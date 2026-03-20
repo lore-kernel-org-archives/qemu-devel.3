@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC2C8109879E
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C68A110987A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:11:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3cPW-0000Pe-8j; Fri, 20 Mar 2026 12:09:18 -0400
+	id 1w3cPa-0000TF-On; Fri, 20 Mar 2026 12:09:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3cP8-0000Dn-NY
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:08:55 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3cPF-0000FF-VC
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:09:06 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3cP7-00007S-9j
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:08:54 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so6552095e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:08:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3cPD-00008s-Pv
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:09:01 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48538c5956bso19268745e9.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774022931; x=1774627731; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774022938; x=1774627738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FMnOlXN+D9n0MPCt+seKokGBkveTPzJtDpLcR65ZSEc=;
- b=S2qcYzGOZPpL+Om0M7jlqMo1QWTfckPd05XsX4EHcN1UAzvL8FwvV/hBQXhf/Pmi4H
- NWnz5PNHE6ZYZO8o2j2Outp5vljHEXaSm4LmRzsv+2v54zFuk7rog+UmCxH2H+q40O9T
- 3KcGsxrl6m90xek4tllgR5krDptCfbmQdpEeYppP5yTE0jFpPPYmsoS4MSn56bBnYxwh
- OakDKBJstoDhhpBNfnFf89yLIdpWm7SocOfw33MZ75aR7GT3T9g4mu45PaLa7MpfBVaM
- ATcyDYjzBKq7m0Wvu+P1DDVxw8x9nLFuXMoMVGhXdbD6FLJIFbvemhvJgLkCCyvLf98E
- uWyw==
+ bh=MlMfDpt1UrnWvCHRhzu62WEH4lx9fXnycrYi+XszbCY=;
+ b=lu/w54jb97CXZaYjEfQCZ1Qti4cfIETEn2ej6NP3H3rsHkAlZXbTHSFrjYMzXX9UjB
+ I7pPb5avVLcJX/nTq5QGKwEq5qU2R/KlrQppJDoPbk3T74Eq4DGii1GyYGMwIVwAhkf3
+ nXFbCX7NEfrwOdDde6aCkX2OcCMCDFSmpYsQq0w5UERnTGEeFIpfEFiX72ZNn5uNnouo
+ t8BuNrHINgiig6RY4ejx23Ji4ugJC3QL8dyuFiUfR2PZCjqQG+eqCIi5QAR6YZ+BExHb
+ jGO//TP/mAvMEkHjuuwnmZc6la2ZU/fSkV54LfKbRhIWpg1c2QAAb0BJvHd7fM67Wlr4
+ r8lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774022931; x=1774627731;
+ d=1e100.net; s=20251104; t=1774022938; x=1774627738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FMnOlXN+D9n0MPCt+seKokGBkveTPzJtDpLcR65ZSEc=;
- b=dWpEPOoTKFjpwGy3OPvI1G1qlqlvAt0EQqpAYuKmDAbIu5+rAQGGhMLJPTw/DJWfwc
- OWaGgWcAb4T1CVo75wkQCIKWrLoFYN2WTuIKjuR3GwBYzQEzfQBS/vkm5Db+OiIHcfSV
- C8dhS4jSdVQNTSoAD5xKuZAsCE7ZCKCdGaAaDjOc0GxJGAXBtXsqc3MKYLV7em4OMBVE
- wEyiqMDe0ymy48xoL5VtmYYNHspK5oSG8r95xZxnmNB8eMwgd+OKq+3qIDIHyDgrI3cg
- cHT7OLOy9sh9o2asNQSNYZQag8+y0vT8EbCfhH6ZD/TcANPct2aD1zIm95HXMK0oc/zH
- R4dQ==
-X-Gm-Message-State: AOJu0YyHZlFCdyeOC0dVej2N6zhGnD9G4zt+EqWeRShpfCGnCihpT3qm
- /avzIwrQW9pNZjotOOkCy+gxKDeEj/BYPTlS2SgCuwHOq/up8l5pkhVWsLs/pv+rCYUWnYvjtvI
- qir2CFHE=
-X-Gm-Gg: ATEYQzyliTnRBB7IPTW3Czzcym//0t8BK9PgGlFFLvneiL10Gi5XpL5hIzJ7GIPGOGP
- Z+2rBrYXWpqUL4Jlgl1hBz0o5+Ib3vl+eayY5qAgB63RtaUt6pCS4jRegsdLLquWmMEb7j6s2SN
- aOvXoh0QI5OjB5RAr71sf+h7XGUBVJuZICVLwBGEm2QNjAchWU7umLOUF+zBSVPZAQVE7S2lSIX
- APmN4BdibaJq9+J1vxLs9yfblWj4N/FJwLPIdCUjFnZmub2JaQjZaTVX/QWW7U4Vsmu6kHJgZtK
- PbOjZP60m2stR/WH8fhJH+hnxq0KlsU1l5NUX7CokGjnQ78QXFmgN/VdPyyUv7FG/WtygUxWdPK
- 6nlrzLYOyCSBUUj/Dx+OmuAcCyXyF32SoMvuAMHXBfCIJl5WIeYykL6nqPs9yrboIXF/BnBYyKR
- h1BXZT9mNAAZjg+g9oF14kZCfWQ21Z4KMFAOY1hWy60Vq7WYJV243ZskwfuZloDTK4ZQZssGgz
-X-Received: by 2002:a05:600c:8b0a:b0:485:4136:99a8 with SMTP id
- 5b1f17b1804b1-486fee0fb9emr55283885e9.22.1774022930523; 
- Fri, 20 Mar 2026 09:08:50 -0700 (PDT)
+ bh=MlMfDpt1UrnWvCHRhzu62WEH4lx9fXnycrYi+XszbCY=;
+ b=kE7Kht8PxdRy84MGmb3iNqjqoOAFx/pWxrf1sARrE/H80uNXSKuvzcFPtll2NYqIGB
+ P/gw5OZ6vgQHAyRKC/67e+zWIZkKOhztUOW0fXE1QNzkjQKK/V3iVhyWkQR0O4d2Na/n
+ zHZUXxaOGZyHf94wV5dQZ6JbOOcwR1CRtMtDK6dxhtpJ1+iBGju1NFZjXI/4iDmQUPxd
+ hQWk8xpcxfnzk42FC1m/xf95359evaRIdhGdIeWfF8YAy7kbIf8WsUbiPRJjOaDuWjQN
+ Vb73/g0VqRTnlddFKx+ZPWtUj2Mr1DZd8I6CV4WCkzyf8ZO7ykGowlafj/FP4AncjMeQ
+ 9eqg==
+X-Gm-Message-State: AOJu0YxzeMU7cFpNjzGZQmKylgdgew52ufx16DVEsPpELOmTzt1VuQxl
+ O3onudLZghrxHidvIeZCaICqemXtbEUVvK9KizQXMf4nESjW2A+A7HUeULrbirNUKih5H2AYanC
+ 2Ba7Abfk=
+X-Gm-Gg: ATEYQzzoAOjowMa0ktJIQdfUd4D73exMCylfeQWrfB9jM7fuWif80+2vVxX5r55rapT
+ vNFdedbIn8rOzcsdzgwl6GyIw/LOkHFD/UNA9lmmMLtsOhNhxkPqtQgLBQhcfxGpNYcKfGrbXv+
+ 8JzPoHFqejUxpMSNiZP289kj9o8IVJClCgimE9wl/H556bEa1PlTFXptFjffJvPKMViYNRi+8aE
+ BKo8b065+g+62sc7VAdHDLT5eEZZfSR7EteveOZ0uZn1OoglT0c3WW48ezxoik6UBq7cJ7a84vx
+ DGaz5BE1VrlSpOo/CarM6XWipmKQMhm6JK+8KC84RW+u2SOO/uq5r+iK6kGucF7lWGQF/ZgjgLp
+ oXVcm+1HYTy0yp7MWXHPxH+E1OkafEffXnBNZydz3umU7IFNCKCtHctHh1105nDvL7QNZILi+XV
+ wg04mY40YSgY6S3ZzVokWsE28wWlHgfHebi4xC156agRAbmHzNUCt6obyxdWvtQnFhbkTHvvGz
+X-Received: by 2002:a05:600c:3483:b0:487:12c:e7ea with SMTP id
+ 5b1f17b1804b1-487012ce938mr37256925e9.5.1774022937693; 
+ Fri, 20 Mar 2026 09:08:57 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487017210dcsm36789405e9.10.2026.03.20.09.08.49
+ 5b1f17b1804b1-486fe7e2665sm82629185e9.6.2026.03.20.09.08.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Mar 2026 09:08:50 -0700 (PDT)
+ Fri, 20 Mar 2026 09:08:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -73,20 +73,19 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH-for-11.1 05/10] target/m68k: Replace legacy
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-11.1 06/10] target/sparc: Replace legacy
  target_monitor_defs -> legacy_monitor_defs
-Date: Fri, 20 Mar 2026 17:08:05 +0100
-Message-ID: <20260320160811.28611-6-philmd@linaro.org>
+Date: Fri, 20 Mar 2026 17:08:06 +0100
+Message-ID: <20260320160811.28611-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260320160811.28611-1-philmd@linaro.org>
 References: <20260320160811.28611-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,46 +108,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose m68k_monitor_defs within target/m68k/ and register
-it as CPUClass::legacy_monitor_defs hook.
+Expose sparc64_monitor_defs within target/sparc/ and register
+it as CPUClass::legacy_monitor_defs hook (taking care to not
+register it on 32-bit SPARC target).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/cpu.h     | 2 ++
- target/m68k/cpu.c     | 1 +
- target/m68k/monitor.c | 5 +----
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ target/sparc/cpu.h     | 2 ++
+ target/sparc/cpu.c     | 3 +++
+ target/sparc/monitor.c | 9 +++------
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index d7f508a9e80..6f19b53158e 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -26,6 +26,8 @@
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index ac0eb9f0faa..83f6859019d 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -7,6 +7,8 @@
+ #include "exec/target_long.h"
  #include "qemu/cpu-float.h"
- #include "cpu-qom.h"
  
-+extern const MonitorDef *m68k_monitor_defs;
++extern const MonitorDef *sparc64_monitor_defs;
 +
- #define OS_BYTE     0
- #define OS_WORD     1
- #define OS_LONG     2
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index d849a4a90fc..fcb14a44793 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -655,6 +655,7 @@ static void m68k_cpu_class_init(ObjectClass *c, const void *data)
-     cc->sysemu_ops = &m68k_sysemu_ops;
+ #if !defined(TARGET_SPARC64)
+ #define TARGET_DPREGS 16
+ #define TARGET_FCCREGS 1
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 1493336e7a2..65468ceeb78 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1096,6 +1096,9 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->gdb_core_xml_file = "sparc64-cpu.xml";
+ #else
+     cc->gdb_core_xml_file = "sparc32-cpu.xml";
++#endif
++#if defined(TARGET_SPARC64)
++    cc->legacy_monitor_defs = sparc64_monitor_defs;
  #endif
-     cc->disas_set_info = m68k_cpu_disas_set_info;
-+    cc->legacy_monitor_defs = m68k_monitor_defs;
- 
-     cc->tcg_ops = &m68k_tcg_ops;
+     cc->tcg_ops = &sparc_tcg_ops;
  }
-diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-index be7411edca6..97ec2bd38bc 100644
---- a/target/m68k/monitor.c
-+++ b/target/m68k/monitor.c
-@@ -38,7 +38,4 @@ static const MonitorDef monitor_defs[] = {
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index 99abddbf1e0..377c2b18cab 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -38,8 +38,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+     dump_mmu(env1);
+ }
+ 
+-const MonitorDef monitor_defs[] = {
+ #ifdef TARGET_SPARC64
++static const MonitorDef monitor_defs[] = {
+     { "asi", offsetof(CPUSPARCState, asi) },
+     { "pstate", offsetof(CPUSPARCState, pstate) },
+     { "cansave", offsetof(CPUSPARCState, cansave) },
+@@ -47,11 +47,8 @@ const MonitorDef monitor_defs[] = {
+     { "otherwin", offsetof(CPUSPARCState, otherwin) },
+     { "wstate", offsetof(CPUSPARCState, wstate) },
+     { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
+-#endif
      { NULL },
  };
  
@@ -156,7 +172,8 @@ index be7411edca6..97ec2bd38bc 100644
 -{
 -    return monitor_defs;
 -}
-+const MonitorDef *m68k_monitor_defs = monitor_defs;
++const MonitorDef *sparc64_monitor_defs = monitor_defs;
++#endif
 -- 
 2.53.0
 
