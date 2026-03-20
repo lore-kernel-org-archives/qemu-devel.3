@@ -4,142 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494351099B29
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 17:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF2C1099B29
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 17:24:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3dXF-00065f-TP; Fri, 20 Mar 2026 13:21:21 -0400
+	id 1w3dZh-0006cs-GQ; Fri, 20 Mar 2026 13:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w3dXE-00065K-80
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 13:21:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w3dXB-0005R8-4d
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 13:21:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774027275;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Vs5HItp1EZJK++4Ft6rwxoFJfkm55x9k5jA0C1EpWIQ=;
- b=bvbb8Pgm7GjTqeJ21TBUkhlpoeuTHq4tpaL/HaaHjwTGMEXqvPzksXD4ozcfyEYciojVQB
- em92KyeGHXJTy//SVVffmUHYf1jNbO40mMNIf8/hzQ3xWRkVhXc+ytHsWM3bmaqfB0sd+Q
- F2K6Kccfy260okbvZbGoUhSB2ww+/ek=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-227-rkz3S1RVM2iI9ElYg-yFFA-1; Fri, 20 Mar 2026 13:21:13 -0400
-X-MC-Unique: rkz3S1RVM2iI9ElYg-yFFA-1
-X-Mimecast-MFC-AGG-ID: rkz3S1RVM2iI9ElYg-yFFA_1774027273
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-89c4d85d619so64965686d6.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 10:21:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774027273; cv=none;
- d=google.com; s=arc-20240605;
- b=Y/Enkj+hrUETsTl2howHEj0DsRISGbixOgEYVbe1fGwoC4vvXlrDSG3FkZBf4mEJVj
- Mtsqo8p9WdEgYiBfLqX/kJjX9GFbvzTVWrK989xkyLJLycDNjXL2kFs5BcczH6Q4Sft7
- dqi/vTJ4mX+8Tcfldz1jVsPbg0oeyzk26mBFDW1XWpCWozsZv/1/896UNLi7EZUrJLXw
- CiwRx7i0FRJK4/dQr9Vd94vGX0uBdA04zxUav6qfHHEwwl8Hj7x9NymCEgAef842+Izq
- XQCTOZ14JfeFEEo9KvpUhhxUNsVLvcfvacZ0LWtx1V0gP7GGMPLt6YhO7PTaMxZ2mqU7
- hAlg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Vs5HItp1EZJK++4Ft6rwxoFJfkm55x9k5jA0C1EpWIQ=;
- fh=ITVUHrDuK24wfFWcPHAMT7QsL3mgm65a7A/rtIt/55A=;
- b=B2xl+bFovJNaqMVC9zvs/EeQ5NsUYhhEqvbiEVpw1FVh7oH/JSn/a5s/pWgGckyrra
- oIFmYWdQe1Zuj7XI5/Io9LZf7vnYyCabaqJC/ANgWa135sOWe9z3X9giJYG6RTfui7F5
- JptMfYzW/gWlQLwL7g5Uy9RBFxMVxED0M4IvK1QNozj0C4D0417GrJwapdxEeExVkSm0
- iiwHxaqIrsYowSaa4gQsk15ml6gYf0nH57yTfSV9P9S6f755vHKop5tFu6I2S3X9fwc6
- gzfuJ+siG4Ns8ZcqxmnL1i81fA0AXjnnzuAA1JsbsrY8kiXqVVeupZ/Gd0nIgeLDywI9
- /lmg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <serapheimd@gmail.com>)
+ id 1w3dZf-0006cj-Tg
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 13:23:51 -0400
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <serapheimd@gmail.com>)
+ id 1w3dZd-0005m7-O8
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 13:23:51 -0400
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-8cbc593a67aso188501085a.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 10:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774027273; x=1774632073; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Vs5HItp1EZJK++4Ft6rwxoFJfkm55x9k5jA0C1EpWIQ=;
- b=tY/R5RejA08C1CawlPd/Du/a+8g7l+qpl6ZnrlZHh28S335MvYRY5w6PPR9cBiF2hU
- P5tOusUDiGh/9RBa9n8kCz0MhIkef1NNd3w1gG6IVsIzPkrAaw4ZaOZTn6lXeGaOBqAb
- b71AK9OCG+3iv6J+AFopTmk6xzid9XimDxGaql88bFlv17WALr5+2Yab11WuMPYNMV8Y
- Bc7Q8kXjMNTmTmvdcDMQWLvuL0PD8TAaxAdMGqAsgxlFjQHT/1ENgocmqdCn5ixAm3O6
- hiL+8mr9dMbmtw9Z++YDLVfMPZkBob4Bm5wvZfGOpEzBGUfva8DDXwxNiJrUUGVKlbeE
- GGVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774027273; x=1774632073;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1774027428; x=1774632228; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Vs5HItp1EZJK++4Ft6rwxoFJfkm55x9k5jA0C1EpWIQ=;
- b=PVUWQDA/E2bE0TDEZCLCejg7hx4oqX+W0AjGrt8MNNOUrJhVkE4Y6DSmZ4T2msb3x2
- rd8XSSQwN6QrTYfCD3s5rrHlyhxc1orRhZoTANtoUG3JqfdOU2x5n2X0Hwn9k55T6j/5
- 0jHhlCAIdmpzaYE8iPmrlKBJOj2q1nApEmglRPr5wpkGI6Wf23phBUZbN9FV4UT50fwU
- wO+AuNZJk6qzDyHjFzXeYsbitGjOFQP+GRE1uhj/kA7h0BkGFAhpF5243KKIpna+/pYT
- uFlMf+0AI5VjeDqLwel5Gb0iRyS4N2VBYWQ9IdcNPsrAWTt8XOQxvGIKPn4v4JguMqf0
- ysKw==
-X-Gm-Message-State: AOJu0YxHEvsU/s167ywP+TS58GQocdXAr3M1eOE9EdKrlRBchCwGGtcG
- IvP59OhU1U0VyhL1jvRRydAYnYffu56IR7r21oi41JxxkNcn0bQwP4mcGATk3rz3hlp2vTSON/H
- cVw1uxNCkbaEysZOobxe1lw5ZOMWvtu0CX9sExxAqTMfk7lMTyuR4mqRqLw5MBTHEV6PO2/66d2
- viKtYrQm3eI4r2TPAMjrCos4jR9jeQ5mk=
-X-Gm-Gg: ATEYQzwg78cGL69lfnKRZApva2mHkH8waG6UncM3cTPFXT6YskbqRcQxaYKKUVRNFQ6
- DDy0v6cQ0KTXsKz3sz06tOgeE5plAA78F5T6veSchEbgXA5Su5Spj8fFsEbn5ikC/EvD5suNeWG
- c7ExInKHPOBHmrH2YGPCEwI5K16g/Zy/8WrNZ+3tjU+rubAnwVAI0mzMQuWgmCrDFmFxWKX/8sW
- o1wspnDSITqs4HXzItiMRNb9tYcPCntpbwCwQ==
-X-Received: by 2002:a05:6214:4b13:b0:89c:869a:ef7d with SMTP id
- 6a1803df08f44-89c869af1bfmr48546926d6.40.1774027272448; 
- Fri, 20 Mar 2026 10:21:12 -0700 (PDT)
-X-Received: by 2002:a05:6214:4b13:b0:89c:869a:ef7d with SMTP id
- 6a1803df08f44-89c869af1bfmr48546306d6.40.1774027271818; Fri, 20 Mar 2026
- 10:21:11 -0700 (PDT)
+ bh=W/8YBAbDUDWnSFur+r4piUQwH9SvhSkhr91o3u0AYXE=;
+ b=FVuSgFKyhpwG/gsgPMNc2TTsTUlsRM6h7Wq9AzbVbxIJN+3wsxTB5CVAvdm5fYDCHg
+ In5BWDMBJKOXRCOnv+lGFqem6HveO3cQIOHXNFZE9W5al3P9PMbcVKDRHENpnVscogK3
+ EP3na4axwT3E+tD2f3O6AzjMcyuNqQCN5nlZLPi88mZrwC4E8UekW/XzFpc38pi1hmtQ
+ 79NeGzgl/r87UHtqQ/sm6wLFGHpzhFFoQVXWt+Kk2ptZPBbIsBTKCMcTGfTpJ9no40c3
+ TC27Y8bSZdRxCNytBuzEF5mX1OtYHYNLMbLTMRLdKk85bKTGIEs7TqGC27ywaLXekyt/
+ OIww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774027428; x=1774632228;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=W/8YBAbDUDWnSFur+r4piUQwH9SvhSkhr91o3u0AYXE=;
+ b=BRIlVhAEDXFm3lwq3kG3YFiMMzOw4rbLbN9QoLZmo7FtZo/lR2/am72wVY41aUGh4A
+ rfzu02gRfvK4F/2FIWSDJqorZmI53TA6jxw38WMWlqjSkaRWgg3oSLCnn903+KcFTAXP
+ OtHmbfC76nGks2V3ImYhTolGNPYr4XaElb/0AdUzdoOnQO/OUM+4V3QpQfcuQ+7psVD5
+ zTzmUA+Nap3GitqCqkqN1gQm/sQW3auxv7xLQe3jvxuUBambWK0ICkARz7I1O2TZOzVK
+ afznrjM66xAvim+TeDZ8gg4sRtVTgGNqXnJT+xjsUE9Ao4d1Ynm6RhPIr39X5Ck8Rhx1
+ AHtw==
+X-Gm-Message-State: AOJu0YwxYwazCrr4e5F20LWixA/iCs1B5qFWlpqnk/qj0ptAW//D2It4
+ AoF0epyX7o3PnWdWAOltBAnp0mApJPQ2ZYb4OkDh9E26D6/Ft3zZxx9C
+X-Gm-Gg: ATEYQzwvqLE4THthNR0WHLB7prjA2Fax6UyEh/GxD4HPklmLZbkWHKMwPZhISN3Lix0
+ fkCiC5m/cEHSmRvCycUwX+8r7SLEmA5CE+09i/o2omfKf89iHUjV9R05QtIHkmR+/dhekhtZEwO
+ MZ3JeXBZ0ZX8nZ7S8Zii+OaL8ya0TdEtLXZKNj/pOiZim11RCkJ0e/SzaErNondNMn+aa/MTAUc
+ 05M1ommj+256LXlsUqqyvp8hlLmfHu+5bTzdi0CK5k4sqPWisNxPTCc6Zf1sKOIAhzTTWdJMdrT
+ xL/6mAT2BmWCeysnRgJDzUUfIWPJU2Njq6kmLRwIo+O811xs8Y3XJs5xjDlg4bPpAM29i2l69lj
+ /tCVPZXPuva2r/hvb8UrLh8JkPFxDWLJo77gMq0VLZ40RxEN03i3oPj0ogMaXdMhSdrp0k0SLoo
+ skewXOaCrkLUIyLJNoImoP2Kfy+lMf+gj4vHDEd/1Yn+nXU3ZiQdeyT7hUyXh0loM0O8P9AsPt/
+ 0PjdPchySe9
+X-Received: by 2002:a05:620a:288d:b0:8cd:827a:2abd with SMTP id
+ af79cd13be357-8cfc7f8adb8mr545184585a.72.1774027427841; 
+ Fri, 20 Mar 2026 10:23:47 -0700 (PDT)
+Received: from CW-FL20TJCW03-L.mynetworksettings.com
+ ([2600:4040:9138:9600:4515:689e:be71:5726])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cfc908df50sm199675485a.26.2026.03.20.10.23.47
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 20 Mar 2026 10:23:47 -0700 (PDT)
+From: Serapheim Dimitropoulos <serapheimd@gmail.com>
+To: stefanha@redhat.com
+Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
+ sgarzarella@redhat.com, xieyongji@bytedance.com, weijunji@bytedance.com,
+ 15927021679@163.com
+Subject: Re: [RFC DISCUSSION] virtio-rdma: RDMA device emulation for QEMU
+Date: Fri, 20 Mar 2026 13:23:45 -0400
+Message-ID: <20260320172345.4688-1-serapheimd@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <CAJSP0QX3JtwhXDTnEgS-heLYYncjJtttg1KmFqG-+_VUXbH+Ww@mail.gmail.com>
+References: <20260316210600.62415-1-serapheimd@gmail.com>
+ <CAJSP0QX3JtwhXDTnEgS-heLYYncjJtttg1KmFqG-+_VUXbH+Ww@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260316182608.148628-1-jsnow@redhat.com>
- <20260316182608.148628-2-jsnow@redhat.com>
- <87se9u7koi.fsf@pond.sub.org>
-In-Reply-To: <87se9u7koi.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 20 Mar 2026 13:20:59 -0400
-X-Gm-Features: AaiRm52p_OHpKJZKVs7MKap5ijtzwZGtp6JOviZR2HSVWrVYmHQ_4wSc-0J4h04
-Message-ID: <CAFn=p-b5uJL8uW_zVg6+30xVVO8MXwD=ukFk-H3UCjT7dHia5g@mail.gmail.com>
-Subject: Re: [PATCH 1/8] qapi: differentiate "intro" and "details" sections
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Lukas Straub <lukasstraub2@web.de>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowang@redhat.com>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Qemu-block <qemu-block@nongnu.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Alex Williamson <alex@shazbot.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Kevin Wolf <kwolf@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Stefano Garzarella <sgarzare@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Jiri Pirko <jiri@resnulli.us>, 
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Kashyap Chamarthy <kchamart@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000005be495064d77e934"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=serapheimd@gmail.com; helo=mail-qk1-x732.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,503 +104,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005be495064d77e934
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Stefan,
 
-On Fri, Mar 20, 2026, 8:24=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
- wrote:
+Thank you for the quick reply and thorough review! I waited a few days
+before replying to see if any of the folks from the previous virtio-rdma
+efforts would chime in but nothing so far. In any case, my responses
+inlined below.
 
-> John Snow <jsnow@redhat.com> writes:
+> I think this is a sign that virtual RDMA has a small community without
+> someone willing to maintain it over the long term. Can you see
+> yourself actively maintaining this over the coming years?
 >
-> > This patch begins distinguishing "Plain" sections as being either
-> > "Intro" or "Details" sections for the purpose of knowing when/where/how
-> > to inline those sections.
-> >
-> > The Intro section is always the first section of any doc block. It may
-> > be empty or any number of paragraphs. It is interrupted by any other
-> > non-plaintext section, i.e.; Members, Features, Errors, Returns, Since,
-> > and TODO.
-> >
-> > The details section, when present, is either the last section or the
-> > second-to-last section when a "Since:" section is present. It consists
-> > of any plain text in the doc block that follows any named sections if
-> > present.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
+> If not, then it may be more appropriate to treat it as an experimental
+> and out-of-tree project. That way the spec and code can be shared in
+> case others want to build on it in the future without any commitment
+> or the overhead of going through the full process of getting a device
+> merged into the VIRTIO spec, QEMU emulating code merged, and Linux
+> guest code merged.
 >
-> The commit message explains what kinds INTRO and DETAILS are, but not
-> why they're useful.  My guess:
+> If you are going to ship products that rely on this, then it's
+> probably necessary to go through the full process of getting
+> everything merged upstream.
+
+I understand the hesitation given the pvrdma precedent. I want to be
+explicit that this is not a side-project. I'm a kernel engineer at
+CoreWeave and having something like virtio-rdma is a requirement for
+some of our current projects. Two of them that I feel comfortable
+disclosing is our work with BlueField DPUs and Kata containers.
+
+For NVIDIA BlueFields we currently do most of our work with real
+hardware which for us developers is at times hard to come by as
+we want to make sure that our customers take priority. Being able
+to do emulation with QEMU means that every engineer on the team
+can iterate without a dedicated BlueField. Moreover, our test suite
+can run more often this way too.
+
+For Kata containers today, to get RDMA you have two options. Either
+use virtio-net and give up latency or vfio-pci passthrough pinning
+the pod to a NIC. The latter not only breaks the security model but
+also isolation (not to mention any prospect of live-migration).
+
+I'm ok keeping this as an out-of-tree project initially in the short
+term but would hate it if something else comes along later and we
+have to re-work everything on our end. As far as long-term commitment
+goes I commit to maintaining virtio-rdma for as long as it's upstream.
+If I ever leave my role at CoreWeave and my next role is not related
+to virtio-rdma, my team at CoreWeave will designate a successor
+maintainer as it has organizational interest in this work. I'm happy
+to formalize my commitment in a MAINTAINERS entry when/if the time
+comes.
+
+> Does this mean that memory is registered on VQ 0 and incoming RDMA
+> WRITE (without immediate) requests modify that memory directly without
+> virtqueue activity? I think this is necessary because registered
+> memory is available continuously and the virtqueue model doesn't
+> really work for this mode of operation.
 >
-
-Right, my apologies. Leaning on you having some existing knowledge here,
-and also going light on details because the series is still obviously in
-flux.
-
-Let me elaborate on the motivations here...
-
-
-> 1. Represent the future "Details:" marker: the plain section before it
-> is of kind INTRO, the one afterwards is of kind DETAILS.
+> It's worth clarifying this because accessing memory outside of
+> virtqueue buffers is a violation of the VIRTIO device model. That's
+> okay, VIRTIO is pragmatic and some devices do this but it's worth
+> mentioning explicitly.
 >
+> Stepping outside the VIRTIO device model can create implementation
+> challenges because interfaces like vDPA/VDUSE may not be designed for
+> it though.
 
-Yes.
+Ok great point actually. Evaluating the potential paths forward I
+thought of the following (though I'm open to other ideas if you have
+them):
 
+A] Use a shared memory window (like virtio-fs DAX) - this wouldn't
+work because it changes the RDMA programming model. Real HCAs let
+you register *any* part of memory via ibv_reg_mr(). Restricting MRs
+to a pre-allocated window would thus break standard applications.
 
-> 2. Future programming convenience?  With just PLAIN, code may have to
-> understand the section's context to make decisions, and with INTRO and
-> DETAILS is doesn't.
+B] Just acknowledge the deviation explicitly and move - as you said
+besides being a spec violation it doesn't concretely solve the
+vDPA/VDUSE case as they may want to enforce IOMMU boundaries.
+
+C] Go the IOTLB route - when the driver registers an MR, the device
+triggers IOTLB updates for every page in the MR giving the backend
+legal IOMMU mappings.
+
+Let me know if you can think of any other ways but I believe [C]
+may be the way to go as real HCAs do the same thing. In our case
+this would look like so:
+
+1. REG_USER_MR sends the page list (guest physical addresses) via
+   the command VQ (virtio-compliant command).
+
+2. The device uses the platform's DMA mapping mechanism to establish
+   mappings for each page in the MR. I believe for QEMU that would be
+   address_space_map() since it has full guest RAM access.
+   (VHOST_USER_IOTLB_MSG for vhost-user and VDUSE_IOTLB_REG_UMEM for
+   VDUSE).
+
+3. RDMA WRITE/READ resolve (remote_addr + rkey) through those mappings.
+
+4. DEREG_MR invalidates them.
+
+The above should require VIRTIO_F_ACCESS_PLATFORM when used with
+IOMMU-protected backends like vDPA/VDUSE. As for the per-page mapping
+cost at registration I'm open to ideas but I wonder if it is acceptable
+for the v1 pass as it is a one time cost.
+
+One potential future scalability issue with the flat list is that
+for very large MRs (128GB/32M page addresses) it can become too
+long/heavy in the command VQ which could be prohibitive for any
+potential hardware implementations (if there were to be any). For
+v1 maybe we could just reserve VIRTIO_RDMA_F_INDIRECT_MR and leave
+room for a future indirect page table model?
+
+Let me know how the above sound to you and I can make sure to document
+them more formally in the spec draft.
+
+> [...] check how registered memory can be implemented both in VDUSE
+> and in-kernel vDPA drivers.
+
+The IOTLB model above should cover both cases but I can double-check.
+For VDUSE, MR registration triggers VDUSE_IOTLB_REG_UMEM calls. For
+in-kernel vDPA, the vDPA bus provides DMA mapping APIs that map to the
+parent IOMMU. The guest driver should ideally be unaware of which
+backend is in use and just send REG_USER_MR with the device handling
+the rest.
+
+> For the userspace virtio-rdma device implementation I expected a new
+> UNIX domain socket protocol along the lines of vhost-user and
+> vfio-user. That's because sharing guest RAM is only part of the
+> communication that must happen between two QEMUs and I guess you'll
+> need to define your own protocol to coordinate RDMA between QEMU
+> processes anyway.
 >
-> Guess close enough?
+> When using vDPA or VDUSE, QEMU shares guest RAM with the device
+> through the /dev/vhost ioctls.
 >
+> In both cases, I'm not sure if ivshmem is necessary.
 
-Pretty much.
+Makes sense - thank you for the pointers! I'm almost done switching
+to domain sockets per your recommendation. The new scheme is currently
+peer-to-peer (not a re-use of vhost-user which is VMM-to-backend). As
+a first phase/stage each side exchanges MEM_REGIONS messages with
+memfd descriptors for guest RAM regions and the peer mmap()s them
+(handshake). Then we forward send/recv via framed messages on the
+socket. RDMA WRITE/READ operate directly on the mmap'd peer memory
+(no message nor remote CPU involvement).
 
-Originally, I thought I'd inline things like this:
+BTW I don't need to add that level of detail in my spec, correct?
+From what I can tell specs seem to define device-to-driver behavior
+only (e.g. virtio-net doesn't say anything about TAP/vhost-user,
+etc.)
 
-Intro (child)
-Intro (parent)
-...other sections...
-Details (parent)
-Details (child)
-
-Last time we went over this, you mused that there was likely never a
-sufficient reason to actually inline the intro. I recall believing and
-accepting this.
-
-So functionally what this does for us is:
-
-(1) Explicitly delineate what comes before the tabular section of the docs
-(members, Returns, Errors, features) and what comes after.
-
-(2) Explicitly defines what will not be inlined.
-
-
-> The commit message covers PLAIN sections at the beginning and at the end
-> (modulo Since:).  It doesn't cover PLAIN sections between tagged
-> sections / member descriptions.  You disallow these in PATCH 2.  You can
-> either cover them here, or get rid of them by swapping PATCH 1 and 2.
+> It depends what you mean by async. Virtqueues can complete requests
+> out-of-order, so a separate completion virtqueue is not needed from
+> that perspective.
 >
+> There could be other reasons why a separate completion virtqueue makes
+> sense. If RDMA relies on the separate CQ design to emit multiple CQEs
+> for the same request or emits CQEs not associated with any request,
+> then a single virtqueue won't work. I don't know RDMA well enough to
+> say either way.
 
-Sure. For now they're separated just to separate concerns in review, but if
-you believe both should be all-at-once, that's fine too. I think there's
-not a regression by separating it, though. It's just a semantic change from
-details meaning "anything after the intro" to "specifically the closing
-section". The intermediate meaning exists for only one patch.
+ok looking more at RDMA CQ semantics and assuming I understand what you
+propose correclty, I do believe we need the separate queue for the
+following reasons:
 
+- An RDMA application may create one CQ and bind multiple QPs to it
+  (multi-QP fan-in). ibv_poll_cq() returns completions from all
+  associated QPs in one call. If completions live in per-VQ used
+  rings, then polling means scanning 2N VQs, O(n) per poll. It also
+  seems like a mismatch in the CQ abstraction being a single
+  aggregation point and virtio VQ a per-queue used ring. The dedicated
+  completion VQ gives you the fan-in O(1) for free.
 
-> Hmm, is your description of DETAILS accurate?  Looks like it isn't; see
-> my review of tests/qapi-schema/doc-good.out below.
->
+- The RDMA spec mandates that when a CQ overflows the device raises
+  IBV_EVENT_CQ_ERR, which cascades to IBV_EVENT_QP_FATAL on every QP
+  bound to that CQ. The device must be able to detect overflows to
+  trigger this. Detecting that with a dedicated completion VQ is
+  straightforward. The virtio used ring on the other hand doesn't have
+  any overflow semantics from what I can tell so we'd need to make
+  something ourselves.
 
-Whoops, future-think. It winds up being true, but isn't true yet as of this
-commit. Well, almost. See below.
+- ibv_req_notify_cq(solicited_only=1) fires only for CQEs with the
+  solicited flag set. I'm not sure how we could express this as-is
+  when virtio event index suppresses by count, rather than per-WR
+  flag. This is less critical though as we could work around it
+  by always notifying and having the driver filter in its interrupt
+  handler in order to be functionally correct.
 
+Let me know if the above reasons seem legitimate on your end. It
+generally seems to me the used ring has no place to put whatever
+fields are needed for an RDMA CQE (only handles generic completion
+metadata). So using a dedicated one to return buffers that contain
+CQEs makes more sense that trying to encode CQE data in the used
+ring itself.
 
-> > ---
-> >  docs/sphinx/qapidoc.py         |  2 +-
-> >  scripts/qapi/parser.py         | 35 +++++++++++++++++++++++-----------
-> >  tests/qapi-schema/doc-good.out |  8 ++++----
-> >  3 files changed, 29 insertions(+), 16 deletions(-)
->
-> [Skipping the Python code in my first pass...]
->
-> > diff --git a/tests/qapi-schema/doc-good.out
-> b/tests/qapi-schema/doc-good.out
-> > index 04a55072646..04e29e8d50f 100644
-> > --- a/tests/qapi-schema/doc-good.out
-> > +++ b/tests/qapi-schema/doc-good.out
-> > @@ -116,7 +116,7 @@ The _one_ {and only}, description on the same line
-> >  Also _one_ {and only}
-> >      feature=3Denum-member-feat
-> >  a member feature
-> > -    section=3DPlain
-> > +    section=3DDetails
-> >  @two is undocumented
->
-> The section containing "@two is undocumented" changes from PLAIN to
-> DETAILS.  Doc source:
->
->     ##
->     # @Enum:
->     #
->     # @one: The _one_ {and only}, description on the same line
->     #
->     # Features:
->     # @enum-feat: Also _one_ {and only}
->     # @enum-member-feat: a member feature
->     #
->     # @two is undocumented
->     ##
->
-> It is at the end.  Good.
->
-> >  doc symbol=3DBase
-> >      body=3D
-> > @@ -175,7 +175,7 @@ description starts on the same line
-> >  a feature
-> >      feature=3Dcmd-feat2
-> >  another feature
-> > -    section=3DPlain
-> > +    section=3DDetails
-> >  .. note:: @arg3 is undocumented
->
-> The section containing "@arg3 is undocumented" changes from PLAIN to
-> DETAILS.  Doc source:
->
-> Doc source:
->
->     ##
->     # @cmd:
->     #
->     # @arg1:
->     #     description starts on a new line,
->     #     indented
->     #
->     # @arg2: description starts on the same line
->     #     remainder indented differently
->     #
->     # Returns: @Object
->     #
->     # Errors: some
->     #
->     # Features:
->     # @cmd-feat1: a feature
->     # @cmd-feat2: another feature
->     #
->     # .. note:: @arg3 is undocumented
->     #
->     # TODO: frobnicate
->     #
->
-> It is *not* at the end.  Is the commit message inaccurate?
->
+> Writing C devices is still perfectly acceptable in QEMU. With Rust you
+> are likely to have to work on bindings and may hit issues just because
+> Rust is new in QEMU, but it's there and you can absolutely use it.
 
-Ah. I wasn't considering TODO... Since it is a comment I mentally elided it=
-.
+Yeah that's what it seemed like when I checked. I'd like to keep things
+simple as a first pass and make sure we get something working while
+monitoring for any Rust PCI+DMA bindings for future versions of this.
 
-What I mean to say is that Details is (will be) essentially the last
-content section that is actually rendered.
+> I think vhost-vpda-device-pci is good practice. It makes sure the
+> device is self-contained and doesn't rely on device-specific VMM
+> support. If it's possible to use just vhost-vdpa-device-pci, then
+> that's great. It scales better because it avoids the need to implement
+> a device in every VMM (like QEMU, Firecracker, etc).
 
-In the HTML, it will always be last if present because both TODO and Since
-are actually entirely removed from the flow of the document.
+Great! Will proceed with that.
 
-Though as we both point out, what i write is not technically true here. (It
-can currently be an intermediate section AND Since is not the only section
-that may follow it.)
+> You can reserve a device ID from the VIRTIO Technical Committee
+> separately from getting the spec merged. Ask
+> virtio-comment@lists.linux.dev.
 
+Will do!
 
-> >      section=3DReturns
-> >  @Object
-> > @@ -183,7 +183,7 @@ another feature
-> >  some
-> >      section=3DTodo
-> >  frobnicate
-> > -    section=3DPlain
-> > +    section=3DDetails
-> >  .. admonition:: Notes
-> >
-> >   - Lorem ipsum dolor sit amet
->     - Ut enim ad minim veniam
->
->     [some section body text elided for brevity...]
->
->    Note::
->        Ceci n'est pas une note
->        section=3DSince
->    2.10
->
-> The section starting with the adminition and ending after "Ceci n'est
-> pas une note" changes from PLAIN to DETAILS.  Doc source continued:
->
->     # .. admonition:: Notes
->     #
->     #  - Lorem ipsum dolor sit amet
->     #  - Ut enim ad minim veniam
->     #
->     [same text elided...]
->     #
->     # Note::
->     #     Ceci n'est pas une note
->     #
->     # Since: 2.10
->     ##
->
-> It is second-to-last, and the last section is SINCE.  Good.
->
-> > @@ -216,7 +216,7 @@ If you're bored enough to read this, go see a video
-> of boxed cats
-> >  a feature
-> >      featurec=3Dmd-feat2
-> >  another feature
-> > -    section=3DPlain
-> > +    section=3DDetails
-> >  .. qmp-example::
-> >
-> >     -> "this example"
->
-> This one is also at the end.  Good.
->
->
+> It is helpful to see the draft VIRTIO spec and RFC patches at the same
+> time. So as soon as you want to discuss the specifics of the VIRTIO
+> spec patches it would be a good time to send RFC patches showing how
+> the spec is implemented.
 
---0000000000005be495064d77e934
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Will do the above shortly. I definitely need to revise my spec and code
+first to incorporate some of the above. I really appreciate your
+feedback on this!
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 20, 2026, 8:24=E2=80=
-=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
-hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">John Snow &l=
-t;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; This patch begins distinguishing &quot;Plain&quot; sections as being e=
-ither<br>
-&gt; &quot;Intro&quot; or &quot;Details&quot; sections for the purpose of k=
-nowing when/where/how<br>
-&gt; to inline those sections.<br>
-&gt;<br>
-&gt; The Intro section is always the first section of any doc block. It may=
-<br>
-&gt; be empty or any number of paragraphs. It is interrupted by any other<b=
-r>
-&gt; non-plaintext section, i.e.; Members, Features, Errors, Returns, Since=
-,<br>
-&gt; and TODO.<br>
-&gt;<br>
-&gt; The details section, when present, is either the last section or the<b=
-r>
-&gt; second-to-last section when a &quot;Since:&quot; section is present. I=
-t consists<br>
-&gt; of any plain text in the doc block that follows any named sections if<=
-br>
-&gt; present.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-<br>
-The commit message explains what kinds INTRO and DETAILS are, but not<br>
-why they&#39;re useful.=C2=A0 My guess:<br></blockquote></div></div><div di=
-r=3D"auto"><br></div><div dir=3D"auto">Right, my apologies. Leaning on you =
-having some existing knowledge here, and also going light on details becaus=
-e the series is still obviously in flux.</div><div dir=3D"auto"><br></div><=
-div dir=3D"auto">Let me elaborate on the motivations here...</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote=
-_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
-rder-left:1px #ccc solid;padding-left:1ex">
-<br>
-1. Represent the future &quot;Details:&quot; marker: the plain section befo=
-re it<br>
-is of kind INTRO, the one afterwards is of kind DETAILS.<br></blockquote></=
-div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes.</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote=
-_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
-rder-left:1px #ccc solid;padding-left:1ex">
-<br>
-2. Future programming convenience?=C2=A0 With just PLAIN, code may have to<=
-br>
-understand the section&#39;s context to make decisions, and with INTRO and<=
-br>
-DETAILS is doesn&#39;t.<br>
-<br>
-Guess close enough?<br></blockquote></div></div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">Pretty much.=C2=A0</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto">Originally, I thought I&#39;d inline things like this:</div><=
-div dir=3D"auto"><br></div><div dir=3D"auto">Intro (child)</div><div dir=3D=
-"auto">Intro (parent)</div><div dir=3D"auto">...other sections...</div><div=
- dir=3D"auto">Details (parent)</div><div dir=3D"auto">Details (child)</div>=
-<div dir=3D"auto"><br></div><div dir=3D"auto">Last time we went over this, =
-you mused that there was likely never a sufficient reason to actually inlin=
-e the intro. I recall believing and accepting this.</div><div dir=3D"auto">=
-<br></div><div dir=3D"auto">So functionally what this does for us is:</div>=
-<div dir=3D"auto"><br></div><div dir=3D"auto">(1) Explicitly delineate what=
- comes before the tabular section of the docs (members, Returns, Errors, fe=
-atures) and what comes after.</div><div dir=3D"auto"><br></div><div dir=3D"=
-auto">(2) Explicitly defines what will not be inlined.</div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_contai=
-ner"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-le=
-ft:1px #ccc solid;padding-left:1ex">
-<br>
-The commit message covers PLAIN sections at the beginning and at the end<br=
->
-(modulo Since:).=C2=A0 It doesn&#39;t cover PLAIN sections between tagged<b=
-r>
-sections / member descriptions.=C2=A0 You disallow these in PATCH 2.=C2=A0 =
-You can<br>
-either cover them here, or get rid of them by swapping PATCH 1 and 2.<br></=
-blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Sure. =
-For now they&#39;re separated just to separate concerns in review, but if y=
-ou believe both should be all-at-once, that&#39;s fine too. I think there&#=
-39;s not a regression by separating it, though. It&#39;s just a semantic ch=
-ange from details meaning &quot;anything after the intro&quot; to &quot;spe=
-cifically the closing section&quot;. The intermediate meaning exists for on=
-ly one patch.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=
-=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-Hmm, is your description of DETAILS accurate?=C2=A0 Looks like it isn&#39;t=
-; see<br>
-my review of tests/qapi-schema/doc-good.out below.<br></blockquote></div></=
-div><div dir=3D"auto"><br></div><div dir=3D"auto">Whoops, future-think. It =
-winds up being true, but isn&#39;t true yet as of this commit. Well, almost=
-. See below.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"></div=
-><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc =
-solid;padding-left:1ex">
-<br>
-&gt; ---<br>
-&gt;=C2=A0 docs/sphinx/qapidoc.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =
-2 +-<br>
-&gt;=C2=A0 scripts/qapi/parser.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 35 +++=
-++++++++++++++++++++-----------<br>
-&gt;=C2=A0 tests/qapi-schema/doc-good.out |=C2=A0 8 ++++----<br>
-&gt;=C2=A0 3 files changed, 29 insertions(+), 16 deletions(-)<br>
-<br>
-[Skipping the Python code in my first pass...]<br>
-<br>
-&gt; diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-go=
-od.out<br>
-&gt; index 04a55072646..04e29e8d50f 100644<br>
-&gt; --- a/tests/qapi-schema/doc-good.out<br>
-&gt; +++ b/tests/qapi-schema/doc-good.out<br>
-&gt; @@ -116,7 +116,7 @@ The _one_ {and only}, description on the same line=
-<br>
-&gt;=C2=A0 Also _one_ {and only}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 feature=3Denum-member-feat<br>
-&gt;=C2=A0 a member feature<br>
-&gt; -=C2=A0 =C2=A0 section=3DPlain<br>
-&gt; +=C2=A0 =C2=A0 section=3DDetails<br>
-&gt;=C2=A0 @two is undocumented<br>
-<br>
-The section containing &quot;@two is undocumented&quot; changes from PLAIN =
-to<br>
-DETAILS.=C2=A0 Doc source:<br>
-<br>
-=C2=A0 =C2=A0 ##<br>
-=C2=A0 =C2=A0 # @Enum:<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # @one: The _one_ {and only}, description on the same line<br=
->
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Features:<br>
-=C2=A0 =C2=A0 # @enum-feat: Also _one_ {and only}<br>
-=C2=A0 =C2=A0 # @enum-member-feat: a member feature<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # @two is undocumented<br>
-=C2=A0 =C2=A0 ##<br>
-<br>
-It is at the end.=C2=A0 Good.<br>
-<br>
-&gt;=C2=A0 doc symbol=3DBase<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 body=3D<br>
-&gt; @@ -175,7 +175,7 @@ description starts on the same line<br>
-&gt;=C2=A0 a feature<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 feature=3Dcmd-feat2<br>
-&gt;=C2=A0 another feature<br>
-&gt; -=C2=A0 =C2=A0 section=3DPlain<br>
-&gt; +=C2=A0 =C2=A0 section=3DDetails<br>
-&gt;=C2=A0 .. note:: @arg3 is undocumented<br>
-<br>
-The section containing &quot;@arg3 is undocumented&quot; changes from PLAIN=
- to<br>
-DETAILS.=C2=A0 Doc source:<br>
-<br>
-Doc source:<br>
-<br>
-=C2=A0 =C2=A0 ##<br>
-=C2=A0 =C2=A0 # @cmd:<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # @arg1:<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0description starts on a new line,<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0indented<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # @arg2: description starts on the same line<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0remainder indented differently<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Returns: @Object<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Errors: some<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Features:<br>
-=C2=A0 =C2=A0 # @cmd-feat1: a feature<br>
-=C2=A0 =C2=A0 # @cmd-feat2: another feature<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # .. note:: @arg3 is undocumented<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # TODO: frobnicate<br>
-=C2=A0 =C2=A0 #<br>
-<br>
-It is *not* at the end.=C2=A0 Is the commit message inaccurate?<br></blockq=
-uote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Ah. I wasn&#=
-39;t considering TODO... Since it is a comment I mentally elided it.</div><=
-div dir=3D"auto"><br></div><div dir=3D"auto">What I mean to say is that Det=
-ails is (will be) essentially the last content section that is actually ren=
-dered.</div><div dir=3D"auto"><br></div><div dir=3D"auto">In the HTML, it w=
-ill always be last if present because both TODO and Since are actually enti=
-rely removed from the flow of the document.</div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">Though as we both point out, what i write is not techni=
-cally true here. (It can currently be an intermediate section AND Since is =
-not the only section that may follow it.)</div><div dir=3D"auto"><br></div>=
-<div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc s=
-olid;padding-left:1ex">
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 section=3DReturns<br>
-&gt;=C2=A0 @Object<br>
-&gt; @@ -183,7 +183,7 @@ another feature<br>
-&gt;=C2=A0 some<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 section=3DTodo<br>
-&gt;=C2=A0 frobnicate<br>
-&gt; -=C2=A0 =C2=A0 section=3DPlain<br>
-&gt; +=C2=A0 =C2=A0 section=3DDetails<br>
-&gt;=C2=A0 .. admonition:: Notes<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0- Lorem ipsum dolor sit amet<br>
-=C2=A0 =C2=A0 - Ut enim ad minim veniam<br>
-<br>
-=C2=A0 =C2=A0 [some section body text elided for brevity...]<br>
-<br>
-=C2=A0 =C2=A0Note::<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0Ceci n&#39;est pas une note<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0section=3DSince<br>
-=C2=A0 =C2=A02.10<br>
-<br>
-The section starting with the adminition and ending after &quot;Ceci n&#39;=
-est<br>
-pas une note&quot; changes from PLAIN to DETAILS.=C2=A0 Doc source continue=
-d:<br>
-<br>
-=C2=A0 =C2=A0 # .. admonition:: Notes<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 #=C2=A0 - Lorem ipsum dolor sit amet<br>
-=C2=A0 =C2=A0 #=C2=A0 - Ut enim ad minim veniam<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 [same text elided...]<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Note::<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0Ceci n&#39;est pas une note<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Since: 2.10<br>
-=C2=A0 =C2=A0 ##<br>
-<br>
-It is second-to-last, and the last section is SINCE.=C2=A0 Good.<br>
-<br>
-&gt; @@ -216,7 +216,7 @@ If you&#39;re bored enough to read this, go see a =
-video of boxed cats<br>
-&gt;=C2=A0 a feature<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 featurec=3Dmd-feat2<br>
-&gt;=C2=A0 another feature<br>
-&gt; -=C2=A0 =C2=A0 section=3DPlain<br>
-&gt; +=C2=A0 =C2=A0 section=3DDetails<br>
-&gt;=C2=A0 .. qmp-example::<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0-&gt; &quot;this example&quot;<br>
-<br>
-This one is also at the end.=C2=A0 Good.<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000005be495064d77e934--
-
+Serapheim
 
