@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B219108B8F3
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 10:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9B0108B8F1
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 10:58:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3XSw-0003f8-K0; Fri, 20 Mar 2026 06:52:30 -0400
+	id 1w3XY7-0004aw-7w; Fri, 20 Mar 2026 06:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3XSv-0003eX-7m
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 06:52:29 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1w3XY1-0004al-Ta
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 06:57:47 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3XSt-000809-HG
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 06:52:28 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64ad9fabd08so1637116d50.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 03:52:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774003946; cv=none;
+ id 1w3XXz-0000ZM-6t
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 06:57:44 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-64ae222d978so2113778d50.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 03:57:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774004262; cv=none;
  d=google.com; s=arc-20240605;
- b=HoA8ym34254IG2crVDEwm7zJPF0dhOfGZLjTO7IBZgJ+qvi0MR7iT92xpwOUsKJmj9
- QPoEani7Us8NPBK9e47iRjDF9MwmVFAsA3uOQkuuk2KN3mIL8lqh9SPo5w79Ok5qgpFm
- bXxGfT5LL7zaIswuUofs8irTkMazeNoraPzGPsh1zJ6Bz7xJ0ZlYRjde8Kk/NRriVSSf
- GAvFKCiVK75a+fU1lq3yRxVb48wvR7PoMTcdA4FmuSOv9kdnOgbI5C/8tCdzG+voNNOC
- HSzVXXq8XwgTktDWdYFTma+TFztCWYzy10D0VFO7nPuJxJ+34ecBV0IEqQL4RbLUrruT
- QIAg==
+ b=Nl2rCfZV3kLp25TGX12+k0iH+O0RJ6dPlSNvEO65rji2+H/gunTZlvffeg+0Rmg9F5
+ 2Ghg7O9LfSFbS/NxjfmvP33nE+1ie+ag2vaZD6Corakg3qkvbkXlikmgb32iAel9lYVG
+ twKn6BQznCMpkTCaXkDmU1QDHZlSGrq1sZ0uo6oEPNfoFV+GfmLQ6h4Z63QWmatbCBmj
+ 2+LS6+Bhq0kBUn6sQybSey1IcFOOZBREu2zvSRXK2m/Jk37+ma2Rf6y1dHUWHxkS/5Cz
+ tsuv69xKALveXUAp5u+00aIMM3VUTRN6ZdYC7ZGRvoq/SIHk5jIm29ZR6XW/lJLDd+xx
+ gGQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Z6PPnfzUTwjFX86DMtMJF/Tfkc2SPydseYXWWsYUlYg=;
- fh=zbUbpmO+35q7VsRM0pjPu5Ad4H0GBrlRuK06zpy0PiI=;
- b=d76VVfNWYYfI9twxLUbRrDY0XCqWbb1g182LGuJ2RooFvQ/DRORVcu3na/ytCSgslL
- Uvv1c0SVR4JDLibXVNmSW4kvudVmCD5U6hbggNszpcro6G1wXcdaJ/IR5nOUeZxL+eSA
- 61RfDOAXMD1iKMWgmgeFI4/VGEWIqH0y/R63lCdOPV3T0giZSXU25OepFWJRn89keIQB
- Yxe7u9K3xgSm4Cyb7Z8ZgjEVLRBKlngdxOCtZvoKiVteggicnZstRfqqArN1KS7SK+Ta
- KzB1K1LUtloaKgGW6ZhlrQYubDmydO0qTWxya22TT8k5J+EPf5rO9PpYzwQ3fTb3Je1q
- YWfw==; darn=nongnu.org
+ bh=5NAeb+r0K9g62kSlsVSXkfafDvekb8iDMpL3/jTEgwg=;
+ fh=wSwtMC/fXdDmr5GTT/JTfnBwPCKr9UxCbllAKlLTOsw=;
+ b=TXHrDkL8qjvkmydmsHxIE/ROvUr7+xnmqqyMSqnl8rtxetTEoOYnxfD1WyM2VTHgyo
+ ivUi5s53R5cXWWTbcRMDUe0C9/h9afuzl523huQJBuRcAduackpEyPE6tUPkkSK0uaE2
+ VLnph6RhDePlEstqPGIapI1YouucwQnCz1hHFwkb7HTVsCYuaxaV02KZDozA4ZNoJUnT
+ 8Og/KQrJbVq0DJfApdkEEttOlPzbmglM+P5nh2Q1BlrDjF4rwibLRBH0l6qGKXY3gexe
+ vnJDL83IX2NIrAXjHly/P8F0ifVr61K5B/e7i6ak+364kMLPSpr0LzJKigBkC46g6pl7
+ d0bg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774003946; x=1774608746; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774004262; x=1774609062; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Z6PPnfzUTwjFX86DMtMJF/Tfkc2SPydseYXWWsYUlYg=;
- b=mVhT0zI3GUmZ6Hg+m+j2Uz/4ZMrBLIq6DL6hB0Tkg5ZeEBaYaMJkVqaJZsuplyXMEk
- 08tg+b/0qHdnD/wWjr/qjAoOGKKjWtG8ylsvy+J00feoWbinmGAb5bGgLEPHYYEd9Iuj
- q4i6zYqcgP5WGbMbi/42sUrF9x1kCOYCjoh+DMp2n/5CAyPOsWm70GKxBxOYStQFa8hI
- usXQyRnZ+UyyCNK05mXBUOyuu37B0DfmROY3CPnACBaJYo1GJrd82ZhaCnKOih+uCLXt
- X8zW+EgRlVUrG9vHcrNKrv7BV5gXLsQbUjC0ij8fOOrjK8wmE7m9+mcJh+9za0LOO1nj
- Rfxw==
+ bh=5NAeb+r0K9g62kSlsVSXkfafDvekb8iDMpL3/jTEgwg=;
+ b=Qk/BELUQlVpIhcS2PU1Bj+L6UoRn+rz6+KquScA57B+vvtr9GazBwY/ZWDDu2tcioW
+ RtAkNhnqMfVQrlUnenl1MRlCwqTQF8uWE+Ni8ZZ3rT5Bv5eAXijYgBm+uW564wpFc3+D
+ Anc8Ka3AZlKaMmJtefZF/3Zp2pZUf4u8R+QmsnQU9Qw/KG5k6HvecpJ2HCbISxsgEOfS
+ yDN4CZEq1wFskfJua2FeDj+TxybyZb1Sf50sVv/KGyrQWmgmRzTqhdaG65IOE0CanpnZ
+ C8ag4+Gbcrzkh/Nf3+CO4ZavMAkof8jsVakO5GyO6NPs2P8ZbJebHT2rMmC5FmG8NXsP
+ QxKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774003946; x=1774608746;
+ d=1e100.net; s=20251104; t=1774004262; x=1774609062;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z6PPnfzUTwjFX86DMtMJF/Tfkc2SPydseYXWWsYUlYg=;
- b=qxYQJ00d42nLVKxj0ZeRsHGFH+q982vjT7WOdtpdzF3LNGQi18MbVjgVOAMIPw51FV
- ObSwmu9SfEDvD6qbC/CegazOpzPJ8bjIFJKPPC8Ojmv37fm4gHXOKwssHrlL3OAYYRSS
- Ul0UGzQUwbmxS15mkAxhvbDChWS8neCM6LohrWsbEr7w+iIU0IxB3qyuJjuROpv/nZFr
- 93DNxKIWIcj31PAwzPGwpxHAfBzFEN5OZ+t+IINkcE2Nnoiuuce1NsDdQ4feyon+PgHk
- 8NDqBd+hwe6LMgK6UFYsa+q8965AfM4eZma0IQYhxYYbYJ2/ihl1aBgEo61w1JFayQMz
- ZqLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUbkWDEV23fXsW59vaF9XMOfXrGEp0DkH37ysZmPinZLKAtRT5TizwM/IN4VIhO3vdecesjIEALTr9y@nongnu.org
-X-Gm-Message-State: AOJu0YzHvnOhxHELX2+oxucjRrbV1cCWJIXscVEc3mpsp4zZz4jQD7vq
- /BGVfNn68Zb+d6+/odYavqJHAEw9amKI79EDYZr4MF+PgE8aiIyQrEyRcS+/gQMf4V66hNg8qFc
- 5Hm4uFRNhM9atf+M4yppqlziPwUoiPsc7Ki9P4iKW2Q==
-X-Gm-Gg: ATEYQzyHnfI8sdq8ttC+Iu3HVfeIXkoUc5kvvW7J6YYtgUbZ7WA17PGvbInLzWBCf1k
- icAaRiaZBfQ4pI3D+9pW09j2U0TF4HJXfnj2WD4qN4FyVto0x5plV4lVB/oDi15FaYDg9awAiLD
- YvUNqj0KWX36XBQbtkVppnJJZASiFUMrGp5/G/wlwnlTZJOPVvTUaqynWhsiikNdb6V38LFJn+2
- EOMDD7FrLCBXezJb/WARXqi3IAul10oVWOo9hEuaC6Olmd3PDmHXe+GK2a/4NT82Lr3mlg6j9sW
- REe2PkLQkQC2cI3VW5MTXqLfUUr1Eap3kkm5QflJLaiDaQWsdGO99wi6QrXlVs3iS8U61QqgNzE
- 7yw==
-X-Received: by 2002:a53:d7c8:0:b0:64c:f90c:743b with SMTP id
- 956f58d0204a3-64eaa764fe2mr1951252d50.41.1774003946077; Fri, 20 Mar 2026
- 03:52:26 -0700 (PDT)
+ bh=5NAeb+r0K9g62kSlsVSXkfafDvekb8iDMpL3/jTEgwg=;
+ b=PnE2CNdC14iFtt9CO8ZrmopOQasfKK5AdbsZMy9AyuQzNLQmEtH9dY8S/4X4JRG4QC
+ Cd/Udfa5eEN0NXNx/kHNAEKKx+4AbYVbJ06MXOtwZjG43C8EkxDcnaZ0tdGqOKxtq5DF
+ UcebPtjhxhXssylLVNBn6i38jE4EdrouEYY/gxHR+NLf9RD8Wzj6Et0CzStnvtquoxpT
+ NwsJBRS2y46lZQb9cz2CCDab2iaTbXZmNkqNNuepE/Hbk5ZwtUGzfFrMbja+L25NwChs
+ iSrsMtWIaqJ38lq0vb/v86FV6nKNgxdTAiizDbMFQoJoa6vDboG0Sz4LxyCODRjVx/Lz
+ 3SDA==
+X-Gm-Message-State: AOJu0Yz3E9S5zQi0EKJbLQVajtvnnJ1ErqOFfS7Qy/d2B+qxCLgaepL5
+ bDSIOvMR5fOqc4lWLF3gwfvAqJet5yxEe9ApFKHLiDe2xES+1GO5ePTn5/q9S4KwkDHeikQ9oze
+ mRCqvQmqTh+KVy3Kblcbh8gN6tK1aWWtIhbgvDhKUZJDlQzjb329o
+X-Gm-Gg: ATEYQzyKUW9rM+zLt1VEg3f2eQU9XPrx7ZGpoj+FLo02ThKJAucf/H2SHHjM1LhVh8s
+ F8Iz5Rtc2Bez3TlBM1V3s4K2rjMDkMSuu7V8V94DFF1M2KosY6Ql3uDHFz4JEyAxGkOX/yXn+XD
+ W1Ho8xJ9hz1axTqXw7zJNydBm/xXR1fpAC5Tz5dIpFAWutoiPO+pUjhi+wtrqyPb7cybeZi//xY
+ tZxhX4ON8TBzLUYfcS729LsbJRZqKW/pbgV/iRBRamMxaVwB+FlbAJnrIPJ2lgkry+sOvSYO4Br
+ vgxONFEwekoyqCkcVA38KdJ4SdHxY52zm1343xCD/pUX52QFh7N9RaQJi2RMpSbzgXg=
+X-Received: by 2002:a05:690e:688:b0:64e:adba:f419 with SMTP id
+ 956f58d0204a3-64eadbb0af1mr812314d50.72.1774004261735; Fri, 20 Mar 2026
+ 03:57:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260315163840.30741-1-zenghui.yu@linux.dev>
-In-Reply-To: <20260315163840.30741-1-zenghui.yu@linux.dev>
+References: <20260309171258.1905205-1-peter.maydell@linaro.org>
+In-Reply-To: <20260309171258.1905205-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 20 Mar 2026 10:52:14 +0000
-X-Gm-Features: AaiRm53-BBalFXXadzniPrFk6Ut4vlJ4b4rvFsowSFtqiBYHwbN73pNDXqqWoVw
-Message-ID: <CAFEAcA_kj1eRpjMYDF4b6hD1_P0+PazzdHFfTJFj=Hn231DBGA@mail.gmail.com>
-Subject: Re: [PATCH rfc] hvf: arm: Inject SEA when executing insn in invalid
- memory range
-To: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, agraf@csgraf.de
+Date: Fri, 20 Mar 2026 10:57:29 +0000
+X-Gm-Features: AaiRm51nQm4T_iRcRVli7vpuisC9wMzBU6r9Nux3XptwzfnzuY1KIJQC-VRjYdg
+Message-ID: <CAFEAcA-nHH3CzHTkAaumtSwXmkohSxJ3G6gVC5HJpckMDzeGdw@mail.gmail.com>
+Subject: Re: [PATCH] hw/isa/piix: Embed i8259 irq in device state instead of
+ allocating
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,108 +115,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 15 Mar 2026 at 16:39, Zenghui Yu <zenghui.yu@linux.dev> wrote:
+On Mon, 9 Mar 2026 at 17:12, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> It seems that hvf doesn't deal with the abort generated when guest tries to
-> execute instructions outside of the valid physical memory range, for
-> unknown reason. The abort is forwarded to userspace and QEMU doesn't handle
-> it either, which ends up with faulting on the same instruction infinitely.
+> The pci_piix_realize() function's use of qemu_allocate_irqs()
+> results in a memory leak:
 >
-> This was noticed by the kvm-unit-tests/selftest-vectors-kernel failure:
+> Direct leak of 8 byte(s) in 1 object(s) allocated from:
+>     #0 0x61045c7a1a43 in malloc (/home/pm215/qemu/build/san/qemu-system-mips+0x16f8a43) (BuildId: aa43d3865e0f1991b1fc04422b5570fe522b6fa7)
+>     #1 0x724cc3095ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>     #2 0x61045db72134 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
+>     #3 0x61045cd7bf49 in pci_piix_realize /home/pm215/qemu/build/san/../../hw/isa/piix.c:318:35
+>     #4 0x61045cf4533e in pci_qdev_realize /home/pm215/qemu/build/san/../../hw/pci/pci.c:2308:9
+>     #5 0x61045db6cbca in device_set_realized /home/pm215/qemu/build/san/../../hw/core/qdev.c:523:13
+>     #6 0x61045db86bd9 in property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:2376:5
+>     #7 0x61045db81c5e in object_property_set /home/pm215/qemu/build/san/../../qom/object.c:1450:5
+>     #8 0x61045db8e2fc in object_property_set_qobject /home/pm215/qemu/build/san/../../qom/qom-qobject.c:28:10
+>     #9 0x61045db8258f in object_property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:1520:15
+>     #10 0x61045db687aa in qdev_realize_and_unref /home/pm215/qemu/build/san/../../hw/core/qdev.c:283:11
+>     #11 0x61045d892e21 in mips_malta_init /home/pm215/qemu/build/san/../../hw/mips/malta.c:1239:5
 >
->   timeout -k 1s --foreground 90s /opt/homebrew/bin/qemu-system-aarch64 \
->     -nodefaults -machine virt -accel hvf -cpu host \
->     -device virtio-serial-device -device virtconsole,chardev=ctd \
->     -chardev testdev,id=ctd -device pci-testdev -display none \
->     -serial stdio -kernel arm/selftest.flat -smp 1 -append vectors-kernel
+> (The i386 PC sets the has-pic property to 'false', so this only
+> affects the MIPS Malta board.)
 >
->   PASS: selftest: vectors-kernel: und
->   PASS: selftest: vectors-kernel: svc
->   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
->   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
->   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
->   [...]
+> Fix this by embedding the i8259 irq in the device state instead of
+> allocating it.  This is a similar fix to the one we used for vt82c686
+> in commit 2225dc562a93dc, except that we use qemu_init_irq_child()
+> instead of qemu_init_irq().  The behaviour is identical except that
+> the _child() version avoids what would be a leak if we ever
+> unrealized the device.
 >
-> It's apparent that the guest is braindead and it's unsure what prevents hvf
-> from injecting an abort directly in that case. Try to deal with the insane
-> guest in QEMU by injecting an SEA back into it in the EC_INSNABORT
-> emulation path.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Shouldn't that be an AddressSize fault, not an external abort?
+I'll take this via target-arm.next; thanks for the reviews.
 
-My guess would be that hvf is handing us the EC_INSNABORT
-cases for the same reason it hands us EC_DATABORT cases --
-we might have some ability to emulate the access. We probably
-also get this for cases like "guest tries to execute out of
-an MMIO device".
-
-What happens for a data access to this kind of
-out-of-the-physical-memory-range address? Does hvf
-pass it back to us, or handle it internally?
-
-Is the problem here a bogus virtual address from the guest's
-point of view, or a valid virtual address that the guest's
-page tables have translated to an invalid (intermediate)
-physical address ?
-
-> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-> ---
->  target/arm/hvf/hvf.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
->
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index aabc7d32c1..54d6ea469c 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -2332,9 +2332,32 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
->          bool ea = (syndrome >> 9) & 1;
->          bool s1ptw = (syndrome >> 7) & 1;
->          uint32_t ifsc = (syndrome >> 0) & 0x3f;
-> +        uint64_t ipa = excp->physical_address;
-> +        AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
-> +        hwaddr xlat;
-> +        MemoryRegion *mr;
-> +
-> +        cpu_synchronize_state(cpu);
->
->          trace_hvf_insn_abort(env->pc, set, fnv, ea, s1ptw, ifsc);
->
-> +        /*
-> +         * TODO: If s1ptw, this is an error in the guest os page tables.
-> +         * Inject the exception into the guest.
-> +         */
-> +        assert(!s1ptw);
-> +
-> +        mr = address_space_translate(as, ipa, &xlat, NULL, false,
-> +                                     MEMTXATTRS_UNSPECIFIED);
-> +        if (unlikely(!memory_region_is_ram(mr))) {
-
-This doesn't look like the right kind of check, given the
-stated problem. Addresses can be in range but not have RAM.
-
-> +            uint32_t syn;
-> +
-> +            /* inject an SEA back into the guest */
-> +            syn = syn_insn_abort(arm_current_el(env) == 1, ea, false, 0x10);
-> +            hvf_raise_exception(cpu, EXCP_PREFETCH_ABORT, syn, 1);
-> +            break;
-> +        }
-> +
->          /* fall through */
-
-This "fall through" remains not correct, I think, and it's kind
-of a big part of the problem here -- if we get an EC_INSNABORT
-handed to us by hvf, then we could:
- * stop execution, exiting QEMU (as a "situation we can't
-   handle and don't know what to do with")
- * advance the PC over the insn (questionable...)
- * feed some kind of exception into the guest
-
-but "continue execution of the guest without changing PC at all"
-is definitely wrong. A fix for this problem ought to involve
-changing the EC_INSNABORT case so that it no lenger does that
-"fall through to default" at all.
-
-thanks
 -- PMM
 
