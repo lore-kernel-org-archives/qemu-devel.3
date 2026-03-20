@@ -4,92 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83327109879E
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C229C109879F
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3c0L-0005jo-2R; Fri, 20 Mar 2026 11:43:17 -0400
+	id 1w3c5X-0006rV-49; Fri, 20 Mar 2026 11:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c0J-0005ja-Gr
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:43:15 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c0G-00047A-MT
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:43:15 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-6689033d0c3so1150183a12.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:43:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1w3c5P-0006r8-Il
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:48:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1w3c5L-0004xb-ET
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:48:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774021705;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=DKuhkeFeXS7Jd0XeIWPiXn4LbHD4gy847cS4YxDczJU=;
+ b=f6FrQNXEezRGVMgTNBmfy9jIuP71iJbsArMEzz99c36DIcUfM1anFiM780vaD5Y2c53rdM
+ szdt02Nash6kapybir2hFWVHim6Yt6x/rK7nZPA0fmSMEpLRbibQj/EVk1c5QWP5H6X+hl
+ vuNHqm4UcH7hPMN6o26aPon4bmpqvXk=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-247-5qnFCBn1MIioKvmjeWPZSw-1; Fri, 20 Mar 2026 11:48:24 -0400
+X-MC-Unique: 5qnFCBn1MIioKvmjeWPZSw-1
+X-Mimecast-MFC-AGG-ID: 5qnFCBn1MIioKvmjeWPZSw_1774021703
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-82a88a2704fso852961b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774021389; x=1774626189; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LdbbLe6KjSYVQ+g6hSpf4e+wwR6TK3+UfDAjOenvcjs=;
- b=AHsNw7C5zilnwIr51sxA2RVX4gt+GL/6l/AzMev9uidLiJHtxYSC7ciagoCpZlSOTk
- 4BCwmUO1OuBs/2yj8bQkdxkQwI7vAo/6cZcC21zQ4d2OxREM3RoOOcfAPE27/pkUk+hI
- lby0bd+GwS8wqcnRXTggdSvTHnLY+ki1WOZ3dyviXI6xsjaNjrtlcXAisiIvyt/03EkK
- J5xGP35Sd99wgDMZCOxRnoMRN2lle4lcwV7/i3wc6TPUF693+dhUr/WeQK/2kw1C8bhs
- Z3oE0sgVd1X/FxlRP6QrfQIXt9nqTLuFPu0a4Y8DGpcx3Oyk+flwtWeJnSa0eWNZqfay
- lH0g==
+ d=redhat.com; s=google; t=1774021703; x=1774626503; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DKuhkeFeXS7Jd0XeIWPiXn4LbHD4gy847cS4YxDczJU=;
+ b=XV0r/zIuyXQr8I5xfaORAmFYMRcO/lqdyPOrOnUwWgCKPZ0WNp8GIkmBjwuc9rMtYd
+ t/628XgjzDA1SCEaSwrHvoBzq2DlmSHBqQQDi/VQJY0uqrIsOs78LOl8H7bHNcgcBE3U
+ 6j2tezgumm7keyVHEoOTtIvUEKBSMSKrf4oIgbnv/7I9+4mb0iO30d6nSgEgCU/p0Hju
+ 3TEYdvvOGrmXfl11EH1Libo7HvdmaHXeh735lRt1aXwrMySUtallzF9q+ViHAB0M+1SU
+ jLRSZk+PabVfDZ7aq/+aFpumLjSZ556C+5OewR6w/8BKaAUMYILWZmG5kL1U8yGPnnDu
+ 0vHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774021389; x=1774626189;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LdbbLe6KjSYVQ+g6hSpf4e+wwR6TK3+UfDAjOenvcjs=;
- b=nuLHBA2CFC53jMrRVsKOyudlhMQyzLw6oGXNU3iALAa69fGi8Cb9Ok634fw902Rate
- xw0r0SgUqeGinPU495io7EXjBOSjnHrBmzD6p2/MhZXdVd00TwDhx4FCzltDX/Kp0f81
- jgiaKQW0pC11CKZZDEXQfvbaNsYZSRsvWRHqtUwijLBHRiSMSz5DDbK3wx2aivZQEZpd
- PAFG6XDQdBXtlV2lQju0qtRJkdIPHutddNqpjDTFXUJVmVPRc6hQGHARLaC06/zJdCgZ
- 6Bzb8oXzUpTu9kvMPLpP85LAhlUekLLpLTUz6qnyqdNabVg4mKzVOm2WmqoAjicxOO6i
- nQVQ==
-X-Gm-Message-State: AOJu0Yw5+8PKfl2Hr+G90G8CvapSj+33Yv/rNEBkhm9ZozclDEEpCN1u
- Vh9D/xTMDbQVhpRB+AWkpreZD4XlOQ1SnUvfm3+gYzpsuq/JWY2IPsBjbEV5KgHMXDA=
-X-Gm-Gg: ATEYQzyRiYH1m8fpSaUKZ9XVAtVPlMwJqOy++OJ6WEY/C55Z5S8G1woelgRTUaqzzjN
- OooWlC3E/reerKbOQe6rY0ChbexBLeBAkh/HCQ4+OKiks/vxNlOvGf1hLXCrLRmn4oggFY1vYRB
- HQj8M30FMVEf2DuQvAw3sxfobiB605eDxOx3DNavi/Xfgu62OXlvj6Ril4rKiunLcmkRHKYyKgK
- Ap2pwQE0KdJemreb18LyxDp71iXy6tFhX3cpINi5r9ato3TEjOCQfVCIjywDiLhVx8ZHFlJ+J4a
- f9TUX3xnEL5fIWl7gWPL/vpguJiO/yiJwL3/FI+VMS9/BlHL+IwELAAjtZ9J46ZRPK1Dm03/4Eo
- Uw4dEozGqKKuyfRyqbdECMJqg6RU5U6mMcRu7+08eDw5O91t58N7M1Y/3G8jX/sHeeE2zDHqym/
- DOeLa9l2e1d/FS8+ydm5i+XY8=
-X-Received: by 2002:a05:6402:4005:b0:663:71dc:127e with SMTP id
- 4fb4d7f45d1cf-668c9528336mr2517429a12.13.1774021389356; 
- Fri, 20 Mar 2026 08:43:09 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-669331c7450sm242435a12.6.2026.03.20.08.43.06
+ d=1e100.net; s=20251104; t=1774021703; x=1774626503;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DKuhkeFeXS7Jd0XeIWPiXn4LbHD4gy847cS4YxDczJU=;
+ b=abLFKmLIpLrvfAhDjq3ipR4sLx8bomaq4ngd6sd7OLmCf+GsKvhfeI9cHmRN8vCDLq
+ C1oSvRfoL1NjXXa1+H0zKYXdKG5/hBzu8bTs0plcES7XiS6CHBeq1AVkfavx33UrYl7Y
+ z4n0vmEdnQdqbTM9Sul7ATwkUxba+WwmC0e52dBw1zMcCT5Z/GrpOll+egOlzx5K2VFo
+ 7Ki0zbG6+zFBvBgcKBXH2pi2WPrVsjUYdZtuHwY+Q6a85iI1FQZYP9TcRpB5LDpL70NZ
+ +a9fA+EX95ZiiS1X6dyiPek50xQiku5LsjqDaMh9+VhAoi4+BNWXnGNvOfbAcdbGZvbD
+ o/XQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU9KvoUsyGwEG9q0fPVexC8YSmr1kIrFLEGSDNAUfAf8t0l1EWtr5DGLSLK8McD1AWjtdExMLIXnFF2@nongnu.org
+X-Gm-Message-State: AOJu0YyTwFQMfRNuMcP7DklW1yDsTPLuN7hanvN3CGidRIHzWJiO5K2N
+ gxgvTmrW+5LnG3lJJehQiClOskOQHyM7S8tQwwEzZdhXFIP2eifV81fOyCFpME0urteJtMzNtwT
+ ZwSs+t+rX1Lo+nLHGEIYG3WnhajExF1Acm8T9YIWGLAXZuLCQM+UoWJ6w
+X-Gm-Gg: ATEYQzzTTjyjT4UZTqvhYas5f6793NaJVuuqDvGRYXKFon1VmNO5nla6pfmd9Lzmoq5
+ JuL+VhFjdXBaMqSCdRhDlrAUHLemxXirVconM13X5jvtYLBop+wmPim3ojbO40P9XeYKgXdTvIT
+ r36K4dYyPQKuJckdL9XN4PZq0Gug78tUTFZB7xk4F2mxGNqkVGvAgUz39iJFnA4LYl7/gkvhLwN
+ PIPdHGUdHsF7OoV6JF2Twrae8YSal+3toAfNB+bjsfoM9XcTSgv4nHl7yWgpI8qv/xQXOh2cYdP
+ XPgcNZ3A95d0pg5F+HWmFZ5JQDUS0cCnAR14wM+j+d0ebai4A9LbO5l5sWuA4lHNCLpnE6UQnmc
+ UGUwzSUq66OWXmXJYJ0s7bXjbiwq6CtJ6M5NpM5OHk6jvcZCGSYKmEFrqgw==
+X-Received: by 2002:a05:6a00:3e12:b0:81f:ac1c:709e with SMTP id
+ d2e1a72fcca58-82a8c45c006mr2610777b3a.31.1774021702831; 
+ Fri, 20 Mar 2026 08:48:22 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3e12:b0:81f:ac1c:709e with SMTP id
+ d2e1a72fcca58-82a8c45c006mr2610756b3a.31.1774021702368; 
+ Fri, 20 Mar 2026 08:48:22 -0700 (PDT)
+Received: from ani-lenovo.lan ([122.163.114.34])
+ by smtp.googlemail.com with ESMTPSA id
+ d2e1a72fcca58-82b0409b448sm2267092b3a.39.2026.03.20.08.48.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 08:43:07 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D46475F82D;
- Fri, 20 Mar 2026 15:43:05 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 0/3] Update openSUSE to version 16 in our CI
-In-Reply-To: <20260316135407.209072-1-thuth@redhat.com> (Thomas Huth's message
- of "Mon, 16 Mar 2026 14:54:04 +0100")
-References: <20260316135407.209072-1-thuth@redhat.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Fri, 20 Mar 2026 15:43:05 +0000
-Message-ID: <87ms02v75i.fsf@draig.linaro.org>
+ Fri, 20 Mar 2026 08:48:22 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: Sourav Poddar <souravpoddar93042@gmail.com>,
+ Xudong Hao <xudong.hao@intel.com>, Ani Sinha <anisinha@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Subject: [PATCH for-11.0 v2] hw/hyperv: fix SynIC not initialized for CPUs
+ after the first
+Date: Fri, 20 Mar 2026 21:17:52 +0530
+Message-ID: <20260320154752.204725-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,30 +120,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+From: Sourav Poddar <souravpoddar93042@gmail.com>
 
-> Since openSUSE 16 is available since a while already, and openSUSE 15
-> is older than 5 years, it's time to update to the new major version now.
->
-> The first patch is required since we are going to remove the "python3-sql=
-ite3"
-> entry from our mappings.yml and lcitool complains about it otherwise.
->
-> Thomas Huth (3):
->   tests/lcitool: Remove python3-sqlite3 from the list of needed packages
->   tests/lcitool: Update openSUSE to version 16
->   tests/docker: Update the opensuse-leap container file to version 16
->
->  configure                                     |  1 -
->  tests/docker/dockerfiles/opensuse-leap.docker | 35 ++++++-----
->  tests/lcitool/mappings.yml                    | 58 -------------------
->  tests/lcitool/projects/qemu.yml               |  1 -
->  tests/lcitool/refresh                         |  2 +-
->  5 files changed, 18 insertions(+), 79 deletions(-)
+hyperv_is_synic_enabled() is a global flag that returns true after the
+first CPU initializes SynIC. With -smp N, all subsequent CPUs skip
+hyperv_x86_synic_add(), leaving them without a synic object. This causes
+get_synic() to return NULL, making hyperv_sint_route_new() fail and
+triggering an assertion crash in hyperv_testdev.
 
-Queued to testing/next, thanks.
+Fix by introducing hyperv_is_synic_present() which checks per-CPU
+whether a synic object is already attached instead of using the global
+flag.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Fixes: c4cf32fc63f1 ("kvm/hyperv: add synic feature to CPU only if its not enabled")
+Reported-by: Xudong Hao <xudong.hao@intel.com>
+Co-authored-by: Ani Sinha <anisinha@redhat.com>
+Signed-off-by: Sourav Poddar <souravpoddar93042@gmail.com>
+---
+ hw/hyperv/hyperv.c         | 5 +++++
+ include/hw/hyperv/hyperv.h | 1 +
+ target/i386/kvm/hyperv.c   | 2 +-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+index 27e323a819..3d6212613e 100644
+--- a/hw/hyperv/hyperv.c
++++ b/hw/hyperv/hyperv.c
+@@ -60,6 +60,11 @@ static SynICState *get_synic(CPUState *cs)
+     return SYNIC(object_resolve_path_component(OBJECT(cs), "synic"));
+ }
+ 
++bool hyperv_is_synic_present(CPUState *cs)
++{
++    return get_synic(cs);
++}
++
+ static void synic_update(SynICState *synic, bool sctl_enable,
+                          hwaddr msg_page_addr, hwaddr event_page_addr)
+ {
+diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
+index 63a8b65278..23091301d0 100644
+--- a/include/hw/hyperv/hyperv.h
++++ b/include/hw/hyperv/hyperv.h
+@@ -81,6 +81,7 @@ void hyperv_synic_reset(CPUState *cs);
+ void hyperv_synic_update(CPUState *cs, bool enable,
+                          hwaddr msg_page_addr, hwaddr event_page_addr);
+ bool hyperv_is_synic_enabled(void);
++bool hyperv_is_synic_present(CPUState *cs);
+ 
+ /*
+  * Process HVCALL_RESET_DEBUG_SESSION hypercall.
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index bd3c26d02b..420c76b5ff 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -27,7 +27,7 @@ int hyperv_x86_synic_add(X86CPU *cpu)
+ int hyperv_enable_synic(X86CPU *cpu)
+ {
+     int ret = 0;
+-    if (!hyperv_is_synic_enabled()) {
++    if (!hyperv_is_synic_present(CPU(cpu))) {
+         ret = hyperv_x86_synic_add(cpu);
+     }
+     return ret;
+-- 
+2.52.0
+
 
