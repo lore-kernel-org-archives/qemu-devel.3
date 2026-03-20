@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C7C1099B30
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568BF1099B40
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 21:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3hlv-0002V2-3J; Fri, 20 Mar 2026 17:52:47 -0400
+	id 1w3hlf-0002SD-KN; Fri, 20 Mar 2026 17:52:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hlt-0002Ug-Jq
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:52:45 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1w3hle-0002RK-AB
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:52:30 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hls-0001ag-6h
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:52:45 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c2af7d09533so1714729a12.1
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 14:52:43 -0700 (PDT)
+ id 1w3hlc-0001ZN-4A
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:52:30 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-35a09e0dd63so1293803a91.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 14:52:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774043563; x=1774648363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774043546; x=1774648346; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=g5PTryZjhpUvvyFkVWpM4L1FKGHNhUWmX1wXgnRF/jI=;
- b=e8fSFwS5dlf5a2AvDCc56mvLHuiu4Q+5cnj36gKBJqU/g059iXZcbkxKWIYgnVPgYH
- 3Xftz7CHmacWhxqED5lzeVE/ZhU9Qt4FbbIeuAxXAp0JzHE3vearWhjrj3Te1MZXSsdR
- FRXKDvzFEhgPf81KG6ZHr9LThgE+M87cKbCbpNoK1FWbB084kq+22HjKlPCzzMUa0pJD
- vOttghJyAU1NF0pgf3CdhFuzqPWfKUWCEr1s8MAPfL+uP9eKCkaYXkTpG+LPjIBzTT0E
- m8UQ0xRdAfGkoJhM6oUX18UFajLQMDO+lv9cidUWgWKP8/7TLSr0VchuIkhPshwUxoAH
- IdzQ==
+ bh=AbJPLOlgxB0/11AE3CtlvCBdGPlx6ENuIB66JCuPM4U=;
+ b=Tw9SVMDGnogq8bUfw6gn63ohCDv5tsaeDZXK/2BpmHTB1gjZES4cco72w9VDIPFFMZ
+ KQ37gOq4WDyX+92Q4NJQsja84io8i+VSsUJTjJWGiQbTi1uYf7jho//sIl72F9kTU4xc
+ z8k1PorZSz9Xb3Srg7H2COs/vvYCb7N3fTgst/p6H6clqv4qgm3HJJQ1bvOwRfQGXcel
+ 5HHRoFEau4l6e32ryzITuYTgDUVga4QMFJcjGLqJc68luH15iDbVA9insQUZlw7adgEe
+ +N5LHhSBAYCvWepej8aVtNWZcpyyvDXd5TmTuQj6zyyXiBEWdpwUIDCuUIVn5hQMZ3cE
+ BXMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774043563; x=1774648363;
+ d=1e100.net; s=20251104; t=1774043546; x=1774648346;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=g5PTryZjhpUvvyFkVWpM4L1FKGHNhUWmX1wXgnRF/jI=;
- b=V2Nujsmr3/1mX6GISvRqWYwBPYFwkOce6pYT7WOBf9Z0N1MGCtwhlDxlYhg7RnGhDm
- D09i0VyWys3c2qGHLtvzAGV9bjJk99nfJvwiLiU5ZuXTKx7nxDqz2gX82tYUe4PFg570
- HIuJna6hjeNYNfVcaV+qAQW7s0YzLydPPYXLTuoGaSYuuQmkPjC7gSEb5d0Rx+899JcC
- UUR8p1ifrAuf9QNTQ7CvG8didhLIPYCob5pza1I5J0u1+bZoCZ8UtkH0ET5E6ldGvBGP
- HjO0PP6ojsUOulH/FpYip1lB4SUx94hJ/3NsNqeqy7rW+xoXk/SBJB8x3VDH/KCuV6dP
- TcpQ==
+ bh=AbJPLOlgxB0/11AE3CtlvCBdGPlx6ENuIB66JCuPM4U=;
+ b=muTLy/aR8OCrtTeSOWbHXYyAUjr9bKKiWJi20T6HgySh36RrAhzCLdqWiGmKgyqHKl
+ jtS8Qgoc0j10/5V87zt2p9kqvU7trRY9E9lGYSspc1CNRGblRLElKgzXIt06Ikez+pLt
+ v+fIkMhfxLSO7bX7CBYPb3ZCtQrMezmyCpkmlO/IYwk0Rn6/Umy7TG/n73N45dJh0so7
+ OCumJe+EPVDLxefevznfK8q6jKGApynaGij81j9EC/Bmc/T1vvcSQwwV7LiTxSDA/ucg
+ xWR9ppRJ73x41eWz8QHdSbEa5kmVSB5qDQ4zE7nWYDTwOVgX+NWD9V8z8sM2Flqn3b23
+ aV1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwxdmMq2VBnCZTr8FPDts7j/msqdnPdQ5/shKIx4So2N1yAIYsW85ouPq6P3Di4G8nQltjHlD7AtGH@nongnu.org
-X-Gm-Message-State: AOJu0YzzeDOcwRaOaZVpiE+t18mOCLCuZPzmp0D66arnfA/iDDeG0039
- FfRpD7Sf3cdA4rWbONXYgLqg/T3JHkA2Mr4vmdzeFlrCPbeiU+Lcl9yZ0sddphmlPdW0QbME9e+
- GAH7cgBM=
-X-Gm-Gg: ATEYQzwTg+lwhDUSN7bBS5Z8BWnZeyK1oo1jt+VYTY0WxqFTPI1zqtThac63ph9dLc5
- MGoKr0tycdFuI/lvihqoDWYINk+CVnpHOu+Zwey25wGhHceq5LUA5Bm4GYysqBBSWvSfy0AoEuq
- cbOdlC6xlLsosuxigcyzdIvqx8Pz1s0ugSYBrFxnm7JEa9vGv/CAHICRTKanG1eDNk7oRnv7XAz
- sl32Gyfanx0rfSrmjR81NFLgxqj3HjuYQa+8rHoP2eY7aWPC8evOv+r2zDMmOSSMEktyfupcZrn
- 2RmLwjwURgAGj4Gz44id5KkChvvbaexCo4LCB+ZLy1Z1nsLYINJyfbGFH2wUWNFyFnvqxyRZfen
- osrf/h6buTNzRF/yxQ4iXdQiAb/7N/oO/q3DBBP/Fk0OfqeLzsLkAT9D33tKBBrMQI/KcRe9L/l
- Fn80Is3tYW04dz5vKWI0PVSpABtrpLCOMBmo7ZhsBt99uorXRywyV5yiZfMkYcqMjkv0pS
-X-Received: by 2002:a05:6a20:1586:b0:398:9466:2ee8 with SMTP id
- adf61e73a8af0-39bce97c801mr4132622637.7.1774043562744; 
- Fri, 20 Mar 2026 14:52:42 -0700 (PDT)
+ AJvYcCXIrgyd+InNPfTFa/9wEzgPn/+OdPVmrZAtDx9okKgCxvKsOQIikyTBj3APWOW86hFjzGUeTQ4QmJTI@nongnu.org
+X-Gm-Message-State: AOJu0YzoG42QkPyFpusLToDIMcJLfkS02bZJejHTgg9mquziVU3nTze9
+ RM2zFrzlG/lmQhN1Ubt1jbNY4M+AX7oNuP+8vmNT7JhuDjdjMSEFOdyOnAkScmxc5+I=
+X-Gm-Gg: ATEYQzwSqsWxETUZ6PxHTXcvTx2k/pv6cjbppnuImxxuqLDar3dIXj14sx7I4AycRbH
+ JB3mBDcOxuf6uISZs/Wvp90FWG7/oBhAivuNVDPT4DacW0OzIfT+hlsZP5iIO/Zt5fZjyWQcz1i
+ JahL8JYbQ+7e6WfbVF1EnZHWUHgJDE4fZHTwPIauoX6QGVr7w5T4PeBldmsdKHyc8X38VeWAMM6
+ Q5xX7uuWTUUNG63sNqm8GOaUXkLWpDOqQxCYaYWviZZFxqRQ70dd5TO3zGWKzQnlB/apLZAnIQq
+ hNoSEZIO4SimyY7uoYtNm+F7Cy5ZCasJDl8PXsczdL7ZPprfBbls4OFUCM+Xrg4RYGm+yBHh3lL
+ BGt4/RLNfM6J+knWdNp2CyPFUaYvue8jclNmYu0yuavnC9npROpV23lOSHbgyzm+FKDGWYsohsB
+ Wwdb51F8E1CV8/VdEjLMEMJnm3nbBbcd3mHhZ+0OMv+V2ZsT6J/6qUNxr3LIxsGUTt4hkd
+X-Received: by 2002:a05:6300:210b:b0:398:71c6:e8fd with SMTP id
+ adf61e73a8af0-39bcec38a75mr3936020637.59.1774043546196; 
+ Fri, 20 Mar 2026 14:52:26 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c743a814548sm2513811a12.9.2026.03.20.14.52.42
+ 41be03b00d2f7-c743a7ff47csm2486650a12.6.2026.03.20.14.52.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 14:52:42 -0700 (PDT)
-Message-ID: <edc820e5-dbf7-4a81-9304-35c2ba6e49d0@linaro.org>
-Date: Fri, 20 Mar 2026 14:52:41 -0700
+ Fri, 20 Mar 2026 14:52:25 -0700 (PDT)
+Message-ID: <419cc31f-3651-4c45-a8ca-942a0cdd5506@linaro.org>
+Date: Fri, 20 Mar 2026 14:52:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 01/10] monitor: Extract completion declarations
- to 'monitor/hmp-completion.h'
+Subject: Re: [PATCH-for-11.1 v6 6/6] monitor: Remove 'monitor/hmp-target.h'
+ header
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20260320160811.28611-1-philmd@linaro.org>
- <20260320160811.28611-2-philmd@linaro.org>
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Max Filippov
+ <jcmvbkbc@gmail.com>, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org
+References: <20260320091019.59902-1-philmd@linaro.org>
+ <20260320091019.59902-7-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -125,18 +130,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260320160811.28611-2-philmd@linaro.org>
+In-Reply-To: <20260320091019.59902-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,26 +157,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/20/26 9:08 AM, Philippe Mathieu-Daudé wrote:
-> Many files include "monitor/hmp.h", but few of them really need
-> the completion declarations: move them to a distinct header.
+On 3/20/26 2:10 AM, Philippe Mathieu-Daudé wrote:
+> The "monitor/hmp-target.h" header doesn't contain any
+> target-specific declarations anymore. Merge it with
+> "monitor/hmp.h", its target-agnostic counterpart.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   MAINTAINERS                      |  1 +
->   include/monitor/hmp-completion.h | 40 ++++++++++++++++++++++++++++++++
->   include/monitor/hmp.h            | 21 -----------------
->   chardev/char-hmp-cmds.c          |  1 +
->   migration/migration-hmp-cmds.c   |  1 +
->   monitor/hmp-target.c             |  1 +
->   net/net-hmp-cmds.c               |  1 +
->   qom/qom-hmp-cmds.c               |  1 +
->   system/qdev-monitor.c            |  1 +
->   system/runstate-hmp-cmds.c       |  1 +
->   trace/trace-hmp-cmds.c           |  1 +
->   ui/ui-hmp-cmds.c                 |  1 +
->   12 files changed, 50 insertions(+), 21 deletions(-)
->   create mode 100644 include/monitor/hmp-completion.h
+>   MAINTAINERS                   |  2 +-
+>   include/monitor/hmp-target.h  | 42 -----------------------------------
+>   include/monitor/hmp.h         | 12 ++++++++++
+>   hw/i386/sgx-stub.c            |  1 -
+>   hw/i386/sgx.c                 |  1 -
+>   monitor/hmp-cmds.c            |  1 -
+>   monitor/hmp-target.c          |  1 -
+>   monitor/hmp.c                 |  1 -
+>   stubs/target-monitor-defs.c   |  2 +-
+>   target/i386/cpu-apic.c        |  1 -
+>   target/i386/monitor.c         |  1 -
+>   target/i386/sev-system-stub.c |  1 -
+>   target/i386/sev.c             |  1 -
+>   target/m68k/monitor.c         |  1 -
+>   target/ppc/monitor.c          |  2 --
+>   target/riscv/monitor.c        |  1 -
+>   target/sh4/monitor.c          |  1 -
+>   target/sparc/monitor.c        |  1 -
+>   target/xtensa/monitor.c       |  1 -
+>   19 files changed, 14 insertions(+), 60 deletions(-)
+>   delete mode 100644 include/monitor/hmp-target.h
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
