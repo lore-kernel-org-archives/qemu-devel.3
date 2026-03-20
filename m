@@ -4,99 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0961093178
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 05:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9941B1093179
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 05:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3SI5-00040j-EG; Fri, 20 Mar 2026 01:20:57 -0400
+	id 1w3SrF-0000GG-OL; Fri, 20 Mar 2026 01:57:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w3SI3-00040V-DL
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 01:20:55 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ (Exim 4.90_1) (envelope-from <shyliuli@aosc.io>) id 1w3SrE-0000Fu-EH
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 01:57:16 -0400
+Received: from relay3.mymailcheap.com ([217.182.119.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w3SHy-0004Bp-8f
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 01:20:55 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (Exim 4.90_1) (envelope-from <shyliuli@aosc.io>) id 1w3SrC-0007UY-Gw
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 01:57:16 -0400
+Received: from nf1.mymailcheap.com (nf1.mymailcheap.com [51.75.14.91])
+ by relay3.mymailcheap.com (Postfix) with ESMTPS id 152433EC16;
+ Fri, 20 Mar 2026 05:57:11 +0000 (UTC)
+Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
+ by nf1.mymailcheap.com (Postfix) with ESMTPSA id CE138400D5;
+ Fri, 20 Mar 2026 05:57:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
+ t=1773986230; bh=8eN7yNUG5kqkKBltS86n2uvYxdqFwVQ25wpBZnY3VFs=;
+ h=From:To:Cc:Subject:Date:From;
+ b=JYROJUhg63ZBN9Wc8yb756DnMpMvgdm4rtgmxwGOYbL3yA+E8kz5cbGNqfD1F5Wmc
+ tIE7x+20HIw5gQMGsWfajNi63I4wWfnBrcjTi66sghJIvq4kT0BVMyz6N8A4FoaG/y
+ DuitnJMvoMd5gAWvzRp2zw1tIE4Sq869S7gM/Aoc=
+Received: from ArchLinux-desktop (unknown [113.200.174.83])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 5BE9F4302D
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 05:20:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1773984048;
- bh=T6k7Cnsd8o/sj4KshkFvuXnRK5cWQmEcGYyW/ffpYBA=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=gdPAIBi24SSeRVzG4nPAKVso2UmFFCyYHI0olgQh2d/kVSMapma/RV+dzu2RFlY52
- uWuRnz36DlxyxLLAzyuazzsSriWZrQH7dyAsKdk6Vejis1kHJxHHTY9s53CPn+vVAL
- nKvDCASEAbr+2sJcyLLIzjTR0wu0jlJdEUbdTo2zTpmPV1xNDOEkDrA9EXVAFwTqgs
- tx87Dm4WI3A3efJqTRfTCtk7/CO6g35g/Z4ZvJVHrWKnlHH9zi66k24d13SopCCVqZ
- BsJQaLfU8LkqwiEAMbdYZL9tIBIPT3NHHlJ+8h1cnRKPTZ3YZ/fo1F1csaIefp8x9I
- nDuZjuohpknGQ==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 3B7EC7F0BC
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 05:20:48 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Mar 2026 05:12:17 -0000
-From: Ubuntu SRU Bot <2126951@bugs.launchpad.net>
+ by mail20.mymailcheap.com (Postfix) with ESMTPSA id 0EB0941347;
+ Fri, 20 Mar 2026 05:57:04 +0000 (UTC)
 To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Fix Committed; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium; assignee=None; 
-X-Launchpad-Bug-Tags: sts verification-needed verification-needed-jammy
- verification-needed-noble verification-needed-questing
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: athos hectorcao mjt+launchpad-tls tjaalton
- ubuntu-sru-bot whershberger
-X-Launchpad-Bug-Reporter: Wesley Hershberger (whershberger)
-X-Launchpad-Bug-Modifier: Ubuntu SRU Bot (ubuntu-sru-bot)
-References: <175977079933.1446079.11908449148472830395.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <20260320051217.9B83EFC02A@ubuntu-archive-toolbox.internal>
-Subject: [Bug 2126951] Autopkgtest regression report
- (qemu/1:6.2+dfsg-2ubuntu6.29)
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="30ebb7e51b1d452d1afd137b32cca7f23d23d307";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: afbab82070ad06eb5630c4907ba9f08c5ffff6bd
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Cc: laurent@vivier.eu, pierrick.bouvier@linaro.org, peter.maydell@linaro.org,
+ Sun Haoyu <shyliuli@aosc.io>
+Subject: [PATCH v2] linux-user: update select timeout writeback
+Date: Fri, 20 Mar 2026 13:57:00 +0800
+Message-ID: <20260320055700.44715-1-shyliuli@aosc.io>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: nf1.mymailcheap.com
+X-Rspamd-Queue-Id: CE138400D5
+X-Spamd-Result: default: False [1.20 / 10.00]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.10)[aosc.io:s=default];
+ R_SPF_ALLOW(-0.10)[+mx]; MIME_GOOD(-0.10)[text/plain];
+ LOCAL_OUTBOUND(0.00)[]; RCVD_COUNT_ONE(0.00)[1];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ DMARC_POLICY_ALLOW(0.00)[aosc.io,quarantine];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[aosc.io:+]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_TLS_ALL(0.00)[]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=217.182.119.157; envelope-from=shyliuli@aosc.io;
+ helo=relay3.mymailcheap.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -105,331 +81,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2126951 <2126951@bugs.launchpad.net>
+Reply-to:  Sun Haoyu <shyliuli@aosc.io>
+From:  Sun Haoyu via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All autopkgtests for the newly accepted qemu (1:6.2+dfsg-2ubuntu6.29) for j=
-ammy have finished running.
-The following regressions have been reported in tests triggered by the pack=
-age:
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3343
 
-livecd-rootfs/2.765.55 (amd64, ppc64el)
-nova/unknown (ppc64el)
-systemd/249.11-0ubuntu3.17 (armhf)
-systemd/unknown (ppc64el)
+The Linux kernel writes back the remaining timeout for select-family
+syscalls in poll_select_finish(). If that writeback fails, it keeps
+the original return value.
 
+However, QEMU only writes back the timeout on success. If the writeback
+fails, QEMU returns -TARGET_EFAULT. This can lose the remaining
+timeout and change the return value.
 
-Please visit the excuses page listed below and investigate the failures, pr=
-oceeding afterwards as per the StableReleaseUpdates policy regarding autopk=
-gtest regressions [1].
+Update do_select(), do_pselect6(), and do_ppoll() to always write back
+the timeout to match the Linux kernel's behavior. If the timeout
+writeback fails, keep the original return value.
 
-https://people.canonical.com/~ubuntu-archive/proposed-
-migration/jammy/update_excuses.html#qemu
+Tested with the issue reproducer.
 
-[1] https://wiki.ubuntu.com/StableReleaseUpdates#Autopkgtest_Regressions
+Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
+---
+Changes since v1:
+- write back the timeout in all cases
+- handle do_select() too
+- keep the original return value if timeout writeback fails
 
-Thank you!
+ linux-user/syscall.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2126951
-
-Title:
-  `block-stream` segfault with concurrent `query-named-block-nodes`
-
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Committed
-Status in qemu source package in Jammy:
-  Fix Committed
-Status in qemu source package in Noble:
-  Fix Committed
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Fix Committed
-Status in qemu source package in Resolute:
-  Fix Committed
-
-Bug description:
-  [ Impact ]
-
-  When running `block-stream` and `query-named-block-nodes`
-  concurrently, a null-pointer dereference causes QEMU to segfault.
-
-  The original reporter of this issue experienced the bug while
-  performing concurrent libvirt `virDomainBlockPull` calls on the same
-  VM/different disks. The race condition occurs at the end of the
-  `block-stream` QMP; libvirt's handler for a completed `block-stream`
-  (`qemuBlockJobProcessEventCompletedPull` [1]) calls `query-named-
-  block-nodes` (see "libvirt trace" below for a full trace).
-
-  This occurs in every version of QEMU shipped with Ubuntu, 22.04 thru
-  25.10.
-
-  [1] qemuBlockJobProcessEventCompletedPull
-
-  [ Test Plan ]
-
-  ```
-  sudo apt install libvirt-daemon-system virtinst
-  ```
-
-  In `query-named-block-nodes.sh`:
-  ```sh
-  #!/bin/bash
-
-  while true; do
-  =C2=A0=C2=A0=C2=A0=C2=A0virsh qemu-monitor-command "$1" query-named-block=
--nodes > /dev/null
-  done
-  ```
-
-  In `blockrebase-crash.sh`:
-  ```sh
-  #!/bin/bash
-
-  set -ex
-
-  domain=3D"$1"
-
-  if [ -z "${domain}" ]; then
-  =C2=A0=C2=A0=C2=A0=C2=A0echo "Missing domain name"
-  =C2=A0=C2=A0=C2=A0=C2=A0exit 1
-  fi
-
-  ./query-named-block-nodes.sh "${domain}" &
-  query_pid=3D$!
-
-  while [ -n "$(virsh list --uuid)" ]; do
-  =C2=A0=C2=A0=C2=A0=C2=A0snap=3D"snap0-$(uuidgen)"
-
-  =C2=A0=C2=A0=C2=A0=C2=A0virsh snapshot-create-as "${domain}" \
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0--name "${snap}" \
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0--disk-only file=3D \
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0--diskspec vda,snapshot=
-=3Dno \
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0--diskspec "vdb,stype=3Df=
-ile,file=3D/var/lib/libvirt/images/n0-blk0_${snap}.qcow2" \
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0--atomic \
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0--no-metadata
-
-  =C2=A0=C2=A0=C2=A0=C2=A0virsh blockpull "${domain}" vdb
-
-  =C2=A0=C2=A0=C2=A0=C2=A0while bjr=3D$(virsh blockjob "$domain" vdb); do
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if [[ "$bjr" =3D=3D *"No =
-current block job for"* ]] ; then
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0b=
-reak;
-  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0fi;
-  =C2=A0=C2=A0=C2=A0=C2=A0done;
-  done
-
-  kill "${query_pid}"
-  ```
-
-  `provision.sh` (`Ctrl + ]` after boot):
-  ```sh
-  #!/bin/bash
-
-  set -ex
-
-  wget https://cloud-images.ubuntu.com/daily/server/noble/current/noble-
-  server-cloudimg-amd64.img
-
-  sudo cp noble-server-cloudimg-amd64.img /var/lib/libvirt/images/n0-root.q=
-cow2
-  sudo qemu-img create -f qcow2 /var/lib/libvirt/images/n0-blk0.qcow2 10G
-
-  touch network-config
-  touch meta-data
-  touch user-data
-
-  virt-install \
-  =C2=A0=C2=A0-n n0 \
-  =C2=A0=C2=A0--description "Test noble minimal" \
-  =C2=A0=C2=A0--os-variant=3Dubuntu24.04 \
-  =C2=A0=C2=A0--ram=3D1024 --vcpus=3D2 \
-  =C2=A0=C2=A0--import \
-  =C2=A0=C2=A0--disk path=3D/var/lib/libvirt/images/n0-root.qcow2,bus=3Dvir=
-tio,cache=3Dwritethrough,size=3D10 \
-  =C2=A0=C2=A0--disk path=3D/var/lib/libvirt/images/n0-blk0.qcow2,bus=3Dvir=
-tio,cache=3Dwritethrough,size=3D10 \
-  =C2=A0=C2=A0--graphics none \
-  =C2=A0=C2=A0--network network=3Ddefault \
-  =C2=A0=C2=A0--cloud-init user-data=3D"user-data,meta-data=3Dmeta-data,net=
-work-config=3Dnetwork-config"
-  ```
-
-  And run the script to cause the crash (you may need to manually kill
-  query-named-block-jobs.sh):
-  ```sh
-  chmod 755 provision.sh blockrebase-crash.sh query-named-block-nodes.sh
-  ./provision.sh
-  ./blockrebase-crash n0
-  ```
-
-  Expected behavior: `blockrebase-crash.sh` runs until "No space left on
-  device"
-
-  Actual behavior: QEMU crashes after a few iterations:
-  ```
-  Block Pull: [81.05 %]+ bjr=3D
-  + [[ '' =3D=3D *\N\o\ \c\u\r\r\e\n\t\ \b\l\o\c\k\ \j\o\b\ \f\o\r* ]]
-  ++ virsh blockjob n0 vdb
-  Block Pull: [97.87 %]+ bjr=3D
-  + [[ '' =3D=3D *\N\o\ \c\u\r\r\e\n\t\ \b\l\o\c\k\ \j\o\b\ \f\o\r* ]]
-  ++ virsh blockjob n0 vdb
-  error: Unable to read from monitor: Connection reset by peer
-  error: Unable to read from monitor: Connection reset by peer
-  + bjr=3D
-  ++ virsh list --uuid
-  + '[' -n 4eed8ba4-300b-4488-a520-510e5b544f57 ']'
-  ++ uuidgen
-  + snap=3Dsnap0-88be23e5-696c-445d-870a-abe5f7df56c0
-  + virsh snapshot-create-as n0 --name snap0-88be23e5-696c-445d-870a-abe5f7=
-df56c0 --disk-only file=3D --diskspec vda,snapshot=3Dno --diskspec vdb,styp=
-e=3Dfile,file=3D/var/lib/libvirt/images/n0-blk0_snap0-88be23e5-696c-445d-87=
-0a-abe5f7df56c0.qcow2 --atomic --no-metadata
-  error: Requested operation is not valid: domain is not running
-  Domain snapshot snap0-88be23e5-696c-445d-870a-abe5f7df56c0 created
-  + virsh blockpull n0 vdb
-  error: Requested operation is not valid: domain is not running
-  error: Requested operation is not valid: domain is not running
-
-  wesley@nv0:~$ error: Requested operation is not valid: domain is not runn=
-ing
-  ```
-
-  [ Where problems could occur ]
-
-  The only codepaths affected by this change are `block-stream` and
-  `blockdev-backup` [1][2]. If the code is somehow broken, we would
-  expect to see failures when executing these QMP commands (or the
-  libvirt APIs that use them, `virDomainBlockPull` and
-  `virDomainBackupBegin` [3][4]).
-
-  As noted in the upstream commit message, the change does cause an
-  additional flush to occur during `blockdev-backup` QMPs.
-
-  The patch that was ultimately merged upstream was a revert of most of
-  [5]. _That_ patch was a workaround for a blockdev permissions issue
-  that was later resolved in [6] (see the end of [7] and replies for
-  upstream discussion). Both [5] and [6] are present in QEMU 6.2.0, so
-  the assumptions that led us to the upstream solution hold for Jammy.
-
-  [1] https://qemu-project.gitlab.io/qemu/interop/qemu-qmp-ref.html#command=
--QMP-block-core.block-stream
-  [2] https://qemu-project.gitlab.io/qemu/interop/qemu-qmp-ref.html#command=
--QMP-block-core.blockdev-backup
-  [3] https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainBlockPu=
-ll
-  [4] https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainBackupB=
-egin
-  [5] https://gitlab.com/qemu-project/qemu/-/commit/3108a15cf09
-  [6] https://gitlab.com/qemu-project/qemu/-/commit/3860c0201924d
-  [7] https://lists.gnu.org/archive/html/qemu-devel/2025-10/msg06800.html
-
-  [ Other info ]
-
-  Backtrace from the coredump (source at [1]):
-  ```
-  #0  bdrv_refresh_filename (bs=3D0x5efed72f8350) at /usr/src/qemu-1:10.1.0=
-+ds-5ubuntu2/b/qemu/block.c:8082
-  #1  0x00005efea73cf9dc in bdrv_block_device_info (blk=3D0x0, bs=3D0x5efed=
-72f8350, flat=3Dtrue, errp=3D0x7ffeb829ebd8)
-  =C2=A0=C2=A0=C2=A0=C2=A0at block/qapi.c:62
-  #2  0x00005efea7391ed3 in bdrv_named_nodes_list (flat=3D<optimized out>, =
-errp=3D0x7ffeb829ebd8)
-  =C2=A0=C2=A0=C2=A0=C2=A0at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/bloc=
-k.c:6275
-  #3  0x00005efea7471993 in qmp_query_named_block_nodes (has_flat=3D<optimi=
-zed out>, flat=3D<optimized out>,
-  =C2=A0=C2=A0=C2=A0=C2=A0errp=3D0x7ffeb829ebd8) at /usr/src/qemu-1:10.1.0+=
-ds-5ubuntu2/b/qemu/blockdev.c:2834
-  #4  qmp_marshal_query_named_block_nodes (args=3D<optimized out>, ret=3D0x=
-7f2b753beec0, errp=3D0x7f2b753beec8)
-  =C2=A0=C2=A0=C2=A0=C2=A0at qapi/qapi-commands-block-core.c:553
-  #5  0x00005efea74f03a5 in do_qmp_dispatch_bh (opaque=3D0x7f2b753beed0) at=
- qapi/qmp-dispatch.c:128
-  #6  0x00005efea75108e6 in aio_bh_poll (ctx=3D0x5efed6f3f430) at util/asyn=
-c.c:219
-  #7  0x00005efea74ffdb2 in aio_dispatch (ctx=3D0x5efed6f3f430) at util/aio=
--posix.c:436
-  #8  0x00005efea7512846 in aio_ctx_dispatch (source=3D<optimized out>, cal=
-lback=3D<optimized out>,
-  =C2=A0=C2=A0=C2=A0=C2=A0user_data=3D<optimized out>) at util/async.c:361
-  #9  0x00007f2b77809bfb in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so=
-.0
-  #10 0x00007f2b77809e70 in g_main_context_dispatch () from /lib/x86_64-lin=
-ux-gnu/libglib-2.0.so.0
-  #11 0x00005efea7517228 in glib_pollfds_poll () at util/main-loop.c:287
-  #12 os_host_main_loop_wait (timeout=3D0) at util/main-loop.c:310
-  #13 main_loop_wait (nonblocking=3D<optimized out>) at util/main-loop.c:589
-  #14 0x00005efea7140482 in qemu_main_loop () at system/runstate.c:905
-  #15 0x00005efea744e4e8 in qemu_default_main (opaque=3Dopaque@entry=3D0x0)=
- at system/main.c:50
-  #16 0x00005efea6e76319 in main (argc=3D<optimized out>, argv=3D<optimized=
- out>) at system/main.c:93
-  ```
-
-  The libvirt logs suggest that the crash occurs right at the end of the bl=
-ockjob, since it reaches "concluded" state before crashing. I assumed that =
-this was one of:
-  - `stream_clean` is freeing/modifying the `cor_filter_bs` without holding=
- a lock that it needs to [2][3]
-  - `bdrv_refresh_filename` needs to handle the possibility that the QLIST =
-of children for a filter bs could be NULL [1]
-
-  Ultimately the fix was neither of these [4]; `bdrv_refresh_filename`
-  should not be able to observe a NULL list of children.
-
-  `query-named-block-nodes` iterates the global list of block nodes
-  `graph_bdrv_states` [5]. The offending block node (the
-  `cor_filter_bs`, added during a `block-stream`) was removed from the
-  list of block nodes _for the disk_ when the operation finished, but
-  not removed from the global list of block nodes until later (this is
-  the window for the race). The patch keeps the block node in the disk's
-  list until it is dropped at the end of the blockjob.
-
-  [1] https://git.launchpad.net/ubuntu/+source/qemu/tree/block.c?h=3Dubuntu=
-/questing-devel#n8071
-  [2] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
-=3Dubuntu/questing-devel#n131
-  [3] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
-=3Dubuntu/questing-devel#n340
-  [4] https://gitlab.com/qemu-project/qemu/-/commit/9dbfd4e28dd11a83f54c371=
-fade8d49a63d6dc1e
-  [5] https://gitlab.com/qemu-project/qemu/-/blob/v10.1.0/block.c?ref_type=
-=3Dtags#L72
-  [6] https://gitlab.com/qemu-project/qemu/-/commit/9dbfd4e28dd11a83f54c371=
-fade8d49a63d6dc1e
-
-  [ libvirt trace ]
-  `qemuBlockJobProcessEventCompletedPull` [1]
-  `qemuBlockJobProcessEventCompletedPullBitmaps` [2]
-  `qemuBlockGetNamedNodeData` [3]
-  `qemuMonitorBlockGetNamedNodeData` [4]
-  `qemuMonitorJSONBlockGetNamedNodeData` [5]
-  `qemuMonitorJSONQueryNamedBlockNodes` [6]
-
-  [1] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_b=
-lockjob.c?h=3Dapplied/ubuntu/questing-devel#n870
-  [2] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_b=
-lockjob.c?h=3Dapplied/ubuntu/questing-devel#n807
-  [3] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_b=
-lock.c?h=3Dapplied/ubuntu/questing-devel#n2925
-  [4] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_m=
-onitor.c?h=3Dapplied/ubuntu/questing-devel#n2039
-  [5] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_m=
-onitor_json.c?h=3Dapplied/ubuntu/questing-devel#n2816
-  [6] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_m=
-onitor_json.c?h=3Dapplied/ubuntu/questing-devel#n2159
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2126951/+subscriptions
-
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 064bc604c9..877a3b8bb6 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -1394,13 +1394,12 @@ static abi_long do_select(int n,
+             return -TARGET_EFAULT;
+         if (efd_addr && copy_to_user_fdset(efd_addr, &efds, n))
+             return -TARGET_EFAULT;
+-
+-        if (target_tv_addr) {
+-            tv.tv_sec = ts.tv_sec;
+-            tv.tv_usec = ts.tv_nsec / 1000;
+-            if (copy_to_user_timeval(target_tv_addr, &tv)) {
+-                return -TARGET_EFAULT;
+-            }
++    }
++    if (target_tv_addr) {
++        tv.tv_sec = ts.tv_sec;
++        tv.tv_usec = ts.tv_nsec / 1000;
++        if (copy_to_user_timeval(target_tv_addr, &tv)) {
++            return ret;
+         }
+     }
+ 
+@@ -1529,16 +1528,18 @@ static abi_long do_pselect6(abi_long arg1, abi_long arg2, abi_long arg3,
+         if (efd_addr && copy_to_user_fdset(efd_addr, &efds, n)) {
+             return -TARGET_EFAULT;
+         }
++    }
++    if (ts_addr) {
+         if (time64) {
+-            if (ts_addr && host_to_target_timespec64(ts_addr, &ts)) {
+-                return -TARGET_EFAULT;
++            if (host_to_target_timespec64(ts_addr, &ts)) {
++                return ret;
+             }
+         } else {
+-            if (ts_addr && host_to_target_timespec(ts_addr, &ts)) {
+-                return -TARGET_EFAULT;
++            if (host_to_target_timespec(ts_addr, &ts)) {
++                return ret;
+             }
+         }
+-    }
++     }
+     return ret;
+ }
+ #endif
+@@ -1606,14 +1607,14 @@ static abi_long do_ppoll(abi_long arg1, abi_long arg2, abi_long arg3,
+         if (set) {
+             finish_sigsuspend_mask(ret);
+         }
+-        if (!is_error(ret) && arg3) {
++        if (arg3) {
+             if (time64) {
+                 if (host_to_target_timespec64(arg3, timeout_ts)) {
+-                    return -TARGET_EFAULT;
++                    return ret;
+                 }
+             } else {
+                 if (host_to_target_timespec(arg3, timeout_ts)) {
+-                    return -TARGET_EFAULT;
++                    return ret;
+                 }
+             }
+         }
+-- 
+2.53.0
 
