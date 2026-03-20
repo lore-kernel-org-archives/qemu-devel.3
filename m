@@ -4,142 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77CA91099B35
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 18:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 328AD1099B36
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 18:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3eb2-0001bj-QH; Fri, 20 Mar 2026 14:29:20 -0400
+	id 1w3f2M-0006Pa-O3; Fri, 20 Mar 2026 14:57:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w3eaq-0001aG-Va
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 14:29:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w3f2H-0006OI-GY
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 14:57:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w3eap-0005QG-2n
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 14:29:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774031344;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7xaUYVokvd3twZDiMkuZAkSQsDI6o1mzDua/c14Nmco=;
- b=cg63PqLS+p/cnDANtvL0hS+sB/xvaG0KizOgD+rzBP2x3dB3u8EfXLP99OKy+Mtte52VcV
- 40YKQRch8XI2dK4kk0fXia4Jchi8NHW953iOMhVNkclAWEb7hRWQ4HHl9eq7uA5Utkmi9X
- BWmH+FMvmIqBVYpbfUR1tkJtSzHK1PE=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-5XtO8iwgPPy-_nTcRB7f4g-1; Fri, 20 Mar 2026 14:29:03 -0400
-X-MC-Unique: 5XtO8iwgPPy-_nTcRB7f4g-1
-X-Mimecast-MFC-AGG-ID: 5XtO8iwgPPy-_nTcRB7f4g_1774031343
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-50b389f2560so64652101cf.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 11:29:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774031343; cv=none;
- d=google.com; s=arc-20240605;
- b=BLm5aPicrYjyx1+eju5UCnGllkp2+TjPxKzx22Of27HeqZ58iFiI+ZGzUXUqKyYQ4Q
- 2YxbDQlP8Xpyg7efMJPYzc2eXfZoNoAURhs4WfKvEwxriqX513rWY21fl7Vp7tdipg+b
- S/McB52+uj54vjX26JQk5s9eH9Q0p13hHUuacsjhRDnsPO+cu10Y5a2geuLCTga/Wcgb
- 1eGNEyOMLz6gZOaWXtKhT3NK03dRc4k7xt9MQ9kG3GYi6mkgIASK+eC6z1HC307IIUyl
- ibfzrIM4shWrQzoMSuTNR06HDf7r+CIxlzaUVeS5k8asITZ+OIyrkQhkjkXlZM0nzr/V
- y+0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=7xaUYVokvd3twZDiMkuZAkSQsDI6o1mzDua/c14Nmco=;
- fh=ITVUHrDuK24wfFWcPHAMT7QsL3mgm65a7A/rtIt/55A=;
- b=W10tbhM9dBuPJX37Ei2Egb7Scdc5Zo7q6INHNb/0wzOZqs1r0+Jwr0J6Itux1nWQx3
- SSSjdV9EZB4ve/JInAw3mJppHVf/vhirWuLreuOinlrOKIpA8QFZCVXysGI9O9h2aJLL
- xGDXaBewcjfXDi7HiBjgEn6GDvOwqDP7DAx2OxZRq7TRskrjR/cd3ILglTjiMrUQLC1D
- TqAlK+YE0k3aMxiy38Ko1axx41xH8K9YwPrGc06NbhEFipb8J4GUsMZfVYhVNWwUiKaF
- exaHG7rDjRkMqfqW/DmOTZ+UM0OC3AcFovfeHSAef30Et1WSWc//j25/1eSHMg4U7ibw
- uhmQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774031343; x=1774636143; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7xaUYVokvd3twZDiMkuZAkSQsDI6o1mzDua/c14Nmco=;
- b=TjpWAFXt9vRRQMuYYIELSTqUk44MjAPHilDihw/veRxnUVkAbskqFBS5GC5MyEhwpY
- rp2qu8PVYSqYcNybFhz+S5lkta/vtJ3NQ0A9mzOw2hEQfRXzyLafxnhcIZGoCARBJyAz
- O7UVOll3jnOen2cD0oT4VNO5WSA8qVJjNQEK071K5WnjjT/MgxjvRnTAA2VPmRqaWuqb
- ooKm8L8TqqRTqcv5jfTNQYELxKhKLO5opQ9cbNU1jJ4U/nT+61mtRXnNuq8MymiB9GuT
- CC+o8O/Hl6BgERiuXMpM45q8z5KvOkkS0+jAur4ZbMECRTboYy5jpbKNwxGqaxQEipHf
- rCLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774031343; x=1774636143;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7xaUYVokvd3twZDiMkuZAkSQsDI6o1mzDua/c14Nmco=;
- b=D7j3B68jfxOKmfR3jzZ41ImuW2GSZ2yS0y8IFrB0oZtryAefSI5T1o7Fod7mm221m+
- IaH+YT66PbmZUZaJiDVyqenIPHfxmhhUdOX0YaltBzHdKhIntZGaZgTDotQWz2lTS9lY
- wkAcShojU1aQyggdknBWjYu4fNa+3v0ebU+B76iMn3p/S8vSAzvlXQ7nSIMs43yTqeQr
- fi3t0PkINi9tAGseVKVMQVcnvETWDKit3IMu6usEYvptpgChxkjTmn5Mb26XmOhUtfBE
- 6qoc+Q/dfQUb/L4hC8Tbs2yHRlepVdO7d4Dw007jIHlx8ZVbN/DbneXuqjloF32NJjGR
- Ls4Q==
-X-Gm-Message-State: AOJu0Yy8G4277vuYoUNiwAxsDkVEaOfliCC+dRyYar7BD3KqC9e7PQ1E
- qk5uf1cu++UxflvkIicJ4J/rU+sHIYPyjHHqp2TDgyKrsz544n5KM0iAOs+N7sWtZofSWMWingy
- 0FApNYNsuRJI1/sQQQpqmjatoRJ5aMoMQ8HzqfJG/2yA1zfbYnLkI7XLMPLEeedmlt/Xzv5GGqX
- T3mqQSzSDx0IAN8cnCvBVJDZ/x+W595umb/w9knV8=
-X-Gm-Gg: ATEYQzyOzGLt5e0CvVUxbu+YvvbJhJElQb3H3LqQvEjxOd//PAS+1VoZpqepeUmcJIP
- zUgkr2FD0ySQLULg3BcDTS34UYCPuHyrLltOls02b8IZ1S3A4v8QjTP5taIv8Ezx1hGW6mV4J/M
- UfSKoaV2rMrXoqZSxatNhmy0Kfhs1TBZXgIqoBn2B8HllXpInrD/ypgOvZTwf28JLpaL7kDDlJ6
- MYG1JqYxKRWgNTmMXsa6KZc24BGvRdVfn5Ikw==
-X-Received: by 2002:a05:6214:3104:b0:89c:4e50:1921 with SMTP id
- 6a1803df08f44-89c859fa733mr60054336d6.26.1774031343010; 
- Fri, 20 Mar 2026 11:29:03 -0700 (PDT)
-X-Received: by 2002:a05:6214:3104:b0:89c:4e50:1921 with SMTP id
- 6a1803df08f44-89c859fa733mr60053636d6.26.1774031342420; Fri, 20 Mar 2026
- 11:29:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w3f2F-0004KF-9X
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 14:57:28 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62KFdlM2802935; Fri, 20 Mar 2026 18:57:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=gulHEL
+ TUzXbdqf9FXTe0M64TBQLWFGNqZYU+FGo8mCQ=; b=GqIQ9aY/heOjnk0XRGPq5A
+ bbtIDxKW/4JtPRhzIlQT3Sno7eG+0KajfRYe2s+1ZqTXN6f5Qd2vY9pUlOVHQW1E
+ RJZZm68VMG8TzcZFFBR7rkZhX4eG8WpY+HhOSXuaICvojp2MVrSPXlQt9q55T+hL
+ 0AxXEVYOkAjaRIn0xnMMDI07fcTeaxfZXrfR5TLViqJyzq48rijlhk0HTISVg1c2
+ Rdqo2MPey6zobzZxIUujMbkBzl6S2Gk7IRhzsPxa8KtauDu2aCTL3BMdczI1kgx0
+ jmWn4KL54aMKcGPoKDVX5ZCjSnGkTpUqombbD6kRSl+RkvenMGEMpq7x7LEmkc6Q
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvyauv4mg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Mar 2026 18:57:10 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62KHQFei028510;
+ Fri, 20 Mar 2026 18:57:09 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwmq1raqd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Mar 2026 18:57:09 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62KIv8LD33817108
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 20 Mar 2026 18:57:09 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D9EAE58052;
+ Fri, 20 Mar 2026 18:57:08 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3645558056;
+ Fri, 20 Mar 2026 18:57:08 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 20 Mar 2026 18:57:08 +0000 (GMT)
+Message-ID: <1334de4e-710c-4daf-aefd-3eee855aa35b@linux.ibm.com>
+Date: Fri, 20 Mar 2026 14:57:07 -0400
 MIME-Version: 1.0
-References: <20260316182608.148628-1-jsnow@redhat.com>
- <20260316182608.148628-7-jsnow@redhat.com>
- <874ima613c.fsf@pond.sub.org>
-In-Reply-To: <874ima613c.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 20 Mar 2026 14:28:51 -0400
-X-Gm-Features: AaiRm53zC7lXcib3f4sWaGKDPuAAT0ej2VbO396o59xY1Ys45dfKTRM4dL3fvAU
-Message-ID: <CAFn=p-Zp47T=iWRAT=zRD1ZOqGBP8fpYi0D1awbQ7qU=Oz7VLA@mail.gmail.com>
-Subject: Re: [PATCH 6/8] qapi: enforce doc block section ordering
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Lukas Straub <lukasstraub2@web.de>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowang@redhat.com>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Qemu-block <qemu-block@nongnu.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Alex Williamson <alex@shazbot.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Kevin Wolf <kwolf@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Stefano Garzarella <sgarzare@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Jiri Pirko <jiri@resnulli.us>, 
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Kashyap Chamarthy <kchamart@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000fc5c3f064d78dbe4"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 7/7] hw/tpm: Increase TPM TIS max buffer size to 8192
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <20260319135316.37412-1-armenon@redhat.com>
+ <20260319135316.37412-8-armenon@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260319135316.37412-8-armenon@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDE1MiBTYWx0ZWRfX3ivsYTsu7kZf
+ ZHRG9QNYqvpH80eemLcPLtJ5rfalz17VBwM9xMxou3xyyv9nalUcvU0SYqwW2VqPm9dB+i7z3YX
+ YkHmHFTZJzM8mckLM0bnC088yUsUtAA+y2Uor39F5SwccfLsIvt7iJIrPAlqgBuIdaOpiBm2+Dr
+ NVTAoVmXmsFMNuVSdfiBuD5ExaGoGKvRWEeEQPk6+1c1f9TTHFOnHRAqf3YTfrW4jgqHfRaPJba
+ ZnokbbTDCD9xMOokgtT25vdV7pv5pMLgqLONoxVzalha3vyEhs3UkFTEZBWe4hbGOqS1YWvrH/v
+ inVolZMNs7W2HwDwmtXvLch7kDK8NQZl92fqMpPe79LOQL78OSO3qlh6tLNOMNvG8BmNel+Wt+A
+ 3mFUzSWIhxAR0bEAsYU3ywOJZ2WxmkjVO64994ToaGQl81vw5Y4cZ9wqFZz1Itv+dHdk9/eoAr3
+ rXQ9EV7RPP+o59+YqTA==
+X-Authority-Analysis: v=2.4 cv=GIQF0+NK c=1 sm=1 tr=0 ts=69bd9886 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=xt6ew7UTAAAA:8
+ a=20KFwNOVAAAA:8 a=15fvszgA47yWHM4l5EcA:9 a=QEXdDO2ut3YA:10
+ a=tn93DeGZTgJ6DdWMtdD4:22
+X-Proofpoint-ORIG-GUID: oIZ2ytosk7kbrndMt4Vw_PGjpK1bHZf5
+X-Proofpoint-GUID: Lte4NvXAfoUgjA0jO8F4SrewxnNVFHvJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-20_03,2026-03-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ phishscore=0 impostorscore=0 suspectscore=0 adultscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603200152
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,96 +133,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fc5c3f064d78dbe4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Mar 20, 2026, 10:13=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
-
-> John Snow <jsnow@redhat.com> writes:
->
-> > Ugly hack, gets the job done. Likely many simplifications can be made a=
-s
-> > a result, but I didn't make any of them. There are some inconsistencies
-> > with human-readable vs ENUM_NAMES in error messages in this patch, but
-> > it appears to work anyway.
-> >
-> > Consider this patch more of a rough idea and not anything approximating
-> > the kind of code you'd want to see from an Enterprise Linux Senior
-> > Software Engineer.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  scripts/qapi/parser.py | 39 +++++++++++++++++++++++----------------
-> >  1 file changed, 23 insertions(+), 16 deletions(-)
->
-> Missing: update to docs/devel/qapi-code-gen.rst.  Suggest to put in a
-> FIXME, so we don't forget.
->
-
-ACK
 
 
-> Missing: test coverage.
->
+On 3/19/26 9:53 AM, Arun Menon wrote:
+> - Double the size from 4096 to 8192 so that we can have bigger buffer
+>    enabling support for PQC algorithms in the TPM TIS interface.
+> - v185 of TCG TPM rolls out PQC algorithm support. [1]
+> 
+> [1] section 46 https://members.trustedcomputinggroup.org/wg/TCG/document/previewpdf/45151
+> 
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>   hw/tpm/tpm_tis.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
+> index 184632ff66..0df35d5a54 100644
+> --- a/hw/tpm/tpm_tis.h
+> +++ b/hw/tpm/tpm_tis.h
+> @@ -33,7 +33,7 @@
+>   
+>   #define TPM_TIS_IS_VALID_LOCTY(x)   ((x) < TPM_TIS_NUM_LOCALITIES)
+>   
+> -#define TPM_TIS_BUFFER_MAX          4096
+> +#define TPM_TIS_BUFFER_MAX          8192
 
-Do we need to test every possible sequence, or just some characteristic
-examples...?
+Unfortunately TIS uses a fixed-size buffer that would now become bigger:
 
->
+typedef struct TPMState {
+     MemoryRegion mmio;
 
---000000000000fc5c3f064d78dbe4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+     unsigned char buffer[TPM_TIS_BUFFER_MAX];  <-- now 8192; before 4096
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 20, 2026, 10:13=E2=
-=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@=
-redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">John Sno=
-w &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"noreferr=
-er">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Ugly hack, gets the job done. Likely many simplifications can be made =
-as<br>
-&gt; a result, but I didn&#39;t make any of them. There are some inconsiste=
-ncies<br>
-&gt; with human-readable vs ENUM_NAMES in error messages in this patch, but=
-<br>
-&gt; it appears to work anyway.<br>
-&gt;<br>
-&gt; Consider this patch more of a rough idea and not anything approximatin=
-g<br>
-&gt; the kind of code you&#39;d want to see from an Enterprise Linux Senior=
-<br>
-&gt; Software Engineer.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 scripts/qapi/parser.py | 39 +++++++++++++++++++++++-------------=
----<br>
-&gt;=C2=A0 1 file changed, 23 insertions(+), 16 deletions(-)<br>
-<br>
-Missing: update to docs/devel/qapi-code-gen.rst.=C2=A0 Suggest to put in a<=
-br>
-FIXME, so we don&#39;t forget.<br></blockquote></div></div><div dir=3D"auto=
-"><br></div><div dir=3D"auto">ACK</div><div dir=3D"auto"><br></div><div dir=
-=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pad=
-ding-left:1ex">
-<br>
-Missing: test coverage.<br></blockquote></div></div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">Do we need to test every possible sequence, or just =
-some characteristic examples...?</div><div dir=3D"auto"><div class=3D"gmail=
-_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"></blockquote><=
-/div></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmai=
-l_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-</blockquote></div></div></div>
 
---000000000000fc5c3f064d78dbe4--
+static const VMStateDescription vmstate_tpm_tis_isa = {
+     .name = "tpm-tis",
+     .version_id = 0,
+     .pre_save  = tpm_tis_pre_save_isa,
+     .fields = (const VMStateField[]) {
+         VMSTATE_BUFFER(state.buffer, TPMStateISA),    <-- now 8192; 
+before 4096
+         VMSTATE_UINT16(state.rw_offset, TPMStateISA),
+
+Problem would be if an older version of the TIS (with size 4096) then 
+receives this 8192 buffer, we would (probably) get a buffer overflow.
+
+
+
+>   
+>   typedef enum {
+>       TPM_TIS_STATE_IDLE = 0,
+
 
 
