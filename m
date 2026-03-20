@@ -4,85 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0806F108B912
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 12:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE696108B918
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 12:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3YuW-0005lD-QD; Fri, 20 Mar 2026 08:25:04 -0400
+	id 1w3Ywv-0006U0-NK; Fri, 20 Mar 2026 08:27:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3YuU-0005h6-HJ
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:25:02 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w3Ywl-0006SW-CS
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:27:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3YuS-0002K2-0U
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:25:02 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w3Ywf-0003HE-9u
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:27:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774009498;
+ s=mimecast20190719; t=1774009636;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=7qh0rVpW1YvZuidsqMRR4n7j7DsSIC/EK2u35AhmMnY=;
- b=McQd6n1mawe7KfaNLAOYlazeVQeAa/8GlXoczBkT0qxksNW0gdFoDvumGowt1opnim+fNB
- RK7k0OXAbQZ1YDi/eKjVXWx6Wgi+AFtH9GRn4IuSMMTeJtQc0VAWplYvwJE0hIEQlZ2ure
- MlpHivTKJsh6Mag8bcbaB2e05MSYe70=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-183-3kF8HO8RN4GmlNDAcExYzg-1; Fri,
- 20 Mar 2026 08:24:53 -0400
-X-MC-Unique: 3kF8HO8RN4GmlNDAcExYzg-1
-X-Mimecast-MFC-AGG-ID: 3kF8HO8RN4GmlNDAcExYzg_1774009491
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32854195605E; Fri, 20 Mar 2026 12:24:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9692D1800766; Fri, 20 Mar 2026 12:24:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 87D3C21E6937; Fri, 20 Mar 2026 13:24:45 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Lukas Straub <lukasstraub2@web.de>,  Richard Henderson
- <richard.henderson@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Jason
- Wang <jasowang@redhat.com>,  Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Peter
- Xu <peterx@redhat.com>,  Eric Blake <eblake@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  qemu-block@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau
- <marcandre.lureau@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Alex Williamson <alex@shazbot.org>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Stefano Garzarella
- <sgarzare@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Igor
- Mammedov <imammedo@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Yanan
- Wang <wangyanan55@huawei.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH 1/8] qapi: differentiate "intro" and "details" sections
-In-Reply-To: <20260316182608.148628-2-jsnow@redhat.com> (John Snow's message
- of "Mon, 16 Mar 2026 14:26:00 -0400")
-References: <20260316182608.148628-1-jsnow@redhat.com>
- <20260316182608.148628-2-jsnow@redhat.com>
-Date: Fri, 20 Mar 2026 13:24:45 +0100
-Message-ID: <87se9u7koi.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=RQv5qIZIpgZbbjJSpqCUzkAcGPiIdNsrHd/Kjf9HtW4=;
+ b=aQBrJM3NCOXYPrBWa+h/AiFpLSjzYEv/Aozva2IsudHDvhUbGPg3nKYOoicIdeAv0iwr1p
+ 3nIonkanzuO6Ym8HYyZf3YKUqMyYj5nwR+gMQfkTpl6plXZ4my+gANVKE3uHP8GjepVVVd
+ 5RJnlk5ft9849DTK2UQpv28tJB3qeds=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-knJpQ3eEPP2_3QMhCg3ibw-1; Fri, 20 Mar 2026 08:27:14 -0400
+X-MC-Unique: knJpQ3eEPP2_3QMhCg3ibw-1
+X-Mimecast-MFC-AGG-ID: knJpQ3eEPP2_3QMhCg3ibw_1774009633
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-486fe36cf73so6167475e9.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 05:27:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774009628; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Geba4Fb7PL40YMNR7BI9b/GSM4geQnmTDkxuE/bcliGASrgscPMjZkrVesIsLIb0bc
+ 6G1hjBpp1PSU+b8r/J5HRTHyW+AQXiB0Wq2g4+CpJ75a6/YbozJ2Lc8JLupVPg5ZXCwH
+ uxX9k6NCFhidARhK6OoPX4bbWOlXLpt9471IBft7ug7B316k36BlJ4xUCb+dPCzvA3zQ
+ 3AzuN9fj/NlPPumKIJkr4KXRaIvT0KMl3Pyh4ZQHh0zE0T04dw2B/TJBePP0BLqjlOfk
+ v2GG6gozcD5lAJpcOEZCnHAnaqYlmF8cIAErjYyQ4cZT9siIH9WOBjQJ+O/ekolDObRs
+ mp+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=RQv5qIZIpgZbbjJSpqCUzkAcGPiIdNsrHd/Kjf9HtW4=;
+ fh=Lkeq1iB2Dypck+qZqvMjsxSGYexXBAyQEFLmuX5D4LA=;
+ b=egcaj6Pb0/73HHhhcLWJ00/nN2UgBCAb4uqkpW/qaveUJ1iaBvakVHLZjwgcHST7UJ
+ aNG6PBW7mNAx8d+OUo2aGY29H2xm5bFrZ31tQ7OgYgdEp3RMOieb+X7v1Xng4gi8uNFl
+ XLaIgp/tNVhu68bqDhYsKc0Xy4gIonTyQWgFmf4wgpyt3zKO8GzjMVg0tM8MdYrTBidn
+ dG2tAI5s7qFzjYdCTb38b9mfU54Egh0Sgu+2DOlp74jDS+BzPKKrRlxnJVuF/J7hsuSz
+ oUgcIDblyDD7oubXJ2PJiZAnkjnSIkUs8tLd4zbNkVncc4ZkeR5rfBWX4clWm34xIr2v
+ hgqQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774009628; x=1774614428; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=RQv5qIZIpgZbbjJSpqCUzkAcGPiIdNsrHd/Kjf9HtW4=;
+ b=UtZd+Xo+BIbfJLxXxNw7VeOQGGGoch2uoQq/nTyqFfkS+buobkcbCO9EHZe4GEiRws
+ wTVDs9lKb9+BmawjAL3i/OJEl+aS4gB7Iy86hdYnbZk1gme05Y/msAkB1CF+4xmH7KFB
+ ApXzidZccWRlHo6UH/X97WJpbf4bgo8oJhjL/RUuqCZTAGyJ5X88ZjL30pcU/yrN2Ewm
+ QM0XyI6UFOXdgCx+O+jp0zi+hdX3PKkJLqJ9pzViL2KSmWtwz1o2etetr5uTVOShwTql
+ LI7G2cXaG5i8ARn5EqbWSMyHFUkG15UpAL9m9LLBfmvTRdHGS3Emxa0n18Ip7NCuhDWD
+ eI6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774009628; x=1774614428;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RQv5qIZIpgZbbjJSpqCUzkAcGPiIdNsrHd/Kjf9HtW4=;
+ b=QmVLgT/tHmHrUBgG1LUTyXxWHQe8mH5Mmosrnb0/ohlwxUDck+2cwVPHO2PYWzA3tN
+ g7P1mO1rwQX3Kk3gm8sff9kIj1c7ExL3XlPVHXTrM1T5fcFfGCgtd/LBNUtWEfHqIEkN
+ A16j1+Pf+UIOmPXnXUxO4xaa8kuISqk02BOSfrPbZ5/ocdFsJgOR/Dmw8R4GPeTAoR4C
+ VP1c4/qTUdHr36tm0pm9LV6K2tqT1op9k0NJIIHC/0rPM6xhx2B9fyWtltB9EZ59acE0
+ UVkoKRiruneZUsi7xxmhcvjta6u8BLS5sU8+v54l3BVoE0zDLHFe36GejwUYmkiipB7O
+ 6QSw==
+X-Gm-Message-State: AOJu0YzicLy1mSNJ0lVjRUgSZ0ErOCC5Xt87rsB5Vw/uaJioi0FwFzk3
+ qQcJT9w43jn2iE8ogt2jkEOLFcMhIrx8hZ1z2Cv5fP5ONnnwT5YtjQS7z+ExQ2gI8SjgFd1lwsM
+ PwWSJYGI0UwRcDdQ0sgkX6yw1giUPc23D81gOKUZD0+lXMmwQtHz6RX55kHm0Q6zQkRxy7HUpLa
+ CPErIB6Cjh6uyoLM471gMNNPepSy7Rs9s=
+X-Gm-Gg: ATEYQzzkvOqzcd4GlAVKa/I06mNGmnUpykIURWRdPGqwzNauEbp0P5uGqHqnYHfP5o6
+ 0fXwjH7PaSRCNTygsjU6hK/KvNx/QZPdvy/Xoz5N/fpbyc35olZYv2frTCL6cAa4S0BFmvWIUG7
+ LjIBcikeA6+U3nVy1oD7XHfkYsRvPrOKznFblZ6+ENUTHMRvAFAxXmSSffRQ4sgPrD+pTbWYhVO
+ +3L6YkOpFPpJS7D+xVSzO5yLE+/wR9vHykhTMPMi/y1kwSaxz0KscJ1916KKgJ3GIq4
+X-Received: by 2002:a05:600c:4ecd:b0:486:fd71:e609 with SMTP id
+ 5b1f17b1804b1-486fee30149mr40235255e9.25.1774009628380; 
+ Fri, 20 Mar 2026 05:27:08 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ecd:b0:486:fd71:e609 with SMTP id
+ 5b1f17b1804b1-486fee30149mr40234695e9.25.1774009627891; Fri, 20 Mar 2026
+ 05:27:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-2-peterx@redhat.com>
+In-Reply-To: <20260319231302.123135-2-peterx@redhat.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Fri, 20 Mar 2026 17:56:51 +0530
+X-Gm-Features: AaiRm53_anFER5fXnZJsNiHD3PFgVymUmIxw6Nf-ZRRZ7_zcHuV8Vtq-03f6Bk4
+Message-ID: <CAE8KmOyTq4wib3niowjXNfqh4TjwhcEDqUt99=mvuLs5vsSx9A@mail.gmail.com>
+Subject: Re: [PATCH RFC 01/12] migration: Fix low possibility downtime
+ violation
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Joao Martins <joao.m.martins@oracle.com>, Alex Williamson <alex@shazbot.org>, 
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Pranav Tyagi <prtyagi@redhat.com>, 
+ Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -107,169 +143,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> This patch begins distinguishing "Plain" sections as being either
-> "Intro" or "Details" sections for the purpose of knowing when/where/how
-> to inline those sections.
+On Fri, 20 Mar 2026 at 04:46, Peter Xu <peterx@redhat.com> wrote:
+> When QEMU queried the estimated version of pending data and thinks it's
+> ready to converge, it'll send another accurate query to make sure of it.
+> It is needed to make sure we collect the latest reports and that equation
+> still holds true.
 >
-> The Intro section is always the first section of any doc block. It may
-> be empty or any number of paragraphs. It is interrupted by any other
-> non-plaintext section, i.e.; Members, Features, Errors, Returns, Since,
-> and TODO.
+> However we missed one tiny little difference here on "<" v.s. "<=" when
+> comparing pending_size (A) to threshold_size (B)..
 >
-> The details section, when present, is either the last section or the
-> second-to-last section when a "Since:" section is present. It consists
-> of any plain text in the doc block that follows any named sections if
-> present.
+> QEMU src only re-query if A<B, but will kickoff switchover if A<=B.
 >
-> Signed-off-by: John Snow <jsnow@redhat.com>
-
-The commit message explains what kinds INTRO and DETAILS are, but not
-why they're useful.  My guess:
-
-1. Represent the future "Details:" marker: the plain section before it
-is of kind INTRO, the one afterwards is of kind DETAILS.
-
-2. Future programming convenience?  With just PLAIN, code may have to
-understand the section's context to make decisions, and with INTRO and
-DETAILS is doesn't.
-
-Guess close enough?
-
-The commit message covers PLAIN sections at the beginning and at the end
-(modulo Since:).  It doesn't cover PLAIN sections between tagged
-sections / member descriptions.  You disallow these in PATCH 2.  You can
-either cover them here, or get rid of them by swapping PATCH 1 and 2.
-
-Hmm, is your description of DETAILS accurate?  Looks like it isn't; see
-my review of tests/qapi-schema/doc-good.out below.
-
+> I think it means it is possible to happen if A (as an estimate only so far)
+> accidentally equals to B, then re-query won't happen and switchover will
+> proceed without considering new dirtied data.
+>
+> It turns out it was an accident in my commit 7aaa1fc072 when refactoring
+> the code around.  Fix this by using the same equation in both places.
+>
+> Fixes: 7aaa1fc072 ("migration: Rewrite the migration complete detect logic")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  docs/sphinx/qapidoc.py         |  2 +-
->  scripts/qapi/parser.py         | 35 +++++++++++++++++++++++-----------
->  tests/qapi-schema/doc-good.out |  8 ++++----
->  3 files changed, 29 insertions(+), 16 deletions(-)
+>  migration/migration.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 5c9aaa6e58..dfc60372cf 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3242,7 +3242,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+>           * postcopy started, so ESTIMATE should always match with EXACT
+>           * during postcopy phase.
+>           */
+> -        if (pending_size < s->threshold_size) {
+> +        if (pending_size <= s->threshold_size) {
+>              qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+>              pending_size = must_precopy + can_postcopy;
+>              trace_migrate_pending_exact(pending_size, must_precopy,
 
-[Skipping the Python code in my first pass...]
+* What is the 'size' difference between < s->threshold_size  Vs  <=
+s->threshold_size?  Going through the source IIUC
+1) 'pending_size' is measured in Bytes.
+     static void ram_state_pending_exact/_estimate()
+         remaining_size = rs->migration_dirty_pages *
+TARGET_PAGE_SIZE(=4096 bytes);
+         100 dirty pages * 4096bytes  => 409600 dirty bytes => 409600
+* 8 => 3,276,800 dirty bits
 
-> diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-> index 04a55072646..04e29e8d50f 100644
-> --- a/tests/qapi-schema/doc-good.out
-> +++ b/tests/qapi-schema/doc-good.out
-> @@ -116,7 +116,7 @@ The _one_ {and only}, description on the same line
->  Also _one_ {and only}
->      feature=enum-member-feat
->  a member feature
-> -    section=Plain
-> +    section=Details
->  @two is undocumented
+2) 's->threshold_size' is derived from bandwidth (100M bits/s) and
+downtime(=300 ms)
+        100,000,000 bits/s => 100,000 bits/ms
+        100,000 bits/ms * 300ms => 30,000,000 bits in 300 ms
+        30,000,000 bits / 8  =>  3,750,000 Bytes / 300 ms
+        s->threshold_size = 30,000,000 bits (= 3.75MBytes) can be
+transferred in 300ms downtime.
 
-The section containing "@two is undocumented" changes from PLAIN to
-DETAILS.  Doc source:
+* Are we comparing pending_size(=409600 bytes)  <=
+s->threshold_size(=30,000,000 bits)?
 
-    ##
-    # @Enum:
-    #
-    # @one: The _one_ {and only}, description on the same line
-    #
-    # Features:
-    # @enum-feat: Also _one_ {and only}
-    # @enum-member-feat: a member feature
-    #
-    # @two is undocumented
-    ##
+*  static void migration_update_counters()
+        transferred = current_bytes - s->iteration_initial_bytes;
+        bandwidth = (double)transferred / time_spent
+        if (switchover_bw) {
+            expected_bw_per_ms = (double)switchover_bw / 1000;
+        } else {
+            expected_bw_per_ms = bandwidth;
+        }
+=> ^^^^^^^  Should we divide 'bandwidth' by 1000 here (for bw_per_ms) ?
 
-It is at the end.  Good.
+      s->threshold_size = expected_bw_per_ms * migrate_downtime_limit();
 
->  doc symbol=Base
->      body=
-> @@ -175,7 +175,7 @@ description starts on the same line
->  a feature
->      feature=cmd-feat2
->  another feature
-> -    section=Plain
-> +    section=Details
->  .. note:: @arg3 is undocumented
+migration_iteration_run():
+   /* Should we switch to postcopy now? */
+   if (must_precopy <= s->threshold_size &&
+      can_switchover && qatomic_read(&s->start_postcopy)) {
+      if (postcopy_start(s, &local_err)) {
+          migrate_error_propagate(s, error_copy(local_err));
+          error_report_err(local_err);
+      }
+      return MIG_ITERATE_SKIP;
+   }
+* Here we should check pending_size <= s->threshold_size,  because
+must_precopy is zero(0) when postcopy is enabled. And we switch to
+postcopy mode even when pending_size > s->threshold_size.
+  I wonder if we really need both 'must_precopy' and 'can_postcopy'
+variables, they seem to complicate things.
+===
+# virsh migrate --verbose --live --auto-converge --postcopy
+--postcopy-after-precopy f42vm
+qemu+ssh://destination-machine.com/system
+# less /var/log/libvirt/qemu/f42vm.log
+...
+migration_iteration_run: estimated pending_size: 50577408 bytes,
+s->threshold_size: 36282361
+migration_iteration_run: estimated pending_size: 43757568 bytes,
+s->threshold_size: 36282361
+migration_iteration_run: estimated pending_size: 36413440 bytes,
+s->threshold_size: 34334680
+migration_iteration_run: estimated pending_size: 29069312 bytes,
+s->threshold_size: 34334680
 
-The section containing "@arg3 is undocumented" changes from PLAIN to
-DETAILS.  Doc source:
+migration_iteration_run: exact pending_size: 4339167232 bytes, 0,
+4339167232              <== exact size is calculated once.
+migration_iteration_run: estimated pending_size: 4332871680 bytes,
+s->threshold_size: 35651363
+migration_iteration_run: switching to postcopy: 4332871680, 0,
+4332871680                    <== switch to postcopy with
+must_precopy(=0) <= s->threshold_size
 
-Doc source:
+migration_iteration_run: estimated pending_size: 4332892160 bytes,
+s->threshold_size: 35651363
+migration_iteration_run: estimated pending_size: 4323188736 bytes,
+s->threshold_size: 27243109
+migration_iteration_run: estimated pending_size: 4315320320 bytes,
+s->threshold_size: 27243109
+migration_iteration_run: estimated pending_size: 4308221952 bytes,
+s->threshold_size: 37695433
+===
+* Here, the exact pending_size is calculated only once, because we
+switch to Postcopy mode even when pending_size is > s->threshold_size.
 
-    ##
-    # @cmd:
-    #
-    # @arg1:
-    #     description starts on a new line,
-    #     indented
-    #
-    # @arg2: description starts on the same line
-    #     remainder indented differently
-    #
-    # Returns: @Object
-    #
-    # Errors: some
-    #
-    # Features:
-    # @cmd-feat1: a feature
-    # @cmd-feat2: another feature
-    #
-    # .. note:: @arg3 is undocumented
-    #
-    # TODO: frobnicate
-    #
-
-It is *not* at the end.  Is the commit message inaccurate?
-
->      section=Returns
->  @Object
-> @@ -183,7 +183,7 @@ another feature
->  some
->      section=Todo
->  frobnicate
-> -    section=Plain
-> +    section=Details
->  .. admonition:: Notes
->  
->   - Lorem ipsum dolor sit amet
-    - Ut enim ad minim veniam
-
-    [some section body text elided for brevity...]
-
-   Note::
-       Ceci n'est pas une note
-       section=Since
-   2.10
-
-The section starting with the adminition and ending after "Ceci n'est
-pas une note" changes from PLAIN to DETAILS.  Doc source continued:
-
-    # .. admonition:: Notes
-    #
-    #  - Lorem ipsum dolor sit amet
-    #  - Ut enim ad minim veniam
-    #
-    [same text elided...]
-    #
-    # Note::
-    #     Ceci n'est pas une note
-    #
-    # Since: 2.10
-    ##
-
-It is second-to-last, and the last section is SINCE.  Good.
-
-> @@ -216,7 +216,7 @@ If you're bored enough to read this, go see a video of boxed cats
->  a feature
->      featurec=md-feat2
->  another feature
-> -    section=Plain
-> +    section=Details
->  .. qmp-example::
->  
->     -> "this example"
-
-This one is also at the end.  Good.
+Thank you.
+---
+  - Prasad
 
 
