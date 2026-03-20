@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58E31099B40
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 21:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6CEA1099B40
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 21:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3heo-0008LU-Am; Fri, 20 Mar 2026 17:45:27 -0400
+	id 1w3hfZ-0000Yh-Ka; Fri, 20 Mar 2026 17:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hej-00085C-4W
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:45:21 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1w3hfI-0000V4-9g
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:46:03 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hee-0000PG-OX
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:45:20 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c742b9b7727so924377a12.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 14:45:15 -0700 (PDT)
+ id 1w3hfF-0000SC-Rk
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:45:55 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-82bae83318bso526811b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 14:45:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774043115; x=1774647915; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774043151; x=1774647951; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gPs8ynpVuvq1IC4QROP9/bWKDSPFZpBcqH+HYqH6hVc=;
- b=VEctIsj189zE37WvC6uri9AJwtqlBJUOPS+HW5LDyVmTVjsSlUTlLhW4E5YRI+8X+X
- xtsQ7BsPhFRV4rx4jfJupuBhsaPwHGC7bDO38q4g7eNIr90FuT+PLJXMFwPno170JYpH
- xmy/NDnJGhmFVCRoipZxRCpyH8pQA2ZoTjUAoWyuQeDK+n4CSlGt/4dkm815ECNZTb4O
- 36xDwH8QgC5J8ods9vaKncaybQQPjIIqf/T6WimM6sqluvvN8FVAWdQLIOQg12lypQxC
- AHSE9Be8zi7ctadMJCfIDxlY1teLa/IeZ7/nDNx/NPHdAVaUdge5CHr4mhtxAgXhNu4i
- twNA==
+ bh=j46g4iPUChZ+S2WJJaeW8olfcqhVtkhPDqOXQfw7iwk=;
+ b=V9hN1am6sDr5SfB6uQkcKfbgFLkWpvaV1VLVkwb+92K3gQ/eNIaBXznlVC4v5Buv5Z
+ ZiY7uXZR32cUI/H7yu4QySvCmKjyceDP+SJuxYOmdd/VvhYOD/S2kUiSZMzxRA59YWab
+ QS7oTrYqVDv8g1IMCOTvR52AVs8VzFJEqPcYz4ReZ44ybP3imOvJFBlx54hBAZjIpbjG
+ ybSf0ZWrJLUryy9ioxu+nf4UqYC9V598tFJiYD8UqUIiHpVWR3WxEDm4nXrgBnNCISbx
+ iStcDM4+YJqbHpoxj1WBmQstHPb9Zd0dLMOutXUPSWfDzh4+AIsOhx8y4V5zEA5SSMaz
+ sYCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774043115; x=1774647915;
+ d=1e100.net; s=20251104; t=1774043151; x=1774647951;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gPs8ynpVuvq1IC4QROP9/bWKDSPFZpBcqH+HYqH6hVc=;
- b=ZHAAsHWUs8Mb+VqV/1Vj9LiGOgtuInN8PQdg0f1EgxQViGvKJaur/TDu0O/v1Dityl
- iZgoNGrF60zmcW4sR1BEyZ75wDUTZ/72o5FTPDUPN+mECilWjM1hUlTiAYaFxylrC2rQ
- J+88UUQbvR66lI2W9CYVCdXKZOrjRkb83HWvVx5brJy2+cEzTZZIFr0yY6hZuDa5BHtR
- T1NZbl3WBfVdDgcmsA9M5QqkONaohCAudW5sU87dwUH1GxTtwbYWJEgPR7vNrLRUKxCM
- ZDo23rAsmWZTtkCmYItDRafBSg678f+9nDlGKvqEVFuS/zyGEHnspr30dGTm06CMLOVB
- K1wQ==
+ bh=j46g4iPUChZ+S2WJJaeW8olfcqhVtkhPDqOXQfw7iwk=;
+ b=ZKsKk5i+J6Au35C2/+y2RMvueTUVlYGTJNId7ZC2A9TrtXsjCy+PJqkm8hnHFrRD1e
+ Ezw1Vb2F6xD7vPgB4NTiADxKt9j71A25xII+02P3Auh6H0VbScvdPlR/HS8k6NrC0oAO
+ 9GK5wil0XU73LRAo+2g89iabBn1KSuAX0ZPxDUvuUQW7vYpCaDurwc1FIU808/5eHxrN
+ IwUt91kuf6V1j0T1hs6yLcxKCLClMD3oZZZG/nau4afOvRJ5CERxCQyEMRPT34iCO3DX
+ +WzfPzVIevHd6ryxaqtboM3UaVpPrThcT2TGU5NBeC7vl42fXBd0c+pU1eg7iZ0KoeGW
+ J5wg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVImulIbUQ6vufc0e37jjo6//uQg2wjrspd0NJdBMNAIqYaVzaMhDJvDOehmU7L/vTc8zlSek8T4YhV@nongnu.org
-X-Gm-Message-State: AOJu0Yyad/5rjehd1v/1rgt5XDnNqjryJkWzo4PsWTtSTUq2Lgt8zXHq
- AgQEa/gYd2HPBLrxA66xztiuaAmhbGe0Z0aJkBcKfpP5erxTLDpa3opV3BN5/lB9uR4=
-X-Gm-Gg: ATEYQzwELl/o7ZEB0L2OZEokwuNr3IBAs4tLRQDYzi1scPkeh+SlHkXo1mj23YCaIRa
- bSe6Oeu2gadf9R+hQl1D9+p9/DTNsaWisIFxLMn9vqzgo3qlNX5IPpQSQlAozqfOXWuggjClwJ5
- ioYNLtA+m6ca1pu4hVhpyjNdjHizlp2RHxZJDrbAjoeKae362AtTsVLsx9q3XZ2kaLPUx3i4ToK
- cTW1hk8XDn1rXcphLffR8UDGvh3sJneHpjh/KtgdrwzpuV6syBo6jOfZ40aPsqmV1JwWuEU2CX0
- JWxgM1RFfk+D+gP9HgSEzwtDoWHSUrfZTAcssbsnsMm1QrWk8LBbheOftO+rwmo89P6Y5glRg2/
- gHliBoYlpkug1txD5IWCsW+WlE4fALF1VzCttxlCQrwjbX4K2DiifFu2Dl6T6Wee8G6KNfo1jfL
- 1HZkd5MZLhQpr1uu9dwtIbDEb9xEYztEnbDtG8CTkKwi5MAEXSbD8a2VUlS11ifRgSAyEj
-X-Received: by 2002:a05:6a21:6b8b:b0:398:76d4:c7e9 with SMTP id
- adf61e73a8af0-39bb2625019mr7223951637.35.1774043114753; 
- Fri, 20 Mar 2026 14:45:14 -0700 (PDT)
+ AJvYcCU/IydAToeoMRtUkDEXwsm1axuzf6a0ziB0x1MRqTEs11lpfZ8QnG8KPNcSSmJoC5ez5zdD8jt9serz@nongnu.org
+X-Gm-Message-State: AOJu0YwEZCiLpc5Ym8X3lu/rnrjYImcmo0VM6iQzUzjk2izBfd9X0KDL
+ sglkfhOkKgyLMM1yzgyAwRA2wgDXGZD2H37/SP6L8jq2gy/4FWSLJDT3K1489T/V05U=
+X-Gm-Gg: ATEYQzyFTXEV0+6qnhQy/bTdTXhYGyJPfD+aVeXJyOWithr+zuJJgEeYD/igu5VFWEZ
+ uCwXK/NoncnrkQrtDpr7r210vpXrc1fftg54fCF8MihUnVYzU4ymPS+lF5cHoO/+PKDxeMDcYn/
+ olVUTVhX0zMvOkbTlczBOo9VIWWFqCyB5DgH14WJbuCi7qyJErodDEt/YWk4ukbougy7Eet4+0K
+ WwTT5SyLSHhnnzGkGs7+mZHLXoIwNrpjjzhe1UcP9NW0uCQmLCF7B0IFMKkppQ8bz+q3c0qxEz5
+ Sbjb40iuECci6zUbT5uWfXKz9r0pxdFwj5M08EuC8tbFKIj764nxKDUy3fZwNpL4eXuBwTJI93Z
+ qAc7TAWcXZ0W0e2YdFDCuvxe1m8Nz40jHKdZOamre84QG7TtHtovc5v2nZBx+EFRi5PnngdR+h/
+ 1n6Ovjxup3L1E4DSltF1gMXvwGvNHGrAcaTSgQ0h3/8M9oaRCNbDhEEzAfc8wrdWoa0GeN
+X-Received: by 2002:a05:6a00:300d:b0:7e8:4471:ae6d with SMTP id
+ d2e1a72fcca58-82a8c3afd81mr3713449b3a.57.1774043150776; 
+ Fri, 20 Mar 2026 14:45:50 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c743a818114sm2423259a12.12.2026.03.20.14.45.14
+ d2e1a72fcca58-82b0409c681sm3496716b3a.37.2026.03.20.14.45.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 14:45:14 -0700 (PDT)
-Message-ID: <335d28b6-6b4b-4c01-b34d-755d679de9ef@linaro.org>
-Date: Fri, 20 Mar 2026 14:45:13 -0700
+ Fri, 20 Mar 2026 14:45:50 -0700 (PDT)
+Message-ID: <a9556f8b-9e8d-4b68-93a3-3ccf2c664bfc@linaro.org>
+Date: Fri, 20 Mar 2026 14:45:49 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 v6 3/6] monitor: Have MonitorDef::get_value()
- always return int64_t type
+Subject: Re: [PATCH-for-11.1 v6 4/6] monitor: Remove last target_long use in
+ get_monitor_def()
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -82,9 +82,9 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+ Markus Armbruster <armbru@redhat.com>
 References: <20260320091019.59902-1-philmd@linaro.org>
- <20260320091019.59902-4-philmd@linaro.org>
+ <20260320091019.59902-5-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -120,11 +120,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260320091019.59902-4-philmd@linaro.org>
+In-Reply-To: <20260320091019.59902-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -148,17 +148,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/20/26 2:10 AM, Philippe Mathieu-Daudé wrote:
-> Simplify MonitorDef::get_value() handler by having it always
-> return a int64_t type. Truncate to 32-bit in the single caller.
-> 
-> Note, this handler is only implemented once for the x86 targets.
+> Truncate manually, removing the need of target-specific
+> code in get_monitor_def().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/monitor/hmp-target.h | 6 +-----
->   monitor/hmp-target.c         | 5 ++++-
->   target/i386/monitor.c        | 4 ++--
->   3 files changed, 7 insertions(+), 8 deletions(-)
+>   monitor/hmp-target.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
