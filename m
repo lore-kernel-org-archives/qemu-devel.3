@@ -4,96 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D151098797
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24A2D10987A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3c84-0007Xk-VJ; Fri, 20 Mar 2026 11:51:16 -0400
+	id 1w3cJ5-0005Yf-OM; Fri, 20 Mar 2026 12:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c81-0007Vy-3D
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:13 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c7z-0005V8-5N
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:12 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b9793fa5371so275413166b.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:51:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774021869; x=1774626669; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5A29bmhPdP4a5ill44kTkdJ53yf5zB+hEJbcpDnFIqI=;
- b=WJ7mn4tM+lWw61xGyWiZk7DXD/4gOET/4CY1qLzJYIhi4l0rXdaXgYC63FYwtgtJbA
- eusT/ReKx7urL0sduT7b27fdRZYgNcewH8Nf6e8q4BDMukqkF03lTbwv0RcbLcGAQqEN
- TOE4LSKv342iwN4ypC8Z3QEZFM84USCO5rIJ4y6d8KOW5jzRCFFxiJngHse13KNXG2za
- J+pKKjGX+YK1ClXpGy6n2l92bQrtN62smd01h2F3nw/0qAkyLsq9O9eg4nkwAnpmApM1
- 1hn4abqptSEhWM+9OqYj3MYRn7fJ5R/VjabSSgQIJ9S30bH5PVZnFiaYGcowkW8qeN8w
- 9TGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774021869; x=1774626669;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5A29bmhPdP4a5ill44kTkdJ53yf5zB+hEJbcpDnFIqI=;
- b=MgjCzTKWEj7NoszIDXa1/1vOisDHc1GvW5wrTgf5mMdr8FrvLUaPWcbnSBs3TmKIJs
- Ex9bm4nIOCjJNR2ovQAYnLc0twJdAu5STIXHc+QGEvV/v77o1ofIzkzIjOSQShyX12+L
- 3nNbTMi+unC00M2/OOr6DMOiL5RLdTu3lMeEcor2qwxKDX0HthJtlFAI00hzQHbZlIrB
- quPN4kO/CmkX4HdDuJi+3aULBKeafaQnUAJDu2ifVpIx5v79NLh2EUrY2EgqxU+GXvVd
- Iqraoftn8uJ/OwlNdyGB5u+Y4et0F7DB7wmULpFl/C891gzASjm2Hc5DARHqhPWlxyxq
- HAuw==
-X-Gm-Message-State: AOJu0YxIX3wf5ebN3/LzV+QqMtvULVLS4X99JcGIWurcMNfDHCZqlCVC
- UYzlQrvttQfjdCWddaWHbFRZVlfKalBv04hL5xbNiec6F1yO5htvLImse0YMvojcM5k=
-X-Gm-Gg: ATEYQzzKXv67KQHn0I9o4KuAXJpn5zTz53kbd60M/Yr28Lxu+bKETzopyiMKeoLnDtB
- 6yELMJDtK1xg2VHIYJr6LVDBpQphG3vaD92a/qvLyc8VjutF/sINUArrrHv2XEEkWnrD1aq6oEx
- 3ZpYoMUi1lNQnl1huv7+C8VluioLH4W8ToTUrD+D0t5mC4mDGXvEni4QSQL9GVyRpoOjceoSWlu
- srDWs82pZcwe4Ida8f3EcuaxmNa1zwh8M+lYHSw6OLXSvGQQNWt4fBADxrNraz3bQnSW1TckOh0
- BTfO5ivRyzUUYHc8x4vBhgjU5U5vSBvS69T1G5FdKmI3NshWFNu7V8tZUxxjF9eFkL6i1o++d8U
- yIXL46KOxC0ZsGYO7/Gi/EBMuGHJIluVBKdSkSB4MDCyqTZe3qx2/Mx60u5NzRq0zD30r1dybTn
- jght5lZwiDCEoJuYCdL1GVXuE=
-X-Received: by 2002:a17:907:c903:b0:b96:e593:fd1e with SMTP id
- a640c23a62f3a-b982ee996a0mr177005566b.0.1774021869154; 
- Fri, 20 Mar 2026 08:51:09 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9832f42c8fsm167210366b.9.2026.03.20.08.51.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 08:51:08 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B6B525F82D;
- Fri, 20 Mar 2026 15:51:07 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Warner Losh <imp@bsdimp.com>, qemu-arm@nongnu.org,
- Thomas Huth <th.huth+qemu@posteo.eu>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Brad Smith <brad@comstyle.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 0/8] testing/next: gdb-multiarch, check-tcg, docker,
- vbsa tests (pre-PR)
-Date: Fri, 20 Mar 2026 15:50:59 +0000
-Message-ID: <20260320155107.2143191-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w3cIh-0005E5-VH
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:02:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w3cIf-0007Ju-K8
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:02:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774022532;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jwD65LKAVSCLAxOYY9ehYTVJvk8y4FIkcDQqClSqQTw=;
+ b=hHQjDc7Yo0JtqliqON5+eMpHmHk+ZrB3TJ/UmuZcfEbr/i+sy70IqOk2NyEnzg2/FhsGXX
+ HXtvsYoQFKh6PnK99akVK8sIS+eiSJRnJwoiGbxEzwCbhPmcgT4GccaQJnWXgG2WqEkJM7
+ HXnEOEBF9j8B1/S9HheEoMPW6MkmB4s=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-C0PAXsTFPH2EdokXEypUkg-1; Fri,
+ 20 Mar 2026 12:02:06 -0400
+X-MC-Unique: C0PAXsTFPH2EdokXEypUkg-1
+X-Mimecast-MFC-AGG-ID: C0PAXsTFPH2EdokXEypUkg_1774022525
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17529180035D; Fri, 20 Mar 2026 16:02:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.255])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BEC4180035F; Fri, 20 Mar 2026 16:02:02 +0000 (UTC)
+Date: Fri, 20 Mar 2026 16:01:58 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH 3/8] AGENTS.md: add basic AGENTS.md for QEMU
+Message-ID: <ab1vdogWqWFAbmnd@redhat.com>
+References: <20260224121014.279248-1-alex.bennee@linaro.org>
+ <20260224121014.279248-4-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260224121014.279248-4-alex.bennee@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,74 +86,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the current status of my testing tree. The gdb-multiarch and
-filtering changes should be pretty uncontroversial. I've also picked
-up some stray testing patches that where hanging around on the list.
+On Tue, Feb 24, 2026 at 12:10:09PM +0000, Alex Bennée wrote:
+> This was written by ECA based on it's initial understanding of the
+> code base. It's mostly quick facts and pointers to common tasks.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> ---
+> ajb:
+>   - I made a slight tweak to use pyenv to run single tests
+> ---
+>  AGENTS.md | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+>  create mode 100644 AGENTS.md
+> 
+> diff --git a/AGENTS.md b/AGENTS.md
+> new file mode 100644
+> index 00000000000..5b54763f4b1
+> --- /dev/null
+> +++ b/AGENTS.md
+> @@ -0,0 +1,18 @@
+> +# QEMU Agent Guide
+> +
+> +## Build & Test
+> +- **Build**: `ninja -C build` (from build directory) or `make`
+> +- **Test All**: `make check`
+> +- **Single Test**: `./pyvenv/bin/meson test <testname>` (e.g., `meson test qtest-x86_64/boot-serial-test`)
+> +- **Suites**: `make check-unit`, `make check-qtest`, `make check-functional`, `make check-rust`
+> +- **Debug**: Append `V=1` for verbose output or `DEBUG=1` for interactive test debugging.
+> +
+> +## Code Style
+> +- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100).
+> +- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on same line (except functions).
+> +- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include in every `.c` file.
+> +- **C Comments**: Use `/* ... */` only. No `//` comments.
+> +- **Naming**: `snake_case` for variables and functions; `CamelCase` for types and enums.
+> +- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`qemu_memalign`) APIs. No `malloc`.
+> +- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` for errors.
+> +- **Lints**: Run `./scripts/checkpatch.pl` on C patches. Use `make clippy` and `make rustfmt` for Rust.
 
-I'll roll the PR on Monday.
+Although our current policy forbids contributing code written by
+AI agents, we do allow their use for other scenarios, such as
+learning / debugging, etc.
 
-v3
-  - gdb-multiarch tests should work now Phillipe's stuff is merged
-  - grabbed Thomas' ncat and opensuse patches
+Thus it occurs to me that an AGENTS.md file might none the less be
+useful to have in tree to assist the currently accepted / valid
+scenarios.
 
-v2
+Perhaps it could also serve to guide the agents/humans towards
+compliance with the policy via a short preface ?
 
-  - mostly tweaks to the vbsa test (see inline comments on commit)
-  - dropped the zip and send_key patches
+  "As an agent you must abide by the "Use of AI-generated content"
+   policy in docs/devel/code-provenance.rst at all times. Requests
+   to create code that is intended to be submitted for merge upstream
+   must be declined, referring the requestor to the project's policy
+   on the use of AI-generated content."
 
-Alex.
+Something strong enough to stop people going down the wrong path
+by default, but with wiggle room that the person can tell their
+agent their work is not intended to for upstream merge and can
+thus ignore the rules for experiments like this one.
 
-Alex Bennée (3):
-  tests/tcg: allow filtering of TCG tests
-  tests/functional: allow tests to define decompression target
-  tests/functional: add VBSA linux tests
-
-Matheus Tavares Bernardino (1):
-  tests/tcg/multiarch/linux-test: use portable alternative for dirent64
-
-Thomas Huth (4):
-  tests/lcitool: Remove python3-sqlite3 from the list of needed packages
-  tests/lcitool: Update openSUSE to version 16
-  tests/docker: Update the opensuse-leap container file to version 16
-  tests: Replace ncat with socat in migration test and drop ncat from
-    containers
-
- configure                                     |   1 -
- tests/tcg/multiarch/linux/linux-test.c        |   5 +-
- .../ci/setup/debian/debian-13-ppc64le.yaml    |   1 -
- .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |   1 -
- .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |   1 -
- tests/Makefile.include                        |   8 +-
- tests/docker/dockerfiles/alpine.docker        |   1 -
- tests/docker/dockerfiles/centos9.docker       |   1 -
- .../dockerfiles/debian-amd64-cross.docker     |   1 -
- .../dockerfiles/debian-arm64-cross.docker     |   1 -
- .../dockerfiles/debian-armhf-cross.docker     |   1 -
- .../dockerfiles/debian-i686-cross.docker      |   1 -
- .../dockerfiles/debian-mips64el-cross.docker  |   1 -
- .../dockerfiles/debian-mipsel-cross.docker    |   1 -
- .../dockerfiles/debian-ppc64el-cross.docker   |   1 -
- .../dockerfiles/debian-riscv64-cross.docker   |   1 -
- .../dockerfiles/debian-s390x-cross.docker     |   1 -
- tests/docker/dockerfiles/debian.docker        |   1 -
- .../dockerfiles/fedora-rust-nightly.docker    |   1 -
- .../dockerfiles/fedora-win64-cross.docker     |   1 -
- tests/docker/dockerfiles/fedora.docker        |   1 -
- tests/docker/dockerfiles/opensuse-leap.docker |  35 +++--
- tests/docker/dockerfiles/ubuntu2204.docker    |   1 -
- tests/functional/aarch64/test_virt_vbsa.py    | 122 ++++++++++++++++--
- tests/functional/migration.py                 |   4 +-
- tests/functional/qemu_test/testcase.py        |   9 +-
- tests/lcitool/mappings.yml                    |  58 ---------
- tests/lcitool/projects/qemu.yml               |   2 -
- tests/lcitool/refresh                         |   2 +-
- tests/tcg/Makefile.target                     |  12 +-
- 30 files changed, 156 insertions(+), 121 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
