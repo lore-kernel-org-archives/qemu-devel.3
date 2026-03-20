@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4941C1098788
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A091098788
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3aig-0002zv-JM; Fri, 20 Mar 2026 10:20:58 -0400
+	id 1w3aih-0002zw-08; Fri, 20 Mar 2026 10:20:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1w3aif-0002z9-3u
+ id 1w3aie-0002z5-Ve
  for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:20:57 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1w3aid-0007T8-JC
+ id 1w3aic-0007Sn-No
  for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:20:56 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62K8YlNi2499511; Fri, 20 Mar 2026 14:20:39 GMT
+ 62K8Y4Ob3254798; Fri, 20 Mar 2026 14:20:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=QPkNy
- dstWfbqDceZLKUfsIAfh5zBIBp/4EWX8VCgJDs=; b=V6Ih8xlGiUhsFEhe9U8BD
- L0tawMhcUaRky5V3hGtxxZtecx+4WX6+7Rqmfy7dgLP74ayrGI7lQCE33j9bGy1b
- 1C4vF58CVzs2yhgj2snpPuIe/wJKy/FLIabDVDWFg8Z5JCvlX+wz3UUIppSKXmwG
- nSjnDVTnm6US+BaKSNYFdd/h28Z9H3280+/pIA72yOQU8J+WU4CrUnkEEBFpOPry
- /Dlpv2lWEwWtWdXfQA8FrzCaU2Xs0fhgFnRe/xsWm+CDYwLEjNMyFUHw2PWeQB5a
- GDXWG26J1RHdXGtpWauSMDX5BeTc23gTrebJUHIAfB43zXnjdHLUuKVfQojsQY5P
- A==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=eLmq7
+ 5GeGNkeMqSupIjOA38TXJGPu/+T/5yeiI4IKGc=; b=gu3ss3icfa80m2XRddZ8I
+ T5FT/Y9nyHWc7atf6X3P2AAOWevTAn5v5M2FsTHrztnukKvoxcTSsm6/WTHAtCyt
+ XRYOUrxlTz7LIGBdw5MP7mY4m7Rj9aU4XpbO8Eharu6k/LR3EA21tESxklcZY3XI
+ 0cnE1dVVmbqw5zeMfVRkhHouq/CMfqZTbJ3SHTX0uFUIlYhaZuPRW35W8aAiZLw/
+ UY2IilsiL7aREVyw/EKBnwZtgJXSZsFho8/AxfaF8zXAGlWm5ZjXsE2g2Stxyqj1
+ PkUCkQXLRxzcQmmRoGEe56KYtJmTwQ+OA+ntoTwLB6NNqxiSkU1P36vWf0mrKprs
+ g==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cw07rhsek-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cvyj69pce-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Mar 2026 14:20:39 +0000 (GMT)
+ Fri, 20 Mar 2026 14:20:36 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 62KCs2Oh030277; Fri, 20 Mar 2026 14:20:38 GMT
+ with ESMTP id 62KDGJQn003488; Fri, 20 Mar 2026 14:20:35 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4cvx4eb49f-1
+ 4cvx4eb484-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Mar 2026 14:20:38 +0000
+ Fri, 20 Mar 2026 14:20:35 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62KEK2Jp016730;
- Fri, 20 Mar 2026 14:20:38 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62KEK2Jl016730;
+ Fri, 20 Mar 2026 14:20:35 GMT
 Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
  (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.252.67])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4cvx4eb3ue-11; Fri, 20 Mar 2026 14:20:38 +0000
+ 4cvx4eb3ue-9; Fri, 20 Mar 2026 14:20:34 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
@@ -63,9 +63,10 @@ Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  sgarzare@redhat.com, jasowang@redhat.com, leiyang@redhat.com,
  si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com,
  armbru@redhat.com, jonah.palmer@oracle.com
-Subject: [RFC v2 10/14] virtio-net: detect VirtIONet VLAN filter table changes
-Date: Fri, 20 Mar 2026 14:20:11 +0000
-Message-ID: <20260320142015.3856652-11-jonah.palmer@oracle.com>
+Subject: [RFC v2 08/14] virtio-net: detect VirtIONet status mid-migration
+ change
+Date: Fri, 20 Mar 2026 14:20:09 +0000
+Message-ID: <20260320142015.3856652-9-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260320142015.3856652-1-jonah.palmer@oracle.com>
 References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
@@ -79,21 +80,21 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  suspectscore=0 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
  definitions=main-2603200114
-X-Authority-Analysis: v=2.4 cv=HcsZjyE8 c=1 sm=1 tr=0 ts=69bd57b7 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=LKFrgZW9 c=1 sm=1 tr=0 ts=69bd57b4 b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117
  a=WeWmnZmh0fydH62SvGsd2A==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=7Gl3-_t3PgB9XO-mQDs3:22 a=yPCof4ZbAAAA:8 a=uRB8GxAVLDhh3WKyutIA:9
-X-Proofpoint-ORIG-GUID: B2hfockT636NSvyTkjRpq3dtqq6eRwX7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDExNCBTYWx0ZWRfXylgWyGHO78jq
- cGQ2lvDcLXWOzeqpzcXodxX9a8o4HVBkhk1xd7QQ6XlzPssSzF3tp3XPGmCHNG4zBkAJTppuGHc
- 9JNPHT244MuDKPwYeIDgX1/Bs/VTEhEB6+rbmZxq6eE8djhwXGa5o5gyR5EbIQ9i/23qhPu8RL6
- syefSiIQ6CYABRvGBBFXH7Lvr7nz4Ryu3kzh1Wk2XRnTSevEGnfYsjpddTE5dJAOWRxwP5O9jA1
- xr/Rw7dPlKDbHY51fmAWRNYDT2cnwMAySnq/tpw8F2tMI81RX5BhFUjKj/M7HxGInY9L/FX+ju/
- Akh5gGWFzYFB10JdJAHrwo5Gxq7NgyRYCEh73Mlpdd6qxgOQOiHupOwu45ONpdqmnF5UrOypq/i
- 4lfU3Om4WrZk4FP/mvIWls76l+AhTeFk+0+oSGzJQrntauWTFVehydMyxk0weDgN5T87UBs4x02
- 63UKHKoXCrZGOf1SPgQ==
-X-Proofpoint-GUID: B2hfockT636NSvyTkjRpq3dtqq6eRwX7
+ a=EIcjfB9IiI4px24ztqRk:22 a=yPCof4ZbAAAA:8 a=05msrqz8p71NSpwwBZQA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDExNCBTYWx0ZWRfX2daJWhYEOrya
+ n82EZAxl+1ZSqqkZ8WcdTBUv7JWb3Ym6ntr4vNJm2Jrfo0eeTtZsGExMpEyuofw+G3FF38k/mNW
+ mWOG9fQB6A/1gPcCgE+WiCYSsdR/NhwrZFSAouVt9UFx8BE/shyUryvnJO7EvZkQbuEoP43mYH8
+ J9IQa9LsMqGwhTiEBSn1Oj+vFcRlEbqQOLoJZQ3uvQNjs49vMeLBq3zhC2oWnpHDDRffNSnshIc
+ u7jfPHu4VvDdiliKbZxSqcb7QFtWz0cZvyS/i8kIOOpT671dPo85/BZspP7y1IN+ruspkw42x5V
+ NWQ5uzWAN0Yi24KID5aWUu2T+lLZhe0H8zLVEvCkZxB3T0wxINItSwrE07LZiSeW6QWJK463wgc
+ +Cem8mVIt65qOaPGD2RsW1aOtlJcPBjsHxKiDxDFARirVMzk2Qvf8rN1MPL1MJflc2y5yo9QrGC
+ 3Ow2E/2fzRfhb5lGgaQ==
+X-Proofpoint-GUID: UQv5J_Y4hHZ7MB1lJovp-UFTEFUKB2nI
+X-Proofpoint-ORIG-GUID: UQv5J_Y4hHZ7MB1lJovp-UFTEFUKB2nI
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -10
@@ -119,81 +120,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Save the current state of virtio-net's VLAN filter table at early
-migration time to compare with later during the stop-and-copy phase.
+Save VirtIONet's status field during early migration and compare it
+again during stop-and-copy.
+
+VirtIONet keeps its own status bits here, including VIRTIO_NET_S_LINK_UP
+and VIRTIO_NET_S_ANNOUNCE.
 
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/net/virtio-net.c            | 14 ++++++++++++++
- include/hw/virtio/virtio-net.h |  2 ++
- 2 files changed, 16 insertions(+)
+ hw/net/virtio-net.c            | 6 ++++++
+ include/hw/virtio/virtio-net.h | 2 ++
+ 2 files changed, 8 insertions(+)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 42c585142d..b3f71d8f84 100644
+index 2dd130777e..88ce33b1d2 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -3890,6 +3890,7 @@ static int virtio_net_early_pre_save(void *opaque)
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     VirtIODevMigration *vdev_mig = vdev->migration;
+@@ -3872,6 +3872,7 @@ static int virtio_net_early_pre_save(void *opaque)
      VirtIONetMigration *vnet_mig = n->migration;
-+    size_t vlans_size = (size_t)(MAX_VLAN >> 3);
  
      vdev_mig->status_early = vdev->status;
-     vnet_mig->status_early = n->status;
-@@ -3929,6 +3930,12 @@ static int virtio_net_early_pre_save(void *opaque)
-     /* Rx filter flags snapshot */
-     vnet_mig->rx_flags_early = virtio_net_rx_flags_pack(n);
++    vnet_mig->status_early = n->status;
  
-+    /* VLAN filter table snapshot */
-+    if (!vnet_mig->vlans_early) {
-+        vnet_mig->vlans_early = g_malloc0(vlans_size);
-+    }
-+    memcpy(vnet_mig->vlans_early, n->vlans, vlans_size);
-+
-     return 0;
- }
- 
-@@ -4217,6 +4224,8 @@ static void virtio_net_device_unrealize(DeviceState *dev)
- 
-         g_free(n->migration->mtable_macs_early);
-         n->migration->mtable_macs_early = NULL;
-+        g_free(n->migration->vlans_early);
-+        n->migration->vlans_early = NULL;
-         g_free(n->migration);
-         n->migration = NULL;
- 
-@@ -4355,6 +4364,11 @@ static bool virtio_net_has_delta(VirtIONet *n, VirtIODevice *vdev)
+     /* VirtIODevice config buffer snapshot */
+     g_free(vdev_mig->config_early);
+@@ -4304,6 +4305,11 @@ static bool virtio_net_has_delta(VirtIONet *n, VirtIODevice *vdev)
          return true;
      }
  
-+    /* Has the VirtIONet's VLAN filter table changed? */
-+    if (memcmp(n->vlans, vnet_mig->vlans_early, MAX_VLAN >> 3) != 0) {
++    /* Has the VirtIONet's status changed? */
++    if (n->status != vnet_mig->status_early) {
 +        return true;
 +    }
 +
-     /*
-      * Always return true for now until we're able to detect all possible
-      * changes to a VirtIONet device.
+     /* Has the VirtIONet's MAC info changed? */
+     if (memcmp(n->mac, vnet_mig->mac_early, ETH_ALEN) != 0) {
+         return true;
 diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 9135d277ff..5df2dd0513 100644
+index 1e1f1a3995..59345f1811 100644
 --- a/include/hw/virtio/virtio-net.h
 +++ b/include/hw/virtio/virtio-net.h
-@@ -176,6 +176,7 @@ typedef struct VirtIONetQueue {
-  * @mtable_multi_overflow_early: Multicast overflow MAC table entries.
+@@ -169,6 +169,7 @@ typedef struct VirtIONetQueue {
+ 
+ /**
+  * struct VirtIONetMigration - VirtIONet migration structure
++ * @status_early: VirtIONet status snapshot.
+  * @mac_early: MAC address early migration snapshot.
+  * @mtable_in_use_early: In-use MAC table entries.
+  * @mtable_uni_overflow_early: Unicast overflow MAC table entries.
+@@ -176,6 +177,7 @@ typedef struct VirtIONetQueue {
   * @mtable_macs_early: MAC table entries.
-  * @rx_flags_early: Bit-packed RX filters (promisc, allmulti, alluni, etc.).
-+ * @vlans_early: VLAN filter table snapshot.
   */
  typedef struct VirtIONetMigration {
-     uint16_t status_early;
-@@ -185,6 +186,7 @@ typedef struct VirtIONetMigration {
-     uint8_t mtable_multi_overflow_early;
-     uint8_t *mtable_macs_early;
-     uint8_t rx_flags_early;
-+    uint8_t *vlans_early;
- } VirtIONetMigration;
- 
- struct VirtIONet {
++    uint16_t status_early;
+     uint8_t mac_early[ETH_ALEN];
+     uint32_t mtable_in_use_early;
+     uint8_t mtable_uni_overflow_early;
 -- 
 2.51.0
 
