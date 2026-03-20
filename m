@@ -4,91 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C761098780
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 12:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C6C41098782
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 12:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ZO7-0006q3-Rp; Fri, 20 Mar 2026 08:55:39 -0400
+	id 1w3ZRM-0000Z1-C1; Fri, 20 Mar 2026 08:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ZO2-0006pS-JI
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:55:35 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ZNz-0003J3-Mf
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:55:34 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43b5bded412so1053534f8f.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 05:55:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774011323; x=1774616123; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cjzLpWaX1RSzTF69D9WopUqnyrOvZsQaWGiSp8qfcRc=;
- b=MyCSeeCrQWHcwvOhseW+5UtgQ4OmJUwJQkaZl3pvPe39LH8tChbi0pcZsjAQqiIhrQ
- pxvts8gYF8bi9YD7B5qrfQzbyaOGRp3iGAQ5cLLSsdqjPL+GDvZTlYzzKfAWQNQumTny
- spKnFDcyVXtb5zwQZNyn/wHeUEvrxu2wDK+sNZrHl2iryzZujRCr2+cv5D8YTqWc5BGP
- NO8sz3UClSzf4NRQ4RtG5EPNnFx+H/0Fs9THqd6ANbYDBO65wNnbA1PhAEldonOyb0nW
- 74nJr9aXYlPu/9+bbF5I603aLfE28od0Pk8uFJ2If5vKsqri/1eQFjpOECHDZosBCRrg
- 5ULA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774011323; x=1774616123;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cjzLpWaX1RSzTF69D9WopUqnyrOvZsQaWGiSp8qfcRc=;
- b=b+s0NShcve+YhMAfXhMcLUoO0pyReNjCDkfummy1lUxfQuQkKBaQvphjatYx0WX6in
- UPun/k3OuajuJ2EdFYB6usfXzWK8j1B5S/W8UhtmbVc+WuesXOvmZuJLrx+uxOl3odB/
- SkPexxCysRrtced7NuBzx0RNCXPPH7LJQ3e8EMRjkUKUhdXc2/8waAb+6gOU8VgGps8Z
- pmtgzM8L6iEZNNlpO5HBXz0AmG55nHRpW1jq8UIpirBzHJjkCyBItEn87nrG2qwg4z64
- ZSNEcG28t/kcYLj8Y9rHIQusKhPN52PnNHTcCR0yUlWfnn+Tw7iT9ysFU6llDhoGRD7i
- et3w==
-X-Gm-Message-State: AOJu0YxhiB4BlznNuG8qVp4HZnB5S8bc3jziTsoNNghUq9b3n4qT2PCL
- O/l4aXOPFOMbYy0Jh1jVVUPPXmb3Oo2qqsH0n9auV5musu/dbbs11wrZvc1uuSUc1tcPWMaIqGt
- lELOC/WU=
-X-Gm-Gg: ATEYQzxrjcROwOYBpKJWWduqTKVWVUgx2OnQoon6RKiVlRvhh/vvIcZFrz/5czChzjb
- WQtdG0owcBLBzTnw0JObadCOEkkMfdwsKyAlUHy5Q0NIUqR8BBLkxTyjLgM8XNXKLpO2NiF2CzP
- gXNjiF+FY4Mmr3fxKYFUnD7MCxFg2WaWBiMVE/AJddMe5ckupA6RzBaHNtSHmL1eWp2rxg43RMy
- GhUl9ln8HQzhK7O0BWcJhY6CevQt8yvVhYiFH5cKIh8Yxk8X13G8mObnVGJsF4jTLF//4LWQe2/
- Be9NONciKUlx9LnndDYVD+f5XmADIKylB907vweR+w5ytkUS67wk+6aZPR6+FedpB/ygK3jJtyW
- Z5B9mIGh48sEiA+sj7fnQCpP35ptBzZYILGjXYCLcN1dC2WPyto0WOZkxdPB8XQlKDc1lwi7ML7
- 9mRwOvEId7u6JoDXgDKtXQLpXxIdx4Vr8i42xkev5GVVH2SXGhCoNw4y5JMWQlRbpV+A==
-X-Received: by 2002:a05:6000:290b:b0:439:c6d9:7fc with SMTP id
- ffacd0b85a97d-43b64264b1dmr5353488f8f.25.1774011323197; 
- Fri, 20 Mar 2026 05:55:23 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b64703343sm5699428f8f.19.2026.03.20.05.55.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 05:55:22 -0700 (PDT)
-Message-ID: <fae7bc44-9b6d-4ec9-b375-845bff594d1a@linaro.org>
-Date: Fri, 20 Mar 2026 13:55:21 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w3ZRK-0000Ya-KC
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:58:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w3ZRH-0003jt-Qs
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 08:58:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774011534;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=dNaHjMAb79y9Sv2tB5XUf+RShQ4AGA9fGzksAYGWbRA=;
+ b=Twwgx5tckqTwWy8Zy0RMUcGwykUfaoociPwP+9xL7eYuOc/DGg9zWzYVcyAZW8hcs/tGpc
+ xagS+NVWQD0eW0z6/g/7g+cGO8ERVlxQx+UoIald270DyMarzK5vEGtR9KqbxUlqanPfzA
+ nnHBDspDI4Tj0gG0f/CV6ilPMnsu7Ns=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-Exbpen-NOsmE09y7AlXeDQ-1; Fri,
+ 20 Mar 2026 08:58:50 -0400
+X-MC-Unique: Exbpen-NOsmE09y7AlXeDQ-1
+X-Mimecast-MFC-AGG-ID: Exbpen-NOsmE09y7AlXeDQ_1774011530
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 03568195608A
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 12:58:50 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.255])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60C131800351; Fri, 20 Mar 2026 12:58:48 +0000 (UTC)
+Date: Fri, 20 Mar 2026 12:58:44 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Elizabeth Ashurov <eashurov@redhat.com>
+Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, yvugenfi@redhat.com
+Subject: Re: [PATCH v2 1/2] qga: replace slog() with standard GLib logging
+Message-ID: <ab1EhBoyvM2YVftM@redhat.com>
+References: <20260312141657.1701801-1-eashurov@redhat.com>
+ <20260318154752.1880933-1-eashurov@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0?] configs/targets: Restrict the legacy
- ldst_phys() API on ARM / Aarch64
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org
-References: <20260319104414.66367-1-philmd@linaro.org>
- <CAFEAcA9kmZp-ExsV-8k7fZ1nsGOyvnPZQ9tD1hrCTihxy=uRpQ@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA9kmZp-ExsV-8k7fZ1nsGOyvnPZQ9tD1hrCTihxy=uRpQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260318154752.1880933-1-eashurov@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,30 +83,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/3/26 11:28, Peter Maydell wrote:
-> On Thu, 19 Mar 2026 at 10:44, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Commit d751921cffd ("hw/arm/omap1: Remove omap_badwidth_*
->> implementations") removed the last use of the legacy ldst_phys()
->> API. Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable to
->> hide the legacy API to the ARM / Aarch64 binaries, avoiding further
->> API uses to creep in.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   configs/targets/aarch64-softmmu.mak | 1 +
->>   configs/targets/arm-softmmu.mak     | 1 +
->>   2 files changed, 2 insertions(+)
+On Wed, Mar 18, 2026 at 05:47:51PM +0200, Elizabeth Ashurov wrote:
+> Replace qga-specific slog() calls with standard GLib logging APIs.
+> Use g_info() for command execution messages and g_warning() for
+> non-fatal failures, and remove the use of "syslog" as a log domain.
 > 
-> We might as well take this now, it's pretty safe.
-
-Thank you, appreciated!
-
-> Applied to target-arm.next, thanks.
+> Rework ga_log() to route messages to the log file and
+> syslog/Event Viewer, filtering by log level. Debug messages are
+> excluded from syslog even with --debug.
 > 
-> -- PMM
+> - Default log level includes ERROR and CRITICAL
+> - -v/--verbose enables WARNING, MESSAGE, and INFO
+
+IMHO "WARNING" should be enabled by default too.
+
+> - -g/--debug enables all levels including DEBUG
+
+Since we can't use the natural '-d' short option, we can
+probably do with only the the long option.
+
+> 
+> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+> ---
+>  qga/commands-linux.c   |  6 ++---
+>  qga/commands-posix.c   | 26 +++++++++---------
+>  qga/commands-win32.c   | 60 +++++++++++++++++++++---------------------
+>  qga/commands.c         | 29 ++++++--------------
+>  qga/guest-agent-core.h |  1 -
+>  qga/main.c             | 39 +++++++++++++++++++--------
+>  6 files changed, 82 insertions(+), 79 deletions(-)
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
