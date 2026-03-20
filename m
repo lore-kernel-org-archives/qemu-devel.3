@@ -4,88 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 067301093193
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601051093194
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Vsv-00078S-Cs; Fri, 20 Mar 2026 05:11:14 -0400
+	id 1w3VxU-0002Iu-Tj; Fri, 20 Mar 2026 05:15:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Vsk-00073k-05
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:11:06 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3VxQ-0002Hm-8u
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:15:52 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Vsg-0003gD-Qb
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:11:01 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-486ff3a0fc1so3641395e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:10:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3VxM-0004Ll-OR
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:15:51 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64ad79df972so402928d50.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:15:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773998147; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KPJWuAKalGi2HOHEc2HqRC5JBS86sZczfCoqeKsoasQcKM0gcbols9HtHAaaS5Al4V
+ uphJWgkY7B+2F435QoJdGaTEyfqazLgdmnGanVE6EWx4/nAcjsecn4Ca+qpY3sxd7lzr
+ m8+/XfEkRk/oSh1PVoIQC115WHEPtqo3wTj12ggkStD+bNirz2bOJQnlJNn01oLP7whc
+ d5v0PsAyGo965XzJ3lAzjEaqrXIOA/6RpSr6xe7UJpv+337Bn7Nzcje26RKzX/bAdzpS
+ mh0OfYzHMDVJwWUBMsobmIUKqPRX0O2Ag/+3XT/8MCrV9XKwpseZQpZk1Mj9zfzaCy21
+ EhrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=xvbAbu4dMgvGESlCuQajDMiqKKtL32Q9bNx4dGp3Nfk=;
+ fh=yaPhCEGMlhygzfDlJVQjjEjsgyPTl6YFrOz2KD4bLYA=;
+ b=bPAxVNrGaBGG1gsgut5rQcWRalTIRg2DajQKuUwhJapOL59sgCAivWIGBp9fKUBGqW
+ Z/uwG6cG8qtdNdDbz7kq/0n3RqzrZTWYvSL/8izTIHc+sfClQyk/JHqmvMKqrDqnQgLv
+ 9EEfkNWR/ujhbQigqmSZFZNPTXr022UewXaF914vmJucKl0OYSBWJmVpjxV8VMwbM8KP
+ yPaJL+/dY+i7ac4tA1nKHYyhHLHdehbjd+/gpvx1DJsvgFSzGhugoai5v4KZTAH1YKH2
+ dnZmVc7m+n79/YhwNpx4m9YfW8Y6kPg/xfz0Hxf1wjfTCjccFmI+gPXHpdFRXU6hvJdd
+ +PLw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773997857; x=1774602657; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XdKq1U5rW3dRPvw71lLGhSrUWkJgSl5smUUmGKvqjzo=;
- b=HU2i2bDI1fQyeu2EuJiIx/l+RO01sOWpI1RiRzwprdYEby3yur+KCq+mr3YKq7Ke6C
- fqqOgxG8VjgZESzVeBH70nwNkPlJBdGEzQKWWJbhm8yp2ed/FMuXHzc7CLpz38bQ7Up7
- QlfHHiqbmGOZt5lcZhZkDGLNRc4tvou8+wTiOsgOwvKPeXxH+34pXScmhryqJYgq3Rsg
- Vj7Tn7tecK6SoMa7Di4woFbqTrdwk3sE0uLpoVlKwmAXWCnmJAX0NfBuyheJ3/eEAvV2
- n/dOMMw+Ib2pgSn/dBizLFO+RBwA0o+LqEch1TUgaEQN8F0uxsRLCuLUVAiEh8FB7O6Z
- xAUQ==
+ d=linaro.org; s=google; t=1773998147; x=1774602947; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xvbAbu4dMgvGESlCuQajDMiqKKtL32Q9bNx4dGp3Nfk=;
+ b=B0XubGYh3jCz2LqywfONlu1rFNxlQhd2hfAPurHlX/eXrlutLH/Zsepaf6zbQMtEqi
+ ubxOijU1Ifw9t7cngcqgqAys1s23//vG2RhE7qxy8yRyk7DhBZRg5QkNjqse1NV2S/Fv
+ lBNrZLgTp4Y5Kke8OH9y8LZ8lnEMNyRHcnxADQR4VTKa8ZmX9xqdYqBswSciYY+5TXQ1
+ 4t11E3GtbExurOT0D8pte1dihYKZIKWgeRvxnp1J2LBnpWy9XrGs8PmJuxtk76PHNroR
+ h51hPWqb7Ff96UyfOCHHDV9/jsh9tQq9yj/YFItX7JRGLWVWL7H6PwvbOC1Ucc1T2kSW
+ j7CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773997857; x=1774602657;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XdKq1U5rW3dRPvw71lLGhSrUWkJgSl5smUUmGKvqjzo=;
- b=HMO/Xujdzy53K0tUCrAPd+f77CbpjLWC+GdoE9UWTqHNLjqqe7MzTu55xMIL0OoNs2
- aYc9a4oNre53oxCLOkZCOnI844L4pVXDMu4W7+85HqEBd0UVD06gHESWhAQPSFUcq7jL
- VNYJ6DNVCw7TLH0Hu9bLBFhK7R4jWho6DtPWeOefDDxyu3ja3BPBku/Hm8oIW1xEuAzv
- oJCXa+vnft2QNtDn2es1CU/GqbDqWFHuec0IJVFiXck37B/HzFcO+/F/n4Blvh5zr1ly
- EaFE44CQ+aMVwm9ys0tbLFm7WCMptBYN/DuBFWVlQo1x8/1qBuM6Q76Krebf0GySUznI
- Hodw==
-X-Gm-Message-State: AOJu0YxtrUWDp6MmKcXjVYSJENQ8QsGqmepb+sz8OAeGEhTMXOsE8ZOq
- AA9Su+FfKjSvcgcQOYFeLe2gvy+jZaakVGxDbLPCfZ2qxX5HWd6OWj2QQ52F2NUGBFLpheCEZW0
- Nc4HiGSU=
-X-Gm-Gg: ATEYQzxQyLLauJwEqarLSEN5Ekp1BOAGIk6yBTNGMbgxs91y+Q6RgteUxuor7MFGvmJ
- c9Hxoj7xaj7/TKpRu86of7W51rPzYhH0rdnRk8qMLyqSl8cXyZajo7ywxV8WTNC3+3CJvSKau+l
- txWViTeIqpGcPk54NDO9mqzefkMqqU7sWZkLuJ2CipN7mueYd3YOTFDNcuEO64BHHLwpaCi9xMG
- OG8Es5RIVJYnJRZlUYNbqtdTgKgCaEILy76AbWLVuxbAYVZ5qxRqfjRLlqJD3OrcbSBd/Zwvghp
- oX8rjSJysVfpWDfvta5olq/IPgY2qbwiDwYhV3C+6ay0A4OZIE6Oj20/pfzHjdcIM1qzcyq8BFM
- 89fpLRTpkz15hyGX6+JtAN37MukoFH/F7idohzRqMfkVwfUghUiLLB0V7ewKAV3BVaYUnv9V9sr
- SRqjsb5wb9cn1S7CuzgK1jWx/7EqIBuARhFRcvWIYe9YLRCOX5mZOSzNhaGByYrmz49dmOt8ro
-X-Received: by 2002:a05:600c:548e:b0:47e:e2ec:9947 with SMTP id
- 5b1f17b1804b1-486ff029336mr31658215e9.33.1773997856588; 
- Fri, 20 Mar 2026 02:10:56 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe7dc4a2sm53051385e9.5.2026.03.20.02.10.55
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Mar 2026 02:10:55 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 v6 5/6] monitor: Reduce target-specific methods
- further
-Date: Fri, 20 Mar 2026 10:10:17 +0100
-Message-ID: <20260320091019.59902-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260320091019.59902-1-philmd@linaro.org>
-References: <20260320091019.59902-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1773998147; x=1774602947;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xvbAbu4dMgvGESlCuQajDMiqKKtL32Q9bNx4dGp3Nfk=;
+ b=sPuVORCDtEYQF+S3htG7uzKgHLe9LgPTsfW0m1cXDXsslgKIq+bz30aDRMdsQM2mq/
+ wnL9tQsNfjw0jbWDGRtWq9lsZhzxoIg2ykmV10JlM+gAGePPqPPlMlC283Q1464+onL7
+ UTYWeOclrZTl6ge3OxLaLt71Uj/p/QdlUYHzAKAjr4Ai3KNraLBraz7/MVYnCJ6cNdAC
+ 3CGQLqYGI1sEDyqiqtGujXZO5GPr5V71ukGVzjy6y0Nriy3IiJ1OqhcGXkHSjL4GaWHP
+ 3ICOehUTqFvSJzaO42X93B+4OmRjSclQOCqMo58MzfdUXicuKzNU6sTkGUVLFl137qqJ
+ +cMQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXZseTsac01fGcnWR42sA0s7G3W0u77L327aCkrhy3qlrIiFpoP+Aeb5REG2WfrpyfEJEHSvaV/hb5I@nongnu.org
+X-Gm-Message-State: AOJu0YzePLLgkKxf+yZRg+yNWpEn5dKFSzDjrHSM/eC8XIruvrmGQ9uj
+ HKibCKEsd7kC9yg/I3CGggoA5AtnofC0LsdxmxQjjiAwSdnN0YyPGLcdncyOUwYjtQRslTG2e3N
+ 3WGd/eUZEB7J9X63CfShXNbNRjYgQjvda7ZRX/0ZDMA==
+X-Gm-Gg: ATEYQzxsDjfkA6QWM+/T9z7rcKKA0GI2ytjx3bkKrvIk/PGxLUilRHgiWtf0OL8IDWE
+ D00hxpKoVrvFtC3bKq9Vyb8w/1IuoB2R8ehowHTw3aGNXsoZDvbI9QH6aN54I58q8a9bzm2YMek
+ +BB8u94MWxbHRaDeZqLzhsTrk5anHVOQV1BgA5y0ZUzZjMAphYmPg1nn1mL5HnDQaWoOjEzJRP+
+ F94alGiqlxugpDvfYsTQ37Qck2uc8ztY8ILlK4YvTQTTBMrlEgKRRYeLJGFuL6/xA7cq+FdlQel
+ T31FPC1vqSyIV0aJOVW8BRC38gjMRJ4yNEFklvHmt3DZvfayrdlwaq3b67PiYpvDP6g=
+X-Received: by 2002:a53:d786:0:b0:649:e546:62e2 with SMTP id
+ 956f58d0204a3-64eaa7b630cmr1712151d50.44.1773998147305; Fri, 20 Mar 2026
+ 02:15:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+References: <20260319183453.100545-1-sw@weilnetz.de>
+In-Reply-To: <20260319183453.100545-1-sw@weilnetz.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 20 Mar 2026 09:15:35 +0000
+X-Gm-Features: AaiRm52Fvg_cJmMP4ysqAEFDoenflm5VgYoBeXreXaBQdPTgtKQsso7DZjlREB8
+Message-ID: <CAFEAcA8dzqPVUyt-bC4r8QxZtJ6dBacgeMG71JEsCsUoGgDsSg@mail.gmail.com>
+Subject: Re: [PATCH for-11.0] Fix several typos in documentation (found by
+ codespell)
+To: Stefan Weil <sw@weilnetz.de>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ John Snow <jsnow@redhat.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
+ qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,142 +123,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-get_monitor_def() doesn't use any target-specific declaration
-anymore, move it to hmp.c to compile it once.
+On Thu, 19 Mar 2026 at 18:34, Stefan Weil <sw@weilnetz.de> wrote:
+>
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+>
+> These typos are part of the generated documentation.
+> Therefore they should be fixed in the new release.
+>
+> More typos can be found in the remaining code, mostly in comments.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
----
- monitor/monitor-internal.h |  1 -
- monitor/hmp-target.c       | 39 -------------------------------------
- monitor/hmp.c              | 40 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 40 insertions(+), 40 deletions(-)
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index feca111ae31..3ecd394ecf6 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -181,7 +181,6 @@ void monitor_data_destroy_qmp(MonitorQMP *mon);
- void coroutine_fn monitor_qmp_dispatcher_co(void *data);
- void qmp_dispatcher_co_wake(void);
- 
--int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
- void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
- int hmp_compare_cmd(const char *name, const char *list);
- 
-diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index 5e9f1b0db5b..a3306b69c93 100644
---- a/monitor/hmp-target.c
-+++ b/monitor/hmp-target.c
-@@ -23,7 +23,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qemu/target-info.h"
- #include "monitor-internal.h"
- #include "monitor/qdev.h"
- #include "net/slirp.h"
-@@ -60,44 +59,6 @@ HMPCommand *hmp_cmds_for_target(bool info_command)
-     return info_command ? hmp_info_cmds : hmp_cmds;
- }
- 
--/*
-- * Set @pval to the value in the register identified by @name.
-- * return 0 if OK, -1 if not found
-- */
--int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
--{
--    const MonitorDef *md = target_monitor_defs();
--    CPUState *cs = mon_get_cpu(mon);
--    void *ptr;
--    uint64_t tmp = 0;
--    int ret;
--
--    if (cs == NULL || md == NULL) {
--        return -1;
--    }
--
--    for(; md->name != NULL; md++) {
--        if (hmp_compare_cmd(name, md->name)) {
--            if (md->get_value) {
--                int64_t val = md->get_value(mon, md, md->offset);
--                *pval = target_long_bits() == 32 ? (int32_t)val : val;
--            } else {
--                CPUArchState *env = mon_get_cpu_env(mon);
--                ptr = (uint8_t *)env + md->offset;
--                *pval = *(int32_t *)ptr;
--            }
--            return 0;
--        }
--    }
--
--    ret = target_get_monitor_def(cs, name, &tmp);
--    if (!ret) {
--        *pval = target_long_bits() == 32 ? (int32_t)tmp : tmp;
--    }
--
--    return ret;
--}
--
- static int
- compare_mon_cmd(const void *a, const void *b)
- {
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 0e5913fabb1..1d645090667 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -355,6 +355,8 @@ static bool gdb_get_register(Monitor *mon, int64_t *pval, const char *name)
- static const char *pch;
- static sigjmp_buf expr_env;
- 
-+static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
-+
- static G_NORETURN G_GNUC_PRINTF(2, 3)
- void expr_error(Monitor *mon, const char *fmt, ...)
- {
-@@ -1595,3 +1597,41 @@ void monitor_register_hmp_info_hrt(const char *name,
-     }
-     g_assert_not_reached();
- }
-+
-+/*
-+ * Set @pval to the value in the register identified by @name.
-+ * return 0 if OK, -1 if not found
-+ */
-+int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
-+{
-+    const MonitorDef *md = target_monitor_defs();
-+    CPUState *cs = mon_get_cpu(mon);
-+    void *ptr;
-+    uint64_t tmp = 0;
-+    int ret;
-+
-+    if (cs == NULL || md == NULL) {
-+        return -1;
-+    }
-+
-+    for(; md->name != NULL; md++) {
-+        if (hmp_compare_cmd(name, md->name)) {
-+            if (md->get_value) {
-+                int64_t val = md->get_value(mon, md, md->offset);
-+                *pval = target_long_bits() == 32 ? (int32_t)val : val;
-+            } else {
-+                CPUArchState *env = mon_get_cpu_env(mon);
-+                ptr = (uint8_t *)env + md->offset;
-+                *pval = *(int32_t *)ptr;
-+            }
-+            return 0;
-+        }
-+    }
-+
-+    ret = target_get_monitor_def(cs, name, &tmp);
-+    if (!ret) {
-+        *pval = target_long_bits() == 32 ? (int32_t)tmp : tmp;
-+    }
-+
-+    return ret;
-+}
--- 
-2.53.0
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index f8d446b3d6..e8adaaea34 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
 
+> @@ -5086,14 +5086,14 @@
+>  ##
+>  # @blockdev-set-active:
+>  #
+> -# Activate or inactivate a block device.  Use this to manage the
+> +# Activate or deactivate a block device.  Use this to manage the
+>  # handover of block devices on migration with qemu-storage-daemon.
+>  #
+>  # Activating a node automatically activates all of its child nodes
+>  # first.  Inactivating a node automatically inactivates any of its
+
+We should also change these to "Deactivating" and "deactivates"
+for consistency.
+
+>  # child nodes that are not in use by a still active node.
+>  #
+> -# @node-name: Name of the graph node to activate or inactivate.  By
+> +# @node-name: Name of the graph node to activate or deactivate.  By
+>  #     default, all nodes are affected by the operation.
+>  #
+>  # @active: true if the nodes should be active when the command returns
+
+
+
+>      ``param=string``
+>           ``string`` will be passed to passt has a command line parameter,
+
+should this be "as a command line parameter" ?
+
+> -         we can have multiple occurences of the ``param`` parameter to
+> +         we can have multiple occurrences of the ``param`` parameter to
+>           pass multiple parameters to passt.
+>
+>           For instance, to pass ``--trace --log=trace.log``:
+> --
+
+thanks
+-- PMM
 
