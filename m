@@ -4,97 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568BF1099B40
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 21:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633A31099B3F
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 22:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3hlf-0002SD-KN; Fri, 20 Mar 2026 17:52:31 -0400
+	id 1w3huA-0005Al-8U; Fri, 20 Mar 2026 18:01:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hle-0002RK-AB
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:52:30 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1w3hu8-0005AA-Cm
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 18:01:16 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hlc-0001ZN-4A
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:52:30 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-35a09e0dd63so1293803a91.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 14:52:27 -0700 (PDT)
+ id 1w3hu6-0003H9-Ko
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 18:01:16 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b6ce6d1d3dcso854394a12.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 15:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774043546; x=1774648346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774044073; x=1774648873; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=AbJPLOlgxB0/11AE3CtlvCBdGPlx6ENuIB66JCuPM4U=;
- b=Tw9SVMDGnogq8bUfw6gn63ohCDv5tsaeDZXK/2BpmHTB1gjZES4cco72w9VDIPFFMZ
- KQ37gOq4WDyX+92Q4NJQsja84io8i+VSsUJTjJWGiQbTi1uYf7jho//sIl72F9kTU4xc
- z8k1PorZSz9Xb3Srg7H2COs/vvYCb7N3fTgst/p6H6clqv4qgm3HJJQ1bvOwRfQGXcel
- 5HHRoFEau4l6e32ryzITuYTgDUVga4QMFJcjGLqJc68luH15iDbVA9insQUZlw7adgEe
- +N5LHhSBAYCvWepej8aVtNWZcpyyvDXd5TmTuQj6zyyXiBEWdpwUIDCuUIVn5hQMZ3cE
- BXMg==
+ bh=vuRbJJtGSgYbHlOzPsOC+2RyiYEorNDryV1uPbgLBDY=;
+ b=YqfF6MO26ASOqbnecRIEaBocqH/d06YXsXfayuMcVunxeA4SZDER1ufvKnzisHnKDS
+ JHU+gXjlgpZmaf6e1o/H+vmOi5BHbbltY5WEaIKLH7VeJPeh4+HYcdm97DKuKiLp++n9
+ 0ACSpODqcdcSjSkcWsMnrClhYbAlPJECEXzEDi+HuLtFO0yH6j3HaqAZNdXdAc1IUb5Q
+ 7nSvwXSiClRu8EuzbAXuR+OTXIbWxXA1oVg5876DW7PIQkXpRdBnvRTjeE71aDaPBtHS
+ lkC0gjQgOQNGfahwNyB0v4c4qrETgJZ8dfw25y0fFJnxasD7FF05tsDxleDTVCbldEeh
+ GGIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774043546; x=1774648346;
+ d=1e100.net; s=20251104; t=1774044073; x=1774648873;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=AbJPLOlgxB0/11AE3CtlvCBdGPlx6ENuIB66JCuPM4U=;
- b=muTLy/aR8OCrtTeSOWbHXYyAUjr9bKKiWJi20T6HgySh36RrAhzCLdqWiGmKgyqHKl
- jtS8Qgoc0j10/5V87zt2p9kqvU7trRY9E9lGYSspc1CNRGblRLElKgzXIt06Ikez+pLt
- v+fIkMhfxLSO7bX7CBYPb3ZCtQrMezmyCpkmlO/IYwk0Rn6/Umy7TG/n73N45dJh0so7
- OCumJe+EPVDLxefevznfK8q6jKGApynaGij81j9EC/Bmc/T1vvcSQwwV7LiTxSDA/ucg
- xWR9ppRJ73x41eWz8QHdSbEa5kmVSB5qDQ4zE7nWYDTwOVgX+NWD9V8z8sM2Flqn3b23
- aV1w==
+ bh=vuRbJJtGSgYbHlOzPsOC+2RyiYEorNDryV1uPbgLBDY=;
+ b=Zek1i9BuJssaOsxyQqmwcxorUsO0XgHirOHUAuY2gO2gv74/OIjTl5xYqV48kfBNGy
+ n2+V/gRrRuvQ4mpgyZqtoreW46aYCZOhhDW8oiOEn0WNSeuUfwNsYC+32KhZQJyIr9jq
+ QLtx3aPtyIfqq6u6G1H5FYULpO948Bv2qb93g0ZRPBdXqPDbJ6ufCQm7Z59lhizXr5m4
+ XN3SlQuHkDfbF7e9m3mncgr56hn8m9udkRfqxRdfXzMlHORpghOuykSrMOlSjVpQtzPu
+ ifpEdW6q1WOjmWA832bypYNJAy1VdGSmgCf2+9wKcWhSiA5hSvvXMKIh9GPXcrK1TH4H
+ 4oDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIrgyd+InNPfTFa/9wEzgPn/+OdPVmrZAtDx9okKgCxvKsOQIikyTBj3APWOW86hFjzGUeTQ4QmJTI@nongnu.org
-X-Gm-Message-State: AOJu0YzoG42QkPyFpusLToDIMcJLfkS02bZJejHTgg9mquziVU3nTze9
- RM2zFrzlG/lmQhN1Ubt1jbNY4M+AX7oNuP+8vmNT7JhuDjdjMSEFOdyOnAkScmxc5+I=
-X-Gm-Gg: ATEYQzwSqsWxETUZ6PxHTXcvTx2k/pv6cjbppnuImxxuqLDar3dIXj14sx7I4AycRbH
- JB3mBDcOxuf6uISZs/Wvp90FWG7/oBhAivuNVDPT4DacW0OzIfT+hlsZP5iIO/Zt5fZjyWQcz1i
- JahL8JYbQ+7e6WfbVF1EnZHWUHgJDE4fZHTwPIauoX6QGVr7w5T4PeBldmsdKHyc8X38VeWAMM6
- Q5xX7uuWTUUNG63sNqm8GOaUXkLWpDOqQxCYaYWviZZFxqRQ70dd5TO3zGWKzQnlB/apLZAnIQq
- hNoSEZIO4SimyY7uoYtNm+F7Cy5ZCasJDl8PXsczdL7ZPprfBbls4OFUCM+Xrg4RYGm+yBHh3lL
- BGt4/RLNfM6J+knWdNp2CyPFUaYvue8jclNmYu0yuavnC9npROpV23lOSHbgyzm+FKDGWYsohsB
- Wwdb51F8E1CV8/VdEjLMEMJnm3nbBbcd3mHhZ+0OMv+V2ZsT6J/6qUNxr3LIxsGUTt4hkd
-X-Received: by 2002:a05:6300:210b:b0:398:71c6:e8fd with SMTP id
- adf61e73a8af0-39bcec38a75mr3936020637.59.1774043546196; 
- Fri, 20 Mar 2026 14:52:26 -0700 (PDT)
+ AJvYcCVNKM2tQ+Ml/1pdqTa6IA4vAs97791pwvutPRnqiVj+nifh2sbfXimZ9Fa6mgF7wZAvllckUF0OsiF1@nongnu.org
+X-Gm-Message-State: AOJu0YymBdr+wub/40+52hY06F76OuPvg+8FJ2QTDtATapAxWkJwD6oo
+ aBSzevxtW7wLmAoECC8SSO2lDWkyzMCYCqz7q/V/Av6BbRVQlTwXR0vNZXxdW8BKpkE=
+X-Gm-Gg: ATEYQzyBGCWj+Srjok0gKm8wIxqocsID21S9A3xkiRXkyNbJLK9iMklw/qiEPSXK1jC
+ 0rGP6UG78yrnGlyOVQzKVLFyn3N6Tot9VLw9JyNk7yv37EXDViblfozNdCy05oCoLFqMBmBkGRI
+ NXhadMVf+eLiipCiNHtstoyZl1R+btYmAn+b3kzg/UOesxCqsJo1am40j9x/zLsBwUmrPYF942f
+ 7qx9iht028pJMGPIfotXxAGQE6/2QpnjG6QF8lT7hmUaPwyAgrzye4+uYvyBFFXM6tTjeLHW4S4
+ C2Ny2qqORqjdkDXyRj/mGviw3rBrrFN3loWycSpm+QGp3RDY3koU3OIRayWKQM16kFs7mOz2B2E
+ oVqGH7hKDcS6EzpEp05rnFVmmPrrhMDdaB0VtXXk+xaK9VXo8pP0ZDYO+BAa80tBkAn2jn0k2fF
+ BP6JZu5PBi+DY6FSHajY7TDjWaJuDRfBytFeacyYrIm7sra9WhLwe3qWDB0R4db5HryTN5
+X-Received: by 2002:a05:6a20:3d88:b0:398:b619:b651 with SMTP id
+ adf61e73a8af0-39bcea1d1c2mr4320815637.21.1774044072778; 
+ Fri, 20 Mar 2026 15:01:12 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c743a7ff47csm2486650a12.6.2026.03.20.14.52.25
+ 41be03b00d2f7-c74453295a8sm2852978a12.28.2026.03.20.15.01.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 14:52:25 -0700 (PDT)
-Message-ID: <419cc31f-3651-4c45-a8ca-942a0cdd5506@linaro.org>
-Date: Fri, 20 Mar 2026 14:52:25 -0700
+ Fri, 20 Mar 2026 15:01:12 -0700 (PDT)
+Message-ID: <7c54cfcf-fef6-41db-a1a8-382857371d3a@linaro.org>
+Date: Fri, 20 Mar 2026 15:01:11 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 v6 6/6] monitor: Remove 'monitor/hmp-target.h'
- header
+Subject: Re: [PATCH-for-11.1 03/10] cpus: Introduce
+ CPUClass::legacy_monitor_defs hook
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Max Filippov
- <jcmvbkbc@gmail.com>, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org
-References: <20260320091019.59902-1-philmd@linaro.org>
- <20260320091019.59902-7-philmd@linaro.org>
+ Artyom Tarasenko <atar4qemu@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
+ Anton Johansson <anjo@rev.ng>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>
+References: <20260320160811.28611-1-philmd@linaro.org>
+ <20260320160811.28611-4-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -130,18 +121,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260320091019.59902-7-philmd@linaro.org>
+In-Reply-To: <20260320160811.28611-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,36 +148,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/20/26 2:10 AM, Philippe Mathieu-Daudé wrote:
-> The "monitor/hmp-target.h" header doesn't contain any
-> target-specific declarations anymore. Merge it with
-> "monitor/hmp.h", its target-agnostic counterpart.
+On 3/20/26 9:08 AM, Philippe Mathieu-Daudé wrote:
+> Allow targets to register their legacy target_monitor_defs()
+> in CPUClass; check it first in get_monitor_def() otherwise
+> fall back to previous per-target helper.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   MAINTAINERS                   |  2 +-
->   include/monitor/hmp-target.h  | 42 -----------------------------------
->   include/monitor/hmp.h         | 12 ++++++++++
->   hw/i386/sgx-stub.c            |  1 -
->   hw/i386/sgx.c                 |  1 -
->   monitor/hmp-cmds.c            |  1 -
->   monitor/hmp-target.c          |  1 -
->   monitor/hmp.c                 |  1 -
->   stubs/target-monitor-defs.c   |  2 +-
->   target/i386/cpu-apic.c        |  1 -
->   target/i386/monitor.c         |  1 -
->   target/i386/sev-system-stub.c |  1 -
->   target/i386/sev.c             |  1 -
->   target/m68k/monitor.c         |  1 -
->   target/ppc/monitor.c          |  2 --
->   target/riscv/monitor.c        |  1 -
->   target/sh4/monitor.c          |  1 -
->   target/sparc/monitor.c        |  1 -
->   target/xtensa/monitor.c       |  1 -
->   19 files changed, 14 insertions(+), 60 deletions(-)
->   delete mode 100644 include/monitor/hmp-target.h
+>   include/hw/core/cpu.h | 3 +++
+>   monitor/hmp.c         | 3 ++-
+>   2 files changed, 5 insertions(+), 1 deletion(-)
 > 
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 04e1f970caf..072f58bead5 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -148,6 +148,8 @@ struct SysemuCPUOps;
+>    * @max_as: Maximum valid index used to refer to the address spaces supported by
+>    *          the architecture, i.e., to refer to CPUAddressSpaces in
+>    *          CPUState::cpu_ases.
+> + * @legacy_monitor_defs: Array of MonitorDef entries. This field is legacy,
+> + *                       use @gdb_core_xml_file to dump registers instead.
+>    *
+>    * Represents a CPU family or model.
+>    */
+> @@ -174,6 +176,7 @@ struct CPUClass {
+>       const char *gdb_core_xml_file;
+>       const char * (*gdb_arch_name)(CPUState *cpu);
+>       const char * (*gdb_get_core_xml_file)(CPUState *cpu);
+> +    const MonitorDef *legacy_monitor_defs;
+>   
+>       void (*disas_set_info)(const CPUState *cpu, disassemble_info *info);
+>   
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index c63da13e310..a2b6269d0ff 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -24,6 +24,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include <dirent.h>
+> +#include "hw/core/cpu.h"
+>   #include "hw/core/qdev.h"
+>   #include "monitor-internal.h"
+>   #include "monitor/hmp.h"
+> @@ -1603,8 +1604,8 @@ void monitor_register_hmp_info_hrt(const char *name,
+>    */
+>   int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+>   {
+> -    const MonitorDef *md = target_monitor_defs();
+>       CPUState *cs = mon_get_cpu(mon);
+> +    const MonitorDef *md = cs->cc->legacy_monitor_defs ?: target_monitor_defs();
+>       void *ptr;
+>       uint64_t tmp = 0;
+>       int ret;
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I'm not very fond of the "keep legacy callback for the N targets that 
+might require it". Either set it for every target, using a default 
+implementation if needed, or...
+
+As an alternative, we could use a dispatch function like:
+
+const MonitorDef *target_monitor_defs()
+{
+   switch (target_arch()) {
+   case
+     SYS_EMU_TARGET_X:
+       return X_target_monitor_defs();
+     SYS_EMU_TARGET_Y:
+       return Y_target_monitor_defs();
+   default:
+     return default_target_monitor_defs();
+   }
+}
+
+Personally, I prefer the dispatch approach, as it's very clear to see 
+what happens per target. This solves the symbol duplication by manually 
+name them differently.
+
+It's just a suggestion though, and I'm ok to have a per target field, as 
+long as we enforce it to be set for all targets, and not using a 
+'legacy' callback for a few of them only.
+
+Pick the one you prefer :)
+
+Regards,
+Pierrick
 
