@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C16C1098782
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C23C1098782
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ZYZ-0002yl-Qv; Fri, 20 Mar 2026 09:06:27 -0400
+	id 1w3ZYg-00035G-EP; Fri, 20 Mar 2026 09:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYY-0002wH-9L
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:26 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1w3ZYT-0002sx-Cl
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:21 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYU-00064H-Eh
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:25 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b97e6e48b24so101102066b.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:21 -0700 (PDT)
+ id 1w3ZYR-000621-AU
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:21 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6674cba2c50so4140295a12.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774011981; x=1774616781; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774011977; x=1774616777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KRX6bSLNd7JglBnF8oTUHMvUmVbVrp85pY+kXHoaidI=;
- b=jCOjyp6KS+VIbddUTvGRRnN5kV7xxXEQnwzwrkS5kPbRnTOsFNac05+HYFkrRRg4Co
- 4zcZecwcDkrd/YOMXXvpMglqLGVIU3njCLQuZyX0Ov+r+zMqK942dfVV6twRl1I1cREu
- V/5pUCS4MAVDLcbB8gFDyBoOac20jVuSavLUaRK/eKl2dTn/YA0WhL7Bq5ad+TnoGTDn
- BnWSpCmvZgJMjpqo9+0wBfC41kCyAQCD7N2iHVEcPAp+4flxNXgMaArU3qxBq3NxmuEt
- H+U26ZzTzgNdQT4sS2SFchUws3vkhx4C5KUJJtmaWjkLw6aDHkAb7+GqnbBrMnlcvZcD
- RySg==
+ bh=8STStOoYQOEp/cfPPvlXjVBa3GE+wDGGrfV/kvX1ag8=;
+ b=boAPTB9eSQnVr5ES+YGqhk6SBBc8NN6Ro7rVZq5//F7DqlEF2IqNGcOWnBfxJx9V/T
+ Ctx1OtEvfYMobng9LpyV/Q+aPODn3C/aBMdrUWFxSRsNJBTmB/V1A/VjIvMx5hWHgo9X
+ XsDXtKlXK1ujbdOep0L1M4Poqqd401/znnFOpKPzIneNYBREFWVphYoH5uL5YwpLofxg
+ Ruuf+b6Vu16xnkV0VvPs2wWTPWusaf1z20tMYH3DGAhDE/IpocwdEU705qLxQ1GY1QGl
+ Ehs7JLbiEYwZjSdp0uMBrwZ9GVPVQkQNn3LpFAQehgk6wf+vR/tOkzav7ms0Hi2x5+bA
+ xlzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774011981; x=1774616781;
+ d=1e100.net; s=20251104; t=1774011977; x=1774616777;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KRX6bSLNd7JglBnF8oTUHMvUmVbVrp85pY+kXHoaidI=;
- b=GVpsj4KZ0qOhDMMM4CTiSBQe+GwVxPMBqOQb0mCcggDpKDJCg9tDBz4ReI1qYvcWyg
- oX/wIYseLH1rG1l/Y/vyzMCF2WkEc1ujF5qCi4eThCbvdUYQ57kuS781aj0K6itC//fx
- W9JXJE8Lu0MRYsFoVkPRD18h+gc5plJTTnm+aAX8Biq35yXO6k6GDks+BJ9sZilsqusl
- Ryl502WVUiDbSJI0qnzmEj89dOdeWkhxJes3MRRcM1W9Q+r6EYJM82mkGhoo958H6MiA
- HSzMJgmdKfJRcK665DceC3LlxLFvJhymgoDuA08oE/dX9fFgWigNaJ4WX9OxCfpLcXe3
- vxKw==
-X-Gm-Message-State: AOJu0YwsgqNINodGE5bGtRyl1G/DCcMUb8GSLy4xg9n7xH1P19fccJ0r
- yv0mhLt4Ns2F11gidbTMDpWUTYzNxIfN8wTb4Nzs0D/eOY8H8BMMVaMdiqcten/dl+Q=
-X-Gm-Gg: ATEYQzxz4L3a6rnK9Qgq0YS9gm8E0bkH8y8g8Ic/EzNwjierUfcwV1OJZsowI4dJPob
- HfBxS2PB2AqleYnnEdvbUq6V3YESutEwUdzJHAm48AgJr5jtuO/b3xSHlI4cPbzRmxtQhAXdJKD
- +R0dtjW7rC6YZB68B67GTDDK+tc59zVB+xa+KBmn5/6OzurXSkhFPtaeWDU8cJ8QyCbjydaWupn
- 2+t5GV6BNXIcze7LC0giIbyrOin0l2XfVXRhpK24q+f2qSbaHcBwpOJyB6bv6x+dj84pG8YJpMF
- oDkwufU57A0v0kVh8rF9vsMubWK+0XlAIZEr/b3dtHTS5pG+FrpdSsNkijM8Tct9I9iMsCeG0xt
- hiep7rjIktOo4FjHR5ZaXPaD8UAEAxJ1/p5itd4qn/G69RRLKBjAb3Cl0nbiVj8y5sAYZFpudSG
- MTWVAoSHx003xonbZ+wDwYe18=
-X-Received: by 2002:a17:906:2099:b0:b8a:f2cb:8088 with SMTP id
- a640c23a62f3a-b982f37d13fmr133976766b.33.1774011980711; 
- Fri, 20 Mar 2026 06:06:20 -0700 (PDT)
+ bh=8STStOoYQOEp/cfPPvlXjVBa3GE+wDGGrfV/kvX1ag8=;
+ b=r8l+6X1PEFBo/RQZMXUWRmv8Aumt3lNIo5SZBn19k5b1hywlThOoAfs5PAUivYPSPG
+ nprDoH8yUTizAOsdBu+gzC3QsaiJCfHEMAPDclNBBqYIphvElIfR4Gm8poX7KqPje0tC
+ V7AO9y98D9pqVY/EYfXk/ciVuijcYBnX10t/030Bx+UFM0ykh4tZ0i1WS0tbRnxq6sx+
+ FEygdK35HUz9L/ZjwEHL6Yfb2MX34WLxUayVmZTGOoPJ2KmaCdNKGxBLcHIog67BidJh
+ rW6l2KWvbrb3rlxpjU2O/a3xc4HknB3gSTQzhMjxt+YnLgqFg+oWYlmzuf+4s/sMfiX0
+ mWIw==
+X-Gm-Message-State: AOJu0YxjgeUnN1HTuKxL8oM1gPbUcy8GL2oDa23xD4PrvK84ukiTxHZ1
+ c84folp8hFowcRGjrMyDqMWacokDWilSslPTkqCwZgFH9RRXOz4NfF/h4Cp1hdpUJyE=
+X-Gm-Gg: ATEYQzxvtje/IyEc0Qrp4qcimGEBwCRSWNrrmkda7wetsFWFtjEnUKJYz01gbkCprc0
+ JescBHcPBUCWNP93PzsRTLIPLz2TjMyXOLZPq3urZafUZiZy49IfpD0mlEDB6skv4JwmIy4mLOK
+ ZPkjXosbYKTsr+qui/jkdHsVx0/ZXXrQZNvHrw1Av97sJKlOM4N246YRiXAmEgpywt9ZLrKvY25
+ 1XHxgoWwHkDVj8xxm3TI+GtcUu0FAgluuCi55dnVB4WER+9txJ+WIXgkog1pVERuuiz3HiosEoo
+ 3zJ17lsjRZaVJBBKbpNGJCyOEvVfwERvoPWSBbuaFsfJTyYeXLFqxYRKOLbB12NCe9JrEOSv0Cm
+ CEpQl7PiS0DFf41iPZ/tSVTV/YvvG+vtgEzHIb2ZPHxdxTOUCD9owxei6ZFWGqX7UuNiLDvMeNu
+ WI4pXIcLstomij3uEUJW/mp2M=
+X-Received: by 2002:a17:907:7f86:b0:b98:654:d9eb with SMTP id
+ a640c23a62f3a-b980fa92acamr415061866b.22.1774011977490; 
+ Fri, 20 Mar 2026 06:06:17 -0700 (PDT)
 Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b98335de3casm158540866b.35.2026.03.20.06.06.17
+ a640c23a62f3a-b983387085fsm155870666b.52.2026.03.20.06.06.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 06:06:20 -0700 (PDT)
+ Fri, 20 Mar 2026 06:06:16 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D39035FAFB;
- Fri, 20 Mar 2026 13:06:10 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id D59F15F9CE;
+ Fri, 20 Mar 2026 13:06:08 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 35/35] tests/tcg: add basic test for aarch64 wf[ie][t]
- insns
-Date: Fri, 20 Mar 2026 13:06:06 +0000
-Message-ID: <20260320130607.2071996-36-alex.bennee@linaro.org>
+Subject: [RFC PATCH 15/35] target/arm: migrate check_hcr_el2_trap to use
+ syndrome helper
+Date: Fri, 20 Mar 2026 13:05:46 +0000
+Message-ID: <20260320130607.2071996-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260320130607.2071996-1-alex.bennee@linaro.org>
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,195 +106,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+It shares the same COPROC_ISS encoding as the other CP traps although
+not all the fields are used.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/aarch64/system/wfx.c            | 126 ++++++++++++++++++++++
- tests/tcg/aarch64/Makefile.softmmu-target |   8 ++
- tests/tcg/aarch64/system/boot.S           |  12 ++-
- 3 files changed, 145 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/aarch64/system/wfx.c
+ target/arm/syndrome.h       | 16 ++++++++++++++++
+ target/arm/tcg/vfp_helper.c |  5 +----
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/tests/tcg/aarch64/system/wfx.c b/tests/tcg/aarch64/system/wfx.c
-new file mode 100644
-index 00000000000..567d9e59c70
---- /dev/null
-+++ b/tests/tcg/aarch64/system/wfx.c
-@@ -0,0 +1,126 @@
-+/*
-+ * WFX Instructions Test (WFI, WFE, WFIT, WFET)
-+ *
-+ * Copyright (c) 2024 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdint.h>
-+#include <minilib.h>
-+#include "gicv3.h"
-+
-+#define __stringify_1(x...) #x
-+#define __stringify(x...)   __stringify_1(x)
-+
-+#define read_sysreg(r) ({                                           \
-+            uint64_t __val;                                         \
-+            asm volatile("mrs %0, " __stringify(r) : "=r" (__val)); \
-+            __val;                                                  \
-+})
-+
-+#define write_sysreg(r, v) do {                     \
-+        uint64_t __val = (uint64_t)(v);             \
-+        asm volatile("msr " __stringify(r) ", %x0"  \
-+                 : : "rZ" (__val));                 \
-+} while (0)
-+
-+#define isb() asm volatile("isb" : : : "memory")
-+#define sev() asm volatile("sev" : : : "memory")
-+#define wfi() asm volatile("wfi" : : : "memory")
-+#define wfe() asm volatile("wfe" : : : "memory")
-+#define wfit(reg) asm volatile("wfit %0" : : "r" (reg) : "memory")
-+#define wfet(reg) asm volatile("wfet %0" : : "r" (reg) : "memory")
-+
-+#define enable_irq()  asm volatile("msr daifclr, #2" : : : "memory")
-+#define disable_irq() asm volatile("msr daifset, #2" : : : "memory")
-+
-+static void wait_ticks(uint64_t ticks)
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 2e3121aec9c..4fbc35ce7b0 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -251,6 +251,22 @@ FIELD(COPROC_ISS, OP2, 17, 3)
+ FIELD(COPROC_ISS, COND, 20, 4)
+ FIELD(COPROC_ISS, CV, 24, 1)
+ 
++static inline uint32_t syn_cp10_rt_trap(int cv, int cond, int opc1,
++                                        int crn, int rt, int isread)
 +{
-+    uint64_t start = read_sysreg(cntvct_el0);
-+    while ((read_sysreg(cntvct_el0) - start) < ticks) {
-+        /* spin */
-+    }
++    uint32_t res = syn_set_ec(0, EC_FPIDTRAP);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++
++    res = FIELD_DP32(res, COPROC_ISS, CV, cv);
++    res = FIELD_DP32(res, COPROC_ISS, COND, cond);
++    res = FIELD_DP32(res, COPROC_ISS, OP1, opc1);
++    res = FIELD_DP32(res, COPROC_ISS, CRN, crn);
++    res = FIELD_DP32(res, COPROC_ISS, RT, rt);
++    res = FIELD_DP32(res, COPROC_ISS, ISREAD, isread);
++
++    return res;
 +}
 +
-+int main(void)
-+{
-+    uint64_t start, end, elapsed;
-+    uint64_t timeout;
-+
-+    gicv3_init();
-+    gicv3_enable_irq(27); /* Virtual Timer PPI */
-+
-+    ml_printf("WFX Test\n");
-+
-+    /* 1. Test WFI with timer interrupt */
-+    ml_printf("Testing WFI...");
-+    /* Setup virtual timer to fire in 100000 ticks (~2ms at 50MHz) */
-+    start = read_sysreg(cntvct_el0);
-+    write_sysreg(cntv_tval_el0, 100000);
-+    write_sysreg(cntv_ctl_el0, 1); /* Enable timer, no mask */
-+    isb();
-+
-+    /*
-+     * We don't have a full interrupt handler, but WFI should wake up
-+     * when the interrupt is pending even if we have it masked at the CPU.
-+     * PSTATE.I is set by boot code.
-+     *
-+     * We unmask interrupts here to ensure the CPU can take the minimal
-+     * exception handler defined in boot.S.
-+     */
-+    enable_irq();
-+    wfi();
-+    disable_irq();
-+    end = read_sysreg(cntvct_el0);
-+    elapsed = end - start;
-+    if (elapsed < 100000) {
-+        ml_printf("FAILED: WFI woke too early (%ld ticks)\n", elapsed);
-+        return 1;
-+    }
-+    ml_printf("PASSED (elapsed %ld ticks)\n", elapsed);
-+    write_sysreg(cntv_ctl_el0, 0); /* Disable timer */
-+
-+    /* 2. Test WFE and SEV */
-+    ml_printf("Testing WFE/SEV...");
-+    sev(); /* Set event register */
-+    start = read_sysreg(cntvct_el0);
-+    wfe(); /* Should return immediately */
-+    end = read_sysreg(cntvct_el0);
-+    elapsed = end - start;
-+    /* while this should be fast there is some overhead from TCG */
-+    if (elapsed > 20000) {
-+        ml_printf("FAILED: WFE slept despite SEV (%ld ticks)\n", elapsed);
-+        return 1;
-+    }
-+    ml_printf("PASSED (%ld ticks)\n", elapsed);
-+
-+    /* 3. Test WFIT */
-+    ml_printf("Testing WFIT...");
-+    start = read_sysreg(cntvct_el0);
-+    timeout = start + 200000;
-+    wfit(timeout);
-+    end = read_sysreg(cntvct_el0);
-+    elapsed = end - start;
-+    if (elapsed < 200000) {
-+        ml_printf("FAILED: WFIT woke too early (%ld ticks)\n", elapsed);
-+        return 1;
-+    }
-+    ml_printf("PASSED (elapsed %ld ticks)\n", elapsed);
-+
-+    /* 4. Test WFET */
-+    ml_printf("Testing WFET...");
-+    start = read_sysreg(cntvct_el0);
-+    timeout = start + 200000;
-+    wfet(timeout);
-+    end = read_sysreg(cntvct_el0);
-+    elapsed = end - start;
-+    if (elapsed < 200000) {
-+        ml_printf("FAILED: WFET woke too early (%ld ticks)\n", elapsed);
-+        return 1;
-+    }
-+    ml_printf("PASSED (elapsed %ld ticks)\n", elapsed);
-+
-+    ml_printf("ALL WFX TESTS PASSED\n");
-+    return 0;
-+}
-diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
-index c0939a0eeca..9a5b95de621 100644
---- a/tests/tcg/aarch64/Makefile.softmmu-target
-+++ b/tests/tcg/aarch64/Makefile.softmmu-target
-@@ -105,6 +105,14 @@ endif
+ static inline uint32_t syn_cp14_rt_trap(int cv, int cond, int opc1, int opc2,
+                                         int crn, int crm, int rt, int isread,
+                                         bool is_16bit)
+diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
+index 45f2eb0930f..e692bc568bd 100644
+--- a/target/arm/tcg/vfp_helper.c
++++ b/target/arm/tcg/vfp_helper.c
+@@ -1359,10 +1359,7 @@ void HELPER(check_hcr_el2_trap)(CPUARMState *env, uint32_t rt, uint32_t reg)
+         g_assert_not_reached();
+     }
  
- gicv3.o: gicv3.c gicv3.h
- 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
-+
-+wfx: CFLAGS += -march=armv8.7-a
-+wfx: LDFLAGS += gicv3.o
-+wfx: gicv3.o
-+
-+QEMU_GICV3_MACHINE=-M virt,gic-version=3 -cpu max -display none
-+run-wfx: QEMU_OPTS=$(QEMU_GICV3_MACHINE) $(QEMU_BASE_ARGS) -kernel
-+
- ifneq ($(CROSS_CC_HAS_ARMV8_MTE),)
- QEMU_MTE_ENABLED_MACHINE=-M virt,mte=on -cpu max -display none
- QEMU_OPTS_WITH_MTE_ON = $(QEMU_MTE_ENABLED_MACHINE) $(QEMU_BASE_ARGS) -kernel
-diff --git a/tests/tcg/aarch64/system/boot.S b/tests/tcg/aarch64/system/boot.S
-index 03a5bad2ab0..6a71fc0da5a 100644
---- a/tests/tcg/aarch64/system/boot.S
-+++ b/tests/tcg/aarch64/system/boot.S
-@@ -60,7 +60,6 @@ curr_sp0_irq:
- curr_sp0_fiq:
- curr_sp0_serror:
- curr_spx_sync:
--curr_spx_irq:
- curr_spx_fiq:
- curr_spx_serror:
- lower_a64_sync:
-@@ -379,6 +378,17 @@ _exit:
- 	semihosting_call
- 	/* never returns */
+-    syndrome = ((EC_FPIDTRAP << ARM_EL_EC_SHIFT)
+-                | ARM_EL_IL
+-                | (1 << 24) | (0xe << 20) | (7 << 14)
+-                | (reg << 10) | (rt << 5) | 1);
++    syndrome = syn_cp10_rt_trap(1, 0xe, 7, reg, rt, 1);
  
-+	/*
-+	 * IRQ handler
-+	 */
-+	.global curr_spx_irq
-+curr_spx_irq:
-+	/* Minimal IRQ handler: just mask the timer and return */
-+	mrs	x0, cntv_ctl_el0
-+	orr	x0, x0, #2		/* IMASK=1 */
-+	msr	cntv_ctl_el0, x0
-+	eret
-+
- 	/*
- 	 * Helper Functions
- 	*/
+     raise_exception(env, EXCP_HYP_TRAP, syndrome, 2);
+ }
 -- 
 2.47.3
 
