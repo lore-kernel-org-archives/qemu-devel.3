@@ -4,95 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C68A110987A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62CB10987AF
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3cPa-0000TF-On; Fri, 20 Mar 2026 12:09:22 -0400
+	id 1w3csb-0003IL-36; Fri, 20 Mar 2026 12:39:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3cPF-0000FF-VC
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:09:06 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3cPD-00008s-Pv
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:09:01 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso19268745e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774022938; x=1774627738; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MlMfDpt1UrnWvCHRhzu62WEH4lx9fXnycrYi+XszbCY=;
- b=lu/w54jb97CXZaYjEfQCZ1Qti4cfIETEn2ej6NP3H3rsHkAlZXbTHSFrjYMzXX9UjB
- I7pPb5avVLcJX/nTq5QGKwEq5qU2R/KlrQppJDoPbk3T74Eq4DGii1GyYGMwIVwAhkf3
- nXFbCX7NEfrwOdDde6aCkX2OcCMCDFSmpYsQq0w5UERnTGEeFIpfEFiX72ZNn5uNnouo
- t8BuNrHINgiig6RY4ejx23Ji4ugJC3QL8dyuFiUfR2PZCjqQG+eqCIi5QAR6YZ+BExHb
- jGO//TP/mAvMEkHjuuwnmZc6la2ZU/fSkV54LfKbRhIWpg1c2QAAb0BJvHd7fM67Wlr4
- r8lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774022938; x=1774627738;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MlMfDpt1UrnWvCHRhzu62WEH4lx9fXnycrYi+XszbCY=;
- b=kE7Kht8PxdRy84MGmb3iNqjqoOAFx/pWxrf1sARrE/H80uNXSKuvzcFPtll2NYqIGB
- P/gw5OZ6vgQHAyRKC/67e+zWIZkKOhztUOW0fXE1QNzkjQKK/V3iVhyWkQR0O4d2Na/n
- zHZUXxaOGZyHf94wV5dQZ6JbOOcwR1CRtMtDK6dxhtpJ1+iBGju1NFZjXI/4iDmQUPxd
- hQWk8xpcxfnzk42FC1m/xf95359evaRIdhGdIeWfF8YAy7kbIf8WsUbiPRJjOaDuWjQN
- Vb73/g0VqRTnlddFKx+ZPWtUj2Mr1DZd8I6CV4WCkzyf8ZO7ykGowlafj/FP4AncjMeQ
- 9eqg==
-X-Gm-Message-State: AOJu0YxzeMU7cFpNjzGZQmKylgdgew52ufx16DVEsPpELOmTzt1VuQxl
- O3onudLZghrxHidvIeZCaICqemXtbEUVvK9KizQXMf4nESjW2A+A7HUeULrbirNUKih5H2AYanC
- 2Ba7Abfk=
-X-Gm-Gg: ATEYQzzoAOjowMa0ktJIQdfUd4D73exMCylfeQWrfB9jM7fuWif80+2vVxX5r55rapT
- vNFdedbIn8rOzcsdzgwl6GyIw/LOkHFD/UNA9lmmMLtsOhNhxkPqtQgLBQhcfxGpNYcKfGrbXv+
- 8JzPoHFqejUxpMSNiZP289kj9o8IVJClCgimE9wl/H556bEa1PlTFXptFjffJvPKMViYNRi+8aE
- BKo8b065+g+62sc7VAdHDLT5eEZZfSR7EteveOZ0uZn1OoglT0c3WW48ezxoik6UBq7cJ7a84vx
- DGaz5BE1VrlSpOo/CarM6XWipmKQMhm6JK+8KC84RW+u2SOO/uq5r+iK6kGucF7lWGQF/ZgjgLp
- oXVcm+1HYTy0yp7MWXHPxH+E1OkafEffXnBNZydz3umU7IFNCKCtHctHh1105nDvL7QNZILi+XV
- wg04mY40YSgY6S3ZzVokWsE28wWlHgfHebi4xC156agRAbmHzNUCt6obyxdWvtQnFhbkTHvvGz
-X-Received: by 2002:a05:600c:3483:b0:487:12c:e7ea with SMTP id
- 5b1f17b1804b1-487012ce938mr37256925e9.5.1774022937693; 
- Fri, 20 Mar 2026 09:08:57 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe7e2665sm82629185e9.6.2026.03.20.09.08.56
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Mar 2026 09:08:57 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1w3csG-0003He-JA
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:39:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1w3cs9-0006P5-3h
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:38:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774024730;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ojVgpHPdozufTm2eUCtk3vbv6e1CEZRkZVvHlIrz0JI=;
+ b=e9Psw3N3qKS01L+hoON/ug8flSEZODEn+supIXS4jRY9gIFD6dmTqQ/X37Srk14KQqeHhw
+ fsNecdfo4C/P/iY1vLcuk5hRMcXejiNL2B9T5ubmVnv/2+HD12lhBBhO2nHVkAB7R/FYCN
+ uvbpRaa3afLHaoEh2S4AjRUBYvA8hAI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-04JXGDxbO2enli6-BCpruA-1; Fri,
+ 20 Mar 2026 12:38:48 -0400
+X-MC-Unique: 04JXGDxbO2enli6-BCpruA-1
+X-Mimecast-MFC-AGG-ID: 04JXGDxbO2enli6-BCpruA_1774024728
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2FF98195609D
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 16:38:48 +0000 (UTC)
+Received: from lenovo-t14s.redhat.com (unknown [10.45.224.233])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 16A1B1800763; Fri, 20 Mar 2026 16:38:45 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 06/10] target/sparc: Replace legacy
- target_monitor_defs -> legacy_monitor_defs
-Date: Fri, 20 Mar 2026 17:08:06 +0100
-Message-ID: <20260320160811.28611-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260320160811.28611-1-philmd@linaro.org>
-References: <20260320160811.28611-1-philmd@linaro.org>
+Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH] virtio-net: allow vhost-user backends to provide config space
+Date: Fri, 20 Mar 2026 17:38:44 +0100
+Message-ID: <20260320163844.754762-1-lvivier@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,72 +83,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose sparc64_monitor_defs within target/sparc/ and register
-it as CPUClass::legacy_monitor_defs hook (taking care to not
-register it on 32-bit SPARC target).
+Remove the vDPA-only guard on vhost_net_get_config/set_config calls so
+any vhost backend that negotiates VHOST_USER_PROTOCOL_F_CONFIG can
+provide device configuration.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+To manage backends that don't support vhost_net_get_config/set_config,
+modify the stubs and vhost_net_get_config/vhost_net_set_config
+with NULL vhost_net parameter to return -ENOSYS.
+
+Until now VHOST_USER_PROTOCOL_F_CONFIG was requisited with the
+supports_config flag in VhostUserState or ignored, but now stop
+stripping VHOST_USER_PROTOCOL_F_CONFIG when the device code doesn't
+explicitly require it, so vhost-user backends that advertise F_CONFIG
+can negotiate it.
+
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 ---
- target/sparc/cpu.h     | 2 ++
- target/sparc/cpu.c     | 3 +++
- target/sparc/monitor.c | 9 +++------
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ hw/net/vhost_net-stub.c |  4 ++--
+ hw/net/vhost_net.c      |  8 ++++++++
+ hw/net/virtio-net.c     | 36 ++++++++++--------------------------
+ hw/virtio/vhost-user.c  | 31 +++++++++++--------------------
+ 4 files changed, 31 insertions(+), 48 deletions(-)
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index ac0eb9f0faa..83f6859019d 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -7,6 +7,8 @@
- #include "exec/target_long.h"
- #include "qemu/cpu-float.h"
+diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
+index 0740d5a2ebe6..6edc0a222f3b 100644
+--- a/hw/net/vhost_net-stub.c
++++ b/hw/net/vhost_net-stub.c
+@@ -53,12 +53,12 @@ void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
+ int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
+                          uint32_t config_len)
+ {
+-    return 0;
++    return -ENOSYS;
+ }
+ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
+                          uint32_t offset, uint32_t size, uint32_t flags)
+ {
+-    return 0;
++    return -ENOSYS;
+ }
  
-+extern const MonitorDef *sparc64_monitor_defs;
+ void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index a8ee18a91266..13f926b5cfb6 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -42,11 +42,19 @@ void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
+ int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
+                          uint32_t config_len)
+ {
++    if (net == NULL) {
++        return -EINVAL;
++    }
 +
- #if !defined(TARGET_SPARC64)
- #define TARGET_DPREGS 16
- #define TARGET_FCCREGS 1
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 1493336e7a2..65468ceeb78 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -1096,6 +1096,9 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
-     cc->gdb_core_xml_file = "sparc64-cpu.xml";
- #else
-     cc->gdb_core_xml_file = "sparc32-cpu.xml";
-+#endif
-+#if defined(TARGET_SPARC64)
-+    cc->legacy_monitor_defs = sparc64_monitor_defs;
- #endif
-     cc->tcg_ops = &sparc_tcg_ops;
+     return vhost_dev_get_config(&net->dev, config, config_len, NULL);
  }
-diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
-index 99abddbf1e0..377c2b18cab 100644
---- a/target/sparc/monitor.c
-+++ b/target/sparc/monitor.c
-@@ -38,8 +38,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-     dump_mmu(env1);
+ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
+                          uint32_t offset, uint32_t size, uint32_t flags)
+ {
++    if (net == NULL) {
++        return -EINVAL;
++    }
++
+     return vhost_dev_set_config(&net->dev, data, offset, size, flags);
  }
  
--const MonitorDef monitor_defs[] = {
- #ifdef TARGET_SPARC64
-+static const MonitorDef monitor_defs[] = {
-     { "asi", offsetof(CPUSPARCState, asi) },
-     { "pstate", offsetof(CPUSPARCState, pstate) },
-     { "cansave", offsetof(CPUSPARCState, cansave) },
-@@ -47,11 +47,8 @@ const MonitorDef monitor_defs[] = {
-     { "otherwin", offsetof(CPUSPARCState, otherwin) },
-     { "wstate", offsetof(CPUSPARCState, wstate) },
-     { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
--#endif
-     { NULL },
- };
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 2a5d642a6476..7ad2dac450d9 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -180,17 +180,9 @@ static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
+                  n->rss_data.supported_hash_types);
+     memcpy(config, &netcfg, n->config_size);
  
--const MonitorDef *target_monitor_defs(void)
--{
--    return monitor_defs;
--}
-+const MonitorDef *sparc64_monitor_defs = monitor_defs;
-+#endif
+-    /*
+-     * Is this VDPA? No peer means not VDPA: there's no way to
+-     * disconnect/reconnect a VDPA peer.
+-     */
+-    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
+-        ret = vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&netcfg,
+-                                   n->config_size);
+-        if (ret == -1) {
+-            return;
+-        }
+-
++    ret = vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&netcfg,
++                               n->config_size);
++    if (ret >= 0) {
+         /*
+          * Some NIC/kernel combinations present 0 as the mac address.  As that
+          * is not a legal address, try to proceed with the address from the
+@@ -223,15 +215,9 @@ static void virtio_net_set_config(VirtIODevice *vdev, const uint8_t *config)
+         qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
+     }
+ 
+-    /*
+-     * Is this VDPA? No peer means not VDPA: there's no way to
+-     * disconnect/reconnect a VDPA peer.
+-     */
+-    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
+-        vhost_net_set_config(get_vhost_net(nc->peer),
+-                             (uint8_t *)&netcfg, 0, n->config_size,
+-                             VHOST_SET_CONFIG_TYPE_FRONTEND);
+-      }
++    vhost_net_set_config(get_vhost_net(nc->peer),
++                         (uint8_t *)&netcfg, 0, n->config_size,
++                         VHOST_SET_CONFIG_TYPE_FRONTEND);
+ }
+ 
+ static bool virtio_net_started(VirtIONet *n, uint8_t status)
+@@ -3868,6 +3854,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VirtIONet *n = VIRTIO_NET(dev);
++    struct virtio_net_config netcfg = {};
+     NetClientState *nc;
+     int i;
+ 
+@@ -4023,12 +4010,9 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     nc = qemu_get_queue(n->nic);
+     nc->rxfilter_notify_enabled = 1;
+ 
+-   if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
+-        struct virtio_net_config netcfg = {};
+-        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+-        vhost_net_set_config(get_vhost_net(nc->peer),
+-            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
+-    }
++    memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
++    vhost_net_set_config(get_vhost_net(nc->peer), (uint8_t *)&netcfg, 0,
++                         ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
+     QTAILQ_INIT(&n->rsc_chains);
+     n->qdev = dev;
+ 
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index a8907cca74ec..2c310403851f 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -2196,28 +2196,19 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+             return -EPROTO;
+         }
+ 
+-        /*
+-         * We will use all the protocol features we support - although
+-         * we suppress F_CONFIG if we know QEMUs internal code can not support
+-         * it.
+-         */
+         protocol_features &= VHOST_USER_PROTOCOL_FEATURE_MASK;
+ 
+-        if (supports_f_config) {
+-            if (!virtio_has_feature(protocol_features,
+-                                    VHOST_USER_PROTOCOL_F_CONFIG)) {
+-                error_setg(errp, "vhost-user device expecting "
+-                           "VHOST_USER_PROTOCOL_F_CONFIG but the vhost-user backend does "
+-                           "not support it.");
+-                return -EPROTO;
+-            }
+-        } else {
+-            if (virtio_has_feature(protocol_features,
+-                                   VHOST_USER_PROTOCOL_F_CONFIG)) {
+-                warn_report("vhost-user backend supports "
+-                            "VHOST_USER_PROTOCOL_F_CONFIG but QEMU does not.");
+-                protocol_features &= ~(1ULL << VHOST_USER_PROTOCOL_F_CONFIG);
+-            }
++        /*
++         * Fail if vhost-user device expects F_CONFIG but backend doesn't
++         * provide it. Otherwise negotiate as usual.
++         */
++        if (supports_f_config &&
++            !virtio_has_feature(protocol_features,
++                                VHOST_USER_PROTOCOL_F_CONFIG)) {
++            error_setg(errp, "vhost-user device expecting "
++                       "VHOST_USER_PROTOCOL_F_CONFIG but the vhost-user backend does "
++                       "not support it.");
++            return -EPROTO;
+         }
+ 
+         if (!u->user->supports_inflight_migration ||
 -- 
 2.53.0
 
