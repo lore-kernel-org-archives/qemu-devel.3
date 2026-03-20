@@ -4,102 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD991099B53
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 23:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE27E1099B4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 23:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3jTX-0005Sn-Rv; Fri, 20 Mar 2026 19:41:55 -0400
+	id 1w3jjH-0007rQ-3o; Fri, 20 Mar 2026 19:58:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <landonclipp@gmail.com>)
- id 1w3jQe-0004d7-RH
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 19:38:56 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ id 1w3jjG-0007r6-4C
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 19:58:10 -0400
+Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <landonclipp@gmail.com>)
- id 1w3jQd-0006av-Cy
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 19:38:56 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-509134ab2d2so21072071cf.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 16:38:52 -0700 (PDT)
+ id 1w3jjE-00008I-M9
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 19:58:09 -0400
+Received: by mail-qv1-xf35.google.com with SMTP id
+ 6a1803df08f44-899a9f445cbso28841856d6.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 16:58:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774049932; x=1774654732; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1774051087; x=1774655887; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NPOeYfcd3a8RIxnu94gsrILewZg9g9bl+gIZgb4Msao=;
- b=Y8SBsRYsJXJKKYLKRpj349E1v2OrFW3I9fb770M+cHQsYbiBnQV8d+ueGFx3NBaSSv
- vMlogyF6Xo8PBc8E4KJS0NsnCpy7fwgDdr6DECkXrigm4SKIPZIlCEhvmo8qmPxS9QTB
- ewE+p31jlN9jicF7zLw1x7ozFumgFDByneE0tJiM0+UudoO8F4rMU+0VwcpHny+hUzY+
- akOSXLKeanKWIWu1SfJ1NNb85aJgP7IVk+ahqwCvaSH3Zc4WJx/n/GiNYgynVb/9Woio
- ZrxWKLC6RJkuWw/OZkghBeWz9b3t5VtJalOYF8/PN/XkARlQU3dAuqotN/si2Wugna7T
- +/gw==
+ bh=ks57RW+en4ONWkRvCJOQSuqmXz/QxxnWhHRzvSJIgHA=;
+ b=SRfv5CKPh+ftCShAcPzcQ/06iEKhs1fBl/NXlHkhQkuHpGrNeqDNAvKuGWUi1wSpJQ
+ qxw1XOPV8ckZ+zcnVCq1XLwyMwRsXrOm/hEX25VIMUm9kJ/e1rGah6tg5woGJ85pFO10
+ 45zawzeDmeBHnHtc5YcLgYdjZwgLjrOE3ZUgZ9MkKMcNu/x49Og1H9w1NAgV0nbaIroU
+ DuSoXLb+icZTCv8wgYNhvxVGYg8PlhDOG5NDhuIK4K6ZMx/UC+ncvjefdAMIgIRY7SXR
+ fHwMIrPYz7mx9gmA4AMdOKlWeeo3DcdUwZe68Wh4lZQHojJeUZ6Ft6Unk2kxWaPSC1LJ
+ XlrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774049932; x=1774654732;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20251104; t=1774051087; x=1774655887;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NPOeYfcd3a8RIxnu94gsrILewZg9g9bl+gIZgb4Msao=;
- b=TCYlxP1PlRKhpPdvew7sbtpFf6GmuDcLMVh/ah9IqTOMzostec0pcHthI54K9GbTrf
- ET3Cykc7Gabr3UEntR3Wc5/d+RxDQMbN/3fcXVFUrxR2p+XdMnftyfS3qYVCLgJ5+ANf
- HJw//EVR3CYMqPK9H4W06ZLblUmBnQCmRDFu7T9Z9RWEiZXEcP4HmhCDSKzreCZQXChn
- vBSDB/9hJEM+fCdSYQg1966qSe0rRTYpz/6vBzg7TotItSEC7n2j8RhfO4yR66aGtZu0
- zs1Bc7vr8q39hdl0R/IxXGcC32wAxX1jqz6wWKMP/O9pdt9kVDuqqg09fiwjFvf/qEAb
- SFCA==
+ bh=ks57RW+en4ONWkRvCJOQSuqmXz/QxxnWhHRzvSJIgHA=;
+ b=KQPEZ2l6ctJhfXxR6HaqDfOy03xcXB1hLy0re7PXtb42rM7HJT/T3KeDcCgLY8GQgu
+ NYVn6F0RmNBtsxx2Hf9LZCDY00fEwKNUx5BeBKvF0Vso3pR/2AdA5EZxmwexXFhsguHs
+ DQv7x7MjImciwdlFfPMYolImnqfIH/KUMttJBs6whlx0RkUlX4eTF2SwL18/Q2mit+sS
+ mgZGf5SZm6Gq5Acr6/YcC1kSQHvaLqHwWdDk9AWDDuuGg931BwV3E98xahpeu/9PotRv
+ JHKjc2QXtDHL/gOFXyMROeKV4SKTNf3BmmwiivKvkIRxi9xDvjWj1+2HUD/astBjsRnu
+ PKbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDqqDbx3LHK7W/jl8i/UahkTsTPkiju3WmgjaIzDKjYrUEO4+dq68M9Kpv9zaZWdgjx26GL8szmt/o@nongnu.org
-X-Gm-Message-State: AOJu0YwfGoGY9DaYIFg1jTWrdP1c6PJzk63gakxCMbQtFfvLerwlS0aW
- cu9gSirfFSXe4eKlPUapJ8iT8wcALBozdN3YAtE4zAo7imIaNoi/O5Y5
-X-Gm-Gg: ATEYQzyxx5nivTqoG9pFvOpmIUMf0ZyV4swQ++5H+eEdM9tkm+/P2kc/adS7equl4Xa
- /lIoSaJjnnqE1kOPOMXAS6F7QRjW5Rwjauv0/pkXWl/T1wgcCyjlOFRX5T2H/F2jgtOuNcSbiwm
- JhODmjzMmUilzlTzcK4fvE0SB7v3Ixp0dQ36ujAy9ykPAd2kv8D22CGFouqkFiOPUuQbm1yNMa0
- E4sIGAU8lOuZ2WQPkeIm/QOI7SqoVf09q/BQp/zXnnL2tCAvk3G8tMWnRdMosn+Yt6ZaWZTgMK2
- ZlUoJ7w3qtolS2zglP0USe5Er2P76WOodtX2kzod4hP2QJZk2rmhUqgIdZxE9gzL6d2ZvTZcJ83
- vAQW0SLsapf9r8CG97IC8iiOoAGeE+vr7CD/NDrmwG8z1LTgzWCn2WYrfXd5kGk6wPyXxaUbC5p
- Ay1Skv2fgi47Xo1ZLgCShVRzM7jqQgCWiXvS0Mh43iLcXlJYDVeEGzo7qgg58pjDbbx9j58gCex
- AU=
-X-Received: by 2002:a05:622a:848f:b0:509:61:b22 with SMTP id
- d75a77b69052e-50b37566620mr53148851cf.57.1774049932015; 
- Fri, 20 Mar 2026 16:38:52 -0700 (PDT)
+ AJvYcCVPzhXZR+825nqXeXk4bIgP30GYHapDk4t62iuY8KQdyDF+lKvAInEgJrh9A+Bl6ZjgFdEKPhslOZnP@nongnu.org
+X-Gm-Message-State: AOJu0Yyzpay0TtlVGJlgzurjMKJeUJNq99vxoU8m3pSfgnM2tA10KkuC
+ qHU4pIS/e7zYUAVueDDUh2D1f4THuYJuliwzZIb6pP736m62tbCVIBXX
+X-Gm-Gg: ATEYQzyPxIwXDSd58SUi4RjwQcETu4goexBnXNwIC3zogy8YhDT4/dFPSms4+Zsphzk
+ 0/1HnTLPICR1thYGaPpY5y2aMQvh7wXlz9vbsQ1yypmNOK03CI9eXYFaU1+RFouhxYi9xWI/UMD
+ acCIMjflMwCPw6L+RsPCQYwcnogBxRenbZBYcKvLYF6AwP5854jeZkJoxcJGb+6Yvk68oAP4Nfd
+ 0AeeOR94GMsldVkD7I63qI76m/rTM/YocVWaY5r5ykIZhdF41LH2ApKNnYGuSeVT2rsi1/AXaga
+ eDdwfsNC/MEX5CY6DRPmAIbPQj/8/AKpdjdNf3gB+A3+YbaoioiRG2y+W26HlI9qe9oXp7uo3Pq
+ UYbGFCL43u7Xi7+xYDO/GNq5DZ6xokRMSm7Qwza+IQy2S4AmdLOchjlh9XyGvV3joEzReJ8eXfR
+ kRPUXZ2ID5GuCeXyVkgO/iKblIERNu1DqZKD0WrBoE53PN80B1ZhXUb2FOsDCWmCFaOcdn+ASfl
+ OOa4E+Z8G3rnA==
+X-Received: by 2002:a05:6214:21c7:b0:89c:518b:9dbd with SMTP id
+ 6a1803df08f44-89c85a7e205mr83165526d6.46.1774051087345; 
+ Fri, 20 Mar 2026 16:58:07 -0700 (PDT)
 Received: from localhost (c-71-194-28-115.hsd1.il.comcast.net. [71.194.28.115])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50b36cb2e29sm35646841cf.1.2026.03.20.16.38.48
+ 6a1803df08f44-89c85215210sm31650716d6.2.2026.03.20.16.58.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 16:38:50 -0700 (PDT)
+ Fri, 20 Mar 2026 16:58:06 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 20 Mar 2026 18:38:47 -0500
-Message-Id: <DH807PW5SQCW.3AA422QQRGVAH@gmail.com>
+Date: Fri, 20 Mar 2026 18:58:04 -0500
+Message-Id: <DH80MH0YC5X4.2PMVY8O5WQJ8U@gmail.com>
+Subject: Re: [Qemu-arm] [PATCH/RFC 4/5] vfio: No-IOMMU mode support
+From: "Landon Clipp" <landonclipp@gmail.com>
+To: "Landon Clipp" <landonclipp@gmail.com>, "Alex Williamson"
+ <alex.williamson@redhat.com>, "Geert Uytterhoeven"
+ <geert+renesas@glider.be>
 Cc: "Peter Maydell" <peter.maydell@linaro.org>, "Auger Eric"
  <eric.auger@redhat.com>, "Xiao Feng Ren" <renxiaof@linux.vnet.ibm.com>,
  "Arnd Bergmann" <arnd@arndb.de>, "Alexander Graf" <agraf@suse.de>, "Magnus
  Damm" <magnus.damm@gmail.com>, "Laurent Pinchart"
  <laurent.pinchart@ideasonboard.com>, "Wolfram Sang"
- <wsa+renesas@sang-engineering.com>, "Landon Clipp" <landonclipp@gmail.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
- <linux-renesas-soc@vger.kernel.org>
-Subject: Re: [Qemu-arm] [PATCH/RFC 4/5] vfio: No-IOMMU mode support
-From: "Landon Clipp" <landonclipp@gmail.com>
-To: "Alex Williamson" <alex.williamson@redhat.com>, "Geert Uytterhoeven"
- <geert+renesas@glider.be>
+ <wsa+renesas@sang-engineering.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, <linux-renesas-soc@vger.kernel.org>
 X-Mailer: aerc 0.21.0
 References: <1518189456-2873-1-git-send-email-geert+renesas@glider.be>
  <1518189456-2873-5-git-send-email-geert+renesas@glider.be>
- <20180209085024.004b6f9e@w520.home>
-In-Reply-To: <20180209085024.004b6f9e@w520.home>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=landonclipp@gmail.com; helo=mail-qt1-x833.google.com
+ <20180209085024.004b6f9e@w520.home> <DH807PW5SQCW.3AA422QQRGVAH@gmail.com>
+In-Reply-To: <DH807PW5SQCW.3AA422QQRGVAH@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
+ envelope-from=landonclipp@gmail.com; helo=mail-qv1-xf35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 20 Mar 2026 19:41:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,62 +113,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Feb 9, 2018 at 9:50 AM CST, Alex Williamson wrote:
-> On Fri,  9 Feb 2018 16:17:35 +0100
-> Geert Uytterhoeven <geert+renesas@glider.be> wrote:
->
->> From: Xiao Feng Ren <renxiaof@linux.vnet.ibm.com>
->>=20
->> Add qemu support for the newly introduced VFIO No-IOMMU driver.
->>=20
->> We need to add special handling for:
->> - Group character device is /dev/vfio/noiommu-$GROUP.
->> - No-IOMMU does not rely on a memory listener.
->> - No IOMMU will be set for its group, so no need to call
->>   vfio_kvm_device_add_group.
->>=20
->> Signed-off-by: Xiao Feng Ren <renxiaof@linux.vnet.ibm.com>
->> [geert: Rebase]
->> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
->> ---
->>  hw/vfio/common.c              | 61 ++++++++++++++++++++++++++++++++++--=
--------
->>  include/hw/vfio/vfio-common.h |  2 ++
->>  2 files changed, 50 insertions(+), 13 deletions(-)
->
-> NAK.  I'm opposed to no-iommu support in QEMU in general, but accepting
-> vfio devices with no-iommu (which provide no DMA translation!!!)
-> transparently as if they might actually work like a regular vfio device
-> is absolutely unacceptable.  Without DMA translation and isolation, you
-> might want to think about another interface, I'm not keen on the idea
-> of corrupting vfio support in order to blink some LEDs.  Thanks,
->
-> Alex
->
+I don't know whether the threading will work 8 years in the past, this is t=
+he
+link to the original conversation:
+https://lists.gnu.org/archive/html/qemu-arm/2018-02/msg00226.html.
 
-8 years later, I was wondering if we could revisit this. I found myself in =
-a
-need to use enable_unsafe_noiommu_mode due to some systems I'm using not ha=
-ving
-a usable IOMMU. QEMU is being used as part of a single-tenant workload
-sandboxing environment, and given the specific circumstances, both the user=
-s and
-the administrators understand that enabling the noiommu mode is unsafe and
-cannot be used where security matters. Regardless, it's still something we =
-want.
-
-As the administrator of my system, it's under my control whether VFIO is pu=
-t
-into this mode, and if it is, I would expect the remaning software componen=
-ts
-to respect that decision. As is, the system is unusable because of a lack o=
-f
-support in QEMU.
-
-I'm happy to elucidate more of my use-case if it is helpful, but I first wa=
-nted to
-gauge your willingness to reconsider this under a different context.
-
-Regards,
-Landon (CoreWeave)
+Landon
 
