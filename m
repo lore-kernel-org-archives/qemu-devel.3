@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B141098783
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699431098783
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ZYU-0002uH-S8; Fri, 20 Mar 2026 09:06:22 -0400
+	id 1w3ZYU-0002uG-TU; Fri, 20 Mar 2026 09:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYT-0002t7-Hp
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:21 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1w3ZYQ-0002px-GI
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:18 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYR-00062O-FX
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:21 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-6674cba2c50so4140301a12.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:18 -0700 (PDT)
+ id 1w3ZYN-0005zz-5u
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:17 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b97f9587e6eso236283266b.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774011978; x=1774616778; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774011973; x=1774616773; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fsdtiykTnW0VjyAme87SkjxBD+RX78r+rOirb5jXuhA=;
- b=DciyGpdEL4wLt+nnEB/K8fQ9bBZ1J0Yc/2IfcJZrOm7A0780bOhEFOSZKNUDHa4FNt
- eF7laWU0bZpLCTotdSHiWXeJ8sC/CRW3Fr3b7DfWnggkazK7q8UvwxJVEC37wLBa6bPO
- nBa5HttgGBBxU0JGa3MRubsjA8PfumCD+7UK7356lU9trzMlAxKtZfWKJE8r41CDwHEa
- Ua8iJNOg/Vg6xR003AMaB74iQqkeoOCp07hcV4w1dW2BPHPfAQhK0MRZdYlsMOavRcjk
- W+3iYrTNGsP+5cMngkpV6KFKn6vatnFZUG1561h+UhaPmdFwVI4erkzGtE6ZOEZ364XU
- F+vw==
+ bh=1oVoeG3Ip9tmzj6CI2CpooaKW3Tvdm92b0eoQG/BIYs=;
+ b=K2oF38nD1Wvjh6aCTRBUcFoFgYoEqfIEYD6OAZtIqhOdMfKd0929vMOiFnnrFuulFn
+ Ktm3ppgnnCv1rqk5SIOgYMbKlQnejhmHa9sKoYG+hqnWUxmgz6NPHG8hwkPBdFYSURbQ
+ SxBqgntEshHrNrZNgv3VAGDyw3a2eU2wtJEx3984uSeUXP+Agwsjf+XJpzF+ImTOxlcY
+ sKg5H8RPXCSGldaP470yGv4HBO99+7fXEMs9K2Wx7pJkr1UzeWOq22K4SeLS2PM/u7Gs
+ Qip5uDAgod5NZrkAHMEnfzD8tI0KFKroogGrpIPwwKVDjDYQOTPBA/GZk1bpvRCBeUrX
+ lWwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774011978; x=1774616778;
+ d=1e100.net; s=20251104; t=1774011973; x=1774616773;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fsdtiykTnW0VjyAme87SkjxBD+RX78r+rOirb5jXuhA=;
- b=agtIgGia+dnCtLbSPaoCNVFoSmVrE6s33Ciaiq7ZTOg3UtXe3rhSPXhSRzn1nFKFFl
- 4awUyol5MNP1mwTSI6GTa5lzVS4hCPdZ0G9Sy2gc7WbN2y+36+/ljPA9Rz3/NPM2Qp78
- 8FZKq1LaO9rB1bE1NxkgAaMXwXuefcMekHjGbyBt1GLBikBydBGNcsV3u/YS3tBWqc1h
- /x8I/yDvGTh9ryQck8s+pGZHHNB027lzOeG2nwS1HELoZ9LRyGGTNAJ9GJuTYCySqm2Y
- yE4Qv4Ehk/ktqrKNNAh+33P4na5B0ZJsCDlBHG0xfkBhG8P1VnG6Pinn+9bhoudb5W62
- U7bQ==
-X-Gm-Message-State: AOJu0Yy4b0e4DI+EzjlEHY42kmRq0vuZa93yBX8sNwolfCyPpssMDkaK
- hhdUWivRR64Evd8sNXb3q0250u8NWxDeef9EbYIzlRWPJYOc/eITRgJ+OgGA18vBYgY=
-X-Gm-Gg: ATEYQzwKlNXMdYJ9Nn6IlTi3jcSo3cbkuU2pTNpu4TgdBvxFhghxkKwEUUnp83zXm33
- pDA1366r1VSKvDwteChsdl/D6UOJ5YZ+qpqtgZB+9qWebyyVAf7Yp2vlLKVGiWpCJu3SR9/Mkbo
- aqUH4Cg7GDr+NTB2nIE7yPqym/N0OHFHlFS27GpwdCl+RjdHKKugplCQ+dOpbAIUqp1M2JE7aMj
- baeAP4VzCiKppE94mSKVfNe7/r5FOeIZ0NnTsW4gx/fTrEMtUO8rQomggufBjLeQmFRcupN3gzk
- EqGGI2VaLYfVgPQe98GGFYC67eQQNevb2irQNgixuBD3/qItA75Z0J0aPn2oAX3G+Okn0ZGN4dK
- AQ82NtI6UkiXDPEndPztOA/gStDMGtkAYf9ZHnOG0PsI3y8t+i/FjhwIN5Eq6eo3kIoup8B+Slt
- VEkf3VkVkQTcE7wG53J+B1zqQ=
-X-Received: by 2002:a17:906:7947:b0:b97:9a7a:9d21 with SMTP id
- a640c23a62f3a-b980f8f9d4amr463136066b.4.1774011977762; 
- Fri, 20 Mar 2026 06:06:17 -0700 (PDT)
+ bh=1oVoeG3Ip9tmzj6CI2CpooaKW3Tvdm92b0eoQG/BIYs=;
+ b=DVKiBnaqRiIhPec+s+3hrDtsKsut5J0s1ArKJqKoihnwc5PAfjWn4hoBQHxqd04efk
+ fPeOXSIgaycVW0jd68yt9ozOanNCHtJCRhu89i5a7SRBhwdipaaXgEJNgvSt9iqnCM8Z
+ SYaImXreM3gAsZPATR/+12ANQr8lsFavaPFaew51ayi1v/hxjQwV4Xn74nn7StZqyBHz
+ kNImhy2N3okoQCpfhUovIa3WY6dVHAZ1Ki5buD+fBh1tBdFasxgZewoUU8U2kA6DhfUh
+ MxSN8QQkXJ4Sre73mxG3BvS8M5BbpYJp5snzYhSLjJBiBWrBuB48Y3z7mSEGU7Kg8ztu
+ Pwxg==
+X-Gm-Message-State: AOJu0Yy3RTzOn13WE0AhGEq2ibcHVqlIsqqszuz3gQiF/AU8eCaPaavT
+ OnpESOvgl15p81lRI1f5kKNP22lQcdlX2Z0YIaH2BfmZ8NjDSY/E7AJxxG6nECw/xGU=
+X-Gm-Gg: ATEYQzx6Ko4O2N3Wr8G9ApP8KNDyGG77MlhkyMOHoGKo46BtrHcJ5eYfa2etgp1Rk1r
+ Mj8BsSdLFvDDuu9xTAW8ToZZ73sl8dKrp9Q6CzkN8JiGgHW+dG+a1WhXXKw2mHaD0vigX7CIWUH
+ IH25RhlYoxEJDxHtewpxRafCmo80toPHChhbrg6WGbIFfD5g1ue4R3/68ejzsmZTb+3zverVOL9
+ umUIbinLkqSyLjaCzRR22mg6uLxLbCfDa2qgTvENgHQk+CALx6kASKi/0WDrc1Nns9FK7IrRvJB
+ BNnQ/hmZCo8Vg3vqzn70jzA0d1YbiAbqMtjpTs4Gr/zhOetMOuiEQocRkSM7gzvzJ/N8nV4lsgW
+ sRIq7deZcTIKGlJVllTKLRGl5KamUnKclyll6961XynXGrwhdcwrD111UAM+Nbs5f4jIqvyJXW2
+ rTyCe8KZldBi5PWcJ+PedYCJ4IAVH6tFK1dQ==
+X-Received: by 2002:a17:907:398c:b0:b83:1433:78de with SMTP id
+ a640c23a62f3a-b982f0bc06cmr215264466b.12.1774011973226; 
+ Fri, 20 Mar 2026 06:06:13 -0700 (PDT)
 Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9832f88d02sm158124966b.14.2026.03.20.06.06.14
+ a640c23a62f3a-b983398c140sm159882766b.63.2026.03.20.06.06.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 06:06:17 -0700 (PDT)
+ Fri, 20 Mar 2026 06:06:11 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 617645F9F8;
- Fri, 20 Mar 2026 13:06:09 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id DC0055F932;
+ Fri, 20 Mar 2026 13:06:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 21/35] target/arm: use syndrome helpers to query VNCR bit
-Date: Fri, 20 Mar 2026 13:05:52 +0000
-Message-ID: <20260320130607.2071996-22-alex.bennee@linaro.org>
+Subject: [RFC PATCH 05/35] target/arm: migrate SME trap syndromes to
+ registerfields
+Date: Fri, 20 Mar 2026 13:05:36 +0000
+Message-ID: <20260320130607.2071996-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260320130607.2071996-1-alex.bennee@linaro.org>
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,35 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are only valid for data abort syndromes.
-
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/tcg/tlb_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/arm/syndrome.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-index c74d8e785a6..bbe1e70bc43 100644
---- a/target/arm/tcg/tlb_helper.c
-+++ b/target/arm/tcg/tlb_helper.c
-@@ -48,7 +48,7 @@ static inline uint64_t merge_syn_data_abort(uint32_t template_syn,
-      * ST64BV, or ST64BV0 insns report syndrome info even for stage-1
-      * faults and regardless of the target EL.
-      */
--    if (template_syn & ARM_EL_VNCR) {
-+    if (FIELD_EX32(template_syn, DABORT_ISS, VNCR)) {
-         /*
-          * FEAT_NV2 faults on accesses via VNCR_EL2 are a special case:
-          * they are always reported as "same EL", even though we are going
-@@ -190,7 +190,7 @@ void arm_deliver_fault(ARMCPU *cpu, vaddr addr,
-      * because we masked that out in disas_set_insn_syndrome())
-      */
-     bool is_vncr = (access_type != MMU_INST_FETCH) &&
--        (env->exception.syndrome & ARM_EL_VNCR);
-+        FIELD_EX32(env->exception.syndrome, DABORT_ISS, VNCR);
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index b145a52769f..abec0a4908e 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -384,10 +384,18 @@ static inline uint32_t syn_erettrap(int eret_op)
+     return res;
+ }
  
-     if (is_vncr) {
-         /* FEAT_NV2 faults on accesses via VNCR_EL2 go to EL2 */
++/*
++ * ISS encoding for an exception due to SME functionality
++ */
++FIELD(SME_ISS, SMTC, 0, 2)
++
+ static inline uint32_t syn_smetrap(SMEExceptionType etype, bool is_16bit)
+ {
+-    return (EC_SMETRAP << ARM_EL_EC_SHIFT)
+-        | (is_16bit ? 0 : ARM_EL_IL) | etype;
++    uint32_t res = syn_set_ec(0, EC_SMETRAP);
++    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
++    res = FIELD_DP32(res, SME_ISS, SMTC, etype);
++
++    return res;
+ }
+ 
+ static inline uint32_t syn_pacfail(bool data, int keynumber)
 -- 
 2.47.3
 
