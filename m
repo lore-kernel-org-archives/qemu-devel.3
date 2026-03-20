@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6CEA1099B40
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 21:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A13E91099B40
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 21:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3hfZ-0000Yh-Ka; Fri, 20 Mar 2026 17:46:13 -0400
+	id 1w3hkh-0001jv-GM; Fri, 20 Mar 2026 17:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hfI-0000V4-9g
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:46:03 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1w3hkd-0001je-SF
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:51:27 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3hfF-0000SC-Rk
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:45:55 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-82bae83318bso526811b3a.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 14:45:51 -0700 (PDT)
+ id 1w3hka-0001Vi-U6
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 17:51:26 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2ad9516a653so11148405ad.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 14:51:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774043151; x=1774647951; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774043483; x=1774648283; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=j46g4iPUChZ+S2WJJaeW8olfcqhVtkhPDqOXQfw7iwk=;
- b=V9hN1am6sDr5SfB6uQkcKfbgFLkWpvaV1VLVkwb+92K3gQ/eNIaBXznlVC4v5Buv5Z
- ZiY7uXZR32cUI/H7yu4QySvCmKjyceDP+SJuxYOmdd/VvhYOD/S2kUiSZMzxRA59YWab
- QS7oTrYqVDv8g1IMCOTvR52AVs8VzFJEqPcYz4ReZ44ybP3imOvJFBlx54hBAZjIpbjG
- ybSf0ZWrJLUryy9ioxu+nf4UqYC9V598tFJiYD8UqUIiHpVWR3WxEDm4nXrgBnNCISbx
- iStcDM4+YJqbHpoxj1WBmQstHPb9Zd0dLMOutXUPSWfDzh4+AIsOhx8y4V5zEA5SSMaz
- sYCg==
+ bh=XWFuE+0LizUOl7DhNeN9aVSmOiaXaQAlDc65xJAwLcg=;
+ b=zNvThdm25qwiF2MvpqZhRpeIyqe95bKQs8eoNv3vgR4+hDb3+o9u28w89lu7UMhrpG
+ RASoVtQLXvPvzI65bD122e28+vBdTxoWY9w3HfleDlWAeNn93fazYAVrYn2Gmul/TgjH
+ eaO8UigAxKS0VVhZB7AXduZzfFO5biHMwXiiKjYvwPka8Y0Mcm9W4qqsNgtL2YSwFzIV
+ akQk0J1EC9LOGjqlAZsB+0WwE+HeClH/hTfRm4eEgG9gyphAnEWHu1G1arkpJdJ3evay
+ HMjs+NDqof8zsWEK72p25z/fVSlb6b3Sth0dBy2BTbyYyLl697ewv8mQ0TggnmD9tBn6
+ UPuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774043151; x=1774647951;
+ d=1e100.net; s=20251104; t=1774043483; x=1774648283;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=j46g4iPUChZ+S2WJJaeW8olfcqhVtkhPDqOXQfw7iwk=;
- b=ZKsKk5i+J6Au35C2/+y2RMvueTUVlYGTJNId7ZC2A9TrtXsjCy+PJqkm8hnHFrRD1e
- Ezw1Vb2F6xD7vPgB4NTiADxKt9j71A25xII+02P3Auh6H0VbScvdPlR/HS8k6NrC0oAO
- 9GK5wil0XU73LRAo+2g89iabBn1KSuAX0ZPxDUvuUQW7vYpCaDurwc1FIU808/5eHxrN
- IwUt91kuf6V1j0T1hs6yLcxKCLClMD3oZZZG/nau4afOvRJ5CERxCQyEMRPT34iCO3DX
- +WzfPzVIevHd6ryxaqtboM3UaVpPrThcT2TGU5NBeC7vl42fXBd0c+pU1eg7iZ0KoeGW
- J5wg==
+ bh=XWFuE+0LizUOl7DhNeN9aVSmOiaXaQAlDc65xJAwLcg=;
+ b=DUCCIZWHOxeFKdxjo7JVGjsH64JanlUhHQr2e+8eB3Hz7KZobtFBcuTH16F4wyldGp
+ 3WwtBPaJkhoxq+2gKMG0K0KDir9gXDVO+bfWbZi0XVOqf/YO1IgmNahyzhRphmCWcVsD
+ p/rtneMqDVBF5Mb/qiBUpY0dT1jiZuo6E/Er9PP/ER6+M6Q1DfaRuUOWuRjvmuVuEYkk
+ EW5JiObPhDa5CflMXgpqb6Vo02PsLX4X51JMvNS73oNhYXk6sh0KSFVpkh6SHYY7BsNz
+ n5tQGVD8mvUIGQFK7AitHNtHot00HE20FUpMER18sbgcB2e4FwMlBioNJTyRZARLxIRs
+ A8ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/IydAToeoMRtUkDEXwsm1axuzf6a0ziB0x1MRqTEs11lpfZ8QnG8KPNcSSmJoC5ez5zdD8jt9serz@nongnu.org
-X-Gm-Message-State: AOJu0YwEZCiLpc5Ym8X3lu/rnrjYImcmo0VM6iQzUzjk2izBfd9X0KDL
- sglkfhOkKgyLMM1yzgyAwRA2wgDXGZD2H37/SP6L8jq2gy/4FWSLJDT3K1489T/V05U=
-X-Gm-Gg: ATEYQzyFTXEV0+6qnhQy/bTdTXhYGyJPfD+aVeXJyOWithr+zuJJgEeYD/igu5VFWEZ
- uCwXK/NoncnrkQrtDpr7r210vpXrc1fftg54fCF8MihUnVYzU4ymPS+lF5cHoO/+PKDxeMDcYn/
- olVUTVhX0zMvOkbTlczBOo9VIWWFqCyB5DgH14WJbuCi7qyJErodDEt/YWk4ukbougy7Eet4+0K
- WwTT5SyLSHhnnzGkGs7+mZHLXoIwNrpjjzhe1UcP9NW0uCQmLCF7B0IFMKkppQ8bz+q3c0qxEz5
- Sbjb40iuECci6zUbT5uWfXKz9r0pxdFwj5M08EuC8tbFKIj764nxKDUy3fZwNpL4eXuBwTJI93Z
- qAc7TAWcXZ0W0e2YdFDCuvxe1m8Nz40jHKdZOamre84QG7TtHtovc5v2nZBx+EFRi5PnngdR+h/
- 1n6Ovjxup3L1E4DSltF1gMXvwGvNHGrAcaTSgQ0h3/8M9oaRCNbDhEEzAfc8wrdWoa0GeN
-X-Received: by 2002:a05:6a00:300d:b0:7e8:4471:ae6d with SMTP id
- d2e1a72fcca58-82a8c3afd81mr3713449b3a.57.1774043150776; 
- Fri, 20 Mar 2026 14:45:50 -0700 (PDT)
+ AJvYcCVkaHr3YYX9OVK13slTvoYjbrKZDMPUBMWjtayxqpaWKmI1eJVhCJJkCu2UK9EmuCizCP+nfb4a1RZx@nongnu.org
+X-Gm-Message-State: AOJu0YxX4QDs2KozFlYMxQUfiW3c+/tUU2ERlG4yavrJVbFkTiNH8q7p
+ KPzpzS91IwkXNXlkiY49RDsH+bqLyzlQrD8NnK5qV2MiCBWIfEXsjEYCQ4cS7CdgCHI=
+X-Gm-Gg: ATEYQzwZSKio+kpLzaUZnYPjtdaWmNYbym67BEGcKLHNmiewx850pd/AuTYY5Lxrd6/
+ ygfbDJxwQEkZZf3dSFcqjC01z6cmoAl27o/rujIuGOqgB6D4d8HOtPQ1b8t7Nroe1KXkKo8PC0H
+ OLrg7DxmPo2KC0V8XZbwxUdTA/N4SpDHF9gN2YZ2ruhfMAfpRpkRvm0MvFArFA8/7UhzWRJl3ln
+ yRaHKEAYKFLGdkV+UNQIpsk2iZHUN4GZI8dAtChW7c5eQY/MPqM0pU02PgeC2zJYNyN6T1IZEhW
+ 11a8oAqpRUe3PkliL5NmIN5W+KA2DUELroeOTwGokacCgxB5JrfATWzAHakSUh5Ns0dD3HneRLG
+ BctFdehhJZCZDd7zwcXm+6UMt//Yey/I7tznAEC8y4UhNRH0NEjasoRMPmMwVkR58CT3E291ZAU
+ NY/jTdRgPJPlNQ0jTPoM/r4QT76jMoLixLi7WPheQ5o/gtpEvGHFrVgztDMvYkSBpNwEEuWDIrZ
+ rWDk8U=
+X-Received: by 2002:a17:903:2f87:b0:2b0:4c8b:7d33 with SMTP id
+ d9443c01a7336-2b0827d5356mr37925155ad.51.1774043482873; 
+ Fri, 20 Mar 2026 14:51:22 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82b0409c681sm3496716b3a.37.2026.03.20.14.45.50
+ d9443c01a7336-2b083655b5dsm42277765ad.52.2026.03.20.14.51.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 14:45:50 -0700 (PDT)
-Message-ID: <a9556f8b-9e8d-4b68-93a3-3ccf2c664bfc@linaro.org>
-Date: Fri, 20 Mar 2026 14:45:49 -0700
+ Fri, 20 Mar 2026 14:51:22 -0700 (PDT)
+Message-ID: <858c6dde-8ccf-459c-acfe-af38bcba977d@linaro.org>
+Date: Fri, 20 Mar 2026 14:51:22 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-11.1 v6 4/6] monitor: Remove last target_long use in
@@ -123,8 +124,8 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
 In-Reply-To: <20260320091019.59902-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -156,6 +157,39 @@ On 3/20/26 2:10 AM, Philippe Mathieu-Daudé wrote:
 >   monitor/hmp-target.c | 3 +--
 >   1 file changed, 1 insertion(+), 2 deletions(-)
 > 
+> diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+> index 155caedd784..5e9f1b0db5b 100644
+> --- a/monitor/hmp-target.c
+> +++ b/monitor/hmp-target.c
+> @@ -34,7 +34,6 @@
+>   #include "qapi/qapi-commands-control.h"
+>   #include "qapi/qapi-commands-misc.h"
+>   #include "qapi/qapi-commands-machine.h"
+> -#include "exec/target_long.h"
+>   
+>   #if defined(TARGET_S390X)
+>   #include "hw/s390x/storage-keys.h"
+> @@ -93,7 +92,7 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+>   
+>       ret = target_get_monitor_def(cs, name, &tmp);
+>       if (!ret) {
+> -        *pval = (target_long) tmp;
+> +        *pval = target_long_bits() == 32 ? (int32_t)tmp : tmp;
+>       }
+>   
+>       return ret;
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Looking a second time at it, I don't think you need it. Same in previous 
+commit.
+
+Since pval is a pointer to a (signed) int64, sign will be extended from 
+32 bit value automatically. So either, it's a positive value, and will 
+be treated as it is. Or it's a negative value, and all upper bits will 
+be set to 1.
+
+So the casting in int32_t has no effect, since it will be extended again 
+automatically.
+
+Regards,
+Pierrick
 
