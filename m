@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FC8108B8E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CDE6108B8E3
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3WXu-0003tL-N7; Fri, 20 Mar 2026 05:53:34 -0400
+	id 1w3WXj-0003jh-Fn; Fri, 20 Mar 2026 05:53:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w3WXs-0003nE-OM
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w3WXh-0003iC-QU
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w3WXr-0005q5-Ap
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w3WXg-0005lK-9F
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774000409;
+ s=mimecast20190719; t=1774000398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=g0i+eazWBJJCbRzeHxe2h56ko1/cENdsnIx1zZWfy2Q=;
- b=NmU1SNSG6np5lRO/yz4SK8+zUre+dvQk1XuzFqVzE4bApYuIzi4E9IAFqj849iX1yChHiG
- A3If+2VwpUg8xiNtkp8Kqbn4PQPdAxJ0CVedcqNTwwtmzMzDyaMG6c3hIXFByyJx7t2Nli
- zKjSJTUvBvfxCUm2GxJTanyCQtmxXCw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5euiBn3f0/O8o0xYggtpWQYDLJX6fZXYzFK7or9Ows4=;
+ b=RSxhnoTQviYdel6QtD30MWQtysDGmjG5WgyDcb2pwPhF2hlTKj2ydD+yam/o28Y9Gv+mrv
+ E/r3wjOeN5/ADWTiZ2pLH/ZI2EUvXcjK+sFR/Y4V29D0J2q0cVErd0HzsoS6txp9UvmSuD
+ AYVSDAjb6Pq5p44qRebh4KyUlO7SqeI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-P0-JoSt-PQm7Watrle2meQ-1; Fri, 20 Mar 2026 05:53:28 -0400
-X-MC-Unique: P0-JoSt-PQm7Watrle2meQ-1
-X-Mimecast-MFC-AGG-ID: P0-JoSt-PQm7Watrle2meQ_1774000407
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-439a85832c0so1411353f8f.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:53:27 -0700 (PDT)
+ us-mta-607-jZNRRSd-PLaYIV-AT2_6MA-1; Fri, 20 Mar 2026 05:53:17 -0400
+X-MC-Unique: jZNRRSd-PLaYIV-AT2_6MA-1
+X-Mimecast-MFC-AGG-ID: jZNRRSd-PLaYIV-AT2_6MA_1774000396
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4852ccff333so17053295e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774000407; x=1774605207; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774000396; x=1774605196; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=g0i+eazWBJJCbRzeHxe2h56ko1/cENdsnIx1zZWfy2Q=;
- b=gXD1HT/fVRrqR3E5N2SS/mY3g+exyKq1QTgKnx05Ul4Aq39azNyJZeWTKlLN4Vokyg
- ifUkK0E6PUl7aBHeBc6yoJHf6mtLxolNEvspMSyYwcZAX2JrrW/h6ixxHvaeDfWl7k7X
- LfdqrL/jIsraew8yuX2Eaz0Xwt3IcvdfR7dyVW3BYF3/QLs102VNc0U9XK6i4mxArA5P
- 2+aeerHFL3Pz6pQduweqwDjnOh3pC9CbvU/viiccF5mU8qAdbFMRl+2zfqfAhhsyFM9F
- zgIvn3jhPj+6Yd+nHSa0mA9rm3tTTgdD2GKzJuI5Q8VOrcGMpN9F+LPabwM4qNentZQb
- kiLg==
+ bh=5euiBn3f0/O8o0xYggtpWQYDLJX6fZXYzFK7or9Ows4=;
+ b=KtjCiR7D2KdMop25b7+cKRoBY0EMPQfzTp6wOMKEuYOWiABPCJalciRChycrPOFaiZ
+ l9MOk3H0vzm2G3c1KtnRULU9c2EjndWKH8mOFRNvRX7oCHQDLbQcl/DKyNjNoAlKKvvf
+ gcCAUKPthgP83hIR4rG6dRd24hoSPsd1NGlWh+iyP/VDoy+XSKf8psu0gO7YrnLteIPE
+ ZBtw1cOxO5N1p2cbFXrwNcGOAWqGKQcUu3hN8QdwggGCEojxyVbVZFAxxMy/s6NAAYZP
+ V/X+8J4BnmfNgupcucG5/l7/1+HossRQc1WXsdsNFJGzXNMo2hxgseFSB0tBKrZiVfEC
+ JdfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774000407; x=1774605207;
+ d=1e100.net; s=20251104; t=1774000396; x=1774605196;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g0i+eazWBJJCbRzeHxe2h56ko1/cENdsnIx1zZWfy2Q=;
- b=YMy13TEVU/5qTwTKWv0pePtKMqrXk7RLsxzqZmB9+zTL2AOfX5f2nKOXcIZvGqt2Xe
- Jm0WobZgtcvf8wYjMwVszVIG/ebXQttyGTMZDHXZTgoZSDQoU7wkcC/aQ1r970o/P6Dd
- MYeOPC3hxZtkghErhfrfuSleS/rLbb+ojescxPWdx2Zr0eoTYeafmtmlWMwsSuTSWHsc
- vJjWOyf/RxCCSpNAQ9vvvggTOhjps674ASqL98KnFOJmSvXOurVSE7LkE7ZeVJWxzQL/
- 7DU8IUht0cYScx59y/tDg8HEJ4ER+Li0H+9+8hpVGiF/E3GlI/ptzcUikIDbI/eqHwKQ
- xmEQ==
+ bh=5euiBn3f0/O8o0xYggtpWQYDLJX6fZXYzFK7or9Ows4=;
+ b=qiLTwMzutcPSTBDibnSVA/ALkLkJDA1qnwH/Z0JQluHEGJoh6xhFAFntyP+9mwuHgj
+ M2IfbANC/UAjlktRrTWpD2I1i4dV88oZMBiB3p4UJI+4GCEXYr//N0KdR5U22lX19ZLk
+ 7IxloBZ87mCYgOp5hde/f8az3B5Av1SrcjuwsVi17MH9OPTuShMEDGeGCF4KPOyJKG47
+ NeDjyQrPtGJa+8rm8+f04hh60sd+Ra5tqNV/NydSAILCCGzJrZvH0CQHyXHj87Oqxyf+
+ fQrysUf6i+YJtjCEE6F2M5zQ5y/nWgqtYM3ybFCFCrwGl4BnKmtseuhJYmoIuH6eE8wq
+ VknA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsNy7XX57t2/Cp/YA3YKvqLnL9RTLRN/8ZlJn/x/bu8kv6lUhThpcCU6tmVuTdgwXERTL5ITPig3Te@nongnu.org
-X-Gm-Message-State: AOJu0YzBC0e/lTanfvdq9Y3H1gPorU9oxX1jhIkeit2JGe0EGCuFtp+C
- oMsPB7CuNEHvr43pkd9Dt5qHAX2D3Hy5HC/5lXamNW92a0VV0uba47l+hTXSGer2KxSJtnOfGkx
- 3Lpmn1Rt0lEED8+3f3V45w6t2jgq13nIEyibcFlYrlTOGFfbtn/u1kvva
-X-Gm-Gg: ATEYQzxhJMpw5x+Psxlc/ukuKupj7zg224adAcEjwhAwGxE0RdoCWPe3p+wT6J0pYnu
- cV137CzZ1d0xasdkhW2HbXZR3FFLaZEabUC0ZzjRRAY9eotarvO5rOLq71aT4jTMkTPcy2iFr0z
- 7oadmMUhIc7TUlP1YAaS0IhDuaY5Kx6v2l37C0Asad+wJkr0/bP4p7Tjto/G/C0pN+wJoRi6Xs0
- aKfvUkpNq51tTKdRFsfrbwHlbcDX/TKXur5T+eArE9Em+h8W3lOg2DlWh6Camov/cf3ibNhT+GX
- eECrX3x/QxKoWoWGUwgeMOqI+E0DCVTiV+c96yUEkKdQwA7Kr2CMdfv/jCxXLnAZ3qv3MPbt4hC
- xTqewhY4HSLngIqtyMA==
-X-Received: by 2002:a05:600c:c167:b0:485:364e:9328 with SMTP id
- 5b1f17b1804b1-486ff024f53mr35860815e9.16.1774000406836; 
- Fri, 20 Mar 2026 02:53:26 -0700 (PDT)
-X-Received: by 2002:a05:600c:c167:b0:485:364e:9328 with SMTP id
- 5b1f17b1804b1-486ff024f53mr35860345e9.16.1774000406337; 
- Fri, 20 Mar 2026 02:53:26 -0700 (PDT)
+ AJvYcCXnnkUxPFy3LQwUCA/CaS4HfmTE8zaHC5JLT0UvzEdo6kqiBPbuBNYWPMOu+HOJxak848SQ/TxO2FL7@nongnu.org
+X-Gm-Message-State: AOJu0YzskmqzJPwd2cU+RiZLR1+g7TKJRXbuCHcWcK0xm+r3mA+v5W1d
+ 7VXvgerImTvsmAvQeWhK73FoKL0YullJVIY+QhKMsigmdviGwINYzGgYvcjl/3gWkSR3nNL+iJC
+ 4Gm8CpDu8T0gpQqzQVAUm6zLyk/2ITH9NvhrwPk/7B6Kw3cjMdeQni86S
+X-Gm-Gg: ATEYQzy8k/ffdl1YRzeFihlMRltRqxBIgTvxPiCGjDyfVuIp0Bxpb83FnZyXfczBYPz
+ vGNNlhX7H0pdL6y23mpJHrwTUSyIWAkuW8FzwldD3Cy0oADR55WGD0hlJUuMqFmAI2LVlIGEAyz
+ cfkgOEVoZMYnat2bMY7gmNLHvQcFktqi82Q0eGiuEbyK2JJ4hprPvwmU2L3dOfbgGkCYBx7dBGf
+ O8RTEYvMKcbDvK241mrXU8dcPzyZgrVzJV5mdMeZzcSCRkxtZYTnwg1feZztapkNTEwhd0I4C+e
+ JOyaBeA8/xu4/cblFofXsum0FEoGswDZwrZjOmZHLPLvIRvn383P6DjoOtC/5NUO0UuXPfxBr5b
+ MVf8BGwg85kemlZi+Rw==
+X-Received: by 2002:a05:600c:8b18:b0:485:3dfc:57d with SMTP id
+ 5b1f17b1804b1-486ff01ca8dmr31706795e9.30.1774000396136; 
+ Fri, 20 Mar 2026 02:53:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b18:b0:485:3dfc:57d with SMTP id
+ 5b1f17b1804b1-486ff01ca8dmr31706445e9.30.1774000395739; 
+ Fri, 20 Mar 2026 02:53:15 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.114.47]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe889652sm19743515e9.2.2026.03.20.02.53.22
+ ffacd0b85a97d-43b644bd38bsm5164036f8f.10.2026.03.20.02.53.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 02:53:25 -0700 (PDT)
-Message-ID: <c9239002-1847-48c4-b643-8a50941c88c9@redhat.com>
-Date: Fri, 20 Mar 2026 10:53:22 +0100
+ Fri, 20 Mar 2026 02:53:15 -0700 (PDT)
+Message-ID: <e328d1c1-92cf-4b46-a920-0151d5ea2834@redhat.com>
+Date: Fri, 20 Mar 2026 10:53:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/21] qom/object: cache ObjectPropertyFlags in
- ObjectProperty
+Subject: Re: [PATCH v2 01/21] qom/object: use BIT macro for ObjectPropertyFlags
 To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster
@@ -102,7 +101,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
  qemu-devel@nongnu.org, devel@lists.libvirt.org
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <20260210032348.987549-3-zhao1.liu@intel.com>
+ <20260210032348.987549-2-zhao1.liu@intel.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -147,7 +146,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260210032348.987549-3-zhao1.liu@intel.com>
+In-Reply-To: <20260210032348.987549-2-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -176,31 +175,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/02/2026 04.23, Zhao Liu wrote:
-> Introduce a 'flags' field in the ObjectProperty structure to store
-> property-specific behavior modifiers.
-> 
-> Currently, ObjectPropertyFlags (READ/WRITE) are only used for property
-> creation (e.g., initialize accessors for pointer properties).
-> 
-> By caching these flags directly in ObjectProperty, we can:
-> 1. Preserve the initial access intent (read/write) of the property.
->     * the READ/WRITE flags cached in ObjectProperty have no effect for
->       now, but they may be useful for cases need write-once, if needed.
-> 
-> 2. Reuse existing ObjectPropertyFlags and provide a foundation for
->     future flags (e.g., to track if a property was explicitly set by
->     external user).
-> 
-> To avoid "incomplete type" error, move ObjectPropertyFlags before
-> ObjectProperty definition, and polish the comment of ObjectPropertyFlags
-> to clarify how READ/WRITE flags work for general properties.
+> Standardize the definition of ObjectPropertyFlags by using the BIT()
+> macro instead of manual bit shifts to improve readability.
 > 
 > Suggested-by: Igor Mammedov <imammedo@redhat.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   include/qom/object.h | 34 +++++++++++++++++++++++++---------
->   qom/object.c         | 16 +++++++++++++++-
->   2 files changed, 40 insertions(+), 10 deletions(-)
+>   include/qom/object.h | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
