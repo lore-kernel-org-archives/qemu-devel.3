@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 616A11098788
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C503C1098782
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3anP-0000PQ-8r; Fri, 20 Mar 2026 10:25:51 -0400
+	id 1w3asL-000298-7J; Fri, 20 Mar 2026 10:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1w3anL-0000P7-ID
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:25:47 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1w3anI-0008Cf-QU
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:25:46 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62K8Y3bP2600046; Fri, 20 Mar 2026 14:20:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=11O1n
- lIAbwkDq0XsRmbItWfRrNrfkL+vYhFfZeFFKIE=; b=J8IuqtpFb4ZZ42H8T18nd
- VNLDIrZ4WU2L0XGGisRZQF0yOpgTYij8Qdpv3RbWJfnRClVqJ8wXt/cBapI6v3ge
- hMX9in6TJVGSZx4L8AFu1M2MRj/RUTSUH7uwgVE4X8iGwgUpOwkXMtr5BRLcA0dn
- OwbPyEVax5HK8NK2Pk5cr4uGjDq8b5aTOt8UQZcyvPzRPT2Lobf5SUNfhUpvoCmf
- P4ttipcpM7fozcv+K6OL8jJARFGqV2njJEiaq+1vJzmt/9z0EGeCemi2MBDAT3QS
- Th7V0BrVX+oGD7o6eVK5e8BWlMu9KcHBET7aEmg/9eVT+UeH7ubjiJr+WCoOxSX1
- w==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cvx8x9th0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Mar 2026 14:20:23 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 62KCi27c030664; Fri, 20 Mar 2026 14:20:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4cvx4eb3yf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Mar 2026 14:20:21 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62KEK2JZ016730;
- Fri, 20 Mar 2026 14:20:21 GMT
-Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
- (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
- [100.100.252.67])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4cvx4eb3ue-3; Fri, 20 Mar 2026 14:20:21 +0000
-To: qemu-devel@nongnu.org
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, mst@redhat.com,
- sgarzare@redhat.com, jasowang@redhat.com, leiyang@redhat.com,
- si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com,
- armbru@redhat.com, jonah.palmer@oracle.com
-Subject: [RFC v2 02/14] virtio,
- virtio-net: add initial early VMSD for setup-phase migration
-Date: Fri, 20 Mar 2026 14:20:03 +0000
-Message-ID: <20260320142015.3856652-3-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260320142015.3856652-1-jonah.palmer@oracle.com>
-References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
+ (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
+ id 1w3asJ-00028Y-Nl
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:30:55 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
+ id 1w3asI-0000LJ-50
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:30:55 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-439fe4985efso556927f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 07:30:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1774017052; x=1774621852; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rwkmTF/CS0VyDJVC1u/aIvu2tt3/nzhHfvzUfjsv28s=;
+ b=heQtI3+98jCLctz6+igpXhOf+ZMopTQ3HPRXmOkwHVrE3Xxegpm/cjUT2r7JS03+81
+ dZMUn/4wjmVNeezLwtgei7u5/+S0vJEE9YxUic+2sUzOF+hWXIgMOrYZxdwShHh95vDw
+ TxYXcTXuDOOfEQ2CAgrDfbgsckvDlK/R/3egomCv/YYEXvAIp+CIZvGTBeS6JhZRu3Lz
+ X1/8fT2dGR+q+tvVJSQTFhJ8+dZCVWb2HUqW5jcamgsS9BcF3UopyxmiFflU9byrjxVI
+ yzhyG3kx0IguJh3uEjfSe8AtYLdmLDfg+BlLkoNhmJyhQ8KtxWBFM9KWYp4xSw4UmhrU
+ iGMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774017052; x=1774621852;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rwkmTF/CS0VyDJVC1u/aIvu2tt3/nzhHfvzUfjsv28s=;
+ b=aw+w6TB4mUFGj7CmOY9WfBfuzIzGtvJWsephrM8i57jKGZiwXdxeWO+T6w3x3QCK3V
+ SUIprzqP4DYqtDM8QIPuXD8URnGXjSxv/XxYiM1TT7/pA1QVFGAdcLJLyQNvMoHSNuqO
+ LHB3IbjB3dk/k3LvQC18yRUgUGrfIu5yHdfmXSYoLJEnbHzP4uPm03alV3+06T/RllDL
+ YLH+ITx3KQkICqtsey7bnLp29k6HLjkEPt5hBBdcAc8pjmqKaLXoolU8PeMMib9pK8zj
+ Dd+mBe+4T9uhq9Nu8iIzhv9xc9GZHSlEAuSFbwMfxnuoQHaaURnkmYMsgaKRHjvMDPDI
+ tcdA==
+X-Gm-Message-State: AOJu0YxbrdVka0FZ9aYz2kvTMdlZz0C35ir4na13cdE8IB5oJ/3k8BKA
+ 93nLu8ZmEnHjulleo2BAj2SOltGP4vHBaIVHgv6N8cAtS52mDISO1VtQ
+X-Gm-Gg: ATEYQzwyxJZjLmB0wyJ3eXNvU0EeWc6HnpWcMJ8+Ty+cRh2cCG6he0nnY55jKTenvvT
+ AMQHHSdMLmh4772Aw2dpPfvAjtxp7+6BRE4R6tUFZJRZrGlH/maWF3ll7qydtA00AaTs3IXTGp9
+ 1O4loFECv+kjiV2siWM+m/pujkl8M4kvhGAT0UwLkCh/rzeSTo5UWNIo8zMeUjYKGlyKLUOCp+J
+ YRWnSQ+SiCkw1lG0t8+DOxJihVOITLDIWO044s3OdLGlreeUnwlqOgWk8VSErpYg4bA1kJM1Fny
+ K7nWY5jLpp9j19CXZ0GoN0Je1P5nG9BBIwN+JymT2byEALJWuN9OpqZrk5zzAy680OWnQPb/fcX
+ cED5O2uZOhA0qTJ2ZYH1tAE5hrsDo+svBSP2VptcBdRKTl8y6cHOP9k856KRA9Kv0RfXu67vW3s
+ m3fyesFOT+b/cIZj933d4L8PpIq8fVDdsiXLafEHVcu5Ku0kDsXHlzKX4V
+X-Received: by 2002:a05:6000:2010:b0:43b:4ec7:f924 with SMTP id
+ ffacd0b85a97d-43b64264073mr5799774f8f.34.1774017052225; 
+ Fri, 20 Mar 2026 07:30:52 -0700 (PDT)
+Received: from [192.168.10.55] (77-32-38-61.dyn.eolo.it. [77.32.38.61])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b64703c35sm7227678f8f.22.2026.03.20.07.30.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Mar 2026 07:30:51 -0700 (PDT)
+Message-ID: <71a496c8-9fbc-467e-bd5c-a82142ba558b@gmail.com>
+Date: Fri, 20 Mar 2026 15:31:21 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-20_02,2026-03-19_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- mlxlogscore=999 phishscore=0
- suspectscore=0 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
- definitions=main-2603200114
-X-Proofpoint-GUID: T4Kn0Sbe6OIZqz5paG60HduzP2ce9Ftr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDExNCBTYWx0ZWRfX3vf6EZP7WzT3
- 9xJSWJIPO2RIqY6zo4ZuHxDOtwPqSdGfO6OpQFHn3wXQv2ycZOzUZ032+uDApguk0G8MrGKOM73
- jkDInwEWMGLXVANk1tmsGylPjFN//T/G7ibsoo/aOUG6WobQAcRTbdXVYVCtq5uVtQtEht1PWGV
- OW2Eit+pEYZkV9zJ5yr8yyGs9y6cJz9wGYfgeWHkvbTle9xdYkAovnzy1kAqv2PeQsh1O0igbOl
- hGHBV1ZWeZ54BnIuk5WsbEgbU65esRVEphf94+1l5FWLzEP8JiGrGmReMAfwvpg1z5/8KA6oPRq
- VGvGaHJuki/W7+Lcrij8ga6h05EZXTNNTS1aTwYIILYdA/YJavA0XzVXBPYg6O9sXATh36WbAvp
- e3BRgsraeIIBnzts8WYzYW5k5344FCV6dhK4UOvs+NihFwR/R1UKxi0rA5iO+TX0p5d8zSHTbFT
- dJ7A3vViPEIgYgvKTYw==
-X-Authority-Analysis: v=2.4 cv=dJmrWeZb c=1 sm=1 tr=0 ts=69bd57a7 b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117
- a=WeWmnZmh0fydH62SvGsd2A==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=RD47p0oAkeU5bO7t-o6f:22 a=yPCof4ZbAAAA:8 a=n8FzOVadAr_i4xXxhBoA:9
-X-Proofpoint-ORIG-GUID: T4Kn0Sbe6OIZqz5paG60HduzP2ce9Ftr
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] i386/sev: Add launch measurement emulation and TIK
+ property
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Oliver Steffen <osteffen@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Giuseppe Lettieri <giuseppe.lettieri@unipi.it>,
+ Paolo Bonzini <pbonzini@redhat.com>, Luigi Leonardi <leonardi@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260317113840.33017-1-califano.tommaso@gmail.com>
+ <20260317113840.33017-5-califano.tommaso@gmail.com>
+ <87pl50vw14.fsf@pond.sub.org>
+Content-Language: en-US, it
+From: Tommaso Califano <califano.tommaso@gmail.com>
+In-Reply-To: <87pl50vw14.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=califano.tommaso@gmail.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,184 +110,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonah Palmer <jonah.palmer@oracle.com>
-From:  Jonah Palmer via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a separate VMStateDescription for virtio-net that uses the
-.early_setup feature. With this feature, we can migrate a virtio-net
-device's state earlier, before the stop-and-copy phase.
 
-Future patches will utilize this to move control plane operations out of
-the stop-and-copy phase to reduce the downtime latency caused by
-migrating a virtio-net device.
 
-A VirtIODevMigration migration data structure is also introduced here
-for VirtIODevices to help track the current state of a migration.
+Il 19/03/26 13:33, Markus Armbruster ha scritto:
+> Tommaso Califano <califano.tommaso@gmail.com> writes:
+> 
+>> The next step for completing the SEV launch emulation is to implement the
+>> "query-sev-launch-measure" feature, responsible for returning the
+>> measurement. In this case the measurement will be computed in QEMU.
+>>
+>> Implement sev_emulated_launch_get_measure() to emulate the LAUNCH_MEASURE
+>> command per AMD SEV API spec section 6.5.1. It generates a random 16-byte
+>> mnonce, computes the launch digest as SHA-256 over ld_data, then derives
+>> the measurement via HMAC-SHA256
+>> (TIK;0x04|| API version || build ID || policy || launch digest || mnonce).
+>> The base64-encoded result (32-byte HMAC + 16-byte mnonce) populates
+>> "query-sev-launch-measure" data, advancing state to LAUNCH_SECRET for
+>> secret injection.
+>>
+>> The TIK is supplied via 16-byte binary file specified in new
+>> SevEmulatedProperty "tik" path; absent this, keys default to zeroed.
+>> Example QEMU arguments with the key passed:
+>>
+>> 	-cpu "EPYC-Milan" \
+>> 	-accel tcg \
+>> 	-object sev-emulated,id=sev0,cbitpos=47,reduced-phys-bits=1,\
+>> 					tik=/path/to/tik.bin \
+>> 	-machine memory-encryption=sev0
+>>
+>> Signed-off-by: Tommaso Califano <califano.tommaso@gmail.com>
+>> ---
+>>  qapi/qom.json     |   3 +-
+>>  target/i386/sev.c | 155 ++++++++++++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 157 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/qapi/qom.json b/qapi/qom.json
+>> index 35cda819ec..affb5024b5 100644
+>> --- a/qapi/qom.json
+>> +++ b/qapi/qom.json
+>> @@ -1064,11 +1064,12 @@
+>>  # This object functionally emulates AMD SEV hardware via TCG, so
+>>  # it does not require real hardware to run.
+>>  #
+>> +# @tik: binary file of the SEV TIK (default: all 0).
+> 
+> Is this a file name?
+> 
 
-The early_load member is used to signal that a VirtIODevice is being
-loaded early and to not throw an error regarding vring indices.
-Inconsistent indices shouldn't be an issue for a device so long as the
-final indices are eventually loaded before the device starts.
+Yes, I'll specify it better writing "Path to the binary file..."
 
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
----
- hw/net/virtio-net.c        | 53 ++++++++++++++++++++++++++++++++++++++
- hw/virtio/virtio.c         | 14 +++++++++-
- include/hw/virtio/virtio.h |  9 +++++++
- 3 files changed, 75 insertions(+), 1 deletion(-)
+> Blank line here, please.
+> 
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 12b3456ca2..ddd6ed6e62 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3864,6 +3864,37 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     return qatomic_read(&n->failover_primary_hidden);
- }
- 
-+static int virtio_net_early_pre_load(void *opaque)
-+{
-+    VirtIONet *n = opaque;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+
-+    vdev->migration->early_load = true;
-+    return 0;
-+}
-+
-+static int virtio_net_early_post_load(void *opaque, int version_id)
-+{
-+    VirtIONet *n = opaque;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+
-+    vdev->migration->early_load = false;
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_virtio_net_early = {
-+    .name = "virtio-net-early",
-+    .minimum_version_id = VIRTIO_NET_VM_VERSION,
-+    .version_id = VIRTIO_NET_VM_VERSION,
-+    .early_setup = true,
-+    .pre_load = virtio_net_early_pre_load,
-+    .post_load = virtio_net_early_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VIRTIO_DEVICE,
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -4046,6 +4077,21 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-             n->rss_data.specified_hash_types.on_bits |
-             n->rss_data.specified_hash_types.auto_bits;
-     }
-+
-+    if (n->early_mig) {
-+        if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
-+            /*
-+             * vhost-user backend is not currently supported for the early
-+             * migration path.
-+             */
-+            n->early_mig = false;
-+        } else {
-+            vdev->migration = g_new0(VirtIODevMigration, 1);
-+            vdev->migration->early_load = false;
-+
-+            vmstate_register_any(VMSTATE_IF(n), &vmstate_virtio_net_early, n);
-+        }
-+    }
- }
- 
- static void virtio_net_device_unrealize(DeviceState *dev)
-@@ -4090,6 +4136,13 @@ static void virtio_net_device_unrealize(DeviceState *dev)
-     g_free(n->rss_data.indirections_table);
-     net_rx_pkt_uninit(n->rx_pkt);
-     virtio_cleanup(vdev);
-+
-+    if (n->early_mig) {
-+        g_free(vdev->migration);
-+        vdev->migration = NULL;
-+
-+        vmstate_unregister(VMSTATE_IF(n), &vmstate_virtio_net_early, n);
-+    }
- }
- 
- static void virtio_net_reset(VirtIODevice *vdev)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 8fcf6cfd0b..48de4a430b 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3323,6 +3323,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-     int32_t config_len;
-     uint32_t num;
-     uint32_t features;
-+    bool inconsistent_indices;
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
-@@ -3460,6 +3461,14 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         if (vdev->vq[i].vring.desc) {
-             uint16_t nheads;
- 
-+            /*
-+             * Ring indices will be inconsistent for a VMStateDescription
-+             * performing an early load. This shouldn't be an issue as the
-+             * final indices will get sent later once the source has been
-+             * stopped.
-+             */
-+            inconsistent_indices = vdev->migration && vdev->migration->early_load;
-+
-             /*
-              * VIRTIO-1 devices migrate desc, used, and avail ring addresses so
-              * only the region cache needs to be set up.  Legacy devices need
-@@ -3481,12 +3490,15 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
- 
-             nheads = vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_avail_idx;
-             /* Check it isn't doing strange things with descriptor numbers. */
--            if (nheads > vdev->vq[i].vring.num) {
-+            if (!inconsistent_indices && nheads > vdev->vq[i].vring.num) {
-                 virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
-                              "inconsistent with Host index 0x%x: delta 0x%x",
-                              i, vdev->vq[i].vring.num,
-                              vring_avail_idx(&vdev->vq[i]),
-                              vdev->vq[i].last_avail_idx, nheads);
-+                inconsistent_indices = true;
-+            }
-+            if (inconsistent_indices) {
-                 vdev->vq[i].used_idx = 0;
-                 vdev->vq[i].shadow_avail_idx = 0;
-                 vdev->vq[i].inuse = 0;
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 6344bd7b68..4c886eb48b 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -99,6 +99,14 @@ enum virtio_device_endian {
-     VIRTIO_DEVICE_ENDIAN_BIG,
- };
- 
-+/**
-+ * struct VirtIODevMigration - Common VirtIODevice migration structure
-+ * @early_load: Flag to indicate an early virtio_load for the device.
-+ */
-+typedef struct VirtIODevMigration {
-+    bool early_load;
-+} VirtIODevMigration;
-+
- /**
-  * struct VirtIODevice - common VirtIO structure
-  * @name: name of the device
-@@ -168,6 +176,7 @@ struct VirtIODevice
-      */
-     EventNotifier config_notifier;
-     bool device_iotlb_enabled;
-+    VirtIODevMigration *migration;
- };
- 
- struct VirtioDeviceClass {
--- 
-2.51.0
+I'll add it.
 
+>>  # Since: 10.1.0
+>>  ##
+>>  { 'struct': 'SevEmulatedProperties',
+>>    'base': 'SevGuestProperties',
+>> -  'data': {}}
+>> +  'data': {'*tik': 'str'}}
+>>  
+>>  ##
+>>  # @SevSnpGuestProperties:
+> 
+> [...]
+> 
+
+Best regards,
+Tommaso Califano
 
