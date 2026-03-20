@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824631093177
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 06:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 630331093177
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 06:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Tc3-0000Kq-Sz; Fri, 20 Mar 2026 02:45:40 -0400
+	id 1w3Tky-0001bS-I2; Fri, 20 Mar 2026 02:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w3Tc2-0000Ki-2m
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 02:45:38 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3Tkw-0001aw-ML
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 02:54:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w3Tbz-00020e-C2
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 02:45:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773989112; bh=MqEmr2InNEtD+IRccWYqUHzCpPe5sw3sUljMC3VEUys=;
- h=Date:To:From:Subject;
- b=ZXpNxnmkhE3mNiaAeZ2GVJQCc3pciAy/KouqoDDFVpQKmEml6uidw/prmX3qgElCb
- MjpGCHvx5nlD9170eXYqrwV4s2csUp4+WMiB35Np10kCuGPUPutCdN6GrchdV1ffUY
- q1IAXkYoQz7Ko7t2tmQ2JP/r6len6wQ3T4XmFdsteFXymSAP/kgYKobxMokpxdwYXA
- 2Wi1ObkzjgH5qAQMTOmvWrg7fp9V3kcH0vUf/0lKRNJ3NkCLgZPC+Gu89s+QKt+Xl2
- 8FbChm9SotNhfAH2w6CJOQkBsQvar5QgTFSqfzIrOiz4KG2mekn3Nkb6WKuIp+9oS8
- Rh+UR5wgr2t0A==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 3C1AB1959EE
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:45:12 +0300 (MSK)
-Message-ID: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
-Date: Fri, 20 Mar 2026 09:45:20 +0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3Tku-0004q7-0V
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 02:54:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773989685;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=G8qHjwIcyL3+jxonEsuie58tPAeNBJLPGTKJWWyhJZ4=;
+ b=VGCwfnwQhsbxzQeFhYU+5C3QvTrxEUiC8rl2VmK1AdLeEWB4Lsn/hseC7E4X6Ul8qcZhiQ
+ AFGH3fpKedf5Ym1kRokrDMJSg2aTiGLZA3BgMjqI+ZslTEY3tOHx6xvPHBpPdBY1yZDCMb
+ qfHVqtVu8Jqd4GWt2pdNOsc5CZD0TLY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-RMS2w4zBPFCT9TCTBULFpw-1; Fri,
+ 20 Mar 2026 02:54:44 -0400
+X-MC-Unique: RMS2w4zBPFCT9TCTBULFpw-1
+X-Mimecast-MFC-AGG-ID: RMS2w4zBPFCT9TCTBULFpw_1773989682
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 136AD180044D; Fri, 20 Mar 2026 06:54:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B52941955D84; Fri, 20 Mar 2026 06:54:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 49D7221E6937; Fri, 20 Mar 2026 07:54:38 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  Juraj Marcin <jmarcin@redhat.com>,  Kirti
+ Wankhede <kwankhede@nvidia.com>,  "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,  Alex Williamson
+ <alex@shazbot.org>,  Yishai Hadas <yishaih@nvidia.com>,  Fabiano Rosas
+ <farosas@suse.de>,  Pranav Tyagi <prtyagi@redhat.com>,  Zhiyi Guo
+ <zhguo@redhat.com>,  Avihai Horon <avihaih@nvidia.com>,  =?utf-8?Q?C?=
+ =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>,  devel@lists.libvirt.org
+Subject: Re: [PATCH RFC 02/12] migration/qapi: Rename MigrationStats to
+ MigrationRAMStats
+In-Reply-To: <20260319231302.123135-3-peterx@redhat.com> (Peter Xu's message
+ of "Thu, 19 Mar 2026 19:12:52 -0400")
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-3-peterx@redhat.com>
+Date: Fri, 20 Mar 2026 07:54:38 +0100
+Message-ID: <877br7kn2p.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: QEMU Development <qemu-devel@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: QEMU requires a 64-bit CPU host architecture?
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,18 +96,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+Cc: correct libvirt list address
 
-Is it intentional that qemu does not build utilities on 32bit hosts
-anymore?
+Peter Xu <peterx@redhat.com> writes:
 
-I understand system/user emulation on a 32bit host, where there are
-quite some real difficulties with address space sizes.
+> This stats is only about RAM, so make it accurate.  This paves way for
+> statistics for all devices.
+>
+> Note that even if this is part of qapi/, this should not be part of ABI of
 
-But what's wrong with building qemu-img et al on a 32bit host?  It
-doesn't require 64bit address space..
+docs/devel/qapi-code-gen.rst section "Compatibility considerations":
 
-Thanks,
+    Since type names are not visible in the Client JSON Protocol, types
+    may be freely renamed.  Even certain refactorings are invisible, such
+    as splitting members from one type into a common base type.
 
-/mjt
+So, s/should not be/is not/.
+
+> at least query-migrate, because the structure is not changed, and this
+> stats is always reported only under the "ram" section.
+
+Why "at least query-migrate"?  Do you have other interfaces in mind, or
+are you just hedging?
+
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Cc: Libvirt Mailing List <libvir-list@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  docs/about/removed-features.rst | 2 +-
+>  qapi/migration.json             | 8 ++++----
+>  migration/migration-stats.h     | 2 +-
+>  3 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-feature=
+s.rst
+> index 6f4447993c..7c4f4325f7 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -699,7 +699,7 @@ was superseded by ``sections``.
+>  ``query-migrate`` return value member ``skipped`` (removed in 9.1)
+>  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>=20=20
+> -Member ``skipped`` of the ``MigrationStats`` struct hasn't been used
+> +Member ``skipped`` of the ``MigrationRAMStats`` struct hasn't been used
+>  for more than 10 years. Removed with no replacement.
+
+Could simply use "of the return value".  But this is fine, too.
+
+>=20=20
+>  ``migrate`` command option ``inc`` (removed in 9.1)
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 7134d4ce47..cfc6ccee26 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -12,7 +12,7 @@
+>  { 'include': 'sockets.json' }
+>=20=20
+>  ##
+> -# @MigrationStats:
+> +# @MigrationRAMStats:
+>  #
+>  # Detailed migration status.
+>  #
+> @@ -64,7 +64,7 @@
+>  #
+>  # Since: 0.14
+>  ##
+> -{ 'struct': 'MigrationStats',
+> +{ 'struct': 'MigrationRAMStats',
+>    'data': {'transferred': 'int', 'remaining': 'int', 'total': 'int' ,
+>             'duplicate': 'int',
+>             'normal': 'int',
+> @@ -209,7 +209,7 @@
+>  #     If this field is not returned, no migration process has been
+>  #     initiated
+>  #
+> -# @ram: `MigrationStats` containing detailed migration status, only
+> +# @ram: `MigrationRAMStats` containing detailed migration status, only
+>  #     returned if status is 'active' or 'completed'(since 1.2)
+
+This gets rendered like
+
+      * ram (MigrationStats, *optional*) -- MigrationStats
+        containing detailed migration status, only returned if status
+        is 'active' or 'completed'(since 1.2)
+
+Recommend to rephrase to avoid the repetition.  Maybe
+
+   # @ram: Detailed migration RAM status, only returned if status is
+   #     'active' or 'completed' (since 1.2)
+
+Also consider replacing "status" by "statistics".
+
+>  #
+>  # @xbzrle-cache: `XBZRLECacheStats` containing detailed XBZRLE
+> @@ -309,7 +309,7 @@
+>  # Since: 0.14
+>  ##
+>  { 'struct': 'MigrationInfo',
+> -  'data': {'*status': 'MigrationStatus', '*ram': 'MigrationStats',
+> +  'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
+>             '*vfio': 'VfioStats',
+>             '*xbzrle-cache': 'XBZRLECacheStats',
+>             '*total-time': 'int',
+> diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+> index c0f50144c9..1153520f7a 100644
+> --- a/migration/migration-stats.h
+> +++ b/migration/migration-stats.h
+> @@ -27,7 +27,7 @@
+>=20=20
+>  /*
+>   * These are the ram migration statistic counters.  It is loosely
+> - * based on MigrationStats.
+> + * based on MigrationRAMStats.
+>   */
+>  typedef struct {
+>      /*
+
+Only minor issues, and none added by this patch, so
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
 
