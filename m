@@ -4,107 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C229C109879F
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE2771098797
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3c5X-0006rV-49; Fri, 20 Mar 2026 11:48:39 -0400
+	id 1w3c8I-0007cY-F5; Fri, 20 Mar 2026 11:51:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3c5P-0006r8-Il
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:48:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3c5L-0004xb-ET
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:48:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774021705;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=DKuhkeFeXS7Jd0XeIWPiXn4LbHD4gy847cS4YxDczJU=;
- b=f6FrQNXEezRGVMgTNBmfy9jIuP71iJbsArMEzz99c36DIcUfM1anFiM780vaD5Y2c53rdM
- szdt02Nash6kapybir2hFWVHim6Yt6x/rK7nZPA0fmSMEpLRbibQj/EVk1c5QWP5H6X+hl
- vuNHqm4UcH7hPMN6o26aPon4bmpqvXk=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-247-5qnFCBn1MIioKvmjeWPZSw-1; Fri, 20 Mar 2026 11:48:24 -0400
-X-MC-Unique: 5qnFCBn1MIioKvmjeWPZSw-1
-X-Mimecast-MFC-AGG-ID: 5qnFCBn1MIioKvmjeWPZSw_1774021703
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-82a88a2704fso852961b3a.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:48:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w3c87-0007Yd-04
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:20 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w3c84-0005Xj-Kq
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:18 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-664f8bef4e7so2978890a12.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774021703; x=1774626503; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DKuhkeFeXS7Jd0XeIWPiXn4LbHD4gy847cS4YxDczJU=;
- b=XV0r/zIuyXQr8I5xfaORAmFYMRcO/lqdyPOrOnUwWgCKPZ0WNp8GIkmBjwuc9rMtYd
- t/628XgjzDA1SCEaSwrHvoBzq2DlmSHBqQQDi/VQJY0uqrIsOs78LOl8H7bHNcgcBE3U
- 6j2tezgumm7keyVHEoOTtIvUEKBSMSKrf4oIgbnv/7I9+4mb0iO30d6nSgEgCU/p0Hju
- 3TEYdvvOGrmXfl11EH1Libo7HvdmaHXeh735lRt1aXwrMySUtallzF9q+ViHAB0M+1SU
- jLRSZk+PabVfDZ7aq/+aFpumLjSZ556C+5OewR6w/8BKaAUMYILWZmG5kL1U8yGPnnDu
- 0vHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774021703; x=1774626503;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1774021875; x=1774626675; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DKuhkeFeXS7Jd0XeIWPiXn4LbHD4gy847cS4YxDczJU=;
- b=abLFKmLIpLrvfAhDjq3ipR4sLx8bomaq4ngd6sd7OLmCf+GsKvhfeI9cHmRN8vCDLq
- C1oSvRfoL1NjXXa1+H0zKYXdKG5/hBzu8bTs0plcES7XiS6CHBeq1AVkfavx33UrYl7Y
- z4n0vmEdnQdqbTM9Sul7ATwkUxba+WwmC0e52dBw1zMcCT5Z/GrpOll+egOlzx5K2VFo
- 7Ki0zbG6+zFBvBgcKBXH2pi2WPrVsjUYdZtuHwY+Q6a85iI1FQZYP9TcRpB5LDpL70NZ
- +a9fA+EX95ZiiS1X6dyiPek50xQiku5LsjqDaMh9+VhAoi4+BNWXnGNvOfbAcdbGZvbD
- o/XQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9KvoUsyGwEG9q0fPVexC8YSmr1kIrFLEGSDNAUfAf8t0l1EWtr5DGLSLK8McD1AWjtdExMLIXnFF2@nongnu.org
-X-Gm-Message-State: AOJu0YyTwFQMfRNuMcP7DklW1yDsTPLuN7hanvN3CGidRIHzWJiO5K2N
- gxgvTmrW+5LnG3lJJehQiClOskOQHyM7S8tQwwEzZdhXFIP2eifV81fOyCFpME0urteJtMzNtwT
- ZwSs+t+rX1Lo+nLHGEIYG3WnhajExF1Acm8T9YIWGLAXZuLCQM+UoWJ6w
-X-Gm-Gg: ATEYQzzTTjyjT4UZTqvhYas5f6793NaJVuuqDvGRYXKFon1VmNO5nla6pfmd9Lzmoq5
- JuL+VhFjdXBaMqSCdRhDlrAUHLemxXirVconM13X5jvtYLBop+wmPim3ojbO40P9XeYKgXdTvIT
- r36K4dYyPQKuJckdL9XN4PZq0Gug78tUTFZB7xk4F2mxGNqkVGvAgUz39iJFnA4LYl7/gkvhLwN
- PIPdHGUdHsF7OoV6JF2Twrae8YSal+3toAfNB+bjsfoM9XcTSgv4nHl7yWgpI8qv/xQXOh2cYdP
- XPgcNZ3A95d0pg5F+HWmFZ5JQDUS0cCnAR14wM+j+d0ebai4A9LbO5l5sWuA4lHNCLpnE6UQnmc
- UGUwzSUq66OWXmXJYJ0s7bXjbiwq6CtJ6M5NpM5OHk6jvcZCGSYKmEFrqgw==
-X-Received: by 2002:a05:6a00:3e12:b0:81f:ac1c:709e with SMTP id
- d2e1a72fcca58-82a8c45c006mr2610777b3a.31.1774021702831; 
- Fri, 20 Mar 2026 08:48:22 -0700 (PDT)
-X-Received: by 2002:a05:6a00:3e12:b0:81f:ac1c:709e with SMTP id
- d2e1a72fcca58-82a8c45c006mr2610756b3a.31.1774021702368; 
- Fri, 20 Mar 2026 08:48:22 -0700 (PDT)
-Received: from ani-lenovo.lan ([122.163.114.34])
- by smtp.googlemail.com with ESMTPSA id
- d2e1a72fcca58-82b0409b448sm2267092b3a.39.2026.03.20.08.48.16
+ bh=FlhWqsULp6KJ73cY3Vo3UNgwju5e7z4CYT++su60MZw=;
+ b=u/G8xh9+uQAhT/DFtah4Wk4S9xBwzu3KDNd+XT9fvNt6SLKNzX+hAa0ZqndNrFu+Dt
+ iHPtl7hMiacf6ZyovL9owtilcyjEpHBCL5PwMPhDVXMK0IsM+lhLyHtVjsDqraR0tQjY
+ HvEr3q1BRC8kfG/RWbocWbh5rDVpk/w7QaUMJylFZeoDAm1AS7nFVppIYmjQkhm3IBMD
+ l3EEtXkx167ezchOcOO+vHreMMfZ0bpTFd29b/rkCKnOsI7pnAs4Y0qSHbwKjAj5leDI
+ 4YLJRwcj8lFx20rhoaWb0Nlpp7OlhdPVMm+6Wm6jY1/CQiEj0ZI9hlzpvQl+/NwkrU60
+ jnvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774021875; x=1774626675;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FlhWqsULp6KJ73cY3Vo3UNgwju5e7z4CYT++su60MZw=;
+ b=EuwivvpTcKXJeBroBaLvedwPyfPr4MNjnwgQRy78Aa+JZbNV4loP69f+2Wjm3GE2WG
+ 5K2PtLH4S1pqY5ZNHX3t87yLsKmWm1S1iRoXj0Ga3RmW5Am2OSCdW794eFMoeo0ebtgr
+ +mqPL33K7q17TIDTTvzQuRbWgXAUr0aLcamth5a7Un3FEsV2SKa3cdopPwDRvU6OGcNp
+ FNd+qLUcEwGrlpGozRXlV2PQXAMqjwMOaeHj60TczT3augLBSwzfzzQrc1KHaVy9XfZr
+ EBvweM3D4JRCavd24gNU7LqQI8VpvrLoR0MJM6mtAsJmwc0pP1n9OsC9rWcVOwz5+G84
+ c5Vg==
+X-Gm-Message-State: AOJu0YxOvZEgIDNvNYPNYcXw6Yq2OO7oQn7UmveNni0Yk2x7NCIdcBJA
+ tcBSKf6iZav63KzM3sCbcyiG2pMWdIubpHocWUqAKfVf7M8Klxzqad3oRByy9iWm02I=
+X-Gm-Gg: ATEYQzzdzzBxV/Kzel1FF3c1aX+bC5acaOLQ1IyViJ17peeJ/+BaoyGwlsVMI6o4wj0
+ OWXn8mwtOpLaqdqTTUvzRZuaYBOyx7hp89y/KyfJq2u/gUc7K+lBxMUBShQvHVfeQxTS5CNWrUv
+ FS494GXzAv5475iM5249SimFH0owYW2SH1wXfM/UvuglF7w19JhqtzQG25cl1tfqZkO2OJxF8+E
+ mQB9wJnjZIS3Li1LxSoHeOQjh3+1ffFYX7NDG0SKDEY2+FF/iyvLhFqadvB63XprRqPtqH2EP5e
+ vBet+vaYCHo0mvUbvO8quiERkPCNKWo6SpDZ8rqf+XLH6ZTq8WwL4O2r5Vksck9F+Ro1ujlfPve
+ fyYMgyEZXQJqKomjwubSe0AUvQOu3NQpyCu+JCWJSYdwJM0zcuVaQJGeOWmtLGb9p4m3gVvDjpq
+ HWEZQwsXQMpoVJndt+ysdy2Rg=
+X-Received: by 2002:a05:6402:35c7:b0:667:447d:cbb1 with SMTP id
+ 4fb4d7f45d1cf-668c8ffd1bdmr2644115a12.1.1774021874928; 
+ Fri, 20 Mar 2026 08:51:14 -0700 (PDT)
+Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-668cd050c4esm1426961a12.0.2026.03.20.08.51.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 08:48:22 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Sourav Poddar <souravpoddar93042@gmail.com>,
- Xudong Hao <xudong.hao@intel.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH for-11.0 v2] hw/hyperv: fix SynIC not initialized for CPUs
- after the first
-Date: Fri, 20 Mar 2026 21:17:52 +0530
-Message-ID: <20260320154752.204725-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.52.0
+ Fri, 20 Mar 2026 08:51:11 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A13BE5F946;
+ Fri, 20 Mar 2026 15:51:08 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, qemu-arm@nongnu.org,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Brad Smith <brad@comstyle.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 8/8] tests: Replace ncat with socat in migration test and
+ drop ncat from containers
+Date: Fri, 20 Mar 2026 15:51:07 +0000
+Message-ID: <20260320155107.2143191-9-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260320155107.2143191-1-alex.bennee@linaro.org>
+References: <20260320155107.2143191-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,70 +112,311 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sourav Poddar <souravpoddar93042@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 
-hyperv_is_synic_enabled() is a global flag that returns true after the
-first CPU initializes SynIC. With -smp N, all subsequent CPUs skip
-hyperv_x86_synic_add(), leaving them without a synic object. This causes
-get_synic() to return NULL, making hyperv_sint_route_new() fail and
-triggering an assertion crash in hyperv_testdev.
+nmap / ncat has a somewhat problematic license (e.g. saying claiming
+that derived work is also considered for software that "is designed
+specifically to execute Covered Software and parse the results", e.g.
+by executing ncat from your own program, you might already fall into
+this category) - so for example in openSUSE 16, you can only find it
+in the "non-OSS" repository.
 
-Fix by introducing hyperv_is_synic_present() which checks per-CPU
-whether a synic object is already attached instead of using the global
-flag.
+We are currently only using it in the migration functional test, and
+that likely does not fall into this "derived work" category yet (since
+it is also doing some other stuff), but still, to be safe, we should
+move away from using it now.
 
-Fixes: c4cf32fc63f1 ("kvm/hyperv: add synic feature to CPU only if its not enabled")
-Reported-by: Xudong Hao <xudong.hao@intel.com>
-Co-authored-by: Ani Sinha <anisinha@redhat.com>
-Signed-off-by: Sourav Poddar <souravpoddar93042@gmail.com>
+Unfortunately, switching to one of the other flavors of netcat is
+also not a real option (see commit f700abbbeb6ab68a3446d1fb168a934d),
+but socat should be a solid replacement here instead.
+
+To avoid that someone else easily uses ncat again, let's also remove
+it from our container files now.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260316183016.239526-1-thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/hyperv/hyperv.c         | 5 +++++
- include/hw/hyperv/hyperv.h | 1 +
- target/i386/kvm/hyperv.c   | 2 +-
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ scripts/ci/setup/debian/debian-13-ppc64le.yaml        | 1 -
+ scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml      | 1 -
+ scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml        | 1 -
+ tests/docker/dockerfiles/alpine.docker                | 1 -
+ tests/docker/dockerfiles/centos9.docker               | 1 -
+ tests/docker/dockerfiles/debian-amd64-cross.docker    | 1 -
+ tests/docker/dockerfiles/debian-arm64-cross.docker    | 1 -
+ tests/docker/dockerfiles/debian-armhf-cross.docker    | 1 -
+ tests/docker/dockerfiles/debian-i686-cross.docker     | 1 -
+ tests/docker/dockerfiles/debian-mips64el-cross.docker | 1 -
+ tests/docker/dockerfiles/debian-mipsel-cross.docker   | 1 -
+ tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 1 -
+ tests/docker/dockerfiles/debian-riscv64-cross.docker  | 1 -
+ tests/docker/dockerfiles/debian-s390x-cross.docker    | 1 -
+ tests/docker/dockerfiles/debian.docker                | 1 -
+ tests/docker/dockerfiles/fedora-rust-nightly.docker   | 1 -
+ tests/docker/dockerfiles/fedora-win64-cross.docker    | 1 -
+ tests/docker/dockerfiles/fedora.docker                | 1 -
+ tests/docker/dockerfiles/ubuntu2204.docker            | 1 -
+ tests/functional/migration.py                         | 4 ++--
+ tests/lcitool/projects/qemu.yml                       | 1 -
+ 21 files changed, 2 insertions(+), 22 deletions(-)
 
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index 27e323a819..3d6212613e 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -60,6 +60,11 @@ static SynICState *get_synic(CPUState *cs)
-     return SYNIC(object_resolve_path_component(OBJECT(cs), "synic"));
- }
- 
-+bool hyperv_is_synic_present(CPUState *cs)
-+{
-+    return get_synic(cs);
-+}
-+
- static void synic_update(SynICState *synic, bool sctl_enable,
-                          hwaddr msg_page_addr, hwaddr event_page_addr)
- {
-diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
-index 63a8b65278..23091301d0 100644
---- a/include/hw/hyperv/hyperv.h
-+++ b/include/hw/hyperv/hyperv.h
-@@ -81,6 +81,7 @@ void hyperv_synic_reset(CPUState *cs);
- void hyperv_synic_update(CPUState *cs, bool enable,
-                          hwaddr msg_page_addr, hwaddr event_page_addr);
- bool hyperv_is_synic_enabled(void);
-+bool hyperv_is_synic_present(CPUState *cs);
- 
- /*
-  * Process HVCALL_RESET_DEBUG_SESSION hypercall.
-diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
-index bd3c26d02b..420c76b5ff 100644
---- a/target/i386/kvm/hyperv.c
-+++ b/target/i386/kvm/hyperv.c
-@@ -27,7 +27,7 @@ int hyperv_x86_synic_add(X86CPU *cpu)
- int hyperv_enable_synic(X86CPU *cpu)
- {
-     int ret = 0;
--    if (!hyperv_is_synic_enabled()) {
-+    if (!hyperv_is_synic_present(CPU(cpu))) {
-         ret = hyperv_x86_synic_add(cpu);
-     }
-     return ret;
+diff --git a/scripts/ci/setup/debian/debian-13-ppc64le.yaml b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
+index 25d96cea460..b16d6d58f8e 100644
+--- a/scripts/ci/setup/debian/debian-13-ppc64le.yaml
++++ b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
+@@ -101,7 +101,6 @@ packages:
+   - make
+   - mtools
+   - multipath-tools
+-  - ncat
+   - nettle-dev
+   - ninja-build
+   - openssh-client
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+index 6a72eabca9e..b58fcda0fa3 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+@@ -102,7 +102,6 @@ packages:
+   - make
+   - mtools
+   - multipath-tools
+-  - ncat
+   - nettle-dev
+   - ninja-build
+   - openssh-client
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+index 6001da12504..fa439db4ca1 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+@@ -100,7 +100,6 @@ packages:
+   - make
+   - mtools
+   - multipath-tools
+-  - ncat
+   - nettle-dev
+   - ninja-build
+   - openssh-client
+diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
+index c0303feb48a..a7ee85fcda7 100644
+--- a/tests/docker/dockerfiles/alpine.docker
++++ b/tests/docker/dockerfiles/alpine.docker
+@@ -76,7 +76,6 @@ RUN apk update && \
+         ndctl-dev \
+         net-tools \
+         nettle-dev \
+-        nmap-ncat \
+         numactl-dev \
+         openssh-client \
+         pcre2-dev \
+diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
+index 6b1aa6dc0de..41a1225856e 100644
+--- a/tests/docker/dockerfiles/centos9.docker
++++ b/tests/docker/dockerfiles/centos9.docker
+@@ -87,7 +87,6 @@ RUN dnf --quiet distro-sync -y && \
+                 ncurses-devel \
+                 nettle-devel \
+                 ninja-build \
+-                nmap-ncat \
+                 numactl-devel \
+                 openssh-clients \
+                 pam-devel \
+diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
+index c386b658b04..6fad808e1b6 100644
+--- a/tests/docker/dockerfiles/debian-amd64-cross.docker
++++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
+index 9d83ab7a32e..889d8a1a755 100644
+--- a/tests/docker/dockerfiles/debian-arm64-cross.docker
++++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
+index c2077ec7a2c..988c87075f6 100644
+--- a/tests/docker/dockerfiles/debian-armhf-cross.docker
++++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
+index db9f04ee93d..d720ebb0bca 100644
+--- a/tests/docker/dockerfiles/debian-i686-cross.docker
++++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index 7758afd80aa..90a2ef15574 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+index cba7f43870f..b7e36b3d974 100644
+--- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
++++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+index 24f946d1441..a70fbee0c1d 100644
+--- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+index f476cf65eaa..9ada5ecce0d 100644
+--- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
++++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
+index a60b4ab01d1..a1de94ff9aa 100644
+--- a/tests/docker/dockerfiles/debian-s390x-cross.docker
++++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
+@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       locales \
+                       make \
+                       mtools \
+-                      ncat \
+                       ninja-build \
+                       openssh-client \
+                       pkgconf \
+diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
+index 6c6ab0256ea..c34923b253d 100644
+--- a/tests/docker/dockerfiles/debian.docker
++++ b/tests/docker/dockerfiles/debian.docker
+@@ -109,7 +109,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       make \
+                       mtools \
+                       multipath-tools \
+-                      ncat \
+                       nettle-dev \
+                       ninja-build \
+                       openssh-client \
+diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+index 38381ef8f59..8766f952ac8 100644
+--- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
++++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+@@ -96,7 +96,6 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        ncurses-devel \
+                        nettle-devel \
+                        ninja-build \
+-                       nmap-ncat \
+                        numactl-devel \
+                        openssh-clients \
+                        pam-devel \
+diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
+index 818485c4ba2..751789e849b 100644
+--- a/tests/docker/dockerfiles/fedora-win64-cross.docker
++++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
+@@ -42,7 +42,6 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        make \
+                        mtools \
+                        ninja-build \
+-                       nmap-ncat \
+                        openssh-clients \
+                        python3 \
+                        python3-PyYAML \
+diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
+index 32aaf01aff4..ec787aa7027 100644
+--- a/tests/docker/dockerfiles/fedora.docker
++++ b/tests/docker/dockerfiles/fedora.docker
+@@ -96,7 +96,6 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        ncurses-devel \
+                        nettle-devel \
+                        ninja-build \
+-                       nmap-ncat \
+                        numactl-devel \
+                        openssh-clients \
+                        pam-devel \
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+index 44e763f571a..fb5b03e7a1b 100644
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ b/tests/docker/dockerfiles/ubuntu2204.docker
+@@ -107,7 +107,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       make \
+                       mtools \
+                       multipath-tools \
+-                      ncat \
+                       nettle-dev \
+                       ninja-build \
+                       openssh-client \
+diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+index e995328e833..2395119d6c6 100644
+--- a/tests/functional/migration.py
++++ b/tests/functional/migration.py
+@@ -84,6 +84,6 @@ def migration_with_exec(self):
+             self.skipTest('ncat is not available')
+         with Ports() as ports:
+             free_port = self._get_free_port(ports)
+-            dst_uri = 'exec:ncat -l localhost %u' % free_port
+-            src_uri = 'exec:ncat localhost %u' % free_port
++            dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
++            src_uri = 'exec:socat - TCP:localhost:%u' % free_port
+             self.migrate(dst_uri, src_uri)
+diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+index b78a1d7f2e0..131d9c4ec81 100644
+--- a/tests/lcitool/projects/qemu.yml
++++ b/tests/lcitool/projects/qemu.yml
+@@ -83,7 +83,6 @@ packages:
+  - meson
+  - mtools
+  - ncursesw
+- - netcat
+  - nettle
+  - ninja
+  - nsis
 -- 
-2.52.0
+2.47.3
 
 
