@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E94431098797
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15DC5109879F
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3c83-0007Wx-5S; Fri, 20 Mar 2026 11:51:15 -0400
+	id 1w3c8D-0007b5-2o; Fri, 20 Mar 2026 11:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c81-0007Vz-3S
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:13 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1w3c85-0007YY-K7
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:20 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c7z-0005VB-5M
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:12 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b97f9587e6eso260075266b.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:51:10 -0700 (PDT)
+ id 1w3c83-0005Wm-57
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:17 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b9358dd7f79so128675466b.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774021870; x=1774626670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774021873; x=1774626673; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YhvJ30u4SjKjKGIAS0IRtyTM16wsKwTzLGcYfkxCVc0=;
- b=tjJRdRWMsDXLUItS0XY4kFlktsP+z85kwp8DDbXpdk3J1qXXHvIaCy9PtYu4pz0fZM
- 3PmDm1DCPQhNUnNEoPlMlDRDxCN4zOmPt9hMkz+MPdnZFsfSFGhHTI4wOQ74FKgmfWVX
- FeoCxshp7zMU4yY/O2l6AOTyTAYmX56kLAkbt7psChu+A3VxpMk4JBZr0MYENghAtHEC
- TZmtmPX0BHSRDxQsH0jiKO+/vJR3ARZHNrpDB/go1/QxpXgRS6eWiMInA3NMup95qzSC
- 4BENJ4NF02+CODexkfzYX8M4r9TSAs4Nrk6XtAVH/FDUzfB7YcMd6pI4xmukU08T/xz6
- l0dQ==
+ bh=Vtp616pn0VVl4bYnzt5PwIs8bsU7tc9ZvPQ6p1AmMyI=;
+ b=B+kOAUQQs53AajIgcTyUamIoE7nxbEWFarGskZSgxS8I6YT7++yw4OZRSVzrsl+IEK
+ eamx3q9PzfKbuqlfBUWrOXA4FWEiY7fSllYPfZMXcKoFL3Npr79WI9gZyzr7kLCb/P/T
+ v0PPcBnuemnozTnSkdwfjtXqiFDYDeGvN3kET9pnkRYmFV2rXakqOcM5m16vKaPMXeHL
+ vIhCOvMAoCq2jVXK6Z5za5MZCG09WfXtyjaTxMKbwJ6aHL3upl2z5om2q4JvdFbjQwTr
+ 6dZPNLaOc4FXvPTwKS1zuV0OQv80BloLA4gx4rxU8eyuHZx7coaqKiMk2yCGsBaMHXAy
+ U7Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774021870; x=1774626670;
+ d=1e100.net; s=20251104; t=1774021873; x=1774626673;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YhvJ30u4SjKjKGIAS0IRtyTM16wsKwTzLGcYfkxCVc0=;
- b=JJl3lN5m+4+nLHZfnlMSACudN+lgaYbiWY/jvp1MxWWsyDyWnnoK/vA2Wt7UTwxV1A
- Stywn5llRBG5570rpaOJkFJzjksubpcE8YOjOMAh5HwmStnp9BsZ9T+0XGqsYS5pzPoU
- iIafJjBE9uQuXybNGBqc7XcJ8X53fAS/Hv3T1j78hBmTd8HhLpNfaKPyuIaKWeA1Kp5q
- fZUsRtuWhxe3AaCWvlFd3U4HtGD/tiEFPwxFw2tchu2rOWOWKi32WOppDOfakCUoX+1q
- lfKwlfk7rJAQbJeV5/MPyyfC/cOrKHw2pnNNVqZoD6knAcTcRdP3Hj1XR/GgGCG7RyV8
- /ozg==
-X-Gm-Message-State: AOJu0YxWD5oL8GGN/uJX2FYXluliZCjvaL+/zViHJ6O5d1D0I/pK9m4j
- j82op1xRNPsg96Z3Z89hoH3lgQTU1ZxkaVLtFz0ynH63Xes7uCbytRfjyhPJtB0MRKg=
-X-Gm-Gg: ATEYQzyT0cu55w/1Je7kSDFgXyJzsQ1KyQwgsCRv6TaUoLmGgYrdrg+3BBGpktBf2bN
- 3vD8kYVL/qD3c8gOJ2NaAW5HjPBCrueF6X9Pnqyhdtl7JYsJ3X3V4twXSGq36Mx6m+fBIdSrNXB
- Iz+uyzpZoWVb+ZWF+2XXdQFD74fcKs8M/mo+cq+Ppy2mrozewZiaLpSNB1AX5Ifi7VAx9QI83uP
- lD0NLW5rnLOGVvfmrVtKGK6DzATnwkYogrROY9b5gyK993wZHaS5/NxyKbrewiC31+KKvsQadGl
- bpxkKZDDZmGG1kUpPiy69eUnj/aVV0HEHIBh0VTj6PgOyHu928DzJs4+FZdtFvyoCZfW96ZtNje
- YbSpDrMU/X8sHab7ZwXG3jOIUJoneBxX4vij0ibc3jFXbj1gblHr9PgOszdY6PChpWG22KeikMr
- VdfI8W6oD/6sLYBL99eFI8M1I=
-X-Received: by 2002:a17:907:c50a:b0:b94:858:5807 with SMTP id
- a640c23a62f3a-b982f235fabmr226643666b.25.1774021869554; 
- Fri, 20 Mar 2026 08:51:09 -0700 (PDT)
+ bh=Vtp616pn0VVl4bYnzt5PwIs8bsU7tc9ZvPQ6p1AmMyI=;
+ b=NfbF8bjByM/55ODnCCrkyYwFwXcdb4W/086GTOZt0zH+g5FL60KTyu5DhbZhVqyD56
+ tz+xRBgdRQZUM3dADsxbqPuR5nheRf9aEw/LhyXmpjTxCV+PT0PlM2lkika8r2f/KzlX
+ z7BOi0Fz7I8opUg/i++PJVc7FOE2uweVLCnJEykb3pmrGqrfr5AZfizsbArbcpHHGZuH
+ 0CZx5pIkx1tU/8o+v420LH9/YHqpUuvJbdmBKsuB2UHyQ5BG4zzAzbxU4ar5MZu6emOY
+ y9dEiAuQa67Bn5sX5atzK35QFnTk1DHdLJ8lNEUtwm3KoTVX+Gdwst4wm9ENmMOiYZnL
+ hdaA==
+X-Gm-Message-State: AOJu0Yy6qBB4BVI36ZmBSRBqSGC8NEwT4Atpy162VMKSIDRNwuWdUa/k
+ Ho2+KxtCpqCLqBwZIPrjV719XrHctfVtHaCXjiWmFvIbpaez2YvR0X5jt9uo3KqQFtM=
+X-Gm-Gg: ATEYQzw5iP/xZRg/pu6J0tFGba+01VOSWLeC2kCUSENfVUfuEuRvYnm3el8qX5cgzWZ
+ qYfgBTUJSQNiCExDmomZLfN8fy7JYXpnfRxvarKCa+4YVTrYUl4EZhVZXPSMV4kdPiO21axdUL8
+ ivlq31y5+q4JCa+TPTsLK5GImKXccmV/PpcE0GmeiJBXRYm2Ll1CGHBGYcbTAyFs9UB6On/6GYD
+ kDyYAZYqnzNNFyJRaF08PZJtKfLgHVVfPsmr/VWA0vpOjuN4EDRVbZDU3acJaluIgK4OPl7dPqh
+ mAir5ks0xSypyt5i8hZHgwhcH4APacMHhXa3DW75b76xSOCVSY1O4mT3r7HrMrAZ2IS0zHdtc4n
+ Pi/28WpE6kxwKEUWhFSW2k7vuaaBbUS7gzBExEpEA42mH5Rl8bT5whfaOe89aGQd3J7GRDGfRfc
+ zATMW0VyscLfPteJ1xaQWoumA=
+X-Received: by 2002:a17:906:cc8d:b0:b97:a422:b435 with SMTP id
+ a640c23a62f3a-b982f3a5e4fmr185042066b.40.1774021873425; 
+ Fri, 20 Mar 2026 08:51:13 -0700 (PDT)
 Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9832fd7147sm172006866b.27.2026.03.20.08.51.08
+ a640c23a62f3a-b983387084asm169057066b.53.2026.03.20.08.51.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 08:51:08 -0700 (PDT)
+ Fri, 20 Mar 2026 08:51:11 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E79F65F910;
- Fri, 20 Mar 2026 15:51:07 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 6F9175F943;
+ Fri, 20 Mar 2026 15:51:08 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Peter Maydell <peter.maydell@linaro.org>,
@@ -77,28 +77,26 @@ Cc: Kyle Evans <kevans@freebsd.org>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 2/8] tests/tcg/multiarch/linux-test: use portable
- alternative for dirent64
-Date: Fri, 20 Mar 2026 15:51:01 +0000
-Message-ID: <20260320155107.2143191-3-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 7/8] tests/docker: Update the opensuse-leap container file
+ to version 16
+Date: Fri, 20 Mar 2026 15:51:06 +0000
+Message-ID: <20260320155107.2143191-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260320155107.2143191-1-alex.bennee@linaro.org>
 References: <20260320155107.2143191-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,52 +112,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+From: Thomas Huth <thuth@redhat.com>
 
-dirent64 and readdir64 are glibc-specific and not portable to other
-C libraries such as musl. Define _FILE_OFFSET_BITS=64 instead, which
-portably instructs all libc implementations to use 64-bit file offsets,
-making readdir() and struct dirent equivalent to their 64-bit variants.
+Run "make lcitool-refresh" to update the container file to the latest
+version of openSUSE.
 
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <af31d21c4d668cfb940ba4159f584fa6454c3d82.1772107448.git.matheus.bernardino@oss.qualcomm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20260316135407.209072-4-thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/multiarch/linux/linux-test.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tests/docker/dockerfiles/opensuse-leap.docker | 35 +++++++++----------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
-index bf6e0fda262..0fa3165602f 100644
---- a/tests/tcg/multiarch/linux/linux-test.c
-+++ b/tests/tcg/multiarch/linux/linux-test.c
-@@ -16,6 +16,7 @@
-  *  You should have received a copy of the GNU General Public License
-  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
-+#define _FILE_OFFSET_BITS 64
- #define _GNU_SOURCE
- #include <stdarg.h>
- #include <stdlib.h>
-@@ -83,7 +84,7 @@ static void test_file(void)
-     struct utimbuf tbuf;
-     struct iovec vecs[2];
-     DIR *dir;
--    struct dirent64 *de;
-+    struct dirent *de;
-     /* TODO: make common tempdir creation for tcg tests */
-     char template[] = "/tmp/linux-test-XXXXXX";
-     char *tmpdir = mkdtemp(template);
-@@ -191,7 +192,7 @@ static void test_file(void)
-         error("opendir");
-     len = 0;
-     for(;;) {
--        de = readdir64(dir);
-+        de = readdir(dir);
-         if (!de)
-             break;
-         if (strcmp(de->d_name, ".") != 0 &&
+diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
+index d693f2c6f85..66e90fa3634 100644
+--- a/tests/docker/dockerfiles/opensuse-leap.docker
++++ b/tests/docker/dockerfiles/opensuse-leap.docker
+@@ -1,13 +1,12 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all opensuse-leap-15 qemu
++#  $ lcitool dockerfile --layers all opensuse-leap-16 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM registry.opensuse.org/opensuse/leap:15.6
++FROM registry.opensuse.org/opensuse/leap:16.0
+ 
+ RUN zypper update -y && \
+-    zypper addrepo -fc https://download.opensuse.org/update/leap/15.6/backports/openSUSE:Backports:SLE-15-SP6:Update.repo && \
+     zypper install -y \
+            Mesa-devel \
+            alsa-lib-devel \
+@@ -80,13 +79,14 @@ RUN zypper update -y && \
+            libudev-devel \
+            liburing-devel \
+            libusb-1_0-devel \
++           libxdp-devel \
+            libzstd-devel \
+            llvm \
+            lttng-ust-devel \
+            lzo-devel \
+            make \
++           meson \
+            mtools \
+-           ncat \
+            ncurses-devel \
+            ninja \
+            openssh \
+@@ -94,11 +94,17 @@ RUN zypper update -y && \
+            pcre2-devel-static \
+            pipewire-devel \
+            pkgconfig \
+-           python311 \
+-           python311-base \
+-           python311-pip \
+-           python311-setuptools \
+-           python311-wheel \
++           python3-Pillow \
++           python3-PyYAML \
++           python3-Sphinx \
++           python3-base \
++           python3-numpy \
++           python3-opencv \
++           python3-pip \
++           python3-setuptools \
++           python3-sphinx_rtd_theme \
++           python3-tomli \
++           python3-wheel \
+            rdma-core-devel \
+            rust \
+            rust-bindgen \
+@@ -110,7 +116,7 @@ RUN zypper update -y && \
+            spice-protocol-devel \
+            swtpm \
+            systemd-devel \
+-           systemtap-sdt-devel \
++           systemtap-dtrace \
+            tar \
+            tesseract-ocr \
+            tesseract-ocr-traineddata-english \
+@@ -133,18 +139,11 @@ RUN zypper update -y && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+ 
+-RUN /usr/bin/pip3.11 install \
+-                     PyYAML \
+-                     meson==1.8.1 \
+-                     pillow \
+-                     sphinx \
+-                     sphinx-rtd-theme
+-
+ ENV CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
+ ENV LANG="en_US.UTF-8"
+ ENV MAKE="/usr/bin/make"
+ ENV NINJA="/usr/bin/ninja"
+-ENV PYTHON="/usr/bin/python3.11"
++ENV PYTHON="/usr/bin/python3"
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
 -- 
 2.47.3
 
