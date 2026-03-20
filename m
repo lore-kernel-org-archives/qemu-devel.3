@@ -4,128 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4817D108B8E5
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C7CA108B8E6
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3WUD-0001qA-VB; Fri, 20 Mar 2026 05:49:46 -0400
+	id 1w3WV4-00026d-En; Fri, 20 Mar 2026 05:50:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w3WUB-0001pM-Jo
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:49:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w3WV2-00025t-A0
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:50:36 -0400
+Received: from p-east2-cluster4-host9-snip4-10.eps.apple.com ([57.103.78.221]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w3WU8-0004OR-Qi
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:49:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774000178;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jTmjwWfULrwN4cfCkbMhVV0ICf/zFXEB5JzkqqhXXuw=;
- b=bYI60DlIUr/0nEtYJlwUfGfoM/0edyS4i2k8ZgvpqPrvE4U1we/qitmwE8Oo9sTYhOqeA4
- UgzKlGIp8VXmM88V35BZerAAaYh+m3BtrGdtgllKWuVkIHI/6wKWOqyRX3n0tTzkurgrIi
- LXbJfu+y1oOZ7OaL5Qtx4O080NwVhvk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-JK69ZqJoNX2WOUMDzYUFiQ-1; Fri, 20 Mar 2026 05:49:36 -0400
-X-MC-Unique: JK69ZqJoNX2WOUMDzYUFiQ-1
-X-Mimecast-MFC-AGG-ID: JK69ZqJoNX2WOUMDzYUFiQ_1774000175
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-483786a09b1so18558375e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:49:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774000175; cv=none;
- d=google.com; s=arc-20240605;
- b=eKkE65W9MM11eKtsAE4MAJbMJhBSRiEZtQEKeNyeHYtNAOp/bXO308wnDTYzLLnm+g
- iBSEGW4Bac4KyHnTe/2Gm0M4TN/+QZ7lI0zdDG37lNu10oA1f3Yt0urLpCbS9sWN4tZR
- zVd/jD3jmA/cEK6L7Q0LONq622UGD55Yy7IlfajJH3oRftnm0iSuj+WRzcsyy5Ngmc4G
- 1AAHAsi/sCyy89jMPA+XZGscvV7P2gw0bXvu2r8I2Cbl/hL2JF1FMrgwPVLOmdg3CU8v
- 8KKTceao3lz+SdDYw79Nl6T7PYEo7n8t21uqJH3u8hSvBg4XNUN/Hfxshr+3BTG6otNQ
- FsOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jTmjwWfULrwN4cfCkbMhVV0ICf/zFXEB5JzkqqhXXuw=;
- fh=PRy/UMsTflbww0VnKZ/lYWzqEyak9st/+YTZWl1C9xA=;
- b=bXCfO+yLabXMYb6GPiOYMGcrQsZGBU42Imq9SNZGfWwRWXwZ+UFbjcgSfa/yji7Sq7
- G9XARQQk4vrtMBdZLiWMVdFEOhAiYd7So6VfRTTzQZ74Ifz8cF9fOwqiBe+RjRAQ0jxo
- ls16MF28NVhDP77PV5U9OeSOBCYokLdspw4IiZ70bwgadzQthB6SX9T4mwq+oax6RVbo
- w40dLKv0057Cntgd2Z3sbO/hED8XUZv6Bj0xkx6Vpomvqcs2GIi4YsCmebhqwGFCny0R
- LwpPKselGXxnlG4yPLF1EwmhFlijCer5AOmkB7olPJ5RVIeRV/mrKxN7j70f5QajjLyN
- UHBg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774000175; x=1774604975; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jTmjwWfULrwN4cfCkbMhVV0ICf/zFXEB5JzkqqhXXuw=;
- b=t1dgnG/6cF2jaRbA/8cjCTpJ/4O/MXEzu7mOvYio8wdUKoKrbEH2ghgV+zhXZ8F0ur
- IpHOQ3yuROAGvmudvqSb0xsvixYHcQs0IRbf5nlgvoOdy1ml9VxYKVbr/joQamnLGnLe
- XEkZ0A4IA28cud3LnW4XwiN0VbnbZP5VKn5KbLr97dTWn/xQ226sc+btari7c+a/mELa
- UNhzbafdEo6p1gH9dvCRkbjIxkG2ctWtY9pLSPPqmEfAwRcsCDPoVkZR9uct+m/b05hq
- 8hfBWwnIkfp5U5yjr1zq2p/t8sP7Al8KQb2lPbKh19lIHRXS75Sd2962bAtUiIrKGq5S
- gy8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774000175; x=1774604975;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jTmjwWfULrwN4cfCkbMhVV0ICf/zFXEB5JzkqqhXXuw=;
- b=NSgCXVeHTTQDmYTZU4mM2QCEJ3EsXTVeb9lm4DYEQPsJA49goFat6dp4SAcyzhoHTl
- kxzbluQ8Cgfx5AzBAKZ3WnUTz8jaSk2IcG4ekJaKc95PnQyFJBJRWXkseKMg51fUuuie
- 0d76gJut8r8kJ/pze3VXQ5CVM4b/Ae/xiou6ZsEyoCOK8ilzGbwp2I14AYjF60Hej3i5
- wtaZEw4U/90K7MxB46wBda6229ZB/6h8D78o6o6clZq6kOYvR1wboxrj521zYgoAMbeZ
- 7Jus/aBNLILehXhqf5Jtw4x/bYBIn8Yp1uxcMByzVmwscRTnIcKT3bqMOMQ5y8b/9Wt+
- dyAg==
-X-Gm-Message-State: AOJu0YxFfmCuybBPzYuxvEP16bj4pHi74Kh5in10OD5P1SKJNBaiQ+a+
- K26btY1JYNsMDJm7cn5qBy1y8vZyYkEOL0C5Pr5lptVkk3tePPn/2Q41aOOgLJrkaGS+BrtVC//
- Z88ccuHxZ6hztNwpJxyFUsdeMWS01ActIzFaUyId+jkojdD0Wrk0ozrfEJf4HcgJje/MHXb54kZ
- eRoe/p6Hq8djSt1mFSZesBGAbY8xFp/kE=
-X-Gm-Gg: ATEYQzxaHGtaF1GLpphupAU2KVDQEQd1PG/0Euz22UcL5R46tTlS0pkjxaRqDw5R4pg
- +Rhmq3emjpfxh+C5aYIGzrBXRopt11ucWn+lhonWMWglm12WLaszP8X4s/h+apgbN3XkJyS8T9o
- ak+41Co6yb04m1Aurd13Tpmyq/qtzIK/94brbZO9e94QiZtre1uAgnb/L8r073MaaR/LsSQ7Pxc
- sNAu2IaaiyxLIFOmL6P1slR2RMbVd9Cm+joQMfvc2uu41SpT0trOFSZX8DNU+IDAG4H
-X-Received: by 2002:a05:600c:8711:b0:485:3f58:d9f with SMTP id
- 5b1f17b1804b1-486ff029008mr36125705e9.30.1774000175090; 
- Fri, 20 Mar 2026 02:49:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:8711:b0:485:3f58:d9f with SMTP id
- 5b1f17b1804b1-486ff029008mr36125085e9.30.1774000174492; Fri, 20 Mar 2026
- 02:49:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-10-peterx@redhat.com>
-In-Reply-To: <20260319231302.123135-10-peterx@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Fri, 20 Mar 2026 15:19:17 +0530
-X-Gm-Features: AaiRm50jgW1qylEIvMoFvAkd7i-z73OB4YDxYNvYlLlqeGetAgwpVT4Q2Hx6GNg
-Message-ID: <CAE8KmOzqJzdez1xuXOsPyq2ewrCohg+a0VfgmbkPkzTS6nr9Wg@mail.gmail.com>
-Subject: Re: [PATCH RFC 09/12] migration: Make iteration counter out of RAM
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
- Kirti Wankhede <kwankhede@nvidia.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Joao Martins <joao.m.martins@oracle.com>, Alex Williamson <alex@shazbot.org>, 
- Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Pranav Tyagi <prtyagi@redhat.com>, 
- Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Yong Huang <yong.huang@smartx.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w3WV0-0004wK-0R
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:50:35 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPS id
+ 7F87818000BE; Fri, 20 Mar 2026 09:50:28 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774000231; x=1776592231;
+ bh=6JHx9mTtuFQjRuYkqnRbXnW8jM/mFHKaQp7UkNbxU4k=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=gi5sBiwRMIadV+6I/j+rnP9mcoHktsnBrXOajs9Sqsfe1jpvYgef0dQPrANZEwZOkoNcSDYKoMfs9mVMGIcZWCY2ZFYszZUOuyRMm1UiUZjCUM9W/CIEArYnZWM7YKL9rhdeUeNhCvFKs1MCMpj4n7oXFTRYuVpz8RhEUCMwK3IAqw6v8OQLcrqM9fh1BZbvksEsnLZj8hFBiOaOC/IaT+Mfsh6zzKP8eD87ad3xBRnBGLfpotInu+voGs+yu+FZcx0BYjR0ul4CV3QV9R8FY+nJpXVP6hJGKbVeYI6sUShXSskyeH77wVdj9g/VGUPGY9RgtbNzYykJNqPoVdvbIg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPSA id
+ D7847180015C; Fri, 20 Mar 2026 09:50:26 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v3 3/6] whpx: arm: enable more enlightements
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA_wVD+mMFhwzDyHx1pY_aMtBvdHjZqQoFoniM_JUCcceA@mail.gmail.com>
+Date: Fri, 20 Mar 2026 10:50:14 +0100
+Cc: qemu-devel@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8B799F60-05AD-49F3-8BAC-4D36EBA8E196@unpredictable.fr>
+References: <20260314221529.47841-1-mohamed@unpredictable.fr>
+ <20260314221529.47841-4-mohamed@unpredictable.fr>
+ <CAFEAcA8v59wSwRvig6NRjWHyvBGY=gPhWFN1B_jD9k+aXqo9Ng@mail.gmail.com>
+ <4387E53A-E140-48E9-80C3-721F9C0B9A9D@unpredictable.fr>
+ <CAFEAcA_wVD+mMFhwzDyHx1pY_aMtBvdHjZqQoFoniM_JUCcceA@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Proofpoint-GUID: irwTAuhgFlC3q4FTS0N8saUS0GEJGzjb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDA3NSBTYWx0ZWRfX9BPa9tuPpuj4
+ ZhopOvlv+TeiFwf+kaTDUGqAYhJobWSe5uqkGERxKlS0XZcCi7ZRz2/BafL7KZWIP9v8Mb5jxAE
+ 9uhpD6i9+oyUwCmw/qDB+AHNoa0++jfYZkvMI1iyNTao1WMQ4odPDNRu2aHCh6AENMk7SBbJaEl
+ vGCEZAlDY1yeZSd3BXKWQd9LnwRHLai3VvR+bxLV2R6XdPNh3PvwWt2WXBwZY3NamileLmaIIDy
+ YWW6FBXesWDedvMg1IIC9VHdWVlaSETEnIOcQIfp+ZWTBh2Hf5/GI4IEnW+mWPQcmITZ9K966zd
+ D8wC1Y44kpuxnJ7b9u+aHQkvbcqt/Q5pZwAkuxPh7Wv81dkyJbuPMwY07LKoDA=
+X-Proofpoint-ORIG-GUID: irwTAuhgFlC3q4FTS0N8saUS0GEJGzjb
+X-Authority-Info-Out: v=2.4 cv=NIrYOk6g c=1 sm=1 tr=0 ts=69bd1865
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=W0AeO356w_Fv_2sdRokA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-20_01,2026-03-19_05,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxlogscore=802 suspectscore=0 mlxscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1030 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603200075
+Received-SPF: pass client-ip=57.103.78.221;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -143,142 +97,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Mar 2026 at 04:44, Peter Xu <peterx@redhat.com> wrote:
-> It used to hide in RAM dirty sync path.  Now with more modules being able
-> to slow sync on dirty information, keeping it there may not be good anymore
-> because it's not RAM's own concept for iterations: all modules should
-> follow.
->
-> More importantly, mgmt may try to query dirty info (to make policy
-> decisions like adjusting downtime) by listening to iteration count changes
-> via QMP events.  So we must make sure the boost of iterations only happens
-> _after_ the dirty sync operations with whatever form (RAM's dirty bitmap
-> sync, or VFIO's different ioctls to fetch latest dirty info from kernel).
->
-> Move this to core migration path to manage, together with the event
-> generation, so that it can be well ordered with the sync operations for all
-> modules.
->
-> This brings a good side effect that we should have an old issue regarding
-> to cpu_throttle_dirty_sync_timer_tick() which can randomly boost iteration
-> counts (because it invokes sync ops).  Now it won't, which is actually the
-> right behavior.
->
-> Said that, we have code (not only QEMU, but likely mgmt too) assuming the
-> 1st iteration will always shows dirty count to 1.
 
-* Where do we make this assumption? I mostly see 'dirty_sync_count'
-read/used as is, only cpu_throttle_dirty_sync_timer_tick() seems to
-skip one *_bitmap_sync_precopy() call when sync_cnt <= 1. This'd works
-for zero(0) as well.
+> On 20. Mar 2026, at 10:17, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Thu, 19 Mar 2026 at 18:50, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>=20
+>>=20
+>>> On 19. Mar 2026, at 19:13, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>>>=20
+>>> On Sat, 14 Mar 2026 at 22:15, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>>>=20
+>>>> Linux uses AccessVpRegs without checking availability and panics if =
+it's not there. Expose it unconditionally.
+>>>=20
+>>> The commit message subject says we're enabling enlightenments...
+>>>=20
+>>>> @@ -953,13 +953,15 @@ int whpx_accel_init(AccelState *as, =
+MachineState *ms)
+>>>>    synthetic_features.Bank0.AccessPartitionReferenceTsc =3D 1;
+>>>>    synthetic_features.Bank0.AccessHypercallRegs =3D 1;
+>>>>    synthetic_features.Bank0.AccessVpIndex =3D 1;
+>>>> -    synthetic_features.Bank0.AccessHypercallRegs =3D 1;
+>>>=20
+>>> ...but the code change seems to be removing one as well as
+>>> adding the three new ones. Intentional?
+>> Hello,
+>>=20
+>> The AccessHypercallRegs bit was set twice - with the first one being =
+two
+>> lines earlier - removed a spurious one of the two.
+>=20
+> Ah, right. How about this for a commit message ?
+>=20
+>=20
+>    whpx: arm: enable more enlightenments
+>=20
+>    Unconditionally enable some more enlightenments for whpx. In
+>    particular, linux uses AccessVpRegs without checking availability =
+and
+>    panics if it's not there, so it's important to expose it.
+>=20
+>    We also had a duplicate line where we set AccessHypercallRegs =3D 1
+>    twice; remove the duplicate.
+>=20
+>=20
+> If you have more rationale/info about the other two we're enabling,
+> that would also be nice to include.
+>=20
+> thanks
+> -- PMM
 
-> Cc: Yong Huang <yong.huang@smartx.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration-stats.h |  3 ++-
->  migration/migration.c       | 29 ++++++++++++++++++++++++++---
->  migration/ram.c             |  6 ------
->  3 files changed, 28 insertions(+), 10 deletions(-)
->
-> diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-> index 1153520f7a..326ddb0088 100644
-> --- a/migration/migration-stats.h
-> +++ b/migration/migration-stats.h
-> @@ -43,7 +43,8 @@ typedef struct {
->       */
->      uint64_t dirty_pages_rate;
->      /*
-> -     * Number of times we have synchronized guest bitmaps.
-> +     * Number of times we have synchronized guest bitmaps.  This always
-> +     * starts from 1 for the 1st iteration.
->       */
->      uint64_t dirty_sync_count;
->      /*
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 42facb16d1..ad8a824585 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1654,10 +1654,15 @@ int migrate_init(MigrationState *s, Error **errp)
->      s->threshold_size = 0;
->      s->switchover_acked = false;
->      s->rdma_migration = false;
-> +
->      /*
-> -     * set mig_stats memory to zero for a new migration
-> +     * set mig_stats memory to zero for a new migration.. except the
-> +     * iteration counter, which we want to make sure it returns 1 for the
-> +     * first iteration.
->       */
->      memset(&mig_stats, 0, sizeof(mig_stats));
-> +    mig_stats.dirty_sync_count = 1;
-> +
->      migration_reset_vfio_bytes_transferred();
->
->      s->postcopy_package_loaded = false;
-> @@ -3230,10 +3235,28 @@ static bool migration_iteration_next_ready(MigrationState *s,
->  static void migration_iteration_go_next(MigPendingData *pending)
->  {
->      /*
-> -     * Do a slow sync will achieve this.  TODO: move RAM iteration code
-> -     * into the core layer.
-> +     * Do a slow sync first before boosting the iteration count.
->       */
->      qemu_savevm_query_pending(pending, false);
-> +
-> +    /*
-> +     * Boost dirty sync count to reflect we finished one iteration.
-> +     *
-> +     * NOTE: we need to make sure when this happens (together with the
-> +     * event sent below) all modules have slow-synced the pending data
-> +     * above.  That means a write mem barrier, but qatomic_add() should be
-> +     * enough.
-> +     *
-> +     * It's because a mgmt could wait on the iteration event to query again
-> +     * on pending data for policy changes (e.g. downtime adjustments).  The
-> +     * ordering will make sure the query will fetch the latest results from
-> +     * all the modules.
-> +     */
-> +    qatomic_add(&mig_stats.dirty_sync_count, 1);
-> +
-> +    if (migrate_events()) {
-> +        qapi_event_send_migration_pass(mig_stats.dirty_sync_count);
-> +    }
->  }
->
->  /*
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 89f761a471..29e9608715 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -1136,8 +1136,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
->      RAMBlock *block;
->      int64_t end_time;
->
-> -    qatomic_add(&mig_stats.dirty_sync_count, 1);
-> -
->      if (!rs->time_last_bitmap_sync) {
->          rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
->      }
-> @@ -1172,10 +1170,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
->          rs->num_dirty_pages_period = 0;
->          rs->bytes_xfer_prev = migration_transferred_bytes();
->      }
-> -    if (migrate_events()) {
-> -        uint64_t generation = qatomic_read(&mig_stats.dirty_sync_count);
-> -        qapi_event_send_migration_pass(generation);
-> -    }
->  }
->
->  void migration_bitmap_sync_precopy(bool last_stage)
-> --
+Hello,
 
-* Change looks okay. Setting dirty_sync_count = 1 seems like special
-casing, we need not do it if it's not required.
 
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+```
+whpx: arm: enable more enlightenments
 
-Thank you.
----
-  - Prasad
+Enable some more enlightenments for whpx for -accel whpx,hyperv=3Don.
+In particular, Linux uses AccessVpRegs without checking availability =
+when
+Hyper-V enlightenments are exposed and panics if it's not there.
+
+We also had a duplicate line where we set AccessHypercallRegs =3D 1
+twice; remove the duplicate.
+
+Microsoft=E2=80=99s VMM exposes SyncContext on arm64 and =
+FastHypercallOutput=20
+regardless of architecture unconditionally, so add those two to match=20
+that configuration.
+
+```
+
+On arm64, Hyper-V enlightenments with QEMU whpx aren=E2=80=99t on by =
+default
+and are a more research-y configuration - as the case when it was needed
+to have a properly-behaved VM on Snapdragon X laptops has been worked =
+around=20
+in Hyper-V.
+
+Snapdragon X has broken CNTVOFF_EL2 with an interrupt flood when=20
+HCR_EL2.E2H =3D 1 + CNTVOFF_EL2 !=3D 0 and Hyper-V synthetic timers were=20=
+
+used on arm64 to sidestep that. Nowadays, Hyper-V has a workaround=20
+so that the virtual timer can be used instead of needing to resort
+to using those.
+
+Thanks,
+-Mohamed
+
 
 
