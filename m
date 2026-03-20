@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB3B51098797
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515691098797
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3c8I-0007d2-Lk; Fri, 20 Mar 2026 11:51:30 -0400
+	id 1w3c8K-0007fn-PM; Fri, 20 Mar 2026 11:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c85-0007YZ-TR
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:20 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3c8J-0007eH-5h
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:31 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3c83-0005XJ-TZ
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:17 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b97bca3797dso270674066b.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:51:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3c8G-0005Zi-Jr
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:51:30 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so1388042f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:51:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774021874; x=1774626674; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2Fv5imt9etkCyxA426f2RtHofD804x2pDCK4rcq9hJc=;
- b=OGFzzahRIFAGKF2Ig8pxRZP5J0w0CyfDVYSQ9HOJOhmqn39BinzHaFw0HUShdVMwZc
- K9bYMqAt8CX3jg4Fe6NQgi0fUzCvpZ8JrkMQjNhHePJZh1qbB2SNx2IplqH2Z0w3f12q
- A7JAHY7VD5LZhHjL4wDvO3HhWCw0lGh8QTohc0Isjvo0WffhCwLvU63agzpk/yiO4ehI
- 5GIC2UheaEdNX0OQdawFiloVMQwbPs1eKadkvDKgwO3/PWzWPJkdRYS7kRJTIJchKwYV
- 2U+QPdbRjTNN225UaGuv+rgDZHv1Pfvrx6+FO2YbuS3w2tE2gXtldAW8/R0PkXaXtLvw
- EyJA==
+ d=linaro.org; s=google; t=1774021887; x=1774626687; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dxAE80npSlmsob1slWiUxqWs13+sUZxls1OfOL833ZQ=;
+ b=oqcR65hT7teBGVjiYpiO+4f6GsBdr/tp0kVYj2siDyKUtGjQtpjpIYjcQa9ZP6d9+B
+ j0CwQDRft3FOa/vXhXXupE0/7/gJRUKQuY30wZMkQBTyHKBAyCQjSeNHEivV2Blfx9++
+ qbkteoVx4DtrvjKu1VqRdXZF1KqCMpF3TX9FYbL3QXfmeBcAN3g/Wh3tphtOookemTPS
+ mf7G/jsnD6JRErE87hrAH13tBX9b0g+yOhaaqbH0ZKpomnMOuG/2zzFDGYC0cFWqkJTu
+ D0/UXoEiK2dXt7Z99933d8euW/pWiFDKlhNORRlaz/d40do86lMZp36d4mp+yA5e4b+l
+ aKuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774021874; x=1774626674;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2Fv5imt9etkCyxA426f2RtHofD804x2pDCK4rcq9hJc=;
- b=b6yHe2dKT163wzRBIszrddrF3dWb3lED183ksZ4C/Iq7c0YS6Oo7cbIOGvp5eNfyfJ
- 4FU+OKEk57De2srSuI78ubMlPXg37MExQCEWQSa0HMp7nhJgFeXQtqaIQYLs8QLphRkv
- 9KvXAuzWp2CQ477myRM439Y5RWnMZam9fooCXJjDnVI+W3v99qae+hYmGfH1pRZm2T3x
- BOvbRBm0oeWIHo0NQigrGKSfZ/tRL/XpxA7NWuyNe3V5HXa0zzsCib2XKvU4EzTanBBW
- ex5FhIIbtgHnAdIoh/Nnl3jOEtif94zVAlq+u2kKAXBwUXz+4JV+jcoltXYnqZQmj8x5
- UjNQ==
-X-Gm-Message-State: AOJu0Yx5Uo/V0jJzlLMswv22ogQdSfZ4Kd/ADAJ5Gohzc3Fa5kmTPLsl
- IrUqiOP0VKB+reK260HfbPho8Hv7i5bIpYFLVihVj3Ak2BYmJxfPdhvA2/83elzUrT0=
-X-Gm-Gg: ATEYQzyLi2O8yNChWBJdMZDk77UuH4OT5Eftl88klidNM0W9mD4AFsOESFlnyBdM0ni
- kpW6SCBY1sUrA5HpM3xzpq0/kIZfD/7EsdRg4M7fs4XzPOZAbZGN5dP3baF4+4PXtFJqxCZxJER
- kZROtw8DXXvEHnyIB7Bc8qg49VEpsnTuetjnq1sbM/SJGhqPIt6aJjo7y6qSIW6IFJ4depuhTwE
- TtdeLv8l5kOkVZHKQSmFE+Ixb+0wf3RhGHXBCNg6jrJQ6VwbBc4lSlQyeF4Nl7K3RY5p+zKYElQ
- ry0Q2t4Tj+zBUS0wktVb6GrD4kidVojspzIe6uv+Dx4k5ZBtXpWvcK7017ZZPosIfsduYU8VaEe
- 4wdOgq+iflxlU9mSNcnBHvuL6Nmd6igWLlsS1Hrqa8tIfEx8V/adBiZZFcoJ3wA10Z/CSwCOk/g
- i8TAy7W72hnF4+40SIHz8GA9A=
-X-Received: by 2002:a17:907:3fa8:b0:b98:33c5:1bb2 with SMTP id
- a640c23a62f3a-b9833c56788mr190108466b.25.1774021874174; 
- Fri, 20 Mar 2026 08:51:14 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-668cd050c4esm1426956a12.0.2026.03.20.08.51.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 08:51:11 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3D4AD5F932;
- Fri, 20 Mar 2026 15:51:08 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Warner Losh <imp@bsdimp.com>, qemu-arm@nongnu.org,
- Thomas Huth <th.huth+qemu@posteo.eu>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Brad Smith <brad@comstyle.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 5/8] tests/lcitool: Remove python3-sqlite3 from the list of
- needed packages
-Date: Fri, 20 Mar 2026 15:51:04 +0000
-Message-ID: <20260320155107.2143191-6-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260320155107.2143191-1-alex.bennee@linaro.org>
-References: <20260320155107.2143191-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20251104; t=1774021887; x=1774626687;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dxAE80npSlmsob1slWiUxqWs13+sUZxls1OfOL833ZQ=;
+ b=rR3qvXgUjXpMajPpMvWEW94+dcz0QeScl1urE1E3z6OWC1Ab6iSNg5pd5zs6OU85bt
+ Cw+H+A57s1Ay4jr4CHHxIBWbQp6XSwWkEl0TWGKnzlZzzAEplSmuTC4UeiNw4KsCxCnz
+ uWmV/ka2gxKgSKWmHgy00I+87pVemFeHnqAa6f8USAbNx6zIg42nD+msX2+VjiJj1U2O
+ wKY9DDPYlpVkzVYI5Zt4fVIL6zei79EUvhUZPvXKXt+RmWWdpxDFs9dELk+8fBI+/ZFw
+ 6W2ytxY4sEinu/dcjxQR0Q/iP5o8m+W7KOFrBFTH4T+PI9eR9Kc/UfaS0hSWCReYVogO
+ qVkw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+a/izWxe2zaQXu+Ox1AhqDzAwHGmY3b+4f1jhivtzQJc9tmby+Ner6TGRR6YYYQKzmNeGjYX57/JS@nongnu.org
+X-Gm-Message-State: AOJu0YxtH+qIz6bvBqBScagb/y5qQdMrUkj0cyZ8LAMb80ply78lDVDb
+ Gk6ooaOYzDD/uTUzvieB959jZ2512maofjOThuryWls9s8vXL7hlXOkUuIDnF+9u4N8=
+X-Gm-Gg: ATEYQzz19hFF2d+Nc4D2wTikMAVP/0t8s5Q9KlPTrIDNMxaH4pgY+n0BUHyspPkowUV
+ mkPUb+4WH2jSQdInfv3GHRNVsc2K4t5eKRVaBL4wWzzTxNCBw+MNfY/7qTK2UP/lfwaNifrGl/2
+ mDynpQgzufSRE1BwP3PyL/yUGjJ0IcMINOefcB4Brn5cjidJTz1r71l+akLT4D3OUizN/rgM28n
+ wFt14PxdUAi8xzam9Jp5kp71Dm+CV9Y/qjxWVwzpicI+WY+UUX4nBiE9B+84xb+xRGnHQVGd3L+
+ WTeJHeVAvOq+YyjY0smLSOmqlF1mE6MYNSHULP05PtrwB9Y9+YURsLcLMG7EAgOE5/d50SdR5H0
+ lzBUmgkv4IoAuAJF4FuzuJf9IuYtiNNMGp6zDTIMxT99LH8z3vfZO2yy1Og11hWsoJlI9rPQfQ6
+ 51cWTVlw2jxQKczcBjz0ki4bykR0bvSwSkE0aIQNGP4X4AQjq0ltEuloAgmGPOhEVeS1MDWTpVS
+ Smp
+X-Received: by 2002:a05:6000:2489:b0:43b:43ae:8c2e with SMTP id
+ ffacd0b85a97d-43b64289994mr6210997f8f.51.1774021887031; 
+ Fri, 20 Mar 2026 08:51:27 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b644bd0dcsm6569891f8f.11.2026.03.20.08.51.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Mar 2026 08:51:26 -0700 (PDT)
+Message-ID: <4a402425-8c01-4247-a533-c43a797a25d4@linaro.org>
+Date: Fri, 20 Mar 2026 16:51:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/7] Add RISC-V big-endian target support
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260320150552.169480-1-djordje.todorovic@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260320150552.169480-1-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,34 +109,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Hi,
 
-According to commit 7485508341f4 ("tests/docker: Add sqlite3 module to
-openSUSE Leap container") that introduced this line, the sqlite3 package
-was only required for Avocado. We don't use Avocado in QEMU anymore since
-a while, so we can drop this package now from our list again.
+On 20/3/26 16:05, Djordje Todorovic wrote:
+> - Addressed comments from v3
+> - Rebased on top of master
+> - Then rebased on top of patch set by Philippe
+>    "target/riscv: Forbid to use legacy native endianness API"
+> 
+> Djordje Todorovic (7):
+>    target/riscv: Define MSTATUS_SBE and MSTATUS_MBE bit masks
+>    target/riscv: Add big-endian CPU property
+>    target/riscv: Set endianness MSTATUS bits at CPU reset
+>    target/riscv: Implement runtime data endianness via MSTATUS bits
+>    hw/riscv: Make boot code endianness-aware at runtime
+>    target/riscv: Fix page table walk endianness for big-endian harts
+>    target/riscv: Support runtime endianness in virtio via sysemu callback
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20260316135407.209072-2-thuth@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/lcitool/projects/qemu.yml | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
-index 5e34e953514..b78a1d7f2e0 100644
---- a/tests/lcitool/projects/qemu.yml
-+++ b/tests/lcitool/projects/qemu.yml
-@@ -101,7 +101,6 @@ packages:
-  - python3-setuptools
-  - python3-sphinx
-  - python3-sphinx-rtd-theme
-- - python3-sqlite3
-  - python3-tomli
-  - python3-venv
-  - python3-wheel
--- 
-2.47.3
-
+Thanks for this v4. What guest do you use to test it? Would it be
+possible to add a functional test, so we can check for regressions?
 
