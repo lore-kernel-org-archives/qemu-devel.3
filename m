@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A507D1098783
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E2C1098783
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ZYk-00038b-Lf; Fri, 20 Mar 2026 09:06:38 -0400
+	id 1w3ZYe-00033k-AE; Fri, 20 Mar 2026 09:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYa-0002za-Ea
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:28 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1w3ZYY-0002wL-Ax
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:26 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYX-00065X-Rz
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:28 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-666f646f5cfso4730392a12.1
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:23 -0700 (PDT)
+ id 1w3ZYU-000648-Da
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:24 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6634bb959a2so3115547a12.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774011983; x=1774616783; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774011981; x=1774616781; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cAlPlaT/8Hy9mK47F+22fBNn4gCuZDEOegCdhpCflck=;
- b=X/1hJ3JY04EIZtG1oUJQtDZRQ2vQIlyL+eb6hKgrU9Gv0yYeqDtFU2wLB55e/S96Ej
- jelPO5EduyIw+XnNsbaPIjhc1nwKgNFkep7uXeFy4CJWBdQAHamA3G3m7GsmnvCdZfk7
- NdzcnzKrZHZqM1Zba2tldxWHHCNZYGh+tQca2OUnl++DeS4cVKBwAOLIorcXJFhPO2LG
- DrWxAM3vaOehgoAt5+6tJ3KXJMKohk7JEOYlLyJ8xrvxuf3Z9nK3scM7TBIV0Jsytn8h
- wCUTcy+fPdII4aLrgPlflNQXIBf5vkfUfPOD+4CLgRfOJJ/vr4MBUuqorJNvA8AQub6v
- E6nA==
+ bh=yHKpdEI4cGFEScBIdDOoiuJbpmPrPZGyT97rrFJXrBk=;
+ b=Nydrcj3LYrVhled/UHzgOyjn8zSXy141g5wpKd3zQN5gCXhQXrRCFD2HJ7UiUttDwq
+ RceajZiB7asSKLmNRt3S1YJt1dpjvGlvjdiM9iDwyl43lleHqrIkx0EggJKHAS1p1CJI
+ 3W5VA1gsl+EmnBJYMgsrbRptXX7HLjaofOqjhRr6ShDkA4E97fK8v0i37oxKoSNZsOjA
+ yhSdYFyUWlsZ0RfWuDjmQcFp8NIlji63knJTfnw7CnsAeAuB9Da7SmzVfYGA+KtyImui
+ zNOqGHgsUYFrObBrh6IikjDfwG9BsuHkxLYtW0rNCgtcAKpf4o8alYnjOrAMPbV1CtrY
+ 2IPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774011983; x=1774616783;
+ d=1e100.net; s=20251104; t=1774011981; x=1774616781;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cAlPlaT/8Hy9mK47F+22fBNn4gCuZDEOegCdhpCflck=;
- b=QpIF6f3sETRzHaBbrdUux6rXPKoUGL6xRPV/aHI8RuWPAhwsnSZe0MFd/CsXYKiepu
- cfshgUKTeDtfgGtoSnLpslnrmvM3DHChybJ3+wkihZeIJhu8RyWehW2g/lhE6f32xCo4
- shN9ZyM+pDOg/WHRZOoBuupjzju/mZWQNWi/PaW4Thw2TsMarm9204q5WfcbcpCeOUZp
- 61Vm+iopQWMlQ2kM0XqRLdBr6wOoLNySTO1ki20EwyC8N0xvw43dgJ4cnvd/OCSzvtDf
- 0ZKFVDn7XBNZ2BeogXTJoKTISduVqOQpQSjswLnnFM90APyCQ37/7YiUXdxLdiBGkYee
- vVHA==
-X-Gm-Message-State: AOJu0YxrCUBbdVlJhorN4lekfVdPEHqBtYMcF6dLcX3sGIicPZ7wmnq/
- Ri9epDWNQQKu8vAsrD3ZZWzRQbGO0c34sAtSW7DIxqVh8yZPs4vBNrdgceNue8o5JB0=
-X-Gm-Gg: ATEYQzwXUukoBGDJeM2VfnSwO0/tS3ca/TIfSdNoaKeof3+G18gRAF5Ieve67HskhMn
- BKoKDoaWAaKBTssYffly4ZMR8RtBj6hlUTWuOCEtqpjjdC2oDQDworKS9+AKknlIJ8DJDHIHyi0
- xEG8T5e6lNPsaRvBufVBQFaQ8xCjkfUXrA5IA58skAwwqyfj1mELNIMyiglRjB2Iny8EZc4Tsqx
- xrHWoDRcGWqLsBQHngseZegtJiAkiGIgJDiH6OLNcHJn6Kk3TAcLRE3xXBWJGpiWN1MQSNQLwKC
- Zo0FlHESMg4xrD8mKiOS3hhixkE13HbikVPJDiyH4XU2hJEBeOD9LvYq37ToIqPWoav+AHQPrQ1
- eaToNkyHrG61g42JYkgr+B0mylZiB/4nqnalhTN0tv8ioJLXFZ+GgUB9d8ih1uvckhfG41RY3gz
- 7k31Q8ENLKiP5MlFYHT9BASw4=
-X-Received: by 2002:a17:906:f2d4:b0:b8f:c684:db37 with SMTP id
- a640c23a62f3a-b982f39b0a4mr163030866b.9.1774011981969; 
- Fri, 20 Mar 2026 06:06:21 -0700 (PDT)
+ bh=yHKpdEI4cGFEScBIdDOoiuJbpmPrPZGyT97rrFJXrBk=;
+ b=Cxp0Qiw5sqAAYjnFisamMzl8PRRl2PUN6rz6Q/7rzudaNFbNV0xtXl+MbM7pDa5M58
+ 6e79+bwUQHyYhvtPf4e3ZhG+03mzveIjRsaMY/xxnRnSgZcLAsa4836IjPCI/UONe+1+
+ pctAZt2UJipJwKkVqUCgRD6x3RcUlx86FP7n6sxCuehB0R92rVHrR9Pa2TWVPcZkzIz8
+ diqHOv3nm9BeLf66WFWmXFZ0pZHPx+nuCMV8GazOuf99IQYOGVXaS2z07SacpuShx/Zh
+ an1+zT/o/YWNyDw9bfXD3aqKCsYojFZc1d9B14602I8410taT9PXTcJHWLiYWiDJIRJ3
+ tXoQ==
+X-Gm-Message-State: AOJu0YzIP3UzjtK4lVlRSA1/ZtpOIvlTcRsodUkEE4F0ptU8ToQ6J8ZL
+ Wk6XCaFTgZKPFoctDjWBK2LU4TBmA+3uJ+oAz1kMMjU/QpJsSoofxkBNonFshNuArOT0DRJr5Po
+ n093xrZE=
+X-Gm-Gg: ATEYQzyui/UOJh/lr0YPjjKw6cEFpJREtQ3wkSjAled7MHuVvrvx4ctufSvpcMh8DeW
+ brs/WOasPzrRL9snhvtNwZNpMbHbT/MKRITiXTrquLNa+jYPS9LrC4nqnvqS8uviX7KeVwiFHt8
+ z3A9A7Wfv3V0arYP7aZzcbDj/2+svgJSkeYL0mTpsvBUE0ypIDPi06pIlKyqlmtJobFcn6jIH4f
+ RnAHbNzvaTHgk3JaCJ/dfIoJWa4zTpj+MvHNBH5egP4qLFlUyERI3Jd6WoHdxckA4ze3yfg+BBt
+ KdKayHvvWCHat12PRrHEKXTZK02zcqV6QFg6eJgLyWUT+8d84zUhPyPQ3Zk2mmZRt3zsksqduKj
+ 6Hr8FYtGprbilSsj1QcA29WVQHmdcd2fMxnhzn2hTvGVMzPvo8zspjUuxOAvAyA1qmZKB3A0n1p
+ MgRkSXFb+U2BTuMHavypTatQFvMSUfuuT4fQ==
+X-Received: by 2002:a05:6402:44da:b0:661:7ba8:a47c with SMTP id
+ 4fb4d7f45d1cf-668c991c4ffmr1571729a12.23.1774011980527; 
+ Fri, 20 Mar 2026 06:06:20 -0700 (PDT)
 Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b983365f607sm154760966b.50.2026.03.20.06.06.16
+ 4fb4d7f45d1cf-668cf4f8874sm1316852a12.5.2026.03.20.06.06.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 06:06:17 -0700 (PDT)
+ Fri, 20 Mar 2026 06:06:16 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B8E605FAF9;
- Fri, 20 Mar 2026 13:06:10 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 752FB5F94C;
+ Fri, 20 Mar 2026 13:06:08 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 34/35] tests/tcg: create a mini-gic3 library
-Date: Fri, 20 Mar 2026 13:06:05 +0000
-Message-ID: <20260320130607.2071996-35-alex.bennee@linaro.org>
+Subject: [RFC PATCH 11/35] target/arm: migrate debug syndromes to
+ registerfields
+Date: Fri, 20 Mar 2026 13:05:42 +0000
+Message-ID: <20260320130607.2071996-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260320130607.2071996-1-alex.bennee@linaro.org>
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,195 +107,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just enough GIC to trigger timer interrupts.
+Migrate syn_swstep, syn_watchpoint and syn_breakpoint to the
+registerfields API.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/aarch64/system/lib/gicv3.h      | 56 +++++++++++++++++
- tests/tcg/aarch64/system/lib/gicv3.c      | 77 +++++++++++++++++++++++
- tests/tcg/aarch64/Makefile.softmmu-target |  7 ++-
- 3 files changed, 138 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/aarch64/system/lib/gicv3.h
- create mode 100644 tests/tcg/aarch64/system/lib/gicv3.c
+ target/arm/syndrome.h | 54 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 48 insertions(+), 6 deletions(-)
 
-diff --git a/tests/tcg/aarch64/system/lib/gicv3.h b/tests/tcg/aarch64/system/lib/gicv3.h
-new file mode 100644
-index 00000000000..9a1268937c6
---- /dev/null
-+++ b/tests/tcg/aarch64/system/lib/gicv3.h
-@@ -0,0 +1,56 @@
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index db92a8020e3..3bd98a30367 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -595,22 +595,64 @@ static inline uint32_t syn_data_abort_vncr(int ea, int wnr, int fsc)
+     return res;
+ }
+ 
 +/*
-+ * GICv3 Helper Library
-+ *
-+ * Copyright (c) 2024 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * ISS encoding for an exception from a Software Step exception.
 + */
++FIELD(SOFTSTEP_ISS, IFSC, 0, 6)
++FIELD(SOFTSTEP_ISS, EX, 6, 1)
++FIELD(SOFTSTEP_ISS, ISV, 24, 1)
 +
-+#ifndef GICV3_H
-+#define GICV3_H
+ static inline uint32_t syn_swstep(int same_el, int isv, int ex)
+ {
+-    return (EC_SOFTWARESTEP << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
+-        | ARM_EL_IL | (isv << 24) | (ex << 6) | 0x22;
++    uint32_t res = syn_set_ec(0, EC_SOFTWARESTEP + same_el);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
 +
-+#include <stdint.h>
++    res = FIELD_DP32(res, SOFTSTEP_ISS, ISV, isv);
++    res = FIELD_DP32(res, SOFTSTEP_ISS, EX, ex);
++    res = FIELD_DP32(res, SOFTSTEP_ISS, IFSC, 0x22);
 +
-+/* Virt machine GICv3 base addresses */
-+#define GICD_BASE       0x08000000  /* c.f. VIRT_GIC_DIST */
-+#define GICR_BASE       0x080a0000  /* c.f. VIRT_GIC_REDIST */
-+
-+/* Distributor registers */
-+#define GICD_CTLR       (GICD_BASE + 0x0000)
-+#define GICD_TYPER      (GICD_BASE + 0x0004)
-+#define GICD_IIDR       (GICD_BASE + 0x0008)
-+
-+/* Redistributor registers (per-CPU) */
-+#define GICR_SGI_OFFSET 0x00010000
-+
-+#define GICR_CTLR       0x0000
-+#define GICR_WAKER      0x0014
-+#define GICR_IGROUPR0   (GICR_SGI_OFFSET + 0x0080)
-+#define GICR_ISENABLER0 (GICR_SGI_OFFSET + 0x0100)
-+#define GICR_IPRIORITYR0 (GICR_SGI_OFFSET + 0x0400)
-+
-+/* GICD_CTLR bits */
-+#define GICD_CTLR_ARE_NS (1U << 4)
-+#define GICD_CTLR_ENA_G1NS (1U << 1)
-+#define GICD_CTLR_ENA_G0 (1U << 0)
-+
-+/* GICR_WAKER bits */
-+#define GICR_WAKER_ChildrenAsleep (1U << 2)
-+#define GICR_WAKER_ProcessorSleep (1U << 1)
-+
-+/**
-+ * gicv3_init:
-+ *
-+ * Initialize GICv3 distributor and the redistributor for the current CPU.
-+ */
-+void gicv3_init(void);
-+
-+/**
-+ * gicv3_enable_irq:
-+ * @irq: The IRQ number to enable
-+ *
-+ * Enable the specified IRQ (SPI or PPI).
-+ */
-+void gicv3_enable_irq(unsigned int irq);
-+
-+#endif /* GICV3_H */
-diff --git a/tests/tcg/aarch64/system/lib/gicv3.c b/tests/tcg/aarch64/system/lib/gicv3.c
-new file mode 100644
-index 00000000000..a09a0e430e6
---- /dev/null
-+++ b/tests/tcg/aarch64/system/lib/gicv3.c
-@@ -0,0 +1,77 @@
++    return res;
+ }
+ 
 +/*
-+ * GICv3 Helper Library Implementation
-+ *
-+ * Copyright (c) 2024 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * ISS encoding for an exception from a Watchpoint exception
 + */
++FIELD(WATCHPOINT_ISS, DFSC, 0, 6)
++FIELD(WATCHPOINT_ISS, WNR, 6, 1)
++FIELD(WATCHPOINT_ISS, CM, 8, 1)
++FIELD(WATCHPOINT_ISS, FnV, 10, 1)
++FIELD(WATCHPOINT_ISS, VNCR, 13, 1) /* FEAT_NV2 */
++FIELD(WATCHPOINT_ISS, FnP, 15, 1)
++FIELD(WATCHPOINT_ISS, WPF, 16, 1)
++/* bellow mandatory from FEAT_Debugv8p9 */
++FIELD(WATCHPOINT_ISS, WPTV, 17, 1) /* FEAT_Debugv8p2 - WPT valid */
++FIELD(WATCHPOINT_ISS, WPT, 18, 6) /* FEAT_Debugv8p2 - missing WP number */
 +
-+#include "gicv3.h"
+ static inline uint32_t syn_watchpoint(int same_el, int cm, int wnr)
+ {
+-    return (EC_WATCHPOINT << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
+-        | ARM_EL_IL | (cm << 8) | (wnr << 6) | 0x22;
++    uint32_t res = syn_set_ec(0, EC_WATCHPOINT + same_el);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
 +
-+#define write_sysreg(r, v) do {                     \
-+        uint64_t __val = (uint64_t)(v);             \
-+        asm volatile("msr " #r ", %x0"              \
-+                 : : "rZ" (__val));                 \
-+} while (0)
++    res = FIELD_DP32(res, WATCHPOINT_ISS, CM, cm);
++    res = FIELD_DP32(res, WATCHPOINT_ISS, WNR, wnr);
++    res = FIELD_DP32(res, WATCHPOINT_ISS, DFSC, 0x22);
 +
-+#define isb() asm volatile("isb" : : : "memory")
-+
-+static inline void write_reg(uintptr_t addr, uint32_t val)
-+{
-+    *(volatile uint32_t *)addr = val;
-+}
-+
-+static inline uint32_t read_reg(uintptr_t addr)
-+{
-+    return *(volatile uint32_t *)addr;
-+}
-+
-+void gicv3_init(void)
-+{
-+    uint32_t val;
-+
-+    /* 1. Enable Distributor ARE and Group 1 NS */
-+    val = read_reg(GICD_CTLR);
-+    val |= GICD_CTLR_ARE_NS | GICD_CTLR_ENA_G1NS;
-+    write_reg(GICD_CTLR, val);
-+
-+    /* 2. Wake up Redistributor 0 */
-+    /* Clear ProcessorSleep */
-+    val = read_reg(GICR_BASE + GICR_WAKER);
-+    val &= ~GICR_WAKER_ProcessorSleep;
-+    write_reg(GICR_BASE + GICR_WAKER, val);
-+
-+    /* Wait for ChildrenAsleep to be cleared */
-+    while (read_reg(GICR_BASE + GICR_WAKER) & GICR_WAKER_ChildrenAsleep) {
-+        /* spin */
-+    }
-+
-+    /* 3. Enable CPU interface */
-+    /* Set Priority Mask to allow all interrupts */
-+    write_sysreg(ICC_PMR_EL1, 0xff);
-+    /* Enable Group 1 Non-Secure interrupts */
-+    write_sysreg(ICC_IGRPEN1_EL1, 1);
-+    isb();
-+}
-+
-+void gicv3_enable_irq(unsigned int irq)
-+{
-+    if (irq < 32) {
-+        /* PPI: use GICR_ISENABLER0 */
-+        uintptr_t addr;
-+
-+        /* Set Group 1 */
-+        addr = GICR_BASE + GICR_IGROUPR0;
-+        write_reg(addr, read_reg(addr) | (1U << irq));
-+
-+        /* Set priority (0xa0) */
-+        addr = GICR_BASE + GICR_IPRIORITYR0 + irq;
-+        *(volatile uint8_t *)addr = 0xa0;
-+
-+        /* Enable it */
-+        addr = GICR_BASE + GICR_ISENABLER0;
-+        write_reg(addr, 1U << irq);
-+    } else {
-+        /* SPI: not implemented yet */
-+    }
-+}
-diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
-index f7a7d2b800f..c0939a0eeca 100644
---- a/tests/tcg/aarch64/Makefile.softmmu-target
-+++ b/tests/tcg/aarch64/Makefile.softmmu-target
-@@ -4,8 +4,9 @@
++    return res;
+ }
  
- AARCH64_SRC=$(SRC_PATH)/tests/tcg/aarch64
- AARCH64_SYSTEM_SRC=$(AARCH64_SRC)/system
-+AARCH64_SYSTEM_LIB_SRC=$(AARCH64_SYSTEM_SRC)/lib
++/*
++ * ISS encoding for an exception from a Breakpoint or a Vector Catch
++ * debug exception.
++ */
++FIELD(BREAKPOINT_ISS, IFSC, 0, 6)
++
+ static inline uint32_t syn_breakpoint(int same_el)
+ {
+-    return (EC_BREAKPOINT << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
+-        | ARM_EL_IL | 0x22;
++    uint32_t res = syn_set_ec(0, EC_BREAKPOINT + same_el);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, BREAKPOINT_ISS, IFSC, 0x22);
++
++    return res;
+ }
  
--VPATH+=$(AARCH64_SYSTEM_SRC)
-+VPATH+=$(AARCH64_SYSTEM_SRC) $(AARCH64_SYSTEM_LIB_SRC)
- 
- # These objects provide the basic boot code and helper functions for all tests
- CRT_OBJS=boot.o
-@@ -24,7 +25,7 @@ LINK_SCRIPT=$(AARCH64_SYSTEM_SRC)/kernel.ld
- LDFLAGS=-Wl,-T$(LINK_SCRIPT)
- TESTS+=$(AARCH64_TESTS) $(MULTIARCH_TESTS)
- EXTRA_RUNS+=$(MULTIARCH_RUNS)
--CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
-+CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC) -I$(AARCH64_SYSTEM_LIB_SRC)
- LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
- 
- config-cc.mak: Makefile
-@@ -102,6 +103,8 @@ run-pauth-3:
- 	$(call skip-test, "RUN of pauth-3", "not built")
- endif
- 
-+gicv3.o: gicv3.c gicv3.h
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
- ifneq ($(CROSS_CC_HAS_ARMV8_MTE),)
- QEMU_MTE_ENABLED_MACHINE=-M virt,mte=on -cpu max -display none
- QEMU_OPTS_WITH_MTE_ON = $(QEMU_MTE_ENABLED_MACHINE) $(QEMU_BASE_ARGS) -kernel
+ static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
 -- 
 2.47.3
 
