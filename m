@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B5110987A9
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807CD10987B6
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3d4B-0006KT-Gh; Fri, 20 Mar 2026 12:51:19 -0400
+	id 1w3d3w-00060N-Iz; Fri, 20 Mar 2026 12:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d49-0006JM-Sl
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:51:17 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d3p-0005v7-Uc
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:50:58 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d48-0001sj-3A
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:51:17 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48558d6ef83so7709025e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:51:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d3m-0001gL-KS
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:50:57 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43b467dcf0bso2121031f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:50:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774025474; x=1774630274; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774025452; x=1774630252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e6sBzq3DUz6gocrIces2uqDUPmvpHqt0ZePVNRFGs/E=;
- b=UZrp0hcjJ4S+7aLXKfIdecAYwBfX0Y2O5VYqyuqrS9nAIy6UeC63PnLE5ApB9VVbkA
- BsDjdHxc6QPXVP/IMowVl3sWqLZPgYXOJSZONfg6wHZ1f35+aF9mvxymkzEWKcSanRoU
- qM0q3b3DVouf7iSaFkP7lAlrpHiyxWOAznLNHn+KRedzNtn57uXVPX1TYL2jQWsFyOue
- n6CBuEA59RP2S4cXhnFfXVgF7jKVnwpXXLkLu1tYVRyryA/hgGYChZEgjRvuhZxqUihq
- SM9eLSYJ5zi0zCyVHcrXD3tHXYs336p0jDsh9Gfqlg2xeub6dPfnSlgIlE9pQNCKeMXb
- ydcw==
+ bh=Ko/NuQ8s3llnSfwWg8qZEUB+hUDbScGaC6K4YYh0HTI=;
+ b=u/E3LWG6w2XxFIA6o4gDIhrwMPuXR4hrbExH1tqNiTsjvr7XJMYF3Oy345Xwmn5TgH
+ zTRBdcsuRX9uL+V4vjs1Mqamgz94qkYaWfPL/BSpHHp8JuHEG63SJb3ZqHUynL5AO9dv
+ Vk1ul6ygdpEhUzVZXdklcT2lGtGLLcGMlLUHUEq4bao+mqef1p8+SohSTY5sr4g7DoT9
+ nCuP40XHWIUwfk5wbafxfWxHLvg3BD+7TDeZxLiZRz/JPeusuWgUixeIuAnmSre1VvwU
+ /LRiznvZTrlDnZeqRg7sMc1IGvY0j7LE/1nX25KHujcXRDzU0X3mGppuwFuszIygQTf4
+ Rp0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774025474; x=1774630274;
+ d=1e100.net; s=20251104; t=1774025452; x=1774630252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=e6sBzq3DUz6gocrIces2uqDUPmvpHqt0ZePVNRFGs/E=;
- b=MJwp+uSMy2dihvLxW0RN9UjIF1nHB/uPG9V4xS8EANTnezDWCqEOetea4UPR/MyN+z
- Ce9SdkLymUSaYVcc+EumkH0j7oACmLidZoR9yJGo0jBDB4DNbIMG4xFClTmOr6AYKF0d
- y2JbhitmGgQ1Xwv8cNytcp5AqVHzt3MP7AxiA7F12dc77Hz+sp1Cng4CtsXmQl7sC3EP
- Pw42tE1uvBufNcsjLx0YJJ0vc0Y91EHLwTuEFoGdAn9fDRLboeto+7NRyEUOsf8S6I+M
- vYnMdkN3bh56P7iJbp5pdiF1gPfHYBXVMOCmyYS0boqWNzkSbMWIET/M6X5IlIgaUT/J
- sWoQ==
-X-Gm-Message-State: AOJu0YyotcIIpIYvMRMSxDgORR/YJVgyrQ02Iail/Wpz+kwsvPaHmCek
- ZDkz3DWusDm1Gf6ZZXV5av8kEd2zfPQh+NbkRfoBwD8cVBy6md0SX+IdEXU4MVO36mqeN/Dmfxj
- z3V3bL4s=
-X-Gm-Gg: ATEYQzySufC84OOH9eeMDsfjMHe2nHK2HSs+glBOdj//nHD1MmI4KVIWixtGv6JvY4Y
- XS96ARoe1xXymZ3iP/trhivZ6wSXimIPKthmKEUczkuDMatY8MUQUrQs05mOWw7emX/7YUgSWwy
- YwSyvcyB6iSOZZUWzAwEzcIZAD99WE3wUyGJIdvGJ3yUF7i69iPcr8LX/d3xQUAE1y9E45nu3Cg
- ivyxxdMUMLie5o6dLCmfDe0HnkNrjfOBkUqfK/AeoMvcRnRUmD3gn0oEu/+xPH3l7MTqVWuk2pn
- rlIn0aGSNYS34Eort2IcV8amWymOiXUW9UONuJEjuSHbTqYNmWHUZQRdLSLQOtLWtfDHtnT3IuU
- LgnwzU3XN4eL4CWxaTnbuV1gwRpiD+LenTgb0bEgXtQxIduQ0B/7OCYtDtyJaz5ZF04AWe+ZB+/
- lgNAv1Zq4r1K5JZmTSQANx25wX/n6r7X85vm1xEgeAvDhDjiEGua/RP6TeA9vksXlQGMZRJQDl
-X-Received: by 2002:a05:600c:8b32:b0:485:4394:b0e with SMTP id
- 5b1f17b1804b1-486fedbad16mr51693335e9.12.1774025474277; 
- Fri, 20 Mar 2026 09:51:14 -0700 (PDT)
+ bh=Ko/NuQ8s3llnSfwWg8qZEUB+hUDbScGaC6K4YYh0HTI=;
+ b=YxCuQQGjoYNfYypXQ69ek4puoRp69v28LkCkGAq26xwAmTvkl5cClkSkXAMI53D7yk
+ pCPb0yU2Dc3N6PS6F8wztQjNHbXIdx6kLCCjA30NSRMSQuLc50rnKJld8Nhkqgq9ME5k
+ TkYz/PENwOVqZXjZxW+iHxsT9q4ZwwLskQqkTIRdd8VJHqbyyr/WOYh81WIAVuDfSN3c
+ iSB2yNRp9cL5C7aE17gCviIeobhswVEonrOmDfNYTKraBjjczBq8auHTMsE0FLKVlvKO
+ phn1roZu6kBs18uRjip3V6W0cQSB6K02PBMUUjCxquWiX8wW4V+qBsaSow8zF9qEfM5a
+ rF1w==
+X-Gm-Message-State: AOJu0YygwpzMbkYKLBirLXCbB4eOXzoVbnvWMq+Wz30KwOxXbxLq+mos
+ y7WEuLmT8CydfLCOEXhqk7nfDc4gOyFFpltG8GxFevDz4eaFGXdt3KULOXdCjkx98ql5MRgdh9d
+ 3X4iOBfM=
+X-Gm-Gg: ATEYQzxfHP1WcEskMl3RiEiemkhQrplqgoVOVY798VPZibTKm5nTrE7U/UBL9VgDiXO
+ ojiHM4HyCHsK6lpNnKGz3FBScMsVnuN09m+nq6q5+ED0h8oXAxFavr6yoC5HU3oDo4MnX8J9xxf
+ 33PZoZISSp+3dXsY9QNFdWOKijb9MF/Blk082wvEfYtLrVeXOMZaD2aF1bIMdQiGPMPkiivYKZ/
+ WsbZb9uunPzbIX7fcrqP5LEzAC3thFKTkubtPgHrJPqU2WdZRrQLuf1atcBb3Bg8hBMAxjmS0aR
+ oTaQR/W1JlafB+tV0+BPvRnhBgfcEkCm2W61UgBOqs7OWFuD3tvzrtx71eFz9XG32db32bDcNwJ
+ SNWGY5pHpTdkQXSB7yRwTWzxl46E1IEj5od1xDhHBDQJITFxnc88fWnfMG7I4SX/sQkJGJRW02I
+ qJGynyBQqPl3YLJndoymvIoqzoQZUxlh5nj8YqAQnvM/0ijUzHvtsAPyeyLfIMrf3z00yJQdJv
+X-Received: by 2002:a05:6000:26cb:b0:439:bb42:dbde with SMTP id
+ ffacd0b85a97d-43b6427daf9mr6982391f8f.23.1774025451578; 
+ Fri, 20 Mar 2026 09:50:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe8ceebdsm30580915e9.4.2026.03.20.09.51.12
+ ffacd0b85a97d-43b6471a27csm8215511f8f.36.2026.03.20.09.50.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Mar 2026 09:51:12 -0700 (PDT)
+ Fri, 20 Mar 2026 09:50:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -72,25 +72,25 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chinmay Rath <rathc@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 v2 7/7] target/xtensa: Rename dump_mmu() ->
- xtensa_monitor_dump_mmu()
-Date: Fri, 20 Mar 2026 17:50:20 +0100
-Message-ID: <20260320165021.39521-8-philmd@linaro.org>
+Subject: [PATCH-for-11.1 v2 4/7] target/xtensa: Display [ID]TLB header within
+ dump_tlb()
+Date: Fri, 20 Mar 2026 17:50:17 +0100
+Message-ID: <20260320165021.39521-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260320165021.39521-1-philmd@linaro.org>
 References: <20260320165021.39521-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,58 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename dump_mmu() to avoid a name clash with other targets:
-
-  $ git grep -w dump_mmu master | fgrep .h
-  target/m68k/cpu.h:610:void dump_mmu(CPUM68KState *env);
-  target/ppc/cpu.h:3083:void dump_mmu(CPUPPCState *env);
-  target/sparc/cpu.h:603:void dump_mmu(CPUSPARCState *env);
-  target/xtensa/cpu.h:697:void dump_mmu(CPUXtensaState *env);
+Move common code from caller to callee.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/xtensa/cpu.h        | 2 +-
- target/xtensa/mmu_helper.c | 2 +-
- target/xtensa/monitor.c    | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ target/xtensa/mmu_helper.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
-index caec22bb742..095b4ced45f 100644
---- a/target/xtensa/cpu.h
-+++ b/target/xtensa/cpu.h
-@@ -693,7 +693,7 @@ int xtensa_get_physical_addr(CPUXtensaState *env, bool update_tlb,
-         uint32_t vaddr, int is_write, int mmu_idx,
-         uint32_t *paddr, uint32_t *page_size, unsigned *access);
- void reset_mmu(CPUXtensaState *env);
--void dump_mmu(Monitor *mon, CPUXtensaState *env);
-+void xtensa_monitor_dump_mmu(Monitor *mon, CPUXtensaState *env);
- 
- static inline MemoryRegion *xtensa_get_er_region(CPUXtensaState *env)
- {
 diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
-index 48e1d64a3d7..766fe60e2eb 100644
+index 9dbf671228b..48e1d64a3d7 100644
 --- a/target/xtensa/mmu_helper.c
 +++ b/target/xtensa/mmu_helper.c
-@@ -1198,7 +1198,7 @@ static void dump_mpu(Monitor *mon, CPUXtensaState *env,
-     }
- }
+@@ -1091,6 +1091,7 @@ static void dump_tlb(Monitor *mon, CPUXtensaState *env, bool dtlb)
+         xtensa_option_enabled(env->config, XTENSA_OPTION_MMU) ?
+         mmu_attr_to_access : region_attr_to_access;
  
--void dump_mmu(Monitor *mon, CPUXtensaState *env)
-+void xtensa_monitor_dump_mmu(Monitor *mon, CPUXtensaState *env)
- {
-     if (xtensa_option_bits_enabled(env->config,
++    monitor_printf(mon, "\n%cTLB:\n", dtlb ? 'D' : 'I');
+     for (wi = 0; wi < conf->nways; ++wi) {
+         uint32_t sz = ~xtensa_tlb_get_addr_mask(env, dtlb, wi) + 1;
+         const char *sz_text;
+@@ -1203,10 +1204,7 @@ void dump_mmu(Monitor *mon, CPUXtensaState *env)
                  XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_PROTECTION) |
-diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
-index 2761735f112..80ebba5acbd 100644
---- a/target/xtensa/monitor.c
-+++ b/target/xtensa/monitor.c
-@@ -34,5 +34,5 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "No CPU available\n");
-         return;
-     }
--    dump_mmu(mon, env1);
-+    xtensa_monitor_dump_mmu(mon, env1);
- }
+                 XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_TRANSLATION) |
+                 XTENSA_OPTION_BIT(XTENSA_OPTION_MMU))) {
+-
+-        monitor_puts(mon, "ITLB:\n");
+         dump_tlb(mon, env, false);
+-        monitor_puts(mon, "\nDTLB:\n");
+         dump_tlb(mon, env, true);
+     } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_MPU)) {
+         monitor_puts(mon, "Foreground map:\n");
 -- 
 2.53.0
 
