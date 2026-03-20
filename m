@@ -4,104 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC801109319C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22506109319C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Vzp-0003CQ-G6; Fri, 20 Mar 2026 05:18:23 -0400
+	id 1w3W3F-0004H2-8f; Fri, 20 Mar 2026 05:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3Vzj-0003Bi-AH
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:18:15 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3Vzg-00051f-Ps
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:18:15 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64937edbc9eso365167d50.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:18:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773998291; cv=none;
- d=google.com; s=arc-20240605;
- b=UwvoxL9PfdKqRXFifgWpbjbRFl1TZAHQLb/DW/2h4YtYgZBz0ZqB9JpLceP0q3dUwa
- ZQhbFaVD4F4DTSG52djKuAIEjY/Gib/3InP3xNIaKVzkSoIWUfSNW5OP/q/KLBr6bzrx
- baJZVNTmWryioekH8OjOzBaZNvYcvrDc6jZK3e4+2cfGvbvJugex6uyJxCukPRteRlgS
- 7P6TQDvQzQwnMTx3s5uql59Q5l5RiRDdfe208ZfM/twfhQr6BcYUt36FevWfQaKxU1iP
- YbtxH98j9Z/HBhkFCtKSx846USttj2l5wWYC0BFTcKPN+gcKHxfdeDf32hGZP/ORFEjl
- QdhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=l4Z7aNuRjzUBmRND1DHS7Om+q5WS6ASYWfNDtxCuz/g=;
- fh=WibSQDncNgWSyywKvPHAKYpHRJ63hQ7/by0Ly3U6FhU=;
- b=beeP9DhA5XvLp8XTArPOvzqiCfSVw4ryvQC/7ifYUmaud703LCrQpQhCiyJlDJNPH0
- T/3b+WaWB82JoM/ZpmSx1jvMg430BzTps8t0hxWYsqRJMMCGOjlMByNz4THH9ddbzsHS
- tPeiqOSGEJtjuAOWR303SFAzbutys0R5citMsGndmAAXeGptr+2CSAcbTqN+xm7Nr8hm
- pxmlzyt+HW2jPsFi+Xd00J97pphm8zaYFHnMxKEQH8mcPsGOH8ImnKIHbVKhQwMSP4HG
- JJunjvzBBGD5JjmKVkSD4YrouB4AYyt4Br8uNipcK8dDIxmSOnfPEoVHhajQfeyCq4So
- Rh/w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773998291; x=1774603091; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=l4Z7aNuRjzUBmRND1DHS7Om+q5WS6ASYWfNDtxCuz/g=;
- b=DZwEtEj0pJc/tfmGaOZ3dQhwW1xBEIyLTHE3WsoyyTrYYUEr1ZMTyc20Ew1ZsYkCm7
- junaKwjXh0IGMiQBtz9YPSKp3iOr80gsoXAoDK0qDVxo/nW2PbKTheZYMR4UrHwJaq1W
- y3Kf+b7a9LBoE4lsyxPJjc4OEn2cKxcf5Vmi8qs+fvJ2urrhhybGvtU1fyREtouutR/t
- JPIUSQX1FEt7MCU1trIU8Kz1gYqOT0ssjFp4Pyl5zTe1vcg2XvsiNFnRTOAirYLNeyqt
- nNYtU9RO4UK6skSqe3L3kwXqMMbBtbWFE+kY2SvVXt9Ca2olwNmx1ktwrOk3ven4zCu9
- mvFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773998291; x=1774603091;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=l4Z7aNuRjzUBmRND1DHS7Om+q5WS6ASYWfNDtxCuz/g=;
- b=XfVx/15x6ksJihLqhuiorcYhRAHBEHVCHxOtaALd7ZgwxK0pKcIvI39Qp9kfiHWjlF
- X/CTzDn7nM+Y440xTXmYdCT8bkcFxsGUrDten37/rnzrFIz3O8K/ypPUNB9+sVqoe427
- Zk5Pl2BGwW4VvqWkJ1x2xYWaff0jWu+ySmSjonzgW+fMU/rawlltfPGVGMf1wgbmPxc9
- iJRjlQxP8tiqBfBcT4h8SRjRXlGalBo1BUWxMUEi2EkYd7+flU5G+G3odFYnddlXZVLQ
- vQom4XOBXNPOu76dGbmwpC4w4BP7LPmMVya+pGFCMVdGZWaPkA4IGaSEWyDnFimIyPyK
- Za8w==
-X-Gm-Message-State: AOJu0Yy261ndUGUc5Ia2qG4c87ZFp+A5aPiAnFGMkWn1MW6UxTce7rqE
- 7CrYIWzWNlo+PtcuhGqcrXEJzHx6JLtE/MQuraimT9ZaQkfKS3MawKKPu6qFGCpoGTPMtMKPDDf
- Q6gpRQgWRJuwTz1gOyJQJ5KHbE+fcNFd+DGHLH1WeKQ==
-X-Gm-Gg: ATEYQzz7LwzLCkjiqxcl8Epdzl/WhiUvvXXZVli9RWo/wrAstq636XZQu7XDcGewluk
- ONwpWI8FKBvkf1bumj6CVnpiDTSCFddSemnkFp7McWzEqrTClqTl58OznGAes0HK8XO/QZqZsDb
- EUjjUx+zptmxv7VtUudVTKKui7UQoJ/evq0p0dyFG3dZJVX+0+J0joFPrQhw4t8sWN81hwhlo5w
- pbu7T0XCSSZmrxxZ3hL/BsT540L95DpacyC72lM4k4lAMVaZCRKqxfnHG23OMgZsKxIfj2sFWbC
- d2W9HK4ZuIPiXiezGE6dY+0eexu3741+J1cBS3DAo7ps1mGppB2iQDA8gx8dSDxdHMs=
-X-Received: by 2002:a53:da51:0:b0:64e:885b:412f with SMTP id
- 956f58d0204a3-64eaa86cf57mr1833154d50.74.1773998291472; Fri, 20 Mar 2026
- 02:18:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1w3W3E-0004Gs-19
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:21:52 -0400
+Received: from mail-4398.protonmail.ch ([185.70.43.98])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1w3W3A-0005zi-DP
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:21:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=matthewpenney.net;
+ s=protonmail; t=1773998503; x=1774257703;
+ bh=9t3VraiifliDfje7GA3oEyQ2QO/BNWRW//D48Ogdl6s=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=sPVw0ru6awiwqXrwWlRy/RQY3z7bupHiTwrVdCBnqjsTCx2KZna5Uuhk3WuM2DB4i
+ hXjmHNWgT7Q0DR/DHjzgbfcRrQojzX5eZDEtL4BqmhiNU53UyFdcPI7sjThG5khQ+v
+ g8AZg8i93f5nNya1aB4vEec0TwXp7uz65bzLLp9FzU75LpTjTKSgUhd70DsJnuqtHQ
+ KQsxZ26x2RH+3ZaG9pt2XgQdEpvJlr37wtbnmlRtQaq015CBywv1FYCZl/p4nX0W49
+ ZKgKTV9SKK9jM8jY1LeidEt0t30p91yk3cUYUEiki6GrS+ILEuNyivvCE7O/8GWEVX
+ rgx8nXJN0iI1Q==
+Date: Fri, 20 Mar 2026 09:21:39 +0000
+To: qemu-devel@nongnu.org
+From: Matthew Penney <matt@matthewpenney.net>
+Cc: Matthew Penney <matt@matthewpenney.net>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ lvivier@redhat.com, amit@kernel.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2] hw/char: clear dangling GLib event source tag
+Message-ID: <yPd8QBKcAflQCNJ4OJD86STH4fWmQnnTfrcuEDYUiG9VwTjUstJ-rMloNB3SoScmpCfPtOCS0mNPlPFJ3nENBNMjIJp3tXJbqizbG3omRfA=@matthewpenney.net>
+In-Reply-To: <20260305213308.96441-1-matt@matthewpenney.net>
+References: <20260305213308.96441-1-matt@matthewpenney.net>
+Feedback-ID: 185185778:user:proton
+X-Pm-Message-ID: 7ffbd63b800dd6a5120a6fa7105eacf4496dfd1e
 MIME-Version: 1.0
-References: <20260314221529.47841-1-mohamed@unpredictable.fr>
- <20260314221529.47841-4-mohamed@unpredictable.fr>
- <CAFEAcA8v59wSwRvig6NRjWHyvBGY=gPhWFN1B_jD9k+aXqo9Ng@mail.gmail.com>
- <4387E53A-E140-48E9-80C3-721F9C0B9A9D@unpredictable.fr>
-In-Reply-To: <4387E53A-E140-48E9-80C3-721F9C0B9A9D@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 20 Mar 2026 09:17:59 +0000
-X-Gm-Features: AaiRm52U5H1VAFgWENUse7TnvPutr7-mdKyQN69nWTB1e3TKSviiyWfJY2RaKG4
-Message-ID: <CAFEAcA_wVD+mMFhwzDyHx1pY_aMtBvdHjZqQoFoniM_JUCcceA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] whpx: arm: enable more enlightements
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.43.98; envelope-from=matt@matthewpenney.net;
+ helo=mail-4398.protonmail.ch
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,46 +73,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Mar 2026 at 18:50, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
->
-> > On 19. Mar 2026, at 19:13, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > On Sat, 14 Mar 2026 at 22:15, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
-> >>
-> >> Linux uses AccessVpRegs without checking availability and panics if it's not there. Expose it unconditionally.
-> >
-> > The commit message subject says we're enabling enlightenments...
-> >
-> >> @@ -953,13 +953,15 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-> >>     synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
-> >>     synthetic_features.Bank0.AccessHypercallRegs = 1;
-> >>     synthetic_features.Bank0.AccessVpIndex = 1;
-> >> -    synthetic_features.Bank0.AccessHypercallRegs = 1;
-> >
-> > ...but the code change seems to be removing one as well as
-> > adding the three new ones. Intentional?
-> Hello,
->
-> The AccessHypercallRegs bit was set twice - with the first one being two
-> lines earlier - removed a spurious one of the two.
+Hi,
 
-Ah, right. How about this for a commit message ?
+Just a gentle ping regarding the v2 patch I sent a couple of weeks ago.
+Patchew: https://patchew.org/QEMU/20260305213308.96441-1-matt@matthewpenney=
+.net/
+
+Thanks for your time.
+
+Best regards,
+Matthew Penney
 
 
-    whpx: arm: enable more enlightenments
 
-    Unconditionally enable some more enlightenments for whpx. In
-    particular, linux uses AccessVpRegs without checking availability and
-    panics if it's not there, so it's important to expose it.
+Sent with Proton Mail secure email.
 
-    We also had a duplicate line where we set AccessHypercallRegs = 1
-    twice; remove the duplicate.
+On Thursday, 5 March 2026 at 21:33, Matthew Penney <matt@matthewpenney.net>=
+ wrote:
 
-
-If you have more rationale/info about the other two we're enabling,
-that would also be nice to include.
-
-thanks
--- PMM
+> Clear dangling GLib event source tag when virtio-console is
+> unrealized. This prevents a stale tag from being used, and
+> maintains consistency with the rest of virtio-console.
+>=20
+> v2:
+> Use g_clear_handle_id() per advice from Marc-Andr=C3=A9 Lureau
+>=20
+> Signed-off-by: Matthew Penney <matt@matthewpenney.net>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  hw/char/virtio-console.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
+> index 25db0f019b..efe7cd6772 100644
+> --- a/hw/char/virtio-console.c
+> +++ b/hw/char/virtio-console.c
+> @@ -257,7 +257,7 @@ static void virtconsole_unrealize(DeviceState *dev)
+>      VirtConsole *vcon =3D VIRTIO_CONSOLE(dev);
+> =20
+>      if (vcon->watch) {
+> -        g_source_remove(vcon->watch);
+> +        g_clear_handle_id(&vcon->watch, g_source_remove);
+>      }
+>  }
+> =20
+> --=20
+> 2.53.0
+>=20
+> 
 
