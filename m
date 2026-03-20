@@ -4,101 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F9FD1098796
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 068BD1098797
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3bNF-00023F-16; Fri, 20 Mar 2026 11:02:53 -0400
+	id 1w3bQX-0002sH-Mn; Fri, 20 Mar 2026 11:06:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
- id 1w3bND-00022r-B2
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:02:51 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
- id 1w3bNB-000148-Iw
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:02:51 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-486fd3a577eso5972385e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:02:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774018967; x=1774623767; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2Zj3pqCGOJKAY2IYhlrVORUKcc3AyQX6JCd7bR8/pZ4=;
- b=IOki6olJqpaKZBsxQrxxy1m9uTfl8Eeg7jAq0V4L7vBlHbU2NkQvV7P7PS5tpGunzC
- Z907Ws4pUlwRioH85xlLWkTp270lI3zu2uFJoaqWF1bncwtp1yj5PxMvuLWqrOhqhBu8
- 69J/E+eIVmNXPeGAmhu9wDS4NXTkT5kKB6NaW9oUoso26j14KT4K9xOTIKfcXlLdxTsQ
- YZzoNab8d+3QmNmrC4nM8izYdCXT6cjmPyO+nZAGnEP5+JcE/qUalMINR/GiZGA80i0J
- giA4p9fvY/1Aq7j7Y3BRhhJ0wYpPZ0vbf9bR84/EAz94a2IA5Ef7JuPmaMiviDDiN4v1
- NhWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774018967; x=1774623767;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2Zj3pqCGOJKAY2IYhlrVORUKcc3AyQX6JCd7bR8/pZ4=;
- b=GafgIHPFZpTNXAso9QHqGfWGE/qStsn9yPG6HtKo3WJlwcEp58j1RydifWemykrLcy
- FJi+IRIO/Vz2va3OY2XTHwPI7qdQBRWojaVNrg698X5T4JVe/XIwY8BUgFOZN3fqBZEg
- CWJN3YJBBGksbePLgSMfI0yWTuDGYippMz2lqIS6KqzWhDQ59nId7VuMW3wmyC+OITCT
- zsK9fssFdR6a+IGXDtCnRh5YnVhP3XVOH00DZ+Bq6p96PYsoNRdO88CMOtgcgXq0Zh5O
- eFvKtOEMFVJfnOd6RBnfJW5UwbHm+KvUcz4swlvklSPtvFidRNvAlqkculFePOlOKlR7
- 3TDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlNH2g0f1Jw3OEH34dN0peuJYHZfbftSNUspz2k20m8IbtD7k2b8ftO/PLniHHCioHRn/xUo8AfHrK@nongnu.org
-X-Gm-Message-State: AOJu0Yxh9KPTLgPwmK+aeIN5fnh8YtaG6PJgfBj4jqKqm4V9ah7B0oLV
- J1XBvUsxAVMeJedeYSdROFGb+Tn4szbWvUMA4r0sY4ymnWss7p7vmBku
-X-Gm-Gg: ATEYQzw4vtLuTD6GBRBUuPlrhhU8xNLOEsd2TIY3ZaevdV9j/nlrXqP8SfIV3B8xuXh
- JeHKiY+08aYCfOrl3SGsjmnOL4j4Ts/UekKwe5u3HeaS7+caAQoel6cFIKM5Pufx9MBC+Bpm0+B
- zC3R9z+YBw5NVthOAu7aHEPUY+vnoI/cjKdfSsopUsfz4bUlPLwtwmOEKNz6Oy/18aLhyHWJoNc
- 3WWhN1hhaz8d+aUk61VPy76z4+VaI4le5l8zpMdGc3DzJ54WzH5faxQ5amCaMOcz3qDTiCzXYGO
- WoRFPPt8Te6b7kO7CgwqJxyxsUq/a9iutX2VRV8V/MdVsYkwfBom0VHRJH/a5Fgqwi/7wPhJITg
- qVNpEgFNM1XmtXUX5c6EPULf7wI0IvGPqqrII0N6CJoKBmhFDW8u1qJG9xdEf3dvE3dZT5MXyYF
- AglyZg4R8je4dgR1mZeK5r0jOFKRhLH2uzDk5me47SPrf7B2MRtl924PM88z3sr0w50CZvcAO08
- RPS/kPMEZok
-X-Received: by 2002:a05:600c:1d15:b0:485:2ce2:4c75 with SMTP id
- 5b1f17b1804b1-486febbc648mr48103335e9.1.1774018967289; 
- Fri, 20 Mar 2026 08:02:47 -0700 (PDT)
-Received: from [192.168.10.55] (host-87-27-45-215.business.telecomitalia.it.
- [87.27.45.215]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486ff109b95sm49229875e9.1.2026.03.20.08.02.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 08:02:46 -0700 (PDT)
-Message-ID: <68682ef3-945f-41ef-814a-8c5bc77dab1c@gmail.com>
-Date: Fri, 20 Mar 2026 16:03:16 +0100
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1w3bQP-0002la-Dr; Fri, 20 Mar 2026 11:06:11 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1w3bQN-0002Q3-IJ; Fri, 20 Mar 2026 11:06:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZyzrwZmWaURxmQxIt+stQ1m+mx1a1kQGVmAPi8ZHFhf6DCWnuHzXVkZJgU5opdpy/NWt/i2kJT902eG968KTN57T588U1/7SIegqnawCcwTswz86aieEUyM0a3D87P3H0jHksysc0bH3D7B3VSE7/FonXJAfv7Li1mRMYnDOrF6yYoddGs3/FnNwi6zp2PmuNnGgjQhKco0ndKmOow9DVNX5wwPOlNf+uAh8Xs4sQS0pYi3oHk4oiIN1xNn7q3H1Xz/iymur5m7ShbKhCxZsbcMDg3zy3g+CNoacbm5NReOE2SDRTGu1jpDGm7t1KrBQC34JMFQWsx7fjfAP1bYn2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hHnzdsgHNf2uFkRyxnKwPC5haEbrZ9k9qd+J1Br6akA=;
+ b=pOI3G5tqFhinGbbF4lw1A2QDx2f8/Z/IfZUZsIixBDghPz5/aicMXFZi9N5V4k6cSvAHK6BSJa/aDbkcXQAyqsXSTAJ1S571w1Ra919sZuabVccEIIvWVnLb0LpgvXynLmbYWWPddiJFn+VLE5lLKbtE26DgIvCPQOm4PqxQHVaEO7TYZC5qLtmZPTIYuNBb3cIddDMNp3w63KyFX+R9EDEyE0Zbtj8UyNrtZocYuH/40Nj/QcZ2sdCG0qUG2oGWIM27ZPk21XLr8iUNH4c3eFK1/br1O/QDMmJoGniooxC1Q0OatDca3nuxY74lat3OVNBY+poJ1NBAxbcIVrknIQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hHnzdsgHNf2uFkRyxnKwPC5haEbrZ9k9qd+J1Br6akA=;
+ b=BSEV5M3UAHY+bV5HnsWiUQg4oDn1P/Np8Q5G8rpR5v57Y/QISEr86hNDKbsyVAxgj/ZlrAGU1CaSas0+8T2Lzs/Bsf81q+u7RgsxZzy3AXV3z6HxKv9sAd3VGl8hD2PLBRrmSyfEYn0PMs9LandlYRe4Fnvsyv16d0bpispb+1V8CaVG0jZaCe64pRpmPB0SQAp5VZ0gIRpDFnrImPpIRpsg6nsT2FFIuVrjPxZDCocOy3KNzz//pPEshA5nLRuWib1zHqaFmAeTkV8cKX3SP/DoU1/dVf0zW+96NOSocYHajgGKaqwKSfFvBkGqQ9EUw/8eBpr4J6Liu5mQ2mkI8A==
+Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
+ by PA2PR09MB7446.eurprd09.prod.outlook.com (2603:10a6:102:40f::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.23; Fri, 20 Mar
+ 2026 15:05:59 +0000
+Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
+ ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
+ ([fe80::939c:95df:4890:ce63%3]) with mapi id 15.20.9723.018; Fri, 20 Mar 2026
+ 15:05:59 +0000
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
+ <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, "philmd@linaro.org"
+ <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
+ <Djordje.Todorovic@htecgroup.com>
+Subject: [PATCH v4 2/7] target/riscv: Add big-endian CPU property
+Thread-Topic: [PATCH v4 2/7] target/riscv: Add big-endian CPU property
+Thread-Index: AQHcuHsPPoKoil0dw02KctBJZCI9tw==
+Date: Fri, 20 Mar 2026 15:05:58 +0000
+Message-ID: <20260320150552.169480-3-djordje.todorovic@htecgroup.com>
+References: <20260320150552.169480-1-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260320150552.169480-1-djordje.todorovic@htecgroup.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|PA2PR09MB7446:EE_
+x-ms-office365-filtering-correlation-id: ed8e0f00-4c6d-45ec-7b44-08de86923202
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|18002099003|22082099003|56012099003|38070700021;
+x-microsoft-antispam-message-info: GHelcCX4Mj5ZFsO25mNWIYMALTLFSHYnFjzgN2SU3G0sWpK6Aka7uUTR8V8KQX/Lap9hLwjWPFrIk029vOF77CJIh4Tf7ohKkOl2GvAGW7iN/rZdPXDJQNFCUbtqwMZAMT8SjwYGL01WQQGRIRricxqKmZO4o9ayfsY/dbvAzC9wNmXL8tpHsRBFqQN5ay0c+X9f6LI0VDfDOUxYOcViln2ZFaD/Mk0WWh+sLTRYVg/DvwlFOyrK5FTo2AvYfVjDBSt3QKwfHPgWG2S+vDVHuymuk0atPf78jxM1iFg/wC1b/Wl3nEQTs+HMOLYPd8n5S6SBPfdvABNrYPJeQf9CqKgDBCkFl1+CvqQPsX5/dYu7pRO3zWlb3iafuyqxsT+WuYyvPWiQfzzTJ2Gn2xeDBQGBPMGyiz2oavJxQhCJ5XwtgW7XGLgWWftdJwo/S9qw1eMN5xcM9FIxs+/uAvmdHmlT/6kiCeNkQR36Uy+XyEWZ9zc8jyh+eCz3DJLpMfJW8oPTSd9KiYMmI9b057y/Ybiz6GKfOjuOhZHlNNJHzmyuArNg8Z6VdBNWj+DGsJR7qlh4UskDP+f6lZDFr2rasrBRxlj0gWeL1NmdgjFXj1QbKaz2FRqHZnfDzDRSsej02CbC4cfDAcLUprdL01NAt4fRcy0Wm9QmQp1xjegQqlUifMYnlIvE/N3oezYE8nvtvDD2eb1XukF3+cM203CBjeypS9UiEF2cqZYTUAldUxbHjQSAXRUdIQXXfe1a00ZbgZ9Cpdnqviw3lP/Sqttxudv+gxjowp7YqdTaSkYpEds=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(18002099003)(22082099003)(56012099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?AAg+85Fv+LmTL5ZPiyqVEGTQRFFtOz83DgJhSog+PigoROTrtF+o/Cajf3?=
+ =?iso-8859-1?Q?Kb24kyrNY+rBNzhbf0xfmitPz+K70HpJ2h+m5hU6v8WY6E1lu1gbpcuxK2?=
+ =?iso-8859-1?Q?sR1qWQ/nQYzzI3swzDB9eq9F/+uYt+JA8nFW0DhypyvurIdq229FqW+vpH?=
+ =?iso-8859-1?Q?Qwr0m80MN9RSgAwA+ExS3mibEFiy8YFhNvMWQJNodzbbYVWUAOapD+DDb2?=
+ =?iso-8859-1?Q?LifJaerluJ9EHbrUff52St5QvXfZ3RXVn2NGlBdQyDeIezs4PMHcqzAH+z?=
+ =?iso-8859-1?Q?pv5VqxabfGUytG04iEMkAmialL9dJ1uGObPEjbaocrVjN/IYEfjON3kCnT?=
+ =?iso-8859-1?Q?1PiswVVPlDdCSFO7TzLaOcfT6YV4lLu4vfrCotbSAOsEf/t5KzKSehnF2X?=
+ =?iso-8859-1?Q?mfy6lRCvRFMTH/ub1dUYyQWqbshN9u9Wtbzm0/D54AMl89AI7rD8aKYWfn?=
+ =?iso-8859-1?Q?SZslQ6FAasNEIQMbxSpmdldlwagwxXuB7ErRqwRYXj7TKHEnNVOXQgXSh3?=
+ =?iso-8859-1?Q?m11020mexwd8K+eQPmakUy1DJ1nZ2SKhFQaz3i+6a8hUDMsSNxoSZ1HWpl?=
+ =?iso-8859-1?Q?p4MxbgdNkqCItz5/BwsnmOBbBdQfUqQN8Fr9a8oAK7MT1oEMdgykOa4V1m?=
+ =?iso-8859-1?Q?q+5Z26dftPsq2/9W/DKJTTcCsiE+NANmzkajPbmXc3wQ57jxDO7MhffNfw?=
+ =?iso-8859-1?Q?b6+6kSGs9USQ3ZPZVgsOMJnDqrz9kvLcZXQ7XunXChdqv90EHMcBtGEMqI?=
+ =?iso-8859-1?Q?pVHuW+Vqvkfk5NLV2SPikKPsCDO8je1O+FF7fJCIWnzg/YqXQC/fUt9apf?=
+ =?iso-8859-1?Q?RRXdHNAolaHcmTkEfaMnBQ1QhO5IT+ErMt9MPV1Q3cLEF6sxMgG77cRdSX?=
+ =?iso-8859-1?Q?FapeD/Mf1SVw5g3Sy4cXb5e8xxqCmcr7O0GZCG0p6ut/yQI/VSIaEa9VuE?=
+ =?iso-8859-1?Q?K/7B0Bp82Z/mAVsNV7dUnBOKm75Ap9ELx3/XpLk0g/QswXsafEFvOCZaPP?=
+ =?iso-8859-1?Q?ZcMwh3IBkcq4RgQgxn5NUfhkxNx3PkXwYIlrgw0+UuLrA7OSc3om32Acje?=
+ =?iso-8859-1?Q?5x3g3hKpDpdbc0r3+utxzhVb9qsNcAEf2mLmGATuztxJjOeEFFRSkYqFBv?=
+ =?iso-8859-1?Q?vzuRSbLjUsYNFPFvHg6mUL4gLI6K7WTSzqIpksad2sp7W32iNDr+8tuq9x?=
+ =?iso-8859-1?Q?yCrAGRVRYna8AGlssLRJRnhpPibkdNwSBLMGIpYkuLnA+GNgWhK4aaYdiO?=
+ =?iso-8859-1?Q?NcEhS0hai2AbW23zlIAPr4iWz5IEFZx2efPiI0OLNYtCoy6hh+dVdOHsLL?=
+ =?iso-8859-1?Q?GuydBV4tQqOK2N9hTpyU6+NINAspS1nRuQFvU/oaA3VMeMj2gD3yGMO5G0?=
+ =?iso-8859-1?Q?QvcgEKzNa4Z1nrRCq3WKPKgViiq4dPCxsQWAgywjejEH0goF7pLpExF2jT?=
+ =?iso-8859-1?Q?DAgDKhVoyAOumDWiH1y0gNyOPC6WHXd3gDcrSTDYvaBM8n2ch2MPomtm/B?=
+ =?iso-8859-1?Q?afPs6RXEnt0Ifm3rijVhd0e2+IQ58YkHUuAaZ6LXm9SUqQvZ8R5g4/bx+4?=
+ =?iso-8859-1?Q?wNc3lUkLglmCpG3epE/vYifv6O9dCgoKx5MsEw002s0+Cxa+JxqmvXGwBM?=
+ =?iso-8859-1?Q?cbuBvszDkGbtf/cnkmaNSU4XJdK3LZflg3dipXtFmGmWkLO3rHv/N0hhKb?=
+ =?iso-8859-1?Q?buFnHUTWm275xzfSgIXTs4DSUuDhZXb61vpy7ZVh0RIqN7L0M00SDXHalv?=
+ =?iso-8859-1?Q?L0dPQbEcv5dSVI0o2RLkKLYYWPuLkYz6zTilfXup3NEKgfQuKKPc4e3KEi?=
+ =?iso-8859-1?Q?aI0EX++3QGHEAPZYDfC+mUYEhvVVHb6+ZXhFoSFYynyifaONniF9?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] i386/sev: Add sev-emulated QOM object with TCG support
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster
- <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Eric Blake <eblake@redhat.com>,
- Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Giuseppe Lettieri <giuseppe.lettieri@unipi.it>,
- Paolo Bonzini <pbonzini@redhat.com>, Luigi Leonardi <leonardi@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260317113840.33017-1-califano.tommaso@gmail.com>
- <20260317113840.33017-2-califano.tommaso@gmail.com>
- <abw3HqBJqEWiY7GP@redhat.com> <ab1ABNvEOlIc2WCU@redhat.com>
-Content-Language: en-US, it
-From: Tommaso Califano <califano.tommaso@gmail.com>
-In-Reply-To: <ab1ABNvEOlIc2WCU@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=califano.tommaso@gmail.com; helo=mail-wm1-x32e.google.com
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed8e0f00-4c6d-45ec-7b44-08de86923202
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Mar 2026 15:05:58.9664 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: LbY9QbvagamVzNeBxLg+/l6uRzQ8fMfECIJ0HURyjcuGKTQv9HOUwctkm2OK6pHWmHcpUdpK+VZgzeTdTMmhJqaT+DQxh15KldEBkHeLC0c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA2PR09MB7446
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=Djordje.Todorovic@htecgroup.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,128 +146,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add a "big-endian" boolean property to the RISC-V CPU configuration,
+defaulting to false (little-endian). This property allows machine
+models to configure individual HARTs for big-endian data operation.
 
+The RISC-V ISA supports big-endian data accesses via the mstatus
+SBE/MBE/UBE bits, while instructions remain always little-endian.
+This property provides the configuration interface; subsequent
+patches will connect it to the CPU state and translation logic.
 
-Il 20/03/26 13:39, Daniel P. Berrangé ha scritto:
-> On Thu, Mar 19, 2026 at 05:49:18PM +0000, Daniel P. Berrangé wrote:
->> On Tue, Mar 17, 2026 at 12:38:36PM +0100, Tommaso Califano wrote:
->>> With this change it is possible to run a VM with the SEV CPUID active
->>> adding:
->>>
->>>     -accel tcg \
->>>     -object sev-emulated,id=sev0,cbitpos=47,reduced-phys-bits=1 \
->>>     -machine memory-encryption=sev0
->>
->> snip
->>
->>> diff --git a/qapi/qom.json b/qapi/qom.json
->>> index c653248f85..35cda819ec 100644
->>> --- a/qapi/qom.json
->>> +++ b/qapi/qom.json
->>> @@ -1057,6 +1057,19 @@
->>>              '*handle': 'uint32',
->>>              '*legacy-vm-type': 'OnOffAuto' } }
->>>  
->>> +##
->>> +# @SevEmulatedProperties:
->>> +#
->>> +# Properties for sev-emulated objects.
->>> +# This object functionally emulates AMD SEV hardware via TCG, so
->>> +# it does not require real hardware to run.
->>> +#
->>> +# Since: 10.1.0
->>> +##
->>> +{ 'struct': 'SevEmulatedProperties',
->>> +  'base': 'SevGuestProperties',
->>> +  'data': {}}
->>
->> This is deriving 'sev-emulated' from 'sev-guest' which means it
->> supports all the properties that 'sev-guest' does, which for
->> the record is:
->>
->>  sev-guest options:
->>   dh-cert-file=<string>  - guest owners DH certificate (encoded with base64)
->>   kernel-hashes=<bool>   - add kernel hashes to guest firmware for measured Linux boot
->>   legacy-vm-type=<OnOffAuto> - use legacy VM type to maintain measurement compatibility with older QEMU or kernel versions.
->>   session-file=<string>  - guest owners session parameters (encoded with base64)
->>   sev-device=<string>    - SEV device to use
-> 
-> Sigh, I was mislead by  '-object sev-guest,help' omitting
-> information about anything that is not a class property.
-> So there is also
-> 
->   - cbitpos=<int>
->   - reduced-phys-bits=<int>
->   - handle=<int>
->   - policy=<int>
-> 
->>
->>
->> Of those properties
->>
->>  * dh-cert-file + session-file are traditionally used
->>    as a means to transfer the TIK+TEK to the SEV firmware,
->>    with wrapping to protect them from the hypervisor.
->>
->>    These can't be used with sev-emulated, as implemented,
->>    since they require a key derivation  from the PDH, a
->>    concept which IIUC is not implemented in this series.
->>
->>    Instead, in a later patch 'tik' and 'tek' properties
->>    are added to 'sev-emulated', and to pass the TIK+TEK
->>    in clear text.
->>
->>  * sev-device + legacy-vm-type - these are only relevant
->>    to the KVM integration, so not applicable for emulation
->>
->>  * kernel-hashes - would be relevant if formally emulating
->>    LAUNCH_UPDATE_DATA for attestation, but IIUC, this is
->>    not done/used by this series
->>   
->>
->> IOW, we're deriving from 'sev-guest' but AFAICT none of
->> its properties are relevant to the emulation. The
->> dh-cert-file and session-file could potentially be
->> relevant if implementing the PDH concept and key
->> derivation, but that's not done, instead the tik/tek
->> are passed explicitly.
->>
->> What is the value we get from this sev-guest -> sev-emulated
->> inheritance ?  My gut feeling is that this perhaps isn't
->> the right way to be modelling things unless there's a plan
->> for future work that would benefit from them.
->>
+Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+---
+ target/riscv/cpu.c                | 1 +
+ target/riscv/cpu_cfg_fields.h.inc | 1 +
+ 2 files changed, 2 insertions(+)
 
-I know most of these properties aren't used in emulation. I chose
-to derive from `sev-guest' primarily for the policy property
-(needed for SEV-ES future implementation).
-
-For the TIK and TEK properties, I considered reusing dh-cert-file
-and session-file, but since those keys are CPU-generated anyway,
-I opted to simplify the cryptographic protocol given the fact
-that security isn't the focus here.
-
-That said, you're right that sev-guest inheritance may not add
-much value. If you'd prefer interface consistency for testing
-(reusing dh-cert-file/session-file) those properties could then
-become relevant. Otherwise, for pure SEV emulation, deriving from
-sev-common makes sense instead; though I'm unsure how that would
-impact the SEV-ES implementation, perhaps we could re-add just the
-policy property if needed.
-
->> Another question related to modelling is whether there is
->> an intention to support SEV-SNP at a later date, would that
->> imply a sev-snp-emulated object type too ? If so, would it
->> inherit from sev-emulated or from sev-snp-guest ?
->>
-
-While I haven't studied it in depth, I think it will. It seems
-best to derive a new object (sev-snp-emulated) from sev-guest-snp
-because of the sev_snp_enabled() function, which will work through
-TYPE_SEV_SNP_GUEST casting (similar to the current sev_enabled()
-function).
-
-Best regards,
-Tommaso Califano
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index e56470a374..4537305dfe 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2641,6 +2641,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rule=
+s[] =3D {
+=20
+ static const Property riscv_cpu_properties[] =3D {
+     DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
++    DEFINE_PROP_BOOL("big-endian", RISCVCPU, cfg.big_endian, false),
+=20
+     {.name =3D "pmu-mask", .info =3D &prop_pmu_mask},
+     {.name =3D "pmu-num", .info =3D &prop_pmu_num}, /* Deprecated */
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_field=
+s.h.inc
+index 70ec650abf..51436daabf 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
+ BOOL_FIELD(ext_xmipscmov)
+ BOOL_FIELD(ext_xmipslsp)
+=20
++BOOL_FIELD(big_endian)
+ BOOL_FIELD(mmu)
+ BOOL_FIELD(pmp)
+ BOOL_FIELD(debug)
+--=20
+2.34.1
 
