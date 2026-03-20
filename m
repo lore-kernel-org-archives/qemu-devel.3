@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7437E1098783
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D99021098783
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 13:08:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ZYR-0002r4-Dw; Fri, 20 Mar 2026 09:06:19 -0400
+	id 1w3ZYW-0002vX-UF; Fri, 20 Mar 2026 09:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYN-0002oK-V9
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:16 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1w3ZYS-0002rk-8p
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:20 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w3ZYK-0005yx-19
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:15 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b982d56dac4so9329166b.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:11 -0700 (PDT)
+ id 1w3ZYP-000615-Ss
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 09:06:19 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-661d20c9787so3080947a12.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 06:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774011969; x=1774616769; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774011976; x=1774616776; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xMvV+Z30MGWIFjks+wq6XxTD4icaEeIiNeTijsECLbs=;
- b=zI2vjjJUrqNu9zJJsY5zHYvFvY31W+xuo7ciZuFQpapwjPaIru4Be2yY9yL322yMYz
- 2EMX6zdXwAnrKZ+FQZ+s5JNh8Wo8tAlCKzuGgmLNjIrp3MFvKCV+dExaBjSxq5t1aagt
- VImSPa1iCmYjh58mlVdRF/VMp0kgPuyiTm5R3QVJf5oR3r2hsYbyHHkvwRjKdstMVu66
- i1dqKBW8N/u1sWBkcccSbiJvHL2/q7rHo9NcDhG3F5hwf4JOb5YVqr4Fx3MQ0JVaKoYM
- IKml/I9pSYgKt1yB/zDjifOjFeuyVC9Xzd311cTQ30sUZ90mOLu1hwMB2HtR18I+K+ph
- Jy+Q==
+ bh=mVhTaVtOsZGTF1nA/GiMlTKKLxEQJ4PvSrc2Fgrxyck=;
+ b=GLa4DMtn5nKpDVDZTOCKPSklg47fbF0E/tjSVfk14uCbpvZYnGHQ5TDeQ5fwzI2zUi
+ 6sV5W4jVDuR7Ugm7jLxC1EnW/jI8wKlxEvVlrCWIpvadnxkiZuwjHEIumeBVJ82XW6Aj
+ 4SmJLmJsD1PzDlPMILsahX+b1r5L7Im5LgfctX65poKI13LXuUrnl3YIxYu/LCbB7amT
+ zSndhYDK47Ie1g43DfEhHMHL1+wxGeqfisV/M7COggoyzkQw3Cqsi4plKTwLSlh1oi1D
+ 2gFOpE47V44RcE2JMqnoZc7fpgCnzQ2JJIxaxVNrd9Sm4x/7N8LIM0FnZ/zjw4t9F32V
+ FOzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774011969; x=1774616769;
+ d=1e100.net; s=20251104; t=1774011976; x=1774616776;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xMvV+Z30MGWIFjks+wq6XxTD4icaEeIiNeTijsECLbs=;
- b=s9TxkiSbNRh6jfXMhBXGCphbQqZge//j9pB/mrCb+HXpAqrwJLeQ/bhpFyyM3TTiXk
- 6xVbADsuozWimZ66mYXRAwTA7HMvuq4NqJpGQh4qa+lzoKXftH5wKRA/H8uvhk0msQDc
- FDnVBxRbUGG8tCHSKEzqvhDUtZAfao6RBDr/GykH8Kn6hm5YNj7p0eV0u2+d411qRXqk
- llgZjCsRWWwxIHyTj7/Bo81xfeMgj3FcZD+U6gj+akqX43z2I+mmj3PMQ3h8cADy6isJ
- cmEljLlW+ZaAO9FXk342gM3Y0zqmiurNkvPhiMfKSHSVkTu22v5VTF6CmwAj/drFlpsn
- nveA==
-X-Gm-Message-State: AOJu0Yyg3KbVLFhzzszJ+W1P0fhNwjPqZcKiAe/5Z6H1jlKUOkkZ3x8d
- r4n4RYaRt9CYYmejueO1W7cZNLNCeBB3IXhZV5wWRaGq6l0na9dVhueyWDU7tay2kryGjk1p9Ss
- +xLMvaOc=
-X-Gm-Gg: ATEYQzy2D4QIhAzsl12+G1QqjSWP65Sd7G7LtB+Zrb2XbgrDRV2EK0rwXWWfXkl+4E2
- YJA0NoNOP68BhwIiW8KJBEtebSLtFmD2/DOcakLuYyiOWSqRY7ZQzTx/caEOhlLnXzXqDfqNGkB
- Gq5anZhPr5aYptP+oBo14uH/gbuxCxBfuWJfL/+/NkpmfPTRPNmivANGPJtX5g+C3eBSaOmNl2V
- +JwH7iu0XvIh2MtetFe3FusKXRXLQ86dxf5n6BItGwNgPEvHZByoUrO+DtC6cKRmAh2GjwdAbwk
- DwHIaEvDMFtvsgEpNLf4OTChDB8Ge6mHemRB02KST47aIBTzh0ZZDpjBdO2tIWlD+4VAW/4Ilbs
- HvY0qvG3pOTHVVDQr7OWRRuM2kdJVgUs93o8cgTTddov2gc00baE1PqrVd86k7OYIfd4ad4o2KJ
- OdOXUbhrE2XNRJgNIASKtyskc=
-X-Received: by 2002:a17:907:a0cd:b0:b96:df8c:42da with SMTP id
- a640c23a62f3a-b982f524397mr224735566b.52.1774011969166; 
- Fri, 20 Mar 2026 06:06:09 -0700 (PDT)
+ bh=mVhTaVtOsZGTF1nA/GiMlTKKLxEQJ4PvSrc2Fgrxyck=;
+ b=k5QFnP4ew8G2i1C5kn03giMS6ycWGingUxvLDTaMCvzHJWmffxq//MC9RuRuJynau3
+ +RQBq2c0oigY6MA8OYoh4l7AoKqiyXNePmcGFD5kAw98qSsAavy8mzZgdD75WUey+RwK
+ oFN4lqEE1HZtdYxgrrdD5xkDQOOYc+AUxnwMRIxM04vJfLkHyQTZn3DX7lhX5nbqgqXn
+ 6hlIl9bFvWCkrm7L87o6n9m+oHd8WIG3sXpLXaSGjYdaItUmrRi3deCvHgXAZCkSozPF
+ Xvow5ICOFCTMaq3n4u+/C2MfZqEErxO8pu1bh6Jg/foeCg2imhUJw89GKKd3nWLhkFKk
+ wKzA==
+X-Gm-Message-State: AOJu0YxtE3cZShWvKTiO/b0kH2pI5may+jZifGxaTQ4fQGtLmRUHijPp
+ I+0vU5b19yBPMG449bCp7sbR17jv7qdLdo18wslfrxGF+aWiQuOjmc99LTfUvjxnrMY=
+X-Gm-Gg: ATEYQzwIdkgA882ZaimNwV2cNqD53sOWAnjcYPZpP2sunBXxCp2PqCd+kuB5WdY/9+w
+ 9SUxn6v8mxR/F6wjsbWDhe59LW+iVXTJu0SOIhC0Fu1X0QZtN0AyhG80KT5+kmjBR/KtqVvpser
+ 10o6kxSv8mTmqA+fk5ch0L16tLpsZ5GWujhDxhuRbHPP5PPn7jM6/r2vmqg/PdeChYVpFGIpZL9
+ dn8B7ihyhwe+/pADqBAlz+lbIVpZ1BSTWJ6BQT5w2MnI7HU1SvnuJsdeIRTAnXMNxs52Z16rWMD
+ OI7VKciTnaQd4RjJT29s7Vmtbe5z63yRJaBMA2SveCyGh76oZKIP1FOSK0zWyjuX7+QUKm+swP5
+ ZooetxLnV7GN2K1HEPMsHBpZ3HXqQAvXsDTduOUlm5GQkoEFiHs8kMvouyn/Bathq7/eXpPyAcG
+ 8ZnGCEERnnjYQM0v7p0Eagqy8=
+X-Received: by 2002:a17:907:cb20:b0:b98:5b2:77f7 with SMTP id
+ a640c23a62f3a-b982f0c9208mr146755066b.12.1774011975601; 
+ Fri, 20 Mar 2026 06:06:15 -0700 (PDT)
 Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9832f8dff5sm156496766b.24.2026.03.20.06.06.08
+ a640c23a62f3a-b9832beecf4sm162492366b.0.2026.03.20.06.06.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 06:06:08 -0700 (PDT)
+ Fri, 20 Mar 2026 06:06:11 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9C8C15F910;
- Fri, 20 Mar 2026 13:06:07 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 5E5655F94B;
+ Fri, 20 Mar 2026 13:06:08 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 02/35] target/arm: migrate system/cp trap syndromes to
+Subject: [RFC PATCH 10/35] target/arm: migrate fault syndromes to
  registerfields
-Date: Fri, 20 Mar 2026 13:05:33 +0000
-Message-ID: <20260320130607.2071996-3-alex.bennee@linaro.org>
+Date: Fri, 20 Mar 2026 13:05:41 +0000
+Message-ID: <20260320130607.2071996-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260320130607.2071996-1-alex.bennee@linaro.org>
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,172 +106,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migrate syn_aa64_sysregtrap and co-processor register trap syndromes
-to the registerfields API. The co-processor syndromes are split
-between single and duel register moves.
+Migrate syn_insn_abort and syn_data_abort_* to the registerfields API.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/syndrome.h | 118 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 99 insertions(+), 19 deletions(-)
+ target/arm/syndrome.h | 87 ++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 74 insertions(+), 13 deletions(-)
 
 diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 517fb2368bc..3d2660614c6 100644
+index 3fd82f5b565..db92a8020e3 100644
 --- a/target/arm/syndrome.h
 +++ b/target/arm/syndrome.h
-@@ -208,53 +208,133 @@ static inline uint32_t syn_aa32_bkpt(uint32_t imm16, bool is_16bit)
+@@ -494,20 +494,64 @@ static inline uint32_t syn_gpc(int s2ptw, int ind, int gpcsc, int vncr,
      return res;
  }
  
 +/*
-+ * ISS encoding for an exception from MSR, MRS, or System instruction
-+ * in AArch64 state.
++ * ISS encoding for an exception from an Instruction Abort
++ *
++ * (aka instruction abort)
 + */
-+FIELD(SYSREG_ISS, ISREAD, 0, 1) /* Direction, 1 is read */
-+FIELD(SYSREG_ISS, CRM, 1, 4)
-+FIELD(SYSREG_ISS, RT, 5, 5)
-+FIELD(SYSREG_ISS, CRN, 10, 4)
-+FIELD(SYSREG_ISS, OP1, 14, 3)
-+FIELD(SYSREG_ISS, OP2, 17, 3)
-+FIELD(SYSREG_ISS, OP0, 20, 2)
++FIELD(IABORT_ISS, IFSC, 0, 6)
++FIELD(IABORT_ISS, S1PTW, 7, 1)
++FIELD(IABORT_ISS, EA, 9, 1)
++FIELD(IABORT_ISS, FnV, 10, 1) /* FAR not Valid */
++FIELD(IABORT_ISS, SET, 11, 2)
++FIELD(IABORT_ISS, PFV, 14, 1)
++FIELD(IABORT_ISS, TopLevel, 21, 1) /* FEAT_THE */
 +
- static inline uint32_t syn_aa64_sysregtrap(int op0, int op1, int op2,
-                                            int crn, int crm, int rt,
-                                            int isread)
+ static inline uint32_t syn_insn_abort(int same_el, int ea, int s1ptw, int fsc)
  {
--    return (EC_SYSTEMREGISTERTRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL
--        | (op0 << 20) | (op2 << 17) | (op1 << 14) | (crn << 10) | (rt << 5)
--        | (crm << 1) | isread;
-+    uint32_t res = syn_set_ec(0, EC_SYSTEMREGISTERTRAP);
+-    return (EC_INSNABORT << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
+-        | ARM_EL_IL | (ea << 9) | (s1ptw << 7) | fsc;
++    uint32_t res = syn_set_ec(0, EC_INSNABORT + same_el);
 +    res = FIELD_DP32(res, SYNDROME, IL, 1);
 +
-+    res = FIELD_DP32(res, SYSREG_ISS, OP0, op0);
-+    res = FIELD_DP32(res, SYSREG_ISS, OP2, op2);
-+    res = FIELD_DP32(res, SYSREG_ISS, OP1, op1);
-+    res = FIELD_DP32(res, SYSREG_ISS, CRN, crn);
-+    res = FIELD_DP32(res, SYSREG_ISS, RT, rt);
-+    res = FIELD_DP32(res, SYSREG_ISS, CRM, crm);
-+    res = FIELD_DP32(res, SYSREG_ISS, ISREAD, isread);
++    res = FIELD_DP32(res, IABORT_ISS, EA, ea);
++    res = FIELD_DP32(res, IABORT_ISS, S1PTW, s1ptw);
++    res = FIELD_DP32(res, IABORT_ISS, IFSC, fsc);
 +
 +    return res;
  }
  
 +/*
-+ * ISS encoding for an exception from an MCR or MRC access
-+ * (move to/from co-processor)
++ * ISS encoding for an exception from a Data Abort
 + */
-+FIELD(COPROC_ISS, ISREAD, 0, 1)
-+FIELD(COPROC_ISS, CRM, 1, 4)
-+FIELD(COPROC_ISS, RT, 5, 5)
-+FIELD(COPROC_ISS, CRN, 10, 4)
-+FIELD(COPROC_ISS, OP1, 14, 3)
-+FIELD(COPROC_ISS, OP2, 17, 3)
-+FIELD(COPROC_ISS, COND, 20, 4)
-+FIELD(COPROC_ISS, CV, 24, 1)
++FIELD(DABORT_ISS, DFSC, 0, 6)
++FIELD(DABORT_ISS, WNR, 6, 1)
++FIELD(DABORT_ISS, S1PTW, 7, 1)
++FIELD(DABORT_ISS, CM, 8, 1)
++FIELD(DABORT_ISS, EA, 9, 1)
++FIELD(DABORT_ISS, FnV, 10, 1)
++FIELD(DABORT_ISS, LST, 11, 2)
++FIELD(DABORT_ISS, VNCR, 13, 1)
++FIELD(DABORT_ISS, AR, 14, 1)
++FIELD(DABORT_ISS, SF, 15, 1)
++FIELD(DABORT_ISS, SRT, 16, 5)
++FIELD(DABORT_ISS, SSE, 21, 1)
++FIELD(DABORT_ISS, SAS, 22, 2)
++FIELD(DABORT_ISS, ISV, 24, 1)
 +
- static inline uint32_t syn_cp14_rt_trap(int cv, int cond, int opc1, int opc2,
-                                         int crn, int crm, int rt, int isread,
-                                         bool is_16bit)
+ static inline uint32_t syn_data_abort_no_iss(int same_el, int fnv,
+                                              int ea, int cm, int s1ptw,
+                                              int wnr, int fsc)
  {
--    return (EC_CP14RTTRAP << ARM_EL_EC_SHIFT)
--        | (is_16bit ? 0 : ARM_EL_IL)
--        | (cv << 24) | (cond << 20) | (opc2 << 17) | (opc1 << 14)
--        | (crn << 10) | (rt << 5) | (crm << 1) | isread;
-+    uint32_t res = syn_set_ec(0, EC_CP14RTTRAP);
-+    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
+-    return (EC_DATAABORT << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
+-           | ARM_EL_IL
+-           | (fnv << 10) | (ea << 9) | (cm << 8) | (s1ptw << 7)
+-           | (wnr << 6) | fsc;
++    uint32_t res = syn_set_ec(0, EC_DATAABORT + same_el);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
 +
-+    res = FIELD_DP32(res, COPROC_ISS, CV, cv);
-+    res = FIELD_DP32(res, COPROC_ISS, COND, cond);
-+    res = FIELD_DP32(res, COPROC_ISS, OP2, opc2);
-+    res = FIELD_DP32(res, COPROC_ISS, OP1, opc1);
-+    res = FIELD_DP32(res, COPROC_ISS, CRN, crn);
-+    res = FIELD_DP32(res, COPROC_ISS, RT, rt);
-+    res = FIELD_DP32(res, COPROC_ISS, CRM, crm);
-+    res = FIELD_DP32(res, COPROC_ISS, ISREAD, isread);
++    res = FIELD_DP32(res, DABORT_ISS, FnV, fnv);
++    res = FIELD_DP32(res, DABORT_ISS, EA, ea);
++    res = FIELD_DP32(res, DABORT_ISS, CM, cm);
++    res = FIELD_DP32(res, DABORT_ISS, S1PTW, s1ptw);
++    res = FIELD_DP32(res, DABORT_ISS, WNR, wnr);
++    res = FIELD_DP32(res, DABORT_ISS, DFSC, fsc);
 +
 +    return res;
  }
  
- static inline uint32_t syn_cp15_rt_trap(int cv, int cond, int opc1, int opc2,
-                                         int crn, int crm, int rt, int isread,
-                                         bool is_16bit)
+ static inline uint32_t syn_data_abort_with_iss(int same_el,
+@@ -517,11 +561,22 @@ static inline uint32_t syn_data_abort_with_iss(int same_el,
+                                                int wnr, int fsc,
+                                                bool is_16bit)
  {
--    return (EC_CP15RTTRAP << ARM_EL_EC_SHIFT)
--        | (is_16bit ? 0 : ARM_EL_IL)
--        | (cv << 24) | (cond << 20) | (opc2 << 17) | (opc1 << 14)
--        | (crn << 10) | (rt << 5) | (crm << 1) | isread;
-+    uint32_t res = syn_set_ec(0, EC_CP15RTTRAP);
+-    return (EC_DATAABORT << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
+-           | (is_16bit ? 0 : ARM_EL_IL)
+-           | ARM_EL_ISV | (sas << 22) | (sse << 21) | (srt << 16)
+-           | (sf << 15) | (ar << 14)
+-           | (ea << 9) | (cm << 8) | (s1ptw << 7) | (wnr << 6) | fsc;
++    uint32_t res = syn_set_ec(0, EC_DATAABORT + same_el);
 +    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
 +
-+    res = FIELD_DP32(res, COPROC_ISS, CV, cv);
-+    res = FIELD_DP32(res, COPROC_ISS, COND, cond);
-+    res = FIELD_DP32(res, COPROC_ISS, OP2, opc2);
-+    res = FIELD_DP32(res, COPROC_ISS, OP1, opc1);
-+    res = FIELD_DP32(res, COPROC_ISS, CRN, crn);
-+    res = FIELD_DP32(res, COPROC_ISS, RT, rt);
-+    res = FIELD_DP32(res, COPROC_ISS, CRM, crm);
-+    res = FIELD_DP32(res, COPROC_ISS, ISREAD, isread);
++    res = FIELD_DP32(res, DABORT_ISS, ISV, 1);
++    res = FIELD_DP32(res, DABORT_ISS, SAS, sas);
++    res = FIELD_DP32(res, DABORT_ISS, SSE, sse);
++    res = FIELD_DP32(res, DABORT_ISS, SRT, srt);
++    res = FIELD_DP32(res, DABORT_ISS, SF, sf);
++    res = FIELD_DP32(res, DABORT_ISS, AR, ar);
++    res = FIELD_DP32(res, DABORT_ISS, EA, ea);
++    res = FIELD_DP32(res, DABORT_ISS, CM, cm);
++    res = FIELD_DP32(res, DABORT_ISS, S1PTW, s1ptw);
++    res = FIELD_DP32(res, DABORT_ISS, WNR, wnr);
++    res = FIELD_DP32(res, DABORT_ISS, DFSC, fsc);
 +
 +    return res;
  }
  
-+/*
-+ * ISS encoding for an exception from an MCRR or MRRC access
-+ * (move to/from co-processor with 2 regs)
-+ */
-+FIELD(COPROC_R2_ISS, ISREAD, 0, 1)
-+FIELD(COPROC_R2_ISS, CRM, 1, 4)
-+FIELD(COPROC_R2_ISS, RT, 5, 5)
-+FIELD(COPROC_R2_ISS, RT2, 10, 5)
-+FIELD(COPROC_R2_ISS, OP1, 16, 4)
-+FIELD(COPROC_R2_ISS, COND, 20, 4)
-+FIELD(COPROC_R2_ISS, CV, 24, 1)
-+
- static inline uint32_t syn_cp14_rrt_trap(int cv, int cond, int opc1, int crm,
-                                          int rt, int rt2, int isread,
-                                          bool is_16bit)
+ /*
+@@ -530,8 +585,14 @@ static inline uint32_t syn_data_abort_with_iss(int same_el,
+  */
+ static inline uint32_t syn_data_abort_vncr(int ea, int wnr, int fsc)
  {
--    return (EC_CP14RRTTRAP << ARM_EL_EC_SHIFT)
--        | (is_16bit ? 0 : ARM_EL_IL)
--        | (cv << 24) | (cond << 20) | (opc1 << 16)
--        | (rt2 << 10) | (rt << 5) | (crm << 1) | isread;
-+    uint32_t res = syn_set_ec(0, EC_CP14RRTTRAP);
-+    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
+-    return (EC_DATAABORT << ARM_EL_EC_SHIFT) | (1 << ARM_EL_EC_SHIFT)
+-        | ARM_EL_IL | ARM_EL_VNCR | (wnr << 6) | fsc;
++    uint32_t res = syn_set_ec(0, EC_DATAABORT_SAME_EL);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
 +
-+    res = FIELD_DP32(res, COPROC_R2_ISS, CV, cv);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, COND, cond);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, OP1, opc1);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, RT2, rt2);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, RT, rt);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, CRM, crm);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, ISREAD, isread);
++    res = FIELD_DP32(res, DABORT_ISS, VNCR, 1);
++    res = FIELD_DP32(res, DABORT_ISS, WNR, wnr);
++    res = FIELD_DP32(res, DABORT_ISS, DFSC, fsc);
 +
 +    return res;
  }
  
- static inline uint32_t syn_cp15_rrt_trap(int cv, int cond, int opc1, int crm,
-                                          int rt, int rt2, int isread,
-                                          bool is_16bit)
- {
--    return (EC_CP15RRTTRAP << ARM_EL_EC_SHIFT)
--        | (is_16bit ? 0 : ARM_EL_IL)
--        | (cv << 24) | (cond << 20) | (opc1 << 16)
--        | (rt2 << 10) | (rt << 5) | (crm << 1) | isread;
-+    uint32_t res = syn_set_ec(0, EC_CP15RRTTRAP);
-+    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
-+
-+    res = FIELD_DP32(res, COPROC_R2_ISS, CV, cv);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, COND, cond);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, OP1, opc1);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, RT2, rt2);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, RT, rt);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, CRM, crm);
-+    res = FIELD_DP32(res, COPROC_R2_ISS, ISREAD, isread);
-+
-+    return res;
- }
- 
- static inline uint32_t syn_fp_access_trap(int cv, int cond, bool is_16bit,
+ static inline uint32_t syn_swstep(int same_el, int isv, int ex)
 -- 
 2.47.3
 
