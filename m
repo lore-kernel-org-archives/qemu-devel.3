@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E42A109448A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 079281094489
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 16:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3zDj-0006EJ-FM; Sat, 21 Mar 2026 12:30:39 -0400
+	id 1w3zDg-0006D9-Ob; Sat, 21 Mar 2026 12:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDR-00064q-Mn
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:25 -0400
+ id 1w3zDZ-0006AQ-Mr
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:30 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDN-0002Do-Lw
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:20 -0400
+ id 1w3zDW-0002FG-RL
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:29 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EB1CC596D8C;
- Sat, 21 Mar 2026 17:30:15 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 147BF596D8F;
+ Sat, 21 Mar 2026 17:30:18 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Oawd89xIuz0I; Sat, 21 Mar 2026 17:30:14 +0100 (CET)
+ id GGfPLY9HXwyL; Sat, 21 Mar 2026 17:30:16 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id F0DDA5969F3; Sat, 21 Mar 2026 17:30:13 +0100 (CET)
-Message-ID: <7d96c67f864845893d4903b988a4da7c7b010f66.1774110169.git.balaton@eik.bme.hu>
+ id 12197596D90; Sat, 21 Mar 2026 17:30:16 +0100 (CET)
+Message-ID: <6e1b83ef3fe7a1ebc246b474eb2b0c7cd05d5deb.1774110169.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1774110169.git.balaton@eik.bme.hu>
 References: <cover.1774110169.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 3/8] ati-vga: Do not add crtc offset to src and dst data
- address
+Subject: [PATCH v6 5/8] ati-vga: Fix display updates in non-32 bit modes
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,7 +41,7 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sat, 21 Mar 2026 17:30:13 +0100 (CET)
+Date: Sat, 21 Mar 2026 17:30:16 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -1
@@ -66,36 +65,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drivers seem to program these registers with values that already
-include the crtc offset so this is not needed. This fixes blit outside
-of vram errors with non-0 crtc offset.
+The memory_region_set_dirty used to mark changes should use stride
+value in vram which is normally only the same as surface_stride in 32
+bit modes. This caused missed updates in 8 and 16 bit modes.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati_2d.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/display/ati_2d.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 0cbbdc33f4..cf2d4a08e2 100644
+index cf2d4a08e2..23527b2c50 100644
 --- a/hw/display/ati_2d.c
 +++ b/hw/display/ati_2d.c
-@@ -110,7 +110,6 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
-     ctx->dst_stride = s->regs.dst_pitch;
-     ctx->dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--        ctx->dst_bits += s->regs.crtc_offset & 0x07ffffff;
-         ctx->dst_stride *= ctx->bpp;
-     }
+@@ -70,6 +70,7 @@ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
+ {
+     DisplaySurface *ds = qemu_console_surface(vga->con);
  
-@@ -121,7 +120,6 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
-     ctx->src_stride = s->regs.src_pitch;
-     ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--        ctx->src_bits += s->regs.crtc_offset & 0x07ffffff;
-         ctx->src_stride *= ctx->bpp;
++    (void)ds;
+     DPRINTF("%p %u ds: %p %d %d rop: %x\n", vga->vram_ptr, vga->vbe_start_addr,
+             surface_data(ds), surface_stride(ds), surface_bits_per_pixel(ds),
+             ctx->rop3 >> 16);
+@@ -78,8 +79,8 @@ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
+         vga->vbe_regs[VBE_DISPI_INDEX_YRES] * vga->vbe_line_offset) {
+         memory_region_set_dirty(&vga->vram,
+                                 vga->vbe_start_addr + ctx->dst_offset +
+-                                ctx->dst.y * surface_stride(ds),
+-                                ctx->dst.height * surface_stride(ds));
++                                ctx->dst.y * ctx->dst_stride,
++                                ctx->dst.height * ctx->dst_stride);
      }
-     DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
+ }
+ 
 -- 
 2.41.3
 
