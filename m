@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A681C1094480
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 16:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E42A109448A
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 16:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3zDi-0006DC-0G; Sat, 21 Mar 2026 12:30:38 -0400
+	id 1w3zDj-0006EJ-FM; Sat, 21 Mar 2026 12:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDZ-0006AO-3k
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:30 -0400
+ id 1w3zDR-00064q-Mn
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:25 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDW-0002FH-P8
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:28 -0400
+ id 1w3zDN-0002Do-Lw
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:20 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 42F9E596E02;
- Sat, 21 Mar 2026 17:30:21 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id EB1CC596D8C;
+ Sat, 21 Mar 2026 17:30:15 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Z9elW9acaXIw; Sat, 21 Mar 2026 17:30:19 +0100 (CET)
+ id Oawd89xIuz0I; Sat, 21 Mar 2026 17:30:14 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3F5A8596E0C; Sat, 21 Mar 2026 17:30:19 +0100 (CET)
-Message-ID: <2ecf42bdeb96a4206b27dc39b3ff13cc8a6190d0.1774110169.git.balaton@eik.bme.hu>
+ id F0DDA5969F3; Sat, 21 Mar 2026 17:30:13 +0100 (CET)
+Message-ID: <7d96c67f864845893d4903b988a4da7c7b010f66.1774110169.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1774110169.git.balaton@eik.bme.hu>
 References: <cover.1774110169.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 8/8] ati-vga: Make sure hardware cursor data is within vram
+Subject: [PATCH v6 3/8] ati-vga: Do not add crtc offset to src and dst data
+ address
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,7 +42,7 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sat, 21 Mar 2026 17:30:19 +0100 (CET)
+Date: Sat, 21 Mar 2026 17:30:13 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -1
@@ -65,38 +66,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add check to make sure we don't read past the end of vram when getting
-mouse pointer image.
+Drivers seem to program these registers with values that already
+include the crtc offset so this is not needed. This fixes blit outside
+of vram errors with non-0 crtc offset.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/display/ati_2d.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index e1616dc3b3..d7b131d633 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -151,6 +151,9 @@ static void ati_cursor_define(ATIVGAState *s)
-     /* FIXME handle cur_hv_offs correctly */
-     srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
-              (s->regs.cur_hv_offs & 0xffff) * 16;
-+    if (srcoff + 64 * 16 > s->vga.vram_size) {
-+        return;
-+    }
-     for (int i = 0; i < 64; i++, srcoff += 16) {
-         data[i] = ldq_le_p(&s->vga.vram_ptr[srcoff]);
-         data[i + 64] = ldq_le_p(&s->vga.vram_ptr[srcoff + 8]);
-@@ -205,6 +208,9 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 0cbbdc33f4..cf2d4a08e2 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -110,7 +110,6 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
+     ctx->dst_stride = s->regs.dst_pitch;
+     ctx->dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
+     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-        ctx->dst_bits += s->regs.crtc_offset & 0x07ffffff;
+         ctx->dst_stride *= ctx->bpp;
      }
-     /* FIXME handle cur_hv_offs correctly */
-     srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
-+    if (srcoff + 16 > s->vga.vram_size) {
-+        return;
-+    }
-     dp = &dp[vga->hw_cursor_x];
-     h = ((s->regs.crtc_h_total_disp >> 16) + 1) * 8;
-     abits = ldq_be_p(&vga->vram_ptr[srcoff]);
+ 
+@@ -121,7 +120,6 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
+     ctx->src_stride = s->regs.src_pitch;
+     ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
+     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-        ctx->src_bits += s->regs.crtc_offset & 0x07ffffff;
+         ctx->src_stride *= ctx->bpp;
+     }
+     DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
 -- 
 2.41.3
 
