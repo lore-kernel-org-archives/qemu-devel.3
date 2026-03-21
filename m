@@ -4,60 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9771094489
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 15:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC7D1094489
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 15:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3yXx-00037f-EW; Sat, 21 Mar 2026 11:47:29 -0400
+	id 1w3yc3-0006Gc-LC; Sat, 21 Mar 2026 11:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1w3yXv-00036e-7M; Sat, 21 Mar 2026 11:47:27 -0400
-Received: from m16.mail.163.com ([117.135.210.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1w3yXr-0003JT-3a; Sat, 21 Mar 2026 11:47:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=MO
- W1hNfAfn57B9gVKObv9M+ctxXe6YQiGWq7CTF+mIw=; b=BlzFhGVKhbwLdK0LZq
- e7f1RpIHEZe7uaEmsXRy/IpxzaX/9teJxz/VQ+oHhw1HMjwchRELcAfhbIfIrBhG
- mNSeWp+4DWiqhWkcMaMwQ8rEfEDxDdaYUjk9+l0ycRf9H0RMZfOTKRLFx6MGmkDO
- jfXHTol1cxZhdNW667NpoqT+w=
-Received: from dt-VM.localdomain (unknown [])
- by gzsmtp5 (Coremail) with SMTP id QCgvCgAH9XF2vb5p1YbwTQ--.2111S3;
- Sat, 21 Mar 2026 23:47:04 +0800 (CST)
-From: Tao Ding <dingtao0430@163.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
-	qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v1 1/5] Fixed the PL011 FIFO level bug
-Date: Sat, 21 Mar 2026 23:46:56 +0800
-Message-ID: <53bae159845bae966f620b42e7873b7f24404284.1774099044.git.dingtao0430@163.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1774099044.git.dingtao0430@163.com>
-References: <cover.1774099044.git.dingtao0430@163.com>
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1w3yc1-0006GG-Ks
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 11:51:41 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1w3ybx-0003ym-5a
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 11:51:40 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-823c56765fdso1578512b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 08:51:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774108295; cv=none;
+ d=google.com; s=arc-20240605;
+ b=dVRz7JT1xhOEQNOQfJycW/eqg7Pg5cmWIRnuwyLsTyWc19HWUCeNrKwRNcJfIvCIpI
+ AltACHtih93talLL8Id7ycSYdnkmq3q8pVfavp3CyjM7ds1K4YfiX8kPvcR3YZhmBD1y
+ LMk8WeI+uvqFFf3f/Q4TDEq8Ms8g2c9t+GvUh+eM2Pl23a2EKO46gYhzUr+N1RsXecfR
+ +xnMdX737/Dcj7oy9pug62OE/Vyr81GLtHdHNpAaoqUrETDecY3/n7Stu/6Kc/0j0hYS
+ 53FMPFl91g6fyThISpCfkZ7AgnClglc78TgOsXmvAuBVmBpKiLkLTe2GAh5rptoHe3tZ
+ fzgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ZXV7nf4iG2DAmm/KYcefJDB4RAuyVTKoCSyXyRx7ENI=;
+ fh=DFQdyJwGvZUwth7T/WKqdvqDS27hKnpFmHOLvp6mSSM=;
+ b=Mm9D1gIQbXGwoY2kW18LkXeSoNFFXelWByrn7apecgnb6Fiu78LUG/jg1wNhszsKUX
+ zQCLwmx05scotHFdKJbPSxTzFxznWb8muu3T5/jkxAtyjxUZCeKh0nFYyYZvc0BT8rr2
+ F1v2fdE6Noj4dAlV6vECm4xGt/rsZTmxJVCsftUhCiXC/PGyKaoRLbN72mUGogoDhIVS
+ GIR226ffQ95JeqkCgIksCW8pyJ4mCT78kMJwzlI+Pypva4zEXJxAocAgkcdPbMkU2M+s
+ Lfbnci/f0LfTjJaFyAMPE5nHQq9IEvuOjF4Cn+uAGAkMaX68fyroazKLh4+9fjlLleLJ
+ lY+w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1774108295; x=1774713095;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZXV7nf4iG2DAmm/KYcefJDB4RAuyVTKoCSyXyRx7ENI=;
+ b=Eo2Wyyha+ynDctuab9i1zKC2Jc6BOY3A4RIk3Ogcfz+ZuBRLs7kjOnq1HPZcRLzg1s
+ hvq7rbwe0ErdNYy6wET0zi/xHFnhytS7Gq+n14Fli5iz40vOTO/l8/F67OnrO49SWZuM
+ w/inbyDWh0VpJoiytgZL+1XKCkra7LjTKxq+SXSZhclrvl9daSVGHRLKqmChHPl8mh8D
+ bQXgOkvseTEDqIPQuGpXqn8ObIcnCax7OQ8zFABkYiI+g5/am/ttqM2SvZ4AOccUvdga
+ zOM5k+K0k3fWNa78VKFXZNDipOFxh4Hz8E7NHvIyeJNJ2q+4HMPeRHVqPMaVRLitF/f9
+ r4EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774108295; x=1774713095;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZXV7nf4iG2DAmm/KYcefJDB4RAuyVTKoCSyXyRx7ENI=;
+ b=BJL3CAp3JcNICIOdie/OsOScbuzcDNAX9aZ3vKPygT3lXo6yuLTtwu80FDISZb6RlN
+ 8p4NgyvprRM/lnOgGh1bctIqFBJcwcMar+t2N5czPtCuYLr0uaU/GLmQ+8aW7jDmIl6T
+ V78m8v1jUzln3YaDVcyeVvewLmkZE6NgnmIViwprlqz+Wh+ZKXB3FDCHDeU4vRR0Uhdj
+ kG6PGjBUeFv+ZJJ26uMcbx5WN1oakVO+WVTBwSHXDNsjluov8cNBkqhqk/4HeJ+Yr+0t
+ CTkjAgZcn5R5dIpn3MUfK8HN6J/UnjXkQjn825QFB0E90WB0gsLFOa4EZOjQAOZHhq2a
+ 31uw==
+X-Gm-Message-State: AOJu0YzBrzd8sajOU3uRc2fZ9lWXIZMXD3BwK4zZwCRlxv1q756s7Csa
+ 3ub5U+je20HGnGSJpoPN1sBIJ9XNQvVWfatcpAEyCJd2EnC17Q+dgvkTdxNjelOb0BnTzLgb7wA
+ G25JgoniRrKG1w4zZzq4FWEgv6zTHV/7jn8BjIcxDgw==
+X-Gm-Gg: ATEYQzw+1Ah4y0e5q6RYCH0vWPDGGBxeMkxxssgHMANU/UEn1ezr60Fqhi1FomwtxPc
+ 0dVpR8ahohlpxH0UNFeFjri2wQt/NV4Ee7Nc+TDNY7M4GydNkIhsrhHd1tqAi88VALz3goLCLbA
+ GlE4dWodPQ7cfaOryKY+HAQy2NWPn5lbvdpt/Ud/7elSqvP0q1v1x+vvdiQOvv3EjbSYqelonWw
+ kyHV+YZH7ABKmSv8dwfw+ES+L6JBLJqy92ldw91hn1SeDvL/2Cn3U3AcrX4v3ZYmKS8lNUYzKNT
+ N+3sefYXJRd8fdctXGtasjFiM/mdr6WFUv0V
+X-Received: by 2002:a05:6a20:7f9f:b0:398:b178:a53f with SMTP id
+ adf61e73a8af0-39bceb427b1mr5921093637.40.1774108295301; Sat, 21 Mar 2026
+ 08:51:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: QCgvCgAH9XF2vb5p1YbwTQ--.2111S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Kw4rur48Jry7ur4rKr15Jwb_yoW8Cw47pF
- na93W5Kas7CF1rXr4rA3WDJr4avFn2qFW2yrWxuFWFva43JrnYgrn2kay2g347WFWSv3yU
- uF43Xr4UJr17uaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zR-18kUUUUU=
-X-Originating-IP: [101.204.36.117]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-RmX1Wm+vXkX8gAA3Q
-Received-SPF: pass client-ip=117.135.210.5; envelope-from=dingtao0430@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+References: <20260321135624.581398-1-npiggin@gmail.com>
+ <20260321135624.581398-3-npiggin@gmail.com>
+In-Reply-To: <20260321135624.581398-3-npiggin@gmail.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Sat, 21 Mar 2026 09:51:24 -0600
+X-Gm-Features: AaiRm53TYxAkgqjZKIAF8_QYBYkiJd3uDXtIKXlCCHH6svwy7xBl-IRqDHxN2Wk
+Message-ID: <CANCZdfoOwgUJZP3Do4Vgj5cN_NRK2_cacorK8LXKjZ=TbBdCsQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] bsd-user, linux-user: signal: recursive signal
+ delivery fix
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000bc1a39064d8ac667"
+Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,73 +117,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to TRM, PL011 generate a burst or a single DMA request based on the FIFO level
+--000000000000bc1a39064d8ac667
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The FlowCntrl field description is as follows:
-     Receive interrupt FIFO level select. 
-     b000 = Receive FIFO becomes >= 1/8 full
-     b001 = Receive FIFO becomes >= 1/4 full
-     b010 = Receive FIFO becomes >= 1/2 full
-     b011 = Receive FIFO becomes >= 3/4 full
-     b100 = Receive FIFO becomes >= 7/8 full
-     b101-b111 = reserved
+On Sat, Mar 21, 2026 at 7:56=E2=80=AFAM Nicholas Piggin <npiggin@gmail.com>=
+ wrote:
 
-Only the read_trigger of rx has been changed, and there is no need to set a trigger for tx 
-because write tx data always completes in a blocking manner. That means tx FIFO is empty.
+> Synchronous signals must accommodate a synchronous signal being
+> raised during delivery, as asynchronous ones do. For example
+> badframe errors during delivery will cause SIGSEGV to be raised.
+>
+> Without this fix, cpu_loop() runs process_pending_signals() which
+> delivers the first synchronous signal (e.g., SIGILL) which fails
+> to set the handler and forces SIGSEGV, but that is not picked up.
+> process_pending_signals() returns. Then cpu_loop() runs cpu_exec()
+> again, which attempts to execute the same instruction, another
+> SIGILL.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  bsd-user/signal.c   | 10 ++++++----
+>  linux-user/signal.c |  9 ++++++---
+>  2 files changed, 12 insertions(+), 7 deletions(-)
+>
 
-Signed-off-by: Tao Ding <dingtao0430@163.com>
----
- hw/char/pl011.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index cb12c3e224..c96a706da1 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -129,6 +129,14 @@ static const uint32_t irqmask[] = {
-     INT_E,
- };
- 
-+static const uint32_t fifo_level[] = {
-+    PL011_FIFO_DEPTH / 8,
-+    PL011_FIFO_DEPTH / 4,
-+    PL011_FIFO_DEPTH / 2,
-+    PL011_FIFO_DEPTH * 3 / 4,
-+    PL011_FIFO_DEPTH * 7 / 8,
-+};
-+
- static void pl011_update(PL011State *s)
- {
-     uint32_t flags;
-@@ -344,17 +352,24 @@ static uint64_t pl011_read(void *opaque, hwaddr offset,
-     return r;
- }
- 
-+static uint32_t pl011_decode_fifo_level(uint32_t val)
-+{
-+    if (val > 4) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "pl011: invalid fifo level field\n");
-+        return 1;
-+    }
-+    return fifo_level[val];
-+}
-+
- static void pl011_set_read_trigger(PL011State *s)
- {
--#if 0
-     /* The docs say the RX interrupt is triggered when the FIFO exceeds
-        the threshold.  However linux only reads the FIFO in response to an
-        interrupt.  Triggering the interrupt when the FIFO is non-empty seems
-        to make things work.  */
-     if (s->lcr & LCR_FEN)
--        s->read_trigger = (s->ifl >> 1) & 0x1c;
-+        s->read_trigger = pl011_decode_fifo_level(extract32(s->ifl, 3, 3));
-     else
--#endif
-         s->read_trigger = 1;
- }
- 
--- 
-2.43.0
+Interesting edge case...
 
+Warner
+
+
+> diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+> index dadcc037dc..3e5e41e1b1 100644
+> --- a/bsd-user/signal.c
+> +++ b/bsd-user/signal.c
+> @@ -998,7 +998,12 @@ void process_pending_signals(CPUArchState *env)
+>                  sigdelset(&ts->signal_mask, target_to_host_signal(sig));
+>                  sigact_table[sig - 1]._sa_handler =3D TARGET_SIG_DFL;
+>              }
+> +            /*
+> +             * Restart scan from the beginning, as handle_pending_signal
+> +             * might have resulted in a new synchronous signal (eg
+> SIGSEGV).
+> +             */
+>              handle_pending_signal(env, sig, &ts->sync_signal);
+> +            goto restart_scan;
+>          }
+>
+>          k =3D ts->sigtab;
+> @@ -1008,10 +1013,7 @@ void process_pending_signals(CPUArchState *env)
+>              if (k->pending &&
+>                  !sigismember(blocked_set, target_to_host_signal(sig))) {
+>                  handle_pending_signal(env, sig, k);
+> -                /*
+> -                 * Restart scan from the beginning, as
+> handle_pending_signal
+> -                 * might have resulted in a new synchronous signal (eg
+> SIGSEGV).
+> -                 */
+> +                /* Restart scan, explained above. */
+>                  goto restart_scan;
+>              }
+>          }
+> diff --git a/linux-user/signal.c b/linux-user/signal.c
+> index e4b8b28bfe..9d43e080ce 100644
+> --- a/linux-user/signal.c
+> +++ b/linux-user/signal.c
+> @@ -1385,6 +1385,11 @@ void process_pending_signals(CPUArchState *cpu_env=
+)
+>              }
+>
+>              handle_pending_signal(cpu_env, sig, &ts->sync_signal);
+> +            /*
+> +             * Restart scan from the beginning, as handle_pending_signal
+> +             * might have resulted in a new synchronous signal (eg
+> SIGSEGV).
+> +             */
+> +            goto restart_scan;
+>          }
+>
+>          for (sig =3D 1; sig <=3D TARGET_NSIG; sig++) {
+> @@ -1395,9 +1400,7 @@ void process_pending_signals(CPUArchState *cpu_env)
+>                  (!sigismember(blocked_set,
+>                                target_to_host_signal_table[sig]))) {
+>                  handle_pending_signal(cpu_env, sig, &ts->sigtab[sig - 1]=
+);
+> -                /* Restart scan from the beginning, as
+> handle_pending_signal
+> -                 * might have resulted in a new synchronous signal (eg
+> SIGSEGV).
+> -                 */
+> +                /* Restart scan, explained above. */
+>                  goto restart_scan;
+>              }
+>          }
+> --
+> 2.51.0
+>
+>
+
+--000000000000bc1a39064d8ac667
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Mar 21,=
+ 2026 at 7:56=E2=80=AFAM Nicholas Piggin &lt;<a href=3D"mailto:npiggin@gmai=
+l.com">npiggin@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">Synchronous signals must accommodate a synchronous =
+signal being<br>
+raised during delivery, as asynchronous ones do. For example<br>
+badframe errors during delivery will cause SIGSEGV to be raised.<br>
+<br>
+Without this fix, cpu_loop() runs process_pending_signals() which<br>
+delivers the first synchronous signal (e.g., SIGILL) which fails<br>
+to set the handler and forces SIGSEGV, but that is not picked up.<br>
+process_pending_signals() returns. Then cpu_loop() runs cpu_exec()<br>
+again, which attempts to execute the same instruction, another<br>
+SIGILL.<br>
+<br>
+Signed-off-by: Nicholas Piggin &lt;<a href=3D"mailto:npiggin@gmail.com" tar=
+get=3D"_blank">npiggin@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0bsd-user/signal.c=C2=A0 =C2=A0| 10 ++++++----<br>
+=C2=A0linux-user/signal.c |=C2=A0 9 ++++++---<br>
+=C2=A02 files changed, 12 insertions(+), 7 deletions(-)<br></blockquote><di=
+v><br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.=
+com">imp@bsdimp.com</a>&gt;</div><div><br></div><div>Interesting edge case.=
+..</div><div><br></div><div>Warner</div><div>=C2=A0</div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c<br>
+index dadcc037dc..3e5e41e1b1 100644<br>
+--- a/bsd-user/signal.c<br>
++++ b/bsd-user/signal.c<br>
+@@ -998,7 +998,12 @@ void process_pending_signals(CPUArchState *env)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sigdelset(&am=
+p;ts-&gt;signal_mask, target_to_host_signal(sig));<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sigact_table[=
+sig - 1]._sa_handler =3D TARGET_SIG_DFL;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Restart scan from the be=
+ginning, as handle_pending_signal<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* might have resulted in a=
+ new synchronous signal (eg SIGSEGV).<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0handle_pending_signal(env, =
+sig, &amp;ts-&gt;sync_signal);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto restart_scan;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0k =3D ts-&gt;sigtab;<br>
+@@ -1008,10 +1013,7 @@ void process_pending_signals(CPUArchState *env)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (k-&gt;pending &amp;&amp=
+;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0!sigismember(=
+blocked_set, target_to_host_signal(sig))) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0handle_pendin=
+g_signal(env, sig, k);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Restart sc=
+an from the beginning, as handle_pending_signal<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* might have=
+ resulted in a new synchronous signal (eg SIGSEGV).<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Restart scan, e=
+xplained above. */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto restart_=
+scan;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+diff --git a/linux-user/signal.c b/linux-user/signal.c<br>
+index e4b8b28bfe..9d43e080ce 100644<br>
+--- a/linux-user/signal.c<br>
++++ b/linux-user/signal.c<br>
+@@ -1385,6 +1385,11 @@ void process_pending_signals(CPUArchState *cpu_env)<=
+br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0handle_pending_signal(cpu_e=
+nv, sig, &amp;ts-&gt;sync_signal);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Restart scan from the be=
+ginning, as handle_pending_signal<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* might have resulted in a=
+ new synchronous signal (eg SIGSEGV).<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto restart_scan;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (sig =3D 1; sig &lt;=3D TARGET_NSIG; =
+sig++) {<br>
+@@ -1395,9 +1400,7 @@ void process_pending_signals(CPUArchState *cpu_env)<b=
+r>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(!sigismember=
+(blocked_set,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0target_to_host_signal_table[sig]))) {=
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0handle_pendin=
+g_signal(cpu_env, sig, &amp;ts-&gt;sigtab[sig - 1]);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Restart scan fr=
+om the beginning, as handle_pending_signal<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* might have=
+ resulted in a new synchronous signal (eg SIGSEGV).<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Restart scan, e=
+xplained above. */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto restart_=
+scan;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+-- <br>
+2.51.0<br>
+<br>
+</blockquote></div></div>
+
+--000000000000bc1a39064d8ac667--
 
