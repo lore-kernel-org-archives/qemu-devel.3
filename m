@@ -4,75 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7208A1099B59
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1CB1099B4C
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 00:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3kJ9-0003QY-65; Fri, 20 Mar 2026 20:35:15 -0400
+	id 1w3kJ9-0003QZ-Mc; Fri, 20 Mar 2026 20:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w3jph-0000YR-F0
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:04:49 -0400
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w3jqC-0000g2-Km
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:05:22 -0400
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w3jpg-0000jI-3R
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:04:49 -0400
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-505a1789a27so14301501cf.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 17:04:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w3jqA-0000wn-Qj
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:05:20 -0400
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-8cd8576a512so396992585a.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 17:05:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774051517; cv=none;
+ d=google.com; s=arc-20240605;
+ b=f4OLWND0n7P0I2j4KlnVHyvHpRtxA3EP+zbbHGJ4LyvN8H2RmNI8/IeFAA+lB3V44s
+ RIAR7xvGZs3fNZFkVsEePT/aAfqSrqLR1yb+Q2FbGn340xJfOkeADv75M5QGVUGfxuNr
+ 961KXBsFzdeJf1v0twYBeqS9l+anzB+g6hqLUadHGshsYfWwFHZSljeAFnb1jCwW47is
+ Ru/5JToSBPZ5H179PItdcO41k9GycnqV3iBE3uyj9cUBXPScbR/sb8XAyNrO++HuMed5
+ yaOF7ktStx8TQvdbHf56RUNmD5Ym0xTEAt18DfMkwa1xBV77TeGUNxL5/TtmxSfaGKmD
+ ZesA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ERCb0Y8/px1upiAhwrl+R7gbGR6nGopZFCRUobbhDcM=;
+ fh=ucZDN36yBpJn58JtaLk0s8jvtfTXFaz6Qj/yP7K9RF0=;
+ b=hNk8mF2cCjjEcY89ixY3PK34AhzcwDeZP9JTVBvKgH94FKfBYDxpoe9TBFtSUtq38d
+ XncAI5Ful8ltwHs5TwOyDDBO7Rzw2X0Aks7PF0wVvrNOASB8VCz1QjP1/8x2zB9BCeYZ
+ 2+tbaeTyr/v5RlGCLEImEpX8PgisnzC++oPfpE4jk4SmLPxB3jPB5pnwLldllna3W4Qj
+ ePWD9z9Ueo9sZkm/5XYN+zY9eJg1DdiRLOVuADPZQ5EP3mC8XU1p4vTapIGKrh4snf2e
+ 3g3ILNUOh2mEKiVj3xhSieXXaQLHkVXbaozUyYIUDGMWUtOq3jm+kEYDrnd8keTydEqB
+ E86A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774051485; x=1774656285; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Rex7xQFHxRc7L0kyFPZqwnfIVMJDK77X2EP6eL4f+RQ=;
- b=Rf+/huEPP/pEz5jAuOPh+IHOouxYHvwhVaBIZYm98V7qMlYxoMtd/L2Xugp+zwvBib
- 7h2RVMBHmmaHZ1xHSC6k/JvZC6VjYv/iNj9biFYr3P+ZgoK6O0aINTika3Cuwc1nXrYG
- Y2JC6zfWOhnpHKvfJ9kH3femEkYQTF4QF3MSoBrYO6HBFWwmjlMAQRchCiGcwpQeIEOT
- Fl27v5FRDSDNrJICLWVcXW9WhW43FTTENvXpiAv5N4yDht8Iwt4CeJacZj2AtSD8Il3T
- yjeoEIJYpUXkiuYWUVnEED0GGDq3HcfdzVoVpbI0gl0G4dbXWzIh6yCX1DXLmiaWxb2l
- qIQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774051485; x=1774656285;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1774051517; x=1774656317; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rex7xQFHxRc7L0kyFPZqwnfIVMJDK77X2EP6eL4f+RQ=;
- b=Vnegf35v38zWKcemDS/rXULCEE16bHPgE70zfvDOSMLHfk2UqQ2aUKmEBGDHMVkjGM
- UuHPrkHfZHSh97V/g9G6O4wMSvx4GkorWYLcVMtwn8grxCi3AEHrGxWAzHiAdOuzLo8m
- DGeHw4y/IRaM06koV3audjpKVgDLw9MqmoZ9vCkEfBrvmtpqcALwf00ntMusGZJwDoHt
- cqtCvGClF81I4nBpodfrB3mOUNCparE5K6fY1zrMrpu6u+av2v4puYHDj9otDuW3H01g
- On5Rb+37q8CwRmhGmSD+QO7SALruyxv9FI479PQRAMVO0DfBNqVdR9Ujc3RLLbhjLfwS
- wE+A==
-X-Gm-Message-State: AOJu0Ywp3BvjR3M4k+GjhGRKT9UXR0qSJtN2tGXTpgQsXphmg2Flpxj7
- 7QyWokrIwK7nn/PKGNs/tl+FXCj3YjOGRcn6pvjOADvZRg+dyiCd01VLRCvKql1H
-X-Gm-Gg: ATEYQzwmVND/Ofz0ZEtdQxYpvq9qIUgJb07Jf0lXlobfOVWq/Epv9/2yjIkKO8xUMx6
- cwUfG5Di4lQAKzLbOgFi8Rl99G44S9CWOq/8ocq9ItqnaMP60liAB4xbZdCSzSrilVpN9ivP7NF
- sj0deO5UGG+w1Ly9z1u/lBfuRGftZw2NKY0XCQu/UpdYZsE4MCzr1ZF0ri1RYNNEv410A2/qBPD
- +ppHyJTj4kHcb5xpzxnNO5BlaRdbzQ63aA1w0651Cfo0c72Xep+FQYYD1/Il5kKaeEfbYp6OUiZ
- hlIVMKp9oADeGIyru9EjFCadMsXQovMRdYEQeLfNPeYFMP3U9kAHXXxKC73hycz7tJgHjQM01Gd
- SRpGxaMgnMcZGZcNn4tfOZQ8rphJaRB5rvP0K3N025PLdbMVuAhSeSW3nU9KLSG5itNKOWGOPdy
- LaZ0H0FpB57xOaIeUxqvLdjQmqeEWCF/DSHQ==
-X-Received: by 2002:a05:622a:cd:b0:50b:4051:2cab with SMTP id
- d75a77b69052e-50b40513540mr51428911cf.58.1774051484643; 
- Fri, 20 Mar 2026 17:04:44 -0700 (PDT)
-Received: from 192-222-50-213.ll.local ([192.222.50.213])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89c85251b04sm30602326d6.17.2026.03.20.17.04.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 17:04:44 -0700 (PDT)
-From: Jenny Guanni Qu <qguanni@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, mcascell@redhat.com, peter.maydell@linaro.org,
- qemu-security@nongnu.org, Jenny Guanni Qu <qguanni@gmail.com>
-Subject: [PATCH v2] hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
-Date: Sat, 21 Mar 2026 00:04:44 +0000
-Message-Id: <20260321000444.909451-1-qguanni@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ bh=ERCb0Y8/px1upiAhwrl+R7gbGR6nGopZFCRUobbhDcM=;
+ b=T84bWEUgJX8Uc4vLdjmnhhSneUhfX/2pFvm4xQqzeeHapfBCJ7ilb//qFfyFRMHGEs
+ g8LD8UunPcgCdjfm+bopVh/zxipFxdSDPEts+uR9fgLfEB4DXcdpJg7YgSolQp8qwTap
+ ZBu5qBdFlSTNgNwGPvwQB1MF60wL9hQHR0DmioBXlqepegzzv/3T31UMMXxqC5u5X5+X
+ snkzGCzK77dtaG+B+EvPoRp9rywvboQstFKX8Ws8bsRosGBgC+YUDI05CZwenmNeRImr
+ fRhRFzN/yuPnpW30pnyeLZ19H0CanL+yznHe0oAIowIDdgv6ZPoh0It+wkqOJDOhCvRw
+ lA4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774051517; x=1774656317;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ERCb0Y8/px1upiAhwrl+R7gbGR6nGopZFCRUobbhDcM=;
+ b=f5HloR3UWB7xDZwbpcr4VLbd3CwUvfAHq2V6syMbByOZu61t5/NiXHh0InSqSJKV5G
+ yGFPtsgpsogGijFsZvPGGSuPC4N4ffM+KyWeZE4b8BMhY+qKYG60qXvmYJzRR07WIPcP
+ vhdOzrweUVCKK9Lx3XtBYFYPZcCUtoX8TaNtpp0fAStftTSBjsJID11xy1RYZcDoGq2q
+ 3YOz3mTKF0iqclO1dWIw9lFQvHY+28mE+ztiJomtROQaua1GNJOzhgPFtlFuTuOHS4wI
+ ZL2/cadAAsNRS0nHIeNUvvc7PuvhNoABY7XPZTxUQm/3TXTGu606GATiQgAvMtanQIYB
+ c4XQ==
+X-Gm-Message-State: AOJu0YwGzLU5EcLaor3u2gsSiQqHxRzQ6HgGrOar2IfzGeuD9Jnxdx2U
+ khmaNvWdIqRnMZ/aKsAyADqx7CJO5B2HKfd0sGCBtfKvjViUJzivFiS/ELYy8JJCalsjLJ/mMod
+ RNiUSd3lHP0Cao7sFm39Uo1gaEnrrzY0=
+X-Gm-Gg: ATEYQzxMx5ksm7RzFLv63QaQ5pAPEl5opmOtX16YLi7SC3HLisQN1aMEqyKHn4YpoUd
+ JxhGLLHp6FDz3p9GJ60APYqntDyzZY0Y8g/yWzrvusaw+gmISG3br+AgELrm4lRhIhwtSTlq9JY
+ Y7LC4EQuIlIJFGXv27G290xxL+upMtgqHmZqhsfOmybc3+2DevZLnVVWWlafyq7cCKqf/OGAjMe
+ hWhkAxY0g5iG+9d3W9gEc6BZL4jSD3VsTZlH/sb2lpqGMe5TqZAnFhvmnw28I9zdajThDXbLl9T
+ XfRfNdvB
+X-Received: by 2002:a05:6214:300f:b0:89c:50fb:31c0 with SMTP id
+ 6a1803df08f44-89c85453c14mr76344296d6.10.1774051517081; Fri, 20 Mar 2026
+ 17:05:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=qguanni@gmail.com; helo=mail-qt1-x835.google.com
+References: <20260318193610.2043847-1-qguanni@gmail.com>
+ <CAFEAcA_tiZT=vhEvtS3VAgjJLrYEZDBTQxm5xbbWmTBm8DLnng@mail.gmail.com>
+In-Reply-To: <CAFEAcA_tiZT=vhEvtS3VAgjJLrYEZDBTQxm5xbbWmTBm8DLnng@mail.gmail.com>
+From: Guanni Qu <qguanni@gmail.com>
+Date: Sat, 21 Mar 2026 01:05:06 +0100
+X-Gm-Features: AaiRm51UF9mdPY2RGhw3f76crzuOOmGD7nVuf5WrtieE34Y7J1Kj2H1XYhUKdTc
+Message-ID: <CAFzOa14yAMB7V1vGME=wzjk-vXE+Xxff06Rp0FSeEXFC8vbkKw@mail.gmail.com>
+Subject: Re: [PATCH] hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, mcascell@redhat.com, 
+ qemu-security@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=qguanni@gmail.com; helo=mail-qk1-x734.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,45 +116,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a guest sets MaxPacketSize to 0 in an OHCI Endpoint Descriptor,
-ohci_service_td() transfers 0 bytes per iteration. The Transfer
-Descriptor never completes because CBP never advances toward BE,
-causing ohci_service_ed_list() to loop indefinitely and hang QEMU.
+Thanks Peter. v2 sent with your suggested comment added.
 
-Add a check for MPS==0 after extracting the field from ED flags.
-If MPS is zero, call ohci_die() to reset the controller and return
-an error, preventing the infinite loop.
-
-Fixes: CVE-2026-3890
-Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
----
- hw/usb/hcd-ohci.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index 1aeed9286f..6ed8046fc2 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -956,6 +956,17 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
-         if (len && dir != OHCI_TD_DIR_IN) {
-             /* The endpoint may not allow us to transfer it all now */
-             pktlen = (ed->flags & OHCI_ED_MPS_MASK) >> OHCI_ED_MPS_SHIFT;
-+            /*
-+             * The OHCI spec does not say what to do if the guest hands us
-+             * an endpoint descriptor which specifies a MaximumPacketSize
-+             * of zero, which would mean we can never actually make forward
-+             * progress transferring data to it. We choose to treat it as
-+             * an error.
-+             */
-+            if (pktlen == 0) {
-+                ohci_die(ohci);
-+                return 1;
-+            }
-             if (pktlen > len) {
-                 pktlen = len;
-             }
--- 
-2.34.1
-
+On Thu, Mar 19, 2026 at 6:34=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Wed, 18 Mar 2026 at 19:36, Jenny Guanni Qu <qguanni@gmail.com> wrote:
+> >
+> > When a guest sets MaxPacketSize to 0 in an OHCI Endpoint Descriptor,
+> > ohci_service_td() transfers 0 bytes per iteration. The Transfer
+> > Descriptor never completes because CBP never advances toward BE,
+> > causing ohci_service_ed_list() to loop indefinitely and hang QEMU.
+> >
+> > Add a check for MPS=3D=3D0 after extracting the field from ED flags.
+> > If MPS is zero, call ohci_die() to reset the controller and return
+> > an error, preventing the infinite loop.
+> >
+> > Fixes: CVE-2026-3890
+> > Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
+> > Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+> > ---
+> >  hw/usb/hcd-ohci.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+> > index 1aeed9286f..b93a99593e 100644
+> > --- a/hw/usb/hcd-ohci.c
+> > +++ b/hw/usb/hcd-ohci.c
+> > @@ -956,6 +956,10 @@ static int ohci_service_td(OHCIState *ohci, struct=
+ ohci_ed *ed)
+> >          if (len && dir !=3D OHCI_TD_DIR_IN) {
+> >              /* The endpoint may not allow us to transfer it all now */
+> >              pktlen =3D (ed->flags & OHCI_ED_MPS_MASK) >> OHCI_ED_MPS_S=
+HIFT;
+> > +            if (pktlen =3D=3D 0) {
+> > +                ohci_die(ohci);
+> > +                return 1;
+> > +            }
+>
+> The OHCI spec doesn't (as far as I can tell) say what the
+> hardware should do for this situation, so I guess "flag it
+> as an error" is a reasonable choice. I think it would be
+> useful to note in a comment that this is our best-guess, though:
+>
+> /*
+>  * The OHCI spec doesn't say what to do if the guest hands us
+>  * an endpoint descriptor which specifies a MaximumPacketSize
+>  * of zero, which would mean we can never actually make forward
+>  * progress transferring data to it. We choose to treat it as
+>  * an error.
+>  */
+>
+> With something like that,
+>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>
+> (Or if I've missed something in the spec, let me know...)
+>
+> thanks
+> -- PMM
 
