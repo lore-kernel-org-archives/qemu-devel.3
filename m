@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1870B1099B58
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 00:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF2AA1099B56
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 00:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3kWe-0005R3-AE; Fri, 20 Mar 2026 20:49:12 -0400
+	id 1w3kWm-0005SL-Vw; Fri, 20 Mar 2026 20:49:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3kWd-0005Qr-1E
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:49:11 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3kWj-0005Rn-Ci
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:49:17 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3kWb-00025V-HF
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:49:10 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-35b97ed057cso684991a91.1
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 17:49:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3kWg-00026E-Ik
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:49:16 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2ab46931cf1so30079435ad.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 17:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774054147; x=1774658947; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1774054153; x=1774658953; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3Vn78SmAAKLbz3+kHLOEDEuAaN8ZeC+NU4A6mFcmLx8=;
- b=MFrxdr7PfbLJ9SKsElFlsyx408sS2LhE5YFhZ1IcfockPDKibiRKCQHymh0cni9WJ3
- qdgPsHqTvDvxQsCjp6KVwgD4i7639EwjZFpiyNbK66jEtCSBbuRL3Go2SNx6Au+92e2P
- 5IWwKTMIZYNUwztU38jorDdAv58fJrkd6cDkauZ1tTvkBXK164p69VP3rph+QbGfzKmd
- tSgov0hhRJLw8swufbMogeeY+O6ifsT1sCxn2lMFN4W5MxvAlmmdO/gQXxpnsAFf8X2p
- d+vgfRQt8/3flr5J5DH8mf45gkaNtuXP8bpGHyJpkk3VFHqLYG33eaaYsobmlIo6AXzY
- SVxQ==
+ bh=hFmstGmcFWszN/qiAw2otwmThWAyPfpEPK+SFVFBwqs=;
+ b=PKrglVy/MtOr4PyV7WgavzHpVtUmS6gciLR0jjTlxxcLPefwdKk/gEsjWnyS8BRd/i
+ 0qcJKz+XOpltNx6ie1uJSf8H0rbF+qKXg76LmbJUfp6t6mob1ZUpBbqqbZcdje5a/AwZ
+ arkGtrq3Xu5AOdotaRH+7zLZchtiJLU0U7Pg2NBSOYPGySDrQpTSS3Ay4tO6fO9qUYeX
+ +b3t9jEmAF0qkFHLQMkPE2UjoI0Inh/b/xutB2dw3dTePjY9D5aWK01/P/J2xIy6xsdI
+ Ab5lXpLJ8FN26wYsJknDEcu8DMcAtJJTmI8FW6Tqflbrkgf5yYt5Fw8Fp5NiqTVwM9Jm
+ GgFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774054147; x=1774658947;
+ d=1e100.net; s=20251104; t=1774054153; x=1774658953;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3Vn78SmAAKLbz3+kHLOEDEuAaN8ZeC+NU4A6mFcmLx8=;
- b=gwwoDwexd1zrmu2w7THm5DRn6hJn6j9IlDjZdYLyzPp3Pux9HtDWp3ncHurWgUtT+x
- 1OmeGNOYSAPn6H+BVRqVjb1biL7+Vi9Sjozx8TJku6CMpDmny4t8ZiwuFkqgYvkGwtqO
- VfCbNLV2TC6qbcUZHYKY3FreEemuvPv/0BJBV4OEbjQK8Mse/KDhJqI2K74gzUNXkfdz
- nsi1Vjo1Chr167hRxiLgctpZzSjPlMC7utVHzWOsU4Y3yu2BlXKzmchmWVOdR/3W2Ak+
- xm3uYz8H9tY82DrP7NYZ3GCSQHSJVdM9YIY5L+vQD4sLb76NT7v4dae73PVVLs8EyMsE
- OZ+g==
-X-Gm-Message-State: AOJu0YzmjxAdOOcXqkphQDFvut1VSeDff3tWddGqDeZfT9oUQ7X+Hoyu
- he5DxMrLgNFG/6bxukSEo04puOwrq5/oelGrsnillPBNdXueBEzFD0woTur5fQ==
-X-Gm-Gg: ATEYQzworgzYgV+tsT8XH1/NLIv6cweY4AXKtFA47nRXhlQ1KseD1AGFfyvBYDXENHb
- IZFr1bhz2ReeqXTBf03z9i5hPJyIeLockmHAAL5jLamuRS1ppZ6zRtxjjrp5Dn1FIahz7OCUImU
- ZxXt3BF/GszXM5y/i9vXecwJyaLh3EXtPESLRCAHy8FwlHvzfHxZ5tGE8XYiNUOP3YGyA9kw3Lo
- iqIyRhOoQK0rLX07HOp8jLI8hYoaFY/v5SeYO3ykHu1KhWymISR7w5OUSBFKMV1n9lKNOBNYGmw
- HTiIfH5N2Q34VIjdmJVS7x0R+0WnIi4BUwCCTyuvcUMlZTRrKatafi/LX88WW2dkjmmw3cLu+XL
- T2kJ4xvq5yAMTrasPMJXJWxpMZHw/0AeriZdmXPAy+pJG2lGUK6rHQ43CdY2k7HwZZmQXg0Vchh
- f1lmlhXyg0sdxMzLHQxirKiXR57vNiAFkxMsf7e4da+as66KJqO9anPfeFOnpNkgDFi1bg
-X-Received: by 2002:a17:903:2984:b0:2b0:5ae9:ee4 with SMTP id
- d9443c01a7336-2b0826d8307mr43580205ad.5.1774054147270; 
- Fri, 20 Mar 2026 17:49:07 -0700 (PDT)
+ bh=hFmstGmcFWszN/qiAw2otwmThWAyPfpEPK+SFVFBwqs=;
+ b=ARUVahir3k+B1EMO/BM0hAUt4//2MvtlayvaaVVi3Jr0VcqxKxU9QXWhakFz/9RRaL
+ rw5sCrMoqPPZwVANOfzKmEojRYDNm94kOL68v+HUf/ZQItt1TLz/j933mJomRI40a2nF
+ Kq9is00VdITZwZ/r4jRkRLppg/Cmd4yympYPwctDB92xwYt0rqRnztElRutm9rtwN6YE
+ JcIntN9MjraP5lH/OeU/v0yeW709G8vT7WbTHl59tbJcHj648rSbympVj5X5r6sYOKVR
+ horJDBFgsbSxUoLJXB+Vke0XtELmlhymWV9vUhIJyVPL0pFcqEOLyRYm7bf//ujTBzdd
+ qqGA==
+X-Gm-Message-State: AOJu0YyhkzDA/dTABP8DMebVL+kKgCqIrr7J00uceZ8CQjoCiCzK28u9
+ 26qF9DXYRu1AwzebVn5iaFTEPG30AdO3qjphU8ORL6gdwQunH4He0yfUcVZAnw==
+X-Gm-Gg: ATEYQzzA0B1toHZnrJjs8pUevZMyZdCMs+MOXPLcQFtVq6ep78Dfa/8zxBiLO1P07JC
+ IvGtxFrHbHXBznfnUJQ8TWmM8PhcSSYRv3rPA/a0gvNiyQv/BGyu0UGXClfjmmadBTKEnhtG790
+ 9jdwQQKhUadUPt/6PqhSp0EnZlQaTNztQO3H6hYHYvOjuCtsXfPoFvliYvGXFXRffJZ2QwOe9VL
+ t5njyhsOJs6AEpg3lf6IwNejNaSuU5KdratVdkINdAb5nkqzcBQI+Oa3QL/mwmifs+VHScij+1C
+ sMn4uJqafn9mxTC1fo431BcIuZ47n5ZdL2O/zw8VwWAudwlgDH2BbwJLr6HqGIQhihUi2hejQIV
+ 4tlNcIXF8AdqI17a64Byvz1BgAkm81mhzVFG1tYuLoV3X7BghTiTc9XPkxC2CMGL/cNhp9MYIIi
+ cjfxXJ9Uovd+7Gwg08YP8b54xUqYCSUbZDigG9Ww/s3V6UMdzkzhGBi2/ArmWxrKcPmcG1
+X-Received: by 2002:a17:903:8c3:b0:2ae:4aa8:cab8 with SMTP id
+ d9443c01a7336-2b082702646mr36963335ad.4.1774054152740; 
+ Fri, 20 Mar 2026 17:49:12 -0700 (PDT)
 Received: from lima-default (103.95.112.190.qld.leaptel.network.
  [103.95.112.190]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083527f84sm34637685ad.18.2026.03.20.17.49.02
+ d9443c01a7336-2b083527f84sm34637685ad.18.2026.03.20.17.49.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 17:49:06 -0700 (PDT)
+ Fri, 20 Mar 2026 17:49:12 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Warner Losh <imp@bsdimp.com>,
@@ -72,16 +72,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Warner Losh <imp@bsdimp.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: [PATCH 2/3] linux-user: Fix unlock_user API usage
-Date: Sat, 21 Mar 2026 10:48:35 +1000
-Message-ID: <20260321004836.500390-3-npiggin@gmail.com>
+Subject: [PATCH 3/3] linux-user: riscv: Fix signal frame user mapping
+Date: Sat, 21 Mar 2026 10:48:36 +1000
+Message-ID: <20260321004836.500390-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260321004836.500390-1-npiggin@gmail.com>
 References: <20260321004836.500390-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,61 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix errors in unlock_user() calls:
-- unlock_user() with len=1 instead of len=written
-- unlock_user() with len=1 instead of len=0
-- unlock_user() with len=0 instead of len=1
+riscv signal frame setup is missing unlock_user_struct().
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- linux-user/linuxload.c | 2 +-
- linux-user/syscall.c   | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ linux-user/riscv/signal.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
-index 85d700953e..79416a94c9 100644
---- a/linux-user/linuxload.c
-+++ b/linux-user/linuxload.c
-@@ -19,7 +19,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src, unsigned long len)
-         return -TARGET_EFAULT;
-     }
-     memcpy(host_ptr, src, len);
--    unlock_user(host_ptr, dest, 1);
-+    unlock_user(host_ptr, dest, len);
-     return 0;
- }
+diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
+index 358fa1d82d..22b1b8149f 100644
+--- a/linux-user/riscv/signal.c
++++ b/linux-user/riscv/signal.c
+@@ -126,6 +126,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
  
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 7832a1aba5..13b8bd9ed3 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2989,7 +2989,7 @@ get_timeout:
-             if (put_user_u32(lv, optlen)) {
-                 return -TARGET_EFAULT;
-             }
--            unlock_user(results, optval_addr, 0);
-+            unlock_user(results, optval_addr, len);
-             break;
-         }
- #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(4, 2, 0) */
-@@ -4006,7 +4006,7 @@ static inline abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
-         __put_user((*host_array)[i], &array[i]);
-     }
-     g_free(*host_array);
--    unlock_user(array, target_addr, 1);
-+    unlock_user(array, target_addr, nsems * sizeof(unsigned short));
+     setup_ucontext(&frame->uc, env, set);
+     frame->info = *info;
++    unlock_user_struct(frame, frame_addr, 1);
  
-     return 0;
- }
-@@ -7888,7 +7888,7 @@ static inline abi_long target_to_host_sigevent(struct sigevent *host_sevp,
-     host_sevp->sigev_notify = tswap32(target_sevp->sigev_notify);
-     host_sevp->sigev_notify_thread_id = tswap32(target_sevp->_sigev_un._tid);
- 
--    unlock_user_struct(target_sevp, target_addr, 1);
-+    unlock_user_struct(target_sevp, target_addr, 0);
-     return 0;
- }
- 
+     env->pc = ka->_sa_handler;
+     env->gpr[xSP] = frame_addr;
 -- 
 2.51.0
 
