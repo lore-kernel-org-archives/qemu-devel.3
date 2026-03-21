@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C9A1094482
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539A11094480
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 14:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3xak-0006yD-47; Sat, 21 Mar 2026 10:46:18 -0400
+	id 1w3xb9-000712-1X; Sat, 21 Mar 2026 10:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3xah-0006xq-NR
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 10:46:15 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3xav-00070J-VD
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 10:46:30 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3xag-00013I-2X
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 10:46:15 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-35b905e9dc0so1890941a91.3
- for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 07:46:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3xas-000147-Cg
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 10:46:28 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-35b97ed057cso900592a91.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 07:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774104373; x=1774709173; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DC/92mQROGokmocD9i48NnoFb4+LLsoIAOSWd43L804=;
- b=T2Fjt8G2R78wStMXLKm/e03app3bYTS//Hnmhy4CT0HIBRd2Ud2GbXXmRyDEgSIk0c
- TUCuyA/MLHWI9rqHkFwQg4PitLLc4EXZ3Slb9AYO1O8feOo6U9hQywi6wSNN5F1Of1pQ
- prOeT8CI49m2j23NfFUlUYNsFccdpqDVtwKO8qW5bQAt0Oh1pTKoYMROaB6yDxyrtkRZ
- F/wxA0N/O8zhTRdLUlHg58AFvBOYfjbMANQ0tTtX+/iQehPuwCoVGXxx+hrpYeYefSJM
- gfXufdOymyhnfxUUE7o+/vJ3u4mJRDTYLSo2CUEVCeyadRaqg904+E7GQP/dbZeD1OyL
- rqGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774104373; x=1774709173;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1774104385; x=1774709185; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DC/92mQROGokmocD9i48NnoFb4+LLsoIAOSWd43L804=;
- b=KYIiA+Ot1+VuRuvMP+V2vuG+xImbqk1JuP/yV6uDuNw6jxXWfJwRW8KCai64uS8goe
- kT+G5ibZ63zr1EcPdNVYjZZnRYf1mT4TZGjrDP4miZlvVLULJ2kHF7ATsS/LjlmlxnfR
- teZdEIhAduGJYQ3Si/g3pY2u9nReZB0oJs+tpjw96jaIRW4zr02eXGtQIFq6JUQj3Q7v
- W4sVQRS/XV+zNkNjOIQHhMhHDNMhmygFzZJG7aBTF3vT/kJSDSfjK4vKgca47HLE3tJW
- QgCLvu7mIWqUA8SMjP8w7Vc19jEsV5ulXeRXIJGHdnbV8WHm7mxNHuXkRHRLbKn9Vmk0
- TbOQ==
+ bh=pNzWLO6D7NdGE2f+sWqVLcKxyJ48nyjmrOFUgZ82abo=;
+ b=Mis7wZEY/3ZiRTY0ppYaDROZVBkKrrCeJkUINz7/mhnC5aZVzrp6RNTWGfhwy+JJud
+ tOox7CIykJee8oPxQsdl64934pw4eoPiIHlONuYoNN3EQ10Z0UBpMoCPTyJsrWq2yQg9
+ 1QCv5bTJGAvEmPVaPWG4v+aqTPszXhUtaRKFyqjriQ7a4LAlDjdChOE0209dYS2BkeK+
+ FBgzZnK2g3dNiIieQzxfnroNGkRFeAT6vOqaeiJMW18VL2UTPRlp51z7HZlOJ8ebI8Uu
+ Ii83/DXoroKOdO9j7SMlkt6+0no4euz5dP/v76K0N56gD6wy5Vv7OetXSNmqKxZvz6w/
+ KhCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774104385; x=1774709185;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pNzWLO6D7NdGE2f+sWqVLcKxyJ48nyjmrOFUgZ82abo=;
+ b=k8cKQztVFYDq+F0gNhm/7Z9S+bwAmHMk8gIsb91NT/N32bmWA/fJzu10wUBFDEZf6g
+ atuav56+KfjVC3cQldEWhqIKZK/vuQ4RFL6cQd1rKQTEr6a6ImDnLOcLT7YL54pv6t/T
+ tmu3Ha4yBdXPbLb/0Tu+QdO7JbyGumjeZHiaFlsnqJ+KQUYlVL+Xg7R1HhXyn5S4gKb9
+ p3fCnOznZRQW3BfPpAm40dV952p7CwMNjQgmfLyKikBRvCw8Hhv+YQCwtgij7M74rTKM
+ ec7VR7A62pEig91Bsh74T/oPFyFm1Twat6xEUQy8OZLJfcBFTz01LLgcx6tOE9tUrYbL
+ 9rFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFY5M4FMcT2j7QkFmgaDQCscJlkM8OJqzpsQwOUq3ltUiO6B7mBtlpX8OU6h0D4a2NbecgsX1oT9tO@nongnu.org
-X-Gm-Message-State: AOJu0YxL4ikdQZovXyuJVQk0M+BT8RzXAPn/rNlYzej1KOl/wCTLZPro
- wluM/0ttNJ4KsQUugAin0rTscy3qP3ocxZAjSMP5pLogw+q3/+Kd04z2
-X-Gm-Gg: ATEYQzwZmOLtlqdEohuACylHGpxOgIGoHR6tN1g45WfTkexBcr19xMyon3BO3gdKS34
- noiAhZxA6or1C0feDt01o7Uv7MYkYsoSxcgUXO+hAthPsScDuACYB6ou8c3k1H+LFSwVBKlWlRf
- 2gh7bHcIhTo9fcLjApwsWDqVT83P5IfzI4KZGqlW0EnrR1Stt5VJndKeAhW5Kq8gPi2PcR0ZLAd
- dqM2bggvmp4Z+RUEzKChMW4V1CI5p0eUiQhebgbPutcugYXpKzut/KyZGbS0MxTUDTBLQMSCV59
- 3g7X6PfxEkVwnVKD5Xku5BYtgC/lanCWHxD7KbM40BGrGaEQ/0fTvupyB7ND4CgGAnmMMA/uy7W
- AIqqR3XeTIJLzSXrsq31tvP0smtzzG5avbiJqiMjcaEFGfHw7ciaUbOItpNycoJ2YF5E6s9e8Dn
- GTblNOnJrSKZDSOgBuCGwBE9ghBATZg0hnXLUUt2B0Yt9Om3eAPiBGA/8yyOoTima1ANTA
-X-Received: by 2002:a17:90b:17cd:b0:35b:9255:47ef with SMTP id
- 98e67ed59e1d1-35bd2d1ba03mr5697763a91.27.1774104372699; 
- Sat, 21 Mar 2026 07:46:12 -0700 (PDT)
+ AJvYcCWwDjAjNPxiSoIuHUzFQq0U8gu51UiHaiFsb7y4Pj99wKKR5ZVa1XaU8AmssQCPVK3r0DKaY4w80dbo@nongnu.org
+X-Gm-Message-State: AOJu0Yy2XTD6wcNyYjRPc9CjpqPLjRk2r7qzUh77Mbi6yZzgAxcg82fD
+ Woz8jPpLS+Pi3ShUMDiu7gAzpkRlrWPzCGD6qVoeWtoyN9LtbjNsp3rK
+X-Gm-Gg: ATEYQzw4NUyqK2Xh2akSif7BLOzSQHqkChc5ulyk2Ke3vv7e3ZjktAD7/QGA6qgOosC
+ E7mq3DUuae02vIzV1yjIf/I9VlrzkpaGAWFJEfrq4HvcTOJrwlRLWycFESSkFUgWj4VGhPthRp7
+ IhXA6x93u0f5KY9aI7yAbPQwL4pog9YqRWRMiJxJvvla5XjkUNGJ/yUEo1ZWGL8OnZg4ywt/4fa
+ 2RvEer68ob8xGY7vJVbr8TzXA6YicOUfisqn4XT4b0Xd6IPo1EH9sU7OmRMflIwSjeErFNWTlQD
+ kiwPleDhtyhtjRIRa5GgZqorHVHuhmOE19NliyzrMtcedLwFICxymziO6nsPz89CwyJLUhGrBwj
+ J2YK/PUUO9kZPueE43FCqMljuH9gwGjM2Z4Y/YhOqy+xG9hevfrpGepOuPDS6YM3xdgZOXVBlJy
+ y9Wn3IDpOn7ch+COXBJDu9pVFXbsxs9A1JB/BvVVyq47vGz+q5KWlDTiXl2Qdk+yrOaUC0
+X-Received: by 2002:a17:90a:1648:b0:35b:e4d7:53f0 with SMTP id
+ 98e67ed59e1d1-35be4d7960fmr453499a91.32.1774104384973; 
+ Sat, 21 Mar 2026 07:46:24 -0700 (PDT)
 Received: from lima-default (103.95.112.190.qld.leaptel.network.
  [103.95.112.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bd24f1b9csm2283060a91.0.2026.03.21.07.46.07
+ 98e67ed59e1d1-35bd24f1b9csm2283060a91.0.2026.03.21.07.46.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Mar 2026 07:46:11 -0700 (PDT)
+ Sat, 21 Mar 2026 07:46:23 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -71,16 +72,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v3 0/3] target/riscv: corner case fixes
-Date: Sun, 22 Mar 2026 00:45:51 +1000
-Message-ID: <20260321144554.606417-1-npiggin@gmail.com>
+ Joel Stanley <joel@jms.id.au>, Nicholas Joaquin <njoaquin@tenstorrent.com>,
+ Ganesh Valliappan <gvalliappan@tenstorrent.com>
+Subject: [PATCH v3 2/3] target/riscv: Fix vector whole ldst vstart check
+Date: Sun, 22 Mar 2026 00:45:53 +1000
+Message-ID: <20260321144554.606417-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260321144554.606417-1-npiggin@gmail.com>
+References: <20260321144554.606417-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,38 +106,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes:
-v3:
-* Added vloxei8.v to overflow test.
-* Added store variants of interrupted vector ops tests.
+The whole vector ldst instructions do not include a vstart check, so an
+overflowed vstart can result in an underflowed memory address offset and
+crash:
 
-v2:
-* Added a tcg tests build-time check for vector intrinsics support
-  in target compiler before building new tests that require it.
-  ci images may not support these yet unfortunately, but upgrading
-  those will be a separate effort.
+    accel/tcg/cputlb.c:1465:probe_access_flags:
+      assertion failed: (-(addr | TARGET_PAGE_MASK) >= size)
 
-Thanks,
-Nick
+Add the VSTART_CHECK_EARLY_EXIT() check for these helpers.
 
+This was found with a verification test generator based on RiESCUE.
 
-Nicholas Piggin (3):
-  target/riscv: Fix IALIGN check in misa write
-  target/riscv: Fix vector whole ldst vstart check
-  tests/tcg: Add riscv test for interrupted vector ops
-
- target/riscv/csr.c                        |  16 +-
- target/riscv/vector_helper.c              |   2 +
- tests/tcg/riscv64/Makefile.softmmu-target |   5 +
- tests/tcg/riscv64/Makefile.target         |  16 ++
- tests/tcg/riscv64/misa-ialign.S           |  88 ++++++
- tests/tcg/riscv64/test-interrupted-v.c    | 329 ++++++++++++++++++++++
- tests/tcg/riscv64/test-vstart-overflow.c  |  78 +++++
- 7 files changed, 531 insertions(+), 3 deletions(-)
- create mode 100644 tests/tcg/riscv64/misa-ialign.S
- create mode 100644 tests/tcg/riscv64/test-interrupted-v.c
+Reported-by: Nicholas Joaquin <njoaquin@tenstorrent.com>
+Reported-by: Ganesh Valliappan <gvalliappan@tenstorrent.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/riscv/vector_helper.c             |  2 +
+ tests/tcg/riscv64/Makefile.target        |  5 ++
+ tests/tcg/riscv64/test-vstart-overflow.c | 78 ++++++++++++++++++++++++
+ 3 files changed, 85 insertions(+)
  create mode 100644 tests/tcg/riscv64/test-vstart-overflow.c
 
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index caa8dd9c12..4126447d11 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -825,6 +825,8 @@ vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+     uint32_t esz = 1 << log2_esz;
+     int mmu_index = riscv_env_mmu_index(env, false);
+ 
++    VSTART_CHECK_EARLY_EXIT(env, evl);
++
+     /* Calculate the page range of first page */
+     addr = base + (env->vstart << log2_esz);
+     page_split = -(addr | TARGET_PAGE_MASK);
+diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+index 4da5b9a3b3..19a49b6467 100644
+--- a/tests/tcg/riscv64/Makefile.target
++++ b/tests/tcg/riscv64/Makefile.target
+@@ -18,3 +18,8 @@ TESTS += test-fcvtmod
+ test-fcvtmod: CFLAGS += -march=rv64imafdc
+ test-fcvtmod: LDFLAGS += -static
+ run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,zfa=true
++
++# Test for vstart >= vl
++TESTS += test-vstart-overflow
++test-vstart-overflow: CFLAGS += -march=rv64gcv
++run-test-vstart-overflow: QEMU_OPTS += -cpu rv64,v=on
+diff --git a/tests/tcg/riscv64/test-vstart-overflow.c b/tests/tcg/riscv64/test-vstart-overflow.c
+new file mode 100644
+index 0000000000..6c904ab309
+--- /dev/null
++++ b/tests/tcg/riscv64/test-vstart-overflow.c
+@@ -0,0 +1,78 @@
++/*
++ * Test for VSTART set to overflow VL
++ *
++ * TCG vector instructions should call VSTART_CHECK_EARLY_EXIT() to check
++ * this case, otherwise memory addresses can underflow and misbehave or
++ * crash QEMU.
++ *
++ * TODO: Add stores and other instructions.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <stdint.h>
++
++#define VSTART_OVERFLOW_TEST(insn)                \
++({                                                \
++    uint8_t vmem[64] = { 0 };                     \
++    uint64_t vstart;                              \
++    asm volatile("                           \r\n \
++    # Set VL=52 and VSTART=56                \r\n \
++    li          t0, 52                       \r\n \
++    vsetvli     x0, t0, e8, m4, ta, ma       \r\n \
++    li          t0, 56                       \r\n \
++    csrrw       x0, vstart, t0               \r\n \
++    li          t1, 64                       \r\n \
++    " insn "                                 \r\n \
++    csrr        %0, vstart                   \r\n \
++    " : "=r"(vstart), "+A"(vmem) :: "t0", "t1", "v24", "memory"); \
++    vstart;                                       \
++})
++
++int run_vstart_overflow_tests()
++{
++    /*
++     * An implementation is permitted to raise an illegal instruction
++     * exception when executing a vector instruction if vstart is set to a
++     * value that could not be produced by the execution of that instruction
++     * with the same vtype. If TCG is changed to do this, then this test
++     * could be updated to handle the SIGILL.
++     */
++    if (VSTART_OVERFLOW_TEST("vl1re16.v    v24, %1")) {
++        return 1;
++    }
++
++    if (VSTART_OVERFLOW_TEST("vs1r.v       v24, %1")) {
++        return 1;
++    }
++
++    if (VSTART_OVERFLOW_TEST("vle16.v      v24, %1")) {
++        return 1;
++    }
++
++    if (VSTART_OVERFLOW_TEST("vse16.v      v24, %1")) {
++        return 1;
++    }
++
++    if (VSTART_OVERFLOW_TEST("vluxei8.v    v24, %1, v20")) {
++        return 1;
++    }
++
++    if (VSTART_OVERFLOW_TEST("vloxei8.v    v24, %1, v20")) {
++        return 1;
++    }
++
++    if (VSTART_OVERFLOW_TEST("vlse16.v     v24, %1, t1")) {
++        return 1;
++    }
++
++    if (VSTART_OVERFLOW_TEST("vlseg2e8.v  v24, %1")) {
++        return 1;
++    }
++
++    return 0;
++}
++
++int main()
++{
++    return run_vstart_overflow_tests();
++}
 -- 
 2.51.0
 
