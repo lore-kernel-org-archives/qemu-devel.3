@@ -4,93 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A1B1094489
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 15:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E15711094489
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 15:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ySx-0001cz-AT; Sat, 21 Mar 2026 11:42:19 -0400
+	id 1w3yXy-00038e-T2; Sat, 21 Mar 2026 11:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ySw-0001ca-8l
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 11:42:18 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ySs-0001q1-GZ
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 11:42:18 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso23131315e9.3
- for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 08:42:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774107732; x=1774712532; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W4n0xpnHYyCtYB7qxOzXV4IUeVHVaEKMq0frjrxJ2yI=;
- b=EXNESwvWJVY/QGejLV+EMzLq6LXiOqzWb1VYLzi6nHXuGCE/DVWzu+hmkn27WXDYaW
- TYSttuI7lZe6P8nKYQTI8hbE/e8mPbcEdWyZ6xeEKggioqrroBMTOs7l6NOZp/i2u3O+
- X70MzEuedWcJuNM4mGST3M+m2kujC66/kaxPlShvZgcRUlpsW0JB9NVDPW8dOnG+OafA
- 7yQ0Eft/ViTY6gR8n6a3mmjBuFo5uy/rCgeU9WStHmN1jQSdhQ2C74oAWfmxZ/TptDYG
- XuURxs1sgcsPa9e28PNZtK4b5yCJ0XXexwiWfmsy3AdqkvmVGKGdqrV6s2AdsG9xotwF
- wTxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774107732; x=1774712532;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W4n0xpnHYyCtYB7qxOzXV4IUeVHVaEKMq0frjrxJ2yI=;
- b=eUklcqcR7blKO+3qjI17N21txAdpOjQY01B41gYXeWlWPCzw9v48hOE5V03LUiSWLN
- waChR3EodHOlX/9LS6o9rB0GBx7mmgiCJM3Zf0RCvaqkQKzJRncBE9mJkVfBqq9sKlve
- SI1vpD2BrEPCOl3WrtwU8nWA5b2AS1DAa6Z7yTYlVJwS9A7whUyD/Zj7Mavg2rwzinad
- E/kohFOXnvi40wN/65/0FlTYBU4snE0YULTQZP/vvyi4QzkAVK2oXgmn/p2Cdu+IqQPD
- /BkXEWxtW/V6Ga7UDiOsusTGw4FNcrV/pAdYEvZU2d2nvHJu3OJmTsjfjcWNReKtBeLu
- K54A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTQukq9LTqxAecKyGRqvNH+K38MdgBRNaR+UWwS1PCzzLR1HT3KGj6/R4O6tj0Ya31fsDSsHoVPi+b@nongnu.org
-X-Gm-Message-State: AOJu0YzOhcu2dJ6RKVsHgevnQbkNE+h0gtMLRNQUuUUzLIskoR41sPc+
- 5d7rWrgFAXyyvbq79lZn1COByNa05oZAvWODInIwLiEpIa2j/DO/h36HC8BXkBIj38M=
-X-Gm-Gg: ATEYQzz4irEczqNquy8Azubdq0KgYSjqeendpYfOgjyqsePgvHz85e0SE/ci/JU/TmQ
- ilONdQPPfai4jm4oX5cVuPsc9g/NQrW21NkQ3vjgw9JsmNhTPJfKMZkEgXTnpnX2i6OT5AvBX1r
- pN68yam+tMkmeq0uceCQoIPuVMk42RNR3eWZmfJcZm5mzp3JUtkH/zT2t5bWkHNyKnesS/zMnrv
- XO9eqxLbGOLDH4/sEEZKnvPk1iW8X8euycVTc9eE71tJSh1MhcOb6dXgGE5PuCdsW4FVUJA27VD
- WDsqPa+IJhJg49Lsg8+JsFduvjokNXwWBk4WWsbb1ij4bVB0/mGTDGHcKKNIBW8fAt+OFDc47lk
- YTo6P+J5yqRsdb5Qbj99h80prudZfWDSijsdkDhY3pcUBd4gBLOcDOQ9MJqhbON3YdzJoti3bYo
- VMRoGBltsTQoISfmxCXthkVCpOQTBwmS2tpenaO/SzebEEsDW6BuAupjS1uXvvswAMLg==
-X-Received: by 2002:a05:600c:a112:b0:485:3ff1:d5c5 with SMTP id
- 5b1f17b1804b1-486febb5904mr72884425e9.7.1774107732051; 
- Sat, 21 Mar 2026 08:42:12 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f8b1fe65sm204545555e9.5.2026.03.21.08.42.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Mar 2026 08:42:11 -0700 (PDT)
-Message-ID: <8a696b3a-f55d-4c9b-ba0b-34c5391de28b@linaro.org>
-Date: Sat, 21 Mar 2026 16:42:09 +0100
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1w3yXx-00037K-2C; Sat, 21 Mar 2026 11:47:29 -0400
+Received: from m16.mail.163.com ([220.197.31.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1w3yXq-0003JY-Tb; Sat, 21 Mar 2026 11:47:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=7E
+ AlcOrlE4davJbWmpLv4X8UIF6sirfV3lw6Oi0idPM=; b=Pojh4s6ubAcx5L7w3M
+ AQkN9fn2f8YlT65dIqkfP6mLbUg28hiyairyuYhoMiqZodelwUxlbC6o9NNz7IMv
+ X22R217yd4/x1c7VL2X3zgI56MXvYsOY3E4/PgmW2TsXsZnxF09tPAACQ9nNPJF8
+ Te8LkrmQ8ziqp1Y/O+4nAAIWc=
+Received: from dt-VM.localdomain (unknown [])
+ by gzsmtp5 (Coremail) with SMTP id QCgvCgAH9XF2vb5p1YbwTQ--.2111S2;
+ Sat, 21 Mar 2026 23:47:04 +0800 (CST)
+From: Tao Ding <dingtao0430@163.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Tao Ding <dingtao0430@163.com>
+Subject: [PATCH v1 0/5] PL011 and PL080 for dma transfer
+Date: Sat, 21 Mar 2026 23:46:55 +0800
+Message-ID: <cover.1774099044.git.dingtao0430@163.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/65] hw/core: Permit devices to define an array of link
- properties
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260223170212.441276-1-peter.maydell@linaro.org>
- <20260223170212.441276-2-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-In-Reply-To: <20260223170212.441276-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-CM-TRANSID: QCgvCgAH9XF2vb5p1YbwTQ--.2111S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3ZFyDuw4DWFW5KF4fGF1xZrb_yoWDZFWDpr
+ W3KF9xtr1UtF4xX343Jr1UGr13Jw48GryUGr17Jr48AF4jyr4xJr1UK3WfJr9rXrZ7Zr15
+ XFyUJa47Jryqqw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0ziByIUUUUUU=
+X-Originating-IP: [101.204.36.117]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4hiX1Wm+vXjWSAAA30
+Received-SPF: pass client-ip=220.197.31.5; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,352 +72,356 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(+Kevin / Markus / Mark for previous discussions)
+The PL080 implementation in QEMU currently supports memory-to-memory data transfers 
+but lacks support for peripheral-related data transfers. 
 
-On 23/2/26 18:01, Peter Maydell wrote:
-> Currently we allow devices to define "link properties" with
-> DEFINE_PROP_LINK(): these are a way to give a device a pointer to
-> another QOM object.  (Under the hood this is done by handing it the
-> canonical QOM path for the object.)
-> 
-> We also allow devices to define "array properties" with
-> DEFINE_PROP_ARRAY(): these are a way to give a device a
-> variable-length array of properties.
-> 
-> However, there is no way to define an array of link properties.  If
-> you try to do it by passing qdev_prop_link as the arrayprop argument
-> to DEFINE_PROP_ARRAY() you will get a crash because qdev_prop_link
-> does not provide the .set and .get methods in its PropertyInfo
-> struct.
-> 
-> This patch implements a new DEFINE_PROP_LINK_ARRAY(). In
-> a device you can use it like this:
-> 
-> struct MyDevice {
->      ...
->      uint32_t num_cpus;
->      ARMCPU **cpus;
-> }
-> 
-> and in your Property array:
->      DEFINE_PROP_LINK_ARRAY("cpus", MyDevice, num_cpus, cpus,
->                             TYPE_ARM_CPU, ARMCPU *),
-> 
-> The array property code will fill in s->num_cpus, allocate memory in
-> s->cpus, and populate it with pointers.
-> 
-> On the device-creation side you set the property in the same way as
-> the existing array properties, using the new qlist_append_link()
-> function to append to the QList:
-> 
->      QList *cpulist = qlist_new();
->      for (int i = 0; i < cpus; i++) {
->          qlist_append_link(cpulist, OBJECT(cpu[i]));
->      }
->      qdev_prop_set_array(mydev, "cpus", cpulist);
-> 
-> The implementation is mostly in the provision of the .set and
-> .get methods to the qdev_prop_link PropertyInfo struct. The
-> code of these methods parallels the code in
-> object_set_link_property() and object_get_link_property().  We can't
-> completely share the code with those functions because of differences
-> in where we get the information like the target QOM type, but I have
-> pulled out a new function object_resolve_and_typecheck() for the
-> shared "given a QOM path and a type, give me the object or an error"
-> code.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I want this specifically for the GICv5 interrupt controller device
-> I'm working on.  I'd like to be able to pass in links to the CPUs
-> connected to the GIC, so that we don't have to have the code assume
-> that it's connected to CPU numbers 0,1,2... the way the current
-> GICv3 code does.
-> 
-> I think Phil also had a proposed series a while back that wanted
-> to do something similar with one of the existing devices.
+To enable this functionality, signal interfaces have been added for PL011 and PL080 to 
+emulate the DMA request handshake, thereby completing the peripheral-related 
+transfer features that were previously unimplemented in PL080. Specifically, 
+memory-to-peripheral, peripheral-to-memory and periphral-to-periphral under dma controll.
 
-FTR previous discussions:
+Although PL011 and PL080 are not strongly coupled, for the convenience of verification, 
+they are still placed in the same patch thread. Finally, unit testing was conducted using Qtest, 
+and Linux system testing was conducted on "Versatilepb" machine in Qemu.
 
-https://lore.kernel.org/qemu-devel/47615329-9ae4-f9e0-117d-f7d4300bfdf1@ilande.co.uk/
-https://lore.kernel.org/qemu-devel/CAFEAcA9FT+QMyQSLCeLjd7tEfaoS9JazmkYWQE++s1AmF7Nfvw@mail.gmail.com/
+Tao Ding (5):
+  Fixed the PL011 FIFO level bug
+  PL011 generate receive timeout interrupt
+  Implement the DMA interface of PL011
+  Run pl080_run in main loop
+  PL080 add transfer memory and peripheral
 
-> 
-> I figured I'd post this early for review, though obviously it's a
-> little unmotivated until I have my new GICv5 code into enough shape
-> to submit. This is tested, but with my work-in-progress code.
-> ---
->   hw/core/qdev-properties.c         | 78 +++++++++++++++++++++++++++++++
->   include/hw/core/qdev-properties.h | 40 ++++++++++++++++
->   include/qom/object.h              | 19 ++++++++
->   qom/object.c                      | 42 ++++++++++-------
->   4 files changed, 161 insertions(+), 18 deletions(-)
-> 
-> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-> index ba8461e9a4..f8181b0d91 100644
-> --- a/hw/core/qdev-properties.c
-> +++ b/hw/core/qdev-properties.c
-> @@ -669,6 +669,7 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
->            * being inside the device struct.
->            */
->           .offset = (uintptr_t)elem - (uintptr_t)obj,
-> +        .link_type = parent_prop->link_type,
->       };
->   }
->   
-> @@ -950,6 +951,12 @@ void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values)
->       qobject_unref(values);
->   }
->   
-> +void qlist_append_link(QList *qlist, Object *obj)
-> +{
-> +    g_autofree char *path = object_get_canonical_path(obj);
-> +    qlist_append_str(qlist, path);
-> +}
-> +
->   static GPtrArray *global_props(void)
->   {
->       static GPtrArray *gp;
-> @@ -1059,9 +1066,80 @@ static ObjectProperty *create_link_property(ObjectClass *oc, const char *name,
->                                             OBJ_PROP_LINK_STRONG);
->   }
->   
-> +/*
-> + * The logic in these get_link() and set_link() functions is similar
-> + * to that used for single-element link properties in the
-> + * object_get_link_property() and object_set_link_property() functions.
-> + * The difference is largely in how we get the expected type of the
-> + * link: for us it is in the Property struct, and for a single link
-> + * property it is part of the property name on the object.
-> + */
-> +static void get_link(Object *obj, Visitor *v, const char *name, void *opaque,
-> +                     Error **errp)
-> +{
-> +    const Property *prop = opaque;
-> +    Object **targetp = object_field_prop_ptr(obj, prop);
-> +    g_autofree char *path = NULL;
-> +
-> +    if (*targetp) {
-> +        path = object_get_canonical_path(*targetp);
-> +        visit_type_str(v, name, &path, errp);
-> +    } else {
-> +        path = g_strdup("");
-> +        visit_type_str(v, name, &path, errp);
-> +    }
-> +}
-> +
-> +static void set_link(Object *obj, Visitor *v, const char *name, void *opaque,
-> +                     Error **errp)
-> +{
-> +    const Property *prop = opaque;
-> +    Object **targetp = object_field_prop_ptr(obj, prop);
-> +    g_autofree char *path = NULL;
-> +    Object *new_target, *old_target = *targetp;
-> +
-> +    ERRP_GUARD();
-> +
-> +    /* Get the path to the object we want to set the link to */
-> +    if (!visit_type_str(v, name, &path, errp)) {
-> +        return;
-> +    }
-> +
-> +    /* Now get the pointer to the actual object */
-> +    if (*path) {
-> +        new_target = object_resolve_and_typecheck(path, prop->name,
-> +                                                  prop->link_type, errp);
-> +        if (!new_target) {
-> +            return;
-> +        }
-> +    } else {
-> +        new_target = NULL;
-> +    }
-> +
-> +    /*
-> +     * Our link properties are always OBJ_PROP_LINK_STRONG and
-> +     * have the allow_set_link_before_realize check.
-> +     */
-> +    qdev_prop_allow_set_link_before_realize(obj, prop->name, new_target, errp);
-> +    if (*errp) {
-> +        return;
-> +    }
-> +
-> +    *targetp = new_target;
-> +    object_ref(new_target);
-> +    object_unref(old_target);
-> +}
-> +
->   const PropertyInfo qdev_prop_link = {
->       .type = "link",
->       .create = create_link_property,
-> +    /*
-> +     * Since we have a create method, the get and set are used
-> +     * only in get_prop_array() and set_prop_array() for the case
-> +     * where we have an array of link properties.
-> +     */
-> +    .get = get_link,
-> +    .set = set_link,
->   };
->   
->   void qdev_property_add_static(DeviceState *dev, const Property *prop)
-> diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-> index d8745d4c65..936d06023a 100644
-> --- a/include/hw/core/qdev-properties.h
-> +++ b/include/hw/core/qdev-properties.h
-> @@ -168,6 +168,31 @@ extern const PropertyInfo qdev_prop_link;
->       DEFINE_PROP(_name, _state, _field, qdev_prop_link, _ptr_type,     \
->                   .link_type  = _type)
->   
-> +/**
-> + * DEFINE_PROP_LINK_ARRAY:
-> + * @_name: name of the array
-> + * @_state: name of the device state structure type
-> + * @_field: uint32_t field in @_state to hold the array length
-> + * @_arrayfield: field in @_state (of type '@_arraytype *') which
-> + *               will point to the array
-> + * @_linktype: QOM type name of the link type
-> + * @_arraytype: C type of the array elements
-> + *
-> + * Define device properties for a variable-length array _name of links
-> + * (i.e. this is the array version of DEFINE_PROP_LINK).
-> + * The array is represented as a list of QStrings in the visitor interface,
-> + * where each string is the QOM path of the object to be linked.
-> + */
-> +#define DEFINE_PROP_LINK_ARRAY(_name, _state, _field, _arrayfield,      \
-> +                               _linktype, _arraytype)                   \
-> +    DEFINE_PROP(_name, _state, _field, qdev_prop_array, uint32_t,       \
-> +                .set_default = true,                                    \
-> +                .defval.u = 0,                                          \
-> +                .arrayinfo = &qdev_prop_link,                           \
-> +                .arrayfieldsize = sizeof(_arraytype),                   \
-> +                .arrayoffset = offsetof(_state, _arrayfield),           \
-> +                .link_type = _linktype)
-> +
->   #define DEFINE_PROP_UINT8(_n, _s, _f, _d)                       \
->       DEFINE_PROP_UNSIGNED(_n, _s, _f, _d, qdev_prop_uint8, uint8_t)
->   #define DEFINE_PROP_UINT16(_n, _s, _f, _d)                      \
-> @@ -219,6 +244,21 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value);
->   /* Takes ownership of @values */
->   void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values);
->   
-> +/**
-> + * qlist_append_link: Add a QOM object to a QList of link properties
-> + * @qlist: list to append to
-> + * @obj: object to append
-> + *
-> + * This is a helper function for constructing a QList to pass to
-> + * qdev_prop_set_array() when the qdev property array is an array of link
-> + * properties (i.e. one defined with DEFINE_PROP_LINK_ARRAY).
-> + *
-> + * The object is encoded into the list as a QString which is the
-> + * canonical path of the object; this is the same encoding that
-> + * object_set_link_property() and object_get_link_property() use.
-> + */
-> +void qlist_append_link(QList *qlist, Object *obj);
-> +
->   void *object_field_prop_ptr(Object *obj, const Property *prop);
->   
->   void qdev_prop_register_global(GlobalProperty *prop);
-> diff --git a/include/qom/object.h b/include/qom/object.h
-> index 26df6137b9..48fdbf353e 100644
-> --- a/include/qom/object.h
-> +++ b/include/qom/object.h
-> @@ -1750,6 +1750,25 @@ ObjectProperty *object_class_property_add_link(ObjectClass *oc,
->                                               Object *val, Error **errp),
->                                 ObjectPropertyLinkFlags flags);
->   
-> +
-> +/**
-> + * object_resolve_and_typecheck:
-> + * @path: path to look up
-> + * @name: name of property we are resolving for (used only in error messages)
-> + * @target_type: QOM type we expect @path to resolve to
-> + * @errp: error
-> + *
-> + * Look up the object at @path and return it. If it does not have
-> + * the correct type @target_type, return NULL and set @errp.
-> + *
-> + * This is similar to object_resolve_path_type(), but it insists on
-> + * a non-ambiguous path and it produces error messages that are specialised
-> + * to the use case of setting a link property on an object.
-> + */
-> +Object *object_resolve_and_typecheck(const char *path,
-> +                                     const char *name,
-> +                                     const char *target_type, Error **errp);
-> +
->   /**
->    * object_property_add_str:
->    * @obj: the object to add a property to
-> diff --git a/qom/object.c b/qom/object.c
-> index ff8ede8a32..90b8f3461e 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -1895,26 +1895,13 @@ static void object_get_link_property(Object *obj, Visitor *v,
->       }
->   }
->   
-> -/*
-> - * object_resolve_link:
-> - *
-> - * Lookup an object and ensure its type matches the link property type.  This
-> - * is similar to object_resolve_path() except type verification against the
-> - * link property is performed.
-> - *
-> - * Returns: The matched object or NULL on path lookup failures.
-> - */
-> -static Object *object_resolve_link(Object *obj, const char *name,
-> -                                   const char *path, Error **errp)
-> +Object *object_resolve_and_typecheck(const char *path,
-> +                                     const char *name,
-> +                                     const char *target_type, Error **errp)
->   {
-> -    const char *type;
-> -    char *target_type;
->       bool ambiguous = false;
->       Object *target;
->   
-> -    /* Go from link<FOO> to FOO.  */
-> -    type = object_property_get_type(obj, name, NULL);
-> -    target_type = g_strndup(&type[5], strlen(type) - 6);
->       target = object_resolve_path_type(path, target_type, &ambiguous);
->   
->       if (ambiguous) {
-> @@ -1931,11 +1918,30 @@ static Object *object_resolve_link(Object *obj, const char *name,
->           }
->           target = NULL;
->       }
-> -    g_free(target_type);
-> -
->       return target;
->   }
->   
-> +/*
-> + * object_resolve_link:
-> + *
-> + * Lookup an object and ensure its type matches the link property type.  This
-> + * is similar to object_resolve_path() except type verification against the
-> + * link property is performed.
-> + *
-> + * Returns: The matched object or NULL on path lookup failures.
-> + */
-> +static Object *object_resolve_link(Object *obj, const char *name,
-> +                                   const char *path, Error **errp)
-> +{
-> +    const char *type;
-> +    g_autofree char *target_type = NULL;
-> +
-> +    /* Go from link<FOO> to FOO.  */
-> +    type = object_property_get_type(obj, name, NULL);
-> +    target_type = g_strndup(&type[5], strlen(type) - 6);
-> +    return object_resolve_and_typecheck(path, name, target_type, errp);
-> +}
-> +
->   static void object_set_link_property(Object *obj, Visitor *v,
->                                        const char *name, void *opaque,
->                                        Error **errp)
+ hw/char/pl011.c         |  72 ++++++++++++++++++++++---
+ hw/dma/pl080.c          | 116 ++++++++++++++++++++++++++++++++++------
+ include/hw/char/pl011.h |   1 +
+ include/hw/dma/pl080.h  |   7 +++
+ 4 files changed, 174 insertions(+), 22 deletions(-)
 
-Nitpicking, I'd add object_resolve_and_typecheck() in a preliminary
-patch. Otherwise patch LGTM!
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+base-commit: 8e711856d7639cbffa51405f2cc2366e3d9e3a23
+
+Testing:
+========
+
+Testing prepare:
+	1. The changes in the patch need to be applied. 
+	2. Then connect the DMA signals of PL011 and PL080 in the Versatilepb board.
+		Channel0 is used to do UART's TX, memory to peripheral. Use 0 signal index.
+		Channel1 is used to do UART's RX, peripheral to memory. Use 1 signal index.
+		(The connection of the signal needs to consider the offset in the device.)
+
+Change in Versatilepb.c :
+-----------------------------------------
+diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
+index 254b1610b3..ee0056e831 100644
+--- a/hw/arm/versatilepb.c
++++ b/hw/arm/versatilepb.c
+@@ -281,7 +281,7 @@ static void versatile_init(MachineState *machine, int board_id)
+     }
+ 
+     pl011_create(0x101f1000, pic[12], serial_hd(0));
+-    pl011_create(0x101f2000, pic[13], serial_hd(1));
++    DeviceState *pl011_dev = pl011_create(0x101f2000, pic[13], serial_hd(1));
+     pl011_create(0x101f3000, pic[14], serial_hd(2));
+     pl011_create(0x10009000, sic[6], serial_hd(3));
+ 
+@@ -292,6 +292,15 @@ static void versatile_init(MachineState *machine, int board_id)
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0x10130000);
+     sysbus_connect_irq(busdev, 0, pic[17]);
++    sysbus_connect_irq(busdev, 3, qdev_get_gpio_in(pl011_dev, 0));
++    sysbus_connect_irq(busdev, 4, qdev_get_gpio_in(pl011_dev, 1));
++
++    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 6, qdev_get_gpio_in(dev, 0));
++    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 7, qdev_get_gpio_in(dev, 1));
++
++    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 8, qdev_get_gpio_in(dev, 16));
++    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 9, qdev_get_gpio_in(dev, 17));
++
+ 
+     sysbus_create_simple("sp804", 0x101e2000, pic[4]);
+     sysbus_create_simple("sp804", 0x101e3000, pic[5]);
+-----------------------------------------
+
+Unit Test by QTest:
+	1. create pl080-test.c in tests/qtest directory.
+------------ pl080-test.c ------------
+#include "qemu/osdep.h"
+#include "libqtest-single.h"
+
+#define PL011_BASE   0x101f2000
+#define PL080_BASE   0x10130000
+#define RAM_BASE     0x0
+
+/* ---------------- PL011 Registers ---------------- */
+#define UARTDR     0x00
+#define UARTFR     0x18
+#define UARTCR     0x30
+#define UARTLCR_H  0x2C
+#define UARTDMACR  0x48
+/* UARTFR bits */
+#define FR_RXFE  (1 << 4)
+#define FR_TXFF  (1 << 5)
+
+/* UARTCR bits */
+#define CR_UARTEN (1 << 0)
+#define CR_TXE    (1 << 8)
+#define CR_RXE    (1 << 9)
+#define CR_LBE    (1 << 7)
+
+#define LCRH_FEN (1 << 4)   // FIFO enable
+
+/* ---------------- PL080 DMA Registers ---------------- */
+#define DMAC_CONFIG       0x30
+
+/* Channel offsets */
+#define DMA_CH_SRC        0x00
+#define DMA_CH_DST        0x04
+#define DMA_CH_LLI        0x08
+#define DMA_CH_CTRL       0x0C
+#define DMA_CH_CFG        0x10
+
+/* Control Register Fields */
+#define CTRL_TRANSFER_SIZE(x)   ((x) & 0xFFF)
+#define CTRL_SRC_WIDTH(x)       ((x) << 18)
+#define CTRL_DST_WIDTH(x)       ((x) << 21)
+#define CTRL_SRC_INC            (1 << 26)
+#define CTRL_DST_INC            (1 << 27)
+
+/* Width */
+#define WIDTH_8BIT   0
+#define WIDTH_16BIT  1
+#define WIDTH_32BIT  2
+
+/* Config Register Fields */
+#define CFG_ENABLE           (1 << 0)
+
+/* Flow control */
+#define CFG_FLOW_MEM2MEM     (0 << 11)
+#define CFG_FLOW_MEM2PER     (1 << 11)
+#define CFG_FLOW_PER2MEM     (2 << 11)
+#define CFG_FLOW_PER2PER     (3 << 11)
+
+/* Peripheral IDs (VersatilePB, PL011 UART) */
+#define PERIPH_UART_TX       0 
+#define PERIPH_UART_RX       1
+
+/* Macro to set peripheral in CFG */
+#define CFG_DST_PERIPH(x)    ((x) << 6)   // DST peripheral ID
+#define CFG_SRC_PERIPH(x)    ((x) << 1)   // SRC peripheral ID
+
+static void test_pl080_pl011(void)
+{
+    QTestState *s;
+    uint32_t cr;
+    uint32_t i;
+
+    /* --------------------------- */
+    /* 1.  UART(loopback) */
+    /* --------------------------- */
+    s = qtest_start("-machine versatilepb -d guest_errors,trace:memory_region_ops_* -D qemu.log");
+
+    qtest_writel(s, PL011_BASE + UARTCR, 0);
+    qtest_writel(s, PL011_BASE + UARTLCR_H, LCRH_FEN);
+
+    cr = CR_UARTEN | CR_TXE | CR_RXE | CR_LBE;
+    qtest_writel(s, PL011_BASE + UARTCR, cr);
+
+    qtest_writel(s, PL011_BASE + UARTDMACR, 0x3);
+
+    /* --------------------------- */
+    /* 2. data in memory */
+    /* --------------------------- */
+    uint8_t tx_buff[12] = {
+        0x1,0x2,0x3,0x4,
+        0x5,0x6,0x7,0x8,
+        0x9,0xa,0xb,0xc
+    };
+
+    uint32_t src_addr = RAM_BASE + 0x1000;
+    uint32_t dst_addr = RAM_BASE + 0x2000;
+    int len = 12;
+
+    for (i = 0; i < len; i++) {
+        qtest_writeb(s, src_addr + i, tx_buff[i]);  
+        qtest_writeb(s, dst_addr + i, 0);           
+    }
+
+    /* --------------------------- */
+    /* 3. enable DMA controller */
+    /* --------------------------- */
+    qtest_writel(s, PL080_BASE + DMAC_CONFIG, 1);
+
+    /* --------------------------- */
+    /* 4. DMA channel 0: mem -> UART */
+    /* --------------------------- */
+    uint32_t ch0_base = PL080_BASE + 0x100;
+
+    qtest_writel(s, ch0_base + DMA_CH_SRC, src_addr);
+    qtest_writel(s, ch0_base + DMA_CH_DST, PL011_BASE + UARTDR);
+
+    qtest_writel(s, ch0_base + DMA_CH_CTRL,
+        CTRL_TRANSFER_SIZE(len/4) |
+        CTRL_SRC_WIDTH(WIDTH_32BIT) |
+        CTRL_DST_WIDTH(WIDTH_8BIT) |
+        CTRL_SRC_INC
+    );
+
+    /* CFG: enable + flow + destination peripheral */
+    qtest_writel(s, ch0_base + DMA_CH_CFG,
+        CFG_ENABLE |
+        CFG_FLOW_MEM2PER |
+        CFG_DST_PERIPH(PERIPH_UART_TX)
+    );
+
+    /* --------------------------- */
+    /* 5. DMA channel 1: UART -> mem */
+    /* --------------------------- */
+    uint32_t ch1_base = PL080_BASE + 0x120;
+
+    qtest_writel(s, ch1_base + DMA_CH_SRC, PL011_BASE + UARTDR);
+    qtest_writel(s, ch1_base + DMA_CH_DST, dst_addr);
+
+    qtest_writel(s, ch1_base + DMA_CH_CTRL,
+        CTRL_TRANSFER_SIZE(len) |
+        CTRL_SRC_WIDTH(WIDTH_8BIT) |
+        CTRL_DST_WIDTH(WIDTH_32BIT) |
+        CTRL_DST_INC
+    );
+
+    /* CFG: enable + flow + source peripheral */
+    qtest_writel(s, ch1_base + DMA_CH_CFG,
+        CFG_ENABLE |
+        CFG_FLOW_PER2MEM |
+        CFG_SRC_PERIPH(PERIPH_UART_RX)
+    );
+
+    /* --------------------------- */
+    /* 6. DMA run*/
+    /* --------------------------- */
+    clock_step(1000000);
+
+    
+    /* wait Channel 0 */
+    while (true) {
+        uint32_t cfg = qtest_readl(s, ch0_base + DMA_CH_CFG);
+        if (!(cfg & CFG_ENABLE)) {
+            printf("Channel 0 finish\n");
+            break;
+        }
+        clock_step(1000000);  
+    }
+
+    /* wait Channel 1 */
+    while (true) {
+        uint32_t cfg = qtest_readl(s, ch1_base + DMA_CH_CFG);
+        if (!(cfg & CFG_ENABLE)) {
+            printf("Channel 1 finish\n");
+            break;
+        }
+        clock_step(1000000);  
+    }
+
+    /* --------------------------- */
+    /* 7. check data */
+    /* --------------------------- */
+    for (i = 0; i < len; i++) {
+        uint8_t s_val = qtest_readb(s, src_addr + i);
+        uint8_t d_val = qtest_readb(s, dst_addr + i);
+
+        g_assert_cmpuint(s_val, ==, d_val);
+    }
+
+    qtest_end();
+}
+
+int main(int argc, char **argv)
+{
+    g_test_init(&argc, &argv, NULL);
+    qtest_add_func("/pl080/test1", test_pl080_pl011);
+    return g_test_run();
+}
+-----------------------------------------
+	2. modify meson
+-----------------------------------------
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index be4fa627b5..6ea187517f 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -249,7 +249,8 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+   ['arm-cpu-features',
+-   'boot-serial-test']
++   'boot-serial-test'] + \
++  ['pl080-test']
+ 
+ # TODO: once aarch64 TCG is fixed on ARM 32 bit host, make bios-tables-test unconditional
+ qtests_aarch64 = \
+-----------------------------------------
+
+Configuration:
+	../configure --target-list=arm-softmmu --enable-debug --disable-werror
+build:
+	make
+Run:
+	QTEST_QEMU_BINARY=./qemu-system-arm ./tests/qtest/pl080-test
+Result:
+-----------------------------------------
+	TAP version 13
+	# random seed: R02Sf2f5311a926a969453439a52838a6fd0
+	1..1
+	# Start of arm tests
+	# Start of pl080 tests
+	# starting QEMU: exec ./qemu-system-arm -qtest unix:/tmp/qtest-23375.sock 
+    -qtest-log /dev/null -chardev socket,path=/tmp/qtest-23375.qmp,id=char0 -mon chardev=char0,mode=control 
+    -display none -audio none -run-with exit-with-parent=on -machine versatilepb -d guest_errors,trace:memory_region_ops_* 
+    -D qemu.log -accel qtest
+	Channel 0 finish
+	Channel 1 finish
+	ok 1 /arm/pl080/test1
+	# End of pl080 tests
+	# End of arm tests
+-----------------------------------------
+
+System Test:
+	1. Refer to qemu/docs/system/arm/volatile.rst to boot Linux.
+	2. modify versatile-pb.dts in linux to use dma.
+		serial@101f2000 {
+			compatible = "arm,pl011\0arm,primecell";
+			reg = <0x101f2000 0x1000>;
+			interrupts = <0x0d>;
+			clocks = <0x05 0x06>;
+			clock-names = "uartclk\0apb_pclk";
+			auto-poll;
++			dmas = <&dma0 1 1>,
++					<&dma0 0 1>;
++			dma-names = "rx", "tx";
+		};
+
+Run:
+	./build/qemu-system-arm -M versatilepb -nographic \
+	-serial mon:stdio \
+	-serial pty \
+	-kernel zImage \
+	-dtb versatile-pb.dtb \
+	-drive if=scsi,driver=file,filename=rootfs.img \
+	-append "console=ttyAMA0 rw root=/dev/sda" \
+	-d guest_errors -D qemu.log
+
+Send and receive data to the guest's UART in another console of the host by pty.
+
+Test result:
+
+guest:
+	~ # echo "hello" > /dev/ttyAMA1
+	uart-pl011 101f2000.serial: DMA channel TX dma1chan0
+	uart-pl011 101f2000.serial: DMA channel RX dma1chan1
+host:
+	cat /dev/pts/1
+	hello
+
+-- 
+2.43.0
 
 
