@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C614109448A
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 16:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A681C1094480
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 16:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3zDn-0006GF-5M; Sat, 21 Mar 2026 12:30:43 -0400
+	id 1w3zDi-0006DC-0G; Sat, 21 Mar 2026 12:30:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDR-00064t-Ou
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:26 -0400
+ id 1w3zDZ-0006AO-3k
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:30 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDN-0002DD-L2
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:20 -0400
+ id 1w3zDW-0002FH-P8
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:28 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7AD2A5969E6;
- Sat, 21 Mar 2026 17:30:13 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 42F9E596E02;
+ Sat, 21 Mar 2026 17:30:21 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id AqsnPI5IFxrC; Sat, 21 Mar 2026 17:30:10 +0100 (CET)
+ id Z9elW9acaXIw; Sat, 21 Mar 2026 17:30:19 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C7A32596A44; Sat, 21 Mar 2026 17:30:10 +0100 (CET)
-Message-ID: <cover.1774110169.git.balaton@eik.bme.hu>
+ id 3F5A8596E0C; Sat, 21 Mar 2026 17:30:19 +0100 (CET)
+Message-ID: <2ecf42bdeb96a4206b27dc39b3ff13cc8a6190d0.1774110169.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1774110169.git.balaton@eik.bme.hu>
+References: <cover.1774110169.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 0/8] ati-vga fixes
+Subject: [PATCH v6 8/8] ati-vga: Make sure hardware cursor data is within vram
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +41,7 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sat, 21 Mar 2026 17:30:10 +0100 (CET)
+Date: Sat, 21 Mar 2026 17:30:19 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -1
@@ -63,66 +65,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OK I think these are all the fixes I'd like to add for 11.0 unless
-some more bugs are found. Could you please check and merge?
+Add check to make sure we don't read past the end of vram when getting
+mouse pointer image.
 
-v6:
-- revert part of mouse pointer fix patch from v5 as it broke MacOS;
-since I'm not sure the Linux image has no issues on real machine I'm
-not trying to fix that now
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hw/display/ati.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-v5:
-- fix typo on Patch 6
-- add more patches to fix mouse pointer with big endian frame buffer
-
-v4:
-- compile fix in patch 5
-- new patch 6 to work around fuloong2e issue:
-https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg06308.html
-v3:
-- fix patch 1 to work with 8 and 16 bit modes too
-- new patch 5 to fix display updates with 8 and 16 bit modes
-v2:
-- fix patch 4 to really avoid warnings
-
-These are some fixes to ati-vga for 11.0.
-
-Patch 1 fixes problem reported in
-https://lists.nongnu.org/archive/html/qemu-ppc/2026-01/msg00105.html
-
-Patch 2 fixes output from Solaris install iso
-Rendering still not always correct as it uses some unimplemented
-features but it's now readable. I did not test full install though.
-
-Patch 3 fixes vram overrun errors seen with Solaris and MorphOS when
-crtc offset is non-zero (this happens on MorphOS when additional
-screen is opened)
-
-Patch 4 tries to avoid Coverity warning matching what other places
-already do
-
-Patch 5 fixes dirty region tracking when guest display depth is not
-the same as the host's
-
-Patch 6 adds work around for fuloong2e to keep working with partial
-machine model
-
-BALATON Zoltan (8):
-  ati-vga: Fix colors when frame buffer endianness does not match host
-  ati-vga: Also switch mode on HW cursor enable bit change
-  ati-vga: Do not add crtc offset to src and dst data address
-  ati-vga: Avoid warnings about sign extension
-  ati-vga: Fix display updates in non-32 bit modes
-  ati-vga: Add work around for fuloong2e
-  ati-vga: Simplify pointer image handling
-  ati-vga: Make sure hardware cursor data is within vram
-
- hw/display/ati.c     | 85 +++++++++++++++++++++++++-------------------
- hw/display/ati_2d.c  | 47 ++++++++++++++++--------
- hw/display/ati_int.h |  1 +
- hw/mips/fuloong2e.c  |  1 +
- 4 files changed, 82 insertions(+), 52 deletions(-)
-
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index e1616dc3b3..d7b131d633 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -151,6 +151,9 @@ static void ati_cursor_define(ATIVGAState *s)
+     /* FIXME handle cur_hv_offs correctly */
+     srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
+              (s->regs.cur_hv_offs & 0xffff) * 16;
++    if (srcoff + 64 * 16 > s->vga.vram_size) {
++        return;
++    }
+     for (int i = 0; i < 64; i++, srcoff += 16) {
+         data[i] = ldq_le_p(&s->vga.vram_ptr[srcoff]);
+         data[i + 64] = ldq_le_p(&s->vga.vram_ptr[srcoff + 8]);
+@@ -205,6 +208,9 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+     }
+     /* FIXME handle cur_hv_offs correctly */
+     srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
++    if (srcoff + 16 > s->vga.vram_size) {
++        return;
++    }
+     dp = &dp[vga->hw_cursor_x];
+     h = ((s->regs.crtc_h_total_disp >> 16) + 1) * 8;
+     abits = ldq_be_p(&vga->vram_ptr[srcoff]);
 -- 
 2.41.3
 
