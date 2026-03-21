@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 079281094489
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8BB109448C
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 16:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3zDg-0006D9-Ob; Sat, 21 Mar 2026 12:30:37 -0400
+	id 1w3zDd-0006CZ-Rm; Sat, 21 Mar 2026 12:30:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDZ-0006AQ-Mr
+ id 1w3zDX-0006AL-22
  for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:30 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w3zDW-0002FG-RL
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:29 -0400
+ id 1w3zDP-0002E4-AE
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 12:30:23 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 147BF596D8F;
- Sat, 21 Mar 2026 17:30:18 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2BA06596DFE;
+ Sat, 21 Mar 2026 17:30:17 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id GGfPLY9HXwyL; Sat, 21 Mar 2026 17:30:16 +0100 (CET)
+ id m-WsSCLJNNKD; Sat, 21 Mar 2026 17:30:15 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 12197596D90; Sat, 21 Mar 2026 17:30:16 +0100 (CET)
-Message-ID: <6e1b83ef3fe7a1ebc246b474eb2b0c7cd05d5deb.1774110169.git.balaton@eik.bme.hu>
+ id 0730C596A4A; Sat, 21 Mar 2026 17:30:15 +0100 (CET)
+Message-ID: <9a3263a06bc72aa5a56bafe0a11ad189d5f60528.1774110169.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1774110169.git.balaton@eik.bme.hu>
 References: <cover.1774110169.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 5/8] ati-vga: Fix display updates in non-32 bit modes
+Subject: [PATCH v6 4/8] ati-vga: Avoid warnings about sign extension
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,15 +41,14 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sat, 21 Mar 2026 17:30:16 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Date: Sat, 21 Mar 2026 17:30:15 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,39 +64,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The memory_region_set_dirty used to mark changes should use stride
-value in vram which is normally only the same as surface_stride in 32
-bit modes. This caused missed updates in 8 and 16 bit modes.
+Coverity reports several possible sign extension errors (latest is CID
+1645615). These cannot happen because the values are limited when
+writing the registers and only 32 bits of the return value matter but
+change type of the variable storing the return value to uint32_t to
+avoid these warnings. Also change DEFAULT_SC_BOTTOM_RIGHT register
+read to match what other similar registers do for consistency.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/display/ati_2d.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/display/ati.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index cf2d4a08e2..23527b2c50 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -70,6 +70,7 @@ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
- {
-     DisplaySurface *ds = qemu_console_surface(vga->con);
- 
-+    (void)ds;
-     DPRINTF("%p %u ds: %p %d %d rop: %x\n", vga->vram_ptr, vga->vbe_start_addr,
-             surface_data(ds), surface_stride(ds), surface_bits_per_pixel(ds),
-             ctx->rop3 >> 16);
-@@ -78,8 +79,8 @@ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
-         vga->vbe_regs[VBE_DISPI_INDEX_YRES] * vga->vbe_line_offset) {
-         memory_region_set_dirty(&vga->vram,
-                                 vga->vbe_start_addr + ctx->dst_offset +
--                                ctx->dst.y * surface_stride(ds),
--                                ctx->dst.height * surface_stride(ds));
-+                                ctx->dst.y * ctx->dst_stride,
-+                                ctx->dst.height * ctx->dst_stride);
-     }
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 8286f67c1c..705e4db6e4 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -266,7 +266,7 @@ static void ati_vga_vblank_irq(void *opaque)
+     ati_vga_update_irq(s);
  }
  
+-static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
++static inline uint32_t ati_reg_read_offs(uint32_t reg, int offs,
+                                          unsigned int size)
+ {
+     if (offs == 0 && size == 4) {
+@@ -279,7 +279,7 @@ static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
+ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+ {
+     ATIVGAState *s = opaque;
+-    uint64_t val = 0;
++    uint32_t val = 0;
+ 
+     switch (addr) {
+     case MM_INDEX:
+@@ -514,8 +514,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+         val |= s->regs.default_tile << 16;
+         break;
+     case DEFAULT_SC_BOTTOM_RIGHT:
+-        val = (s->regs.default_sc_bottom << 16) |
+-              s->regs.default_sc_right;
++        val = s->regs.default_sc_right;
++        val |= s->regs.default_sc_bottom << 16;
+         break;
+     case SC_TOP:
+         val = s->regs.sc_top;
 -- 
 2.41.3
 
