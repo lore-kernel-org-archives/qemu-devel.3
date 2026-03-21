@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 886DC1094471
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 12:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506CB109447E
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 13:57:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3vFs-0007uG-4S; Sat, 21 Mar 2026 08:16:36 -0400
+	id 1w3woo-0008Qx-Mz; Sat, 21 Mar 2026 09:56:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
- id 1w3vFo-0007tr-CE; Sat, 21 Mar 2026 08:16:32 -0400
-Received: from smtpx.feld.cvut.cz ([2001:718:2:1516::210:153]
- helo=smtpx.fel.cvut.cz)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
- id 1w3vFm-0008E9-2q; Sat, 21 Mar 2026 08:16:32 -0400
-Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 929131D3E8;
- Sat, 21 Mar 2026 13:16:20 +0100 (CET)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Authentication-Results: cerokez-250.feld.cvut.cz (amavis);
- dkim=pass (2048-bit key) header.d=fel.cvut.cz
-Received: from smtpx.fel.cvut.cz ([192.168.200.2])
- by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id 24d0DMBMfDQ4; Sat, 21 Mar 2026 13:16:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1774095379;
- bh=lrWJrmvDOvPhQqfjMIj8/1gXYs+NrU6uWZYqUUj9WTc=;
- h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
- b=bXFKaOPPGDS1aBr2VmuidLzV8A0PTT0iGqZ+6Vhsg4PHDDe2id+S8MuXsIHDFesH6
- SrLj+J5ILmRh+WzBq+CdM+uAbCoakbX2p1EvEKSqeLmgQ4pZ+tI7D1xjBG0X9STOSd
- VVBpspnwQ+vdW3+W69Z2IKM2gwQ+8ikRD9Z89IF2etLZ7Bc18JVW5UHQ1xR/wmySGM
- kjkrOGpoAup3lnwf6AuSJjDZP8J9LFABvHSNpNsCMSHLV/ATYZ9aVe0sdiMR7Z+AIa
- lC5a3XzUnLkAur+/w927R8eaCQXmxvyQSszBQ3yVYzNPEMsYx5NW4IursorNjW9rGX
- 7rizcWmFGyc3Q==
-Received: from baree.pikron.com (static-84-242-78-234.bb.vodafone.cz
- [84.242.78.234])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id B87D31D4AF;
- Sat, 21 Mar 2026 13:16:18 +0100 (CET)
-From: Pavel Pisa <pisa@fel.cvut.cz>
-To: =?utf-8?q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
- "Marc Kleine-Budde" <mkl@pengutronix.de>,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3won-0008Qn-LQ
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 09:56:45 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3wom-0000V6-8U
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 09:56:45 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-c757a9251faso562267a12.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 06:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1774101402; x=1774706202; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=M4ucEH6jgNvziEcY1IkILlW5nK/zX9LJO8HCq9EYnP8=;
+ b=PSvnmeVqWx/KnQ07mVrAtn/4hdgVTaBsE06wu6q/yoGxaRxomKsb1puSgVeP/L2+rT
+ c6Q+fT/1blbF6Z/7KsmM0RrNeabrTmy9xPbrruO5PDRxDvs1UA+RWm5C4/KD+lEgW+Gb
+ LKfP1Ln66ka8YA7BWBMmTEwKSSc2Xms/bZXS7rM0Nkf0DpCPVQwIvguQMqhvO0vYtjgI
+ 6HObZ5Fi0j2H10mY1ry+LafHrJMap1wRLkBeM9z/a04ZWv0uZt8i3ktrJQ5v1hsgOhuz
+ aSB5cCMVQtaCFBLNDPv5oVOYPD1+ONMsKGXpLKxvMgMlxHEdmF11htAj0Xrcpk2SU++s
+ VPjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774101402; x=1774706202;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M4ucEH6jgNvziEcY1IkILlW5nK/zX9LJO8HCq9EYnP8=;
+ b=l7OU1A2l8+328ffYuxJmr8NYQR+c7t9q4aeK4kfgZzesNrOBYc0WYfEZ05GuJuV8kx
+ yZWSy0M1mUBl3UwZ6Wbkh90dZrINM+ADy80A/ORP9eMfec6g3JayPkCs+dNdOZEgnhtO
+ Ii1RhsDkJXI14mr+vxz8uXGsvRkkBtMXLarorKO1jH4ybroBlyz9XiZrTnlY+VTvYDIV
+ 8LRYifvCx4PlwNyBrRdvhACnVOjFG5vh+HdqZI/2Hjb3uEJCnSW4b0/IeLka7WYP3nTa
+ 6bCsJZffeanWw2tTVoyzEoA85LcGci+uV8aS0hHRKhjXU2K0QnTto7r8VeBucOqFYZfc
+ +p2w==
+X-Gm-Message-State: AOJu0YzlZqdpXn4phyGHmYmk4VH6uHyC39wbvwcL6KW0dmIY2RhFYc9k
+ jaJQ+pmMgGANgNgQhKNzHZ3tqiBawveYrkcspTuDwGT5TFWoHEz43Iwx5+sRkw==
+X-Gm-Gg: ATEYQzxWirNCpLAHRql/fpnQt8AM5xYMQzligJof5nPh9zZFbX0asfcog01vJRYJM5f
+ zrqcjypZb+4/vB6wzCE4EvxQh+yngaMgZ4YCRGjDo3YNTf5Wmz233sTjz6kSwl5KoxgyQJxSnXr
+ AYZMczXSpLcMRsM0659XwIMxTTxSvH2pDwguq9Xc/CL2bLb6gLHj+9Y41ns19Qkb+R9Z8XQDf1l
+ x56MPOO0r8jjZgjm1OjKKzKQ9RSaidK/zopu0nUV9nR6IoSBY5cO9VUPCw7Ad2FHzcY65ZZDtMd
+ ki1PwJaCFTiTIuTAI00475RZNL5sBfobOpGcDGTQ9RvRERsw+UeB+CPjPSZUms/+y7keowSYErC
+ GlDOMmWK26D8GaLyjh5WDrZrfKt25EJM7vlMfC0xjjlK538f8KtS9JfB6gaFlRJeCOQQiE+a0mC
+ V7Q9lQh1XYx9xqr2Qit0DtVjT5wZ6FU+Jropfnr6s+Qq7gVSYxYoaK/qHRWS7wZplcr3E4
+X-Received: by 2002:a17:903:15c7:b0:2b0:73d2:219e with SMTP id
+ d9443c01a7336-2b08280025bmr58416615ad.47.1774101401847; 
+ Sat, 21 Mar 2026 06:56:41 -0700 (PDT)
+Received: from lima-default (103.95.112.190.qld.leaptel.network.
+ [103.95.112.190]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b08354bce3sm66285675ad.32.2026.03.21.06.56.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 21 Mar 2026 06:56:40 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 4/7] hw/net/can/flexcan: NXP FlexCAN core emulation
-Date: Sat, 21 Mar 2026 13:16:18 +0100
-User-Agent: KMail/1.9.10
-Cc: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>
-References: <cover.1773866323.git.matyas.bobek@gmail.com>
- <e790990bfaaebf2c1dd884c2c2f4eab5de6d4076.1773866323.git.matyas.bobek@gmail.com>
-In-Reply-To: <e790990bfaaebf2c1dd884c2c2f4eab5de6d4076.1773866323.git.matyas.bobek@gmail.com>
-X-KMail-QuotePrefix: > 
+Subject: [PATCH 0/3] user: recursive signal delivery fix and test
+Date: Sat, 21 Mar 2026 23:56:20 +1000
+Message-ID: <20260321135624.581398-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Message-Id: <202603211316.18181.pisa@fel.cvut.cz>
-Received-SPF: pass client-ip=2001:718:2:1516::210:153;
- envelope-from=pisa@fel.cvut.cz; helo=smtpx.fel.cvut.cz
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.101, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,52 +98,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear QEMU maintainers and developers,
+I found this recursive delivery problem when testing new riscv vector
+state support patches (plus a minor lock user balance bug).
 
-please review the code.
+This or similar type of issue was fixed with 8bd3773cce1 but I couldn't
+see exactly what scenario that was addressing. Is there any other way a
+signal can be generated during handle_pending_signal()? The SIGTTIN
+case, perhaps?
 
-On Thursday 19 of March 2026 20:13:11 Maty=C3=A1=C5=A1 Bobek wrote:
-> Added the FlexCAN2 emulator implementation core, with
-> CAN_FLEXCAN Kconfig flag and MAINTAINERS entry.
->
-> FlexCAN2 version can be found in i.MX6 SoCs and others.
->
-> More information about the implementation can be found in [1].
->
-> [1]
-> http://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-Maty=
-as
->-BP_Bobek_FlexCAN_final_4.pdf
->
-> Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas.bobek@gmail.com>
+Thanks,
+Nick
 
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
-Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
+Nicholas Piggin (3):
+  linux-user: sigaltstack lock_user_struct missing unlock
+  bsd-user, linux-user: signal: recursive signal delivery fix
+  tests/tcg: add recursive signal delivery tests
 
-I have tested the series final result as I have already
-confirmed in reply to the cover letter.
+ bsd-user/signal.c            |  10 +-
+ linux-user/signal.c          |  36 +++---
+ tests/tcg/multiarch/badsig.c | 226 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 252 insertions(+), 20 deletions(-)
+ create mode 100644 tests/tcg/multiarch/badsig.c
 
-I have gone through all commit and tested that the QEMU
-build without errors even for all intermediate states.
+-- 
+2.51.0
 
-Mark, please, look at the header definition license
-as Matyas Bobek has expressed and I have already
-announced as pleas by e-mail during FOSDEM.
-=20
-Best wishes,
-
-                Pavel Pisa
-    phone:      +420 603531357
-    e-mail:     pisa@cmp.felk.cvut.cz
-    Department of Control Engineering FEE CVUT
-    Karlovo namesti 13, 121 35, Prague 2
-    university: http://control.fel.cvut.cz/
-    personal:   http://cmp.felk.cvut.cz/~pisa
-    social:     https://social.kernel.org/ppisa
-    projects:   https://www.openhub.net/accounts/ppisa
-    CAN related:http://canbus.pages.fel.cvut.cz/
-    RISC-V education: https://comparch.edu.cvut.cz/
-    Open Technologies Research Education and Exchange Services
-    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
