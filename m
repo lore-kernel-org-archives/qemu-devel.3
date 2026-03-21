@@ -4,110 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3C71099B54
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 05:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF9B1099B54
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 06:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3pEg-0000y6-MN; Sat, 21 Mar 2026 01:50:58 -0400
+	id 1w3phv-0006h7-R7; Sat, 21 Mar 2026 02:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1w3pEa-0000xI-Ue; Sat, 21 Mar 2026 01:50:54 -0400
-Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1w3pEX-0007BS-70; Sat, 21 Mar 2026 01:50:52 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id A0D0EEC0113;
- Sat, 21 Mar 2026 01:50:44 -0400 (EDT)
-Received: from phl-imap-18 ([10.202.2.89])
- by phl-compute-02.internal (MEProxy); Sat, 21 Mar 2026 01:50:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1774072244;
- x=1774158644; bh=RRtfR5e2ZlMbp50vZXrBUCW0kymEC/MrW4PG2X1HoKM=; b=
- VFYAWh7wQ+t4dsNVDkN6Iw+BwNf38B4qFDy9GjPdggYBuH7knI5LjSmUp7KvPNok
- D2GnjiYe+FIu1MYU18VrR2hN7kdtcaNNm3GHXx2tmKwHVWu4C7vnOmw8pmYsmve8
- kV0lZU/NgfN9Oy83TGAgA02LC2NRcp5jXsgW6aTqvRDHG6l7fM07lVJEZzASnDxP
- yq+5QnTONQklHWOKMcfVTG1UUGJwSg1C5dq1bsVyYxDd4m/a1aMA3ANrb0j3nChH
- 1OjllUW4TfXD4ryOQgwpI/SaUIg7ruN14tPixR9KoiZ+4JIQZVdVobaSDMTqee84
- Jxi/oEUk0YVqcC2qz4qVKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774072244; x=
- 1774158644; bh=RRtfR5e2ZlMbp50vZXrBUCW0kymEC/MrW4PG2X1HoKM=; b=2
- +3bruGF/uIoj9ur2whpKKRLcxqPUeh8IyDS7oKms+6eDl5xHUYRuewmLtN9nuf90
- gkXfoSAQz+vkVbHPukNlWZ14wYrlF1KsM0eViTCJE7oxx8Wk4eu+BU5P5wVsZfZy
- rFLLpfYeADvYyt18vODQy+wBbU0IUkBUFCKynI3mws8DIOVF0e6tD6IFfKGKphId
- b0O+vUaLPNkXRXx4PK/uODWetftRUW8gthI9PQHK+Rn3olSkWSwlYOUv5OAJMaq3
- fKgdEHQ02slaBe5qEFZdc4RUDMX5dZAfT7mUmyScqcpUjc29avHRx5LnpDi0CT1Q
- BuY8wfYjSlQx1ZfLXauBA==
-X-ME-Sender: <xms:sjG-aYCtAu6tX5TAPP-xlBsp6dZZhRhoHmv4Z25Hd5ELHSEuppVX2A>
- <xme:sjG-aVWzk4y73Qwkkzxm89Hb4ey6uWaAjWuhX3iMLeQYTikNJbhSusJGSpvoKH876
- EkbWs6xX1nTMZ_e5hH30XZTxRU08EpWdJq5i46q1fq4bsCns2EicQc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddvtddvucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehlvgig
- ucghihhllhhirghmshhonhdfuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtf
- frrghtthgvrhhnpefgfeeflefggfffveffteetiedvtedtgfdvieevfeejfeefffevteej
- tedufffgveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
- hmpegrlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepudefpdhmohgu
- vgepshhmthhpohhuthdprhgtphhtthhopegrrhhnugesrghrnhgusgdruggvpdhrtghpth
- htohepghgvvghrthdorhgvnhgvshgrshesghhlihguvghrrdgsvgdprhgtphhtthhopehl
- rghnughonhgtlhhiphhpsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrghhnuhhsrd
- gurghmmhesghhmrghilhdrtghomhdprhgtphhtthhopehlrghurhgvnhhtrdhpihhntghh
- rghrthesihguvggrshhonhgsohgrrhgurdgtohhmpdhrtghpthhtohepphgvthgvrhdrmh
- grhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprhgvnhigihgrohhfsehl
- ihhnuhigrdhvnhgvthdrihgsmhdrtghomhdprhgtphhtthhopehqvghmuhdqrghrmhesnh
- honhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdr
- ohhrgh
-X-ME-Proxy: <xmx:sjG-aUy-oYcGoovuYKPKnQM_po2oS_CnaTvadegDVPvPXsub5R28eg>
- <xmx:sjG-ab9BrAQIcdsVsATWyPXypUxRsnCp_xcZ_mFfxroIAsHdJBvusw>
- <xmx:sjG-ae_l9MXNq132DL2chdiHIV6ikHr1thGkuJ5lhxlAuFHtVBV0mg>
- <xmx:sjG-aT7orrrDgeRMYF4_nI2qZCjKQ3b86ikJEme2EiJMXXfL6HlTBg>
- <xmx:tDG-aXqCjn3gbMnei31EhyAoc0qBGRO3h5t51wc_6Dxogn8m4SA1ACv8>
-Feedback-ID: i03f14258:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id C274215C008C; Sat, 21 Mar 2026 01:50:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <souravpoddar93042@gmail.com>)
+ id 1w3phu-0006gw-DK
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 02:21:10 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <souravpoddar93042@gmail.com>)
+ id 1w3phs-0002QP-4M
+ for qemu-devel@nongnu.org; Sat, 21 Mar 2026 02:21:10 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-82bae83318bso628479b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 23:21:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1774074066; x=1774678866; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZSQ89Q5UIkC/UY+OjRqSF7k7yNwRVgyzOGoYEVv2A2w=;
+ b=XuK3TSJjnNL9586xnnOD12pO79nrANq2gOMQkXLMklHHk7+abtLN/RoD7MxW93SBZ+
+ OO+7cfzOYgEACIoz39cbMndSSl5U54fn/FXgY2bwYgiRgkFXmmLLukLvJxK4OQCuc8nE
+ 6zxQ4N4myMN1ikbx52kwoYpSI+XNG/pfFePnleuf03IsXXr+KwmSHIBM89W4ho6uV4Ce
+ FJgINuLN+WjlO2znTbQij8+dSID4ueBjAneqmTfT8XjJtRC71xF5XGjDQymYyBJUB2DA
+ iOc4emxked1AtyePAnoBDLxDBr5V6ivxKfTdp03tiWOq49oOx7YVCPQAXtFduVjzCUld
+ rQeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774074066; x=1774678866;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZSQ89Q5UIkC/UY+OjRqSF7k7yNwRVgyzOGoYEVv2A2w=;
+ b=Zw+k1x/2eJkuHjc3jWj0YlVrRYytEGf2YAI6kzfoPE2AU0Y5hrO1nkN00wnOVIUQMd
+ FNNURyerPYo9T9odDMfJFypUmAVIjpYVF/KFN/twI42IaNTnck5KxNB4iIUfJdZhtjnA
+ raGQfiiDU9coiwGymFsgVJfYv4aGuG0IS31Pdzh1OnI0UWcAhkrlQBfkD8b0G0ee0Oao
+ jUyJRAVc/+J8099qLSy6DO9CvZrQuDxrY0f7wR+GXVR2kJ15wv3vWfssmEwVGdxtiPy5
+ lt96N4CbRJ1H19fuqtqdrRi+FWjvG5JnGvLRh8lk5D9xwstPWRU/Dhd+dZP698MTVyEm
+ Q7pA==
+X-Gm-Message-State: AOJu0YzlA4oSGFYForPfEwckUyNQ9MYktyx0lxco45YmlkiHqc3GVt26
+ C6SRVOSmJuN8+Azp8pnmeTiUzIfoy/IzNaFIKjYC4zqYqot1/xXv8BKqLGCrHSFt
+X-Gm-Gg: ATEYQzwPJJhVVu3FrHsHCG5ovYNU9iWgCyutFsWSvPgyt5C10ZxlVwBF6p7sKUaDcOq
+ C/2au0+coRW7mSHR5nopkQxYoQU9EbpnBm7NWGK+xRtnSvAHUuCpgGK0IqZOAUrJkw3s/3ZJ6kY
+ rhtZ0hC2VPsEIhBHbgLECgftkOsZ4yzr/WqqoEKU4+DkyJuC790EHP2pNBuTgZiwXSx7aEjb84x
+ 7t1UxVRQL53NRJXKVyW0VjOTabBdbJnMVDbQxuIKEgvq2CBGlGbjnj7Mk6EJzay2zjPOJ20aKy+
+ p3W4s/Z9p+j4UdumtXlQ2Wind2xqCTHhuBiIjwoaeEZialh4ng8op/7yI3oNnj7eHvXBEUjS5yw
+ 2ol21LcSur98TSCE7B3H6bZpQnYTX/v9VlJc9RcmMr/a3Q0mJiYIRk1OwM2SMYL82/1+opi9Ley
+ gsjqsALu55Fzcac8dTaXapdWGd0MQd
+X-Received: by 2002:a05:6a20:7f9c:b0:398:7ca0:5d32 with SMTP id
+ adf61e73a8af0-39bceb47129mr5010478637.43.1774074066097; 
+ Fri, 20 Mar 2026 23:21:06 -0700 (PDT)
+Received: from kishu ([2409:40e2:15c:a951:bd6d:7ea:4443:ff50])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82b03bbeff2sm3750429b3a.20.2026.03.20.23.21.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Mar 2026 23:21:05 -0700 (PDT)
+From: Sourav Poddar <souravpoddar93042@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, anisinha@redhat.com, philippe.mathieu.daude@gmail.com,
+ Sourav Poddar <souravpoddar93042@gmail.com>
+Subject: [PATCH] hw/hyperv: fix SynIC not initialized for CPUs after the first
+Date: Sat, 21 Mar 2026 11:50:55 +0530
+Message-ID: <20260321062055.20839-1-souravpoddar93042@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-X-ThreadId: AC0Qvsrv4yKJ
-Date: Fri, 20 Mar 2026 23:50:22 -0600
-From: "Alex Williamson" <alex@shazbot.org>
-To: "Landon Clipp" <landonclipp@gmail.com>,
- "Geert Uytterhoeven" <geert+renesas@glider.be>
-Cc: "Peter Maydell" <peter.maydell@linaro.org>,
- "Auger Eric" <eric.auger@redhat.com>,
- "Xiao Feng Ren" <renxiaof@linux.vnet.ibm.com>,
- "Arnd Bergmann" <arnd@arndb.de>, "Alexander Graf" <agraf@suse.de>,
- "Magnus Damm" <magnus.damm@gmail.com>,
- "Laurent Pinchart" <laurent.pinchart@ideasonboard.com>,
- "Wolfram Sang" <wsa+renesas@sang-engineering.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, linux-renesas-soc@vger.kernel.org
-Message-Id: <3b8c2bbe-72dc-4425-8381-c0323c692933@app.fastmail.com>
-In-Reply-To: <DH807PW5SQCW.3AA422QQRGVAH@gmail.com>
-References: <1518189456-2873-1-git-send-email-geert+renesas@glider.be>
- <1518189456-2873-5-git-send-email-geert+renesas@glider.be>
- <20180209085024.004b6f9e@w520.home> <DH807PW5SQCW.3AA422QQRGVAH@gmail.com>
-Subject: Re: [Qemu-arm] [PATCH/RFC 4/5] vfio: No-IOMMU mode support
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=alex@shazbot.org;
- helo=fout-a4-smtp.messagingengine.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=souravpoddar93042@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,62 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026, at 5:38 PM, Landon Clipp wrote:
-> On Fri Feb 9, 2018 at 9:50 AM CST, Alex Williamson wrote:
->> On Fri,  9 Feb 2018 16:17:35 +0100
->> Geert Uytterhoeven <geert+renesas@glider.be> wrote:
->>
->>> From: Xiao Feng Ren <renxiaof@linux.vnet.ibm.com>
->>> 
->>> Add qemu support for the newly introduced VFIO No-IOMMU driver.
->>> 
->>> We need to add special handling for:
->>> - Group character device is /dev/vfio/noiommu-$GROUP.
->>> - No-IOMMU does not rely on a memory listener.
->>> - No IOMMU will be set for its group, so no need to call
->>>   vfio_kvm_device_add_group.
->>> 
->>> Signed-off-by: Xiao Feng Ren <renxiaof@linux.vnet.ibm.com>
->>> [geert: Rebase]
->>> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
->>> ---
->>>  hw/vfio/common.c              | 61 ++++++++++++++++++++++++++++++++++---------
->>>  include/hw/vfio/vfio-common.h |  2 ++
->>>  2 files changed, 50 insertions(+), 13 deletions(-)
->>
->> NAK.  I'm opposed to no-iommu support in QEMU in general, but accepting
->> vfio devices with no-iommu (which provide no DMA translation!!!)
->> transparently as if they might actually work like a regular vfio device
->> is absolutely unacceptable.  Without DMA translation and isolation, you
->> might want to think about another interface, I'm not keen on the idea
->> of corrupting vfio support in order to blink some LEDs.  Thanks,
->>
->> Alex
->>
->
-> 8 years later, I was wondering if we could revisit this. I found myself in a
-> need to use enable_unsafe_noiommu_mode due to some systems I'm using not having
-> a usable IOMMU. QEMU is being used as part of a single-tenant workload
-> sandboxing environment, and given the specific circumstances, both the users and
-> the administrators understand that enabling the noiommu mode is unsafe and
-> cannot be used where security matters. Regardless, it's still something we want.
->
-> As the administrator of my system, it's under my control whether VFIO is put
-> into this mode, and if it is, I would expect the remaning software components
-> to respect that decision. As is, the system is unusable because of a lack of
-> support in QEMU.
->
-> I'm happy to elucidate more of my use-case if it is helpful, but I 
-> first wanted to
-> gauge your willingness to reconsider this under a different context.
+hyperv_is_synic_enabled() is a global flag that returns true after the
+first CPU initializes SynIC. With -smp N, all subsequent CPUs skip
+hyperv_x86_synic_add() in hyperv_enable_synic(), leaving them without
+a synic object. This causes get_synic() to return NULL, making
+hyperv_sint_route_new() fail and triggering an assertion crash in
+hyperv_testdev.
 
-I'm not aware of anything that's improved the chances of accepting something like this.
+Fix by introducing hyperv_is_synic_present() which checks per-CPU
+whether a synic object is already attached instead of using the global
+flag.
 
-In fact, a vfio-platform motivated feature is arguably on worse footing now.
+Fixes: c4cf32fc63f1 ("kvm/hyperv: add synic feature to CPU only if its not enabled")
+Reported-by: Xudong Hao
+Signed-off-by: Sourav Poddar <souravpoddar93042@gmail.com>
+---
+ hw/hyperv/hyperv.c         | 5 +++++
+ include/hw/hyperv/hyperv.h | 1 +
+ target/i386/kvm/hyperv.c   | 2 +-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-More importantly, QEMU now has support for vfio-user, so I believe you can already do this.  The model would be a vfio-noiommu userspace driver that exposes a vfio-user interface for QEMU.
+diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+index 27e323a819..ff53cbc699 100644
+--- a/hw/hyperv/hyperv.c
++++ b/hw/hyperv/hyperv.c
+@@ -60,6 +60,11 @@ static SynICState *get_synic(CPUState *cs)
+     return SYNIC(object_resolve_path_component(OBJECT(cs), "synic"));
+ }
+ 
++bool hyperv_is_synic_present(CPUState *cs)
++{
++    return get_synic(cs) != NULL;
++}
++
+ static void synic_update(SynICState *synic, bool sctl_enable,
+                          hwaddr msg_page_addr, hwaddr event_page_addr)
+ {
+diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
+index 63a8b65278..23091301d0 100644
+--- a/include/hw/hyperv/hyperv.h
++++ b/include/hw/hyperv/hyperv.h
+@@ -81,6 +81,7 @@ void hyperv_synic_reset(CPUState *cs);
+ void hyperv_synic_update(CPUState *cs, bool enable,
+                          hwaddr msg_page_addr, hwaddr event_page_addr);
+ bool hyperv_is_synic_enabled(void);
++bool hyperv_is_synic_present(CPUState *cs);
+ 
+ /*
+  * Process HVCALL_RESET_DEBUG_SESSION hypercall.
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index bd3c26d02b..420c76b5ff 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -27,7 +27,7 @@ int hyperv_x86_synic_add(X86CPU *cpu)
+ int hyperv_enable_synic(X86CPU *cpu)
+ {
+     int ret = 0;
+-    if (!hyperv_is_synic_enabled()) {
++    if (!hyperv_is_synic_present(CPU(cpu))) {
+         ret = hyperv_x86_synic_add(cpu);
+     }
+     return ret;
+-- 
+2.53.0
 
-All of the previous issues with security and virtualization still remain with implementing this support directly in QEMU.  Providing a DMA capable no-iommu device to a QEMU sandbox negates any isolation it might otherwise provide.  With the vfio-user no-iommu driver model, you take on the security burden to use only non-DMA capable devices, or mediate the access, rather than asking the QEMU community to assume that risk.  Thanks,
-
-Alex
 
