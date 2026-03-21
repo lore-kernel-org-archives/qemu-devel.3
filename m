@@ -4,106 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9602E1099B3C
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 04:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3C71099B54
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 05:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3nmp-0000Vk-9k; Sat, 21 Mar 2026 00:18:07 -0400
+	id 1w3pEg-0000y6-MN; Sat, 21 Mar 2026 01:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1w3nmm-0000V3-G3
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 00:18:04 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1w3nmj-00008i-5p
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 00:18:03 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2aae146b604so15538905ad.3
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 21:17:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774066679; cv=none;
- d=google.com; s=arc-20240605;
- b=YHgnOVpvwpZdXHxznpeYraWaTAT/KqgbRuonLxYNNWUrgpPGeTr109PNaRGGYNk0HC
- 0rM3zzX0lqvPE3Lrgx6VkN01qpkY2Tf3MPavTvMlsMXLYG+YTNIt7OKocGqAWlG357TI
- xD98og2fflQVCJMBZSmP4ycXNqlWJeTcybG7G90jsUCV4EXsdE0Qj+JQvA4zCWInOTci
- /MoIjQUzEE00QXTdPMrlcNFuCRhEgLXSJeV8R+FXlz+kmpr/7ea8Dxf5kMH7WA6FyfqS
- Psz3VpkK4mK7HjCRGO7ykclqfTCcCTcSrE7Vepu7OMvRNWgcMBwNkPZSL5et3oTH+B3a
- 9SVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/71rvbLJqzxExEGJYa5W00IAvP4YfCGLkNzIzZ5mQIs=;
- fh=X0JCVnag0TcRr8vxCgHEt345nm3uKbFVdK/gX0Q5lvg=;
- b=QYzVePX9QSwzrX0owqzCNaPJ05ULLxOdIQJ+8nZsWO4/U/uUfVF8VpPuXIbf2sBEuG
- GwnO6e50F0xS/mtcw0/l5lURk1u/UXmMiW+tH49oEqHdGXL/tpqgHtkQSBqCRKBODfEq
- aaZSDf7Yv61+pmQr1n89onwkdbfsZM8d5eNWEPNkq4RcM8q6rWbPP/G4Ndxq3XD/9gBf
- 4x6bDgKgX0ojwSOAm16boRycyE7nKvXo8NMGD5s3rqTVxnfZAddhxGQitNwmQ8bTlBsv
- LvhNMe3RZIzNaycZyDT3s5oaIwH4oAB9NqgUpOy0RbpLX+wFpZOeEkmTbpPazm4zD48j
- AIBw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1774066679; x=1774671479;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/71rvbLJqzxExEGJYa5W00IAvP4YfCGLkNzIzZ5mQIs=;
- b=mTFhHOmj9bviQB0pwbQucij1Bu+1y+uzGZsmCrlDA0qHTyoF+vvkiKRHrPazTNRokH
- mZKDd9yg6MIimBh4LEevNGV4eI8+XZ95vBG60SRM8MHIVYswpYNmbOvlz+3vFPvrwzmX
- +Og8YYziZhf16MljoQLBmgZejj23nIlpGGm05IPe6XzgX4TYPbClN/IDSQx/1etVN+uG
- R4B3dCV6QrQblB0f6s921IKcvJZqgApkQ32+1V5NhGSubg+0oWmUcobTmjq+RCnQN0Lh
- XNpEDlGmm4UOm0zxI9bz48P5++vIMnBcdsHRHT8h6n/qehog3gJdYaOhd24As20LnIfd
- swkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774066679; x=1774671479;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/71rvbLJqzxExEGJYa5W00IAvP4YfCGLkNzIzZ5mQIs=;
- b=ARgiHSO7ZQQTd3b78nLfmHXuyHDDbqePwUVYaohftwSxYiWj2ByzXh9zj/2HdpJyjG
- 7UqjTJDD4Kwvh3TxrV7CqOW28TSDKJ+baUlRz0GKJMH8GLp2SZdm/io9VCCYsVDQpxOt
- hR2XXRvGQBbsiZC6tHFu6Xwn5h1tE5FfVkplIQue+RMZz9akZl4h7+YNiguJ3RPtXFdZ
- 1bJwS5QmOo2nlblre8q90YBuViZHar7olpWRa+yNaT1fUhNPjyt8GZXAmMDR1qIy39n9
- ytqMCXCbq+WO/sYkMqjDFiC3+cs5QUzz7j+31U0x0f7fJ+KDltNpzIOvdcdGTmF8CigS
- xYeg==
-X-Gm-Message-State: AOJu0Ywa2rRQUELPem2zt90KqygOPvA0Rx8J+7v1VbFb30k4najudEsE
- nLyCemMAAPwxQQJKnY9uNpdfgvYLRkq0P9X0xfGQRHJrbvRaYQ4hyZx0x0sXAM5fhS7+bJhU4x+
- ac3PiHQTgD84Xos0WHorvHgZ15H7eEQDYeODIV4hryA==
-X-Gm-Gg: ATEYQzyuzJTGPguMXoxZEMY919oq+jMSq1BE6jY+1s9xKhCSBYESVrAXZgL4DvwBvfk
- Ma1waSf98A7Oft0ZqF3JfJITbbPZXmy5jTDMfIb3L7BFeJDb0FFa0dhNmQHByAjj6tQyDjuqVSY
- Ze8AhgpgbhTNtidWADS2r6G6dlNdJKb/fBNVU86aCZFoEFi8u32MfcezFpzmT9iAkHJpyiEz3Kb
- XVSAIrFI+uYY88z7rX634TZLo+IjERgiXVXaauSX/DDbVdSexICIE8ltp+fu+K7dKFU+kzJnruo
- G+bWVqSQXDE7dC3orNxIVgbFFx1wyaL/KoIIuA==
-X-Received: by 2002:a17:903:283:b0:2ae:6205:2345 with SMTP id
- d9443c01a7336-2b0827b59e8mr46085265ad.35.1774066678888; Fri, 20 Mar 2026
- 21:17:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1w3pEa-0000xI-Ue; Sat, 21 Mar 2026 01:50:54 -0400
+Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1w3pEX-0007BS-70; Sat, 21 Mar 2026 01:50:52 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id A0D0EEC0113;
+ Sat, 21 Mar 2026 01:50:44 -0400 (EDT)
+Received: from phl-imap-18 ([10.202.2.89])
+ by phl-compute-02.internal (MEProxy); Sat, 21 Mar 2026 01:50:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1774072244;
+ x=1774158644; bh=RRtfR5e2ZlMbp50vZXrBUCW0kymEC/MrW4PG2X1HoKM=; b=
+ VFYAWh7wQ+t4dsNVDkN6Iw+BwNf38B4qFDy9GjPdggYBuH7knI5LjSmUp7KvPNok
+ D2GnjiYe+FIu1MYU18VrR2hN7kdtcaNNm3GHXx2tmKwHVWu4C7vnOmw8pmYsmve8
+ kV0lZU/NgfN9Oy83TGAgA02LC2NRcp5jXsgW6aTqvRDHG6l7fM07lVJEZzASnDxP
+ yq+5QnTONQklHWOKMcfVTG1UUGJwSg1C5dq1bsVyYxDd4m/a1aMA3ANrb0j3nChH
+ 1OjllUW4TfXD4ryOQgwpI/SaUIg7ruN14tPixR9KoiZ+4JIQZVdVobaSDMTqee84
+ Jxi/oEUk0YVqcC2qz4qVKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774072244; x=
+ 1774158644; bh=RRtfR5e2ZlMbp50vZXrBUCW0kymEC/MrW4PG2X1HoKM=; b=2
+ +3bruGF/uIoj9ur2whpKKRLcxqPUeh8IyDS7oKms+6eDl5xHUYRuewmLtN9nuf90
+ gkXfoSAQz+vkVbHPukNlWZ14wYrlF1KsM0eViTCJE7oxx8Wk4eu+BU5P5wVsZfZy
+ rFLLpfYeADvYyt18vODQy+wBbU0IUkBUFCKynI3mws8DIOVF0e6tD6IFfKGKphId
+ b0O+vUaLPNkXRXx4PK/uODWetftRUW8gthI9PQHK+Rn3olSkWSwlYOUv5OAJMaq3
+ fKgdEHQ02slaBe5qEFZdc4RUDMX5dZAfT7mUmyScqcpUjc29avHRx5LnpDi0CT1Q
+ BuY8wfYjSlQx1ZfLXauBA==
+X-ME-Sender: <xms:sjG-aYCtAu6tX5TAPP-xlBsp6dZZhRhoHmv4Z25Hd5ELHSEuppVX2A>
+ <xme:sjG-aVWzk4y73Qwkkzxm89Hb4ey6uWaAjWuhX3iMLeQYTikNJbhSusJGSpvoKH876
+ EkbWs6xX1nTMZ_e5hH30XZTxRU08EpWdJq5i46q1fq4bsCns2EicQc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddvtddvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehlvgig
+ ucghihhllhhirghmshhonhdfuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtf
+ frrghtthgvrhhnpefgfeeflefggfffveffteetiedvtedtgfdvieevfeejfeefffevteej
+ tedufffgveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpegrlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepudefpdhmohgu
+ vgepshhmthhpohhuthdprhgtphhtthhopegrrhhnugesrghrnhgusgdruggvpdhrtghpth
+ htohepghgvvghrthdorhgvnhgvshgrshesghhlihguvghrrdgsvgdprhgtphhtthhopehl
+ rghnughonhgtlhhiphhpsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrghhnuhhsrd
+ gurghmmhesghhmrghilhdrtghomhdprhgtphhtthhopehlrghurhgvnhhtrdhpihhntghh
+ rghrthesihguvggrshhonhgsohgrrhgurdgtohhmpdhrtghpthhtohepphgvthgvrhdrmh
+ grhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprhgvnhigihgrohhfsehl
+ ihhnuhigrdhvnhgvthdrihgsmhdrtghomhdprhgtphhtthhopehqvghmuhdqrghrmhesnh
+ honhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdr
+ ohhrgh
+X-ME-Proxy: <xmx:sjG-aUy-oYcGoovuYKPKnQM_po2oS_CnaTvadegDVPvPXsub5R28eg>
+ <xmx:sjG-ab9BrAQIcdsVsATWyPXypUxRsnCp_xcZ_mFfxroIAsHdJBvusw>
+ <xmx:sjG-ae_l9MXNq132DL2chdiHIV6ikHr1thGkuJ5lhxlAuFHtVBV0mg>
+ <xmx:sjG-aT7orrrDgeRMYF4_nI2qZCjKQ3b86ikJEme2EiJMXXfL6HlTBg>
+ <xmx:tDG-aXqCjn3gbMnei31EhyAoc0qBGRO3h5t51wc_6Dxogn8m4SA1ACv8>
+Feedback-ID: i03f14258:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id C274215C008C; Sat, 21 Mar 2026 01:50:42 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-References: <20260321004836.500390-1-npiggin@gmail.com>
- <20260321004836.500390-2-npiggin@gmail.com>
-In-Reply-To: <20260321004836.500390-2-npiggin@gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 20 Mar 2026 22:17:47 -0600
-X-Gm-Features: AaiRm51jySqlfp86N046jO9V1USKzBRZ2YkuOa3KzLygeU61yhnjO_4Y7wK4eAw
-Message-ID: <CANCZdfq+iybMORb=_zNCdmSGgFMc87FN_6njavohifLY_vpnkg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] bsd-user: Fix unlock_user API usage
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000003409d5064d81161b"
-Received-SPF: none client-ip=2607:f8b0:4864:20::62c;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-ThreadId: AC0Qvsrv4yKJ
+Date: Fri, 20 Mar 2026 23:50:22 -0600
+From: "Alex Williamson" <alex@shazbot.org>
+To: "Landon Clipp" <landonclipp@gmail.com>,
+ "Geert Uytterhoeven" <geert+renesas@glider.be>
+Cc: "Peter Maydell" <peter.maydell@linaro.org>,
+ "Auger Eric" <eric.auger@redhat.com>,
+ "Xiao Feng Ren" <renxiaof@linux.vnet.ibm.com>,
+ "Arnd Bergmann" <arnd@arndb.de>, "Alexander Graf" <agraf@suse.de>,
+ "Magnus Damm" <magnus.damm@gmail.com>,
+ "Laurent Pinchart" <laurent.pinchart@ideasonboard.com>,
+ "Wolfram Sang" <wsa+renesas@sang-engineering.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, linux-renesas-soc@vger.kernel.org
+Message-Id: <3b8c2bbe-72dc-4425-8381-c0323c692933@app.fastmail.com>
+In-Reply-To: <DH807PW5SQCW.3AA422QQRGVAH@gmail.com>
+References: <1518189456-2873-1-git-send-email-geert+renesas@glider.be>
+ <1518189456-2873-5-git-send-email-geert+renesas@glider.be>
+ <20180209085024.004b6f9e@w520.home> <DH807PW5SQCW.3AA422QQRGVAH@gmail.com>
+Subject: Re: [Qemu-arm] [PATCH/RFC 4/5] vfio: No-IOMMU mode support
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.147; envelope-from=alex@shazbot.org;
+ helo=fout-a4-smtp.messagingengine.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,147 +123,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003409d5064d81161b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Mar 20, 2026 at 6:49=E2=80=AFPM Nicholas Piggin <npiggin@gmail.com>=
- wrote:
-
-> Fix errors in unlock_user() calls:
-> - unlock_user() with len=3D1 instead of len=3Dwritten
-> - unlock_user() with len=3D1 instead of len=3D0
+On Fri, Mar 20, 2026, at 5:38 PM, Landon Clipp wrote:
+> On Fri Feb 9, 2018 at 9:50 AM CST, Alex Williamson wrote:
+>> On Fri,  9 Feb 2018 16:17:35 +0100
+>> Geert Uytterhoeven <geert+renesas@glider.be> wrote:
+>>
+>>> From: Xiao Feng Ren <renxiaof@linux.vnet.ibm.com>
+>>> 
+>>> Add qemu support for the newly introduced VFIO No-IOMMU driver.
+>>> 
+>>> We need to add special handling for:
+>>> - Group character device is /dev/vfio/noiommu-$GROUP.
+>>> - No-IOMMU does not rely on a memory listener.
+>>> - No IOMMU will be set for its group, so no need to call
+>>>   vfio_kvm_device_add_group.
+>>> 
+>>> Signed-off-by: Xiao Feng Ren <renxiaof@linux.vnet.ibm.com>
+>>> [geert: Rebase]
+>>> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+>>> ---
+>>>  hw/vfio/common.c              | 61 ++++++++++++++++++++++++++++++++++---------
+>>>  include/hw/vfio/vfio-common.h |  2 ++
+>>>  2 files changed, 50 insertions(+), 13 deletions(-)
+>>
+>> NAK.  I'm opposed to no-iommu support in QEMU in general, but accepting
+>> vfio devices with no-iommu (which provide no DMA translation!!!)
+>> transparently as if they might actually work like a regular vfio device
+>> is absolutely unacceptable.  Without DMA translation and isolation, you
+>> might want to think about another interface, I'm not keen on the idea
+>> of corrupting vfio support in order to blink some LEDs.  Thanks,
+>>
+>> Alex
+>>
 >
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  bsd-user/bsd-misc.c | 2 +-
->  bsd-user/bsd-misc.h | 2 +-
->  bsd-user/bsdload.c  | 2 +-
->  3 files changed, 3 insertions(+), 3 deletions(-)
+> 8 years later, I was wondering if we could revisit this. I found myself in a
+> need to use enable_unsafe_noiommu_mode due to some systems I'm using not having
+> a usable IOMMU. QEMU is being used as part of a single-tenant workload
+> sandboxing environment, and given the specific circumstances, both the users and
+> the administrators understand that enabling the noiommu mode is unsafe and
+> cannot be used where security matters. Regardless, it's still something we want.
 >
-
-
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-
-
-> diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c
-> index 3e1968718f..eac3edb8ac 100644
-> --- a/bsd-user/bsd-misc.c
-> +++ b/bsd-user/bsd-misc.c
-> @@ -95,7 +95,7 @@ abi_long host_to_target_semarray(int semid, abi_ulong
-> target_addr,
->      for (i =3D 0; i < nsems; i++) {
->          __put_user(array[i], host_array + i);
->      }
-> -    unlock_user(array, target_addr, 1);
-> +    unlock_user(array, target_addr, nsems * sizeof(unsigned short));
->      return 0;
->  }
+> As the administrator of my system, it's under my control whether VFIO is put
+> into this mode, and if it is, I would expect the remaning software components
+> to respect that decision. As is, the system is unusable because of a lack of
+> support in QEMU.
 >
-> diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-> index 13e40d9cde..13abc7e3b1 100644
-> --- a/bsd-user/bsd-misc.h
-> +++ b/bsd-user/bsd-misc.h
-> @@ -211,7 +211,7 @@ static inline abi_long do_bsd___semctl(int semid, int
-> semnum, int target_cmd,
->          break;
->      }
->  out:
-> -    unlock_user(target_un, un_ptr, 1);
-> +    unlock_user(target_un, un_ptr, 0);
->      return ret;
->  }
->
-> diff --git a/bsd-user/bsdload.c b/bsd-user/bsdload.c
-> index 5b3c061a45..9ea3b93825 100644
-> --- a/bsd-user/bsdload.c
-> +++ b/bsd-user/bsdload.c
-> @@ -30,7 +30,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void
-> *src,
->          return -TARGET_EFAULT;
->      }
->      memcpy(host_ptr, src, len);
-> -    unlock_user(host_ptr, dest, 1);
-> +    unlock_user(host_ptr, dest, len);
->      return 0;
->  }
->
-> --
-> 2.51.0
->
->
+> I'm happy to elucidate more of my use-case if it is helpful, but I 
+> first wanted to
+> gauge your willingness to reconsider this under a different context.
 
---0000000000003409d5064d81161b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I'm not aware of anything that's improved the chances of accepting something like this.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 20,=
- 2026 at 6:49=E2=80=AFPM Nicholas Piggin &lt;<a href=3D"mailto:npiggin@gmai=
-l.com">npiggin@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
-_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
-,204);padding-left:1ex">Fix errors in unlock_user() calls:<br>
-- unlock_user() with len=3D1 instead of len=3Dwritten<br>
-- unlock_user() with len=3D1 instead of len=3D0<br>
-<br>
-Signed-off-by: Nicholas Piggin &lt;<a href=3D"mailto:npiggin@gmail.com" tar=
-get=3D"_blank">npiggin@gmail.com</a>&gt;<br>
----<br>
-=C2=A0bsd-user/bsd-misc.c | 2 +-<br>
-=C2=A0bsd-user/bsd-misc.h | 2 +-<br>
-=C2=A0bsd-user/bsdload.c=C2=A0 | 2 +-<br>
-=C2=A03 files changed, 3 insertions(+), 3 deletions(-)<br></blockquote><div=
-><br></div><div><br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mail=
-to:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div>=C2=A0</div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">
-diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c<br>
-index 3e1968718f..eac3edb8ac 100644<br>
---- a/bsd-user/bsd-misc.c<br>
-+++ b/bsd-user/bsd-misc.c<br>
-@@ -95,7 +95,7 @@ abi_long host_to_target_semarray(int semid, abi_ulong tar=
-get_addr,<br>
-=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; nsems; i++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0__put_user(array[i], host_array + i);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 unlock_user(array, target_addr, 1);<br>
-+=C2=A0 =C2=A0 unlock_user(array, target_addr, nsems * sizeof(unsigned shor=
-t));<br>
-=C2=A0 =C2=A0 =C2=A0return 0;<br>
-=C2=A0}<br>
-<br>
-diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h<br>
-index 13e40d9cde..13abc7e3b1 100644<br>
---- a/bsd-user/bsd-misc.h<br>
-+++ b/bsd-user/bsd-misc.h<br>
-@@ -211,7 +211,7 @@ static inline abi_long do_bsd___semctl(int semid, int s=
-emnum, int target_cmd,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0out:<br>
--=C2=A0 =C2=A0 unlock_user(target_un, un_ptr, 1);<br>
-+=C2=A0 =C2=A0 unlock_user(target_un, un_ptr, 0);<br>
-=C2=A0 =C2=A0 =C2=A0return ret;<br>
-=C2=A0}<br>
-<br>
-diff --git a/bsd-user/bsdload.c b/bsd-user/bsdload.c<br>
-index 5b3c061a45..9ea3b93825 100644<br>
---- a/bsd-user/bsdload.c<br>
-+++ b/bsd-user/bsdload.c<br>
-@@ -30,7 +30,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src=
-,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -TARGET_EFAULT;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0memcpy(host_ptr, src, len);<br>
--=C2=A0 =C2=A0 unlock_user(host_ptr, dest, 1);<br>
-+=C2=A0 =C2=A0 unlock_user(host_ptr, dest, len);<br>
-=C2=A0 =C2=A0 =C2=A0return 0;<br>
-=C2=A0}<br>
-<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
+In fact, a vfio-platform motivated feature is arguably on worse footing now.
 
---0000000000003409d5064d81161b--
+More importantly, QEMU now has support for vfio-user, so I believe you can already do this.  The model would be a vfio-noiommu userspace driver that exposes a vfio-user interface for QEMU.
+
+All of the previous issues with security and virtualization still remain with implementing this support directly in QEMU.  Providing a DMA capable no-iommu device to a QEMU sandbox negates any isolation it might otherwise provide.  With the vfio-user no-iommu driver model, you take on the security burden to use only non-DMA capable devices, or mediate the access, rather than asking the QEMU community to assume that risk.  Thanks,
+
+Alex
 
