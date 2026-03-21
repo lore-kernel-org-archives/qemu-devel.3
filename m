@@ -4,104 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1CB1099B4C
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 00:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1870B1099B58
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 00:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3kJ9-0003QZ-Mc; Fri, 20 Mar 2026 20:35:15 -0400
+	id 1w3kWe-0005R3-AE; Fri, 20 Mar 2026 20:49:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w3jqC-0000g2-Km
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:05:22 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3kWd-0005Qr-1E
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:49:11 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w3jqA-0000wn-Qj
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:05:20 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-8cd8576a512so396992585a.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 17:05:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774051517; cv=none;
- d=google.com; s=arc-20240605;
- b=f4OLWND0n7P0I2j4KlnVHyvHpRtxA3EP+zbbHGJ4LyvN8H2RmNI8/IeFAA+lB3V44s
- RIAR7xvGZs3fNZFkVsEePT/aAfqSrqLR1yb+Q2FbGn340xJfOkeADv75M5QGVUGfxuNr
- 961KXBsFzdeJf1v0twYBeqS9l+anzB+g6hqLUadHGshsYfWwFHZSljeAFnb1jCwW47is
- Ru/5JToSBPZ5H179PItdcO41k9GycnqV3iBE3uyj9cUBXPScbR/sb8XAyNrO++HuMed5
- yaOF7ktStx8TQvdbHf56RUNmD5Ym0xTEAt18DfMkwa1xBV77TeGUNxL5/TtmxSfaGKmD
- ZesA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ERCb0Y8/px1upiAhwrl+R7gbGR6nGopZFCRUobbhDcM=;
- fh=ucZDN36yBpJn58JtaLk0s8jvtfTXFaz6Qj/yP7K9RF0=;
- b=hNk8mF2cCjjEcY89ixY3PK34AhzcwDeZP9JTVBvKgH94FKfBYDxpoe9TBFtSUtq38d
- XncAI5Ful8ltwHs5TwOyDDBO7Rzw2X0Aks7PF0wVvrNOASB8VCz1QjP1/8x2zB9BCeYZ
- 2+tbaeTyr/v5RlGCLEImEpX8PgisnzC++oPfpE4jk4SmLPxB3jPB5pnwLldllna3W4Qj
- ePWD9z9Ueo9sZkm/5XYN+zY9eJg1DdiRLOVuADPZQ5EP3mC8XU1p4vTapIGKrh4snf2e
- 3g3ILNUOh2mEKiVj3xhSieXXaQLHkVXbaozUyYIUDGMWUtOq3jm+kEYDrnd8keTydEqB
- E86A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w3kWb-00025V-HF
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 20:49:10 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-35b97ed057cso684991a91.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 17:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774051517; x=1774656317; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1774054147; x=1774658947; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ERCb0Y8/px1upiAhwrl+R7gbGR6nGopZFCRUobbhDcM=;
- b=T84bWEUgJX8Uc4vLdjmnhhSneUhfX/2pFvm4xQqzeeHapfBCJ7ilb//qFfyFRMHGEs
- g8LD8UunPcgCdjfm+bopVh/zxipFxdSDPEts+uR9fgLfEB4DXcdpJg7YgSolQp8qwTap
- ZBu5qBdFlSTNgNwGPvwQB1MF60wL9hQHR0DmioBXlqepegzzv/3T31UMMXxqC5u5X5+X
- snkzGCzK77dtaG+B+EvPoRp9rywvboQstFKX8Ws8bsRosGBgC+YUDI05CZwenmNeRImr
- fRhRFzN/yuPnpW30pnyeLZ19H0CanL+yznHe0oAIowIDdgv6ZPoh0It+wkqOJDOhCvRw
- lA4Q==
+ bh=3Vn78SmAAKLbz3+kHLOEDEuAaN8ZeC+NU4A6mFcmLx8=;
+ b=MFrxdr7PfbLJ9SKsElFlsyx408sS2LhE5YFhZ1IcfockPDKibiRKCQHymh0cni9WJ3
+ qdgPsHqTvDvxQsCjp6KVwgD4i7639EwjZFpiyNbK66jEtCSBbuRL3Go2SNx6Au+92e2P
+ 5IWwKTMIZYNUwztU38jorDdAv58fJrkd6cDkauZ1tTvkBXK164p69VP3rph+QbGfzKmd
+ tSgov0hhRJLw8swufbMogeeY+O6ifsT1sCxn2lMFN4W5MxvAlmmdO/gQXxpnsAFf8X2p
+ d+vgfRQt8/3flr5J5DH8mf45gkaNtuXP8bpGHyJpkk3VFHqLYG33eaaYsobmlIo6AXzY
+ SVxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774051517; x=1774656317;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1774054147; x=1774658947;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ERCb0Y8/px1upiAhwrl+R7gbGR6nGopZFCRUobbhDcM=;
- b=f5HloR3UWB7xDZwbpcr4VLbd3CwUvfAHq2V6syMbByOZu61t5/NiXHh0InSqSJKV5G
- yGFPtsgpsogGijFsZvPGGSuPC4N4ffM+KyWeZE4b8BMhY+qKYG60qXvmYJzRR07WIPcP
- vhdOzrweUVCKK9Lx3XtBYFYPZcCUtoX8TaNtpp0fAStftTSBjsJID11xy1RYZcDoGq2q
- 3YOz3mTKF0iqclO1dWIw9lFQvHY+28mE+ztiJomtROQaua1GNJOzhgPFtlFuTuOHS4wI
- ZL2/cadAAsNRS0nHIeNUvvc7PuvhNoABY7XPZTxUQm/3TXTGu606GATiQgAvMtanQIYB
- c4XQ==
-X-Gm-Message-State: AOJu0YwGzLU5EcLaor3u2gsSiQqHxRzQ6HgGrOar2IfzGeuD9Jnxdx2U
- khmaNvWdIqRnMZ/aKsAyADqx7CJO5B2HKfd0sGCBtfKvjViUJzivFiS/ELYy8JJCalsjLJ/mMod
- RNiUSd3lHP0Cao7sFm39Uo1gaEnrrzY0=
-X-Gm-Gg: ATEYQzxMx5ksm7RzFLv63QaQ5pAPEl5opmOtX16YLi7SC3HLisQN1aMEqyKHn4YpoUd
- JxhGLLHp6FDz3p9GJ60APYqntDyzZY0Y8g/yWzrvusaw+gmISG3br+AgELrm4lRhIhwtSTlq9JY
- Y7LC4EQuIlIJFGXv27G290xxL+upMtgqHmZqhsfOmybc3+2DevZLnVVWWlafyq7cCKqf/OGAjMe
- hWhkAxY0g5iG+9d3W9gEc6BZL4jSD3VsTZlH/sb2lpqGMe5TqZAnFhvmnw28I9zdajThDXbLl9T
- XfRfNdvB
-X-Received: by 2002:a05:6214:300f:b0:89c:50fb:31c0 with SMTP id
- 6a1803df08f44-89c85453c14mr76344296d6.10.1774051517081; Fri, 20 Mar 2026
- 17:05:17 -0700 (PDT)
+ bh=3Vn78SmAAKLbz3+kHLOEDEuAaN8ZeC+NU4A6mFcmLx8=;
+ b=gwwoDwexd1zrmu2w7THm5DRn6hJn6j9IlDjZdYLyzPp3Pux9HtDWp3ncHurWgUtT+x
+ 1OmeGNOYSAPn6H+BVRqVjb1biL7+Vi9Sjozx8TJku6CMpDmny4t8ZiwuFkqgYvkGwtqO
+ VfCbNLV2TC6qbcUZHYKY3FreEemuvPv/0BJBV4OEbjQK8Mse/KDhJqI2K74gzUNXkfdz
+ nsi1Vjo1Chr167hRxiLgctpZzSjPlMC7utVHzWOsU4Y3yu2BlXKzmchmWVOdR/3W2Ak+
+ xm3uYz8H9tY82DrP7NYZ3GCSQHSJVdM9YIY5L+vQD4sLb76NT7v4dae73PVVLs8EyMsE
+ OZ+g==
+X-Gm-Message-State: AOJu0YzmjxAdOOcXqkphQDFvut1VSeDff3tWddGqDeZfT9oUQ7X+Hoyu
+ he5DxMrLgNFG/6bxukSEo04puOwrq5/oelGrsnillPBNdXueBEzFD0woTur5fQ==
+X-Gm-Gg: ATEYQzworgzYgV+tsT8XH1/NLIv6cweY4AXKtFA47nRXhlQ1KseD1AGFfyvBYDXENHb
+ IZFr1bhz2ReeqXTBf03z9i5hPJyIeLockmHAAL5jLamuRS1ppZ6zRtxjjrp5Dn1FIahz7OCUImU
+ ZxXt3BF/GszXM5y/i9vXecwJyaLh3EXtPESLRCAHy8FwlHvzfHxZ5tGE8XYiNUOP3YGyA9kw3Lo
+ iqIyRhOoQK0rLX07HOp8jLI8hYoaFY/v5SeYO3ykHu1KhWymISR7w5OUSBFKMV1n9lKNOBNYGmw
+ HTiIfH5N2Q34VIjdmJVS7x0R+0WnIi4BUwCCTyuvcUMlZTRrKatafi/LX88WW2dkjmmw3cLu+XL
+ T2kJ4xvq5yAMTrasPMJXJWxpMZHw/0AeriZdmXPAy+pJG2lGUK6rHQ43CdY2k7HwZZmQXg0Vchh
+ f1lmlhXyg0sdxMzLHQxirKiXR57vNiAFkxMsf7e4da+as66KJqO9anPfeFOnpNkgDFi1bg
+X-Received: by 2002:a17:903:2984:b0:2b0:5ae9:ee4 with SMTP id
+ d9443c01a7336-2b0826d8307mr43580205ad.5.1774054147270; 
+ Fri, 20 Mar 2026 17:49:07 -0700 (PDT)
+Received: from lima-default (103.95.112.190.qld.leaptel.network.
+ [103.95.112.190]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b083527f84sm34637685ad.18.2026.03.20.17.49.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Mar 2026 17:49:06 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Subject: [PATCH 2/3] linux-user: Fix unlock_user API usage
+Date: Sat, 21 Mar 2026 10:48:35 +1000
+Message-ID: <20260321004836.500390-3-npiggin@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260321004836.500390-1-npiggin@gmail.com>
+References: <20260321004836.500390-1-npiggin@gmail.com>
 MIME-Version: 1.0
-References: <20260318193610.2043847-1-qguanni@gmail.com>
- <CAFEAcA_tiZT=vhEvtS3VAgjJLrYEZDBTQxm5xbbWmTBm8DLnng@mail.gmail.com>
-In-Reply-To: <CAFEAcA_tiZT=vhEvtS3VAgjJLrYEZDBTQxm5xbbWmTBm8DLnng@mail.gmail.com>
-From: Guanni Qu <qguanni@gmail.com>
-Date: Sat, 21 Mar 2026 01:05:06 +0100
-X-Gm-Features: AaiRm51UF9mdPY2RGhw3f76crzuOOmGD7nVuf5WrtieE34Y7J1Kj2H1XYhUKdTc
-Message-ID: <CAFzOa14yAMB7V1vGME=wzjk-vXE+Xxff06Rp0FSeEXFC8vbkKw@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, mcascell@redhat.com, 
- qemu-security@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=qguanni@gmail.com; helo=mail-qk1-x734.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 20 Mar 2026 20:35:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,63 +104,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Peter. v2 sent with your suggested comment added.
+Fix errors in unlock_user() calls:
+- unlock_user() with len=1 instead of len=written
+- unlock_user() with len=1 instead of len=0
+- unlock_user() with len=0 instead of len=1
 
-On Thu, Mar 19, 2026 at 6:34=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Wed, 18 Mar 2026 at 19:36, Jenny Guanni Qu <qguanni@gmail.com> wrote:
-> >
-> > When a guest sets MaxPacketSize to 0 in an OHCI Endpoint Descriptor,
-> > ohci_service_td() transfers 0 bytes per iteration. The Transfer
-> > Descriptor never completes because CBP never advances toward BE,
-> > causing ohci_service_ed_list() to loop indefinitely and hang QEMU.
-> >
-> > Add a check for MPS=3D=3D0 after extracting the field from ED flags.
-> > If MPS is zero, call ohci_die() to reset the controller and return
-> > an error, preventing the infinite loop.
-> >
-> > Fixes: CVE-2026-3890
-> > Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
-> > Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-> > ---
-> >  hw/usb/hcd-ohci.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> > index 1aeed9286f..b93a99593e 100644
-> > --- a/hw/usb/hcd-ohci.c
-> > +++ b/hw/usb/hcd-ohci.c
-> > @@ -956,6 +956,10 @@ static int ohci_service_td(OHCIState *ohci, struct=
- ohci_ed *ed)
-> >          if (len && dir !=3D OHCI_TD_DIR_IN) {
-> >              /* The endpoint may not allow us to transfer it all now */
-> >              pktlen =3D (ed->flags & OHCI_ED_MPS_MASK) >> OHCI_ED_MPS_S=
-HIFT;
-> > +            if (pktlen =3D=3D 0) {
-> > +                ohci_die(ohci);
-> > +                return 1;
-> > +            }
->
-> The OHCI spec doesn't (as far as I can tell) say what the
-> hardware should do for this situation, so I guess "flag it
-> as an error" is a reasonable choice. I think it would be
-> useful to note in a comment that this is our best-guess, though:
->
-> /*
->  * The OHCI spec doesn't say what to do if the guest hands us
->  * an endpoint descriptor which specifies a MaximumPacketSize
->  * of zero, which would mean we can never actually make forward
->  * progress transferring data to it. We choose to treat it as
->  * an error.
->  */
->
-> With something like that,
->
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->
-> (Or if I've missed something in the spec, let me know...)
->
-> thanks
-> -- PMM
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ linux-user/linuxload.c | 2 +-
+ linux-user/syscall.c   | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
+index 85d700953e..79416a94c9 100644
+--- a/linux-user/linuxload.c
++++ b/linux-user/linuxload.c
+@@ -19,7 +19,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src, unsigned long len)
+         return -TARGET_EFAULT;
+     }
+     memcpy(host_ptr, src, len);
+-    unlock_user(host_ptr, dest, 1);
++    unlock_user(host_ptr, dest, len);
+     return 0;
+ }
+ 
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 7832a1aba5..13b8bd9ed3 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2989,7 +2989,7 @@ get_timeout:
+             if (put_user_u32(lv, optlen)) {
+                 return -TARGET_EFAULT;
+             }
+-            unlock_user(results, optval_addr, 0);
++            unlock_user(results, optval_addr, len);
+             break;
+         }
+ #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(4, 2, 0) */
+@@ -4006,7 +4006,7 @@ static inline abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
+         __put_user((*host_array)[i], &array[i]);
+     }
+     g_free(*host_array);
+-    unlock_user(array, target_addr, 1);
++    unlock_user(array, target_addr, nsems * sizeof(unsigned short));
+ 
+     return 0;
+ }
+@@ -7888,7 +7888,7 @@ static inline abi_long target_to_host_sigevent(struct sigevent *host_sevp,
+     host_sevp->sigev_notify = tswap32(target_sevp->sigev_notify);
+     host_sevp->sigev_notify_thread_id = tswap32(target_sevp->_sigev_un._tid);
+ 
+-    unlock_user_struct(target_sevp, target_addr, 1);
++    unlock_user_struct(target_sevp, target_addr, 0);
+     return 0;
+ }
+ 
+-- 
+2.51.0
+
 
