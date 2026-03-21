@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34EE1094486
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 15:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9771094489
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 15:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3yXx-000387-Qq; Sat, 21 Mar 2026 11:47:29 -0400
+	id 1w3yXx-00037f-EW; Sat, 21 Mar 2026 11:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1w3yXv-00036d-6H; Sat, 21 Mar 2026 11:47:27 -0400
-Received: from m16.mail.163.com ([220.197.31.2])
+ id 1w3yXv-00036e-7M; Sat, 21 Mar 2026 11:47:27 -0400
+Received: from m16.mail.163.com ([117.135.210.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1w3yXq-0003JR-T5; Sat, 21 Mar 2026 11:47:26 -0400
+ id 1w3yXr-0003JT-3a; Sat, 21 Mar 2026 11:47:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=z5
- ePYzr5dc8VqIY13zZ5UM75pHZbjpDXm6VJI6eKyJw=; b=Edv2XNgJgDm3hagTOe
- 3m7SIuSWyF8eG70buPIbVK2NErD7+0kH89oLAXMVAOKeNI8sjJOIBMS0bR/Z03ei
- 9sUiXfHTm4ETho7UeaB2Qx2XujSf497OAzcAlB5pPCF1DkZhhtknGicPsl7TFjNH
- J21QP0KsIHHpIGXHY08XjJUt0=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=MO
+ W1hNfAfn57B9gVKObv9M+ctxXe6YQiGWq7CTF+mIw=; b=BlzFhGVKhbwLdK0LZq
+ e7f1RpIHEZe7uaEmsXRy/IpxzaX/9teJxz/VQ+oHhw1HMjwchRELcAfhbIfIrBhG
+ mNSeWp+4DWiqhWkcMaMwQ8rEfEDxDdaYUjk9+l0ycRf9H0RMZfOTKRLFx6MGmkDO
+ jfXHTol1cxZhdNW667NpoqT+w=
 Received: from dt-VM.localdomain (unknown [])
- by gzsmtp5 (Coremail) with SMTP id QCgvCgAH9XF2vb5p1YbwTQ--.2111S4;
- Sat, 21 Mar 2026 23:47:05 +0800 (CST)
+ by gzsmtp5 (Coremail) with SMTP id QCgvCgAH9XF2vb5p1YbwTQ--.2111S3;
+ Sat, 21 Mar 2026 23:47:04 +0800 (CST)
 From: Tao Ding <dingtao0430@163.com>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v1 2/5] PL011 generate receive timeout interrupt
-Date: Sat, 21 Mar 2026 23:46:57 +0800
-Message-ID: <3411a43d161ef59db3db1d7ed0f84839d50ceb33.1774099044.git.dingtao0430@163.com>
+Subject: [PATCH v1 1/5] Fixed the PL011 FIFO level bug
+Date: Sat, 21 Mar 2026 23:46:56 +0800
+Message-ID: <53bae159845bae966f620b42e7873b7f24404284.1774099044.git.dingtao0430@163.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1774099044.git.dingtao0430@163.com>
 References: <cover.1774099044.git.dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: QCgvCgAH9XF2vb5p1YbwTQ--.2111S4
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KFWrWr1ktw4fAw48KFyUWrg_yoW8GFy5pr
- ZY9Fy5Gwn7Kr18Zr4ayw4kXF13Zr1vvayjkry8A34UZas8Gw1rXr9rAayag3y2kFWft3yj
- vFnIqr1UZF929aUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07Uga9hUUUUU=
+X-CM-TRANSID: QCgvCgAH9XF2vb5p1YbwTQ--.2111S3
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Kw4rur48Jry7ur4rKr15Jwb_yoW8Cw47pF
+ na93W5Kas7CF1rXr4rA3WDJr4avFn2qFW2yrWxuFWFva43JrnYgrn2kay2g347WFWSv3yU
+ uF43Xr4UJr17uaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zR-18kUUUUU=
 X-Originating-IP: [101.204.36.117]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4hmX1Wm+vXnWTgAA3y
-Received-SPF: pass client-ip=220.197.31.2; envelope-from=dingtao0430@163.com;
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-RmX1Wm+vXkX8gAA3Q
+Received-SPF: pass client-ip=117.135.210.5; envelope-from=dingtao0430@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: 0
 X-Spam_score: -0.1
@@ -55,9 +55,8 @@ X-Spam_bar: /
 X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,45 +73,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After changing the read_trigger, no interrupt will be generated when the data 
-in the rx FIFO of pl011 does not reach the FIFO level. This will cause input 
-in the console to have no effect in Linux, until data input exceeds the FIFO level.
+According to TRM, PL011 generate a burst or a single DMA request based on the FIFO level
 
-But UART will generate an interrupt after a timeout period after RX receives the data. 
-The relevant description of this in TRM : 
-    *The receive timeout interrupt is asserted when the receive FIFO is not empty, and no 
-    more data is received during a 32-bit period.
+The FlowCntrl field description is as follows:
+     Receive interrupt FIFO level select. 
+     b000 = Receive FIFO becomes >= 1/8 full
+     b001 = Receive FIFO becomes >= 1/4 full
+     b010 = Receive FIFO becomes >= 1/2 full
+     b011 = Receive FIFO becomes >= 3/4 full
+     b100 = Receive FIFO becomes >= 7/8 full
+     b101-b111 = reserved
 
-To simplify this operation, pl011 immediately generates an RT interrupt upon receiving data, 
-which means the period is triggered instantly. (QEMUTimer triggering is also optional)
+Only the read_trigger of rx has been changed, and there is no need to set a trigger for tx 
+because write tx data always completes in a blocking manner. That means tx FIFO is empty.
 
 Signed-off-by: Tao Ding <dingtao0430@163.com>
 ---
- hw/char/pl011.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/char/pl011.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index c96a706da1..58803f0fc2 100644
+index cb12c3e224..c96a706da1 100644
 --- a/hw/char/pl011.c
 +++ b/hw/char/pl011.c
-@@ -200,6 +200,9 @@ static void pl011_fifo_rx_put(void *opaque, uint32_t value)
-     }
-     if (s->read_count == s->read_trigger) {
-         s->int_level |= INT_RX;
-+    }
-+    if (s->read_count) {
-+        s->int_level |= INT_RT;
-         pl011_update(s);
-     }
+@@ -129,6 +129,14 @@ static const uint32_t irqmask[] = {
+     INT_E,
+ };
+ 
++static const uint32_t fifo_level[] = {
++    PL011_FIFO_DEPTH / 8,
++    PL011_FIFO_DEPTH / 4,
++    PL011_FIFO_DEPTH / 2,
++    PL011_FIFO_DEPTH * 3 / 4,
++    PL011_FIFO_DEPTH * 7 / 8,
++};
++
+ static void pl011_update(PL011State *s)
+ {
+     uint32_t flags;
+@@ -344,17 +352,24 @@ static uint64_t pl011_read(void *opaque, hwaddr offset,
+     return r;
  }
-@@ -281,6 +284,7 @@ static uint32_t pl011_read_rxdata(PL011State *s)
-     }
-     if (s->read_count == 0) {
-         s->flags |= PL011_FLAG_RXFE;
-+        s->int_level &= ~INT_RT;
-     }
-     if (s->read_count == s->read_trigger - 1) {
-         s->int_level &= ~INT_RX;
+ 
++static uint32_t pl011_decode_fifo_level(uint32_t val)
++{
++    if (val > 4) {
++        qemu_log_mask(LOG_GUEST_ERROR, "pl011: invalid fifo level field\n");
++        return 1;
++    }
++    return fifo_level[val];
++}
++
+ static void pl011_set_read_trigger(PL011State *s)
+ {
+-#if 0
+     /* The docs say the RX interrupt is triggered when the FIFO exceeds
+        the threshold.  However linux only reads the FIFO in response to an
+        interrupt.  Triggering the interrupt when the FIFO is non-empty seems
+        to make things work.  */
+     if (s->lcr & LCR_FEN)
+-        s->read_trigger = (s->ifl >> 1) & 0x1c;
++        s->read_trigger = pl011_decode_fifo_level(extract32(s->ifl, 3, 3));
+     else
+-#endif
+         s->read_trigger = 1;
+ }
+ 
 -- 
 2.43.0
 
