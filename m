@@ -4,51 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF8DFC72AC
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 06:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C120FC72AB
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 06:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4C6G-0007jE-EC; Sun, 22 Mar 2026 02:15:50 -0400
+	id 1w4CB2-0001a1-Mx; Sun, 22 Mar 2026 02:20:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w4C6D-0007iF-V6; Sun, 22 Mar 2026 02:15:46 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w4CAz-0001Zr-SY
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 02:20:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w4C6B-0002Gj-8Z; Sun, 22 Mar 2026 02:15:45 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w4CAy-0002bO-EF
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 02:20:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774160116; bh=BE/6JDPwOkH0enXNea6DhRaQionSDnWi4AHYTzVjiBM=;
+ t=1774160424; bh=HLFZXaMtDYifUbKOtdB5vo4ZJNR4l9TAph46r+C9bRg=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=MhdLHozzM9PEsvcl/STyBB8TRFMkCJ96DDIAsGc55x7yJOAqcgFx+N0McSrBTZdLq
- CPuBM1bXCwccGkXFxWi7GjQD+equoepp6R6lBFoiS9vc3YgE+UjyNIcqYM2uPEOpeH
- VN5n18uWo/1o5Z3XUeHy44QFdBWdJXzfl/PPMWKp9kAjAQs6W6sxHvyAHF03SoxmZX
- lyUkhpvlu65buAQeSoXTi8gQhgFJZ+H96bso8Tb4wVPWfxBVzQDip9h9q7eqSOLhl5
- Pedx29gmqPbyvWPjPjegwMiatfun9+L3euc84N6M60qFEwEHSlo7brZq0/UTGuMEFS
- s4bYhURY7g0Dg==
+ b=BFswrIkV5uSlGEi8TVKIsoDF6t3Auv+iuwUtJBb/HyQlBv9TtmoEsIGAKQrV7MHUl
+ LgSfmlptpbgoD+q/KoeeWHLs5If+b2rU40aIA6Xg+NCAqqdjMGONXUgBvu/rMazY9c
+ WPMJX2eHOsUA4b13CS7YMuUPlvj2J447bZoH/LqqGAH23JUbmiLI7nvP9XUUSHGA8B
+ 91NxYjlEkqYzc0SFRDvHcRrsbHSrEnBdFPBuvdejJwgxIR6ZjsK680kCPC2vMwHQ+7
+ QDtT7OjqbMnU4vBh3t19FA4NQRMm08pyj8lwUe4ZlNbQn30YDu56VyZ3j88rsLQ/Y0
+ iHFs31ltwaARQ==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 5C9AF1962F1;
- Sun, 22 Mar 2026 09:15:16 +0300 (MSK)
-Message-ID: <8ca786b1-765b-4dc4-92fd-6ba6aeedf098@tls.msk.ru>
-Date: Sun, 22 Mar 2026 09:15:30 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 805431962FB;
+ Sun, 22 Mar 2026 09:20:24 +0300 (MSK)
+Message-ID: <35aa3161-0b34-4c0e-adee-975fb8cf24ba@tls.msk.ru>
+Date: Sun, 22 Mar 2026 09:20:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] chardev: Improve @docstring and clarify
- qemu_chr_write() uses
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20251112134143.27194-1-philmd@linaro.org>
- <0faef1dc-6fde-41b1-bf1e-8ecfe49033f7@tls.msk.ru>
- <a50b8ccb-4d13-431b-836e-b08e5add71bd@linaro.org>
- <95e61064-c8e8-4c36-9371-cbd28ab737c8@tls.msk.ru>
- <17f7b53d-dbb7-4090-a6ac-671c85dd611d@linaro.org>
+Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
+ deposition in rsqrte_f64
+To: Li-Hang Lin <lihang.lin@gmail.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20251226064225.791454-1-lihang.lin@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -94,9 +85,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <17f7b53d-dbb7-4090-a6ac-671c85dd611d@linaro.org>
+In-Reply-To: <20251226064225.791454-1-lihang.lin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -2
@@ -121,29 +112,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.02.2026 23:13, Philippe Mathieu-Daudé wrote:
-
->>>>  From this patchset, 1 change has now found its way to the master
->>>> branch:
->>>>
->>>>   chardev/char-pty: Do not ignore chr_write() failures
->>>>
->>>> Besides it, the following 2 changes were marked for-stable:
->>>>
->>>>   chardev/char: Allow partial writes in qemu_chr_write()
->>>>   chardev/char: Preserve %errno in qemu_chr_write()
->>>>
->>>> Are other changes (including the above 2) not needed anymore?
->>>
->>> They are, I need to reply to Marc-André and respin a v4...
->>>
->>> Old bugs so can wait 11.0 :S
->>
->> Found an old(ish) thread...  ping? :))
+On 26.12.2025 09:42, Li-Hang Lin wrote:
+> Fix an error in rsqrte_f64() where the sign bit was being
+> placed incorrectly. Specifically, ensure f64_sign is deposited
+> into bit 63.
 > 
-> Cc'ing new docs/ maintainer :P
+> Additionally, update the comments regarding the exponent (exp) bit
+> width to reflect the correct double-precision specifications.
 
-Ping *N?  11.0 is almost out already..
+Ping?  Or is this patch not needed anymore?
+
+Thanks,
 
 /mjt
+
+>   target/arm/tcg/vfp_helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
+> index e156e3774a..60188b2c7e 100644
+> --- a/target/arm/tcg/vfp_helper.c
+> +++ b/target/arm/tcg/vfp_helper.c
+> @@ -1078,8 +1078,8 @@ float64 HELPER(rsqrte_f64)(float64 input, float_status *s)
+>   
+>       f64_frac = recip_sqrt_estimate(&f64_exp, 3068, f64_frac, false);
+>   
+> -    /* result = sign : result_exp<4:0> : estimate<7:0> : Zeros(44) */
+> -    val = deposit64(0, 61, 1, f64_sign);
+> +    /* result = sign : result_exp<10:0> : estimate<7:0> : Zeros(44) */
+> +    val = deposit64(0, 63, 1, f64_sign);
+>       val = deposit64(val, 52, 11, f64_exp);
+>       val = deposit64(val, 44, 8, extract64(f64_frac, 52 - 8, 8));
+>       return make_float64(val);
+
 
