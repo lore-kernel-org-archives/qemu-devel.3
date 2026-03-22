@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15665D58CAC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C8ED58CAA
 	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 21:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4Qo4-0003jA-Pr; Sun, 22 Mar 2026 17:58:00 -0400
+	id 1w4Qo2-0003ib-JJ; Sun, 22 Mar 2026 17:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w4Qnw-0003h0-5H
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 17:57:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w4Qnt-0003gT-UE
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 17:57:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w4Qnu-00074f-Q6
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 17:57:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w4Qns-000744-Fg
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 17:57:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774216669;
+ s=mimecast20190719; t=1774216667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w+zR4CHZKqEzE6EWL7+Cb/iO18yqfAa7R5SdF4FE98I=;
- b=QJUbM72ZPx3QFaBUOYDgCYltuOd0z6gSwl+qxVkTbFNSqN7je361xcmJfkaMrgLfnU3STO
- dwzg5q2CC/piLM8nsC2luvrkXmOf6YMXyS2sOqAQFjCJ3gKd0vUfrWvCEQfcVetNgAo3jD
- JDdAYzKEwOhmR6C2Px9ml0eFSTyx7Js=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=RWPs4YD2eLCJholyqr+znF7lgjSEcqldUvmPGI4O6oM=;
+ b=OZYIl7kPiiWd4MzH0FO0USI4WXi4XSpKXEBqS63XSEEOaniwL/3VVCFfkS7sJSCBQWLE+H
+ 0er/+mr428SVHLw3nm1YCrIPssT6LPXMdEaS3dVfgm6D//XD5Vs4hJz1bFIhMuBkMffbup
+ vULq/RssagHzoydr3OEipBKq7lvDDO4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-fkfgBn5lOLmpknpw40_tTg-1; Sun,
- 22 Mar 2026 17:57:46 -0400
-X-MC-Unique: fkfgBn5lOLmpknpw40_tTg-1
-X-Mimecast-MFC-AGG-ID: fkfgBn5lOLmpknpw40_tTg_1774216665
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-M7GzWShoOXy-BpmvCmvzLw-1; Sun,
+ 22 Mar 2026 17:57:44 -0400
+X-MC-Unique: M7GzWShoOXy-BpmvCmvzLw-1
+X-Mimecast-MFC-AGG-ID: M7GzWShoOXy-BpmvCmvzLw_1774216663
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68202195608B; Sun, 22 Mar 2026 21:57:45 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC0B51800464; Sun, 22 Mar 2026 21:57:42 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.42])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 665D019560B7; Sun, 22 Mar 2026 21:57:43 +0000 (UTC)
+ id E2D1D19560B7; Sun, 22 Mar 2026 21:57:40 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 3/3] hw/i2c/aspeed_i2c: Remove assert
-Date: Sun, 22 Mar 2026 22:57:32 +0100
-Message-ID: <20260322215732.387383-4-clg@redhat.com>
+Subject: [PATCH 2/3] ftgmac100: Improve DMA error handling
+Date: Sun, 22 Mar 2026 22:57:31 +0100
+Message-ID: <20260322215732.387383-3-clg@redhat.com>
 In-Reply-To: <20260322215732.387383-1-clg@redhat.com>
 References: <20260322215732.387383-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,34 +84,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the Aspeed datasheet, the RX_BUF_LEN_W1T and
-TX_BUF_LEN_W1T bits of the A_I2CS_DMA_LEN (0x2c) register allow
-firmware to program the TX and RX DMA length (TX_BUF_LEN and
-RX_BUF_LEN fields of the same register) separately without the need to
-read/modify/write the value.  If RX_BUF_LEN_W1T and TX_BUF_LEN_W1T
-bits are 0, then both TX and RX DMA length will be written.
+Currently, DMA memory operation errors in the ftgmac100 model are not
+all tested and this can lead to a guest-triggerable denial of service
+as described in https://gitlab.com/qemu-project/qemu/-/work_items/3335.
 
-When setting the RX_BUF_LEN field, the TX_BUF_LEN field being set is
-not an invalid condition. Remove the assert.
+To fix this, check the return value of ftgmac100_write_bd() in the TX
+path and exit the TX loop on error to prevent further processing. In
+the event of a DMA error, also set FTGMAC100_INT_AHB_ERR interrupt
+flag as appropriate.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3315
+The FTGMAC100_INT_AHB_ERR interrupt status bit only applies to the
+AST2400 SoC; on newer Aspeed SoCs, it is a reserved bit.
+Nevertheless, since it is supported by the Linux driver and it should
+be safe to use in the QEMU implementation across all SoCs.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/i2c/aspeed_i2c.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/net/ftgmac100.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index ad6342bec0d4..5d18f8d49ea4 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -780,7 +780,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-         bus->regs[R_I2CS_DMA_RX_ADDR] = value;
-         break;
-     case A_I2CS_DMA_LEN:
--        assert(FIELD_EX32(value, I2CS_DMA_LEN, TX_BUF_LEN) == 0);
-         if (FIELD_EX32(value, I2CS_DMA_LEN, RX_BUF_LEN_W1T)) {
-             ARRAY_FIELD_DP32(bus->regs, I2CS_DMA_LEN, RX_BUF_LEN,
-                              FIELD_EX32(value, I2CS_DMA_LEN, RX_BUF_LEN));
+diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+index 69a38adb627f..25c3ede72cbb 100644
+--- a/hw/net/ftgmac100.c
++++ b/hw/net/ftgmac100.c
+@@ -624,7 +624,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
+         bd.des0 &= ~FTGMAC100_TXDES0_TXDMA_OWN;
+ 
+         /* Write back the modified descriptor.  */
+-        ftgmac100_write_bd(&bd, addr);
++        if (ftgmac100_write_bd(&bd, addr)) {
++            s->isr |= FTGMAC100_INT_AHB_ERR;
++            break;
++        }
+         /* Advance to the next descriptor.  */
+         if (bd.des0 & s->txdes0_edotr) {
+             addr = tx_ring;
+@@ -1134,7 +1137,10 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
+             bd.des0 |= flags | FTGMAC100_RXDES0_LRS;
+             s->isr |= FTGMAC100_INT_RPKT_BUF;
+         }
+-        ftgmac100_write_bd(&bd, addr);
++        if (ftgmac100_write_bd(&bd, addr)) {
++            s->isr |= FTGMAC100_INT_AHB_ERR;
++            break;
++        }
+         if (bd.des0 & s->rxdes0_edorr) {
+             addr = s->rx_ring;
+         } else {
 -- 
 2.53.0
 
