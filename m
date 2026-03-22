@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A676FC72AC
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 06:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2D5AFC72AE
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 06:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4CY2-0004zA-L7; Sun, 22 Mar 2026 02:44:30 -0400
+	id 1w4Ci1-0006PQ-0P; Sun, 22 Mar 2026 02:54:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w4CY1-0004yl-5X
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 02:44:29 -0400
-Received: from mail-dl1-x1244.google.com ([2607:f8b0:4864:20::1244])
+ id 1w4Chz-0006P6-VD
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 02:54:47 -0400
+Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w4CXz-0005Px-Ni
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 02:44:28 -0400
-Received: by mail-dl1-x1244.google.com with SMTP id
- a92af1059eb24-126ea4e9694so4751320c88.1
- for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 23:44:26 -0700 (PDT)
+ id 1w4Chy-0006AU-JK
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 02:54:47 -0400
+Received: by mail-dy1-x1343.google.com with SMTP id
+ 5a478bee46e88-2c0ea57fea7so3730616eec.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 23:54:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774161866; x=1774766666; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1774162485; x=1774767285; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1bnhlTsB5UucnK03Ih70PNZltznio/11H4/q6j/e0e0=;
- b=aJ3auvPn3t5462aFNIW7ukfOhSsnXIyLHW73J+i0l/r4YqbPZb1rb+mbqgqqUYaSuP
- dPl9Ee4ON6w/c7IZq3QAE9pKrhbSRfUueshVNkY+kcCOFl3GeuryfHjnlOWx6oU0W5y3
- 5crjYxapZ8/I+sY+49KYECHFRuJkf1oMPJS/6cHiFf2EYt2K9JhHEB+YX5jJmkfR9/Sa
- pYvfdXyPMWXCI+m4Aq/RKoi1bHxqTjOaz2Dpu2c4ejvXjfMSUTzCtAYzrwTmo/MZCZs7
- vUiSQW90PrIQB1tTEntQwYjU+eSR0iZ3dh7GdiFOKfmooTc+aL9iugnJ1+ot5a9DTaZW
- q5AA==
+ bh=lR4Lg5WMiC3gZZ1RZp8LEYhSlBo/OHfy5DCH0SCfqHQ=;
+ b=a4rOiamPlOrbalogjrE7+zZUPc6Qk8FNHUA8sGrqgYCiv1C1j7QLmQY4xDSj1SHXGB
+ GQZwjR5QqZPHD6zqA5YMMRsr3DFVl7xnk4eDc3rsnX6hCpajUvxU+Lp27WcXtCfjbqKm
+ K6r/1ndQDRM+VfVxGr6Snd30PSKL/gvfJL6bfkTMttWfmc2Vu1U78aZLIyOJSKvGHTqI
+ jay0/aXM2U04HnYlr3cgGfLqCpc91nvJeIaFc9sJY/bAmE6CjZEE60Q987ylgmeiietl
+ ZuxbzgXo1jzomB69wdAaxPjrh4q3N4V4Bgifg+WbteWQU2E/GvW4fMaNSwU1iW7PzPvY
+ Lrpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774161866; x=1774766666;
+ d=1e100.net; s=20251104; t=1774162485; x=1774767285;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1bnhlTsB5UucnK03Ih70PNZltznio/11H4/q6j/e0e0=;
- b=osQ61/hFWBDDjSz+WLArXm2SECdkQWuLuhHU76JR8/EXrFM45d1I2Cfh8DjDY3RrEF
- 1y0X3dQ3ubknh6A3oNRYZZpCU5zqrUc5cFFxBXWF2RGCOlzFB70K29Eov00j8as7G5U2
- LcgVkGlcAbeaAKa/e9cxgDSJ6qwqxAUT4uuuFGXEsb9QHeu/ZcTMoXK7mbpObwwqNIb8
- lPVq3BSBn9OfRnMyz7AJ3nxkEN7JwauxSB+UclJifdJQj0dNQepwfoMTWoz5JY2YaBli
- oUc2puCjLj0gt6WbjhBX29rQtYJpFRusw3fmRiB6SGhzWYT25oyTN7Gmy0baxOQ41Jkm
- zaHA==
-X-Gm-Message-State: AOJu0YwaCqAd+kbNUodWA7sPOzoG5pJ+jeg7CWW5pdlhrECsHHoTAZTA
- xG2mU2BOnf+JZyePFqAJoy09s9AEVLEmMARugXER+nZVamGv+oKz9Eve
-X-Gm-Gg: ATEYQzwTPmUYjhegh4UfJ6gGb4+bKoQF9MOixnbxVthACFDXSecRSF7pwAtGvCQA/6L
- 7afUSJskw6LedJ34JUr/JGPjO/ZIhhpfebw3yWvZeUV8ZQU0hnx6Ux30CuF/740m+x9k3+dtOi6
- IXGCpAStNNmOa4PbnXa+8jhWiNOdWJkb2j2W1SFtNH7hZANso6OWI+p/qAlC3eChFRI8MqfyujJ
- YKFLEsUCf4zX2wwQK3hjWmBOpJ6F3a8b9Bd5PEG4+eTLGn48FReAuUrrQS59tPzvYc7PcrfcNp1
- nyIjF/pOEjKeXukAmyiaDQRiMuyJ000CLr/TDJHJ6sJBKDmoDM4fGDJWwpKsd/QC+X9WcPVcpC3
- UTCmZYN8kY7Z2lsgqZV0cZPVh9V4SgNR4zF/DQJx5uCTV+m+R0QZrwmCTTp3itqfw8kFfGiHO7a
- ETcs7bpEVpjJQASFkSbl7WHio1DO9M8pOR8z58oWhQChRWtCT2zW7Cb0nk7AB5ld3/WLvc8nmgT
- AGYtbQERFS9MMFJFOKh5sXX94TL4qx4/TmMlrGsDw==
-X-Received: by 2002:a05:7022:6713:b0:128:d6c3:9b23 with SMTP id
- a92af1059eb24-12a7265fd74mr4711262c88.14.1774161865547; 
- Sat, 21 Mar 2026 23:44:25 -0700 (PDT)
+ bh=lR4Lg5WMiC3gZZ1RZp8LEYhSlBo/OHfy5DCH0SCfqHQ=;
+ b=lniwBh3WjX2eu3608Je7cO+XoEMLmqBrmFWPlRpecuoP3ubOq1FRVCzs/1lHkpcBb8
+ jwXlQw23XOXmj/NRIa6VPoEqTz807w6E1nz7lNWt97b981bQRCtUxC2Vu68mN4rByQ7S
+ /ac/HbqHbIMyOZVZjsFU2L4tArX+gMlSuX+2KL8Iv3aT3aYC3KVsItiobq5wOibA2z/Z
+ LJN7c617e3AZwGk2nGH2h7xVr1RmuXdcclVApG31tITDzGuETPLg+gJXtSrkPntUgqRk
+ 9andzY7q6c0kJWE5j8TV1ToDVMppRimvNTJ0kCc2we/bVi4TjB4oftiDMW/T3KGkFM1B
+ xR1Q==
+X-Gm-Message-State: AOJu0YyIS+zHWdN5ztDwo8OTo/wdgsdezNFmef08HQSyopiOwCPgcORS
+ 6IkAi9WMPXUZ4XvQn9I2h1jDMlvyB71ZGnt4i4MLzMAUbb0aAq0HblC6
+X-Gm-Gg: ATEYQzxbyjVoi5bG0++VzoFuS5HZMyNzJxQbCUGEpLWg2aJiBm8xcC5axoFzPZA09xJ
+ baRatPTlOL/DCdcFoswlDXC5snutT2XfhyJ5uLfHmb5ze/aQe/siF/9ObVFJMcTYKVe/XWd/TxS
+ XUNiZhXqVzdJBNr/NqSpQy32hZ1ESbKzqgeldEiKlkdpGo6pp5YXwdK6RTVYZxUXO5+kiDrQz15
+ G/cTn7AUM5Z/7S/mfHQ7AnQOj2uxyEADna/cKtKAge9TI6bgwYrUpeuTuvCXfoj0AWRbQpJeCdM
+ 93WziFfcPxVV9JR5rEatwDl0MyGGP32yseFbq4XGYAInA8IgKgXLl1QsN6vU16pAgafmeWS3q7N
+ IcQXXgeEbO2u7izKe4TZH7tjDUcW6IBINDqfzNN1j386MhBM1qzm/K/j9TZdQMoz00iKlx47C4A
+ dRGGLGZAUHPAiqpW30YJ1eIlaexBiUkjllelpLUmhByvy6lq1G9p1AiADI+0NrwFBwqb8Kwzk49
+ nOEZDaq6BEiji74xFa08/uGAbYBi1s=
+X-Received: by 2002:a05:7023:b14:b0:128:bd5b:61f6 with SMTP id
+ a92af1059eb24-12a726dd98emr3161154c88.35.1774162484738; 
+ Sat, 21 Mar 2026 23:54:44 -0700 (PDT)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12a734bbb57sm6838365c88.10.2026.03.21.23.44.21
+ 5a478bee46e88-2c10b2d673asm10851401eec.24.2026.03.21.23.54.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Mar 2026 23:44:25 -0700 (PDT)
-Date: Sun, 22 Mar 2026 14:44:14 +0800
+ Sat, 21 Mar 2026 23:54:44 -0700 (PDT)
+Date: Sun, 22 Mar 2026 14:54:31 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>, 
@@ -74,16 +74,16 @@ Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 3/3] linux-user: riscv: Fix signal frame user mapping
-Message-ID: <ab-PsVKa48NWJCTO@ZEVORN-PC.localdomain>
+Subject: Re: [PATCH 2/3] linux-user: Fix unlock_user API usage
+Message-ID: <ab-Q2znE0qdtTRsT@ZEVORN-PC.localdomain>
 References: <20260321004836.500390-1-npiggin@gmail.com>
- <20260321004836.500390-4-npiggin@gmail.com>
+ <20260321004836.500390-3-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260321004836.500390-4-npiggin@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1244;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1244.google.com
+In-Reply-To: <20260321004836.500390-3-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,30 +106,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 21, 2026 at 10:48:36AM +1000, Nicholas Piggin wrote:
-> riscv signal frame setup is missing unlock_user_struct().
+On Sat, Mar 21, 2026 at 10:48:35AM +1000, Nicholas Piggin wrote:
+> Fix errors in unlock_user() calls:
+> - unlock_user() with len=1 instead of len=written
+> - unlock_user() with len=1 instead of len=0
+> - unlock_user() with len=0 instead of len=1
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  linux-user/linuxload.c | 2 +-
+>  linux-user/syscall.c   | 6 +++---
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
+> index 85d700953e..79416a94c9 100644
+> --- a/linux-user/linuxload.c
+> +++ b/linux-user/linuxload.c
+> @@ -19,7 +19,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src, unsigned long len)
+>          return -TARGET_EFAULT;
+>      }
+>      memcpy(host_ptr, src, len);
+> -    unlock_user(host_ptr, dest, 1);
+> +    unlock_user(host_ptr, dest, len);
+This fixes the writeback -- old code had 0 which meant
+no flush at all, so getsockopt results were silently
+lost under CONFIG_DEBUG_REMAP.
+
+Minor observation: getsockopt returns actual bytes in
+lv, so using lv rather than len would be more precise.
+That said, the swap loop above also uses len, so this
+is consistent with the existing code.
+>      return 0;
+>  }
+>  
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 7832a1aba5..13b8bd9ed3 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -2989,7 +2989,7 @@ get_timeout:
+>              if (put_user_u32(lv, optlen)) {
+>                  return -TARGET_EFAULT;
+>              }
+> -            unlock_user(results, optval_addr, 0);
+> +            unlock_user(results, optval_addr, len);
+>              break;
+>          }
+>  #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(4, 2, 0) */
+> @@ -4006,7 +4006,7 @@ static inline abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
+>          __put_user((*host_array)[i], &array[i]);
+>      }
+>      g_free(*host_array);
+> -    unlock_user(array, target_addr, 1);
+> +    unlock_user(array, target_addr, nsems * sizeof(unsigned short));
+>  
+>      return 0;
+>  }
+> @@ -7888,7 +7888,7 @@ static inline abi_long target_to_host_sigevent(struct sigevent *host_sevp,
+>      host_sevp->sigev_notify = tswap32(target_sevp->sigev_notify);
+>      host_sevp->sigev_notify_thread_id = tswap32(target_sevp->_sigev_un._tid);
+>  
+> -    unlock_user_struct(target_sevp, target_addr, 1);
+> +    unlock_user_struct(target_sevp, target_addr, 0);
+Right. This function only reads from target, so
+copy=0 (no writeback) is the correct semantic.
+
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
 Thanks,
 Chao
-> ---
->  linux-user/riscv/signal.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
-> index 358fa1d82d..22b1b8149f 100644
-> --- a/linux-user/riscv/signal.c
-> +++ b/linux-user/riscv/signal.c
-> @@ -126,6 +126,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+>      return 0;
+>  }
 >  
->      setup_ucontext(&frame->uc, env, set);
->      frame->info = *info;
-> +    unlock_user_struct(frame, frame_addr, 1);
->  
->      env->pc = ka->_sa_handler;
->      env->gpr[xSP] = frame_addr;
 > -- 
 > 2.51.0
 > 
