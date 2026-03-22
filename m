@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACE1109449E
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Mar 2026 23:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3D6FC72AB
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 05:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w45bJ-0002z7-QR; Sat, 21 Mar 2026 19:19:25 -0400
+	id 1w4Bet-0003EG-Ql; Sun, 22 Mar 2026 01:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <josemartins90@gmail.com>)
- id 1w45bG-0002yN-S6
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 19:19:22 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <josemartins90@gmail.com>)
- id 1w45bF-0002L2-8c
- for qemu-devel@nongnu.org; Sat, 21 Mar 2026 19:19:22 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-439c9bdc1eeso3015861f8f.3
- for <qemu-devel@nongnu.org>; Sat, 21 Mar 2026 16:19:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774135159; x=1774739959; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=taN5i5PqZqqZVzFggF/Qi/FgD648VkuyzwYuJ2FNeCg=;
- b=Rd5Eav4ZUby/GihHQyVAey3mKNhzYZnKhUSjn1qyvo61QeXwi/QOrmiKq/vE6H6/Ue
- M4Fk8ySg0IwtJcQI8P0pYrGC9uC0DFoQJxRCV9fmU71z2TKF7h+UnJpZwj/wItaeaI1I
- bYH61TNhw2N1/qQ9AtJ86lsMhhQYZZx3DJtHn0Hap1+p3LvWAYB3tieOhRA+26bRmddy
- UZNb8B0+xBHA4OdEKkBu/TZBO5NVyQKPV4wZ6bw4AHf1ZdGLGbxoM4P3NqnOigTe5Hz+
- L+/P2SG7ezbbcxDyHGmROW/YpDC3E0rDmNKC0L1iPWzbH72rSVdzMSMr84PfxzGfzOFe
- rwzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774135159; x=1774739959;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=taN5i5PqZqqZVzFggF/Qi/FgD648VkuyzwYuJ2FNeCg=;
- b=B7rYIqF3aKVg54ejtAO5xama5W/iBsKQNUcvtrNGvZRyR3IkSUA5jro1KxoEFRHsGu
- NgQtsW8+cN+h5M+kNB8OppbXPMurwHlBGUDPitz0omTxsF7M6JTsc9UHquCe6RnYV8qQ
- L3UcXoAtgBut/WvK9fZt1GcyfFlIJBq1qao9Kwah9UPMFobaN/OUiOdgFTfXJqC7fezp
- 5s8nxkrUBRvhOTu6pqopEJi0gzm2AKsBLzW8g/b4d7/+0bG5AkrM4Jcg7pc3nQBE93EJ
- Sai0lvxBVKq1MsooEKA9UR9YfB2LbvmJyCAsdRdvff4mMGRFXT2Lr9D73loHC1NCxqIZ
- WUVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/eqNE7G8Od7ao/9ZENpBWUQkQTP1YfwJyxgpc3LNEjl5vS0yUmI+IHM/MbsBmr22BhzoqDnMdJ4wE@nongnu.org
-X-Gm-Message-State: AOJu0Yx2tSgL/tO5r/THaRPSZ0R8CyKsSieNRsn9XO7KdbPeSxNEQUkx
- s6jXLfAwFRKTQyeDBHAzrzjcVv4r9GYJhmyKwskihTuBSW+cdrzyHKYS
-X-Gm-Gg: ATEYQzwiWDjalGl2eLKfw6Rj6b3UX3/Xnq9a3vw9eV0DhsgRecBF5SDTjHvVu3a1J4X
- 62g1y7cPrD5Tx4HWfraeh4pCpn7HssWjY00KFXrmEvmOEt/wRL+EEM+50j7BregWA8raZg7W+5y
- KERkD6W8jz+vFYQ5obDhHX79W7reuIlhX9R8VYBBYwRB++HhE1IdL+bcbyG9JIcypbJkXHnFSLf
- 8hXNJs7n26Ti0Wd2v8F1M1BcJmKozBisfxLMQNrwskr5SyKo6WEIprJgtNk+5tK4HcTGB5341aS
- 07U3fX91duL8ofdOCSRQ6Q0XHxiB21ocFcXVAdUj70fAIgAYQv9GQyn8v0H3++yQ8XUE5Cma3K1
- qKKbD4nw2WimWJmmr93Wlk1FOUxDEcG3tvayM3yq2cW+9bUnzT9tiY2FEBkeMBfEhaXwikAKzmN
- C0/fQDO415QEt2Iel43C/HR+8rCcrBdZGX9b+4WYVV6k07Xr+buxQpgEB1bHRMvyHCXVIZ
-X-Received: by 2002:a05:6000:184d:b0:43b:5762:2989 with SMTP id
- ffacd0b85a97d-43b6427b212mr12005836f8f.49.1774135159222; 
- Sat, 21 Mar 2026 16:19:19 -0700 (PDT)
-Received: from josecm-msi (a89-153-207-214.cpe.netcabo.pt. [89.153.207.214])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b644bd923sm20264431f8f.12.2026.03.21.16.19.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Mar 2026 16:19:18 -0700 (PDT)
-From: Jose Martins <josemartins90@gmail.com>
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, richard.henderson@linaro.org,
- Jose Martins <josemartins90@gmail.com>
-Subject: [PATCH 1/1] target/arm: fix s2prot not set for two-stage PMSA
- translations
-Date: Sat, 21 Mar 2026 23:19:16 +0000
-Message-ID: <20260321231916.2852653-1-josemartins90@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1w4BeZ-0003Bd-OM
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 01:47:13 -0400
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1w4BeT-00071q-9w
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 01:47:10 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1774158406; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=QHAo2IQidkMDiKlnv1Kc+cZpyNmZQWFJtEIBnld6NC6+ajffIuJK64jQRqQkk0wzgQWZyEk3D9bQHWJGNkZmg9HaOJnKSCAcydb1uI8CHA4jUyVecBZJD6lNqKyfM/taGb6SQQqhMkZGnHsOIL2hCFCiQ5WtG3eKbOtxy2pDxuA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1774158406;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=7P1xYMLeUjE9+Hfi/dJETq6lzV3wsL6TMHI4LGtIDBw=; 
+ b=dYufDDKeAF8h8GvN9oeeaLs5uNv9Ag74N5qKTKWmoUFDd82lSqoxPlf0ZTplMXKAj7CAyqQrWRebj5wfTZpginlFdfNR12sYBHQuRhvp3XPW3au94xnBkbpOyyQoFNIXrbNffPrkeQglP+XK7UfpdQg+wru/z3UfX8jICTq4dkM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774158406; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=7P1xYMLeUjE9+Hfi/dJETq6lzV3wsL6TMHI4LGtIDBw=;
+ b=mSbp/iiDYFyz4u522kDrbd99VZhkilFvllVR32wpbZcaAq3WThLWC9nL5Od88XWH
+ OuxpJbiGk0PTVA7VTi298khe1sHJaqk2V5WGNpwOn49H41V/vCnkU+SpR1PMT34Q92P
+ w5S0U2lTX/9qPN8btDC5Hvm/+SsOIT8uEJXrc4pQ=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1774158404498550.4959337986081;
+ Sat, 21 Mar 2026 22:46:44 -0700 (PDT)
+Date: Sun, 22 Mar 2026 13:46:44 +0800
+From: Li Chen <me@linux.beauty>
+To: "Alireza Sanaee" <alireza.sanaee@huawei.com>
+Cc: "Jonathan Cameron" <jonathan.cameron@huawei.com>,
+ "Fan Ni" <fan.ni@samsung.com>, "qemu-devel" <qemu-devel@nongnu.org>,
+ "linux-cxl" <linux-cxl@vger.kernel.org>
+Message-ID: <19d1414db80.826e8bdb1235052.3769762728645896585@linux.beauty>
+In-Reply-To: <20260318150108.00001a5f.alireza.sanaee@huawei.com>
+References: <20260317033304.3185291-1-me@linux.beauty>
+ <20260317165702.00003c98@huawei.com>
+ <20260318150108.00001a5f.alireza.sanaee@huawei.com>
+Subject: Re: [PATCH 0/3] cxl: avoid KVM internal error for fixed memory windows
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=josemartins90@gmail.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
+ helo=sender4-op-o15.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,64 +83,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-commit 015cefc0ed65 ("target/arm: Add in_prot_check to S1Translate")
-changed get_phys_addr_twostage() to combine stage 1 and stage 2
-permissions using the new s2prot field:
+Hi Alireza,
 
-  result->f.prot = s1_prot & result->s2prot;
+ ---- On Wed, 18 Mar 2026 23:01:08 +0800  Alireza Sanaee <alireza.sanaee@hu=
+awei.com> wrote ---=20
+ > On Tue, 17 Mar 2026 16:57:02 +0000
+ > Jonathan Cameron <jonathan.cameron@huawei.com> wrote:
+ >=20
+ > Hi Li,
+ >=20
+ > It looks like what you achieved is quite similar to what I have done in =
+the patchset Jonathan shared earlier.
+ >=20
+ > You have used memory_region_begin_transaction and memory_region_transact=
+ion_commit calls that I believe they are useful to be there given other exa=
+mples I checked in the qemu code base.
+ >=20
+ > I will be using those calls and will send another version. Also, please =
+let me know if that patchset actually addresses your usecase and fix the bu=
+g you have in the cover letter.
+=20
+Yes, exactly! Your patchset addresses my use case issue perfectly. Thank yo=
+u very much for your effort!
 
-The LPAE stage 2 path sets result->s2prot explicitly, but the PMSA
-stage 2 path (get_phys_addr_pmsav8) only sets result->f.prot, leaving
-s2prot at zero. This causes the combined permission to be zero,
-resulting in addr_read being set to -1 in the TLB entry and triggering
-an assertion in atomic_mmu_lookup() when the guest executes an atomic
-instruction on a two-stage PMSA platform (e.g. Cortex-R52 with EL2).
+Regards,
+Li
 
-Set s2prot from f.prot after the PMSA stage 2 lookup, consistent with
-what the LPAE path does.
+ > Thanks,
+ > Ali
+ >=20
+ > > On Tue, 17 Mar 2026 11:33:00 +0800
+ > > Li Chen <me@linux.beauty> wrote:
+ > >=20
+ > > > CXL fixed memory windows are currently modeled as an I/O MemoryRegio=
+n.
+ > > > When running under KVM, this makes the entire window look like MMIO.
+ > > > If Linux onlines the window as system RAM (e.g. for a CXL Type-3
+ > > > volatile memdev), normal CPU stores into the window trigger KVM
+ > > > instruction emulation. Instructions like XSAVEC are not supported by
+ > > > the emulator and abort the VM with a KVM internal error.
+ > > >=20
+ > > > Repro:
+ > > >   - Boot a guest with a CXL Type-3 volatile memdev and a fixed memor=
+y window.
+ > > >   - In the guest, create a RAM region and online it as system RAM:
+ > > >       cxl create-region -m -t ram -d decoder0.0 -w 1 -g 4096 mem0
+ > > >   - QEMU exits with a KVM internal error. =20
+ > >=20
+ > > Hi Li Chen,
+ > >=20
+ > > At least at first look this looks very like:
+ > >=20
+ > > https://lore.kernel.org/qemu-devel/20260306121151.883-1-alireza.sanaee=
+@huawei.com/
+ > >=20
+ > > Which was ready for merge as far as I was concerned, but missed gettin=
+g queued for
+ > > 11.0 (as last PCI pull request had gone) and is currently ready to go =
+in next cycle.
+ > >=20
+ > > Please see if that works for your case. If there are improvements I'd =
+prefer
+ > > to see them applied on top of that series than reinventing what I thin=
+k
+ > > is the same thing.
+ > >=20
+ > > It's not KVM specific as linear mappings (when valid) bring huge perfo=
+rmance
+ > > benefits on TCG as well as correctness for KVM.
+ > >=20
+ > > Jonathan
+ > >=20
+ > > +CC linux-cxl which is where CXL folk tend to hang out in larger numbe=
+rs
+ > > than on the qemu list.
+ > >=20
+ > >=20
+ > >=20
+ > > >=20
+ > > > Serial output excerpt:
+ > > >   KVM internal error. Suberror: 1
+ > > >   extra data[0]: 0x0000000000000001
+ > > >   extra data[1]: 0xc0314061c70f480f
+ > > >   extra data[2]: 0x024080f610478b48
+ > > >   extra data[3]: 0x0000000000000400
+ > > >   extra data[4]: 0x000000010000000f
+ > > >   extra data[5]: 0x00000004a0003140
+ > > >   extra data[6]: 0x0000000000000000
+ > > >   extra data[7]: 0x0000000000000000
+ > > >   emulation failure
+ > > >   RAX=3D0000000000000007 RBX=3Dffff8eace0001a40 RCX=3Dffff8eace00031=
+00 RDX=3D0000000000000000
+ > > >   RSI=3D0000000000000007 RDI=3Dffff8eace00030c0 RBP=3Dffffd48ac1747c=
+08 RSP=3Dffffd48ac1747bc8
+ > > >   R8 =3D0000000000000007 R9 =3D0000000000000007 R10=3D00000000000000=
+0d R11=3D0000000000000000
+ > > >   R12=3Dffff8ea945b51a40 R13=3Dffffd48ac166c000 R14=3D00000000000000=
+00 R15=3D0000000001200000
+ > > >   RIP=3Dffffffffaf77a14d RFL=3D00000256 [---ZAP-] CPL=3D0 II=3D0 A20=
+=3D1 SMM=3D0 HLT=3D0
+ > > >   ES =3D0000 0000000000000000 00000000 00000000
+ > > >   CS =3D0010 0000000000000000 ffffffff 00a09b00 DPL=3D0 CS64 [-RA]
+ > > >   SS =3D0018 0000000000000000 ffffffff 00c09300 DPL=3D0 DS   [-WA]
+ > > >   DS =3D0000 0000000000000000 00000000 00000000
+ > > >   FS =3D0000 00007f997da3fec0 00000000 00000000
+ > > >   GS =3D0000 ffff8eab0535d000 00000000 00000000
+ > > >   LDT=3D0000 fffffe7600000000 00000000 00000000
+ > > >   TR =3D0040 fffffe767cf8f000 00004087 00008b00 DPL=3D0 TSS64-busy
+ > > >   GDT=3D     fffffe767cf8d000 0000007f
+ > > >   IDT=3D     fffffe0000000000 00000fff
+ > > >   CR0=3D80050033 CR2=3D000055fd193a6468 CR3=3D000000010930c000 CR4=
+=3D00350ef0
+ > > >   DR0=3D0000000000000000 DR1=3D0000000000000000 DR2=3D00000000000000=
+00 DR3=3D0000000000000000
+ > > >   DR6=3D00000000ffff0ff0 DR7=3D0000000000000400
+ > > >   EFER=3D0000000000001d01
+ > > >   Code=3D0f 1f 44 00 00 48 8b 4f 10 48 8b 41 08 48 89 c2 48 c1 ea 20=
+ <48> 0f c7 61 40 31 c0 48 8b 47 10 f6 80 40 02 00 00 c0 74 1e 48 8b 05 98 =
+f8 e8 01 48 89 47
+ > > >=20
+ > > > This series keeps the existing MMIO dispatcher, but turns the fixed
+ > > > window into a container and (when the window maps linearly to a Type=
+-3
+ > > > volatile memdev) overlays a RAM alias so KVM can create a memslot fo=
+r
+ > > > the range. The mapping is updated when HDM decoders are
+ > > > committed/uncommitted by the guest.
+ > > >=20
+ > > > This patchset is based on master branch 559919ce54927d59b215a4665eda=
+7ab6118a48aa
+ > > >=20
+ > > > Local validation on this base confirmed that the issue reproduces
+ > > > without the series and is fixed with the 3 patches below.
+ > > >=20
+ > > > Li Chen (3):
+ > > >   cxl/type3: expose vmem mapping for fixed windows
+ > > >   cxl: alias fixed memory windows to RAM under KVM
+ > > >   cxl: update fixed window mappings on decoder programming
+ > > >=20
+ > > >  hw/cxl/cxl-component-utils.c |   2 +
+ > > >  hw/cxl/cxl-host-stubs.c      |   1 +
+ > > >  hw/cxl/cxl-host.c            | 189 ++++++++++++++++++++++++++++++++=
+++-
+ > > >  hw/mem/cxl_type3.c           |  59 +++++++++++
+ > > >  include/hw/cxl/cxl.h         |   5 +
+ > > >  include/hw/cxl/cxl_device.h  |   3 +
+ > > >  include/hw/cxl/cxl_host.h    |   1 +
+ > > >  7 files changed, 258 insertions(+), 2 deletions(-)
+ > > >  =20
+ > >=20
+ >=20
+ >=20
+Regards,
 
-Fixes: 015cefc0ed65 ("target/arm: Add in_prot_check to S1Translate")
-Signed-off-by: Jose Martins <josemartins90@gmail.com>
----
-This issue was found while running a Bao hypervisor [1] demo on the
-mps3-an536 machine, which features a Cortex-R52 with virtualization
-support (PMSAv8 with EL2). Bao uses the stage 2 PMSA MPU to partition
-memory between guest VMs. With QEMU >= 10.2.0 the demo crashes
-immediately after the first guest VCPU is scheduled, when the guest
-executes its first atomic instruction:
-
-  ERROR:../accel/tcg/cputlb.c:1848:atomic_mmu_lookup: \
-      code should not be reached
-
-To reproduce, clone the bao-demos repository [2] and follow the
-instructions for the mps3-an536 platform and baremetal demo. With this
-patch applied, the demo boots successfully.
-
-[1] https://github.com/bao-project/bao-hypervisor
-[2] https://github.com/bao-project/bao-demos
-
- target/arm/ptw.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 8b8dc09e72..e289f88124 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3200,6 +3200,13 @@ static bool get_phys_addr_pmsav8(CPUARMState *env,
- 
-     ret = pmsav8_mpu_lookup(env, address, access_type, ptw->in_prot_check,
-                             mmu_idx, secure, result, fi, NULL);
-+    /*
-+     * For two-stage PMSA translations, s2prot holds the stage 2
-+     * permissions to be combined with stage 1 in get_phys_addr_twostage().
-+     */
-+    if (regime_is_stage2(mmu_idx)) {
-+        result->s2prot = result->f.prot;
-+    }
-     if (sattrs.subpage) {
-         result->f.lg_page_size = 0;
-     }
--- 
-2.53.0
+Li=E2=80=8B
 
 
