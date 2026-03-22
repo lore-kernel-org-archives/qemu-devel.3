@@ -4,81 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6D6FC72AD
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 12:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F14FC72C2
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 13:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4Hol-0002Jr-S2; Sun, 22 Mar 2026 08:22:08 -0400
+	id 1w4IoS-0005b9-Aj; Sun, 22 Mar 2026 09:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w4HoI-00028H-Rv
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 08:21:41 -0400
-Received: from pv-2001j-snip4-8.eps.apple.com ([57.103.64.101]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w4HoG-0003mK-4o
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 08:21:38 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-7 (Postfix) with ESMTPS id
- 82F44180021F; Sun, 22 Mar 2026 12:21:31 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774182093; x=1776774093;
- bh=NRNYftw+F8W4wdc8Q0+jqmNDbjfOs9Ll7J9c3EldO+E=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=W5ts3ccAG5r4yxsFabt47P+RiGpMU0KdNL/clhWW8fmPk6sXY+Yiewj6urizREIKnR4mavJz9lfa89zdOe4OQMVNlgIqS4kiQU1Nv0XiyHom3gjPgZ/DWJZ2JksdA5wPbmVBgYsTKEPJd5FtwjcuU6aiwJlnSgxQVG1FtqLMrqMl+hG1xBWoBOTWq7J8LFpWBRZHvgNDIG32MvvEimlA4hj6dtDs3q4KZ6lSq2MiV8Bdebuzw0sjP9uQoBwXffJDeiztB/6ySOa+2jbtc5xO+jH+TQ1itR1SyAarusmYVtU0YGvh6sPAi8OVgrPq75TGxyJgi28p018m7Beyvry6hQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-7 (Postfix) with ESMTPSA id
- B175F1800229; Sun, 22 Mar 2026 12:21:29 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH] meson.build: Add --enable-use-pdb option
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <9c5998db-7368-4345-8d87-bdc0a0c9da78@tls.msk.ru>
-Date: Sun, 22 Mar 2026 13:21:16 +0100
-Cc: Steve Aarnio <saarnio@qti.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <CD39E113-FAE4-457D-A5C1-16BED1A94774@unpredictable.fr>
-References: <MN2PR02MB6622718572E2A2B5E4EE3C039B4EA@MN2PR02MB6622.namprd02.prod.outlook.com>
- <9c5998db-7368-4345-8d87-bdc0a0c9da78@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4IoP-0005ab-9N
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 09:25:49 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4IoM-0005U0-Vj
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 09:25:49 -0400
+Received: from [192.168.178.155] (p5b1514ce.dip0.t-ipconnect.de [91.21.20.206])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id D9408DA0418;
+ Sun, 22 Mar 2026 14:25:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1774185942;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=k6ZNgyPLhpZ8UTrS4z7pQnanEvn5X7Ke3FFV2wqPGuU=;
+ b=Nc7x5LK8h2qZTWGSwXomAJwNJqbvuTIGfqdi/cmW0HKPUTxHBex3v/w2350K/jIAEUd1pQ
+ nEB9SYx68OPGs4GpTVDlQAQyPX9yfIkbbAjJ3RybQjj2Wss6Cp1lzP5wYLDCD/5Uj0VAgM
+ Zm+1/MMGdSUUOBapYo8/XaK0bt7L6nA=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <a2087b7f-3efa-44d0-afdc-3fb1453551fb@weilnetz.de>
+Date: Sun, 22 Mar 2026 14:25:41 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0] Fix several typos in documentation (found by
+ codespell)
 To: Michael Tokarev <mjt@tls.msk.ru>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Authority-Info-Out: v=2.4 cv=NLDYOk6g c=1 sm=1 tr=0 ts=69bfdecc
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=9qUTvQc-AAAA:8
- a=Dw3r2Dz2FUu6so0R2m0A:9 a=QEXdDO2ut3YA:10 a=axOgMmt4Ejcwn1cqzmsR:22
-X-Proofpoint-ORIG-GUID: JHuA3XYAIJQveKTDMPMvHdqYYi7x4nKG
-X-Proofpoint-GUID: JHuA3XYAIJQveKTDMPMvHdqYYi7x4nKG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIyMDEwNyBTYWx0ZWRfX6uTBcIwhXRbZ
- 6PBMQ0YmcwzZoXhmXY/zplc64JMh3wkeVXcN3ADNLOgD9zEWave/+SNe5fTLOk7K8aCZ1IGqsII
- KCxuajKcrJHbvyl/dN46qWbAhbPPundBLsVM76vAC2rbvOPLvwuIfHw37CuI6VSBndy8yp1b+vg
- 5Nu4PFvRauS5lVaWAsSxjkW/zafCmvnI2Sci6Z3iwHcFPlk7xmqezJ2WdwjeO/6OAe7CQgnDOkN
- ft1T56NPIJ8f70SXjaxIYeWw6JjgJvzhn4ubpQAO+2s/41pQlOUQQPhtAGD7c9B/2HTtLoh+edy
- s7Xb480TUePdacUlS15lo6MHYzbRr7qSuKGKQcik4X+QeC9Zml5suTZgB/jb68=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-22_03,2026-03-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- adultscore=0 bulkscore=0 clxscore=1030 phishscore=0 lowpriorityscore=0
- suspectscore=0 malwarescore=0 spamscore=0 mlxlogscore=753 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603220107
-Received-SPF: pass client-ip=57.103.64.101;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260319183453.100545-1-sw@weilnetz.de>
+ <b8f6ec6d-60ba-4620-93ee-f4053d368c85@tls.msk.ru>
+ <d97253a2-a59b-c046-69f3-74f383c996cb@eik.bme.hu>
+ <472d0e05-c12d-4cc8-8955-d08a3dc7f89b@tls.msk.ru>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <472d0e05-c12d-4cc8-8955-d08a3dc7f89b@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: D9408DA0418
+X-Spamd-Bar: ---
+X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
+ TO_DN_EQ_ADDR_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; MIME_TRACE(0.00)[0:+];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,35 +127,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Am 22.03.26 um 12:47 schrieb Michael Tokarev:
 
-> On 22. Mar 2026, at 12:56, Michael Tokarev <mjt@tls.msk.ru> wrote:
->=20
-> Overall, I think there's no need to have separate option especially
-> for pdb, - it can be enabled on windows when --enable-debug is
-> specified (or is it --debug? I don't remember).
->=20
-> This code:
->=20
-> option_cflags =3D (get_option('debug') ? ['-g'] : [])
->=20
-> can be extended to add the necessary compiler options.
+> On 22.03.2026 14:01, BALATON Zoltan wrote:
+>> On Sun, 22 Mar 2026, Michael Tokarev wrote:
+>>> On 19.03.2026 21:34, Stefan Weil via wrote:
+>>>> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+>>>>
+>>>> These typos are part of the generated documentation.
+>>>> Therefore they should be fixed in the new release.
+>>>>
+>>>> More typos can be found in the remaining code, mostly in comments.
+>
+>>> Missing s-o-b?
+>>>
+>>> I can fold changes suggested by Peter to this patch, but without S-o-b
+>>> it's not good.
+>>
+>> Isn't there an S-o-b right in the first line of quoted text above?
+>
+> D'oh :)  Don't do things in ENOCOFFEE mode :)
+>
+> Picked up for trivial-patches tree, with suggestions by Peter.
+>
+> /mjt
 
-Hello,
 
-I think that=E2=80=99s a bit suboptimal because while Clang can generate =
-PDBs, the same
-isn=E2=80=99t true for a GCC build, where gdb + DWARF is in practice =
-preferred instead.
+Thanks! My S-o-b is valid for Peter's good suggestions, too.
 
-A converter exists at https://github.com/rainers/cv2pdb however to cover =
-the GCC
-case but the compiler won=E2=80=99t do it by itself.
+Stefan
 
-And people might also want to use gdb/lldb when they can :)
-
-Thanks,
--Mohamed=
 
