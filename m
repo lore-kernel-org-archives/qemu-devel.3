@@ -4,117 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F14FC72C2
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 13:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6565DFC72AD
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 14:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4IoS-0005b9-Aj; Sun, 22 Mar 2026 09:25:52 -0400
+	id 1w4Jvv-0007Se-KD; Sun, 22 Mar 2026 10:37:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4IoP-0005ab-9N
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 09:25:49 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
+ id 1w4Jvr-0007SD-PL
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 10:37:35 -0400
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4IoM-0005U0-Vj
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 09:25:49 -0400
-Received: from [192.168.178.155] (p5b1514ce.dip0.t-ipconnect.de [91.21.20.206])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id D9408DA0418;
- Sun, 22 Mar 2026 14:25:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
- t=1774185942;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=k6ZNgyPLhpZ8UTrS4z7pQnanEvn5X7Ke3FFV2wqPGuU=;
- b=Nc7x5LK8h2qZTWGSwXomAJwNJqbvuTIGfqdi/cmW0HKPUTxHBex3v/w2350K/jIAEUd1pQ
- nEB9SYx68OPGs4GpTVDlQAQyPX9yfIkbbAjJ3RybQjj2Wss6Cp1lzP5wYLDCD/5Uj0VAgM
- Zm+1/MMGdSUUOBapYo8/XaK0bt7L6nA=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
-Message-ID: <a2087b7f-3efa-44d0-afdc-3fb1453551fb@weilnetz.de>
-Date: Sun, 22 Mar 2026 14:25:41 +0100
+ (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
+ id 1w4Jvq-0007Ua-4f
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 10:37:35 -0400
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-94ac3958788so1988337241.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Mar 2026 07:37:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774190253; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Pk365LrTTqv8ovIRK1g24SQvOs2ymT6UH5x/TiAYiDsgZA8wpJmAHf8bEuf9510u3y
+ WPPTAb1KP2/tFYAP1RQiQkJfjI22QlRT4bsRtspTTQaLQv4Khqfp/O59BPVNCazKkVY5
+ ht+sDDPqAdOpLC1vW2iF3suw5UhkfdBtIl3ceqRTHGfFCphasjM18Mf57JE2O3CZboeq
+ 0gcS6EuVsDa1xy9Qrefh5eHHMRC60ca1dPleHAhL90WpPQOyP4oLO81pD4kCa9mcMuiK
+ ZXPM8q1Vn4sjcxpnrx3J7rWuyZATFEDyykO/hM5F1qFb+nMDA7ZSXYjz5z5X7jAmXPcr
+ jbxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=6/XVdDNZBk7cNq/Pb8AUnE87Ytj3I7iQPvdwhXJiZ04=;
+ fh=3GTBalfkKWi4/O/tERlh1Ni+3Fw39fwN9nrYjU8qlSo=;
+ b=FdkFugdYuBjqptmDocJe/3xzuJrRCZJZRy4hGo08nOHJoIaX41/YBVM9sNUwYko+kU
+ lvza7jlARSD+mvFM9Kpw/yM9xsl7EvkeuDRXZcl/4w5UQeku2uLdqRlqUkeRJIoHAY0n
+ VJI3xsCOAZz0j3x73Xyv+SrvFyizbkt22AyhPwT+f/M+SmXgNItjuHHkedo4zPs3RaIb
+ GHPENsU9o0xa22DqBqMnPgKL4U+2WLFL/SScOtf+LUSFT/XkXVx7SWSYAW/bNNe4/ESN
+ uwj+0ZdSdzCeoG4ehQqmTv8vrXIbEU901g7EFEhCmMgAlRuMkWuqdh1Z5MQ6z8Iw2J4u
+ b/7g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1774190253; x=1774795053; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6/XVdDNZBk7cNq/Pb8AUnE87Ytj3I7iQPvdwhXJiZ04=;
+ b=g8xAFlylV2Wd/Fk5VBM7UKvN0PMGQ+ZN/CfjnF/n3AWS4109NKFurgpV95a0tYp5PQ
+ 5yOxcFr82gEPLlkPh5VLcO512zb7SRc5GlXd3pdYBzK4lGpzjOQ+Nk1DpX6Cf3ee+lrL
+ sZRdtUpmp5xPcs81CZdf+smXmPezHDER9KbBPF8zUTyR9kQhubwSKuQ7TPggzsiAAiWA
+ b+/wdTOvpVRwCW6mOpjcP0cINDnZy9oKrHh5JjmvVsWVgInlT2uNvTJF6oL59w/K1ial
+ 28ZFiclXLDVPCt6K5WotCdjvYcPMxBa1CHQNMQdba2txkhKy8tI92NQjOmPI7Cwn65cc
+ njSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774190253; x=1774795053;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6/XVdDNZBk7cNq/Pb8AUnE87Ytj3I7iQPvdwhXJiZ04=;
+ b=K5umi10p3IHy7dRwOijhfPvpH2N9p9yOnNoqW4k1G5ohaEridHE6ywAQfnCGckf924
+ XyC7XtRut5+N2rUD7s7hSaJv9vj3gfFVA/OUXGQvojUiUs0FLlEdAFAtojjK1j6mD7i1
+ 6H+/xalYEOujh/HHtfMuTHubONbwOyPx968i59+0RlNxQJbOt1JdaN4/5kpSLRsI3/6R
+ voBere+7fviFkGBqYM8G3XKtlZk9FMKwEsZiSHcizscM71735h6wETmKk7knUfKYzQSl
+ 7TCDimi8G2FicqGGhS/jRTUmSnTVATCEWOYKGOpFylR9JHYKmxfSgY+bAOw9ZrF2AJMC
+ 8DwA==
+X-Gm-Message-State: AOJu0YyDXrrTRayQTl1PTVz7xzxOPgIRfmYk6ZTdRngJTPS5bLJUz+3e
+ V975QVNplqTWbIsemB6JjLKUXWX767Jzh71mO/V2cZAvfeG6u0u2pRTRILLUlEF9ZWznGLRfbhi
+ 5rxcNev08KNtBMXUN3yjp1er5+emWOOI=
+X-Gm-Gg: ATEYQzyObh5bZQSPf4gE8o9QFLZMWc9XjBY4tA1h5cXKe4ko//48VV0u9KrlsznFAEv
+ bkHDVtZDN25qNGziWgrtCnRNBgJbDX/kq9bmlwoKvUzBIrhnIhhA8VvrFlbAOEbmD1/UNsVLXtY
+ 2VKmPQUWf8QCvesXLzPpXCRFo4tw6YtAoD6g8/2tUweVyURkJyn6qiSaHSwdlWh1E9C2/C0/A1c
+ ClfJyPQEmc6/xdAABAGBX2AhtJEBeP7cokSCnBq0Gz4UdPRDy3IO6e9k06ccvTXJ4oHRyputSCU
+ yD1wPfD+
+X-Received: by 2002:a05:6102:b14:b0:5fd:eacf:27df with SMTP id
+ ada2fe7eead31-602af6caf4amr3608153137.10.1774190252645; Sun, 22 Mar 2026
+ 07:37:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0] Fix several typos in documentation (found by
- codespell)
-To: Michael Tokarev <mjt@tls.msk.ru>
-References: <20260319183453.100545-1-sw@weilnetz.de>
- <b8f6ec6d-60ba-4620-93ee-f4053d368c85@tls.msk.ru>
- <d97253a2-a59b-c046-69f3-74f383c996cb@eik.bme.hu>
- <472d0e05-c12d-4cc8-8955-d08a3dc7f89b@tls.msk.ru>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <472d0e05-c12d-4cc8-8955-d08a3dc7f89b@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: v2201612906741603
-X-Rspamd-Queue-Id: D9408DA0418
-X-Spamd-Bar: ---
-X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
- TO_DN_EQ_ADDR_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCPT_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; MIME_TRACE(0.00)[0:+];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20251226064225.791454-1-lihang.lin@gmail.com>
+ <35aa3161-0b34-4c0e-adee-975fb8cf24ba@tls.msk.ru>
+In-Reply-To: <35aa3161-0b34-4c0e-adee-975fb8cf24ba@tls.msk.ru>
+From: Lin Li-Hang <lihang.lin@gmail.com>
+Date: Sun, 22 Mar 2026 22:37:21 +0800
+X-Gm-Features: AQROBzA4_yStP-_TuZqy0Mf7iUodamu47m5Z5wEgIWQ5DsGMqFM8M8rKyXYgYgI
+Message-ID: <CAPR+-WG1cDA0iqqKrxDpA0OB6h3iy1nxDCtoeFQmEOSqn9Yxmg@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
+ deposition in rsqrte_f64
+To: mjt@tls.msk.ru
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000c5e3f9064d9ddb9f"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=lihang.lin@gmail.com; helo=mail-ua1-x92e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,39 +113,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 22.03.26 um 12:47 schrieb Michael Tokarev:
+--000000000000c5e3f9064d9ddb9f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On 22.03.2026 14:01, BALATON Zoltan wrote:
->> On Sun, 22 Mar 2026, Michael Tokarev wrote:
->>> On 19.03.2026 21:34, Stefan Weil via wrote:
->>>> Signed-off-by: Stefan Weil <sw@weilnetz.de>
->>>>
->>>> These typos are part of the generated documentation.
->>>> Therefore they should be fixed in the new release.
->>>>
->>>> More typos can be found in the remaining code, mostly in comments.
+Hi mjt,
+
+After discussing with Peter, I did further debugging.
+The original code is harmless even with the wrong bit position placement.
+My patch is not perfect and Peter suggested refactoring those snippets.
+
+Cheers
+
+
+On Sun, Mar 22, 2026 at 2:20=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+
+> On 26.12.2025 09:42, Li-Hang Lin wrote:
+> > Fix an error in rsqrte_f64() where the sign bit was being
+> > placed incorrectly. Specifically, ensure f64_sign is deposited
+> > into bit 63.
+> >
+> > Additionally, update the comments regarding the exponent (exp) bit
+> > width to reflect the correct double-precision specifications.
 >
->>> Missing s-o-b?
->>>
->>> I can fold changes suggested by Peter to this patch, but without S-o-b
->>> it's not good.
->>
->> Isn't there an S-o-b right in the first line of quoted text above?
+> Ping?  Or is this patch not needed anymore?
 >
-> D'oh :)  Don't do things in ENOCOFFEE mode :)
->
-> Picked up for trivial-patches tree, with suggestions by Peter.
+> Thanks,
 >
 > /mjt
+>
+> >   target/arm/tcg/vfp_helper.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
+> > index e156e3774a..60188b2c7e 100644
+> > --- a/target/arm/tcg/vfp_helper.c
+> > +++ b/target/arm/tcg/vfp_helper.c
+> > @@ -1078,8 +1078,8 @@ float64 HELPER(rsqrte_f64)(float64 input,
+> float_status *s)
+> >
+> >       f64_frac =3D recip_sqrt_estimate(&f64_exp, 3068, f64_frac, false)=
+;
+> >
+> > -    /* result =3D sign : result_exp<4:0> : estimate<7:0> : Zeros(44) *=
+/
+> > -    val =3D deposit64(0, 61, 1, f64_sign);
+> > +    /* result =3D sign : result_exp<10:0> : estimate<7:0> : Zeros(44) =
+*/
+> > +    val =3D deposit64(0, 63, 1, f64_sign);
+> >       val =3D deposit64(val, 52, 11, f64_exp);
+> >       val =3D deposit64(val, 44, 8, extract64(f64_frac, 52 - 8, 8));
+> >       return make_float64(val);
+>
+>
 
+--000000000000c5e3f9064d9ddb9f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks! My S-o-b is valid for Peter's good suggestions, too.
+<div dir=3D"ltr"><div>Hi mjt,</div><div><br></div><div>After discussing wit=
+h Peter, I did further=C2=A0debugging.</div><div>The original code is harml=
+ess even with the wrong bit position placement.</div><div>My patch is not p=
+erfect and Peter suggested refactoring those snippets.</div><div><br></div>=
+<div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_sig=
+nature"><div dir=3D"ltr">Cheers<br></div></div></div><br></div><br><div cla=
+ss=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Sun, Mar 22, 2026 at 2:20=E2=80=AFPM Michael Tokarev &lt;<a href=3D"=
+mailto:mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">On 26.12.2025 09:42, Li-Hang Lin wrote=
+:<br>
+&gt; Fix an error in rsqrte_f64() where the sign bit was being<br>
+&gt; placed incorrectly. Specifically, ensure f64_sign is deposited<br>
+&gt; into bit 63.<br>
+&gt; <br>
+&gt; Additionally, update the comments regarding the exponent (exp) bit<br>
+&gt; width to reflect the correct double-precision specifications.<br>
+<br>
+Ping?=C2=A0 Or is this patch not needed anymore?<br>
+<br>
+Thanks,<br>
+<br>
+/mjt<br>
+<br>
+&gt;=C2=A0 =C2=A0target/arm/tcg/vfp_helper.c | 4 ++--<br>
+&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c=
+<br>
+&gt; index e156e3774a..60188b2c7e 100644<br>
+&gt; --- a/target/arm/tcg/vfp_helper.c<br>
+&gt; +++ b/target/arm/tcg/vfp_helper.c<br>
+&gt; @@ -1078,8 +1078,8 @@ float64 HELPER(rsqrte_f64)(float64 input, float_=
+status *s)<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0f64_frac =3D recip_sqrt_estimate(&amp;f64_ex=
+p, 3068, f64_frac, false);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -=C2=A0 =C2=A0 /* result =3D sign : result_exp&lt;4:0&gt; : estimate&l=
+t;7:0&gt; : Zeros(44) */<br>
+&gt; -=C2=A0 =C2=A0 val =3D deposit64(0, 61, 1, f64_sign);<br>
+&gt; +=C2=A0 =C2=A0 /* result =3D sign : result_exp&lt;10:0&gt; : estimate&=
+lt;7:0&gt; : Zeros(44) */<br>
+&gt; +=C2=A0 =C2=A0 val =3D deposit64(0, 63, 1, f64_sign);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0val =3D deposit64(val, 52, 11, f64_exp);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0val =3D deposit64(val, 44, 8, extract64(f64_=
+frac, 52 - 8, 8));<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return make_float64(val);<br>
+<br>
+</blockquote></div>
 
-Stefan
-
+--000000000000c5e3f9064d9ddb9f--
 
