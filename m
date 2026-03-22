@@ -4,50 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764EFFC72C3
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 11:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBDEFC72C3
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 11:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4HHl-0003SF-Db; Sun, 22 Mar 2026 07:48:01 -0400
+	id 1w4HQ9-0005VM-Kg; Sun, 22 Mar 2026 07:56:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w4HHe-0003Qp-LR; Sun, 22 Mar 2026 07:47:54 -0400
+ id 1w4HQ4-0005V0-GG; Sun, 22 Mar 2026 07:56:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w4HHc-0005Qz-CQ; Sun, 22 Mar 2026 07:47:54 -0400
+ id 1w4HQ2-0006aw-3a; Sun, 22 Mar 2026 07:56:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774180052; bh=zylBEzdY+MGlaBLqH1Gq2Hw7HYeOsN9Xzfj+AN5ysRw=;
+ t=1774180575; bh=+C0QPKnP9v7IlepSDZxD36/xaqenZps13Z2lnpWPg2E=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=DC35jiRvU0eF8u+BBklz7UXhyxIIdxRWrjV08sOBu5phRu8vnvyOuxw0apTeAeN9k
- 3/n4gZGxUtl2ghNPtQCn2WbC6WDIfdPYGYCYZ9+t8BruDz/bJTKh1DSzHPs733MiR8
- PNwrvbrvvb1nD5ILPvJ19hRuKai2dgNAnOdcd0X4+zodcVEJnAV26eTB/RAoAamVUB
- naiDxczLm10Ap8lLJHmGtFiS4gH9isYxFysj3oTc6QDEqNP3qLILk9pqW9NGK5gS8o
- 2giO5ncPQ0bEpNVYqRY4zApQ68diuo97VZ70j35lr612vub5nB/9TxBPZHxxLh3XjX
- 3kWn9swBrWnHQ==
+ b=mLt15UndAx4BeCwch2PK5968hQbwKeX8ph/uiVSGYyd34Rpe3j3F84uC4VoRo2WdN
+ 9UbNWwoa9VpCVusxW/f6LTHQB54xIn0SdrOOV8CFVzKMBcToUk09dGZGAR2rCklERX
+ q35YjeCXuZ0z2EW7r943NC4LoDDMu19B6tGSmqosV+LDFPz2pwYF44mDSD60SWcnP6
+ 9/DhTtYSALWAaDcOoa/HOmXbQKuDf4ZKU/buygZGDSPJQFmuHiH+R5W5VV2qHlYdx8
+ o6xBPhPYtEPonJt4JtC9YQUPoJLXXf2mPPV5VQKsBIqgOEVw0gJ98MFOKr6f6VnmaI
+ FzdidS0pYjDcw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 114D41963F7;
- Sun, 22 Mar 2026 14:47:32 +0300 (MSK)
-Message-ID: <472d0e05-c12d-4cc8-8955-d08a3dc7f89b@tls.msk.ru>
-Date: Sun, 22 Mar 2026 14:47:46 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 7DC5D1963FD;
+ Sun, 22 Mar 2026 14:56:15 +0300 (MSK)
+Message-ID: <9c5998db-7368-4345-8d87-bdc0a0c9da78@tls.msk.ru>
+Date: Sun, 22 Mar 2026 14:56:30 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0] Fix several typos in documentation (found by
- codespell)
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Stefan Weil <sw@weilnetz.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- John Snow <jsnow@redhat.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20260319183453.100545-1-sw@weilnetz.de>
- <b8f6ec6d-60ba-4620-93ee-f4053d368c85@tls.msk.ru>
- <d97253a2-a59b-c046-69f3-74f383c996cb@eik.bme.hu>
+Subject: Re: [PATCH] meson.build: Add --enable-use-pdb option
+To: Steve Aarnio <saarnio@qti.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
+References: <MN2PR02MB6622718572E2A2B5E4EE3C039B4EA@MN2PR02MB6622.namprd02.prod.outlook.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -93,9 +84,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <d97253a2-a59b-c046-69f3-74f383c996cb@eik.bme.hu>
+In-Reply-To: <MN2PR02MB6622718572E2A2B5E4EE3C039B4EA@MN2PR02MB6622.namprd02.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -120,26 +111,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.03.2026 14:01, BALATON Zoltan wrote:
-> On Sun, 22 Mar 2026, Michael Tokarev wrote:
->> On 19.03.2026 21:34, Stefan Weil via wrote:
->>> Signed-off-by: Stefan Weil <sw@weilnetz.de>
->>>
->>> These typos are part of the generated documentation.
->>> Therefore they should be fixed in the new release.
->>>
->>> More typos can be found in the remaining code, mostly in comments.
-
->> Missing s-o-b?
->>
->> I can fold changes suggested by Peter to this patch, but without S-o-b
->> it's not good.
+On 18.03.2026 22:18, Steve Aarnio wrote:
+> This option will (attempt to) modify the QEMU compile and link flags to
+> emit PDB symbol files rather than the standard (DWARF?) symbol output
+> from gcc/clang.
 > 
-> Isn't there an S-o-b right in the first line of quoted text above?
+> This enables using native Windows debug tools (Windbg/Visual Studio) for
+> debugging QEMU.
 
-D'oh :)  Don't do things in ENOCOFFEE mode :)
+While the change looks good (but please don't use html or
+quoted-printable encoding when sending patches), the name for
+the option is a bit.. non-English, so to say.  It might be
+--enable-pdb for example, or --use-pdb, but probably not
+what's suggested initially.   There's one more possible issue
+with this approach: when pdb isn't supported by the compiler,
+this option is silently ignored, instead of giving some
+useful diagnostics.
 
-Picked up for trivial-patches tree, with suggestions by Peter.
+Overall, I think there's no need to have separate option especially
+for pdb, - it can be enabled on windows when --enable-debug is
+specified (or is it --debug? I don't remember).
+
+This code:
+
+option_cflags = (get_option('debug') ? ['-g'] : [])
+
+can be extended to add the necessary compiler options.
+
+Thanks,
 
 /mjt
+
+> Signed-off-by: Steve Aarnio <saarnio@qti.qualcomm.com>
+> ---
+>   meson.build       | 5 +++++
+>   meson_options.txt | 2 ++
+>   2 files changed, 7 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index d7c4095b39..d27581e0c2 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -692,6 +692,11 @@ endif
+>   qemu_common_flags += hardening_flags
+> +if get_option('debug') and get_option('use_pdb')
+> +  qemu_common_flags += cc.get_supported_arguments('-g','-gcodeview','- 
+> gcolumn-info','-fno-omit-frame-pointer')
+> +  qemu_ldflags += cc.get_supported_link_arguments('-g','-Wl,--pdb=')
+> +endif
+> +
+>   # Collect warning flags we want to set, sorted alphabetically
+>   warn_flags = [
+>     # First enable interesting warnings
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 31d5916cfc..b1f3250d5c 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -372,6 +372,8 @@ option('debug_stack_usage', type: 'boolean', value: 
+> false,
+>          description: 'measure coroutine stack usage')
+>   option('qom_cast_debug', type: 'boolean', value: true,
+>          description: 'cast debugging support')
+> +option('use_pdb', type: 'boolean', value: false,
+> +       description: 'use pdb symbol format on debug windows builds')
+>   option('slirp_smbd', type : 'feature', value : 'auto',
+>          description: 'use smbd (at path --smbd=*) in slirp networking')
+> -- 
+> 2.53.0
+> 
+
 
