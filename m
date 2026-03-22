@@ -4,69 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAD7FC72AB
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 05:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF8DFC72AC
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Mar 2026 06:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4Bh3-0003l8-PL; Sun, 22 Mar 2026 01:49:45 -0400
+	id 1w4C6G-0007jE-EC; Sun, 22 Mar 2026 02:15:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1w4Bh1-0003kq-Dm
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 01:49:43 -0400
-Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w4C6D-0007iF-V6; Sun, 22 Mar 2026 02:15:46 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1w4Bgz-0007Hj-HB
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 01:49:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1774158564; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=eKoQrLjr14G8bYeYYF4HDA3B4QriTKJMSvmErVcrwas3XH3QjZY55ROsNkeFyklEMpZ7HGWZkY2ykauKW6pPI6L/1bz0540raHpfla8dPPpJybVcjP+qezd2YtSUMGDmwUDT0sOhDU1xh021VaWOw6Q/OzhWjun+zn+rClwfrns=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1774158564;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=6o6bBpCocH45Wo/Gv/hO1GPZHn0BZZn4GmfTpVDe6Oo=; 
- b=hfRgdjQWsU37frxf7zXopwbO7DvQa2MPyYSJw7yXbJ7k6v/wfSwdIBMdQyWiSZQw/Rdr9NqibikknsrHt6+CtV3izP/+W6ZrPoTBp+8CdQ8uQ+byB8FbXPPBblBUm7rWV03pXs8K0qoX1l/KYooMMJOFlyPlFJPPtctyGANSWvM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=linux.beauty;
- spf=pass  smtp.mailfrom=me@linux.beauty;
- dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774158564; 
- s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=6o6bBpCocH45Wo/Gv/hO1GPZHn0BZZn4GmfTpVDe6Oo=;
- b=iRfIwmmD1c2GAoeP2IYIqURn/B0/ilw5vVYCrhH/TVQ1t/JGb8Dzof1IWzzuuWzz
- Dhi6VyAxmsnwJkkmg9KJek0ogYuAod9vJQClqqmpZURxHpYi241/f8Cg2iiW/zjgBEv
- Psx9bO7XoenZ0JDqAAWoHR55PyBCptIjZxJ7EN+0=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1774158562915609.4080264699327;
- Sat, 21 Mar 2026 22:49:22 -0700 (PDT)
-Date: Sun, 22 Mar 2026 13:49:22 +0800
-From: Li Chen <me@linux.beauty>
-To: "Jonathan Cameron" <jonathan.cameron@huawei.com>
-Cc: "Fan Ni" <fan.ni@samsung.com>, "qemu-devel" <qemu-devel@nongnu.org>,
- "alireza.sanaee" <alireza.sanaee@huawei.com>,
- "linux-cxl" <linux-cxl@vger.kernel.org>
-Message-ID: <19d14174653.62e333dc1235182.8831443129363062828@linux.beauty>
-In-Reply-To: <20260317165702.00003c98@huawei.com>
-References: <20260317033304.3185291-1-me@linux.beauty>
- <20260317165702.00003c98@huawei.com>
-Subject: Re: [PATCH 0/3] cxl: avoid KVM internal error for fixed memory windows
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w4C6B-0002Gj-8Z; Sun, 22 Mar 2026 02:15:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774160116; bh=BE/6JDPwOkH0enXNea6DhRaQionSDnWi4AHYTzVjiBM=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=MhdLHozzM9PEsvcl/STyBB8TRFMkCJ96DDIAsGc55x7yJOAqcgFx+N0McSrBTZdLq
+ CPuBM1bXCwccGkXFxWi7GjQD+equoepp6R6lBFoiS9vc3YgE+UjyNIcqYM2uPEOpeH
+ VN5n18uWo/1o5Z3XUeHy44QFdBWdJXzfl/PPMWKp9kAjAQs6W6sxHvyAHF03SoxmZX
+ lyUkhpvlu65buAQeSoXTi8gQhgFJZ+H96bso8Tb4wVPWfxBVzQDip9h9q7eqSOLhl5
+ Pedx29gmqPbyvWPjPjegwMiatfun9+L3euc84N6M60qFEwEHSlo7brZq0/UTGuMEFS
+ s4bYhURY7g0Dg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5C9AF1962F1;
+ Sun, 22 Mar 2026 09:15:16 +0300 (MSK)
+Message-ID: <8ca786b1-765b-4dc4-92fd-6ba6aeedf098@tls.msk.ru>
+Date: Sun, 22 Mar 2026 09:15:30 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
- helo=sender4-op-o15.zoho.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/10] chardev: Improve @docstring and clarify
+ qemu_chr_write() uses
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251112134143.27194-1-philmd@linaro.org>
+ <0faef1dc-6fde-41b1-bf1e-8ecfe49033f7@tls.msk.ru>
+ <a50b8ccb-4d13-431b-836e-b08e5add71bd@linaro.org>
+ <95e61064-c8e8-4c36-9371-cbd28ab737c8@tls.msk.ru>
+ <17f7b53d-dbb7-4090-a6ac-671c85dd611d@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <17f7b53d-dbb7-4090-a6ac-671c85dd611d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,113 +121,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
+On 12.02.2026 23:13, Philippe Mathieu-Daudé wrote:
 
- ---- On Wed, 18 Mar 2026 00:57:02 +0800  Jonathan Cameron <jonathan.cameron@huawei.com> wrote --- 
- > On Tue, 17 Mar 2026 11:33:00 +0800
- > Li Chen <me@linux.beauty> wrote:
- > 
- > > CXL fixed memory windows are currently modeled as an I/O MemoryRegion.
- > > When running under KVM, this makes the entire window look like MMIO.
- > > If Linux onlines the window as system RAM (e.g. for a CXL Type-3
- > > volatile memdev), normal CPU stores into the window trigger KVM
- > > instruction emulation. Instructions like XSAVEC are not supported by
- > > the emulator and abort the VM with a KVM internal error.
- > > 
- > > Repro:
- > >   - Boot a guest with a CXL Type-3 volatile memdev and a fixed memory window.
- > >   - In the guest, create a RAM region and online it as system RAM:
- > >       cxl create-region -m -t ram -d decoder0.0 -w 1 -g 4096 mem0
- > >   - QEMU exits with a KVM internal error.
- > 
- > Hi Li Chen,
- > 
- > At least at first look this looks very like:
- > 
- > https://lore.kernel.org/qemu-devel/20260306121151.883-1-alireza.sanaee@huawei.com/
+>>>>  From this patchset, 1 change has now found its way to the master
+>>>> branch:
+>>>>
+>>>>   chardev/char-pty: Do not ignore chr_write() failures
+>>>>
+>>>> Besides it, the following 2 changes were marked for-stable:
+>>>>
+>>>>   chardev/char: Allow partial writes in qemu_chr_write()
+>>>>   chardev/char: Preserve %errno in qemu_chr_write()
+>>>>
+>>>> Are other changes (including the above 2) not needed anymore?
+>>>
+>>> They are, I need to reply to Marc-André and respin a v4...
+>>>
+>>> Old bugs so can wait 11.0 :S
+>>
+>> Found an old(ish) thread...  ping? :))
+> 
+> Cc'ing new docs/ maintainer :P
 
-Yes, I have tested the patchset, and it can addresses my issue. 
-Thank you very much for the information!
+Ping *N?  11.0 is almost out already..
 
-Regards,
-Li
-
- > Which was ready for merge as far as I was concerned, but missed getting queued for
- > 11.0 (as last PCI pull request had gone) and is currently ready to go in next cycle.
- > 
- > Please see if that works for your case. If there are improvements I'd prefer
- > to see them applied on top of that series than reinventing what I think
- > is the same thing.
- > 
- > It's not KVM specific as linear mappings (when valid) bring huge performance
- > benefits on TCG as well as correctness for KVM.
- > 
- > Jonathan
- > 
- > +CC linux-cxl which is where CXL folk tend to hang out in larger numbers
- > than on the qemu list.
- > 
- > 
- > 
- > > 
- > > Serial output excerpt:
- > >   KVM internal error. Suberror: 1
- > >   extra data[0]: 0x0000000000000001
- > >   extra data[1]: 0xc0314061c70f480f
- > >   extra data[2]: 0x024080f610478b48
- > >   extra data[3]: 0x0000000000000400
- > >   extra data[4]: 0x000000010000000f
- > >   extra data[5]: 0x00000004a0003140
- > >   extra data[6]: 0x0000000000000000
- > >   extra data[7]: 0x0000000000000000
- > >   emulation failure
- > >   RAX=0000000000000007 RBX=ffff8eace0001a40 RCX=ffff8eace0003100 RDX=0000000000000000
- > >   RSI=0000000000000007 RDI=ffff8eace00030c0 RBP=ffffd48ac1747c08 RSP=ffffd48ac1747bc8
- > >   R8 =0000000000000007 R9 =0000000000000007 R10=000000000000000d R11=0000000000000000
- > >   R12=ffff8ea945b51a40 R13=ffffd48ac166c000 R14=0000000000000000 R15=0000000001200000
- > >   RIP=ffffffffaf77a14d RFL=00000256 [---ZAP-] CPL=0 II=0 A20=1 SMM=0 HLT=0
- > >   ES =0000 0000000000000000 00000000 00000000
- > >   CS =0010 0000000000000000 ffffffff 00a09b00 DPL=0 CS64 [-RA]
- > >   SS =0018 0000000000000000 ffffffff 00c09300 DPL=0 DS   [-WA]
- > >   DS =0000 0000000000000000 00000000 00000000
- > >   FS =0000 00007f997da3fec0 00000000 00000000
- > >   GS =0000 ffff8eab0535d000 00000000 00000000
- > >   LDT=0000 fffffe7600000000 00000000 00000000
- > >   TR =0040 fffffe767cf8f000 00004087 00008b00 DPL=0 TSS64-busy
- > >   GDT=     fffffe767cf8d000 0000007f
- > >   IDT=     fffffe0000000000 00000fff
- > >   CR0=80050033 CR2=000055fd193a6468 CR3=000000010930c000 CR4=00350ef0
- > >   DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
- > >   DR6=00000000ffff0ff0 DR7=0000000000000400
- > >   EFER=0000000000001d01
- > >   Code=0f 1f 44 00 00 48 8b 4f 10 48 8b 41 08 48 89 c2 48 c1 ea 20 <48> 0f c7 61 40 31 c0 48 8b 47 10 f6 80 40 02 00 00 c0 74 1e 48 8b 05 98 f8 e8 01 48 89 47
- > > 
- > > This series keeps the existing MMIO dispatcher, but turns the fixed
- > > window into a container and (when the window maps linearly to a Type-3
- > > volatile memdev) overlays a RAM alias so KVM can create a memslot for
- > > the range. The mapping is updated when HDM decoders are
- > > committed/uncommitted by the guest.
- > > 
- > > This patchset is based on master branch 559919ce54927d59b215a4665eda7ab6118a48aa
- > > 
- > > Local validation on this base confirmed that the issue reproduces
- > > without the series and is fixed with the 3 patches below.
- > > 
- > > Li Chen (3):
- > >   cxl/type3: expose vmem mapping for fixed windows
- > >   cxl: alias fixed memory windows to RAM under KVM
- > >   cxl: update fixed window mappings on decoder programming
- > > 
- > >  hw/cxl/cxl-component-utils.c |   2 +
- > >  hw/cxl/cxl-host-stubs.c      |   1 +
- > >  hw/cxl/cxl-host.c            | 189 ++++++++++++++++++++++++++++++++++-
- > >  hw/mem/cxl_type3.c           |  59 +++++++++++
- > >  include/hw/cxl/cxl.h         |   5 +
- > >  include/hw/cxl/cxl_device.h  |   3 +
- > >  include/hw/cxl/cxl_host.h    |   1 +
- > >  7 files changed, 258 insertions(+), 2 deletions(-)
- > > 
- > 
- > 
-
+/mjt
 
