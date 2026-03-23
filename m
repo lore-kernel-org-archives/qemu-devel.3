@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F87F46126
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88CF6F46124
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fqh-0001M5-9U; Mon, 23 Mar 2026 10:01:49 -0400
+	id 1w4fpt-00017z-Jz; Mon, 23 Mar 2026 10:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4foW-0000KK-O1
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:32 -0400
+ id 1w4foH-0008TA-Oj
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:20 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foT-0006x8-CG
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:26 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foF-0006wl-QZ
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:13 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 630D820B6F08;
- Mon, 23 Mar 2026 06:59:11 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 630D820B6F08
+ by linux.microsoft.com (Postfix) with ESMTPSA id 93A7A20B6F01;
+ Mon, 23 Mar 2026 06:59:07 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 93A7A20B6F01
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274354;
- bh=5zQbl0qaIrXlqH8wQsSR333IBJGZhs7tX9K2NiD0c5Y=;
+ s=default; t=1774274350;
+ bh=jJHde85rrqP4JFlhsgAekskobRmJMJo3MVNFcALWQys=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Q/ZRDX2XBm1qEzol0kfD+91lpBhi58V1oP9IFaZNPqfjB+VpBfxr4CFDE7GSxiFec
- ZuhS/USARHValeySyaF3TDKcDCniH5Wfq7Oh/Roq8fGlrNZwrsHeBV9WeBOF7k1wKN
- MOA0Jg1yGStijV4but70LbvZ1eZCWD8EiIqc1KeM=
+ b=jZX5ekNXnuKDmViDKWeLe6jPJW1ZxH4BagMdEbQpl9FVooJfy4oELFciJEKl/fD9N
+ r+HeF1+fyAGCc3DgLc/1h0q7baBYN2anFR+F+rJkawuEcIX5uwLavbaT+EqUHESexU
+ 320eLM+0Fm/ybrVMxVA9wZAb6AXSpJpc7mBvTRrk=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 15/32] target/i386/mshv: migrate LAPIC state
-Date: Mon, 23 Mar 2026 14:57:55 +0100
-Message-Id: <20260323135812.383509-16-magnuskulke@linux.microsoft.com>
+Subject: [RFC 14/32] target/i386/mshv: move apic logic into own file
+Date: Mon, 23 Mar 2026 14:57:54 +0100
+Message-Id: <20260323135812.383509-15-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,167 +75,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change implements loading and storing the hyperv lapic state as
-part of the load/store routines for a vcpu.
-
-The HyperV LAPIC is similar to the the split-irqchip in KVM, it will
-only handle MSI/X interrupts. PIC and IOAPIC have to be handled in
-userland.
-
-An opaque blob is added to the APICCommonState, guarded behind a flag,
-hence it will be covered by a migration, as we declare VMSTATE_BUFFER
-for the hv_lapic_state field.
-
-In the future we might want to introduce a dedicated class for MSHV, that
-would require us to wire up an IOAPIC delivery path to QEMU's userland
-emulation.
+Use a new file to unclutter the vcpu code gradually from APIC related
+logic.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- hw/intc/apic_common.c           |  3 ++
- include/hw/i386/apic_internal.h |  5 +++
- target/i386/mshv/mshv-cpu.c     | 61 +++++++++++++++++++++++++++++++--
- 3 files changed, 67 insertions(+), 2 deletions(-)
+ include/system/mshv_int.h    |  8 ++++
+ target/i386/mshv/meson.build |  1 +
+ target/i386/mshv/mshv-apic.c | 78 ++++++++++++++++++++++++++++++++++++
+ target/i386/mshv/mshv-cpu.c  | 66 +++---------------------------
+ 4 files changed, 92 insertions(+), 61 deletions(-)
+ create mode 100644 target/i386/mshv/mshv-apic.c
 
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index bf4abc21d7..a7df870f1a 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -380,6 +380,9 @@ static const VMStateDescription vmstate_apic_common = {
-         VMSTATE_INT64(next_time, APICCommonState),
-         VMSTATE_INT64(timer_expiry,
-                       APICCommonState), /* open-coded timer state */
-+#ifdef CONFIG_MSHV
-+        VMSTATE_BUFFER(hv_lapic_state, APICCommonState),
-+#endif
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription * const []) {
-diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
-index 0cb06bbc76..6d4ccca4e8 100644
---- a/include/hw/i386/apic_internal.h
-+++ b/include/hw/i386/apic_internal.h
-@@ -23,6 +23,7 @@
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 7af5bcf022..f86c7a3be6 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -16,6 +16,8 @@
  
- #include "cpu.h"
- #include "hw/i386/apic.h"
+ #define MSHV_MSR_ENTRIES_COUNT 64
+ 
++struct mshv_get_set_vp_state;
++
+ typedef struct hyperv_message hv_message;
+ 
+ typedef struct MshvHvCallArgs {
+@@ -84,6 +86,12 @@ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
+ int mshv_arch_post_init_vm(int vm_fd);
++int mshv_set_lapic(int cpu_fd,
++                   const struct hv_local_interrupt_controller_state *state);
++int mshv_get_lapic(int cpu_fd,
++                   struct hv_local_interrupt_controller_state *state);
++int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
++int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
+ 
+ typedef struct mshv_root_hvcall mshv_root_hvcall;
+ int mshv_hvcall(int fd, const mshv_root_hvcall *args);
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index 49f28d4a5b..5eb6e833a6 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -1,6 +1,7 @@
+ i386_mshv_ss = ss.source_set()
+ 
+ i386_mshv_ss.add(files(
++  'mshv-apic.c',
+   'mshv-cpu.c',
+ ))
+ 
+diff --git a/target/i386/mshv/mshv-apic.c b/target/i386/mshv/mshv-apic.c
+new file mode 100644
+index 0000000000..e0e8b8cacf
+--- /dev/null
++++ b/target/i386/mshv/mshv-apic.c
+@@ -0,0 +1,78 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/memalign.h"
++#include "qemu/error-report.h"
++
++#include "system/mshv.h"
++#include "system/mshv_int.h"
++
++#include "linux/mshv.h"
++#include "hw/hyperv/hvgdk.h"
++#include "hw/hyperv/hvhdk_mini.h"
 +#include "hw/hyperv/hvgdk_mini.h"
- #include "system/memory.h"
- #include "qemu/timer.h"
- #include "target/i386/cpu-qom.h"
-@@ -188,6 +189,10 @@ struct APICCommonState {
-     DeviceState *vapic;
-     hwaddr vapic_paddr; /* note: persistence via kvmvapic */
-     uint32_t extended_log_dest;
 +
-+#ifdef CONFIG_MSHV
-+    uint8_t hv_lapic_state[sizeof(struct hv_local_interrupt_controller_state)];
-+#endif
- };
- 
- typedef struct VAPICState {
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 54c262d8bc..906f5b0c3d 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -112,6 +112,25 @@ static int get_generic_regs(CPUState *cpu,
-                             struct hv_register_assoc *assocs,
-                             size_t n_regs);
- 
-+static int get_lapic(CPUState *cpu)
++#include <sys/ioctl.h>
++
++int mshv_get_lapic(int cpu_fd,
++                   struct hv_local_interrupt_controller_state *state)
 +{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    APICCommonState *apic = APIC_COMMON(x86cpu->apic_state);
-+    int cpu_fd = mshv_vcpufd(cpu);
 +    int ret;
-+    struct hv_local_interrupt_controller_state lapic_state = { 0 };
++    size_t size = 4096;
++    /* buffer aligned to 4k, as *state requires that */
++    void *buffer = qemu_memalign(size, size);
++    struct mshv_get_set_vp_state mshv_state = { 0 };
 +
-+    ret = mshv_get_lapic(cpu_fd, &lapic_state);
++    mshv_state.buf_ptr = (uint64_t) buffer;
++    mshv_state.buf_sz = size;
++    mshv_state.type = MSHV_VP_STATE_LAPIC;
++
++    ret = mshv_get_vp_state(cpu_fd, &mshv_state);
++    if (ret == 0) {
++        memcpy(state, buffer, sizeof(*state));
++    }
++    qemu_vfree(buffer);
 +    if (ret < 0) {
-+        error_report("failed to get lapic state");
++        error_report("failed to get lapic");
 +        return -1;
 +    }
-+
-+    memcpy(&apic->hv_lapic_state, &lapic_state, sizeof(lapic_state));
 +
 +    return 0;
 +}
 +
- static void populate_fpu(const hv_register_assoc *assocs, X86CPU *x86cpu)
- {
-     union hv_register_value value;
-@@ -559,6 +578,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
-         return ret;
-     }
- 
-+    ret = get_lapic(cpu);
++int mshv_set_lapic(int cpu_fd,
++                   const struct hv_local_interrupt_controller_state *state)
++{
++    int ret;
++    size_t size = 4096;
++    /* buffer aligned to 4k, as *state requires that */
++    void *buffer = qemu_memalign(size, size);
++    struct mshv_get_set_vp_state mshv_state = { 0 };
++
++    if (!state) {
++        error_report("lapic state is NULL");
++        return -1;
++    }
++    memcpy(buffer, state, sizeof(*state));
++
++    mshv_state.buf_ptr = (uint64_t) buffer;
++    mshv_state.buf_sz = size;
++    mshv_state.type = MSHV_VP_STATE_LAPIC;
++
++    ret = mshv_set_vp_state(cpu_fd, &mshv_state);
++    qemu_vfree(buffer);
 +    if (ret < 0) {
-+        return ret;
++        error_report("failed to set lapic: %s", strerror(errno));
++        return -1;
 +    }
 +
++    return 0;
++}
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 56656ac0b0..54c262d8bc 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -919,7 +919,7 @@ static int set_xc_reg(const CPUState *cpu)
      return 0;
  }
  
-@@ -952,9 +976,11 @@ int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
+-static int get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
++int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
+ {
+     int ret;
  
+@@ -932,39 +932,12 @@ static int get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
+     return 0;
+ }
+ 
+-static int get_lapic(const CPUState *cpu,
+-                     struct hv_local_interrupt_controller_state *state)
+-{
+-    int ret;
+-    size_t size = 4096;
+-    /* buffer aligned to 4k, as *state requires that */
+-    void *buffer = qemu_memalign(size, size);
+-    struct mshv_get_set_vp_state mshv_state = { 0 };
+-    int cpu_fd = mshv_vcpufd(cpu);
+-
+-    mshv_state.buf_ptr = (uint64_t) buffer;
+-    mshv_state.buf_sz = size;
+-    mshv_state.type = MSHV_VP_STATE_LAPIC;
+-
+-    ret = get_vp_state(cpu_fd, &mshv_state);
+-    if (ret == 0) {
+-        memcpy(state, buffer, sizeof(*state));
+-    }
+-    qemu_vfree(buffer);
+-    if (ret < 0) {
+-        error_report("failed to get lapic");
+-        return -1;
+-    }
+-
+-    return 0;
+-}
+-
+ static uint32_t set_apic_delivery_mode(uint32_t reg, uint32_t mode)
+ {
+     return ((reg) & ~0x700) | ((mode) << 8);
+ }
+ 
+-static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
++int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
+ {
+     int ret;
+ 
+@@ -977,43 +950,14 @@ static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
+     return 0;
+ }
+ 
+-static int set_lapic(const CPUState *cpu,
+-                     const struct hv_local_interrupt_controller_state *state)
+-{
+-    int ret;
+-    size_t size = 4096;
+-    /* buffer aligned to 4k, as *state requires that */
+-    void *buffer = qemu_memalign(size, size);
+-    struct mshv_get_set_vp_state mshv_state = { 0 };
+-    int cpu_fd = mshv_vcpufd(cpu);
+-
+-    if (!state) {
+-        error_report("lapic state is NULL");
+-        return -1;
+-    }
+-    memcpy(buffer, state, sizeof(*state));
+-
+-    mshv_state.buf_ptr = (uint64_t) buffer;
+-    mshv_state.buf_sz = size;
+-    mshv_state.type = MSHV_VP_STATE_LAPIC;
+-
+-    ret = set_vp_state(cpu_fd, &mshv_state);
+-    qemu_vfree(buffer);
+-    if (ret < 0) {
+-        error_report("failed to set lapic: %s", strerror(errno));
+-        return -1;
+-    }
+-
+-    return 0;
+-}
+-
  static int init_lint(const CPUState *cpu)
  {
--    int ret;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    APICCommonState *apic = APIC_COMMON(x86cpu->apic_state);
+     int ret;
      uint32_t *lvt_lint0, *lvt_lint1;
-     int cpu_fd = mshv_vcpufd(cpu);
-+    int ret;
++    int cpu_fd = mshv_vcpufd(cpu);
  
      struct hv_local_interrupt_controller_state lapic_state = { 0 };
-     ret = mshv_get_lapic(cpu_fd, &lapic_state);
-@@ -970,7 +996,32 @@ static int init_lint(const CPUState *cpu)
+-    ret = get_lapic(cpu, &lapic_state);
++    ret = mshv_get_lapic(cpu_fd, &lapic_state);
+     if (ret < 0) {
+         return ret;
+     }
+@@ -1026,7 +970,7 @@ static int init_lint(const CPUState *cpu)
  
      /* TODO: should we skip setting lapic if the values are the same? */
  
--    return mshv_set_lapic(cpu_fd, &lapic_state);
-+    ret = mshv_set_lapic(cpu_fd, &lapic_state);
-+    if (ret < 0) {
-+        return -1;
-+    }
-+
-+    memcpy(apic->hv_lapic_state, &lapic_state, sizeof(lapic_state));
-+
-+    return 0;
-+}
-+
-+static int set_lapic(const CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    APICCommonState *apic = APIC_COMMON(x86cpu->apic_state);
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int ret;
-+
-+    struct hv_local_interrupt_controller_state lapic_state = { 0 };
-+    memcpy(&lapic_state, &apic->hv_lapic_state, sizeof(lapic_state));
-+    ret = mshv_set_lapic(cpu_fd, &lapic_state);
-+    if (ret < 0) {
-+        error_report("failed to set lapic");
-+        return -1;
-+    }
-+
-+    return 0;
+-    return set_lapic(cpu, &lapic_state);
++    return mshv_set_lapic(cpu_fd, &lapic_state);
  }
  
  int mshv_arch_store_vcpu_state(const CPUState *cpu)
-@@ -997,6 +1048,12 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-         return ret;
-     }
- 
-+    /* INVARIANT: special regs (APIC_BASE) must be restored before LAPIC */
-+    ret = set_lapic(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
 -- 
 2.34.1
 
