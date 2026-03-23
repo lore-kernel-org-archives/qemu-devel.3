@@ -4,92 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128FAF4613C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D22BBF4613D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4heP-0005La-51; Mon, 23 Mar 2026 11:57:09 -0400
+	id 1w4hfO-0006Ii-81; Mon, 23 Mar 2026 11:58:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w4he2-0005Ed-QU
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:49 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w4he0-0007t4-7N
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:46 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b9841aecf72so335798366b.2
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:56:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774281399; x=1774886199; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WDq7L8VxJbWEl+g0lwQ7GIiMPhaC6/ZfTXLocURTGgs=;
- b=RB82YbNuKrh4kibTdwGu7nBo3R2Czm8a519qwAVdhhxgIqglJSYEXNiqFFurRFNrXv
- Ff9wEivhoMHxOOLKQN4ZekBxACAi57gtMvsmiGS8/sp9f7Us0gSqBJ5Qn/0ph+dSEitZ
- RA6h1SkBX+x5LinjpyC9iJZw5UeRlhDZHLxsiVFwFszJ9/fq2o6kSM++V2r0GmMpxE5v
- b0kvE280kNnAbVGrgCz5NT+CFIwQQsoqVgImCuockH/XCekcjeYPoerUiR5Z6P41yDG2
- vEmWmNvgyMPw81kBfScMYPzJXUH9lTvG9xvaXQdQ7CmJb6OHUsLZwkPlvHYQ2xyEPnss
- Et1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774281399; x=1774886199;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WDq7L8VxJbWEl+g0lwQ7GIiMPhaC6/ZfTXLocURTGgs=;
- b=JnJsGJ8gQKr8yjD0RWuyJ6iBkSz9JtaCDxNn92iaA4HRxwQ8w3/y2Dh6+CN0Dt6V2n
- bPyQXP4i7YNvXr7K1VLV5waT7eT0IrjNCS0P6HLTXdxm7gYMKXElAW8PpGJefeNnHGKG
- CRgu332gokshqHvI94K5N9S/yW6k9DeKdFW7K0Ns5ff2egVj27cwMDl1Z1HVJDzEOUxt
- +lyUWkGBjaws44nBWMYMiKw3X/DDsbogzXikW7iOAf32FYWuNGX7AvQ3VnNlPDVcK/0p
- kg/0FhHYonj29X2/km6MBTf+jg1TIgKLU1A7ALJbixr5NqNG2Oc5oUy0xwcNEgVEQoAk
- qn/w==
-X-Gm-Message-State: AOJu0YyrIx8mAkO0DrWJ2qsMDxC4JH61SpFTmxKrFYXhN/1BacqGw81s
- weXXOaJU7/jnK5tW8cHV4FKzpu7/ee8X2WVvX+GsQaYk56yOkiwD44F4cGOCJpC902o=
-X-Gm-Gg: ATEYQzwWbiZoAHv7K1dy5irbo6DiwTLPYaf8NJXFVDQY7GqCS5sDmv4gYG8iz7PIYPT
- OBsFYVT8HbX/ygXLaoxIbb1J/58AW6oEqWRUL3w0zWRKW/iz2/hwMwEMUOJ1TeWPtUFWhmlrTHx
- IttWgPQCw6sr3qH5EwmZaiM8EgXJP6ohI3suUEtlOtnm1Ys8AwMluy+cC8vtT1hFuWrt50Wr+dT
- ICDRcyfkjIV6GSYqTZ1wdFhPYmlxi3U4sc+uiblfbayq/ZvttbSiekKr1TxI3/LtidTwlpumage
- aIQiFN/aHq+C7oiG/8ZTANVc1gCe+VJTmi3uizDitoO73KWwV8WNf+tI6uk9G14NsYrh8ZaYdCm
- o3TuInfYhIteyTt3laSO1nMPUGPF62rJOjjvhOX+mKNcgtA9xACODVaMgiZpf44OKGTWDz9tK16
- 7udslOqAKE73Fsu6GKAFi7aDo=
-X-Received: by 2002:a17:906:6a22:b0:b98:4b50:ac3c with SMTP id
- a640c23a62f3a-b984b50ad49mr644273166b.27.1774281399386; 
- Mon, 23 Mar 2026 08:56:39 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b983365a159sm502508766b.44.2026.03.23.08.56.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 08:56:38 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 00C875F7F5;
- Mon, 23 Mar 2026 15:56:38 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/8] tests/tcg: allow filtering of TCG tests
-Date: Mon, 23 Mar 2026 15:56:30 +0000
-Message-ID: <20260323155637.145015-2-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260323155637.145015-1-alex.bennee@linaro.org>
-References: <20260323155637.145015-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1w4hfE-00064d-77; Mon, 23 Mar 2026 11:58:00 -0400
+Received: from m16.mail.163.com ([220.197.31.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1w4hf6-0007z1-OA; Mon, 23 Mar 2026 11:57:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Content-Type:Message-ID:Date:MIME-Version:Subject:
+ To:From; bh=NBd5CC8iIWClqebrf+oO0dCEhOq9QvIxqIi2dsxBFIc=; b=fsIR
+ rKRa3lylr+wi9ezZdwnMxx9bNi+4rIO1a+V5+voIVqODJpxx2IIhCHWnupFXknlR
+ 8zDGDHNp/7IeHamQnW3IWTyDyG8Nj8G5G+TzIc8hS8Z/xygZ3AEBRoRtcQXfAabv
+ u3Ogze4Tm6VPNrs82n0UvZ7M+fa8NueHSZhdjOg=
+Received: from [IPV6:2408:8266:ba01:2dde:d488:e165:11a4:9190] (unknown [])
+ by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id
+ _____wBXvg7YYsFpiNTxAw--.1738S2; 
+ Mon, 23 Mar 2026 23:57:12 +0800 (CST)
+Content-Type: multipart/alternative;
+ boundary="------------Rk41Iv0XiaB600HD5c7aTA0S"
+Message-ID: <6f0e0760-296c-4720-a542-03732e4735e9@163.com>
+Date: Mon, 23 Mar 2026 23:57:14 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 5/5] PL080 add transfer memory and peripheral
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <cover.1774099044.git.dingtao0430@163.com>
+ <6ade608e668d8fb9e720639333a48120bb814d41.1774099044.git.dingtao0430@163.com>
+ <CAFEAcA97JFytdf1ZZfoMX-Rt92kfOgq304WahUWD2tQY6WsW+w@mail.gmail.com>
+From: Tao Ding <dingtao0430@163.com>
+In-Reply-To: <CAFEAcA97JFytdf1ZZfoMX-Rt92kfOgq304WahUWD2tQY6WsW+w@mail.gmail.com>
+X-CM-TRANSID: _____wBXvg7YYsFpiNTxAw--.1738S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tFWDur17Wr47WF43CryDZFb_yoW8XryDpa
+ yaka1vkw1kXa4Ivwn7Cw4xtFyrCw1fJrsIyrZ8tr4DAwn8JrWFyry7Kw1YvFWkCws3u3W7
+ Cw4jva4UWa1qvFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U9SdkUUUUU=
+X-Originating-IP: [2408:8266:ba01:2dde:d488:e165:11a4:9190]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4RiZ12nBYtiriQAA3H
+Received-SPF: pass client-ip=220.197.31.5; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,74 +75,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have a lot of TCG tests now which can be fiddly if we just want to
-check one particular test type across the targets. Introduce
-TCG_TEST_FILTER to allow this:
+This is a multi-part message in MIME format.
+--------------Rk41Iv0XiaB600HD5c7aTA0S
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-  make check-tcg TCG_TEST_FILTER=gdb
+Hi, Thanks for the review and the historical context. I don't have a 
+strong use case for peripheral DMA transfers at the moment, so I'll drop 
+that part for now and focus on the bug fixes first. 1.handling the "last 
+transfer is short" case 2.fixing the transfer size register decrement 
+I'll send the updated patches shortly. Thanks, Tao
 
-to run all the gdb tests across the suites.
+> On Sat, 21 Mar 2026 at 15:47, Tao Ding<dingtao0430@163.com> wrote:
+>> On the interface, 0~15 represents single request, 16~31 represents burst request.
+>> Access peripheral data based on the validity of the request. For the convenience,
+>> we only respond to single requests. The number of data read from the source and written
+>> to the destination is always equal, with a value of max(swidth, dwidth).
+>>
+>> Due to the lack of data preparation by the peripheral, it is necessary to cache data separately
+>> for each channel until the peripheral is ready for processing.
+>>
+>> The width of peripherals perhaps not possible to process all data at once,
+>> so continuous processing is required. Read from source is achieved through "continue",
+>> while writing to destination is achieved through "goto".
+> This has tangled up the original bugs we were trying to fix
+> (that we weren't handling the "last transfer is short" case,
+> and we weren't decrementing the transfer size register by the
+> right amount) with the DMA transfer code.
+>
+> Can you start the patch series with the bug fixes, and then
+> if you want the DMA transfer implementation do that second,
+> please?
+>
+> thanks
+> -- PMM
+--------------Rk41Iv0XiaB600HD5c7aTA0S
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260320155107.2143191-2-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <pre><span
+data-slate-fragment=3D"JTVCJTdCJTIydHlwZSUyMiUzQSUyMnBhcmFncmFwaCUyMiUyQy=
+UyMmNoaWxkcmVuJTIyJTNBJTVCJTdCJTIyaWQlMjIlM0ElMjJ2eHdXZzBvMHd6JTIyJTJDJTI=
+ycGFyYUlkeCUyMiUzQTAlMkMlMjJzcmMlMjIlM0ElMjJJJTIwd2lsbCUyMHByaW9yaXRpemUl=
+MjBmaXhpbmclMjBidWdzJTIwaW4lMjBwbDA4MCUyMGFuZCUyMHRlbXBvcmFyaWx5JTIwcHV0J=
+TIwdGhlJTIwcGVyaXBoZXJhbCUyMHRyYW5zZmVyJTIwZnVuY3Rpb24lMjBvbiUyMGhvbGQlMj=
+IlMkMlMjJkc3QlMjIlM0ElMjIlRTYlODglOTElRTUlQjAlODYlRTQlQkMlOTglRTUlODUlODg=
+lRTQlQkYlQUUlRTUlQTQlOERwbDA4MCVFNCVCOCVBRCVFNyU5QSU4NCVFOSU5NCU5OSVFOCVB=
+RiVBRiVFRiVCQyU4QyVFNSVCOSVCNiVFNiU5QSU4MiVFNiU5NyVCNiVFNiU5MCU4MSVFNyVCR=
+CVBRSVFNSVBNCU5NiVFNSU5QiVCNCVFNCVCQyVBMCVFOCVCRSU5MyVFNSU4QSU5RiVFOCU4My=
+VCRCUyMiUyQyUyMm1ldGFkYXRhJTIyJTNBJTIyJTIyJTJDJTIybWF0Y2hlcyUyMiUzQW51bGw=
+lMkMlMjJ0cmFuc2xhdGVkQnklMjIlM0FudWxsJTJDJTIybWV0YURhdGElMjIlM0ElNUIlNUQl=
+MkMlMjJ0ZXh0JTIyJTNBJTIySSUyMHdpbGwlMjBwcmlvcml0aXplJTIwZml4aW5nJTIwYnVnc=
+yUyMGluJTIwcGwwODAlMjBhbmQlMjB0ZW1wb3JhcmlseSUyMHB1dCUyMHRoZSUyMHBlcmlwaG=
+VyYWwlMjB0cmFuc2ZlciUyMGZ1bmN0aW9uJTIwb24lMjBob2xkJTIyJTdEJTVEJTdEJTVE"
+    style=3D"white-space: pre;">Hi,
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 59b9a4b9220..f257288194d 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -16,9 +16,11 @@ check-help:
- 	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
- 	@echo " $(MAKE) check-block                   Run block tests"
- ifneq ($(filter $(all-check-targets), check-softfloat),)
--	@echo " $(MAKE) check-tcg                     Run TCG tests"
- 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
--	@echo " $(MAKE) run-tcg-tests-TARGET-softmmu  Run TCG tests for a given target"
-+	@echo " $(MAKE) check-tcg                     Run TCG tests"
-+	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a given target"
-+	@echo
-+	@echo "The variable TCG_TEST_FILTER will select the subset of matching tests."
- endif
- 	@echo
- 	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
-@@ -64,7 +66,7 @@ $(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/
- .PHONY: $(TCG_TESTS_TARGETS:%=run-tcg-tests-%)
- $(TCG_TESTS_TARGETS:%=run-tcg-tests-%): run-tcg-tests-%: build-tcg-tests-%
- 	$(call quiet-command, \
--           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) run, \
-+           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) TCG_TEST_FILTER=$(TCG_TEST_FILTER) run, \
-         "RUN", "$* guest-tests")
- 
- .PHONY: $(TCG_TESTS_TARGETS:%=clean-tcg-tests-%)
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index af72903f898..1b83824ff4e 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -254,8 +254,15 @@ endif
- gdb-%: %
- 	gdb --args $(QEMU) $(QEMU_OPTS) $<
- 
-+# Filter tests based on TCG_TEST_FILTER if set
-+ifdef TCG_TEST_FILTER
-+FILTERED_RUN_TESTS=$(foreach test,$(RUN_TESTS),$(if $(findstring $(TCG_TEST_FILTER),$(test)),$(test)))
-+else
-+FILTERED_RUN_TESTS=$(RUN_TESTS)
-+endif
-+
- .PHONY: run
--run: $(RUN_TESTS)
-+run: $(FILTERED_RUN_TESTS)
- 
- clean:
- 	rm -f $(TESTS) *.o $(CLEANFILES)
-@@ -269,3 +276,6 @@ help:
- 	@echo "Built with $(CC)"
- 	@echo "Available tests:"
- 	@$(foreach t,$(RUN_TESTS),echo "  $t";)
-+	@echo ""
-+	@echo "Environment variables:"
-+	@echo "  TCG_TEST_FILTER=<pattern>  Filter tests matching pattern"
--- 
-2.47.3
+Thanks for the review and the historical context.
+I don't have a strong use case for peripheral DMA transfers at the moment=
+,=20
+so I'll drop that part for now and focus on the bug fixes first.
+
+  1.handling the "last transfer is short" case
+  2.fixing the transfer size register decrement
+
+I'll send the updated patches shortly.
+
+Thanks,
+Tao</span></pre>
+    <blockquote type=3D"cite"
+cite=3D"mid:CAFEAcA97JFytdf1ZZfoMX-Rt92kfOgq304WahUWD2tQY6WsW+w@mail.gmai=
+l.com">
+      <pre wrap=3D"" class=3D"moz-quote-pre">On Sat, 21 Mar 2026 at 15:47=
+, Tao Ding <a class=3D"moz-txt-link-rfc2396E" href=3D"mailto:dingtao0430@=
+163.com">&lt;dingtao0430@163.com&gt;</a> wrote:
+</pre>
+      <blockquote type=3D"cite">
+        <pre wrap=3D"" class=3D"moz-quote-pre">
+On the interface, 0~15 represents single request, 16~31 represents burst =
+request.
+Access peripheral data based on the validity of the request. For the conv=
+enience,
+we only respond to single requests. The number of data read from the sour=
+ce and written
+to the destination is always equal, with a value of max(swidth, dwidth).
+
+Due to the lack of data preparation by the peripheral, it is necessary to=
+ cache data separately
+for each channel until the peripheral is ready for processing.
+
+The width of peripherals perhaps not possible to process all data at once=
+,
+so continuous processing is required. Read from source is achieved throug=
+h "continue",
+while writing to destination is achieved through "goto".
+</pre>
+      </blockquote>
+      <pre wrap=3D"" class=3D"moz-quote-pre">
+This has tangled up the original bugs we were trying to fix
+(that we weren't handling the "last transfer is short" case,
+and we weren't decrementing the transfer size register by the
+right amount) with the DMA transfer code.
+
+Can you start the patch series with the bug fixes, and then
+if you want the DMA transfer implementation do that second,
+please?
+
+thanks
+-- PMM
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------Rk41Iv0XiaB600HD5c7aTA0S--
 
 
