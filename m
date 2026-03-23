@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6338BD58B00
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878C0FC72C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4eZP-0002CP-7D; Mon, 23 Mar 2026 08:39:47 -0400
+	id 1w4ecL-0003Ii-Nb; Mon, 23 Mar 2026 08:42:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4eZN-0002Bs-3v
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:39:45 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1w4ecH-0003Hl-Ff
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:42:45 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4eZL-0002e4-Jd
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:39:44 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-798374d0f44so70927277b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:39:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774269582; cv=none;
+ id 1w4ecF-0003Ku-S3
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:42:45 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-79495b1aaa7so33464577b3.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:42:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774269762; cv=none;
  d=google.com; s=arc-20240605;
- b=N21G6ijSabUbo7kB/bvFQQt//jElw4SX+XixvErEjPm8AHihirtSe+ZDSjO7SrQNHm
- 0jFsy0hEksYvL5yR/71D5cRQAXkdyyWzzmMSNs9XP+cEHoh27BB/nECumF71AcR7W/5Q
- yy7FsgFY+lPT6cEAHFozAWyd4jDmgwC+1DKu8oxJhpx+O/yNwNGw7SGhticwcnhP5ISg
- 0mH41gG30wAsGMxuZvkNemQLkNKLw5Q4bAlTXHaZeMDtoR+oWzyc1NPbafdA5seKaHqr
- YzkOtvbsJCHTLzbNUdPezfIZfmAFhDIMUGSfw0VIHiGrgfEehZlAfjLGMampKs4/+swE
- 4oVw==
+ b=TdLTn8ctS2HwR+dVQtwkIOzH0ve+AH+EoFV3ebj5nrij/yT74jVxGgxFhu14EhX9rx
+ Dm0w37DxWIEZSSUXwR3ItFkTacbLZ03TZw6BXnCvmvIrnuxUeFRlrgtvxywQ/Q4Mc/2j
+ ldnIw3AyG6h5V7lC8dVNhu3S5IHWwMlqo18BNKP3Lt2MIxxyeR8PA0M4dLnR2guhsdT5
+ skjttO5kqKMhjGFT3CA7qG22zRclg9wGHf5+y2yirNk8vWtxemC4fgSr5jcm1JtQ8OTC
+ tQZtBU/bfFbP9dBtQd4svaeJiSGzxdHTaSlHvlyxP8AeGn/Pp/5IoG8KiPM3WgDRSiEK
+ v4Fw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=R7JL3klp5R0qHeWkPx3riPndEVfG7uwqPmPnbUGg0nU=;
- fh=Ep0uaJipAhObsWjFYu6sRYa/1NUAk1w0dh43gVx3LDU=;
- b=lLdFT71bYQRP+bjlwURFFZEQITu5m93oj2yxy9jMc2c0xQpEYy8NRdpyMxTUV/Pkjm
- R5n52PWvO6UP34flfFiIPfKAlWZCYjNLwLOjsMU7oqdp3p9+grmVBEGmzrEYsOFz4d1o
- cFM6BnLOQ05HUHHRJxH4HT22PukINKZZyAqRueLZtKUBgPNoA1Kt5zjbhj4pcATrhLcM
- Ws9vi+peZaR65KZvkh6F+VBvgkZD8KO/6fftA615oCTlDm/tNqPMF1fjh2wr5R1C5Jl9
- RcSI5Bad3mddu2B2CDRhL/IFnk1M2qbSkTzhFud0Aud3RHdRdSU5U5raSIqMq2ezCLaa
- Uvag==; darn=nongnu.org
+ bh=bWQOdPxoWNTmio9+Twmarc0LaqonfKM/EkcEVyn+YDc=;
+ fh=sbxuPqjMywa3JYEGeYJMyo5ksfdP/w06LeNzDEfn49s=;
+ b=PEqSsM7DEbE8AJhdcWTgyEyG0/LItLJ6dyzivKghzj9Rn+Ur6xC1bZkyxypHkazzBZ
+ qSW8pqpaBEUnQ4yX6Z0fRFmrtZWPR00CTt8lABx/zaAZSXLMRzWlBk1NWXw0rUlnUcNI
+ AOBbItHq1VLiK7Hdb/dSFaNYcAzzoIZqCOOOIbZYLWJ0Wb8RPmpTjB802kdJpqRgVpLu
+ q4+Xd3YiAO/IsX9WGYDt0U0TMNe1oh3m9GPFkgJvhHU/akKHPc3XHR9UXLOFYNm6Gl00
+ ddeULt5jBiWjIoypov5shGy90mLhVxQxFMiioe32awxBPc1hzPylGvQgs7zoMNRokIt7
+ hZDA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774269582; x=1774874382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774269762; x=1774874562; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=R7JL3klp5R0qHeWkPx3riPndEVfG7uwqPmPnbUGg0nU=;
- b=awysDPJ4ugnWD7OjiWOIKBj9JwogB/qP0bfbc/hOC0mFeJGyxRPeS9df9YH7GLxKYg
- xPYbQRMxmyUAocmXkgt2wumA029SDqwcWyw7TWyiI+J/48C/FTFyfAgXbDNeUbF5tRM3
- qKSuAYxE6waav2QcZeqZkUrJH12CCOdvFchGsPDfvdnP4LCmGQOm7dtvOYtoc3MD+bDi
- Y9WLVfKMIO2Yhjdb7H+pK5F/M/ZxX1NVNpNiXc/RwK/1Y+dpLZcQHgf96Ib0u1PTrMhn
- sWZrd7eBmiaQaQOOW9qcf/3bRFdujRhDXb4dk9nuJtdBBuVC/WHEbm8IGbEoE6o7GzT7
- cyqQ==
+ bh=bWQOdPxoWNTmio9+Twmarc0LaqonfKM/EkcEVyn+YDc=;
+ b=LpLKRNGaUPdmSINeYax/Wl9+eMGmRve2DKny579hkeAUzeCak78Nu3V4LeAyigTq+a
+ /tbY6ou768qVn//kSb8q7ep3ZRE5zSQaV59Mha74z5ajbkorKxLcX2hD9mfclISHH+oo
+ b1+3EFACe2UdcgAjFfbMhpMWFVXCPcATSOLmm9QbiqFXg+LKV6AvDNzlUJ4xqlfJoTGU
+ n0ebHpdA+AqNGUtHXkagry96SzyLbbVQmXBQ58wToiTXkuX9eBfBbKsqBaJYzmpDlUY+
+ Z9c5IFyqmrC+r/UiVmXmPLPHyndWzWLCHEpmDx2OJmdQgW711eUI0ARWf24QLhZlWqrc
+ ZyEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774269582; x=1774874382;
+ d=1e100.net; s=20251104; t=1774269762; x=1774874562;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R7JL3klp5R0qHeWkPx3riPndEVfG7uwqPmPnbUGg0nU=;
- b=JYCZEP2knNZylm/nv9C/jvvMEfwM5RMexTBSKLmo7SywGfKii3nNaP17fKcGpVBfeL
- tzuV3VzgfYRInUPBWvpXRxXqm/uRD8m9wBVOCpg/pZVTaLJQoyQO0As+QwtT4zXpbDcj
- hpDu7jxDkMvioQCTXk1DLQ92hefOKEVMVW8aCIEwZpdbDdKWUTv2zIP2sKV5LWAa9Wfv
- ZX8ZfyPrO/46Lcri7108Xnq+Y7vVX1m9lILAbQSHpmVJOKRfRjLUFH+M+/5rxAx9Olx6
- TYlKiBRlyvYS5Y6ku56DqJE9xrZWKnezCZBUCor19zd8CjiBMglqV66kmBzPe0bJGG+S
- NaTw==
-X-Gm-Message-State: AOJu0YzZ/DEoOauqnMyQGhqVVb4/i9oKPHsC+kN3G7QIZHU0PATbk5kW
- FKBRjf79chZdDA3MLGL1zdqu+iiCXXB+D5OFoY98woQsXh1gCKB+sxwVf3nxcBivAm0rqRl6gVY
- BoyyDKiamkKkf4pOdlEy2xKATdtMFX1mvCmYX4gyOOw==
-X-Gm-Gg: ATEYQzzYpmZzavnX5a72H+5OqMdAekmUFfkoKZCxgK5czAUl2Yv9ngh70XenasuI42W
- LWNEfR+veimR3r6LscFAIXe7Yl/xvcObKI2u8w5BBr2bJZkSjhtsaHdMN70TOd43E2y7LKr7qcq
- SF3TzgCK7cZJAreDKgKRCYZWIwo0WMAhaZ1JftRFT4HhjenxdPDsJ89zcR6meB5zNX06RgYyOTc
- w+fpL1Pqoaha9XCIFlise7gI0Q8Q8sQ/1ISN1+5idjsZptajEjPEIsTQxi0kRpFmcSqLaMLP96U
- Bfqdj9kxkYFP32ECF3jXXt5JS02OF9q4RG/F3HKoYAzvmoKf2ql0hU77/uj8NNHbJhE=
-X-Received: by 2002:a05:690c:e3ce:b0:79a:b586:7389 with SMTP id
- 00721157ae682-79ab58679f6mr29605587b3.20.1774269582257; Mon, 23 Mar 2026
- 05:39:42 -0700 (PDT)
+ bh=bWQOdPxoWNTmio9+Twmarc0LaqonfKM/EkcEVyn+YDc=;
+ b=mUSxc9Fhv6VKFQgFVqsInZPYmxoPWlASHCWwU+H6nb5dIAI7j42ZQmkub0VfLPElZk
+ Mx6MlYrK6ExkH/f0IQTjnIOhue1O0ZqmGYAZdEOyYZOvmWQVGVAbL2WYt5kHpVdgQmR7
+ i8b6TdvWDEDwTGw78a8q6bmIj/qQyGPRyNnC3WrAacSxdkGAZoS0zkv6WXKfuuW9t8hF
+ NpnzwixEC2ZttE6uK2FCDoBmRKTvUh2yNx/G/m+xDnMIXDGw08LteT3NumfMUMulhrbV
+ bPAKpneJwd9sEwHtEmu1UdYPzj5p69sdmoHLmvUcrqjqNGqnoRxoEiSRt2/acfT8B9i5
+ hclA==
+X-Gm-Message-State: AOJu0YyLLHMvl2JoMCRfOghoDP6ZhwzinTFeSIcgGQIKbMeVqyxBQfj3
+ /rpY3gIhY5x3vULb5+8QJ2CXjnSQA72W8dDeQ994xjM28ZmjxjhOoT1xGonxM0WS8vw+1UUdkP+
+ rDVhTDF/ErsKNHBvy+tAm9hLyAY0zv/KesH0qJTmXGmqMBAYmLXJO5dw=
+X-Gm-Gg: ATEYQzwtlYC0e2u8A+0cp0Wp+5VAb+h0QY42dVIvgHVgZk3dq3wyZyRXPG0dfdOuemK
+ 5bmK4+ZK4WosPEg7kJyq/g3XJhXUEsYDQcB++ehEf6w+EPHXo/cuh+wLasVFcqZBYITIXqL68v3
+ a2daKrRDLkpdWMAg41XgzgxMJgc5g/cwG5YKS/UwnQ90xuTKZxGDSr9SNXLO/2ZDY6vpFBf4uCO
+ e/yoR13z88onWOFV7jGo9GcD+ySQ/6yOUz/BAOhad/w/6t/tMFPsXFGYmTVxYl3WcONgZR1iGqe
+ n5+jygDTZnqaLyay4lPtFOUjyJCk/UHhRP4B0mfqS1aluGFrD1AU/EesNkEu0aH6jSk=
+X-Received: by 2002:a05:690c:22c4:b0:796:2fde:5dfe with SMTP id
+ 00721157ae682-79a90ba0251mr131343807b3.38.1774269761750; Mon, 23 Mar 2026
+ 05:42:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
-In-Reply-To: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
+References: <20260320145041.3027130-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260320145041.3027130-1-brian.cain@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Mar 2026 12:39:30 +0000
-X-Gm-Features: AaiRm50mw_b035xTPgZi3DJMUYXQE3ixuwng2zLVlN7HjkzA_JX0TX9uraipWxI
-Message-ID: <CAFEAcA-EfRkCXWu061c1uZsW4BC4qKut_uju6U4NyiNuYbf5EQ@mail.gmail.com>
-Subject: Re: [PATCH] include/hw/hyperv: add QEMU_PACKED to uapi structs
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Wei Liu <wei.liu@kernel.org>, Aastha Rawat <aastharawat@linux.microsoft.com>
+Date: Mon, 23 Mar 2026 12:42:30 +0000
+X-Gm-Features: AaiRm51ipqtXuwY3ht_eQmKVmLKBW2EL4fsEC7vdGKDs3MHkz1V2s4fUYdbLcCs
+Message-ID: <CAFEAcA8tO=vRqRxzbsGyGrGTRa7zc4CEPBdHyVbjZ+9KtKckPQ@mail.gmail.com>
+Subject: Re: [PULL 0/3] hex queue
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,33 +113,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Mar 2026 at 12:06, Magnus Kulke
-<magnuskulke@linux.microsoft.com> wrote:
+On Fri, 20 Mar 2026 at 14:50, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
 >
-> The uapi definitions are marked with __packed hints in the kernel
-> headers, since we want to keep the contract of the Microsoft Hypervisor
-> ABI explicit, we should also added them in our vendored files, with a
-> few notable exceptions where the attribute is a noop.
+> The following changes since commit 8e711856d7639cbffa51405f2cc2366e3d9e3a23:
 >
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->  include/hw/hyperv/hvgdk_mini.h | 37 ++++++++++++++++++++++------------
->  include/hw/hyperv/hvhdk.h      | 14 +++++++------
->  2 files changed, 32 insertions(+), 19 deletions(-)
+>   Merge tag 'hppa-fixes-for-v11-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-03-20 10:04:48 +0000)
 >
-> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> index cb52cc9de2..7d7b2e9b36 100644
-> --- a/include/hw/hyperv/hvgdk_mini.h
-> +++ b/include/hw/hyperv/hvgdk_mini.h
-> @@ -7,6 +7,8 @@
->  #ifndef HW_HYPERV_HVGDK_MINI_H
->  #define HW_HYPERV_HVGDK_MINI_H
+> are available in the Git repository at:
 >
-> +#include "qemu/compiler.h"
+>   https://github.com/quic/qemu tags/pull-hex-20260320
+>
+> for you to fetch changes up to 1adf67b3c445f4060900440ea210e7a1e03042f5:
+>
+>   tests/tcg/hexagon: add test for predicated .new branch LSB evaluation (2026-03-20 07:43:03 -0700)
+>
+> ----------------------------------------------------------------
+> Fix for J2_jumptnew{,pt} pred-reg misbehavior
+>
 
-osdep.h includes compiler.h, so it is always present for all C
-files; you don't need to explicitly include it.
 
-thanks
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
 -- PMM
 
