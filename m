@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17014EC01B1
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9CDCEC01B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4bzf-00027N-4J; Mon, 23 Mar 2026 05:54:43 -0400
+	id 1w4c03-0002RE-AA; Mon, 23 Mar 2026 05:55:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bzd-000261-3u
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:54:41 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4c01-0002MR-2x
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:55:05 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bzb-0002KK-Cd
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:54:40 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-439b94a19fdso2444053f8f.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:54:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bzz-0002M0-9C
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:55:04 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-439b9cf8cb5so5530811f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:55:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774259677; x=1774864477; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1774259701; x=1774864501; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8uPgG5J5PjJUfJmoUsFe9xRnPOKjQq2k4lhmyoBxMyY=;
- b=o6yioX9TvZ8GwFtvGzSO0668NdGsqkgvzPaYLlWZTq2zuMW6CA9/VwI8EF7XUffxS7
- D9o/FsuDFZjmEGCucMrsPab0ykkfObT1tTjae+wEZj4ZyDY1DgXZ0sO8kmf9gbYX7uWm
- yjLyMi1ODJTHun5kL5Y+ZU0rviME0zmOrz0qT4dSAcaOytpFmXyvyBQbxm8eUMd6jupn
- Z3GGSyr1ksc2cktUZho3/15pzxG4/O5IZwFFpePdF2pXIr/miJRe9Llqi1vAUEYoYNqm
- O83uCCL/R18wuUqubf4zm3vIclLa+ZmzXgAHR1sa6RquMguSa2P8dUhaD4tU/USPCoM2
- RE8w==
+ bh=veW2TdckBctyztJTUtrDnGjbSdCSJOd+WxFVVe/HMN8=;
+ b=rQPimDzErfwI4zBsRKzSWLzuswa62Cc2ovYhFCWllGiWvu97858vkfosus6T92SFRr
+ AgCXSSOjtDCakieU8ctp7LI8P1rZLnAWqz6Ha1tMf+Ma2SnoYmZeqPr+fM9u/RqfgpUB
+ U2Co6ugJX6kZux1wUFcUbNtAMu1vk02KAWzNi+fsSUXH15e2i1g8MxQxCfJP/d8q5h8v
+ r+Cmx9ZLMNzkHro+unajiLVUXwy6uMe/qoELxnTpygf/Sae4wEH6ThZ9tYZitDuX6OQq
+ 4HHtA+bejHopa+9FyCVyN5bidKkfEmMsQUKq77x0f8qVsjMjw3aALjS09FcCIb42IAOW
+ R72w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774259677; x=1774864477;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20251104; t=1774259701; x=1774864501;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8uPgG5J5PjJUfJmoUsFe9xRnPOKjQq2k4lhmyoBxMyY=;
- b=UjwrHFeMcqpeXooQv44TQkVLDfFX8N/2c62NgYIRasnKnhpdnfynGWl+wZuaD/gTKa
- a1tHH7GmiJFyzy2sBp/ZIsU+FkMrdgmSqFnZgODVwTo5Kd76IlHd1JWvzvuT4EcJUGn4
- 6ENXv7SC3oRAuREfR8pJHFWluffLitcMc60nkWnPzszTXAyTzxs6VOCKxXYD8Xt3chdv
- nlsWoZ7OBnmVmJ9bhYsDg6F6UHpbgTbyzl2tO8Jh7PUw+YX2x0IIeN9Y7h0nsuZobqrW
- hq5rVQ3y0TnciS1ItDXMuXnI9G7Ep9FsBYYEK6DBPA9381wO8yO35CcUx8On05nuIor4
- Dclw==
-X-Gm-Message-State: AOJu0Yx1v+jbSaD1ZEJtj6qcBPvdK2dosT6HdCnxbRWJzzNvIzX6cNCx
- jN+WvLhG1SI4gqTokom5LbHEehSFmAi15+0vgb5+w7VOcWbdkmKhMY7V+g0pLGXU/DaYKiA/M4+
- UhZdbXjQXzA==
-X-Gm-Gg: ATEYQzyJE23B6ornK7lQJq0CTOuNylNb4/W+RVlv5WUWvPies6vY7AEn3ACg5yfqLw7
- YKW+nnPOpQfgBIetUSDepA3SaKRa/xq+HExQTYhNEH3L1l9uiG38CKQoPUxh56+X8mLzY1lA0Ba
- DD1I0Dl392iRBgnvQkIAJRbzS9L2528hoFMXgZkYbFqN2SHuttjukr9DvPSVZaapZkaelBRkAsV
- olEcvq/Ly90L+h3wS8lyRfPhsoQ3abuigKbjCxakcQNTp5qv9i/5tk5Gu5AlCQ9TvdeNFkUIAOj
- WV4vk7FYSxKm+AjIZAReTtXjwGPVzT3uoXOxE5DzF8/wCKQX3ebBwaDnjvXY41EkMg/mnTgcJGn
- ouLzOWuDRG06KjLeQwVm79ZtI1lLl13j4geP/d7tBief+P/xYrp0UNBBKuJrInxWnCxam2OGh5g
- EdgPxuoaD+TgydqKHX5ztJYGJdbcycF1yjTiMqd7NGqWGoX8fQEKKcfiM+j8vWTWSz2g==
-X-Received: by 2002:a05:6000:2c0e:b0:439:b744:c5fe with SMTP id
- ffacd0b85a97d-43b6427d272mr17635100f8f.52.1774259677234; 
- Mon, 23 Mar 2026 02:54:37 -0700 (PDT)
+ bh=veW2TdckBctyztJTUtrDnGjbSdCSJOd+WxFVVe/HMN8=;
+ b=PoprbLy4FeCZRNTH/ppOqH7hTp4IRKRosdv+z5K1lWB465XVubavngPsmvxIPNM9by
+ ftvTBgT/Hgq6JdyoWfSHOa49F+p9f0ZCg/fNus9rxwePky6+CHT8CDqs14xY+2r5Fd13
+ z2y1DIKCX0iD82Stsxd/u64dnG5pxlZOV2ZwMj64Xt8PJ82eCYqmXkyobBQv1P/F2u0N
+ 488Ba52LgxQghaQMS8YduxHzOzskeFeV4PZI7G+Fg4xRri2ZDefsjbq+qLYtDQuMsFWU
+ it0HBRio5nV4SZ19JMMVWdMEs0AuJ+YwYtb4Qzr40qoSVGwrdK9OGnvTV0HHsBN+i8O+
+ Iv+Q==
+X-Gm-Message-State: AOJu0YwMo0n/eL9jCYbXs5Vb/i4FKluN5ipZd8901XhcQQbnzngGFAn2
+ whkyJrl6JIK2E8MaR3bjlDqaQ3Vey+QDoQqLAgPOrZdkBUWjR+HLnqywpJOZmmkTr2Zzdg4g7km
+ ukcfCaulaSQ==
+X-Gm-Gg: ATEYQzzaNFt43Dx2S+09Trs9d0zpKNkBx6g5Oa1/oxBEHaoRPvIJKh1bzCprPIkGCem
+ BArEQ0PB0O7d7Np3QiOXDE6b7gIs/9JJ6qCR49rar/KI+DEIr/r80nOx/tVV2QiH97qINhLljy4
+ EC1vDEzPBd271/kRPOZKexdxmZrue1WOWTeae8i78ivGHkf+qSaD2yldbs8fTn62xo3YQ1f9ZLX
+ 2qz6oCYN/wmiFxHpUdgUmOw2byXhsWLXJGsmBVXAXbEmqRuuQ71dF7+SMBZOLzcIC9gBQaFlciI
+ nP01jK/8ZR+i2ZJyVp96CZi+db+6NmlC5kBGIgMa79LN4ktOUoyJ6xgpLVgmk7yn6uSSkYW9Ort
+ 0RAqPxqMOZ7K2SbyfZqRkkVnn7OvLvw5DzLZl+tTZD2xbYcwuS8LYabVl1xGyMeUi94l1jt+Vbf
+ rotceaeoM0H0W915C/mcpe53z2fVnuKM6c3OQ36wtMfxoXnC6IcgmFLnCVoiYKWnJs0w==
+X-Received: by 2002:a05:6000:40de:b0:439:dfae:8083 with SMTP id
+ ffacd0b85a97d-43b6427863cmr19264257f8f.38.1774259701016; 
+ Mon, 23 Mar 2026 02:55:01 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b644ae37dsm28192391f8f.2.2026.03.23.02.54.35
+ ffacd0b85a97d-43b646b0b0csm26905665f8f.15.2026.03.23.02.54.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 02:54:36 -0700 (PDT)
-Message-ID: <d3dcd9e4-0df9-4e39-8660-31570f92775e@linaro.org>
-Date: Mon, 23 Mar 2026 10:54:35 +0100
+ Mon, 23 Mar 2026 02:55:00 -0700 (PDT)
+Message-ID: <64fa4546-f815-446e-89c5-26c7524030c6@linaro.org>
+Date: Mon, 23 Mar 2026 10:54:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Replace target_ulong -> uint64_t for
- TARGET_X86_64
+Subject: Re: [PATCH v2 00/38] target/cpu: Do not include 'exec/cpu-defs.h'
+ anymore
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Anton Johansson <anjo@rev.ng>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260315165319.39727-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260315165319.39727-1-philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20260313062055.2188-1-philmd@linaro.org>
+In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/3/26 17:53, Philippe Mathieu-Daudé wrote:
-> These registers are only available on 64-bit builds, thus
-> always handled as 64-bit. This isn't even a migration break
-> because they are migrated as 64-bit since the beginning
-> (see commit 02536f8b1f9 "x86_64 save/restore").
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/i386/cpu.h | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+On 13/3/26 07:20, Philippe Mathieu-Daudé wrote:
 
-Queued for 11.1, thanks.
+> Philippe Mathieu-Daudé (37):
+>    target/arm: Remove target_ulong use in hvf_handle_psci_call()
+>    target/ppc: Replace TARGET_PAGE_BITS -> qemu_target_page_bits()
+>    hw/s390x/vfio: Replace TARGET_PAGE_BITS -> qemu_target_page_bits()
+>    monitor/hmp: : Include missing 'exec/target_long.h' header
+>    target-info: Include 'exec/cpu-defs.h' explicitly
+>    target/xtensa: Restrict inclusion of 'exec/cpu-defs.h' header
+>    target/hexagon: Include missing 'exec/target_long.h' header
+>    target/hppa: Include missing 'exec/target_long.h' header
+>    target/i386: Include missing 'exec/target_long.h' header
+>    target/m68k: Include missing 'exec/target_long.h' header
+>    target/mips: Include missing 'exec/target_long.h' header
+>    target/ppc: Include missing 'exec/target_long.h' header
+>    target/riscv: Include missing 'exec/target_long.h' header
+>    target/sparc: Include missing 'exec/target_long.h' header
+>    system/kvm_xen: Include missing 'exec/target_page.h' header
+>    hw/misc/cpc: Include missing 'hw/core/cpu.h' header
+>    target/s390x/tcg: Include missing '*cpu.h' headers
+>    exec/helper-head: Include missing 'exec/target_long.h' header
+>    target/cpu: Do not include 'exec/cpu-defs.h' anymore
+>    hw/alpha: Include full path to target 'cpu.h' header
+>    hw/arm: Include full path to target 'cpu.h' header
+>    hw/avr: Include full path to target 'cpu.h' header
+>    hw/hppa: Include full path to target 'cpu.h' header
+>    hw/i386: Include full path to target 'cpu.h' header
+>    hw/m68k: Include full path to target 'cpu.h' header
+>    hw/microblaze: Include full path to target 'cpu.h' header
+>    hw/mips: Include full path to target 'cpu.h' header
+>    hw/or1k: Include full path to target 'cpu.h' header
+>    hw/ppc: Include full path to target 'cpu.h' header
+>    hw/riscv: Include full path to target 'cpu.h' header
+>    hw/s390x: Include full path to target 'cpu.h' header
+>    hw/sh4: Include full path to target 'cpu.h' header
+>    hw/sparc: Include full path to target 'cpu.h' header
+>    hw/tricore: Include full path to target 'cpu.h' header
+>    hw/xtensa: Include full path to target 'cpu.h' header
+>    hw/avr: Build as common unit files
+>    hw/misc: Build 'mac_via' as common unit file
+> 
+> Pierrick Bouvier (1):
+>    hw/misc/allwinner-cpucfg.c: make compilation unit common
+
+Series queued for 11.1, thanks.
 
