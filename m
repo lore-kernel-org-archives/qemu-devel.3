@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88CF6F46124
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A39FF46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fpt-00017z-Jz; Mon, 23 Mar 2026 10:00:59 -0400
+	id 1w4foa-0000CD-CZ; Mon, 23 Mar 2026 09:59:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4foH-0008TA-Oj
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:20 -0400
+ id 1w4fo2-0008Ga-Hl
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:02 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foF-0006wl-QZ
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:13 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fo0-0006s9-SB
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:58 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 93A7A20B6F01;
- Mon, 23 Mar 2026 06:59:07 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 93A7A20B6F01
+ by linux.microsoft.com (Postfix) with ESMTPSA id 00BCF20B700D;
+ Mon, 23 Mar 2026 06:58:52 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 00BCF20B700D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274350;
- bh=jJHde85rrqP4JFlhsgAekskobRmJMJo3MVNFcALWQys=;
+ s=default; t=1774274335;
+ bh=4H6AOTHbSt4M6umhyzila9t2EZwbHKhGHm3APiPWRFc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jZX5ekNXnuKDmViDKWeLe6jPJW1ZxH4BagMdEbQpl9FVooJfy4oELFciJEKl/fD9N
- r+HeF1+fyAGCc3DgLc/1h0q7baBYN2anFR+F+rJkawuEcIX5uwLavbaT+EqUHESexU
- 320eLM+0Fm/ybrVMxVA9wZAb6AXSpJpc7mBvTRrk=
+ b=ogk3+hhNAmK2F2D7EZqoy8Tq5JUjReQ2gcuNfVMHJuOvIOJBookBdOcNZ/oiD6uQ7
+ pZNAEfNs9TU0yj+qMZNmbuIkdwaGgEtUiBGw5TlBHZ4wzXEjeH84SAjov+N7uDi8UU
+ PO+qfdmZxDZsSycV4/hVnpBU/dOQU5RFCMPdnIv4=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 14/32] target/i386/mshv: move apic logic into own file
-Date: Mon, 23 Mar 2026 14:57:54 +0100
-Message-Id: <20260323135812.383509-15-magnuskulke@linux.microsoft.com>
+Subject: [RFC 10/32] accel/mshv: update s->irq_routes in release_virq
+Date: Mon, 23 Mar 2026 14:57:50 +0100
+Message-Id: <20260323135812.383509-11-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,249 +75,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a new file to unclutter the vcpu code gradually from APIC related
-logic.
+The state's irq_routes field will be updated when an irqchip's gsi
+is requested to be released.
+
+The old remove_msi_routing() fn is redundant and can be removed.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv_int.h    |  8 ++++
- target/i386/mshv/meson.build |  1 +
- target/i386/mshv/mshv-apic.c | 78 ++++++++++++++++++++++++++++++++++++
- target/i386/mshv/mshv-cpu.c  | 66 +++---------------------------
- 4 files changed, 92 insertions(+), 61 deletions(-)
- create mode 100644 target/i386/mshv/mshv-apic.c
+ accel/accel-irq.c       |  2 +-
+ accel/mshv/irq.c        | 43 ++++++++++++++---------------------------
+ accel/stubs/mshv-stub.c |  2 +-
+ include/system/mshv.h   |  2 +-
+ 4 files changed, 17 insertions(+), 32 deletions(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 7af5bcf022..f86c7a3be6 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -16,6 +16,8 @@
- 
- #define MSHV_MSR_ENTRIES_COUNT 64
- 
-+struct mshv_get_set_vp_state;
-+
- typedef struct hyperv_message hv_message;
- 
- typedef struct MshvHvCallArgs {
-@@ -84,6 +86,12 @@ void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
- int mshv_arch_post_init_vm(int vm_fd);
-+int mshv_set_lapic(int cpu_fd,
-+                   const struct hv_local_interrupt_controller_state *state);
-+int mshv_get_lapic(int cpu_fd,
-+                   struct hv_local_interrupt_controller_state *state);
-+int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
-+int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
- 
- typedef struct mshv_root_hvcall mshv_root_hvcall;
- int mshv_hvcall(int fd, const mshv_root_hvcall *args);
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-index 49f28d4a5b..5eb6e833a6 100644
---- a/target/i386/mshv/meson.build
-+++ b/target/i386/mshv/meson.build
-@@ -1,6 +1,7 @@
- i386_mshv_ss = ss.source_set()
- 
- i386_mshv_ss.add(files(
-+  'mshv-apic.c',
-   'mshv-cpu.c',
- ))
- 
-diff --git a/target/i386/mshv/mshv-apic.c b/target/i386/mshv/mshv-apic.c
-new file mode 100644
-index 0000000000..e0e8b8cacf
---- /dev/null
-+++ b/target/i386/mshv/mshv-apic.c
-@@ -0,0 +1,78 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/memalign.h"
-+#include "qemu/error-report.h"
-+
-+#include "system/mshv.h"
-+#include "system/mshv_int.h"
-+
-+#include "linux/mshv.h"
-+#include "hw/hyperv/hvgdk.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "hw/hyperv/hvgdk_mini.h"
-+
-+#include <sys/ioctl.h>
-+
-+int mshv_get_lapic(int cpu_fd,
-+                   struct hv_local_interrupt_controller_state *state)
-+{
-+    int ret;
-+    size_t size = 4096;
-+    /* buffer aligned to 4k, as *state requires that */
-+    void *buffer = qemu_memalign(size, size);
-+    struct mshv_get_set_vp_state mshv_state = { 0 };
-+
-+    mshv_state.buf_ptr = (uint64_t) buffer;
-+    mshv_state.buf_sz = size;
-+    mshv_state.type = MSHV_VP_STATE_LAPIC;
-+
-+    ret = mshv_get_vp_state(cpu_fd, &mshv_state);
-+    if (ret == 0) {
-+        memcpy(state, buffer, sizeof(*state));
-+    }
-+    qemu_vfree(buffer);
-+    if (ret < 0) {
-+        error_report("failed to get lapic");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+int mshv_set_lapic(int cpu_fd,
-+                   const struct hv_local_interrupt_controller_state *state)
-+{
-+    int ret;
-+    size_t size = 4096;
-+    /* buffer aligned to 4k, as *state requires that */
-+    void *buffer = qemu_memalign(size, size);
-+    struct mshv_get_set_vp_state mshv_state = { 0 };
-+
-+    if (!state) {
-+        error_report("lapic state is NULL");
-+        return -1;
-+    }
-+    memcpy(buffer, state, sizeof(*state));
-+
-+    mshv_state.buf_ptr = (uint64_t) buffer;
-+    mshv_state.buf_sz = size;
-+    mshv_state.type = MSHV_VP_STATE_LAPIC;
-+
-+    ret = mshv_set_vp_state(cpu_fd, &mshv_state);
-+    qemu_vfree(buffer);
-+    if (ret < 0) {
-+        error_report("failed to set lapic: %s", strerror(errno));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 56656ac0b0..54c262d8bc 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -919,7 +919,7 @@ static int set_xc_reg(const CPUState *cpu)
-     return 0;
- }
- 
--static int get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
-+int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
+diff --git a/accel/accel-irq.c b/accel/accel-irq.c
+index 5a97a345b2..0cb3ef78d3 100644
+--- a/accel/accel-irq.c
++++ b/accel/accel-irq.c
+@@ -67,7 +67,7 @@ void accel_irqchip_release_virq(int virq)
  {
-     int ret;
- 
-@@ -932,39 +932,12 @@ static int get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
-     return 0;
- }
- 
--static int get_lapic(const CPUState *cpu,
--                     struct hv_local_interrupt_controller_state *state)
--{
--    int ret;
--    size_t size = 4096;
--    /* buffer aligned to 4k, as *state requires that */
--    void *buffer = qemu_memalign(size, size);
--    struct mshv_get_set_vp_state mshv_state = { 0 };
--    int cpu_fd = mshv_vcpufd(cpu);
--
--    mshv_state.buf_ptr = (uint64_t) buffer;
--    mshv_state.buf_sz = size;
--    mshv_state.type = MSHV_VP_STATE_LAPIC;
--
--    ret = get_vp_state(cpu_fd, &mshv_state);
--    if (ret == 0) {
--        memcpy(state, buffer, sizeof(*state));
--    }
--    qemu_vfree(buffer);
--    if (ret < 0) {
--        error_report("failed to get lapic");
--        return -1;
--    }
--
--    return 0;
--}
--
- static uint32_t set_apic_delivery_mode(uint32_t reg, uint32_t mode)
- {
-     return ((reg) & ~0x700) | ((mode) << 8);
- }
- 
--static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
-+int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
- {
-     int ret;
- 
-@@ -977,43 +950,14 @@ static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
-     return 0;
- }
- 
--static int set_lapic(const CPUState *cpu,
--                     const struct hv_local_interrupt_controller_state *state)
--{
--    int ret;
--    size_t size = 4096;
--    /* buffer aligned to 4k, as *state requires that */
--    void *buffer = qemu_memalign(size, size);
--    struct mshv_get_set_vp_state mshv_state = { 0 };
--    int cpu_fd = mshv_vcpufd(cpu);
--
--    if (!state) {
--        error_report("lapic state is NULL");
--        return -1;
--    }
--    memcpy(buffer, state, sizeof(*state));
--
--    mshv_state.buf_ptr = (uint64_t) buffer;
--    mshv_state.buf_sz = size;
--    mshv_state.type = MSHV_VP_STATE_LAPIC;
--
--    ret = set_vp_state(cpu_fd, &mshv_state);
--    qemu_vfree(buffer);
--    if (ret < 0) {
--        error_report("failed to set lapic: %s", strerror(errno));
--        return -1;
--    }
--
--    return 0;
--}
--
- static int init_lint(const CPUState *cpu)
- {
-     int ret;
-     uint32_t *lvt_lint0, *lvt_lint1;
-+    int cpu_fd = mshv_vcpufd(cpu);
- 
-     struct hv_local_interrupt_controller_state lapic_state = { 0 };
--    ret = get_lapic(cpu, &lapic_state);
-+    ret = mshv_get_lapic(cpu_fd, &lapic_state);
-     if (ret < 0) {
-         return ret;
+ #ifdef CONFIG_MSHV_IS_POSSIBLE
+     if (mshv_msi_via_irqfd_enabled()) {
+-        mshv_irqchip_release_virq(virq);
++        mshv_irqchip_release_virq(mshv_state, virq);
      }
-@@ -1026,7 +970,7 @@ static int init_lint(const CPUState *cpu)
- 
-     /* TODO: should we skip setting lapic if the values are the same? */
- 
--    return set_lapic(cpu, &lapic_state);
-+    return mshv_set_lapic(cpu_fd, &lapic_state);
+ #endif
+     if (kvm_enabled()) {
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index b5a047b367..990ce34620 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -123,33 +123,6 @@ static int commit_msi_routing_table(int vm_fd)
+     return 0;
  }
  
- int mshv_arch_store_vcpu_state(const CPUState *cpu)
+-static int remove_msi_routing(uint32_t gsi)
+-{
+-    struct mshv_user_irq_entry *route_entry;
+-    GHashTable *gsi_routes;
+-
+-    trace_mshv_remove_msi_routing(gsi);
+-
+-    if (gsi >= MSHV_MAX_MSI_ROUTES) {
+-        error_report("Invalid GSI: %u", gsi);
+-        return -1;
+-    }
+-
+-    assert(msi_control);
+-
+-    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
+-        gsi_routes = msi_control->gsi_routes;
+-        route_entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
+-        if (route_entry) {
+-            g_hash_table_remove(gsi_routes, GINT_TO_POINTER(gsi));
+-            g_free(route_entry);
+-            msi_control->updated = true;
+-        }
+-    }
+-
+-    return 0;
+-}
+-
+ /* Pass an eventfd which is to be used for injecting interrupts from userland */
+ static int irqfd(int vm_fd, int fd, int resample_fd, uint32_t gsi,
+                  uint32_t flags)
+@@ -319,9 +292,21 @@ int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
+     return gsi;
+ }
+ 
+-void mshv_irqchip_release_virq(int virq)
++void mshv_irqchip_release_virq(MshvState *s, int virq)
+ {
+-    remove_msi_routing(virq);
++    struct mshv_user_irq_entry *e;
++    int i;
++
++    for (i = 0; i < s->irq_routes->nr; i++) {
++        e = &s->irq_routes->entries[i];
++        if (e->gsi == virq) {
++            s->irq_routes->nr--;
++            *e = s->irq_routes->entries[s->irq_routes->nr];
++        }
++    }
++    irqchip_release_gsi(s, virq);
++
++    trace_mshv_remove_msi_routing(virq);
+ }
+ 
+ static int update_routing_entry(MshvState *s,
+diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
+index 998c9e2fc6..dadf05511a 100644
+--- a/accel/stubs/mshv-stub.c
++++ b/accel/stubs/mshv-stub.c
+@@ -19,7 +19,7 @@ int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
+     return -ENOSYS;
+ }
+ 
+-void mshv_irqchip_release_virq(int virq)
++void mshv_irqchip_release_virq(MshvState *s, int virq)
+ {
+ }
+ 
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 7f60aba308..2033beed70 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -63,7 +63,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+ int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
+ void mshv_irqchip_commit_routes(void);
+-void mshv_irqchip_release_virq(int virq);
++void mshv_irqchip_release_virq(MshvState *s, int virq);
+ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
+                                         const EventNotifier *rn, int virq);
+ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
 -- 
 2.34.1
 
