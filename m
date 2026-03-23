@@ -4,99 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA342EC01A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 08:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC714EC01A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 08:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ar0-0001iR-C9; Mon, 23 Mar 2026 04:41:42 -0400
+	id 1w4auY-0002jZ-42; Mon, 23 Mar 2026 04:45:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4aqw-0001hv-Jm
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:41:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4aqu-0001SP-KA
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:41:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774255295;
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4auW-0002jR-Lj
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:45:20 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4auU-0001vN-82
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:45:20 -0400
+Received: from [192.168.178.155] (p5b1514ce.dip0.t-ipconnect.de [91.21.20.206])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id CD5D2DA0760;
+ Mon, 23 Mar 2026 09:45:15 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1774255516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1dInh74RKH2R7GVqdZJNtAKBl/+b9GNgs14cnwP2dXc=;
- b=Ii8Aq72QyaEDsznM7nXApPJFlkK3o2DB/g4syvbAKI7CNWcDhvL3jtPN4J2FWoNb5YVMMg
- +jOdcbWW7qSmRQlEjND5DRsof7uveMeZB4E+FE86xn0/w1V3ZgLzgIZUe/H5yrRT3cuVAI
- AIHMuyRresI3xlYkc+qm23RtUknHDQY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-t4ZNKKTxM6ak0G4E3sLr_w-1; Mon,
- 23 Mar 2026 04:41:31 -0400
-X-MC-Unique: t4ZNKKTxM6ak0G4E3sLr_w-1
-X-Mimecast-MFC-AGG-ID: t4ZNKKTxM6ak0G4E3sLr_w_1774255289
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0549E1944F12; Mon, 23 Mar 2026 08:41:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53957300019F; Mon, 23 Mar 2026 08:41:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5B70D21E6937; Mon, 23 Mar 2026 09:41:23 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Lukas Straub <lukasstraub2@web.de>,
- Richard Henderson <richard.henderson@linaro.org>,  Zhao Liu
- <zhao1.liu@intel.com>,  Jason Wang <jasowang@redhat.com>,  Mauro Carvalho
- Chehab <mchehab+huawei@kernel.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>,  Eric Blake <eblake@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Qemu-block <qemu-block@nongnu.org>,  =?utf-8?Q?Marc-An?=
- =?utf-8?Q?dr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Alex Williamson <alex@shazbot.org>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Stefano Garzarella
- <sgarzare@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Igor
- Mammedov <imammedo@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Yanan
- Wang <wangyanan55@huawei.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH 2/8] qapi: prohibit 'details' sections between tagged
- sections
-In-Reply-To: <CAFn=p-bU08juAbYaXPheforOU+4se-MZY9PK4Hr7NSVLdAYt2A@mail.gmail.com>
- (John Snow's message of "Fri, 20 Mar 2026 13:40:48 -0400")
-References: <20260316182608.148628-1-jsnow@redhat.com>
- <20260316182608.148628-3-jsnow@redhat.com>
- <87h5qa7joo.fsf@pond.sub.org>
- <CAFn=p-bU08juAbYaXPheforOU+4se-MZY9PK4Hr7NSVLdAYt2A@mail.gmail.com>
-Date: Mon, 23 Mar 2026 09:41:23 +0100
-Message-ID: <87se9rym30.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=LfjNMxFsC4I0+IiYRELZqrXH0dAAOXCrgFc5++6di20=;
+ b=qZG3MIQhvwObfg2SPwe814R3TqF6Hn1LXghlE8qg7t4lCkxhRPZcnH4GNdrSzlmnRZGbTF
+ gCSSKZ9TeahxfgDCb5VzHIN5DKU65nv9XuPcayUSCH26rA5Bg9XlMaoaS8EiL1RQUeTgIM
+ hbCWzyWx7FPf/x2pLUHAwGDOzmor7qg=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <758d7f2c-938f-49cb-89fc-980fc8e020b2@weilnetz.de>
+Date: Mon, 23 Mar 2026 09:45:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 65/77] i386/tdx: Fetch and validate CPUID of TD guest
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+References: <20250530071250.2050910-1-pbonzini@redhat.com>
+ <20250530071250.2050910-66-pbonzini@redhat.com>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <20250530071250.2050910-66-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: CD5D2DA0760
+X-Spamd-Bar: ---
+X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,284 +123,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> On Fri, Mar 20, 2026, 8:46=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > This patch prohibits plain documentation sections from appearing betwe=
-en
->> > "tagged" sections. The two existing uses of this pattern are patched
->> > out.
->>
->> One real use, and one just for test coverage.
->>
->> > This is being done primarily to ensure consistency between the source
->> > documents and the final, rendered HTML output. Because
->> > member/feature/returns/error sections will always appear in a visually
->> > grouped element in the HTML output, prohibiting plain paragraphs betwe=
-en
->> > those sections ensures ordering consistency between source and the fin=
-al
->> > render.
->>
->> Is consistency an actual problem being fixed, or a future problem being
->> avoided?  I'm guessing the latter, based on my review of qom.json below.
->>
->
-> With just one actual use, it's *mostly* avoiding future problems. It does
-> correct one instance in the rendered HTML of a plain text paragraph
-> interrupting the tabular fields, which is not a "bug" per se but a visual
-> inconsistency I wish to eliminate.
-
-A visual blemish you wish to eliminate is not an inconsistency between
-doc source and rendered doc.
-
-It would become one if you made the generator move the PLAIN section out
-to fix the blemish, but that's not the plan.
-
-Instead, you fix the blemish by making doc writers move their PLAIN
-sections out.
-
-> The problem is minimal now, but intensifies when considering inlining.
-
-Would inlining make it necessary for the generator to move PLAIN
-sections around?  Why?
-
-If yes, this patch eliminates a visual blemish now *and* avoids
-inconsistency later.
-
-> Prohibiting the insertion of any section into the "tabular region" helps
-> ensure consistent, good looking HTML manual output.
->
-> A goal is for source order to match rendered order. Rendered order looks
-> best with all tabular elements grouped together without root-level
-> paragraphs interrupting them.
->
-> Thus, the desire to restrict source order.
->
-> (i.e. we allow only one intro section and only one details section.)
-
-I'm not opposed to that, I just want a clearer commit message :)
-
->> > Additionally, prohibiting such "middle" text paragraphs allows us to
->> > classify all plain text sections as either "intro" or "details" sectio=
-ns,
->> > because these sections must either appear before structured/tagged
->> > sections ("intro") or afterwards ("details").
->>
->> Huh?
->>
->> The previous patch already classified all plain text sections as either
->> INTRO or DETAILS.
->>
->> I think the paragraph would make sense if this patch came before the
->> previous one.
->>
->
-> Mmm.
->
-> The previous patch is confusingly worded and I didn't do better here.
->
-> Previous patch categorizes all plaintext sections as intro or details, but
-> technically allows multiple details sections.
->
-> This patch enforces that we only have one.
->
-> (...I think. Currently not clear on how TODO and Since behave with this
-> logic. Maybe we end up with multiple details sections interrupted only by
-> non-rendered sections... Edit: yes, you find such a case below.)
->
->
->> > This keeps the inlining algorithm simpler with fewer "splice" points
->> > when merging multiple documentation blocks.
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  qapi/qom.json                   |  4 ++--
->> >  scripts/qapi/parser.py          | 17 +++++++++++++++++
->> >  tests/qapi-schema/doc-good.json |  4 ++--
->> >  tests/qapi-schema/doc-good.out  |  4 ++--
->> >  tests/qapi-schema/doc-good.txt  |  8 ++++----
->> >  5 files changed, 27 insertions(+), 10 deletions(-)
->> >
->> > diff --git a/qapi/qom.json b/qapi/qom.json
->> > index c653248f85d..1b47abd44e9 100644
->> > --- a/qapi/qom.json
->> > +++ b/qapi/qom.json
->> > @@ -243,12 +243,12 @@
->> >  #
->> >  # @typename: the type name of an object
->> >  #
->> > +# Returns: a list describing object properties
->> > +#
->> >  # .. note:: Objects can create properties at runtime, for example to
->> >  #    describe links between different devices and/or objects.  These
->> >  #    properties are not included in the output of this command.
->> >  #
->> > -# Returns: a list describing object properties
->> > -#
->> >  # Since: 2.12
->> >  ##
->> >  { 'command': 'qom-list-properties',
->>
->> Rendered documentation before the patch:
->>
->>     Command qom-list-properties (Since: 2.12)
->>
->>        List properties associated with a QOM object.
->>
->>        Arguments:
->>           * typename (string) -- the type name of an object
->>
->>        Note:
->>
->>          Objects can create properties at runtime, for example to descri=
-be
->>          links between different devices and/or objects.  These properti=
-es
->>          are not included in the output of this command.
->>
->>        Return:
->>           [ObjectPropertyInfo] -- a list describing object properties
->>
->> Afterwards:
->>
->>     Command qom-list-properties (Since: 2.12)
->>
->>        List properties associated with a QOM object.
->>
->>        Arguments:
->>           * typename (string) -- the type name of an object
->>
->>        Return:
->>           [ObjectPropertyInfo] -- a list describing object properties
->>
->>        Note:
->>
->>          Objects can create properties at runtime, for example to descri=
-be
->>          links between different devices and/or objects.  These properti=
-es
->>          are not included in the output of this command.
->>
->> Fine.
->>
->> [Skipping the Python code in my first pass...]
->>
->> > diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-g=
-ood.json
->> > index fac13425b72..9103fed472e 100644
->> > --- a/tests/qapi-schema/doc-good.json
->> > +++ b/tests/qapi-schema/doc-good.json
->> > @@ -165,12 +165,12 @@
->> >  # @cmd-feat1: a feature
->> >  # @cmd-feat2: another feature
->> >  #
->> > -# .. note:: @arg3 is undocumented
->> > -#
->> >  # Returns: @Object
->> >  #
->> >  # Errors: some
->> >  #
->> > +# .. note:: @arg3 is undocumented
->> > +#
->> >  # TODO: frobnicate
->> >  #
->> >  # .. admonition:: Notes
->> > diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-go=
-od.out
->> > index 04e29e8d50f..6a0167ad580 100644
->> > --- a/tests/qapi-schema/doc-good.out
->> > +++ b/tests/qapi-schema/doc-good.out
->> > @@ -175,12 +175,12 @@ description starts on the same line
->> >  a feature
->> >      feature=3Dcmd-feat2
->> >  another feature
->> > -    section=3DDetails
->> > -.. note:: @arg3 is undocumented
->> >      section=3DReturns
->> >  @Object
->> >      section=3DErrors
->> >  some
->> > +    section=3DDetails
->> > +.. note:: @arg3 is undocumented
->> >      section=3DTodo
->> >  frobnicate
->> >      section=3DDetails
->>
->> The Details section is still between tagged sections.  The code
->> prohibiting it must have a hole :)
->>
->
-> Well, there's the answer to my above self-musing on Since/TODO...
-> After reading my replies, is it clear what I am concerned with
-> accomplishing?
->
-> If not, the goal for *rendered output* is this:
->
-> 1. Intro (literally and truly only ever one section, both in the QAPIDoc
-> sense and in the rendered HTML output sense)
->
-> 2. All tabular sections (members, returns, Errors, features)
->
-> 3. Details
->
-> You'll notice I didn't bother specifying Since and TODO here. TODO is
-> removed from rendered output, so I don't actually care where it goes in t=
-he
-> QAPIDoc source list.
->
-> Since is also removed from the flow in the HTML output, so I also don't
-> care about it. (However, you requested that it specifically go last, so I
-> do address that in this series and later prohibit any details sections fr=
-om
-> appearing after a Since marker.)
-
-Understood.
-
-> The true "semantic" goals here are two things:
->
-> (1) Prohibiting free text from appearing within the tabular section region
->
-> (2) Delineating free text that appears before the tabular region from free
-> text that appears after it.
->
-> I apologize for conflating "section order" with "rendered section order".
->
-> You are right to point out that these sections i do not care about may, in
-> the source, impact the classification of other sections and the total
-> number thereof.
->
-> (i.e. TODO is enough to terminate the intro without an explicit details
-> marker, and Since/TODO can create multiple details sections after the
-> tabular region. They are merged visually but not in the QAPIDoc sections
-> list. I don't consider this a bug per se, but it is the source of a lot of
-> confusion here in this series when I am eliding that technicality.)
-
-A commit message needs to explain why and how the patch is useful.  When
-details distract from the core argument too much, it can be beneficial
-to gloss over them.
-
-Glossing over is not the same as not mentioning.
-
-Commit message readers use it to build a mental model of things.  A good
-model simplifies reality.  A bad model misleads about reality.
-
-If the commit message completely elides details that matter, readers end
-up with bad models and unwarranted confidence in them.  They'll then
-struggle with the patch.
-
-If the commit message at least hints at the details elided, readers may
-still end up with bad models, but they'll hopefully understand their
-limitations, treat them as incomplete, and fill in the details from the
-patch.
-
+Am 30.05.25 um 09:12 schrieb Paolo Bonzini:
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> 
+> Use KVM_TDX_GET_CPUID to get the CPUIDs that are managed and enfored
+> by TDX module for TD guest. Check QEMU's configuration against the
+> fetched data.
+> 
+> Print wanring  message when 1. a feature is not supported but requested
+> by QEMU or 2. QEMU doesn't want to expose a feature while it is enforced
+> enabled.
+> 
+> - If cpu->enforced_cpuid is not set, prints the warning message of both
+> 1) and 2) and tweak QEMU's configuration.
+> 
+> - If cpu->enforced_cpuid is set, quit if any case of 1) or 2).
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Link: https://lore.kernel.org/r/20250508150002.689633-52-xiaoyao.li@intel.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/cpu.h     |   7 +++
+>   target/i386/cpu.c     |  33 +++++++++++++-
+>   target/i386/kvm/tdx.c | 101 ++++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 139 insertions(+), 2 deletions(-)
+> 
 [...]
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index e35983ad9bd..e474abf3a60 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -766,6 +766,106 @@ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+>       return value;
+>   }
+>   
+> +static struct kvm_cpuid2 *tdx_fetch_cpuid(CPUState *cpu, int *ret)
+> +{
+> +    struct kvm_cpuid2 *fetch_cpuid;
+> +    int size = KVM_MAX_CPUID_ENTRIES;
+> +    Error *local_err = NULL;
+> +    int r;
+> +
+> +    do {
+> +        error_free(local_err);
+> +        local_err = NULL;
+> +
+> +        fetch_cpuid = g_malloc0(sizeof(*fetch_cpuid) +
+> +                                sizeof(struct kvm_cpuid_entry2) * size);
+> +        fetch_cpuid->nent = size;
+> +        r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid, &local_err);
+> +        if (r == -E2BIG) {
+> +            g_free(fetch_cpuid);
+> +            size = fetch_cpuid->nent;
 
+I don't understand this code, and CodeQL on GitHub reports a use after 
+free here (and I think it is right).
+
+Stefan
+
+> +        }
+> +    } while (r == -E2BIG);
+> +
+> +    if (r < 0) {
+> +        error_report_err(local_err);
+> +        *ret = r;
+> +        return NULL;
+> +    }
+> +
+> +    return fetch_cpuid;
+> +}
+[...]
 
