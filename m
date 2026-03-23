@@ -4,94 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 153F8EC01A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7F0EC01A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4bRU-00037S-4t; Mon, 23 Mar 2026 05:19:24 -0400
+	id 1w4bVz-0004sX-40; Mon, 23 Mar 2026 05:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bRF-00036M-1d
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:19:10 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bVx-0004sL-6p
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:24:01 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bRD-00064O-4w
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:19:08 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b980c65b97aso326628866b.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:19:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bVv-0006Yw-KL
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:24:00 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43b467dcf0bso2913104f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774257545; x=1774862345; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774257836; x=1774862636; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JmE6j+51sZw8DesHq1vtw9Wgt0FnSm/wzBYCwVR7eQg=;
- b=msEn7d5ZrpojlBAjqRKN936Dp1us8Li8JMh7FPUn2cFcKDycH0+2U0YaOH01rF/lsA
- gifzOMziM8W7X3745zuPtz0LPpV2cDW9VIsav6eNBq0R7w9kVxsDBPPNdjejJLnLJiT7
- lF8BNvK50GmW6KTIzr3tdPX1aita8aC/iKqGXLUD3iL7+7d9jPyTDXWsXt0wNpfmtHvs
- t+kPTkkp21OH6LJiUTU+hTKso0hKCWkYfFfOBjDCiSqypxKcOqmvfPzbK2URWsFqVcwa
- /bH4t1ygGkuWEeEIvofWqnwGNy1nsUI7HokMmV5OcrPOPxf4E2UJwmiOkkbLI7XQV3pw
- wHsg==
+ bh=o6jF7tWb1iPp0byNesh17yAGa7yqIFeQZUfNM1OxExA=;
+ b=xKGmIOJ02C7Vh4fuUPZ8w9km8w0V04eybAsX61hQYk9tP9DBYzuW87iphws7u3UgA+
+ Q6LM2pzVWqP5hrE6W565/WMhV7T6AHnU02JTbo3MBm/CrlIz9B0XlbfHPPUno1wYDSVZ
+ f461HBpJm8V7okmayuSKVGjX6XzmENqb1/uWf8md0jvz+jLCTF2DsTdZ4fn9LvySJBr1
+ cnFwNcVI+KhrgHZ9R5gX8ZX0z8sPBYinv4Se7FkydvCR13ZayLqlS4dYIzLFlLAf57PZ
+ o743oQLTHeklf6ABTvhuiKwm1ySBJ/DW1h1Q2JNUNgZNkQjAopanv9L64nQlwcl1KFE6
+ //Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774257545; x=1774862345;
+ d=1e100.net; s=20251104; t=1774257836; x=1774862636;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JmE6j+51sZw8DesHq1vtw9Wgt0FnSm/wzBYCwVR7eQg=;
- b=Sxu7j5KnSyxH1ALJXF+qgHAYSpf1WuqXhX9LwHD6ui9GzNsPNJHzYB5jb5wJx8wdcu
- yu0OITOgmI4/sgCk3rjvXhEpJjrvmhs1cp8dwwi4rk4yGDtduNlJXGTrMUdZOCwdcieJ
- rOVHXQv5Dr+qSvwkRxwVj1POwHc3cOmhIC9EbCsooGrxhDLfYVDW1lrEU7MZm+HoIjAy
- IRwdIS3zW+45NEj9Hcq2ReXHaN/VaAHdxQJwqDEg2PGi6VDaSENiJzflN/WfnJLFMllM
- 8WiOjkJn3V126Ga9FrtUNzFFwdGpOOtV5QVikLqIWR+pvUBKh1Qov7kuhXz0dLBzM1Qs
- UKkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXO+XguwUraO7pQJ2lxKElBlWJfDIWWRfz4lTW9d4D6m5CnQRAwYdmyUGKuojOl0g1fUAIL0MAmd0e8@nongnu.org
-X-Gm-Message-State: AOJu0YxshN1puS12X3/M6j9q7AGuKJuVLiZM+/QndfZ1v7qdZzoDmRtP
- P1C9YyF7N5TlFfBk9mR5nsbks+kR38JUYLyv1Dgci018lzWB8or6gf+vfzI015kNDEI=
-X-Gm-Gg: ATEYQzz5hbyvGwec1OYJ8NxsWKeNcQQNujSy4yyZEfql6RquEyHtgkBfPBqvP7amnoI
- Aqp1dHQGDlIdQzdWZLY+mgRu1IG2DicbxrxsrCNfsHADXOp1v2k9Bm7NsSidvw9IOoc+izbRUm3
- HRxwEZZurytOOswlqG0C0Vf/vgBEc4xHS1Sc81/rluO75ppyNN1de6GfSKr6lq9/mwF8fcqCDRv
- tdmtEeDwXuv55kBKAKmH6OVikjLZQ489X4niheNUUchTlR/ikZ405t8t3jNyScJ3B++vY6P+jaS
- V9L7ScZNH/wUJvFtJ20hqPAIo1fLxyJ4MJ9Vn3IlwY6RZQfbGcR+ymM2UFjg54jceriU8EHmfPP
- +0KCqU8AVZ673VwFprAj0/QgL/KAeXgkQ4BqacrbhzFV9Y/PwKfhKrSMtXGFe7z+3Jo2CWbolp7
- dVXdQ5GYsGodQH3WZ4Jw+gAwmf649yXsjJM1MeC2hAq+YGCzbNqZYSIGJJ5zQ5C4YeLQ==
-X-Received: by 2002:a17:907:c88d:b0:b97:98a4:1d6d with SMTP id
- a640c23a62f3a-b982f1ecf63mr720708066b.16.1774257544782; 
- Mon, 23 Mar 2026 02:19:04 -0700 (PDT)
+ bh=o6jF7tWb1iPp0byNesh17yAGa7yqIFeQZUfNM1OxExA=;
+ b=bH+sXGOjYoH0WfCEqDN2ESJuLOoW7T9O0xfLHfAMbiA0IcXxz5ZibIgmoDiflTiOb7
+ ZG58UA9KTBbZUpcGFkJtasr9lH41sY5OC2uZ3CeHjvw/l2uv4ezPOqlWTfQR2dAHK75N
+ VXFmTXpmmcD5Xfm5wtYfaIrNTf9FcEMXSa+EXdUkm9RH9oV5fAsGM+sRd6emjPJ2yDBF
+ PxcdfBZdzxCGK2Pvy1y8NGne6OFt0tdvOaNKTxJgi0ptdbtfTutrWQ6bKoiOSNtZkitS
+ WyniBU8mZL899bASTj73LDvfvOfFYmV2urYsrerQ6atmuUy4/pDo1dFWpHslDDo+ZfhK
+ ppqw==
+X-Gm-Message-State: AOJu0YwJdSLgVQ5LHy6bfXnHnooYLv4JRdAVPATENYkkZg8GC8UHGJaS
+ PMWduqCCE6pwKDjHJxSD9ohvz0h8RBrfu4tcoHPAo+8bVC3J5xoItr9/bsObC9C3HpK0rQyu7SZ
+ 1RVnt8w3+qA==
+X-Gm-Gg: ATEYQzxuwQRpEqb034y2onR6WfGWgIgUx9BHjvTGnvUcYLQJ7bW1N8buzXMnd2M8izI
+ 8fujwI6Em5kmrF+d5LCjEIvOuYGQ0XbtDQlOhvfBojs2LI1d8tBEWvwOCwx1odt4kZ0tGJSGdkr
+ WkLNxci6gadZAN6UPi1PvKTBaQBLYBMDA2PKhisB1oLG2EXW+KolXfPABn87FyuGpZEu+/uGvDf
+ 5mN8wh288CZgKPYEd7cVmOM40seHY/T59IxHM/R9pdcyRUbbzzu/pwdcOHVKawOUpm0cS+yfBvm
+ oRiKAQLtHa+RbyIKh/0cYE7wWJTSQW6JOVq8mdRxPg7nvHtDDooYw437C9DSVXqhInxUpFFZrbT
+ fYDHeVk3MjBvicY8Bxy4SzAjIv0F5KyMFf2dZHYqGgvwzI/82AH7/aF3jPh1sBfaMm0phr9+Kl7
+ irK8N/8LuaCVqBQ5qDJLcdwocE/ORtqYXDkslkUYxxfntrWNke76MeKEYJn6KhcYmb5w==
+X-Received: by 2002:a05:6000:701:b0:43b:4951:6b37 with SMTP id
+ ffacd0b85a97d-43b577233cbmr25009414f8f.15.1774257836538; 
+ Mon, 23 Mar 2026 02:23:56 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b98335de0b2sm466686166b.34.2026.03.23.02.19.02
+ ffacd0b85a97d-43b6cdfdfa9sm18867872f8f.9.2026.03.23.02.23.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 02:19:03 -0700 (PDT)
-Message-ID: <7c724cf7-c0d8-4e8b-8c74-8a78ace9f4d2@linaro.org>
-Date: Mon, 23 Mar 2026 10:19:01 +0100
+ Mon, 23 Mar 2026 02:23:55 -0700 (PDT)
+Message-ID: <533c5094-6c62-4406-a894-07d1834efd66@linaro.org>
+Date: Mon, 23 Mar 2026 10:23:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 03/10] cpus: Introduce
- CPUClass::legacy_monitor_defs hook
+Subject: Re: [PATCH] tests/functional: preserve PYTHONPATH entries
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Anton Johansson <anjo@rev.ng>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>
-References: <20260320160811.28611-1-philmd@linaro.org>
- <20260320160811.28611-4-philmd@linaro.org>
- <7c54cfcf-fef6-41db-a1a8-382857371d3a@linaro.org>
- <9ed408a5-6b25-4d4e-aefc-59b413058ca6@linaro.org>
- <ada320b4-4204-43eb-a2da-5730641535de@linaro.org>
+To: Alyssa Ross <hi@alyssa.is>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20260323084739.1013748-1-hi@alyssa.is>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ada320b4-4204-43eb-a2da-5730641535de@linaro.org>
+In-Reply-To: <20260323084739.1013748-1-hi@alyssa.is>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,125 +102,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/3/26 20:51, Pierrick Bouvier wrote:
-> On 3/21/26 8:19 AM, Philippe Mathieu-Daudé wrote:
->> On 20/3/26 23:01, Pierrick Bouvier wrote:
->>> On 3/20/26 9:08 AM, Philippe Mathieu-Daudé wrote:
->>>> Allow targets to register their legacy target_monitor_defs()
->>>> in CPUClass; check it first in get_monitor_def() otherwise
->>>> fall back to previous per-target helper.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>>    include/hw/core/cpu.h | 3 +++
->>>>    monitor/hmp.c         | 3 ++-
->>>>    2 files changed, 5 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
->>>> index 04e1f970caf..072f58bead5 100644
->>>> --- a/include/hw/core/cpu.h
->>>> +++ b/include/hw/core/cpu.h
->>>> @@ -148,6 +148,8 @@ struct SysemuCPUOps;
->>>>     * @max_as: Maximum valid index used to refer to the address spaces
->>>> supported by
->>>>     *          the architecture, i.e., to refer to CPUAddressSpaces in
->>>>     *          CPUState::cpu_ases.
->>>> + * @legacy_monitor_defs: Array of MonitorDef entries. This field is
->>>> legacy,
->>>> + *                       use @gdb_core_xml_file to dump registers
->>>> instead.
->>>>     *
->>>>     * Represents a CPU family or model.
->>>>     */
->>>> @@ -174,6 +176,7 @@ struct CPUClass {
->>>>        const char *gdb_core_xml_file;
->>>>        const char * (*gdb_arch_name)(CPUState *cpu);
->>>>        const char * (*gdb_get_core_xml_file)(CPUState *cpu);
->>>> +    const MonitorDef *legacy_monitor_defs;
->>>>        void (*disas_set_info)(const CPUState *cpu, disassemble_info
->>>> *info);
->>>> diff --git a/monitor/hmp.c b/monitor/hmp.c
->>>> index c63da13e310..a2b6269d0ff 100644
->>>> --- a/monitor/hmp.c
->>>> +++ b/monitor/hmp.c
->>>> @@ -24,6 +24,7 @@
->>>>    #include "qemu/osdep.h"
->>>>    #include <dirent.h>
->>>> +#include "hw/core/cpu.h"
->>>>    #include "hw/core/qdev.h"
->>>>    #include "monitor-internal.h"
->>>>    #include "monitor/hmp.h"
->>>> @@ -1603,8 +1604,8 @@ void monitor_register_hmp_info_hrt(const char
->>>> *name,
->>>>     */
->>>>    int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
->>>>    {
->>>> -    const MonitorDef *md = target_monitor_defs();
->>>>        CPUState *cs = mon_get_cpu(mon);
->>>> +    const MonitorDef *md = cs->cc->legacy_monitor_defs ?:
->>>> target_monitor_defs();
->>>>        void *ptr;
->>>>        uint64_t tmp = 0;
->>>>        int ret;
->>>
->>> I'm not very fond of the "keep legacy callback for the N targets that
->>> might require it". Either set it for every target, using a default
->>> implementation if needed, or...
->>>
->>> As an alternative, we could use a dispatch function like:
->>>
->>> const MonitorDef *target_monitor_defs()
->>> {
->>>     switch (target_arch()) {
->>>     case
->>>       SYS_EMU_TARGET_X:
->>>         return X_target_monitor_defs();
->>>       SYS_EMU_TARGET_Y:
->>>         return Y_target_monitor_defs();
->>>     default:
->>>       return default_target_monitor_defs();
->>>     }
->>> }
->>>
->>> Personally, I prefer the dispatch approach, as it's very clear to see
->>> what happens per target. This solves the symbol duplication by manually
->>> name them differently.
->>>
->>> It's just a suggestion though, and I'm ok to have a per target field, as
->>> long as we enforce it to be set for all targets, and not using a
->>> 'legacy' callback for a few of them only.
->>>
->>> Pick the one you prefer :)
->>
->> My preference would be to remove this legacy code altogether, as
->> I'm pretty sure it isn't used anymore (see for the example the
->> issues RISC-V folks had with it before giving up).
+On 23/3/26 09:47, Alyssa Ross wrote:
+> Otherwise, it's not possible to use a packaged qemu.qmp.
 > 
-> I'm not sure what you mean.
-> 
-> If it's not used, then we simply remove it.
-> If it's used, then let's keep it, but just make it consistent with all 
-> targets without having a special case named "legacy". If it's here to 
-> stay, it's not legacy.
-> 
-> Do you have something else in mind?
+> Fixes: 1497377857 ("tests/functional: Prepare the meson build system for the functional tests")
+> Signed-off-by: Alyssa Ross <hi@alyssa.is>
+> ---
+>   tests/functional/meson.build | 12 ++++++++----
+>   1 file changed, 8 insertions(+), 4 deletions(-)
 
-As a software engineer I prefer to deal with code. Unfortunately in my
-experience with QEMU development, removing legacy code means endless
-bikesheeding debates. I'm not judging they are bad, just they drain my
-time and energy. I agree legacy code should be removed, but again this
-is the QEMU project here, where we have bad habbits of adding new APIs
-with the promise of removing the previous one but never finish API
-conversions, not even marking legacy one. With that in mind, I think
-mentioning "legacy" is still a good first step.
-
-Anyway, I suppose what you are asking is me starting a poll for each
-target array and ask "Who is still using this SPARC 'canrestore' monitor
-command?" etc., wait 2 months for replies, then if possible deprecate
-them, wait 2 more releases, and eventually remove. Then we'll be able
-to link this file in single binary. As of today I'm not motivated enough
-for that so I'm looking for alternatives. Looking at mailing list
-archives I apparently started to tackle this 9 weeks ago, long enough to
-keep working on the single binary with HMP code disable until we get
-a working proof of concept; then revisit.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
