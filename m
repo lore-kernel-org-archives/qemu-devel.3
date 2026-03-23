@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B6F0D58CDC
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 07:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F23D58CDC
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 07:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ZrM-0001Af-KT; Mon, 23 Mar 2026 03:38:00 -0400
+	id 1w4Zv2-0001r2-9l; Mon, 23 Mar 2026 03:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4ZrK-00019d-Dk
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 03:37:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w4Zuv-0001qJ-37; Mon, 23 Mar 2026 03:41:41 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4ZrH-0002dy-Pw
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 03:37:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774251473;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5phMkHqJK6umlLLJaXrmjh8nbO8YVrSIXoxr7z9JE4A=;
- b=RlvCma6TT/XjFHN6FDP1H0odHfSLJbS2p1RuWGCm6VZwGr6UHOoEFEq1EzMn0qYwDYFfDf
- /VWoCTZSGmcdyhb0l8Eti/K49bdHojoH3O6gFrRaVm6OWgWooiTTTbEbOgJ4s9k/l7RrD0
- pbrnBHbmRZ/PhfMc+lt8YTixUIl25qI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-SgQDmLeuPfu6bCYoPmsZGQ-1; Mon,
- 23 Mar 2026 03:37:52 -0400
-X-MC-Unique: SgQDmLeuPfu6bCYoPmsZGQ-1
-X-Mimecast-MFC-AGG-ID: SgQDmLeuPfu6bCYoPmsZGQ_1774251471
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 065F2195608B; Mon, 23 Mar 2026 07:37:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DE981955D71; Mon, 23 Mar 2026 07:37:50 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1D6A621E6937; Mon, 23 Mar 2026 08:37:48 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?B?5pmP6b6Z6b6Z?= <yanlonglong@kylinos.cn>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  John Snow <jsnow@redhat.com>
-Subject: Re: =?utf-8?B?5Zue5aSNOg==?= Re: [PATCH] hw/ide: resolve core crash
- caused by optical drive pop-up during virtual machine startup
-In-Reply-To: <1a3bpqsg0je3-1a3jv8ue67n0@nsmail8.2--kylin--1>
- (=?utf-8?B?IuaZj+m+mem+mSIncw==?=
- message of "Mon, 23 Mar 2026 09:05:21 +0800")
-References: <1a3bpqsg0je3-1a3jv8ue67n0@nsmail8.2--kylin--1>
-Date: Mon, 23 Mar 2026 08:37:48 +0100
-Message-ID: <877br30zeb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w4Zur-0002zS-KV; Mon, 23 Mar 2026 03:41:39 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 1A800C015A;
+ Mon, 23 Mar 2026 10:41:30 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:803e:400:96d8:c146:8b39:5d71] (unknown
+ [2a02:6bf:803e:400:96d8:c146:8b39:5d71])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id QfMEt00AgmI0-dQqHGO8C; Mon, 23 Mar 2026 10:41:29 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1774251689;
+ bh=EZm1NU2ucQ8gnEVcfRktWBEbQCWpytewWeeBhA/0LUg=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Vl6ABMXJfQ2tun1+VXq+SkCENSX++x5tcvWJI3ZkMDFiXdQViYqkTXhKqqHuE3iZF
+ nQqRp7cEzqsDrz4y9nZ/bdqsQq7ADQa+LlO/bJ4/Z1SWTsDeWmtoldtAw5RL0kNcNG
+ Qj5x7Yhyqtzo3lmoBeBraj8ywuxKlaV0YNNmRB5c=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <964e04cf-d2bc-46b3-a3c2-d6eaf6cfecef@yandex-team.ru>
+Date: Mon, 23 Mar 2026 12:41:26 +0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] vhost-user-blk: fix compatibility with older qemu
+ versions
+To: qemu-devel@nongnu.org
+Cc: virtio-fs@lists.linux.dev, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <20260311084728.751169-1-dtalexundeer@yandex-team.ru>
+Content-Language: en-US
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260311084728.751169-1-dtalexundeer@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,29 +86,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=E6=99=8F=E9=BE=99=E9=BE=99 <yanlonglong@kylinos.cn> writes:
+Ping)
 
-> Markus Armbruster <armbru@redhat.com> writes:
->>
->> yanlonglong <yanlonglong@kylinos.cn> writes:
->>
->> Reproducer?
->>
->> Is this a regression?
+On 3/11/26 13:47, Alexandr Moshkov wrote:
+> v1 -> v2:
+> - reorganize commits: make refactor commits first, then core semantic change
+> - add additional pre_save check for inflight migration possibility
 >
-> This occurred in a production environment
-
-Maintainers needs to understand the fix, and that means understanding
-the bug.  Please help them.
-
-A reproducer can go a long way towards understanding the bug.  It's also
-required to test the fix.
-
-Another way to help is a sufficiently detailed analysis of the bug.
-What needs to happen for the program to crash?
-
-Fixes we don't understand and cannot test are really, really dangerous.
-
-[...]
-
+> ---
+>
+> This is a small continuation of my series about inflight migration for vhost-user-blk.
+>
+> This series is designed to solve the problem of compatibility with older versions of qemu, where this feature has not yet been introduced (for example, if we want to downgrade versions due to some problems).
+>
+> In the current version for vhost-user-blk, this feature is enabled using the parameter and further migration of the inflight region will depend on whether the vhost-user has accepted the new protocol feature or not. This creates an inconvenient dependency, because there is no way to disable this feature without reconnecting to the backend.
+> This series slightly changes the semantics of the introduced protocol feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature adds a new parameter for GET_VRING_BASE message - skip_drain, which allows to control drain in-flight requests on the backend.
+>
+> Thus, user can enable or disable inflight-migration param for vhost-user-blk to maintain compatibility with older versions of QEMU.
+>
+> Alexandr Moshkov (4):
+>    vhost-user.rst: fix typo
+>    vhost-user: add skip_drain param to do_vhost_virtqueue_stop
+>    vhost-user-blk: move inflight_needed higher
+>    vhost-user: add skip_drain param to GET_VRING_BASE
+>
+>   backends/cryptodev-vhost.c     |  2 +-
+>   backends/vhost-user.c          |  2 +-
+>   docs/interop/vhost-user.rst    |  8 +++-----
+>   hw/block/vhost-user-blk.c      | 32 +++++++++++++++++++++++++-------
+>   hw/net/vhost_net.c             |  9 +++++----
+>   hw/scsi/vhost-scsi-common.c    |  2 +-
+>   hw/virtio/vdpa-dev.c           |  2 +-
+>   hw/virtio/vhost-user-base.c    |  2 +-
+>   hw/virtio/vhost-user-fs.c      |  2 +-
+>   hw/virtio/vhost-user-scmi.c    |  2 +-
+>   hw/virtio/vhost-user.c         |  3 +--
+>   hw/virtio/vhost-vsock-common.c |  2 +-
+>   hw/virtio/vhost.c              | 24 +++++++++++++++---------
+>   include/hw/virtio/vhost-user.h |  1 -
+>   include/hw/virtio/vhost.h      |  7 +++++--
+>   15 files changed, 62 insertions(+), 38 deletions(-)
+>
 
