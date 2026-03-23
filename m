@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A39FF46122
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88762F46124
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4foa-0000CD-CZ; Mon, 23 Mar 2026 09:59:41 -0400
+	id 1w4frg-00031z-TE; Mon, 23 Mar 2026 10:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fo2-0008Ga-Hl
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:02 -0400
+ id 1w4foZ-0000RL-0Q
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:40 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fo0-0006s9-SB
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:58 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foW-0006xI-HO
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:29 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 00BCF20B700D;
- Mon, 23 Mar 2026 06:58:52 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 00BCF20B700D
+ by linux.microsoft.com (Postfix) with ESMTPSA id 01C4720B6F12;
+ Mon, 23 Mar 2026 06:59:14 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 01C4720B6F12
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274335;
- bh=4H6AOTHbSt4M6umhyzila9t2EZwbHKhGHm3APiPWRFc=;
+ s=default; t=1774274357;
+ bh=JjZO2/X3lUM54v7gEfoxaHgi6BZofDR2FWQNRjmIZ3g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ogk3+hhNAmK2F2D7EZqoy8Tq5JUjReQ2gcuNfVMHJuOvIOJBookBdOcNZ/oiD6uQ7
- pZNAEfNs9TU0yj+qMZNmbuIkdwaGgEtUiBGw5TlBHZ4wzXEjeH84SAjov+N7uDi8UU
- PO+qfdmZxDZsSycV4/hVnpBU/dOQU5RFCMPdnIv4=
+ b=EdTpaejezyNCqSnBHdwFIFM4AsUnJFV6TB9ExJskiAIaH2I/xiWhRE4gcvppAbvkD
+ OvbDelpoc+sNVyggAWiHp3Vpj5sm6fb+J+iD6MuaLub0HMX3QBgcxqlDRkven0BVrn
+ FjGit/rrNlDterxKu/jRGDcqzhWk91DeO1Po6G9c=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 10/32] accel/mshv: update s->irq_routes in release_virq
-Date: Mon, 23 Mar 2026 14:57:50 +0100
-Message-Id: <20260323135812.383509-11-magnuskulke@linux.microsoft.com>
+Subject: [RFC 16/32] target/i386/mshv: move msr code to arch
+Date: Mon, 23 Mar 2026 14:57:56 +0100
+Message-Id: <20260323135812.383509-17-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,120 +75,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The state's irq_routes field will be updated when an irqchip's gsi
-is requested to be released.
-
-The old remove_msi_routing() fn is redundant and can be removed.
+The MSR code is x86 specific, hence it's better suited in the arch
+tree.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c       |  2 +-
- accel/mshv/irq.c        | 43 ++++++++++++++---------------------------
- accel/stubs/mshv-stub.c |  2 +-
- include/system/mshv.h   |  2 +-
- 4 files changed, 17 insertions(+), 32 deletions(-)
+ accel/mshv/meson.build            | 1 -
+ target/i386/mshv/meson.build      | 1 +
+ {accel => target/i386}/mshv/msr.c | 0
+ 3 files changed, 1 insertion(+), 1 deletion(-)
+ rename {accel => target/i386}/mshv/msr.c (100%)
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 5a97a345b2..0cb3ef78d3 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -67,7 +67,7 @@ void accel_irqchip_release_virq(int virq)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
--        mshv_irqchip_release_virq(virq);
-+        mshv_irqchip_release_virq(mshv_state, virq);
-     }
- #endif
-     if (kvm_enabled()) {
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index b5a047b367..990ce34620 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -123,33 +123,6 @@ static int commit_msi_routing_table(int vm_fd)
-     return 0;
- }
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+index c1b1787c5e..e433187cde 100644
+--- a/accel/mshv/meson.build
++++ b/accel/mshv/meson.build
+@@ -1,6 +1,5 @@
+ system_ss.add(when: 'CONFIG_MSHV', if_true: files(
+   'irq.c',
+   'mem.c',
+-  'msr.c',
+   'mshv-all.c'
+ ))
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index 5eb6e833a6..f44e84688d 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -3,6 +3,7 @@ i386_mshv_ss = ss.source_set()
+ i386_mshv_ss.add(files(
+   'mshv-apic.c',
+   'mshv-cpu.c',
++  'msr.c',
+ ))
  
--static int remove_msi_routing(uint32_t gsi)
--{
--    struct mshv_user_irq_entry *route_entry;
--    GHashTable *gsi_routes;
--
--    trace_mshv_remove_msi_routing(gsi);
--
--    if (gsi >= MSHV_MAX_MSI_ROUTES) {
--        error_report("Invalid GSI: %u", gsi);
--        return -1;
--    }
--
--    assert(msi_control);
--
--    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
--        gsi_routes = msi_control->gsi_routes;
--        route_entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
--        if (route_entry) {
--            g_hash_table_remove(gsi_routes, GINT_TO_POINTER(gsi));
--            g_free(route_entry);
--            msi_control->updated = true;
--        }
--    }
--
--    return 0;
--}
--
- /* Pass an eventfd which is to be used for injecting interrupts from userland */
- static int irqfd(int vm_fd, int fd, int resample_fd, uint32_t gsi,
-                  uint32_t flags)
-@@ -319,9 +292,21 @@ int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
-     return gsi;
- }
- 
--void mshv_irqchip_release_virq(int virq)
-+void mshv_irqchip_release_virq(MshvState *s, int virq)
- {
--    remove_msi_routing(virq);
-+    struct mshv_user_irq_entry *e;
-+    int i;
-+
-+    for (i = 0; i < s->irq_routes->nr; i++) {
-+        e = &s->irq_routes->entries[i];
-+        if (e->gsi == virq) {
-+            s->irq_routes->nr--;
-+            *e = s->irq_routes->entries[s->irq_routes->nr];
-+        }
-+    }
-+    irqchip_release_gsi(s, virq);
-+
-+    trace_mshv_remove_msi_routing(virq);
- }
- 
- static int update_routing_entry(MshvState *s,
-diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
-index 998c9e2fc6..dadf05511a 100644
---- a/accel/stubs/mshv-stub.c
-+++ b/accel/stubs/mshv-stub.c
-@@ -19,7 +19,7 @@ int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
-     return -ENOSYS;
- }
- 
--void mshv_irqchip_release_virq(int virq)
-+void mshv_irqchip_release_virq(MshvState *s, int virq)
- {
- }
- 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 7f60aba308..2033beed70 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -63,7 +63,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
- int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
- void mshv_irqchip_commit_routes(void);
--void mshv_irqchip_release_virq(int virq);
-+void mshv_irqchip_release_virq(MshvState *s, int virq);
- int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
-                                         const EventNotifier *rn, int virq);
- int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
+ i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+diff --git a/accel/mshv/msr.c b/target/i386/mshv/msr.c
+similarity index 100%
+rename from accel/mshv/msr.c
+rename to target/i386/mshv/msr.c
 -- 
 2.34.1
 
