@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878C0FC72C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4267D58B00
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:43:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ecL-0003Ii-Nb; Mon, 23 Mar 2026 08:42:49 -0400
+	id 1w4ecX-0003Kx-CX; Mon, 23 Mar 2026 08:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4ecH-0003Hl-Ff
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:42:45 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1w4ecV-0003KI-Cz
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:42:59 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4ecF-0003Ku-S3
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:42:45 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-79495b1aaa7so33464577b3.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:42:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774269762; cv=none;
+ id 1w4ecS-0003MB-Ct
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:42:58 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-79ab0e9c724so1198037b3.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:42:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774269775; cv=none;
  d=google.com; s=arc-20240605;
- b=TdLTn8ctS2HwR+dVQtwkIOzH0ve+AH+EoFV3ebj5nrij/yT74jVxGgxFhu14EhX9rx
- Dm0w37DxWIEZSSUXwR3ItFkTacbLZ03TZw6BXnCvmvIrnuxUeFRlrgtvxywQ/Q4Mc/2j
- ldnIw3AyG6h5V7lC8dVNhu3S5IHWwMlqo18BNKP3Lt2MIxxyeR8PA0M4dLnR2guhsdT5
- skjttO5kqKMhjGFT3CA7qG22zRclg9wGHf5+y2yirNk8vWtxemC4fgSr5jcm1JtQ8OTC
- tQZtBU/bfFbP9dBtQd4svaeJiSGzxdHTaSlHvlyxP8AeGn/Pp/5IoG8KiPM3WgDRSiEK
- v4Fw==
+ b=El5/uqchh9Qlchco+E3VXYPaSF5GNBHU/8zCYeGmHWSn7UkRfbce79LHmNASxE7RXE
+ aYQHDaxigz+iDYZFhfutEbaVUgmEGp/yidCV7Sy8TJCxu6SWVtiKtiOvQcpR8PAhaJm4
+ Oht1KLTHcFrFnYPiGkSdYrtb61jjH8ur45ZS5cRgHwuCdqtSUkv47ahrgFiXt2lU7Yyq
+ Bx1g/wmg+HTd967f2A0HWuM30iCCvUHMAD3hkonuD2AjKPmPt5QLOZpORvAPF53FY+hM
+ IhUixRoyOtp+ppe/7rMs+2Q+aOlFHPzEeK5mTLgxS5oD0wIAhg4f6rR4Yadmyyx/Ci2d
+ aU0g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=bWQOdPxoWNTmio9+Twmarc0LaqonfKM/EkcEVyn+YDc=;
- fh=sbxuPqjMywa3JYEGeYJMyo5ksfdP/w06LeNzDEfn49s=;
- b=PEqSsM7DEbE8AJhdcWTgyEyG0/LItLJ6dyzivKghzj9Rn+Ur6xC1bZkyxypHkazzBZ
- qSW8pqpaBEUnQ4yX6Z0fRFmrtZWPR00CTt8lABx/zaAZSXLMRzWlBk1NWXw0rUlnUcNI
- AOBbItHq1VLiK7Hdb/dSFaNYcAzzoIZqCOOOIbZYLWJ0Wb8RPmpTjB802kdJpqRgVpLu
- q4+Xd3YiAO/IsX9WGYDt0U0TMNe1oh3m9GPFkgJvhHU/akKHPc3XHR9UXLOFYNm6Gl00
- ddeULt5jBiWjIoypov5shGy90mLhVxQxFMiioe32awxBPc1hzPylGvQgs7zoMNRokIt7
- hZDA==; darn=nongnu.org
+ bh=5AUFMg8d/nHt5nP34N8R+KJO9D45DjZhBL3sAoWBZ7s=;
+ fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
+ b=YC+afOpsZt3j5tIw7R8K7GMy2jTH3DyMMzSOSNQjbJzCnKPlEY7Zm6m5aJOeBXavbr
+ zSmG6AT4A3zVWjXalJ3LdONKpVWvYWhUCijEl9dbaik6APm0aSwxl/mkvAhcpO2ubqyG
+ OF+M/UyGg6fxVJASEXQFKdNryr1BT319ck3UJn0ugDe5e3O0bDcxdbMkEimvWYl+f2MW
+ 6k6GXowZMLewzcd3Ij4hijWmKLnjEfFVft9Jt8asL+IrAF0M4EfCz5/Nah0cOTnAfa+K
+ AH8hNS4Oh3EH5PFbZUDND3k986hihvply+KNZGeI5eEvRBxkWhC5ULc67bzgVZaaoJXe
+ 0Mbg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774269762; x=1774874562; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774269775; x=1774874575; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bWQOdPxoWNTmio9+Twmarc0LaqonfKM/EkcEVyn+YDc=;
- b=LpLKRNGaUPdmSINeYax/Wl9+eMGmRve2DKny579hkeAUzeCak78Nu3V4LeAyigTq+a
- /tbY6ou768qVn//kSb8q7ep3ZRE5zSQaV59Mha74z5ajbkorKxLcX2hD9mfclISHH+oo
- b1+3EFACe2UdcgAjFfbMhpMWFVXCPcATSOLmm9QbiqFXg+LKV6AvDNzlUJ4xqlfJoTGU
- n0ebHpdA+AqNGUtHXkagry96SzyLbbVQmXBQ58wToiTXkuX9eBfBbKsqBaJYzmpDlUY+
- Z9c5IFyqmrC+r/UiVmXmPLPHyndWzWLCHEpmDx2OJmdQgW711eUI0ARWf24QLhZlWqrc
- ZyEA==
+ bh=5AUFMg8d/nHt5nP34N8R+KJO9D45DjZhBL3sAoWBZ7s=;
+ b=fAy8SU17YwMPGEIZ9s3/0uJPZDMFbxfetebNXrwkWmUkkNHtVsLv85njRQ8VUVd98A
+ W4+ffi/tjgMOV4YgVZc3/q+a0QwPB3JigpZX7xNxQqIDPTK8HVfLJOz8LlmvzR1uUXH+
+ ODF2WGD3ZEaLfxV8TAN/O5tZwFQV48LrRElf6B2Fz4vc/do2CB2lsaPilIcFqUridU1+
+ s5aNfnFK4Zr+LxZO2HGcWL47m10TLRrsO+Q8XgLIHBTyqsCNRkfl8Cn27zadLOK7tFns
+ oh0IKxzeJkbesA0zsq3vNbnUfH1zEwwbUvkr7btM+a77IlP162ziefQ75hI6dzRWsioT
+ EMwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774269762; x=1774874562;
+ d=1e100.net; s=20251104; t=1774269775; x=1774874575;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bWQOdPxoWNTmio9+Twmarc0LaqonfKM/EkcEVyn+YDc=;
- b=mUSxc9Fhv6VKFQgFVqsInZPYmxoPWlASHCWwU+H6nb5dIAI7j42ZQmkub0VfLPElZk
- Mx6MlYrK6ExkH/f0IQTjnIOhue1O0ZqmGYAZdEOyYZOvmWQVGVAbL2WYt5kHpVdgQmR7
- i8b6TdvWDEDwTGw78a8q6bmIj/qQyGPRyNnC3WrAacSxdkGAZoS0zkv6WXKfuuW9t8hF
- NpnzwixEC2ZttE6uK2FCDoBmRKTvUh2yNx/G/m+xDnMIXDGw08LteT3NumfMUMulhrbV
- bPAKpneJwd9sEwHtEmu1UdYPzj5p69sdmoHLmvUcrqjqNGqnoRxoEiSRt2/acfT8B9i5
- hclA==
-X-Gm-Message-State: AOJu0YyLLHMvl2JoMCRfOghoDP6ZhwzinTFeSIcgGQIKbMeVqyxBQfj3
- /rpY3gIhY5x3vULb5+8QJ2CXjnSQA72W8dDeQ994xjM28ZmjxjhOoT1xGonxM0WS8vw+1UUdkP+
- rDVhTDF/ErsKNHBvy+tAm9hLyAY0zv/KesH0qJTmXGmqMBAYmLXJO5dw=
-X-Gm-Gg: ATEYQzwtlYC0e2u8A+0cp0Wp+5VAb+h0QY42dVIvgHVgZk3dq3wyZyRXPG0dfdOuemK
- 5bmK4+ZK4WosPEg7kJyq/g3XJhXUEsYDQcB++ehEf6w+EPHXo/cuh+wLasVFcqZBYITIXqL68v3
- a2daKrRDLkpdWMAg41XgzgxMJgc5g/cwG5YKS/UwnQ90xuTKZxGDSr9SNXLO/2ZDY6vpFBf4uCO
- e/yoR13z88onWOFV7jGo9GcD+ySQ/6yOUz/BAOhad/w/6t/tMFPsXFGYmTVxYl3WcONgZR1iGqe
- n5+jygDTZnqaLyay4lPtFOUjyJCk/UHhRP4B0mfqS1aluGFrD1AU/EesNkEu0aH6jSk=
-X-Received: by 2002:a05:690c:22c4:b0:796:2fde:5dfe with SMTP id
- 00721157ae682-79a90ba0251mr131343807b3.38.1774269761750; Mon, 23 Mar 2026
- 05:42:41 -0700 (PDT)
+ bh=5AUFMg8d/nHt5nP34N8R+KJO9D45DjZhBL3sAoWBZ7s=;
+ b=QsUQjQzrmKGPAy8vnhphbvfBirS1F0eLCJXuQMAeeumeWbg65Sf23mhhPil3drI6J2
+ 39WjNYXEAUKwGKCPsSh53QcEiCbJs8jac0gn0AFSJI3xjF8V0JFyOrO0B6HDT9mIbU0w
+ zO+f0W/2eCpejxRgwW0q8DP9EK1v0gzA7yUxmLaU7y//xtykc2Xaosa9A7DPt+S9txB2
+ 47qlXISVHRt9dbw5ZfSUkocIUc97l90uYZv7Fp8Ctpmm9IAl+9kcZzJHom3Q2CIj1g+Z
+ IPjXAFUpx3QkLg7WHN61V6HPxnQkFOWuk673SKM1aHC5BMXug5QyPa2IUDL7dlUXjzar
+ CW4g==
+X-Gm-Message-State: AOJu0Yx3Q3J/WsJAorLLFqOTdD42F5+QAqKcCu3zbEmHlDap3Qjxcyaa
+ 1HCTqGyDaPY2yIjJ/IK2OEQpmLCcdmz6+sKOuqqdqHTJ08Ji5TZd5k7SHneBZFYDQQidroy40Cx
+ 5vPT8edt7lpGnIpQzuRKSbjob5rBqPIn5bUDFWf1faACIwTkLdpwDsW8=
+X-Gm-Gg: ATEYQzxgnH4wgJMVOJfY7/81GWdGqpCCOWP/c6oJEWH4aR+c6huJYStvX4OEjF0+Vrj
+ t9pNmgepyNtLG29wO0IkCeDLY1IcXDb/rKAPkx/NdmnkQZh6fUP4yMgnKO28PIeFl/uhMkN9su3
+ 1T+5YXQ58lA5uBWD3VGTrBwFWrsv8W2+hRkBJ4lAWd8LQMj+WbUNkvQeMwUgbFXAEaw80+2JeQw
+ E6zL9PywglGb7Tuk6sRF5ILUz0opmI4dLN8VoLqDiMA3eRhvibBMUGTiiOwSG0Z1Vq+KEFNedXf
+ V27gLnmOHf/uPvmQrqfDRpgwMGs9fTbIh5WuR6Gj1+4Bz+eJxlhXgGBXfvdywPMXxefNv0qd8Tv
+ c7A==
+X-Received: by 2002:a05:690c:87:b0:797:f226:3a80 with SMTP id
+ 00721157ae682-79a90af4b11mr121232267b3.26.1774269775190; Mon, 23 Mar 2026
+ 05:42:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260320145041.3027130-1-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260320145041.3027130-1-brian.cain@oss.qualcomm.com>
+References: <20260323102920.25170-1-thuth@redhat.com>
+In-Reply-To: <20260323102920.25170-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Mar 2026 12:42:30 +0000
-X-Gm-Features: AaiRm51ipqtXuwY3ht_eQmKVmLKBW2EL4fsEC7vdGKDs3MHkz1V2s4fUYdbLcCs
-Message-ID: <CAFEAcA8tO=vRqRxzbsGyGrGTRa7zc4CEPBdHyVbjZ+9KtKckPQ@mail.gmail.com>
-Subject: Re: [PULL 0/3] hex queue
-To: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Mon, 23 Mar 2026 12:42:44 +0000
+X-Gm-Features: AaiRm50k-r6GSlddatQeHrCBu_FJE6ZNgHQjSf4lNjoK6O7Tlr2ePBqPU8lUUng
+Message-ID: <CAFEAcA-u3kjw_KedvF2Ap8ywPiBSmeOJNWd1ZMxE0JFJLm_KPA@mail.gmail.com>
+Subject: Re: [PULL 0/6] Various fixes for QEMU v11.0-rc1
+To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,7 +114,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Mar 2026 at 14:50, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+On Mon, 23 Mar 2026 at 10:29, Thomas Huth <thuth@redhat.com> wrote:
 >
 > The following changes since commit 8e711856d7639cbffa51405f2cc2366e3d9e3a23:
 >
@@ -121,15 +122,15 @@ On Fri, 20 Mar 2026 at 14:50, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://github.com/quic/qemu tags/pull-hex-20260320
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-23
 >
-> for you to fetch changes up to 1adf67b3c445f4060900440ea210e7a1e03042f5:
+> for you to fetch changes up to b86eff44ba09b4baea17d2b002afa221de753cc4:
 >
->   tests/tcg/hexagon: add test for predicated .new branch LSB evaluation (2026-03-20 07:43:03 -0700)
+>   tests/functional: remove heuristics for finding build dir (2026-03-23 08:16:07 +0100)
 >
 > ----------------------------------------------------------------
-> Fix for J2_jumptnew{,pt} pred-reg misbehavior
->
+> * Fix various crashes that can happen when running QEMU with -device xyz,help
+> * Improve detection of build directory in the functional patches
 
 
 
