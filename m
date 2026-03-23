@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3ABF46122
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC660F46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fqs-0001aL-1L; Mon, 23 Mar 2026 10:02:05 -0400
+	id 1w4fnW-0007WF-4G; Mon, 23 Mar 2026 09:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fog-0000Sx-Op
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:42 -0400
+ id 1w4fnS-0007PP-S0
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:22 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fod-0006xu-RP
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:38 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fnQ-0006l1-46
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:21 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 4AD4820B6F1F;
- Mon, 23 Mar 2026 06:59:22 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4AD4820B6F1F
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6EC2C20B710C;
+ Mon, 23 Mar 2026 06:58:15 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6EC2C20B710C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274365;
- bh=ASHwIUqJhX6VXNhjtPjQt2QC4yNFkvq7Vac2whkLBwE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=AEtv4OcTVKomZFVNK/kGBko1z4d0IDgkNtbtPVl/n7a9C/U4RgbmeMHzA3L53fdpy
- n+T0JSs5ZkVnVDg3u0KUJDwGSPdjtQmD6HS0CIXxU5EgywxL8v2H5RAWwYdtwz+hG/
- layGbJuszzJhBQ9zC2SFfpMvc5bxICZWPAQzBwMY=
+ s=default; t=1774274298;
+ bh=tJpBQZj75HUYMQsTFFKSpzrxKtG71ffSxKRsEuze/cA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=e60CNyS1t+kSi37egryYGqrlSAU4SZlOrDSKjWnPYHlGHiXw8CR3GdJrQOxd315T8
+ IT1ij0vS18sYsRkAMip3jK535kAInWobzBxwQUE+1t1r+bZ0c28n9LlpPjZELaq2ib
+ j8whcBvzk2MJdJ0paxjV01cWZ9RBC4s7QEW6YpNw=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,12 +43,10 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 18/32] target/i386/mshv: expose msvh_get_generic_regs
-Date: Mon, 23 Mar 2026 14:57:58 +0100
-Message-Id: <20260323135812.383509-19-magnuskulke@linux.microsoft.com>
+Subject: [RFC 00/32] Add migration support to the MSHV accelerator
+Date: Mon, 23 Mar 2026 14:57:40 +0100
+Message-Id: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
-References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
@@ -75,89 +73,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We expose the fn, so we can call them from the other source files
-(msr.c).
+Hey all, This is a draft patch series for live migration support in
+the MSHV accelerator. Since this is somewhat invasiva and touches
+various parts outside of the accel's folder hierarchies I'm sending
+an RFC series to collect early feedback.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- include/system/mshv_int.h   |  2 ++
- target/i386/mshv/mshv-cpu.c | 15 ++++++---------
- 2 files changed, 8 insertions(+), 9 deletions(-)
+Note: this patches are sent in sent in isolation, but for LM to be
+functional we will require require the recently submitted patch series
+"Support QEMU cpu models in MSHV accelerator" (at v3 currently) to be
+merged, since on some hosts we will need the CPUID infra to disable
+features that we currently do not yet migrate (e.g. AMX tiles).
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 2b6d7b2f35..2c5d16bf9a 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -81,6 +81,8 @@ int mshv_configure_vcpu(const CPUState *cpu);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-                           size_t n_regs);
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                          size_t n_regs);
- int mshv_arch_store_vcpu_state(const CPUState *cpu);
- int mshv_arch_load_vcpu_state(CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 906f5b0c3d..ecb4711b95 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -108,9 +108,6 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
- };
- 
- static int set_special_regs(const CPUState *cpu);
--static int get_generic_regs(CPUState *cpu,
--                            struct hv_register_assoc *assocs,
--                            size_t n_regs);
- 
- static int get_lapic(CPUState *cpu)
- {
-@@ -187,7 +184,7 @@ static int get_fpu(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = FPU_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get special registers");
-         return -errno;
-@@ -207,7 +204,7 @@ static int get_xc_reg(CPUState *cpu)
- 
-     assocs[0].name = HV_X64_REGISTER_XFEM;
- 
--    ret = get_generic_regs(cpu, assocs, 1);
-+    ret = mshv_get_generic_regs(cpu, assocs, 1);
-     if (ret < 0) {
-         error_report("failed to get xcr0");
-         return -1;
-@@ -300,8 +297,8 @@ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-     return 0;
- }
- 
--static int get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
--                            size_t n_regs)
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                          size_t n_regs)
- {
-     int cpu_fd = mshv_vcpufd(cpu);
-     int vp_index = cpu->cpu_index;
-@@ -450,7 +447,7 @@ static int get_standard_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = STANDARD_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get standard registers");
-         return -1;
-@@ -527,7 +524,7 @@ static int get_special_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = SPECIAL_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get special registers");
-         return -errno;
+In this series we perform some preperatory refactorings and introduce
+new abstractions where required, particulary for irqchips and MSR
+logic. We also have to introduce some generic logic for XSAVE
+de/compaction to allow migration of XSAVE state.
+
+Note 2: I did already receive some feedback offline on the new XSAVE
+de/compaction handlers. We want to avoid the buffer copy and rework
+existing code to be generic over a compacted or standard layout. The v1
+submission will contain this change.
+
+The guest state components that are covered by migration are:
+
+- standard regs
+- special regs
+- xcr0
+- (legacy) FPU regs
+- XSAVE
+- LAPIC
+- MSRs
+- SynIC state (SIMP, SIEFP, STIMER)
+- pending interrupts/exceptions
+- MP state (AP cpu modes)
+
+Finally, routines for dirty-page tracking to reduce migration downtime
+have beend added and integrated in the respective hooks.
+
+best,
+
+magnus
+
+Magnus Kulke (32):
+  target/i386/mshv: use arch_load/store_reg fns
+  target/i386/mshv: use generic FPU/xcr0 state
+  target/i386/mshv: impl init/load/store_vcpu_state
+  accel/accel-irq: add AccelRouteChange abstraction
+  accel/accel-irq: add generic begin_route_changes
+  accel/accel-irq: add generic commit_route_changes
+  accel/mshv: add irq_routes to state
+  accel/mshv: update s->irq_routes in add_msi_route
+  accel/mshv: update s->irq_routes in update_msi_route
+  accel/mshv: update s->irq_routes in release_virq
+  accel/mshv: use s->irq_routes in commit_routes
+  accel/mshv: reserve ioapic routes on s->irq_routes
+  accel/mshv: remove redundant msi controller
+  target/i386/mshv: move apic logic into own file
+  target/i386/mshv: migrate LAPIC state
+  target/i386/mshv: move msr code to arch
+  accel/mshv: store partition proc features
+  target/i386/mshv: expose msvh_get_generic_regs
+  target/i386/mshv: migrate MSRs
+  target/i386/mshv: migrate MTRR MSRs
+  target/i386/mshv: migrate Synic SINT MSRs
+  target/i386/mshv: migrate SIMP and SIEFP state
+  target/i386/mshv: migrate STIMER state
+  accel/mshv: introduce SaveVMHandler
+  accel/mshv: write synthetic MSRs after migration
+  accel/mshv: migrate REFERENCE_TIME
+  target/i386/mshv: migrate pending ints/excs
+  target/i386: add de/compaction to xsave_helper
+  target/i386/mshv: migrate XSAVE state
+  target/i386/mshv: reconstruct hflags after load
+  target/i386/mshv: migrate MP_STATE
+  accel/mshv: enable dirty page tracking
+
+ accel/accel-irq.c               |  41 +-
+ accel/kvm/kvm-all.c             |   6 +-
+ accel/mshv/irq.c                | 360 ++++++------
+ accel/mshv/mem.c                | 211 +++++++
+ accel/mshv/meson.build          |   1 -
+ accel/mshv/mshv-all.c           | 243 ++++++++-
+ accel/mshv/msr.c                | 375 -------------
+ accel/stubs/kvm-stub.c          |   2 +-
+ accel/stubs/mshv-stub.c         |   6 +-
+ hw/intc/apic_common.c           |   3 +
+ hw/misc/ivshmem-pci.c           |   8 +-
+ hw/vfio/pci.c                   |  11 +-
+ hw/virtio/virtio-pci.c          |   3 +-
+ include/accel/accel-route.h     |  17 +
+ include/hw/hyperv/hvgdk_mini.h  |  22 +
+ include/hw/hyperv/hvhdk.h       | 149 +++++
+ include/hw/i386/apic_internal.h |   5 +
+ include/system/accel-irq.h      |   6 +-
+ include/system/kvm.h            |  23 +-
+ include/system/mshv.h           |  15 +-
+ include/system/mshv_int.h       |  89 +--
+ target/i386/cpu.h               |  14 +-
+ target/i386/kvm/kvm.c           |   5 +-
+ target/i386/machine.c           |  46 ++
+ target/i386/mshv/meson.build    |   3 +
+ target/i386/mshv/mshv-apic.c    |  78 +++
+ target/i386/mshv/mshv-cpu.c     | 940 +++++++++++++++++++++++---------
+ target/i386/mshv/msr.c          | 432 +++++++++++++++
+ target/i386/mshv/synic.c        | 206 +++++++
+ target/i386/xsave_helper.c      | 255 +++++++++
+ 30 files changed, 2641 insertions(+), 934 deletions(-)
+ delete mode 100644 accel/mshv/msr.c
+ create mode 100644 include/accel/accel-route.h
+ create mode 100644 target/i386/mshv/mshv-apic.c
+ create mode 100644 target/i386/mshv/msr.c
+ create mode 100644 target/i386/mshv/synic.c
+
 -- 
 2.34.1
 
