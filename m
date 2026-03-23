@@ -4,91 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FCAD58CC0
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 02:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE449D58CBE
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 02:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4Ueg-0001b9-RO; Sun, 22 Mar 2026 22:04:35 -0400
+	id 1w4Uhp-0002Qs-M8; Sun, 22 Mar 2026 22:07:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4Ued-0001aj-Tk
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 22:04:31 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1w4Uhn-0002QS-Ao
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 22:07:47 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4Uea-0007xo-6z
- for qemu-devel@nongnu.org; Sun, 22 Mar 2026 22:04:30 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2b061b6cf36so17660775ad.3
- for <qemu-devel@nongnu.org>; Sun, 22 Mar 2026 19:04:17 -0700 (PDT)
+ id 1w4Uhk-0008Fp-Cr
+ for qemu-devel@nongnu.org; Sun, 22 Mar 2026 22:07:47 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-82c20b9fb15so842930b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 22 Mar 2026 19:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774231456; x=1774836256; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=7ZeCI6p1Rj/ifWOaQd0kSPn/flQUglTbsikVuvFRtAM=;
- b=AQvmEbBDOARbQFXSYSAUOJcuvaeyMmN617c2cz0sxHhYARP6cZViIWTEdVs+ZZqI4b
- n1Wkws6Ms87WeZjKdi6Hdmgsik37WNTKRhwApAgFpSLGd40MU2uOnH8M9UrVt2ITaGOG
- 0vWn4iDdNWBY2Ok78crCJlMZqPWDs00C3yb5hmlbk2WwKusWRMxla3rsAJFY0bMom4PI
- o7DUIaw19bf0vAiw5cu6EZzLU/gG6Bno/NR8P3ov0dJ5ky6hZsgC1xxNEi61ifGWfi+F
- tghYf3mYvS3AR5aRyqw3Q8KjhVdYakHa134UNRtKQkBEssr+ueyagBbnL+HxR4/s8vZj
- UlXA==
+ d=linaro.org; s=google; t=1774231662; x=1774836462; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xl8sc9Qsd/jHW0lKORW1FuULmhfA7/cOI5Ytq7rOBfw=;
+ b=AoCjH2tX9FqD8zwclKv2ein73udayPKOLV4Zl7JNCrtHaRVdP84+Yi0n9/mqvFxwOx
+ xjcOu3yQ0uRRZKDermzyZ5LI7EPsJH1nUpeXgBorYi/5fUSaJ4nVb4U6gcTZf1V+DYXN
+ 0hb87jj9p73m3pcQjkpx7CD3KD2mowI5YDEZ3+yX1174xZStVIQbCraqXtzxSY/wLO9C
+ W3Ib6Dh+58Myj4uQheVkTTgZmVG0bQ0rrhUTdtAYwflq2ZucoyWJTpQKPTKxA3S+a+RD
+ htro79fvyTT/wLyO/sgblUKf4CBOu0AwHi3Pu4ZB8tMx09wGVdm7ej0Ne31D/O7O5EXK
+ NiCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774231456; x=1774836256;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7ZeCI6p1Rj/ifWOaQd0kSPn/flQUglTbsikVuvFRtAM=;
- b=PK3VlQgGpKieg6Q+zAPUjzCuE0brTkDgsqvBxlTdyin8Am8gV2O34bal6gKqB6bzOb
- M/HS1o5HpSWs+kVfV5YQ0NdNDIx3Zg39+d012L1Vj1b9ZVuYEizyojYLHRKIfwmJCPvd
- heXTxF4QSyVWVbGLPqSHgmr3do4wAh03oQAB5CX31eZ64iQlVnAOaPyKWPIjirBBr/aa
- ZyK4cqOSRc+7tree/yYV7odfVa8SXtwA6/bcXdM07DdctfE55NEiBObyKhcHRgVl1ddr
- OECdVTGp0tzrovsDjsnxTZzLItXHbqFVy2LI/L5Nd28nMpq8Twt6taaFiMZHTZFZptW6
- tvMg==
+ d=1e100.net; s=20251104; t=1774231662; x=1774836462;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xl8sc9Qsd/jHW0lKORW1FuULmhfA7/cOI5Ytq7rOBfw=;
+ b=V5vlumPCNi2gTMJoyl8k7J9kTRS1qVvG4l7gHT3ilv+urfo5kVlTwxiCrmb5vvHhPL
+ d4VaLEHjqsUI+Kyp40PvGM+udqViy3C1zm3SDF7fOHAZ0DApdpITssI3Y1Gi5X8rhg+K
+ YQ5hAuU+BwgNQs+QlBGxrvEqvaPWFJuHjiMFyNsPEF/sCYrDpYMpXYwVqwiX0Refa/Yn
+ 41CgEGfQVVGRvN9gzI5Kz4y1JidMBtHI6B++Fa7ysnTOGTgLiB2Fu69TtA3//x+F+Lkr
+ qst8nK2dPJULxOxqlzW1BITcFUngMR6eH1CASzucI0ERUv9MUUgoTAc9KkXFYG6Rsf4q
+ Vv/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5MCDWvBhezji895m2R+UBe9ciUj366m3Z3CqIxVLzl1d+aRvUC0VSeSRiINTws84j7rXTKg1Qx92o@nongnu.org
-X-Gm-Message-State: AOJu0YyaZAUhe273/UTYO48sB2spAgrHKBzz8evoMu2IlGLzQ6oll4fL
- MoFFIrdWKoXtVC9AR43pjMQZra2X8TacuwLIJn32KHSzfidpc88hPwPHJzENDy8TJug=
-X-Gm-Gg: ATEYQzx1y9I3m6DWy4Gw7qsfgbmNRD0gAc4wVUMsQRjOA+vo++CdqrzLUjuxufD9fvL
- VoZCQorNpYnu3Hgii05UFqQanngahiQ75kek038QGlvTnmHCTbQFKwHa3J9qoHT+LbN/edPVgv8
- 3wgtR8SByBi3hAW26qKLXz5EmX+PLlvtOiDspqCr4RddvM9bLrwsxfusioxkNOKM92kF6P6dpo7
- R7wnNovExLqH11FES+TgnxwYyZvAc1s5cIp+dOAkTeDPS4WC7lHDkeydiN2ctuS6JMWEKkhrX1g
- wEkibhmspfUEwB9xGMYgBiRPsk5yYWi1RZLvznMjEGa5awdEijKOtN6LKroO3NuqmUQNM4EkUJK
- DKA/bz0j6Ac8GptS8HaxOA4pSxkexJvGhYQIxMlRf766o3uwDNAILulx5D8ForXigWfuqv84AD6
- GivBq+Jf6i6hyqXj5LVDAI8l/gizEmrijcR+a6jsTwd/4u6tkxHwr0mNAMHg8IMQYO5K0t
-X-Received: by 2002:a17:903:191:b0:2ae:8272:deb0 with SMTP id
- d9443c01a7336-2b0826feb3dmr104925965ad.15.1774231456194; 
- Sun, 22 Mar 2026 19:04:16 -0700 (PDT)
+ AJvYcCWpIElwSReCqZwkI7rSfeQXxZ/5qGCOjSfBAa35Rvl3HYf/M7xvqB8GBpTYlF/zoI9xSJo03jZKGDXg@nongnu.org
+X-Gm-Message-State: AOJu0Yw0lSu4FAYKH+qF/fqaVHluJ9SdNgWvyFQDbp1KULwRqk2m8JOb
+ x1EBhvHJ69949ixYQceNX88UHFh77WoYkZpq1I0BHmGwUCmUjcQ+iCoGmMOUbLD+LXc=
+X-Gm-Gg: ATEYQzyXUqGhf2SzZTbGIDJEfV+YE5fBxOMqmMIPfTi4TgdzsdlR0sZUcEy37FVGfPZ
+ FrISZHm4GC7txL991OJj8tNLyxlpcGJJYFCpjLLn+Z/uXssEQTCR8Cv2sALCefFdsMcekiBYgRJ
+ u6SMSc9Yx9+odgnK+xyhn7RUNbMNSnWGeFEyxrtOF+WmFC72EyOHAFqhjp4gwvonenwaNym8+IR
+ RxXVebxRKRR2SD2go9a1WYXdZ7KAOd54heYILCvjfxMkvV7VWGGYPyyns+ooeUwA3gPnzIOOusg
+ S1FQec59XDE8USrbSptLprU5eJTzyfqHAyEIBhrGPAqfkLMQ54YA3ENirWRjEz2hhhx115WXN9m
+ 078dlK9DPhkR/R2KOa943GbaiGncA17paURKeCR49u0211jtIc8+wI5BALavsf9L5mB3gTEmNju
+ nuLjZS0L01EduK6OJOKB2K8i1WIAa0+tgsLaAlK0BmjpkrSpQbY+Rjc4WEl7Jaqhrr1aC4
+X-Received: by 2002:a05:6a20:7f9f:b0:398:7357:bb91 with SMTP id
+ adf61e73a8af0-39bceb46c0emr9086912637.33.1774231662146; 
+ Sun, 22 Mar 2026 19:07:42 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083688ca4sm116198715ad.67.2026.03.22.19.04.15
+ 41be03b00d2f7-c744aa0bbdcsm5860451a12.32.2026.03.22.19.07.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 22 Mar 2026 19:04:15 -0700 (PDT)
-Message-ID: <c8536f00-efbc-441a-8725-bfe80aa8666c@linaro.org>
-Date: Sun, 22 Mar 2026 19:04:15 -0700
+ Sun, 22 Mar 2026 19:07:41 -0700 (PDT)
+Message-ID: <e1add462-55a6-4aab-b469-b7db7eedafcb@linaro.org>
+Date: Sun, 22 Mar 2026 19:07:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] chardev: Improve @docstring and clarify
- qemu_chr_write() uses
-To: Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20251112134143.27194-1-philmd@linaro.org>
- <0faef1dc-6fde-41b1-bf1e-8ecfe49033f7@tls.msk.ru>
- <a50b8ccb-4d13-431b-836e-b08e5add71bd@linaro.org>
- <95e61064-c8e8-4c36-9371-cbd28ab737c8@tls.msk.ru>
- <17f7b53d-dbb7-4090-a6ac-671c85dd611d@linaro.org>
- <8ca786b1-765b-4dc4-92fd-6ba6aeedf098@tls.msk.ru>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: Monitor address printing
 Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <e4f35870-7b04-c9f3-300f-909599a199fe@eik.bme.hu>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -123,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <8ca786b1-765b-4dc4-92fd-6ba6aeedf098@tls.msk.ru>
+In-Reply-To: <e4f35870-7b04-c9f3-300f-909599a199fe@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -150,37 +139,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/26 11:15 PM, Michael Tokarev wrote:
-> On 12.02.2026 23:13, Philippe Mathieu-Daudé wrote:
+On 3/22/26 4:38 PM, BALATON Zoltan wrote:
+> Hello,
 > 
->>>>>   From this patchset, 1 change has now found its way to the master
->>>>> branch:
->>>>>
->>>>>    chardev/char-pty: Do not ignore chr_write() failures
->>>>>
->>>>> Besides it, the following 2 changes were marked for-stable:
->>>>>
->>>>>    chardev/char: Allow partial writes in qemu_chr_write()
->>>>>    chardev/char: Preserve %errno in qemu_chr_write()
->>>>>
->>>>> Are other changes (including the above 2) not needed anymore?
->>>>
->>>> They are, I need to reply to Marc-André and respin a v4...
->>>>
->>>> Old bugs so can wait 11.0 :S
->>>
->>> Found an old(ish) thread...  ping? :))
->>
->> Cc'ing new docs/ maintainer :P
+> Noticed that now addresses are printed with a lot of leading zeros in
+> monitor:
 > 
-> Ping *N?  11.0 is almost out already..
+> $ qemu-system-ppc -monitor stdio -S
+> QEMU 10.2.90 monitor - type 'help' for more information
+> (qemu) x/x 0
+> 0000000000000000000000000000000000000000000000000000000000000000: 0x00000000
+> (qemu) x/x 0xfff00000
+> 00000000000000000000000000000000000000000000000000000000fff00000: 0x60000000
 > 
-> /mjt
+> I suspected maybe the recent changes around 42cc2028a43 might have
+> something to do with that so I tried to find a point to bisect but looks
+> like some build system changes also broke that:
+> 
+> $ git checkout 42cc2028a43^
+> $ configure...
+> [...]
+> mkvenv: installing meson==1.10.0, pycotap==1.3.1, qemu.qmp==0.0.5, setuptools>=44.1.1, wheel>=0.34.2, pip>=20.3.4
+> ERROR: Could not find a version that satisfies the requirement wheel>=0.34.2 (from versions: none)
+> ERROR: No matching distribution found for wheel>=0.34.2
+> 
+> *** Ouch! ***
+> 
+> Could not provide build dependency 'meson==1.10.0':
+> 
+> master still builds and I get the above error with earlier version even
+> with a new empty build dir so looks like some build system problem. Could
+> you please check and fix these?
+>
 
-I didn't answer previously, since it was touching code in addition to 
-docs, and was expecting this to be picked up by chardev maintainer 
-(Marc-André in this case if I'm right). So I assumed it fell back to a 
-subsystem documentation change and not a general one I was supposed to take.
+Build system has been broken upstream for a few commits, and I'm afraid 
+there is no proper fix for concerned revisions.
+You should skip them in your bisect run (git bisect skip or run script 
+should return 125).
+
+> Regards,
+> BALATON Zoltan
+> 
 
 Regards,
 Pierrick
