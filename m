@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC24FF46126
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538DCF46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4foa-0000CZ-CV; Mon, 23 Mar 2026 09:59:37 -0400
+	id 1w4ft1-0005aF-5p; Mon, 23 Mar 2026 10:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fo5-0008Jg-PG
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:03 -0400
+ id 1w4fow-0000av-9n
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:56 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fo4-0006tE-C6
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:01 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fou-000710-2V
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:54 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 8649420B7007;
- Mon, 23 Mar 2026 06:58:56 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8649420B7007
+ by linux.microsoft.com (Postfix) with ESMTPSA id A05FF20B6F0C;
+ Mon, 23 Mar 2026 06:59:37 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A05FF20B6F0C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274339;
- bh=+449kqpsT3rs/26cTO+xTXYI56NYmCzZVttigepvBaE=;
+ s=default; t=1774274380;
+ bh=zOiXzpk6ZsOGpRIWUT9SZ7VhQlMkNvXloKqOzNfhXPM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=o73bjwCv1M6bmGMltUPwyi9QAIV+9orQPu8JdvTulptPQu+OYOS/eYdweG9gWS8MK
- BCLIxFKwQi2/TGqoLCre1iGiIanPEfphanY1iJmVbs/FYp5lYzVFDcZiGTOpcLMeGv
- dzUJ0apeVV4YTV/rYUgk3fRG0aXlrH1fJP6IdmKo=
+ b=S4LoVi6GMIfd5aBKX4+RBdvHCOaVeQcDrmNttz1aoQUupOjidR1hg6/U7EOoJQ27h
+ YpPAn+Oe0f27T0ScMVgxdD1Wn5eJVkYD7TkW4VGHJeEXqeXJ8ixyMD9GSuof/PtntZ
+ Im5RqEcAWKCXw4qN0Ht4tJsKwKr8i5TwtIo9+D90=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 11/32] accel/mshv: use s->irq_routes in commit_routes
-Date: Mon, 23 Mar 2026 14:57:51 +0100
-Message-Id: <20260323135812.383509-12-magnuskulke@linux.microsoft.com>
+Subject: [RFC 22/32] target/i386/mshv: migrate SIMP and SIEFP state
+Date: Mon, 23 Mar 2026 14:58:02 +0100
+Message-Id: <20260323135812.383509-23-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,84 +75,418 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mshv_irqchip_commit_routes() the entries that have been accumulated
-in s->irq_routes are committed directly to MSHV's irqchip.
+This part SynIC state is retrieved from the hypervisor via aligned state
+pages:
 
-The old commit_msi_routing_table() fn will be removed in a subsquent commit.
+- Add new synic source file
+- Centralize the synic_enabled() check
+- r/w pages from the hyper via aligned pages
+- only handle pages when synic is enabled
+- add buffers for migration to VM state
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c       | 2 +-
- accel/mshv/irq.c        | 7 ++++---
- accel/stubs/mshv-stub.c | 2 +-
- include/system/mshv.h   | 2 +-
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ include/system/mshv_int.h    |   7 ++
+ target/i386/cpu.h            |   5 ++
+ target/i386/machine.c        |  26 ++++++
+ target/i386/mshv/meson.build |   1 +
+ target/i386/mshv/mshv-cpu.c  |  64 +++++++++++++++
+ target/i386/mshv/msr.c       |   7 +-
+ target/i386/mshv/synic.c     | 155 +++++++++++++++++++++++++++++++++++
+ 7 files changed, 260 insertions(+), 5 deletions(-)
+ create mode 100644 target/i386/mshv/synic.c
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 0cb3ef78d3..4303e10e40 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -55,7 +55,7 @@ void accel_irqchip_commit_routes(void)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
--        mshv_irqchip_commit_routes();
-+        mshv_irqchip_commit_routes(mshv_state);
-     }
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 29b363e73e..80df4030c5 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -119,4 +119,11 @@ int mshv_init_msrs(const CPUState *cpu);
+ int mshv_get_msrs(CPUState *cpu);
+ int mshv_set_msrs(const CPUState *cpu);
+ 
++/* synic */
++int mshv_get_simp(int cpu_fd, uint8_t *page);
++int mshv_set_simp(int cpu_fd, const uint8_t *page);
++int mshv_get_siefp(int cpu_fd, uint8_t *page);
++int mshv_set_siefp(int cpu_fd, const uint8_t *page);
++bool mshv_synic_enabled(const CPUState *cpu);
++
  #endif
-     if (kvm_enabled()) {
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 990ce34620..9ba837f0e2 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -394,16 +394,17 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0b539155c4..d010d26146 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -33,6 +33,7 @@
+ #include "qemu/cpu-float.h"
+ #include "qemu/timer.h"
+ #include "standard-headers/asm-x86/kvm_para.h"
++#include "hw/hyperv/hvgdk_mini.h"
+ 
+ #define XEN_NR_VIRQS 24
+ 
+@@ -2291,6 +2292,10 @@ typedef struct CPUArchState {
+ #if defined(CONFIG_HVF) || defined(CONFIG_MSHV) || defined(CONFIG_WHPX)
+     void *emu_mmio_buf;
+ #endif
++#if defined(CONFIG_MSHV)
++    uint8_t hv_simp_page[HV_HYP_PAGE_SIZE];
++    uint8_t hv_siefp_page[HV_HYP_PAGE_SIZE];
++#endif
+ 
+     uint64_t mcg_cap;
+     uint64_t mcg_ctl;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 48a2a4b319..f94cc544b3 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -952,6 +952,29 @@ static const VMStateDescription vmstate_msr_hyperv_reenlightenment = {
+     }
+ };
+ 
++#ifdef CONFIG_MSHV
++static bool mshv_synic_vp_state_needed(void *opaque)
++{
++    X86CPU *cpu = opaque;
++    CPUX86State *env = &cpu->env;
++
++    /* Only migrate SIMP/SIEFP if SynIC is enabled */
++    return env->msr_hv_synic_control & 1;
++}
++
++static const VMStateDescription vmstate_mshv_synic_vp_state = {
++    .name = "cpu/mshv_synic_vp_state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mshv_synic_vp_state_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BUFFER(env.hv_simp_page, X86CPU),
++        VMSTATE_BUFFER(env.hv_siefp_page, X86CPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++#endif
++
+ static bool avx512_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+@@ -1916,6 +1939,9 @@ const VMStateDescription vmstate_x86_cpu = {
+         &vmstate_cet,
+ #ifdef TARGET_X86_64
+         &vmstate_apx,
++#endif
++#ifdef CONFIG_MSHV
++        &vmstate_mshv_synic_vp_state,
+ #endif
+         NULL
+     }
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index f44e84688d..a847a6c74c 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -4,6 +4,7 @@ i386_mshv_ss.add(files(
+   'mshv-apic.c',
+   'mshv-cpu.c',
+   'msr.c',
++  'synic.c',
+ ))
+ 
+ i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 0d4721582a..49f3f9c090 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -128,6 +128,33 @@ static int get_lapic(CPUState *cpu)
      return 0;
  }
  
--void mshv_irqchip_commit_routes(void)
-+void mshv_irqchip_commit_routes(MshvState *s)
++static int get_synic_state(CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    int cpu_fd = mshv_vcpufd(cpu);
++    int ret;
++
++    /* SIMP/SIEFP can only be read when SynIC is enabled */
++    if (!mshv_synic_enabled(cpu)) {
++        return 0;
++    }
++
++    ret = mshv_get_simp(cpu_fd, env->hv_simp_page);
++    if (ret < 0) {
++        error_report("failed to get simp state");
++        return -1;
++    }
++
++    ret = mshv_get_siefp(cpu_fd, env->hv_siefp_page);
++    if (ret < 0) {
++        error_report("failed to get siefp state");
++        return -1;
++    }
++
++    return 0;
++}
++
+ static void populate_fpu(const hv_register_assoc *assocs, X86CPU *x86cpu)
+ {
+     union hv_register_value value;
+@@ -585,6 +612,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+         return ret;
+     }
+ 
++    ret = get_synic_state(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++
+     return 0;
+ }
+ 
+@@ -1026,6 +1058,33 @@ static int set_lapic(const CPUState *cpu)
+     return 0;
+ }
+ 
++static int set_synic_state(const CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    int cpu_fd = mshv_vcpufd(cpu);
++    int ret;
++
++    /* SIMP/SIEFP can only be written when SynIC is enabled */
++    if (!mshv_synic_enabled(cpu)) {
++        return 0;
++    }
++
++    ret = mshv_set_simp(cpu_fd, env->hv_simp_page);
++    if (ret < 0) {
++        error_report("failed to set simp state");
++        return -1;
++    }
++
++    ret = mshv_set_siefp(cpu_fd, env->hv_siefp_page);
++    if (ret < 0) {
++        error_report("failed to set siefp state");
++        return -1;
++    }
++
++    return 0;
++}
++
+ int mshv_arch_store_vcpu_state(const CPUState *cpu)
  {
      int ret;
--    int vm_fd = mshv_state->vm;
-+    int vm_fd = s->vm;
- 
--    ret = commit_msi_routing_table(vm_fd);
-+    ret = ioctl(vm_fd, MSHV_SET_MSI_ROUTING, s->irq_routes);
-     if (ret < 0) {
-         error_report("Failed to commit msi routing table");
-         abort();
+@@ -1062,6 +1121,11 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
+         return ret;
      }
-+    trace_mshv_commit_msi_routing_table(vm_fd, s->irq_routes->nr);
+ 
++    ret = set_synic_state(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++
+     return 0;
  }
  
- int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *event,
-diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
-index dadf05511a..8b69539a85 100644
---- a/accel/stubs/mshv-stub.c
-+++ b/accel/stubs/mshv-stub.c
-@@ -28,7 +28,7 @@ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
-     return -ENOSYS;
- }
+diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
+index d19b79d729..bfae4ed0d8 100644
+--- a/target/i386/mshv/msr.c
++++ b/target/i386/mshv/msr.c
+@@ -299,7 +299,6 @@ int mshv_get_msrs(CPUState *cpu)
+     size_t i, j;
+     uint32_t name;
+     X86CPU *x86cpu = X86_CPU(cpu);
+-    bool synic_enabled;
  
--void mshv_irqchip_commit_routes(void)
-+void mshv_irqchip_commit_routes(MshvState *s)
- {
- }
+     set_hv_name_in_assocs(assocs, n_assocs);
  
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 2033beed70..0c9a4f927c 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -62,8 +62,8 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+@@ -327,8 +326,7 @@ int mshv_get_msrs(CPUState *cpu)
+     store_in_env(cpu, assocs, n_assocs);
  
- int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
--void mshv_irqchip_commit_routes(void);
- void mshv_irqchip_release_virq(MshvState *s, int virq);
-+void mshv_irqchip_commit_routes(MshvState *s);
- int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
-                                         const EventNotifier *rn, int virq);
- int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
+     /* Read SINT MSRs only if SynIC is enabled */
+-    synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
+-    if (synic_enabled) {
++    if (mshv_synic_enabled(cpu)) {
+         QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
+ 
+         for (i = 0; i < HV_SINT_COUNT; i++) {
+@@ -382,7 +380,6 @@ int mshv_set_msrs(const CPUState *cpu)
+     int ret;
+     size_t i, j;
+     X86CPU *x86cpu = X86_CPU(cpu);
+-    bool synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
+ 
+     load_from_env(cpu, assocs, n_assocs);
+ 
+@@ -416,7 +413,7 @@ int mshv_set_msrs(const CPUState *cpu)
+     }
+ 
+     /* SINT MSRs can only be written if SCONTROL has been set, so we split */
+-    if (synic_enabled) {
++    if (mshv_synic_enabled(cpu)) {
+         QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
+ 
+         for (i = 0; i < HV_SINT_COUNT; i++) {
+diff --git a/target/i386/mshv/synic.c b/target/i386/mshv/synic.c
+new file mode 100644
+index 0000000000..8f9fee6ed7
+--- /dev/null
++++ b/target/i386/mshv/synic.c
+@@ -0,0 +1,155 @@
++/*
++ * QEMU MSHV SynIC support
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Magnus Kulke  <magnuskulke@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/memalign.h"
++#include "qemu/error-report.h"
++
++#include "system/mshv.h"
++#include "system/mshv_int.h"
++
++#include "linux/mshv.h"
++#include "hw/hyperv/hvgdk_mini.h"
++#include "cpu.h"
++
++#include <sys/ioctl.h>
++
++bool mshv_synic_enabled(const CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++
++    return x86cpu->env.msr_hv_synic_control & 1;
++}
++
++static int get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
++{
++    int ret;
++
++    ret = ioctl(cpu_fd, MSHV_GET_VP_STATE, state);
++    if (ret < 0) {
++        error_report("failed to get vp state: %s", strerror(errno));
++        return -1;
++    }
++
++    return 0;
++}
++
++static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
++{
++    int ret;
++
++    ret = ioctl(cpu_fd, MSHV_SET_VP_STATE, state);
++    if (ret < 0) {
++        error_report("failed to set vp state: %s", strerror(errno));
++        return -1;
++    }
++
++    return 0;
++}
++
++int mshv_get_simp(int cpu_fd, uint8_t *page)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SIMP;
++
++    ret = get_vp_state(cpu_fd, &args);
++
++    if (ret < 0) {
++        qemu_vfree(buffer);
++        error_report("failed to get simp");
++        return -1;
++    }
++
++    memcpy(page, buffer, HV_HYP_PAGE_SIZE);
++    qemu_vfree(buffer);
++
++    return 0;
++}
++
++int mshv_set_simp(int cpu_fd, const uint8_t *page)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SIMP;
++
++    assert(page);
++    memcpy(buffer, page, HV_HYP_PAGE_SIZE);
++
++    ret = set_vp_state(cpu_fd, &args);
++    qemu_vfree(buffer);
++
++    if (ret < 0) {
++        error_report("failed to set simp");
++        return -1;
++    }
++
++    return 0;
++}
++
++int mshv_get_siefp(int cpu_fd, uint8_t *page)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SIEFP,
++
++    ret = get_vp_state(cpu_fd, &args);
++
++    if (ret < 0) {
++        qemu_vfree(buffer);
++        error_report("failed to get siefp");
++        return -1;
++    }
++
++    memcpy(page, buffer, HV_HYP_PAGE_SIZE);
++    qemu_vfree(buffer);
++
++    return 0;
++}
++
++int mshv_set_siefp(int cpu_fd, const uint8_t *page)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SIEFP,
++
++    assert(page);
++    memcpy(buffer, page, HV_HYP_PAGE_SIZE);
++
++    ret = set_vp_state(cpu_fd, &args);
++    qemu_vfree(buffer);
++
++    if (ret < 0) {
++        error_report("failed to set simp");
++        return -1;
++    }
++
++    return 0;
++}
 -- 
 2.34.1
 
