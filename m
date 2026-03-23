@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB6F9EC01C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DEDEC01CD
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 10:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4cvl-0001uX-BS; Mon, 23 Mar 2026 06:54:45 -0400
+	id 1w4cve-0001qH-Ew; Mon, 23 Mar 2026 06:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4cvj-0001tq-Fj
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:43 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1w4cvc-0001oo-Iv
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:36 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4cvh-00066N-VB
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:43 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-486ff201041so21133305e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 03:54:41 -0700 (PDT)
+ id 1w4cva-000641-Rl
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:36 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-486fe655187so35693475e9.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 03:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774263280; x=1774868080; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774263272; x=1774868072; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=d1Bl0lKWC4KpVkS31ZxF1KFY77v74e5vNIPVSZv7eHs=;
- b=NqD8YELkGbUPG3Kx6+18Mw4s75G9iyNVUTI/JBN+p9DKdAZbI7nHGPCxBurIOJTXs6
- 18MS2Dq93v5BkkCXJJ22SUp5bnsoHQCrQEreCdJCa4kQ5PJuKufqB+6OLIbYZPQexkPZ
- TY3B5ZbGmwueFq5X78BhXdsWhJfp9mq8uk3lLuMVoWoxSkhNoxWvTm6V/2xtjFEvgBHD
- BKAAHIAozj54KiiKkWhBayUdcfx+ZwlYEigM5WlDTWckMKO1/+bx6fOVyLD5/jmUwpOs
- n6KttFxq9Jzd3AXIowZbqNr3Fl56an8EkPyyedfsTDDpPi0/Q4b0gJvJ3uDvZUtgqd6e
- aG8w==
+ :reply-to; bh=A6ZLqp38jEhF8gx3RD7UOd1UMhdnIBandbyq1IDDyic=;
+ b=BnSZnYIoVjkERyMYb9b741bRbaa8kmk2L6frNWl6gZcqg29dbrFIsc3Ynhlg4aZCi3
+ OM5svSW/2OZodu0cmFyMb1Wk+4Uj2voljkNopJVQIalpXezVcHCz6c2Rk9DxsAZEB9zi
+ w7egM9OKrZAIzuJAu/vKGlfw/Eu7UCqXholUXIQA3u8nmDRN3MmIj2Fu6cmFtYERxu3X
+ 5qh01qO/KnjefzxTNUVSsM3CePLUjCnBdhzpMmUNOG4V+BEaTDN5BWMBLTx/hvsbxxrL
+ XvE33Sq0Zm81t0HbfaDpEDQdz+eJO5eL2keQn31z05qiFRwUvYcd3IiaudvA+7zPkJhA
+ h13w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774263280; x=1774868080;
+ d=1e100.net; s=20251104; t=1774263272; x=1774868072;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=d1Bl0lKWC4KpVkS31ZxF1KFY77v74e5vNIPVSZv7eHs=;
- b=RHwfX7KYEnR4alMLbDrIFWvc0xoe2ugA1Ys6LIK64azXyxknwSicL9cqNBlaC241WZ
- 6THEfYYhCEJz+nm2y7x7HWCNTE7wB1DNYqxlJX+g/gTIb9Hv3gqzjYyC9/HVBYSF25LY
- IFvxNffLCGMv7ahpwu1OHdaRzqRsbsxOm3g2lHmAHApn27RmBLwaqwBmItrNzB7CU+HK
- OnKZZimVP80oLAEBjhtW8TClUTsWCVljyIfXYIbG9gv57bTcoa/YbYkp3KMIursYLT8j
- 6L1S8impkzk+Qw2Xaf0Dqi6AAFHVpRdzgG3XPRCSCKzU17FzKwOAl3PVgXdVjYkzLT+v
- RkaQ==
-X-Gm-Message-State: AOJu0Yxqd8Y5YB/MyInmkukoMhZivxSYWsVZ4p3WLxO1g9DIZhatL77o
- gGMQL5bORN9rD5wlEDgzi8O9Aa8awzpw7yZyNuMtKaDBykuftaj//bLjNe7IT6jbB5s9a6vu24V
- 3voO06p4=
-X-Gm-Gg: ATEYQzw15XMMGR83I0tLw7OUkOAWeh/og8G7OxHceEf96YsTHiHovxjc6/ict/wd19y
- kg09D5h/NSqUSFlVhI+FLW+fg+IEN0vbrAWGRDtQCa1RNgTNYPDpBj4TzZ+mZ7XLFQQ3uVaFeFu
- Dk2jKBzAGRhLVN/Ithx/A4MhAaIVOIuzViBiCPlpAt4iEgKlyjHTB/1cMO1xYRyyvIJDbRc7Htg
- Y1HoZuVVlA674ZBMpsZxooMxf9XdkLAdGKRcMQFjG7vbvuDUqrcHjKFqUDDq/MzXZ6Ngxfbf1TR
- aHi2Avz406lorYCLskbRye4aGxhvrA3CALAKykNe9uO+2SiTjs32V9/JhOWlu8bqMekzey0yj8p
- B2yCyq/OWTaAe3fGdno6wfBxQPoN7r7AUbgTgUbeK2lS0dwtN4FJvS07qau6H5VxKrYg8ErBKe4
- OrTuUAuLzLDLPykhl+vm0UTXg/4ELNRhPaKp1bjSn0/dBiWFid2NT5DgLFrrKelilmfDGKwkss7
- BAbzh2wuyEv3Rgs08y/Q9WczivNIQE=
-X-Received: by 2002:a05:600c:c083:b0:485:2fc5:3a5 with SMTP id
- 5b1f17b1804b1-486fee19f85mr121739325e9.26.1774263280403; 
- Mon, 23 Mar 2026 03:54:40 -0700 (PDT)
+ bh=A6ZLqp38jEhF8gx3RD7UOd1UMhdnIBandbyq1IDDyic=;
+ b=noGwon3dJ467SnBB/ftsIXxiVyQmbBCjGUJySJKLSh5CCIN6Dmf8mJlOnJW3JO/QEp
+ nnPxDeqAVpKj89WPtJF83vnSb0lK+NQqgSwpILgCD/VVAGJsaHZCRVlUu1IB4xzOgpVH
+ hROLTDpmzlT4KPmCX9T+GZ2e7/Wh3Cgel7g3AgP0buIpyKjnFSUN5WZXHwgbWL17Kpw8
+ H1AVdJkyC5t9kYz7Bsj++6Q/yYcOdWJcVTODByVFQT+LYKQwyZS3NCL/lSv8fAANuwv3
+ DQ4oeEpQIPY9ttLvUKEuL7Ufozc9/uapk+b5CI7sA1V17PWn70KWZxPGTQU9ZwbHDv/J
+ spyA==
+X-Gm-Message-State: AOJu0YzS/VM2wGJp7Y1KYXwNbAJpnoWtnfzRkMeajrJSlPrArYSVfzGG
+ jwareJBMLTyw9HBiICMuUkK0JbhYjMInCOu7UAYNphG8I6fa/1KAbi95Hjacue7QWAymmTM21Rt
+ m8V95TUs=
+X-Gm-Gg: ATEYQzy7gB0XUE4/SJdgcoCT0k+KziUWPbgUkahvjBNJ2DHMOz3itSrzPkitEfxu5Ip
+ ZUjeXLrwj29Etoj6NG76ZmVpEpBDn1CovUvahx9WUT1q70BB5AVtEeAVgmiWC8R+IkciSbNjN8x
+ V83Y2iixUpJhK66fmKzhzgrF0hBMAwPErl7dg/LPJShsBDoTkYw/ybWqDJ2D3K2vFr+IQoi+U/+
+ 4Q8LADb2HcShu9D1ZnsVjgoVzVqrK9vY7lMAOp6veaINQt9G0yJT7Djo81+rTGRP6lPQZgJtwU0
+ FFFAv6XdNRgLBb+85Q3unlkQSQpsO1Y8myOH2JGuo0+RvKNPxpHM8JrMVP9D9L8gawPaaMKGJTy
+ nf5EHScsfd5+0NyZUtKCKls1ripdit3AXORzwkNu2cC9g1T8tD5EJDOZpkbVMvO+6luRSzHOqG/
+ cCnHNke34nNzWczhpBBIaeBsCJbjxGEX2REUPctHMABmCd67o6bgABL3gyLZ01kHeMQE8IQWptu
+ RFMIrKCKAsr+5ZuUALf5B9rOtrUECc=
+X-Received: by 2002:a05:600c:8207:b0:485:3ff1:d5c3 with SMTP id
+ 5b1f17b1804b1-486febb449bmr158201375e9.5.1774263271976; 
+ Mon, 23 Mar 2026 03:54:31 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486ff1dd9f1sm115483185e9.8.2026.03.23.03.54.38
+ 5b1f17b1804b1-486ff1dd9f1sm115483185e9.8.2026.03.23.03.54.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 03:54:38 -0700 (PDT)
+ Mon, 23 Mar 2026 03:54:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/10] configs/targets: Restrict the legacy ldst_phys() API on
- ARM / Aarch64
-Date: Mon, 23 Mar 2026 10:54:28 +0000
-Message-ID: <20260323105429.4059580-10-peter.maydell@linaro.org>
+Subject: [PULL 01/10] tests/qtest/arm-cpu-features: Fix thinko in
+ g_strdup_printf() call
+Date: Mon, 23 Mar 2026 10:54:20 +0000
+Message-ID: <20260323105429.4059580-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260323105429.4059580-1-peter.maydell@linaro.org>
 References: <20260323105429.4059580-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,41 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+In commit 62272f9f8891 we changed some uses of fixed char arrays
+to call g_strdup_printf() instead. In one place I made a silly
+error where in changing
+  sprintf(name, "fmt string", ...)
+to
+  name = g_strdup_printf("fmt string", ...)
+I forgot to delete "name" from the argument list.
 
-Commit d751921cffd ("hw/arm/omap1: Remove omap_badwidth_*
-implementations") removed the last use of the legacy ldst_phys()
-API. Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable to
-hide the legacy API to the ARM / Aarch64 binaries, avoiding further
-API uses to creep in.
+Luckily Coverity spotted this (as CID 1645771) because at this
+point "name" is NULL and passing g_strdup_printf() a NULL first
+argument is not valid.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260319104414.66367-1-philmd@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+We didn't notice the mistake in testing or CI because this bit of
+code is only run if on an AArch64 host with KVM and SVE available.
+
+Correct the error by removing the stray function argument.
+
+Fixes: 62272f9f8891 ("tests/qtest/arm-cpu-features: Use g_strdup_printf() instead of char arrays")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-id: 20260317111121.2062455-1-peter.maydell@linaro.org
 ---
- configs/targets/aarch64-softmmu.mak | 1 +
- configs/targets/arm-softmmu.mak     | 1 +
- 2 files changed, 2 insertions(+)
+ tests/qtest/arm-cpu-features.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
-index 9a20187e2c..d34aead41c 100644
---- a/configs/targets/aarch64-softmmu.mak
-+++ b/configs/targets/aarch64-softmmu.mak
-@@ -5,3 +5,4 @@ TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml arm-core.xml arm-vfp.xml arm-
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/arm-softmmu.mak b/configs/targets/arm-softmmu.mak
-index 35af7da79f..b235e34a38 100644
---- a/configs/targets/arm-softmmu.mak
-+++ b/configs/targets/arm-softmmu.mak
-@@ -3,3 +3,4 @@ TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/tests/qtest/arm-cpu-features.c b/tests/qtest/arm-cpu-features.c
+index 5444e4d40b..bbdd89a81d 100644
+--- a/tests/qtest/arm-cpu-features.c
++++ b/tests/qtest/arm-cpu-features.c
+@@ -612,7 +612,7 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
+              * we need at least one vector length enabled.
+              */
+             vq = __builtin_ffsll(vls);
+-            name = g_strdup_printf(name, "sve%u", vq * 128);
++            name = g_strdup_printf("sve%u", vq * 128);
+             error = g_strdup_printf("cannot disable %s", name);
+             assert_error(qts, "host", error, "{ %s: false }", name);
+             g_free(error);
 -- 
 2.43.0
 
