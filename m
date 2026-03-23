@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D71CF46102
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAF2F46102
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4evE-0002Wn-68; Mon, 23 Mar 2026 09:02:20 -0400
+	id 1w4evM-0002e7-EU; Mon, 23 Mar 2026 09:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w4etQ-00026W-Rv; Mon, 23 Mar 2026 09:00:46 -0400
+ id 1w4etU-00028F-5n; Mon, 23 Mar 2026 09:01:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w4etM-0006aA-Sv; Mon, 23 Mar 2026 09:00:27 -0400
+ id 1w4etS-0006b3-Av; Mon, 23 Mar 2026 09:00:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774270805; bh=TUOSuj3dCkJHerEHg9wKu0b7M0iCbAIKvPgwRs44tP8=;
- h=From:To:Cc:Subject:Date;
- b=HhV8xgKfjIq9jF8U88P0r2Qzu9Is8ZRtyUeXtUVtRF7I55XBewbYW363d+119Tv9W
- giQB7t0JTJXlWokfvibz0uB+zw9KOA6W8CenihoBawZYl8aDQUVeMt3YoEDldYtush
- C3TXM/+3M25G46xz7N7ZHF+Ch3b79Zol/BD1e6IwFqeRiR1cfbGikvp8PVvxM7oxRi
- szxc4gCizyUEmhRh9p2z/A7TIfi1Nhw+FIoUAMtQVy3m26hIZtg8Xdb4+r68TTYJbP
- +uTsUfZ1qonIjtSkmsk1DWG47/taVYIl2dg88PgUKo63YtUs57fBtMHFX94p/51F+X
- cEMprjSRpoMsQ==
+ t=1774270805; bh=wwHUGGarCmbaL8dJjpjqkI/zpYoKiR0JviDKd9duN0U=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=mfS3SXGMK1LSBMbnjNW4B3ZZEJ21tk93RaRuDKlxg26LS1eJXaG6yW/MEKYC/keRo
+ RnjPcCIY2ACF2RzL9oFiXtP/hr4v+m5S2a6U7VmmPPTOIRbw14f5NdOpiI41AhtZte
+ dE79uln2VMzHggP06aK32UMO6McAa+Xu38Csc+lvDWXMyS5DjvxPg4mbmDzOM/Y8Bh
+ zjrMD2CYmoKwvF13o4yxk7oEIMhhWEYuKh2J9QAYCYbHzh0llq8cG7/sLzv9/rNLbz
+ +4JNjzvfpoYPnVjBpgd4ZqDfiR4UxsN2IfvTqaIqKHbhaMh6ZHR/aAUTyZdct1vx7N
+ YFVKRnufPl1uw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0CFFB196970;
+ by isrv.corpit.ru (Postfix) with ESMTP id 44204196973;
  Mon, 23 Mar 2026 16:00:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 91AA638515D;
- Mon, 23 Mar 2026 16:00:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0FADA385160;
+ Mon, 23 Mar 2026 16:00:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 0/4] Trivial patches for 2026-03-23
-Date: Mon, 23 Mar 2026 16:00:12 +0300
-Message-ID: <20260323130021.376393-1-mjt@tls.msk.ru>
+Cc: Stefan Weil via <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 3/4] docs: Update GitHub URL of libu2f-emu
+Date: Mon, 23 Mar 2026 16:00:15 +0300
+Message-ID: <20260323130021.376393-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260323130021.376393-1-mjt@tls.msk.ru>
+References: <20260323130021.376393-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,45 +68,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit eb153d8fd3be325a5aa7e1a6a73be8854eeaaf27:
+From: Stefan Weil via <qemu-trivial@nongnu.org>
 
-  Merge tag 'pull-target-arm-20260323' of https://gitlab.com/pm215/qemu into staging (2026-03-23 10:55:20 +0000)
+This avoids a redirect from the old to the new URL.
 
-are available in the Git repository at:
-
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
-
-for you to fetch changes up to 8ef2576d32dcabc3cfe9abfde7c23c1587444584:
-
-  Fix several typos in documentation (found by codespell) (2026-03-23 15:14:34 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2026-03-23
-
-minor u2f tweaks ny Stefan, and small docs/comments updates
-
-----------------------------------------------------------------
-Stefan Weil (3):
-      Fix include statement for u2f-emu.h
-      docs: Update GitHub URL of libu2f-emu
-      Fix several typos in documentation (found by codespell)
-
-xieyi (1):
-      tests: fix typo in char unit test comment
-
- contrib/plugins/traps.c         | 2 +-
- docs/about/emulation.rst        | 2 +-
- docs/devel/code-provenance.rst  | 4 ++--
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
  docs/system/devices/usb-u2f.rst | 2 +-
- docs/system/tls.rst             | 8 ++++----
- hw/arm/virt.c                   | 2 +-
- hw/usb/u2f-emulated.c           | 2 +-
- include/hw/arm/virt.h           | 2 +-
- include/plugins/qemu-plugin.h   | 2 +-
- qapi/block-core.json            | 8 ++++----
- qapi/job.json                   | 2 +-
- qapi/uefi.json                  | 2 +-
- qemu-options.hx                 | 6 +++---
- tests/unit/test-char.c          | 2 +-
- 14 files changed, 23 insertions(+), 23 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/system/devices/usb-u2f.rst b/docs/system/devices/usb-u2f.rst
+index 4f57d5c8c3..f7ca127cbb 100644
+--- a/docs/system/devices/usb-u2f.rst
++++ b/docs/system/devices/usb-u2f.rst
+@@ -41,7 +41,7 @@ requires a working libudev):
+ ----------------
+ 
+ ``u2f-emulated`` is a completely software emulated U2F device.
+-It uses `libu2f-emu <https://github.com/MattGorko/libu2f-emu>`__
++It uses `libu2f-emu <https://github.com/Agnoctopus/libu2f-emu>`__
+ for the U2F key emulation. libu2f-emu
+ provides a complete implementation of the U2F protocol device part for
+ all specified transports given by the FIDO Alliance.
+-- 
+2.47.3
+
 
