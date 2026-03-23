@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5022ED58B00
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6338BD58B00
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4eSR-0008BT-Vb; Mon, 23 Mar 2026 08:32:35 -0400
+	id 1w4eZP-0002CP-7D; Mon, 23 Mar 2026 08:39:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4eSQ-0008B3-4v
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:32:34 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4eZN-0002Bs-3v
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:39:45 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4eSN-0001m8-Np
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:32:33 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-439b9b1900bso1950248f8f.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:32:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4eZL-0002e4-Jd
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:39:44 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-798374d0f44so70927277b3.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:39:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774269582; cv=none;
+ d=google.com; s=arc-20240605;
+ b=N21G6ijSabUbo7kB/bvFQQt//jElw4SX+XixvErEjPm8AHihirtSe+ZDSjO7SrQNHm
+ 0jFsy0hEksYvL5yR/71D5cRQAXkdyyWzzmMSNs9XP+cEHoh27BB/nECumF71AcR7W/5Q
+ yy7FsgFY+lPT6cEAHFozAWyd4jDmgwC+1DKu8oxJhpx+O/yNwNGw7SGhticwcnhP5ISg
+ 0mH41gG30wAsGMxuZvkNemQLkNKLw5Q4bAlTXHaZeMDtoR+oWzyc1NPbafdA5seKaHqr
+ YzkOtvbsJCHTLzbNUdPezfIZfmAFhDIMUGSfw0VIHiGrgfEehZlAfjLGMampKs4/+swE
+ 4oVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=R7JL3klp5R0qHeWkPx3riPndEVfG7uwqPmPnbUGg0nU=;
+ fh=Ep0uaJipAhObsWjFYu6sRYa/1NUAk1w0dh43gVx3LDU=;
+ b=lLdFT71bYQRP+bjlwURFFZEQITu5m93oj2yxy9jMc2c0xQpEYy8NRdpyMxTUV/Pkjm
+ R5n52PWvO6UP34flfFiIPfKAlWZCYjNLwLOjsMU7oqdp3p9+grmVBEGmzrEYsOFz4d1o
+ cFM6BnLOQ05HUHHRJxH4HT22PukINKZZyAqRueLZtKUBgPNoA1Kt5zjbhj4pcATrhLcM
+ Ws9vi+peZaR65KZvkh6F+VBvgkZD8KO/6fftA615oCTlDm/tNqPMF1fjh2wr5R1C5Jl9
+ RcSI5Bad3mddu2B2CDRhL/IFnk1M2qbSkTzhFud0Aud3RHdRdSU5U5raSIqMq2ezCLaa
+ Uvag==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774269150; x=1774873950; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nO+jjWxT+fBbHad0xaSFQs/OYQG5HaNYoduaoDtscB8=;
- b=AHrUv0nddZYg7D4Ch+QhvWuZoAkM3JWYEdyrkC/JyexSKjyLyT5MZE+5Zpm7CO8pLx
- u/H6QLx60B2UPOhyuaJCa9Fugonh6xSG/lEa0sTjdZ7bCitl9WsLIYFulcxU40hBW6Dj
- QmxWwsvPm0plRQe0fUzpUjoIUXV0VhVQxqGc2aLujEDv9cReyd3Fwo54AhqlEZ1TxlGb
- vzgY3yxR419TMpqBl+G0mw2aAfUVD3G1vFCHXPt+q9lThilJi313nd7fP5Q3UnHnYW9Q
- 2/7Y1at1jI50k8gAQM3Jb0WL+BRqxMaJ9ie73T8kioxrTKs5/saOQYbQEEoKJ7hfrR0Q
- 0C2A==
+ d=linaro.org; s=google; t=1774269582; x=1774874382; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=R7JL3klp5R0qHeWkPx3riPndEVfG7uwqPmPnbUGg0nU=;
+ b=awysDPJ4ugnWD7OjiWOIKBj9JwogB/qP0bfbc/hOC0mFeJGyxRPeS9df9YH7GLxKYg
+ xPYbQRMxmyUAocmXkgt2wumA029SDqwcWyw7TWyiI+J/48C/FTFyfAgXbDNeUbF5tRM3
+ qKSuAYxE6waav2QcZeqZkUrJH12CCOdvFchGsPDfvdnP4LCmGQOm7dtvOYtoc3MD+bDi
+ Y9WLVfKMIO2Yhjdb7H+pK5F/M/ZxX1NVNpNiXc/RwK/1Y+dpLZcQHgf96Ib0u1PTrMhn
+ sWZrd7eBmiaQaQOOW9qcf/3bRFdujRhDXb4dk9nuJtdBBuVC/WHEbm8IGbEoE6o7GzT7
+ cyqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774269150; x=1774873950;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nO+jjWxT+fBbHad0xaSFQs/OYQG5HaNYoduaoDtscB8=;
- b=JzLz784zqweaIOpn+segEUMfH81hckwo6xUhik8011h342Ag/kjt54DmPH4CkT8oMw
- 9OGWYG8R7wK3LzmpD2k0IBDP22cGv6u7DYLxhdrAvgdJibkQcciH+pi+FaOISCg8eux2
- jal7QztUEwm9yW4h9Up3p2LoNF3A2qiWCTKEiFaDrjly00Z+904MZLLVcFeZEC7Avd/A
- qHYrJciLEfh5g8pG0I8uiAS4SDexKA2WY+7akMFclH2ZzikcJVeSrIQ+/JnKPdjZF3xa
- GeYP4757bbeWHonZ8nAYtZaX2qQeU3Hohp1uIpndoMI1ptitb47PkAZS5FR0mQgLo8Xk
- W9tQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSgqaF9Me3uZLRcuahQifBxb+ebwnAvVJDugqQPJtbC1+YO0YhkVbChiahkzAdQYGvrEwGzWboLveR@nongnu.org
-X-Gm-Message-State: AOJu0YxPxj9r3F/bcFz/25J4/RiF/03PBaNOFfrQo2A9vs2nq2suu+9a
- SHTPKHlWxpOwSss1aWfGo3VpM7GdD5hiTysm1uyDNGxl6AVf7rIoSkBcgFYgPKrTxvdrLQ9ypie
- xiqQVNxM=
-X-Gm-Gg: ATEYQzx0dIJcsGD4aovcVwmYlfall1sepONaBDPpK6zc1iIoK4JUK/aUutd79kwuPFJ
- FQ2b5MYa8lhiVkoz2Ed5d5DfRSOGtcymNy/eVd/vJxs7tx1hTqh59O2zxZWse7Nu5AKCd2FTIhe
- rStGi4+NReCoG6k1XX6FdZUfimgz1xDxldeA1MbzZlK2Yko1H8rzIQFQul9TzoA0fKFRtGMOaGf
- Y9xcXMYNwOz18AzaUuQ272XoMTuYSD0Cxy+GAaqYY4ZlQYLQCYWdouRQojSeCdf/sb7qotelDCj
- mvp0kyhL7R3r7mlvqRMQLijXAUeg31YIn0lxDtQH963ugCABlnDO9EnmTcOLGCoccamtcZW7DuE
- bBMQZCz8Wp/uFpAVxNbYIL5yDVZ/HI3XvBscxsw7dLnmZjNqtEirZ9e0MtvGyze/BeXDXB2Rd/e
- L7fUVLg1r1FBP68iWTt1nTmQhFDxh+sjsbbX5NPel+ClMvjLd9ZPVFzFxOqLf33rE6Uw==
-X-Received: by 2002:a05:6000:2301:b0:43a:16d8:96e8 with SMTP id
- ffacd0b85a97d-43b63fef61amr18091446f8f.0.1774269149694; 
- Mon, 23 Mar 2026 05:32:29 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b6470b243sm29945670f8f.26.2026.03.23.05.32.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 05:32:29 -0700 (PDT)
-Message-ID: <9d492305-aad0-4aa5-9aab-d6ad0d222964@linaro.org>
-Date: Mon, 23 Mar 2026 13:32:28 +0100
+ d=1e100.net; s=20251104; t=1774269582; x=1774874382;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R7JL3klp5R0qHeWkPx3riPndEVfG7uwqPmPnbUGg0nU=;
+ b=JYCZEP2knNZylm/nv9C/jvvMEfwM5RMexTBSKLmo7SywGfKii3nNaP17fKcGpVBfeL
+ tzuV3VzgfYRInUPBWvpXRxXqm/uRD8m9wBVOCpg/pZVTaLJQoyQO0As+QwtT4zXpbDcj
+ hpDu7jxDkMvioQCTXk1DLQ92hefOKEVMVW8aCIEwZpdbDdKWUTv2zIP2sKV5LWAa9Wfv
+ ZX8ZfyPrO/46Lcri7108Xnq+Y7vVX1m9lILAbQSHpmVJOKRfRjLUFH+M+/5rxAx9Olx6
+ TYlKiBRlyvYS5Y6ku56DqJE9xrZWKnezCZBUCor19zd8CjiBMglqV66kmBzPe0bJGG+S
+ NaTw==
+X-Gm-Message-State: AOJu0YzZ/DEoOauqnMyQGhqVVb4/i9oKPHsC+kN3G7QIZHU0PATbk5kW
+ FKBRjf79chZdDA3MLGL1zdqu+iiCXXB+D5OFoY98woQsXh1gCKB+sxwVf3nxcBivAm0rqRl6gVY
+ BoyyDKiamkKkf4pOdlEy2xKATdtMFX1mvCmYX4gyOOw==
+X-Gm-Gg: ATEYQzzYpmZzavnX5a72H+5OqMdAekmUFfkoKZCxgK5czAUl2Yv9ngh70XenasuI42W
+ LWNEfR+veimR3r6LscFAIXe7Yl/xvcObKI2u8w5BBr2bJZkSjhtsaHdMN70TOd43E2y7LKr7qcq
+ SF3TzgCK7cZJAreDKgKRCYZWIwo0WMAhaZ1JftRFT4HhjenxdPDsJ89zcR6meB5zNX06RgYyOTc
+ w+fpL1Pqoaha9XCIFlise7gI0Q8Q8sQ/1ISN1+5idjsZptajEjPEIsTQxi0kRpFmcSqLaMLP96U
+ Bfqdj9kxkYFP32ECF3jXXt5JS02OF9q4RG/F3HKoYAzvmoKf2ql0hU77/uj8NNHbJhE=
+X-Received: by 2002:a05:690c:e3ce:b0:79a:b586:7389 with SMTP id
+ 00721157ae682-79ab58679f6mr29605587b3.20.1774269582257; Mon, 23 Mar 2026
+ 05:39:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] include/hw/hyperv: add QEMU_PACKED to uapi structs
-Content-Language: en-US
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Anirudh Rayabharam <anirudh@anirudhrb.com>, Wei Liu <wei.liu@kernel.org>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>
 References: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Mar 2026 12:39:30 +0000
+X-Gm-Features: AaiRm50mw_b035xTPgZi3DJMUYXQE3ixuwng2zLVlN7HjkzA_JX0TX9uraipWxI
+Message-ID: <CAFEAcA-EfRkCXWu061c1uZsW4BC4qKut_uju6U4NyiNuYbf5EQ@mail.gmail.com>
+Subject: Re: [PATCH] include/hw/hyperv: add QEMU_PACKED to uapi structs
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Wei Liu <wei.liu@kernel.org>, Aastha Rawat <aastharawat@linux.microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,17 +114,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/3/26 13:06, Magnus Kulke wrote:
+On Mon, 23 Mar 2026 at 12:06, Magnus Kulke
+<magnuskulke@linux.microsoft.com> wrote:
+>
 > The uapi definitions are marked with __packed hints in the kernel
 > headers, since we want to keep the contract of the Microsoft Hypervisor
 > ABI explicit, we should also added them in our vendored files, with a
 > few notable exceptions where the attribute is a noop.
-> 
+>
 > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->   include/hw/hyperv/hvgdk_mini.h | 37 ++++++++++++++++++++++------------
->   include/hw/hyperv/hvhdk.h      | 14 +++++++------
->   2 files changed, 32 insertions(+), 19 deletions(-)
+>  include/hw/hyperv/hvgdk_mini.h | 37 ++++++++++++++++++++++------------
+>  include/hw/hyperv/hvhdk.h      | 14 +++++++------
+>  2 files changed, 32 insertions(+), 19 deletions(-)
+>
+> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> index cb52cc9de2..7d7b2e9b36 100644
+> --- a/include/hw/hyperv/hvgdk_mini.h
+> +++ b/include/hw/hyperv/hvgdk_mini.h
+> @@ -7,6 +7,8 @@
+>  #ifndef HW_HYPERV_HVGDK_MINI_H
+>  #define HW_HYPERV_HVGDK_MINI_H
+>
+> +#include "qemu/compiler.h"
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+osdep.h includes compiler.h, so it is always present for all C
+files; you don't need to explicitly include it.
+
+thanks
+-- PMM
 
