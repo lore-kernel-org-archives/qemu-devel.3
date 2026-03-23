@@ -4,61 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA05F46101
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14630F46112
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fP9-0000yy-EU; Mon, 23 Mar 2026 09:33:15 -0400
+	id 1w4fU5-0004JB-Cg; Mon, 23 Mar 2026 09:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w4fOR-0000XD-56; Mon, 23 Mar 2026 09:32:31 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w4fON-00029V-9i; Mon, 23 Mar 2026 09:32:30 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwA3NpLmQMFp1U9sCA--.2530S2;
- Mon, 23 Mar 2026 21:32:22 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwwZLcQMFp0nsEAA--.10052S7;
- Mon, 23 Mar 2026 21:32:17 +0800 (CST)
-From: Tao Tang <tangtao1634@phytium.com.cn>
-To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v3 4/4] [NOT-MERGE] tests/qtest: add q35 SMM-only x86 attrs
- coverage
-Date: Mon, 23 Mar 2026 21:32:10 +0800
-Message-Id: <20260323133210.1523868-5-tangtao1634@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260323133210.1523868-1-tangtao1634@phytium.com.cn>
-References: <20260323133210.1523868-1-tangtao1634@phytium.com.cn>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwwZLcQMFp0nsEAA--.10052S7
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQADBWnAQfgOywAAsS
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3Ar43Gw43Wry3WFykArW8JFb_yoW3Wr4xpF
- yDAFnF9r4a9F1xZrs7Ja1xC3WYqFs7Ca48urW7GwsYkF45Crn2yryq9Fyvqr9rJrW0vw4r
- u3WDJFZrGan8JaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w4fU2-0004IV-08
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:38:18 -0400
+Received: from va-1-111.ptr.blmpb.com ([209.127.230.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w4fTr-00035M-RS
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:38:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1774273077; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=P0N0Blz9eTWsx1Ygi7EPAoiTQsWDhfzDt4IseD6bdPA=;
+ b=QwUyIkaK4OqwYg9YRZ94bA1bNNrtOIedwm9KR3m/Zf4bJommV/QaPGCtzRBFw0QDR0/y++
+ jm5Rh/nXJguetEQP8tlWfC6s2YUXDk14+fsyykkFGyUWewiHTj/MfwJ8txzh9jV7KAl/MN
+ 8PQIf/NYkxuOC5DdD8XwhG1NEkrJInbPzxxGN3jUDTYuKyGB6oVFOyhJe1Ec6SEHkFq1Cv
+ tLIqnuyqnA6qkvPGXJ3HjhZsfZO3ZdItnuY0SOBhY4la78q9rgElzRRzG1H1Sm03WbbuI0
+ BJ0U0awp6pB50s8J9FSOkxeyeNlNHZhH4Nn1eknqPVbLJlcx9nWzXTkZU8Onhw==
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+Cc: <dave@treblig.org>, <armbru@redhat.com>, <wubo.bob@bytedance.com>, 
+ "hongmianquan" <hongmianquan@bytedance.com>
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Date: Mon, 23 Mar 2026 21:37:44 +0800
+Message-Id: <20260323133744.46493-1-hongmianquan@bytedance.com>
+X-Lms-Return-Path: <lba+269c14233+ac3f16+nongnu.org+hongmianquan@bytedance.com>
+To: <qemu-devel@nongnu.org>
+Subject: [RFC] monitor: Fix deadlock in monitor_cleanup
+X-Mailer: git-send-email 2.32.1 (Apple Git-133)
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.127.230.111;
+ envelope-from=hongmianquan@bytedance.com; helo=va-1-111.ptr.blmpb.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,232 +67,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a q35-only test path for x86 secure attrs by introducing an optional
-test-only RAM region that is mapped only into the SMM address space.
+During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
+received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
 
-The new qtest-x86-attrs-test enables this region with
-`-global mch.x-smm-test-ram=on` and verifies that accesses with the
-`secure` attribute reach the SMM-only region, while default accesses do
-not. This provides the x86 cross-verification that qtest-attrs-test does
-not cover, where normal RAM is visible from both the default and SMM
-address spaces.
+The root cause is a race condition between the main thread's shutdown sequence and the coroutine's dispatching mechanism. When handling a non-coroutine QMP command, qmp_dispatcher_co schedules the actual command execution as a bottom half in iohandler_ctx and then yields. At this suspended point, qmp_dispatcher_co_busy remains true.
+Subsequently, the main thread in monitor_cleanup(), sets qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx, false), which attempts to wake up the coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx. The main thread then blocks indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches termination, resulting in a deadlock.
 
-This is a NOT-MERGE commit.
+The execution sequence is illustrated below:
 
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+ IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
+    |                                 |                                        |
+    |-- query-commands                |                                        |
+    |-- qmp_dispatcher_co_wake()      |                                        |
+    |    (sets busy = true)           |                                        |
+    |                                 |   <-- Wakes up in iohandler_ctx -->    |
+    |                                 |                                        |-- qmp_dispatch()
+    |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
+    |                                 |                                        |-- qemu_coroutine_yield()
+    |                                 |                                            [State: Suspended, busy=true]
+    |   [ quit triggered ]            |
+    |                                 |-- monitor_cleanup()
+    |                                 |-- qmp_dispatcher_co_shutdown = true
+    |                                 |-- qmp_dispatcher_co_wake()
+    |                                 |    -> Checks busy flag. It's TRUE!
+    |                                 |    -> Skips aio_co_wake().
+    |                                 |
+    |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
+    |                                 |   |-- aio_poll(iohandler_ctx, false)
+    |                                 |   |    -> Executes do_qmp_dispatch_bh
+    |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
+    |                                 |   |
+    |                                 |   |-- aio_poll(qemu_aio_context, true)
+    |                                 |   |    -> Blocks indefinitely! (Deadlock)
+    |                                 |
+    |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
+
+To fix this, we should always wake up the dispatcher coroutine if shutdown is requested, bypassing the qmp_dispatcher_co_busy check. This ensures that the coroutine can process the shutdown signal and exit cleanly, breaking the deadlock.
+
+Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
 ---
- hw/pci-host/q35.c                  |  24 +++++++
- include/hw/pci-host/q35.h          |   8 +++
- tests/qtest/meson.build            |   1 +
- tests/qtest/qtest-x86-attrs-test.c | 109 +++++++++++++++++++++++++++++
- 4 files changed, 142 insertions(+)
- create mode 100644 tests/qtest/qtest-x86-attrs-test.c
+ monitor/monitor-internal.h | 1 +
+ monitor/monitor.c          | 7 ++++++-
+ monitor/qmp.c              | 6 ++++++
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index e85e4227b3..5c23375dd6 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -572,6 +572,11 @@ static void mch_realize(PCIDevice *d, Error **errp)
-         return;
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index feca111ae3..943fc832f5 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -180,6 +180,7 @@ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+ void monitor_data_destroy_qmp(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
++void qmp_dispatcher_co_wake_force(void);
+ 
+ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+ void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 1273eb7260..f6c7811cf4 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -671,7 +671,12 @@ void monitor_cleanup(void)
+     WITH_QEMU_LOCK_GUARD(&monitor_lock) {
+         qmp_dispatcher_co_shutdown = true;
      }
- 
-+    if (mch->enable_smm_test_ram && !mch->has_smm_ranges) {
-+        error_setg(errp, "x-smm-test-ram requires SMM support");
-+        return;
-+    }
+-    qmp_dispatcher_co_wake();
 +
-     /* setup pci memory mapping */
-     pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
++    /*
++     * Force wake up the dispatcher coroutine to
++     * make sure it notices the shutdown flag.
++     */
++    qmp_dispatcher_co_wake_force();
  
-@@ -653,6 +658,23 @@ static void mch_realize(PCIDevice *d, Error **errp)
-     memory_region_add_subregion(&mch->smram, MCH_HOST_BRIDGE_SMBASE_ADDR,
-                                 &mch->smbase_window);
- 
-+    if (mch->enable_smm_test_ram) {
-+        /*
-+         * This is a QEMU-specific, test-only region. It is mapped only into
-+         * mch->smram so qtest can verify that x86 secure attrs select the SMM
-+         * address space rather than the default one.
-+         */
-+        memory_region_init_ram(&mch->smm_test_ram, OBJECT(mch),
-+                               "smm-test-ram",
-+                               MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE, errp);
-+        if (*errp) {
-+            return;
-+        }
-+        memory_region_add_subregion(&mch->smram,
-+                                    MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE,
-+                                    &mch->smm_test_ram);
-+    }
-+
-     object_property_add_const_link(qdev_get_machine(), "smram",
-                                    OBJECT(&mch->smram));
+     AIO_WAIT_WHILE_UNLOCKED(NULL,
+                    (aio_poll(iohandler_get_aio_context(), false),
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 687019811f..1b4a55cabf 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -362,6 +362,12 @@ void qmp_dispatcher_co_wake(void)
+     }
  }
-@@ -661,6 +683,8 @@ static const Property mch_props[] = {
-     DEFINE_PROP_UINT16("extended-tseg-mbytes", MCHPCIState, ext_tseg_mbytes,
-                        64),
-     DEFINE_PROP_BOOL("smbase-smram", MCHPCIState, has_smram_at_smbase, true),
-+    DEFINE_PROP_BOOL("x-smm-test-ram", MCHPCIState, enable_smm_test_ram,
-+                     false),
- };
  
- static void mch_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
-index ddafc3f2e3..1ca26f0e63 100644
---- a/include/hw/pci-host/q35.h
-+++ b/include/hw/pci-host/q35.h
-@@ -49,8 +49,10 @@ struct MCHPCIState {
-     MemoryRegion smram, low_smram, high_smram;
-     MemoryRegion tseg_blackhole, tseg_window;
-     MemoryRegion smbase_blackhole, smbase_window;
-+    MemoryRegion smm_test_ram;
-     bool has_smram_at_smbase;
-     bool has_smm_ranges;
-+    bool enable_smm_test_ram;
-     Range pci_hole;
-     uint64_t below_4g_mem_size;
-     uint64_t above_4g_mem_size;
-@@ -99,6 +101,12 @@ struct Q35PCIHost {
- #define MCH_HOST_BRIDGE_PCIEXBAR_SIZE          8       /* 64bit register */
- #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
- #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
-+/*
-+ * Optional qtest-only RAM window used to expose an address that exists only
-+ * in the SMM address space, so x86 secure attrs can be cross-checked.
-+ */
-+#define MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE      0xfef00000
-+#define MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE      (64 * KiB)
- #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
- #define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 26))
- #define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 25))
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 87aa104d23..fcdd95bf7f 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -116,6 +116,7 @@ qtests_i386 = \
-    'cpu-plug-test',
-    'migration-test',
-    'qtest-attrs-test',
-+   'qtest-x86-attrs-test',
-   ]
- 
- if dbus_display and config_all_devices.has_key('CONFIG_VGA')
-diff --git a/tests/qtest/qtest-x86-attrs-test.c b/tests/qtest/qtest-x86-attrs-test.c
-new file mode 100644
-index 0000000000..d9a67d5309
---- /dev/null
-+++ b/tests/qtest/qtest-x86-attrs-test.c
-@@ -0,0 +1,109 @@
-+/*
-+ * QTest for x86 memory access with transaction attributes
-+ *
-+ * Verify q35 SMM address-space access with the secure attribute.
-+ *
-+ * Copyright (c) 2026 Phytium Technology
-+ *
-+ * Author:
-+ *  Tao Tang <tangtao1634@phytium.com.cn>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#define TEST_ADDR_OFFSET_NS     0x1000ULL
-+#define TEST_X86_BASE           0x0ULL
-+#define TEST_X86_SMM_BASE       0xfef00000ULL
-+
-+#define TEST_ADDR_X86           (TEST_X86_BASE + TEST_ADDR_OFFSET_NS)
-+
-+#define X86_MACHINE_ARGS        "-machine q35,smm=on -m 1G -accel tcg " \
-+                                "-global mch.x-smm-test-ram=on"
-+
-+static void test_x86_scalar_attrs(void)
++void qmp_dispatcher_co_wake_force(void)
 +{
-+    QTestState *qts;
-+    uint8_t val;
-+
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
-+        return;
-+    }
-+
-+    qts = qtest_init(X86_MACHINE_ARGS);
-+
-+    qtest_writeb_attrs(qts, TEST_ADDR_X86, 0x11, NULL);
-+    val = qtest_readb_attrs(qts, TEST_ADDR_X86, NULL);
-+    g_assert_cmpuint(val, ==, 0x11);
-+
-+    qtest_writeb_attrs(qts, TEST_ADDR_X86 + 0x1, 0x22, "secure");
-+    val = qtest_readb_attrs(qts, TEST_ADDR_X86 + 0x1, "secure");
-+    g_assert_cmpuint(val, ==, 0x22);
-+
-+
-+    qtest_writeb_attrs(qts, TEST_X86_SMM_BASE + 0x2, 0x33, "secure");
-+    val = qtest_readb_attrs(qts, TEST_X86_SMM_BASE + 0x2, "secure");
-+    g_assert_cmpuint(val, ==, 0x33);
-+
-+    qtest_quit(qts);
++    qatomic_set_mb(&qmp_dispatcher_co_busy, true);
++    aio_co_wake(qmp_dispatcher_co);
 +}
 +
-+static void test_x86_bulk_attrs(void)
-+{
-+    QTestState *qts;
-+    uint8_t wbuf[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-+    uint8_t rbuf[8];
-+    size_t i;
-+
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
-+        return;
-+    }
-+
-+    qts = qtest_init(X86_MACHINE_ARGS);
-+
-+    qtest_memwrite_attrs(qts, TEST_ADDR_X86 + 0x100, wbuf, sizeof(wbuf), NULL);
-+    qtest_memread_attrs(qts, TEST_ADDR_X86 + 0x100, rbuf, sizeof(rbuf), NULL);
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+
-+    qtest_memwrite_attrs(qts, TEST_ADDR_X86 + 0x180,
-+                         wbuf, sizeof(wbuf), "secure");
-+    qtest_memread_attrs(qts, TEST_ADDR_X86 + 0x180,
-+                        rbuf, sizeof(rbuf), "secure");
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+
-+    qtest_memwrite_attrs(qts, TEST_X86_SMM_BASE + 0x100,
-+                         wbuf, sizeof(wbuf), "secure");
-+    qtest_memread_attrs(qts, TEST_X86_SMM_BASE + 0x100,
-+                        rbuf, sizeof(rbuf), "secure");
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+
-+    qtest_memset_attrs(qts, TEST_X86_SMM_BASE + 0x120,
-+                       0x5a, sizeof(rbuf), "secure");
-+    qtest_memread_attrs(qts, TEST_X86_SMM_BASE + 0x120,
-+                        rbuf, sizeof(rbuf), "secure");
-+    for (i = 0; i < sizeof(rbuf); i++) {
-+        g_assert_cmpuint(rbuf[i], ==, 0x5a);
-+    }
-+
-+    qtest_bufwrite_attrs(qts, TEST_X86_SMM_BASE + 0x200,
-+                         wbuf, sizeof(wbuf), "secure");
-+    qtest_bufread_attrs(qts, TEST_X86_SMM_BASE + 0x200,
-+                        rbuf, sizeof(rbuf), "secure");
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/qtest/x86/attrs/scalar", test_x86_scalar_attrs);
-+    qtest_add_func("/qtest/x86/attrs/bulk", test_x86_bulk_attrs);
-+
-+    return g_test_run();
-+}
+ static void handle_qmp_command(void *opaque, QObject *req, Error *err)
+ {
+     MonitorQMP *mon = opaque;
 -- 
-2.34.1
-
+2.32.1 (Apple Git-133)
 
