@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92FCD58CBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 20:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132C9F483F8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 21:09:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4mCD-0007id-H4; Mon, 23 Mar 2026 16:48:23 -0400
+	id 1w4mVv-0003td-Ci; Mon, 23 Mar 2026 17:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w4mC6-0007iN-Cd
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 16:48:14 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1w4mVr-0003t9-Qd
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 17:08:39 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w4mC4-00073V-G0
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 16:48:14 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-35b95e21ccaso2359680a91.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 13:48:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774298891; cv=none;
+ id 1w4mVp-0002ao-Lq
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 17:08:39 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-358ed696623so1535026a91.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 14:08:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774300114; cv=none;
  d=google.com; s=arc-20240605;
- b=PYFNet5qd4Rcofq4kNGFERA241/huWiMb3SJN1PKSZpw0L8PydWXVRseTc/FKwMTp2
- YR2PrpMMmNyaZvaGIggE4ABFuQkfCAjJLbg5chhyUz3jQ550APHolkAErhOJOvc9EO+A
- 8NBVKJtGJp2Rwj5882VnueTjvtEnsqLvw0G8m0o5Rd/kmhxX3ilNHo4HR5yExX6aGZCX
- DRLGkjsps3iJaggvfA7qhAWtoJ8YRLHwnzM5C0lukOFCuxd9fnYvO2umax0nzXm94eeV
- uA5XmI7uKWyL8/fTW2a8mJgTcL2AaDQX7e6uFQTQP/NRNDOrivmc+jqhKCcjgbKWIJzA
- zXwQ==
+ b=jc0mdihpM1sKMteQ1mP1Hkw58XBq7pqEDfx0AjcMWfv2NDKsJ1s46eKLUipSqoxZWY
+ C4g7Zoo79HJAucFwHW7AYxwVD2w+VkpqDuheKBy+C878x4TzauW1+0/Dq6XrNhlPQW3d
+ 65pR5ChwEdY6RyItKSO7O7z6YU/6xaCeX6KrgvOqkYW9EcE47F6gcTt297PdWWyU7Prn
+ Cc80ijc3p08VlBY1GGt5fFoazOv+CJ8Z0pIQXEGLFNpqd/k6r2XXu9A01/Wb1DUSK+dn
+ XVraPWKSHt5CrIFc6Mvd81gN69EHDesuV3dgl9hdvXxUSPseik4AC7jW07H+YDDT0DLv
+ AfLw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=7ULII5Lfx9OnusFCcZFjOt8Wl9xaBWDbNZBH8IMCdP0=;
+ bh=aOJooXeokofRy3rggJOnKK07eHCeLYU8N6p9hgmPeg8=;
  fh=uv1tA9xklsQ23QRRVuZ5ICrQzjqlbIWk8lB36BxPINw=;
- b=P7rF7DvPnXe8k+Yml+hmFnl/FX5yjJjXsCxnyujxJeADqb2p4qRpQ/EDs/ncHqfgjm
- cM8dRVqtWBXJYWJBiaNHTfoQAnONmufyOFqF9sgQmDvusl0tGrBvV40nuzxxoTO00FMk
- omCeXJG3WfG6oF7mm4pR6l8qYBI2ghWIFFDssPIPll/QLS5rwekHn5LQ4we3/+Wt/z6A
- /YUGyYtV4ciEUv/8gpI8Bc1v59Re6BAdDZZvJ+/oI2q4ERBIaihFcTPK3A5wIlxygjRf
- MkHEccBItXapzL/8DpI00XYqD8RdPp+5SyuElD1UwxMBR7nMMFKIr9q5aM9fLGA8hM+J
- 7eug==; darn=nongnu.org
+ b=N0J3Y1MIsBiA+bP+c7sekPcSOv0ZW6G946zhJ0humyGUWnHJBmAzjDZW7Ob1bAARxp
+ 8u9Um5m9pLf29JPcJMJY+MuBNB3PvuH6DwZSkOfQGikUPW5bano18B8T0/jm0gwZH/Pr
+ 2JkxCEFcq5lt5wnuSpjEwOWUakfgRLguZx1Mfkx41ynOzDnxy1TR/lSfrdJOMP1AIyBH
+ QQ99GtJaX0YILY+sX3L1BzGjxEpdPamMubLljYPqskVqCi1Z2u7+Vg6ju7D8gWmFqKAc
+ aVLrEL7SuNDg9vR+Zd1GqoVAM01XSOIUL/qCgVPu+357lhebkG3uRNnp2pglWMH6aQsy
+ TXpQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774298891; x=1774903691; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774300114; x=1774904914; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7ULII5Lfx9OnusFCcZFjOt8Wl9xaBWDbNZBH8IMCdP0=;
- b=Hrs6NH79j6F8NaASCKFzoNPDvUvEOeN1QWJ3FoCmJLi9LewkL/wyqkmoE5h2g0VEc3
- WykTu6s+VX2yiFlWRE/ccw6Ai7puoJo7ar1iLL62P0MSNneV+ztW3hMPSQDoDj2pI4g2
- tTtxKSb92vzPPuiC/ERma0Dquk7cvhXdJdWMuQltx2CLw533qNmZuhq7Rp+PtOX1xsO2
- MWjPfgyge8K2RyvkCpQoUuerl3MaSsvh5teFUFwH1tjjaVIcxOqY+zjKCowySXNmdQgF
- lmTjc16Vbsx+hf5ZxC4/SAcbgOnfXBSQ4L0ifzUM8KyeUwsfSR9rQFQXSyAw30ieyhCg
- 8jGA==
+ bh=aOJooXeokofRy3rggJOnKK07eHCeLYU8N6p9hgmPeg8=;
+ b=ABpsIyqKietQMFQl2w+YvidlRqYj6dqKCerNjLkJp0m+omLAoTE8onsVzPSpXCHQf1
+ f6mEh4Ujg0slT6d0hBxoeQOP2qYCTq8bb0QG8uSDRfpuKUAXBmqy1ht3HJbioosSTU9m
+ w194yTHb/Wku56+OhSTJR3oXvq+T0PwccXwkOcDxie5xHWJph/iTk7EOv7jGkxIl0M8r
+ 1+oz7ebZc82tjwTgH3hImotzrggcERNAK64TSQiF4/adL2JYnca1tQYxuB/pe8cXGAsE
+ 7gkHZA5XbKyidojMVLl+WF09jX36K8cMc5ndpX2HFF5iA79AcwipJxRp9T0Wmftrm9QI
+ 695Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774298891; x=1774903691;
+ d=1e100.net; s=20251104; t=1774300114; x=1774904914;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7ULII5Lfx9OnusFCcZFjOt8Wl9xaBWDbNZBH8IMCdP0=;
- b=iEjhTdFwPEgAe0f5jff+QsB146W2kXid9jHxk+a+iAayT2168UHvI4bRXvh0Z8e796
- dbXA5TUVD87mz80A0b5cOuQLKExHpepsAfr8VWWgn03ZIO0sjNKaAmxF85cdvLaZNN3r
- qU39yS9w5vnr4nigXmoYPPZjwSd8xluuky5M0kgZWgcS5AfwbQfPmG9a6Gw63a9/b2QW
- 4iFxdtG5IYMrWzhlR2RY6UcUZ1esavAJvdFiCcihG533Bp3QmwJHa3mh4FiP72n9qvwr
- 2gSk31hAV/V3oD9q24kDYWgNvgV1o1qVNTkiRJw7PSeaPck48w1LGEVwWcAkVfZWs3pr
- tm3g==
-X-Gm-Message-State: AOJu0Yy98FAZKyUDoG31iI+3HukE/8Cv9ZrWLR+NwzpA2t308PY7YgHB
- 1cBu86A2N0j5uZCexhB87PbhxqNXLAuS9hABKTTzKvh/Npj1ZfkN4tlNGcZZSnL8SQXYwEeSY87
- qGo8tqlCKN8zN1eXiOS5VhUszfnT70bY=
-X-Gm-Gg: ATEYQzwUVBPneCExAHz4FLmSl2s2arFr8kSCiNBN9U0Ypy4KkkKJ7oQttVSP70kAHIb
- BZovPIZnVIcIEVs6+IZ6dloR8f88JiEY6mlcJ8tWtX6IBoB/8tz1yPZHAHjOaZfF0kBw1m4Uvse
- jKjhN7rdJdN+MAW7OUTiH2XRYBAEnN6GO2TFTPRWQCG+1/cANK7yVJF4IxkXUOmCC0eQW5EoLnZ
- eZ6MRBqXXEkLxy5JeiaJI02GI1MDXcM7NsGC4CgwA6uqZBIiw0X9xOHFFgwBI4jz4CogSF/zo27
- x/JgH2bHHQrwOxLLzdaxi97cjOY5sbyA5AEtpwY=
-X-Received: by 2002:a17:902:d491:b0:2b0:6ba2:3d78 with SMTP id
- d9443c01a7336-2b0a4d80232mr7480245ad.3.1774298890819; Mon, 23 Mar 2026
- 13:48:10 -0700 (PDT)
+ bh=aOJooXeokofRy3rggJOnKK07eHCeLYU8N6p9hgmPeg8=;
+ b=iBUVhEb0tWE1Y3P29Q/NEKZllK3q19n+CfccOSqBq1LN7qauSHA9Y1Dw+SSMIwBMRu
+ xo2KgSODtMp0YjJd95ib4XLxORLhYC/zfbJC3BI+Lqt3qG5KMhtAdquj0BOmKnLrEbP0
+ vi9wMt8k2Uvgmt57uWjNMGpU6G5rc4ifPpxJdNGYJDR2sj732QKCqefrNrxcJAv4pRoB
+ C1680y2CEYcxhVNqAUaa9jB2kY3sidqtjA7gXUeRDSseBBd+0SqPvEwixTkggLzMdFtY
+ /AlQynEdrECTZ3lYqgM/fyar78x5FRad1eeOzd4DLMu3StSRXdLykuw13HMNBjSkEF21
+ ydEg==
+X-Gm-Message-State: AOJu0Yzejf6t1cEP49K8fijYp22gLc8dWiL7CVIKv44dZKZntaENZm4c
+ sj1/ls+SJIhx6E11uda8rr04grnn9oYkm/mSraSWgyZNzDEznn//ewRiZuG33mngSUFMgAKktMV
+ N+nJuqRFaWDGMf4JcJQyCHT+nnqNwA2gHk5UoAZQ=
+X-Gm-Gg: ATEYQzzrcn7Rqe+rdCg5sScGkP1qiO5pycoJ6VdXnsx9jpyaJlrlP8g8l6J2H+AbxfF
+ lMbTCU9VYTXvvBlvCDYR3ngghrYyq2B6oJzUqBJr4u5LAjdMJu3iUHfSqOpQZ5ZXQ0RFvjP1uQr
+ Ag1D++twHswvP1GVkF1hASBbf+n4kmkjh5S1XV911tJprha0UYzrByDgt9Ru01pOiMTZhK18Dfa
+ iHUEkMxA69Y0CpG1n0HXdMC5M7ONS6Qd5VXhv51pkDpE4egdPDlzL57fPM+3xJHAICaHSvvldso
+ v8s527PPvFkaVt9ctGOtxpun2+/i7rTQRqfPxMM=
+X-Received: by 2002:a17:90a:d010:b0:359:ff8a:ee55 with SMTP id
+ 98e67ed59e1d1-35bd2bf6b36mr10127810a91.14.1774300114492; Mon, 23 Mar 2026
+ 14:08:34 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
- <4895991dcd597b052869e2275d5f0056dfc2368b.1774271525.git.matheus.bernardino@oss.qualcomm.com>
-In-Reply-To: <4895991dcd597b052869e2275d5f0056dfc2368b.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <c47bfbfbd95829c8493be298a9fb1f49a6584308.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <c47bfbfbd95829c8493be298a9fb1f49a6584308.1774271525.git.matheus.bernardino@oss.qualcomm.com>
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 23 Mar 2026 14:47:59 -0600
-X-Gm-Features: AaiRm53Echdc8k_hmlizoMjL0Il9e7-KdXXbsSmlxZRmqzMbWstf5TdeXkez-QI
-Message-ID: <CAATN3No1pf9Xty8NOCmO2_YJg0TKjJ3NoUcPBvG9fHTf8Dr7kw@mail.gmail.com>
-Subject: Re: [PATCH 05/13] target/hexagon: add v68 HVX IEEE float min/max insns
+Date: Mon, 23 Mar 2026 15:08:23 -0600
+X-Gm-Features: AaiRm51keyiIZXVyQtP_ewSungcH02C9ENtN0XC1WnsgCCF7pfBG9ecvr68hOCA
+Message-ID: <CAATN3NpxMXer5jUD=kpf7aYK8QXRMcxjhzdZXDvPtix=UYK1HA@mail.gmail.com>
+Subject: Re: [PATCH 06/13] target/hexagon: add v68 HVX IEEE float misc insns
 To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng, 
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org, 
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Content-Type: multipart/alternative; boundary="0000000000001cddc4064db727a9"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x102f.google.com
+Content-Type: multipart/alternative; boundary="0000000000000c9e46064db77035"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,90 +116,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001cddc4064db727a9
+--0000000000000c9e46064db77035
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, Mar 23, 2026 at 7:15=E2=80=AFAM Matheus Tavares Bernardino <
 matheus.bernardino@oss.qualcomm.com> wrote:
 
-> Add HVX IEEE floating-point min/max instructions:
-> - vfmin_hf, vfmin_sf: IEEE floating-point minimum
-> - vfmax_hf, vfmax_sf: IEEE floating-point maximum
-> - vmax_hf, vmax_sf: qfloat IEEE maximum
-> - vmin_hf, vmin_sf: qfloat IEEE minimum
->
-> The Hexagon qfloat variants are similar to the IEEE-754 ones, but they
-> handle NaN slightly differently. See comment on kvx_ieee.h
+> Add HVX IEEE floating-point miscellaneous instructions:
+> - vassign_fp (vfmv): vector move
+> - vfneg_hf, vfneg_sf: vector floating-point negate
+> - vabs_hf, vabs_sf: vector absolute value
 >
 > Signed-off-by: Matheus Tavares Bernardino <
 > matheus.bernardino@oss.qualcomm.com>
 > ---
->  target/hexagon/mmvec/kvx_ieee.h              | 12 +++++
->  target/hexagon/mmvec/kvx_ieee.c              | 46 ++++++++++++++++++++
->  target/hexagon/imported/mmvec/encode_ext.def | 11 +++++
->  target/hexagon/imported/mmvec/ext.idef       | 28 +++++++++++-
->  4 files changed, 96 insertions(+), 1 deletion(-)
+>  target/hexagon/mmvec/kvx_ieee.h              |  3 +++
+>  target/hexagon/imported/mmvec/encode_ext.def |  7 +++++++
+>  target/hexagon/imported/mmvec/ext.idef       | 14 ++++++++++++++
+>  3 files changed, 24 insertions(+)
 >
 > diff --git a/target/hexagon/mmvec/kvx_ieee.h
 > b/target/hexagon/mmvec/kvx_ieee.h
-> index e92ddebeb9..78f546eb8e 100644
+> index 78f546eb8e..263feb7e94 100644
 > --- a/target/hexagon/mmvec/kvx_ieee.h
 > +++ b/target/hexagon/mmvec/kvx_ieee.h
-> @@ -44,4 +44,16 @@ uint32_t fp_vdmpy(uint16_t a1, uint16_t a2, uint16_t
-> a3, uint16_t a4,
->  uint32_t fp_vdmpy_acc(uint32_t acc, uint16_t a1, uint16_t a2, uint16_t a=
-3,
->                        uint16_t a4, float_status *fp_status);
+> @@ -13,6 +13,9 @@
+>  #define FP32_DEF_NAN      0x7FFFFFFF
+>  #define FP16_DEF_NAN      0x7FFF
 >
-> +/* IEEE - FP min/max instructions */
-> +uint32_t fp_min_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
-> +uint32_t fp_max_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
-> +uint16_t fp_min_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
-> +uint16_t fp_max_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
-> +
-> +/* Qfloat min/max treat +NaN as greater than +INF and -NaN as smaller
-> than -INF */
-> +uint32_t qf_max_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
-> +uint32_t qf_min_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
-> +uint16_t qf_max_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
-> +uint16_t qf_min_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
+> +#define signF32UI(a) ((bool)((uint32_t)(a) >> 31))
+> +#define signF16UI(a) ((bool)((uint16_t)(a) >> 15))
 >
 
-Why are we including Qfloat stuff in a patch series for IEEE float?
+Use softfloat routines here
+    !float32_is_neg
+    !float16_is_neg
+
+Actually, these aren't needed.  See below.
 
 
-> +
->  #endif
-> diff --git a/target/hexagon/imported/mmvec/encode_ext.def
-> b/target/hexagon/imported/mmvec/encode_ext.def
-> index 4ce87d09fd..23fbb75743 100644
-> --- a/target/hexagon/imported/mmvec/encode_ext.def
-> +++ b/target/hexagon/imported/mmvec/encode_ext.def
-> @@ -823,4 +823,15 @@
-> DEF_ENC(V6_vsub_sf_hf,"00011111100vvvvvPP1uuuuu101ddddd")
->  DEF_ENC(V6_vadd_hf_hf,"00011111101vvvvvPP1uuuuu111ddddd")
->  DEF_ENC(V6_vsub_hf_hf,"00011111011vvvvvPP1uuuuu000ddddd")
+> diff --git a/target/hexagon/imported/mmvec/ext.idef
+> b/target/hexagon/imported/mmvec/ext.idef
+> index 43153366b1..5ef5baa404 100644
+> --- a/target/hexagon/imported/mmvec/ext.idef
+> +++ b/target/hexagon/imported/mmvec/ext.idef
+> @@ -3018,6 +3018,20 @@
+> ITERATOR_INSN_ANY_SLOT_2SRC(16,vmax_hf,"Vd32.hf=3Dvmax(Vu32.hf,Vv32.hf)",=
+ \
+>  ITERATOR_INSN_ANY_SLOT_2SRC(16,vmin_hf,"Vd32.hf=3Dvmin(Vu32.hf,Vv32.hf)"=
+, \
+>      "Vector min of hf input", VdV.hf[i] =3D qf_min_hf(VuV.hf[i], VvV.hf[=
+i],
+> &env->fp_status))
 >
-> +/* IEEE FP min/max instructions */
-> +DEF_ENC(V6_vfmin_hf,"00011100011vvvvvPP1uuuuu000ddddd")
-> +DEF_ENC(V6_vfmin_sf,"00011100011vvvvvPP1uuuuu001ddddd")
-> +DEF_ENC(V6_vfmax_hf,"00011100011vvvvvPP1uuuuu010ddddd")
-> +DEF_ENC(V6_vfmax_sf,"00011100011vvvvvPP1uuuuu011ddddd")
-> +DEF_ENC(V6_vmax_sf,"00011111110vvvvvPP1uuuuu001ddddd")
-> +DEF_ENC(V6_vmin_sf,"00011111110vvvvvPP1uuuuu010ddddd")
-> +DEF_ENC(V6_vmax_hf,"00011111110vvvvvPP1uuuuu011ddddd")
-> +DEF_ENC(V6_vmin_hf,"00011111110vvvvvPP1uuuuu100ddddd")
-> +DEF_ENC(V6_vcvt_ub_hf,"00011111110vvvvvPP1uuuuu101ddddd")
+> +/* IEEE FP move, negate, abs instructions */
+> +ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vassign_fp, "Vd32.w=3Dvfmv(Vu32.w)"=
+, \
+> +    "Vector IEEE move", VdV.w[i]  =3D VuV.w[i])
+> +ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfneg_hf, "Vd32.hf=3Dvfneg(Vu32.hf)=
+", \
+> +    "Vector IEEE neg: hf", VdV.hf[i] =3D (VuV.hf[i] ^ 0x8000))
 >
 
-Minor nit - this is a conversion instruction and is repeated in patch 7.
-Remove it from this patch.
+Use softfloat routines
+    VdV.hf[i] =3D float16_set_sign(VuV.hf[i], float16_is_neg(VuV.hf[i]) ? 1=
+ :
+0)
+
+
+> +ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfneg_sf, "Vd32.sf=3Dvfneg(Vu32.sf)=
+", \
+> +    "Vector IEEE neg: sf", VdV.sf[i] =3D (VuV.sf[i] ^ 0x80000000))
+>
+
+Ditto, but float32_
+
+
+> +ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vabs_hf,  "Vd32.hf=3Dvabs(Vu32.hf)"=
+, \
+> +    "Vector IEEE abs: hf", \
+> +    VdV.hf[i] =3D ((signF16UI(VuV.hf[i])) ? (VuV.hf[i] ^ 0x8000) :
+> VuV.hf[i]))
+>
+
+Use softfloat routines
+    VdV.hf[i] =3D float16_abs(VuV.hf[i])
+
+
+> +ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vabs_sf,  "Vd32.sf=3Dvabs(Vu32.sf)"=
+, \
+> +    "Vector IEEE abs: sf", \
+> +    VdV.sf[i] =3D ((signF32UI(VuV.sf[i])) ? (VuV.sf[i] ^ 0x80000000) :
+> VuV.sf[i]))
+>
+
+Ditto, but float32_
 
 Thanks,
 Taylor
 
---0000000000001cddc4064db727a9
+--0000000000000c9e46064db77035
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -209,82 +226,83 @@ mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 23,=
 atheus.bernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>=
 &gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Add =
-HVX IEEE floating-point min/max instructions:<br>
-- vfmin_hf, vfmin_sf: IEEE floating-point minimum<br>
-- vfmax_hf, vfmax_sf: IEEE floating-point maximum<br>
-- vmax_hf, vmax_sf: qfloat IEEE maximum<br>
-- vmin_hf, vmin_sf: qfloat IEEE minimum<br>
-<br>
-The Hexagon qfloat variants are similar to the IEEE-754 ones, but they<br>
-handle NaN slightly differently. See comment on kvx_ieee.h<br>
+HVX IEEE floating-point miscellaneous instructions:<br>
+- vassign_fp (vfmv): vector move<br>
+- vfneg_hf, vfneg_sf: vector floating-point negate<br>
+- vabs_hf, vabs_sf: vector absolute value<br>
 <br>
 Signed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheus.ber=
 nardino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm=
 .com</a>&gt;<br>
 ---<br>
 =C2=A0target/hexagon/mmvec/kvx_ieee.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 | 12 +++++<br>
-=C2=A0target/hexagon/mmvec/kvx_ieee.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 | 46 ++++++++++++++++++++<br>
-=C2=A0target/hexagon/imported/mmvec/encode_ext.def | 11 +++++<br>
-=C2=A0target/hexagon/imported/mmvec/ext.idef=C2=A0 =C2=A0 =C2=A0 =C2=A0| 28=
- +++++++++++-<br>
-=C2=A04 files changed, 96 insertions(+), 1 deletion(-)<br>
+=A0 =C2=A0 |=C2=A0 3 +++<br>
+=C2=A0target/hexagon/imported/mmvec/encode_ext.def |=C2=A0 7 +++++++<br>
+=C2=A0target/hexagon/imported/mmvec/ext.idef=C2=A0 =C2=A0 =C2=A0 =C2=A0| 14=
+ ++++++++++++++<br>
+=C2=A03 files changed, 24 insertions(+)<br>
 <br>
 diff --git a/target/hexagon/mmvec/kvx_ieee.h b/target/hexagon/mmvec/kvx_iee=
 e.h<br>
-index e92ddebeb9..78f546eb8e 100644<br>
+index 78f546eb8e..263feb7e94 100644<br>
 --- a/target/hexagon/mmvec/kvx_ieee.h<br>
 +++ b/target/hexagon/mmvec/kvx_ieee.h<br>
-@@ -44,4 +44,16 @@ uint32_t fp_vdmpy(uint16_t a1, uint16_t a2, uint16_t a3,=
- uint16_t a4,<br>
-=C2=A0uint32_t fp_vdmpy_acc(uint32_t acc, uint16_t a1, uint16_t a2, uint16_=
-t a3,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0uint16_t a4, float_status *fp_status);<br>
+@@ -13,6 +13,9 @@<br>
+=C2=A0#define FP32_DEF_NAN=C2=A0 =C2=A0 =C2=A0 0x7FFFFFFF<br>
+=C2=A0#define FP16_DEF_NAN=C2=A0 =C2=A0 =C2=A0 0x7FFF<br>
 <br>
-+/* IEEE - FP min/max instructions */<br>
-+uint32_t fp_min_sf(uint32_t a1, uint32_t a2, float_status *fp_status);<br>
-+uint32_t fp_max_sf(uint32_t a1, uint32_t a2, float_status *fp_status);<br>
-+uint16_t fp_min_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<br>
-+uint16_t fp_max_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<br>
-+<br>
-+/* Qfloat min/max treat +NaN as greater than +INF and -NaN as smaller than=
- -INF */<br>
-+uint32_t qf_max_sf(uint32_t a1, uint32_t a2, float_status *fp_status);<br>
-+uint32_t qf_min_sf(uint32_t a1, uint32_t a2, float_status *fp_status);<br>
-+uint16_t qf_max_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<br>
-+uint16_t qf_min_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<br>=
-</blockquote><div><br></div><div>Why are we including Qfloat stuff in a pat=
-ch series for IEEE float?</div><div>=C2=A0</div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">
-+<br>
-=C2=A0#endif<br>diff --git a/target/hexagon/imported/mmvec/encode_ext.def b=
-/target/hexagon/imported/mmvec/encode_ext.def<br>
-index 4ce87d09fd..23fbb75743 100644<br>
---- a/target/hexagon/imported/mmvec/encode_ext.def<br>
-+++ b/target/hexagon/imported/mmvec/encode_ext.def<br>
-@@ -823,4 +823,15 @@ DEF_ENC(V6_vsub_sf_hf,&quot;00011111100vvvvvPP1uuuuu10=
-1ddddd&quot;)<br>
-=C2=A0DEF_ENC(V6_vadd_hf_hf,&quot;00011111101vvvvvPP1uuuuu111ddddd&quot;)<b=
-r>
-=C2=A0DEF_ENC(V6_vsub_hf_hf,&quot;00011111011vvvvvPP1uuuuu000ddddd&quot;)<b=
-r>
++#define signF32UI(a) ((bool)((uint32_t)(a) &gt;&gt; 31))<br>
++#define signF16UI(a) ((bool)((uint16_t)(a) &gt;&gt; 15))<br></blockquote><=
+div><br></div><div>Use softfloat routines here</div><div>=C2=A0 =C2=A0 !flo=
+at32_is_neg</div><div>=C2=A0 =C2=A0 !float16_is_neg</div><div><br></div><di=
+v>Actually, these aren&#39;t needed.=C2=A0 See below.</div><div>=C2=A0</div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">diff --git a/target/hexa=
+gon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef<br>
+index 43153366b1..5ef5baa404 100644<br>
+--- a/target/hexagon/imported/mmvec/ext.idef<br>
++++ b/target/hexagon/imported/mmvec/ext.idef<br>
+@@ -3018,6 +3018,20 @@ ITERATOR_INSN_ANY_SLOT_2SRC(16,vmax_hf,&quot;Vd32.hf=
+=3Dvmax(Vu32.hf,Vv32.hf)&quot;, \<br>
+=C2=A0ITERATOR_INSN_ANY_SLOT_2SRC(16,vmin_hf,&quot;Vd32.hf=3Dvmin(Vu32.hf,V=
+v32.hf)&quot;, \<br>
+=C2=A0 =C2=A0 =C2=A0&quot;Vector min of hf input&quot;, VdV.hf[i] =3D qf_mi=
+n_hf(VuV.hf[i], VvV.hf[i], &amp;env-&gt;fp_status))<br>
 <br>
-+/* IEEE FP min/max instructions */<br>
-+DEF_ENC(V6_vfmin_hf,&quot;00011100011vvvvvPP1uuuuu000ddddd&quot;)<br>
-+DEF_ENC(V6_vfmin_sf,&quot;00011100011vvvvvPP1uuuuu001ddddd&quot;)<br>
-+DEF_ENC(V6_vfmax_hf,&quot;00011100011vvvvvPP1uuuuu010ddddd&quot;)<br>
-+DEF_ENC(V6_vfmax_sf,&quot;00011100011vvvvvPP1uuuuu011ddddd&quot;)<br>
-+DEF_ENC(V6_vmax_sf,&quot;00011111110vvvvvPP1uuuuu001ddddd&quot;)<br>
-+DEF_ENC(V6_vmin_sf,&quot;00011111110vvvvvPP1uuuuu010ddddd&quot;)<br>
-+DEF_ENC(V6_vmax_hf,&quot;00011111110vvvvvPP1uuuuu011ddddd&quot;)<br>
-+DEF_ENC(V6_vmin_hf,&quot;00011111110vvvvvPP1uuuuu100ddddd&quot;)<br>
-+DEF_ENC(V6_vcvt_ub_hf,&quot;00011111110vvvvvPP1uuuuu101ddddd&quot;)<br></b=
-lockquote><div><br></div><div>Minor nit - this is a conversion instruction =
-and is repeated in patch 7.=C2=A0 Remove it from this patch.</div><div>=C2=
-=A0</div><div>Thanks,</div><div>Taylor</div><div><br></div></div></div>
++/* IEEE FP move, negate, abs instructions */<br>
++ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vassign_fp, &quot;Vd32.w=3Dvfmv(Vu32.=
+w)&quot;, \<br>
++=C2=A0 =C2=A0 &quot;Vector IEEE move&quot;, VdV.w[i]=C2=A0 =3D VuV.w[i])<b=
+r>
++ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfneg_hf, &quot;Vd32.hf=3Dvfneg(Vu32.=
+hf)&quot;, \<br>
++=C2=A0 =C2=A0 &quot;Vector IEEE neg: hf&quot;, VdV.hf[i] =3D (VuV.hf[i] ^ =
+0x8000))<br></blockquote><div><br></div><div>Use softfloat routines</div><d=
+iv>=C2=A0 =C2=A0 VdV.hf[i] =3D float16_set_sign(VuV.hf[i], float16_is_neg(V=
+uV.hf[i]) ? 1 : 0)</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
++ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfneg_sf, &quot;Vd32.sf=3Dvfneg(Vu32.=
+sf)&quot;, \<br>
++=C2=A0 =C2=A0 &quot;Vector IEEE neg: sf&quot;, VdV.sf[i] =3D (VuV.sf[i] ^ =
+0x80000000))<br></blockquote><div><br></div><div>Ditto, but float32_</div><=
+div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vabs_hf,=C2=A0 &quot;Vd32.hf=3Dvabs(V=
+u32.hf)&quot;, \<br>
++=C2=A0 =C2=A0 &quot;Vector IEEE abs: hf&quot;, \<br>
++=C2=A0 =C2=A0 VdV.hf[i] =3D ((signF16UI(VuV.hf[i])) ? (VuV.hf[i] ^ 0x8000)=
+ : VuV.hf[i]))<br></blockquote><div><br></div><div>Use softfloat routines</=
+div><div>=C2=A0 =C2=A0 VdV.hf[i] =3D float16_abs(VuV.hf[i])</div><div>=C2=
+=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vabs_sf,=C2=A0 &quot;Vd32.sf=3Dvabs(V=
+u32.sf)&quot;, \<br>
++=C2=A0 =C2=A0 &quot;Vector IEEE abs: sf&quot;, \<br>
++=C2=A0 =C2=A0 VdV.sf[i] =3D ((signF32UI(VuV.sf[i])) ? (VuV.sf[i] ^ 0x80000=
+000) : VuV.sf[i]))<br></blockquote><div><br></div><div>Ditto, but float32_<=
+/div><div><br></div><div>Thanks,</div><div>Taylor</div><div>=C2=A0</div><di=
+v><br></div><div>=C2=A0</div></div></div>
 
---0000000000001cddc4064db727a9--
+--0000000000000c9e46064db77035--
 
