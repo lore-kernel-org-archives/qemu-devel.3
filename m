@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88762F46124
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CFE2F46124
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4frg-00031z-TE; Mon, 23 Mar 2026 10:02:47 -0400
+	id 1w4frY-0002AW-Di; Mon, 23 Mar 2026 10:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4foZ-0000RL-0Q
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:40 -0400
+ id 1w4fpQ-0000wg-J9
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:28 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foW-0006xI-HO
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:29 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fpO-0007Ii-3N
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:24 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 01C4720B6F12;
- Mon, 23 Mar 2026 06:59:14 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 01C4720B6F12
+ by linux.microsoft.com (Postfix) with ESMTPSA id AD06220B6F15;
+ Mon, 23 Mar 2026 07:00:07 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AD06220B6F15
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274357;
- bh=JjZO2/X3lUM54v7gEfoxaHgi6BZofDR2FWQNRjmIZ3g=;
+ s=default; t=1774274410;
+ bh=i1SaRdeL8nyaeXZZpzUNqErLAZluVvPxmogP/V/TiJQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=EdTpaejezyNCqSnBHdwFIFM4AsUnJFV6TB9ExJskiAIaH2I/xiWhRE4gcvppAbvkD
- OvbDelpoc+sNVyggAWiHp3Vpj5sm6fb+J+iD6MuaLub0HMX3QBgcxqlDRkven0BVrn
- FjGit/rrNlDterxKu/jRGDcqzhWk91DeO1Po6G9c=
+ b=NnAdnNO0JkPCxghel2ozc28fvTtEn1BuZVgT0SHgDCMhWsoWNoHNtGTFtjkFC2tyG
+ ma1lXudtzN9B1ql+G9K7y15vCNc7QMxg0+MVosPeW4zHaUWi/Lws7GbKsZ590ashrG
+ IG4E2VAgl1qE9rljl1yM5La1Gt2cHJkzNGng4NN0=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 16/32] target/i386/mshv: move msr code to arch
-Date: Mon, 23 Mar 2026 14:57:56 +0100
-Message-Id: <20260323135812.383509-17-magnuskulke@linux.microsoft.com>
+Subject: [RFC 30/32] target/i386/mshv: reconstruct hflags after load
+Date: Mon, 23 Mar 2026 14:58:10 +0100
+Message-Id: <20260323135812.383509-31-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,44 +75,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MSR code is x86 specific, hence it's better suited in the arch
-tree.
+hflags is a cached bitmap derived from standard and special regs. We
+want to reconstruct this state after regs and sregs have been read from
+the hypervisor, similar to how it's one in other accelerators.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/meson.build            | 1 -
- target/i386/mshv/meson.build      | 1 +
- {accel => target/i386}/mshv/msr.c | 0
- 3 files changed, 1 insertion(+), 1 deletion(-)
- rename {accel => target/i386}/mshv/msr.c (100%)
+ target/i386/mshv/mshv-cpu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-index c1b1787c5e..e433187cde 100644
---- a/accel/mshv/meson.build
-+++ b/accel/mshv/meson.build
-@@ -1,6 +1,5 @@
- system_ss.add(when: 'CONFIG_MSHV', if_true: files(
-   'irq.c',
-   'mem.c',
--  'msr.c',
-   'mshv-all.c'
- ))
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-index 5eb6e833a6..f44e84688d 100644
---- a/target/i386/mshv/meson.build
-+++ b/target/i386/mshv/meson.build
-@@ -3,6 +3,7 @@ i386_mshv_ss = ss.source_set()
- i386_mshv_ss.add(files(
-   'mshv-apic.c',
-   'mshv-cpu.c',
-+  'msr.c',
- ))
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index dacc33674c..80e5dd5a4b 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -814,6 +814,16 @@ static int set_vcpu_events(const CPUState *cpu)
+     return 0;
+ }
  
- i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
-diff --git a/accel/mshv/msr.c b/target/i386/mshv/msr.c
-similarity index 100%
-rename from accel/mshv/msr.c
-rename to target/i386/mshv/msr.c
++static int update_hflags(CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++
++    x86_update_hflags(env);
++
++    return 0;
++}
++
+ int mshv_arch_load_vcpu_state(CPUState *cpu)
+ {
+     int ret;
+@@ -828,6 +838,9 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+         return ret;
+     }
+ 
++    /* INVARIANT: hflags are derived from regs+sregs, need to get both first */
++    update_hflags(cpu);
++
+     ret = get_xc_reg(cpu);
+     if (ret < 0) {
+         return ret;
 -- 
 2.34.1
 
