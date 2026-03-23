@@ -4,116 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBAB0F483CC
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 17:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C080AF483D8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 17:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ii8-0007hk-6L; Mon, 23 Mar 2026 13:05:04 -0400
+	id 1w4ipF-0001Qa-PF; Mon, 23 Mar 2026 13:12:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4ihr-0007fK-Ns
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:04:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4ihp-00020H-JL
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:04:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774285484;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HmyevSYYbYiSldgunmcLQbxE92ZsBLdj7Awks5QpXo0=;
- b=NObE//78lvsSm/G0CGqknDBCSagVy7zOgr5Fi/SmmBLG2mAcdieTtoAdCbWoRXFEqk8YGD
- TCG6hh2S+a76yB8p735lo3A8Lc8o2uGrqxZOuhE37HcY1zQTFIQ4YE8oWzeBsZyHce0m4j
- PuZWVxbPP/9Zd6hOaN4ASUp+ioko2S0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-241-Pe0fpGYwOAGVTU_zm8WhOA-1; Mon, 23 Mar 2026 13:04:43 -0400
-X-MC-Unique: Pe0fpGYwOAGVTU_zm8WhOA-1
-X-Mimecast-MFC-AGG-ID: Pe0fpGYwOAGVTU_zm8WhOA_1774285482
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-486fb142205so38211755e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 10:04:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4ipC-0001PQ-Lo
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:12:23 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4ipA-00033y-RR
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:12:22 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-79a60975dc5so5257657b3.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 10:12:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774285939; cv=none;
+ d=google.com; s=arc-20240605;
+ b=XEWUr89ouqNEwgTYRU7fLM9b5T/4OlLq4lNDDSrsSbu98nlvWZi/MSDclwIVTdPAXU
+ kjGsWo3RCqYJdQKoNp81ty7ZnwNYq8hsfWS3G8gPv24rVS9zZXgsqBH8JxfK770eNr10
+ 8tiRrMRGQfaYET4hK+Ne5zuh6U0xV+7B5nJkQ6QzoLy9C5JMdKEB96yq1g8x0QYZtKRd
+ p5afR51wi2H95uFQpwbIAyEtihpX5I4qaMyuMjNulG/I18YUYNYikng4hIQ4yioFim2j
+ 6y5HICT6U3thLeJf4/Wcz2IPYKfGArbZp34YqQIW3twvADs6PQgbCMEzZG5lCWE+eoz+
+ h+PQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=GR1VkcQo+oVYC4DpG+EQ1/sIRNf4GzzeXMm3yrpItcM=;
+ fh=5edAaP18pyl3lodfbsgOZSnGzjEZI/vj89FYLcBlJUw=;
+ b=X+//L6VHVxnmclpfI3omwTcO1OTD5veVrJiF8+W7On5nTnCAwtPp84fiffEA3Ozlr2
+ VhivN8rbDqvT8trY7BV7XokTKl3L3U2q6Z4J7zO6TLntgci1Jt+EB8ABnCibAmkbhUG7
+ KFQl3DDqJaVCPEyrMf5FpGLU31g5sfWhwwNMuvw913QThH9/UNFwdnKwnCmLHOXp5fFc
+ TlBvdre1Cso1NZ2GJ32htGtJ2Pv2Ldpogh+87X1nNOlsLFUg3yP4vLlSZ+0HjXwn+pP3
+ FsjqaFUf0idTChtO2gMWd4rZGv4hc13Ed4WIlDoc+BAWeZDwDU/nbUFwPOJBOaNrksKC
+ NqTg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774285482; x=1774890282; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=HmyevSYYbYiSldgunmcLQbxE92ZsBLdj7Awks5QpXo0=;
- b=dfkNabG6v4mseUvLZxBplqaP7RH/LsxU5BbFd7zws2GuCovPi+jK8XFM3O0oFgAEH0
- 8Ct43Ep4g8uDUCO8khCRZMPXuR3gNPYyVMRrZizOx+StGnicmfUQ+hnmBV4i2VjI3CE8
- Ts97ncUnJf5rFpGnwl1P1eQmrEN8IKr+XN54VdJU6MmNDS8wDg3aaXwfFTu+S5mUkSpW
- DgufFVtH803Ga2RjPNuHM4NDTX3FAzM7iNCdesmht2MT1TRCXdbwFab85byQq5JayZDl
- i6JzkAlQbA0DQzrh+JWj9wSQeOVHTvNJPHJwBM8aSiX5l56dUdTDkB1i0t3MmxP30eHQ
- zV6Q==
+ d=linaro.org; s=google; t=1774285939; x=1774890739; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GR1VkcQo+oVYC4DpG+EQ1/sIRNf4GzzeXMm3yrpItcM=;
+ b=NpJxoH6hPcoqynOCI9Td65iOQ1ZSA25pVb+41tSKV2DcHQreCkAuH6gcV68dzsdfbd
+ ghYp3cMpl4plJTYBdXBGHtm/mq7DTwV05jaxAaS55y/ievyt9BtFThUii1ZdLp1fhHv3
+ NOknNzmY8Ub2b+4d4C5c6n6TDj1AL9tZOvMpJsM+x4VyOG1fzv1UXqXigFT3V+oitoZJ
+ 0glWAhrL1fPHpWHZcyuWISU0+vWynzNTf43cbL44mk9m/B3+PE/YwJDwYPesFS9EB7q9
+ 2V5L04Li+exs3zhikmp1jpLLNscm/lRg7vfdTXAPxsmQFaVvYE4E4aM5W9grCQiB4dQy
+ a1gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774285482; x=1774890282;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HmyevSYYbYiSldgunmcLQbxE92ZsBLdj7Awks5QpXo0=;
- b=fRqsXRAMUOyXC72mD5eQ0K0z9dQY/hDX1xykzw+DLovVqLD1GL1U8uUDvLm/KUWaJJ
- 54w0yX0NuRpqVIZ7/l0dKG0aDajerLGQRQniXIl/cNd9G2QgRErsc9IOxZpg4svLrhsm
- srNSSvVNoQP6pELH48XRmj9uxyrRklXP14hRJ/rYEMp5QsInB/8ir7Uot1pt6i4WyIUR
- Fc0PleFpHqnaW7sNU2o7hMisUfsPZ9llFCRO4Zmg0fV9GEC1Ff2lk72OUFHPUzFVYYcY
- uSCUiG3ZVxSJtvakW+kXdnsZa+B1/b4c4WE3FgDfs1kaNuM0tIamFgwoFQv98q4nbfmv
- nKnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1DDXRmSrWnD9aTa9OE+PvVMgXmXcYZRWJj6YyOuxp8X8q2nTRdvP+yZ8KeQMlaChy7Ibyx0k6qyT5@nongnu.org
-X-Gm-Message-State: AOJu0Yx3bkIXJwd7Xi26TyuUhuiUesZ0DBl8/FMuV0NpmzVqTDw0vCud
- F1hokTW7PuBypd7WTrSmu9LYtMqtKjwU23FJ6XuYDvtjd/RpgjcjW5Bcijv2rt3KxaJdFUjArIY
- 8jFsryAJRpL2Ih+9cGUiT9jtA6jBgL5+cnPRJqgLR92vD0nLT72xqNslV
-X-Gm-Gg: ATEYQzzg/kuyH1SuIHGsjIBCOB4yaLyf94Uf/OwDEWo0JIponoPkuS439dV8XdJF7v9
- EG+4R6fRc89Mdp37oWRIRjoCXkU3kIdJE4RGbeNGz5UkX9jlkm1uEkZKZkWzuQInApDoIwAwOgZ
- /kSHBKT/900OLvrSBXbrhCUo6OoIE1nMsypHZVtKatpQmLSzNJ5HR8m4GjdX+OY8rsb2s4VWr6F
- 0iEBNYpM34ib15akkgGddFE0eAiD91kYut3FQJ8VubO8Xj6y0ObNlfr1J9BVLBItDBkSBhA8oe6
- t/icU6tIDFr8M39KMWo/C/sycxJFDhqy8SI8JgJ2WAP0mY2RjBZI353zxtZDepMF7TxLgZ6AiiA
- PfhPxMy5WDKp8FC5GpkXgtyZGkUZUUuHhpPH/XcTq9h+BIEJEy2T+sSfD62xppIN/CUKenwv6hC
- fDntPtYohNgiHsFABcI18FtRG/4EAqpemJt4YFP/+dG9pjQpdV09o=
-X-Received: by 2002:a05:600c:4848:b0:486:ffa3:592 with SMTP id
- 5b1f17b1804b1-486ffa30bf0mr100037115e9.24.1774285481860; 
- Mon, 23 Mar 2026 10:04:41 -0700 (PDT)
-X-Received: by 2002:a05:600c:4848:b0:486:ffa3:592 with SMTP id
- 5b1f17b1804b1-486ffa30bf0mr100036825e9.24.1774285481313; 
- Mon, 23 Mar 2026 10:04:41 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d737:d03c:df99:cbc9:b444:8cfa?
- (p200300cfd737d03cdf99cbc9b4448cfa.dip0.t-ipconnect.de.
- [2003:cf:d737:d03c:df99:cbc9:b444:8cfa])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487004e7bc4sm120822885e9.2.2026.03.23.10.04.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 10:04:40 -0700 (PDT)
-Message-ID: <236ef551-05c3-4bf4-8b0e-6e52106ca7ff@redhat.com>
-Date: Mon, 23 Mar 2026 18:04:38 +0100
+ d=1e100.net; s=20251104; t=1774285939; x=1774890739;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GR1VkcQo+oVYC4DpG+EQ1/sIRNf4GzzeXMm3yrpItcM=;
+ b=Qi1OoqfBJR1FSnKJyz+0ayDO34srjsiUw0xf4LEruaBQPQ+zTNPfq0x7pHIEmDKyPa
+ vgo5qiI7rx5/Qy9IU0tkAZchvpPGfokThPZpOWt4jTAq4omI1s7CJlE8iVjV51ooL9OT
+ 9vueelssvQJ3sxVMZ3u/sBFiVcUzRqI7mMaqPtDDInnr5k3qCdU5FsnVrqyWZT6rrenV
+ sy8WjgqjD952g2Mx0PC3NNos0FvJKH7yJhl2+9YmsyXLlSKVDK/CV+o1vfwAA2cjoC81
+ zZbvw9jVi8cm6BhuFjPpWNO0f1+Ss0LSIL2azJHrFX4l4gzRhG2pYcaR1FasOjOxb+RG
+ JeLA==
+X-Gm-Message-State: AOJu0YydmAROC3i/c7Xt2kNjHTrpKvC5HgkLRTEVggvLM2r0X368Oum9
+ e1GE8mMmz72n99ERkxR2MYh2ELsSMMtyp3XcINOSu1ChfLoqTQS8YHVj5x/vsFoAwiewQFcs9yn
+ k2BADzoXX1DmxM6AZilz/YB0wMINEpZDDY6pYL8UY5g==
+X-Gm-Gg: ATEYQzzN5RzkEFmZAYBNUMNXzLiUfL3x4PWp8J6d+od3j+kolxt/6qXrkBf5VS/s0dW
+ Y5GanzEhkAkWyJNVJLMbCL45wKBXo0fyZK382VydIjE5qBDvQutohW42PL/E1rryYKWW/ZAJ9s0
+ mP/axsbeLjzTsdTeWGn0Wv0KAFwUNxSV5E5oN5JTO9+fP4gzah2AqRWusqTc2eTM8PrhaG5osrK
+ Ayj9K8YUIqrRy8s47Pd4LIaLCY+ghOm01eJPdbBOs9+MCl0GSp2JTXOTC+FPXz4kTMaP6oG9tjt
+ Z8bAD5838YS52JnJqWAaq+dpj/5ZFVzD4xIrPiQUtDZRm4rVjD0NmBfXgINKwoPgwrkeFItusQz
+ tDQ==
+X-Received: by 2002:a05:690c:385:b0:79a:373c:107 with SMTP id
+ 00721157ae682-79a90aa0315mr137772517b3.12.1774285939204; Mon, 23 Mar 2026
+ 10:12:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0 1/3] linux-aio: Put all parameters into
- qemu_laiocb
-From: Hanna Czenczek <hreitz@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Aarushi Mehta <mehta.aaru20@gmail.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-References: <20260318153206.171494-1-hreitz@redhat.com>
- <20260318153206.171494-2-hreitz@redhat.com> <acFqulONusPdbQHY@redhat.com>
- <d6622d0b-9198-47cf-8f80-42c4384a8883@redhat.com>
-Content-Language: en-US
-In-Reply-To: <d6622d0b-9198-47cf-8f80-42c4384a8883@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260318174522.87902-1-sw@weilnetz.de>
+In-Reply-To: <20260318174522.87902-1-sw@weilnetz.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Mar 2026 17:12:07 +0000
+X-Gm-Features: AaiRm502k7P7ZrbjeTCpd6UvfsJjeozmxOau-WnLR5rw4Huae0ymBeWmMLPcHlg
+Message-ID: <CAFEAcA--mf5DoEkvPi+9M5zHhxhqOScX4hWKowcR49zE5iwFnA@mail.gmail.com>
+Subject: Re: [PATCH for-11.0.0] Fix include statement for u2f-emu.h
+To: Stefan Weil <sw@weilnetz.de>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,49 +115,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.03.26 18:02, Hanna Czenczek wrote:
-> On 23.03.26 17:36, Kevin Wolf wrote:
->> Am 18.03.2026 um 16:32 hat Hanna Czenczek geschrieben:
->>> Put all request parameters into the qemu_laiocb struct, which will 
->>> allow
->>> re-submitting the tail of short reads/writes.
->>>
->>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
->>> ---
->>>   block/linux-aio.c | 35 ++++++++++++++++++++++-------------
->>>   1 file changed, 22 insertions(+), 13 deletions(-)
->>>
->>> diff --git a/block/linux-aio.c b/block/linux-aio.c
->>> index 53c3e9af8a..1f25339dc9 100644
->>> --- a/block/linux-aio.c
->>> +++ b/block/linux-aio.c
->>> @@ -40,10 +40,15 @@ struct qemu_laiocb {
->>>       Coroutine *co;
->>>       LinuxAioState *ctx;
->>>       struct iocb iocb;
->>> +    int fd;
->>>       ssize_t ret;
->>> +    off_t offset;
->>>       size_t nbytes;
->>>       QEMUIOVector *qiov;
->>> -    bool is_read;
->>> +
->>> +    int type;
->> If you put fd and type next to each other, you'd avoid a hole in the
->> struct.
+On Wed, 18 Mar 2026 at 17:46, Stefan Weil via qemu development
+<qemu-devel@nongnu.org> wrote:
 >
-> And I assume pulling dev_max_batch forward, after qiov, yes.
+> All examples on https://github.com/Agnoctopus/libu2f-emu/ don't
+> simply include u2f-emu.h without any added directory.
+>
+> The additional include directory does not exist when libu2f
+> was built with meson.
+>
+> It's up to pkgconfig to make sure that u2f-emu.h is found in any case.
+>
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
 
-Noticed while sending: I missed `.next` for some reason. So no reason to 
-pull dev_max_batch forward, and I guess there will always be a hole, but 
-I suppose it is still best to put all 32-bit ints next to each other 
-(fd, type, flags) so filling that up in the future is more likely.
+Hi, Stefan. Could I ask you to try a tweak to your git config
+which (assuming you use git-send-email) I hope will fix the problem
+where the mailing list rewrites the From headers of your emails
+to "Stefan Weil via qemu development <qemu-devel@nongnu.org>" and
+then when a maintainer picks them up they need to manually adjust
+the git commit author line ?
 
-Hanna
+This is the suggestion that our .mailmap has:
 
->>> +    BdrvRequestFlags flags;
->>> +    uint64_t dev_max_batch;
->>>       QSIMPLEQ_ENTRY(qemu_laiocb) next;
->>>   };
+# If the mailing list munges your emails, use:
+#   git config sendemail.from '"Your Name" <your.email@example.com>'
+# the use of "" in that line will differ from the typically unquoted
+# 'git config user.name', which in turn is sufficient for 'git send-email'
+# to add an extra From: line in the body of your email that takes
+# precedence over any munged From: in the mail's headers.
+# See https://lists.openembedded.org/g/openembedded-core/message/166515
+# and https://lists.gnu.org/archive/html/qemu-devel/2023-09/msg06784.html
 
+Hopefully that will help...
+
+(I don't really understand why our mailing list still does some
+address rewriting -- I thought we had configured it so it never
+changes the mails any more and so shouldn't need to rewrite senders,
+but a few people still seem to have their addresses rewritten :-( )
+
+thanks
+-- PMM
 
