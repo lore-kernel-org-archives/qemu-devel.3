@@ -4,91 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A06FEC01D4
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F66EC01DD
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4e2T-0007HM-Ji; Mon, 23 Mar 2026 08:05:46 -0400
+	id 1w4e3I-0007iI-EB; Mon, 23 Mar 2026 08:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w4e2P-0007Gk-6p
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:05:41 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w4e2M-0005Ns-3q
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:05:40 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 17495403F6
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 12:05:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1774267535;
- bh=ipYQxyYGecYOwcNzP3FEM4ubnbgbx/kA6ZRrZ2l3MNc=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=ZwFg4iYqTIl3w7CAvm41HW3pEegScqJR0R3pU7MD9tbX0G5/Updo8bJEBirQMwBFD
- tQ9Tu7qOCLbiAee5vUpFS/ZNiYXN1jnHOZNpPMciOIiERpO/zuAZQazrf0an+W2Egf
- ceOWvxXtY9oiOc+WC1MpR3j8Xbg1RzVvrCTj+XivBkIe3PwZQDF5Pl7+FjWVX99fnG
- 6T4J5/D9sD9QpNboW2dWVNnXelZRY7mhS9X7wIseOLaPwn2iXSstTHoEjaIKocVo3d
- xTnYgvcU1VVKAm9nSnpy3uyyrTj1ZutCFPD6zENm8l8geEeeXu3tJSek3hlvVTeFUS
- 8sJTKEQAJ1tTA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id ECE337F2A4
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 12:05:34 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 23 Mar 2026 11:58:46 -0000
-From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1w4e33-0007eg-GN
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:06:21 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4e31-0005TH-AY
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:06:21 -0400
+Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 935AD20B710C;
+ Mon, 23 Mar 2026 05:06:16 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 935AD20B710C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1774267577;
+ bh=j0zx57orCfjH/b4yZSBp1d3VPOTnjKE85cp35cyPnmg=;
+ h=From:To:Cc:Subject:Date:From;
+ b=cNbd/8njikJwDdFQO3sQUrcup05Gl54i5U9US/PbWT0ruZlb2ABRe7lS0GAuYW+8D
+ OMKvQwspe/pj/HLMD9qQMZmgxTUjiDVC1TCj7iOiq37vWH6SleYAYfkwtykMfEgDtG
+ rYhkxUPn4RhVRSD8IYFv2kxmMMqW5mKvdMCE/F/o=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
- assignee=None; 
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
-X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
-References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <177426712683.2374445.7360992304090092074.malone@juju-98d295-prod-launchpad-7>
-Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
- handler
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: e71e75823e4ae2650b038b2b56ad5af2eccdb5b6
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+Cc: Anirudh Rayabharam <anirudh@anirudhrb.com>, Wei Liu <wei.liu@kernel.org>,
+ Aastha Rawat <aastharawat@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PATCH] include/hw/hyperv: add QEMU_PACKED to uapi structs
+Date: Mon, 23 Mar 2026 13:06:13 +0100
+Message-Id: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
 X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -97,154 +62,230 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The issue is reproducible with 1:10.2.1+ds-1ubuntu2.
+The uapi definitions are marked with __packed hints in the kernel
+headers, since we want to keep the contract of the Microsoft Hypervisor
+ABI explicit, we should also added them in our vendored files, with a
+few notable exceptions where the attribute is a noop.
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133188
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ include/hw/hyperv/hvgdk_mini.h | 37 ++++++++++++++++++++++------------
+ include/hw/hyperv/hvhdk.h      | 14 +++++++------
+ 2 files changed, 32 insertions(+), 19 deletions(-)
 
-Title:
-  [SRU] RISC-V vector state not restored by signal handler
-
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  Confirmed
-Status in qemu source package in Noble:
-  New
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  New
-Status in qemu source package in Resolute:
-  Confirmed
-
-Bug description:
-  # Title
-  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
-et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
-
-  ## Summary
-  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
- 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
-gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
- (core dumped)" or "died with signal 4". The illegal instruction is observe=
-d inside glibc's memset implementation at an instruction that uses RISC-V v=
-ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
-e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
-nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
-lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
-code generation / state corruption), not a cmake bug.
-
-  ## Affects
-  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
-untu3)
-  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
-qemu-user static interpreter
-
-  ## Environment / Context
-  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
-  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
-  - Container image: ubuntu:26.04 for riscv64
-  - qemu package used:
-    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
-b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
--user_10.0.6+ds-0+deb13u2).=20
-    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
-ost and registered via /proc/sys/fs/binfmt_misc/register
-  - CMake version used inside container (bootstrap/build may use system-pro=
-vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
-ggers crash)
-  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
-eral consecutive successes or failures)
-  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
-t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
-QEMU_STRACE also makes it much harder to reproduce.
-   =20
-
-  ## Full reproduction steps
-  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
-ry:
-     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
-uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
-     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
--5ubuntu3_amd64
-     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
-in/qemu-riscv64-static
-
-  2. Register qemu-riscv64 with binfmt_misc:
-     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
-     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
-00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
-\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
- >/proc/sys/fs/binfmt_misc/register
-
-  3. Start riscv64 ubuntu container:
-     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
-4 bash
-     docker exec -it ubuntu26 bash -i
-
-  4. Inside container:
-     apt update
-     apt install -y build-essential cmake
-
-  5. Reproducer 1:
-     cmake --system-information
-     -> Often fails with:
-        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
-        Illegal instruction (core dumped)
-
-  6. Reproducer 2 (minimal C project):
-     Create test_cmake/CMakeLists.txt:
-     cmake_minimum_required(VERSION 3.10)
-     project(HelloCMake C)
-     add_executable(hello main.c)
-
-     Create test_cmake/main.c:
-     #include <stdio.h>
-     int main() {
-         printf("Hello, CMake!\n");
-         return 0;
-     }
-
-     cd test_cmake
-     cmake .
-     -> Crash with:
-        -- Detecting C compiler ABI info
-        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
-
-  7. Reproducer 3 (rebuild cmake from source inside container):
-     apt source cmake
-     cd cmake
-     apt-get build-dep .
-     dpkg-buildpackage -us -uc -b
-     -> Bootstrapping error:
-        Illegal instruction (core dumped)
-        Error when bootstrapping CMake:
-        Problem while running initial CMake
-
-  8. Observed crash location (from gdb/QEMU_STRACE when available):
-     - Illegal instruction is in memset@@GLIBC_2.27+0x52
-     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
-bit elements)
-
-
-  ## Workarounds
-  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
- using vectorized memset.
-  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
-=E2=80=94 both make the failure much less likely.
-
-  Note: The same workload does not reproduce the crash when run under
-  qemu-system (full-system emulation). The issue appears specific to
-  qemu-user
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index cb52cc9de2..7d7b2e9b36 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -7,6 +7,8 @@
+ #ifndef HW_HYPERV_HVGDK_MINI_H
+ #define HW_HYPERV_HVGDK_MINI_H
+ 
++#include "qemu/compiler.h"
++
+ #define MSHV_IOCTL  0xB8
+ 
+ typedef enum hv_register_name {
+@@ -211,7 +213,7 @@ enum hv_intercept_type {
+ struct hv_u128 {
+     uint64_t low_part;
+     uint64_t high_part;
+-};
++} QEMU_PACKED;
+ 
+ union hv_x64_xmm_control_status_register {
+     struct hv_u128 as_uint128;
+@@ -326,13 +328,13 @@ typedef struct hv_x64_segment_register {
+         };
+         uint16_t attributes;
+     };
+-} hv_x64_segment_register;
++} QEMU_PACKED hv_x64_segment_register;
+ 
+ typedef struct hv_x64_table_register {
+     uint16_t pad[3];
+     uint16_t limit;
+     uint64_t base;
+-} hv_x64_table_register;
++} QEMU_PACKED hv_x64_table_register;
+ 
+ union hv_x64_fp_control_status_register {
+     struct hv_u128 as_uint128;
+@@ -416,6 +418,10 @@ typedef union hv_register_value {
+     union hv_x64_register_sev_control sev_control;
+ } hv_register_value;
+ 
++/*
++ * This struct is __packed in the kernel. Since all members are naturally
++ * aligned, we can omit QEMU_PACKED to avoid address-of-packed-member warnings.
++ */
+ typedef struct hv_register_assoc {
+     uint32_t name;         /* enum hv_register_name */
+     uint32_t reserved1;
+@@ -439,7 +445,7 @@ typedef struct hv_input_get_vp_registers {
+     uint8_t  rsvd_z8;
+     uint16_t rsvd_z16;
+     uint32_t names[];
+-} hv_input_get_vp_registers;
++} QEMU_PACKED hv_input_get_vp_registers;
+ 
+ typedef struct hv_input_set_vp_registers {
+     uint64_t partition_id;
+@@ -448,7 +454,7 @@ typedef struct hv_input_set_vp_registers {
+     uint8_t  rsvd_z8;
+     uint16_t rsvd_z16;
+     struct hv_register_assoc elements[];
+-} hv_input_set_vp_registers;
++} QEMU_PACKED hv_input_set_vp_registers;
+ 
+ union hv_interrupt_control {
+     uint64_t as_uint64;
+@@ -468,7 +474,7 @@ struct hv_input_assert_virtual_interrupt {
+     uint8_t target_vtl;
+     uint8_t rsvd_z0;
+     uint16_t rsvd_z1;
+-};
++} QEMU_PACKED;
+ 
+ /* /dev/mshv */
+ #define MSHV_CREATE_PARTITION   _IOW(MSHV_IOCTL, 0x00, struct mshv_create_partition)
+@@ -487,6 +493,11 @@ struct hv_input_assert_virtual_interrupt {
+  ********************************
+  */
+ 
++/*
++ * This struct is __packed in the kernel, but since all members are naturally
++ * aligned, so we can omit QEMU_PACKED to avoid address-of-packed-member
++ * warnings.
++ */
+ struct hv_local_interrupt_controller_state {
+     /* HV_X64_INTERRUPT_CONTROLLER_STATE */
+     uint32_t apic_id;
+@@ -644,7 +655,7 @@ struct hv_x64_intercept_message_header {
+     struct hv_x64_segment_register cs_segment;
+     uint64_t rip;
+     uint64_t rflags;
+-};
++} QEMU_PACKED;
+ 
+ union hv_x64_io_port_access_info {
+     uint8_t as_uint8;
+@@ -669,7 +680,7 @@ typedef struct hv_x64_io_port_intercept_message {
+     uint64_t rcx;
+     uint64_t rsi;
+     uint64_t rdi;
+-} hv_x64_io_port_intercept_message;
++} QEMU_PACKED hv_x64_io_port_intercept_message;
+ 
+ union hv_x64_memory_access_info {
+     uint8_t as_uint8;
+@@ -692,7 +703,7 @@ struct hv_x64_memory_intercept_message {
+     uint64_t guest_virtual_address;
+     uint64_t guest_physical_address;
+     uint8_t instruction_bytes[16];
+-};
++} QEMU_PACKED;
+ 
+ union hv_message_flags {
+     uint8_t asu8;
+@@ -711,14 +722,14 @@ struct hv_message_header {
+         uint64_t sender;
+         union hv_port_id port;
+     };
+-};
++} QEMU_PACKED;
+ 
+ struct hv_message {
+     struct hv_message_header header;
+     union {
+         uint64_t payload[HV_MESSAGE_PAYLOAD_QWORD_COUNT];
+     } u;
+-};
++} QEMU_PACKED;
+ 
+ /* From  github.com/rust-vmm/mshv-bindings/src/x86_64/regs.rs */
+ 
+@@ -731,13 +742,13 @@ struct hv_cpuid_entry {
+     uint32_t ecx;
+     uint32_t edx;
+     uint32_t padding[3];
+-};
++} QEMU_PACKED;
+ 
+ struct hv_cpuid {
+     uint32_t nent;
+     uint32_t padding;
+     struct hv_cpuid_entry entries[0];
+-};
++} QEMU_PACKED;
+ 
+ #define IA32_MSR_TSC            0x00000010
+ #define IA32_MSR_EFER           0xC0000080
+diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+index 866c8211bf..bf2f8cbc27 100644
+--- a/include/hw/hyperv/hvhdk.h
++++ b/include/hw/hyperv/hvhdk.h
+@@ -9,6 +9,8 @@
+ #ifndef HW_HYPERV_HVHDK_H
+ #define HW_HYPERV_HVHDK_H
+ 
++#include "qemu/compiler.h"
++
+ #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
+ 
+ struct hv_input_set_partition_property {
+@@ -16,7 +18,7 @@ struct hv_input_set_partition_property {
+     uint32_t property_code; /* enum hv_partition_property_code */
+     uint32_t padding;
+     uint64_t property_value;
+-};
++} QEMU_PACKED;
+ 
+ union hv_partition_synthetic_processor_features {
+     uint64_t as_uint64[HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS];
+@@ -201,12 +203,12 @@ typedef struct hv_input_translate_virtual_address {
+     uint32_t padding;
+     uint64_t control_flags;
+     uint64_t gva_page;
+-} hv_input_translate_virtual_address;
++} QEMU_PACKED hv_input_translate_virtual_address;
+ 
+ typedef struct hv_output_translate_virtual_address {
+     union hv_translate_gva_result translation_result;
+     uint64_t gpa_page;
+-} hv_output_translate_virtual_address;
++} QEMU_PACKED hv_output_translate_virtual_address;
+ 
+ typedef struct hv_register_x64_cpuid_result_parameters {
+     struct {
+@@ -226,13 +228,13 @@ typedef struct hv_register_x64_cpuid_result_parameters {
+         uint32_t edx;
+         uint32_t edx_mask;
+     } result;
+-} hv_register_x64_cpuid_result_parameters;
++} QEMU_PACKED hv_register_x64_cpuid_result_parameters;
+ 
+ typedef struct hv_register_x64_msr_result_parameters {
+     uint32_t msr_index;
+     uint32_t access_type;
+     uint32_t action; /* enum hv_unimplemented_msr_action */
+-} hv_register_x64_msr_result_parameters;
++} QEMU_PACKED hv_register_x64_msr_result_parameters;
+ 
+ union hv_register_intercept_result_parameters {
+     struct hv_register_x64_cpuid_result_parameters cpuid;
+@@ -244,6 +246,6 @@ typedef struct hv_input_register_intercept_result {
+     uint32_t vp_index;
+     uint32_t intercept_type; /* enum hv_intercept_type */
+     union hv_register_intercept_result_parameters parameters;
+-} hv_input_register_intercept_result;
++} QEMU_PACKED hv_input_register_intercept_result;
+ 
+ #endif /* HW_HYPERV_HVHDK_H */
+-- 
+2.34.1
 
 
