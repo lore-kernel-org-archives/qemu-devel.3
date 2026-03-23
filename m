@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80097F483CC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76CC4F483C8
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iYZ-00087R-AN; Mon, 23 Mar 2026 12:55:11 -0400
+	id 1w4iY7-00071q-Pr; Mon, 23 Mar 2026 12:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iYM-0007Vq-8K
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:59 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iY1-0006s5-2e
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:37 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iYK-0000iE-C9
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:58 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43a03cb1df9so409488f8f.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:54:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXz-0000gh-Kl
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:36 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-439fe4985efso2725045f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284894; x=1774889694; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284874; x=1774889674; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DydaDApGQyKIZilhgXGoxyDZiKo9keH82dkobi0tCBY=;
- b=klTm8mohRg+tQYjAqjxaAxZ57AfDe+29aoguGN/juTr7Kgn06d7iaXvkXmlFdp7jOc
- 4MCS35BfY+ziJslcMMzID40Ln3mwuMppBQeEqrt2ic00rDhYdRDnr1GDwwzx57RyiNlI
- 65A0W46gAsmlyXFkGob4H7OnB4PjXrJkCu1YeOUXYAbikwJ4+cozVYSvuqy31m1RI+pO
- iOGjMsT6hFY+pUe4atupQ+OmgmfipFUsiGVNxZV7TVJSbw47Lf4ivZEcf9wubo36tnyX
- VYJE1uInE/6WBHCVmcGaoA6U4FawGYAwvo/zAd8kynLg2ZhyqNdR1By+DYZwcXN9L3++
- G7mA==
+ :reply-to; bh=6ggi0z8zst48aH62Pax6Yp4IE+XZiFinN9t9NdCYPpE=;
+ b=yx/qMHtnqPRzuo9/f2uw7vzVKIQ7oAQPWzH4TdDsEuIYkT+qPZyzUQCmK04NkMo56A
+ vuPwY00k3KeO4PeOVAc/8Z13f3fwit4MIGu1qtg3EavwfaKjwHPXCnfBdQ/1z2oMQ+Xu
+ oo5EIQau4yh1qjEt8XVuXafNtjYCrAUD5ueXkq7/FRMXVC24nm1gRT1B0JabDvdFtb+d
+ Szz8MfHIuq1xV8uoBshWXINHUO861ysS+M20LnyTKhaM1iZy806ifr46d2b1ak9J8Pre
+ V3uRzWhmdzTHLFEMVNfE8LcpMZtw0z58hfTd4vBCORYO/zyeQXp9a+cJnldCDCFFrOgD
+ I6tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284894; x=1774889694;
+ d=1e100.net; s=20251104; t=1774284874; x=1774889674;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=DydaDApGQyKIZilhgXGoxyDZiKo9keH82dkobi0tCBY=;
- b=NQ9gw7JufmLBneAvwJwyLT99oYWo4N0h6YNKmiGxlCVB8sXfpV4krVQiN7vJ6PTeDY
- iQeCkRbRf8B0exGoFSdgC36e/hnlUSVdaN4QO37wN9YIhVPorsiAuAfoCoRlo955BeE0
- Y/GOEkMCX4MOi9606HFBXWlJonjU7oo+UMkJWfU+qdxBYaKuoVSZ3SUuHKt8bi90u78u
- QhdOW592j11DuxhM1StOfv5Fmb3H5pSUPs8OuY0EpMBEv8v5dRrm8z3dGR5pvpCU6iGl
- A1tMGXIq3RIJjZ2zu2oma0um3rWMYRRwPTrCKf1iRZQBEg7pJnQoMASj6mfZ8RwMU2U1
- o8GA==
-X-Gm-Message-State: AOJu0Yz5N131uNoa2DEzwpXSHMKAGh+0afeA0AM3Ju+wYT3ZLwgBBG0n
- 79QmUcwDiKjSJhcp5HM/uD4uL4wf9plXmBSPvHeJOccYj2MKw/pspHbTbMmUDVbXhe5wOfHn5kw
- JHPSY9A8=
-X-Gm-Gg: ATEYQzyUewZvykXHGXI8xg4YLkMw/U41dyxtLuIP8OL8PR4XhVXZFs59PcxG0zwPR87
- u0NJUb42ZfnpMrHZTZb8dZpfV3gxgCJk/06i5O/pJqLACLcRiSZqSiAinv6BpTvT6dSqA6T6tq3
- Y4Va86fAe2jX+enAk0Ordrd2r3+lDVFdkIUK6A5+gLetWhj9w/LsO5UBpjG3Y54SwIxu7JTMJBL
- CIGe52h+SGnrut44bJX+8DnGyek2aE4XGbfKh0hHV5EmdGjVwXEoBsSOLE3eduvy0xIA+aupJec
- G7OD33YxChMH7fATXkqlDmZsCbk4G9e59sNeUrXkvuoi5Ip69g8qt+8NHZJRI82TJBx+uCesv0A
- AFeNgDKgAiqUnlyzdatPMjaNo6ly0pqrqhyv7y/bgc7F0Vm4FprlHosbdriWK22623oxe1LM8Ba
- 0NSR6QtMfRTwKt4aIU3cm9pSMQLMeGPvo/RHCeoKRYk/MwX2G06ruhs8vf/W0ZjmZbR+xrLmaz
-X-Received: by 2002:a05:6000:420c:b0:439:c62a:6dc2 with SMTP id
- ffacd0b85a97d-43b6427973bmr20347789f8f.41.1774284894237; 
- Mon, 23 Mar 2026 09:54:54 -0700 (PDT)
+ bh=6ggi0z8zst48aH62Pax6Yp4IE+XZiFinN9t9NdCYPpE=;
+ b=nCP7WgxH4VVN6d5AwR8Tbj6zl2pfmy8qldQJwSRQELnxf43T91L06RaJ8cW5skfRy/
+ BmyBkzyv10pVgXujK/8mowlMr6xh3wv5119UMdCfr3SNLo+YwW6lgcoCVcg6Dni2votV
+ Hvhj1UE1/W+BXjjJ5QJNTk41WhacQ+gDTTa8ZOL0xc4BGlLyGHw1ccVuEsnPiaUQW28/
+ UrhXf+Al4igEgfUmfkIRe6uc3A9I1qw66hPkf1btbSc8t5cf3N4ZyhhcV18dkDlkWQlv
+ zpeIvuvwMGd5ROLTwI9iNLqhreFU+ADvHTEGkkGWZOwv8/oFS/z+hTud6NCWEKbaARCU
+ Tl6g==
+X-Gm-Message-State: AOJu0YxqsnZH5OTIxT+a52QxkJHSrD65diVFSsIYR1kW4hVQPES4nCTK
+ hYIkuM3ntvEP2wSAG7vClUGN7bGY2Zv6KbbZFLcy28ODg8w2zxJPkKPznuMH1yTJM9h0VR4KKCv
+ 8hEASVNw=
+X-Gm-Gg: ATEYQzxI6H8pykhWeJl5CCtRzgm/8XZMbGUsK7vvFFw1hA2OhCyFBnQ8Jd1NaIVLwjq
+ NCWFLVfis53HmTFYnGAkMU2OTwJ4LlOou6IlOV8XYxZrLO4oPfz6E4QLPnMQeSfPefK+FqPVUFw
+ Ker7q9u4abREH6o4+HXM6U6hQNf8ersLqENa65QCNnYCYT4XZnBwiAe3NAHFsTprNrI8tdeqb4A
+ beWOC/pmV4PBCYky1TR3jxcHAjNlhlAsF7frD//EQjSR2ifzmOhOfVfEdYMtLkNNyolu0SkgFgB
+ WS2yQqQbYRYKw6+mo+O7k485VGszRYN4uPEDONyJ6YG/4RQPQvx00jPe1WnZGJoln8fe5xqLlWm
+ AwUrRidUJSeJ5yyqgXku4fxKKD1yz4tfytsUMop4jIbIVQJLZc5prrHFE17pm5p8WJ8nI3Wanlh
+ ftvKFIUBZ0eXVSaF7/WZupGtDLh5crtsJaG70oBmzXQmyBa7sxF2P18y2rd0RgIJzZguvIYd89
+X-Received: by 2002:a5d:5d89:0:b0:43b:436d:77f6 with SMTP id
+ ffacd0b85a97d-43b64270860mr20447359f8f.37.1774284873785; 
+ Mon, 23 Mar 2026 09:54:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b6470c239sm30915537f8f.27.2026.03.23.09.54.53
+ ffacd0b85a97d-43b646b0b0csm29389363f8f.15.2026.03.23.09.54.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:54:53 -0700 (PDT)
+ Mon, 23 Mar 2026 09:54:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/27] ati-vga: Simplify pointer image handling
-Date: Mon, 23 Mar 2026 17:52:14 +0100
-Message-ID: <20260323165218.96607-24-philmd@linaro.org>
+Subject: [PULL 20/27] ati-vga: Avoid warnings about sign extension
+Date: Mon, 23 Mar 2026 17:52:11 +0100
+Message-ID: <20260323165218.96607-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,115 +100,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Rewrite reading of mouse pointer image. I am not sure this is entirely
-correct but appears to work at least on little endian host with PPC
-guests using little or big endian frame buffer (MorphOS and MacOS) but
-still produces broken pointer image with Linux where I am not sure if
-it is a guest driver bug or still missing something.
+Coverity reports several possible sign extension errors (latest is CID
+1645615). These cannot happen because the values are limited when
+writing the registers and only 32 bits of the return value matter but
+change type of the variable storing the return value to uint32_t to
+avoid these warnings. Also change DEFAULT_SC_BOTTOM_RIGHT register
+read to match what other similar registers do for consistency.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <b9de530074b954d661a0eb9b8b4ad82a66085456.1774110169.git.balaton@eik.bme.hu>
-[PMD: Replaced BIT() -> BIT_ULL() in ati_cursor_draw_line()]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <9a3263a06bc72aa5a56bafe0a11ad189d5f60528.1774110169.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/ati.c | 57 ++++++++++++++++++++++--------------------------
- 1 file changed, 26 insertions(+), 31 deletions(-)
+ hw/display/ati.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index f74dd1efc0b..c054c9aa7a2 100644
+index 1a6a5ad4fd6..a070f7af296 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -141,27 +141,24 @@ static void ati_vga_switch_mode(ATIVGAState *s)
- /* Used by host side hardware cursor */
- static void ati_cursor_define(ATIVGAState *s)
- {
--    uint8_t data[1024];
-+    uint64_t data[128];
-     uint32_t srcoff;
--    int i, j, idx = 0;
- 
-     if ((s->regs.cur_offset & BIT(31)) || s->cursor_guest_mode) {
-         return; /* Do not update cursor if locked or rendered by guest */
-     }
-     /* FIXME handle cur_hv_offs correctly */
--    srcoff = s->regs.cur_offset -
--        (s->regs.cur_hv_offs >> 16) - (s->regs.cur_hv_offs & 0xffff) * 16;
--    for (i = 0; i < 64; i++) {
--        for (j = 0; j < 8; j++, idx++) {
--            data[idx] = vga_read_byte(&s->vga, srcoff + i * 16 + j);
--            data[512 + idx] = vga_read_byte(&s->vga, srcoff + i * 16 + j + 8);
--        }
-+    srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
-+             (s->regs.cur_hv_offs & 0xffff) * 16;
-+    for (int i = 0; i < 64; i++, srcoff += 16) {
-+        data[i] = ldq_le_p(&s->vga.vram_ptr[srcoff]);
-+        data[i + 64] = ldq_le_p(&s->vga.vram_ptr[srcoff + 8]);
-     }
-     if (!s->cursor) {
-         s->cursor = cursor_alloc(64, 64);
-     }
-     cursor_set_mono(s->cursor, s->regs.cur_color1, s->regs.cur_color0,
--                    &data[512], 1, &data[0]);
-+                    (uint8_t *)&data[64], 1, (uint8_t *)&data[0]);
-     dpy_cursor_define(s->vga.con, s->cursor);
+@@ -265,7 +265,7 @@ static void ati_vga_vblank_irq(void *opaque)
+     ati_vga_update_irq(s);
  }
  
-@@ -196,9 +193,9 @@ static void ati_cursor_invalidate(VGACommonState *vga)
- static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+-static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
++static inline uint32_t ati_reg_read_offs(uint32_t reg, int offs,
+                                          unsigned int size)
  {
-     ATIVGAState *s = container_of(vga, ATIVGAState, vga);
--    uint32_t srcoff;
-+    uint32_t h, srcoff, color;
-+    uint64_t abits, xbits, mask;
-     uint32_t *dp = (uint32_t *)d;
--    int i, j, h, idx = 0;
+     if (offs == 0 && size == 4) {
+@@ -278,7 +278,7 @@ static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
+ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+ {
+     ATIVGAState *s = opaque;
+-    uint64_t val = 0;
++    uint32_t val = 0;
  
-     if (!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN) ||
-         scr_y < vga->hw_cursor_y || scr_y >= vga->hw_cursor_y + 64 ||
-@@ -209,26 +206,24 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
-     srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
-     dp = &dp[vga->hw_cursor_x];
-     h = ((s->regs.crtc_h_total_disp >> 16) + 1) * 8;
--    for (i = 0; i < 8; i++) {
--        uint32_t color;
--        uint8_t abits = vga_read_byte(vga, srcoff + i);
--        uint8_t xbits = vga_read_byte(vga, srcoff + i + 8);
--        for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1, idx++) {
--            if (vga->hw_cursor_x + idx >= h) {
--                return; /* end of screen, don't span to next line */
--            }
--            if (abits & BIT(7)) {
--                if (xbits & BIT(7)) {
--                    color = dp[idx] ^ 0xffffffff; /* complement */
--                } else {
--                    continue; /* transparent, no change */
--                }
--            } else {
--                color = (xbits & BIT(7) ? s->regs.cur_color1 :
--                                          s->regs.cur_color0) | 0xff000000;
--            }
--            dp[idx] = color;
-+    abits = ldq_be_p(&vga->vram_ptr[srcoff]);
-+    xbits = ldq_be_p(&vga->vram_ptr[srcoff + 8]);
-+    mask = BIT_ULL(63);
-+    for (int i = 0; i < 64; i++, mask >>= 1) {
-+        if (vga->hw_cursor_x + i >= h) {
-+            return; /* end of screen, don't span to next line */
-         }
-+        if (abits & mask) {
-+            if (xbits & mask) {
-+                color = dp[i] ^ 0xffffffff; /* complement */
-+            } else {
-+                continue; /* transparent, no change */
-+            }
-+        } else {
-+            color = (xbits & mask ? s->regs.cur_color1 :
-+                                    s->regs.cur_color0) | 0xff000000;
-+        }
-+        dp[i] = color;
-     }
- }
- 
+     switch (addr) {
+     case MM_INDEX:
+@@ -513,8 +513,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+         val |= s->regs.default_tile << 16;
+         break;
+     case DEFAULT_SC_BOTTOM_RIGHT:
+-        val = (s->regs.default_sc_bottom << 16) |
+-              s->regs.default_sc_right;
++        val = s->regs.default_sc_right;
++        val |= s->regs.default_sc_bottom << 16;
+         break;
+     case SC_TOP:
+         val = s->regs.sc_top;
 -- 
 2.53.0
 
