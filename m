@@ -4,96 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BBEF4611B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00678F4611C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fmE-0006Z7-6I; Mon, 23 Mar 2026 09:57:07 -0400
+	id 1w4fn6-00071n-Eh; Mon, 23 Mar 2026 09:58:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w4fm5-0006XQ-8z
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:56:58 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w4fmg-0006tY-2l
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:57:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w4fm3-0006gC-8w
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:56:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w4fme-0006iD-EV
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:57:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774274213;
+ s=mimecast20190719; t=1774274251;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zrE0W8UV9/iBeosIIXKEXofArqR2IbKfAMs8uE4S2rE=;
- b=Ej6dfwv8TDWy0H3PoIowHsInBfupuuceV9IGpM4EOwakC9/zgyp+hTAbcKjWF37I1UQJt2
- ohzT5jioDr/B88np/EGhHkZMv588pGWsXkqqxlGCI5UFnZQFSery6hpxZA4iVjoTnIFXpa
- RB1lQY6/OrvOkplfvbS0zsN5ue9SCgQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pfcUm49uHHBtyItVC5u633X7yS+mvT2cAbMNi0GNZak=;
+ b=g8aEm1pSYNlHGB6tXqKPwnHmGWn07tdGiASLsv7MvP/q9KfaGW6IorNSd3g9lvZYhHISBP
+ 24z3x0tD0Af1KqjBME0RdEeZVbF86ytKutuV+TRPRJ32QVh97Mi9Zkbpw79MuPD5qhQIYA
+ mNDm1J4N6labNmm6HyBK6v4mWa2tkPs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-183-PhMW2lmfNYaOuUWyggzJKA-1; Mon, 23 Mar 2026 09:56:52 -0400
-X-MC-Unique: PhMW2lmfNYaOuUWyggzJKA-1
-X-Mimecast-MFC-AGG-ID: PhMW2lmfNYaOuUWyggzJKA_1774274211
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43b7ec737c1so417606f8f.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 06:56:51 -0700 (PDT)
+ us-mta-31-hpGosQ9rPJCHzev-NsSB5A-1; Mon, 23 Mar 2026 09:57:29 -0400
+X-MC-Unique: hpGosQ9rPJCHzev-NsSB5A-1
+X-Mimecast-MFC-AGG-ID: hpGosQ9rPJCHzev-NsSB5A_1774274248
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-439c794ec8eso3408998f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 06:57:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774274210; x=1774879010; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774274248; x=1774879048; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zrE0W8UV9/iBeosIIXKEXofArqR2IbKfAMs8uE4S2rE=;
- b=HmjG0iYSAkRygc6gYMOXUCcnXdIGyRwqMMJIOGLMq31HHlQt1VuqYUJZuWJ9SrrkG8
- hoHSJlMrRq5Mt3Y1Nn9jTy6eNLRxM4vb7oi6TtJUZ9s1NX6sy0ciWyWdA0UO0jOzFRBj
- /lbgOym/PPYAFsiaP9/q+Qzv104RxhP+0nWfVyHPtwjLFa0mUxpbrCNbGRYwo/1QHK/t
- UkXu66FpIFzS5hefXjKn2heMFAx93ehrFFoVd1dduOrZWN9CZ65i9uCn5P1+xoAAx5s6
- W+QQkRMtMuDkKeMQCMDCI+quOeMt0caAKgIET1NK7iTNdIBvrstFshuWekXOH0Jn4Q1j
- e3Qw==
+ bh=pfcUm49uHHBtyItVC5u633X7yS+mvT2cAbMNi0GNZak=;
+ b=WgDgtS1JzTXzZ8gTn/gm4sWuesI7hfB/GJUdS4tJtfXfFMdATOSB8Op+KU23o8+9gG
+ ALVYpw18Mza3wHWLEdm2uI87j6jpAXZStWZspIXOJJoI/3MgxDgJ44erN7ptvgGs/czL
+ LjYCw5OQ4kAN/mMKApMW24Zlh64QIXsatnZ0QF+8ht/bhHPyjl0kjFd103di1SlOw8Bh
+ VEycZKGly3LVa8H+PvqN67lYBtbdw+n1qPxUashYX/MT88ZFNtaF4duIO/B0X7yq33re
+ vlrl3TJPXLuXBuHV4d+boaUe5aw4Tl2ol4BI6p8Uulvn9ClOO19eyxuJf58KievVemFm
+ yK3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774274210; x=1774879010;
+ d=1e100.net; s=20251104; t=1774274248; x=1774879048;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zrE0W8UV9/iBeosIIXKEXofArqR2IbKfAMs8uE4S2rE=;
- b=Rag7x1ppiWiTUgUUs6qkojdM1UJo3LnVb37V6/z/Y0qi9suzy63OZ7kJNk/WcX5x5B
- lHnJsnrJfGTriU8Zh6k8f+bfM3jeOQyxCGfmxuQSHgO8Vu3DzkxH9Fdn+k2clgzkZ/Rb
- f5sBnUJfX3vhc/Pg62xXNhqP9MPzxdymybr/5NUjO87YKHvE+mZUbzluL3nbS+JWzolH
- 2x9FhNAzhVnl1o7gcfrqUoW1UIBzrmiMl+UAj+rrIqv1vhywS7ohYFpBMWAWJbqkD13T
- gAqNr8kQD+r7OCE3rxotCOCa/rnzMAHfXBqCVtjOWD6+qydo9sE10FBi10ZwoR5kENTB
- HPcQ==
-X-Gm-Message-State: AOJu0YxVlhrEIYmQKjzX0IffoUNqJ9cCzBoRhm1H08YTZzPV9wtGBGrU
- daFgQgqDpt6QjCdNbp6O5VdFcAwRtcehyrpxp+uxOlS/fGiTCvTEHN5OS/zKYUtaVorl0fpAxDx
- B5UCOOz+qCTU0rQpAgInbI0SLPAUj+4Mdc7CzAWgnMQ7dN1t/L2xGXkPw
-X-Gm-Gg: ATEYQzy0PUWk16N+eXeVFVlDOmjOxN9Eo34zIa4v+jnwE1Zvg+7mxBDiDOaq5s2M0b/
- cwF7rluZGsc4F/5XYRTHEGUy+kJiNO+r1y7zat410Y4InGfnAOcKqlxwal21YLRDMDQy3YY8kP6
- ykZOrnk2eooU1Tp8iA6wZ2uAGZC2hOAZ0mqUIQhd5rA1R4duFEjlEXzKJSEzPkbYjtSEG/C4BY/
- aEytjD2vymzyBFjv44YtKNZx2tXSFbYHvApbgPwi5vwI9CdeNHIZjnPncPOyW4D0o1nxkNJGiaS
- rVADiD3Uf5/MM17+EDLVmRg7nqmm67qE1LcTSom+9PG/hWx/DsLYujIbOHRwdXoI0eBUQYxMTuH
- khJzWed37a6+Pq8jv
-X-Received: by 2002:a5d:5d13:0:b0:439:caf7:a5e5 with SMTP id
- ffacd0b85a97d-43b6427d3b7mr18318654f8f.31.1774274210140; 
- Mon, 23 Mar 2026 06:56:50 -0700 (PDT)
-X-Received: by 2002:a5d:5d13:0:b0:439:caf7:a5e5 with SMTP id
- ffacd0b85a97d-43b6427d3b7mr18318613f8f.31.1774274209605; 
- Mon, 23 Mar 2026 06:56:49 -0700 (PDT)
+ bh=pfcUm49uHHBtyItVC5u633X7yS+mvT2cAbMNi0GNZak=;
+ b=YL17P0PeBDKtai4YEstsl3ymHX3y2fFq+m+If7KbuZbM9VGHPeHc25F5BF00lyZBpL
+ mK/jNOrZRjBwIigYdL9110b27qLK1aS5JJ8KLeM+XiKG//Ikn4SUBXNxj4yYMgjOw9Di
+ bEs8w9e3gMd9JuEz+m/UXypoLFXt/c7M9SG51KIz1ONKMwmX7+aDKz+zYc8kZcITu6s1
+ 94ElhU6Zo9szTnMNfTEOH0HFf3N9Jn72+TGTk4mQC19BVlUT4OUM/Fbl/Al7G3Ok/MQt
+ Zm0S7GROgCcBMYtW07ypJIdZT6sJOr5RY2/AkMrbYLf/qqhOlxMQC5bDLCbkSd/4+2Ey
+ yzRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXKGzPp4f1WzLG+9wQZs3MOVG1QM9UFokOwr3BzNBryXnf017NXBrzpQwzX7LDdbZPMzslx4Fw7qJGf@nongnu.org
+X-Gm-Message-State: AOJu0Yz+tOKQFnhBRhNVpE7zwjihVHvGfd24EqQId9eyQgs5Uzhc6zrt
+ juSlWkxIVKjSMLVjMrOUC8HM7UrImFs0BbkYPtBOBfgtQQVb70GJF3lh/ba8bJ1YtucsR150cbK
+ LhYswYctj5OPf8GzDD2cGsvn0o1yXhMjPHdrxvOq+s50Ng4Pf44/INf5w
+X-Gm-Gg: ATEYQzwmdBbNU63BpUqqUoBWSpbvSi2NJSr/0/88sekPADJ2e5HLMVcZTbMOqw86Iwi
+ SmVcXXwn5zeN1j9WQ9PG248ie0t+eQmApvCyo7oHap6+4/fzXUJmC0tRIWlzfAagHjMbLdWF/n8
+ 3ko/Sw69In67vOc60BC7IFQl60cwHj1pgutRn/DpO9HaY7mbaw+Cdb0Ilzetd06qJyS5YU4JgFV
+ 6WiBPe3Fca4kUvlYBfzWBb/mRLePeKI3s6XkzlY88Twqk4ZIi72H0TJ7dq4goAFNeT5PALHCZvC
+ M2HmNqBwlJTDdsz+CbaW8nfD6Q1zPhzA9Cud6474uQ+t3gpE+zs/yq/OZ9Lpaahy3sEcIcM9iPQ
+ rPuW1B+MXGREM7jbp
+X-Received: by 2002:a05:6000:1787:b0:439:fcf4:32d0 with SMTP id
+ ffacd0b85a97d-43b6427b8a3mr19765631f8f.54.1774274248139; 
+ Mon, 23 Mar 2026 06:57:28 -0700 (PDT)
+X-Received: by 2002:a05:6000:1787:b0:439:fcf4:32d0 with SMTP id
+ ffacd0b85a97d-43b6427b8a3mr19765569f8f.54.1774274247525; 
+ Mon, 23 Mar 2026 06:57:27 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1525:da00:3ac2:1a22:72ff:4256])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b644bf1c5sm32662889f8f.14.2026.03.23.06.56.47
+ ffacd0b85a97d-43b644bd38bsm29601225f8f.10.2026.03.23.06.57.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 06:56:48 -0700 (PDT)
-Date: Mon, 23 Mar 2026 09:56:46 -0400
+ Mon, 23 Mar 2026 06:57:26 -0700 (PDT)
+Date: Mon, 23 Mar 2026 09:57:24 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, yuri.benditovich@daynix.com,
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org,
+ jasowang@redhat.com, yuri.benditovich@daynix.com,
  akihiko.odaki@daynix.com, qemu-stable@nongnu.org
 Subject: Re: [PATCH] virtio-net: validate RSS indirections_len in post_load
-Message-ID: <20260323094940-mutt-send-email-mst@kernel.org>
+Message-ID: <20260323095706-mutt-send-email-mst@kernel.org>
 References: <20260323131531.1976-1-junjie.cao@intel.com>
+ <acFDFHsh8Rjhfncc@redhat.com>
+ <CAFEAcA88mHqmM8Pmm0Gbbeu4ugBV8snenZh7bvjSSruUtRcywQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260323131531.1976-1-junjie.cao@intel.com>
+In-Reply-To: <CAFEAcA88mHqmM8Pmm0Gbbeu4ugBV8snenZh7bvjSSruUtRcywQ@mail.gmail.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -119,80 +125,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 23, 2026 at 09:15:31PM +0800, Junjie Cao wrote:
-> virtio_net_handle_rss() enforces that indirections_len is a non-zero
-> power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
-> virtio_net_rss_post_load() applies none of these checks to values
-> restored from the migration stream.
+On Mon, Mar 23, 2026 at 01:53:53PM +0000, Peter Maydell wrote:
+> On Mon, 23 Mar 2026 at 13:43, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Mon, Mar 23, 2026 at 09:15:31PM +0800, Junjie Cao wrote:
+> > > virtio_net_handle_rss() enforces that indirections_len is a non-zero
+> > > power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
+> > > virtio_net_rss_post_load() applies none of these checks to values
+> > > restored from the migration stream.
+> > >
+> > > A crafted migration stream can set indirections_len to 0.  Even if it
+> >
+> > The migration stream originating from the source QEMU is trusted.
 > 
-> A crafted migration stream can set indirections_len to 0.  Even if it
-> also clears redirect, virtio_load() calls set_features_nocheck() after
-> the device vmstate (including the RSS subsection and its post_load) has
-> already been loaded, re-deriving redirect from the negotiated guest
-> features.  When VIRTIO_NET_F_RSS was negotiated, redirect is set back
-> to true regardless of the migration stream value.  The receive path
-> then computes
+> Is it? In https://www.qemu.org/docs/master/system/security.html we say:
 > 
->     hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
+> # The following entities are untrusted, meaning that they may be buggy
+> # or malicious:
 > 
-> and uses the result to index into indirections_table, which was not
-> allocated by the VMState loader when the element count is zero (see
-> vmstate_handle_alloc()), resulting in a NULL pointer dereference that
-> crashes QEMU:
+> #  * Guest
+> #  * User-facing interfaces (e.g. VNC, SPICE, WebSocket)
+> #  * Network protocols (e.g. NBD, live migration)
+> #  * User-supplied files (e.g. disk images, kernels, device trees)
+> #  * Passthrough devices (e.g. PCI, USB)
 > 
->   #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
->   #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
->   #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
->   #3  nc_sendv_compat           ../net/net.c:823
->   #4  qemu_deliver_packet_iov   ../net/net.c:870
+> which explicitly lists "live migration" as an untrusted entity.
 > 
-> The RSS subsection is only loaded when rss_data.enabled is true (via
-> virtio_net_rss_needed()), and the command path always produces
-> indirections_len in {1, 2, 4, â€¦, 128}, so an unconditional check
-> cannot reject a legitimate migration stream.
+> I would definitely be extremely cautious about having a threat
+> model where I had to distrust inbound migration data, but the
+> above does suggest we aim to handle that, and we have I think
+> in the past taken patches which add sanity-checking to the
+> migration data.
 > 
-> Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> thanks
+> -- PMM
 
 
-Thanks for the patch!
-Yet something to improve:
-
-> ---
->  hw/net/virtio-net.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 2a5d642a64..3038836098 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3427,6 +3427,15 @@ static int virtio_net_rss_post_load(void *opaque, int version_id)
->          n->rss_data.supported_hash_types = VIRTIO_NET_RSS_SUPPORTED_HASHES;
->      }
->  
-> +    if (n->rss_data.indirections_len == 0 ||
-
-
-not needed since it's included in is_power_of_2 check below?
-
-> +        n->rss_data.indirections_len > VIRTIO_NET_RSS_MAX_TABLE_LEN ||
-> +        !is_power_of_2(n->rss_data.indirections_len)) {
-
-with == 0 removed, the logic is duplicated from
-virtio_net_device_realize.
-How about factoring it out to a helper?
-
-> +        error_report("virtio-net: saved image has invalid RSS "
-> +                     "indirections_len: %u",
-> +                     n->rss_data.indirections_len);
-> +        return -EINVAL;
-> +    }
-> +
->      return 0;
->  }
->  
-> -- 
-> 2.43.0
+And we even assigned a low priority CVEs to these.
 
 
