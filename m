@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1494F483C8
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57E2F483CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iVv-0001La-OR; Mon, 23 Mar 2026 12:52:27 -0400
+	id 1w4iW0-0001MH-KA; Mon, 23 Mar 2026 12:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iVu-0001LK-O3
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:52:26 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iVz-0001M6-2n
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:52:31 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iVs-0000RJ-OT
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:52:26 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-486fc4725f0so37373925e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:52:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iVx-0000SC-7v
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:52:30 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4853e1ce427so31644805e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284741; x=1774889541; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=lUs6HYcCGyQoS3qF3eBKXsPnU9GcyZPEs22Bpr3lj58=;
- b=mBeBGjJjYo9X3X1hLEWezRe92Jwq9ZUIWjAOWoQi6OW2SdLgOdKwEGZDNiXY2yUSCA
- ne7QclZt8HdsLzUHV/VYeojL27YSJa3IitNG8/tMvbEZpJa2TEK9rutn82NvXlhc2RUY
- Cb49UyeZ3WcNNFHywrmuycqRCyqe4pcpLXrDomfc+EV9iuMeom31D6rp7qWtWSli7zGU
- alxVN85eurweUzSYdLsBEOopVh71bmEP2dvDVyrQR1fW/3pHHY/otUhTPSUh/kaz/lWZ
- DJrl0y9kc83OWohYcak09ZcDyo23KHPJIwzgCTmdgjdQ8/EAjq1GQcR+gKyoAyB+LW1r
- lAuw==
+ d=linaro.org; s=google; t=1774284747; x=1774889547; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=/9xlo3DkgERVht39wnMqkq+rDYCD0wv9BKJFxhIWcEo=;
+ b=NoatmngrbjRQP9M0QWgB5lftYVGNyQ7sENF/VesqMS8Ak4nb/zX4q9CNV38l4Zhs8s
+ dJta2StBT8cm5bhI8eRBU/3DtH7MI3Bp0niK3BY0kr1wmDrShDM/QtDUb5EBMx6m5Ptg
+ 1vnmxVAu1Njl/fnDecvbVG7t2HiiBdh/IhADOpx/tx8er0nsDMr8QTM2g7jrOPy3TrHB
+ 4IUUtEvzxap7ezqGq2hsJ7iCxGzrHp66qXgl41b26Ag2t27cvo+TKaRABJ1Vl2ul2U1A
+ Sa300s2NsgH1vxl2cSUEWiZyNqYwCJr3NuhWKv5gEi6PQwuEuUhkVZ8+RvTgjEmv2TO7
+ 2HoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284741; x=1774889541;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lUs6HYcCGyQoS3qF3eBKXsPnU9GcyZPEs22Bpr3lj58=;
- b=lnSvf6eaEh8e1GMkglnQsZ2MTRSp6h+PT3Z6N9aJ3D/DeuJRTQ5gCtYc2SaAlBJhDP
- WCHfvWDdAoSkLRBH2eDJE1wK1kdWypiJ7NyIiWmaNdhSVLOYGYC3OrGzcLnmpWOJbrOy
- bqA3f822DVuPJHumK4oUwlxPkQqWjIjKR4Khjn5l6etQT8yWFQL4wuA4L1b9vmcGBf/f
- 40oWwXjGmIs6PLzZpBjqaKk0RIupDmXMVroFGB9azZixYvsmjcxCfD5aPcRMZ9/ouEbk
- 9O0APeuBnUFNbc7guYevLxDZbDJjxkyYlTe3xtHO+h+qgdzDAHk1zNwZMABHMQIusKo4
- Uq4w==
-X-Gm-Message-State: AOJu0YxS7O+QKiurJ7wnaV66k9CdjrGzdq1vKYU7gSQz7PP6b40wzTmj
- VNGT4kd7FxRSGdzeK+ChXP2+wJD9q9ac8ECOGEZSsdsjYH/b8mq96WETvSzrBil+D5M2H+NCHGC
- B3U3C75w=
-X-Gm-Gg: ATEYQzy81mYAGR6Ns1mY4P+55YO4vQZZNNE1Iyegmw4n6hvkeJqF1jLTSjTvgeIB+AO
- FxaBZ8DVMBnxVf9GjBT32mxVGZKBl2hMQC9jZn5P8A54QEVe3jUQ/gOLk/spr90Vf2Sg+AGqikE
- wPr8lUj5pSskK9lI1sc9PDX7cHgljpgTKgjilnRQuPoj25wHO0b1QB9AiwnjalRhQsHOiGhSyqn
- lvOcNjgWSElFGOVOvf2DnxLuloPdQUNfsfXJ8JlWZ0uEldzjxH1NnC5ZhG93l9d7EihkaZh42hs
- zanuQCizshHvLBTWhOkduezXSHw86lPRfoAFQSRnDllwWF8KkM6Ry75hPMB+PTTW7Zul+EpULMJ
- MkhD0bza522Iia/LvxbNC9nW+3fwJL5vj1uKoSYsnuFlz0uzRbkLpZDPnymHTaWcVA5+34oS1R/
- IX8OqS29aOAimy+R/DsTiJFELUKlDyGRpbIfHduhO0pwfYvmudx4nDo59n8Z1BIII8brhaQ9V8q
- r2cZYb0Ytk=
-X-Received: by 2002:a05:600c:6309:b0:485:3989:b3e4 with SMTP id
- 5b1f17b1804b1-4870f1f40d3mr4386845e9.6.1774284740428; 
- Mon, 23 Mar 2026 09:52:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774284747; x=1774889547;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=/9xlo3DkgERVht39wnMqkq+rDYCD0wv9BKJFxhIWcEo=;
+ b=CHNWGKybPCw+xoNOzSrrT5eBhhxUQsNk6rYhGV7otPj2ukVdShGXOhgDNPBPxq8CLW
+ XZyp+CYywfavDSJUFGCLYWBjs+g1m+FMncC2SQDCpqz24q+h7OhjxSPXff5b+IkCpSN2
+ BV14ig+bO6hPNwfMjiNiymSMLkhyjeGM9fYOSQKg2F0bZM7/br0nywhOmpwqH2U9MGFa
+ dD+pyjn6F46Wy42qMvhQotzm0ALBDIXGjWtyjek7v2zhuyO49GR4RIMz8z1v+o12BK3b
+ YTp/PKqJUoVvdmX5Y6le+pNcNlYG2B8xkgOkZnTygBNgVsFp1GITvqV9kbjX4haOm/CU
+ f11A==
+X-Gm-Message-State: AOJu0YxcajaKAabs6zyhB1j8M8ZIoCj2IvQwy1eEqFOre1zn9bnwSnKT
+ ME0c9cQgo4doxtR109L2qWWCaLbS6CV0nRgnkmmXj8jMHFWVEGLd3CY5HQqW7yX8fRwIM+AxWNP
+ Mh7UR4hY=
+X-Gm-Gg: ATEYQzyLyKWp1Wj0Eo6ECtelQMKWZ4umB6vWp9YrkI9vF37hh1uKU7OHVKzl/NCxFK4
+ gvY779b4TVKKGdDEoG8OhBYhOzdA57JpqI4a1JbkvJZ5ADwWVjqsa0xWhvxzWj5yUiDf3hYC66p
+ ZZwacxnltmdwTp6So67/w6SgQuJKEY1bnNaicNXff5rJ3KI9AYUSqG+FK2SEc+Z7I5Hfmj7rQ5L
+ S+sHp+JOke9ewLGtDeDM5yRYLSTnKgYIbSUPpQX+7Aiuh5EqSTL2PLx9QMAp3BYqjIW52Xdl3/G
+ qpe/gZzPnMWlKf2md/Pk9n56PiqdFxHo9kdsf3XdTzlO7NL1mVEDC3pLw3jKd0qp+/D/eVFaMyW
+ POA4SSLccmomnCmCzqsWh8D4avfakUeNz+CodpEpx02bgUeuaPqF/7Kp/PXfNX1Hcn+b3UuqW+6
+ DxuKqDvK8CcUUiK3QClVwEZ03zCJCHeCiFtP4myhjRe2kfgIWDETnhULGUbA7flngBjdFqUVQN
+X-Received: by 2002:a05:600c:45c7:b0:485:3fd1:9936 with SMTP id
+ 5b1f17b1804b1-486fede721amr166888905e9.5.1774284747041; 
+ Mon, 23 Mar 2026 09:52:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487004e7bc4sm120303315e9.2.2026.03.23.09.52.19
+ 5b1f17b1804b1-486fe032a55sm561676355e9.7.2026.03.23.09.52.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:52:19 -0700 (PDT)
+ Mon, 23 Mar 2026 09:52:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/27] Misc HW patches for 2026-03-23
-Date: Mon, 23 Mar 2026 17:51:51 +0100
-Message-ID: <20260323165218.96607-1-philmd@linaro.org>
+Subject: [PULL 01/27] hw/riscv: Mark RISC-V specific peripherals as
+ little-endian
+Date: Mon, 23 Mar 2026 17:51:52 +0100
+Message-ID: <20260323165218.96607-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
+References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,145 +99,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit eb153d8fd3be325a5aa7e1a6a73be8854eeaaf27:
+These devices are only used by the RISC-V targets, which are
+only built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
+definition expand to DEVICE_LITTLE_ENDIAN (besides, the
+DEVICE_BIG_ENDIAN case isn't tested). Simplify directly
+using DEVICE_LITTLE_ENDIAN.
 
-  Merge tag 'pull-target-arm-20260323' of https://gitlab.com/pm215/qemu into staging (2026-03-23 10:55:20 +0000)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20260318103122.97244-2-philmd@linaro.org>
+---
+ hw/char/ibex_uart.c     | 2 +-
+ hw/char/shakti_uart.c   | 2 +-
+ hw/char/sifive_uart.c   | 2 +-
+ hw/misc/sifive_e_aon.c  | 2 +-
+ hw/misc/sifive_e_prci.c | 2 +-
+ hw/misc/sifive_u_otp.c  | 2 +-
+ hw/misc/sifive_u_prci.c | 2 +-
+ hw/riscv/riscv-iommu.c  | 2 +-
+ hw/sd/cadence_sdhci.c   | 2 +-
+ hw/timer/ibex_timer.c   | 2 +-
+ hw/timer/sifive_pwm.c   | 2 +-
+ 11 files changed, 11 insertions(+), 11 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20260323
-
-for you to fetch changes up to 070fc710251809c4d8d2a84f24527a174e843423:
-
-  hw/hyperv: add QEMU_PACKED to uapi structs (2026-03-23 17:50:50 +0100)
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Fix guest-triggerable abort in FTGMAC100 Gigabit Ethernet
-- Fix uninitialized value in DesignWare I3C controller
-- Clear dangling GLib event source tag in virtio-console
-- Mark RISC-V specific peripherals as little-endian
-- Correct virtual address formatting in monitor
-- Improve error handling path in core loader
-- Improve error hints in IOMMU FD
-- Prevent hang in USB OHCI
-- ATI VGA, HyperV & CXL fixes
-
-----------------------------------------------------------------
-
-Alireza Sanaee (1):
-  hw/cxl: Use HPA in cxl_cfmws_find_device() rather than offset in
-    window.
-
-Ani Sinha (2):
-  hw/i386/pc_sysfw: stub out x86_firmware_configure
-  hw/i386/hyperv: add stubs for synic enablement
-
-BALATON Zoltan (8):
-  ati-vga: Fix colors when frame buffer endianness does not match host
-  ati-vga: Also switch mode on HW cursor enable bit change
-  ati-vga: Do not add crtc offset to src and dst data address
-  ati-vga: Avoid warnings about sign extension
-  ati-vga: Fix display updates in non-32 bit modes
-  ati-vga: Add work around for fuloong2e
-  ati-vga: Simplify pointer image handling
-  ati-vga: Make sure hardware cursor data is within vram
-
-Cédric Le Goater (1):
-  hw/net/ftgmac100: Improve DMA error handling
-
-Davidlohr Bueso (2):
-  hw/cxl: Respect Media Operation max ops discovery semantics
-  hw/cxl: Exclude Discovery from Media Operation Discovery output
-
-Jamin Lin (1):
-  hw/i3c/dw-i3c: Fix uninitialized data use in short transfer
-
-Jenny Guanni Qu (1):
-  hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
-
-Magnus Kulke (1):
-  hw/hyperv: add QEMU_PACKED to uapi structs
-
-Matthew Penney (1):
-  hw/char/virtio-console: clear dangling GLib event source tag
-
-Philippe Mathieu-Daudé (2):
-  hw/riscv: Mark RISC-V specific peripherals as little-endian
-  monitor: Correctly display virtual addresses while dumping memory
-
-Pierrick Bouvier (2):
-  backends/iommufd: report error when /dev/iommu is not available
-  hw/vfio/iommufd: report hint to user when vfio-dev/vfio*/dev is
-    missing
-
-Sourav Poddar (1):
-  hw/hyperv: Fix SynIC not initialized except on first vCPU
-
-Trieu Huynh (4):
-  hw/core/loader: fix error handling for load_image_targphys callers
-  hw/core/loader: fix error handling for get_image_size callers
-  util/event_notifier: fix error handling for event_notifier_init
-    callers
-  hw/pci/msix: fix error handling for msix_init callers
-
- hw/display/ati_int.h           |  1 +
- include/hw/hyperv/hvgdk_mini.h | 35 ++++++++-----
- include/hw/hyperv/hvhdk.h      | 12 ++---
- include/hw/hyperv/hyperv.h     |  1 +
- target/i386/kvm/hyperv.h       |  1 +
- backends/iommufd.c             |  3 ++
- hw/alpha/dp264.c               |  2 +-
- hw/char/ibex_uart.c            |  2 +-
- hw/char/shakti_uart.c          |  2 +-
- hw/char/sifive_uart.c          |  2 +-
- hw/char/virtio-console.c       |  2 +-
- hw/cxl/cxl-host.c              |  7 +--
- hw/cxl/cxl-mailbox-utils.c     | 27 +++++------
- hw/display/ati.c               | 89 +++++++++++++++++++---------------
- hw/display/ati_2d.c            | 47 ++++++++++++------
- hw/hppa/machine.c              |  2 +-
- hw/hyperv/hyperv.c             |  9 +++-
- hw/hyperv/vmbus.c              |  4 +-
- hw/i386/pc_sysfw.c             | 32 ------------
- hw/i386/pc_sysfw_ovmf-stubs.c  |  5 ++
- hw/i386/pc_sysfw_ovmf.c        | 33 +++++++++++++
- hw/i3c/dw-i3c.c                | 14 ++++--
- hw/ipmi/ipmi_bmc_sim.c         |  2 +
- hw/m68k/next-cube.c            | 11 ++++-
- hw/m68k/q800.c                 |  2 +-
- hw/m68k/virt.c                 |  2 +-
- hw/microblaze/boot.c           |  3 +-
- hw/mips/fuloong2e.c            |  1 +
- hw/misc/sifive_e_aon.c         |  2 +-
- hw/misc/sifive_e_prci.c        |  2 +-
- hw/misc/sifive_u_otp.c         |  2 +-
- hw/misc/sifive_u_prci.c        |  2 +-
- hw/net/ftgmac100.c             | 10 +++-
- hw/net/igbvf.c                 |  2 +-
- hw/net/rocker/rocker.c         |  2 +-
- hw/pci/msix.c                  |  2 +-
- hw/remote/proxy.c              | 15 +++++-
- hw/riscv/riscv-iommu.c         |  2 +-
- hw/scsi/megasas.c              | 16 ++++--
- hw/sd/cadence_sdhci.c          |  2 +-
- hw/timer/ibex_timer.c          |  2 +-
- hw/timer/sifive_pwm.c          |  2 +-
- hw/usb/hcd-ohci.c              | 11 +++++
- hw/usb/hcd-xhci-pci.c          | 16 ++++--
- hw/vfio/ap.c                   |  2 +-
- hw/vfio/ccw.c                  |  2 +-
- hw/vfio/iommufd.c              |  5 +-
- hw/vfio/pci-quirks.c           |  2 +-
- hw/vfio/pci.c                  |  2 +-
- hw/virtio/vhost-vdpa.c         |  4 +-
- monitor/hmp-cmds.c             |  2 +-
- target/i386/kvm/hyperv-stub.c  |  5 ++
- target/i386/kvm/hyperv.c       |  9 ++++
- target/i386/kvm/kvm.c          | 12 ++---
- 54 files changed, 305 insertions(+), 183 deletions(-)
-
+diff --git a/hw/char/ibex_uart.c b/hw/char/ibex_uart.c
+index 127d219df3c..26ed1aea140 100644
+--- a/hw/char/ibex_uart.c
++++ b/hw/char/ibex_uart.c
+@@ -470,7 +470,7 @@ static void fifo_trigger_update(void *opaque)
+ static const MemoryRegionOps ibex_uart_ops = {
+     .read = ibex_uart_read,
+     .write = ibex_uart_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl.min_access_size = 4,
+     .impl.max_access_size = 4,
+ };
+diff --git a/hw/char/shakti_uart.c b/hw/char/shakti_uart.c
+index 2d1bc9cb8e2..d38920a03a0 100644
+--- a/hw/char/shakti_uart.c
++++ b/hw/char/shakti_uart.c
+@@ -103,7 +103,7 @@ static void shakti_uart_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps shakti_uart_ops = {
+     .read = shakti_uart_read,
+     .write = shakti_uart_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl = {.min_access_size = 1, .max_access_size = 4},
+     .valid = {.min_access_size = 1, .max_access_size = 4},
+ };
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index 4c30fbf5685..b4de662d616 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -236,7 +236,7 @@ static void fifo_trigger_update(void *opaque)
+ static const MemoryRegionOps sifive_uart_ops = {
+     .read = sifive_uart_read,
+     .write = sifive_uart_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4
+diff --git a/hw/misc/sifive_e_aon.c b/hw/misc/sifive_e_aon.c
+index e78f4f56725..ff2a7c18235 100644
+--- a/hw/misc/sifive_e_aon.c
++++ b/hw/misc/sifive_e_aon.c
+@@ -250,7 +250,7 @@ sifive_e_aon_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps sifive_e_aon_ops = {
+     .read = sifive_e_aon_read,
+     .write = sifive_e_aon_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 4
+diff --git a/hw/misc/sifive_e_prci.c b/hw/misc/sifive_e_prci.c
+index 400664aabae..a4a60e7b406 100644
+--- a/hw/misc/sifive_e_prci.c
++++ b/hw/misc/sifive_e_prci.c
+@@ -75,7 +75,7 @@ static void sifive_e_prci_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps sifive_e_prci_ops = {
+     .read = sifive_e_prci_read,
+     .write = sifive_e_prci_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4
+diff --git a/hw/misc/sifive_u_otp.c b/hw/misc/sifive_u_otp.c
+index 7205374bc39..cececd4f7a8 100644
+--- a/hw/misc/sifive_u_otp.c
++++ b/hw/misc/sifive_u_otp.c
+@@ -187,7 +187,7 @@ static void sifive_u_otp_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps sifive_u_otp_ops = {
+     .read = sifive_u_otp_read,
+     .write = sifive_u_otp_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4
+diff --git a/hw/misc/sifive_u_prci.c b/hw/misc/sifive_u_prci.c
+index f51588623ab..4674d5925ea 100644
+--- a/hw/misc/sifive_u_prci.c
++++ b/hw/misc/sifive_u_prci.c
+@@ -112,7 +112,7 @@ static void sifive_u_prci_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps sifive_u_prci_ops = {
+     .read = sifive_u_prci_read,
+     .write = sifive_u_prci_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 225394ea838..c3c9ed6469a 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2375,7 +2375,7 @@ static MemTxResult riscv_iommu_mmio_read(void *opaque, hwaddr addr,
+ static const MemoryRegionOps riscv_iommu_mmio_ops = {
+     .read_with_attrs = riscv_iommu_mmio_read,
+     .write_with_attrs = riscv_iommu_mmio_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 8,
+diff --git a/hw/sd/cadence_sdhci.c b/hw/sd/cadence_sdhci.c
+index d576855a1a8..8476baf67fb 100644
+--- a/hw/sd/cadence_sdhci.c
++++ b/hw/sd/cadence_sdhci.c
+@@ -122,7 +122,7 @@ static void cadence_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
+ static const MemoryRegionOps cadence_sdhci_ops = {
+     .read = cadence_sdhci_read,
+     .write = cadence_sdhci_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+diff --git a/hw/timer/ibex_timer.c b/hw/timer/ibex_timer.c
+index ee186521893..0f12531934d 100644
+--- a/hw/timer/ibex_timer.c
++++ b/hw/timer/ibex_timer.c
+@@ -234,7 +234,7 @@ static void ibex_timer_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps ibex_timer_ops = {
+     .read = ibex_timer_read,
+     .write = ibex_timer_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl.min_access_size = 4,
+     .impl.max_access_size = 4,
+ };
+diff --git a/hw/timer/sifive_pwm.c b/hw/timer/sifive_pwm.c
+index 780eaa50799..4f4f566cd4b 100644
+--- a/hw/timer/sifive_pwm.c
++++ b/hw/timer/sifive_pwm.c
+@@ -388,7 +388,7 @@ static void sifive_pwm_reset(DeviceState *dev)
+ static const MemoryRegionOps sifive_pwm_ops = {
+     .read = sifive_pwm_read,
+     .write = sifive_pwm_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+ static const VMStateDescription vmstate_sifive_pwm = {
 -- 
 2.53.0
 
