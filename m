@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A254F46123
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1AE3F4611C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fnt-00089X-9A; Mon, 23 Mar 2026 09:58:49 -0400
+	id 1w4fnw-0008DE-7W; Mon, 23 Mar 2026 09:58:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fno-00082e-RH
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:45 -0400
+ id 1w4fnr-000885-7S
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:48 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fnm-0006nT-CU
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:43 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fnp-0006nf-OV
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:47 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5719F20B7136;
- Mon, 23 Mar 2026 06:58:38 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5719F20B7136
+ by linux.microsoft.com (Postfix) with ESMTPSA id 108DA20B7138;
+ Mon, 23 Mar 2026 06:58:41 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 108DA20B7138
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274321;
- bh=5f5lBzYNJXSQHl9L3phyPddlzD4DT+ukgAveanWx3Z4=;
+ s=default; t=1774274324;
+ bh=Q99VB31zJMe+kwy7P7q526bcuOKPTBKL3PaUmcduhVg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nDlUuqEn44ECZzdbgOTVV2eqEPp/xykd4mfUDlDV/yjrXhWX3yYgXkpvBQ3IviHMK
- T6Iffl179PzLwnbtL3ewwffHUrLKt8rKTrgAmTrbztCUfWOfXbo1SSVrlujNQI0aTz
- pXYZ///WQnWppFBugbcCKUqZMcp5wyv0OedoeusQ=
+ b=UMugpAwPlir5DpKO9i8Us7blVSXe4E05zoCjdDxYfujRpzKhOP+wMH9RrbRjxoRfl
+ +/sLmlCFC+M7Yscfn0ou5YM1nneprBNHqAFcP41oByX5dsdslcXwPesGVg76Cr/z25
+ KCR+5wXkiJV8WnAvEwOMM23oRtTMJ4oHDKwxeRG0=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 06/32] accel/accel-irq: add generic commit_route_changes
-Date: Mon, 23 Mar 2026 14:57:46 +0100
-Message-Id: <20260323135812.383509-7-magnuskulke@linux.microsoft.com>
+Subject: [RFC 07/32] accel/mshv: add irq_routes to state
+Date: Mon, 23 Mar 2026 14:57:47 +0100
+Message-Id: <20260323135812.383509-8-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,107 +75,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A generic accel_irqchip_commit_route_changes() fn has been introduced for
-usage in the MSHV accelerator. The respective kvm_ fn can be removed
-since we handle the commit op in a generic way.
+This change adds fields related to irq routing to the MSHV state, following
+similar fields in the KVM implementation.
+
+So far the fields are only initialized, they will be used in subsequent
+commits for bookkeeping purposes and storing uncommitted interrupt routes.
+
+The TYPE_MSHV_ACCEL defines have been moved to the header.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c     | 10 +++-------
- hw/misc/ivshmem-pci.c |  2 +-
- hw/vfio/pci.c         |  4 ++--
- include/system/kvm.h  |  8 --------
- target/i386/kvm/kvm.c |  2 +-
- 5 files changed, 7 insertions(+), 19 deletions(-)
+ accel/mshv/irq.c          | 10 ++++++++++
+ accel/mshv/mshv-all.c     |  6 ++----
+ include/system/mshv.h     |  7 +++++++
+ include/system/mshv_int.h |  5 +++++
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 3815f6727c..7e71b52555 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -45,13 +45,9 @@ int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 3c238c33c3..82f2022c7c 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -396,3 +396,13 @@ int mshv_reserve_ioapic_msi_routes(int vm_fd)
  
- void accel_irqchip_commit_route_changes(AccelRouteChange *c)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
--    if (mshv_msi_via_irqfd_enabled()) {
--        mshv_irqchip_commit_routes();
--    }
--#endif
--    if (kvm_enabled()) {
--        kvm_irqchip_commit_route_changes(c);
-+    if (c->changes) {
-+        accel_irqchip_commit_routes();
-+        c->changes = 0;
-     }
+     return 0;
  }
++
++void mshv_init_irq_routing(MshvState *s)
++{
++    int gsi_count = MSHV_MAX_MSI_ROUTES;
++
++    s->irq_routes = g_malloc0(sizeof(*s->irq_routes));
++    s->nr_allocated_irq_routes = 0;
++    s->gsi_count = gsi_count;
++    s->used_gsi_bitmap = bitmap_new(gsi_count);
++}
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 04d248fe1d..8acb080db1 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -43,10 +43,6 @@
+ #include <err.h>
+ #include <sys/ioctl.h>
  
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index fa23562886..536475e9de 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -436,7 +436,7 @@ static void ivshmem_add_kvm_msi_virq(IVShmemState *s, int vector,
-         error_setg(errp, "kvm_irqchip_add_msi_route failed");
-         return;
-     }
--    kvm_irqchip_commit_route_changes(&c);
-+    accel_irqchip_commit_route_changes(&c);
- 
-     s->msi_vectors[vector].virq = ret;
-     s->msi_vectors[vector].pdev = pdev;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 6768523147..d1807888d5 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -695,7 +695,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-             } else {
-                 vfio_route_change = accel_irqchip_begin_route_changes();
-                 vfio_pci_add_kvm_msi_virq(vdev, vector, nr, true);
--                kvm_irqchip_commit_route_changes(&vfio_route_change);
-+                accel_irqchip_commit_route_changes(&vfio_route_change);
-                 vfio_connect_kvm_msi_virq(vector, nr);
-             }
-         }
-@@ -804,7 +804,7 @@ void vfio_pci_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
-     assert(vdev->defer_kvm_irq_routing);
-     vdev->defer_kvm_irq_routing = false;
- 
--    kvm_irqchip_commit_route_changes(&vfio_route_change);
-+    accel_irqchip_commit_route_changes(&vfio_route_change);
- 
-     for (i = 0; i < vdev->nr_vectors; i++) {
-         vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i], i);
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index fec24d2135..cdd1856ac5 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -476,14 +476,6 @@ int kvm_irqchip_update_msi_route(KVMState *s, int virq, MSIMessage msg,
-                                  PCIDevice *dev);
- void kvm_irqchip_commit_routes(KVMState *s);
- 
--static inline void kvm_irqchip_commit_route_changes(AccelRouteChange *c)
--{
--    if (c->changes) {
--        kvm_irqchip_commit_routes(KVM_STATE(c->accel));
--        c->changes = 0;
--    }
--}
+-#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
 -
- int kvm_irqchip_get_virq(KVMState *s);
- void kvm_irqchip_release_virq(KVMState *s, int virq);
+-DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
+-
+ bool mshv_allowed;
  
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index dc7c495f9c..b132e986f9 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6692,7 +6692,7 @@ void kvm_arch_init_irq_routing(KVMState *s)
-                 exit(1);
-             }
-         }
--        kvm_irqchip_commit_route_changes(&c);
-+        accel_irqchip_commit_route_changes(&c);
-     }
- }
+ MshvState *mshv_state;
+@@ -457,6 +453,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
  
+     mshv_state = s;
+ 
++    mshv_init_irq_routing(s);
++
+     register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
+                                   0, "mshv-memory");
+     memory_listener_register(&mshv_io_listener, &address_space_io);
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 1e96b3a606..0d1745315b 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -45,7 +45,13 @@ extern bool mshv_allowed;
+ #define mshv_msi_via_irqfd_enabled() mshv_enabled()
+ #endif
+ 
++#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
++
+ typedef struct MshvState MshvState;
++
++DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
++                         TYPE_MSHV_ACCEL)
++
+ extern MshvState *mshv_state;
+ 
+ /* interrupt */
+@@ -60,5 +66,6 @@ void mshv_irqchip_release_virq(int virq);
+ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
+                                         const EventNotifier *rn, int virq);
+ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
++void mshv_init_irq_routing(MshvState *s);
+ 
+ #endif
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 70631ca6ba..56fda76a9c 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -48,6 +48,11 @@ struct MshvState {
+     int nr_as;
+     MshvAddressSpace *as;
+     int fd;
++    /* irqchip routing */
++    struct mshv_user_irq_table *irq_routes;
++    int nr_allocated_irq_routes;
++    unsigned long *used_gsi_bitmap;
++    unsigned int gsi_count;
+ };
+ 
+ typedef struct MshvMsiControl {
 -- 
 2.34.1
 
