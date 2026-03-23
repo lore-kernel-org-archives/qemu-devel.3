@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 053BDEC01D4
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A34EC01D4
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4duT-0000Ld-NQ; Mon, 23 Mar 2026 07:57:29 -0400
+	id 1w4dz2-0005QI-4s; Mon, 23 Mar 2026 08:02:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4duR-0000Jv-D0
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:57:27 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4duP-0003ep-VE
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:57:27 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 2526B20B710C;
- Mon, 23 Mar 2026 04:57:22 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2526B20B710C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774267044;
- bh=3qKH/AOjRjhm/x8a9eu7OnZ3TkDZ/w2V+YOycx7vrL0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=gjmzbRuQro4yAxPIUF++q3ijPizn0qJVZqXMULdmR8Ii8ulfHDH1PSb9FYVt6b7w0
- hKqHmTHA5hrQCweOmy0z+fikM8qNbGoVospK7SAF4H0tn3XGzZxfe/OuftWvTwpJYT
- 3PXn76SGusD4qkwBb1rigr1v0NMEJFjoRLv7ULxg=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4dy5-00053y-E6
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:01:16 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4dy2-0004FQ-Ur
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:01:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 335375969F2;
+ Mon, 23 Mar 2026 13:01:09 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id sOo2rTibYsnP; Mon, 23 Mar 2026 13:01:06 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D7E3E5969E6; Mon, 23 Mar 2026 13:01:06 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D69475968DD;
+ Mon, 23 Mar 2026 13:01:06 +0100 (CET)
+Date: Mon, 23 Mar 2026 13:01:06 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Wei Liu <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 4/9] target/i386/mshv: change cpuid mask to UINT32_MAX
-Date: Mon, 23 Mar 2026 12:57:06 +0100
-Message-Id: <20260323115711.353793-5-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260323115711.353793-1-magnuskulke@linux.microsoft.com>
-References: <20260323115711.353793-1-magnuskulke@linux.microsoft.com>
+cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com, 
+ Chad Jablonski <chad@jablonski.xyz>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v6 0/8] ati-vga fixes
+In-Reply-To: <cover.1774110169.git.balaton@eik.bme.hu>
+Message-ID: <31834120-467d-0db2-c21a-9a8d6eb4d33f@eik.bme.hu>
+References: <cover.1774110169.git.balaton@eik.bme.hu>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,50 +67,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current implementation would only override the feature bits that are
-enabled, however we also want to consider disabled features, hence all
-bits are set on the masks in the hypercall argument.
+On Sat, 21 Mar 2026, BALATON Zoltan wrote:
+> OK I think these are all the fixes I'd like to add for 11.0 unless
+> some more bugs are found. Could you please check and merge?
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
----
- target/i386/mshv/mshv-cpu.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+Philippe are you queueing these too for 11.0? The last ati-vga patches 
+went through your tree because of fuloong2e and I don't think there's 
+anybody else who maintains hw/display.
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 4183727a86..e42b5a614d 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -538,22 +538,17 @@ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
-         .input.always_override = always_override,
-         .input.padding = 0,
-         /*
--         * With regard to masks - these are to specify bits to be overwritten
--         * The current CpuidEntry structure wouldn't allow to carry the masks
--         * in addition to the actual register values. For this reason, the
--         * masks are set to the exact values of the corresponding register bits
--         * to be registered for an overwrite. To view resulting values the
--         * hypervisor would return, HvCallGetVpCpuidValues hypercall can be
--         * used.
-+         * Masks specify which bits to override. Set to 0xFFFFFFFF to
-+         * override all bits with the values from the QEMU CPU model.
-          */
-         .result.eax = entry->eax,
--        .result.eax_mask = entry->eax,
-+        .result.eax_mask = 0xFFFFFFFF,
-         .result.ebx = entry->ebx,
--        .result.ebx_mask = entry->ebx,
-+        .result.ebx_mask = 0xFFFFFFFF,
-         .result.ecx = entry->ecx,
--        .result.ecx_mask = entry->ecx,
-+        .result.ecx_mask = 0xFFFFFFFF,
-         .result.edx = entry->edx,
--        .result.edx_mask = entry->edx,
-+        .result.edx_mask = 0xFFFFFFFF,
-     };
-     union hv_register_intercept_result_parameters parameters = {
-         .cpuid = cpuid_params,
--- 
-2.34.1
+(Last too patches don't yet have review but you could take the rest at 
+least.)
 
+Regards,
+BALATON Zoltan
+
+> v6:
+> - revert part of mouse pointer fix patch from v5 as it broke MacOS;
+> since I'm not sure the Linux image has no issues on real machine I'm
+> not trying to fix that now
+>
+> v5:
+> - fix typo on Patch 6
+> - add more patches to fix mouse pointer with big endian frame buffer
+>
+> v4:
+> - compile fix in patch 5
+> - new patch 6 to work around fuloong2e issue:
+> https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg06308.html
+> v3:
+> - fix patch 1 to work with 8 and 16 bit modes too
+> - new patch 5 to fix display updates with 8 and 16 bit modes
+> v2:
+> - fix patch 4 to really avoid warnings
+>
+> These are some fixes to ati-vga for 11.0.
+>
+> Patch 1 fixes problem reported in
+> https://lists.nongnu.org/archive/html/qemu-ppc/2026-01/msg00105.html
+>
+> Patch 2 fixes output from Solaris install iso
+> Rendering still not always correct as it uses some unimplemented
+> features but it's now readable. I did not test full install though.
+>
+> Patch 3 fixes vram overrun errors seen with Solaris and MorphOS when
+> crtc offset is non-zero (this happens on MorphOS when additional
+> screen is opened)
+>
+> Patch 4 tries to avoid Coverity warning matching what other places
+> already do
+>
+> Patch 5 fixes dirty region tracking when guest display depth is not
+> the same as the host's
+>
+> Patch 6 adds work around for fuloong2e to keep working with partial
+> machine model
+>
+> BALATON Zoltan (8):
+>  ati-vga: Fix colors when frame buffer endianness does not match host
+>  ati-vga: Also switch mode on HW cursor enable bit change
+>  ati-vga: Do not add crtc offset to src and dst data address
+>  ati-vga: Avoid warnings about sign extension
+>  ati-vga: Fix display updates in non-32 bit modes
+>  ati-vga: Add work around for fuloong2e
+>  ati-vga: Simplify pointer image handling
+>  ati-vga: Make sure hardware cursor data is within vram
+>
+> hw/display/ati.c     | 85 +++++++++++++++++++++++++-------------------
+> hw/display/ati_2d.c  | 47 ++++++++++++++++--------
+> hw/display/ati_int.h |  1 +
+> hw/mips/fuloong2e.c  |  1 +
+> 4 files changed, 82 insertions(+), 52 deletions(-)
+>
+>
 
