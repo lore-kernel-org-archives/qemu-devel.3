@@ -4,150 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C9DEC01AC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 153F8EC01A9
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:20:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4bRM-00036n-Ea; Mon, 23 Mar 2026 05:19:17 -0400
+	id 1w4bRU-00037S-4t; Mon, 23 Mar 2026 05:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4bRE-00036F-Mm
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bRF-00036M-1d
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:19:10 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bRD-00064O-4w
  for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:19:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4bRC-00064L-Hd
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:19:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774257545;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KTeQFrFtZ3TTAtzTXFv4yY0bTkUA1gUiT1MsBYwKgaU=;
- b=AZA93GvWlOmKwgQvZGOY7uUeTumkqY7mUVo1vnkaK3trJDIT5N15Z6CccixIFMDC0pbP55
- quWCJCjj8KoddR07tZF31A4leAxH77z/O8wrr6jRogTP9K2aTJOUsMQatihcrMFKCMWG/t
- tG8L0B7GwNg/lekrE8m3VAMli8FYm/o=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-FvhhEopMME-1V-JBltFnGg-1; Mon, 23 Mar 2026 05:19:03 -0400
-X-MC-Unique: FvhhEopMME-1V-JBltFnGg-1
-X-Mimecast-MFC-AGG-ID: FvhhEopMME-1V-JBltFnGg_1774257542
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-5a124b5672aso4067735e87.2
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:19:03 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b980c65b97aso326628866b.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774257542; x=1774862342; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=KTeQFrFtZ3TTAtzTXFv4yY0bTkUA1gUiT1MsBYwKgaU=;
- b=c+E7ok4mWUFuY6UxEUWvYySYy+hh8TXX1WAtEvGoVt5jP2rDCcu7qHMn+o1HVJvxHh
- MVqJZo9r6vbn+jGsSrOoFr62IWs3V5zvtimxyP5muVufn7JCbGwbbHGlffwQ5JT301VG
- fz3xP4OCNSlQyegUKbLnl5fE35mvLnV2Iu9ifKhKhx6m8+AuOcoTSbnDYpRQ1t5E4rWq
- GogBPk6Q9J8k8B3pzRPK7M538yHoWpXM+bENuFY0ZuzmI0Tv+mXgHARxvvbR2+TUrKkp
- RfheuMC/64N29pNqcGe38wVlwJFrHUT2vLAg/5ngQMQgk8n6+d6XtS+mfDJTOEWHaZBV
- v3WQ==
+ d=linaro.org; s=google; t=1774257545; x=1774862345; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JmE6j+51sZw8DesHq1vtw9Wgt0FnSm/wzBYCwVR7eQg=;
+ b=msEn7d5ZrpojlBAjqRKN936Dp1us8Li8JMh7FPUn2cFcKDycH0+2U0YaOH01rF/lsA
+ gifzOMziM8W7X3745zuPtz0LPpV2cDW9VIsav6eNBq0R7w9kVxsDBPPNdjejJLnLJiT7
+ lF8BNvK50GmW6KTIzr3tdPX1aita8aC/iKqGXLUD3iL7+7d9jPyTDXWsXt0wNpfmtHvs
+ t+kPTkkp21OH6LJiUTU+hTKso0hKCWkYfFfOBjDCiSqypxKcOqmvfPzbK2URWsFqVcwa
+ /bH4t1ygGkuWEeEIvofWqnwGNy1nsUI7HokMmV5OcrPOPxf4E2UJwmiOkkbLI7XQV3pw
+ wHsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774257542; x=1774862342;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KTeQFrFtZ3TTAtzTXFv4yY0bTkUA1gUiT1MsBYwKgaU=;
- b=sTPGwSphZpAKWcbkTB0ubCkO5qcD6wOBdk/rL9wVKf7gWdtRn1yPoSqlxwBWlxQlMf
- KkH63MrVoRs/Rh8Je9vI3ffP3FGIqN6c6VFVLiTvY+ZeOTXQJoL53UGo0oVeAF/Xr2iW
- ssuK+fHLfuQxMVA8HMS6i83RFEa4s16ZEnEtrKNHunDK0NiDEP/9NgCrXsIKg6uL7MMD
- T5Nj8MsU7lNtWL0xIOrmxjUvm0EpFG1+lD9V2/l/WedEAwqXY6ZxpNMDoPTznUIrr94H
- omViwiOGxpTlOZhkZSuz6H67SOx7pZiub2A372LENMD/EwgdfrOgQdgGdZYTyXJKf3t7
- Wo3g==
-X-Gm-Message-State: AOJu0Yztr5p1xf87hfNjqzjrNmzG86JcVqXs9XRqpku8Tq3q5lPIzfd8
- OZg6nwvUUjP47bA+b/yjj4kgnTkIXOOUXmyH+ax1ypFAImo08pD5Aebf41NATZCOXNK2bi8bzRz
- IbDQwT30GTMU+bB/wTOKroSDOPUiJT90UDKcGWwKbOHO+0ltTkeEXXVnd
-X-Gm-Gg: ATEYQzxKQQIK4HVaciRO+4FeeSMcRNZEHtM5b+FmYNEx8hgIiTkYEqm1ZfVdFXCBPn0
- 1U7d+/M2bIpVA4u2JD8syfGldXEVa8MKucD4qYK9f/4Ltf2h9MZZBQTTkbUPTFOBMd4Aowswm/1
- GJF1BJCBV+rAynu8/cA2Lroi+fAolA/91DSnRSksOvmcC7lTxHHuuqB9STIUWHC2UZiSCdv0gmZ
- HUCh8QuEXKu4pojYEZnv+NqP98NMCn1ScxiySSSthwB/NSJOBJYOQ9SKOi5I7h1SDmvSzCfIapa
- 0F0FJ4tqGQki4kNFiky1YsrBDVAjmnmwGGtpCEZdTiZtv1oFJeZMo4MUScGDZKy2yM+B05xXz3O
- /rpqplwW0kdCHNqG3rA==
-X-Received: by 2002:a05:6512:3510:b0:5a1:3e94:b7b2 with SMTP id
- 2adb3069b0e04-5a285b502d4mr2974345e87.32.1774257541915; 
- Mon, 23 Mar 2026 02:19:01 -0700 (PDT)
-X-Received: by 2002:a05:6512:3510:b0:5a1:3e94:b7b2 with SMTP id
- 2adb3069b0e04-5a285b502d4mr2974329e87.32.1774257541404; 
- Mon, 23 Mar 2026 02:19:01 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.47]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5a28519f2afsm2391451e87.18.2026.03.23.02.18.58
+ d=1e100.net; s=20251104; t=1774257545; x=1774862345;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JmE6j+51sZw8DesHq1vtw9Wgt0FnSm/wzBYCwVR7eQg=;
+ b=Sxu7j5KnSyxH1ALJXF+qgHAYSpf1WuqXhX9LwHD6ui9GzNsPNJHzYB5jb5wJx8wdcu
+ yu0OITOgmI4/sgCk3rjvXhEpJjrvmhs1cp8dwwi4rk4yGDtduNlJXGTrMUdZOCwdcieJ
+ rOVHXQv5Dr+qSvwkRxwVj1POwHc3cOmhIC9EbCsooGrxhDLfYVDW1lrEU7MZm+HoIjAy
+ IRwdIS3zW+45NEj9Hcq2ReXHaN/VaAHdxQJwqDEg2PGi6VDaSENiJzflN/WfnJLFMllM
+ 8WiOjkJn3V126Ga9FrtUNzFFwdGpOOtV5QVikLqIWR+pvUBKh1Qov7kuhXz0dLBzM1Qs
+ UKkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXO+XguwUraO7pQJ2lxKElBlWJfDIWWRfz4lTW9d4D6m5CnQRAwYdmyUGKuojOl0g1fUAIL0MAmd0e8@nongnu.org
+X-Gm-Message-State: AOJu0YxshN1puS12X3/M6j9q7AGuKJuVLiZM+/QndfZ1v7qdZzoDmRtP
+ P1C9YyF7N5TlFfBk9mR5nsbks+kR38JUYLyv1Dgci018lzWB8or6gf+vfzI015kNDEI=
+X-Gm-Gg: ATEYQzz5hbyvGwec1OYJ8NxsWKeNcQQNujSy4yyZEfql6RquEyHtgkBfPBqvP7amnoI
+ Aqp1dHQGDlIdQzdWZLY+mgRu1IG2DicbxrxsrCNfsHADXOp1v2k9Bm7NsSidvw9IOoc+izbRUm3
+ HRxwEZZurytOOswlqG0C0Vf/vgBEc4xHS1Sc81/rluO75ppyNN1de6GfSKr6lq9/mwF8fcqCDRv
+ tdmtEeDwXuv55kBKAKmH6OVikjLZQ489X4niheNUUchTlR/ikZ405t8t3jNyScJ3B++vY6P+jaS
+ V9L7ScZNH/wUJvFtJ20hqPAIo1fLxyJ4MJ9Vn3IlwY6RZQfbGcR+ymM2UFjg54jceriU8EHmfPP
+ +0KCqU8AVZ673VwFprAj0/QgL/KAeXgkQ4BqacrbhzFV9Y/PwKfhKrSMtXGFe7z+3Jo2CWbolp7
+ dVXdQ5GYsGodQH3WZ4Jw+gAwmf649yXsjJM1MeC2hAq+YGCzbNqZYSIGJJ5zQ5C4YeLQ==
+X-Received: by 2002:a17:907:c88d:b0:b97:98a4:1d6d with SMTP id
+ a640c23a62f3a-b982f1ecf63mr720708066b.16.1774257544782; 
+ Mon, 23 Mar 2026 02:19:04 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b98335de0b2sm466686166b.34.2026.03.23.02.19.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 02:19:00 -0700 (PDT)
-Message-ID: <a72aac29-a1ff-4016-8c08-354cda18c823@redhat.com>
-Date: Mon, 23 Mar 2026 10:18:57 +0100
+ Mon, 23 Mar 2026 02:19:03 -0700 (PDT)
+Message-ID: <7c724cf7-c0d8-4e8b-8c74-8a78ace9f4d2@linaro.org>
+Date: Mon, 23 Mar 2026 10:19:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: preserve PYTHONPATH entries
-To: Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20260323084739.1013748-1-hi@alyssa.is>
+Subject: Re: [PATCH-for-11.1 03/10] cpus: Introduce
+ CPUClass::legacy_monitor_defs hook
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260323084739.1013748-1-hi@alyssa.is>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
+ Anton Johansson <anjo@rev.ng>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>
+References: <20260320160811.28611-1-philmd@linaro.org>
+ <20260320160811.28611-4-philmd@linaro.org>
+ <7c54cfcf-fef6-41db-a1a8-382857371d3a@linaro.org>
+ <9ed408a5-6b25-4d4e-aefc-59b413058ca6@linaro.org>
+ <ada320b4-4204-43eb-a2da-5730641535de@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ada320b4-4204-43eb-a2da-5730641535de@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,48 +114,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/03/2026 09.47, Alyssa Ross wrote:
-> Otherwise, it's not possible to use a packaged qemu.qmp.
+On 21/3/26 20:51, Pierrick Bouvier wrote:
+> On 3/21/26 8:19 AM, Philippe Mathieu-Daudé wrote:
+>> On 20/3/26 23:01, Pierrick Bouvier wrote:
+>>> On 3/20/26 9:08 AM, Philippe Mathieu-Daudé wrote:
+>>>> Allow targets to register their legacy target_monitor_defs()
+>>>> in CPUClass; check it first in get_monitor_def() otherwise
+>>>> fall back to previous per-target helper.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>>    include/hw/core/cpu.h | 3 +++
+>>>>    monitor/hmp.c         | 3 ++-
+>>>>    2 files changed, 5 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+>>>> index 04e1f970caf..072f58bead5 100644
+>>>> --- a/include/hw/core/cpu.h
+>>>> +++ b/include/hw/core/cpu.h
+>>>> @@ -148,6 +148,8 @@ struct SysemuCPUOps;
+>>>>     * @max_as: Maximum valid index used to refer to the address spaces
+>>>> supported by
+>>>>     *          the architecture, i.e., to refer to CPUAddressSpaces in
+>>>>     *          CPUState::cpu_ases.
+>>>> + * @legacy_monitor_defs: Array of MonitorDef entries. This field is
+>>>> legacy,
+>>>> + *                       use @gdb_core_xml_file to dump registers
+>>>> instead.
+>>>>     *
+>>>>     * Represents a CPU family or model.
+>>>>     */
+>>>> @@ -174,6 +176,7 @@ struct CPUClass {
+>>>>        const char *gdb_core_xml_file;
+>>>>        const char * (*gdb_arch_name)(CPUState *cpu);
+>>>>        const char * (*gdb_get_core_xml_file)(CPUState *cpu);
+>>>> +    const MonitorDef *legacy_monitor_defs;
+>>>>        void (*disas_set_info)(const CPUState *cpu, disassemble_info
+>>>> *info);
+>>>> diff --git a/monitor/hmp.c b/monitor/hmp.c
+>>>> index c63da13e310..a2b6269d0ff 100644
+>>>> --- a/monitor/hmp.c
+>>>> +++ b/monitor/hmp.c
+>>>> @@ -24,6 +24,7 @@
+>>>>    #include "qemu/osdep.h"
+>>>>    #include <dirent.h>
+>>>> +#include "hw/core/cpu.h"
+>>>>    #include "hw/core/qdev.h"
+>>>>    #include "monitor-internal.h"
+>>>>    #include "monitor/hmp.h"
+>>>> @@ -1603,8 +1604,8 @@ void monitor_register_hmp_info_hrt(const char
+>>>> *name,
+>>>>     */
+>>>>    int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+>>>>    {
+>>>> -    const MonitorDef *md = target_monitor_defs();
+>>>>        CPUState *cs = mon_get_cpu(mon);
+>>>> +    const MonitorDef *md = cs->cc->legacy_monitor_defs ?:
+>>>> target_monitor_defs();
+>>>>        void *ptr;
+>>>>        uint64_t tmp = 0;
+>>>>        int ret;
+>>>
+>>> I'm not very fond of the "keep legacy callback for the N targets that
+>>> might require it". Either set it for every target, using a default
+>>> implementation if needed, or...
+>>>
+>>> As an alternative, we could use a dispatch function like:
+>>>
+>>> const MonitorDef *target_monitor_defs()
+>>> {
+>>>     switch (target_arch()) {
+>>>     case
+>>>       SYS_EMU_TARGET_X:
+>>>         return X_target_monitor_defs();
+>>>       SYS_EMU_TARGET_Y:
+>>>         return Y_target_monitor_defs();
+>>>     default:
+>>>       return default_target_monitor_defs();
+>>>     }
+>>> }
+>>>
+>>> Personally, I prefer the dispatch approach, as it's very clear to see
+>>> what happens per target. This solves the symbol duplication by manually
+>>> name them differently.
+>>>
+>>> It's just a suggestion though, and I'm ok to have a per target field, as
+>>> long as we enforce it to be set for all targets, and not using a
+>>> 'legacy' callback for a few of them only.
+>>>
+>>> Pick the one you prefer :)
+>>
+>> My preference would be to remove this legacy code altogether, as
+>> I'm pretty sure it isn't used anymore (see for the example the
+>> issues RISC-V folks had with it before giving up).
 > 
-> Fixes: 1497377857 ("tests/functional: Prepare the meson build system for the functional tests")
-> Signed-off-by: Alyssa Ross <hi@alyssa.is>
-> ---
->   tests/functional/meson.build | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
+> I'm not sure what you mean.
 > 
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 9bec5a0751..8c4d7f70e1 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -76,8 +76,10 @@ foreach speed : ['quick', 'thorough']
->       endif
->       test_env.set('QEMU_TEST_QEMU_BINARY', test_emulator.full_path())
->       test_env.set('QEMU_BUILD_ROOT', meson.project_build_root())
-> -    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-> -                               meson.current_source_dir())
-> +    test_env.prepend('PYTHONPATH',
-> +                     meson.project_source_root() / 'python',
-> +                     meson.current_source_dir(),
-> +                     separator : ':')
->   
->       # Define the GDB environment variable if gdb is available.
->       gdb = get_option('gdb')
-> @@ -96,8 +98,10 @@ foreach speed : ['quick', 'thorough']
->         teststamp = testname + '.tstamp'
->         test_precache_env = environment()
->         test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
-> -      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-> -                                          meson.current_source_dir())
-> +      test_precache_env.prepend('PYTHONPATH',
-> +                                meson.project_source_root() / 'python',
-> +                                meson.current_source_dir(),
-> +                                separator : ':')
->         precache = custom_target('func-precache-' + testname,
->                                  output: teststamp,
->                                  command: [python, testpath],
+> If it's not used, then we simply remove it.
+> If it's used, then let's keep it, but just make it consistent with all 
+> targets without having a special case named "legacy". If it's here to 
+> stay, it's not legacy.
 > 
-> base-commit: 8e711856d7639cbffa51405f2cc2366e3d9e3a23
+> Do you have something else in mind?
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+As a software engineer I prefer to deal with code. Unfortunately in my
+experience with QEMU development, removing legacy code means endless
+bikesheeding debates. I'm not judging they are bad, just they drain my
+time and energy. I agree legacy code should be removed, but again this
+is the QEMU project here, where we have bad habbits of adding new APIs
+with the promise of removing the previous one but never finish API
+conversions, not even marking legacy one. With that in mind, I think
+mentioning "legacy" is still a good first step.
 
+Anyway, I suppose what you are asking is me starting a poll for each
+target array and ask "Who is still using this SPARC 'canrestore' monitor
+command?" etc., wait 2 months for replies, then if possible deprecate
+them, wait 2 more releases, and eventually remove. Then we'll be able
+to link this file in single binary. As of today I'm not motivated enough
+for that so I'm looking for alternatives. Looking at mailing list
+archives I apparently started to tackle this 9 weeks ago, long enough to
+keep working on the single binary with HMP code disable until we get
+a working proof of concept; then revisit.
 
