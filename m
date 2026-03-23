@@ -4,139 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14456F483ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 20:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F360BF483F9
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 20:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4lRo-0005eL-Fs; Mon, 23 Mar 2026 16:00:25 -0400
+	id 1w4ltd-00047C-HM; Mon, 23 Mar 2026 16:29:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4lRj-0005dY-Dm
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 16:00:20 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w4ltZ-00046j-2S
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 16:29:06 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4lRf-0007ZI-Tu
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 16:00:18 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-35b97ed057cso1949155a91.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 13:00:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w4ltW-0003s5-Gn
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 16:29:04 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-c741db5d610so1322324a12.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 13:29:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774297740; cv=none;
+ d=google.com; s=arc-20240605;
+ b=cP951il9cg9w1SQh2mJrSqL8EC8gv98ZX4LUGbDvAFsQ0Gt1yvJCXmZZMrPapsoF9/
+ Z6QBA/BTwFvDGgxNyPkRfIjB8FFalq8suQljd7916x5lSD5/Ql7Fg6dxAKonPghwjPKV
+ wuV7oWI+7YLn/6gaJuiJ80/zXgCF6IdfYZBvqh2jtOPFPFFcCnpvAyzWfcNVmAiOpbht
+ B4MPxtKH/muN2n9ZaZRrL/KWTDSjSBjr5Q46Q2TYjtPQfLJUTPsHScabF1YOIh//MMji
+ Lr1xnT0gYG+BtKwZLnghq/3Hg9UhPb0L4sv9hU4O9DJ4kNvnRnN5WPiFiNuQTA/xlM4j
+ YnMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=TskLC0xPkAbGzYxFafunlFhvT4pz/sGBw4UZwgAKp4Q=;
+ fh=uv1tA9xklsQ23QRRVuZ5ICrQzjqlbIWk8lB36BxPINw=;
+ b=lxfosYLspValYq0Krh+r1Fe2t1Fd/S791cvy9mLO6VwhoQAvnmfYSLlin/v6yBJ+Gb
+ bGTzTDadX0S01AEhF8OmjsBWz6iNDlAm1tA3mjeYIsg4qwgCYeZ9hUF/wSyebmb5MInS
+ WkjF3MNDHu0ZOv58mAad/Qz4XL5+Ect5njhNdz/QjVE7My8WD695pqf9tXIRlDSpGqlS
+ 5t0h4Uv82euuEQDoYOp4tYDdLQyrqff496NzdAoePtHUmRdKw8GnXTcbnvSB2mP+TFAT
+ ZqGHcf3JTQ32mjZ7atQ2y20FJxtcYPT1+bHJ3RxJ/PnVYgoio6M6xX5aIpdpqvS836UL
+ py+Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774296014; x=1774900814; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=faybZzLh6YY9dmLNXfG9qYTZlVqHu8hU9KRd1rRespI=;
- b=EDIqpNgqeBSc8/6YDrdRdvHhVa/lZxfOzKackKaZXTX1vaMBl600ELLEppGBI2E3J+
- XQ//VmN4L1ROUDf0/c4ImJQ6ik+WF+5FjFTXclWde56tYlrPqUp9sfvXz+GbUgPUkZ+B
- Pju7GGbHp6CwnJtD/cHe6mK6AvqVxbLSB5TVYHUTw0GJfe3DMG+Y5DNsfRmOqZhyVx5v
- 3S8jSRVgAlQonDrnaNjsEtsezTChfsO9XBKt6H8nlp+nggNNZCj4QpUIgtwJxd4hPL+a
- 3AXva/pjyrsS1c+RcjdZ97zx096HXx41v+muRfLg5wWNYYgHTOeOrsvv3hjf5ZlBHeYL
- 1p/A==
+ d=gmail.com; s=20251104; t=1774297740; x=1774902540; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TskLC0xPkAbGzYxFafunlFhvT4pz/sGBw4UZwgAKp4Q=;
+ b=czVdoHBwlJonVzJKp+c+4KnCYaKYMM7v6/QPjKmpExySUIBbIhMt0t9r+WkXJyL3Oh
+ aFLcPhS8Sqbue57uT9sMlu3b+ieF/rXJ5dXG3orotf3qIoHVM5BO8rxwRsCGxljMvvUP
+ NRGRt1GXfZyvm9zn2RUKI0V3HjN5KxsjP9sIHCK42Heul1LzM6B8dH6beX3pUaoaZMD8
+ MnQFTGPSnAyKGtismb79n67NR6nRGEtHi8Kakfhejph3jRQd3d1CjWcu7tyYMrge8xoN
+ JchkjXexyQAhe65hg3fAwCdmoxwP2uMez+7HkU+X1rANNOteZHLOjeQXqVVK3TJdk/EU
+ ExAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774296014; x=1774900814;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=faybZzLh6YY9dmLNXfG9qYTZlVqHu8hU9KRd1rRespI=;
- b=mOVL/DDa2U5ATw4ZhoKO9AcCJ/kt/M2NbteuEGOXSqZwzvV2GKw/9mul1x9h/FuZiP
- yhaAX/VHwe8bEDtg0JJC/VB9XISBwfUU1F9ZLxQ4VUwfld2h+IhV60jOaZLAiC+qZsdb
- dotNpb3Zx0HrwouWtCRQQNHb9ywRcZwXedL5XPeIW8Z227WXkd8ewir3vBJO9RVVJzDc
- sgDOWWeYrjxiZXYpEwLdjc7BhgpdXovx+o6qOalu74bY/HEhRzME3H/BUTHF9Mc27+NQ
- QybmPZrWgKItzDSaBQtrdbowthx6FtJQjIQ4dTfhoB99zxSXNShl/ou1gbcdna+0Rllk
- xD8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhJqiz46Uw8UnpBp0ramK+1mAbcNHIl//Q9DsIYGU6YFt9F8gF8EQQLdcyAqLOnY16YzmQb7yKc8E4@nongnu.org
-X-Gm-Message-State: AOJu0YwnaoJujm9NPrl1t0/Zo1NfrRDhrYiEO2qP7NnZHGj2cKsT8Y/c
- XaOXN9G23fL4bosHPAZppA0lAge1MKjL5nmKj/D7y7Bha7nOdgXm0d4MLjhogyhc5M4=
-X-Gm-Gg: ATEYQzzoPmVQ+EO5k07oucltc2L6xL4aLeRqUjG0ZpHvoX5iM0IY4QsXfr2jgIW6ZAw
- zv1gxJqbqaGYpXlRQUU/m2EsFWGJ315ODV0cREAnYV1ICDjXLR9lFqBY658oCh4HQ1dcfIfFh5c
- V8sQUXuHtZ6HqG8ILQh0EkOVfktmbLCKlxCLu5vVnwmBRYPVVj+NqE9f9g/XSPY0zPL3Qq2qp+i
- AwaY8mfrdvM3u+Zk9n9hrIxM3qTw6C3ItZd9gL0t4G6VEJl2WVD8nG9neTtamwURqZ9oesHQJeF
- Dpxhj1/+E4fQ1IzJ7+znOxyQIOj69LVIZanvfA3F6htoOlGpus9CcNYHAL+UbF/tiB65coomEBB
- zQedcjZU5tJBmUmfjF6kkP8+tNhYIJax3Irzbpmn1zc+iwvpCjZVn7ZYlzdiSq2Of50e4eOOkca
- P3ycCiA6tsVMM0RbJXcI3s+tfLZ+7AVdoye96HxURH0+UuYKD4wCkZkHVti62hVGpIq4d7DLwEU
- j5u8XI=
-X-Received: by 2002:a17:90b:35c3:b0:35b:8d89:719a with SMTP id
- 98e67ed59e1d1-35bd2bf6ce7mr10589773a91.15.1774296014052; 
- Mon, 23 Mar 2026 13:00:14 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bc6017492sm13884139a91.5.2026.03.23.13.00.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 13:00:13 -0700 (PDT)
-Message-ID: <9f6d106a-878f-4fdf-ba30-1af86a2a0500@linaro.org>
-Date: Mon, 23 Mar 2026 13:00:12 -0700
+ d=1e100.net; s=20251104; t=1774297740; x=1774902540;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TskLC0xPkAbGzYxFafunlFhvT4pz/sGBw4UZwgAKp4Q=;
+ b=afNGaFvr5qc1iMpsFM6hECeUnDCfnekMl+Xji3YfhuGy6aGYVGShDlivIX7w3hfrZ3
+ yM0AS5XDwlzfK0P9GYnZKz6K6LZz0sng2MILBeH5deKedTJNzcGspVBrOeddvqfySLjz
+ TyJOEK8fNv3Q4ZlX4BxdGfPN96I7dxnfitNgvvGtLrVIlFRFRmMJLodBh7Q8LSiG96aP
+ 2sGzc1UpqCWZ7ynltX6ytnooT6gGxk158ZGqNFT9iVKigwlqO36o7TtwIapUrr8i0Ytz
+ LKRzwgmtdFkfHQErWwNx0eho8pKN3Z5bvXxkC4qv5bff/BDYl5C8hFqA6XXwrebVgI9n
+ 93OQ==
+X-Gm-Message-State: AOJu0YxiHIKsVJfR697OFF7J54KPRrh/dI6faeKXBPHfJFYzUnZcS3pC
+ 6RsfwyIj4dZPom9hJqhheYtExxesy+4C54zijT0lT82pGOlHAb2DSNg3tRvVINnqmeqA/oXSZcI
+ lKaMB/r3CsHUWNryPQ6eu0G24BhBHEB0=
+X-Gm-Gg: ATEYQzw0yREt41IhXkzt9K43u7fR4TztggEmg3V1xmYDS7yFsB7c2DRXB4qL8qstwPg
+ g9ryAdXjUNblt4+5rwYJw76T/SinzPcrI2M+pDCJJj00xDMc9D03UAOOxMIG3uqFRFmwibe+7la
+ MNG1xt3JkhHRyfShkcivifequWHeCnvJJTmRvQ3RuDjPsVGSOX3MTQSG8eZRmFNNHg0ur2egGQj
+ R5+pH9i5GtI4eU6oMqiNZ0crK2ZCTcU4qGesaG3jr4uQ7a8sCtNbIdmWJWWe/VNEqmBvHXzVETG
+ SuwMIOPMNtIQ4Fh9WIXnL2JXl+Qs35+t9MYVZsg=
+X-Received: by 2002:a17:902:f605:b0:2b0:7d6f:4627 with SMTP id
+ d9443c01a7336-2b0827d63c4mr119822945ad.37.1774297739910; Mon, 23 Mar 2026
+ 13:28:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 03/10] cpus: Introduce
- CPUClass::legacy_monitor_defs hook
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Anton Johansson <anjo@rev.ng>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>
-References: <20260320160811.28611-1-philmd@linaro.org>
- <20260320160811.28611-4-philmd@linaro.org>
- <7c54cfcf-fef6-41db-a1a8-382857371d3a@linaro.org>
- <9ed408a5-6b25-4d4e-aefc-59b413058ca6@linaro.org>
- <ada320b4-4204-43eb-a2da-5730641535de@linaro.org>
- <7c724cf7-c0d8-4e8b-8c74-8a78ace9f4d2@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <7c724cf7-c0d8-4e8b-8c74-8a78ace9f4d2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
+References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <831949008a7266559a6f313f99a394cd68cc9846.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <831949008a7266559a6f313f99a394cd68cc9846.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 23 Mar 2026 14:28:48 -0600
+X-Gm-Features: AaiRm52AZ16jFio0aekc6_Jk34kOyKRINmh60iZ_PVfxtpKBeJUpJCaIwiKpmXE
+Message-ID: <CAATN3NrZVn6W0pAyshZ7mhYVcY+gtRk9tJwz5WLLzxoPTDupwA@mail.gmail.com>
+Subject: Re: [PATCH 04/13] target/hexagon: add v68 HVX IEEE float arithmetic
+ insns
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Content-Type: multipart/alternative; boundary="000000000000836147064db6e2b5"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,147 +117,548 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/23/26 2:19 AM, Philippe Mathieu-Daudé wrote:
-> On 21/3/26 20:51, Pierrick Bouvier wrote:
->> On 3/21/26 8:19 AM, Philippe Mathieu-Daudé wrote:
->>> On 20/3/26 23:01, Pierrick Bouvier wrote:
->>>> On 3/20/26 9:08 AM, Philippe Mathieu-Daudé wrote:
->>>>> Allow targets to register their legacy target_monitor_defs()
->>>>> in CPUClass; check it first in get_monitor_def() otherwise
->>>>> fall back to previous per-target helper.
->>>>>
->>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>> ---
->>>>>     include/hw/core/cpu.h | 3 +++
->>>>>     monitor/hmp.c         | 3 ++-
->>>>>     2 files changed, 5 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
->>>>> index 04e1f970caf..072f58bead5 100644
->>>>> --- a/include/hw/core/cpu.h
->>>>> +++ b/include/hw/core/cpu.h
->>>>> @@ -148,6 +148,8 @@ struct SysemuCPUOps;
->>>>>      * @max_as: Maximum valid index used to refer to the address spaces
->>>>> supported by
->>>>>      *          the architecture, i.e., to refer to CPUAddressSpaces in
->>>>>      *          CPUState::cpu_ases.
->>>>> + * @legacy_monitor_defs: Array of MonitorDef entries. This field is
->>>>> legacy,
->>>>> + *                       use @gdb_core_xml_file to dump registers
->>>>> instead.
->>>>>      *
->>>>>      * Represents a CPU family or model.
->>>>>      */
->>>>> @@ -174,6 +176,7 @@ struct CPUClass {
->>>>>         const char *gdb_core_xml_file;
->>>>>         const char * (*gdb_arch_name)(CPUState *cpu);
->>>>>         const char * (*gdb_get_core_xml_file)(CPUState *cpu);
->>>>> +    const MonitorDef *legacy_monitor_defs;
->>>>>         void (*disas_set_info)(const CPUState *cpu, disassemble_info
->>>>> *info);
->>>>> diff --git a/monitor/hmp.c b/monitor/hmp.c
->>>>> index c63da13e310..a2b6269d0ff 100644
->>>>> --- a/monitor/hmp.c
->>>>> +++ b/monitor/hmp.c
->>>>> @@ -24,6 +24,7 @@
->>>>>     #include "qemu/osdep.h"
->>>>>     #include <dirent.h>
->>>>> +#include "hw/core/cpu.h"
->>>>>     #include "hw/core/qdev.h"
->>>>>     #include "monitor-internal.h"
->>>>>     #include "monitor/hmp.h"
->>>>> @@ -1603,8 +1604,8 @@ void monitor_register_hmp_info_hrt(const char
->>>>> *name,
->>>>>      */
->>>>>     int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
->>>>>     {
->>>>> -    const MonitorDef *md = target_monitor_defs();
->>>>>         CPUState *cs = mon_get_cpu(mon);
->>>>> +    const MonitorDef *md = cs->cc->legacy_monitor_defs ?:
->>>>> target_monitor_defs();
->>>>>         void *ptr;
->>>>>         uint64_t tmp = 0;
->>>>>         int ret;
->>>>
->>>> I'm not very fond of the "keep legacy callback for the N targets that
->>>> might require it". Either set it for every target, using a default
->>>> implementation if needed, or...
->>>>
->>>> As an alternative, we could use a dispatch function like:
->>>>
->>>> const MonitorDef *target_monitor_defs()
->>>> {
->>>>      switch (target_arch()) {
->>>>      case
->>>>        SYS_EMU_TARGET_X:
->>>>          return X_target_monitor_defs();
->>>>        SYS_EMU_TARGET_Y:
->>>>          return Y_target_monitor_defs();
->>>>      default:
->>>>        return default_target_monitor_defs();
->>>>      }
->>>> }
->>>>
->>>> Personally, I prefer the dispatch approach, as it's very clear to see
->>>> what happens per target. This solves the symbol duplication by manually
->>>> name them differently.
->>>>
->>>> It's just a suggestion though, and I'm ok to have a per target field, as
->>>> long as we enforce it to be set for all targets, and not using a
->>>> 'legacy' callback for a few of them only.
->>>>
->>>> Pick the one you prefer :)
->>>
->>> My preference would be to remove this legacy code altogether, as
->>> I'm pretty sure it isn't used anymore (see for the example the
->>> issues RISC-V folks had with it before giving up).
->>
->> I'm not sure what you mean.
->>
->> If it's not used, then we simply remove it.
->> If it's used, then let's keep it, but just make it consistent with all
->> targets without having a special case named "legacy". If it's here to
->> stay, it's not legacy.
->>
->> Do you have something else in mind?
-> 
-> As a software engineer I prefer to deal with code. Unfortunately in my
-> experience with QEMU development, removing legacy code means endless
-> bikesheeding debates. I'm not judging they are bad, just they drain my
-> time and energy. I agree legacy code should be removed, but again this
-> is the QEMU project here, where we have bad habbits of adding new APIs
-> with the promise of removing the previous one but never finish API
-> conversions, not even marking legacy one. With that in mind, I think
-> mentioning "legacy" is still a good first step.
+--000000000000836147064db6e2b5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Mar 23, 2026 at 7:15=E2=80=AFAM Matheus Tavares Bernardino <
+matheus.bernardino@oss.qualcomm.com> wrote:
+
+> Add HVX IEEE floating-point arithmetic instructions:
+> - vmpy_sf_sf, vmpy_sf_hf, vmpy_hf_hf: multiply operations
+> - vdmpy_sf_hf: dot-product multiply
+> - vmpy_sf_hf_acc, vmpy_hf_hf_acc, vdmpy_sf_hf_acc: multiply-accumulate
+> - vadd_sf_sf, vsub_sf_sf, vadd_sf_hf, vsub_sf_hf: add/sub with sf output
+> - vadd_hf_hf, vsub_hf_hf: add/sub with hf output
+>
+> Signed-off-by: Matheus Tavares Bernardino <
+> matheus.bernardino@oss.qualcomm.com>
+> ---
+>  target/hexagon/mmvec/kvx_ieee.h              | 47 ++++++++++
+>  target/hexagon/mmvec/macros.h                |  1 +
+>  target/hexagon/mmvec/mmvec.h                 |  2 +
+>  target/hexagon/attribs_def.h.inc             |  4 +
+>  target/hexagon/mmvec/kvx_ieee.c              | 87 ++++++++++++++++++
+>  target/hexagon/hex_common.py                 |  1 +
+>  target/hexagon/imported/mmvec/encode_ext.def | 18 ++++
+>  target/hexagon/imported/mmvec/ext.idef       | 93 ++++++++++++++++++++
+>  target/hexagon/meson.build                   |  1 +
+>  9 files changed, 254 insertions(+)
+>  create mode 100644 target/hexagon/mmvec/kvx_ieee.h
+>  create mode 100644 target/hexagon/mmvec/kvx_ieee.c
 >
 
-I agree, and it's *not* your responsibility to refactor any piece of 
-code you have to touch for another purpose. In this case, I was just 
-suggesting to make the callback consistent between all targets (i.e. 
-force all them to implement it) instead of having a conditional legacy 
-callback.
+I'm curious why the prefix is kvx instead of hvx.
 
-All the rest of the series (symbol renaming, etc) stays intact.
 
-> Anyway, I suppose what you are asking is me starting a poll for each
-> target array and ask "Who is still using this SPARC 'canrestore' monitor
-> command?" etc., wait 2 months for replies, then if possible deprecate
-> them, wait 2 more releases, and eventually remove. Then we'll be able
-> to link this file in single binary. As of today I'm not motivated enough
-> for that so I'm looking for alternatives. Looking at mailing list
-> archives I apparently started to tackle this 9 weeks ago, long enough to
-> keep working on the single binary with HMP code disable until we get
-> a working proof of concept; then revisit.
+>
+> diff --git a/target/hexagon/mmvec/kvx_ieee.h
+> b/target/hexagon/mmvec/kvx_ieee.h
+> new file mode 100644
+> index 0000000000..e92ddebeb9
+> --- /dev/null
+> +++ b/target/hexagon/mmvec/kvx_ieee.h
+> @@ -0,0 +1,47 @@
+> +/*
+> + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + *  SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HEXAGON_KVX_IEEE_H
+> +#define HEXAGON_KVX_IEEE_H
+> +
+> +#include "fpu/softfloat.h"
+> +
+> +/* Hexagon canonical NaN */
+> +#define FP32_DEF_NAN      0x7FFFFFFF
+> +#define FP16_DEF_NAN      0x7FFF
+>
 
-I was just curious about your mention "My preference would be to remove 
-this legacy code altogether", but no one expects you to do it.
-I think having consistent callbacks through all targets is a very 
-acceptable solution. The only difference with your series is to rename 
-"legacy*" and set a default callback for all other targets.
+These are the same as the scalar core, right?  If so, there's already a
+call to set_float_default_nan_pattern in hexagon_cpu_reset_hold.
 
-If it's creating too much friction, I can also hear it and accept your 
-current series as it is.
+If the patterns are different, you'll need to call
+set_float_default_nan_pattern before each scalar FP instruction and before
+each HVX FP instruction.
 
-Regards,
-Pierrick
+
+> +
+> +/*
+> + * IEEE - FP ADD/SUB/MPY instructionsFP
+> + */
+> +uint32_t fp_mult_sf_sf(uint32_t a1, uint32_t a2, float_status *fp_status=
+);
+> +uint32_t fp_add_sf_sf(uint32_t a1, uint32_t a2, float_status *fp_status)=
+;
+> +uint32_t fp_sub_sf_sf(uint32_t a1, uint32_t a2, float_status *fp_status)=
+;
+> +
+> +uint16_t fp_mult_hf_hf(uint16_t a1, uint16_t a2, float_status *fp_status=
+);
+> +uint16_t fp_add_hf_hf(uint16_t a1, uint16_t a2, float_status *fp_status)=
+;
+> +uint16_t fp_sub_hf_hf(uint16_t a1, uint16_t a2, float_status *fp_status)=
+;
+> +
+> +uint32_t fp_mult_sf_hf(uint16_t a1, uint16_t a2, float_status *fp_status=
+);
+> +uint32_t fp_add_sf_hf(uint16_t a1, uint16_t a2, float_status *fp_status)=
+;
+> +uint32_t fp_sub_sf_hf(uint16_t a1, uint16_t a2, float_status *fp_status)=
+;
+> +
+> +/*
+> + * IEEE - FP Accumulate instructions
+> + */
+> +uint16_t fp_mult_hf_hf_acc(uint16_t a1, uint16_t a2, uint16_t acc,
+> +                           float_status *fp_status);
+> +uint32_t fp_mult_sf_hf_acc(uint16_t a1, uint16_t a2, uint32_t acc,
+> +                           float_status *fp_status);
+> +
+> +/*
+> + * IEEE - FP Reduce instructions
+> + */
+> +uint32_t fp_vdmpy(uint16_t a1, uint16_t a2, uint16_t a3, uint16_t a4,
+> +                  float_status *fp_status);
+> +uint32_t fp_vdmpy_acc(uint32_t acc, uint16_t a1, uint16_t a2, uint16_t a=
+3,
+> +                      uint16_t a4, float_status *fp_status);
+> +
+>
+
+Consider using macros similar to the ones in the .c file to create these
+protos.
+
+
+> +#endif
+> diff --git a/target/hexagon/mmvec/kvx_ieee.c
+> b/target/hexagon/mmvec/kvx_ieee.c
+> new file mode 100644
+> index 0000000000..b763899aa3
+> --- /dev/null
+> +++ b/target/hexagon/mmvec/kvx_ieee.c
+> @@ -0,0 +1,87 @@
+> +/*
+> + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + *  SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "kvx_ieee.h"
+> +
+> +#define DEF_FP_INSN_2(name, rt, a1t, a2t, op) \
+> +    uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \
+> +                           float_status *fp_status) { \
+> +        float##a1t f1 =3D make_float##a1t(a1); \
+> +        float##a2t f2 =3D make_float##a2t(a2); \
+> +        \
+> +        if (float##a1t##_is_any_nan(f1) || float##a2t##_is_any_nan(f2)) =
+{
+> \
+> +            return FP##rt##_DEF_NAN; \
+> +        } \
+>
+
+These nan checks shouldn't be needed if you're using QEMU softfloat
+properly.
+
+
+> +        float##rt result =3D op; \
+> +        \
+> +        if (float##rt##_is_any_nan(result)) { \
+> +            return FP##rt##_DEF_NAN; \
+> +        } \
+>
+
+Ditto
+
+
+> +        return result; \
+> +    }
+> +
+> +#define DEF_FP_INSN_3(name, rt, a1t, a2t, a3t, op) \
+> +    uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \
+> +                           uint##a3t##_t a3, float_status *fp_status) { =
+\
+> +        float##a1t f1 =3D make_float##a1t(a1); \
+> +        float##a2t f2 =3D make_float##a2t(a2); \
+> +        float##a3t f3 =3D make_float##a3t(a3); \
+> +        \
+> +        if (float##a1t##_is_any_nan(f1) || float##a2t##_is_any_nan(f2) |=
+|
+> \
+> +            float##a3t##_is_any_nan(f3)) \
+> +            return FP##rt##_DEF_NAN; \
+>
+
+Ditto
+
+
+> +        \
+> +        float##rt result =3D op; \
+> +        \
+> +        if (float##rt##_is_any_nan(result)) \
+> +            return FP##rt##_DEF_NAN; \
+>
+
+Ditto
+
+
+> +        return result; \
+> +    }
+> +
+> diff --git a/target/hexagon/imported/mmvec/ext.idef
+> b/target/hexagon/imported/mmvec/ext.idef
+> index 03d31f6181..3f0d8e366e 100644
+> --- a/target/hexagon/imported/mmvec/ext.idef
+> +++ b/target/hexagon/imported/mmvec/ext.idef
+> @@ -2895,9 +2895,102 @@ EXTINSN(V6_vprefixqw,"Vd32.w=3Dprefixsum(Qv4)",
+>  ATTRIBS(A_EXTENSION,A_CVI,A_CVI_
+>      }
+>      } )
+>
+> +/* KVX - IEEE FP Instructions */
+>
+> +/* Single pipe, 32-bit output */
+> +#define ITERATOR_INSN_IEEE_FP_32(WIDTH,TAG,SYNTAX,DESCR,CODE) \
+> +EXTINSN(V6_##TAG, SYNTAX, \
+> +ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_OUT_32), =
+\
+> +DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
+>
+> +/* Single pipe, 16-bit output */
+> +#define ITERATOR_INSN_IEEE_FP_16(WIDTH,TAG,SYNTAX,DESCR,CODE) \
+> +EXTINSN(V6_##TAG, SYNTAX, \
+> +ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_OUT_16), =
+\
+> +DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
+>
+> +/* Two pipes: P2 & P3, single output: P2, 32-bit output */
+> +#define
+> ITERATOR_INSN_IEEE_FP_DOUBLE_SINGLE_32(WIDTH,TAG,SYNTAX,DESCR,CODE) \
+> +EXTINSN(V6_##TAG, SYNTAX, \
+> +ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX_DV,A_HVX_IEEE_FP_OUT_32=
+),
+> \
+> +DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
+> +
+> +/* Two pipes: P2 & P3, two outputs, 32-bit output */
+> +#define ITERATOR_INSN_IEEE_FP_DOUBLE_32(WIDTH,TAG,SYNTAX,DESCR,CODE) \
+> +EXTINSN(V6_##TAG, SYNTAX, \
+> +ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX_DV,A_HVX_IEEE_FP_OUT_32=
+),
+> \
+> +DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
+> +
+> +/*
+> + * single pipe, accumulate instruction, produces 16-bit output, requires
+> 16-bit
+> + * accumulate input
+> + */
+> +#define ITERATOR_INSN_IEEE_FP_ACC_16(WIDTH,TAG,SYNTAX,DESCR,CODE) \
+> +EXTINSN(V6_##TAG, SYNTAX, \
+> +ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_ACC,A_HVX=
+_IEEE_FP_OUT_16,A_CVI_VX_NO_TMP_LD),
+> \
+> +DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
+> +
+> +/*
+> + * single pipe, accumulate instruction, produces 32-bit output, requires
+> 32-bit
+> + * accumulate input
+> + */
+> +#define ITERATOR_INSN_IEEE_FP_ACC_32(WIDTH,TAG,SYNTAX,DESCR,CODE) \
+> +EXTINSN(V6_##TAG, SYNTAX, \
+> +ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_ACC,A_HVX=
+_IEEE_FP_OUT_32,A_CVI_VX_NO_TMP_LD),
+> \
+> +DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
+> +
+> +/* IEEE FP multiply instructions */
+> +ITERATOR_INSN_IEEE_FP_DOUBLE_SINGLE_32(32, vmpy_sf_sf,
+> +    "Vd32.sf=3Dvmpy(Vu32.sf,Vv32.sf)", "Vector IEEE mul: sf",
+> +    VdV.sf[i] =3D fp_mult_sf_sf(VuV.sf[i], VvV.sf[i], &env->fp_status))
+>
+
+Do these instructions interact with the FP bits in USR (e.g., rounding
+mode, FP exceptions)?
+
+If so, you'll need something similar to arch_fpop_start/arch_fpop_end at
+the start/end of each helper.  This can be done in gen_helper_funcs.py.
+
+Thanks,
+Taylor
+
+--000000000000836147064db6e2b5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 23,=
+ 2026 at 7:15=E2=80=AFAM Matheus Tavares Bernardino &lt;<a href=3D"mailto:m=
+atheus.bernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Add =
+HVX IEEE floating-point arithmetic instructions:<br>
+- vmpy_sf_sf, vmpy_sf_hf, vmpy_hf_hf: multiply operations<br>
+- vdmpy_sf_hf: dot-product multiply<br>
+- vmpy_sf_hf_acc, vmpy_hf_hf_acc, vdmpy_sf_hf_acc: multiply-accumulate<br>
+- vadd_sf_sf, vsub_sf_sf, vadd_sf_hf, vsub_sf_hf: add/sub with sf output<br=
+>
+- vadd_hf_hf, vsub_hf_hf: add/sub with hf output<br>
+<br>
+Signed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheus.ber=
+nardino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm=
+.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/mmvec/kvx_ieee.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 | 47 ++++++++++<br>
+=C2=A0target/hexagon/mmvec/macros.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 1 +<br>
+=C2=A0target/hexagon/mmvec/mmvec.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +<br>
+=C2=A0target/hexagon/attribs_def.h.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0|=C2=A0 4 +<br>
+=C2=A0target/hexagon/mmvec/kvx_ieee.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 | 87 ++++++++++++++++++<br>
+=C2=A0target/hexagon/hex_common.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
+=C2=A0target/hexagon/imported/mmvec/encode_ext.def | 18 ++++<br>
+=C2=A0target/hexagon/imported/mmvec/ext.idef=C2=A0 =C2=A0 =C2=A0 =C2=A0| 93=
+ ++++++++++++++++++++<br>
+=C2=A0target/hexagon/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
+=C2=A09 files changed, 254 insertions(+)<br>
+=C2=A0create mode 100644 target/hexagon/mmvec/kvx_ieee.h<br>
+=C2=A0create mode 100644 target/hexagon/mmvec/kvx_ieee.c<br></blockquote><d=
+iv><br></div><div>I&#39;m curious why the prefix is kvx instead of hvx.</di=
+v><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+diff --git a/target/hexagon/mmvec/kvx_ieee.h b/target/hexagon/mmvec/kvx_iee=
+e.h<br>
+new file mode 100644<br>
+index 0000000000..e92ddebeb9<br>
+--- /dev/null<br>
++++ b/target/hexagon/mmvec/kvx_ieee.h<br>
+@@ -0,0 +1,47 @@<br>
++/*<br>
++ *=C2=A0 Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries=
+.<br>
++ *<br>
++ *=C2=A0 SPDX-License-Identifier: GPL-2.0-or-later<br>
++ */<br>
++<br>
++#ifndef HEXAGON_KVX_IEEE_H<br>
++#define HEXAGON_KVX_IEEE_H<br>
++<br>
++#include &quot;fpu/softfloat.h&quot;<br>
++<br>
++/* Hexagon canonical NaN */<br>
++#define FP32_DEF_NAN=C2=A0 =C2=A0 =C2=A0 0x7FFFFFFF<br>
++#define FP16_DEF_NAN=C2=A0 =C2=A0 =C2=A0 0x7FFF<br></blockquote><div><br><=
+/div><div>These are the same as the scalar core, right?=C2=A0 If so, there&=
+#39;s already a call to set_float_default_nan_pattern in hexagon_cpu_reset_=
+hold.</div><div><br></div><div>If the patterns are different, you&#39;ll ne=
+ed to call set_float_default_nan_pattern before each scalar FP instruction =
+and before each HVX FP instruction.</div><div>=C2=A0</div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
++<br>
++/*<br>
++ * IEEE - FP ADD/SUB/MPY instructionsFP<br>
++ */<br>
++uint32_t fp_mult_sf_sf(uint32_t a1, uint32_t a2, float_status *fp_status);=
+<br>
++uint32_t fp_add_sf_sf(uint32_t a1, uint32_t a2, float_status *fp_status);<=
+br>
++uint32_t fp_sub_sf_sf(uint32_t a1, uint32_t a2, float_status *fp_status);<=
+br>
++<br>
++uint16_t fp_mult_hf_hf(uint16_t a1, uint16_t a2, float_status *fp_status);=
+<br>
++uint16_t fp_add_hf_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<=
+br>
++uint16_t fp_sub_hf_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<=
+br>
++<br>
++uint32_t fp_mult_sf_hf(uint16_t a1, uint16_t a2, float_status *fp_status);=
+<br>
++uint32_t fp_add_sf_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<=
+br>
++uint32_t fp_sub_sf_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<=
+br>
++<br>
++/*<br>
++ * IEEE - FP Accumulate instructions<br>
++ */<br>
++uint16_t fp_mult_hf_hf_acc(uint16_t a1, uint16_t a2, uint16_t acc,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0float_status *fp_status);<br>
++uint32_t fp_mult_sf_hf_acc(uint16_t a1, uint16_t a2, uint32_t acc,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0float_status *fp_status);<br>
++<br>
++/*<br>
++ * IEEE - FP Reduce instructions<br>
++ */<br>
++uint32_t fp_vdmpy(uint16_t a1, uint16_t a2, uint16_t a3, uint16_t a4,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 float_statu=
+s *fp_status);<br>
++uint32_t fp_vdmpy_acc(uint32_t acc, uint16_t a1, uint16_t a2, uint16_t a3,=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 uint16_t a4, float_status *fp_status);<br>
++<br></blockquote><div><br></div><div>Consider using macros similar to the =
+ones in the .c file to create these protos.</div><div>=C2=A0</div><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">
++#endif<br>diff --git a/target/hexagon/mmvec/kvx_ieee.c b/target/hexagon/mm=
+vec/kvx_ieee.c<br>
+new file mode 100644<br>
+index 0000000000..b763899aa3<br>
+--- /dev/null<br>
++++ b/target/hexagon/mmvec/kvx_ieee.c<br>
+@@ -0,0 +1,87 @@<br>
++/*<br>
++ *=C2=A0 Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries=
+.<br>
++ *<br>
++ *=C2=A0 SPDX-License-Identifier: GPL-2.0-or-later<br>
++ */<br>
++<br>
++#include &quot;qemu/osdep.h&quot;<br>
++#include &quot;kvx_ieee.h&quot;<br>
++<br>
++#define DEF_FP_INSN_2(name, rt, a1t, a2t, op) \<br>
++=C2=A0 =C2=A0 uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0float_status *fp_status) { \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float##a1t f1 =3D make_float##a1t(a1); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float##a2t f2 =3D make_float##a2t(a2); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (float##a1t##_is_any_nan(f1) || float##a2t#=
+#_is_any_nan(f2)) { \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return FP##rt##_DEF_NAN; \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } \<br></blockquote><div><br></div><div>These =
+nan checks shouldn&#39;t be needed if you&#39;re using QEMU softfloat prope=
+rly.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
+">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float##rt result =3D op; \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (float##rt##_is_any_nan(result)) { \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return FP##rt##_DEF_NAN; \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } \<br></blockquote><div><br></div><div>Ditto<=
+/div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return result; \<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++#define DEF_FP_INSN_3(name, rt, a1t, a2t, a3t, op) \<br>
++=C2=A0 =C2=A0 uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0uint##a3t##_t a3, float_status *fp_status) { \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float##a1t f1 =3D make_float##a1t(a1); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float##a2t f2 =3D make_float##a2t(a2); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float##a3t f3 =3D make_float##a3t(a3); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (float##a1t##_is_any_nan(f1) || float##a2t#=
+#_is_any_nan(f2) || \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 float##a3t##_is_any_nan(f3)) \<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return FP##rt##_DEF_NAN; \<br></=
+blockquote><div><br></div><div>Ditto</div><div>=C2=A0</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float##rt result =3D op; \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (float##rt##_is_any_nan(result)) \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return FP##rt##_DEF_NAN; \<br></=
+blockquote><div><br></div><div>Ditto</div><div>=C2=A0</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return result; \<br>
++=C2=A0 =C2=A0 }<br>
++<br>diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/i=
+mported/mmvec/ext.idef<br>
+index 03d31f6181..3f0d8e366e 100644<br>
+--- a/target/hexagon/imported/mmvec/ext.idef<br>
++++ b/target/hexagon/imported/mmvec/ext.idef<br>
+@@ -2895,9 +2895,102 @@ EXTINSN(V6_vprefixqw,&quot;Vd32.w=3Dprefixsum(Qv4)&=
+quot;,=C2=A0 =C2=A0ATTRIBS(A_EXTENSION,A_CVI,A_CVI_<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0} )<br>
+<br>
++/* KVX - IEEE FP Instructions */<br>
+<br>
++/* Single pipe, 32-bit output */<br>
++#define ITERATOR_INSN_IEEE_FP_32(WIDTH,TAG,SYNTAX,DESCR,CODE) \<br>
++EXTINSN(V6_##TAG, SYNTAX, \<br>
++ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_OUT_32), \<=
+br>
++DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))<br>
+<br>
++/* Single pipe, 16-bit output */<br>
++#define ITERATOR_INSN_IEEE_FP_16(WIDTH,TAG,SYNTAX,DESCR,CODE) \<br>
++EXTINSN(V6_##TAG, SYNTAX, \<br>
++ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_OUT_16), \<=
+br>
++DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))<br>
+<br>
++/* Two pipes: P2 &amp; P3, single output: P2, 32-bit output */<br>
++#define ITERATOR_INSN_IEEE_FP_DOUBLE_SINGLE_32(WIDTH,TAG,SYNTAX,DESCR,CODE=
+) \<br>
++EXTINSN(V6_##TAG, SYNTAX, \<br>
++ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX_DV,A_HVX_IEEE_FP_OUT_32),=
+ \<br>
++DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))<br>
++<br>
++/* Two pipes: P2 &amp; P3, two outputs, 32-bit output */<br>
++#define ITERATOR_INSN_IEEE_FP_DOUBLE_32(WIDTH,TAG,SYNTAX,DESCR,CODE) \<br>
++EXTINSN(V6_##TAG, SYNTAX, \<br>
++ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX_DV,A_HVX_IEEE_FP_OUT_32),=
+ \<br>
++DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))<br>
++<br>
++/*<br>
++ * single pipe, accumulate instruction, produces 16-bit output, requires 1=
+6-bit<br>
++ * accumulate input<br>
++ */<br>
++#define ITERATOR_INSN_IEEE_FP_ACC_16(WIDTH,TAG,SYNTAX,DESCR,CODE) \<br>
++EXTINSN(V6_##TAG, SYNTAX, \<br>
++ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_ACC,A_HVX_I=
+EEE_FP_OUT_16,A_CVI_VX_NO_TMP_LD), \<br>
++DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))<br>
++<br>
++/*<br>
++ * single pipe, accumulate instruction, produces 32-bit output, requires 3=
+2-bit<br>
++ * accumulate input<br>
++ */<br>
++#define ITERATOR_INSN_IEEE_FP_ACC_32(WIDTH,TAG,SYNTAX,DESCR,CODE) \<br>
++EXTINSN(V6_##TAG, SYNTAX, \<br>
++ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_ACC,A_HVX_I=
+EEE_FP_OUT_32,A_CVI_VX_NO_TMP_LD), \<br>
++DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))<br>
++<br>
++/* IEEE FP multiply instructions */<br>
++ITERATOR_INSN_IEEE_FP_DOUBLE_SINGLE_32(32, vmpy_sf_sf,<br>
++=C2=A0 =C2=A0 &quot;Vd32.sf=3Dvmpy(Vu32.sf,Vv32.sf)&quot;, &quot;Vector IE=
+EE mul: sf&quot;,<br>
++=C2=A0 =C2=A0 VdV.sf[i] =3D fp_mult_sf_sf(VuV.sf[i], VvV.sf[i], &amp;env-&=
+gt;fp_status))<br></blockquote><div><br></div><div>Do these instructions in=
+teract with the FP bits in USR (e.g., rounding mode, FP exceptions)?</div><=
+div><br></div><div>If so, you&#39;ll need something similar to arch_fpop_st=
+art/arch_fpop_end at the start/end of each helper.=C2=A0 This can be done i=
+n gen_helper_funcs.py.</div><div><br></div><div>Thanks,</div><div>Taylor</d=
+iv><div><br></div></div></div>
+
+--000000000000836147064db6e2b5--
 
