@@ -4,79 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD5CBD58CBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 22:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F00F4613F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 22:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4nre-00061R-GY; Mon, 23 Mar 2026 18:35:14 -0400
+	id 1w4o9T-0005Ma-8r; Mon, 23 Mar 2026 18:53:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w4nrd-00060y-QG
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 18:35:13 -0400
-Received: from qs-2007e-snip4-10.eps.apple.com ([57.103.84.180]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w4nrb-00038m-Oc
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 18:35:13 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPS id
- 4723218000B8; Mon, 23 Mar 2026 22:35:10 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774305310; x=1776897310;
- bh=PdT7IERfl0p/CeTQ+XFKTtOdCZ5WIYKOrnKXReIT4Ds=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=I8NdINj1hpOQlipGfw+u4r3efecuiPt3HSDyTom2aBr6U5osvf2mYKlSfEIjfsttmyv7sdQMRFdvpi7Fm4/DC5WOCWZUAv9WJeRlBPkizOr/jsgGohsNDG78zhcNyY1N1cjxhKaUAEW3Ct0ROT4uW3QMnP+8AJVUSAsbvmNTN7StZKQTWgqUlfkmvAw0ernrRwUV4kykYDBhf0HgFLJNB08viCLOEA1pQIXEDHjZoXQTTdqt4CeurwFUsRi1ldRThmSVKoIU6ip0ZyHqLJ8pT/60lOdTjveRW2CRiW/XFEy+iMv/fEPl0M75ZK5q+8bNs1rAKXI7orAiA+iSKUu3YQ==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPSA id
- A41D41800276; Mon, 23 Mar 2026 22:35:08 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Roman Bolshakov <rbolshakov@ddn.com>, Wei Liu <wei.liu@kernel.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 13/13] whpx: i386: fast runtime state reads
-Date: Mon, 23 Mar 2026 23:34:34 +0100
-Message-ID: <20260323223434.81780-14-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260323223434.81780-1-mohamed@unpredictable.fr>
-References: <20260323223434.81780-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w4o9R-0005M2-Eo
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 18:53:37 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w4o9P-0005zD-Tn
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 18:53:37 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-82a62714fe6so2265739b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 15:53:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774306414; x=1774911214; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nnEwQW71vA0cbEd0rFbBZYeSd3+uRgA/hncDuuGIaAU=;
+ b=fH7v9aPXSnhMUivxKTZ2Q3anaYsUTB4sl/ZP/ib0UPXzXhyzVefQscBvmyI7r9TLip
+ YVS++eT8oy+FOhQ9xyzg7sZd5nqTo4i2ZyMysQ3c9cLxU2saDkAgRaA0+OvjmGkvPkOM
+ PUVrgteXeJBxdd4gPuZPBa+soWL+25K1hIu1y7At2VcPYJ4bjcaz+f9ZL8z1xigK9Q68
+ aNKud2xHtYPK9ZMkQbRg/0v/osNFAox5ji4N981AYPT4pt/s8LBo4HD9fcpaY9vB8hWJ
+ 5nCbGuKs2OYm4XoPAb5AllQzd5Ii/3EpwNikSOI9ox7APatvt7ZMV0kgBluAq5hrr0Jp
+ tQeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774306414; x=1774911214;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nnEwQW71vA0cbEd0rFbBZYeSd3+uRgA/hncDuuGIaAU=;
+ b=bz44ncGwFIN0GaR6k/j9BdXqGLwbYXNDZE2KdgtDRdKzIhImlKqpWkhrXFaO22dvVw
+ KILKM1uGipmvpaHDWW61nPXRPbEaIvg3egpUwzKALLVR7v0c1ZLtK+CeRkU8sbM88fLd
+ aE4KdgFRCrYvCVvG+T1hufplMWs6NuaqDyy27AwWamVdzra25MQSos2O2bH+u092Xzuk
+ bQuFNkK+VU+lk4MY1yNWSOWgc+gSMe71DJpXrQEPwzKuJDoByKCK79I4bkR+2/IOOcsF
+ Si3hzs+ywMDr7atiFp6MvZcz9CO5g54xf5H2bLcygLl3KI8kSgtKanuB8W+Uuea+exx3
+ +lDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxOieODgArr5UlspZYTJWLu/lmxhUIK49IpVybcgl8K2Zgrmk3wTJ7zUUp0ibpb3I4unC984IAlsck@nongnu.org
+X-Gm-Message-State: AOJu0YyvCQ1GYfxUiLp0D1rjzxHXPuYxzHR6XzMVzmA5rvcIdcHwOpZu
+ eNyjMX3t7Wl/EWWwC+sVi0KSXqipk+LMU6zQTFOCg+lf3NCCyrHHK5EpNgRxa926IYA=
+X-Gm-Gg: ATEYQzx0W9IZAppNZRcasfoz4jd4OCO1YNjq7XdUzYNZtDUjO2RIFx2TDAcByiGFbBQ
+ b/RQHcFcTpB8G998H0YN/4J1h0cFr873AqJpa8w5NYg+UMC+ycxhbbzHTlTfuEZ9ZTWXMwXbDCI
+ 6HDoTHjbPuQlmCJFCg6X2Xq2/QC8HYxr1J8SmpjFTPRPQAvf53hrp+f0gnD5ES3PXwSBkdXIZ4w
+ enTYFpmef0zYXwOAL2bX8ggUnaexsgNkCFKY49lNDQ8eBPpeeGCKGnauUsjjDd8+/WK3sCD5oNN
+ Bk8l2kFZVUHLE5AIKm4nuXeKU1q99/whFJLSPrXAKsTx4imCvUo8SZgYgN92czf9pMzKpjXyfBV
+ NlkJoQF0C+iUPBzM1P5fNF5++9w/eK+CfPbPnGaF7J1KWR4coi4AkYUWY7uGz42xLFgFxkpPA75
+ hmUWJ9jWYC2NkM9QyKWZ04IBUDv+93wtg3thZ0vjDzWQ==
+X-Received: by 2002:a05:6a00:4207:b0:829:acf6:9406 with SMTP id
+ d2e1a72fcca58-82c5bf009f3mr845080b3a.29.1774306413234; 
+ Mon, 23 Mar 2026 15:53:33 -0700 (PDT)
+Received: from [172.16.11.156] ([103.100.225.140])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82b03aa5a9bsm10632687b3a.8.2026.03.23.15.53.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Mar 2026 15:53:32 -0700 (PDT)
+Message-ID: <b20eb2a7-1386-477e-b3f7-e5ddffdd62ca@linaro.org>
+Date: Tue, 24 Mar 2026 08:53:26 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/2] Linux user for v11 patches
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ Helge Deller <deller@gmx.de>
+Cc: Razvan Ghiorghe <razvanghiorghe16@gmail.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260313183009.34221-1-deller@kernel.org>
+ <66022765-b7b8-4f46-a90a-43dc473a16fd@tls.msk.ru>
+ <0864102b-f32d-41a1-b19a-7eb9b237b368@gmx.de>
+ <389cce41-5aad-4703-82bc-dfb9a8f7e774@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <389cce41-5aad-4703-82bc-dfb9a8f7e774@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=QO1lhwLL c=1 sm=1 tr=0 ts=69c1c01e
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=WK8LibQvd4XDxIxmQ_8A:9
-X-Proofpoint-ORIG-GUID: wNLytSTucOV3Xj4S8pAkvdffB-7AAeos
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIzMDE2NyBTYWx0ZWRfX+fMlqLiUTIB1
- JPxrXUnu90gQl0zdoqaHnzAwb+6E5Q4WAGPmg/6Pqu4VHHk0oeZMGLmx7ZaMKCJuz2QOQaXk+XY
- zMe2jr+XFmOKQaXl4lSMJ9jv6CsRIgVgnYg/jfI6fSqSgJHqhitmCuEkbA6hki59/x4er7RhjjE
- pSeH5w/6FZmgXXL3MCM2XiIZM6y1YykziBffkOYzm43vxc2wb7FD8chP/Oedrrt964wHeG5dWZZ
- pjUqpIRW9CCGkNTwU3Pc+pAUlv2Ua4j/Y7sAm7IB4bE2ceOnLgB7js89olaeyk+4+sAoDCUvGdN
- +rf7uUpvxRzLtEA5jhULZmCUkgPU1/nU5hIpG+EjmCS4X1EBz162BOR7uEfWt0=
-X-Proofpoint-GUID: wNLytSTucOV3Xj4S8pAkvdffB-7AAeos
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-23_06,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- spamscore=0 bulkscore=0 adultscore=0 malwarescore=0
- clxscore=1030
- lowpriorityscore=0 mlxlogscore=760 phishscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603230167
-Received-SPF: pass client-ip=57.103.84.180;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,146 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that there's an on-demand interface for fetching CRs
-and segments, only query GPRs and query everything else
-on-demand for vmexits.
+On 3/23/26 17:52, Michael Tokarev wrote:
+> On 16.03.2026 20:00, Helge Deller wrote:
+>> On 3/16/26 14:43, Michael Tokarev wrote:
+>>> On 13.03.2026 21:30, Helge Deller wrote:
+>>>
+>>>> Razvan Ghiorghe (2):
+>>>>    linux-user: Fix zero_bss for RX PT_LOAD segments
+>>>>    linux-user: fix mremap with old_size=0 for shared mappings
+>>>
+>>> This looks like qemu-stable material, is it not?
+>>
+>> Yes.
+> 
+> ..with one caveat: mremap with old_size=0 fix doesn't apply to 10.0,
+> the current LTS stable series, because 10.0.x doesn't have f55fc1c092
+> "accel/tcg: Add clear_flags argument to page_set_flags", because of this:
+> 
+> +        page_set_flags(new_addr, new_addr + new_size - 1,
+> +                       prot | PAGE_VALID, PAGE_VALID);
+> 
+> What would be the correct construct for this for 10.0.x?
+> (Adding rth to Cc list).
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 77 +++++++++++++++++++++++++++++++++----
- 1 file changed, 70 insertions(+), 7 deletions(-)
+Probably
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index d87afceb08..ff842bf359 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -156,6 +156,26 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
-      */
- };
- 
-+static const WHV_REGISTER_NAME whpx_register_names_for_vmexit[] = {
-+    /* X64 General purpose registers */
-+    WHvX64RegisterRax,
-+    WHvX64RegisterRcx,
-+    WHvX64RegisterRdx,
-+    WHvX64RegisterRbx,
-+    WHvX64RegisterRsp,
-+    WHvX64RegisterRbp,
-+    WHvX64RegisterRsi,
-+    WHvX64RegisterRdi,
-+    WHvX64RegisterR8,
-+    WHvX64RegisterR9,
-+    WHvX64RegisterR10,
-+    WHvX64RegisterR11,
-+    WHvX64RegisterR12,
-+    WHvX64RegisterR13,
-+    WHvX64RegisterR14,
-+    WHvX64RegisterR15,
-+};
-+
- struct whpx_register_set {
-     WHV_REGISTER_VALUE values[RTL_NUMBER_OF(whpx_register_names)];
- };
-@@ -593,6 +613,47 @@ static void whpx_get_xcrs(CPUState *cpu)
-     cpu_env(cpu)->xcr0 = xcr0.Reg64;
- }
- 
-+static void whpx_get_registers_for_vmexit(CPUState *cpu, WHPXStateLevel level)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    AccelCPUState *vcpu = cpu->accel;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    struct whpx_register_set vcxt;
-+    HRESULT hr;
-+    int idx;
-+    int idx_next;
-+
-+    assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
-+
-+    hr = whp_dispatch.WHvGetVirtualProcessorRegisters(
-+        whpx->partition, cpu->cpu_index,
-+        whpx_register_names_for_vmexit,
-+        RTL_NUMBER_OF(whpx_register_names_for_vmexit),
-+        &vcxt.values[0]);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get virtual processor context, hr=%08lx",
-+                     hr);
-+    }
-+
-+    idx = 0;
-+
-+    /* Indexes for first 16 registers match between HV and QEMU definitions */
-+    idx_next = 16;
-+    for (idx = 0; idx < CPU_NB_REGS; idx += 1) {
-+        env->regs[idx] = vcxt.values[idx].Reg64;
-+    }
-+    idx = idx_next;
-+
-+    env->eip = vcpu->exit_ctx.VpContext.Rip;
-+    env->eflags = vcpu->exit_ctx.VpContext.Rflags;
-+    rflags_to_lflags(env);
-+
-+    assert(idx == RTL_NUMBER_OF(whpx_register_names_for_vmexit));
-+
-+    x86_update_hflags(env);
-+}
-+
- void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     struct whpx_state *whpx = &whpx_global;
-@@ -608,7 +669,11 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
- 
-     assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
- 
--    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && !env->tsc_valid) {
-+    if (level == WHPX_LEVEL_FAST_RUNTIME_STATE) {
-+        return whpx_get_registers_for_vmexit(cpu, level);
-+    }
-+
-+    if (!env->tsc_valid) {
-         whpx_get_tsc(cpu);
-         env->tsc_valid = !runstate_is_running();
-     }
-@@ -623,7 +688,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-                      hr);
-     }
- 
--    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel()) {
-+    if (whpx_irqchip_in_kernel()) {
-         /*
-          * Fetch the TPR value from the emulated APIC. It may get overwritten
-          * below with the value from CR8 returned by
-@@ -680,7 +745,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     env->cr[4] = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterCr8);
-     tpr = vcxt.values[idx++].Reg64;
--    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && tpr != vcpu->tpr) {
-+    if (tpr != vcpu->tpr) {
-         vcpu->tpr = tpr;
-         cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(tpr));
-     }
-@@ -691,9 +756,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-      * Extended control registers needs to be handled separately depending
-      * on whether xsave is supported/enabled or not.
-      */
--    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE) {
--        whpx_get_xcrs(cpu);
--    }
-+    whpx_get_xcrs(cpu);
- 
-     /* 16 XMM registers */
-     assert(whpx_register_names[idx] == WHvX64RegisterXmm0);
-@@ -768,7 +831,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
- 
-     assert(idx == RTL_NUMBER_OF(whpx_register_names));
- 
--    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel()) {
-+    if (whpx_irqchip_in_kernel()) {
-         whpx_apic_get(x86_cpu->apic_state);
-     }
- 
--- 
-2.50.1 (Apple Git-155)
+   page_set_flags(new_addr, new_addr + new_size - 1,
+                  prot | PAGE_VALID | PAGE_RESET);
 
+
+r~
 
