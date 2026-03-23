@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDD8EC01D4
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF43EC01DD
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4duV-0000Ly-Ik; Mon, 23 Mar 2026 07:57:31 -0400
+	id 1w4duX-0000MW-70; Mon, 23 Mar 2026 07:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4duT-0000LD-CI
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:57:29 -0400
+ id 1w4duV-0000M4-Mi
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:57:31 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4duR-0003fV-UA
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:57:29 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4duU-0003g4-8V
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:57:31 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 88C1320B7128;
- Mon, 23 Mar 2026 04:57:25 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 88C1320B7128
+ by linux.microsoft.com (Postfix) with ESMTPSA id A0E2920B710C;
+ Mon, 23 Mar 2026 04:57:27 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A0E2920B710C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774267047;
- bh=xH4HagDCiBk6gATgsEXyD93463ehoI+ZwQqXAAzAVR4=;
+ s=default; t=1774267049;
+ bh=vE3ebHrN7UQ629WB+JSY974v1w4xk1/XwHXJu7IONSA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=CQvvBaBlY2zF+4SsC8Fvi6Q3bwKt4KgxEpWSr5LVVfN5UW7dtiEKYZMizsE3TFUfg
- LBOI0ooyOT5v4LdgU7lwr21S7SZXRgsICSDoL9ET5ARDwXoY08IQvIv1wSz9lamJfy
- GKBESBgalZGiZBtw6nZai8LS8B1yJ8lbfw0xnMyI=
+ b=jzY//GmMuaFC3r2ftYJL24fjjhKE69HjOdp+0SnW5H4GGLQFJ9sdnaTq0VMjmy+//
+ iO2vEx6ySdruV0cMNXRMeUZRjOhjBmOWu0kSHSZc550QVJ7wGWYVBHvzzTQtyIrDgO
+ wRjD2zSOg4BzHVO7HfAwdgnhVTjHT7RV73m4G1dA=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 5/9] target/i386/mshv: set cpu model name on -cpu host
-Date: Mon, 23 Mar 2026 12:57:07 +0100
-Message-Id: <20260323115711.353793-6-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v3 6/9] target/i386: query mshv accel for supported cpuids
+Date: Mon, 23 Mar 2026 12:57:08 +0100
+Message-Id: <20260323115711.353793-7-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323115711.353793-1-magnuskulke@linux.microsoft.com>
 References: <20260323115711.353793-1-magnuskulke@linux.microsoft.com>
@@ -68,65 +68,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By registering a cpu_accel_class for mshv, we can report an accurate
-model name on -cpu host.
+We implement mshv_get_supported_cpuid() and invoke it in
+x86_cpu_get_supported_feature_word() retrieve the cpu features that the
+host is supporting. Initially we mask the virtualization capabilitities
+potentially we might need to mask more in the future.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- target/i386/mshv/mshv-cpu.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ include/system/mshv.h       |  3 +++
+ target/i386/cpu.c           |  8 ++++++++
+ target/i386/mshv/mshv-cpu.c | 27 +++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+)
 
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 75286baf16..51b0420735 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -60,4 +60,7 @@ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
+                                         const EventNotifier *rn, int virq);
+ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
+ 
++/* cpuid */
++uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
++
+ #endif
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index b5e483e8cd..21e42fb4f6 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -26,6 +26,7 @@
+ #include "tcg/helper-tcg.h"
+ #include "exec/translation-block.h"
+ #include "system/hvf.h"
++#include "system/mshv.h"
+ #include "hvf/hvf-i386.h"
+ #include "kvm/kvm_i386.h"
+ #include "kvm/tdx.h"
+@@ -8087,6 +8088,13 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+         r = hvf_get_supported_cpuid(wi->cpuid.eax,
+                                     wi->cpuid.ecx,
+                                     wi->cpuid.reg);
++     } else if (mshv_enabled()) {
++        if (wi->type != CPUID_FEATURE_WORD) {
++            return 0;
++        }
++        r = mshv_get_supported_cpuid(wi->cpuid.eax,
++                                     wi->cpuid.ecx,
++                                     wi->cpuid.reg);
+     } else if (tcg_enabled()) {
+         r = wi->tcg_features;
+     } else {
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index e42b5a614d..09878ef357 100644
+index 09878ef357..3b392533b4 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -24,10 +24,13 @@
- #include "hw/i386/apic_internal.h"
- 
- #include "cpu.h"
-+#include "host-cpu.h"
- #include "emulate/x86_decode.h"
- #include "emulate/x86_emu.h"
- #include "emulate/x86_flags.h"
- 
-+#include "accel/accel-cpu-target.h"
-+
- #include "trace-accel_mshv.h"
- #include "trace.h"
- 
-@@ -1675,3 +1678,31 @@ int mshv_arch_post_init_vm(int vm_fd)
- 
-     return ret;
+@@ -1639,6 +1639,33 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
  }
-+
-+static void mshv_cpu_instance_init(CPUState *cs)
+ 
++uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
 +{
-+    X86CPU *cpu = X86_CPU(cs);
++    uint32_t eax, ebx, ecx, edx;
++    uint32_t ret = 0;
 +
-+    host_cpu_instance_init(cpu);
++    host_cpuid(func, idx, &eax, &ebx, &ecx, &edx);
++    switch (reg) {
++    case R_EAX:
++        ret = eax; break;
++    case R_EBX:
++        ret = ebx; break;
++    case R_ECX:
++        ret = ecx; break;
++    case R_EDX:
++        ret = edx; break;
++    }
++
++    /* Disable nested virtualization features not yet supported by MSHV */
++    if (func == 0x80000001 && reg == R_ECX) {
++        ret &= ~CPUID_EXT3_SVM;
++    }
++    if (func == 0x01       && reg == R_ECX) {
++        ret &= ~CPUID_EXT_VMX;
++    }
++    return ret;
 +}
 +
-+static void mshv_cpu_accel_class_init(ObjectClass *oc, const void *data)
-+{
-+    AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
-+
-+    acc->cpu_instance_init = mshv_cpu_instance_init;
-+}
-+
-+static const TypeInfo mshv_cpu_accel_type_info = {
-+    .name = ACCEL_CPU_NAME("mshv"),
-+    .parent = TYPE_ACCEL_CPU,
-+    .class_init = mshv_cpu_accel_class_init,
-+    .abstract = true,
-+};
-+
-+static void mshv_cpu_accel_register_types(void)
-+{
-+    type_register_static(&mshv_cpu_accel_type_info);
-+}
-+
-+type_init(mshv_cpu_accel_register_types);
+ /*
+  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+  * fault to the guest if it tries to access it. It is possible to override
 -- 
 2.34.1
 
