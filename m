@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E942F4610D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AA9F46112
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fdO-0000ew-57; Mon, 23 Mar 2026 09:47:58 -0400
+	id 1w4fdN-0000eX-Ki; Mon, 23 Mar 2026 09:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4fdF-0000d0-1H
+ id 1w4fdF-0000d4-CK
  for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:47:49 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4fdB-0005XW-Qx
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:47:47 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48557c8ad47so1209895e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 06:47:45 -0700 (PDT)
+ id 1w4fdC-0005Xt-LO
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:47:49 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-43b45bb7548so3045518f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 06:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774273663; x=1774878463; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=29B3TWrmp9HDLZHqMIvZLwgmE1azPiN6lT1eZf7m934=;
- b=fgN9PWkY079NolkSxGUfGGt+rw+9LDJVQXqiQ6XZG32ih964QIlectFfvSc9Mo3A+Y
- miZLD+flIp8ctH1ntSH2P3TxJ/uCMXtAdrF9Tb16TOMqujGacM+So8lUwSgTveO/gDQQ
- 9iY69F46vTBr7I0JM/8p3MZ6WLMA7KzHvIcQmXpwYRm8kt/e5Bue5qDe/Lb4+W48kUd8
- hVQBVToH7z+TaVhtXXySncWhVOv0J0E5SHmTyFyv/1c7D29GmqJfgUKEojpfT5PG4HM6
- ddyFRQK0aeAL0PZMp0QVQrEFlk2AhtjsThI+yBXHYA6XyFjLRPyUdKG92eCkLu7nDuBm
- H7Pg==
+ d=linaro.org; s=google; t=1774273665; x=1774878465; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=uKxs08Eal2HGj5ECW9ciBCNGi/We4yXnPvl6pwVcAoM=;
+ b=H5BSgfkhWTpDvAd2NpHm9wz24FZ6gUpZQ5bY3Yz4elLR8aEJg/cu7x6u7pd0sdtMty
+ sqZ4HrpNlXYYC2cvNaqKYXk3H3LFg+e+Ze3b8e2IClVRdsfr7FfcF+b1+GwCLzBiSMFw
+ Bo5W7PIlB++jCP0iXNkfIT22UdpfY2Jku0F3EQkyCI52I5db7WBwVNK8H+LlRrDiFqBr
+ IEgMxINciV97+E2WSpK0oO0iyltHYZHZbZIKeZeFNaD2NNTxG72jBCck4eNULU26Jedi
+ Q1feUijlXc36ukyR8gmjnbehjIDQqrqcUYsbdrDqMZGi9wPDCw7Vh47ptWqUdQfb0pLF
+ nhnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774273663; x=1774878463;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=29B3TWrmp9HDLZHqMIvZLwgmE1azPiN6lT1eZf7m934=;
- b=UrspTdOLaZ09hoN6C+TIu6+XVvs+MAcCma3/tM0mzarzzZlhFTyuTWZ1UpvbWGHHsb
- 9gRd8WlsWuCb9VsYCQ0MQZ28HKzUJ30BAJSjjGUdDCyyNMDw1PSXoGNwkFmkTSt5sh3i
- VFQGe66ObCkV4fSTDj1G2aSmIhfpGT2kVrXLQy61FaxMuyPnG1zegjULKZTevoaUQLgM
- /kxJ38P/jP+FWnaLT78I1JBREtFTpo3UymAbgIJGK4hzKcGZRQyeZU0SVsgERh4ij5oN
- 75AT+XtQTdeGVv4xZwosOgw0xrNqOADZJWlisS+azBwZYEbXVZpO3Mxhd3b/vrHW7hux
- dDRg==
-X-Gm-Message-State: AOJu0YwhxGGC4EMwvz+Bi6eZ/Hr78ubDw/pyVi4IiI70dRg6HDD5pLFR
- 5+V00ARg3SZ6A3AR7eMj3aR7Vg8OLf3hZN/eRMXbKAAkDFjd5GrlBHS7xrWgNL83orWN28gA9qs
- LzEtooIM=
-X-Gm-Gg: ATEYQzxxcbRCLEoqg3V6MSniYg3PyLB21aCOtswNCNLcxwmU+LajqfPvK52uI1LAmb6
- c/HUTSHSuOVkt3sV5ZpDMucfxDqEEewqwQYAMLV01vVZ5xDHYC9LZDTWFx2iBhdGmiL1bTloVbN
- ZNbq/pvstaD9OTt1tMcqfyqY7/DphL3wTVKdf31HlwGMsrNS/aOPwK6ynt5vMXjk+GW+q6LmHz7
- VzD8Um9SeCSReQA3p3aCwUDmWuWzqaZm3qOSWXNQNRmchgAZ25lyxZDfGUXpUWzwniHPhJmF2/B
- CwnjUr/Sno/2vjYwaLT4VeH699nASiWX7fS6ZAy/lObvKhoHusffy4oVq6iAf0TTOSRhjrAhrBR
- i8QThsSIsaZmLmxltiiEMIvizMuNfu3l9Y7xOp06+pm1Wd429BL449rAnmei1XgVnYJ6ZIFnGhD
- scvDNaWUMe3qtmKBnIbExN9l/hTLnnwOUoHmwjZ9+jt9UiLv06EpNfnPczB/WKVQzncynJgV6uO
- CLbAQKKzaah+XMPQNO1CnbZk0AJ9+s=
-X-Received: by 2002:a05:600c:c493:b0:485:4388:3492 with SMTP id
- 5b1f17b1804b1-486fedbd0b0mr179937445e9.11.1774273662699; 
- Mon, 23 Mar 2026 06:47:42 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774273665; x=1774878465;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=uKxs08Eal2HGj5ECW9ciBCNGi/We4yXnPvl6pwVcAoM=;
+ b=MuhX04PYlZT+3kOXOW+XbDb22hL/PFzFnma+/YT2fl3KqR4jqZ4oEKUnxRGN4W/bFZ
+ vHIN+xbHwDEep/8jzYyMsPXnt8ofgv9kAmWwnQHLgPBJyDeAoHDu4zVrhdKo3Tq4JbhA
+ CgXjxxjg/zLX8QdD6GvXeuGWX02nwy1wHsGkq3UH4HryMtgJDhJuvlVo0syOZefbHXV7
+ np81nAPdayBTob05isDBFDUSo7GEoUusPoZfoO+tbgGNhk7oLfGvj3EOhnLLrATdZa4E
+ 0E4OCwAVQTbN+SbUb00xxyQCpYvvoOBUmJ6pTrx4cLC4xcZcTPteJCmYqbMi1XYnZYGY
+ 8u7Q==
+X-Gm-Message-State: AOJu0YwyNlJsGsn4A98HmCz6w6sDyxqUjfod4zw0hyYxbCkY29XmJZFQ
+ tm9ug6ADyVGmTodDGGm8Uny9k7+y9YFSLu3q3Nyqf/jokPSk6kqymSY9WXXS+hbYaeMUgymdnrv
+ Ap5+28ZE=
+X-Gm-Gg: ATEYQzw4P1jyGLTZSDWLC7js8HaWWSPiJtScCEe2djDd21Hzm0Za8wO82t36kopLU/J
+ 7iHltVljknjhNNvCS7+fB0wvKiatVDEWLGUQ1O6vc5qq3pjms01vn0Ghqu7ToPFcpIVA9PxkkMq
+ CSI4103tY61pj+2BMpXrSyfu9dGVabi3awRYwqGkpf037kHPRiO9RReyh91zVGZSmlEiNh5Bfyc
+ hXlLOq3hw6pCcmWhMHlCm8pbr14N83h/3x1rxt1Uy53daZRek7iQApnm0GSu1gPf5dpqzyH3EBB
+ DwUZ7IhYlRH53Ti7bv/eWclugUDIYsbtprFHlEkmWXqf/Jw5cINYE+EPqgZxz1m5Ci+33kg9V9b
+ t4wqQ0mIaz44mLIEoWLv6sKWqCP5YaLn7onw1LLp5Ysj2362K1OUkHN5QPQZC5BZxlnqyWJxpCk
+ BMuEVmv4gcru36RYv6voiGWErGy444BVifJfw6HR+iK2rYCKnTeTeALjP0vL/TKc0YXxJwpIhMb
+ ycROKOYGo2OStmZDiEqOiANbW7eZtQ=
+X-Received: by 2002:a05:6000:26c8:b0:439:bcb8:54b7 with SMTP id
+ ffacd0b85a97d-43b6424b9eemr18322781f8f.15.1774273664935; 
+ Mon, 23 Mar 2026 06:47:44 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b646b0d3dsm28308143f8f.16.2026.03.23.06.47.41
+ ffacd0b85a97d-43b646b0d3dsm28308143f8f.16.2026.03.23.06.47.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 06:47:41 -0700 (PDT)
+ Mon, 23 Mar 2026 06:47:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/2] MAINTAINERS: more updates,
- orphan "overall usermode emulation"
-Date: Mon, 23 Mar 2026 13:47:39 +0000
-Message-ID: <20260323134741.4114629-1-peter.maydell@linaro.org>
+Subject: [PATCH 2/2] MAINTAINERS: Remove Igor Mitsyanko
+Date: Mon, 23 Mar 2026 13:47:41 +0000
+Message-ID: <20260323134741.4114629-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260323134741.4114629-1-peter.maydell@linaro.org>
+References: <20260323134741.4114629-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,29 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset updates our MAINTAINERS file to remove entries for some
-people who have let me know that they no longer wish to be listed, in
-the same manner as the earlier patchset I sent a few weeks ago:
+Igor Mitsyanko doesn't wish to be listed in MAINTAINERS any more;
+remove his email from the relevant sections.
 
-https://lore.kernel.org/qemu-devel/20260306120555.2035421-1-peter.maydell@linaro.org/
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-As usual, I'd like to say thank you on behalf of the project for your
-work on QEMU, and for helping us in reviewing code and maintainer
-duties.
-
-NB: this leaves the "Overall usermode emulation" subsection in the
-Orphan state.
-
-thanks
--- PMM
-
-Peter Maydell (2):
-  MAINTAINERS: Remove Riku Voipio
-  MAINTAINERS: Remove Igor Mitsyanko
-
- MAINTAINERS | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c686010599..ed07629e49 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -820,7 +820,6 @@ F: hw/display/dm163.c
+ F: tests/qtest/dm163-test.c
+ 
+ Exynos
+-M: Igor Mitsyanko <i.mitsyanko@gmail.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
+ L: qemu-arm@nongnu.org
+ S: Odd Fixes
 -- 
 2.43.0
 
