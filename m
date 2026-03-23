@@ -4,84 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5967CFC72A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 07:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D29FC72A8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 07:27:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ZeP-00067s-7R; Mon, 23 Mar 2026 03:24:37 -0400
+	id 1w4ZgG-0006th-7A; Mon, 23 Mar 2026 03:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4ZeN-000676-1G
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 03:24:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w4ZgD-0006t8-3L; Mon, 23 Mar 2026 03:26:29 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4ZeC-0000kA-Sq
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 03:24:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774250662;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W5fpN+to2H34GvzMy4uc4/TyuJdurXy6MBQlxOrclng=;
- b=Wq39ltQQpqivrfZEb0mdJ6G8aJjIYXN5WEbrN+rSnXdIKs9H+mT4AUXWvvDz5Z5HxsoSGq
- +ExqxST8n2JWIRAKqkGabsv72OLh5botIOmf0WzxXkRVqfvcpbYP66lsFRSsf+FEuVu0Yx
- 95cV/X9A5U7gZp9Pbt0fvln+knWB/18=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-OWGcTqnNM3KvCLrl65zUlQ-1; Mon,
- 23 Mar 2026 03:24:18 -0400
-X-MC-Unique: OWGcTqnNM3KvCLrl65zUlQ-1
-X-Mimecast-MFC-AGG-ID: OWGcTqnNM3KvCLrl65zUlQ_1774250657
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D18E91955DB6; Mon, 23 Mar 2026 07:24:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 06544180058B; Mon, 23 Mar 2026 07:24:16 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9E02F21E6937; Mon, 23 Mar 2026 08:24:13 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Tommaso Califano <califano.tommaso@gmail.com>,  qemu-devel@nongnu.org,
- kvm@vger.kernel.org,  Eduardo Habkost <eduardo@habkost.net>,  Zhao Liu
- <zhao1.liu@intel.com>,  Marcelo Tosatti <mtosatti@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Oliver Steffen <osteffen@redhat.com>,  Stefano
- Garzarella <sgarzare@redhat.com>,  Giuseppe Lettieri
- <giuseppe.lettieri@unipi.it>,  Paolo Bonzini <pbonzini@redhat.com>,  Luigi
- Leonardi <leonardi@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH 1/5] i386/sev: Add sev-emulated QOM object with TCG support
-In-Reply-To: <ab1ALDdqxwSWxPOx@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Fri, 20 Mar 2026 12:40:12 +0000")
-References: <20260317113840.33017-1-califano.tommaso@gmail.com>
- <20260317113840.33017-2-califano.tommaso@gmail.com>
- <abw3HqBJqEWiY7GP@redhat.com> <87eclfj66v.fsf@pond.sub.org>
- <ab1ALDdqxwSWxPOx@redhat.com>
-Date: Mon, 23 Mar 2026 08:24:13 +0100
-Message-ID: <87h5q7100y.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w4Zg9-00010q-KJ; Mon, 23 Mar 2026 03:26:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774250758; bh=0Av4WQCtk8F17CpiSsu5g0G78N3ERQpoRFTxmhFOKsw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=BgOuRyIogA/CQu9I1XBTVxAHVIPLP1Oah700/qn3czGVQwAzHE4FKQL4RwyNxSsoT
+ Pq+Fdklof4lRl9nVrcpI1nWIP+i284YFBfD2Y/5QF+DIBbr4VqnJJ0vSVRmdH8HinI
+ k2FKQZ1dCwbzWZDPMoRnIDp2kijaZCRCTPP7UvVw6Fycuwgta+5zA7T/rgJkMijEnN
+ t6lRDA/Z1G5W3o8iCp4ArG9FE0/qnrMMdqZoqsR85yMTQwSj6zFk4KmqDcWZ3GU8k5
+ 7L2nX4fEGVCX6UkQkH9GbBPExpaVKXjYbL64KJ4X+VgBYEXvSRgA96HXd9ePuNV2B5
+ JXBeBe6rX1E5w==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id D29171966CF;
+ Mon, 23 Mar 2026 10:25:57 +0300 (MSK)
+Message-ID: <20a922d2-cfdf-4ce2-b230-675e33266d42@tls.msk.ru>
+Date: Mon, 23 Mar 2026 10:26:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Fix probe_pages and vext_ldff issues
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-stable <qemu-stable@nongnu.org>,
+ Paolo Savini <paolo.savini@embecosm.com>
+References: <20260318013805.1920377-1-max.chou@sifive.com>
+ <9843f984-b58b-422c-a823-11a497510709@tls.msk.ru>
+ <acDljtkBJTxOMqfk@sifive.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <acDljtkBJTxOMqfk@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,53 +119,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 23.03.2026 10:08, Max Chou wrote:
 
-> On Fri, Mar 20, 2026 at 08:44:40AM +0100, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Tue, Mar 17, 2026 at 12:38:36PM +0100, Tommaso Califano wrote:
->> >> With this change it is possible to run a VM with the SEV CPUID active
->> >> adding:
->> >>=20
->> >>     -accel tcg \
->> >>     -object sev-emulated,id=3Dsev0,cbitpos=3D47,reduced-phys-bits=3D1=
- \
->> >>     -machine memory-encryption=3Dsev0
->> >
->> > snip
->> >
->> >> diff --git a/qapi/qom.json b/qapi/qom.json
->> >> index c653248f85..35cda819ec 100644
->> >> --- a/qapi/qom.json
->> >> +++ b/qapi/qom.json
->> >> @@ -1057,6 +1057,19 @@
->> >>              '*handle': 'uint32',
->> >>              '*legacy-vm-type': 'OnOffAuto' } }
->> >>=20=20
->> >> +##
->> >> +# @SevEmulatedProperties:
->> >> +#
->> >> +# Properties for sev-emulated objects.
->> >> +# This object functionally emulates AMD SEV hardware via TCG, so
->> >> +# it does not require real hardware to run.
->> >> +#
->> >> +# Since: 10.1.0
->> >> +##
->> >> +{ 'struct': 'SevEmulatedProperties',
->> >> +  'base': 'SevGuestProperties',
->> >> +  'data': {}}
->> >
->> > This is deriving 'sev-emulated' from 'sev-guest' which means it
->> > supports all the properties that 'sev-guest' does, which for
->> > the record is:
->>=20
->> Uh, I somehow misread the base as SevCommonProperties!  Had I read
->> correctly, I would've had similar questions.
->
-> Even SevCommonProperties has stuff that's irrelevant for
-> emulation that I mentioned.
+> Yes, I believe this patchset should be picked up for the current stable
+> release. These patches address the issues that were introduced after
+> v10.0.0-rc0.
 
-Yes.  I was too hasty.  Glad you spotted it!
+This makes sense.
 
+However, 10.0 lacks d887736225 "Expand the probe_pages helper function
+to handle probe flags", which makes the first change in this series
+(5568177738 "target/riscv: rvv: Fix missing flags merge in probe_pages
+for cross-page accesses") non-applicable.
+
+Is it okay to pick d887736225 for 10.0.x too?  (Adding Paolo Savini to
+the Cc list).
+
+The result works and passes tests but since it's not my area it'd be
+nice if someone can confirm/deny.  Or maybe some other fixes should be
+picked up for 10.0.x too.  The current result is at
+https://gitlab.com/mjt0k/qemu/-/commits/staging-10.0
+
+Thanks!
+
+/mjt
 
