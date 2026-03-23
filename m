@@ -4,126 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7961EEC01B6
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A191AEC01B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4bsV-00008G-Pj; Mon, 23 Mar 2026 05:47:19 -0400
+	id 1w4buQ-0000at-Pe; Mon, 23 Mar 2026 05:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w4bsT-00007q-QO
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:47:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w4bsR-0001hO-HV
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:47:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774259233;
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4buO-0000ak-MM
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:49:16 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4buM-0001l9-Ck
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:49:16 -0400
+Received: from [192.168.178.155] (p5b1514ce.dip0.t-ipconnect.de [91.21.20.206])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 06DCADA08A1;
+ Mon, 23 Mar 2026 10:49:11 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1774259352;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=03IX4K4l4WBqfiN7JF0YuYEff+fUSnJPafwl0AA0GZg=;
- b=hwsJdZxTAfDpaNRJPkag66P5ii13qSyNLJmh3Upo+FTWcJSL4hvTzEb1RxrL36AvAO3iHd
- jRcxRTVB/809AtYYOzODMt5WZ46u+ChpRy7m7D5HENioH2hdCOHcG4nQXYnkZlk3Rdky35
- MAuvwBEtoGN7BbhgWdSmm/9cPqcnVoE=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-pWcKDYw6NJyfnY-0rCYfmw-1; Mon, 23 Mar 2026 05:47:12 -0400
-X-MC-Unique: pWcKDYw6NJyfnY-0rCYfmw-1
-X-Mimecast-MFC-AGG-ID: pWcKDYw6NJyfnY-0rCYfmw_1774259232
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-79ab2460d85so11546897b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:47:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774259232; cv=none;
- d=google.com; s=arc-20240605;
- b=DvrK7q2BG2o2axyK2JBWQD1Z8Rf2QfcbPdBa2JOjtz/yboMciJ1IbL6VwtS/aF5s1U
- cmPTTB4nVcDRIhVQ0VSAjAJXw2HbNqpelV8YS5NQvK5AOzKTETv4tnNWq78ChuUa3H37
- J7WljmIOmj8uifGa6bfAd65UpHfBEEtzG6ORcdXoAvpYBsnamuD+TbOJJtqfGAJHsfi9
- Id00/xutVitFlWWtojQWqAjgbyU+jh8qCORZl8n/f1RWGRZpAJG+Y05rrtwflh5bMj4k
- oFnd1UPMcs4YW14P3wlRkGjw+n1PXXNmmP0Q6F7LVfEIZiJ3X1Fcfq8ZMdBXS0I5UHBN
- 4/Vw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=03IX4K4l4WBqfiN7JF0YuYEff+fUSnJPafwl0AA0GZg=;
- fh=YWd1Q3HWQm37cadwbuH1smAtl/9JiSgdWcRaZLT5vrE=;
- b=jXKY4TwSjucInF6jDzQ9bjFC6Hgl5gmJBgcpaYMyehYjJgUf1kssQE/WNrabhF2rTF
- 5IGWICZKYUPrfmYrYEXPO341f+eV8pbR5PHEf23CrmzaDEVEBZVIrBKKz7pN4Boogalk
- knfD9IQffsaijWzgKJHYJMT8QKehiPrqpi1QswXYLSW5Yj+1GqfJcVUAsAeEIuNbBvXe
- xHVVpVJjnoA4nEoYMX5BqGfJtEXOB5KhdVDe5KDV48QGJPV8AfnPC4HdArdvDzT7rroD
- 3zXC/t40jcFrQfHNukPjPVon7BYuMH6ctOIIy7Fn3syip1fzgsqxs6C1tTjqMiYiH8vz
- YbEQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774259232; x=1774864032; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=03IX4K4l4WBqfiN7JF0YuYEff+fUSnJPafwl0AA0GZg=;
- b=Wg31hUI9oKA0DrOdcsqU2IuxZO1kXYMLqta7cVXAmFfufwi5M/RTHjcVTi69vp+bDb
- RO9kbEnNtpmZSoKIjnXA3phq5dKRZW5ipk1B4TbJakzwwiGiN3WmNE3Zq/yRP2/cPdRG
- f2qmhCT6VkG75DgklliMSDMf+Wm+QgEOQ/9ao4V08spIDKrFIVE7W5RGCvd4fcT26jtt
- afCON0xrJeTW0B28F396FVlcs6RDjCgPUh3j0j3H7kNSFfMMV89MBXXhzHyqluJsJzUm
- addq19kjNh71iMkvacgucM6O8kBsosvZc8awHGJi8ijtPsBN9pXUebTmfa1/fEPF6DcH
- 74fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774259232; x=1774864032;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=03IX4K4l4WBqfiN7JF0YuYEff+fUSnJPafwl0AA0GZg=;
- b=fSnbYR0JqqqETe9g8zwAGz5NzNMpCHyTCB13kHuw/v2i4vLHx8tS2lOIT1tvPQgHIh
- dYfw6Nph/h0V+WtLrkzTJlh6QqjoJkESySesKH0Ln6+gzmvNGaDuUIuw4ToAXCFIclyC
- 5Cv8nwrL4NGrfqawhr6LQv3h2shf61NFW4hl+NsxFVHHhDSDaF+vjOny17oC8fpPrBua
- f/ITIgTbd3yoHvniv122QZ+enzf7GJjorAlzNf9XURZbHdhfnI2sAdCL7oXAQBMtiIdc
- 0HqzwMdq9uXVSIyWrFrIZnBCFklWVysWkUCdETWXC+Isjx1t+0s85FZdTWEfX6ymJgfq
- G4gQ==
-X-Gm-Message-State: AOJu0YyTYjiUdfjaMCDsfunMf6HKMsgoVBZ5uHY5hOqkrilvfHE/ci7L
- ehUNF3mTIm5mKK7dX3D8DYdjeydUk7JyF8wuWGMSVVo0q89OHIDNQmqc8GxQV6OZI59DLEZ8o9s
- m14vwVG2puoffoQe5cSkNcVb3XE8JStm8r6eUk90Cmov2k3d1b1l2gi/lR+B45yvROlBy3Gj/Wk
- iGvOkpDclKPPAWHwIELvUCeekeRl30ZOI=
-X-Gm-Gg: ATEYQzx67m4sMiUfbiPxVqLsppzfkV/1nRgtJVbSbLjVQfwq2ZGTK7ZPGROkH6Xmmlj
- ER7d1d/PeHpJ+GpRA6i3+EdDcmWZQ2dxpyG7GoKV51yr1aw4LGWqrtrsjogvWUx4FZJjhmUtzdB
- ML9oz9CjhuXg0OghhZhzcgi68NbyFLW6k58r+R8fIrwPKcDbfDKMb9IcAAzDKaNwDiw++lmFrfl
- J6+Yw==
-X-Received: by 2002:a05:690c:498f:b0:799:1:bf1 with SMTP id
- 00721157ae682-79a90b80f96mr118179647b3.29.1774259231749; 
- Mon, 23 Mar 2026 02:47:11 -0700 (PDT)
-X-Received: by 2002:a05:690c:498f:b0:799:1:bf1 with SMTP id
- 00721157ae682-79a90b80f96mr118179427b3.29.1774259231300; Mon, 23 Mar 2026
- 02:47:11 -0700 (PDT)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=UCEjtKGY8b8TWgA7r+pvpZIQxlkRs4ZxzVzhFQxwLQk=;
+ b=K66zAW+W8rIIJmgK9JJCgBdlpF1BBEhUttimwmr15QvdelipJKpU0N/IuiChaPl1XsLcyv
+ Yiflz/wj4cflHbkzlGfzK8VZOiJYiQD7mSRY4F+2TWUw3YU94SQPGL1V8qOv7zbW3Z/zYS
+ 9sb30jBTftu/PGL0t+EUuuESNlVFXls=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <5262a373-4492-4119-8231-04981e6a8782@weilnetz.de>
+Date: Mon, 23 Mar 2026 10:49:11 +0100
 MIME-Version: 1.0
-References: <20260311132801.292173-1-kdutta@redhat.com>
- <CAJaqyWfHQ-6S1jNnnv0TrTmP5r-GQWdP+PeLtziuUikyg+TFYA@mail.gmail.com>
- <CALseRdf-2dUhKk51hKn8Kb=GiXA8QqbQG+n+txy6S-B+OJ3mMg@mail.gmail.com>
-In-Reply-To: <CALseRdf-2dUhKk51hKn8Kb=GiXA8QqbQG+n+txy6S-B+OJ3mMg@mail.gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 23 Mar 2026 10:46:35 +0100
-X-Gm-Features: AaiRm50t5wMmKAeN5kWOqR24DyMZWSBAGXQOTuGJ5-Z8og3hDB7lQHUVl5Q-Cmw
-Message-ID: <CAJaqyWdMPQiUoJtuef3pzggRb-6wk4EJD8h8yy4z=HF_CwTKAQ@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/net/virtio-net: add support for notification
- coalescing
-To: Koushik Dutta <kdutta@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tdx: fix use-after-free in tdx_fetch_cpuid
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260323085527.2083921-1-pbonzini@redhat.com>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <20260323085527.2083921-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: 06DCADA08A1
+X-Spamd-Bar: ---
+X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; MID_RHS_MATCH_FROM(0.00)[];
+ ARC_NA(0.00)[]; RCVD_COUNT_ZERO(0.00)[0];
+ RCPT_COUNT_TWO(0.00)[2]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; MIME_TRACE(0.00)[0:+];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,107 +121,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 23, 2026 at 9:39=E2=80=AFAM Koushik Dutta <kdutta@redhat.com> w=
-rote:
+Am 23.03.26 um 09:55 schrieb Paolo Bonzini:
+
+> This is mostly harmless right now because the "if" is never
+> hit, but the code as written makes no sense.
 >
-> Hi Eugenio,
-> Regarding the point about not enabling VIRTIO_NET_F_NOTF_COAL uncondition=
-ally: since feature negotiation happens during VM bootup and coalescing is =
-configured via ethtool after the VM has already booted, how would we handle=
- this under a conditional property?
+> Reported-by: Stefan Weil <sw@weilnetz.de>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/kvm/tdx.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> If the feature isn't negotiated at the start, we wouldn't be able to enab=
-le it dynamically later. Could you clarify how you'd like the command-line =
-regulation to interact with the guest's ability to enable it later?
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 4cae99c281a..4714c9d514e 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -848,7 +848,7 @@ static struct kvm_cpuid2 *tdx_fetch_cpuid(CPUState *cpu, int *ret)
+>           r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid, &local_err);
+>           if (r == -E2BIG) {
+>               g_free(fetch_cpuid);
+> -            size = fetch_cpuid->nent;
+> +            size *= 2;
+>           }
+>       } while (r == -E2BIG);
 
-Replying at the position of the comment, marked with [1]. Please
-interleave your reply for the next time, as it makes revision easier
-:) [2].
 
-> ------------------------------------------------------------
->
-> > @@ -37,6 +37,7 @@ bool vhost_svq_valid_features(uint64_t features, Erro=
-r **errp)
-> >          case VIRTIO_RING_F_INDIRECT_DESC:
-> >              continue;
-> >
-> > +        case VIRTIO_F_RING_RESET:
->
-> This patch does not handle VIRTIO_F_RING_RESET, so this should not be ena=
-bled.
->
-> =3D> I included VIRTIO_F_RING_RESET in the valid features list because th=
-e vDPA host device offers it by default; without it, SVQ fails the feature =
-negotiation check during initialization.
-> qemu-system-x86_64: -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-=
-0,id=3Dvhost-vdpa0,x-svq=3Don: SVQ Invalid device feature flags, offer: 0x1=
-e0010330bfffa7, ok: 0x1e0000330bfffa7
->
+Reviewed-by: Stefan Weil <sw@weilnetz.de>
 
-Since you're testing the feature with nested virtualization, you can
-disable the features in the L0 QEMU with:
--device virtio-net-pci,...,queue_reset=3Doff,iommu_platform=3Doff,guest_uso=
-4=3Doff,guest_uso6=3Doff,host_uso=3Doff,guest_announce=3Doff
+Paolo, thank you for the fast fix. The GitHub code scanning currently 
+reports 23 issues with severity critical (one fixed with the commit 
+above) or high. It might be a good idea to enable CodeQL for the 
+official mirror https://github.com/qemu/qemu.
 
-> Regards,
-> Koushik Dutta
->
-> On Thu, Mar 12, 2026 at 3:47=E2=80=AFPM Eugenio Perez Martin <eperezma@re=
-dhat.com> wrote:
->>
->> On Wed, Mar 11, 2026 at 2:28=E2=80=AFPM Koushik Dutta <kdutta@redhat.com=
-> wrote:
->> >
+Regards
 
-[...]
-
->> > +
->> > +static void virtio_net_add_queue(VirtIONet *n, int index)
->> > +{
->> > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
->> > +
->> > +    n->vqs[index].rx_vq =3D
->> > +        virtio_add_queue(vdev,
->> > +                         n->net_conf.rx_queue_size,
->> > +                         virtio_net_handle_rx);
->> > +
->> > +    n->vqs[index].tx_vq =3D
->> > +        virtio_add_queue(vdev,
->> > +                         n->net_conf.tx_queue_size,
->> > +                         virtio_net_handle_tx_dispatch);
->> > +
->> > +    n->vqs[index].tx_timer =3D
->> > +        timer_new_ns(QEMU_CLOCK_VIRTUAL,
->> > +                     virtio_net_tx_timer,
->> > +                     &n->vqs[index]);
->>
->> We should avoid creating a new timer if it will not be used by
->> default. Create it only if cmdline enables it or the guest enable it
->> via control vq.
->>
-
-[1]
-
-I'm proposing we switch this to something like:
-
-if (!strcmp(n->net_conf.tx, "timer")) {
-  n->vqs[index].tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-virtio_net_tx_timer, &n->vqs[index]);
-}
-
-And, in the CVQ code that you created,
-
-if (n->tx_coal_usecs) {
-  n->vqs[index].tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-virtio_net_tx_timer, &n->vqs[index]);
-}
-
-And the same applies to RX timers.
-
-[2] https://subspace.kernel.org/etiquette.html#do-not-top-post-when-replyin=
-g
+Stefan
 
 
