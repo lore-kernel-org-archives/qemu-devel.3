@@ -4,118 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75336F46101
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05B2F4610C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4f8R-0000E4-V9; Mon, 23 Mar 2026 09:15:59 -0400
+	id 1w4f8s-0000KZ-30; Mon, 23 Mar 2026 09:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w4f8Q-0000Dl-8z
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:15:58 -0400
+ id 1w4f8l-0000Im-Tm
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:16:21 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w4f8O-0000Kc-Go
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:15:58 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1w4f8k-0000NS-DE
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:16:19 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62N83oL31364149
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 13:15:53 GMT
+ 62NADsDX3539883
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 13:16:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=mRTHD33x9sS/GvdPsRjBTq4ipPh5R4vU6n7
- QEzrj5eU=; b=lORzZt4JIrlQpLLAzFNd8ZQacBYwfvyfLDf5xqC0TUkr9wzgXaz
- uHe/sddqvtnlUbH9mG8bn1AHakaYCPvJlsDZ58nIsq7mRsV5niWnRJL6JccUTebn
- S6DnQkvEu3H+mBdJEhqeSqhzyFv/UcqRBJ4BX2XaXSeyyVVj2rJYFaLKcKRvtluU
- RNG+gomjn8iWEMNe7hug3UJj2jOwb/sQTvFkxrCura0UdJagGW7slW6beLymvPCI
- D/r3rg0g1Un2BTUfn3VMAP3ISn80cOeW1adw2NPYj8KtMujVkcEHDupb8DnfAUmZ
- YbXAWgAso52nbZG/1Cueh8zzekUH24SHLaA==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d31p792sc-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=wxSDJLqM9vb
+ GPEMmhLZ18CzmgBXFcFzdhXgwNgVwEN0=; b=gN8xDnyHza71EMJ5RaLPPfJkPuj
+ YlL19BzVyXLhJsEFrZsLaFVfbEMH/KVOd/M8II7qk+foFnbejBzi5Swtx1W+T8ay
+ +3lBhbZITFdr3Y+1jI8TTX8HlxchcfxnUhtxj/0JotliukwFKnN3eORfBXGxPAhz
+ Z3kJOMskTE2OE9U83uxgasbunm9gML1ZFVb4c9cNAnjZIdQPaKJc/dBjTCrdpRUC
+ GDZQz9YQKgye7kNG71t77NqJkU3qmiKILnYe2HNLMOn26Leq5obEnSeG6KdyuQbp
+ jkc2N4Me2CetQAP0ZQ/4G6oew2yGacNte7s1vj603jqMRBJnhmlpCWOIrZA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d33k30jux-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 13:15:53 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-128d0b690feso1233396c88.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 06:15:53 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 13:16:07 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2c0e264d802so12705961eec.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 06:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1774271752; x=1774876552; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mRTHD33x9sS/GvdPsRjBTq4ipPh5R4vU6n7QEzrj5eU=;
- b=WFSM32QboBjb6LVJiEup8q3wlWqSMJl9nkkCSW8196wsz7YxPbTCTKiqtsa970xvtT
- sPrV9u+I09fJirlbsSjdfFNVc0Ob3Lq6DlYdNds9V52npAgafhvj3qnmPtZrT+RyM8me
- IYMh0ytpHoOLi+w/uAReuadZE9EarYbGJPm0Q3tel8AZD2q+G9GS6XdldFPHalFrp3jr
- ub/4QZoYlYO96P2D/xgjpwjL10T27W7W76SiSPRq4fT8JF81TaR9W26L0+okPS1FvJYe
- YKYnEIQDfN8rdZ2MjV72plYus0zARcF5ZmNSH8Q28W8q+bqYSn2UGWeA1Bkx5WQTzjDM
- M2ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774271752; x=1774876552;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1774271766; x=1774876566; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mRTHD33x9sS/GvdPsRjBTq4ipPh5R4vU6n7QEzrj5eU=;
- b=UbVWdnDp4jms5kmbQbE9ZZYA5mu2pOGEJ14yvmcR1yE2LIJ2JD4gy+folEWYQTKBHX
- xNc+GnrWj5f1fZHDpNGt6S/FZIhGFVIM3jccPl9DVvk+2iZ8JrXyihc5CSA4QvZ1UrWj
- DY+22kmbnH63yZe1mO5QlQkhrDmw6TNx0+aSMbWJ9PL02i9QWxieq0LFvmUqPo1K98Z0
- Dp0eYsSDhOKpSovEBEkcd8bIuDAL0Fcz+1QkxcdYGzEWy4MmMjlpkqv5Un+atamicD0D
- hVCsesy2irfc7LC8MtE2y9C/6XEViM+jMUdYlUq1x8EH0Ep8VnLkvMdp0HZBxsp7rrBt
- vqCg==
-X-Gm-Message-State: AOJu0YwfQ0LsK8thdOVo8F1oeAeBBV8L+gkz6SjFDQaEBCmYRVVgOfy2
- QRhdlMPGiDeeZug+BE41sxF5IvwaaBkVwcsxTZUR/bvOAcKYJGjnbBRMt9amgxbGkxhGGZFI98g
- 5RkerTb8e0QEAANjHJHLsQhg18ElciLNNVjHzzh8X9+EgzLzkChjw8gx6QsAsrL/f8Awv
-X-Gm-Gg: ATEYQzx61xz8/BvfN1ukRnb4of/yp0dS++1Dd8pt+SuDijjsrGGIWeLf2P2ImJbYK72
- ilPAkCAGpg8wl3vmNYJLtx6wwNhfJfTvjmRdsSlWKaYlppoXXuSiQ3AvARqMN8urlhhR7lig4Fu
- jIBZZHzvUodTM6zL+0rRLWR9WeZLnFbcbDGH0VTLpk3mMGXmkXkCCcK/d5EHXOyGrJnmtGEimyE
- Y8ZAmo/nqm3HxLlEaUjdR+X3Kncy14d0B89spp57wR5onPgNm70F3Oonvjr+GYSKXzuqHUjbIBs
- LNX7zLt4PaacuDkkNJTkgPILOWh4jbgNjXbgPcv+wGdk8Hn/DGiDcsHv7NYHcbt1l3V1iT7AFx4
- ijfdqSo5Cw8rJEj7RwrjC4uSjge0cFIvTxKJlhorP0K2h1mqo6sZ80b3Ig8hAOIHsHtSS9Tr6nA
- Qt5hkH8ncK
-X-Received: by 2002:a05:7022:68a8:b0:119:e56b:c74d with SMTP id
- a92af1059eb24-12a7267f92dmr7204553c88.18.1774271752335; 
- Mon, 23 Mar 2026 06:15:52 -0700 (PDT)
-X-Received: by 2002:a05:7022:68a8:b0:119:e56b:c74d with SMTP id
- a92af1059eb24-12a7267f92dmr7204529c88.18.1774271751691; 
- Mon, 23 Mar 2026 06:15:51 -0700 (PDT)
+ bh=wxSDJLqM9vbGPEMmhLZ18CzmgBXFcFzdhXgwNgVwEN0=;
+ b=J4QSdCoBp3kEbXjZbDYEm2w0VF53k/YotSP6A1vrRAeinlDA7a+rdayAXBiFpUDF6S
+ 0BNwdM5HGgFU5josiCzCHzGh57k4ucTTI79enW3UxNplKtI+RRsZDYCqbv/7ND01RtfD
+ 0YLlvycuVxpwyiyb+rBFsvH/LZoQp7sXMG8uh9zy79pwaz8JmUBUo4ZnWO1czDhToEQY
+ fYAdrSznudGlJHePqDcEP9VaDh5tAescsc8axcDH/xJmQPHo9d7auuIxDVk4ck46KaLp
+ uLG7HjCaJZljdeWSJPvpLRPhOFNwrBkl/t+6Ms6ch5Jq302QHZ5XYgrxH6MKQ9E/Ij0s
+ rg5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774271766; x=1774876566;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wxSDJLqM9vbGPEMmhLZ18CzmgBXFcFzdhXgwNgVwEN0=;
+ b=ZHIiMyKjiBRfHlXwM9wLJdCwP7G+816lJWmpSBFKJmfHhrEtFeaBLal6ld1tBw3BIv
+ JLVNJQ43J2bMqrLJlm/aicPL2qEG36fFEscp68BwN87oiAq1iCipxD/2Ux8VZttqnKe/
+ bg3V77omZzVamOXDNNfnxAbYsQoXwjL18nlhyBbNykkHFfJo51AHiDpcl3rOrlYuNoSG
+ wgoKCEP/07/pLbLxNW6AIIL4GS/YdBxDBfVh91SIrR45nDfxKMFWptu3eLl1D6HDK5aS
+ Yn6gFUCwmbK9soRe6UPPpzK+jSdLak9ku3PFJgrPKiqh09Qypm+fSpaHPqsrwr2QIk/U
+ 4P5w==
+X-Gm-Message-State: AOJu0YzeecDk4dIXvl0gnYROZfQ8TkYWjFWgJ8cQi+904pjyzMdzKj/Y
+ /g+YxrORYlqpydsOE4fcYTYBR+JQJLOZAXl/i7xPXyitvAqqY65lMXI4ZJBZe2bGgOcjaTty4Rz
+ WxhZpvWBnie2JbU7LXf5hUVj5cvwaUNn4pSWNUyFXbCx46+T6utlePBxCLGTfnFG5HsEK
+X-Gm-Gg: ATEYQzxe2R3uc4t5Wqg1eiPZzxRpGqzCrEssw+jXTUxqxTQEtgeBsgdjAsqubWS6EvP
+ /MFtlXNUBizLpz+Y825vKCi0aLPoZ6SIlO8Zqin6EF1TxbXkWtZxZH39vWDrPt7oPqwiyD6/qft
+ IBKYjZFPyYUUcV3fSJTyV88lk1so7QO8ZPp0xBhuJqp3LQt85p4SLG0EzJUgj27YwFMYZxPpr06
+ yyqMu4FLX2BGIgFs11COaevks4EBxGtLqH8sCrkSWd8I2UgPjpRRd+T5G2dfpFIw3hLiVSh+HWr
+ jVFDXVKfQ4whI4rD2eSoK5eq9cUjUvMwVDdzb/fIA6cridzYHE2qUADJsKV1VF2CV0TO6r32QDJ
+ YE6VMWCsOIlXoUTdfQfHuto79bRUzPRWMBvsXK6ZwWCzdnPgIZCvTEJlN3tuUVoIu1tc3YVAm4p
+ 1oIDPvny/i
+X-Received: by 2002:a05:7300:a145:b0:2be:617:2ddf with SMTP id
+ 5a478bee46e88-2c10970ed0fmr5751894eec.16.1774271766162; 
+ Mon, 23 Mar 2026 06:16:06 -0700 (PDT)
+X-Received: by 2002:a05:7300:a145:b0:2be:617:2ddf with SMTP id
+ 5a478bee46e88-2c10970ed0fmr5751865eec.16.1774271765347; 
+ Mon, 23 Mar 2026 06:16:05 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2c10b14cadbsm14702574eec.3.2026.03.23.06.15.50
+ 5a478bee46e88-2c10b14cadbsm14702574eec.3.2026.03.23.06.16.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 06:15:51 -0700 (PDT)
+ Mon, 23 Mar 2026 06:16:04 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com, marco.liebel@oss.qualcomm.com,
  philmd@linaro.org, quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH 00/13] hexagon: add missing HVX float instructions
-Date: Mon, 23 Mar 2026 06:15:36 -0700
-Message-Id: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+Subject: [PATCH 13/13] tests/hexagon: add tests for v68 HVX IEEE float
+ comparisons
+Date: Mon, 23 Mar 2026 06:15:49 -0700
+Message-Id: <76a65d4bf9062558256d29756e9e847d18692be9.1774271525.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
+In-Reply-To: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=RMC+3oi+ c=1 sm=1 tr=0 ts=69c13d09 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Authority-Analysis: v=2.4 cv=CYYFJbrl c=1 sm=1 tr=0 ts=69c13d17 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=HTRO867GeXLZ4amH5JYA:9
- a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-ORIG-GUID: IS6DVvX-gJBVFPUfGaTJs6wL3S5CZ2XC
-X-Proofpoint-GUID: IS6DVvX-gJBVFPUfGaTJs6wL3S5CZ2XC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIzMDEwMyBTYWx0ZWRfXwMqo68FifjA3
- /1H9IENn8jI3aqzBD+P/zpf/DXN3hE8RD3Nl59aqvkCEJt2B1LVqtPb7o8zU7DaA8iCtRpKdUE8
- hrgWuBX2RPNV8tMmbU80Rzgp+OAH5z3HZ8KTwVrxmKiTwDCEbB1J6L0wwzTPIil7XOYtXkV+Snj
- cczo/FVjj3BPek8X7ca+wDmtNl/nRTBUICQF1InECkr+0VxDMNBjUjrDP5F5d/yR184S5x9auqs
- PL7ymOGsVpN+Dfd1XntajqsfZ3cr+jz9d0vdxgSXz715UT6nmSuVHrrKk/syxsUJMd79kA2LXmc
- Usgi5y7vEaQrKtZPJ+X5PIT07pCcHmO7KQUViiasR9ARTFQBB24hugQdwTJ9ELb4tA1rMkuniJr
- zXBeE/aewDTL7PRMBWHyQ+joe1rMlURQsQkcE1rzegVXzy7m61qtFUNFApSz5HKhES193ISMKa+
- S1xiYTcEjGVvW/fBvdQ==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=0FvW_baqbJdJ8tG75fUA:9 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIzMDEwMyBTYWx0ZWRfX5HvaAHbur8RC
+ gOVUey16BS2Crib5h4mzkumuCsXDnsP1vub2DRalUCC4IIs1lLGc4n8/7+vqaJfgR4awuFTrcyB
+ idQN9aJIKhLK0qN8dx6CbGkVTv/di2wfucFk7Y0uCku4tHDCot+c5+WHRucLDZyU9SY2w7Tb70e
+ +KZJlSwHVEZVlktM0uS3MhSzNlLkD6H6o5/sVx0KTxsQalB20WqKJT75fRsdZ7sDrhuKEFbxmi4
+ LyG+jFxCE11m/E4JeFnLgdWY8Ir5Af53vUXFqoF6KckfX3kYHQ+lm/je6bQ793TB7+ugC98eDYM
+ 7q7H4t6u08PUFg8ARzrAMy9++tfZ55nKdZAETS4ChkuhEA1x9x1ht2G0SrZ4TLyAgO4clRHlbsf
+ MuXAd0gW+pitFir5Dj8fPtwOD2uhry68nktQMp2gpiPt5bJMQRCOg4IPlXpBQOP7vksr/QvT94n
+ /BaUhGB5dADXiFc2ECg==
+X-Proofpoint-GUID: usmgfBGLEWkVXRODWlVaTqppyPDsHH9q
+X-Proofpoint-ORIG-GUID: usmgfBGLEWkVXRODWlVaTqppyPDsHH9q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-23_04,2026-03-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 spamscore=0 phishscore=0 lowpriorityscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603230103
 Received-SPF: pass client-ip=205.220.180.131;
@@ -144,57 +149,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset adds 59 HVX floating point instructions from Hexagon
-revisions v68 and v73 that were missing in qemu. Tests are also added at
-the end.
-
-Brian Cain (1):
-  tests/docker: Update hexagon cross toolchain to 22.1.0
-
-Matheus Tavares Bernardino (12):
-  target/hexagon: fix incorrect/too-permissive HVX encodings
-  target/hexagon/cpu: add HVX IEEE FP extension
-  target/hexagon: add v68 HVX IEEE float arithmetic insns
-  target/hexagon: add v68 HVX IEEE float min/max insns
-  target/hexagon: add v68 HVX IEEE float misc insns
-  target/hexagon: add v68 HVX IEEE float conversion insns
-  target/hexagon: add v68 HVX IEEE float compare insns
-  target/hexagon: add v73 HVX IEEE bfloat16 insns
-  tests/hexagon: add tests for v68 HVX IEEE float arithmetics
-  tests/hexagon: add tests for v68 HVX IEEE float min/max
-  tests/hexagon: add tests for v68 HVX IEEE float conversions
-  tests/hexagon: add tests for v68 HVX IEEE float comparisons
-
- target/hexagon/cpu.h                          |   1 +
- target/hexagon/mmvec/kvx_ieee.h               | 119 ++++++
- target/hexagon/mmvec/macros.h                 |  16 +
- target/hexagon/mmvec/mmvec.h                  |   3 +
- target/hexagon/translate.h                    |   1 +
- tests/tcg/hexagon/hex_test.h                  |  16 +
- tests/tcg/hexagon/hvx_misc.h                  |  14 +
- target/hexagon/attribs_def.h.inc              |   9 +
- target/hexagon/cpu.c                          |   1 +
- target/hexagon/decode.c                       |  22 ++
- target/hexagon/mmvec/kvx_ieee.c               | 234 ++++++++++++
- target/hexagon/translate.c                    |   1 +
- tests/tcg/hexagon/fp_hvx.c                    | 150 ++++++++
- tests/tcg/hexagon/fp_hvx_cmp.c                |  58 +++
- tests/tcg/hexagon/fp_hvx_cvt.c                | 194 ++++++++++
- tests/tcg/hexagon/fp_hvx_disabled.c           |  32 ++
- target/hexagon/hex_common.py                  |   2 +
- target/hexagon/imported/mmvec/encode_ext.def  | 127 +++++--
- target/hexagon/imported/mmvec/ext.idef        | 357 +++++++++++++++++-
- target/hexagon/meson.build                    |   1 +
- .../dockerfiles/debian-hexagon-cross.docker   |  10 +-
- tests/tcg/hexagon/Makefile.target             |  14 +
- 22 files changed, 1354 insertions(+), 28 deletions(-)
- create mode 100644 target/hexagon/mmvec/kvx_ieee.h
- create mode 100644 target/hexagon/mmvec/kvx_ieee.c
- create mode 100644 tests/tcg/hexagon/fp_hvx.c
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+---
+ tests/tcg/hexagon/hex_test.h      |  1 +
+ tests/tcg/hexagon/fp_hvx_cmp.c    | 58 +++++++++++++++++++++++++++++++
+ tests/tcg/hexagon/Makefile.target |  3 ++
+ 3 files changed, 62 insertions(+)
  create mode 100644 tests/tcg/hexagon/fp_hvx_cmp.c
- create mode 100644 tests/tcg/hexagon/fp_hvx_cvt.c
- create mode 100644 tests/tcg/hexagon/fp_hvx_disabled.c
 
+diff --git a/tests/tcg/hexagon/hex_test.h b/tests/tcg/hexagon/hex_test.h
+index 28522faf04..5bc7a76a17 100644
+--- a/tests/tcg/hexagon/hex_test.h
++++ b/tests/tcg/hexagon/hex_test.h
+@@ -124,6 +124,7 @@ const uint16_t HF_any = 0x3c00;
+ const uint16_t HF_neg_two = 0xc000;
+ 
+ const uint32_t SF_INF =              0x7f800000;
++const uint32_t SF_INF_neg =          0xff800000;
+ const uint32_t SF_QNaN =             0x7fc00000;
+ const uint32_t SF_QNaN_special =     0x7f800001;
+ const uint32_t SF_SNaN =             0x7fb00000;
+diff --git a/tests/tcg/hexagon/fp_hvx_cmp.c b/tests/tcg/hexagon/fp_hvx_cmp.c
+new file mode 100644
+index 0000000000..e925c973f3
+--- /dev/null
++++ b/tests/tcg/hexagon/fp_hvx_cmp.c
+@@ -0,0 +1,58 @@
++/*
++ *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <stdio.h>
++#include <stdint.h>
++#include <stdbool.h>
++#include <string.h>
++#include <hexagon_types.h>
++#include <hvx_hexagon_protos.h>
++
++#if __HEXAGON_ARCH__ > 75
++#error "After v75, compiler will replace some FP HVX instructions."
++#endif
++
++int err;
++#include "hvx_misc.h"
++#include "hex_test.h"
++
++#define TEST_CMP(VAL1, VAL2, EXP) do { \
++    ((MMVector *)&buffers[0])->sf[index] = VAL1; \
++    ((MMVector *)&buffers[1])->sf[index] = VAL2; \
++    expect[0].w[index] = EXP ? 0xffffffff : 0; \
++    index++; \
++} while (0)
++
++int main(void)
++{
++    HVX_Vector *hvx_output = (HVX_Vector *)&output[0];
++    HVX_Vector buffers[2], true_vec, false_vec;
++    HVX_VectorPred pred;
++    int index = 0;
++
++    memset(&buffers, 0, sizeof(buffers));
++    memset(expect, 0, sizeof(expect));
++    memset(&true_vec, 0xff, sizeof(true_vec));
++    memset(&false_vec, 0, sizeof(false_vec));
++
++    TEST_CMP(raw_sf(2.2),  raw_sf(2.1),  true);
++    TEST_CMP(raw_sf(2.2),  raw_sf(2.2),  false);
++    TEST_CMP(raw_sf(0),    raw_sf(-2.2), true);
++    TEST_CMP(SF_SNaN,      SF_SNaN,      false);
++    TEST_CMP(SF_INF,       SF_INF_neg,   true);
++    TEST_CMP(SF_INF_neg,   SF_INF,       false);
++    TEST_CMP(SF_SNaN,      SF_QNaN,      false);
++    TEST_CMP(SF_QNaN,      SF_SNaN,      true);
++    TEST_CMP(SF_QNaN,      SF_QNaN_neg,  true);
++
++    pred = Q6_Q_vcmp_gt_VsfVsf(buffers[0], buffers[1]);
++    *hvx_output = Q6_V_vmux_QVV(pred, true_vec, false_vec);
++
++    check_output_sf(__LINE__, 1);
++
++    puts(err ? "FAIL" : "PASS");
++    return err ? 1 : 0;
++}
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index e240372fd2..ba93ffab17 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -52,6 +52,7 @@ HEX_TESTS += hvx_misc
+ HEX_TESTS += hvx_histogram
+ HEX_TESTS += fp_hvx
+ HEX_TESTS += fp_hvx_cvt
++HEX_TESTS += fp_hvx_cmp
+ HEX_TESTS += fp_hvx_disabled
+ HEX_TESTS += invalid-slots
+ HEX_TESTS += invalid-encoding
+@@ -132,6 +133,8 @@ fp_hvx_disabled: fp_hvx_disabled.c hvx_misc.h
+ fp_hvx_disabled: CFLAGS += -mhvx -mhvx-ieee-fp
+ fp_hvx_cvt: fp_hvx_cvt.c hvx_misc.h
+ fp_hvx_cvt: CFLAGS += -mhvx -mhvx-ieee-fp
++fp_hvx_cmp: fp_hvx_cmp.c hvx_misc.h
++fp_hvx_cmp: CFLAGS += -mhvx -mhvx-ieee-fp
+ 
+ run-fp_hvx_disabled: QEMU_OPTS += -cpu v73,ieee-fp=false
+ 
 -- 
 2.37.2
 
