@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41138F46124
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC24FF46126
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ft9-00060N-Uu; Mon, 23 Mar 2026 10:04:16 -0400
+	id 1w4foa-0000CZ-CV; Mon, 23 Mar 2026 09:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fp9-0000pD-OP
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:15 -0400
+ id 1w4fo5-0008Jg-PG
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:03 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fp8-00073m-1x
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:07 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fo4-0006tE-C6
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:01 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 2F30720B6F1B;
- Mon, 23 Mar 2026 06:59:52 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2F30720B6F1B
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8649420B7007;
+ Mon, 23 Mar 2026 06:58:56 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8649420B7007
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274395;
- bh=+GcfDGF+p4TwuNzdDU1vHppWDYVvy/FB9/c/HXYoevs=;
+ s=default; t=1774274339;
+ bh=+449kqpsT3rs/26cTO+xTXYI56NYmCzZVttigepvBaE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UVeLNgdI5nYWCu1OyAzf3VaXpB1gaFTPxadDDb6zHvYkUhmfNatrjByuo91FHcEXi
- AVJCN2Zt+lbprqjSuAah2EzDGjyvaOGFbM22H3Mt6XYwhgXiRwJB8tNALufhPHeiY2
- unvfwFRqfmC6PGyPiibJHBt4ed0rqPMOcSd2D39s=
+ b=o73bjwCv1M6bmGMltUPwyi9QAIV+9orQPu8JdvTulptPQu+OYOS/eYdweG9gWS8MK
+ BCLIxFKwQi2/TGqoLCre1iGiIanPEfphanY1iJmVbs/FYp5lYzVFDcZiGTOpcLMeGv
+ dzUJ0apeVV4YTV/rYUgk3fRG0aXlrH1fJP6IdmKo=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 26/32] accel/mshv: migrate REFERENCE_TIME
-Date: Mon, 23 Mar 2026 14:58:06 +0100
-Message-Id: <20260323135812.383509-27-magnuskulke@linux.microsoft.com>
+Subject: [RFC 11/32] accel/mshv: use s->irq_routes in commit_routes
+Date: Mon, 23 Mar 2026 14:57:51 +0100
+Message-Id: <20260323135812.383509-12-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,102 +75,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a partition-wide state that we use a dedicated handler for. It
-is stored as-is in the "mshv" savevm_live field. We might have to extend
-this later if we have more partition-wide state to roundtrip.
+In mshv_irqchip_commit_routes() the entries that have been accumulated
+in s->irq_routes are committed directly to MSHV's irqchip.
+
+The old commit_msi_routing_table() fn will be removed in a subsquent commit.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 70 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 69 insertions(+), 1 deletion(-)
+ accel/accel-irq.c       | 2 +-
+ accel/mshv/irq.c        | 7 ++++---
+ accel/stubs/mshv-stub.c | 2 +-
+ include/system/mshv.h   | 2 +-
+ 4 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 22e838ede6..3927a82925 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -85,13 +85,81 @@ static int set_time_freeze(int vm_fd, int freeze)
+diff --git a/accel/accel-irq.c b/accel/accel-irq.c
+index 0cb3ef78d3..4303e10e40 100644
+--- a/accel/accel-irq.c
++++ b/accel/accel-irq.c
+@@ -55,7 +55,7 @@ void accel_irqchip_commit_routes(void)
+ {
+ #ifdef CONFIG_MSHV_IS_POSSIBLE
+     if (mshv_msi_via_irqfd_enabled()) {
+-        mshv_irqchip_commit_routes();
++        mshv_irqchip_commit_routes(mshv_state);
+     }
+ #endif
+     if (kvm_enabled()) {
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 990ce34620..9ba837f0e2 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -394,16 +394,17 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
      return 0;
  }
  
-+static int get_reference_time(int vm_fd, uint64_t *ref_time)
-+{
-+    int ret;
-+    struct hv_input_get_partition_property in = {0};
-+    struct hv_output_get_partition_property out = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_REFERENCE_TIME;
-+
-+    args.code = HVCALL_GET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+    args.out_sz = sizeof(out);
-+    args.out_ptr = (uint64_t)&out;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to get reference time");
-+        return -1;
-+    }
-+
-+    *ref_time = out.property_value;
-+    return 0;
-+}
-+
- static void mshv_save_state(QEMUFile *f, void *opaque)
+-void mshv_irqchip_commit_routes(void)
++void mshv_irqchip_commit_routes(MshvState *s)
  {
--    return;
-+    MshvState *s = opaque;
-+    uint64_t ref_time;
-+    int ret;
-+
-+    ret = get_reference_time(s->vm, &ref_time);
-+    if (ret < 0) {
-+        error_report("Failed to get reference time for migration");
-+        abort();
-+    }
-+
-+    qemu_put_be64(f, ref_time);
-+}
-+
-+static int set_reference_time(int vm_fd, uint64_t ref_time)
-+{
-+    int ret;
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_REFERENCE_TIME;
-+    in.property_value = ref_time;
-+
-+    args.code = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set reference time");
-+        return -1;
-+    }
-+
-+    return 0;
+     int ret;
+-    int vm_fd = mshv_state->vm;
++    int vm_fd = s->vm;
+ 
+-    ret = commit_msi_routing_table(vm_fd);
++    ret = ioctl(vm_fd, MSHV_SET_MSI_ROUTING, s->irq_routes);
+     if (ret < 0) {
+         error_report("Failed to commit msi routing table");
+         abort();
+     }
++    trace_mshv_commit_msi_routing_table(vm_fd, s->irq_routes->nr);
  }
  
- static int mshv_load_state(QEMUFile *f, void *opaque, int version_id)
- {
-+    MshvState *s = opaque;
-+    uint64_t ref_time;
-+    int ret;
-+
-+    ref_time = qemu_get_be64(f);
-+
-+    ret = set_reference_time(s->vm, ref_time);
-+    if (ret < 0) {
-+        error_report("Failed to set reference time after migration");
-+        return -1;
-+    }
-     return 0;
+ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *event,
+diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
+index dadf05511a..8b69539a85 100644
+--- a/accel/stubs/mshv-stub.c
++++ b/accel/stubs/mshv-stub.c
+@@ -28,7 +28,7 @@ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
+     return -ENOSYS;
  }
  
+-void mshv_irqchip_commit_routes(void)
++void mshv_irqchip_commit_routes(MshvState *s)
+ {
+ }
+ 
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 2033beed70..0c9a4f927c 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -62,8 +62,8 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+ 
+ int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
+-void mshv_irqchip_commit_routes(void);
+ void mshv_irqchip_release_virq(MshvState *s, int virq);
++void mshv_irqchip_commit_routes(MshvState *s);
+ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
+                                         const EventNotifier *rn, int virq);
+ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
 -- 
 2.34.1
 
