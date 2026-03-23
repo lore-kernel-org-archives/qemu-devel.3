@@ -4,92 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16563F483D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0B05F483C8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iF1-0004M8-27; Mon, 23 Mar 2026 12:35:00 -0400
+	id 1w4iGP-00054F-Jl; Mon, 23 Mar 2026 12:36:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iEt-0004KK-Hi
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:34:52 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iEq-0003nf-SS
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:34:50 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-486fba7ce4cso3090805e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:34:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774283685; x=1774888485; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W44l1oLZoJUW7IKaKFPRn2qixRx23D3QDvkpQdC+BBs=;
- b=S7Ay4OJuAYTsHlnthae/BLu8ExhidCHCytbD9fGloj3VF7D0SLM3vWzNApMQeGnIO0
- exL7luSQlV5GosXY3f5zLAa8zRjGlQBpHf4Kj3ZdD0i/OoGKDlr7Zmtqd9gpo+ei6C/l
- 9egMZRmqvYv6DWMAcBszvqc8xrH4nxKhbaA3fj0wTYLsF/BgQp03mNnu+d1T9s3c4HzH
- 2I4EYmjkV+b1L2tuV/O968aVmb53bKkuWRUaZ9kqPquCUO/DrybJOy/HznmcoG6Y9oHZ
- cKsCJKPjzk95HmysTgThcKbP2MhrGg7ryrxRfngm/DQ3e+ydTNEaJTXftu+SK/IOWrBt
- XEXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774283685; x=1774888485;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W44l1oLZoJUW7IKaKFPRn2qixRx23D3QDvkpQdC+BBs=;
- b=fLStIQjlD14Xi2FfZV/WU1e471GlPeqPHkPjkAjlI50MCpW9ZBgmnrfSmH54Rr4y1k
- y5oLYqT85tHqEoGcMLhIAikM9CiyvY7hiZVyw8FCiJmscYm0nmQOQtX/0mysXZxCUYNk
- iKoZpIm5bJnwehAClkpxJOXL3LM3bOVTxEOvYEqzEv+Kplf0Lrq6UkZ7I2hIv1yJJzuj
- MaROwxxjVrOe0Alxc518IePILoRsJBzsCrt9eLqQiE26naB8IDeJtLzI+0EUlzW4TNWW
- uo2sRcnZE1z6n1G6VnyokpxEmknwrItJkk8M+nGdTn+u67nIOXgaJw0RnB2csJutEvXU
- TVLQ==
-X-Gm-Message-State: AOJu0YxUW9aB1m8lOhbJ2E6JGnO+LEPC/p+APEsuld0TcGYMuhL3fsuY
- gpCam+SXvaMBSlgN0IK6uaxrskT3a9yKMlAEQnju8+uw2qiTs0hW/iRYKyQi5Jif9h8=
-X-Gm-Gg: ATEYQzyZ3q6yvomFe16XES2mMQtOctF2h7UHaKMBQ5z2LTS+nGokf0pPVfICSJcQ0Nl
- Bz4dmi9aIBuJyx66QE46BGTFA3SUWty34+vVEb8utYP2J6VY/jeSyfEUF3i0f0JlUJj8ODe0LFo
- MmA5v4QOV80lz2LYcNhr78LAH+HkMhreXlTCIYOLXnuRNmfhGxYZ4cRbdfQdKb4e61xrNKUl+L8
- IPUTe9bPjUc+INwXI2eHgs1+bKFm9q1NBhuPxdti/Gv1Mee0IB0u+8lW6CjserAfLyxyUxxLMG8
- K9WwODnrrZ22U8zng5IIEDg/8GEB9QaO8gTjp9lmYFYfSo1d7gw9Unk2/pqjuvr0RlSYK6n0Pgq
- rOYYuCK54/c2MvdBYx7L9FrIQ9Vw9s5f1KqBrD0V/jaY/JRKLqXRhngRXWz9iunMwvUDtAXsZQF
- CHA53XcHu/T5irh21a9gOC9V0sIIsE+bFf2SwmLl0yjZrSp7Y/GZ/zw84AHqkKMiaH6Q==
-X-Received: by 2002:a05:600c:c083:b0:47e:e076:c7a5 with SMTP id
- 5b1f17b1804b1-486fedf9b7cmr146302285e9.11.1774283684840; 
- Mon, 23 Mar 2026 09:34:44 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe85e4b4sm85751705e9.3.2026.03.23.09.34.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 09:34:43 -0700 (PDT)
-Message-ID: <1c1bf900-aa17-4db4-8d33-fca40ed4da58@linaro.org>
-Date: Mon, 23 Mar 2026 17:34:42 +0100
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w4iGK-00053N-19
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:36:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w4iGI-0004r0-7i
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:36:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774283776;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rIkbjBHjvn8E76gPlCC8uOvatQxjMWJmWzMeWl472RU=;
+ b=iCUZ1OB0f+gW8aOj6+mW66thv/HJYk025S++XJxyMxg4Jj7zHK52wzv02WGZyS0GkdUE+H
+ EYhdMKPMX20wuyNFaoIXOfZPcANUgQOwc/pMkg9kebKlSVU4DEfspbD2eNVHjVqZseGB3j
+ v1u759lf6RNk0GgpxIFDp0/4udr3CE8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-8x7UaTg4O4Sjc_Ym6yr8BA-1; Mon,
+ 23 Mar 2026 12:36:12 -0400
+X-MC-Unique: 8x7UaTg4O4Sjc_Ym6yr8BA-1
+X-Mimecast-MFC-AGG-ID: 8x7UaTg4O4Sjc_Ym6yr8BA_1774283771
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 93B7719560B4; Mon, 23 Mar 2026 16:36:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.184])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99BD5300019F; Mon, 23 Mar 2026 16:36:09 +0000 (UTC)
+Date: Mon, 23 Mar 2026 17:36:07 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Aarushi Mehta <mehta.aaru20@gmail.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH for-11.0 1/3] linux-aio: Put all parameters into
+ qemu_laiocb
+Message-ID: <acFqulONusPdbQHY@redhat.com>
+References: <20260318153206.171494-1-hreitz@redhat.com>
+ <20260318153206.171494-2-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0] docs/about/removed-features: Replace 'since' ->
- 'removed in'
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260323151934.92880-1-philmd@linaro.org>
- <CAFEAcA-F8_B8ni2kNefoG2f9dwB9NXXCV9M_V3sd2k=KWYf6SA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-F8_B8ni2kNefoG2f9dwB9NXXCV9M_V3sd2k=KWYf6SA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260318153206.171494-2-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,31 +86,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/3/26 17:30, Peter Maydell wrote:
-> On Mon, 23 Mar 2026 at 15:20, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> We use "deprecated since ..." and "removed in ...".
->> Replace "since" by "removed in" for removed features.
->>
->> Fixes: 762c8554394 ("vfio: Remove 'vfio-platform'")
->> Fixes: aeb1a50d4a7 ("vfio: Remove 'vfio-amd-xgbe' device")
->> Fixes: e50a021a451 ("hw/arm: Remove ast2700a0-evb machine")
->> Fixes: 4af2433a81b ("docs: Mention 32-bit PPC host as removed")
->> Fixes: 8ebc416ac17 ("vfio: Remove 'vfio-calxeda-xgmac' device")
->> Fixes: a80151c9da1 ("hw/sd/sdcard: Remove support for spec v1.10")
->> Fixes: 269ffaabc84 ("buildsys: Remove support for 32-bit MIPS hosts")
->> Fixes: fc37c122fff ("migration: Drop deprecated QMP migrate argument @detach")
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Am 18.03.2026 um 16:32 hat Hanna Czenczek geschrieben:
+> Put all request parameters into the qemu_laiocb struct, which will allow
+> re-submitting the tail of short reads/writes.
 > 
-> I checked these commits to confirm that none of them were cases
-> where the "since X.Y" had just been moved over to removed.rst
-> without updating it from the "version we deprecated this in"
-> value to "version we actually removed it" value.
-
-Me too :D
-
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  block/linux-aio.c | 35 ++++++++++++++++++++++-------------
+>  1 file changed, 22 insertions(+), 13 deletions(-)
 > 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> diff --git a/block/linux-aio.c b/block/linux-aio.c
+> index 53c3e9af8a..1f25339dc9 100644
+> --- a/block/linux-aio.c
+> +++ b/block/linux-aio.c
+> @@ -40,10 +40,15 @@ struct qemu_laiocb {
+>      Coroutine *co;
+>      LinuxAioState *ctx;
+>      struct iocb iocb;
+> +    int fd;
+>      ssize_t ret;
+> +    off_t offset;
+>      size_t nbytes;
+>      QEMUIOVector *qiov;
+> -    bool is_read;
+> +
+> +    int type;
 
-Thanks!
+If you put fd and type next to each other, you'd avoid a hole in the
+struct.
+
+> +    BdrvRequestFlags flags;
+> +    uint64_t dev_max_batch;
+>      QSIMPLEQ_ENTRY(qemu_laiocb) next;
+>  };
+>  
+> @@ -87,7 +92,7 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+>              ret = 0;
+>          } else if (ret >= 0) {
+>              /* Short reads mean EOF, pad with zeros. */
+> -            if (laiocb->is_read) {
+> +            if (laiocb->type == QEMU_AIO_READ) {
+>                  qemu_iovec_memset(laiocb->qiov, ret, 0,
+>                      laiocb->qiov->size - ret);
+>              } else {
+> @@ -367,23 +372,23 @@ static void laio_deferred_fn(void *opaque)
+>      }
+>  }
+>  
+> -static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+> -                          int type, BdrvRequestFlags flags,
+> -                          uint64_t dev_max_batch)
+> +static int laio_do_submit(struct qemu_laiocb *laiocb)
+>  {
+>      LinuxAioState *s = laiocb->ctx;
+>      struct iocb *iocbs = &laiocb->iocb;
+>      QEMUIOVector *qiov = laiocb->qiov;
+> +    int fd = laiocb->fd;
+> +    off_t offset = laiocb->offset;
+>  
+> -    switch (type) {
+> +    switch (laiocb->type) {
+>      case QEMU_AIO_WRITE:
+>  #ifdef HAVE_IO_PREP_PWRITEV2
+>      {
+> -        int laio_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
+> +        int laio_flags = (laiocb->flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
+>          io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov, offset, laio_flags);
+>      }
+>  #else
+> -        assert(flags == 0);
+> +        assert(laiocb->flags == 0);
+>          io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
+>  #endif
+>          break;
+> @@ -399,7 +404,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+>      /* Currently Linux kernel does not support other operations */
+>      default:
+>          fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
+> -                        __func__, type);
+> +                        __func__, laiocb->type);
+>          return -EIO;
+>      }
+>      io_set_eventfd(&laiocb->iocb, event_notifier_get_fd(&s->e));
+> @@ -407,7 +412,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+>      QSIMPLEQ_INSERT_TAIL(&s->io_q.pending, laiocb, next);
+>      s->io_q.in_queue++;
+>      if (!s->io_q.blocked) {
+> -        if (s->io_q.in_queue >= laio_max_batch(s, dev_max_batch)) {
+> +        if (s->io_q.in_queue >= laio_max_batch(s, laiocb->dev_max_batch)) {
+>              ioq_submit(s);
+>          } else {
+>              defer_call(laio_deferred_fn, s);
+> @@ -425,14 +430,18 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
+>      AioContext *ctx = qemu_get_current_aio_context();
+>      struct qemu_laiocb laiocb = {
+>          .co         = qemu_coroutine_self(),
+> -        .nbytes     = qiov ? qiov->size : 0,
+> +        .fd         = fd,
+> +        .offset     = offset,
+> +        .nbytes     = (qiov ? qiov->size : 0),
+
+Adding parentheses around the expression seems both unrelated and
+unnecessary.
+
+>          .ctx        = aio_get_linux_aio(ctx),
+>          .ret        = -EINPROGRESS,
+> -        .is_read    = (type == QEMU_AIO_READ),
+>          .qiov       = qiov,
+> +        .type       = type,
+> +        .flags      = flags,
+> +        .dev_max_batch = dev_max_batch,
+>      };
+>  
+> -    ret = laio_do_submit(fd, &laiocb, offset, type, flags, dev_max_batch);
+> +    ret = laio_do_submit(&laiocb);
+>      if (ret < 0) {
+>          return ret;
+>      }
+
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+
 
