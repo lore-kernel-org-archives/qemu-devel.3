@@ -4,68 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29154EC01C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 10:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BFEEC01BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 10:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4cXV-00030M-5X; Mon, 23 Mar 2026 06:29:41 -0400
+	id 1w4cg9-0007CI-Mh; Mon, 23 Mar 2026 06:38:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4cXP-0002zQ-Dg
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:29:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w4cg2-0007Ba-MO
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:38:31 -0400
+Received: from p-east2-cluster2-host3-snip4-6.eps.apple.com ([57.103.78.109]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4cXN-0008Do-L9
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:29:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774261772;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gPE0PGbUieh4H5tEywglXPgc/0vbzNmgzvnwWExdN24=;
- b=IJB2RGFOlNU2pbQu3/DR6coaM2ZdeOUfgwllmH3wFE7Aj8sI9BHv31gStb2JsnNvpca1Rn
- h3pBi7KhEqz7wi8+QoKv0gHQ3/KFu5O2nqByllvAA1VRuGREAxGSORRIcMaZB34Wl5IWNa
- kfExlKm5uTwG6tNxGR1fcHdVRzqU5+w=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-aEnvW9e2NsScVVTxMvggMw-1; Mon,
- 23 Mar 2026 06:29:31 -0400
-X-MC-Unique: aEnvW9e2NsScVVTxMvggMw-1
-X-Mimecast-MFC-AGG-ID: aEnvW9e2NsScVVTxMvggMw_1774261769
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F08E31944F2F; Mon, 23 Mar 2026 10:29:28 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.50])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2F86A300019F; Mon, 23 Mar 2026 10:29:26 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
-	Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 2/6] hw/display/cg3: Fix crash when introspecting cgthree from
- the CLI
-Date: Mon, 23 Mar 2026 11:29:16 +0100
-Message-ID: <20260323102920.25170-3-thuth@redhat.com>
-In-Reply-To: <20260323102920.25170-1-thuth@redhat.com>
-References: <20260323102920.25170-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w4cfx-0001TB-DE
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:38:30 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPS id
+ 2246E1800C12; Mon, 23 Mar 2026 10:38:19 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774262301; x=1776854301;
+ bh=a6pV38Vc8867vdB+wMASeULNxeNxh8/rfWCvj1861Pc=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=T3EcgMqr7DUEZs4UKtgP6UOM+ZiTkHoyiPk08sNqxf5sTzwuYhBPGv6T/tgLgTjeWp/69G6vLS/GVM8scdh9niGBgWX5Mg7j4M8rjLUptdAU2xU2Kf/reo8AJj3u82YtmKpson1NJD2r8ws9u+NOIl8mdp1cIJdX1mXW+YIFvXkLK80TdmCj/KAFUTUINXnbwM7iaQeDUu0AJQvD0Le+V6aadFigu3iDMALrudk6U2HIMAg4UTTyzFC1Lnk2+o/r7gheLW2nYvQovyTvtUtojTDyt9M8mTJcSnsSC4J+iI+CugTLiJMm2Qk4Zyn3pSYhIeXCXAzw7DR2LGrQqbfv2g==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPSA id
+ D439A180012F; Mon, 23 Mar 2026 10:38:18 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH] whpx: i386: skip TSC read for MMIO exits
+Date: Mon, 23 Mar 2026 11:38:05 +0100
+Message-ID: <20260323103805.97592-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-Proofpoint-GUID: JhTOg3Dhg0ewXXDccFJDUOwN9ubWOZpB
+X-Authority-Info-Out: v=2.4 cv=K6Qv3iWI c=1 sm=1 tr=0 ts=69c1181d
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NP4je1IWzm4tDGSucAQA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIzMDA4MiBTYWx0ZWRfX7y45FqrmLxYY
+ vFheSNjfTQpK1z+QllUo+YY+uYDtrB+2sVUJrhNi2Pv4t2jc9Tvdt3ATrCPpArn64wBl9gdFpDH
+ 83/T7z+kiDECDamnTfrrbHgjv7DUXdS+kwyHf8i3mhyCvfhd4+iT2jtgHjt5pVUXc8pURZK6sG2
+ fBVhknsSP6G8zM8f5Hs88Ku5G7HroS5C7FwBnLLDfjxQfTyon0wyXrk5EyARcKIG/H9y61Nh090
+ N8uiaXxkshuRtzUktGED6VGjlvJIR2x0iqtEYi8P5rk7yEQ2fvU4GEtWUDQdl4JHzPZ6nPZfTOp
+ bw0OTeRPqf3DHNKNoxqtYK6XBTWADhiUms6LyGt89yDRjfTCKKFYBlVuO6v2Jw=
+X-Proofpoint-ORIG-GUID: JhTOg3Dhg0ewXXDccFJDUOwN9ubWOZpB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-23_03,2026-03-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ phishscore=0 mlxlogscore=678 clxscore=1030 bulkscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603230082
+Received-SPF: pass client-ip=57.103.78.109;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,75 +87,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+The TSC value isn't needed for vmexit processing.
 
-QEMU currently crashes when introspecting the cgthree device from the
-command line interface:
-
- $ ./qemu-system-sparc -device cgthree,help
- Segmentation fault (core dumped)
-
-This happens because the memory_region_init_rom() function internally
-calls qemu_ram_alloc_internal() that needs the current_machine pointer
-to be set up - which is not the case here since the machine has not
-been created yet.
-
-There does not seem to be a compelling reason for initializing the
-memory regions from the instance_init function, so let's simply move
-the code into the realize() function instead to fix this issue.
-
-Tested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260317080623.438230-1-thuth@redhat.com>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- hw/display/cg3.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ target/i386/whpx/whpx-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/display/cg3.c b/hw/display/cg3.c
-index 61bdb0552e9..0a413fbb7ec 100644
---- a/hw/display/cg3.c
-+++ b/hw/display/cg3.c
-@@ -277,10 +277,13 @@ static const GraphicHwOps cg3_ops = {
-     .gfx_update = cg3_update_display,
- };
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 015c0f1dc9..5ac7fbdf7a 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -606,7 +606,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
  
--static void cg3_initfn(Object *obj)
-+static void cg3_realizefn(DeviceState *dev, Error **errp)
- {
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
--    CG3State *s = CG3(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    Object *obj = OBJECT(dev);
-+    CG3State *s = CG3(dev);
-+    int ret;
-+    char *fcode_filename;
+     assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
  
-     memory_region_init_rom(&s->rom, obj, "cg3.prom", FCODE_MAX_ROM_SIZE,
-                            &error_fatal);
-@@ -289,14 +292,6 @@ static void cg3_initfn(Object *obj)
-     memory_region_init_io(&s->reg, obj, &cg3_reg_ops, s, "cg3.reg",
-                           CG3_REG_SIZE);
-     sysbus_init_mmio(sbd, &s->reg);
--}
--
--static void cg3_realizefn(DeviceState *dev, Error **errp)
--{
--    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
--    CG3State *s = CG3(dev);
--    int ret;
--    char *fcode_filename;
- 
-     /* FCode ROM */
-     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, CG3_ROM_FILE);
-@@ -381,7 +376,6 @@ static const TypeInfo cg3_info = {
-     .name          = TYPE_CG3,
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(CG3State),
--    .instance_init = cg3_initfn,
-     .class_init    = cg3_class_init,
- };
- 
+-    if (!env->tsc_valid) {
++    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && !env->tsc_valid) {
+         whpx_get_tsc(cpu);
+         env->tsc_valid = !runstate_is_running();
+     }
 -- 
-2.53.0
+2.50.1 (Apple Git-155)
 
 
