@@ -4,108 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC46F46139
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A2CF46139
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4hHv-0000I3-RO; Mon, 23 Mar 2026 11:33:55 -0400
+	id 1w4hLY-0001ml-VE; Mon, 23 Mar 2026 11:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4hHt-0000Gx-I9
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:33:53 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4hHs-0004C8-4a
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:33:53 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-79801df3e42so54780367b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:33:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774280031; cv=none;
- d=google.com; s=arc-20240605;
- b=WIUoL1DWars9reWBUU7lQeCaX/M9jTCxTj4q066bpaDe/b7UrXXt8JBp4UcisF/tSy
- sRNVKNPWeNindB/LG3hdmYL3xhvF6ogvZiomG4L7Ma8I0GOUg5MZuvnZJBhpL5j1/Mnm
- Ev02tZ08nfIyOMrVz/uHaegxqfH6/9U8SLj4NMgNzRaGqf44WUgd+btqpQu9/PukHGqF
- 4lYA8xkfY06nZtW/cWyZa1iMJ8UTqGWWvvrloIKlHBsTSNDkRH9yGbedJuWgHad4yVes
- gQBj0oTx9siB0JZgSLVN0LOwSiEHN6cHqYI0YFCXuUF2hixmps041IJ+fbTmpit/8geU
- 26tQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8ZNFO4m9N974fMV6SMdh12CJIrrms+GSDZzZozFbW8k=;
- fh=lIg4F3nqWhRKsRwDZRN+oq7OtY9qZ/Lce+dK0XSk1r0=;
- b=PNSOjLq19Z3wTpbdQ0Ln8TwTGnfImjCWeDNB3XeHtDomdLPgeE7YdTkEk5kKgaqXPY
- /vr23V4Iy8i7Rx43Na1LW/hs0XmBQPm/aAtr8xsvQFR34udxXzmhjYyCjuKcX2VC342B
- b5+AeN9XgkmtMp8MxkBHhS87bWh2mBVv05xfTj3ii3A2Jz5h+sO1flLeS1c6GZX8bjlm
- pPpnhmrhm6NU6fJssZRJxOd5vWiTmzgXWNus8/WNjCxwMI/h+YbGppGbQM5Nm3o8owOA
- fHggdO214Q/9zOozzwTMrCX1244mknrJ6HKtOEYhtQYjz1ImgT6CxEhlsDTvWhHYLUwZ
- Wy3A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774280031; x=1774884831; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8ZNFO4m9N974fMV6SMdh12CJIrrms+GSDZzZozFbW8k=;
- b=X0agY1SGhrO4+KeQmKF3z2edwMJkTrmb4fwEvnETo2DhtQkCaVCpn+zRI0YssFzGES
- ieJ46c7613LRKtdkMgmkZBKllRh/sl6Xa2iNfPnhKKRckyKDQQNQvUW/tXFCuUK+vzNu
- 5zCNEVKuAeCk44N67/Xt4YC1TcvmUuUJQTE1UEV4UUrMhLNGwJx6jfIm8gsZhzewSJ2a
- pWuHaQyKrfMkT4EXPEuVGfpOE1kALt4MVdSmaQG2LjhwIv7wYjaBXq5vHUxEMMFdqp+2
- RZAQh2pIbo9e4qdxqgc3e+DnH2QyuTnL6AOtHV3vx/doPIFQOWmvchdyC/A91rkUGxJf
- DqCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774280031; x=1774884831;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8ZNFO4m9N974fMV6SMdh12CJIrrms+GSDZzZozFbW8k=;
- b=rHnK3TSCSzhsUh2/Hm05uQp11xA68x5LECxpjmdOHT2Dsm5llXV0KN5twIQCg7SVFq
- HN5xr+yP3pYMCUgu8z4QmX5qGmCvWb9ZfVqRPT1+HlaW0gleCO+BFuSmzFt7ouUIvomk
- FddWMtTZo9RF5JkeIiqHHIQbB7FQD5VKzmVfwoWk906+O0wjNTMNHmooiUs4syo3Cyu2
- WqD3cqRfGzrxiCBbua46VdeTa1thtkkFCvUMbImBLDUxOHkkp9p6bIeJ9D08K+V9jzk2
- cy9VzmmlWiCn+QaRe9H3Im8CgZnXGsWe2hwwbYl69AMUdHRoECLusd+ZMMZD6adDWjdL
- bdqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSti+H79fEAm5CcgBueykd8rlf7f2uj5vYrGkLmOE8q9lJW5EKP/4bHflL+GI3id3iG3mim8HvfrrA@nongnu.org
-X-Gm-Message-State: AOJu0YwEw3xmwt8Q0KeOskuftpTlIoIyrm9idXyZmwwpUoITfGZE71LD
- VT0edwPm5j9xEsL8G1120+pwFKRnscfN+IlGuWEjbpvNHUJgZZlm9atTr31k7zmgbnMxjL8j44T
- jGb1XJsUMUG0iX+zUtd5UAtJdPMAgqpZ8CtapJoQ/Mw==
-X-Gm-Gg: ATEYQzxV1/mgUP/4cEjF9cyj3gW0kvaHkthpduarYplo6dlml8ttPdKqxqjho050rNQ
- FC75LNyfkGFQAZpAFORJklK2Sc3GyUA9i9CFSlA9Luiv6nKjavK/8JhREy0QuSUyBb1NUWkOmgB
- d11fKqxE8r5Xc4QNFvg+DL/BWOHq7OjsNbmtvoGt+4y9+Rx0+UEbteyS65GOlWKI7R98NgbxrqC
- BBQYzZ3nZgQ34urXZhSk9PZWarWuvkhm1glLRrk02pAM72zrAhz3ob4T+Fjzr/qudsUCkTsYgFd
- FMmHnf4hdy+LA1y4WNClLc1tF7FPIUvLEN0qqHeGlCm5RmzaaDi8Oa/6MKDfMH2f+lk=
-X-Received: by 2002:a05:690c:dd5:b0:79a:ac83:ac67 with SMTP id
- 00721157ae682-79ac2e7e1eemr495037b3.9.1774280030579; Mon, 23 Mar 2026
- 08:33:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w4hLW-0001mY-P3
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:37:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w4hLU-0004k0-Pz
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:37:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774280254;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H1+kb50vlbRyclo23V2H0nq9MyEDP7+agIC4NW2QiPM=;
+ b=Z690Yho31+RG+s/6O1H4M81Me7ppYDMqFUVeyTvksrJgJEaTcLXyQvgYaV+6ymCrfzeE+Z
+ PA6UzcLIm0HwgdjOnM8p4ovBjQAHIXRSJ8iKhwkzr2LakEmu9ihGJRWbt9uLbsIuIspTSp
+ wiMROSQ5MO2gEquP2w4en1kNA+muz6A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-iJaAgp-rMjmlMcaj5GCayQ-1; Mon,
+ 23 Mar 2026 11:37:30 -0400
+X-MC-Unique: iJaAgp-rMjmlMcaj5GCayQ-1
+X-Mimecast-MFC-AGG-ID: iJaAgp-rMjmlMcaj5GCayQ_1774280248
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F02F218002EF; Mon, 23 Mar 2026 15:37:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.184])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CA7319560B7; Mon, 23 Mar 2026 15:37:22 +0000 (UTC)
+Date: Mon, 23 Mar 2026 16:37:20 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zide Chen <zide.chen@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track external
+ user input
+Message-ID: <acFeMO4CX6iqikZL@redhat.com>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <877bricy97.fsf@pond.sub.org> <abFqwbCCf7rNDEWs@redhat.com>
+ <87tsufpyo5.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <20260323131531.1976-1-junjie.cao@intel.com>
- <acFDFHsh8Rjhfncc@redhat.com>
- <CAFEAcA88mHqmM8Pmm0Gbbeu4ugBV8snenZh7bvjSSruUtRcywQ@mail.gmail.com>
- <acFKLgvFAlP7asIp@redhat.com>
-In-Reply-To: <acFKLgvFAlP7asIp@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Mar 2026 15:33:37 +0000
-X-Gm-Features: AaiRm536DluWudFxi6Vj2Tm_bErHoSAAmouJTYoYqbUXjn3VnubAthP8MZWTAUs
-Message-ID: <CAFEAcA9Yy=tdr+KaZO=hAitOH2aawrmp8X2FTW3piwTFrpg5xQ@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: validate RSS indirections_len in post_load
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org,
- jasowang@redhat.com, mst@redhat.com, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87tsufpyo5.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,26 +99,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Mar 2026 at 14:12, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Mon, Mar 23, 2026 at 01:53:53PM +0000, Peter Maydell wrote:
-> > I would definitely be extremely cautious about having a threat
-> > model where I had to distrust inbound migration data, but the
-> > above does suggest we aim to handle that, and we have I think
-> > in the past taken patches which add sanity-checking to the
-> > migration data.
->
-> My view of the migration stream is that we authenticate the client
-> at the point of connection (either explicitly with SASL, or implicitly
-> with a x509 certificate validation), and protect the data stream
-> integrity with TLS, or equivalent.
+Am 16.03.2026 um 16:43 hat Markus Armbruster geschrieben:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> > For -object / object_add  we introduced formal QAPI modelling of
+> > all Object subclasses which implement the UserCreatable interface.
+> > IIUC, that gives us the desired separation between internal and
+> > external views, as only properties declared in qapi/qom.json are
+> > publically settable.
+> 
+> Correct.  Kevin Wolf's work.
+> 
+> > This work did not apply to the Device classes because the historical
+> > baggage with qdev being grafted onto qom, means we don't have that
+> > working via the UserCreatable inteface or -object/object_add.
+> >
+> > Can we bring Device into the same world though ?
+> 
+> Kevin Wolf took a stab at it.  I had a hard time understanding it back
+> then.  Various pennies finally dropped when he patiently explained it to
+> me in person.  I disliked certain aspects of its design, and wanted to
+> explore a bit more.  Never found the time.  Perhaps we should just take
+> it despite my design misgivings.
+> 
+> > Adding 1000 device types to QAPI is a huge job, so it would need to
+> > be a long incremental job, unless perhaps we auto-generate QAPI
+> > descriptions for everything that already exists ?
 
-This seems like it would be useful clarifying information to
-add to the security.rst document under the "Sensitive configurations"
-subsection as part of documenting what we recommend, even if we
-decide that we want to continue treating malicious migration-data
-as part of our threat model / security boundary.
+Doing things incrementally was my idea when I did the patch series to
+prepare it (which really only completed the converstion for -object,
+getting rid of some of the duplication between QOM and QAPI definitions
+that we currently have - but the same things would probably also be the
+prerequisite for starting to convert devices).
 
--- PMM
+Even if you could automate the conversion, doing thousands of devices
+with different maintainers in a single series seems completely
+unmanageable.
+
+> Interesting idea.
+> 
+> QAPI is declarative: types and their properties are declared in a
+> schema.
+> 
+> QOM is imperative: we execute C code to create types and their
+> properties.
+> 
+> Extracting a QAPI schema from the C code is impossible in the completely
+> general case (halting problem), and merely impractical (I believe) in
+> the special cases we have.
+> 
+> We could start with QOM introspection instead: qom-list-types and
+> qom-list-properties.  These are only mostly complete, but should be good
+> enough.
+> 
+> Mapping QOM types to QAPI types would involve guesswork, because QOM
+> doesn't have a type system, it has strings and bailing wire.
+
+QOM itself is typed, only the QemuOpts it normally takes as input isn't.
+You just have to find the right visitor call in the code and then you
+can pretty much copy the type into the QAPI schema (sometimes it's more
+complex than that because visitor calls are made conditionally or in a
+loop or whatever, but it's not guesswork anyway).
+
+> Schema documentation would be placeholders at best.  We could try to
+> extract documentation from -device T,help.  Most properties have
+> nothing there, and the remainder likely needs to be rewritten
+> completely to be fit for purpose.
+
+FWIW, writing documentation was the real work in converting -object.
+Automating everything else can possibly be a minor convenience
+improvement, but in comparison to documenting stuff it's trivial enough
+anyway.
+
+> > More generally anything we can do to bring qdev & qom closer together
+> > feels desirable. I dream of a future where -device/device_add are
+> > obsolete....
+> 
+> That would be lovely.
+
+If you decide to finally stop blocking it, let me know. Maybe I can find
+some time to resurrect something, though having to rebase after four(?)
+years doesn't sound like fun.
+
+Kevin
+
 
