@@ -4,86 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCEBF4613D
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1554F483C6
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4hio-00021L-Jk; Mon, 23 Mar 2026 12:01:42 -0400
+	id 1w4hx3-0007ps-5U; Mon, 23 Mar 2026 12:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ihanzhzh@gmail.com>)
- id 1w4hiO-0001hs-1T
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:01:28 -0400
-Received: from mail-pj1-x1042.google.com ([2607:f8b0:4864:20::1042])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4hwt-0007iN-2J
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:16:16 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ihanzhzh@gmail.com>)
- id 1w4hiM-0008NV-3j
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:01:15 -0400
-Received: by mail-pj1-x1042.google.com with SMTP id
- 98e67ed59e1d1-3567e2b4159so297867a91.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:01:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4hwq-0001dF-Eb
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:16:14 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-7986fb839f5so43475057b3.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:16:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774282569; cv=none;
+ d=google.com; s=arc-20240605;
+ b=DkwGHBUzbXZHTYbYFH6u8jKBBDtY5JNtAAkE4lQnvk9K7Zj8qA2JWWvxCudouxNOfi
+ 5Ws1Tq70abwkIReMaEnYpofpJjGYaEm+rHtQ9figI5zbknC4qa5IkWN1iLzr0LcFUMQc
+ YRRTwJ2YOnzGDCseSeOHwi7rzN9aKPGmqQ3MhIAb6AwLZzyO8W6mEQIWqXbQmrHAZpdl
+ wYc08QiqOqCPWDZS2fRpYqU5QdtGM9u5Cr2ukjDHgrBDrILSB4jEI9oD8+8EOvcl9eA7
+ suc7HUukqXvfgF+63T+O+BpFbJJtr1YijjEizkr1NtSVr2Ol+KIJk6bU5UdVfo5pBlN3
+ N9lA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=VIYsd1UHMj+DQbBwzdI8c+MElysBCLs4EQd1MM1yzzE=;
+ fh=UWl137STQqxEr1K9+5b1WykodOUPgfSuBIvU+QTWstg=;
+ b=FZneUSmVZy9AtXTCybnfXPgez9MuStX7JrB+EtFloX+3AALrn5VJ5aa+3j7iLsmWJW
+ cIATFVFCekLMBmz8ba6hmmBkjbyHRHtgXFVO078wWVp/r9ifayDwDT7sxe9axgK/+oDt
+ pQF4iWdSGmj4QKtOHJHdWIohQJTsGzEWqaBJMWqmWAH2wTWjUV19uGkfL014SxDYwrgf
+ Q4AXxf/j+rClxGNGaj2QAMWrX4Hcjg2grwDNor3imJC2JxugIuFGscJKuIjC5TXocCnW
+ SPyimujo0RdPzgKDtLxxo2PTl2ZD2Q1y35CJUNRvz5qnuF0gQkd9TjJ1TMdo8WtRtKg3
+ AxDA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774281668; x=1774886468; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1774282569; x=1774887369; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0OqbRfPpNGnOZ4ufg6r9BpKIs1x5fGacz7S8hngqPKc=;
- b=grLa7DvKzm+FqUw7/CFL0/jgdrSJ5lsFb/o58qb6abVyefqRnH4HZ4ZMROYIghL4OT
- N9a9bN/lCkSUrTngHmZtnZuQOYt21LkATevcpprSdt78saoTBqyeul2oiWCkCQCIuR0N
- qstmrFV84da/CUbBTu+/sXg6i0Flq1BXCHky73xu6aMWmfWlm8uYYkqGYykU4iNlb6Ea
- U8niy724xAhnJuMuJcTmqv/R2xc0Cjv+SfN13Yjdtur5BvaVS+PVD6CzxF1lgoe44E0v
- NmIOCRV6f3U/7pxuRN/DcL0AodT/bOrOJDmMZ1RmgtQXpRQrzcZfqRB6bZog9muAsapw
- KJeA==
+ bh=VIYsd1UHMj+DQbBwzdI8c+MElysBCLs4EQd1MM1yzzE=;
+ b=DVTOhlMGOZJD4l/GMyuj9xYrGJmS8Mk913WAU/KCxtSNJMuE3USubs6p30LKgbbexY
+ myb1+q7LBMZAuVw8bmHnIWC8RSAEinjzopnmxwN4vK+ErQso4cPwcnIP1H1i9aVGT1Ot
+ oZXGttpwtlpblbdduEiJ3CAeuHKNQB7Ztj11nMFqHmxrfHVJ9jn/jw1a5U9aCpSBjfDI
+ qePjr007rrqxZLXil9iXOHd9QIHXHIByLnfw4yvBj4lf/kQXr+ZQfktkBawACrnMmtHK
+ 5+GoxHEjMhQccUXU5jIlS/hOI+nqUZhSsSr7QXuysgkgQmzjo2lL95cdYZW4evxDvQXO
+ NeKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774281668; x=1774886468;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1774282569; x=1774887369;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0OqbRfPpNGnOZ4ufg6r9BpKIs1x5fGacz7S8hngqPKc=;
- b=T5sEMMqkEIU8CnvEHI5JqQgeFkmNmjPjyfq/PW9lH1d9bxa0Er2yTmKqG3o1pw8aIR
- QmPeZ2ETW3fTFEp4YN/dx0oR4XOiNgjg98HPfPTcAPnrQFFpCUBYPoYxjPWbTY3L4NC9
- uKd07QLyUeTjL5wLGMI5X9KxFx9CFB3ygPzEpod+h7LUkOgxiR1nsHI6C9T+BEoTI+hI
- 2ZQCUq/X006Z2f0QnjJ6BTqcsQbpG2bBuyxzFLUbok+4RgKPStR0YCeBLNEgbCxvlQjp
- lr5EIpKPdfAYZAaFXs7DDHWXgHNsqz6P1ppAm4wv7hA2nSuYjdFEVGr7gbmw89cpQZ0S
- 0Rsw==
-X-Gm-Message-State: AOJu0Yxs2jCOE9akvfTacLCCQQG+g7F4TCtP3ORjFmBYt2qu6TNYFlx9
- 6Q89IJMMIwjw9s04rmknotqCSGYpTXaoU6xHTgFgQB3UrWbO0NIqsmhViSoJpHiViLMJ
-X-Gm-Gg: ATEYQzxkIYKHxyawRIzgiU+68k9xERXSjBbdbEuCXLb+Ir9XGPUfb771Wqsfjahptlu
- G7PopIiPLLRhXXx2sztj3/BQZZVxA39oIl6gXu2q3Vd1mptjww877pcXYES6K5d5be7NSjtB2i5
- /Zc+b1V5C/8tPVbuGdYtkWC878b7p7h5uN29TibhKtED/N5izOphS5DK3ICQVgCNLurMldM0Pj4
- fJBpAeCcwx8v87uYKGX4NSC4n3JpKO8n4QHlqQ29a10sR3m+WhcqDsIB7awhe9Rk0hkJsVhhpK9
- i95rzrIDeFIRxRGQ+SmQ5u5H0P/2mtNx61yPiS8Jib28avMyACvSs2NUQhYQ5lZaE36a6I1bezR
- Ple9bjIh/uIxDBtAFSpFWgtdXmB/rYMLd+edq2KJSdnxkfYBudXDJPyHLeJDZAMhauOqWGy5EWi
- aBezKR8T1cr96H12MAuOeu05iRDAGU
-X-Received: by 2002:a05:6a20:6a0d:b0:398:7ed3:a005 with SMTP id
- adf61e73a8af0-39bcea4f7b3mr10046906637.29.1774281667974; 
- Mon, 23 Mar 2026 09:01:07 -0700 (PDT)
-Received: from MINIPC.localdomain ([240c:c603:c:1531:cc6f:66ab:f6f0:ec53])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82b040da7besm9467763b3a.49.2026.03.23.09.01.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 09:01:07 -0700 (PDT)
-From: ihanzhzh@gmail.com
-To: qemu-devel@nongnu.org
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it,
- qemu-block@nongnu.org, Han Zhang <ihanzh@outlook.com>,
- Han Zhang <ihanzhzh@gmail.com>
-Subject: [PATCH v2] hw/nvme: keep switch handling in nvme_directive_receive()
-Date: Mon, 23 Mar 2026 23:57:37 +0800
-Message-Id: <20260323155736.1558483-1-ihanzhzh@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260317010721.232247-1-ihanzh@outlook.com>
-References: <20260317010721.232247-1-ihanzh@outlook.com>
+ bh=VIYsd1UHMj+DQbBwzdI8c+MElysBCLs4EQd1MM1yzzE=;
+ b=VYPDA/5VTuq19NmMQ/IJQvLAZtb6l62FUqsEI+zCbeYYdoDRrw2edknMiqcy0LoNCh
+ qMejzgIUmHDOpB9254kfxFo5r/hm4MXBOurLfzX1+mAWW/ALq5oIO92/HUlIXikkC9ch
+ Wi9YtnZhbNV+1xyQyUWr23e7P+oZQ6IuAGhUaLaZAShQwGsBVddGZWpITM+pLlvDkwSf
+ 7WcPUIaQIQtS5wQ98UaGTSvtzsRTMRQIhfmbvkE/ZvLW9iFeYgeW6gkmpPk2NhBXL1bH
+ NHcM6rGhJrVsaZEf2Hxmo8Kdd31lnmvNOMu8I8gqqfTp3sS4Jo7za7vHv5slDMPdqb50
+ 8B/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLFaqvoD+2GWw+lFA248s/i43Inl9gXVSRNH+mm3yaUXyts2eWzRVbiPw704T+8KLDYS7D1RXZxHcD@nongnu.org
+X-Gm-Message-State: AOJu0YwzOIuCo4VwEOjYDYVgyDVfYef1sCBcxnMAHsKEqDm2EHZZCxyE
+ 9hzhRsSawFpDkQNoSDYCvUMqzx+qz3IHdeGCXrV+cJ/uK1jFjR5LaRVIB/Z8bKmivrEUcnVzLiA
+ QUJoxb5dE6hI9S7oplKZ2QHp03vnh6mwtsdZ5AYH+0A==
+X-Gm-Gg: ATEYQzxNOZIrX8JL0INEdqljjv48ARrQ2Q96ZYocmheRLtDpCyRv0e8rVmZAv3uqsoH
+ fNyK5qe1Jt3kE3c1EQezBjxVMHRl7uGLXec7kszL+sot3k2RHmmuGpw1D+8JU79qWuN2dd5A2Rl
+ qkm4c0q/GaYPMuLsYF3TSB9SKiNkJS8ILbwOr6SyhcN8vGYJJCri6EwCeqaIK+meCwWZVTklQnP
+ yZ17Uwj7zd275I7iFXDHvUKO5aaB2SCEr70ipCPM2Kwfo2n9iayfLQhomXxfsPyhT8QK4+FL7nH
+ X1LIHeetwdpw4DNNEKU5pw6hmyBjLlidqHnK4RXYneWBUguibsfSG/LT3BgpaHwZuPQ=
+X-Received: by 2002:a05:690c:3482:b0:79a:b193:8938 with SMTP id
+ 00721157ae682-79ab1938effmr51724157b3.13.1774282568242; Mon, 23 Mar 2026
+ 09:16:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1042;
- envelope-from=ihanzhzh@gmail.com; helo=mail-pj1-x1042.google.com
+References: <20260323131531.1976-1-junjie.cao@intel.com>
+ <acFDFHsh8Rjhfncc@redhat.com>
+ <CAFEAcA88mHqmM8Pmm0Gbbeu4ugBV8snenZh7bvjSSruUtRcywQ@mail.gmail.com>
+ <20260323095706-mutt-send-email-mst@kernel.org> <acFUnqeSF2RMDiIe@redhat.com>
+ <CAFEAcA_QV3k9bbayQh76-ASdHiJeWNSGY32DeDZJ0UrrC-WXLg@mail.gmail.com>
+ <acFjLhpXlo2fv9Z6@redhat.com>
+In-Reply-To: <acFjLhpXlo2fv9Z6@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Mar 2026 16:15:56 +0000
+X-Gm-Features: AaiRm50aACR4r2RwnsQWTDh2RAp_NouKK5tG5rUdzRTxXNjf81c3ag-rqlJMAZA
+Message-ID: <CAFEAcA-kuHOhsYEBUi3ty8eaK86+nE7jKHp=cXCungO6S0NE=w@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: validate RSS indirections_len in post_load
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Junjie Cao <junjie.cao@intel.com>,
+ qemu-devel@nongnu.org, jasowang@redhat.com, qemu-stable@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -101,68 +124,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Han Zhang <ihanzh@outlook.com>
+On Mon, 23 Mar 2026 at 15:58, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Mon, Mar 23, 2026 at 03:25:10PM +0000, Peter Maydell wrote:
+> > On Mon, 23 Mar 2026 at 14:56, Daniel P. Berrang=C3=A9 <berrange@redhat.=
+com> wrote:
+> > >
+> > > On Mon, Mar 23, 2026 at 09:57:24AM -0400, Michael S. Tsirkin wrote:
+> > > > On Mon, Mar 23, 2026 at 01:53:53PM +0000, Peter Maydell wrote:
+> > > > > On Mon, 23 Mar 2026 at 13:43, Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+> > > > > >
+> > > > > > On Mon, Mar 23, 2026 at 09:15:31PM +0800, Junjie Cao wrote:
+> > > > > > > virtio_net_handle_rss() enforces that indirections_len is a n=
+on-zero
+> > > > > > > power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
+> > > > > > > virtio_net_rss_post_load() applies none of these checks to va=
+lues
+> > > > > > > restored from the migration stream.
+> > > > > > >
+> > > > > > > A crafted migration stream can set indirections_len to 0.  Ev=
+en if it
+> > > > > >
+> > > > > > The migration stream originating from the source QEMU is truste=
+d.
+> > > > >
+> > > > > Is it? In https://www.qemu.org/docs/master/system/security.html w=
+e say:
+> > > > >
+> > > > > # The following entities are untrusted, meaning that they may be =
+buggy
+> > > > > # or malicious:
+> > > > >
+> > > > > #  * Guest
+> > > > > #  * User-facing interfaces (e.g. VNC, SPICE, WebSocket)
+> > > > > #  * Network protocols (e.g. NBD, live migration)
+> > > > > #  * User-supplied files (e.g. disk images, kernels, device trees=
+)
+> > > > > #  * Passthrough devices (e.g. PCI, USB)
+> > > > >
+> > > > > which explicitly lists "live migration" as an untrusted entity.
+> > > > >
+> > > > > I would definitely be extremely cautious about having a threat
+> > > > > model where I had to distrust inbound migration data, but the
+> > > > > above does suggest we aim to handle that, and we have I think
+> > > > > in the past taken patches which add sanity-checking to the
+> > > > > migration data.
+> > > >
+> > > > And we even assigned a low priority CVEs to these.
+> > >
+> > > Do you have an example of that ?
+> >
+> > Here's one from last year:
+> > https://access.redhat.com/security/cve/cve-2025-54566
+>
+> I think this one is valid, because it involves incorrect handling
+> of settings that are controlled by the guest OS. There's no
+> external party claimed to be modifying the migration stream IIUC
 
-Static analysis reported that the default branches in
-nvme_directive_receive() were unreachable because dtype and doper were
-validated before the switch statements.
+I think the "guest OS sets things wrongly" is CVE-2025-54567,
+and 54566 is specifically for the "migration stream is malicious"
+case. The commit fixing them:
+https://gitlab.com/qemu-project/qemu/-/commit/cad9aa6fbdccd95e56e10cfa57c35=
+4a20a333717
+fixes both at the same time, by providing a validation function
+and calling it both (a) when the guest OS writes the settings
+and (b) in post_load. If we trust migration data then we don't need
+to validate it in post-load, we could just say "make sure your
+source QEMU has the fix for (a) and that you've restarted the guest".
 
-Keep the switch statements as explicit documentation of supported
-directive type/operation combinations, and remove the redundant early
-dtype/doper checks instead.
+> > I vaguely recall we had a set of them some years ago too
+> > (probably somebody specifically looking for flaws in the
+> > category). https://access.redhat.com/security/cve/cve-2013-4536
+> > might be an example of that.
+>
+> I think this one is probably issued in error.
+>
+> If we're considering that the migration data stream is modifiable
+> by an attacker, the implication is that the attacker has arbitrary
+> read and write over the entire of guest RAM. That in turn implies
+> no guest OS can ever be trusted after a migration has been performed,
 
-Also move namespace lookup into the RETURN_PARAMS path so invalid
-dtype/doper values are rejected via switch defaults without an
-unnecessary nvme_ns() lookup.
+> That is certainly not the case though.
 
-Reported-by: Ekaterina Zilotina
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2472
-Signed-off-by: Han Zhang <ihanzhzh@gmail.com>
----
- hw/nvme/ctrl.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+Trusted by whom? If I'm a cloud vendor then I don't trust the
+guest OS in the first place. QEMU itself should consider everything
+in guest RAM untrusted data, because it's guest-controlled.
+You can probably have setups where the user who owns the VM might
+be able to modify the migration stream but no third party can
+(e.g. if you give them the ability to vmsave/vmload to a file
+that they own), in the same way you can give the VM owner the
+ability to directly write to the disk images the VM is using
+without that being a way for them to escape to the host.
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index cc4593cd42..479a4b8725 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7540,13 +7540,7 @@ static uint16_t nvme_directive_receive(NvmeCtrl *n, NvmeRequest *req)
- 
-     trans_len = MIN(sizeof(NvmeDirectiveIdentify), numd << 2);
- 
--    if (nsid == NVME_NSID_BROADCAST || dtype != NVME_DIRECTIVE_IDENTIFY ||
--        doper != NVME_DIRECTIVE_RETURN_PARAMS) {
--        return NVME_INVALID_FIELD | NVME_DNR;
--    }
--
--    ns = nvme_ns(n, nsid);
--    if (!ns) {
-+    if (nsid == NVME_NSID_BROADCAST) {
-         return NVME_INVALID_FIELD | NVME_DNR;
-     }
- 
-@@ -7554,6 +7548,11 @@ static uint16_t nvme_directive_receive(NvmeCtrl *n, NvmeRequest *req)
-     case NVME_DIRECTIVE_IDENTIFY:
-         switch (doper) {
-         case NVME_DIRECTIVE_RETURN_PARAMS:
-+            ns = nvme_ns(n, nsid);
-+            if (!ns) {
-+                return NVME_INVALID_FIELD | NVME_DNR;
-+            }
-+
-             if (ns->endgrp && ns->endgrp->fdp.enabled) {
-                 id.supported |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
-                 id.enabled |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
-@@ -7567,7 +7566,7 @@ static uint16_t nvme_directive_receive(NvmeCtrl *n, NvmeRequest *req)
-         }
- 
-     default:
--        return NVME_INVALID_FIELD;
-+        return NVME_INVALID_FIELD | NVME_DNR;
-     }
- }
- 
--- 
-2.34.1
+> I don't accept scope for CVEs in QEMU for an external attacker modifying
+> the migration data stream or saved state file contents though. AFAICS,
+> such possibilities imply gross misconfiguration of QEMU by the mgmt app,
+> and should be CVEs in the mgmt app instead.
 
+I agree that you have a pretty weird threat/operating model if
+you allow the migration-stream to be considered untrusted, because
+it's reasonable and sensible to secure it. But I have a vague
+recollection that this language is in the doc precisely because
+at least one person/party has argued in the past in favour of
+treating the migration stream as on the security boundary. I don't
+object to our deciding we want to call the migration-stream trusted --
+but I do think this is a policy change from our current stance.
+
+Paolo, Stefan, do you happen to remember anything about this ?
+
+thanks
+-- PMM
 
