@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1EF6F4613F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9021DF4613D
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4heH-0005FR-9C; Mon, 23 Mar 2026 11:57:01 -0400
+	id 1w4heO-0005Kv-13; Mon, 23 Mar 2026 11:57:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w4he2-0005EV-2e
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:46 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1w4he2-0005Ee-UZ
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:49 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w4he0-0007tN-7x
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:45 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b97a9f4b4dcso55075766b.3
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:56:43 -0700 (PDT)
+ id 1w4he0-0007tB-F8
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:46 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-6611f41eebcso644583a12.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774281403; x=1774886203; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774281401; x=1774886201; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P1owwL+w+vru+csJAdWQEKd51KLa9JtH8Ji/d8a5Sfc=;
- b=Z/8m8wNdd1k8SwowSXTptQr7tUDGdeChzZZawKP1kQgeDGipR+uyHS6TKGBuHECk3O
- FOwfe5dM+7/vo1BqnY22HemmFUH4TU9/rTgOMAQODYl+Tj2AW75vXZPxj/PHTC8ZGMLa
- Bt0ZilFqAJwIrW5Gqo9hkPsKAOkT4KNBLXGjFOp2e8eJdPrtBmCTbHLtE1JzcItQ8ens
- yEDSN2U5vFxb6vJAc1ueTcb9VafeIzPAHuL2/7cUC5gVaQVmn7qqi8O1dXGiQOZi/kXd
- /+PPAB96re45Lj6txyyewfD8CwgO2vZ3NJzrsY+7ppE0497Dz/2FCxAegw3UKpFnazCj
- jrtg==
+ bh=ehmEJNcEUvWR4p1pxJZuNpiKpsAzgjyq2kLYhXCKaxg=;
+ b=ApzlY98u3NAVIs618n5GijkFL+wfswyMQhWUXbWkfCgXhzfrGuxdaddfLuPEBchIzj
+ loaVGmheBVL0aVdmzD6rhnA1PJ0s96SE9AToGvftKVQtu767tJG5MQ4AEoHz0K7pNJRn
+ Xaf5KP62x8xXh9Ufa8h3oLivnYJSA4x+6PXYh3/HhAyQsDg5jmtpqo9HE/LHaSoHBTw2
+ 2TYORB1mMQS4o80uQGxlZ/NR5/vpSxNqOVZBrp6RytqgICoBhpM91Q8XvcGXZPEUqADu
+ JmgfjIoMJga94fZXM+Js443tv3nqemh37ifRJ2I6p/YwJ3f1ElupTQsNxaqjxHnEj1ak
+ YgIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774281403; x=1774886203;
+ d=1e100.net; s=20251104; t=1774281401; x=1774886201;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P1owwL+w+vru+csJAdWQEKd51KLa9JtH8Ji/d8a5Sfc=;
- b=jYFkE+AB9ujwuA73UeiKCc+qYxuHNA7LvGTXoP1z+roaG9H/zah/PQKYvsUq8/yPjE
- SvRVKnYbbg3SeG0E20GSr1gBgkdikQ9NePsSlbPLCJVd5ve+NKS4Ha0rLqF+EMpKK/tn
- urrqK4KJrpOSGV/0Yzf4aa656awRTgZ/z7zrPkU7yH4Kq+p0Ut2UQwsK/HDx/OLkWLer
- uiCpDwQNX0zXZkUniPstz2XQnVPQpcySs5VcXLz+nRcZMlhhCGRMDTJLIPnSyIBO73Xu
- 6nk6eBvQdFW8xhkYscYD+EEwo8yeY4v5nWZeLOTAWO6+xSA1ZHd7j6U4jyK3xxbuC40e
- Ah5g==
-X-Gm-Message-State: AOJu0YxSue8hUT3uq31SwyIVa/DtCE9CIYNzQZms9DIXNTzFTNfKx1Gb
- 0MmoHHt9Htx81FrgeCAkjSshSnBBYGktIB/vzL5RtE31Skzqvg5H0ovSHT7SbKkJ3jM=
-X-Gm-Gg: ATEYQzyvUgdw43yUujQOSS5PaKpe81iuq/awQHj4pWjTLEbIcmi1aIfhCvUso57607K
- gf/DLsW9aDA3fh2O2IhCLmdS6JpTkrdIhmJFLbdtv9vZeFOxSHxBAyFYzGM/lWSsF6+VKbovb5t
- 2vKVd3XOzzrcKlQxhiZN3m52Hy5mSBFQ887fsu6jS46W2VcMBYUjINBqrrH/MI5szAdvMWDEfLc
- 0sDskOpmvSZGMbZpW0wTg232RFtZTOpLMlPkBkFzGPvLkICswcG0noWgxcLD01PbsfRGvhozCj/
- IaTpHzx8hLmDlaQSXhcV5WernY1J1APkcp2TB22/0xtsU3fAPvWp/HWg+n0q06lX/+qbQ7z0mXo
- bNkBGnsvnIe+fzGA4tMyU5mONkyK7PUvha8xxo5EZEaMcP8h7DJ1KrU740p81IPUo0mKITf5Ad2
- kdcym78Kty4zJQ59zCoWXkAew=
-X-Received: by 2002:a17:907:3f98:b0:b98:4b5e:da5e with SMTP id
- a640c23a62f3a-b984b5efa8bmr660242966b.43.1774281402533; 
- Mon, 23 Mar 2026 08:56:42 -0700 (PDT)
+ bh=ehmEJNcEUvWR4p1pxJZuNpiKpsAzgjyq2kLYhXCKaxg=;
+ b=CxsRtlMxmO4y5eXbDnIJ7X3Cmm6oO8NDGCJtsdPPo2Vs5liJpoSd88pY0V2CdDF/oP
+ r/pFOHHT10fHimzZYHsJakABMV9qJPaZA9NUdQAQCjw1hKhlnvt1DakXIm9ze4TyDjzK
+ lQEkc4eD/35yCWgWG312MQ8kwK826jE1XOrHqb7K6M2asu4l/5LT0eHSWupOzwaJYfmN
+ IXgATzZw6yEPiO4Mu7E218IKDivbJbzPZQtC3xP1I3DK+FZdQdFtMu8JKmPGqIXgg+AF
+ TrMrGGhSPOjgAWZZ2aOY0Yv7IeJTd+nGleoupFQtVAq/417TDxtszMUHPYLfh0jfZQzg
+ qrhQ==
+X-Gm-Message-State: AOJu0YwLrz/qoKrpF00bbrR8YEKKc0knslSQNL8zgl/+NKT5BS/zbKus
+ EplCLrvENopacPtqEEDZNYKJ80PofuqZJb+22Ll8ZVh5oCi4NubqV87N0uceojW37NI=
+X-Gm-Gg: ATEYQzyxMZrgZvZ9WRNecebIVH/+s4UpafqU+pIJdgEP+PPx7nybsQf6NG8UAzc4Bve
+ DBgBDIGEJ0vGhSo4uKIMajPf/WabAg9QPJzGhGkVNqfN458iHs6HNJhw4qc5l9OpbnfqFMmzDQ0
+ alzQ/Dkw5Fpt+VuYabLLARTwcI6ffNbyGZFHNrx2MZNp5ClgKa0IYT7wIIz0E/tIhrUEIdrGuuk
+ j18DEzSDCmlA2mMw3fC1eF8LaWLT3mPYMj20vJde8iHp53SmnCFm8UHF3xVdJokA762y3X+Frhl
+ /zB3VigGvhC4J5sMBdire3oDyYrPCFq0Yi/R9MDJ+5iPMfz7XTEzPteAVh5DD4GxDFgwWSqC6tl
+ r1I6uCNd5QlaNWOZ22B0VD/NSmd7Pz5HRkXP991zFxSw8eOLEcWlWYz0P8miKGyzcLyYbfU/c7V
+ NzaSigmZmNPZoiBhE+Wrg+JH8=
+X-Received: by 2002:a17:907:7fa3:b0:b98:4799:e6de with SMTP id
+ a640c23a62f3a-b984799e8afmr721698766b.48.1774281400671; 
+ Mon, 23 Mar 2026 08:56:40 -0700 (PDT)
 Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b98335de177sm510337766b.29.2026.03.23.08.56.39
+ a640c23a62f3a-b983365a14csm496397766b.43.2026.03.23.08.56.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 08:56:41 -0700 (PDT)
+ Mon, 23 Mar 2026 08:56:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4D64C5F888;
+ by draig.lan (Postfix) with ESMTP id 25E6C5F855;
  Mon, 23 Mar 2026 15:56:38 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 5/8] tests/lcitool: Remove python3-sqlite3 from the list of
- needed packages
-Date: Mon, 23 Mar 2026 15:56:34 +0000
-Message-ID: <20260323155637.145015-6-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 3/8] tests/functional: allow tests to define decompression
+ target
+Date: Mon, 23 Mar 2026 15:56:32 +0000
+Message-ID: <20260323155637.145015-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260323155637.145015-1-alex.bennee@linaro.org>
 References: <20260323155637.145015-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,31 +107,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+When dealing with multi-stage decompression we want to specify the
+target file name lest we just overload the cache name. It also allows
+for something is little more friendly than the cache hash.
 
-According to commit 7485508341f4 ("tests/docker: Add sqlite3 module to
-openSUSE Leap container") that introduced this line, the sqlite3 package
-was only required for Avocado. We don't use Avocado in QEMU anymore since
-a while, so we can drop this package now from our list again.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20260316135407.209072-2-thuth@redhat.com>
-Message-ID: <20260320155107.2143191-6-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260320155107.2143191-4-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
-index 5e34e953514..b78a1d7f2e0 100644
---- a/tests/lcitool/projects/qemu.yml
-+++ b/tests/lcitool/projects/qemu.yml
-@@ -101,7 +101,6 @@ packages:
-  - python3-setuptools
-  - python3-sphinx
-  - python3-sphinx-rtd-theme
-- - python3-sqlite3
-  - python3-tomli
-  - python3-venv
-  - python3-wheel
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index c2c916f6077..eaec1bea138 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -35,7 +35,7 @@
+ 
+ class QemuBaseTest(unittest.TestCase):
+ 
+-    def uncompress(self, compressed, format=None):
++    def uncompress(self, compressed, target=None, format=None):
+         '''
+         @params compressed: filename, Asset, or file-like object to uncompress
+         @params format: optional compression format (gzip, lzma)
+@@ -52,8 +52,11 @@ def uncompress(self, compressed, format=None):
+         if isinstance(compressed, Asset):
+             compressed.fetch()
+ 
+-        (name, _ext) = os.path.splitext(str(compressed))
+-        uncompressed = self.scratch_file(os.path.basename(name))
++        if target is not None:
++            uncompressed = self.scratch_file(target)
++        else:
++            (name, _ext) = os.path.splitext(str(compressed))
++            uncompressed = self.scratch_file(os.path.basename(name))
+ 
+         uncompress(compressed, uncompressed, format)
+ 
 -- 
 2.47.3
 
