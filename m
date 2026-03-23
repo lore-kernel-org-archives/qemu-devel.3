@@ -4,64 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85E1F483D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 17:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B23F483D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 17:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ipC-0001P6-4c; Mon, 23 Mar 2026 13:12:22 -0400
+	id 1w4irn-0002cw-Aj; Mon, 23 Mar 2026 13:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w4ipA-0001OX-Dm
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:12:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4irV-0002aN-Af
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:14:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w4ip7-00032L-Vi
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:12:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4irT-0003It-9e
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:14:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774285936;
+ s=mimecast20190719; t=1774286082;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fedUGibDwnaiJKVyIOs/j8ofRw3Y+LCiPfyt2H49EQg=;
- b=cln3yQRKxVnn7EhB8cIGRvm2N9Rb9yLyvDtEgNFihn48exIBoDhVzvaWNIOYNFXwGh9M0e
- LbAYjPV7w+b28oQMnPeS2pckfvOMl4k1a2fi0yirLDDcWhfXvDDoMqkUeVQc17RjD8CT+F
- Vu4azvfXY/pZDlUCH4Hc2K88DdZP+94=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZKcLN44a5EAqDQUK5Jp0uNYlSQIpUPtUV/cyjAqIGFE=;
+ b=eH8l5b4yxiDB8UxW+xOJnjDNlZP33PdJFke7V0G7kps/oHY8wbHMeoerUhDy85RpMvPWfq
+ x8C+wleLrJla0U73IVVFkbn4DB6Qu+PQi5fNwG62+LnMpc80rOhTk5uhykb8zvPTfWEi0D
+ GfKkhj49uxnItW3NDtxjARaHEs1d8fk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-bP7fD_qQN8uqDO-ympyMoQ-1; Mon,
- 23 Mar 2026 13:12:12 -0400
-X-MC-Unique: bP7fD_qQN8uqDO-ympyMoQ-1
-X-Mimecast-MFC-AGG-ID: bP7fD_qQN8uqDO-ympyMoQ_1774285931
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-426-sfNDIbcYMAii6tAZ7o1dgg-1; Mon,
+ 23 Mar 2026 13:14:39 -0400
+X-MC-Unique: sfNDIbcYMAii6tAZ7o1dgg-1
+X-Mimecast-MFC-AGG-ID: sfNDIbcYMAii6tAZ7o1dgg_1774286078
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF13C19541BE; Mon, 23 Mar 2026 17:12:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.184])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB9B71953947; Mon, 23 Mar 2026 17:12:03 +0000 (UTC)
-Date: Mon, 23 Mar 2026 18:12:01 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Aarushi Mehta <mehta.aaru20@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH for-11.0 2/3] linux-aio: Resubmit tails of short
- reads/writes
-Message-ID: <acF0V3W4aWhP-Zlg@redhat.com>
-References: <20260318153206.171494-1-hreitz@redhat.com>
- <20260318153206.171494-3-hreitz@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A06E19560B1; Mon, 23 Mar 2026 17:14:38 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.50])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1B153300019F; Mon, 23 Mar 2026 17:14:34 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] tests/functional/s390x: Add test for booting from a disk with
+ 4k sectors
+Date: Mon, 23 Mar 2026 18:14:23 +0100
+Message-ID: <20260323171423.112205-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260318153206.171494-3-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -70,7 +65,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,233 +81,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 18.03.2026 um 16:32 hat Hanna Czenczek geschrieben:
-> Short reads/writes can happen.  One way to reproduce them is via our
-> FUSE export, with the following diff applied (%s/escaped // to apply --
-> if you put plain diffs in commit messages, git-am will apply them, and I
-> would rather avoid breaking FUSE accidentally via this patch):
-> 
-> escaped diff --git a/block/export/fuse.c b/block/export/fuse.c
-> escaped index a2a478d293..67dc50a412 100644
-> escaped --- a/block/export/fuse.c
-> escaped +++ b/block/export/fuse.c
-> @@ -828,7 +828,7 @@ static ssize_t coroutine_fn GRAPH_RDLOCK
->  fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
->               const struct fuse_init_in_compat *in)
->  {
-> -    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
-> +    const uint32_t supported_flags = FUSE_ASYNC_READ;
-> 
->      if (in->major != 7) {
->          error_report("FUSE major version mismatch: We have 7, but kernel has %"
-> @@ -1060,6 +1060,8 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
->      void *buf;
->      int ret;
-> 
-> +    size = MIN(size, 4096);
-> +
->      /* Limited by max_read, should not happen */
->      if (size > FUSE_MAX_READ_BYTES) {
->          return -EINVAL;
-> @@ -1110,6 +1112,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
->      int64_t blk_len;
->      int ret;
-> 
-> +    size = MIN(size, 4096);
-> +
->      QEMU_BUILD_BUG_ON(FUSE_MAX_WRITE_BYTES > BDRV_REQUEST_MAX_BYTES);
->      /* Limited by max_write, should not happen */
->      if (size > FUSE_MAX_WRITE_BYTES) {
-> 
-> Then:
-> $ ./qemu-img create -f raw test.raw 8k
-> Formatting 'test.raw', fmt=raw size=8192
-> $ ./qemu-io -f raw -c 'write -P 42 0 8k' test.raw
-> wrote 8192/8192 bytes at offset 0
-> 8 KiB, 1 ops; 00.00 sec (64.804 MiB/sec and 8294.9003 ops/sec)
-> $ hexdump -C test.raw
-> 00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
-> *
-> 00002000
-> 
-> With aio=threads, short I/O works:
-> $ storage-daemon/qemu-storage-daemon \
->     --blockdev file,node-name=test,filename=test.raw \
->     --export fuse,id=exp,node-name=test,mountpoint=test.raw,writable=true
-> 
-> Other shell:
-> $ ./qemu-io --image-opts -c 'read -P 42 0 8k' \
->     driver=file,filename=test.raw,cache.direct=on,aio=threads
-> read 8192/8192 bytes at offset 0
-> 8 KiB, 1 ops; 00.00 sec (36.563 MiB/sec and 4680.0923 ops/sec)
-> $ ./qemu-io --image-opts -c 'write -P 23 0 8k' \
->     driver=file,filename=test.raw,cache.direct=on,aio=threads
-> wrote 8192/8192 bytes at offset 0
-> 8 KiB, 1 ops; 00.00 sec (35.995 MiB/sec and 4607.2970 ops/sec)
-> $ hexdump -C test.raw
-> 00000000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
-> *
-> 00002000
-> 
-> But with aio=native, it does not:
-> $ ./qemu-io --image-opts -c 'read -P 23 0 8k' \
->     driver=file,filename=test.raw,cache.direct=on,aio=native
-> Pattern verification failed at offset 0, 8192 bytes
-> read 8192/8192 bytes at offset 0
-> 8 KiB, 1 ops; 00.00 sec (86.155 MiB/sec and 11027.7900 ops/sec)
-> $ ./qemu-io --image-opts -c 'write -P 42 0 8k' \
->     driver=file,filename=test.raw,cache.direct=on,aio=native
-> write failed: No space left on device
-> $ hexdump -C test.raw
-> 00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
-> *
-> 00001000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
-> *
-> 00002000
-> 
-> This patch fixes that.
-> 
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  block/linux-aio.c | 61 ++++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 53 insertions(+), 8 deletions(-)
-> 
-> diff --git a/block/linux-aio.c b/block/linux-aio.c
-> index 1f25339dc9..01621d4794 100644
-> --- a/block/linux-aio.c
-> +++ b/block/linux-aio.c
-> @@ -46,6 +46,10 @@ struct qemu_laiocb {
->      size_t nbytes;
->      QEMUIOVector *qiov;
->  
-> +    /* For handling short reads/writes */
-> +    size_t total_done;
-> +    QEMUIOVector resubmit_qiov;
-> +
->      int type;
->      BdrvRequestFlags flags;
->      uint64_t dev_max_batch;
-> @@ -73,28 +77,61 @@ struct LinuxAioState {
->  };
->  
->  static void ioq_submit(LinuxAioState *s);
-> +static int laio_do_submit(struct qemu_laiocb *laiocb);
->  
->  static inline ssize_t io_event_ret(struct io_event *ev)
->  {
->      return (ssize_t)(((uint64_t)ev->res2 << 32) | ev->res);
->  }
->  
-> +/**
-> + * Retry tail of short requests.
-> + */
-> +static int laio_resubmit_short_io(struct qemu_laiocb *laiocb, size_t done)
-> +{
-> +    QEMUIOVector *resubmit_qiov = &laiocb->resubmit_qiov;
-> +
-> +    laiocb->total_done += done;
-> +
-> +    if (!resubmit_qiov->iov) {
-> +        qemu_iovec_init(resubmit_qiov, laiocb->qiov->niov);
-> +    } else {
-> +        qemu_iovec_reset(resubmit_qiov);
-> +    }
-> +    qemu_iovec_concat(resubmit_qiov, laiocb->qiov,
-> +                      laiocb->total_done, laiocb->nbytes - laiocb->total_done);
-> +
-> +    return laio_do_submit(laiocb);
-> +}
-> +
->  /*
->   * Completes an AIO request.
->   */
->  static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
->  {
-> -    int ret;
-> +    ssize_t ret;
->  
->      ret = laiocb->ret;
->      if (ret != -ECANCELED) {
-> -        if (ret == laiocb->nbytes) {
-> +        if (ret == laiocb->nbytes - laiocb->total_done) {
->              ret = 0;
-> +        } else if (ret > 0 && (laiocb->type == QEMU_AIO_READ ||
-> +                               laiocb->type == QEMU_AIO_WRITE)) {
-> +            ret = laio_resubmit_short_io(laiocb, ret);
-> +            if (!ret) {
-> +                return;
-> +            }
->          } else if (ret >= 0) {
-> -            /* Short reads mean EOF, pad with zeros. */
-> +            /*
-> +             * For normal reads and writes, we only get here if ret == 0, which
-> +             * means EOF for reads and ENOSPC for writes.
-> +             * For zone-append, we get here with any ret >= 0, which we just
-> +             * treat as ENOSPC, too (safer than resubmitting, probably, but not
-> +             * 100 % clear).
-> +             */
->              if (laiocb->type == QEMU_AIO_READ) {
-> -                qemu_iovec_memset(laiocb->qiov, ret, 0,
-> -                    laiocb->qiov->size - ret);
-> +                qemu_iovec_memset(laiocb->qiov, laiocb->total_done, 0,
-> +                                  laiocb->qiov->size - laiocb->total_done);
->              } else {
->                  ret = -ENOSPC;
->              }
-> @@ -102,6 +139,7 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
->      }
->  
->      laiocb->ret = ret;
-> +    qemu_iovec_destroy(&laiocb->resubmit_qiov);
+From: Thomas Huth <thuth@redhat.com>
 
-Calling qemu_iovec_destroy() for a qiov that has potentially never been
-initialised feels a bit unsafe to me. It will work in practice for the
-current implementation, but maybe make this one conditional on
-laiocb->resubmit_qiov.iov, too? (Which is already making assumptions
-about the internals of QEMUIOVector, but that we'll have an iov after
-initialising the qiov with qemu_iovec_init() above will probably never
-change.)
+The DASD disks on s390x have a different sector size (4k) and use
+a different layout of the boot loader data compared to the usual
+"SCSI"-style disks with 512 sectors that are used with most modern
+guests. To make sure that there are no regressions with 4k disk
+booting, add a test case that uses a disk image with these 4k sectors
+and check that we can successfully show the boot menu and and load the
+right kernel in all supported cases.
 
->      /*
->       * If the coroutine is already entered it must be in ioq_submit() and
-> @@ -380,23 +418,30 @@ static int laio_do_submit(struct qemu_laiocb *laiocb)
->      int fd = laiocb->fd;
->      off_t offset = laiocb->offset;
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/s390x/meson.build     |   1 +
+ tests/functional/s390x/test_boot_4k.py | 138 +++++++++++++++++++++++++
+ 2 files changed, 139 insertions(+)
+ create mode 100755 tests/functional/s390x/test_boot_4k.py
 
-I wonder if making it laiocb->offset + laiocb->total_done here wouldn't
-be more robust than having the addition in every call below.
-
-> +    if (laiocb->resubmit_qiov.iov) {
-> +        qiov = &laiocb->resubmit_qiov;
-> +    }
-> +
->      switch (laiocb->type) {
->      case QEMU_AIO_WRITE:
->  #ifdef HAVE_IO_PREP_PWRITEV2
->      {
->          int laio_flags = (laiocb->flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
-> -        io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov, offset, laio_flags);
-> +        io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov,
-> +                         offset + laiocb->total_done, laio_flags);
->      }
->  #else
->          assert(laiocb->flags == 0);
-> -        io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
-> +        io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov,
-> +                        offset + laiocb->total_done);
->  #endif
->          break;
->      case QEMU_AIO_ZONE_APPEND:
->          io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
->          break;
->      case QEMU_AIO_READ:
-> -        io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
-> +        io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov,
-> +                       offset + laiocb->total_done);
->          break;
->      case QEMU_AIO_FLUSH:
->          io_prep_fdsync(iocbs, fd);
-
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+diff --git a/tests/functional/s390x/meson.build b/tests/functional/s390x/meson.build
+index 0f03e1c9db8..b065b666bc2 100644
+--- a/tests/functional/s390x/meson.build
++++ b/tests/functional/s390x/meson.build
+@@ -10,6 +10,7 @@ tests_s390x_system_quick = [
+ ]
+ 
+ tests_s390x_system_thorough = [
++  'boot_4k',
+   'ccw_virtio',
+   'pxelinux',
+   'replay',
+diff --git a/tests/functional/s390x/test_boot_4k.py b/tests/functional/s390x/test_boot_4k.py
+new file mode 100755
+index 00000000000..965123ebd31
+--- /dev/null
++++ b/tests/functional/s390x/test_boot_4k.py
+@@ -0,0 +1,138 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Copyright 2026 Red Hat, Inc.
++#
++# Author:
++#  Thomas Huth <thuth@redhat.com>
++'''
++Functional test that boots from a (incomplete) disk with 4k sectors
++(DASD/ECKD geometry) and multiple kernels installed, so we can check
++the boot menu and various LOADPARM options.
++'''
++
++from qemu_test import QemuSystemTest, Asset, skipFlakyTest
++from qemu_test import wait_for_console_pattern
++
++
++class S390Boot4k(QemuSystemTest):
++
++    # This disk image has been taken from a DASD with 4k sectors.
++    # Note: It's incomplete (to keep it small), it contains just enough
++    # data for booting the kernels that are installed on the disk image
++    ASSET_DISK = Asset(
++        ('https://github.com/huth/qemu-paddock/raw/refs/heads/main/s390x/'
++         'f32-4k-bootmenu.raw.xz'),
++        'f4e2c91b4ec50a4756e8816b7a7c8ca01cc0d929f7a711cfd8124640c304ea41')
++
++    def wait_for_pattern(self, success_message, vm=None):
++        wait_for_console_pattern(self, success_message, vm=vm,
++                                 failure_message='panic')
++
++    def basic_machine_setup(self):
++        self.set_machine('s390-ccw-virtio')
++        disk_path = self.uncompress(self.ASSET_DISK, format="xz")
++
++        self.vm.set_console()
++        self.vm.add_args("-nographic", "-no-shutdown", "-blockdev",
++                         f"driver=file,filename={disk_path},node-name=d1")
++
++    def test_default(self):
++        '''
++        Check that the default kernel boots up correctly from a ccw device
++        '''
++        self.basic_machine_setup()
++        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1")
++        self.vm.launch()
++        self.wait_for_pattern("Linux version 5.8.15-301.fc33.s390x")
++        self.wait_for_pattern("Trying to unpack rootfs image as initramfs")
++
++    def test_loadparm_machine(self):
++        '''
++        Check that we can select a kernel via "-machine loadparm=..."
++        '''
++        self.basic_machine_setup()
++        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1",
++                         "-machine", "loadparm=2")
++        self.vm.launch()
++        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
++
++    def test_loadparm_device(self):
++        '''
++        Check that we can select a kernel via  "-device ...,loadparm=..."
++        '''
++        self.basic_machine_setup()
++        self.vm.add_args("-device",
++                         "virtio-blk-ccw,drive=d1,bootindex=1,loadparm=3")
++        self.vm.launch()
++        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
++
++    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/work_items/3350")
++    def test_loadparm_pci(self):
++        '''
++        Check that we can select a kernel via  "-device ...-pci,loadparm=..."
++        '''
++        self.require_device('virtio-blk-pci')
++        self.basic_machine_setup()
++        self.vm.add_args("-device",
++                         "virtio-blk-pci,drive=d1,bootindex=1,loadparm=2")
++        self.vm.launch()
++        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
++
++    def test_scsi_default(self):
++        '''
++        Check that we can boot via SCSI, too (need to set logical block size
++        here to avoid that the auto-detection in the bios fails)
++        '''
++        self.basic_machine_setup()
++        self.vm.add_args("-device", "virtio-scsi", "-device",
++            "scsi-hd,drive=d1,physical_block_size=4096,logical_block_size=4096")
++        self.vm.launch()
++        self.wait_for_pattern("Linux version 5.8.15-301.fc33.s390x")
++
++    def test_scsi_loadparm(self):
++        '''
++        Check that we can boot via SCSI with loadparm
++        '''
++        self.basic_machine_setup()
++        self.vm.add_args("-device", "virtio-scsi", "-device",
++                         ("scsi-hd,drive=d1,bootindex=1,loadparm=3,"
++                          "physical_block_size=4096,logical_block_size=4096"))
++        self.vm.launch()
++        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
++
++    def test_menu(self):
++        '''
++        Check that boot menu shows up correctly
++        '''
++        self.basic_machine_setup()
++        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1,bootindex=1",
++                         "-boot", "menu=on")
++        self.vm.launch()
++        self.wait_for_pattern("1. Fedora (5.8.15-301.fc33.s390x) 33")
++        self.wait_for_pattern("2. Fedora (5.6.6-300.fc32.s390x) 32")
++        self.wait_for_pattern("3. Fedora (0-rescue-b7218f0092704c5a9")
++        self.wait_for_pattern("Please choose:")
++        # For some unknown reason, sending a key to the bios does not work
++        # in the testing framework yet:
++        # exec_command_and_wait_for_pattern(self, '2',
++        #                              "Linux version 5.6.6-300.fc32.s390x")
++
++    def test_menu_timeout(self):
++        '''
++        Check that boot menu shows up and boot continues automatically
++        when a timeout has been specified
++        '''
++        self.basic_machine_setup()
++        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1,bootindex=1",
++                         "-boot", "menu=on,splash-time=1")
++        self.vm.launch()
++        self.wait_for_pattern("s390-ccw zIPL Boot Menu")
++        self.wait_for_pattern("0. default (Fedora (5.8.15-301.fc33.s390x)")
++        self.wait_for_pattern("(default will boot in 0 seconds)")
++        self.wait_for_pattern("Linux version 5.8.15-301.fc33.s390x")
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.53.0
 
 
