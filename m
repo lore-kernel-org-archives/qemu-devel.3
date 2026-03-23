@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9ECF46120
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39244F46120
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fnm-0007yf-6K; Mon, 23 Mar 2026 09:58:42 -0400
+	id 1w4fo9-0008GZ-2N; Mon, 23 Mar 2026 09:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fnk-0007wA-GC
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:40 -0400
+ id 1w4fnv-0008DR-RB
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:52 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fni-0006nH-NY
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:40 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fnu-0006nz-0E
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:51 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id AA6F320B7135;
- Mon, 23 Mar 2026 06:58:34 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AA6F320B7135
+ by linux.microsoft.com (Postfix) with ESMTPSA id 940BF20B713B;
+ Mon, 23 Mar 2026 06:58:45 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 940BF20B713B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274317;
- bh=ZUck8KRzAIHOJZRjiz7XUC9sA5Upd2lSR/QGThC5/Zk=;
+ s=default; t=1774274328;
+ bh=VSt5BsFgnJsvC8WsZFKT0zrQ9CBJAd3GXCR4xVichT0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=G66Phg8ZIRSknyuAf6SxTBhuI7Pa5PEEyhu4NG/DulcV27GFe6HTGv6wcij1P98mk
- vA5QBuFi2l6cojr9xpbtuo6jIBPhFiYk6A2H6Ciu+/LZjrsJsVXlfbyhla9BEkzzMP
- SqsxJcmqAq2f7SVl87GjNXfYTHwHOs07dSnros5U=
+ b=oz74KWORamCB4RpfWr9zrTaZQAfh1RNHwhhpmrbmrDW+LGCg+Z6OJPn5VB0HGCLSO
+ r1ad5GomT/DuWmXPrvXhrDUwWhKS0NcrUcWpKuIhm6e6Y7wj4oWenmGk5KlMXG1PEA
+ tIcKikz8XuPXkjI8cQBcud1kj+lqrNxmdc2vr8do=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 05/32] accel/accel-irq: add generic begin_route_changes
-Date: Mon, 23 Mar 2026 14:57:45 +0100
-Message-Id: <20260323135812.383509-6-magnuskulke@linux.microsoft.com>
+Subject: [RFC 08/32] accel/mshv: update s->irq_routes in add_msi_route
+Date: Mon, 23 Mar 2026 14:57:48 +0100
+Message-Id: <20260323135812.383509-9-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,173 +75,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A generic accel_irqchip_begin_route_change() fn has been introduced for
-usage in the MSHV accelerator. It replaces the respective kvm_ fn.
+The irq_routes field of the state is populated with native mshv irq
+route entries. The allocation logic is modelled after the KVM
+implementation: we will always allocate a minumum of 64 entries and use
+a bitmask to find/set/clear GSIs.
+
+The old implementation of add_msi_routes will be removed in a subsequent
+commit.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c          | 21 +++++++++++++++++++++
- hw/misc/ivshmem-pci.c      |  4 ++--
- hw/vfio/pci.c              |  5 +++--
- hw/virtio/virtio-pci.c     |  2 +-
- include/system/accel-irq.h |  1 +
- include/system/kvm.h       |  8 --------
- target/i386/kvm/kvm.c      |  3 ++-
- 7 files changed, 30 insertions(+), 14 deletions(-)
+ accel/accel-irq.c       |  2 +-
+ accel/mshv/irq.c        | 87 +++++++++++++++++++++++++++++++++++++----
+ accel/stubs/mshv-stub.c |  2 +-
+ include/system/mshv.h   |  3 +-
+ 4 files changed, 84 insertions(+), 10 deletions(-)
 
 diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 0aa04c033d..3815f6727c 100644
+index 7e71b52555..5a97a345b2 100644
 --- a/accel/accel-irq.c
 +++ b/accel/accel-irq.c
-@@ -10,6 +10,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "hw/pci/msi.h"
- 
- #include "system/kvm.h"
-@@ -104,3 +105,23 @@ int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq)
+@@ -21,7 +21,7 @@ int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
+ {
+ #ifdef CONFIG_MSHV_IS_POSSIBLE
+     if (mshv_msi_via_irqfd_enabled()) {
+-        return mshv_irqchip_add_msi_route(vector, dev);
++        return mshv_irqchip_add_msi_route(c, vector, dev);
      }
+ #endif
+     if (kvm_enabled()) {
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 82f2022c7c..9d6bdde27a 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -278,18 +278,91 @@ static int irqchip_update_irqfd_notifier_gsi(const EventNotifier *event,
+     return register_irqfd(vm_fd, fd, virq);
+ }
+ 
++static int irqchip_allocate_gsi(MshvState *s, int *gsi)
++{
++    int next_gsi;
++
++    /* Return the lowest unused GSI in the bitmap */
++    next_gsi = find_first_zero_bit(s->used_gsi_bitmap, s->gsi_count);
++    if (next_gsi >= s->gsi_count) {
++        return -ENOSPC;
++    }
++
++    *gsi = next_gsi;
++
++    return 0;
++}
++
++static void irqchip_release_gsi(MshvState *s, int gsi)
++{
++    clear_bit(gsi, s->used_gsi_bitmap);
++}
++
++static void add_routing_entry(MshvState *s, struct mshv_user_irq_entry *entry)
++{
++    struct mshv_user_irq_entry *new;
++    int n, size;
++
++    if (s->irq_routes->nr == s->nr_allocated_irq_routes) {
++        n = s->nr_allocated_irq_routes * 2;
++        if (n < MSHV_MIN_ALLOCATED_MSI_ROUTES) {
++            n = MSHV_MIN_ALLOCATED_MSI_ROUTES;
++        }
++        size = sizeof(struct mshv_user_irq_table);
++        size += n * sizeof(*new);
++        s->irq_routes = g_realloc(s->irq_routes, size);
++        s->nr_allocated_irq_routes = n;
++    }
++
++    n = s->irq_routes->nr;
++    s->irq_routes->nr++;
++    new = &s->irq_routes->entries[n];
++
++    *new = *entry;
++
++    set_bit(entry->gsi, s->used_gsi_bitmap);
+ 
+-int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
++    trace_mshv_add_msi_routing(entry->address_lo | entry->address_hi,
++                               entry->data);
++}
++
++int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
+ {
+-    MSIMessage msg = { 0, 0 };
+-    int virq = 0;
++    struct mshv_user_irq_entry entry = { 0 };
++    MSIMessage msg = { 0 };
++    uint32_t data, high_addr, low_addr;
++    int gsi, ret;
++    MshvState *s = MSHV_STATE(c->accel);
++
++    if (!pci_available || !dev) {
++        return 0;
++    }
+ 
+-    if (pci_available && dev) {
+-        msg = pci_get_msi_message(dev, vector);
+-        virq = add_msi_routing(msg.address, le32_to_cpu(msg.data));
++    msg = pci_get_msi_message(dev, vector);
++
++    ret = irqchip_allocate_gsi(mshv_state, &gsi);
++    if (ret < 0) {
++        error_report("Could not allocate GSI for MSI route");
++        return -1;
++    }
++    high_addr = msg.address >> 32;
++    low_addr = msg.address & 0xFFFFFFFF;
++    data = le32_to_cpu(msg.data);
++
++    entry.gsi = gsi;
++    entry.address_hi = high_addr;
++    entry.address_lo = low_addr;
++    entry.data = data;
++
++    if (s->irq_routes->nr < s->gsi_count) {
++        add_routing_entry(s, &entry);
++        c->changes++;
++    } else {
++        irqchip_release_gsi(s, gsi);
++        return -ENOSPC;
+     }
+ 
+-    return virq;
++    return gsi;
+ }
+ 
+ void mshv_irqchip_release_virq(int virq)
+diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
+index e499b199d9..998c9e2fc6 100644
+--- a/accel/stubs/mshv-stub.c
++++ b/accel/stubs/mshv-stub.c
+@@ -14,7 +14,7 @@
+ 
+ bool mshv_allowed;
+ 
+-int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
++int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
+ {
      return -ENOSYS;
  }
-+
-+inline AccelRouteChange accel_irqchip_begin_route_changes(void)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        return (AccelRouteChange) {
-+            .accel = ACCEL(mshv_state),
-+            .changes = 0,
-+        };
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        return (AccelRouteChange) {
-+            .accel = ACCEL(kvm_state),
-+            .changes = 0,
-+        };
-+    }
-+    error_report("can't initiate route change, no accel irqchip available");
-+    abort();
-+}
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index aa8f271755..fa23562886 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -26,7 +26,7 @@
- #include "hw/core/qdev-properties-system.h"
- #include "hw/pci/msi.h"
- #include "hw/pci/msix.h"
--#include "system/kvm.h"
-+#include "system/accel-irq.h"
- #include "migration/blocker.h"
- #include "migration/vmstate.h"
- #include "qemu/error-report.h"
-@@ -430,7 +430,7 @@ static void ivshmem_add_kvm_msi_virq(IVShmemState *s, int vector,
-     IVSHMEM_DPRINTF("ivshmem_add_kvm_msi_virq vector:%d\n", vector);
-     assert(!s->msi_vectors[vector].pdev);
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 0d1745315b..7f60aba308 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -33,6 +33,7 @@
+ #endif
  
--    c = kvm_irqchip_begin_route_changes(kvm_state);
-+    c = accel_irqchip_begin_route_changes();
-     ret = kvm_irqchip_add_msi_route(&c, vector, pdev);
-     if (ret < 0) {
-         error_setg(errp, "kvm_irqchip_add_msi_route failed");
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index e48f4add4e..6768523147 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -39,6 +39,7 @@
- #include "qemu/module.h"
- #include "qemu/range.h"
- #include "qemu/units.h"
-+#include "system/accel-irq.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
- #include "pci.h"
-@@ -692,7 +693,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-             if (vdev->defer_kvm_irq_routing) {
-                 vfio_pci_add_kvm_msi_virq(vdev, vector, nr, true);
-             } else {
--                vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
-+                vfio_route_change = accel_irqchip_begin_route_changes();
-                 vfio_pci_add_kvm_msi_virq(vdev, vector, nr, true);
-                 kvm_irqchip_commit_route_changes(&vfio_route_change);
-                 vfio_connect_kvm_msi_virq(vector, nr);
-@@ -793,7 +794,7 @@ void vfio_pci_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
- {
-     assert(!vdev->defer_kvm_irq_routing);
-     vdev->defer_kvm_irq_routing = true;
--    vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
-+    vfio_route_change = accel_irqchip_begin_route_changes();
- }
+ #define MSHV_MAX_MSI_ROUTES 4096
++#define MSHV_MIN_ALLOCATED_MSI_ROUTES 64
  
- void vfio_pci_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 5010572784..faa4a41cca 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -869,7 +869,7 @@ static int kvm_virtio_pci_vq_vector_use(VirtIOPCIProxy *proxy,
-     int ret;
+ #define MSHV_PAGE_SHIFT 12
  
-     if (irqfd->users == 0) {
--        AccelRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
-+        AccelRouteChange c = accel_irqchip_begin_route_changes();
-         ret = accel_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
-         if (ret < 0) {
-             return ret;
-diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
-index a148920711..fc94c54264 100644
---- a/include/system/accel-irq.h
-+++ b/include/system/accel-irq.h
-@@ -25,6 +25,7 @@ static inline bool accel_irqchip_is_split(void)
-     return mshv_msi_via_irqfd_enabled() || kvm_irqchip_is_split();
- }
+@@ -59,7 +60,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+                            uint32_t vp_index, bool logical_destination_mode,
+                            bool level_triggered);
  
-+AccelRouteChange accel_irqchip_begin_route_changes(void);
- int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector,
-                                 PCIDevice *dev);
- int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev);
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index ccf90b8341..fec24d2135 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -476,14 +476,6 @@ int kvm_irqchip_update_msi_route(KVMState *s, int virq, MSIMessage msg,
-                                  PCIDevice *dev);
- void kvm_irqchip_commit_routes(KVMState *s);
- 
--static inline AccelRouteChange kvm_irqchip_begin_route_changes(KVMState *s)
--{
--    return (AccelRouteChange) {
--        .accel = ACCEL(s),
--        .changes = 0,
--    };
--}
--
- static inline void kvm_irqchip_commit_route_changes(AccelRouteChange *c)
- {
-     if (c->changes) {
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9cc41758d7..dc7c495f9c 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -32,6 +32,7 @@
- #include "vmsr_energy.h"
- #include "system/system.h"
- #include "system/hw_accel.h"
-+#include "system/accel-irq.h"
- #include "system/kvm_int.h"
- #include "system/runstate.h"
- #include "system/ramblock.h"
-@@ -6680,7 +6681,7 @@ void kvm_arch_init_irq_routing(KVMState *s)
-     kvm_gsi_routing_allowed = true;
- 
-     if (kvm_irqchip_is_split()) {
--        AccelRouteChange c = kvm_irqchip_begin_route_changes(s);
-+        AccelRouteChange c = accel_irqchip_begin_route_changes();
-         int i;
- 
-         /* If the ioapic is in QEMU and the lapics are in KVM, reserve
+-int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
++int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
+ void mshv_irqchip_commit_routes(void);
+ void mshv_irqchip_release_virq(int virq);
 -- 
 2.34.1
 
