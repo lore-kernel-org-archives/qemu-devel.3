@@ -4,52 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F66EC01DD
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1897FEC01DD
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4e3I-0007iI-EB; Mon, 23 Mar 2026 08:06:37 -0400
+	id 1w4e3r-00006h-41; Mon, 23 Mar 2026 08:07:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4e33-0007eg-GN
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:06:21 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4e31-0005TH-AY
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:06:21 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 935AD20B710C;
- Mon, 23 Mar 2026 05:06:16 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 935AD20B710C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774267577;
- bh=j0zx57orCfjH/b4yZSBp1d3VPOTnjKE85cp35cyPnmg=;
- h=From:To:Cc:Subject:Date:From;
- b=cNbd/8njikJwDdFQO3sQUrcup05Gl54i5U9US/PbWT0ruZlb2ABRe7lS0GAuYW+8D
- OMKvQwspe/pj/HLMD9qQMZmgxTUjiDVC1TCj7iOiq37vWH6SleYAYfkwtykMfEgDtG
- rYhkxUPn4RhVRSD8IYFv2kxmMMqW5mKvdMCE/F/o=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Anirudh Rayabharam <anirudh@anirudhrb.com>, Wei Liu <wei.liu@kernel.org>,
- Aastha Rawat <aastharawat@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH] include/hw/hyperv: add QEMU_PACKED to uapi structs
-Date: Mon, 23 Mar 2026 13:06:13 +0100
-Message-Id: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4e3f-0008TN-Vb
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:07:03 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4e3e-0005Xb-A7
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:06:59 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4853c1ca73aso301405e9.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:06:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774267617; x=1774872417; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PlDxlCm/MSaqxXseyRetYdrmnuFRpx7MkC1hJIxQ8l0=;
+ b=l+ebLcVtHyN8VuSsubB46Fx5a6KGU//qyuQg2cFNpEp/FTMLtnZEBTyWHjfjwRWmBs
+ CbwPakA6tzZQ5yGfm9vW8zmTir+p7kTWj5VBhWl8x0u1iXoQEnorDcgaVqRL8JgyrdHt
+ ssSLLqE7pEO+uBjyml6XoS4Os6JdYRnDQTu+ntJQxs3v0iCA57ehAP14HFpCuk8ywY/0
+ ObWIHV99ijzxFQT/HoLJuBmbyNE42ZGL+xIVqKKjuaLfiJjNlg5mzRb9gHp6pHsShZdi
+ Lc4DtrABHVd+pds3u/VTu7dRgl8vTNLhCVjtbALhlpnAi4coP1B/ekzbuKRrL4gZBizd
+ xSqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774267617; x=1774872417;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PlDxlCm/MSaqxXseyRetYdrmnuFRpx7MkC1hJIxQ8l0=;
+ b=UR0mJ1JpH5zTfPlLSfOOI84jnKp8f25FngBkX5oJ+x8YjoGyPDSMHPMy8yJr9tLJnL
+ a/Db9WNRC1U+KOCjY1nZBKte/D4dFIy2RTJliPJmxt8lRINT6kuFY/FxpxCptHOgPSMz
+ 72NaPxYMmuJQImfWwsOc6wi8eaziqrSlYHFtUKS0Uip51hZ2fxuf/IgTPYTK5QCj98Nr
+ 9pT/hA9Iu07C5wbas/zQEVnVdZtK1ZwN5nLeZoIcSqn+Xww4VaHe7H4L0E8+3QBBfvAA
+ +2+8yXfe1RuyQO6VJUEKVrFX+cVlWppR1TF6mIIqOWdC7Bna7CyzpsATUw+lYvli7MXr
+ rArQ==
+X-Gm-Message-State: AOJu0YxS0LAG6m2Qawv7RIBDXdPlYIHRDVYmMg6kEnpzlfgWoGP7n3A9
+ IVxLn4FqVWDVeM+PaJlInmUN1GH5a/2MvLBpdwEJKh4ARZ54RjHyS3pkp/xJNqXvs/Q=
+X-Gm-Gg: ATEYQzzvq/e41IKGEv0Bh9W+IS0b+mabGjSGEZ3lEkKkJoNgz6MEyjVJEqO2FsRcwnV
+ LBxZossP/mI0uCrx3QfKhRQ46dOvPSATbgVYpLRe/XMiVaE/qAuhMN5vnyVmg2pox3guiiOdHuZ
+ 2pA0WoaV9hoUVk2X1l4yhBG7vW9EvUL4lAgHP9rVRJyF4fh82C4czD9Dk41MK5HMMjk3TuW+vTE
+ /31J0F+6VqKdSxyXyBsSC/80WW1Ax1xn+0HJUVI+QKSmftfptNLLJIyI73SdyWvmDr6DZx+ylX+
+ CRT0lB4/JnKyViaaY7JidToUDIRnPdhaKoAnTrmBdqUUucmU/EX1Rqk3+1Hu6W2ouSdNskUH8Ln
+ P/QAv1Z4VulL2G8ukpSKMHyKy4dS7b2S45GORoMUq6YrtTej+TJhA1ILcDY8LJq5H28LAwLQ0hA
+ wBzulb1g1RSNELq4Ki5daeqgD4Kylt24uZz509uz0JPv1yQ+hycC8BdE9Q5Uy/qWGZKw==
+X-Received: by 2002:a05:600c:8710:b0:486:d76c:fa21 with SMTP id
+ 5b1f17b1804b1-486fee051a3mr164986095e9.12.1774267616658; 
+ Mon, 23 Mar 2026 05:06:56 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486fe7dc4a2sm313103895e9.5.2026.03.23.05.06.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Mar 2026 05:06:56 -0700 (PDT)
+Message-ID: <26785143-4574-411c-8985-951ae0da0570@linaro.org>
+Date: Mon, 23 Mar 2026 13:06:54 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0] monitor: Correctly display virtual addresses
+ while dumping memory
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+References: <20260323095020.66658-1-philmd@linaro.org>
+ <d0a6376c-dcb5-a12a-3b32-8a2c81f32b0e@eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <d0a6376c-dcb5-a12a-3b32-8a2c81f32b0e@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,227 +104,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The uapi definitions are marked with __packed hints in the kernel
-headers, since we want to keep the contract of the Microsoft Hypervisor
-ABI explicit, we should also added them in our vendored files, with a
-few notable exceptions where the attribute is a noop.
+On 23/3/26 12:51, BALATON Zoltan wrote:
+> On Mon, 23 Mar 2026, Philippe Mathieu-Daudé wrote:
+>> While reworking the address format width in commit 6ad593a75a8 we
+>> introduce a bug, leading to addresses being displayed with too many
+>> zeroes:
+>>
+>>  $ qemu-system-ppc -monitor stdio -S
+>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>  (qemu) x/x 0
+>>  0000000000000000000000000000000000000000000000000000000000000000: 
+>> 0x00000000
+>>  (qemu) x/x 0xfff00000
+>>  00000000000000000000000000000000000000000000000000000000fff00000: 
+>> 0x60000000
+>>
+>>  $ qemu-system-ppc64 -monitor stdio -S
+>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>  (qemu) x/x 0
+>>  00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000: 0x00000000
+>>
+>> Correct the format width to restore the previous behavior:
+>>
+>>  $ qemu-system-ppc -monitor stdio -S
+>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>  (qemu) x/x 0
+>>  00000000: 0x00000000
+>>
+>>  $ qemu-system-ppc64 -monitor stdio -S
+>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>  (qemu) x/x 0
+>>  0000000000000000: 0x00000000
+>>
+>> Fixes: 6ad593a75a8 ("monitor/hmp: Use plain uint64_t @addr argument in 
+>> memory_dump()")
+>> Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> monitor/hmp-cmds.c | 2 +-
+>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+>> index bad034937a9..bc26b39d708 100644
+>> --- a/monitor/hmp-cmds.c
+>> +++ b/monitor/hmp-cmds.c
+>> @@ -537,7 +537,7 @@ static void memory_dump(Monitor *mon, int count, 
+>> int format, int wsize,
+>>     uint8_t buf[16];
+>>     uint64_t v;
+>>     CPUState *cs = mon_get_cpu(mon);
+>> -    const unsigned int addr_width = is_physical ? 8 : 
+>> (target_long_bits() * 2);
+>> +    const unsigned int addr_width = is_physical ? 8 : 
+>> (target_long_bits() / 4);
+> 
+> Thanks, that should help, haven't tried yet. But is_physical used 
+> HWADDR_FMT_plx before which is "%016" PRIx64 so should that be 16 here 
+> to preserve previous behaviour? (Both 8 or 16 seem arbitrary, it should 
+> really depend on the physical address width of target but 64 bits for 
+> physical seems better as even 32 bit CPUs might have larger phys 
+> addresses.)
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- include/hw/hyperv/hvgdk_mini.h | 37 ++++++++++++++++++++++------------
- include/hw/hyperv/hvhdk.h      | 14 +++++++------
- 2 files changed, 32 insertions(+), 19 deletions(-)
+This patch only fixes the virtual path, restoring the
+behavior prior commit 6ad593a75a8.
 
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index cb52cc9de2..7d7b2e9b36 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -7,6 +7,8 @@
- #ifndef HW_HYPERV_HVGDK_MINI_H
- #define HW_HYPERV_HVGDK_MINI_H
- 
-+#include "qemu/compiler.h"
-+
- #define MSHV_IOCTL  0xB8
- 
- typedef enum hv_register_name {
-@@ -211,7 +213,7 @@ enum hv_intercept_type {
- struct hv_u128 {
-     uint64_t low_part;
-     uint64_t high_part;
--};
-+} QEMU_PACKED;
- 
- union hv_x64_xmm_control_status_register {
-     struct hv_u128 as_uint128;
-@@ -326,13 +328,13 @@ typedef struct hv_x64_segment_register {
-         };
-         uint16_t attributes;
-     };
--} hv_x64_segment_register;
-+} QEMU_PACKED hv_x64_segment_register;
- 
- typedef struct hv_x64_table_register {
-     uint16_t pad[3];
-     uint16_t limit;
-     uint64_t base;
--} hv_x64_table_register;
-+} QEMU_PACKED hv_x64_table_register;
- 
- union hv_x64_fp_control_status_register {
-     struct hv_u128 as_uint128;
-@@ -416,6 +418,10 @@ typedef union hv_register_value {
-     union hv_x64_register_sev_control sev_control;
- } hv_register_value;
- 
-+/*
-+ * This struct is __packed in the kernel. Since all members are naturally
-+ * aligned, we can omit QEMU_PACKED to avoid address-of-packed-member warnings.
-+ */
- typedef struct hv_register_assoc {
-     uint32_t name;         /* enum hv_register_name */
-     uint32_t reserved1;
-@@ -439,7 +445,7 @@ typedef struct hv_input_get_vp_registers {
-     uint8_t  rsvd_z8;
-     uint16_t rsvd_z16;
-     uint32_t names[];
--} hv_input_get_vp_registers;
-+} QEMU_PACKED hv_input_get_vp_registers;
- 
- typedef struct hv_input_set_vp_registers {
-     uint64_t partition_id;
-@@ -448,7 +454,7 @@ typedef struct hv_input_set_vp_registers {
-     uint8_t  rsvd_z8;
-     uint16_t rsvd_z16;
-     struct hv_register_assoc elements[];
--} hv_input_set_vp_registers;
-+} QEMU_PACKED hv_input_set_vp_registers;
- 
- union hv_interrupt_control {
-     uint64_t as_uint64;
-@@ -468,7 +474,7 @@ struct hv_input_assert_virtual_interrupt {
-     uint8_t target_vtl;
-     uint8_t rsvd_z0;
-     uint16_t rsvd_z1;
--};
-+} QEMU_PACKED;
- 
- /* /dev/mshv */
- #define MSHV_CREATE_PARTITION   _IOW(MSHV_IOCTL, 0x00, struct mshv_create_partition)
-@@ -487,6 +493,11 @@ struct hv_input_assert_virtual_interrupt {
-  ********************************
-  */
- 
-+/*
-+ * This struct is __packed in the kernel, but since all members are naturally
-+ * aligned, so we can omit QEMU_PACKED to avoid address-of-packed-member
-+ * warnings.
-+ */
- struct hv_local_interrupt_controller_state {
-     /* HV_X64_INTERRUPT_CONTROLLER_STATE */
-     uint32_t apic_id;
-@@ -644,7 +655,7 @@ struct hv_x64_intercept_message_header {
-     struct hv_x64_segment_register cs_segment;
-     uint64_t rip;
-     uint64_t rflags;
--};
-+} QEMU_PACKED;
- 
- union hv_x64_io_port_access_info {
-     uint8_t as_uint8;
-@@ -669,7 +680,7 @@ typedef struct hv_x64_io_port_intercept_message {
-     uint64_t rcx;
-     uint64_t rsi;
-     uint64_t rdi;
--} hv_x64_io_port_intercept_message;
-+} QEMU_PACKED hv_x64_io_port_intercept_message;
- 
- union hv_x64_memory_access_info {
-     uint8_t as_uint8;
-@@ -692,7 +703,7 @@ struct hv_x64_memory_intercept_message {
-     uint64_t guest_virtual_address;
-     uint64_t guest_physical_address;
-     uint8_t instruction_bytes[16];
--};
-+} QEMU_PACKED;
- 
- union hv_message_flags {
-     uint8_t asu8;
-@@ -711,14 +722,14 @@ struct hv_message_header {
-         uint64_t sender;
-         union hv_port_id port;
-     };
--};
-+} QEMU_PACKED;
- 
- struct hv_message {
-     struct hv_message_header header;
-     union {
-         uint64_t payload[HV_MESSAGE_PAYLOAD_QWORD_COUNT];
-     } u;
--};
-+} QEMU_PACKED;
- 
- /* From  github.com/rust-vmm/mshv-bindings/src/x86_64/regs.rs */
- 
-@@ -731,13 +742,13 @@ struct hv_cpuid_entry {
-     uint32_t ecx;
-     uint32_t edx;
-     uint32_t padding[3];
--};
-+} QEMU_PACKED;
- 
- struct hv_cpuid {
-     uint32_t nent;
-     uint32_t padding;
-     struct hv_cpuid_entry entries[0];
--};
-+} QEMU_PACKED;
- 
- #define IA32_MSR_TSC            0x00000010
- #define IA32_MSR_EFER           0xC0000080
-diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-index 866c8211bf..bf2f8cbc27 100644
---- a/include/hw/hyperv/hvhdk.h
-+++ b/include/hw/hyperv/hvhdk.h
-@@ -9,6 +9,8 @@
- #ifndef HW_HYPERV_HVHDK_H
- #define HW_HYPERV_HVHDK_H
- 
-+#include "qemu/compiler.h"
-+
- #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
- 
- struct hv_input_set_partition_property {
-@@ -16,7 +18,7 @@ struct hv_input_set_partition_property {
-     uint32_t property_code; /* enum hv_partition_property_code */
-     uint32_t padding;
-     uint64_t property_value;
--};
-+} QEMU_PACKED;
- 
- union hv_partition_synthetic_processor_features {
-     uint64_t as_uint64[HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS];
-@@ -201,12 +203,12 @@ typedef struct hv_input_translate_virtual_address {
-     uint32_t padding;
-     uint64_t control_flags;
-     uint64_t gva_page;
--} hv_input_translate_virtual_address;
-+} QEMU_PACKED hv_input_translate_virtual_address;
- 
- typedef struct hv_output_translate_virtual_address {
-     union hv_translate_gva_result translation_result;
-     uint64_t gpa_page;
--} hv_output_translate_virtual_address;
-+} QEMU_PACKED hv_output_translate_virtual_address;
- 
- typedef struct hv_register_x64_cpuid_result_parameters {
-     struct {
-@@ -226,13 +228,13 @@ typedef struct hv_register_x64_cpuid_result_parameters {
-         uint32_t edx;
-         uint32_t edx_mask;
-     } result;
--} hv_register_x64_cpuid_result_parameters;
-+} QEMU_PACKED hv_register_x64_cpuid_result_parameters;
- 
- typedef struct hv_register_x64_msr_result_parameters {
-     uint32_t msr_index;
-     uint32_t access_type;
-     uint32_t action; /* enum hv_unimplemented_msr_action */
--} hv_register_x64_msr_result_parameters;
-+} QEMU_PACKED hv_register_x64_msr_result_parameters;
- 
- union hv_register_intercept_result_parameters {
-     struct hv_register_x64_cpuid_result_parameters cpuid;
-@@ -244,6 +246,6 @@ typedef struct hv_input_register_intercept_result {
-     uint32_t vp_index;
-     uint32_t intercept_type; /* enum hv_intercept_type */
-     union hv_register_intercept_result_parameters parameters;
--} hv_input_register_intercept_result;
-+} QEMU_PACKED hv_input_register_intercept_result;
- 
- #endif /* HW_HYPERV_HVHDK_H */
--- 
-2.34.1
+For physical path previous format indeed used 16 chars,
+overkill IMHO, still I neglected to comment I reduced
+16 -> 8 in commit 6ad593a75a8. Nobody complained so far
+but if you rather I can restore that too, as a "fix".
+
+Long term my plan is to use mr_addr_fmt_width() here
+for physical addresses:
+https://lore.kernel.org/qemu-devel/20260226220226.20164-8-philmd@linaro.org/
+
+> 
+> Regards,
+> BALATON Zoltan
+> 
+>>     const bool big_endian = target_big_endian();
+>>
+>>     if (!cs && (format == 'i' || !is_physical)) {
+>>
 
 
