@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE381F46122
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEDFF46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4frY-000257-DW; Mon, 23 Mar 2026 10:02:36 -0400
+	id 1w4fsJ-0004Ef-MZ; Mon, 23 Mar 2026 10:03:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4foo-0000WN-6J
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:49 -0400
+ id 1w4fpP-0000vR-4W
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:27 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foi-0006yl-QI
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:44 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fpK-0007IE-8R
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:20 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id D42B020B6F15;
- Mon, 23 Mar 2026 06:59:25 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D42B020B6F15
+ by linux.microsoft.com (Postfix) with ESMTPSA id 7EACB20B6F20;
+ Mon, 23 Mar 2026 07:00:03 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7EACB20B6F20
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274369;
- bh=bqX1LydjjPPSm4vkKSG85SPs6GNqTLaHe3QD+pYtxEM=;
+ s=default; t=1774274406;
+ bh=WL7aGhrD9h47rdLHpTc412OkLiLisXW3EZzyJTLGXtA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=puH5ODnmgAuUdppLRIXyKpxP0HYMgSkz+Y7oAsxBX7avzDaND9N0DF7mjoA2LFm5n
- rOHnJP8Q18PSsmOLx7VMC4zWeOFcNAn+Po7pF91stUKKm6V//Rwg4YOi3KsaZq/3OS
- pVGPFWLBgUVzol+p41fFeOP40s6R2MV5JEFmgOKk=
+ b=GBWvBSQvLoC3WBwWC0h45O+c/bU66/wvFs3nCeH9dOBaDh3MrqJbaMB0d/3twYolp
+ qvvOrQRf4mxkubIxtdNXWQ89nWGQeQiEHfiBjm2tSgorfRLojL4M5nu+I0Yb4MmhCA
+ QpG9cl4yELEpjCTar2KL9Xfg8mHIvHV2pMlhckrQ=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 19/32] target/i386/mshv: migrate MSRs
-Date: Mon, 23 Mar 2026 14:57:59 +0100
-Message-Id: <20260323135812.383509-20-magnuskulke@linux.microsoft.com>
+Subject: [RFC 29/32] target/i386/mshv: migrate XSAVE state
+Date: Mon, 23 Mar 2026 14:58:09 +0100
+Message-Id: <20260323135812.383509-30-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,775 +75,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this change the we rewrite the existing MSR logic to make MSRs
-migratable:
+We implement fn's that roundtrip XSAVE state in migration. We are using
+the xsave_helper routines to move individual components from CPUX86State
+to an xsave_buf and then we have to compact the buffer to XSAVEC format,
+which is what the hypervisor expects.
 
-- we map them on existing QEMU fields in the CPU. A table and a macro
-  MSHV_ENV_FIELD is used to associate a HV register name to the their msr
-  index and their offset in the cpu state struct. The list is not
-  exhaustive and will be extended in follow-up commits.
-- mshv_set/get_msrs() fns are called in the arch_load/store_vcpu_state()
-  fns. they use use generic registers ioctl's and map the input/output
-  via load/store_to/from_env() from/to the hv register content to the
-  cpu state representation.
-- init_msrs() has been moved from mshv-vcpu to the msr source file
-- we need to perform some filtering of MSR because before writing and
-  reading, because the hvcalls will fail if the partition doesn't
-  support a given MSRs.
-- Some MSRs are partition-wide and so we will only write the to on the
-  BSP.
+And the same applies in the other direction for restoring state from the
+hypervisor.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/hw/hyperv/hvgdk_mini.h |  16 +
- include/system/mshv_int.h      |  17 +-
- target/i386/mshv/mshv-cpu.c    |  40 +--
- target/i386/mshv/msr.c         | 549 +++++++++++++--------------------
- 4 files changed, 254 insertions(+), 368 deletions(-)
+ target/i386/cpu.h           |   2 +-
+ target/i386/mshv/mshv-cpu.c | 100 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 100 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index cb52cc9de2..a47bc6212e 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -9,6 +9,19 @@
- 
- #define MSHV_IOCTL  0xB8
- 
-+/* Hyper-V specific model specific registers (MSRs) */
-+
-+/* HV_X64_SYNTHETIC_MSR */
-+#define HV_X64_MSR_GUEST_OS_ID      0x40000000
-+#define HV_X64_MSR_HYPERCALL        0x40000001
-+#define HV_X64_MSR_VP_INDEX         0x40000002
-+#define HV_X64_MSR_RESET            0x40000003
-+#define HV_X64_MSR_VP_RUNTIME       0x40000010
-+#define HV_X64_MSR_TIME_REF_COUNT   0x40000020
-+#define HV_X64_MSR_REFERENCE_TSC    0x40000021
-+#define HV_X64_MSR_TSC_FREQUENCY    0x40000022
-+#define HV_X64_MSR_APIC_FREQUENCY   0x40000023
-+
- typedef enum hv_register_name {
-     /* Pending Interruption Register */
-     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
-@@ -152,12 +165,14 @@ typedef enum hv_register_name {
-     /* Available */
- 
-     HV_X64_REGISTER_SPEC_CTRL       = 0x00080084,
-+    HV_X64_REGISTER_TSC_DEADLINE    = 0x00080095,
-     HV_X64_REGISTER_TSC_ADJUST      = 0x00080096,
- 
-     /* Other MSRs */
-     HV_X64_REGISTER_MSR_IA32_MISC_ENABLE = 0x000800A0,
- 
-     /* Misc */
-+    HV_X64_REGISTER_HYPERCALL       = 0x00090001,
-     HV_REGISTER_GUEST_OS_ID         = 0x00090002,
-     HV_REGISTER_REFERENCE_TSC       = 0x00090017,
- 
-@@ -788,6 +803,7 @@ struct hv_cpuid {
- #define IA32_MSR_DEBUG_CTL        0x1D9
- #define IA32_MSR_SPEC_CTRL        0x00000048
- #define IA32_MSR_TSC_ADJUST       0x0000003b
-+#define IA32_MSR_TSC_DEADLINE     0x000006e0
- 
- #define IA32_MSR_MISC_ENABLE 0x000001a0
- 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 2c5d16bf9a..29b363e73e 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -14,7 +14,6 @@
- #ifndef QEMU_MSHV_INT_H
- #define QEMU_MSHV_INT_H
- 
--#define MSHV_MSR_ENTRIES_COUNT 64
- #include "hw/hyperv/hvhdk.h"
- 
- struct mshv_get_set_vp_state;
-@@ -116,18 +115,8 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-                        bool add);
- 
- /* msr */
--typedef struct MshvMsrEntry {
--  uint32_t index;
--  uint32_t reserved;
--  uint64_t data;
--} MshvMsrEntry;
--
--typedef struct MshvMsrEntries {
--    MshvMsrEntry entries[MSHV_MSR_ENTRIES_COUNT];
--    uint32_t nmsrs;
--} MshvMsrEntries;
--
--int mshv_configure_msr(const CPUState *cpu, const MshvMsrEntry *msrs,
--                       size_t n_msrs);
-+int mshv_init_msrs(const CPUState *cpu);
-+int mshv_get_msrs(CPUState *cpu);
-+int mshv_set_msrs(const CPUState *cpu);
- 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index cd5d5a5369..0f30f0dd5b 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2272,7 +2272,7 @@ typedef struct CPUArchState {
+     int64_t user_tsc_khz; /* for sanity check only */
+     uint64_t apic_bus_freq;
+     uint64_t tsc;
+-#if defined(CONFIG_KVM) || defined(CONFIG_HVF)
++#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_MSHV)
+     void *xsave_buf;
+     uint32_t xsave_buf_len;
  #endif
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index ecb4711b95..0d4721582a 100644
+index 746987d62b..dacc33674c 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -580,6 +580,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
-         return ret;
-     }
+@@ -109,6 +109,78 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
  
-+    ret = mshv_get_msrs(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     return 0;
- }
+ static int set_special_regs(const CPUState *cpu);
  
-@@ -1051,6 +1056,12 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-         return ret;
-     }
- 
-+    /* INVARIANT: LAPIC must be restored before MSRs (TSC_DEADLINE) */
-+    ret = mshv_set_msrs(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
-@@ -1537,33 +1548,6 @@ void mshv_init_mmio_emu(void)
-     init_emu(&mshv_x86_emul_ops);
- }
- 
--static int init_msrs(const CPUState *cpu)
--{
--    int ret;
--    uint64_t d_t = MSR_MTRR_ENABLE | MSR_MTRR_MEM_TYPE_WB;
--
--    const struct hv_register_assoc assocs[] = {
--        { .name = HV_X64_REGISTER_SYSENTER_CS,       .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_SYSENTER_ESP,      .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_SYSENTER_EIP,      .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_STAR,              .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_CSTAR,             .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_LSTAR,             .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_KERNEL_GS_BASE,    .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_SFMASK,            .value.reg64 = 0x0 },
--        { .name = HV_X64_REGISTER_MSR_MTRR_DEF_TYPE, .value.reg64 = d_t },
--    };
--    QEMU_BUILD_BUG_ON(ARRAY_SIZE(assocs) > MSHV_MSR_ENTRIES_COUNT);
--
--    ret = mshv_set_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
--    if (ret < 0) {
--        error_report("failed to put msrs");
--        return -1;
--    }
--
--    return 0;
--}
--
- void mshv_arch_init_vcpu(CPUState *cpu)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-@@ -1593,7 +1577,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-     ret = init_cpuid2(cpu);
-     assert(ret == 0);
- 
--    ret = init_msrs(cpu);
-+    ret = mshv_init_msrs(cpu);
-     assert(ret == 0);
- 
-     ret = init_lint(cpu);
-diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
-index e6e5baef50..6e53874787 100644
---- a/target/i386/mshv/msr.c
-+++ b/target/i386/mshv/msr.c
-@@ -14,362 +14,259 @@
- #include "hw/hyperv/hvgdk_mini.h"
- #include "linux/mshv.h"
- #include "qemu/error-report.h"
-+#include "cpu.h"
- 
--static uint32_t supported_msrs[64] = {
--    IA32_MSR_TSC,
--    IA32_MSR_EFER,
--    IA32_MSR_KERNEL_GS_BASE,
--    IA32_MSR_APIC_BASE,
--    IA32_MSR_PAT,
--    IA32_MSR_SYSENTER_CS,
--    IA32_MSR_SYSENTER_ESP,
--    IA32_MSR_SYSENTER_EIP,
--    IA32_MSR_STAR,
--    IA32_MSR_LSTAR,
--    IA32_MSR_CSTAR,
--    IA32_MSR_SFMASK,
--    IA32_MSR_MTRR_DEF_TYPE,
--    IA32_MSR_MTRR_PHYSBASE0,
--    IA32_MSR_MTRR_PHYSMASK0,
--    IA32_MSR_MTRR_PHYSBASE1,
--    IA32_MSR_MTRR_PHYSMASK1,
--    IA32_MSR_MTRR_PHYSBASE2,
--    IA32_MSR_MTRR_PHYSMASK2,
--    IA32_MSR_MTRR_PHYSBASE3,
--    IA32_MSR_MTRR_PHYSMASK3,
--    IA32_MSR_MTRR_PHYSBASE4,
--    IA32_MSR_MTRR_PHYSMASK4,
--    IA32_MSR_MTRR_PHYSBASE5,
--    IA32_MSR_MTRR_PHYSMASK5,
--    IA32_MSR_MTRR_PHYSBASE6,
--    IA32_MSR_MTRR_PHYSMASK6,
--    IA32_MSR_MTRR_PHYSBASE7,
--    IA32_MSR_MTRR_PHYSMASK7,
--    IA32_MSR_MTRR_FIX64K_00000,
--    IA32_MSR_MTRR_FIX16K_80000,
--    IA32_MSR_MTRR_FIX16K_A0000,
--    IA32_MSR_MTRR_FIX4K_C0000,
--    IA32_MSR_MTRR_FIX4K_C8000,
--    IA32_MSR_MTRR_FIX4K_D0000,
--    IA32_MSR_MTRR_FIX4K_D8000,
--    IA32_MSR_MTRR_FIX4K_E0000,
--    IA32_MSR_MTRR_FIX4K_E8000,
--    IA32_MSR_MTRR_FIX4K_F0000,
--    IA32_MSR_MTRR_FIX4K_F8000,
--    IA32_MSR_TSC_AUX,
--    IA32_MSR_DEBUG_CTL,
--    HV_X64_MSR_GUEST_OS_ID,
--    HV_X64_MSR_SINT0,
--    HV_X64_MSR_SINT1,
--    HV_X64_MSR_SINT2,
--    HV_X64_MSR_SINT3,
--    HV_X64_MSR_SINT4,
--    HV_X64_MSR_SINT5,
--    HV_X64_MSR_SINT6,
--    HV_X64_MSR_SINT7,
--    HV_X64_MSR_SINT8,
--    HV_X64_MSR_SINT9,
--    HV_X64_MSR_SINT10,
--    HV_X64_MSR_SINT11,
--    HV_X64_MSR_SINT12,
--    HV_X64_MSR_SINT13,
--    HV_X64_MSR_SINT14,
--    HV_X64_MSR_SINT15,
--    HV_X64_MSR_SCONTROL,
--    HV_X64_MSR_SIEFP,
--    HV_X64_MSR_SIMP,
--    HV_X64_MSR_REFERENCE_TSC,
--    HV_X64_MSR_EOM,
-+#define MSHV_ENV_FIELD(env, offset) (*(uint64_t *)((char *)(env) + (offset)))
-+
-+typedef struct MshvMsrEnvMap {
-+    uint32_t msr_index;
-+    uint32_t hv_name;
-+    ptrdiff_t env_offset;
-+} MshvMsrEnvMap;
-+
-+/* Those MSRs have a direct mapping to fields in CPUX86State  */
-+static const MshvMsrEnvMap msr_env_map[] = {
-+    /* Architectural */
-+    { IA32_MSR_EFER, HV_X64_REGISTER_EFER, offsetof(CPUX86State, efer) },
-+    { IA32_MSR_PAT,  HV_X64_REGISTER_PAT,  offsetof(CPUX86State, pat) },
-+
-+    /* Syscall */
-+    { IA32_MSR_SYSENTER_CS,    HV_X64_REGISTER_SYSENTER_CS,
-+                               offsetof(CPUX86State, sysenter_cs) },
-+    { IA32_MSR_SYSENTER_ESP,   HV_X64_REGISTER_SYSENTER_ESP,
-+                               offsetof(CPUX86State, sysenter_esp) },
-+    { IA32_MSR_SYSENTER_EIP,   HV_X64_REGISTER_SYSENTER_EIP,
-+                               offsetof(CPUX86State, sysenter_eip) },
-+    { IA32_MSR_STAR,           HV_X64_REGISTER_STAR,
-+                               offsetof(CPUX86State, star) },
-+    { IA32_MSR_LSTAR,          HV_X64_REGISTER_LSTAR,
-+                               offsetof(CPUX86State, lstar) },
-+    { IA32_MSR_CSTAR,          HV_X64_REGISTER_CSTAR,
-+                               offsetof(CPUX86State, cstar) },
-+    { IA32_MSR_SFMASK,         HV_X64_REGISTER_SFMASK,
-+                               offsetof(CPUX86State, fmask) },
-+    { IA32_MSR_KERNEL_GS_BASE, HV_X64_REGISTER_KERNEL_GS_BASE,
-+                               offsetof(CPUX86State, kernelgsbase) },
-+
-+    /* TSC-related */
-+    { IA32_MSR_TSC,          HV_X64_REGISTER_TSC,
-+                             offsetof(CPUX86State, tsc) },
-+    { IA32_MSR_TSC_AUX,      HV_X64_REGISTER_TSC_AUX,
-+                             offsetof(CPUX86State, tsc_aux) },
-+    { IA32_MSR_TSC_ADJUST,   HV_X64_REGISTER_TSC_ADJUST,
-+                             offsetof(CPUX86State, tsc_adjust) },
-+    { IA32_MSR_TSC_DEADLINE, HV_X64_REGISTER_TSC_DEADLINE,
-+                             offsetof(CPUX86State, tsc_deadline) },
-+
-+    /* Hyper-V per-partition MSRs */
-+    { HV_X64_MSR_HYPERCALL,     HV_X64_REGISTER_HYPERCALL,
-+                                offsetof(CPUX86State, msr_hv_hypercall) },
-+    { HV_X64_MSR_GUEST_OS_ID,   HV_REGISTER_GUEST_OS_ID,
-+                                offsetof(CPUX86State, msr_hv_guest_os_id) },
-+    { HV_X64_MSR_REFERENCE_TSC, HV_REGISTER_REFERENCE_TSC,
-+                                offsetof(CPUX86State, msr_hv_tsc) },
-+
-+    /* Hyper-V MSRs (non-SINT) */
-+    { HV_X64_MSR_SCONTROL,  HV_REGISTER_SCONTROL,
-+                            offsetof(CPUX86State, msr_hv_synic_control) },
-+    { HV_X64_MSR_SIEFP,     HV_REGISTER_SIEFP,
-+                            offsetof(CPUX86State, msr_hv_synic_evt_page) },
-+    { HV_X64_MSR_SIMP,      HV_REGISTER_SIMP,
-+                            offsetof(CPUX86State, msr_hv_synic_msg_page) },
-+
-+    /* Other */
-+
-+    /* TODO: find out processor features that correlate to unsupported MSRs. */
-+    /* { IA32_MSR_MISC_ENABLE, HV_X64_REGISTER_MSR_IA32_MISC_ENABLE, */
-+    /*                         offsetof(CPUX86State, msr_ia32_misc_enable) }, */
-+    /* { IA32_MSR_BNDCFGS,     HV_X64_REGISTER_BNDCFGS, */
-+    /*                         offsetof(CPUX86State, msr_bndcfgs) }, */
-+    { IA32_MSR_SPEC_CTRL,   HV_X64_REGISTER_SPEC_CTRL,
-+                            offsetof(CPUX86State, spec_ctrl) },
- };
--static const size_t msr_count = ARRAY_SIZE(supported_msrs);
- 
--static int compare_msr_index(const void *a, const void *b)
-+int mshv_init_msrs(const CPUState *cpu)
- {
--    return *(uint32_t *)a - *(uint32_t *)b;
++static int get_xsave_state(CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    int cpu_fd = mshv_vcpufd(cpu);
 +    int ret;
-+    uint64_t d_t = MSR_MTRR_ENABLE | MSR_MTRR_MEM_TYPE_WB;
++    void *xsavec_buf;
++    const size_t page = HV_HYP_PAGE_SIZE;
++    size_t xsavec_buf_len = page;
 +
-+    const struct hv_register_assoc assocs[] = {
-+        { .name = HV_X64_REGISTER_SYSENTER_CS,       .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_SYSENTER_ESP,      .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_SYSENTER_EIP,      .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_STAR,              .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_CSTAR,             .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_LSTAR,             .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_KERNEL_GS_BASE,    .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_SFMASK,            .value.reg64 = 0x0 },
-+        { .name = HV_X64_REGISTER_MSR_MTRR_DEF_TYPE, .value.reg64 = d_t },
++    /* TODO: should properly determine xsavec size based on CPUID */
++    xsavec_buf = qemu_memalign(page, xsavec_buf_len);
++    memset(xsavec_buf, 0, xsavec_buf_len);
++
++    struct mshv_get_set_vp_state args = {
++        .type = MSHV_VP_STATE_XSAVE,
++        .buf_sz = xsavec_buf_len,
++        .buf_ptr = (uintptr_t)xsavec_buf,
 +    };
 +
-+    ret = mshv_set_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
++    ret = ioctl(cpu_fd, MSHV_GET_VP_STATE, &args);
 +    if (ret < 0) {
-+        error_report("failed to put msrs");
-+        return -1;
++        error_report("failed to get xsave state: %s", strerror(errno));
++        return -errno;
 +    }
++
++    ret = decompact_xsave_area(xsavec_buf, xsavec_buf_len, env);
++    g_free(xsavec_buf);
++    if (ret < 0) {
++        error_report("failed to decompact xsave area");
++        return ret;
++    }
++    x86_cpu_xrstor_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
 +
 +    return 0;
- }
- 
--__attribute__((constructor))
--static void init_sorted_msr_map(void)
-+
-+/*
-+ * INVARIANT: this fn expects assocs in the same order as they appear in
-+ * msr_env_map.
-+ */
-+static void store_in_env(CPUState *cpu, const struct hv_register_assoc *assocs,
-+                         size_t n_assocs)
- {
--    qsort(supported_msrs, msr_count, sizeof(uint32_t), compare_msr_index);
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    size_t i, j;
-+    const MshvMsrEnvMap *mapping;
-+    union hv_register_value hv_value;
-+    ptrdiff_t offset;
-+    uint32_t hv_name;
-+
-+    assert(n_assocs <= (ARRAY_SIZE(msr_env_map)));
-+
-+    for (i = 0, j = 0; i < ARRAY_SIZE(msr_env_map); i++) {
-+        hv_name = assocs[j].name;
-+        mapping = &msr_env_map[i];
-+        if (hv_name != mapping->hv_name) {
-+            continue;
-+        }
-+
-+        hv_value = assocs[j].value;
-+        offset = mapping->env_offset;
-+        MSHV_ENV_FIELD(env, offset) = hv_value.reg64;
-+        j++;
-+    }
- }
- 
--static int mshv_is_supported_msr(uint32_t msr)
-+static void set_hv_name_in_assocs(struct hv_register_assoc *assocs,
-+                                  size_t n_assocs)
- {
--    return bsearch(&msr, supported_msrs, msr_count, sizeof(uint32_t),
--                   compare_msr_index) != NULL;
-+    size_t i;
-+
-+    assert(n_assocs == ARRAY_SIZE(msr_env_map));
-+    for (i = 0; i < ARRAY_SIZE(msr_env_map); i++) {
-+        assocs[i].name = msr_env_map[i].hv_name;
-+    }
- }
- 
--static int mshv_msr_to_hv_reg_name(uint32_t msr, uint32_t *hv_reg)
-+static bool msr_supported(uint32_t name)
- {
--    switch (msr) {
--    case IA32_MSR_TSC:
--        *hv_reg = HV_X64_REGISTER_TSC;
--        return 0;
--    case IA32_MSR_EFER:
--        *hv_reg = HV_X64_REGISTER_EFER;
--        return 0;
--    case IA32_MSR_KERNEL_GS_BASE:
--        *hv_reg = HV_X64_REGISTER_KERNEL_GS_BASE;
--        return 0;
--    case IA32_MSR_APIC_BASE:
--        *hv_reg = HV_X64_REGISTER_APIC_BASE;
--        return 0;
--    case IA32_MSR_PAT:
--        *hv_reg = HV_X64_REGISTER_PAT;
--        return 0;
--    case IA32_MSR_SYSENTER_CS:
--        *hv_reg = HV_X64_REGISTER_SYSENTER_CS;
--        return 0;
--    case IA32_MSR_SYSENTER_ESP:
--        *hv_reg = HV_X64_REGISTER_SYSENTER_ESP;
--        return 0;
--    case IA32_MSR_SYSENTER_EIP:
--        *hv_reg = HV_X64_REGISTER_SYSENTER_EIP;
--        return 0;
--    case IA32_MSR_STAR:
--        *hv_reg = HV_X64_REGISTER_STAR;
--        return 0;
--    case IA32_MSR_LSTAR:
--        *hv_reg = HV_X64_REGISTER_LSTAR;
--        return 0;
--    case IA32_MSR_CSTAR:
--        *hv_reg = HV_X64_REGISTER_CSTAR;
--        return 0;
--    case IA32_MSR_SFMASK:
--        *hv_reg = HV_X64_REGISTER_SFMASK;
--        return 0;
--    case IA32_MSR_MTRR_CAP:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_CAP;
--        return 0;
--    case IA32_MSR_MTRR_DEF_TYPE:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_DEF_TYPE;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE0:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE0;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK0:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK0;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE1:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE1;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK1:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK1;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE2:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE2;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK2:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK2;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE3:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE3;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK3:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK3;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE4:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE4;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK4:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK4;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE5:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE5;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK5:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK5;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE6:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE6;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK6:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK6;
--        return 0;
--    case IA32_MSR_MTRR_PHYSBASE7:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE7;
--        return 0;
--    case IA32_MSR_MTRR_PHYSMASK7:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK7;
--        return 0;
--    case IA32_MSR_MTRR_FIX64K_00000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX64K00000;
--        return 0;
--    case IA32_MSR_MTRR_FIX16K_80000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX16K80000;
--        return 0;
--    case IA32_MSR_MTRR_FIX16K_A0000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX16KA0000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_C0000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KC0000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_C8000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KC8000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_D0000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KD0000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_D8000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KD8000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_E0000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KE0000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_E8000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KE8000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_F0000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KF0000;
--        return 0;
--    case IA32_MSR_MTRR_FIX4K_F8000:
--        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KF8000;
--        return 0;
--    case IA32_MSR_TSC_AUX:
--        *hv_reg = HV_X64_REGISTER_TSC_AUX;
--        return 0;
--    case IA32_MSR_BNDCFGS:
--        *hv_reg = HV_X64_REGISTER_BNDCFGS;
--        return 0;
--    case IA32_MSR_DEBUG_CTL:
--        *hv_reg = HV_X64_REGISTER_DEBUG_CTL;
--        return 0;
--    case IA32_MSR_TSC_ADJUST:
--        *hv_reg = HV_X64_REGISTER_TSC_ADJUST;
--        return 0;
--    case IA32_MSR_SPEC_CTRL:
--        *hv_reg = HV_X64_REGISTER_SPEC_CTRL;
--        return 0;
--    case HV_X64_MSR_GUEST_OS_ID:
--        *hv_reg = HV_REGISTER_GUEST_OS_ID;
--        return 0;
--    case HV_X64_MSR_SINT0:
--        *hv_reg = HV_REGISTER_SINT0;
--        return 0;
--    case HV_X64_MSR_SINT1:
--        *hv_reg = HV_REGISTER_SINT1;
--        return 0;
--    case HV_X64_MSR_SINT2:
--        *hv_reg = HV_REGISTER_SINT2;
--        return 0;
--    case HV_X64_MSR_SINT3:
--        *hv_reg = HV_REGISTER_SINT3;
--        return 0;
--    case HV_X64_MSR_SINT4:
--        *hv_reg = HV_REGISTER_SINT4;
--        return 0;
--    case HV_X64_MSR_SINT5:
--        *hv_reg = HV_REGISTER_SINT5;
--        return 0;
--    case HV_X64_MSR_SINT6:
--        *hv_reg = HV_REGISTER_SINT6;
--        return 0;
--    case HV_X64_MSR_SINT7:
--        *hv_reg = HV_REGISTER_SINT7;
--        return 0;
--    case HV_X64_MSR_SINT8:
--        *hv_reg = HV_REGISTER_SINT8;
--        return 0;
--    case HV_X64_MSR_SINT9:
--        *hv_reg = HV_REGISTER_SINT9;
--        return 0;
--    case HV_X64_MSR_SINT10:
--        *hv_reg = HV_REGISTER_SINT10;
--        return 0;
--    case HV_X64_MSR_SINT11:
--        *hv_reg = HV_REGISTER_SINT11;
--        return 0;
--    case HV_X64_MSR_SINT12:
--        *hv_reg = HV_REGISTER_SINT12;
--        return 0;
--    case HV_X64_MSR_SINT13:
--        *hv_reg = HV_REGISTER_SINT13;
--        return 0;
--    case HV_X64_MSR_SINT14:
--        *hv_reg = HV_REGISTER_SINT14;
--        return 0;
--    case HV_X64_MSR_SINT15:
--        *hv_reg = HV_REGISTER_SINT15;
--        return 0;
--    case IA32_MSR_MISC_ENABLE:
--        *hv_reg = HV_X64_REGISTER_MSR_IA32_MISC_ENABLE;
--        return 0;
--    case HV_X64_MSR_SCONTROL:
--        *hv_reg = HV_REGISTER_SCONTROL;
--        return 0;
--    case HV_X64_MSR_SIEFP:
--        *hv_reg = HV_REGISTER_SIEFP;
--        return 0;
--    case HV_X64_MSR_SIMP:
--        *hv_reg = HV_REGISTER_SIMP;
--        return 0;
--    case HV_X64_MSR_REFERENCE_TSC:
--        *hv_reg = HV_REGISTER_REFERENCE_TSC;
--        return 0;
--    case HV_X64_MSR_EOM:
--        *hv_reg = HV_REGISTER_EOM;
--        return 0;
--    default:
--        error_report("failed to map MSR %u to HV register name", msr);
--        return -1;
-+    /*
-+     * This check is not done comprehensively, it's meant to avoid hvcall
-+     * failures for certain MSRs on architectures that don't support them.
-+     */
-+
-+    switch (name) {
-+    case HV_X64_REGISTER_SPEC_CTRL:
-+        return mshv_state->processor_features.ibrs_support;
-+    case HV_X64_REGISTER_TSC_ADJUST:
-+        return mshv_state->processor_features.tsc_adjust_support;
-+    case HV_X64_REGISTER_TSC_DEADLINE:
-+        return mshv_state->processor_features.tsc_deadline_tmr_support;
-     }
-+
-+    return true;
- }
- 
--static int set_msrs(const CPUState *cpu, GList *msrs)
-+int mshv_get_msrs(CPUState *cpu)
- {
--    size_t n_msrs;
--    GList *entries;
--    MshvMsrEntry *entry;
--    enum hv_register_name name;
--    struct hv_register_assoc *assoc;
--    int ret;
--    size_t i = 0;
--
--    n_msrs = g_list_length(msrs);
--    hv_register_assoc *assocs = g_new0(hv_register_assoc, n_msrs);
--
--    entries = msrs;
--    for (const GList *elem = entries; elem != NULL; elem = elem->next) {
--        entry = elem->data;
--        ret = mshv_msr_to_hv_reg_name(entry->index, &name);
--        if (ret < 0) {
--            g_free(assocs);
--            return ret;
-+    int ret = 0;
-+    size_t n_assocs = ARRAY_SIZE(msr_env_map);
-+    struct hv_register_assoc assocs[ARRAY_SIZE(msr_env_map)];
-+    size_t i, j;
-+    uint32_t name;
-+
-+    set_hv_name_in_assocs(assocs, n_assocs);
-+
-+    /* Filter out MSRs that cannot be read */
-+    for (i = 0, j = 0; i < n_assocs; i++) {
-+        name = assocs[i].name;
-+
-+        if (!msr_supported(name)) {
-+            continue;
-+        }
-+
-+        if (j != i) {
-+            assocs[j] = assocs[i];
-         }
--        assoc = &assocs[i];
--        assoc->name = name;
--        /* the union has been initialized to 0 */
--        assoc->value.reg64 = entry->data;
--        i++;
-+        j++;
-     }
--    ret = mshv_set_generic_regs(cpu, assocs, n_msrs);
--    g_free(assocs);
-+    n_assocs = j;
-+
-+    ret = mshv_get_generic_regs(cpu, assocs, n_assocs);
-     if (ret < 0) {
--        error_report("failed to set msrs");
--        return -1;
-+        error_report("Failed to get MSRs");
-+        return -errno;
-     }
-+
-+    store_in_env(cpu, assocs, n_assocs);
-+
-     return 0;
- }
- 
-+static void load_from_env(const CPUState *cpu, struct hv_register_assoc *assocs,
-+                          size_t n_assocs)
-+{
-+    size_t i;
-+    const MshvMsrEnvMap *mapping;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    ptrdiff_t offset;
-+    union hv_register_value *hv_value;
-+
-+    assert(n_assocs == ARRAY_SIZE(msr_env_map));
- 
--int mshv_configure_msr(const CPUState *cpu, const MshvMsrEntry *msrs,
--                       size_t n_msrs)
-+    for (i = 0; i < ARRAY_SIZE(msr_env_map); i++) {
-+        mapping = &msr_env_map[i];
-+        offset = mapping->env_offset;
-+        assocs[i].name = mapping->hv_name;
-+        hv_value = &assocs[i].value;
-+        hv_value->reg64 = MSHV_ENV_FIELD(env, offset);
-+    }
 +}
 +
-+int mshv_set_msrs(const CPUState *cpu)
- {
--    GList *valid_msrs = NULL;
--    uint32_t msr_index;
-+    size_t n_assocs = ARRAY_SIZE(msr_env_map);
-+    struct hv_register_assoc assocs[ARRAY_SIZE(msr_env_map)];
-     int ret;
-+    size_t i, j;
- 
--    for (size_t i = 0; i < n_msrs; i++) {
--        msr_index = msrs[i].index;
--        /* check whether index of msrs is in SUPPORTED_MSRS */
--        if (mshv_is_supported_msr(msr_index)) {
--            valid_msrs = g_list_append(valid_msrs, (void *) &msrs[i]);
-+    load_from_env(cpu, assocs, n_assocs);
++static int set_xsave_state(const CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    int cpu_fd = mshv_vcpufd(cpu);
++    int ret;
++    void *xsavec_buf;
++    size_t page = HV_HYP_PAGE_SIZE, xsavec_buf_len;
 +
-+    /* Filter out MSRs that cannot be written */
-+    for (i = 0, j = 0; i < n_assocs; i++) {
-+        uint32_t name = assocs[i].name;
++    /* allocate and populate compacted buffer */
++    xsavec_buf = qemu_memalign(page, page);
++    xsavec_buf_len = page;
 +
-+        /* Partition-wide MSRs: only write on vCPU 0 */
-+        if (cpu->cpu_index != 0 &&
-+            (name == HV_X64_REGISTER_HYPERCALL ||
-+             name == HV_REGISTER_GUEST_OS_ID ||
-+             name == HV_REGISTER_REFERENCE_TSC)) {
-+            continue;
-         }
++    /* save registers to standard format buffer */
++    x86_cpu_xsave_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
 +
-+        if (!msr_supported(name)) {
-+            continue;
-+        }
++    /* store compacted version of xsave area in xsavec_buf */
++    compact_xsave_area(env, xsavec_buf, xsavec_buf_len);
 +
-+        if (j != i) {
-+            assocs[j] = assocs[i];
-+        }
-+        j++;
-     }
-+    n_assocs = j;
- 
--    ret = set_msrs(cpu, valid_msrs);
--    g_list_free(valid_msrs);
-+    ret = mshv_set_generic_regs(cpu, assocs, n_assocs);
++    struct mshv_get_set_vp_state args = {
++        .type = MSHV_VP_STATE_XSAVE,
++        .buf_sz = xsavec_buf_len,
++        .buf_ptr = (uintptr_t)xsavec_buf,
++    };
++
++    ret = ioctl(cpu_fd, MSHV_SET_VP_STATE, &args);
++    g_free(xsavec_buf);
 +    if (ret < 0) {
-+        error_report("Failed to set MSRs");
++        error_report("failed to set xsave state: %s", strerror(errno));
 +        return -errno;
 +    }
- 
--    return ret;
++
 +    return 0;
++}
++
+ static int get_lapic(CPUState *cpu)
+ {
+     X86CPU *x86cpu = X86_CPU(cpu);
+@@ -766,6 +838,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+         return ret;
+     }
+ 
++    ret = get_xsave_state(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++
+     ret = get_lapic(cpu);
+     if (ret < 0) {
+         return ret;
+@@ -1284,6 +1361,11 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
+         return ret;
+     }
+ 
++    ret = set_xsave_state(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++
+     /* INVARIANT: special regs (APIC_BASE) must be restored before LAPIC */
+     ret = set_lapic(cpu);
+     if (ret < 0) {
+@@ -1812,9 +1894,10 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+-    size_t page = HV_HYP_PAGE_SIZE;
++    size_t page = HV_HYP_PAGE_SIZE, xsave_len;
+     void *mem = qemu_memalign(page, 2 * page);
+     int ret;
++    X86XSaveHeader *header;
+ 
+     /* sanity check, to make sure we don't overflow the page */
+     QEMU_BUILD_BUG_ON((MAX_REGISTER_COUNT
+@@ -1828,6 +1911,17 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+ 
+     env->emu_mmio_buf = g_new(char, 4096);
+ 
++    /* Initialize XSAVE buffer page-aligned */
++    /* TODO: pick proper size based on CPUID */
++    xsave_len = page;
++    env->xsave_buf = qemu_memalign(page, xsave_len);
++    env->xsave_buf_len = xsave_len;
++    memset(env->xsave_buf, 0, env->xsave_buf_len);
++
++    /* we need to set the compacted format bit in xsave header for mshv */
++    header = (X86XSaveHeader *)(env->xsave_buf + sizeof(X86LegacyXSaveArea));
++    header->xcomp_bv = header->xstate_bv | (1ULL << 63);
++
+     /*
+      * TODO: populate topology info:
+      * X86CPUTopoInfo *topo_info = &env->topo_info;
+@@ -1852,6 +1946,10 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     g_free(state->hvcall_args.base);
+     state->hvcall_args = (MshvHvCallArgs){0};
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
++
++    qemu_vfree(env->xsave_buf);
++    env->xsave_buf = NULL;
++    env->xsave_buf_len = 0;
  }
+ 
+ /*
 -- 
 2.34.1
 
