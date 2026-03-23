@@ -4,102 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E69BFEC01CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6C7EC01DF
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4dmy-0005wt-R2; Mon, 23 Mar 2026 07:49:44 -0400
+	id 1w4dpH-0006k3-42; Mon, 23 Mar 2026 07:52:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4dmx-0005wU-Hf
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:49:43 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4dmw-0002E7-1N
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:49:43 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-64ae222d978so4168307d50.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 04:49:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774266581; cv=none;
- d=google.com; s=arc-20240605;
- b=IBWpQrSltVJleS+JdFb+3oTWFo6utepeiMfKtnneEUDUBEtevQdyQtd3ltiFbEH3SN
- udA+XkGLz9ifooAGvVjAPJdO1t0FtbQ4IjrnsvH5zqmGyIdfwBXLfrQsq8hNeOFQOS9v
- dAkuaDh+ClWKYKRIeHaIgFMwxjlvBJN64CgMaIDlrHHay+OPXYVHMk8+6zjLc6FxltZX
- xSiDoaxZYOJRVApnb5GC8iS14SW2JbLYBBwjyWZ47k8K2HD6rdtz8nxzOtYogI7eRJLQ
- aPRe0+mCGHSm3HWOrcrqRCNegWWqFwb4BR6X0V27bvoSphEwBtnCU6dLp/soIVM1Nfl5
- pbmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=a/I1sHcUTA9qsXLQZGVHbSeHDN/6/UdW2iP3Bh5paiU=;
- fh=gS8oh9EHdcTDcglskGyIv3/M5LtfI+jKdwGYJC227W4=;
- b=Y2/m1gYQ4kdAWplQdb3FS41jO8isCi9tmuQ3IWAigRkvcXpJP+Q1HzUaxGqyF3KBM/
- SGTY0nqz2KZC0Ec1KzI7Ky26/q7CYk92SbbT9YCYrjFJ8M2LkbDYDXdQ40doHR/7g/hu
- y/XA+zHXhhLb5sIfrYQY6XdEUReZ9U3HaqQACcOs/9rv8hrPZ/HOjFCvY7nZFoBO83jB
- ljtBHwrtNsBTaiL0C4qCnaxHGFeA0Bzu0C2jIC3drlKz0nbilfpc3uQxsaDCurHKEEAz
- 5HdXohR/CC5oJcIEfWqVAqrxNJuj/t/1gAHchHk5r9mDyyoQNJdkY+s60LcpAj+dutrG
- 2ElQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774266581; x=1774871381; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=a/I1sHcUTA9qsXLQZGVHbSeHDN/6/UdW2iP3Bh5paiU=;
- b=wpaOF6fJqQGdvUPqoq0bDFPPJZPJ04qv3B+vmvp0avxlI2SStH/SCCQpKqoq7et7bL
- fiDHj+zd1akjyC1KoQRv4Ap3owuV552aDmZf8JhSlezymQjlWSWfEKvi4lgqvJPbGyyc
- 6+OyVGud1HZCP8pyP92+ig8QtJoKkZ2dhVNusBohIqC9mpR9QzMmTUIKJnLGSRHpl0Kg
- A4yQe5gBXR7RZQDpnK3Xvy5DMZv7fBRR5I28h9SPzh7XKbb3IBstQZTn/hAvj15oAMnD
- Mq6IIJVeOQFOMj7HH1jADJoiOJlu0FYGP/JWWt8C17piteHI+wBk7P2n+VRE9ZPe9im1
- lYBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774266581; x=1774871381;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a/I1sHcUTA9qsXLQZGVHbSeHDN/6/UdW2iP3Bh5paiU=;
- b=QNra8FbSRati8JsTEb3ge+3lup93/iccWh5eW1jz4Po4Kx/Dw9sURc2hF9OVvZ36QK
- OmGOqndewpzEYpk2Ebg72WMZULKglC7FjfMLw0+ataUDwTOg+I7GJLRJtR5/L7XeAtIh
- BgFvVP4s8kgrnFv1iff/ZfSR1WvuHYsdOrFWDQ9SXAAW5GrmfyFdOF8W2u6lQ2aJFLs5
- tblI4GP8GMIrMW6bl7NgEnythy4ZoDGo7mRYxTcI06iPISGj2XvEo/r0PxVmvygWzWzk
- 7VTAfPgmnL4tcJLKhyC/iCKgegjdYC1yTAMcjxa+7rDqzTi5Cv9Py1Us6yu7SYKNoFni
- 1NpA==
-X-Gm-Message-State: AOJu0YzlyGOQbSBjAXgCmcF9+3lJTP+aMx6TcxA7Vylt0gXb/bODuRep
- MAhvP1qxLrsBWC8SF6ASG3LS01XeDDp6U9AgiAKmaoDY9+EmmhLRioW5qKi29tBVi8T3XTTRdPt
- T0pmXo6FyGRtXNAShHm4/3ivUpNvRcsAQSj1E8LxH4A==
-X-Gm-Gg: ATEYQzzhRrjPHYaCiw4+p+iyE65KfQl/3UC/id5owhoc3avwPZlv85ZbSbl0SV8B2rY
- a5k5nLULNZmieIv36Y6FRC8wkpoZFHS5PZnInSbgLPPqLv7qJCSpnNgC1pnxMtS2taswD9zoAY4
- gBHN9k14xLIghNIjwvEPVpZhXYTKupd5urUuYHsc5xdchxyyy+X036QWnYu80SVx3w9q76qHKUv
- +y8QS7Ftee2rL84psFpIJyHGASb+k5qsGJBVuWKnkPd8H4N42LGR29i0gWY3eOWYfcQLzpqKV2h
- 2PZvJWtMf4DFzClrfMJm+HWUWpgvCGIQBJZ8JmjCAkfz7EIwZaupI5aKd9L9TV1+XCXHFhL/O/5
- fQw==
-X-Received: by 2002:a05:690c:4990:b0:795:294c:fd4d with SMTP id
- 00721157ae682-79a90b7acafmr126214287b3.37.1774266580781; Mon, 23 Mar 2026
- 04:49:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4dpB-0006jl-Qb
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:52:01 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4dp8-0002X7-Pp
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:52:01 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EE6655969E4;
+ Mon, 23 Mar 2026 12:51:54 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id V2bABg79TmSH; Mon, 23 Mar 2026 12:51:52 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id EDDF05968DD; Mon, 23 Mar 2026 12:51:52 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EBFED5968DC;
+ Mon, 23 Mar 2026 12:51:52 +0100 (CET)
+Date: Mon, 23 Mar 2026 12:51:52 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH-for-11.0] monitor: Correctly display virtual addresses
+ while dumping memory
+In-Reply-To: <20260323095020.66658-1-philmd@linaro.org>
+Message-ID: <d0a6376c-dcb5-a12a-3b32-8a2c81f32b0e@eik.bme.hu>
+References: <20260323095020.66658-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <cover.1774099044.git.dingtao0430@163.com>
- <3411a43d161ef59db3db1d7ed0f84839d50ceb33.1774099044.git.dingtao0430@163.com>
-In-Reply-To: <3411a43d161ef59db3db1d7ed0f84839d50ceb33.1774099044.git.dingtao0430@163.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Mar 2026 11:49:29 +0000
-X-Gm-Features: AaiRm53HhedbXWr_RWJu6Gfz2JH9Ik2ijt8qkpuhXrrQ02EO0bn5VFgKHhiSubk
-Message-ID: <CAFEAcA_0JMqY-RCKtKL0uaVKFVfmPSR2-Ta7Eo2FHY9qRp0ThQ@mail.gmail.com>
-Subject: Re: [PATCH v1 2/5] PL011 generate receive timeout interrupt
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed; boundary="3866299591-825563091-1774266712=:9762"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,57 +68,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 21 Mar 2026 at 15:47, Tao Ding <dingtao0430@163.com> wrote:
->
-> After changing the read_trigger, no interrupt will be generated when the data
-> in the rx FIFO of pl011 does not reach the FIFO level. This will cause input
-> in the console to have no effect in Linux, until data input exceeds the FIFO level.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This sounds like you created a regression in patch 1 and are now
-fixing it here. You should order changes to avoid doing that.
+--3866299591-825563091-1774266712=:9762
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-> But UART will generate an interrupt after a timeout period after RX receives the data.
-> The relevant description of this in TRM :
->     *The receive timeout interrupt is asserted when the receive FIFO is not empty, and no
->     more data is received during a 32-bit period.
+On Mon, 23 Mar 2026, Philippe Mathieu-Daudé wrote:
+> While reworking the address format width in commit 6ad593a75a8 we
+> introduce a bug, leading to addresses being displayed with too many
+> zeroes:
 >
-> To simplify this operation, pl011 immediately generates an RT interrupt upon receiving data,
-> which means the period is triggered instantly. (QEMUTimer triggering is also optional)
+>  $ qemu-system-ppc -monitor stdio -S
+>  QEMU 10.2.90 monitor - type 'help' for more information
+>  (qemu) x/x 0
+>  0000000000000000000000000000000000000000000000000000000000000000: 0x00000000
+>  (qemu) x/x 0xfff00000
+>  00000000000000000000000000000000000000000000000000000000fff00000: 0x60000000
 >
-> Signed-off-by: Tao Ding <dingtao0430@163.com>
+>  $ qemu-system-ppc64 -monitor stdio -S
+>  QEMU 10.2.90 monitor - type 'help' for more information
+>  (qemu) x/x 0
+>  00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000: 0x00000000
+>
+> Correct the format width to restore the previous behavior:
+>
+>  $ qemu-system-ppc -monitor stdio -S
+>  QEMU 10.2.90 monitor - type 'help' for more information
+>  (qemu) x/x 0
+>  00000000: 0x00000000
+>
+>  $ qemu-system-ppc64 -monitor stdio -S
+>  QEMU 10.2.90 monitor - type 'help' for more information
+>  (qemu) x/x 0
+>  0000000000000000: 0x00000000
+>
+> Fixes: 6ad593a75a8 ("monitor/hmp: Use plain uint64_t @addr argument in memory_dump()")
+> Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/char/pl011.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> monitor/hmp-cmds.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> index c96a706da1..58803f0fc2 100644
-> --- a/hw/char/pl011.c
-> +++ b/hw/char/pl011.c
-> @@ -200,6 +200,9 @@ static void pl011_fifo_rx_put(void *opaque, uint32_t value)
->      }
->      if (s->read_count == s->read_trigger) {
->          s->int_level |= INT_RX;
-> +    }
-> +    if (s->read_count) {
-> +        s->int_level |= INT_RT;
->          pl011_update(s);
->      }
->  }
-> @@ -281,6 +284,7 @@ static uint32_t pl011_read_rxdata(PL011State *s)
->      }
->      if (s->read_count == 0) {
->          s->flags |= PL011_FLAG_RXFE;
-> +        s->int_level &= ~INT_RT;
->      }
->      if (s->read_count == s->read_trigger - 1) {
->          s->int_level &= ~INT_RX;
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index bad034937a9..bc26b39d708 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -537,7 +537,7 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+>     uint8_t buf[16];
+>     uint64_t v;
+>     CPUState *cs = mon_get_cpu(mon);
+> -    const unsigned int addr_width = is_physical ? 8 : (target_long_bits() * 2);
+> +    const unsigned int addr_width = is_physical ? 8 : (target_long_bits() / 4);
 
-But if we do this, what was the point in changing patch 1 so as to
-make read_trigger accurate? Now we are back to where we were
-before, where we trigger an interrupt when there's any data in
-the FIFO. (At least we do understand better now why we see the
-problem...)
+Thanks, that should help, haven't tried yet. But is_physical used 
+HWADDR_FMT_plx before which is "%016" PRIx64 so should that be 16 here to 
+preserve previous behaviour? (Both 8 or 16 seem arbitrary, it should 
+really depend on the physical address width of target but 64 bits for 
+physical seems better as even 32 bit CPUs might have larger phys 
+addresses.)
 
-thanks
--- PMM
+Regards,
+BALATON Zoltan
+
+>     const bool big_endian = target_big_endian();
+>
+>     if (!cs && (format == 'i' || !is_physical)) {
+>
+--3866299591-825563091-1774266712=:9762--
 
