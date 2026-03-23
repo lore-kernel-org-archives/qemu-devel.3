@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96FBEC01C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 10:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CB5EC01CB
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 10:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4cvf-0001rD-Os; Mon, 23 Mar 2026 06:54:39 -0400
+	id 1w4cvg-0001ro-UF; Mon, 23 Mar 2026 06:54:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4cvd-0001pr-Vk
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:37 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1w4cvf-0001r0-Gb
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:39 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4cvb-000648-0T
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:37 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4852c9b4158so30388305e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 03:54:34 -0700 (PDT)
+ id 1w4cve-00064z-0V
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:39 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso30331945e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 03:54:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774263273; x=1774868073; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774263276; x=1774868076; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Xs/B4YzHpjJ5hjN0zfMVmY19I76iyWMoSRLARmh3iVg=;
- b=NkrTub69bMqGw5LRhIHmar/3tKqCV2GTm9ObFUkLcsKEQaLKJgItecRJkhhjDv+v2E
- gcC+DoMVTwlG58DSgZkTgf46pgQVpUNLVPKUzuKl6RtSYmM//+djbd1qYooa65pqLPQ5
- dGrepk+QNlxDBwYfFYmOkfFExW1+axtvqWp7mqcqHKBrk6QRUo0BmpUgarNulPChamRb
- L6Dqcy4+BFPYUWuPBVV6VdaILaWLeruz9DHA4J8cNTaupUA0PZKEcLpbTsrR1/c2ks1v
- BrmQXx+ubd0M0I9AZo6KBGOWNKdmwCrDoQ5tPtJSaG80GKbWTn+gnAPA5+CPjHMwmy8u
- o/dQ==
+ :reply-to; bh=Oqhm3xyUZh+W31/fl248bBeWUOuk3wxGAOmgwD+wPOg=;
+ b=XHffmujJbkKbi+8HsMWnEbn4YAqaXFF3FRUS5oyv+cDB17hePoYoAb2jXx0rbX+uIn
+ sm9D4MtBa+arDeWZRKQu0LnsPZqFOY+NOJ9OoiAFDwupxEBN1eVLzNtGCHnVoStpa9zk
+ WE97/RV3pb6HhLQHVrirT33iFbIhc3nqoUlB9JCtiMKzqHEUzbGC+i+OXBpzyyXGinhJ
+ DrGWS6M+LFqg5M/XzKe8PyTP0FbPb6Z5mqWxGtGhSrMz31avBy0IFCIN1YVyO8BJa1dQ
+ aiKDiRRN9DFAEvL3Og8fs7f+gnymZsnDTdprrPl9IJyZ6aWCFks0LsNBf9fIkCZKqDcW
+ YkGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774263273; x=1774868073;
+ d=1e100.net; s=20251104; t=1774263276; x=1774868076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Xs/B4YzHpjJ5hjN0zfMVmY19I76iyWMoSRLARmh3iVg=;
- b=jsjaVtlSMtGL9PSiOnlmhP2gA9g46b4ACHGlyW+JcPMYT0tEu+qiVae6m2zJLgIqr1
- jt67BhQmn7eqQk9fb2/KTQPWNFXXZT2kvV0ZQWSSYTcRdAMZLhDToKKGPt9ON/XeCe0J
- fXP1nRruqFgMUkgEQr2RShoZIuLT/0rmGWAzk+f+ENI8xwMaWZc7k7kQAgf4FSQ0gNAn
- kX/o0K5gMwNOgBgEouWDhgDwO7kJtMjTc9clYT59fnoSsi70HhXTW/HkI3lBCOQ+13r5
- x9BTuzawVmsfh2fXpjIUcF51rBr62xX3qf2Lm9z2Y6PETZaB3gfZehPkTNicpjz3ayuT
- ItvQ==
-X-Gm-Message-State: AOJu0YwsE7BikqIIZ90boZ2hMzu0jmYoVwUTpBZDw2VFdaa7kefYi8iH
- gieJov8TKw5qD+IJ+Eow8BFEv9AM/8SyVRxXWr+fRhCHqTDYKqv56IlA8uyhw/w+o+0hCUYPRad
- 6JX4GKOU=
-X-Gm-Gg: ATEYQzzvDPxOXXCYAEnSQD5stUyJHMLMwakwFo7SzwuknzI/KzUdcZGOw/PRik2zTFF
- abKDyjKm+phfGUZ5DSySnjyQGixRJ5CLtR0JEpl8Mou/5Ok+YBFWCdyxSUxDKgunOmPqqfVnF63
- L8iqJp8lkZeSwBrjfopHjcVcckqIOhIfiP+Ss+ewTb7lcQEJCu0w4C4P9a8yiQgwF0leCS25uE9
- bfz/k6CYeCaHzjo3FBQsrZE7BlYM03k52a+XC/SZ280yb/WLnnJa5SwNYfFlaRGMyXxHspnGPo2
- MrgJJmvzlLmcQl6VcxrK6DMBe6KZRblnNz1L74B1ZGk3wQby8Vmc66SD2GX/LeWg2Km80fvuRFh
- du/rF0JmzoVqPJIhAbG8BRs7k5lqzgN9g8PmHF3fRKapaJFkvN/6/+DMZPycPEAGloHoJJFctQN
- uhu9nZyT8Wz3MUWJWSguHY9al3Pyc0qdk0AMLP7j0NinwobtlS20RqGvuuygd++TBDos7+07gqn
- pznTwdf8DOFyIdvdjkA4KVSV4VW2Mw=
-X-Received: by 2002:a05:600c:c173:b0:485:5981:1411 with SMTP id
- 5b1f17b1804b1-486fee1a26bmr148657235e9.23.1774263272773; 
- Mon, 23 Mar 2026 03:54:32 -0700 (PDT)
+ bh=Oqhm3xyUZh+W31/fl248bBeWUOuk3wxGAOmgwD+wPOg=;
+ b=Y26umBYJilrK46ASAjMe98rbdURbUA5H9AtgMzmuHkjb33YpTuxrlixXZIdHQgAaEU
+ jDT//gmG+UDNuWQgEs8YDGbHJcXo01+ixAVXAEG3+mVedKJbMeYYQPsH9eUAGxq24d8+
+ 4mWhW2qj+emDcqxy3FAOihilRpJXNYGna42PzBfc9DblnMnYBPZ/3LDKK7wOnw0BkfXC
+ ZS1GwoInXhgZrzIs0Ud0L0ynsEPTD5h4LYnE5ilto9HSkmXj2nnodJxhL0ZSKoxUA7sN
+ hqV7jhTzTYTmQ/R3te3fuApvhSmavSe6Ri6IvYWsjZ3hxbOCZMGN7MVf73/Q7EbOKkHt
+ 4gUg==
+X-Gm-Message-State: AOJu0Yxy6mgWbe+clE7fbvgQjlFnTBqea7+cGs9dPKsjg8pFRTkkQU54
+ i4yuIBnY+fWgayeK1DVpM8W1RR+DMi+9M6RLHckClgVf5MiHObBH8Veoa7q6/TaDZYD3+OIKVyp
+ z3AiyhbY=
+X-Gm-Gg: ATEYQzyrXRDxuqiDg6jQRkcgzKmQhO8om+Wy5yq9TfLzmIGPjAubwxPMRvMc6EepWFm
+ x6d5ukqfq2HTLYHo5o6apOeHebBNVy7K1/OqmGE22EvCwSISjeUtEr6WspFckbKN3C8LR1/u3FN
+ j3KypfTiG0tLOxmRWVBls6CWL4XVA0A9CodnsZngDto+ddltVrhas9pG3t6lSLuEoyd7t8AQoxf
+ d40Fj0iqUxyVEuI/AitvhAxu0RRtNoakVFjj8sVw75a+hkdpCpHw3qEBZJOAtCI5jp1sm7nAfZv
+ ejTElDzanHD8u92o5JHz0WTBfPgq/VjyeRn4dAy8UTKUMZMhIfiKDGDEbo6JbN8orUswS74riSh
+ sp/mlR+4FOao0TnN85P2kDWXXFGC5rQCR6v99DJ6+qRnH7Nr0SX+9FYRRWNOYnjBSA0gBcXA71n
+ JUgo9M2ma/y9Hm7hnVToSYgEC2Dkigb2lQwWfd/ZaiGEXSouMYXABJgR9sEoSNShXlHSnLwcpIC
+ CuyTD7WRj+qWpmu4omyq4KWQY93yAo=
+X-Received: by 2002:a05:600c:548c:b0:486:f634:ef1 with SMTP id
+ 5b1f17b1804b1-486ff027176mr164670895e9.17.1774263276103; 
+ Mon, 23 Mar 2026 03:54:36 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486ff1dd9f1sm115483185e9.8.2026.03.23.03.54.32
+ 5b1f17b1804b1-486ff1dd9f1sm115483185e9.8.2026.03.23.03.54.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 03:54:32 -0700 (PDT)
+ Mon, 23 Mar 2026 03:54:35 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/10] configure: Remove unused variable default_cflags
-Date: Mon, 23 Mar 2026 10:54:21 +0000
-Message-ID: <20260323105429.4059580-3-peter.maydell@linaro.org>
+Subject: [PULL 06/10] whpx: arm: remove comment bit that is no longer accurate
+Date: Mon, 23 Mar 2026 10:54:25 +0000
+Message-ID: <20260323105429.4059580-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260323105429.4059580-1-peter.maydell@linaro.org>
 References: <20260323105429.4059580-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,48 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-configure has a variable default_cflags, which was originally added
-in commit bafe78ad3bc4c ("contrib/plugins: use an independent
-makefile") as part of it setting up the build environment for
-contrib/plugins, which at the time used make.  However, we now build
-the plugins with meson, and in commit 55c84a72aba4 ("contrib/plugins:
-remove Makefile for contrib/plugins") we dropped the logic from
-configure that does that makefile setup, leaving default_cflags
-as an unused variable.
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-shellcheck helpfully reports this:
-      default_cflags='-O0 -g'
-      ^------------^ SC2034 (warning): default_cflags appears unused. Verify use (or export if used externally).
+As of Windows 11 version 26H1, SME support shipped.  However the
+MIT-licensed headers aren't updated yet.
 
-Remove the unused variable.
-
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Message-id: 20260314221529.47841-5-mohamed@unpredictable.fr
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260317120215.2075164-1-peter.maydell@linaro.org
 ---
- configure | 2 --
- 1 file changed, 2 deletions(-)
+ target/arm/whpx/whpx-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/configure b/configure
-index cd1dadd8bb..42c45fe47a 100755
---- a/configure
-+++ b/configure
-@@ -248,7 +248,6 @@ for opt do
-   esac
- done
- 
--default_cflags='-O2 -g'
- git_submodules_action="update"
- docs="auto"
- EXESUF=""
-@@ -707,7 +706,6 @@ for opt do
-       meson_option_parse --enable-debug-graph-lock ""
-       meson_option_parse --enable-debug-mutex ""
-       meson_option_add -Doptimization=0
--      default_cflags='-O0 -g'
-   ;;
-   --disable-tcg) tcg="disabled"
-   ;;
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 9e5bc03a21..8aa24f2adc 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -717,7 +717,7 @@ static bool whpx_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+      * Work needed for SVE support:
+      * - SVE state save/restore
+      * - any potentially needed VL management
+-     * Also disable SME at the same time. (not currently supported by Hyper-V)
++     * Also disable SME at the same time.
+      */
+     SET_IDREG(&ahcf->isar, ID_AA64PFR0,
+               GET_IDREG(&ahcf->isar, ID_AA64PFR0) & ~R_ID_AA64PFR0_SVE_MASK);
 -- 
 2.43.0
 
