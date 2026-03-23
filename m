@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B0DF46113
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41499F46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fpX-0000wQ-Rw; Mon, 23 Mar 2026 10:00:33 -0400
+	id 1w4fpg-00010E-Pd; Mon, 23 Mar 2026 10:00:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4for-0000YR-6d
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:50 -0400
+ id 1w4fp7-0000kq-Bz
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:11 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fop-000703-NX
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:48 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fp4-00073O-Dp
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:04 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 2761C20B6F1B;
- Mon, 23 Mar 2026 06:59:33 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2761C20B6F1B
+ by linux.microsoft.com (Postfix) with ESMTPSA id AA00220B6F15;
+ Mon, 23 Mar 2026 06:59:48 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AA00220B6F15
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274377;
- bh=fHGJO6oByr4zwjSDzga9p2/aohq98U3wlbaQ5tyzs2c=;
+ s=default; t=1774274391;
+ bh=/aJjVtv2N2HvKWYe9sJ5DIN7GG5pVPTEVn5pz5+VPjQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NUiTn1GaPrme945lxn1FyhsjFrYg/soTLtR90JhKsM+++6ZFoBGYjCUvRM6PH80VN
- qVHJdTTt6rrtd0hRBgCxIikxepI9cLhDnwq+1cmfr3nbamuhQIL2Pwk4TOcApdm0NR
- FOSQsCfFD9fWaq43SliFJL1QW3ZlCN6vYns6fUwU=
+ b=dyeboFIJ2FdETlp6CR65ZWMlL/58/lM9WsOgz8YXa8ZdGCT4GFFQbhdVxXhGh3Zc4
+ xuNLnzXedjOIEom/ui2tP4fdkQwBPdtgkbgn+ZN/lKv10UleqbkEO3i563jq2ln8o0
+ gZLNOK8aRjvC8y4hsQ6pgG/8pRxphI88VyPINcHw=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 21/32] target/i386/mshv: migrate Synic SINT MSRs
-Date: Mon, 23 Mar 2026 14:58:01 +0100
-Message-Id: <20260323135812.383509-22-magnuskulke@linux.microsoft.com>
+Subject: [RFC 25/32] accel/mshv: write synthetic MSRs after migration
+Date: Mon, 23 Mar 2026 14:58:05 +0100
+Message-Id: <20260323135812.383509-26-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,87 +75,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migrate HyperV SynIC SINT MSRs. We can only read/write those if SCONTROL
-is enabled in the guest, hence we have to split the SINT MSR out and
-make reading/writing them dependent on that MSR.
+Write partition-wide synthetic MSRs. This ensures the hypercall page and
+SynIC facilities are set up before vCPUs attempt to use it.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/msr.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ accel/mshv/mshv-all.c          |  7 +++++++
+ include/hw/hyperv/hvgdk_mini.h |  3 +++
+ include/system/mshv_int.h      |  1 +
+ target/i386/mshv/mshv-cpu.c    | 15 +++++++++++++++
+ 4 files changed, 26 insertions(+)
 
-diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
-index 240ee84447..d19b79d729 100644
---- a/target/i386/mshv/msr.c
-+++ b/target/i386/mshv/msr.c
-@@ -298,6 +298,8 @@ int mshv_get_msrs(CPUState *cpu)
-     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-     size_t i, j;
-     uint32_t name;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    bool synic_enabled;
- 
-     set_hv_name_in_assocs(assocs, n_assocs);
- 
-@@ -324,6 +326,27 @@ int mshv_get_msrs(CPUState *cpu)
- 
-     store_in_env(cpu, assocs, n_assocs);
- 
-+    /* Read SINT MSRs only if SynIC is enabled */
-+    synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
-+    if (synic_enabled) {
-+        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 365288b901..22e838ede6 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -137,6 +137,13 @@ static int mshv_load_setup(QEMUFile *f, void *opaque, Error **errp)
+ static int mshv_load_cleanup(void *opaque)
+ {
+     MshvState *s = opaque;
++    int ret;
 +
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            assocs[i].name = HV_REGISTER_SINT0 + i;
-+        }
-+
-+        ret = mshv_get_generic_regs(cpu, assocs, HV_SINT_COUNT);
-+        if (ret < 0) {
-+            error_report("Failed to get SynIC SINT MSRs");
-+            return -errno;
-+        }
-+
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            uint64_t hv_sint_value = assocs[i].value.reg64;
-+            x86cpu->env.msr_hv_synic_sint[i] = hv_sint_value;
-+        }
++    ret = mshv_arch_set_partition_msrs(first_cpu);
++    if (ret < 0) {
++        error_report("Failed to set partition MSRs: %s", strerror(-ret));
++        return -1;
 +    }
+ 
+     resume_vm(s->vm);
+ 
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index a47bc6212e..00daac0431 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -23,6 +23,9 @@
+ #define HV_X64_MSR_APIC_FREQUENCY   0x40000023
+ 
+ typedef enum hv_register_name {
++    /* VP Management Registers */
++    HV_REGISTER_INTERNAL_ACTIVITY_STATE = 0x00000004,
 +
+     /* Pending Interruption Register */
+     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
+ 
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 7d685fc647..7052f20a00 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -84,6 +84,7 @@ int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
+                           size_t n_regs);
+ int mshv_arch_store_vcpu_state(const CPUState *cpu);
+ int mshv_arch_load_vcpu_state(CPUState *cpu);
++int mshv_arch_set_partition_msrs(const CPUState *cpu);
+ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index ec1caf4e7a..0b08f478ce 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1141,6 +1141,21 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
      return 0;
  }
  
-@@ -358,6 +381,8 @@ int mshv_set_msrs(const CPUState *cpu)
-     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-     int ret;
-     size_t i, j;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    bool synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
- 
-     load_from_env(cpu, assocs, n_assocs);
- 
-@@ -390,5 +415,21 @@ int mshv_set_msrs(const CPUState *cpu)
-         return -errno;
-     }
- 
-+    /* SINT MSRs can only be written if SCONTROL has been set, so we split */
-+    if (synic_enabled) {
-+        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
++int mshv_arch_set_partition_msrs(const CPUState *cpu)
++{
++    CPUX86State *env = &X86_CPU(cpu)->env;
++    struct hv_register_assoc assocs[] = {
++        { .name = HV_REGISTER_GUEST_OS_ID,
++          .value.reg64 = env->msr_hv_guest_os_id },
++        { .name = HV_REGISTER_REFERENCE_TSC,
++          .value.reg64 = env->msr_hv_tsc },
++        { .name = HV_X64_REGISTER_HYPERCALL,
++          .value.reg64 = env->msr_hv_hypercall },
++    };
 +
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            assocs[i].name        = HV_REGISTER_SINT0 + i;
-+            assocs[i].value.reg64 = x86cpu->env.msr_hv_synic_sint[i];
-+        }
++    return mshv_set_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
++}
 +
-+        ret = mshv_set_generic_regs(cpu, assocs, HV_SINT_COUNT);
-+        if (ret < 0) {
-+            error_report("Failed to set SynIC SINT MSRs");
-+            return -errno;
-+        }
-+    }
-+
-     return 0;
- }
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features)
+ {
 -- 
 2.34.1
 
