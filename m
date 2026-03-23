@@ -4,68 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B23F483D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 17:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D165F483DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 17:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4irn-0002cw-Aj; Mon, 23 Mar 2026 13:15:03 -0400
+	id 1w4izO-0004nZ-Mz; Mon, 23 Mar 2026 13:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4irV-0002aN-Af
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:14:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w4izC-0004m4-Rc; Mon, 23 Mar 2026 13:22:46 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4irT-0003It-9e
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 13:14:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774286082;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ZKcLN44a5EAqDQUK5Jp0uNYlSQIpUPtUV/cyjAqIGFE=;
- b=eH8l5b4yxiDB8UxW+xOJnjDNlZP33PdJFke7V0G7kps/oHY8wbHMeoerUhDy85RpMvPWfq
- x8C+wleLrJla0U73IVVFkbn4DB6Qu+PQi5fNwG62+LnMpc80rOhTk5uhykb8zvPTfWEi0D
- GfKkhj49uxnItW3NDtxjARaHEs1d8fk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-426-sfNDIbcYMAii6tAZ7o1dgg-1; Mon,
- 23 Mar 2026 13:14:39 -0400
-X-MC-Unique: sfNDIbcYMAii6tAZ7o1dgg-1
-X-Mimecast-MFC-AGG-ID: sfNDIbcYMAii6tAZ7o1dgg_1774286078
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A06E19560B1; Mon, 23 Mar 2026 17:14:38 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.50])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1B153300019F; Mon, 23 Mar 2026 17:14:34 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] tests/functional/s390x: Add test for booting from a disk with
- 4k sectors
-Date: Mon, 23 Mar 2026 18:14:23 +0100
-Message-ID: <20260323171423.112205-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w4izA-0004A0-6f; Mon, 23 Mar 2026 13:22:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774286537; bh=auUEqXc7uLnxQMoUv3qU802ClhyurexHu5euSg0WJE4=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=nyN+PW0PiZ2hHwqtha9kiFE6UtDAgdsMgjVfD/fGin0+JQo+vNCWD1ZtD7nwTrnci
+ DAvbycOFZW8vHoa6FfV05c1pdih4Bj+Moyywp87VI4Qx+HIi+Pcpee/XCGpZYqaBm6
+ cN1A3jgdU6cfhlRStB1t3PlVESoNT6nMyfP5Vy1+V/eYxTPVskNnhK5o5UZMpvcCi7
+ clHsLTWc09KzMwE3eY0H5GzGXWPxZhoBg9OnoFSvOnuSt38xX/eibbELFOSyL7Dp+8
+ ZoJutouw4AihkmLqL4fc8SIpFgEivEVNpKAvacBceh1sIcMYS6vS2D3vBVkzyV0mx5
+ YgLobb2bsKIlw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id D84F6196B91;
+ Mon, 23 Mar 2026 20:22:17 +0300 (MSK)
+Message-ID: <a3b30fca-f7ea-4408-8e5a-a84ead4a3c8c@tls.msk.ru>
+Date: Mon, 23 Mar 2026 20:22:35 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0.0] Fix include statement for u2f-emu.h
+To: Peter Maydell <peter.maydell@linaro.org>, Stefan Weil <sw@weilnetz.de>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+References: <20260318174522.87902-1-sw@weilnetz.de>
+ <CAFEAcA--mf5DoEkvPi+9M5zHhxhqOScX4hWKowcR49zE5iwFnA@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <CAFEAcA--mf5DoEkvPi+9M5zHhxhqOScX4hWKowcR49zE5iwFnA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,180 +111,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 23.03.2026 20:12, Peter Maydell wrote:
 
-The DASD disks on s390x have a different sector size (4k) and use
-a different layout of the boot loader data compared to the usual
-"SCSI"-style disks with 512 sectors that are used with most modern
-guests. To make sure that there are no regressions with 4k disk
-booting, add a test case that uses a disk image with these 4k sectors
-and check that we can successfully show the boot menu and and load the
-right kernel in all supported cases.
+> Hi, Stefan. Could I ask you to try a tweak to your git config
+> which (assuming you use git-send-email) I hope will fix the problem
+> where the mailing list rewrites the From headers of your emails
+> to "Stefan Weil via qemu development <qemu-devel@nongnu.org>" and
+> then when a maintainer picks them up they need to manually adjust
+> the git commit author line ?
+> 
+> This is the suggestion that our .mailmap has:
+> 
+> # If the mailing list munges your emails, use:
+> #   git config sendemail.from '"Your Name" <your.email@example.com>'
+> # the use of "" in that line will differ from the typically unquoted
+> # 'git config user.name', which in turn is sufficient for 'git send-email'
+> # to add an extra From: line in the body of your email that takes
+> # precedence over any munged From: in the mail's headers.
+> # See https://lists.openembedded.org/g/openembedded-core/message/166515
+> # and https://lists.gnu.org/archive/html/qemu-devel/2023-09/msg06784.html
+> 
+> Hopefully that will help...
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/s390x/meson.build     |   1 +
- tests/functional/s390x/test_boot_4k.py | 138 +++++++++++++++++++++++++
- 2 files changed, 139 insertions(+)
- create mode 100755 tests/functional/s390x/test_boot_4k.py
+It might help if the original email did not have From: header at all.
+But I doubt that was the case here, as From-less emails (messages w/o
+From: header) gets dropped almost everywhere, so there should be
+delivery probs for other places too.  But I can't know if original
+email had the header or not, - but mailman definitely tweaked this
+header (either adding it, or, most likely, modifying it).
 
-diff --git a/tests/functional/s390x/meson.build b/tests/functional/s390x/meson.build
-index 0f03e1c9db8..b065b666bc2 100644
---- a/tests/functional/s390x/meson.build
-+++ b/tests/functional/s390x/meson.build
-@@ -10,6 +10,7 @@ tests_s390x_system_quick = [
- ]
- 
- tests_s390x_system_thorough = [
-+  'boot_4k',
-   'ccw_virtio',
-   'pxelinux',
-   'replay',
-diff --git a/tests/functional/s390x/test_boot_4k.py b/tests/functional/s390x/test_boot_4k.py
-new file mode 100755
-index 00000000000..965123ebd31
---- /dev/null
-+++ b/tests/functional/s390x/test_boot_4k.py
-@@ -0,0 +1,138 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Copyright 2026 Red Hat, Inc.
-+#
-+# Author:
-+#  Thomas Huth <thuth@redhat.com>
-+'''
-+Functional test that boots from a (incomplete) disk with 4k sectors
-+(DASD/ECKD geometry) and multiple kernels installed, so we can check
-+the boot menu and various LOADPARM options.
-+'''
-+
-+from qemu_test import QemuSystemTest, Asset, skipFlakyTest
-+from qemu_test import wait_for_console_pattern
-+
-+
-+class S390Boot4k(QemuSystemTest):
-+
-+    # This disk image has been taken from a DASD with 4k sectors.
-+    # Note: It's incomplete (to keep it small), it contains just enough
-+    # data for booting the kernels that are installed on the disk image
-+    ASSET_DISK = Asset(
-+        ('https://github.com/huth/qemu-paddock/raw/refs/heads/main/s390x/'
-+         'f32-4k-bootmenu.raw.xz'),
-+        'f4e2c91b4ec50a4756e8816b7a7c8ca01cc0d929f7a711cfd8124640c304ea41')
-+
-+    def wait_for_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(self, success_message, vm=vm,
-+                                 failure_message='panic')
-+
-+    def basic_machine_setup(self):
-+        self.set_machine('s390-ccw-virtio')
-+        disk_path = self.uncompress(self.ASSET_DISK, format="xz")
-+
-+        self.vm.set_console()
-+        self.vm.add_args("-nographic", "-no-shutdown", "-blockdev",
-+                         f"driver=file,filename={disk_path},node-name=d1")
-+
-+    def test_default(self):
-+        '''
-+        Check that the default kernel boots up correctly from a ccw device
-+        '''
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1")
-+        self.vm.launch()
-+        self.wait_for_pattern("Linux version 5.8.15-301.fc33.s390x")
-+        self.wait_for_pattern("Trying to unpack rootfs image as initramfs")
-+
-+    def test_loadparm_machine(self):
-+        '''
-+        Check that we can select a kernel via "-machine loadparm=..."
-+        '''
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1",
-+                         "-machine", "loadparm=2")
-+        self.vm.launch()
-+        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
-+
-+    def test_loadparm_device(self):
-+        '''
-+        Check that we can select a kernel via  "-device ...,loadparm=..."
-+        '''
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device",
-+                         "virtio-blk-ccw,drive=d1,bootindex=1,loadparm=3")
-+        self.vm.launch()
-+        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
-+
-+    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/work_items/3350")
-+    def test_loadparm_pci(self):
-+        '''
-+        Check that we can select a kernel via  "-device ...-pci,loadparm=..."
-+        '''
-+        self.require_device('virtio-blk-pci')
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device",
-+                         "virtio-blk-pci,drive=d1,bootindex=1,loadparm=2")
-+        self.vm.launch()
-+        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
-+
-+    def test_scsi_default(self):
-+        '''
-+        Check that we can boot via SCSI, too (need to set logical block size
-+        here to avoid that the auto-detection in the bios fails)
-+        '''
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device", "virtio-scsi", "-device",
-+            "scsi-hd,drive=d1,physical_block_size=4096,logical_block_size=4096")
-+        self.vm.launch()
-+        self.wait_for_pattern("Linux version 5.8.15-301.fc33.s390x")
-+
-+    def test_scsi_loadparm(self):
-+        '''
-+        Check that we can boot via SCSI with loadparm
-+        '''
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device", "virtio-scsi", "-device",
-+                         ("scsi-hd,drive=d1,bootindex=1,loadparm=3,"
-+                          "physical_block_size=4096,logical_block_size=4096"))
-+        self.vm.launch()
-+        self.wait_for_pattern("Linux version 5.6.6-300.fc32.s390x")
-+
-+    def test_menu(self):
-+        '''
-+        Check that boot menu shows up correctly
-+        '''
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1,bootindex=1",
-+                         "-boot", "menu=on")
-+        self.vm.launch()
-+        self.wait_for_pattern("1. Fedora (5.8.15-301.fc33.s390x) 33")
-+        self.wait_for_pattern("2. Fedora (5.6.6-300.fc32.s390x) 32")
-+        self.wait_for_pattern("3. Fedora (0-rescue-b7218f0092704c5a9")
-+        self.wait_for_pattern("Please choose:")
-+        # For some unknown reason, sending a key to the bios does not work
-+        # in the testing framework yet:
-+        # exec_command_and_wait_for_pattern(self, '2',
-+        #                              "Linux version 5.6.6-300.fc32.s390x")
-+
-+    def test_menu_timeout(self):
-+        '''
-+        Check that boot menu shows up and boot continues automatically
-+        when a timeout has been specified
-+        '''
-+        self.basic_machine_setup()
-+        self.vm.add_args("-device", "virtio-blk-ccw,drive=d1,bootindex=1",
-+                         "-boot", "menu=on,splash-time=1")
-+        self.vm.launch()
-+        self.wait_for_pattern("s390-ccw zIPL Boot Menu")
-+        self.wait_for_pattern("0. default (Fedora (5.8.15-301.fc33.s390x)")
-+        self.wait_for_pattern("(default will boot in 0 seconds)")
-+        self.wait_for_pattern("Linux version 5.8.15-301.fc33.s390x")
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.53.0
+What will help, most likely, is to configure DKIM on the sender side
+(for weilnetz.de domain in this case).  For postfix, opendkim works
+quite well, and there are other solutions which can be used.
 
+> (I don't really understand why our mailing list still does some
+> address rewriting -- I thought we had configured it so it never
+> changes the mails any more and so shouldn't need to rewrite senders,
+> but a few people still seem to have their addresses rewritten :-( )
+
+I guess most uses who's From addresses gets rewritten have DKIM set up.
+Your domain definitely does use DKIM signing, and so is mine.
+
+/mjt
 
