@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39244F46120
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B0DF46113
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:01:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fo9-0008GZ-2N; Mon, 23 Mar 2026 09:59:10 -0400
+	id 1w4fpX-0000wQ-Rw; Mon, 23 Mar 2026 10:00:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fnv-0008DR-RB
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:52 -0400
+ id 1w4for-0000YR-6d
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:50 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fnu-0006nz-0E
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:51 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fop-000703-NX
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:48 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 940BF20B713B;
- Mon, 23 Mar 2026 06:58:45 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 940BF20B713B
+ by linux.microsoft.com (Postfix) with ESMTPSA id 2761C20B6F1B;
+ Mon, 23 Mar 2026 06:59:33 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2761C20B6F1B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274328;
- bh=VSt5BsFgnJsvC8WsZFKT0zrQ9CBJAd3GXCR4xVichT0=;
+ s=default; t=1774274377;
+ bh=fHGJO6oByr4zwjSDzga9p2/aohq98U3wlbaQ5tyzs2c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oz74KWORamCB4RpfWr9zrTaZQAfh1RNHwhhpmrbmrDW+LGCg+Z6OJPn5VB0HGCLSO
- r1ad5GomT/DuWmXPrvXhrDUwWhKS0NcrUcWpKuIhm6e6Y7wj4oWenmGk5KlMXG1PEA
- tIcKikz8XuPXkjI8cQBcud1kj+lqrNxmdc2vr8do=
+ b=NUiTn1GaPrme945lxn1FyhsjFrYg/soTLtR90JhKsM+++6ZFoBGYjCUvRM6PH80VN
+ qVHJdTTt6rrtd0hRBgCxIikxepI9cLhDnwq+1cmfr3nbamuhQIL2Pwk4TOcApdm0NR
+ FOSQsCfFD9fWaq43SliFJL1QW3ZlCN6vYns6fUwU=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 08/32] accel/mshv: update s->irq_routes in add_msi_route
-Date: Mon, 23 Mar 2026 14:57:48 +0100
-Message-Id: <20260323135812.383509-9-magnuskulke@linux.microsoft.com>
+Subject: [RFC 21/32] target/i386/mshv: migrate Synic SINT MSRs
+Date: Mon, 23 Mar 2026 14:58:01 +0100
+Message-Id: <20260323135812.383509-22-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,172 +75,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The irq_routes field of the state is populated with native mshv irq
-route entries. The allocation logic is modelled after the KVM
-implementation: we will always allocate a minumum of 64 entries and use
-a bitmask to find/set/clear GSIs.
-
-The old implementation of add_msi_routes will be removed in a subsequent
-commit.
+Migrate HyperV SynIC SINT MSRs. We can only read/write those if SCONTROL
+is enabled in the guest, hence we have to split the SINT MSR out and
+make reading/writing them dependent on that MSR.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c       |  2 +-
- accel/mshv/irq.c        | 87 +++++++++++++++++++++++++++++++++++++----
- accel/stubs/mshv-stub.c |  2 +-
- include/system/mshv.h   |  3 +-
- 4 files changed, 84 insertions(+), 10 deletions(-)
+ target/i386/mshv/msr.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 7e71b52555..5a97a345b2 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -21,7 +21,7 @@ int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
--        return mshv_irqchip_add_msi_route(vector, dev);
-+        return mshv_irqchip_add_msi_route(c, vector, dev);
-     }
- #endif
-     if (kvm_enabled()) {
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 82f2022c7c..9d6bdde27a 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -278,18 +278,91 @@ static int irqchip_update_irqfd_notifier_gsi(const EventNotifier *event,
-     return register_irqfd(vm_fd, fd, virq);
- }
+diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
+index 240ee84447..d19b79d729 100644
+--- a/target/i386/mshv/msr.c
++++ b/target/i386/mshv/msr.c
+@@ -298,6 +298,8 @@ int mshv_get_msrs(CPUState *cpu)
+     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
+     size_t i, j;
+     uint32_t name;
++    X86CPU *x86cpu = X86_CPU(cpu);
++    bool synic_enabled;
  
-+static int irqchip_allocate_gsi(MshvState *s, int *gsi)
-+{
-+    int next_gsi;
+     set_hv_name_in_assocs(assocs, n_assocs);
+ 
+@@ -324,6 +326,27 @@ int mshv_get_msrs(CPUState *cpu)
+ 
+     store_in_env(cpu, assocs, n_assocs);
+ 
++    /* Read SINT MSRs only if SynIC is enabled */
++    synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
++    if (synic_enabled) {
++        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
 +
-+    /* Return the lowest unused GSI in the bitmap */
-+    next_gsi = find_first_zero_bit(s->used_gsi_bitmap, s->gsi_count);
-+    if (next_gsi >= s->gsi_count) {
-+        return -ENOSPC;
-+    }
-+
-+    *gsi = next_gsi;
-+
-+    return 0;
-+}
-+
-+static void irqchip_release_gsi(MshvState *s, int gsi)
-+{
-+    clear_bit(gsi, s->used_gsi_bitmap);
-+}
-+
-+static void add_routing_entry(MshvState *s, struct mshv_user_irq_entry *entry)
-+{
-+    struct mshv_user_irq_entry *new;
-+    int n, size;
-+
-+    if (s->irq_routes->nr == s->nr_allocated_irq_routes) {
-+        n = s->nr_allocated_irq_routes * 2;
-+        if (n < MSHV_MIN_ALLOCATED_MSI_ROUTES) {
-+            n = MSHV_MIN_ALLOCATED_MSI_ROUTES;
++        for (i = 0; i < HV_SINT_COUNT; i++) {
++            assocs[i].name = HV_REGISTER_SINT0 + i;
 +        }
-+        size = sizeof(struct mshv_user_irq_table);
-+        size += n * sizeof(*new);
-+        s->irq_routes = g_realloc(s->irq_routes, size);
-+        s->nr_allocated_irq_routes = n;
++
++        ret = mshv_get_generic_regs(cpu, assocs, HV_SINT_COUNT);
++        if (ret < 0) {
++            error_report("Failed to get SynIC SINT MSRs");
++            return -errno;
++        }
++
++        for (i = 0; i < HV_SINT_COUNT; i++) {
++            uint64_t hv_sint_value = assocs[i].value.reg64;
++            x86cpu->env.msr_hv_synic_sint[i] = hv_sint_value;
++        }
 +    }
 +
-+    n = s->irq_routes->nr;
-+    s->irq_routes->nr++;
-+    new = &s->irq_routes->entries[n];
-+
-+    *new = *entry;
-+
-+    set_bit(entry->gsi, s->used_gsi_bitmap);
+     return 0;
+ }
  
--int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
-+    trace_mshv_add_msi_routing(entry->address_lo | entry->address_hi,
-+                               entry->data);
-+}
-+
-+int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
--    MSIMessage msg = { 0, 0 };
--    int virq = 0;
-+    struct mshv_user_irq_entry entry = { 0 };
-+    MSIMessage msg = { 0 };
-+    uint32_t data, high_addr, low_addr;
-+    int gsi, ret;
-+    MshvState *s = MSHV_STATE(c->accel);
-+
-+    if (!pci_available || !dev) {
-+        return 0;
-+    }
+@@ -358,6 +381,8 @@ int mshv_set_msrs(const CPUState *cpu)
+     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
+     int ret;
+     size_t i, j;
++    X86CPU *x86cpu = X86_CPU(cpu);
++    bool synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
  
--    if (pci_available && dev) {
--        msg = pci_get_msi_message(dev, vector);
--        virq = add_msi_routing(msg.address, le32_to_cpu(msg.data));
-+    msg = pci_get_msi_message(dev, vector);
-+
-+    ret = irqchip_allocate_gsi(mshv_state, &gsi);
-+    if (ret < 0) {
-+        error_report("Could not allocate GSI for MSI route");
-+        return -1;
-+    }
-+    high_addr = msg.address >> 32;
-+    low_addr = msg.address & 0xFFFFFFFF;
-+    data = le32_to_cpu(msg.data);
-+
-+    entry.gsi = gsi;
-+    entry.address_hi = high_addr;
-+    entry.address_lo = low_addr;
-+    entry.data = data;
-+
-+    if (s->irq_routes->nr < s->gsi_count) {
-+        add_routing_entry(s, &entry);
-+        c->changes++;
-+    } else {
-+        irqchip_release_gsi(s, gsi);
-+        return -ENOSPC;
+     load_from_env(cpu, assocs, n_assocs);
+ 
+@@ -390,5 +415,21 @@ int mshv_set_msrs(const CPUState *cpu)
+         return -errno;
      }
  
--    return virq;
-+    return gsi;
++    /* SINT MSRs can only be written if SCONTROL has been set, so we split */
++    if (synic_enabled) {
++        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
++
++        for (i = 0; i < HV_SINT_COUNT; i++) {
++            assocs[i].name        = HV_REGISTER_SINT0 + i;
++            assocs[i].value.reg64 = x86cpu->env.msr_hv_synic_sint[i];
++        }
++
++        ret = mshv_set_generic_regs(cpu, assocs, HV_SINT_COUNT);
++        if (ret < 0) {
++            error_report("Failed to set SynIC SINT MSRs");
++            return -errno;
++        }
++    }
++
+     return 0;
  }
- 
- void mshv_irqchip_release_virq(int virq)
-diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
-index e499b199d9..998c9e2fc6 100644
---- a/accel/stubs/mshv-stub.c
-+++ b/accel/stubs/mshv-stub.c
-@@ -14,7 +14,7 @@
- 
- bool mshv_allowed;
- 
--int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
-+int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     return -ENOSYS;
- }
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 0d1745315b..7f60aba308 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -33,6 +33,7 @@
- #endif
- 
- #define MSHV_MAX_MSI_ROUTES 4096
-+#define MSHV_MIN_ALLOCATED_MSI_ROUTES 64
- 
- #define MSHV_PAGE_SHIFT 12
- 
-@@ -59,7 +60,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
-                            uint32_t vp_index, bool logical_destination_mode,
-                            bool level_triggered);
- 
--int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
-+int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
- void mshv_irqchip_commit_routes(void);
- void mshv_irqchip_release_virq(int virq);
 -- 
 2.34.1
 
