@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14630F46112
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE80DF4610F
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fU5-0004JB-Cg; Mon, 23 Mar 2026 09:38:21 -0400
+	id 1w4fU6-0004JL-7V; Mon, 23 Mar 2026 09:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w4fU2-0004IV-08
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:38:18 -0400
-Received: from va-1-111.ptr.blmpb.com ([209.127.230.111])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w4fTr-00035M-RS
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:38:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1774273077; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=P0N0Blz9eTWsx1Ygi7EPAoiTQsWDhfzDt4IseD6bdPA=;
- b=QwUyIkaK4OqwYg9YRZ94bA1bNNrtOIedwm9KR3m/Zf4bJommV/QaPGCtzRBFw0QDR0/y++
- jm5Rh/nXJguetEQP8tlWfC6s2YUXDk14+fsyykkFGyUWewiHTj/MfwJ8txzh9jV7KAl/MN
- 8PQIf/NYkxuOC5DdD8XwhG1NEkrJInbPzxxGN3jUDTYuKyGB6oVFOyhJe1Ec6SEHkFq1Cv
- tLIqnuyqnA6qkvPGXJ3HjhZsfZO3ZdItnuY0SOBhY4la78q9rgElzRRzG1H1Sm03WbbuI0
- BJ0U0awp6pB50s8J9FSOkxeyeNlNHZhH4Nn1eknqPVbLJlcx9nWzXTkZU8Onhw==
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Original-From: hongmianquan <hongmianquan@bytedance.com>
-Cc: <dave@treblig.org>, <armbru@redhat.com>, <wubo.bob@bytedance.com>, 
- "hongmianquan" <hongmianquan@bytedance.com>
-From: "hongmianquan" <hongmianquan@bytedance.com>
-Date: Mon, 23 Mar 2026 21:37:44 +0800
-Message-Id: <20260323133744.46493-1-hongmianquan@bytedance.com>
-X-Lms-Return-Path: <lba+269c14233+ac3f16+nongnu.org+hongmianquan@bytedance.com>
-To: <qemu-devel@nongnu.org>
-Subject: [RFC] monitor: Fix deadlock in monitor_cleanup
-X-Mailer: git-send-email 2.32.1 (Apple Git-133)
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.127.230.111;
- envelope-from=hongmianquan@bytedance.com; helo=va-1-111.ptr.blmpb.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4fU3-0004Im-N2
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:38:19 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4fTy-00035n-US
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:38:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A51B75969F2;
+ Mon, 23 Mar 2026 14:38:07 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id Y3jysCLInMWg; Mon, 23 Mar 2026 14:38:05 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 94D465968DD; Mon, 23 Mar 2026 14:38:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 92F845968DC;
+ Mon, 23 Mar 2026 14:38:05 +0100 (CET)
+Date: Mon, 23 Mar 2026 14:38:05 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>
+Subject: Re: [PATCH v6 7/8] ati-vga: Simplify pointer image handling
+In-Reply-To: <7bb33f6d-8ff8-48d0-bc96-cea8cbd165ae@linaro.org>
+Message-ID: <f41b83aa-619d-94e6-8927-0fc347f220c3@eik.bme.hu>
+References: <cover.1774110169.git.balaton@eik.bme.hu>
+ <b9de530074b954d661a0eb9b8b4ad82a66085456.1774110169.git.balaton@eik.bme.hu>
+ <7bb33f6d-8ff8-48d0-bc96-cea8cbd165ae@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="3866299591-2049878549-1774273085=:72485"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,98 +68,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
-received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The root cause is a race condition between the main thread's shutdown sequence and the coroutine's dispatching mechanism. When handling a non-coroutine QMP command, qmp_dispatcher_co schedules the actual command execution as a bottom half in iohandler_ctx and then yields. At this suspended point, qmp_dispatcher_co_busy remains true.
-Subsequently, the main thread in monitor_cleanup(), sets qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx, false), which attempts to wake up the coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx. The main thread then blocks indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches termination, resulting in a deadlock.
+--3866299591-2049878549-1774273085=:72485
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-The execution sequence is illustrated below:
+On Mon, 23 Mar 2026, Philippe Mathieu-Daudé wrote:
+> On 21/3/26 17:30, BALATON Zoltan wrote:
+>> Rewrite reading of mouse pointer image. I am not sure this is entirely
+>> correct but appears to work at least on little endian host with PPC
+>> guests using little or big endian frame buffer (MorphOS and MacOS) but
+>> still produces broken pointer image with Linux where I am not sure if
+>> it is a guest driver bug or still missing something.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/display/ati.c | 53 ++++++++++++++++++++++--------------------------
+>>   1 file changed, 24 insertions(+), 29 deletions(-)
+>> 
+>> diff --git a/hw/display/ati.c b/hw/display/ati.c
+>> index fba73a9956..e1616dc3b3 100644
+>> --- a/hw/display/ati.c
+>> +++ b/hw/display/ati.c
+>> @@ -142,27 +142,24 @@ static void ati_vga_switch_mode(ATIVGAState *s)
+>>   /* Used by host side hardware cursor */
+>>   static void ati_cursor_define(ATIVGAState *s)
+>>   {
+>> -    uint8_t data[1024];
+>> +    uint64_t data[128];
+>>       uint32_t srcoff;
+>> -    int i, j, idx = 0;
+>>         if ((s->regs.cur_offset & BIT(31)) || s->cursor_guest_mode) {
+>>           return; /* Do not update cursor if locked or rendered by guest */
+>>       }
+>>       /* FIXME handle cur_hv_offs correctly */
+>> -    srcoff = s->regs.cur_offset -
+>> -        (s->regs.cur_hv_offs >> 16) - (s->regs.cur_hv_offs & 0xffff) * 16;
+>> -    for (i = 0; i < 64; i++) {
+>> -        for (j = 0; j < 8; j++, idx++) {
+>> -            data[idx] = vga_read_byte(&s->vga, srcoff + i * 16 + j);
+>> -            data[512 + idx] = vga_read_byte(&s->vga, srcoff + i * 16 + j + 
+>> 8);
+>> -        }
+>> +    srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
+>> +             (s->regs.cur_hv_offs & 0xffff) * 16;
+>> +    for (int i = 0; i < 64; i++, srcoff += 16) {
+>> +        data[i] = ldq_le_p(&s->vga.vram_ptr[srcoff]);
+>> +        data[i + 64] = ldq_le_p(&s->vga.vram_ptr[srcoff + 8]);
+>>       }
+>>       if (!s->cursor) {
+>>           s->cursor = cursor_alloc(64, 64);
+>>       }
+>>       cursor_set_mono(s->cursor, s->regs.cur_color1, s->regs.cur_color0,
+>> -                    &data[512], 1, &data[0]);
+>> +                    (uint8_t *)&data[64], 1, (uint8_t *)&data[0]);
+>>       dpy_cursor_define(s->vga.con, s->cursor);
+>>   }
+>>   @@ -197,9 +194,9 @@ static void ati_cursor_invalidate(VGACommonState 
+>> *vga)
+>>   static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int 
+>> scr_y)
+>>   {
+>>       ATIVGAState *s = container_of(vga, ATIVGAState, vga);
+>> -    uint32_t srcoff;
+>> +    uint32_t h, srcoff, color;
+>> +    uint64_t abits, xbits, mask;
+>>       uint32_t *dp = (uint32_t *)d;
+>> -    int i, j, h, idx = 0;
+>>         if (!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN) ||
+>>           scr_y < vga->hw_cursor_y || scr_y >= vga->hw_cursor_y + 64 ||
+>> @@ -210,26 +207,24 @@ static void ati_cursor_draw_line(VGACommonState *vga, 
+>> uint8_t *d, int scr_y)
+>>       srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
+>>       dp = &dp[vga->hw_cursor_x];
+>>       h = ((s->regs.crtc_h_total_disp >> 16) + 1) * 8;
+>> -    for (i = 0; i < 8; i++) {
+>> -        uint32_t color;
+>> -        uint8_t abits = vga_read_byte(vga, srcoff + i);
+>> -        uint8_t xbits = vga_read_byte(vga, srcoff + i + 8);
+>> -        for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1, idx++) {
+>> -            if (vga->hw_cursor_x + idx >= h) {
+>> -                return; /* end of screen, don't span to next line */
+>> -            }
+>> -            if (abits & BIT(7)) {
+>> -                if (xbits & BIT(7)) {
+>> -                    color = dp[idx] ^ 0xffffffff; /* complement */
+>> -                } else {
+>> -                    continue; /* transparent, no change */
+>> -                }
+>> +    abits = ldq_be_p(&vga->vram_ptr[srcoff]);
+>> +    xbits = ldq_be_p(&vga->vram_ptr[srcoff + 8]);
+>> +    mask = BIT(63);
+>
+> This triggers:
+>
+> In file included from include/qemu/timer.h:4,
+>                 from ../hw/display/ati_int.h:12,
+>                 from ../hw/display/ati.c:20:
+> ../hw/display/ati.c: In function 'ati_cursor_draw_line':
+> include/qemu/bitops.h:24:38: error: left shift count >= width of type 
+> [-Werror=shift-count-overflow]
+>   24 | #define BIT(nr)                 (1UL << (nr))
+>      |                                      ^~
+> ../hw/display/ati.c:217:12: note: in expansion of macro 'BIT'
+>  217 |     mask = BIT(63);
+>      |            ^~~
+>
+> I suppose we want BIT_ULL() here, I'll test again.
 
- IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
-    |                                 |                                        |
-    |-- query-commands                |                                        |
-    |-- qmp_dispatcher_co_wake()      |                                        |
-    |    (sets busy = true)           |                                        |
-    |                                 |   <-- Wakes up in iohandler_ctx -->    |
-    |                                 |                                        |-- qmp_dispatch()
-    |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
-    |                                 |                                        |-- qemu_coroutine_yield()
-    |                                 |                                            [State: Suspended, busy=true]
-    |   [ quit triggered ]            |
-    |                                 |-- monitor_cleanup()
-    |                                 |-- qmp_dispatcher_co_shutdown = true
-    |                                 |-- qmp_dispatcher_co_wake()
-    |                                 |    -> Checks busy flag. It's TRUE!
-    |                                 |    -> Skips aio_co_wake().
-    |                                 |
-    |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
-    |                                 |   |-- aio_poll(iohandler_ctx, false)
-    |                                 |   |    -> Executes do_qmp_dispatch_bh
-    |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
-    |                                 |   |
-    |                                 |   |-- aio_poll(qemu_aio_context, true)
-    |                                 |   |    -> Blocks indefinitely! (Deadlock)
-    |                                 |
-    |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
+Yes should be BIT_ULL, Previously it was only 8 bits and I forgot to 
+change the BIT macro and did not get a warning with the compiler I have. 
+Sorry for that, I hope you can fix up or drop the last two patches until I 
+can update it.
 
-To fix this, we should always wake up the dispatcher coroutine if shutdown is requested, bypassing the qmp_dispatcher_co_busy check. This ensures that the coroutine can process the shutdown signal and exit cleanly, breaking the deadlock.
+Regards,
+BALATON Zoltan
 
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
-Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
----
- monitor/monitor-internal.h | 1 +
- monitor/monitor.c          | 7 ++++++-
- monitor/qmp.c              | 6 ++++++
- 3 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index feca111ae3..943fc832f5 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -180,6 +180,7 @@ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
- void monitor_data_destroy_qmp(MonitorQMP *mon);
- void coroutine_fn monitor_qmp_dispatcher_co(void *data);
- void qmp_dispatcher_co_wake(void);
-+void qmp_dispatcher_co_wake_force(void);
- 
- int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
- void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 1273eb7260..f6c7811cf4 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -671,7 +671,12 @@ void monitor_cleanup(void)
-     WITH_QEMU_LOCK_GUARD(&monitor_lock) {
-         qmp_dispatcher_co_shutdown = true;
-     }
--    qmp_dispatcher_co_wake();
-+
-+    /*
-+     * Force wake up the dispatcher coroutine to
-+     * make sure it notices the shutdown flag.
-+     */
-+    qmp_dispatcher_co_wake_force();
- 
-     AIO_WAIT_WHILE_UNLOCKED(NULL,
-                    (aio_poll(iohandler_get_aio_context(), false),
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 687019811f..1b4a55cabf 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -362,6 +362,12 @@ void qmp_dispatcher_co_wake(void)
-     }
- }
- 
-+void qmp_dispatcher_co_wake_force(void)
-+{
-+    qatomic_set_mb(&qmp_dispatcher_co_busy, true);
-+    aio_co_wake(qmp_dispatcher_co);
-+}
-+
- static void handle_qmp_command(void *opaque, QObject *req, Error *err)
- {
-     MonitorQMP *mon = opaque;
--- 
-2.32.1 (Apple Git-133)
+>> +    for (int i = 0; i < 64; i++, mask >>= 1) {
+>> +        if (vga->hw_cursor_x + i >= h) {
+>> +            return; /* end of screen, don't span to next line */
+>> +        }
+>> +        if (abits & mask) {
+>> +            if (xbits & mask) {
+>> +                color = dp[i] ^ 0xffffffff; /* complement */
+>>               } else {
+>> -                color = (xbits & BIT(7) ? s->regs.cur_color1 :
+>> -                                          s->regs.cur_color0) | 
+>> 0xff000000;
+>> +                continue; /* transparent, no change */
+>>               }
+>> -            dp[idx] = color;
+>> +        } else {
+>> +            color = (xbits & mask ? s->regs.cur_color1 :
+>> +                                    s->regs.cur_color0) | 0xff000000;
+>>           }
+>> +        dp[i] = color;
+>>       }
+>>   }
+>> 
+>
+>
+--3866299591-2049878549-1774273085=:72485--
 
