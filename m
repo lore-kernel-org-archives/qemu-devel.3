@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E02AF483D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167EBF483CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iWT-0001gI-3h; Mon, 23 Mar 2026 12:53:01 -0400
+	id 1w4iWy-0002Tj-DK; Mon, 23 Mar 2026 12:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWQ-0001di-Tg
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:52:59 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWX-0001ll-Hf
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:08 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWO-0000Ua-Vb
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:52:58 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48557c8ad47so2660195e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:52:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWU-0000VA-V1
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:04 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43b4fd681c2so319334f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284774; x=1774889574; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284781; x=1774889581; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=T6H6sf+k0veQoe0EHL4gat/mLrbBV0Ns7HTDzxebBos=;
- b=fDXSbeHr9pgWwJDuwErpnC8uMNaTYVzEOGqWXoqMfjhjWkfYzedoQwdGBaz0WO2w3A
- Zo9DQjuemKRO4T9fZAcixLQvBieVpzsTHNDdjwneI7fuTgJ7QxKccGXeAEhDukY6PLfR
- wzjmCHzGdgB3nYHTGgIxngyMUUOgCLTlJDLMyPDzD0QqCpEsY5icaCg4CQOglzlmnxQA
- nmZgcykjo+M9FSQ9mvw/eEHjbtToZ1xIem4hvltDaPJY000DdmFELRrf/lVIyxLR845k
- f14bVErmAS9eDikxqAsa1lZdkwzjZHuTGUo2PJObgctJEX+iYud357pgU30S8hhHzy+c
- LRUw==
+ :reply-to; bh=rzoFtsUXcWO2CsqhXorD4l05nkjxjOTs8D6KMk1lCcY=;
+ b=KbwVLXD0G+qB7tFGrrju4nJUhSpBY70XLWGIofKM2X8JWPcoU95AnfQvNJGpIGbWCX
+ zqBJZSgsLnonEFX+Lrv64ZarFeDzSIrr6Qkkkl/Y71igeOv3u+c/N5cmw6rnN5jKCWm1
+ vDmHFibqYsX9HnT8vVjW7hQ3m/lSIHbln4zNcsHjUuJruPVUSFWQ2c4jCXOWjWoiwc+M
+ /9pmwDFKuvNBGpKsGNR69R9sN70BMhwsWdj/e8ufSdsWgbm8v3yjJNYv8U1f/xXimZzR
+ V4kY0pxeGcR+x1RYoM1z5bWEMeBaltkJMfH0b3+D8mhgqvY2qL+C17rCELxjyxHweNRt
+ 479A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284774; x=1774889574;
+ d=1e100.net; s=20251104; t=1774284781; x=1774889581;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=T6H6sf+k0veQoe0EHL4gat/mLrbBV0Ns7HTDzxebBos=;
- b=jgWr60PMd/aFnbL3YPTfufVimsNpmBscEglV+4ljQFZvLXYeqfe1yQX2ZTH7PstHQi
- u9hL2Z4VKNClaw2FetX4Vn4TUuIqL/qanUaoZS+M9mk8dPEz0ZNZ9alEoY84dizKjcWQ
- pzDuu7zCbxoLU3jTn9Xpc83pLTVIvy4RQnCon7qNZ8ZGgsgZDZ1YCSiZbCGF+rulYsn8
- 7BGADMBYUmuFVYoLABfdclaPCnTO53SiZ/rKBHc3YEd+sDgLzoHZnsSK6obgYOW9zPVW
- rHqu5mTSAeWL9Tro1Fy4kTfNtFIxmgAyhi7Ghahi2f8VGD6VEUcODuDFsqZSoMsxuYO/
- cxkg==
-X-Gm-Message-State: AOJu0Yy5RNn8REtSHlJnjJHBVaanfnZm3kdpQFED+4j5oFw/OF9jwtUR
- noXnAzLvXzObaKRhJ5UYt6Ban8O9HWyTkiSAcdn3bFzMk4JqZJ1WnzncCV8qSA7UGZxoHZTkfUg
- BO3NW8cE=
-X-Gm-Gg: ATEYQzxT3Wps6GclZDLm2s+HM5M/YkcT+IBGI0VnJiFQqbhHPVrUUkOdYXqmLjeHEBU
- Es69nxMv2SQ7T7FI2uhY8TRO7Zp9et5Dtd11BzwWl782/UkabmMX86StKJfy8BfdbOuFpHnUCUh
- Gvt0VMF5QX8aCMrzydp6L0J8nZLc2Gvmj5KKi26eD/oS59Q4YO0Tg4ZhKzn5HxybNGG8CE3YeNH
- sOH+hG+ViCSNiKUC25DhwsPV3xc9BKKwtZT85ttf7UPTPdBuPDJ5saQl/PM88CcIxAp1snJoMAc
- VVb4femapePlsB8Wvi7hTDqsynFetztJJN+gY3UvPqIZqtfTgIeRz+x6aFrfl8/xyNASb/lNAaG
- W9DJTCqwtb+D5u3wyPsfpA9IEl01Ccs9FSCXueRqygkKnqigg63XEefwSry/E+ZosxHYWg1m0Ms
- gYTswSUjpfvvVFt1JYjPZNEf5xNz5Sb4TqV0uGMeI+y1j7YHACdujZ12yJYgVOS54Up7zuvB56+
- CmnqI3eB34=
-X-Received: by 2002:a05:600c:524e:b0:486:f634:ef3 with SMTP id
- 5b1f17b1804b1-486ff01efcdmr172669495e9.32.1774284773961; 
- Mon, 23 Mar 2026 09:52:53 -0700 (PDT)
+ bh=rzoFtsUXcWO2CsqhXorD4l05nkjxjOTs8D6KMk1lCcY=;
+ b=BJR1aW/q98GLr17lxGA1zCqKsII4ER4VjCtSDvcE5iy5/x94VK/PbQaq4qYxFxIoso
+ BhIOnGGbtXcUNeVgNipl3prV5fRJPeic8PxlmaSn3FUkYaIq0y5LjIZO1KaY+b3wVEIX
+ kewKcUlvxO71JaEAkkgB4nwO5gE+kmwuRU9EMD7WuGf4dv2KQitP5sHosmKjoyVPMjgk
+ KFriSmP/mDJfp6UqwhC3bcSqL9UuHGdh+ZFHzi7PPx4T294RsRzof7UKZaFc+xStKieI
+ l+VP103E0sGD6pvunUDQsvjlPs+g2OPc1el1mkM7sSI0o2fsannVQz5aTb5MS0z8rVdv
+ xBFw==
+X-Gm-Message-State: AOJu0YxTuwLX8HbYuKI7Dem++hDL8FyQbby+tMkD5Qcx1J8K9Lx0ppb4
+ b3ItB1gcSqN78U0rimCeAOm/hzniLAfLPMzbl+wMGQtv3WHfc8CbFTl1NaDWvaZbVmQH01QBfRQ
+ 7h8L7u0g=
+X-Gm-Gg: ATEYQzxyV9p536I5qUEBRlSRsxCBNCtG7HcSsgFf9e9SMm4DK56X/gyc+nhqwsrrzF6
+ sKkpf8ADXSPXiyY7F4IdAGrbjnhmwG9iqt56uYKvBcWXHMbEhYy1e8/2DhJ1ohTqX2cRtVXMlP/
+ 20MO3EfX5rdNIue/ZP8ppwxjg10hgBIcXyIv5gx+Yfl1IiD52kBylBZa2MsZd5T8lJs8xzzqjPL
+ c9dR507Sq4g7ffkRAV8ztCiouRvSscdXUJiX9u84LSq8Z+hrYo3U/ba2odNSIJChi995inliPnq
+ 5qU9ZAUcXZ0sOrKjQ9U+NVdOAEd2TMb0TDEoCQPBjowO1Ge6vk2pHM6sBR+qXvSlwO7xKaT6OC2
+ NsgCXpOLbLOsjXgHuJHeakn+K17pPOWpuUF7pyW0EkMO7M/iDuGUad//81iyHveCAMnq3TiDhEk
+ yilZ8GHZAlkRa/yXpDm8uSxW+Zvbt6N2bttUL/BHH6X/wiZ1D7XS/k3OKROdak7mAOwIFLwquX
+X-Received: by 2002:a05:6000:3113:b0:439:abcd:b314 with SMTP id
+ ffacd0b85a97d-43b6423fb6fmr19020361f8f.18.1774284780711; 
+ Mon, 23 Mar 2026 09:53:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487031790fdsm245344725e9.3.2026.03.23.09.52.53
+ ffacd0b85a97d-43b644ae16fsm31818360f8f.8.2026.03.23.09.52.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:52:53 -0700 (PDT)
+ Mon, 23 Mar 2026 09:53:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/27] hw/core/loader: fix error handling for
- load_image_targphys callers
-Date: Mon, 23 Mar 2026 17:51:56 +0100
-Message-ID: <20260323165218.96607-6-philmd@linaro.org>
+Subject: [PULL 06/27] hw/core/loader: fix error handling for get_image_size
+ callers
+Date: Mon, 23 Mar 2026 17:51:57 +0100
+Message-ID: <20260323165218.96607-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,124 +101,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Trieu Huynh <vikingtc4@gmail.com>
 
-Use QEMU's Error API to handle load_image_targphys() failures
-consistently across callers.
+Check the return value of get_image_size() and report failures
+for non-mandatory file such as FRU image.
 
-- Use &error_fatal for callers that previously passed NULL, ensuring
-the process exits early on failure instead of continuing in an invalid
-state.
+- Use ret < 0 to detect failures in getting image size.
 - No functional changes.
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
 Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260318141415.8538-2-vikingtc4@gmail.com>
+Message-ID: <20260318141415.8538-3-vikingtc4@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/alpha/dp264.c     |  2 +-
- hw/hppa/machine.c    |  2 +-
- hw/m68k/next-cube.c  | 11 +++++++++--
- hw/m68k/q800.c       |  2 +-
- hw/m68k/virt.c       |  2 +-
- hw/microblaze/boot.c |  3 ++-
- 6 files changed, 15 insertions(+), 7 deletions(-)
+ hw/ipmi/ipmi_bmc_sim.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
-index 98219f04569..2ab3c147471 100644
---- a/hw/alpha/dp264.c
-+++ b/hw/alpha/dp264.c
-@@ -190,7 +190,7 @@ static void clipper_init(MachineState *machine)
-             /* Put the initrd image as high in memory as possible.  */
-             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
-             load_image_targphys(initrd_filename, initrd_base,
--                                ram_size - initrd_base, NULL);
-+                                ram_size - initrd_base, &error_fatal);
- 
-             address_space_stq_le(&address_space_memory, param_offset + 0x100,
-                                  initrd_base + 0xfffffc0000000000ULL,
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 318ebfeee46..3663bac53bd 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -527,7 +527,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-             }
- 
-             load_image_targphys(initrd_filename, initrd_base, initrd_size,
--                                NULL);
-+                                &error_fatal);
-             cpu[0]->env.initrd_base = initrd_base;
-             cpu[0]->env.initrd_end  = initrd_base + initrd_size;
+diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+index 012e2ee4fe2..fd875491f55 100644
+--- a/hw/ipmi/ipmi_bmc_sim.c
++++ b/hw/ipmi/ipmi_bmc_sim.c
+@@ -2561,6 +2561,8 @@ static void ipmi_fru_init(IPMIFru *fru)
+             g_free(fru->data);
+             fru->data = NULL;
          }
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 26177c7b867..4bfe5bcf569 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -1326,9 +1326,16 @@ static void next_cube_init(MachineState *machine)
-     memory_region_init_alias(&m->rom2, NULL, "next.rom2", &m->rom, 0x0,
-                              0x20000);
-     memory_region_add_subregion(sysmem, 0x0, &m->rom2);
--    if (load_image_targphys(bios_name, 0x01000000, 0x20000, NULL) < 8) {
-+    Error *local_err = NULL;
-+    if (load_image_targphys(bios_name, 0x01000000, 0x20000, &local_err) < 8) {
-         if (!qtest_enabled()) {
--            error_report("Failed to load firmware '%s'.", bios_name);
-+            if (local_err) {
-+                error_report_err(local_err);
-+            } else {
-+                error_report("Firmware image '%s' is too short.", bios_name);
-+            }
-+        } else {
-+            error_free(local_err);
-         }
-     } else {
-         uint8_t *ptr;
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index ded531394e6..c0d78eb7d71 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -633,7 +633,7 @@ static void q800_machine_init(MachineState *machine)
++    } else {
++        error_report("Could not get file size '%s'", fru->filename);
+     }
  
-             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
-             load_image_targphys(initrd_filename, initrd_base,
--                                ram_size - initrd_base, NULL);
-+                                ram_size - initrd_base, &error_fatal);
-             BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
-                       initrd_size);
-         } else {
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index e67900c727d..ffe6e234155 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -292,7 +292,7 @@ static void virt_init(MachineState *machine)
- 
-             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
-             load_image_targphys(initrd_filename, initrd_base,
--                                ram_size - initrd_base, NULL);
-+                                ram_size - initrd_base, &error_fatal);
-             BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
-                       initrd_size);
-         } else {
-diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
-index a6f9ebab90c..4ad5ffd34bd 100644
---- a/hw/microblaze/boot.c
-+++ b/hw/microblaze/boot.c
-@@ -38,6 +38,7 @@
- #include "hw/core/loader.h"
- #include "elf.h"
- #include "qemu/cutils.h"
-+#include "qapi/error.h"
- 
- #include "boot.h"
- 
-@@ -171,7 +172,7 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
-         /* Not an ELF image nor an u-boot image, try a RAW image.  */
-         if (kernel_size < 0) {
-             kernel_size = load_image_targphys(kernel_filename, ddr_base,
--                                              ramsize, NULL);
-+                                              ramsize, &error_fatal);
-             boot_info.bootstrap_pc = ddr_base;
-             high = (ddr_base + kernel_size + 3) & ~3;
-         }
+ out:
 -- 
 2.53.0
 
