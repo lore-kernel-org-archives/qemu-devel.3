@@ -4,116 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BD1EC01A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 08:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C4EEC01A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 08:48:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4avD-0002wo-Dl; Mon, 23 Mar 2026 04:46:03 -0400
+	id 1w4ax4-0003mh-JN; Mon, 23 Mar 2026 04:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1w4av1-0002rm-GY
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:45:51 -0400
-Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1w4auz-0001wH-CF
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:45:50 -0400
-Received: by mail-dl1-x1234.google.com with SMTP id
- a92af1059eb24-12a71ade78cso3034322c88.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 01:45:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774255547; cv=none;
- d=google.com; s=arc-20240605;
- b=YmUDSw6FLzFeKMoq1k7JWCZPj8alaJIas/czaaFCbRPxCAKkrRGAU8emS1ZS7Dbh/l
- AGrbNJhxCuG44HMQORZKn6zWq887M2sR9hqh7DlrlGUCmUArIwQWEmXanDl4x+C0Dzqz
- cE6wWIDJdaVEfc/Bpm6u71eU2u8lwojL59fPTlUVFyHWZrd9nQAvsGdN5NXXJEs1xC6x
- wzcR8wdlK8+3QVxmy8w3t+EwvSJJ0aEQhMQ+xpO7YcFkhk7LFny4asw/uuuuTowRvoJp
- RHxky6NgpdFhvHyUj99DLDlE33w7Al4/5XJGJBwLQp/+foinPnRIuLw1bUgXM+e7Z2FA
- k1DQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=oWELl6eArAQdDQJ3lpu/o5eM21u1lCrRBSAETaQgXvM=;
- fh=gogkjo7Kd2IF2Dzbu8MyraoP0lpaqyCJnuKsD6IlXUI=;
- b=Oa00C9B+PvFakmvKvkcBbk96d6/npB5jpmPEWDCnelTlJg0P3ys0qLJ+6gJLeHguDv
- bv1uIk/8x4m3NIRveKA8A0qqRdhnL7JOjOyaMDAuqpQcW2RDwvdAEfEULZQtCoiRw1//
- N7mK2e0qs5pne+Qry0iQ7JnRDryQjk22kqp0Vc6aez4PjFOk95QBHxvPx/xZukFBXfFp
- lZ25lEyIuIQwdEuB6kstYEnUnMZc4RwOKBVdUMKCpZw5KpgHdUqGpbd0OBYfNocA6rZQ
- YnUM6J/XeZb3j4BJjAQ8VF2fCxoGGS/pdSY5WlJLTpjNxVyqkhqK0tyg8h3B2gMCUVo/
- jfrw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774255547; x=1774860347; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oWELl6eArAQdDQJ3lpu/o5eM21u1lCrRBSAETaQgXvM=;
- b=ck3RtpepGMacycsVnGcuU1zTCuvK3Q8xqflAb4tVsYeBGmrbyVshLemvJ7GHfitx8Y
- EADh6Fx+VGpP6wzzLse5/C633o3QJZJo5GMr+aHcosyVfQlACJjTiJ9VyqQisUp5lSQC
- UdQSQYLxxkFam2TAyCGnPmrrJLJYBG+5Teyadlvwgn/chaC27aS+OrOiDNu4c1FbO7BP
- CRVOZS5b7ovLDafgPmxYoOudlQJK6d7wlHDlHg2yucN3KG6GIW6EUQ57wD9O6P5gGroi
- NwvLkvx4D/kGko8n++SM4lHkVIRLQsGH44mJpFtMvxbIWFgoVVXInpFiniUPSwG6vi2u
- qjqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774255547; x=1774860347;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=oWELl6eArAQdDQJ3lpu/o5eM21u1lCrRBSAETaQgXvM=;
- b=DRrw6Foy1Hvguq8wy+Mr5z5NetAcaOjKeBsHtKNbNOx/tTzjq3yB4OmkEUuMPkMfTV
- GzshqKSw0LTlvPyLu+8znzs8kLKOtnnqxAAMI/aQhEO3OVTCpJr7EH4gxuvxMeOsA5E4
- 9DH7Ic9kzXXvxwm3BZhTlQa6nPW2YEaFFbOl/CpS0MvLV5jltLnDH6sCl6/ncthBQH1C
- pVzznokhJQnGjToSpDmPc9Z1l4N/MNXFt3FnU20lKZlJXK28UvMIxGmjRoYg64NKN+2j
- jOQ+3aw4ddZMLUz3x19QtN1xi70owCcDiyL/R1HScLDUCUGoLfmWFo9Eo1M5+8FkEYha
- wbGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXKGTCyK/2ycWqAaKD8mPF8BMEm24DLx7dmOluMKjPIpuSyt/lAFb/VIhsJjPQdkm9RrrBTn2hr74WI@nongnu.org
-X-Gm-Message-State: AOJu0YwfabGLcnNdD2djR3EsmUCRIaGR8ApsIQvudpFhGS9rqFaDxc6M
- uvLN7PQtApb3A//ZorW6oui3CmEyiXmwJs7+B/Aorcp0h6/+bRXYVezn6C+1+uQqEdlDZgxgwqo
- pE04B6jIeFxWDbpae7RmD52iyD/XFiCY=
-X-Gm-Gg: ATEYQzzMSy5bTz09wHNc3P0HHKYHPA1ySFYg4E2Ov5ifCR7FYgyOjSpVMbXQ7laPhiw
- /azz/CLp58vHh/ci2w5itIz0rV2gjGJxKa8f8M+AXWMD/ilmsLknS6BHtfORRur1MiI9DUetvJ9
- WmmiXbuVAwF4M3RuVQePn0JGDIyArEtybRHkSe3bf1+obm09+rbU51M23XGpJC8lr+eHAbeu3Ck
- VpyWix/ITk5M/U67+u4V+9P8O/oXShXGrFyfjG8ORTgG7+TNBu4iVWsK5aiMk4ZefL5u1P6F91Y
- chpMLm80tasU6JufeZyTO3FMwHAmftLn/7sbIYE=
-X-Received: by 2002:a05:7022:ebc7:b0:128:d450:bc76 with SMTP id
- a92af1059eb24-12a726dc1c0mr5115642c88.26.1774255546939; Mon, 23 Mar 2026
- 01:45:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1w4ax2-0003mL-DB
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:47:56 -0400
+Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1w4awz-0002Kv-Jc
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 04:47:55 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id 3FB73EC010A;
+ Mon, 23 Mar 2026 04:47:51 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Mon, 23 Mar 2026 04:47:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
+ :cc:content-transfer-encoding:content-type:date:date:from:from
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to; s=fm3; t=1774255671; x=1774342071; bh=otcQ2Ali03w+PA52KvfAg
+ +GxSS4w4PK0XGhlil6m5bo=; b=fJXo9twIP0XBoO78ySQQcJ/d4hcoNgHw6UxLX
+ VSH1msZLVkSz75CikNsynLx7tqPJ3yk1w6o0IeA+MDSm9ez5a5vAnT/vOJoA93bb
+ V0MCT2UYwqVTI6P/8/Twm9zygLhjibTYhpSTfT5lpHS6OtNNInxhqB6dvcdH1wDG
+ 3mDZijJ135uav9GDy6ZsunXI28/YW0udfKT99QNRiyuhHF1rM7mje4K3ELS4HKaQ
+ GV+sF1ZUtjjouu1WHcErv6Hx5x7d+Jes3akU3Wnq+B9OlUSTHDLKf5bjg8KBNFL/
+ 10v7fYwD6thL6auxVc+a0kpPYgBL1oDIyRNthGoNIyKffbGFg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1774255671; x=1774342071; bh=otcQ2Ali03w+PA52KvfAg+GxSS4w4PK0XGh
+ lil6m5bo=; b=Imepn+vwOP4hcylNDifIpcHBgiiZOHDHhWF6mB41+tVogTYsO0F
+ QQOeF8GMeReoUx3l801TBWXQTGfeGsryln/pyARsFF71zC9cbgO5DY6SyXF93mm5
+ rgl6qv+nvr9tyD26I5D6Ksq0wB0OS86RUEhc92+kEH0pzVJhbPoeHW6XvAPMMfkS
+ 6AlhjmvS48kfZUuKOmQiiL4dg+ns0RLJTy0Dgpx+Ftfw8NiJOwrJzw7hFnHSZtfz
+ 4OfO/QVcqPkEwt/6AVrYCb5scdIjQqnEZRlCc3TYqdb8TQpXcwc7HCASSRkTqPJ4
+ GG2I1AxGvaevoox4s5nnV9eHpUZza7m25BQ==
+X-ME-Sender: <xms:Nv7AaQLQe6ojdudYXBp_wGh6UsdLIsHhcr89_Z7xnC1fw64DrZxQNw>
+ <xme:Nv7AaQTeAlyR5cnqV21v_S0ivlEvH7sWJeFgxHjB2YsscE7FtdDUnvp4cYkEDvDkt
+ UFsxX-sMZwjUjw7tTnAKjTT5bCvdkNBzwPO3D1-paS14nOyGvAx>
+X-ME-Received: <xmr:Nv7AaYopM1IFewkHT1kGflbWmk81J7ccyzWjSom8i7Cl9zydvoobBmkQ40GYzvLFkw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudekvdejucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomheptehlhihsshgrucft
+ ohhsshcuoehhihesrghlhihsshgrrdhisheqnecuggftrfgrthhtvghrnhepheekgfdtve
+ ettdekuddugeeugfdujeehuefgleegtedthfffudfhheduhfduuefhnecuvehluhhsthgv
+ rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhephhhisegrlhihshhsrgdrih
+ hspdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehp
+ hhhilhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlse
+ hnohhnghhnuhdrohhrghdprhgtphhtthhopehthhdrhhhuthhhodhqvghmuhesphhoshht
+ vghordgvuhdprhgtphhtthhopegsvghrrhgrnhhgvgesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:Nv7AaVpsgVFV54Vs3m7hA9ZtY0_nipeTh2cRqK4pj05umYwMzu0qXQ>
+ <xmx:Nv7AaSMMVli6vvBc8aPNosURC14I-FTjWFlCjY544E24DU9qDzilgQ>
+ <xmx:Nv7Aaeyq7k7omX_c0McZClzg6xYfkHTkJQSSub9CpQzAcP3INFAE9Q>
+ <xmx:Nv7AaTsEAPDhvyl7HCLy4UfE9B8izZLNFjnxldTMEkaKgrMLLN7USQ>
+ <xmx:N_7AaQcX3TrX-iZK2LlRxPREiNNkL5a1KJ5JgKh9HL-OUksSbG4KeRLb>
+Feedback-ID: i12284293:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Mar 2026 04:47:50 -0400 (EDT)
+Received: by fw12.qyliss.net (Postfix, from userid 1000)
+ id A908688CD104; Mon, 23 Mar 2026 09:47:47 +0100 (CET)
+From: Alyssa Ross <hi@alyssa.is>
+To: Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] tests/functional: preserve PYTHONPATH entries
+Date: Mon, 23 Mar 2026 09:47:39 +0100
+Message-ID: <20260323084739.1013748-1-hi@alyssa.is>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20251112134143.27194-1-philmd@linaro.org>
- <0faef1dc-6fde-41b1-bf1e-8ecfe49033f7@tls.msk.ru>
- <a50b8ccb-4d13-431b-836e-b08e5add71bd@linaro.org>
- <95e61064-c8e8-4c36-9371-cbd28ab737c8@tls.msk.ru>
- <17f7b53d-dbb7-4090-a6ac-671c85dd611d@linaro.org>
- <8ca786b1-765b-4dc4-92fd-6ba6aeedf098@tls.msk.ru>
- <c8536f00-efbc-441a-8725-bfe80aa8666c@linaro.org>
-In-Reply-To: <c8536f00-efbc-441a-8725-bfe80aa8666c@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 23 Mar 2026 12:45:35 +0400
-X-Gm-Features: AQROBzA1ujWORgZ1Eu_xaHgFh8j95zDTxQNqMRN9r7ZpbNrANbFcyffZ35cxKaI
-Message-ID: <CAJ+F1CKkpcYCAnv1YACrnySodumarEQy0Ff-UedWY_Q4u3C7vg@mail.gmail.com>
-Subject: Re: [PATCH v3 00/10] chardev: Improve @docstring and clarify
- qemu_chr_write() uses
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-stable <qemu-stable@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=103.168.172.147; envelope-from=hi@alyssa.is;
+ helo=fout-a4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,53 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Otherwise, it's not possible to use a packaged qemu.qmp.
 
-On Mon, Mar 23, 2026 at 6:05=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 3/21/26 11:15 PM, Michael Tokarev wrote:
-> > On 12.02.2026 23:13, Philippe Mathieu-Daud=C3=A9 wrote:
-> >
-> >>>>>   From this patchset, 1 change has now found its way to the master
-> >>>>> branch:
-> >>>>>
-> >>>>>    chardev/char-pty: Do not ignore chr_write() failures
-> >>>>>
-> >>>>> Besides it, the following 2 changes were marked for-stable:
-> >>>>>
-> >>>>>    chardev/char: Allow partial writes in qemu_chr_write()
-> >>>>>    chardev/char: Preserve %errno in qemu_chr_write()
-> >>>>>
-> >>>>> Are other changes (including the above 2) not needed anymore?
-> >>>>
-> >>>> They are, I need to reply to Marc-Andr=C3=A9 and respin a v4...
+Fixes: 1497377857 ("tests/functional: Prepare the meson build system for the functional tests")
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
+---
+ tests/functional/meson.build | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-What was that for?
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 9bec5a0751..8c4d7f70e1 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -76,8 +76,10 @@ foreach speed : ['quick', 'thorough']
+     endif
+     test_env.set('QEMU_TEST_QEMU_BINARY', test_emulator.full_path())
+     test_env.set('QEMU_BUILD_ROOT', meson.project_build_root())
+-    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
+-                               meson.current_source_dir())
++    test_env.prepend('PYTHONPATH',
++                     meson.project_source_root() / 'python',
++                     meson.current_source_dir(),
++                     separator : ':')
+ 
+     # Define the GDB environment variable if gdb is available.
+     gdb = get_option('gdb')
+@@ -96,8 +98,10 @@ foreach speed : ['quick', 'thorough']
+       teststamp = testname + '.tstamp'
+       test_precache_env = environment()
+       test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
+-      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
+-                                          meson.current_source_dir())
++      test_precache_env.prepend('PYTHONPATH',
++                                meson.project_source_root() / 'python',
++                                meson.current_source_dir(),
++                                separator : ':')
+       precache = custom_target('func-precache-' + testname,
+                                output: teststamp,
+                                command: [python, testpath],
 
-> >>>>
-> >>>> Old bugs so can wait 11.0 :S
-> >>>
-> >>> Found an old(ish) thread...  ping? :))
-> >>
-> >> Cc'ing new docs/ maintainer :P
-> >
-> > Ping *N?  11.0 is almost out already..
-> >
-> > /mjt
->
-> I didn't answer previously, since it was touching code in addition to
-> docs, and was expecting this to be picked up by chardev maintainer
-> (Marc-Andr=C3=A9 in this case if I'm right). So I assumed it fell back to=
- a
-> subsystem documentation change and not a general one I was supposed to ta=
-ke.
->
+base-commit: 8e711856d7639cbffa51405f2cc2366e3d9e3a23
+-- 
+2.53.0
 
-I think we missed the boat for 11.0.
-
-Philippe, maybe you can rebase, and I will queue for 11.1?
-
---=20
-Marc-Andr=C3=A9 Lureau
 
