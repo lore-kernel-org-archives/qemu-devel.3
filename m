@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62159EC01DC
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E69BFEC01CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4dhO-0004Cz-CL; Mon, 23 Mar 2026 07:43:58 -0400
+	id 1w4dmy-0005wt-R2; Mon, 23 Mar 2026 07:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4dhN-0004Ci-GC
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:43:57 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1w4dmx-0005wU-Hf
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:49:43 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4dhL-0001FT-Tv
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:43:57 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-79ab0e9c6a9so7109637b3.2
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 04:43:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774266234; cv=none;
+ id 1w4dmw-0002E7-1N
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:49:43 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64ae222d978so4168307d50.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 04:49:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774266581; cv=none;
  d=google.com; s=arc-20240605;
- b=EDitDk3UfNwUZGbaYVa+T6qj9+eEv5A5JWusjycQkepyLj36zvsTaIwrdVJvJSs5zG
- 7ju0No5RkmBqBIth9Qq0KB84r74oDDCqzT2slhmX8qPT1dwxwLI89e5x09evtB93A39G
- N1JAl+zQ8NSSavCy1W1ofyg0LeDItSg813RK8U9V7NHmOo/G2HXu7B8AVt50ULM62Sym
- 4VOya0Q5AgeDi5B+oZKyQxasM3+1heN913SJnUrwCA34xPW43OCvwc5Pp75y5pitZmZg
- 5bGRqEKtDWvLGZnhKVAS7maX3r/Dzphjfsdmo5DxaDrGlsK2K7Qx25bMqfvTberc8i5G
- eh/g==
+ b=IBWpQrSltVJleS+JdFb+3oTWFo6utepeiMfKtnneEUDUBEtevQdyQtd3ltiFbEH3SN
+ udA+XkGLz9ifooAGvVjAPJdO1t0FtbQ4IjrnsvH5zqmGyIdfwBXLfrQsq8hNeOFQOS9v
+ dAkuaDh+ClWKYKRIeHaIgFMwxjlvBJN64CgMaIDlrHHay+OPXYVHMk8+6zjLc6FxltZX
+ xSiDoaxZYOJRVApnb5GC8iS14SW2JbLYBBwjyWZ47k8K2HD6rdtz8nxzOtYogI7eRJLQ
+ aPRe0+mCGHSm3HWOrcrqRCNegWWqFwb4BR6X0V27bvoSphEwBtnCU6dLp/soIVM1Nfl5
+ pbmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=SNMcaEOH+SNnRbIYCSj4mp9uQnJ7AvR5jOnbX1A1R9E=;
+ bh=a/I1sHcUTA9qsXLQZGVHbSeHDN/6/UdW2iP3Bh5paiU=;
  fh=gS8oh9EHdcTDcglskGyIv3/M5LtfI+jKdwGYJC227W4=;
- b=WNUzPvVmchwpo0o/lCjCJydHMXA0PnPYxM1+lxRyUvFwrNfeCRODW0vi4yvgqiKJ76
- 1Ed/1t8JXZef8H8y3c3rnCAmeklgFY2K3L+9vDQzDUTkgHvNIQ9GytBGs84k6iJAbc1a
- U0/g8zokDmOfB4Z4YqYtZWY9sAYc14V/T3+cEdv4YOji1vGDUBzHwH+RkidRjsYizTtq
- cahGlLJIEtdm2ulu2PnlB2OgEZKpXhGQ1zWcCBZLOfHw0MgwOHCmwtIpD82ICvgygRnv
- HZ6R9ZmoXhQRJaQ6Zl89UrLQTl0zKHk5EWVsEEiSyCwgo9A5QCBkyHBm1nA1Uk/zCi6z
- CWZQ==; darn=nongnu.org
+ b=Y2/m1gYQ4kdAWplQdb3FS41jO8isCi9tmuQ3IWAigRkvcXpJP+Q1HzUaxGqyF3KBM/
+ SGTY0nqz2KZC0Ec1KzI7Ky26/q7CYk92SbbT9YCYrjFJ8M2LkbDYDXdQ40doHR/7g/hu
+ y/XA+zHXhhLb5sIfrYQY6XdEUReZ9U3HaqQACcOs/9rv8hrPZ/HOjFCvY7nZFoBO83jB
+ ljtBHwrtNsBTaiL0C4qCnaxHGFeA0Bzu0C2jIC3drlKz0nbilfpc3uQxsaDCurHKEEAz
+ 5HdXohR/CC5oJcIEfWqVAqrxNJuj/t/1gAHchHk5r9mDyyoQNJdkY+s60LcpAj+dutrG
+ 2ElQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774266234; x=1774871034; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774266581; x=1774871381; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SNMcaEOH+SNnRbIYCSj4mp9uQnJ7AvR5jOnbX1A1R9E=;
- b=zlg5GA22zmCd/dQX+RkHbR1IWwPDJJvFnublUE+6h403Ha6yrLbaeNVGxjNfO1cPhS
- 1mFpUSN7JbFqbZAvXcSljLGZcgHwxw8bZPfI2cMyIiOy7/OmW0BDU3KjyGHtoUv+ZAhV
- QrHoEOgHhqMNKw+WsZ5ElQAEpYUZrcnUJG1C2f9j1CLLEH533LjOcMCBadA/Hp7Jhv2X
- WFn7ROoJyl5Kp6lPgtwoT1fFQ5h8aoQ6vxZnXlvlZYpzCsRW/GoD/e9nP4WxyZvczmPV
- +Ymxvy5NQ/DBkMm2UHOmIh8q6jl5gveakdP7dcbS68yKEUMkdiJm6hQjud12CZZRavG7
- Hgng==
+ bh=a/I1sHcUTA9qsXLQZGVHbSeHDN/6/UdW2iP3Bh5paiU=;
+ b=wpaOF6fJqQGdvUPqoq0bDFPPJZPJ04qv3B+vmvp0avxlI2SStH/SCCQpKqoq7et7bL
+ fiDHj+zd1akjyC1KoQRv4Ap3owuV552aDmZf8JhSlezymQjlWSWfEKvi4lgqvJPbGyyc
+ 6+OyVGud1HZCP8pyP92+ig8QtJoKkZ2dhVNusBohIqC9mpR9QzMmTUIKJnLGSRHpl0Kg
+ A4yQe5gBXR7RZQDpnK3Xvy5DMZv7fBRR5I28h9SPzh7XKbb3IBstQZTn/hAvj15oAMnD
+ Mq6IIJVeOQFOMj7HH1jADJoiOJlu0FYGP/JWWt8C17piteHI+wBk7P2n+VRE9ZPe9im1
+ lYBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774266234; x=1774871034;
+ d=1e100.net; s=20251104; t=1774266581; x=1774871381;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SNMcaEOH+SNnRbIYCSj4mp9uQnJ7AvR5jOnbX1A1R9E=;
- b=mSUJtv1AhHtmpvfLeL12JcCnQ38uAtLVKHKkgoznpjpl24sJgMcSewL5e2eUP587tt
- sCV/DK841Q541BuTC4RnOS7byqqjOj/EC/fovNqTnlOnMsTfQQxX44LuCU+mBp1vEwvf
- +z1CUXymSJctfQOV+pNRIKnGAX5D0U5eLlukK2Vxg3YyNi7cMaz6EbUHu6XRxRVc+jrA
- bGPE5odidOd4AkDgxzF/FBbr8hDVJTkELzcDdy2++hVdJhJr4+RvQZVKNjBUOr1ILztE
- M8IGN4dapVhLqyaZiDa+IBzjnXs4Xff8ITJdTMQhsOPKy3wtD3ee2v0uLs3TfEhuhoyD
- M6Uw==
-X-Gm-Message-State: AOJu0YwWlmg5PUytlHj+bWsJyrxyTUEW4GlnJIItrtWkT9dFXsLy7pC/
- xNKsiagxfTIt1qTdbMcbQQt5FU8EJvmJO/9HChZ4PhkFC9bpLnwrowu4Mq8ImOKGLHgdCEuxRhk
- D1vdGPo0LPQUNSCdclLl8cXDAZFmqHqi+I7+MJ2b/3A==
-X-Gm-Gg: ATEYQzx/z06ORi6RB8mrgtpzb2631noAcfe+WSOHzocWuLK5a9LA23wb9QCnd3HK/yZ
- 9S3ZS+BUThi1veUzvUReN00Ofti41Q2iUURE9b2O4DnZVeWBatFERIEsY87iSLyd4gjR4nkEsjt
- EVnvEDPEpQ6CpSaETFejtl4DYtYOKOzs88Lrzi0opzOLxh7njm4MtAcZLXCWIuqtn1K+uUUg+2N
- bw1VGHpLkloJeLiIvU7SsGdBBYUoLN0enYAGRkC0wKQPfdksbCaiP4MSYMCe5dS0lpgc2xWXJBA
- jx0JgrFEx568MvKovCjXO0cEX+oSppzmUT+kp7mqrnsr9m1296+HFMSrpNaF1kwCmbuVZurLjU3
- Bdw==
-X-Received: by 2002:a05:690c:82:b0:798:da7a:1ef0 with SMTP id
- 00721157ae682-79a90b7ba82mr123984397b3.29.1774266234364; Mon, 23 Mar 2026
- 04:43:54 -0700 (PDT)
+ bh=a/I1sHcUTA9qsXLQZGVHbSeHDN/6/UdW2iP3Bh5paiU=;
+ b=QNra8FbSRati8JsTEb3ge+3lup93/iccWh5eW1jz4Po4Kx/Dw9sURc2hF9OVvZ36QK
+ OmGOqndewpzEYpk2Ebg72WMZULKglC7FjfMLw0+ataUDwTOg+I7GJLRJtR5/L7XeAtIh
+ BgFvVP4s8kgrnFv1iff/ZfSR1WvuHYsdOrFWDQ9SXAAW5GrmfyFdOF8W2u6lQ2aJFLs5
+ tblI4GP8GMIrMW6bl7NgEnythy4ZoDGo7mRYxTcI06iPISGj2XvEo/r0PxVmvygWzWzk
+ 7VTAfPgmnL4tcJLKhyC/iCKgegjdYC1yTAMcjxa+7rDqzTi5Cv9Py1Us6yu7SYKNoFni
+ 1NpA==
+X-Gm-Message-State: AOJu0YzlyGOQbSBjAXgCmcF9+3lJTP+aMx6TcxA7Vylt0gXb/bODuRep
+ MAhvP1qxLrsBWC8SF6ASG3LS01XeDDp6U9AgiAKmaoDY9+EmmhLRioW5qKi29tBVi8T3XTTRdPt
+ T0pmXo6FyGRtXNAShHm4/3ivUpNvRcsAQSj1E8LxH4A==
+X-Gm-Gg: ATEYQzzhRrjPHYaCiw4+p+iyE65KfQl/3UC/id5owhoc3avwPZlv85ZbSbl0SV8B2rY
+ a5k5nLULNZmieIv36Y6FRC8wkpoZFHS5PZnInSbgLPPqLv7qJCSpnNgC1pnxMtS2taswD9zoAY4
+ gBHN9k14xLIghNIjwvEPVpZhXYTKupd5urUuYHsc5xdchxyyy+X036QWnYu80SVx3w9q76qHKUv
+ +y8QS7Ftee2rL84psFpIJyHGASb+k5qsGJBVuWKnkPd8H4N42LGR29i0gWY3eOWYfcQLzpqKV2h
+ 2PZvJWtMf4DFzClrfMJm+HWUWpgvCGIQBJZ8JmjCAkfz7EIwZaupI5aKd9L9TV1+XCXHFhL/O/5
+ fQw==
+X-Received: by 2002:a05:690c:4990:b0:795:294c:fd4d with SMTP id
+ 00721157ae682-79a90b7acafmr126214287b3.37.1774266580781; Mon, 23 Mar 2026
+ 04:49:40 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1774099044.git.dingtao0430@163.com>
- <53bae159845bae966f620b42e7873b7f24404284.1774099044.git.dingtao0430@163.com>
-In-Reply-To: <53bae159845bae966f620b42e7873b7f24404284.1774099044.git.dingtao0430@163.com>
+ <3411a43d161ef59db3db1d7ed0f84839d50ceb33.1774099044.git.dingtao0430@163.com>
+In-Reply-To: <3411a43d161ef59db3db1d7ed0f84839d50ceb33.1774099044.git.dingtao0430@163.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Mar 2026 11:43:43 +0000
-X-Gm-Features: AaiRm50XOeVJ7iowjOG63kaaqJtqJsVgWS_yMBGBXvHA1ywP0PnfwzT36HH0rdE
-Message-ID: <CAFEAcA8FpEWCKQK5_jDQ0MjvGqHC-vmYT37WxyxhLMhUBxqg7A@mail.gmail.com>
-Subject: Re: [PATCH v1 1/5] Fixed the PL011 FIFO level bug
+Date: Mon, 23 Mar 2026 11:49:29 +0000
+X-Gm-Features: AaiRm53HhedbXWr_RWJu6Gfz2JH9Ik2ijt8qkpuhXrrQ02EO0bn5VFgKHhiSubk
+Message-ID: <CAFEAcA_0JMqY-RCKtKL0uaVKFVfmPSR2-Ta7Eo2FHY9qRp0ThQ@mail.gmail.com>
+Subject: Re: [PATCH v1 2/5] PL011 generate receive timeout interrupt
 To: Tao Ding <dingtao0430@163.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,78 +117,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sat, 21 Mar 2026 at 15:47, Tao Ding <dingtao0430@163.com> wrote:
 >
-> According to TRM, PL011 generate a burst or a single DMA request based on the FIFO level
+> After changing the read_trigger, no interrupt will be generated when the data
+> in the rx FIFO of pl011 does not reach the FIFO level. This will cause input
+> in the console to have no effect in Linux, until data input exceeds the FIFO level.
+
+This sounds like you created a regression in patch 1 and are now
+fixing it here. You should order changes to avoid doing that.
+
+> But UART will generate an interrupt after a timeout period after RX receives the data.
+> The relevant description of this in TRM :
+>     *The receive timeout interrupt is asserted when the receive FIFO is not empty, and no
+>     more data is received during a 32-bit period.
 >
-> The FlowCntrl field description is as follows:
->      Receive interrupt FIFO level select.
->      b000 = Receive FIFO becomes >= 1/8 full
->      b001 = Receive FIFO becomes >= 1/4 full
->      b010 = Receive FIFO becomes >= 1/2 full
->      b011 = Receive FIFO becomes >= 3/4 full
->      b100 = Receive FIFO becomes >= 7/8 full
->      b101-b111 = reserved
->
-> Only the read_trigger of rx has been changed, and there is no need to set a trigger for tx
-> because write tx data always completes in a blocking manner. That means tx FIFO is empty.
+> To simplify this operation, pl011 immediately generates an RT interrupt upon receiving data,
+> which means the period is triggered instantly. (QEMUTimer triggering is also optional)
 >
 > Signed-off-by: Tao Ding <dingtao0430@163.com>
 > ---
->  hw/char/pl011.c | 21 ++++++++++++++++++---
->  1 file changed, 18 insertions(+), 3 deletions(-)
+>  hw/char/pl011.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
 > diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> index cb12c3e224..c96a706da1 100644
+> index c96a706da1..58803f0fc2 100644
 > --- a/hw/char/pl011.c
 > +++ b/hw/char/pl011.c
-> @@ -129,6 +129,14 @@ static const uint32_t irqmask[] = {
->      INT_E,
->  };
->
-> +static const uint32_t fifo_level[] = {
-> +    PL011_FIFO_DEPTH / 8,
-> +    PL011_FIFO_DEPTH / 4,
-> +    PL011_FIFO_DEPTH / 2,
-> +    PL011_FIFO_DEPTH * 3 / 4,
-> +    PL011_FIFO_DEPTH * 7 / 8,
-> +};
-> +
->  static void pl011_update(PL011State *s)
->  {
->      uint32_t flags;
-> @@ -344,17 +352,24 @@ static uint64_t pl011_read(void *opaque, hwaddr offset,
->      return r;
->  }
->
-> +static uint32_t pl011_decode_fifo_level(uint32_t val)
-> +{
-> +    if (val > 4) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "pl011: invalid fifo level field\n");
-> +        return 1;
+> @@ -200,6 +200,9 @@ static void pl011_fifo_rx_put(void *opaque, uint32_t value)
+>      }
+>      if (s->read_count == s->read_trigger) {
+>          s->int_level |= INT_RX;
 > +    }
-> +    return fifo_level[val];
-> +}
-> +
->  static void pl011_set_read_trigger(PL011State *s)
->  {
-> -#if 0
->      /* The docs say the RX interrupt is triggered when the FIFO exceeds
->         the threshold.  However linux only reads the FIFO in response to an
->         interrupt.  Triggering the interrupt when the FIFO is non-empty seems
->         to make things work.  */
->      if (s->lcr & LCR_FEN)
-> -        s->read_trigger = (s->ifl >> 1) & 0x1c;
-> +        s->read_trigger = pl011_decode_fifo_level(extract32(s->ifl, 3, 3));
->      else
-> -#endif
->          s->read_trigger = 1;
+> +    if (s->read_count) {
+> +        s->int_level |= INT_RT;
+>          pl011_update(s);
+>      }
 >  }
+> @@ -281,6 +284,7 @@ static uint32_t pl011_read_rxdata(PL011State *s)
+>      }
+>      if (s->read_count == 0) {
+>          s->flags |= PL011_FLAG_RXFE;
+> +        s->int_level &= ~INT_RT;
+>      }
+>      if (s->read_count == s->read_trigger - 1) {
+>          s->int_level &= ~INT_RX;
 
-I'm always a bit nervous about this kind of change, where we have had
-something in the device for decades which was obviously working around
-some kind of problem with a really common guest. The #if 0-d out code
-gets the wrong answer for RXIFLSEL == 0b100, but otherwise it is the
-same behaviour as the code you're putting in here. So I worry that
-maybe this re-introduces the problem that the comment is describing.
+But if we do this, what was the point in changing patch 1 so as to
+make read_trigger accurate? Now we are back to where we were
+before, where we trigger an interrupt when there's any data in
+the FIFO. (At least we do understand better now why we see the
+problem...)
 
 thanks
 -- PMM
