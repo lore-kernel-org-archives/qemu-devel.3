@@ -4,62 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59D2EF46126
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDA5F46126
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fsE-0003jy-1A; Mon, 23 Mar 2026 10:03:19 -0400
+	id 1w4fxG-0005VH-Ax; Mon, 23 Mar 2026 10:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fpK-0000tP-HG
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:23 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fpG-0007At-Ai
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:17 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 803C220B6F1F;
- Mon, 23 Mar 2026 06:59:59 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 803C220B6F1F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274402;
- bh=+vncmzL8fth993nkvLF4vJxsSvuXK42ECZb3oeQw0p4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=VLfFYUZ0pSnR7atr85LKQAMWgQ/3Yv2GouJJR/SuwF7e5n7PfNhzXbwYQ+QyECsG5
- jZoELpMOAtRKUKU8kyafANhOblvAn9TVJcMas7HivK+Gh5dkKI2Wd4AXgbrl0x8kKy
- XEDCvido95ixkYvl0PPIFYB2FUU2AgW/2er1CbAQ=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Wei Liu <wei.liu@kernel.org>, Alex Williamson <alex@shazbot.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 28/32] target/i386: add de/compaction to xsave_helper
-Date: Mon, 23 Mar 2026 14:58:08 +0100
-Message-Id: <20260323135812.383509-29-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
-References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1w4fx7-0005Tg-HF; Mon, 23 Mar 2026 10:08:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1w4fx4-0008Fl-RP; Mon, 23 Mar 2026 10:08:21 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62NBJfUQ3644267; Mon, 23 Mar 2026 14:08:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4jRitI
+ 4YCs9V+Q4uucvyWZ0Fz8w1DzEs0OGBnxjNO88=; b=oCYjyMfzJi+tKzACPHxlVC
+ DwMIAKis8byM4xV6AJUha25y9AIfVqQ4hwfrgQasfQOyDmEeUmUnVQPG7cuhpuWm
+ DYpgvnNAUFfkYl7XGbEc6B5MjWLjXSSkkipOA9zJE3HvqFzXf3DkeR5gkpM9cjbR
+ G7ZuPy6FikZbQQ2xhynFEn+DSruEQe1ie4/UcFS3yTLr3PqWNA9484MVNkmO+dBf
+ D2bbAN1jRxH520/f2U07RDZ2tJgTiF6ZAfILbqgow8rlvaClwj9ZB0npc+8sVpbG
+ ayKKkO8lSsf+pF6E0hHFk8oZuBHoi/jUaaIyzPJF6WVeVkjNVCNL82a1YzB2Cqcw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kxyxttk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Mar 2026 14:08:15 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62NBwhK0005991;
+ Mon, 23 Mar 2026 14:08:14 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d261ydr27-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Mar 2026 14:08:14 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62NE8EOq2360032
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 23 Mar 2026 14:08:14 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1316A5805D;
+ Mon, 23 Mar 2026 14:08:14 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C79C358057;
+ Mon, 23 Mar 2026 14:08:13 +0000 (GMT)
+Received: from [9.61.250.54] (unknown [9.61.250.54])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 23 Mar 2026 14:08:13 +0000 (GMT)
+Message-ID: <63173e58-6c6e-4f69-a80d-8ddc4b372198@linux.ibm.com>
+Date: Mon, 23 Mar 2026 09:08:13 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v1 0/3] aio-poll: improve aio-polling efficiency
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
+ fam@euphon.net, armbru@redhat.com, eblake@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
+References: <20260113174824.464720-1-jhkim@linux.ibm.com>
+ <20260219222717.GA1011077@fedora>
+ <79c89de8-68f4-46ff-bcce-dcb817d04ad5@linux.ibm.com>
+ <5a50568c-d7c8-4938-b399-b304c162f6f2@linux.ibm.com>
+ <e2fc5d97-af5b-4a8a-8a51-50bc108d969d@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <e2fc5d97-af5b-4a8a-8a51-50bc108d969d@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIzMDEwNyBTYWx0ZWRfXzvxoKISz5Te3
+ 3ABQ2F31YKjbsywVNfA6lAaaiiclFrwtT9dKEyh+Y2BU3d/pTwG3cXmvJDfB8IoRYPwyaocqWiv
+ DRXui1ujj6ZXfSuir/mNRT49Hns73veB7Ouk6TiU2TOvQoBReK8hXcbK/J7aKUoozIqpJvpDX0Z
+ A1ad602cxpIdFiaDJ9FJJ1wB9PmRTaHCNHFNCrmlBP125ssMlj04CnVhUd0P8yRT1A/et7awE+L
+ J8YeqjufoDRaluEl5OCZ52wYjTTkDpfYQ0ywdRy9ltI16TrnSoQIuMaILLiIYaDjWlvZAhg7qoC
+ eEQ1Cb8Uhfhds16oABR+MuX7wfdwDVOTZz1/OU6CKQedCT5r65CyrE1ZbdAlIBRT4sEn68AYUfi
+ hMj6HZ9vg2HSFApRTNZ0BxAUxtLzMWjD+4/vytuESWKCBUk/D19cR9Oveofwhlf1W7mKuS3EBLK
+ FA17LbNWIL95MiuK8qg==
+X-Authority-Analysis: v=2.4 cv=JK42csKb c=1 sm=1 tr=0 ts=69c1494f cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=w-EzcEeEK3HJlgL9Y7YA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: Y-0X9zfbw__VWhall6Rad_GdjsF5xYg6
+X-Proofpoint-GUID: Y-0X9zfbw__VWhall6Rad_GdjsF5xYg6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-23_04,2026-03-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 adultscore=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603230107
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,318 +126,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HyperV use XSAVES which stores extended state in compacted format in
-which components are packed contiguously, while QEMU's internal XSAVE
-representation use the standard format in which each component is places
-at a fixed offset. Hence for this purpose we add two conversion fn's to
-the xsave helper to roundtrip XSAVE state in a migration.
+On 3/9/2026 3:46 PM, JAEHOON KIM wrote:
+> On 2/26/2026 12:03 AM, JAEHOON KIM wrote:
+>> On 2/20/2026 1:00 PM, JAEHOON KIM wrote:
+>>> On 2/19/2026 4:27 PM, Stefan Hajnoczi wrote:
+>>>> Hi Jaehoon,
+>>>> Following the call earlier this week I ran a single fio job to get a
+>>>> clearer picture of:
+>>>> 1. The QEMU 10.0.0 regression that prompted you to optimize AioContext
+>>>>     polling.
+>>>> 2. How the poll-weight parameter affects IOPS.
+>>>>
+>>>> run      rw        bs   numjobs iothreads iops   diff
+>>>> v9.2.0   randread  8k   1       1         174944 3.6%
+>>>> v10.0.0  randread  8k   1       1         174285 3.2%
+>>>> baseline randread  8k   1       1         168908 0.0%
+>>>> w2       randread  8k   1       1         163718 -3.1%
+>>>> w3       randread  8k   1       1         165805 -1.8%
+>>>> w4       randread  8k   1       1         167388 -0.9%
+>>>>
+>>>> This time I only ran randread bs=8k iodepth=8 numjobs=1 with a single
+>>>> IOThread.
+>>>>
+>>>> Observations:
+>>>>
+>>>> - There might be an IOPS regression between v10.0.0 and the baseline
+>>>>    (9ad7f544c696) that your patches apply on top of. This is different
+>>>>    from the CPU utilization regression that you found in v9.2.0 ->
+>>>>    v10.0.0. I will bisect it.
+>>>>
+>>>> - poll-weight=3 and 4 improve IOPS to a level that is acceptable. CPU
+>>>>    utilization looks like this:
+>>>>
+>>>> run         %usr     %nice      %sys   %iowait    %steal %irq     
+>>>> %soft    %guest    %gnice     %idle
+>>>> baseline   49.37      0.00     31.10      0.00      0.00 11.61      
+>>>> 0.04      0.00      0.00      7.89
+>>>> w2         46.24      0.00     32.61      0.00      0.00 11.84      
+>>>> 0.10      0.00      0.00      9.21
+>>>> w3         48.04      0.00     32.17      0.00      0.00 11.98      
+>>>> 0.08      0.00      0.00      7.73
+>>>> w4         48.56      0.00     31.23      0.00      0.00 11.48      
+>>>> 0.03      0.00      0.00      8.69
+>>>>
+>>>> poll-weight=2 is the winner at CPU utilization. I'm not sure if
+>>>> poll-weight=3 will produce an acceptable CPU utilization 
+>>>> improvement for
+>>>> you. Do you have data or want to re-run to measure poll-weight=3?
+>>>>
+>>>> Stefan
+>>>
+>>> Thank you very much for sharing the detailed measurement results.
+>>> I truly appreciate the effort.
+>>>
+>>> Regarding w=3, I will discuss with our performance team to see
+>>> if the CPU consumption levels are acceptable within our internal
+>>> test environment. I will get back to you with more definitive data
+>>> as soon as possible.
+>>>
+>>> Thanks again for your thorough analysis.
+>>>
+>>> Regards,
+>>> Jaehoon.
+>>>
+>> Hello Stefan,
+>>
+>> Thank you for your patience. I would like to share the observed 
+>> changes in throughput
+>> and CPU consumption in our performance test environment as follows.
+>>
+>> We observed that when using W=3, performance returns to a level 
+>> comparable to
+>> QEMU v9.1, while W=2 results in slightly lower CPU consumption.
+>>
+>> Our initial preference is to use W=2 by default.
+>> However, we fully understand your concerns regarding the potential 
+>> performance drop.
+>> Should the patch be accepted, we would provide guidance on using the 
+>> weighted value as
+>> a configurable option.
+>>
+>> For reference, we consider values between -2 and 2 as noise in our 
+>> analysis.
+>> I look forward to your feedback.
+>>
+>> The table below shows a comparison between:
+>> *  - Host:* RHEL10.1-GA+qemu-10.0.0-14.el10_1, *Guest:* RHEL 9.6 GA vs.
+>> *  - Host:* RHEL10.1-GA+qemu-10.0.0-14.el10_1 (w=2, w=3), *Guest:* 
+>> RHEL 9.6 GA
+>>     for FIO FCP and FICON with 1 iothread and 8 iothreads.
+>>     The values shown are the averages for numjobs 1, 4, and 8.
+>>
+>> FIO FCP -1 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -3.00    |   -2.33    |    0.00    | 
+>>  -0.33    |   -3.00    |   -3.33    |    1.33    |   -0.33    |
+>> | CPU consumption avg |   -5.67    |   -4.33    |   -6.33    | 
+>>  -5.33    |   -7.33    |   -5.33    |  -10.33    |   -8.67    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>> FIO FCP -8 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -5.00    |   -4.00    |   -3.67    | 
+>>  -3.33    |   -4.67    |   -4.00    |   -0.33    |   -0.67    |
+>> | CPU consumption avg |  -13.00    |  -10.67    |  -16.00    | 
+>> -14.33    |  -14.00    |   -9.33    |  -13.67    |  -11.00    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>>
+>> FIO FICON -1 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -0.67    |   -0.67    |   -6.33    | 
+>>  -6.67    |   -0.67    |    0.00    |    1.33    |    1.33    |
+>> | CPU consumption avg |   -7.67    |   -7.33    |  -13.67    | 
+>> -13.00    |   -9.00    |   -8.33    |   -5.00    |   -4.33    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>> FIO FICON -8 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -3.00    |   -2.67    |   -7.33    | 
+>>  -7.00    |   -0.67    |   -1.00    |    0.67    |    0.67    |
+>> | CPU consumption avg |  -16.33    |  -14.33    |  -25.33    | 
+>> -27.00    |   -8.67    |   -7.00    |   -6.67    |   -5.00    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>>
+>> The table below shows a comparison between:
+>> * - Host:* RHEL 10.0 GA + qemu-9.1.0-15.el10, *Guest:* RHEL 9.6 GA vs.
+>> * - Host:* RHEL 10.1 GA + qemu-10.0.0-14.el10_1 (w=2, w=3), *Guest:* 
+>> RHEL 9.6 GA.
+>>
+>> FIO FCP -1 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -0.67    |    0.00    |   -0.33    | 
+>>  -1.00    |   -1.00    |   -0.67    |    3.33    |    2.00    |
+>> | CPU consumption avg |    0.67    |    2.00    |    1.67    | 3.00  
+>>   |   -3.33    |   -0.33    |   -2.33    |    0.00    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>> FIO FCP -8 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -2.00    |   -1.33    |   -1.00    | 0.00  
+>>   |   -0.33    |    1.00    |    1.00    |    0.67    |
+>> | CPU consumption avg |   -3.00    |   -1.00    |   -2.00    | 0.00  
+>>   |  -10.33    |   -5.67    |   -6.67    |   -3.33    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>>
+>> FIO FICON -1 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -1.67    |   -1.67    |   -0.33    | 0.00  
+>>   |   -1.33    |   -1.00    |   -1.67    |   -2.33    |
+>> | CPU consumption avg |   -0.33    |    1.00    |    1.00    | 2.00  
+>>   |   -2.33    |   -1.33    |   -1.33    |   -0.33    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>> FIO FICON -8 iothread
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
+>> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
+>> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
+>> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>> | Throughput avg      |   -1.00    |   -0.67    |   -0.33    | 0.33  
+>>   |    0.67    |    0.33    |    0.33    |    0.33    |
+>> | CPU consumption avg |   -1.33    |    1.00    |    4.33    | 2.33  
+>>   |   -2.00    |    0.00    |   -3.00    |   -1.33    |
+>> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
+>>
+>>
+>>
+>> Regards,
+>> Jaehoon.
+>>
+>>
+> Hello Stefan,
+>
+> I’m following up to see if you’ve had a chance to review the 
+> performance results I shared.
+> As I mentioned, we are completely fine with using w=3 as the default 
+> value.
+> It effectively restores performance to QEMU v9.1 levels, and we will 
+> provide guidance
+> for users who need further CPU savings to use w=2.
+>
+> I’ve updated the patch to set the default value to 3 and include the 
+> feedback so far.
+> Please let me know if you have any comments or if I should post the 
+> new patch.
+>
+> Regards,
+> Jaehoon
+>
+>
+Hello,
 
-- decompact_xsave_area(): converts compacted format to standard.
-  XSTATE_BV is masked to host XCR0 since IA32_XSS is managed
-  by the hypervisor.
+I'd like to follow up on this thread. I have posted a v2 incorporating 
+the feedback so far.
+I'd really appreciate your thoughts when you have a chance.
 
-- compact_xsave_area(): converts standard format back to compacted
-  format. XCOMP_BV is set from the host's CPUID 0xD.0 rather than the
-  guest's XCR0, as this is what the hypervisor expects.
+Thanks again for your time.
 
-Both functions use the host's CPUID leaf 0xD subleaves to determine component
-sizes, offsets, and alignment requirements.
+Regards,
+Jaehoon.
 
-There are situations when the host advertises features that we want to
-disable for the guest, e.g. AMX TILE. In this case we cannot rely on the
-host's xcr0, but instead we use the feature mask that has been generated
-in as part of the CPU realization process (x86_cpu_expand_features).
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/cpu.h          |   2 +
- target/i386/xsave_helper.c | 255 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 257 insertions(+)
-
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4ad4a35ce9..cd5d5a5369 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -3033,6 +3033,8 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen);
- void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen);
- uint32_t xsave_area_size(uint64_t mask, bool compacted);
- void x86_update_hflags(CPUX86State* env);
-+int decompact_xsave_area(const void *buf, size_t buflen, CPUX86State *env);
-+int compact_xsave_area(CPUX86State *env, void *buf, size_t buflen);
- 
- static inline bool hyperv_feat_enabled(X86CPU *cpu, int feat)
- {
-diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
-index bab2258732..2272b83f5f 100644
---- a/target/i386/xsave_helper.c
-+++ b/target/i386/xsave_helper.c
-@@ -3,6 +3,7 @@
-  * See the COPYING file in the top-level directory.
-  */
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- 
- #include "cpu.h"
- 
-@@ -293,3 +294,257 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen)
-     }
- #endif
- }
-+
-+#define XSTATE_BV_IN_HDR  offsetof(X86XSaveHeader, xstate_bv)
-+#define XCOMP_BV_IN_HDR   offsetof(X86XSaveHeader, xcomp_bvo)
-+
-+typedef struct X86XSaveAreaView {
-+    /* 512 bytes */
-+    X86LegacyXSaveArea legacy;
-+    /* 64 bytes */
-+    X86XSaveHeader     header;
-+    /* ...followed by individual xsave areas */
-+} X86XSaveAreaView;
-+
-+#define XSAVE_XSTATE_BV_OFFSET  offsetof(X86XSaveAreaView, header.xstate_bv)
-+#define XSAVE_XCOMP_BV_OFFSET   offsetof(X86XSaveAreaView, header.xcomp_bv)
-+#define XSAVE_EXT_OFFSET        (sizeof(X86LegacyXSaveArea) + \
-+                                 sizeof(X86XSaveHeader))
-+
-+/**
-+ * decompact_xsave_area - Convert compacted XSAVE format to standard format
-+ * @buf: Source buffer containing compacted XSAVE data
-+ * @buflen: Size of source buffer
-+ * @env: CPU state where the standard format buffer will be written to
-+ *
-+ * Accelerator backends like MSHV might return XSAVE state in compacted format
-+ * (XSAVEC). The state components have to be packed contiguously without gaps.
-+ * The XSAVE qemu buffers are in standard format where each component has a
-+ * fixed offset.
-+ *
-+ * Returns: 0 on success, negative errno on failure
-+ */
-+int decompact_xsave_area(const void *buf, size_t buflen, CPUX86State *env)
-+{
-+    uint64_t compacted_xstate_bv, compacted_xcomp_bv, compacted_layout_bv;
-+    uint64_t xsave_offset, *xcomp_bv;
-+    size_t i;
-+    uint32_t eax, ebx, ecx, edx;
-+    uint32_t size, dst_off;
-+    bool align64;
-+    uint64_t guest_xcr0, *xstate_bv;
-+
-+    compacted_xstate_bv = *(uint64_t *)(buf + XSAVE_XSTATE_BV_OFFSET);
-+    compacted_xcomp_bv  = *(uint64_t *)(buf + XSAVE_XCOMP_BV_OFFSET);
-+
-+    /* This function only handles compacted format (bit 63 set) */
-+    assert((compacted_xcomp_bv >> 63) & 1);
-+
-+    /* Low bits of XCOMP_BV describe which components are in the layout */
-+    compacted_layout_bv = compacted_xcomp_bv & ~(1ULL << 63);
-+
-+    /* Zero out buffer, then copy legacy region (FP + SSE) and header as-is */
-+    memset(env->xsave_buf, 0, env->xsave_buf_len);
-+    memcpy(env->xsave_buf, buf, XSAVE_EXT_OFFSET);
-+
-+    /*
-+     * We mask XSTATE_BV with the guest's supported XCR0 because:
-+     * 1. Supervisor state (IA32_XSS) is hypervisor-managed, we don't use
-+     *    this state for migration.
-+     * 2. Features disabled at partition creation (e.g. AMX) must be excluded
-+     */
-+    guest_xcr0 = ((uint64_t)env->features[FEAT_XSAVE_XCR0_HI] << 32) |
-+                 env->features[FEAT_XSAVE_XCR0_LO];
-+    xstate_bv = (uint64_t *)(env->xsave_buf + XSAVE_XSTATE_BV_OFFSET);
-+    *xstate_bv &= guest_xcr0;
-+
-+    /* Clear bit 63 - output is standard format, not compacted */
-+    xcomp_bv = (uint64_t *)(env->xsave_buf + XSAVE_XCOMP_BV_OFFSET);
-+    *xcomp_bv = *xcomp_bv & ~(1ULL << 63);
-+
-+    /*
-+     * Process each extended state component in the compacted layout.
-+     * Components 0 and 1 (FP and SSE) are in the legacy region, so we
-+     * start at component 2. For each component:
-+     * - Calculate its offset in the compacted source (contiguous layout)
-+     * - Get its fixed offset in the standard destination from CPUID
-+     * - Copy if the component has non-init state (bit set in XSTATE_BV)
-+     */
-+    xsave_offset = XSAVE_EXT_OFFSET;
-+    for (i = 2; i < 63; i++) {
-+        if (((compacted_layout_bv >> i) & 1) == 0) {
-+            continue;
-+        }
-+
-+        /* Query guest CPUID for this component's size and standard offset */
-+        cpu_x86_cpuid(env, 0xD, i, &eax, &ebx, &ecx, &edx);
-+
-+        size = eax;
-+        dst_off = ebx;
-+        align64 = (ecx & (1u << 1)) != 0;
-+
-+        /* Component is in the layout but unknown to the guest CPUID model */
-+        if (size == 0) {
-+            /*
-+             * The hypervisor might expose a component that has no
-+             * representation in the guest CPUID model. We query the host to
-+             * retrieve the size of the component, so we can skip over it.
-+             */
-+            host_cpuid(0xD, i, &eax, &ebx, &ecx, &edx);
-+            size = eax;
-+            align64 = (ecx & (1u << 1)) != 0;
-+            if (size == 0) {
-+                error_report("xsave component %zu: size unknown to both "
-+                             "guest and host CPUID", i);
-+                return -EINVAL;
-+            }
-+
-+            if (align64) {
-+                xsave_offset = QEMU_ALIGN_UP(xsave_offset, 64);
-+            }
-+
-+            if (xsave_offset + size > buflen) {
-+                error_report("xsave component %zu overruns source buffer: "
-+                             "offset=%zu size=%u buflen=%zu",
-+                             i, xsave_offset, size, buflen);
-+                return -E2BIG;
-+            }
-+
-+            xsave_offset += size;
-+            continue;
-+        }
-+
-+        if (align64) {
-+            xsave_offset = QEMU_ALIGN_UP(xsave_offset, 64);
-+        }
-+
-+        if ((xsave_offset + size) > buflen) {
-+            error_report("xsave component %zu overruns source buffer: "
-+                         "offset=%zu size=%u buflen=%zu",
-+                         i, xsave_offset, size, buflen);
-+            return -E2BIG;
-+        }
-+
-+        if ((dst_off + size) > env->xsave_buf_len) {
-+            error_report("xsave component %zu overruns destination buffer: "
-+                         "offset=%u size=%u buflen=%zu",
-+                         i, dst_off, size, (size_t)env->xsave_buf_len);
-+            return -E2BIG;
-+        }
-+
-+        /* Copy components marked present in XSTATE_BV to guest model */
-+        if (((compacted_xstate_bv >> i) & 1) != 0) {
-+            memcpy(env->xsave_buf + dst_off, buf + xsave_offset, size);
-+        }
-+
-+        xsave_offset += size;
-+    }
-+
-+    return 0;
-+}
-+
-+/**
-+ * compact_xsave_area - Convert standard XSAVE format to compacted format
-+ * @env: CPU state containing the standard format XSAVE buffer
-+ * @buf: Destination buffer for compacted XSAVE data (to send to hypervisor)
-+ * @buflen: Size of destination buffer
-+ *
-+ * Accelerator backends like MSHV might expect XSAVE state in compacted format
-+ * (XSAVEC). The state components are packed contiguously without gaps.
-+ * The XSAVE qemu buffers are in standard format where each component has a
-+ * fixed offset.
-+ *
-+ * This function converts from standard to compacted format, it accepts a
-+ * pre-allocated destination buffer of sufficient size, it is the
-+ * responsibility of the caller to ensure the buffer is big enough.
-+ *
-+ * Returns: total size of compacted XSAVE data written to @buf
-+ */
-+int compact_xsave_area(CPUX86State *env, void *buf, size_t buflen)
-+{
-+    uint64_t *xcomp_bv;
-+    size_t i;
-+    uint32_t eax, ebx, ecx, edx;
-+    uint32_t size, src_off;
-+    bool align64;
-+    size_t compact_offset;
-+    uint64_t host_xcr0_mask, guest_xcr0;
-+
-+    /* Zero out buffer, then copy legacy region (FP + SSE) and header as-is */
-+    memset(buf, 0, buflen);
-+    memcpy(buf, env->xsave_buf, XSAVE_EXT_OFFSET);
-+
-+    /*
-+     * Set XCOMP_BV to indicate compacted format (bit 63) and which
-+     * components are in the layout.
-+     *
-+     * We must explicitly set XCOMP_BV because x86_cpu_xsave_all_areas()
-+     * produces standard format with XCOMP_BV=0 (buffer is zeroed and only
-+     * XSTATE_BV is set in the header).
-+     *
-+     * XCOMP_BV must reflect the partition's XSAVE capability, not the
-+     * guest's current XCR0 (env->xcr0). These differ b/c:
-+     * - A guest's XCR0 is what the guest OS has enabled via XSETBV
-+     * - The partition's XCR0 mask is the hypervisor's save/restore capability
-+     *
-+     * The hypervisor uses XSAVES which saves based on its capability, so the
-+     * XCOMP_BV value in the buffer we send back must match that capability.
-+     *
-+     * We intersect the host XCR0 with the guest's supported XCR0 features
-+     * (FEAT_XSAVE_XCR0_*) so that features disabled at partition creation
-+     * (e.g. AMX) are excluded from the compacted layout.
-+     */
-+    host_cpuid(0xD, 0, &eax, &ebx, &ecx, &edx);
-+    host_xcr0_mask = ((uint64_t)edx << 32) | eax;
-+    guest_xcr0 = ((uint64_t)env->features[FEAT_XSAVE_XCR0_HI] << 32) |
-+                 env->features[FEAT_XSAVE_XCR0_LO];
-+    host_xcr0_mask &= guest_xcr0;
-+    xcomp_bv = buf + XSAVE_XCOMP_BV_OFFSET;
-+    *xcomp_bv = host_xcr0_mask | (1ULL << 63);
-+
-+    /*
-+     * Process each extended state component in the host's XCR0.
-+     * The compacted layout must match XCOMP_BV (host capability).
-+     *
-+     * For each component:
-+     * - Get its size and standard offset from host CPUID
-+     * - Apply 64-byte alignment if required
-+     * - Copy data only if guest has this component (bit set in env->xcr0)
-+     * - Always advance offset to maintain correct layout
-+     */
-+    compact_offset = XSAVE_EXT_OFFSET;
-+    for (i = 2; i < 63; i++) {
-+        if (!((host_xcr0_mask >> i) & 1)) {
-+            continue;
-+        }
-+
-+        /* Query host CPUID for this component's size and standard offset */
-+        host_cpuid(0xD, i, &eax, &ebx, &ecx, &edx);
-+        size = eax;
-+        src_off = ebx;
-+        align64 = (ecx >> 1) & 1;
-+
-+        if (size == 0) {
-+            /* Component in host xcr0 but unknown - shouldn't happen */
-+            continue;
-+        }
-+
-+        /* Apply 64-byte alignment if required by this component */
-+        if (align64) {
-+            compact_offset = QEMU_ALIGN_UP(compact_offset, 64);
-+        }
-+
-+        /*
-+         * Only copy data if guest has this component enabled in XCR0.
-+         * Otherwise the component remains zeroed (init state), but we
-+         * still advance the offset to maintain the correct layout.
-+         */
-+        if ((env->xcr0 >> i) & 1) {
-+            memcpy(buf + compact_offset, env->xsave_buf + src_off, size);
-+        }
-+
-+        compact_offset += size;
-+    }
-+
-+    return compact_offset;
-+}
--- 
-2.34.1
 
 
