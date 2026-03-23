@@ -4,82 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6491F46139
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33BAEF46139
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4h5y-0005LO-FA; Mon, 23 Mar 2026 11:21:34 -0400
+	id 1w4h9r-0006bH-TN; Mon, 23 Mar 2026 11:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4h5u-0005L1-TV
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:21:31 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4h9k-0006Zj-3g
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:25:28 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4h5t-0002Xc-7w
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:21:30 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4853c1ca73aso2527545e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:21:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w4h9i-0002wt-BR
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:25:27 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-79a46260385so3439257b3.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:25:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774279524; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ay+IvQRfLuNj99k8Lldd0NJqQw4q8Z4t24njYnBWqGJnG0TvcZjr1GvLPLL0EBZf15
+ ZHos1MpYqOLCLyR5ie9TeBUq0VkbIwOWMgngwB2y2qy+cOiDShLcNUMbw99Uu2Gd3oN+
+ PgMIFvvmSfr1I4GcNZHl9qq3iZ+eONw+z94upaO914ha4w1eBoozQ1tSWTtdOeR1V6oO
+ /dhg3Pyv+KDtokkxlSgXstw7xr+qCs0mNThJw7VanYzV/wZthTpT5N/iDSeni+Jel8ut
+ 1fcdGyvofD/P4OHWIlb/Lf+RKnc30N1jRCaWQLgBFwjBIg1t1PmEmzHRjVIVAwNGofwC
+ GsZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=E8qW0zsK+rUnQLR4W4uc8v09s3ivi1irOgw/UH62E9Q=;
+ fh=Cj3JRfgXXZ0yfArZxnQNlKgg3RP+BmJc+pmlGdXrQ3c=;
+ b=T019essHMC9zEv0gtP0Af0aWH2UyPdHaWUE/fRTs7Xg67p9hGf1jer8HHHEPbnl2Kh
+ d/ID+uKk2vamz1KDvDorvE5eywWHQKFrgL8cdPJB0IgxLU41uqyO1X3dyW3iqgB4cKUY
+ ZKqiKuCgjl+UjsDDXvUnC9NyRDhyN0wjopFaeVuQX4zDjVU2OaRfmbngUjgh1ZeB/S/G
+ X+E0TQ3AHMBLAWyN5TQ3/+99tV1hQ1tYwWKzclwr8CLty5uiqFUXOulWSV7i8i2+6cNN
+ IjarChpX8wpD/enS345Y59TVDlpWg9Pt66StO/sK/iViNr19ycvZhZ7Dw3+ZfDiipb6u
+ hhXA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774279286; x=1774884086; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xwSg4574/35tZ7ThVUYhoIp0tLBiIgRYgkQ3PdO9EJY=;
- b=H2LJSvriCNZzu3QtecOvMK0nFMV5bMsGTrNyGVjOKmpF6Qk9wuw+KzZFXFv4SMKdle
- hNqPCY+ZnAynZ8Cmzc6/z8m8xm73xepTjRAqijLHaPlQilHAh58IcySHT2jjHMdqnkfO
- azM5kX2gi2rq28Cgzi6Cl/0jgJpncdQaSCFGC5d+MXkMDnBIoX7ekKKQ5cEaEWXmcgCE
- +X32mrShY2qYCICy8rJY6N5HKYSgRkktDMyB14r2teWHJaILi5HZwebZOAiR9G/rmIdj
- ocQMb/HuBJ7AltBkw1+/tOP+Pa5FPaXLCXiIwIImfGetWZMt8kV2tLVp777jUf1YJ+/O
- xaDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774279286; x=1774884086;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1774279524; x=1774884324; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xwSg4574/35tZ7ThVUYhoIp0tLBiIgRYgkQ3PdO9EJY=;
- b=mADkbObd4dRtnZxjaU5EIqZa82j7EHsa8EbGXRjlx0fTWYbv8Yz86v9/SLZMbe6DyD
- 2v5oYcFgis95Sy9VS1vigv4qljY2jDVYbs3woxqTqtmQK/iOidJXrpikiBZrjGonBefL
- JdoSfCsXlYi3Lq/da8OqMpnZhdSmvSTfYJ5fWgs1h20G9cJZbzPZBgU/ZlFcG6Zq4anL
- RngJZEp9cx/xzkOW/xzxKzDmIcM+EExPAcDxcuAZW/xCZH+yH+6jQd9GJs18gTFAxihP
- jn7m33++ygUYzTeP/Zsq1Qv60XljLNOVKlCMN9mMzDusuLM/gR8Z6iL7H18c7BLcEEpC
- KDwA==
-X-Gm-Message-State: AOJu0YyyhVI13hy7dCrmVtZR/S9GW0Ayp1/vFzFL7KnA08emim9FhauD
- RfD1ev3ygvzEK91kJQr8yN11Jv8y21BLiMdvkiR6gvIbq+o9wr7Hw7zBxjV8WLl7hjR8FAVpVWf
- ZJd7paxQ=
-X-Gm-Gg: ATEYQzyxwQ0aljhPnRhJ6QwhxxTNRPDd7EjALKFscMvzsO4MgLtOxGjmb4myhMViD3b
- Uo+wnmvi+hbUCuZmAoD5qygINEiSOUs9G8qhAoGqogMApHlCiuz5LtPhBZmlFOHNCy1Xoo6zOIN
- +u7Bh/wu/tYB/88aCrnfKggvIAUb9EexyvWUU7m7ZthahUjXnRlOcm3+tiuVy1cR6xBiviAOSRH
- uea4CPaFbJ/vQm6xfTlHPrEAlfbbIgGKL+2DTM9T48VaBTP1XlUlkSAFXZ0NnMVBCq5BS/mH7Sb
- Yu0Ta1kljQCdlahB2bYB0BJryrJaoDJ8hpOiR2KdQCwWIdWUYvwDels1b046hqDoxuWVovhjUzu
- pMd3OaPnnJR5aQ4KSItlkhFJHB2UDCE2KMOJEJq240kZ2acTthMLRDbo0f3p/XwzuZm1rEUb2xS
- /6jCnnjVkaTzygbz+8Oe0pMC309ImmZmmwQJpwlwCmujgPkTA3EO+mxW1nhbT/c/eODYPHw3iQd
- tMyQjLhYZA=
-X-Received: by 2002:a05:600c:3f1b:b0:487:59c:2bb8 with SMTP id
- 5b1f17b1804b1-487059c2eb3mr92067465e9.27.1774279286256; 
- Mon, 23 Mar 2026 08:21:26 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe032a55sm551025315e9.7.2026.03.23.08.21.25
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 08:21:25 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Roth <michael.roth@amd.com>, devel@lists.libvirt.org,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0] qapi: Remove deprecated SchemaInfoEnumMember::values
- field
-Date: Mon, 23 Mar 2026 16:21:24 +0100
-Message-ID: <20260323152124.93051-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ bh=E8qW0zsK+rUnQLR4W4uc8v09s3ivi1irOgw/UH62E9Q=;
+ b=gVXsNnR8OEBjnLfhssx+92Vwogne1E6ETG66N4KA+rBYVak/KCh5vlhBnXxGj4MiIL
+ dSzdInlL3zCSpPwdr0mb2vifFSzRLoNEfUHMzyt/IL1ecHAgznbUbya/NgnDpKCNUhzg
+ aGS/t05k/nE9COfiisRtzw8f2hNamhD7nHgr3bKKIGSTKLpqltKPlMd4q1tD3l5D433J
+ MU1jIe/Nd/mHHg0yDDv6Pzr7ItIL7TAkyyHrIp8dAsuS8dKZvUAmF9XomfLzfszklZWm
+ l3zRhOrL4FLu+GyjrZYEJ5sMdMgOK19owaFlaSVR6Kk+ZCAFZv4Qrr74vzgHvKbq5l+D
+ v2lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774279524; x=1774884324;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=E8qW0zsK+rUnQLR4W4uc8v09s3ivi1irOgw/UH62E9Q=;
+ b=rGeWiXJ3vNd/musKfQyVRk+Mie38e4lMtEZze8aSCEt6w9TMSs10jc2v4A87tMk9L1
+ WFueY/+hWTRmamHKpgzoUJ1cAOvmutuGNSh7agY7xAKWRPjARXam1NCAfjnxGUQWGIda
+ JWxG7649KLVTYCi0xNBAvABhDeEcMEDZZZ8U3FMxfApG3qxtshbEEozRrL5mX++wEI8Y
+ OBZEjO5zkmAmnBYZ3aLcRvZVW9LOYkPdba5Ylp8gdNBl/XR44QsqEs0YXiJIArCiIFbd
+ P/hlJGcMbd7HUyM28HJyGYdJaHfHKcOllFjuh4RK6HBjh1nLkUh72FL7Qsk85+ly/h2/
+ r7yA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQ68GRIeq5UmfzBfb38ICmFRzN7Ex9+MDb1Ia7dfBoMCcshwo9/XWOqzLyWcRR/HpcAz57+d3swu3r@nongnu.org
+X-Gm-Message-State: AOJu0Ywsz1EX3LZ14ZyoBfMTiFrA1GZXJaobB2wdjSdgUvi0uyIaE1W6
+ 90r7nhpWb+xB5XeEAnkaoXhzKjLBcrNq7//KtQ+FIalvKtJXy2YpzY/f6rVB4J3TMNGmf39rqej
+ CuOD8fW5U6KVI0pM1wuXy8WXMYxvJOjynOX8UCMzklg==
+X-Gm-Gg: ATEYQzx/RXIKAgV5Ou39HQVyXD/ofzsV12wMHKLNkdVnj3MtYxRRaRSJznf3mzt001k
+ dbQRuPwQbPFPSmfRuEE9NydK4ckB4rMiQSgVP2An/mbFSrBsD5dVAUpepCSjn1fk527Q16V876V
+ QM27SVZvMWzvbPDhqnjLqzpsHjWhVhFL5qclyQyhDQ7nqqiX+/h2TiVFoKVQkS2gCXSnLmSIXaa
+ 7Ob1iRTse8EAxwFbueguedvwAWDai0H5OoqWU+LHh3O0mFHzUzh6WoGbd2UuayFoWb3m5xlR14c
+ ZOj4RNQiqSwdJWY32/Az9BR9+8+pdRkJWEcezE/+G42WdSjhgHppNibPPWTmrFPqL7TDUX3lHhN
+ urA==
+X-Received: by 2002:a05:690c:c4e8:b0:79a:3a33:942 with SMTP id
+ 00721157ae682-79a90bc99c4mr141604247b3.31.1774279523669; Mon, 23 Mar 2026
+ 08:25:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+References: <20260323131531.1976-1-junjie.cao@intel.com>
+ <acFDFHsh8Rjhfncc@redhat.com>
+ <CAFEAcA88mHqmM8Pmm0Gbbeu4ugBV8snenZh7bvjSSruUtRcywQ@mail.gmail.com>
+ <20260323095706-mutt-send-email-mst@kernel.org> <acFUnqeSF2RMDiIe@redhat.com>
+In-Reply-To: <acFUnqeSF2RMDiIe@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Mar 2026 15:25:10 +0000
+X-Gm-Features: AaiRm50GFWTQRhMiXjbZVTGPpq0t-EYnYu8pGOT5hoyCozq4b7DL-2pVQz432n0
+Message-ID: <CAFEAcA_QV3k9bbayQh76-ASdHiJeWNSGY32DeDZJ0UrrC-WXLg@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: validate RSS indirections_len in post_load
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Junjie Cao <junjie.cao@intel.com>,
+ qemu-devel@nongnu.org, 
+ jasowang@redhat.com, yuri.benditovich@daynix.com, akihiko.odaki@daynix.com, 
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,97 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SchemaInfoEnumMember::values field has been deprecated for
-more than 5 years (see commit 75ecee72625 "qapi: Enable enum
-member introspection to show more than name"), it should be
-safe enough to remove.
+On Mon, 23 Mar 2026 at 14:56, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Mon, Mar 23, 2026 at 09:57:24AM -0400, Michael S. Tsirkin wrote:
+> > On Mon, Mar 23, 2026 at 01:53:53PM +0000, Peter Maydell wrote:
+> > > On Mon, 23 Mar 2026 at 13:43, Daniel P. Berrang=C3=A9 <berrange@redha=
+t.com> wrote:
+> > > >
+> > > > On Mon, Mar 23, 2026 at 09:15:31PM +0800, Junjie Cao wrote:
+> > > > > virtio_net_handle_rss() enforces that indirections_len is a non-z=
+ero
+> > > > > power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
+> > > > > virtio_net_rss_post_load() applies none of these checks to values
+> > > > > restored from the migration stream.
+> > > > >
+> > > > > A crafted migration stream can set indirections_len to 0.  Even i=
+f it
+> > > >
+> > > > The migration stream originating from the source QEMU is trusted.
+> > >
+> > > Is it? In https://www.qemu.org/docs/master/system/security.html we sa=
+y:
+> > >
+> > > # The following entities are untrusted, meaning that they may be bugg=
+y
+> > > # or malicious:
+> > >
+> > > #  * Guest
+> > > #  * User-facing interfaces (e.g. VNC, SPICE, WebSocket)
+> > > #  * Network protocols (e.g. NBD, live migration)
+> > > #  * User-supplied files (e.g. disk images, kernels, device trees)
+> > > #  * Passthrough devices (e.g. PCI, USB)
+> > >
+> > > which explicitly lists "live migration" as an untrusted entity.
+> > >
+> > > I would definitely be extremely cautious about having a threat
+> > > model where I had to distrust inbound migration data, but the
+> > > above does suggest we aim to handle that, and we have I think
+> > > in the past taken patches which add sanity-checking to the
+> > > migration data.
+> >
+> > And we even assigned a low priority CVEs to these.
+>
+> Do you have an example of that ?
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- docs/about/deprecated.rst       |  6 ------
- docs/about/removed-features.rst |  7 +++++++
- qapi/introspect.json            | 12 +-----------
- scripts/qapi/introspect.py      |  3 +--
- 4 files changed, 9 insertions(+), 19 deletions(-)
+Here's one from last year:
+https://access.redhat.com/security/cve/cve-2025-54566
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index a6d6a713265..afb0d383c27 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -101,12 +101,6 @@ Use the more generic commands ``block-export-add`` and ``block-export-del``
- instead.  As part of this deprecation, where ``nbd-server-add`` used a
- single ``bitmap``, the new ``block-export-add`` uses a list of ``bitmaps``.
- 
--``query-qmp-schema`` return value member ``values`` (since 6.2)
--'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
--
--Member ``values`` in return value elements with meta-type ``enum`` is
--deprecated.  Use ``members`` instead.
--
- ``drive-backup`` (since 6.2)
- ''''''''''''''''''''''''''''
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index e75db084108..9eb4ef67ff4 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -787,6 +787,13 @@ $VM,debug-threads=on`` instead.
- 
- This argument has always been ignored.
- 
-+``query-qmp-schema`` return value member ``values`` (removed in 11.0)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+Member ``values`` in return value elements with meta-type ``enum`` has
-+been replaced by ``members`` instead.
-+
-+
- QEMU Machine Protocol (QMP) events
- ----------------------------------
- 
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index c8432c8ed8e..71b10baabaf 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -159,22 +159,12 @@
- # @members: the enum type's members, in no particular order.
- #     (since 6.2)
- #
--# @values: the enumeration type's member names, in no particular
--#     order.  Redundant with @members.  Just for backward
--#     compatibility.
--#
--# Features:
--#
--# @deprecated: Member @values is deprecated.  Use @members instead.
--#
- # Values of this type are JSON string on the wire.
- #
- # Since: 2.5
- ##
- { 'struct': 'SchemaInfoEnum',
--  'data': { 'members': [ 'SchemaInfoEnumMember' ],
--            'values': { 'type': [ 'str' ],
--                        'features': [ 'deprecated' ] } } }
-+  'data': { 'members': [ 'SchemaInfoEnumMember' ] } }
- 
- ##
- # @SchemaInfoEnumMember:
-diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-index 7e28de2279a..daeb3d77b23 100644
---- a/scripts/qapi/introspect.py
-+++ b/scripts/qapi/introspect.py
-@@ -318,8 +318,7 @@ def visit_enum_type(self, name: str, info: Optional[QAPISourceInfo],
-                         prefix: Optional[str]) -> None:
-         self._gen_tree(
-             name, 'enum',
--            {'members': [self._gen_enum_member(m) for m in members],
--             'values': [Annotated(m.name, m.ifcond) for m in members]},
-+            {'members': [self._gen_enum_member(m) for m in members]},
-             ifcond, features
-         )
- 
--- 
-2.53.0
+I vaguely recall we had a set of them some years ago too
+(probably somebody specifically looking for flaws in the
+category). https://access.redhat.com/security/cve/cve-2013-4536
+might be an example of that.
 
+-- PMM
 
