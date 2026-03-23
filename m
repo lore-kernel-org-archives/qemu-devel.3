@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E34F46122
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3ABF46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fpD-0000dy-Cy; Mon, 23 Mar 2026 10:00:16 -0400
+	id 1w4fqs-0001aL-1L; Mon, 23 Mar 2026 10:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4foE-0008Sb-DO
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:15 -0400
+ id 1w4fog-0000Sx-Op
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:42 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fo8-0006wM-Mv
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:06 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fod-0006xu-RP
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:38 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 1650820B7017;
- Mon, 23 Mar 2026 06:58:59 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1650820B7017
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4AD4820B6F1F;
+ Mon, 23 Mar 2026 06:59:22 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4AD4820B6F1F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274342;
- bh=apZ0c23LEobuYLV/xQNkaE00YRO3wUE05eRvWn9R9qc=;
+ s=default; t=1774274365;
+ bh=ASHwIUqJhX6VXNhjtPjQt2QC4yNFkvq7Vac2whkLBwE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=G5MhR6qGe8Pl+TzUfI7xQZZt0ZGF6hUb9To/EUYKelrzr4B8KKbnEz6ecpGSCCbcs
- j5nsuXuljRYPXWE9f9tSZvwBU6ovuM/H/Zl/V570sCJ6tuyjei4rvyiDrFYkVJJl29
- bUiV6feNjPyLCPcfxQf+ByMz25s9oJyjd1vJYCts=
+ b=AEtv4OcTVKomZFVNK/kGBko1z4d0IDgkNtbtPVl/n7a9C/U4RgbmeMHzA3L53fdpy
+ n+T0JSs5ZkVnVDg3u0KUJDwGSPdjtQmD6HS0CIXxU5EgywxL8v2H5RAWwYdtwz+hG/
+ layGbJuszzJhBQ9zC2SFfpMvc5bxICZWPAQzBwMY=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 12/32] accel/mshv: reserve ioapic routes on s->irq_routes
-Date: Mon, 23 Mar 2026 14:57:52 +0100
-Message-Id: <20260323135812.383509-13-magnuskulke@linux.microsoft.com>
+Subject: [RFC 18/32] target/i386/mshv: expose msvh_get_generic_regs
+Date: Mon, 23 Mar 2026 14:57:58 +0100
+Message-Id: <20260323135812.383509-19-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,199 +75,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We reserve 24 ioapic routes using the new functions that operate on the
-mshv apic state.
-
-commit/add_msi_routing() fn's can be removed now.
+We expose the fn, so we can call them from the other source files
+(msr.c).
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/irq.c          | 115 ++++++--------------------------------
- accel/mshv/mshv-all.c     |   5 --
- include/system/mshv_int.h |   1 -
- 3 files changed, 18 insertions(+), 103 deletions(-)
+ include/system/mshv_int.h   |  2 ++
+ target/i386/mshv/mshv-cpu.c | 15 ++++++---------
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 9ba837f0e2..52b8ac9479 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -36,93 +36,6 @@ void mshv_init_msicontrol(void)
-     msi_control->updated = false;
- }
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 2b6d7b2f35..2c5d16bf9a 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -81,6 +81,8 @@ int mshv_configure_vcpu(const CPUState *cpu);
+ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
+ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
+                           size_t n_regs);
++int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
++                          size_t n_regs);
+ int mshv_arch_store_vcpu_state(const CPUState *cpu);
+ int mshv_arch_load_vcpu_state(CPUState *cpu);
+ void mshv_arch_init_vcpu(CPUState *cpu);
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 906f5b0c3d..ecb4711b95 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -108,9 +108,6 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
+ };
  
--static int add_msi_routing(uint64_t addr, uint32_t data)
--{
--    struct mshv_user_irq_entry *route_entry;
--    uint32_t high_addr = addr >> 32;
--    uint32_t low_addr = addr & 0xFFFFFFFF;
--    int gsi;
--    GHashTable *gsi_routes;
--
--    trace_mshv_add_msi_routing(addr, data);
--
--    assert(msi_control);
--
--    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
--        /* find an empty slot */
--        gsi = 0;
--        gsi_routes = msi_control->gsi_routes;
--        while (gsi < MSHV_MAX_MSI_ROUTES) {
--            route_entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
--            if (!route_entry) {
--                break;
--            }
--            gsi++;
--        }
--        if (gsi >= MSHV_MAX_MSI_ROUTES) {
--            error_report("No empty gsi slot available");
--            return -1;
--        }
--
--        /* create new entry */
--        route_entry = g_new0(struct mshv_user_irq_entry, 1);
--        route_entry->gsi = gsi;
--        route_entry->address_hi = high_addr;
--        route_entry->address_lo = low_addr;
--        route_entry->data = data;
--
--        g_hash_table_insert(gsi_routes, GINT_TO_POINTER(gsi), route_entry);
--        msi_control->updated = true;
--    }
--
--    return gsi;
--}
--
--static int commit_msi_routing_table(int vm_fd)
--{
--    guint len;
--    int i, ret;
--    size_t table_size;
--    struct mshv_user_irq_table *table;
--    GHashTableIter iter;
--    gpointer key, value;
--
--    assert(msi_control);
--
--    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
--        if (!msi_control->updated) {
--            /* nothing to update */
--            return 0;
--        }
--
--        /* Calculate the size of the table */
--        len = g_hash_table_size(msi_control->gsi_routes);
--        table_size = sizeof(struct mshv_user_irq_table)
--                     + len * sizeof(struct mshv_user_irq_entry);
--        table = g_malloc0(table_size);
--
--        g_hash_table_iter_init(&iter, msi_control->gsi_routes);
--        i = 0;
--        while (g_hash_table_iter_next(&iter, &key, &value)) {
--            struct mshv_user_irq_entry *entry = value;
--            table->entries[i] = *entry;
--            i++;
--        }
--        table->nr = i;
--
--        trace_mshv_commit_msi_routing_table(vm_fd, len);
--
--        ret = ioctl(vm_fd, MSHV_SET_MSI_ROUTING, table);
--        g_free(table);
--        if (ret < 0) {
--            error_report("Failed to commit msi routing table");
--            return -1;
--        }
--        msi_control->updated = false;
--    }
--    return 0;
--}
--
- /* Pass an eventfd which is to be used for injecting interrupts from userland */
- static int irqfd(int vm_fd, int fd, int resample_fd, uint32_t gsi,
-                  uint32_t flags)
-@@ -420,37 +333,45 @@ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *event,
-     return irqchip_update_irqfd_notifier_gsi(event, NULL, virq, false);
- }
+ static int set_special_regs(const CPUState *cpu);
+-static int get_generic_regs(CPUState *cpu,
+-                            struct hv_register_assoc *assocs,
+-                            size_t n_regs);
  
--int mshv_reserve_ioapic_msi_routes(int vm_fd)
-+static int mshv_reserve_ioapic_msi_routes(MshvState *s)
+ static int get_lapic(CPUState *cpu)
  {
--    int ret, gsi;
-+    int ret, i;
-+    int gsi = 0;
-+    struct mshv_user_irq_entry blank_entry = { 0 };
- 
-     /*
-      * Reserve GSI 0-23 for IOAPIC pins, to avoid conflicts of legacy
-      * peripherals with MSI-X devices
-      */
--    for (gsi = 0; gsi < IOAPIC_NUM_PINS; gsi++) {
--        ret = add_msi_routing(0, 0);
-+    for (i = 0; i < IOAPIC_NUM_PINS; i++) {
-+        /* ret = add_msi_routing(0, 0); */
-+        ret = irqchip_allocate_gsi(s, &gsi);
-         if (ret < 0) {
--            error_report("Failed to reserve GSI %d", gsi);
-+            error_report("Failed to reserve GSI %d: %s", gsi, strerror(-ret));
-             return -1;
-         }
-+        blank_entry.gsi = gsi;
-+        add_routing_entry(s, &blank_entry);
+@@ -187,7 +184,7 @@ static int get_fpu(CPUState *cpu)
+     for (size_t i = 0; i < n_regs; i++) {
+         assocs[i].name = FPU_REGISTER_NAMES[i];
      }
+-    ret = get_generic_regs(cpu, assocs, n_regs);
++    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+     if (ret < 0) {
+         error_report("failed to get special registers");
+         return -errno;
+@@ -207,7 +204,7 @@ static int get_xc_reg(CPUState *cpu)
  
--    ret = commit_msi_routing_table(vm_fd);
--    if (ret < 0) {
--        error_report("Failed to commit reserved IOAPIC MSI routes");
--        return -1;
--    }
-+    mshv_irqchip_commit_routes(s);
+     assocs[0].name = HV_X64_REGISTER_XFEM;
  
+-    ret = get_generic_regs(cpu, assocs, 1);
++    ret = mshv_get_generic_regs(cpu, assocs, 1);
+     if (ret < 0) {
+         error_report("failed to get xcr0");
+         return -1;
+@@ -300,8 +297,8 @@ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
      return 0;
  }
  
- void mshv_init_irq_routing(MshvState *s)
+-static int get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
+-                            size_t n_regs)
++int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
++                          size_t n_regs)
  {
-+    int ret;
-     int gsi_count = MSHV_MAX_MSI_ROUTES;
- 
-     s->irq_routes = g_malloc0(sizeof(*s->irq_routes));
-     s->nr_allocated_irq_routes = 0;
-     s->gsi_count = gsi_count;
-     s->used_gsi_bitmap = bitmap_new(gsi_count);
-+
-+    ret = mshv_reserve_ioapic_msi_routes(s);
-+    if (ret < 0) {
-+        error_report("Failed to reserve IOAPIC MSI routes");
-+        abort();
-+    }
- }
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 8acb080db1..08bc26713f 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -200,11 +200,6 @@ static int create_vm(int mshv_fd, int *vm_fd)
-         return -1;
+     int cpu_fd = mshv_vcpufd(cpu);
+     int vp_index = cpu->cpu_index;
+@@ -450,7 +447,7 @@ static int get_standard_regs(CPUState *cpu)
+     for (size_t i = 0; i < n_regs; i++) {
+         assocs[i].name = STANDARD_REGISTER_NAMES[i];
      }
- 
--    ret = mshv_reserve_ioapic_msi_routes(*vm_fd);
--    if (ret < 0) {
--        return -1;
--    }
--
-     ret = mshv_arch_post_init_vm(*vm_fd);
+-    ret = get_generic_regs(cpu, assocs, n_regs);
++    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
      if (ret < 0) {
+         error_report("failed to get standard registers");
          return -1;
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 56fda76a9c..9bc56e70cf 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -120,6 +120,5 @@ int mshv_configure_msr(const CPUState *cpu, const MshvMsrEntry *msrs,
- 
- /* interrupt */
- void mshv_init_msicontrol(void);
--int mshv_reserve_ioapic_msi_routes(int vm_fd);
- 
- #endif
+@@ -527,7 +524,7 @@ static int get_special_regs(CPUState *cpu)
+     for (size_t i = 0; i < n_regs; i++) {
+         assocs[i].name = SPECIAL_REGISTER_NAMES[i];
+     }
+-    ret = get_generic_regs(cpu, assocs, n_regs);
++    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+     if (ret < 0) {
+         error_report("failed to get special registers");
+         return -errno;
 -- 
 2.34.1
 
