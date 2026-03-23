@@ -4,150 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC8BF483C8
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5941DF483C8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iZ2-0001U0-0U; Mon, 23 Mar 2026 12:55:40 -0400
+	id 1w4ibD-0004OY-SV; Mon, 23 Mar 2026 12:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4iYz-0001Da-Vv
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:55:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4ib5-0004MH-5z
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:57:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w4iYx-0000wx-5X
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:55:37 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4ib3-0001Do-PD
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:57:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774284933;
+ s=mimecast20190719; t=1774285064;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uwMEodKF/gaipnHXhWutcui/GbZ6xyzedvCsjeMPTfw=;
- b=Pk/T2o+qoQZg1Ugltda4N/c+EyYxVSa9ut4rrDQNpe3ardtrohKVJFacVte8UTXdoN0e5d
- 1VoZnli7KUUVox7Do1UhXUScwasuMp7zm+YTM/F8+QqM0DH6QI6t+REhEU2UiKQjwxy9kt
- S9DNoAk/5uO/KbIdYUZq1zr1j4OMduY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=tfa54HH+XPXxZEqMtM5d9bOMy+a03QuaBuvSBlziR2U=;
+ b=bLGnr55IWfh9S/bSApR86WXDT7CAA+dZJpZs1XkNt9I7+YdL1D61qnwk7+RCFv71+Y/rut
+ 6VSaMvBmVNP15UB7UmJGRpqNqaKjjqNnWdv596sjYh78Zqup/4csFma19mH3cUsnOwcpa1
+ 2BwNaptpSaWTxoXZF0wmZ/ckfQukTFI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-qHhE3UCzNVitwERBScx-0w-1; Mon, 23 Mar 2026 12:55:32 -0400
-X-MC-Unique: qHhE3UCzNVitwERBScx-0w-1
-X-Mimecast-MFC-AGG-ID: qHhE3UCzNVitwERBScx-0w_1774284930
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48539bda3dcso5364215e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:55:30 -0700 (PDT)
+ us-mta-564-uRqMVck7NVanmtUIe796pA-1; Mon, 23 Mar 2026 12:57:43 -0400
+X-MC-Unique: uRqMVck7NVanmtUIe796pA-1
+X-Mimecast-MFC-AGG-ID: uRqMVck7NVanmtUIe796pA_1774285062
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43b41d45be4so4008940f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:57:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774284930; x=1774889730; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=uwMEodKF/gaipnHXhWutcui/GbZ6xyzedvCsjeMPTfw=;
- b=RrXQW3+q3onzjAFBxkE9taJmyUGD130jhxtUsN2dg3cYb3uwgPqI90r6g4xuiFR+Bu
- NAdomXDgm/GYGp9CW5H6INePSxmsmUIIyqDOhaoqqXmJmzQ7sOeZBa7wHABy6yuF5i9B
- 00rz5KisrkeIP6h/6D4Tz05QukAwwzjyXc1ej6zhyyCGAe2BPzLMr0ZSpCdcZ6jBMF+O
- byioJX6cJsAekaGnsRJiAfD7HMRQ2grNRQ6JzOkeZ0mHD1c8WXkqcOkuv8Rn4Ksb/MTo
- fkXrUcGLKpX3T9dKM9YXwJ/ospeQ4dMU6fnAGUuhuurYcsXs1/tgSWtMuQtJzOaS89oP
- 8PEA==
+ d=redhat.com; s=google; t=1774285062; x=1774889862; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tfa54HH+XPXxZEqMtM5d9bOMy+a03QuaBuvSBlziR2U=;
+ b=Njxpbg5APsLOhCkyX5i/4TUWzXsxYl0sXh9otnJSsNbsKbM22yl9UaD6QDbq03vzRR
+ jjfzSipEMOLk9jko9KU2p7fnisTLi05ANorYSi7M04uZQEDOf1HwCklwC2jm6y/uzh6i
+ YjshYIX9xoBhvK/eFYWQIuXtXWsbqyxHOJ24SvM+NIAFK7LYa260lJK/fZiZUVUlK2Xa
+ BKsXwVcaPyB2ohVwOFLQACJ3kSgxMcGFiElmikTtqR2iAtrM3/nnisP85vsTaiOmlUAr
+ lc0rnsO1xlD1jTwOeIIKlAyRK69aboatI5uYnekUjKaj8MeDSxH+bRmvH0FZ3Ykux8rt
+ cTWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284930; x=1774889730;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uwMEodKF/gaipnHXhWutcui/GbZ6xyzedvCsjeMPTfw=;
- b=HfvCxA8CJQq0RHkLOLSoDR0Qw7NztkMGngA6vFfakf0It4eSUm+rPfoAiLdMdIfqz7
- PAeb0n5wnACUiRcpSGMbAkUhfLiGjwTMOBL33nDplq+H6xjBVnu0EPMg24imIoKFRGKg
- BBwgHd3nURpru3HyrhD9HcAGI7CoZbXWx0ms/xSuAdd7wwAPW+WSlNMTfkW4b+kaNGPx
- GI1lx6FMPTicxPoTtCimEQ1K+yUCMKLz/T3mNIyYvaR++IRb7zgJxBo1mykqu8ZFzj+N
- 08On6jbgm/4ybQn/UlR7tkfBpyaVr5jB70IzaLtkUEdMiM1+KvA6THdaQnV0mmG2T/sr
- W0QA==
+ d=1e100.net; s=20251104; t=1774285062; x=1774889862;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tfa54HH+XPXxZEqMtM5d9bOMy+a03QuaBuvSBlziR2U=;
+ b=PWhBiStgptG6LJjSif69LEX4I1VwnvnmzI4IDktJCK5KswfkRqf5IQwQl6FZqgQihG
+ c6JftSo0G64LYIOPNSQjrsj9ambF2bqRJ7QS0Dk+6qn127SMFaVIW6V5khs8/Wg3sPui
+ CVdP6fvCg42Rqi/Am7HftNvb7PAD/zrtqX1y+9xmYnrDbCNd2nQ6GyY8QCAdK3vNzf/Y
+ imRyPppZvd6WDwieqLUYKD2+EWP1EsxKzl65URBBnRKovMP6Z5BHj7ckSy6RLACCL7uv
+ dzSPiHz453dgp59MDoQWotpxiNzwYlGGCNxx6klaus7bhNrWiAjavIBmwp/H5adEjWC+
+ a30w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXTxVNIt/fV89MRC4WNxpnKV2qjOX889BH8q9dc5KBKQF6+LWgMjww+WWBZLPGWzT0pDKBeanunvU1g@nongnu.org
-X-Gm-Message-State: AOJu0Yzfwfvwl5alYSVHHORWZ4ppRH+j84aEcPFFXzU/vOdRfinB/PUJ
- H2gxo3xAGVFZQBjfCyJSZVnW4hcumDhfp6R5CI9qU9PEpS8KpzM4FG/yk+mwr+V2TT82I1/dVup
- ZTE2jgltA2H/CG7eBbdCLFMnQQbf8r0CbarJ4xqKY27wmeiuC7SSj4wLp
-X-Gm-Gg: ATEYQzyTBotbPcrGOUX880Nivxro3prup6HB83h0PV2QIAat1H9ADNIf4ISrwbRvdKE
- qBvYx1svTzwC0ihi84WryThlzStQkuiFi4kn1hcn3F3EEzYAH6+kKL/7ldu5bftYxo6tWhmoRcA
- ctPvVTKSIM2NyEeJGk51fNBB335rqAZN0jMJl3sRgZU1DT/Q0G+jw7rcGTfo3J2ONRq7eDF2yY4
- pKLw5JvXEKImXdhG9pNf7I9xIHp+nSg7sTvqbHr7Zkr2COpLJJYyJdKy/5rXEDOHBoDfeeURw2s
- 8tJEWxfHuKh8ZhSHS8NK+TWhy7Ej8WUxFcsaUCzWtILeLxgG2iw1H4MYq0iLDYPXoF6somWOTPS
- cxrAT0ghZAG96MXAqog==
-X-Received: by 2002:a05:600c:6749:b0:487:716:2fa9 with SMTP id
- 5b1f17b1804b1-48707163156mr77323035e9.13.1774284929925; 
- Mon, 23 Mar 2026 09:55:29 -0700 (PDT)
-X-Received: by 2002:a05:600c:6749:b0:487:716:2fa9 with SMTP id
- 5b1f17b1804b1-48707163156mr77322725e9.13.1774284929511; 
- Mon, 23 Mar 2026 09:55:29 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.47]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b646b0b0csm29394686f8f.15.2026.03.23.09.55.28
+ AJvYcCUnwEkcKUXwWjkdl1hNePNPI1IxmDfzFUIE3/YXGijlWd1pCB2szGXS6qVn/cgvl/EksY0FOxxuRvYS@nongnu.org
+X-Gm-Message-State: AOJu0YweXcBr6efgqqCeM9F5F5vqtAQpWIIafTwOYWxVfFLrJJFwnRam
+ fgwc56FhGpKTTGxrs97FhGq5dvRvUQrMnPHyu/t1hC0oUXdi5XbiuRhOtFqMlOi01uqHLut/6fj
+ Y179ZvLX3V2oIGsGNGzozTIWprCjG+0EawGv+0Ane0MaPXn4vFeBDdglT
+X-Gm-Gg: ATEYQzw/l6TOTTusEJPKwW38OOQnAMozFpnj8q6Ez7YaeTLPZw142+Fj5q4Tdy10aYg
+ PFByVuTMgGWWqu0fCMdZEGCutXjZaTa5PCPZhxnSYS9PpSksewgIg/ej8x3XBG4Y6JeIB3DlEVp
+ s7cHUp7lLapQaY2EKv3rk/GkC7QPzt2X4wQkdolFUrP9cBkYU0qwuYJXZJ+lAveztnqZlE6ajTL
+ i0haTMmPz7Q+1YYfCBV8GuCvUc+zLYxiy85w5Xqi31MAPqF3txnO25ATCJNzPTZFEL1AzzJDUMX
+ ex5JXOD93ri79VTOZPwI/IrhmfJZATU8mneUQ+7lIcgoyBsWaMmOiMQPx00kipk16maeXEesdlL
+ z1kNQeWWMWhimsuOFnYsnHRO2JfDr6l5lsB/J1XI378xsoGtdlprjOtZD9kmmo2o5OVeqh7ByT/
+ UEloMi7XfV5v6mXZvHCFnw4ez+BJ1XEPxFCxFGcrNfTwApvOoA0Cs=
+X-Received: by 2002:a5d:5f56:0:b0:439:c24b:ec15 with SMTP id
+ ffacd0b85a97d-43b805316edmr525843f8f.5.1774285061697; 
+ Mon, 23 Mar 2026 09:57:41 -0700 (PDT)
+X-Received: by 2002:a5d:5f56:0:b0:439:c24b:ec15 with SMTP id
+ ffacd0b85a97d-43b805316edmr525809f8f.5.1774285061216; 
+ Mon, 23 Mar 2026 09:57:41 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d737:d03c:df99:cbc9:b444:8cfa?
+ (p200300cfd737d03cdf99cbc9b4448cfa.dip0.t-ipconnect.de.
+ [2003:cf:d737:d03c:df99:cbc9:b444:8cfa])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b644bd923sm36702213f8f.12.2026.03.23.09.57.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 09:55:29 -0700 (PDT)
-Message-ID: <a626d134-7664-4b5c-8502-016b406d75d6@redhat.com>
-Date: Mon, 23 Mar 2026 17:55:27 +0100
+ Mon, 23 Mar 2026 09:57:40 -0700 (PDT)
+Message-ID: <222c5153-0f83-4288-814b-698caa5c8f3a@redhat.com>
+Date: Mon, 23 Mar 2026 17:57:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/15] s390x: Add support for virtio-blk-pci IPL device
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20260309003601.242634-1-jrossi@linux.ibm.com>
+Subject: Re: [PATCH v2 1/2] iotests/041: add test for mirror with throttled
+ NBD export as target
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, kwolf@redhat.com
+References: <20260318165446.709541-1-f.ebner@proxmox.com>
+ <20260318165446.709541-2-f.ebner@proxmox.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260309003601.242634-1-jrossi@linux.ibm.com>
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20260318165446.709541-2-f.ebner@proxmox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -165,23 +127,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/03/2026 01.35, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> This patch series introduces an IPLB subtype to support PCI devices, which may
-> be built if a device has been assigned a boot index and is identified as a PCI
-> device with a corresponding s390 PCI Bus device.
+On 18.03.26 17:54, Fiona Ebner wrote:
+> Mostly in preparation for commit "iotests/041: add test for duplicate
+> job-complete with throttled target".
+>
+> Use a second VM instance for providing the NBD export rather than
+> qemu-storage-daemon, because the latter does not support qtest for
+> stepping the clock.
+>
+> Use copy_mode='write-blocking' for easy checking how many bytes were
+> written in a given time. In the job's offset, the numbers are
+> inflated, since a 1 KiB write will mean copying a full cluster of
+> 64 KiB.
+>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+>   tests/qemu-iotests/041     | 155 +++++++++++++++++++++++++++++++++++++
+>   tests/qemu-iotests/041.out |   4 +-
+>   2 files changed, 157 insertions(+), 2 deletions(-)
+>
+> diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
+> index 8452845f44..7b4a701aba 100755
+> --- a/tests/qemu-iotests/041
+> +++ b/tests/qemu-iotests/041
+> @@ -1373,6 +1373,161 @@ class TestFilters(iotests.QMPTestCase):
 
-  Hi Jared,
+[...]
 
-FYI, today I noticed that in some rare cases (maybe 1 out of 50 boots), the 
-loading of the Linux kernel from a PCI device still fails. I filed a ticket 
-with a reproducer here:
+> +        # Check that requests do not complete faster than 1 per second. They
+> +        # might complete in batches, so do not check for exactly 1 per second.
+> +        for i in range(0, self.reqs):
+> +            result = self.vm.cmd('query-blockstats')
+> +            assert result[0]['stats']['wr_bytes'] <= (i + 1) * self.req_len
+> +
+> +            self.target_vm.qtest(f'clock_step {1 * 1000 * 1000 * 1000}')
+> +            time.sleep(0.1)
+> +
+> +        time.sleep(2)
 
-  https://gitlab.com/qemu-project/qemu/-/work_items/3350
+I’m still not so happy about this sleep (in the loop it’s fine). What 
+exactly do we need it for, what are we trying to test here? It looks 
+like it’s testing that the throttle driver allows the right number of 
+writes through, as it should, but I feel like that should go into 
+another test that uses null as a back-end so that it is not prone to 
+flakiness. I think here we should just trust that the throttle driver 
+works, that is, maybe just complete the job under throttle? Would that work?
 
-Maybe there is another virtio_reset() missing somewhere?
+Hanna
 
-  Thomas
+> +
+> +        # Check that all requests are complete.
+> +        result = self.vm.cmd('query-blockstats')
+> +        self.assertEqual(result[0]['stats']['wr_bytes'],
+> +                         self.reqs * self.req_len)
+> +
+> +        self.disable_throttling()
+> +
+> +        self.complete_and_wait('mirror', wait_ready=False)
+> +        self.target_vm.shutdown()
+> +        self.vm.shutdown()
+> +        self.assertTrue(iotests.compare_images(test_img, target_img),
+> +                        'target image does not match source after mirroring')
+>   
+>   if __name__ == '__main__':
+>       iotests.main(supported_fmts=['qcow2', 'qed'],
 
 
