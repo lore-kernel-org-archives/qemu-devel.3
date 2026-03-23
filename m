@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29D6EC01CB
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B9FEC01CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 11:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4dWm-0000zb-7X; Mon, 23 Mar 2026 07:33:00 -0400
+	id 1w4dcD-0002f1-Rd; Mon, 23 Mar 2026 07:38:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4dWk-0000z1-8l
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:32:58 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4dWi-0008Ax-KU
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 07:32:58 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-64aedd812baso68938d50.3
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 04:32:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774265575; cv=none;
- d=google.com; s=arc-20240605;
- b=EvY1uu/2rb7XeqSDVxDNe6H2eaHhiDLjTTN+U0Gc9XgawmuAjk14GLeT9RKsqa13Ds
- QBmgKtlUQhEXu5Hz/MyTa18fwLInfHnnjFZ8YcBS+N+/5KJ47ODSnCgAu44SEvqGhtE1
- LDVhEXOLf78tlPFEILIEUno8u46V0l28oQ6CkKxCVr5RQtkd55wrbtm8EalXa0HHKyeH
- +DTIiUpEfkwvyXnXqgB3+NyaEjtoCqS8Tf62j/BPwQPKUqi2P4AXmQ1u+r085lyasfF0
- 8ejT+JESSYlIbW6JCTev/K9JkA/zmqegWJpaAUcPBecDmin5W8+zbvPQe9d6FX8eDWVs
- qiwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Uce4dAExkWdTa9B8+QY2xBvUaXU6jGLUBPzqr4+fI2k=;
- fh=gS8oh9EHdcTDcglskGyIv3/M5LtfI+jKdwGYJC227W4=;
- b=ZNlCdOJd2nLqSDvUhmuJvf34On7edymUOMSuNubVZkJ9kSpxn5B5OO14680zNvwKeV
- lh1kdvfPlsWSqRAEO3YTl8/2G29/ds8dE2WjbKTBLTG8jIMnfpA318nQ/kiqlRUm5GHX
- KJB8KZ36UnVjLyBrAKmvORLRL8P7L6kGyDcYOjy+FKGc75etrOj/ZbXsdRUculzIB7q0
- RyWGcUj4yKrtdUCGESpjjhdVuhj97uRFMUooRD5oeYHCyU4iAa+AkjIbhg9ln1uozP+k
- mmVHdbkTxMy5ntude1A93/jMdQ7Cs9DHbqLJf69REtUgb6YsOyfgbVhjKW3enKuLjp8k
- MtGA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774265575; x=1774870375; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Uce4dAExkWdTa9B8+QY2xBvUaXU6jGLUBPzqr4+fI2k=;
- b=QRv4BBsv6azUBhB4/hfY3LmQ4lGn0DogEyXuaxtP38ky/phcpPJpdlTJMF/GZPmW8A
- OSYuBt2Agv4gSBdiGJgv3LHnrLA+ScWEyIDL9vyx9gurmq5lqLMjEHM+jgBs4uLRyAEd
- Pr150Kkq6ENZf/Bm2FJQpz/BEV4jl4I/FHmHEAN6Qa4k4j3OC3YGHm2HzaxUtxhgOi1I
- IWdiKbUBH3547hADAQG5ZGr8gMW9sMnrg3Tc6cPyEXL2g4elnmdHAHKO90Lw8f61tBXn
- Ch9LApVkXtZjajI3/WY+7rR/45253PurcXot7xn2tknOVZF27uazFcFx3Wqg0Lkd1wSL
- pOdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774265575; x=1774870375;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Uce4dAExkWdTa9B8+QY2xBvUaXU6jGLUBPzqr4+fI2k=;
- b=cbz64dVZPTNhBS+6VfYqOZ/aR+A1lBKKdtVszQRuBac/qsjFKPdOpqlftBh42Ay02V
- Yr+Bl8QdbdEVZ4joAALunhIUGPTEmtYX6EAuQaqosL7bRBHS3gZZKkHzzWAbIYmy7riR
- Qwb2Pyoml/FcMs9NjFtnWqv+g2I7X9u0rSFYtDmKwOZKk0CgWuesE7CmGFEY/GBeu/yS
- YDmDW3HLW1tfFvhkRdTHZ6ZQOmS/bK7WCQ54G+HCDEwBou7LYNc0LqhjUYiqW0MDpPxG
- UoMHhRwoRXwv9GNN9QFhiUhbRXcoc9itzmJNGNUx8DL8T1eC8EmwIyoGVfHB/U/BCEhf
- l7ig==
-X-Gm-Message-State: AOJu0YxEOw4yvOvxSh+4U7z0W8JPKvn1RDkYSiXa49DfR8mFFRhzncIj
- 73vgjEeCLz2leLN2+UzhwW3sTiCO+w49E8kN4j0CAXODZtkv9VHKZB5lSqgLztEJ3TLvPGuD3vu
- qqTB6QDlysu6DMlqnzGsFSnZvNZIRSOu5EpnTqUKztg==
-X-Gm-Gg: ATEYQzylm/+6vl+jIE84kYNcL+EN8O433zRoGD5TLBNvyPkF4bbTlrJntp5BhZPmXw0
- n/AEWxRkxrZzqz/i5oin5dvpxAbbswbCcRCJc8kN67wpX+xIkh7TPiwvDdhH6+05Zqg/ELyMKV6
- aR8iBwww1F/a8ATm0qfhBIw5mLpcheaeJzUMtAhvnK6XkGkn/TMSIf7Xr0tY0kKJ00AmGiWTi+h
- koMKEeZAfipbyfMKt8T4oEo7pkjlPYVSuNuDYLEO5JW+DGUZZ+jhhGZahYst+67vIfTP61oAWmC
- fx7AualqeENH4ZskBWyu6pOM9cWY2Jpb5nze7wGqlYfoBvtyUTuh9zrR/YFXP5T/ANE=
-X-Received: by 2002:a05:690c:6983:b0:79a:6d99:b242 with SMTP id
- 00721157ae682-79a909612camr120586737b3.0.1774265574862; Mon, 23 Mar 2026
- 04:32:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1w4dcA-0002e0-1V; Mon, 23 Mar 2026 07:38:34 -0400
+Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1w4dc7-0000Un-OT; Mon, 23 Mar 2026 07:38:33 -0400
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+ by mailfout.stl.internal (Postfix) with ESMTP id DA1591D001BE;
+ Mon, 23 Mar 2026 07:38:26 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-10.internal (MEProxy); Mon, 23 Mar 2026 07:38:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1774265906; x=
+ 1774352306; bh=o8sCfQlzy5s8jSBk3Ce+OSgnj/WKPr6lmYXCWzuGIBs=; b=U
+ 69GZFyWsPfb+nBK/SX2Sh3sh+8wWdbgzvqJ8qOIAKghwRCfLArMcuG3ZNLNnDTu3
+ haOwwfQWj1BzT/+/tKuBIYJJIpmHttPNDA730dr8GJe4NjUR/f9Agpyv069WU8TR
+ IlpOahrL+GOjHrdB6wB390Dtcn0UO/4uY4wdwRxGOGYto8uXf6zGVETNxwkIzinz
+ tpcIZmwc1NOaw0drXVkvr9jCQcT4ruZ2mTAAAH4voqhkTNDID4wkpw6alfX4W4kR
+ 01qR+R+f4wwNsunfIiBESCu7gC8RCPHiaffvf+akv41/zqVnYC/ca/fGwZhQhgJ3
+ AtA8Hoyth/bDmAAeFHT+Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1774265906; x=1774352306; bh=o8sCfQlzy5s8jSBk3Ce+OSgnj/WKPr6lmYX
+ CWzuGIBs=; b=x0zyhypLE5UH59jwM1DPTtdWJIwIuIcEO0ZpOAeDsnIJO2Bkw5z
+ psspQ2O3boQmQ2HnV1YAetlaCxyHqrRN/8rnxUxbN+7vXUfq2tTmMzhpGSnZBGMz
+ 6nzB9cOYCRUrIO2nlMWJ9NIFMck4XvN7hKc4xWenUZ0el5SRS2yJAXWaOH4gmrM6
+ BQXP3GF03oVHb3Ok/aijkMx5fAKbrtCoLV/JPDV+/JWo7Pn4SjvjfhXW7HC3io4k
+ BXo7feJDaavCdYQADrLXI8VLwXYovW3cfPgvmpnNmKxZccYNGyEYlTgEy53esYiz
+ bWlhlioIQ7m40gVr7wqpxZN2UrjwpXdxTAQ==
+X-ME-Sender: <xms:MSbBaShGGtfKVAb07j5oqe7p8KUKpAh-tjRvM4b6YIWPP1Lxk3abOA>
+ <xme:MSbBad_tRx0qXvI7LQAsUN7er7mhMXsTleOPXbG7EzPWnjvy1_R3ORXaFTKVOM5-1
+ tlbS_59F4EvtWjVa5ozjRShNo1uPI1G0YPH7lipxpfrRJAZPTWOzs0>
+X-ME-Received: <xmr:MSbBaZEY89Dg3JGhYuEFz9k70G1jBoI9zNsSTsjPxejfecHTNQ37hpGWyu16lQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudekieduucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtdorre
+ dttdejnecuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghv
+ rghnthdrughkqeenucggtffrrghtthgvrhhnpeeufefgjeduveeifefhhfeikeeltdethe
+ ehteeutdeuudefveeiheejieeltdegtdenucffohhmrghinhepghhithhlrggsrdgtohhm
+ necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
+ esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtohepihhhrghniihhiihhsehgmhgrihhlrdgtohhmpdhrtghpth
+ htohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehksghu
+ shgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghroh
+ drihhtpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgt
+ phhtthhopehihhgrnhiihhesohhuthhlohhokhdrtghomhdprhgtphhtthhopehithhsse
+ hirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:MSbBaQnADcIsXNK1vMNF5Cm7MOIZl9qfPw_JnlwE_8WXw5xPIkG11w>
+ <xmx:MSbBada18ruV0X44Q9hFnFA1bFII7U0pgCMhkhFYnDcZ8EPgWkvsvQ>
+ <xmx:MSbBaVEerdloYRjQvbtHclVfZpiljHCGP1RIKg1DVAC5nWOWgC9C7g>
+ <xmx:MSbBaeKCU7BKFeLDRPf6FIryWB3WFsvTelVwn9PR5R_OtWn7_Dvk0A>
+ <xmx:MibBaX1uZ2l3cDZpb25mR6MI2EjNt5dGtK0rONg6A9vLQccPUfjOLtpN>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Mar 2026 07:38:25 -0400 (EDT)
+Date: Mon, 23 Mar 2026 12:38:24 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Han Zhang <ihanzhzh@gmail.com>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it,
+ qemu-block@nongnu.org, Han Zhang <ihanzh@outlook.com>
+Subject: Re: [PATCH] hw/nvme: remove unreachable default cases in
+ nvme_directive_receive()
+Message-ID: <acEmMFBXkcgGLtGo@AALNPWKJENSEN.aal.scsc.local>
+References: <20260317010721.232247-1-ihanzh@outlook.com>
 MIME-Version: 1.0
-References: <cover.1774099044.git.dingtao0430@163.com>
-In-Reply-To: <cover.1774099044.git.dingtao0430@163.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Mar 2026 11:32:42 +0000
-X-Gm-Features: AaiRm525KdEGD6QFdc1qMCIQHFRKN2woDuFxGxjdWhgdlLBavvHfWVDHrTJezbY
-Message-ID: <CAFEAcA8S3=pUo9Dw0Lc3sWF0PHK-F-hpObDG-t_zCK7-QuaUBg@mail.gmail.com>
-Subject: Re: [PATCH v1 0/5] PL011 and PL080 for dma transfer
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="OhxHg5JLEyL9not+"
+Content-Disposition: inline
+In-Reply-To: <20260317010721.232247-1-ihanzh@outlook.com>
+Received-SPF: pass client-ip=202.12.124.151; envelope-from=its@irrelevant.dk;
+ helo=fout-b8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,56 +111,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 21 Mar 2026 at 15:47, Tao Ding <dingtao0430@163.com> wrote:
->
-> The PL080 implementation in QEMU currently supports memory-to-memory data transfers
-> but lacks support for peripheral-related data transfers.
 
-This is true, but do we actually need it ? The PL080 is an ancient
-peripheral which we use only in a couple of devboards, where nobody
-has complained about the feature being missing despite these
-boards having been in QEMU for decades.
+--OhxHg5JLEyL9not+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It's correct that the versatile boards ought in theory to be modelling
-the peripheral DMA and wiring up the UARTs to the DMA controller,
-but what's your motivation for implementing this ?
-
-> Change in Versatilepb.c :
-> -----------------------------------------
-> diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
-> index 254b1610b3..ee0056e831 100644
-> --- a/hw/arm/versatilepb.c
-> +++ b/hw/arm/versatilepb.c
-> @@ -281,7 +281,7 @@ static void versatile_init(MachineState *machine, int board_id)
+On Mar 17 09:07, Han Zhang wrote:
+> Static analysis reported that the default cases in the switch
+> statements handling dtype and doper in nvme_directive_receive()
+> are unreachable.
+>=20
+> The values of dtype and doper are already validated earlier in the
+> function, making the default branches redundant.
+>=20
+> Remove the unreachable cases to simplify the control flow.
+>=20
+> Reported-by: Ekaterina Zilotina
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2472
+> Signed-off-by: Han Zhang <ihanzh@outlook.com>
+> ---
+>  hw/nvme/ctrl.c | 24 ++++++------------------
+>  1 file changed, 6 insertions(+), 18 deletions(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index cc4593cd42..36df6eeca2 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -7550,25 +7550,13 @@ static uint16_t nvme_directive_receive(NvmeCtrl *=
+n, NvmeRequest *req)
+>          return NVME_INVALID_FIELD | NVME_DNR;
 >      }
->
->      pl011_create(0x101f1000, pic[12], serial_hd(0));
-> -    pl011_create(0x101f2000, pic[13], serial_hd(1));
-> +    DeviceState *pl011_dev = pl011_create(0x101f2000, pic[13], serial_hd(1));
->      pl011_create(0x101f3000, pic[14], serial_hd(2));
->      pl011_create(0x10009000, sic[6], serial_hd(3));
->
-> @@ -292,6 +292,15 @@ static void versatile_init(MachineState *machine, int board_id)
->      sysbus_realize_and_unref(busdev, &error_fatal);
->      sysbus_mmio_map(busdev, 0, 0x10130000);
->      sysbus_connect_irq(busdev, 0, pic[17]);
-> +    sysbus_connect_irq(busdev, 3, qdev_get_gpio_in(pl011_dev, 0));
-> +    sysbus_connect_irq(busdev, 4, qdev_get_gpio_in(pl011_dev, 1));
+> =20
+> -    switch (dtype) {
+> -    case NVME_DIRECTIVE_IDENTIFY:
+> -        switch (doper) {
+> -        case NVME_DIRECTIVE_RETURN_PARAMS:
+> -            if (ns->endgrp && ns->endgrp->fdp.enabled) {
+> -                id.supported |=3D 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
+> -                id.enabled |=3D 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
+> -                id.persistent |=3D 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
+> -            }
+> -
+> -            return nvme_c2h(n, (uint8_t *)&id, trans_len, req);
+> -
+> -        default:
+> -            return NVME_INVALID_FIELD | NVME_DNR;
+> -        }
+> -
+> -    default:
+> -        return NVME_INVALID_FIELD;
+> +    if (ns->endgrp && ns->endgrp->fdp.enabled) {
+> +        id.supported |=3D 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
+> +        id.enabled |=3D 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
+> +        id.persistent |=3D 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
+>      }
 > +
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 6, qdev_get_gpio_in(dev, 0));
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 7, qdev_get_gpio_in(dev, 1));
-> +
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 8, qdev_get_gpio_in(dev, 16));
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(pl011_dev), 9, qdev_get_gpio_in(dev, 17));
+> +    return nvme_c2h(n, (uint8_t *)&id, trans_len, req);
+>  }
+> =20
+>  static uint16_t nvme_admin_cmd(NvmeCtrl *n, NvmeRequest *req)
+> --=20
+> 2.34.1
+>=20
+>=20
 
-These don't seem to match the channel numbering for the UARTs
-documented in the versatilepb manual, and only cover one UART:
+I'd rather keep the switches there and drop the early checks. The
+switches are good documentation for what's going on. Removing them makes
+the code a little "what, is this correct?".
 
-https://developer.arm.com/documentation/dui0224/i/programmer-s-reference/direct-memory-access-controller-and-mapping-registers?lang=en
+If you update that, I'll be happy to grab this :)
 
-If we're going to implement this, we should correctly model
-it in the versatile board and have the test in tests/qtest.
 
-thanks
--- PMM
+Thanks,
+Klaus
+
+--OhxHg5JLEyL9not+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnBJiwACgkQTeGvMW1P
+DekJ2ggAjV48+QPD4E4fOag6cE6IsECtHHJ8GK+T1fcQGnyg/lMInGMj3wfRIaJk
+RM1Jzq7kDC+N3LoAnFZK6MeFhBMyQhaZZkYOhAkgXOUfF+c0VAGldvMDPCYOOi9r
+qWY3lpP0MtHAykP1k16Z8TeQhU+Q3QWwSTPrGMloLaXXTDtYAgUcjXETESMcXl4x
+1UYubZdov0l1YcQ6jwQD2Z49j3EVEwXH4Rs5KYft2eXbstsWcF7lUbc0Z8gaIgU9
+B3Zf+CcnkkuLmebLI+XF33oBBEzg5V9VhQz2rJ+cdnKnByKvXU/8Rs5gawq+915F
+67xVm8ZA6nhfD1OO0S1zoRq8GD+Opg==
+=yJ8I
+-----END PGP SIGNATURE-----
+
+--OhxHg5JLEyL9not+--
 
