@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 508AEF483D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B451F483C8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iXX-0004mr-6S; Mon, 23 Mar 2026 12:54:07 -0400
+	id 1w4iXs-00063b-KG; Mon, 23 Mar 2026 12:54:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXT-0004aL-U5
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:05 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXn-0005dl-OG
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:24 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXS-0000bB-CW
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:03 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48702d51cd0so29549025e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:54:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXm-0000e4-AI
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:23 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4852c9b4158so33748455e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:54:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284840; x=1774889640; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284860; x=1774889660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4MpTe1yv7uEMZE6CnXhL8F86Rr2QJaTOJmEJNZwsfqQ=;
- b=byq5oydEe/VlmG1/39r8cVdThxb1L6J6+hXpUnrRcCiktJKyi1auFwf+qaFr0KZbeZ
- SBLSpZxWWWXgxVosgrTkAy2pqdp8ntE3TG4kLUDE1ke5xpwY/66FISOTTFKmFBafg5iF
- FDZecwRthOVZf4KUi9pKgnC/ozQM8+EH3voUsRUk410lSN2LiqxB91wGXSpDzFYxk62q
- 6jhzhRYaDyxtBrxz7P80HAW9ygb8qoRw5exN25x01SbIfOaj9i79w7jo8NA4ox7LFPKL
- JigmKHluFHTVgdqipD7sDm97ztlCxXW0RVmpag6KaxTV2Xn4fgcrtVM/ajQe3ebiht2B
- G9sQ==
+ :reply-to; bh=6zkZ4KurA30gv8kMnOhTH3jotd7NQGbvuL8HbdwSYNs=;
+ b=zVgr9DeKcfhOXVZC2RLNtJIZqFnn0jLEG4x1ZU89cnXhYkswp5zjtpkaw0XP7wXXl/
+ oTup11sz8w9GUP9tf41upAEvlD8w9huj9u1O45I5w7vMa9Euy+xFIQWr/aPft7qpaj0N
+ IaGoo71LbEBKEXN93wZJ9ZZ6hilmkdDW3wLofFpps++GRGaHxCEhiFNtxG7bUy+2tiFF
+ eXrlCgcMf2JuXnwR+XDAk15yrubakaakzm9rDnqJjvlpRPH5TkNLu+jD1yBPq/8XkDtj
+ kXNkddGXvcfuF1sbA6NoegXYY55vVlHrkm1Z6H3k7d7ptaSao0UObEFjcmP07Mz3ZIvF
+ lh/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284840; x=1774889640;
+ d=1e100.net; s=20251104; t=1774284860; x=1774889660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4MpTe1yv7uEMZE6CnXhL8F86Rr2QJaTOJmEJNZwsfqQ=;
- b=aZg0dFOdSJaD8jEsoWLHWjf+BlNWJ3gtVA39IOXWuBRcobuOs5+cOskAQXQnd5Grms
- vVPxEKDRKpMhrZRLOjvv94fFhjAz8HXJ1G3IH3UbSc7S40kElVHMQIbvk3SAq7/NpE22
- ZfaoF83GEGrssudtsnlKZh++OKNTrR5CeO9A7Ykgk/XDQIb4Fb+JZ/lWakQMF+vHjS13
- EC2xHFPXKlWV3YZpcLcvVs5UVXaruh9N2AebXneadUmzfW2dZL9JcXMQZdxWMRusbxFg
- wZouUshCXSFA970Nl4OvfTrc3IoXoowJRabpZR9tXt7hnmmV+y5GBWgUUHm6OkiwIurG
- NG9g==
-X-Gm-Message-State: AOJu0YyGD06XEHbP1/ayeBky3MlOKNcM1c/lz7IzDj4ntJfWUmBiFPcv
- JuB5RG3XxzCp/b6+/Xa9IHCdhuvC45A2nTjzntT8DSCPk25tA1l50BN+hvTr4tdPC0LElJ9z4g7
- SHX6IVAU=
-X-Gm-Gg: ATEYQzxwqSL4FmQrNa3uJNZibrCzte6JcrvHxgEWqSiSUWnUz95EEs63jdD+49AhNbm
- gKIUV3AD+zmMb+oz7q3qVZ9DIOizeK22Cu/lyEbPRGf0mVkXRpY44ne5NyLDltILxhWC79TVXUU
- QTRkFncVK98VcvUxASFxGZgPlpfIlp7cqyhorkIYWUzG2k1ubtYLNCEj1RlxSPIvlaXpbUaez8a
- FHvc+B3Fi5vQgDFX3TNH4HOZCC613W/U7K/Fia65BM4bsguDjjnS44+vFUdXPk25cPFRwrKVrAL
- g4Ss/66bjuyPFNzJKQYIS54MOPmzB23XtbZxXnMSWj5jdyMK0Q+DpGb8i8IWVZzbOBEBE+1AaRZ
- i3NWPJRvzbCy51+TlCkLaegkatwt5ENL6fTyx0mN1f8GfS/xtCalX6fePdrpfhUqi8j3lxzIQb/
- UKommKn2wyae0npzxGQRdi4Gg6YmAXVRDZ67VrPV25hhJWDUmGjHmVARbRJ4K5yKunfvQ4wwmM
-X-Received: by 2002:a05:600c:3212:b0:487:1c2:6a4c with SMTP id
- 5b1f17b1804b1-48701c26b76mr91783185e9.4.1774284840485; 
- Mon, 23 Mar 2026 09:54:00 -0700 (PDT)
+ bh=6zkZ4KurA30gv8kMnOhTH3jotd7NQGbvuL8HbdwSYNs=;
+ b=GwQG4UpnztgeMvFdGHeEfCM8dczFMD/7tz6uk3T5p03sBzF6ff7HQLjftyx3xitEAZ
+ Sp/6EmYpFUNBQMEJEfKsTuKtDtr5TZRQKn2aBuMBxo0pCcam5Tlk+00hTEmFJb5Xvrg/
+ nshjF6soUzZ5QnOwCqswaf8xIvK7xJdNjuHMVBi8w2CcwRC3jT5xMOgYocfuIJkXgeTe
+ Zti+yJR1k6DKifF0bPxgcnknrMeGuK3j7TPctUv0Ktlj4KHGf2UBua9tN3TlL5Qt7E0u
+ IDY1aXRHDwdcnteG27tawKqsS+mXjYh21GXbwdul8fAIh4eiNwoMZHFe8y0qsRZ4nsms
+ xkKw==
+X-Gm-Message-State: AOJu0Yw7CR+FMm713P0YNEHYtJqwdDtGPUlmWmyHdWJgzK+v7E0jnkxN
+ y3u1F5cBn7UPBlOHdabikt3mKlC6jbFERlZ9sQOYxT65EC3Xun2KWO0oINoqC9ViWeqe2uSWmD8
+ zKhRTXSk=
+X-Gm-Gg: ATEYQzwU6Mp8JGk6kHydY1w6j6Q4V4vjdAVaaGevDr/fmrW3Fkabu6XSPKKhXNp6FY5
+ +7P1ddwdcydpsv4oyhdy9hbz9nhoNnKP0RFBqqAdT+GaYo5C8I7N3aYT+qG9qqyndoNfmMyxDcR
+ qL4Af/PaVG4ZXrSj6EdR8xQbxh1EDTuWd3ULMo9usvZzn/leHEJ79FvAu/MoEnzOSK1aBAkLoz6
+ MoHGO5MlkUPZCszGDs6/lYqou1+HTchi7tLnAa96mEajZGDOfGR6yO5BqorXq7rBBF97Z4Qt3Y/
+ dmpyXV72NU6u2sElOm2qq+CEJMhGHbs0KICBlGh88czddaozpwOWpaWIRF7HjKXCfS+GvCJs3/N
+ 9IJzTlTf3PlwsgVHf2M29Woz5a5Qvpfucqh4wXb0zo2FTuXclAu35wydporGEN4xbpfmyh8u5xy
+ YzpjFv2H+7xLIjmec9KL3Fm/mEPZaF1Hi0x9wyLJD896d/Fu9cRHJJZvYKoJQgLKvpxZZ+5U2Y
+X-Received: by 2002:a05:600c:530f:b0:485:2ce2:4c87 with SMTP id
+ 5b1f17b1804b1-486febb455dmr192118995e9.4.1774284860457; 
+ Mon, 23 Mar 2026 09:54:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b6470393fsm32046440f8f.17.2026.03.23.09.53.59
+ 5b1f17b1804b1-486ff1e6029sm149301815e9.9.2026.03.23.09.54.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:54:00 -0700 (PDT)
+ Mon, 23 Mar 2026 09:54:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/27] hw/hyperv: Fix SynIC not initialized except on first vCPU
-Date: Mon, 23 Mar 2026 17:52:06 +0100
-Message-ID: <20260323165218.96607-16-philmd@linaro.org>
+Subject: [PULL 18/27] ati-vga: Also switch mode on HW cursor enable bit change
+Date: Mon, 23 Mar 2026 17:52:09 +0100
+Message-ID: <20260323165218.96607-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,73 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sourav Poddar <souravpoddar93042@gmail.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-hyperv_is_synic_enabled() is a global flag that returns true after the
-first CPU initializes SynIC. With -smp N, all subsequent CPUs skip
-hyperv_x86_synic_add(), leaving them without a synic object. This causes
-get_synic() to return NULL, making hyperv_sint_route_new() fail and
-triggering an assertion crash in hyperv_testdev.
+This does nothing for most drivers but works around issue and fixes
+output with the Solaris R128 driver that only sets display parameters
+after enabling CRT controller which we would miss otherwise.
 
-Fix by introducing hyperv_is_synic_present() which checks per-CPU
-whether a synic object is already attached instead of using the global
-flag.
-
-Fixes: c4cf32fc63f1 ("kvm/hyperv: add synic feature to CPU only if its not enabled")
-Reported-by: Xudong Hao <xudong.hao@intel.com>
-Co-authored-by: Ani Sinha <anisinha@redhat.com>
-Signed-off-by: Sourav Poddar <souravpoddar93042@gmail.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Message-ID: <20260320154752.204725-1-anisinha@redhat.com>
-[PMD: Reworded subject]
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Tested-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Message-ID: <ad3f415749178984c764f4ba810c663d1299ddfd.1774110169.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/hyperv/hyperv.h | 1 +
- hw/hyperv/hyperv.c         | 5 +++++
- target/i386/kvm/hyperv.c   | 2 +-
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ hw/display/ati.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
-index 63a8b65278f..23091301d06 100644
---- a/include/hw/hyperv/hyperv.h
-+++ b/include/hw/hyperv/hyperv.h
-@@ -81,6 +81,7 @@ void hyperv_synic_reset(CPUState *cs);
- void hyperv_synic_update(CPUState *cs, bool enable,
-                          hwaddr msg_page_addr, hwaddr event_page_addr);
- bool hyperv_is_synic_enabled(void);
-+bool hyperv_is_synic_present(CPUState *cs);
- 
- /*
-  * Process HVCALL_RESET_DEBUG_SESSION hypercall.
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index aa278b179e6..a42c2850e35 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -60,6 +60,11 @@ static SynICState *get_synic(CPUState *cs)
-     return SYNIC(object_resolve_path_component(OBJECT(cs), "synic"));
- }
- 
-+bool hyperv_is_synic_present(CPUState *cs)
-+{
-+    return get_synic(cs);
-+}
-+
- static void synic_update(SynICState *synic, bool sctl_enable,
-                          hwaddr msg_page_addr, hwaddr event_page_addr)
- {
-diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
-index bd3c26d02b5..420c76b5ff5 100644
---- a/target/i386/kvm/hyperv.c
-+++ b/target/i386/kvm/hyperv.c
-@@ -27,7 +27,7 @@ int hyperv_x86_synic_add(X86CPU *cpu)
- int hyperv_enable_synic(X86CPU *cpu)
- {
-     int ret = 0;
--    if (!hyperv_is_synic_enabled()) {
-+    if (!hyperv_is_synic_present(CPU(cpu))) {
-         ret = hyperv_x86_synic_add(cpu);
-     }
-     return ret;
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 05cf507bd47..1a6a5ad4fd6 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -617,6 +617,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         ati_reg_write_offs(&s->regs.crtc_gen_cntl,
+                            addr - CRTC_GEN_CNTL, data, size);
+         if ((val & CRTC2_CUR_EN) != (s->regs.crtc_gen_cntl & CRTC2_CUR_EN)) {
++            ati_vga_switch_mode(s);
+             if (s->cursor_guest_mode) {
+                 s->vga.force_shadow = !!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN);
+             } else {
 -- 
 2.53.0
 
