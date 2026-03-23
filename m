@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167EBF483CC
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7B5EF483C8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iWy-0002Tj-DK; Mon, 23 Mar 2026 12:53:32 -0400
+	id 1w4iWy-0002Ti-Aw; Mon, 23 Mar 2026 12:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWX-0001ll-Hf
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:08 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWk-00023i-Cf
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:21 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWU-0000VA-V1
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:04 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-43b4fd681c2so319334f8f.3
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWi-0000W7-8u
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:18 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43b44c0bcdbso4726266f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284781; x=1774889581; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284794; x=1774889594; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rzoFtsUXcWO2CsqhXorD4l05nkjxjOTs8D6KMk1lCcY=;
- b=KbwVLXD0G+qB7tFGrrju4nJUhSpBY70XLWGIofKM2X8JWPcoU95AnfQvNJGpIGbWCX
- zqBJZSgsLnonEFX+Lrv64ZarFeDzSIrr6Qkkkl/Y71igeOv3u+c/N5cmw6rnN5jKCWm1
- vDmHFibqYsX9HnT8vVjW7hQ3m/lSIHbln4zNcsHjUuJruPVUSFWQ2c4jCXOWjWoiwc+M
- /9pmwDFKuvNBGpKsGNR69R9sN70BMhwsWdj/e8ufSdsWgbm8v3yjJNYv8U1f/xXimZzR
- V4kY0pxeGcR+x1RYoM1z5bWEMeBaltkJMfH0b3+D8mhgqvY2qL+C17rCELxjyxHweNRt
- 479A==
+ :reply-to; bh=IF5AIne3aOjW5NQiAWyFpvmY0cptp84jUlFsWbEzYLg=;
+ b=fOp2r857ZlfBon5HJUjO2hbbcr/MqsQ605/NxaxGawk3xvgzLybN918vYNTKuulPN2
+ cg84XuQeSiNqb5PKG531Ei9G3vJWB5IlnpmY/D24C/oTYvtG3c47ubNmeRD+/E2zjp/5
+ q0rOuebnVXZTjLxUCPjKiIRZnz7bmLUDtOLsyrNRpOIlwwLzzEycnVAIu9he0FQPO5RD
+ B/nja5BbiqgkZabvHX58A4eqdGCncGENuwu5hj+kwawVgPUuqylA83My3tjLGMFsFM3m
+ 8Dzz9fZntc2IKtfHHHBU/Ehal2JKN/ioGLPspGee2DEphipYH27nnn1W/hwTdNU/tnEo
+ KCqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284781; x=1774889581;
+ d=1e100.net; s=20251104; t=1774284794; x=1774889594;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rzoFtsUXcWO2CsqhXorD4l05nkjxjOTs8D6KMk1lCcY=;
- b=BJR1aW/q98GLr17lxGA1zCqKsII4ER4VjCtSDvcE5iy5/x94VK/PbQaq4qYxFxIoso
- BhIOnGGbtXcUNeVgNipl3prV5fRJPeic8PxlmaSn3FUkYaIq0y5LjIZO1KaY+b3wVEIX
- kewKcUlvxO71JaEAkkgB4nwO5gE+kmwuRU9EMD7WuGf4dv2KQitP5sHosmKjoyVPMjgk
- KFriSmP/mDJfp6UqwhC3bcSqL9UuHGdh+ZFHzi7PPx4T294RsRzof7UKZaFc+xStKieI
- l+VP103E0sGD6pvunUDQsvjlPs+g2OPc1el1mkM7sSI0o2fsannVQz5aTb5MS0z8rVdv
- xBFw==
-X-Gm-Message-State: AOJu0YxTuwLX8HbYuKI7Dem++hDL8FyQbby+tMkD5Qcx1J8K9Lx0ppb4
- b3ItB1gcSqN78U0rimCeAOm/hzniLAfLPMzbl+wMGQtv3WHfc8CbFTl1NaDWvaZbVmQH01QBfRQ
- 7h8L7u0g=
-X-Gm-Gg: ATEYQzxyV9p536I5qUEBRlSRsxCBNCtG7HcSsgFf9e9SMm4DK56X/gyc+nhqwsrrzF6
- sKkpf8ADXSPXiyY7F4IdAGrbjnhmwG9iqt56uYKvBcWXHMbEhYy1e8/2DhJ1ohTqX2cRtVXMlP/
- 20MO3EfX5rdNIue/ZP8ppwxjg10hgBIcXyIv5gx+Yfl1IiD52kBylBZa2MsZd5T8lJs8xzzqjPL
- c9dR507Sq4g7ffkRAV8ztCiouRvSscdXUJiX9u84LSq8Z+hrYo3U/ba2odNSIJChi995inliPnq
- 5qU9ZAUcXZ0sOrKjQ9U+NVdOAEd2TMb0TDEoCQPBjowO1Ge6vk2pHM6sBR+qXvSlwO7xKaT6OC2
- NsgCXpOLbLOsjXgHuJHeakn+K17pPOWpuUF7pyW0EkMO7M/iDuGUad//81iyHveCAMnq3TiDhEk
- yilZ8GHZAlkRa/yXpDm8uSxW+Zvbt6N2bttUL/BHH6X/wiZ1D7XS/k3OKROdak7mAOwIFLwquX
-X-Received: by 2002:a05:6000:3113:b0:439:abcd:b314 with SMTP id
- ffacd0b85a97d-43b6423fb6fmr19020361f8f.18.1774284780711; 
- Mon, 23 Mar 2026 09:53:00 -0700 (PDT)
+ bh=IF5AIne3aOjW5NQiAWyFpvmY0cptp84jUlFsWbEzYLg=;
+ b=BtXg+Rfb8KIS3iBPimki1e4TPFgSkh+vJs/UhkKe+GVbGeoHnCg+dxqT0Wa0Y1jB+q
+ QEHZgQeuMNm8W81NAJwQOrm4vzTbDiueYOt+H85BAT9i1meQq3JnBoKyFvLa7RXB9mGu
+ JGCS4TyDykZi3Z9eOk11jtxRSWXrYNALid6SuTmEJQAoJ1ukjXMf6mUc+PwJgJOT+dQo
+ 7dpHTpxTHS3d5k0EuOLsfWST1dSJkXBV+wlHIJrcBdalI2GSmIfvmlVwUGMPC0v21Ocl
+ wQoBHGiDNgFWPe5Hr9/6mfqJoI0BYdzfizHFsTgevdJLAUr9YpmCZGysTtJnJIle+Ke7
+ W6gQ==
+X-Gm-Message-State: AOJu0YzyjE6hwJIdeLyT2h7j4NNYa/NtNqMq6W2YV6l6EB+Ek108QNLb
+ KWIVisMnNaNZOVnaGdTFiBhK3JSi4otlPSkCO6QMmARn8i/40i9263Qf2V5+2pNmNJ8c6Dejuhr
+ Opd4r9Jo=
+X-Gm-Gg: ATEYQzxyTZ2stUeRtGSO8XQHjj72MFafIMNfFChO0uc73/pFrooVa3elK17ImrUNETo
+ znlY7C8J+0f6w9fDs+Dn5MC4Pmt3HE9BxpRmC/gJ/5YtNuHvjNqjsGLQs9ZFSBBbjvN8DBnOInt
+ dDyZDcWkkur4nWF7Whm5YflK3ZyqSFZqNIUhjqne8obFkZUvxco1Zcm7NJdwhsutoH9gaMfaeKD
+ xbPdrYgQdyRPjoJ6Ke3CeqCgwNR/xIT6Q17Apss5xqK3HGQzho/sT2nhd4Y9U+sMKiOCuoV3aDT
+ 08xqCb/ooUJN8lYocaPBRZ9+g+S2qlrDLZ7NTSy4WI1R/QUeQW8yxDLJKXDwmGTDCEfZYHzVkZA
+ tRBao6R0XyfcD2+R+eGHRuGdSbbcr3svaXB2Xh2hYeWY+PDlgN8duLDP+pWnhln8lPdL7Em1tn+
+ 7d7W1IepfxVVZwaT5NmzApH4uzdbBoOlDaQMdgRrl7ewt3Iisgt/99invvoGMgXBvLRCcZY4dJ
+X-Received: by 2002:a05:6000:1861:b0:43b:4396:6738 with SMTP id
+ ffacd0b85a97d-43b6427b2c2mr20318638f8f.50.1774284793959; 
+ Mon, 23 Mar 2026 09:53:13 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b644ae16fsm31818360f8f.8.2026.03.23.09.52.59
+ ffacd0b85a97d-43b6470380asm30181991f8f.24.2026.03.23.09.53.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:53:00 -0700 (PDT)
+ Mon, 23 Mar 2026 09:53:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/27] hw/core/loader: fix error handling for get_image_size
- callers
-Date: Mon, 23 Mar 2026 17:51:57 +0100
-Message-ID: <20260323165218.96607-7-philmd@linaro.org>
+Subject: [PULL 08/27] hw/pci/msix: fix error handling for msix_init callers
+Date: Mon, 23 Mar 2026 17:51:59 +0100
+Message-ID: <20260323165218.96607-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,34 +100,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Trieu Huynh <vikingtc4@gmail.com>
 
-Check the return value of get_image_size() and report failures
-for non-mandatory file such as FRU image.
-
-- Use ret < 0 to detect failures in getting image size.
+Check return value of msix_init() and return early on
+failure instead of continuing with invalid state.
+- Use ret < 0 to handle negative return value.
+- Use errp parameter to handle failure instead of NULL.
 - No functional changes.
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
 Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260318141415.8538-3-vikingtc4@gmail.com>
+Message-ID: <20260318141415.8538-5-vikingtc4@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ipmi/ipmi_bmc_sim.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/net/igbvf.c         |  2 +-
+ hw/net/rocker/rocker.c |  2 +-
+ hw/pci/msix.c          |  2 +-
+ hw/scsi/megasas.c      | 16 +++++++++++-----
+ hw/usb/hcd-xhci-pci.c  | 16 +++++++++++-----
+ 5 files changed, 25 insertions(+), 13 deletions(-)
 
-diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-index 012e2ee4fe2..fd875491f55 100644
---- a/hw/ipmi/ipmi_bmc_sim.c
-+++ b/hw/ipmi/ipmi_bmc_sim.c
-@@ -2561,6 +2561,8 @@ static void ipmi_fru_init(IPMIFru *fru)
-             g_free(fru->data);
-             fru->data = NULL;
-         }
-+    } else {
-+        error_report("Could not get file size '%s'", fru->filename);
+diff --git a/hw/net/igbvf.c b/hw/net/igbvf.c
+index 48d56e43aca..9a165c7063e 100644
+--- a/hw/net/igbvf.c
++++ b/hw/net/igbvf.c
+@@ -260,7 +260,7 @@ static void igbvf_pci_realize(PCIDevice *dev, Error **errp)
+ 
+     ret = msix_init(dev, IGBVF_MSIX_VEC_NUM, &s->msix, IGBVF_MSIX_BAR_IDX, 0,
+         &s->msix, IGBVF_MSIX_BAR_IDX, 0x2000, 0x70, errp);
+-    if (ret) {
++    if (ret < 0) {
+         return;
      }
  
- out:
+diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
+index 4a7056bd45e..910dce901b6 100644
+--- a/hw/net/rocker/rocker.c
++++ b/hw/net/rocker/rocker.c
+@@ -1228,7 +1228,7 @@ static int rocker_msix_init(Rocker *r, Error **errp)
+                     &r->msix_bar,
+                     ROCKER_PCI_MSIX_BAR_IDX, ROCKER_PCI_MSIX_PBA_OFFSET,
+                     0, errp);
+-    if (err) {
++    if (err < 0) {
+         return err;
+     }
+ 
+diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+index b35476d0577..1b23eaf1007 100644
+--- a/hw/pci/msix.c
++++ b/hw/pci/msix.c
+@@ -432,7 +432,7 @@ int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
+                     0, &dev->msix_exclusive_bar,
+                     bar_nr, bar_pba_offset,
+                     0, errp);
+-    if (ret) {
++    if (ret < 0) {
+         return ret;
+     }
+ 
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index f62e420a91e..a29742d4493 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -2380,11 +2380,17 @@ static void megasas_scsi_realize(PCIDevice *dev, Error **errp)
+     memory_region_init_io(&s->queue_io, OBJECT(s), &megasas_queue_ops, s,
+                           "megasas-queue", 0x40000);
+ 
+-    if (megasas_use_msix(s) &&
+-        msix_init(dev, 15, &s->mmio_io, b->mmio_bar, 0x2000,
+-                  &s->mmio_io, b->mmio_bar, 0x3800, 0x68, NULL)) {
+-        /* TODO: check msix_init's error, and should fail on msix=on */
+-        s->msix = ON_OFF_AUTO_OFF;
++    if (megasas_use_msix(s)) {
++        ret = msix_init(dev, 15, &s->mmio_io, b->mmio_bar, 0x2000,
++                        &s->mmio_io, b->mmio_bar, 0x3800, 0x68,
++                        s->msix == ON_OFF_AUTO_ON ? errp : NULL);
++
++        if (ret < 0) {
++            if (s->msix == ON_OFF_AUTO_ON) {
++                return;
++            }
++            s->msix = ON_OFF_AUTO_OFF;
++        }
+     }
+ 
+     if (pci_is_express(dev)) {
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index aa570506fc1..c5446a4a5e1 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -173,11 +173,17 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+     }
+ 
+     if (s->msix != ON_OFF_AUTO_OFF) {
+-        /* TODO check for errors, and should fail when msix=on */
+-        msix_init(dev, s->xhci.numintrs,
+-                  &s->xhci.mem, 0, OFF_MSIX_TABLE,
+-                  &s->xhci.mem, 0, OFF_MSIX_PBA,
+-                  0x90, NULL);
++        ret = msix_init(dev, s->xhci.numintrs,
++                        &s->xhci.mem, 0, OFF_MSIX_TABLE,
++                        &s->xhci.mem, 0, OFF_MSIX_PBA,
++                        0x90, s->msix == ON_OFF_AUTO_ON ? errp : NULL);
++
++        if (ret < 0) {
++            if (s->msix == ON_OFF_AUTO_ON) {
++                return;
++            }
++            s->msix = ON_OFF_AUTO_OFF;
++        }
+     }
+     s->xhci.as = pci_get_address_space(dev);
+ }
 -- 
 2.53.0
 
