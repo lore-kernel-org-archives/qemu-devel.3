@@ -4,76 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CE2F46112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F863F4610D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 13:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fXl-0006I5-6A; Mon, 23 Mar 2026 09:42:09 -0400
+	id 1w4fbV-00081V-In; Mon, 23 Mar 2026 09:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w4fXf-0006Gp-Vm
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:42:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4fbT-0007zw-0J
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:45:59 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w4fXa-0004Em-CM
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:42:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774273316;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FFR/uvyPyMIgIXD2fn4+1E5+IwSBm0k0CtQI5ytOBHM=;
- b=Gie/ahJLmVuvXCq/TOop9R9BbqYVHafklttFtUn3RAXEk28Rr/HES/kLBIaj2QvrmmY8nZ
- +qg6hujtCfIavMWnjVRmoHbwMP9ZT6SIwIGGlcynadTCxub8B5c6754ldq82uVm3Nxsrk1
- A1o71T/67khuDcgwRy93mJSw5eZq+L4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-183-El3kUb4KNFm2U59OrEaHeg-1; Mon,
- 23 Mar 2026 09:41:52 -0400
-X-MC-Unique: El3kUb4KNFm2U59OrEaHeg-1
-X-Mimecast-MFC-AGG-ID: El3kUb4KNFm2U59OrEaHeg_1774273306
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79FA51955DDB; Mon, 23 Mar 2026 13:41:46 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.227])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BAD1B300019F; Mon, 23 Mar 2026 13:41:43 +0000 (UTC)
-Date: Mon, 23 Mar 2026 13:41:40 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, mst@redhat.com,
- yuri.benditovich@daynix.com, akihiko.odaki@daynix.com,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH] virtio-net: validate RSS indirections_len in post_load
-Message-ID: <acFDFHsh8Rjhfncc@redhat.com>
-References: <20260323131531.1976-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w4fbP-0005Iw-JW
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:45:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A38A25969F2;
+ Mon, 23 Mar 2026 14:45:53 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id mUt697yM9Paq; Mon, 23 Mar 2026 14:45:51 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 911D65969E6; Mon, 23 Mar 2026 14:45:51 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8F8E15969E4;
+ Mon, 23 Mar 2026 14:45:51 +0100 (CET)
+Date: Mon, 23 Mar 2026 14:45:51 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH-for-11.0] monitor: Correctly display virtual addresses
+ while dumping memory
+In-Reply-To: <26785143-4574-411c-8985-951ae0da0570@linaro.org>
+Message-ID: <55136018-65af-8e46-2ba1-794dc2f4114e@eik.bme.hu>
+References: <20260323095020.66658-1-philmd@linaro.org>
+ <d0a6376c-dcb5-a12a-3b32-8a2c81f32b0e@eik.bme.hu>
+ <26785143-4574-411c-8985-951ae0da0570@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260323131531.1976-1-junjie.cao@intel.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1426576585-1774273551=:72485"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,85 +68,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 23, 2026 at 09:15:31PM +0800, Junjie Cao wrote:
-> virtio_net_handle_rss() enforces that indirections_len is a non-zero
-> power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
-> virtio_net_rss_post_load() applies none of these checks to values
-> restored from the migration stream.
-> 
-> A crafted migration stream can set indirections_len to 0.  Even if it
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The migration stream originating from the source QEMU is trusted.
+--3866299591-1426576585-1774273551=:72485
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Is there a problem you can demonstrate with regular QEMU commands
-/ versions, not crafting a malicious migration stream.
+On Mon, 23 Mar 2026, Philippe Mathieu-Daudé wrote:
+> On 23/3/26 12:51, BALATON Zoltan wrote:
+>> On Mon, 23 Mar 2026, Philippe Mathieu-Daudé wrote:
+>>> While reworking the address format width in commit 6ad593a75a8 we
+>>> introduce a bug, leading to addresses being displayed with too many
+>>> zeroes:
+>>> 
+>>>  $ qemu-system-ppc -monitor stdio -S
+>>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>>  (qemu) x/x 0
+>>>  0000000000000000000000000000000000000000000000000000000000000000: 
+>>> 0x00000000
+>>>  (qemu) x/x 0xfff00000
+>>>  00000000000000000000000000000000000000000000000000000000fff00000: 
+>>> 0x60000000
+>>> 
+>>>  $ qemu-system-ppc64 -monitor stdio -S
+>>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>>  (qemu) x/x 0
+>>>  00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000: 
+>>> 0x00000000
+>>> 
+>>> Correct the format width to restore the previous behavior:
+>>> 
+>>>  $ qemu-system-ppc -monitor stdio -S
+>>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>>  (qemu) x/x 0
+>>>  00000000: 0x00000000
+>>> 
+>>>  $ qemu-system-ppc64 -monitor stdio -S
+>>>  QEMU 10.2.90 monitor - type 'help' for more information
+>>>  (qemu) x/x 0
+>>>  0000000000000000: 0x00000000
+>>> 
+>>> Fixes: 6ad593a75a8 ("monitor/hmp: Use plain uint64_t @addr argument in 
+>>> memory_dump()")
+>>> Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> monitor/hmp-cmds.c | 2 +-
+>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>> 
+>>> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+>>> index bad034937a9..bc26b39d708 100644
+>>> --- a/monitor/hmp-cmds.c
+>>> +++ b/monitor/hmp-cmds.c
+>>> @@ -537,7 +537,7 @@ static void memory_dump(Monitor *mon, int count, int 
+>>> format, int wsize,
+>>>     uint8_t buf[16];
+>>>     uint64_t v;
+>>>     CPUState *cs = mon_get_cpu(mon);
+>>> -    const unsigned int addr_width = is_physical ? 8 : (target_long_bits() 
+>>> * 2);
+>>> +    const unsigned int addr_width = is_physical ? 8 : (target_long_bits() 
+>>> / 4);
+>> 
+>> Thanks, that should help, haven't tried yet. But is_physical used 
+>> HWADDR_FMT_plx before which is "%016" PRIx64 so should that be 16 here to 
+>> preserve previous behaviour? (Both 8 or 16 seem arbitrary, it should really 
+>> depend on the physical address width of target but 64 bits for physical 
+>> seems better as even 32 bit CPUs might have larger phys addresses.)
+>
+> This patch only fixes the virtual path, restoring the
+> behavior prior commit 6ad593a75a8.
+>
+> For physical path previous format indeed used 16 chars,
+> overkill IMHO, still I neglected to comment I reduced
+> 16 -> 8 in commit 6ad593a75a8. Nobody complained so far
+> but if you rather I can restore that too, as a "fix".
 
-> also clears redirect, virtio_load() calls set_features_nocheck() after
-> the device vmstate (including the RSS subsection and its post_load) has
-> already been loaded, re-deriving redirect from the negotiated guest
-> features.  When VIRTIO_NET_F_RSS was negotiated, redirect is set back
-> to true regardless of the migration stream value.  The receive path
-> then computes
-> 
->     hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
-> 
-> and uses the result to index into indirections_table, which was not
-> allocated by the VMState loader when the element count is zero (see
-> vmstate_handle_alloc()), resulting in a NULL pointer dereference that
-> crashes QEMU:
-> 
->   #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
->   #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
->   #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
->   #3  nc_sendv_compat           ../net/net.c:823
->   #4  qemu_deliver_packet_iov   ../net/net.c:870
-> 
-> The RSS subsection is only loaded when rss_data.enabled is true (via
-> virtio_net_rss_needed()), and the command path always produces
-> indirections_len in {1, 2, 4, …, 128}, so an unconditional check
-> cannot reject a legitimate migration stream.
-> 
-> Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-> ---
->  hw/net/virtio-net.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 2a5d642a64..3038836098 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3427,6 +3427,15 @@ static int virtio_net_rss_post_load(void *opaque, int version_id)
->          n->rss_data.supported_hash_types = VIRTIO_NET_RSS_SUPPORTED_HASHES;
->      }
->  
-> +    if (n->rss_data.indirections_len == 0 ||
-> +        n->rss_data.indirections_len > VIRTIO_NET_RSS_MAX_TABLE_LEN ||
-> +        !is_power_of_2(n->rss_data.indirections_len)) {
-> +        error_report("virtio-net: saved image has invalid RSS "
-> +                     "indirections_len: %u",
-> +                     n->rss_data.indirections_len);
-> +        return -EINVAL;
-> +    }
-> +
->      return 0;
->  }
->  
-> -- 
-> 2.43.0
-> 
-> 
+Considering that e.g. PPC440 or i386 with PAE could have larger physical 
+addresses even if target long bits is 32 (and 64 bit CPUs surely have 
+larger physical addresses) I don't think just 8 chars would be enough. 
+Even if nobody complained yet maybe it's safest to match the original 
+output for the freeze now and try to rewrite it for next version.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Regards,
+BALATON Zoltan
+--3866299591-1426576585-1774273551=:72485--
 
