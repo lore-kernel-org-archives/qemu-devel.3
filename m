@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA35F483D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B00EF483CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iWt-0002Fw-0j; Mon, 23 Mar 2026 12:53:27 -0400
+	id 1w4iWz-0002bJ-68; Mon, 23 Mar 2026 12:53:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWe-0001z2-PD
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:16 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWq-00029Y-7s
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:24 -0400
 Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWc-0000Vf-KV
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:12 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iWo-0000WQ-Dy
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:23 -0400
 Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-439b7c2788dso1955377f8f.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:09 -0700 (PDT)
+ ffacd0b85a97d-439d8df7620so2876588f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284787; x=1774889587; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284801; x=1774889601; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZUL4OvcdIzqgWJj0q2pMTC7lXI6ZXxkYtPaw18rj/bk=;
- b=TWsGa17Zrg9DNfWbFNJ4r8LxyKxfJuCgQGORD3kGC53hImI+Tw8SYZOijGcPvDE3a5
- TNzC1I+9l+A4y1O7uhNobFQHt7NxrCvB8PRkQ8/VROMxlQUCmMXD32P6sasbbEkfxwED
- k56zB/Ol43gfymCRtI9bcvr/v/U25YrcPVJzFujV+lRYIFLZUYappBgZsfjKF+zPO04I
- 0YCa/yApAZGsRb3CcCRpjN6E4FD0L4wwYZgXzM5omWkPRi6gKAXujg83REcGCzsp1jJO
- fx1Rxk72NYImNa+4KfBpqOToYf//fzFvypn6dBlHiqM/kGofRU2z/MImIen4aekoxTUT
- ZZxg==
+ :reply-to; bh=2OS9dwrhVLnfvMFaD7Eherrp2nRjOZpeUcPJ4Mmm4SM=;
+ b=AksaxL2NbNoA5YHJNc0uQghfRh1ld8G2ig4CRGnmyV9j3hN9lrvqLubFjJj2JHokZl
+ 8DNp2fT9gtvF7K6Dravip7NZe3pegRV9GktwuFjkPxPvflJjimb4vdRBamcZrgBCo4Xu
+ bl8Em+Y+GKgEJnBXf1R131mqm/AEzdyOuemeIraMK4gC3KhhD8fb0sbzPEbGIce6YSb+
+ EGbwFHJYTh/2wWQU9sm5RiEdxj0JY6XFU/Hw1Acsoas9ETGn2L8nMWWgXqV3KBTx/JI/
+ hy9cINXc1az3shA+TZWT8qiAP2Pg6NpYcVavAfZolQashuWLDfdRE0tx1RZbyRX7pq+m
+ tfvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284787; x=1774889587;
+ d=1e100.net; s=20251104; t=1774284801; x=1774889601;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ZUL4OvcdIzqgWJj0q2pMTC7lXI6ZXxkYtPaw18rj/bk=;
- b=OA/AaPpAS0JOzPl4+pbc6vTFRQ1j5Pgah4ES1RdMo92q6Q7DU8u+CxHnNleG5gFXGp
- SaL6GceI9L7oXUL90fx1EqQtx45JdvcWsfikC2ilHOgr7I4KlD0bzCm+hEzGLkYcOQEJ
- fGP5xt1RQdtqWx9oLdhWsoojKUq11gmj2lRGDUgImE9ZgaYlYsdhfZ3UCqnFn+ynrxIj
- 2K6BmphY+pdgk/4yY47v5bn+OME+UmUuqsZ26zwnejYi9plpPTJgag9cNFEiX47GPph/
- tlme5VwOSNbVMrC5F5yzgZOs1NEhtPQ8QIlyQre7hapDMV5T7XN1JFEQGyWnYTqTK0wx
- UiVg==
-X-Gm-Message-State: AOJu0Yza79DF+YcCQz7ffjACwJI473B4H9Wjs0OUMlh5G7ZWzsLlWgeO
- cmQjGjFE1ny/q1T8savyWdVqyw46pckcEinXTCC0BBzqGY0X/qV9qYT7kStgv5TiMtCjEp+cnj1
- vq0+62PQ=
-X-Gm-Gg: ATEYQzziYIzE4boo0s0R6g7gCw/8sCms7CVZscdYtWeAHReuX33OZb/yjOuFbUMn4Gq
- Fql7yjq9xM+M7CSo41cQVvVvkgzotcD/f6FSxOwe1C/Xoj1YeN6DkX/wGQH1YDC/zuCt71KdMlV
- X9hvlzU+HqQ4aV6vUsoomOg5tRDXOqvgvrJdnapef3yqZEOhmGZXpSMgK0epvyvM/ZyItRRCmym
- D6wtM3SiP+p48VMawAwHmmGxia151AScv9Pnr6jGt18iyZ/K2TC0ZleNAoMKLSarjiS6Lo5ozl3
- ZiEWxw3n1un2LX/vPhF0QvrkBQ8hanVZT1LyC9T0fxy+CDlQy6dWAoXIekRGrAsbhIl6bDy5SHA
- lsQWLXSKmGVXebuTmPptFjLNBtIy/DyBux42zhzRVeOVCzawgmh3wFaIkAL48LFR5NtDFGxNP95
- SsAFaeSxGrPjPhBOW6irYRCfaysENEdpJ18rhNisiMSIecFHgMyL53NYNtLBi54wnn9Xhg7Eyt
-X-Received: by 2002:a05:6000:26c4:b0:439:abcd:b317 with SMTP id
- ffacd0b85a97d-43b6424e33dmr18890214f8f.14.1774284787351; 
- Mon, 23 Mar 2026 09:53:07 -0700 (PDT)
+ bh=2OS9dwrhVLnfvMFaD7Eherrp2nRjOZpeUcPJ4Mmm4SM=;
+ b=T7iTcIrGNObWSDEU/EAzfxb0MlGN2yVQAdJXeoGjk50GVaCo3RPPgYyIXiyUa2mqba
+ XOn3rB2wglctkqTndIdm0/qfJBOQVRHQw4lzRHaEKe3o8vazrETqfyJpEq2Xe/os33ce
+ 3DXSrC9Zmaq+PX4lX5RbFAjLJ4WOdv5IBf7++VSHxLZF5asAWnQK5nQCwo3n0u96jXxO
+ q7Q0HoOEtv576C3f5jqkOgtkwjYZ4UC2Zy3gYmMgQhV3qBmpoiCRkSm5QuipTlUGjhZl
+ uLGx7x2TsLpWKra4y8EYC5bpWNScc4VAFldsKCpEXK1Pof6izRDfmsOF3GNjizBcDNzw
+ 9iuQ==
+X-Gm-Message-State: AOJu0YydTOMVm5+02c4N59s0AjcvnkmUfNzFEwtLUfOSs7AVLFt6zhox
+ vizKJ1Geg8miSgCUY7qjufmmScFGmFf44DqFUesl1OJvmx/xNiv/Fyi/BT1ck/2youzcOI4R7qa
+ wYnc2v3g=
+X-Gm-Gg: ATEYQzxj2li6BVFK6REPW+VPiDoOXXK8ZwMsVhQl7zwrTH3o9woflSyAnrPSyLp7sEE
+ 3YtOAOGq2MAmWppZ7lLqsGNxCAM8jWs7oVwv5/MCBDoKQZFlNufQ5M0C+2hwWEhuhmttu+sdRQ9
+ TtKuVkEsfK7loNRog2ypPki9TUEVwGXPhpHIBWJ/NbK9IVq66zBtedqhWl7w1ymO0PTFQaib9E5
+ EWoTHe5awBUMrGVmsgVxFcY+z0uJwmasxmddST73Fr1w3fF3/gKCvgptqYPXTB57JMScifbwYlS
+ 5C06N+uMEIyf7xPcX12qtERsqJ6jhu9ZxP8bt3fd1xpihx02gSw77GrMpOgUgK+JK0Y6s4/n/2M
+ kT/It6S6xTFHe9Z4LUmI7C+efr17Kl/hs1Kv6usaMOys2y7n1tKF5WEsdD3dhJ0P6Uu/oY/SpjF
+ e/g//m8CMiaJiVFv4UusG9xCWeSGAyph+2VUeVnbdA8jRgCZM4HDFGm/8f6S2eu+zMwZrfaTp7
+X-Received: by 2002:a05:6000:2c0e:b0:439:c279:32df with SMTP id
+ ffacd0b85a97d-43b6427feadmr21007083f8f.35.1774284800585; 
+ Mon, 23 Mar 2026 09:53:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b6470c239sm30908066f8f.27.2026.03.23.09.53.06
+ ffacd0b85a97d-43b64717e97sm32692491f8f.35.2026.03.23.09.53.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:53:06 -0700 (PDT)
+ Mon, 23 Mar 2026 09:53:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/27] util/event_notifier: fix error handling for
- event_notifier_init callers
-Date: Mon, 23 Mar 2026 17:51:58 +0100
-Message-ID: <20260323165218.96607-8-philmd@linaro.org>
+Subject: [PULL 09/27] hw/i386/pc_sysfw: stub out x86_firmware_configure
+Date: Mon, 23 Mar 2026 17:52:00 +0100
+Message-ID: <20260323165218.96607-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
@@ -99,175 +98,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Trieu Huynh <vikingtc4@gmail.com>
+From: Ani Sinha <anisinha@redhat.com>
 
-Check return value of event_notifier_init() and return early on
-failure instead of continuing with invalid state.
-- Use ret < 0 to handle negative return value.
-- No functional changes.
+x86_firmware_configure requires ovmf support. Add a stub for this function call
+for cases where OVMF is not supported.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
-Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-Acked-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Reviewed-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for the Hyper-V part
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Message-ID: <20260318141415.8538-4-vikingtc4@gmail.com>
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Tested-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20260319122137.142178-2-anisinha@redhat.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+[PMD: Remove "kvm/tdx.h" include line]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/hyperv/hyperv.c     |  4 ++--
- hw/hyperv/vmbus.c      |  4 ++--
- hw/remote/proxy.c      | 15 +++++++++++++--
- hw/vfio/ap.c           |  2 +-
- hw/vfio/ccw.c          |  2 +-
- hw/vfio/pci-quirks.c   |  2 +-
- hw/vfio/pci.c          |  2 +-
- hw/virtio/vhost-vdpa.c |  4 ++--
- 8 files changed, 23 insertions(+), 12 deletions(-)
+ hw/i386/pc_sysfw.c            | 32 --------------------------------
+ hw/i386/pc_sysfw_ovmf-stubs.c |  5 +++++
+ hw/i386/pc_sysfw_ovmf.c       | 33 +++++++++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index 27e323a8196..aa278b179e6 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
-         sint_route->staged_msg->cb_data = cb_data;
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index d8a86756ca4..1a41a5972bd 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -37,7 +37,6 @@
+ #include "hw/block/flash.h"
+ #include "system/kvm.h"
+ #include "target/i386/sev.h"
+-#include "kvm/tdx.h"
  
-         r = event_notifier_init(ack_notifier, false);
--        if (r) {
-+        if (r < 0) {
-             goto cleanup_err_sint;
+ #define FLASH_SECTOR_SIZE 4096
+ 
+@@ -283,34 +282,3 @@ void pc_system_firmware_init(PCMachineState *pcms,
          }
-         event_notifier_set_handler(ack_notifier, sint_ack_handler);
-@@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
- 
-     /* We need to setup a GSI for this SintRoute */
-     r = event_notifier_init(&sint_route->sint_set_notifier, false);
--    if (r) {
-+    if (r < 0) {
-         goto cleanup_err_sint;
      }
- 
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index 64abe4c4c16..5388f4277f3 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -1432,7 +1432,7 @@ static void open_channel(VMBusChannel *chan)
-         goto put_gpadl;
-     }
- 
--    if (event_notifier_init(&chan->notifier, 0)) {
-+    if (event_notifier_init(&chan->notifier, 0) < 0) {
-         goto put_gpadl;
-     }
- 
-@@ -2450,7 +2450,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
-     }
- 
-     ret = event_notifier_init(&vmbus->notifier, 0);
--    if (ret != 0) {
-+    if (ret < 0) {
-         error_setg(errp, "event notifier failed to init with %d", ret);
-         goto remove_msg_handler;
-     }
-diff --git a/hw/remote/proxy.c b/hw/remote/proxy.c
-index 5081d67e7f4..e91566509f3 100644
---- a/hw/remote/proxy.c
-+++ b/hw/remote/proxy.c
-@@ -52,9 +52,20 @@ static void setup_irqfd(PCIProxyDev *dev)
-     PCIDevice *pci_dev = PCI_DEVICE(dev);
-     MPQemuMsg msg;
-     Error *local_err = NULL;
-+    int ret = 0;
- 
--    event_notifier_init(&dev->intr, 0);
--    event_notifier_init(&dev->resample, 0);
-+    ret = event_notifier_init(&dev->intr, 0);
-+    if (ret < 0) {
-+        error_report("Failed to init intr notifier: %s", strerror(-ret));
-+        return;
-+    }
+ }
+-
+-void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
+-{
+-    int ret;
+-
+-    /*
+-     * OVMF places a GUIDed structures in the flash, so
+-     * search for them
+-     */
+-    pc_system_parse_ovmf_flash(ptr, size);
+-
+-    if (sev_enabled()) {
+-
+-        /* Copy the SEV metadata table (if it exists) */
+-        pc_system_parse_sev_metadata(ptr, size);
+-
+-        ret = sev_es_save_reset_vector(ptr, size);
+-        if (ret) {
+-            error_report("failed to locate and/or save reset vector");
+-            exit(1);
+-        }
+-
+-        sev_encrypt_flash(gpa, ptr, size, &error_fatal);
+-    } else if (is_tdx_vm()) {
+-        ret = tdx_parse_tdvf(ptr, size);
+-        if (ret) {
+-            error_report("failed to parse TDVF for TDX VM");
+-            exit(1);
+-        }
+-    }
+-}
+diff --git a/hw/i386/pc_sysfw_ovmf-stubs.c b/hw/i386/pc_sysfw_ovmf-stubs.c
+index aabe78b2710..b53906a0521 100644
+--- a/hw/i386/pc_sysfw_ovmf-stubs.c
++++ b/hw/i386/pc_sysfw_ovmf-stubs.c
+@@ -24,3 +24,8 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size)
+ {
+     g_assert_not_reached();
+ }
 +
-+    ret = event_notifier_init(&dev->resample, 0);
-+    if (ret < 0) {
-+        error_report("Failed to init resample notifier: %s", strerror(-ret));
-+        event_notifier_cleanup(&dev->intr);
-+        return;
++void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
++{
++    g_assert_not_reached();
++}
+diff --git a/hw/i386/pc_sysfw_ovmf.c b/hw/i386/pc_sysfw_ovmf.c
+index da947c3ca41..2f7d15c9f3e 100644
+--- a/hw/i386/pc_sysfw_ovmf.c
++++ b/hw/i386/pc_sysfw_ovmf.c
+@@ -28,6 +28,8 @@
+ #include "hw/i386/pc.h"
+ #include "exec/target_page.h"
+ #include "cpu.h"
++#include "target/i386/sev.h"
++#include "kvm/tdx.h"
+ 
+ #define OVMF_TABLE_FOOTER_GUID "96b582de-1fb2-45f7-baea-a366c55a082d"
+ 
+@@ -160,3 +162,34 @@ bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
+     }
+     return false;
+ }
++
++void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
++{
++    int ret;
++
++    /*
++     * OVMF places a GUIDed structures in the flash, so
++     * search for them
++     */
++    pc_system_parse_ovmf_flash(ptr, size);
++
++    if (sev_enabled()) {
++
++        /* Copy the SEV metadata table (if it exists) */
++        pc_system_parse_sev_metadata(ptr, size);
++
++        ret = sev_es_save_reset_vector(ptr, size);
++        if (ret) {
++            error_report("failed to locate and/or save reset vector");
++            exit(1);
++        }
++
++        sev_encrypt_flash(gpa, ptr, size, &error_fatal);
++    } else if (is_tdx_vm()) {
++        ret = tdx_parse_tdvf(ptr, size);
++        if (ret) {
++            error_report("failed to parse TDVF for TDX VM");
++            exit(1);
++        }
 +    }
- 
-     memset(&msg, 0, sizeof(MPQemuMsg));
-     msg.cmd = MPQEMU_CMD_SET_IRQFD;
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index e58a0169af9..5c8f3056530 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -180,7 +180,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
-         return false;
-     }
- 
--    if (event_notifier_init(notifier, 0)) {
-+    if (event_notifier_init(notifier, 0) < 0) {
-         error_setg_errno(errp, errno,
-                          "vfio: Unable to init event notifier for irq (%d)",
-                          irq);
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 2251facb356..ce9c014e6a7 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -418,7 +418,7 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-         return false;
-     }
- 
--    if (event_notifier_init(notifier, 0)) {
-+    if (event_notifier_init(notifier, 0) < 0) {
-         error_setg_errno(errp, errno,
-                          "vfio: Unable to init event notifier for irq (%d)",
-                          irq);
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index 7b907b9360d..66e02b15a48 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -318,7 +318,7 @@ static VFIOIOEventFD *vfio_ioeventfd_init(VFIOPCIDevice *vdev,
- 
-     ioeventfd = g_malloc0(sizeof(*ioeventfd));
- 
--    if (event_notifier_init(&ioeventfd->e, 0)) {
-+    if (event_notifier_init(&ioeventfd->e, 0) < 0) {
-         g_free(ioeventfd);
-         return NULL;
-     }
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 94c174a773f..1945751ffd4 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -70,7 +70,7 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
-     }
- 
-     ret = event_notifier_init(e, 0);
--    if (ret) {
-+    if (ret < 0) {
-         error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
-         return false;
-     }
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 2f8f11df869..9c7634e2439 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -1075,13 +1075,13 @@ static int vhost_vdpa_svq_set_fds(struct vhost_dev *dev,
-     int r;
- 
-     r = event_notifier_init(&svq->hdev_kick, 0);
--    if (r != 0) {
-+    if (r < 0) {
-         error_setg_errno(errp, -r, "Couldn't create kick event notifier");
-         goto err_init_hdev_kick;
-     }
- 
-     r = event_notifier_init(&svq->hdev_call, 0);
--    if (r != 0) {
-+    if (r < 0) {
-         error_setg_errno(errp, -r, "Couldn't create call event notifier");
-         goto err_init_hdev_call;
-     }
++}
 -- 
 2.53.0
 
