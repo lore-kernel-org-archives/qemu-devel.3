@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1CFF4613D
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128FAF4613C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4heo-0005di-OV; Mon, 23 Mar 2026 11:57:34 -0400
+	id 1w4heP-0005La-51; Mon, 23 Mar 2026 11:57:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w4he5-0005Es-7P
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:50 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1w4he2-0005Ed-QU
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:49 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w4he2-0007tl-VG
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:48 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-661d20c9787so467129a12.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:56:46 -0700 (PDT)
+ id 1w4he0-0007t4-7N
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:56:46 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b9841aecf72so335798366b.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774281405; x=1774886205; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774281399; x=1774886199; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=43Q6+kzhBrTb5bx6FeAKwYn/Gs9dWMYzJ9+hPGcPf+k=;
- b=K2NyxfBzi0wY3aPY4aLa+zdeC+uNeRgI/RjHqoiyZG6OH7VAmSCqptXfZQ5Zz0h7JK
- RfuMHSmXQWgvLy3FX92ioYvWJ0qCWGd/hjgWZJmL7H8IUE7yuwnH/euOT32d4tXT0v2R
- aufc8wBYMqMKECgjL/Ft2vGNfjeXT3J8i69/nZ+oyAJzdSZAKFemFHV8gF4b57T3M6dq
- rwn2yBSvzAH96hjme09R5w45OziOFQvNyLrMsIy9kJzCSFna4zMKCl1H690w71wCbfVM
- WA96C/Nr4I1O3OqCuGlTqa1g/JgROAqpNSOepBMQkoTz0UdOuwBcr2Ur2uEym58IMLm2
- G84g==
+ bh=WDq7L8VxJbWEl+g0lwQ7GIiMPhaC6/ZfTXLocURTGgs=;
+ b=RB82YbNuKrh4kibTdwGu7nBo3R2Czm8a519qwAVdhhxgIqglJSYEXNiqFFurRFNrXv
+ Ff9wEivhoMHxOOLKQN4ZekBxACAi57gtMvsmiGS8/sp9f7Us0gSqBJ5Qn/0ph+dSEitZ
+ RA6h1SkBX+x5LinjpyC9iJZw5UeRlhDZHLxsiVFwFszJ9/fq2o6kSM++V2r0GmMpxE5v
+ b0kvE280kNnAbVGrgCz5NT+CFIwQQsoqVgImCuockH/XCekcjeYPoerUiR5Z6P41yDG2
+ vEmWmNvgyMPw81kBfScMYPzJXUH9lTvG9xvaXQdQ7CmJb6OHUsLZwkPlvHYQ2xyEPnss
+ Et1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774281405; x=1774886205;
+ d=1e100.net; s=20251104; t=1774281399; x=1774886199;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=43Q6+kzhBrTb5bx6FeAKwYn/Gs9dWMYzJ9+hPGcPf+k=;
- b=IKnClX77Zp5sRh5t1VXVlECrD/eISdamz5LngWZlqC2OjE7DVTMm+3TgeMDCGqODUG
- 7tqY2XedLF63haIT0uJEXIq9UtRJdlK8kWBtFIqFnNLJNYD16nhSpx8VO0/9xpqGHl63
- PtXu+z+fyCPNtCiFc69jhOdkEIqY6msN1ma2T4oM92y53Y+HUlTru6kIODo1ydYaIH+x
- 1yTsTN/BqCE3tM+fmbvBmkLNnF90TJCfRERYEqXfDCGYuqasCalajCHodTXHRob9ZNeF
- /KyX9PRKQlE8V8smzOW9GGrLEH0aKSzCLkrNOHk8zAoZaJmFC7ywF3KALzjmqUYo9x7e
- dR7Q==
-X-Gm-Message-State: AOJu0YyKhYSxjq0WaLSNuc+xbf/BwIv9bfwweFyde2gZgVrXOzKz/M6z
- GVN5YMVYfA3Op/64PNfmqVFCrbt2CT8h8JuXSchJPvsLsY0cCASR3Fco7oZWq3lZGYU=
-X-Gm-Gg: ATEYQzxamvkcA7yVZ6xpUaC503PyB+rLaEe1IYKwoO2Lfvk6Ytz68Z7UrU/9Tx0esW7
- V8jur3c6LMMWo+hu/SKiwlqUZppti+CoiMhOy8usITLetNP1kw+CNOTDYoaM8VXtaHMrb9VuPTC
- K1gcZziDBmk6yaqdpVpvfQB8xX0OoWgr71Qn/d56Fg4GA7l/jR3prBjxV9mhKRdRbw/snfTTxnD
- 9k1s/cKxGh+Z5O1S+bSc3CXGIPAMM5ofp5Pi/ZHG9BUDQoeJ3Tl5BX3k+61Rks5FTXDcPBXWdQH
- 9rEFQvv2EcIxe49zmpIj6H1d0XtVBMFW+9ffyYR/GcyV1+rn6kZi4kE71pFsoYeqCdNB8C0vfR5
- Xe+4SYgm2S6gJRPg6QplLtlnWpnFv+frui2jPcaduMu+vQkz5phuFNP6pdrvUeQUs/inaqkMByz
- Zhf3oxgD+OzDFwLefcOqeEPhddxz3NFInjRA==
-X-Received: by 2002:a05:6402:158d:b0:668:502d:80b6 with SMTP id
- 4fb4d7f45d1cf-668c9928d2emr8305443a12.26.1774281405205; 
- Mon, 23 Mar 2026 08:56:45 -0700 (PDT)
+ bh=WDq7L8VxJbWEl+g0lwQ7GIiMPhaC6/ZfTXLocURTGgs=;
+ b=JnJsGJ8gQKr8yjD0RWuyJ6iBkSz9JtaCDxNn92iaA4HRxwQ8w3/y2Dh6+CN0Dt6V2n
+ bPyQXP4i7YNvXr7K1VLV5waT7eT0IrjNCS0P6HLTXdxm7gYMKXElAW8PpGJefeNnHGKG
+ CRgu332gokshqHvI94K5N9S/yW6k9DeKdFW7K0Ns5ff2egVj27cwMDl1Z1HVJDzEOUxt
+ +lyUWkGBjaws44nBWMYMiKw3X/DDsbogzXikW7iOAf32FYWuNGX7AvQ3VnNlPDVcK/0p
+ kg/0FhHYonj29X2/km6MBTf+jg1TIgKLU1A7ALJbixr5NqNG2Oc5oUy0xwcNEgVEQoAk
+ qn/w==
+X-Gm-Message-State: AOJu0YyrIx8mAkO0DrWJ2qsMDxC4JH61SpFTmxKrFYXhN/1BacqGw81s
+ weXXOaJU7/jnK5tW8cHV4FKzpu7/ee8X2WVvX+GsQaYk56yOkiwD44F4cGOCJpC902o=
+X-Gm-Gg: ATEYQzwWbiZoAHv7K1dy5irbo6DiwTLPYaf8NJXFVDQY7GqCS5sDmv4gYG8iz7PIYPT
+ OBsFYVT8HbX/ygXLaoxIbb1J/58AW6oEqWRUL3w0zWRKW/iz2/hwMwEMUOJ1TeWPtUFWhmlrTHx
+ IttWgPQCw6sr3qH5EwmZaiM8EgXJP6ohI3suUEtlOtnm1Ys8AwMluy+cC8vtT1hFuWrt50Wr+dT
+ ICDRcyfkjIV6GSYqTZ1wdFhPYmlxi3U4sc+uiblfbayq/ZvttbSiekKr1TxI3/LtidTwlpumage
+ aIQiFN/aHq+C7oiG/8ZTANVc1gCe+VJTmi3uizDitoO73KWwV8WNf+tI6uk9G14NsYrh8ZaYdCm
+ o3TuInfYhIteyTt3laSO1nMPUGPF62rJOjjvhOX+mKNcgtA9xACODVaMgiZpf44OKGTWDz9tK16
+ 7udslOqAKE73Fsu6GKAFi7aDo=
+X-Received: by 2002:a17:906:6a22:b0:b98:4b50:ac3c with SMTP id
+ a640c23a62f3a-b984b50ad49mr644273166b.27.1774281399386; 
+ Mon, 23 Mar 2026 08:56:39 -0700 (PDT)
 Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-668cf4f89fesm3900200a12.4.2026.03.23.08.56.40
+ a640c23a62f3a-b983365a159sm502508766b.44.2026.03.23.08.56.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 08:56:41 -0700 (PDT)
+ Mon, 23 Mar 2026 08:56:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 75FAF5F8EB;
+ by draig.lan (Postfix) with ESMTP id 00C875F7F5;
  Mon, 23 Mar 2026 15:56:38 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 7/8] tests/docker: Update the opensuse-leap container file to
- version 16
-Date: Mon, 23 Mar 2026 15:56:36 +0000
-Message-ID: <20260323155637.145015-8-alex.bennee@linaro.org>
+Subject: [PULL 1/8] tests/tcg: allow filtering of TCG tests
+Date: Mon, 23 Mar 2026 15:56:30 +0000
+Message-ID: <20260323155637.145015-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260323155637.145015-1-alex.bennee@linaro.org>
 References: <20260323155637.145015-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,105 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+We have a lot of TCG tests now which can be fiddly if we just want to
+check one particular test type across the targets. Introduce
+TCG_TEST_FILTER to allow this:
 
-Run "make lcitool-refresh" to update the container file to the latest
-version of openSUSE.
+  make check-tcg TCG_TEST_FILTER=gdb
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20260316135407.209072-4-thuth@redhat.com>
-Message-ID: <20260320155107.2143191-8-alex.bennee@linaro.org>
+to run all the gdb tests across the suites.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260320155107.2143191-2-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index d693f2c6f85..66e90fa3634 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -1,13 +1,12 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all opensuse-leap-15 qemu
-+#  $ lcitool dockerfile --layers all opensuse-leap-16 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 59b9a4b9220..f257288194d 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -16,9 +16,11 @@ check-help:
+ 	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
+ 	@echo " $(MAKE) check-block                   Run block tests"
+ ifneq ($(filter $(all-check-targets), check-softfloat),)
+-	@echo " $(MAKE) check-tcg                     Run TCG tests"
+ 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
+-	@echo " $(MAKE) run-tcg-tests-TARGET-softmmu  Run TCG tests for a given target"
++	@echo " $(MAKE) check-tcg                     Run TCG tests"
++	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a given target"
++	@echo
++	@echo "The variable TCG_TEST_FILTER will select the subset of matching tests."
+ endif
+ 	@echo
+ 	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
+@@ -64,7 +66,7 @@ $(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/
+ .PHONY: $(TCG_TESTS_TARGETS:%=run-tcg-tests-%)
+ $(TCG_TESTS_TARGETS:%=run-tcg-tests-%): run-tcg-tests-%: build-tcg-tests-%
+ 	$(call quiet-command, \
+-           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) run, \
++           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) TCG_TEST_FILTER=$(TCG_TEST_FILTER) run, \
+         "RUN", "$* guest-tests")
  
--FROM registry.opensuse.org/opensuse/leap:15.6
-+FROM registry.opensuse.org/opensuse/leap:16.0
+ .PHONY: $(TCG_TESTS_TARGETS:%=clean-tcg-tests-%)
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index af72903f898..1b83824ff4e 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -254,8 +254,15 @@ endif
+ gdb-%: %
+ 	gdb --args $(QEMU) $(QEMU_OPTS) $<
  
- RUN zypper update -y && \
--    zypper addrepo -fc https://download.opensuse.org/update/leap/15.6/backports/openSUSE:Backports:SLE-15-SP6:Update.repo && \
-     zypper install -y \
-            Mesa-devel \
-            alsa-lib-devel \
-@@ -80,13 +79,14 @@ RUN zypper update -y && \
-            libudev-devel \
-            liburing-devel \
-            libusb-1_0-devel \
-+           libxdp-devel \
-            libzstd-devel \
-            llvm \
-            lttng-ust-devel \
-            lzo-devel \
-            make \
-+           meson \
-            mtools \
--           ncat \
-            ncurses-devel \
-            ninja \
-            openssh \
-@@ -94,11 +94,17 @@ RUN zypper update -y && \
-            pcre2-devel-static \
-            pipewire-devel \
-            pkgconfig \
--           python311 \
--           python311-base \
--           python311-pip \
--           python311-setuptools \
--           python311-wheel \
-+           python3-Pillow \
-+           python3-PyYAML \
-+           python3-Sphinx \
-+           python3-base \
-+           python3-numpy \
-+           python3-opencv \
-+           python3-pip \
-+           python3-setuptools \
-+           python3-sphinx_rtd_theme \
-+           python3-tomli \
-+           python3-wheel \
-            rdma-core-devel \
-            rust \
-            rust-bindgen \
-@@ -110,7 +116,7 @@ RUN zypper update -y && \
-            spice-protocol-devel \
-            swtpm \
-            systemd-devel \
--           systemtap-sdt-devel \
-+           systemtap-dtrace \
-            tar \
-            tesseract-ocr \
-            tesseract-ocr-traineddata-english \
-@@ -133,18 +139,11 @@ RUN zypper update -y && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
++# Filter tests based on TCG_TEST_FILTER if set
++ifdef TCG_TEST_FILTER
++FILTERED_RUN_TESTS=$(foreach test,$(RUN_TESTS),$(if $(findstring $(TCG_TEST_FILTER),$(test)),$(test)))
++else
++FILTERED_RUN_TESTS=$(RUN_TESTS)
++endif
++
+ .PHONY: run
+-run: $(RUN_TESTS)
++run: $(FILTERED_RUN_TESTS)
  
--RUN /usr/bin/pip3.11 install \
--                     PyYAML \
--                     meson==1.8.1 \
--                     pillow \
--                     sphinx \
--                     sphinx-rtd-theme
--
- ENV CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
- ENV LANG="en_US.UTF-8"
- ENV MAKE="/usr/bin/make"
- ENV NINJA="/usr/bin/ninja"
--ENV PYTHON="/usr/bin/python3.11"
-+ENV PYTHON="/usr/bin/python3"
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
+ clean:
+ 	rm -f $(TESTS) *.o $(CLEANFILES)
+@@ -269,3 +276,6 @@ help:
+ 	@echo "Built with $(CC)"
+ 	@echo "Available tests:"
+ 	@$(foreach t,$(RUN_TESTS),echo "  $t";)
++	@echo ""
++	@echo "Environment variables:"
++	@echo "  TCG_TEST_FILTER=<pattern>  Filter tests matching pattern"
 -- 
 2.47.3
 
