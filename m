@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7686EC01CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5022ED58B00
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 12:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4eLc-0005gP-Je; Mon, 23 Mar 2026 08:25:32 -0400
+	id 1w4eSR-0008BT-Vb; Mon, 23 Mar 2026 08:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4eLZ-0005g6-GO
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:25:29 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4eSQ-0008B3-4v
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:32:34 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4eLW-000083-GD
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:25:28 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-486fb439299so32798185e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:25:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4eSN-0001m8-Np
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 08:32:33 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-439b9b1900bso1950248f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 05:32:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774268725; x=1774873525; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1774269150; x=1774873950; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JbSB6GMulnagVycJfUF8W/f8ilnxplIqZE5Xzykxggs=;
- b=folYF0SeGmD6cPYa+irV41pL17xiM4h+aZ190CosBNg4l54RcHJIoiT/OTaAeZ8AIY
- 2NxFIhIvFfDSkRZYi1n5hx+Un1UyLd6y56LONTLiY4yW7BmlUzVvGuAuCzFBDwPcPGU7
- cJubfWjC6b4Xko44GIkn0+BD1PLX4VRpCl9Vb6CHO+BDXuW74TJIxlYBvassA7wGPSBN
- Ow7tviMXLtIaJng8G/MomyESnU9dwIghnHRaP7/BZYM2JeWpL8SMy7bl1k1V0LZM9YFH
- uHGzXr+gfxr8g4zZo/qUltc5xkg7cw2FfU+Y4M0JrH1dx2/ZLYyvS54lq84tMaRhX12m
- 8bew==
+ bh=nO+jjWxT+fBbHad0xaSFQs/OYQG5HaNYoduaoDtscB8=;
+ b=AHrUv0nddZYg7D4Ch+QhvWuZoAkM3JWYEdyrkC/JyexSKjyLyT5MZE+5Zpm7CO8pLx
+ u/H6QLx60B2UPOhyuaJCa9Fugonh6xSG/lEa0sTjdZ7bCitl9WsLIYFulcxU40hBW6Dj
+ QmxWwsvPm0plRQe0fUzpUjoIUXV0VhVQxqGc2aLujEDv9cReyd3Fwo54AhqlEZ1TxlGb
+ vzgY3yxR419TMpqBl+G0mw2aAfUVD3G1vFCHXPt+q9lThilJi313nd7fP5Q3UnHnYW9Q
+ 2/7Y1at1jI50k8gAQM3Jb0WL+BRqxMaJ9ie73T8kioxrTKs5/saOQYbQEEoKJ7hfrR0Q
+ 0C2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774268725; x=1774873525;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20251104; t=1774269150; x=1774873950;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JbSB6GMulnagVycJfUF8W/f8ilnxplIqZE5Xzykxggs=;
- b=ECAOYvJlBf6iZ/OfzO/ncY9hpKOSMaOovhE80RJjg4ggEPHzdHChdLeX7nXYb6L+WD
- RTnv9zjokkYwl516+0J5q8yDPsyI1FXsbdOM20oFXEq4KzPHLeLpawW6bg32/pYyAaVK
- Gpr34V+OLPwKv0fBflavpCTMYuUGTnMOyfi7NrfJYknKbx1JFQj7V/xkCvwv5EZOWwDY
- P/gvippbplH+fCfNZn0iyH0SjHRSt33SNNVcqO8UTBNM3mGkxkIiLWTcznM8/iYhC13l
- ySVJK0aKMyd+krGqmif3cDnB1PKhanacVERkztRc0Ul6BMFCUns+VpkHW63KdVYCL37d
- NJ/A==
+ bh=nO+jjWxT+fBbHad0xaSFQs/OYQG5HaNYoduaoDtscB8=;
+ b=JzLz784zqweaIOpn+segEUMfH81hckwo6xUhik8011h342Ag/kjt54DmPH4CkT8oMw
+ 9OGWYG8R7wK3LzmpD2k0IBDP22cGv6u7DYLxhdrAvgdJibkQcciH+pi+FaOISCg8eux2
+ jal7QztUEwm9yW4h9Up3p2LoNF3A2qiWCTKEiFaDrjly00Z+904MZLLVcFeZEC7Avd/A
+ qHYrJciLEfh5g8pG0I8uiAS4SDexKA2WY+7akMFclH2ZzikcJVeSrIQ+/JnKPdjZF3xa
+ GeYP4757bbeWHonZ8nAYtZaX2qQeU3Hohp1uIpndoMI1ptitb47PkAZS5FR0mQgLo8Xk
+ W9tQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxfoHEJlwO3wMusxM/yJv/bMOr8g3MuDGo8E8wF5RETmMNuw1zy3AR7U8qTcoZkTHNiOesC0Et/Miu@nongnu.org
-X-Gm-Message-State: AOJu0YwcnDFMzzYabBF0B3ywWidgE+AMCmbkyiOhIU1FryHGE/EBnjug
- xCPjK1QiAVcE8ySzhVPVb99J/XtCYVMU18N2ARdqHhQWS9tpZabCF5lGX5NIsggeGI8=
-X-Gm-Gg: ATEYQzzHwuXHcaI8hkG6K85o4wViOv5ycbRKawIXPhqVwK7+EW366jjwS8GhbKKJC1O
- MBxyDFaAiptOkJ50BpQE9z5BkOS5MWHPZZJ7zDkFLBnY739Q++POBoeY4G0t7HQ+t/hOwneekin
- bE6cjqj7fsyGEvPNYymYxq6WO5KuvjZAoj+fW05nSFefaq5NPRfojf7V9+6XXlYpE84Mtm+mH8A
- UL3ScNLxJF+gW2sfMgjtQubeua3woTFgpU//3Ar/JMIB1JiZ6hASURhfobQxZnusgSspt1ocSuL
- eSV0RAe8zvAoB0hHzezTWWoUv04RQ4+znZnsk+CA2UIMuAaun5l8dY4Ol/xlA0ERNmr+0a4Xlt1
- gunn/qXqAiEGXlMQYLaAQxrpfb1Rgmz368SFAsUqb6Q3VQrBR9sbsTBQp22Se+zWydMhaHO1dmo
- NDxhx7gDmL7SXqCWH1txzM5TpppX4G9ZhhNLxCYl99eL5Q6l2evrq2ZxKRITjnywsfsQ==
-X-Received: by 2002:a05:600c:4214:b0:487:76c:5c97 with SMTP id
- 5b1f17b1804b1-487076c5d9fmr36080945e9.32.1774268724800; 
- Mon, 23 Mar 2026 05:25:24 -0700 (PDT)
+ AJvYcCWSgqaF9Me3uZLRcuahQifBxb+ebwnAvVJDugqQPJtbC1+YO0YhkVbChiahkzAdQYGvrEwGzWboLveR@nongnu.org
+X-Gm-Message-State: AOJu0YxPxj9r3F/bcFz/25J4/RiF/03PBaNOFfrQo2A9vs2nq2suu+9a
+ SHTPKHlWxpOwSss1aWfGo3VpM7GdD5hiTysm1uyDNGxl6AVf7rIoSkBcgFYgPKrTxvdrLQ9ypie
+ xiqQVNxM=
+X-Gm-Gg: ATEYQzx0dIJcsGD4aovcVwmYlfall1sepONaBDPpK6zc1iIoK4JUK/aUutd79kwuPFJ
+ FQ2b5MYa8lhiVkoz2Ed5d5DfRSOGtcymNy/eVd/vJxs7tx1hTqh59O2zxZWse7Nu5AKCd2FTIhe
+ rStGi4+NReCoG6k1XX6FdZUfimgz1xDxldeA1MbzZlK2Yko1H8rzIQFQul9TzoA0fKFRtGMOaGf
+ Y9xcXMYNwOz18AzaUuQ272XoMTuYSD0Cxy+GAaqYY4ZlQYLQCYWdouRQojSeCdf/sb7qotelDCj
+ mvp0kyhL7R3r7mlvqRMQLijXAUeg31YIn0lxDtQH963ugCABlnDO9EnmTcOLGCoccamtcZW7DuE
+ bBMQZCz8Wp/uFpAVxNbYIL5yDVZ/HI3XvBscxsw7dLnmZjNqtEirZ9e0MtvGyze/BeXDXB2Rd/e
+ L7fUVLg1r1FBP68iWTt1nTmQhFDxh+sjsbbX5NPel+ClMvjLd9ZPVFzFxOqLf33rE6Uw==
+X-Received: by 2002:a05:6000:2301:b0:43a:16d8:96e8 with SMTP id
+ ffacd0b85a97d-43b63fef61amr18091446f8f.0.1774269149694; 
+ Mon, 23 Mar 2026 05:32:29 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe032a55sm534477625e9.7.2026.03.23.05.25.23
+ ffacd0b85a97d-43b6470b243sm29945670f8f.26.2026.03.23.05.32.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 05:25:24 -0700 (PDT)
-Message-ID: <b2895a1f-237e-4f9d-92dc-efa2ea747913@linaro.org>
-Date: Mon, 23 Mar 2026 13:25:23 +0100
+ Mon, 23 Mar 2026 05:32:29 -0700 (PDT)
+Message-ID: <9d492305-aad0-4aa5-9aab-d6ad0d222964@linaro.org>
+Date: Mon, 23 Mar 2026 13:32:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 7/8] ati-vga: Simplify pointer image handling
+Subject: Re: [PATCH] include/hw/hyperv: add QEMU_PACKED to uapi structs
 Content-Language: en-US
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
+Cc: Anirudh Rayabharam <anirudh@anirudhrb.com>, Wei Liu <wei.liu@kernel.org>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>
+References: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>
-References: <cover.1774110169.git.balaton@eik.bme.hu>
- <b9de530074b954d661a0eb9b8b4ad82a66085456.1774110169.git.balaton@eik.bme.hu>
- <7bb33f6d-8ff8-48d0-bc96-cea8cbd165ae@linaro.org>
-In-Reply-To: <7bb33f6d-8ff8-48d0-bc96-cea8cbd165ae@linaro.org>
+In-Reply-To: <20260323120613.355019-1-magnuskulke@linux.microsoft.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,73 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/3/26 13:21, Philippe Mathieu-Daudé wrote:
-> On 21/3/26 17:30, BALATON Zoltan wrote:
->> Rewrite reading of mouse pointer image. I am not sure this is entirely
->> correct but appears to work at least on little endian host with PPC
->> guests using little or big endian frame buffer (MorphOS and MacOS) but
->> still produces broken pointer image with Linux where I am not sure if
->> it is a guest driver bug or still missing something.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/display/ati.c | 53 ++++++++++++++++++++++--------------------------
->>   1 file changed, 24 insertions(+), 29 deletions(-)
-
-
->> @@ -197,9 +194,9 @@ static void ati_cursor_invalidate(VGACommonState 
->> *vga)
->>   static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, 
->> int scr_y)
->>   {
->>       ATIVGAState *s = container_of(vga, ATIVGAState, vga);
->> -    uint32_t srcoff;
->> +    uint32_t h, srcoff, color;
->> +    uint64_t abits, xbits, mask;
->>       uint32_t *dp = (uint32_t *)d;
->> -    int i, j, h, idx = 0;
->>       if (!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN) ||
->>           scr_y < vga->hw_cursor_y || scr_y >= vga->hw_cursor_y + 64 ||
->> @@ -210,26 +207,24 @@ static void ati_cursor_draw_line(VGACommonState 
->> *vga, uint8_t *d, int scr_y)
->>       srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
->>       dp = &dp[vga->hw_cursor_x];
->>       h = ((s->regs.crtc_h_total_disp >> 16) + 1) * 8;
->> -    for (i = 0; i < 8; i++) {
->> -        uint32_t color;
->> -        uint8_t abits = vga_read_byte(vga, srcoff + i);
->> -        uint8_t xbits = vga_read_byte(vga, srcoff + i + 8);
->> -        for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1, idx++) {
->> -            if (vga->hw_cursor_x + idx >= h) {
->> -                return; /* end of screen, don't span to next line */
->> -            }
->> -            if (abits & BIT(7)) {
->> -                if (xbits & BIT(7)) {
->> -                    color = dp[idx] ^ 0xffffffff; /* complement */
->> -                } else {
->> -                    continue; /* transparent, no change */
->> -                }
->> +    abits = ldq_be_p(&vga->vram_ptr[srcoff]);
->> +    xbits = ldq_be_p(&vga->vram_ptr[srcoff + 8]);
->> +    mask = BIT(63);
+On 23/3/26 13:06, Magnus Kulke wrote:
+> The uapi definitions are marked with __packed hints in the kernel
+> headers, since we want to keep the contract of the Microsoft Hypervisor
+> ABI explicit, we should also added them in our vendored files, with a
+> few notable exceptions where the attribute is a noop.
 > 
-> This triggers:
-> 
-> In file included from include/qemu/timer.h:4,
->                   from ../hw/display/ati_int.h:12,
->                   from ../hw/display/ati.c:20:
-> ../hw/display/ati.c: In function 'ati_cursor_draw_line':
-> include/qemu/bitops.h:24:38: error: left shift count >= width of type [- 
-> Werror=shift-count-overflow]
->     24 | #define BIT(nr)                 (1UL << (nr))
->        |                                      ^~
-> ../hw/display/ati.c:217:12: note: in expansion of macro 'BIT'
->    217 |     mask = BIT(63);
->        |            ^~~
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>   include/hw/hyperv/hvgdk_mini.h | 37 ++++++++++++++++++++++------------
+>   include/hw/hyperv/hvhdk.h      | 14 +++++++------
+>   2 files changed, 32 insertions(+), 19 deletions(-)
 
-BTW you can check that yourself by running our CI jobs on GitLab
-(https://www.qemu.org/docs/master/devel/testing/ci.html).
-
-This is the output of the 'cross-win64-system' job:
-https://gitlab.com/philmd/qemu/-/jobs/13605781786
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
