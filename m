@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3834F483C8
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3526F483CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iXI-00045i-PK; Mon, 23 Mar 2026 12:53:52 -0400
+	id 1w4iXe-0005Pq-LG; Mon, 23 Mar 2026 12:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXA-0003qE-EJ
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:47 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXa-0005Ap-HE
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:11 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iX8-0000Zb-Or
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:44 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439bc14dcf4so3723972f8f.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXZ-0000bg-0I
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:10 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4852b81c73aso27507535e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284821; x=1774889621; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284847; x=1774889647; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Ytl/Lf/ir6hv7oQtfO3hAVuKT+Xlc63h9VpXwPWBR6I=;
- b=dROAP88us0XhtPpOy4hh2WksFFjUUc1tKb0eKYZfl8MJvAA5SlzgQzBVVlw7+dNkGN
- 6Wg3gk4B0wsz+HZnCHIMm78TW2LVDL/HO+uODvQoxikOstY3EEtYw9w2jk2GUyqSNVbm
- RKvien3XJNoffmRyEES9iRkATVF6r6y7f83NjT45i3emkOxwyIVus3iXtry/0mj3dBJ2
- F80D/tw4vR/qD6QJAzvivROfB1TPZEWjYokaOdVi0VjZgJboP3L90bV0zq4NIRZaa2/l
- hbxiD1JV9kJxMNcKvxRwFB1R3bhHBqKr9zGvBUoeNbpakmy6Nwzf0GDt+OUlJV3BiHuv
- kTdQ==
+ :reply-to; bh=HxZq9kuwV2EPeGqBtGUjPbFp7Ne2hS6lS30xXSScbwA=;
+ b=csI/04/qSKUKg5FwMqNBgKpRQOIt/rcyspTGnH4kA7xfqz2s5ro9d8FXasMZUinQIg
+ I06n+9oQ9r33vs55m9Ng41p6CIKu8igpaWcHiCb5Ete6Vf2M0qRKVunq+GdQPfzsEZHW
+ p6bnzK1TcZ+F0wORfsWBfJXDq6ohD4Q0p10FgBiuH9X+qWSSdbrxfvaHkt5JW9iVShV1
+ Foph4Ojv9oGy1U2O4ECXPvF+hNn1l/rQNPMFtIW6IMNw3FvQ9EUYJCZiZF1WM2HwgWct
+ TlPXebjvlZf/FcPxcLGfBYWycRYriJypmSlFv1AKLVQ+19G01UMge93q8qSArMstgJid
+ 1bFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284821; x=1774889621;
+ d=1e100.net; s=20251104; t=1774284847; x=1774889647;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Ytl/Lf/ir6hv7oQtfO3hAVuKT+Xlc63h9VpXwPWBR6I=;
- b=jhb7Uh1NiCbE5lc/HZX6XPeXNqf3Wgejs0z0QbIty/7qLxpdjgrXRAXWkOmpOSK2Qm
- SihsMBfYwsk6r8AUW/wT6p3yxECu8AF7gkZzDTAAL0SCA0cXODSWWGv7GGxxWA2Ugrnr
- JrXB4IdzlWDVPEQz6EyKhszfENbkWJdi6J075XE4zeTXP1HB8SHZppZz9a35fySkenTI
- Cm9d6hxoSxtH+VRnFzBoMQpcc2UMtrkxI3lHLL95fbMzTJcB96twUfjJKLR8lGBddkos
- P0Q2/Tf/FLoNNzwqd7MrL5BVFTTUnKUZ9J7buO8cfXOiMtWgkthWrilj1S91xA3oSoN/
- /yvw==
-X-Gm-Message-State: AOJu0Yz3UK6M4zFB9pUUU9OWfmbfJ+fOhpFSb/8ApxdTqX+kFa0Hc7+Q
- X1UDcNGwMFJJ0FqdHDze0/xSMdk48aOt6f/jXCCCsfghSvbp1DzryoRAp/gi7XGJv7d9baomeIT
- XZsSpMY0=
-X-Gm-Gg: ATEYQzw9dsHjbi+cNQBrfQaIGEuD9Z55vsQkz4EQhV6dE7MPIc+IevFcdW9VeZVjEYY
- 1klLKBu8gzykFxNBusadll6D2ex1eTAbkhQLnZeC5yoDEU35om+8Ry6Fwrrshh7fJ+6NqPJ7T7t
- dgxkaAJg1BOkWE49SMlAkGuRs9fcUC5fEpH6SfxkVwhMImQPKEaYAd1DuTPUENJyO0ez3y9nc0u
- cRdtC3HLn6b3M2VSHKtBJYejf4XenibdlYPl5xpMeEPXAg4mZl8KBaxFKD5Sp8X8lJPyB3y9uog
- ml/USyIB97UEbr48lYSfRxOy+k5+/Oqbw45dO0As94rp/bDz/PTU7AFz610Dk5hPC3a0wipyrAb
- Sws1Y99QyShbbLVwedxzQh32ipBcET8zKK39DSbcH62hx/16ppa/83y/yAi3wEkh9oXXAdg8bYX
- L18UiAW5MZpMU1bTwx+YW3ZxO8d/UvxEh+qmC/h31FvQ3CnPGCyNhDueR1fjw0A8qRU6rKw31o
-X-Received: by 2002:adf:e19c:0:b0:43b:4166:b855 with SMTP id
- ffacd0b85a97d-43b805923d0mr482603f8f.14.1774284820702; 
- Mon, 23 Mar 2026 09:53:40 -0700 (PDT)
+ bh=HxZq9kuwV2EPeGqBtGUjPbFp7Ne2hS6lS30xXSScbwA=;
+ b=KulkaDcD/bGqsENVsrbNEWP/OZFvbThqv8UdaAjSM3JBbduD6DawCoFdoW+K4+S035
+ /6xZogBw1dl4L06HQM6LyfsPc6J4tM1C57qgSml0cV5ogF55kuuhsxXftB1KYWDEgx1q
+ GPswKyR/Sa/e2/9fEtQlHW1LLd+QsMvVK1TJCBz2ex4mRgIhKXMt4kjJ8rSVgQhUQ19t
+ w5FOI8F54YFsOd49YcDXKAx/Rl2C+P6WXBt/rWJAAOd81drtPbAO/074uVAoeavI1LX3
+ 4sFwb2rOulH+2ntSgIqro2S+aJ4mXxBSHpjhYuA/vKCVLYQHEOswMFV2ENEO9qXst4oc
+ nq8A==
+X-Gm-Message-State: AOJu0Yx4PYUGbH1D4cYTFXpRqRfIi6fGloRWS84ve25wgkgCAzJ06AKM
+ +a5oidwVLxdoANMISr5GviiqBG5lYGK8WJiJPhELoJqwAxHYMDuhbBlFfFBubNshihzHc+HzgJk
+ t4wCeJH0=
+X-Gm-Gg: ATEYQzxn3nlQL10QRJqHI1/ynvLgPvFHB2G23GduXxPAub72M2CxzLC+KNTVeidiNRx
+ 7owDMc8ZdGvknKwXJUBTwJHRuxsyOuKLU5w7osjmDpysRB29yvSfYpFouJPoqvzr+AvlZqAzBYs
+ fJo1XTpFAvue0rJNsTN3ym7oHUlY/CwFYgMTFYXiFn/iqm/vn2u4MsSa/bZEj/xSJNCh/SClI+F
+ 7IVbq6Pa7UyLMMiqvzbRImpvhzy926QWURdkwvhPR5NGALMIbZFqjZs0tymolpNfV13x0Flno1g
+ bl6rjdVVFZEblsbPSyM1ebl4/KOT1tQ18XyQZcKgIhneSB1uvpYiaIbQ74ygcz/iXfKhCBdbZRZ
+ OAIQFmIuwh3cCfChrS0qkrafKFWZSo8+Yjd0ghKiFZM5+e5UiFJml8cZSla25H0icK0jGrrjLCV
+ 2A1/1NPa9g+GNydzxuJJx8HVIoqH8g6Hd13fU/BGQfpgfPdGjnpQ0oNhVGggbKmeUrR3h/IVMOT
+ KEA9Vv5T1E=
+X-Received: by 2002:a05:600c:3546:b0:486:fbdb:b718 with SMTP id
+ 5b1f17b1804b1-486fee29536mr182910175e9.25.1774284847005; 
+ Mon, 23 Mar 2026 09:54:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b64715539sm31339390f8f.33.2026.03.23.09.53.39
+ 5b1f17b1804b1-486fe8359acsm291324285e9.12.2026.03.23.09.54.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:53:40 -0700 (PDT)
+ Mon, 23 Mar 2026 09:54:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/27] hw/cxl: Exclude Discovery from Media Operation Discovery
- output
-Date: Mon, 23 Mar 2026 17:52:03 +0100
-Message-ID: <20260323165218.96607-13-philmd@linaro.org>
+Subject: [PULL 16/27] hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
+Date: Mon, 23 Mar 2026 17:52:07 +0100
+Message-ID: <20260323165218.96607-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,52 +99,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Jenny Guanni Qu <qguanni@gmail.com>
 
-Per CXL 4.0 Table 8-331, the Discovery operation "returns a list of
-all Media Operations that the device supports, with the exception of
-the Discovery operation (Class=0, Subclass=0)."
+When a guest sets MaxPacketSize to 0 in an OHCI Endpoint Descriptor,
+ohci_service_td() transfers 0 bytes per iteration. The Transfer
+Descriptor never completes because CBP never advances toward BE,
+causing ohci_service_ed_list() to loop indefinitely and hang QEMU.
 
-Filter out Discovery entries when building the output list and adjust
-total_supported_operations accordingly.
+Add a check for MPS==0 after extracting the field from ED flags.
+If MPS is zero, call ohci_die() to reset the controller and return
+an error, preventing the infinite loop.
 
-Fixes: 77a8e9fe0ecb ("hw/cxl/cxl-mailbox-utils: Add support for Media operations discovery commands cxl r3.2 (8.2.10.9.5.3)")
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Message-ID: <20260319184256.3762391-3-dave@stgolabs.net>
+Fixes: CVE-2026-3890
+Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
+Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260321000444.909451-1-qguanni@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/cxl/cxl-mailbox-utils.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ hw/usb/hcd-ohci.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index a5b70cd01c0..d8ba7e86252 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2675,7 +2675,7 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
-     } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
-     struct media_op_discovery_out_pl *media_out_pl =
-         (struct media_op_discovery_out_pl *)payload_out;
--    int total = ARRAY_SIZE(media_op_matrix);
-+    int total = ARRAY_SIZE(media_op_matrix) - 1; /* exclude Discovery */
-     int num_ops, start_index, i;
-     int count = 0;
- 
-@@ -2701,10 +2701,12 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
- 
-     num_ops = MIN(num_ops, total - start_index);
-     for (i = 0; i < num_ops; i++) {
-+        int idx = start_index + i + 1; /* skip Discovery (first entry) */
-+
-         media_out_pl->entry[count].media_op_class =
--                media_op_matrix[start_index + i].media_op_class;
-+                media_op_matrix[idx].media_op_class;
-         media_out_pl->entry[count].media_op_subclass =
--                media_op_matrix[start_index + i].media_op_subclass;
-+                media_op_matrix[idx].media_op_subclass;
-         count++;
-     }
- 
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 1aeed9286f5..6ed8046fc20 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -956,6 +956,17 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+         if (len && dir != OHCI_TD_DIR_IN) {
+             /* The endpoint may not allow us to transfer it all now */
+             pktlen = (ed->flags & OHCI_ED_MPS_MASK) >> OHCI_ED_MPS_SHIFT;
++            /*
++             * The OHCI spec does not say what to do if the guest hands us
++             * an endpoint descriptor which specifies a MaximumPacketSize
++             * of zero, which would mean we can never actually make forward
++             * progress transferring data to it. We choose to treat it as
++             * an error.
++             */
++            if (pktlen == 0) {
++                ohci_die(ohci);
++                return 1;
++            }
+             if (pktlen > len) {
+                 pktlen = len;
+             }
 -- 
 2.53.0
 
