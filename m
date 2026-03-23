@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE92EC01C4
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 10:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F74EC01C4
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 10:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4cvl-0001v6-Ro; Mon, 23 Mar 2026 06:54:45 -0400
+	id 1w4cvj-0001to-CJ; Mon, 23 Mar 2026 06:54:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4cvk-0001uI-DW
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:44 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1w4cvh-0001sl-QX
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:41 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4cvi-00066d-KY
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:44 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48702d51cd0so25526865e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 03:54:42 -0700 (PDT)
+ id 1w4cvg-00065m-DC
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 06:54:41 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4853c1ca73aso38151265e9.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 03:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774263281; x=1774868081; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774263279; x=1774868079; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=k5Z763d6X03vG3iJc5sKRc8GlONoknrUoOK/ogdPcDo=;
- b=k0JZDnxgiJGfxTb7u0u4Z9rXQ7chzhaKTDQVcoGC4HsgDn3+0dWkzQ28gIS/xOauQ5
- fW99uOgWM4dG+lNk8OcBbo7iGF7Rsu32Zuv2k6QPqLlAgPm88w/fGeB2ck1lsxD4Ap6s
- Hyy0/SkzmYcCPkC5j8u2usidwyQ3LxErUYsRHE8Ha0K9VEJYgpkiJF4U3z34V/bbTRuJ
- oV2CnDNlPQEMQv/H6VflQlc8Xo/Bp+gp/ovZG5KEuho4eAQRqb4T6AVn/BZMqeiBhtE4
- 0Zyyg4NNfZrhYmtPZLyA7XUMMHcyGvLOR8FZ26ExjQgPPUbzRwrF4/KJdqNqPGhuKKmw
- ZqUA==
+ :reply-to; bh=xX2yGsEAs7o2rPFSa1StWGZ6GI7Skmem7ShM/upVa4Y=;
+ b=AiqRux5LoEi9MJlSsJ2Vs6q6jitQk7CV+jdUmEXAsWdJXp68hBEP/QC7uJKBHtUHSt
+ 9U5entoBI26NUfOooV9/Z4coKXgnBjCbbc2DxCp2T3Hav8qASQgLNnGRigCEdA9/uo2O
+ twfrgK2eFjCRcZp3V0qBdOdVLKZOyfCZWooDIAl9HTec2Ls+4ZaMJXKefSk3gcvRDYzB
+ j0h42s5xfrmanZS/XdIkxAIat2+v/qBWSO2nNdLv9Yg9MEtcdL8VviOB9E1ILergX+ME
+ /4vN5GzX74Gd1FdcLQqPJXhHZJ2cEcobJlseJG4pUtB70byAR/DUg1zd0dXuyqUYiDKx
+ ExBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774263281; x=1774868081;
+ d=1e100.net; s=20251104; t=1774263279; x=1774868079;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=k5Z763d6X03vG3iJc5sKRc8GlONoknrUoOK/ogdPcDo=;
- b=UIia/C0abMsTQy9XLsifyqVcQeS4vGTSzPvYwiXM67YZK1d1KVor5aMS5K8QnTnSdV
- KIcMa24tN+IrqBrpMWpz48FVXjT8pwya3IKKXJojJkrz8OKFMMjOjKhoef/O+dikxfxv
- huM8nGToIDlKs+pMTR5VPrq/sGSYaoLsWtVY8+Lesw6S27U1X1e38cVM4MPnjYtYyRZH
- arroQwTd+v326Hn2v8C5P6yThdeSuqt7AW3rxbAz2z/Hc20dv5FMRdoJ59A5cBS1JjnQ
- vRm+jaKotWDwU8mSiKj8m2BeBjGQsnsMMw9fZwkbsLOKnbCelQjJImWokl+3mB+uJ9dY
- S0VA==
-X-Gm-Message-State: AOJu0YyXPxCjSBF4wDn2yEFcvQsd5qC8raKXmmUY5PSShLk06CByksIJ
- /j46FRR1C6NbXUaNS4Pmd6cErbICKtXSWbyCaJOJP9otP24gS9Gh8O42ZX+w0wQoN55GKMY4PKc
- LgoFwNNk=
-X-Gm-Gg: ATEYQzwoNXwOFy4Ocr/2oyFjCpcGrCe5G8lZ2vAZSwpwvIqyjlnpgUbo7QpTUnJ/ql9
- NE0XgtDRSUZX0/7WDGsit+vFvD6XXUvKa/yvinDTERKvO1gbpqolBxJpGoVbS9AUhu/FS4CrO+1
- k431TAp4F21iBWaLY2FbbswnSi/R8yxEmmNeR0tEiynUKcZskbcrSuRwQwdOR8PUK4D3w6OqzO0
- 0YEeX1OLcmx3B+8sQD/me0Orfz/blYOrIclFBzcULyqTDtjNDe7c2G6RhGtvKNAjOC3rFdTcJ3/
- Wo2b1T9PkY8KUJ1wsoaBt37+ySD0oGJv6rnNT30ue1HGBlyEOtTysMVmpWJVYolTwIhj796GbTn
- pOInfb4Q/EpxC2weP84FMmeCyaWxeYGezRHNvmAt1xGZMwMRvlMoCIe8mxsM8h9qvcGVvxiO5fG
- UH3rgntvFY5HPYXYEq6aiFc2KluQscnUIg/EwqFw8odM3jxQi07DVjzxNorsAYXBa/wljQcQV6x
- YvbILtocGKA90h1brqj2uUuTT+iUZM=
-X-Received: by 2002:a05:600c:45c7:b0:485:3fd1:9936 with SMTP id
- 5b1f17b1804b1-486fede721amr150941555e9.5.1774263281183; 
- Mon, 23 Mar 2026 03:54:41 -0700 (PDT)
+ bh=xX2yGsEAs7o2rPFSa1StWGZ6GI7Skmem7ShM/upVa4Y=;
+ b=d5xDXiTBEAyDkFm5ivBwvz92lBBdCet9nYVSICWNZCYd2R5Bkiz0d2NsDVMHbHOiaS
+ duomZKc2Wf60CGzlMqMToG4aNJtLyb85Whu1iHpvy4S5AfBXjxiRE4ibvWSVwG4i3lVu
+ drkf4qBVm4SDGFe0j1ReW29rVVm4cQpRNn7ZUCz49N4cBg2kSGwQpx6NIQsH4yv2yAPC
+ fvdm6GbMQFng1xTpP2r8PvMNeYWZGcY4OXexUzyaPDx+uZaqXNwJZtmzPWumXgpPP7yW
+ IpHK04K0vkWJlHdg0hbJSX0HxsKDcnyBGoWgdd87deIDIoRgN5SevBkCwUVQcViTnYhr
+ vkqA==
+X-Gm-Message-State: AOJu0YxkZrNj4S/mkGGkphWfxRRx5T+RQVRZNuKhNgHcneao07FDFQ+6
+ royAhzRKlZ6Vz/E1AGeGbV5nUjF2nQT4OJJibY7nX813KN3xmjPC2UviOuRNciF13KHfWEpk3y3
+ hBMkOTYE=
+X-Gm-Gg: ATEYQzz01JrKMm8QkscHVw4v4c1c5qLOYxsis9fAvZDY1V0OH0gORVj5zhWiUGTN0SI
+ K7+mfQr12+AuWZ6rOTPoNVHwkMj+UjwR1MR5vR5n4TsK40ycb94ec/gKEZPTlJ7Wcjy/EK/HdW7
+ Gm7DOGGNNifEmpLkPym+Eq3SsP3+YP4nTYcK2B//fIlAT9uUflQzZ7YFUCbgtctCeS5N1fuguB8
+ fl+evxyyMFG19Euvem5sgyqxMUfhaun2yxDxhYMOuMJv2VbCpNEi95r2NArnCeIZIya+7NxyP6H
+ jmX6ifLTr9mLiCNZjt/ZgUyPNEE2pPXxa0xfJn7SRJZ5ZDKU8T9eK+J5oSZEEApVvPy0SQo/jsy
+ sdbKztZf3uLc6Awk/QVPl6ju/dYphnmVE9aM+jZ93s2E47M2rqQ4v+XpKdBQ4Aq/IDCqr+MGR6n
+ AfxRYAw2aUJkUVEAUbIoz2C5/yUBP7QYnGVcfdZwmqOm/pBdqGm76L3Rz29+/aKnX18ljLkd5ZV
+ 279H8wuT7flXqjmxKWhF8Cwh4k88jfYCqtlaBVkwA==
+X-Received: by 2002:a05:600c:828d:b0:486:fe39:28b7 with SMTP id
+ 5b1f17b1804b1-486fedf8fcbmr172659835e9.9.1774263278749; 
+ Mon, 23 Mar 2026 03:54:38 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486ff1dd9f1sm115483185e9.8.2026.03.23.03.54.40
+ 5b1f17b1804b1-486ff1dd9f1sm115483185e9.8.2026.03.23.03.54.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2026 03:54:40 -0700 (PDT)
+ Mon, 23 Mar 2026 03:54:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/10] hw/isa/piix: Embed i8259 irq in device state instead of
- allocating
-Date: Mon, 23 Mar 2026 10:54:29 +0000
-Message-ID: <20260323105429.4059580-11-peter.maydell@linaro.org>
+Subject: [PULL 08/10] whpx: arm: fix ID_AA64MMFR3_EL1 host feature register
+ index
+Date: Mon, 23 Mar 2026 10:54:27 +0000
+Message-ID: <20260323105429.4059580-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260323105429.4059580-1-peter.maydell@linaro.org>
 References: <20260323105429.4059580-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,86 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pci_piix_realize() function's use of qemu_allocate_irqs()
-results in a memory leak:
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-Direct leak of 8 byte(s) in 1 object(s) allocated from:
-    #0 0x61045c7a1a43 in malloc (/home/pm215/qemu/build/san/qemu-system-mips+0x16f8a43) (BuildId: aa43d3865e0f1991b1fc04422b5570fe522b6fa7)
-    #1 0x724cc3095ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x61045db72134 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
-    #3 0x61045cd7bf49 in pci_piix_realize /home/pm215/qemu/build/san/../../hw/isa/piix.c:318:35
-    #4 0x61045cf4533e in pci_qdev_realize /home/pm215/qemu/build/san/../../hw/pci/pci.c:2308:9
-    #5 0x61045db6cbca in device_set_realized /home/pm215/qemu/build/san/../../hw/core/qdev.c:523:13
-    #6 0x61045db86bd9 in property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:2376:5
-    #7 0x61045db81c5e in object_property_set /home/pm215/qemu/build/san/../../qom/object.c:1450:5
-    #8 0x61045db8e2fc in object_property_set_qobject /home/pm215/qemu/build/san/../../qom/qom-qobject.c:28:10
-    #9 0x61045db8258f in object_property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:1520:15
-    #10 0x61045db687aa in qdev_realize_and_unref /home/pm215/qemu/build/san/../../hw/core/qdev.c:283:11
-    #11 0x61045d892e21 in mips_malta_init /home/pm215/qemu/build/san/../../hw/mips/malta.c:1239:5
+IdAa64Mmfr3El1 was stored in idregs[ID_AA64MMFR2_EL1_IDX], overwriting
+MMFR2 and leaving MMFR3 never set. Use ID_AA64MMFR3_EL1_IDX so the host
+MMFR3 value is stored in the correct slot.
 
-(The i386 PC sets the has-pic property to 'false', so this only
-affects the MIPS Malta board.)
-
-Fix this by embedding the i8259 irq in the device state instead of
-allocating it.  This is a similar fix to the one we used for vt82c686
-in commit 2225dc562a93dc, except that we use qemu_init_irq_child()
-instead of qemu_init_irq().  The behaviour is identical except that
-the _child() version avoids what would be a leak if we ever
-unrealized the device.
-
+Fixes: f7fa2b88084 ("whpx: arm64: implement -cpu host")
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260314221529.47841-7-mohamed@unpredictable.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Message-id: 20260309171258.1905205-1-peter.maydell@linaro.org
 ---
- hw/isa/piix.c                 | 11 ++++++-----
- include/hw/southbridge/piix.h |  3 +++
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ target/arm/whpx/whpx-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/isa/piix.c b/hw/isa/piix.c
-index 04b2be2cc3..31fa53e6a4 100644
---- a/hw/isa/piix.c
-+++ b/hw/isa/piix.c
-@@ -315,12 +315,13 @@ static void pci_piix_realize(PCIDevice *dev, const char *uhci_type,
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 8aa24f2adc..bbf0f6be96 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -684,7 +684,7 @@ static bool whpx_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         { WHvArm64RegisterIdAa64Mmfr0El1, &ahcf->isar.idregs[ID_AA64MMFR0_EL1_IDX] },
+         { WHvArm64RegisterIdAa64Mmfr1El1, &ahcf->isar.idregs[ID_AA64MMFR1_EL1_IDX] },
+         { WHvArm64RegisterIdAa64Mmfr2El1, &ahcf->isar.idregs[ID_AA64MMFR2_EL1_IDX] },
+-        { WHvArm64RegisterIdAa64Mmfr3El1, &ahcf->isar.idregs[ID_AA64MMFR2_EL1_IDX] }
++        { WHvArm64RegisterIdAa64Mmfr3El1, &ahcf->isar.idregs[ID_AA64MMFR3_EL1_IDX] }
+     };
  
-     /* PIC */
-     if (d->has_pic) {
--        qemu_irq *i8259_out_irq = qemu_allocate_irqs(piix_request_i8259_irq, d,
--                                                     1);
--        qemu_irq *i8259 = i8259_init(isa_bus, *i8259_out_irq);
--        size_t i;
-+        qemu_irq *i8259;
- 
--        for (i = 0; i < ISA_NUM_IRQS; i++) {
-+        qemu_init_irq_child(OBJECT(dev), "i8259-irq", &d->i8259_irq,
-+                            piix_request_i8259_irq, d, 0);
-+        i8259 = i8259_init(isa_bus, &d->i8259_irq);
-+
-+        for (size_t i = 0; i < ISA_NUM_IRQS; i++) {
-             d->isa_irqs_in[i] = i8259[i];
-         }
- 
-diff --git a/include/hw/southbridge/piix.h b/include/hw/southbridge/piix.h
-index 86709ba2e4..a296b1205a 100644
---- a/include/hw/southbridge/piix.h
-+++ b/include/hw/southbridge/piix.h
-@@ -17,6 +17,7 @@
- #include "hw/ide/pci.h"
- #include "hw/rtc/mc146818rtc.h"
- #include "hw/usb/hcd-uhci.h"
-+#include "hw/core/irq.h"
- 
- /* PIRQRC[A:D]: PIRQx Route Control Registers */
- #define PIIX_PIRQCA 0x60
-@@ -52,6 +53,8 @@ struct PIIXState {
-     qemu_irq cpu_intr;
-     qemu_irq isa_irqs_in[ISA_NUM_IRQS];
- 
-+    IRQState i8259_irq;
-+
-     /* This member isn't used. Just for save/load compatibility */
-     int32_t pci_irq_levels_vmstate[PIIX_NUM_PIRQS];
- 
+     int i;
 -- 
 2.43.0
 
