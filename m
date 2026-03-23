@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578ABF46137
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB72F4613C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 15:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4gi2-0000A9-Lc; Mon, 23 Mar 2026 10:56:50 -0400
+	id 1w4h4F-0004gV-MI; Mon, 23 Mar 2026 11:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w4ghy-00008H-CF
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:56:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w4ghv-0006tP-Nw
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:56:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774277801;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AB+sKi8OYhoJimMrdxZXtUS/CmESeSffeocO8B1EHaw=;
- b=acn1/Acu1z6P+ye7fm1xSvZGk3xYlvkmsvMfVUtTTtnS58ZHN9ZkahsrANsNoJe9cbm/LB
- 2LQLYaFQg40SNC7D+DMdo+xtO3wHdAwodjPbD2Q7Rq4t8dRB0NnGL2CORQqee4h8ABnnM/
- mRIiYpmtv4CTcoyd2LxhsPCDW9gKgGM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-12Vzaal6Pues7JuxdTHUsA-1; Mon,
- 23 Mar 2026 10:56:39 -0400
-X-MC-Unique: 12Vzaal6Pues7JuxdTHUsA-1
-X-Mimecast-MFC-AGG-ID: 12Vzaal6Pues7JuxdTHUsA_1774277798
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EDB51944EB0; Mon, 23 Mar 2026 14:56:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.227])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 18A9E1800107; Mon, 23 Mar 2026 14:56:34 +0000 (UTC)
-Date: Mon, 23 Mar 2026 14:56:30 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org,
- jasowang@redhat.com, yuri.benditovich@daynix.com,
- akihiko.odaki@daynix.com, qemu-stable@nongnu.org
-Subject: Re: [PATCH] virtio-net: validate RSS indirections_len in post_load
-Message-ID: <acFUnqeSF2RMDiIe@redhat.com>
-References: <20260323131531.1976-1-junjie.cao@intel.com>
- <acFDFHsh8Rjhfncc@redhat.com>
- <CAFEAcA88mHqmM8Pmm0Gbbeu4ugBV8snenZh7bvjSSruUtRcywQ@mail.gmail.com>
- <20260323095706-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4h4B-0004g2-Qc
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:19:43 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4h48-0002EQ-I0
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 11:19:43 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso2288175e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 08:19:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774279176; x=1774883976; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NOEBFAr9NIyUeJhcmsPDZUWYMCRxOf1h9zZJVvCw+wY=;
+ b=qJGdALnYaULHxRDmcST4CYHcSJkeXDScV87OdrwEy9B7YuGF+p7DOA8u4VCOnxyLS+
+ HcE8NtCYbTYn9Al+n3pWUYrIOrW/UAkve/f3aF+BZ6n38S8N+hueQHuqxVTeNlrhTKRK
+ UDi6yzgbPays097P60Zw4Tijpfod2ieFt4lySz+HfbkcXWL45ib3twl6i4m5gzBA+Jgu
+ 8M/jYKUxng5QaMURWQtKPwl4oqZsvPv5if+PzRwZUXX0x2qee0EFpkXHjJWiOsg9bd0R
+ TSYGOJBiLqyyNIetuJsrlcGBDBm2Wt22+stVheUKXylsbbJWNULW4xELYacOVayAhVbl
+ C3FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774279176; x=1774883976;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NOEBFAr9NIyUeJhcmsPDZUWYMCRxOf1h9zZJVvCw+wY=;
+ b=dnnCz2mzZsoLIxgqEgiRWFOPMqgTdywmyloq4bTnLBbNbpFZp8ErDmqbBVHz1GMzLz
+ yN/tPeYBiSJo7On1b67f4jlT1HRX8Cq60cznHdzxlfgVUwBc4VEKIk3kbY+/icPT/GtG
+ TaG5noLOIyQNSkCSH3V4f7D43/ISDQzVb7YH3lt6Aw0ssiNoMylrHudGjyA1LoPyhgOJ
+ rx25ZP86UCIBBhmpHi2l9wbHxTWQK/bhfYc7+gZ6BZGYInck05pz9pe/bmEUinUTb1sh
+ wF+MxXcCt+rDyOriyq8D3qwTjGnLpy7SZu+NV767C578dFwvTBJydXCOflyRUQLrU09S
+ Wi4w==
+X-Gm-Message-State: AOJu0YzQhCjg4lGgiwosDbBqPLOBSnF3SkgsOaoXdY9VaDpvn3j9Y5Mi
+ qkzg+dMV2jBeTqb1caENXt8OkuQEj1ER4r9bKZ665I9abc9J8POQ0tHeBDEX+uI495t2ExH+O+V
+ /KBooEJ4=
+X-Gm-Gg: ATEYQzyRCxTd4vF8Ns+A91tkWWn6sfAYjC5necAJLEdyJQgp42YMXnmtX+hgBJJo2aW
+ KKGTkq/DfKIb8DJp9/MOOUkyv45iRqN0c2VXKR2CzitFzGMGNhHNSVBbe7AUOt2mdHsXzqeIqZn
+ YNVcQjQSitg9QloOyi071c/GaqRxqQOTLUJXCsbr5YjaA1qFJKOOcoxAGdwCkv0gmMZqf9ByvUu
+ 9GKINBxJwppcRjAkpxC+BJLHzRvk9CmS63PsOOXkXfY/GUZTms0nd0gH90Ws3ikGQ2c4nMubdtH
+ GSX98Xd77S7QOIS+U8KFFPOBqAorGq59TiyrYFRycsYdE9MrNPeRjuXzCIN9jUhorugHcecjZLV
+ R1EWeta7FMwtfehD6IxuYYW8eymxU9pR0RbLlakq6pxYgYyigPVyCQMIA74mus31mV078QJzVO2
+ wJLXETgWAeIjMAYrffLMIQMU2p8+o7FJ3FS9z+F183jSRwTwXSTlXemqQR/5USycaIcFHX+89J
+X-Received: by 2002:a05:600c:319c:b0:487:288:1199 with SMTP id
+ 5b1f17b1804b1-4870288126emr97639285e9.28.1774279176375; 
+ Mon, 23 Mar 2026 08:19:36 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486fe68ec05sm423162975e9.0.2026.03.23.08.19.35
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 23 Mar 2026 08:19:35 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-11.0] docs/about/removed-features: Replace 'since' ->
+ 'removed in'
+Date: Mon, 23 Mar 2026 16:19:34 +0100
+Message-ID: <20260323151934.92880-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260323095706-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,52 +99,110 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 23, 2026 at 09:57:24AM -0400, Michael S. Tsirkin wrote:
-> On Mon, Mar 23, 2026 at 01:53:53PM +0000, Peter Maydell wrote:
-> > On Mon, 23 Mar 2026 at 13:43, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > >
-> > > On Mon, Mar 23, 2026 at 09:15:31PM +0800, Junjie Cao wrote:
-> > > > virtio_net_handle_rss() enforces that indirections_len is a non-zero
-> > > > power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
-> > > > virtio_net_rss_post_load() applies none of these checks to values
-> > > > restored from the migration stream.
-> > > >
-> > > > A crafted migration stream can set indirections_len to 0.  Even if it
-> > >
-> > > The migration stream originating from the source QEMU is trusted.
-> > 
-> > Is it? In https://www.qemu.org/docs/master/system/security.html we say:
-> > 
-> > # The following entities are untrusted, meaning that they may be buggy
-> > # or malicious:
-> > 
-> > #  * Guest
-> > #  * User-facing interfaces (e.g. VNC, SPICE, WebSocket)
-> > #  * Network protocols (e.g. NBD, live migration)
-> > #  * User-supplied files (e.g. disk images, kernels, device trees)
-> > #  * Passthrough devices (e.g. PCI, USB)
-> > 
-> > which explicitly lists "live migration" as an untrusted entity.
-> > 
-> > I would definitely be extremely cautious about having a threat
-> > model where I had to distrust inbound migration data, but the
-> > above does suggest we aim to handle that, and we have I think
-> > in the past taken patches which add sanity-checking to the
-> > migration data.
-> 
-> And we even assigned a low priority CVEs to these.
+We use "deprecated since ..." and "removed in ...".
+Replace "since" by "removed in" for removed features.
 
-Do you have an example of that ?
+Fixes: 762c8554394 ("vfio: Remove 'vfio-platform'")
+Fixes: aeb1a50d4a7 ("vfio: Remove 'vfio-amd-xgbe' device")
+Fixes: e50a021a451 ("hw/arm: Remove ast2700a0-evb machine")
+Fixes: 4af2433a81b ("docs: Mention 32-bit PPC host as removed")
+Fixes: 8ebc416ac17 ("vfio: Remove 'vfio-calxeda-xgmac' device")
+Fixes: a80151c9da1 ("hw/sd/sdcard: Remove support for spec v1.10")
+Fixes: 269ffaabc84 ("buildsys: Remove support for 32-bit MIPS hosts")
+Fixes: fc37c122fff ("migration: Drop deprecated QMP migrate argument @detach")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/removed-features.rst | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-With regards,
-Daniel
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 557a24679a1..e75db084108 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -782,8 +782,8 @@ without reporting any destination threads, or non-multifd source
+ threads).  For debugging purpose, please use ``-name
+ $VM,debug-threads=on`` instead.
+ 
+-``migrate`` argument ``detach`` (since 11.0)
+-''''''''''''''''''''''''''''''''''''''''''''
++``migrate`` argument ``detach`` (removed in 11.0)
++''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ This argument has always been ignored.
+ 
+@@ -932,14 +932,14 @@ work around the atomicity issues in system mode by running all vCPUs
+ in a single thread context; in user mode atomicity was simply broken.
+ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+ 
+-32-bit MIPS (since 10.2)
+-''''''''''''''''''''''''
++32-bit MIPS (removed in 10.2)
++'''''''''''''''''''''''''''''
+ 
+ Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
+ maintain our cross-compilation CI tests of the architecture.
+ 
+-32-bit PPC (since 10.2)
+-'''''''''''''''''''''''
++32-bit PPC (removed in 10.2)
++''''''''''''''''''''''''''''
+ 
+ The QEMU project no longer supports 32-bit host builds.
+ 
+@@ -1172,8 +1172,8 @@ Mips ``mipssim`` machine (removed in 10.2)
+ Linux dropped support for this virtual machine type in kernel v3.7, and
+ there was also no binary available online to use with that board.
+ 
+-Arm ``ast2700a0-evb`` machine (since 11.0)
+-''''''''''''''''''''''''''''''''''''''''''
++Arm ``ast2700a0-evb`` machine (removed in 11.0)
++'''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ The ``ast2700a0-evb`` machine represents the first revision of the AST2700
+ and serves as the initial engineering sample rather than a production version.
+@@ -1290,8 +1290,8 @@ by using ``-machine graphics=off``.
+ 
+ The 'pvrdma' device and the whole RDMA subsystem have been removed.
+ 
+-``-device sd-card,spec_version=1`` (since 10.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''
++``-device sd-card,spec_version=1`` (removed in 10.2)
++''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ SD physical layer specification v2.00 supersedes the v1.10 one.
+ 
+@@ -1396,21 +1396,21 @@ device driver such as RBD.
+ VFIO devices
+ ------------
+ 
+-``-device vfio-calxeda-xgmac`` (since 10.2)
+-'''''''''''''''''''''''''''''''''''''''''''
++``-device vfio-calxeda-xgmac`` (removed in 10.2)
++''''''''''''''''''''''''''''''''''''''''''''''''
+ The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
+ 10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
+ string) to a guest. Calxeda HW has been ewasted now and there is no point
+ keeping that device.
+ 
+-``-device vfio-amd-xgbe`` (since 10.2)
+-''''''''''''''''''''''''''''''''''''''
++``-device vfio-amd-xgbe`` (removed in 10.2)
++'''''''''''''''''''''''''''''''''''''''''''
+ The vfio-amd-xgbe device allows to assign a host AMD 10GbE controller
+ to a guest ("amd,xgbe-seattle-v1a" compatibility string). AMD "Seattle"
+ is not supported anymore and there is no point keeping that device.
+ 
+-``-device vfio-platform`` (since 10.2)
+-''''''''''''''''''''''''''''''''''''''
++``-device vfio-platform`` (removed in 10.2)
++'''''''''''''''''''''''''''''''''''''''''''
+ The vfio-platform device allows to assign a host platform device
+ to a guest in a generic manner. Integrating a new device into
+ the vfio-platform infrastructure requires some adaptation at
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.53.0
 
 
