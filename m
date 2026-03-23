@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 739A0F46122
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 580EEF46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fsH-0003mx-8b; Mon, 23 Mar 2026 10:03:22 -0400
+	id 1w4fre-0002sg-QW; Mon, 23 Mar 2026 10:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fpS-0000ws-Ly
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:29 -0400
+ id 1w4foz-0000eP-PN
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:04 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fpR-0007JF-1i
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:26 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foy-00071b-1m
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:57 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 25AB420B6F1B;
- Mon, 23 Mar 2026 07:00:10 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 25AB420B6F1B
+ by linux.microsoft.com (Postfix) with ESMTPSA id 7B26420B6F1F;
+ Mon, 23 Mar 2026 06:59:41 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7B26420B6F1F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274414;
- bh=9BS8GXf6VR6ZaAFlkE7y0tvwO0EDUtmobElH9h7DNf8=;
+ s=default; t=1774274384;
+ bh=yhITRCfVYpAj4mFPzBy0ptGSp7r7sjaGYtVDf189wk8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=OIoGS9GKpf2Umk6z462NM92lu9gamDiTmGQtjQ/nKrxFTDphm8IElsq/7FcPNUMK9
- L6SxxFIeWcR/ozR2uJ+v6ksidX1l1NfVLw88XDwip7QLRk7dV+MWttY2oVu83Cw/5M
- Y38sZ0w+b+uYSLl5FreenHD/iE8rXgbGOLN3Rix4=
+ b=qBpmZgjagkS2imgAQjvc11FGT9sV6RiIfquJjcSrHG9ocqn9+zCuhiXLhaN1swHnC
+ 9Y/PRhjO3oZZX0s63dN0zmpR5lqHiwN/JWnFYxirW6hvoaImKPYUFO8ojtmvEcN5d3
+ H/dH8lOQ40Ge2/WzLtNX5gc3etC5Yjk65gQ7kKTs=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 31/32] target/i386/mshv: migrate MP_STATE
-Date: Mon, 23 Mar 2026 14:58:11 +0100
-Message-Id: <20260323135812.383509-32-magnuskulke@linux.microsoft.com>
+Subject: [RFC 23/32] target/i386/mshv: migrate STIMER state
+Date: Mon, 23 Mar 2026 14:58:03 +0100
+Message-Id: <20260323135812.383509-24-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,167 +75,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSHV's "internal activity state" roughly maps to QEMU's env->mp_state
-and cpu->halted states that describe state of APs in a guest.
+This part of Synic state is retrieved via a mem-aligned page. We declare
+the required space (size reference: rust-vmm/mshv) as a buffer on the VM
+state struct for inclusion in a migration.
 
-We don't invoke set_mp_state as part of store_vcpu_state() b/c we would
-put all BSP + APs in a RUNNABLE (0) state immediately, breaking SMP boot
-
-Instead we store the mp state as part of the load_cleanup() routine
-after a migration.
+Other than other SynIC features, STIMER doesn't depend on SCONTROL being
+set.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c       | 10 +++++
- include/system/mshv_int.h   |  1 +
- target/i386/mshv/mshv-cpu.c | 80 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 91 insertions(+)
+ include/system/mshv_int.h   |  2 ++
+ target/i386/cpu.h           |  5 ++++
+ target/i386/machine.c       | 20 +++++++++++++++
+ target/i386/mshv/mshv-cpu.c | 12 +++++++++
+ target/i386/mshv/synic.c    | 51 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 90 insertions(+)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 3927a82925..45fe1ef468 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -205,6 +205,7 @@ static int mshv_load_setup(QEMUFile *f, void *opaque, Error **errp)
- static int mshv_load_cleanup(void *opaque)
- {
-     MshvState *s = opaque;
-+    CPUState *cpu;
-     int ret;
- 
-     ret = mshv_arch_set_partition_msrs(first_cpu);
-@@ -213,6 +214,15 @@ static int mshv_load_cleanup(void *opaque)
-         return -1;
-     }
- 
-+    CPU_FOREACH(cpu) {
-+        ret = mshv_arch_set_mp_state(cpu);
-+        if (ret < 0) {
-+            error_report("Failed to set mp state for vCPU %d: %s",
-+                         cpu->cpu_index, strerror(-ret));
-+            return -1;
-+        }
-+    }
-+
-     resume_vm(s->vm);
- 
-     return 0;
 diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index bc16b794b2..c24efc8675 100644
+index 80df4030c5..7d685fc647 100644
 --- a/include/system/mshv_int.h
 +++ b/include/system/mshv_int.h
-@@ -98,6 +98,7 @@ int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
- int mshv_arch_store_vcpu_state(const CPUState *cpu);
- int mshv_arch_load_vcpu_state(CPUState *cpu);
- int mshv_arch_set_partition_msrs(const CPUState *cpu);
-+int mshv_arch_set_mp_state(const CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
+@@ -125,5 +125,7 @@ int mshv_set_simp(int cpu_fd, const uint8_t *page);
+ int mshv_get_siefp(int cpu_fd, uint8_t *page);
+ int mshv_set_siefp(int cpu_fd, const uint8_t *page);
+ bool mshv_synic_enabled(const CPUState *cpu);
++int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state);
++int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state);
+ 
+ #endif
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index d010d26146..4ad4a35ce9 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -45,6 +45,10 @@
+ #define ELF_MACHINE_UNAME "i686"
+ #endif
+ 
++#ifdef CONFIG_MSHV
++#define MSHV_STIMERS_STATE_SIZE 200
++#endif
++
+ enum {
+     R_EAX = 0,
+     R_ECX = 1,
+@@ -2295,6 +2299,7 @@ typedef struct CPUArchState {
+ #if defined(CONFIG_MSHV)
+     uint8_t hv_simp_page[HV_HYP_PAGE_SIZE];
+     uint8_t hv_siefp_page[HV_HYP_PAGE_SIZE];
++    uint8_t hv_synthetic_timers_state[MSHV_STIMERS_STATE_SIZE];
+ #endif
+ 
+     uint64_t mcg_cap;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index f94cc544b3..38ccbbe19d 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -10,6 +10,7 @@
+ #include "exec/watchpoint.h"
+ #include "system/kvm.h"
+ #include "system/kvm_xen.h"
++#include "system/mshv.h"
+ #include "system/tcg.h"
+ 
+ #include "qemu/error-report.h"
+@@ -953,6 +954,24 @@ static const VMStateDescription vmstate_msr_hyperv_reenlightenment = {
+ };
+ 
+ #ifdef CONFIG_MSHV
++
++static bool mshv_synthetic_timers_needed(void *opaque)
++{
++    /* Always migrate synthetic timers */
++    return mshv_enabled();
++}
++
++static const VMStateDescription vmstate_mshv_synthetic_timers = {
++    .name = "cpu/mshv_synthetic_timers",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mshv_synthetic_timers_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BUFFER(env.hv_synthetic_timers_state, X86CPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool mshv_synic_vp_state_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+@@ -1942,6 +1961,7 @@ const VMStateDescription vmstate_x86_cpu = {
+ #endif
+ #ifdef CONFIG_MSHV
+         &vmstate_mshv_synic_vp_state,
++        &vmstate_mshv_synthetic_timers,
+ #endif
+         NULL
+     }
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 80e5dd5a4b..c2c217372a 100644
+index 49f3f9c090..ec1caf4e7a 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -33,6 +33,11 @@
+@@ -135,6 +135,12 @@ static int get_synic_state(CPUState *cpu)
+     int cpu_fd = mshv_vcpufd(cpu);
+     int ret;
  
- #include <sys/ioctl.h>
- 
-+#define MSHV_MP_STATE_RUNNABLE       0
-+#define MSHV_MP_STATE_UNINITIALIZED  1
-+#define MSHV_MP_STATE_INIT_RECEIVED  2
-+#define MSHV_MP_STATE_HALTED         3
++    ret = mshv_get_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
++    if (ret < 0) {
++        error_report("failed to get synthetic timers");
++        return -1;
++    }
 +
- #define MAX_REGISTER_COUNT (MAX_CONST(ARRAY_SIZE(STANDARD_REGISTER_NAMES), \
-                             MAX_CONST(ARRAY_SIZE(SPECIAL_REGISTER_NAMES), \
-                                       ARRAY_SIZE(FPU_REGISTER_NAMES))))
-@@ -814,6 +819,76 @@ static int set_vcpu_events(const CPUState *cpu)
+     /* SIMP/SIEFP can only be read when SynIC is enabled */
+     if (!mshv_synic_enabled(cpu)) {
+         return 0;
+@@ -1065,6 +1071,12 @@ static int set_synic_state(const CPUState *cpu)
+     int cpu_fd = mshv_vcpufd(cpu);
+     int ret;
+ 
++    ret = mshv_set_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
++    if (ret < 0) {
++        error_report("failed to set synthetic timers state");
++        return -1;
++    }
++
+     /* SIMP/SIEFP can only be written when SynIC is enabled */
+     if (!mshv_synic_enabled(cpu)) {
+         return 0;
+diff --git a/target/i386/mshv/synic.c b/target/i386/mshv/synic.c
+index 8f9fee6ed7..4c629adc3a 100644
+--- a/target/i386/mshv/synic.c
++++ b/target/i386/mshv/synic.c
+@@ -54,6 +54,57 @@ static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
      return 0;
  }
  
-+static int get_mp_state(CPUState *cpu)
++int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state)
 +{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    struct hv_register_assoc assoc = {
-+        .name = HV_REGISTER_INTERNAL_ACTIVITY_STATE,
-+    };
-+    union hv_internal_activity_register activity;
 +    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
 +
-+    ret = mshv_get_generic_regs(cpu, &assoc, 1);
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
++
++    ret = get_vp_state(cpu_fd, &args);
++
 +    if (ret < 0) {
-+        error_report("failed to get internal activity state");
++        qemu_vfree(buffer);
++        error_report("failed to get synthetic timers");
 +        return -1;
 +    }
 +
-+    activity.as_uint64 = assoc.value.reg64;
-+
-+    /*
-+     * map MSHV activity state to KVM mp_state values, which are used as the
-+     * shared representation in env->mp_state and serialized by vmstate_x86_cpu.
-+     */
-+
-+    if (activity.startup_suspend) {
-+        env->mp_state = MSHV_MP_STATE_UNINITIALIZED;
-+    } else if (activity.halt_suspend) {
-+        env->mp_state = MSHV_MP_STATE_HALTED;
-+    } else {
-+        env->mp_state = MSHV_MP_STATE_RUNNABLE;
-+    }
-+
-+    cpu->halted = (env->mp_state == MSHV_MP_STATE_HALTED);
++    memcpy(state, buffer, MSHV_STIMERS_STATE_SIZE);
++    qemu_vfree(buffer);
 +
 +    return 0;
 +}
 +
-+int mshv_arch_set_mp_state(const CPUState *cpu)
++int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state)
 +{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    union hv_internal_activity_register activity = { 0 };
-+    struct hv_register_assoc assoc = {
-+        .name = HV_REGISTER_INTERNAL_ACTIVITY_STATE,
-+    };
 +    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
 +
-+    switch (env->mp_state) {
-+    case MSHV_MP_STATE_HALTED:
-+        activity.halt_suspend = 1;
-+        break;
-+    case MSHV_MP_STATE_UNINITIALIZED:
-+    case MSHV_MP_STATE_INIT_RECEIVED:
-+        activity.startup_suspend = 1;
-+        break;
-+    case MSHV_MP_STATE_RUNNABLE:
-+    default:
-+        break;
-+    }
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    memset(buffer, 0, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
 +
-+    assoc.value.reg64 = activity.as_uint64;
++    assert(state);
++    memcpy(buffer, state, MSHV_STIMERS_STATE_SIZE);
 +
-+    ret = mshv_set_generic_regs(cpu, &assoc, 1);
++    ret = set_vp_state(cpu_fd, &args);
++    qemu_vfree(buffer);
++
 +    if (ret < 0) {
-+        error_report("failed to set internal activity state");
++        error_report("failed to set synthetic timers");
 +        return -1;
 +    }
 +
 +    return 0;
 +}
 +
- static int update_hflags(CPUState *cpu)
+ int mshv_get_simp(int cpu_fd, uint8_t *page)
  {
-     X86CPU *x86cpu = X86_CPU(cpu);
-@@ -876,6 +951,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
-         return ret;
-     }
- 
-+    ret = get_mp_state(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
+     int ret;
 -- 
 2.34.1
 
