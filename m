@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A62F46124
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10725F46122
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4frC-0001pF-KR; Mon, 23 Mar 2026 10:02:22 -0400
+	id 1w4fop-0000TY-77; Mon, 23 Mar 2026 09:59:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4fp4-0000jS-Gc
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:05 -0400
+ id 1w4foG-0008St-25
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:16 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fp0-00072n-Oo
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:00 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foD-0006wZ-Gf
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:11 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 263DA20B6F21;
- Mon, 23 Mar 2026 06:59:44 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 263DA20B6F21
+ by linux.microsoft.com (Postfix) with ESMTPSA id ABB9020B703B;
+ Mon, 23 Mar 2026 06:59:03 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com ABB9020B703B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274388;
- bh=z5pOF/uzO+7evYgTyZgR0PS2QiZuE42WF+kRFN/Qu/4=;
+ s=default; t=1774274346;
+ bh=57Nxf0HUrehtTgIAOHD4gvpLgPO803KCA3BRX10c6L0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MQP4it7X9kjqgaHAjWwpRdEqThg3YMJoToaoQvka51y29N8Ugk20eIlhJC5YTwPIM
- bxHknKSLeeuYASMTxJ1IgWzKolt5GcpPcNmBBgaTDQbGAfckyodyuJytvoBtHziXvn
- wbTt6GXiLKzkF9TPxqm1MJpyyEZXat0HH774cp/g=
+ b=k6q8KWt76IFtPQRx4EoxjLyHAczwTAFAwykWgBnbrySJ5CVrdRKhDXqe6Cew6CL3U
+ ni4M+EKnPKg5GVjHoRek7pE+EXgM93XwPqSJrr/ujI+4kQykNENxVPRIsWFJecihSi
+ oztEOE7VsjSEq7kc9185RWpDVYSXqE1oC9zJLSdE=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 24/32] accel/mshv: introduce SaveVMHandler
-Date: Mon, 23 Mar 2026 14:58:04 +0100
-Message-Id: <20260323135812.383509-25-magnuskulke@linux.microsoft.com>
+Subject: [RFC 13/32] accel/mshv: remove redundant msi controller
+Date: Mon, 23 Mar 2026 14:57:53 +0100
+Message-Id: <20260323135812.383509-14-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,132 +75,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This mechanism is used to handle more imperative partition-wide steps
-that have to be taken as part of a migration routine.
-
-Currently it's a skeleton that will just pause/resume the partition as
-part of a migration. It will later be extended with more specific steps
-like reference time and hypercall pages.
+The remaining MsiControl infrastructure can be removed now
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 75 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ accel/mshv/irq.c          | 11 -----------
+ accel/mshv/mshv-all.c     |  2 --
+ include/system/mshv_int.h |  3 ---
+ 3 files changed, 16 deletions(-)
 
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 52b8ac9479..4828ac51ac 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -25,17 +25,6 @@
+ #define MSHV_IRQFD_RESAMPLE_FLAG (1 << MSHV_IRQFD_BIT_RESAMPLE)
+ #define MSHV_IRQFD_BIT_DEASSIGN_FLAG (1 << MSHV_IRQFD_BIT_DEASSIGN)
+ 
+-static MshvMsiControl *msi_control;
+-static QemuMutex msi_control_mutex;
+-
+-void mshv_init_msicontrol(void)
+-{
+-    qemu_mutex_init(&msi_control_mutex);
+-    msi_control = g_new0(MshvMsiControl, 1);
+-    msi_control->gsi_routes = g_hash_table_new(g_direct_hash, g_direct_equal);
+-    msi_control->updated = false;
+-}
+-
+ /* Pass an eventfd which is to be used for injecting interrupts from userland */
+ static int irqfd(int vm_fd, int fd, int resample_fd, uint32_t gsi,
+                  uint32_t flags)
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index d1bf148bb8..365288b901 100644
+index 08bc26713f..056b19b3b8 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -39,6 +39,8 @@
- #include "system/mshv.h"
- #include "system/mshv_int.h"
- #include "system/reset.h"
-+#include "migration/qemu-file-types.h"
-+#include "migration/register.h"
- #include "trace.h"
- #include <err.h>
- #include <sys/ioctl.h>
-@@ -47,6 +49,9 @@ bool mshv_allowed;
+@@ -426,8 +426,6 @@ static int mshv_init(AccelState *as, MachineState *ms)
  
- MshvState *mshv_state;
+     mshv_init_mmio_emu();
  
-+static int pause_vm(int vm_fd);
-+static int resume_vm(int vm_fd);
-+
- static int init_mshv(int *mshv_fd)
- {
-     int fd = open("/dev/mshv", O_RDWR | O_CLOEXEC);
-@@ -80,6 +85,64 @@ static int set_time_freeze(int vm_fd, int freeze)
-     return 0;
- }
+-    mshv_init_msicontrol();
+-
+     ret = create_vm(mshv_fd, &vm_fd);
+     if (ret < 0) {
+         close(mshv_fd);
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 9bc56e70cf..7af5bcf022 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -118,7 +118,4 @@ typedef struct MshvMsrEntries {
+ int mshv_configure_msr(const CPUState *cpu, const MshvMsrEntry *msrs,
+                        size_t n_msrs);
  
-+static void mshv_save_state(QEMUFile *f, void *opaque)
-+{
-+    return;
-+}
-+
-+static int mshv_load_state(QEMUFile *f, void *opaque, int version_id)
-+{
-+    return 0;
-+}
-+
-+static int mshv_save_prepare(void *opaque, Error **errp)
-+{
-+    MshvState *s = opaque;
-+    int ret;
-+
-+    ret = pause_vm(s->vm);
-+    if (ret < 0) {
-+        error_setg(errp, "Failed to pause VM for migration");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static void mshv_save_cleanup(void *opaque)
-+{
-+    MshvState *s = opaque;
-+    int ret;
-+
-+    ret = resume_vm(s->vm);
-+    if (ret < 0) {
-+        error_report("Failed to resme VM after  migration");
-+    }
-+}
-+
-+static int mshv_load_setup(QEMUFile *f, void *opaque, Error **errp)
-+{
-+    MshvState *s = opaque;
-+    int ret;
-+
-+    ret = pause_vm(s->vm);
-+    if (ret < 0) {
-+        error_setg(errp, "Failed to pause VM for migration restore");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int mshv_load_cleanup(void *opaque)
-+{
-+    MshvState *s = opaque;
-+
-+    resume_vm(s->vm);
-+
-+    return 0;
-+}
-+
- static int pause_vm(int vm_fd)
- {
-     int ret;
-@@ -454,6 +517,15 @@ static int mshv_init_vcpu(CPUState *cpu)
-     return 0;
- }
- 
-+static SaveVMHandlers savevm_mshv = {
-+    .save_prepare = mshv_save_prepare,
-+    .save_state = mshv_save_state,
-+    .save_cleanup = mshv_save_cleanup,
-+    .load_setup = mshv_load_setup,
-+    .load_state = mshv_load_state,
-+    .load_cleanup = mshv_load_cleanup,
-+};
-+
- static int mshv_init(AccelState *as, MachineState *ms)
- {
-     MshvState *s;
-@@ -509,6 +581,9 @@ static int mshv_init(AccelState *as, MachineState *ms)
-                                   0, "mshv-memory");
-     memory_listener_register(&mshv_io_listener, &address_space_io);
- 
-+    /* register custom handlers for migration events */
-+    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
-+
-     return 0;
- }
- 
+-/* interrupt */
+-void mshv_init_msicontrol(void);
+-
+ #endif
 -- 
 2.34.1
 
