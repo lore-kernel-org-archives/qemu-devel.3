@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 580EEF46122
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB63F46126
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 14:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4fre-0002sg-QW; Mon, 23 Mar 2026 10:02:43 -0400
+	id 1w4foR-0008V3-9c; Mon, 23 Mar 2026 09:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w4foz-0000eP-PN
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 10:00:04 -0400
+ id 1w4fnz-0008FH-7a
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:57 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4foy-00071b-1m
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:59:57 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w4fnx-0006q3-2I
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 09:58:54 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 7B26420B6F1F;
- Mon, 23 Mar 2026 06:59:41 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7B26420B6F1F
+ by linux.microsoft.com (Postfix) with ESMTPSA id 49F1920B7001;
+ Mon, 23 Mar 2026 06:58:49 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 49F1920B7001
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774274384;
- bh=yhITRCfVYpAj4mFPzBy0ptGSp7r7sjaGYtVDf189wk8=;
+ s=default; t=1774274332;
+ bh=DLb4Xz56FicxDJh1EcJd2k8Rmdkqnc0+6TN1HYuGNCw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=qBpmZgjagkS2imgAQjvc11FGT9sV6RiIfquJjcSrHG9ocqn9+zCuhiXLhaN1swHnC
- 9Y/PRhjO3oZZX0s63dN0zmpR5lqHiwN/JWnFYxirW6hvoaImKPYUFO8ojtmvEcN5d3
- H/dH8lOQ40Ge2/WzLtNX5gc3etC5Yjk65gQ7kKTs=
+ b=bNpHuoI0CjuyVef9jXpvTbtEeEGAcU8V6+voQWSnxvzYoYAe1H/VJIzj8oOayT3f3
+ 6rghs2smdRVgvJmDwsQjzOTF+NA6k+okOLNQG2Rv7LPFCp1wzNKwmDJ+LzwXbEKvp1
+ WSASlAQ7AyQKpktO6WM7d7hUo2JyWSUh2o98P9VQ=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
@@ -43,9 +43,9 @@ Cc: kvm@vger.kernel.org, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC 23/32] target/i386/mshv: migrate STIMER state
-Date: Mon, 23 Mar 2026 14:58:03 +0100
-Message-Id: <20260323135812.383509-24-magnuskulke@linux.microsoft.com>
+Subject: [RFC 09/32] accel/mshv: update s->irq_routes in update_msi_route
+Date: Mon, 23 Mar 2026 14:57:49 +0100
+Message-Id: <20260323135812.383509-10-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
 References: <20260323135812.383509-1-magnuskulke@linux.microsoft.com>
@@ -75,194 +75,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This part of Synic state is retrieved via a mem-aligned page. We declare
-the required space (size reference: rust-vmm/mshv) as a buffer on the VM
-state struct for inclusion in a migration.
+The state's irq_routes field will be updated when an irqchip's gsi
+is requested to be updated with a new dest/vector.
 
-Other than other SynIC features, STIMER doesn't depend on SCONTROL being
-set.
+The old set_msi_routing() fn is redundant and can be removed.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv_int.h   |  2 ++
- target/i386/cpu.h           |  5 ++++
- target/i386/machine.c       | 20 +++++++++++++++
- target/i386/mshv/mshv-cpu.c | 12 +++++++++
- target/i386/mshv/synic.c    | 51 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 90 insertions(+)
+ accel/mshv/irq.c | 87 +++++++++++++++++++++---------------------------
+ 1 file changed, 38 insertions(+), 49 deletions(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 80df4030c5..7d685fc647 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -125,5 +125,7 @@ int mshv_set_simp(int cpu_fd, const uint8_t *page);
- int mshv_get_siefp(int cpu_fd, uint8_t *page);
- int mshv_set_siefp(int cpu_fd, const uint8_t *page);
- bool mshv_synic_enabled(const CPUState *cpu);
-+int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state);
-+int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state);
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 9d6bdde27a..b5a047b367 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -36,52 +36,6 @@ void mshv_init_msicontrol(void)
+     msi_control->updated = false;
+ }
  
- #endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index d010d26146..4ad4a35ce9 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -45,6 +45,10 @@
- #define ELF_MACHINE_UNAME "i686"
- #endif
+-static int set_msi_routing(uint32_t gsi, uint64_t addr, uint32_t data)
+-{
+-    struct mshv_user_irq_entry *entry;
+-    uint32_t high_addr = addr >> 32;
+-    uint32_t low_addr = addr & 0xFFFFFFFF;
+-    GHashTable *gsi_routes;
+-
+-    trace_mshv_set_msi_routing(gsi, addr, data);
+-
+-    if (gsi >= MSHV_MAX_MSI_ROUTES) {
+-        error_report("gsi >= MSHV_MAX_MSI_ROUTES");
+-        return -1;
+-    }
+-
+-    assert(msi_control);
+-
+-    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
+-        gsi_routes = msi_control->gsi_routes;
+-        entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
+-
+-        if (entry
+-            && entry->address_hi == high_addr
+-            && entry->address_lo == low_addr
+-            && entry->data == data)
+-        {
+-            /* nothing to update */
+-            return 0;
+-        }
+-
+-        /* free old entry */
+-        g_free(entry);
+-
+-        /* create new entry */
+-        entry = g_new0(struct mshv_user_irq_entry, 1);
+-        entry->gsi = gsi;
+-        entry->address_hi = high_addr;
+-        entry->address_lo = low_addr;
+-        entry->data = data;
+-
+-        g_hash_table_insert(gsi_routes, GINT_TO_POINTER(gsi), entry);
+-        msi_control->updated = true;
+-    }
+-
+-    return 0;
+-}
+-
+ static int add_msi_routing(uint64_t addr, uint32_t data)
+ {
+     struct mshv_user_irq_entry *route_entry;
+@@ -370,16 +324,51 @@ void mshv_irqchip_release_virq(int virq)
+     remove_msi_routing(virq);
+ }
  
-+#ifdef CONFIG_MSHV
-+#define MSHV_STIMERS_STATE_SIZE 200
-+#endif
-+
- enum {
-     R_EAX = 0,
-     R_ECX = 1,
-@@ -2295,6 +2299,7 @@ typedef struct CPUArchState {
- #if defined(CONFIG_MSHV)
-     uint8_t hv_simp_page[HV_HYP_PAGE_SIZE];
-     uint8_t hv_siefp_page[HV_HYP_PAGE_SIZE];
-+    uint8_t hv_synthetic_timers_state[MSHV_STIMERS_STATE_SIZE];
- #endif
- 
-     uint64_t mcg_cap;
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index f94cc544b3..38ccbbe19d 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -10,6 +10,7 @@
- #include "exec/watchpoint.h"
- #include "system/kvm.h"
- #include "system/kvm_xen.h"
-+#include "system/mshv.h"
- #include "system/tcg.h"
- 
- #include "qemu/error-report.h"
-@@ -953,6 +954,24 @@ static const VMStateDescription vmstate_msr_hyperv_reenlightenment = {
- };
- 
- #ifdef CONFIG_MSHV
-+
-+static bool mshv_synthetic_timers_needed(void *opaque)
++static int update_routing_entry(MshvState *s,
++                                struct mshv_user_irq_entry *new_entry)
 +{
-+    /* Always migrate synthetic timers */
-+    return mshv_enabled();
++    struct mshv_user_irq_entry *entry;
++    int n;
++
++    for (n = 0; n < s->irq_routes->nr; n++) {
++        entry = &s->irq_routes->entries[n];
++        if (entry->gsi != new_entry->gsi) {
++            continue;
++        }
++
++        if (!memcmp(entry, new_entry, sizeof *entry)) {
++            return 0;
++        }
++
++        *entry = *new_entry;
++
++        return 0;
++    }
++
++    return -ESRCH;
 +}
 +
-+static const VMStateDescription vmstate_mshv_synthetic_timers = {
-+    .name = "cpu/mshv_synthetic_timers",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = mshv_synthetic_timers_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BUFFER(env.hv_synthetic_timers_state, X86CPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static bool mshv_synic_vp_state_needed(void *opaque)
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
  {
-     X86CPU *cpu = opaque;
-@@ -1942,6 +1961,7 @@ const VMStateDescription vmstate_x86_cpu = {
- #endif
- #ifdef CONFIG_MSHV
-         &vmstate_mshv_synic_vp_state,
-+        &vmstate_mshv_synthetic_timers,
- #endif
-         NULL
++    uint32_t addr_hi = msg.address >> 32;
++    uint32_t addr_lo = msg.address & 0xFFFFFFFF;
++    uint32_t data = le32_to_cpu(msg.data);
++    struct mshv_user_irq_entry entry = {
++        .gsi = virq,
++        .address_hi = addr_hi,
++        .address_lo = addr_lo,
++        .data = data,
++    };
+     int ret;
+ 
+-    ret = set_msi_routing(virq, msg.address, le32_to_cpu(msg.data));
++    ret = update_routing_entry(mshv_state, &entry);
+     if (ret < 0) {
+-        error_report("Failed to set msi routing");
+-        return -1;
++        error_report("Failed to set msi routing for gsi %d", virq);
++        abort();
      }
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 49f3f9c090..ec1caf4e7a 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -135,6 +135,12 @@ static int get_synic_state(CPUState *cpu)
-     int cpu_fd = mshv_vcpufd(cpu);
-     int ret;
  
-+    ret = mshv_get_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
-+    if (ret < 0) {
-+        error_report("failed to get synthetic timers");
-+        return -1;
-+    }
++    trace_mshv_set_msi_routing(virq, msg.address, data);
 +
-     /* SIMP/SIEFP can only be read when SynIC is enabled */
-     if (!mshv_synic_enabled(cpu)) {
-         return 0;
-@@ -1065,6 +1071,12 @@ static int set_synic_state(const CPUState *cpu)
-     int cpu_fd = mshv_vcpufd(cpu);
-     int ret;
- 
-+    ret = mshv_set_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
-+    if (ret < 0) {
-+        error_report("failed to set synthetic timers state");
-+        return -1;
-+    }
-+
-     /* SIMP/SIEFP can only be written when SynIC is enabled */
-     if (!mshv_synic_enabled(cpu)) {
-         return 0;
-diff --git a/target/i386/mshv/synic.c b/target/i386/mshv/synic.c
-index 8f9fee6ed7..4c629adc3a 100644
---- a/target/i386/mshv/synic.c
-+++ b/target/i386/mshv/synic.c
-@@ -54,6 +54,57 @@ static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
      return 0;
  }
  
-+int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state)
-+{
-+    int ret;
-+    void *buffer;
-+    struct mshv_get_set_vp_state args = {0};
-+
-+    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-+    args.buf_ptr = (uint64_t)buffer;
-+    args.buf_sz = HV_HYP_PAGE_SIZE;
-+    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
-+
-+    ret = get_vp_state(cpu_fd, &args);
-+
-+    if (ret < 0) {
-+        qemu_vfree(buffer);
-+        error_report("failed to get synthetic timers");
-+        return -1;
-+    }
-+
-+    memcpy(state, buffer, MSHV_STIMERS_STATE_SIZE);
-+    qemu_vfree(buffer);
-+
-+    return 0;
-+}
-+
-+int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state)
-+{
-+    int ret;
-+    void *buffer;
-+    struct mshv_get_set_vp_state args = {0};
-+
-+    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-+    memset(buffer, 0, HV_HYP_PAGE_SIZE);
-+    args.buf_ptr = (uint64_t)buffer;
-+    args.buf_sz = HV_HYP_PAGE_SIZE;
-+    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
-+
-+    assert(state);
-+    memcpy(buffer, state, MSHV_STIMERS_STATE_SIZE);
-+
-+    ret = set_vp_state(cpu_fd, &args);
-+    qemu_vfree(buffer);
-+
-+    if (ret < 0) {
-+        error_report("failed to set synthetic timers");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- int mshv_get_simp(int cpu_fd, uint8_t *page)
- {
-     int ret;
 -- 
 2.34.1
 
