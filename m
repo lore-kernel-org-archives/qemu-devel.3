@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B451F483C8
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DD4F483C8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iXs-00063b-KG; Mon, 23 Mar 2026 12:54:28 -0400
+	id 1w4iXV-0004aK-A3; Mon, 23 Mar 2026 12:54:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXn-0005dl-OG
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:24 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXO-0004Rz-6l
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:59 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXm-0000e4-AI
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:54:23 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4852c9b4158so33748455e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:54:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXL-0000ao-NJ
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:57 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-439b9cf8cb5so518688f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284860; x=1774889660; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284834; x=1774889634; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6zkZ4KurA30gv8kMnOhTH3jotd7NQGbvuL8HbdwSYNs=;
- b=zVgr9DeKcfhOXVZC2RLNtJIZqFnn0jLEG4x1ZU89cnXhYkswp5zjtpkaw0XP7wXXl/
- oTup11sz8w9GUP9tf41upAEvlD8w9huj9u1O45I5w7vMa9Euy+xFIQWr/aPft7qpaj0N
- IaGoo71LbEBKEXN93wZJ9ZZ6hilmkdDW3wLofFpps++GRGaHxCEhiFNtxG7bUy+2tiFF
- eXrlCgcMf2JuXnwR+XDAk15yrubakaakzm9rDnqJjvlpRPH5TkNLu+jD1yBPq/8XkDtj
- kXNkddGXvcfuF1sbA6NoegXYY55vVlHrkm1Z6H3k7d7ptaSao0UObEFjcmP07Mz3ZIvF
- lh/w==
+ :reply-to; bh=hQjqq3u97AoFafmWsWE1btsU5OiybkBrm5wYCU6VUyo=;
+ b=XGOa5Z4gPPqUaaY47TIj5tJLVEAuCsmE9H2qq3VNtKzoZlCGugg1pCC9SER1Czb1U3
+ Ahi1zJMCnWRNwvyfps+V+MuzGAsLxsWLxoWr6TRYV9xoPahdA+R5TZoFePb57tkxFJgM
+ YWDFGLGf8tg8WpN5CmftRHau91OdpcHGvnRyCZYW99SIzvFZWTK/SSTMqS+noW0qR2E3
+ VYhLzct/CfHcdGOjehdYdVXfZLxMptanKlK1xZkJ1h54kbEqB2/NaTNb/+VW5NBzL6wl
+ LbFsdT37O9oLQiMqJQYWqRpaKMokzveQsxZ8pI3oRA8AIb853/KZA5wyIARdoD5yMKiB
+ uXAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284860; x=1774889660;
+ d=1e100.net; s=20251104; t=1774284834; x=1774889634;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=6zkZ4KurA30gv8kMnOhTH3jotd7NQGbvuL8HbdwSYNs=;
- b=GwQG4UpnztgeMvFdGHeEfCM8dczFMD/7tz6uk3T5p03sBzF6ff7HQLjftyx3xitEAZ
- Sp/6EmYpFUNBQMEJEfKsTuKtDtr5TZRQKn2aBuMBxo0pCcam5Tlk+00hTEmFJb5Xvrg/
- nshjF6soUzZ5QnOwCqswaf8xIvK7xJdNjuHMVBi8w2CcwRC3jT5xMOgYocfuIJkXgeTe
- Zti+yJR1k6DKifF0bPxgcnknrMeGuK3j7TPctUv0Ktlj4KHGf2UBua9tN3TlL5Qt7E0u
- IDY1aXRHDwdcnteG27tawKqsS+mXjYh21GXbwdul8fAIh4eiNwoMZHFe8y0qsRZ4nsms
- xkKw==
-X-Gm-Message-State: AOJu0Yw7CR+FMm713P0YNEHYtJqwdDtGPUlmWmyHdWJgzK+v7E0jnkxN
- y3u1F5cBn7UPBlOHdabikt3mKlC6jbFERlZ9sQOYxT65EC3Xun2KWO0oINoqC9ViWeqe2uSWmD8
- zKhRTXSk=
-X-Gm-Gg: ATEYQzwU6Mp8JGk6kHydY1w6j6Q4V4vjdAVaaGevDr/fmrW3Fkabu6XSPKKhXNp6FY5
- +7P1ddwdcydpsv4oyhdy9hbz9nhoNnKP0RFBqqAdT+GaYo5C8I7N3aYT+qG9qqyndoNfmMyxDcR
- qL4Af/PaVG4ZXrSj6EdR8xQbxh1EDTuWd3ULMo9usvZzn/leHEJ79FvAu/MoEnzOSK1aBAkLoz6
- MoHGO5MlkUPZCszGDs6/lYqou1+HTchi7tLnAa96mEajZGDOfGR6yO5BqorXq7rBBF97Z4Qt3Y/
- dmpyXV72NU6u2sElOm2qq+CEJMhGHbs0KICBlGh88czddaozpwOWpaWIRF7HjKXCfS+GvCJs3/N
- 9IJzTlTf3PlwsgVHf2M29Woz5a5Qvpfucqh4wXb0zo2FTuXclAu35wydporGEN4xbpfmyh8u5xy
- YzpjFv2H+7xLIjmec9KL3Fm/mEPZaF1Hi0x9wyLJD896d/Fu9cRHJJZvYKoJQgLKvpxZZ+5U2Y
-X-Received: by 2002:a05:600c:530f:b0:485:2ce2:4c87 with SMTP id
- 5b1f17b1804b1-486febb455dmr192118995e9.4.1774284860457; 
- Mon, 23 Mar 2026 09:54:20 -0700 (PDT)
+ bh=hQjqq3u97AoFafmWsWE1btsU5OiybkBrm5wYCU6VUyo=;
+ b=n21I/a2QgkCOPHia9OFN5aTmuhrnIkk6ZpZcINHFatXzoIEWmHmVWbr8JeDyxu5Glv
+ CPBCHCzp3/Wi8VGllQAuP9g1bszgYwRotvTdRF2mcUijVxXWHaHb1J2XnTTfWLOrIGog
+ Uv6EmCHAyFC5JxlzJ419HrCf3rQlTkkyaq06ZE4he68JgrD2xcy1yNw1dHgcxYUWk9tY
+ Fa7hzsRg8hj2F1/LOgVlAbnidKgyaFEe113pcx1VLz5EdtStWh69ACyk+u/ou9M/0Aqw
+ FlNu0ymijsJiFrAXqGBQZ+X2kss9GaXYAySag2SCA4cpPP7LLFfd3eEbbCpgrTW5VcB/
+ ogzw==
+X-Gm-Message-State: AOJu0YzRvpgQEWSIUKecTDRYr3RDI/UJOqcaca9hmIAqllXXwrllxyYh
+ xaCJfO8GeRsWzT2wsiMWCBbRpJIPESMiS5uIq433t9nTqYUypTZwoMAvqAP5X2KmGkUnV0+OLj/
+ ds2e0zCE=
+X-Gm-Gg: ATEYQzx2IMmBfaTkofrGFmZW197GBswyWzR5qEysOrxxgH6A35lqNf1z9lGVT5JQq3W
+ M8FTl3yc5gnerFloKZtAmWHeJtBKrg4mHaSsbD9c94uhSY35mJPzQv75J6vRvA0YPvEsD1ZPDGl
+ La+MApB9CfKOaCsMIm8lyY6u7c/+XMfIjCyHjed36KqXaMH3gVWFCmTnhJODwk8pgmM4F1biVhZ
+ El544uQpVstzpMtZ3unZhKhH5XeZUVGQMdqZpR18AFORxok08sMgOU/O5zuHKVLVRHkTU8NNda9
+ rXVt+P5B6U4Gljyt2qXLKmcWRzu8y921Kq2G0b1CRcVfOFLgT67eFjRly+0Xyj8zVOd8c+cUfLB
+ qWJgxKHu+GpPXgtcbEaz8pnN/bbO0D/oRtz2u58J7/a8Al3LvfHAyS3avEBEi1O1werRNUn8e8g
+ 2Kn7UvbNvMD3QpTg6IMLCtmczNgahht1L7kXNuKPeX5/Sb7eP3SHJwlluRGLuqwhN8nikT/M65+
+ gIP7SkNbdk=
+X-Received: by 2002:a05:6000:4282:b0:439:b791:f920 with SMTP id
+ ffacd0b85a97d-43b6423faafmr21067741f8f.17.1774284833835; 
+ Mon, 23 Mar 2026 09:53:53 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486ff1e6029sm149301815e9.9.2026.03.23.09.54.19
+ ffacd0b85a97d-43b644ae048sm30843201f8f.1.2026.03.23.09.53.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:54:20 -0700 (PDT)
+ Mon, 23 Mar 2026 09:53:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/27] ati-vga: Also switch mode on HW cursor enable bit change
-Date: Mon, 23 Mar 2026 17:52:09 +0100
-Message-ID: <20260323165218.96607-19-philmd@linaro.org>
+Subject: [PULL 14/27] hw/vfio/iommufd: report hint to user when
+ vfio-dev/vfio*/dev is missing
+Date: Mon, 23 Mar 2026 17:52:05 +0100
+Message-ID: <20260323165218.96607-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-This does nothing for most drivers but works around issue and fixes
-output with the Solaris R128 driver that only sets display parameters
-after enabling CRT controller which we would miss otherwise.
+Give a hint about missing kernel config CONFIG_VFIO_DEVICE_CDEV.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Tested-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
-Message-ID: <ad3f415749178984c764f4ba810c663d1299ddfd.1774110169.git.balaton@eik.bme.hu>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260319205942.367705-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/ati.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/vfio/iommufd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 05cf507bd47..1a6a5ad4fd6 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -617,6 +617,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         ati_reg_write_offs(&s->regs.crtc_gen_cntl,
-                            addr - CRTC_GEN_CNTL, data, size);
-         if ((val & CRTC2_CUR_EN) != (s->regs.crtc_gen_cntl & CRTC2_CUR_EN)) {
-+            ati_vga_switch_mode(s);
-             if (s->cursor_guest_mode) {
-                 s->vga.force_shadow = !!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN);
-             } else {
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 131612eb836..3e33dfbb356 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -274,7 +274,10 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+     }
+ 
+     if (!g_file_get_contents(vfio_dev_path, &contents, &length, NULL)) {
+-        error_setg(errp, "failed to load \"%s\"", vfio_dev_path);
++        error_setg(errp,
++                   "failed to load \"%s\""
++                   " (is your kernel config missing CONFIG_VFIO_DEVICE_CDEV?)",
++                   vfio_dev_path);
+         goto out_close_dir;
+     }
+ 
 -- 
 2.53.0
 
