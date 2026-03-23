@@ -4,111 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A191AEC01B6
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF0BEC01B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 09:50:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4buQ-0000at-Pe; Mon, 23 Mar 2026 05:49:18 -0400
+	id 1w4bvY-00017v-4X; Mon, 23 Mar 2026 05:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4buO-0000ak-MM
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:49:16 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bvW-00017Q-BP
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:50:26 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1w4buM-0001l9-Ck
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:49:16 -0400
-Received: from [192.168.178.155] (p5b1514ce.dip0.t-ipconnect.de [91.21.20.206])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 06DCADA08A1;
- Mon, 23 Mar 2026 10:49:11 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
- t=1774259352;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UCEjtKGY8b8TWgA7r+pvpZIQxlkRs4ZxzVzhFQxwLQk=;
- b=K66zAW+W8rIIJmgK9JJCgBdlpF1BBEhUttimwmr15QvdelipJKpU0N/IuiChaPl1XsLcyv
- Yiflz/wj4cflHbkzlGfzK8VZOiJYiQD7mSRY4F+2TWUw3YU94SQPGL1V8qOv7zbW3Z/zYS
- 9sb30jBTftu/PGL0t+EUuuESNlVFXls=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
-Message-ID: <5262a373-4492-4119-8231-04981e6a8782@weilnetz.de>
-Date: Mon, 23 Mar 2026 10:49:11 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4bvU-00020Q-Ko
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 05:50:26 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439b9b190easo3098780f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 02:50:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774259423; x=1774864223; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fRUbWa9EoshrLPcFotiw2eoFcJR1oBcx2I97maoI5JQ=;
+ b=PdvhxgQhpqf179vVD9Pruvv0vtvqlxv3Osk8QQSp30Zkpcm/Wva2EP0Dqe5TgwjIxD
+ bjl7wv6RVkwKXDTwCGISyz2y6SVvELCgONw7RtyEGGU9C0j/nnvO1JnyoOVtfLGCW8wu
+ 20K2M9qp/RbEkKBlf4NhktQ3iySkHsTYnthLXPA+Z7FHKhk2mwmknhdUDEGLffqaRO0r
+ gPxIiVgApby74j999XNDjvhNuzOemMb+5THsNdRw0Y/ub3QcYxNWXvSAlFYygbzklIO/
+ V5++eOZJk3Vb7qQI6zIGAC71AAo9BaDj+tLC4BI77xYQaDEf8T/yi4BPiQpPQBfoxMo3
+ mdLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774259423; x=1774864223;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fRUbWa9EoshrLPcFotiw2eoFcJR1oBcx2I97maoI5JQ=;
+ b=YB1m+wexsiMNIobt0v7naBYE68HcpmRlm2UdWLiWVedXAa7cBPve+4Z4lJBMkuyRXI
+ l0VQhADfYas7zFc378FV53v1m5v2GdfTT6pTR9r2W2D+xcnYXuXwylBsUAkmlJi8HdRj
+ zdlYB7KbZ0EW2j2wP/rrHjDlu9GAEc3SQEAoEzaouiDU3nUqAAdfe4qMHOztnzbyNCBP
+ CoyNXq4omwfWqEpRggYzg3cW7K30iDGwPyiEa1Jm4lhBEmDYPeCcAM6ySoarJIPE/y0e
+ OMyiHzXPkrxdT/+IMignd+Ji+KOcelwPp8mg+SkVXvTq8s3EDOiLSzmzu4mOlByxA6+d
+ rPew==
+X-Gm-Message-State: AOJu0Yy9/gIupluP+HTNOOQek0CYsv8+5udGdu4AmwkL1RzYdYX6yXxk
+ qDTVXz/OFh/FxN4m2114g7CALz+XISAie0ZXAUhsgz245enf69ascxySmYjuVWJwgBc3H9YFj8G
+ J4xK2WFpNPw==
+X-Gm-Gg: ATEYQzzSGZUik7/dlor5W/5D72TebNFw0AYZiqBDp+dShUbW8488x3jbnCDhOjtOw4t
+ On3bMdqrPzDJn23TOw5/Ok6npyf5+CYjiA5wyutXw4qtSqR6Hbw0YOt5Jm4yeabu/8LJr9o8OUz
+ dfp4tse+0stqnGcNrott2jrz1RxL6hg+EJ9vnyZo7tkrXKgJKTej/joIl7IhuxFGu6JH17BqYht
+ GkiFDcDpVcDgleOvM1UnlE9vCyMI40SBgJpIDp0p9FAFFPBVKGpBHF+KBVXjxB2LckPwwOXRxCr
+ zKDtUBcDBhd/JCfDPz3vN2vEx+vXZOLGhh0txoLrPrm4Az2pHiMEeOPiuKxKho9EBQzXByDdDVM
+ GUpM0xZBFB50bt82r2WA8gtfrM25Upj2blH3J29JS3BHiw73L77K6WYv+HtzI3nbg+pLaweTtPl
+ VikcrmefukPgPFJZIszT6AaDM8PeYLn+gZXVPwurPnjmdPQRMhDtbzCnFKXs4wkr0OH16CHsSr
+X-Received: by 2002:a05:6000:290b:b0:439:c67d:9fe8 with SMTP id
+ ffacd0b85a97d-43b6424ef8bmr18413472f8f.22.1774259422581; 
+ Mon, 23 Mar 2026 02:50:22 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b644ae132sm27424526f8f.6.2026.03.23.02.50.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 23 Mar 2026 02:50:21 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH-for-11.0] monitor: Correctly display virtual addresses while
+ dumping memory
+Date: Mon, 23 Mar 2026 10:50:20 +0100
+Message-ID: <20260323095020.66658-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tdx: fix use-after-free in tdx_fetch_cpuid
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260323085527.2083921-1-pbonzini@redhat.com>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <20260323085527.2083921-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: v2201612906741603
-X-Rspamd-Queue-Id: 06DCADA08A1
-X-Spamd-Bar: ---
-X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[100.00%];
- MIME_GOOD(-0.10)[text/plain]; MID_RHS_MATCH_FROM(0.00)[];
- ARC_NA(0.00)[]; RCVD_COUNT_ZERO(0.00)[0];
- RCPT_COUNT_TWO(0.00)[2]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; MIME_TRACE(0.00)[0:+];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,45 +98,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 23.03.26 um 09:55 schrieb Paolo Bonzini:
+While reworking the address format width in commit 6ad593a75a8 we
+introduce a bug, leading to addresses being displayed with too many
+zeroes:
 
-> This is mostly harmless right now because the "if" is never
-> hit, but the code as written makes no sense.
->
-> Reported-by: Stefan Weil <sw@weilnetz.de>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/kvm/tdx.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index 4cae99c281a..4714c9d514e 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -848,7 +848,7 @@ static struct kvm_cpuid2 *tdx_fetch_cpuid(CPUState *cpu, int *ret)
->           r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid, &local_err);
->           if (r == -E2BIG) {
->               g_free(fetch_cpuid);
-> -            size = fetch_cpuid->nent;
-> +            size *= 2;
->           }
->       } while (r == -E2BIG);
+  $ qemu-system-ppc -monitor stdio -S
+  QEMU 10.2.90 monitor - type 'help' for more information
+  (qemu) x/x 0
+  0000000000000000000000000000000000000000000000000000000000000000: 0x00000000
+  (qemu) x/x 0xfff00000
+  00000000000000000000000000000000000000000000000000000000fff00000: 0x60000000
 
+  $ qemu-system-ppc64 -monitor stdio -S
+  QEMU 10.2.90 monitor - type 'help' for more information
+  (qemu) x/x 0
+  00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000: 0x00000000
 
-Reviewed-by: Stefan Weil <sw@weilnetz.de>
+Correct the format width to restore the previous behavior:
 
-Paolo, thank you for the fast fix. The GitHub code scanning currently 
-reports 23 issues with severity critical (one fixed with the commit 
-above) or high. It might be a good idea to enable CodeQL for the 
-official mirror https://github.com/qemu/qemu.
+  $ qemu-system-ppc -monitor stdio -S
+  QEMU 10.2.90 monitor - type 'help' for more information
+  (qemu) x/x 0
+  00000000: 0x00000000
 
-Regards
+  $ qemu-system-ppc64 -monitor stdio -S
+  QEMU 10.2.90 monitor - type 'help' for more information
+  (qemu) x/x 0
+  0000000000000000: 0x00000000
 
-Stefan
+Fixes: 6ad593a75a8 ("monitor/hmp: Use plain uint64_t @addr argument in memory_dump()")
+Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ monitor/hmp-cmds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index bad034937a9..bc26b39d708 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -537,7 +537,7 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+     uint8_t buf[16];
+     uint64_t v;
+     CPUState *cs = mon_get_cpu(mon);
+-    const unsigned int addr_width = is_physical ? 8 : (target_long_bits() * 2);
++    const unsigned int addr_width = is_physical ? 8 : (target_long_bits() / 4);
+     const bool big_endian = target_big_endian();
+ 
+     if (!cs && (format == 'i' || !is_physical)) {
+-- 
+2.53.0
 
 
