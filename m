@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 814C3F483C8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDF7F483CC
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Mar 2026 16:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4iXJ-00048b-Au; Mon, 23 Mar 2026 12:53:53 -0400
+	id 1w4iX8-0003li-GJ; Mon, 23 Mar 2026 12:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXG-00041W-TC
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:51 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iX4-0003JP-1P
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:38 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iXF-0000a0-Bh
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:50 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-486fba7ce4cso3252335e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4iX2-0000YR-7N
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 12:53:37 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4852c9b4158so33740755e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 09:53:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774284827; x=1774889627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774284814; x=1774889614; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9xec0PufxJI+IEi1jZgcoZUa38ZsCLM2bEVrWDrVSGo=;
- b=o+yOhX0ANdGr/TKOcZAiCEViGrwXDKsTXxnRPPfKvF69I7HYDVcRFbSNoXzQEX9XJs
- achnVb0jNaodvqaxmEVDTaf/GvdO5TNvlKeH33UhTTDLMo5gwbk3DV6sOESogYDE4l7a
- q1TzdojRY01dkRuvep4J8t42f9fumnIAXhKe18Xz2+2r0d5DLWs/6TBxqnxsKt2JAnN2
- 6W0eOqmGZVc1kDXAUhDi2ddZyYlytb2MWDEubo7RHR1Cip2HpCqaJg+JJOVGhpGhlA5b
- i+VVesW09gomUTnjX+Ks7DyEeilB8GSDs+8FCSLMPiIINP8KVf+gq5LEg03ox91XI6sq
- ggbw==
+ :reply-to; bh=/YhwIk60da2oTQuJc0jryc1bfNTZEuAJTxikVRlrD0Q=;
+ b=uVlgd+74ol0GcCOf9ssu3EvsNE8sUXZvB5zoSXS2OanF93wpIKVFeuvPTXJvyLO2b8
+ sKvabCHU0Sch3BK69A4fym9VMQ/zxiP4+8CxWVYDT25rXtrdRpYQVt/kOz4IR7IJnqie
+ KLvKg/ydszmpx9Q13gofe9hzUez3M0WsPJmIEWUp3ptMttJkqTvNNzzOsCPpwUBh9t5z
+ jnODPUPB3bhd17VjYvuiglso4s66+sSd1+p/lnB79DB+rzwqsuLpBHNCqskA2xQ/HAsZ
+ 9hhSvzeLgqS1nREeUo44eK9dHvNn+10rrdjo5qHx5MWOQjl0iqEc3omoji1158RZ+C6v
+ n7jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774284827; x=1774889627;
+ d=1e100.net; s=20251104; t=1774284814; x=1774889614;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9xec0PufxJI+IEi1jZgcoZUa38ZsCLM2bEVrWDrVSGo=;
- b=IB+E3Ymy0/x0zsPM0dA+VFuOoOiaqaDmOiX8fCbwDMMYudmG0jy5lzLrrO7Cnr+M+3
- Ww+Cx4BX5cI3rlGKzZU86XEtgCi75xiMK9dopuLkEIiMEjhf8Ki5yokuYaxmP/Ocj5gI
- UJFgrkt7MkBFryLlNiD2bgNUq5FpVzkdKeY/IX/AWJVnNV3k3IB0BLXBh9L9H8TSZOPc
- vOw4yXD8wAjYYbuJkdT/nd1t0LqXRmXldo508nvmglOXgJdyX02qzV4a/xTHkaNCIWiq
- Htljyfs8vhvyLY8FjZ7sOFnGAca8QHinYGss3SxIa5sgPddaJnX054lt5bucX7TcyCFN
- tD4A==
-X-Gm-Message-State: AOJu0YwRfLhTaMM4Byxm336ysahsx9ZqZI9oPAkusBHd755M8dccs54Z
- ln2Qm5j92XaBfntEYSnjIp/UovYb81XO9BUYVv/ULIPEkNcgwPifbn5LOmuFoby8OHoqv6izq2q
- 0x452whA=
-X-Gm-Gg: ATEYQzzpaM7hHmp8eobuQ9GGaz7oLW7HnMr4bWOr7aBQdYrfPRiwRkYyWcgEELB5Oyi
- Xde9SOo/O7uZ1i7uoWwrrKZDpYFKiMcpl89ZjtPJ+OhF0JJ7wkWe9W9pW80+Q33/UWU8gHr3FeN
- rF4ybVy9UgujB0xHzeXsItBWfepiJS1fB1zF7fmHu4y9Mm/XqEPaUv2Ijl2RH/QdBh+xKUoZ+eP
- Y2EEcIBISVmgzI3Morq0CJiBOLu0Xtfh1C9yDxE4qLXk338xTMdLmAKVXRpXnYmlpAG59xy7MRm
- DzhtP30ZIlgDyYhm5/fYRsXChqChxkYTYuudcI05I1ynaO5UGYZROcRY8strKr+J09t0qjjTPnv
- 7X+i/HEDdEd6hJFb8V0dPq8gwXOfHeUo16cOK7/xyxREolIOKX99Y6IKXiW+PFXCqSzJMMfrKT8
- PQLMrGd2oDaG7be9Z1Pq1BmBUu3lkDjee1sy3GkgBpvo54wYwLzczllEy1avxtcZqA5npVO0Br
-X-Received: by 2002:a5d:588e:0:b0:439:beee:43aa with SMTP id
- ffacd0b85a97d-43b6424e655mr19486926f8f.16.1774284827277; 
- Mon, 23 Mar 2026 09:53:47 -0700 (PDT)
+ bh=/YhwIk60da2oTQuJc0jryc1bfNTZEuAJTxikVRlrD0Q=;
+ b=cc9NNjkExlGo4C/ZMXLiqtCKvbm4ikKkRrqryGrPmICfwOHbJ486FliWrHyEHxpqmH
+ qmrCq4tPnfvp9Jhoj9nu2kU1HQN/H9D2c/rAWwfJ8+Vi7A1GYagE7ZDBs6ojmDn1Zcg4
+ pv/vKdBO7A/8Dklfe7vFMTzzhObIjgO6n8GAaEFyBhFa/1Zd/HCPMnsFduG6xU2GUrk2
+ 8/RVh9oFRKuOG8CjLRlBqlE4kbfkr5pR5wSE29M5YGhbZmAa1y10TfHjcujiRtfhJV20
+ bHr+gyic4LNNB7WoExfySbKltl7mJEHgH2VPriOdt+vsVla/lJE3k0aBAaXgTWdjdetJ
+ 73bQ==
+X-Gm-Message-State: AOJu0YwPPOOR3iQzmFyTDOBpmoN4gyphQVv2x+emZ8Q7e+8uzPNocV2u
+ N+UJHNGjAM+C23Yz0cbbGg1fLtRxoKEXuQskpces+mowMfG/qFX+NQfSIrFhCMQ6YjUEVtY3m3R
+ rQzt9tug=
+X-Gm-Gg: ATEYQzx3CKHBB2DrEHbeh9RKGKhNRrw3n2WPM5S7oir+i4zfKzK0iQ5AMHYPUjBejAF
+ lTtasGDEJErKGk4C4W3kg7DiiR4VFYj6ZUkm+Youa+7ILrE22bA1C2o6YXt7xIyoeVcJnR6Xuhx
+ 1OR6VoQXlYqjmojRC4vGVhNOnPaDkHkmUcWexzmOzrG1LJd4J5GtNsWN1JHDPwTjOoMZZxng3lR
+ 0GC83b1lPWM0yt/bm1NNRoo1+/NF/A9LC6aP7dU63dyYcNwrIyutITvoRuMMRpq21errbfsQMV/
+ Yi1qmgdymp7aLrFv9IwH54EUXZjlQmbSDZZnvadn4oIUQwtUs7j1fOoLQBfZ4ZYHjKXMc3ga26m
+ Y72rMNntE50pZZjBPpFafanhIr3OS3hYkcENBgM5RR3K15/J51OBVR5V++hD914FiHUhqfCq+6X
+ BoM/txv7pUAHreHNoK1v2ISf76z7sRN9/Bq32F6/WjziUZPm1MWUzBhR8WoG0To3hXtRW/V5a2
+X-Received: by 2002:a05:600c:1d1b:b0:485:3cf3:1010 with SMTP id
+ 5b1f17b1804b1-486febb5fefmr189242445e9.2.1774284813981; 
+ Mon, 23 Mar 2026 09:53:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b644ae37dsm31032656f8f.2.2026.03.23.09.53.46
+ 5b1f17b1804b1-486fe8367d8sm345405025e9.14.2026.03.23.09.53.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 09:53:46 -0700 (PDT)
+ Mon, 23 Mar 2026 09:53:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/27] backends/iommufd: report error when /dev/iommu is not
- available
-Date: Mon, 23 Mar 2026 17:52:04 +0100
-Message-ID: <20260323165218.96607-14-philmd@linaro.org>
+Subject: [PULL 11/27] hw/cxl: Respect Media Operation max ops discovery
+ semantics
+Date: Mon, 23 Mar 2026 17:52:02 +0100
+Message-ID: <20260323165218.96607-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
 References: <20260323165218.96607-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +99,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-In case current kernel does not support /dev/iommu, qemu will probably
-fail first because /sys/bus/pci/devices/*/vfio-dev/ is not present,
-since QEMU opens it before /dev/iommu.
+The Discovery rejects requests where start_index + num_ops
+exceeds the total number of supported operations. Per CXL 4.0
+Table 8-332, num_ops is the "Maximum number of Media Operation to
+return" - a maximum, not an exact count. The device should return
+up to that many entries, not reject the request.
 
-Instead, report an error directly when completing an iommufd object, to
-inform user that kernel does not support it, with a hint about missing
-CONFIG_IOMMUFD. We can't do this from initialize as there is no way to
-return an error, and we don't want to abort at this step.
+Cap num_ops to the available entries from start_index instead of
+erroring the command.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Message-ID: <20260319205942.367705-2-pierrick.bouvier@linaro.org>
+Fixes: 77a8e9fe0ecb ("hw/cxl/cxl-mailbox-utils: Add support for Media operations discovery commands cxl r3.2 (8.2.10.9.5.3)")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Message-ID: <20260319184256.3762391-2-dave@stgolabs.net>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- backends/iommufd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/cxl/cxl-mailbox-utils.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index acfab907c03..e1fee16acf2 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -82,6 +82,9 @@ static void iommufd_backend_complete(UserCreatable *uc, Error **errp)
-         } else {
-             cpr_save_fd(name, 0, be->fd);
-         }
-+    } else if (!g_file_test("/dev/iommu", G_FILE_TEST_EXISTS)) {
-+        error_setg(errp, "/dev/iommu does not exist"
-+                         " (is your kernel config missing CONFIG_IOMMUFD?)");
-     }
- }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index c83b5f90d4d..a5b70cd01c0 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2675,6 +2675,7 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+     } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
+     struct media_op_discovery_out_pl *media_out_pl =
+         (struct media_op_discovery_out_pl *)payload_out;
++    int total = ARRAY_SIZE(media_op_matrix);
+     int num_ops, start_index, i;
+     int count = 0;
  
+@@ -2691,24 +2692,20 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+      * sub class command.
+      */
+     if (media_op_in_disc_pl->dpa_range_count ||
+-        start_index + num_ops > ARRAY_SIZE(media_op_matrix)) {
++        start_index >= total) {
+         return CXL_MBOX_INVALID_INPUT;
+     }
+ 
+     media_out_pl->dpa_range_granularity = CXL_CACHE_LINE_SIZE;
+-    media_out_pl->total_supported_operations =
+-                                     ARRAY_SIZE(media_op_matrix);
+-    if (num_ops > 0) {
+-        for (i = start_index; i < start_index + num_ops; i++) {
+-            media_out_pl->entry[count].media_op_class =
+-                    media_op_matrix[i].media_op_class;
+-            media_out_pl->entry[count].media_op_subclass =
+-                        media_op_matrix[i].media_op_subclass;
+-            count++;
+-            if (count == num_ops) {
+-                break;
+-            }
+-        }
++    media_out_pl->total_supported_operations = total;
++
++    num_ops = MIN(num_ops, total - start_index);
++    for (i = 0; i < num_ops; i++) {
++        media_out_pl->entry[count].media_op_class =
++                media_op_matrix[start_index + i].media_op_class;
++        media_out_pl->entry[count].media_op_subclass =
++                media_op_matrix[start_index + i].media_op_subclass;
++        count++;
+     }
+ 
+     media_out_pl->num_of_supported_operations = count;
 -- 
 2.53.0
 
