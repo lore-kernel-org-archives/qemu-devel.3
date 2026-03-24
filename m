@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE0E0F532D0
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 05:01:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C7F8F532D4
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 05:27:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ttD-0001wC-7w; Tue, 24 Mar 2026 01:01:15 -0400
+	id 1w4uHg-0006Yo-KI; Tue, 24 Mar 2026 01:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4tt9-0001vu-2i
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:01:12 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1w4uHf-0006Wq-EM
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:26:31 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4tt6-0004jl-SB
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:01:10 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-439b9cf8cb5so1069166f8f.0
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 22:01:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1w4uHc-0000LX-Uv
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:26:31 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-829a27414a3so2161639b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 22:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774328467; x=1774933267; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5qf24kPvtfF2FeuNfcRqvJ0/FPzqobMnJksOBjxjq+0=;
- b=l3mcgZLs4Q0Y9GB2ud2a0HzjaNVuALmC9Pgc8sOgBOYzkVw9Va0DK3fvTwsVFcC5xN
- FiRVmFITln0gPoY0dupRGwStwSeREoBFMYSlFRchUAWIbC+5FUZOMz6Dh923C/bG7GQ+
- CYA0bK57nBuiAgwiF3+XXvuJ2KxjlAtq02+VKK8/85nhasXz0SCBbdTfYN5NYwmkxIR1
- 3DLUMBNXC/bSujL0Pr87Tp/q52pvY74f/JT7OfvtK2/gJJkdzevKzzcNXQEZqwrWcrfZ
- sNzrMp8DBUft7PZqAZce4wQJ7CAb7jI9HlIHq51xu7fUL5in3INDMEPVH7tqpYGF5Wkp
- 1ElA==
+ d=sifive.com; s=google; t=1774329987; x=1774934787; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pXZrWvTVYsv2t2m1a7BOD7mXOMDtxAvtUL+4FsrXNC4=;
+ b=gic0txKDYfWpM4atLntpp71ZFNsPEElWoMoeMkjc+v6FYo2q2lFynfLoNY6AB/6mlW
+ xFhMJbsq+B9fuPDJdaH4uTZDTZAqmP+JcjQMlZ8dqbTu4kc67Tf66jKR5GGRzjY2Zr8H
+ C8jRknYQMyw+ijcVXTXWiA+9q/6V8K0hZuSsR5tGnfHwoqMDhT8WXXW9dJG7rTC04SyB
+ enShRGcrQ6u4FX/YV6NCTQ+2//gnaZ5gYQO7lnqBSsBHGuJiv/P2O3lPeyT5P8QsMAp9
+ LqPw3Lq575ioING0mF7+54YgQ39gfZkLpJ0rM7octzEmtpdY0PJb/PjbWvP1LozTn6Yz
+ 6wFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774328467; x=1774933267;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5qf24kPvtfF2FeuNfcRqvJ0/FPzqobMnJksOBjxjq+0=;
- b=XXHXj5RaDflVfEegMK6hqKuUNSfZs8+jtXCt7vyvH+ageJBqwMmX2TtTR3/0EUjf7a
- rYOUBbBy5xtQhqWYqvNsn2Q6dhjN3tf6bBO677qsgBwLtVdh+5uvcPL221qLg0XMhyKV
- 2U9UAsRvVt922e5K3Qbf+tUJ9mz0UDBTn9gkeXqmqtv/qOqAKknST/OCqzh4pTlNl57i
- LPL6pXDP/hWURR+Zt7M5kABRIoI8CmzxOvWJEV04HWCHhL0/ICZ5AU/+zUKsF5hHYt0V
- LQ0CXwaSa3WHOV9AhR3zgLQArLEmBuYyqWdwrVPVpCFPcFJvamCXNLgroa8p7zFK6zxi
- BLXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxlfZCU2S8ocNu2WDAq8EGiAo3PVH2E4rN2dB0vv/RnZp71v5gQl3dRaADZJeGedZb15yfQ3mvf9Wj@nongnu.org
-X-Gm-Message-State: AOJu0YyOaTATDx8jIGAphif36RazutV10KXqbCczJkXJzmhhxtGrM0MB
- gt2UMvzLFTVClMR0j/5GWx2pi3vzMqTu7nDLLnCqGNnLYPkuslR9KBP6ohBaJZs88fIdtnSsPjv
- tNYB/E7o=
-X-Gm-Gg: ATEYQzxcVKrm5KgaeVFomHWnS6g0nX9a9hP8IILlOLoNw2nkUfdSDIevsVVichGStmX
- 7qPlRPGZYDGneaVi098md6IwuM5S5siBaIaBdi+PaUgjJyH/YDvta0QdEmJz4LzgrZoKV/BTPDH
- yklMDHZDALSTrN2KaLaa5pYkgf0YNkOZBSfB2dF09WAZqE848ra1JdDY1YbjPdjkuVfGCBTxjiw
- sMg9Fri6YfuRUTLu9NmQsopkxzMKqNEYzUPSojtIauHnGmNf213jj9JxpbK4vYFwUfJDK0ZlhhA
- 8mfHyVGR5+J0SS67UXL8vUHSt7HWeMht6f1t70GIZZLiG53dRsxxBvmB3GgZzVfS/TA/0lT5OTV
- TG89QU49jtXgGfpjJuNZMor31C6XXekNejdnUipElkKHVYTn+kCyfunEbAD75uD2pTISUi5q3AM
- GfpFB6VvSwmFZGrdeySdO8/FqEvCKRMmZi5dN2ewHBsawCGmR2z4nqAD9YG8l0j4R5OQ==
-X-Received: by 2002:a05:600c:35c4:b0:485:3e19:9e01 with SMTP id
- 5b1f17b1804b1-486fee31e63mr228349915e9.28.1774328467260; 
- Mon, 23 Mar 2026 22:01:07 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487113c4eb3sm25591515e9.0.2026.03.23.22.00.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 22:01:06 -0700 (PDT)
-Message-ID: <c935883f-66d1-42fd-bb19-9c0b59c9493e@linaro.org>
-Date: Tue, 24 Mar 2026 06:00:58 +0100
+ d=1e100.net; s=20251104; t=1774329987; x=1774934787;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pXZrWvTVYsv2t2m1a7BOD7mXOMDtxAvtUL+4FsrXNC4=;
+ b=SpvsSNzX3XV7LzizHOHAmJaLBmX+qdi+xFi3jTl52i4G57/dtkDbBlWfjX4Kot1XJr
+ lBe+/AB5ALbnAGE+i7yDPdfEAcmTTPO/Av+jaPneLJ+JXmKiDqRKiauZaW9V4zZRri3M
+ VKnGQtS0/jWZq98NjolnS79x0jEm0+e4T+SrgC8NZJfbgRQc5NWVy+Mys6OEGZvOjBv3
+ 9JlfigbQxd2wdtWv4ILOXhQQa4WKCJaZGeegtoZ0w5GGp7rlfKZ3Q6EpQY/PYc0ositS
+ 3kkgt5kL8apCMY1RFQAPM9vEjMRjutu+eFhhhG6g/alGqO1y4uEohoIQ3DxkbxDzJV27
+ QgFw==
+X-Gm-Message-State: AOJu0YwvCmPGMnaNEzT35nHc/d2sAgRlDbO9DhLCzAgHGPU15BLYWnCp
+ mTbkYCWNw84jYLCIvbyQybAJJ4/c3KABldnSH/IyjEy46NklayQO7onUEks4253oSVQ+iRhDy+A
+ mCSbYyxreZdNMqmBcvBIKhuCEzjZW5377A71jiNLmHMFHSfjTK/8NmbVBTNKWUL1qRHrz4KwkI4
+ drrRA6MUlKQRKYs99A8NHTZQ9DAPaY8pt67HRY8b8rMzw=
+X-Gm-Gg: ATEYQzyuAbfrlsUy1TRdzpbSgfYJ8Y/yVwm71A1UIALzlifzrXjmkgT1hz24y3tBN4W
+ 2rPpYc8SswrFC3CWaI/hJAFVeSkI+DX1L7qcRK5P3/IEIHgHb769TxV9FYJNbb+lmb4sAwAyGmk
+ daFqlJ0UD603J2TjQSqW7qHrUkgWYWqJ2kGAaSTNkXViX/j0/nnc721+eVukZ/4WeOUo9NIObws
+ Oc1RCuZ88yERQ3pE/bgv99zqDHENGX4MJ8IvqwJp1NF+MbeDarReeuoeUPhIhIabWwMqwPL03zE
+ mYKE8uQ5G0q/053wdHO1Q4KeRJcCglio19yv2XHAvqt3ElwtBn/c+2ug3HA5TOu196v+16GOAi4
+ CjoyzXMq25FyXf+B467hcEd/6yfsnG87fAe9Xb44gRPp0t60mC4X8DgB0KC85XUeo2HCkrCQaM8
+ ymUYhW0+oqRr9+32yiJBzORT/A5Sc7NC4DraoTMjjK0QX23g8hchMtjWlIU6MS3g==
+X-Received: by 2002:a05:6a00:a14:b0:82c:2445:bd45 with SMTP id
+ d2e1a72fcca58-82c2445c921mr10514383b3a.10.1774329986324; 
+ Mon, 23 Mar 2026 22:26:26 -0700 (PDT)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82b0410a3d7sm11582655b3a.55.2026.03.23.22.26.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 23 Mar 2026 22:26:25 -0700 (PDT)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Jay Chang <jay.chang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH] hw/riscv/riscv-iommu: Use standard EN_PRI bit for PRI
+Date: Tue, 24 Mar 2026 13:26:20 +0800
+Message-ID: <20260324052620.36049-1-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0] qapi: Remove deprecated
- SchemaInfoEnumMember::values field
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Eric Blake <eblake@redhat.com>, Michael Roth <michael.roth@amd.com>,
- devel@lists.libvirt.org, Markus Armbruster <armbru@redhat.com>
-References: <20260323152124.93051-1-philmd@linaro.org>
- <8abf41ec-3f8f-4b3c-8966-f9309a404862@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8abf41ec-3f8f-4b3c-8966-f9309a404862@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=jay.chang@sifive.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,39 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/3/26 04:19, Pierrick Bouvier wrote:
-> On 3/23/26 8:21 AM, Philippe Mathieu-Daudé wrote:
->> SchemaInfoEnumMember::values field has been deprecated for
->> more than 5 years (see commit 75ecee72625 "qapi: Enable enum
->> member introspection to show more than name"), it should be
->> safe enough to remove.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   docs/about/deprecated.rst       |  6 ------
->>   docs/about/removed-features.rst |  7 +++++++
->>   qapi/introspect.json            | 12 +-----------
->>   scripts/qapi/introspect.py      |  3 +--
->>   4 files changed, 9 insertions(+), 19 deletions(-)
->>
-> 
-> By curiosity, is this patch goal is simply to remove a deprecated 
-> feature/code, or does it unlock something beyond it?
-> No judgment here, that's a genuine question, and both are valid reasons!
+Replace the temporary custom extension bit (TC[32]) with the
+standard EN_PRI bit defined in RISC-V IOMMU specification.
 
-In a previous thread Daniel said past deprecation period, feature
-must be removed, otherwise undeprecated and re-introduced. I'm just
-trying to be consistent with the deprecation process, removing what
-doesn't seem worth to re-introduce (for the code I'm able to figure
-out at least).
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+---
+ hw/riscv/riscv-iommu.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Maybe we should clarify the deprecation process, clarifying that,
-and mentioning that maintainers sending pull request to commit
-patches with deprecations are also a commitment to remove code
-when the proper released is out.
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 225394ea83..7d5c8cd7f5 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1572,11 +1572,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
+ 
+     iot_cache = g_hash_table_ref(s->iot_cache);
+-    /*
+-     * TC[32] is reserved for custom extensions, used here to temporarily
+-     * enable automatic page-request generation for ATS queries.
+-     */
+-    enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
++    enable_pri = (iotlb->perm == IOMMU_NONE) &&
++        (ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI);
+     enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+ 
+     /* Check for ATS request. */
+-- 
+2.48.1
 
-> Looks good to me, to the limit of my qapi knowledge :).
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-Thanks!
 
