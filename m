@@ -4,118 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E1BE9A764
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:49:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B18EE9A765
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:52:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4zJw-0006KT-Vr; Tue, 24 Mar 2026 06:49:13 -0400
+	id 1w4zMp-0007BU-M9; Tue, 24 Mar 2026 06:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w4zJv-0006Fz-8s
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:49:11 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w4zMk-0007B8-O0
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:52:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w4zJs-0000OY-SG
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:49:10 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w4zMi-0000kn-44
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:52:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774349347;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1774349523;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cPYBG1S1s3K+YMoFMcK3kLRyXPMhOuHiZhO5uJic+MQ=;
- b=ixGvKFibP/KrwE+YfWIMLqCX+phKl/cyZvzKuz/yCKuMYCqHWj7Z53w8R7niKmY7r90VUu
- hs6/uf+N+unwUMnRkKRvvjz7v7n6jxQT6pmdhxYdZfxWqp9dWOQpmT2tgycBlX6NcRhyZy
- 6fDzNprPeAKfcOMutZfXOZTbYlI1EG4=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-279-H3AFXul0O8iVkv8bJfWUdA-1; Tue, 24 Mar 2026 06:49:06 -0400
-X-MC-Unique: H3AFXul0O8iVkv8bJfWUdA-1
-X-Mimecast-MFC-AGG-ID: H3AFXul0O8iVkv8bJfWUdA_1774349346
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-799001d77fcso26876847b3.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 03:49:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774349345; cv=none;
- d=google.com; s=arc-20240605;
- b=Jf2wEHL+wDxC7m802mMIxveNL6ztFrQgzrcPUcaN6/E+rUhu4eGdbeH437/Z91K6QU
- zZhm81xbFnqCvKby3tMWqs86x+3gW3YXlXsRCz+hE8zMYC/lXjC5QZBIDKsG3pG4+6Gu
- b9fAPMSqZrA2xdlJoPVGBAcLt3wPIUFWknMemAm+7/ZJQf6sSfcmz8YrhO+kmTUDMgWV
- JJdXH6Ai1uF3xWX/oC0KIgUYjvcaKSM0OzgzhpeggqA2podPnXk6ZhnIrkrVg9h4QpTW
- ZoJjdt0f4k1iI/Kv+WsjhbzuKZ0U9KMZ+yNLFZodkuKKapBei8ZvZ+T6EEa/n5ENvibU
- iHCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=cPYBG1S1s3K+YMoFMcK3kLRyXPMhOuHiZhO5uJic+MQ=;
- fh=/Q1walrJ1rQppfQIaR5kN+L7c1qEv+piY1FwYfW9K3g=;
- b=lJSFA+KRyM2gmPZaOnVuvexKO9OlkuXapsb284+ILh76GtOuzmFGpzC1rKs+pRxHjh
- ++KejeQQzBsRuqZk+Kydsjuan2tQRNWrjvAUT53WlBU64AUsUIVR6l1XtZHYFMh81Ifo
- acRUgoE9uTvii5+1+YhwcQ+QnakfqeMRokjlzEVXGOPAjSwJ5pSnBjOFlzEQ1SQLCUM3
- x2Qv+ooD/ilzdLb49Fcj2A+U2s4WFyrxvYIY6FNyhX4leCU794J/cG9SVxT0dlsgqw8i
- chXkIiLdWPJNrtSQuQquGg0VMdYxFjIX2MXbI9WB+R/V/iop6pZr96p2Zq+yn45NFM2G
- nFBg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774349345; x=1774954145; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cPYBG1S1s3K+YMoFMcK3kLRyXPMhOuHiZhO5uJic+MQ=;
- b=TSrg9ZMx8UsIPUbP+lDPUK1MAkf4eLngj55ha5d5kF0yxDwQyMMJVAL4knYWQK3tby
- D/48mkMmTRJHT+QtSH8egxC2D1sJgFcK6ESG5M3JkTeYHYaMpvSlNsxZQ/9kvNUDyEjj
- bwSTeYxab2sAxLDAcQEjONPNJQnn+gRNGOow4T1pnPwuTzkJQm2CH7JVmILfxqSt31mP
- C+lluA2fP49Hl/jWiiO9crf0Pk2X39ZZXyOfu1xCjPOX1hRNJJXHcM/gerLBAOUYgLUX
- 8GFJNrt96Dn9Ysyb3akxUw5Fm2VV0bovuuPGbCkk8t3qY74ieDxL6JAwUjajFjUa5ltr
- mLEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774349345; x=1774954145;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cPYBG1S1s3K+YMoFMcK3kLRyXPMhOuHiZhO5uJic+MQ=;
- b=UK3djCiwi151LSH+YY1biT4U6t5Gxubxp1/p0yR+qq/5zMH08pJM1dqzw0vYE6YCAk
- OMJhWS011JW/FQjqo49BxtneV/Ry1OYqFeCf3N5soG40qxPONSaEJAfpM6AT001Jq0ap
- V8ufGilaKkk5KKe957rVg2C25R2b4hxRokR54wyVLFeAzjYCmk8rOEmdS8cVTHzCGyvK
- 2dBeIQKcP/3cdyOw2plpJ3cNvO3H8aG6er/NXQv4RL2YaTHg3Ah2GKSVhWYjEeC7fkT5
- yObYEWbW0iQ9NrJb1HC7RFWTnOJTjTYrJxbb+ftSmi6LUIOyWbOf1NQDJR+ChUuWmoJF
- rjSQ==
-X-Gm-Message-State: AOJu0YwQKxPOFUQ0k/0H2+oZDpkXeJ91E/fmz1TIsjDHrYPaTONAbE+y
- GtfwLqke3jbFf5Y0iaCP/+9NKP+yiU02zt/F2olvRa2nIBHmc7WQIq9e3F8wfRw/G6GOwFvZyHM
- XYgD4Q/PrqqqnlK5pdlIwi5BIu48wAKdncIJ4qzj/KSNWwG1aN0l8gJPF/TKeGv9/ORlCd/9eNH
- PYsUzDqk/x4CnYmP8CFrnjfRUke/ebkzk=
-X-Gm-Gg: ATEYQzzzoLDhi4nIlH3EFX1ppsm3ibeWHXEZvOja/oEO8loaMfw3jBPwtkx0gZ0tNiD
- HnNCPwHxrPVQnsJMDFurKpd3RYwODlV5ifR12WDPtYCg7NP3ojKjIJjnm556nRcP0CZ+qjLr9SI
- UDBuwxfEyjjT72wmYm93uyBHbwBvPwLQ9ZHinE5gDoOHLHQxN52FD2iSkH/vI6U6zzPmeISX7yC
- Hp6fw==
-X-Received: by 2002:a05:690c:10c:b0:79a:7157:892 with SMTP id
- 00721157ae682-79a90b7ebedmr162341797b3.34.1774349345637; 
- Tue, 24 Mar 2026 03:49:05 -0700 (PDT)
-X-Received: by 2002:a05:690c:10c:b0:79a:7157:892 with SMTP id
- 00721157ae682-79a90b7ebedmr162341597b3.34.1774349345238; Tue, 24 Mar 2026
- 03:49:05 -0700 (PDT)
+ bh=L6FtIEg1LkTUlE+Bdn2zLfFhWfZZlAd5B8njJFVB1ds=;
+ b=J2Wzg2zCepN3zO2/VaQmygN+i7cTdLvvrLFR5GfdoGQLe1IoYXNjh4pi3ZzNw5eO9evjve
+ Qqxq/3oSMbIdXFyREQAquBdyQZTJ/6m73R/3579yfsuKZ1T8BfjLl3fbC/srSPqRdFLtpB
+ ZsjAMsjIdm++2v7BI+j+K6vrg095wE4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-olsOyhnPNoWtuL8z9Rk3_g-1; Tue,
+ 24 Mar 2026 06:51:59 -0400
+X-MC-Unique: olsOyhnPNoWtuL8z9Rk3_g-1
+X-Mimecast-MFC-AGG-ID: olsOyhnPNoWtuL8z9Rk3_g_1774349519
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5B4D195608B; Tue, 24 Mar 2026 10:51:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.93])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B4C7B1800767; Tue, 24 Mar 2026 10:51:56 +0000 (UTC)
+Date: Tue, 24 Mar 2026 10:51:53 +0000
+To: Junjie Cao <junjie.cao@intel.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de
+Subject: Re: [PATCH v2 1/3] io/channel: introduce qio_channel_pread{v, }_all()
+ and preadv_all_eof()
+Message-ID: <acJsyXqcMfzjHz58@redhat.com>
+References: <20260318140113.434-1-junjie.cao@intel.com>
+ <20260318140113.434-2-junjie.cao@intel.com>
 MIME-Version: 1.0
-References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
- <20260320142015.3856652-6-jonah.palmer@oracle.com>
-In-Reply-To: <20260320142015.3856652-6-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 24 Mar 2026 11:48:28 +0100
-X-Gm-Features: AaiRm51xxHtwaBfvyxcaxq_JdkhZlHiSfGRLqPYK6Oe_Exjxa0D5tmqvt9ph8hs
-Message-ID: <CAJaqyWfNABTMcg8UUS5GaSs9C3uUMWC17auV76dAYeK8fEWxcA@mail.gmail.com>
-Subject: Re: [RFC v2 05/14] virtio-net: detect VirtIODevice config buffer
- mid-migration change
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
- mst@redhat.com, sgarzare@redhat.com, jasowang@redhat.com, leiyang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, armbru@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260318140113.434-2-junjie.cao@intel.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -137,98 +85,289 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+X-ACL-Warn: ,  Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+From:  Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 3:21=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
-> This patch saves the config buffer and its length of a virtio-net
-> device's VirtIODevice to compare with later during the stop-and-copy
-> phase.
->
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+On Wed, Mar 18, 2026 at 10:01:11PM +0800, Junjie Cao wrote:
+> qio_channel_pread() and qio_channel_preadv() perform a single read
+> and may return a short result.  Callers that need all bytes currently
+> have to open-code a retry loop or simply treat a short read as an
+> error.
+> 
+> Introduce three new helpers following the existing read_all / readv_all
+> pattern:
+> 
+>   qio_channel_preadv_all_eof()  – retry loop; returns 1 on success,
+>                                    0 on clean EOF, -1 on error.
+>   qio_channel_preadv_all()      – wraps _eof; treats early EOF as
+>                                    error; returns 0 / -1.
+>   qio_channel_pread_all()       – single-buffer convenience wrapper
+>                                    around preadv_all().
+> 
+> These advance the file offset internally after each partial read, so
+> callers only need a single call.  All three are marked
+> coroutine_mixed_fn, consistent with the existing _all helpers.
+> 
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 > ---
->  hw/net/virtio-net.c        | 21 +++++++++++++++++++++
->  include/hw/virtio/virtio.h |  4 ++++
->  2 files changed, 25 insertions(+)
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 2733e0130c..ca4385df1a 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3871,6 +3871,15 @@ static int virtio_net_early_pre_save(void *opaque)
->      VirtIODevMigration *vdev_mig =3D vdev->migration;
->
->      vdev_mig->status_early =3D vdev->status;
-> +
-> +    /* VirtIODevice config buffer snapshot */
-> +    g_free(vdev_mig->config_early);
-> +    vdev_mig->config_len_early =3D vdev->config_len;
-> +    if (vdev->config_len) {
-> +        vdev_mig->config_early =3D g_memdup2(vdev->config, vdev->config_=
-len);
-> +    } else {
-> +        vdev_mig->config_early =3D NULL;
-> +    }
->      return 0;
->  }
->
-> @@ -4150,6 +4159,9 @@ static void virtio_net_device_unrealize(DeviceState=
- *dev)
->      virtio_cleanup(vdev);
->
->      if (n->early_mig) {
-> +        g_free(vdev->migration->config_early);
-> +        vdev->migration->config_early =3D NULL;
-> +
->          g_free(vdev->migration);
->          vdev->migration =3D NULL;
->
-> @@ -4251,6 +4263,15 @@ static bool virtio_net_has_delta(VirtIONet *n, Vir=
-tIODevice *vdev)
->          return true;
->      }
->
-> +    /* Has the VirtIODevice's config buffer changed? */
-> +    if (vdev->config_len !=3D vdev_mig->config_len_early) {
-> +        return true;
-> +    }
-> +    if (vdev->config_len && memcmp(vdev->config, vdev_mig->config_early,
-> +                                   vdev->config_len) !=3D 0) {
+>  include/io/channel.h | 63 ++++++++++++++++++++++++++++++++
+>  io/channel.c         | 85 ++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 148 insertions(+)
 
-I'm happy with this but maybe a comparison to the config generation is enou=
-gh?
+So currently we have:
 
-> +        return true;
-> +    }
+   qio_channel_read
+   qio_channel_read_all
+   qio_channel_read_all_eof
+
+   qio_channel_readv
+   qio_channel_readv_all
+   qio_channel_readv_all_eof
+
+   qio_channel_readv_full
+   qio_channel_readv_full_all
+   qio_channel_readv_full_all_eof
+
+   qio_channel_pread
+   qio_channel_preadv
+
+The obvious gaps in this API design pattern are
+
+   qio_channel_pread_all
+   qio_channel_pread_all_eof
+   qio_channel_preadv_all
+   qio_channel_preadv_all_eof
+
+Your patch is fixing 3 of those 4 gaps. Can you also ensure
+it adds qio_channel_pread_all_eof so we complete the set.
+
+
+On the write side we have
+
+   qio_channel_write
+   qio_channel_write_all
+
+   qio_channel_writev
+   qio_channel_writev_all
+
+   qio_channel_writev_full
+   qio_channel_writev_full_all
+
+   qio_channel_pwrite
+   qio_channel_pwritev
+
+Thus we're missing
+
+   qio_channel_pwrite_all
+   qio_channel_pwritev_all
+
+Your patch only adds read variants, can you add the corresponding
+write variants too.
+
+The write variants can be a separate commit from the read
+variants.
+
+> diff --git a/include/io/channel.h b/include/io/channel.h
+> index 1b02350437..d5b14c8c77 100644
+> --- a/include/io/channel.h
+> +++ b/include/io/channel.h
+> @@ -634,6 +634,69 @@ ssize_t qio_channel_preadv(QIOChannel *ioc, const struct iovec *iov,
+>  ssize_t qio_channel_pread(QIOChannel *ioc, void *buf, size_t buflen,
+>                            off_t offset, Error **errp);
+>  
+> +/**
+> + * qio_channel_preadv_all_eof:
+> + * @ioc: the channel object
+> + * @iov: the array of memory regions to read data into
+> + * @niov: the length of the @iov array
+> + * @offset: the starting offset in the channel to read from
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Reads data contiguously from the channel into @iov starting at
+> + * @offset, retrying on short reads until all requested bytes have
+> + * been read.  The offset is advanced internally after each partial
+> + * read.
+> + *
+> + * Returns: 1 if all bytes were read, 0 if no data could be read
+> + *          before encountering end-of-file, or -1 on error
+
+Keep the descriptive text matching the other APIs as closely
+as possible. eg
+
+ * Reads @iov, possibly blocking or (if the channel is non-blocking)
+ * yielding from the current coroutine multiple times until the entire
+ * content is read. If end-of-file occurs immediately it is not an
+ * error, but if it occurs after data has been read it will return
+ * an error rather than a short-read. Otherwise behaves as
+ * qio_channel_preadv().
+ *
+ * Returns: 1 if all bytes were read, 0 if end-of-file occurs
+ *          without data, or -1 on error
+
+
+And similarly copy the docs for the other APIs as closely
+as possible.
+
+> + */
+> +int coroutine_mixed_fn qio_channel_preadv_all_eof(QIOChannel *ioc,
+> +                                                  const struct iovec *iov,
+> +                                                  size_t niov,
+> +                                                  off_t offset,
+> +                                                  Error **errp);
 > +
->      /*
->       * Always return true for now until we're able to detect all possibl=
-e
->       * changes to a VirtIONet device.
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index 752c46ce53..9949b94b64 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -103,10 +103,14 @@ enum virtio_device_endian {
->   * struct VirtIODevMigration - Common VirtIODevice migration structure
->   * @early_load: Flag to indicate an early virtio_load for the device.
->   * @status_early: Device status at the time it was sent early.
-> + * @config_len_early: Length of the config buffer at the time it was sen=
-t early.
-> + * @config_early: Config buffer at the time it was sent early.
->   */
->  typedef struct VirtIODevMigration {
->      bool early_load;
->      uint8_t status_early;
-> +    size_t config_len_early;
-> +    uint8_t *config_early;
->  } VirtIODevMigration;
->
+> +/**
+> + * qio_channel_preadv_all:
+> + * @ioc: the channel object
+> + * @iov: the array of memory regions to read data into
+> + * @niov: the length of the @iov array
+> + * @offset: the starting offset in the channel to read from
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Reads data contiguously from the channel into @iov starting at
+> + * @offset, retrying on short reads until all requested bytes have
+> + * been read.  Unlike qio_channel_preadv_all_eof(), end-of-file
+> + * before all data has been read is treated as an error.
+> + *
+> + * Returns: 0 if all bytes were read, or -1 on error
+> + */
+> +int coroutine_mixed_fn qio_channel_preadv_all(QIOChannel *ioc,
+> +                                              const struct iovec *iov,
+> +                                              size_t niov,
+> +                                              off_t offset,
+> +                                              Error **errp);
+> +
+> +/**
+> + * qio_channel_pread_all:
+> + * @ioc: the channel object
+> + * @buf: the memory region to read data into
+> + * @buflen: the number of bytes to read into @buf
+> + * @offset: the starting offset in the channel to read from
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Reads @buflen bytes contiguously from the channel at @offset
+> + * into @buf, retrying on short reads.  End-of-file before all data
+> + * has been read is treated as an error.
+> + *
+> + * Returns: 0 if all bytes were read, or -1 on error
+> + */
+> +int coroutine_mixed_fn qio_channel_pread_all(QIOChannel *ioc,
+> +                                             void *buf,
+> +                                             size_t buflen,
+> +                                             off_t offset,
+> +                                             Error **errp);
+> +
 >  /**
-> --
-> 2.51.0
->
+>   * qio_channel_shutdown:
+>   * @ioc: the channel object
+> diff --git a/io/channel.c b/io/channel.c
+> index cc02d997a4..e18c40aa0b 100644
+> --- a/io/channel.c
+> +++ b/io/channel.c
+> @@ -507,6 +507,91 @@ ssize_t qio_channel_pread(QIOChannel *ioc, void *buf, size_t buflen,
+>      return qio_channel_preadv(ioc, &iov, 1, offset, errp);
+>  }
+>  
+> +int coroutine_mixed_fn qio_channel_preadv_all_eof(QIOChannel *ioc,
+> +                                                  const struct iovec *iov,
+> +                                                  size_t niov,
+> +                                                  off_t offset,
+> +                                                  Error **errp)
+> +{
+> +    int ret = -1;
+> +    struct iovec *local_iov = g_new(struct iovec, niov);
+> +    struct iovec *local_iov_head = local_iov;
+> +    unsigned int nlocal_iov = niov;
+> +    bool partial = false;
+> +
+> +    nlocal_iov = iov_copy(local_iov, nlocal_iov,
+> +                          iov, niov,
+> +                          0, iov_size(iov, niov));
+> +
+> +    while (nlocal_iov > 0) {
+> +        ssize_t len;
+> +        len = qio_channel_preadv(ioc, local_iov, nlocal_iov, offset, errp);
+> +
+> +        if (len == QIO_CHANNEL_ERR_BLOCK) {
+> +            qio_channel_wait_cond(ioc, G_IO_IN);
+> +            continue;
+> +        }
+> +
+> +        if (len == 0) {
+> +            if (!partial) {
+> +                ret = 0;
+> +                goto cleanup;
+> +            }
+> +            error_setg(errp,
+> +                       "Unexpected end-of-file before all data were read");
+> +            goto cleanup;
+> +        }
+> +
+> +        if (len < 0) {
+> +            goto cleanup;
+> +        }
+> +
+> +        partial = true;
+> +        offset += len;
+> +        iov_discard_front(&local_iov, &nlocal_iov, len);
+> +    }
+> +
+> +    ret = 1;
+> +
+> + cleanup:
+> +    g_free(local_iov_head);
+> +    return ret;
+> +}
+> +
+> +int coroutine_mixed_fn qio_channel_preadv_all(QIOChannel *ioc,
+> +                                              const struct iovec *iov,
+> +                                              size_t niov,
+> +                                              off_t offset,
+> +                                              Error **errp)
+> +{
+> +    int ret = qio_channel_preadv_all_eof(ioc, iov, niov, offset, errp);
+> +
+> +    if (ret == 0) {
+> +        error_setg(errp,
+> +                   "Unexpected end-of-file before all data were read");
+> +        return -1;
+> +    }
+> +    if (ret == 1) {
+> +        return 0;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+> +int coroutine_mixed_fn qio_channel_pread_all(QIOChannel *ioc,
+> +                                             void *buf,
+> +                                             size_t buflen,
+> +                                             off_t offset,
+> +                                             Error **errp)
+> +{
+> +    struct iovec iov = {
+> +        .iov_base = buf,
+> +        .iov_len = buflen
+> +    };
+> +
+> +    return qio_channel_preadv_all(ioc, &iov, 1, offset, errp);
+> +}
+> +
+>  int qio_channel_shutdown(QIOChannel *ioc,
+>                           QIOChannelShutdown how,
+>                           Error **errp)
+> -- 
+> 2.43.0
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
