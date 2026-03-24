@@ -4,65 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC18F54AC5
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF50F54AC6
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52zu-0004Zd-0v; Tue, 24 Mar 2026 10:44:46 -0400
+	id 1w52zu-0004Zj-Po; Tue, 24 Mar 2026 10:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w52zp-0004Xs-Qw; Tue, 24 Mar 2026 10:44:42 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w52zj-00084n-7Z; Tue, 24 Mar 2026 10:44:39 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 01B0F807EA;
- Tue, 24 Mar 2026 17:44:29 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:46c::1:35] (unknown
- [2a02:6bf:8080:46c::1:35])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id RiUbwL0AVGk0-86wP404A; Tue, 24 Mar 2026 17:44:28 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1774363468;
- bh=v4nenMEoHzlAkz+SFSx7UbB7ZAHk4o4iN3u9/R+jmAQ=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=zkgdg8XoGyn5joHriPtp3wwiqEEnTNycVrPbG06DVvYQC2wEjsEZZRhGG+hlZ/CuY
- bHw/AVXT89iHD2x44pIqZoO81eOK4yu1YW5GXMn2Z30VTWjiINuB8B6ixm++/j6ZQ5
- iQTOu+jXH6FXzDg79BSIgjuVHT1oZfIi195LGS9w=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <af3bec19-96ee-4de2-b9bf-3875d59aaed1@yandex-team.ru>
-Date: Tue, 24 Mar 2026 17:44:27 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52zt-0004ZJ-DG
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:44:45 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52zn-00085z-U8
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:44:43 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4852a9c6309so35756245e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 07:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774363477; x=1774968277; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hp4pL/bF8hNGCmBBphkw7BUQWdKqYjXyhDc/M3BZwoY=;
+ b=HzlBC5BtKZf5648+HTeyVV1xwm7nfheXCf0O3fNxbHZRyZNEGeM3wnUQXJYgfN0hxm
+ jVCgFA0WMIlrvXcxl0a/QCooTQlWj4hebK7K/G7g0v79uoLBqFPWxtzAHMyfv7MCocy1
+ 5lJHn88neknkTvgT11ob5ts9cQu16SkHuCuhKGFXeZa7n8j9FUm9gI031VqBucnEW8qt
+ PgSMVtudw3LIYPKm09rb2dgbYZdvjEDUf4sjb28jPIcT+7ZsJ37xxtQEoiNI1LvdXvUy
+ 2/HUNUtcYAr3JSX8iFvngqFruzxYAoEQc6dp1bRzx89Bb+BJzAJysM4c/E7ozRiR3m0A
+ ovqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774363477; x=1774968277;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hp4pL/bF8hNGCmBBphkw7BUQWdKqYjXyhDc/M3BZwoY=;
+ b=CXr6gqCD/gpcHFT2TNXgkgFJvCfm9+qOPDyfKdKhLjcPIvoZ4rC0LbAO0jrMegU8vX
+ DR0Xn4l9+MRYGKqoX2kaTkvFpNepq3qhexl3kv9yCMN06GQUsKWGPf7o6G8a8P3Ur1Or
+ MNT5QRCKD7h84V7g83CYYBEqANK0Hucx/lIWK5rk1akROpjlLykfMTdLORkH19SwlNxL
+ C8McUvrHP7RX8KqbrSEGz65tMehMqFXwsvoMfG60sIsXRdwXCxECuT80K5J5VSlnEqA1
+ GFSIHR4fpYnOxwqcS3sWB3JTU4nErDdE33geaIWJNYGqinB+GqTIxrAzNGHAXDYpdE9r
+ NshQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVii8fUCNuPpv6gLOpalytEQRmFEGCqn5pu2n0QFAfaGhKU4Q6Gv8RkQsSG38JnO25QZA1MuIHhzHx2@nongnu.org
+X-Gm-Message-State: AOJu0YxYGYteEmoxk2EItqz5hBMdzfLDSBuvFObCdnLKyOVy++QZCmeM
+ 0OaCFIdbfTQhKDFUfQDK2UmEcg6X/5TK7S3VmewgJ6HpkVXhleMa5mIVmCSva/RksDg=
+X-Gm-Gg: ATEYQzwBDAZqgA5KsN68H4yApxZiySbrf9UEgRp/0PQi1I41MIRHW2Nh2KF+drsa7va
+ eeJFejdsqeCZKdHn3uASdjngdkl/x08ZWp0Xjf1bpM+F+sE2MA33FUXoz2dpm+usNokIUEKyCWx
+ ohZWTOjmx6J3Rmc41W3tA6nbzXfR+NMAkKc8P2EdI39Cp3h/rjauuvJUjXJkUhp03W/pQv65wcJ
+ a3VXqrIBjE/oI4IXBDYdjXJ2qLdVR9u4lU4AQ12Zqpxal+vbSlQ+4128JujFA9j4ldOrmFPcGQ4
+ KcgIS6gAkD/hXkmlTHO64Pj8Wnzj7r96PqpLa+hZlmCEnmE+UI7cD1AeCJURQRaLRbjaHJvGakB
+ jJzm3RXADhXiDWz/9XR8uo9p0dGouajAKefvDgg6RsuvjFDLeCVBIaysvfL0LhfPmVIvuloRjRg
+ NfRcqRapEAGuqHBH/eNZw/wB0lugrNBvweoTAy2ImHsfaMfx7w8ZP/Aw7bLsEdU55uUw==
+X-Received: by 2002:a05:600c:4da5:b0:485:3ae8:2231 with SMTP id
+ 5b1f17b1804b1-48716092864mr183905e9.30.1774363476867; 
+ Tue, 24 Mar 2026 07:44:36 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b644bd0dcsm38087469f8f.11.2026.03.24.07.44.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 07:44:36 -0700 (PDT)
+Message-ID: <9e8f20c1-9562-4091-85fb-73c050156331@linaro.org>
+Date: Tue, 24 Mar 2026 15:44:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mirror: Fix missed dirty bitmap writes during startup
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, f.ebner@proxmox.com,
- jsnow@redhat.com, jean-louis@dupond.be, dionbosschieter@gmail.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org, pbonzini@redhat.com
-References: <20260219202446.312493-1-kwolf@redhat.com>
- <d7c3d44a-d42f-4232-b5e5-a7504fb62a73@yandex-team.ru>
- <aaqflohdSVTFpkRZ@redhat.com>
+Subject: Re: [PATCH v3 2/4] hw/core/loader: fix error handling for
+ get_image_size callers
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aaqflohdSVTFpkRZ@redhat.com>
+To: corey@minyard.net, Peter Maydell <peter.maydell@linaro.org>
+Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org,
+ Corey Minyard <minyard@acm.org>
+References: <20260318141415.8538-1-vikingtc4@gmail.com>
+ <20260318141415.8538-3-vikingtc4@gmail.com>
+ <CAFEAcA8pktQGG5Fd-F=0SRO9MTrC0GVcOf3p8BnneqG3F504xw@mail.gmail.com>
+ <abxAcZs2hXzFPKor@mail.minyard.net>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <abxAcZs2hXzFPKor@mail.minyard.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,181 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.03.26 12:34, Kevin Wolf wrote:
-> Am 05.03.2026 um 19:34 hat Vladimir Sementsov-Ogievskiy geschrieben:
->> On 19.02.26 23:24, Kevin Wolf wrote:
->>> Currently, mirror disables the block layer's dirty bitmap before its own
->>> replacement is working. This means that during startup, there is a
->>> window in which the allocation status of blocks in the source has
->>> already been checked, but new writes coming in aren't tracked yet,
->>> resulting in a corrupted copy:
+On 19/3/26 19:29, Corey Minyard wrote:
+> On Thu, Mar 19, 2026 at 06:04:33PM +0000, Peter Maydell wrote:
+>> On Wed, 18 Mar 2026 at 14:15, Trieu Huynh <vikingtc4@gmail.com> wrote:
 >>>
->>> 1. Dirty bitmap is disabled in mirror_start_job()
->>> 2. Some request are started in mirror_top_bs while s->job == NULL
->>> 3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
->>>      the request hasn't completed yet, the block isn't allocated
->>> 4. The request completes, still sees s->job == NULL and skips the
->>>      bitmap, and nothing else will mark it dirty either
->>>
->>> One ingredient is that mirror_top_opaque->job is only set after the
->>> job is fully initialized. For the rationale, see commit 32125b1460
->>> ("mirror: Fix access of uninitialised fields during start").
->>>
->>> Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
->>> to track writes from the beginning. Disabling the block layer's tracking
->>> and enabling the mirror_top_bs one happens in a drained section, so
->>> there is no danger of races with in-flight requests any more. All of
->>> this happens well before the block allocation status is checked, so we
->>> can be sure that no writes will be missed.
->>>
->>> Cc: qemu-stable@nongnu.org
->>> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
->>> Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
->>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->>> ---
->>> Supersedes: <20260212120411.369498-1-f.ebner@proxmox.com>
->>> ---
->>>    block/mirror.c | 48 +++++++++++++++++++++++++++++-------------------
->>>    1 file changed, 29 insertions(+), 19 deletions(-)
->>>
->>> diff --git a/block/mirror.c b/block/mirror.c
->>> index b344182c747..f38636e7457 100644
->>> --- a/block/mirror.c
->>> +++ b/block/mirror.c
->>> @@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
->>>    typedef struct MirrorBDSOpaque {
->>>        MirrorBlockJob *job;
->>> +    BdrvDirtyBitmap *dirty_bitmap;
->>>        bool stop;
->>>        bool is_commit;
->>>    } MirrorBDSOpaque;
->>> @@ -1672,9 +1673,9 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
->>>            abort();
->>>        }
->>> -    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
->>> +    if (!copy_to_target) {
->>>            qatomic_set(&s->job->actively_synced, false);
->>> -        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
->>> +        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
->>>        }
->>>        if (ret < 0) {
->>> @@ -1901,13 +1902,35 @@ static BlockJob *mirror_start_job(
->>>        bdrv_drained_begin(bs);
->>>        ret = bdrv_append(mirror_top_bs, bs, errp);
->>> -    bdrv_drained_end(bs);
->>> -
->>>        if (ret < 0) {
->>> +        bdrv_drained_end(bs);
->>> +        bdrv_unref(mirror_top_bs);
->>> +        return NULL;
->>> +    }
->>> +
->>> +    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
->>> +                                                       granularity,
->>> +                                                       NULL, errp);
->>> +    if (!bs_opaque->dirty_bitmap) {
->>> +        bdrv_drained_end(bs);
->>>            bdrv_unref(mirror_top_bs);
->>>            return NULL;
->>>        }
->>> +    /*
->>> +     * The mirror job doesn't use the block layer's dirty tracking because it
->>> +     * needs to be able to switch seemlessly between background copy mode (which
->>> +     * does need dirty tracking) and write blocking mode (which doesn't) and
->>> +     * doing that would require draining the node. Instead, mirror_top_bs takes
->>> +     * care of updating the dirty bitmap as appropriate.
->>> +     *
->>> +     * Note that write blocking mode only becomes effective after mirror_run()
->>> +     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
->>> +     * we're still in background copy mode irrespective of @copy_mode.
->>> +     */
->>> +    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
->>> +    bdrv_drained_end(bs);
->>> +
->>>        /* Make sure that the source is not resized while the job is running */
->>>        s = block_job_create(job_id, driver, NULL, mirror_top_bs,
->>>                             BLK_PERM_CONSISTENT_READ,
->>> @@ -2002,24 +2025,13 @@ static BlockJob *mirror_start_job(
->>>        s->base_overlay = bdrv_find_overlay(bs, base);
->>>        s->granularity = granularity;
->>>        s->buf_size = ROUND_UP(buf_size, granularity);
->>> +    s->dirty_bitmap = bs_opaque->dirty_bitmap;
->>>        s->unmap = unmap;
->>>        if (auto_complete) {
->>>            s->should_complete = true;
->>>        }
->>>        bdrv_graph_rdunlock_main_loop();
->>> -    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
->>> -                                               NULL, errp);
->>> -    if (!s->dirty_bitmap) {
->>> -        goto fail;
->>> -    }
->>> -
->>> -    /*
->>> -     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
->>> -     * mode.
->>> -     */
->>> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>> -
->>>        bdrv_graph_wrlock_drained();
->>>        ret = block_job_add_bdrv(&s->common, "source", bs, 0,
->>>                                 BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
->>> @@ -2099,9 +2111,6 @@ fail:
->>>            g_free(s->replaces);
->>>            blk_unref(s->target);
->>>            bs_opaque->job = NULL;
->>> -        if (s->dirty_bitmap) {
->>> -            bdrv_release_dirty_bitmap(s->dirty_bitmap);
->>> -        }
->>>            job_early_fail(&s->common.job);
->>>        }
->>> @@ -2115,6 +2124,7 @@ fail:
->>>        bdrv_graph_wrunlock();
->>>        bdrv_drained_end(bs);
->>> +    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
->>
->>
->> Hmm. Shouldn't we change position of _release_ in mirror_exit_common() too?
->>
->> Now the sequence is:
->>
->> bdrv_release_dirty_bitmap(s->dirty_bitmap);
->>
->>
->> < could mirror_top_bs access dirty_bitmap here, before drained begin? >
->>
->> ...
->>
->> drained begin
->>
->> .. a lot of logic, including actual removing of the mirror_top_bs from the chain ..
->>
->> drained end
->>
->> bdrv_unref(mirror_top_bs)
+>>> Check the return value of get_image_size() and report failures
+>>> for non-mandatory file such as FRU image.
 > 
-> I think you're right, but isn't this already a preexisting bug in
-> master? After releasing, we don't set s->dirty_bitmap = NULL, which
-> could have prevented the access in the code before this patch. So this
-> should probably be a separate patch.
-> 
-> mirror_exit_common() runs in the main loop, so I assume you can
-> hit this when using an iothread.
-> 
-> It seems that initially the release was later, but commit 2119882 moved
-> it earlier, without saying why it did that. Paolo, do you remember?
-> 
-> Kevin
-> 
-
-On the other hand, in mirror_exit_common(), we are already in
-
-bdrv_drained_begin(bs); section, started in mirror_run()...
-
-Does bdrv_drained_begin(mirror_top_bs) add something to previous
-bdrv_drained_begin(bs) ?
-
--- 
-Best regards,
-Vladimir
+> Yes, this makes sense.  You want to do this through my tree, or do you
+> have another way you want to get it in?
+Merged via hw-misc tree, thanks!
 
