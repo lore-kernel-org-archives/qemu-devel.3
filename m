@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F000D58CCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 12:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF24F4613D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 12:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w51DV-0003wA-FN; Tue, 24 Mar 2026 08:50:41 -0400
+	id 1w51Jk-0005Fq-6p; Tue, 24 Mar 2026 08:57:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w51DR-0003vo-AP
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:50:37 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w51Je-0005FG-Rd
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:57:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w51DO-0003ME-JF
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:50:37 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w51Jc-0005CN-Sc
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:57:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774357019;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SbVzfoDvgGv435UJwj4U4ck/dmt/LM2DPHQHVK2BMR0=;
+ b=E0Vrk4m+tgG8TTqCpJZtu6pxUaBP1+9rFEKmJE13SswO65dH9GQCOyJMTZPPdYZtfKQ5xa
+ 4U45/z3BwqmHaEeQKiiAT5h9Z9/kYX/JnjzAJxQN9dsDiVgYq9i6VXAcRUrUEPdu9aertt
+ L8/RVhtGBSmXML8dbnpBdmcmg9olGHA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-wftC_P2UPT-8mIUWnBBZLQ-1; Tue,
+ 24 Mar 2026 08:56:55 -0400
+X-MC-Unique: wftC_P2UPT-8mIUWnBBZLQ-1
+X-Mimecast-MFC-AGG-ID: wftC_P2UPT-8mIUWnBBZLQ_1774357014
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 9D20640D5D
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:50:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1774356631;
- bh=PywS9M9r6dsvxN1UOM5YkCTt0D0gkNMIIyWzIaIGC0g=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=VFqmVcEt/Be/YOCcaYuQBJTK2k1M3xrPVyOcNAZyeJfLH8u5lNBcs5MvqZXJF27wB
- oajBnTiT/Pza/17qaFS1X+2HU1sBL1DDElempKWofYsJDz2LINMEtLOqNkuRnsxOLf
- vzPfBacvn+etDP7ly/xcml3u0Ly5QNVuaF81zxrF8FfkGvLD6dtikQ++x676GNXNAa
- zrIO9Cqvbugf0cBXraus8olTeVHg7OMDgRYsVfe5Ypmtd4atcofgq+c5ilxANBJAdd
- cRFO9mU5r0hYwmmnL/zVS9OPrssHh7Kd2iq9EkGL98pwyarskT28V+ifjbGkGBDitN
- 7Wz1/J9DrXa/A==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 86A7C7F313
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:50:31 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2D861955E79; Tue, 24 Mar 2026 12:56:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E444E30002D6; Tue, 24 Mar 2026 12:56:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 89DAE21E6937; Tue, 24 Mar 2026 13:56:50 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Artyom Tarasenko <atar4qemu@gmail.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH-for-11.1 v6 3/6] monitor: Have MonitorDef::get_value()
+ always return int64_t type
+In-Reply-To: <20260320091019.59902-4-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 20 Mar 2026 10:10:15
+ +0100")
+References: <20260320091019.59902-1-philmd@linaro.org>
+ <20260320091019.59902-4-philmd@linaro.org>
+Date: Tue, 24 Mar 2026 13:56:50 +0100
+Message-ID: <87pl4ts7vx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 24 Mar 2026 12:42:03 -0000
-From: Jonas Jelten <2133188@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
- assignee=None; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
-X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Jonas Jelten (jj)
-References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <177435612562.748499.7250927969200169288.launchpad@juju-98d295-prod-launchpad-7>
-Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
- handler
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: a39a00cf012303bac68abd027d11959380508e8f
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -98,154 +91,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-** Tags added: server-todo
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133188
+> Simplify MonitorDef::get_value() handler by having it always
+> return a int64_t type. Truncate to 32-bit in the single caller.
+>
+> Note, this handler is only implemented once for the x86 targets.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  include/monitor/hmp-target.h | 6 +-----
+>  monitor/hmp-target.c         | 5 ++++-
+>  target/i386/monitor.c        | 4 ++--
+>  3 files changed, 7 insertions(+), 8 deletions(-)
+>
+> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+> index 56322ceddd4..6364c94edf8 100644
+> --- a/include/monitor/hmp-target.h
+> +++ b/include/monitor/hmp-target.h
+> @@ -27,15 +27,11 @@
+>=20=20
+>  typedef struct MonitorDef MonitorDef;
+>=20=20
+> -#ifdef COMPILING_PER_TARGET
+> -#include "cpu.h"
+>  struct MonitorDef {
+>      const char *name;
+>      int offset;
+> -    target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
+> -                             int val);
+> +    int64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int =
+offset);
+>  };
+> -#endif
+>=20=20
+>  const MonitorDef *target_monitor_defs(void);
+>  int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pva=
+l);
+> diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+> index 3f019ae2a28..155caedd784 100644
+> --- a/monitor/hmp-target.c
+> +++ b/monitor/hmp-target.c
+> @@ -23,6 +23,7 @@
+>   */
+>=20=20
+>  #include "qemu/osdep.h"
+> +#include "qemu/target-info.h"
+>  #include "monitor-internal.h"
+>  #include "monitor/qdev.h"
+>  #include "net/slirp.h"
+> @@ -33,6 +34,7 @@
+>  #include "qapi/qapi-commands-control.h"
+>  #include "qapi/qapi-commands-misc.h"
+>  #include "qapi/qapi-commands-machine.h"
+> +#include "exec/target_long.h"
+>=20=20
+>  #if defined(TARGET_S390X)
+>  #include "hw/s390x/storage-keys.h"
+> @@ -78,7 +80,8 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const =
+char *name)
+>      for(; md->name !=3D NULL; md++) {
+>          if (hmp_compare_cmd(name, md->name)) {
+>              if (md->get_value) {
+> -                *pval =3D md->get_value(mon, md, md->offset);
+> +                int64_t val =3D md->get_value(mon, md, md->offset);
+> +                *pval =3D target_long_bits() =3D=3D 32 ? (int32_t)val : =
+val;
 
-Title:
-  [SRU] RISC-V vector state not restored by signal handler
+This assumes target_long_bits() returns either 32 or 64, doesn't it?
 
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  Confirmed
-Status in qemu source package in Noble:
-  New
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  New
-Status in qemu source package in Resolute:
-  Confirmed
+Is this true today?
 
-Bug description:
-  # Title
-  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
-et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
+Will it remain true?
 
-  ## Summary
-  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
- 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
-gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
- (core dumped)" or "died with signal 4". The illegal instruction is observe=
-d inside glibc's memset implementation at an instruction that uses RISC-V v=
-ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
-e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
-nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
-lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
-code generation / state corruption), not a cmake bug.
+Could we use something like
 
-  ## Affects
-  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
-untu3)
-  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
-qemu-user static interpreter
+    val & ((1 << target_long_bits()) - 1)
 
-  ## Environment / Context
-  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
-  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
-  - Container image: ubuntu:26.04 for riscv64
-  - qemu package used:
-    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
-b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
--user_10.0.6+ds-0+deb13u2).=20
-    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
-ost and registered via /proc/sys/fs/binfmt_misc/register
-  - CMake version used inside container (bootstrap/build may use system-pro=
-vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
-ggers crash)
-  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
-eral consecutive successes or failures)
-  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
-t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
-QEMU_STRACE also makes it much harder to reproduce.
-   =20
+to truncate to target_long_bits() bits?
 
-  ## Full reproduction steps
-  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
-ry:
-     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
-uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
-     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
--5ubuntu3_amd64
-     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
-in/qemu-riscv64-static
-
-  2. Register qemu-riscv64 with binfmt_misc:
-     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
-     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
-00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
-\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
- >/proc/sys/fs/binfmt_misc/register
-
-  3. Start riscv64 ubuntu container:
-     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
-4 bash
-     docker exec -it ubuntu26 bash -i
-
-  4. Inside container:
-     apt update
-     apt install -y build-essential cmake
-
-  5. Reproducer 1:
-     cmake --system-information
-     -> Often fails with:
-        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
-        Illegal instruction (core dumped)
-
-  6. Reproducer 2 (minimal C project):
-     Create test_cmake/CMakeLists.txt:
-     cmake_minimum_required(VERSION 3.10)
-     project(HelloCMake C)
-     add_executable(hello main.c)
-
-     Create test_cmake/main.c:
-     #include <stdio.h>
-     int main() {
-         printf("Hello, CMake!\n");
-         return 0;
-     }
-
-     cd test_cmake
-     cmake .
-     -> Crash with:
-        -- Detecting C compiler ABI info
-        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
-
-  7. Reproducer 3 (rebuild cmake from source inside container):
-     apt source cmake
-     cd cmake
-     apt-get build-dep .
-     dpkg-buildpackage -us -uc -b
-     -> Bootstrapping error:
-        Illegal instruction (core dumped)
-        Error when bootstrapping CMake:
-        Problem while running initial CMake
-
-  8. Observed crash location (from gdb/QEMU_STRACE when available):
-     - Illegal instruction is in memset@@GLIBC_2.27+0x52
-     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
-bit elements)
-
-
-  ## Workarounds
-  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
- using vectorized memset.
-  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
-=E2=80=94 both make the failure much less likely.
-
-  Note: The same workload does not reproduce the crash when run under
-  qemu-system (full-system emulation). The issue appears specific to
-  qemu-user
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+>              } else {
+>                  CPUArchState *env =3D mon_get_cpu_env(mon);
+>                  ptr =3D (uint8_t *)env + md->offset;
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index 977f65fe16c..b128334e571 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -593,8 +593,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+>      }
+>  }
+>=20=20
+> -static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef =
+*md,
+> -                                  int val)
+> +static int64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+> +                              int offset)
+>  {
+>      CPUArchState *env =3D mon_get_cpu_env(mon);
+>      return env->eip + env->segs[R_CS].base;
 
 
