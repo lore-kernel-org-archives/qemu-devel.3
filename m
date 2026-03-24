@@ -4,145 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C2CFFEC0F6
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C9EFEC0F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w572l-00082X-Ue; Tue, 24 Mar 2026 15:04:00 -0400
+	id 1w574X-0000FL-Uc; Tue, 24 Mar 2026 15:05:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xypron.glpk@gmx.de>)
- id 1w572j-000828-PC
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:03:57 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xypron.glpk@gmx.de>)
- id 1w572h-0007eO-8R
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:03:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1774379032; x=1774983832; i=xypron.glpk@gmx.de;
- bh=uKcYdpRjN0UanpLR7MQXAl7lsHN+nWqAYBfdT5n42C0=;
- h=X-UI-Sender-Class:Date:From:To:CC:Subject:In-Reply-To:References:
- Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
- content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=Lv0Y5rkuIi4Htp0L3tBIYvl8mK2p67/uhkEjMnj6BVc3w/mg767wrcOH860ct6Kw
- voMUAGF+XtbCY0PXPJjgOmu/Y6lxH1BrKO8yiUDrGQujM/NGE16aF7vkhusJuPoo0
- E1ieuwbAA2U4UYGy6AFuNNl7iEhMQoNds5IPAZnGaCFk+OXeKVqrWsDDbYXw8vy5v
- fV74q7bSyJ1ckfohHzjKdsbGp4BKoLzRZHMvVrM8O/c/7M4qXV/CsM6vf8QYKJV5x
- RuaB0Cs+EKrcI4o+wxPSZ+rLA5R/rUwMgTAp2SbWHV6AwUlOxHmhyK3rF/6xtLlNo
- MXfR/ab7W33MaDzLMQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7b6b-1wD7O11dhV-00HCtj; Tue, 24
- Mar 2026 20:03:52 +0100
-Date: Tue, 24 Mar 2026 20:03:48 +0100
-From: Heinrich Schuchardt <xypron.glpk@gmx.de>
-To: Leo Yu-Chi Liang <ycliang@andestech.com>, u-boot@lists.denx.de
-CC: rick@andestech.com, ycliang@andestech.com, trini@konsulko.com, me@ziyao.cc,
- anshuld@ti.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] riscv: andes: Add Smstateen extension support
-User-Agent: Thunderbird for Android
-In-Reply-To: <20260319082911.3270255-2-ycliang@andestech.com>
-References: <20260319082911.3270255-1-ycliang@andestech.com>
- <20260319082911.3270255-2-ycliang@andestech.com>
-Message-ID: <203AE23D-AC3C-409D-B79C-8FF631D828E3@gmx.de>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w574V-0000Ex-2R
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:05:47 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w574R-00089y-2w
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:05:45 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-35a094cc3e9so3894086a91.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:05:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774379140; cv=none;
+ d=google.com; s=arc-20240605;
+ b=g/gQLtsi8LX/4gyKYiMKIq0X2eVQP7jMXlUj4xw3cw102ht4KgS46ZAC9gV6KlDjrD
+ 7t9nLbUAQpu5al7Jau4SRjrKl6OzHGhX0qg0G0sLdCoCreDpfedbR28PHXeskBdqwuts
+ MHv2pLG3m4dBaJfJVh4dvD1qWE9fzQUTpuoplNm2p+iedzIv7yGMjFEt79tXPf0XgnSI
+ k8UDnyqb+mkr+dXu0KvbbtTkICP2U3Yd+eNmUY/PH43stvesGTOIv4NJBnEjbxF3sbQv
+ 9p3+y9vTXkxkslVqGoFfjPzcxZXQ/Xlu0oQ6TzMBCLQ5N5TG86+asyaaOEFBn163wLtS
+ aS+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3wsi9O/j1Q1C+u7Ic7Q2ig6tW82w3BBnUHcG6C4tIok=;
+ fh=uv1tA9xklsQ23QRRVuZ5ICrQzjqlbIWk8lB36BxPINw=;
+ b=SbYo23qKnpv+4oTL3XmivfObjVG3Y9gBydRmsf+UubJWCke2XEthQXLrG13b4PNx/L
+ X6IpI1LqVqZ8h18b/0ef/0vonwzGu9eGLPus9TIaf89qDDerqFcwaw+q/5gWgtRByePl
+ u0cZkyCm2Of7mbHpMGbtDEOdlkohb9ntUUOp2daOAMc+K83n5FxW0ZMxWENG9f0XhARQ
+ KpzyiLyMXFUN85Nh+M+r9qnCj586Cs5r6QnUVeuzR8kVT9qDFSENl5OjOhmOhAcraAgG
+ v4rV34JdAvY7YlNuHEvrsJDEIenQ8+pybe5UyeLTku6gBgGjSCtjlPxVK7YICqvC6Um7
+ iqNA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774379140; x=1774983940; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3wsi9O/j1Q1C+u7Ic7Q2ig6tW82w3BBnUHcG6C4tIok=;
+ b=cCjmX8Ynm/JRZEZjqo68llb2kaBADNJ9UheeYlANxFCPo5Vepw1dm7731IbvrFl6oc
+ 2xwdYNWiaQOEkjLBuE4SuWxYcu8dsR+A42pGh0IaqWrJy1FpHNXdC916oRp8GwPIkap5
+ CfNfB4Vv6ql46WuKK6iI7MKkoi9G43y09quBo/+AAZUCBcRoDC02/aWC7VADAkqck6eP
+ NQs7eXJdP99pq8rCb442+pT+TByaYtbWlpNYXIhmevLLKbsuzLx3qxuueDTG/GAnGXLX
+ EmSd7La9iXs/J5aJfKGi4lfM89nGCp9czWw8q4xAvNd3a040zxEkvlDYhP35ZppBMpCW
+ GRAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774379140; x=1774983940;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3wsi9O/j1Q1C+u7Ic7Q2ig6tW82w3BBnUHcG6C4tIok=;
+ b=j1yjWw1FRXH/0dqA+5uhTGd9Mxyi3VwmzanMtQaHl5wvxm8oYNF5Ry8C3p/OIPUIHP
+ Rk3h4zd6gmd1S2+xYEcbzoyMXU8TzUaz5sxpB4pQgn403+0uKF/34/Mpnq2vMKfFjT4T
+ zIBWR0ZZ+sBF0hKIl6x2h8IdtdFI9m7K4nKzYGg5GYDYZ2Revpv2UI3YmsTvdbgwxEFE
+ Pg3I1J+i3XzUn1us8QGr/EtK7YjAR2svoDAjerRd8yagW8Kr8OZvFoqKc1QEAyRdqauM
+ vzrmo8gPuoh1ju2ligEpItL2ELbBss9q1jVgXPhtCI+C4+3ekKMiu5BUrbk3cTyhwA9u
+ Xlkg==
+X-Gm-Message-State: AOJu0YzOnfJApWn9k7isJ5UvWl7XSZ6NfRqF1Ftt61jWuVFSBdEultd0
+ rA8QNBCzFJGXlrWegafVrggbvkhvCn5ON57SJ+aHUtVX1gpcAGf7dJXeqFzbx095SuHbkIWvqZq
+ Hmf8dlDpEcHQxaya1iqTNB2iRCl8Dbm0=
+X-Gm-Gg: ATEYQzwQ5OdokOMudzAwjvFmrpdHeOk6woGEUqi09KYEKqFFIzRiyPeRKMeXTISsTJv
+ 20unWtB/ant+Exo4mZKDbCh7y6k4kjlqvHzTvFywFp6Wj9B8dt24q7vK9LhryPWd34gUdXAIyuD
+ Of+lAZy5Q5Ul4d0qlwkdjEWTF0R5jjmyEHAr3qkLSDWAPO3f5GS9+fV1xfA+CZ3gUMb/+PtnAyW
+ bJ0u+6X448A1jQaZv6uyVGkoMUsumWhqaoYth8U1FxCftGwXkrawqVGxTZwfsjsYnhh4X1wF1y+
+ BzyxXOkP5e5eK6cF8vIoYE5uixIZ7zjIzDFolvWv7YGe4SnKDQ==
+X-Received: by 2002:a17:90b:2fcc:b0:35b:93d8:6aaa with SMTP id
+ 98e67ed59e1d1-35c0dd7af62mr419159a91.19.1774379139297; Tue, 24 Mar 2026
+ 12:05:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lQH5iBCaD3g3TybEDMcgc4d9nuR6Ogcsfj2SckPcfZMEFITg6XJ
- dy4bLEIXtSGGPQxvCwWK2qb01wRsOcFEz19FLqysNZz40KBBl18/hQ5zwcQYCA7oy7VkyXF
- dCOoF5PY9SYbj/50Jv3aZk/AyyG6L7zTWRQQnHxglarbFxtwWn2R9ht72/5c0vO66uVM6QZ
- ppvyH72bcxMM1V0ZG0B9g==
-UI-OutboundReport: notjunk:1;M01:P0:NGRyPFwY/SM=;QrlOg3OYiSLCN9rBNTRQVhu46ZY
- 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
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=xypron.glpk@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <82c5487435a72c68ceec1c09dd6fb986409328e1.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <82c5487435a72c68ceec1c09dd6fb986409328e1.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Tue, 24 Mar 2026 13:05:28 -0600
+X-Gm-Features: AaiRm534NtYCcygvGG175OOg9heji9TkL3ZYGYY-0WTpYRM2sp0ljm-WBcIXNbU
+Message-ID: <CAATN3NpkMvcWubprGjd705iQ0XCAJD+toCnEv78E3=ZL+eSemg@mail.gmail.com>
+Subject: Re: [PATCH 10/13] tests/hexagon: add tests for v68 HVX IEEE float
+ arithmetics
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Content-Type: multipart/alternative; boundary="0000000000004b774c064dc9d6b8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,119 +117,520 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 19=2E M=C3=A4rz 2026 09:29:11 MEZ schrieb Leo Yu-Chi Liang <ycliang@ande=
-stech=2Ecom>:
->Use the CSR detection mechanism to probe for the Smstateen extension
->and initialize mstateen0/sstateen0 CSRs when present=2E
+--0000000000004b774c064dc9d6b8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Mar 23, 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino <
+matheus.bernardino@oss.qualcomm.com> wrote:
+
+> Signed-off-by: Matheus Tavares Bernardino <
+> matheus.bernardino@oss.qualcomm.com>
+> ---
+>  tests/tcg/hexagon/hvx_misc.h        |  12 +++
+>  tests/tcg/hexagon/fp_hvx.c          | 129 ++++++++++++++++++++++++++++
+>  tests/tcg/hexagon/fp_hvx_disabled.c |  32 +++++++
+>  tests/tcg/hexagon/Makefile.target   |   8 ++
+>  4 files changed, 181 insertions(+)
+>  create mode 100644 tests/tcg/hexagon/fp_hvx.c
+>  create mode 100644 tests/tcg/hexagon/fp_hvx_disabled.c
 >
->The mstateen0 register is configured to allow S-mode access to fcsr,
->AIA, IMSIC, indirect CSR access, environment configuration, and
->sstateen0=2E The sstateen0 register enables U-mode access to compressed
->extension state and fcsr=2E
+> diff --git a/tests/tcg/hexagon/fp_hvx.c b/tests/tcg/hexagon/fp_hvx.c
+> new file mode 100644
+> index 0000000000..85b8ff78ed
+> --- /dev/null
+> +++ b/tests/tcg/hexagon/fp_hvx.c
+> @@ -0,0 +1,129 @@
+> +/*
+> + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + *  SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <stdio.h>
+> +#include <stdint.h>
+> +#include <stdbool.h>
+> +#include <string.h>
+> +#include <hexagon_types.h>
+> +#include <hvx_hexagon_protos.h>
+> +
+> +int err;
+> +#include "hvx_misc.h"
+> +
+> +#if __HEXAGON_ARCH__ > 75
+> +#error "After v75, compiler will replace some FP HVX instructions."
+> +#endif
+> +
 >
->Supports both RV32 (using MSTATEEN0/MSTATEEN0H split) and RV64=2E
-
-Why is this change needed in U-Boot?
-Does EDK II do the same?
-Isn't this the kernel's job?
-
-Best regards
-
-Heinrich
-
+> +/***********************************************************************=
+*******
+> + * NAN handling
+> +
+> *************************************************************************=
+****/
+> +
+> +#define isnan(X) \
+> +     (sizeof(X) =3D=3D bytes_hf ? ((raw_hf(X) & ~0x8000) > 0x7c00) : \
+> +                              ((raw_sf(X) & ~(1 << 31)) > 0x7f800000UL))
+> +
+> +#define CHECK_NAN(A, DEF_NAN) (isnan(A) ? DEF_NAN : (A))
+> +#define NAN_SF float_sf(0x7FFFFFFF)
+> +#define NAN_HF float_hf(0x7FFF)
+> +
 >
->Signed-off-by: Leo Yu-Chi Liang <ycliang@andestech=2Ecom>
->---
-> arch/riscv/cpu/andes/cpu=2Ec   | 29 +++++++++++++++++++++++++++++
-> arch/riscv/include/asm/csr=2Eh | 15 +++++++++++++++
-> 2 files changed, 44 insertions(+)
+> +/***********************************************************************=
+*******
+> + * Binary operations
+> +
+> *************************************************************************=
+****/
+> +
+> +#define DEF_TEST_OP_2(vop, op, type_res, type_arg) \
+> +    static void test_##vop##_##type_res##_##type_arg(void) \
+> +    { \
+> +        memset(expect, 0xff, sizeof(expect)); \
+> +        memset(output, 0xff, sizeof(expect)); \
 >
->diff --git a/arch/riscv/cpu/andes/cpu=2Ec b/arch/riscv/cpu/andes/cpu=2Ec
->index d25ecba0e88=2E=2Efeb755a4f0d 100644
->--- a/arch/riscv/cpu/andes/cpu=2Ec
->+++ b/arch/riscv/cpu/andes/cpu=2Ec
->@@ -9,6 +9,7 @@
-> #include <irq_func=2Eh>
-> #include <asm/cache=2Eh>
-> #include <asm/csr=2Eh>
->+#include <asm/csr_detect=2Eh>
-> #include <asm/arch-andes/csr=2Eh>
->=20
-> /*
->@@ -60,5 +61,33 @@ void harts_early_init(void)
-> 		mmisc_ctl_val |=3D MMISC_CTL_NON_BLOCKING_EN;
->=20
-> 		csr_write(CSR_MMISC_CTL, mmisc_ctl_val);
->+
->+		/* Initialize Smstateen if the extension is present */
->+		{
->+			int trap =3D 0;
->+			unsigned long long mstateen0;
->+
->+			mstateen0 =3D csr_read_allowed(CSR_MSTATEEN0, trap);
->+			if (!trap) {
->+#if __riscv_xlen =3D=3D 32
->+				mstateen0 |=3D (unsigned long long)
->+					csr_read(CSR_MSTATEEN0H) << 32;
->+#endif
->+				mstateen0 |=3D SMSTATEEN0_CS | SMSTATEEN0_FCSR |
->+					     SMSTATEEN0_CONTEXT |
->+					     SMSTATEEN0_IMSIC |
->+					     SMSTATEEN0_AIA |
->+					     SMSTATEEN0_CSRIND |
->+					     SMSTATEEN0_ENVCFG |
->+					     SMSTATEEN0_SE0;
->+				csr_write(CSR_MSTATEEN0, mstateen0);
->+#if __riscv_xlen =3D=3D 32
->+				csr_write(CSR_MSTATEEN0H, mstateen0 >> 32);
->+#endif
->+				csr_write(CSR_SSTATEEN0,
->+					  csr_read(CSR_SSTATEEN0) |
->+					  SMSTATEEN0_CS | SMSTATEEN0_FCSR);
->+			}
->+		}
-> 	}
-> }
->diff --git a/arch/riscv/include/asm/csr=2Eh b/arch/riscv/include/asm/csr=
-=2Eh
->index 986f951c31a=2E=2Ecef0fd906da 100644
->--- a/arch/riscv/include/asm/csr=2Eh
->+++ b/arch/riscv/include/asm/csr=2Eh
->@@ -97,6 +97,18 @@
-> #define SIE_STIE		(_AC(0x1, UL) << IRQ_S_TIMER)
-> #define SIE_SEIE		(_AC(0x1, UL) << IRQ_S_EXT)
->=20
->+/* Smstateen: mstateen0 / sstateen0 bit definitions */
->+#define SMSTATEEN0_CS		(_AC(0x1, ULL) << 0)
->+#define SMSTATEEN0_FCSR		(_AC(0x1, ULL) << 1)
->+#define SMSTATEEN0_JVT		(_AC(0x1, ULL) << 2)
->+#define SMSTATEEN0_CONTEXT	(_AC(0x1, ULL) << 57)
->+#define SMSTATEEN0_IMSIC	(_AC(0x1, ULL) << 58)
->+#define SMSTATEEN0_AIA		(_AC(0x1, ULL) << 59)
->+#define SMSTATEEN0_CSRIND	(_AC(0x1, ULL) << 60)
->+#define SMSTATEEN0_P1P13	(_AC(0x1, ULL) << 61)
->+#define SMSTATEEN0_ENVCFG	(_AC(0x1, ULL) << 62)
->+#define SMSTATEEN0_SE0		(_AC(0x1, ULL) << 63)
->+
-> #define CSR_FCSR		0x003
-> #define CSR_CYCLE		0xc00
-> #define CSR_TIME		0xc01
->@@ -105,6 +117,7 @@
-> #define CSR_SIE			0x104
-> #define CSR_STVEC		0x105
-> #define CSR_SCOUNTEREN		0x106
->+#define CSR_SSTATEEN0		0x10c
-> #define CSR_SSCRATCH		0x140
-> #define CSR_SEPC		0x141
-> #define CSR_SCAUSE		0x142
->@@ -126,6 +139,8 @@
-> #else
-> #define CSR_MCOUNTEREN		0x306
-> #endif
->+#define CSR_MSTATEEN0		0x30c
->+#define CSR_MSTATEEN0H		0x31c
-> #define CSR_MSCRATCH		0x340
-> #define CSR_MEPC		0x341
-> #define CSR_MCAUSE		0x342
 
+sizeof(output)
+
+
+> +        HVX_Vector *hvx_output =3D (HVX_Vector *)&output[0]; \
+> +        HVX_Vector hvx_buffer0 =3D *(HVX_Vector *)&buffer0[0]; \
+> +        HVX_Vector hvx_buffer1 =3D *(HVX_Vector *)&buffer1[0]; \
+> +        \
+> +        *hvx_output =3D \
+> +
+> Q6_V##type_res##_##vop##_V##type_arg##V##type_arg(hvx_buffer0, \
+> +
+> hvx_buffer1); \
+> +        \
+> +        for (int i =3D 0; i < MAX_VEC_SIZE_BYTES / bytes_##type_res; i++=
+) {
+> \
+> +            expect[0].type_res[i] =3D \
+> +
+> raw_##type_res(op(float_##type_arg(buffer0[0].type_arg[i]), \
+> +
+> float_##type_arg(buffer1[0].type_arg[i]))); \
+> +        } \
+>
+
+Put this in a loop over the input buffers to get more input values.  Then
+change the second argument to check_output below.
+
+
+> +        check_output_##type_res(__LINE__, 1); \
+> +    }
+> +
+> +#define SUM(X, Y, DEF_NAN) CHECK_NAN((X) + (Y), DEF_NAN)
+> +#define SUB(X, Y, DEF_NAN) CHECK_NAN((X) - (Y), DEF_NAN)
+> +#define MULT(X, Y, DEF_NAN) CHECK_NAN((X) * (Y), DEF_NAN)
+> +
+> +#define SUM_SF(X, Y) SUM(X, Y, NAN_SF)
+> +#define SUM_HF(X, Y) SUM(X, Y, NAN_HF)
+> +#define SUB_SF(X, Y) SUB(X, Y, NAN_SF)
+> +#define SUB_HF(X, Y) SUB(X, Y, NAN_HF)
+> +#define MULT_SF(X, Y) MULT(X, Y, NAN_SF)
+> +#define MULT_HF(X, Y) MULT(X, Y, NAN_HF)
+> +
+> +DEF_TEST_OP_2(vadd, SUM_SF, sf, sf);
+> +DEF_TEST_OP_2(vadd, SUM_HF, hf, hf);
+> +DEF_TEST_OP_2(vsub, SUB_SF, sf, sf);
+> +DEF_TEST_OP_2(vsub, SUB_HF, hf, hf);
+> +DEF_TEST_OP_2(vmpy, MULT_SF, sf, sf);
+> +DEF_TEST_OP_2(vmpy, MULT_HF, hf, hf);
+> +
+>
+> +/***********************************************************************=
+*******
+> + * Other tests
+> +
+> *************************************************************************=
+****/
+> +
+> +void test_vdmpy_sf_hf(bool acc)
+> +{
+> +    HVX_Vector *hvx_output =3D (HVX_Vector *)&output[0];
+> +    HVX_Vector hvx_buffer0 =3D *(HVX_Vector *)&buffer0[0];
+> +    HVX_Vector hvx_buffer1 =3D *(HVX_Vector *)&buffer1[0];
+> +
+> +    uint32_t PREFIL_VAL =3D 0x111222;
+> +    memset(expect, 0xff, sizeof(expect));
+> +    *hvx_output =3D Q6_V_vsplat_R(PREFIL_VAL);
+> +
+> +    if (!acc) {
+> +        *hvx_output =3D Q6_Vsf_vdmpy_VhfVhf(hvx_buffer0, hvx_buffer1);
+> +    } else {
+> +        *hvx_output =3D Q6_Vsf_vdmpyacc_VsfVhfVhf(*hvx_output, hvx_buffe=
+r0,
+> +                                                hvx_buffer1);
+> +    }
+> +
+> +    for (int i =3D 0; i < MAX_VEC_SIZE_BYTES / 4; i++) {
+> +        float a1 =3D float_hf_to_sf(float_hf(buffer0[0].hf[2 * i + 1]));
+> +        float a2 =3D float_hf_to_sf(float_hf(buffer0[0].hf[2 * i]));
+> +        float a3 =3D float_hf_to_sf(float_hf(buffer1[0].hf[2 * i + 1]));
+> +        float a4 =3D float_hf_to_sf(float_hf(buffer1[0].hf[2 * i]));
+> +        float prev =3D acc ? float_sf(PREFIL_VAL) : 0;
+> +        expect[0].sf[i] =3D raw_sf(CHECK_NAN((a1 * a3) + (a2 * a4) + pre=
+v,
+> NAN_SF));
+> +    }
+>
+
+Put this into a loop also.
+
+
+> +
+> +    check_output_sf(__LINE__, 1);
+> +}
+> +
+> +int main(void)
+> +{
+> +    init_buffers();
+>
+
+The init_buffers function is designed to create inputs for non-FP functions=
+.
+Create a new function to initialize the buffers with interesting FP values
+(e.g., NaN, large FP values that will lead to overflow).
+Also, see my prior comment about FP flags.  We'll want to check those here.
+We should also add some tests with packets.  See my prior comment about
+.new values.
+
+
+> +
+> +    /* add/sub */
+> +    test_vadd_sf_sf();
+> +    test_vadd_hf_hf();
+> +    test_vsub_sf_sf();
+> +    test_vsub_hf_hf();
+> +
+> +    /* multiply */
+> +    test_vmpy_sf_sf();
+> +    test_vmpy_hf_hf();
+> +
+> +    /* dot product */
+> +    test_vdmpy_sf_hf(false);
+> +    test_vdmpy_sf_hf(true);
+> +
+> +    puts(err ? "FAIL" : "PASS");
+> +    return err ? 1 : 0;
+> +}
+> diff --git a/tests/tcg/hexagon/fp_hvx_disabled.c
+> b/tests/tcg/hexagon/fp_hvx_disabled.c
+> new file mode 100644
+> index 0000000000..af409ab8d2
+> --- /dev/null
+> +++ b/tests/tcg/hexagon/fp_hvx_disabled.c
+> @@ -0,0 +1,32 @@
+> +/*
+> + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + *  SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <stdio.h>
+> +#include <string.h>
+> +#include <hexagon_types.h>
+> +#include <hvx_hexagon_protos.h>
+> +
+> +int err;
+> +#include "hvx_misc.h"
+> +
+> +int main(void)
+> +{
+> +    asm volatile("r0 =3D #0xff\n"
+> +                 "v0 =3D vsplat(r0)\n"
+> +                 "vmem(%1 + #0) =3D v0\n"
+> +                 "r1 =3D #0x1\n"
+> +                 "v1 =3D vsplat(r1)\n"
+> +                 "v2 =3D vsplat(r1)\n"
+> +                 "v0.sf =3D vadd(v1.sf, v2.sf)\n"
+> +                 "vmem(%0 + #0) =3D v0\n"
+> +                 :
+> +                 : "r"(output), "r"(expect)
+> +                 : "r0", "r1", "v0", "v1", "v2", "memory");
+>
+
+Add a test where the result is used in a .new context.
+
+
+> +
+> +    check_output_w(__LINE__, 1);
+> +    puts(err ? "FAIL" : "PASS");
+> +    return err ? 1 : 0;
+> +}
+>
+>
+
+--0000000000004b774c064dc9d6b8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 23, 2026=
+ at 7:16=E2=80=AFAM Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheu=
+s.bernardino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qua=
+lcomm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">Signed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:=
+matheus.bernardino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@o=
+ss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0tests/tcg/hexagon/hvx_misc.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 12 ++=
++<br>
+=C2=A0tests/tcg/hexagon/fp_hvx.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 129 ++=
+++++++++++++++++++++++++++<br>
+=C2=A0tests/tcg/hexagon/fp_hvx_disabled.c |=C2=A0 32 +++++++<br>
+=C2=A0tests/tcg/hexagon/Makefile.target=C2=A0 =C2=A0|=C2=A0 =C2=A08 ++<br>
+=C2=A04 files changed, 181 insertions(+)<br>
+=C2=A0create mode 100644 tests/tcg/hexagon/fp_hvx.c<br>
+=C2=A0create mode 100644 tests/tcg/hexagon/fp_hvx_disabled.c<br>
+<br>diff --git a/tests/tcg/hexagon/fp_hvx.c b/tests/tcg/hexagon/fp_hvx.c<br=
+>
+new file mode 100644<br>
+index 0000000000..85b8ff78ed<br>
+--- /dev/null<br>
++++ b/tests/tcg/hexagon/fp_hvx.c<br>
+@@ -0,0 +1,129 @@<br>
++/*<br>
++ *=C2=A0 Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries=
+.<br>
++ *<br>
++ *=C2=A0 SPDX-License-Identifier: GPL-2.0-or-later<br>
++ */<br>
++<br>
++#include &lt;stdio.h&gt;<br>
++#include &lt;stdint.h&gt;<br>
++#include &lt;stdbool.h&gt;<br>
++#include &lt;string.h&gt;<br>
++#include &lt;hexagon_types.h&gt;<br>
++#include &lt;hvx_hexagon_protos.h&gt;<br>
++<br>
++int err;<br>
++#include &quot;hvx_misc.h&quot;<br>
++<br>
++#if __HEXAGON_ARCH__ &gt; 75<br>
++#error &quot;After v75, compiler will replace some FP HVX instructions.&qu=
+ot;<br>
++#endif<br>
++<br>
++/*************************************************************************=
+*****<br>
++ * NAN handling<br>
++ *************************************************************************=
+****/<br>
++<br>
++#define isnan(X) \<br>
++=C2=A0 =C2=A0 =C2=A0(sizeof(X) =3D=3D bytes_hf ? ((raw_hf(X) &amp; ~0x8000=
+) &gt; 0x7c00) : \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((raw_sf(X) &amp; ~(1 &lt;&lt; 31)) &gt; 0x=
+7f800000UL))<br>
++<br>
++#define CHECK_NAN(A, DEF_NAN) (isnan(A) ? DEF_NAN : (A))<br>
++#define NAN_SF float_sf(0x7FFFFFFF)<br>
++#define NAN_HF float_hf(0x7FFF)<br>
++<br>
++/*************************************************************************=
+*****<br>
++ * Binary operations<br>
++ *************************************************************************=
+****/<br>
++<br>
++#define DEF_TEST_OP_2(vop, op, type_res, type_arg) \<br>
++=C2=A0 =C2=A0 static void test_##vop##_##type_res##_##type_arg(void) \<br>
++=C2=A0 =C2=A0 { \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(expect, 0xff, sizeof(expect)); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(output, 0xff, sizeof(expect)); \<br></b=
+lockquote><div><br></div><div>sizeof(output)</div><div>=C2=A0</div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 HVX_Vector *hvx_output =3D (HVX_Vector *)&amp;=
+output[0]; \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 HVX_Vector hvx_buffer0 =3D *(HVX_Vector *)&amp=
+;buffer0[0]; \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 HVX_Vector hvx_buffer1 =3D *(HVX_Vector *)&amp=
+;buffer1[0]; \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 *hvx_output =3D \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Q6_V##type_res##_##vop##_V##type=
+_arg##V##type_arg(hvx_buffer0, \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hvx_b=
+uffer1); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (int i =3D 0; i &lt; MAX_VEC_SIZE_BYTES / =
+bytes_##type_res; i++) { \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 expect[0].type_res[i] =3D \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 raw_##type_res(op(=
+float_##type_arg(buffer0[0].type_arg[i]), \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 float_##type_arg(buffer1[0].t=
+ype_arg[i]))); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } \<br></blockquote><div><br></div><div>Put th=
+is in a loop over the input buffers to get more input values.=C2=A0 Then ch=
+ange the second argument to check_output below.</div><div>=C2=A0</div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 check_output_##type_res(__LINE__, 1); \<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++#define SUM(X, Y, DEF_NAN) CHECK_NAN((X) + (Y), DEF_NAN)<br>
++#define SUB(X, Y, DEF_NAN) CHECK_NAN((X) - (Y), DEF_NAN)<br>
++#define MULT(X, Y, DEF_NAN) CHECK_NAN((X) * (Y), DEF_NAN)<br>
++<br>
++#define SUM_SF(X, Y) SUM(X, Y, NAN_SF)<br>
++#define SUM_HF(X, Y) SUM(X, Y, NAN_HF)<br>
++#define SUB_SF(X, Y) SUB(X, Y, NAN_SF)<br>
++#define SUB_HF(X, Y) SUB(X, Y, NAN_HF)<br>
++#define MULT_SF(X, Y) MULT(X, Y, NAN_SF)<br>
++#define MULT_HF(X, Y) MULT(X, Y, NAN_HF)<br>
++<br>
++DEF_TEST_OP_2(vadd, SUM_SF, sf, sf);<br>
++DEF_TEST_OP_2(vadd, SUM_HF, hf, hf);<br>
++DEF_TEST_OP_2(vsub, SUB_SF, sf, sf);<br>
++DEF_TEST_OP_2(vsub, SUB_HF, hf, hf);<br>
++DEF_TEST_OP_2(vmpy, MULT_SF, sf, sf);<br>
++DEF_TEST_OP_2(vmpy, MULT_HF, hf, hf);<br>
++<br>
++/*************************************************************************=
+*****<br>
++ * Other tests<br>
++ *************************************************************************=
+****/<br>
++<br>
++void test_vdmpy_sf_hf(bool acc)<br>
++{<br>
++=C2=A0 =C2=A0 HVX_Vector *hvx_output =3D (HVX_Vector *)&amp;output[0];<br>
++=C2=A0 =C2=A0 HVX_Vector hvx_buffer0 =3D *(HVX_Vector *)&amp;buffer0[0];<b=
+r>
++=C2=A0 =C2=A0 HVX_Vector hvx_buffer1 =3D *(HVX_Vector *)&amp;buffer1[0];<b=
+r>
++<br>
++=C2=A0 =C2=A0 uint32_t PREFIL_VAL =3D 0x111222;<br>
++=C2=A0 =C2=A0 memset(expect, 0xff, sizeof(expect));<br>
++=C2=A0 =C2=A0 *hvx_output =3D Q6_V_vsplat_R(PREFIL_VAL);<br>
++<br>
++=C2=A0 =C2=A0 if (!acc) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 *hvx_output =3D Q6_Vsf_vdmpy_VhfVhf(hvx_buffer=
+0, hvx_buffer1);<br>
++=C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 *hvx_output =3D Q6_Vsf_vdmpyacc_VsfVhfVhf(*hvx=
+_output, hvx_buffer0,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 hvx_buffer1);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 for (int i =3D 0; i &lt; MAX_VEC_SIZE_BYTES / 4; i++) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float a1 =3D float_hf_to_sf(float_hf(buffer0[0=
+].hf[2 * i + 1]));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float a2 =3D float_hf_to_sf(float_hf(buffer0[0=
+].hf[2 * i]));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float a3 =3D float_hf_to_sf(float_hf(buffer1[0=
+].hf[2 * i + 1]));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float a4 =3D float_hf_to_sf(float_hf(buffer1[0=
+].hf[2 * i]));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 float prev =3D acc ? float_sf(PREFIL_VAL) : 0;=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 expect[0].sf[i] =3D raw_sf(CHECK_NAN((a1 * a3)=
+ + (a2 * a4) + prev, NAN_SF));<br>
++=C2=A0 =C2=A0 }<br></blockquote><div><br></div><div>Put this into a loop a=
+lso.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
+">
++<br>
++=C2=A0 =C2=A0 check_output_sf(__LINE__, 1);<br>
++}<br>
++<br>
++int main(void)<br>
++{<br>
++=C2=A0 =C2=A0 init_buffers();<br></blockquote><div><br></div><div>The init=
+_buffers function is designed to create inputs for non-FP functions.</div><=
+div>Create a new function to initialize the buffers with interesting FP val=
+ues (e.g., NaN, large FP values that will lead to overflow).</div><div>Also=
+, see my prior comment about FP flags.=C2=A0 We&#39;ll want to check those =
+here.</div><div>We should also add some tests with packets.=C2=A0 See my pr=
+ior comment about .new values.</div><div>=C2=A0</div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">
++<br>
++=C2=A0 =C2=A0 /* add/sub */<br>
++=C2=A0 =C2=A0 test_vadd_sf_sf();<br>
++=C2=A0 =C2=A0 test_vadd_hf_hf();<br>
++=C2=A0 =C2=A0 test_vsub_sf_sf();<br>
++=C2=A0 =C2=A0 test_vsub_hf_hf();<br>
++<br>
++=C2=A0 =C2=A0 /* multiply */<br>
++=C2=A0 =C2=A0 test_vmpy_sf_sf();<br>
++=C2=A0 =C2=A0 test_vmpy_hf_hf();<br>
++<br>
++=C2=A0 =C2=A0 /* dot product */<br>
++=C2=A0 =C2=A0 test_vdmpy_sf_hf(false);<br>
++=C2=A0 =C2=A0 test_vdmpy_sf_hf(true);<br>
++<br>
++=C2=A0 =C2=A0 puts(err ? &quot;FAIL&quot; : &quot;PASS&quot;);<br>
++=C2=A0 =C2=A0 return err ? 1 : 0;<br>
++}<br>
+diff --git a/tests/tcg/hexagon/fp_hvx_disabled.c b/tests/tcg/hexagon/fp_hvx=
+_disabled.c<br>
+new file mode 100644<br>
+index 0000000000..af409ab8d2<br>
+--- /dev/null<br>
++++ b/tests/tcg/hexagon/fp_hvx_disabled.c<br>
+@@ -0,0 +1,32 @@<br>
++/*<br>
++ *=C2=A0 Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries=
+.<br>
++ *<br>
++ *=C2=A0 SPDX-License-Identifier: GPL-2.0-or-later<br>
++ */<br>
++<br>
++#include &lt;stdio.h&gt;<br>
++#include &lt;string.h&gt;<br>
++#include &lt;hexagon_types.h&gt;<br>
++#include &lt;hvx_hexagon_protos.h&gt;<br>
++<br>
++int err;<br>
++#include &quot;hvx_misc.h&quot;<br>
++<br>
++int main(void)<br>
++{<br>
++=C2=A0 =C2=A0 asm volatile(&quot;r0 =3D #0xff\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;v0 =3D=
+ vsplat(r0)\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;vmem(%=
+1 + #0) =3D v0\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;r1 =3D=
+ #0x1\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;v1 =3D=
+ vsplat(r1)\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;v2 =3D=
+ vsplat(r1)\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;v0.sf =
+=3D vadd(v1.sf, v2.sf)\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;vmem(%=
+0 + #0) =3D v0\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: &quot;r&qu=
+ot;(output), &quot;r&quot;(expect)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: &quot;r0&q=
+uot;, &quot;r1&quot;, &quot;v0&quot;, &quot;v1&quot;, &quot;v2&quot;, &quot=
+;memory&quot;);<br></blockquote><div><br></div><div>Add a test where the re=
+sult is used in a .new context.</div><div>=C2=A0</div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">
++<br>
++=C2=A0 =C2=A0 check_output_w(__LINE__, 1);<br>
++=C2=A0 =C2=A0 puts(err ? &quot;FAIL&quot; : &quot;PASS&quot;);<br>
++=C2=A0 =C2=A0 return err ? 1 : 0;<br>
++}<br><br>
+</blockquote></div></div>
+</div>
+
+--0000000000004b774c064dc9d6b8--
 
