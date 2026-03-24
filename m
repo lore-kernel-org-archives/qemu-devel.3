@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32182F532DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 05:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEFA1F532DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 05:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4uUc-00015P-0o; Tue, 24 Mar 2026 01:39:54 -0400
+	id 1w4ucN-0002g5-QT; Tue, 24 Mar 2026 01:47:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4uUX-00014g-Er
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:39:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1w4ucL-0002f1-On
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:47:53 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w4uUV-0002FL-8L
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:39:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774330785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s+0YGFpQM3ulLCo5fVzKjgeZxiTy+YtVz/KSucLyu+w=;
- b=LkGDML6r7G254GZZfybQ6YDuHKV3SdlH+X1yRE5WQTdI6rrxeCTq7sx9KJAd/CsVMfhXtF
- pSfqNT8ibwxtgbhHXVgWXAI7WQTV7H9PJyYOb3907nt+ek28WbHabbQtm4MZafP5jg0YPy
- wnLPff42ubf9zjyB1n3QkQSjaS04ROk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-774wtRmgNCyRAqgfsT9jcg-1; Tue,
- 24 Mar 2026 01:39:42 -0400
-X-MC-Unique: 774wtRmgNCyRAqgfsT9jcg-1
-X-Mimecast-MFC-AGG-ID: 774wtRmgNCyRAqgfsT9jcg_1774330781
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADD1B180047F; Tue, 24 Mar 2026 05:39:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 18FB9180035F; Tue, 24 Mar 2026 05:39:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 16CE521E6937; Tue, 24 Mar 2026 06:39:37 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Cc: Nathan Chen <nathanc@nvidia.com>,  "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Eric Auger <eric.auger@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  "Michael S . Tsirkin" <mst@redhat.com>,  Igor
- Mammedov <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Shannon
- Zhao <shannon.zhaosl@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?Q?P=2EBerrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>,
- Matt Ochs <mochs@nvidia.com>,  Nicolin Chen <nicolinc@nvidia.com>
-Subject: Re: [PATCH v4 5/8] hw/arm/smmuv3-accel: Change SSIDSIZE property to
- SsidSizeMode
-In-Reply-To: <CH3PR12MB7548E042617EA0BDFB34C55BAB4BA@CH3PR12MB7548.namprd12.prod.outlook.com>
- (Shameer Kolothum Thodi's message of "Mon, 23 Mar 2026 17:41:29
- +0000")
-References: <20260318184907.4060030-1-nathanc@nvidia.com>
- <20260318184907.4060030-6-nathanc@nvidia.com>
- <87341w9ftp.fsf@pond.sub.org>
- <e855b12b-5e1c-4590-8440-a29155a6c9b0@nvidia.com>
- <CH3PR12MB7548E042617EA0BDFB34C55BAB4BA@CH3PR12MB7548.namprd12.prod.outlook.com>
-Date: Tue, 24 Mar 2026 06:39:37 +0100
-Message-ID: <874im5wzty.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1w4ucK-0003Al-44
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:47:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1774331272; x=1805867272;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Wv0X5NHyuEw0I0tSJIvkAzRvQq8ilmibRZSZA4wKbBI=;
+ b=XeXmoG6SWc7sS9i4upbEuLYh4kE33lxQlr2SVknOZyY1txSi2N4is+qV
+ tv9yJBvRVp79ASDmvpgB7uDLYQLD3tDZq7BXW9FukRVLNOi/rsrQhfbbB
+ naDz8AxGE3CVMl90d3ChKkzBwMmuSuU54wLiOy8APC4bZH2EWNuOREyr7
+ HXHYco115qOSZYpFjO8CoaMK+Uz51pHAKl6IaCIxoa1Fhw9A2lYvOfLfF
+ dmDuRuwm0n1XVNA5rIM6kg7ZEdBxqPN4N5/tYBMhhybYF9OTdhP0RXa5J
+ 92DdTRUbt1QU1Htz7WwP/UqRA0YKizTUr6BTV6MI73bsF/gGyXxWT7+8E w==;
+X-CSE-ConnectionGUID: lfPodur9TsqkoWNONhYhww==
+X-CSE-MsgGUID: DBPiEVjGS8+VMbCqWVosNw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11738"; a="75246803"
+X-IronPort-AV: E=Sophos;i="6.23,138,1770624000"; d="scan'208";a="75246803"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Mar 2026 22:47:50 -0700
+X-CSE-ConnectionGUID: 7c/ev2w7RHeF8XgxQB+T2w==
+X-CSE-MsgGUID: kFvN4ASoTK26K94nz3Wf7w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,138,1770624000"; d="scan'208";a="219364640"
+Received: from unknown (HELO [10.239.158.22]) ([10.239.158.22])
+ by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Mar 2026 22:47:49 -0700
+Message-ID: <0991e811-0ad3-4d96-9a4b-deee9c77ef20@intel.com>
+Date: Tue, 24 Mar 2026 13:47:47 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/tdx: Fix the UAF issue in tdx_fetch_cpuid()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Stefan Weil <sw@weilnetz.de>
+References: <20260324012313.1580760-1-xiaoyao.li@intel.com>
+ <186c9ed2-5e41-42d5-8d07-f90654cf35a9@linaro.org>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <186c9ed2-5e41-42d5-8d07-f90654cf35a9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,29 +87,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shameer Kolothum Thodi <skolothumtho@nvidia.com> writes:
+On 3/24/2026 1:35 PM, Philippe Mathieu-Daudé wrote:
+> On 24/3/26 02:23, Xiaoyao Li wrote:
+>> Fix the UAF issue by reading the returned size before freeing the
+>> fetch_cpuid structure.
+>>
+>> Link: https://lore.kernel.org/ 
+>> r/758d7f2c-938f-49cb-89fc-980fc8e020b2@weilnetz.de
+> 
+> Fixes: e3d1a4a6d1d ("i386/tdx: Fetch and validate CPUID of TD guest")
 
->> On 3/19/2026 5:14 AM, Markus Armbruster wrote:
+Oh, I missed this.
 
-[...]
+Thanks for providing it!
 
->> > Any particular reason this is called @ssidsize and not @ssid-size?
->> 
->> I'm not sure there's a particular reason - this property was newly
->> introduced in the accel SMMUv3 series [0]. Should we include a patch to
->> change it to @ssid-size to match the format of other properties?
-
-Separating words improves legibility.  docs/devel/qapi-code-gen.rst
-section "Naming rules and reserved names":
-
-    Command names, member names within a type, and feature names should
-    be all lower case with words separated by a hyphen.
-
-However, we have a compelling reason for @ssidsize:
-
-> I don't think we should as that name was selected to match the SMMUv3
-> IDR1 register filed name in the SMMUv3 specification.
-
-Thanks!
+>> Reported-by: Stefan Weil <sw@weilnetz.de>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>>   target/i386/kvm/tdx.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>> index 4cae99c281ac..e578110df4da 100644
+>> --- a/target/i386/kvm/tdx.c
+>> +++ b/target/i386/kvm/tdx.c
+>> @@ -847,8 +847,8 @@ static struct kvm_cpuid2 *tdx_fetch_cpuid(CPUState 
+>> *cpu, int *ret)
+>>           fetch_cpuid->nent = size;
+>>           r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid, 
+>> &local_err);
+>>           if (r == -E2BIG) {
+>> -            g_free(fetch_cpuid);
+>>               size = fetch_cpuid->nent;
+>> +            g_free(fetch_cpuid);
+>>           }
+>>       } while (r == -E2BIG);
+> 
 
 
