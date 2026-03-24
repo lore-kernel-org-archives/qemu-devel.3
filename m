@@ -4,98 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CC9F54ABA
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0DE6F54ABA
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:52:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52BA-0006V1-5m; Tue, 24 Mar 2026 09:52:20 -0400
+	id 1w52B8-0006PV-BK; Tue, 24 Mar 2026 09:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w52At-0006Gc-2a
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:52:06 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w52Ap-0006py-4O
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:52:01 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-439bcec8613so2700817f8f.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 06:51:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774360315; x=1774965115; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bNxcHylGEJrRuXK5LOihueLekjFUA3Rcv2HHQr54vi8=;
- b=sBgOExK/za+F9lHR+X3RHkr+bIGdXPQcgR6g9TWlzDbqI4NFiFikU/xVI3oAjsJnO9
- hIAPxIQd5VKvo59kzxNYr8+oVZFHaiP8aKuDj3uzwx8EynckdSvcCYfdvmAa8CQEOA6+
- wyuaFG6rL9H452sHTs7gtJkm516FFj3XlWYNQtOUNwfbKM8n+HmpdOPIJ2VcW12L1Fpq
- jIdLY3GTEqrkdYiiG2MDMarBAsFqof7xLC25d8PVRlnsd03o4c+hE0ZJfpKvM7UVSB67
- xoH0rnadzngk0VYcm8eBMM2j1Oa96HPEwYoQP55QzyicRJiMM389WqaxzIuqLOpxFHye
- tdeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774360315; x=1774965115;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bNxcHylGEJrRuXK5LOihueLekjFUA3Rcv2HHQr54vi8=;
- b=BAl0UiGnzroX/LJYSKVx2MFO3SxWaxVLx4GaNp9RK+iHXOar4ozPMVw6auVsTfXuJ8
- dGfsfEvIYna1n7ENBfoyjbVcjXdvKJ3iIVls5IXd0GNXjPyKy/vcl64RnqIT0oK5aXx3
- 92IaE+HqX45JLJL4z1pWFfDs9NQcoAaOOJczCJqP1Bx/K0SCYd+02XGjVXRLrEI3Ci2X
- 4hr+Adz0iQqAESGtG12t16VMO47nT6/wYNOebEJxIXI5onLoeJgWLlQ4r2KWUpIayRGu
- s4mZcJVUjvGrq2StY8KuhEmeYqVqLHgthW07qhjRwUgMd77+4CN5hDMTeFgm/oFaoHrA
- 6f4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUih+H8Kt+rCtw9kHt94ZrOsyTENIUEY/qSKdOd+HTELpfuo+qY2ei+lLrYkYyACOub4QzKh2f4rSES@nongnu.org
-X-Gm-Message-State: AOJu0YzsuUxukbYbPZ12vWh+fs0GnfpLL6JwZI+gl+wAQR5h3TTioJej
- FtyqHCOfqvf55mbNnKoM3eAed71Dknl9RhgWwMlQFpkghKnN5gW32lmt
-X-Gm-Gg: ATEYQzy0zCEuj6HSQhDAlWnNvSLedN3TMUV0Giw4iIycQINDdK3Ku1l8dtgduluOrK/
- 730QWB47SSJ5jr6zWot0k9TLe6suBh7uhxHNwBKmioWOreZh1FwWU3LzWdAdnmfYKkYMSj6fENx
- ytels0FBUf/1+jE6y3TAytv/H7QhkeCqQipYK7OyHEQaKEDZ+6Ur0shjCsRknMsxmpDBfSDMrLu
- vjpGcRcCXZT5sHlVH8fSMafWeq90qwjHuv83XDIwapW4dXUj3R84ktGiSCUlu9EFS9JPLoEz7i8
- c4aBeOn2vK3e0ocSQtAjDLTh7qng2GE2JOu/y5AaR6YC2TkZRGkz5RMj/Asm96LqW+k8nMZuR6v
- 6snYZAoL/dq3llOJPAFL4igLpLgDbibi3vQYxNG58r/7bYJFZ3piIZTn6E+9iX9txm3LZsnQgLn
- wbM8HGmA7hzTGW6vOB+nHa6/l08M557A==
-X-Received: by 2002:a05:6000:2384:b0:43b:41b5:e021 with SMTP id
- ffacd0b85a97d-43b64243115mr26366044f8f.2.1774360314736; 
- Tue, 24 Mar 2026 06:51:54 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([90.187.110.129])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b644bdaf8sm43784652f8f.13.2026.03.24.06.51.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Mar 2026 06:51:54 -0700 (PDT)
-Date: Tue, 24 Mar 2026 11:11:51 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
- qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Pavel Pisa <pisa@fel.cvut.cz>
-CC: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_2/7=5D_hw/arm/sabrelite=3A_?=
- =?US-ASCII?Q?Introduce_class_SabreliteMachineState?=
-In-Reply-To: <6b21c46dde0f562eba1a5e2dfd9dc8635daaedf1.1773866323.git.matyas.bobek@gmail.com>
-References: <cover.1773866323.git.matyas.bobek@gmail.com>
- <6b21c46dde0f562eba1a5e2dfd9dc8635daaedf1.1773866323.git.matyas.bobek@gmail.com>
-Message-ID: <1C02DA1C-F933-4C4D-9518-FB1A5FDC1CF5@gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w52Ap-0006Cs-15
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:52:04 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w52Al-0006pY-8K
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:51:58 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c08:7605:0:640:8d9a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C8FE3808FC;
+ Tue, 24 Mar 2026 16:51:49 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:46c::1:35] (unknown
+ [2a02:6bf:8080:46c::1:35])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id lpTAdN0ARa60-3kZA60lO; Tue, 24 Mar 2026 16:51:49 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1774360309;
+ bh=JmfqnTCl0CWWw9gH1+arcc3Yc6l87kCUv6ngNWCoGw4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=r5E/YgUyVL12Z9IEZ4FvQLcjvmyVsLnKee0wOGviZl+N/EoUWtrmy4VeQh4y04ECx
+ dUACHuJ7YXD/NK2gtzCvFeRFo1l5aLk49wnt9I0Lh7ewr6l7ehKbJHDI6cEqAhnOwy
+ Gq3b2GMhxVpkJ+hQc2s33E8HNpnYfXcmudjVcLfI=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <d3beaccb-6903-47c2-8ffe-82b3f3cdc6b7@yandex-team.ru>
+Date: Tue, 24 Mar 2026 16:51:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 6/8] net/tap: support local migration with virtio-net
+To: Markus Armbruster <armbru@redhat.com>
+Cc: jasowang@redhat.com, mst@redhat.com, eblake@redhat.com, farosas@suse.de,
+ peterx@redhat.com, zhao1.liu@intel.com, wangyanan55@huawei.com,
+ philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ davydov-max@yandex-team.ru, qemu-devel@nongnu.org, yc-core@yandex-team.ru,
+ leiyang@redhat.com, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
+ th.huth+qemu@posteo.eu, berrange@redhat.com, pbonzini@redhat.com
+References: <20260319155333.260341-1-vsementsov@yandex-team.ru>
+ <20260319155333.260341-7-vsementsov@yandex-team.ru>
+ <87y0jhs8z3.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87y0jhs8z3.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -107,139 +83,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 24.03.26 15:33, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> Support transferring of TAP state (including open fd) through
+>> migration stream as part of viritio-net "local-migration".
+>>
+>> Add new option, incoming-fds, which should be set to true to
+>> trigger new logic.
+>>
+>> For new option require explicitly unset script and downscript,
+>> to keep possibility of implementing support for them in future.
+>>
+>> Note disabling read polling on source stop for TAP migration:
+>> otherwise, source process may steal packages from TAP fd even
+>> after source vm STOP.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   net/tap.c     | 147 +++++++++++++++++++++++++++++++++++++++++++++++---
+>>   qapi/net.json |   7 ++-
+>>   2 files changed, 147 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/net/tap.c b/net/tap.c
+>> index 9d6213fc3e5..2156b6cbb73 100644
+>> --- a/net/tap.c
+>> +++ b/net/tap.c
+>> @@ -36,6 +36,7 @@
+>>   #include "net/net.h"
+>>   #include "clients.h"
+>>   #include "monitor/monitor.h"
+>> +#include "system/runstate.h"
+>>   #include "system/system.h"
+>>   #include "qapi/error.h"
+>>   #include "qemu/cutils.h"
+>> @@ -86,6 +87,9 @@ typedef struct TAPState {
+>>       VHostNetState *vhost_net;
+>>       unsigned host_vnet_hdr_len;
+>>       Notifier exit;
+>> +
+>> +    bool read_poll_detached;
+>> +    VMChangeStateEntry *vmstate;
+>>   } TAPState;
+>>   
+>>   static void launch_script(const char *setup_script, const char *ifname,
+>> @@ -94,19 +98,25 @@ static void launch_script(const char *setup_script, const char *ifname,
+>>   static void tap_send(void *opaque);
+>>   static void tap_writable(void *opaque);
+>>   
+>> +static bool tap_is_explicit_no_scirpt(const char *script_arg)
+> 
+> "scirpt"?  Do you mean "script"?
+> 
+>> +{
+>> +    return script_arg &&
+>> +        (script_arg[0] == '\0' || strcmp(script_arg, "no") == 0);
+>> +}
+>> +
+>>   static char *tap_parse_script(const char *script_arg, const char *default_path)
+>>   {
+>>       g_autofree char *res = g_strdup(script_arg);
+>>   
+>> -    if (!res) {
+>> -        res = get_relocated_path(default_path);
+>> +    if (tap_is_explicit_no_scirpt(script_arg)) {
+>> +        return NULL;
+>>       }
+>>   
+>> -    if (res[0] == '\0' || strcmp(res, "no") == 0) {
+>> -        return NULL;
+>> +    if (!script_arg) {
+>> +        return get_relocated_path(default_path);
+>>       }
+>>   
+>> -    return g_steal_pointer(&res);
+>> +    return g_strdup(script_arg);
+>>   }
+>>   
+>>   static void tap_update_fd_handler(TAPState *s)
+>> @@ -123,6 +133,23 @@ static void tap_read_poll(TAPState *s, bool enable)
+>>       tap_update_fd_handler(s);
+>>   }
+>>   
+>> +static void tap_vm_state_change(void *opaque, bool running, RunState state)
+>> +{
+>> +    TAPState *s = opaque;
+>> +
+>> +    if (running) {
+>> +        if (s->read_poll_detached) {
+>> +            tap_read_poll(s, true);
+>> +            s->read_poll_detached = false;
+>> +        }
+>> +    } else if (state == RUN_STATE_FINISH_MIGRATE) {
+>> +        if (s->read_poll) {
+>> +            s->read_poll_detached = true;
+>> +            tap_read_poll(s, false);
+>> +        }
+>> +    }
+>> +}
+>> +
+>>   static void tap_write_poll(TAPState *s, bool enable)
+>>   {
+>>       s->write_poll = enable;
+>> @@ -353,6 +380,11 @@ static void tap_cleanup(NetClientState *nc)
+>>           s->exit.notify = NULL;
+>>       }
+>>   
+>> +    if (s->vmstate) {
+>> +        qemu_del_vm_change_state_handler(s->vmstate);
+>> +        s->vmstate = NULL;
+>> +    }
+>> +
+>>       tap_read_poll(s, false);
+>>       tap_write_poll(s, false);
+>>       close(s->fd);
+>> @@ -393,6 +425,65 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+>>       return s->vhost_net;
+>>   }
+>>   
+>> +static bool tap_is_wait_incoming(NetClientState *nc)
+>> +{
+>> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+>> +    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+>> +    return s->fd == -1;
+>> +}
+>> +
+>> +static int tap_pre_load(void *opaque)
+>> +{
+>> +    TAPState *s = opaque;
+>> +
+>> +    if (s->fd != -1) {
+>> +        error_report(
+>> +            "TAP is already initialized and cannot receive incoming fd");
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static bool tap_setup_vhost(TAPState *s, Error **errp);
+>> +
+>> +static int tap_post_load(void *opaque, int version_id)
+>> +{
+>> +    TAPState *s = opaque;
+>> +    Error *local_err = NULL;
+>> +
+>> +    tap_read_poll(s, true);
+>> +
+>> +    if (s->fd < 0) {
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (!tap_setup_vhost(s, &local_err)) {
+>> +        error_prepend(&local_err,
+>> +                      "Failed to setup vhost during TAP post-load: ");
+>> +        error_report_err(local_err);
+>> +        return -1;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static const VMStateDescription vmstate_tap = {
+>> +    .name = "net-tap",
+>> +    .pre_load = tap_pre_load,
+>> +    .post_load = tap_post_load,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_FD(fd, TAPState),
+>> +        VMSTATE_BOOL(using_vnet_hdr, TAPState),
+>> +        VMSTATE_BOOL(has_ufo, TAPState),
+>> +        VMSTATE_BOOL(has_uso, TAPState),
+>> +        VMSTATE_BOOL(has_tunnel, TAPState),
+>> +        VMSTATE_BOOL(enabled, TAPState),
+>> +        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>>   /* fd support */
+>>   
+>>   static NetClientInfo net_tap_info = {
+>> @@ -412,7 +503,9 @@ static NetClientInfo net_tap_info = {
+>>       .set_vnet_le = tap_set_vnet_le,
+>>       .set_vnet_be = tap_set_vnet_be,
+>>       .set_steering_ebpf = tap_set_steering_ebpf,
+>> +    .is_wait_incoming = tap_is_wait_incoming,
+>>       .get_vhost_net = tap_get_vhost_net,
+>> +    .backend_vmsd = &vmstate_tap,
+>>   };
+>>   
+>>   static TAPState *net_tap_fd_init(NetClientState *peer,
+>> @@ -748,6 +841,9 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+>>       int sndbuf =
+>>           (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+>>   
+>> +    s->read_poll_detached = false;
+>> +    s->vmstate = qemu_add_vm_change_state_handler(tap_vm_state_change, s);
+>> +
+>>       if (!tap_set_sndbuf(fd, sndbuf, sndbuf_required ? errp : NULL) &&
+>>           sndbuf_required) {
+>>           goto failed;
+>> @@ -779,6 +875,8 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+>>       return true;
+>>   
+>>   failed:
+>> +    qemu_del_vm_change_state_handler(s->vmstate);
+>> +    s->vmstate = NULL;
+>>       qemu_del_net_client(&s->nc);
+>>       return false;
+>>   }
+>> @@ -910,6 +1008,26 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>>           return -1;
+>>       }
+>>   
+>> +    if (tap->incoming_fds &&
+>> +        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
+>> +         tap->has_sndbuf || tap->has_vnet_hdr)) {
+>> +        error_setg(errp, "incoming-fds is incompatible with "
+>> +                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=");
+> 
+> @incoming-fds excludes certain optional members, and ...
+> 
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (tap->incoming_fds &&
+>> +        !(tap_is_explicit_no_scirpt(tap->script) &&
+>> +          tap_is_explicit_no_scirpt(tap->downscript))) {
+>> +        /*
+>> +         * script="" and downscript="" are silently supported to be consistent
+>> +         * with cases without incoming_fds, but do not care to put this into
+>> +         * error message.
+>> +         */
+>> +        error_setg(errp, "incoming-fds requires script=no and downscript=no");
+> 
+> ... requires others.  Not documented in net.json.  Should it be?
+
+Hmm. Excluded options are not documented as well, and as many other relations
+between options around TAP.
+
+Still, I script/downscript requirements are more unobvious, so, let's add it to doc.
+
+> 
+>> +        return -1;
+>> +    }
+>> +
+>>       queues = tap_parse_fds_and_queues(tap, &fds, errp);
+>>       if (queues < 0) {
+>>           return -1;
+>> @@ -928,7 +1046,24 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>>           goto fail;
+>>       }
+>>   
+>> -    if (fds) {
+>> +    if (tap->incoming_fds) {
+>> +        for (i = 0; i < queues; i++) {
+>> +            NetClientState *nc;
+>> +            TAPState *s;
+>> +
+>> +            nc = qemu_new_net_client(&net_tap_info, peer, "tap", name);
+>> +            qemu_set_info_str(nc, "incoming");
+>> +
+>> +            s = DO_UPCAST(TAPState, nc, nc);
+>> +            s->fd = -1;
+>> +            if (vhost_fds) {
+>> +                s->vhostfd = vhost_fds[i];
+>> +                s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
+>> +            } else {
+>> +                s->vhostfd = -1;
+>> +            }
+>> +        }
+>> +    } else if (fds) {
+>>           for (i = 0; i < queues; i++) {
+>>               if (i == 0) {
+>>                   vnet_hdr = tap_probe_vnet_hdr(fds[i], errp);
+>> diff --git a/qapi/net.json b/qapi/net.json
+>> index 118bd349651..2240de7dbf6 100644
+>> --- a/qapi/net.json
+>> +++ b/qapi/net.json
+>> @@ -355,6 +355,10 @@
+>>   # @poll-us: maximum number of microseconds that could be spent on busy
+>>   #     polling for tap (since 2.7)
+>>   #
+>> +# @incoming-fds: do not open or create any TAP devices.  Prepare for
+>> +#     getting opened TAP file descriptors from incoming migration
+>> +#     stream.  (Since 11.0)
+> 
+> Let's scratch "opened".
+> 
+> Sure you're still targeting 11.0?
+
+Will fix
+
+> 
+>> +#
+>>   # Since: 1.2
+>>   ##
+>>   { 'struct': 'NetdevTapOptions',
+>> @@ -373,7 +377,8 @@
+>>       '*vhostfds':   'str',
+>>       '*vhostforce': 'bool',
+>>       '*queues':     'uint32',
+>> -    '*poll-us':    'uint32'} }
+>> +    '*poll-us':    'uint32',
+>> +    '*incoming-fds': 'bool' } }
+>>   
+>>   ##
+>>   # @NetdevSocketOptions:
+> 
 
 
-Am 19=2E M=C3=A4rz 2026 19:13:09 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <mat=
-yas=2Ebobek@gmail=2Ecom>:
->Create full class SabreliteMachineState extending MachineState=2E
->
->Previously, Sabrelite board MachineState was declared indirectly by the
->DEFINE_MACHINE_ARM macro=2E FslIMX6State was only instantiated in the
->sabrelite_init function=2E For FlexCAN device, machine properties
->will be used to select QEMU CAN buses=2E A custom class is therefore
->required, so the CanBusState "connections" can then be added as fields=2E
->
->Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas=2Ebobek@gmail=2Ecom>
->---
-> hw/arm/sabrelite=2Ec | 39 +++++++++++++++++++++------------------
-> 1 file changed, 21 insertions(+), 18 deletions(-)
->
->diff --git a/hw/arm/sabrelite=2Ec b/hw/arm/sabrelite=2Ec
->index 40ee8196ac=2E=2E7e036e6388 100644
->--- a/hw/arm/sabrelite=2Ec
->+++ b/hw/arm/sabrelite=2Ec
->@@ -20,6 +20,15 @@
-> #include "qemu/error-report=2Eh"
-> #include "system/qtest=2Eh"
->=20
->+struct SabreliteMachineState {
->+    MachineState parent_obj;
->+
->+    FslIMX6State soc;
->+};
->+
->+#define TYPE_SABRELITE_MACHINE MACHINE_TYPE_NAME("sabrelite")
->+OBJECT_DECLARE_SIMPLE_TYPE(SabreliteMachineState, SABRELITE_MACHINE)
->+
-> static struct arm_boot_info sabrelite_binfo =3D {
->     /* DDR memory start */
->     =2Eloader_start =3D FSL_IMX6_MMDC_ADDR,
->@@ -41,7 +50,7 @@ static void sabrelite_reset_secondary(ARMCPU *cpu,
->=20
-> static void sabrelite_init(MachineState *machine)
-> {
->-    FslIMX6State *s;
->+    SabreliteMachineState *s =3D SABRELITE_MACHINE(machine);
->=20
->     /* Check the amount of memory is compatible with the SOC */
->     if (machine->ram_size > FSL_IMX6_MMDC_SIZE) {
->@@ -50,13 +59,12 @@ static void sabrelite_init(MachineState *machine)
->         exit(1);
->     }
->=20
->-    s =3D FSL_IMX6(object_new(TYPE_FSL_IMX6));
->-    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
->+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IM=
-X6);
->=20
->     /* Ethernet PHY address is 6 */
->-    object_property_set_int(OBJECT(s), "fec-phy-num", 6, &error_fatal);
->+    object_property_set_int(OBJECT(&s->soc), "fec-phy-num", 6, &error_fa=
-tal);
->=20
->-    qdev_realize(DEVICE(s), NULL, &error_fatal);
->+    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
->=20
->     memory_region_add_subregion(get_system_memory(), FSL_IMX6_MMDC_ADDR,
->                                 machine->ram);
->@@ -70,7 +78,7 @@ static void sabrelite_init(MachineState *machine)
->         /* Add the sst25vf016b NOR FLASH memory to first SPI */
->         Object *spi_dev;
->=20
->-        spi_dev =3D object_resolve_path_component(OBJECT(s), "spi1");
->+        spi_dev =3D object_resolve_path_component(OBJECT(&s->soc), "spi1=
-");
->         if (spi_dev) {
->             SSIBus *spi_bus;
->=20
->@@ -89,7 +97,7 @@ static void sabrelite_init(MachineState *machine)
->                 qdev_realize_and_unref(flash_dev, BUS(spi_bus), &error_f=
-atal);
->=20
->                 cs_line =3D qdev_get_gpio_in_named(flash_dev, SSI_GPIO_C=
-S, 0);
->-                qdev_connect_gpio_out(DEVICE(&s->gpio[2]), 19, cs_line);
->+                qdev_connect_gpio_out(DEVICE(&s->soc=2Egpio[2]), 19, cs_=
-line);
->             }
->         }
->     }
->@@ -100,12 +108,14 @@ static void sabrelite_init(MachineState *machine)
->     sabrelite_binfo=2Esecondary_cpu_reset_hook =3D sabrelite_reset_secon=
-dary;
->=20
->     if (!qtest_enabled()) {
->-        arm_load_kernel(&s->cpu[0], machine, &sabrelite_binfo);
->+        arm_load_kernel(&s->soc=2Ecpu[0], machine, &sabrelite_binfo);
->     }
-> }
->=20
->-static void sabrelite_machine_init(MachineClass *mc)
->+static void sabrelite_machine_class_init(ObjectClass *oc, const void *da=
-ta)
-> {
->+    MachineClass *mc =3D MACHINE_CLASS(oc);
->+
->     mc->desc =3D "Freescale i=2EMX6 Quad SABRE Lite Board (Cortex-A9)";
->     mc->init =3D sabrelite_init;
->     mc->max_cpus =3D FSL_IMX6_NUM_CPUS;
->@@ -114,18 +124,11 @@ static void sabrelite_machine_init(MachineClass *mc=
-)
->     mc->auto_create_sdcard =3D true;
-> }
->=20
->-static void sabrelite_machine_class_init(ObjectClass *oc, const void *da=
-ta)
->-{
->-    MachineClass *mc =3D MACHINE_CLASS(oc);
->-
->-    sabrelite_machine_init(mc);
->-}
-
-Let's do the merge in the previous commit, as explained there=2E
-
->-
-> static const TypeInfo sabrelite_machine_init_typeinfo =3D {
->-    =2Ename          =3D MACHINE_TYPE_NAME("sabrelite"),
->+    =2Ename          =3D TYPE_SABRELITE_MACHINE,
->     =2Eparent        =3D TYPE_MACHINE,
->     =2Eclass_init    =3D sabrelite_machine_class_init,
->-    =2Einstance_size =3D sizeof(MachineState),
->+    =2Einstance_size =3D sizeof(SabreliteMachineState),
->     =2Eabstract      =3D false,
->     =2Einterfaces    =3D arm_machine_interfaces,
-> };
-
-With the above:
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+-- 
+Best regards,
+Vladimir
 
