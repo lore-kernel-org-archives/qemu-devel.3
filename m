@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29F1F532ED
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EDAEF532F5
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4xMi-0004fX-DY; Tue, 24 Mar 2026 04:43:56 -0400
+	id 1w4xMg-0004ab-9B; Tue, 24 Mar 2026 04:43:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4xMg-0004aZ-1W
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:43:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4xMe-0004ZZ-De
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:43:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4xMe-0005LO-61
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:43:53 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4xMb-0005Ku-P3
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:43:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774341831;
+ s=mimecast20190719; t=1774341829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x95ITeG3qDTYkVXpwGDq0a+8lz2mrJu4Ql89QIroNy4=;
- b=ar6nLM8a5tyyfP/4wqnfT7eQNpLP8SfOF8MklZYQ46/YMKFOZsoql8nzkEeTHNJf48w1ak
- eIahL0aasHWYJxyKtROkVCdhvxkDMi9BRIJqMtPThKRG8ndzTdQDJhWz/HLwKBSb5ll2tU
- QJKWZcn6dV6aERq/tDL95av9Uz8h+RE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JKWtmzsVyC/vUaJKxKrxcKgLxnja+qeqEwklaNrjqAg=;
+ b=el6/U5IVTP5uMEMRHHh79VnZxknQFNlZ0sDX3w2+HwGNCSF0yer4ejz+BSSly7bYsh1xYs
+ HxP9WqqR824/bVnX7CbQm+yOBy0dDRbnVR2dwB4tqg8ej5rsuGgeuOTlZMycovE5kIxbW6
+ GtndCSu/Pg4SsB4ic2PbWS1kMdakabI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-9dJUOIjFN86t9OW_Mb6Uog-1; Tue, 24 Mar 2026 04:43:49 -0400
-X-MC-Unique: 9dJUOIjFN86t9OW_Mb6Uog-1
-X-Mimecast-MFC-AGG-ID: 9dJUOIjFN86t9OW_Mb6Uog_1774341828
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43b4dcdb372so2728575f8f.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 01:43:49 -0700 (PDT)
+ us-mta-42-uYfwWC9PPiO3lhH-Kd83SA-1; Tue, 24 Mar 2026 04:43:47 -0400
+X-MC-Unique: uYfwWC9PPiO3lhH-Kd83SA-1
+X-Mimecast-MFC-AGG-ID: uYfwWC9PPiO3lhH-Kd83SA_1774341826
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43b46b2b161so4062855f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 01:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774341828; x=1774946628; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774341826; x=1774946626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x95ITeG3qDTYkVXpwGDq0a+8lz2mrJu4Ql89QIroNy4=;
- b=BZxygHcm9FWEOPEnnILcM5bfBNdNj9wb4/YMy/aAjcqVHE57cBfB5IMgFaK4I6h07b
- GEbVQXxkR7tS/lb6NrzX4sNkakudG4gan6RYHfT8MGTBLsBTfGQ1VOiPFo0PhKxqQc1o
- WH7kvMEeTUKYvlkgDLzTxIBwKxILJlcvLX95xC6cLm/B1tdeD1OXbFEPyTpRzlv/KAUw
- oQVuLNya96MF6B/a4Ze6PJfO1iZbYIJxfN9UhDLzke7YhzpU+zGLy41hHx+hNlAmUE7N
- SHLsbh0Zl7jgH6/4ooJfHoZ5wYlKxKAu3oR9ZWC7vi5Jq3vSXMgT1FzghoP68oZx2NJB
- QkkQ==
+ bh=JKWtmzsVyC/vUaJKxKrxcKgLxnja+qeqEwklaNrjqAg=;
+ b=IWLnuXOa8Jh+EP2/glL1fbEgqFU6ZFYyxXXIYDyWcqcWpTEiySQggwzd9IP20IHTaX
+ euWPCOF3XYANmFsye22vHHEg0KW7ZqfRkga+jc6Gryk8ghjFgAWOZheVrzv/12Six0L0
+ D/i+eUCUbImKfNH2BCsQfT/ixxQ27uAggPov99JodsIFr1WViJsnudOIpRyjD+uTLBfj
+ b1DQNLlXIOdT0/G+dzyh31AbAUTuaxhYlLlWcRNWoVxQAM6zdXc6FV40yWv3LLDYSE6G
+ On2O+7ZmfDzizWt54/iR4QHlPOu9LXpVZ8LdOZm5RezykBFHRMGfXAkCSWkBGohwHoYM
+ gpgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774341828; x=1774946628;
+ d=1e100.net; s=20251104; t=1774341826; x=1774946626;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=x95ITeG3qDTYkVXpwGDq0a+8lz2mrJu4Ql89QIroNy4=;
- b=HoSeGa/EFtSkKS+OcCF9v7YSqPFmiwITxsxMCKA/CA5g/kTNtl/RJYW9rOufn0Uuoq
- T8Uek0YffV0tvqTqjoHyOep/BZc4TRv14PyDhPt36Ba1poEAi7QRrvQTPzzDSDeKUxxQ
- zTdXm8mSDkHM0tZ2udmPir1SYCMdpFOYY/vL6KkvHjkhTAnEIf3/kyBvDKaNMultxE3i
- Xz4+2FwHnVPALL4gTYRVfMkqLpl7ajDh9Wy6sFx4V2Rk9FmsOkKWYcuiyRZitgnv537z
- oQxu4QH4Iu08WLsILvw0txhr7JzmfR/J0OebLN+6PbIX1L3tjwgI4oA+7AWCm2mVuIQ9
- vZkA==
-X-Gm-Message-State: AOJu0YwzP6F3rVAU+RqU/AeiKZ59YsA+BSCz7p6vjb7+4CCI11htL/I2
- X7ajlJVCAEAy8Ri9OexXNmhPNI3dEUFQbDki8z10hAq4DGUU7SKmezntMxUEYsARAxV1HZWUETP
- K3KEXpSJ42aFNu8bZ2tYnAsWx5bz1syzM/jyslEJK8gxkttg6rBcGhk/d
-X-Gm-Gg: ATEYQzy78AFs1rtL8HDFR2brGn0DeOpDYmFCqa6s+11FCemhtV/UjCG3tkk1DWEd2iX
- mzbzVhwqTCGGEvzZ8gcHhmiLZ3u+J99uoLAaqRFezwyd0rcGDfkw+rssxO3YD9pAk22DnA7g+jX
- f2kVA2lLoXguNWiPYC4154UfWnMfTqxnj/DrlfDw+nVraYD4SMgLFMi1SQkndHqNvrIIXT/S4g1
- a7whb3lfR58EauICONDk+KDOYnwKF6W8YfcHSY95qj1K7PJuXbplNqeDEwIRxxoRZoAzYqMtIyW
- yEI9RkNe6RnV2imL2XEb/0GARADjKUmM7dqcss1Ao1aqquqV+2mOsMK42ckdN8NHbH+kqR68zZB
- HaHWoFYOPSOy0HckiUrGiTQNx6yj5Jt26Z8MQEuia82g5AoBj4n8B/eOyMmM9eTbpEF4nRwZwPl
- W9EA6N
-X-Received: by 2002:a05:600c:698e:b0:486:f4d2:eac6 with SMTP id
- 5b1f17b1804b1-486fedd80c9mr193787265e9.13.1774341828138; 
- Tue, 24 Mar 2026 01:43:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:698e:b0:486:f4d2:eac6 with SMTP id
- 5b1f17b1804b1-486fedd80c9mr193786915e9.13.1774341827663; 
- Tue, 24 Mar 2026 01:43:47 -0700 (PDT)
+ bh=JKWtmzsVyC/vUaJKxKrxcKgLxnja+qeqEwklaNrjqAg=;
+ b=GVVgyxLOpHMw88dcqsfzwZNZd4t83PLS4Ec7d0EWXIyOPeD+Nj31WlgBTnp9Xxgh3m
+ u8JAYfxpPgh3n139RqHsciIKC8rWwAE/TIYEXoApeNrdJx/xpfVkOobITFk/28ox7WYJ
+ ZQE5XlIN9PiHYPTAgvJtTDZk/iIdJl9ZPw9HzL+b/rRi5gZKUJSGlB4rbvdqr2NTlFBr
+ ApKwE0zz3j/6bBeJsgDfw6AtK9SF11LSIFfTzd3Ye5XDlbDY+QSWcplOoGWYMm77JQLR
+ q1DbsX6PpSwl4uKUxiz03sEFvdz85Zqz1e00M7FOyxsXO5naFy/g7qvQAac8OhAnByZb
+ AE3g==
+X-Gm-Message-State: AOJu0YxTBhLWuxTreT0QiM4QXUokJoUD6BPnJSUoNP5DFDimagOmfPG3
+ dWatqLle0nCOwHJUPNccm040hSzBs3xj82ILjJf/yl+QaBS5xxFgPRPWUuU1RgkrQUJqFbk6pVN
+ yMx+QHl9cT8YBOfKSuYSFqou/UCTjUWtvQAwl4nJD2wOTqvrI87MyljT0
+X-Gm-Gg: ATEYQzzqOGz25ZrRC6dFH7Uxz9qxTxplpLJ9qrVC/UQDUrQd3JYmgjrTjsA184X4GvQ
+ fek9UBSx00uVhjaMBsupzwp6ZxtjYlFIfTbXSdq1oSDUJIOfjLc6vbmwfqJZvJgHJ3BIqVBK4Ci
+ i/yV0ypyr7WeyI0A7eULTclxa5s30SDwVDEEKK/+8ijtEJeGQYrL2INTKHzHRmWyjdIOqy7Xhxc
+ twFHj+9xaAxIklT2WRF4qG7JxVN5HUg2YbSbnRqbe0RGj/Y5vPOewSlTc9ZLj/VckhBtdDJ7MS4
+ HpTnCboLCq3Kw4aYKzQuJF1N5GlMjZEEQ9/D5TBhoVSnR+KL+tcvNK49bxeOfbkSRmGRTiqSaGY
+ ciluoRVK2yVL726l2ZS+ZynMLCGHKYgBM7/qXUyPP/qdRmPNHV/znxj/uQKFkjVVyBetT78a4Yt
+ yEV3eM
+X-Received: by 2002:a05:6000:601:b0:439:c5cf:fc73 with SMTP id
+ ffacd0b85a97d-43b6423b842mr23735085f8f.12.1774341826145; 
+ Tue, 24 Mar 2026 01:43:46 -0700 (PDT)
+X-Received: by 2002:a05:6000:601:b0:439:c5cf:fc73 with SMTP id
+ ffacd0b85a97d-43b6423b842mr23735050f8f.12.1774341825684; 
+ Tue, 24 Mar 2026 01:43:45 -0700 (PDT)
 Received: from localhost
  (p200300cfd737d03cdf99cbc9b4448cfa.dip0.t-ipconnect.de.
  [2003:cf:d737:d03c:df99:cbc9:b444:8cfa])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b644ae048sm36104144f8f.1.2026.03.24.01.43.46
+ ffacd0b85a97d-43b6470b243sm36839348f8f.26.2026.03.24.01.43.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 01:43:46 -0700 (PDT)
+ Tue, 24 Mar 2026 01:43:44 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -91,24 +91,23 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Aarushi Mehta <mehta.aaru20@gmail.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH for-11.0 v2 2/3] linux-aio: Resubmit tails of short
- reads/writes
-Date: Tue, 24 Mar 2026 09:43:35 +0100
-Message-ID: <20260324084338.37453-3-hreitz@redhat.com>
+Subject: [PATCH for-11.0 v2 1/3] linux-aio: Put all parameters into qemu_laiocb
+Date: Tue, 24 Mar 2026 09:43:34 +0100
+Message-ID: <20260324084338.37453-2-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260324084338.37453-1-hreitz@redhat.com>
 References: <20260324084338.37453-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,202 +125,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Short reads/writes can happen.  One way to reproduce them is via our
-FUSE export, with the following diff applied (%s/escaped // to apply --
-if you put plain diffs in commit messages, git-am will apply them, and I
-would rather avoid breaking FUSE accidentally via this patch):
-
-escaped diff --git a/block/export/fuse.c b/block/export/fuse.c
-escaped index a2a478d293..67dc50a412 100644
-escaped --- a/block/export/fuse.c
-escaped +++ b/block/export/fuse.c
-@@ -828,7 +828,7 @@ static ssize_t coroutine_fn GRAPH_RDLOCK
- fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
-              const struct fuse_init_in_compat *in)
- {
--    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
-+    const uint32_t supported_flags = FUSE_ASYNC_READ;
-
-     if (in->major != 7) {
-         error_report("FUSE major version mismatch: We have 7, but kernel has %"
-@@ -1060,6 +1060,8 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
-     void *buf;
-     int ret;
-
-+    size = MIN(size, 4096);
-+
-     /* Limited by max_read, should not happen */
-     if (size > FUSE_MAX_READ_BYTES) {
-         return -EINVAL;
-@@ -1110,6 +1112,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
-     int64_t blk_len;
-     int ret;
-
-+    size = MIN(size, 4096);
-+
-     QEMU_BUILD_BUG_ON(FUSE_MAX_WRITE_BYTES > BDRV_REQUEST_MAX_BYTES);
-     /* Limited by max_write, should not happen */
-     if (size > FUSE_MAX_WRITE_BYTES) {
-
-Then:
-$ ./qemu-img create -f raw test.raw 8k
-Formatting 'test.raw', fmt=raw size=8192
-$ ./qemu-io -f raw -c 'write -P 42 0 8k' test.raw
-wrote 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (64.804 MiB/sec and 8294.9003 ops/sec)
-$ hexdump -C test.raw
-00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
-*
-00002000
-
-With aio=threads, short I/O works:
-$ storage-daemon/qemu-storage-daemon \
-    --blockdev file,node-name=test,filename=test.raw \
-    --export fuse,id=exp,node-name=test,mountpoint=test.raw,writable=true
-
-Other shell:
-$ ./qemu-io --image-opts -c 'read -P 42 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=threads
-read 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (36.563 MiB/sec and 4680.0923 ops/sec)
-$ ./qemu-io --image-opts -c 'write -P 23 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=threads
-wrote 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (35.995 MiB/sec and 4607.2970 ops/sec)
-$ hexdump -C test.raw
-00000000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
-*
-00002000
-
-But with aio=native, it does not:
-$ ./qemu-io --image-opts -c 'read -P 23 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=native
-Pattern verification failed at offset 0, 8192 bytes
-read 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (86.155 MiB/sec and 11027.7900 ops/sec)
-$ ./qemu-io --image-opts -c 'write -P 42 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=native
-write failed: No space left on device
-$ hexdump -C test.raw
-00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
-*
-00001000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
-*
-00002000
-
-This patch fixes that.
+Put all request parameters into the qemu_laiocb struct, which will allow
+re-submitting the tail of short reads/writes.
 
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/linux-aio.c | 56 ++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 50 insertions(+), 6 deletions(-)
+ block/linux-aio.c | 34 ++++++++++++++++++++++------------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
 
 diff --git a/block/linux-aio.c b/block/linux-aio.c
-index 3843f45eac..0a7424fbb3 100644
+index 53c3e9af8a..3843f45eac 100644
 --- a/block/linux-aio.c
 +++ b/block/linux-aio.c
-@@ -45,6 +45,10 @@ struct qemu_laiocb {
+@@ -41,9 +41,15 @@ struct qemu_laiocb {
+     LinuxAioState *ctx;
+     struct iocb iocb;
+     ssize_t ret;
++    off_t offset;
      size_t nbytes;
      QEMUIOVector *qiov;
- 
-+    /* For handling short reads/writes */
-+    size_t total_done;
-+    QEMUIOVector resubmit_qiov;
+-    bool is_read;
 +
-     int fd;
-     int type;
-     BdrvRequestFlags flags;
-@@ -74,28 +78,61 @@ struct LinuxAioState {
++    int fd;
++    int type;
++    BdrvRequestFlags flags;
++
++    uint64_t dev_max_batch;
+     QSIMPLEQ_ENTRY(qemu_laiocb) next;
  };
  
- static void ioq_submit(LinuxAioState *s);
-+static int laio_do_submit(struct qemu_laiocb *laiocb);
- 
- static inline ssize_t io_event_ret(struct io_event *ev)
- {
-     return (ssize_t)(((uint64_t)ev->res2 << 32) | ev->res);
+@@ -87,7 +93,7 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+             ret = 0;
+         } else if (ret >= 0) {
+             /* Short reads mean EOF, pad with zeros. */
+-            if (laiocb->is_read) {
++            if (laiocb->type == QEMU_AIO_READ) {
+                 qemu_iovec_memset(laiocb->qiov, ret, 0,
+                     laiocb->qiov->size - ret);
+             } else {
+@@ -367,23 +373,23 @@ static void laio_deferred_fn(void *opaque)
+     }
  }
  
-+/**
-+ * Retry tail of short requests.
-+ */
-+static int laio_resubmit_short_io(struct qemu_laiocb *laiocb, size_t done)
-+{
-+    QEMUIOVector *resubmit_qiov = &laiocb->resubmit_qiov;
-+
-+    laiocb->total_done += done;
-+
-+    if (!resubmit_qiov->iov) {
-+        qemu_iovec_init(resubmit_qiov, laiocb->qiov->niov);
-+    } else {
-+        qemu_iovec_reset(resubmit_qiov);
-+    }
-+    qemu_iovec_concat(resubmit_qiov, laiocb->qiov,
-+                      laiocb->total_done, laiocb->nbytes - laiocb->total_done);
-+
-+    return laio_do_submit(laiocb);
-+}
-+
- /*
-  * Completes an AIO request.
-  */
- static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+-static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+-                          int type, BdrvRequestFlags flags,
+-                          uint64_t dev_max_batch)
++static int laio_do_submit(struct qemu_laiocb *laiocb)
  {
--    int ret;
-+    ssize_t ret;
- 
-     ret = laiocb->ret;
-     if (ret != -ECANCELED) {
--        if (ret == laiocb->nbytes) {
-+        if (ret == laiocb->nbytes - laiocb->total_done) {
-             ret = 0;
-+        } else if (ret > 0 && (laiocb->type == QEMU_AIO_READ ||
-+                               laiocb->type == QEMU_AIO_WRITE)) {
-+            ret = laio_resubmit_short_io(laiocb, ret);
-+            if (!ret) {
-+                return;
-+            }
-         } else if (ret >= 0) {
--            /* Short reads mean EOF, pad with zeros. */
-+            /*
-+             * For normal reads and writes, we only get here if ret == 0, which
-+             * means EOF for reads and ENOSPC for writes.
-+             * For zone-append, we get here with any ret >= 0, which we just
-+             * treat as ENOSPC, too (safer than resubmitting, probably, but not
-+             * 100 % clear).
-+             */
-             if (laiocb->type == QEMU_AIO_READ) {
--                qemu_iovec_memset(laiocb->qiov, ret, 0,
--                    laiocb->qiov->size - ret);
-+                qemu_iovec_memset(laiocb->qiov, laiocb->total_done, 0,
-+                                  laiocb->qiov->size - laiocb->total_done);
-             } else {
-                 ret = -ENOSPC;
-             }
-@@ -103,6 +140,9 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
-     }
- 
-     laiocb->ret = ret;
-+    if (laiocb->resubmit_qiov.iov) {
-+        qemu_iovec_destroy(&laiocb->resubmit_qiov);
-+    }
- 
-     /*
-      * If the coroutine is already entered it must be in ioq_submit() and
-@@ -379,7 +419,11 @@ static int laio_do_submit(struct qemu_laiocb *laiocb)
+     LinuxAioState *s = laiocb->ctx;
      struct iocb *iocbs = &laiocb->iocb;
      QEMUIOVector *qiov = laiocb->qiov;
-     int fd = laiocb->fd;
--    off_t offset = laiocb->offset;
-+    off_t offset = laiocb->offset + laiocb->total_done;
-+
-+    if (laiocb->resubmit_qiov.iov) {
-+        qiov = &laiocb->resubmit_qiov;
-+    }
++    int fd = laiocb->fd;
++    off_t offset = laiocb->offset;
  
-     switch (laiocb->type) {
+-    switch (type) {
++    switch (laiocb->type) {
      case QEMU_AIO_WRITE:
+ #ifdef HAVE_IO_PREP_PWRITEV2
+     {
+-        int laio_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
++        int laio_flags = (laiocb->flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
+         io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov, offset, laio_flags);
+     }
+ #else
+-        assert(flags == 0);
++        assert(laiocb->flags == 0);
+         io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
+ #endif
+         break;
+@@ -399,7 +405,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+     /* Currently Linux kernel does not support other operations */
+     default:
+         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
+-                        __func__, type);
++                        __func__, laiocb->type);
+         return -EIO;
+     }
+     io_set_eventfd(&laiocb->iocb, event_notifier_get_fd(&s->e));
+@@ -407,7 +413,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+     QSIMPLEQ_INSERT_TAIL(&s->io_q.pending, laiocb, next);
+     s->io_q.in_queue++;
+     if (!s->io_q.blocked) {
+-        if (s->io_q.in_queue >= laio_max_batch(s, dev_max_batch)) {
++        if (s->io_q.in_queue >= laio_max_batch(s, laiocb->dev_max_batch)) {
+             ioq_submit(s);
+         } else {
+             defer_call(laio_deferred_fn, s);
+@@ -425,14 +431,18 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
+     AioContext *ctx = qemu_get_current_aio_context();
+     struct qemu_laiocb laiocb = {
+         .co         = qemu_coroutine_self(),
++        .offset     = offset,
+         .nbytes     = qiov ? qiov->size : 0,
+         .ctx        = aio_get_linux_aio(ctx),
+         .ret        = -EINPROGRESS,
+-        .is_read    = (type == QEMU_AIO_READ),
+         .qiov       = qiov,
++        .fd         = fd,
++        .type       = type,
++        .flags      = flags,
++        .dev_max_batch = dev_max_batch,
+     };
+ 
+-    ret = laio_do_submit(fd, &laiocb, offset, type, flags, dev_max_batch);
++    ret = laio_do_submit(&laiocb);
+     if (ret < 0) {
+         return ret;
+     }
 -- 
 2.53.0
 
