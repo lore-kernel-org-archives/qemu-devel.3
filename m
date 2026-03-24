@@ -4,106 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB95F54ABA
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08461F54ABA
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52DK-0008N2-CB; Tue, 24 Mar 2026 09:54:34 -0400
+	id 1w52Jm-0001oR-Gv; Tue, 24 Mar 2026 10:01:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w52DA-0008LN-7H
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:54:25 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w52D7-0007LQ-GS
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:54:23 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-79ac5de41d8so6521077b3.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 06:54:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774360456; cv=none;
- d=google.com; s=arc-20240605;
- b=Ni8HT0hiLa/bkzIADthbK5fSMOQjk/1OspfWVEA4A+veKedfOMH/wnzqeEyrMUk3yX
- b9aBpoBtUNJkC+WOkNnY8Qewo0annib3luxTcfBNJSF+B9RnL8sSre6cGGxigGsieEWs
- UjctR99TTS6UKc2C+YLJoQIkEvOunL2HhLXX17qhIrsV0XiuUDQBxL4GPI3gpTpwQAC3
- MOUBFaGgcNuJsOSSsrEfCOTTisVrKX5z3rznnAui1EAtNkL4IHoJC4XqYD8C0K+9luVB
- 8Crejzcq0dx4mNBjDSV2TurBN11pK3lRDwbDUXUq3LCrrKXB5OHSlduUJINZHaR0ea57
- oCig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=YUGNwSQdAVhXLvGXKesSDlNmZVu9KXTOjexyuPzmt/4=;
- fh=tz3tCtkSjLPshsF0qmCdaD4Sit4q9rcrvcYWO8Pjotg=;
- b=H9VktgC19iCpTw/CEiX/yI4NNSbQMeCvW7NDp+JSldQSbbdhyB46TY/nSKri0eOuvK
- MiSMP3hEz5VbpS4yELOdeVojHkIMXN1d06jsn2LDHh27LsgM3Dlp/kP1iBILRr3IKjMv
- PZpiLoovSmKmXRoKGjUBnO0GEvoE+hp+8D9S5nqytD4LCiwXQPIt3JP89mZhcl669TMi
- 5KWerHsF7UA75u9tlo22RHxGRn4YJUCaOrk1A/ujW1WIqjEIqHy+FV1II7VzqZDkFM5X
- sDl4BIg6sTaJnEf9SegzzYvLlenwvJSTopJokp3fIvUCazSfpWXaA3Nsm54WHVoCw6AH
- 7VRQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774360456; x=1774965256; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=YUGNwSQdAVhXLvGXKesSDlNmZVu9KXTOjexyuPzmt/4=;
- b=MtG1MP3P0PabHsel7bUjxiZPOnx1tRCJDbA09QXdGuxW06/c2M1Vzcw7jwZpY8T8EW
- Ia5W10GGaQvjACBdmjaCKKO1os6fzo8N1UChVTTIFpTTPOBT0WY2V8q+m8GYWJc2GERx
- W/zuxtvMrT6+H5oDIuYUSbX0kpKYWKt8W5SGY3aXBgtRcbM1W64T60R0N15cWg7HFJ5L
- Kvi1ni3Od7lprsnnSqsWaLr31xtmEATfS57/a4JFfCRWATu0NtntHlXEXCXz5a1rnzJJ
- sBP1Z8Mp5JFnztJLS1GhYYiIolqI45S49KpJW53i+TOeNNqfs4zpi5/o+zqgXHYFkLyO
- SlNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774360456; x=1774965256;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YUGNwSQdAVhXLvGXKesSDlNmZVu9KXTOjexyuPzmt/4=;
- b=mnL6IQwHabEEEeKYHtZQcNv3IiQqfEyC97WJFWNURMMQeDBysZmSRkBJj7jQpjF8AU
- tTaqHU8+g76ZQWlLwZbu40xX/lR5qCbCZkjZr0ZARVA6nlA5TKX+MVLKWbpOsyCqM3Kc
- Dr09xzC2LXHKo8Agp3CH0+wGtsNSgoBh3JRZF0l6pizGHPsKH/oLmif8Kk8f7wlr0qwu
- zl9KCdJX9rPNCxGvMRBjSlcQauy2JEfidrY1KHBP5LfVYzUocaUzGCC+Ahz9oS0C77gw
- Ollc1pAm8m3KCUlBVSnOAtvoZnBYEWjFtrckcWRuFdBOElzh3gw1fOgKSX+BQdZhArV2
- b79A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLHqrp9NsybBK6DoknIL5iTKWU9rdJ7D+iyL7t86hMvuNBnYQKRGv4LZ6iYJfJfRLZccxv7WhSHQoP@nongnu.org
-X-Gm-Message-State: AOJu0Yz/MSq6CTQlJ7a8GPBmk7QHD/0WWvEGXm8a5id8N9Uo/qh1/Plu
- 0hpwzyObVLakWRW0ze+MdjbVNJOad8kcI77BQeAFrr0SdRqgWUUVItq0sp68xvyL9Ui6gCGLEo8
- 9FahiR94YqsPLFCPWW3nAoRpylKDNIRhKH0WDO8VNYs7FloSqP8kiyi4=
-X-Gm-Gg: ATEYQzypHvCS4GtgBZpxQPAj1fhl6cqC1K7hzXwT8ocYD4PMfWzMYPxZXrVf5SByRm9
- f0r2AEakVqtYWgNim9/36KKAOb6VtdyNBEt4QXR8T/UyyYOLekTRccAvHQj9/kxMEuT1Zl9as+X
- 7EB/A4iyANi6fuqhB2CELUlu1EqW1AV2CJQv1pLEpmm1kiYKi7N0yA4m0nRIELXOz1JQ2qg2U3r
- xceRp1IZSLO87z/IrPrDXxg3dPF8nPZrxJruyK3iqj1V1FcGOWxi5+nOiqt5bTLSjJtdJuF9dv4
- 4U6YPt7nSc4htB+2sb+HUY5X8Lomdo0m2LY6B7aZtZUO6dCwfPT5SJfPDYLNcxKoRzo=
-X-Received: by 2002:a05:690c:82:b0:79a:8895:9b30 with SMTP id
- 00721157ae682-79a90b7ed13mr159770207b3.30.1774360456326; Tue, 24 Mar 2026
- 06:54:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w52Jk-0001nL-UM
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:01:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w52Jj-0000dE-7Z
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:01:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774360870;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EHa5d2fM0wkQMSu8oG4pvY/FNkAyzgum3Lv/4seJPvs=;
+ b=OoLl/3B7DmD6Jl1yB1sB42i/VE+713mneMNq4bWH+t0nZ72TFcYO98bSVu+b0POb8whheA
+ P2S2ZccDBm5PWhSFeWoWYgxW3L9aCLmESRtpCOkqp0NHam6+EXddRfHVZ4t4hFKRTegfGz
+ 5TVGsUF94LkY4OlaWo4tAnvG3On5By8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-JnE_zxJNOPmX6ZLoT_-DJQ-1; Tue,
+ 24 Mar 2026 10:01:06 -0400
+X-MC-Unique: JnE_zxJNOPmX6ZLoT_-DJQ-1
+X-Mimecast-MFC-AGG-ID: JnE_zxJNOPmX6ZLoT_-DJQ_1774360864
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC2EC180120C
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 14:01:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.93])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5DC4619560AB; Tue, 24 Mar 2026 14:01:00 +0000 (UTC)
+Date: Tue, 24 Mar 2026 14:00:57 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 09/60] ui/vnc-jobs: drop redundant (and needless)
+ qemu_thread_get_self()
+Message-ID: <acKZGUhxY3G7tXk_@redhat.com>
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-9-48eb1dcf7b76@redhat.com>
 MIME-Version: 1.0
-References: <20260324135026.247418-1-shivangu@linux.ibm.com>
-In-Reply-To: <20260324135026.247418-1-shivangu@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Mar 2026 13:54:04 +0000
-X-Gm-Features: AaiRm53iSpfFdhHdyGEzV49A1SHtOSZo8GapFBskve1gYJMBD04U9QFS_w-R9i8
-Message-ID: <CAFEAcA_fvj_LZu+BMqW-LNtK1k-agsumTUu6wR0ZKOJJ6R0EOQ@mail.gmail.com>
-Subject: Re: [PATCH] ppc/pnv: generate dtb after machine initialization is
- complete
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com, 
- milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-stable@nongnu.org, Nathan Chancellor <nathan@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260317-qemu-vnc-v1-9-48eb1dcf7b76@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,31 +87,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Mar 2026 at 13:51, Shivang Upadhyay <shivangu@linux.ibm.com> wrote:
->
-> Currently, the machine dtb is generated in pnv_init(), before all devices
-> are fully initialized. This can result in an incomplete dtb for the system,
-> as seen in bug [1].
->
-> Fix this by deferring dtb generation until machine initialization is complete,
-> using the machine_init_done_notifier hook.
->
-> [1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
->
-> Cc: Aditya Gupta <adityag@linux.ibm.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Cc: BALATON Zoltan <balaton@eik.bme.hu>
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Nathan Chancellor <nathan@kernel.org>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+On Tue, Mar 17, 2026 at 12:50:23PM +0400, Marc-André Lureau wrote:
+> The call is unnecessary, since "thread" is already set at creation time.
+> Furthermore, the "thread" field is mostly useless as the thread is
+> created DETACHED and isn't used for anything but perhaps debugging.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Doesn't even seem to be used for debugging - nothing ever reads it
+afaict.
 
-thanks
--- PMM
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>  ui/vnc-jobs.c | 2 --
+>  1 file changed, 2 deletions(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
