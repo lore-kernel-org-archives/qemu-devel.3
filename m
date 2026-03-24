@@ -4,118 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5321EE9A74A
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 09:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B000AE9A743
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 09:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4y43-0005X0-Ns; Tue, 24 Mar 2026 05:28:43 -0400
+	id 1w4yBR-0007Cp-HO; Tue, 24 Mar 2026 05:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w4y41-0005WU-Tc
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:28:41 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w4yBH-00077Q-5l
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:36:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w4y3z-0004I8-QH
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:28:41 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w4yBD-0006mR-7M
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:36:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774344518;
+ s=mimecast20190719; t=1774344964;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Is5VTulEglzsM1YxFzwN6z4DTzjQ6TP4WZSQkm920L0=;
- b=MqHj0YPdTcbg46ciHbMoijqV2NpOWrfvvLH5Um+SDPzTZWkDmU+md3ORU/5ze0GHPbuLm5
- liqDBmAxs5HKa87FUORUpi7yaZ2r5Zk4LCkvOmkYUzIgLnVX/LNLqxPY+S0ISkdxq2yzQM
- CAmp8Rtg0HacDJoYSz9ODPNiWQb09hg=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MmDeBojZMVM6gw1cmlEyl0ViO3ORRvnJFHCelIk5brI=;
+ b=W5KENVzouLnCmzEsqaK0mOACbepwaXwCObVqDgr70Dse6KuO++XhTeME0liC0YDY6QpgvT
+ eTZn8bzpP/xdncLA12OMAIX4l22KaXRaxfjeTNxC/vj1bXWxgGvPiYR3BojQ/auKYokRxo
+ sotFRFKi+p8ClGf9R1cDl14XEExKpFc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-Yb9kpFTSMeOfDscq1n_9yw-1; Tue, 24 Mar 2026 05:28:37 -0400
-X-MC-Unique: Yb9kpFTSMeOfDscq1n_9yw-1
-X-Mimecast-MFC-AGG-ID: Yb9kpFTSMeOfDscq1n_9yw_1774344516
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-794b240c0d3so148347417b3.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 02:28:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774344516; cv=none;
+ us-mta-531-esUozHukOTGAoJuvFA2uTg-1; Tue, 24 Mar 2026 05:36:02 -0400
+X-MC-Unique: esUozHukOTGAoJuvFA2uTg-1
+X-Mimecast-MFC-AGG-ID: esUozHukOTGAoJuvFA2uTg_1774344961
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4839fc4cef6so67599325e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 02:36:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774344961; cv=none;
  d=google.com; s=arc-20240605;
- b=IOGnFYAimzpUcA0VjkK9NLXJgymQoqrlG6fdk0NvAgs0YEXXDMlZYcvvceQvfsO4pj
- Mxaolj+LZ2WOeKFSuGyQj8BoiW40MJOKFxcGne5WDy1rJ8VmTxYYDlJpyZyEMk60fTgT
- sd2zN3tFZUjZbl8vrCN1Uekj3FhJqwIv72mR832Z1giGST3ddQb7IDSgsVH1Ghr7PM7g
- eQp9zkwfo3m1F6ulDlLz5mli7aATuOffurhINglOXm/RQv3GoANev6pEcRs3AJouBv6y
- fxw589Z2sNMDP/1VoOLvAtY6v6+DAZGjoqCwbibP8qksbPmOgTmS1fxNAkeLylhCXUQa
- Df/g==
+ b=fHcKREChV1QHQmYDAr/+IRnf3ZjXrjP1Lkrs8VT811xSy9PT+GWykk+sjl4asn6aUw
+ GDdY8GVwRVO3QuCXHsVrShSr+r6WKMS2FPxP46Sm6v7oDs9AyfYXgEEb2BTopgJbGhgp
+ a4oNqoCf5S8O0kBdQhwMQDKT3eFmncI7wsqfuEK/g3+L1xx4HasVlrIibjsv7rdvtrmq
+ q6JYGpCKycEXO7jm60ZOJELP+HHKm/BGC2LS10Acc8oX+/72uGGx1GwZ42YBK6KpMMD6
+ wiDTftSVCxQ0fsIq4ngkjSZeTbPrSvjLi+D080+ZMUXVugBLkWPCyMmu95EmKJrSLH2a
+ VTVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Is5VTulEglzsM1YxFzwN6z4DTzjQ6TP4WZSQkm920L0=;
- fh=/Q1walrJ1rQppfQIaR5kN+L7c1qEv+piY1FwYfW9K3g=;
- b=el9GQJweMoEROoPKs/VDO46sisvs71UcxwAhEP4hObWDLkQpxcMAZrSWnMzPg1F60W
- Ff1DgDT4r+Izz+UTGd39FyAo3pMeKPgHzMlr/podL7ETkZJ20skYovdXjnjLjWm3TALM
- OC3mOj10kj38+dhyvoZObyICAi3OmoxMdflFlzvAACRGLuxiL1E1PNex4+NWM3Cl1nzf
- EwFlypzAKPhNl1T4xjxQHRoNbXrNRT9BP3wJ8G7FwACfFxRvyfOb7wI5XgMOs+/c9Njj
- yLny/1BjRX/7EjP3PIj31DnnAxBgxzVBcr5Klv4hqi2njfEzLge4yhkwVP5LpQG8qdUr
- JM2w==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=MmDeBojZMVM6gw1cmlEyl0ViO3ORRvnJFHCelIk5brI=;
+ fh=PJ2YM0MCLDpxc+Rr1VwlqTOUmMMZEVsV9MPE+Th47YI=;
+ b=LXZbc63MM/wgFuCY1Wiw67OIneW09drNwH6AaXYNgDEaFOgE+ASL+5PXbfce9Rdnwm
+ Ok1a4ve33D6T7GLTMvb0zG+GQt3FcdnOE4fstO6pEBVnkU6e/XZ2R1dowQMLTaTGghKx
+ 2oSguPlLjCASaZGxlvVyvDLdpmCEor7/EpHEzjSCIf9/z1ADgb8OTA2fQC9g0Kwvln1l
+ ZkWR3TLnYJwT9MZ9pUl545RX7tCq8drVx7gmHzXE/5r2MeiX68DqT/U/y7JtUEKOnNna
+ V4qeUXH/4ZLfSWYq4A1momNTz5j9SlZUC1SSLSZTuhHz05SLPwS1tIfpl8ULd4egL8dO
+ +Q0g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774344516; x=1774949316; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Is5VTulEglzsM1YxFzwN6z4DTzjQ6TP4WZSQkm920L0=;
- b=iRpgLu5bfKs1UpQe0yywm9lLbZQqqUIkVxmkuO5+X5HSY3q7CemxYRAD3eE2g8hzJV
- p3ua0anFxFmjpQ4/AsSfZTt1dCgLtHrQ6aowWeB8kUdvRV8LOvzajUftsRYkHPm4PQGX
- zaj6lE5bkiUyeCxfbVMPQuLv9UtuCBFPvlRek/wIJeriOvbHHzlaUKXzpyjQdgzKwL6k
- kFvVlHrZk2z+nNrwIAAZPDqZV7ElWYBMtQVc64HlEHL3E4pYpEOPn3yw7/+6fIUFVMor
- ysiCXJw5hWz23+nPmnHKxCTnSgdW8eXn5gqxyCPYphU3aMdE3OFsCYwLmmGztW5ntFmi
- 5Keg==
+ d=redhat.com; s=google; t=1774344961; x=1774949761; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=MmDeBojZMVM6gw1cmlEyl0ViO3ORRvnJFHCelIk5brI=;
+ b=Gx9zllJKbJFe8PjqoOG+a7/CFuoAmL9YNWVP96ERafM+cElonraTnn0lQzowndfszl
+ WiLbO1wCeypxzLwwrw1z2Tt6rvywjRe+5RvhjcMTAM1FB9JByqERCUkrD/7pMdJ1AMnB
+ Uc+h0nghllSVUrg6w0tOARUALQc4/U0Dzal+dOgTfHNbCD3hNtFYIM/X8hRFZhXEzE5z
+ lWPJQeZSxc9LWzSqtzRs2MKPNATS7ruKu6z71aWMm4eFvWA+wPJyPzgO3um940A7ISCC
+ wYSATULAdaAgllqAHmS75fLs9Y8KAW+7kE9FL0FJK6PRC38DfqcSsx8Y2dyYEWQwuFlE
+ Ov+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774344516; x=1774949316;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Is5VTulEglzsM1YxFzwN6z4DTzjQ6TP4WZSQkm920L0=;
- b=FORZy67tyWg3cZAqEowJJbyMbEwjULdI8X/wOaT/3tAT3kXEBKrv7cdM9vJkyG7pco
- u3LN1+iwbGlJa2sJ6toOEb72PFcqYb0s8xE6vmCbmtU+D0biWiUlkMbM4tJJO+prEPWj
- LGx+josemstv0wm10injYDfcqThS09BK3JjJ0jxKNf/9po4IGPhElbV56IcLTGwl53gF
- 8GbPN1gMpf+zE5+rJjZMkElCw7MQiaK5yrjlEfI9T4HfvukiRy3c6DYdQucYr9qfLiH8
- pskJ+/yvS17aY39xacvZXc5vS76flQBCGjSoLilfcvLyb86nOLUKDS7OPIfHtfcB9+Kg
- CHsA==
-X-Gm-Message-State: AOJu0Ywbi8CQ/l8fQwFc/ASOI+uPHuozLe9epwabVJTOVvDYjB6MNUEr
- 26uO0CY2gaJlloF5FePndhI23h4G9bNGq/49L2TIrKb2ESzmraq57FnSC3OmIMo0CY90iwy0geg
- ZsBU1RZZoN1ss4Uzw9gSB98fw9QgmhIvKFhwO/fS8xCqfq1VRshzLhK0sNiAFkTiyw9CMsQ0BjZ
- bR8gtr22pWQ9/8kxGJvoyG0phR0PEf8XM=
-X-Gm-Gg: ATEYQzwcwFGubiupfYWB79cG589I2Sg90iTiAMdtRDoNdWjg+WHVL3PaTD1iH6YdqJ3
- l8ECS28LDSOqQUdbewh7WO/t4kUaeKHzviuLhYpgKSrGXk8uP71c4nirPgOqybj9HWUExEHMRuk
- EVA37ndQ7NlPDzd2wPR8RNF2xOKkdJEQMyePlIYKDNURRJ1qrZOl11F8+J2RLTFzLNKSUxS4iKE
- byEMQ==
-X-Received: by 2002:a05:690c:f09:b0:79a:bf27:fe61 with SMTP id
- 00721157ae682-79ac2eceb50mr26166677b3.14.1774344516540; 
- Tue, 24 Mar 2026 02:28:36 -0700 (PDT)
-X-Received: by 2002:a05:690c:f09:b0:79a:bf27:fe61 with SMTP id
- 00721157ae682-79ac2eceb50mr26166327b3.14.1774344516099; Tue, 24 Mar 2026
- 02:28:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774344961; x=1774949761;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MmDeBojZMVM6gw1cmlEyl0ViO3ORRvnJFHCelIk5brI=;
+ b=FXbrXK9J9iUMz8TOt5OIgyK6evAAhF8DG7vQ42JpE5xBC5AYtFPdBZa1zUTiHQ9pqs
+ 3YMeFsL6ABMnOEOchmwHiq7Q6ClKNHw17K+j0kz6VgjZ9ykrCNo/fkp10OjP6otwazm/
+ wXPDX5EryYXviDOlCrime4+UIYZjBoa3Xe8krpjI80QE/YppMYBCblTJJNpzjn6M1cJo
+ AA3ug/RIQpHh2OrHGVx68gBvv7SidAiyy1osZqXXvJHHuaZpJESEOSr6WJ6kGYjdTKH5
+ 8LxNpZ5xpwM+RgKXCgpe0NUjcFIRh7QmNAyVtOEqs0igw0+dVLMzSBE8MUR0B16Q6+bT
+ 406g==
+X-Gm-Message-State: AOJu0YwRtWVbhWrX+JxaZPO/ggSdsEXecHlsLP8KeBlI0CQdq421GKKM
+ LEx2em+pM9/M04c0evA8cCyxUlFbyePLKNV950TWijZ7M4g+JucwKvLiHPcpDSEZI+rMOonYbbN
+ 85QE3pPF8oNtHmC0hgwG7Dt0MXeAoQ2QTxCCtgrMmVGGDicEp4q9iU23r0mAtjkf495ycwNOGl4
+ P+bVYXkcpPIasx+Inn0fdxRra6cezmidg=
+X-Gm-Gg: ATEYQzz1M1BAukWjRKnEGOqDsI4xIAZB9RD9QBe9GbiU1Wnu3RGHL3vtYqgv8EuENXZ
+ p8E2+xsGBJUhliW1AeU8pbpDCee9j0bGcZ7K2p7IjTomYAkuSn0AOwcmoBOHA/iZ4bNFQRwldp6
+ d9Vw4i78H4ko19gHjVXwocNtTvc8JFmWzTimmNRY5kSytA9Pz6goWrm6qS9zSrGh8Z5Gqo5uPWY
+ CSwK05M8WCr+PlyLNA857dGxKJ768RAeHiZ+y9id1+slm89UpA22eVOfqOk1GBp/OdP
+X-Received: by 2002:a05:600c:4e13:b0:486:fbc4:8fe2 with SMTP id
+ 5b1f17b1804b1-4870f22485fmr37321855e9.15.1774344961196; 
+ Tue, 24 Mar 2026 02:36:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e13:b0:486:fbc4:8fe2 with SMTP id
+ 5b1f17b1804b1-4870f22485fmr37321405e9.15.1774344960674; Tue, 24 Mar 2026
+ 02:36:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
- <20260320142015.3856652-3-jonah.palmer@oracle.com>
-In-Reply-To: <20260320142015.3856652-3-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 24 Mar 2026 10:27:59 +0100
-X-Gm-Features: AaiRm50VX31bSBaVDS2noKIO1Rzrci99kaxDOtCSMeU4JqwoahMs78mBUsjkI-w
-Message-ID: <CAJaqyWfsr8GUfcXPz6xwcXn3TA2_k4o8+_ySr6znExj34p5VtA@mail.gmail.com>
-Subject: Re: [RFC v2 02/14] virtio,virtio-net: add initial early VMSD for
- setup-phase migration
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
- mst@redhat.com, sgarzare@redhat.com, jasowang@redhat.com, leiyang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, armbru@redhat.com
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-7-peterx@redhat.com>
+In-Reply-To: <20260319231302.123135-7-peterx@redhat.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 24 Mar 2026 15:05:42 +0530
+X-Gm-Features: AQROBzCNokbBAYy4rWk8ZWlBFg6J34NeIgPqNM88lNO9Lt-PZsQvDLxwfPjKCuk
+Message-ID: <CAE8KmOwdxaW+dnEq-gzLR1iWJQ-Ks6z+keT6Y=k1pg+DGT5PaQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 06/12] migration: Use the new save_query_pending() API
+ directly
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Joao Martins <joao.m.martins@oracle.com>, Alex Williamson <alex@shazbot.org>, 
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Pranav Tyagi <prtyagi@redhat.com>, 
+ Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -140,209 +143,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 3:25=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
+On Fri, 20 Mar 2026 at 04:44, Peter Xu <peterx@redhat.com> wrote:
+> It's easier to use the new API directly in the migration iterations.  This
+> also paves way for follow up patches to add new data to report directly to
+> the iterator function.
 >
-> Adds a separate VMStateDescription for virtio-net that uses the
-> .early_setup feature. With this feature, we can migrate a virtio-net
-> device's state earlier, before the stop-and-copy phase.
+> When at it, merge the tracepoints too into one.
 >
-> Future patches will utilize this to move control plane operations out of
-> the stop-and-copy phase to reduce the downtime latency caused by
-> migrating a virtio-net device.
+> No functional change intended.
 >
-> A VirtIODevMigration migration data structure is also introduced here
-> for VirtIODevices to help track the current state of a migration.
->
-> The early_load member is used to signal that a VirtIODevice is being
-> loaded early and to not throw an error regarding vring indices.
-> Inconsistent indices shouldn't be an issue for a device so long as the
-> final indices are eventually loaded before the device starts.
->
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  hw/net/virtio-net.c        | 53 ++++++++++++++++++++++++++++++++++++++
->  hw/virtio/virtio.c         | 14 +++++++++-
->  include/hw/virtio/virtio.h |  9 +++++++
->  3 files changed, 75 insertions(+), 1 deletion(-)
+>  migration/savevm.h     |  4 ----
+>  migration/migration.c  | 16 +++++++---------
+>  migration/savevm.c     | 23 ++---------------------
+>  migration/trace-events |  1 +
+>  4 files changed, 10 insertions(+), 34 deletions(-)
 >
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 12b3456ca2..ddd6ed6e62 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3864,6 +3864,37 @@ static bool failover_hide_primary_device(DeviceLis=
-tener *listener,
->      return qatomic_read(&n->failover_primary_hidden);
->  }
->
-> +static int virtio_net_early_pre_load(void *opaque)
-> +{
-> +    VirtIONet *n =3D opaque;
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +
-> +    vdev->migration->early_load =3D true;
-> +    return 0;
-> +}
-> +
-> +static int virtio_net_early_post_load(void *opaque, int version_id)
-> +{
-> +    VirtIONet *n =3D opaque;
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +
-> +    vdev->migration->early_load =3D false;
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_virtio_net_early =3D {
-> +    .name =3D "virtio-net-early",
-> +    .minimum_version_id =3D VIRTIO_NET_VM_VERSION,
-> +    .version_id =3D VIRTIO_NET_VM_VERSION,
-> +    .early_setup =3D true,
-> +    .pre_load =3D virtio_net_early_pre_load,
-> +    .post_load =3D virtio_net_early_post_load,
-> +    .fields =3D (const VMStateField[]) {
-> +        VMSTATE_VIRTIO_DEVICE,
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
->  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index b116933bce..3c39190fa4 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -46,10 +46,6 @@ void qemu_savevm_state_cleanup(void);
+>  void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+>  int qemu_savevm_state_complete_precopy(MigrationState *s);
+>  void qemu_savevm_query_pending(MigPendingData *pending, bool fastpath);
+> -void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+> -                                     uint64_t *can_postcopy);
+> -void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> -                                        uint64_t *can_postcopy);
+
+* +1.
+
+>  int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
+>  bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
+>  void qemu_savevm_state_end(QEMUFile *f);
+> diff --git a/migration/migration.c b/migration/migration.c
+> index dfc60372cf..99c4d09000 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3204,17 +3204,17 @@ typedef enum {
+>   */
+>  static MigIterateState migration_iteration_run(MigrationState *s)
 >  {
->      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> @@ -4046,6 +4077,21 @@ static void virtio_net_device_realize(DeviceState =
-*dev, Error **errp)
->              n->rss_data.specified_hash_types.on_bits |
->              n->rss_data.specified_hash_types.auto_bits;
+> -    uint64_t must_precopy, can_postcopy, pending_size;
+>      Error *local_err = NULL;
+>      bool in_postcopy = (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
+>                          s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+>      bool can_switchover = migration_can_switchover(s);
+> +    MigPendingData pending = { };
+> +    uint64_t pending_size;
+>      bool complete_ready;
+>
+>      /* Fast path - get the estimated amount of pending data */
+> -    qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
+> -    pending_size = must_precopy + can_postcopy;
+> -    trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
+> +    qemu_savevm_query_pending(&pending, true);
+> +    pending_size = pending.precopy_bytes + pending.postcopy_bytes;
+
+* Why do we have 'precopy_bytes' & 'postcopy_bytes'? What if
+qemu_savevm_query_pending() returned the pending data size?
+
+>      if (in_postcopy) {
+>          /*
+> @@ -3243,14 +3243,12 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+>           * during postcopy phase.
+>           */
+>          if (pending_size <= s->threshold_size) {
+> -            qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+> -            pending_size = must_precopy + can_postcopy;
+> -            trace_migrate_pending_exact(pending_size, must_precopy,
+> -                                        can_postcopy);
+> +            qemu_savevm_query_pending(&pending, false);
+> +            pending_size = pending.precopy_bytes + pending.postcopy_bytes;
+>          }
+>
+>          /* Should we switch to postcopy now? */
+> -        if (must_precopy <= s->threshold_size &&
+> +        if (pending.precopy_bytes <= s->threshold_size &&
+>              can_switchover && qatomic_read(&s->start_postcopy)) {
+>              if (postcopy_start(s, &local_err)) {
+>                  migrate_error_propagate(s, error_copy(local_err));
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 6268e68382..b3285d480f 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1779,28 +1779,9 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool fastpath)
+>          }
+>          se->ops->save_query_pending(se->opaque, pending);
 >      }
-> +
-> +    if (n->early_mig) {
-> +        if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VH=
-OST_USER) {
-> +            /*
-> +             * vhost-user backend is not currently supported for the ear=
-ly
-> +             * migration path.
-> +             */
-> +            n->early_mig =3D false;
-> +        } else {
-> +            vdev->migration =3D g_new0(VirtIODevMigration, 1);
-> +            vdev->migration->early_load =3D false;
-> +
-> +            vmstate_register_any(VMSTATE_IF(n), &vmstate_virtio_net_earl=
-y, n);
-> +        }
-> +    }
+> -}
+> -
+> -void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> -                                        uint64_t *can_postcopy)
+> -{
+> -    MigPendingData pending;
+> -
+> -    qemu_savevm_query_pending(&pending, true);
+> -
+> -    *must_precopy = pending.precopy_bytes;
+> -    *can_postcopy = pending.postcopy_bytes;
+> -}
+> -
+> -void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+> -                                     uint64_t *can_postcopy)
+> -{
+> -    MigPendingData pending;
+> -
+> -    qemu_savevm_query_pending(&pending, false);
+>
+> -    *must_precopy = pending.precopy_bytes;
+> -    *can_postcopy = pending.postcopy_bytes;
+> +    trace_qemu_savevm_query_pending(fastpath, pending->precopy_bytes,
+> +                                    pending->postcopy_bytes);
 >  }
->
->  static void virtio_net_device_unrealize(DeviceState *dev)
-> @@ -4090,6 +4136,13 @@ static void virtio_net_device_unrealize(DeviceStat=
-e *dev)
->      g_free(n->rss_data.indirections_table);
->      net_rx_pkt_uninit(n->rx_pkt);
->      virtio_cleanup(vdev);
-> +
-> +    if (n->early_mig) {
-> +        g_free(vdev->migration);
-> +        vdev->migration =3D NULL;
-
-Nit: You can use g_clear_pointer(vdev->migration, g_free) here.
-
-> +
-> +        vmstate_unregister(VMSTATE_IF(n), &vmstate_virtio_net_early, n);
-> +    }
->  }
->
->  static void virtio_net_reset(VirtIODevice *vdev)
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 8fcf6cfd0b..48de4a430b 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -3323,6 +3323,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int ve=
-rsion_id)
->      int32_t config_len;
->      uint32_t num;
->      uint32_t features;
-> +    bool inconsistent_indices;
->      BusState *qbus =3D qdev_get_parent_bus(DEVICE(vdev));
->      VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(qbus);
->      VirtioDeviceClass *vdc =3D VIRTIO_DEVICE_GET_CLASS(vdev);
-> @@ -3460,6 +3461,14 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int v=
-ersion_id)
->          if (vdev->vq[i].vring.desc) {
->              uint16_t nheads;
->
-> +            /*
-> +             * Ring indices will be inconsistent for a VMStateDescriptio=
-n
-> +             * performing an early load. This shouldn't be an issue as t=
-he
-> +             * final indices will get sent later once the source has bee=
-n
-> +             * stopped.
-> +             */
-> +            inconsistent_indices =3D vdev->migration && vdev->migration-=
->early_load;
-> +
->              /*
->               * VIRTIO-1 devices migrate desc, used, and avail ring addre=
-sses so
->               * only the region cache needs to be set up.  Legacy devices=
- need
-> @@ -3481,12 +3490,15 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int =
-version_id)
->
->              nheads =3D vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_=
-avail_idx;
->              /* Check it isn't doing strange things with descriptor numbe=
-rs. */
-> -            if (nheads > vdev->vq[i].vring.num) {
-> +            if (!inconsistent_indices && nheads > vdev->vq[i].vring.num)=
- {
->                  virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
->                               "inconsistent with Host index 0x%x: delta 0=
-x%x",
->                               i, vdev->vq[i].vring.num,
->                               vring_avail_idx(&vdev->vq[i]),
->                               vdev->vq[i].last_avail_idx, nheads);
-> +                inconsistent_indices =3D true;
-> +            }
-> +            if (inconsistent_indices) {
->                  vdev->vq[i].used_idx =3D 0;
->                  vdev->vq[i].shadow_avail_idx =3D 0;
->                  vdev->vq[i].inuse =3D 0;
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index 6344bd7b68..4c886eb48b 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -99,6 +99,14 @@ enum virtio_device_endian {
->      VIRTIO_DEVICE_ENDIAN_BIG,
->  };
->
-> +/**
-> + * struct VirtIODevMigration - Common VirtIODevice migration structure
-> + * @early_load: Flag to indicate an early virtio_load for the device.
-> + */
-> +typedef struct VirtIODevMigration {
-> +    bool early_load;
-> +} VirtIODevMigration;
-> +
->  /**
->   * struct VirtIODevice - common VirtIO structure
->   * @name: name of the device
-> @@ -168,6 +176,7 @@ struct VirtIODevice
->       */
->      EventNotifier config_notifier;
->      bool device_iotlb_enabled;
-> +    VirtIODevMigration *migration;
-
-Can we use something like net "struct VirtIONetMigTmp" for this so
-VirtIODevice does not need to be expanded?
-
->  };
->
->  struct VirtioDeviceClass {
-> --
-> 2.51.0
 >
 
 
