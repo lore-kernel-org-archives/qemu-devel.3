@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C7F8F532D4
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 05:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E795F532D6
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 05:35:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4uHg-0006Yo-KI; Tue, 24 Mar 2026 01:26:32 -0400
+	id 1w4uQG-000084-DE; Tue, 24 Mar 2026 01:35:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1w4uHf-0006Wq-EM
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:26:31 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4uQC-000077-U7
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:35:21 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1w4uHc-0000LX-Uv
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:26:31 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-829a27414a3so2161639b3a.3
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 22:26:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w4uQB-00021g-3w
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 01:35:20 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4853e1ce427so36496235e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 22:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1774329987; x=1774934787; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pXZrWvTVYsv2t2m1a7BOD7mXOMDtxAvtUL+4FsrXNC4=;
- b=gic0txKDYfWpM4atLntpp71ZFNsPEElWoMoeMkjc+v6FYo2q2lFynfLoNY6AB/6mlW
- xFhMJbsq+B9fuPDJdaH4uTZDTZAqmP+JcjQMlZ8dqbTu4kc67Tf66jKR5GGRzjY2Zr8H
- C8jRknYQMyw+ijcVXTXWiA+9q/6V8K0hZuSsR5tGnfHwoqMDhT8WXXW9dJG7rTC04SyB
- enShRGcrQ6u4FX/YV6NCTQ+2//gnaZ5gYQO7lnqBSsBHGuJiv/P2O3lPeyT5P8QsMAp9
- LqPw3Lq575ioING0mF7+54YgQ39gfZkLpJ0rM7octzEmtpdY0PJb/PjbWvP1LozTn6Yz
- 6wFA==
+ d=linaro.org; s=google; t=1774330516; x=1774935316; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tSH2Irs5xoB4y2iJJiD4Y2v8DjQv3zbMZ5VG97RgZf8=;
+ b=qbCZSPuE3RXZA7quXOl6YjDrP+KdahIfmfKBR8wxFeAYHfJsjaDZYuSeRBXbpg3WOB
+ UMhbky8xKGc3taJi59Iwv+5qeXgTWK8k1GCNu42DHEm6l7nshtyG05lTkq0VSM+kE0qA
+ tC9/oPnj4dLhU+eKDvOZwvGZCUxKbhJK7qor/Q4NhJujRP0nN9F9QQrjf2+iIrut6b1m
+ etdVNG9oFOJ6gXxiWzleDJuuA6h0LWhqpcqEHkGV1YpVSbsH7du3SjyI10DjG5ESxorm
+ LIQL3gFb3H+Tzi+DwSIdmywsjWqV3kJ68IXw3A5IHTdx7SopgSfG5mn8biLX6vP5NfGG
+ lZ/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774329987; x=1774934787;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pXZrWvTVYsv2t2m1a7BOD7mXOMDtxAvtUL+4FsrXNC4=;
- b=SpvsSNzX3XV7LzizHOHAmJaLBmX+qdi+xFi3jTl52i4G57/dtkDbBlWfjX4Kot1XJr
- lBe+/AB5ALbnAGE+i7yDPdfEAcmTTPO/Av+jaPneLJ+JXmKiDqRKiauZaW9V4zZRri3M
- VKnGQtS0/jWZq98NjolnS79x0jEm0+e4T+SrgC8NZJfbgRQc5NWVy+Mys6OEGZvOjBv3
- 9JlfigbQxd2wdtWv4ILOXhQQa4WKCJaZGeegtoZ0w5GGp7rlfKZ3Q6EpQY/PYc0ositS
- 3kkgt5kL8apCMY1RFQAPM9vEjMRjutu+eFhhhG6g/alGqO1y4uEohoIQ3DxkbxDzJV27
- QgFw==
-X-Gm-Message-State: AOJu0YwvCmPGMnaNEzT35nHc/d2sAgRlDbO9DhLCzAgHGPU15BLYWnCp
- mTbkYCWNw84jYLCIvbyQybAJJ4/c3KABldnSH/IyjEy46NklayQO7onUEks4253oSVQ+iRhDy+A
- mCSbYyxreZdNMqmBcvBIKhuCEzjZW5377A71jiNLmHMFHSfjTK/8NmbVBTNKWUL1qRHrz4KwkI4
- drrRA6MUlKQRKYs99A8NHTZQ9DAPaY8pt67HRY8b8rMzw=
-X-Gm-Gg: ATEYQzyuAbfrlsUy1TRdzpbSgfYJ8Y/yVwm71A1UIALzlifzrXjmkgT1hz24y3tBN4W
- 2rPpYc8SswrFC3CWaI/hJAFVeSkI+DX1L7qcRK5P3/IEIHgHb769TxV9FYJNbb+lmb4sAwAyGmk
- daFqlJ0UD603J2TjQSqW7qHrUkgWYWqJ2kGAaSTNkXViX/j0/nnc721+eVukZ/4WeOUo9NIObws
- Oc1RCuZ88yERQ3pE/bgv99zqDHENGX4MJ8IvqwJp1NF+MbeDarReeuoeUPhIhIabWwMqwPL03zE
- mYKE8uQ5G0q/053wdHO1Q4KeRJcCglio19yv2XHAvqt3ElwtBn/c+2ug3HA5TOu196v+16GOAi4
- CjoyzXMq25FyXf+B467hcEd/6yfsnG87fAe9Xb44gRPp0t60mC4X8DgB0KC85XUeo2HCkrCQaM8
- ymUYhW0+oqRr9+32yiJBzORT/A5Sc7NC4DraoTMjjK0QX23g8hchMtjWlIU6MS3g==
-X-Received: by 2002:a05:6a00:a14:b0:82c:2445:bd45 with SMTP id
- d2e1a72fcca58-82c2445c921mr10514383b3a.10.1774329986324; 
- Mon, 23 Mar 2026 22:26:26 -0700 (PDT)
-Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82b0410a3d7sm11582655b3a.55.2026.03.23.22.26.24
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Mar 2026 22:26:25 -0700 (PDT)
-From: Jay Chang <jay.chang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Jay Chang <jay.chang@sifive.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH] hw/riscv/riscv-iommu: Use standard EN_PRI bit for PRI
-Date: Tue, 24 Mar 2026 13:26:20 +0800
-Message-ID: <20260324052620.36049-1-jay.chang@sifive.com>
-X-Mailer: git-send-email 2.48.1
+ d=1e100.net; s=20251104; t=1774330516; x=1774935316;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tSH2Irs5xoB4y2iJJiD4Y2v8DjQv3zbMZ5VG97RgZf8=;
+ b=HnW7VWidz0wOsZv7PY2lz0tNP3VddoUskqbGq0nt+jtJWAmOp2MosphvdmBRN9fOCX
+ U6nC2XhrqjHej4eN8VNll/zOHpLcDIXv0HTi21EJmgLuUvmtlRPfwtXUucKkz8Iqybwa
+ vvXkmn3mhUQz/UjZAJwpQ9VyGIUyzPCQPzgc+tDx3HjmOGE1672q3NF0cvwiTVslLw6G
+ kqHFIi5YD/4mqoYH0EfEfThVuYAc2Q5XW6LdOXMW0LuBkSdHxBDoBrrA5zRaGgDhtM9I
+ kukheBHGu06ONGvy3ihlG0EC1IctWvlXJd6/nWhO0DnVK2n1s52Il2iDAYp7vfBNHQ+P
+ xcLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHmDvtULwo55hdn5RV/J5+GyorXAdSVnvX5G0OSsIAmR5oklqTsOPU3TCip+L1T+afIBu/2qiiVNHh@nongnu.org
+X-Gm-Message-State: AOJu0Yx+v7CrUz7zO3tCr/+Bo9Ew7NAPbcHrmiCE1q+GPLPWkdeq3+6Y
+ StDc456q7B4pak1l+cWd3lLtuwA8DOD6jjWPg55ZuRM605okuUx3p2ZwRUJw58T5AnY=
+X-Gm-Gg: ATEYQzzg+i+w1ZmAS9J5sPV3X2BiWsispOm/QZGF47nZKSrPpRuH2edjgiXplP86CdM
+ UMXyVUy4Gc4AXdVYS2hGFmSZtLffu0xLRubXy+tT6CzZ6bsxiRVa1vJYxTLYZZN+1wVIoImVkeO
+ aDm8O/+ydaveIGGUEnfq9WfNTrN2+JMu7RwiCk2sRf9ZCWAcUAUblt5krOmklfLkL7xeszjZhzZ
+ 6xmvafjwBdGA309gtPjMJJm39NA9gPsRUzg4cRLmm2vbh5Wc7xXglJpySiJP6hN+apoO+V2ES9B
+ vzDNmJsZSRcV8KM5fQFq9twYqu8CGpNGjJDbCHLn/9yS/AhOOwtmSFYDT6INBiWQkHZYsFLIROe
+ /WM7tkCgH6YUSv1r3Bhq8mp/fiH//w41W/OBRXIapwKrU3FLbJ87xqcJzC43w1nHMIc3g+fBEld
+ ob+Ir7SCi4hTX0HDeUN7B93yS5P793x5/Jvq4vsQCxL7Rk1ecZqBGR9RQnxYV4MYpU7J1aFNhhd
+ gB4
+X-Received: by 2002:a05:600c:828d:b0:47e:e48b:506d with SMTP id
+ 5b1f17b1804b1-486ff0291ccmr207941835e9.16.1774330516404; 
+ Mon, 23 Mar 2026 22:35:16 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-487116ee562sm27430095e9.15.2026.03.23.22.35.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Mar 2026 22:35:15 -0700 (PDT)
+Message-ID: <186c9ed2-5e41-42d5-8d07-f90654cf35a9@linaro.org>
+Date: Tue, 24 Mar 2026 06:35:15 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=jay.chang@sifive.com; helo=mail-pf1-x435.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/tdx: Fix the UAF issue in tdx_fetch_cpuid()
+Content-Language: en-US
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Stefan Weil <sw@weilnetz.de>
+References: <20260324012313.1580760-1-xiaoyao.li@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260324012313.1580760-1-xiaoyao.li@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,34 +104,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the temporary custom extension bit (TC[32]) with the
-standard EN_PRI bit defined in RISC-V IOMMU specification.
+On 24/3/26 02:23, Xiaoyao Li wrote:
+> Fix the UAF issue by reading the returned size before freeing the
+> fetch_cpuid structure.
+> 
+> Link: https://lore.kernel.org/r/758d7f2c-938f-49cb-89fc-980fc8e020b2@weilnetz.de
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
----
- hw/riscv/riscv-iommu.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Fixes: e3d1a4a6d1d ("i386/tdx: Fetch and validate CPUID of TD guest")
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 225394ea83..7d5c8cd7f5 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -1572,11 +1572,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
- 
-     iot_cache = g_hash_table_ref(s->iot_cache);
--    /*
--     * TC[32] is reserved for custom extensions, used here to temporarily
--     * enable automatic page-request generation for ATS queries.
--     */
--    enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
-+    enable_pri = (iotlb->perm == IOMMU_NONE) &&
-+        (ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI);
-     enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
- 
-     /* Check for ATS request. */
--- 
-2.48.1
+> Reported-by: Stefan Weil <sw@weilnetz.de>
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>   target/i386/kvm/tdx.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 4cae99c281ac..e578110df4da 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -847,8 +847,8 @@ static struct kvm_cpuid2 *tdx_fetch_cpuid(CPUState *cpu, int *ret)
+>           fetch_cpuid->nent = size;
+>           r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid, &local_err);
+>           if (r == -E2BIG) {
+> -            g_free(fetch_cpuid);
+>               size = fetch_cpuid->nent;
+> +            g_free(fetch_cpuid);
+>           }
+>       } while (r == -E2BIG);
+>   
 
 
