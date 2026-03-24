@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2595F54ABA
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23327F54AC0
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52UX-0005y5-NR; Tue, 24 Mar 2026 10:12:21 -0400
+	id 1w52Wg-0006YT-Lb; Tue, 24 Mar 2026 10:14:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w52UW-0005xm-6U
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:12:20 -0400
+ id 1w52Wf-0006YI-TP
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:14:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w52UT-0002U6-Ub
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:12:19 -0400
+ id 1w52We-0002gB-BH
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:14:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774361536;
+ s=mimecast20190719; t=1774361671;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=viAXpLN02vh8eaklRb/7v6yn0bYpWernHSFVcVSpbfQ=;
- b=V9FROOSkDxtOedGF62j4gmTojHAZ71b3kOpdte59/kYmQuu+U2CKOWC2EePtBeykU/uD2r
- m0RN+1CSVCcgmQ9EUO+YBWUq9F/abRFHP//eNZHWo4KLLLe7kmtgUIInOp2i56qzOHJ1YK
- h4BGcHJHfjREZRAVszNL4s8vflcMjbE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=+AeEo46HHYZvMkpJuJ4z/L63DB0t9zUqYd6BL7Nvmzk=;
+ b=DjqzgGHSH0gYFo5z4NypgM1zZBpEhtVnUXgQZd3oYHYbV+J3otxaHT8lkh89gQmovqx68m
+ QZziJjSGbG37lzdGNFYamFn3v5HzgiFXpBTMMXczkh3CnBUzJsPr/j2yekN8MhSs/eZ4Q8
+ Kp+OTlV6WzQ5zKaZf28wQk1HaEyDR6I=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-Qg4waka9NyGo22i2mXHJYQ-1; Tue,
- 24 Mar 2026 10:12:13 -0400
-X-MC-Unique: Qg4waka9NyGo22i2mXHJYQ-1
-X-Mimecast-MFC-AGG-ID: Qg4waka9NyGo22i2mXHJYQ_1774361532
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-WPl0FNPFMdm1mMWUdkSDAg-1; Tue,
+ 24 Mar 2026 10:14:28 -0400
+X-MC-Unique: WPl0FNPFMdm1mMWUdkSDAg-1
+X-Mimecast-MFC-AGG-ID: WPl0FNPFMdm1mMWUdkSDAg_1774361667
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 261BC195608E
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 14:12:04 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76A0B18002CA
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 14:14:27 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.33.93])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C40A19560AB; Tue, 24 Mar 2026 14:12:02 +0000 (UTC)
-Date: Tue, 24 Mar 2026 14:11:29 +0000
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9E1219540C4; Tue, 24 Mar 2026 14:14:25 +0000 (UTC)
+Date: Tue, 24 Mar 2026 14:14:22 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 13/60] ui/console-vc: fix comment shift-out/in comments
-Message-ID: <acKbkbhYImg4FVpH@redhat.com>
+Subject: Re: [PATCH 14/60] ui/console: dispatch get_label() through QOM
+ virtual method
+Message-ID: <acKcPnnab3bwS30h@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-13-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-14-48eb1dcf7b76@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260317-qemu-vnc-v1-13-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-14-48eb1dcf7b76@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -90,43 +91,23 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 17, 2026 at 12:50:27PM +0400, Marc-André Lureau wrote:
-> 14 is shift-out
-> 15 is shift-in
-
-Yep, checked at  https://www.ascii-code.com/
-
+On Tue, Mar 17, 2026 at 12:50:28PM +0400, Marc-André Lureau wrote:
+> Replace the type-checking chain in qemu_console_get_label() (using
+> QEMU_IS_GRAPHIC_CONSOLE/QEMU_IS_TEXT_CONSOLE) with a QemuConsoleClass
+> virtual method, allowing each console subclass to provide its own
+> get_label implementation.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  ui/console-vc.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  include/ui/console.h  |   2 +
+>  ui/console-priv.h     |   1 -
+>  ui/console-vc-stubs.c |   6 ---
+>  ui/console-vc.c       |  12 ++++--
+>  ui/console.c          | 101 +++++++++++++++++++++++++++-----------------------
+>  5 files changed, 65 insertions(+), 57 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> 
-> diff --git a/ui/console-vc.c b/ui/console-vc.c
-> index 5eca9a5c004..fae8c8ce768 100644
-> --- a/ui/console-vc.c
-> +++ b/ui/console-vc.c
-> @@ -847,10 +847,10 @@ static void vc_putchar(VCChardev *vc, int ch)
->              /* TODO: has to be implemented */
->              break;
->          case 14:
-> -            /* SI (shift in), character set 0 (ignored) */
-> +            /* SO (shift out), character set 1 (ignored) */
->              break;
->          case 15:
-> -            /* SO (shift out), character set 1 (ignored) */
-> +            /* SI (shift in), character set 0 (ignored) */
->              break;
->          case 27:    /* esc (introducing an escape sequence) */
->              vc->state = TTY_STATE_ESC;
-> 
-> -- 
-> 2.53.0
-> 
-> 
 
 With regards,
 Daniel
