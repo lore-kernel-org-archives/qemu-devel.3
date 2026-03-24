@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9263AF54ACD
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58097F54AC5
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:12:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w53Pi-0000g7-3I; Tue, 24 Mar 2026 11:11:26 -0400
+	id 1w53Q3-0000zL-Uy; Tue, 24 Mar 2026 11:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Pb-0000cV-Te
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:20 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1w53Pq-0000qe-3H
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:37 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Pa-0005Br-7Z
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:19 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-439d8dc4ae4so4843272f8f.2
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:17 -0700 (PDT)
+ id 1w53Pl-0005EU-V8
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:32 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-486fb439299so45578245e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774365077; x=1774969877; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774365088; x=1774969888; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IKbUTaFOqvDJxELefvnhulrQMMYMDi7DhugEoR6vIwo=;
- b=kp9fsaUzPTH2ItGY5PUOzW5T0uYrfRSLBTJdlhhOoL81d6IRQ8QztT84qvsY0rsymo
- jD00NIzxfNEkX/ZkTbEa5bF8GYWn338HkSD4KGrjyzSEzb1jLZFHWZdm7hy9n8W2o8Nx
- 9BWrKxHUbRPZ/r3/J1j1dS5GmFYYYHebJzssPv5vwvTQ642Mz8LRw5lEyju12Vb0DHCl
- 0VHl5jdg3rIitDZR7yyNZMtNqkO6rL4yTQezj4/wxiGDCDuEKgPgvo5tgSZt9gqjq936
- 9E3cnchLthkFARLbLMdy0lwj8GSFJ5nUawLtL/T+3AQdXA8Gm0hcU3xrvTR2VGSgPmy6
- E1ng==
+ :reply-to; bh=t6RuVFBjGQxXKkbjdmtXNHPThUXn3bXy8K/7GIwt1EU=;
+ b=wcOEbUCBh/f0uzDvPszd6Az24FRfAwQ4R7y48EBOJU1+SbWx6WuV7Cp21BcrAMLDpg
+ +ag5jJrume9OsP7cY/T6qFkDht+YiVZu8xO3WcsfKcKu+eUIfnYWJizIvMdrcUaO1ME4
+ WfGtcPeflnfrf+z+MamRV78QZsLhmhrFn11aLyraMfkjvxO8R+ZzzjOlXQ7Xo6VvUbTw
+ r8XsZRyP+Wxz2fnkCRUpiWqUo1WheiMYEYHO/tFbKP75ThqUIyqkRbEzTB2klFPSHH9E
+ id1tBPmmLfH0bQ14VY2hm97YHokQdTlbj5tzo3iuYlDLt29GK+OxnRMK7Si09De93/9n
+ kN+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774365077; x=1774969877;
+ d=1e100.net; s=20251104; t=1774365088; x=1774969888;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IKbUTaFOqvDJxELefvnhulrQMMYMDi7DhugEoR6vIwo=;
- b=GDaaC2Qj6wQOSlgPzVINL2R+lFxYN0ATql85acwBhxvbpBzsmuFSegjY5TXIwhXV50
- jN9HPgirt+yQz1f3I8NrBrk/zfq+JoKD4jogQfXESOmkla21TKrPQJJirOZVOrBrcaDl
- yaEXuxYmeoBFmp2NI0OCRSm9GKiZ2D8CRdIvgjDdlqkvg5JHDe3m76zAtLtUU5xeayGw
- kZPNBdLW7Dn8v8K5Nuylq6xfTJPo1v9wHUJq2wfU8K5ephqTBAxmEgjChN+ES/T2BdJA
- 2ACEPwnrDDnhRQ53vtcmuNozcroGusXNzGucQdf4q+0b1jOLZtuGDxV6LRFNUj40eCTY
- LGdA==
-X-Gm-Message-State: AOJu0YwCP5qGMEA1TP52rR05J5W9HX9nVe6jRBJL7R7UDEx9E8PHi5cC
- NKtenvHC3AwZeke8sQdlLSnOsdfZrxt3E0iXm78AL4McSP9IJbovOqOHyCitPS7m3E3kF7xjOgL
- UD8AP46g=
-X-Gm-Gg: ATEYQzxGSiK7rrTWlSKH5+7AtKnpwMZ523/Lmu6r+nYuFdnwmcU7tGhS/HoiqYCWzmg
- yqsjQ6Dnd5ss1rd4M5lo1CDmFkAzxDdmWYts9CuFwsxQxIRXFoxS9CxIx2kL3JAof1fXDQWxmYT
- cXG7/xl0d3kMclFfBBcu39jfFifOkhWHnNDzLX/GyojIHa5NvX4szxiYDAznA8jpmCqBgBIfX9i
- L0uj/tGY9K5oRwbd7VJJ9cV1QjJY6ELkPTNF7zfaVZ/L055aatgBdxrSR9hRCcZavLSG9T2Qls+
- 1D3+XBX3c7IxXQgEhpTOnl9aZrsy+bEY9uaDkwUlX7wOsamJEwVnoIIET0GYRJI+fCRT9lXe/XP
- +6sWVnk6zmyQh2EmUmu/EAZshUGlKaaCZBb80TbtjlhSLjh8pjiby4d5ZxLA6/byg32/YEY3j/A
- MkDfcxvvaUPeAokHegGoY5OSxjsAorqX+02ivpdwDWg/vm6mXAR6C+O/LK5bOIfOvJzn6yxBuf9
- RF6DF9PPJbRsjybwZj20imi/tNHprM=
-X-Received: by 2002:a05:6000:310d:b0:43b:3b80:6776 with SMTP id
- ffacd0b85a97d-43b64262ebbmr26034105f8f.30.1774365076416; 
- Tue, 24 Mar 2026 08:11:16 -0700 (PDT)
+ bh=t6RuVFBjGQxXKkbjdmtXNHPThUXn3bXy8K/7GIwt1EU=;
+ b=iN1knSVzan30ZrSmUyJ8uekAS7gqttJPSrrdFZZUlIN+QZ64ck0M7lL0pq4n1sgDlq
+ iu45HPniGdUTce7RAAH08MZuuQA+SrVE4+SmZTR2KPM7wj5R6mun+lHUvQOg/nuHID45
+ X0x1oAE31M7DzgF0n/uVr1JMbcN//Q6LWlZ1TUtjtinIcPb0nlNWTYZMJa59ogNpmB7y
+ NLw3BTHT7wLu11NEu3QYTO1VU0pT52ecFjPmavN58VpB5Ex55+rq6CMEQbDeUtE/vlXu
+ fgkJANDaL0jQO98UrcjklWjsmWYoZK06R/sq7cvk8+NNuC7S4eLfetGoYduOjyrfL0xF
+ xGlA==
+X-Gm-Message-State: AOJu0YyDT7rvsnrrEwsa+b6p6OX57Sl8hLM0W5BS6o4x1bEdOy/jhny1
+ UVlQotQ2BdZ8/U+XQsmPr9oIQmfIF05acvFxMp3aEyzxQ8xCPkoT1p5q1mnUTApxnwyVDI1XnTP
+ UCBw98aw=
+X-Gm-Gg: ATEYQzy3zUf0pcPQJnkDeAwb1R4aj/Wr2oC+JpjKY0B1LmkVGvZmM6dnoyFtlxuiC/s
+ KFLueJQcNz7bcO4WPi0qZJD1qPA8kttBCU48CRXKdhKGMiHsgGtGGzqVYhopevDoiJPrNilRvO5
+ khwsTvLo+/RpjdVWWOgpJSYi9f2u5NqDHYCGEwYne7QjrgQJIejbbv31wFt/ZzY8ZwldPRPlbFu
+ yroVx+3eiI2FdMWc3oRcnF93cSbdpxAoOWzLFnD6QRTsmebvqS9HRgH0zREiZw9uqZhJQJ3Psio
+ xFHWDu+xjY7JsD09ZHPpTNW43x9j2v2KLckYZ2rxj0x9niPC4O/08xFZsHvPQnMJayaTpXOHDbg
+ 7wWb2oUEsjWIQCgMRJzL3xyqgAG9UL7rWYKHrCqJYWexfUbhnaUmNRumUXOyu3QnePH6cGbl9di
+ 8N8eoyvUHE/jIcoq9T5BOQqxKns6RFGpisQnDriETdLr634SIUsFL2o/cP0euIaFuSAIlW8tSo3
+ XJDgWTUIoFQDB286Nv0msTvNSqpzT8=
+X-Received: by 2002:a05:6000:1861:b0:439:b440:b8a2 with SMTP id
+ ffacd0b85a97d-43b64277fa4mr25834713f8f.28.1774365088260; 
+ Tue, 24 Mar 2026 08:11:28 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.14
+ ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 08:11:14 -0700 (PDT)
+ Tue, 24 Mar 2026 08:11:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/11] linux-user/i386/signal.c: Correct definition of
- target_fpstate_32
-Date: Tue, 24 Mar 2026 15:11:02 +0000
-Message-ID: <20260324151111.237411-3-peter.maydell@linaro.org>
+Subject: [PULL 11/11] qemu-options.hx: Document arm-smmuv3 device's accel
+ properties
+Date: Tue, 24 Mar 2026 15:11:11 +0000
+Message-ID: <20260324151111.237411-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260324151111.237411-1-peter.maydell@linaro.org>
 References: <20260324151111.237411-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,90 +101,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our definition of the target_fpstate_32 struct doesn't match the
-kernel's version.  We only use this struct definition in the
-definition of 'struct sigframe', where it is used in a field that is
-present only for legacy reasons to retain the offset of the following
-'extramask' field.  So really all that matters is its length, and we
-do get that right; but our previous definition using
-X86LegacySaveArea implicitly added an extra alignment constraint
-(because X86LegacySaveArea is tagged as 16-aligned) which the real
-target_fpstate_32 does not have.  Because we allocate and use a
-'struct sigframe' on the guest's stack with the guest's alignment
-requirements, this resulted in the undefined-behaviour sanitizer
-complaining during 'make check-tcg' for i386-linux-user:
+From: Nathan Chen <nathanc@nvidia.com>
 
-../../linux-user/i386/signal.c:471:35: runtime error: member access within misaligned address 0x1000c07f75ec for type 'struct sigframe', which requires 16 byte alignment
-0x1000c07f75ec: note: pointer points here
-  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-              ^
+Document arm-smmuv3 properties for setting HW-acceleration,
+Range Invalidation, and Address Translation Services support, as
+well as setting Output Address size and Substream ID size.
 
-../../linux-user/i386/signal.c:808:5: runtime error: member access within misaligned address 0x1000c07f75f4 for type 'struct target_sigcontext_32', which requires 8 byte alignment
-0x1000c07f75f4: note: pointer points here
-  0a 00 00 00 33 00 00 00  00 00 00 00 2b 00 00 00  2b 00 00 00 40 05 80 40  f4 7f 10 08 58 05 80 40
-              ^
-
-and various similar errors.
-
-Replace the use of X86LegacyXSaveArea with a set of fields that match
-the kernel _fpstate_32 struct, and assert that the length is correct.
-We could equally have used
-   uint8_t legacy_area[512];
-but following the kernel is probably less confusing overall.
-
-Since in target/i386/cpu.h we assert that X86LegacySaveArea is 512
-bytes, and in linux-user/i386/signal.c we assert that
-target_fregs_state is (32 + 80) bytes, the new assertion confirms
-that we didn't change the size of target_fpstate_32 here, only its
-alignment requirements.
-
-Cc: qemu-stable@nongnu.org
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Tested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+Message-id: 20260323182454.1416110-9-nathanc@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260305161739.1775232-1-peter.maydell@linaro.org
 ---
- linux-user/i386/signal.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ qemu-options.hx | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index 0f11dba831..b646fde431 100644
---- a/linux-user/i386/signal.c
-+++ b/linux-user/i386/signal.c
-@@ -60,10 +60,33 @@ struct target_fpx_sw_bytes {
- };
- QEMU_BUILD_BUG_ON(sizeof(struct target_fpx_sw_bytes) != 12*4);
+diff --git a/qemu-options.hx b/qemu-options.hx
+index dbcb0155ba..21972f8326 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1279,13 +1279,43 @@ SRST
+     ``aw-bits=val`` (val between 32 and 64, default depends on machine)
+         This decides the address width of the IOVA address space.
  
-+struct fpxreg {
-+    uint16_t significand[4];
-+    uint16_t exponent;
-+    uint16_t padding[3];
-+};
-+
-+struct xmmreg {
-+    uint32_t element[4];
-+};
-+
-+/*
-+ * This corresponds to the kernel's _fpstate_32. Since we
-+ * only use it for the fpstate_unused padding section in
-+ * the target sigcontext, it doesn't actually matter what fields
-+ * we define here as long as we get the size right.
-+ */
- struct target_fpstate_32 {
-     struct target_fregs_state fpstate;
--    X86LegacyXSaveArea fxstate;
-+    uint32_t fxsr_env[6];
-+    uint32_t mxcsr;
-+    uint32_t reserved;
-+    struct fpxreg fxsr_st[8];
-+    struct xmmreg xmm[8];
-+    uint32_t padding1[44];
-+    uint32_t padding2[12]; /* aka sw_reserved */
- };
-+QEMU_BUILD_BUG_ON(sizeof(struct target_fpstate_32) != 32 + 80 + 512);
+-``-device arm-smmuv3,primary-bus=id``
++``-device arm-smmuv3,primary-bus=id[,option=...]``
+     This is only supported by ``-machine virt`` (ARM).
  
- struct target_sigcontext_32 {
-     uint16_t gs, __gsh;
+     ``primary-bus=id``
+         Accepts either the default root complex (pcie.0) or a
+         pxb-pcie based root complex.
+ 
++    ``accel=on|off`` (default: off)
++        Enables guest to leverage host SMMUv3 features for acceleration.
++        Enabling accel configures the host SMMUv3 in nested mode to support
++        vfio-pci passthrough.
++
++     The following options are available when accel=on.
++     Note: 'auto' mode is not currently supported.
++
++    ``ril=on|off`` (default: on)
++        Support for Range Invalidation, which allows the SMMUv3 driver to
++        invalidate TLB entries for a range of IOVAs at once instead of issuing
++        separate commands to invalidate each page. Must match with host SMMUv3
++        Range Invalidation support.
++
++    ``ats=on|off`` (default: off)
++        Support for Address Translation Services, which enables PCIe devices to
++        cache address translations in their local TLB and reduce latency. Host
++        SMMUv3 must support ATS in order to enable this feature for the vIOMMU.
++
++    ``oas=val`` (supported values are 44 and 48. default: 44)
++        Sets the Output Address Size in bits. The value set here must be less
++        than or equal to the host SMMUv3's supported OAS, so that the
++        intermediate physical addresses (IPA) consumed by host SMMU for stage-2
++        translation do not exceed the host's max supported IPA size.
++
++    ``ssidsize=val`` (val between 0 and 20. default: 0)
++        Sets the Substream ID size in bits. When set to a non-zero value,
++        PASID capability is advertised to the vIOMMU and accelerated use cases
++        such as Shared Virtual Addressing (SVA) are supported.
++
+ ``-device amd-iommu[,option=...]``
+     Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
+     Only available with ``-machine q35``, it supports the following options:
 -- 
 2.43.0
 
