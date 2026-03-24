@@ -4,93 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 861D7F532EF
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91ACBF532F6
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4x9B-0002B0-H3; Tue, 24 Mar 2026 04:29:57 -0400
+	id 1w4xLm-0004Ji-Lc; Tue, 24 Mar 2026 04:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w4x99-0002AC-6i
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:29:55 -0400
-Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w4x97-0003X6-2a
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:29:54 -0400
-Received: by mail-dy1-x1343.google.com with SMTP id
- 5a478bee46e88-2c0ecaae7dfso8317479eec.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 01:29:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774340991; x=1774945791; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=WzmCZnpPp3dNgOv0BjGPEHtaYYUktKoojDUIsjuiHIg=;
- b=oBv0GLgLbSKyK1pqPG+MYmIAZBagn7B4pFQenHUHdBHmJiXsXtIHQeEbDsggdYACJc
- QyFjD/j4N/k5SfDSY/6uJBWYtQpuqkQbDuh6j831b5qDhttB4n2Cc7FHSUegzvPaYPGe
- J3luEuwk/pZE52FuGTwZMymbJRef6a8mKYvhtI/S1vg+0CopPOfW46J+FZH7s2OEXqeQ
- Ksu/ZPHpPO5HYXRjAlmNYUIT7p5NmU4XGvHL5ibbaMRD7K1GyYQS/nzG7qq3tgSXRwh1
- 4gyPyHQiq7y1r7I+Bn7bYlurGrAzVGcOsPfUCVlUD1wg6W1Gv8owA/Offj3S8oNtqVmW
- 0V2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774340991; x=1774945791;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WzmCZnpPp3dNgOv0BjGPEHtaYYUktKoojDUIsjuiHIg=;
- b=KH2cRuXCVOl7qQmgzaW4rv53MpTEDr5OXlMgcGab399Rjsl0lRRQuYY2G99bh6DvxN
- WpO2R02jhX8ZjLNAMrZlfBBJKYNNeocSAvkr1YlhChCsTvJ8SdMvedTlHW6fyIffED0j
- p1FAkYpOjCBfAL8e8ZOZZnF84Tnc1tOLDDrb8vm1Hyhme0JTd7FvszwB/11kbUwx3f7l
- u5flsBi/Avw6EExDcnGyedZmglr/frX5NAm0xdbQxQBeLMmxTxTmZWCRF0dCoMd7jop6
- DUrnol1KbjYn8Du346mfhtOlsfmNKm8cpdBZYRhQKgQSHBYyjeUshDKYoQ+GHCu9GKLF
- 0h0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdQuGGnV2dH3p40StE4pBoxyod56UYWYARq4A5DFJyIU0bXQRZ1PLqqegUCRm4ofU3o0KSJKufUsUe@nongnu.org
-X-Gm-Message-State: AOJu0YzpQ0iq9OZj43Dzdx9QnsmsFyFd7oDvs5Rx79TGA1PwzJ11wlKB
- r06Eks/PD/Xfc/JIROWpTT3DFGr9ylFRFVeuKDLR355co4hIoSoTqqUh
-X-Gm-Gg: ATEYQzyHr7vOA2y4dRbYy/GBQX2oGY5b86ifeCNVW3mMWJ+Jzjf9aFucVSW5HUans2T
- IckzdzEcHP5S7PhWBuXViPW2V0b8pfkH8lRCXsMJ4Rvrv8wmqIBfdwgmXVftLiAIUePW9aTIcFP
- D+iyhwcvJe88UZoEjsj0P/ueIGKV6EXO+7s05/JwNmCUT32/eWdTKKnRl9Zb/xO6rZ8sCSIP1VF
- uZe6M1bsR0tYx98BP5IopF9XqwCvl8PUJ4VXP7L9bd11ELtZuEfpoFuXCee5pOebjsLZ8eZpBCs
- EXu9/On5UJZmHFP5wJAfv8Ci7wkATVKYtHBjv/6CK1Y0b3qn4pIskXzhSkKoi9pzmqq+jkjCT+9
- aUOBV4MHUatmoQY5UY+R+SJVColPvfomzgC2+smUsEvYmUL+KAXXtYFnmZk+TA9rWSQ1Q6osLg0
- bUxM8/pNj8W/HkRtYt6lMoj/IMWLDDsMSOJV8lEzUF4nO2QA5J3qj9qiYUt9vSWwIU7wvZAUeN3
- w1nbKuLwgXbfBtjucERoHdS1DwYsiw=
-X-Received: by 2002:a05:693c:300b:b0:2c0:c63d:e02e with SMTP id
- 5a478bee46e88-2c109567365mr7375062eec.3.1774340991230; 
- Tue, 24 Mar 2026 01:29:51 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2c10b14bac4sm19594255eec.4.2026.03.24.01.29.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 01:29:50 -0700 (PDT)
-Date: Tue, 24 Mar 2026 16:29:33 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC v3 4/4] [NOT-MERGE] tests/qtest: add q35 SMM-only x86 attrs
- coverage
-Message-ID: <acJKzHQf1AP2iUA2@ZEVORN-PC.localdomain>
-References: <20260323133210.1523868-1-tangtao1634@phytium.com.cn>
- <20260323133210.1523868-5-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w4xLk-0004It-HD; Tue, 24 Mar 2026 04:42:56 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w4xLi-00054D-UA; Tue, 24 Mar 2026 04:42:56 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62O5arZC4178383; Tue, 24 Mar 2026 08:42:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=oqGXyU
+ ypB1JfGaftFlkZCJoy44Wg2H9UGDqXuOFTNQU=; b=l/2msU6XqJ8l9ZymhaznAC
+ rIoMywA+Hv88fTNhmmFuPiEwAH1YsLldkwK2DWER1rJpdPq/g1PAPLReLCmnb+np
+ tDYdE95ghmo4oo/DWkoWd/QuQlyFM+iy/e9i9RrCfVq0vWfdh6CaEK1ZoLZNJcqm
+ jC83bOwhG8qWyx1ujru9iUIVkSkmunW1w0V34f/3u4yZqCUElBYO3JMTP/32iLlM
+ XkdWdSPGylQNtWUCpRxQhnxnHl0W10RX9Rij0wRxqCPZU+cBdfsoD5bQmwu5oPqk
+ Zg6VBo4PrZiNuHaiO6MgO5dCpSc32L/KoZ/b47xrWnf1Xpj5shDxNfmLl1fKSmOg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kw9thqt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Mar 2026 08:42:44 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62O7QP2Z031687;
+ Tue, 24 Mar 2026 08:42:43 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d25nss3v1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Mar 2026 08:42:43 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62O8gdrR15991164
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 24 Mar 2026 08:42:39 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 57D7320043;
+ Tue, 24 Mar 2026 08:42:39 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8115E2004B;
+ Tue, 24 Mar 2026 08:42:34 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.39.27.39])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 24 Mar 2026 08:42:34 +0000 (GMT)
+Message-ID: <8cde9a355050b306180f80e8d1340ec814c0876c.camel@linux.ibm.com>
+Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, Harsh Prateek
+ Bora	 <harshpb@linux.ibm.com>, Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org
+Date: Tue, 24 Mar 2026 14:12:32 +0530
+In-Reply-To: <20260323231612.GA2637687@ax162>
+References: <20260311143549.118720-1-shivangu@linux.ibm.com>
+ <20260323231612.GA2637687@ax162>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260323133210.1523868-5-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: FrXxOc7rgNzTkzp2-iblFXJpU5cCcsgV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDA2NiBTYWx0ZWRfX84s+4rHq/5Tm
+ MyEfE+mzjkwiu3ocAWHH/CM9w3TEoJlLnYPQlHUghgDTh2cFE/a9Lqkmv2qtbhRO++wwJfUfxVv
+ j0syrVyMPRUzMN4aHNUdkbQA+lTFBcp5D4ePIRxWvhr/WUEThU0sh+OURWA6WFshDOmxyUhsWlu
+ p4PEKOzX2Pf+SoGDR5D5xql3/48Io1v2N84pHhXovD++v5328VumBTiPP1n2KKrHW+J7sESxldf
+ XEWp55gMRW0olhw93+pRnRTAsyb+etp5q7LGEAY4eeKE3kAZNuyViOvIF94CsjUfmiti0jF+VEg
+ M8ZjwSdkxJMy9R9dZFkvxN9Zu9Ajzo2zE9c2RVEc+3tujH7n07UV8WuoK8qUQ5vbdsx20+ngO2q
+ CgDF+6iLo6bNA9vRESB82RrjToT6Xz7XFV+31CyDb+heO43+JhjbWiEstda9K4vkaKuap1o9I6x
+ wZZigugJez9oL1OtedQ==
+X-Proofpoint-GUID: 1iQD-BRxY7MPYL5PoB-Jlc7lymfzSr6X
+X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c24e84 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=p0WdMEafAAAA:8 a=DiSADyN12PveX24rIx0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-24_02,2026-03-23_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 clxscore=1015 phishscore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240066
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,253 +124,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 23, 2026 at 09:32:10PM +0800, Tao Tang wrote:
-> Add a q35-only test path for x86 secure attrs by introducing an optional
-> test-only RAM region that is mapped only into the SMM address space.
-> 
-> The new qtest-x86-attrs-test enables this region with
-> `-global mch.x-smm-test-ram=on` and verifies that accesses with the
-> `secure` attribute reach the SMM-only region, while default accesses do
-> not. This provides the x86 cross-verification that qtest-attrs-test does
-> not cover, where normal RAM is visible from both the default and SMM
-> address spaces.
-> 
-> This is a NOT-MERGE commit.
-> 
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  hw/pci-host/q35.c                  |  24 +++++++
->  include/hw/pci-host/q35.h          |   8 +++
->  tests/qtest/meson.build            |   1 +
->  tests/qtest/qtest-x86-attrs-test.c | 109 +++++++++++++++++++++++++++++
->  4 files changed, 142 insertions(+)
->  create mode 100644 tests/qtest/qtest-x86-attrs-test.c
-> 
-> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-> index e85e4227b3..5c23375dd6 100644
-> --- a/hw/pci-host/q35.c
-> +++ b/hw/pci-host/q35.c
-> @@ -572,6 +572,11 @@ static void mch_realize(PCIDevice *d, Error **errp)
->          return;
->      }
->  
-> +    if (mch->enable_smm_test_ram && !mch->has_smm_ranges) {
-> +        error_setg(errp, "x-smm-test-ram requires SMM support");
-> +        return;
-> +    }
-> +
->      /* setup pci memory mapping */
->      pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
->  
-> @@ -653,6 +658,23 @@ static void mch_realize(PCIDevice *d, Error **errp)
->      memory_region_add_subregion(&mch->smram, MCH_HOST_BRIDGE_SMBASE_ADDR,
->                                  &mch->smbase_window);
->  
-> +    if (mch->enable_smm_test_ram) {
-> +        /*
-> +         * This is a QEMU-specific, test-only region. It is mapped only into
-> +         * mch->smram so qtest can verify that x86 secure attrs select the SMM
-> +         * address space rather than the default one.
-> +         */
-> +        memory_region_init_ram(&mch->smm_test_ram, OBJECT(mch),
-> +                               "smm-test-ram",
-> +                               MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE, errp);
-> +        if (*errp) {
-> +            return;
-> +        }
-if errp is ever NULL this will crash.
+On Mon, 2026-03-23 at 16:16 -0700, Nathan Chancellor wrote:
+>=20
+> After this patch landed in QEMU master as commit a16d4c2f16
+> ("ppc/pnv:
+> fix dumpdtb option"), I am seeing a hang on shutdown. With the files
+> available at [1]:
+>=20
+> =C2=A0 $ qemu-system-ppc64 \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -display none \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -nodefaults \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -device ipmi-bmc-sim,id=3Dbmc0 \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -device isa-ipmi-bt,bmc=3Dbmc0,irq=3D10 \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -machine powernv \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -kernel zImage.epapr \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -initrd rootfs.cpio \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -m 2G \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -serial mon:stdio
+> =C2=A0 ...
+> =C2=A0 [=C2=A0=C2=A0=C2=A0 1.308982][=C2=A0=C2=A0=C2=A0 T1] Run /init as =
+init process
+>=20
+Hi Nathan,
 
-The safer pattern is ERRP_GUARD() at the top of mch_realize(),
-or a local Error * with error_propagate(). Even for NOT-MERGE
-code it is worth getting right since copy-paste propagates
-patterns.
+ I have root-casued this issue. During discussion for this bug [1], I
+made assumption about dtb not changing during between resets. To handle
+that I removed the dt_recreation logic from `pnv_init` code.
 
-> +        memory_region_add_subregion(&mch->smram,
-> +                                    MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE,
-> +                                    &mch->smm_test_ram);
-> +    }
-> +
->      object_property_add_const_link(qdev_get_machine(), "smram",
->                                     OBJECT(&mch->smram));
->  }
-> @@ -661,6 +683,8 @@ static const Property mch_props[] = {
->      DEFINE_PROP_UINT16("extended-tseg-mbytes", MCHPCIState, ext_tseg_mbytes,
->                         64),
->      DEFINE_PROP_BOOL("smbase-smram", MCHPCIState, has_smram_at_smbase, true),
-> +    DEFINE_PROP_BOOL("x-smm-test-ram", MCHPCIState, enable_smm_test_ram,
-> +                     false),
->  };
->  
->  static void mch_class_init(ObjectClass *klass, const void *data)
-> diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
-> index ddafc3f2e3..1ca26f0e63 100644
-> --- a/include/hw/pci-host/q35.h
-> +++ b/include/hw/pci-host/q35.h
-> @@ -49,8 +49,10 @@ struct MCHPCIState {
->      MemoryRegion smram, low_smram, high_smram;
->      MemoryRegion tseg_blackhole, tseg_window;
->      MemoryRegion smbase_blackhole, smbase_window;
-> +    MemoryRegion smm_test_ram;
->      bool has_smram_at_smbase;
->      bool has_smm_ranges;
-> +    bool enable_smm_test_ram;
->      Range pci_hole;
->      uint64_t below_4g_mem_size;
->      uint64_t above_4g_mem_size;
-> @@ -99,6 +101,12 @@ struct Q35PCIHost {
->  #define MCH_HOST_BRIDGE_PCIEXBAR_SIZE          8       /* 64bit register */
->  #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
->  #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
-> +/*
-> + * Optional qtest-only RAM window used to expose an address that exists only
-> + * in the SMM address space, so x86 secure attrs can be cross-checked.
-> + */
-> +#define MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE      0xfef00000
-> +#define MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE      (64 * KiB)
->  #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
->  #define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 26))
->  #define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 25))
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 87aa104d23..fcdd95bf7f 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -116,6 +116,7 @@ qtests_i386 = \
->     'cpu-plug-test',
->     'migration-test',
->     'qtest-attrs-test',
-> +   'qtest-x86-attrs-test',
->    ]
->  
->  if dbus_display and config_all_devices.has_key('CONFIG_VGA')
-> diff --git a/tests/qtest/qtest-x86-attrs-test.c b/tests/qtest/qtest-x86-attrs-test.c
-> new file mode 100644
-> index 0000000000..d9a67d5309
-> --- /dev/null
-> +++ b/tests/qtest/qtest-x86-attrs-test.c
-> @@ -0,0 +1,109 @@
-> +/*
-> + * QTest for x86 memory access with transaction attributes
-> + *
-> + * Verify q35 SMM address-space access with the secure attribute.
-> + *
-> + * Copyright (c) 2026 Phytium Technology
-> + *
-> + * Author:
-> + *  Tao Tang <tangtao1634@phytium.com.cn>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +
-> +#define TEST_ADDR_OFFSET_NS     0x1000ULL
-> +#define TEST_X86_BASE           0x0ULL
-> +#define TEST_X86_SMM_BASE       0xfef00000ULL
-> +
-> +#define TEST_ADDR_X86           (TEST_X86_BASE + TEST_ADDR_OFFSET_NS)
-> +
-> +#define X86_MACHINE_ARGS        "-machine q35,smm=on -m 1G -accel tcg " \
-> +                                "-global mch.x-smm-test-ram=on"
-> +
-> +static void test_x86_scalar_attrs(void)
-> +{
-> +    QTestState *qts;
-> +    uint8_t val;
-> +
-> +    if (!qtest_has_machine("q35")) {
-> +        g_test_skip("q35 machine not available");
-> +        return;
-> +    }
-> +
-> +    qts = qtest_init(X86_MACHINE_ARGS);
-> +
-> +    qtest_writeb_attrs(qts, TEST_ADDR_X86, 0x11, NULL);
-> +    val = qtest_readb_attrs(qts, TEST_ADDR_X86, NULL);
-> +    g_assert_cmpuint(val, ==, 0x11);
-> +
-> +    qtest_writeb_attrs(qts, TEST_ADDR_X86 + 0x1, 0x22, "secure");
-> +    val = qtest_readb_attrs(qts, TEST_ADDR_X86 + 0x1, "secure");
-> +    g_assert_cmpuint(val, ==, 0x22);
-> +
-> +
-nit: extra blank line.
+But, As in your case the bmc details are provided from command line,
+the bmc device is not present during `pnv_init`. And later on during
+device initialization it gets filled with correct details. `pnv_reset`
+is also called to start the cpu also, So previously the correct bmc
+details were populated.
 
-> +    qtest_writeb_attrs(qts, TEST_X86_SMM_BASE + 0x2, 0x33, "secure");
-> +    val = qtest_readb_attrs(qts, TEST_X86_SMM_BASE + 0x2, "secure");
-> +    g_assert_cmpuint(val, ==, 0x33);
-The commit message says "secure accesses reach the
-SMM-only region, while default accesses do not", but
-the test only checks the secure-can-access half. It
-would strengthen the coverage to also verify that a
-default (non-secure) read of TEST_X86_SMM_BASE returns
-different data or an ERR, confirming the address-space
-isolation actually works. Without that, a bug where
-both address spaces map the region would pass silently.
+To handle this case, I should add the dt recreation logic to the "bmc
+details found" case. [2].
 
-Thanks,
-Chao
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_x86_bulk_attrs(void)
-> +{
-> +    QTestState *qts;
-> +    uint8_t wbuf[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-> +    uint8_t rbuf[8];
-> +    size_t i;
-> +
-> +    if (!qtest_has_machine("q35")) {
-> +        g_test_skip("q35 machine not available");
-> +        return;
-> +    }
-> +
-> +    qts = qtest_init(X86_MACHINE_ARGS);
-> +
-> +    qtest_memwrite_attrs(qts, TEST_ADDR_X86 + 0x100, wbuf, sizeof(wbuf), NULL);
-> +    qtest_memread_attrs(qts, TEST_ADDR_X86 + 0x100, rbuf, sizeof(rbuf), NULL);
-> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-> +
-> +    qtest_memwrite_attrs(qts, TEST_ADDR_X86 + 0x180,
-> +                         wbuf, sizeof(wbuf), "secure");
-> +    qtest_memread_attrs(qts, TEST_ADDR_X86 + 0x180,
-> +                        rbuf, sizeof(rbuf), "secure");
-> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-> +
-> +    qtest_memwrite_attrs(qts, TEST_X86_SMM_BASE + 0x100,
-> +                         wbuf, sizeof(wbuf), "secure");
-> +    qtest_memread_attrs(qts, TEST_X86_SMM_BASE + 0x100,
-> +                        rbuf, sizeof(rbuf), "secure");
-> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-> +
-> +    qtest_memset_attrs(qts, TEST_X86_SMM_BASE + 0x120,
-> +                       0x5a, sizeof(rbuf), "secure");
-> +    qtest_memread_attrs(qts, TEST_X86_SMM_BASE + 0x120,
-> +                        rbuf, sizeof(rbuf), "secure");
-> +    for (i = 0; i < sizeof(rbuf); i++) {
-> +        g_assert_cmpuint(rbuf[i], ==, 0x5a);
-> +    }
-> +
-> +    qtest_bufwrite_attrs(qts, TEST_X86_SMM_BASE + 0x200,
-> +                         wbuf, sizeof(wbuf), "secure");
-> +    qtest_bufread_attrs(qts, TEST_X86_SMM_BASE + 0x200,
-> +                        rbuf, sizeof(rbuf), "secure");
-> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    qtest_add_func("/qtest/x86/attrs/scalar", test_x86_scalar_attrs);
-> +    qtest_add_func("/qtest/x86/attrs/bulk", test_x86_bulk_attrs);
-> +
-> +    return g_test_run();
-> +}
-> -- 
-> 2.34.1
-> 
+Thanks for finding this case.
+
+[1]https://lore.kernel.org/all/7yq2eac5yzsx2ve2nwbs7uhjguemravsimtm26dkgppe=
+czqmix@wtrwux3aeswg/
+[2]
+https://gitlab.com/qemu-project/qemu/-/blob/master/hw/ppc/pnv.c?ref_type=3D=
+heads#L772
+
+~Shivang.
 
