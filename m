@@ -4,130 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32BAF54ACF
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E404CF54AD7
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 16:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w53vd-0002kp-Rz; Tue, 24 Mar 2026 11:44:25 -0400
+	id 1w54F5-0002zL-AY; Tue, 24 Mar 2026 12:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
- id 1w53vX-0002jp-KM; Tue, 24 Mar 2026 11:44:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1w54Ev-0002wK-47
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 12:04:25 -0400
+Received: from out-173.mta1.migadu.com ([95.215.58.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
- id 1w53vV-0003SX-Ut; Tue, 24 Mar 2026 11:44:19 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62OCjGJN3481709; Tue, 24 Mar 2026 15:44:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=JiND6mGiPvbE2LYKOKXLYrjLtSLL
- QoO6Xdn0gIx8CCY=; b=tg3s6Yn4Oa3yJ68E5f9V7KlD4kTaE/VBf2LP95IwNfDe
- 3guni/kTKQPcEgrSk8qkPRxSbkAVpcW1dKhsIrs07izaVoP4YmJgTKytVIVafYpv
- jU8yQX04Z2TFV7d/zpVnO/XcPJiDSelOwdSRvBE4lOvZjcoiiVkdR4SPmrMibKX4
- HoOmm0BEJIfGrRgJFJm2Xd5k0Nr6hV2U7z1qu3wejozpdO01nyDEUvEU4SsdDPzP
- 8n8sgPW83TAUUXfzC7aCPegnMuWtIAFOBf9mUN703njv5OcjPhhFm9bFXBGYVLs5
- 5H5qrCXLkbN6tb30y+aTxacIszCM0Rus//kqhRhmSA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kxqcb18-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Mar 2026 15:44:12 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62OCXFOW026685;
- Tue, 24 Mar 2026 15:44:11 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d275ktg27-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Mar 2026 15:44:10 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62OFi6iT46793018
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Mar 2026 15:44:06 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C4C8020040;
- Tue, 24 Mar 2026 15:44:06 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E35E920043;
- Tue, 24 Mar 2026 15:44:05 +0000 (GMT)
-Received: from [192.168.88.251] (unknown [9.111.21.79])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 24 Mar 2026 15:44:05 +0000 (GMT)
-From: Christoph Schlameuss <schlameuss@linux.ibm.com>
-Subject: [PATCH v2 0/2] s390x/kvm: Add ASTFLE facility 2 for nested
- virtualization
-Date: Tue, 24 Mar 2026 16:43:43 +0100
-Message-Id: <20260324-astfleie2-v2-0-13008712da00@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1w54Ep-00071y-Db
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 12:04:17 -0400
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1774368232;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tggIhwU4ah+M7xrWWbu3SutZ4qjR8wO0kzZh129W/Js=;
+ b=IKDmyoIa9QUZtM10EJ0f+1rxICSGldx9DDwzlgsIO4nRsWhHRfeOVxIcBP/jmAwcpCu7I6
+ udf4tIRVlR6EAuB4J5Kv6ksq90pr3x7s6GuPhlEAv1zWh90WU2JT/ItMk4Zzxa54VD9x4Q
+ jGSSCFCtqBWH/QttQR6uCBNf7VDZIsE=
+From: Zenghui Yu <zenghui.yu@linux.dev>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ Zenghui Yu <zenghui.yu@linux.dev>
+Subject: [PATCH v2] target/arm: Don't skip access flag fault for AccessType_AT
+Date: Wed, 25 Mar 2026 00:03:21 +0800
+Message-ID: <20260324160321.96347-1-zenghui.yu@linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/03Myw6CMBCF4Vchs7akM14CrnwPwwLLVCaBlrRIM
- KTvbiUuXP4nJ98GkYNwhGuxQeBFoniXgw4FmL51T1bS5QbSdNGka9XG2Q4sTKo6M5vadjXhEfJ
- /Cmxl3a17k7uXOPvw3ukFv+tPQfxTFlSojG0R7YnIdtVtEPdaS3mMpfEjNCmlDzNihB+mAAAA
-X-Change-ID: 20260209-astfleie2-85eec9fd9213
-To: qemu-s390x@nongnu.org
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>, kvm@vger.kernel.org,
- Christoph Schlameuss <schlameuss@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1825;
- i=schlameuss@linux.ibm.com; h=from:subject:message-id;
- bh=COzvXf95VgYEGFT3vkIvilIgEuwTrj6d18C4DXXyebQ=;
- b=owGbwMvMwCUmoqVx+bqN+mXG02pJDJmHNrre+3LAj5krjetWQu1N0dMFwu0S/QcPMZU9/HbkS
- uOfRT+ud5SyMIhxMciKKbJUi1vnVfW1Lp1z0PIazBxWJpAhDFycAjCR8GyGf1YhkQU9OaxdTA8X
- fNbZdVSjL04i4KC2xpZUeeXCMoPrOgz/owONZs6Z0rV107Ml6+qjldt9oo+KfzhrkMl6e8LT5R2
- JXAA=
-X-Developer-Key: i=schlameuss@linux.ibm.com; a=openpgp;
- fpr=0E34A68642574B2253AF4D31EEED6AB388551EC3
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DoZzYelRpbj0VMS9CnGpYd2PlKxbtea-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDExOSBTYWx0ZWRfX7eOt/3jKOe2N
- Ie3h0tUC2cwuRS0jkYcEN/Hw3qa0jQGCvNXzUM5SXTkSOFpwClemCRqjuIaQHXlNo23AeljuC6J
- 1M/V7Are8pVRl2Bi3YeLttEo+mAJpnIbk+0S9iz4dgmTx4basFzAEFTRDTJpFHT4qaAxJeFKoRC
- utfnS7pRcEX7PVjrRFXBCKMRUMTl/ByK69Z5LQ3vrN7viVa5IizmRuG8bRjMXOvNpJNxYRFCPKn
- PMzfqAgqOU+y1VQAnOC9EuNBpAZKVz+RCJoia3sWCgy/g0G1H0tPcW8K/iCPmRcQ58u+3TV+GaC
- puE1BnUSSEEHaqxbhyMobehvnc/mr8CgJeKnXk9CwKegXCLSc9RwT+uD5eKUfUDPRH4gBdJkP/z
- akZaRPCyG7QvHbVcaaAi5PYSmij9guUyLJbCIqGYRI+X3LGwAmWJql3/1g0G5ehdYBohzv4r7ZI
- 5qapC53+SBEWCs1uPXQ==
-X-Authority-Analysis: v=2.4 cv=bLEb4f+Z c=1 sm=1 tr=0 ts=69c2b14c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=VwQbUJbxAAAA:8
- a=fVmZTmo3ZkCWnWwVhVYA:9 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: DoZzYelRpbj0VMS9CnGpYd2PlKxbtea-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_03,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603240119
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=schlameuss@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.173; envelope-from=zenghui.yu@linux.dev;
+ helo=out-173.mta1.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,54 +67,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the kernel headers to get access to
-KVM_S390_VM_CPU_FEAT_ASTFLEIE2 and allow passing the feature through to
-guest on IBM z16 onwards.
+As per the pseudo code from DDI0487 M.a.a (on J1-16021) AArch64.S1Walk():
 
-Cc: qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Eric Farman <farman@linux.ibm.com>
-Cc: Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Cornelia Huck <cohuck@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
-To: qemu-s390x@nongnu.org
-Cc: kvm@vger.kernel.org
+  // Check descriptor AF bit
+  elsif (descriptor<10> == '0' && walkparams.ha == '0' &&
+          (!accdesc.acctype IN {AccessType_DC, AccessType_IC} ||
+           boolean IMPLEMENTATION_DEFINED "Generate access flag fault on IC/DC operations")) then
+      fault.statuscode = Fault_AccessFlag;
 
-Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+an access flag fault should be generated for AccessType_AT, if the AF bit
+is 0 and !param.ha.
+
+Besides, we should continue to not raise the access flag fault for
+in_debug = true which is what we've been doing previously (before commit
+efebeec13d07) for LPAE and is what intention of the debugger access
+codepath is.
+
+Fixes: efebeec13d07 ("target/arm: Skip AF and DB updates for AccessType_AT")
+Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
 ---
-Changes in v2:
-- Isolate the linux-header update into its own commit (thanks Thomas)
-- Correct naming of the feature (thanks Hendrik)
-- Add S390_FEAT_SIE_ASTFLEIE2 to full_GEN16_GA1 only as it depends on
-  SIEF2 (thanks Christian)
+* From v1 [1]:
+  - handles in_debug = true (Peter)
 
----
-Christoph Schlameuss (2):
-      linux-headers: Update to Linux v7.x with KVM_S390_VM_CPU_FEAT_ASTFLEIE2
-      s390x/kvm: Add ASTFLE facility 2 for nested virtualization
+[1] https://lore.kernel.org/r/20260317122517.47627-1-zenghui.yu@linux.dev
 
- hw/s390x/sclp.c                     | 2 ++
- include/hw/s390x/sclp.h             | 4 +++-
- linux-headers/asm-s390/kvm.h        | 1 +
- target/s390x/cpu_features.c         | 3 +++
- target/s390x/cpu_features.h         | 1 +
- target/s390x/cpu_features_def.h.inc | 3 +++
- target/s390x/cpu_models.c           | 2 ++
- target/s390x/gen-features.c         | 1 +
- target/s390x/kvm/kvm.c              | 1 +
- 9 files changed, 17 insertions(+), 1 deletion(-)
----
-base-commit: fa4b2e31e649ba6fdb3eb2dd43952aad4a3bd675
-change-id: 20260209-astfleie2-85eec9fd9213
+ target/arm/ptw.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-Best regards,
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 8b8dc09e72..fa6db9e5a2 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2118,6 +2118,14 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     descaddr &= ~(hwaddr)(page_size - 1);
+     descaddr |= (address & (page_size - 1));
+ 
++    if (likely(!ptw->in_debug)) {
++        /* Check descriptor AF bit */
++        if (!(descriptor & (1 << 10)) && !param.ha) {
++            fi->type = ARMFault_AccessFlag;
++            goto do_fault;
++        }
++    }
++
+     /*
+      * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
+      * and it is IMPLEMENTATION DEFINED whether AF is updated
+@@ -2127,15 +2135,9 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         /*
+          * Access flag.
+          * If HA is enabled, prepare to update the descriptor below.
+-         * Otherwise, pass the access fault on to software.
+          */
+-        if (!(descriptor & (1 << 10))) {
+-            if (param.ha) {
+-                new_descriptor |= 1 << 10; /* AF */
+-            } else {
+-                fi->type = ARMFault_AccessFlag;
+-                goto do_fault;
+-            }
++        if (!(descriptor & (1 << 10)) && param.ha) {
++            new_descriptor |= 1 << 10; /* AF */
+         }
+ 
+         /*
 -- 
-Christoph Schlameuss <schlameuss@linux.ibm.com>
+2.53.0
 
 
