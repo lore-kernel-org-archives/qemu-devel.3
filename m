@@ -4,68 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 006D7F532DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 06:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB0EF532DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 06:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4upH-00068P-Qh; Tue, 24 Mar 2026 02:01:15 -0400
+	id 1w4urg-0006nA-N2; Tue, 24 Mar 2026 02:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1w4upG-00067w-8K; Tue, 24 Mar 2026 02:01:14 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1w4ure-0006mu-VV
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 02:03:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1w4upE-0005Sz-CR; Tue, 24 Mar 2026 02:01:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774332072; x=1805868072;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=e6V2pPK1eXiMyGY5xM3lOdxYLzEvakyzwuF8hOA+zDM=;
- b=D7wDf7hF5QEVrmmiEhDjY6qChkQ+J60EzxTBxWY0XeTyb1J9ApVNDD7Y
- HgBi7bIE9Fc+eYP93GdTUMzfYaWR7ApjBMf3P5KRyZmdDr+fNXR74/2v6
- jl+GOtX86Xh4JkYRg5h9yw36gVBmPObmUipSsaGd6zUG9wEIbMFZH74gV
- NirL8P29+ndAXOAMtHYLBo93RfkHAQdtlu+icuPWUTOYSrNfXVC+h174r
- BdvOOQ2IqZjNGTi77QoHFwZg9sKHtAKam1d6ulVNStC/h/JOwmIgApZxY
- vnDhi9KsWVbbn/MKXFkEKlx9wrr0MAcmw4Czn5urepC0xU8dVJqK+yv+T g==;
-X-CSE-ConnectionGUID: 0nmhgtFxREKcTti8BFyeBQ==
-X-CSE-MsgGUID: 5ei+A8ojQ8m9q8/WulGywQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11738"; a="86415816"
-X-IronPort-AV: E=Sophos;i="6.23,138,1770624000"; d="scan'208";a="86415816"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Mar 2026 23:01:09 -0700
-X-CSE-ConnectionGUID: JTpPg6dvQzSyhurp0yToKg==
-X-CSE-MsgGUID: jO/odzocSoKP479jJBiFaw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,138,1770624000"; d="scan'208";a="217686740"
-Received: from junjieca-mobl.ccr.corp.intel.com ([10.124.242.111])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Mar 2026 23:01:06 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, mst@redhat.com, yuri.benditovich@daynix.com,
- berrange@redhat.com, peter.maydell@linaro.org, qemu-stable@nongnu.org,
- junjie.cao@intel.com
-Subject: [PATCH v2] virtio-net: validate RSS indirections_len in post_load
-Date: Tue, 24 Mar 2026 14:01:00 +0800
-Message-ID: <20260324060100.1997-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.53.0.windows.2
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1w4urb-0005cR-N4
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 02:03:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774332217;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9ytuDdcNHqd++reaTdFAMTjikDK4r4bdTpQ/3uMsDII=;
+ b=PC1ro6Mp9Nq7H5NRSyXCBaooTLXAvpstA5QcxUIeptngDeoJfFh/PjuGUKWOoniSadiAza
+ t1pUq0+9v54yeTHqEgI5m9zS+bbkCT8jCpBSzCwqIROPPUF3AGWJrXl9g+ulnIRQs4vmod
+ IW0Ns9s2aDVOtbFGICkmmvPYB499gMo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-bLxePv82Mlefb1e7wPkvcg-1; Tue,
+ 24 Mar 2026 02:03:33 -0400
+X-MC-Unique: bLxePv82Mlefb1e7wPkvcg-1
+X-Mimecast-MFC-AGG-ID: bLxePv82Mlefb1e7wPkvcg_1774332212
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 790A9195608E; Tue, 24 Mar 2026 06:03:32 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.45.242.5])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BF38180058B; Tue, 24 Mar 2026 06:03:30 +0000 (UTC)
+Date: Tue, 24 Mar 2026 07:03:26 +0100
+From: Peter Krempa <pkrempa@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, devel@lists.libvirt.org,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH-for-11.0] qapi: Remove deprecated
+ SchemaInfoEnumMember::values field
+Message-ID: <acIpLpMOTCwKwDQt@angien.pipo.sk>
+References: <20260323152124.93051-1-philmd@linaro.org>
+ <8abf41ec-3f8f-4b3c-8966-f9309a404862@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <8abf41ec-3f8f-4b3c-8966-f9309a404862@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,107 +91,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_net_handle_rss() enforces that indirections_len is a non-zero
-power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
-virtio_net_rss_post_load() applies none of these checks to values
-restored from the migration stream.
+On Mon, Mar 23, 2026 at 20:19:45 -0700, Pierrick Bouvier wrote:
+> On 3/23/26 8:21 AM, Philippe Mathieu-Daudé wrote:
+> > SchemaInfoEnumMember::values field has been deprecated for
+> > more than 5 years (see commit 75ecee72625 "qapi: Enable enum
+> > member introspection to show more than name"), it should be
+> > safe enough to remove.
+> > 
+> > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > ---
+> >   docs/about/deprecated.rst       |  6 ------
+> >   docs/about/removed-features.rst |  7 +++++++
+> >   qapi/introspect.json            | 12 +-----------
+> >   scripts/qapi/introspect.py      |  3 +--
+> >   4 files changed, 9 insertions(+), 19 deletions(-)
+> > 
+> 
+> By curiosity, is this patch goal is simply to remove a deprecated
+> feature/code, or does it unlock something beyond it?
+> No judgment here, that's a genuine question, and both are valid reasons!
 
-A corrupted save file or crafted migration stream can set
-indirections_len to 0.  Even if it also clears redirect,
-virtio_load() calls set_features_nocheck() after the device vmstate
-(including the RSS subsection and its post_load) has already been
-loaded, re-deriving redirect from the negotiated guest features.
-When VIRTIO_NET_F_RSS was negotiated, redirect is set back to true
-regardless of the migration stream value.  The receive path then
-computes
+This patch also shaves off a nice 1.3k lines of duplicate data from the
+prettified reply from query-qmp-schema.
 
-    hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
+(In libvirt we capture dumps of the schema which we use for internal
+testing as well as validation that the monitor command handlers and
+commandline generators (by proxy) don't use deprecated and or
+non-existent members.)
 
-and uses the result to index into indirections_table, which was not
-allocated by the VMState loader when the element count is zero (see
-vmstate_handle_alloc()), resulting in a NULL pointer dereference that
-crashes QEMU:
+> Looks good to me, to the limit of my qapi knowledge :).
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-  #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
-  #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
-  #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
-  #3  nc_sendv_compat           ../net/net.c:823
-  #4  qemu_deliver_packet_iov   ../net/net.c:870
+On behalf of libvirt (and since I didn't look at the code at all; just
+at the output):
 
-The RSS subsection is only loaded when rss_data.enabled is true (via
-virtio_net_rss_needed()), and the command path always produces
-indirections_len in {1, 2, 4, â€¦, 128}, so an unconditional check
-cannot reject a legitimate migration stream.
-
-Factor the validation into virtio_net_rss_indirections_len_valid()
-and call it from both virtio_net_handle_rss() and
-virtio_net_rss_post_load().
-
-Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
-v1 -> v2:
-  - Drop the redundant == 0 check; is_power_of_2() already handles
-    it. [MST]
-  - Factor the validation into virtio_net_rss_indirections_len_valid()
-    and use it from both virtio_net_handle_rss() and
-    virtio_net_rss_post_load(), replacing the two separate checks in
-    the command path. [MST]
-
-v1: https://lore.kernel.org/qemu-devel/20260323131531.1976-1-junjie.cao@intel.com/
-
- hw/net/virtio-net.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
-
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2a5d642a64..f0e3beb290 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1374,6 +1374,11 @@ static void virtio_net_unload_ebpf(VirtIONet *n)
-     ebpf_rss_unload(&n->ebpf_rss);
- }
- 
-+static bool virtio_net_rss_indirections_len_valid(uint16_t len)
-+{
-+    return is_power_of_2(len) && len <= VIRTIO_NET_RSS_MAX_TABLE_LEN;
-+}
-+
- static uint16_t virtio_net_handle_rss(VirtIONet *n,
-                                       struct iovec *iov,
-                                       unsigned int iov_cnt,
-@@ -1411,14 +1416,9 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
-     if (!do_rss) {
-         n->rss_data.indirections_len = 0;
-     }
--    if (n->rss_data.indirections_len >= VIRTIO_NET_RSS_MAX_TABLE_LEN) {
--        err_msg = "Too large indirection table";
--        err_value = n->rss_data.indirections_len;
--        goto error;
--    }
-     n->rss_data.indirections_len++;
--    if (!is_power_of_2(n->rss_data.indirections_len)) {
--        err_msg = "Invalid size of indirection table";
-+    if (!virtio_net_rss_indirections_len_valid(n->rss_data.indirections_len)) {
-+        err_msg = "Invalid indirection table length";
-         err_value = n->rss_data.indirections_len;
-         goto error;
-     }
-@@ -3427,6 +3427,13 @@ static int virtio_net_rss_post_load(void *opaque, int version_id)
-         n->rss_data.supported_hash_types = VIRTIO_NET_RSS_SUPPORTED_HASHES;
-     }
- 
-+    if (!virtio_net_rss_indirections_len_valid(n->rss_data.indirections_len)) {
-+        error_report("virtio-net: saved image has invalid RSS "
-+                     "indirections_len: %u",
-+                     n->rss_data.indirections_len);
-+        return -EINVAL;
-+    }
-+
-     return 0;
- }
- 
--- 
-2.43.0
+ACKed-by: Peter Krempa <pkrempa@redhat.com>
 
 
