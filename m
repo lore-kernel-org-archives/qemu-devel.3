@@ -4,85 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C632FEC0FD
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FF0BFEC100
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w57XO-0000sk-RG; Tue, 24 Mar 2026 15:35:38 -0400
+	id 1w57Zi-0001mg-2l; Tue, 24 Mar 2026 15:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w57XM-0000sL-8I
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:35:36 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w57Zf-0001mL-Tm
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:37:59 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w57XK-0006nr-DS
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:35:35 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso1973855e9.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:35:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w57Ze-00078D-5z
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:37:59 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c7412b07f22so100292a12.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:37:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774381076; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gblUYUgsrCqtXGl8ZD9X32OLIa4OTZMm69dNXFCTbHl/Bwr+/ZuHhP4+Xp7XP+fG9i
+ Uk2kVYLPepre5IB+zHziMQBW3EZlus277+RRf5JCpbBB0/XIcFlhOxNjhNLNHbl60RQm
+ dqQuVEdga2x+zsbfhSCEFhpyR3th/4Q0HEFM23IRVDeTkB/ywgRB7f1cWfH95Kw8Mei2
+ x+gPLBSm85p3nqUXcOTelerbnj0P7apS+2+QUcr4U1bJkmLO+ENkNB+x64OxMniIGVLl
+ hIV3zr2J7XXeqJmS2GWZpTvdA9bcDj4aRAzDNkRFj9Rs+HqKuUYovqHZLzRWizsIC8q5
+ qijQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=E4jg651gMRtWJp/UaSbfM+bz2mMjaNZQ1mOz69vomQM=;
+ fh=uv1tA9xklsQ23QRRVuZ5ICrQzjqlbIWk8lB36BxPINw=;
+ b=OIGqJhGVYVaZqLADFZgwHQhpp2dsvqmgXjoQeavT4s2mAtAAxqCV984Y5Lahm05bQr
+ QdiXavPxKoG4zSpEB0yXB/gsleCgkwK5DU9uaI6ZZDAL9yTzkx4d7FjRG0reIkn2Pv4j
+ jNTvdwy0IhsVEpbYo3thlCrpVA90AOQL7Gi1AMPR5B1imcqCPTMdP1tW8i5ALC5vz4aI
+ MnhOwC5wKKLkOWCyhOKi98tCineTiZanvFh5sr9MNJQE+i2A75nm5SzOnoMeV/vg+QfV
+ bv6qDe3I30BHUXlzrfj639KwuVDc+cqvKXfF8pSdxvUwoJYn6Yc7wRnINcT1kwRGFV6+
+ /+tQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774380933; x=1774985733; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GDxBD2slxa/qr05PqNswk0PG2IQH7R7Cd9XrepJdiD8=;
- b=qylblbRjEOxEdh2ru7zklYHND23xru2y/YSNwflap1bKlTKAQPvjNAcKOPKastkkVI
- uG09/g+blA6g93EcE9Nr5npEoFy4AXkCu3Ez2cHih76a/qGQcC2D/3LAZ62v7Klrveyg
- 3Rg/LKrYdVClPBIvxlKhKsNtFTZ9rPpB7qRueFffD+hlkQotuEMk5/npfSKjaYCPMdL6
- vc7G44A88yYJtO/f7uuzvu4MNC0VvDuRvef6wnn3VH0BlFcyMlDL0EiDxa/MocwbJ2LN
- rR4kxySPcC7f47EEDwj4KhYCsUB+T1wHgCdTiaPsG32+Uf1qbdKGgY0lDh0Aul4uSIP2
- jrpg==
+ d=gmail.com; s=20251104; t=1774381076; x=1774985876; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=E4jg651gMRtWJp/UaSbfM+bz2mMjaNZQ1mOz69vomQM=;
+ b=UwIxxAP7Ta99Zu7HVyU7Ue9A1FH6Y+Ww9sUwxJYX5EEafDllgGchS+bKLAVbAS+Vvb
+ PbWT072efP9Pd5+SEgCFKkjMPb1CYuwFGBqzK4bPrXlfcWK8M11ZUJkNJKGA6KaFx19Y
+ 4+sBYQnLpwDNV8q5/9dDxyjk0g1NX2Le8giXRYJx+QSzbuZHzTCywuIrcu6gCRYNBtLw
+ WGKfG6zuhHGLqqPq6g3+At7ayyFX5McEuPpc+2JvdJu9uLxA2taKIeYI06ZXTxgxsMS/
+ 14Efr8f6heGJ4A43rojFxO3/f7drFresupJij3tjRpQy55tR6/4H91jgwSOnTGASjVcl
+ OHDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774380933; x=1774985733;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1774381076; x=1774985876;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GDxBD2slxa/qr05PqNswk0PG2IQH7R7Cd9XrepJdiD8=;
- b=Y/8C+12LBghc7irmimRFLlkqlM/zjpmxxvHyrVFC/p7oDOz3uQl58g9TpP4jpyUem3
- qWynJPZv7J/MNOA8UynJOaxtM4bHfBcmBx12ITgmM86RqJxISs+2atL3Mv+1d04x7gwp
- zKsYIhEkZJLFLHpW/sx2Fcat+iMJZVawdNXMqw5ZXeDj5RIcq+ez3DcTn7/X0QyXPtMW
- K95xg9gfyx4z9lS997M5Ijx7qjlKgUtWvk8urjGmB9DASPba58MpyJM5ZC3J5BjRmH8H
- Ua+EBGcCOvyxApWa9eMDO9YThKZGzf9n83vBCnIEa8LA59dDOlLVIWoTZdtX8MLN4aQT
- feGA==
-X-Gm-Message-State: AOJu0YzkzwTaoA7KPhnrbcjhnnU5efEvUObaE3mBg0ROnjbQ8Vz+5ZWm
- D0b9Q6dsUMmgbmas3UB0ayzHkn6o8BRs1NI3AnCDhHdQfl40ovWOw+S87UsCF1TxRqAew4zDuxm
- ouGHRHe0=
-X-Gm-Gg: ATEYQzwck+R0mGTUEjYlqf+oc/e9U/RIDjiMxk7zSntfzF44VmzsMXL6+zEIjUoDD5w
- n8g8Df1U3gYEW4ipyp2bwUmxzUf2RO0xTbs1gSez9nKKlA0etXb5r4INeAhZ117TMFLz/wEhj2I
- CfC4Z0B+rHry9x/gM22S+75q3ce8FVKj7X+mQihbYq5OlpIayxgJqlYI0Wge2xQV1Ean0C5V1Zm
- iKWSskHHbdzD/YDNeLO69jJ8cqrcFCXjDNvL5oX9Hr8buAXiCWaKd8c76yANWPvpo7GcuDzhWOm
- rZ9xI6u6DhqnT32YvloTnjJX/n1z8tfV4xhfB8E97z7vhhgJzIjEeezVVY9B7eeS3veg1gnMk2c
- irA+1ZkoGjaPLVXLpshVaPuonOI8waN7W2yK9kmV4dbBDJMIG68Dt1BbLB3LXAnRD9L2bVUzGPT
- QZiMR+BNHnQbHaKP6Ab2IuOezkDyq5HZZa3zWT7gFzrceJOpfG6CDUPaFnZOeaioKjeOOFVz5LC
- xaYEUEqe39Wq5+uUVFHJEUW0y7K+fk=
-X-Received: by 2002:a05:600c:5288:b0:485:3e00:944a with SMTP id
- 5b1f17b1804b1-48716075f66mr13447065e9.9.1774380932230; 
- Tue, 24 Mar 2026 12:35:32 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4871664ad92sm4318255e9.4.2026.03.24.12.35.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 12:35:31 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH] hw/net/rocker: Avoid double-free of l2_flood.group_ids
-Date: Tue, 24 Mar 2026 19:35:30 +0000
-Message-ID: <20260324193530.375628-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=E4jg651gMRtWJp/UaSbfM+bz2mMjaNZQ1mOz69vomQM=;
+ b=dttsX4XT2ULS5Ia4ivDASUbIpn2Yhv05y/aNBZqCTwaaSX6/rR5AUUM+5+d+ubN3b7
+ cyWuFY/ZmHxQNs3lwGxZC8ZjALm5IfUd3CWRyNiFu9UBsQL+WkvaHlbCwGT/tBbOLqc0
+ 16iCHIK8fe/MAP5RyG+YuboVFXTUILOwS5yxvPvSLea79c4OGKL4Ac1LJjrOtklsRVd/
+ TvHIQ22BLO3X9cb/bcX/DBv2jJROXqlNdFGwMNctktmNDPKwycATPpAZcBs0Ij5nUIfn
+ DokXulcZE9NittfKUraltnuGU0CxGHGTzX5x53wHMa3bgG3O8GfxGZsDqtpRKsljjuk6
+ 3FTA==
+X-Gm-Message-State: AOJu0YzNQTCfc5/FLwEahaZhj0GDqgGTL4aEbxp/NyCtw1MJ0L2sDaFA
+ kN51BgZ9LEOc1bk4Bfbog9pZB91jTRZAgFY1emG72aSihAQY0G1YD9JVltTnWwtlAAJq7FOzGZZ
+ aKjLEV1t5fiNvl+DizwLI/qHE+EKcs9c=
+X-Gm-Gg: ATEYQzzPgb6s16eVKE/MmY0QyyqAhC+fpZUQW4OusjpxYeCdTRIDuE69tuADfXS2Oy9
+ Xvm2dYWxgei6sTnc2gRHlebCznlgXh5SzMLa+y+5oKhco75NjFib0Y7rVARgbGjihRym0bDAk6Z
+ zGNzsdt1eYhZeVLmV9RLzfpRG2ZQvnbPCIf5BS0qKfw8bUWTtFwtzYEsdiOmk4n4rUnxTDzXGnA
+ uf4cKTfrC9FHB1jgv5JEyNE160PKZwCN+ciRTpDx7fV75Kcdr/0gjoZMmR8LHpQyzlrbMyvJPhd
+ /LSCH68Mtla4etiTbK4eWbxPz7dyUSCqNdqGTnw=
+X-Received: by 2002:a17:903:388c:b0:2ae:5346:d4e6 with SMTP id
+ d9443c01a7336-2b0a4e5ef51mr44588955ad.28.1774381075992; Tue, 24 Mar 2026
+ 12:37:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <76a65d4bf9062558256d29756e9e847d18692be9.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <76a65d4bf9062558256d29756e9e847d18692be9.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Tue, 24 Mar 2026 13:37:44 -0600
+X-Gm-Features: AaiRm52AasZXXiThThEEDgbVFmIXRy_rgBXc1i_srszpPpOfepAIHreEk1dR0gY
+Message-ID: <CAATN3NqtZ67=PuqAY7UdKNqSNXOhWJkFX9e8e=vLKL1MHwfFDQ@mail.gmail.com>
+Subject: Re: [PATCH 13/13] tests/hexagon: add tests for v68 HVX IEEE float
+ comparisons
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Content-Type: multipart/alternative; boundary="000000000000bb16fa064dca49a4"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,38 +117,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In of_dpa_cmd_add_l2_flood(), we allocate memory for the
-group->l2_flood.group_ids array, freeing any previous array.
-However, in the error-exit path we free the group_ids memory but do
-not clear the pointer to NULL.  This means that if the guest causes
-us to take the error-exit path and then later call the function
-again, we will try again to free the memory we already freed.
+--000000000000bb16fa064dca49a4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fix this by clearing the group_ids pointer in the error exit
-path, so we maintain the invariant of "either it points at
-allocated memory, or it is NULL" (both being valid to g_free()).
+On Mon, Mar 23, 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino <
+matheus.bernardino@oss.qualcomm.com> wrote:
 
-Cc: qemu-stable@nongnu.org
-Fixes: dc488f88806 ("rocker: add new rocker switch device")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3253
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/net/rocker/rocker_of_dpa.c | 1 +
- 1 file changed, 1 insertion(+)
+> Signed-off-by: Matheus Tavares Bernardino <
+> matheus.bernardino@oss.qualcomm.com>
+> ---
+>  tests/tcg/hexagon/hex_test.h      |  1 +
+>  tests/tcg/hexagon/fp_hvx_cmp.c    | 58 +++++++++++++++++++++++++++++++
+>  tests/tcg/hexagon/Makefile.target |  3 ++
+>  3 files changed, 62 insertions(+)
+>  create mode 100644 tests/tcg/hexagon/fp_hvx_cmp.c
+>
+> diff --git a/tests/tcg/hexagon/fp_hvx_cmp.c
+> b/tests/tcg/hexagon/fp_hvx_cmp.c
+> new file mode 100644
+> index 0000000000..e925c973f3
+> --- /dev/null
+> +++ b/tests/tcg/hexagon/fp_hvx_cmp.c
+> @@ -0,0 +1,58 @@
+> +/*
+> + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + *  SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <stdio.h>
+> +#include <stdint.h>
+> +#include <stdbool.h>
+> +#include <string.h>
+> +#include <hexagon_types.h>
+> +#include <hvx_hexagon_protos.h>
+> +
+> +#if __HEXAGON_ARCH__ > 75
+> +#error "After v75, compiler will replace some FP HVX instructions."
+> +#endif
+> +
+> +int err;
+> +#include "hvx_misc.h"
+> +#include "hex_test.h"
+> +
+> +#define TEST_CMP(VAL1, VAL2, EXP) do { \
+> +    ((MMVector *)&buffers[0])->sf[index] =3D VAL1; \
+> +    ((MMVector *)&buffers[1])->sf[index] =3D VAL2; \
+> +    expect[0].w[index] =3D EXP ? 0xffffffff : 0; \
+> +    index++; \
+> +} while (0)
+> +
+> +int main(void)
+> +{
+> +    HVX_Vector *hvx_output =3D (HVX_Vector *)&output[0];
+> +    HVX_Vector buffers[2], true_vec, false_vec;
+> +    HVX_VectorPred pred;
+> +    int index =3D 0;
+> +
+> +    memset(&buffers, 0, sizeof(buffers));
+> +    memset(expect, 0, sizeof(expect));
+> +    memset(&true_vec, 0xff, sizeof(true_vec));
+> +    memset(&false_vec, 0, sizeof(false_vec));
+> +
+> +    TEST_CMP(raw_sf(2.2),  raw_sf(2.1),  true);
+> +    TEST_CMP(raw_sf(2.2),  raw_sf(2.2),  false);
+> +    TEST_CMP(raw_sf(0),    raw_sf(-2.2), true);
+> +    TEST_CMP(SF_SNaN,      SF_SNaN,      false);
+> +    TEST_CMP(SF_INF,       SF_INF_neg,   true);
+> +    TEST_CMP(SF_INF_neg,   SF_INF,       false);
+> +    TEST_CMP(SF_SNaN,      SF_QNaN,      false);
+> +    TEST_CMP(SF_QNaN,      SF_SNaN,      true);
+> +    TEST_CMP(SF_QNaN,      SF_QNaN_neg,  true);
+> +
+> +    pred =3D Q6_Q_vcmp_gt_VsfVsf(buffers[0], buffers[1]);
+> +    *hvx_output =3D Q6_V_vmux_QVV(pred, true_vec, false_vec);
+> +
+> +    check_output_sf(__LINE__, 1);
+> +
+> +    puts(err ? "FAIL" : "PASS");
+> +    return err ? 1 : 0;
+> +}
+>
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 814f19afc5..3190a0e75c 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -2059,6 +2059,7 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
- err_out:
-     group->l2_flood.group_count = 0;
-     g_free(group->l2_flood.group_ids);
-+    group->l2_flood.group_ids = NULL;
-     g_free(tlvs);
- 
-     return err;
--- 
-2.43.0
+We should add some half-float tests as well as and/or/xor versions.
+Also, check the FP flags.
+Finally, we should add another test for bfloat.
 
+Thanks,
+Taylor
+
+--000000000000bb16fa064dca49a4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 23,=
+ 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino &lt;<a href=3D"mailto:m=
+atheus.bernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Sign=
+ed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheus.bernard=
+ino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm.com=
+</a>&gt;<br>
+---<br>
+=C2=A0tests/tcg/hexagon/hex_test.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 1 +<br>
+=C2=A0tests/tcg/hexagon/fp_hvx_cmp.c=C2=A0 =C2=A0 | 58 ++++++++++++++++++++=
++++++++++++<br>
+=C2=A0tests/tcg/hexagon/Makefile.target |=C2=A0 3 ++<br>
+=C2=A03 files changed, 62 insertions(+)<br>
+=C2=A0create mode 100644 tests/tcg/hexagon/fp_hvx_cmp.c<br>
+<br>diff --git a/tests/tcg/hexagon/fp_hvx_cmp.c b/tests/tcg/hexagon/fp_hvx_=
+cmp.c<br>
+new file mode 100644<br>
+index 0000000000..e925c973f3<br>
+--- /dev/null<br>
++++ b/tests/tcg/hexagon/fp_hvx_cmp.c<br>
+@@ -0,0 +1,58 @@<br>
++/*<br>
++ *=C2=A0 Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries=
+.<br>
++ *<br>
++ *=C2=A0 SPDX-License-Identifier: GPL-2.0-or-later<br>
++ */<br>
++<br>
++#include &lt;stdio.h&gt;<br>
++#include &lt;stdint.h&gt;<br>
++#include &lt;stdbool.h&gt;<br>
++#include &lt;string.h&gt;<br>
++#include &lt;hexagon_types.h&gt;<br>
++#include &lt;hvx_hexagon_protos.h&gt;<br>
++<br>
++#if __HEXAGON_ARCH__ &gt; 75<br>
++#error &quot;After v75, compiler will replace some FP HVX instructions.&qu=
+ot;<br>
++#endif<br>
++<br>
++int err;<br>
++#include &quot;hvx_misc.h&quot;<br>
++#include &quot;hex_test.h&quot;<br>
++<br>
++#define TEST_CMP(VAL1, VAL2, EXP) do { \<br>
++=C2=A0 =C2=A0 ((MMVector *)&amp;buffers[0])-&gt;sf[index] =3D VAL1; \<br>
++=C2=A0 =C2=A0 ((MMVector *)&amp;buffers[1])-&gt;sf[index] =3D VAL2; \<br>
++=C2=A0 =C2=A0 expect[0].w[index] =3D EXP ? 0xffffffff : 0; \<br>
++=C2=A0 =C2=A0 index++; \<br>
++} while (0)<br>
++<br>
++int main(void)<br>
++{<br>
++=C2=A0 =C2=A0 HVX_Vector *hvx_output =3D (HVX_Vector *)&amp;output[0];<br>
++=C2=A0 =C2=A0 HVX_Vector buffers[2], true_vec, false_vec;<br>
++=C2=A0 =C2=A0 HVX_VectorPred pred;<br>
++=C2=A0 =C2=A0 int index =3D 0;<br>
++<br>
++=C2=A0 =C2=A0 memset(&amp;buffers, 0, sizeof(buffers));<br>
++=C2=A0 =C2=A0 memset(expect, 0, sizeof(expect));<br>
++=C2=A0 =C2=A0 memset(&amp;true_vec, 0xff, sizeof(true_vec));<br>
++=C2=A0 =C2=A0 memset(&amp;false_vec, 0, sizeof(false_vec));<br>
++<br>
++=C2=A0 =C2=A0 TEST_CMP(raw_sf(2.2),=C2=A0 raw_sf(2.1),=C2=A0 true);<br>
++=C2=A0 =C2=A0 TEST_CMP(raw_sf(2.2),=C2=A0 raw_sf(2.2),=C2=A0 false);<br>
++=C2=A0 =C2=A0 TEST_CMP(raw_sf(0),=C2=A0 =C2=A0 raw_sf(-2.2), true);<br>
++=C2=A0 =C2=A0 TEST_CMP(SF_SNaN,=C2=A0 =C2=A0 =C2=A0 SF_SNaN,=C2=A0 =C2=A0 =
+=C2=A0 false);<br>
++=C2=A0 =C2=A0 TEST_CMP(SF_INF,=C2=A0 =C2=A0 =C2=A0 =C2=A0SF_INF_neg,=C2=A0=
+ =C2=A0true);<br>
++=C2=A0 =C2=A0 TEST_CMP(SF_INF_neg,=C2=A0 =C2=A0SF_INF,=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0false);<br>
++=C2=A0 =C2=A0 TEST_CMP(SF_SNaN,=C2=A0 =C2=A0 =C2=A0 SF_QNaN,=C2=A0 =C2=A0 =
+=C2=A0 false);<br>
++=C2=A0 =C2=A0 TEST_CMP(SF_QNaN,=C2=A0 =C2=A0 =C2=A0 SF_SNaN,=C2=A0 =C2=A0 =
+=C2=A0 true);<br>
++=C2=A0 =C2=A0 TEST_CMP(SF_QNaN,=C2=A0 =C2=A0 =C2=A0 SF_QNaN_neg,=C2=A0 tru=
+e);<br>
++<br>
++=C2=A0 =C2=A0 pred =3D Q6_Q_vcmp_gt_VsfVsf(buffers[0], buffers[1]);<br>
++=C2=A0 =C2=A0 *hvx_output =3D Q6_V_vmux_QVV(pred, true_vec, false_vec);<br=
+>
++<br>
++=C2=A0 =C2=A0 check_output_sf(__LINE__, 1);<br>
++<br>
++=C2=A0 =C2=A0 puts(err ? &quot;FAIL&quot; : &quot;PASS&quot;);<br>
++=C2=A0 =C2=A0 return err ? 1 : 0;<br>
++}<br></blockquote><div><br></div><div>We should add some half-float tests =
+as well as and/or/xor versions.</div><div>Also, check the FP flags.</div><d=
+iv>Finally, we should add another test for bfloat.</div><div><br></div><div=
+>Thanks,</div><div>Taylor</div><div><br></div></div></div>
+
+--000000000000bb16fa064dca49a4--
 
