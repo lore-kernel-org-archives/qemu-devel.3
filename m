@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80AA1F532CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 03:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E62F532C9
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 03:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4sGI-0006Vm-Bq; Mon, 23 Mar 2026 23:16:58 -0400
+	id 1w4sJB-0007BQ-M7; Mon, 23 Mar 2026 23:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4sGG-0006VR-NP
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:16:56 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1w4sJ4-00079p-3E
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:19:51 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4sGD-0006Os-6H
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:16:55 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-35b88a4f123so2364604a91.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 20:16:52 -0700 (PDT)
+ id 1w4sJ2-0006sJ-A1
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:19:49 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-35a094cc3e9so3322869a91.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 20:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774322211; x=1774927011; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774322387; x=1774927187; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kiIKXuCPvyAHNddXS0qqhzacmveeGDjRpNLclwSiWG0=;
- b=qKgez1yNdQvdaCRGVcZCKodwk9eHiBp5zO9X2dm1+ARyX4pgnYKqqpn60dI28Qy+wZ
- GXHRdsJ3BoJIL15ksUZZ+0Sxv7dQrugnh5joe5ckdiFXZtRUTeuv+BmkaxQjnZ82ES2w
- jhn1Kk+o2TDMi/kF1689IEUOOAJqrrWB+0X+8U71LsekJX4xolj4R0tUzQvVS4Wqtdcq
- j4QYQV8jsnZvFp8ylD1CebdOLxgI+eWea6nKZNb24s6+9JqKbpoVbfmRE/6wFPw7q6ee
- eB6aKI7a6RsGUhuygt/mp3jSQH0m+vt2MsAk1s3ASzbCPAJXgFkVOOPNzb1jjo+bPaPd
- pJdQ==
+ bh=x5YUaxV2hMWhnd65GT9SAc14OKLNLY196qtkPW8xwVI=;
+ b=v8zytQcX+y3e31kZ4ErZyS3vexXqd2gPEJoW/IoDGfNHeR9H+Ja/nJoY6ps08EoyIQ
+ J7OGbuCNooIeK+RnSlHVlRh6Jedtxthu9hYUAY2B7pBwoM5ntkt8XwmLVysSD4TscLQz
+ 2+7Y19AUhztNIrBe9I1iZD1qCHBVd3H0T+g6nmQcEkgDsv1Y9Mf3rejXf+xbh1G41d9L
+ OTOOQJ+bGnPfKsuFsN14VCW7DQOzPrlLMZ4GWW5J6IMo2lHuvbiYT9nKQrTEKN77SjOr
+ htSnDuC7hMOP3HVwTfDDlAI/Tf4goHXwYV9qBKi3mnQXxFVqj2j8W+F6o2acsHqSCNAH
+ speg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774322211; x=1774927011;
+ d=1e100.net; s=20251104; t=1774322387; x=1774927187;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kiIKXuCPvyAHNddXS0qqhzacmveeGDjRpNLclwSiWG0=;
- b=UqWrBQTotVm8mseKTb5+//OjCBBVFgrrwDvCz0ceBvsR/5uGKq/PsP6jq4TOV9I41c
- BFfJ/2cgha2/rN3ipBMHqZWO1SC6U04B1LhV1ZrPdtBOBLBZYE7vJRpT272P9vNoOl09
- /vdiCmXnF7PP0170BylUPjQdoY2jo8Vx1UC5yS0jquRhOvBkTxyKS+49FibNnPlT7Xud
- m2We6KUKyDVf9Ao7eT2ZfwikDM15qhyAP3NPCrcN4OogcDUc2BqcPYjBoovHbfDaLiW4
- POTgfE20kAz36dKrDuO0ROy6n2m59I6WVVE1hHr/Y/6TL/lCmZNp3LF9ovLQjbYnsOp5
- 5NzA==
+ bh=x5YUaxV2hMWhnd65GT9SAc14OKLNLY196qtkPW8xwVI=;
+ b=nfhINzwQSz+jvdVxkRLqzGfIJmx/rKAjB6qccky/3qhBEzeXg22UdOGekfcpqG4M2c
+ l3gYJlSID0BG/VW29hE6AaH+dIIvH236MIV3gruyC7WGHwHgTSxUcVRj589JLPirUx8F
+ S6fHivdtZT95j0oR/p2bONTgQRgAU6wF7op5LVXbcpMGhLyvixWyIfVDI3mE/I3tjguU
+ Xtv74NsrYwOSaP/1qlGbtnCyduLorpuHxhM05Gj9O78T/HYxEEYajeR04d+nHCHK6EbX
+ v6p2ezamKCCHSp0HF7qOWzt50Nmb/Q36cPvj5W+yaZ8Jq3OPJq1KN9pJVUiUj/2yUAyN
+ Y2Ag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvp6f31R64jZsspO9cPc8sBLuk4SVgB9EuAMXvcXt1UYkzZ53PgMGNSK1WjuRyXuibRwxKioS44uQQ@nongnu.org
-X-Gm-Message-State: AOJu0Ywk40UvO/xBbOpSyaGhUhzWjZIxuDBwvFi+sCov6pGPTHgrDLCd
- /AX8EPf6jVZx9qqcZyqEaNSIkjJHHnLqbJ4T7v3uNosyW4FSUzcdVXJEoHO06TwGq6s=
-X-Gm-Gg: ATEYQzwWP0s71KEp3ZM0B3MhkWHU9xELnNiLjHo7+ou6vZEqcz4k5Kwt2d279rpyH6A
- BzI8o6jaTAiS7myCB4nbw+e3dnMdBiahPpXG+P+xaelrl8hHPlm4IDgP/GJVa4bhYfb/Ya90/j3
- ZpWVqJhn87TY7mkpGqDoojvyDjcbRZoojx1CAkfex0314HrJgdMoqAj2zzeGB3XG06YjymmBfYz
- E+n4F3VhSmHSa5XKQn9OXLnPbzxxqFu9NXqfTPRgKMSAscRpaUYCBVDTzUtqiKwzzKEqjmitH5Z
- 7xf2iVmAQWpPZ3oOSwl1Eg9rD7XT7DcBNCNR3AtrNgjnTsMY600/COeVLcifhb/rFme/B7VgUHY
- vuzHFsFM1uoFBXXiDdxOQekyg/Rezyo8Vqe/cYR9sgLuddI56XNJE2OBbBvk+QvVWMSWKv/KG66
- dKRkuWkHrMyvZhnHuWUU5BAvzAWOknRJZck5nY8naS/x6cSaokAE5tPXwQ96bbxIq6EQE5chzf0
- J17wjA=
-X-Received: by 2002:a17:90b:528b:b0:34a:c671:50df with SMTP id
- 98e67ed59e1d1-35c009133c0mr1468363a91.17.1774322211312; 
- Mon, 23 Mar 2026 20:16:51 -0700 (PDT)
+ AJvYcCWBHdEw6K9Tp7uvbjYiWjc0eLoWgJr7Ep6Vo39ZwI0t69jZJ3xEipv83PWOmwGU6m2M80V32WAOwgcu@nongnu.org
+X-Gm-Message-State: AOJu0YyXAoPt3Vk9pOPriySZ3hYo5DuPsp8j7YxHcGqSyb6fYY1EFCSY
+ 5li3BeB68G/3J7dbEUh0ECk+UCouwfYk/RO6Wx898bM7uMNdHlVHEL6ku0GPajZLCcAeZ+7QhkF
+ xmout+nY=
+X-Gm-Gg: ATEYQzyBGmozvGQGNdH9TMV03aReuSxMHI4xCAxIUVlmoaotr9UcFgM+TMDF0/MW7/n
+ BkO97ogp5qb54n7f0fZsikgKmV2AOXNiYU9DFAbpMln2BRavI+b1W6Q/IeQ087zvy+bzojnNfbN
+ YNs0vwaH1L/3UlTkmL8R/BKsC+omFC9YXjVPFi3yNkWSSywWL9G24CG6x3IAzh3jy+Kv9mp+ZQL
+ 6wWLD1HuA8VMhCTckNg9i69j5ys+huPWs33K8JJmzawO13cMMPIlii+u2cgjtbrOQJI9i8aZn8d
+ ohaP3v5BXt+RGvmnzukOGjtE+GT8l88NKRIoRuvV8krQSXFX4xLX3iEdpuYeZgr8ZSGbeF9Rsz7
+ Kl2SG9FWqmfyaM7fGd68EzYCuLV934c44DCe0n3Jf442h9IN17v+N6KHnpeXLYexwfhqPW6M27X
+ wmdCcmkFlHhnY8LiR7dO0F1RL87e8IWkThJXpYQAXUD7dPKUVGYDE2M1SrgDS3TOYi0QoR
+X-Received: by 2002:a17:90b:3908:b0:359:8411:a40 with SMTP id
+ 98e67ed59e1d1-35bd29a00f1mr13744826a91.0.1774322386713; 
+ Mon, 23 Mar 2026 20:19:46 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c03172ec1sm553756a91.16.2026.03.23.20.16.49
+ 98e67ed59e1d1-35c031ed064sm548065a91.9.2026.03.23.20.19.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 20:16:50 -0700 (PDT)
-Message-ID: <0ae1679b-fe47-4209-a540-43f2f23058ba@linaro.org>
-Date: Mon, 23 Mar 2026 20:16:49 -0700
+ Mon, 23 Mar 2026 20:19:46 -0700 (PDT)
+Message-ID: <8abf41ec-3f8f-4b3c-8966-f9309a404862@linaro.org>
+Date: Mon, 23 Mar 2026 20:19:45 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0] monitor: Correctly display virtual addresses
- while dumping memory
+Subject: Re: [PATCH-for-11.0] qapi: Remove deprecated
+ SchemaInfoEnumMember::values field
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, "Dr. David Alan Gilbert"
- <dave@treblig.org>, BALATON Zoltan <balaton@eik.bme.hu>
-References: <20260323095020.66658-1-philmd@linaro.org>
+Cc: Eric Blake <eblake@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ devel@lists.libvirt.org, Markus Armbruster <armbru@redhat.com>
+References: <20260323152124.93051-1-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -115,11 +115,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260323095020.66658-1-philmd@linaro.org>
+In-Reply-To: <20260323152124.93051-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,42 +142,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/23/26 2:50 AM, Philippe Mathieu-Daudé wrote:
-> While reworking the address format width in commit 6ad593a75a8 we
-> introduce a bug, leading to addresses being displayed with too many
-> zeroes:
+On 3/23/26 8:21 AM, Philippe Mathieu-Daudé wrote:
+> SchemaInfoEnumMember::values field has been deprecated for
+> more than 5 years (see commit 75ecee72625 "qapi: Enable enum
+> member introspection to show more than name"), it should be
+> safe enough to remove.
 > 
->    $ qemu-system-ppc -monitor stdio -S
->    QEMU 10.2.90 monitor - type 'help' for more information
->    (qemu) x/x 0
->    0000000000000000000000000000000000000000000000000000000000000000: 0x00000000
->    (qemu) x/x 0xfff00000
->    00000000000000000000000000000000000000000000000000000000fff00000: 0x60000000
-> 
->    $ qemu-system-ppc64 -monitor stdio -S
->    QEMU 10.2.90 monitor - type 'help' for more information
->    (qemu) x/x 0
->    00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000: 0x00000000
-> 
-> Correct the format width to restore the previous behavior:
-> 
->    $ qemu-system-ppc -monitor stdio -S
->    QEMU 10.2.90 monitor - type 'help' for more information
->    (qemu) x/x 0
->    00000000: 0x00000000
-> 
->    $ qemu-system-ppc64 -monitor stdio -S
->    QEMU 10.2.90 monitor - type 'help' for more information
->    (qemu) x/x 0
->    0000000000000000: 0x00000000
-> 
-> Fixes: 6ad593a75a8 ("monitor/hmp: Use plain uint64_t @addr argument in memory_dump()")
-> Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   monitor/hmp-cmds.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   docs/about/deprecated.rst       |  6 ------
+>   docs/about/removed-features.rst |  7 +++++++
+>   qapi/introspect.json            | 12 +-----------
+>   scripts/qapi/introspect.py      |  3 +--
+>   4 files changed, 9 insertions(+), 19 deletions(-)
 > 
 
+By curiosity, is this patch goal is simply to remove a deprecated 
+feature/code, or does it unlock something beyond it?
+No judgment here, that's a genuine question, and both are valid reasons!
+
+Looks good to me, to the limit of my qapi knowledge :).
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+Regards,
+Pierrick
 
