@@ -4,154 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57486FEC0FC
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 20:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E7BFEC0FC
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 20:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w58Jq-0002qI-6C; Tue, 24 Mar 2026 16:25:42 -0400
+	id 1w58gJ-0000jD-Al; Tue, 24 Mar 2026 16:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w58Jo-0002p0-Gy
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 16:25:40 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1w58gH-0000iX-Le
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 16:48:53 -0400
+Received: from mail-southcentralusazon11011002.outbound.protection.outlook.com
+ ([40.93.194.2] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w58Jm-0000Sf-T3
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 16:25:40 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62OJCfh1989023
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 20:25:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Rfxn9+gF7BO8MRYW1PcEqaEGBMjnj9/muwmL3Q7QEAE=; b=fxcKFRM5d4qgReOm
- 4TTHHE9Kqu+lCTpstEf1x478MwYlG57mYWBCxmc3ny8/hg5c5q2qh2bknHVP94im
- CGd03hxmArK5UNhfHaBCOQEjPVVLIb2pps0tmG6y644VTLhd51Y9dwk0EL2V9s5l
- AuORX0GIkBKLKyvI8Er8xe8y4KVChvKFNx1fUMyYicsn90cNF+K5TiEKqACzA+Dx
- H6eoyGuUrtTSW938KlKtQbQODXIOwxsHtkKKgOYMR8xW6mOklTfTmcjccY19O6yD
- KQ5wtv+RFuDU02m8NH5AlYovB3+pKW1vwuVaaAlZnI23MBDpwCRfEfQp1M/EVwp0
- qi2wYg==
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d3u0m1s3g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 20:25:35 +0000 (GMT)
-Received: by mail-oa1-f70.google.com with SMTP id
- 586e51a60fabf-40ed781f705so47985985fac.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 13:25:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774383935; cv=none;
- d=google.com; s=arc-20240605;
- b=KO1Mmls5TiCSnL7cOgiZn7Doeb/HlNIDvhiitwiRikfksYvpyughSa51YeuN7qYVFZ
- XQKF4dKYpKrNCFxoPsvndBnoPAjSJ2rqzzbr7hZ//L2NvTJrCSi2nq40v6jcimlyabqO
- Ko1sQ+o7xCqWPA7YO6s5b+RsD3nrRr6sntmSij29W0kL+Fod/JvPlbPYzw5w/93fk6Fp
- s8pUO+j89QfKqx0GUQX/izwVEhDr5UKU6yOg+CNbqkiV1XDWpQAF/4e45sWIwEgG/6id
- CkqkbyPGE5jfC94tVRzTYOJUb+P5kYoi8DTJV1VJjeQbArdkxVpMGwbJvEy5E5XdR2P+
- JmUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Rfxn9+gF7BO8MRYW1PcEqaEGBMjnj9/muwmL3Q7QEAE=;
- fh=GIsXnfQ1rlTLuqMVRnuWQs1/XCKcI3goSMKmOb1sBfk=;
- b=eRETFrzbKxD4AJul4WUdfYPpuS+tybY7RU9gwBLnKfv2l3WDDVjooclqb+LvYIeiQn
- OcwRBDJ/ReOwreOMKpJBtj8aBrdXfU6WbS3lZaWx+4Pe0nPQ0Ahk6BXY9o9bqXTmStdo
- w8YdzbWWstcSysBcK7tio+qpi5OQ0jUq4dZsWWqA0FaouguwASqCssxNliAR0ht0P4iu
- SOqJvDnSl3yTK8iqiNEHxkBvF/nOfAZc+Oa0ILgspBSXgWU/z/FHaHseEP6l4rWpa9kV
- 7VGE4xA/fJdbsWU5T9usDpCvBdhMoFgP4GcFgT+MtYXI8j71es2PbeHyp3oYtKhgMMq4
- +wSA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1774383935; x=1774988735; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Rfxn9+gF7BO8MRYW1PcEqaEGBMjnj9/muwmL3Q7QEAE=;
- b=BuYnhQntns9hXFIeR5SftQALbxEKXlyssWtZxidcfNThyLCWIr2fOqz9Z6UfbtaKFp
- W5GQYtrB9S/it3SCl1OB3CQhbUZSjyYBWLDwkSi4YTkpiZW4pRM+8Gf0RbSFMPYdjuDU
- mLj1MyMZWnfPuHNors79o1/I4KOuwv7K3IKNCLxm/w5zC2aNvxoUAe7tl6cmk6Dxk62C
- Ra9ZnJt/u7/VmdrbW1lLIryhIpIi8d0mTo5YEgcaP/jNNumIar77rQVBoAWAPnRrr/lH
- F9PaMIQnAALkQ2ORj0jT5hmprorJOem/xGCJm/glFOF7d7c6Z5JEPI2p6ccNFYkKk0kB
- kkXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774383935; x=1774988735;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Rfxn9+gF7BO8MRYW1PcEqaEGBMjnj9/muwmL3Q7QEAE=;
- b=HwNBPMSObw1wcxXPq8RLv2fE1bvrkGupLj6FdyCaqj8gT00r486IZ4U5RalVQSGyUy
- ApBbcY2bxl8TBufgtBfKD9JYVsclomC7dM9IQeoPwtWzP8+kcwp5zBO0TMYMbxvvTAU8
- ZFpIiwK3zleOO2SqTQQyrpYSZDjKFWRmtDcRdfX2n9oexEUv46FRUA+FxGofxB3C3MIH
- 0+6R8/0nyCn2IH1NHwK64mhyT4VP1AM0iktmgd8zxUgCvbuXxQNMLlL4LlwtokLhb9+U
- 1bJcSKua/b8QzXmg18dAZIB4nzlA1QBPUeJv12peneASNqOgl6bQW/S4dVdtk46N6sZf
- /7ZQ==
-X-Gm-Message-State: AOJu0YzXho5u0H099v6axoLp4681qq5VwfxxMnjHZZcjezVxMegjQElY
- 9pD2nt/35AkXNat2vDTI+Bt5FufJUcHg8bDSvXUGqmNQkCUoY8iAGI1YVFM5OehoQMmou97rVEn
- 5zhYAsF1hHehuMj7KxhlQXXtjvBJOpOIvA2tU9GPlKWWYquL+aazC7+HjlI8Zzy4uUQ3viTf17O
- a/fI/lVWHINbVw7Xk76now8MKJggsB72/P
-X-Gm-Gg: ATEYQzxwU5SGzS5hUNiNZUa9Zdmc0i8mXsFY6JBtg6WwRkQGKyqGo3fnLt07sT7HKJS
- yM1vhWhuGdBvw1dIIKjcgIoFEtSVqrjcCxn9SC86ty9vQF/HGwrTFANpyvVnsIp01gl097/zzpf
- 1TIhVETuXxJRUp5Uiv8ZaAsRH5BdBHA1jloxEPONbmXeS41juaLr1wo3xjbNkfBzYy0efDr5C9g
- W+P2Ks=
-X-Received: by 2002:a05:6820:a0c:b0:67b:c368:1369 with SMTP id
- 006d021491bc7-67dff5a0440mr640347eaf.67.1774383935034; 
- Tue, 24 Mar 2026 13:25:35 -0700 (PDT)
-X-Received: by 2002:a05:6820:a0c:b0:67b:c368:1369 with SMTP id
- 006d021491bc7-67dff5a0440mr640330eaf.67.1774383934715; Tue, 24 Mar 2026
- 13:25:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1w58gD-0004a4-AT
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 16:48:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VYUQZPjGAH71d40DMnWDI3jA1OofJJzBehJ0hHc+isOrC3Ax7xMrrkHjioSc5keXOkXpbjE1z9WcJj1g+x1+YAqMviIjrqvQBjggwANJyaZoMdxbrlJYZSyMH6YJ/jtYBOa3S0QtIAioi4xEtp+58340c6tJKd36HuVVBH3xxExp7bss6Ss/9tWr3eH1dNe6IjS9BdOhZooow4ljcATMkCk7cp+vhBp0lDMrOkmJagJM5yvobR1zssUre+3oCQorFpwzbpxIquaJ5L4LA1cEGfQfamQIz8dcOLREp7MmUOWmMLMkbCf/Ltik2mor01gi/oskBq/nC/OmKE03TdwzuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=k+6G7oP2bhkfS0Pgs/p8MjzSGJdkih9hok4//4tvh10=;
+ b=nZ0tPzp7zLApuBRj4r8obwiPRBqLJjm8D3P8rE3D4d2FvR4KSb8XszCgSlvWhJ12pUO4GkOFL73G/UyUSbZEgnJYRl01Fp1eyFOCaD9xGaFRX/hlNG2Bp7wnJD48dCjKQL2MDtsXm0vhpwrZseQYu4axDwcVCnvnRjNlmZjsflg6ZB9UDUkYDinNjLJv57K2f+8yrh1FFMI7vB7sp2yr/nAsV7KHlASOh1m3OavzUte6FOB7GXBmzlueXTU1C74i4Di+IMrTEaZIZTdqP6DyUj+p4sthdY02Bg4fRtOEEAHH1d8FSPNE/0gcZBOxAvI5kKYtmcBWqhdxKgjISnilhw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=k+6G7oP2bhkfS0Pgs/p8MjzSGJdkih9hok4//4tvh10=;
+ b=gEy6Pjy17GnXbz3W2WHqGMvwi9EsS8AtcBtxiRmtu/MfL7fenZz+BVrZ5m5G1aafnum7M9DhmFJPfvUM2EIxLWVm2/S/+ASl9SiN660wqrMAOl+p+eFHhTnFuLg/5eynsczwqcWFN7hxXZKSAIb4AwCFuvV8qS2SDVG26yU2Z7s=
+Received: from BL1PR13CA0220.namprd13.prod.outlook.com (2603:10b6:208:2bf::15)
+ by IA0PR12MB8862.namprd12.prod.outlook.com (2603:10b6:208:48e::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Tue, 24 Mar
+ 2026 20:43:37 +0000
+Received: from BL02EPF0001A0F9.namprd03.prod.outlook.com
+ (2603:10b6:208:2bf:cafe::ef) by BL1PR13CA0220.outlook.office365.com
+ (2603:10b6:208:2bf::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9723.31 via Frontend Transport; Tue,
+ 24 Mar 2026 20:43:31 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL02EPF0001A0F9.mail.protection.outlook.com (10.167.242.100) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9723.19 via Frontend Transport; Tue, 24 Mar 2026 20:43:36 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 24 Mar
+ 2026 15:43:36 -0500
+Date: Tue, 24 Mar 2026 15:43:19 -0500
+To: <qemu-devel@nongnu.org>
+CC: <peter.maydell@linaro.org>
+Subject: [ANNOUNCE] QEMU 11.0.0-rc1 is now available
+Message-ID: <ijk43fnzhbaxmlufnpnfpg2fevvwsskidtgqtta6lxh2wykrfv@4hy5mhglcfto>
 MIME-Version: 1.0
-References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
- <c47bfbfbd95829c8493be298a9fb1f49a6584308.1774271525.git.matheus.bernardino@oss.qualcomm.com>
- <CAATN3NpxMXer5jUD=kpf7aYK8QXRMcxjhzdZXDvPtix=UYK1HA@mail.gmail.com>
-In-Reply-To: <CAATN3NpxMXer5jUD=kpf7aYK8QXRMcxjhzdZXDvPtix=UYK1HA@mail.gmail.com>
-From: Matheus Bernardino <matheus.bernardino@oss.qualcomm.com>
-Date: Tue, 24 Mar 2026 17:25:23 -0300
-X-Gm-Features: AQROBzBdN4SGlLtpP1V9RUqoG7MC1vX1pYDrSJxzj93b49nIC4BpOLGyIuHanhE
-Message-ID: <CABrGZ+E58Vv5L_fdrFD5QRZT0=6-2ZXSpNT-tLV6=CnKAF1kbQ@mail.gmail.com>
-Subject: Re: [PATCH 06/13] target/hexagon: add v68 HVX IEEE float misc insns
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=IY6KmGqa c=1 sm=1 tr=0 ts=69c2f33f cx=c_pps
- a=nSjmGuzVYOmhOUYzIAhsAg==:117 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=YMgV9FUhrdKAYTUUvYB2:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=YspN8EcahtHjA50IrUsA:9 a=QEXdDO2ut3YA:10 a=1zu1i0D7hVQfj8NKfPKu:22
-X-Proofpoint-ORIG-GUID: U_AzbAM7y43-nPyyt5Bzqrr2UJhAh5Z0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDE1OCBTYWx0ZWRfX1klGvRCRtuga
- i7YjD6P+M6HPwbR4XE+pNU6Gop2o/and8sKpnP6v/j1H/1L10lSy1aDUZ6JgYoZTQM2Xp6AFzKZ
- 5XS2JK1V+xMmnx4tEgnz6RbpK/GMxbw4t4Gick+pOJUoIvrOQznD9H6DeyXjU8U8W3ZK2Oe8V1p
- zpIv0YPYmNJFVlcV7YdC8AReZAdIPJuFPOvLyg8xwd6CcbJVmG2ccavrceYrrBDKRVDGpGuUf6D
- 6mtU6Scb/3sYMv1NpAXLtYjvxC+qWqFm/1XNwTXvWc9M59C5l2LJANEiPglmfLBfzTCjjogjeCa
- uywMXcKeTmWl4N8up3PaPW1V4dglweEui02GWaDfzM+R9nH0Jqrl/EBtufHyTRAla8QTtQ5DR4f
- PEHyjWLDaDNj+jqHbC7rgHcHQECxTuqrZegp3B8X3cJ1Srd/qoriglnT1Uq6fuW7yEaznRujWYL
- jOVfFQzZGiLurJ0I2tQ==
-X-Proofpoint-GUID: U_AzbAM7y43-nPyyt5Bzqrr2UJhAh5Z0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_03,2026-03-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 phishscore=0 malwarescore=0 suspectscore=0
- adultscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603240158
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A0F9:EE_|IA0PR12MB8862:EE_
+X-MS-Office365-Filtering-Correlation-Id: e0b7404f-3cc0-4ee8-1dc9-08de89e60606
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|1800799024|36860700016|376014|13003099007|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info: J6vFy4UsinN//RIxQ37ZtbeuEDXj8hSfQWMk8fk/k6CvJoBk2wpexXbeHdnerewDMZdvwEMU3NEzGZmKBVlFVaIV3Zhu0L6E3I9plLLEjJvaveDpem+sHLmsMGxrAqEaewjsagX4odDbhmagLDOo9qF03vybrqXl1N3z0Z4fPyQMLCwsENTMxzzi9QDQ7tZ9ixF6jfP3RhJ55sAK2w5rGosm8yUphUNBNOUJAhi0wcTSf2yS6oK+w0Cm3h4t5tcmETkOVJOzL0EMKmCGgpbMLQIJC+oJSzkpD2WbH9NcxUWXIIUUhGRUFOOrFjjpWz92fzlja6kbOYDps3aC7phT1KHiP2u5eTfgXynYuCse2hGkqF3uinSYT/5WfVK8KkfK0Jf4GvMd4zfbiFYUVKpV3lSa+yhbuwwlsMBNUWoJ+HnWrKLYVDDM9VH+dIEsOv3/JpQK+d5cYWVeWS7+/0ry77mHpLHBRP6us6eKpbzUgVpBDeXNSzHKYqPSc9PkShswEr4mkP8bTILgBCWU6h7aTIaKHQF0YoR0XMrfsf8F5BYqBgdHmNrS07xLuXzNHLlYoJwOcpQ75NMxiJnKkh4OK82TzwMfD7Ba8RBwTsptvVBEFRcnf18CEAkvrRvU5w04zfGMqytYU5AeoirWUbuI/xoUX0ghRqCIF8xc/dKozc9mJUaYHwYDj0HXbv7Vj8dbivH3ciHurzjNm90Bu+USeJdoPhIsxj7Ma3grrFc4avs=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(36860700016)(376014)(13003099007)(56012099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: BDVJbNm+pxmTUnNchj3o5Kaxm/SiiUD4OnvOlvGFYHdmpCps9Ayo+nos3kFW9HxMyTqvRFSP1VV8cxWABpifLMCpMcHPtJcVA1yOAwWpszyqC2t3XYDYaHGci33WY4xzuhgswb8D2GJrrs7Orbm35UYY75eSyKV5+7GP/SnUhFVBrxlCMnrWOErz6ibfuGa0bv6JIrfZhNBF+m5avoJmk7aDNuv8a5DgO01Fj2FtYMGtdos6yTZ5uVJfHjMwWrvh66docU1Kzt8wNwA33l+Ipz78mjaAPCSLJ8v7bLmVY7ffNgh4y6jIq92g0Mi8aRCMkFZWHJnYIIRWSHFyQtPO23cp6+/+i/OnLIsx75zvFBSvyq9PEVyBqLE3v4rQn4Bk3p91smheycbYOUsx+ditFjDoy8sQBpERtvZBGdxprBOSNxyUEOMlk7vIlmpR9ht6
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2026 20:43:36.9373 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e0b7404f-3cc0-4ee8-1dc9-08de89e60606
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0F9.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8862
+Received-SPF: permerror client-ip=40.93.194.2;
+ envelope-from=Michael.Roth@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,48 +119,138 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Michael Roth <michael.roth@amd.com>
+From:  Michael Roth via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 23, 2026 at 6:08=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
-l.com> wrote:
->
->
->
-> On Mon, Mar 23, 2026 at 7:15=E2=80=AFAM Matheus Tavares Bernardino <mathe=
-us.bernardino@oss.qualcomm.com> wrote:
->>
->> Add HVX IEEE floating-point miscellaneous instructions:
->> - vassign_fp (vfmv): vector move
->> - vfneg_hf, vfneg_sf: vector floating-point negate
->> - vabs_hf, vabs_sf: vector absolute value
->>
->> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualco=
-mm.com>
->> ---
->>  target/hexagon/mmvec/kvx_ieee.h              |  3 +++
->>  target/hexagon/imported/mmvec/encode_ext.def |  7 +++++++
->>  target/hexagon/imported/mmvec/ext.idef       | 14 ++++++++++++++
->>  3 files changed, 24 insertions(+)
->>
->> diff --git a/target/hexagon/mmvec/kvx_ieee.h b/target/hexagon/mmvec/kvx_=
-ieee.h
->> index 78f546eb8e..263feb7e94 100644
->> --- a/target/hexagon/mmvec/kvx_ieee.h
->> +++ b/target/hexagon/mmvec/kvx_ieee.h
->> @@ -13,6 +13,9 @@
->>  #define FP32_DEF_NAN      0x7FFFFFFF
->>  #define FP16_DEF_NAN      0x7FFF
->>
->> +#define signF32UI(a) ((bool)((uint32_t)(a) >> 31))
->> +#define signF16UI(a) ((bool)((uint16_t)(a) >> 15))
->
->
-> Use softfloat routines here
->     !float32_is_neg
->     !float16_is_neg
->
-> Actually, these aren't needed.  See below.
+Hello,
 
-Ah, good idea, thanks!
+On behalf of the QEMU Team, I'd like to announce the availability of the
+second release candidate for the QEMU 11.0 release. This release is meant
+for testing purposes and should not be used in a production environment.
+
+  http://download.qemu.org/qemu-11.0.0-rc1.tar.xz
+  http://download.qemu.org/qemu-11.0.0-rc1.tar.xz.sig
+
+You can help improve the quality of the QEMU 11.0 release by testing this
+release and reporting bugs using our GitLab issue tracker:
+
+  https://gitlab.com/qemu-project/qemu/-/milestones/18
+
+The release plan, as well a documented known issues for release
+candidates, are available at:
+
+  http://wiki.qemu.org/Planning/11.0
+
+Please add entries to the ChangeLog for the 11.0 release below:
+
+  http://wiki.qemu.org/ChangeLog/11.0
+
+Thank you to everyone involved!
+
+Changes since rc0:
+
+512b794b10: Update version for v11.0.0-rc1 release (Peter Maydell)
+af35bc0c14: qemu-options.hx: Document arm-smmuv3 device's accel properties (Nathan Chen)
+c2ff1305cc: hw/arm/smmuv3-accel: Change "oas" property type to OasMode (Nathan Chen)
+d3d2de3d22: qdev: Add an OasMode property type (Nathan Chen)
+ffded86bdd: hw/arm/smmuv3-accel: Change "ssidsize" property type to SsidSizeMode (Nathan Chen)
+3a3dd64e63: qdev: Add a SsidSizeMode property type (Nathan Chen)
+1a76cc3933: hw/arm/smmuv3-accel: Change "ril" property type to OnOffAuto (Nathan Chen)
+9f8a8e0f2c: hw/arm/smmuv3-accel: Change "ats" property type to OnOffAuto (Nathan Chen)
+dc86d45232: hw/arm/smmuv3-accel: Check ATS compatibility between host and guest (Nathan Chen)
+5a2fa06b09: hw/dma/pl080: Fix transfer logic in PL080 (Tao Ding)
+0376e9c2dd: linux-user/i386/signal.c: Correct definition of target_fpstate_32 (Peter Maydell)
+32ebd6c09c: target/arm: fix s2prot not set for two-stage PMSA translations (Jose Martins)
+8a74949354: mailmap: Update email for Nina Schoetterl-Glausch (Nina Schoetterl-Glausch)
+8ee23f993d: MAINTAINERS: S390 CPU topology: Change maintainer (Gautam Gala)
+5fca367b89: hw/i2c/aspeed_i2c: Remove assert (Cédric Le Goater)
+80c5be9458: hw/ssi/aspeed_smc: Convert mem ops to read/write_with_attrs for error handling (Cédric Le Goater)
+adbe612295: tests/functional/aarch64/test_aspeed: Disable kernel crypto self-tests in AST2700 boot tests (Jamin Lin)
+24b5f58bee: MAINTAINERS: Add Kane Chen as reviewer for Aspeed machines (Jamin Lin)
+7e82393ed0: hw/i2c/aspeed: fix lost interrupts on back-to-back commands (Jithu Joseph)
+b7ae542de4: Fix several typos in documentation (found by codespell) (Stefan Weil)
+bcf5e68cc9: docs: Update GitHub URL of libu2f-emu (Stefan Weil)
+4ef8aca3d1: Fix include statement for u2f-emu.h (Stefan Weil)
+070fc71025: hw/hyperv: add QEMU_PACKED to uapi structs (Magnus Kulke)
+083072dba0: monitor: Correctly display virtual addresses while dumping memory (Philippe Mathieu-Daudé)
+fa4a759fc1: hw/net/ftgmac100: Improve DMA error handling (Cédric Le Goater)
+2f1fbe6ee9: ati-vga: Make sure hardware cursor data is within vram (BALATON Zoltan)
+28df2e5469: ati-vga: Simplify pointer image handling (BALATON Zoltan)
+c1315534f3: ati-vga: Add work around for fuloong2e (BALATON Zoltan)
+b7c0d01719: ati-vga: Fix display updates in non-32 bit modes (BALATON Zoltan)
+4588ef5176: ati-vga: Avoid warnings about sign extension (BALATON Zoltan)
+eca8b4c99b: ati-vga: Do not add crtc offset to src and dst data address (BALATON Zoltan)
+5c520d976a: ati-vga: Also switch mode on HW cursor enable bit change (BALATON Zoltan)
+d0f1fdc37c: ati-vga: Fix colors when frame buffer endianness does not match host (BALATON Zoltan)
+129922c2bc: hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop (Jenny Guanni Qu)
+4f7a06ec25: hw/hyperv: Fix SynIC not initialized except on first vCPU (Sourav Poddar)
+04249f0f94: hw/vfio/iommufd: report hint to user when vfio-dev/vfio*/dev is missing (Pierrick Bouvier)
+45a0241365: backends/iommufd: report error when /dev/iommu is not available (Pierrick Bouvier)
+20beec283b: hw/cxl: Exclude Discovery from Media Operation Discovery output (Davidlohr Bueso)
+bc72b2996c: hw/cxl: Respect Media Operation max ops discovery semantics (Davidlohr Bueso)
+6c21a067a7: hw/i386/hyperv: add stubs for synic enablement (Ani Sinha)
+c78bac1e67: hw/i386/pc_sysfw: stub out x86_firmware_configure (Ani Sinha)
+08324de90d: hw/pci/msix: fix error handling for msix_init callers (Trieu Huynh)
+8953fd41e6: util/event_notifier: fix error handling for event_notifier_init callers (Trieu Huynh)
+5e69353ff1: hw/core/loader: fix error handling for get_image_size callers (Trieu Huynh)
+b06bb02721: hw/core/loader: fix error handling for load_image_targphys callers (Trieu Huynh)
+56bd07a859: hw/i3c/dw-i3c: Fix uninitialized data use in short transfer (Jamin Lin)
+34aad58901: hw/char/virtio-console: clear dangling GLib event source tag (Matthew Penney)
+ea24be6cdd: hw/cxl: Use HPA in cxl_cfmws_find_device() rather than offset in window. (Alireza Sanaee)
+cf430fa1f1: hw/riscv: Mark RISC-V specific peripherals as little-endian (Philippe Mathieu-Daudé)
+643a171f56: tests: Replace ncat with socat in migration test and drop ncat from containers (Thomas Huth)
+b68e5bc1ed: tests/docker: Update the opensuse-leap container file to version 16 (Thomas Huth)
+5859803c77: tests/lcitool: Update openSUSE to version 16 (Thomas Huth)
+31fb808acf: tests/lcitool: Remove python3-sqlite3 from the list of needed packages (Thomas Huth)
+da10beeb8a: tests/functional: add VBSA linux tests (Alex Bennée)
+6ba3255d29: tests/functional: allow tests to define decompression target (Alex Bennée)
+e413f66f53: tests/tcg/multiarch/linux-test: use portable alternative for dirent64 (Matheus Tavares Bernardino)
+fb37a16694: tests/tcg: allow filtering of TCG tests (Alex Bennée)
+317268a354: tests: fix typo in char unit test comment (xieyi)
+b38859be76: hw/isa/piix: Embed i8259 irq in device state instead of allocating (Peter Maydell)
+8bee653122: configs/targets: Restrict the legacy ldst_phys() API on ARM / Aarch64 (Philippe Mathieu-Daudé)
+045981037b: whpx: arm: fix ID_AA64MMFR3_EL1 host feature register index (Osama Abdelkader)
+80cad8d0bd: target/arm: cpu: alter error message for host CPU type (Mohamed Mediouni)
+dccf60b6ca: whpx: arm: remove comment bit that is no longer accurate (Mohamed Mediouni)
+f3364a1b04: whpx: arm: enable more enlightenments (Mohamed Mediouni)
+fc788ca5ed: whpx: arm: add EC_DATAABORT assert for WHvRunVpExitReasonGpaIntercept/UnmappedGpa (Mohamed Mediouni)
+f4df1d60ac: whpx: arm: fix -cpu host (Mohamed Mediouni)
+6d5023fdc1: configure: Remove unused variable default_cflags (Peter Maydell)
+b64a5f5351: tests/qtest/arm-cpu-features: Fix thinko in g_strdup_printf() call (Peter Maydell)
+b86eff44ba: tests/functional: remove heuristics for finding build dir (Daniel P. Berrangé)
+dea076926b: tests/functional: fix log placement when run directly (Daniel P. Berrangé)
+d319a3a899: hw/sparc64/sun4u_iommu: Fix crash when introspecting sun4u-iommu from the CLI (Thomas Huth)
+ead7c5b06f: hw/sparc/sun4m_iommu: Fix crash when introspecting sun4m-iommu from the CLI (Thomas Huth)
+4ea7024ff6: hw/display/cg3: Fix crash when introspecting cgthree from the CLI (Thomas Huth)
+aee404fc7f: hw/pci-host/raven: Fix crash when introspecting raven-pcihost from the CLI (Thomas Huth)
+1adf67b3c4: tests/tcg/hexagon: add test for predicated .new branch LSB evaluation (Brian Cain)
+dfa4c8810f: target/hexagon: use TCG_COND_TSTEQ/TSTNE for predicate branches (Brian Cain)
+e8743ca0ac: target/hexagon: fix J2_jumptnew/pt predicate check to use LSB (Brian Cain)
+38937473da: target/riscv: Fix scountovf CSR behavior in VS-mode and M-mode (Jim Shu)
+0e8ad6a846: target/riscv: rvv: Fix page probe issues in vext_ldff (Max Chou)
+5568177738: target/riscv: rvv: Fix missing flags merge in probe_pages for cross-page accesses (Max Chou)
+f9f430b701: hw/char: sifive_uart: Remove ip variable (Frank Chang)
+558f14b26f: hw/char: sifive_uart: Update IRQ when rxctrl is written (Frank Chang)
+7997b782f4: hw/char: sifive_uart: Sync txwm interrupt pending status after TX FIFO enqueue (Frank Chang)
+e6051fa61b: hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen (Frank Chang)
+fa2d5d84e0: target/hppa: Update SeaBIOS-hppa to version 23 (Helge Deller)
+3835a61341: hw/hppa: Fix crash of 64-bit HP-UX 11 while flushing caches (Helge Deller)
+90c6cf342c: hw/pci-host/astro: Use proper region names (Helge Deller)
+0a3283513f: target/hppa: Always map 64-bit firmware at 0xfffffff0f0000000 (Helge Deller)
+50bc19c0a5: hw/hppa: Adjust physical addresses of Astro and Elroy (Helge Deller)
+cb991be5b1: hw/hppa: Fix description of the HP A400-44 server (Helge Deller)
+2a13e31073: hw/display/tcx: Init memory regions in realize (BALATON Zoltan)
+792cb90e84: memory: Set mr->ram before RAM Block allocation (Xiaoyao Li)
+58cbdc780b: target/riscv: Support Smpmpmt extension (Jay Chang)
+3d39fd35f6: hw/riscv/riscv-iommu: Free instance_init allocations in instance_finalize (Peter Maydell)
+9d090fe440: fpu: Fix unexpected exception flags when converting infinity to OCP E4M3 (Max Chou)
+053e913aad: fpu: Fix repacking issues in the uncanonical step for E4M3 overflow (Max Chou)
+f2af8f0d5d: hw/riscv: Remove deprecated 'riscv, delegate' device-tree property (Philippe Mathieu-Daudé)
+9251858a65: hw/dma: sifive_pdma: Set done bit upon completion (Jay Chang)
+cdb4c06292: MAINTAINERS: Add myself as a reviewer for RISC-V TCG CPUs (Chao Liu)
+c58ab7cf21: MAINTAINERS: update my email (Daniel Henrique Barboza)
+519f0bdf4c: target/riscv: Fix null pointer dereference in cpu_set_exception_base (Djordje Todorovic)
+6802b477e1: hw/riscv: Fix integer overflow in cm_base calculation (Djordje Todorovic)
 
