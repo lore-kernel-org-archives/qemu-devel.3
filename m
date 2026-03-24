@@ -4,93 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8AE0E9A75A
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534B1E9A75D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:15:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ygS-0006hM-25; Tue, 24 Mar 2026 06:08:24 -0400
+	id 1w4ymx-000820-9v; Tue, 24 Mar 2026 06:15:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4ygP-0006gv-TI
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:08:21 -0400
+ id 1w4ymv-00081J-UX
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:15:05 -0400
 Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4ygO-0003iL-Cj
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:08:21 -0400
+ id 1w4ymu-00048r-C6
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:15:05 -0400
 Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-79ab3e26cceso10618407b3.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 03:08:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774346896; cv=none;
+ 00721157ae682-79800183233so63311247b3.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 03:15:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774347303; cv=none;
  d=google.com; s=arc-20240605;
- b=L2alqeU4ufYqtt+5jR6S3o4y75klXQCdHVC1XYiNU0A0TJekMTIPmlhlnLoAXPtDAG
- F6KCrldTbzNnS4XM29eCdo0dwdT2ubuQls5A1LhCQLRxs5xDnHSv2eFGOgbkcOLe4tTF
- hxRbj5d9w1/yyY/mA0hOxcYmKLx/+kvVqdFWkkFwtpJ1XkTzRiDnGx42MfxzAWEa9UiE
- V6yCRyAbay25Grm5eg3o/IPul71ZzmGcC6XCAM00a8ZLssatCsNx+73HVxN1AmMrJ17D
- hektqBDsvHs0iWPID0UTkbnQm1N/4MArinSQF7UP6K24yvYslsbutBan1oPMrKkrZeyU
- AY1w==
+ b=kV76NH8EmVyOjpFmOsEOgagLybfmJcdXWlkiQg8KkVaeLL0fhSWe3dihe2gryNCn7I
+ gG+AFdfSwF6/CPHoLE6su5u4cqqbgDDeBxxhw+DYAXAdlyTJtwVZX3N9az3DIaYWxJ88
+ U1exb/Dp03GUL/WO6hdSSRoisy2wczonfFGd3RMYcxyUSKmD+ht0dgcumzp1FcHlO+mG
+ 3mufyOtha+PCEnECFRFsqaifrHzzomLHSBAC8FrjdfvLve7Vv+8sYO8B9I592uW/xjgD
+ 5TsjkQ+ZJSe0VlDU4DON7b5VUThSFRsLr03Y7ReG1yAZ381m3IJbxnD4nekJk51blGxe
+ 0rFg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=FiaTLq1M7Doeus9DWJbUnATXxFxwPRMeeYczqh4Kd0o=;
- fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
- b=FKEHK102U/0dwI22CrGiTPK3dr5yPXEGedo4NAlGoaNXm69jiMN4m/qrPyyQX6ImVn
- AdjnDDlWX4KmOP2ySRnw0VlL8ckqoSHG6acIW3PcQDl+SLmH2heif81Ke7RU+g9c2GP5
- RJn0iZfJr2mwNb0NSv8Hlyq6C4fd9KwGjHCaXV/iK8qKcnf4ERel+EU917BFg3RyPbdN
- ceEZQfn8g9RnXCFwjxNU3jgg5RxGDLhrtodZV/69A7EUbPYA0FLpRRW7cC4B3GSpVI2w
- V6BAL9qcnFHMR9zrqiE4TC6lWktvTFVEBcaOrEEeRqnXkxL5Yx+RKjpHI/Nru4cJm8+r
- LFIg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=DQVi0q+E57h9TLscD2BfXSjr7hY6v6cTKvicgNa5tqM=;
+ fh=QKFMOxPwXZb/OLSTxPYIA/LZI7aXMd0hhZxdGRidgsQ=;
+ b=bXtO6q59rMU9EWLHZkF4tfmcn4QauuyRqBbHbZcUlBIJE5Mw9fzx2ws6+O756YPebg
+ ge69SkTVhtLKWIiM/H9LzPlwJPp1q14z+UyNpoeTccK+0q4sEzLHLM11PRtM9eHmAmXh
+ IjNv5CPSgXgGZW+5cWddWQXB+QyMYCYh2ZCeAEcEIHvjm6WdetoGsNDXkSg99c5HP0RV
+ xe4iknwQ4rHHcG2VFXkBvabSxHlNT+fRxf9Mnvd6vzhGhVcsai9QLdn4Hs4wF4YypfhX
+ R+vRQ4DrBSu26yw4Lu4HDyQVafW5tKFNleAK4H81uymc7Ck2+QPA91QmtQjU5uSMQ5Gr
+ 6Zxw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774346896; x=1774951696; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FiaTLq1M7Doeus9DWJbUnATXxFxwPRMeeYczqh4Kd0o=;
- b=nks5EhTX6ZeTGydrGs7VkMfMbS9Btl9cMxPqCjlToSL0SzEliFmL+tJVWOj7hH5uIZ
- lq7YeE/J+TK/DBqnjMeDaUIU0Zr9wh8Vamh7Ufie4Rhq0/3Ng63Z1rvhL/7MNAYZNQuc
- 7RQc7SiwE9et/shmLiwKcCJb1LowXpP90nnC063Ap0pUFZBoLoXaGzT5w/H3mX6T0GjO
- dzb1AK97yiGgQsLHqBRzJNFCZ7L8TUqs7RlQV02a3NOCYQbXJAtVwUSnSd/PKa9OmKPk
- Q7oLiGgig707idtsvQGphTqfP0P2fyHPg2XSnWrNJan6yxwOcwYy/S27PNeLJ4kJyH3l
- vLdQ==
+ d=linaro.org; s=google; t=1774347303; x=1774952103; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DQVi0q+E57h9TLscD2BfXSjr7hY6v6cTKvicgNa5tqM=;
+ b=ZaeQ7vAheagIiXBx8KaI32n5Rgjc0nr99OEHoDpxC6ITEmktEhVPaUgSgalnx/Px+h
+ 7WQYh9nGy3eulkDPL6GStFV+7na5pU3Y/JuDvcHEjO/YnT9MsgVg2bnfqFyTV/eAcaaq
+ cyKDZL0IoRX6WlatfRwfbHUKTQFUJA7xmObuU2OH0+e1UH9b53g5CJmWmbkIPVbgeLsK
+ qphjneArklvBP1/MHdoKxbSLKfiq0dZmzGqt8y0HOLfVAno0k7I20IRL0mvhq66WIgM7
+ Is4EBxO+T/5w7YHzHV+HqpK8sV5r3HReqYcJ3Cc8lzNkGFMM1YEOrRfxrW6nlhf1MuZo
+ D4Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774346896; x=1774951696;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FiaTLq1M7Doeus9DWJbUnATXxFxwPRMeeYczqh4Kd0o=;
- b=tI29lghzRlbRGJOriH47DZ9646sQs8MgPgVMgainquEznZq+I2ytODny6NjZ9fEDnz
- b1ARGdybE3HmFj5kgE6gLAuyH0QeKKwbFQJaYTAhWXmxjSg0YCzUGnnmM2yoIsAK8nQp
- KaO+5L0N4xjmIOQozWSPfYL23HBuBCuXOwaSX83YKyzj8TSKtm88q5J8Fifwg6+NDqb/
- nogAhdgtcjai36KHQJxxV6h31mNIDnYVWkkjyi6iwQlWOnUgpG5N+B7qs1vY6o3Zaw2X
- mCw+0sKS01jdftcWn+mIzg/UE0Qn1v8xKdd0S4aYQMF5wcSwu8HOkRI7oeXKDHGk1QdH
- fFBQ==
-X-Gm-Message-State: AOJu0Yx6LjaGAD5z2DDYNnzu4XvY3609+eOqIBxNiUq8icHMQLMgZQjq
- rl0nU/Qnv0RsgwCVnU1BcZAxeqdbCv93jtNactX0mbjs7O4FmiHOOziGvOm31sKq5xXsi8Lq8lW
- 5OVENX9ZW8Tnbeixvc5oHUzMNqNx6WQXOSyTSPLQwFf3Y8ml6/bGppZc=
-X-Gm-Gg: ATEYQzx7rDvZ+0duNkXebuV7lAnBvpUdPpyNDZronuUZ5FFRCWO8jLLkHe/uQmMfwAf
- lEAXPDOnuUYhyUirwDM3reBpGAm21dpd/kak7PL7gSDQTAddpABQoaZsNiTX/axts66V1UZ5VU8
- zoWmKgPe9Ayc9Jvi7Ywi2e7idWY1lt3+xMDW7wuFUUqkwvNQP4DDm6kIrYjL9dlmhnMp812NgDz
- g54fpG5WMPXVrTUG3l3jRsDPjnbOFqphPPJOAKLGxRL/3OuOnLbEB36Z8jGL8e+6g3Iftc5XJTN
- 5VG4jFoAaJyHV4aFEapOVMH6uT35lmI5F95W0xpXgdsUFhBIVw3iIEY2HHNKx2iRGJE=
-X-Received: by 2002:a05:690c:39a:b0:79a:8eee:fa3a with SMTP id
- 00721157ae682-79a90aef73cmr161342967b3.25.1774346896504; Tue, 24 Mar 2026
- 03:08:16 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774347303; x=1774952103;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DQVi0q+E57h9TLscD2BfXSjr7hY6v6cTKvicgNa5tqM=;
+ b=sQkO0NpY4Xqo9WYyXJqtKLm4IuadXNtYEngJPR0aoCDbIG2w5p0EnPUmZlqNECYK42
+ 2mvG1QU5GkMt8txW98EBKpD1Y4FpIkAuC2iOyGdsHjEvnFI53NKNSl3VM4BpLLpA3gfs
+ gJ2iVE1kTdZyQjb8DdW7TtRzYYSf2aa+wXlGu3nlyNfoOxfkebrx8+rsHwKMNs7DgPWD
+ R7eFGFs0G9r6LViKfOBG80CydWoBiFULnxodtjCqu7cJfGoY9eR5SPyNGVux0iTKjxuu
+ yoh+COpwVHi3vgEcnoA+Hm7+3pH9Mr4OMuQjQ3Hq/i+9v34ClCmPI3EK9PWev63AWgNH
+ nx6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUe/iFGlpp/c0Sf8P6tWgu27+qdK4dr3EJTCsjyy9t/u9OEQGtI6YI0ahk/JVsCsgKUBubsUzkYDlLC@nongnu.org
+X-Gm-Message-State: AOJu0Yz7zNEE6VsRjJlXAeZVSBhDbHH5aAisnJZIE0MLDH2ObBZjtm2h
+ 7Klmu+xf0MlSx50yaZoEtm6wwwRPtTwg1HsLu4PbZSMlz+KV0rlNbokgrk6lHvhTHI9b/o1uP2r
+ 8MiH4CYD/cIjxvuIycINn5zzUfDJdl680Z/cxT9UrDA==
+X-Gm-Gg: ATEYQzxu5Y4wuxeknKsV/3Qs65dwZeEzJUgbxRzSRSRCKLy7cqZ/lbF7hT7tIxWO+dO
+ LAercScQU9Q8hVOszk5eFah+uqJDpy9kzCGcgcjMDa/NyZIIp1/7zsJWzevpXmFrr1UunZgKrOk
+ nTNSUdYFwRFEfiaQdlRvmAZqxq36Vvl4oeUQtVP2I7OVxSt3U8FukE4HhU+Kiue1p2RYME4x3XG
+ 8BjqK+5dYJT8Tvyp84AVmyvEUWLmBXqWomrC/PDeIzaGmXC92cNV+DjEyNaYxQLvdTetbt6cCmO
+ ZpbTa5/rEn9VJlTEwiweWcAsN2oaY/4YbqZmjsSLW2RV+pNgz2ZIglp89ziVC3EwxNk=
+X-Received: by 2002:a05:690c:34c9:b0:79a:3e64:c15d with SMTP id
+ 00721157ae682-79ac2f8e0f6mr26946687b3.31.1774347303044; Tue, 24 Mar 2026
+ 03:15:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260323165218.96607-1-philmd@linaro.org>
-In-Reply-To: <20260323165218.96607-1-philmd@linaro.org>
+References: <20260311143549.118720-1-shivangu@linux.ibm.com>
+ <20260323231612.GA2637687@ax162>
+ <8cde9a355050b306180f80e8d1340ec814c0876c.camel@linux.ibm.com>
+In-Reply-To: <8cde9a355050b306180f80e8d1340ec814c0876c.camel@linux.ibm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Mar 2026 10:08:04 +0000
-X-Gm-Features: AaiRm52V1IWvlxxCEoRBnToxj60JZUVp2zhv0O1MUVq_7_aSw0ei502NgxMAuF0
-Message-ID: <CAFEAcA-9U4_FT6hTzb69KOnqafsedy1xCqVoqtVST9WFfA3jjQ@mail.gmail.com>
-Subject: Re: [PULL 00/27] Misc HW patches for 2026-03-23
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 24 Mar 2026 10:14:51 +0000
+X-Gm-Features: AaiRm52U7XV8IZEgqBR3uKQLCstpKT6pRzqNDKwQrE3b6C1V3g1afClU0o8qyDM
+Message-ID: <CAFEAcA-zJor6L=WFxjfPVhY-bCGHvJTht0yX37Gks_Ozk+PdZQ@mail.gmail.com>
+Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: Nathan Chancellor <nathan@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, 
+ npiggin@gmail.com, milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
  envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
@@ -115,44 +121,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Mar 2026 at 16:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Tue, 24 Mar 2026 at 08:42, Shivang Upadhyay <shivangu@linux.ibm.com> wrote:
 >
-> The following changes since commit eb153d8fd3be325a5aa7e1a6a73be8854eeaaf=
-27:
+> On Mon, 2026-03-23 at 16:16 -0700, Nathan Chancellor wrote:
+> >
+> > After this patch landed in QEMU master as commit a16d4c2f16
+> > ("ppc/pnv:
+> > fix dumpdtb option"), I am seeing a hang on shutdown. With the files
+> > available at [1]:
+> >
+> >   $ qemu-system-ppc64 \
+> >       -display none \
+> >       -nodefaults \
+> >       -device ipmi-bmc-sim,id=bmc0 \
+> >       -device isa-ipmi-bt,bmc=bmc0,irq=10 \
+> >       -machine powernv \
+> >       -kernel zImage.epapr \
+> >       -initrd rootfs.cpio \
+> >       -m 2G \
+> >       -serial mon:stdio
+> >   ...
+> >   [    1.308982][    T1] Run /init as init process
+> >
+> Hi Nathan,
 >
->   Merge tag 'pull-target-arm-20260323' of https://gitlab.com/pm215/qemu i=
-nto staging (2026-03-23 10:55:20 +0000)
+>  I have root-casued this issue. During discussion for this bug [1], I
+> made assumption about dtb not changing during between resets. To handle
+> that I removed the dt_recreation logic from `pnv_init` code.
 >
-> are available in the Git repository at:
+> But, As in your case the bmc details are provided from command line,
+> the bmc device is not present during `pnv_init`. And later on during
+> device initialization it gets filled with correct details. `pnv_reset`
+> is also called to start the cpu also, So previously the correct bmc
+> details were populated.
 >
->   https://github.com/philmd/qemu.git tags/hw-misc-20260323
->
-> for you to fetch changes up to 070fc710251809c4d8d2a84f24527a174e843423:
->
->   hw/hyperv: add QEMU_PACKED to uapi structs (2026-03-23 17:50:50 +0100)
->
-> ----------------------------------------------------------------
-> Misc HW patches
->
-> - Fix guest-triggerable abort in FTGMAC100 Gigabit Ethernet
-> - Fix uninitialized value in DesignWare I3C controller
-> - Clear dangling GLib event source tag in virtio-console
-> - Mark RISC-V specific peripherals as little-endian
-> - Correct virtual address formatting in monitor
-> - Improve error handling path in core loader
-> - Improve error hints in IOMMU FD
-> - Prevent hang in USB OHCI
-> - ATI VGA, HyperV & CXL fixes
->
-> ----------------------------------------------------------------
+> To handle this case, I should add the dt recreation logic to the "bmc
+> details found" case. [2].
 
-
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+You might also consider using qemu_add_machine_init_done_notifier()
+to register a callback that happens after machine-init is complete
+(i.e. all command-line created devices have been completed): if
+I understand correctly that would be a valid place to create the DTB
+(the machine-init-done hook is called after everything is created,
+but before we process the dumpdtb option).
 
 -- PMM
 
