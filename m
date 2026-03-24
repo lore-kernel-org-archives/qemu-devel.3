@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B852F54AC5
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE1FF54ACD
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w53Pt-0000rb-PX; Tue, 24 Mar 2026 11:11:37 -0400
+	id 1w53Pn-0000mm-6q; Tue, 24 Mar 2026 11:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Pi-0000j1-Bf
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:27 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1w53Pb-0000bO-EZ
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:19 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Pg-0005DX-J5
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:26 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b44c0bcdbso5918511f8f.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:24 -0700 (PDT)
+ id 1w53PY-0005Bj-IJ
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:19 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439c6fc2910so1102928f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774365083; x=1774969883; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774365075; x=1774969875; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Rgr2enp+qbVDThQZJFr+FEHlpspYgEBOwZezu1EGo0U=;
- b=gZXOJeGv4vl1fRQXZGy5xkzurHdhWXE5ANYrM7ryIXDlMK43C4zCfkL5dICEIfanNH
- 76XH2muODCDcHoy08CwCMkw9Ll020HWSwY8LLhh9dYcrc8rLm6S2o483AhOz40Iik6cV
- FsywMRpbTNt3l3pG8XEG35ugZFyT6Y4b1TOuhOvaciMSbHD4k3yiUSE+fFb4HygyD4Jk
- p0QznlpW2t9MBIW8negcC8sQoeN7KCpZKT56hWVVYSY4VnUUHgFMOrrv+FdUJ4uXL0st
- igPojhgD1vIIxsVa8SnHZh9u+vHQg7eFzBqB9IeXREs1fbLohU8dHbQGkWG6XMapgWUE
- JKCQ==
+ :reply-to; bh=ErylgoX7rGE2MPVTc4vGOkn7Dc6WAKHtKwRhn5S4AVo=;
+ b=bTpInedDvaJq6S2mpiFeeED3lHQ42LBoqkiNUDlKqkLam1LRy8YhpddzftR4HYyZJG
+ +AeZvSkR8SbQj29xU2iFS8TKVskX1mrxCgp58w7gfHeyCaP/F22n9ZKFl/VDNMGVPGPK
+ hMvZ730JDaR6iDEKubaAta8Q18OksMi5MoVgF9xtJ4bE0SRhM/mDAw4KA8oTeyOQPNbg
+ aMMdTaV6OTLuYqrbCxAaxQcpdITHE/ZpRs83KwC2sTeBrlTfmoq6jApYa9hltkzXwKVE
+ rqnmEGI0hfTC0aw4Bw4GCBaNRYml6lUV6jSpwN5mH6BQBWCMAwD4Mjyzv4OwVq1VAAKS
+ lpfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774365083; x=1774969883;
+ d=1e100.net; s=20251104; t=1774365075; x=1774969875;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Rgr2enp+qbVDThQZJFr+FEHlpspYgEBOwZezu1EGo0U=;
- b=GsHwqsk0ACgrhl6XY5EK/MFdQJS0abBOefKDEzL2XA4zjdan7hhSCGpYZ3iCqr84w4
- SKlg+J0O3mkTwkecdC3tMWhfIF6ymfSAJNr4aapDyDCSUbhg7qSDuTe4QXNdueDOJEGQ
- UnZjBkDmkPn77s+gFaGNu3gPTQkWn+iJAV7qSUzf4mucBJUKO8Ort/fUuJTEIcOYoUfs
- YKTlpCLFX7sAyokIdln1HkrrNbgsrj3xFpSg6iaCnnSZBP5gOXtLCuWx20XKMxqH6deq
- WRAQC6bOEhfWgpgo0VYOpCvCC1CcYoX8rCyS+XD17YVlgCJRFSruoXUgI5/jOndkQELE
- 1RFA==
-X-Gm-Message-State: AOJu0YyHuXes04gtikpKJdmtVRdze5uwyp/pLos9yPWQo4OPBgvIKaqd
- SnDeSFyDXzX8LvMUNsf8UY0lH8tk3bX+f+uHc1+Xw5GZJFkNC02xYjOodXJXZLh2xQoib4v/e5N
- eUzhcAjE=
-X-Gm-Gg: ATEYQzxZ6GZ2csB8YU3jAYGlHG9yJtHiwGhp+DjOcvwcSl8ceasqiD0cSg6mCg6SCAF
- BPG7o7VcmPd3y+itdL4X2u+e8l8U/5NSyiUbMQc/FpZqp3h21a7ZDMtpRswXGJ8OphjDtaNaz92
- SlsWz23JURUNky0Z54elE/V/4Ssi7IA6lj++gQJCl69K+DpOw+D8tlPTMgey9FPWuoW9TO0wXvV
- evjjM9Y0ehJ8eq6Qg5JJWZUruOgiZbZhaUKEeuh5LVxjyUTwWhnS/4K8alS2AWN1Q+WRifnto57
- tq8/x4srND5HoeGvGXWHptSoj2oUPVDZPnCx6cdCSF/YNaE0NNQbmMbCyAFwDdvil9Hu2x7jMe8
- kK7nmakwfCYqFND3O4/KrCh+IrSvBb3xr0A+sVUJ+Q0bUbTYluKnfMOBPseGKc/p19ELBUlXZdi
- gcqCZJnUx+s5z3z/azmv0jJolGa4Daf1Rmcy+mODS/PUhYslXXqKEhAL3Oaoz0+1lDY8/Kg+L4O
- ejakRzhtRmrYRORKY03YpSr0zULayA=
-X-Received: by 2002:a05:6000:2502:b0:439:d755:a895 with SMTP id
- ffacd0b85a97d-43b6426d7b8mr24914965f8f.42.1774365082829; 
- Tue, 24 Mar 2026 08:11:22 -0700 (PDT)
+ bh=ErylgoX7rGE2MPVTc4vGOkn7Dc6WAKHtKwRhn5S4AVo=;
+ b=VgKYsEVIo9KI/FxrfOhxesxGUtpXw+BUiwt48J+ZMrUWKrCr6PyH9E3GBumSDi03gK
+ 8XE+X0vwRKlP9eU4cyKJ+pWeV2CYbe1ziWM9Su8C5DQRPXvKJ5oizxNb1tLUZsftfLcx
+ 1a+YV1NpI2LHtJtpoPgseNzzIkgxfzhH+x3HGjntp6OTyOTrb/inuWD8ZCiyEY07VlRS
+ 08zxvwCBUojyY5eRjmwZ7FusbaWwiUehRU5TjUmwPMevx7kwXrtZaxAT7gqySmmN0DHx
+ zStUgDyLPlPA+2Ms80Sa/HvpwVMxgQAZKh3e9C/df3g3TXzwUopKItu1Ny+2duQK8bmW
+ 6NLA==
+X-Gm-Message-State: AOJu0YyM76VXjQTWEWMJWU7bkd/Yrw6JIOvMFfN34ThrEZEFZUgV0O8t
+ Fw1dDkovrau4RLgGizy3LAohiS/xY9dGo0uJS+iFUI4j5FDCMozmopPM186Zt94Ntv/9qj+QHtQ
+ oqT972tA=
+X-Gm-Gg: ATEYQzzXFungrCjnVRDId4mR7cYxWLdodGmbKQi+emIwANcFvKEW8LOXRroy3FUG2Jo
+ J8wn8LOth+9jUGpxcSVb1K1+bT+9gITOE3i5HS3E+UfZyrtLY2xKeIRCwjSOF3D7OTxqRYQl3zs
+ EIqtTi4uHFTicii3XPqkvnSa+o08K8FeifAKOd7bVA8FyB9zHEVFTBHmadtCjG9qpAtfIK7ndVE
+ h/Q0mCdwsnY8bIWZVF78JamdH4DWS8hzAyjSnA8fOgoCUMh+i+DyNkgH0cGaiUY+x6Rdi9/V5Yk
+ 8C76d7zh+v5Bfr30O20LQ1W3lE9yftfhvFqOMN7Hntctb9n+96KvYhBsoC80cCeer9KAYAXEfq1
+ vWdiE30O9l1jnXZ2SVpiKOkwUfkvg8PF5ZiWVqQRzsu53mC8BZWRxu6ndrYQdsRVSq6maGolupz
+ Z9+n0YYvyMeLBhf5Ch/8nt3X6QbysjI/ugba73vooSTzKfDafkHCKoROb4tWaZI2mw26x+/CQoR
+ u9ri+rSnfQjt1UIp+GICtkNKaKiqGg=
+X-Received: by 2002:a5d:5d82:0:b0:439:b3ff:9ab9 with SMTP id
+ ffacd0b85a97d-43b642919b2mr26523385f8f.48.1774365074750; 
+ Tue, 24 Mar 2026 08:11:14 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.21
+ ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 08:11:21 -0700 (PDT)
+ Tue, 24 Mar 2026 08:11:13 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/11] qdev: Add a SsidSizeMode property type
-Date: Tue, 24 Mar 2026 15:11:07 +0000
-Message-ID: <20260324151111.237411-8-peter.maydell@linaro.org>
+Subject: [PULL 01/11] target/arm: fix s2prot not set for two-stage PMSA
+ translations
+Date: Tue, 24 Mar 2026 15:11:01 +0000
+Message-ID: <20260324151111.237411-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260324151111.237411-1-peter.maydell@linaro.org>
 References: <20260324151111.237411-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,117 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nathan Chen <nathanc@nvidia.com>
+From: Jose Martins <josemartins90@gmail.com>
 
-Introduce a new enum type property allowing to set a Substream ID size
-for HW-accelerated smmuv3. Values are auto and 0..20. The auto value
-allows SSID size property to be derived from host IOMMU capabilities.
-A value of 0 disables SubstreamID, while non-zero values specify the
-SSID size in bits.
+Commit a811c5dafb7 ("target/arm: Implement get_S2prot_indirect")
+changed get_phys_addr_twostage() to combine stage 1 and stage 2
+permissions using the new s2prot field:
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-Message-id: 20260323182454.1416110-5-nathanc@nvidia.com
+  result->f.prot = s1_prot & result->s2prot;
+
+The LPAE stage 2 path sets result->s2prot explicitly, but the PMSA
+stage 2 path (get_phys_addr_pmsav8) only sets result->f.prot, leaving
+s2prot at zero. This causes the combined permission to be zero,
+resulting in addr_read being set to -1 in the TLB entry and triggering
+an assertion in atomic_mmu_lookup() when the guest executes an atomic
+instruction on a two-stage PMSA platform (e.g. Cortex-R52 with EL2).
+
+Set s2prot from f.prot after the PMSA stage 2 lookup, consistent with
+what the LPAE path does.
+
+Cc: qemu-stable@nongnu.org
+Fixes: a811c5dafb7 ("target/arm: Implement get_S2prot_indirect")
+Signed-off-by: Jose Martins <josemartins90@gmail.com>
+[PMM: refer to the right commit in the commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260321231916.2852653-1-josemartins90@gmail.com
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/core/qdev-properties-system.c         | 14 ++++++++++++++
- include/hw/core/qdev-properties-system.h |  3 +++
- qapi/misc-arm.json                       | 16 ++++++++++++++++
- qapi/pragma.json                         |  1 +
- 4 files changed, 34 insertions(+)
+ target/arm/ptw.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index a402321f42..4aca1d4326 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -18,6 +18,7 @@
- #include "qapi/qapi-types-block.h"
- #include "qapi/qapi-types-machine.h"
- #include "qapi/qapi-types-migration.h"
-+#include "qapi/qapi-types-misc-arm.h"
- #include "qapi/qapi-visit-virtio.h"
- #include "qapi/qmp/qerror.h"
- #include "qemu/ctype.h"
-@@ -723,6 +724,19 @@ const PropertyInfo qdev_prop_zero_page_detection = {
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 8b8dc09e72..e289f88124 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3200,6 +3200,13 @@ static bool get_phys_addr_pmsav8(CPUARMState *env,
  
-+/* --- SsidSizeMode --- */
-+
-+QEMU_BUILD_BUG_ON(sizeof(SsidSizeMode) != sizeof(int));
-+
-+const PropertyInfo qdev_prop_ssidsize_mode = {
-+    .type = "SsidSizeMode",
-+    .description = "ssidsize mode: auto, 0-20",
-+    .enum_table = &SsidSizeMode_lookup,
-+    .get = qdev_propinfo_get_enum,
-+    .set = qdev_propinfo_set_enum,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-+
- /* --- Reserved Region --- */
- 
- /*
-diff --git a/include/hw/core/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
-index ec21732ce5..4708885164 100644
---- a/include/hw/core/qdev-properties-system.h
-+++ b/include/hw/core/qdev-properties-system.h
-@@ -14,6 +14,7 @@ extern const PropertyInfo qdev_prop_multifd_compression;
- extern const PropertyInfo qdev_prop_mig_mode;
- extern const PropertyInfo qdev_prop_granule_mode;
- extern const PropertyInfo qdev_prop_zero_page_detection;
-+extern const PropertyInfo qdev_prop_ssidsize_mode;
- extern const PropertyInfo qdev_prop_losttickpolicy;
- extern const PropertyInfo qdev_prop_blockdev_on_error;
- extern const PropertyInfo qdev_prop_bios_chs_trans;
-@@ -61,6 +62,8 @@ extern const PropertyInfo qdev_prop_virtio_gpu_output_list;
- #define DEFINE_PROP_ZERO_PAGE_DETECTION(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_zero_page_detection, \
-                        ZeroPageDetection)
-+#define DEFINE_PROP_SSIDSIZE_MODE(_n, _s, _f, _d) \
-+    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_ssidsize_mode, SsidSizeMode)
- #define DEFINE_PROP_LOSTTICKPOLICY(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_losttickpolicy, \
-                         LostTickPolicy)
-diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
-index f921d740f1..416b4240e2 100644
---- a/qapi/misc-arm.json
-+++ b/qapi/misc-arm.json
-@@ -45,3 +45,19 @@
- #                     { "version": 3, "emulated": false, "kernel": true } ] }
- ##
- { 'command': 'query-gic-capabilities', 'returns': ['GICCapability'] }
-+
-+##
-+# @SsidSizeMode:
-+#
-+# SMMUv3 SubstreamID size configuration mode.
-+#
-+# @auto: derive from host IOMMU capabilities
-+#
-+# Values 0-20: SSIDSIZE value in bits.  0 disables SubstreamID.
-+#
-+# Since: 11.0
-+##
-+{ 'enum': 'SsidSizeMode',
-+  'data': [ 'auto', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-+            '10', '11', '12', '13', '14', '15', '16', '17', '18',
-+            '19', '20' ] } # order matters, see ssidsize_mode_to_value()
-diff --git a/qapi/pragma.json b/qapi/pragma.json
-index 193bc39059..24aebbe8f5 100644
---- a/qapi/pragma.json
-+++ b/qapi/pragma.json
-@@ -68,6 +68,7 @@
-         'S390CpuEntitlement',
-         'S390CpuPolarization',
-         'S390CpuState',
-+        'SsidSizeMode',
-         'String',
-         'StringWrapper',
-         'SysEmuTarget',
+     ret = pmsav8_mpu_lookup(env, address, access_type, ptw->in_prot_check,
+                             mmu_idx, secure, result, fi, NULL);
++    /*
++     * For two-stage PMSA translations, s2prot holds the stage 2
++     * permissions to be combined with stage 1 in get_phys_addr_twostage().
++     */
++    if (regime_is_stage2(mmu_idx)) {
++        result->s2prot = result->f.prot;
++    }
+     if (sattrs.subpage) {
+         result->f.lg_page_size = 0;
+     }
 -- 
 2.43.0
 
