@@ -4,100 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA202FEC102
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5EAFEC102
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:45:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w57fX-0003Et-Fm; Tue, 24 Mar 2026 15:44:03 -0400
+	id 1w57fv-0003SY-1C; Tue, 24 Mar 2026 15:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fW-0003E6-8q
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:02 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fu-0003Rp-34
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:26 -0400
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fU-0008Aa-Lq
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:02 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fs-0008Ha-ML
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:25 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id F2E975BE1C;
- Tue, 24 Mar 2026 19:43:42 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 1CF7E5BE1D;
+ Tue, 24 Mar 2026 19:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381423; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381440; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bTso67SWkueoernNlzrQNovHxxZ3l8z99afvZIli9YQ=;
- b=zCDfJnWv0kreJk70tTH3a6FDFSBlspHxf5IKDCRL6VR8EZ1JPl8ff/lmn0Z69493rhosdh
- aTGtjxVkihhYkaHzsMkpGfb4fSBLY+9FeVE22mDO5+verDcBUAveFRP6mDgPi6XkL/2URc
- u13kazQiqP1PzBs62crd5DYgqZ57mlw=
+ bh=uKkqaMifPLhVuCwU2Uzx6zWtC1DhStHTsblOt5+wAvA=;
+ b=LJlHHZ/FT4XwhQxWsba7xLivXw8tRl7OERSKWAqdN9+uyUtENrYdUDcsMio4rcyKscuuf3
+ wdf7FPAUnoWXgfhdaa/0LlXkLVFmfO2lKuI7NYFG00tqiEqexmIVCdA+SwjdrwMO1gGeVF
+ ZYuo4UEYxyN1s+IFlW+9Jw7eOwxeh8g=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381423;
+ s=susede2_ed25519; t=1774381440;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bTso67SWkueoernNlzrQNovHxxZ3l8z99afvZIli9YQ=;
- b=pEmeV9Y9Aiqf3pQpDAMhOiQn0rFyWRPTQuphHd03Q/qyXyjawIY7F59iLeYshdrZmi7YA3
- IOiuu8U2knEVRDDA==
+ bh=uKkqaMifPLhVuCwU2Uzx6zWtC1DhStHTsblOt5+wAvA=;
+ b=SxOx9ekqVA+6fy2vnaLcB5pGmLz8rHvRdGWAzxBza6RTTsBoHM7F0cDDCOkryUR0BUdI91
+ YEeW23L6BlEvRgAg==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="LJlHHZ/F";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=SxOx9ekq
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381422; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381440; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bTso67SWkueoernNlzrQNovHxxZ3l8z99afvZIli9YQ=;
- b=wEt8FwjcokX7IluUDAG4ow3RBtGf92VDKwVT7GNFZ9G8CW1NsS2KsmNQWzeutf+Ly5pgO7
- F4pKjH1dCTM8370EKr6QwZrj8GY5evD703Xzmzjb1JhfUHm/9km8/D38MEIhdOZE0Y3HqR
- cLAzjzj6Abwi9yz74NbQC5jgzOxernY=
+ bh=uKkqaMifPLhVuCwU2Uzx6zWtC1DhStHTsblOt5+wAvA=;
+ b=LJlHHZ/FT4XwhQxWsba7xLivXw8tRl7OERSKWAqdN9+uyUtENrYdUDcsMio4rcyKscuuf3
+ wdf7FPAUnoWXgfhdaa/0LlXkLVFmfO2lKuI7NYFG00tqiEqexmIVCdA+SwjdrwMO1gGeVF
+ ZYuo4UEYxyN1s+IFlW+9Jw7eOwxeh8g=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381422;
+ s=susede2_ed25519; t=1774381440;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bTso67SWkueoernNlzrQNovHxxZ3l8z99afvZIli9YQ=;
- b=IX6DgJiG0VStoapP71C9ZqnD0T/rmQ9guvljMhlR9a15QVhv3JpOopP5l9spZfQuauUyBY
- c8LxtnCVPkdGX6Aw==
+ bh=uKkqaMifPLhVuCwU2Uzx6zWtC1DhStHTsblOt5+wAvA=;
+ b=SxOx9ekqVA+6fy2vnaLcB5pGmLz8rHvRdGWAzxBza6RTTsBoHM7F0cDDCOkryUR0BUdI91
+ YEeW23L6BlEvRgAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CB93443FE4;
- Tue, 24 Mar 2026 19:43:41 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EA48A43FE4;
+ Tue, 24 Mar 2026 19:43:58 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YOZqJm3pwmlkMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:43:41 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YFDWLX7pwmlkMQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:43:58 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [RFC PATCH v1 04/17] vmstate: Set error inside of
- vmstate_save_field_with_vmdesc
-Date: Tue, 24 Mar 2026 16:43:19 -0300
-Message-ID: <20260324194333.30004-5-farosas@suse.de>
+Subject: [RFC PATCH v1 15/17] vmstate: Invert exists check
+Date: Tue, 24 Mar 2026 16:43:30 -0300
+Message-ID: <20260324194333.30004-16-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324194333.30004-1-farosas@suse.de>
 References: <20260324194333.30004-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 1CF7E5BE1D
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -123,50 +129,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reduces duplication and keeps the top level less visually
-polluted.
+Aiming to reduce one level of indentation on these routines, invert
+the exists check so it can "return early" (continue actually). There
+is too much code and doing it all at once would be hard to review.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/vmstate.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ migration/vmstate.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index d7b1bc6b86..dec9cf920b 100644
+index 5bc860129e..1862198c70 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -586,6 +586,11 @@ vmstate_save_field_with_vmdesc(QEMUFile *f, void *pv, size_t size,
+@@ -301,7 +301,10 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
  
-     vmsd_desc_field_end(vmsd, vmdesc, field, written_bytes);
+         trace_vmstate_load_state_field(vmsd->name, field->name, exists);
  
-+    if (!ok) {
-+        error_prepend(errp, "Save of field %s/%s failed: ",
-+                      vmsd->name, field->name);
-+    }
+-        if (exists) {
++        if (!exists) {
++            field++;
++            continue;
++        } else {
+             void *head;
+             int i, n_elems = vmstate_n_elems(opaque, field);
+             int size = vmstate_size(opaque, field);
+@@ -653,7 +656,11 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+         if (!ok) {
+             g_assert_not_reached();
+         }
+-        if (exists) {
 +
-     return ok;
- }
- 
-@@ -691,8 +696,6 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
- 
-                 if (!ok) {
--                    error_prepend(errp, "Save of field %s/%s failed: ",
--                                  vmsd->name, field->name);
-                     goto out;
-                 }
- 
-@@ -709,10 +712,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                                                         field->size, vmsd,
-                                                         field, vmdesc_loop,
-                                                         i, max_elems, errp);
--
-                     if (!ok) {
--                        error_prepend(errp, "Save of field %s/%s failed: ",
--                                      vmsd->name, field->name);
-                         goto out;
-                     }
-                 }
++        if (!exists) {
++            field++;
++            continue;
++        } else {
+             void *head;
+             int i, n_elems = vmstate_n_elems(opaque, field);
+             int size = vmstate_size(opaque, field);
 -- 
 2.51.0
 
