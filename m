@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC10F54AB0
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CC9F54ABA
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:52:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52AS-00060J-Qf; Tue, 24 Mar 2026 09:51:36 -0400
+	id 1w52BA-0006V1-5m; Tue, 24 Mar 2026 09:52:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1w52AQ-0005zC-Go; Tue, 24 Mar 2026 09:51:34 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1w52AO-0006o3-7B; Tue, 24 Mar 2026 09:51:33 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62O8hR10569186; Tue, 24 Mar 2026 13:51:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=buuiN39Vu5REgaZO5K2+FV8UZFg9qf9shKom+SDvP
- wU=; b=XBrxl0Isz/7NYTWkSx078WFmpFFhirkKGClIvjNhLTyoTkbGZq1SahuSa
- fSr3nrxmMHiL532iH69qsDrNSL+e8yzsfhZIS5XjvgDYn2S/hyTtOZf07aN17F4R
- 1unq6QXJ3tOhL20eioCgyB5bIIXu/tmBfb6jhfoTCOhNzCqm7+jOLe51ZkiT9xDx
- +d+g6Cvgx7Enim4iLawzPjjtG+QkZLRw1JTuZ7DBX2SUnMpwROo5mO9DQzgL5os9
- 2WpbxdYbf0gDOASd6RLxf2oXXZUizZ2CwjSm1uJkLMjRrEGqHWvrIsD0omMzhZRr
- oUXdz93IZpMGj5tSzZTWVfsSaIaWw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1ktuu6mb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Mar 2026 13:51:24 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62OCe3qs026698;
- Tue, 24 Mar 2026 13:51:24 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d275kt1n2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Mar 2026 13:51:23 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62ODpK1H60621286
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Mar 2026 13:51:20 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F244520049;
- Tue, 24 Mar 2026 13:51:19 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B80620040;
- Tue, 24 Mar 2026 13:51:15 +0000 (GMT)
-Received: from shivang.com (unknown [9.39.27.96])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 24 Mar 2026 13:51:14 +0000 (GMT)
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, milesg@linux.ibm.com,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org,
- Nathan Chancellor <nathan@kernel.org>,
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w52At-0006Gc-2a
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:52:06 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w52Ap-0006py-4O
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:52:01 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-439bcec8613so2700817f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 06:51:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774360315; x=1774965115; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bNxcHylGEJrRuXK5LOihueLekjFUA3Rcv2HHQr54vi8=;
+ b=sBgOExK/za+F9lHR+X3RHkr+bIGdXPQcgR6g9TWlzDbqI4NFiFikU/xVI3oAjsJnO9
+ hIAPxIQd5VKvo59kzxNYr8+oVZFHaiP8aKuDj3uzwx8EynckdSvcCYfdvmAa8CQEOA6+
+ wyuaFG6rL9H452sHTs7gtJkm516FFj3XlWYNQtOUNwfbKM8n+HmpdOPIJ2VcW12L1Fpq
+ jIdLY3GTEqrkdYiiG2MDMarBAsFqof7xLC25d8PVRlnsd03o4c+hE0ZJfpKvM7UVSB67
+ xoH0rnadzngk0VYcm8eBMM2j1Oa96HPEwYoQP55QzyicRJiMM389WqaxzIuqLOpxFHye
+ tdeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774360315; x=1774965115;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bNxcHylGEJrRuXK5LOihueLekjFUA3Rcv2HHQr54vi8=;
+ b=BAl0UiGnzroX/LJYSKVx2MFO3SxWaxVLx4GaNp9RK+iHXOar4ozPMVw6auVsTfXuJ8
+ dGfsfEvIYna1n7ENBfoyjbVcjXdvKJ3iIVls5IXd0GNXjPyKy/vcl64RnqIT0oK5aXx3
+ 92IaE+HqX45JLJL4z1pWFfDs9NQcoAaOOJczCJqP1Bx/K0SCYd+02XGjVXRLrEI3Ci2X
+ 4hr+Adz0iQqAESGtG12t16VMO47nT6/wYNOebEJxIXI5onLoeJgWLlQ4r2KWUpIayRGu
+ s4mZcJVUjvGrq2StY8KuhEmeYqVqLHgthW07qhjRwUgMd77+4CN5hDMTeFgm/oFaoHrA
+ 6f4w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUih+H8Kt+rCtw9kHt94ZrOsyTENIUEY/qSKdOd+HTELpfuo+qY2ei+lLrYkYyACOub4QzKh2f4rSES@nongnu.org
+X-Gm-Message-State: AOJu0YzsuUxukbYbPZ12vWh+fs0GnfpLL6JwZI+gl+wAQR5h3TTioJej
+ FtyqHCOfqvf55mbNnKoM3eAed71Dknl9RhgWwMlQFpkghKnN5gW32lmt
+X-Gm-Gg: ATEYQzy0zCEuj6HSQhDAlWnNvSLedN3TMUV0Giw4iIycQINDdK3Ku1l8dtgduluOrK/
+ 730QWB47SSJ5jr6zWot0k9TLe6suBh7uhxHNwBKmioWOreZh1FwWU3LzWdAdnmfYKkYMSj6fENx
+ ytels0FBUf/1+jE6y3TAytv/H7QhkeCqQipYK7OyHEQaKEDZ+6Ur0shjCsRknMsxmpDBfSDMrLu
+ vjpGcRcCXZT5sHlVH8fSMafWeq90qwjHuv83XDIwapW4dXUj3R84ktGiSCUlu9EFS9JPLoEz7i8
+ c4aBeOn2vK3e0ocSQtAjDLTh7qng2GE2JOu/y5AaR6YC2TkZRGkz5RMj/Asm96LqW+k8nMZuR6v
+ 6snYZAoL/dq3llOJPAFL4igLpLgDbibi3vQYxNG58r/7bYJFZ3piIZTn6E+9iX9txm3LZsnQgLn
+ wbM8HGmA7hzTGW6vOB+nHa6/l08M557A==
+X-Received: by 2002:a05:6000:2384:b0:43b:41b5:e021 with SMTP id
+ ffacd0b85a97d-43b64243115mr26366044f8f.2.1774360314736; 
+ Tue, 24 Mar 2026 06:51:54 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([90.187.110.129])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b644bdaf8sm43784652f8f.13.2026.03.24.06.51.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 06:51:54 -0700 (PDT)
+Date: Tue, 24 Mar 2026 11:11:51 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
+ qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Pavel Pisa <pisa@fel.cvut.cz>
+CC: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] ppc/pnv: generate dtb after machine initialization is complete
-Date: Tue, 24 Mar 2026 19:20:26 +0530
-Message-ID: <20260324135026.247418-1-shivangu@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_2/7=5D_hw/arm/sabrelite=3A_?=
+ =?US-ASCII?Q?Introduce_class_SabreliteMachineState?=
+In-Reply-To: <6b21c46dde0f562eba1a5e2dfd9dc8635daaedf1.1773866323.git.matyas.bobek@gmail.com>
+References: <cover.1773866323.git.matyas.bobek@gmail.com>
+ <6b21c46dde0f562eba1a5e2dfd9dc8635daaedf1.1773866323.git.matyas.bobek@gmail.com>
+Message-ID: <1C02DA1C-F933-4C4D-9518-FB1A5FDC1CF5@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: PL6XUOS4SMvoB2sdZj_IUFRltYYO4G3q
-X-Authority-Analysis: v=2.4 cv=aMr9aL9m c=1 sm=1 tr=0 ts=69c296dc cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=KKAkSRfTAAAA:8 a=3Nvx4KkB4OfEQQwSXpwA:9 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDEwOSBTYWx0ZWRfX6xOMU+08LE2Z
- SRSOrFBZ2ZTZeW0W1HA5RmqGn1L43Iu2t5Y3eSaPj+uH9gEJHKwV4ek1EXY2XnrmSWsY7HJU/nY
- BrZWDWJx/7FruzGLHqLp+MmTYe6sZi5flAhMiXYIrZy79o/lA1EadldPKr4n7z98W9uEzRqAqlp
- vdcpp5f3y2hUlncDORX+7pGD8HwyrI2FHtYpcpEBHl2WYo1AF/ffiAwilTSnGtX+15PLCzp1IXo
- MrQAu1Gae0LxwN2O7fpuFjTS1eW6nmq4OggNQ+cVe/EJB2m6oNnzS9Z8gKw7E9fU6SDF3az1k1l
- s1BMdKVFEk/o83htiU+6r3FL7Ty038i5IM2h98aSNvzPQSQYlVY2UkAwkxy/1WpkYHyNI0vSgX3
- F3ctWx7tuKEzgrpmFVGjwDaGiwPWiKknjMrCupdkY9JMuemnnv3XdQ54RELhtL60smqM0a4fW0h
- uYRxX3Bq1yjOydMVh/w==
-X-Proofpoint-GUID: 8HALic1-HaJl6yIUSwE-5z-3F96iB8gs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_03,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 malwarescore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240109
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,77 +107,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the machine dtb is generated in pnv_init(), before all devices
-are fully initialized. This can result in an incomplete dtb for the system,
-as seen in bug [1].
 
-Fix this by deferring dtb generation until machine initialization is complete,
-using the machine_init_done_notifier hook.
 
-[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
+Am 19=2E M=C3=A4rz 2026 19:13:09 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <mat=
+yas=2Ebobek@gmail=2Ecom>:
+>Create full class SabreliteMachineState extending MachineState=2E
+>
+>Previously, Sabrelite board MachineState was declared indirectly by the
+>DEFINE_MACHINE_ARM macro=2E FslIMX6State was only instantiated in the
+>sabrelite_init function=2E For FlexCAN device, machine properties
+>will be used to select QEMU CAN buses=2E A custom class is therefore
+>required, so the CanBusState "connections" can then be added as fields=2E
+>
+>Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas=2Ebobek@gmail=2Ecom>
+>---
+> hw/arm/sabrelite=2Ec | 39 +++++++++++++++++++++------------------
+> 1 file changed, 21 insertions(+), 18 deletions(-)
+>
+>diff --git a/hw/arm/sabrelite=2Ec b/hw/arm/sabrelite=2Ec
+>index 40ee8196ac=2E=2E7e036e6388 100644
+>--- a/hw/arm/sabrelite=2Ec
+>+++ b/hw/arm/sabrelite=2Ec
+>@@ -20,6 +20,15 @@
+> #include "qemu/error-report=2Eh"
+> #include "system/qtest=2Eh"
+>=20
+>+struct SabreliteMachineState {
+>+    MachineState parent_obj;
+>+
+>+    FslIMX6State soc;
+>+};
+>+
+>+#define TYPE_SABRELITE_MACHINE MACHINE_TYPE_NAME("sabrelite")
+>+OBJECT_DECLARE_SIMPLE_TYPE(SabreliteMachineState, SABRELITE_MACHINE)
+>+
+> static struct arm_boot_info sabrelite_binfo =3D {
+>     /* DDR memory start */
+>     =2Eloader_start =3D FSL_IMX6_MMDC_ADDR,
+>@@ -41,7 +50,7 @@ static void sabrelite_reset_secondary(ARMCPU *cpu,
+>=20
+> static void sabrelite_init(MachineState *machine)
+> {
+>-    FslIMX6State *s;
+>+    SabreliteMachineState *s =3D SABRELITE_MACHINE(machine);
+>=20
+>     /* Check the amount of memory is compatible with the SOC */
+>     if (machine->ram_size > FSL_IMX6_MMDC_SIZE) {
+>@@ -50,13 +59,12 @@ static void sabrelite_init(MachineState *machine)
+>         exit(1);
+>     }
+>=20
+>-    s =3D FSL_IMX6(object_new(TYPE_FSL_IMX6));
+>-    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+>+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IM=
+X6);
+>=20
+>     /* Ethernet PHY address is 6 */
+>-    object_property_set_int(OBJECT(s), "fec-phy-num", 6, &error_fatal);
+>+    object_property_set_int(OBJECT(&s->soc), "fec-phy-num", 6, &error_fa=
+tal);
+>=20
+>-    qdev_realize(DEVICE(s), NULL, &error_fatal);
+>+    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+>=20
+>     memory_region_add_subregion(get_system_memory(), FSL_IMX6_MMDC_ADDR,
+>                                 machine->ram);
+>@@ -70,7 +78,7 @@ static void sabrelite_init(MachineState *machine)
+>         /* Add the sst25vf016b NOR FLASH memory to first SPI */
+>         Object *spi_dev;
+>=20
+>-        spi_dev =3D object_resolve_path_component(OBJECT(s), "spi1");
+>+        spi_dev =3D object_resolve_path_component(OBJECT(&s->soc), "spi1=
+");
+>         if (spi_dev) {
+>             SSIBus *spi_bus;
+>=20
+>@@ -89,7 +97,7 @@ static void sabrelite_init(MachineState *machine)
+>                 qdev_realize_and_unref(flash_dev, BUS(spi_bus), &error_f=
+atal);
+>=20
+>                 cs_line =3D qdev_get_gpio_in_named(flash_dev, SSI_GPIO_C=
+S, 0);
+>-                qdev_connect_gpio_out(DEVICE(&s->gpio[2]), 19, cs_line);
+>+                qdev_connect_gpio_out(DEVICE(&s->soc=2Egpio[2]), 19, cs_=
+line);
+>             }
+>         }
+>     }
+>@@ -100,12 +108,14 @@ static void sabrelite_init(MachineState *machine)
+>     sabrelite_binfo=2Esecondary_cpu_reset_hook =3D sabrelite_reset_secon=
+dary;
+>=20
+>     if (!qtest_enabled()) {
+>-        arm_load_kernel(&s->cpu[0], machine, &sabrelite_binfo);
+>+        arm_load_kernel(&s->soc=2Ecpu[0], machine, &sabrelite_binfo);
+>     }
+> }
+>=20
+>-static void sabrelite_machine_init(MachineClass *mc)
+>+static void sabrelite_machine_class_init(ObjectClass *oc, const void *da=
+ta)
+> {
+>+    MachineClass *mc =3D MACHINE_CLASS(oc);
+>+
+>     mc->desc =3D "Freescale i=2EMX6 Quad SABRE Lite Board (Cortex-A9)";
+>     mc->init =3D sabrelite_init;
+>     mc->max_cpus =3D FSL_IMX6_NUM_CPUS;
+>@@ -114,18 +124,11 @@ static void sabrelite_machine_init(MachineClass *mc=
+)
+>     mc->auto_create_sdcard =3D true;
+> }
+>=20
+>-static void sabrelite_machine_class_init(ObjectClass *oc, const void *da=
+ta)
+>-{
+>-    MachineClass *mc =3D MACHINE_CLASS(oc);
+>-
+>-    sabrelite_machine_init(mc);
+>-}
 
-Cc: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-stable@nongnu.org
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
----
- hw/ppc/pnv.c         | 17 +++++++++++++----
- include/hw/ppc/pnv.h |  2 ++
- 2 files changed, 15 insertions(+), 4 deletions(-)
+Let's do the merge in the previous commit, as explained there=2E
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 7e54b6bc60..f13b2e3db8 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -984,6 +984,17 @@ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
-     return chip_id == 0 ? 1 * GiB : QEMU_ALIGN_DOWN(ram_per_chip, 1 * MiB);
- }
- 
-+static void pnv_machine_init_done(Notifier *notifier, void *data)
-+{
-+    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
-+    MachineState *machine = MACHINE(pnv);
-+
-+    if (!machine->fdt) {
-+        machine->fdt = pnv_dt_create(machine);
-+        _FDT((fdt_pack(machine->fdt)));
-+    }
-+}
-+
- static void pnv_init(MachineState *machine)
- {
-     const char *bios_name = machine->firmware ?: FW_FILE_NAME;
-@@ -1244,10 +1255,8 @@ static void pnv_init(MachineState *machine)
-         pmc->i2c_init(pnv);
-     }
- 
--    if (!machine->fdt) {
--        machine->fdt = pnv_dt_create(machine);
--        _FDT((fdt_pack(machine->fdt)));
--    }
-+    pnv->machine_init_done.notify = pnv_machine_init_done;
-+    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
- }
- 
- /*
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 24f8843a40..90028f974d 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -111,6 +111,8 @@ struct PnvMachineState {
- 
-     bool         big_core;
-     bool         lpar_per_core;
-+
-+    Notifier     machine_init_done;
- };
- 
- PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
--- 
-2.53.0
+>-
+> static const TypeInfo sabrelite_machine_init_typeinfo =3D {
+>-    =2Ename          =3D MACHINE_TYPE_NAME("sabrelite"),
+>+    =2Ename          =3D TYPE_SABRELITE_MACHINE,
+>     =2Eparent        =3D TYPE_MACHINE,
+>     =2Eclass_init    =3D sabrelite_machine_class_init,
+>-    =2Einstance_size =3D sizeof(MachineState),
+>+    =2Einstance_size =3D sizeof(SabreliteMachineState),
+>     =2Eabstract      =3D false,
+>     =2Einterfaces    =3D arm_machine_interfaces,
+> };
 
+With the above:
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
