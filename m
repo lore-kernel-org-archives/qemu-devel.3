@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163E9E9A768
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81279E9A768
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4zOL-0007k5-Np; Tue, 24 Mar 2026 06:53:45 -0400
+	id 1w4zPR-00088O-8h; Tue, 24 Mar 2026 06:54:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w4zOJ-0007jY-V4
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:53:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w4zPP-00088D-IM
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:54:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w4zOI-0000xc-78
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:53:43 -0400
+ id 1w4zPN-00011C-VU
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:54:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774349620;
+ s=mimecast20190719; t=1774349689;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3YpUc/ODFStNWhZjRClnuP5z+oh++RSb6zDXm+hVTDc=;
- b=i6BqKXiBsnghTSZtDStoIdcYWGl1ms8cNibpbsizBlYXmmQ7PufiPlwYJp3SgpC101SBMP
- uZdWtzKCe8cezadncqNOychcIwmrWgAU2ApR6Xn4CuGev+q7BKFQl2SVaOaG0/0rDOjP5i
- kkDWw3wBQ1MStbD+SerUWrxV9zneYmU=
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=rUIgxkZT2yzzsX0JAAuiHF8PjxEoMHU8hBwniQ9EoRw=;
+ b=eO+B+fcwUYvMeWofWhwBjFfeXv2gBw0f2c0Y6eS5mtvhu31jpKcQo4al6NwEsZAZ/zXdXP
+ XA7U6fdzWrsX0smuAtpMvR1yXdfx4Jm2ciTMmzKz6PF7ZAACGBgBvGCy0maIrlcnJkp3cg
+ veySJtcDoaP9KflZiErTxxgvFT3cV/4=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-jpi2PWFlMpahZlfDlh4vmg-1; Tue,
- 24 Mar 2026 06:53:39 -0400
-X-MC-Unique: jpi2PWFlMpahZlfDlh4vmg-1
-X-Mimecast-MFC-AGG-ID: jpi2PWFlMpahZlfDlh4vmg_1774349618
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-pIEyrAK4PvCcKrtLaQAmYg-1; Tue,
+ 24 Mar 2026 06:54:45 -0400
+X-MC-Unique: pIEyrAK4PvCcKrtLaQAmYg-1
+X-Mimecast-MFC-AGG-ID: pIEyrAK4PvCcKrtLaQAmYg_1774349685
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79C8D1956089; Tue, 24 Mar 2026 10:53:38 +0000 (UTC)
+ id B3CE61954B17; Tue, 24 Mar 2026 10:54:44 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.33.93])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A8F3B180058C; Tue, 24 Mar 2026 10:53:36 +0000 (UTC)
-Date: Tue, 24 Mar 2026 10:53:32 +0000
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 825E219560B1; Tue, 24 Mar 2026 10:54:42 +0000 (UTC)
+Date: Tue, 24 Mar 2026 10:54:38 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Junjie Cao <junjie.cao@intel.com>
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de
-Subject: Re: [PATCH v2 2/3] migration/file: fix type mismatch and NULL deref
+Subject: Re: [PATCH v2 0/3] migration/file: fix type mismatch and NULL deref
  in multifd_file_recv_data
-Message-ID: <acJtLOkGyLc2cAjp@redhat.com>
-References: <20260318140113.434-1-junjie.cao@intel.com>
- <20260318140113.434-3-junjie.cao@intel.com>
+Message-ID: <acJtbvE39JHM4g5c@redhat.com>
+References: <20260316084618.52-1-junjie.cao@intel.com>
+ <20260318140113.434-1-junjie.cao@intel.com>
+ <20260324082738.841-1-junjie.cao@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260318140113.434-3-junjie.cao@intel.com>
+In-Reply-To: <20260324082738.841-1-junjie.cao@intel.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,31 +88,33 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 18, 2026 at 10:01:12PM +0800, Junjie Cao wrote:
-> multifd_file_recv_data() stores the return value of qio_channel_pread()
-> (ssize_t) in a size_t variable.  On I/O error the -1 return value wraps
-> to SIZE_MAX, producing a nonsensical read size in the error message.
+On Tue, Mar 24, 2026 at 04:27:38PM +0800, Junjie Cao wrote:
+> Hi Peter, Daniel,
 > 
-> More critically, a short read (0 <= ret < data->size) is possible when
-> the migration file is truncated.  In that case qio_channel_pread()
-> returns a non-negative value without setting *errp.  The function then
-> calls error_prepend(errp, ...) which dereferences *errp -- a NULL
-> pointer -- crashing QEMU.
+> I wanted to follow up on this series.  Looking back, I went
+> straight to adding new public API in io/channel.  I should 
+> have confirmed my approach and whether the Suggested-by
+> tag was appropriate here with you before sending.  Sorry for that.
 > 
-> Fix both issues by switching to qio_channel_pread_all() introduced in
-> the previous commit, which retries on short reads and treats
-> end-of-file as an error, so the caller no longer needs to check the
-> byte count manually.  Add ERRP_GUARD() so that error_prepend() works
-> correctly even when errp is &error_fatal or NULL.
+> I see two possible paths and would appreciate your guidance:
 > 
-> Suggested-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-> ---
->  migration/file.c | 17 ++++++++---------
->  1 file changed, 8 insertions(+), 9 deletions(-)
+>   (a) Keep it purely a fix in migration/file.c: add a local
+>       retry loop around qio_channel_pread() in
+>       multifd_file_recv_data(), fix the ssize_t/size_t
+>       mismatch, and use ERRP_GUARD() so error_prepend()
+>       is safe.
+> 
+>   (b) If pread_all() retry helpers are worth having as a
+>       general facility in io/channel, I'm happy to propose
+>       them as a separate RFC so we can discuss the API design
+>       on its own merits.
+> 
+> I'm leaning toward (a) and can send a v3 quickly.
+> Does that sound right?
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
+Doing (b) is the right approach. We want these helpers in the
+general code, so we don't create technical debt that has to be
+fixed next time something else wants the same APIs.
 
 With regards,
 Daniel
