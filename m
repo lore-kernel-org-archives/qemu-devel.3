@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C088F54ACD
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0A1BF54ACD
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w53Pw-0000tv-6w; Tue, 24 Mar 2026 11:11:41 -0400
+	id 1w53Pn-0000ms-9V; Tue, 24 Mar 2026 11:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Pj-0000jn-QF
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:27 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1w53Pl-0000lX-3y
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:29 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Ph-0005Do-QD
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:27 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-486b96760easo12859155e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:25 -0700 (PDT)
+ id 1w53Pj-0005E9-FS
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:28 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439d8dc4ae4so4843460f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774365084; x=1774969884; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774365086; x=1774969886; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kvuAX+aljmK1WGcU3Y0ud4Mf1yP5fbh/2lCieSQZkf0=;
- b=Kq0kaArPKQYg21Gs27QQepvLKa3ni3u0L6ZMKckhno5Z9SMcGoPs4w0Ni9oZql/vsC
- FdKZ+ymnMrzVwYTzNaY1APvo5KfqFHnjRQXihignHWVYibVtW9VpIu5GL04OHvba6JT6
- KyOpyPGkT6DBWZCzcfoLenu7ViD52xxixHaGVXAdD/ry03QciAmNaGSysv4YahuC6hG7
- 9YeWl0/HeD96atOlZG/ndzreQe4vhMbbRDfXCr1NSi/+BOoZ5CwpS3an0LRn+dnXE+La
- ZOvmx26weHLf8WxM5eY6i7Ia1ePLxaWVxejR3eAzmIzuT2Vw32Jopongdhz5qZwdoRL5
- 00fQ==
+ :reply-to; bh=5wiSFi8wnswcXFlOefRmA6X45uTbRfHYHACuotQz0g4=;
+ b=ADXAkpmlpcaBKSMRSbXCPkAc9YaKfPv3Q5Eu3p8Vl2y+vzaLhX+KyAZUq9ayhxCYk4
+ dpz5NtojupISooDSpYGPrCHkUEXhlsic0IVmBOJ9M/Wd4FfOnlZNWcCFWPmflURAZKUQ
+ 0UG7BQ2Jms/qblpKY9Ty28Ybz39la+3paF1SI6UN8u81FBOk0REFjVLjDZd/yrvwDnGy
+ duOQM8aKwsCzGQUmIXKinIqgdFLWxPpNH1J/K7D70jg+6j+NahDcfUoUznqOe/ftR10n
+ 3G2EfnPbB1s7O4LgYEi2IbQcx0dFgqahQetTv5zKvsu6DWHmU3ZQvamXTgY4gDxV08HI
+ IfRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774365084; x=1774969884;
+ d=1e100.net; s=20251104; t=1774365086; x=1774969886;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=kvuAX+aljmK1WGcU3Y0ud4Mf1yP5fbh/2lCieSQZkf0=;
- b=DMHmKCeokqqWuu96vHUGV1m2kwUCma9xyx+gjEkc5/PfagaMkq3KwW4kJ7EnFCsfGZ
- rrf031BzGGEeFlhfqFf05D+HhY2qFxborH/AMq3j9CQ1ArLfrdMDnci4vlC+EaNiJ2jM
- iJdlqu0ZLug+053oTdElkPkVxOpnNzszGr4ULPFMLO7syD2Ft4JRxx4HZ3gHU4oUor8v
- 9DG49Ln1Skan3YeBh21o+3M5BEAnQfIWibkXfHlOs5nCJlIudlHPxSx5VC3pHjA2XB1W
- MZVEL3n3N6m0mMFQzOQwnEw81lo5mbtC9TLl+Y+b12NwqlviZqYGIHJo9RySvcAM6e/a
- FyBA==
-X-Gm-Message-State: AOJu0Yy2i/QMJTgOJQcqmWJ2QkqVryu4TNFsK6/JjLHHOFfNUWASVqg7
- XCDkazsrb/Ep/wZBTftqSG1XcvgQU4bIY5aIFSG1pk913c18Lg+4CxUH1E13Nhx2p7EOKK2cqO6
- FVNeM4mQ=
-X-Gm-Gg: ATEYQzxCz51ZIetJyMZo19VH++J8hIEmpAfPKmobrfNTsWsw6P1+xexn/X/ZLpQSzMl
- VAj6LUaWVEbf9ndE9Mlgog1q/wkIxyzy9RhcZ8OyyWJPSUa9e739/n7EV5J/N2D6YsXfioolzs3
- 3wQT8JW/Fb45GHuJWRQwmsq+13uoMdsjcBUK6kKQYv1DA9co9XeH2YUo9CT4C1jujRpCOX4QG8d
- IZlogRY4uTESXhX4sbv7T+SvdyuZIUGTx/criMyorLtS/Ql+OZqwCWdCD6CuSiT7ZLS3xANXnrO
- kGlrLzKzYFaS7tjS+uiB+l4r3DuP1daz9hR2PjIToT9Ks4O/t1VSByvV4An00jiVoGaSX68r9IP
- HScAxOaK59bxlNHsK+cyqVqUhp0TzOEdk7BnAkaYjahVV4AhbmHTADFQ4EJIYvjoTvoyI8ZeqQh
- U+fqVkQWH/PdWksny0WLpAR9USiR7StEdwEiXw2fKSwIvo6HNdSBV+PHv69PKaUexkKFbGBIRZY
- 2DcZYyR/mg7h3yhoH8THOcPyjWh4EJXJK6uVCBnJg==
-X-Received: by 2002:a05:600c:4e87:b0:477:6d96:b3e5 with SMTP id
- 5b1f17b1804b1-48715fd463emr2270045e9.7.1774365084025; 
- Tue, 24 Mar 2026 08:11:24 -0700 (PDT)
+ bh=5wiSFi8wnswcXFlOefRmA6X45uTbRfHYHACuotQz0g4=;
+ b=VYwrr4IAnDg9ghZ4QIKaqUb6YuN/p4OTSUKT8RmR1GWoJWI4I2w3J4EIJCHFj+nvao
+ LzMDZFranH4wvt196fVU2kn99PPPm1+ueD3I3ZIE2Zg6yVbOV74x1tPXZRCqwboAnAYB
+ bDTyIoBpn8V1CVwJ1MZ2DmPHqBrfu/qCKSNo20uAIWONqiogF8XmltA1PoLcDwjN5e7K
+ KXquUhM/qzIAnqf+f7vkyQYgIsA9qDYv8I15nk38wmvJt9kxKYp6eCnX1A/E3253Mckp
+ pKLx/zLui4MRWudAk76B42BynxP4jgfZ7AZSE8HbfM1BBB26ZFyjU3peatUf04ZK2BBg
+ zbwQ==
+X-Gm-Message-State: AOJu0Yz0TYJfWnj16WZkR6fU+/3FjIAmZb/Up10174vyM49e38DjQ9x3
+ RycQ7zEWtt77x5ppTAdt9W4EVREOzXjN9db5z/B8rh48kKn2wRNzWwGrMFIvGhlpC3+KB1jOayM
+ 4CrEJD/Y=
+X-Gm-Gg: ATEYQzw9ieWoBk6vjGnVjYCDAERhnVldVOEjldhakATqXY5RbHSBfgSQRyPHGoIKwM+
+ I5zaDz/iEfNkx06egwXNZOqJWempQoYGBzPksrd7A5VIvIasWE3cIV578yZAqU/On8987Eb1gIq
+ Nawnj8iAS1PcWbKvCFnXR+gA0WKjIQ1/okX7FNPaE9A4UGTZi4FHiLGH6lM5Z/D28TikFr0wK7v
+ DJ5HXMGhl64OLx7uADH2FzIMaCd69SIPCXDqXWNJTPkrLB8CVtB9gOhsElbV4Bm34igLrrQMx9k
+ 8E4vB0c8doN0Vcti2tYxpJkbCsLGFkcve5HLwkSRKxv3oQinO+vtd5jJ52ksLcDZ+TK4FFtLjGj
+ cTpcXa4HbjJoA3PfHUyVREn2TBFYNJqUbbcDdUXEIo4jWnMj0pT2K5gGKHuz7kyjTfeEQ93rhtk
+ vinLTg0UJPrzqDRAxvVOFy4KrYe2fbl8FZk2pQZsU0XazEFuR7RWkxOhizjmlpLBYAA3mTec+Xj
+ kO/jrbcwsqM/d8iv0jmIsrsi5SOf+w=
+X-Received: by 2002:a5d:5d13:0:b0:43b:4920:56bb with SMTP id
+ ffacd0b85a97d-43b6427b750mr24419103f8f.52.1774365085799; 
+ Tue, 24 Mar 2026 08:11:25 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.22
+ ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 08:11:23 -0700 (PDT)
+ Tue, 24 Mar 2026 08:11:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/11] hw/arm/smmuv3-accel: Change "ssidsize" property type to
- SsidSizeMode
-Date: Tue, 24 Mar 2026 15:11:08 +0000
-Message-ID: <20260324151111.237411-9-peter.maydell@linaro.org>
+Subject: [PULL 09/11] qdev: Add an OasMode property type
+Date: Tue, 24 Mar 2026 15:11:09 +0000
+Message-ID: <20260324151111.237411-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260324151111.237411-1-peter.maydell@linaro.org>
 References: <20260324151111.237411-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,186 +102,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nathan Chen <nathanc@nvidia.com>
 
-Change accel SMMUv3 SSIDSIZE property from uint8_t to SsidSizeMode.
-The 'auto' value is not implemented, as this commit is meant to set the
-property to the correct type and avoid breaking JSON/QMP when the auto
-mode is introduced. A future patch will implement resolution of 'auto'
-value to match the host SMMUv3 SSIDSIZE value.
+Introduce a new enum type property allowing to set an Output Address
+Size. Values are auto, 32, 36, 40, 42, 44, 48, 52, and 56, where a
+value of N specifies an N-bit OAS.
 
-The conversion of the "ssidsize" property type to OnOffAuto is an
-incompatible change for JSON/QMP when a uint8_t value is expected for
-"ssidsize", but this property is new in 11.0 and this patch is
-submitted as a fix to the property type.
-
-Fixes: b8c6f8a69d27 ("hw/arm/smmuv3-accel: Make SubstreamID support configurable")
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-Message-id: 20260323182454.1416110-6-nathanc@nvidia.com
+Message-id: 20260323182454.1416110-7-nathanc@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3-accel.c          | 23 +++++++++++++++++++++--
- hw/arm/smmuv3.c                | 19 ++++++++++---------
- include/hw/arm/smmuv3-common.h |  1 -
- include/hw/arm/smmuv3.h        |  3 ++-
- 4 files changed, 33 insertions(+), 13 deletions(-)
+ hw/core/qdev-properties-system.c         | 13 +++++++++++
+ include/hw/core/qdev-properties-system.h |  3 +++
+ qapi/misc-arm.json                       | 28 ++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+)
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index c31b64295e..bc6cbfebc2 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -802,7 +802,7 @@ static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
-     SMMUState *bs = opaque;
-     SMMUv3State *s = ARM_SMMUV3(bs);
- 
--    if (s->ssidsize) {
-+    if (s->ssidsize > SSID_SIZE_MODE_0) {
-         flags |= VIOMMU_FLAG_PASID_SUPPORTED;
-     }
-     return flags;
-@@ -817,6 +817,22 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
-     .get_msi_direct_gpa = smmuv3_accel_get_msi_gpa,
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 4aca1d4326..a805ee2e1f 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -737,6 +737,19 @@ const PropertyInfo qdev_prop_ssidsize_mode = {
+     .set_default_value = qdev_propinfo_set_default_value_enum,
  };
  
-+/*
-+ * This returns the value of a SsidSizeMode value offset by 1 to
-+ * account for the enum values offset by 1 from actual values.
-+ *
-+ * SSID_SIZE_MODE_0 = 1, SSID_SIZE_MODE_1 = 2, etc. so return 0
-+ * if SSID_SIZE_MODE_0 is passed as input, return 1 if
-+ * SSID_SIZE_MODE_1 is passed as input, etc.
-+ */
-+static uint8_t ssidsize_mode_to_value(SsidSizeMode mode)
-+{
-+    if (mode == SSID_SIZE_MODE_AUTO) {
-+        return 0;
-+    }
-+    return mode - 1;
-+}
++/* --- OasMode --- */
 +
- void smmuv3_accel_idr_override(SMMUv3State *s)
- {
-     if (!s->accel) {
-@@ -842,7 +858,10 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
-      * By default QEMU SMMUv3 has no SubstreamID support. Update IDR1 if user
-      * has enabled it.
-      */
--    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE, s->ssidsize);
-+    if (s->ssidsize > SSID_SIZE_MODE_0) {
-+        s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE,
-+                               ssidsize_mode_to_value(s->ssidsize));
-+    }
- }
++QEMU_BUILD_BUG_ON(sizeof(OasMode) != sizeof(int));
++
++const PropertyInfo qdev_prop_oas_mode = {
++    .type = "OasMode",
++    .description = "oas mode: auto, 32, 36, 40, 42, 44, 48, 52, 56",
++    .enum_table = &OasMode_lookup,
++    .get = qdev_propinfo_get_enum,
++    .set = qdev_propinfo_set_enum,
++    .set_default_value = qdev_propinfo_set_default_value_enum,
++};
++
+ /* --- Reserved Region --- */
  
- /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index ea285bdf64..79018f8d66 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -20,6 +20,7 @@
- #include "qemu/bitops.h"
- #include "hw/core/irq.h"
- #include "hw/core/sysbus.h"
-+#include "hw/core/qdev-properties-system.h"
- #include "migration/blocker.h"
- #include "migration/vmstate.h"
- #include "hw/core/qdev-properties.h"
-@@ -625,7 +626,7 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
-     }
- 
-     /* Multiple context descriptors require SubstreamID support */
--    if (!s->ssidsize && STE_S1CDMAX(ste) != 0) {
-+    if (s->ssidsize == SSID_SIZE_MODE_0 && STE_S1CDMAX(ste) != 0) {
-         qemu_log_mask(LOG_UNIMP,
-                 "SMMUv3: multiple S1 context descriptors require SubstreamID support. "
-                 "Configure ssidsize > 0 (requires accel=on)\n");
-@@ -1979,6 +1980,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
-         error_setg(errp, "ril auto mode is not supported");
-         return false;
-     }
-+    if (s->ssidsize == SSID_SIZE_MODE_AUTO) {
-+        error_setg(errp, "ssidsize auto mode is not supported");
-+        return false;
-+    }
- 
-     if (!s->accel) {
-         if (s->ril == ON_OFF_AUTO_OFF) {
-@@ -1993,7 +1998,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
-             error_setg(errp, "OAS must be 44 bits when accel=off");
-             return false;
-         }
--        if (s->ssidsize) {
-+        if (s->ssidsize > SSID_SIZE_MODE_0) {
-             error_setg(errp, "ssidsize can only be set if accel=on");
-             return false;
-         }
-@@ -2011,11 +2016,6 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
-         error_setg(errp, "OAS can only be set to 44 or 48 bits");
-         return false;
-     }
--    if (s->ssidsize > SMMU_SSID_MAX_BITS) {
--        error_setg(errp, "ssidsize must be in the range 0 to %d",
--                   SMMU_SSID_MAX_BITS);
--        return false;
--    }
- 
-     return true;
- }
-@@ -2144,7 +2144,8 @@ static const Property smmuv3_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
-     DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
-     DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
--    DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
-+    DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
-+                              SSID_SIZE_MODE_0),
- };
- 
- static void smmuv3_instance_init(Object *obj)
-@@ -2185,7 +2186,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
-         "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
-         "Valid range is 0-20, where 0 disables SubstreamID support. "
-         "Defaults to 0. A value greater than 0 is required to enable "
--        "PASID support.");
-+        "PASID support. ssidsize=auto is not supported.");
- }
- 
- static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
-diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
-index 9f78bbe89e..7f0f992dfd 100644
---- a/include/hw/arm/smmuv3-common.h
-+++ b/include/hw/arm/smmuv3-common.h
-@@ -311,7 +311,6 @@ REG32(IDR1,                0x4)
-     FIELD(IDR1, TABLES_PRESET, 30, 1)
-     FIELD(IDR1, ECMDQ,        31, 1)
- 
--#define SMMU_SSID_MAX_BITS 20
- #define SMMU_IDR1_SIDSIZE 16
- #define SMMU_CMDQS   19
- #define SMMU_EVENTQS 19
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index c35e599bbc..ddf472493d 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -21,6 +21,7 @@
- 
- #include "hw/arm/smmu-common.h"
- #include "qom/object.h"
-+#include "qapi/qapi-types-misc-arm.h"
- 
- #define TYPE_SMMUV3_IOMMU_MEMORY_REGION "smmuv3-iommu-memory-region"
- 
-@@ -72,7 +73,7 @@ struct SMMUv3State {
-     OnOffAuto ril;
-     OnOffAuto ats;
-     uint8_t oas;
--    uint8_t ssidsize;
-+    SsidSizeMode ssidsize;
- };
- 
- typedef enum {
+ /*
+diff --git a/include/hw/core/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
+index 4708885164..2cbea16d61 100644
+--- a/include/hw/core/qdev-properties-system.h
++++ b/include/hw/core/qdev-properties-system.h
+@@ -15,6 +15,7 @@ extern const PropertyInfo qdev_prop_mig_mode;
+ extern const PropertyInfo qdev_prop_granule_mode;
+ extern const PropertyInfo qdev_prop_zero_page_detection;
+ extern const PropertyInfo qdev_prop_ssidsize_mode;
++extern const PropertyInfo qdev_prop_oas_mode;
+ extern const PropertyInfo qdev_prop_losttickpolicy;
+ extern const PropertyInfo qdev_prop_blockdev_on_error;
+ extern const PropertyInfo qdev_prop_bios_chs_trans;
+@@ -64,6 +65,8 @@ extern const PropertyInfo qdev_prop_virtio_gpu_output_list;
+                        ZeroPageDetection)
+ #define DEFINE_PROP_SSIDSIZE_MODE(_n, _s, _f, _d) \
+     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_ssidsize_mode, SsidSizeMode)
++#define DEFINE_PROP_OAS_MODE(_n, _s, _f, _d) \
++    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_oas_mode, OasMode)
+ #define DEFINE_PROP_LOSTTICKPOLICY(_n, _s, _f, _d) \
+     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_losttickpolicy, \
+                         LostTickPolicy)
+diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+index 416b4240e2..4dc66d00e5 100644
+--- a/qapi/misc-arm.json
++++ b/qapi/misc-arm.json
+@@ -61,3 +61,31 @@
+   'data': [ 'auto', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+             '10', '11', '12', '13', '14', '15', '16', '17', '18',
+             '19', '20' ] } # order matters, see ssidsize_mode_to_value()
++
++##
++# @OasMode:
++#
++# SMMUv3 Output Address Size configuration mode.
++#
++# @auto: derive from host IOMMU capabilities
++#
++# @32: 32-bit output address size
++#
++# @36: 36-bit output address size
++#
++# @40: 40-bit output address size
++#
++# @42: 42-bit output address size
++#
++# @44: 44-bit output address size
++#
++# @48: 48-bit output address size
++#
++# @52: 52-bit output address size
++#
++# @56: 56-bit output address size
++#
++# Since: 11.0
++##
++{ 'enum': 'OasMode',
++  'data': [ 'auto', '32', '36', '40', '42', '44', '48', '52', '56' ] }
 -- 
 2.43.0
 
