@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D103F54AC7
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AC2F54AC7
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52vO-000205-6k; Tue, 24 Mar 2026 10:40:06 -0400
+	id 1w52xU-0003I5-BS; Tue, 24 Mar 2026 10:42:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w52vJ-0001uq-By
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:40:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w52vH-0007Hi-Ry
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:40:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774363198;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/EVxeiEWJ9/V+6EeFAbiiT43pr+PvE41V9rc0+9QJpM=;
- b=BWdbovWRDYqgeOZV1POh7P9o9NorzbcFpMj1V/aOz0y6V6r2evc4IWLAlF5H/WcRK3u/xf
- 2VHTNL2lnb4JZG5wwzhWnnhG8xnUkqyggaDtrmGSaxHK5cg1nojdVBZxvF82VzggUQM6zw
- HKC6Al68PzyeCXY7MPqrxxPMghJk5SY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-9VaPlZVEMJ23d3QO3sh02Q-1; Tue,
- 24 Mar 2026 10:39:56 -0400
-X-MC-Unique: 9VaPlZVEMJ23d3QO3sh02Q-1
-X-Mimecast-MFC-AGG-ID: 9VaPlZVEMJ23d3QO3sh02Q_1774363196
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09207195609D
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 14:39:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.93])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED8F3300019F; Tue, 24 Mar 2026 14:39:54 +0000 (UTC)
-Date: Tue, 24 Mar 2026 14:39:51 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 44/60] ui/vnc: VncDisplay.id is not const
-Message-ID: <acKiNyLsjy--YvPW@redhat.com>
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-44-48eb1dcf7b76@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52x9-0003H4-2D
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:41:55 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52x4-0007r9-HM
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:41:52 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43b87970468so192901f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 07:41:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774363309; x=1774968109; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d9nTY42IS1HlSSrDcnTX14DmOYYDGUpXN9zSkrhwb7Q=;
+ b=HUN28gNGrAY9slDQ6uLuLYltuEOh1a0Yu+l9De5oMuQiFPkXpv1NvWMx6z6UNLP06y
+ BlXfI4iobzIYoVVA2QCLpNypcoV2ydA0DlJQMLAaMgNRK+EOfonXWkZYHvh9gKmAK+I8
+ QXa8NqhOpJryuVHCUEmvLU5E/G0y1zzhYFqHcCHRWI+ZED3W2UgACSI8C61ijmorW7V1
+ EpnxVXa/XKUKtQ15AWqAVkj+AnqurMrPDVFVlcWrD6LPl6HlbX5yVxPgVEF9g34BpSGI
+ kl6pMbH/aF1Zez6blUvf4zPS/80quutzskKQ+DMX7jh6APNAMgf3/UBTnJA4nwYrRe46
+ JFQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774363309; x=1774968109;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d9nTY42IS1HlSSrDcnTX14DmOYYDGUpXN9zSkrhwb7Q=;
+ b=LqwpVCn+v5eiQrhyzGTSgKzTO7YC5V9EYuK80DDCDo0aeubyMWfQWE00ukLoLoWLQN
+ 2hhTuWXel3EzqXmYdhZ1OppIP8vMEFFMfHGDQFhjqKD126LXsfbUxjNmKdNyUxVhtD7a
+ xDP664QNmZ5z/Y29wHaue9kNjQ0/mO0SbGf4idRbhofuT6bg55XeLXx72k3va6zcBkep
+ YgcQ8H4RJopAeqzrJY7KpfJmsmJ//d4MhjXifbZMajMgOGx8ujEefdgYhb4/EYcxyuee
+ EUb/xL4PacO1HPNrAFJ7mryPXSPpXGk6dbaiVusvo3BN2YF/FheErV4jzJXBTaiQTyUb
+ QZ2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrauw+7xgIi0D1mP/anZEr0hl0iHx5YpHPTXrNYhSTIES5Laagthr7zTswV965L3Y+GB71au6dH0va@nongnu.org
+X-Gm-Message-State: AOJu0YwLA1cG91OagIFy5UHcASJF51qT3UXZFOYaKhyGpIkS+9c6R2Qs
+ zKRSwKrDvMmXu4S0mIAD8vi4W1/9TuZQ28O3UiUufxcxi62cnhkpNI+zD2ZXp0xsNDA=
+X-Gm-Gg: ATEYQzwl9Mr2t7ZSWUm6wFzq9FS3nNzADAQj3mOtEwK4C/BnpZrJBipXGcxRtzfn/zz
+ sDlW3+gEwOMuh9Ql3Jv62RiWJ2kvMORUAhKF4HKy6UgYp/TNwutdmMpBc+9cm6VQQTU8D+Ks8mp
+ JDg5bG/tD4U0O3vhVHOrvbKtLoxzo5gGk6ko+USXS34HtN2fqqIjsK2K2Tl+JscFj5TUJqU/TDg
+ nMz4WIPd/K+CB0WLc83kY5tJtbigrurTXucbaE5xwn5tnRDWGvwYXHYvjTf3WSdhzJTNIjgpG7y
+ mBTJHJEK9ZkAnRqYaCjpa6WCDbWPYBim8BBGRDMMM7LdZVoiJ87jVlFzRAC6GPndlK/e3sdIN/I
+ nuM/ex692Qg/sxObHe5XU3qHs7MPc7XLpcNcR0sVxXRMkiWQbOctNR06JCendH770Ud3bUMnd07
+ OU1q/W8dalMjryI8RGaY7zA/ure74Vx1j/a73ZjUWcj+AlgRC7WEdiAOJ+9tRgAS8EZ+WowIj2L
+ iyB
+X-Received: by 2002:a05:6000:40cc:b0:43b:54c9:85f4 with SMTP id
+ ffacd0b85a97d-43b64279621mr26498941f8f.39.1774363308635; 
+ Tue, 24 Mar 2026 07:41:48 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b64717e97sm40602521f8f.35.2026.03.24.07.41.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 07:41:48 -0700 (PDT)
+Message-ID: <838aaebf-7bc4-480c-b799-55b4b791f075@linaro.org>
+Date: Tue, 24 Mar 2026 15:41:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260317-qemu-vnc-v1-44-48eb1dcf7b76@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/4] Fix error handling for callers of
+ load_image_targphys, get_image_size, event_notifier_init, msix_init
+Content-Language: en-US
+To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
+References: <20260318141415.8538-1-vikingtc4@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260318141415.8538-1-vikingtc4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,31 +100,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 17, 2026 at 12:50:58PM +0400, Marc-André Lureau wrote:
-> s/strdup/g_strdup to highlight the issue and be consistent with other
-> allocations.
-> 
-> The next patch is going to introduce vnc_display_free() to take care of
-> deallocating it.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  ui/vnc.h | 2 +-
->  ui/vnc.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+On 18/3/26 15:14, Trieu Huynh wrote:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Trieu Huynh (4):
+>    hw/core/loader: fix error handling for load_image_targphys callers
+>    hw/core/loader: fix error handling for get_image_size callers
+>    util/event_notifier: fix error handling for event_notifier_init
+>      callers
+>    hw/pci/msix: fix error handling for msix_init callers
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Merged as commits b06bb02721a98d5b42...08324de90d1036326f, thanks.
 
 
