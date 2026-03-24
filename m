@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF7E0F54AB0
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99F1CF54AB0
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w525W-0003sw-0y; Tue, 24 Mar 2026 09:46:30 -0400
+	id 1w525X-0003zC-F9; Tue, 24 Mar 2026 09:46:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w5251-0003iI-Ev
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:46:05 -0400
+ id 1w525Q-0003sV-FJ
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:46:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w524s-0005fj-8c
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:45:53 -0400
+ id 1w525L-0005vW-VN
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:46:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774359949;
+ s=mimecast20190719; t=1774359979;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4yzOTAra0Cs6ydfwoDZR6PEhcP9gN2D+0mBps2M2FgQ=;
- b=RGg+F2JUcytDEKNFZgcynzBYA/7DOvAhLfAlYso8NLy58d65D7uMFtVv+Rf0vG+GH9uq+9
- sLwJJ3qd9ni/KxoYFrI2HWFx418B8WKnWCojGkLNCZw5pez8KBAhLFKzTgKqEwZXOUMn85
- +eB9O96MhGp9cuLDXkNmwk80egR4Z+Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3RGijrxEJMx2OONNsZW43JaWBOED3gFGigEegdJ7G7g=;
+ b=ArQEV8pUj1Ukclqwu3AB4LYnTvTj4yXl1O+Z2HULVdxsQPN/jTl36qtnFNTE8tjj9DhRpY
+ kcqerecRfPDfIkYhuo8MCpGWJQ3Y24Lll7uDzu9SwaovMUBBDI9KdL4uBVXOOil0DUugF4
+ dblojBazvYdkfgfIW/710joBouu13mU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-hjlp81Y1NgWIGeLU72ghog-1; Tue,
- 24 Mar 2026 09:45:46 -0400
-X-MC-Unique: hjlp81Y1NgWIGeLU72ghog-1
-X-Mimecast-MFC-AGG-ID: hjlp81Y1NgWIGeLU72ghog_1774359946
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-FOlkm_NlNRex81Mr3m7ODg-1; Tue,
+ 24 Mar 2026 09:46:17 -0400
+X-MC-Unique: FOlkm_NlNRex81Mr3m7ODg-1
+X-Mimecast-MFC-AGG-ID: FOlkm_NlNRex81Mr3m7ODg_1774359976
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01FA41954B1E
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 13:45:46 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8EEC419560AA
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 13:46:16 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.33.93])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09F051955D71; Tue, 24 Mar 2026 13:45:44 +0000 (UTC)
-Date: Tue, 24 Mar 2026 13:45:40 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9811718001FE; Tue, 24 Mar 2026 13:46:15 +0000 (UTC)
+Date: Tue, 24 Mar 2026 13:46:12 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 04/60] ui/vnc: clarify intent using buffer_empty() function
-Message-ID: <acKVhHfFM8_-0lOq@redhat.com>
+Subject: Re: [PATCH 05/60] ui/vnc-jobs: vnc_has_job_locked() argument cannot
+ be NULL
+Message-ID: <acKVpLd-0kX8GFBX@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-4-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-5-48eb1dcf7b76@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260317-qemu-vnc-v1-4-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-5-48eb1dcf7b76@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -90,14 +91,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 17, 2026 at 12:50:18PM +0400, Marc-André Lureau wrote:
+On Tue, Mar 17, 2026 at 12:50:19PM +0400, Marc-André Lureau wrote:
+> The only caller, vnc_jobs_join() cannot take vs == NULL argument, or it
+> would later crash.
+> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
 >  ui/vnc-jobs.c | 2 +-
->  ui/vnc.c      | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 
 With regards,
 Daniel
