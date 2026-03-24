@@ -4,96 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFC9AFEC118
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 20:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB49FEC0FC
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 21:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w58pV-0006xb-8a; Tue, 24 Mar 2026 16:58:25 -0400
+	id 1w58vq-0000rG-J1; Tue, 24 Mar 2026 17:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w58pU-0006xC-HJ
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 16:58:24 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1w58vm-0000qe-JK
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 17:04:57 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w58pT-0006yG-17
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 16:58:24 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-486ff201041so38602785e9.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 13:58:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1w58vl-0007lj-89
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 17:04:54 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-50b6c45781aso190181cf.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 14:04:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774386291; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YM0xvjRd1UbIZbNhWZq2IBrnmdof21iS61pJUogM30hD5n18+EeeyTsUArWLBoS6zC
+ oxBF3wWxSHFSzb3LOuC0BdDICm4294yWi9Ps6VZ+jhbAzU8QDO02HYXv2GDV+ubBspJ/
+ bA6aSPt51vkTIX7HBXE9u1k+YgC7ifgeYs5/VYx+9I+KYZAWL/PAquNJE0rkflYXOo3h
+ wpUNuo92LttgcliNDqrQuMf/WT7w8YJ0c+UmVM6n9RDw/WU2B3YtpScGm50e2VzGitPk
+ /hecmh0/6X5Mbzi/amthRDNoCaPQyEReS89+LZ3JiwKZEVskwIjStokpuYPgKxlzXS7P
+ S9hw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=6RmWdrwQ1QHLLnCBaFsIjIX76EfZ/m7DNlKu/8iTgg0=;
+ fh=AdDKvCB2COk0IQjCNRDWO4HzvnkWk8VyvNAQUUtYmaM=;
+ b=hRnyaihOcrLdGLZspNNxFW4S4ozCwdAlj+TNaFDkg1UqJl+oj3TU7KfX84KuayjZsq
+ 27SkJtW5II/mY/JfAcJoCtl3ZaLtzdS6r8MscftGFAS2vLT6yfHoJ9lnVKyiN6Q4h8Zt
+ +rW/438jRRTa2DBCBq/VkUaqqUoNJBTscG2eKGmmSjFgT0rjfDE9tON/2ScHLX/6nOVf
+ isvZGWI2YczeaCaZRw7cuIMWsOZRre2rgBAX2wyTm1AAFx+LXkpcWN87zo1xh8zzbB3c
+ A0S9bgPDK122cmUV9fbhr77AzYcPNO44wFjosshgDKduP8ab7i44VXy7hX4OFO2aSD3G
+ GpAw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774385901; x=1774990701; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=google.com; s=20251104; t=1774386291; x=1774991091; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=or4gydKa0WQ8LJoYBqRR2/fe1enyIXs4mWK0LmQVX4A=;
- b=c/w6iMkmlLn56QusO2Yf0hsjwnN5PXi98jePtRg6S+V7ZD+zbUorRgDYWBXWFwPqe+
- c9WQwGP+E6FasbeZnPX+XRWWOJqsCw4g+cF94a7zWI4qZZmTJDdUC6GFSQ2cQxffJ4ks
- zGW6+qBbE7Ek2wiLhLU71KqsQ50SpXszHTGWidbeOkW/WbgzcIrS2Nj8MrPvTtChuXXE
- adYyCuaz+Sj9lzueb1IzqF9AleHmBh1x3vSNL/bWKWHZG4H7hO8b5gCuQ63bKQOIfqa5
- 6AhdG5B64AUImxGz1TeaJKnplLi18xrmPtAMCJf9V4VWrkemR0Pc2RA0R/0OYsalogNd
- yhhA==
+ bh=6RmWdrwQ1QHLLnCBaFsIjIX76EfZ/m7DNlKu/8iTgg0=;
+ b=YJdHpVtzyw3RGks+ei39KdXUK6ZhxHQtjkAX69VlQayzuqLsmRRLhrKhBoW4IQyuD4
+ gMgPjHJXaKf292X8tiq131oWAqcqXLasa1asKIi/DIOVA7w0BLbm2X/lYlF/M/Jfxi+G
+ 0BFi2ctTRKfwcRMBkehQ/25Q0cA4GhNefc3Wx2Kd+LE8qQ5H26ksWIohu6jsKD1OWlqF
+ YqBquwTTsZGxtzr4iopG0teQQnbBSITAJVk1R2IUkhksGYgFDUlB+/SVREXPV2azUZPd
+ epTs22O0BzgvmujzES2LE4Aw8Qj+9mn+52EkOk8yoGVMbd0N6bU6wcWEB/Fr7FrYSsDT
+ fjdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774385901; x=1774990701;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1774386291; x=1774991091;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=or4gydKa0WQ8LJoYBqRR2/fe1enyIXs4mWK0LmQVX4A=;
- b=gR49+Pn4E0g2lv3F0mIjA8xDYWQOz7iscKITUKaNBuP+e1OcqvjRkCLbvJ4fADOTwY
- bE3hgxlaHiN1kAxVPz1J//VyC/k0CTb8hnck3tHXpKTpaTfu1plfbvcRLGb7RR2vx7q3
- gAcplULimgy0vk4XsWV07WmTdjIjJm9yDN+mu1xe/lLfsvm4iEbbsz2SkvZfq+31Vs0W
- pY0bBiS3rgXlscE6ByfYwq96d05Bu194cHLJ7SLMINdS9hXize9saS5SvYz86ghDWMz+
- fjUAWRqsxbmOAFnrNumQxS+isJeChB2JQGfNJBgFqJQUacjql66Z6gF9o+iWb52EkDco
- cTQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKy+2gbA9ZiOMDr9B3oH2zeVgQ0leWAT2XxTeN9UjpMnRE60CEjc9wlF97prmTBUBGnaOC0U2CqxS2@nongnu.org
-X-Gm-Message-State: AOJu0YyCYT8TEHMeHp8z8DNWBLBJS1EyU7cr5A2yuU522OyBkmtnGXbS
- D19vwembPE6dklhJixMrmRyU8Yb5If7GsYazZ47b0Ww7cDLUYfb9dhfC
-X-Gm-Gg: ATEYQzweBCIEHgPXazV9/zMe+HkqfH3ZWjSHYQ8xFNpLSMrkjSTnk0vjNX4faCvwyD6
- ZsDGw/XoAGT0M8YAkfTsNQdNj7dF4QIsWAgG/R3tb7AsGGCYJtb5eoice37OmCA0ZzXg7UEO7Ux
- iKemPoLGG150nLFfordyEUMJ6eR4+1yJHlL3VbgVEBJuzASQZKHSLNBskBEYPnZNWfuHKCbEWc2
- ChywNVuO2gwv8nktFNzSd4CeJc/6Ra4WMEcu79kwjtGIf6wbcNOY8MgDFvGXsnNtOPu8EAzfeeL
- FVwBEiQdXmlt7BgSjVh/KHcliSNy0XQSngn0GD7Lz0/f6adpqkwWgEddgai+brjIAlMIUROggbC
- drHS7C4rElXtxkOxarJVMdEkXp5BgX/Y2/bEGOnTFasalYk4DPS7AXLTSjiXMXsRAB1DCiWhat1
- rP0hnTTzXgrjruVIT92kMPAe+yrZCCe/2hM0qCIQSp53FD2QWeD150zvDJlq5X67NVNyDqQYd7Q
- QilqZRxUU4qF5S15gGoABeoas6vARn9cbWOngdmybRjQzc=
-X-Received: by 2002:a05:600c:3511:b0:486:fc5f:1ab9 with SMTP id
- 5b1f17b1804b1-48715feab33mr17763785e9.14.1774385901255; 
- Tue, 24 Mar 2026 13:58:21 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-24e1-d500-204c-1ac0-c53f-1a0e.310.pool.telefonica.de.
- [2a02:3100:24e1:d500:204c:1ac0:c53f:1a0e])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487172bbdf2sm4070985e9.4.2026.03.24.13.58.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Mar 2026 13:58:20 -0700 (PDT)
-Date: Tue, 24 Mar 2026 20:58:20 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
- qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Pavel Pisa <pisa@fel.cvut.cz>
-CC: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 1/7] hw/arm/sabrelite: Open code DEFINE_MACHINE_ARM
-In-Reply-To: <0528e7cd5cff7ce171b0aad0093a5e77e07c139a.1773866323.git.matyas.bobek@gmail.com>
-References: <cover.1773866323.git.matyas.bobek@gmail.com>
- <0528e7cd5cff7ce171b0aad0093a5e77e07c139a.1773866323.git.matyas.bobek@gmail.com>
-Message-ID: <8C7E8510-66CE-4AA2-ADAC-F7549D04A16B@gmail.com>
+ bh=6RmWdrwQ1QHLLnCBaFsIjIX76EfZ/m7DNlKu/8iTgg0=;
+ b=mmqINmQdCweWE9Ma+/8xS8q43rEhth3I1g/QxMOQbIpp/5EBjrGYhkF5RLNoYI9ybg
+ uw72ZqVTpvFHNMGhWGOK7PLnh1sGThb1adx84TaYpIuc90WqbxKSetBCJx4vmjKWTAhL
+ HQ8z4czoEuIpuwUPm3W0ZGc58w2DfUgNgtl45ABYoL6+/xE9L47ScDDjJtPSSC0wuFzq
+ NHua+p3sDBmZc51/THofAoliBjNOQWMvWYgKgtO4r38in/EwdzOhihqHU0V+0DmEnGbZ
+ ryP4Slx8YNfwQQ6J+jvCyIFjUyDWARnYaao10MA9E49z5Qt3MzRhfnhNPe1h7HZGUuHU
+ Z4IA==
+X-Gm-Message-State: AOJu0Yz2f0pQaANLIvWrnUuBDPFT8LY2LLwNsoWIX/6LDqHCFw7hmKS7
+ B0pX/z9MT/wW1zgltYXvKv3AiRLaYtD1ehGJBwF6XfKDRmGnH3jffAN9msjygNb9i1EyoPqA2ah
+ KQnLwgPj2liQgUAmSBpg0WR+jMcRnsbRmclWFZXwA
+X-Gm-Gg: ATEYQzyUCcqwlqd2iMErZQHCyJO40M0ePwKMhlHbhr8OghDMsy/B+K9DdNEhs2GjlUU
+ zyFf2K/DTg+gKdAK1nSRgpcP2NOaB/83grXj4e883zTh0nns3R0iTumVHntzRHwWp4l/LeFWi6X
+ /rB58NglwcATIOClfQhieKShP69wPz/X3FTkNcNdGH6LJmNUnKBAkBSTTlYJEEkvlsGG2/jilKS
+ j5728SbTBLs0gB7IVInvhA/84HNgKOaCZ+Wn60RJQwlwuv17UulSJCRNX7qe0klPpDtl9qr2HLB
+ e/+Vnv0Jx4Ch35tiAbP/viOU46kWXlYm3lOh
+X-Received: by 2002:a05:622a:5147:b0:509:174d:3224 with SMTP id
+ d75a77b69052e-50b83cf7c30mr1208171cf.11.1774386290653; Tue, 24 Mar 2026
+ 14:04:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20260310235632.3987668-1-rkir@google.com>
+In-Reply-To: <20260310235632.3987668-1-rkir@google.com>
+From: Roman Kiryanov <rkir@google.com>
+Date: Tue, 24 Mar 2026 14:04:39 -0700
+X-Gm-Features: AQROBzColZX4_4jgk4LYUdDxegfKJ4aXbv-5ZfEnddylfcqk01bRIvoBZrL36bI
+Message-ID: <CAOGAQeoFfo6SVew6rQEVUfjYMXXn8B_1TEvwzB44YaM_peZtVQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] virtio-snd: snapshot prep cleanups
+To: philmd@linaro.org, manos.pitsidianakis@linaro.org
+Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com, 
+ jpcottin@google.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=rkir@google.com; helo=mail-qt1-x830.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,57 +115,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 19=2E M=C3=A4rz 2026 19:13:08 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <maty=
-as=2Ebobek@gmail=2Ecom>:
->Open code the DEFINE_MACHINE_ARM macro in preparation of creating
->SabreliteMachineState class=2E The name field in TypeInfo initializator
->is left as string literal since the macro would expand into this=2E
+On Tue, Mar 10, 2026 at 4:56=E2=80=AFPM Roman Kiryanov <rkir@google.com> wr=
+ote:
+> I am currently working on adding snapshot support for the virtio-snd devi=
+ce.
 >
->Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas=2Ebobek@gmail=2Ecom>
->---
-> hw/arm/sabrelite=2Ec | 23 ++++++++++++++++++++++-
-> 1 file changed, 22 insertions(+), 1 deletion(-)
->
->diff --git a/hw/arm/sabrelite=2Ec b/hw/arm/sabrelite=2Ec
->index db5669c5c2=2E=2E40ee8196ac 100644
->--- a/hw/arm/sabrelite=2Ec
->+++ b/hw/arm/sabrelite=2Ec
->@@ -114,4 +114,25 @@ static void sabrelite_machine_init(MachineClass *mc)
->     mc->auto_create_sdcard =3D true;
-> }
->=20
->-DEFINE_MACHINE_ARM("sabrelite", sabrelite_machine_init)
->+static void sabrelite_machine_class_init(ObjectClass *oc, const void *da=
-ta)
->+{
->+    MachineClass *mc =3D MACHINE_CLASS(oc);
->+
->+    sabrelite_machine_init(mc);
->+}
+> This patch series cleans up the internal PCM state ...
 
-Yes, this separation of concerns looks cleaner!
+Hi everyone, just a quick ping on this cleanup series.
 
-Since this function will be merged with sabrelite_machine_init() in the ne=
-xt commit, let's merge the two functions here=2E This avoids the intermedia=
-te function and makes the next commit easier to comprehend=2E
+Let me know if anyone has had a chance to look over these patch series
+or if there are any concerns.
 
->+
->+static const TypeInfo sabrelite_machine_init_typeinfo =3D {
->+    =2Ename          =3D MACHINE_TYPE_NAME("sabrelite"),
->+    =2Eparent        =3D TYPE_MACHINE,
->+    =2Eclass_init    =3D sabrelite_machine_class_init,
->+    =2Einstance_size =3D sizeof(MachineState),
->+    =2Eabstract      =3D false,
->+    =2Einterfaces    =3D arm_machine_interfaces,
->+};
->+
->+static void sabrelite_machine_init_register_types(void)
->+{
->+    type_register_static(&sabrelite_machine_init_typeinfo);
->+}
->+
->+type_init(sabrelite_machine_init_register_types)
-
-With the above:
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+Thanks, Roman
 
