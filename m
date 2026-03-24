@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01750F54AD6
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 23:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF5EF54ADD
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 23:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5BVp-0002Ig-M1; Tue, 24 Mar 2026 19:50:17 -0400
+	id 1w5BZB-0003Fi-Q6; Tue, 24 Mar 2026 19:53:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
- id 1w5BVo-0002II-4t
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 19:50:16 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1w5BZ8-0003F0-0c
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 19:53:42 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
- id 1w5BVm-0006VN-BV
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 19:50:15 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-c742d4df00cso144330a12.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 16:50:13 -0700 (PDT)
+ id 1w5BZ4-0006tB-DC
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 19:53:41 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2b061b6cf36so34134675ad.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 16:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774396212; x=1775001012; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774396417; x=1775001217; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
  :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OYU3SCDMR6HSiuSZCiXJl/RsRG8wy61Pclyi/UR2lDo=;
- b=BtXEn2qfadWZO3nK0C6Scd5dmT041qRiJ7vfRXog4ScW7vBbhPR70K0UrXp6S8Zkzp
- 4spGSfVck7wVp2DKmhrTlyGmCSiih9miTyVjW2ZkDKm7nOO42L9RcaHjhyrgo0I+9LNy
- LyjvDeTkEUMnkjbbWJIabnizX7GIFIRlh6i03+YX5Lhw1pDigkllbctW9+3kPjHeAMEw
- GiqbRsAN3ZJJO3W+CFXgkDIZfcIrNIviWRYOPO6bsZ3ZSaZpZ9z16ll9jqQXEOk+VQKS
- SZl+Z9ayXkSrkJuisdd2IYLsF4BGl4NKGSZljOcmT738aws6P5e4a932VvftBGh9Mqew
- Xg2g==
+ bh=dLW3iB1LCqTAfDpXSqQYge0Z0FmIiSP4G+skw5jW7U8=;
+ b=c+4hLjVTWAx378BsVcSHvDUwdH/OnUqG+INJe+N0aZd0/GKRc923WAFEiW3mejyRm6
+ IJZRPW1irMYMnK4x/Cdp4GwdmOLBnmOPmeNfhC9W28qC+j+PcDsDyy+MrMbT3pRlIp9z
+ jYzpxcHN7gcnZqkFhy1CdBk7STD7JHksKb3t/7EyTkNGG5Agz8F4QpBo8IQbsYv4T01A
+ CgPUxx58b4wJ2A2eVhsX/jVsoF7D1Cqlp+pDvn2Xd16CjeetBHRpOLBkqf1q/9D0Wn6p
+ 1D0IyzNfqq3SWcwvhMFhhe7fAdnKMb9AQ2YjJtd2KWbXKgyq2K6d6VMBlG+mrYMNbxCW
+ ScSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774396212; x=1775001012;
+ d=1e100.net; s=20251104; t=1774396417; x=1775001217;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
  :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OYU3SCDMR6HSiuSZCiXJl/RsRG8wy61Pclyi/UR2lDo=;
- b=L+bKbjDvMxnmO1rbfiEdmNKEuNBOCpyfMj2mxVgiLA4AFZ+pzf+LpLkwQkE9PpdyWn
- vseslc6lpSAwNN2Wgpne2Ys3dSS8KAmt6ODZ8p/fgba9HgSrcrhvWR/Dmr6CbYvtJnUx
- FBU3eeMYOaLuBvAfMub1ptY8fsLdHiJ3AAOKxbOsd5Em6Jh/o2ydjAAKfjRaDDcFI614
- bENCZy/PqV1tFSr1lyBjAUAXDxuxOKbwuEa1kc8FQXo9ce6CG2SmYCrQLuKnu5ugvTq7
- Jt0oKEIedOSzhJLRM68mOVGVLK7UyflMAiv34oaJTizCxZ4Ggh4KpGCt8AfbmAdE7rGL
- 3C6Q==
-X-Gm-Message-State: AOJu0YzXaRcJvUvCJ26Y3DpgIZtrqL7MliNx7sc6X5DSmNHZTzZ2/xet
- /V3+JXX6qfEYYu4O69u/nkZ+o8gBFvyAPmQBvs4tc289nqpENOaAlSAp
-X-Gm-Gg: ATEYQzwgi6BM3UtuZhV+icbE44hiD/Ip7jsS1OktlG9v7wkSYxrVm5CNj0J3ikZ2yfv
- 7REOBeszDTNj1YnFeW9Byi39BFmCp2ZfBlF+EDv3rICB+IATK/HvvmNSMA3glnp6BFaD8kbIg36
- ZuspuU40Q1MTdbyYMr8OjNF5/nHvrC5I1zPx45xG93vRNQYGn3J0dtCb6drAgUBqcFGewkO1Wwt
- H5gs25lkhZNrVZVCqeJ+8+MI5rUfTnsYOZerlptvUpro+f96ASrX6UKhGIVKuy72+9zcF5T8sef
- Tat/MzT2/sqa537On5oKtbTiEDas4KA4LKzZ4+QKT6RohxRpcy86zLiV/1XsKjwUZU09OAwjy7n
- V5bR7owOn8e2FLX4aeN2kgA9GwE1sbHWVK/rZKxpVsXJQSLWrrTNNanTzgIPBR5ea75VmfSzCLK
- 5kxeeB2K0+aoskvR2vfI3aYRL80Au1xilB4j8FyXGd2mjcH6qZnN6uGB8d8kB6vOUqRj78oqop
-X-Received: by 2002:a17:903:40ca:b0:2b0:4f16:22f7 with SMTP id
- d9443c01a7336-2b0a4e1302emr47628855ad.16.1774396211898; 
- Tue, 24 Mar 2026 16:50:11 -0700 (PDT)
+ bh=dLW3iB1LCqTAfDpXSqQYge0Z0FmIiSP4G+skw5jW7U8=;
+ b=bO+ku2lhSUK9wyMF8E65MncNwdOMSMbyku0oDejPcVfQtBiCoslVSVoS9GJ6rzdANs
+ gTDrplbUPMudjRKdmv6dfgalAhG2gryNQkjm3tHnNXCqlscVWOpvOga3ZyZi0EQjCnrL
+ 5Myqd8NfucvxgGX5VyE/yoYDBgFej1qIPrgHfX7y5sFQVUzZfJA5O42zhNVmOJQGUBpB
+ /attW76Hqr96/1EmUIkhyiOdcaCCKVRGj+xX9sRUICsMTqm3I3HMqMcLRMiMoyQjIpU7
+ 2YNEDE18lhfeDu2K0xSodrGx6OvWdIyiveoMY4l2EA7cYvY+OCFWT9N39Am/eeXQ8phA
+ /MuA==
+X-Gm-Message-State: AOJu0YzUP//YwQJjTrLmrMC19OcaWxiTPh1+eJGuyIxocT7t496nXhyv
+ iZH1Ysqp0zqbPX2QFtHRRSGncyhjTapszOqNMOPi1l6kPMgJSNeL2mUi
+X-Gm-Gg: ATEYQzzUbL6rjbNYgdl7tPppoNF1BWdpNpwPFcnfc7UOZYXCy+UbFS3kiNtCwxlZYKA
+ ZLAyEZH+SjKi0m+QTc672bM2ndDs+BvS+vLh/tGMYqIiqT9fZQNeepYw4Lk5nO3NCh6yacwVjYO
+ 5JitdXbcxSnjCJxmZV59iL8OSKlcQD83ciw7aA30dujAay1tHZjkkn2NnyxHkrcOo9+u6boaeZC
+ 1pNMNodCouWyPLCsn2MiB5UysL8Ii9qxD4jhQHXq7phEwOT5QHYRObEVm+2inLSAHrdA+/x/EU6
+ CKt2+BHIrDA3D9AsHfUGq+9CHURbNWIlml/4kii3OFneu/CANek3GHrhJGrHEP2lIb+kK5tDoDc
+ M/dKRJcSMJKz4rormraZ203F5ruQ4WNQ8ldp4reEutVC55VIZhkrcoNPLDAH9sSCIgcu1Xy/QH5
+ i1TISdHh4mA1lIMVlZnXvZy1YVb6kGVuMt7S8ZUW6RU2Gwd9wJSbCpGlkXhhCgRhbISz0pzMQ0
+X-Received: by 2002:a17:903:2352:b0:2ad:bd4c:a5 with SMTP id
+ d9443c01a7336-2b0b09a7da7mr14718105ad.1.1774396416616; 
+ Tue, 24 Mar 2026 16:53:36 -0700 (PDT)
 Received: from ?IPV6:240e:469:64e:26f:31b9:833e:80d3:35b3?
  ([240e:469:64e:26f:31b9:833e:80d3:35b3])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516908sm196389605ad.1.2026.03.24.16.50.08
+ d9443c01a7336-2b08369617dsm203378435ad.71.2026.03.24.16.53.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Mar 2026 16:50:11 -0700 (PDT)
-Message-ID: <dda1d80e-e2f7-4444-943c-b863d9314389@gmail.com>
-Date: Wed, 25 Mar 2026 07:50:03 +0800
+ Tue, 24 Mar 2026 16:53:36 -0700 (PDT)
+Message-ID: <122d4691-0597-442e-8b60-ea1787ccdcb3@gmail.com>
+Date: Wed, 25 Mar 2026 07:53:28 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 1/2] tests/qtest/libqos: Add Intel IOMMU helper library
@@ -79,13 +79,13 @@ To: Tao Tang <tangtao1634@phytium.com.cn>, "Michael S. Tsirkin"
 Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <cover.1773450180.git.15fengyuan@gmail.com>
  <75efb1c5f4088f449754ac05d0aaff4e70e8329f.1773450180.git.15fengyuan@gmail.com>
- <baefd7cd-3a4c-41cf-892e-a6002bc6418a@phytium.com.cn>
+ <5207b39c-074a-41d1-a2f1-26c7908d6da4@phytium.com.cn>
 From: Fengyuan <15fengyuan@gmail.com>
-In-Reply-To: <baefd7cd-3a4c-41cf-892e-a6002bc6418a@phytium.com.cn>
+In-Reply-To: <5207b39c-074a-41d1-a2f1-26c7908d6da4@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=15fengyuan@gmail.com; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=15fengyuan@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,13 +108,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tao,
+Hi, Tao
 
-On 3/24/2026 12:12 PM, Tao Tang wrote:
+On 3/24/2026 11:33 AM, Tao Tang wrote:
 > Hi Fengyuan,
 > 
 > On 2026/3/14 09:11, Fengyuan Yu wrote:
 >> Signed-off-by: Fengyuan Yu <15fengyuan@gmail.com>
+> 
+> 
+> As Chao said, you may need commit message here, also in patch #2.
+> 
+> 
+
+Sorry for the oversight. I will add the brief introduction in next version.
+
+
 >> ---
 >>   MAINTAINERS                          |   6 +
 >>   tests/qtest/libqos/meson.build       |   3 +
@@ -144,6 +153,18 @@ On 3/24/2026 12:12 PM, Tao Tang wrote:
 >> +F: tests/qtest/libqos/qos-intel-iommu*
 >> +F: tests/qtest/iommu-intel-test.c
 >> +
+> 
+> 
+> nit: there is a new line which is unnecessary.
+> 
+> 
+I will fix it in next version.
+
+
+> Thanks,
+> 
+> Tao
+> 
 >>   AMD-Vi Emulation
 >>   M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 >> diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
@@ -204,36 +225,621 @@ On 3/24/2026 12:12 PM, Tao Tang wrote:
 >> +     */
 >> +    return 0;
 >> +}
+>> +
+>> +static void qvtd_build_root_entry(QTestState *qts, uint8_t bus,
+>> +                                  uint64_t context_table_ptr,
+>> +                                  QVTDTransMode mode)
+>> +{
+>> +    uint64_t root_entry_addr = QVTD_ROOT_TABLE_BASE +
+>> +                               (bus * sizeof(VTDRootEntry));
+>> +    uint64_t lo, hi;
+>> +
+>> +    if (qvtd_is_scalable(mode)) {
+>> +        /*
+>> +         * Scalable-mode Root Entry (Section 9.2):
+>> +         * lo = Lower Context Table Pointer + LP (Lower Present)
+>> +         * hi = Upper Context Table Pointer + UP (Upper Present)
+>> +         *
+>> +         * Lower table covers devfn 0-127, Upper covers devfn 128-255.
+>> +         * Only lower half is needed for test device (devfn < 128).
+>> +         */
+>> +        lo = (context_table_ptr & VTD_ROOT_ENTRY_CTP) | VTD_ROOT_ENTRY_P;
+>> +        hi = 0;  /* UP=0: upper context table not present */
+>> +    } else {
+>> +        /*
+>> +         * Legacy Root Entry (Section 9.1):
+>> +         * lo = Context Table Pointer + Present
+>> +         * hi = Reserved
+>> +         */
+>> +        lo = (context_table_ptr & VTD_ROOT_ENTRY_CTP) | VTD_ROOT_ENTRY_P;
+>> +        hi = 0;
+>> +    }
+>> +
+>> +    qtest_writeq(qts, root_entry_addr, lo);
+>> +    qtest_writeq(qts, root_entry_addr + 8, hi);
+>> +}
+>> +
+>> +static void qvtd_build_context_entry(QTestState *qts, uint16_t sid,
+>> +                                     QVTDTransMode mode, uint64_t ssptptr)
+>> +{
+>> +    uint8_t devfn = sid & 0xff;
+>> +    uint64_t context_entry_addr = QVTD_CONTEXT_TABLE_BASE +
+>> +                                 (devfn * VTD_CTX_ENTRY_LEGACY_SIZE);
+>> +    uint64_t lo, hi;
+>> +
+>> +    if (mode == QVTD_TM_LEGACY_PT) {
+>> +        /*
+>> +         * Pass-through mode (Section 9.3):
+>> +         * lo: P + FPD(=0, fault enabled) + TT(=Pass-through)
+>> +         * hi: DID + AW
+>> +         */
+>> +        lo = VTD_CONTEXT_ENTRY_P | VTD_CONTEXT_TT_PASS_THROUGH;
+>> +        hi = ((uint64_t)QVTD_DOMAIN_ID << 8) | QVTD_AW_48BIT_ENCODING;
+>> +    } else {
+>> +        /*
+>> +         * Translated mode (Section 9.3):
+>> +         * lo: P + FPD(=0, fault enabled) + TT(=Multi-level) + SSPTPTR
+>> +         * hi: DID + AW(=48-bit, 4-level)
+>> +         */
+>> +        lo = VTD_CONTEXT_ENTRY_P | VTD_CONTEXT_TT_MULTI_LEVEL |
+>> +             (ssptptr & VTD_CONTEXT_ENTRY_SSPTPTR);
+>> +        hi = ((uint64_t)QVTD_DOMAIN_ID << 8) | QVTD_AW_48BIT_ENCODING;
+>> +    }
+>> +
+>> +    qtest_writeq(qts, context_entry_addr, lo);
+>> +    qtest_writeq(qts, context_entry_addr + 8, hi);
+>> +}
+>> +
+>> +static void qvtd_build_scalable_context_entry(QTestState *qts, uint16_t sid)
+>> +{
+>> +    uint8_t devfn = sid & 0xff;
+>> +    uint64_t ce_addr = QVTD_CONTEXT_TABLE_BASE +
+>> +                       (devfn * VTD_CTX_ENTRY_SCALABLE_SIZE);
+>> +
+>> +    /*
+>> +     * Scalable-Mode Context Entry (Section 9.4), 32 bytes = 4 qwords:
+>> +     *
+>> +     * val[0]: P + FPD(=0) + DTE(=0) + PASIDE(=0) + PRE(=0) + HPTE(=0)
+>> +     *         + EPTR(=0) + PDTS(=0) + PASIDDIRPTR
+>> +     * val[1]: RID_PASID(=0) + PDTTE(=0) + PRE(=0) + RID_CG(=0)
+>> +     * val[2]: Reserved (must be 0)
+>> +     * val[3]: Reserved (must be 0)
+>> +     */
+>> +    qtest_writeq(qts, ce_addr,
+>> +                 (QVTD_PASID_DIR_BASE & VTD_PASID_DIR_BASE_ADDR_MASK) |
+>> +                 VTD_CONTEXT_ENTRY_P);
+>> +    qtest_writeq(qts, ce_addr + 8, 0);
+>> +    qtest_writeq(qts, ce_addr + 16, 0);
+>> +    qtest_writeq(qts, ce_addr + 24, 0);
+>> +}
+>> +
+>> +static void qvtd_build_pasid_dir_entry(QTestState *qts)
+>> +{
+>> +    uint64_t addr = QVTD_PASID_DIR_BASE +
+>> +                    VTD_PASID_DIR_INDEX(0) * VTD_PASID_DIR_ENTRY_SIZE;
+>> +
+>> +    /*
+>> +     * PASID Directory Entry (Section 9.5):
+>> +     * P + FPD(=0, fault enabled) + SMPTBLPTR
+>> +     */
+>> +    qtest_writeq(qts, addr,
+>> +                 (QVTD_PASID_TABLE_BASE & VTD_PASID_TABLE_BASE_ADDR_MASK) |
+>> +                 VTD_PASID_ENTRY_P);
+>> +}
+>> +
+>> +static void qvtd_build_pasid_table_entry(QTestState *qts, QVTDTransMode mode,
+>> +                                         uint64_t ptptr)
+>> +{
+>> +    uint64_t addr = QVTD_PASID_TABLE_BASE +
+>> +                    VTD_PASID_TABLE_INDEX(0) * VTD_PASID_ENTRY_SIZE;
+>> +    uint64_t val0, val1, val2;
+>> +
+>> +    /*
+>> +     * Scalable-Mode PASID Table Entry (Section 9.6), 64 bytes = 8 qwords:
+>> +     *
+>> +     * val[0]: P + FPD(=0) + AW + PGTT + SSADE(=0) + SSPTPTR
+>> +     * val[1]: DID + PWSNP(=0) + PGSNP(=0)
+>> +     *         + CD(=0) + EMTE(=0) + PAT(=0): Memory Type,
+>> +     *           all Reserved(0) since QEMU ECAP.MTS=0
+>> +     * val[2]: SRE(=0) + FSPM(=0, 4-level) + WPE(=0) + IGN + EAFE(=0) + FSPTPTR
+>> +     * val[3]: Reserved (must be 0)
+>> +     * val[4]: HPT fields, Reserved(0) since QEMU ECAP.HPTS=0
+>> +     * val[5]: HPT fields, Reserved(0) since QEMU ECAP.HPTS=0
+>> +     * val[6]: Reserved (must be 0)
+>> +     * val[7]: Reserved (must be 0)
+>> +     */
+>> +    switch (mode) {
+>> +    case QVTD_TM_SCALABLE_PT:
+>> +        val0 = VTD_PASID_ENTRY_P |
+>> +               ((uint64_t)VTD_SM_PASID_ENTRY_PT << 6);
+>> +        val1 = (uint64_t)QVTD_DOMAIN_ID;
+>> +        val2 = 0;
+>> +        break;
+>> +    case QVTD_TM_SCALABLE_SLT:
+>> +        val0 = VTD_PASID_ENTRY_P |
+>> +               ((uint64_t)VTD_SM_PASID_ENTRY_SST << 6) |
+>> +               ((uint64_t)QVTD_AW_48BIT_ENCODING << 2) |
+>> +               (ptptr & VTD_SM_PASID_ENTRY_SSPTPTR);
+>> +        val1 = (uint64_t)QVTD_DOMAIN_ID;
+>> +        val2 = 0;
+>> +        break;
+>> +    case QVTD_TM_SCALABLE_FLT:
+>> +        /*
+>> +         * val[2] fields for FLT (Section 9.6):
+>> +         * SRE(=0, user-level DMA only) + FSPM(=0, 4-level) +
+>> +         * WPE(=0, no supervisor write-protect) + IGN + EAFE(=0) + FSPTPTR
+>> +         */
+>> +        val0 = VTD_PASID_ENTRY_P |
+>> +               ((uint64_t)VTD_SM_PASID_ENTRY_FST << 6);
+>> +        val1 = (uint64_t)QVTD_DOMAIN_ID;
+>> +        val2 = ptptr & QVTD_SM_PASID_ENTRY_FSPTPTR;
+>> +        break;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +
+>> +    qtest_writeq(qts, addr, val0);
+>> +    qtest_writeq(qts, addr + 8, val1);
+>> +    qtest_writeq(qts, addr + 16, val2);
+>> +    qtest_writeq(qts, addr + 24, 0);
+>> +    qtest_writeq(qts, addr + 32, 0);
+>> +    qtest_writeq(qts, addr + 40, 0);
+>> +    qtest_writeq(qts, addr + 48, 0);
+>> +    qtest_writeq(qts, addr + 56, 0);
+>> +}
+>> +
+>> +/*
+>> + * VT-d second-level paging helpers.
+>> + * 4-level, 48-bit address space, 9 bits per level index.
+>> + */
+>> +static uint32_t qvtd_get_table_index(uint64_t iova, int level)
+>> +{
+>> +    int shift = VTD_PAGE_SHIFT + VTD_LEVEL_BITS * (level - 1);
+>> +
+>> +    return (iova >> shift) & ((1u << VTD_LEVEL_BITS) - 1);
+>> +}
+>> +
+>> +static uint64_t qvtd_get_table_addr(uint64_t base, int level, uint64_t iova)
+>> +{
+>> +    return base + (qvtd_get_table_index(iova, level) * QVTD_PTE_SIZE);
+>> +}
+>> +
+>> +static uint64_t qvtd_get_pte_attrs(void)
+>> +{
+>> +    /* Second-level: R/W in every paging entry (Section 3.7.1) */
+>> +    return VTD_SS_R | VTD_SS_W;
+>> +}
+>> +
+>> +static uint64_t qvtd_get_fl_pte_attrs(bool is_leaf)
+>> +{
+>> +    /* First-level: x86 page table format (VT-d spec Section 9.9) */
+>> +    uint64_t attrs = VTD_FS_P | VTD_FS_RW | VTD_FS_US | VTD_FS_A;
+>> +
+>> +    if (is_leaf) {
+>> +        attrs |= VTD_FS_D;
+>> +    }
+>> +    return attrs;
+>> +}
+>> +
+>> +void qvtd_setup_translation_tables(QTestState *qts, uint64_t iova,
+>> +                                   QVTDTransMode mode)
+>> +{
+>> +    bool is_fl = (mode == QVTD_TM_SCALABLE_FLT);
+>> +    uint64_t non_leaf_attrs, leaf_attrs;
+>> +
+>> +    if (is_fl) {
+>> +        non_leaf_attrs = qvtd_get_fl_pte_attrs(false);
+>> +        leaf_attrs = qvtd_get_fl_pte_attrs(true);
+>> +    } else {
+>> +        /* Second-level: all levels use identical R/W attrs (spec 3.7.1) */
+>> +        non_leaf_attrs = qvtd_get_pte_attrs();
+>> +        leaf_attrs = non_leaf_attrs;
+>> +    }
+>> +
+>> +    g_test_message("Page table setup: IOVA=0x%" PRIx64
+>> +                   " PA=0x%" PRIx64 " %s",
+>> +                   (uint64_t)iova, (uint64_t)QVTD_PT_VAL,
+>> +                   is_fl ? "first-level" : "second-level");
+>> +
+>> +    /* PML4 (L4) -> PDPT (L3) -> PD (L2) -> PT (L1) -> PA */
+>> +    qtest_writeq(qts, qvtd_get_table_addr(QVTD_PT_L4_BASE, 4, iova),
+>> +                 QVTD_PT_L3_BASE | non_leaf_attrs);
+>> +    qtest_writeq(qts, qvtd_get_table_addr(QVTD_PT_L3_BASE, 3, iova),
+>> +                 QVTD_PT_L2_BASE | non_leaf_attrs);
+>> +    qtest_writeq(qts, qvtd_get_table_addr(QVTD_PT_L2_BASE, 2, iova),
+>> +                 QVTD_PT_L1_BASE | non_leaf_attrs);
+>> +    qtest_writeq(qts, qvtd_get_table_addr(QVTD_PT_L1_BASE, 1, iova),
+>> +                 (QVTD_PT_VAL & VTD_PAGE_MASK_4K) | leaf_attrs);
+>> +}
+>> +
+>> +void qvtd_program_regs(QTestState *qts, uint64_t iommu_base,
+>> +                        QVTDTransMode mode)
+>> +{
+>> +    uint32_t gcmd = 0;
+>> +    uint64_t rtaddr = QVTD_ROOT_TABLE_BASE;
+>> +
+>> +    /* Set SMT bit for scalable mode (VT-d spec Section 9.1) */
+>> +    if (qvtd_is_scalable(mode)) {
+>> +        rtaddr |= VTD_RTADDR_SMT;
+>> +    }
+>> +
+>> +    /* Set Root Table Address */
+>> +    qtest_writeq(qts, iommu_base + DMAR_RTADDR_REG, rtaddr);
+>> +
+>> +    /* Set Root Table Pointer and verify */
+>> +    gcmd |= VTD_GCMD_SRTP;
+>> +    qtest_writel(qts, iommu_base + DMAR_GCMD_REG, gcmd);
+>> +    g_assert(qtest_readl(qts, iommu_base + DMAR_GSTS_REG) & VTD_GSTS_RTPS);
+>> +
+>> +    /* Setup Invalidation Queue */
+>> +    qtest_writeq(qts, iommu_base + DMAR_IQA_REG,
+>> +                 QVTD_IQ_BASE | QVTD_IQ_QS);
+>> +    qtest_writeq(qts, iommu_base + DMAR_IQH_REG, 0);
+>> +    qtest_writeq(qts, iommu_base + DMAR_IQT_REG, 0);
+>> +
+>> +    /* Enable Queued Invalidation and verify */
+>> +    gcmd |= VTD_GCMD_QIE;
+>> +    qtest_writel(qts, iommu_base + DMAR_GCMD_REG, gcmd);
+>> +    g_assert(qtest_readl(qts, iommu_base + DMAR_GSTS_REG) & VTD_GSTS_QIES);
+>> +
+>> +    /* Setup Fault Event MSI */
+>> +    qtest_writel(qts, iommu_base + DMAR_FECTL_REG, 0x0);
+>> +    qtest_writel(qts, iommu_base + DMAR_FEDATA_REG, QVTD_FAULT_IRQ_DATA);
+>> +    qtest_writel(qts, iommu_base + DMAR_FEADDR_REG, QVTD_FAULT_IRQ_ADDR);
+>> +
+>> +    /* Enable translation and verify */
+>> +    gcmd |= VTD_GCMD_TE;
+>> +    qtest_writel(qts, iommu_base + DMAR_GCMD_REG, gcmd);
+>> +    g_assert(qtest_readl(qts, iommu_base + DMAR_GSTS_REG) & VTD_GSTS_TES);
+>> +}
+>> +
+>> +uint32_t qvtd_build_translation(QTestState *qts, QVTDTransMode mode,
+>> +                                uint16_t sid)
+>> +{
+>> +    uint8_t bus = (sid >> 8) & 0xff;
+>> +
+>> +    g_test_message("Build translation: IOVA=0x%" PRIx64 " PA=0x%" PRIx64
+>> +                   " mode=%d",
+>> +                   (uint64_t)QVTD_IOVA, (uint64_t)QVTD_PT_VAL, mode);
+>> +
+>> +    /* Clear IOMMU structure regions to avoid stale entries */
+>> +    qtest_memset(qts, QVTD_ROOT_TABLE_BASE, 0, 0x1000);
+>> +    qtest_memset(qts, QVTD_PT_L4_BASE, 0, 0x4000);
+>> +
+>> +    if (qvtd_is_scalable(mode)) {
+>> +        /* Scalable: 32B context entries need 8KB */
+>> +        qtest_memset(qts, QVTD_CONTEXT_TABLE_BASE, 0, 0x2000);
+>> +        qtest_memset(qts, QVTD_PASID_DIR_BASE, 0, 0x1000);
+>> +        qtest_memset(qts, QVTD_PASID_TABLE_BASE, 0, 0x1000);
+>> +    } else {
+>> +        qtest_memset(qts, QVTD_CONTEXT_TABLE_BASE, 0, 0x1000);
+>> +    }
+>> +
+>> +    qvtd_build_root_entry(qts, bus, QVTD_CONTEXT_TABLE_BASE, mode);
+>> +
+>> +    if (qvtd_is_scalable(mode)) {
+>> +        /* Scalable path: context -> PASID dir -> PASID entry -> page tables */
+>> +        qvtd_build_scalable_context_entry(qts, sid);
+>> +        qvtd_build_pasid_dir_entry(qts);
+>> +
+>> +        if (mode == QVTD_TM_SCALABLE_PT) {
+>> +            qvtd_build_pasid_table_entry(qts, mode, 0);
+>> +        } else {
+>> +            qvtd_setup_translation_tables(qts, QVTD_IOVA, mode);
+>> +            qvtd_build_pasid_table_entry(qts, mode, QVTD_PT_L4_BASE);
+>> +        }
+>> +    } else {
+>> +        /* Legacy path */
+>> +        if (mode == QVTD_TM_LEGACY_PT) {
+>> +            qvtd_build_context_entry(qts, sid, mode, 0);
+>> +        } else {
+>> +            qvtd_setup_translation_tables(qts, QVTD_IOVA, mode);
+>> +            qvtd_build_context_entry(qts, sid, mode, QVTD_PT_L4_BASE);
+>> +        }
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +uint32_t qvtd_setup_and_enable_translation(QVTDTestContext *ctx)
+>> +{
+>> +    uint32_t build_result;
+>> +
+>> +    /* Build translation structures first */
+>> +    build_result = qvtd_build_translation(ctx->qts, ctx->config.trans_mode,
+>> +                                          ctx->sid);
+>> +    if (build_result != 0) {
+>> +        g_test_message("Build failed: mode=%u sid=%u status=0x%x",
+>> +                       ctx->config.trans_mode, ctx->sid, build_result);
+>> +        ctx->trans_status = build_result;
+>> +        return ctx->trans_status;
+>> +    }
+>> +
+>> +    /* Program IOMMU registers (sets root table pointer, enables translation) */
+>> +    qvtd_program_regs(ctx->qts, ctx->iommu_base, ctx->config.trans_mode);
+>> +
+>> +    ctx->trans_status = 0;
+>> +    return ctx->trans_status;
+>> +}
+>> +
+>> +static bool qvtd_validate_test_result(QVTDTestContext *ctx)
+>> +{
+>> +    uint32_t expected = qvtd_expected_dma_result(ctx);
+>> +
+>> +    g_test_message("-> Validating result: expected=0x%x actual=0x%x",
+>> +                   expected, ctx->dma_result);
+>> +    return (ctx->dma_result == expected);
+>> +}
+>> +
+>> +static uint32_t qvtd_single_translation_setup(void *opaque)
+>> +{
+>> +    return qvtd_setup_and_enable_translation(opaque);
+>> +}
+>> +
+>> +static uint32_t qvtd_single_translation_attrs(void *opaque)
+>> +{
+>> +    return qvtd_build_dma_attrs();
+>> +}
+>> +
+>> +static bool qvtd_single_translation_validate(void *opaque)
+>> +{
+>> +    return qvtd_validate_test_result(opaque);
+>> +}
+>> +
+>> +static void qvtd_single_translation_report(void *opaque, uint32_t dma_result)
+>> +{
+>> +    QVTDTestContext *ctx = opaque;
+>> +
+>> +    if (dma_result != 0) {
+>> +        g_test_message("DMA failed: mode=%u result=0x%x",
+>> +                       ctx->config.trans_mode, dma_result);
+>> +    } else {
+>> +        g_test_message("-> DMA succeeded: mode=%u",
+>> +                       ctx->config.trans_mode);
+>> +    }
+>> +}
+>> +
+>> +void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
+>> +                               QPCIBar bar, uint64_t iommu_base,
+>> +                               const QVTDTestConfig *cfg)
+>> +{
+>> +    QVTDTestContext ctx = {
+>> +        .qts = qts,
+>> +        .dev = dev,
+>> +        .bar = bar,
+>> +        .iommu_base = iommu_base,
+>> +        .config = *cfg,
+>> +        .sid = dev->devfn,
+>> +    };
+>> +
+>> +    QOSIOMMUTestdevDmaCfg dma = {
+>> +        .dev = dev,
+>> +        .bar = bar,
+>> +        .iova = QVTD_IOVA,
+>> +        .gpa = cfg->dma_gpa,
+>> +        .len = cfg->dma_len,
+>> +    };
+>> +
+>> +    qtest_memset(qts, cfg->dma_gpa, 0x00, cfg->dma_len);
+>> +    qos_iommu_testdev_single_translation(&dma, &ctx,
+>> +                                         qvtd_single_translation_setup,
+>> +                                         qvtd_single_translation_attrs,
+>> +                                         qvtd_single_translation_validate,
+>> +                                         qvtd_single_translation_report,
+>> +                                         &ctx.dma_result);
+>> +
+>> +    if (ctx.dma_result == 0 && ctx.config.expected_result == 0) {
+>> +        g_autofree uint8_t *buf = NULL;
+>> +
+>> +        buf = g_malloc(ctx.config.dma_len);
+>> +        qtest_memread(ctx.qts, ctx.config.dma_gpa, buf, ctx.config.dma_len);
+>> +
+>> +        for (int i = 0; i < ctx.config.dma_len; i++) {
+>> +            uint8_t expected;
+>> +
+>> +            expected = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
+>> +            g_assert_cmpuint(buf[i], ==, expected);
+>> +        }
+>> +    }
+>> +}
+>> diff --git a/tests/qtest/libqos/qos-intel-iommu.h b/tests/qtest/libqos/qos- 
+>> intel-iommu.h
+>> new file mode 100644
+>> index 0000000000..04450165af
+>> --- /dev/null
+>> +++ b/tests/qtest/libqos/qos-intel-iommu.h
+>> @@ -0,0 +1,191 @@
+>> +/*
+>> + * QOS Intel IOMMU (VT-d) Module
+>> + *
+>> + * This module provides Intel IOMMU-specific helper functions for libqos tests,
+>> + * encapsulating VT-d setup, assertion, and cleanup operations.
+>> + *
+>> + * Copyright (c) 2026 Fengyuan Yu <15fengyuan@gmail.com>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#ifndef QTEST_LIBQOS_INTEL_IOMMU_H
+>> +#define QTEST_LIBQOS_INTEL_IOMMU_H
+>> +
+>> +#include "hw/misc/iommu-testdev.h"
+>> +#include "hw/i386/intel_iommu_internal.h"
+>> +
+>> +/*
+>> + * Intel IOMMU MMIO register base. This is the standard Q35 IOMMU address.
+>> + */
+>> +#define Q35_IOMMU_BASE            0xfed90000ULL
+>> +
+>> +/*
+>> + * Guest memory layout for IOMMU structures.
+>> + * All structures are placed in guest physical memory inside the 512MB RAM.
+>> + * Using 256MB mark (0x10000000) as base to ensure all structures fit in RAM.
+>> + */
+>> +#define QVTD_MEM_BASE             0x10000000ULL
+>> +
+>> +/* Root Entry Table: 256 entries * 16 bytes = 4KB */
+>> +#define QVTD_ROOT_TABLE_BASE      (QVTD_MEM_BASE + 0x00000000)
+>> +
+>> +/* Context Entry Table: 256 entries, 16B (legacy) or 32B (scalable) per entry */
+>> +#define QVTD_CONTEXT_TABLE_BASE   (QVTD_MEM_BASE + 0x00001000)
+>> +
+>> +/* Page Tables: 4-level hierarchy for 48-bit address translation */
+>> +#define QVTD_PT_L4_BASE           (QVTD_MEM_BASE + 0x00010000)  /* PML4 */
+>> +#define QVTD_PT_L3_BASE           (QVTD_MEM_BASE + 0x00011000)  /* PDPT */
+>> +#define QVTD_PT_L2_BASE           (QVTD_MEM_BASE + 0x00012000)  /* PD */
+>> +#define QVTD_PT_L1_BASE           (QVTD_MEM_BASE + 0x00013000)  /* PT */
+>> +
+>> +/*
+>> + * Invalidation Queue.
+>> + * IQA_REG bits[2:0] = QS, entries = 1 << (QS + 8), each entry 16 bytes.
+>> + */
+>> +#define QVTD_IQ_BASE              (QVTD_MEM_BASE + 0x00020000)
+>> +#define QVTD_IQ_QS                0    /* QS=0 → 256 entries */
+>> +
+>> +/*
+>> + * Fault Event MSI configuration.
+>> + */
+>> +#define QVTD_FAULT_IRQ_ADDR       0xfee00000   /* APIC base */
+>> +#define QVTD_FAULT_IRQ_DATA       0x0
+>> +
+>> +/* Scalable mode PASID structures */
+>> +#define QVTD_PASID_DIR_BASE        (QVTD_MEM_BASE + 0x00030000)
+>> +#define QVTD_PASID_TABLE_BASE      (QVTD_MEM_BASE + 0x00031000)
+>> +
+>> +/* Page table entry size (8 bytes per PTE) */
+>> +#define QVTD_PTE_SIZE             sizeof(uint64_t)
+>> +
+>> +/* FSPTPTR mask: same as VTD_SM_PASID_ENTRY_SSPTPTR, bits[63:12] */
+>> +#define QVTD_SM_PASID_ENTRY_FSPTPTR   VTD_SM_PASID_ENTRY_SSPTPTR
+>> +
+>> +/* Default Domain ID for single-domain tests */
+>> +#define QVTD_DOMAIN_ID            0
+>> +
+>> +/* Test IOVA and target physical address */
+>> +#define QVTD_IOVA                 0x0000000010200567ull
+>> +#define QVTD_PT_VAL               (QVTD_MEM_BASE + 0x00100000)
+>> +
+>> +/*
+>> + * Translation modes supported by Intel IOMMU
+>> + */
+>> +typedef enum QVTDTransMode {
+>> +    QVTD_TM_LEGACY_PT,          /* Legacy pass-through mode */
+>> +    QVTD_TM_LEGACY_TRANS,       /* Legacy translated mode (4-level paging) */
+>> +    QVTD_TM_SCALABLE_PT,        /* Scalable pass-through mode */
+>> +    QVTD_TM_SCALABLE_SLT,       /* Scalable Second Level Translation */
+>> +    QVTD_TM_SCALABLE_FLT,       /* Scalable First Level Translation */
+>> +    QVTD_TM_SCALABLE_NESTED,    /* Scalable Nested Translation */
+>> +} QVTDTransMode;
+>> +
+>> +static inline bool qvtd_is_scalable(QVTDTransMode mode)
+>> +{
+>> +    return mode == QVTD_TM_SCALABLE_PT ||
+>> +           mode == QVTD_TM_SCALABLE_SLT ||
+>> +           mode == QVTD_TM_SCALABLE_FLT;
+>> +}
+>> +
+>> +typedef struct QVTDTestConfig {
+>> +    QVTDTransMode trans_mode;     /* Translation mode */
+>> +    uint64_t dma_gpa;             /* GPA for readback validation */
+>> +    uint32_t dma_len;             /* DMA length for testing */
+>> +    uint32_t expected_result;     /* Expected DMA result */
+>> +} QVTDTestConfig;
+>> +
+>> +typedef struct QVTDTestContext {
+>> +    QTestState *qts;              /* QTest state handle */
+>> +    QPCIDevice *dev;              /* PCI device handle */
+>> +    QPCIBar bar;                  /* PCI BAR for MMIO access */
+>> +    QVTDTestConfig config;        /* Test configuration */
+>> +    uint64_t iommu_base;          /* Intel IOMMU base address */
+>> +    uint32_t trans_status;        /* Translation configuration status */
+>> +    uint32_t dma_result;          /* DMA operation result */
+>> +    uint16_t sid;                 /* Source ID (bus:devfn) */
+>> +} QVTDTestContext;
+>> +
+>> +/*
+>> + * qvtd_setup_and_enable_translation - Complete translation setup and enable
+>> + *
+>> + * @ctx: Test context containing configuration and device handles
+>> + *
+>> + * Returns: Translation status (0 = success, non-zero = error)
+>> + *
+>> + * This function performs the complete translation setup sequence:
+>> + * 1. Builds VT-d structures (root/context entry, page tables)
+>> + * 2. Programs IOMMU registers and enables translation
+>> + * 3. Returns configuration status
+>> + */
+>> +uint32_t qvtd_setup_and_enable_translation(QVTDTestContext *ctx);
+>> +
+>> +/*
+>> + * qvtd_build_translation - Build Intel IOMMU translation structures
+>> + *
+>> + * @qts: QTest state handle
+>> + * @mode: Translation mode (pass-through or translated)
+>> + * @sid: Source ID (bus:devfn)
+>> + *
+>> + * Returns: Build status (0 = success, non-zero = error)
+>> + *
+>> + * Constructs all necessary VT-d translation structures in guest memory:
+>> + * - Root Entry for the device's bus
+>> + * - Context Entry for the device
+>> + * - Complete 4-level page table hierarchy (if translated mode)
+>> + */
+>> +uint32_t qvtd_build_translation(QTestState *qts, QVTDTransMode mode,
+>> +                                uint16_t sid);
+>> +
+>> +/*
+>> + * qvtd_program_regs - Program Intel IOMMU registers and enable translation
+>> + *
+>> + * @qts: QTest state handle
+>> + * @iommu_base: IOMMU base address
+>> + * @mode: Translation mode (scalable modes set RTADDR SMT bit)
+>> + *
+>> + * Programs IOMMU registers with the following sequence:
+>> + * 1. Set root table pointer (SRTP), with SMT bit for scalable mode
+>> + * 2. Setup invalidation queue (QIE)
+>> + * 3. Configure fault event MSI
+>> + * 4. Enable translation (TE)
+>> + *
+>> + * Each step verifies completion via GSTS register read-back.
+>> + */
+>> +void qvtd_program_regs(QTestState *qts, uint64_t iommu_base,
+>> +                        QVTDTransMode mode);
+>> +
+>> +/*
+>> + * qvtd_setup_translation_tables - Setup complete VT-d page table hierarchy
+>> + *
+>> + * @qts: QTest state handle
+>> + * @iova: Input Virtual Address to translate
+>> + * @mode: Translation mode
+>> + *
+>> + * This builds the 4-level page table structure for translating
+>> + * the given IOVA to PA through Intel VT-d. The structure is:
+>> + * - PML4 (Level 4): IOVA bits [47:39]
+>> + * - PDPT (Level 3): IOVA bits [38:30]
+>> + * - PD (Level 2): IOVA bits [29:21]
+>> + * - PT (Level 1): IOVA bits [20:12]
+>> + * - Page offset: IOVA bits [11:0]
+>> + *
+>> + * The function writes all necessary Page Table Entries (PTEs) to guest
+>> + * memory using qtest_writeq(), setting up the complete translation path
+>> + * that the VT-d hardware will traverse during DMA operations.
+>> + */
+>> +void qvtd_setup_translation_tables(QTestState *qts, uint64_t iova,
+>> +                                   QVTDTransMode mode);
+>> +
+>> +/* Calculate expected DMA result */
+>> +uint32_t qvtd_expected_dma_result(QVTDTestContext *ctx);
+>> +
+>> +/* Build DMA attributes for Intel VT-d */
+>> +uint32_t qvtd_build_dma_attrs(void);
+>> +
+>> +/* High-level test execution helpers */
+>> +void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
+>> +                               QPCIBar bar, uint64_t iommu_base,
+>> +                               const QVTDTestConfig *cfg);
+>> +
+>> +#endif /* QTEST_LIBQOS_INTEL_IOMMU_H */
 > 
-> The comment is partially misleading.
-> 
-> The SID part is correct. But iommu-testdev does not program MemTxAttrs.pid( only 
-> program .secure and .space now), so returning 0 here does not explicitly select 
-> PASID=0. PASID_0 is reached implicitly via VT-d’s no-PASID handling fallback, 
-> not via DMA_ATTRS.
-> 
-> I think the comment should be clarified to reflect this.  You may need check 
-> whether the related logic runs as your expectations. Expanding the DMA_ATTRS in 
-> iommu-testdev is open if you really need it.
-> 
-> 
-> Thanks,
-> 
-> Tao
-> 
-
-Thanks for the review. The current iommu-testdev dma_attrs_cfg is somewhat 
-ARM-centric — it only exposes secure, space, and space_valid, which are
-primarily relevant to ARM TrustZone. For x86 VT-d, the missing piece is 
-MemTxAttrs.pid. Currently we can only test PASID=0 via the
-no-PASID fallback path. I'll fix the comment to clarify this in v3. 
-
-  
-
-Best regards, 
-
-Fengyuan
-
-
 
 
