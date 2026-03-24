@@ -4,76 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DE5F54AC5
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D2CF54ACB
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w532b-0006xa-6Q; Tue, 24 Mar 2026 10:47:33 -0400
+	id 1w533q-0007QK-0M; Tue, 24 Mar 2026 10:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w532Y-0006xK-Ra
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:47:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w533o-0007PZ-Go; Tue, 24 Mar 2026 10:48:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w532W-0000E8-OT
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:47:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774363647;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d59FoLl81hs3ydRLtHyAohFWQvzMGtc7OiJX7rmCDNY=;
- b=iOyavssGGXmiJcDopUMQNWpk8d4Oe+OwDHdBxQMUku3WlfCQN9uHukUcqBN4gCFebWcyhG
- cQiMHiuLUq9vkjP70UWCEzl2qXV6IpiSxT74RWDFYFz/ek6NpsKcKwsr4RwLuDzOlQtiGd
- dDlKjbV9c2yRqJFDrTpaITTS364+V/w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-KdZuxhZYMMeN2oHmGmAx9A-1; Tue,
- 24 Mar 2026 10:47:25 -0400
-X-MC-Unique: KdZuxhZYMMeN2oHmGmAx9A-1
-X-Mimecast-MFC-AGG-ID: KdZuxhZYMMeN2oHmGmAx9A_1774363644
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B40C180061D
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 14:47:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.93])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 55F6B180035F; Tue, 24 Mar 2026 14:47:22 +0000 (UTC)
-Date: Tue, 24 Mar 2026 14:47:20 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 45/60] ui/vnc: fix vnc_display_init() leak on failure
-Message-ID: <acKj-I6rEVPPXXry@redhat.com>
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-45-48eb1dcf7b76@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w533n-0000Sa-0d; Tue, 24 Mar 2026 10:48:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774363705; bh=6zy1ZwEJcwdmkXZKCLZboTvLIx57gZUWOUOXGSUj8G8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=kB9NEisYueJk4HRE5yDjQLNFJptrHU2a2e7YDeHXxe/ioeTylKg6rV91emj/Xxi0c
+ 6bUHASNRTvye6EsXoF79wH2CpSSJISTUWQW4Yr2p4TuUOrEkrPY8zVUTAR/e4iRg2g
+ 6hLhzrB9afYAXwM8rQ2C7IlM7dq0QGZ3QcIEibIxNIwC+v+X134Zd29t4QtCXQo91j
+ CkrIkmw9bCrbolQy5E9chDgOyY//1YUi6rroh15GOxew12zw1b2jwZVTE8qFXJFX3W
+ xtgTI5OUYrc3w19LyoKaEbYfx9RA4IDYy0TOT22htQ008MyYdEhfDA5P31t20S+TXK
+ eUYFrWhQUvswg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id C145A19710D;
+ Tue, 24 Mar 2026 17:48:25 +0300 (MSK)
+Message-ID: <f9a0ac48-baab-4782-a5da-608b762b3a69@tls.msk.ru>
+Date: Tue, 24 Mar 2026 17:48:44 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/2] Linux user for v11 patches
+To: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
+Cc: qemu-stable <qemu-stable@nongnu.org>
+References: <20260313183009.34221-1-deller@kernel.org>
+ <66022765-b7b8-4f46-a90a-43dc473a16fd@tls.msk.ru>
+ <0864102b-f32d-41a1-b19a-7eb9b237b368@gmx.de>
+ <389cce41-5aad-4703-82bc-dfb9a8f7e774@tls.msk.ru>
+ <b20eb2a7-1386-477e-b3f7-e5ddffdd62ca@linaro.org>
+ <ff2edb88-fab7-43e9-b3f5-5cfcddb09cc0@tls.msk.ru>
+ <57aa74f6-f28c-450a-a19d-15dc8403ef83@gmx.de>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <57aa74f6-f28c-450a-a19d-15dc8403ef83@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260317-qemu-vnc-v1-45-48eb1dcf7b76@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,165 +113,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 17, 2026 at 12:50:59PM +0400, Marc-André Lureau wrote:
-> Do not add the display state to the vnc list, if the initialization
-> failed. Add vnc_display_free(), to free the display state and associated
-> data in such case. The function is meant to be public and reused in the
-> following changes.
+On 24.03.2026 13:56, Helge Deller wrote:
+> Am 24.03.26 um 07:19 schrieb Michael Tokarev:
+>> On 24.03.2026 01:53, Richard Henderson wrote:
+
+>>> Probably
+>>>
+>>>    page_set_flags(new_addr, new_addr + new_size - 1,
+>>>                   prot | PAGE_VALID | PAGE_RESET);
+>>>
+>>
+>> Well, at least the testcase works with this version.  Thank you!
+>>
+>> BTW, do we have another testcase for this scenario somewhere,
+>> like in LTP or something?  Looking at linux test project I don't
+>> see this case covered.
 > 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  ui/keymaps.h |  1 +
->  ui/keymaps.c | 13 ++++++++++---
->  ui/vnc.c     | 30 ++++++++++++++++++++++++++----
->  3 files changed, 37 insertions(+), 7 deletions(-)
+> At least there is a reproducer here:
 > 
-> diff --git a/ui/keymaps.h b/ui/keymaps.h
-> index 3d52c0882a1..e8917e56404 100644
-> --- a/ui/keymaps.h
-> +++ b/ui/keymaps.h
-> @@ -54,6 +54,7 @@ typedef struct kbd_layout_t kbd_layout_t;
->  
->  kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
->                                     const char *language, Error **errp);
-> +void kbd_layout_free(kbd_layout_t *k);
->  int keysym2scancode(kbd_layout_t *k, int keysym,
->                      QKbdState *kbd, bool down);
->  int keycode_is_keypad(kbd_layout_t *k, int keycode);
-> diff --git a/ui/keymaps.c b/ui/keymaps.c
-> index 2359dbfe7e6..d1b3f43dc8a 100644
-> --- a/ui/keymaps.c
-> +++ b/ui/keymaps.c
-> @@ -178,6 +178,14 @@ out:
->      return ret;
->  }
->  
-> +void kbd_layout_free(kbd_layout_t *k)
-> +{
-> +    if (!k) {
-> +        return;
-> +    }
-> +    g_hash_table_unref(k->hash);
-> +    g_free(k);
-> +}
->  
->  kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
->                                     const char *language, Error **errp)
-> @@ -185,10 +193,9 @@ kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
->      kbd_layout_t *k;
->  
->      k = g_new0(kbd_layout_t, 1);
-> -    k->hash = g_hash_table_new(NULL, NULL);
-> +    k->hash = g_hash_table_new_full(NULL, NULL, NULL, g_free);
->      if (parse_keyboard_layout(k, table, language, errp) < 0) {
-> -        g_hash_table_unref(k->hash);
-> -        g_free(k);
-> +        kbd_layout_free(k);
->          return NULL;
->      }
->      return k;
+> https://gitlab.com/qemu-project/qemu/-/work_items/3105
 
-This is fixing a memory leak in init_keyboard_layout that's separate
-from the VNC leak, so these ui/keymaps.c should be their own commit.
+Yes, this is what I used to test the change, which I mentioned
+above as "testcase works".  But it is a testcase for this particular
+corner case only, - there might be more mmap-from-zero testcases
+somewhere.  But ok, that's enough for now.
 
+Thanks,
 
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 763b13acbde..115ff8a988e 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3421,6 +3421,8 @@ static void vmstate_change_handler(void *opaque, bool running, RunState state)
->      update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
->  }
->  
-> +static void vnc_display_free(VncDisplay *vd);
-> +
->  void vnc_display_init(const char *id, Error **errp)
->  {
->      VncDisplay *vd;
-> @@ -3430,8 +3432,9 @@ void vnc_display_init(const char *id, Error **errp)
->      }
->      vd = g_malloc0(sizeof(*vd));
->  
-> +    qemu_mutex_init(&vd->mutex);
->      vd->id = g_strdup(id);
-> -    QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
-> +    vd->dcl.ops = &dcl_ops;
->  
->      QTAILQ_INIT(&vd->clients);
->      vd->expires = TIME_MAX;
-> @@ -3445,22 +3448,22 @@ void vnc_display_init(const char *id, Error **errp)
->      }
->  
->      if (!vd->kbd_layout) {
-> +        vnc_display_free(vd);
->          return;
->      }
->  
->      vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
->      vd->connections_limit = 32;
->  
-> -    qemu_mutex_init(&vd->mutex);
->      vnc_start_worker_thread();
->  
-> -    vd->dcl.ops = &dcl_ops;
->      register_displaychangelistener(&vd->dcl);
->      vd->kbd = qkbd_state_init(vd->dcl.con);
->      vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
->          &vmstate_change_handler, vd);
-> -}
->  
-> +    QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
-> +}
->  
->  static void vnc_display_close(VncDisplay *vd)
->  {
-> @@ -3504,6 +3507,25 @@ static void vnc_display_close(VncDisplay *vd)
->  #endif
->  }
->  
-> +static void vnc_display_free(VncDisplay *vd)
-> +{
-> +    if (!vd) {
-> +        return;
-> +    }
-> +    vnc_display_close(vd);
-> +    unregister_displaychangelistener(&vd->dcl);
-> +    qkbd_state_free(vd->kbd);
-> +    qemu_del_vm_change_state_handler(vd->vmstate_handler_entry);
-> +    kbd_layout_free(vd->kbd_layout);
-> +    qemu_mutex_destroy(&vd->mutex);
-> +    if (QTAILQ_IN_USE(vd, next)) {
-> +        QTAILQ_REMOVE(&vnc_displays, vd, next);
-> +    }
-> +    g_free(vd->id);
-> +    g_free(vd);
-> +}
-
-If we're introducing this we need to answer the earlier questions
-in this series about killing off the VNC worker thread, as IMHO,
-we should not leave the thread running if we're claiming to be
-able to free VncDisplay state.
-
-> +
-> +
->  int vnc_display_password(const char *id, const char *password, Error **errp)
->  {
->      VncDisplay *vd = vnc_display_find(id);
-> 
-> -- 
-> 2.53.0
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+/mjt
 
