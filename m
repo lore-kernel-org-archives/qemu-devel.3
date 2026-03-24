@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C631CF54ACD
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC19F54AC5
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:10:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w53Nx-0007s7-Bg; Tue, 24 Mar 2026 11:09:37 -0400
+	id 1w53OQ-0008Fo-Hk; Tue, 24 Mar 2026 11:10:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w53Ns-0007rA-7m; Tue, 24 Mar 2026 11:09:33 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1w53ON-00086T-B4; Tue, 24 Mar 2026 11:10:03 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w53Nq-0004qZ-1C; Tue, 24 Mar 2026 11:09:31 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 28EA2808BB;
- Tue, 24 Mar 2026 18:09:25 +0300 (MSK)
+ id 1w53OL-0004sa-K9; Tue, 24 Mar 2026 11:10:03 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 90DF280765;
+ Tue, 24 Mar 2026 18:09:57 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:46c::1:35] (unknown
  [2a02:6bf:8080:46c::1:35])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id M9VkXN0AYGk0-9GFcaTDs; Tue, 24 Mar 2026 18:09:24 +0300
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id s9V1AO0Aq8c0-HzkvMfr0; Tue, 24 Mar 2026 18:09:57 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1774364964;
- bh=d4Igsfv4es+Y+pAjOwNhvMTRh0MCSjv/75osresmPTE=;
+ s=default; t=1774364997;
+ bh=5xLTA+UEADKvxsr2P1ihdURInult42bmMBZiH7Rjw1M=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=BWhYYd+7+WRntWC2GlaXcwpvz56JkgPege9J6tp+WH3Xc+CwYbMQQQxZZUbi1X/W0
- D4ZRrMCA5TyV6eL1D/Sg2wY1TrxdvLR6io62IID/5diOZOiLPsMPosnLve5Nh1U09/
- wxW/GhilTTEMf4jVShGQOV1tiK9TXiUjc2uMY8Fo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ b=Z2EtYo0xvT6FbRkg1eUbQHBfEtv6n9I0ejX3CU+B4TiMxYJxczTvQ/dpDARRFcQJt
+ Ow7M6DHYyEWmFQ65uFeSzbGyWz5HERi5T9S0SuMEPBWbHFn82mDTaomCkK5anJfYtN
+ Sl33/K162uqsF7204N9R0WZPcmcr0YCQH0B1VUBA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <cbfbb464-cc7a-4753-9e4f-4dc6bda30b69@yandex-team.ru>
-Date: Tue, 24 Mar 2026 18:09:22 +0300
+Message-ID: <7610d8a3-f6a4-4b68-90f3-ac22ff049d94@yandex-team.ru>
+Date: Tue, 24 Mar 2026 18:09:54 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] vhost-user.rst: fix typo
+Subject: Re: [PATCH v2 2/4] vhost-user: add skip_drain param to
+ do_vhost_virtqueue_stop
 To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
 Cc: virtio-fs@lists.linux.dev, zhenwei pi <zhenwei.pi@linux.dev>,
  Hanna Reitz <hreitz@redhat.com>,
@@ -56,21 +58,20 @@ Cc: virtio-fs@lists.linux.dev, zhenwei pi <zhenwei.pi@linux.dev>,
  Stefano Garzarella <sgarzare@redhat.com>, Fam Zheng <fam@euphon.net>,
  Kevin Wolf <kwolf@redhat.com>
 References: <20260311084728.751169-1-dtalexundeer@yandex-team.ru>
- <20260311084728.751169-2-dtalexundeer@yandex-team.ru>
+ <20260311084728.751169-3-dtalexundeer@yandex-team.ru>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260311084728.751169-2-dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260311084728.751169-3-dtalexundeer@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,11 +87,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11.03.26 11:47, Alexandr Moshkov wrote:
+> Will be used in future commit for adding this param to GET_VRING_BASE
+> 
 > Signed-off-by: Alexandr Moshkov<dtalexundeer@yandex-team.ru>
 
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-(and you forget r-b by Stefan)
 
 -- 
 Best regards,
