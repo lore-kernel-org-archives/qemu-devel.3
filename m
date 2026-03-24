@@ -4,100 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A44F54AC7
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 151C7F54AC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52nM-00079i-Uv; Tue, 24 Mar 2026 10:31:49 -0400
+	id 1w52tk-0000nv-Jv; Tue, 24 Mar 2026 10:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w52nK-00079L-9J; Tue, 24 Mar 2026 10:31:46 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w52nG-0006Lx-Ml; Tue, 24 Mar 2026 10:31:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774362681; bh=tc4JRIYkYdOpfOYaMtrNj2Aoqu1II2Z4zFkoIAZLE98=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To;
- b=gEaGXeVlIO7ogyhsUvGk0ot0FJMW+nUmCbSJk1ZXWGScq4EGHrRpaCPU4ZmresDt+
- KkfIzPL6TGqVwP9N1RH3QKaDYs2jmEPdmoViiAf4k1XJJIJNtnHnSw5b5V//Cy5xnO
- NBHGjzk+hiUCe05px+VWT7nUIx3v8n2NlPfx/vMuiuCfONdbP1Vq7FqV767xeyb1Xy
- VevSRIPiZbMjs8W+qa7uZWaNXQaijpnPzLabm5DN06XylYV3TjAfLzPKv63PdBhG0Y
- xDvFAteeF94EYgncgzWCEp4T8EVOMw7hm2euI/XQCwQHX+CXnK5NtDcyhbWvTlEGwU
- ziNMRPLfw2mEA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 025F519707A;
- Tue, 24 Mar 2026 17:31:21 +0300 (MSK)
-Message-ID: <5d1301df-aee0-44c0-a317-806331c16c35@tls.msk.ru>
-Date: Tue, 24 Mar 2026 17:31:39 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52th-0000nN-9i
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:38:22 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52te-00079j-Ov
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:38:20 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-667f8794e97so9205342a12.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 07:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774363097; x=1774967897; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XQcI8BKi1qvMDPWwBTaO4BHjJ8aG6ZzpF9S+Abxw0e4=;
+ b=YKkUL2aLrC4O03u6TXmneha4qqmxlTbbfLbn80hL1Y+KYAuouhR3c1EqZGlyp3Q7h5
+ lsFOEInOxZIWbNAEbeK1i4vZiFJmRiq7uJYSBcVlm6LcqHZWFUivn97I0SBUIRvqBDfP
+ GROEimOI3ch8OC4MyuucJMIiG23WsmbOnfQTZRLMQVYApr9l5XVjSaiFVuXFzuIqLQai
+ vpscPmPMQsSRNDz2WRo7K2qkUkH+t3Vume+yr5FdODgAu/XmpO0Jv7PtbI5W01GwruMW
+ GYArTnXVQlgb6ZtXwSXXV+s96Gazgs0JS3J+icyDkJMdiNKtTVUjv6TlE/NF9tImsV9e
+ GicQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774363097; x=1774967897;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XQcI8BKi1qvMDPWwBTaO4BHjJ8aG6ZzpF9S+Abxw0e4=;
+ b=kwpXKnknboLgAqmCr9556vcmammslZRlAiYllCfxX0ie6LckfxkhK7Hs/mfVFgqEYg
+ +CRyQwYLgtoF2lbov084tQSEyHOcKlDzZkDT7doSOCeuhroZUg44YGpOmMAgnGmKiMcU
+ dnDYYUI8MOHzSlv4Ar2CG7voGOOxCvgoJKKoefH9MDCkhfvpq3AWdCULuMAxEaJ4OeFC
+ UPFH/kWP3+oUZDXvdwsRRAlDWf0lUc/zToJzgK8rYsNRdZ+UkHu6U9xCmonVQ8GSq+9o
+ JQCX9DAUy0crnERH/qpolmH50UVzQxfmgLdmWItB+OpfvPwIq2Pb2d4LM9xhdTnOyIgZ
+ E+gg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjvBmr8g6DynDKw6Whpz3I+V9v32nJsxw5UV8oXlq1usvClWW/e58f0jmnh/70KPY2CL73NdJHjuq4@nongnu.org
+X-Gm-Message-State: AOJu0YzNdzT8lQKpM9or9pd+PuTm19/eelgTjarRmGmeh7X4RIwEYk/W
+ gJytaDj1+MAW3rhxxDgvPXqrUXZy1shFQc4WL8PA82b/74J3lek2CZyuXZ13y/0JVD0=
+X-Gm-Gg: ATEYQzzbs88AKT6MsjvkkPujlefFJG/kg6au4EpBkktkC3UsOKkhHscPiRxlVzlUf/c
+ fedso+Gu9B0Gkw1LE3eOOW2QsmxunENLOmvWw37du/KeB87pVUMUMFNm8duGls8f4Dri6TfnZdP
+ j10FAE7Nrqc2ExEUY0+7eUZtrryNJsCzRAJL7enJ5Wpfg5dHb4IuGUrVSAr+HyoE0OYSJxzFy99
+ 1NQQgfMwC/nKG9PJvDy8ehIdoEtDD1+Kiy6V16klxmP4GYB0WrmZAk9tFDksSYSXJwTi7Bm3aYf
+ 65nIQMxpf3sa+0LVGszHMwaKoc5OEvMZnnAb5NOHSzeAWxhHd4I9j+cCGq9bcx3x3mhP4dqwXUi
+ YBd+ATCQaK+rNeeth/B1wLzMqIR9ghoWr7k5f0FeF1MuvnWl0EVf3PSNVYq/Av+85Cr533t8tkh
+ qlqFO2P+ZmPaPNrRTSi78QHpWI3Lv7mv2QO/P52Uf9RdGGvMn0JxR6py7BVYzwIC0ttg==
+X-Received: by 2002:a05:6402:1453:b0:66a:6c0b:937f with SMTP id
+ 4fb4d7f45d1cf-66a6c0b9604mr808888a12.1.1774363096741; 
+ Tue, 24 Mar 2026 07:38:16 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6697d733a0dsm2664506a12.26.2026.03.24.07.38.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 07:38:16 -0700 (PDT)
+Message-ID: <e0686a78-cad0-4cbf-9063-81c4c211bde4@linaro.org>
+Date: Tue, 24 Mar 2026 15:38:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/8] ati-vga fixes
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <cover.1774110169.git.balaton@eik.bme.hu>
- <68e1536d-5ffc-4c06-bbab-cece627a69c6@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <68e1536d-5ffc-4c06-bbab-cece627a69c6@tls.msk.ru>
+Subject: Re: [PATCH for 11.0] pc-bios: remove obsolete linuxboot.bin prebuilt
+ blob
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20260324122025.892666-1-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260324122025.892666-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,29 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.03.2026 16:38, Michael Tokarev wrote:
-> On 21.03.2026 19:30, BALATON Zoltan wrote:
-
->> BALATON Zoltan (8):
->>    ati-vga: Fix colors when frame buffer endianness does not match host
->>    ati-vga: Also switch mode on HW cursor enable bit change
->>    ati-vga: Do not add crtc offset to src and dst data address
->>    ati-vga: Avoid warnings about sign extension
->>    ati-vga: Fix display updates in non-32 bit modes
->>    ati-vga: Add work around for fuloong2e
->>    ati-vga: Simplify pointer image handling
->>    ati-vga: Make sure hardware cursor data is within vram
+On 24/3/26 13:20, Daniel P. Berrangé wrote:
+> The corresponding source was removed in
 > 
-> This stuff feels like it should be picked up for qemu-stable too,
-> what do you think?
+>    commit 88641f4df388faa78c49c54ed885e530fd0a75dc
+>    Author: Philippe Mathieu-Daudé <philmd@linaro.org>
+>    Date:   Thu Jan 8 11:30:39 2026 +0800
+> 
+>      hw/i386: Remove linuxboot.bin
+> 
+> We must also remove the pre-built blob to avoid a GPL violation
+> from lack of complete & corresponding source.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   pc-bios/linuxboot.bin | Bin 1024 -> 0 bytes
+>   1 file changed, 0 insertions(+), 0 deletions(-)
+>   delete mode 100644 pc-bios/linuxboot.bin
 
-Um, this is a bit difficult, since there were quite some
-refactoring of this area for 11.0, so for previous qemu
-releases we should either pick up these refactorings or
-back-port the new changes.  Neither of which seems very
-important.
-
-Thanks,
-
-/mjt
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
