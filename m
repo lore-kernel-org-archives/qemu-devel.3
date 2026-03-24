@@ -4,131 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A65FEC0F1
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 18:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 225CCFEC0F1
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 18:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w56aT-0006kE-GG; Tue, 24 Mar 2026 14:34:45 -0400
+	id 1w56bZ-0007GD-CK; Tue, 24 Mar 2026 14:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w56aR-0006k1-9e
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:34:43 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w56bF-0007Eb-Gf
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:35:38 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w56aP-0002gX-Ih
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:34:42 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-82a7539851fso2297504b3a.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 11:34:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w56b9-000311-Lk
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:35:32 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-64aedd812baso1696441d50.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 11:35:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774377326; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MsMHCWJqHrDw/xITAFcUGA/wufAwszzvJK8PvhU78XQiZwqK/QCNnk8mi+UEwivitD
+ zIGc5E2d/QXgLBaKb7RfnyKq7gN2IOjMyk+20fdH2+7CeEU+VVT3WiIuAJ9XZ/en4q22
+ SgKIK7hfGRzE5/+MCLnFAyeuibIoQNlIZoMOHSdclHPWesG7LUubvDumn5tSTW7w3Qes
+ on4q8gadbP0VLMqCTf3CHBWeBFiN4koea48VikxI8m4JcdxPp2VJbnUPKpuFwxriHPXn
+ 0c9/fjrUcqll+GrpK8cqX8As7AMtyhBIpDQPfFrZ86FHuh1boGuze6fIzXMKw1aoC9f1
+ 5Dag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2l5BIxEWC/cDCvQbuxmSCsYfbdqGZdohBU17UTLkiFM=;
+ fh=0gw5nfXnh7VFeoy1bdl11avC11t0a9fpFz5v6uZHFHI=;
+ b=jxHSUm7GBP428mpCtLBGXqQYWOw/5bAgJwCcnS1LxpUvtko5iPjScSy1k7YbE1ulGy
+ gjMJYZia2gKTEzHvC5RMfG1CSozEhBI258jvr6UMsSd1uIu5zOvnncwXpbYHyVTQJgTD
+ OFB/042Z5XnjHpysMN5X+aGTlGXq3j3QoaJiBHEXen+1bLZAAhU6dMAi28eOqjUetqt9
+ 6ipjRT2OuwwWo6zsruPSW521ku2t/TOBw4cx54h1co/tJyWSJM1KCmlP7XQyy0u7rvnf
+ ZWekyyGAUFh2DTXgemUpbvqivlGYTmMg4i/7kQ0yBsGu+fEAO93v0GU2FfShLfnavpcx
+ seWw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774377280; x=1774982080; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HYCDysaSAZsmu6TFqlIx8x4TUGbFpnbrWy1nF0owSyA=;
- b=sKHk1xWtI4ya8pH7z9znYMH2I0n6Mtrc87pjTlXyeXSCYsZXKO7j8uXcTnGiZl1SZi
- 0T1IvTc9VWVyHBlqq5174Ud1zzljZJ2YE8A5uHGAARQVVx16fhwpWSXcjMrAn5OwyWjF
- ndPuQDYwCUkyXK4+mve2ZcZIO8UDO+oUXEm/ODjyBrN86XA+lydoXEH4ggDVJfTFY8dA
- hSKoHQZxSpmnQ2optZ+7N1JVo4qohNe7ZuuPGPIvvoKMdXJZpTHAXvxBPaqufkkmnpYZ
- JPjUCyB9d65QYwBTENAcWuCaeHOqUT9NPELO3m98c18cM8cIhDIXcEo2wZGxv3LOXEM0
- y5Gw==
+ d=linaro.org; s=google; t=1774377326; x=1774982126; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2l5BIxEWC/cDCvQbuxmSCsYfbdqGZdohBU17UTLkiFM=;
+ b=Y47EEeqxkZkYaR/RZe655FU3rCq/gF0ijlAzklM48yxkohfsKpnxb+tjM5UmmsfZcl
+ OORpeJsFfVoxbGhgAvDZ3Mu5qLNHD8nqxrksDlsgsY4Bu3x+WpJtEmnu4e8p8lr3ROKP
+ zJ1vTIs/hNLIiDsaL3dulMrRt8b1SV+NPy4ep+niG1VH9YOTcORTRt5FuQjKQYX6EN6W
+ mrnY3Opr4RPj7tUWf09yfaOC7CDLNb3LJ76IentszfwV0WpOaWCTAiCg0uj3G9uMsSog
+ /hRb+pFBZpsdWgdVNNXYVvWnKN3GEpoQNt+bYmWj50/uWR9jVZrlsefp1kq2mvKXx2Ob
+ kOvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774377280; x=1774982080;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HYCDysaSAZsmu6TFqlIx8x4TUGbFpnbrWy1nF0owSyA=;
- b=Ymr6U8SWFd0n1V3pKoEg3SSxyXqYHju9+wR+3wcu7MUEji3tuNw6xoxT3curIH6Qci
- 8M51siFrv55Tdht3kCTWK1V0SfIIOAg8m31vr1khf0HBwVHJQTqoq/XT2bDvJPl+0frm
- y7A3Y1EOxyFVYjocWDiko06oo8VLGMLAMH6wVSCo6lw+afku+A7WDDK3bVUdFZXowQw6
- Vyk2Ii0ghvS+iCfffAXId4ydKqqUYBMiFdfI/IaNTX9CAfPnRWzc8YX4BATGbAE+z6GX
- 82HdSwrIaGoGb11HafTBNf/Zmj1FGswiT//gYsWUab6R7eZz07dcgLycRMlzoJ4dNOwB
- RTCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPXbyZSSNPusT9zBp0vNfK1lvrrjPl4g+yjACxy9AgEBixcprEk7P80+R6IuqD9P3utaaQbeDzOw34@nongnu.org
-X-Gm-Message-State: AOJu0YxyygX1gnllUqDUvmq85qPOjPd5JvcJT7RyCFz308O9g1I9Y1zs
- N4M8g6IGlRwVz9SU75tDpgCyH7COErWGiymj6uDvAQpLQv0P+Vrfp9OqOlYP9ilgmsk+Zf/q1hm
- vQo+3BRs=
-X-Gm-Gg: ATEYQzy4Pc9T+RSS7k7GQ09/3IZSzdVokfP65o7U9uIW2jx4mgDlrpLWaTcy1g5wGB0
- mepcEXx5HcMSv4qJuISuGfNdPTLGIDuBXhb/0GiYM1VPBsu5pXo6EJhiemqvnoFoFcMLNvo+uX7
- vPMnCbd4K+0dW5tmCvooIRNhq3QrEyOODfUgOX/5sLVF9IrqWtB3A77gKJ9yKGZbV8gR4F88thL
- TfwyKH1x25pNZSnQ6ced/mbvUfPJldR1dGbeXCmGwoGy1VLb2OYPpn4Lgx418Y8RmcpaqscF3gq
- SEjC2Y98AXiw6yCjDPxYA16e2rfe4Ia96zeQsxOs3Uwh8j5K2eg4fYPAOW54C/NGUFsqDE7XwSW
- jOdm9SPVVIZgk6r0LvRJfJum1wtOyAjvi8WPAf6QqsV8tWW+pgf6Qy+epchDY1QcxmGjGbZHaw0
- cFSP6X4ManQZKr1zoBvssDUTnO77NlvgixY/Uwaq1Fmrs8sW496RUrgiC21K7trNw5MIPt
-X-Received: by 2002:a05:6a00:3d4b:b0:829:809e:8977 with SMTP id
- d2e1a72fcca58-82c6e0d4346mr589359b3a.49.1774377279887; 
- Tue, 24 Mar 2026 11:34:39 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82b03bbf0c2sm15572088b3a.15.2026.03.24.11.34.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Mar 2026 11:34:39 -0700 (PDT)
-Message-ID: <c0f35257-98ae-4cb8-a73e-2e36bac91a55@linaro.org>
-Date: Tue, 24 Mar 2026 11:34:38 -0700
+ d=1e100.net; s=20251104; t=1774377326; x=1774982126;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2l5BIxEWC/cDCvQbuxmSCsYfbdqGZdohBU17UTLkiFM=;
+ b=bpQChz1TfzpXBLzbbg+71TftyCTpqtdubMwUVsxafO+34q6xr0StgA5NWUt2VKvYqZ
+ qADEIdqwwsrC4BC9XHa7ZHb3vbCLdmdGrdZQZ4ixy3Nx4/KM1FJG+mPUPIaOkX60m4Yf
+ ABamXjxZBdr3AO9PeCm5IXgaEEHiMC73kY8SxdQ1to2VTz+8pRjsKuW4PZA9bWCsmvU5
+ 1MyWYc1XdZhZ3RjWBs+NIF8b0hOMBF1wk9FEOO0sJeE6pMM1dIjZ73R4k2KWpSj38T1A
+ +nJcfz+Jx78MAUMh6srY2NGjhBgXkiowTbWnYQJKu4RJpVmbEowmL2oz3Ask6s11bfIO
+ 28qA==
+X-Gm-Message-State: AOJu0YwKtb2ceTVIFR1ZFtScopn0NJEApqDTBeIQLh16zTc0gIfieZLC
+ uo6T6o/Ro4BPuH1Oar/4ezVKpgtKBkwphiXSfD3aOBCYY5OFqCsvMORsNxONFlroOe6DKtmHXDB
+ aD0n86MNAZqlPXAmi7zLD4YpkqeflwlJ+yrRjrOkguA==
+X-Gm-Gg: ATEYQzzLF0H8sYBZj6MwCeXAjdn0/Gk6AK7WKYmYt1QehmSI8kPwZolWctVvkDkNHRw
+ qZ/w+FNZVbfqoMGyQw4zSXtLQNFE8npIWMCzJLiDdO2fZ/TXNqHj8/Y3JDdfz6SPg6Wjl8B0B38
+ 9Uhvyaa9VxW8xlBGIo3Ir+BLNog/Iu07i2WGbeE72bim58hgRHVrOfnhxQ3/Wc7gcMuShHsHI9y
+ EQQg/Aoe+jXHTBCShObAXfJGPeexyeJfsUjCVOi+CAs/F95Jw8dlikaVfKGnSkMrGDx4BKPRaTn
+ tYBJilSrB7dloaensf1ZRXVkGuTOZI6IhPvyk5ByD8Ceiqqn2hNxfmJ3tfqoE6/p0xo=
+X-Received: by 2002:a05:690c:e3eb:b0:79a:467a:3c57 with SMTP id
+ 00721157ae682-79acf73293dmr8482657b3.54.1774377326179; Tue, 24 Mar 2026
+ 11:35:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 v6 3/6] monitor: Have MonitorDef::get_value()
- always return int64_t type
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20260320091019.59902-1-philmd@linaro.org>
- <20260320091019.59902-4-philmd@linaro.org> <87pl4ts7vx.fsf@pond.sub.org>
- <CAFEAcA_y5amOwF-HCM8L3xc1_bSbXxno+HjrLBiOaN25fCt4eA@mail.gmail.com>
- <87tsu5qofj.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
- eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
- CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
- gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
- qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
- 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
- L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
- IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
- dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
- tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
- PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
- F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
- HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
- CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
- UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
- uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
- vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
- FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
- I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
- oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
- TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
- y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
- /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
- YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
- DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
- v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
- 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
- 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
- dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
- 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
- X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <87tsu5qofj.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+References: <20260324123444.131118-1-cohuck@redhat.com>
+In-Reply-To: <20260324123444.131118-1-cohuck@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Mar 2026 18:35:14 +0000
+X-Gm-Features: AaiRm53Kzr7o1-AltAnJUP7ZRX8k0fMKNlDA3jSph9qY-AmnMSBpkU0dTiOVCaA
+Message-ID: <CAFEAcA9jLcvvUW6duXdghBtyRHTWqJ4r8YfapSe=LSrXw-GVuQ@mail.gmail.com>
+Subject: Re: [PULL for-11.0 0/2] s390x maintainer updates
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -151,96 +113,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/24/26 7:42 AM, Markus Armbruster wrote:
-> Peter Maydell <peter.maydell@linaro.org> writes:
-> 
->> On Tue, 24 Mar 2026 at 12:57, Markus Armbruster <armbru@redhat.com> wrote:
->>>
->>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>>
->>>> Simplify MonitorDef::get_value() handler by having it always
->>>> return a int64_t type. Truncate to 32-bit in the single caller.
->>>>
->>>> Note, this handler is only implemented once for the x86 targets.
->>
->>>> @@ -78,7 +80,8 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
->>>>       for(; md->name != NULL; md++) {
->>>>           if (hmp_compare_cmd(name, md->name)) {
->>>>               if (md->get_value) {
->>>> -                *pval = md->get_value(mon, md, md->offset);
->>>> +                int64_t val = md->get_value(mon, md, md->offset);
->>>> +                *pval = target_long_bits() == 32 ? (int32_t)val : val;
->>>
->>> This assumes target_long_bits() returns either 32 or 64, doesn't it?
->>>
->>> Is this true today?
->>
->> It's certainly true today, and we insist on that: exec/target_long.h
->> handles TARGET_LONG_SIZE being 4 or 8 and will #error on anything else.
-> 
-> Good.
-> 
->> What other values do you expect it could have ?
-> 
-> There might be a need for 128 in the future.  Not an easy change to
-> make.
+On Tue, 24 Mar 2026 at 12:35, Cornelia Huck <cohuck@redhat.com> wrote:
 >
+> The following changes since commit 750ed363ebfb108082b40bc532b20564bf00f913:
+>
+>   Merge tag 'hw-misc-20260323' of https://github.com/philmd/qemu into staging (2026-03-23 16:58:15 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/cohuck/qemu tags/s390x-20260324
+>
+> for you to fetch changes up to 8a749493544e027a43a14a6eba23feb7e9e5c370:
+>
+>   mailmap: Update email for Nina Schoetterl-Glausch (2026-03-24 11:52:11 +0100)
+>
+> ----------------------------------------------------------------
+> s390x maintainer and mailmap updates
+>
+> ----------------------------------------------------------------
 
-The day this will happen, there will be more places to fix than the 
-current patch, as it's assumed everywhere else that target_long_bits or 
-TARGET_LONG_BITS is 32 or 64 only. So I would not worry too much about 
-it at the moment.
 
->>> Will it remain true?
->>>
->>> Could we use something like
->>>
->>>      val & ((1 << target_long_bits()) - 1)
->>>
->>> to truncate to target_long_bits() bits?
->>
->> This is UB for the case where target_long_bits returns 64,
->> and isn't what the code currently does because it zero
->> extends rather than sign extending.
-> 
-> I signalled my cavalier neglect for these details by writing "something
-> like" ;)
-> 
->> If we wanted to programmatically sign extend from
->> target_long_bits() to the int64_t, that would be
->>
->>   *pval = sextract64(val, 0, target_long_bits());
->>
->> (Whether sign extension is what we actually want for your
->> average register is questionable, but it's what the code
->> does now both for the get_value functions and also for the
->> generic cases handled by the switch on md->type.)
->>
->> Incidentally, we currently behave differently here for
->> qemu-system-i386 and qemu-system-x86_64:
->>
->> $ ./build/all/qemu-system-x86_64 -S -monitor stdio -display none
->> QEMU 10.2.50 monitor - type 'help' for more information
->> (qemu) print $pc
->> 0xfffffff0
->> (qemu) q
->> $ ./build/all/qemu-system-i386 -S -monitor stdio -display none
->> QEMU 10.2.50 monitor - type 'help' for more information
->> (qemu) print $pc
->> 0xfffffffffffffff0
->>
->> For qemu-system-x86_64 we have a 64-bit target_long, so
->> the unsigned addition of env->eip and env->segs[R_CS].base
->> in monitor_get_pc() is done at 64 bits, and that width is
->> then carried through get_monitor_def() and to the caller.
->> For qemu-system-i386 we have a 32-bit target_long, so
->> we do an unsigned 32-bit addition in monitor_get_pc(),
->> return a signed 32-bit result, and then sign extend that
->> to 64 bits in get_monitor_def().
-> 
-> I'm carefully retracing my steps out of this swamp.
-> 
-> Thanks!
-> 
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
