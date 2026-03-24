@@ -4,107 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 442EAE9A75A
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E6A0E9A764
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4zB0-0004Jy-KG; Tue, 24 Mar 2026 06:39:58 -0400
+	id 1w4zH2-0005Rr-Nx; Tue, 24 Mar 2026 06:46:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4zAy-0004Jg-AN
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:39:56 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4zAw-00080F-6G
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:39:55 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64e8c7f5082so4635441d50.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 03:39:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774348790; cv=none;
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1w4zGm-0005RD-LY
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:45:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1w4zGj-0000Fm-1U
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:45:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774349149;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3cESUk+FyTMPX/FUqfRvt5lNRyHH3XkdHcxJPyAOlmQ=;
+ b=SPd/VVI8WvdjtinFUX0aC8reOlRRw5Mnf+bqWV32dG/gWbkEXOS582ECg4CliBg06GVZb8
+ MoV2C9k6AkiC5HfjQrBicCJT2+U803IrXO2+4MyBln75Yrsj9N77Lmx2q6bUIHue8rEDwW
+ x+/Wh7G2YOVYl1yEiUBnkoTvMbt8/IU=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-52-dGIBygymOZ-f2XFad6_j4g-1; Tue, 24 Mar 2026 06:45:48 -0400
+X-MC-Unique: dGIBygymOZ-f2XFad6_j4g-1
+X-Mimecast-MFC-AGG-ID: dGIBygymOZ-f2XFad6_j4g_1774349148
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-79064868702so37720807b3.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 03:45:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774349148; cv=none;
  d=google.com; s=arc-20240605;
- b=ftdOVWxBh1ky77GMaagrPnTO35MzOSJoQBjnEvWp0dINQ3pWJkVqMX1SAy+K9nTx9z
- 1SfbTYRQWn4KgwAinH60FVCVrsGF1QJ5j4QHLzgDimligphfCirbhB71izzb0v02JavD
- lDGE+CJ1PhXKsrRcLa3O+uCkNTz4RFOE8AsICgGS6/2vyI5gmIEpILb33m0SmdIqzhga
- LMVT+0JaBEaMr79hpmLZrArHgWwOnDPT06j9eJwl0CVCeiIyh/B2ZasQQt7go52Y0Cg4
- kpaINih4H9zgVIlQN5NHVlYuAgG7LCBP6cDR2CqGYfbVfeatKkab53GnlyCERDmJ1vED
- Jx6w==
+ b=aSkxLVQYw02WVtAzQgKmA4szCIsQOVk1w+D8YWLL0DFxiYeJeJ8X4xpGKJth1GcB1B
+ NKwBY4Ay4z3veqoNOproZCc/tbm8eEZFVvab7TtRF6bVhZUp0Peq3SCuJFpnYZvTxtWI
+ hQDtkmaAOdHaHEQq6fzfXbzW5zJ9kJdGF4gPyXvQLOqCTZ0t5SKfSaM+nn2wqEah9ci4
+ k0P8C1ZN9RhX2EoiP47Eq1c+52P1TDalHJPpp+iJIoR1v123K+JxPmgPfxQzbe3GvFAU
+ rDdHtx9FAxo1pue2I/c6H0Ydn/1RGHn1Ofkpp1/cSZTqrJX2OTFbFvDeDiMz0IOnnB6v
+ eMPw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cew/+vmTaGE8VFgZmpz4wioo/nNxu9Z1P4xF4vN+kbY=;
- fh=PzbTjfSh5thByvES80y7/ymjUitiQ4VIxw4ZoPURAB0=;
- b=fxETBI3ub5Vx35fmaIiCyP82KOUErtJrxE7eo4Sb/9AvduWYopLXegwqe3dA3mKvcx
- d1SZyKQJ5lwTwJ+i9B+NJC7wp8Cji/4pYLfvfiIth+/FlmDTCfw8mAV1h40+VBj1tTvp
- 37e1qgm2NEzYiCuQyiGQkHx23auE3R4sWtRlhQasNGeziZ6uPqDxF0mcqrilKtnojzfE
- /JdUEeeJDS/64NWFdxGQROh9FC48tNecadr44hVTHZ+UaZ0q68xKvJX+Y7f/0XoVpV9v
- oIURachHIH/pRelXrOUpASvD/LDhmioJynIbgFICmz//HphNccL3KM2DutpjYR4zZcpu
- BOJw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3cESUk+FyTMPX/FUqfRvt5lNRyHH3XkdHcxJPyAOlmQ=;
+ fh=YABNQfmvUMl7qMn0Pg+rjVUhb9BD90dDpz1/2AdAcYo=;
+ b=BA2UAeq3X99dhdkk5Uap8HEhqibw0Kwe1nw5FwACjhLiLBSs+634ZZC8wvVdKMEBHD
+ t5DU0MNUAUN9y6n4aaxnb1icfKT1E/AffZy5oL9jjqc+QqvWS8ndGuzKK2Lf9jruHteR
+ vTvkoVDUMqcZ1LImjrSTt3NiqyAGc62aSNfvvqGveTrRJlihpMDgXuanyXLlDiKNE7Bc
+ vVO+XXrrXAmPhsZz9IjevwEVZ2iG+bEact8q55j3mUt3YUiCTLrxHsGYpTEGXEXmW0Md
+ F/W2PTBr8Zkwk+VsTv8tlgtOr/E1xD4TaW2//GlskwE7UvIGxhT6kiijqv/XB/7URkSM
+ mgQQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774348790; x=1774953590; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=cew/+vmTaGE8VFgZmpz4wioo/nNxu9Z1P4xF4vN+kbY=;
- b=AMYosSrYsm6RYNz1QzLLQqirGGl2iFUOQEFuFtVlauaysS6yF/ENmUiWt0JlLWJPU7
- +YvBi9Il5uSccWJE4YI/Frj15Kg8GKufBrfNlpp6Gm5VlCNXdknVypI/fd3wdqzGkdc8
- 4ElRsld2rWslrfjLEnfxWRpJWfZwsCMYH7Fvz9/Jqk6bB220IJqxUhkzYGUdy9X1PC5G
- er1JLiviOGb3+SI6p/GQ3vm0WZ8IHVP9OEVzKUFApB749jZ3CnYYdEVUMxl9y0HXhUkC
- y5bjGdnaJyKeOaAXM4wy7iNUceNaf+K3kQ7UdZkcCntX+qy6fQy9Mu/eYsbSwckXcR0E
- HBsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774348790; x=1774953590;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1774349148; x=1774953948; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cew/+vmTaGE8VFgZmpz4wioo/nNxu9Z1P4xF4vN+kbY=;
- b=YCrEhD3zGzdvGF1VXtEDf9GXsXU7xOpzTobidv2Y++Q1yIooM6O7i9BIOuVAHqug00
- nrlZRQ75EPyYHnHR4AYfY+T7SlMNLcPmbWmvU11XWnSMGhksR5+9sVWcEYmb2iOpmNi5
- hjM9/ZnhWswXuxMiDLe1N9ieWUnDu5viS6TgYmGx1VZkrZ1ZN/nikG+I3rnLGRzKc5xQ
- NeXlCGa63VrYuy+SAwyGNbE9UbEGs/CKrXDB+oTfdJIUwKLFJGUs18ZETUKawO8Kkic8
- TOLJLANHhOd9yf5GioGp6C5F3BAPfSDk/DNbsA8Ts13gE3Um66q4DkeMQVBCnh2WsCR2
- UVkw==
-X-Gm-Message-State: AOJu0YyBVIdldvTAgRw7dRHqA11CCGHz7qgZjbAFWgegWM0urZKq18ss
- gKB9Dh5U7B/Iq6a4q1h05P079XY/geyD5p/k1FWVkAzJGK5IdeVmWbs0mg3EAzuXtGc6XNfuHiI
- MuJLp2kgDFYjhH/gzo8e0mgRgVtgILxN/tzx4wujjjwga8j3j1uQUxoQ=
-X-Gm-Gg: ATEYQzzZK5l4k7XVnb78RROHagcLjYZgGClfbhJxtwMbHqoVdx2A0sZwFdni1xIMPc2
- efUW2kUNrIPVU+Y1wlr1BAXscd2tdlzCJMdK1f0uCiCdkfphJDCZMEM+HHylruku5z3gxS+Hh90
- yLyC/ubwfDt58eV8j3IMZer7wmbYsRDxcru0V3YKdOComOdmSj+vZMnK+1bHCRSA9yP3BHbFrk3
- IFvUtEsk3mPIJGG1aLd8LBeNck8fPOP615vplg0FGU0u+Hl/kNZdgaJ9W+J2wcqkSD6O9F5Z4q/
- OHKqIuUSOfAbxIQ6qYU8L5A74sVD6ky1F5xSBB3/jl00q1jr0hvnK8Ip/e6zYyNBQkQ=
-X-Received: by 2002:a05:690c:4b8a:b0:79a:c2a1:92dc with SMTP id
- 00721157ae682-79ac2a197aamr31244707b3.29.1774348790327; Tue, 24 Mar 2026
- 03:39:50 -0700 (PDT)
+ bh=3cESUk+FyTMPX/FUqfRvt5lNRyHH3XkdHcxJPyAOlmQ=;
+ b=UlHnZNEmjDc9RmHPd1WejpZgPeadX4Y6/zQAcP0FogEvFucIIgBDG3nzPVeluifNb9
+ lFNuxyAkzrQVA6hUvlVgJt+6A1ZQIFWYbJuLA3errvvUBrSDHnE/YAbmZ0m+7OsdAoKt
+ Zikh3ARu07xyp58zX6nUuP5Z2ZXknvuTIpZCsrEhjO8wuW3Azau28QXAXkpcTG/qQOm0
+ t5llKiKLBWvPHIKmgvcWTIiwkHJgR1/cnPf34ZynvLukCwBbWhr4z/zuhfNeKNxU7Uxw
+ z/4+Kzp3m6LhNujfZyA1i/aW9yjHyhKr/iUByjOJuI9sM0Ody7g/XJRgNdWQOg/1s4vr
+ WWqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774349148; x=1774953948;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3cESUk+FyTMPX/FUqfRvt5lNRyHH3XkdHcxJPyAOlmQ=;
+ b=Sr0SHeianeOOav+vO6B/FxGVq0zOyz0ti2AS1grHzCYIAfDSfA8JI25ugsyVbtWwuL
+ qzpLqu6h8oy+4UHwFboIDqwq7HpeAQXKxYiZA931gGDbYIEjst9+v9p+i0eEqA/9cHrX
+ hYOYGEWP36aijPtQbjH1eEnoOZByT6d5RJcYC0ear3enWIkF/n6n5zaSPSDRVsTPmF4v
+ /hUmVUtDbvc9xuGlDvz202kXkQqednCRgDbNxNfI1MRJKkaLbrwHJjM+bRMSU3jGUzed
+ eGXYuc2fn5MoMvK262Wq4X9UvSGtw6jjqJp3tvcsrw1TrY0WzZJ5N43HgOAItw4W5l72
+ jYQA==
+X-Gm-Message-State: AOJu0YzZeqrAbQsd0ow+cPgEQO4wDwXLEDAVivgtopC5byPKgu7AMkCY
+ 95mqYFSE+PNnDxjhHpLVOVUpUKhquPBf2MPb4y2EgxPnLvkfX+8M8ZzgI3KH4LsymVBUqrFk1h0
+ UJU3uAH64GyR6Wz03M/mOTmmicsc3a2sCT/2GvSI3U3BPZIZ8T3HH6RfXKGUT9vnWm0DHr2ry4T
+ ACyXGos9WUpU1oB1t3Ytkoq73gXe8AgqQ=
+X-Gm-Gg: ATEYQzzQKQ6Owhc2752dZTVf4AHuWDNMimnoqSFiVnyNZCGfuYEzy8vKotinFvw0X3+
+ N0aXxb6M2FE+Vg+9QL9SHDegpyUf/4at00HW6a93Mok6fKB29vkcE9inmlbTATBU/YGPoJLwUxH
+ Aytupxc16Fga1/G4LkijyAb/6JHzCZ9Nf0hpfa3iYT58N0lgpJK+DtH6o/BmAsCNvPY6cXEMQLs
+ kfVeQ==
+X-Received: by 2002:a05:690c:7446:b0:794:d3e6:a503 with SMTP id
+ 00721157ae682-79a90b09fe6mr167322667b3.24.1774349147802; 
+ Tue, 24 Mar 2026 03:45:47 -0700 (PDT)
+X-Received: by 2002:a05:690c:7446:b0:794:d3e6:a503 with SMTP id
+ 00721157ae682-79a90b09fe6mr167322457b3.24.1774349147357; Tue, 24 Mar 2026
+ 03:45:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260305161739.1775232-1-peter.maydell@linaro.org>
- <8d76a679-4d7c-4c3b-80d2-11799dc98fdc@linaro.org>
- <CAFEAcA9HgVmbe9TXGOZW5Vbkvbn-Dvah24f1oPn4zvymk=_mZg@mail.gmail.com>
- <a38b768a-3a80-47de-8a03-11faf2b85526@linaro.org>
- <CAFEAcA9dCKF0H=MkNmOmxnfyJV+SeHk_tObL558MJ-w3w8aQSg@mail.gmail.com>
- <dedd88a2-cdc0-4f0c-bbf5-69751b9cd827@linaro.org>
-In-Reply-To: <dedd88a2-cdc0-4f0c-bbf5-69751b9cd827@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Mar 2026 10:39:38 +0000
-X-Gm-Features: AaiRm53vil19QVXokcdKKcyCDoFxF0lruCsaWL6KcoGm9puj-bWOS7BlJWd6zks
-Message-ID: <CAFEAcA90VH+Y24KArRgzQc-jeSRUDhpWuj9jz49sdcra6mGvBw@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/i386/signal.c: Correct definition of
- target_fpstate_32
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
+ <20260320142015.3856652-5-jonah.palmer@oracle.com>
+In-Reply-To: <20260320142015.3856652-5-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 24 Mar 2026 11:45:11 +0100
+X-Gm-Features: AaiRm528jH5gGV88zC6vXBqHctKfROyrE1GiO3-cDS4jJZGmEq5YFRmaQMjrQg4
+Message-ID: <CAJaqyWfkLCu2RRGaJZdcqG0c3uZH0jWmmTmN23F=Bz-Hfm4KOg@mail.gmail.com>
+Subject: Re: [RFC v2 04/14] virtio-net: detect VirtIODevice status
+ mid-migration change
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
+ mst@redhat.com, sgarzare@redhat.com, jasowang@redhat.com, leiyang@redhat.com, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, armbru@redhat.com, 
+ Juraj Marcin <jmarcin@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,46 +141,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Mar 2026 at 15:37, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Fri, Mar 20, 2026 at 3:20=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
 >
-> On 3/20/26 22:23, Peter Maydell wrote:
-> > On Fri, 20 Mar 2026 at 01:15, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >> On 3/19/26 22:27, Peter Maydell wrote:
-> >>> I also note that for the data structure I am fixing, we never do
-> >>> an xsave/xrestore on it -- it is purely junk unused padding.
-> >>> The real xsave/xrestore info is elsewhere, in the dynamic part
-> >>> of the signal frame.
-> >>
-> >> That is an excellent point.  The structure you're fixing is never really used.
-> >>
-> >> It's only use at present is to be included in the ia32 sigframe structure, and is only
-> >> used for padding.  As an unintended side effect, the alignment of X86LegacyXSaveArea is
-> >> inherited by sigframe.
-> >>
-> >> Perhaps we should simply have
-> >>
-> >> -    struct target_fpstate_32 fpstate_unused;
-> >> +    char fpstate_unused[sizeof(struct target_fregs_state) +
-> >> +                        sizeof(X86LegacyXSaveArea)];
-> >
-> > I did consider something like that; from the commit message:
-> >
-> > # Replace the use of X86LegacyXSaveArea with a set of fields that match
-> > # the kernel _fpstate_32 struct, and assert that the length is correct.
-> > # We could equally have used
-> > #    uint8_t legacy_area[512];
-> > # but following the kernel is probably less confusing overall.
-> >
-> > Either way works, so I guess I don't care very strongly.
+> This patch introduces the mechanism in which this series will use to
+> detect VirtIODevice & VirtIONet state deltas, starting with the
+> VirtIODevice's 'status' member of a virtio-net device.
 >
-> Ok then,
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Before we send the device's state early, we save each piece of its state
+> in a temporary structure via virtio_net_early_pre_save. Later, once the
+> source VM has been paused,
 
-Thanks; I've applied this to target-arm.next, unless anybody
-would prefer to take it some other route.
+While I ack this approach should cover 99% of cases=E2=80=94as I think it i=
+s
+unlikely the guest changes device properties during a live migration=E2=80=
+=94I
+still believe these changes should be sent when the guest modifies the
+property, before it is paused. That way we shrink the downtime even
+more. This comparison fits naturally: Instead of sending one state and
+then the deltas at the switchover, we send the state and then the
+delta for every change.
 
--- PMM
+However, I'm happy enough with this approach because it is more
+self-contained within the migration code. It also reduces the state
+sent over the migration channel if the guest changes its device status
+many times.
+
+CCing Juraj as we discussed this at the virtio-net upstream meeting.
+
+> we compare the current values of those pieces
+> to what we saved earlier. If any mismatch is found, virtio-net's VMSD
+> (vmstate_virtio_net) is enabled and resends all state and device prep
+> work (as it's normally done today when live migrating a virtio-net
+> device).
+>
+> Once all relevant delta checks are in place, a no-delta case will skip
+> vmstate_virtio_net and only resend updated VQ indices.
+>
+> For this patch, keep a temporary always-true fallback in
+> virtio_net_has_delta/virtio_net_needed until follow-up patches cover the
+> remaining VirtIONet & VirtIODevice deltas.
+>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>  hw/net/virtio-net.c        | 40 ++++++++++++++++++++++++++++++++++++++
+>  include/hw/virtio/virtio.h |  2 ++
+>  2 files changed, 42 insertions(+)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 5d71ad235e..2733e0130c 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3864,6 +3864,16 @@ static bool failover_hide_primary_device(DeviceLis=
+tener *listener,
+>      return qatomic_read(&n->failover_primary_hidden);
+>  }
+>
+> +static int virtio_net_early_pre_save(void *opaque)
+> +{
+> +    VirtIONet *n =3D opaque;
+> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
+> +    VirtIODevMigration *vdev_mig =3D vdev->migration;
+> +
+> +    vdev_mig->status_early =3D vdev->status;
+> +    return 0;
+> +}
+> +
+>  static int virtio_net_early_pre_load(void *opaque)
+>  {
+>      VirtIONet *n =3D opaque;
+> @@ -3887,6 +3897,7 @@ static const VMStateDescription vmstate_virtio_net_=
+early =3D {
+>      .minimum_version_id =3D VIRTIO_NET_VM_VERSION,
+>      .version_id =3D VIRTIO_NET_VM_VERSION,
+>      .early_setup =3D true,
+> +    .pre_save =3D virtio_net_early_pre_save,
+>      .pre_load =3D virtio_net_early_pre_load,
+>      .post_load =3D virtio_net_early_post_load,
+>      .fields =3D (const VMStateField[]) {
+> @@ -4231,10 +4242,39 @@ static bool dev_unplug_pending(void *opaque)
+>      return vdc->primary_unplug_pending(dev);
+>  }
+>
+> +static bool virtio_net_has_delta(VirtIONet *n, VirtIODevice *vdev)
+> +{
+> +    VirtIODevMigration *vdev_mig =3D vdev->migration;
+> +
+> +    /* Has the VirtIODevice's status changed? */
+> +    if (vdev->status !=3D vdev_mig->status_early) {
+> +        return true;
+> +    }
+
+To clarify my point, I think we should add something like this:
+
+if (vdev->status !=3D status) {
+  // process it.
+  virtio_send_status_update_to_destination()
+}
+
+At virtio_net_set_status, or similar.
+
+> +
+> +    /*
+> +     * Always return true for now until we're able to detect all possibl=
+e
+> +     * changes to a VirtIONet device.
+> +     */
+> +    return true;
+> +}
+> +
+> +static bool virtio_net_needed(void *opaque)
+> +{
+> +    VirtIONet *n =3D opaque;
+> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
+> +
+> +    if (!n->early_mig) {
+> +        return true;
+> +    }
+> +
+> +    return virtio_net_has_delta(n, vdev);
+> +}
+> +
+>  static const VMStateDescription vmstate_virtio_net =3D {
+>      .name =3D "virtio-net",
+>      .minimum_version_id =3D VIRTIO_NET_VM_VERSION,
+>      .version_id =3D VIRTIO_NET_VM_VERSION,
+> +    .needed =3D virtio_net_needed,
+>      .fields =3D (const VMStateField[]) {
+>          VMSTATE_VIRTIO_DEVICE,
+>          VMSTATE_END_OF_LIST()
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 74fed8c324..752c46ce53 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -102,9 +102,11 @@ enum virtio_device_endian {
+>  /**
+>   * struct VirtIODevMigration - Common VirtIODevice migration structure
+>   * @early_load: Flag to indicate an early virtio_load for the device.
+> + * @status_early: Device status at the time it was sent early.
+>   */
+>  typedef struct VirtIODevMigration {
+>      bool early_load;
+> +    uint8_t status_early;
+>  } VirtIODevMigration;
+>
+>  /**
+> --
+> 2.51.0
+>
+
 
