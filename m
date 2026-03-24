@@ -4,131 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8849DFEC0F7
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 18:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70B9FEC0EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 18:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w56kG-0001Tu-FQ; Tue, 24 Mar 2026 14:44:52 -0400
+	id 1w56nr-0002xq-Qj; Tue, 24 Mar 2026 14:48:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w56k8-0001TX-Bh
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:44:45 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w56np-0002xG-J5
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:48:33 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w56k4-0004nz-4F
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:44:41 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-35a211df8e3so1079464a91.2
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 11:44:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w56nm-0005Ls-2z
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:48:33 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-354bc7c2c46so2802369a91.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 11:48:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774378107; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QjmXf9zm20DtIwYUqlqJkIetG9zwZ0QZsKYoufyAs272uUqWbkUZ0P5XkrfpQ5fLHz
+ /8MrzUBuUkgJkIxp8mK+DArMozfSkrXV4EGO68/orD0NUF6UTwHYrcbUVWbZs12WCZt3
+ TRi1OzDcPO6q3ReQJ84qNgEJx48yNlT2mQgyqIbEzEq6K+kySkX5ZYk6sMDOvQIIQc2X
+ F9NpAvKw0FwufXxHf/Rhzn1ZIOkGNUY70zwiJPruDDKhEJDqnIX2KCpe24jHY0mPYWJy
+ JYzZBKKjNjhzaDAJHBo/XFsDxNo2v9C7vPY5ShAMmOPW04RF8Iu2+x8usEIndyPuhBpq
+ cZug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=SMtu+PT9U1xNjtLQ8Saimav8l/U7UHCC4CwPez3Zgic=;
+ fh=fJqGvtWqLDKIzOXW1wAsc3/gnAi5Otjc7uqp16gUscQ=;
+ b=ZPib91uMPzfU9o6BYx3tb5cOs5lkXDmlsLrmWQoYvnph41kLgmSjPb5gfNN4/13i8x
+ W1Mz6W6gLVyCWuBJiiKlSdCOHjfS9IHt275F6hrg5+n7oxLFKqZKPNTRM6Z68GQL6K9l
+ Kq6QlgfSYcU1neMPMBOynlbPKJ863IfFGEzv9OKJ4uxRIWBMFhkVY5+OgQwj+7FojWSz
+ iz7b+ToTwOThKOqhyzxg2Wzt+NHStA1MEFdIcO4S0DT78WZj+Hkt7WCqbJec7RNv8jdL
+ ZE6BqbxdTSb21Iw/rHTwUn509UXAG6raLojhHivw1TxzQdeGSbkPCyAAQlBfbWJGhm66
+ bUAA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774377878; x=1774982678; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=flO5NXJZbfmHSirVfrTOnM5aQhcD/11RQKhDORtzBsc=;
- b=wzgDyF1r5nDOBfuBnDwhDzpEe2NZtILXNbi+Kb8DjqUmSe+M1dSiWSLAvxdhLUpWzH
- NxRAaBtLwhfipoWJZbHsfbT5r7aUEizQd0n0SwtJhWt+CyFuY8lYiiCCDGvn2zVsYxjh
- AxinCAArUIK/eL6UMbGE+VdFv0NHbTj9OQ5fDzAlYVsFEX5ct9NFOTQ/nV2tgEcmevzx
- BEMOfBE84YHy3/CDLnF4M5LoevNR6V8x6BLoMM7PCCUCawHOmRkZeFnKZlElJOGaQVJY
- q4fVqInEOlYqaKiPOdjTG3VSQUgub3Y+imvpMhLv6enyPfuLPvumTGTjRlYU7sBgl69Z
- hEEQ==
+ d=gmail.com; s=20251104; t=1774378107; x=1774982907; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=SMtu+PT9U1xNjtLQ8Saimav8l/U7UHCC4CwPez3Zgic=;
+ b=AOD3teWVtWPHkRldv8TWKbEc2h0YEsLfl53JjHjApVeHxs67uG2mhPTdjGorXSw8yF
+ li2FeAjoP1TDrwKxKxzkniQQX+StxQSoyocsB5d9r4hTX7VFueYhqnupH9oxIN5XLA+B
+ tONHaVw3QFmytTQzsaOeuZfl82HRpEbZhto+ioerUWZsRjsBxBA1/w3cEeB4lJzcbYut
+ tx4lBoUHOxdzliF39OyyuDk66dvT/EtuC4RMBpU1jdzI78x44k+3JztJh7qkOzTiYkYs
+ +ulN2c00Lw1mYUkqI+fP4yJWyz0o/KY5jNxg8BYrJYCyVmmrl+3mSl+pIaH8HzaOojLF
+ neHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774377878; x=1774982678;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=flO5NXJZbfmHSirVfrTOnM5aQhcD/11RQKhDORtzBsc=;
- b=iKi4yOKNWNJktmgzbsywr7yRzv7aEC5Xuw3IVagZC34EP6vPV/k1LvgVdacGgQdRhC
- 9moWzovNPBLX0OOr3LkJ384JJP3+9ocOjToZmUH0aYVMVX3OHj/KPtTWLKP7vmtQ4jHZ
- SSODA6w4KtORLcTzGJqbVnj5PwjoAsPoTkzZrH9D1Ii/lACqbR4qKRK6bqbYkOUq3UCj
- cBnkqs0BQ7qpnB/j1jE7RGADRchDhAjlVIRgTfl57cqyB98uuzgyqBqUtDutP7kOSUBG
- 2RhbRZ8Dgy8TfEY/32M2BdwwZw2xho0Nd7ilBhEi1kaMKHwj0xYVRV8qbzuj1UzXzEzo
- Iv9Q==
-X-Gm-Message-State: AOJu0YzTbECB762T7SIwLuti6YF98oTB7k2cYpRJXMXaYfCqbcle21H4
- SW8QPlASct7CTPGExGjqe5hwAZh6xqqWico5KQ/fA8V6tmrw0zcamxPOuixPxQuI0Cc=
-X-Gm-Gg: ATEYQzy1T62m8qD6YxEOFimXcjvbmI9GZV/djOvyJjadDbH+c56UQcLf71Fpcn4pcvD
- 3tjvSDQDulcOymnuWjTYnw1SmYwH1VqHSaU2v9SgLe0DiPlSGo3K1NhHw5JKEPGvjeK7QDe70SP
- jzoecMVTR/p/ajj/5RK5bPuHIBtIfvlIZzCYLqS0a1scun/Lq8tlKOXetAAN5GSEZG7GAEzh1H7
- /mUmcYBsTCsb9puQPeh9xVREzw3QuxJPsFbh2lUWzu9y1abaLQcpOezkN+0enUKCjPuc+chKYW1
- b5DujqcL7m7vnV7nPVtF6ZmUsWmIdWEucOp+F13cVd4Qye5s/pWGs7PbOSc3UTRGsHY5bIKN8eK
- mGuRrkWCCqHbApwhpFSrz0H9DNsUon8fm5r377uYKMguqCebh62MWYLNLFskAdASuLnKsfqUbhO
- wWNML3MUctQ6CO/w9XSUy4HgBtvhWa874fCrsje81RZoZxZbZBKR6HrRbH0MzS9Axn2kWVuNAmC
- DlfqYQ=
-X-Received: by 2002:a17:90b:530d:b0:359:974a:3d65 with SMTP id
- 98e67ed59e1d1-35c0ddadf71mr400385a91.16.1774377878316; 
- Tue, 24 Mar 2026 11:44:38 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c087cd95bsm1935470a91.13.2026.03.24.11.44.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Mar 2026 11:44:37 -0700 (PDT)
-Message-ID: <39b64118-7faa-4308-a603-d568cc78de47@linaro.org>
-Date: Tue, 24 Mar 2026 11:44:37 -0700
+ d=1e100.net; s=20251104; t=1774378107; x=1774982907;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SMtu+PT9U1xNjtLQ8Saimav8l/U7UHCC4CwPez3Zgic=;
+ b=HKV0Jv7DtmwJS+j/NKZpp2nO8ek8NLvPazDLx/wDl10SrYpOWJpzs4+SWYJIKpPcJm
+ yKjKdhUsmAqAlxAdFnWVKegTk5F16T41Ww/95/U9audLf9cbvdZ7VHxHI4wmoG9jKHWX
+ JYTH4T3fa96afYrSe4PX2CCejGBzdPP6QhoiDRaadWnwesc2bTQx9k552FwlTWNneQui
+ nZ2m5qfzEemWmBldyX5mJmkyIRzpC1xa6m2d7L5hUdaDQ0eJ8axyHXjk+GCLPJ1SRBJP
+ sA4OXfxGJ2B/A5+cWNYqGoRVqTR5V1e/uLsKX/22/9C+pDIoa13b9OH0U1LuM7tYIZ+1
+ oxbw==
+X-Gm-Message-State: AOJu0Yz129EDihAL0oR5D6X35862KIcp9hYIS4f8SXttkV/qpHLoKji2
+ dtCxgesAxGfDK7X4ApFdkHu2lH+z0jz0z6KjfwhvI9VicFTd3ksBpYTn3P26aDHMTPWpYyM7akW
+ VyXfgEj+Oh6olYo52skOrDBprWRAsRg8=
+X-Gm-Gg: ATEYQzyV4gVyX+PfbE1Y7Gp/7gZhKW6Doo/prqV1wWIqoEN54Yzd4A5hphxcIyFvebL
+ D0Z1ya2rTLGpJHSmegD709BYmE5mVTDI1kM+ADXD4bqTlcENf64taN43IIc0SKd+AmYSrlLE2KX
+ abGVelu+LuppXhom0nnMDmF0nmN1ypZbZEHmlvtU9m04zn1aUzI8qE57Rmgsnmr3+tFi3h4lN6I
+ h3AWZ635W4qM/AANKYrdXXZJC/7/U7x5Xr3pM6k97yDUAI41IFQQbs2//LJyTXvQJGSGLi9AGom
+ T3khmHJm2gXfcUG3WQwVQ3k7puwQ/I2ih9tb5CY=
+X-Received: by 2002:a17:90b:1b43:b0:35b:e4d5:dc71 with SMTP id
+ 98e67ed59e1d1-35c0dcd49e6mr416442a91.14.1774378107194; Tue, 24 Mar 2026
+ 11:48:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Cleaning up contrib/ and tools/
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Michael Roth
- <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eric Blake <eblake@redhat.com>
-References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
- <ef2a0d92-c7f6-438b-a15a-2712e1c4373a@linaro.org>
- <CAFEAcA-kk29mjGWLrAGjd9AiAW64v0TvWdedZypSH0i43WgQzw@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAFEAcA-kk29mjGWLrAGjd9AiAW64v0TvWdedZypSH0i43WgQzw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <4f6bd77ba6c6c07c8796e805ce6e50539bde260e.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <CAATN3NrTa3qL1jZew7_3L2mfeK2PT3RFTkTDxQUZ_4NK7wAmAw@mail.gmail.com>
+ <CABrGZ+GiQ-KiJVhyCHK4EfG__4=mbJhj1rhpfczASuQ+NT9-BQ@mail.gmail.com>
+In-Reply-To: <CABrGZ+GiQ-KiJVhyCHK4EfG__4=mbJhj1rhpfczASuQ+NT9-BQ@mail.gmail.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Tue, 24 Mar 2026 12:48:16 -0600
+X-Gm-Features: AaiRm516I1a9ZtUtxk5TSceG2lxXIs1vUYJMftU3zywIgSK8el46VBfI8CaWsAo
+Message-ID: <CAATN3Nq+BSfAFrCfFEfsOWaSt2JsHC4hVm+K5hJts-iAF83wTg@mail.gmail.com>
+Subject: Re: [PATCH 03/13] target/hexagon/cpu: add HVX IEEE FP extension
+To: Matheus Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Content-Type: multipart/alternative; boundary="000000000000c6cfe9064dc99837"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,58 +118,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/24/26 11:33 AM, Peter Maydell wrote:
-> On Tue, 24 Mar 2026 at 18:28, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
->>
->> On 3/24/26 10:09 AM, Peter Maydell wrote:
->>> And for contrib/, easy ones first:
->>>    * contrib/vhost-user-{blk,bridge,gpu,input,scsi} move to tools/
->>>    * contrib/elf2dmp moves to tools/
->>>    * contrib/ivshmem-client and contrib/ivshmem-server move to tools/
->>>    * contrib/plugins moves to plugins/plugins (or a different subdir
->>>      name of your choice)
->>>
->>
->> I would suggest plugins/contrib or plugins/community, to make clear they
->> are the community contributed ones.
->> @Alex, do you have a different suggestion/preference?
-> 
-> I firmly do not want us to have anything that claims to be
-> "contrib" or "community" or similar. Everything in QEMU is
-> community contributed in some sense. Either we care about
-> and maintain these plugins, in which case call them "plugins",
-> or we do not in fact care about and maintain them, in which
-> case delete them. "In the tree but not maintained" is not
-> a category I think we should have, and that is what "contrib"
-> generally implies.
+--000000000000c6cfe9064dc99837
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Mar 24, 2026 at 10:52=E2=80=AFAM Matheus Bernardino <
+matheus.bernardino@oss.qualcomm.com> wrote:
+
+> On Mon, Mar 23, 2026 at 4:33=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gm=
+ail.com>
+> wrote:
+> >
+> >
+> >
+> > On Mon, Mar 23, 2026 at 7:15=E2=80=AFAM Matheus Tavares Bernardino <
+> matheus.bernardino@oss.qualcomm.com> wrote:
+> >>
+> >> This flag will be used to control the HVX IEEE float instructions, whi=
+ch
+> >> are only available at some Hexagon cores. When unavailable, the
+> >> instruction is essentially treated as a no-op.
+> >>
+> >> Signed-off-by: Matheus Tavares Bernardino <
+> matheus.bernardino@oss.qualcomm.com>
+> >> ---
+> >>  target/hexagon/cpu.h             |  1 +
+> >>  target/hexagon/translate.h       |  1 +
+> >>  target/hexagon/attribs_def.h.inc |  3 +++
+> >>  target/hexagon/cpu.c             |  1 +
+> >>  target/hexagon/decode.c          | 22 ++++++++++++++++++++++
+> >>  target/hexagon/translate.c       |  1 +
+> >>  6 files changed, 29 insertions(+)
+> >>
+> >>
+> >> diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+> >> index dbc9c630e8..d832a64a17 100644
+> >> --- a/target/hexagon/decode.c
+> >> +++ b/target/hexagon/decode.c
+> >> @@ -696,6 +696,18 @@ static bool pkt_has_write_conflict(Packet *pkt)
+> >>      return !bitmap_empty(conflict, 32);
+> >>  }
+> >>
+> >> +static void convert_to_nop(Insn *insn)
+> >> +{
+> >> +    bool is_endloop =3D insn->is_endloop;
+> >> +    memset(insn, 0, sizeof(*insn));
+> >> +    insn->opcode =3D A2_nop;
+> >> +    insn->new_read_idx =3D -1;
+> >> +    insn->dest_idx =3D -1;
+> >> +    insn->generate =3D opcode_genptr[insn->opcode];
+> >> +    insn->iclass =3D 0b111;
+> >> +    insn->is_endloop =3D is_endloop;
+> >> +}
+> >> +
+> >>  /*
+> >>   * decode_packet
+> >>   * Decodes packet with given words
+> >> @@ -746,6 +758,16 @@ int decode_packet(DisasContext *ctx, int
+> max_words, const uint32_t *words,
+> >>          /* Ran out of words! */
+> >>          return 0;
+> >>      }
+> >> +
+> >> +    /* Disable HVX IEEE instruction if extension is disabled. */
+> >> +    if (!ctx->ieee_fp_extension) {
+> >> +        for (i =3D 0; i < num_insns; i++) {
+> >> +            if (GET_ATTRIB(pkt->insn[i].opcode, A_HVX_IEEE_FP)) {
+> >> +                convert_to_nop(&pkt->insn[i]);
+> >> +            }
+> >> +        }
+> >> +    }
+> >> +
+> >
+> >
+> > Better to leave the instruction alone and turn it into a nop by not
+> generating any TCG.
+> >
+> > That way, the disassembly (-d in_asm) will still show what's actually i=
+n
+> the binary.  You could add the check in gen_tcg_funcs.py.
+> >
+> > You could also consider adding some sort of marker in the disassembly t=
+o
+> indicate that the flag is needed for the instruction to do anything.
+>
+> Ah, good idea. Will do both for the next round, thanks.
 >
 
-We make sure they build, and test them (manually) on changes. The only 
-difference with tests/tcg/plugins is that those are used for make 
-check-tcg. I personnally consider both of them as properly maintained.
+Note that we'll need to be careful with packets that use the result vector
+in a .new context.  For example
+    { V0.sf =3D vadd(V1.sf,V2.sf)
+      vmem(R19+#0x0) =3D V0.new }
+The problem is that the store wants to read the value from future_VRegs.
+However, if the vadd is  nop, there is junk in future_VRegs.  So, we'll
+either have to get the store to read from the real VRegs or have the vadd
+copy the old value of the destination into the future_VRegs value.  The
+first option will be more efficient because it will avoid the vector copy.
 
->> Moving those sources will break build folder hierarchy also, which is an
->> issue for all existing binaries built from contrib anyway.
->> I'm not sure there is anything sane to do to fix that except accepting
->> the breaking change.
-> 
-> What are we breaking here ? Nothing outside QEMU ought to be
-> depending on the layout of our source tree. When we move things
-> around we'll update the meson.build and the documentation.
-> I don't think we have 'contrib' in our installed-locations
-> layout (tools get installed into the bin/ dir, for instance),
-> but I might have missed something.
+We should also add a test to fp_hvx_disabled for this case.
+
+HTH,
+Taylor
+
+--000000000000c6cfe9064dc99837
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 24,=
+ 2026 at 10:52=E2=80=AFAM Matheus Bernardino &lt;<a href=3D"mailto:matheus.=
+bernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Mar=
+ 23, 2026 at 4:33=E2=80=AFPM Taylor Simpson &lt;<a href=3D"mailto:ltaylorsi=
+mpson@gmail.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt; wrote:<=
+br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt; On Mon, Mar 23, 2026 at 7:15=E2=80=AFAM Matheus Tavares Bernardino &lt=
+;<a href=3D"mailto:matheus.bernardino@oss.qualcomm.com" target=3D"_blank">m=
+atheus.bernardino@oss.qualcomm.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; This flag will be used to control the HVX IEEE float instructions,=
+ which<br>
+&gt;&gt; are only available at some Hexagon cores. When unavailable, the<br=
 >
+&gt;&gt; instruction is essentially treated as a no-op.<br>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:ma=
+theus.bernardino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss=
+.qualcomm.com</a>&gt;<br>
+&gt;&gt; ---<br>
+&gt;&gt;=C2=A0 target/hexagon/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|=C2=A0 1 +<br>
+&gt;&gt;=C2=A0 target/hexagon/translate.h=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0=
+ 1 +<br>
+&gt;&gt;=C2=A0 target/hexagon/attribs_def.h.inc |=C2=A0 3 +++<br>
+&gt;&gt;=C2=A0 target/hexagon/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|=C2=A0 1 +<br>
+&gt;&gt;=C2=A0 target/hexagon/decode.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =
+22 ++++++++++++++++++++++<br>
+&gt;&gt;=C2=A0 target/hexagon/translate.c=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0=
+ 1 +<br>
+&gt;&gt;=C2=A0 6 files changed, 29 insertions(+)<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c<br>
+&gt;&gt; index dbc9c630e8..d832a64a17 100644<br>
+&gt;&gt; --- a/target/hexagon/decode.c<br>
+&gt;&gt; +++ b/target/hexagon/decode.c<br>
+&gt;&gt; @@ -696,6 +696,18 @@ static bool pkt_has_write_conflict(Packet *pk=
+t)<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 return !bitmap_empty(conflict, 32);<br>
+&gt;&gt;=C2=A0 }<br>
+&gt;&gt;<br>
+&gt;&gt; +static void convert_to_nop(Insn *insn)<br>
+&gt;&gt; +{<br>
+&gt;&gt; +=C2=A0 =C2=A0 bool is_endloop =3D insn-&gt;is_endloop;<br>
+&gt;&gt; +=C2=A0 =C2=A0 memset(insn, 0, sizeof(*insn));<br>
+&gt;&gt; +=C2=A0 =C2=A0 insn-&gt;opcode =3D A2_nop;<br>
+&gt;&gt; +=C2=A0 =C2=A0 insn-&gt;new_read_idx =3D -1;<br>
+&gt;&gt; +=C2=A0 =C2=A0 insn-&gt;dest_idx =3D -1;<br>
+&gt;&gt; +=C2=A0 =C2=A0 insn-&gt;generate =3D opcode_genptr[insn-&gt;opcode=
+];<br>
+&gt;&gt; +=C2=A0 =C2=A0 insn-&gt;iclass =3D 0b111;<br>
+&gt;&gt; +=C2=A0 =C2=A0 insn-&gt;is_endloop =3D is_endloop;<br>
+&gt;&gt; +}<br>
+&gt;&gt; +<br>
+&gt;&gt;=C2=A0 /*<br>
+&gt;&gt;=C2=A0 =C2=A0* decode_packet<br>
+&gt;&gt;=C2=A0 =C2=A0* Decodes packet with given words<br>
+&gt;&gt; @@ -746,6 +758,16 @@ int decode_packet(DisasContext *ctx, int max_=
+words, const uint32_t *words,<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Ran out of words! */<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; +<br>
+&gt;&gt; +=C2=A0 =C2=A0 /* Disable HVX IEEE instruction if extension is dis=
+abled. */<br>
+&gt;&gt; +=C2=A0 =C2=A0 if (!ctx-&gt;ieee_fp_extension) {<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; num_insns; i++) =
+{<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (GET_ATTRIB(pkt-&gt;=
+insn[i].opcode, A_HVX_IEEE_FP)) {<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 convert_t=
+o_nop(&amp;pkt-&gt;insn[i]);<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; +<br>
+&gt;<br>
+&gt;<br>
+&gt; Better to leave the instruction alone and turn it into a nop by not ge=
+nerating any TCG.<br>
+&gt;<br>
+&gt; That way, the disassembly (-d in_asm) will still show what&#39;s actua=
+lly in the binary.=C2=A0 You could add the check in gen_tcg_funcs.py.<br>
+&gt;<br>
+&gt; You could also consider adding some sort of marker in the disassembly =
+to indicate that the flag is needed for the instruction to do anything.<br>
+<br>
+Ah, good idea. Will do both for the next round, thanks.<br></blockquote><di=
+v><br></div><div>Note that we&#39;ll need to be careful with packets that u=
+se the result vector in a .new context.=C2=A0 For example</div><div>=C2=A0 =
+=C2=A0 {	V0.sf =3D vadd(V1.sf,V2.sf)<br>=C2=A0 =C2=A0 =C2=A0 vmem(R19+#0x0)=
+ =3D V0.new }</div><div>The problem is that the store wants to read the val=
+ue from future_VRegs.=C2=A0 However, if the vadd is=C2=A0 nop, there is jun=
+k in future_VRegs.=C2=A0 So, we&#39;ll either have to get the store to read=
+ from the real VRegs or have the vadd copy the old value of the destination=
+ into the future_VRegs value.=C2=A0 The first option will be more efficient=
+ because it will avoid the vector copy.</div><div><br></div><div>We should =
+also add a test to fp_hvx_disabled for this case.</div><div><br></div><div>=
+HTH,</div><div>Taylor</div></div></div>
 
-I was thinking more about users that might have custom scripts using 
-various contrib plugins, or using vhost-* binaries or ivshmem-server or 
-elf2dmp. They will be relocated because meson automatically uses layout 
-of sources in build folder.
-It's not a big deal anyway.
-
-> -- PMM
-
-Regards,
-Pierrick
+--000000000000c6cfe9064dc99837--
 
