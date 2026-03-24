@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85EDCFEC102
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DBF9FEC0FC
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w57g0-0003YK-AH; Tue, 24 Mar 2026 15:44:32 -0400
+	id 1w57ff-0003GK-Dc; Tue, 24 Mar 2026 15:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fz-0003WF-0h
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:31 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fb-0003Fs-Ud
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:07 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fx-0008IL-4B
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:30 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fZ-0008ED-C1
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:06 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 37EC85BE1C;
- Tue, 24 Mar 2026 19:44:03 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id BD94B4D29A;
+ Tue, 24 Mar 2026 19:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381443; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381430; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y1stviN/raIeGwfKRJGzfc+zY9+icZReG+c5s58fsdo=;
- b=VXdP7x+urG6oRbRSv+cO2dKT8gYkMbhvwFXO3lrBM27R+gmNnqpkn1snxKyJsCdAaH608I
- FYhYfGCvnNtuBLUpvebB28BnjsXKdeLJHR05qyniDVDzfEdKwIibeDa56nCCJtYpglrZeY
- bapb9I9SoDXf16W5x3xqWHtF2iUqoGc=
+ bh=iifD1ZJD/OWYjxjW9swI71sEK/kXSYVXV76A7LYh7TE=;
+ b=2JnBfOIP9DGBdFlcWWiWp5pgNV5JHX6ZUocBdBduuAQ+pQ2H6Dto2JvTniZbmwXdrUqXU7
+ 7Lk/j4OM7nntLX0yBECYt+V75UVhRfD84rRvPhn+1NsVBQ8Sy2yCwqMWFUKXVa949CFi9B
+ fJrHPsOc3fBhDdpGmTj+SvJgD0A/YVY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381443;
+ s=susede2_ed25519; t=1774381430;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y1stviN/raIeGwfKRJGzfc+zY9+icZReG+c5s58fsdo=;
- b=cskHf+ukmCAfaP7umTs3ZqsGRjG8mCalhhU0tCCuBqWvQuKYXJUvspNk4yLU4KcllUjfm8
- oMVl4BiwHtdBNrBg==
-Authentication-Results: smtp-out2.suse.de;
+ bh=iifD1ZJD/OWYjxjW9swI71sEK/kXSYVXV76A7LYh7TE=;
+ b=pSMLDsIuhtm0udwUAyunS8GM30xC2BEw6EZUiRsQ847jNTLVuJ69wrA2YZG2Q8fOT+NbOr
+ 8N9AECTdfsZblhCg==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381443; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381430; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y1stviN/raIeGwfKRJGzfc+zY9+icZReG+c5s58fsdo=;
- b=VXdP7x+urG6oRbRSv+cO2dKT8gYkMbhvwFXO3lrBM27R+gmNnqpkn1snxKyJsCdAaH608I
- FYhYfGCvnNtuBLUpvebB28BnjsXKdeLJHR05qyniDVDzfEdKwIibeDa56nCCJtYpglrZeY
- bapb9I9SoDXf16W5x3xqWHtF2iUqoGc=
+ bh=iifD1ZJD/OWYjxjW9swI71sEK/kXSYVXV76A7LYh7TE=;
+ b=2JnBfOIP9DGBdFlcWWiWp5pgNV5JHX6ZUocBdBduuAQ+pQ2H6Dto2JvTniZbmwXdrUqXU7
+ 7Lk/j4OM7nntLX0yBECYt+V75UVhRfD84rRvPhn+1NsVBQ8Sy2yCwqMWFUKXVa949CFi9B
+ fJrHPsOc3fBhDdpGmTj+SvJgD0A/YVY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381443;
+ s=susede2_ed25519; t=1774381430;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y1stviN/raIeGwfKRJGzfc+zY9+icZReG+c5s58fsdo=;
- b=cskHf+ukmCAfaP7umTs3ZqsGRjG8mCalhhU0tCCuBqWvQuKYXJUvspNk4yLU4KcllUjfm8
- oMVl4BiwHtdBNrBg==
+ bh=iifD1ZJD/OWYjxjW9swI71sEK/kXSYVXV76A7LYh7TE=;
+ b=pSMLDsIuhtm0udwUAyunS8GM30xC2BEw6EZUiRsQ847jNTLVuJ69wrA2YZG2Q8fOT+NbOr
+ 8N9AECTdfsZblhCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0F97743FE4;
- Tue, 24 Mar 2026 19:44:01 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 950C443FE4;
+ Tue, 24 Mar 2026 19:43:49 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id eHwnNIHpwmlkMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:44:01 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6DwcGXXpwmlkMQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:43:49 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [RFC PATCH v1 17/17] vmstate: Reduce indentation levels
-Date: Tue, 24 Mar 2026 16:43:32 -0300
-Message-ID: <20260324194333.30004-18-farosas@suse.de>
+Subject: [RFC PATCH v1 09/17] vmstate: Increase scope of vmstate_handle_alloc
+Date: Tue, 24 Mar 2026 16:43:24 -0300
+Message-ID: <20260324194333.30004-10-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324194333.30004-1-farosas@suse.de>
 References: <20260324194333.30004-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCPT_COUNT_THREE(0.00)[4]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- R_RATELIMIT(0.00)[to_ip_from(RLuo5zndapfjusa9yqdunguuf8)];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -122,254 +120,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simply move the code out of the else branch.
+Move more code into vmstate_handle_alloc. If it's going to handle,
+make it handle it all.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/vmstate.c | 193 ++++++++++++++++++++++----------------------
- 1 file changed, 96 insertions(+), 97 deletions(-)
+ migration/vmstate.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 054e642ec9..22f8758960 100644
+index 8437b5ef3e..0cdfde2232 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -306,46 +306,46 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
-         if (!exists) {
-             field++;
-             continue;
--        } else {
--            n_elems = vmstate_n_elems(opaque, field);
--            size = vmstate_size(opaque, field);
-+        }
+@@ -100,15 +100,23 @@ static int vmstate_size(void *opaque, const VMStateField *field)
+     return size;
+ }
  
--            head = vmstate_first(opaque, field, size, n_elems,
--                                 !(field->flags & VMS_ARRAY_OF_POINTER));
-+        n_elems = vmstate_n_elems(opaque, field);
-+        size = vmstate_size(opaque, field);
- 
--            for (i = 0; i < n_elems; i++) {
--                /* If we will process the load of field? */
--                bool load_field = true;
--                void *curr_elem;
-+        head = vmstate_first(opaque, field, size, n_elems,
-+                             !(field->flags & VMS_ARRAY_OF_POINTER));
- 
--                if (field->flags & VMS_ARRAY_OF_POINTER) {
--                    /* Peek a possible pointer marker instead of VMSD first */
--                    ok = vmstate_ptr_marker_load(f, &load_field);
--                }
-+        for (i = 0; i < n_elems; i++) {
-+            /* If we will process the load of field? */
-+            bool load_field = true;
-+            void *curr_elem;
- 
--                curr_elem = vmstate_next(head, field, size, i,
--                                         load_field && ok);
-+            if (field->flags & VMS_ARRAY_OF_POINTER) {
-+                /* Peek a possible pointer marker instead of VMSD first */
-+                ok = vmstate_ptr_marker_load(f, &load_field);
-+            }
- 
--                if (load_field) {
--                    ok = vmstate_load_field(f, curr_elem, size, field, errp);
--                }
-+            curr_elem = vmstate_next(head, field, size, i, load_field && ok);
- 
--                if (ok) {
--                    int ret = qemu_file_get_error(f);
--                    if (ret < 0) {
--                        error_setg(errp,
--                                   "Failed to load %s state: stream error: %d",
--                                   vmsd->name, ret);
--                        trace_vmstate_load_field_error(field->name, ret);
--                        return false;
--                    }
--                } else {
--                    qemu_file_set_error(f, -EINVAL);
--                    trace_vmstate_load_field_error(field->name, -EINVAL);
-+            if (load_field) {
-+                ok = vmstate_load_field(f, curr_elem, size, field, errp);
-+            }
+-static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
++static void *vmstate_handle_alloc(void *ptr, const VMStateField *field,
+                                  int size, int n_elems)
+ {
+-    if (field->flags & VMS_POINTER && field->flags & VMS_ALLOC) {
+-        size *= n_elems;
+-        if (size) {
+-            *(void **)ptr = g_malloc(size);
++    void *new = ptr;
 +
-+            if (ok) {
-+                int ret = qemu_file_get_error(f);
-+                if (ret < 0) {
-+                    error_setg(errp,
-+                               "Failed to load %s state: stream error: %d",
-+                               vmsd->name, ret);
-+                    trace_vmstate_load_field_error(field->name, ret);
-                     return false;
-                 }
-+            } else {
-+                qemu_file_set_error(f, -EINVAL);
-+                trace_vmstate_load_field_error(field->name, -EINVAL);
-+                return false;
-             }
++    if (field->flags & VMS_POINTER) {
++        if (field->flags & VMS_ALLOC) {
++            size *= n_elems;
++            if (size) {
++                new = g_malloc(size);
++                *(void **)ptr = new;
++            }
          }
-+
-         field++;
++        assert(new || !n_elems || !size);
++        return *(void **)ptr;
      }
-     assert(field->flags == VMS_END);
-@@ -663,93 +663,92 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-         if (!exists) {
-             field++;
-             continue;
--        } else {
--            n_elems = vmstate_n_elems(opaque, field);
--            size = vmstate_size(opaque, field);
-+        }
++    return new;
+ }
  
--            trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
--            head = vmstate_first(opaque, field, size, n_elems, false);
-+        n_elems = vmstate_n_elems(opaque, field);
-+        size = vmstate_size(opaque, field);
+ static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
+@@ -247,11 +255,7 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+             int i, n_elems = vmstate_n_elems(opaque, field);
+             int size = vmstate_size(opaque, field);
  
--            for (i = 0; i < n_elems; i++) {
--                bool save_field = true;
--                void *curr_elem = vmstate_next(head, field, size, i, false);
--                int max_elems = n_elems - i;
-+        trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
-+        head = vmstate_first(opaque, field, size, n_elems, false);
+-            vmstate_handle_alloc(first_elem, field, size, n_elems);
+-            if (field->flags & VMS_POINTER) {
+-                first_elem = *(void **)first_elem;
+-                assert(first_elem || !n_elems || !size);
+-            }
++            first_elem = vmstate_handle_alloc(first_elem, field, size, n_elems);
  
--                if (field->flags & VMS_ARRAY_OF_POINTER) {
--                    bool use_marker_field, is_null, use_dynamic_array;
-+        for (i = 0; i < n_elems; i++) {
-+            bool save_field = true;
-+            void *curr_elem = vmstate_next(head, field, size, i, false);
-+            int max_elems = n_elems - i;
- 
--                    is_null = !curr_elem;
-+            if (field->flags & VMS_ARRAY_OF_POINTER) {
-+                bool use_marker_field, is_null, use_dynamic_array;
- 
-+                is_null = !curr_elem;
-+
-+                /*
-+                 * When this is enabled, it means we will always push a ptr
-+                 * marker first for each element saying if it's populated.
-+                 */
-+                use_dynamic_array =
-+                    field->flags & VMS_ARRAY_OF_POINTER &&
-+                    field->flags & VMS_ALLOC;
-+
-+                use_marker_field = use_dynamic_array || is_null;
-+
-+                if (vmdesc && vmsd_can_compress(field)) {
-                     /*
--                     * When this is enabled, it means we will always push a ptr
--                     * marker first for each element saying if it's populated.
-+                     * This logic only matters when dumping VM
-+                     * Desc, and only when the VMSD field can be
-+                     * compressed.
-+                     *
-+                     * Due to the fake nullptr handling above, if
-+                     * there's mixed null/non-null data, it
-+                     * doesn't make sense to emit a compressed
-+                     * array representation spanning the entire
-+                     * array because the field types will be
-+                     * different (e.g. struct vs. nullptr). Search
-+                     * ahead for the next null/non-null element
-+                     * and start a new compressed array if found.
-                      */
--                    use_dynamic_array =
--                        field->flags & VMS_ARRAY_OF_POINTER &&
--                        field->flags & VMS_ALLOC;
--
--                    use_marker_field = use_dynamic_array || is_null;
--
--                    if (vmdesc && vmsd_can_compress(field)) {
--                        /*
--                         * This logic only matters when dumping VM
--                         * Desc, and only when the VMSD field can be
--                         * compressed.
--                         *
--                         * Due to the fake nullptr handling above, if
--                         * there's mixed null/non-null data, it
--                         * doesn't make sense to emit a compressed
--                         * array representation spanning the entire
--                         * array because the field types will be
--                         * different (e.g. struct vs. nullptr). Search
--                         * ahead for the next null/non-null element
--                         * and start a new compressed array if found.
--                         */
--                        if (is_null != is_null_prev) {
--                            is_null_prev = is_null;
--                            use_vmdesc = true;
--
--                            for (int j = i + 1; j < n_elems; j++) {
--                                void *elem = vmstate_next(head, field, size, j,
--                                                          false);
--                                bool elem_is_null = !elem;
--
--                                if (is_null != elem_is_null) {
--                                    max_elems = j - i;
--                                    break;
--                                }
--                            }
--                        }
--                    }
--
--                    if (use_dynamic_array) {
-+                    if (is_null != is_null_prev) {
-+                        is_null_prev = is_null;
-                         use_vmdesc = true;
--                    }
- 
--                    if (use_marker_field) {
--                        ok = vmstate_ptr_marker_save(f, curr_elem, vmsd, field,
--                                                     use_vmdesc ? vmdesc : NULL,
--                                                     i, max_elems, errp);
--                        if (!ok) {
--                            goto out;
-+                        for (int j = i + 1; j < n_elems; j++) {
-+                            void *elem = vmstate_next(head, field, size, j,
-+                                                      false);
-+                            bool elem_is_null = !elem;
-+
-+                            if (is_null != elem_is_null) {
-+                                max_elems = j - i;
-+                                break;
-+                            }
-                         }
--
--                        save_field = !!curr_elem;
-                     }
-                 }
- 
--                if (save_field) {
--                    ok = vmstate_save_field_with_vmdesc(
--                        f, curr_elem, size, vmsd, field,
--                        use_vmdesc ? vmdesc : NULL, i, max_elems, errp);
-+                if (use_dynamic_array) {
-+                    use_vmdesc = true;
-+                }
- 
-+                if (use_marker_field) {
-+                    ok = vmstate_ptr_marker_save(f, curr_elem, vmsd, field,
-+                                                 use_vmdesc ? vmdesc : NULL,
-+                                                 i, max_elems, errp);
-                     if (!ok) {
-                         goto out;
-                     }
-+
-+                    save_field = !!curr_elem;
-                 }
-+            }
- 
--                use_vmdesc = false;
-+            if (save_field) {
-+                ok = vmstate_save_field_with_vmdesc(f, curr_elem, size, vmsd,
-+                                                    field,
-+                                                    use_vmdesc ? vmdesc : NULL,
-+                                                    i, max_elems, errp);
-+                if (!ok) {
-+                    goto out;
-+                }
-             }
-+            use_vmdesc = false;
-         }
-         field++;
-     }
+             for (i = 0; i < n_elems; i++) {
+                 /* If we will process the load of field? */
 -- 
 2.51.0
 
