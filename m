@@ -4,66 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B1F0F532FF
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 09:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CECE9A741
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 09:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4xnc-0001di-CS; Tue, 24 Mar 2026 05:11:45 -0400
+	id 1w4xrl-0002ay-3v; Tue, 24 Mar 2026 05:16:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w4xnZ-0001dF-Vp
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:11:41 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w4xri-0002Vf-Go
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:15:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w4xnX-00011X-6m
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:11:41 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62O9BWjj068009
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 24 Mar 2026 18:11:32 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ZSmMdlU7nids3b6FDnnfwestQ5W02f0UK0dJTft58ew=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1774343492; v=1;
- b=J5m9o0xyCHHZtPJZr894Lc2NrAOGJDuAFktix4mxZJTcCBiQErgGOnPNiLumhNHR
- qhCXw6kv2JBBc0BNrjJqe3otXl/5Aq+ZLml4drWzcwaA+dMeSp9izvLrIm98SYAi
- 76sjkX9PyCm0mz0TM0MSWfOWFLTlJ7OiAXa/HWQdckRocmsxIKH9shlG9yx3HToI
- b0DY1Z6tJeRPV7uF6FawBiMQVvdLiMU5Ux/Tb/7NNd5fl60j4WTXI5MtefRELdEa
- G5H1ZgbAOOT0+HsJMbe3vXnSzC/fF0CTz6GfzmF1Czakl+uHfkuZhudsWkaUP7Ag
- iM/Z6p4LTPD7Qxbks748cw==
-Message-ID: <6af4e73c-4ad5-4684-9982-04276b6b7daa@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 24 Mar 2026 18:11:31 +0900
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w4xre-0001U7-4c
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 05:15:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774343753;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qowj+XaNeD3DaWz8Tj9ccUkjLVLVDqMxxb8CylqCGtI=;
+ b=cXpMg3gpQJ7ZtYMljvlSqD674znuNlYhVBd3nZqBQnaga0Dc9RTyeNTP3oFOP4fDiHJjBp
+ CEk2GgVRJAYfBxCchJZC7LLPeZMe5S1BooNNjs6deOjXdbQrdFwL8LVfnYdYDR5LHpyBYO
+ 1eQgnJ0k3AqXpRQThrSl16QpKUzgTE0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-hoXvn6XIM1SJzSOfGeXtlA-1; Tue,
+ 24 Mar 2026 05:15:50 -0400
+X-MC-Unique: hoXvn6XIM1SJzSOfGeXtlA-1
+X-Mimecast-MFC-AGG-ID: hoXvn6XIM1SJzSOfGeXtlA_1774343749
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B84A1955E79; Tue, 24 Mar 2026 09:15:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.93])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F12B180058C; Tue, 24 Mar 2026 09:15:46 +0000 (UTC)
+Date: Tue, 24 Mar 2026 09:15:43 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, devel@lists.libvirt.org
+Subject: Re: [PATCH-for-11.0] qapi: Remove deprecated
+ SchemaInfoEnumMember::values field
+Message-ID: <acJWPxbjZIcA3cuF@redhat.com>
+References: <20260323152124.93051-1-philmd@linaro.org>
+ <8abf41ec-3f8f-4b3c-8966-f9309a404862@linaro.org>
+ <c935883f-66d1-42fd-bb19-9c0b59c9493e@linaro.org>
+ <87qzp9vhev.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260319052023.2088685-1-vivek.kasireddy@intel.com>
- <20260319052023.2088685-11-vivek.kasireddy@intel.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260319052023.2088685-11-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <87qzp9vhev.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,80 +91,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/19 14:15, Vivek Kasireddy wrote:
-> In addition to memfd, a blob resource can also have its backing
-> storage in a VFIO device region. Since, there is no effective way
-> to determine where the backing storage is located, we first try to
-> create a dmabuf assuming it is in memfd. If that fails, we try to
-> create a dmabuf assuming it is in VFIO device region.
+On Tue, Mar 24, 2026 at 08:02:48AM +0100, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
 > 
-> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
-> backing storage is located in a memfd or not. If it is not, we invoke
-> the vfio_device_create_dmabuf_fd() API which identifies the right
-> VFIO device and eventually creates a dmabuf fd.
+> > On 24/3/26 04:19, Pierrick Bouvier wrote:
+> >> On 3/23/26 8:21 AM, Philippe Mathieu-Daudé wrote:
+> >>> SchemaInfoEnumMember::values field has been deprecated for
+> >>> more than 5 years (see commit 75ecee72625 "qapi: Enable enum
+> >>> member introspection to show more than name"), it should be
+> >>> safe enough to remove.
+> >>>
+> >>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> >>> ---
+> >>>   docs/about/deprecated.rst       |  6 ------
+> >>>   docs/about/removed-features.rst |  7 +++++++
+> >>>   qapi/introspect.json            | 12 +-----------
+> >>>   scripts/qapi/introspect.py      |  3 +--
+> >>>   4 files changed, 9 insertions(+), 19 deletions(-)
+> >>>
+> >> By curiosity, is this patch goal is simply to remove a deprecated feature/code, or does it unlock something beyond it?
+> >> No judgment here, that's a genuine question, and both are valid reasons!
+> >
+> > In a previous thread Daniel said past deprecation period, feature
+> > must be removed, otherwise undeprecated and re-introduced.
 > 
-> Note that, for mmapping the dmabuf, we directly call mmap() if the
-> dmabuf fd was created via virtio_gpu_create_udmabuf() since we know
-> that the udmabuf driver supports mmap(). However, if the dmabuf was
-> created via vfio_device_create_dmabuf_fd(), we use the
-> vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
-> 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
->   hw/display/virtio-gpu-dmabuf.c | 23 ++++++++++++++++++++---
->   1 file changed, 20 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-> index 89aa487654..f953db0fbe 100644
-> --- a/hw/display/virtio-gpu-dmabuf.c
-> +++ b/hw/display/virtio-gpu-dmabuf.c
-> @@ -147,9 +147,26 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->           if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
->               error_free_or_abort(&local_err);
->   
-> -            qemu_log_mask(LOG_GUEST_ERROR,
-> -                          "Cannot create dmabuf: incompatible memory\n");
-> -            return;
-> +            res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
-> +                                                          res->iov_cnt,
-> +                                                          res->blob_size,
+> I think that's too rigid.
 
-The correspondence between (iov, iov_cnt) and blob_size is more of a 
-internal concern of virtio-gpu, not of VFIO. This parameter is better 
-removed from vfio_device_create_dmabuf_fd() and vfio_device_mmap_dmabuf().
+Definitely s/must/should/.
 
-Regards,
-Akihiko Odaki
+> 
+> Why do we deprecate features?  Reasons include:
+> 
+> * A feature may have become too much of a burden to support.  We
+>   deprecate it with the firm intent to remove it at the earliest
+>   opportunity.  The motivation is to help developers, and deprecation is
+>   the means to do so without inflicting unnecessary pain on users.
+> 
+> * A certain interface has turned out to be too limited, necessitating a
+>   more expressive one.  Now we have two ways to do the same thing.  We
+>   deprecate the limited one to guide users to the new one, because
+>   that's the one we think they should use for their own good.  The
+>   motivation is to help users, and deprecation is the means.  Removing
+>   the old interface later on helps future users a bit more.  It also
+>   inconveniences any remaining users of the old interface.
+> 
+> Mixed reasons are possible.  For instance, we might start for the second
+> reason (need a new interface), then find the first reason now applies
+> (maintaining the old interface in addition is bothersome).
+> 
+> Removing a deprecated feature is always a tradeoff, and time is commonly
+> a factor.  The deprecation grace period is merely a lower bound we
+> commit to so we don't surprise users.  docs/about/deprecated.rst:
+> 
+>     The [deprecated] feature will remain functional for the release in
+>     which it was deprecated and one further release. After these two
+>     releases, the feature is liable to be removed.
+> 
+> Note "liable".
+> 
+> >                                                            I'm just
+> > trying to be consistent with the deprecation process, removing what
+> > doesn't seem worth to re-introduce (for the code I'm able to figure
+> > out at least).
+> >
+> > Maybe we should clarify the deprecation process, clarifying that,
+> > and mentioning that maintainers sending pull request to commit
+> > patches with deprecations are also a commitment to remove code
+> > when the proper released is out.
+> 
+> I believe that wouldn't be a clarification of actual practice, it would
+> be a change of practice.  We can certainly debate such a change.
 
-> +                                                          &local_err);
-> +            if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
-> +                error_free_or_abort(&local_err);
-> +                qemu_log_mask(LOG_GUEST_ERROR,
-> +                              "Cannot create dmabuf: incompatible memory\n");
-> +                return;
-> +            }
-> +
-> +            if (res->dmabuf_fd >= 0) {
-> +                pdata = vfio_device_mmap_dmabuf(res->iov, res->iov_cnt,
-> +                                                res->blob_size, &local_err);
-> +                if (!pdata) {
-> +                    virtio_gpu_destroy_dmabuf(res);
-> +                }
-> +            } else {
-> +                res->dmabuf_fd = -1;
-> +            }
->           } else if (res->dmabuf_fd >= 0) {
->               pdata = virtio_gpu_remap_dmabuf(res, &local_err);
->               if (!pdata) {
+Yes, that's too rigid. Some of the things are very complicated to remove
+from the code and so it is valid for maintainers to want to focus on
+other things as a higher priority. It is upto maintainers to decide
+what priorities deliver most value.  I've tried several times to remove
+some of the very old deprecated block features, and it is very hard to
+untangle the deps and get tests fixed.
+
+The deprecation process is there to put users on notice, and give
+maintainers a clear date, after which they have the freedom to
+choose to break / remove things.
+
+The ideal situation is that things are removed promptly after the
+2 release cycle marker, but sometimes reality intervenes, sometimes
+for a very long time.
+
+I think it is unhelpful to let things fester in a deprecated state
+for many years though, as it potentially leads to a situation where
+users cease to believe they'll ever be removed, undermining the goal
+of deprecation.
+
+
+Perhaps we could open tickets for each deprecated item. That would
+give us a place to record some of the info about the removal process
+that contributors need to remember, and any related discussion around
+the process. ?
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
