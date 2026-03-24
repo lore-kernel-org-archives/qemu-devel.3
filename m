@@ -4,125 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6408CE9A778
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 12:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1023E9A77A
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 12:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w50ek-0001T7-30; Tue, 24 Mar 2026 08:14:46 -0400
+	id 1w50kR-0002Nb-Mu; Tue, 24 Mar 2026 08:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w50ee-0001Sd-9N
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:14:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w50kP-0002N0-Au
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:20:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w50ec-0005sS-QD
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:14:40 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w50kN-00079t-Tu
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:20:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774354477;
+ s=mimecast20190719; t=1774354833;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6a77FYSkLHfh4LMVPybUiWBxSD+h3hygicTWQO9dato=;
- b=QUrRykeAmtvYu7RnNx1qONqNWkcVB/EhSvNAvUwZfBsQnQqe3FuzIQ8O6knfxGsvEm4GSN
- bFLN4dkNoIgQuSSNxP1QY4gu9wImPQOagJ5xPUCun8LGGaV+2jfOlArwYhg3dlGyViJ+3L
- KD429J6POKs8yh+C2lfiZSj7UknclR0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-UYAAwSZaP1mh0OOzaum4fg-1; Tue, 24 Mar 2026 08:14:35 -0400
-X-MC-Unique: UYAAwSZaP1mh0OOzaum4fg-1
-X-Mimecast-MFC-AGG-ID: UYAAwSZaP1mh0OOzaum4fg_1774354475
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43b7ec737c1so1205185f8f.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 05:14:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774354474; cv=none;
- d=google.com; s=arc-20240605;
- b=CMEQ2s02Jykj6e+xNwBCp7z3h6aYtDZBtOOZvc6fOAfXwUzSAe714Ja3VgeZgpjvkT
- 7ezX/gSCJAWgXyjHYqV0dnm3j9aPpVhFunE7e5LosIT60sW4TH4Ag9TbhpZWoWvYqNSu
- QL1iSLni+dj9EGEm7+gTl4AiyChHUzgbdcTs8QrrGUZW0pVBkljkPPCQ+DZ8gra8NiGO
- oCoTc1Gy21x9SfBkNamXjSBmDEXUKzLrbOkumVfXlPxIuW6aX5IZFfL2e0V7+DlWzt2s
- ZpEZbrtTxABQ1/J1E54UL8FHsxRzCiJTOe480UMOuww4gMg0PoovJKgYMAp+B1gj+ttt
- H4MA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=6a77FYSkLHfh4LMVPybUiWBxSD+h3hygicTWQO9dato=;
- fh=DEKJBWYHReeN9dOuWkZV2UHSlbxzJ3VUam5yYLUPFAc=;
- b=j3NJSBUtc8cgvmCtsaRPVOHRocehixw8F7qUw0EO8KuOcSTmRS/BXk39FU+tbyV/wN
- DSCcc7esmE7Cbf6zu1Q9RxfzphGRbQ+O+VoZagUiOwpI05AYwKkLg5CiM9+VOAoIlnOH
- 8w4Lcmu5gFZD41IErgUENsARLFprfXe+pd26tO2x6ACIAZvtqO9Gpq/xCij7pbyOHFYL
- aIcSogR2ONN/xtEh3NgUTh0kguE4VokAXhe/kBw1+ovaoSCkHv4efu7E8QzPpxIcZ1U7
- WSYrEsY4jSn4d/GqZG/IfNelZ3+2yC6GR8tWYhYwUaCqh0VHt97XL7//FuFYrm31fSZn
- +ZZA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774354474; x=1774959274; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6a77FYSkLHfh4LMVPybUiWBxSD+h3hygicTWQO9dato=;
- b=ViEJMxNyR5LsPBXr6aOEA2Hp6aBe0C1xYnVL9ub9J7nrCytIOeIBR10nmkxNN/013e
- RJD1p5EUPX5QUU4tJBd7wPt/165vNygqjlFYLQbmJTbkv28oNaply1SomN4FBKzUaL/J
- vHYgpNJwiLWcfPSk3cmjKaSZCEEiqJQP4o3eaP+OeB/dZ7leS+hY5T1/ZkFjiNnWLj3D
- KDLoBbOIpPhRsFQ6hRnhDfGUAiOlG40iPncFYPIuEXl/ruhDEvx8TdTBqYlgFQ0QathQ
- toxAOP4SoUyuU3XV9wbiHjxKovIik0MsOedeB4tr92bjUf/mrHww9Od3O3Ijf4+ytgH3
- tLRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774354474; x=1774959274;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6a77FYSkLHfh4LMVPybUiWBxSD+h3hygicTWQO9dato=;
- b=itkSuOKLO26Hd5pvOKFyAlTaXEc0BwagBaZb3SxrwPbWlZrwTsSwsn7rJBHTe/9xna
- vD/eKUsqzgQhbw0yob+zgHzr5D5xaPRMGURy9Z3pRGS4uV9MBJ+WhRE/5RNjYwJDumB9
- 0bc00Iv5d3SJF7+X2npXgEOa66qAqxVU3AR6MERRNFv6pwJCO02vEu/fv5knlqY6FC4T
- TEt6axrN67Y0PeqX4wSbsR8skrGun/8JpEoqbqK9mEBf5k2IYYN4bkPciIzyB9XJlOb0
- vfdyQhnw1pqaCQHxQAgrRrJIQTkhK/mcwtjWpLuFAmZVYEKKhMBQBIWrFTufuq5GW/W6
- nTLA==
-X-Gm-Message-State: AOJu0Yx/0qwdneUL3BzsDPDYz5nQ52ZeWBoGaijb45NsjchKcOs+1cZQ
- kC7bkJ6+xCKASwOHdJHDjo8IL0/6DL+05wOeSrzwshNgT3YCfYhg0Y0guehdDjuug5IutTPGraG
- X6T/6G4tO9Yrd/x8ox4nWSRJLXhA+SsnFboKpq5AJrIh+n1HzB7Qmwb+DJYiD2T5Vk3iv0OAY29
- hYTxITUBli2q67/6KofgkN+4nNFaKvvlc=
-X-Gm-Gg: ATEYQzyRq6cax8aZyb9PEBxpfCK0TQ8cjVsRS388YgXhNkqpjV9Miy/k/7Ta1kpi6c2
- Nz78u3gVick28glljwlI5ZRvL2caIsdH8m4jQElfJNsUlXlllKgd8QDjCL/qxZmXGkajHs2xEDF
- IAIYudAhtNsEg92uP4LKYkXvO0gCofSsg0DQigh36NmVnVPHDZzVCu+WJEE2Z5IYnSmvr6rIOUJ
- 2D/HIxz0MuM1TZPkApZos7PQM0pIADJoNvDc+/5/ewuTDqILBpHD4s2D3Ewj9z7Um4CXDBOc76a
- kCZL
-X-Received: by 2002:a05:6000:1446:b0:439:af96:29e4 with SMTP id
- ffacd0b85a97d-43b64291a36mr24748674f8f.54.1774354474371; 
- Tue, 24 Mar 2026 05:14:34 -0700 (PDT)
-X-Received: by 2002:a05:6000:1446:b0:439:af96:29e4 with SMTP id
- ffacd0b85a97d-43b64291a36mr24748599f8f.54.1774354473785; Tue, 24 Mar 2026
- 05:14:33 -0700 (PDT)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=YSaLNfehMvGy72Zc2qQN5X1k6y0LNjeEtt0z5UQ/tbE=;
+ b=BoTLSmhoOmd7NppKbX2nRVHzLCNVuHzQRX3nWAh6mArtgKW/KRgXIgozkce2dLNcpP1HMs
+ pYeccy6bXX3nf/uQUu9xAto3imLFgxUYyrxO1OO7vIc5Ws9gq0eRglwRNFQh9r09gycj7f
+ 9g2O9H39RegtyKy+t5eDH/fEEHzsCq0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-dOZrssPNN1-xZHLtOQDyHw-1; Tue,
+ 24 Mar 2026 08:20:30 -0400
+X-MC-Unique: dOZrssPNN1-xZHLtOQDyHw-1
+X-Mimecast-MFC-AGG-ID: dOZrssPNN1-xZHLtOQDyHw_1774354829
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E81EC19560A1; Tue, 24 Mar 2026 12:20:28 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.44.33.93])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6906D1955D71; Tue, 24 Mar 2026 12:20:27 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH for 11.0] pc-bios: remove obsolete linuxboot.bin prebuilt blob
+Date: Tue, 24 Mar 2026 12:20:25 +0000
+Message-ID: <20260324122025.892666-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20260212144244.22579-1-pbonzini@redhat.com>
- <20260212144244.22579-17-pbonzini@redhat.com>
- <acJ_qqzYMKqvrShH@redhat.com>
-In-Reply-To: <acJ_qqzYMKqvrShH@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 24 Mar 2026 13:14:21 +0100
-X-Gm-Features: AQROBzALflLIjoD0RcUPQrxKmQdQNdljG4JEvsgLJpLahmYab83YX0hNqQokKQ8
-Message-ID: <CABgObfbsicXGvZaZrr1nOCSfrNAqZBJp2VEoa8ovYbD0DGfy8Q@mail.gmail.com>
-Subject: Re: [PULL 16/41] hw/i386: Remove linuxboot.bin
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -140,36 +83,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 24, 2026 at 1:12=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Thu, Feb 12, 2026 at 03:42:18PM +0100, Paolo Bonzini wrote:
-> > From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >
-> > All machines now use the linuxboot_dma.bin binary, so it's safe to
-> > remove the non-DMA version (linuxboot.bin).
-> >
-> > Suggested-by: Thomas Huth <thuth@redhat.com>
-> > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > Reviewed-by: Thomas Huth <thuth@redhat.com>
-> > Link: https://lore.kernel.org/r/20260108033051.777361-16-zhao1.liu@inte=
-l.com
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  hw/i386/pc.c                  |   3 +-
-> >  pc-bios/meson.build           |   1 -
-> >  pc-bios/optionrom/Makefile    |   2 +-
-> >  pc-bios/optionrom/linuxboot.S | 195 ----------------------------------
-> >  4 files changed, 2 insertions(+), 199 deletions(-)
-> >  delete mode 100644 pc-bios/optionrom/linuxboot.S
->
-> The pre-built  pc-bios/linuxboot_dma.bin  still exists in the tree,
-> shouldn't that have been deleted too ?
+The corresponding source was removed in
 
-I think you mean pc-bios/linuxboot.bin - yeah, that one should go as well.
+  commit 88641f4df388faa78c49c54ed885e530fd0a75dc
+  Author: Philippe Mathieu-Daudé <philmd@linaro.org>
+  Date:   Thu Jan 8 11:30:39 2026 +0800
 
-Paolo
+    hw/i386: Remove linuxboot.bin
+
+We must also remove the pre-built blob to avoid a GPL violation
+from lack of complete & corresponding source.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ pc-bios/linuxboot.bin | Bin 1024 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 pc-bios/linuxboot.bin
+
+diff --git a/pc-bios/linuxboot.bin b/pc-bios/linuxboot.bin
+deleted file mode 100644
+index 923d1796fbc58f1a836c160be533d1cf697b7511..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1024
+zcmdUt&r2IY6vy9gHZe)X-PE5@4-#x3kjv16P>MG_wU8X_xkCL)K~ks<^cr#+2m|)m
+zKcW9XhMabq!zPFb>7}h60wPg1(qJ!DlqpeCN|5o~cbIwbo%ea~4d1oT_AcES^R$>R
+z<}G_DE=IDEVgBqUsW!#8%d68Jk~38IqCe}YXb-9r|Mzg4;0>tI5eK3njzlQFRvHWZ
+zyPPzan335ADxn8{SYUo0%m+IFYk{@FG}zg$xmuk#!UxlG);NQbbA-AVB^qpYwfSo+
+zQ(lhQ5qmqCK@iK?TI(g5G%^DDz@%HhGk6lq*?3HSt>3?r)(LB|_TF@&Rf;FtC5J2i
+zBhfBRlodH}YZp-6WH?^_LKfWGB~;flH^>GkcL(eY`0|_$evC@b3s(EHglZFR&4=nZ
+zh>k~yz*o=VS}*(HJxGg)+_Vqr5s~oCZMc#TNB&BVnHJ}Pj2m?&Q=>q$V*)vK4{&+}
+z2sv=EoA#?s;h#Re9-5o9CZbRKxA(_=Dy+O%qvvmmr4I{RZ`WUMy!-p|zmG?M04>~Q
+A5C8xG
+
+-- 
+2.53.0
 
 
