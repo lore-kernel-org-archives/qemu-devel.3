@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5847BF54AD9
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 16:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881A2F54AD9
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 16:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w54o6-0003nQ-J9; Tue, 24 Mar 2026 12:40:42 -0400
+	id 1w54o6-0003nB-5v; Tue, 24 Mar 2026 12:40:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1w54o0-0003lM-2E; Tue, 24 Mar 2026 12:40:36 -0400
+ id 1w54nw-0003k3-59; Tue, 24 Mar 2026 12:40:32 -0400
 Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
  ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1w54nx-0005LR-FW; Tue, 24 Mar 2026 12:40:35 -0400
+ id 1w54nu-0005LR-C3; Tue, 24 Mar 2026 12:40:31 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S7uY1Y58vPAR9B7eme46vtCgSc+wpnOGRpH3W6F3eT90T9l5SUbKe4Si2HbyqGlQWb9jV4Xz329Dxe4uqZMeLgd6fR17ib58xmMRm0H7F35YhFKVVl87lSF8fcS08W6an18eLsi8YGeuHBRMoyeRF+cqf9WLwm3EiSlESD2HtRIibE4pay/rSUuUcxt69Fhp2tIWNJD7KflQFAjopYUTiMB/r1oTr1rsS4HQ0Fv0mkaIDpcHlY++lqt9onqbFzsmOBvwjU/2EPupvHH//UKo4eahZwCZ2b7JTxAL47cqbPQlEIfiz4DKBdwfMlYPS0uLznX7Y0+7QL21SWP00Sn7OA==
+ b=osWXb6hUXIpYICGCuXtVpZ5w8AgX/Jvl6rFaO+y//TPdPQ2HeSkkgn+IdeAzS6RJCLGH6bGfw8d1oJT0Xgr6KVBd0jrwvz2q7dMeZJrAM6ttBBGUeXo0KKuf2oHnEwU1NOuUUDNIR6Kl7qt6f0lVNTpwNA3mRzFKfNUmKWSLZMZ2cnuMKmiw6UvUTRxExCxN4GxpkxEaOVvS7p/xECMpQ4Bk1YUSgbLVjR8x4O+S8oCKnaaiFHxYcei4GFMI/6o4VOiyU2pIRNW5dO+5B9ayisyTsuXoVUw5ErO0/IE/xhujs/ThftV52ATYa4GcDbwof/L4f19tbrZSpq+bLw/64A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pbfVXWr9+U6etvsznPf/5+PQydUm4sQ3DPy9B4dJuEk=;
- b=airhLJ/FSH9KeFP3dzAkZFVswL5R5z4GfZpqtVUTsbQrDw/SnbvvggIEbJE7q5QSa85JnTmIoGtnQausKryiEkK58iEHUMHTyfK0ufJ0EENWpEZ3WYOELAPxJliXia338N12LvlW2XHY8ZeLdBWJwwLHjjlp5fQYsdJ8DQLhJqYoXaZI+LW9Yncd++RjwRbxx5Hbdh2mLY1CwAZohoYTtVp0Tg50H5LYXu4eGeEse4HQ3nzvHVEGNnsEzv7ye4ePG0U2I/i9ojIRffK98nunbuiWmAueIRuBlHiq1jG0ueNKDs1Jc/rTAQGgyQ1CJACEgmtww2Qt6AFm2X+QkCxlrg==
+ bh=7IvIlDTSCqZOcy60cvRsxbmIPpRE8DmuWP/+rIsbc2k=;
+ b=nauqNKYRf3/UEYdX0rSi4SgrqfqjjfLIoLcpITcjn1NVSxiJrULdFHpaDeibQKPdSaUdl+w/BVE5oqoHRJLQdXQqUq2faPez8/1F4JO2sZuU/oUenFTgKMN72H+XGnQmhzsrQPGntMVoqNe9FFUak3Fugcf1iVZHXp3QA0VpSOvC9DRsX7k36c63uU08B8ABbSdhHr9Rr49u0JwhyyFdh7j3k897+fc0gfxU+U0nHc59fnSLLSVY/wptAmGhNJBPxu8gRjmhvEegciE1qoDbY7A49dKmHIipwtqMTvWs+RXIC3kL+ozrfTPe0QULuYynA81+8t22Qhp3Qbom69/OwA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=htecgroup.com; dmarc=pass action=none
  header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pbfVXWr9+U6etvsznPf/5+PQydUm4sQ3DPy9B4dJuEk=;
- b=N3LqF6bcKAXiNmvS8ZXjxORJlyd8e2ipvMowzWlidJ0TlktYP/ONubpgv3N2CRshIK9ihIutCZjyaema0xdHJoPhIkGvdVinAzM8NvdTc/bT043uwJsH4T/66qpyR5/BcRT+yhhqhEkfh+hL7TrBWm6N2x5qnCKeWVqYoSzOdisY2dNC9x4cVcN0WScfF2NZB1ogOQHkl3A37jf2QPzkkWhMZ9hjCjvqETllK8dDSQyD52FFyG7vzHSn8svKSIRChc+EV6TT5RcYssCE7GZhtz3OpIPC/TSsWLnEpWdCkPwSsS0+eg5hSXL5j/zPollBiFAvazYDXasW8hG8prX9KQ==
+ bh=7IvIlDTSCqZOcy60cvRsxbmIPpRE8DmuWP/+rIsbc2k=;
+ b=jHB9Wq2LZnkjaQdvMLqxgmCnNE1yoI0v45tq+eWseizOx+u9Mhqwi6uUgGatA7bTTTE7lbfmb75mEywWgJ5/TALbRXbcD3T4IEO3R2SfriAfY10qwqj1fZmeFry1fdheTFotJpkYmkY7FoOPax+l9zYUgmuJpPxr+7GMl0rr7SBV6B935xEEKca2PIB6qUCcTvKvrw0MkmXRLRXD5U30CMc9nkXUjbbnvnI+Ojna1TugMqEyYohWpyBQFuSnYgodQa+FNGKN2WXZzOb5B7UIBWEugmAtboI6XhU+Qn4q2r71DR9WaxSPi1Wzotk5umpHX4JFMm/lJwP1/VhPG6CTVA==
 Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
  by DU0PR09MB6145.eurprd09.prod.outlook.com (2603:10a6:10:475::22)
  with Microsoft SMTP Server (version=TLS1_2,
@@ -52,12 +52,13 @@ CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
  <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
  "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
  <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH v5 4/7] hw/riscv: Make boot code endianness-aware at runtime
-Thread-Topic: [PATCH v5 4/7] hw/riscv: Make boot code endianness-aware at
- runtime
-Thread-Index: AQHcu6zkp4dl2F3i9UaTc6hdecuzUQ==
+Subject: [PATCH v5 3/7] target/riscv: Implement runtime data endianness via
+ MSTATUS bits
+Thread-Topic: [PATCH v5 3/7] target/riscv: Implement runtime data endianness
+ via MSTATUS bits
+Thread-Index: AQHcu6zkMXwXI9vy0EubjyivhQYRHA==
 Date: Tue, 24 Mar 2026 16:40:16 +0000
-Message-ID: <20260324164007.549397-5-djordje.todorovic@htecgroup.com>
+Message-ID: <20260324164007.549397-4-djordje.todorovic@htecgroup.com>
 References: <20260324164007.549397-1-djordje.todorovic@htecgroup.com>
 In-Reply-To: <20260324164007.549397-1-djordje.todorovic@htecgroup.com>
 Accept-Language: en-US
@@ -68,60 +69,60 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=htecgroup.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|DU0PR09MB6145:EE_
-x-ms-office365-filtering-correlation-id: 7d162eaf-bffe-45e5-5f42-08de89c407a5
+x-ms-office365-filtering-correlation-id: 91fce064-51bd-4081-daec-08de89c40769
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|376014|366016|1800799024|38070700021|56012099003|18002099003|22082099003;
-x-microsoft-antispam-message-info: 7Qhlh7qN9bTH3QeWv4WtvSeVHS35/KX6yXrg41ZBIrukEwfYvhFLB5GjzPvZgM6QdnS48OfY30bIlNAC5MlmnLpq80I33DQ3+4pgMzcyBcbkHqLM+T4nvY6R+DQbXA43O9C3jmwefydzGcHz1eBM2+NioAIi/O6D0Hi7f2X2nHVkQuNwJie/5/dfkjWBTujsMLmsasZpdyIBHI1yF+98oMQGc+FcWxtDFES+pRwuN+L3f8WK4qBFGfU7j1l+KWXGxbedBYyZl6o/gfC8gyYSWPWT6fX+iC90IpyasCGBwZC4Xt+Un/LVT/zTcLaGyatWuwlnpMxeIa8oZ8fwL7lNvvBazSgPjmWBLKYg4Hp/VIpYcxQxTFpdoQkHmaTSqfSgPYPZeVwoeAyJnZaGZYtd28krfXHOgy5RGZGCFxsWMYmxpTlOIzQ1t8rduAFFCHHITGTDISYTUlHJcOgeoO0dLOHpOsRlKexhTQQ0bSxtnesauz8Y33HRwXMU/7OXMpfdBvVvhj+VC3J0x2g8Ny5CyeOkGTvfySD/ksSLlM/59+Fx/ee3FfFXUx+OwDSmqg9gYQSthK7iRX4WdjPcSZXb5UB/IjhNlJ8D8U4+OlswXNkeokfZNfMkKFEZllt3SBvHTiZycIXil9rwCNJvXNmf+Qf4oNZb9ohmtfGZfrBvvdLWCmKVXiFzgqueedjiyUjW8i3AYiSt2Fu3jdgeSXgyVIbwO/B2kFRFDHYKGt43TGA+j9MK6OkLLi0pPfE4tqTrJQgCWRf56Q+OLlZJMcRvNgLfXVshrVZiEN+17vlA/so=
+x-microsoft-antispam-message-info: DJIlAviIpFV49NxMe6Lqyz/5l7RiDbuu7vI++nJyBMDg45wBrEDhpTvVRwf21/X410PGa0ovcGjd9uKxJCSDf5ru9wR+ksJN2qhxJqEof9Za+I6gLQEx2Kw7qaFzCxENCIiDfQNf5Ll9+JVdRjmvMB7AzquxfzN2mEdPhmqfqqRmbVHcjKO5yvHdYSe0BKafEAuhs2b0x90ntVTnnGwKFqAhpoHhjIo8uI/k+l3THEOq0YAA1Ev1B40DJk7UoDnYonM8NxXdrhKgB62nItBA+W3E61ma4dhsDiGZePBDmmz62fiAlbQ4yC/1wrnpS1wYSyIIHP2PBG8hwxGgyEstL/KM0dA692vWGcp+1+PtmGsku+kMSz/Y1Gk8jqtilxOCAUiyCBbewErXNOoG8NC0rdO3oaaGwVh9BzuP0BhivlTuYwSjRWsyXzVXQKHEdgWnF1cUSJ6QqsTDeEy9oOFJw4GYlVGROxJuf12XjjXsNB7XkilW2N16OhY936uctFUVPfNIRsGlp9PGc43Clqgy0zZ9WP50LAX1zEj81UO1bNdrIcgVaYc3oi44ZGjCuF/JprHaYcS76yG8WcsCr9TivL22ZcY+QVcDR4iFImkBj1037gMEM+bq4M6BxCbWmotk91ST29Fx8WGSJaqWCGQHeE4lBeS78DlP5OUMTdcgmerrxe3oCFftayJGqCD4yEJy0TfiJ+M2zuVFRkOs/qAfTdvvok/hJqY+1frfp2uC5iHhcSTCLlWxd5iU1wjzrh3/Up8Dm//bdk+Oo7PIyzNZuVeykTh8dviW1CJlygDlj44=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(56012099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?nBsqJV2C/BI2Umc3qbLaELnr9VdotfN4DKBaVc9Q67IgpOHp+27/NtdXCU?=
- =?iso-8859-1?Q?zXYl9uHTHsUHWGsWmQO53SgEIQ0frJAoXO+mCnXuP9pBEDzxoVcC1f3daG?=
- =?iso-8859-1?Q?M2gAbXJKXLL2kl85a7Fu4b6eCuCXkvjZet5qnHntud43S80aD7sgLeoYTQ?=
- =?iso-8859-1?Q?DDx2bGYijKXWIslEw3hu8IHNuUrHFnIteSHyfSMsA3FlbZ5owuTATCP/D5?=
- =?iso-8859-1?Q?a4ibjL6dOckXhRWRLe8O5jJCWsJdiOGeKDvHaUoG+CsrmBS6swYjtUq9j+?=
- =?iso-8859-1?Q?hJhoYVM/P4+4m9GOsBFijohVcDcqKwVqzmvCUpie+ou0d9AADbdoZJQ0On?=
- =?iso-8859-1?Q?g2jnKjlwKMkQZQ1JJVmQ9P6zlG5xSn0Fk7ZodnudhxXunGEy4KKAM2lc4m?=
- =?iso-8859-1?Q?8eyrFxTD1g1BtNx+7iP3UQVWWoCrt0bOB6Hjo4cdQfBkAJPNiAHOOi8/pk?=
- =?iso-8859-1?Q?Y68awAbEefMbUkl3lODH5joQTUWGc9jwWL3bUTn5cYMwEFaIj4A1uvUzrB?=
- =?iso-8859-1?Q?B23U8Zz2Ni8DTTJobd/QZfmYSSyY0AD18wtlNHQTHc3jPDblG/R/pNvJT2?=
- =?iso-8859-1?Q?brgCIOhmiJdBwlDwrg5mH6DxvRxbDBEZ4cq8uOmtLmCpkMsGNTPrrpNwHo?=
- =?iso-8859-1?Q?zXE7Vgp2Bnxa5nZgw77knrIYLEVNv3KjyFmWlBEQWoawPnykl6abgqf0yW?=
- =?iso-8859-1?Q?xbPodf5lU5J1Ok1OxoJ7p5ADVh6i774AblnOdoojm1RGugcbSl1M8mcJjf?=
- =?iso-8859-1?Q?Dya5ivyJB5bwbWsammWTN7RIrWwNVUPGljfKYDTAUJ5Ga8t9I5H5L9m77y?=
- =?iso-8859-1?Q?1bm8xjxwzWvi26D5Mw4ChUdyCQIyBf9FA8PnYGUqPPkD3GqvGDJmDpSLRw?=
- =?iso-8859-1?Q?FZNSuBv9EZ+ANKlA7AZxhtDtPfkSVabqSlG79HKYcPfr6AWnkMIsOzMsgw?=
- =?iso-8859-1?Q?7yETskriL40RJPcfOhs77ilSpoF78UV89G2wPFamz221ZR3fkdxJ1Lga/g?=
- =?iso-8859-1?Q?Z7vL2ho+IkGpbXFl+WqNqIQXiOTLNjJ9Ai5DUHRd+fanIsL6pDBA9srTiu?=
- =?iso-8859-1?Q?b9JxSBXCam4HT7682gb9BFM6RkI/ltwP6Ec4gjGf564ZNVeJvET07/oZXe?=
- =?iso-8859-1?Q?1QVuP5S97ztvZ/ZmuR6qDAPZq4iG6FHKfuXLvU499fxFtBkzr3YrStLdfG?=
- =?iso-8859-1?Q?XtJ3FIXBavEGlEzVPLHQ/M9xCrv4V4R+KMnITm4inQ5tJtpr26A9AU89wt?=
- =?iso-8859-1?Q?XZR5ixvNQQRoztaSOBAS8+Uwld00ZAjGiug+xKlKLnO6NGPkkSzn4EECRe?=
- =?iso-8859-1?Q?uDf67RC6DOHUgjWgyUvHZDgYeC8msrrAftvGufq110tf3XMDWdJbw7EVFw?=
- =?iso-8859-1?Q?E41u4/zT+H0OP1np1Z9zVnce5uEKQnQNY4h6vSIGoZZDKtpQGbKmJ7U72H?=
- =?iso-8859-1?Q?ndFnr/hyQEQqZkffMF77XchMQ4Wy7et98YOMCRk5mBnRl+1KQhwatP1a/+?=
- =?iso-8859-1?Q?Y+KxurCFgoFf9neu/5wfVErO9vewq56rzQCELYroUvFD1+CFEG4Zls7w68?=
- =?iso-8859-1?Q?Z56nZBIiVFO2udP8Bqadn/LNaYWbxoAEqgOl1awx4x/SQVux9mOev6YGI/?=
- =?iso-8859-1?Q?Db5IoXr7FnmlkPDaobZlZUxahSxJInJe60BCyoS0XJ730/6IjFkVxYvftW?=
- =?iso-8859-1?Q?axLepj+uEegOTpmcIUmRbEct8U2Mbwdghmuhq2YI/ybur+xLbki4DEW2RE?=
- =?iso-8859-1?Q?a9wdkK0CYjAHVwZyflxCpV0Emljl7abrf0vckz9a9WmLIsE6Zmqt+dvUak?=
- =?iso-8859-1?Q?Jx4HUAvbYIxaTgCjUrB7obyc9jDPCJ9rngLLV4evKgLHHL3yzDsp?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?vxUJvZKAwucIKGnnbwbrcFZWp8n1Y4B3ga+fddpqvvPJbk0nVpH/nlvScY?=
+ =?iso-8859-1?Q?Pgy0x0GwfJW4fVpxClPOPZSDBQ2YMmiHB59HeBeI7mHFTHGpX7ey+v8xl3?=
+ =?iso-8859-1?Q?Rpht+gTQepBeGokZASrq3pZ3AijDBD25bQLQ1ym0iEVu1gZk4GTLenm6tE?=
+ =?iso-8859-1?Q?I+9NxNUW6PWogl6IhoRSoKuiJ+MUPmXT+20fSlXXyXOjNoFrFfP/t4/aBO?=
+ =?iso-8859-1?Q?4Po3qR5qKEa45EznvbBm0mKyg4qze9P22aKUL3nfTIcB6RVr+dtvrShxc6?=
+ =?iso-8859-1?Q?hnVIkR0DCwtkXcuhcxv1+FmxiuO8gFESmEthuxXaXOD8ioLwd3h93Nh//C?=
+ =?iso-8859-1?Q?4HEtvFjVHko6k0yQg7Umf2rpzUZ+LA7eWTpFMYnq9657qW3JtI4GMfJjCW?=
+ =?iso-8859-1?Q?5G0Y87xLQhOE3SFJ6WCn7MueVzgeBSiDt3CNQgJCSfN6Imdz1xL3OHn76U?=
+ =?iso-8859-1?Q?/OlBgGZGKimZ1v4DKamLXACrW20gcrIM7Ebsge0bbg9XOIq1WFCyzjdPbI?=
+ =?iso-8859-1?Q?IUvTd18ZDzWPMytTwGYOH/GEyqp/JRn6J0P5DNRzJNPV/qBMTy7AuU9Hjv?=
+ =?iso-8859-1?Q?5EXX9rVRLW9LZxdYG4flhpu24i7uBO9jnZKxlVXnU5lqZogCIHSueBApdh?=
+ =?iso-8859-1?Q?uHhNV3yE7tg/iUo400kFlFSNqLfyjR8aPvefXWtRoI6dFuW7xmnsO4vykw?=
+ =?iso-8859-1?Q?ff/oDF5gcZ3rdP9W9IOnIrZrH+d+nesE8MX5Bs44/OMJBu0Cu7pNwhH6Bc?=
+ =?iso-8859-1?Q?WIFAvDjeLRdnlBZDmSlFxyV07L86uqGbgIYiTybxGblX0zSgaJvc6kx4fE?=
+ =?iso-8859-1?Q?CbMl/euyAstZxWdj7rspe75gYOJG+51n2C3l20e0eDuYDcUs07uZMFk69/?=
+ =?iso-8859-1?Q?dn06GThBNs6ULxLS7E8yoOovwkPZMMk55aX5lfBgHNWpRHhdvyvON9I1Ws?=
+ =?iso-8859-1?Q?dq9Bd9RWNNvT/xkfJuSU/btNH1GcwXiubhOSQLFFsYnFUzdykbGI1XBZIH?=
+ =?iso-8859-1?Q?bZGJuaTv1AeuI9nnc3Uv39YKZT4DJ4LFVBE9artPBq3m/vL5IAG1ofXB9C?=
+ =?iso-8859-1?Q?TZK3agliw2z39t7sQWFPYY6Wi4bU4T9rn0EwR3xuwkXPPXEjU4Nk6tcj4L?=
+ =?iso-8859-1?Q?n/+BxTz6bB0+cqwG0Nt6tCC0VT4kG3K51qIUFP9xGv8AfdK1i/5A4pzgaV?=
+ =?iso-8859-1?Q?iITsfBaVoPUaEuP+J1B+V7XjqHgtQ4QcjuJrZaoqUnz4SbU8cmC8CVkTYO?=
+ =?iso-8859-1?Q?5qZEZ3jnhJsCeV+FFCN/SqP8lE1gEsKyTw1NEB0dD8h2Eg2qWGk00m/RIC?=
+ =?iso-8859-1?Q?8w9ih8CQqB2Y+e3jEhypsh1IVbyya9vYQviX8xBf+YRpZEPrRtHVe/QRgu?=
+ =?iso-8859-1?Q?/P3LFAmIxu/MEReJ8p94gfM6pt7gUBb3lxjxXEkTzuQndGGzy9IZAChGQe?=
+ =?iso-8859-1?Q?l/LbzRQ8IA6tFpNA/nZAJNA/QB3bY6tXdDJ4f791DlM95t10jwJag5Zt4b?=
+ =?iso-8859-1?Q?+VfLkGW5RXrlHq3aHiI3l1/N+jAVjlujJl2TYN5+H7CpSjHQBDTxa/Y1OK?=
+ =?iso-8859-1?Q?dQDxjnujep0MU2iPlk38/ae7umHDTQhDo63Rz6QwagdQAo81e4wEgqyOi5?=
+ =?iso-8859-1?Q?3yyn60q1Qd+rlucUK+3mtc+1qKesRzm26zy1asA9YNNMocque9o7EfUTiV?=
+ =?iso-8859-1?Q?q0xU2Umj7cBZrvc2maJFSfQjqfniEFDeNYX8ehhv9R9jsz6r2BU+gRNZ0E?=
+ =?iso-8859-1?Q?F5zrhjr2cIwazEoNMJuoPZ0/+kTUboh6dR5Xkycps80zOzxWr7fRwguIS/?=
+ =?iso-8859-1?Q?ayoYBU4moQH7xmmZEu/JYNEn4PUOu3QO1FFOgGwitT6Bi6hdtIhp?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: htecgroup.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7d162eaf-bffe-45e5-5f42-08de89c407a5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2026 16:40:16.4489 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 91fce064-51bd-4081-daec-08de89c40769
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2026 16:40:16.0667 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4902d83BDxSC96jrBLH7kwi/B2WymZv5u7L1asJfMSoQN/iyDPR/O6DXjlBJSnCSZ8CO04yoxcT/dBLUrdeGOK+Hf6m7RDJsVL6nzoGMz2Y=
+X-MS-Exchange-CrossTenant-userprincipalname: zqVyudgTAgiC1ME9VNSgujlbcXdvLZ5/jMv2s1JU96cNt9QkbPUln6m1s83yS/k8EvjdQm+R7rAExC4M1yJp8CsAjemQGt/HrzfR4PSVO0E=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR09MB6145
 Received-SPF: pass client-ip=2a01:111:f403:c200::1;
  envelope-from=Djordje.Todorovic@htecgroup.com;
@@ -147,186 +148,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add riscv_is_big_endian() helper that checks the hart's big-endian CPU
-property and use it throughout the boot code:
+Implement runtime big-endian data support by reading the MSTATUS
+UBE/SBE/MBE bits to determine data endianness per privilege level.
 
-- ELF loading: pass ELFDATA2MSB or ELFDATA2LSB based on endianness
-- Firmware dynamic info: use cpu_to_be* or cpu_to_le* based on endianness
-- Reset vector: instructions (entries 0-5) remain always little-endian,
-  data words (entries 6-9) use target data endianness. For RV64 BE, the
-  hi/lo word pairs within each dword are swapped since LD reads as BE.
+The key changes are:
 
-This is part of the runtime big-endian support series which avoids
-separate BE binaries by handling endianness as a CPU property.
+- Add riscv_cpu_data_is_big_endian() helper in cpu.h that checks
+  the appropriate MSTATUS endianness bit based on current privilege
+  level (MBE for M-mode, SBE for S-mode, UBE for U-mode).
+
+- Update mo_endian() in translate.c to return MO_BE or MO_LE based
+  on a new 'big_endian' field in DisasContext, rather than the
+  previous hardcoded MO_TE.
+
+- Update mo_endian_env() in op_helper.c to call the new helper,
+  giving hypervisor load/store helpers correct runtime endianness.
+
+- Pack the endianness flag into cs_base bit 32 (alongside misa_ext
+  in bits 0-25) in riscv_get_tb_cpu_state(), ensuring translation
+  blocks are correctly separated by data endianness.
+
+Note: instruction fetches continue to use MO_LE unconditionally
+(from the previous patch), as RISC-V instructions are always
+little-endian per the ISA specification.
 
 Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
 ---
- hw/riscv/boot.c         | 82 +++++++++++++++++++++++++++++++++++------
- include/hw/riscv/boot.h |  2 +
- 2 files changed, 72 insertions(+), 12 deletions(-)
+ target/riscv/cpu.h         | 28 ++++++++++++++++++++++++++++
+ target/riscv/internals.h   |  9 +--------
+ target/riscv/tcg/tcg-cpu.c |  9 ++++++++-
+ target/riscv/translate.c   | 12 ++++--------
+ 4 files changed, 41 insertions(+), 17 deletions(-)
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index e5490beda0..c7558b904f 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -40,6 +40,28 @@ bool riscv_is_32bit(RISCVHartArrayState *harts)
-     return mcc->def->misa_mxl_max =3D=3D MXL_RV32;
- }
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 35d1f6362c..ef870d05b3 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -703,6 +703,12 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+ FIELD(TB_FLAGS, PM_PMM, 29, 2)
+ FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
 =20
-+bool riscv_is_big_endian(RISCVHartArrayState *harts)
-+{
-+    return harts->harts[0].cfg.big_endian;
-+}
-+
 +/*
-+ * Convert a pair of 32-bit words forming a 64-bit dword to target data
-+ * endianness. For big-endian, the hi/lo word order is swapped since LD
-+ * interprets bytes as BE.
++ * cs_base carries misa_ext (bits 0-25) plus additional flags.
++ * Bit 32 is used for data endianness since TB_FLAGS has no free bits.
 + */
-+static void riscv_boot_data_dword(uint32_t *data, bool big_endian)
-+{
-+    if (big_endian) {
-+        uint32_t tmp =3D data[0];
-+        data[0] =3D cpu_to_be32(data[1]);
-+        data[1] =3D cpu_to_be32(tmp);
-+    } else {
-+        data[0] =3D cpu_to_le32(data[0]);
-+        data[1] =3D cpu_to_le32(data[1]);
-+    }
-+}
++#define TB_CSBASE_BIG_ENDIAN  (1ULL << 32)
 +
- /*
-  * Return the per-socket PLIC hart topology configuration string
-  * (caller must free with g_free())
-@@ -72,6 +94,7 @@ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartA=
-rrayState *harts)
-     info->kernel_size =3D 0;
-     info->initrd_size =3D 0;
-     info->is_32bit =3D riscv_is_32bit(harts);
-+    info->is_big_endian =3D riscv_is_big_endian(harts);
+ #ifdef TARGET_RISCV32
+ #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+ #else
+@@ -718,6 +724,28 @@ static inline const RISCVCPUConfig *riscv_cpu_cfg(CPUR=
+ISCVState *env)
+     return &env_archcpu(env)->cfg;
  }
 =20
- vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-@@ -247,8 +270,9 @@ void riscv_load_kernel(MachineState *machine,
-      */
-     kernel_size =3D load_elf_ram_sym(kernel_filename, NULL, NULL, NULL, NU=
-LL,
-                                    &info->image_low_addr, &info->image_hig=
-h_addr,
--                                   NULL, ELFDATA2LSB, EM_RISCV,
--                                   1, 0, NULL, true, sym_cb);
-+                                   NULL,
-+                                   ELFDATA2LSB,
-+                                   EM_RISCV, 1, 0, NULL, true, sym_cb);
-     if (kernel_size > 0) {
-         info->kernel_size =3D kernel_size;
-         goto out;
-@@ -391,21 +415,32 @@ void riscv_rom_copy_firmware_info(MachineState *machi=
-ne,
-     struct fw_dynamic_info64 dinfo64;
-     void *dinfo_ptr =3D NULL;
-     size_t dinfo_len;
-+    bool big_endian =3D riscv_is_big_endian(harts);
-=20
-     if (riscv_is_32bit(harts)) {
--        dinfo32.magic =3D cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
--        dinfo32.version =3D cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
--        dinfo32.next_mode =3D cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
--        dinfo32.next_addr =3D cpu_to_le32(kernel_entry);
-+        dinfo32.magic =3D big_endian ? cpu_to_be32(FW_DYNAMIC_INFO_MAGIC_V=
-ALUE)
-+                                   : cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VAL=
-UE);
-+        dinfo32.version =3D big_endian ? cpu_to_be32(FW_DYNAMIC_INFO_VERSI=
-ON)
-+                                     : cpu_to_le32(FW_DYNAMIC_INFO_VERSION=
-);
-+        dinfo32.next_mode =3D big_endian
-+                          ? cpu_to_be32(FW_DYNAMIC_INFO_NEXT_MODE_S)
-+                          : cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
-+        dinfo32.next_addr =3D big_endian ? cpu_to_be32(kernel_entry)
-+                                       : cpu_to_le32(kernel_entry);
-         dinfo32.options =3D 0;
-         dinfo32.boot_hart =3D 0;
-         dinfo_ptr =3D &dinfo32;
-         dinfo_len =3D sizeof(dinfo32);
-     } else {
--        dinfo64.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
--        dinfo64.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
--        dinfo64.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
--        dinfo64.next_addr =3D cpu_to_le64(kernel_entry);
-+        dinfo64.magic =3D big_endian ? cpu_to_be64(FW_DYNAMIC_INFO_MAGIC_V=
-ALUE)
-+                                   : cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VAL=
-UE);
-+        dinfo64.version =3D big_endian ? cpu_to_be64(FW_DYNAMIC_INFO_VERSI=
-ON)
-+                                     : cpu_to_le64(FW_DYNAMIC_INFO_VERSION=
-);
-+        dinfo64.next_mode =3D big_endian
-+                          ? cpu_to_be64(FW_DYNAMIC_INFO_NEXT_MODE_S)
-+                          : cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
-+        dinfo64.next_addr =3D big_endian ? cpu_to_be64(kernel_entry)
-+                                       : cpu_to_le64(kernel_entry);
-         dinfo64.options =3D 0;
-         dinfo64.boot_hart =3D 0;
-         dinfo_ptr =3D &dinfo64;
-@@ -474,10 +509,33 @@ void riscv_setup_rom_reset_vec(MachineState *machine,=
- RISCVHartArrayState *harts
-         reset_vec[2] =3D 0x00000013;   /*     addi   x0, x0, 0 */
-     }
-=20
--    /* copy in the reset vector in little_endian byte order */
--    for (i =3D 0; i < ARRAY_SIZE(reset_vec); i++) {
-+    /* RISC-V instructions are always little-endian */
-+    for (i =3D 0; i < 6; i++) {
-         reset_vec[i] =3D cpu_to_le32(reset_vec[i]);
-     }
-+
-+    /*
-+     * Data words (addresses at entries 6-9) must match the firmware's dat=
-a
-+     * endianness.
-+     */
-+    if (riscv_is_32bit(harts)) {
-+        for (i =3D 6; i < ARRAY_SIZE(reset_vec); i++) {
-+            if (riscv_is_big_endian(harts)) {
-+                reset_vec[i] =3D cpu_to_be32(reset_vec[i]);
-+            } else {
-+                reset_vec[i] =3D cpu_to_le32(reset_vec[i]);
-+            }
-+        }
-+    } else {
-+        /*
-+         * For RV64, each pair of 32-bit words forms a dword. For big-endi=
-an,
-+         * the hi/lo word order within each dword must be swapped since LD
-+         * interprets bytes as BE.
-+         */
-+        for (i =3D 6; i < ARRAY_SIZE(reset_vec); i +=3D 2) {
-+            riscv_boot_data_dword(reset_vec + i, riscv_is_big_endian(harts=
-));
-+        }
++/*
++ * Return true if data accesses are big-endian for the current privilege
++ * level, based on the MSTATUS MBE/SBE/UBE bits.
++ */
++static inline bool riscv_cpu_data_is_big_endian(CPURISCVState *env)
++{
++#if defined(CONFIG_USER_ONLY)
++    return false;
++#else
++    switch (env->priv) {
++    case PRV_M:
++        return env->mstatus & MSTATUS_MBE;
++    case PRV_S:
++        return env->mstatus & MSTATUS_SBE;
++    case PRV_U:
++        return env->mstatus & MSTATUS_UBE;
++    default:
++        g_assert_not_reached();
 +    }
-     rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
-                           rom_base, &address_space_memory);
-     riscv_rom_copy_firmware_info(machine, harts,
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index f00b3ca122..a54c2b397d 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -36,9 +36,11 @@ typedef struct RISCVBootInfo {
-     ssize_t initrd_size;
++#endif
++}
++
+ #if !defined(CONFIG_USER_ONLY)
+ static inline int cpu_address_mode(CPURISCVState *env)
+ {
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index 460346dd6d..e2f0334da8 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -64,14 +64,7 @@ static inline bool mmuidx_2stage(int mmu_idx)
 =20
-     bool is_32bit;
-+    bool is_big_endian;
- } RISCVBootInfo;
+ static inline MemOp mo_endian_env(CPURISCVState *env)
+ {
+-    /*
+-     * A couple of bits in MSTATUS set the endianness:
+-     *  - MSTATUS_UBE (User-mode),
+-     *  - MSTATUS_SBE (Supervisor-mode),
+-     *  - MSTATUS_MBE (Machine-mode)
+-     * but we don't implement that yet.
+-     */
+-    return MO_LE;
++    return riscv_cpu_data_is_big_endian(env) ? MO_BE : MO_LE;
+ }
 =20
- bool riscv_is_32bit(RISCVHartArrayState *harts);
-+bool riscv_is_big_endian(RISCVHartArrayState *harts);
+ /* share data between vector helpers and decode code */
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 3407191c22..fa42197e98 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -189,10 +189,17 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
+*cs)
+     flags =3D FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
+     flags =3D FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
 =20
- char *riscv_plic_hart_config_string(int hart_count);
++    uint64_t cs_base =3D env->misa_ext;
++#ifndef CONFIG_USER_ONLY
++    if (riscv_cpu_data_is_big_endian(env)) {
++        cs_base |=3D TB_CSBASE_BIG_ENDIAN;
++    }
++#endif
++
+     return (TCGTBCPUState){
+         .pc =3D env->xl =3D=3D MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
+         .flags =3D flags,
+-        .cs_base =3D env->misa_ext,
++        .cs_base =3D cs_base,
+     };
+ }
 =20
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 5df5b73849..d7f1f8e466 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -119,6 +119,8 @@ typedef struct DisasContext {
+     bool fcfi_lp_expected;
+     /* zicfiss extension, if shadow stack was enabled during TB gen */
+     bool bcfi_enabled;
++    /* Data endianness from MSTATUS UBE/SBE/MBE */
++    bool big_endian;
+ } DisasContext;
+=20
+ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+@@ -128,14 +130,7 @@ static inline bool has_ext(DisasContext *ctx, uint32_t=
+ ext)
+=20
+ static inline MemOp mo_endian(DisasContext *ctx)
+ {
+-    /*
+-     * A couple of bits in MSTATUS set the endianness:
+-     *  - MSTATUS_UBE (User-mode),
+-     *  - MSTATUS_SBE (Supervisor-mode),
+-     *  - MSTATUS_MBE (Machine-mode)
+-     * but we don't implement that yet.
+-     */
+-    return MO_LE;
++    return ctx->big_endian ? MO_BE : MO_LE;
+ }
+=20
+ #ifdef TARGET_RISCV32
+@@ -1346,6 +1341,7 @@ static void riscv_tr_init_disas_context(DisasContextB=
+ase *dcbase, CPUState *cs)
+     ctx->zero =3D tcg_constant_tl(0);
+     ctx->virt_inst_excp =3D false;
+     ctx->decoders =3D cpu->decoders;
++    ctx->big_endian =3D ctx->base.tb->cs_base & TB_CSBASE_BIG_ENDIAN;
+ }
+=20
+ static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
 --=20
 2.34.1
 
