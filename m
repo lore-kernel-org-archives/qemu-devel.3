@@ -4,197 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E94B6F54AC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 653F4F54AC5
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:26:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52hT-0002zT-8z; Tue, 24 Mar 2026 10:25:43 -0400
+	id 1w52hs-0003AT-Hz; Tue, 24 Mar 2026 10:26:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1w52hP-0002zF-U4
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:25:39 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1w52hN-0004ll-0W
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:25:39 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62OCBxwR1156650; Tue, 24 Mar 2026 14:25:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=WzyYOaKJQuwMdpjHa2TrDrPh5UYqv9UmiWroY6r0jvk=; b=
- Ux6fkb35KpVMx8Qx9agc3hA5EYh/dGDqZNSnlu8uJUym5JoBSV+mixk/o0X+IF+L
- ReeOhpDS+bxPkkbVQ7qMjXgrLWMFBZaNC6s+VggOwSYE3sOzDIOR+TH0tNTggQCM
- aV+z5XyJ305u13oRV8L968a3ywP/Ca9qUJ1aRf6LdqubY0Z7OWVVQ8lHswwnYtl4
- LFNkIaq4HPkyHIQDjGI/73+W9MWxNLs5NDFgSYPY/ZP2uxwjLDhm3KFnounCf3jk
- rfZyeu9o8R8onz6jBCdv+0zAcnpxhhck7sfN37PFiWqNnuk3t/TJxXr5rtV9arGE
- qmwMAxFML15QqqZ1QTbBkw==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4d1kgfmbbe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Mar 2026 14:25:24 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 62ODGjXU007139; Tue, 24 Mar 2026 14:25:23 GMT
-Received: from dm5pr21cu001.outbound.protection.outlook.com
- (mail-centralusazon11011022.outbound.protection.outlook.com [52.101.62.22])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4d1hs9q64h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Mar 2026 14:25:23 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K9CrwqNHoUjNMtqaejtLju0FWC/Oh1aRVIxKrJFaQ0z6GW3B8EsuALUa4YCUMZwfPI7vZZ4o/w1hL5JqAQ216hAk2cT5F4+UahQiggbfPuQ4Ts8S+9qu9k9iw4thg2dSEgtJoaUDBlJLAYnulNRmsUZiReKiFv6teAhn0fVN4dxXd+9hXUvBMwspQrttki2kIi6TDQKBh1aqGFVKVIWFES7vDbnuAuaEVgC8usDC8MKF/jEtLY4Ke5DM4b86Tr3rjjH8nhM92azZOM4wgFhHcoEiuvn6hTkJyd9b4YlquIzodhpGo6deOz2hEQcOKS74wJCfEj1PafNwxfj8UCUtkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WzyYOaKJQuwMdpjHa2TrDrPh5UYqv9UmiWroY6r0jvk=;
- b=r2b8GfJ3l2BZVkrrT0+N17H9kn87kXUr6QtglcRApsIzoQE3tjlEVKN1kGe3rQzFBCcV/v2tfBRMJYN7MnPeBVJNG7Y07ZyrMWa4t66dvLXwJPNLSsejQEWYMqDa03LoXyZ4TKj/i4AmQpkwa485rx1NRWyxNwDPVoMpO1vfuJKsTjdnMIb5zL6LMQ9GccJLESALfYLrTvpkKvtU1+2R4vqirz+4CI9LUq3AXWqs/dzBNn6jEBwXGHP1wzfzrYU011UWzjd9PmSkzPRAK4tDRtu6g9T4HZq/RqtM8y0jzg6StVkl8oV7Pov/C6Vy2Zp//SsYFB6Zl9jJxOXVotJudA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52hX-00031m-29
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:25:49 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52hU-0004mS-UN
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:25:46 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-486ff3a0fc1so34572055e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 07:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WzyYOaKJQuwMdpjHa2TrDrPh5UYqv9UmiWroY6r0jvk=;
- b=jJC4vK9XWoZ0rsTAwxjuRC4lHKfkpvBYp7NCRBIpA1I8MZokAmJr1upyUCdfo1Dt8zO4SdCHinzdUcac9pLb8MmSkYthJjicshZdCGzIgxchs5IrYTbFnKSEksHfate0o0+1+8jYZlRSFfH9tsXxBjMQHxGsZ9LOYVrcgdcOZK4=
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com (2603:10b6:208:30e::6)
- by CH2PR10MB4215.namprd10.prod.outlook.com (2603:10b6:610:7e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Tue, 24 Mar
- 2026 14:25:19 +0000
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4]) by BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4%6]) with mapi id 15.20.9745.019; Tue, 24 Mar 2026
- 14:25:19 +0000
-Message-ID: <ba2d7018-7dcc-42d7-ba52-395d4e1d0298@oracle.com>
-Date: Tue, 24 Mar 2026 10:25:17 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] amd_iommu: Follow root pointer before page walk and
- use 1-based levels
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: qemu@demindiro.com, mst@redhat.com, clement.mathieu--drif@eviden.com,
- pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- boris.ostrovsky@oracle.com
-References: <20260311203943.2309841-1-alejandro.j.jimenez@oracle.com>
- <20260311203943.2309841-2-alejandro.j.jimenez@oracle.com>
- <2756c509-4286-444a-815c-d6266c3e3a91@amd.com>
-Content-Language: en-US
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-In-Reply-To: <2756c509-4286-444a-815c-d6266c3e3a91@amd.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MN0P220CA0015.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:208:52e::13) To BLAPR10MB5041.namprd10.prod.outlook.com
- (2603:10b6:208:30e::6)
+ d=linaro.org; s=google; t=1774362342; x=1774967142; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=m/tTx04MnKP3+IW0DzP9IvJRG7ff4bR9Q3P6/VdKyQM=;
+ b=XTUogMQQI48tmNti3Vxp1aA9bCi7C9nP3xZXbKnNC0z68a27qTVwP0uT0BEwlgEqyr
+ CHjN2cjsxq60Pqm59qh7Sw+JoF7i8u/YfUV6cp+mHyP6Avyv/2QSa2NZipKjv53xxyCX
+ W1F/hAbfNfKYQWTsgnlPZSwGIWInc6hWViqH8rkABD4YT4tt2NDTfmK6c0vU6pmmi73k
+ jbB/o3e5aUGFEbtwag3QAoA24cABuw4jLYqxiFcvrP+wUx/XVsdu6LBVPVIbqNG7N2ip
+ +6wMkwjwvQfoFQ0vwqfcMEQ2yeBVev2tHX1QBeYrJ20TDtaTnOeklppLUGCTIUoD8/uj
+ sk4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774362342; x=1774967142;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m/tTx04MnKP3+IW0DzP9IvJRG7ff4bR9Q3P6/VdKyQM=;
+ b=OG3s0JIxl7Lgb5vcpmZtIN9i7qwWz5kL3E7w/j+6RcjSPC1+GdJEdETZiYul5vraHj
+ EhbyczwmVeNuSUMRmQJ8uoqOtOQmXEWlh9J9TJHSYPxZzFDalv1V6Qjt9YOMFs4X2Wkc
+ 7Fc8mgJVp8EtbTN2HKDSjZWw59/rMMoprGBxBTAUwK+HpQYOSCFRO5Nk+OBCok5yeWm2
+ /XqSwVsS3cSysLah2YSIgfHII/xx1DA2v0KCu/sgmbVMy8DpUjiMxTV+6heMTbM9xOCa
+ gAuO/iFRiCi17VblGpDfoDFuN/P12TozUA65iV+tphzOUizZFETCOOxj8AWW54lnZVwL
+ QAkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtyDBstFKHfCUueBJawX3G4iB/xrBfI/fG/J8puoIkFa6VGVWfjJR1elJL280m58o3WW7Ve07WQAmb@nongnu.org
+X-Gm-Message-State: AOJu0YyUK7ExIaCPkWD3+gcOptPn3fiQhN+/d+VqfhtROtE8ZCzmwCOU
+ bX+ZdeuXq8x3snewfdojcLL/d7rAdzAk0RrPNUOlRgSmRG0CcNYOGorxwb9YFqE417Y=
+X-Gm-Gg: ATEYQzy6r1Nbja8CPsQUNSzfrfecTDrPL6NoODdyEyzVyERATcGZ9dXrClzGQtxiPqi
+ RPmVZE3Um1lhVTbLAmpoIPLoIyauHc74iiDOJs7IEcnvsx05MYHR3SUJ/Zvn+QObZC8gYMVxCCP
+ g9ZjvY1i15hF6wpBbuPBc/04M6WoRvhevlCCi5lgO97ddCvf8z9ZRL6fsQMSaOxClFJ15ExlKuz
+ t9EUCejhGQCms1hn32bUIK5GfAXZ+OCKng7b5vVRd8Fc6RSG1jQ8PZ26pOswmnY/cduBIHEun4l
+ FRrssl9sMoz44rbgS/dMvkdM9uwyEyYZuWJQOLMnEUgXDdov0314GCmQfa5BiCCUN1yHHAPEhc9
+ FezxlVYK3Nt3YAulljUNijCPjHPJXvBtgO6qdxfYMFA3DD/Cb8BrqDrrqFc3fLvCGHzekls1991
+ ZS8cRmpsuQkVGFjOD0S62v2l8m4CTgRjCylL02+vrC+xn2fj6rSpvoMCCJQ0E8IaUhGw==
+X-Received: by 2002:a05:600c:19d3:b0:487:1114:d431 with SMTP id
+ 5b1f17b1804b1-4871114d548mr40196815e9.18.1774362342456; 
+ Tue, 24 Mar 2026 07:25:42 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48714bc9ef9sm11244255e9.5.2026.03.24.07.25.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 07:25:41 -0700 (PDT)
+Message-ID: <8f1052be-a018-4e3e-ad5d-7a5943a0357c@linaro.org>
+Date: Tue, 24 Mar 2026 15:25:40 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BLAPR10MB5041:EE_|CH2PR10MB4215:EE_
-X-MS-Office365-Filtering-Correlation-Id: a277cf04-ec64-4688-2653-08de89b12d15
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|18002099003|22082099003|56012099003; 
-X-Microsoft-Antispam-Message-Info: 0PYfmIGYEjcxwYtMt8ZF5YerELayb+3B5GH15qTZgjtCcXJ4MrLTJGsC9EF/mo67qe1HZa2xxxVz/4/Km1dkXVcenNC9Eg/psggJkIRK5Nmyn79tNw37ZM150EqabL2TGIqBg/l6UpXNGVXeR/2g91CTOpYM64QkqS9anc6UsRjWF0qUxOtvln8/bs6PJPgj4bs2jRETADli88QvXYZ8I3yyX4dNQxqlHI93uIlgsxN0B9wqSTS0X7khAJHO5M+V3mFopH0/AVTk8WZV8EfzECNM/46GCHyD6JkG3vXXktU2rGowGHoayDlLmH1XEGUXKIIG9QlW4sxfxqOfCqbyQZnmq46jEO5CQ8yHKWvjnUUKiqJXUkntWsNuy/N/5Skfd8h2+/UHgKeeHRpRh4NwnCiBBY0ApEpMWIC+LXnQpfW1H9eYFA0lAzPUx/7qCuVFxsnMdmUyHfehA+GNlocXpLJiC1CbYF0FcGD6xfg5MVSPUxivdmiregx9UoKZGDQNLUryYoNdgJkzGCisWTNImSDNTSAa8BfbhePgF6iMMeyywL/oYhbWEpeHDiCpqb/2EvoIpnxym6iuszjqHwqE/m0KBdyBz6J4MwGee7e2b1yTx+TO5/NR90nm7WJWcD4diZUexhTKfWSiUbLPE2ou7uQpDA8lJ635RcIOK+kehiVxXfw8bKWyJl4dDk8vCbnnI8RFU8Lq6VUba42QKrL/NBnKQ8u7e6xJXhtmpohtyQQ=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BLAPR10MB5041.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(18002099003)(22082099003)(56012099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OFUyOVNBL3FIaUtkeldNYWxxUnArNE4waXU3WG9iL0FCUkdSOVRYcTJXWXNL?=
- =?utf-8?B?MWdLc3R0Z3MvMXNKOEpQNzJvemdYbCsyR1Jleng4SmljWGhzS0hEOCsxaSt5?=
- =?utf-8?B?UGFoU084MWFPdFY1MWJ4cm40Ym1SdnlzUk9TMDNjeG1FMER0WThDN1dmeXdX?=
- =?utf-8?B?bFEwZkNyaGN2S0lRUEdSZE9vbms0eW0xUVB0UVRLR3Z5RERoR1NZVjhFbFNk?=
- =?utf-8?B?TCtHYUFCNGl4NVdlM2FsaHVJcTJxZlVjeGw0eFZvLzRyclRjOWVGK1RnaVN5?=
- =?utf-8?B?SWs3akl2bnlVQlhxSFc5UWVFQXI3VUJ6YjZrR3NUN1k3ellGcGVDYXZTWGln?=
- =?utf-8?B?bkFwclk1VzZsbmpZYW91SG55U3k0RmptL2ptYVM0WTZGN085YTgxTFo2WWlk?=
- =?utf-8?B?b3ZoOWZHOU5haUd5UzFJQkFRdUhTQTUxSkxwZzlFRFVTSEhlOFZadmkwRTZH?=
- =?utf-8?B?eVVvVHVRK0lPQ08rcEN6Y29pTlEzbU9XYnloWENKNGpsTHhuWWR4NDhtOFc4?=
- =?utf-8?B?Yk1xVE9yMGdPbGdab3U2cS9iak9TZzRYSEVsbkU0MEgzV0VncTJGS3JJYjUv?=
- =?utf-8?B?UEtlYW9oQTQvTCt4bHBoUmFZSDRuSjNpb3RIVXJaM3A5QXRnaWpjZlNZelNy?=
- =?utf-8?B?MzI4S3dFYStOSWZQVnN1cStZZXcreHhtcFNVRzhndE1CS3FidXFIYUY2VVZi?=
- =?utf-8?B?R1VWT2dmNE1wbjltMXQ0SldNOSt0Z2g1TVJ4UVRQRmZ5b2V6V2hQZU5KcU9E?=
- =?utf-8?B?NXFpL3V0Y01xb0I1TC94aFdnYjNUT1M3T0l3M2VXM0h2dnJxMytKdG9xdFJX?=
- =?utf-8?B?SGhqSm5FMkhac09vNVRsMGEzemhJYUZ1QjBXd3dONzVGY2lzOUFZWDVQUzZP?=
- =?utf-8?B?STkyWnlXOGpIMnBjV1d2NnFCbE5tSHViQ2dGdjU0VW55YmJFSVVHczYrcDZy?=
- =?utf-8?B?V0lrWnAvME5oSjNma2Z2dXQ2VWhjdVV3bEo2Q3hKWks0bUZRaFpDV01USm9Y?=
- =?utf-8?B?M0V3UWJPVXZiMXp4eVArUnVnZE5vSUIva1M4b3BESVQwZlRna24yTzJPb0NM?=
- =?utf-8?B?M3ZvT2tlWStteHptbk9wMkRxdC9lQjJDUWswME12cUlWNWNWMURjV1ZBM1ZU?=
- =?utf-8?B?N25BU1Y1WGFzbmZxdlBMMmtlN1hGOEdqWFUybjJTN1djY21Hd1VTMDZKb01X?=
- =?utf-8?B?OGlEblRGNlExRDYwMnN0eUZGQ1lVU1R4amJWOXl0QVBjRXRMY1dybUlKTjY1?=
- =?utf-8?B?VytLdkxuZktnYnpVZlRJaVg5cUdOK0VobThIMU8wZjlzV3JjazVEWitJMG52?=
- =?utf-8?B?K1JqYkhCZEo5Sk1hY0RJUTJFc2JHbEpVRWFjMWZXZk1RWHI4Q3RYK3REZ21C?=
- =?utf-8?B?NmFROVNsU2hpWHdMZGg2TGc1d0h3SU44WFkwT1dhN0lZWCtEdm1YNDZEU3VW?=
- =?utf-8?B?dkRHd0t6TjBYVVRzVXRTWDJ6bkR3RXBUR3luYWhpa1Yzb0t5blpVT2NlWkdp?=
- =?utf-8?B?TEpQVERmeWc0Z0ZLWnY3blpvaDdsaWR1aHU3WGR5end2UDBVTGZ5clM3QW5O?=
- =?utf-8?B?TFhRSmplQlJ5UmlKTXJONnV6ZTgxeWYvYWxXb0hJNjZNeHh1Yk5DVlcwUXRJ?=
- =?utf-8?B?VDEyOU9KQ3N3NUVCR0s1WC9hZkdEejRRdWluTmF0OTFVMEcrSzBWNFl1ZlpY?=
- =?utf-8?B?Z1dZajhFdlJ5YUg5cHJTcjBOZXNTOG1Kd01hWXlUS0ozZTUrY2JLem1FU1I0?=
- =?utf-8?B?WFFiYUk5aEJ6d2kwcnF3SWc4TWx5RUdpZUZsRGlPSTkrY09uUXpCcUNKZ3VY?=
- =?utf-8?B?QVZSMnpoVDd6VHQrS0RsWXk3NnZENHVrNVhMVVNzNSsrcHU0emFpUnc1TFpk?=
- =?utf-8?B?ZGhSWEJOaFU0OWRHaG9PRnQvUld4YTh6NnFlQzFmeE9SSUNRNVIwUVdDdnMr?=
- =?utf-8?B?UUZ0MTRUSHZRbm9TUWgrTisvS2dHQkN0TTdHaVB5SjdQL1dGRkp4SWJtdWE0?=
- =?utf-8?B?My9lSXBrWEZNOWdoRklNTlk1RUJMaTJsWjNlbjNZQldEdWRBQmFqOFZTcXVE?=
- =?utf-8?B?enRsUElISG5QNTluRWxzRmVDa05aVGliVXNOSUc1UjcvR0R6UkRNQkhaMDVp?=
- =?utf-8?B?RkpWR3poR0FkWlFTOUNnRG9CSytSdGMwUUFBRUpySnlCNUtYQjZZQUltOHBh?=
- =?utf-8?B?M0RKV3FjSFJQVEZqRkhGSVFuOW40ZXA3MFJBZmp3bm5CbXhTOHI0R3ZTWk9I?=
- =?utf-8?B?RkRVeDFmcy93L3BaVGtycC8xWDFvWVROU2orTE9lZ0g0MDJ0ODd2bUFCNWc5?=
- =?utf-8?B?OVlwVFI4dHYvNGRmbE1HS3Z5WnpkU3dPdXEvbXM4emZxZWNCOFFsKzlYTjRX?=
- =?utf-8?Q?NiG6CL3mz82uTk7A=3D?=
-X-Exchange-RoutingPolicyChecked: Z1jDcV7ZrFaBT+LNfDqWFQvsgFRplwQOIYNk0sRFJspyMt/18/K9mQdINxDZx7PSWw02HXQHiHVApYAuZIgEzRMJkL0C54I2Szy78M0XnNMP3aKR6qW3fe/+XEsWkyQptpoSlLdfN6mn6gGoaW8LDXoDuZ8QIuI/LXou7KUE6evxTxZTnEPkV8VIrB8gqIoDoNQR9DuIxBG3/a3MOP/J6kh26fc3smcSOcdFJRweWckq+SFEtcEb3Z4Sgj4XO7XYlonKihSzOI2OfZR3VbSdAoi6EwrcWuE4K273DXt7hgv7lDmS3LbzQva1j3krPYoE6WOLAb8KYtw87sf/GThRHA==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: MSUcFsUO1XUdartt8ID0/hGfEtyLwe1pzQsb+5e6IEDqPMpfVUlmlP13EibBLpdSdF+UyRYUAQ7mdvIeeQrvgTUkzHgOyHE+7DPF1KRjxJcytk/s9xrAG4MBz2ak6JU3rqvj0TggD9F5/Vlk6gFJiVEBnMJLm3qwaGOk8A33A1pGHGbu+irscfEcKSkqisMTwpQ3Llv/5d57vAJYH/fN0a1hjwt55+XGUYyGt+bIyZO9zqY4dUDunGrzWYbzZbpY/Kuf0WfWDvrxq4etai6oFXmwqiurSx5uIJpMBvNidY+KHioypEwTsjOuwXGnnhRejfK7nOZcBkIq1udpP3a/PuUeZyVzQT5GxMJxZAM7bRYbRAt8iMmigL9nZYfhReeaO8THqSPbrP6uWXXZfPvqcqaJYTnM7G1tKx43VwEC+daamcYj4iv+z45GA/RX/PwUXZNevRGf5sa/Sbvviw5lpQ9T6xITVgCo5E52uv8E30PxYtDekkr+j51Jdd8GHtUgEXJiRK4bQojnJ7/Dyw5TBmURJp77fdJ4hW7d/JmC6npAyUgJ/avX2ytJwrj4U++OvAmfsz1xH/2zfwtGCMGLcLyFFdaABFHo6BRQJ5zZqqY=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a277cf04-ec64-4688-2653-08de89b12d15
-X-MS-Exchange-CrossTenant-AuthSource: BLAPR10MB5041.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2026 14:25:19.3956 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9JcSBmWwaFEbJzsa4GrfWkxRKGoUV5WRf1CjJatPQ7ixkWkt/KmWehizaZZTB+B9WDtHIy6ZyeP11rYPwF0/uZwBWfnES4YsziydLJb8QZc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR10MB4215
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_03,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- adultscore=0 bulkscore=0
- malwarescore=0 mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
- definitions=main-2603240113
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDExNCBTYWx0ZWRfX4bDVBFrnc2JY
- zHPd2f19ku2oR3IEHY95DC6k1apyDUbLbvdV5QrrPTaOmDSerBP51IxZSKeEtK5qT1tSkgm3eje
- lb+lxRbPVQXJVjJfN7mCEsAL/MkaQvnjEjpEX1LHIrzE9Eu6rTPjNxBzeJ0Ru5nkp+QtpFzkvvW
- syoR+Gu5CzU4b5Q9WGc6r9gtbjJar9YSKGXN8GM9fHr8jfXOoVVsKRDCZ5stj9E66qDvW2P3tFI
- 6PA+NTrPE26apxMymvp52JaB/Eyq80JXbXFK4w5esFf7WXs90RngprQRybM64RTEOmnK5fTmVkB
- ogQq4XhSEDc3pqp29uIFSob5Ybi4HPSzrTE6h0XJ+9asseDP1MXGZL21IPMtyId/76ims1ohwH0
- +Lz5axB7jR30HB9JQ1Cy1E5IBpcWeaMimDd+bkxX71axX8ruFQPMhE8oYe2Scm84S7pWn15vPuP
- 2sjo5BKAq0nMjSWm2zA==
-X-Authority-Analysis: v=2.4 cv=aq+/yCZV c=1 sm=1 tr=0 ts=69c29ed4 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Yq5XynenixoA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=69wJf7TsAAAA:8
- a=RWxpEp7VAAAA:8 a=yPCof4ZbAAAA:8 a=q3gGEZLLbp5tZrWB41oA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22 a=3unh6Pbajv6CBnL1DxgC:22
-X-Proofpoint-ORIG-GUID: j969-DCFr1ZEyxQCbxc1-Z2bQylo9Qnz
-X-Proofpoint-GUID: j969-DCFr1ZEyxQCbxc1-Z2bQylo9Qnz
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 4/5] Run pl080_run in main loop
+Content-Language: en-US
+To: Tao Ding <dingtao0430@163.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <cover.1774099044.git.dingtao0430@163.com>
+ <97fc49242d026d0784ee31816a3561dc6b316c8e.1774099044.git.dingtao0430@163.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <97fc49242d026d0784ee31816a3561dc6b316c8e.1774099044.git.dingtao0430@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -210,88 +104,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Tao,
 
-
-On 3/23/26 7:01 AM, Sairaj Kodilkar wrote:
+On 21/3/26 16:46, Tao Ding wrote:
+> Accessing MMIO in QEMU will trigger pl080_run. If it is a memory to memory data transfer,
+> it is generally faster, so it will not significantly block vCPU. But when dealing with peripherals,
+> time is uncontrollable because it is unknown when the peripherals will generate data.
+> This will result in continuous blocking of vCPU.
 > 
+> Due to the presence of BQL in qemu, mmio access and bh callbacks are safty.
 > 
-> On 3/12/2026 2:09 AM, Alejandro Jimenez wrote:
->> DTE[Mode] and PTE NextLevel encode page table levels as 1-based values, but
->> fetch_pte() currently uses a 0-based level counter, making the logic
->> harder to follow and requiring conversions between DTE mode and level.
->>
->> Switch the page table walk logic to use 1-based level accounting in
->> fetch_pte() and the relevant macro helpers. To further simplify the page
->> walking loop, split the root page table access from the walk i.e. rework
->> fetch_pte() to follow the DTE Page Table Root Pointer and retrieve the top
->> level pagetable entry before entering the loop, then iterate only over the
->> PDE/PTE entries.
->>
->> The reworked algorithm fixes a page walk bug where the page size was
->> calculated for the next level before checking if the current PTE was already
->> a leaf/hugepage. That caused hugepage mappings to be reported as 4K pages,
->> leading to performance degradation and failures in some setups.
->>
->> Fixes: a74bb3110a5b ("amd_iommu: Add helpers to walk AMD v1 Page Table
->> format")
->> Cc: qemu-stable@nongnu.org
->> Reported-by: David Hoppenbrouwers <qemu@demindiro.com>
->> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
->> ---
->>   hw/i386/amd_iommu.c | 132 ++++++++++++++++++++++++++++++--------------
->>   hw/i386/amd_iommu.h |  11 ++--
->>   2 files changed, 97 insertions(+), 46 deletions(-)
->>
-
-[...]
-
+> Signed-off-by: Tao Ding <dingtao0430@163.com>
+> ---
+>   hw/dma/pl080.c         | 11 +++++++++--
+>   include/hw/dma/pl080.h |  3 +++
+>   2 files changed, 12 insertions(+), 2 deletions(-)
 > 
-> Hi Alejandro,
-> 
-> amdvi_sync_shadow_page_table_range() does not check if DTE
-> **valid and translation valid** bit are set. I added this check in
-> my reply to david's patch. Do you think we should include that
-> check as well to ensure that only DTEs with **valid and translation valid**
-> bit are passed to the fetch_pte ?
-> 
+> diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+> index 627ccbbd81..3596739854 100644
+> --- a/hw/dma/pl080.c
+> +++ b/hw/dma/pl080.c
+> @@ -232,6 +232,12 @@ again:
+>       pl080_update(s);
+>   }
+>   
+> +static void pl080_run_cb(void *opaque)
+> +{
+> +    PL080State *s = PL080(opaque);
+> +    pl080_run(s);
+> +}
+> +
+>   static uint64_t pl080_read(void *opaque, hwaddr offset,
+>                              unsigned size)
+>   {
+> @@ -326,7 +332,7 @@ static void pl080_write(void *opaque, hwaddr offset,
+>               break;
+>           case 4: /* Configuration */
+>               s->chan[i].conf = value;
+> -            pl080_run(s);
+> +            qemu_bh_schedule(s->bh);
+>               break;
+>           }
+>           return;
+> @@ -351,7 +357,7 @@ static void pl080_write(void *opaque, hwaddr offset,
+>               qemu_log_mask(LOG_UNIMP,
+>                             "pl080_write: Big-endian DMA not implemented\n");
+>           }
+> -        pl080_run(s);
+> +        qemu_bh_schedule(s->bh);
 
-Right now the check for DTE[V] and DTE[TV] are implemented in
-amdvi_as_to_dte(), which all callers of
-amdvi_sync_shadow_page_table_range() use to extract the DTE that will be
-passed as its argument. So I think if we were to add a check, an assert
-would be more appropriate.
+If transfers are scheduled, they need to be cancelled when the
+device resets. See docs/devel/reset.rst:
 
-On the other hand, I am worried about sprinkling assertions around the
-code, and I am actually considering removing the ones the original series
-added to amdvi_sync_shadow_page_table_range(), fetch_pte(), and
-amdvi_notify_iommu(), since any failures in these cases are likely to cause
-immediate symptoms and I don't believe it creates any window for data
-corruption.
+   DMA capable devices are expected to cancel all outstanding DMA
+   operations during either 'enter' or 'hold' phases. IOMMUs are
+   expected to reset during the 'exit' phase and this sequencing
+   makes sure no outstanding DMA request will fault.
 
-With that in mind, to answer your question I would not add any additional
-check on amdvi_sync_shadow_page_table_range(), and would rely on the
-current convention to check when retrieving a DTE via the interface we
-provided for it and all the code already uses i.e. amdvi_as_to_dte().
-
-
-For a follow up cleanup, maybe amdvi_as_to_dte() should be renamed with a
-more suggestive name that clearly indicates that it validates for those
-conditions. But in context, all of its callers rely on the fact that it
-does this verification and its return values also encode it.
-
-While looking into this I noticed a chance for minor cleanup in this flow:
-amdvi_do_translate()
-    amdvi_as_to_dte()
-    amdvi_page_walk()
-
-Where amdvi_page_walk() does an unnecessary check for DTE[TV], that
-amd_vi_as_to_dte() already ensures is set.
-
-Thank you,
-Alejandro
-
-> Thanks
-> Sairaj Kodilkar
-> 
-
+>           break;
+>       case 13: /* Sync */
+>           s->sync = value;
+> @@ -405,6 +411,7 @@ static void pl080_init(Object *obj)
+>       sysbus_init_irq(sbd, &s->interr);
+>       sysbus_init_irq(sbd, &s->inttc);
+>       s->nchannels = 8;
+> +    s->bh = qemu_bh_new(pl080_run_cb, s);
+>   }
 
