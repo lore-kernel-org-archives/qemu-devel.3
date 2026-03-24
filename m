@@ -4,152 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FB7F532E9
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C103F532EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4wjL-0004sI-RZ; Tue, 24 Mar 2026 04:03:15 -0400
+	id 1w4wsO-0006OZ-WB; Tue, 24 Mar 2026 04:12:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w4wjK-0004s7-ST
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:03:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4wsN-0006OA-Jn
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:12:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w4wjI-0007lU-Pe
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:03:14 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4wsL-00016c-Gz
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:12:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774339386;
+ s=mimecast20190719; t=1774339951;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FDhaQQlJ0yFYkEgcZ1I2pIIIkPMoQ00+avbTeSWCjg4=;
- b=LEzuEcuctuQacI2dcZZLjkSSlIfHEP0iwFVzWVzNvE/6skGHgKhIGfcfssI6YypO5Kkt8L
- xwcEj5Xqrr8XUcoXAQK5J1t3eH12Xuo5f5m0u5kLH9NicWibv77t00S5qz5t7dl84srCla
- +3xqSEzaBs4lplvFauP9IpOFJ6+d8n8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=ICHirUpQxuQk99gTx4ZfYSn5+71PumbyOyIBnXo6Q9o=;
+ b=EHMUL75LqRsB3qJqUkncoWVnD3dgMJnuqGLsbJJ5XVAt/3sZI9D6VxMfYE2k53eFzUohMC
+ ggUOyu64yL8X1pR7vEoO4rGlv7utJycrOeXzSXjfbB02qeAdiZnd79QcVveBugwMW1woZ/
+ VLzAzteAP0iUpccojWI5uQgTKI0OoqE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636--1uJKRMTOxO6Tr5Cbl3krQ-1; Tue, 24 Mar 2026 04:03:04 -0400
-X-MC-Unique: -1uJKRMTOxO6Tr5Cbl3krQ-1
-X-Mimecast-MFC-AGG-ID: -1uJKRMTOxO6Tr5Cbl3krQ_1774339383
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-439c794ec8eso4032188f8f.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 01:03:04 -0700 (PDT)
+ us-mta-139-BixhPtGiOJGfPhU0LDTr2g-1; Tue, 24 Mar 2026 04:12:29 -0400
+X-MC-Unique: BixhPtGiOJGfPhU0LDTr2g-1
+X-Mimecast-MFC-AGG-ID: BixhPtGiOJGfPhU0LDTr2g_1774339948
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43b7ec737c1so1005017f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 01:12:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774339382; x=1774944182; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=FDhaQQlJ0yFYkEgcZ1I2pIIIkPMoQ00+avbTeSWCjg4=;
- b=DroguN7hr/7P8BAyvh3k3W+t4Jhg9ipIcaKiwIKQJYd20fIkqp7xsBETxnaDtQ63MB
- CWVfqO9pqr4p4E9QNnw8JWz1CAIYDzaPqUyaaDhJGNKWWoveXc3qEb8H/RjKHjG77LN+
- IO8Bw96dp0ROUA5MWKLqfF+m/L0fQ3brKtsKGMNm1xOYYd5TbF7ve9uaW5QlLKujZqhq
- YmUPcJ1SHd0QBTzbngGoptyoRuBtuFWGC7Cs/iJpxRPj0yIT6H/k8M/OFoHi7qDOtNJF
- n9exP6cbgIAU0phv9B58U5y429FkiKZQp0XDbse4eeVOayCnbNLlwzO/umV0/G0PV6Y/
- 8HLQ==
+ d=redhat.com; s=google; t=1774339948; x=1774944748; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ICHirUpQxuQk99gTx4ZfYSn5+71PumbyOyIBnXo6Q9o=;
+ b=n1WXWvH65uYkmokvqbSadVFJZRxHExKZa288o6syrJI8HDZG5wkm93EQ2Y81mw1y6L
+ pvCp0R4kzVceAQ9NiBY6NIROtQl2pjx/KSS42e6CJSWqHCZ4aF70E+cEJGTjdK3xDNIh
+ Gtdv87REBsSqqst2u+7LjOwZQWjJPJCuUPjR/o3ihW9UU8F7fkVezD9aJvU9kXzk7zdP
+ JHbHa2jpbn/DHrzHc6TkaL6xkaA5yi426LwnktYeFsPCfUuXiHjf54OeKtLmXn1dlgjh
+ b7EHG9Ys8Fi5bUCwITlyJgbFDMKnDCui7+1iCBUFWWg1A5CxByqIqk0bc3Npl8CfcaUn
+ fIMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774339382; x=1774944182;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FDhaQQlJ0yFYkEgcZ1I2pIIIkPMoQ00+avbTeSWCjg4=;
- b=PHSq1Y8uWsf321gH07CziqbOkmhB+eLeVFOQd+71wjFEYlxoW48fpF84yTWI3JP5vt
- wec0oueVFY/AdXhcqd/JL9w+msvM881fDLGkX5lJ9xJf6xf5bcwUrh06nALOca2UDgA0
- xUgX25t/6Kj7QjS6cKr+OBuHccPbhPCzfh8uJWoa7vaBcfHUFuvDxeihMZ+TB1YImGH0
- mFqyatGytYW3IOxC1Cc8iBBv6IW6vsi0GhZ9GSv99czcMeuYphvH69K4MVM3MFSyGKcm
- I9Fb7YulGs0ESRO6813vn1p5SpSNWb4LZhJoyIyi/XvSm62mi1prpSfAIq7+lqEDb0Ok
- SxXQ==
+ d=1e100.net; s=20251104; t=1774339948; x=1774944748;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ICHirUpQxuQk99gTx4ZfYSn5+71PumbyOyIBnXo6Q9o=;
+ b=eqNCOUCRli8RdYjnBT2LahoEJS1sHkg+9yRvv7G6my9Z3JUL2kkZC1KldF5GDjNTtN
+ inPrThpU6yy3833lKDOTWdOv7Te9Yd/logxxKHg+p9BY2bJTwxjzt8a+ESKaEHKeamzD
+ cKdKu9dBcS/Xu5vDetr+gpN7m7m3Axy0IxNa/VQucu0xIU1vA4XdlHH6X/ZMS2dAuRq1
+ J/CNhiDZfQDylWvLweesc4HfpQSfd68YF+QFByZnufFP8GHYEPf7+X1Wfu/ngaC7gncd
+ wiSzQPPcZTJxtLwTeoIY0pi4wzWeFCW2ltx4MNFK9EdCJbxXUdtzt6DPPWYg50bzjoVx
+ OxuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxdpUc/mOdYl6y6w40r7T1oUADk1sVjjMehgiCkEwoQnLM25q8kelGpjsYoiLmPC8Q5RscBMJav4Z2@nongnu.org
-X-Gm-Message-State: AOJu0Yzn3F2kgItxFW8NluuAy47jzj8VULDeRVO5MIOPylmQi8OGlzjU
- HCVmxmgyew1mnl1yTPVXEgE+1FH8wtg0/0gIQt7zzH2OwPkG+EBJTdLSIA2oalrvbAW8KaPpehD
- vDHicSNErP6iPCAnOHvlFkNSefnlaH8DmV35/tliUrXMaKdt7L/7R7SZJDGCp05bp
-X-Gm-Gg: ATEYQzwSUMixwZj3plY0zI5NVxh7PQoKnKTiYpFb2Uqq3HS+pZfnXkboAl5tDlv5j6J
- Izs2KRrfbbrb4PZl0nAFl+M8V23bwY5lpKD1qVAq2liqBEmGzmfdsl/1lUJu9VRZptvT5x7sVMX
- eqP6TeIgP9MM0oBiV7N+kOA+ys+ifS/plO/JeQj3qZQefoB5fIz+Bok+JjVZb1N43Fyguu4gXSf
- bMKLh7me3ykcuD2yWAOtIxh7krcimYOtMDcyHwDokjCRztkxeSjj43bf1bYKlTA6wrJLFeDJNjV
- LBy+nQkqyayws2KFXf5FPINHr6EgDUXqNbWZov4H0xhdK/o/vWdMGltlLyMdh5dz24dp2Kmwg3e
- FMVSj80AEa/SJC5OtWOZ6ZPmr/YKEcEgIRZbBIUhZOXPlrx32HKGijLWzy8l+
-X-Received: by 2002:a05:6000:608:b0:439:fdd5:10b5 with SMTP id
- ffacd0b85a97d-43b6426d710mr24429557f8f.39.1774339382359; 
- Tue, 24 Mar 2026 01:03:02 -0700 (PDT)
-X-Received: by 2002:a05:6000:608:b0:439:fdd5:10b5 with SMTP id
- ffacd0b85a97d-43b6426d710mr24429493f8f.39.1774339381807; 
- Tue, 24 Mar 2026 01:03:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCUzfNmGgM+2ZeMnmjnXpWejoWjsTFMakLgosMmd/YBrCLVMApdA1j/NBQ93Wnzf7/mpFmbc33wUmTgN@nongnu.org
+X-Gm-Message-State: AOJu0YxvBAxEwOv80UuKvXnYuwWSTg9PNsarU2HvwZqFF/NrL2hzwHWr
+ 7PhpPF17VsST5KNaH5prmLv4PKO5zDzD0Y3tJZ+dq/mXu0Ij6/W73XnpSejEuDiGdI6p+rtNKCZ
+ UEZssLKuJg/Pa+qdFnH31jkBrYNuAZnPgqcU0BbYKUIQDOHVVC0uzrIWw
+X-Gm-Gg: ATEYQzzBo58MLVnRxPEYzQqHJCoFJXpZzGRq6PoaVvSLXveh83NcpyB6OfnxqabarnG
+ cF3E/YA/eVBGdVOfSEIHWHs/Nvizgg6R780i+eFO8PDC3LODcImz0rhwLf1b87XhX25v8d2WxLk
+ 4T8R08E9SEuqfmtea9Au+WRjCkxsZdrZpjuLSFBChvPN/Luu7/5Gc5e7dj2mu/ukoblBVUaOKnC
+ jYjvPLm/e4aduVP+7flxniaZ4ENU8aTiYjxp1gLRKr9ktX47hLbYM32zcIrQECzbslP8EthtqY+
+ YxrfuO4W8nhHL5qU2k//H4aT9NJ6OZBkJC6/k4F30G5PHtg6b2FqWfcS9J8Uv/vkUn/o0BNX5jP
+ 1PVGW5Eg7lI3zpUHykeE5E79Jo/FkN438nO0gwHF6IoFu7vFSrDzXG/iN3aKnmJrxtFNDS6ZwR8
+ lBLDvnFncEjLyy54i/XrXArhZdqwPqQrxYXNCoRe/O34WiCkxZ+Ms=
+X-Received: by 2002:a05:6000:2010:b0:43b:509c:51fe with SMTP id
+ ffacd0b85a97d-43b6424e349mr22815927f8f.13.1774339947993; 
+ Tue, 24 Mar 2026 01:12:27 -0700 (PDT)
+X-Received: by 2002:a05:6000:2010:b0:43b:509c:51fe with SMTP id
+ ffacd0b85a97d-43b6424e349mr22815866f8f.13.1774339947348; 
+ Tue, 24 Mar 2026 01:12:27 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d737:d03c:df99:cbc9:b444:8cfa?
+ (p200300cfd737d03cdf99cbc9b4448cfa.dip0.t-ipconnect.de.
+ [2003:cf:d737:d03c:df99:cbc9:b444:8cfa])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b6471a27csm38355690f8f.36.2026.03.24.01.03.00
+ ffacd0b85a97d-43b644ae016sm34646990f8f.4.2026.03.24.01.12.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Mar 2026 01:03:01 -0700 (PDT)
-Message-ID: <37e7a5da-9fa5-4602-97f4-d3190f638b01@redhat.com>
-Date: Tue, 24 Mar 2026 09:03:00 +0100
+ Tue, 24 Mar 2026 01:12:26 -0700 (PDT)
+Message-ID: <9f951ced-6d40-4bd2-8cde-3b0be7503803@redhat.com>
+Date: Tue, 24 Mar 2026 09:12:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 25/27] hw/net/ftgmac100: Improve DMA error handling
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20260323165218.96607-1-philmd@linaro.org>
- <20260323165218.96607-26-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260323165218.96607-26-philmd@linaro.org>
+Subject: Re: [PATCH for-11.0 2/3] linux-aio: Resubmit tails of short
+ reads/writes
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Aarushi Mehta <mehta.aaru20@gmail.com>, Stefan Hajnoczi
+ <stefanha@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+References: <20260318153206.171494-1-hreitz@redhat.com>
+ <20260318153206.171494-3-hreitz@redhat.com> <acF0V3W4aWhP-Zlg@redhat.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <acF0V3W4aWhP-Zlg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -167,86 +129,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 23.03.26 18:12, Kevin Wolf wrote:
+> Am 18.03.2026 um 16:32 hat Hanna Czenczek geschrieben:
+>> Short reads/writes can happen.  One way to reproduce them is via our
+>> FUSE export, with the following diff applied (%s/escaped // to apply --
+>> if you put plain diffs in commit messages, git-am will apply them, and I
+>> would rather avoid breaking FUSE accidentally via this patch):
+>>
+>> escaped diff --git a/block/export/fuse.c b/block/export/fuse.c
+>> escaped index a2a478d293..67dc50a412 100644
+>> escaped --- a/block/export/fuse.c
+>> escaped +++ b/block/export/fuse.c
+>> @@ -828,7 +828,7 @@ static ssize_t coroutine_fn GRAPH_RDLOCK
+>>   fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+>>                const struct fuse_init_in_compat *in)
+>>   {
+>> -    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
+>> +    const uint32_t supported_flags = FUSE_ASYNC_READ;
+>>
+>>       if (in->major != 7) {
+>>           error_report("FUSE major version mismatch: We have 7, but kernel has %"
+>> @@ -1060,6 +1060,8 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
+>>       void *buf;
+>>       int ret;
+>>
+>> +    size = MIN(size, 4096);
+>> +
+>>       /* Limited by max_read, should not happen */
+>>       if (size > FUSE_MAX_READ_BYTES) {
+>>           return -EINVAL;
+>> @@ -1110,6 +1112,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
+>>       int64_t blk_len;
+>>       int ret;
+>>
+>> +    size = MIN(size, 4096);
+>> +
+>>       QEMU_BUILD_BUG_ON(FUSE_MAX_WRITE_BYTES > BDRV_REQUEST_MAX_BYTES);
+>>       /* Limited by max_write, should not happen */
+>>       if (size > FUSE_MAX_WRITE_BYTES) {
+>>
+>> Then:
+>> $ ./qemu-img create -f raw test.raw 8k
+>> Formatting 'test.raw', fmt=raw size=8192
+>> $ ./qemu-io -f raw -c 'write -P 42 0 8k' test.raw
+>> wrote 8192/8192 bytes at offset 0
+>> 8 KiB, 1 ops; 00.00 sec (64.804 MiB/sec and 8294.9003 ops/sec)
+>> $ hexdump -C test.raw
+>> 00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
+>> *
+>> 00002000
+>>
+>> With aio=threads, short I/O works:
+>> $ storage-daemon/qemu-storage-daemon \
+>>      --blockdev file,node-name=test,filename=test.raw \
+>>      --export fuse,id=exp,node-name=test,mountpoint=test.raw,writable=true
+>>
+>> Other shell:
+>> $ ./qemu-io --image-opts -c 'read -P 42 0 8k' \
+>>      driver=file,filename=test.raw,cache.direct=on,aio=threads
+>> read 8192/8192 bytes at offset 0
+>> 8 KiB, 1 ops; 00.00 sec (36.563 MiB/sec and 4680.0923 ops/sec)
+>> $ ./qemu-io --image-opts -c 'write -P 23 0 8k' \
+>>      driver=file,filename=test.raw,cache.direct=on,aio=threads
+>> wrote 8192/8192 bytes at offset 0
+>> 8 KiB, 1 ops; 00.00 sec (35.995 MiB/sec and 4607.2970 ops/sec)
+>> $ hexdump -C test.raw
+>> 00000000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
+>> *
+>> 00002000
+>>
+>> But with aio=native, it does not:
+>> $ ./qemu-io --image-opts -c 'read -P 23 0 8k' \
+>>      driver=file,filename=test.raw,cache.direct=on,aio=native
+>> Pattern verification failed at offset 0, 8192 bytes
+>> read 8192/8192 bytes at offset 0
+>> 8 KiB, 1 ops; 00.00 sec (86.155 MiB/sec and 11027.7900 ops/sec)
+>> $ ./qemu-io --image-opts -c 'write -P 42 0 8k' \
+>>      driver=file,filename=test.raw,cache.direct=on,aio=native
+>> write failed: No space left on device
+>> $ hexdump -C test.raw
+>> 00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
+>> *
+>> 00001000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
+>> *
+>> 00002000
+>>
+>> This patch fixes that.
+>>
+>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>> ---
+>>   block/linux-aio.c | 61 ++++++++++++++++++++++++++++++++++++++++-------
+>>   1 file changed, 53 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/block/linux-aio.c b/block/linux-aio.c
+>> index 1f25339dc9..01621d4794 100644
+>> --- a/block/linux-aio.c
+>> +++ b/block/linux-aio.c
+>> @@ -46,6 +46,10 @@ struct qemu_laiocb {
+>>       size_t nbytes;
+>>       QEMUIOVector *qiov;
+>>   
+>> +    /* For handling short reads/writes */
+>> +    size_t total_done;
+>> +    QEMUIOVector resubmit_qiov;
+>> +
+>>       int type;
+>>       BdrvRequestFlags flags;
+>>       uint64_t dev_max_batch;
+>> @@ -73,28 +77,61 @@ struct LinuxAioState {
+>>   };
+>>   
+>>   static void ioq_submit(LinuxAioState *s);
+>> +static int laio_do_submit(struct qemu_laiocb *laiocb);
+>>   
+>>   static inline ssize_t io_event_ret(struct io_event *ev)
+>>   {
+>>       return (ssize_t)(((uint64_t)ev->res2 << 32) | ev->res);
+>>   }
+>>   
+>> +/**
+>> + * Retry tail of short requests.
+>> + */
+>> +static int laio_resubmit_short_io(struct qemu_laiocb *laiocb, size_t done)
+>> +{
+>> +    QEMUIOVector *resubmit_qiov = &laiocb->resubmit_qiov;
+>> +
+>> +    laiocb->total_done += done;
+>> +
+>> +    if (!resubmit_qiov->iov) {
+>> +        qemu_iovec_init(resubmit_qiov, laiocb->qiov->niov);
+>> +    } else {
+>> +        qemu_iovec_reset(resubmit_qiov);
+>> +    }
+>> +    qemu_iovec_concat(resubmit_qiov, laiocb->qiov,
+>> +                      laiocb->total_done, laiocb->nbytes - laiocb->total_done);
+>> +
+>> +    return laio_do_submit(laiocb);
+>> +}
+>> +
+>>   /*
+>>    * Completes an AIO request.
+>>    */
+>>   static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+>>   {
+>> -    int ret;
+>> +    ssize_t ret;
+>>   
+>>       ret = laiocb->ret;
+>>       if (ret != -ECANCELED) {
+>> -        if (ret == laiocb->nbytes) {
+>> +        if (ret == laiocb->nbytes - laiocb->total_done) {
+>>               ret = 0;
+>> +        } else if (ret > 0 && (laiocb->type == QEMU_AIO_READ ||
+>> +                               laiocb->type == QEMU_AIO_WRITE)) {
+>> +            ret = laio_resubmit_short_io(laiocb, ret);
+>> +            if (!ret) {
+>> +                return;
+>> +            }
+>>           } else if (ret >= 0) {
+>> -            /* Short reads mean EOF, pad with zeros. */
+>> +            /*
+>> +             * For normal reads and writes, we only get here if ret == 0, which
+>> +             * means EOF for reads and ENOSPC for writes.
+>> +             * For zone-append, we get here with any ret >= 0, which we just
+>> +             * treat as ENOSPC, too (safer than resubmitting, probably, but not
+>> +             * 100 % clear).
+>> +             */
+>>               if (laiocb->type == QEMU_AIO_READ) {
+>> -                qemu_iovec_memset(laiocb->qiov, ret, 0,
+>> -                    laiocb->qiov->size - ret);
+>> +                qemu_iovec_memset(laiocb->qiov, laiocb->total_done, 0,
+>> +                                  laiocb->qiov->size - laiocb->total_done);
+>>               } else {
+>>                   ret = -ENOSPC;
+>>               }
+>> @@ -102,6 +139,7 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+>>       }
+>>   
+>>       laiocb->ret = ret;
+>> +    qemu_iovec_destroy(&laiocb->resubmit_qiov);
+> Calling qemu_iovec_destroy() for a qiov that has potentially never been
+> initialised feels a bit unsafe to me. It will work in practice for the
+> current implementation, but maybe make this one conditional on
+> laiocb->resubmit_qiov.iov, too? (Which is already making assumptions
+> about the internals of QEMUIOVector, but that we'll have an iov after
+> initialising the qiov with qemu_iovec_init() above will probably never
+> change.)
 
-On 3/23/26 17:52, Philippe Mathieu-Daudé wrote:
-> From: Cédric Le Goater <clg@redhat.com>
-> 
-> Currently, DMA memory operation errors in the ftgmac100 model are not
-> all tested and this can lead to a guest-triggerable denial of service
-> as described in https://gitlab.com/qemu-project/qemu/-/work_items/3335.
-> 
-> To fix this, check the return value of ftgmac100_write_bd() in the TX
-> path and exit the TX loop on error to prevent further processing. In
-> the event of a DMA error, also set FTGMAC100_INT_AHB_ERR interrupt
-> flag as appropriate.
-> 
-> The FTGMAC100_INT_AHB_ERR interrupt status bit only applies to the
-> AST2400 SoC; on newer Aspeed SoCs, it is a reserved bit.
-> Nevertheless, since it is supported by the Linux driver and it should
-> be safe to use in the QEMU implementation across all SoCs.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
+Sure!
 
+(For reference, the io-uring code calls qemu_iovec_destroy() the same 
+way, but I agree.  I’ll make that change there, too.)
 
-Philippe,
+>>       /*
+>>        * If the coroutine is already entered it must be in ioq_submit() and
+>> @@ -380,23 +418,30 @@ static int laio_do_submit(struct qemu_laiocb *laiocb)
+>>       int fd = laiocb->fd;
+>>       off_t offset = laiocb->offset;
+> I wonder if making it laiocb->offset + laiocb->total_done here wouldn't
+> be more robust than having the addition in every call below.
 
-You can certainly apply the fixes, but I don't see any email from you
-about it. However, I indicated that I was applying it to aspeed-next
-as part of this series:
+I had it that way originally, but then decided to put it into the calls 
+below to show better which ones can actually be retried.  Yes, the ones 
+not retried (zone_append) will always have total_done == 0, but I found 
+this clearer, personally.
 
-   https://lore.kernel.org/qemu-devel/20260323125545.577653-1-clg@redhat.com/
+Maybe I’ll make it two variables, original_offset and offset.
 
-There is reason for it. The SMC patch is required to fix issue 3335.
-The patch should say so, I agree. My bad.
+Hanna
 
-I see that some VFIO patches are also included. I appreciate your help,
-but please contact the maintainers before, I believe I am responsive
-enough to requests ? I will rework the aspeed PR I had prepared
-and update the VFIO tree.
-
-
-Thanks,
-
-C.
-
-
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Message-ID: <20260322215732.387383-3-clg@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/net/ftgmac100.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-> index d29f7dcd171..2f05bba11d0 100644
-> --- a/hw/net/ftgmac100.c
-> +++ b/hw/net/ftgmac100.c
-> @@ -624,7 +624,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
->           bd.des0 &= ~FTGMAC100_TXDES0_TXDMA_OWN;
->   
->           /* Write back the modified descriptor.  */
-> -        ftgmac100_write_bd(&bd, addr);
-> +        if (ftgmac100_write_bd(&bd, addr)) {
-> +            s->isr |= FTGMAC100_INT_AHB_ERR;
-> +            break;
-> +        }
->           /* Advance to the next descriptor.  */
->           if (bd.des0 & s->txdes0_edotr) {
->               addr = tx_ring;
-> @@ -1134,7 +1137,10 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
->               bd.des0 |= flags | FTGMAC100_RXDES0_LRS;
->               s->isr |= FTGMAC100_INT_RPKT_BUF;
->           }
-> -        ftgmac100_write_bd(&bd, addr);
-> +        if (ftgmac100_write_bd(&bd, addr)) {
-> +            s->isr |= FTGMAC100_INT_AHB_ERR;
-> +            break;
-> +        }
->           if (bd.des0 & s->rxdes0_edorr) {
->               addr = s->rx_ring;
->           } else {
+>> +    if (laiocb->resubmit_qiov.iov) {
+>> +        qiov = &laiocb->resubmit_qiov;
+>> +    }
+>> +
+>>       switch (laiocb->type) {
+>>       case QEMU_AIO_WRITE:
+>>   #ifdef HAVE_IO_PREP_PWRITEV2
+>>       {
+>>           int laio_flags = (laiocb->flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
+>> -        io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov, offset, laio_flags);
+>> +        io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov,
+>> +                         offset + laiocb->total_done, laio_flags);
+>>       }
+>>   #else
+>>           assert(laiocb->flags == 0);
+>> -        io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
+>> +        io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov,
+>> +                        offset + laiocb->total_done);
+>>   #endif
+>>           break;
+>>       case QEMU_AIO_ZONE_APPEND:
+>>           io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
+>>           break;
+>>       case QEMU_AIO_READ:
+>> -        io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
+>> +        io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov,
+>> +                       offset + laiocb->total_done);
+>>           break;
+>>       case QEMU_AIO_FLUSH:
+>>           io_prep_fdsync(iocbs, fd);
+> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+>
 
 
