@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD2AF54AC7
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D473F54AC6
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 14:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w52xs-0003eZ-RI; Tue, 24 Mar 2026 10:42:41 -0400
+	id 1w52zb-0004LJ-Ur; Tue, 24 Mar 2026 10:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w52xp-0003dm-MD
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:42:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w52xn-0007wR-VI
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:42:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774363355;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f30onhXfsY7EpO+xSODa+UxRUOOoUXWAFzoPHtSsJPA=;
- b=cnn2jeb9KSax6hxOYKBZVS2DMP1MlX/q342npW47eBYoFV8yJmW7/38DhmibcifE8bT6hw
- 2h4MZ0Przc5CdNs8+YLnvX/A4WoYyBZaAGqtXC8hSfujqPSqrDkFaq5LoQzoO9WVdhI8pk
- kdnjMERguykzPagAIQOETtANoiKz8Rg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-D29Jc0kBNzyotYKYXfLN0A-1; Tue,
- 24 Mar 2026 10:42:29 -0400
-X-MC-Unique: D29Jc0kBNzyotYKYXfLN0A-1
-X-Mimecast-MFC-AGG-ID: D29Jc0kBNzyotYKYXfLN0A_1774363347
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61EE219560A1; Tue, 24 Mar 2026 14:42:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8D20F1955D71; Tue, 24 Mar 2026 14:42:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4630621E6937; Tue, 24 Mar 2026 15:42:24 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Artyom Tarasenko
- <atar4qemu@gmail.com>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,  Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH-for-11.1 v6 3/6] monitor: Have MonitorDef::get_value()
- always return int64_t type
-In-Reply-To: <CAFEAcA_y5amOwF-HCM8L3xc1_bSbXxno+HjrLBiOaN25fCt4eA@mail.gmail.com>
- (Peter Maydell's message of "Tue, 24 Mar 2026 13:24:54 +0000")
-References: <20260320091019.59902-1-philmd@linaro.org>
- <20260320091019.59902-4-philmd@linaro.org>
- <87pl4ts7vx.fsf@pond.sub.org>
- <CAFEAcA_y5amOwF-HCM8L3xc1_bSbXxno+HjrLBiOaN25fCt4eA@mail.gmail.com>
-Date: Tue, 24 Mar 2026 15:42:24 +0100
-Message-ID: <87tsu5qofj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52zX-0004Ku-5b
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:44:23 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w52zM-00081f-8G
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 10:44:17 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-486b96760easo12566575e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 07:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774363434; x=1774968234; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jj+Z3ZSW6zRWI7mPeSURHkNR2tbGWmRJyZFTKyjqj9g=;
+ b=MAFNtNp0MhS2arQjTwOobVgmtKyikvtL0zUKUuq0UDzhH/cMy1XUfNcuSM/3t+pXh/
+ 1eLQ8lk3LeWpU9uBE0PR+JjVjJY0seDNP5odF7nizNx4Jg3HxwNqxAt2MvP+7iKG/AfK
+ +xcGgiGcus9VdW1wQTOT4spN7nd2B1ViBmp+1EO68kBSiXqbzH5y3kzF6ce0XGhFa3aA
+ S7II7eob97Fwn+SUvxBWKZzYsV8aXh6iU3fK3O7Vcg3dqa9Spr2kwTPed6JomqJYVwG1
+ OZD0JQl0uPVQ7Jq5XXr3mmHdUnVh8Savmrbn9OLO6i0+S81jefJuHIlAt/6wXCSrMcPk
+ Ta5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774363434; x=1774968234;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jj+Z3ZSW6zRWI7mPeSURHkNR2tbGWmRJyZFTKyjqj9g=;
+ b=JhMi8M8LViYDum08biqc7baLRwJT+Iup0cge4tVFQlzU13PH83lIft/E4t78JVeKJu
+ iOO49uVm5xlqIDQqCGfdZR7jiy50+4TA+UkRidbix/1le4t18TA3bQBBVtHWagFg086W
+ /klmP0RS2dEfa/g+fMPE9qw+IzMBwTBdeVemSdzTuXF6b84HuI28Fc6HuKPbN/MjzzmG
+ 1oz0sk08OXBY2E3CfFnxoqhPHXqjUo6iqL9k6xpcOSbuw5EbmKRgmNvt6yf+1wnq5VhZ
+ pfiKdJJw9UYM+5ihJQ6lzLDnxRmYYBIB3KguhcvNz+dEG2FwArYmpICT1IL6nc0Qz/zR
+ MULw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1BjJg1HEAiQohHWx/79YhIsBNp+/RuTMa96UN+4XPikS1+761SBFvOwHyRrDJttePpUMg5ItWz/bU@nongnu.org
+X-Gm-Message-State: AOJu0Yw88rvKOu2WXH+Gan6UFLHCbVMzAwCL4i4pkO44bAZ5uS6sl4UD
+ MuKicrA6sdqdNQbZp/WT+2xkFkNjMhcekp4OR+xad9ipenZrNaZ2sK0UBL7Fp/r7OypJ79Ozcmp
+ o9jtDZ/Y=
+X-Gm-Gg: ATEYQzwQianion1+N107ZUWYeo11KIyma2ph3Iht2GGAvSmYBLMYB015UvemUjzvdEK
+ /go572lwVDP6VzxlpkHtBVxycreUHc0S5PMMZU1XtoRNG9SOuYTZgJnrcqlWIOycmuTf6+Ei1Ge
+ WVCYUm6jAl5aMEm2Lp3WcpNdPrGhqrRYzOzWmoKcpNT+yr/Rw56zaM3COuXtC9cKdY/bO+wY+xD
+ RTQ6QSyRcLV92HAbKAy5Jgy0H/xgxjzb38MbUAiog6srb53JZJYBL55Wjqqjqf8Wt8O3AYHe+mH
+ UhO0Eym/29CgGYtjYXzswz1MdpoqtgVMn+5crMpGvjiuwwge/xAxjF8ujqSxYBNesNpVYoGK0So
+ XSeULMnFNSp8efcrLrl7Cv7Y/VroDZGnJEgO0Cd3ksFnNQHSzvGbV3McMZNrvSgJmjH3uSNb7mo
+ gu1kXlAc3Gad4CVMWZdGTlc9GLiTUj2E+vSaBe+QaIQMkl0OJOeydufcOdNPhCljpEgg==
+X-Received: by 2002:a05:600c:4c97:b0:487:2b7:18d1 with SMTP id
+ 5b1f17b1804b1-4871609d1d7mr122235e9.33.1774363434381; 
+ Tue, 24 Mar 2026 07:43:54 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b64714decsm34706153f8f.31.2026.03.24.07.43.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 07:43:53 -0700 (PDT)
+Message-ID: <21126fa7-ea3e-4de7-bb4a-b0958cca54a1@linaro.org>
+Date: Tue, 24 Mar 2026 15:43:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/char: clear dangling GLib event source tag
+To: Matthew Penney <matt@matthewpenney.net>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ lvivier@redhat.com, amit@kernel.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260305213308.96441-1-matt@matthewpenney.net>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260305213308.96441-1-matt@matthewpenney.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,90 +105,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 5/3/26 22:33, Matthew Penney wrote:
+> Clear dangling GLib event source tag when virtio-console is
+> unrealized. This prevents a stale tag from being used, and
+> maintains consistency with the rest of virtio-console.
+> 
+> v2:
+> Use g_clear_handle_id() per advice from Marc-André Lureau
+> 
+> Signed-off-by: Matthew Penney <matt@matthewpenney.net>
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/char/virtio-console.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On Tue, 24 Mar 2026 at 12:57, Markus Armbruster <armbru@redhat.com> wrote:
->>
->> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->>
->> > Simplify MonitorDef::get_value() handler by having it always
->> > return a int64_t type. Truncate to 32-bit in the single caller.
->> >
->> > Note, this handler is only implemented once for the x86 targets.
->
->> > @@ -78,7 +80,8 @@ int get_monitor_def(Monitor *mon, int64_t *pval, con=
-st char *name)
->> >      for(; md->name !=3D NULL; md++) {
->> >          if (hmp_compare_cmd(name, md->name)) {
->> >              if (md->get_value) {
->> > -                *pval =3D md->get_value(mon, md, md->offset);
->> > +                int64_t val =3D md->get_value(mon, md, md->offset);
->> > +                *pval =3D target_long_bits() =3D=3D 32 ? (int32_t)val=
- : val;
->>
->> This assumes target_long_bits() returns either 32 or 64, doesn't it?
->>
->> Is this true today?
->
-> It's certainly true today, and we insist on that: exec/target_long.h
-> handles TARGET_LONG_SIZE being 4 or 8 and will #error on anything else.
-
-Good.
-
-> What other values do you expect it could have ?
-
-There might be a need for 128 in the future.  Not an easy change to
-make.
-
->> Will it remain true?
->>
->> Could we use something like
->>
->>     val & ((1 << target_long_bits()) - 1)
->>
->> to truncate to target_long_bits() bits?
->
-> This is UB for the case where target_long_bits returns 64,
-> and isn't what the code currently does because it zero
-> extends rather than sign extending.
-
-I signalled my cavalier neglect for these details by writing "something
-like" ;)
-
-> If we wanted to programmatically sign extend from
-> target_long_bits() to the int64_t, that would be
->
->  *pval =3D sextract64(val, 0, target_long_bits());
->
-> (Whether sign extension is what we actually want for your
-> average register is questionable, but it's what the code
-> does now both for the get_value functions and also for the
-> generic cases handled by the switch on md->type.)
->
-> Incidentally, we currently behave differently here for
-> qemu-system-i386 and qemu-system-x86_64:
->
-> $ ./build/all/qemu-system-x86_64 -S -monitor stdio -display none
-> QEMU 10.2.50 monitor - type 'help' for more information
-> (qemu) print $pc
-> 0xfffffff0
-> (qemu) q
-> $ ./build/all/qemu-system-i386 -S -monitor stdio -display none
-> QEMU 10.2.50 monitor - type 'help' for more information
-> (qemu) print $pc
-> 0xfffffffffffffff0
->
-> For qemu-system-x86_64 we have a 64-bit target_long, so
-> the unsigned addition of env->eip and env->segs[R_CS].base
-> in monitor_get_pc() is done at 64 bits, and that width is
-> then carried through get_monitor_def() and to the caller.
-> For qemu-system-i386 we have a 32-bit target_long, so
-> we do an unsigned 32-bit addition in monitor_get_pc(),
-> return a signed 32-bit result, and then sign extend that
-> to 64 bits in get_monitor_def().
-
-I'm carefully retracing my steps out of this swamp.
-
-Thanks!
-
+Merged as commit 34aad589019c8687fb3b19ba79d64d97071a7205, thanks.
 
