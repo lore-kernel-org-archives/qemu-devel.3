@@ -4,103 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4097EF54AB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D693F54AB8
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w51xi-0000h9-T3; Tue, 24 Mar 2026 09:38:26 -0400
+	id 1w51yQ-0000tE-Ek; Tue, 24 Mar 2026 09:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w51xg-0000gf-NZ
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:38:24 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w51xe-00049X-OA
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:38:24 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-64ca6595c8aso3223522d50.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 06:38:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774359500; cv=none;
- d=google.com; s=arc-20240605;
- b=gkVdV0uue0f6IUru8vOqUMYXbrJ3JGg+B7MD07WogdPWE9Z6HaP0Hm+q5YxptWj4Gp
- ZI5Z1+WE3GdydAIz+xkr0QbMAySyp/Vlm3OH01rJqnLbkF9kX/d7ftzL8jhgQnTPmXRb
- 3Q6MWWVhjHZQ86f+3CwcNWABwjTInK4j66Y77ZNCYx24NkQppv20DOcq3w188sZJf0iV
- qKjgyH4aVm6brdlcQCNQRqxXYhUAI3UAMoGUVs04ydX/H9M8q0fMxwwYXpr36H3oEn8M
- CXjuIlrYFj52PJbhNWL8OAOz5HN2SIZv2rWE+gEXtNoIZEWBC2hzjNMhQlvGJAA6qETN
- IzPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=TPOzL2/PxgXplEfzLP4gJiOQHyowhZVV0LiuIEGPfxk=;
- fh=oF7acPCYJXtnkf90Y0LDbuP54lAfQrIKYg9nzrimFrU=;
- b=SLE/k12JNKsv5cZnbTpU0G+bc36s9Tre2Xt/eWj+2iaG00fwrnW6W38oiFo6tEuD86
- CdOoIO2pZUv1/GUI1LgHfsWjwArLHi4vSyZF2TBkhRR6rLqwQL9lJNiUHE+/I5uhNoa8
- R3Ef6mhPgcMk2VIr5hSFexLnvX5SuAsRiAXeJOJqjcESb6RzVD2kSAW9qWP3aQlo+l+O
- kCGkC+PAjql+RGj7acBnxAdj3aUu4YhmSh8LKHG2anlcYVYFNStY4cJvNLYb8Rpzo3ud
- u2+PY8YCxqlrObiKAZ/iURPolz2/IkftsmtTfYDlLr4RNCrMfbdo0wJUoK0ScsYKwft5
- gPQw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774359500; x=1774964300; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TPOzL2/PxgXplEfzLP4gJiOQHyowhZVV0LiuIEGPfxk=;
- b=NNabnAgSN7+91VJ2m6Cf/HTC/MccxnwPPJcm23fbz4alk1K9RoZt6L9TtoZK0HrcGw
- /BgZ0uDUGvqy0zoyxAOPgQGlmybGL+M8cWwK2vYISxGbxq4iVKGc26n+UfmHeqUVCLWI
- U8NgIZEqc3hpDsS0bIMNpJDCgqS6fUMA9abpljMl7TT67Ue6xTD6/w/Wg0/OB2ZpNqCX
- Z6lwwX6UIy4IkCN/ItJ/WwxynSKTvDPyGqsZMQeBLU9vxDKB1mX+v6XeNtRyHZnIb3UR
- kWTjs3hiM3iBhCdo+2Gz8SXhx+9tPELU5yIhV4Z3CxaAImtE+6SSIzWeJKH0EXKTFuaF
- juug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774359500; x=1774964300;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TPOzL2/PxgXplEfzLP4gJiOQHyowhZVV0LiuIEGPfxk=;
- b=Hu/5MnyAOQodciOdMVPR9J7jkOVpLYyXjwIyHnGSTsgytSNrSLn9W7LQ/C2sQGFaFt
- VkR2HrWxwYfLhltToWDnyEnolH7JqtHpSrUfuGRTq/0zHTGYt0owf1x46oZQWTZf/6EA
- DBvsxEpl9lICfZgT8l3LXO1cyAfVPtitHFA3WLlJjUWevSE9hI7YZs4tE5H5vwtr/16g
- gJQ4xnA/D76SvD1pNnm2R6I/8yVcJcUIaDrXnmr6eCXqhLPNYWXB/MVsRh4rXh31ffr0
- DK6E4sCJKW0H2a0U26EJXtAy33Ep4/bn+sItUPh+OygUbOOcPsw3WX7+Um5PHVFM9WRy
- dhNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUQMMEuJnceAKCyWHgQB2LOI/ljXeC6PXcWT4BuYhGyZNvB3dBx8GfVAij1SIuh6/DB8N0wHhiDu2M@nongnu.org
-X-Gm-Message-State: AOJu0Yy3oFlHSnOGOt5d/fRmsnK44MoRE9GVZwnAm/6kERQ7yb4on0pA
- 32879ADeHN4E5WGKtQx5d0N9/bV5ddwvbslQLgb3a6pgWyMUy+SBrMC1LK4nub8zAqnR/AJkS8z
- ekrZx83R/wb2CGPm7sOhb6B3u1/+I7QM43S50uaxTBg==
-X-Gm-Gg: ATEYQzzQKH6mbG6/K0+iG5/Z5V6M0UqpafxsBnMHX5BT4VRS+sihSAESANGKl/mmm6g
- Bm1+m7VsEWY7q6xsIxirB/qTiEg94RGP6pT+DpyKBbdGIm70eilIa3AJNlOVomD5qdbjTOXLrCC
- e5RqYxuAt+YJbjYhIyfYSmsxBZPK1DhBNrb3si0m5XwaNpq8dUIIagmhGmcx2OPTWGE4DrKUl2w
- +JTNarw4eNCShrQa+H6y3zC+CkzUMB1BkAyA54lMrBHr39EzDTU9SFfKLQWUah2HBs2OXvsJ1Vk
- 0znV1cNNMuM/u4yGd5Ozxy01jpso8e/Yc3alBwnbJvRTSK/o7Ilosiz/su5ih96mE0pSdHTmfLk
- yEQ==
-X-Received: by 2002:a0d:e705:0:b0:79a:c28b:b077 with SMTP id
- 00721157ae682-79ac28bce8fmr29452717b3.37.1774359500050; Tue, 24 Mar 2026
- 06:38:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w51y9-0000oF-1S; Tue, 24 Mar 2026 09:38:57 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w51y4-0004EP-Hs; Tue, 24 Mar 2026 09:38:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774359506; bh=YbFH1dtW5jSSPAvvOweSLCdv4mZjJ/v1ayXoa7luSc0=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=tcaNgc/dmzWtfFKWYYh8Q7+MTiq2ungSXcGEYwu5RLbpXx6OwoDtAjIHGswrhXIMX
+ iuyXpYrk9+189T7x2Jn+Ng4jW1Hc0tvciMScPA7ON1ac66sbGdoxfaKolRHbDBc+Oi
+ +CG21Un3odAKf9YG7HP901gjf4i7T36Z4qYheYRen4ZgtnZQ+Gvfzwt+4gnv4Ur5d1
+ o6lcLM58H1tAes3r5Isar+oNMzz+u8Ybl/R8p1FCSYPIi2n98+NGjAaIhnVQC5iG44
+ hani+uxe6mlzr/bzOZAODtomsg7NJia89xp8lscSJjcGNX728W1ZxuY3OOu5Zun2zr
+ sasZWMAhHITaQ==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4ED69196FD7;
+ Tue, 24 Mar 2026 16:38:26 +0300 (MSK)
+Message-ID: <68e1536d-5ffc-4c06-bbab-cece627a69c6@tls.msk.ru>
+Date: Tue, 24 Mar 2026 16:38:44 +0300
 MIME-Version: 1.0
-References: <20260317122517.47627-1-zenghui.yu@linux.dev>
- <CAFEAcA9bGVuWXAPA0=EaAWXhSigm_yf5OYfnYoTjaQ8x1qXKYg@mail.gmail.com>
-In-Reply-To: <CAFEAcA9bGVuWXAPA0=EaAWXhSigm_yf5OYfnYoTjaQ8x1qXKYg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Mar 2026 13:38:08 +0000
-X-Gm-Features: AaiRm50FE7_OIbx50eS9N4iPq-PfmnGcL4qMWUg1G44_vZig7hi2R-ol00aaJQs
-Message-ID: <CAFEAcA9sovFYwoF1Jk6sN7Aheh1WXj+imAVhJ7ifpvTu7PHuFg@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Don't skip access flag fault for AccessType_AT
-To: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/8] ati-vga fixes
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
+ Chad Jablonski <chad@jablonski.xyz>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <cover.1774110169.git.balaton@eik.bme.hu>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <cover.1774110169.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,94 +113,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Mar 2026 at 17:17, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 17 Mar 2026 at 12:25, Zenghui Yu <zenghui.yu@linux.dev> wrote:
-> >
-> > As per the pseudo code from DDI0487 M.a.a (on J1-16021) AArch64.S1Walk():
-> >
-> >   // Check descriptor AF bit
-> >   elsif (descriptor<10> == '0' && walkparams.ha == '0' &&
-> >           (!accdesc.acctype IN {AccessType_DC, AccessType_IC} ||
-> >            boolean IMPLEMENTATION_DEFINED "Generate access flag fault on IC/DC operations")) then
-> >       fault.statuscode = Fault_AccessFlag;
-> >
-> > an access flag fault should be generated for AccessType_AT, if the AF bit
-> > is 0 and !param.ha.
->
-> Did you find this by code inspection, or because it caused
-> a guest to go wrong?
->
-> We should probably
->
-> Cc: qemu-stable@nongnu.org
->
-> > Fixes: efebeec13d07 ("target/arm: Skip AF and DB updates for AccessType_AT")
-> > Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-> > ---
-> >  target/arm/ptw.c | 16 ++++++++--------
-> >  1 file changed, 8 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> > index 8b8dc09e72..572048d560 100644
-> > --- a/target/arm/ptw.c
-> > +++ b/target/arm/ptw.c
-> > @@ -2118,6 +2118,12 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-> >      descaddr &= ~(hwaddr)(page_size - 1);
-> >      descaddr |= (address & (page_size - 1));
-> >
-> > +    /* Check descriptor AF bit */
-> > +    if (!(descriptor & (1 << 10)) && !param.ha) {
-> > +        fi->type = ARMFault_AccessFlag;
-> > +        goto do_fault;
-> > +    }
-> > +
-> >      /*
-> >       * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
-> >       * and it is IMPLEMENTATION DEFINED whether AF is updated
-> > @@ -2127,15 +2133,9 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-> >          /*
-> >           * Access flag.
-> >           * If HA is enabled, prepare to update the descriptor below.
-> > -         * Otherwise, pass the access fault on to software.
-> >           */
-> > -        if (!(descriptor & (1 << 10))) {
-> > -            if (param.ha) {
-> > -                new_descriptor |= 1 << 10; /* AF */
-> > -            } else {
-> > -                fi->type = ARMFault_AccessFlag;
-> > -                goto do_fault;
-> > -            }
-> > +        if (!(descriptor & (1 << 10)) && param.ha) {
-> > +            new_descriptor |= 1 << 10; /* AF */
-> >          }
->
-> This is definitely correct behaviour for AT insns. The only
-> thing I'm wondering about is what we should do for the
-> ptw->in_debug == true case. Before commit efebeec13d07 we
-> were checking !ptw->in_debug to skip both the testing and
-> the updating of the access flag; now we will skip the update
-> (definitely correct) but will fail debug accesses if the
-> access flag is not set.
->
-> There's an argument that if you're doing a debugger access
-> it's not very helpful for it to not work just because the OS
-> happens to have cleared the access flag on the page table entry
-> (we also ignore permissions on debug accesses, though there
-> are some code paths where we do enforce permissions, not
-> really intentionally).
->
-> On the other hand, we don't and I think have never suppressed
-> AccessFlag faults for the get_phys_addr_v6 short-descriptor
-> tables, so honouring them here too is at least consistent.
+On 21.03.2026 19:30, BALATON Zoltan wrote:
+> OK I think these are all the fixes I'd like to add for 11.0 unless
+> some more bugs are found. Could you please check and merge?
+> 
+> v6:
+> - revert part of mouse pointer fix patch from v5 as it broke MacOS;
+> since I'm not sure the Linux image has no issues on real machine I'm
+> not trying to fix that now
+> 
+> v5:
+> - fix typo on Patch 6
+> - add more patches to fix mouse pointer with big endian frame buffer
+> 
+> v4:
+> - compile fix in patch 5
+> - new patch 6 to work around fuloong2e issue:
+> https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg06308.html
+> v3:
+> - fix patch 1 to work with 8 and 16 bit modes too
+> - new patch 5 to fix display updates with 8 and 16 bit modes
+> v2:
+> - fix patch 4 to really avoid warnings
+> 
+> These are some fixes to ati-vga for 11.0.
+> 
+> Patch 1 fixes problem reported in
+> https://lists.nongnu.org/archive/html/qemu-ppc/2026-01/msg00105.html
+> 
+> Patch 2 fixes output from Solaris install iso
+> Rendering still not always correct as it uses some unimplemented
+> features but it's now readable. I did not test full install though.
+> 
+> Patch 3 fixes vram overrun errors seen with Solaris and MorphOS when
+> crtc offset is non-zero (this happens on MorphOS when additional
+> screen is opened)
+> 
+> Patch 4 tries to avoid Coverity warning matching what other places
+> already do
+> 
+> Patch 5 fixes dirty region tracking when guest display depth is not
+> the same as the host's
+> 
+> Patch 6 adds work around for fuloong2e to keep working with partial
+> machine model
+> 
+> BALATON Zoltan (8):
+>    ati-vga: Fix colors when frame buffer endianness does not match host
+>    ati-vga: Also switch mode on HW cursor enable bit change
+>    ati-vga: Do not add crtc offset to src and dst data address
+>    ati-vga: Avoid warnings about sign extension
+>    ati-vga: Fix display updates in non-32 bit modes
+>    ati-vga: Add work around for fuloong2e
+>    ati-vga: Simplify pointer image handling
+>    ati-vga: Make sure hardware cursor data is within vram
 
-Having thought about this a little more, I think we should
-continue to not raise the AccessFlag fault for in_debug = true:
-it is what we've been doing previously for LPAE, at least, and
-it is what intention of the debugger access codepath is.
+This stuff feels like it should be picked up for qemu-stable too,
+what do you think?
 
-Could you do a v2 of this patch that handles in_debug = true, please?
+Thanks,
 
-thanks
--- PMM
+/mjt
+
+>   hw/display/ati.c     | 85 +++++++++++++++++++++++++-------------------
+>   hw/display/ati_2d.c  | 47 ++++++++++++++++--------
+>   hw/display/ati_int.h |  1 +
+>   hw/mips/fuloong2e.c  |  1 +
+>   4 files changed, 82 insertions(+), 52 deletions(-)
+> 
+
 
