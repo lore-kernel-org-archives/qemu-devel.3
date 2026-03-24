@@ -4,92 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB4EFEC0F7
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B087FEC0F7
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w57K9-0005FM-Px; Tue, 24 Mar 2026 15:21:57 -0400
+	id 1w57L3-0005jO-Jq; Tue, 24 Mar 2026 15:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w57K8-0005F7-IC
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:21:56 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w57K6-0003ae-Nu
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:21:56 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4870206f73bso24775415e9.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:21:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774380112; x=1774984912; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MIASM8q/q6lH5xs+H50lh7SABHLA+Ey4wC8TjuO3eII=;
- b=aIeU1CUDyDo149pEXD7+ZTAod2nPWz1FZW1/7wBecO/2iDs9NhVCyF09FlSR14Tq80
- t8dhoIYlv1hqYCpv+3o5BQxgExnV75k8wpRJPzaF6p4Yj3NYg4KwAZzC+IxkIuqzMRbj
- U03PVBrIkEU17l748qBBTO3i0JU33Xm07TPR7eF/fHwXuG7n30rKJZMz2yt53juY61Vd
- rNNEbW3PTzKz0xfE+dc89LVFhHAI/7QuGyYt7k+O9yFeZEaMXpenW7hyNPDZRVu8o6Xp
- WWsPOPpaH98KB/pyQUBMcYtoPetiBGl4wI2Eas/PnF5DWAhVp6H4RNm15SszOg/NutZF
- BYCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774380112; x=1774984912;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MIASM8q/q6lH5xs+H50lh7SABHLA+Ey4wC8TjuO3eII=;
- b=ErCESZQi+/5XTWXnEYjcGDY5Bx6HGeeVYCmyjoB2JErnDFSH/gwRv7BqX9Gz/yCnW7
- G8UgQq6vuEdPiZSi7OmWQlxUG55p/AdYj/h9dBVr1lFLF1q2r2q9NKGNDRGYx/+D9/qW
- LR5LgExLCctydBMUoqqp3BstyaHq3uEbaSRTuEXjSG7WXk4t/REpFsFeDyoEABbHq1sZ
- OqL25oPavAXj21Awov316ZFlhLJmR2Qu448cnWMGYg5ZBO2XD6wMGh/fMcTrgm4A909p
- 0iVBxqPqavAHlmkeGR4S4u7Nt+/FwM+pTCPbyazTKMwxTiEyvThknNCUpv64LH8vA9TZ
- A46g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwhQQUddZ03ldzMfF6H+H9k2LiWW5STLgAr2dU3SrsomMq1NXxDsxln0cHQcHhiZJLjZgqnIyjzcJY@nongnu.org
-X-Gm-Message-State: AOJu0YwxVXugVU7caFeP+yrII5G5NlUXubbJEphL6krXfaeNVnscyk2w
- pPw9rNEpfNKqRKLNn4by05PKZtQbqjO4nXY2OrmWi98Jf3mEUgQ0LwGLR/4SZ0aZ0tjS4oJ12up
- sHweOKu4=
-X-Gm-Gg: ATEYQzwnFAYuuGTAIvWmSf1xfLgB89dgC6t7t1chuPal88Gdlyg219H3eLUqX2Zitm0
- kZwKTsWufjVjwMbXTxAPb6n5TXmKjUPArRGHkrRnziC3v6UrbFdQm2V34kRRGyB6vbey9iwFlJY
- ocJLeqfSYxqxAY54bTbQPMah8Jmo5MPyHbENpwRnmzx0NUwOr4VLkwnpcTV3xRpkCagXBF1piiB
- Sak/ScSsENH8KeXPSSDggtisO31/ZbgTz5XqUFixdHR3Xv8g1SmFqwcK/a+CSiR4aiFNY6nDEJP
- dgejCPiCA/kRbLAlZuBakxIy+hkAxOL3hXYsV7rMlrRqBbXzZcbsq7PlXDtt4H93cG8twn6DZmK
- kGOaXDj/rJbcY+LLa4ClvAj5Lyy4cP0iSXDzppjIlgzoPNITO1Dbx/PZzdHywcYdoCDnmXsFvlR
- PxPjFlBO9hhoXnpRf5hEmanV7F7Hc1uqyncdstuTQIngM6eu3HfFxbP9QKs+yuwBM32FSmiyC2B
- OcU
-X-Received: by 2002:a05:600c:1f86:b0:486:fb5c:3b20 with SMTP id
- 5b1f17b1804b1-48715fef819mr15089335e9.13.1774380112460; 
- Tue, 24 Mar 2026 12:21:52 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4871174f2desm90940085e9.9.2026.03.24.12.21.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Mar 2026 12:21:51 -0700 (PDT)
-Message-ID: <e5d54af3-e3c7-453c-b087-d0699d5241e2@linaro.org>
-Date: Tue, 24 Mar 2026 20:21:51 +0100
+ (Exim 4.90_1) (envelope-from <nathan@kernel.org>)
+ id 1w57L1-0005j5-TI; Tue, 24 Mar 2026 15:22:51 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nathan@kernel.org>)
+ id 1w57L0-0003jm-2i; Tue, 24 Mar 2026 15:22:51 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 0398F416C9;
+ Tue, 24 Mar 2026 19:22:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84EBC19424;
+ Tue, 24 Mar 2026 19:22:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1774380167;
+ bh=1JdvQ5Ajau5Sc028LxlGfL7ghHiS0nOimoMJZr5qMeg=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=uIVfPVMb/PVKyPrfccyWaDySNtYjAGxsHmCuFfyaoZWQoqEUM+XYc7ObMK7jIGhj7
+ uQQx9Ge/V4ZXif3gwavU7iHqPtshqiSmlIW9x54FtQO7yr0dbX3vkEWDXBtUSrSqav
+ sGPMijgoyf8YZQXEFju22/RjN0mm1tBJ6nNle6E5rs36qGrGRVvaycIZHEI44GkiAw
+ 6py9dULN74r0mDBKLUQ6Yo462ThwlAwK7GyyYBHpyxgcGOnaZOBkGfEVrHrPEHcpH3
+ Zte2aeb+mBcCRRIt65fsSz+qTl0OlsqZDrh5nAXeSsvnVCXe3UmXhNpLdvhDDWpze2
+ FqAjjydOKA9Zg==
+Date: Tue, 24 Mar 2026 12:22:43 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] ppc/pnv: generate dtb after machine initialization is
+ complete
+Message-ID: <20260324192243.GA1270341@ax162>
+References: <20260324135026.247418-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 25/27] hw/net/ftgmac100: Improve DMA error handling
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-References: <20260323165218.96607-1-philmd@linaro.org>
- <20260323165218.96607-26-philmd@linaro.org>
- <37e7a5da-9fa5-4602-97f4-d3190f638b01@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <37e7a5da-9fa5-4602-97f4-d3190f638b01@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260324135026.247418-1-shivangu@linux.ibm.com>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=nathan@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,62 +72,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+On Tue, Mar 24, 2026 at 07:20:26PM +0530, Shivang Upadhyay wrote:
+> Currently, the machine dtb is generated in pnv_init(), before all devices
+> are fully initialized. This can result in an incomplete dtb for the system,
+> as seen in bug [1].
+> 
+> Fix this by deferring dtb generation until machine initialization is complete,
+> using the machine_init_done_notifier hook.
+> 
+> [1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
+> 
+> Cc: Aditya Gupta <adityag@linux.ibm.com>
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-On 24/3/26 09:03, Cédric Le Goater wrote:
-> Hello,
-> 
-> On 3/23/26 17:52, Philippe Mathieu-Daudé wrote:
->> From: Cédric Le Goater <clg@redhat.com>
->>
->> Currently, DMA memory operation errors in the ftgmac100 model are not
->> all tested and this can lead to a guest-triggerable denial of service
->> as described in https://gitlab.com/qemu-project/qemu/-/work_items/3335.
->>
->> To fix this, check the return value of ftgmac100_write_bd() in the TX
->> path and exit the TX loop on error to prevent further processing. In
->> the event of a DMA error, also set FTGMAC100_INT_AHB_ERR interrupt
->> flag as appropriate.
->>
->> The FTGMAC100_INT_AHB_ERR interrupt status bit only applies to the
->> AST2400 SoC; on newer Aspeed SoCs, it is a reserved bit.
->> Nevertheless, since it is supported by the Linux driver and it should
->> be safe to use in the QEMU implementation across all SoCs.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
-> 
-> 
-> Philippe,
-> 
-> You can certainly apply the fixes, but I don't see any email from you
-> about it. However, I indicated that I was applying it to aspeed-next
-> as part of this series:
-> 
->    https://lore.kernel.org/qemu-devel/20260323125545.577653-1- 
-> clg@redhat.com/
-> 
-> There is reason for it. The SMC patch is required to fix issue 3335.
-> The patch should say so, I agree. My bad.
-> 
-> I see that some VFIO patches are also included. I appreciate your help,
-> but please contact the maintainers before, I believe I am responsive
-> enough to requests ? I will rework the aspeed PR I had prepared
-> and update the VFIO tree.
+Tested-by: Nathan Chancellor <nathan@kernel.org>
 
-I understood your aspeed-next branch was for the first queue to apply
-after 11.0, not for fixes before, and this one felt worthwhile fix.
-Indeed I should have replied to the patch with that justification
-and you'd have cleared any doubts. I apologize for having stepped over
-your maintenance area. This shouldn't reproduce.
-
-Regards,
-
-Phil.
-
+> ---
+>  hw/ppc/pnv.c         | 17 +++++++++++++----
+>  include/hw/ppc/pnv.h |  2 ++
+>  2 files changed, 15 insertions(+), 4 deletions(-)
 > 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 7e54b6bc60..f13b2e3db8 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -984,6 +984,17 @@ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
+>      return chip_id == 0 ? 1 * GiB : QEMU_ALIGN_DOWN(ram_per_chip, 1 * MiB);
+>  }
+>  
+> +static void pnv_machine_init_done(Notifier *notifier, void *data)
+> +{
+> +    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
+> +    MachineState *machine = MACHINE(pnv);
+> +
+> +    if (!machine->fdt) {
+> +        machine->fdt = pnv_dt_create(machine);
+> +        _FDT((fdt_pack(machine->fdt)));
+> +    }
+> +}
+> +
+>  static void pnv_init(MachineState *machine)
+>  {
+>      const char *bios_name = machine->firmware ?: FW_FILE_NAME;
+> @@ -1244,10 +1255,8 @@ static void pnv_init(MachineState *machine)
+>          pmc->i2c_init(pnv);
+>      }
+>  
+> -    if (!machine->fdt) {
+> -        machine->fdt = pnv_dt_create(machine);
+> -        _FDT((fdt_pack(machine->fdt)));
+> -    }
+> +    pnv->machine_init_done.notify = pnv_machine_init_done;
+> +    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
+>  }
+>  
+>  /*
+> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+> index 24f8843a40..90028f974d 100644
+> --- a/include/hw/ppc/pnv.h
+> +++ b/include/hw/ppc/pnv.h
+> @@ -111,6 +111,8 @@ struct PnvMachineState {
+>  
+>      bool         big_core;
+>      bool         lpar_per_core;
+> +
+> +    Notifier     machine_init_done;
+>  };
+>  
+>  PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
+> -- 
+> 2.53.0
 > 
-> Thanks,
-> 
-> C.
-
 
