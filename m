@@ -4,153 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427D3F54ADC
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 16:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A231EF54ADA
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 16:58:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w54zw-0002SJ-Ew; Tue, 24 Mar 2026 12:52:56 -0400
+	id 1w554L-0004tR-4y; Tue, 24 Mar 2026 12:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w54zs-0002RI-Ad
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 12:52:52 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5548-0004iN-Lr
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 12:57:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w54zq-0007bc-Id
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 12:52:52 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62OGKweB3039733
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 16:52:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6HziRqdtNMNNDx7LyURzpMEacQ1+82Whh1fOaLMXRPs=; b=memiUr6ApQnp1SRi
- 9eyotm0qTkSReJCg9N/NVAHjQr9WNzz4KeaLJXNs41CoVpI6HfLlYBckviVKC6fS
- CwacRiXSWna3dK2UXsQLpTMiXfLn7RKSIaG8yaU6QbUQl+Dyg82TF8x2iFoAJDwb
- VHDWzuQZkgXmW6kj5AThWpVUCEkhWyj+6LKrWvo+3oq7Lwzo4vcZtfh/dF6VQT0V
- zRAtcGMqflkc9ofAjkJUrDkCd06wsm8JaVKeKLCH6duGtV5CSXUz1CPZKpHIgKjI
- 9wxSxRm2tKLxKcyPJs2AEF8AkQ78rZrI9MJJH1/vEKHY0FADQbhml8I6nUe8Tj8E
- 7sPBoQ==
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d3rf0hke3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 16:52:46 +0000 (GMT)
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-467ec73eec1so21618857b6e.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 09:52:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774371166; cv=none;
- d=google.com; s=arc-20240605;
- b=kKBJy7Bqy4uJNHkH9gSDfOAYI4IcBZ9UgD24p8GsvI4/DGkT9WJf0oTF8hlfTX7gVO
- MocLUmUBq8kmvMedfnRn2bO0psa+LALhCWSvQcwTi75QNxVhxHHo2anOmHEHlT8V4boE
- GtDMCoeJpNEj0/00PLHx+nIMpqzWhprcIcG02j++w+zD5PH8yz7mBUNxiAcFCzWTVaW7
- ML2I8hjzQ+Bl+85Tq0E0U+ye7X0aoo423qrv79Da3eEdqHd094JccvEcHpyabJ1Vfafg
- aGbKhlQqZihbYbu7qwudIx0DgzFYDVkUKjJ36cT35BcoiLiE9QLQlMCZL+JPWT2SMd22
- n7+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=6HziRqdtNMNNDx7LyURzpMEacQ1+82Whh1fOaLMXRPs=;
- fh=GIsXnfQ1rlTLuqMVRnuWQs1/XCKcI3goSMKmOb1sBfk=;
- b=LfW8dxejfykvVxJIizrbC5MP4fXj1iNj4/A1Ls15k6XqiJHZ9Z3IqQz1ica28EvBtS
- goR+wL/RSUKljzFyObQyS9JmS82bYyRt57t2uCtIXfYhlcOZRmaRWXINXa4u6/P+msl1
- tsquJClPsZ918mpUuMu3DCGQt47UcUN1A4RTDuFgjdtBLfsvLGr+BXeFdnDhbbhGRekp
- 2cpiOxjNxts7kKdiBUSloQjlHmm7Xi2PefB3p3xViCIZDBd9DWKqYvd+AFB5RbLdEoCf
- xQXeIpKQRXqrm/+Vtp5kMiOlV+aSxtn/hHXzAod61n1wsJrSjv1Mtu1gOqeE3+qYAWdS
- zQ2A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5546-0000YR-61
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 12:57:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774371431;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qolVXTErP3rEARxzso+7cA4ZsYaKcIoCUVPKfyGf30s=;
+ b=RUFmmKwbIWlbqmKnWX9tiXkMzRjsP7FKJtZVGfkH72lSRR17tC9cIjDaknVNAiMa0iaKl+
+ 3bcZoqOPIBPPTkKYvvCxnoRjkUsXAugHvSpxkcRsE7ugyLWmIBzH6g715m0SRd2jIr2ZVi
+ IB48vxKRMP6gQR1xRxddfuFYjgA1oU4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-185-eijSrHk7OiCssKBec6J6qg-1; Tue, 24 Mar 2026 12:57:09 -0400
+X-MC-Unique: eijSrHk7OiCssKBec6J6qg-1
+X-Mimecast-MFC-AGG-ID: eijSrHk7OiCssKBec6J6qg_1774371428
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-485375aa56eso38397175e9.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 09:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1774371166; x=1774975966; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6HziRqdtNMNNDx7LyURzpMEacQ1+82Whh1fOaLMXRPs=;
- b=JtVBqCvtXGEYU3UXwzgivmXBapfMeHWDrTmAaM1Sqay1sjUrHERN+kRikYLDoAKalo
- HgAJ17+WtuF7pyaD0etBoDRvKV8WYoWQrK3/vsMxOxUFKgSUVSvpbp8SpUyOKXifb+lp
- 3c3s7HKOD+BsB5R/dsoPhF89ScRdS/L0oH62Lz/rgJsdr7IimaBBB7CcKKyoMsNZiyIY
- zVqzLjrLoirfcQv09Mxi9J8EAAEzaKqcyaP49gXyBSfUYuded+gtCWWfvdGAzPz22xjx
- PU4OKppSfNNRsXlMJ30ne3/xJWxOxji7EzvbsQs6JZ4QGq/Yn9LnkUrF/1Z2nq/+HwKc
- eRlA==
+ d=redhat.com; s=google; t=1774371428; x=1774976228; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qolVXTErP3rEARxzso+7cA4ZsYaKcIoCUVPKfyGf30s=;
+ b=M8F5OvFJku4qzydFfRor8pXV8By6qpz17Y/rWfDvBgElK/o9kbp/ESvnh8PbBHBRQI
+ tEGV9ol3bKu9Iz6383UY3RTHq7P9cJrqNr4e/5zcez8vVRuoXCz0cwzjPtvTsQNg+nPW
+ KJqHi8rFIMRDdy0hRaR5xywmXECKubaVXd3Gg561gQfPWMmo2TlzpXyUoANd205jscp6
+ t54+JzOvFz0GS+0+djFANHoEuKTdIB31FHiS2zYVv7IPvDuE7wMcR7LeC42PGnSz9usR
+ gwdKo9YehYJLSWVXBsXBNH8R9vXVE6+xlcpa0itBctB+yz++E/bG3MwSTjNWRQk0OkJ8
+ sHdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774371166; x=1774975966;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6HziRqdtNMNNDx7LyURzpMEacQ1+82Whh1fOaLMXRPs=;
- b=Mx46LNeQ7EXIT+Ss6E41FDrxGe4n2FHS6gpuEHDSQBOOsNcp3RcjdfYKDuogiOm4kU
- YkFBkVt8VpA5i0YaGqxjPa0yaPrJc80KVnupMNtPK0h68COPjn2RH6Kw+0X4rFk1iJby
- QBNy+/Pj2JzUFG5uRgq6t3Yvtd3ffct/Rk09wffCz0EqIYsTGt7OohxLnARgwtKrH0qP
- KofVoid+s6T/zoTnv92nksgi2bubLv8Sj21Ree2Gud27uoJx9719UQoTgBHtL3Y4Zym8
- 2ajrSPALxvveryQ3R6m9UbG0mCljVWmE6J2ZWi3G1+eOty4p/EZ5Xr+xnfTPfaLLWwGB
- 8WHw==
-X-Gm-Message-State: AOJu0YxaD7u+f9eAmycx2JMdnH3jyUSKmQwup6z5EfoHEacYNsTfCkco
- YKusUXBcsiu2miSGpl1jMD7tAHiTgjiTJBLFjZzUpY2TJnxmuHnKvxu7UFMuZ6BAuOD2777dfLj
- 0mCxqqERsos8HEEgbh5e6NTbIOsVxKYay4slSHSaZE2hRu0w+MhWf7UeULMZyHEy2IK7UwcjAYA
- wGPnIKpozwdPHcSSMzapg/9h5cq6wyw6AD
-X-Gm-Gg: ATEYQzyspGb62N+s+mc+fHBqIkf/EwYBjwHApwS095Loo5vAzbn/zsQftRHOIIA33/D
- RrWeMOH87yRz2idNPUTw2eDBpJQN7j69ophWftguKSHrjZpnuxx0fVqQTpuPotyQCuckeljZr2r
- j1AlEdRWQUhwzSCnm0q0LCmr3yRbGf+1nZF8NGcteCvh9qZCFiMDVIsnpAXGRoM8lh73c8yR1M5
- hmV3vo=
-X-Received: by 2002:a05:6808:4fcb:b0:467:db5:8b21 with SMTP id
- 5614622812f47-46a5c3d6cf4mr165375b6e.0.1774371165916; 
- Tue, 24 Mar 2026 09:52:45 -0700 (PDT)
-X-Received: by 2002:a05:6808:4fcb:b0:467:db5:8b21 with SMTP id
- 5614622812f47-46a5c3d6cf4mr165351b6e.0.1774371165464; Tue, 24 Mar 2026
- 09:52:45 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774371428; x=1774976228;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qolVXTErP3rEARxzso+7cA4ZsYaKcIoCUVPKfyGf30s=;
+ b=TyNpH5Q18Yawv/Jwf0y8WEybPmJes3sAS8OuyBkXbY8WtNtMb2R/2BfBHy3e80EuL4
+ uU2zuREhzrCDTvM2NfEyrA75U52Iio3FgAOqdyW9bnlll0cRabOREDpK+WVz3J2W0AFX
+ TqDdw9JHT+UGsUOtHKxSmwvm/QCeEJyVj8DoaD/vG8TT48e8ak5NpYxJr5xHH9IFqq8t
+ YAvnZ2hPjB3HlpNIXKknQkVDy+4yoERbqeRXJlsM+JaBV8NeLk3odrNNhSY83wC+htp4
+ 8ClX7hw9nyk4TEw36J/sIbDbs19x5q45jlYrOteC93PVCFCkWbg3zCyh/3289ej30g1f
+ ZPSw==
+X-Gm-Message-State: AOJu0Yy1cc+T7Kd2JtaIybV3BpGOI75PgtcbLWCCdP5SbijG49QiAOvB
+ L8j9V72tC7y3etM2ufX2y/USFq7fO12S10XdtJW3UNQGimMm8UJuWrSdGq6WL9Zm+OCNtvPfCkk
+ QkM9tbXjfiFKjUQSDvSjgdG9ovYQCjd2EAO9vpRQyYn1dZ8Lk9YF2qmexffVcamBiQzpS6o9n53
+ 3LbWMtT/nSiBjtfSpI8+bPAsQewZvc69seXLeeeM1t
+X-Gm-Gg: ATEYQzwK2USVNlCWLFTbig61ZhtON+4DpVba6fk9S6bxrWiuG6sFUMHCpZ1ov3wdiFZ
+ wx7xae2vgKyacNtnpBChL6nyzS71u24pGw20wQFiMMH3a7gUnXgu0T6AeVlEfcwP5zIGhTXWJqf
+ D2PTOJ3+hHIzlLbjw799CP3lSuTCMgNn1qNIU+H43hd7x6viRVVqQZSWSVZofbEIr1LXaHc3cBL
+ kez4pMiO0MYFfvWMoJ0WnylCHovV1Js/NO77cSxBxPuwwFPakBf7TEvoHFsmkxsYNk8KbJRX3iJ
+ NUFGxhyj5cLUwTKjnrD+5ofnbJk8oDFlMoVeVt372eRk1htNNfb5bn7Y6XoawHepU/NgVxQaGcu
+ AWkT1dfcpm8Od7ELK9dYv2QafwAu3fmzc2gv3JwC3LxN4UeInWVTFzO2Y1pmTw/NBXjZ9gipafH
+ U1sUSM70vrXmlb9fNia9OwNQEL
+X-Received: by 2002:a05:600c:a40e:b0:485:4136:99a8 with SMTP id
+ 5b1f17b1804b1-48716042b35mr5058505e9.22.1774371427458; 
+ Tue, 24 Mar 2026 09:57:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:a40e:b0:485:4136:99a8 with SMTP id
+ 5b1f17b1804b1-48716042b35mr5058145e9.22.1774371426698; 
+ Tue, 24 Mar 2026 09:57:06 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.85.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4871174f2desm79948305e9.9.2026.03.24.09.57.05
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Mar 2026 09:57:06 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] treewide: replace qemu_hw_version() with QEMU_HW_VERSION
+Date: Tue, 24 Mar 2026 17:57:05 +0100
+Message-ID: <20260324165705.785605-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
- <4f6bd77ba6c6c07c8796e805ce6e50539bde260e.1774271525.git.matheus.bernardino@oss.qualcomm.com>
- <CAATN3NrTa3qL1jZew7_3L2mfeK2PT3RFTkTDxQUZ_4NK7wAmAw@mail.gmail.com>
-In-Reply-To: <CAATN3NrTa3qL1jZew7_3L2mfeK2PT3RFTkTDxQUZ_4NK7wAmAw@mail.gmail.com>
-From: Matheus Bernardino <matheus.bernardino@oss.qualcomm.com>
-Date: Tue, 24 Mar 2026 13:52:32 -0300
-X-Gm-Features: AQROBzB1FVyWW6-rt13x8khaT-1g1a9t43hHZpaWUfWPCxjlR8bTPhlzCLP71Hw
-Message-ID: <CABrGZ+GiQ-KiJVhyCHK4EfG__4=mbJhj1rhpfczASuQ+NT9-BQ@mail.gmail.com>
-Subject: Re: [PATCH 03/13] target/hexagon/cpu: add HVX IEEE FP extension
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDEzMSBTYWx0ZWRfX9h1ppcwXoFHg
- vFJZlJilqwYlbMKhOoFjmanVfB1nt/XOfJp40NLUwk1iiLjzfw6b5cdW0hruJK3aVOSxN/KbQCi
- LxDtRvHHy/9GqDQ9Fj5X+MBeUxLYXLwnYQY8o1PPq9evUM5V2A4K/qcG2NSQ+MR4iAPB5mMjekh
- 9lsiORKm7n/KVr3o0gW23IK+jCBWf7zSCmXu20HCIVxj2XStvFaX32CYvvlMyYaDAAhZw5LygnD
- gvlkpwzzWqKvyyoxS1rAPFEYnl2tugXitVOA/dSFvRq7vkFAg8qQu4ySnN/auFXMNMUyZU9uje8
- mQRLBA6ryGVHXJpHptGUjwHxGkvbne+pLR1yJHGZH7LKzluiFYcStW9ctpE/l1+EqG92TcOg64A
- tYAmtIIMLb2dVjGX8sKVRnEmpI5tjRYjl6wPwBgk0iprmVxFYkft1o5E8dTRXx1/YX6Rvia5fTR
- wfXyFg9N7AitPcbTSTg==
-X-Authority-Analysis: v=2.4 cv=Ua9ciaSN c=1 sm=1 tr=0 ts=69c2c15e cx=c_pps
- a=WJcna6AvsNCxL/DJwPP1KA==:117 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_glEPmIy2e8OvE2BGh3C:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=aqt7E0AF0lIwVVJQHr8A:9 a=QEXdDO2ut3YA:10 a=_Y9Zt4tPzoBS9L09Snn2:22
-X-Proofpoint-ORIG-GUID: UQK_3sld55wXBjfEfqP-bHcB7EQfG6vh
-X-Proofpoint-GUID: UQK_3sld55wXBjfEfqP-bHcB7EQfG6vh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_03,2026-03-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 phishscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240131
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,78 +117,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 23, 2026 at 4:33=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
-l.com> wrote:
->
->
->
-> On Mon, Mar 23, 2026 at 7:15=E2=80=AFAM Matheus Tavares Bernardino <mathe=
-us.bernardino@oss.qualcomm.com> wrote:
->>
->> This flag will be used to control the HVX IEEE float instructions, which
->> are only available at some Hexagon cores. When unavailable, the
->> instruction is essentially treated as a no-op.
->>
->> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualco=
-mm.com>
->> ---
->>  target/hexagon/cpu.h             |  1 +
->>  target/hexagon/translate.h       |  1 +
->>  target/hexagon/attribs_def.h.inc |  3 +++
->>  target/hexagon/cpu.c             |  1 +
->>  target/hexagon/decode.c          | 22 ++++++++++++++++++++++
->>  target/hexagon/translate.c       |  1 +
->>  6 files changed, 29 insertions(+)
->>
->>
->> diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
->> index dbc9c630e8..d832a64a17 100644
->> --- a/target/hexagon/decode.c
->> +++ b/target/hexagon/decode.c
->> @@ -696,6 +696,18 @@ static bool pkt_has_write_conflict(Packet *pkt)
->>      return !bitmap_empty(conflict, 32);
->>  }
->>
->> +static void convert_to_nop(Insn *insn)
->> +{
->> +    bool is_endloop =3D insn->is_endloop;
->> +    memset(insn, 0, sizeof(*insn));
->> +    insn->opcode =3D A2_nop;
->> +    insn->new_read_idx =3D -1;
->> +    insn->dest_idx =3D -1;
->> +    insn->generate =3D opcode_genptr[insn->opcode];
->> +    insn->iclass =3D 0b111;
->> +    insn->is_endloop =3D is_endloop;
->> +}
->> +
->>  /*
->>   * decode_packet
->>   * Decodes packet with given words
->> @@ -746,6 +758,16 @@ int decode_packet(DisasContext *ctx, int max_words,=
- const uint32_t *words,
->>          /* Ran out of words! */
->>          return 0;
->>      }
->> +
->> +    /* Disable HVX IEEE instruction if extension is disabled. */
->> +    if (!ctx->ieee_fp_extension) {
->> +        for (i =3D 0; i < num_insns; i++) {
->> +            if (GET_ATTRIB(pkt->insn[i].opcode, A_HVX_IEEE_FP)) {
->> +                convert_to_nop(&pkt->insn[i]);
->> +            }
->> +        }
->> +    }
->> +
->
->
-> Better to leave the instruction alone and turn it into a nop by not gener=
-ating any TCG.
->
-> That way, the disassembly (-d in_asm) will still show what's actually in =
-the binary.  You could add the check in gen_tcg_funcs.py.
->
-> You could also consider adding some sort of marker in the disassembly to =
-indicate that the flag is needed for the instruction to do anything.
+The version is never set on 2.5+ machine types, so qemu_hw_version() and
+qemu_set_hw_version() are not needed anymore.
 
-Ah, good idea. Will do both for the next round, thanks.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/hw/core/boards.h  |  6 ------
+ include/qemu/hw-version.h | 15 ---------------
+ hw/ide/core.c             |  2 +-
+ hw/scsi/megasas.c         |  2 +-
+ hw/scsi/scsi-bus.c        |  2 +-
+ hw/scsi/scsi-disk.c       |  2 +-
+ system/vl.c               |  4 ----
+ target/s390x/cpu_models.c |  2 +-
+ util/osdep.c              | 12 ------------
+ 9 files changed, 5 insertions(+), 42 deletions(-)
+
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index f85f31bd90d..b8dad0a1074 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -197,11 +197,6 @@ typedef struct {
+  *    used to provide @cpu_index to socket number mapping, allowing
+  *    a machine to group CPU threads belonging to the same socket/package
+  *    Returns: socket number given cpu_index belongs to.
+- * @hw_version:
+- *    Value of QEMU_VERSION when the machine was added to QEMU.
+- *    Set only by old machines because they need to keep
+- *    compatibility on code that exposed QEMU_VERSION to guests in
+- *    the past (and now use qemu_hw_version()).
+  * @possible_cpu_arch_ids:
+  *    Returns an array of @CPUArchId architecture-dependent CPU IDs
+  *    which includes CPU IDs for present and possible to hotplug CPUs.
+@@ -297,7 +292,6 @@ struct MachineClass {
+     const char *default_display;
+     const char *default_nic;
+     GPtrArray *compat_props;
+-    const char *hw_version;
+     ram_addr_t default_ram_size;
+     const char *default_cpu_type;
+     bool default_kernel_irqchip_split;
+diff --git a/include/qemu/hw-version.h b/include/qemu/hw-version.h
+index 730a8c904d9..a40a6c204a6 100644
+--- a/include/qemu/hw-version.h
++++ b/include/qemu/hw-version.h
+@@ -7,21 +7,6 @@
+ #ifndef QEMU_HW_VERSION_H
+ #define QEMU_HW_VERSION_H
+ 
+-/*
+- * Starting on QEMU 2.5, qemu_hw_version() returns "2.5+" by default
+- * instead of QEMU_VERSION, so setting hw_version on MachineClass
+- * is no longer mandatory.
+- *
+- * Do NOT change this string, or it will break compatibility on all
+- * machine classes that don't set hw_version.
+- */
+ #define QEMU_HW_VERSION "2.5+"
+ 
+-/* QEMU "hardware version" setting. Used to replace code that exposed
+- * QEMU_VERSION to guests in the past and need to keep compatibility.
+- * Do not use qemu_hw_version() in new code.
+- */
+-void qemu_set_hw_version(const char *);
+-const char *qemu_hw_version(void);
+-
+ #endif
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index b45abf067b2..d6719dbf31d 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -2660,7 +2660,7 @@ int ide_init_drive(IDEState *s, IDEDevice *dev, IDEDriveKind kind, Error **errp)
+     if (dev->version) {
+         pstrcpy(s->version, sizeof(s->version), dev->version);
+     } else {
+-        pstrcpy(s->version, sizeof(s->version), qemu_hw_version());
++        pstrcpy(s->version, sizeof(s->version), QEMU_HW_VERSION);
+     }
+ 
+     ide_reset(s);
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index f62e420a91e..0276886d594 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -782,7 +782,7 @@ static int megasas_ctrl_get_info(MegasasState *s, MegasasCmd *cmd)
+ 
+     memcpy(info.product_name, base_class->product_name, 24);
+     snprintf(info.serial_number, 32, "%s", s->hba_serial);
+-    snprintf(info.package_version, 0x60, "%s-QEMU", qemu_hw_version());
++    snprintf(info.package_version, 0x60, "%s-QEMU", QEMU_HW_VERSION);
+     memcpy(info.image_component[0].name, "APP", 3);
+     snprintf(info.image_component[0].version, 10, "%s-QEMU",
+              base_class->product_version);
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index 9b8656dd832..1a6b181b9d6 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -703,7 +703,7 @@ static bool scsi_target_emulate_inquiry(SCSITargetReq *r)
+         r->buf[7] = 0x10 | (r->req.bus->info->tcq ? 0x02 : 0); /* Sync, TCQ.  */
+         memcpy(&r->buf[8], "QEMU    ", 8);
+         memcpy(&r->buf[16], "QEMU TARGET     ", 16);
+-        pstrcpy((char *) &r->buf[32], 4, qemu_hw_version());
++        pstrcpy((char *) &r->buf[32], 4, QEMU_HW_VERSION);
+     }
+     return true;
+ }
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index a5201855352..5ba5b46c4f4 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -2543,7 +2543,7 @@ static void scsi_realize(SCSIDevice *dev, Error **errp)
+     }
+ 
+     if (!s->version) {
+-        s->version = g_strdup(qemu_hw_version());
++        s->version = g_strdup(QEMU_HW_VERSION);
+     }
+     if (!s->vendor) {
+         s->vendor = g_strdup("QEMU");
+diff --git a/system/vl.c b/system/vl.c
+index 38d7b849e0a..246623b3196 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2212,10 +2212,6 @@ static void qemu_create_machine(QDict *qdict)
+ 
+     cpu_exec_init_all();
+ 
+-    if (machine_class->hw_version) {
+-        qemu_set_hw_version(machine_class->hw_version);
+-    }
+-
+     /*
+      * Get the default machine options from the machine if it is not already
+      * specified either by the configuration file or by the command line.
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 954a7a99a9e..0b88868289b 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -955,7 +955,7 @@ static void s390_qemu_cpu_model_class_init(ObjectClass *oc, const void *data)
+ 
+     xcc->is_migration_safe = true;
+     xcc->desc = g_strdup_printf("QEMU Virtual CPU version %s",
+-                                qemu_hw_version());
++                                QEMU_HW_VERSION);
+ }
+ 
+ static void s390_max_cpu_model_class_init(ObjectClass *oc, const void *data)
+diff --git a/util/osdep.c b/util/osdep.c
+index 000e7daac8b..4a8b8b5a90f 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -31,8 +31,6 @@
+ #include "qemu/hw-version.h"
+ #include "monitor/monitor.h"
+ 
+-static const char *hw_version = QEMU_HW_VERSION;
+-
+ int socket_set_cork(int fd, int v)
+ {
+ #if defined(SOL_TCP) && defined(TCP_CORK)
+@@ -533,16 +531,6 @@ ssize_t qemu_send_full(int s, const void *buf, size_t count)
+     return total;
+ }
+ 
+-void qemu_set_hw_version(const char *version)
+-{
+-    hw_version = version;
+-}
+-
+-const char *qemu_hw_version(void)
+-{
+-    return hw_version;
+-}
+-
+ #ifdef _WIN32
+ static void socket_cleanup(void)
+ {
+-- 
+2.53.0
+
 
