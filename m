@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC11F54ACE
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9263AF54ACD
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w53Pk-0000kR-5z; Tue, 24 Mar 2026 11:11:28 -0400
+	id 1w53Pi-0000g7-3I; Tue, 24 Mar 2026 11:11:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Pg-0000g6-Fe
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:25 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1w53Pb-0000cV-Te
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:20 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53Pe-0005Cr-LN
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:24 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-439af7d77f0so4121617f8f.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:21 -0700 (PDT)
+ id 1w53Pa-0005Br-7Z
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:11:19 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-439d8dc4ae4so4843272f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774365080; x=1774969880; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774365077; x=1774969877; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=SNjKRlPgyHByobSZXWFL5LbzsZyidVKneZpX7LBz9rs=;
- b=hroRSSoDKLKfSPbhermzzM8azuX8HhT6ZVzAx3LYgxHZQdIPDyCkHSw4e2zaHeMIe0
- duTJtdbDrrskFGiP7gpQZkpy0HSom8iCwHBH8+tYZwLFl+kOiW4o8AR2R8sOeHa7x0x0
- 74ljfpPFLBKyoWAFCCfe0DMqv9+1iDu2I0D6zx65u9hnRUA7zm4GJHtMZb4bRovzRefJ
- M8BjIa8C53uYXGx0Zfc5s9eTF4HigXbzMIQi8u9H+8EhVD/MTV2s72ERaYJIQzLDofKC
- ASFym7pc/ycSLxebgSpo+awMb9+ExcrA8j2tuf0/sgkG2FwFU9y3Ru5v5lPCuWYQCLm9
- 9Lcw==
+ :reply-to; bh=IKbUTaFOqvDJxELefvnhulrQMMYMDi7DhugEoR6vIwo=;
+ b=kp9fsaUzPTH2ItGY5PUOzW5T0uYrfRSLBTJdlhhOoL81d6IRQ8QztT84qvsY0rsymo
+ jD00NIzxfNEkX/ZkTbEa5bF8GYWn338HkSD4KGrjyzSEzb1jLZFHWZdm7hy9n8W2o8Nx
+ 9BWrKxHUbRPZ/r3/J1j1dS5GmFYYYHebJzssPv5vwvTQ642Mz8LRw5lEyju12Vb0DHCl
+ 0VHl5jdg3rIitDZR7yyNZMtNqkO6rL4yTQezj4/wxiGDCDuEKgPgvo5tgSZt9gqjq936
+ 9E3cnchLthkFARLbLMdy0lwj8GSFJ5nUawLtL/T+3AQdXA8Gm0hcU3xrvTR2VGSgPmy6
+ E1ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774365080; x=1774969880;
+ d=1e100.net; s=20251104; t=1774365077; x=1774969877;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=SNjKRlPgyHByobSZXWFL5LbzsZyidVKneZpX7LBz9rs=;
- b=sfgXPyjH4ooqhL2Nldsfsd0h6ULEtveifaZkEP4rENCqp0RQbJW4sks5/m3WDnL0oK
- UjYSbD+RG3rTw+8NnMZaThPc7gMOWBt2Ydnk7aAMQJBL0tK1H3sxZH7kTMG8XcirnZHv
- S6GaZbTkPxaz+m3dSoYTYb1ZmbeIvPL5hI26H+zNJQsvbcz3lHfvu1KdJ36mPvO19S6p
- 4jdv0s94Z7FNnoaqd81t6VmSFIqQHcTmw52PXdy1Huek/4PH7d1ejaNAfM8BodSoXGIN
- dRqiS5GVhh+3WkCjjcpONXeEyoaePx3TQHq1ySfN6e3SVPX3RD2dXCdTFH2MsYuiX8mO
- /+Uw==
-X-Gm-Message-State: AOJu0Yw5BXVyebNIIFojKjrUL6X2xMk2lqbIw8/bDVRRyEUm43rWnpAx
- z/i+4LLVNLXIbdhSM/ZbJfPjuPt1FJhzF9kP2qSGu0Ahh7Ge2UqRuIGiAxNVajLzYipUCbJZ4aH
- KkTdh9Dg=
-X-Gm-Gg: ATEYQzzu26PQ5msjP6kYaBnqpC1wYppdHaU/lQkioGj+rjKtBsN7PDtAwEpXED7QlxS
- NQdpESHWSSvy0c7k5dTh+5g7Ht3Q+z/KfPp7XMzAoiUyrKTG/W4jepK7qiaU6/hwEQrxvsgPKg0
- QLHzt9xMVGBfqXW7xu276+g4wc+Mb+AZD4nnYCer3NxRPUaMjlnqLMX7C1MtR8YsVzKrFglyz7w
- /Le0nxqaGFa/EL4EOTyx8f9J1PLTMhKSqN4CEskh2FSK6VHAAsL9XkJl4e92BfghfN0MSrl9BE0
- D6068p+ocJxatc8DnCoMoU9kCjCmQfcMaup4N9YdfoJTQf7mfUP6gEjMQeQBM0U2p/ixMtmnri2
- +SPLjZFNc6KG++tQWn0TMI5DJQeVWoPfifptCYEhtMsZOJIdGHETEFVSi9xYO42n29CMnpyvIMR
- YD+f6nRnurZLR8wxTum/SsxQKAQPPFypIE9mV6Z+LRUtQPIji+kDWvJ7TgDM3jq8q+9sGRlqSAa
- ZCG5Hn73svTV/zmrFkEFLA0XZnNiUEJicgtW/ThSw==
-X-Received: by 2002:a5d:64c6:0:b0:439:bd26:3c63 with SMTP id
- ffacd0b85a97d-43b64262da5mr24967152f8f.28.1774365080321; 
- Tue, 24 Mar 2026 08:11:20 -0700 (PDT)
+ bh=IKbUTaFOqvDJxELefvnhulrQMMYMDi7DhugEoR6vIwo=;
+ b=GDaaC2Qj6wQOSlgPzVINL2R+lFxYN0ATql85acwBhxvbpBzsmuFSegjY5TXIwhXV50
+ jN9HPgirt+yQz1f3I8NrBrk/zfq+JoKD4jogQfXESOmkla21TKrPQJJirOZVOrBrcaDl
+ yaEXuxYmeoBFmp2NI0OCRSm9GKiZ2D8CRdIvgjDdlqkvg5JHDe3m76zAtLtUU5xeayGw
+ kZPNBdLW7Dn8v8K5Nuylq6xfTJPo1v9wHUJq2wfU8K5ephqTBAxmEgjChN+ES/T2BdJA
+ 2ACEPwnrDDnhRQ53vtcmuNozcroGusXNzGucQdf4q+0b1jOLZtuGDxV6LRFNUj40eCTY
+ LGdA==
+X-Gm-Message-State: AOJu0YwCP5qGMEA1TP52rR05J5W9HX9nVe6jRBJL7R7UDEx9E8PHi5cC
+ NKtenvHC3AwZeke8sQdlLSnOsdfZrxt3E0iXm78AL4McSP9IJbovOqOHyCitPS7m3E3kF7xjOgL
+ UD8AP46g=
+X-Gm-Gg: ATEYQzxGSiK7rrTWlSKH5+7AtKnpwMZ523/Lmu6r+nYuFdnwmcU7tGhS/HoiqYCWzmg
+ yqsjQ6Dnd5ss1rd4M5lo1CDmFkAzxDdmWYts9CuFwsxQxIRXFoxS9CxIx2kL3JAof1fXDQWxmYT
+ cXG7/xl0d3kMclFfBBcu39jfFifOkhWHnNDzLX/GyojIHa5NvX4szxiYDAznA8jpmCqBgBIfX9i
+ L0uj/tGY9K5oRwbd7VJJ9cV1QjJY6ELkPTNF7zfaVZ/L055aatgBdxrSR9hRCcZavLSG9T2Qls+
+ 1D3+XBX3c7IxXQgEhpTOnl9aZrsy+bEY9uaDkwUlX7wOsamJEwVnoIIET0GYRJI+fCRT9lXe/XP
+ +6sWVnk6zmyQh2EmUmu/EAZshUGlKaaCZBb80TbtjlhSLjh8pjiby4d5ZxLA6/byg32/YEY3j/A
+ MkDfcxvvaUPeAokHegGoY5OSxjsAorqX+02ivpdwDWg/vm6mXAR6C+O/LK5bOIfOvJzn6yxBuf9
+ RF6DF9PPJbRsjybwZj20imi/tNHprM=
+X-Received: by 2002:a05:6000:310d:b0:43b:3b80:6776 with SMTP id
+ ffacd0b85a97d-43b64262ebbmr26034105f8f.30.1774365076416; 
+ Tue, 24 Mar 2026 08:11:16 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.19
+ ffacd0b85a97d-43b64717e97sm40781916f8f.35.2026.03.24.08.11.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 08:11:19 -0700 (PDT)
+ Tue, 24 Mar 2026 08:11:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/11] hw/arm/smmuv3-accel: Change "ats" property type to
- OnOffAuto
-Date: Tue, 24 Mar 2026 15:11:05 +0000
-Message-ID: <20260324151111.237411-6-peter.maydell@linaro.org>
+Subject: [PULL 02/11] linux-user/i386/signal.c: Correct definition of
+ target_fpstate_32
+Date: Tue, 24 Mar 2026 15:11:02 +0000
+Message-ID: <20260324151111.237411-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260324151111.237411-1-peter.maydell@linaro.org>
 References: <20260324151111.237411-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,139 +101,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nathan Chen <nathanc@nvidia.com>
+Our definition of the target_fpstate_32 struct doesn't match the
+kernel's version.  We only use this struct definition in the
+definition of 'struct sigframe', where it is used in a field that is
+present only for legacy reasons to retain the offset of the following
+'extramask' field.  So really all that matters is its length, and we
+do get that right; but our previous definition using
+X86LegacySaveArea implicitly added an extra alignment constraint
+(because X86LegacySaveArea is tagged as 16-aligned) which the real
+target_fpstate_32 does not have.  Because we allocate and use a
+'struct sigframe' on the guest's stack with the guest's alignment
+requirements, this resulted in the undefined-behaviour sanitizer
+complaining during 'make check-tcg' for i386-linux-user:
 
-Change accel SMMUv3 ATS property from bool to OnOffAuto. The 'auto'
-value is not implemented, as this commit is meant to set the property
-to the correct type and avoid breaking JSON/QMP when the auto mode is
-introduced. A future patch will implement resolution of the 'auto'
-value to match the host SMMUv3 ATS support.
+../../linux-user/i386/signal.c:471:35: runtime error: member access within misaligned address 0x1000c07f75ec for type 'struct sigframe', which requires 16 byte alignment
+0x1000c07f75ec: note: pointer points here
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+              ^
 
-The conversion of the ATS property type to OnOffAuto is an
-incompatible change for JSON/QMP when a bool value is expected for
-"ats", but the "ats" property is new in 11.0 and this patch is
-submitted as a fix to the property type.
+../../linux-user/i386/signal.c:808:5: runtime error: member access within misaligned address 0x1000c07f75f4 for type 'struct target_sigcontext_32', which requires 8 byte alignment
+0x1000c07f75f4: note: pointer points here
+  0a 00 00 00 33 00 00 00  00 00 00 00 2b 00 00 00  2b 00 00 00 40 05 80 40  f4 7f 10 08 58 05 80 40
+              ^
 
-Fixes: f7f5013a55a3 ("hw/arm/smmuv3-accel: Add support for ATS")
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Tested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-Message-id: 20260323182454.1416110-3-nathanc@nvidia.com
+and various similar errors.
+
+Replace the use of X86LegacyXSaveArea with a set of fields that match
+the kernel _fpstate_32 struct, and assert that the length is correct.
+We could equally have used
+   uint8_t legacy_area[512];
+but following the kernel is probably less confusing overall.
+
+Since in target/i386/cpu.h we assert that X86LegacySaveArea is 512
+bytes, and in linux-user/i386/signal.c we assert that
+target_fregs_state is (32 + 80) bytes, the new assertion confirms
+that we didn't change the size of target_fpstate_32 here, only its
+alignment requirements.
+
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260305161739.1775232-1-peter.maydell@linaro.org
 ---
- hw/arm/smmuv3-accel.c    |  4 +++-
- hw/arm/smmuv3.c          | 17 ++++++++++++++---
- hw/arm/virt-acpi-build.c |  2 +-
- include/hw/arm/smmuv3.h  |  4 +++-
- 4 files changed, 21 insertions(+), 6 deletions(-)
+ linux-user/i386/signal.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 2bb142c47f..f21a6a9997 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -827,7 +827,9 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
-     s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
- 
-     /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
--    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
-+    if (s->ats == ON_OFF_AUTO_ON) {
-+        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 1);
-+    }
- 
-     /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
-     if (s->oas == SMMU_OAS_48BIT) {
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 068108e49b..a683402a0c 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -317,6 +317,11 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
-     smmuv3_accel_idr_override(s);
- }
- 
-+bool smmuv3_ats_enabled(SMMUv3State *s)
-+{
-+    return FIELD_EX32(s->idr[0], IDR0, ATS);
-+}
-+
- static void smmuv3_reset(SMMUv3State *s)
- {
-     s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
-@@ -1966,12 +1971,17 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
-     }
- #endif
- 
-+    if (s->ats == ON_OFF_AUTO_AUTO) {
-+        error_setg(errp, "ats auto mode is not supported");
-+        return false;
-+    }
-+
-     if (!s->accel) {
-         if (!s->ril) {
-             error_setg(errp, "ril can only be disabled if accel=on");
-             return false;
-         }
--        if (s->ats) {
-+        if (s->ats == ON_OFF_AUTO_ON) {
-             error_setg(errp, "ats can only be enabled if accel=on");
-             return false;
-         }
-@@ -2128,7 +2138,7 @@ static const Property smmuv3_properties[] = {
-     DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
-     /* RIL can be turned off for accel cases */
-     DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
--    DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
-+    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
-     DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
-     DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
+diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
+index 0f11dba831..b646fde431 100644
+--- a/linux-user/i386/signal.c
++++ b/linux-user/i386/signal.c
+@@ -60,10 +60,33 @@ struct target_fpx_sw_bytes {
  };
-@@ -2160,7 +2170,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
-         "Disable range invalidation support (for accel=on)");
-     object_class_property_set_description(klass, "ats",
-         "Enable/disable ATS support (for accel=on). Please ensure host "
--        "platform has ATS support before enabling this");
-+        "platform has ATS support before enabling this. ats=auto is not "
-+        "supported.");
-     object_class_property_set_description(klass, "oas",
-         "Specify Output Address Size (for accel=on). Supported values "
-         "are 44 or 48 bits. Defaults to 44 bits");
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 719d2f994e..591cfc993c 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -402,7 +402,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
+ QEMU_BUILD_BUG_ON(sizeof(struct target_fpx_sw_bytes) != 12*4);
  
-     bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
-     sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
--    sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
-+    sdev.ats = smmuv3_ats_enabled(ARM_SMMUV3(obj));
-     pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-     sbdev = SYS_BUS_DEVICE(obj);
-     sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index 26b2fc42fd..ce51a5b9b4 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -70,7 +70,7 @@ struct SMMUv3State {
-     uint64_t msi_gpa;
-     Error *migration_blocker;
-     bool ril;
--    bool ats;
-+    OnOffAuto ats;
-     uint8_t oas;
-     uint8_t ssidsize;
- };
-@@ -91,6 +91,8 @@ struct SMMUv3Class {
-     ResettablePhases parent_phases;
- };
- 
-+bool smmuv3_ats_enabled(struct SMMUv3State *s);
++struct fpxreg {
++    uint16_t significand[4];
++    uint16_t exponent;
++    uint16_t padding[3];
++};
 +
- #define TYPE_ARM_SMMUV3   "arm-smmuv3"
- OBJECT_DECLARE_TYPE(SMMUv3State, SMMUv3Class, ARM_SMMUV3)
++struct xmmreg {
++    uint32_t element[4];
++};
++
++/*
++ * This corresponds to the kernel's _fpstate_32. Since we
++ * only use it for the fpstate_unused padding section in
++ * the target sigcontext, it doesn't actually matter what fields
++ * we define here as long as we get the size right.
++ */
+ struct target_fpstate_32 {
+     struct target_fregs_state fpstate;
+-    X86LegacyXSaveArea fxstate;
++    uint32_t fxsr_env[6];
++    uint32_t mxcsr;
++    uint32_t reserved;
++    struct fpxreg fxsr_st[8];
++    struct xmmreg xmm[8];
++    uint32_t padding1[44];
++    uint32_t padding2[12]; /* aka sw_reserved */
+ };
++QEMU_BUILD_BUG_ON(sizeof(struct target_fpstate_32) != 32 + 80 + 512);
  
+ struct target_sigcontext_32 {
+     uint16_t gs, __gsh;
 -- 
 2.43.0
 
