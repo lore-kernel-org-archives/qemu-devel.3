@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E5C3FEC0F6
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E27FEC0F6
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w575G-000149-Qb; Tue, 24 Mar 2026 15:06:34 -0400
+	id 1w576d-0001bZ-EA; Tue, 24 Mar 2026 15:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w575F-00013Z-MU
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:06:33 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w576a-0001bI-H3
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:07:56 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w575E-0008FH-4S
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:06:33 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-794719afcd4so51026527b3.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:06:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774379191; cv=none;
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w576Y-00005A-Sc
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:07:56 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a9296b3926so13376725ad.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 12:07:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774379273; cv=none;
  d=google.com; s=arc-20240605;
- b=eCr9flgL4xlDG8kyjHjkqTP10TAKffcB81YE99dQrXth9kTLOQQjU5o+8HkMpBzg/I
- rXAIo4N28SUwbybWwl1Dni0sLZ39tpyZahKmN4Yy/vefHnlnMFFBIfoRe+GeHrsu0MOJ
- s4dnGm5BdSKGNEjzY2YSRizAxUsFx7O2rG4eSkdWO7Ikuli4xi5mJiBAgyqEz516kPKp
- BbDMv1rf6jXmzIi3rdSCQUK30SjjzJhnwpTUolJxZbKUFwEUdVVe+WTR/0R8iAswwKVR
- gPLSvBeN5nw1bJcPahtQKL6EGDj54dYg2TWJcJCbFwn4tILyw7ekVjMsKPfkjk9mnOWR
- Auqg==
+ b=TwUOf9W899vup4G6NBNlxIydNENmXOECdv9Qg5s6Q78lF3b87kOG9oAAVGWtYtmIMr
+ sXvJI9EmzhGu0BndIIyC5W+RSKJG/qtC96Zu41hKSvJSaE/0F2rgOw/MXaBh8/EJEf7s
+ QIgZr6ky9p8C0qNzym/bsAufPaykPMX65V5u5cnzdSRNbRUzgZAsfJpFEr/yIGFpVvC/
+ 3k6jHojPt7kNzFfkRHPUaLgOv/F5v+xBC21wrfcGjJuwGO0gjpRv6hYcb2uUe4HVwjQp
+ 3WhH/ae1OTimgjVEV/HhYa+nIusFVzCAN/uCc0HIN3E5G4gPUdM0U3oIUUuYs5SMfwF6
+ g6MA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=wfjRUlHoEzD8aG+KSCZs4+KMf/9/RO5GYYO7ekuyq6Q=;
- fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
- b=L3n6Bdz7pXwRUhhZtexfOKwg0V9rVl5qxGckj7ouhFk0zk7Q2QazohQhMWktBXBYgV
- ldfoG558tEyH3H1WXs+bd+CidBzPUOEiACWHBbNSTsjffOuDRh6uyYc68VEpOHKZ/gbX
- 8JZUX0F0Ed1V+HQqPiKt6/WU4chdOc4tLeGMQ8qhWpqFoIEz3znQ1JiYYXu2M7pjK0qW
- 2G1RmCMQaep+ogj16YmUqbT4K9UCp0d2nd01pcl9eW80rg7ACJs5jLX7uHIn248v0TcD
- V4qbfipkx7U4JvkkTNp9QX7S/caxux1j6IwP9CQTGiZnLpq895dqqPz5ZzqZNE01rfSq
- Zjkg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=L4p41USaMqAlyjLMvAnhRKSZMPrFQRvUypW/tFUEqUI=;
+ fh=uv1tA9xklsQ23QRRVuZ5ICrQzjqlbIWk8lB36BxPINw=;
+ b=O8f9zI4PljXV2Id83t+g+5tUuEcaG2E/wsvB2bxNsQJk9mEob8fbrGjedDbL9S0DzK
+ UxrWQnkCSgw6Cc0AjYYcB/lULhzYAfnz94E5O2P5YH0lnVT7lwThDxqlJlJFtVIst4wE
+ 5lu9rx0SP6faiApCvXtDTZ5mlkHmnYXOUMfHkmfjoRqqZ5yegMOhDeowajZNE6fu36PK
+ q9itI5i9EYdQkmG28+F6gAEQ/pd0KVpaa1q0Jb8VArRycMfjLNDFk0gKbpmR3QxnXfXR
+ Dc0XaBo8zE0qkzSgq/GTZu4iC5ouIjN0Cv01lR5nv1hVzNAgY0FR1zdHIuC6XwkcpS8M
+ 4CTQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774379191; x=1774983991; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wfjRUlHoEzD8aG+KSCZs4+KMf/9/RO5GYYO7ekuyq6Q=;
- b=PSKh6qj2NlsRohimLKzPGQHqvm3zGlkOuA7JRvrEUgt4pZxPW8mEN8QQVT87/kr9yW
- vp7VMtms3R8zBxYRtku5Pct2qbDWhKL0NqN2zcpMQuHpst6I3VCAUyW6RbGuNsVd3IdT
- PY6TgnOddah70OG7/texnC8t9rCGCWSlXn+hCOmJH431Q88k24MOOL2/JRFxn9oEMu2p
- PGDash65dlI7FyjqUQERCyRaSTI4l3HUkOsHm7DrhKqhkuD5uF5uwtb1tgU7EbDlyqFe
- dPJvfWw/ttQgVLKNXBlMl8P6XkTrmIXg4HcK0ZXDK7dOp2bkn7ds3RJVd6IXV+rQnbK3
- oOUA==
+ d=gmail.com; s=20251104; t=1774379273; x=1774984073; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=L4p41USaMqAlyjLMvAnhRKSZMPrFQRvUypW/tFUEqUI=;
+ b=sttCKHB7FnmAYaFIrci76dAleftcRkddHOUCmis06zCQAnVGPJ+udEfACYxkD6JhpT
+ MzLhZmxRUP5hcgzdKuXGBJ5ONmRL8pC31Nr42MV2vk1qUM74iMIq1s4cdlWv0giN32M4
+ m9FH5sOvxEFJ8343Gh1DbFwlKGU4jAmyvLgPG4UaJZjTaQAVnBpU4mJn0wyZXrV6ZD5T
+ +4mrx0iX2BQiR8muRF4FcEivx65IOyNzELGUwhhCX0YMBKZe71F2n7lK++MvoQppXDMC
+ YZTy/l1XtKKeMfggoFbFzpg200jmm/eOPG76WnnAMoBBTrnt1c8s2tBargyZwQVXWUHd
+ epJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774379191; x=1774983991;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wfjRUlHoEzD8aG+KSCZs4+KMf/9/RO5GYYO7ekuyq6Q=;
- b=KpBpMda9YY7LJ1RAZ/3kJhXuyJdr494lxQpyXE8t4Dadl/+Jp6xKnWehrzw/xqcFrY
- OPtXz6L15Pxq1J2fhDnO8RaXEIyC77tiSAnv0khNbKrXCuul7UJuD7wUb6ia3HzkNas9
- M8/kLJUdsgM1zr8i/qQy0OrCncWjsFlw6QMyM/ewbXlwWITN9fFoWr/noj1b5LjzNWjp
- dK2jm2t1Mrwaoke3EGX4AP5NxfZs2cTm70tTsIeMc1QIKDpOIm5HuE+dAybCCafbbxlT
- LmZo/QUWvpFBlToZ3o2B6O1ijnXTwWTrgvjK5aoS+Px1VNuCjHMk1hYYw/6IQQ9deaNa
- MM0g==
-X-Gm-Message-State: AOJu0YzPt2CX8J+N0zV+Z0FQFSKmJaDD8VnEeMVDMBUGQRmrBcgGygNj
- uucljJpnHAH//vk5KKK+63KRtLs/etMFZVn19gQuVnpsXdb9x0Y1ZDMWCHD00K2iPdRAzF3VVnA
- 8NxSYT3Zk0gAZs22sj2O+x3IX9SZvk5/TXRQFxgLDbQ==
-X-Gm-Gg: ATEYQzyQtWcEBAvmcmwmaXs8HxvNyz2RCW9BQOKg+VlSrvFUBvET2ueZLyb9HkOSnK5
- 451mXEl9XsisXUqXFf1uL5qsMrbo9PiuI3PetpvjT6SXYjCQRONiwgwVckKeimfydIueEZTWw03
- W0esVIldOZH/KLhCnLaLonxrdutKUenCpCdxRRQUmBIVUqUKsY4gtPrbQClb5ZEqlO7x28vJ7js
- Z7X8C+3JhOoRw6MxTkeP8jVw9H0jOmVMordEwtY7XcsiunkPVJc+SpPYPRX3hHxQXPEB2JBAZ4Y
- LM9TqNa1/O1sfrawpUsobPlvjMd3I2virhKN3PsFqrqMeJQkDb7i0ICJjz2l/GrIH6Y=
-X-Received: by 2002:a05:690c:d88:b0:79a:bbe0:8cae with SMTP id
- 00721157ae682-79acf3352a5mr10410557b3.1.1774379190413; Tue, 24 Mar 2026
- 12:06:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774379273; x=1774984073;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L4p41USaMqAlyjLMvAnhRKSZMPrFQRvUypW/tFUEqUI=;
+ b=CQhMosbvsIVUXVVtlBstK8DKAaWlrgDFaXVWBUkA+mDLnU8MgYqmpnPRIhlDIzYHgm
+ TG32scnSndECah7QHgLmD8aK730kOTgHYUn6e1HeDrFw0Y+B4tl53SKSTSs20vUD7Nv4
+ K3qLLB6UCahjH5R1Vhayehp/1EBJ9o27PLatvffMQsdDG5EpX9xvnwbM8s4C+xU7vzz7
+ u6r31IHCNDWE5I2IkEsxTy0tWo6qOaROCjhJb+Q5FyHRJO+j8qYOTtmiDCpcHl/gjkjj
+ 6yPHZykTJh6AAT4f+3BJsPfMhUXyfdKV4SNWX99Tnn1t8bJ2ppTyb1tT62zOS+CLBvQn
+ sSpg==
+X-Gm-Message-State: AOJu0YyNlfhl/cmolrZxUHjSAYEtIinfPily68KdZl8CmdkXy1D6TxRo
+ x1JoTXTYRLxxMuAM15Cno/JvcGhuywUgx5BM0fQAaCUIV+LNWlpoG69ryRuGShmnIlmil3EwUGr
+ 6alGUsZiKTicx5qFIlaFR8/WyGCzF9G8=
+X-Gm-Gg: ATEYQzyU0mtY6QfNVDPv95OycJEB7owylST8+1ULIO8/9wwG2hSq7F/T64gqP95CfIh
+ VgxLkHUWcFyLxM17h2r0N9p5sC8992AZ8+aU9mIj0fV3BbbDLTbHLcPKEm57SpV4dn8LgZ5QcKU
+ unox80eIyryPKCllvyPYa8ob0IqtRgjBonferWWYqrCBpyi9FMl2XNE81v3wEMEDdHyHERAB5af
+ +aFk5Wt2HCH8I2Ft8XLhfMxJzNrcPK4DazXiK0sV3gJS6UoikmESQr2SoFudqEY2xesaACb8w9n
+ cEnrUJx9ZcKi8wNPFaLArpqGRf2pHBl5B4lSNytnY03YCDITKA==
+X-Received: by 2002:a17:903:908:b0:2b0:669d:3a68 with SMTP id
+ d9443c01a7336-2b0b0a15b81mr8395615ad.19.1774379273088; Tue, 24 Mar 2026
+ 12:07:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260323165218.96607-1-philmd@linaro.org>
- <20260323165218.96607-18-philmd@linaro.org>
-In-Reply-To: <20260323165218.96607-18-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Mar 2026 19:06:19 +0000
-X-Gm-Features: AaiRm53oHw-CyFSjBFb7mUaapXBH4RyWdUy9wg0Kr8XZ0bXYC5OWw5N1juwKJE8
-Message-ID: <CAFEAcA-SKjjEyYVi0myBa9akLJJpV9auPxrNmzU=wL=CK-RAaQ@mail.gmail.com>
-Subject: Re: [PULL 17/27] ati-vga: Fix colors when frame buffer endianness
- does not match host
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <de0eb7d07cdae77e9803feccae79f5c9f29277d6.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <de0eb7d07cdae77e9803feccae79f5c9f29277d6.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Tue, 24 Mar 2026 13:07:41 -0600
+X-Gm-Features: AaiRm52Fb_ZX8-3vp9Ih-AnNERtMMGlAweV0AYKUbxBvHTtM8O5-bYWrTZWD9JM
+Message-ID: <CAATN3NqtZEQxzmpUtY80dpRGvuwx=XLRqyf2e6QXVkGfANP-1A@mail.gmail.com>
+Subject: Re: [PATCH 11/13] tests/hexagon: add tests for v68 HVX IEEE float
+ min/max
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Content-Type: multipart/alternative; boundary="00000000000044f324064dc9de61"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,45 +117,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Mar 2026 at 16:54, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+--00000000000044f324064dc9de61
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Mar 23, 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino <
+matheus.bernardino@oss.qualcomm.com> wrote:
+
+> Signed-off-by: Matheus Tavares Bernardino <
+> matheus.bernardino@oss.qualcomm.com>
+> ---
+>  tests/tcg/hexagon/fp_hvx.c | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
 >
-> From: BALATON Zoltan <balaton@eik.bme.hu>
->
-> When writing pixels we have to take into account if the frame buffer
-> endianness matches the host endianness or we need to swap to correct
-> endianness. This caused wrong colors e.g. with PPC Linux guest that
-> uses big endian frame buffer when running on little endian host.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Tested-by: Chad Jablonski <chad@jablonski.xyz>
-> Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
-> Message-ID: <759ed5e3b019cce94e9a4ef003f1fc2e0cea2ec1.1774110169.git.bala=
-ton@eik.bme.hu>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Hi; Coverity flags this as possibly-wrong code (CID 1645969:
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-> @@ -89,6 +90,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2=
-DCtx *ctx)
->      ctx->host_data_active =3D s->host_data.active;
->      ctx->left_to_right =3D s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
->      ctx->top_to_bottom =3D s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
-> +    ctx->need_swap =3D HOST_BIG_ENDIAN !=3D s->vga.big_endian_fb ? true =
-: false;
+--00000000000044f324064dc9de61
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The issue is that !=3D is higher priority than ?:, and people often
-write "X !=3D A ? B : C" when they wanted "X !=3D (A ? B : C)" but they
-get "(X !=3D A) ? B : C". Either way, using parentheses helps clarify
-for readers.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 23,=
+ 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino &lt;<a href=3D"mailto:m=
+atheus.bernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Sign=
+ed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheus.bernard=
+ino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm.com=
+</a>&gt;<br>
+---<br>
+=C2=A0tests/tcg/hexagon/fp_hvx.c | 21 +++++++++++++++++++++<br>
+=C2=A01 file changed, 21 insertions(+)<br></blockquote><div><br></div><div>=
+Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com"=
+>ltaylorsimpson@gmail.com</a>&gt;=C2=A0</div></div></div>
 
-The priority is actually right for this particular case, but the
-expression is unnecessarily complex: we could write more simply:
-
-  ctx->need_swap =3D (HOST_BIG_ENDIAN !=3D s->vga.big_endian_fb);
-
-I've marked the issue in Coverity as false-positive, but we might
-consider changing the code also.
-
--- PMM
+--00000000000044f324064dc9de61--
 
