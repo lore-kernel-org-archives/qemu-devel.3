@@ -4,108 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534B1E9A75D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DEBFE9A75E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 10:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4ymx-000820-9v; Tue, 24 Mar 2026 06:15:07 -0400
+	id 1w4ytb-0000kY-4J; Tue, 24 Mar 2026 06:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4ymv-00081J-UX
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:15:05 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w4ymu-00048r-C6
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 06:15:05 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-79800183233so63311247b3.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 03:15:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774347303; cv=none;
- d=google.com; s=arc-20240605;
- b=kV76NH8EmVyOjpFmOsEOgagLybfmJcdXWlkiQg8KkVaeLL0fhSWe3dihe2gryNCn7I
- gG+AFdfSwF6/CPHoLE6su5u4cqqbgDDeBxxhw+DYAXAdlyTJtwVZX3N9az3DIaYWxJ88
- U1exb/Dp03GUL/WO6hdSSRoisy2wczonfFGd3RMYcxyUSKmD+ht0dgcumzp1FcHlO+mG
- 3mufyOtha+PCEnECFRFsqaifrHzzomLHSBAC8FrjdfvLve7Vv+8sYO8B9I592uW/xjgD
- 5TsjkQ+ZJSe0VlDU4DON7b5VUThSFRsLr03Y7ReG1yAZ381m3IJbxnD4nekJk51blGxe
- 0rFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=DQVi0q+E57h9TLscD2BfXSjr7hY6v6cTKvicgNa5tqM=;
- fh=QKFMOxPwXZb/OLSTxPYIA/LZI7aXMd0hhZxdGRidgsQ=;
- b=bXtO6q59rMU9EWLHZkF4tfmcn4QauuyRqBbHbZcUlBIJE5Mw9fzx2ws6+O756YPebg
- ge69SkTVhtLKWIiM/H9LzPlwJPp1q14z+UyNpoeTccK+0q4sEzLHLM11PRtM9eHmAmXh
- IjNv5CPSgXgGZW+5cWddWQXB+QyMYCYh2ZCeAEcEIHvjm6WdetoGsNDXkSg99c5HP0RV
- xe4iknwQ4rHHcG2VFXkBvabSxHlNT+fRxf9Mnvd6vzhGhVcsai9QLdn4Hs4wF4YypfhX
- R+vRQ4DrBSu26yw4Lu4HDyQVafW5tKFNleAK4H81uymc7Ck2+QPA91QmtQjU5uSMQ5Gr
- 6Zxw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774347303; x=1774952103; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DQVi0q+E57h9TLscD2BfXSjr7hY6v6cTKvicgNa5tqM=;
- b=ZaeQ7vAheagIiXBx8KaI32n5Rgjc0nr99OEHoDpxC6ITEmktEhVPaUgSgalnx/Px+h
- 7WQYh9nGy3eulkDPL6GStFV+7na5pU3Y/JuDvcHEjO/YnT9MsgVg2bnfqFyTV/eAcaaq
- cyKDZL0IoRX6WlatfRwfbHUKTQFUJA7xmObuU2OH0+e1UH9b53g5CJmWmbkIPVbgeLsK
- qphjneArklvBP1/MHdoKxbSLKfiq0dZmzGqt8y0HOLfVAno0k7I20IRL0mvhq66WIgM7
- Is4EBxO+T/5w7YHzHV+HqpK8sV5r3HReqYcJ3Cc8lzNkGFMM1YEOrRfxrW6nlhf1MuZo
- D4Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774347303; x=1774952103;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DQVi0q+E57h9TLscD2BfXSjr7hY6v6cTKvicgNa5tqM=;
- b=sQkO0NpY4Xqo9WYyXJqtKLm4IuadXNtYEngJPR0aoCDbIG2w5p0EnPUmZlqNECYK42
- 2mvG1QU5GkMt8txW98EBKpD1Y4FpIkAuC2iOyGdsHjEvnFI53NKNSl3VM4BpLLpA3gfs
- gJ2iVE1kTdZyQjb8DdW7TtRzYYSf2aa+wXlGu3nlyNfoOxfkebrx8+rsHwKMNs7DgPWD
- R7eFGFs0G9r6LViKfOBG80CydWoBiFULnxodtjCqu7cJfGoY9eR5SPyNGVux0iTKjxuu
- yoh+COpwVHi3vgEcnoA+Hm7+3pH9Mr4OMuQjQ3Hq/i+9v34ClCmPI3EK9PWev63AWgNH
- nx6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUe/iFGlpp/c0Sf8P6tWgu27+qdK4dr3EJTCsjyy9t/u9OEQGtI6YI0ahk/JVsCsgKUBubsUzkYDlLC@nongnu.org
-X-Gm-Message-State: AOJu0Yz7zNEE6VsRjJlXAeZVSBhDbHH5aAisnJZIE0MLDH2ObBZjtm2h
- 7Klmu+xf0MlSx50yaZoEtm6wwwRPtTwg1HsLu4PbZSMlz+KV0rlNbokgrk6lHvhTHI9b/o1uP2r
- 8MiH4CYD/cIjxvuIycINn5zzUfDJdl680Z/cxT9UrDA==
-X-Gm-Gg: ATEYQzxu5Y4wuxeknKsV/3Qs65dwZeEzJUgbxRzSRSRCKLy7cqZ/lbF7hT7tIxWO+dO
- LAercScQU9Q8hVOszk5eFah+uqJDpy9kzCGcgcjMDa/NyZIIp1/7zsJWzevpXmFrr1UunZgKrOk
- nTNSUdYFwRFEfiaQdlRvmAZqxq36Vvl4oeUQtVP2I7OVxSt3U8FukE4HhU+Kiue1p2RYME4x3XG
- 8BjqK+5dYJT8Tvyp84AVmyvEUWLmBXqWomrC/PDeIzaGmXC92cNV+DjEyNaYxQLvdTetbt6cCmO
- ZpbTa5/rEn9VJlTEwiweWcAsN2oaY/4YbqZmjsSLW2RV+pNgz2ZIglp89ziVC3EwxNk=
-X-Received: by 2002:a05:690c:34c9:b0:79a:3e64:c15d with SMTP id
- 00721157ae682-79ac2f8e0f6mr26946687b3.31.1774347303044; Tue, 24 Mar 2026
- 03:15:03 -0700 (PDT)
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w4ytX-0000jg-UQ; Tue, 24 Mar 2026 06:21:56 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w4ytW-0004wG-E2; Tue, 24 Mar 2026 06:21:55 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62O5Olql506491; Tue, 24 Mar 2026 10:21:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=77vNsp
+ GKb4jyYYCUBeGZhGYidOS5Jp0iRojdGwns6JE=; b=gUrJOMt4GipFLFmfyQmN04
+ r4FxijAygPAVzt90cV5A2ZJNSFMtVson5EwI3mMRS9lIfoiDFwlG3Tbl/ZNjIdAU
+ Z7W7VBrE61kG83D2Au1a3dPgrAjR/kQI7AbIxgvoHHvwuate/V2uiCbF2levT8fV
+ uiLEmjPpPV/55O7ap1pBiC9FNCQvFXGdNaxxVpL3t1M674MYaw6X2JqaUkX2Y2+r
+ PCJhhhV3DWZTfkHRaIx4Wpar08sY4fU1d5OOa83bd2arnmFmvLQTcScl0o4+t5Ea
+ oVSmbsij+WS9hozsboOCO7e8HaVDgnnENTjsUNHUnDlyvP5Tt9O9C6330qB8UDjg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kxqaw0t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Mar 2026 10:21:42 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62O9HHuD004407;
+ Tue, 24 Mar 2026 10:21:42 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d28c213v7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Mar 2026 10:21:41 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62OALaFQ50725244
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 24 Mar 2026 10:21:36 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C590520043;
+ Tue, 24 Mar 2026 10:21:36 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B1C6020040;
+ Tue, 24 Mar 2026 10:21:32 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.39.27.96])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 24 Mar 2026 10:21:32 +0000 (GMT)
+Message-ID: <fc2985a0adfeb0de4bb2980798950f1ca2b0a4f7.camel@linux.ibm.com>
+Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, npiggin@gmail.com, milesg@linux.ibm.com, Aditya
+ Gupta	 <adityag@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org
+Date: Tue, 24 Mar 2026 15:51:31 +0530
+In-Reply-To: <CAFEAcA-zJor6L=WFxjfPVhY-bCGHvJTht0yX37Gks_Ozk+PdZQ@mail.gmail.com>
 References: <20260311143549.118720-1-shivangu@linux.ibm.com>
  <20260323231612.GA2637687@ax162>
  <8cde9a355050b306180f80e8d1340ec814c0876c.camel@linux.ibm.com>
-In-Reply-To: <8cde9a355050b306180f80e8d1340ec814c0876c.camel@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Mar 2026 10:14:51 +0000
-X-Gm-Features: AaiRm52U7XV8IZEgqBR3uKQLCstpKT6pRzqNDKwQrE3b6C1V3g1afClU0o8qyDM
-Message-ID: <CAFEAcA-zJor6L=WFxjfPVhY-bCGHvJTht0yX37Gks_Ozk+PdZQ@mail.gmail.com>
-Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, 
- npiggin@gmail.com, milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-stable@nongnu.org
+ <CAFEAcA-zJor6L=WFxjfPVhY-bCGHvJTht0yX37Gks_Ozk+PdZQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: HsprzhrMtH4oejrr10XIFWKftOVEpckN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDA4MiBTYWx0ZWRfX+bo4/jkEOvfa
+ aKrgyXA7dA+2aFwED6X4pFkoF0NrQ6Mkg4LPot+IKiR2dEr5v0PB/H2PJpIpfMbeSZfX0XjWC0+
+ GAI3FciPHX6H+4gH22W98qkQcX6f8/4gItcw/N70XAOYr/IuevncLXG/5APZKIGWMFoxNedWnTS
+ +2ma3ZO5vlw1EN+745dB772PQFMGFBKdzpvPOvCvTS/tueaKKrOLojBNPMouUDS96vicLyiMs8X
+ vz49BkzpKfcqInBDVcvP8i0vxrIkwrTsvGlBddaKrLvZteI0deKRvv6fzI67FgBvCGgju2qgtdo
+ P+nztwkDTEHH3vYR0vq7kLcs39Bqkt83yuV0JUJMbmNP61cqJg1pdJjxk7ehZOCSkBrztV1xiUb
+ NDL8ZF3bIVcNP65qZ/K6icnE0ALGtSYspxSX9f/I16L8PaaaAdXr1PUSo/zW6b3pHXCXkcck91v
+ EbUJaH6fCx2invSgnZQ==
+X-Authority-Analysis: v=2.4 cv=bLEb4f+Z c=1 sm=1 tr=0 ts=69c265b7 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=xmvE-_sHl21UGuzNvFwA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zaJwa3M8fbP3j1RW6wiWs17QgpAwtFVS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-24_02,2026-03-23_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603240082
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,49 +127,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Mar 2026 at 08:42, Shivang Upadhyay <shivangu@linux.ibm.com> wrote:
->
-> On Mon, 2026-03-23 at 16:16 -0700, Nathan Chancellor wrote:
-> >
-> > After this patch landed in QEMU master as commit a16d4c2f16
-> > ("ppc/pnv:
-> > fix dumpdtb option"), I am seeing a hang on shutdown. With the files
-> > available at [1]:
-> >
-> >   $ qemu-system-ppc64 \
-> >       -display none \
-> >       -nodefaults \
-> >       -device ipmi-bmc-sim,id=bmc0 \
-> >       -device isa-ipmi-bt,bmc=bmc0,irq=10 \
-> >       -machine powernv \
-> >       -kernel zImage.epapr \
-> >       -initrd rootfs.cpio \
-> >       -m 2G \
-> >       -serial mon:stdio
-> >   ...
-> >   [    1.308982][    T1] Run /init as init process
-> >
-> Hi Nathan,
->
->  I have root-casued this issue. During discussion for this bug [1], I
-> made assumption about dtb not changing during between resets. To handle
-> that I removed the dt_recreation logic from `pnv_init` code.
->
-> But, As in your case the bmc details are provided from command line,
-> the bmc device is not present during `pnv_init`. And later on during
-> device initialization it gets filled with correct details. `pnv_reset`
-> is also called to start the cpu also, So previously the correct bmc
-> details were populated.
->
-> To handle this case, I should add the dt recreation logic to the "bmc
-> details found" case. [2].
+On Tue, 2026-03-24 at 10:14 +0000, Peter Maydell wrote:
+>=20
+> You might also consider using qemu_add_machine_init_done_notifier()
+> to register a callback that happens after machine-init is complete
+> (i.e. all command-line created devices have been completed): if
+> I understand correctly that would be a valid place to create the DTB
+> (the machine-init-done hook is called after everything is created,
+> but before we process the dumpdtb option).
 
-You might also consider using qemu_add_machine_init_done_notifier()
-to register a callback that happens after machine-init is complete
-(i.e. all command-line created devices have been completed): if
-I understand correctly that would be a valid place to create the DTB
-(the machine-init-done hook is called after everything is created,
-but before we process the dumpdtb option).
+Ah, That would be a good direction. Thanks Ill check on this, and
+report.
 
--- PMM
+~Shivang.
 
