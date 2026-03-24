@@ -4,23 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0672F532E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 06:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E86F532E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 06:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4uyQ-0000Nz-F3; Tue, 24 Mar 2026 02:10:42 -0400
+	id 1w4v1e-0001nl-13; Tue, 24 Mar 2026 02:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1w4uyN-0000NW-Ql; Tue, 24 Mar 2026 02:10:39 -0400
+ id 1w4v1c-0001n1-Dt; Tue, 24 Mar 2026 02:14:00 -0400
 Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1w4uyJ-0006gF-LH; Tue, 24 Mar 2026 02:10:39 -0400
-X-UUID: 2353fbbc274811f1a21c59e7364eecb8-20260324
+ id 1w4v1a-0006vv-Fp; Tue, 24 Mar 2026 02:14:00 -0400
+X-UUID: 9e9a7cf6274811f1a21c59e7364eecb8-20260324
+X-CID-CACHE: Type:Local,Time:202603241410+08,HitQuantity:1
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.11, REQID:54895ef7-03a2-4509-a7df-f7abbef6bbc5, IP:0,
+X-CID-O-INFO: VERSION:1.3.11, REQID:3a93ecf3-8aa4-4d52-8fb5-b402edabecef, IP:0,
  U
  RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
  release,TS:0
@@ -33,20 +34,20 @@ X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 2353fbbc274811f1a21c59e7364eecb8-20260324
+X-UUID: 9e9a7cf6274811f1a21c59e7364eecb8-20260324
 X-User: zhaoguohan@kylinos.cn
 Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
  (envelope-from <zhaoguohan@kylinos.cn>)
  (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 729945883; Tue, 24 Mar 2026 14:10:20 +0800
+ with ESMTP id 1794002211; Tue, 24 Mar 2026 14:13:47 +0800
 From: zhaoguohan@kylinos.cn
 To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  GuoHan Zhao <zhaoguohan@kylinos.cn>
-Subject: [PATCH] block/curl: factor common cleanup and free password
-Date: Tue, 24 Mar 2026 14:10:16 +0800
-Message-ID: <20260324061016.973051-1-zhaoguohan@kylinos.cn>
+Subject: [PATCH v2] block/curl: factor common cleanup and free password
+Date: Tue, 24 Mar 2026 14:13:45 +0800
+Message-ID: <20260324061345.975935-1-zhaoguohan@kylinos.cn>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <27e0e408-eec9-4507-94f8-d8f9c392dc61@linaro.org>
 References: <27e0e408-eec9-4507-94f8-d8f9c392dc61@linaro.org>
