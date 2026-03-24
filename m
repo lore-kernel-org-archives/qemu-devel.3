@@ -4,108 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E84F54ACE
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB16CF54ACE
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 15:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w53w5-0002s2-Vg; Tue, 24 Mar 2026 11:44:54 -0400
+	id 1w53vd-0002km-EP; Tue, 24 Mar 2026 11:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53w3-0002pZ-VY
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:44:52 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w53w2-0003V7-GJ
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 11:44:51 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-666f646f5cfso9349028a12.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 08:44:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774367089; cv=none;
- d=google.com; s=arc-20240605;
- b=QGryv3gD04ktn6SxzFWDNIIDy/aHyn18+J/S7m95n83eOxPp909SzqLWMBY7qK/s6h
- a9VV3JncT7PaTvYk2Ec/plBF5iinyDrw1QXfqA7HDCYBAdDYL1KW8hfk4Lm4W30gVAj6
- FIXOebMgG0oDQMfbkOCtnQebOg10sVgIiF5OzirWt3AKe7zuoUGOyQLSfJYJNEYNRIWB
- qKikI+kdk8tf/N3HnYJqt6OBC+9jYJbPTX2OzXxFuWzAf7mNIYhCf5mme1rppAbaK798
- 734XbDZuAx5LxtVE5ztrwIup0PG4v3vVpwiQN44L8Aohjxil4VAFxcC04UymPIRLPo8S
- 6cuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=dycVPoOMlmKnE9sM91De/wxYtcazs1IWrTyzEg3/slE=;
- fh=6RY1YYZakaERMi8/DkhvkUeqhJnfOV6lGiakfBhpSxg=;
- b=XIXMAk6J71CXLLpRVwpWUkP0tJPs7fT3WfMIl6z6BLqBy9nvCdbRp4sWmAIJMuSIvN
- lTKRpeChb5i/S/tIXazcV/zLM3+EEMpx7yu9e3gIwwWCO7Ewdl1v542z2AS/gmr50Pe5
- UgT/kcIKkJLpwtmPSb2pMw2fHw06EtpkM9a0ZTwwidGqZjhMXsZcQaREXVz9LeMnQWU3
- yMFUI1wnr+xW2AS4iNV7wM6m3TllwGiny5RHm6ID/Pmn0H4Iroq4aGHyPRhS8z/RDioR
- OwMh+qINkERGE2Ww4IiTVQiEyc75ySXBKq9ltp9R4DCu+d9YNYaIcor+IcFXQ2gM5jYW
- 8uTg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774367089; x=1774971889; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dycVPoOMlmKnE9sM91De/wxYtcazs1IWrTyzEg3/slE=;
- b=Ok8pTb4tAtCZ7PUJOHCGc+a/UpuFCKntYYW3FfVqjvnX16sbVHVwFtynscOA5Q/t0K
- ObpGE9+m3KnQHQ+GU2vrnxsvu6ngdyohIa/49KZRHP4dGqimC+IAW8mi8Lszbh3IJAZn
- oNkjHBa08JNteTsKTkLBeUDthNz9QoGxXBz/xI1dk2hBda/N1J1dnROKoiCaaxjvna5z
- UFytdJBLnZaN9au9I3a50T/A+SS7b8coiNyG6Qas3upBuE4RCSu2OMlSJsxex018jaWN
- 9Vc1xoaXmn+Pp3mvru6W53LX0dv/3m3roArprTZLu8qmR+XAQjSWIrPZ6hql6ZeCIEYE
- qnPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774367089; x=1774971889;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dycVPoOMlmKnE9sM91De/wxYtcazs1IWrTyzEg3/slE=;
- b=Yl4U4J58SOGddqAGmhv0Qipi9Q5X7gsB8LDhA1ldbJqDzCeoedXeP/d49cFweJd7cr
- BhyVnGbiAEXmLA+giFjqDKHUET67qhlx448IMn+xG5/d4oMj7vhjlyV6yyBoO/j3tWjL
- 5uB5sgxqtWCg855/P0camTtIagcFyfnnHBot0jnXGSFSPcv/y+xjXlUL2zsuDuHKq2WT
- M5sn8RDf4jAsCBdALsi8mHCW4DQxokvp7WyEtZaU+tYQd4zKUvHugV4RnP3lQTsO9guj
- i3aY73G4XgqiVuMzJeFCBp1Jm5FWxR3t0KU2EMK5UMJzVJSRH6blBw2XKCTwud/AgP7G
- aKMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOP4WsI0XqKz47JwY2eAtyf3IV9ug+B6asKXl2WZ3WvhcZkA+vX1JAsHQmAhuKXCUlTfz1wVss42Td@nongnu.org
-X-Gm-Message-State: AOJu0Ywp9ic177gA2YCaNcMM+0JfO6WoAKGItoismcx1HcgezT7YX4wK
- J4A3g9LwxgIpU/H7/kvVdwI8Ai9yYrlB4irrfE+ikviInZBAJBgEl9UOPRQA2y0m18xRx0KaNmF
- uRxsVMup05sDnD6y+qp9//Wuy4zczS22slSwRv1fTiA==
-X-Gm-Gg: ATEYQzwsnqXdDb8Rz/hv/TD54kWzBlGXGXA9HHVplOg12+Jp22Qw/vD+OccOYwn4GmX
- NV/Zo5o5FYXH5RUzjzq4uPNh9H1GU8/tUBDgY/0ckRZvv1zUtqKqyDSVLYlymj1kREJ5APW2WyL
- SkiFZOSgo1WNM5UHq2eReQEZDEMkYjsNL+hMY2DJFRIQiG8rrFcSA+5RnEuT4J8c7qRfIY73T4W
- 4ozxpfaY8zKkBH0peDFc5szPKxxE33x4ykotf2nJQsBBvH2bpb3XeVlfwHh/5QKU7RtqnCNPYKS
- BGNBgPk5NNFWM8QsjSbH+FUdW0P+qqo1BtrD2hSLbs04vgEBxDe5oFpA31clCO5N/bY=
-X-Received: by 2002:a17:907:3f8d:b0:b96:e1de:db04 with SMTP id
- a640c23a62f3a-b98864026d5mr238285866b.18.1774367088624; Tue, 24 Mar 2026
- 08:44:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
+ id 1w53vW-0002jC-2B; Tue, 24 Mar 2026 11:44:18 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
+ id 1w53vU-0003Qi-2z; Tue, 24 Mar 2026 11:44:17 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62O6rxXl196681; Tue, 24 Mar 2026 15:44:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=goAbn3
+ M6s8E6UDo35Jz9BSCp5ZhlCs01KLjg80bSd0Q=; b=bqDGfEL+25HdehRO+DfeIS
+ 8LEwdjt93GQJFxOkVFU3xDrLx4o/KWsYwXaeblwvHMNvrkMgluV6lrQXJ1Tz9RXJ
+ KDhYWQBy3UZpkkGD4bOLmOvnFEum7nhkrrktaHLJEoSIb56OxOxgIOPzF9YWr1a7
+ ppyUH92W6aWGFGbvA83vAuUJHvmw1UMksmJKPBA/aq+MioypPnhvuT6iTpZV1JbZ
+ CaNJj7HX46EMDV9A7XqiPUagq+DYzDK70AkdaeSbtplrIBSErX/eLT/E6i7nrrSM
+ rJHYVl21H5sfk3ba+u4TjfNi/QSzFGPBUDIrNbvk7RiGA5sRX6EfkrjrupDDlLxg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kumkrr3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Mar 2026 15:44:12 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62OD3dBd011788;
+ Tue, 24 Mar 2026 15:44:11 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d27vk2c77-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Mar 2026 15:44:11 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62OFi7Ib24969518
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 24 Mar 2026 15:44:07 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C925120040;
+ Tue, 24 Mar 2026 15:44:07 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DDE3D20043;
+ Tue, 24 Mar 2026 15:44:06 +0000 (GMT)
+Received: from [192.168.88.251] (unknown [9.111.21.79])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 24 Mar 2026 15:44:06 +0000 (GMT)
+From: Christoph Schlameuss <schlameuss@linux.ibm.com>
+Date: Tue, 24 Mar 2026 16:43:44 +0100
+Subject: [PATCH v2 1/2] linux-headers: Update to Linux v7.x with
+ KVM_S390_VM_CPU_FEAT_ASTFLEIE2
 MIME-Version: 1.0
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-60-48eb1dcf7b76@redhat.com>
- <acKsobCZ2G8TE2XI@redhat.com>
-In-Reply-To: <acKsobCZ2G8TE2XI@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Mar 2026 15:44:34 +0000
-X-Gm-Features: AQROBzC7G5HRO1XZHcQr60e0IgZ_c-BA7OwsJUdWRFVW9638EGtleBkNjKyY_w0
-Message-ID: <CAFEAcA9wBuHxmYp5wdZ0HOtUhTqmWfUJaZuLxrUbz=m4h+mA-A@mail.gmail.com>
-Subject: Re: [PATCH 60/60] contrib/qemu-vnc: add standalone VNC server over
- D-Bus
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260324-astfleie2-v2-1-13008712da00@linux.ibm.com>
+References: <20260324-astfleie2-v2-0-13008712da00@linux.ibm.com>
+In-Reply-To: <20260324-astfleie2-v2-0-13008712da00@linux.ibm.com>
+To: qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>, kvm@vger.kernel.org,
+ Christoph Schlameuss <schlameuss@linux.ibm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=899;
+ i=schlameuss@linux.ibm.com; h=from:subject:message-id;
+ bh=aguW8fYG0qpSz/k+6lHIr+3GbPHh6X/lMXQp85Z0fSg=;
+ b=owGbwMvMwCUmoqVx+bqN+mXG02pJDJmHNroy3pqQPdFTWPvH00eaYs7Wcg/YFYU8/KaJLO02e
+ mH78FFgRykLgxgXg6yYIku1uHVeVV/r0jkHLa/BzGFlAhnCwMUpABNpLmJk2Hzp6N3S5dN/WTBK
+ Hc/3nrw0rtxKvbj2lN7KnWZb1wq6/WL4nzf93mehWdfPdi/viLv67vPrbo0k76WJvJfy3R32VH6
+ awAIA
+X-Developer-Key: i=schlameuss@linux.ibm.com; a=openpgp;
+ fpr=0E34A68642574B2253AF4D31EEED6AB388551EC3
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: dHEQX7RCwiJGkPrO79YzfWpn4Uya3J6q
+X-Proofpoint-ORIG-GUID: dHEQX7RCwiJGkPrO79YzfWpn4Uya3J6q
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDExOSBTYWx0ZWRfX/JkWA0XBAdF6
+ FfKhvYQVApuiUuvKk0NHiF5jm8iiZmUb8MZOFxs6V3QI8Oyx2z2hgrZjmpJ9Ry5vBQCwy7Rm4HV
+ IKUrNARFwiYHmRIfYkjPL9qEZ7Xps82+XyGdLPHQlXA2nvJUMw4GNgEfnM+3xjDlWsUoUJS1/HN
+ YV9vdWyr+nz04SLD3gCclbG4HjYgc3tjmMGnfRRQTUNqIbExKdf7Ir/HfP6sG1VnHLoFuhcN+hJ
+ 931oI33d6ivLeqDM0/BZAxuT5eVPuNv/M8edWs0xNuwQZpC6Ri1flbTmSsam2NOfnUI2PIC95xD
+ FgdWoB6Z2DGm8qWY/UFV2VpMl3/5iXfrzNgHZeBNdNOCFNCzMrJ6TGURnlOw8njSuoc65P7CWZq
+ VaKlXt41klMk5owDYDLm0JnXEGRI8Y7Z3uxOlCk1pURd9SQYslXuVP1ZBJ+VINLFsEPiIWE7vzc
+ APAgWm/990jES3XfFSg==
+X-Authority-Analysis: v=2.4 cv=KbXfcAYD c=1 sm=1 tr=0 ts=69c2b14c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=owZ0ccYYszmCy-IndPwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-24_03,2026-03-23_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240119
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=schlameuss@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,22 +138,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Mar 2026 at 15:24, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
-> IMHO we should not really be adding more things to the contrib
-> directory, and rather wish most of the existing stuff was
-> not there. When I see "contrib" directories in projects, the
-> message is generally "unmaintained, abandoned junk".
+Need KVM_S390_VM_CPU_FEAT_ASTFLEIE2 specifically.
 
-Definitely agreed: either we care about something, and it should
-have a proper place and somebody who maintains it; or else
-we don't care about it and should kick it out of the tree.
-Having a contrib/ directory is an attractive nuisance for
-accumulating more stuff in the awkward halfway-house.
+Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
 
-We should really clean up the existing /contrib/ and move
-stuff into where it belongs (quite often tools/, which in
-turn mostly contains things that should *not* be in tools/...)
+---
 
--- PMM
+To merge this this needs to be changed to a proper update of the
+linux-headers once the kernel change is upstream.
+
+For now only include the needed change here.
+---
+ linux-headers/asm-s390/kvm.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/linux-headers/asm-s390/kvm.h b/linux-headers/asm-s390/kvm.h
+index ab5a6bce590c722452dac5aeb476bd1969d2235b..45a6d0a7406a3f1b71026c49e00ac25a6fc620ef 100644
+--- a/linux-headers/asm-s390/kvm.h
++++ b/linux-headers/asm-s390/kvm.h
+@@ -444,6 +444,7 @@ struct kvm_s390_vm_cpu_machine {
+ #define KVM_S390_VM_CPU_FEAT_PFMFI	11
+ #define KVM_S390_VM_CPU_FEAT_SIGPIF	12
+ #define KVM_S390_VM_CPU_FEAT_KSS	13
++#define KVM_S390_VM_CPU_FEAT_ASTFLEIE2	14
+ struct kvm_s390_vm_cpu_feat {
+ 	__u64 feat[16];
+ };
+
+-- 
+2.53.0
+
 
