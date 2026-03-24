@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E1BFEC10A
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F640FEC102
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w57fV-0003DQ-BR; Tue, 24 Mar 2026 15:44:01 -0400
+	id 1w57fj-0003IM-AS; Tue, 24 Mar 2026 15:44:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fP-0003Ce-Aq
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:43:56 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fd-0003G6-CP
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:09 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fM-00086t-2T
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:43:54 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fb-0008EN-Nj
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:09 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6C09B5BE1E;
- Tue, 24 Mar 2026 19:43:41 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 867D15BD56;
+ Tue, 24 Mar 2026 19:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381421; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381424; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e2FV9zihxhp8bsTYaLNeKNqOqq6SsZysoqtwXgfHDvo=;
- b=qkcutVcOh60wGwlSNvx+tVUnkNzjrhA9OcVqPZM6SJPRoJwsA7EF7wr9OWwsZrhAR76Vix
- inWxOx8PvBT2rlkfKw9tMF40X9kiXpVP39/6ymByzfAg+FWBE+I4Hd4v7daeoipN3dWJJO
- Lwo7u3y/mNCM0RMuozYLDOiiD1eEM7g=
+ bh=mqFU08QiemyHMKmACwXdYM3VqArmk1wjvFdrAmao4JI=;
+ b=n031BixcOB1TXteDcoVZ0zbAOgEnVYA9yBNrBF9//Ev/k7dvhh11GAeHyZq2PX8Zrsl81Y
+ pqPMlrZlYyQC0tN3jiXmf/ew84dYU1N37QzNUjxa5trVusqQyjxQz2RNEMYo/EPUeKzc9Q
+ H/60EoGNytkvxwTGCYGIfqrdrursXHM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381421;
+ s=susede2_ed25519; t=1774381424;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e2FV9zihxhp8bsTYaLNeKNqOqq6SsZysoqtwXgfHDvo=;
- b=7assybSdChlpQdVJ6uY2sYV2V+7XuH/ukSl8dOTUcRzlZmwy8/8uxy3Vwk4Mmc9HAC7xrG
- 5uN4OOV23sFjeIAA==
+ bh=mqFU08QiemyHMKmACwXdYM3VqArmk1wjvFdrAmao4JI=;
+ b=PEFEgJDwPPJ0lriYoNtNuwkSsyPzRUce5oP2DiM0gTJvRSIQwRGUw9YED0fgOFOTkUK8yu
+ rjCHXmEVn9cPuDBA==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qkcutVcO;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7assybSd
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=n031Bixc;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PEFEgJDw
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381421; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381424; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e2FV9zihxhp8bsTYaLNeKNqOqq6SsZysoqtwXgfHDvo=;
- b=qkcutVcOh60wGwlSNvx+tVUnkNzjrhA9OcVqPZM6SJPRoJwsA7EF7wr9OWwsZrhAR76Vix
- inWxOx8PvBT2rlkfKw9tMF40X9kiXpVP39/6ymByzfAg+FWBE+I4Hd4v7daeoipN3dWJJO
- Lwo7u3y/mNCM0RMuozYLDOiiD1eEM7g=
+ bh=mqFU08QiemyHMKmACwXdYM3VqArmk1wjvFdrAmao4JI=;
+ b=n031BixcOB1TXteDcoVZ0zbAOgEnVYA9yBNrBF9//Ev/k7dvhh11GAeHyZq2PX8Zrsl81Y
+ pqPMlrZlYyQC0tN3jiXmf/ew84dYU1N37QzNUjxa5trVusqQyjxQz2RNEMYo/EPUeKzc9Q
+ H/60EoGNytkvxwTGCYGIfqrdrursXHM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381421;
+ s=susede2_ed25519; t=1774381424;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e2FV9zihxhp8bsTYaLNeKNqOqq6SsZysoqtwXgfHDvo=;
- b=7assybSdChlpQdVJ6uY2sYV2V+7XuH/ukSl8dOTUcRzlZmwy8/8uxy3Vwk4Mmc9HAC7xrG
- 5uN4OOV23sFjeIAA==
+ bh=mqFU08QiemyHMKmACwXdYM3VqArmk1wjvFdrAmao4JI=;
+ b=PEFEgJDwPPJ0lriYoNtNuwkSsyPzRUce5oP2DiM0gTJvRSIQwRGUw9YED0fgOFOTkUK8yu
+ rjCHXmEVn9cPuDBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 44E9843FE4;
- Tue, 24 Mar 2026 19:43:40 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5F42B43FE4;
+ Tue, 24 Mar 2026 19:43:43 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gLOKBWzpwmlkMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:43:40 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kJjuC2/pwmlkMQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:43:43 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [RFC PATCH v1 03/17] vmstate: Stop checking size for nullptr
- compression
-Date: Tue, 24 Mar 2026 16:43:18 -0300
-Message-ID: <20260324194333.30004-4-farosas@suse.de>
+Subject: [RFC PATCH v1 05/17] vmstate: Remove vmdesc_loop
+Date: Tue, 24 Mar 2026 16:43:20 -0300
+Message-ID: <20260324194333.30004-6-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324194333.30004-1-farosas@suse.de>
 References: <20260324194333.30004-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
@@ -95,7 +94,7 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
  FUZZY_RATELIMITED(0.00)[rspamd.com];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
@@ -104,16 +103,14 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Action: no action
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 6C09B5BE1E
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Rspamd-Queue-Id: 867D15BD56
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,50 +127,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The NULL pointer marker code applies only to VMS_ARRAY_OF_POINTER,
-where the size is never NULL. Move the setting of is_null under
-VMS_ARRAY_OF_POINTER, so we can stop checking the size.
+The vmdesc_loop variable is being used as a hacky way of writing the
+JSON description only for the first element of a compressed
+array. There are also a few implicit uses, such as writing the JSON
+for the first non-compressed element after a compressed portion.
+
+Future work will have trouble with this. Use a simple boolean to be
+explicit now.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
-AFAICS, the size actually should never be NULL, but there are a few
-vmsds doing a hack with VMS_SINGLE. I can't be bothered to learn about
-it right now.
----
- migration/vmstate.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ migration/vmstate.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 7edfa3d990..d7b1bc6b86 100644
+index dec9cf920b..7a12245d36 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -635,15 +635,15 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-             for (i = 0; i < n_elems; i++) {
-                 void *curr_elem = first_elem + size * i;
-                 const VMStateField *inner_field;
--                bool use_marker_field, is_null;
-+                bool use_marker_field, is_null = false;
-                 int max_elems = n_elems - i;
+@@ -622,8 +622,9 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             void *first_elem = opaque + field->offset;
+             int i, n_elems = vmstate_n_elems(opaque, field);
+             int size = vmstate_size(opaque, field);
+-            JSONWriter *vmdesc_loop = vmdesc;
+             bool is_null_prev = false;
++            bool use_vmdesc = true;
++
+             /*
+              * When this is enabled, it means we will always push a ptr
+              * marker first for each element saying if it's populated.
+@@ -673,7 +674,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     is_null != is_null_prev) {
  
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
-                     assert(curr_elem);
-                     curr_elem = *(void **)curr_elem;
-+                    is_null = !curr_elem;
-                 }
- 
--                is_null = (!curr_elem && size);
-                 use_marker_field = use_dynamic_array || is_null;
- 
-                 if (use_marker_field) {
-@@ -672,7 +672,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     is_null_prev = is_null;
+-                    vmdesc_loop = vmdesc;
++                    use_vmdesc = true;
  
                      for (int j = i + 1; j < n_elems; j++) {
                          void *elem = *(void **)(first_elem + size * j);
--                        bool elem_is_null = !elem && size;
-+                        bool elem_is_null = !elem;
+@@ -686,8 +687,13 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     }
+                 }
  
-                         if (is_null != elem_is_null) {
-                             max_elems = j - i;
++                if (use_dynamic_array) {
++                    use_vmdesc = true;
++                }
++
+                 ok = vmstate_save_field_with_vmdesc(f, curr_elem, size, vmsd,
+-                                                    inner_field, vmdesc_loop,
++                                                    inner_field,
++                                                    use_vmdesc ? vmdesc : NULL,
+                                                     i, max_elems, errp);
+ 
+                 /* If we used a fake temp field.. free it now */
+@@ -708,19 +714,16 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                      * NOTE: do not use vmstate_size() here because we want
+                      * to dump the real VMSD object now.
+                      */
+-                    ok = vmstate_save_field_with_vmdesc(f, curr_elem,
+-                                                        field->size, vmsd,
+-                                                        field, vmdesc_loop,
+-                                                        i, max_elems, errp);
++                    ok = vmstate_save_field_with_vmdesc(
++                        f, curr_elem, field->size, vmsd, field,
++                        use_vmdesc ? vmdesc : NULL, i, max_elems, errp);
++
+                     if (!ok) {
+                         goto out;
+                     }
+                 }
+ 
+-                /* Compressed arrays only care about the first element */
+-                if (vmdesc_loop && vmsd_can_compress(field)) {
+-                    vmdesc_loop = NULL;
+-                }
++                use_vmdesc = false;
+             }
+         } else {
+             if (field->flags & VMS_MUST_EXIST) {
 -- 
 2.51.0
 
