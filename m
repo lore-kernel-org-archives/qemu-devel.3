@@ -4,81 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF24F4613D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 12:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59A90F54AA0
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w51Jk-0005Fq-6p; Tue, 24 Mar 2026 08:57:08 -0400
+	id 1w51cA-0000YI-Pf; Tue, 24 Mar 2026 09:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w51Je-0005FG-Rd
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:57:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w51c5-0000XP-3f; Tue, 24 Mar 2026 09:16:05 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w51Jc-0005CN-Sc
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 08:57:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774357019;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SbVzfoDvgGv435UJwj4U4ck/dmt/LM2DPHQHVK2BMR0=;
- b=E0Vrk4m+tgG8TTqCpJZtu6pxUaBP1+9rFEKmJE13SswO65dH9GQCOyJMTZPPdYZtfKQ5xa
- 4U45/z3BwqmHaEeQKiiAT5h9Z9/kYX/JnjzAJxQN9dsDiVgYq9i6VXAcRUrUEPdu9aertt
- L8/RVhtGBSmXML8dbnpBdmcmg9olGHA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-wftC_P2UPT-8mIUWnBBZLQ-1; Tue,
- 24 Mar 2026 08:56:55 -0400
-X-MC-Unique: wftC_P2UPT-8mIUWnBBZLQ-1
-X-Mimecast-MFC-AGG-ID: wftC_P2UPT-8mIUWnBBZLQ_1774357014
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2D861955E79; Tue, 24 Mar 2026 12:56:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E444E30002D6; Tue, 24 Mar 2026 12:56:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 89DAE21E6937; Tue, 24 Mar 2026 13:56:50 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Artyom Tarasenko <atar4qemu@gmail.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH-for-11.1 v6 3/6] monitor: Have MonitorDef::get_value()
- always return int64_t type
-In-Reply-To: <20260320091019.59902-4-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 20 Mar 2026 10:10:15
- +0100")
-References: <20260320091019.59902-1-philmd@linaro.org>
- <20260320091019.59902-4-philmd@linaro.org>
-Date: Tue, 24 Mar 2026 13:56:50 +0100
-Message-ID: <87pl4ts7vx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w51c2-0008Ek-2u; Tue, 24 Mar 2026 09:16:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774358132; bh=4LZW+BrbAq7G6wYLXjn1EYau3Dva5eoDv0yrFJ/AG/A=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=dQe7WzMg4F7jKIB2EdNrk04lv/VaJPMrVc4Hyh2FXN6wSwLkkzHwY1IkSZMcgbXfO
+ e0Xd5/nz8Hyqoov39/hO/BWVct/DAqsCN4QopTU85HdX4va9ATWs16q9wNbGK1Dqn2
+ fje5PR42yb5eRpWSxSB5DghEqo2qbybdbWPLMnFkRCusULTWlgalqknqpRgBFuyGH6
+ OAw8F4gyog2ApW1UtyFkwfgsKHVyKvJYgMjKUKrelFKBc70y3S1zQ0LGOOKADC1J/q
+ DJwVRu64eq5m4QwCDpuS1xT9e/ZYBpQYGgufyDZ9/hGZzaC0x0kBiS5QcYgIzW+lT4
+ YXtk3ycjZkwyg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id E4721196FBE;
+ Tue, 24 Mar 2026 16:15:31 +0300 (MSK)
+Message-ID: <f2f9f07a-4c92-4856-bcf6-7d2e0a5d43f1@tls.msk.ru>
+Date: Tue, 24 Mar 2026 16:15:50 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/8] tests/tcg/multiarch/linux-test: use portable
+ alternative for dirent64
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, qemu-arm@nongnu.org,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Brad Smith <brad@comstyle.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20260320155107.2143191-1-alex.bennee@linaro.org>
+ <20260320155107.2143191-3-alex.bennee@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260320155107.2143191-3-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,103 +122,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On 20.03.2026 18:51, Alex Bennée wrote:
+> From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> 
+> dirent64 and readdir64 are glibc-specific and not portable to other
+> C libraries such as musl. Define _FILE_OFFSET_BITS=64 instead, which
+> portably instructs all libc implementations to use 64-bit file offsets,
+> making readdir() and struct dirent equivalent to their 64-bit variants.
 
-> Simplify MonitorDef::get_value() handler by having it always
-> return a int64_t type. Truncate to 32-bit in the single caller.
->
-> Note, this handler is only implemented once for the x86 targets.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/monitor/hmp-target.h | 6 +-----
->  monitor/hmp-target.c         | 5 ++++-
->  target/i386/monitor.c        | 4 ++--
->  3 files changed, 7 insertions(+), 8 deletions(-)
->
-> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-> index 56322ceddd4..6364c94edf8 100644
-> --- a/include/monitor/hmp-target.h
-> +++ b/include/monitor/hmp-target.h
-> @@ -27,15 +27,11 @@
->=20=20
->  typedef struct MonitorDef MonitorDef;
->=20=20
-> -#ifdef COMPILING_PER_TARGET
-> -#include "cpu.h"
->  struct MonitorDef {
->      const char *name;
->      int offset;
-> -    target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
-> -                             int val);
-> +    int64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int =
-offset);
->  };
-> -#endif
->=20=20
->  const MonitorDef *target_monitor_defs(void);
->  int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pva=
-l);
-> diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-> index 3f019ae2a28..155caedd784 100644
-> --- a/monitor/hmp-target.c
-> +++ b/monitor/hmp-target.c
-> @@ -23,6 +23,7 @@
->   */
->=20=20
->  #include "qemu/osdep.h"
-> +#include "qemu/target-info.h"
->  #include "monitor-internal.h"
->  #include "monitor/qdev.h"
->  #include "net/slirp.h"
-> @@ -33,6 +34,7 @@
->  #include "qapi/qapi-commands-control.h"
->  #include "qapi/qapi-commands-misc.h"
->  #include "qapi/qapi-commands-machine.h"
-> +#include "exec/target_long.h"
->=20=20
->  #if defined(TARGET_S390X)
->  #include "hw/s390x/storage-keys.h"
-> @@ -78,7 +80,8 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const =
-char *name)
->      for(; md->name !=3D NULL; md++) {
->          if (hmp_compare_cmd(name, md->name)) {
->              if (md->get_value) {
-> -                *pval =3D md->get_value(mon, md, md->offset);
-> +                int64_t val =3D md->get_value(mon, md, md->offset);
-> +                *pval =3D target_long_bits() =3D=3D 32 ? (int32_t)val : =
-val;
 
-This assumes target_long_bits() returns either 32 or 64, doesn't it?
+> --- a/tests/tcg/multiarch/linux/linux-test.c
+> +++ b/tests/tcg/multiarch/linux/linux-test.c
+> @@ -16,6 +16,7 @@
+>    *  You should have received a copy of the GNU General Public License
+>    *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+>    */
+> +#define _FILE_OFFSET_BITS 64
 
-Is this true today?
+Afiacs, qemu has always been built with file_offset_bits=64, one way
+or another:
 
-Will it remain true?
+meson.build:
+   '-D_GNU_SOURCE', '-D_FILE_OFFSET_BITS=64', '-D_LARGEFILE_SOURCE',
 
-Could we use something like
 
-    val & ((1 << target_long_bits()) - 1)
+Now, with only 64bit host support, defining _FILE_OFFSET_BITS to 64
+makes no difference, since it is already 64 by default.  So it looks
+like this change is unnecessary.  The only change needed there was
+to drop 64 from readdir/dirent.
 
-to truncate to target_long_bits() bits?
+FWIW.
 
->              } else {
->                  CPUArchState *env =3D mon_get_cpu_env(mon);
->                  ptr =3D (uint8_t *)env + md->offset;
-> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-> index 977f65fe16c..b128334e571 100644
-> --- a/target/i386/monitor.c
-> +++ b/target/i386/monitor.c
-> @@ -593,8 +593,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
->      }
->  }
->=20=20
-> -static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef =
-*md,
-> -                                  int val)
-> +static int64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
-> +                              int offset)
->  {
->      CPUArchState *env =3D mon_get_cpu_env(mon);
->      return env->eip + env->segs[R_CS].base;
-
+/mjt
 
