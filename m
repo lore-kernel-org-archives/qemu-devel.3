@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF0AF54AB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C32AF54AB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5233-0002cH-HN; Tue, 24 Mar 2026 09:43:57 -0400
+	id 1w523l-0002kn-N7; Tue, 24 Mar 2026 09:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w5231-0002bq-90
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:43:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1w523k-0002kH-09
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:44:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w522z-0005EQ-Pg
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:43:55 -0400
+ id 1w523i-0005NT-Jb
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:44:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774359832;
+ s=mimecast20190719; t=1774359877;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qdcXKfDuUvpMP35H9kmedH8UGNHb0K/uAA6rTgcJPZU=;
- b=XIuwxNCsaq0sNr7s4qp3v5zNGRhkOOFHKN2OJpEl+sZBz2G+v9TuAfMWw40d7gn79nWEpS
- S89K7opeY48EwOBUf7Vt+nTWkOCOJcbhpxt6W3SCZgaEVXPjkyu7PERxsAtVexKmKLLQ8s
- xX9v9xaBgHiWKa/csLeSZVmVtGEks28=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=U3n4GnEHSzmwBGvto+dJqhBL5z57zumpfHs/bn3KnXQ=;
+ b=dvAok5hwNW5XOnNGZanM7Wvzl3pc1OorHH1qtMMWqyb34KMCLp4Mhdmim9NBVpdh9a2IkL
+ x1Wvgiq/ENTmEJbICqUXl5fePe0EnQIvd7nWMnxiTPwYySsKFjVZOCZkZ4+VHfGe5CoTWj
+ GR4kXnMhjk9ACQA70Y/SfzmaZIgZMY0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-rxX4icj4PdeYXSmx5SqqhA-1; Tue,
- 24 Mar 2026 09:43:50 -0400
-X-MC-Unique: rxX4icj4PdeYXSmx5SqqhA-1
-X-Mimecast-MFC-AGG-ID: rxX4icj4PdeYXSmx5SqqhA_1774359829
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-iWtxxrLbNaCDRLUgEf6y6w-1; Tue,
+ 24 Mar 2026 09:44:36 -0400
+X-MC-Unique: iWtxxrLbNaCDRLUgEf6y6w-1
+X-Mimecast-MFC-AGG-ID: iWtxxrLbNaCDRLUgEf6y6w_1774359875
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 495D81944D3A
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 13:43:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25DBF1800561
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 13:44:35 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.33.93])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B81DD3000223; Tue, 24 Mar 2026 13:43:41 +0000 (UTC)
-Date: Tue, 24 Mar 2026 13:43:38 +0000
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1306A1955D71; Tue, 24 Mar 2026 13:44:33 +0000 (UTC)
+Date: Tue, 24 Mar 2026 13:44:30 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 01/60] ui/vnc-jobs: fix VncRectEntry leak on job cleanup
-Message-ID: <acKVCk2eeQvcn9M9@redhat.com>
+Subject: Re: [PATCH 02/60] ui/vnc-jobs: clear source tag
+Message-ID: <acKVPpakxqdGoYjj@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-1-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-2-48eb1dcf7b76@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260317-qemu-vnc-v1-1-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-2-48eb1dcf7b76@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,32 +90,16 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 17, 2026 at 12:50:15PM +0400, Marc-André Lureau wrote:
-> When a VncJob is freed, its associated VncRectEntry list must also be
-> freed. Previously, vnc_job_push() and the disconnected path in
-> vnc_worker_thread_loop() called g_free(job) directly, leaking all
-> VncRectEntry allocations.
+On Tue, Mar 17, 2026 at 12:50:16PM +0400, Marc-André Lureau wrote:
+> Avoid potentially removing a dangling source & simplify code.
 > 
-> Introduce vnc_job_free() which iterates and frees the rectangle entries
-> before freeing the job itself, and use it in both paths.
-> 
-> Also add QLIST_REMOVE() in the worker loop before g_free(entry), so
-> that entries processed during normal operation are properly unlinked.
-> Without this, vnc_job_free() would iterate dangling pointers to
-> already-freed entries, causing use-after-free.
-> 
-> Fixes: bd023f953e5e ("vnc: threaded VNC server")
-
-... Oppps ...  Wed Jul 7 2010 
-
-
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  ui/vnc-jobs.c | 19 +++++++++++++++++--
->  1 file changed, 17 insertions(+), 2 deletions(-)
+>  ui/vnc-jobs.c |  4 +---
+>  ui/vnc.c      | 31 +++++++------------------------
+>  2 files changed, 8 insertions(+), 27 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
 
 With regards,
 Daniel
