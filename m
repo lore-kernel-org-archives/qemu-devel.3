@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B37A2FEC107
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B66C4FEC102
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 19:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w57fY-0003FI-Dt; Tue, 24 Mar 2026 15:44:04 -0400
+	id 1w57ft-0003R7-LF; Tue, 24 Mar 2026 15:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fW-0003E2-5V
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:02 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fs-0003P7-15
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:24 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fU-0008AH-M9
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:01 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w57fq-0008H4-An
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 15:44:23 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 350414D258;
- Tue, 24 Mar 2026 19:43:49 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 0371B4D2D7;
+ Tue, 24 Mar 2026 19:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381429; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7yWIcZLxTYk0vijj26b8iV73kdeke7MYyK4wz5guLbw=;
- b=MOWOSWiHG05+qmxDk1TXjZlVm7pMV3BCTPmOTwkiiS3r1vEn87sCbVmSVIdE1xxRM6hjVr
- WrcGhJ2Pi7I3JwnurhsT1GPMDfyCz6XD5MvpJ6Mngn8/cebjhsThPLYa/y8i0S+26ZGzL7
- 4oelo8AxOhUEao6jA1VdWQgFTi6xxko=
+ bh=CKGmz+lKmXdFvQ91j7EaHfHSLwUO7DpcItY8Bz2/bO0=;
+ b=SG+MIn1ujA8J03/2tK3CgElz6d4fQBTORqaGA5QX0uHCzFWL/6zLwCvF08hCJXZCPfu5of
+ tK+asjnku9MLSeT48qjXVDfUpVpqpe3PB1EYag3lu4A1CotxXv2NOawxRO1fPkBUQrkVJL
+ CdHtd+FRD1ouumsBQMA5qwnfCbuftmg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381429;
+ s=susede2_ed25519; t=1774381437;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7yWIcZLxTYk0vijj26b8iV73kdeke7MYyK4wz5guLbw=;
- b=5GiRSDis07n3YgaHMeUJqGr8XLWyNjDiEvVCkoQ9kPulT2swhrIxg9utKx3Xe26hFZZzmQ
- Kegr6vVwh831dWBA==
+ bh=CKGmz+lKmXdFvQ91j7EaHfHSLwUO7DpcItY8Bz2/bO0=;
+ b=nlPayM8pI51QIJeluhDW03aZYIxWpK6p0GtV0CF6hwYSy9kIH0c6jARU7CoUE05AumlHdh
+ hssoq/kQ/yxYoIBw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774381429; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774381437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7yWIcZLxTYk0vijj26b8iV73kdeke7MYyK4wz5guLbw=;
- b=MOWOSWiHG05+qmxDk1TXjZlVm7pMV3BCTPmOTwkiiS3r1vEn87sCbVmSVIdE1xxRM6hjVr
- WrcGhJ2Pi7I3JwnurhsT1GPMDfyCz6XD5MvpJ6Mngn8/cebjhsThPLYa/y8i0S+26ZGzL7
- 4oelo8AxOhUEao6jA1VdWQgFTi6xxko=
+ bh=CKGmz+lKmXdFvQ91j7EaHfHSLwUO7DpcItY8Bz2/bO0=;
+ b=SG+MIn1ujA8J03/2tK3CgElz6d4fQBTORqaGA5QX0uHCzFWL/6zLwCvF08hCJXZCPfu5of
+ tK+asjnku9MLSeT48qjXVDfUpVpqpe3PB1EYag3lu4A1CotxXv2NOawxRO1fPkBUQrkVJL
+ CdHtd+FRD1ouumsBQMA5qwnfCbuftmg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774381429;
+ s=susede2_ed25519; t=1774381437;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7yWIcZLxTYk0vijj26b8iV73kdeke7MYyK4wz5guLbw=;
- b=5GiRSDis07n3YgaHMeUJqGr8XLWyNjDiEvVCkoQ9kPulT2swhrIxg9utKx3Xe26hFZZzmQ
- Kegr6vVwh831dWBA==
+ bh=CKGmz+lKmXdFvQ91j7EaHfHSLwUO7DpcItY8Bz2/bO0=;
+ b=nlPayM8pI51QIJeluhDW03aZYIxWpK6p0GtV0CF6hwYSy9kIH0c6jARU7CoUE05AumlHdh
+ hssoq/kQ/yxYoIBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0E46E43FE4;
- Tue, 24 Mar 2026 19:43:47 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D097543FE4;
+ Tue, 24 Mar 2026 19:43:55 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0EjMM3PpwmlkMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:43:47 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6PajJ3vpwmlkMQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 24 Mar 2026 19:43:55 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [RFC PATCH v1 08/17] vmstate: Don't recompute size and n_elems in
- vmstate_size
-Date: Tue, 24 Mar 2026 16:43:23 -0300
-Message-ID: <20260324194333.30004-9-farosas@suse.de>
+Subject: [RFC PATCH v1 13/17] vmstate: Drop VMS_ARRAY_OF_POINTER_AUTO_ALLOC
+Date: Tue, 24 Mar 2026 16:43:28 -0300
+Message-ID: <20260324194333.30004-14-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324194333.30004-1-farosas@suse.de>
 References: <20260324194333.30004-1-farosas@suse.de>
@@ -119,41 +118,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The caller already has the size and number of elements available. Pass
-them in. Subsequent commits will add other callers.
+The semantics of the VMS_ARRAY_OF_POINTER_AUTO_ALLOC of allocating
+memory dynamically for an array of pointers could be thought to be the
+same as the currently non-existent combination of VMS_ARRAY_OF_POINTER
+| VMS_ALLOC. The code is now able to handle such invalid combination,
+so drop the new flag and enable the VMS_ARRAY_OF_POINTER | VMS_ALLOC
+combo.
+
+Note: I don't quite understand why we cannot allocate the first
+element of the array with VMS_ARRAY_OF_POINTER_AUTO_ALLOC, so I
+avoided that case when using the other flags as well.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/vmstate.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/migration/vmstate.h | 21 +++++----------------
+ migration/savevm.c          | 28 ++++++++++++----------------
+ migration/vmstate.c         | 12 +++++++-----
+ 3 files changed, 24 insertions(+), 37 deletions(-)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 0975d10793..8437b5ef3e 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -101,11 +101,10 @@ static int vmstate_size(void *opaque, const VMStateField *field)
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 70bebc60ed..bf12df66e2 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -146,8 +146,8 @@ enum VMStateFlags {
+     /* When loading serialised VM state, allocate memory for the
+      * (entire) field. Only valid in combination with
+      * VMS_POINTER. Note: Not all combinations with other flags are
+-     * currently supported, e.g. VMS_ALLOC|VMS_ARRAY_OF_POINTER won't
+-     * cause the individual entries to be allocated. */
++     * currently supported.
++     */
+     VMS_ALLOC            = 0x2000,
+ 
+     /* Multiply the number of entries given by the integer at opaque +
+@@ -161,19 +161,8 @@ enum VMStateFlags {
+      * structure we are referencing to use. */
+     VMS_VSTRUCT           = 0x8000,
+ 
+-    /*
+-     * This is a sub-flag for VMS_ARRAY_OF_POINTER, so VMS_ARRAY_OF_POINTER
+-     * must be set altogether.  When set, it means array elements can
+-     * contain either valid or NULL pointers, vmstate core will sync it
+-     * between the two QEMU instances via the stream protocol.  When it's a
+-     * valid pointer, the vmstate core will be responsible to do the proper
+-     * memory allocations.  It also means user of this flag must prepare
+-     * the array to be all NULLs otherwise memory may leak.
+-     */
+-    VMS_ARRAY_OF_POINTER_AUTO_ALLOC = 0x10000,
+-
+     /* Marker for end of list */
+-    VMS_END                         = 0x20000,
++    VMS_END                         = 0x10000,
+ };
+ 
+ typedef enum {
+@@ -610,7 +599,7 @@ extern const VMStateInfo vmstate_info_qlist;
+     .size       = sizeof(_type),                                     \
+     .flags      = VMS_POINTER | VMS_VARRAY_UINT8 |                   \
+                   VMS_ARRAY_OF_POINTER | VMS_STRUCT |                \
+-                  VMS_ARRAY_OF_POINTER_AUTO_ALLOC,                   \
++                  VMS_ALLOC,                                         \
+     .offset     = vmstate_offset_pointer(_state, _field, _type *),   \
  }
  
- static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
--                                 void *opaque)
-+                                 int size, int n_elems)
+@@ -623,7 +612,7 @@ extern const VMStateInfo vmstate_info_qlist;
+     .size       = sizeof(_type),                                      \
+     .flags      = VMS_POINTER | VMS_VARRAY_UINT32 |                   \
+                   VMS_ARRAY_OF_POINTER | VMS_STRUCT |                 \
+-                  VMS_ARRAY_OF_POINTER_AUTO_ALLOC,                    \
++                  VMS_ALLOC,                                          \
+     .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
+ }
+ 
+diff --git a/migration/savevm.c b/migration/savevm.c
+index db0721996c..5170928d87 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -869,7 +869,8 @@ static void vmstate_check(const VMStateDescription *vmsd)
+     if (field) {
+         while (field->name) {
+             if (field->flags & VMS_ARRAY_OF_POINTER) {
+-                if (field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
++                if (field->flags & VMS_ARRAY_OF_POINTER &&
++                    field->flags & VMS_ALLOC) {
+                     /*
+                      * Size must be provided because dest QEMU needs that
+                      * info to know what to allocate
+@@ -882,22 +883,17 @@ static void vmstate_check(const VMStateDescription *vmsd)
+                      * setup of sizes in this case.
+                      */
+                     assert(field->size == 0 && field->size_offset == 0);
++
++                    /*
++                     * Without VMS_ALLOC, VMS_ARRAY_OF_POINTER must be
++                     * used only together with one of VMS_(V)ARRAY*
++                     * flags.
++                     */
++                    assert(field->flags & (VMS_ARRAY | VMS_VARRAY_INT32 |
++                                           VMS_VARRAY_UINT16 |
++                                           VMS_VARRAY_UINT8 |
++                                           VMS_VARRAY_UINT32));
+                 }
+-                /*
+-                 * VMS_ARRAY_OF_POINTER must be used only together with one
+-                 * of VMS_(V)ARRAY* flags.
+-                 */
+-                assert(field->flags & (VMS_ARRAY | VMS_VARRAY_INT32 |
+-                                       VMS_VARRAY_UINT16 | VMS_VARRAY_UINT8 |
+-                                       VMS_VARRAY_UINT32));
+-            }
+-
+-            /*
+-             * When VMS_ARRAY_OF_POINTER_ALLOW_NULL is used, we must have
+-             * VMS_ARRAY_OF_POINTER set too.
+-             */
+-            if (field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
+-                assert(field->flags & VMS_ARRAY_OF_POINTER);
+             }
+ 
+             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index c1ad0ef9a5..8f0f9383e2 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -115,7 +115,7 @@ static void *vmstate_first(void *opaque, const VMStateField *field,
  {
-     if (field->flags & VMS_POINTER && field->flags & VMS_ALLOC) {
--        gsize size = vmstate_size(opaque, field);
--        size *= vmstate_n_elems(opaque, field);
-+        size *= n_elems;
-         if (size) {
-             *(void **)ptr = g_malloc(size);
-         }
-@@ -248,7 +247,7 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
-             int i, n_elems = vmstate_n_elems(opaque, field);
+     void **first = opaque + field->offset;
+ 
+-    if (alloc) {
++    if (alloc && field->flags & VMS_ALLOC) {
+         return vmstate_handle_alloc(first, size, n);
+     }
+ 
+@@ -142,7 +142,7 @@ static void *vmstate_next(void **first, const VMStateField *field,
+     next = *array_elem;
+ 
+     if (alloc) {
+-        if (!next || field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
++        if (!next || field->flags & VMS_ALLOC) {
+             /*
+              * NOTE: do not use vmstate_size() here, because we
+              * need the object size, not entry size of the
+@@ -291,7 +291,7 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
              int size = vmstate_size(opaque, field);
  
--            vmstate_handle_alloc(first_elem, field, opaque);
-+            vmstate_handle_alloc(first_elem, field, size, n_elems);
-             if (field->flags & VMS_POINTER) {
-                 first_elem = *(void **)first_elem;
-                 assert(first_elem || !n_elems || !size);
+             head = vmstate_first(opaque, field, size, n_elems,
+-                                 field->flags & VMS_ALLOC);
++                                 !(field->flags & VMS_ARRAY_OF_POINTER));
+ 
+             for (i = 0; i < n_elems; i++) {
+                 /* If we will process the load of field? */
+@@ -408,7 +408,8 @@ static bool vmsd_can_compress(const VMStateField *field)
+         return false;
+     }
+ 
+-    if (field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
++    if (field->flags & VMS_ARRAY_OF_POINTER &&
++        field->flags & VMS_ALLOC) {
+         /*
+          * This may involve two VMSD fields to be dumped, one for the
+          * marker to show if the pointer is NULL, followed by the real
+@@ -659,7 +660,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                      * marker first for each element saying if it's populated.
+                      */
+                     use_dynamic_array =
+-                        field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
++                        field->flags & VMS_ARRAY_OF_POINTER &&
++                        field->flags & VMS_ALLOC;
+ 
+                     use_marker_field = use_dynamic_array || is_null;
+ 
 -- 
 2.51.0
 
