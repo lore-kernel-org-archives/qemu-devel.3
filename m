@@ -4,111 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91ACBF532F6
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687C4F532ED
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 08:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4xLm-0004Ji-Lc; Tue, 24 Mar 2026 04:42:58 -0400
+	id 1w4xMe-0004Zi-LO; Tue, 24 Mar 2026 04:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1w4xLk-0004It-HD; Tue, 24 Mar 2026 04:42:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4xMc-0004ZD-TF
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:43:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1w4xLi-00054D-UA; Tue, 24 Mar 2026 04:42:56 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62O5arZC4178383; Tue, 24 Mar 2026 08:42:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=oqGXyU
- ypB1JfGaftFlkZCJoy44Wg2H9UGDqXuOFTNQU=; b=l/2msU6XqJ8l9ZymhaznAC
- rIoMywA+Hv88fTNhmmFuPiEwAH1YsLldkwK2DWER1rJpdPq/g1PAPLReLCmnb+np
- tDYdE95ghmo4oo/DWkoWd/QuQlyFM+iy/e9i9RrCfVq0vWfdh6CaEK1ZoLZNJcqm
- jC83bOwhG8qWyx1ujru9iUIVkSkmunW1w0V34f/3u4yZqCUElBYO3JMTP/32iLlM
- XkdWdSPGylQNtWUCpRxQhnxnHl0W10RX9Rij0wRxqCPZU+cBdfsoD5bQmwu5oPqk
- Zg6VBo4PrZiNuHaiO6MgO5dCpSc32L/KoZ/b47xrWnf1Xpj5shDxNfmLl1fKSmOg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kw9thqt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Mar 2026 08:42:44 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62O7QP2Z031687;
- Tue, 24 Mar 2026 08:42:43 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d25nss3v1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Mar 2026 08:42:43 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62O8gdrR15991164
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Mar 2026 08:42:39 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57D7320043;
- Tue, 24 Mar 2026 08:42:39 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8115E2004B;
- Tue, 24 Mar 2026 08:42:34 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.39.27.39])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 24 Mar 2026 08:42:34 +0000 (GMT)
-Message-ID: <8cde9a355050b306180f80e8d1340ec814c0876c.camel@linux.ibm.com>
-Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, Harsh Prateek
- Bora	 <harshpb@linux.ibm.com>, Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org
-Date: Tue, 24 Mar 2026 14:12:32 +0530
-In-Reply-To: <20260323231612.GA2637687@ax162>
-References: <20260311143549.118720-1-shivangu@linux.ibm.com>
- <20260323231612.GA2637687@ax162>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w4xMa-0005Ka-Ve
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 04:43:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774341827;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=i1UQZyGRL2zngaxArgi/9cfDlcapLbuGront1+ctlck=;
+ b=U+qqUbQhbN/ZIC9NTQ0E67F/ls/nKUnYjGYc4A8f+oxmhiJelUqMmq52WW9qCUxXHn146K
+ LAX7UtOnY6wCIPNnGS1w3Dvbt78JcfwBjRZeTiXVpAyXcuFgdLFqlb9em4Rt/2+34lFOGd
+ pxbcAhzNXGaxcmsyYBZPC+HpyN6Z27k=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-D24lUGEMPcKBvOIoEBkjFg-1; Tue, 24 Mar 2026 04:43:45 -0400
+X-MC-Unique: D24lUGEMPcKBvOIoEBkjFg-1
+X-Mimecast-MFC-AGG-ID: D24lUGEMPcKBvOIoEBkjFg_1774341825
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-43b42eee946so4689114f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 01:43:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774341824; x=1774946624; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=i1UQZyGRL2zngaxArgi/9cfDlcapLbuGront1+ctlck=;
+ b=FLFFaAhWDvvAKTgEhV/amDaW92paJZ9Y8Qy/AuvS65Ggb0OgRpBFhb8dOx/iOjj2jI
+ 7ZHICPXsrRx/nBbO/E6UFpu1bFcqXHMFX3ZQBOQI0+/QkIHozaSiPaMOGHlFbyyvWcyE
+ FTWC8NhCNXTTVYWjdfhM4y5oREIoybtULsyJgfhQ7wH7fXqd8bVscA+PO+kuOW8OshAi
+ I9cLwprWrzMtrOpo+Izyz2DY7r3/b2IzIHcdP82/lOVFcFKEH5kGMj5lWmez9/hleVWD
+ TseEFwPFnP+HdV4BJ5qK3Vd6irGykCtc/grKdh0ClgJiAfqveK84bxPdKvdKPCsPErAR
+ LP2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774341824; x=1774946624;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i1UQZyGRL2zngaxArgi/9cfDlcapLbuGront1+ctlck=;
+ b=FULnsfP+BoI3miAoTTJp4Kt6Pdo4pCVW7NcFezRVwY8LI2iA9O5kLaa/1USalfp/tg
+ c8B63DV8RfDf2nyrJMzN6NSkIAN7NjE6L8VFnDdrA/1S/75fcKoIONe8T0vmAgCPMmEd
+ nR/X+9uWueGCCNpAfYCWdGAJp9QPFmG6E41idzWVe4OukYgvpIFd0b4IMt4s8lA2Cl4f
+ zzW/UXOTv0WuVGYd04kMEA9KTQpwuwEtIB0MB9+eO0uHcFDmg6dovnCFwk53wC26IzIf
+ hLqU6p0CHMXdODl+cgbCoGEbwygePcgMDRkCttYojz2fjhivyt+eezmriC9IxxU8EdMw
+ fV1A==
+X-Gm-Message-State: AOJu0Yydl0P0MasU5yRKpv0nwsrRQRx60vsbLgc5qpCJrMJImjSowFfr
+ ujiJeWKHR/KuDMt/sK5GWVl3ua875O2DaIvNhCVxbyKB6jDdvw5Szwd0OsXkf3mwfRNvFxqWJk7
+ gIGANKvAlvvJCZFWXFtA58tXCeKp+2ovDHMfg6Edjgut4K99t8DyNWDNqpgrPC1OP
+X-Gm-Gg: ATEYQzxBz/Ud7V9/7l2kD2GjPLgPI4Bjx4FSwLPR7a+77tALUt45/1h7ldPewN8CJaU
+ PgKSh3qIMZioQuZtrFNoc7kbjdUgHLjNh6WI/sopj6bj44XfFwf+TR0GEkgFjpVuDAyWJbsU4tQ
+ WaKE8+M9lKTCbKlAKPb7/uH0si9WWUcQ3Ih5fO3QABftvU9cYPvO+KT+Ty9DOMIx7PsIR4zh6zU
+ iNRhAJPdjS9MrNm+jhdxwZxPCy0mLZnAUE4KKoFcHBBfMQZGPfYfrE2CAMv8UfOyrwaDXKVA2F6
+ zvvvT5MuFsyH2Zz6B7IvAov+F6FRUKzz/kcAwIpigcMPeuil0EzEMSi8KqU8z+Y3XLS8aYvtwa5
+ atdodMvuUqhjCGueBdtImERmVDAElWTrDhbduAv7nHCa7XPJLpygT5NF/kdR7/lq2iJYiBK9Sm9
+ RXHqki
+X-Received: by 2002:a05:600c:4f0b:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-4870f202653mr30304075e9.11.1774341824188; 
+ Tue, 24 Mar 2026 01:43:44 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f0b:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-4870f202653mr30303705e9.11.1774341823746; 
+ Tue, 24 Mar 2026 01:43:43 -0700 (PDT)
+Received: from localhost
+ (p200300cfd737d03cdf99cbc9b4448cfa.dip0.t-ipconnect.de.
+ [2003:cf:d737:d03c:df99:cbc9:b444:8cfa])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48711702191sm33366955e9.5.2026.03.24.01.43.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Mar 2026 01:43:43 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Julia Suvorova <jusual@redhat.com>,
+ Aarushi Mehta <mehta.aaru20@gmail.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH for-11.0 v2 0/3] linux-aio/io-uring: Resubmit tails of short
+ requests
+Date: Tue, 24 Mar 2026 09:43:33 +0100
+Message-ID: <20260324084338.37453-1-hreitz@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: FrXxOc7rgNzTkzp2-iblFXJpU5cCcsgV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDA2NiBTYWx0ZWRfX84s+4rHq/5Tm
- MyEfE+mzjkwiu3ocAWHH/CM9w3TEoJlLnYPQlHUghgDTh2cFE/a9Lqkmv2qtbhRO++wwJfUfxVv
- j0syrVyMPRUzMN4aHNUdkbQA+lTFBcp5D4ePIRxWvhr/WUEThU0sh+OURWA6WFshDOmxyUhsWlu
- p4PEKOzX2Pf+SoGDR5D5xql3/48Io1v2N84pHhXovD++v5328VumBTiPP1n2KKrHW+J7sESxldf
- XEWp55gMRW0olhw93+pRnRTAsyb+etp5q7LGEAY4eeKE3kAZNuyViOvIF94CsjUfmiti0jF+VEg
- M8ZjwSdkxJMy9R9dZFkvxN9Zu9Ajzo2zE9c2RVEc+3tujH7n07UV8WuoK8qUQ5vbdsx20+ngO2q
- CgDF+6iLo6bNA9vRESB82RrjToT6Xz7XFV+31CyDb+heO43+JhjbWiEstda9K4vkaKuap1o9I6x
- wZZigugJez9oL1OtedQ==
-X-Proofpoint-GUID: 1iQD-BRxY7MPYL5PoB-Jlc7lymfzSr6X
-X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c24e84 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=p0WdMEafAAAA:8 a=DiSADyN12PveX24rIx0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_02,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 clxscore=1015 phishscore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240066
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,49 +122,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-03-23 at 16:16 -0700, Nathan Chancellor wrote:
->=20
-> After this patch landed in QEMU master as commit a16d4c2f16
-> ("ppc/pnv:
-> fix dumpdtb option"), I am seeing a hang on shutdown. With the files
-> available at [1]:
->=20
-> =C2=A0 $ qemu-system-ppc64 \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -display none \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -nodefaults \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -device ipmi-bmc-sim,id=3Dbmc0 \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -device isa-ipmi-bt,bmc=3Dbmc0,irq=3D10 \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -machine powernv \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -kernel zImage.epapr \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -initrd rootfs.cpio \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -m 2G \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -serial mon:stdio
-> =C2=A0 ...
-> =C2=A0 [=C2=A0=C2=A0=C2=A0 1.308982][=C2=A0=C2=A0=C2=A0 T1] Run /init as =
-init process
->=20
-Hi Nathan,
+Hi,
 
- I have root-casued this issue. During discussion for this bug [1], I
-made assumption about dtb not changing during between resets. To handle
-that I removed the dt_recreation logic from `pnv_init` code.
+v1 is here:
 
-But, As in your case the bmc details are provided from command line,
-the bmc device is not present during `pnv_init`. And later on during
-device initialization it gets filled with correct details. `pnv_reset`
-is also called to start the cpu also, So previously the correct bmc
-details were populated.
+https://lists.nongnu.org/archive/html/qemu-block/2026-03/msg00307.html
 
-To handle this case, I should add the dt recreation logic to the "bmc
-details found" case. [2].
+Short reads and writes can happen.  One way to reproduce them is via
+FUSE export, if you force it to limit the request length in the
+read/write path (patch in the commit messages of patches 2 and 3), but
+specifically short writes apparently can also happen with NFS.
 
-Thanks for finding this case.
+For the file-posix block driver, aio=threads already takes care of them.
+aio=native does not, at all, and aio=io_uring only handles short reads,
+but not writes.  This series has both aio=native and aio=io_uring handle
+both short reads and writes.  zone-append is not touched, as I don’t
+believe resubmitting the tail (if a short append can even happen) is
+safe.
 
-[1]https://lore.kernel.org/all/7yq2eac5yzsx2ve2nwbs7uhjguemravsimtm26dkgppe=
-czqmix@wtrwux3aeswg/
-[2]
-https://gitlab.com/qemu-project/qemu/-/blob/master/hw/ppc/pnv.c?ref_type=3D=
-heads#L772
+v2:
+- Patch 1 (kept R-b):
+  - Put all 32-bit fields together
+  - Removed unnecessary parentheses
+- Patch 2 (kept R-b):
+  - make qemu_iovec_destroy() call contingent on qiov.iov being non-NULL
+  - include total_done in offset in laio_do_submit()
+- Patch 3 (kept R-b):
+  - make qemu_iovec_destroy() call contingent on qiov.iov being non-NULL
+  - include total_done in offset in luring_prep_sqe()
 
-~Shivang.
+git-backport-diff against v1:
+
+Key:
+[----] : patches are identical
+[####] : number of functional differences between upstream/downstream patch
+[down] : patch is downstream-only
+The flags [FC] indicate (F)unctional and (C)ontextual differences, respectively
+
+001/3:[0007] [FC] 'linux-aio: Put all parameters into qemu_laiocb'
+002/3:[0017] [FC] 'linux-aio: Resubmit tails of short reads/writes'
+003/3:[0023] [FC] 'io-uring: Resubmit tails of short writes'
+
+Hanna Czenczek (3):
+  linux-aio: Put all parameters into qemu_laiocb
+  linux-aio: Resubmit tails of short reads/writes
+  io-uring: Resubmit tails of short writes
+
+ block/io_uring.c   | 82 +++++++++++++++++++++++-------------------
+ block/linux-aio.c  | 88 +++++++++++++++++++++++++++++++++++++---------
+ block/trace-events |  2 +-
+ 3 files changed, 117 insertions(+), 55 deletions(-)
+
+-- 
+2.53.0
+
 
