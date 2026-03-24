@@ -4,73 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB28FEC0EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 18:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FF7FEC0F3
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 18:29:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w565P-0000SP-K0; Tue, 24 Mar 2026 14:02:39 -0400
+	id 1w56UY-0004o7-Nb; Tue, 24 Mar 2026 14:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w565I-0000Rv-Eo
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:02:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w5657-0004Ap-Oo
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:02:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774375340;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=AXlkGCllJFX09LFzbGyzWegVHXFrePUUCWfvSPlRCbg=;
- b=YB4WpcmuN3/VZiaALc4aApecU5akJRFyVsL/hAlsiapIb4Ep+ynypcXnhqM6TSnXOd8toS
- vhVl6i1gDkeOabawix8T8HEHn/uDko6wyZutB2yC652qubY+A7eTAJabf/96QDE4NIGDNe
- j9wOWDJti4xbnT0tKY2aDlSLVMb0KWg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-149-yBk3f5n9OwaUjkmrRPP6wg-1; Tue,
- 24 Mar 2026 14:02:18 -0400
-X-MC-Unique: yBk3f5n9OwaUjkmrRPP6wg-1
-X-Mimecast-MFC-AGG-ID: yBk3f5n9OwaUjkmrRPP6wg_1774375337
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D7A51800627
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 18:02:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.93])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 715CF19560B1; Tue, 24 Mar 2026 18:02:13 +0000 (UTC)
-Date: Tue, 24 Mar 2026 18:02:10 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Elizabeth Ashurov <eashurov@redhat.com>
-Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, yvugenfi@redhat.com
-Subject: Re: [PATCH v2 1/2] qga: replace slog() with standard GLib logging
-Message-ID: <acLRoqsvfN3EcM7P@redhat.com>
-References: <20260312141657.1701801-1-eashurov@redhat.com>
- <20260318154752.1880933-1-eashurov@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w56UW-0004nl-No
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:28:36 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w56UU-00013q-0G
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 14:28:36 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2b07069e2efso10562165ad.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 11:28:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774376912; x=1774981712; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=gfYJ0/NFET7qzAnEVyjfuSbOkNV2PrvtGVK2ed0AlAg=;
+ b=WK29TUa/4XTD7DN9/f3xOK+fM6BoUU/6aUFLjCESTST7zjlC72u1uxMfTaWOESERka
+ JrTFtVg0ZQJup1nPK9uB7yJuh/cLf14WHbM3DZZcq+RONeuMoim24lpkaWOFs4U56OMt
+ FRk/HNxttUkzR79BnDXhe3i7ziuQkmfYTkp0cAuyiAVz/bT6J2ZCwI8LhXM940rKygQ0
+ bWxQB5jBalqAe+U6h56CR4+pWUw7XcVeEBbCOdnNWk1w8QSjwqIKBuum+qsJMgF3lReg
+ j2oxp8wbgTDrjcVCpH7f8mtvKcW9usuqpAzBIFXR86qurBjcdCvOiMJ/lXYW/BOqwk7b
+ ImkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774376912; x=1774981712;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gfYJ0/NFET7qzAnEVyjfuSbOkNV2PrvtGVK2ed0AlAg=;
+ b=K6ysA5ViiF+BjB/G0cL0dcfx7FR32La0U0keRa+QQgIUKYnFEJWxozkQs84QfToDaZ
+ oGj4j+1+OuZ78rx3yIuAR+mF1qxzsIA2t03x+ouw7XdQbcsTBzvaIbMZiheDNP27HFY6
+ D3W5l4Ut6iNhwSJblNvLAqZd0w9kY59ldYY+UgeMgIKftjc9SxJCAGrYUQRGRgj5Z1YM
+ 9c+ivTOXK/VR9Xg3Ldt1AVYM+a1gK1rxgGljPInc6T3J0X8Ap1WJJGuzRzmh9TvcOU1P
+ iUd7Yzs1N5gabVHY86bQ254WZ6R0GtgSCvbFO3Sv/g7qvHlIjtdBZjw4BiQZutNpQ5OC
+ 8syQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUZ2aU4JPxp8tsIu8zN+g/p/iAv4QOncuQ3PiXh9pe3Z4MRK5tKYAsrUV2djcaVQoOr3kUTyr7EEhn7@nongnu.org
+X-Gm-Message-State: AOJu0Ywb7iK9k8IYn2w8XzOG1ovuUG7Oeds8REXDYnglMWrHuhmcnpZr
+ DqnJRlzIuBhUhjt/fXJoCKJHPg0qNnZtuY77oUM1XC7Uig+SvfCO2d2LlwsRXjx2Pds=
+X-Gm-Gg: ATEYQzyQlK6b0ZCUwHDdVYesZc64gfcqog69uhD8uMXVgDG/sGF7w3Lj5FtIGOH5aUK
+ 75Ri1nc/8Uv75z7wvjg3iCl2t59ZfrnX0e/mx2OPfWDxiHzF69aKeu6CMJLl9w/yXT5qgdBMTMT
+ +fXviA+plPXAypoozcOvtx32ikKJqFX3rsD60LqOGsVPom4Xkl5QOSKdDcDTYm1+fyjFy5JV731
+ BwugMqq1WRRJw2HO7U+yXrTxBdBFjw8nBuLLN17XLLZMSdek4VdmVVcejAoY8cfPc63q53J/ZP8
+ ycu2PTvqb14nTlT0H5yRKVPyEof511nWJ9+fRRCzZQSnmk+qfbXPG1/xUD27w13czzNXIXsI+n8
+ SAHi03w93Lzcda/Bxc0TlPIVDlkIrfOcuZte1USEgLWX914enLnJJMa4vlQjHuuqycqKO3IwLK/
+ Xpk7OKWtqUAI5vwJH5+HKhJ23mMJ4YAQV4aHVvimbFM3fd/KUqJnB7PErtDs2tTPhRpbB4
+X-Received: by 2002:a17:902:da88:b0:2b0:5cb3:e4bc with SMTP id
+ d9443c01a7336-2b0b09d25e9mr6911765ad.16.1774376911802; 
+ Tue, 24 Mar 2026 11:28:31 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b08366c56bsm218617875ad.57.2026.03.24.11.28.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 11:28:31 -0700 (PDT)
+Message-ID: <ef2a0d92-c7f6-438b-a15a-2712e1c4373a@linaro.org>
+Date: Tue, 24 Mar 2026 11:28:30 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260318154752.1880933-1-eashurov@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Cleaning up contrib/ and tools/
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: "Daniel P. Berrange" <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eric Blake <eblake@redhat.com>
+References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,602 +141,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FWIW, next time, please send new versions as top level mail
-threads. Don't try to make the mails a reply to a previous
-posting as that is liable to lead to maintainers overlooking
-the new posting.
+On 3/24/26 10:09 AM, Peter Maydell wrote:
+> We have a couple of directories in our source tree which have
+> accumulated things in them that don't really belong there; this is a
+> proposal to clean up by moving things to more appropriate locations
+> (as 11.1 work, obviously).
+> 
+> Firstly, contrib/ has a tendency to be a dumping ground for stuff that
+> we didn't think hard enough about finding a good home for, and for
+> things in a weird "not really maintained" state. We should either
+> (a) care enough about something to give it a correct home and to
+> maintain it, or (b) not care about it, and kick it out of our tree.
+> 
+> Secondly, tools/ exists but is very under-used. I think it should be
+> for the set of standalone tools that we build if you configure
+> --enable-tools and which we document in docs/tools.  Currently it
+> contains two things, one of which doesn't match that idea...
+> 
+> So, starting with tools/:
+> 
+>   * tools/ebpf/ is the source for the pre-generated
+>     ebpf/rss.bpf.skeleton.h ; it should move to ebpf/
+>   * tools/i386/qemu-vmsr-helper.c is the source for the
+>     qemu-vmsr-helper tool; it can stay (should it lose its
+>     i386/ subdir ?)
+>   * the tools which currently are in the top level directory
+>     should move into tools/:
+>      - qemu-bridge-helper.c
+>      - qemu-edid.c
+>      - qemu-img.c
+>      - qemu-io.c
+>      - qemu-keymap.c
+>      - qemu-nbd.c
+> 
+> And for contrib/, easy ones first:
+>   * contrib/vhost-user-{blk,bridge,gpu,input,scsi} move to tools/
+>   * contrib/elf2dmp moves to tools/
+>   * contrib/ivshmem-client and contrib/ivshmem-server move to tools/
+>   * contrib/plugins moves to plugins/plugins (or a different subdir
+>     name of your choice)
+>
 
-On Wed, Mar 18, 2026 at 05:47:51PM +0200, Elizabeth Ashurov wrote:
-> Replace qga-specific slog() calls with standard GLib logging APIs.
-> Use g_info() for command execution messages and g_warning() for
-> non-fatal failures, and remove the use of "syslog" as a log domain.
-> 
-> Rework ga_log() to route messages to the log file and
-> syslog/Event Viewer, filtering by log level. Debug messages are
-> excluded from syslog even with --debug.
-> 
-> - Default log level includes ERROR and CRITICAL
-> - -v/--verbose enables WARNING, MESSAGE, and INFO
-> - -g/--debug enables all levels including DEBUG
-> 
-> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
-> ---
->  qga/commands-linux.c   |  6 ++---
->  qga/commands-posix.c   | 26 +++++++++---------
->  qga/commands-win32.c   | 60 +++++++++++++++++++++---------------------
->  qga/commands.c         | 29 ++++++--------------
->  qga/guest-agent-core.h |  1 -
->  qga/main.c             | 39 +++++++++++++++++++--------
->  6 files changed, 82 insertions(+), 79 deletions(-)
-> 
-> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-> index 378f4d080c..a722de2e6a 100644
-> --- a/qga/commands-linux.c
-> +++ b/qga/commands-linux.c
-> @@ -44,7 +44,7 @@ static int dev_major_minor(const char *devpath,
->      *devminor = 0;
->  
->      if (stat(devpath, &st) < 0) {
-> -        slog("failed to stat device file '%s': %s", devpath, strerror(errno));
-> +        g_warning("failed to stat device file '%s': %s", devpath, strerror(errno));
->          return -1;
->      }
->      if (S_ISDIR(st.st_mode)) {
-> @@ -1158,7 +1158,7 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
->      int fd;
->      struct fstrim_range r;
->  
-> -    slog("guest-fstrim called");
-> +    g_info("guest-fstrim called");
->  
->      QTAILQ_INIT(&mounts);
->      if (!build_fs_mount_list(&mounts, errp)) {
-> @@ -2072,7 +2072,7 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
->          }
->  
->          if (i < 5) {
-> -            slog("Parsing cpu stat from %s failed, see \"man proc\"", cpustats);
-> +            g_warning("Parsing cpu stat from %s failed, see \"man proc\"", cpustats);
->              break;
->          }
->  
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 837be51c40..96939a6f36 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -240,7 +240,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
->      const char *reboot_flag = "-r";
->  #endif
->  
-> -    slog("guest-shutdown called, mode: %s", mode);
-> +    g_info("guest-shutdown called, mode: %s", mode);
->      if (!mode || strcmp(mode, "powerdown") == 0) {
->          if (access(POWEROFF_CMD_PATH, X_OK) == 0) {
->              shutdown_cmd = POWEROFF_CMD_PATH;
-> @@ -519,7 +519,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode,
->      if (!mode) {
->          mode = "r";
->      }
-> -    slog("guest-file-open called, filepath: %s, mode: %s", path, mode);
-> +    g_info("guest-file-open called, filepath: %s, mode: %s", path, mode);
->      fh = safe_open_or_create(path, mode, &local_err);
->      if (local_err != NULL) {
->          error_propagate(errp, local_err);
-> @@ -540,7 +540,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode,
->          return -1;
->      }
->  
-> -    slog("guest-file-open, handle: %" PRId64, handle);
-> +    g_info("guest-file-open, handle: %" PRId64, handle);
->      return handle;
->  }
->  
-> @@ -549,7 +549,7 @@ void qmp_guest_file_close(int64_t handle, Error **errp)
->      GuestFileHandle *gfh = guest_file_handle_find(handle, errp);
->      int ret;
->  
-> -    slog("guest-file-close called, handle: %" PRId64, handle);
-> +    g_info("guest-file-close called, handle: %" PRId64, handle);
->      if (!gfh) {
->          return;
->      }
-> @@ -645,7 +645,7 @@ GuestFileWrite *qmp_guest_file_write(int64_t handle, const char *buf_b64,
->      write_count = fwrite(buf, 1, count, fh);
->      if (ferror(fh)) {
->          error_setg_errno(errp, errno, "failed to write to file");
-> -        slog("guest-file-write failed, handle: %" PRId64, handle);
-> +        g_warning("guest-file-write failed, handle: %" PRId64, handle);
->      } else {
->          write_data = g_new0(GuestFileWrite, 1);
->          write_data->count = write_count;
-> @@ -760,7 +760,7 @@ static void execute_fsfreeze_hook(FsfreezeHookArg arg, Error **errp)
->  
->      const char *argv[] = {hook, arg_str, NULL};
->  
-> -    slog("executing fsfreeze hook with arg '%s'", arg_str);
-> +    g_info("executing fsfreeze hook with arg '%s'", arg_str);
->      ga_run_command(argv, NULL, "execute fsfreeze hook", &local_err);
->      if (local_err) {
->          error_propagate(errp, local_err);
-> @@ -793,7 +793,7 @@ int64_t qmp_guest_fsfreeze_freeze_list(bool has_mountpoints,
->      FsMountList mounts;
->      Error *local_err = NULL;
->  
-> -    slog("guest-fsfreeze called");
-> +    g_info("guest-fsfreeze called");
->  
->      execute_fsfreeze_hook(FSFREEZE_HOOK_FREEZE, &local_err);
->      if (local_err) {
-> @@ -833,7 +833,7 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
->  
->      if (ret >= 0) {
->          ga_unset_frozen(ga_state);
-> -        slog("guest-fsthaw called");
-> +        g_info("guest-fsthaw called");
->          execute_fsfreeze_hook(FSFREEZE_HOOK_THAW, errp);
->      } else {
->          ret = 0;
-> @@ -849,8 +849,8 @@ static void guest_fsfreeze_cleanup(void)
->      if (ga_is_frozen(ga_state) == GUEST_FSFREEZE_STATUS_FROZEN) {
->          qmp_guest_fsfreeze_thaw(&err);
->          if (err) {
-> -            slog("failed to clean up frozen filesystems: %s",
-> -                 error_get_pretty(err));
-> +            g_warning("failed to clean up frozen filesystems: %s",
-> +                      error_get_pretty(err));
->              error_free(err);
->          }
->      }
-> @@ -1282,19 +1282,19 @@ static GKeyFile *ga_parse_osrelease(const char *fname)
->      const char *group = "[os-release]\n";
->  
->      if (!g_file_get_contents(fname, &content, NULL, &err)) {
-> -        slog("failed to read '%s', error: %s", fname, err->message);
-> +        g_warning("failed to read '%s', error: %s", fname, err->message);
->          goto fail;
->      }
->  
->      if (!g_utf8_validate(content, -1, NULL)) {
-> -        slog("file is not utf-8 encoded: %s", fname);
-> +        g_warning("file is not utf-8 encoded: %s", fname);
->          goto fail;
->      }
->      content2 = g_strdup_printf("%s%s", group, content);
->  
->      if (!g_key_file_load_from_data(keys, content2, -1, G_KEY_FILE_NONE,
->                                     &err)) {
-> -        slog("failed to parse file '%s', error: %s", fname, err->message);
-> +        g_warning("failed to parse file '%s', error: %s", fname, err->message);
->          goto fail;
->      }
->  
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index c0bf3467bd..d26b0041ce 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -231,7 +231,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
->      if (!mode) {
->          mode = "r";
->      }
-> -    slog("guest-file-open called, filepath: %s, mode: %s", path, mode);
-> +    g_info("guest-file-open called, filepath: %s, mode: %s", path, mode);
->      guest_flags = find_open_flag(mode);
->      if (guest_flags == NULL) {
->          error_setg(errp, "invalid file open mode");
-> @@ -267,7 +267,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
->          goto done;
->      }
->  
-> -    slog("guest-file-open, handle: % " PRId64, fd);
-> +    g_info("guest-file-open, handle: % " PRId64, fd);
->  
->  done:
->      g_free(w_path);
-> @@ -278,7 +278,7 @@ void qmp_guest_file_close(int64_t handle, Error **errp)
->  {
->      bool ret;
->      GuestFileHandle *gfh = guest_file_handle_find(handle, errp);
-> -    slog("guest-file-close called, handle: %" PRId64, handle);
-> +    g_info("guest-file-close called, handle: %" PRId64, handle);
->      if (gfh == NULL) {
->          return;
->      }
-> @@ -337,7 +337,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
->      Error *local_err = NULL;
->      UINT shutdown_flag = EWX_FORCE;
->  
-> -    slog("guest-shutdown called, mode: %s", mode);
-> +    g_info("guest-shutdown called, mode: %s", mode);
->  
->      if (!mode || strcmp(mode, "powerdown") == 0) {
->          shutdown_flag |= EWX_POWEROFF;
-> @@ -361,7 +361,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
->  
->      if (!ExitWindowsEx(shutdown_flag, SHTDN_REASON_FLAG_PLANNED)) {
->          g_autofree gchar *emsg = g_win32_error_message(GetLastError());
-> -        slog("guest-shutdown failed: %s", emsg);
-> +        g_warning("guest-shutdown failed: %s", emsg);
->          error_setg_win32(errp, GetLastError(), "guest-shutdown failed");
->      }
->  }
-> @@ -426,7 +426,7 @@ GuestFileWrite *qmp_guest_file_write(int64_t handle, const char *buf_b64,
->      is_ok = WriteFile(fh, buf, count, &write_count, NULL);
->      if (!is_ok) {
->          error_setg_win32(errp, GetLastError(), "failed to write to file");
-> -        slog("guest-file-write-failed, handle: %" PRId64, handle);
-> +        g_warning("guest-file-write failed, handle: %" PRId64, handle);
->      } else {
->          write_data = g_new0(GuestFileWrite, 1);
->          write_data->count = (size_t) write_count;
-> @@ -1255,7 +1255,7 @@ int64_t qmp_guest_fsfreeze_freeze_list(bool has_mountpoints,
->          return 0;
->      }
->  
-> -    slog("guest-fsfreeze called");
-> +    g_info("guest-fsfreeze called");
->  
->      /* cannot risk guest agent blocking itself on a write in this state */
->      ga_set_frozen(ga_state);
-> @@ -1294,7 +1294,7 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
->  
->      ga_unset_frozen(ga_state);
->  
-> -    slog("guest-fsthaw called");
-> +    g_info("guest-fsthaw called");
->  
->      return i;
->  }
-> @@ -1310,8 +1310,8 @@ static void guest_fsfreeze_cleanup(void)
->      if (ga_is_frozen(ga_state) == GUEST_FSFREEZE_STATUS_FROZEN) {
->          qmp_guest_fsfreeze_thaw(&err);
->          if (err) {
-> -            slog("failed to clean up frozen filesystems: %s",
-> -                 error_get_pretty(err));
-> +            g_warning("failed to clean up frozen filesystems: %s",
-> +                      error_get_pretty(err));
->              error_free(err);
->          }
->      }
-> @@ -1464,7 +1464,7 @@ static DWORD WINAPI do_suspend(LPVOID opaque)
->  
->      if (!SetSuspendState(*mode == GUEST_SUSPEND_MODE_DISK, TRUE, TRUE)) {
->          g_autofree gchar *emsg = g_win32_error_message(GetLastError());
-> -        slog("failed to suspend guest: %s", emsg);
-> +        g_warning("failed to suspend guest: %s", emsg);
->          ret = -1;
->      }
->      g_free(mode);
-> @@ -2174,8 +2174,8 @@ static char *ga_get_win_name(const OSVERSIONINFOEXW *os_version, bool id)
->          }
->          ++table;
->      }
-> -    slog("failed to lookup Windows version: major=%lu, minor=%lu",
-> -        major, minor);
-> +    g_warning("failed to lookup Windows version: major=%lu, minor=%lu",
-> +              major, minor);
->      return g_strdup("N/A");
->  }
->  
-> @@ -2198,8 +2198,8 @@ static char *ga_get_win_product_name(Error **errp)
->      err = RegQueryValueExA(key, "ProductName", NULL, NULL,
->                              (LPBYTE)result, &size);
->      if (err == ERROR_MORE_DATA) {
-> -        slog("ProductName longer than expected (%lu bytes), retrying",
-> -                size);
-> +        g_info("ProductName longer than expected (%lu bytes), retrying",
-> +               size);
->          g_free(result);
->          result = NULL;
->          if (size > 0) {
-> @@ -2244,8 +2244,8 @@ static char *ga_get_current_arch(void)
->          break;
->      case PROCESSOR_ARCHITECTURE_UNKNOWN:
->      default:
-> -        slog("unknown processor architecture 0x%0x",
-> -            info.wProcessorArchitecture);
-> +        g_warning("unknown processor architecture 0x%0x",
-> +                  info.wProcessorArchitecture);
->          result = g_strdup("unknown");
->          break;
->      }
-> @@ -2308,14 +2308,14 @@ static LPBYTE cm_get_property(DEVINST devInst, const DEVPROPKEY *propName,
->          buffer, &buffer_len, 0);
->      if (cr != CR_SUCCESS && cr != CR_BUFFER_SMALL) {
->  
-> -        slog("failed to get property size, error=0x%lx", cr);
-> +        g_warning("failed to get property size, error=0x%lx", cr);
->          return NULL;
->      }
->      buffer = g_new0(BYTE, buffer_len + 1);
->      cr = CM_Get_DevNode_PropertyW(devInst, propName, propType,
->          buffer, &buffer_len, 0);
->      if (cr != CR_SUCCESS) {
-> -        slog("failed to get device property, error=0x%lx", cr);
-> +        g_warning("failed to get device property, error=0x%lx", cr);
->          return NULL;
->      }
->      return g_steal_pointer(&buffer);
-> @@ -2329,7 +2329,7 @@ static GStrv ga_get_hardware_ids(DEVINST devInstance)
->      g_autofree LPWSTR property = (LPWSTR)cm_get_property(devInstance,
->          &qga_DEVPKEY_Device_HardwareIds, &cm_type);
->      if (property == NULL) {
-> -        slog("failed to get hardware IDs");
-> +        g_warning("failed to get hardware IDs");
->          return NULL;
->      }
->      if (*property == '\0') {
-> @@ -2371,7 +2371,7 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
->          return NULL;
->      }
->  
-> -    slog("enumerating devices");
-> +    g_info("enumerating devices");
->      for (i = 0; SetupDiEnumDeviceInfo(dev_info, i, &dev_info_data); i++) {
->          bool skip = true;
->          g_autofree LPWSTR name = NULL;
-> @@ -2385,7 +2385,7 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
->          name = (LPWSTR)cm_get_property(dev_info_data.DevInst,
->              &qga_DEVPKEY_NAME, &cm_type);
->          if (name == NULL) {
-> -            slog("failed to get device description");
-> +            g_warning("failed to get device description");
->              continue;
->          }
->          device->driver_name = g_utf16_to_utf8(name, -1, NULL, NULL, NULL);
-> @@ -2393,7 +2393,7 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
->              error_setg(errp, "conversion to utf8 failed (driver name)");
->              return NULL;
->          }
-> -        slog("querying device: %s", device->driver_name);
-> +        g_info("querying device: %s", device->driver_name);
->          hw_ids = ga_get_hardware_ids(dev_info_data.DevInst);
->          if (hw_ids == NULL) {
->              continue;
-> @@ -2424,7 +2424,7 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
->          version = (LPWSTR)cm_get_property(dev_info_data.DevInst,
->              &qga_DEVPKEY_Device_DriverVersion, &cm_type);
->          if (version == NULL) {
-> -            slog("failed to get driver version");
-> +            g_warning("failed to get driver version");
->              continue;
->          }
->          device->driver_version = g_utf16_to_utf8(version, -1, NULL,
-> @@ -2437,15 +2437,15 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
->          date = (LPFILETIME)cm_get_property(dev_info_data.DevInst,
->              &qga_DEVPKEY_Device_DriverDate, &cm_type);
->          if (date == NULL) {
-> -            slog("failed to get driver date");
-> +            g_warning("failed to get driver date");
->              continue;
->          }
->          device->driver_date = filetime_to_ns(date);
->          device->has_driver_date = true;
->  
-> -        slog("driver: %s\ndriver version: %" PRId64 ",%s\n",
-> -             device->driver_name, device->driver_date,
-> -             device->driver_version);
-> +        g_info("driver: %s\ndriver version: %" PRId64 ",%s\n",
-> +               device->driver_name, device->driver_date,
-> +               device->driver_version);
->          QAPI_LIST_APPEND(tail, g_steal_pointer(&device));
->      }
->  
-> @@ -2479,8 +2479,8 @@ static VOID CALLBACK load_avg_callback(PVOID hCounter, BOOLEAN timedOut)
->          (PDH_HCOUNTER)hCounter, PDH_FMT_DOUBLE, 0, &displayValue);
->      /* Skip updating the load if we can't get the value successfully */
->      if (err != ERROR_SUCCESS) {
-> -        slog("PdhGetFormattedCounterValue failed to get load value with 0x%lx",
-> -             err);
-> +        g_warning("PdhGetFormattedCounterValue failed to get load value"
-> +                  " with 0x%lx", err);
->          return;
->      }
->      currentLoad = displayValue.doubleValue;
-> diff --git a/qga/commands.c b/qga/commands.c
-> index 5f20af25d3..55edd9fd4c 100644
-> --- a/qga/commands.c
-> +++ b/qga/commands.c
-> @@ -30,19 +30,6 @@
->   */
->  #define GUEST_FILE_READ_COUNT_MAX (48 * MiB)
->  
-> -/* Note: in some situations, like with the fsfreeze, logging may be
-> - * temporarily disabled. if it is necessary that a command be able
-> - * to log for accounting purposes, check ga_logging_enabled() beforehand.
-> - */
-> -void slog(const gchar *fmt, ...)
-> -{
-> -    va_list ap;
-> -
-> -    va_start(ap, fmt);
-> -    g_logv("syslog", G_LOG_LEVEL_INFO, fmt, ap);
-> -    va_end(ap);
-> -}
-> -
->  int64_t qmp_guest_sync_delimited(int64_t id, Error **errp)
->  {
->      ga_set_response_delimited(ga_state);
-> @@ -56,7 +43,7 @@ int64_t qmp_guest_sync(int64_t id, Error **errp)
->  
->  void qmp_guest_ping(Error **errp)
->  {
-> -    slog("guest-ping called");
-> +    g_info("guest-ping called");
->  }
->  
->  static void qmp_command_info(const QmpCommand *cmd, void *opaque)
-> @@ -149,7 +136,7 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
->      GuestExecInfo *gei;
->      GuestExecStatus *ges;
->  
-> -    slog("guest-exec-status called, pid: %u", (uint32_t)pid);
-> +    g_info("guest-exec-status called, pid: %u", (uint32_t)pid);
->  
->      gei = guest_exec_info_find(pid);
->      if (gei == NULL) {
-> @@ -251,7 +238,7 @@ static char **guest_exec_get_args(const strList *entry, bool log)
->      args[i] = NULL;
->  
->      if (log) {
-> -        slog("guest-exec called: \"%s\"", str);
-> +        g_info("guest-exec called: \"%s\"", str);
->      }
->      g_free(str);
->  
-> @@ -285,8 +272,8 @@ static void guest_exec_task_setup(gpointer data)
->           * inside the parent, not the child.
->           */
->          if (dup2(STDOUT_FILENO, STDERR_FILENO) != 0) {
-> -            slog("dup2() failed to merge stderr into stdout: %s",
-> -                 strerror(errno));
-> +            g_warning("dup2() failed to merge stderr into stdout: %s",
-> +                      strerror(errno));
->          }
->      }
->  
-> @@ -295,8 +282,8 @@ static void guest_exec_task_setup(gpointer data)
->      sigact.sa_handler = SIG_DFL;
->  
->      if (sigaction(SIGPIPE, &sigact, NULL) != 0) {
-> -        slog("sigaction() failed to reset child process's SIGPIPE: %s",
-> -             strerror(errno));
-> +        g_warning("sigaction() failed to reset child process's SIGPIPE: %s",
-> +                  strerror(errno));
->      }
->  #endif
->  }
-> @@ -626,7 +613,7 @@ GuestFileRead *qmp_guest_file_read(int64_t handle, bool has_count,
->  
->      read_data = guest_file_read_unsafe(gfh, count, errp);
->      if (!read_data) {
-> -        slog("guest-file-write failed, handle: %" PRId64, handle);
-> +        g_warning("guest-file-read failed, handle: %" PRId64, handle);
->      }
->  
->      return read_data;
-> diff --git a/qga/guest-agent-core.h b/qga/guest-agent-core.h
-> index d9f3922adf..0f2d1b3415 100644
-> --- a/qga/guest-agent-core.h
-> +++ b/qga/guest-agent-core.h
-> @@ -40,7 +40,6 @@ void ga_command_state_free(GACommandState *cs);
->  bool ga_logging_enabled(GAState *s);
->  void ga_disable_logging(GAState *s);
->  void ga_enable_logging(GAState *s);
-> -void G_GNUC_PRINTF(1, 2) slog(const gchar *fmt, ...);
->  void ga_set_response_delimited(GAState *s);
->  bool ga_is_frozen(GAState *s);
->  void ga_set_frozen(GAState *s);
-> diff --git a/qga/main.c b/qga/main.c
-> index fd19c7037d..04c772b680 100644
-> --- a/qga/main.c
-> +++ b/qga/main.c
-> @@ -286,7 +286,8 @@ QEMU_COPYRIGHT "\n"
->  #endif
->  "  -t, --statedir    specify dir to store state information (absolute paths\n"
->  "                    only, default is %s)\n"
-> -"  -v, --verbose     log extra debugging information\n"
-> +"  -v, --verbose     enable verbose logging (warning/info and above)\n"
-> +"  -g, --debug       enable debug logging (all messages)\n"
->  "  -V, --version     print version information and exit\n"
->  "  -d, --daemonize   become a daemon\n"
->  #ifdef _WIN32
-> @@ -391,18 +392,24 @@ static void ga_log(const gchar *domain, GLogLevelFlags level,
->      }
->  
->      level &= G_LOG_LEVEL_MASK;
-> -    if (g_strcmp0(domain, "syslog") == 0) {
-> +    if (!(level & s->log_level)) {
-> +        return;
-> +    }
-> +
-> +    if (s->log_file) {
-> +        g_autoptr(GDateTime) now = g_date_time_new_now_utc();
-> +        g_autofree char *nowstr = g_date_time_format(now, "%s.%f");
-> +        fprintf(s->log_file, "%s: %s: %s\n", nowstr, level_str, msg);
-> +        fflush(s->log_file);
-> +    }
-> +
-> +    if (level & ~G_LOG_LEVEL_DEBUG) {
->  #ifndef _WIN32
->          syslog(glib_log_level_to_system(level), "%s: %s", level_str, msg);
->  #else
->          ReportEvent(s->event_log, glib_log_level_to_system(level),
->                      0, 1, NULL, 1, 0, &msg, NULL);
->  #endif
-> -    } else if (level & s->log_level) {
-> -        g_autoptr(GDateTime) now = g_date_time_new_now_utc();
-> -        g_autofree char *nowstr = g_date_time_format(now, "%s.%f");
-> -        fprintf(s->log_file, "%s: %s: %s\n", nowstr, level_str, msg);
-> -        fflush(s->log_file);
->      }
->  }
->  
-> @@ -1140,7 +1147,11 @@ static void config_load(GAConfig *config, const char *confpath, bool required)
->      }
->      if (g_key_file_has_key(keyfile, "general", "verbose", NULL) &&
->          g_key_file_get_boolean(keyfile, "general", "verbose", &gerr)) {
-> -        /* enable all log levels */
-> +        config->log_level |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_MESSAGE
-> +                          | G_LOG_LEVEL_INFO;
-> +    }
-> +    if (g_key_file_has_key(keyfile, "general", "debug", NULL) &&
-> +        g_key_file_get_boolean(keyfile, "general", "debug", &gerr)) {
->          config->log_level = G_LOG_LEVEL_MASK;
->      }
->      if (g_key_file_has_key(keyfile, "general", "retry-path", NULL)) {
-> @@ -1214,7 +1225,9 @@ static void config_dump(GAConfig *config)
->  #endif
->      g_key_file_set_string(keyfile, "general", "statedir", config->state_dir);
->      g_key_file_set_boolean(keyfile, "general", "verbose",
-> -                           config->log_level == G_LOG_LEVEL_MASK);
-> +                           config->log_level & G_LOG_LEVEL_INFO);
-> +    g_key_file_set_boolean(keyfile, "general", "debug",
-> +                           config->log_level & G_LOG_LEVEL_DEBUG);
->      g_key_file_set_boolean(keyfile, "general", "retry-path",
->                             config->retry_path);
->      tmp = list_join(config->blockedrpcs, ',');
-> @@ -1238,7 +1251,7 @@ static void config_dump(GAConfig *config)
->  
->  static void config_parse(GAConfig *config, int argc, char **argv)
->  {
-> -    const char *sopt = "hVvdc:m:p:l:f:F::b:a:s:t:Dr";
-> +    const char *sopt = "hVvdgc:m:p:l:f:F::b:a:s:t:Dr";
->      int opt_ind = 0, ch;
->      const struct option lopt[] = {
->          { "help", 0, NULL, 'h' },
-> @@ -1251,6 +1264,7 @@ static void config_parse(GAConfig *config, int argc, char **argv)
->          { "fsfreeze-hook", 2, NULL, 'F' },
->  #endif
->          { "verbose", 0, NULL, 'v' },
-> +        { "debug", 0, NULL, 'g' },
->          { "method", 1, NULL, 'm' },
->          { "path", 1, NULL, 'p' },
->          { "daemonize", 0, NULL, 'd' },
-> @@ -1313,7 +1327,10 @@ static void config_parse(GAConfig *config, int argc, char **argv)
->              config->state_dir = g_strdup(optarg);
->              break;
->          case 'v':
-> -            /* enable all log levels */
-> +            config->log_level |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_MESSAGE
-> +                              | G_LOG_LEVEL_INFO;
-> +            break;
-> +        case 'g':
->              config->log_level = G_LOG_LEVEL_MASK;
->              break;
->          case 'V':
-> -- 
-> 2.51.0
-> 
+I would suggest plugins/contrib or plugins/community, to make clear they 
+are the community contributed ones.
+@Alex, do you have a different suggestion/preference?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Moving those sources will break build folder hierarchy also, which is an 
+issue for all existing binaries built from contrib anyway.
+I'm not sure there is anything sane to do to fix that except accepting 
+the breaking change.
 
+> For contrib/, ones I'm less sure about:
+> 
+>   * contrib/vmapple/uuid.sh is a one-liner; we should either commit to
+>     having this, by giving it a better name and documentation and
+>     installing it in 'make install', or else junk it and have
+>     docs/system/arm/vmapple.rst give you the plutil command and tell
+>     you to run it directly.
+>   * contrib/gitdm moves to scripts/ ? It's just config data for
+>     generating statistics about patches, so with other
+>     developer-related stuff makes sense.
+>   * contrib/systemd -- we don't do anything with these (e.g.
+>     'make install' ignores them), so I am sceptical about their
+>     usefulness. We could drop them, or move them to scripts/, or put
+>     them in tools/ and qga/ with the tools that they are systemd
+>     scripts for.
+> 
+> Then we can delete contrib/ entirely.
+> 
+> (scripts/ is also in danger of being "miscellaneous dumping
+> ground", of course. I have tried not to suggest it as the
+> destination when I could think of an alternative.)
+> 
+> -- PMM
+
+Regards,
+Pierrick
 
