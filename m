@@ -4,74 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AADF54AB8
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6813F54AB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 13:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w51sO-0007Op-VX; Tue, 24 Mar 2026 09:32:56 -0400
+	id 1w51uG-00084T-ND; Tue, 24 Mar 2026 09:34:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w51sN-0007Oc-26
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:32:55 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w51sL-0002xA-4T
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:32:54 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E0DDFC01A6;
- Tue, 24 Mar 2026 16:32:48 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:46c::1:35] (unknown
- [2a02:6bf:8080:46c::1:35])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id kWTDON0AsuQ0-HzwcQEqR; Tue, 24 Mar 2026 16:32:48 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1774359168;
- bh=C3PF4XPTEf+NoGf/S0bHt4v49k+fVw/T7NCbskJkH9g=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=WppFlKkUEhIuzYXrX3SRxnnDOgyTjaTQR3Cw8kX7TeGVq2YuWrLDYUxYxc5LIN2HB
- MyO5Pw5CuIRxgiRKHiBzz8aAO40TC3xKf//QhwNgYN0x5pYiK38PxbzgIgVm+LP8yB
- 9NIqSx1I373vS6J7x8H/tMGgPqu++Rdjh0S38zTg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0a8a94d8-2365-4f85-9529-cb204149c585@yandex-team.ru>
-Date: Tue, 24 Mar 2026 16:32:46 +0300
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1w51uF-000847-5u
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:34:51 -0400
+Received: from mail-vk1-xa41.google.com ([2607:f8b0:4864:20::a41])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1w51uD-0003FW-EX
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 09:34:50 -0400
+Received: by mail-vk1-xa41.google.com with SMTP id
+ 71dfb90a1353d-56cfe7b2344so766560e0c.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 06:34:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774359288; x=1774964088; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=35we+WfrubkBZmvNiww3m8Pfsu7szo+HvCClejAuJBg=;
+ b=glKQSKx1f8l5mjI6ULd/6OOm/7baTRL3aeefo+uVxyDjUzqy6uPdKqpdreMoqDuRSw
+ wA34uoUVMAyRqKGOHkLMv47Ub0gWX0+zdGjHHYEMshCnf8dYKAOsCjTPuc2mxL+fJYuZ
+ UlndythDwwbLFpcXvfKD0LLLD5ceRAq7kWbS/uj+IzzPVy/DZ1f7Dnpxnf4Ufh3epugu
+ rHD5jGYMyuXXU8AoPF/fitOkofW99g380MGvFsFjw3SEqkbhE8A8QXH/GSulvHxs3+jy
+ H20R1dY/xAMuIaMeTHyngdwm+dszzSSaMrdhRPS9vO1EJvpl0Ty8jbar6j1ci4oOFOrt
+ Gz4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774359288; x=1774964088;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=35we+WfrubkBZmvNiww3m8Pfsu7szo+HvCClejAuJBg=;
+ b=LIb8fGcVRwroNrCtknF/VJyWUGXH024a0x6U+hkVoTN1aZpxB0WFtBYdLWawsIf7FI
+ xZMGrAENJaW3sIVN8eYNwXLdh/y9/lQsp1TqdxfXPXGjsFjFt5oJfFxQXR0zzbMNKk7L
+ 2hwXpeHn2J90hB9Ni5JU6EQOYfLXccp0TPK5Ts3fYOOnGAf38FSTyHzSeDqKrTnvA5z+
+ bG1sV7Qt87/B+bgude82zKF21cEVRKimWkSAILDLXN+fkY393TZwIY152gTW+LO9g17l
+ AmnSjuc0IqOqJMA8Z5ZQJgtT/2SXZyDjTSLGahhy4CbOia6js2nu+olgVjEL6+pQDuHQ
+ QRKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyS9Zcd0F0jJAgVAJDFUGERlgia7uDYVtQVfWetounxoFIn8FatokS2BWBUFGD0dzLHbupIDK1NsVq@nongnu.org
+X-Gm-Message-State: AOJu0YwLWMGIauekYsaqoNhkOu8OEK1hjrUVWccrWSx3DBvNgwsaN3Et
+ dFJbRitGkxzcqg9BgjBdBltYQiHWnd0sKtBF/xLVUFRoN6N9KLBgPVgxC8wQQcrhI0c=
+X-Gm-Gg: ATEYQzyY/tll/F28onEbesH+Xz2qKMuVL1dx9NaXFqOruAMU+RL6+lrD+i/qtzLV9+f
+ zpA6/xGakb1v0g4kMW9cVWGnoxTQd0EsA4S8G7TULEmdJ47NJb1V8fY8lP2vYcAjbGCr9HuS7a0
+ y5ILBZMBsjD7Aj4eKwlqKYrA7KBdK7C3WiNqRjhkAqWNhwhN5/5vl3kpR5Qyuf78RQOihlrj7sL
+ VaJeHzLtci+vbP0O2GdXZcdBdCvbrpJo18hFkvHN14jnVBjCnnULNgbJlh5M1m/b5goRcW+uOKd
+ RrG/DMILA5hGjZIroJwFYcOds1SkgMyVQNcR7PlfzycrVT7S+wXboHRg3FX1t01Kqp1fBZ2yAd8
+ DHvnEOq4dS4lxTOMPt59eIoAAq5WRiZuFggKxWaAa6kewU8FkzLNAbEp5OQoShw+pyGK00JYfri
+ Ksx87PV0Z3I2A4u+a9+ngvKUNhUXoWRTaqB5PR
+X-Received: by 2002:a05:6122:d1e:b0:56c:d59a:cfe4 with SMTP id
+ 71dfb90a1353d-56cde47e3camr7644720e0c.17.1774359287810; 
+ Tue, 24 Mar 2026 06:34:47 -0700 (PDT)
+Received: from [192.168.0.103] ([177.146.137.168])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-56cddb94eaasm14971403e0c.8.2026.03.24.06.34.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 06:34:47 -0700 (PDT)
+Message-ID: <22a212da-76cb-4319-8e1d-a64524eae11c@linaro.org>
+Date: Tue, 24 Mar 2026 10:34:38 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 3/8] qapi: add local migration parameter
-To: Markus Armbruster <armbru@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, eblake@redhat.com, farosas@suse.de,
- peterx@redhat.com, zhao1.liu@intel.com, wangyanan55@huawei.com,
- philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- davydov-max@yandex-team.ru, qemu-devel@nongnu.org, yc-core@yandex-team.ru,
- leiyang@redhat.com, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
- th.huth+qemu@posteo.eu, berrange@redhat.com, pbonzini@redhat.com
-References: <20260319155333.260341-1-vsementsov@yandex-team.ru>
- <20260319155333.260341-4-vsementsov@yandex-team.ru>
- <87341ptnxo.fsf@pond.sub.org>
+Subject: Re: [PATCH 1/1] target/arm: fix s2prot not set for two-stage PMSA
+ translations
+To: Jose Martins <josemartins90@gmail.com>, peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, richard.henderson@linaro.org
+References: <20260321231916.2852653-1-josemartins90@gmail.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87341ptnxo.fsf@pond.sub.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20260321231916.2852653-1-josemartins90@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a41;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-vk1-xa41.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -83,75 +105,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.03.26 15:24, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> We are going to implement local-migration feature: some devices will be
->> able to transfer open file descriptors through migration stream (which
->> must UNIX domain socket for that purpose).  This allows to transfer the
->> whole backend state without reconnecting and restarting the backend
->> service. For example, virtio-net will migrate its attached TAP netdev,
->> together with its connected file descriptors.
->>
->> In this commit we introduce a migration parameter, which enables
->> the feature for devices that support it (none at the moment).
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> 
-> [...]
-> 
->>   void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index 7134d4ce47e..cf7037ed3fc 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -831,7 +831,8 @@
->>              'mode',
->>              'zero-page-detection',
->>              'direct-io',
->> -           'cpr-exec-command'] }
->> +           'cpr-exec-command',
->> +           'local'] }
->>   
->>   ##
->>   # @migrate-set-parameters:
->> @@ -1007,6 +1008,12 @@
->>   #     is @cpr-exec.  The first list element is the program's filename,
->>   #     the remainder its arguments.  (Since 10.2)
->>   #
->> +# @local: Enable local migration for devices that support it.  Backend
->> +#     state and its file descriptors can then be passed to the
->> +#     destination in the migration channel.  The migration channel
->> +#     must be a Unix domain socket.  Usually needs to be enabled per
->> +#     device.  (Since 11.0)
-> 
-> Sure your're still targeting 11.0?
+Hi Jose,
 
-Time passes quickly) Will fix to 11.1.
-
+On 3/21/26 20:19, Jose Martins wrote:
+> commit 015cefc0ed65 ("target/arm: Add in_prot_check to S1Translate")
+> changed get_phys_addr_twostage() to combine stage 1 and stage 2
+> permissions using the new s2prot field:
 > 
->> +#
->>   # Features:
->>   #
->>   # @unstable: Members @x-checkpoint-delay and
->> @@ -1046,7 +1053,8 @@
->>               '*mode': 'MigMode',
->>               '*zero-page-detection': 'ZeroPageDetection',
->>               '*direct-io': 'bool',
->> -            '*cpr-exec-command': [ 'str' ]} }
->> +            '*cpr-exec-command': [ 'str' ],
->> +            '*local': 'bool' } }
->>   
->>   ##
->>   # @query-migrate-parameters:
+>    result->f.prot = s1_prot & result->s2prot;
 > 
-> With the appropriate Since: tag
-> Acked-by: Markus Armbruster <armbru@redhat.com>
+> The LPAE stage 2 path sets result->s2prot explicitly, but the PMSA
+> stage 2 path (get_phys_addr_pmsav8) only sets result->f.prot, leaving
+> s2prot at zero. This causes the combined permission to be zero,
+> resulting in addr_read being set to -1 in the TLB entry and triggering
+> an assertion in atomic_mmu_lookup() when the guest executes an atomic
+> instruction on a two-stage PMSA platform (e.g. Cortex-R52 with EL2).
 > 
+> Set s2prot from f.prot after the PMSA stage 2 lookup, consistent with
+> what the LPAE path does.
+> 
+> Fixes: 015cefc0ed65 ("target/arm: Add in_prot_check to S1Translate")
+> Signed-off-by: Jose Martins <josemartins90@gmail.com>
+> ---
+> This issue was found while running a Bao hypervisor [1] demo on the
+> mps3-an536 machine, which features a Cortex-R52 with virtualization
+> support (PMSAv8 with EL2). Bao uses the stage 2 PMSA MPU to partition
+> memory between guest VMs. With QEMU >= 10.2.0 the demo crashes
+> immediately after the first guest VCPU is scheduled, when the guest
+> executes its first atomic instruction:
+> 
+>    ERROR:../accel/tcg/cputlb.c:1848:atomic_mmu_lookup: \
+>        code should not be reached
+> 
+> To reproduce, clone the bao-demos repository [2] and follow the
+> instructions for the mps3-an536 platform and baremetal demo. With this
+> patch applied, the demo boots successfully.
+> 
+> [1] https://github.com/bao-project/bao-hypervisor
+> [2] https://github.com/bao-project/bao-demos
+> 
+>   target/arm/ptw.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 8b8dc09e72..e289f88124 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -3200,6 +3200,13 @@ static bool get_phys_addr_pmsav8(CPUARMState *env,
+>   
+>       ret = pmsav8_mpu_lookup(env, address, access_type, ptw->in_prot_check,
+>                               mmu_idx, secure, result, fi, NULL);
+> +    /*
+> +     * For two-stage PMSA translations, s2prot holds the stage 2
+> +     * permissions to be combined with stage 1 in get_phys_addr_twostage().
+> +     */
+> +    if (regime_is_stage2(mmu_idx)) {
+> +        result->s2prot = result->f.prot;
+> +    }
+>       if (sattrs.subpage) {
+>           result->f.lg_page_size = 0;
+>       }
 
-Thanks!
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
--- 
-Best regards,
-Vladimir
+
+Cheers,
+Gustavo
 
