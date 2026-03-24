@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E55F532C9
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 03:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80AA1F532CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Mar 2026 03:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w4sES-0005lX-R1; Mon, 23 Mar 2026 23:15:04 -0400
+	id 1w4sGI-0006Vm-Bq; Mon, 23 Mar 2026 23:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4sEQ-0005lB-Mo
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:15:02 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1w4sGG-0006VR-NP
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:16:56 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w4sEM-00063R-Kd
- for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:15:01 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-35b88a4f123so2364019a91.1
- for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 20:14:57 -0700 (PDT)
+ id 1w4sGD-0006Os-6H
+ for qemu-devel@nongnu.org; Mon, 23 Mar 2026 23:16:55 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-35b88a4f123so2364604a91.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Mar 2026 20:16:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774322096; x=1774926896; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=pEUpRc7fApmZhbOt/d3g5lcXqKPhP0JyIByYyIZC9w4=;
- b=ohB/Tde/bppErnQ6/5Wi3HBrr/KdRVDseys9PWt4ymdtP0lg7WNZ7gKN337/MdHqE/
- YjB73IHXoKPGrT9iSM0madlo/Sa9NozsZZlzRyJmaZ8JfDjw6C1xwtJO8AX71trB/cCx
- oP3aQKli2m3aofLjuxTZ0SUo0BGsVJ3oi5vdt6e2xidWb0XlqNl+dJ7dcnnxyWeA6BBb
- xsGQWqWFewWK83iKMiCzNqxiHK4vFEPOSd3eUQ+ufcJLpgwGT/myDjpf3fyMeFkB6O27
- TIsyf4DyAE0hW7PIK5/3zo0jvPqLpe4dK5xQ8UlqrF3msSRPjYN3oojVsT0hOKWIiKLb
- 6JAQ==
+ d=linaro.org; s=google; t=1774322211; x=1774927011; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kiIKXuCPvyAHNddXS0qqhzacmveeGDjRpNLclwSiWG0=;
+ b=qKgez1yNdQvdaCRGVcZCKodwk9eHiBp5zO9X2dm1+ARyX4pgnYKqqpn60dI28Qy+wZ
+ GXHRdsJ3BoJIL15ksUZZ+0Sxv7dQrugnh5joe5ckdiFXZtRUTeuv+BmkaxQjnZ82ES2w
+ jhn1Kk+o2TDMi/kF1689IEUOOAJqrrWB+0X+8U71LsekJX4xolj4R0tUzQvVS4Wqtdcq
+ j4QYQV8jsnZvFp8ylD1CebdOLxgI+eWea6nKZNb24s6+9JqKbpoVbfmRE/6wFPw7q6ee
+ eB6aKI7a6RsGUhuygt/mp3jSQH0m+vt2MsAk1s3ASzbCPAJXgFkVOOPNzb1jjo+bPaPd
+ pJdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774322096; x=1774926896;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pEUpRc7fApmZhbOt/d3g5lcXqKPhP0JyIByYyIZC9w4=;
- b=jIqXIfWCVcpFBsLj3Eqbdw7NY4ri8K8PLo8CpQlOW6mi5Yj1BO1gb8MNDA0mJRAer5
- LlgpRr238J4Gsq0PlYWHlX2plXLz1+1/fhOz9cJkZHFj92zRRtbqZ6jtfEfe1vx1i1/B
- GMEC4Ast9EZ9iy4T1IulDnnozqI0kmO+SzGpNrhdcPNqawAgBE/rrd+XvM5JOTnCeaLy
- TEswYYXjWjE/ma+66C3lWfKAm7wCgFB6NcWdHYUFllz3rsQmnzM6Oir34TOR4Yq5aYY6
- DrUiXblPw3k/0BqYkIga02LFBqlKm7RcfeafveNiLRAd2uIrVYwV+h7xlrHKYXDeJuHh
- /MzQ==
+ d=1e100.net; s=20251104; t=1774322211; x=1774927011;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kiIKXuCPvyAHNddXS0qqhzacmveeGDjRpNLclwSiWG0=;
+ b=UqWrBQTotVm8mseKTb5+//OjCBBVFgrrwDvCz0ceBvsR/5uGKq/PsP6jq4TOV9I41c
+ BFfJ/2cgha2/rN3ipBMHqZWO1SC6U04B1LhV1ZrPdtBOBLBZYE7vJRpT272P9vNoOl09
+ /vdiCmXnF7PP0170BylUPjQdoY2jo8Vx1UC5yS0jquRhOvBkTxyKS+49FibNnPlT7Xud
+ m2We6KUKyDVf9Ao7eT2ZfwikDM15qhyAP3NPCrcN4OogcDUc2BqcPYjBoovHbfDaLiW4
+ POTgfE20kAz36dKrDuO0ROy6n2m59I6WVVE1hHr/Y/6TL/lCmZNp3LF9ovLQjbYnsOp5
+ 5NzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUE9wJqPE5bHsxry/0/W73ruM96ZjhEGX6dMkPViWYPy+Yklm51muiBMSnsU6BntL5hGGZHW5i8EatK@nongnu.org
-X-Gm-Message-State: AOJu0YyQc/uc4yz1etqZzOSzdsBv+VrwIvfUT7Ps6D6hwCwdBF5/YyKo
- rVv3w+VRV15QYq1Vwz0FMbHbTjyCE+10p8UEV2qSxZnazwMfE3TADXIRFfdX2BumQno=
-X-Gm-Gg: ATEYQzzhBYiuyzsGZUMzgGDpml/Ro0Gz3c5aglqyUPWJ5lZUYEG0trVDdCXS13PzZCq
- IeDn3Q3oUFLdaQvYjNNJgiCdQqITdy5xgtrAYSd9x2z3YAnM14hXsOQde4Z4iJsD7A4xhrF/hWX
- fOLTI7tpJxaJo/MdBZ/B0geTqcbzuPxVlVeHerxuZlhE5zvE5IojD3txZlHuYGBlETqswTwChEV
- sWPXDBLX+hF72PKr7sPca1MS9MGXmaZWPd44HJi/GpeQJuy88XiWHgXANXeQ/YHEigMElnoHcfo
- ddlX9FpHi2m+yDjHUJ6Iyi+WVyYH56hxvNMJGAqrBGw51XLy845rFJOSbyGJjJxm9QjEFXJTaCv
- ZnxoMCZKQItSKIuQ9mFuWrGcG6VBTcA1R5LE21f2H8O47b0ayGSbEn6vq6TZ5t7X/6ldrIDeVCe
- MqJZPTjnZXnprx1L+b2Uc3pnZe7hle4U3Wg0Q89eh21BgfXsxg65QRDsDaLU3Yz+YcsS0P
-X-Received: by 2002:a17:90b:2686:b0:343:3898:e7c7 with SMTP id
- 98e67ed59e1d1-35c00873a7emr1211398a91.12.1774322095848; 
- Mon, 23 Mar 2026 20:14:55 -0700 (PDT)
+ AJvYcCUvp6f31R64jZsspO9cPc8sBLuk4SVgB9EuAMXvcXt1UYkzZ53PgMGNSK1WjuRyXuibRwxKioS44uQQ@nongnu.org
+X-Gm-Message-State: AOJu0Ywk40UvO/xBbOpSyaGhUhzWjZIxuDBwvFi+sCov6pGPTHgrDLCd
+ /AX8EPf6jVZx9qqcZyqEaNSIkjJHHnLqbJ4T7v3uNosyW4FSUzcdVXJEoHO06TwGq6s=
+X-Gm-Gg: ATEYQzwWP0s71KEp3ZM0B3MhkWHU9xELnNiLjHo7+ou6vZEqcz4k5Kwt2d279rpyH6A
+ BzI8o6jaTAiS7myCB4nbw+e3dnMdBiahPpXG+P+xaelrl8hHPlm4IDgP/GJVa4bhYfb/Ya90/j3
+ ZpWVqJhn87TY7mkpGqDoojvyDjcbRZoojx1CAkfex0314HrJgdMoqAj2zzeGB3XG06YjymmBfYz
+ E+n4F3VhSmHSa5XKQn9OXLnPbzxxqFu9NXqfTPRgKMSAscRpaUYCBVDTzUtqiKwzzKEqjmitH5Z
+ 7xf2iVmAQWpPZ3oOSwl1Eg9rD7XT7DcBNCNR3AtrNgjnTsMY600/COeVLcifhb/rFme/B7VgUHY
+ vuzHFsFM1uoFBXXiDdxOQekyg/Rezyo8Vqe/cYR9sgLuddI56XNJE2OBbBvk+QvVWMSWKv/KG66
+ dKRkuWkHrMyvZhnHuWUU5BAvzAWOknRJZck5nY8naS/x6cSaokAE5tPXwQ96bbxIq6EQE5chzf0
+ J17wjA=
+X-Received: by 2002:a17:90b:528b:b0:34a:c671:50df with SMTP id
+ 98e67ed59e1d1-35c009133c0mr1468363a91.17.1774322211312; 
+ Mon, 23 Mar 2026 20:16:51 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c031403e4sm611721a91.6.2026.03.23.20.14.54
+ 98e67ed59e1d1-35c03172ec1sm553756a91.16.2026.03.23.20.16.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2026 20:14:55 -0700 (PDT)
-Message-ID: <cf2415ba-1ced-4455-84cb-fbde3a121686@linaro.org>
-Date: Mon, 23 Mar 2026 20:14:54 -0700
+ Mon, 23 Mar 2026 20:16:50 -0700 (PDT)
+Message-ID: <0ae1679b-fe47-4209-a540-43f2f23058ba@linaro.org>
+Date: Mon, 23 Mar 2026 20:16:49 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0] docs/about/removed-features: Replace 'since' ->
- 'removed in'
+Subject: Re: [PATCH-for-11.0] monitor: Correctly display virtual addresses
+ while dumping memory
+Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Fabiano Rosas <farosas@suse.de>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260323151934.92880-1-philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, "Dr. David Alan Gilbert"
+ <dave@treblig.org>, BALATON Zoltan <balaton@eik.bme.hu>
+References: <20260323095020.66658-1-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -115,11 +115,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260323151934.92880-1-philmd@linaro.org>
+In-Reply-To: <20260323095020.66658-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,113 +142,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/23/26 8:19 AM, Philippe Mathieu-Daudé wrote:
-> We use "deprecated since ..." and "removed in ...".
-> Replace "since" by "removed in" for removed features.
+On 3/23/26 2:50 AM, Philippe Mathieu-Daudé wrote:
+> While reworking the address format width in commit 6ad593a75a8 we
+> introduce a bug, leading to addresses being displayed with too many
+> zeroes:
 > 
-> Fixes: 762c8554394 ("vfio: Remove 'vfio-platform'")
-> Fixes: aeb1a50d4a7 ("vfio: Remove 'vfio-amd-xgbe' device")
-> Fixes: e50a021a451 ("hw/arm: Remove ast2700a0-evb machine")
-> Fixes: 4af2433a81b ("docs: Mention 32-bit PPC host as removed")
-> Fixes: 8ebc416ac17 ("vfio: Remove 'vfio-calxeda-xgmac' device")
-> Fixes: a80151c9da1 ("hw/sd/sdcard: Remove support for spec v1.10")
-> Fixes: 269ffaabc84 ("buildsys: Remove support for 32-bit MIPS hosts")
-> Fixes: fc37c122fff ("migration: Drop deprecated QMP migrate argument @detach")
+>    $ qemu-system-ppc -monitor stdio -S
+>    QEMU 10.2.90 monitor - type 'help' for more information
+>    (qemu) x/x 0
+>    0000000000000000000000000000000000000000000000000000000000000000: 0x00000000
+>    (qemu) x/x 0xfff00000
+>    00000000000000000000000000000000000000000000000000000000fff00000: 0x60000000
+> 
+>    $ qemu-system-ppc64 -monitor stdio -S
+>    QEMU 10.2.90 monitor - type 'help' for more information
+>    (qemu) x/x 0
+>    00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000: 0x00000000
+> 
+> Correct the format width to restore the previous behavior:
+> 
+>    $ qemu-system-ppc -monitor stdio -S
+>    QEMU 10.2.90 monitor - type 'help' for more information
+>    (qemu) x/x 0
+>    00000000: 0x00000000
+> 
+>    $ qemu-system-ppc64 -monitor stdio -S
+>    QEMU 10.2.90 monitor - type 'help' for more information
+>    (qemu) x/x 0
+>    0000000000000000: 0x00000000
+> 
+> Fixes: 6ad593a75a8 ("monitor/hmp: Use plain uint64_t @addr argument in memory_dump()")
+> Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   docs/about/removed-features.rst | 32 ++++++++++++++++----------------
->   1 file changed, 16 insertions(+), 16 deletions(-)
+>   monitor/hmp-cmds.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index 557a24679a1..e75db084108 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -782,8 +782,8 @@ without reporting any destination threads, or non-multifd source
->   threads).  For debugging purpose, please use ``-name
->   $VM,debug-threads=on`` instead.
->   
-> -``migrate`` argument ``detach`` (since 11.0)
-> -''''''''''''''''''''''''''''''''''''''''''''
-> +``migrate`` argument ``detach`` (removed in 11.0)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''
->   
->   This argument has always been ignored.
->   
-> @@ -932,14 +932,14 @@ work around the atomicity issues in system mode by running all vCPUs
->   in a single thread context; in user mode atomicity was simply broken.
->   From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
->   
-> -32-bit MIPS (since 10.2)
-> -''''''''''''''''''''''''
-> +32-bit MIPS (removed in 10.2)
-> +'''''''''''''''''''''''''''''
->   
->   Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
->   maintain our cross-compilation CI tests of the architecture.
->   
-> -32-bit PPC (since 10.2)
-> -'''''''''''''''''''''''
-> +32-bit PPC (removed in 10.2)
-> +''''''''''''''''''''''''''''
->   
->   The QEMU project no longer supports 32-bit host builds.
->   
-> @@ -1172,8 +1172,8 @@ Mips ``mipssim`` machine (removed in 10.2)
->   Linux dropped support for this virtual machine type in kernel v3.7, and
->   there was also no binary available online to use with that board.
->   
-> -Arm ``ast2700a0-evb`` machine (since 11.0)
-> -''''''''''''''''''''''''''''''''''''''''''
-> +Arm ``ast2700a0-evb`` machine (removed in 11.0)
-> +'''''''''''''''''''''''''''''''''''''''''''''''
->   
->   The ``ast2700a0-evb`` machine represents the first revision of the AST2700
->   and serves as the initial engineering sample rather than a production version.
-> @@ -1290,8 +1290,8 @@ by using ``-machine graphics=off``.
->   
->   The 'pvrdma' device and the whole RDMA subsystem have been removed.
->   
-> -``-device sd-card,spec_version=1`` (since 10.2)
-> -'''''''''''''''''''''''''''''''''''''''''''''''
-> +``-device sd-card,spec_version=1`` (removed in 10.2)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''''
->   
->   SD physical layer specification v2.00 supersedes the v1.10 one.
->   
-> @@ -1396,21 +1396,21 @@ device driver such as RBD.
->   VFIO devices
->   ------------
->   
-> -``-device vfio-calxeda-xgmac`` (since 10.2)
-> -'''''''''''''''''''''''''''''''''''''''''''
-> +``-device vfio-calxeda-xgmac`` (removed in 10.2)
-> +''''''''''''''''''''''''''''''''''''''''''''''''
->   The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
->   10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
->   string) to a guest. Calxeda HW has been ewasted now and there is no point
->   keeping that device.
->   
-> -``-device vfio-amd-xgbe`` (since 10.2)
-> -''''''''''''''''''''''''''''''''''''''
-> +``-device vfio-amd-xgbe`` (removed in 10.2)
-> +'''''''''''''''''''''''''''''''''''''''''''
->   The vfio-amd-xgbe device allows to assign a host AMD 10GbE controller
->   to a guest ("amd,xgbe-seattle-v1a" compatibility string). AMD "Seattle"
->   is not supported anymore and there is no point keeping that device.
->   
-> -``-device vfio-platform`` (since 10.2)
-> -''''''''''''''''''''''''''''''''''''''
-> +``-device vfio-platform`` (removed in 10.2)
-> +'''''''''''''''''''''''''''''''''''''''''''
->   The vfio-platform device allows to assign a host platform device
->   to a guest in a generic manner. Integrating a new device into
->   the vfio-platform infrastructure requires some adaptation at
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-Good for me, do you want me to pull this patch, or you feel ok 
-integrating in one of your series?
-
-Regards,
-Pierrick
 
