@@ -4,92 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADE8109C022
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 14:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1122109C029
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 15:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5PHZ-00050Y-90; Wed, 25 Mar 2026 10:32:29 -0400
+	id 1w5Pxi-0003xr-SM; Wed, 25 Mar 2026 11:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w5PHW-00050L-1j
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 10:32:27 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5Pxf-0003xb-2D
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:15:59 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w5PHT-000558-IX
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 10:32:25 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b97ed4ad579so777214166b.3
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 07:32:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5Pxb-0007QN-Qe
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:15:57 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8299f1ca894so4006708b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 08:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774449142; x=1775053942; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=faguxbi313ZwgM1cUu9QJKWko6tPJUGz3JYLS+WqCrQ=;
- b=CPcajm6aiKYqFxByf7QS0wMsjRSVjP/FnB7Udh08u1xzSlQikPMTfnepcFFQ8oIFY+
- DK1dQNnQiQQdXqLWTxB2k3i4ZdEKRy8RjvK8td+z4abKAO/ciwndDlUU42uggiLGl+w7
- oyPLFyR5jjNRueH4VjVeTzEeCgEx8hlSApkgfhodyVG1JGZR1jNo36Y77GkpioHL2V4n
- gEFdiaePG3fci43tiTxHtw1KGFqh8lua3+IjsocRoLu47EuchVpLgPImRNCXauMXWFWr
- bOriKjfe+E3GHoczmKJTVbSeJRw/PhbTOKOlOKMOVgdNWgao59frlPXcxWWQlqQAdz7C
- twIA==
+ d=linaro.org; s=google; t=1774451753; x=1775056553; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bvLQkyAMiIv5jPCjU2g12PGqCQELg5JieBzoCK+7LQI=;
+ b=kvuzR9KTeqnIUkxUQxGniXWkGLVYUtEyjxHZyvt1tHgg8o3xFz6+XAIVVBsqWZLeUH
+ jt1Jf6vV8JI5Ey3DENk1dgY3symSEsMNJHWo19+2IrHxNnwu6EQD3L9voKcki+0/LQzN
+ /nLkdf1HoRoSkkUTRNozkS2u8kPAi6iKMi00qnCbsXBlV40ORhzP9D7AqANFscBCY/q3
+ plr+PJG9Xjl+FteKjiDN7/jQHZ1AND0qpkgSXN919O1S5ZtBog0Wq4k8KoYizLnaNXvP
+ DTuXUM8ufTMrwmTqjVFSvGlO3oL8/n68FWrkdRrc3ilTL4aESppxrEMElLJp8FH/BQ6v
+ JGwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774449142; x=1775053942;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=faguxbi313ZwgM1cUu9QJKWko6tPJUGz3JYLS+WqCrQ=;
- b=LR+BoMSyK/CHPsPcaKx1oLMBqaWI7xKnb0qTkg/fLfjlI00+Jz7yM8YeNR7YPEHCKe
- Pmue/ERWi2eth8uaJfw7q/lR4n/vcxkd2IoXEFzo4IG9tFfoUUPcbOVXN7xlUfx9N51a
- Gl0lXzpjaLSvdm05aXk5H7Q0gahBiHv48l03iC7D/O9X7hEt/0KAbjN+oN71Lb34y1Ys
- cRCt90Rnz2iL57uf8mze9bo7E1yclU2XLOzXB5NDDjRZPGnuXf3gR4GEa49Yve4JtOYk
- hY42sVnXKesjE2jfM8qiaIlNKko/yWH+6j0wbc2qmLGJ4NdeZEDwLax4AiELbbhy8eZm
- W2iQ==
+ d=1e100.net; s=20251104; t=1774451753; x=1775056553;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bvLQkyAMiIv5jPCjU2g12PGqCQELg5JieBzoCK+7LQI=;
+ b=ds4/tAmbXfC7FkXPHl5PPlvflR+zfO2RoS5qA0i0payilqWQdixO8UuUSLIih+lvEq
+ +5pOV5YVcFVJiffajjpSFa1gXXYONs3RQIh2X8Iflvholu4hYxVRmsqZ3aRETM+ce7Ko
+ gRB8I+X7BVleC8GtJLaTHH2A8MhQtc2gwbIWss+2+8OTcsi3G0owZWkI298HYBIi7PKI
+ rS51zOkpwenpE9jODorJo23UPtUn2wfuA6x8RkFZB3MRiGnZjjhSNmVV697pslFBYrP4
+ YA0ZO1XEfqYM66ybuF16fBKkg0j3bGLJpfkU4le3nhWIv9SSDLokfielDDnX2NeXuhMu
+ W8nA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKIr52b8T9I0Ft4wUa62FPBi7kMX6JSugDYVHCeAe0gV089bJx6zCcT5nksVEfz4KE/Pp86HcU+ph8@nongnu.org
-X-Gm-Message-State: AOJu0Yw790TYqTr2m5Q0Nt6Z7xAOeyqHmfuwlTTvsWwo/C2VDIVFGL9m
- sfyC+n4HcxjSrPs6td4a7yzvP02zAvBeeWSYDvLi/c7Hp4eQut7zvYSXrpM1EQ2GRTo=
-X-Gm-Gg: ATEYQzxGbb7g3w0sD5tFW6qKFIiSmobNRVDQV+GGcMObSq6EA/n6nsM2k93uf2onUvW
- 7j4H6H73yOzf7FfbojQC1zp0SgdEsy1054rHYhPM+LdAS01aXxeRaRWKfMuewc0A7fktS2dBUEN
- NP1vPaIC2oSbYpUDcPW6x2zTf+zn/KFa6vjgwJGyuGF7UBylzu2Y6cE1lCv5+f7oqA0lQPehKBS
- ljjHVEYeurQw/eFCCOHt7FaNxPumjPQQn786Zj/bE3wrkknQVlhTjXKg6tOWtflfD7s5ccvvMlF
- HBztgM9Mow0kkXFMpTCLRs4THUhgsALmbE6WyWv11e7PbJB/bkyvcn7/WTbuak8NRiEyd0q8fkX
- +2+xp1n5dbP4kUyy/xv06WycP4YbUGPvnkt9eD1eW/Kt7Y/hXgNO0EHfbs3uqa/8HK+j6YRzH5/
- ax0TJmDuM/EnANI5MXORJ81IU=
-X-Received: by 2002:a17:907:3e89:b0:b9b:171e:baef with SMTP id
- a640c23a62f3a-b9b171ebdbbmr139544266b.6.1774449141513; 
- Wed, 25 Mar 2026 07:32:21 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b98b20c8c7bsm215362066b.63.2026.03.25.07.32.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 07:32:20 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AEF2D5F878;
- Wed, 25 Mar 2026 14:32:19 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  QEMU Developers
- <qemu-devel@nongnu.org>,  "Daniel P. Berrange" <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  Konstantin Kostiuk <kkostiuk@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: Cleaning up contrib/ and tools/
-In-Reply-To: <87tsu4m8w4.fsf@pond.sub.org> (Markus Armbruster's message of
- "Wed, 25 Mar 2026 12:43:55 +0100")
-References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
- <87tsu4m8w4.fsf@pond.sub.org>
-User-Agent: mu4e 1.14.0-pre3; emacs 30.1
-Date: Wed, 25 Mar 2026 14:32:19 +0000
-Message-ID: <87341o3rpo.fsf@draig.linaro.org>
+ AJvYcCW2nD2uOx5OLq+t+i3j2mQLNayf+cP9h8gOFuRnHYoL/QFNjyH+Sgia+ZgwC/H1Gth24es9UxnQ8DZy@nongnu.org
+X-Gm-Message-State: AOJu0Yz8qh9FNia9U/lHx8xpD6aFCm7iL4bkPq0kG9sLKyZN6MmIeUNs
+ yBJkX4Ts0PzSMh9FtPrzQSh2ztcZ2dONvCxImOq6DD3BFxOhJmSBYQGKVwjc4VA837I=
+X-Gm-Gg: ATEYQzwnO8l2yKABeoTBydJsBpVQZlv5BkOl/H2LZmXWOsVO81P4UiusjLiFC3k9TT5
+ 9HGhK+0RFI/6ebuH9MpCZSfyZCGL4TU8uTUsipHddVLZ1zofuARDG418sQwkIwLfNlpKC/gfKOy
+ EKfOPdDGeFMqy9a0AOJeggurlj6fXaUoM/37MtQtJ0wr9gBfu+SavszFdgSVZDCePDmniIiUkLs
+ 2BJcjmWrwh3JZA4JCURkAP+Cgf3oyuhFqPxSnSd7NBYikDt0YePq2zYnOPlMAdSvbAgpvr3Y1/Z
+ 39ZFNYCyetg+ADFhA5xOw955niHoAiL8YSyhgHpzJDTs1tKyI0uu9BR6CZnTqzx22Zfl/Ae3lSE
+ P/wwN/hMqBIlgEeIsO1H2WJ7GN/W4ZcURsFNE12Kw+5AYod0dScbX5CjoHdrjPCiSJBqB7kfRgw
+ X8XaUOWlXiB/TIwoFPfRRtu3bLKrrS1D9gGNeMf2+BQgbD/VzYCyzs2rprjzPpfuPjzBb6
+X-Received: by 2002:a05:6a00:450e:b0:827:489d:76d0 with SMTP id
+ d2e1a72fcca58-82c6dec0565mr4224312b3a.14.1774451753157; 
+ Wed, 25 Mar 2026 08:15:53 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82c7d3c293fsm31620b3a.49.2026.03.25.08.15.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Mar 2026 08:15:52 -0700 (PDT)
+Message-ID: <1bc4bc8c-4ef7-445f-816f-f76380ee264a@linaro.org>
+Date: Wed, 25 Mar 2026 08:15:51 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0] tcg: Pass host-endian values to
+ plugin_gen_mem_callbacks_*
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260325004052.1026892-1-richard.henderson@linaro.org>
+ <456faa09-4889-43e2-a35a-449888f9249e@linaro.org>
+ <8c67019a-49c0-4651-9c02-0d15ae262888@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <8c67019a-49c0-4651-9c02-0d15ae262888@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,65 +140,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
-
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
->> We have a couple of directories in our source tree which have
->> accumulated things in them that don't really belong there; this is a
->> proposal to clean up by moving things to more appropriate locations
->> (as 11.1 work, obviously).
+On 3/24/26 9:59 PM, Richard Henderson wrote:
+> On 3/25/26 11:39, Pierrick Bouvier wrote:
+>> Hi Richard,
 >>
->> Firstly, contrib/ has a tendency to be a dumping ground for stuff that
->> we didn't think hard enough about finding a good home for, and for
->> things in a weird "not really maintained" state. We should either
->> (a) care enough about something to give it a correct home and to
->> maintain it, or (b) not care about it, and kick it out of our tree.
+>> On 3/24/26 5:40 PM, Richard Henderson wrote:
+>>> If the host does not support swapped-endian loads and stores,
+>>> then we emulate those within the tcg expanders with explicit
+>>> bswap operations.
+>>>
+>>> However, we were passing values to the plugin interface in
+>>> the middle of those bswap operations, which meant that we
+>>> would pass values of the wrong endianness to plugins when
+>>> running on hosts without swapped-endian loads and stores.
+>>>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3351
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>> ---
+>>>
+>>> Hi Pierrick,
+>>>
+>>> On IRC I expressed the opinion that there was an additional
+>>> big-endian bug with how we treat neg.plugin_mem_value_low,
+>>> but I now see that isn't true, because of how we adjust the
+>>> store address in plugin_gen_mem_callbacks_i32.
+>>>
 >>
->> Secondly, tools/ exists but is very under-used. I think it should be
->> for the set of standalone tools that we build if you configure
->> --enable-tools and which we document in docs/tools.  Currently it
->> contains two things, one of which doesn't match that idea...
->>
->> So, starting with tools/:
+>> Yes, we store the value directly swapped, so there is no further transformation needed.
 >
-> [...]
+> It's not about storing the value swapped, it's about storing the i32 to the low part of
+> the uint64_t for the host endianness.
 >
->> And for contrib/, easy ones first:
->>  * contrib/vhost-user-{blk,bridge,gpu,input,scsi} move to tools/
->>  * contrib/elf2dmp moves to tools/
->>  * contrib/ivshmem-client and contrib/ivshmem-server move to tools/
->
-> Absolutely not.  This is example code, provided in the hope of helping
-> people understand the protocol, and experiment with it.  It is entirely
-> unfit for more serious use, and that's intentional.
 
-The rust-vmm project has gpu, input and scsi vhost-user daemons which
-are actively maintained. I don't think there is a blk device although I
-guess people should be directed to use qsd for storage?
+I finally realized the orig_value we had is already in host-endian 
+order, while I was assuming it was in target-endian order. Thus the 
+confusion in our conversion. All good now.
 
+>> It works, but it is still not clear to me why the value orig_val (which is not swapped and
+>> in target-endian order) gets stored swapped correctly in neg.plugin_mem_value_low.
+> 
+> Again, it is *not* swapped: orig_val is host-endian order, and so is neg.plugin_mem_value_low.
+> 
+>> I'll probably add another patch to document that better in plugin api, and remove the
+>> additional swapping done in tests/tcg/plugins/mem.c.
+> 
+> What swapping is that?
 >
-> If somebody contributes something fit for more serious use, and there's
-> interest in maintaining it in that role going forward, and that code is
-> still simple enough to serve the example code's purpose as described
-> above, we can drop the example code from contrib/.
->
-> We could also drop it without replacement just to have an empty
-> contrib/.  I think that would be a disservice to people trying to use
-> ivshmem.  But then I'm the guy who keeps telling people *not* to use it,
-> so why should I care?
->
-> Perhaps contrib/ is not a good home for example code.  It seems to
-> bother people whose judgement I respect.  Can we find a better home?
->
->>  * contrib/plugins moves to plugins/plugins (or a different subdir
->>    name of your choice)
->>
->> For contrib/, ones I'm less sure about:
->
-> [...]
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+It tracks memory regions we accessed, so which byte was written matters 
+in this case, thus the need to swap to target-endian order.
+
+> There's a variable called "swapped_value", but it appears to be mis-named, or a remnant of
+> swapping that used to occur.
+>
+
+It's basically the value in target-endian order. FROM_BE should to TO_BE 
+as well, even though both macros do exactly the same (FROM or TO acting 
+as documentation to express the intent).
+
+> 
+> r~
+
 
