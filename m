@@ -4,120 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1122109C029
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 15:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606DD109C029
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 15:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Pxi-0003xr-SM; Wed, 25 Mar 2026 11:16:02 -0400
+	id 1w5PzG-0004Tt-5Y; Wed, 25 Mar 2026 11:17:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5Pxf-0003xb-2D
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:15:59 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5PzD-0004PB-Is
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:17:35 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5Pxb-0007QN-Qe
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:15:57 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8299f1ca894so4006708b3a.2
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 08:15:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5PzB-0007hL-MV
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:17:35 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48700b1ba53so49126515e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 08:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774451753; x=1775056553; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bvLQkyAMiIv5jPCjU2g12PGqCQELg5JieBzoCK+7LQI=;
- b=kvuzR9KTeqnIUkxUQxGniXWkGLVYUtEyjxHZyvt1tHgg8o3xFz6+XAIVVBsqWZLeUH
- jt1Jf6vV8JI5Ey3DENk1dgY3symSEsMNJHWo19+2IrHxNnwu6EQD3L9voKcki+0/LQzN
- /nLkdf1HoRoSkkUTRNozkS2u8kPAi6iKMi00qnCbsXBlV40ORhzP9D7AqANFscBCY/q3
- plr+PJG9Xjl+FteKjiDN7/jQHZ1AND0qpkgSXN919O1S5ZtBog0Wq4k8KoYizLnaNXvP
- DTuXUM8ufTMrwmTqjVFSvGlO3oL8/n68FWrkdRrc3ilTL4aESppxrEMElLJp8FH/BQ6v
- JGwQ==
+ d=linaro.org; s=google; t=1774451851; x=1775056651; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uPDUxnutXePrc/HTKjEYwSZo7PAefB6IwoET63e9G6c=;
+ b=Bv6tPCApOD/X2PgAeGQa0N/QqWe1I+LuzId3DL8okF07+sju0NOG6wHkgB5neYA/Xl
+ 9gEQlRJ7ejbCBllB/XuFmHd6ArohsBe/dV8OqzceJkxSecsxa3MxDX9v3Zf2PJgDZJXD
+ P5DYoWwAkW2gE73ihkozeG/rx8OMSUfxM+ltz04g2jlbf58VDzb/oZoW/uxdxyW17s9k
+ +7J4qgIAHHSICo25RFqnzpOogBLfAQO26XR5eZYydTipeQJzvDO2Nj9R5xmHjocoU019
+ uXSI/xrhVQjwM6aX5XE232AmKgg35/G6ROWXvRNnrYBQ6ED08K6t3A5JEvvZoO3NxGsJ
+ U+cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774451753; x=1775056553;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bvLQkyAMiIv5jPCjU2g12PGqCQELg5JieBzoCK+7LQI=;
- b=ds4/tAmbXfC7FkXPHl5PPlvflR+zfO2RoS5qA0i0payilqWQdixO8UuUSLIih+lvEq
- +5pOV5YVcFVJiffajjpSFa1gXXYONs3RQIh2X8Iflvholu4hYxVRmsqZ3aRETM+ce7Ko
- gRB8I+X7BVleC8GtJLaTHH2A8MhQtc2gwbIWss+2+8OTcsi3G0owZWkI298HYBIi7PKI
- rS51zOkpwenpE9jODorJo23UPtUn2wfuA6x8RkFZB3MRiGnZjjhSNmVV697pslFBYrP4
- YA0ZO1XEfqYM66ybuF16fBKkg0j3bGLJpfkU4le3nhWIv9SSDLokfielDDnX2NeXuhMu
- W8nA==
+ d=1e100.net; s=20251104; t=1774451851; x=1775056651;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uPDUxnutXePrc/HTKjEYwSZo7PAefB6IwoET63e9G6c=;
+ b=GG4WWk80WfnsgFkjGGzEm9eTaOASDD7gSuRRi6BVqPDRjZJhQ0xn1eGc+Fdpfy329p
+ f6PPHnpbeTIj7NUnnilpG7ngY5opsEfTSEkfEIUsCyUc4cRqIM7Ph3QlrfEnOAi0wSIL
+ nmWCkaHKfUUgsCYAHidtomWwNsU8ANfZyp1orutc1kH4UeM9kLfOB79LdnO7/X5kpMbO
+ 0BlGGNpDiF6BftXL4usHQYUC0Hm7xB09UPWvRnAmjY020kn+0jQhWXWPvu35C850gZxQ
+ fdltwFXnFUbh0N9666YnBJNARLmcRR87UyCKiHt7xja1y2A4rmUFW4Z044Q/oPHsOkpH
+ qmRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2nD2uOx5OLq+t+i3j2mQLNayf+cP9h8gOFuRnHYoL/QFNjyH+Sgia+ZgwC/H1Gth24es9UxnQ8DZy@nongnu.org
-X-Gm-Message-State: AOJu0Yz8qh9FNia9U/lHx8xpD6aFCm7iL4bkPq0kG9sLKyZN6MmIeUNs
- yBJkX4Ts0PzSMh9FtPrzQSh2ztcZ2dONvCxImOq6DD3BFxOhJmSBYQGKVwjc4VA837I=
-X-Gm-Gg: ATEYQzwnO8l2yKABeoTBydJsBpVQZlv5BkOl/H2LZmXWOsVO81P4UiusjLiFC3k9TT5
- 9HGhK+0RFI/6ebuH9MpCZSfyZCGL4TU8uTUsipHddVLZ1zofuARDG418sQwkIwLfNlpKC/gfKOy
- EKfOPdDGeFMqy9a0AOJeggurlj6fXaUoM/37MtQtJ0wr9gBfu+SavszFdgSVZDCePDmniIiUkLs
- 2BJcjmWrwh3JZA4JCURkAP+Cgf3oyuhFqPxSnSd7NBYikDt0YePq2zYnOPlMAdSvbAgpvr3Y1/Z
- 39ZFNYCyetg+ADFhA5xOw955niHoAiL8YSyhgHpzJDTs1tKyI0uu9BR6CZnTqzx22Zfl/Ae3lSE
- P/wwN/hMqBIlgEeIsO1H2WJ7GN/W4ZcURsFNE12Kw+5AYod0dScbX5CjoHdrjPCiSJBqB7kfRgw
- X8XaUOWlXiB/TIwoFPfRRtu3bLKrrS1D9gGNeMf2+BQgbD/VzYCyzs2rprjzPpfuPjzBb6
-X-Received: by 2002:a05:6a00:450e:b0:827:489d:76d0 with SMTP id
- d2e1a72fcca58-82c6dec0565mr4224312b3a.14.1774451753157; 
- Wed, 25 Mar 2026 08:15:53 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82c7d3c293fsm31620b3a.49.2026.03.25.08.15.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 08:15:52 -0700 (PDT)
-Message-ID: <1bc4bc8c-4ef7-445f-816f-f76380ee264a@linaro.org>
-Date: Wed, 25 Mar 2026 08:15:51 -0700
+ AJvYcCW6Q5u/+MDsNu8BMAAaCubq8SOQjJJqw3G0nMqkJcKeOoohBD8WbamTTEc2FGthbmmc9+c7/kzSPBqc@nongnu.org
+X-Gm-Message-State: AOJu0YwW6K2D/bBSllsEsqVPviJtzC0Q4X9QMQDRoMV24/zbjdSyzqXH
+ k2k1HTSMxUOIBsto+HvK8ohYumsRrdxTIh7kynCd17VWTkm11xvumSRnyo3tLI/KB54=
+X-Gm-Gg: ATEYQzwb+TE8pm1Qe/vGAD/6QRT3DNf/iRxw1fplNT4EMpQxliswjHkySTf7ZKU10uJ
+ 3GAxk2MOFLFJbmZUl9Jw9bIYjlykptd0dESlZC+Puh6uZvH3wBVNOhbNJlXM0Y4xbhgew73UsT7
+ 3G+mQ0aGtY/b1/kPFcHmhBxx7q+AoKCjnKng53W9YVam83fMsqrxwGhPKXeyPUnuwMzzsgoOl+B
+ K855cp+nhsJP8M14YdwdDHhIGmQuF3Iumc+DVW4OcPyJ6lV68e+pKCjNtMx0HuxiRD95/EsswZd
+ FiYCohpK944j96mwlQ1BE6ncIDbjMqQqey3+mBDG++EKEcxTxuUIsg6saQvlZTm73ojClLkdQsB
+ ex5apmLBXEFkL0uFuK75Wv41b4pgJg1DnvchEGA9HQ+ivHycnjtI0xHRiyCHRxj7IXkuGLp/Eyf
+ A+vhcHxppepcso8KalWWMFrG+NQr6WSSH9f1DrXn7uAy/tF+ju5UqQUflRNikGfsym0kdnBAP/
+X-Received: by 2002:a05:600c:8707:b0:486:f8d6:5dea with SMTP id
+ 5b1f17b1804b1-48716046e04mr64235355e9.19.1774451851290; 
+ Wed, 25 Mar 2026 08:17:31 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-487173a8d28sm22153735e9.36.2026.03.25.08.17.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 25 Mar 2026 08:17:30 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ kvm@vger.kernel.org
+Subject: [PATCH-for-11.0? 0/6] qom: Restrict compat properties API to system
+ emulation
+Date: Wed, 25 Mar 2026 16:17:22 +0100
+Message-ID: <20260325151728.45378-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0] tcg: Pass host-endian values to
- plugin_gen_mem_callbacks_*
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260325004052.1026892-1-richard.henderson@linaro.org>
- <456faa09-4889-43e2-a35a-449888f9249e@linaro.org>
- <8c67019a-49c0-4651-9c02-0d15ae262888@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <8c67019a-49c0-4651-9c02-0d15ae262888@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,65 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/24/26 9:59 PM, Richard Henderson wrote:
-> On 3/25/26 11:39, Pierrick Bouvier wrote:
->> Hi Richard,
->>
->> On 3/24/26 5:40 PM, Richard Henderson wrote:
->>> If the host does not support swapped-endian loads and stores,
->>> then we emulate those within the tcg expanders with explicit
->>> bswap operations.
->>>
->>> However, we were passing values to the plugin interface in
->>> the middle of those bswap operations, which meant that we
->>> would pass values of the wrong endianness to plugins when
->>> running on hosts without swapped-endian loads and stores.
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3351
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>
->>> Hi Pierrick,
->>>
->>> On IRC I expressed the opinion that there was an additional
->>> big-endian bug with how we treat neg.plugin_mem_value_low,
->>> but I now see that isn't true, because of how we adjust the
->>> store address in plugin_gen_mem_callbacks_i32.
->>>
->>
->> Yes, we store the value directly swapped, so there is no further transformation needed.
->
-> It's not about storing the value swapped, it's about storing the i32 to the low part of
-> the uint64_t for the host endianness.
->
+Remove QDev uses from QOM to help build the guest-agent
+binary without pulling in QDev methods.
 
-I finally realized the orig_value we had is already in host-endian 
-order, while I was assuming it was in target-endian order. Thus the 
-confusion in our conversion. All good now.
+After that only util/qsp.c is left (cond/mutex atomics),
+see this thread:
+https://lore.kernel.org/qemu-devel/a547c29b-3ab7-42fe-889a-19668bc9d090@tls.msk.ru/
 
->> It works, but it is still not clear to me why the value orig_val (which is not swapped and
->> in target-endian order) gets stored swapped correctly in neg.plugin_mem_value_low.
-> 
-> Again, it is *not* swapped: orig_val is host-endian order, and so is neg.plugin_mem_value_low.
-> 
->> I'll probably add another patch to document that better in plugin api, and remove the
->> additional swapping done in tests/tcg/plugins/mem.c.
-> 
-> What swapping is that?
->
+Philippe Mathieu-Daudé (6):
+  MAINTAINERS: Separate QDev section from QOM one
+  hw/core: Move compat_props_add() to 'hw/core/boards.h'
+  qom: Declare GlobalProperty structure in 'qom/compat-properties.h'
+  qom: Declare compat properties API in 'qom/compat-properties.h'
+  qom: Restrict compat properties API to system emulation
+  buildsys: Allow building guest-agent on 32-bit hosts
 
-It tracks memory regions we accessed, so which byte was written matters 
-in this case, thus the need to swap to target-endian order.
+ MAINTAINERS                       |  21 +++---
+ configure                         |  64 +++++++++++++----
+ meson.build                       |   2 +-
+ include/hw/core/boards.h          |  11 +++
+ include/hw/core/qdev-properties.h |   1 +
+ include/hw/core/qdev.h            |  27 -------
+ include/qom/compat-properties.h   |  40 +++++++++++
+ include/qom/object.h              |   8 ---
+ accel/accel-system.c              |   1 +
+ backends/hostmem.c                |   1 +
+ hw/core/machine.c                 |   1 +
+ hw/core/qdev-properties.c         |   1 +
+ hw/core/qdev.c                    |   1 +
+ hw/i386/pc_q35.c                  |   1 +
+ qom/compat-properties.c           | 116 ++++++++++++++++++++++++++++++
+ qom/object.c                      | 102 +-------------------------
+ system/rtc.c                      |   1 +
+ system/vl.c                       |   1 +
+ target/i386/sev.c                 |   1 +
+ ui/vdagent.c                      |   1 +
+ qom/meson.build                   |   3 +
+ 21 files changed, 248 insertions(+), 157 deletions(-)
+ create mode 100644 include/qom/compat-properties.h
+ create mode 100644 qom/compat-properties.c
 
-> There's a variable called "swapped_value", but it appears to be mis-named, or a remnant of
-> swapping that used to occur.
->
-
-It's basically the value in target-endian order. FROM_BE should to TO_BE 
-as well, even though both macros do exactly the same (FROM or TO acting 
-as documentation to express the intent).
-
-> 
-> r~
+-- 
+2.53.0
 
 
