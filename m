@@ -4,112 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 087DFFEA802
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 03:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D048BFEA802
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 03:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Ehy-0001kp-3l; Tue, 24 Mar 2026 23:15:02 -0400
+	id 1w5Eme-0002rU-KC; Tue, 24 Mar 2026 23:19:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5Ehw-0001jx-7a
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 23:15:00 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w5Emd-0002ql-Bw
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 23:19:51 -0400
+Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5Ehu-0007Jy-DZ
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 23:14:59 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b93698bb57aso105434966b.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 20:14:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774408497; cv=none;
- d=google.com; s=arc-20240605;
- b=XZRPv8vYIOKk3XyfoXLDESMe+YTXhLHGlwf3iAHqQZcS6ZALoLIjLYEXfMYIKT4lE1
- in/Bb7zAiHJSqdyWLe6GcblEm3W2rS5/hVhlwwFyvZckS0ZAvcBt7AQGseXgI4Emo+bt
- ASyiMH8bkni5X9m790V9qz8OL3BwpqerFul/V/Knq4m6nSxA/bl1sIvfzDjUOPQgQ5O3
- gDliUX1qOWfTtDojPsOzhWttZ4hCmrsfm/dbre36enwep0oSrvOUREhR7XFnh/74sHg8
- a5y2RX42JThdbr9rJRnWWOUVdKsrzzJXdAI4YyFNWj/MXGToevaavVHKWPKZxUgO7Xpf
- kQ4A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=FZcCt6K1ChIemZxf4SW8DRwqQIfqh/ODxhoJfdAe5fA=;
- fh=Su2FPx71BQho6tN89vAi6wUVPZAGYbP0ier5t6FRizo=;
- b=dWSgjGqwBU5NUE+w1gtGP5dr+ENu3PuN12VTvGB9TRVdx+GEMCiwdHCmkm/dYjFfMU
- O/X88ns5NdMpX3UIP2+arKYUgE4Vc4RdriQakkT+lDS1hMvCbnI+f3NCZ6D9+hEo5au7
- WnI1QdY0MBzjybSNXMtyN2EXCYZfSqbawoFsJK1sk4iKoP2myd2I2agY+S3aauz5jHg5
- SEtcnzbPioYhY6TJJ/dehmjj5ha7aNOaecpUOLDmVR7W/YiRHZjeTq/Ncekxz+73OQd9
- qQ6nGGqNxZporhmPJ6mnP4By/qXQzNjEIB+MubHH+9tQjl84tOCzMbcFKavfMcSNulR7
- y0Pg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w5Ema-0008HM-TW
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 23:19:51 -0400
+Received: by mail-dy1-x1344.google.com with SMTP id
+ 5a478bee46e88-2c15849aa2cso1135125eec.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 20:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774408497; x=1775013297; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FZcCt6K1ChIemZxf4SW8DRwqQIfqh/ODxhoJfdAe5fA=;
- b=eiWCZ/rmltBK4/yOfHlZqbMdCPIK+r9n5kKaUyFneyrIa1Wh95vtgBORKw5noqq/Iv
- aEA89ORi2cRPJfVZa/T54IjvbVH3+/T2l8io0zaLR+0XiMHtuDbCwHPgSxrrvIEA4NnL
- Ekkg9+x1cJQLYbeprs5ymySCtuQBw0eOgIAxQqMtXFq/2DUU01In4HVRnlt1SXEAZPcG
- Gz5i6vePqwxfwltqranIRmAezicfpqQynB51obQ6hQQ/IdAfwIz6UQjDVjEm0/5I55vO
- HOygVtOGAXP797qraeDcEqEF7putVack44UxzRTQSdd3Be/SLOD3ZdZFt86vZHYAKB0s
- AjzQ==
+ d=gmail.com; s=20251104; t=1774408787; x=1775013587; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=dbx8BfzE1IUU9tlH0DP5MCIM+U2+X7ZWepTxAlEGawQ=;
+ b=Wak/bpu6Wx8vgyjqJZzvxnULTV8FPuto0/NIID6DNyDjsGW0TJ5WGPQVxwwdB5n8Kv
+ RLEteL+/5BzZe2Wl2D0oscPOzOwscv4hQknGJ178uxHsYgnhpCyN+P74HMU6NJRXZ+0k
+ /BG1oq4l5cPmIEC/af2E81a+Xbb7rLXolXsyCMo5krrX2A4Z4aO2tibEeU8GydgiKChS
+ HdsfoQsz7lZo3d0R0ZjdO17vUI0p6O/3J3yp47E7JYth3Lz4A640nSEQcpEO/RfLGWB5
+ C4geM1rj3MDclMuN5GuVn7xv+Lha6PuJ2tS3BDdhi/ELB5oVjXAmuKz/EahssX/EyUjx
+ Kzdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774408497; x=1775013297;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FZcCt6K1ChIemZxf4SW8DRwqQIfqh/ODxhoJfdAe5fA=;
- b=Q/c/EBUgpG8PuLz6/Sih3rzM/0kHEkJhhOOIfFfRe0cMuqXYipn+YLvcC3AJUcPXrc
- vS2ZD4L43OuOVrGuAeQQ7fM30ZrvkvgZosiFJmhA6dmVzYcTsm59s/tVSKvdw0U3Nau8
- BAhLYecQqo1peONgcG9Xpjn8DVFfQFLA0Gq3oB/Z3je27IH1AGWatCtQqVHPkGqgUdgF
- FTgcGyPBzLVPyaC3Xm/g4AiMfdwFza7B+E/3DC6KbK1ba/je56z0GkF8xOL9z4iy+20r
- lRtaWkPd67pJstTrD7NQ7QL+j0CE68QPqzNlBYpF8wrNf+wrpYgVEgv2KCG3Vc4waz1l
- xsFA==
+ d=1e100.net; s=20251104; t=1774408787; x=1775013587;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dbx8BfzE1IUU9tlH0DP5MCIM+U2+X7ZWepTxAlEGawQ=;
+ b=Lc7PrB03Zl8U26NxMLNpTOQgASMCPaoNh9QsM994JwNdAZCAXiATgHcoH/6kzLnsE6
+ unJ7obkACdGjQZlJ7dXf1i3QfFRxjcPgZX7WuCokNijN3chSEs8BJYDrEawIjKNDTmKh
+ VwxhnTGGzGa41/x3i+yVScrFxz6PR8vsrdRuAVhJHxFtHA3dy6oHnPYmWkcNi4xAYzMR
+ wUHLkizkN8ymki28EKRlnIiycoXi0Q/EAtpHpa65WRi1n7xXtIujgq61jk1Szz2lV6rV
+ Pe0HG9aqDcKLk5wnYUv5bP6Yko8heDUkOpkZL2yqwtBEQVTPnJ7CGb+gZXac9ft7fIoA
+ Wiyg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMwPTKYLfoxlo2ZTeKZe8gtmdd34DReLj+DpeW0GDrLERne0GXj4btc+7aX7UqXRWv2Ox5AXknd0ac@nongnu.org
-X-Gm-Message-State: AOJu0Yx94pYFoAZV7hO3d4AB/k3Z7u/RC7EtZWAp6Yt+lhXcEQRuVru9
- +kuKejpKNUBo/LrjbmoQTcgkKoo1gSmBfkfovcVcbc7t+Ik6DeEGjlzDoNlzDmEU5HFr/NaRON5
- nwsVEdDR1DAm5YEYMijjC8S1I/BsRZSI=
-X-Gm-Gg: ATEYQzzRVqiMuukh4iMW5nx1SvRtmwCxN8zNup2hgbvedoPV3mh6Xlrt7XTlH9i90pa
- 55qWStS76jb6IzuVBKYhTBAQ6kr/b7BrXclSulWZotx21RvStP6Gu6P8x3BKsdqc1cL0D0XMywt
- Jwl7KRzkNzDA8zsTC7peYV9bDsQjfGwKcPP14ioZYM6lWZLuXJaKVYGnOJM0I1wGHpWxr1PyGJ+
- 2yz4//zun9itpLRgg6w4xaHYJGTX40pY/8jJxdHwaPoGRtUkJbHlpaf2IDXRJ6mk4HOIIEGbuwN
- lOPCck+uvHiOfuob/DyeL6sBTa9/iN6bTgrrbw==
-X-Received: by 2002:a17:907:c27:b0:b9b:132c:a590 with SMTP id
- a640c23a62f3a-b9b132cc584mr27018366b.4.1774408496659; Tue, 24 Mar 2026
- 20:14:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260321141345.599105-1-npiggin@gmail.com>
- <20260321141345.599105-4-npiggin@gmail.com>
-In-Reply-To: <20260321141345.599105-4-npiggin@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 25 Mar 2026 13:14:30 +1000
-X-Gm-Features: AQROBzBbTjCDMjsG7crXRCYRLjoqZJYOlyEJug9L2RYbsfsPUyPND5IdLCd7Jt4
-Message-ID: <CAKmqyKMVTjrm3-jn-hz5bsfa+TCF3yae-VcwuF7UTh_zqf5UMQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] linux-user/riscv: Add extended state to sigcontext
+ AJvYcCW+AbTGsnkdGIbOoGZurqqLHNPd7z11LsIIVQKuCTdki7eBeoG8hIt+1ASMQaLmSwKNKdnmr2DglZmi@nongnu.org
+X-Gm-Message-State: AOJu0YwyRsESt3aKl6Ldk/65iWJk0aJ8vq4EVL4lgoScxvaxoG7Xd78x
+ MGZnIdo5xGHT7ihbgCa754KCcnYTCY6PUn8cU6kKQPqY61XQUpkocCS3
+X-Gm-Gg: ATEYQzyEIra1wc9LrrX/ppSkFl6Nc7cpCjEoftoc+x+cuwl/azUbihbSz1J1j9VNtJw
+ SJqYw+M2Cuiz4++9HE78nh6OitydKpEdJEbOvoc0w9zNQ97UlTGgnAvZtRwXVbRbN4LInHgu3TA
+ lz50DWuf7ew4/zrq2VMPptVvcV2xYba9ys3DyIkXAmyAX7l3TC7gUp9db2S3cerFOUwCrwWfveC
+ xJdTH5eirBvm0N/ymqPs6j65unTqJJVRP5CCMc6LJeYWzFvBrX1nCsRURk723iL8hsV8XfqTjOB
+ jbQO1aWKpmCYpopj7knpN6E/1lpkGennePBI8eGN2By9Nj7oiNxFQdm65XXjJymIsqqpPKMQi2e
+ 2yY+VxKPQ+xGxPfuqVA4lC4x7HSQSFOA52r/orE508EZOhXOb2/Zsi03Z9DgqvOzmcIDwata+n8
+ HU9iR/nVC0qn7oo+OEzuIIfLh0G9t2//PoNyGpNJPnJg21kNsW6MjXzuOf4CXHTfVHwQn3XGLtT
+ vtlwN81cW4VrUVaaBxR3HKG41+RprU=
+X-Received: by 2002:a05:7300:a892:b0:2c1:27c:75c3 with SMTP id
+ 5a478bee46e88-2c15d35e956mr854977eec.10.1774408787213; 
+ Tue, 24 Mar 2026 20:19:47 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2c10b17b8f2sm22800063eec.9.2026.03.24.20.19.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Mar 2026 20:19:46 -0700 (PDT)
+Date: Wed, 25 Mar 2026 11:19:26 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+Cc: qemu-riscv@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Richard Henderson <richard.henderson@linaro.org>, Joel Stanley <joel@jms.id.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v3 3/3] tests/tcg: Add riscv test for interrupted vector
+ ops
+Message-ID: <acNSjHocMNviKQVZ@ZEVORN-PC.localdomain>
+References: <20260321144554.606417-1-npiggin@gmail.com>
+ <20260321144554.606417-4-npiggin@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260321144554.606417-4-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -127,201 +109,431 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 22, 2026 at 12:16=E2=80=AFAM Nicholas Piggin <npiggin@gmail.com=
-> wrote:
->
-> Linux/riscv has extended the sigcontext with padding and an
-> extended state structure that can save various optional
-> features like vector in a flexible format. Update the
-> linux-user signal handling to this new structure.
->
+On Sun, Mar 22, 2026 at 12:45:54AM +1000, Nicholas Piggin wrote:
+> riscv vector instructions can be interrupted with a trap, and partial
+> completion is recorded in the vstart register. Some causes are
+> implementation dependent, for example an asynchronous interrupt (which I
+> don't think TCG allows). Others are architectural, typically memory
+> access faults on vector load/store instructions.
+> 
+> Add some TCG tests for interrupting vector load instructions and
+> resuming partially completed ones.
+> 
+> This would have caught a recent (now reverted) regression in vector
+> stride load implementation, commit 28c12c1f2f50d ("Generate strided
+> vector loads/stores with tcg nodes.")
+> 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  linux-user/riscv/signal.c         | 93 +++++++++++++++++++++++++++----
->  linux-user/riscv/vdso-asmoffset.h |  4 +-
->  2 files changed, 85 insertions(+), 12 deletions(-)
->
-> diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
-> index ece276f85f..e20b9ac177 100644
-> --- a/linux-user/riscv/signal.c
-> +++ b/linux-user/riscv/signal.c
-> @@ -31,14 +31,43 @@
->
->     The code below is qemu re-implementation of arch/riscv/kernel/signal.=
-c */
->
-> -struct target_sigcontext {
-> +struct target_gp_state {
->      abi_long pc;
->      abi_long gpr[31]; /* x0 is not present, so all offsets must be -1 */
-> +};
-> +
-> +struct target_fp_state {
->      uint64_t fpr[32];
->      uint32_t fcsr;
-> +};
-> +
-> +/* The Magic number for signal context frame header. */
-> +#define END_MAGIC       0x0
-> +
-> +/* The size of END signal context header. */
-> +#define END_HDR_SIZE    0x0
-> +
-> +struct target_ctx_hdr {
-> +    uint32_t magic;
-> +    uint32_t size;
-> +};
-> +
-> +struct target_extra_ext_header {
-> +    uint32_t __padding[129] __attribute__((aligned(16)));
-> +    uint32_t reserved;
-> +    struct target_ctx_hdr hdr;
-> +};
-> +
-> +struct target_sigcontext {
-> +    struct target_gp_state sc_regs;
-> +    union {
-> +        struct target_fp_state sc_fpregs;
-> +        struct target_extra_ext_header sc_extdesc;
-> +    };
->  }; /* cf. riscv-linux:arch/riscv/include/uapi/asm/ptrace.h */
+>  tests/tcg/riscv64/Makefile.target      |  11 +
+>  tests/tcg/riscv64/test-interrupted-v.c | 329 +++++++++++++++++++++++++
+>  2 files changed, 340 insertions(+)
+>  create mode 100644 tests/tcg/riscv64/test-interrupted-v.c
+> 
+> diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+> index 19a49b6467..b2b2325843 100644
+> --- a/tests/tcg/riscv64/Makefile.target
+> +++ b/tests/tcg/riscv64/Makefile.target
+> @@ -1,6 +1,10 @@
+>  # -*- Mode: makefile -*-
+>  # RISC-V specific tweaks
+>  
+> +# Not all environments have compilers with vector intrinsics yet.
+> +HAVE_RISCV_VECTOR_INTRINSICS := $(shell echo '#ifndef __riscv_v_intrinsic\n#error\n#endif' |  \
+> +                                  $(CC) -march=rv64gcv -E -x c - >/dev/null 2>&1 && echo y)
+The feature probe relies on echo interpreting '\n'
+as newlines, but this is not portable.
 
-I would argue that arch/riscv/include/uapi/asm/sigcontext.h is a
-better pointer, but both work
+POSIX leaves echo's handling of backslash sequences
+implementation-defined.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+On bash (the default /bin/sh on many systems including
+Fedora, Arch, and some CI images), echo outputs literal
+'\n', so the preprocessor sees a malformed single-line input
+and always fails. This silently disables test-interrupted-v
+even when the compiler supports vector intrinsics.
 
-Alistair
+I suggest using printf for portability:
 
->
-> -QEMU_BUILD_BUG_ON(offsetof(struct target_sigcontext, fpr) !=3D offsetof_=
-freg0);
-> +QEMU_BUILD_BUG_ON(offsetof(struct target_sigcontext, sc_fpregs.fpr) !=3D
-> +                  offsetof_freg0);
->
->  struct target_ucontext {
->      abi_ulong uc_flags;
-> @@ -79,19 +108,26 @@ static abi_ulong get_sigframe(struct target_sigactio=
-n *ka,
->
->  static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState=
- *env)
->  {
-> +    struct target_ctx_hdr *hdr;
->      int i;
->
-> -    __put_user(env->pc, &sc->pc);
-> +    __put_user(env->pc, &sc->sc_regs.pc);
->
->      for (i =3D 1; i < 32; i++) {
-> -        __put_user(env->gpr[i], &sc->gpr[i - 1]);
-> +        __put_user(env->gpr[i], &sc->sc_regs.gpr[i - 1]);
->      }
->      for (i =3D 0; i < 32; i++) {
-> -        __put_user(env->fpr[i], &sc->fpr[i]);
-> +        __put_user(env->fpr[i], &sc->sc_fpregs.fpr[i]);
->      }
->
->      uint32_t fcsr =3D riscv_csr_read(env, CSR_FCSR);
-> -    __put_user(fcsr, &sc->fcsr);
-> +    __put_user(fcsr, &sc->sc_fpregs.fcsr);
+    HAVE_RISCV_VECTOR_INTRINSICS := $(shell printf \
+        '#ifndef __riscv_v_intrinsic\n#error\n#endif\n' | \
+        $(CC) -march=rv64gcv -E -x c - \
+        >/dev/null 2>&1 && echo y)
+
 > +
-> +    __put_user(0, &sc->sc_extdesc.reserved);
+>  VPATH += $(SRC_PATH)/tests/tcg/riscv64
+>  TESTS += test-div
+>  TESTS += noexec
+> @@ -23,3 +27,10 @@ run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,zfa=true
+>  TESTS += test-vstart-overflow
+>  test-vstart-overflow: CFLAGS += -march=rv64gcv
+>  run-test-vstart-overflow: QEMU_OPTS += -cpu rv64,v=on
 > +
-> +    hdr =3D &sc->sc_extdesc.hdr;
-> +    __put_user(END_MAGIC, &hdr->magic);
-> +    __put_user(END_HDR_SIZE, &hdr->size);
->  }
->
->  static void setup_ucontext(struct target_ucontext *uc,
-> @@ -147,21 +183,58 @@ badframe:
->
->  static bool restore_sigcontext(CPURISCVState *env, struct target_sigcont=
-ext *sc)
->  {
-> +    struct target_ctx_hdr *hdr;
-> +    uint32_t rsv, magic, size;
->      int i;
->
-> -    __get_user(env->pc, &sc->pc);
-> +    __get_user(env->pc, &sc->sc_regs.pc);
->
->      for (i =3D 1; i < 32; ++i) {
-> -        __get_user(env->gpr[i], &sc->gpr[i - 1]);
-> +        __get_user(env->gpr[i], &sc->sc_regs.gpr[i - 1]);
->      }
->      for (i =3D 0; i < 32; ++i) {
-> -        __get_user(env->fpr[i], &sc->fpr[i]);
-> +        __get_user(env->fpr[i], &sc->sc_fpregs.fpr[i]);
->      }
->
->      uint32_t fcsr;
-> -    __get_user(fcsr, &sc->fcsr);
-> +    __get_user(fcsr, &sc->sc_fpregs.fcsr);
->      riscv_csr_write(env, CSR_FCSR, fcsr);
->
-> +    hdr =3D &sc->sc_extdesc.hdr;
-> +    __get_user(rsv, &sc->sc_extdesc.reserved);
-> +    if (rsv !=3D 0) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "signal: sigcontext reserved fiel=
-d is "
-> +                                       "non-zero\n");
-> +        return false;
+> +ifeq ($(HAVE_RISCV_VECTOR_INTRINSICS),y)
+> +# Test for interrupted vector instructions
+> +TESTS += test-interrupted-v
+> +test-interrupted-v: CFLAGS += -march=rv64gcv
+> +run-test-interrupted-v: QEMU_OPTS += -cpu rv64,v=on
+> +endif
+> diff --git a/tests/tcg/riscv64/test-interrupted-v.c b/tests/tcg/riscv64/test-interrupted-v.c
+> new file mode 100644
+> index 0000000000..3d0d21b49b
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/test-interrupted-v.c
+> @@ -0,0 +1,329 @@
+> +/*
+> + * Test for interrupted vector operations.
+> + *
+> + * Some vector instructions can be interrupted partially complete, vstart will
+> + * be set to where the operation has progressed to, and the instruction can be
+> + * re-executed with vstart != 0. It is implementation dependent as to what
+> + * instructions can be interrupted and what vstart values are permitted when
+> + * executing them. Vector memory operations can typically be interrupted
+> + * (as they can take page faults), so these are easy to test.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#include <stdlib.h>
+> +#include <stdint.h>
+> +#include <stdbool.h>
+> +#include <string.h>
+> +#include <sys/mman.h>
+> +#include <stdio.h>
+> +#include <assert.h>
+> +#include <signal.h>
+> +#include <unistd.h>
+> +#include <riscv_vector.h>
+> +
+> +static unsigned long page_size;
+> +
+> +static volatile int nr_segv;
+> +static volatile unsigned long fault_start, fault_end;
+> +static volatile bool fault_write;
+checkpatch errors:
+
+  ERROR: Use of volatile is usually wrong, please add a comment
+  #84: FILE: tests/tcg/riscv64/test-interrupted-v.c:26:
+  +static volatile int nr_segv;
+
+  ERROR: Use of volatile is usually wrong, please add a comment
+  #85: FILE: tests/tcg/riscv64/test-interrupted-v.c:27:
+  +static volatile unsigned long fault_start, fault_end;
+
+  ERROR: Use of volatile is usually wrong, please add a comment
+  #86: FILE: tests/tcg/riscv64/test-interrupted-v.c:28:
+  +static volatile bool fault_write;
+
+Please fix it.
+> +
+> +/*
+> + * Careful: qemu-user does not save/restore vector state in
+> + * signals yet, so any library or compiler autovec code will
+> + * corrupt our test.
+> + *
+> + * Do only minimal work in the signal handler.
+> + */
+> +static void SEGV_handler(int signo, siginfo_t *info, void *context)
+> +{
+> +    unsigned long page = (unsigned long)info->si_addr &
+> +                             ~(unsigned long)(page_size - 1);
+> +
+> +    assert((unsigned long)info->si_addr >= fault_start);
+> +    assert((unsigned long)info->si_addr < fault_end);
+> +    if (fault_write) {
+> +        mprotect((void *)page, page_size, PROT_READ | PROT_WRITE);
+> +    } else {
+> +        mprotect((void *)page, page_size, PROT_READ);
+> +    }
+> +    nr_segv++;
+> +}
+> +
+> +/* Use noinline to make generated code easier to inspect */
+> +static __attribute__((noinline))
+> +uint8_t unit_load(uint8_t *mem, size_t nr, bool ff)
+> +{
+> +    size_t vl;
+> +    vuint8m1_t vec, redvec, sum;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    if (ff) {
+> +        vec = __riscv_vle8ff_v_u8m1(mem, &vl, vl);
+> +    } else {
+> +        vec = __riscv_vle8_v_u8m1(mem, vl);
+> +    }
+> +    redvec = __riscv_vmv_v_x_u8m1(0, vl);
+> +    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
+> +    return __riscv_vmv_x_s_u8m1_u8(sum);
+> +}
+> +
+> +static __attribute__((noinline))
+> +uint8_t seg2_load(uint8_t *mem, size_t nr, bool ff)
+> +{
+> +    size_t vl;
+> +    vuint8m1x2_t segvec;
+> +    vuint8m1_t vec, redvec, sum;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    if (ff) {
+> +        segvec = __riscv_vlseg2e8ff_v_u8m1x2(mem, &vl, vl);
+> +    } else {
+> +        segvec = __riscv_vlseg2e8_v_u8m1x2(mem, vl);
+> +    }
+> +    vec = __riscv_vadd_vv_u8m1(__riscv_vget_v_u8m1x2_u8m1(segvec, 0),
+> +                   __riscv_vget_v_u8m1x2_u8m1(segvec, 1), vl);
+> +    redvec = __riscv_vmv_v_x_u8m1(0, vl);
+> +    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
+> +    return __riscv_vmv_x_s_u8m1_u8(sum);
+> +}
+> +
+> +static __attribute__((noinline))
+> +uint8_t strided_load(uint8_t *mem, size_t nr, size_t stride)
+> +{
+> +    size_t vl;
+> +    vuint8m1_t vec, redvec, sum;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    vec = __riscv_vlse8_v_u8m1(mem, stride, vl);
+> +    redvec = __riscv_vmv_v_x_u8m1(0, vl);
+> +    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
+> +    return __riscv_vmv_x_s_u8m1_u8(sum);
+> +}
+> +
+> +static __attribute__((noinline))
+> +uint8_t indexed_load(uint8_t *mem, size_t nr, uint32_t *indices)
+> +{
+> +    size_t vl;
+> +    vuint32m4_t idx;
+> +    vuint8m1_t vec, redvec, sum;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    idx = __riscv_vle32_v_u32m4(indices, vl);
+> +    vec = __riscv_vloxei32_v_u8m1(mem, idx, vl);
+> +    redvec = __riscv_vmv_v_x_u8m1(0, vl);
+> +    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
+> +    return __riscv_vmv_x_s_u8m1_u8(sum);
+> +}
+> +
+> +/* New store functions */
+> +static __attribute__((noinline))
+> +void unit_store(uint8_t *mem, size_t nr, vuint8m1_t vec)
+> +{
+> +    size_t vl;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    __riscv_vse8_v_u8m1(mem, vec, vl);
+> +}
+> +
+> +static __attribute__((noinline))
+> +void seg2_store(uint8_t *mem, size_t nr, vuint8m1x2_t segvec)
+> +{
+> +    size_t vl;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    __riscv_vsseg2e8_v_u8m1x2(mem, segvec, vl);
+> +}
+> +
+> +static __attribute__((noinline))
+> +void strided_store(uint8_t *mem, size_t nr, size_t stride, vuint8m1_t vec)
+> +{
+> +    size_t vl;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    __riscv_vsse8_v_u8m1(mem, stride, vec, vl);
+> +}
+> +
+> +static __attribute__((noinline))
+> +void indexed_store(uint8_t *mem, size_t nr, uint32_t *indices, vuint8m1_t vec)
+> +{
+> +    size_t vl;
+> +    vuint32m4_t idx;
+> +
+> +    vl = __riscv_vsetvl_e8m1(nr);
+> +    idx = __riscv_vle32_v_u32m4(indices, vl);
+> +    __riscv_vsoxei32_v_u8m1(mem, idx, vec, vl);
+> +}
+> +
+> +/* Use e8 elements, 128-bit vectors */
+> +#define NR_ELEMS 16
+> +
+> +static int run_interrupted_v_tests(void)
+> +{
+> +    struct sigaction act = { 0 };
+> +    uint8_t *mem;
+> +    uint32_t indices[NR_ELEMS];
+> +    int i;
+> +
+> +    page_size = sysconf(_SC_PAGESIZE);
+Regarding other checkpatch errors: the volatile usage and
+sysconf(_SC_PAGESIZE) are correct for a guest test binary
+that has no access to QEMU internals. These are
+false positives.
+
+Thanks,
+Chao
+> +
+> +    act.sa_flags = SA_SIGINFO;
+> +    act.sa_sigaction = &SEGV_handler;
+> +    if (sigaction(SIGSEGV, &act, NULL) == -1) {
+> +        perror("sigaction");
+> +        exit(EXIT_FAILURE);
 > +    }
 > +
-> +    __get_user(magic, &hdr->magic);
-> +    while (magic !=3D END_MAGIC) {
-> +        switch (magic) {
-> +        default:
-> +            qemu_log_mask(LOG_GUEST_ERROR, "signal: unknown extended sta=
-te in "
-> +                                           "sigcontext, magic=3D0x%08x\n=
-", magic);
-> +            return false;
-> +        }
+> +    mem = mmap(NULL, NR_ELEMS * page_size, PROT_READ | PROT_WRITE,
+> +               MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    assert(mem != MAP_FAILED);
+> +    madvise(mem, NR_ELEMS * page_size, MADV_NOHUGEPAGE);
 > +
-> +        __get_user(size, &hdr->size);
-> +        if (size =3D=3D 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state in "
-> +                                           "sigcontext has size 0\n");
-> +            return false;
-> +        }
+> +    /*** Load tests ***/
+> +    fault_write = false;
 > +
-> +        hdr =3D (void *)hdr + size;
-> +        __get_user(magic, &hdr->magic);
+> +    /* Unit-stride tests load memory crossing a page boundary */
+> +    memset(mem, 0, NR_ELEMS * page_size);
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        mem[page_size - NR_ELEMS + i] = 3;
+> +    }
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        mem[page_size + i] = 5;
 > +    }
 > +
-> +    __get_user(size, &hdr->size);
-> +    if (size !=3D END_HDR_SIZE) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state end heade=
-r has "
-> +                                       "size=3D%u (should be 0)\n", size=
-);
-> +        return false;
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
+> +    fault_end = fault_start + NR_ELEMS;
+> +    mprotect(mem, page_size * 2, PROT_NONE);
+> +    assert(unit_load(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, false)
+> +                    == 8 * NR_ELEMS / 2);
+> +    assert(nr_segv == 2);
+> +
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)&mem[page_size - NR_ELEMS];
+> +    fault_end = fault_start + NR_ELEMS * 2;
+> +    mprotect(mem, page_size * 2, PROT_NONE);
+> +    assert(seg2_load(&mem[page_size - NR_ELEMS], NR_ELEMS, false)
+> +                    == 8 * NR_ELEMS);
+> +    assert(nr_segv == 2);
+> +
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
+> +    fault_end = fault_start + (NR_ELEMS / 2);
+> +    mprotect(mem, page_size * 2, PROT_NONE);
+> +    assert(unit_load(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, true)
+> +                    == 3 * NR_ELEMS / 2);
+> +    assert(nr_segv == 1); /* fault-first does not fault the second page */
+> +
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)&mem[page_size - NR_ELEMS];
+> +    fault_end = fault_start + NR_ELEMS;
+> +    mprotect(mem, page_size * 2, PROT_NONE);
+> +    assert(seg2_load(&mem[page_size - NR_ELEMS], NR_ELEMS * 2, true)
+> +                    == 3 * NR_ELEMS);
+> +    assert(nr_segv == 1); /* fault-first does not fault the second page */
+> +
+> +    /* Following tests load one element from first byte of each page */
+> +    mprotect(mem, page_size * 2, PROT_READ | PROT_WRITE);
+> +    memset(mem, 0, NR_ELEMS * page_size);
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        mem[i * page_size] = 3;
+> +        indices[i] = i * page_size;
 > +    }
 > +
->      return true;
->  }
->
-> diff --git a/linux-user/riscv/vdso-asmoffset.h b/linux-user/riscv/vdso-as=
-moffset.h
-> index 123902ef61..92e8ac10ab 100644
-> --- a/linux-user/riscv/vdso-asmoffset.h
-> +++ b/linux-user/riscv/vdso-asmoffset.h
-> @@ -1,9 +1,9 @@
->  #ifdef TARGET_ABI32
-> -# define sizeof_rt_sigframe     0x2b0
-> +# define sizeof_rt_sigframe     0x3b0
->  # define offsetof_uc_mcontext   0x120
->  # define offsetof_freg0         0x80
->  #else
-> -# define sizeof_rt_sigframe     0x340
-> +# define sizeof_rt_sigframe     0x440
->  # define offsetof_uc_mcontext   0x130
->  # define offsetof_freg0         0x100
->  #endif
-> --
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)mem;
+> +    fault_end = fault_start + NR_ELEMS * page_size;
+> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
+> +    assert(strided_load(mem, NR_ELEMS, page_size) == 3 * NR_ELEMS);
+> +    assert(nr_segv == NR_ELEMS);
+> +
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)mem;
+> +    fault_end = fault_start + NR_ELEMS * page_size;
+> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
+> +    assert(indexed_load(mem, NR_ELEMS, indices) == 3 * NR_ELEMS);
+> +    assert(nr_segv == NR_ELEMS);
+> +
+> +    /*** Store tests ***/
+> +    fault_write = true;
+> +
+> +    uint8_t store_data[NR_ELEMS];
+> +    uint8_t store_data_seg0[NR_ELEMS];
+> +    uint8_t store_data_seg1[NR_ELEMS];
+> +    vuint8m1_t vec;
+> +    vuint8m1x2_t segvec;
+> +    size_t vl = __riscv_vsetvl_e8m1(NR_ELEMS);
+> +
+> +    /* Create some data to store */
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        store_data[i] = i * 3;
+> +        store_data_seg0[i] = i * 5;
+> +        store_data_seg1[i] = i * 7;
+> +    }
+> +    vec = __riscv_vle8_v_u8m1(store_data, vl);
+> +    segvec = __riscv_vcreate_v_u8m1x2(
+> +        __riscv_vle8_v_u8m1(store_data_seg0, vl),
+> +        __riscv_vle8_v_u8m1(store_data_seg1, vl));
+> +
+> +    /* Unit-stride store test crossing a page boundary */
+> +    mprotect(mem, page_size * 2, PROT_READ | PROT_WRITE);
+> +    memset(mem, 0, page_size * 2);
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
+> +    fault_end = fault_start + NR_ELEMS;
+> +    mprotect(mem, page_size * 2, PROT_NONE);
+> +    unit_store(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, vec);
+> +    assert(nr_segv == 2);
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        assert(mem[page_size - (NR_ELEMS / 2) + i] == store_data[i]);
+> +    }
+> +
+> +    /* Segmented store test crossing a page boundary */
+> +    mprotect(mem, page_size * 2, PROT_READ | PROT_WRITE);
+> +    memset(mem, 0, page_size * 2);
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)&mem[page_size - NR_ELEMS];
+> +    fault_end = fault_start + NR_ELEMS * 2;
+> +    mprotect(mem, page_size * 2, PROT_NONE);
+> +    seg2_store(&mem[page_size - NR_ELEMS], NR_ELEMS, segvec);
+> +    assert(nr_segv == 2);
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        assert(mem[page_size - NR_ELEMS + i * 2] == store_data_seg0[i]);
+> +        assert(mem[page_size - NR_ELEMS + i * 2 + 1] == store_data_seg1[i]);
+> +    }
+> +
+> +    /* Strided store test to one element on each page */
+> +    mprotect(mem, NR_ELEMS * page_size, PROT_READ | PROT_WRITE);
+> +    memset(mem, 0, NR_ELEMS * page_size);
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)mem;
+> +    fault_end = fault_start + NR_ELEMS * page_size;
+> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
+> +    strided_store(mem, NR_ELEMS, page_size, vec);
+> +    assert(nr_segv == NR_ELEMS);
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        assert(mem[i * page_size] == store_data[i]);
+> +    }
+> +
+> +    /* Indexed store test to one element on each page */
+> +    mprotect(mem, NR_ELEMS * page_size, PROT_READ | PROT_WRITE);
+> +    memset(mem, 0, NR_ELEMS * page_size);
+> +    nr_segv = 0;
+> +    fault_start = (unsigned long)mem;
+> +    fault_end = fault_start + NR_ELEMS * page_size;
+> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
+> +    indexed_store(mem, NR_ELEMS, indices, vec);
+> +    assert(nr_segv == NR_ELEMS);
+> +    for (i = 0; i < NR_ELEMS; i++) {
+> +        assert(mem[indices[i]] == store_data[i]);
+> +    }
+> +
+> +    munmap(mem, NR_ELEMS * page_size);
+> +
+> +    return 0;
+> +}
+> +
+> +int main(void)
+> +{
+> +    return run_interrupted_v_tests();
+> +}
+> -- 
 > 2.51.0
->
->
+> 
+> 
 
