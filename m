@@ -4,109 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7191109C040
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 18:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E57EB109C058
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 18:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Shf-00051I-5J; Wed, 25 Mar 2026 14:11:40 -0400
+	id 1w5TCN-00024L-Mq; Wed, 25 Mar 2026 14:43:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5ShZ-00050r-OY
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:11:34 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5ShX-0000qX-Eb
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:11:33 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 799885BCF8;
- Wed, 25 Mar 2026 18:11:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774462288; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6Jh3rtxKgzb5uF3D05rl3H5rlxtEEvLJmEe702E6cW0=;
- b=0zKnyFkeLOHNnFnEMSyz1xaKh6ZsSc4REVprZ234zd74422tP7Me/TocYCKVF6rzK9b5vP
- GmjPsKYAZaUMTD/G8xEdRWALWvj2CcmSaUljo/96Kt3BRBFQ3njMsUe14cqyoZGn0V7xY5
- o82pn77Lz6EXyWoRCRBPoABf3GYlG0o=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774462288;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6Jh3rtxKgzb5uF3D05rl3H5rlxtEEvLJmEe702E6cW0=;
- b=ALcP77MghL7Btq0O/4pSrcXIGqukjxPndiSXQHsVCb1Ax5n7LWwjyMDGzpNXzMSvTGlM1w
- Ckcp0uJeSqgieQDw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0zKnyFke;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ALcP77Mg
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774462288; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6Jh3rtxKgzb5uF3D05rl3H5rlxtEEvLJmEe702E6cW0=;
- b=0zKnyFkeLOHNnFnEMSyz1xaKh6ZsSc4REVprZ234zd74422tP7Me/TocYCKVF6rzK9b5vP
- GmjPsKYAZaUMTD/G8xEdRWALWvj2CcmSaUljo/96Kt3BRBFQ3njMsUe14cqyoZGn0V7xY5
- o82pn77Lz6EXyWoRCRBPoABf3GYlG0o=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774462288;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6Jh3rtxKgzb5uF3D05rl3H5rlxtEEvLJmEe702E6cW0=;
- b=ALcP77MghL7Btq0O/4pSrcXIGqukjxPndiSXQHsVCb1Ax5n7LWwjyMDGzpNXzMSvTGlM1w
- Ckcp0uJeSqgieQDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 04D7644526;
- Wed, 25 Mar 2026 18:11:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id zyNJME8lxGmlLwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 25 Mar 2026 18:11:27 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [RFC PATCH v1 05/17] vmstate: Remove vmdesc_loop
-In-Reply-To: <acQWXMP1VjSeXUvL@x1.local>
-References: <20260324194333.30004-1-farosas@suse.de>
- <20260324194333.30004-6-farosas@suse.de> <acQWXMP1VjSeXUvL@x1.local>
-Date: Wed, 25 Mar 2026 15:11:25 -0300
-Message-ID: <87pl4rkcdu.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1w5TCM-00024B-8F
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:43:22 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1w5TCJ-0005qH-Cz
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:43:21 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fgwl43pFjzJ46F4;
+ Thu, 26 Mar 2026 02:42:56 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 78CD340584;
+ Thu, 26 Mar 2026 02:43:05 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.47.66.203) by
+ dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 25 Mar 2026 18:43:04 +0000
+To: <qemu-devel@nongnu.org>
+CC: <anisa.su@samsung.com>, <armbru@redhat.com>, <berrange@redhat.com>,
+ <eblake@redhat.com>, <jonathan.cameron@huawei.com>,
+ <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>, <lizhijian@fujitsu.com>,
+ <mst@redhat.com>, <pbonzini@redhat.com>, <gourry@gourry.net>,
+ <nifan.cxl@gmail.com>, <me@linux.beauty>
+Subject: [QEMU PATCH 0/9] Application Specific Tagged Memory Support in CXL
+ Type 3 Devices
+Date: Wed, 25 Mar 2026 18:42:48 +0000
+Message-ID: <20260325184259.366-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.51.0.windows.2
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 799885BCF8
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.47.66.203]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,138 +68,190 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hi,
 
-> On Tue, Mar 24, 2026 at 04:43:20PM -0300, Fabiano Rosas wrote:
->> The vmdesc_loop variable is being used as a hacky way of writing the
->> JSON description only for the first element of a compressed
->> array. There are also a few implicit uses, such as writing the JSON
->> for the first non-compressed element after a compressed portion.
->> 
->> Future work will have trouble with this. Use a simple boolean to be
->> explicit now.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/vmstate.c | 25 ++++++++++++++-----------
->>  1 file changed, 14 insertions(+), 11 deletions(-)
->> 
->> diff --git a/migration/vmstate.c b/migration/vmstate.c
->> index dec9cf920b..7a12245d36 100644
->> --- a/migration/vmstate.c
->> +++ b/migration/vmstate.c
->> @@ -622,8 +622,9 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->>              void *first_elem = opaque + field->offset;
->>              int i, n_elems = vmstate_n_elems(opaque, field);
->>              int size = vmstate_size(opaque, field);
->> -            JSONWriter *vmdesc_loop = vmdesc;
->>              bool is_null_prev = false;
->> +            bool use_vmdesc = true;
->> +
->>              /*
->>               * When this is enabled, it means we will always push a ptr
->>               * marker first for each element saying if it's populated.
->> @@ -673,7 +674,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->>                      is_null != is_null_prev) {
->>  
->>                      is_null_prev = is_null;
->> -                    vmdesc_loop = vmdesc;
->> +                    use_vmdesc = true;
->>  
->>                      for (int j = i + 1; j < n_elems; j++) {
->>                          void *elem = *(void **)(first_elem + size * j);
->> @@ -686,8 +687,13 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->>                      }
->>                  }
->>  
->> +                if (use_dynamic_array) {
->> +                    use_vmdesc = true;
->> +                }
->
-> [1]
->
->> +
->>                  ok = vmstate_save_field_with_vmdesc(f, curr_elem, size, vmsd,
->> -                                                    inner_field, vmdesc_loop,
->> +                                                    inner_field,
->> +                                                    use_vmdesc ? vmdesc : NULL,
->>                                                      i, max_elems, errp);
->>  
->>                  /* If we used a fake temp field.. free it now */
->> @@ -708,19 +714,16 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->>                       * NOTE: do not use vmstate_size() here because we want
->>                       * to dump the real VMSD object now.
->>                       */
->> -                    ok = vmstate_save_field_with_vmdesc(f, curr_elem,
->> -                                                        field->size, vmsd,
->> -                                                        field, vmdesc_loop,
->> -                                                        i, max_elems, errp);
->> +                    ok = vmstate_save_field_with_vmdesc(
->> +                        f, curr_elem, field->size, vmsd, field,
->> +                        use_vmdesc ? vmdesc : NULL, i, max_elems, errp);
->> +
->>                      if (!ok) {
->>                          goto out;
->>                      }
->>                  }
->>  
->> -                /* Compressed arrays only care about the first element */
->> -                if (vmdesc_loop && vmsd_can_compress(field)) {
->> -                    vmdesc_loop = NULL;
->> -                }
->> +                use_vmdesc = false;
->
-> Hmm...
->
-> vmsd_can_compress() can return arbitrary things depending on the field
-> itself, now we always do the dedup almost for everything.
->
-> The patch did add above [1] to make AUTO_ALLOC be ok, by enforce setting
-> TRUE for it for every loop, but what about other cases where
-> vmsd_can_compress() may return false (where the field does not support
-> compression)?
->
+This series is a rework of the earlier RFC posted at:
+https://lore.kernel.org/all/20251127225526.700-1-alireza.sanaee@huawei.com/
 
-Hmm, I think you're right. But what I'm doing by setting
-use_vmdesc=false here is just clearing it for the next iteration, where
-it should be set according to necessity. So I'd leave this down here,
-but up there change to:
+The overall goal is still to support application-specific tagged memory
+for CXL Type 3 dynamic capacity, but the backend model is now different.
 
-         if (vmdesc && vmsd_can_compress(field)) {
-             if (is_null != is_null_prev) {
-                 use_vmdesc = true;
-                 ...
-             }
--        }
--
--        if (use_dynamic_array) {
-+        } else {
-             use_vmdesc = true;
-         }
+The earlier RFC introduced a dedicated tagged memory backend object.
+This version does not. Instead, the first patch adds a `tag` property
+to generic host memory backends, and the rest of the series teaches the
+CXL Type 3 DC flow to find and hook up those tagged backends lazily at
+runtime.
 
-In words: all fields should appear in the JSON, unless its part of the
-NULL portion of a compressed array. For compressed arrays only the first
-element appears in the JSON. If a stream of NULLs is followed by a
-non-NULL member, then that member should appear in the JSON after the
-compressed entry.
+In practice, a device may now be created with `dc-regions-total-size`
+and no `volatile-dc-memdev`. When add-capacity is requested with a tag,
+the tagged host memory backend is looked up, validated, and only mapped
+after host acceptance. The committed extent keeps the backend and fixed
+window metadata so that:
 
-These two catch all these corner-cases I think:
+ - direct alias mapping can be installed for the performant path,
+ - teardown can happen correctly at release time, and
+ - tag-based removal can locate and release extents by tag.
 
-PYTHON=$(pwd)/pyvenv/bin/python3.11
-QTEST_QEMU_BINARY=./qemu-system-s390x ./tests/qtest/migration-test -p
-/s390x/migration/analyze-script
+Assumptions, limitations and reasons behind it:
 
-PYTHON=$(pwd)/pyvenv/bin/python3.11
-QTEST_QEMU_BINARY=./qemu-system-ppc64 ./tests/qtest/migration-test-p
-/ppc64/migration/analyze-script
+ 1. Each lazy-backed extent maps to exactly one tagged host memory
+    backend. In VM scenarios, we just need to add a backend which has
+    one extent representing the entire backend tied to one region. If
+    more extents required then more regions can be added.
+ 2. Partial release of a backend-backed extent is rejected. If a
+    backend is represented by the one extent then partial release of
+    a region does not makes sense.
+ 3. The current lazy flow only supports a single extent per add
+    request. This can be changed if required later.
 
->>              }
->>          } else {
->>              if (field->flags & VMS_MUST_EXIST) {
->> -- 
->> 2.51.0
->> 
+This series contains:
+
+ - add generic host memory backend tag support;
+ - allow creating DC-only Type 3 devices with total capacity but no
+   backing device at init time;
+ - wire tagged host memory backends into the DC add flow;
+ - store per-extent backend and fixed-window metadata;
+ - map the backend after host acceptance;
+ - add the direct alias fast path for accesses;
+ - tear down aliases and lazy mappings on release;
+ - add tag-based removal support; and
+ - add a status QMP helper for orchestration layers.
+
+Tested with two tagged `memory-backend-ram` objects and QMP-driven add
+and release flows, including tag-based release.
+
+Example flow
+============
+
+Below is a short tutorial-style example based on the earlier RFC, but
+updated for the current design where generic host memory backends carry
+the tag.
+
+1. Start QEMU with a Type 3 device that advertises dynamic capacity via
+   `dc-regions-total-size`, without an initial `volatile-dc-memdev`.
+
+   -device cxl-type3,bus=root_port13,id=cxl-vmem0,num-dc-regions=1, \
+           dc-regions-total-size=4G
+
+2. Create tagged backends at runtime with QMP:
+
+{
+    "execute": "object-add",
+    "arguments": {
+        "qom-type": "memory-backend-ram",
+        "id": "tm0",
+        "size": 1073741824,
+        "share": true,
+        "tag": "5be13bce-ae34-4a77-b6c3-16df975fcf1a"
+    }
+}
+
+{
+    "execute": "object-add",
+    "arguments": {
+        "qom-type": "memory-backend-ram",
+        "id": "tm1",
+        "size": 1073741824,
+        "share": true,
+        "tag": "6be13bce-ae34-4a77-b6c3-16df975fcf1a"
+    }
+}
+
+3. Add capacity by tag:
+
+{
+    "execute": "cxl-add-dynamic-capacity",
+    "arguments": {
+        "path": "/machine/peripheral/cxl-vmem0",
+        "host-id": 0,
+        "selection-policy": "prescriptive",
+        "region": 0,
+        "tag": "5be13bce-ae34-4a77-b6c3-16df975fcf1a",
+        "extents": [
+            {
+                "offset": 0,
+                "len": 1073741824
+            }
+        ]
+    }
+}
+
+After the host accepts the extent, the tagged backend is mapped and the
+direct alias path becomes active for the committed extent.
+
+4. Release by tag:
+
+{
+    "execute": "cxl-release-dynamic-capacity",
+    "arguments": {
+        "path": "/machine/peripheral/cxl-vmem0",
+        "host-id": 0,
+        "removal-policy": "tag-based",
+        "tag": "5be13bce-ae34-4a77-b6c3-16df975fcf1a",
+        "region": 0,
+        "extents": [
+            {
+                "offset": 0,
+                "len": 1073741824
+            }
+        ]
+    }
+}
+
+5. Query whether the tagged extent is still present:
+
+{
+    "execute": "cxl-release-dynamic-capacity-status",
+    "arguments": {
+        "path": "/machine/peripheral/cxl-vmem0",
+        "host-id": 0,
+        "tag": "5be13bce-ae34-4a77-b6c3-16df975fcf1a",
+        "region": 0
+    }
+}
+
+For the Ira patchset from Intel, I allowed UUIDs in the kernel-side
+flow, and that change is available here:
+https://github.com/sarsanaee/linux/tree/allow_uuid_ira
+
+Depends-on:
+https://lore.kernel.org/all/20260318171918.146-1-alireza.sanaee@huawei.com/
+
+Depends-on:
+https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-0-1d4911a0b365@intel.com/
+
+--
+Alireza Sanaee
+
+Alireza Sanaee (9):
+  hw/mem: Add tag support to generic host memory backends
+  hw/cxl: Allow initializing type3 device with no backing device
+  hw/cxl: Hook up tagged host memory backends at runtime for DC extents
+  hw/cxl: Carry backend metadata in DC extent records
+  hw/cxl: Map lazy memory backend after host acceptance
+  hw/cxl: Create direct fixed-window aliases for accepted extents
+  hw/cxl: Add release-time teardown for direct-mapped extents
+  hw/cxl: Add tag-based dynamic-capacity release support
+  hw/cxl: Add QMP status query for dynamic-capacity extent release
+
+ backends/hostmem.c          |  72 +++++++
+ hw/cxl/cxl-host.c           |   6 +
+ hw/cxl/cxl-mailbox-utils.c  | 223 ++++++++++++++++++++--
+ hw/mem/cxl_type3.c          | 361 +++++++++++++++++++++++++++++++-----
+ hw/mem/cxl_type3_stubs.c    |  10 +
+ include/hw/cxl/cxl_device.h |  41 +++-
+ include/system/hostmem.h    |   2 +
+ qapi/cxl.json               |  46 +++++
+ qapi/qom.json               |   3 +
+ tests/qtest/qom-test.c      |   8 +-
+ 10 files changed, 703 insertions(+), 69 deletions(-)
+
+-- 
+2.50.1 (Apple Git-155)
+
 
