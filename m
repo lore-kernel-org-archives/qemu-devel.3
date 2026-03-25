@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 468A9106B530
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 13:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00987106B533
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 13:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5NvU-0006XT-PR; Wed, 25 Mar 2026 09:05:37 -0400
+	id 1w5O07-0007tz-3v; Wed, 25 Mar 2026 09:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w5NvQ-0006WW-37; Wed, 25 Mar 2026 09:05:32 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1w5O04-0007td-VC
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 09:10:21 -0400
+Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w5NvN-0002ww-42; Wed, 25 Mar 2026 09:05:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774443902; bh=ZQzSE8WH5CC+7qkFXF1OKRooIMC2aAfV9klPsVoWG48=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=V/mHPwaB/u3709Bdp5SD6ehScTbg4vVY0ejmBETh5gRiwKxWd3uz1gfm6ZypuSdgJ
- Zo1bAI4RUMiyAkD3SiBM7e8hOoDBRS1T0bIMi4VIibEN9mcSY1N+6lRjUYUZq1H3MW
- tRgBJVh2qUEpXfK6XyVhOU+B9ji4iTi+LHey37HNu6aOplMQzBBTlNTUYtGUWcHJDn
- QGXawr0VSpzlHDj+Nnb9odPWB5CdE1reHtu5JJCL5iFqydIWt2aSW1ZOc7Dn2jytNz
- NljT/KqPnBXrpsXFlD0x/C7/ri5jHlV/FdLUetDZnNWkzoruuwqTEgiHlFvjmJ61DX
- 0WolcxD/7G9Eg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 586301978EA;
- Wed, 25 Mar 2026 16:05:02 +0300 (MSK)
-Message-ID: <a547c29b-3ab7-42fe-889a-19668bc9d090@tls.msk.ru>
-Date: Wed, 25 Mar 2026 16:05:22 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU requires a 64-bit CPU host architecture?
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-block <qemu-block@nongnu.org>
-Cc: QEMU Development <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
- <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
- <acOoVWw3jXfkfion@redhat.com>
- <CAFEAcA-Jzh0Wan9Dh+Pe9S3cHPeexV5mLaD+juXS8L9eMMd43g@mail.gmail.com>
- <d2db3893-7691-4707-8f43-341d09ceac97@linaro.org>
- <f3045c88-c64b-45ea-a372-3627cb3b4b01@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <f3045c88-c64b-45ea-a372-3627cb3b4b01@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1w5O03-0006RW-7M
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 09:10:20 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id AA3AE140027F;
+ Wed, 25 Mar 2026 09:10:17 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Wed, 25 Mar 2026 09:10:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1774444217; x=1774530617; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p
+ 0gRn5cEe2Wc=; b=IvOKnC4o4QuKP9JV2ovzMpa//h/pfQZG4O5vktFg3LQDPL5U
+ zqw/PIE6Cm6DdQ6IVCTZQKGwS5kiMlXHbTzCuUATAJpdwXl2Cxya357lp1IZjsue
+ wvwC76JVfbJCYp2uM0JxTQ8zqaD/rqXxShsIGd/08FJ3yz6Yp24Aod1xDqB8gZwf
+ 3hQnY147efP8N7c6GLgXqlYjJ2aXTLSIAcxT4vvIcAI0MsS/c6WJDUFWVPuoGSEw
+ mYsusVJYYtPIKzKDYjDImBbdLtV/Xn3t3KatMQ8G4qydUmpfcC6+MRi0U/dOMZ6Q
+ WT7OGhI60NMJVJEn+pAgPAvcOVheBcNt+RHMHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774444217; x=
+ 1774530617; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p0gRn5cEe2Wc=; b=0
+ nK+a8mXAsUkLwelnpdPQH8kpFCxoVs0XTl6RnUN4fR3RFjZc8mwXaVXfNyYZpagn
+ sane6VXZLAFEOJRdgNnYClpNBkNM+cXTHbSqlSJN9XHI3/V4WXVTeqm2/T+qp8W5
+ 1UmLhktxqWPDYkDZim40IRR/e7vPIdc3Pz9SX8f51avNlbAYWTuY4+7C0Z2uxTI3
+ wATj8W/TYXK6htjvzrGYEKwgYwWvAFWcjO9ifeE7yfFApJDODXFzE/wxWUnSAvhd
+ dvXu3iGBO2J+SKi61d5NKbwPj2yEjI2brGhEGN66W7e2bo9s+MgZ8+lsaeyIV2Jz
+ AvFK7wKE9DXM9QIvjCdUQ==
+X-ME-Sender: <xms:ud7DaadNvWUFArQqOUPaLmpT6RW_i8i18jLt4CHb3klXtdxdzOJf2g>
+ <xme:ud7DaX5bw8RhqXQiz5NN0rszzvfoybRINW6qAn1KtkTCW2_tcqR8cBJBPfvSEr5_T
+ 7Pk4EiBsIw0TLSSrUnX7_DDODrxTGm73ElnEG6US1RACr3wCk_lx2RZ>
+X-ME-Received: <xmr:ud7DaVWDTDB8aAsFEfU3ay4JWxS5E9p_jzpCWN47mqCgRvtHB23u48_D86lr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdegheegucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+ hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
+ jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
+ honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
+ tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
+ nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrh
+ gtrghnughrvgdrlhhurhgvrghusehrvgguhhgrthdrtghomhdprhgtphhtthhopegsrghl
+ rghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehphhhilhhmugeslhhinhgrrh
+ hordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdp
+ rhgtphhtthhopehkrhgrgigvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtoheptghhrg
+ gusehjrggslhhonhhskhhirdighiii
+X-ME-Proxy: <xmx:ud7Dae642_r1RexPf-luBXHDeHlnJ5eE28m3Tbct-BEOuyz4Z8YJxg>
+ <xmx:ud7DaYpgkX2WWTK0VeW4fft9i6pcL0UAXsrEfh02dAq0Qs-IC6Yk8A>
+ <xmx:ud7DaZk1Ck5aBrYYJyVs8KEee-17JiBtYiCuGMHtHd9_wZIrJQ_1Zw>
+ <xmx:ud7DacO-lItpMAkE6A0g28JLwqYTIWaSVsZnYwFgUc3bbX6ilSrnXA>
+ <xmx:ud7Daaf6Fq5_ddVp_Wc_7dSJE8YLixpEe3xGBw93LBz1BOlSOMoNsDbE>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 09:10:16 -0400 (EDT)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id 03781d58;
+ Wed, 25 Mar 2026 13:10:16 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 25 Mar 2026 09:10:16 -0400
+Message-Id: <DHBVZ7B7ZCAN.D37FLYFV0847@jablonski.xyz>
+Cc: <qemu-devel@nongnu.org>, "Gerd Hoffmann" <kraxel@redhat.com>,
+ <marcandre.lureau@redhat.com>, =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH v6 7/8] ati-vga: Simplify pointer image handling
+From: "Chad Jablonski" <chad@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
+ <chad@jablonski.xyz>
+X-Mailer: aerc 0.21.0
+References: <cover.1774110169.git.balaton@eik.bme.hu>
+ <b9de530074b954d661a0eb9b8b4ad82a66085456.1774110169.git.balaton@eik.bme.hu>
+ <DHB2SIE9XM4F.38ZR2LJ2F670B@jablonski.xyz>
+ <fa102b60-4b0d-7d70-81b1-dc145ee8b5f0@eik.bme.hu>
+In-Reply-To: <fa102b60-4b0d-7d70-81b1-dc145ee8b5f0@eik.bme.hu>
+Received-SPF: pass client-ip=103.168.172.155; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-a4-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,28 +122,5 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.03.2026 14:55, Philippe Mathieu-Daudé wrote:
-...
-> ... then the single issue in QOM is the object_class_property_init_all()
-> (due to sysemu GlobalProperty) which can be stubbed, ...
-
-qga doesn't actually need GlobalProperty, either.
-
-> ... then the only problem left is what util/qsp.c defines:
-> 
-> - qemu_mutex_lock_func()
-> - qemu_cond_wait_func()
-> - qemu_cond_timedwait_func()
-> 
-> If we can provide a 32-bit version of these the qga links (not sure
-> it makes sense although).
-
-And these aren't needed - it seems - by qga either.
-
-Both come to the qga link line using other, unrelated ways.
-
-Thanks,
-
-/mjt
-
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
 
