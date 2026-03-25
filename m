@@ -4,127 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48E4FEA80E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 06:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C23FEA814
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 07:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5I3K-0001oh-Dv; Wed, 25 Mar 2026 02:49:18 -0400
+	id 1w5IEf-0003pO-7c; Wed, 25 Mar 2026 03:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w5I3I-0001oP-FI
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 02:49:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5IEe-0003pF-B4
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:01:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w5I3F-0006MO-UL
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 02:49:16 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5IEc-0008LO-NN
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:01:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774421349;
+ s=mimecast20190719; t=1774422056;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8zPb9HXGk/LMb7TltLfeENvfOZo2obQDwZ/uJhoEKA8=;
- b=c1qO2OOnUIuYgUMfKbnLa4zIkk8PxcNv1AyERO4LtnDxS9qUBmzXVGDjBmiPu2U6Ved4c1
- cadEEhwAYQ8sDpHnA1IXuykAjpqrxPFPr+sPXnd0xjLPdJ7Ot5LRuICsNZDKROYuM6uwkn
- j+8UPLTcfXqY1Fm3oDSopoXYhOPmJkI=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fDWdFYschMvZsV6n8P91xQQUzluThfHYeAs7SXI1FuM=;
+ b=dziy2l2rPaFuRaaiAb0hAqQ+yD+jMcdLaK19+5zJdUww2Vx++EJeMVKTl9KWZtAvGJoUK6
+ OPSOswj5qg702lYUXEcxtGgVyqUQRqKoBlBHOn1dm0JMTxjjnThAVwCm4fW5qnOFYxhQdc
+ vIbgOwl4cZFsUmhBPlUMT4w+DQpBmvE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-Q6YbHbwCMUWdpD9GTrgjAA-1; Wed, 25 Mar 2026 02:49:07 -0400
-X-MC-Unique: Q6YbHbwCMUWdpD9GTrgjAA-1
-X-Mimecast-MFC-AGG-ID: Q6YbHbwCMUWdpD9GTrgjAA_1774421346
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-b630b4d8d52so3302814a12.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 23:49:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774421346; cv=none;
+ us-mta-64-Um3bhX5FOZ2EOT88FBUYHg-1; Wed, 25 Mar 2026 03:00:54 -0400
+X-MC-Unique: Um3bhX5FOZ2EOT88FBUYHg-1
+X-Mimecast-MFC-AGG-ID: Um3bhX5FOZ2EOT88FBUYHg_1774422053
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-439c112b1a4so2727246f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 00:00:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774422053; cv=none;
  d=google.com; s=arc-20240605;
- b=dHmhtGG38Mhkq9tLyDzdTal9ndzCLhluLbjQEG2ItIkXyKbYc6J/a9mtMYK4DsP9vW
- uQ9kiRlWRL9ObUXVujVNTk7Hi+Zi+5SjXrAerud/pwkBP/D89H35HJijEvBWqZRS4Ovx
- 5CchciyieB+KJkkOoypAc5bYVNHD/aO98Yo+sFPMwoKCkEOFHJwDxTANOMgH8aBKX/f/
- 1R+JqhOMoSFWdPqCCDrARymyN6RDvj5DAafc9ZYDQ3guRJ0HmL9RL24SK45JT8bPjx2/
- 5ejMIIARHah+4EowvazDlCb59xuDPLRlMuhz62ugOxklkr7yOo5dW1dmdAV7uwKyaqlq
- JCMg==
+ b=Wl99Eyie3ZPzHYlcOpNeTIGJPvoY98N20uMLbyTMDdZLw/2hg6CN21nmL0NEEkznUl
+ lxgP6qCqdezLMi/VFLeJOlqZGIChd+ShkQ7fyecUjDvIi03PIev4yJoVKjETcTMhatbQ
+ zaOYeT78d6Pf6rpfdcD7rH1mSQBUO5GQt1sCRPuNCDzcD3qEGO2uE2cAF8It1lYGywb/
+ 7Ouct1Hl3ntJXUAL4F/s8KNNEFRBzgGkaJgCejU7MFoaKuF0ZgeEmYNfrJEiGu6/8utt
+ sY1cxQByYSYe98S9yktcInOytXVRpTyY2oHzoYqPj9+0/OXZCmbBQGijP1GGOlPxA06y
+ wH6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8zPb9HXGk/LMb7TltLfeENvfOZo2obQDwZ/uJhoEKA8=;
- fh=pljgQb51SI5T8fJjT4f89PH4vuf7hUTqYcKOSXi3vR8=;
- b=kjpw3x2wBmM4oTOzHInEDVc7bnyFPGB3PafD9zNTCeQBINxS1wHZTR+Wvkglfbill2
- sHWWGi2GjbNwvkkR/yTOf75R+m58up6Dhu3OBmBA66uGcd20zODByg4AwDO3XXH27K5q
- iaj+8eYYAZKKArA+nQ/5PUFNKqM0BHfnHFAdgYdG0BLwOnCyj2SMYdaPLiCui8WyWNJB
- J6O3HGibYTh4B2tJqTfooLqmGGtw+OviYNV6nJ+5DAX++vbuOZNIoOo5ultCwPfs1ckS
- 35HAwHGQhQDp3/WSs7tvhTbSMPUdJsDIrRSifX/SZOoq5KdQRx5SW6HJCN3+wuwlcSHX
- aLrw==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=fDWdFYschMvZsV6n8P91xQQUzluThfHYeAs7SXI1FuM=;
+ fh=z5zLVx7biUVgmF8IXR4zlw3g/GraE2IcqOjlGjNrAIE=;
+ b=QGxEyhPLDP4HsWFv1bwdDz5oXrDgeVS7Jhhgs18oL45ooCoSeTPwImSpd4Ch1vu785
+ ngkVN51i/L7njQTYYFdf6nEh9iONSKY+9lLzCFVmt6+kov1NTbAKvZ3tMxooEt5rG6q8
+ 17UpFXYC41IF9pYk25Cak/kKVQF94s9dh3KpYYyoswdscl1cYhcF2haVTau2F8B/Hcli
+ gTypRzkVTlJ+IgaaLZ53VczmlL5MUW/zd8erHd2XLdR3meNtwKtTcUJZAb/K1bdha4kH
+ h0yfDEhfjNRy3l8OUzD7dHpNcYC3sIvKZpqKY/fplhSbsoYoHpFU9Hggv4w0tqLAY36F
+ 9upg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774421346; x=1775026146; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8zPb9HXGk/LMb7TltLfeENvfOZo2obQDwZ/uJhoEKA8=;
- b=DtIlLKy+tpzfKYzUc21ts1BaqK1Rc/+ScWF1yw/qKQXnOeMcXT3mXgCj3jY39kgnNU
- bQ2zOG+ZbClyJjJSJHbZbkAjpyQR4aR7gBXGRZY46wFkzTa9VkuvlTe8/5+BQlp0SZ+T
- bY51+u4PSg+O/l0/FC5Nuksk6HyXc+L8eg6Ah+ZtHMl0XhDygJZEM2vAf6kHF5fC4/mX
- APiUZsVm/10wjt7ad+V8ZngLEPpzE2a+YDeBqomStFvX43MGvRaouUbkvT5TyjG+ehYi
- VCMNbz1Sl92Ps3BrFdYCZ8o0Jek0M542GuINfj7qzI1hDQ+HTonbzahU9RLmhIoaZJ1w
- 1jwA==
+ d=redhat.com; s=google; t=1774422053; x=1775026853; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fDWdFYschMvZsV6n8P91xQQUzluThfHYeAs7SXI1FuM=;
+ b=h+VtpAZpFBFvJgBmVGvZgbILDjq3sTjxn8qPA9b810RGq1qh/ybjc54W67M/D7rOD1
+ 6gTh3L8syzGBJ7vXeoOoDSiQ77Wb6Wr6gvDj8g4G3L+l/k8rMARlq8/6dslqnM+rlZSV
+ P5GBD5BMjl8VJvzxy913MahsP4LLJ7jRWOiiMLHvf4473JAkPOOQ1tJr/KXrRSO0C/ca
+ MOkJ/U9KICiLUxsgNGjUcadoQj+o4aHWy31+bcvDmCPA3XzgwYb1FerFbun4/mbHloUy
+ v2TOK78bbfCpwC+wk3XWW3gTlMxYWmG5hKAWS3n5mFIU2MWcemZ7ZhbrRF/JlGxmZFHf
+ QPpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774421346; x=1775026146;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8zPb9HXGk/LMb7TltLfeENvfOZo2obQDwZ/uJhoEKA8=;
- b=iI6H12FEGsN1oyPyo05OtO1G4pMItdZXxe+bpC7aoMBJy37y1n/B4efhjus7bjg4Om
- H/HaLqt37m2J0XHjNJf7TteftBrAZd48oTROJUPWKV/VLiZVkCaTK65gnfA2J+RRRxgA
- QFPdNAQaLflysnVXsxP62Tsz4XDcFO2uy6kn2EIiEFPxASq0vX1s4ssjNdKLKKmnhuzr
- XyqZdzltdE/v4vXPNWuxmNEw2pp9dqRO13iN2JOVoPmQarlfyjQUSLWJq8LFvmXhNFIn
- T8MP9l9M05WJlgD26JMnWA/7/OtBtSXulDF0/UDs2m3Kk8x/tTDLsBKDIPU4zex9VCAf
- TkAQ==
-X-Gm-Message-State: AOJu0YylBRVspzJqpusSa1L0kXFEhZDZ3HxsVBgrwmS8W+TgcP/0NjsB
- 9HwCspz8WZye8QZif7oDE42bckcVLlnRkaOxcRy6ci97c1FY6gDKr2X8W/7XS6lG7KPyPK4QR0T
- JZvj7pjsvxuuAaanM35gKJX9iRKLWRijOxdPCaR0N+2EHXVNMg9CUsiIv7gOmoW0VIuW+4Seqts
- xUA5m5Mwvvx5vkJWJ8DIwnXE0tmKIgJmg=
-X-Gm-Gg: ATEYQzzyoQTTCFnIWCdywFYIPOnMbi6BJgd0ICobbvfFOxzBt2UdVA8eLmbKYVCnU18
- UNE0NZMrjZOOO8vOvkOgj5pV1/dW2TfdWE/kPyU4MG82hPf4We2q9nNxfaLFBNMRWZmesB0DFZR
- QPWm6YcZ+jKYvxhFyFl4pSZ9JOODY6ZsXqVr1N8JmrxncmTiPVtMXu8oLS4QhtxmNAnk+7+DpuW
- VjMcp3qn57cBuJ6jLrVDr/5ddKiUPUeO2RNwkwZC2COSAskzVBvuQE0sg0vmZtFyhB/KzrkbqoH
- foLW0G8OihcjLl7itYK3Xfw=
-X-Received: by 2002:a05:6a20:729f:b0:39b:f026:6f8d with SMTP id
- adf61e73a8af0-39c4ada9073mr2580616637.43.1774421346078; 
- Tue, 24 Mar 2026 23:49:06 -0700 (PDT)
-X-Received: by 2002:a05:6a20:729f:b0:39b:f026:6f8d with SMTP id
- adf61e73a8af0-39c4ada9073mr2580594637.43.1774421345566; Tue, 24 Mar 2026
- 23:49:05 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774422053; x=1775026853;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fDWdFYschMvZsV6n8P91xQQUzluThfHYeAs7SXI1FuM=;
+ b=WARHkE3l2e7f9IVGeCEIM4CHU2I0mbHFxoAzxgv/9PaDgfXrClPtltV3DuFW0QOC06
+ 6SKD/velbc0jLiCD1o/ReKCbolqdS6o8Vo/YHfCuqq4eXc5l46iQpnV2OiL5AufUHz0C
+ T/an3BlX68byTQ6oRY5P8cAP2xT71pfmffXFUFELz1keKA8hjVesCLs7gqI7gO7Wznl6
+ 4SUOhMnlQdViZu/9zbQOx2gI1st+IMToSf8rosZWbDQ46XKVIVzVtc3wW6Q7s2u3Kis+
+ YBlSTihkQBOuvaimQ9E5bR4rfEk4A0bqN5vNlGZcq+fhFp6pzVqQO6LXIui6uiZcHBfu
+ VFKQ==
+X-Gm-Message-State: AOJu0Yx5p5Jrwi+XcCzzx3esfOc/9wL4R8s0URro5UH/exjKkNfvYQPw
+ 4oaDehW5Q5p85QOMb+YXqICdMfxWBgVhMw6zhaoS7WTfiQ+3KfTZHw2UojkoX9mBKungvxKxgRO
+ yZIrj7E/8CkKFS9kY12HDOf/LoAEkBWiquPqwvoOxpECMmGLmX4gax+TY6vvTbW4YD4lYucjhHQ
+ caglYSeUNWbryJdInwrJFtBpgnLgollI2WqMS3AMA=
+X-Gm-Gg: ATEYQzwUJgS+l4pDK5jDteqfPn/aGaJ5XYWQ0G2LnL4c7MBZFStfuTU1e7tycD+yA9/
+ zQjAdMtG1Li9qlNEumE7wnr4ACq3afNgnRYSSfI9baB2TcnA63avSaSivjiBMhWpwDD+RMAd1sh
+ UvqdTh7RggIGJmlHwRph0kirxXp576e6FoSCM/L6DoF30Al0PiaipbntJwm1wGSx8U1E3HGsasZ
+ hwYoxN9iSq5XUJqf7qJrudUvLI7GNtLODLbb02lHU+13mrjiP3hChPeR0NhOynVtFw7dW+B8GFB
+ iTrf
+X-Received: by 2002:a05:6000:208a:b0:432:5c34:fb32 with SMTP id
+ ffacd0b85a97d-43b889bd8b5mr3323888f8f.23.1774422052278; 
+ Wed, 25 Mar 2026 00:00:52 -0700 (PDT)
+X-Received: by 2002:a05:6000:208a:b0:432:5c34:fb32 with SMTP id
+ ffacd0b85a97d-43b889bd8b5mr3323781f8f.23.1774422051566; Wed, 25 Mar 2026
+ 00:00:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-11-48eb1dcf7b76@redhat.com>
- <878qbgpj31.fsf@pond.sub.org>
-In-Reply-To: <878qbgpj31.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 25 Mar 2026 10:48:54 +0400
-X-Gm-Features: AaiRm52lP2An-LpLxP6wM9jHcX2Bavx3y-Cs1NFnxdPOp5VwPFHbQjaeWrRgNTU
-Message-ID: <CAMxuvayGCvJwyUgrHSGwfLhqAbVC61dEbgbL4Ji_0YQHyv4LJA@mail.gmail.com>
-Subject: Re: [PATCH 11/60] ui/console-vc: add UTF-8 input decoding with CP437
- rendering
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+References: <20260324165705.785605-1-pbonzini@redhat.com>
+ <3768bc38-1231-4f62-9ac8-c27e8bb66e7b@linaro.org>
+In-Reply-To: <3768bc38-1231-4f62-9ac8-c27e8bb66e7b@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 25 Mar 2026 08:00:00 +0100
+X-Gm-Features: AQROBzBpG1fKeeT6xTheY31xdtcnuQMQk8Baa19x2TLpwulhvD6rtUVcAo0zOAc
+Message-ID: <CABgObfZXP1XvFg_SNPJ=dP7gXix3g=ZTq-jnC71WTv+cCusVPA@mail.gmail.com>
+Subject: Re: [PATCH] treewide: replace qemu_hw_version() with QEMU_HW_VERSION
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000010d05d064dd3d41d"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,38 +135,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HI
+--00000000000010d05d064dd3d41d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 25, 2026 at 9:35=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->
-> > The text console receives bytes that may be UTF-8 encoded (e.g. from
-> > a guest running a modern distro), but currently treats each byte as a
-> > raw character index into the VGA/CP437 font, producing garbled output
-> > for any multi-byte sequence.
+Il mar 24 mar 2026, 20:18 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
+a
+scritto:
+
+> On 24/3/26 17:57, Paolo Bonzini wrote:
+> > The version is never set on 2.5+ machine types, so qemu_hw_version() an=
+d
+> > qemu_set_hw_version() are not needed anymore.
 > >
-> > Add a proper UTF-8 decoder using Bjoern Hoehrmann's DFA.
-> > The DFA inherently rejects overlong encodings, surrogates, and
-> > codepoints above U+10FFFF.  Completed codepoints are then mapped to
-> > CP437, unmappable characters are displayed as '?'.
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   include/hw/core/boards.h  |  6 ------
+> >   include/qemu/hw-version.h | 15 ---------------
+> >   hw/ide/core.c             |  2 +-
+> >   hw/scsi/megasas.c         |  2 +-
+> >   hw/scsi/scsi-bus.c        |  2 +-
+> >   hw/scsi/scsi-disk.c       |  2 +-
+> >   system/vl.c               |  4 ----
+> >   target/s390x/cpu_models.c |  2 +-
+> >   util/osdep.c              | 12 ------------
+> >   9 files changed, 5 insertions(+), 42 deletions(-)
+>
+>
+> > diff --git a/include/qemu/hw-version.h b/include/qemu/hw-version.h
+> > index 730a8c904d9..a40a6c204a6 100644
+> > --- a/include/qemu/hw-version.h
+> > +++ b/include/qemu/hw-version.h
+> > @@ -7,21 +7,6 @@
+> >   #ifndef QEMU_HW_VERSION_H
+> >   #define QEMU_HW_VERSION_H
 > >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > -/*
+> > - * Starting on QEMU 2.5, qemu_hw_version() returns "2.5+" by default
+> > - * instead of QEMU_VERSION, so setting hw_version on MachineClass
+> > - * is no longer mandatory.
+> > - *
+> > - * Do NOT change this string, or it will break compatibility on all
+> > - * machine classes that don't set hw_version.
+> > - */
+> >   #define QEMU_HW_VERSION "2.5+"
 >
-> Have you considered the decoder in util/unicode.c?  Do we need two
-> decoders, or could we replace one by the other?
+> Maybe rename as QEMU_HW_VERSION_2_5P if we remove the "do not change
+> this string" comment.
 >
 
-Oh! I missed it, I should definitely try to use it.
+Maybe, on the other hand *which* version is used as the baseline (2.5+) is
+an implementation detail. Even if we added QEMU_HW_VERSION_11_1+ tomorrow,
+the baseline would stay the same. The comment is clear.
 
-> There's a mad UTF-8 test suite buried in tests/unit/check-qjson.c
-> derived from Markus Kuhn's UTF-8 decoder capability and stress test at
-> <http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt>.  How does
-> this decoder do on these tests?
+Paolo
+
+
+> >
+> > -/* QEMU "hardware version" setting. Used to replace code that exposed
+> > - * QEMU_VERSION to guests in the past and need to keep compatibility.
+> > - * Do not use qemu_hw_version() in new code.
+> > - */
+> > -void qemu_set_hw_version(const char *);
+> > -const char *qemu_hw_version(void);
+> > -
+> >   #endif
+>
 >
 
-According to the author original article, it should pass
-https://bjoern.hoehrmann.de/utf-8/decoder/dfa/
+--00000000000010d05d064dd3d41d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 24 mar 2026, 20:18 Philip=
+pe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linar=
+o.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">On 24/3/26 17:57, Paolo Bonzini wrote:<br>
+&gt; The version is never set on 2.5+ machine types, so qemu_hw_version() a=
+nd<br>
+&gt; qemu_set_hw_version() are not needed anymore.<br>
+&gt; <br>
+&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
+" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0include/hw/core/boards.h=C2=A0 |=C2=A0 6 ------<br>
+&gt;=C2=A0 =C2=A0include/qemu/hw-version.h | 15 ---------------<br>
+&gt;=C2=A0 =C2=A0hw/ide/core.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0|=C2=A0 2 +-<br>
+&gt;=C2=A0 =C2=A0hw/scsi/megasas.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0=
+ 2 +-<br>
+&gt;=C2=A0 =C2=A0hw/scsi/scsi-bus.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-=
+<br>
+&gt;=C2=A0 =C2=A0hw/scsi/scsi-disk.c=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-=
+<br>
+&gt;=C2=A0 =C2=A0system/vl.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|=C2=A0 4 ----<br>
+&gt;=C2=A0 =C2=A0target/s390x/cpu_models.c |=C2=A0 2 +-<br>
+&gt;=C2=A0 =C2=A0util/osdep.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 | 12 ------------<br>
+&gt;=C2=A0 =C2=A09 files changed, 5 insertions(+), 42 deletions(-)<br>
+<br>
+<br>
+&gt; diff --git a/include/qemu/hw-version.h b/include/qemu/hw-version.h<br>
+&gt; index 730a8c904d9..a40a6c204a6 100644<br>
+&gt; --- a/include/qemu/hw-version.h<br>
+&gt; +++ b/include/qemu/hw-version.h<br>
+&gt; @@ -7,21 +7,6 @@<br>
+&gt;=C2=A0 =C2=A0#ifndef QEMU_HW_VERSION_H<br>
+&gt;=C2=A0 =C2=A0#define QEMU_HW_VERSION_H<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -/*<br>
+&gt; - * Starting on QEMU 2.5, qemu_hw_version() returns &quot;2.5+&quot; b=
+y default<br>
+&gt; - * instead of QEMU_VERSION, so setting hw_version on MachineClass<br>
+&gt; - * is no longer mandatory.<br>
+&gt; - *<br>
+&gt; - * Do NOT change this string, or it will break compatibility on all<b=
+r>
+&gt; - * machine classes that don&#39;t set hw_version.<br>
+&gt; - */<br>
+&gt;=C2=A0 =C2=A0#define QEMU_HW_VERSION &quot;2.5+&quot;<br>
+<br>
+Maybe rename as QEMU_HW_VERSION_2_5P if we remove the &quot;do not change<b=
+r>
+this string&quot; comment.<br></blockquote></div></div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">Maybe, on the other hand *which* version is used =
+as the baseline (2.5+) is an implementation detail. Even if we added QEMU_H=
+W_VERSION_11_1+ tomorrow, the baseline would stay the same. The comment is =
+clear.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quo=
+te_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -/* QEMU &quot;hardware version&quot; setting. Used to replace code th=
+at exposed<br>
+&gt; - * QEMU_VERSION to guests in the past and need to keep compatibility.=
+<br>
+&gt; - * Do not use qemu_hw_version() in new code.<br>
+&gt; - */<br>
+&gt; -void qemu_set_hw_version(const char *);<br>
+&gt; -const char *qemu_hw_version(void);<br>
+&gt; -<br>
+&gt;=C2=A0 =C2=A0#endif<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000010d05d064dd3d41d--
 
 
