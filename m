@@ -4,47 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EAA8103A9AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 11:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 877FA103A9A7
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 11:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5M9j-0002RQ-4y; Wed, 25 Mar 2026 07:12:11 -0400
+	id 1w5MIw-0006Gz-87; Wed, 25 Mar 2026 07:21:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1w5M9R-0002Mg-VI; Wed, 25 Mar 2026 07:11:54 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1w5M9O-0003Ob-UM; Wed, 25 Mar 2026 07:11:53 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id CCD7F49019;
- Wed, 25 Mar 2026 12:11:48 +0100 (CET)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org,
-	hreitz@redhat.com,
-	kwolf@redhat.com
-Subject: [PATCH v3 1/2] iotests/041: add test for mirror with throttled NBD
- export as target
-Date: Wed, 25 Mar 2026 12:11:03 +0100
-Message-ID: <20260325111140.347421-2-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260325111140.347421-1-f.ebner@proxmox.com>
-References: <20260325111140.347421-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5MIo-0006FD-MU
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 07:21:34 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5MIm-0008FH-BL
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 07:21:33 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso7477225e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 04:21:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774437690; x=1775042490; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CvKEVKcv7f3BzA/1Uh0nPdE2w3AyCFo2zjW38XFHqq8=;
+ b=ygBpsBp+F2Axxz+BeoVH/zIeBJD3FKO1XbF+pNgiK+4Emgv0fABvF6JAc4eSXie9HU
+ CI5IkeMpmCv+/26XRBZfsPs6X4ABSTWRLgBTPDofGxrcHT/kyiH07d5EhDVG4coGrkbO
+ vPp6R51YYETDauwfAvWsz5Zuc72hWqh4INp30ZDo1SXBmDY6U6asFqT5NOTkog0l0nd3
+ +niCOhatugcNqepFT1ARxgxIeOl/431FRZaqLWM/wYOctnHhjnb+idC4E805qnwnnH1o
+ 5Z+KzMDoHu7f6WmHY9H8i2gMdKTWvmn8Y+PD/RJOy6z/pCfKKLmGIb0uCmXy5q9+Vosz
+ q6Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774437690; x=1775042490;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CvKEVKcv7f3BzA/1Uh0nPdE2w3AyCFo2zjW38XFHqq8=;
+ b=EiUeJ/WpuZzPPI4HVLgJuS6tgis6+xKMxCruDv0XZAFGIyQpYN/83nMdffG6nCEaks
+ S962Ury4+kxkCs/4HIRHsOOV4p40X98Fd/6bOaCKDjBKO4GFx2f29SQN2VlHI0C/mOsI
+ wvGdi1/pq5fI7qqoIAQ0cOCeeZDV+IxRHs4Ehbu+lhJ8vCaQY8rpTEuUvlqgvgUTHJZi
+ PYcy5uNF+DW6dGeFPLwz7E7p8A1IJ8IGGjmD1dFN4kwVq+QJXZjVUnlN/YrTF9a2l5cy
+ QQLDBOyX05AbBqiU7leukke+KI0N3oNz4V25FXtn7VQQaUvLnfUhWIhJaLp/jVxLideO
+ o9Cg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYn3Oq9mOUbD3neVU5vaPzksrvuvtImz3gmvEwfVHpAyfEC/Pu0mcAxi9zaMQ+nvzwifxivkbnlmx6@nongnu.org
+X-Gm-Message-State: AOJu0YxldKfOAcpKMcr19YDjf8s3Sg2MraP1D1uAUZ+qcuUuA0Ke0Uz/
+ 2vxpsxE7tfgpmozoo8TI8rgDA6oGvLGUGrgaCbdHTU2tVhcx+4YVCUuoFrU5/NzPDsk=
+X-Gm-Gg: ATEYQzyaZBNUEmoaTE9M48v10AOKTTh3tphQooD3ibKN4EwCVYIUUSgxq856XEkK9XJ
+ AVNVOhJm7ngCBymqY985qZaRkie8RUsqAAjlUdSlufyFUIEXHUfAfYVo7/rStk+shUyZOTbzp+O
+ 5yZa0IXuxWIRv3L6X2azC6cCLGP/4/DDu+KNW95fB0fLQo01JO1ZSJv8nUlkxzSfJIRIDrbxycT
+ /fjrq99bbN3dUgP7Qa291SK/0alD/m5uXnSPVWRbd5RMAh015UDwoJ241V5hpuNirOIMg8+rCWA
+ Rdo5r9auld1HucjZH2OhvvROwHop3IzJpS0WpPXFNa79tt06RrLDSCeR+5rX+qJ7xKwXI08N4Nl
+ wP/TXuv1DbtwAnr9cEmqI7P67WbtQmMjjXvtvbiTuog8Sw/VZYeEl1T0nxQT452qjb6AzLQ+IX3
+ 9YvrrTTGpgJphgddI/i8c/ciOghErVXtVJlfjAq0R/BIvAY3BgutLlCqB2MQGzn2zawQ==
+X-Received: by 2002:a05:600c:4f89:b0:477:9890:9ab8 with SMTP id
+ 5b1f17b1804b1-48715fc75b2mr40446795e9.3.1774437689570; 
+ Wed, 25 Mar 2026 04:21:29 -0700 (PDT)
+Received: from [192.168.69.229] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48711701804sm126251425e9.4.2026.03.25.04.21.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Mar 2026 04:21:28 -0700 (PDT)
+Message-ID: <d2db3893-7691-4707-8f43-341d09ceac97@linaro.org>
+Date: Wed, 25 Mar 2026 12:21:27 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: QEMU requires a 64-bit CPU host architecture?
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-block <qemu-block@nongnu.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, QEMU Development
+ <qemu-devel@nongnu.org>, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
+ <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
+ <acOoVWw3jXfkfion@redhat.com>
+ <CAFEAcA-Jzh0Wan9Dh+Pe9S3cHPeexV5mLaD+juXS8L9eMMd43g@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA-Jzh0Wan9Dh+Pe9S3cHPeexV5mLaD+juXS8L9eMMd43g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1774437060106
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,201 +109,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mostly in preparation for commit "iotests/041: add test for duplicate
-job-complete with throttled target".
+On 25/3/26 11:24, Peter Maydell wrote:
+> On Wed, 25 Mar 2026 at 09:19, Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>
+>> On Wed, Mar 25, 2026 at 11:08:41AM +0300, Michael Tokarev wrote:
+>>> On 20.03.2026 09:45, Michael Tokarev wrote:
+>>>> Hi!
+>>>>
+>>>> Is it intentional that qemu does not build utilities on 32bit hosts
+>>>> anymore?
+>>>
+>>> This is
+>>>
+>>> commit 372ec46b9f1215f48a4717f2b7ed969f65bfadc6
+>>> Author: Richard Henderson <richard.henderson@linaro.org>
+>>> Date:   Thu Dec 18 09:56:27 2025 +1100
+>>>
+>>>      meson: Reject 32-bit hosts
+>>>
+>>>      32-bit hosts have been deprecated since 10.0.
+>>>
+>>> How would one build qemu-img and especially qemu-guest-agent, say,
+>>> on i386 or armhf?
+>>>
+>>> I tried removing this error message from meson.build (in $subject),
+>>> but it fails to build even the qga due to errors in atomic.h, -
+>>> even if these aren't used by qga.
+>>>
+>>> That smells like a bad decision, - to drop qga and qemu-img support
+>>> on 32bit architectures.  Especially qga.
+>>
+>> IMHO dropping the block related tools is reasonable, as if you keep
+>> that, the dependencies that need to remain 32-bit compatible ripple
+>> out across a very large part of the codebase.
+>>
+>> Not having qga though feels like a pretty undesirable consequence,
+>> given our message overall is that we were dropping host support but
+>> keeping 32-bit emulation.
+> 
+> Yes, I'm not sure we quite realised that we would be no longer
+> building QGA for 32-bits. How much effort would it be to
+> reinstate that?
 
-Use a second VM instance for providing the NBD export rather than
-qemu-storage-daemon, because the latter does not support qtest for
-stepping the clock.
+ From the commits in 5053e0a65db...90e2e8ada7c we'd need to (partially)
+revert various of the buildsys ones (meson & configure).
 
-Use copy_mode='write-blocking' for easy checking how many bytes were
-written in a given time. In the job's offset, the numbers are
-inflated, since a 1 KiB write will mean copying a full cluster of
-64 KiB.
+Then we'd need to check if the Stat64 API (90e2e8ada7c) was used by
+the block tools, and if so also revert the atomic64 patches (around
+997d86a9bb1). If not some (sane) refactor is needed for some core
+components (disentangle qdev from qom due to the atomic uses). Still
+we rely heavily on atomic helpers for threads and co-routines used
+by the block layer (and also to reference the QOM objects...).
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
-
-Changes in v3:
-* In the first test, avoid testing that all requests complete in a
-  given time. This is prone to flakiness. Instead, complete the job
-  under throttle.
-
- tests/qemu-iotests/041     | 146 +++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/041.out |   4 +-
- 2 files changed, 148 insertions(+), 2 deletions(-)
-
-diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
-index 8452845f44..976a12a6f2 100755
---- a/tests/qemu-iotests/041
-+++ b/tests/qemu-iotests/041
-@@ -1373,6 +1373,152 @@ class TestFilters(iotests.QMPTestCase):
- 
-         self.complete_and_wait('mirror')
- 
-+# Tests for mirror where the target is a throttled NBD export.
-+class TestThrottledNBDTarget(iotests.QMPTestCase):
-+    image_len = 32 * 1024 * 1024
-+    reqs = 20
-+    req_len = 1024
-+
-+    def setUp(self):
-+        iotests.create_image(backing_img, self.image_len)
-+        iotests.create_image(target_backing_img, self.image_len)
-+        qemu_img('create', '-f', iotests.imgfmt,
-+                 '-o', f'backing_file={backing_img}', '-F', 'raw', test_img)
-+        qemu_img('create', '-f', iotests.imgfmt,
-+                 '-o', f'backing_file={target_backing_img}', '-F', 'raw',
-+                 target_img)
-+        qemu_io('-c', f'write -P 23 0 {self.image_len}', test_img)
-+
-+        self.target_vm = iotests.VM()
-+        self.target_vm.launch()
-+
-+        self.target_vm.cmd('nbd-server-start', {
-+            'addr': {
-+                'type': 'unix',
-+                'data': {
-+                    'path': nbd_sock_path
-+                }
-+            }
-+        })
-+
-+        self.target_vm.cmd('object-add', {
-+            'qom-type': 'throttle-group',
-+            'id': 'thrgr-target',
-+            'limits': {} # limits are set by the individual tests
-+        })
-+
-+        self.target_vm.cmd('blockdev-add', {
-+            'node-name': 'target',
-+            'driver': 'throttle',
-+            'throttle-group': 'thrgr-target',
-+            'file': {
-+                'driver': iotests.imgfmt,
-+                'file': {
-+                    'driver': 'file',
-+                    'filename': target_img
-+                }
-+            }
-+        })
-+
-+        self.target_vm.cmd('block-export-add', {
-+            'id': 'exp0',
-+            'type': 'nbd',
-+            'node-name': 'target',
-+            'writable': True
-+        })
-+
-+        self.vm = iotests.VM().add_device('virtio-scsi,id=vio-scsi')
-+        self.vm.launch()
-+
-+        self.vm.cmd('blockdev-add',{
-+            'node-name': 'source',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'file',
-+                'filename': test_img
-+            },
-+            'backing': {
-+                'node-name': 'backing',
-+                'driver': 'raw',
-+                'file': {
-+                    'driver': 'file',
-+                    'filename': backing_img
-+                }
-+            }
-+        })
-+
-+        self.vm.cmd('device_add',
-+                    driver='scsi-hd',
-+                    id='virtio',
-+                    bus='vio-scsi.0',
-+                    drive='source')
-+
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'target',
-+            'driver': 'nbd',
-+            'export': 'target',
-+            'server': {
-+                'type': 'unix',
-+                'path': nbd_sock_path
-+            }
-+        })
-+
-+        self.drive_qdev = '/machine/peripheral/virtio'
-+
-+    def set_throttle_limits(self, limits):
-+        self.target_vm.cmd('qom-set', {
-+            'path': 'thrgr-target',
-+            'property': 'limits',
-+            'value': limits
-+        })
-+
-+    def disable_throttling(self):
-+        if self.target_vm.is_running():
-+            self.set_throttle_limits({})
-+            for i in range(0, self.reqs):
-+                self.target_vm.qtest(f'clock_step {1 * 1000 * 1000 * 1000}')
-+
-+    def tearDown(self):
-+        if self.target_vm.is_running():
-+            self.disable_throttling()
-+            self.target_vm.shutdown()
-+        self.vm.shutdown()
-+        os.remove(test_img)
-+        os.remove(target_img)
-+        os.remove(backing_img)
-+        os.remove(target_backing_img)
-+
-+    def test_throttled(self):
-+        self.vm.cmd('blockdev-mirror',
-+                    job_id='mirror',
-+                    device='source',
-+                    target='target',
-+                    sync='full',
-+                    copy_mode='write-blocking')
-+
-+        self.wait_ready('mirror')
-+
-+        self.set_throttle_limits({'iops-write': 1})
-+
-+        # Issue requests that will be throttled.
-+        for i in range(0, self.reqs):
-+            req = f'aio_write -P 7 {i}M {self.req_len}'
-+            self.vm.hmp_qemu_io(self.drive_qdev, req, qdev=True)
-+
-+        # Check that requests do not complete faster than 1 per second. They
-+        # might complete in batches, so do not check for exactly 1 per second.
-+        for i in range(0, self.reqs):
-+            result = self.vm.cmd('query-blockstats')
-+            assert result[0]['stats']['wr_bytes'] <= (i + 1) * self.req_len
-+
-+            self.target_vm.qtest(f'clock_step {1 * 1000 * 1000 * 1000}')
-+            time.sleep(0.1)
-+
-+        self.complete_and_wait('mirror', wait_ready=False)
-+        self.target_vm.shutdown()
-+        self.vm.shutdown()
-+        self.assertTrue(iotests.compare_images(test_img, target_img),
-+                        'target image does not match source after mirroring')
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2', 'qed'],
-diff --git a/tests/qemu-iotests/041.out b/tests/qemu-iotests/041.out
-index 46651953e8..5273ce86c3 100644
---- a/tests/qemu-iotests/041.out
-+++ b/tests/qemu-iotests/041.out
-@@ -1,5 +1,5 @@
--...........................................................................................................
-+............................................................................................................
- ----------------------------------------------------------------------
--Ran 107 tests
-+Ran 108 tests
- 
- OK
--- 
-2.47.3
-
-
+How / where would we test that (and for how long)?
 
