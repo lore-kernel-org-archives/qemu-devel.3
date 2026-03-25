@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881DE109E522
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F625109E520
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5W9T-0000xK-I2; Wed, 25 Mar 2026 17:52:35 -0400
+	id 1w5W9T-0000x9-CH; Wed, 25 Mar 2026 17:52:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5W9S-0000wn-B3
+ id 1w5W9S-0000wZ-5w
  for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:52:34 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5W9P-00034Q-Qm
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:52:34 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-35a094cc3e9so203458a91.3
+ id 1w5W9Q-00034d-Bm
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:52:33 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-35c1a131946so312137a91.0
  for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774475550; x=1775080350; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774475551; x=1775080351; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OhuC67npbeF55oq6DIBT6Wta/p6WeDjzvn37ZsiDmLE=;
- b=c+Lzsx4LOvGD7axTIKjOZuXGvW1MTesG+inScQVVpyoQxZtNBnCR3XjD+ijy24Pnyk
- r9yIGciBkWF30MdgbEzY0rX4WEnn+G/IHjANprXZnCkDMpro+4Vhff1KybSzgBUYzy5i
- GoyKrBhtImHypwTVYoFhYFXyk06cNam+K2198w450VGKMhWpAnVpNZfPOb9onYdVuh9V
- eLXqvQV6JyCnKzZ+AY09eGXIN8TM+JGSViYzxuMgtfCFgX57fc1EB3jzx7Z1MqTyTuY8
- Z6cXIqhK6f0ydTtOM0QEFVY+hrpRHJ4n0H4fXiHg0yImNQi9YT/dllfiYgkFwhWTcfSV
- Q24w==
+ bh=v/6uNAZDRg3OvgbspkHXUcua3vTL1U01rrAn4eKcg5k=;
+ b=XGsy1ELehUUekP58BGH4rbE5x4Cw5XfqdVfwbZQdDVyl5+y2nheuCNwUlbGBVf4p2a
+ 226L7p6KHj3tGl3rGY+VfHx3NyzGG9iKo7G+UhD3/HXEb2YoHibYHqWkEHeC+Tqs7M58
+ zJ/0zvaumTZYgGc7lcbjsprR5N61jddKL8R9Kd2m2saaFke8vPgz5k0jC5QB3anV4f0G
+ JPbnWld0f6WOmPUr3206/4JwT5BM+v3Mia1VJYu9TJ4rGRF88Shy9PxhFpph7+aHeiVH
+ NA8wPGLvRD49an7MlOePC4K5Z3kUDJyKkSnqUhy8NFx4OzKvEiygZYBUNVl9RN+nFM3w
+ 9H9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774475550; x=1775080350;
+ d=1e100.net; s=20251104; t=1774475551; x=1775080351;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OhuC67npbeF55oq6DIBT6Wta/p6WeDjzvn37ZsiDmLE=;
- b=aJk6029lJwbG+6eBnfrrXhLsKUFBr9jAcYr1rlYd6fqleoHYoEC32lEr0DoB8fqAa/
- qtE+kbQMHlFmdjgSiBio4YWkxnX993NWn5FrEophhfKW4xXSIlZ1eh5s57R6KplnbfVr
- 5F0zCEbMoyb5fQNUixO+YiqToVVmkCcBQCcu1fXfk7V4FSjDL6Qat4PPrb5BwYUOjJRj
- IqfWsn3OGShiRP3R9LpGNYHRDggTwwtOFKdxHEpGO2ehqeTD7PoqLXS7NV9a6t0ucM1g
- Z20Dc/+YQ6YRIC7zC18VI1/GsBa2R4DibBILfPbbChQv4dJ3U16q4I5sgzH/rxlxXPIv
- 6HKQ==
-X-Gm-Message-State: AOJu0YzO2cbodZQcXhUPRD+MUGvziM6Y9AmTcD5ZSW61AWSisiE9vZ9K
- S0/VnDv/B1HMdhyaXAr0fwnlAd4xjz53veUDZQa3p+iF0REu6bRBW3CdPLJljxLSdlb6iDeiz1R
- 6A7Xvh4s=
-X-Gm-Gg: ATEYQzz6Bqwm4/h1Ea6UKvvuktwNRwZxkB0VuW+KJOQSB+AkpDMq6KrbyOyat7LWjA7
- BtxifscWv7TYDSYswUCbbpqZbjOHCEggz5QCp0pAURvCnxOjT/OuP88xRDVk3DCntidu7EPr+a9
- 1KeVoM3AMwxo52bINplFw4N2DlWE2dlBaP98twVDzwTkqfp19/vS3CVijx5DR7Cm1zklSYTbiNK
- N9tk74PFPhXAUNjT8pFXvmJVtb+2FKPR3Gj++ROaBcJJ4BRNBSIh1DYc1K45ophS7dYfZxMC93U
- 4CMYrEw2l1crv9shjgZhLoNLvDQQEsUmBxrHjq33Mem54VjrPCIwH5LhMP6DTkh2zmqtT/XgOIL
- g7VFvLXu18RmWSh/mNEkVvDrAZBeDBNn6wPKUxYIVWP0tANHlXVyQSdGjLAH8p3B3GoHYLbRq9d
- lKc3Jh5npIj3MtmOhiYnUAavWuVMPxBLIDn5Bu/aJr0k2XCMz/XZizuNh8lN1oUvYghsLWDgPZn
- kQR
-X-Received: by 2002:a17:90b:2747:b0:35b:e5cf:20fc with SMTP id
- 98e67ed59e1d1-35c0dd98967mr4890427a91.26.1774475550158; 
+ bh=v/6uNAZDRg3OvgbspkHXUcua3vTL1U01rrAn4eKcg5k=;
+ b=tXIrv9E6nAJtrfYY5iq25LwDkG89W3sDyQCr8/5KBb/igm42T2pqXGgM4ikvl6k3WB
+ v+BMyW4U+u4XHASDUkFLNiqlWP3KoE5S+dihoYhx1qztauMkNz+2U13HVPuCXywGFfuC
+ v5mVAOy4F4l+phNrGr6x56wO0l7Hjubwq+ELzCVuLFokkbhaGvB/hXVSQ9u2JmxMnSKX
+ Fk6j1VD9KsSJNwBzGZWBTUAD2k6TiOyaSnTFV1E5urrFgwH4ZwPZ3D8oK6u40ytsttbW
+ 3C6FJ9ziJTCh8z7B+rv33ZA4Dn6io0T97EJ41IKO+CqGz9ySKzHB02hRCa3lAPiLnuR3
+ B5rA==
+X-Gm-Message-State: AOJu0YwshKBgqANd+pk0WnyoITqXO4O/o3Asq3FeY3LnqXJpKkClLAFR
+ HWG5u+iM2UakpmyCtkDDcJ/scvC5850nYJOOuCwGYuylaPJzTFgiostO5yXP3ARra7kiazcF8gq
+ CP3ugQ28=
+X-Gm-Gg: ATEYQzwC1NAx6YmV8iiJ66eDO8LvB6UJXcRXPiIEoT86iOPgU7VxWEL/voKlRQAnTiI
+ SBXnO5Al2KutQQqiH+HLr/hLkhRqBdnwcfk8BgC9op5vNKzWdN6Hs06I4jdE5JedD1WqX9MqNAx
+ 943waFTWuO9iY+Bufq4RUQhcFyoePe/XkVbZQU5eqxZShg6JMCeBmKS0i8KQD/mfoYD7PBWGD4l
+ Z8mUJW+pNP16DBbubdE677GBiDbvSot1GvHde4tZuq6LF81GjtOHJa64JtI+lwHt6ySxPuTkD48
+ uhLtRKYR2DNI8IGLi5ewrdVaNOCOsEYtmjWs9gA/i3yUlQICg/fhpAGxAMEWWj8UlWqtuci2cZ6
+ tIzfgI3m3fReV5eYr0bRF//JZJRwA1KMWmg2EsCC3hdjJYthmZbe3BAU0gkT/p1DMEP7Lpxr9aL
+ HNXoTN2zfyeRauNNUmgeMWL7aTxGB+tjwAE+Pn7XSWHvH4uSZrIHNJwoVPBBDXbn2hmjDNBJbNi
+ ixR
+X-Received: by 2002:a17:90b:3d8d:b0:35b:e4d4:8290 with SMTP id
+ 98e67ed59e1d1-35c008d3242mr7937420a91.9.1774475550941; 
  Wed, 25 Mar 2026 14:52:30 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c0313eedasm6402987a91.5.2026.03.25.14.52.29
+ 98e67ed59e1d1-35c0313eedasm6402987a91.5.2026.03.25.14.52.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 14:52:29 -0700 (PDT)
+ Wed, 25 Mar 2026 14:52:30 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 2/3] include/plugins/qemu-plugin.h: add note about endianness
- of value returned by qemu_plugin_mem_get_value
-Date: Wed, 25 Mar 2026 14:52:21 -0700
-Message-ID: <20260325215222.3678982-3-pierrick.bouvier@linaro.org>
+Subject: [PULL 3/3] tests/tcg/plugins/mem.c: fix endian swap in
+ update_region_info
+Date: Wed, 25 Mar 2026 14:52:22 -0700
+Message-ID: <20260325215222.3678982-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260325215222.3678982-1-pierrick.bouvier@linaro.org>
 References: <20260325215222.3678982-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260325024252.3369186-3-pierrick.bouvier@linaro.org
+value returned by qemu_plugin_mem_get_value() is always in host-endian
+order, so we need to convert TO target endianness and not FROM it.
+
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260325024252.3369186-4-pierrick.bouvier@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/plugins/qemu-plugin.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tests/tcg/plugins/mem.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 2ce7a7fb6c3..4eb1d2cd85c 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -374,7 +374,8 @@ enum qemu_plugin_mem_value_type {
-  *
-  * @type: the memory access size
-  * @data: the value accessed during the memory operation (value after
-- *        read/write)
-+ *        read/write). It's directly stored following host endianness, so no
-+ *        further swap is needed.
-  */
- typedef struct {
-     enum qemu_plugin_mem_value_type type;
-@@ -682,7 +683,7 @@ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info);
-  * qemu_plugin_mem_get_value() - return last value loaded/stored
-  * @info: opaque memory transaction handle
-  *
-- * Returns: memory value
-+ * Returns: memory value in host-endian order (no further swap is necessary).
-  */
- QEMU_PLUGIN_API
- qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info);
+diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+index 1ee257f855b..6b0732dc0fd 100644
+--- a/tests/tcg/plugins/mem.c
++++ b/tests/tcg/plugins/mem.c
+@@ -154,20 +154,20 @@ static void update_region_info(uint64_t region, uint64_t offset,
+         val_size = 1;
+         break;
+     case QEMU_PLUGIN_MEM_VALUE_U16:
+-        swapped_value.data.u16 = be ? GUINT16_FROM_BE(value.data.u16) :
+-            GUINT16_FROM_LE(value.data.u16);
++        swapped_value.data.u16 = be ? GUINT16_TO_BE(value.data.u16) :
++            GUINT16_TO_LE(value.data.u16);
+         val_ptr = &swapped_value.data.u16;
+         val_size = 2;
+         break;
+     case QEMU_PLUGIN_MEM_VALUE_U32:
+-        swapped_value.data.u32 = be ? GUINT32_FROM_BE(value.data.u32) :
+-            GUINT32_FROM_LE(value.data.u32);
++        swapped_value.data.u32 = be ? GUINT32_TO_BE(value.data.u32) :
++            GUINT32_TO_LE(value.data.u32);
+         val_ptr = &swapped_value.data.u32;
+         val_size = 4;
+         break;
+     case QEMU_PLUGIN_MEM_VALUE_U64:
+-        swapped_value.data.u64 = be ? GUINT64_FROM_BE(value.data.u64) :
+-            GUINT64_FROM_LE(value.data.u64);
++        swapped_value.data.u64 = be ? GUINT64_TO_BE(value.data.u64) :
++            GUINT64_TO_LE(value.data.u64);
+         val_ptr = &swapped_value.data.u64;
+         val_size = 8;
+         break;
 -- 
 2.47.3
 
