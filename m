@@ -4,77 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 810AB109C05B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 20:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07678106B504
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Uyt-0000nI-Kq; Wed, 25 Mar 2026 16:37:35 -0400
+	id 1w5VMk-0005bu-6V; Wed, 25 Mar 2026 17:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5Uyp-0000im-DE
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 16:37:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5Uyn-0003u9-74
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 16:37:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774471048;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=okGu3iCIsjaNtnI71uFSo+5OeT93nD1JMY3laNXXIjE=;
- b=FS8zJWUBQUVEs7KjC3bEjMYzvpUdpxKbcMHaPj4L08j9jybygYXZeDfc25OL31S0wH0u2t
- NU4c6DX69U0AS4T0YMgb+fn+YV9453iTx8M9H65X9aBU3HJtJpK35ac0yr2HYy6qXg197x
- Njh2xQ0tmergH53KW+zo0VizGCsUg/s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-VT6Zr1i9O9u2SbsMEL3_cQ-1; Wed,
- 25 Mar 2026 16:37:22 -0400
-X-MC-Unique: VT6Zr1i9O9u2SbsMEL3_cQ-1
-X-Mimecast-MFC-AGG-ID: VT6Zr1i9O9u2SbsMEL3_cQ_1774471041
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5VMg-0005bO-52
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:02:10 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5VMe-0004TK-Gr
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:02:09 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0F081956096; Wed, 25 Mar 2026 20:37:20 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.10])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3BE053000223; Wed, 25 Mar 2026 20:37:18 +0000 (UTC)
-Date: Wed, 25 Mar 2026 16:37:16 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Jaehoon Kim <jhkim@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pbonzini@redhat.com, fam@euphon.net,
- armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
- eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-Subject: Re: [PATCH RFC v2 2/3] aio-poll: refine iothread polling using
- weighted handler intervals
-Message-ID: <20260325203716.GD701300@fedora>
-References: <20260323135451.579655-1-jhkim@linux.ibm.com>
- <20260323135451.579655-3-jhkim@linux.ibm.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 521C95BCF8;
+ Wed, 25 Mar 2026 21:02:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774472526; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pOl4HX8k1ATCUErLnwQM1O6qkxzlv6DDPzoG/jScB1U=;
+ b=x8bNr4cO0I5Uv5KL/9v2UTfhbZzudt0QS21QOi8v3pDLZMhZxGA9QXtSL53KeqYRYvzE5Z
+ 9i8e8PbfyV+l8jxs+ALbkKwSvmEJBKPGlMjP1ZKnfIALZbqorfWGl7kGORIfe0Wvl6oYhb
+ 3MktnFrbPN2PXITD+8qEg+rWhHJyfvE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774472526;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pOl4HX8k1ATCUErLnwQM1O6qkxzlv6DDPzoG/jScB1U=;
+ b=5KNnBAGynU1vxxy6dsmwWNhEMxildYR2HEY0fUaEw4k5zPcrj2hs830JYLFqiCCqawhu99
+ ElUdjjQDjUWvH4BA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774472526; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pOl4HX8k1ATCUErLnwQM1O6qkxzlv6DDPzoG/jScB1U=;
+ b=x8bNr4cO0I5Uv5KL/9v2UTfhbZzudt0QS21QOi8v3pDLZMhZxGA9QXtSL53KeqYRYvzE5Z
+ 9i8e8PbfyV+l8jxs+ALbkKwSvmEJBKPGlMjP1ZKnfIALZbqorfWGl7kGORIfe0Wvl6oYhb
+ 3MktnFrbPN2PXITD+8qEg+rWhHJyfvE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774472526;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pOl4HX8k1ATCUErLnwQM1O6qkxzlv6DDPzoG/jScB1U=;
+ b=5KNnBAGynU1vxxy6dsmwWNhEMxildYR2HEY0fUaEw4k5zPcrj2hs830JYLFqiCCqawhu99
+ ElUdjjQDjUWvH4BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D141A4A0A2;
+ Wed, 25 Mar 2026 21:02:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YfocJU1NxGl/WQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 25 Mar 2026 21:02:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Eugenio =?utf-8?Q?P=C3=A9rez?= <eperezma@redhat.com>, qemu-devel@nongnu.org
+Cc: Maxime Coquelin <mcoqueli@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, Koushik Dutta
+ <kdutta@redhat.com>, Jason Wang <jasowang@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>
+Subject: Re: [RFC PATCH 1/8] tests: vhost-vdpa: add initial VDUSE-based
+ vhost-vdpa tests
+In-Reply-To: <20260305163938.3200787-2-eperezma@redhat.com>
+References: <20260305163938.3200787-1-eperezma@redhat.com>
+ <20260305163938.3200787-2-eperezma@redhat.com>
+Date: Wed, 25 Mar 2026 18:02:03 -0300
+Message-ID: <87jyuzk4hg.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="gRu6PJk+TjdQZrBq"
-Content-Disposition: inline
-In-Reply-To: <20260323135451.579655-3-jhkim@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,385 +126,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Eugenio P=C3=A9rez <eperezma@redhat.com> writes:
 
---gRu6PJk+TjdQZrBq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Based on vhost-user tests, the qos register itself as a VDUSE device and
+> receives the events from QEMU.
+>
+> The test infrastructure creates a thread that acts as a VDUSE device,
+> while the regular test thread is managing QEMU.
+>
+> This basic test just verify that the guest memory ring addresses are
+> accessible, similar to the already existing test in vhost-user.
+>
+> This enables automated testing of vhost-vdpa code paths that previously
+> required manual testing with real hardware.
+>
+> Changes from vhost-user test:
+> * Automatic cleanup of many things.
+> * Handle the vduse fd and timeout.
+> * VDPA device cannot be removed before deleting QEMU, killing QEMU in
+>   vhost_vdpa_test_cleanup.
+> * Read in enable callbacks, and the actual test_read_guest_mem is just
+>   waiting.
+> * Add vhost_vdpa_thread to abstract fd monitoring
+> * Use QemuMutex and QemuConf for scoped cleanup
+>
+> RFC: I'm not sure if this is the right place to add the tests in meson.
+> Also, a few things are just with asserts() or g_spawn(), instead of
+> more elegant code.
+>
+> Also, I don't know how to include the libvduse.a library as meson
+> complains it's out of the tests/ directory, so I'm including the .c
+> directly.  Ugly but it works.
+>
 
-On Mon, Mar 23, 2026 at 08:54:50AM -0500, Jaehoon Kim wrote:
-> Refine adaptive polling in aio_poll by updating iothread polling
-> duration based on weighted AioHandler event intervals.
->=20
-> Each AioHandler's poll.ns is updated using a weighted factor when an
-> event occurs. Idle handlers accumulate block_ns until poll_max_ns and
-> then reset to 0, preventing sporadically active handlers from
-> unnecessarily prolonging iothread polling.
->=20
-> The iothread polling duration is set based on the largest poll.ns among
-> active handlers. The shrink divider defaults to 2, matching the grow
-> rate, to reduce frequent poll_ns resets for slow devices.
->=20
-> The default weight factor (POLL_WEIGHT_SHIFT=3D3, meaning the current
-> interval contributes 12.5% to the weighted average) was selected based
-> on extensive testing comparing QEMU 10.0.0 baseline vs poll-weight=3D2
-> and poll-weight=3D3 across various workloads.
->=20
-> The table below shows a comparison between:
-> -Host: RHEL 10.1 GA + qemu-10.0.0-14.el10_1, Guest: RHEL 9.6GA vs.
-> -Host: RHEL 10.1 GA + qemu-10.0.0-14.el10_1 (w=3D2/w=3D3), Guest: RHEL 9.=
-6GA
-> for FIO FCP and FICON with 1 iothread and 8 iothreads.
-> The values shown are the averages for numjobs 1, 4, and 8.
->=20
-> Summary of results (% change vs baseline):
->=20
->                     | poll-weight=3D2      | poll-weight=3D3
-> --------------------|--------------------|-----------------
-> Throughput avg      | -2.4% (all tests)  | -2.2% (all tests)
-> CPU consumption avg | -10.9% (all tests) | -9.4% (all tests)
->=20
-> Both weight=3D2 and weight=3D3 show significant CPU consumption reduction
-> (~10%) compared to baseline, which addresses the CPU utilization
-> regression observed in QEMU 10.0.0. The throughput impact is minimal
-> for both (~2%).
->=20
-> Weight=3D3 is selected as the default because it provides slightly better
-> throughput (-2.2% vs -2.4%) while still achieving substantial CPU
-> savings (-9.4%). The difference between weight=3D2 and weight=3D3 is smal=
-l,
-> but weight=3D3 offers a better balance for general-purpose workloads.
->=20
-> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-> ---
->  include/qemu/aio.h |   4 +-
->  util/aio-posix.c   | 135 +++++++++++++++++++++++++++++++--------------
->  util/async.c       |   1 +
->  3 files changed, 99 insertions(+), 41 deletions(-)
->=20
-> diff --git a/include/qemu/aio.h b/include/qemu/aio.h
-> index 8cca2360d1..6c77a190e9 100644
-> --- a/include/qemu/aio.h
-> +++ b/include/qemu/aio.h
-> @@ -195,7 +195,8 @@ struct BHListSlice {
->  typedef QSLIST_HEAD(, AioHandler) AioHandlerSList;
-> =20
->  typedef struct AioPolledEvent {
-> -    int64_t ns;        /* current polling time in nanoseconds */
-> +    bool has_event; /* Flag to indicate if an event has occurred */
-> +    int64_t ns;     /* estimated block time in nanoseconds */
->  } AioPolledEvent;
-> =20
->  struct AioContext {
-> @@ -306,6 +307,7 @@ struct AioContext {
->      int poll_disable_cnt;
-> =20
->      /* Polling mode parameters */
-> +    int64_t poll_ns;        /* current polling time in nanoseconds */
->      int64_t poll_max_ns;    /* maximum polling time in nanoseconds */
->      int64_t poll_grow;      /* polling time growth factor */
->      int64_t poll_shrink;    /* polling time shrink factor */
-> diff --git a/util/aio-posix.c b/util/aio-posix.c
-> index b02beb0505..2b3522f2f9 100644
-> --- a/util/aio-posix.c
-> +++ b/util/aio-posix.c
-> @@ -29,9 +29,11 @@
-> =20
->  /* Stop userspace polling on a handler if it isn't active for some time =
-*/
->  #define POLL_IDLE_INTERVAL_NS (7 * NANOSECONDS_PER_SECOND)
-> +#define POLL_WEIGHT_SHIFT   (3)
-> =20
-> -static void adjust_polling_time(AioContext *ctx, AioPolledEvent *poll,
-> -                                int64_t block_ns);
-> +static void adjust_block_ns(AioContext *ctx, int64_t block_ns);
-> +static void grow_polling_time(AioContext *ctx, int64_t block_ns);
-> +static void shrink_polling_time(AioContext *ctx, int64_t block_ns);
-> =20
->  bool aio_poll_disabled(AioContext *ctx)
->  {
-> @@ -373,7 +375,7 @@ static bool aio_dispatch_ready_handlers(AioContext *c=
-tx,
->           * add the handler to ctx->poll_aio_handlers.
+The proper way should be the following. Unfortunately, you'll have to
+rewrite some parts of the test as it currently accesses symbols internal
+to the library.
 
-This comment refers to adjusting the polling time. The code no longer
-does this and the comment should be updated.
+-- >8 --
+From ca4418e57a2de83b1fea49f589f2c27ba424039b Mon Sep 17 00:00:00 2001
+From: Fabiano Rosas <farosas@suse.de>
+Date: Wed, 25 Mar 2026 17:54:41 -0300
+Subject: [PATCH] tmp
 
->           */
->          if (ctx->poll_max_ns && QLIST_IS_INSERTED(node, node_poll)) {
-> -            adjust_polling_time(ctx, &node->poll, block_ns);
+---
+ tests/qtest/meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-aio_dispatch_ready_handlers() no longer uses the block_ns argument. It
-can be removed.
-
-> +            node->poll.has_event =3D true;
->          }
->      }
-> =20
-> @@ -560,18 +562,13 @@ static bool run_poll_handlers(AioContext *ctx, AioH=
-andlerList *ready_list,
->  static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_list,
->                            int64_t *timeout)
->  {
-> -    AioHandler *node;
->      int64_t max_ns;
-> =20
->      if (QLIST_EMPTY_RCU(&ctx->poll_aio_handlers)) {
->          return false;
->      }
-> =20
-> -    max_ns =3D 0;
-> -    QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
-> -        max_ns =3D MAX(max_ns, node->poll.ns);
-> -    }
-> -    max_ns =3D qemu_soonest_timeout(*timeout, max_ns);
-> +    max_ns =3D qemu_soonest_timeout(*timeout, ctx->poll_ns);
-> =20
->      if (max_ns && !ctx->fdmon_ops->need_wait(ctx)) {
->          /*
-> @@ -587,46 +584,98 @@ static bool try_poll_mode(AioContext *ctx, AioHandl=
-erList *ready_list,
->      return false;
->  }
-> =20
-> -static void adjust_polling_time(AioContext *ctx, AioPolledEvent *poll,
-> -                                int64_t block_ns)
-> +static void shrink_polling_time(AioContext *ctx, int64_t block_ns)
->  {
-> -    if (block_ns <=3D poll->ns) {
-> -        /* This is the sweet spot, no adjustment needed */
-> -    } else if (block_ns > ctx->poll_max_ns) {
-> -        /* We'd have to poll for too long, poll less */
-> -        int64_t old =3D poll->ns;
-> -
-> -        if (ctx->poll_shrink) {
-> -            poll->ns /=3D ctx->poll_shrink;
-> -        } else {
-> -            poll->ns =3D 0;
-> -        }
-> +    /*
-> +     * Reduce polling time if the block_ns is zero or
-> +     * less than the current poll_ns.
-> +     */
-> +    int64_t old =3D ctx->poll_ns;
-> +    int64_t shrink =3D ctx->poll_shrink;
-> =20
-> -        trace_poll_shrink(ctx, old, poll->ns);
-> -    } else if (poll->ns < ctx->poll_max_ns &&
-> -               block_ns < ctx->poll_max_ns) {
-> -        /* There is room to grow, poll longer */
-> -        int64_t old =3D poll->ns;
-> -        int64_t grow =3D ctx->poll_grow;
-> +    if (shrink =3D=3D 0) {
-> +        shrink =3D 2;
-> +    }
-> =20
-> -        if (grow =3D=3D 0) {
-> -            grow =3D 2;
-> -        }
-> +    if (block_ns < (ctx->poll_ns / shrink)) {
-> +        ctx->poll_ns /=3D shrink;
-> +    }
-> =20
-> -        if (poll->ns) {
-> -            poll->ns *=3D grow;
-> -        } else {
-> -            poll->ns =3D 4000; /* start polling at 4 microseconds */
-> -        }
-> +    trace_poll_shrink(ctx, old, ctx->poll_ns);
-
-This trace event should be inside if (block_ns < (ctx->poll_ns /
-shrink)) like it was before this patch.
-
-> +}
-> =20
-> -        if (poll->ns > ctx->poll_max_ns) {
-> -            poll->ns =3D ctx->poll_max_ns;
-> -        }
-> +static void grow_polling_time(AioContext *ctx, int64_t block_ns)
-> +{
-> +    /* There is room to grow, poll longer */
-> +    int64_t old =3D ctx->poll_ns;
-> +    int64_t grow =3D ctx->poll_grow;
-> =20
-> -        trace_poll_grow(ctx, old, poll->ns);
-> +    if (grow =3D=3D 0) {
-> +        grow =3D 2;
->      }
-> +
-> +    if (block_ns > ctx->poll_ns * grow) {
-> +        ctx->poll_ns =3D block_ns;
-> +    } else {
-> +        ctx->poll_ns *=3D grow;
-> +    }
-> +
-> +    if (ctx->poll_ns > ctx->poll_max_ns) {
-> +        ctx->poll_ns =3D ctx->poll_max_ns;
-> +    }
-> +
-> +    trace_poll_grow(ctx, old, ctx->poll_ns);
-
-Same here.
-
->  }
-> =20
-> +static void adjust_block_ns(AioContext *ctx, int64_t block_ns)
-> +{
-> +    AioHandler *node;
-> +    int64_t adj_block_ns =3D -1;
-> +
-> +    QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
-> +        if (node->poll.has_event) {
-
-Did you consider unifying node->poll.has_event with
-node->poll_idle_timeout, which is assigned now + POLL_IDLE_INTERVAL_NS
-every time ->io_poll() detects an event?
-
-For instance, rename node->poll_idle_timeout to
-node->last_event_timestamp and assign now without adding
-POLL_IDLE_INTERVAL_NS. Then use the field for both idle node removal and
-adjust_block_ns() (pass in now).
-
-> +            /*
-> +             * Update poll.ns for the node with an event.
-> +             * Uses a weighted average of the current block_ns and the p=
-revious
-> +             * poll.ns to smooth out polling time adjustments.
-> +             */
-> +            node->poll.ns =3D node->poll.ns
-> +                ? (node->poll.ns - (node->poll.ns >> POLL_WEIGHT_SHIFT))
-> +                + (block_ns >> POLL_WEIGHT_SHIFT) : block_ns;
-> +
-> +            if (node->poll.ns > ctx->poll_max_ns) {
-> +                node->poll.ns =3D 0;
-> +            }
-
-Previously:
--        if (poll->ns > ctx->poll_max_ns) {
--            poll->ns =3D ctx->poll_max_ns;
--        }
-
-Was this causing excessive CPU consumption in your benchmarks?
-
-Can you explain the rationale for zeroing the poll time? Aside from
-reducing CPU consumption, it also reduces the chance that polling will
-succeed and could therefore impact performance.
-
-I'm asking about this because this patch makes several changes at once
-and I'm not sure how the CPU usage and performance changes are
-attributed to these multiple changes. I want to make sure the changes
-merged are minimal and the best set - sometimes when multiple things are
-changes at the same time, not all of them are beneficial.
-
-> +            /*
-> +             * To avoid excessive polling time increase, update adj_bloc=
-k_ns
-> +             * for nodes with the event flag set to true
-> +             */
-> +            adj_block_ns =3D MAX(adj_block_ns, node->poll.ns);
-
-adj_block_ns is not the blocking time, it's the maximum current poll
-time across all nodes. It would be clearer to change the variable name.
-
-> +            node->poll.has_event =3D false;
-> +         } else {
-
-4-space indentation should be used.
-
-> +            /*
-> +             * No event now, but was active before.
-> +             * If it waits longer than poll_max_ns, poll.ns will stay 0
-> +             * until the next event arrives.
-> +             */
-> +            if (node->poll.ns !=3D 0) {
-> +                node->poll.ns +=3D block_ns;
-
-Why is block_ns being added to an recently inactive node's polling time?
-Here node->poll.ns no longer measures the weighted time until the
-handler had an event.
-
-If the goal is to get rid of inactive nodes, then maybe the idle handler
-removal mechanism should be made more aggresive instead?
-
-> +                if (node->poll.ns > ctx->poll_max_ns) {
-> +                    node->poll.ns =3D 0;
-> +                }
-> +            }
-> +        }
-> +    }
-> +
-> +    if (adj_block_ns >=3D 0) {
-> +        if (adj_block_ns > ctx->poll_ns) {
-> +            grow_polling_time(ctx, adj_block_ns);
-> +        } else {
-> +            shrink_polling_time(ctx, adj_block_ns);
-> +         }
-> +     }
-> + }
-> +
->  bool aio_poll(AioContext *ctx, bool blocking)
->  {
->      AioHandlerList ready_list =3D QLIST_HEAD_INITIALIZER(ready_list);
-> @@ -723,6 +772,10 @@ bool aio_poll(AioContext *ctx, bool blocking)
-> =20
->      aio_free_deleted_handlers(ctx);
-> =20
-> +    if (ctx->poll_max_ns) {
-> +        adjust_block_ns(ctx, block_ns);
-> +    }
-> +
->      qemu_lockcnt_dec(&ctx->list_lock);
-> =20
->      progress |=3D timerlistgroup_run_timers(&ctx->tlg);
-> @@ -784,6 +837,7 @@ void aio_context_set_poll_params(AioContext *ctx, int=
-64_t max_ns,
-> =20
->      qemu_lockcnt_inc(&ctx->list_lock);
->      QLIST_FOREACH(node, &ctx->aio_handlers, node) {
-> +        node->poll.has_event =3D false;
->          node->poll.ns =3D 0;
->      }
->      qemu_lockcnt_dec(&ctx->list_lock);
-> @@ -794,6 +848,7 @@ void aio_context_set_poll_params(AioContext *ctx, int=
-64_t max_ns,
->      ctx->poll_max_ns =3D max_ns;
->      ctx->poll_grow =3D grow;
->      ctx->poll_shrink =3D shrink;
-> +    ctx->poll_ns =3D 0;
-> =20
->      aio_notify(ctx);
->  }
-> diff --git a/util/async.c b/util/async.c
-> index 80d6b01a8a..9d3627566f 100644
-> --- a/util/async.c
-> +++ b/util/async.c
-> @@ -606,6 +606,7 @@ AioContext *aio_context_new(Error **errp)
->      timerlistgroup_init(&ctx->tlg, aio_timerlist_notify, ctx);
-> =20
->      ctx->poll_max_ns =3D 0;
-> +    ctx->poll_ns =3D 0;
->      ctx->poll_grow =3D 0;
->      ctx->poll_shrink =3D 0;
-> =20
-> --=20
-> 2.50.1
->=20
-
---gRu6PJk+TjdQZrBq
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnER3wACgkQnKSrs4Gr
-c8hEDggAq796uCOyV0ikA5cxxvs8omdq5BAgg7dOgWO2yG0CQO62rFMCljUBP2ab
-+zhI0nQitqwLYbUlpUVykP1l642N2sVenjNQfkQ5swtRmHJs/OLE5dJIvGrITAL/
-hB7Q0GeVdeZ13omjkw44GCnBBz1lShGpuF8T5ebCdmEP208ZYqEJfuOMekAOLuVi
-n4F2WEpW4ZlKirDou48QloO8XbugHlhOXM5MTzMAsZouutMtSLqhT4TVhEBr8EPo
-U7tTTmdvQOcBYdtQGaWNSxxwqwGk/CHmG3Ht1Naeovo3PpdQV5d05q9nP5qHxL+z
-+jIkOLnYcfxurBsompmQVPB8R43baA==
-=lgCc
------END PGP SIGNATURE-----
-
---gRu6PJk+TjdQZrBq--
-
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 2b002ea1ce..d6cf0e25ad 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -348,6 +348,7 @@ if have_tools and have_vhost_user_blk_server
+ endif
+ if have_libvduse and have_vhost_vdpa
+   qos_test_ss.add(files('vhost-vdpa-test.c'))
++  qos_test_ss.add(libvduse)
+ endif
+=20
+ tpmemu_files =3D ['tpm-emu.c', 'tpm-util.c', 'tpm-tests.c']
+@@ -395,7 +396,8 @@ qtests =3D {
+   'pxe-test': files('boot-sector.c'),
+   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
+                           'pnv-xive2-nvpg_bar.c'),
+-  'qos-test': [chardev, io, qos_test_ss.apply({}).sources()],
++  'qos-test': [chardev, io, qos_test_ss.apply({}).sources(),
++               qos_test_ss.apply({}).dependencies()],
+   'tpm-crb-swtpm-test': [io, tpmemu_files],
+   'tpm-crb-test': [io, tpmemu_files],
+   'tpm-tis-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
+--=20
+2.51.0
 
