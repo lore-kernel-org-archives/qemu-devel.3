@@ -4,106 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94556109C04B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 17:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7763109C04B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 17:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5RxL-0003p7-D8; Wed, 25 Mar 2026 13:23:47 -0400
+	id 1w5S5l-0005eH-1r; Wed, 25 Mar 2026 13:32:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w5RxK-0003op-Cb
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:23:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1w5S5h-0005dh-0k
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:32:25 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w5RxI-0006o9-Pm
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:23:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774459423;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=KoJmKdc9lzgJbOe7eN67JyCu5oa6GHVM298rdQUySj0=;
- b=T4NixV57bz+BojKXof1GXGBIexMbxE8AADCHYYEMES+ZTTlgwxjBUM0OGnr96EzyCyCT5V
- HbvDUvwGlywQ7ZocZhmX847wyzpyx0em9snVqOpCsmi/8O/vusGb7EUkeK3DTYK1R1LGlL
- 9hNQ03T62053SHDKG519gp1YZ8yWBRA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-OYykxLG1NEy5QrN5ZO6p2g-1; Wed, 25 Mar 2026 13:23:41 -0400
-X-MC-Unique: OYykxLG1NEy5QrN5ZO6p2g-1
-X-Mimecast-MFC-AGG-ID: OYykxLG1NEy5QrN5ZO6p2g_1774459420
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48534941525so4070065e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 10:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774459420; x=1775064220; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=KoJmKdc9lzgJbOe7eN67JyCu5oa6GHVM298rdQUySj0=;
- b=tvWUsgSIhHI95k0jAuxzsV6rVetATQ+wapLcL3aT4LbOc1+xtESs60AFG/VF1QW3p8
- 8ZeX2d8JWsMzSM/Kwz7wYeKTP95sv5eC5ZlUCZDEuM395lFTFIBxWdRzREMb4HqkL2R9
- 4Qud6/MGkF04Glp7XN5dRJCTDAqFetrz+bj9DBnWKeu+KII5cuEG6K6SFW7Z5c/kdNNg
- SNMtYkYylyj2zq2RZjQdc0qAg0ftdCTEtdAUmPHHMzai+oxF5e6rwYLwMZVpt454vOMs
- M/8ET6jnojBg61QO3ZwkFk+macKHEmAyLZg+lmHgNMiEkvmZNPLZ2vg1x2iRtGRadcQz
- FJlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774459420; x=1775064220;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KoJmKdc9lzgJbOe7eN67JyCu5oa6GHVM298rdQUySj0=;
- b=MMW8YEIjxpkkPAmpVp/b+5U3CGwlatuwliUozWVO8ar3Jcv7Klf3eWFj6iL01caFDc
- SbkeeONJkvJYy9Fv79WYgvm5Cwqj0oGqRJYIixlDMmGxPmQrLb4a51l/9q/flPpMRcLL
- coxun2kEluUQV6EqK/no63WtQe8ga9E6QvVUSoTYxK/RHXaB20TyGF7nBwTCcGhQ65IQ
- kpGfG429JCCUyE2sbs1CJQ9RDYH0HQJRUATCLx6ERjbGBpZUu4/hGM0RsJlf9p99WtBu
- ArFROTOk/sZreWWqnBs1LjYhXtafX6+2qoz3zWmeHElIkggwAIzbF8JPd+LLdfsFcYBB
- Gm2g==
-X-Gm-Message-State: AOJu0YzC4NGf9j6s88DWa+6chsfYbqjEXIouXGGOhMMqDqepyjDD5cck
- T04+Yx2Fw/v7sS7BcyOtusI788ZTwADAa0afSqvCCxjXpbr5KnUT3goU3CtJs89onExIRt51Cd8
- 9HmmKM6W2c49c3jBp5ijLFGZJ2u9lV5ypokyRnFS0Z2Bd5y8GKqeOFB8L7J1eyUFg2DxxdKkuQg
- uG/v7umQMgH2ECYDDdRxIq9v2tThVE/3PdSo5TSofe
-X-Gm-Gg: ATEYQzxbbQ1EuGR0lXPjxobBPif9pzntNgwuiV/oJP+6hZLsJZSJMvexufnQT0PFiYQ
- YhJqg8RZq0Lwe7/8Hz3K0f28nstmd2WiiXQVrBexkjDkOkxsVw0BaorPkLjfhsUsFvW/losTsJ2
- NV4rv/Y4a0V8iLZygruj28jV16FMKvtDUFz1cTaOUFSvRKIO1waZGDpkT/59czddyIxyXXTr+Gf
- JSX/zQ7+KLegKyiuPsHbfDn2FIUB3edbUrqFuUPqbCjbttM5JKzTknzDNNyfRcdSl4sZEoPw5SQ
- au94/k/23+CfvUQdgFH4JbFbLGJ0CVR26v31QDoJkkY1Dx+2jhlRvv2rjxtkZfuTnNth/U+67Pu
- QgE3rTcgDopS04lZn9iwSWH5dRQOkDy+Z+Giqmx1vU77015JGIGhHGHH/eUxlIWbtLU+oaZDAUW
- 7YeadxNrM4GH4uMlpbFCjumI6r
-X-Received: by 2002:a05:600c:1913:b0:485:9a50:3384 with SMTP id
- 5b1f17b1804b1-48716071753mr63518115e9.25.1774459419611; 
- Wed, 25 Mar 2026 10:23:39 -0700 (PDT)
-X-Received: by 2002:a05:600c:1913:b0:485:9a50:3384 with SMTP id
- 5b1f17b1804b1-48716071753mr63517665e9.25.1774459419035; 
- Wed, 25 Mar 2026 10:23:39 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.85.67])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48717342048sm24040585e9.14.2026.03.25.10.23.37
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 10:23:38 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/19] Fixes (including big i386/emulate performance
- improvement) for 11.0-rc
-Date: Wed, 25 Mar 2026 18:23:36 +0100
-Message-ID: <20260325172337.87212-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1w5S5f-00034v-Dq
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:32:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XpmsZsz4Q8MmO8Bk69Zxd5NsaBxFLwv7xu2cEk/R4tZRGF9FNk/4vHozzCuD/1/guWYByjw2+Z4WL5FFDKwwfC4H3fb+3wHmKW7l7fA4bar2wdxKkcOCS5brXEm4O1E6c5ZKj0xVzs4Xn15+4QO6KZzwDRNnME3TylFpIxqboHXoDEAwXTKFjsFyYgC9f8ZNkrxBGdhuBK9AVSz9mpsNywJ72FXN+60/pe/3iMigtS4SfUn5JE1WPAqc+34GHW4mPLVWq34APQJItE8iNzjO/TPASxJUa0vuRHUBV2MlwUhy44kle1jLVvk6kAmEqTpzbdCkqHojGMCv+Q36RIThBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=r4K0MMqMlK/t6kvk+c/x7vP8DKEg6MHaijHfmLAfy9E=;
+ b=gNBMs4r+HVx3IAmyjRX/lC+tCTawSSv/AJDVNFLZ3dt451YecFUehli3XUwc8CWdRqdYhNWEXNNseyXNuJ16wCFPDKxgRk/3ju0tHjOPulKW2qkDtzTwn2H101lHts5nacvPST6AeY3/UKBv1SmVrtGxn02etOIQC7/CBoTf8U6TEbxYVvDTfIOw4FL1/+gPBLWZ3q0negwImqMVYjpeko3gdgxPzfMZpycs43nsHl44YtoHhlYjImhRJbhz85lWyuz/EEK314bXNtArQbKZTFvfqiKyfA5Vjq7Z97KEL5oiGUyJkOUEvzCr6NE245vmBnbS31A4Vzt+aPJeZPvDBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r4K0MMqMlK/t6kvk+c/x7vP8DKEg6MHaijHfmLAfy9E=;
+ b=hGTjun/RkwyPuB+RopWONQCXgxEQJDWK+bcxGnRa6quE2fk7vMIEStxeKxR8L5UzLiZ0O2LkKk0t9kB7hN+bnN+X1n9YeYo38AQJMwOIAeq0JjecIui3zz8zJZ2MUE7b21Vu2if3bW9IyTasM4PEjkIBMZBi7Gsa15CEKCx4dZ+RGoXN3hynMLcTzdYvgYSE8RE2RJfy31+JDZnZYO8jbEb3DFONMkCX1xene3q53Rtc3Ig/LGV2RyiqLgGTsAak6mZy28jy5xbvGRT/KqgUvQJB4SzfvDq8i+IjI7lsJQhk7G63UdGF0/+JnQV+mniRaJxAkitwwbadjK10eeb1oA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by SJ0PR12MB6685.namprd12.prod.outlook.com (2603:10b6:a03:478::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Wed, 25 Mar
+ 2026 17:32:17 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%5]) with mapi id 15.20.9769.004; Wed, 25 Mar 2026
+ 17:32:17 +0000
+Message-ID: <e6a9aaf2-e2ab-4b25-a01d-b6093922668e@nvidia.com>
+Date: Wed, 25 Mar 2026 19:32:12 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 08/12] vfio/migration: Fix incorrect reporting for
+ VFIO pending data
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Kirti Wankhede <kwankhede@nvidia.com>, 
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, Alex Williamson
+ <alex@shazbot.org>, Yishai Hadas <yishaih@nvidia.com>,
+ Fabiano Rosas <farosas@suse.de>, Pranav Tyagi <prtyagi@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-9-peterx@redhat.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20260319231302.123135-9-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-ClientProxiedBy: FR0P281CA0095.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a9::12) To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|SJ0PR12MB6685:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8c3c97a-6df2-4d3b-10bf-08de8a9475fd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|7416014|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: eXOkskYtkDXS+0GcNAbyY86VLAXJ4rXnKMnlGUFUzhEUzmOXFX6CNdAaKjK3gJ0vTMxf0FhneRL+bKP2+l86bTz38immmmLXI/VQ0qx+Ie5xZWNc/1rbfUkegqVFREMnrbCixBx64wLRN04Rz5NN/QO048WR9mN8n5KADkUoAuDGcZ5e3aII4eyTDvh/qyZKCHHq+iMu7HpVwycraMsrUalcb8NBuJevA+AYLC2cuLzcG2qGm1J7O2KNJsm7QKdG3oABa4+D7xtbqTGEKP6HTMvLtDUvCzsiHwAmoFCZdgPe1fQuXus51yQhbq1KtqhJ5qP2FnR5cEYOXZD1+6uRLRqIc958SSaWoy1Q6FIY+yRll19mIQxmYQCXP/0OJdjROUVd7Kkke4wfxh1eFVCCccWEAMLGOcPQ+cw4r3Ytxu5M89sa8hBskR3d66oWZPfxRZPsZbqJbVY4iKqk8cp/YHeedLczhZojT2czH8vWwnqvNSzjQh4KWtVrteI2X5xCR51PHDUmYr//lhUAI3YX1gWYpwVz3TGpTE7F8G0HdFMgANWvoZ+SvZRf1id/aQSFB9wRK6dyc64xVSk6RkymIwBWN9yh+Is/O/vYPYJdeFnjkQZhICO2f8seHkAHkIJ3Vxk4NC5BInYRL9JSNF3edxmuSQpAQKPBnFfSPJHeo4Hn5/vCPhSCRs/o0Oa+iVmJW4EDq59TsjsWVnzdwlsneveVyek50HArSTvkM7S3C04=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eXUrY1NWZG5laTByeDRmamhyVGlXNlQyL04xUkkzbkVWQnFFa1JOOE1iODI4?=
+ =?utf-8?B?K3FuSEtMWHc2ekFHOTMwOUsrVkRQMlBhY2oyKzluK2cyL0xLdVBMSW4rbmUv?=
+ =?utf-8?B?YlMrcXM3c2NSL0dNcTJ3Mmdya2lGQTdkaEpxYTR5blFUWVM5NjBFOXNGSy9v?=
+ =?utf-8?B?blNWMlM5T2p1RVlSMTdteDQ1L1FSaDZjdVZaZ29hN3ZIYzc5SGcxMmliQzhN?=
+ =?utf-8?B?RXJOWFg1K2RJdWVqb0w2Z1lYeGNpTGlwWlVVZlFub0R0SnhyQS9XNUl1dmhw?=
+ =?utf-8?B?NHNEUHdKUkh3SDc3aXk1YUwzQ0NQWXBPNStjK21SYTlmMHJxWkVveVJxOWl0?=
+ =?utf-8?B?b05FWDBKaG0yZ1ltZW96aEF5RWx5eHdLQnpyQ1R5RHpvZW1DMXVoVCsrQVpN?=
+ =?utf-8?B?b1RCNFl4c0Q0RTFacm1CL3VrRndiOW5HUHBlQTR4YjEvN2VqaFpmQXJVNk8y?=
+ =?utf-8?B?OVBwUHRJWlRQREVBMGtsUXJUeXB2SnhheDlxenNWeTU1Qkl3QmtKVG1CMlMx?=
+ =?utf-8?B?UUhMYWNqNTc1MDI2YU5kVk5NMjUvLzU3aXl1QUFYd0FPU0h5ZlRSRE9oK0Rp?=
+ =?utf-8?B?cFh4UEFwUktJMDdoenFtellpbFUwMk5rVzNmWGJCV0pZWFpXRjY0MS9HVkVz?=
+ =?utf-8?B?UnBuSUFUWVVZVUtZVWZqY1RmMzZuU2FjWW02QmdrazBOejRORDVqTjV5TU44?=
+ =?utf-8?B?Ky9NbTY3R3kvaTJwVmNsa0lBWTlXNXJCd1VRZmpmOS9mNUlKTEd2b1FveHNF?=
+ =?utf-8?B?OXJXV1FUaEdidzN4YnQ1bHdaVlNBKzRXK1BURnA0S3ZFRU5aK0MzamdtZW50?=
+ =?utf-8?B?bmVvb2REN1ZUQ2xUWExBN1VNSEJ6WUlHRWNXcnY4eHhSVzVjbTUrdXRkNzNQ?=
+ =?utf-8?B?am1PSjZIN3c0UTdJUjJaQVpURUU0WWVIUFpNUHA5VlBGMGRwa0FxUmN6ZE1t?=
+ =?utf-8?B?ZFFFSG5wSzY0ZEhCZFVuck5IQnd1MnBZMG1lRlNvQWoyS2xER001OW1KNlVW?=
+ =?utf-8?B?UmpkVEsyM0phV0FJUXIwUmJEZXJJY0hmejNKSUVmNnBqb1EvSlE1bG1HUzhk?=
+ =?utf-8?B?TnJyWGdVNWNRMjZ4UmIxMXpNYk9OWFlNWDZJQTJ4SFlFZmJ5NFAzU2dmOGt6?=
+ =?utf-8?B?ZTFsS0NkRUNJcVVJaTlyTzZlMm5uRjlJaG1LV1VJNWRtY1RlaVRjelgrbWtQ?=
+ =?utf-8?B?djdKT3lveFNtUHBrTmd4Wjg2Nm9ENHcwQWthWDAzL00xa3FwK1pnMXpHYkk3?=
+ =?utf-8?B?Z0U3c2VMckg4UWxTMnVBMnBYeEdpay8wUk1QT3VjNFEvc1V5Wk9GSk15em12?=
+ =?utf-8?B?Z25VOUpqOW1GNHBJNkhFR2dHTUpzeWFEZVpabmRGSW84TjZENDBnbnlHT2gy?=
+ =?utf-8?B?aXA0dHlndnhjZzFUaXZ2bXF0dmR4TTFuVGZXc3ozbGFZMmlkbFF2MlZmWFBx?=
+ =?utf-8?B?UW5ZNTZ5MEkvdDR6dkpIMUR1dGlERENVejhxSEV4amVmK3NWekdIWFR0ckMw?=
+ =?utf-8?B?Yy9McVhJRFB2azFmVWhDRGhoSlpKVVp1NW15eVBwSThhK0pqWVhPekVvMGJH?=
+ =?utf-8?B?d1l3aUxjblE5OWtWbHVkMlMxdVpHRlA5WU1JSUJGR3ZyaUdLR1ZrVXlmSWpr?=
+ =?utf-8?B?eFlaS1psR3l2TVA4cEVMS3ptbEdHOWw3d05ucWZwUGYxZWVsb2JqS2h3TG1M?=
+ =?utf-8?B?dTFzR0VHVFpsN3BLU0NwYUFlcHpqRCtxK0V0MUlzeFg0SXVhTHg2SU5ZVXhi?=
+ =?utf-8?B?K1U2WFdXamZXTkpDeDgvU0hTTHQ4d2RhenJaampxdVBqeFczMG5pRXZvM3VX?=
+ =?utf-8?B?YUducDI3UXJTZEdla0UxczB3NDl4OHFORjNPNkJqbkdvSVd5T1dvUmMxc3lD?=
+ =?utf-8?B?MjZzdmJEMUVUM04vK1M1VEZ4aU5GWVB6YndsbUtBMFYyeUtFaU1ZbDUxRXV6?=
+ =?utf-8?B?MUlncWVZditWS1RhTm1aSmFGZjlrWThvL0xLMU5wK3Y3eHlGaDdxRzQvdGhl?=
+ =?utf-8?B?UGEyZGF3RE5ZZi9FUk1SUXh3U1lGdjJ6L1R0RlF2bDNqQXRScS83RFBqZ3NC?=
+ =?utf-8?B?QjJBS0JEZU5sOUs0cFVYdTM5QmlHS2tiZXlneHhwMXRwaGlrUTlFblIveHJm?=
+ =?utf-8?B?OTMwZDkzQVFUWFVGbkM5eEZPL0JvSmo0cjRhYnZFSUVBLzdsTFJuRXhha1Vj?=
+ =?utf-8?B?SFNDRzU2aStrUVRPOVBFK2hhZm0wTzkzdEIwbGlRU01oMHdLTGE0Z2VuaUNi?=
+ =?utf-8?B?cmNSQ3lsam5ua21OSUtUVmxPd2R2dVYvOFdSd3MwZlpFMHExb2ZxME1tdnlC?=
+ =?utf-8?B?UGVlZFFtRUZUcGlzcnpjRjhmelVuQlpjeU9wTGlCSDRjRFdYbTZJZz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8c3c97a-6df2-4d3b-10bf-08de8a9475fd
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2026 17:32:17.3955 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ySbyJmwzM0W1XOPcrO2oma/TNOEgqTI23dutCrLLiQa/aKqMNdqhZPKb0i47j3w3wOJSk9ZL3OLcC25od0B/6w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6685
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+ envelope-from=avihaih@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,74 +159,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 007b29752ed06e467d3c830bc2c17a8851f8bcd3:
 
-  Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-25 09:16:13 +0000)
+On 3/20/2026 1:12 AM, Peter Xu wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> VFIO used to report different things in its fast/slow version of query
+> pending results.  It was likely because it wants to make sure precopy data
+> can reach 0 hence trigger sync queries.
 
-are available in the Git repository at:
+It was to guarantee precopy data can reach 0 and trigger dirty sync 
+queries, since not all VFIO device data may be precopy-able.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> Now with stopcopy size reporting facility it doesn't need this hack
+> anymore.  Fix this.
 
-for you to fetch changes up to ba41e525413906473ed004b3a45f565783f3533f:
+Looks good, now the fast/slow path are consistent, plus we get the 
+benefit that if VFIO device has much stopcopy data, migration will try 
+to reduce RAM/other iterative devices to the minimum continuously 
+instead of jumping from fast to slow path as it currently does.
 
-  target/i386: emulate: follow priv_check_exempt (2026-03-25 18:22:27 +0100)
+I still want to test this later with a few workloads, just to make sure 
+we don't miss anything here.
 
-----------------------------------------------------------------
-* tests/functional: preserve PYTHONPATH entries
-* target/i386: show GMET feature
-* target/i386/emulate, whpx/i386: on-demand access to runtime state, MMU fixes
-* tdx: fix use-after-free in tdx_fetch_cpuid
-* treewide: replace qemu_hw_version() with QEMU_HW_VERSION
-* sb16: detect invalid migration stream
+>
+> Copy stable might be too much; just skip it and skip the Fixes.
+>
+> Cc: Avihai Horon <avihaih@nvidia.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   hw/vfio/migration.c | 11 +++++++----
+>   1 file changed, 7 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index c054c749b0..9dbe5ad9e9 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -591,6 +591,10 @@ static void vfio_state_pending_sync(VFIODevice *vbasedev)
+>                             __func__, migration->precopy_init_size,
+>                             migration->precopy_dirty_size,
+>                             migration->stopcopy_size);
+> +        migration->stopcopy_size = 0;
+> +    } else {
+> +        migration->stopcopy_size -=
+> +            (migration->precopy_init_size + migration->precopy_dirty_size);
 
-----------------------------------------------------------------
-Alyssa Ross (1):
-      tests/functional: preserve PYTHONPATH entries
+Query of stopcopy and precopy are not atomic, so we better use MIN() here:
 
-Jenny Guanni Qu (1):
-      hw/audio/sb16: validate VMState fields in post_load
+migration->stopcopy_size -= MIN(migration->stopcopy_size, 
+migration->precopy_init_size + migration->precopy_dirty_size);
 
-Mohamed Mediouni (14):
-      whpx: i386: workaround for Windows 10 support
-      whpx: i386: enable exceptions VM exit only when needed
-      whpx: i386: skip TSC read for MMIO exits
-      whpx: i386: skip XCRs read for MMIO exits
-      whpx: i386: don't restore segment registers after MMIO handling
-      target/i386: emulate: add new callbacks
-      whpx: i386: add implementation of new x86_emul_ops
-      target/i386: emulate: indirect access to CRs
-      whpx: i386: indirect access to CRs
-      target/i386: emulate: segmentation rework
-      whpx: i386: fetch segments on-demand
-      whpx: i386: fast runtime state reads
-      target/i386: emulate: set PG_ERROR_W_MASK as expected
-      target/i386: emulate: follow priv_check_exempt
+>       }
+>   }
+>
+> @@ -598,19 +602,18 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending)
+>   {
+>       VFIODevice *vbasedev = opaque;
+>       VFIOMigration *migration = vbasedev->migration;
+> -    uint64_t remain;
+>
+>       if (pending->fastpath) {
+>           if (!vfio_device_state_is_precopy(vbasedev)) {
+>               return;
+>           }
+> -        remain = migration->precopy_init_size + migration->precopy_dirty_size;
+>       } else {
+>           vfio_state_pending_sync(vbasedev);
+> -        remain = migration->stopcopy_size;
+>       }
+>
+> -    pending->precopy_bytes += remain;
+> +    pending->precopy_bytes +=
+> +        migration->precopy_init_size + migration->precopy_dirty_size;
+> +    pending->stopcopy_bytes += migration->stopcopy_size;
 
-Paolo Bonzini (3):
-      tdx: fix use-after-free in tdx_fetch_cpuid
-      treewide: replace qemu_hw_version() with QEMU_HW_VERSION
-      target/i386: expose AMD GMET feature
+Now that migration->stopcopy_size holds only the stopcopy size (and not 
+stopcopy+precopy), we should remove these lines from 
+vfio_update_estimated_pending_data():
 
- include/hw/core/boards.h          |   6 -
- include/qemu/hw-version.h         |  18 +--
- target/i386/emulate/x86_emu.h     |   6 +
- hw/audio/sb16.c                   |   7 +
- hw/ide/core.c                     |   2 +-
- hw/scsi/megasas.c                 |   2 +-
- hw/scsi/scsi-bus.c                |   2 +-
- hw/scsi/scsi-disk.c               |   2 +-
- system/vl.c                       |   4 -
- target/i386/cpu.c                 |   2 +-
- target/i386/emulate/x86_helpers.c |  83 ++++++-----
- target/i386/emulate/x86_mmu.c     |  27 ++--
- target/i386/hvf/x86.c             |  11 ++
- target/i386/kvm/tdx.c             |   2 +-
- target/i386/whpx/whpx-all.c       | 284 ++++++++++++++++++++++++++++++++------
- target/s390x/cpu_models.c         |   2 +-
- util/osdep.c                      |  12 --
- tests/functional/meson.build      |  12 +-
- 18 files changed, 343 insertions(+), 141 deletions(-)
--- 
-2.53.0
+     /* The total size remaining requires separate accounting */
+     migration->stopcopy_size -= data_size;
 
+Thanks.
+
+>
+>       trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
+>                                migration->precopy_init_size,
+> --
+> 2.50.1
+>
 
