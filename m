@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C879109C059
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 18:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD6C109C057
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 18:48:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5TGV-0005lj-TL; Wed, 25 Mar 2026 14:47:39 -0400
+	id 1w5TH4-00068g-Qp; Wed, 25 Mar 2026 14:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1w5TGR-0005kC-Ht
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:47:36 -0400
+ id 1w5TH0-00063s-Ts
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:48:11 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1w5TGP-0000Ec-Ro
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:47:35 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fgwrC0wMtzJ46DS;
- Thu, 26 Mar 2026 02:47:23 +0800 (CST)
+ id 1w5TGw-0000Jm-IY
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 14:48:10 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fgwrq2fRtzJ469d;
+ Thu, 26 Mar 2026 02:47:55 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 16DA640086;
- Thu, 26 Mar 2026 02:47:32 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 5254F4056B;
+ Thu, 26 Mar 2026 02:48:04 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.47.66.203) by
  dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 25 Mar 2026 18:47:30 +0000
+ 15.2.1544.11; Wed, 25 Mar 2026 18:48:03 +0000
 To: <qemu-devel@nongnu.org>
 CC: <anisa.su@samsung.com>, <armbru@redhat.com>, <berrange@redhat.com>,
  <eblake@redhat.com>, <jonathan.cameron@huawei.com>,
  <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>, <lizhijian@fujitsu.com>,
  <mst@redhat.com>, <pbonzini@redhat.com>, <gourry@gourry.net>,
  <nifan.cxl@gmail.com>, <me@linux.beauty>
-Subject: [PATCH 8/9] hw/cxl: Add tag-based dynamic-capacity release support
-Date: Wed, 25 Mar 2026 18:42:56 +0000
-Message-ID: <20260325184259.366-9-alireza.sanaee@huawei.com>
+Subject: [PATCH 9/9] hw/cxl: Add QMP status query for dynamic-capacity extent
+ release
+Date: Wed, 25 Mar 2026 18:42:57 +0000
+Message-ID: <20260325184259.366-10-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.51.0.windows.2
 In-Reply-To: <20260325184259.366-1-alireza.sanaee@huawei.com>
 References: <20260325184259.366-1-alireza.sanaee@huawei.com>
@@ -74,98 +75,188 @@ From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the tag-based dynamic-capacity release policy via the QMP
-interface. The new path scans committed extents, selects those whose stored
-tag matches the requested UUID, and emits a Release Dynamic Capacity event
-for each matching range.
+Add a small status query so orchestration layers can check whether a tagged
+extent is still pending, committed, or no longer present after a release
+request.
 
-This is intentionally scoped to tag-driven selection. Prescriptive release
-handling and the underlying extent teardown stay in the existing paths.
+Introduce the ExtentStatus QAPI struct and the
+cxl-release-dynamic-capacity-status command.
 
 Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 ---
- hw/mem/cxl_type3.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ hw/mem/cxl_type3.c       | 85 ++++++++++++++++++++++++++++++++++++++++
+ hw/mem/cxl_type3_stubs.c | 10 +++++
+ qapi/cxl.json            | 46 ++++++++++++++++++++++
+ 3 files changed, 141 insertions(+)
 
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 6b73d58358..d5fa8a530a 100644
+index d5fa8a530a..8999b36e61 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -2492,6 +2492,63 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-     cxl_create_dc_event_records_for_extents(dcd, type, extents, num_extents);
+@@ -2635,6 +2635,91 @@ void cxl_remove_memory_alias(CXLType3Dev *dcd, struct CXLFixedWindow *fw,
+     dcd->dc.direct_mr_bitmap &= ~(1u << hdm_id);
  }
  
-+static void qmp_cxl_process_dynamic_capacity_tag_based(const char *path,
-+        uint16_t hid, CXLDCEventType type, uint8_t rid, const char *tag,
-+        CxlDynamicCapacityExtentList *records, Error **errp)
++/*
++ * This function allows for a simple check to make sure that
++ * our extent is removed. It can be used by an orchestration layer.
++ */
++ExtentStatus *
++qmp_cxl_release_dynamic_capacity_status(const char *path,
++                                        uint16_t hid, uint8_t rid,
++                                        const char *tag,
++                                        Error **errp)
 +{
 +    Object *obj;
 +    CXLType3Dev *dcd;
 +    CXLDCExtentList *list = NULL;
 +    CXLDCExtent *ent;
-+    g_autofree CXLDCExtentRaw *extents = NULL;
++    QemuUUID uuid_req;
++    ExtentStatus *res;
 +
 +    obj = object_resolve_path_type(path, TYPE_CXL_TYPE3, NULL);
 +    if (!obj) {
 +        error_setg(errp, "Unable to resolve CXL type 3 device");
-+        return;
++        return NULL;
 +    }
 +
 +    dcd = CXL_TYPE3(obj);
 +    if (!dcd->dc.num_regions) {
 +        error_setg(errp, "No dynamic capacity support from the device");
-+        return;
++        return NULL;
 +    }
 +
 +    if (rid >= dcd->dc.num_regions) {
-+        error_setg(errp, "region id is too large");
-+        return;
++        error_setg(errp, "Region id is too large");
++        return NULL;
 +    }
 +
-+    QemuUUID uuid_req;
-+    qemu_uuid_parse(tag, &uuid_req);
++    if (!tag) {
++        error_setg(errp, "Tag must be valid");
++        return NULL;
++    }
 +
 +    list = &dcd->dc.extents;
-+    size_t cap = 8, n = 0;
-+    extents = g_new0(CXLDCExtentRaw, cap);
++    qemu_uuid_parse(tag, &uuid_req);
++    res = g_new0(ExtentStatus, 1);
++
++    /* Check committed extents */
 +    QTAILQ_FOREACH(ent, list, node) {
 +        QemuUUID uuid_ext;
++        g_autofree char *uuid_str = NULL;
 +        memcpy(&uuid_ext.data, ent->tag, sizeof(ent->tag));
-+        if (!qemu_uuid_is_equal(&uuid_req, &uuid_ext)) {
-+            continue;
++        if (qemu_uuid_is_equal(&uuid_req, &uuid_ext)) {
++            uuid_str = qemu_uuid_unparse_strdup(&uuid_ext);
++            res->status = g_strdup("Committed");
++            res->message =
++                g_strdup_printf("Found committed extent with tag %s dpa 0x%"
++                                PRIx64 " len 0x%" PRIx64,
++                                uuid_str, ent->start_dpa, ent->len);
++            return res;
 +        }
-+
-+        if (n == cap) {
-+            cap *= 2;
-+            extents = g_renew(CXLDCExtentRaw, extents, cap);
-+        }
-+
-+        extents[n++] = (CXLDCExtentRaw){ .start_dpa = ent->start_dpa,
-+                                         .len = ent->len,
-+                                         .shared_seq = 0 };
 +    }
 +
-+    if (n == 0) {
-+        return;
++    /* Check pending extents (not yet committed by kernel) */
++    {
++        CXLDCExtentGroup *group;
++        QTAILQ_FOREACH(group, &dcd->dc.extents_pending, node) {
++            QTAILQ_FOREACH(ent, &group->list, node) {
++                QemuUUID uuid_ext;
++                g_autofree char *uuid_str = NULL;
++                memcpy(&uuid_ext.data, ent->tag, sizeof(ent->tag));
++                if (qemu_uuid_is_equal(&uuid_req, &uuid_ext)) {
++                    uuid_str = qemu_uuid_unparse_strdup(&uuid_ext);
++                    res->status = g_strdup("Pending");
++                    res->message =
++                        g_strdup_printf("Found pending extent with tag %s"
++                                        " dpa 0x%" PRIx64 " len 0x%" PRIx64,
++                                        uuid_str, ent->start_dpa, ent->len);
++                    return res;
++                }
++            }
++        }
 +    }
-+    extents = g_renew(CXLDCExtentRaw, extents, n);
-+    cxl_create_dc_event_records_for_extents(dcd, type, extents, n);
++
++    res->status = g_strdup("Released");
++    res->message = g_strdup_printf("Tag %s released or not found", tag);
++    return res;
 +}
 +
- void qmp_cxl_add_dynamic_capacity(const char *path, uint16_t host_id,
-                                   CxlExtentSelectionPolicy sel_policy,
-                                   uint8_t region, const char *tag,
-@@ -2537,6 +2594,10 @@ void qmp_cxl_release_dynamic_capacity(const char *path, uint16_t host_id,
-                                                       region, tag,
-                                                       extents, errp);
-         return;
-+    case CXL_EXTENT_REMOVAL_POLICY_TAG_BASED:
-+        qmp_cxl_process_dynamic_capacity_tag_based(path, host_id, type, region,
-+                                                   tag, extents, errp);
-+        return;
-     default:
-         error_setg(errp, "Removal policy not supported");
-         return;
+ static void ct3_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+index 98292a931c..17f9414142 100644
+--- a/hw/mem/cxl_type3_stubs.c
++++ b/hw/mem/cxl_type3_stubs.c
+@@ -127,3 +127,13 @@ void qmp_cxl_release_dynamic_capacity(const char *path, uint16_t host_id,
+ {
+     error_setg(errp, "CXL Type 3 support is not compiled in");
+ }
++
++ExtentStatus *qmp_cxl_release_dynamic_capacity_status(const char *path,
++                                                      uint16_t host_id,
++                                                      uint8_t region,
++                                                      const char *tag,
++                                                      Error **errp)
++{
++    error_setg(errp, "CXL Type 3 support is not compiled in");
++    return NULL;
++}
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 81d6198ba0..53325ba530 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -636,3 +636,49 @@
+            },
+   'features': [ 'unstable' ]
+ }
++
++##
++# @ExtentStatus:
++# This is an object that describes the status of an extent.
++#
++# @status:   String indicating the overall result, e.g. "success".
++# @message:  Human-readable description of the outcome.
++#
++# Since: 9.1
++##
++{ 'struct': 'ExtentStatus',
++      'data': { 'status': 'str', 'message': 'str' }
++}
++
++##
++# @cxl-release-dynamic-capacity-status:
++#
++# This commands checks if an extent tag has been released or not.
++#
++# @path: path to the CXL Dynamic Capacity Device in the QOM tree.
++#
++# @host-id: The "Host ID" field as defined in Compute Express Link
++#     (CXL) Specification, Revision 3.1, Table 7-71.
++#
++# @region: The "Region Number" field as defined in Compute Express
++#     Link Specification, Revision 3.1, Table 7-71.  Valid range
++#     is from 0-7.
++#
++# @tag: The "Tag" field as defined in Compute Express Link (CXL)
++#     Specification, Revision 3.1, Table 7-71.
++#
++# Features:
++#
++# @unstable: For now this command is subject to change.
++#
++# Since: 9.1
++##
++{ 'command': 'cxl-release-dynamic-capacity-status',
++  'data': { 'path': 'str',
++            'host-id': 'uint16',
++            'region': 'uint8',
++            'tag': 'str'
++          },
++  'features': [ 'unstable' ],
++  'returns': 'ExtentStatus'
++}
 -- 
 2.50.1 (Apple Git-155)
 
