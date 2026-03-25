@@ -4,69 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641DBFEA82F
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F82BFEA82E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5JCT-00071d-S9; Wed, 25 Mar 2026 04:02:50 -0400
+	id 1w5JIH-0008JF-74; Wed, 25 Mar 2026 04:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w5JCO-000714-Ln
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:02:45 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w5JIF-0008Is-0p
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:08:47 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w5JCL-0003Qd-97
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:02:44 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62P82YAq055578
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 25 Mar 2026 17:02:34 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=RxQSz5Lzd+JXhSHBXYFOEwuUJq1+dt0uw5uZNp5kCc4=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1774425754; v=1;
- b=lRw3XtIYjjzq2OHK1+/ryIKqfX42WXx7szBJ9yoAmQrzyBkxz98URkV6yT9/fSVt
- bNznZdqvz4CfTKZqHb5rhZ40Vk+/TAn8Rxnp0t6I4/5R+oFq9iJVN/Hfy7YGwU1m
- Hfd9P0s8A5+K/OvhV25Iv/UQ08AJpF/vAmTDcARh25/5d3uUhYYV8PMV7Avun5Hf
- jGfQK6NqKo/PypYaakgWkcCwdkA4yY7n5Z92isb28QVyIslknH5ERdo1Vmpgu9M2
- QuV/xktVu65MbSfaWN/URc9NvWw2x5Ja99Tm+gdkNVqHrploxeFyu4t9gr4/xpqs
- 1j3WzQL0lOEcQgPAQSc6xg==
-Message-ID: <c7ced616-2d9e-4180-ad40-c1f0d13fdc05@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 25 Mar 2026 17:02:33 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w5JID-0005Sm-3o
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:08:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774426101; bh=SM91wa4t4E+QDwFZxbT5kSFr52tRJ9J8JeXVx8sU9e8=;
+ h=Date:Subject:From:To:References:Cc:In-Reply-To;
+ b=MJOxY9Kg4kUz4acQh3BYPRRztZSdme2tebFUlldz+9erAiSP9OQCjIn4DROUkQdNS
+ DV3DbL265iyAnEqOSCW0c9FxNeQxbE67sS4yTuGBu+g3jGuI7sT6zDkqyU9Tbowl2f
+ r5XxEgKz8wi2iIPpPGAcan/z/WnMdkrHcKuWa7S4VIH76ILy4dNEuPVBqQBmDjrLFe
+ EiCPwJbpOnJ1LzlcdiOuDTf58cVo/bPCpZhu1gM2tx3nEuFdi9LWRYfPn1jOaB0ZfT
+ yqani344ZVPVYDhq9Dc0mlhxVRvmM/5wY/dJuagnmQ3HrzLmlKyaHtVFHyM7dZy4S9
+ 3dOI6KPu/B3qw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4744A197761;
+ Wed, 25 Mar 2026 11:08:21 +0300 (MSK)
+Message-ID: <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
+Date: Wed, 25 Mar 2026 11:08:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260319052023.2088685-1-vivek.kasireddy@intel.com>
- <20260319052023.2088685-11-vivek.kasireddy@intel.com>
- <6af4e73c-4ad5-4684-9982-04276b6b7daa@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71851291496AF53CF79309DAF849A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB71851291496AF53CF79309DAF849A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: Re: QEMU requires a 64-bit CPU host architecture?
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: QEMU Development <qemu-devel@nongnu.org>
+References: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,143 +112,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/25 14:29, Kasireddy, Vivek wrote:
-> Hi Akihiko,
+On 20.03.2026 09:45, Michael Tokarev wrote:
+> Hi!
 > 
->> Subject: Re: [PATCH v12 10/10] virtio-gpu-dmabuf: Create dmabuf for
->> blobs associated with VFIO devices
->>
->> On 2026/03/19 14:15, Vivek Kasireddy wrote:
->>> In addition to memfd, a blob resource can also have its backing
->>> storage in a VFIO device region. Since, there is no effective way
->>> to determine where the backing storage is located, we first try to
->>> create a dmabuf assuming it is in memfd. If that fails, we try to
->>> create a dmabuf assuming it is in VFIO device region.
->>>
->>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
->>> backing storage is located in a memfd or not. If it is not, we invoke
->>> the vfio_device_create_dmabuf_fd() API which identifies the right
->>> VFIO device and eventually creates a dmabuf fd.
->>>
->>> Note that, for mmapping the dmabuf, we directly call mmap() if the
->>> dmabuf fd was created via virtio_gpu_create_udmabuf() since we
->> know
->>> that the udmabuf driver supports mmap(). However, if the dmabuf
->> was
->>> created via vfio_device_create_dmabuf_fd(), we use the
->>> vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
->>>
->>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>> Cc: Alex Williamson <alex@shazbot.org>
->>> Cc: Cédric Le Goater <clg@redhat.com>
->>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>> ---
->>>    hw/display/virtio-gpu-dmabuf.c | 23 ++++++++++++++++++++---
->>>    1 file changed, 20 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
->> dmabuf.c
->>> index 89aa487654..f953db0fbe 100644
->>> --- a/hw/display/virtio-gpu-dmabuf.c
->>> +++ b/hw/display/virtio-gpu-dmabuf.c
->>> @@ -147,9 +147,26 @@ void virtio_gpu_init_dmabuf(struct
->> virtio_gpu_simple_resource *res)
->>>            if (res->dmabuf_fd ==
->> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
->>>                error_free_or_abort(&local_err);
->>>
->>> -            qemu_log_mask(LOG_GUEST_ERROR,
->>> -                          "Cannot create dmabuf: incompatible memory\n");
->>> -            return;
->>> +            res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
->>> +                                                          res->iov_cnt,
->>> +                                                          res->blob_size,
->>
->> The correspondence between (iov, iov_cnt) and blob_size is more of a
->> internal concern of virtio-gpu, not of VFIO. This parameter is better
->> removed from vfio_device_create_dmabuf_fd() and
->> vfio_device_mmap_dmabuf().
-> I don't disagree. So, should we add the following check in
-> virtio_gpu_init_dmabuf() or somewhere?
-> if (iov_size(iov, iov_cnt) != blob_size)
+> Is it intentional that qemu does not build utilities on 32bit hosts
+> anymore?
 
-I suggest to have a check in virtio_gpu_create_mapping_iov() since it's 
-not even specific to DMA-BUF.
+This is
 
-And instead let's ensure iov_size(iov, iov_cnt) >= blob_size and reject 
-otherwise instead. I cited Codex's reasoning for this, which I totally 
-agree. (I applied the Codex for Open Source program for access to Codex. 
-And just in case: we are currently not allowed to use LLMs for writing 
-patches and its use is restricted for the other purposes.)
+commit 372ec46b9f1215f48a4717f2b7ed969f65bfadc6
+Author: Richard Henderson <richard.henderson@linaro.org>
+Date:   Thu Dec 18 09:56:27 2025 +1100
 
-It will be also more of a bug fix, so I think it is better to be sent as 
-an independent patch instead of including it into this series.
+     meson: Reject 32-bit hosts
 
-Regards,
-Akihiko Odaki
+     32-bit hosts have been deprecated since 10.0.
 
-Below is the Codex's output based on commit 8e711856d763 ("Merge tag 
-'hppa-fixes-for-v11-pull-request' of 
-https://github.com/hdeller/qemu-hppa into staging"):
+How would one build qemu-img and especially qemu-guest-agent, say,
+on i386 or armhf?
 
-In current QEMU, omitting the check leaves inconsistent state possible, 
-and the effect depends on the direction of the mismatch.
+I tried removing this error message from meson.build (in $subject),
+but it fails to build even the qga due to errors in atomic.h, -
+even if these aren't used by qga.
 
-If iov_size < blob_size, this is the bad case. The dmabuf/export backing 
-is built from the iov lengths in virtio-gpu-udmabuf.c (line 45) and 
-virtio-gpu-udmabuf.c (line 63), but remap and scanout bounds use 
-blob_size in virtio-gpu-udmabuf.c (line 73) and virtio-gpu.c (line 761). 
-There is also a fast path that directly exposes iov_base as res->blob 
-for small single-iov blobs in virtio-gpu-udmabuf.c (line 136), and 
-scanout later uses that pointer as image data in virtio-gpu.c (line 662) 
-and virtio-gpu.c (line 674). So a too-small backing is not a clean or 
-obviously safe case.
-If iov_size > blob_size, it is mostly a semantics issue. QEMU still 
-bounds scanout using blob_size in virtio-gpu.c (line 761), so the extra 
-backing is usually just unused. But the resource state is still 
-inconsistent.
-QEMU does not currently enforce the relationship elsewhere. blob_size 
-and the iov are populated independently at blob creation in virtio-gpu.c 
-(line 362) and virtio-gpu.c (line 366), and later backing attach also 
-does not compare them in virtio-gpu.c (line 946).
-So if the question is “can we omit the check entirely?”, the answer is: 
-yes, but then you are knowingly accepting malformed guest state and 
-relying on later backend behavior. If you want a defensive check, 
-iov_size < blob_size is the one with a concrete justification. iov_size 
-!= blob_size is harder to defend from the spec.
+That smells like a bad decision, - to drop qga and qemu-img support
+on 32bit architectures.  Especially qga.
 
-> 
-> Thanks,
-> Vivek
->>
->> Regards,
->> Akihiko Odaki
->>
->>> +                                                          &local_err);
->>> +            if (res->dmabuf_fd ==
->> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
->>> +                error_free_or_abort(&local_err);
->>> +                qemu_log_mask(LOG_GUEST_ERROR,
->>> +                              "Cannot create dmabuf: incompatible memory\n");
->>> +                return;
->>> +            }
->>> +
->>> +            if (res->dmabuf_fd >= 0) {
->>> +                pdata = vfio_device_mmap_dmabuf(res->iov, res->iov_cnt,
->>> +                                                res->blob_size, &local_err);
->>> +                if (!pdata) {
->>> +                    virtio_gpu_destroy_dmabuf(res);
->>> +                }
->>> +            } else {
->>> +                res->dmabuf_fd = -1;
->>> +            }
->>>            } else if (res->dmabuf_fd >= 0) {
->>>                pdata = virtio_gpu_remap_dmabuf(res, &local_err);
->>>                if (!pdata) {
-> 
+Thanks,
+
+/mjt
 
 
