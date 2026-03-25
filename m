@@ -4,157 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F6F103A9A4
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808F6103A9A9
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Lpt-000532-BC; Wed, 25 Mar 2026 06:51:41 -0400
+	id 1w5LtT-0005rI-Tn; Wed, 25 Mar 2026 06:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5Lps-00052q-5L
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:51:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1w5LtN-0005qm-KB; Wed, 25 Mar 2026 06:55:17 -0400
+Received: from smtpout9.mo534.mail-out.ovh.net ([178.33.251.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5Lpn-0004wZ-QS
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:51:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774435894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=U9VFzuEcjXje5ShW3zxAHxwlfNiTkjCNuQpsaDcFuZY=;
- b=GXcv/qTXGPhShuW4pw2H45MNZXq7tms3eCafyPVnj0UiL9/Sbz/tVhOINi4+gmaah/uuA+
- a6lGa7pv/W0fFkRrBOEDrPoeoDtyAgqTs90OozeiJDLxRaWjhjcat+f/MhyRX7RIvi8Isx
- KkCF4Ngr2KCWuhgwMwdke3bWVAEJYuc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-KYJ7iDHMOeKS5W5wvvaGrA-1; Wed, 25 Mar 2026 06:51:32 -0400
-X-MC-Unique: KYJ7iDHMOeKS5W5wvvaGrA-1
-X-Mimecast-MFC-AGG-ID: KYJ7iDHMOeKS5W5wvvaGrA_1774435891
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4837bfcfe0dso52701225e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 03:51:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774435891; x=1775040691; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=U9VFzuEcjXje5ShW3zxAHxwlfNiTkjCNuQpsaDcFuZY=;
- b=ML1wpxmQR58PvuY7MUCdaq2/3yCsw/Rj5ykQqlYrInya0TaQVPG48pikM7GkRyeLdi
- qbDvW1bxEoyESirz2dK1HhJbEisJFzh2WqudS46UuKpU2c6cm9YyS/erb3jqXqkqS87U
- 2sO3TnxukJqhtLKfc2mQ883Y2gwZYaAkxqi5b1bK1flEn+0wZG89PwnhGc7F4Qnxd427
- qegBjJmp36LcrGKtcbVGG3CfQ2CuoR9QbgVBJxomRY31L0zJFUr9XXF1MgEMTy7yqfU0
- eWXMBe+la5m8t/z0yHvHCHCpLMc8mGF2TjZA2ylK69kB5HHKW6IA3MG2+iWfA3RHc1jM
- i3ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774435891; x=1775040691;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U9VFzuEcjXje5ShW3zxAHxwlfNiTkjCNuQpsaDcFuZY=;
- b=fvOChjENUJ0QesWJWoeeXHr8oZR9iV4QYn8SlAlvhZJoGbe2k7ovOuz61dm16KfWLZ
- D71LumqMTFFOzK3IqNxLj0HcAO5BTyVW09l5GUwDnzvrw1A9/uQtw67u2VKKCkjvM0nu
- eVEJGEHAsR9VVv/Kag5oCxMvRrU18gwKKYrnIK6emL01D92CH/sm5sRCMVDxWYihB6Av
- oZUkvZReP58cUs7THREE/QC0PHUBJcBBFC1u8pyL9qwnehR/fuEton/2jd9uCuxjvOYP
- 8YEOHSYoA8iLvkLzQXmlSSk0nJCZee9QxjsjRJjWm16sZ5TPjM7oVN5IKw519/jCPDsH
- SrQA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvTbXg3DhJwHJxCiC6yag/4HI0EuTQhVqqGTqmqvaVleYQqu9ERy7g0lKXJDntRvXhFToj0xTJi4Tt@nongnu.org
-X-Gm-Message-State: AOJu0YxI1XF/2o6YAbTjlFJgZ/m4zSYhIaflUc9Q3bEIPRyGoEWtnQeg
- hI6oqWLhpQOaU7x+E2dw1wZPXtUZXyA5UeB4dZzDM32yJN29JRDxdOy7KLRV2ucTlEx/35hELro
- vMG1lQ059RHCtbm++p76OXCyw+b//G91bgfZrnas3da4WJnOlLgX7hA87
-X-Gm-Gg: ATEYQzwE2i06zjFUMr/Qhsp7RR+G99RdWO+1IA/xkJ/eDNYMFMa+kCig88M92k0Wlyx
- lKvzvZ74uOShfXCO35p7wEGXbbLqcAVG63sczhiTfsVVck7zfIYg8H8cIImReNpFiVI9c8AH/zN
- NFxK3JOszAPwu3ZqSUeIaVyYIkLkahy4QQyBFU6rmC8wejvyV/4w/5EVae5lyCXeRINeVsTyTUB
- U4TIgFKv7O7xOJtkqiW+ynfZ4hr3mBeDAAXyn7Xdyh81qVoMHiwLY0CjFnTl+tZWfcnKwl7SrDU
- easy6+zCl7hqO6CeyGhYiSoprEWssJbLmhDoPfc5Vfza1CkoVbQ4Q8HQP4hKk0OSh1CNtM1YFwG
- K9TcHBRskf6Ups4oFvA==
-X-Received: by 2002:a05:600c:46c6:b0:485:40c6:f507 with SMTP id
- 5b1f17b1804b1-4871609d044mr47842645e9.30.1774435890958; 
- Wed, 25 Mar 2026 03:51:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:46c6:b0:485:40c6:f507 with SMTP id
- 5b1f17b1804b1-4871609d044mr47842175e9.30.1774435890461; 
- Wed, 25 Mar 2026 03:51:30 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.113.85]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487117732a1sm116329925e9.15.2026.03.25.03.51.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 03:51:30 -0700 (PDT)
-Message-ID: <1002958d-783e-4fad-9a89-65d53f1f6e84@redhat.com>
-Date: Wed, 25 Mar 2026 11:51:29 +0100
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1w5LtK-00009x-SV; Wed, 25 Mar 2026 06:55:17 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4fgkM84735z60Ks;
+ Wed, 25 Mar 2026 10:55:00 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 25 Mar 2026 10:54:59 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.51])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4fgkM76C41z1xvG; Wed, 25 Mar 2026 10:54:59 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
+ (Authenticated sender: clg@kaod.org)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 7D94F240397C; Wed, 25 Mar 2026 10:54:58 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-105G006b58b77fd-c109-4057-a78f-e0603fae2a86,
+ 796938FF8373C45809F81B5903BEE6B4DB9E2182) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <cbc2f8e2-82d6-426e-b269-4921fa95b219@kaod.org>
+Date: Wed, 25 Mar 2026 11:54:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/7] target/riscv: Add test for RISC-V BE
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "alistair23@gmail.com" <alistair23@gmail.com>
-References: <20260324164007.549397-1-djordje.todorovic@htecgroup.com>
- <20260324164007.549397-8-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260324164007.549397-8-djordje.todorovic@htecgroup.com>
+Subject: Re: [PATCH] hw/i2c/aspeed_i2c: reset and migrate pending_intr_sts
+To: GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+References: <20260325085450.126595-1-zhaoguohan@kylinos.cn>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260325085450.126595-1-zhaoguohan@kylinos.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 13763844889324596246
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTE/kBvEMuP/lvNh4aza2QNNOwAz5RGsYOdPdOo8LzV3CNr9yZe+SZHmwM0XBPKJJAYheLIDZJ6sP/9eSAveXokL02fJOhONrcAsDm9ynk0pUtYWoD+hX7SWLYyzh/ooEN6/lAZtGK3jJI+2mtG/hYPr09qOw6ALkJ05qZxyWNbzOv/LYu8+Ev0bdRFPzenH1C4BM3Kgk/JhDMTW+OUvxon/hmusGIhszamipt+w8TpaBekZo/xTWnjF8g6pKx1jjnc1bS1FJPZ9lWlz5GgrwpZ7m/HIRGydEvjPPy9cTe5epgFni12bTVhCWWQmf0WtTH6/jbWqr/vgvfvL9fDhq1N6Womp6hdZydSWOC2Y7x7tZWhXVoO6ZEogZfKqpKqxgy13tt7OMuh0OgnWyjn4ENpogV5Tmt9mnalNHnGc0U2ioS0ITikLoYvk3AlKfOU82sxQYS2HmS27aeAO08BX+TrXWAvzs00I64+hZX3gdIcfigkHJ3OJFXURejyai9AwTYdZt6dXeRixJ1t2gDMX49PFC+ekkc0ULfCiARixGsGTk15VPrU7p67mNK1YAYk0cuRKRWj/FDfzvHH5OcB+Bj2nRSdGwO4LIrPK93RMTCvhFpXnxWV20kTFYtCB5xyCPBkDe3PEBtn76Ch0JesMYO6epTMa1F/4evAzcvJ1lPtxLw
+DKIM-Signature: a=rsa-sha256; bh=z3ruGhnxssl+qyLC5+ftx1nRQlkiV4Gj7AZ22MaILF4=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1774436103; v=1;
+ b=d+2GWjNFhBiTU+TJdQrvT7Re/J3KjLQlqujCNzkls2Pul99ZuXuRfQYcEq/dQFX41N8E913A
+ mIUysdKXwmN0mEyhlg15QRoQHF8dm4MftRWreldHyBAH6OWTIW0cwuV6T4B/0GOD5eXrmx25b+i
+ f9qFp5RDCSaTHysSwP24OId9bUAmXU6J+jk1bY5B/k3zUXR3oaJin+205fS+lYIbE7pUchhaL28
+ 9MCGch/Ji4vps9hX7hnx65TgXNZai05JrUI5yefnUXdwMBeLhcGLePH6W2v3IOl2HrN4sbX2Kgx
+ hshOv66RFs7lp2b6xg+EzI7ACA1CqwER+jbaM/TtWz4Zw==
+Received-SPF: pass client-ip=178.33.251.187; envelope-from=clg@kaod.org;
+ helo=smtpout9.mo534.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,94 +134,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/03/2026 17.40, Djordje Todorovic wrote:
-> Add functional test for RISC-V big-endian.
++Jithu
+
+On 3/25/26 09:54, GuoHan Zhao wrote:
+> Commit 7e82393ed058 ("hw/i2c/aspeed: fix lost interrupts on
+> back-to-back commands") introduced pending_intr_sts to preserve
+> interrupt bits that collide with already pending status bits.
 > 
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> That deferred interrupt state is consumed later when the guest clears
+> INTR_STS, but it is not reset in aspeed_i2c_bus_reset() and it is not
+> part of the bus migration state. A reset can therefore leave stale
+> deferred bits behind, and migration can silently drop them.
+> 
+> Clear pending_intr_sts on reset and include it in VMState while keeping
+> compatibility with older migration streams.
+> 
+> Fixes: 7e82393ed058 ("hw/i2c/aspeed: fix lost interrupts on back-to-back commands")
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->   tests/functional/riscv64/meson.build       |  1 +
->   tests/functional/riscv64/test_bigendian.py | 57 ++++++++++++++++++++++
->   2 files changed, 58 insertions(+)
->   create mode 100644 tests/functional/riscv64/test_bigendian.py
+>   hw/i2c/aspeed_i2c.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-> index b996c89d7d..d06d6ea112 100644
-> --- a/tests/functional/riscv64/meson.build
-> +++ b/tests/functional/riscv64/meson.build
-> @@ -11,6 +11,7 @@ tests_riscv64_system_quick = [
->   ]
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 5d18f8d49ea4..90f83a03fd4f 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -1134,10 +1134,11 @@ static const MemoryRegionOps aspeed_i2c_bus_pool_ops = {
 >   
->   tests_riscv64_system_thorough = [
-> +  'bigendian',
->     'boston',
->     'sifive_u',
->     'tuxrun',
-> diff --git a/tests/functional/riscv64/test_bigendian.py b/tests/functional/riscv64/test_bigendian.py
-> new file mode 100644
-> index 0000000000..9e0b3b7db5
-> --- /dev/null
-> +++ b/tests/functional/riscv64/test_bigendian.py
-> @@ -0,0 +1,57 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional tests for RISC-V big-endian support
-> +#
-> +# Copyright (c) 2026 MIPS
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +
-> +
-> +class RiscvBigEndian(QemuSystemTest):
-> +    """
-> +    Tests for RISC-V runtime big-endian data support.
-> +
-> +    Uses a bare-metal RV64 ELF that detects data endianness at runtime
-> +    by storing a 32-bit word and reading back byte 0. Prints "ENDIAN: BE"
-> +    or "ENDIAN: LE" to the NS16550A UART on the virt machine.
-> +    """
-> +
-> +    timeout = 10
-> +
-> +    ASSET_BE_TEST = Asset(
-> +        'https://github.com/MIPS/linux-test-downloads/raw/main/'
-> +        'riscvbe-baremetal/be-test-bare-metal.elf',
-> +        '9ad51b675e101de65908fadbac064ed1d0564c17463715d09dd734db86ea0f58')
-> +
-> +    def _run_bare_metal(self, big_endian=False):
-> +        self.set_machine('virt')
-> +        kernel = self.ASSET_BE_TEST.fetch()
-> +        self.vm.add_args('-bios', 'none')
-> +        self.vm.add_args('-kernel', kernel)
-> +        if big_endian:
-> +            self.vm.add_args('-cpu', 'rv64,big-endian=on')
-> +        self.vm.set_console()
-> +        self.vm.launch()
-> +        expected = 'ENDIAN: BE' if big_endian else 'ENDIAN: LE'
-> +        wait_for_console_pattern(self, expected)
-> +
-> +    def test_bare_metal_littleendian(self):
-> +        """
-> +        Boot bare-metal ELF on virt with default little-endian CPU.
-> +        Expects "ENDIAN: LE" on UART.
-> +        """
-> +        self._run_bare_metal(big_endian=False)
-> +
-> +    def test_bare_metal_bigendian(self):
-> +        """
-> +        Boot bare-metal ELF on virt with big-endian=on CPU property.
-> +        Expects "ENDIAN: BE" on UART.
-> +        """
-> +        self._run_bare_metal(big_endian=True)
-> +
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
-
-Thanks for adding this!
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+>   static const VMStateDescription aspeed_i2c_bus_vmstate = {
+>       .name = TYPE_ASPEED_I2C,
+> -    .version_id = 6,
+> +    .version_id = 7,
+>       .minimum_version_id = 6,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32_ARRAY(regs, AspeedI2CBus, ASPEED_I2C_NEW_NUM_REG),
+> +        VMSTATE_UINT32_V(pending_intr_sts, AspeedI2CBus, 7),
+>           VMSTATE_UINT8_ARRAY(pool, AspeedI2CBus, ASPEED_I2C_BUS_POOL_SIZE),
+>           VMSTATE_UINT64(dma_dram_offset, AspeedI2CBus),
+>           VMSTATE_END_OF_LIST()
+> @@ -1510,6 +1511,7 @@ static void aspeed_i2c_bus_reset(DeviceState *dev)
+>       AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
+>   
+>       memset(s->regs, 0, sizeof(s->regs));
+> +    s->pending_intr_sts = 0;
+>       i2c_end_transfer(s->bus);
+>   }
+>   
 
 
