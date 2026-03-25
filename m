@@ -4,145 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E231093168
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 14:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADE8109C022
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 14:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5P1f-0000Vr-19; Wed, 25 Mar 2026 10:16:03 -0400
+	id 1w5PHZ-00050Y-90; Wed, 25 Mar 2026 10:32:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1w5P1c-0000Ve-H1
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 10:16:00 -0400
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1w5P1a-0006Vo-NP
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 10:16:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZbdVHvL2yjoHbSuggWOX4dpnv2lmZt8AV4ak9Ds7f7XA4rSIb3zTbRPnHxGx/lHQ00KxTAgd9jmWR04uimK762DSWWpG4qLZZYjfYmdMORx2VY2TyvByfPJ8sP5ygrduRM6b3kT9hd/rdsH/rdw5Tir1aIviCQq4uYyRhKSO1GQgOUXAixPXP/8oETbu/Mbfq0fH26uYcJdzg6BcAlKten0GAw+ZP7n7hUqW8PmiabOKkRlgisXegr0H6yXN9Y3JiF1qMuu3xC21pRhfwlfkSdQNLmC/H+G4FmUDhp5hxktykoY5BCbVic5ht9c+yT8RXN5Z7R1/4zeJpz9MAioChQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KAevLbYE+RtQrQBZesVm8JdNZXPkB8mEwNUvP4GMuIk=;
- b=MpmUH8NiNUFq79Wl1/IMeR24rwyOqCrwum+UIVsg2lXJxFnI28CGsopgMT6XFac/kAGZfJZrFVz1u6FAlcLeye325Ri1RR1CPjFYpv4lJRz6t3pVbKrP7lTP1ENISSEFTHnDI8eOOSk5Z/KbDxlYX6lBAEl/qvddw4rLgcJnTxIGM+PIROUrv8aQ6e9DLz+V+mHsLs11v1FdTivq1VJYZsZ6q5NwzipSz/MhE42ikKCIkOCtjUCsXUzkx2MCf1tXjrnRR+GzYmQGrqHBP3gjdJkHUgOMykip2KjriWkc9nxoFXuJnG3a4j/LNjuQF+ylSXif5n0SZGKGxUKt77yBtA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KAevLbYE+RtQrQBZesVm8JdNZXPkB8mEwNUvP4GMuIk=;
- b=lqUCmVAWUs8EwFVCj7Z6uGTkDVZmBb8BXxU6xr4vaYyA50X1wc2XFWCpNY16cEPLRxnP9mzBh09c5lyPvALUn6h/E8fdTsatW6E+p1hwtR9ISuijz1YaQqplKmMp6L0anCjnfPAaZIYIe10wrVOmJ7mRdXRxEQbvwjtQ54x0tfqkJYz0ZZgGc74++MMIO6sVZOwZelxOSgmC8W3Mvbig/9QJ6aZ1z2yzmfNIGPm8vT7zcO7ZbdsOm8Ky5zqfN8Q5mXjqPR+6PKHmocr1TaL8srhehGvedk44aEnRUSST34UIeLe/rUx4nP4sbdgWXNu3LTbGp8BTt54llDc+wsqEfQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by DS7PR12MB6072.namprd12.prod.outlook.com (2603:10b6:8:9c::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Wed, 25 Mar
- 2026 14:15:52 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%5]) with mapi id 15.20.9769.004; Wed, 25 Mar 2026
- 14:15:51 +0000
-Message-ID: <894ad48a-6779-41f7-bf9f-08008c8e4bde@nvidia.com>
-Date: Wed, 25 Mar 2026 16:15:45 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 04/12] vfio/migration: Cache stop size in VFIOMigration
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Kirti Wankhede <kwankhede@nvidia.com>, 
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, Alex Williamson
- <alex@shazbot.org>, Yishai Hadas <yishaih@nvidia.com>,
- Fabiano Rosas <farosas@suse.de>, Pranav Tyagi <prtyagi@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-5-peterx@redhat.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <20260319231302.123135-5-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TL0P290CA0009.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:5::6)
- To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w5PHW-00050L-1j
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 10:32:27 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w5PHT-000558-IX
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 10:32:25 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b97ed4ad579so777214166b.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 07:32:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774449142; x=1775053942; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=faguxbi313ZwgM1cUu9QJKWko6tPJUGz3JYLS+WqCrQ=;
+ b=CPcajm6aiKYqFxByf7QS0wMsjRSVjP/FnB7Udh08u1xzSlQikPMTfnepcFFQ8oIFY+
+ DK1dQNnQiQQdXqLWTxB2k3i4ZdEKRy8RjvK8td+z4abKAO/ciwndDlUU42uggiLGl+w7
+ oyPLFyR5jjNRueH4VjVeTzEeCgEx8hlSApkgfhodyVG1JGZR1jNo36Y77GkpioHL2V4n
+ gEFdiaePG3fci43tiTxHtw1KGFqh8lua3+IjsocRoLu47EuchVpLgPImRNCXauMXWFWr
+ bOriKjfe+E3GHoczmKJTVbSeJRw/PhbTOKOlOKMOVgdNWgao59frlPXcxWWQlqQAdz7C
+ twIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774449142; x=1775053942;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=faguxbi313ZwgM1cUu9QJKWko6tPJUGz3JYLS+WqCrQ=;
+ b=LR+BoMSyK/CHPsPcaKx1oLMBqaWI7xKnb0qTkg/fLfjlI00+Jz7yM8YeNR7YPEHCKe
+ Pmue/ERWi2eth8uaJfw7q/lR4n/vcxkd2IoXEFzo4IG9tFfoUUPcbOVXN7xlUfx9N51a
+ Gl0lXzpjaLSvdm05aXk5H7Q0gahBiHv48l03iC7D/O9X7hEt/0KAbjN+oN71Lb34y1Ys
+ cRCt90Rnz2iL57uf8mze9bo7E1yclU2XLOzXB5NDDjRZPGnuXf3gR4GEa49Yve4JtOYk
+ hY42sVnXKesjE2jfM8qiaIlNKko/yWH+6j0wbc2qmLGJ4NdeZEDwLax4AiELbbhy8eZm
+ W2iQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKIr52b8T9I0Ft4wUa62FPBi7kMX6JSugDYVHCeAe0gV089bJx6zCcT5nksVEfz4KE/Pp86HcU+ph8@nongnu.org
+X-Gm-Message-State: AOJu0Yw790TYqTr2m5Q0Nt6Z7xAOeyqHmfuwlTTvsWwo/C2VDIVFGL9m
+ sfyC+n4HcxjSrPs6td4a7yzvP02zAvBeeWSYDvLi/c7Hp4eQut7zvYSXrpM1EQ2GRTo=
+X-Gm-Gg: ATEYQzxGbb7g3w0sD5tFW6qKFIiSmobNRVDQV+GGcMObSq6EA/n6nsM2k93uf2onUvW
+ 7j4H6H73yOzf7FfbojQC1zp0SgdEsy1054rHYhPM+LdAS01aXxeRaRWKfMuewc0A7fktS2dBUEN
+ NP1vPaIC2oSbYpUDcPW6x2zTf+zn/KFa6vjgwJGyuGF7UBylzu2Y6cE1lCv5+f7oqA0lQPehKBS
+ ljjHVEYeurQw/eFCCOHt7FaNxPumjPQQn786Zj/bE3wrkknQVlhTjXKg6tOWtflfD7s5ccvvMlF
+ HBztgM9Mow0kkXFMpTCLRs4THUhgsALmbE6WyWv11e7PbJB/bkyvcn7/WTbuak8NRiEyd0q8fkX
+ +2+xp1n5dbP4kUyy/xv06WycP4YbUGPvnkt9eD1eW/Kt7Y/hXgNO0EHfbs3uqa/8HK+j6YRzH5/
+ ax0TJmDuM/EnANI5MXORJ81IU=
+X-Received: by 2002:a17:907:3e89:b0:b9b:171e:baef with SMTP id
+ a640c23a62f3a-b9b171ebdbbmr139544266b.6.1774449141513; 
+ Wed, 25 Mar 2026 07:32:21 -0700 (PDT)
+Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b98b20c8c7bsm215362066b.63.2026.03.25.07.32.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Mar 2026 07:32:20 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AEF2D5F878;
+ Wed, 25 Mar 2026 14:32:19 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  QEMU Developers
+ <qemu-devel@nongnu.org>,  "Daniel P. Berrange" <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,  Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: Cleaning up contrib/ and tools/
+In-Reply-To: <87tsu4m8w4.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Wed, 25 Mar 2026 12:43:55 +0100")
+References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
+ <87tsu4m8w4.fsf@pond.sub.org>
+User-Agent: mu4e 1.14.0-pre3; emacs 30.1
+Date: Wed, 25 Mar 2026 14:32:19 +0000
+Message-ID: <87341o3rpo.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|DS7PR12MB6072:EE_
-X-MS-Office365-Filtering-Correlation-Id: b75fb09d-4a67-4a02-a933-08de8a7904ca
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|56012099003|22082099003|7053199007|18002099003;
-X-Microsoft-Antispam-Message-Info: ZJWHkW7CzBkbPUCwvG99X43mmgSgA4M1JHAbZfVxdjjsegolf0HoEBFFGeCEj4OoNEW2/OFBbp0taMyAJ8iw7fPPZ5l/rvX4+AcAXNGbBuuxYviJQUKuou6i7pR+tI5mIlFGQs8tjB609rIQEjWafT5vHtD8mb+EKoPuWvzUOzlgliKqYa6vcPpzMBzsCT967g7yoM77MRzEiKucfozuzPMyyNqWQ+0Vz+xlT1+5ngrgBuJ0xnukNu2N58mNG79t60nYMyodxLqMkbx5spqeXM+JNDHzC/FYxbCd6guQbv5YCerfgaF7NxLkJRtVE8P87kF/jfMGZoPU+lqYbnXpoGXPIj7nV1fvQvlaHsGd6BSJAd+c7knVdSnH5UhHud/PXUkzrW/hAUiJ9epyTwukAys9noHBCXdeEU8t/n3wEnkl92sGiQwxB8kqq5010I3iBzQOl/S7wQxUp4G+mO/F1t2sfglwI1DHHsNCwi4Qqcutu/M1odgfuxPfdX5/yxza8sP8tj8s69ebPk9VdElWr0KYR2reYVtFyIc5Xc9w/j9N2E/aG3HaN8OsZ8zfv0UaurY9kB1Zp6q/6BAzFx19rzyq633WwBiqDex+A78fUydOmzQgolpqkWKTIX66jtKN0df4KZE+qT1n/39ZpoWOcljKdCdVDxu5XNbEZDD+EDK9JRJwroCJUZyhLmBaq+/oSRYJI84swQyI6qmqH077xO6ipaldRRHYoL+aVhv3Vfo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(56012099003)(22082099003)(7053199007)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VU9sT2FKT2JYL1BXNElNTnNJQVlpOVRQZEUvZVd3NmxVK011MnBCTmNpeUNX?=
- =?utf-8?B?T1Z4YXBaWmlRaS9zWnZuYVZqWHMvVFdDMzI2c1NuVjBwclN4VW41dThQVlVh?=
- =?utf-8?B?dFBRSWZ1cW85T1RSV3ArWmVYZEU5VVN5eGM2Z0ZBckQzVVE2SjUvYmpJSE1N?=
- =?utf-8?B?SVNWdlNGVzh6cnZYRWFxMEpRVnY3NUhNSWZPei9GaFNkcld3cVVCUkpBSEt5?=
- =?utf-8?B?bVFGU2dlNEEwNG12RGFNck54L0hQYkl3N3JWanZEcmZydUdIbTV3TTF0dGtF?=
- =?utf-8?B?MlRIcFRhY09hOGYrOFRrMXlDSkNldWJ5UE45d0xjWWdJcUlnR0VIMElPNER5?=
- =?utf-8?B?WXFYTVZMclJORGtuVzRpQ1hUOTE4ZnY5UllaUTJFVlQ0UlFuMlhxQndoOXcy?=
- =?utf-8?B?bk80V3AzekM4eWh2TUk0M3kvWU5jSnl0bG03KzJOZzE3SkF5ZkdocFN1aVgr?=
- =?utf-8?B?cEF6Q00xMHJ4RnZJbW5lRUNuZHZIdkhCVFB0eTVqOGw3NDF0WUc3MmQwQ3gw?=
- =?utf-8?B?N3RmZjR2R0VxOEY2TEhyaEJaTkRNYkQ5VzVqOVVaMGJIN2VTbmhqRTlFcTRJ?=
- =?utf-8?B?aS9iREFMRVdCNkV4ZmplMHo2K3JydHJnaWcwL3lCZyt2VWIzQzJCaGtsQ3BW?=
- =?utf-8?B?clU1eXk2cWxkSmwyeGwxOFh2ZnhuWnB2SnpHN05yZ3V6cGMzYkpzcWpDNlZE?=
- =?utf-8?B?MUx2VWZ4K2wvZFE4K3ZDeVIyanp3NHBUMi93MEdqTVpSMWRuclJzZnFGVzhl?=
- =?utf-8?B?NzRPMVdjKy83b09uMThJVHhSZFBRcWJiSG5UaW1KMnMvUkZ6SkdRT3VaWWlv?=
- =?utf-8?B?cjBxZTlUSnExcGZaQjhLT1ZKaHNJeEdCazl0dk1QUjVRQ1IxZ09RTmVOVFVt?=
- =?utf-8?B?TGtpSVJjV2grdEhncm12MzM1cGtCbWlXWTg4N1EwQjJkckJHZlljUEdlRTlR?=
- =?utf-8?B?VVBYSlJYMXZGWTJGWlJIaXJJNzdCcG1qcmN6L2tnZzhoODJLTGg4MFM3b1Bx?=
- =?utf-8?B?QkdIdEtzaXpLYmh5UDI0ekxIam5HTWtJM3AzbC8rcThCTmN6b3ZQMlJJWEZE?=
- =?utf-8?B?VGk1SHo5aXlPcjlmdzJkbmJzM2taNTN1dERXVTFXcENXUXpMMzhpUFFxNjJR?=
- =?utf-8?B?MGhtelVLMFhrTnY1d1l6Mnl6SnZNR0ExNTgzam54OGd4TEp5VngyMUEyV0tm?=
- =?utf-8?B?VEVhUmVJVStpbE13WEoyVkJLZG5QMWJUSzFSOHowUk5XZE1HSlhlZTBPdnhZ?=
- =?utf-8?B?TnoyeVlHZFZhSjlUTEFHcWJJZ0VpMUVaVWRhbmR1U3B6VzRNQ1U1SEFoNExV?=
- =?utf-8?B?SklrUzFjTUhoeEw1M1FGckRvZkdkUWRGaG0wWEJocHNjZHJBN0NBUVRNUENz?=
- =?utf-8?B?Y25mQVFGT0V6UTZBTnp2c2J5Q1Q0SWxJQ0E1SFRIWTNHaXgrTGtlSW1DRytL?=
- =?utf-8?B?bWZjb01Fa2lxUmdLKzFJcmNpTUhyTGFxVUNzTlBtRXNRT0lIYlZsZzlyTW9O?=
- =?utf-8?B?aTlCSWJWbytGL3k1eithS1VmNWVNMTJkcmY0ZzFxL1ZaQ25vTU1tdUY1M0F0?=
- =?utf-8?B?VjN0NGpEYU9vTVJLb0hwbisxUityODBSWld6TnMzOStLNjAveGRMNWFic29x?=
- =?utf-8?B?cFFtSXhaR1lDbm91M0pGSEd0SjFOcUJycXBibVVlRGpHcVoyOFMyNng4MmNX?=
- =?utf-8?B?Q2p1enBlVmNubmdXZG5tWGZZUklQTE5MZUFnTURmZmtNQWh0SWMxUkJyakJn?=
- =?utf-8?B?UXRSNVVRUFU1dFNma29RRXpQNFhrMFp6MjZ3dWVBQ3hOZEFjbkR6UDM1Qm9X?=
- =?utf-8?B?VHRCeUFrV2x0eEhSTjJpVEFiZmFScGVDK0R0Rjl6RVJsN0lvT3VvN0dBQnJS?=
- =?utf-8?B?bVFxWUZ4LzJYT1pHZTN0eDM2SU15emdwcTA4cGZqL09LQkUybkdPMGZrbHRC?=
- =?utf-8?B?Z2lpbUdiYWt6eUVnejBTRWRBamF4eUFjbHJOaTQ5VVNYREJrVjZFckp0bW5a?=
- =?utf-8?B?TURIc2VEcTY5bkNlM3A5UUxLMzRJWVJwWjhObTF1WUVqWUIxeFhKY2tua2dK?=
- =?utf-8?B?MklIVXFnbGRTd1ZveEgwVVFHR1NPdVlXb0k4bmxHZGN6RlgvOEtiaWYwcGlt?=
- =?utf-8?B?eklKMEViNWpvUk5vWFFMVTl1SWppeFJOaGZBM0tnbXNXNHpBUkJWemFtT2ph?=
- =?utf-8?B?QW5hb1BoeDJNZDQrc1V2WVBwNzdQc0MwdlhoY2VWcVhWSnliSzVUb2szeEI5?=
- =?utf-8?B?dERBNHZHcHBZZWxxMjZiVUpQNFB2RjZpYjNyVFJPQ2tUc3Z2d2NCalhGZ1B4?=
- =?utf-8?B?MVMvSU9YL2hMb2MvRjAzY3pTS2I3bTFaWDZ5dXZRaGgyQUhqK0NPZz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b75fb09d-4a67-4a02-a933-08de8a7904ca
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2026 14:15:51.8232 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XCa3JtqShodw1duidprtx2yW0lrrxDW4exAudRlm4j7clPOaqPriBN7AGCO2grbcr3THEajXkUmBLRoahvbjzA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6072
-Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
- envelope-from=avihaih@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,159 +112,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Markus Armbruster <armbru@redhat.com> writes:
 
-On 3/20/2026 1:12 AM, Peter Xu wrote:
-> External email: Use caution opening links or attachments
+> Peter Maydell <peter.maydell@linaro.org> writes:
 >
+>> We have a couple of directories in our source tree which have
+>> accumulated things in them that don't really belong there; this is a
+>> proposal to clean up by moving things to more appropriate locations
+>> (as 11.1 work, obviously).
+>>
+>> Firstly, contrib/ has a tendency to be a dumping ground for stuff that
+>> we didn't think hard enough about finding a good home for, and for
+>> things in a weird "not really maintained" state. We should either
+>> (a) care enough about something to give it a correct home and to
+>> maintain it, or (b) not care about it, and kick it out of our tree.
+>>
+>> Secondly, tools/ exists but is very under-used. I think it should be
+>> for the set of standalone tools that we build if you configure
+>> --enable-tools and which we document in docs/tools.  Currently it
+>> contains two things, one of which doesn't match that idea...
+>>
+>> So, starting with tools/:
 >
-> Add a field to cache stop size.  Note that there's an initial value change
-> in vfio_save_setup for the stop size default, but it shouldn't matter if it
-> is followed with a math of MIN() against VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE.
+> [...]
 >
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   hw/vfio/vfio-migration-internal.h |  1 +
->   hw/vfio/migration.c               | 43 +++++++++++++++++--------------
->   2 files changed, 24 insertions(+), 20 deletions(-)
+>> And for contrib/, easy ones first:
+>>  * contrib/vhost-user-{blk,bridge,gpu,input,scsi} move to tools/
+>>  * contrib/elf2dmp moves to tools/
+>>  * contrib/ivshmem-client and contrib/ivshmem-server move to tools/
 >
-> diff --git a/hw/vfio/vfio-migration-internal.h b/hw/vfio/vfio-migration-internal.h
-> index 814fbd9eba..08df32c055 100644
-> --- a/hw/vfio/vfio-migration-internal.h
-> +++ b/hw/vfio/vfio-migration-internal.h
-> @@ -47,6 +47,7 @@ typedef struct VFIOMigration {
->       uint64_t mig_flags;
->       uint64_t precopy_init_size;
->       uint64_t precopy_dirty_size;
-> +    uint64_t stopcopy_size;
->       bool multifd_transfer;
->       VFIOMultifd *multifd;
->       bool initial_data_sent;
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 851ea783f3..827d3ded63 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -41,6 +41,12 @@
->    */
->   #define VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE (1 * MiB)
->
-> +/*
-> + * Migration size of VFIO devices can be as little as a few KBs or as big as
-> + * many GBs. This value should be big enough to cover the worst case.
-> + */
-> +#define VFIO_MIG_STOP_COPY_SIZE (100 * GiB)
-> +
->   static unsigned long bytes_transferred;
->
->   static const char *mig_state_to_str(enum vfio_device_mig_state state)
-> @@ -314,8 +320,7 @@ static void vfio_migration_cleanup(VFIODevice *vbasedev)
->       migration->data_fd = -1;
->   }
->
-> -static int vfio_query_stop_copy_size(VFIODevice *vbasedev,
-> -                                     uint64_t *stop_copy_size)
-> +static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
->   {
->       uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
->                                 sizeof(struct vfio_device_feature_mig_data_size),
-> @@ -323,16 +328,22 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev,
->       struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
->       struct vfio_device_feature_mig_data_size *mig_data_size =
->           (struct vfio_device_feature_mig_data_size *)feature->data;
-> +    VFIOMigration *migration = vbasedev->migration;
->
->       feature->argsz = sizeof(buf);
->       feature->flags =
->           VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_MIG_DATA_SIZE;
->
->       if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-> +        /*
-> +         * If getting pending migration size fails, VFIO_MIG_STOP_COPY_SIZE
-> +         * is reported so downtime limit won't be violated.
-> +         */
-> +        migration->stopcopy_size = VFIO_MIG_STOP_COPY_SIZE;
->           return -errno;
->       }
->
-> -    *stop_copy_size = mig_data_size->stop_copy_length;
-> +    migration->stopcopy_size = mig_data_size->stop_copy_length;
->
->       return 0;
->   }
-> @@ -415,6 +426,9 @@ static void vfio_update_estimated_pending_data(VFIOMigration *migration,
->           return;
->       }
->
-> +    /* The total size remaining requires separate accounting */
-> +    migration->stopcopy_size -= data_size;
+> Absolutely not.  This is example code, provided in the hope of helping
+> people understand the protocol, and experiment with it.  It is entirely
+> unfit for more serious use, and that's intentional.
 
-stopcopy_size is also an estimation, so I think it's safer to have:
+The rust-vmm project has gpu, input and scsi vhost-user daemons which
+are actively maintained. I don't think there is a blk device although I
+guess people should be directed to use qsd for storage?
 
-   migration->stopcopy_size -= MIN(migration->stopcopy_size, data_size);
+>
+> If somebody contributes something fit for more serious use, and there's
+> interest in maintaining it in that role going forward, and that code is
+> still simple enough to serve the example code's purpose as described
+> above, we can drop the example code from contrib/.
+>
+> We could also drop it without replacement just to have an empty
+> contrib/.  I think that would be a disservice to people trying to use
+> ivshmem.  But then I'm the guy who keeps telling people *not* to use it,
+> so why should I care?
+>
+> Perhaps contrib/ is not a good home for example code.  It seems to
+> bother people whose judgement I respect.  Can we find a better home?
+>
+>>  * contrib/plugins moves to plugins/plugins (or a different subdir
+>>    name of your choice)
+>>
+>> For contrib/, ones I'm less sure about:
+>
+> [...]
 
-Thanks.
-
-> +
->       if (migration->precopy_init_size) {
->           uint64_t init_size = MIN(migration->precopy_init_size, data_size);
->
-> @@ -469,7 +483,6 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->   {
->       VFIODevice *vbasedev = opaque;
->       VFIOMigration *migration = vbasedev->migration;
-> -    uint64_t stop_copy_size = VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE;
->       int ret;
->
->       if (!vfio_multifd_setup(vbasedev, false, errp)) {
-> @@ -478,9 +491,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->
->       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_SETUP_STATE);
->
-> -    vfio_query_stop_copy_size(vbasedev, &stop_copy_size);
-> +    vfio_query_stop_copy_size(vbasedev);
->       migration->data_buffer_size = MIN(VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE,
-> -                                      stop_copy_size);
-> +                                      migration->stopcopy_size);
->       migration->data_buffer = g_try_malloc0(migration->data_buffer_size);
->       if (!migration->data_buffer) {
->           error_setg(errp, "%s: Failed to allocate migration data buffer",
-> @@ -576,32 +589,22 @@ static void vfio_state_pending_estimate(void *opaque, uint64_t *must_precopy,
->                                         migration->precopy_dirty_size);
->   }
->
-> -/*
-> - * Migration size of VFIO devices can be as little as a few KBs or as big as
-> - * many GBs. This value should be big enough to cover the worst case.
-> - */
-> -#define VFIO_MIG_STOP_COPY_SIZE (100 * GiB)
-> -
->   static void vfio_state_pending_exact(void *opaque, uint64_t *must_precopy,
->                                        uint64_t *can_postcopy)
->   {
->       VFIODevice *vbasedev = opaque;
->       VFIOMigration *migration = vbasedev->migration;
-> -    uint64_t stop_copy_size = VFIO_MIG_STOP_COPY_SIZE;
->
-> -    /*
-> -     * If getting pending migration size fails, VFIO_MIG_STOP_COPY_SIZE is
-> -     * reported so downtime limit won't be violated.
-> -     */
-> -    vfio_query_stop_copy_size(vbasedev, &stop_copy_size);
-> -    *must_precopy += stop_copy_size;
-> +    vfio_query_stop_copy_size(vbasedev);
-> +    *must_precopy += migration->stopcopy_size;
->
->       if (vfio_device_state_is_precopy(vbasedev)) {
->           vfio_query_precopy_size(migration);
->       }
->
->       trace_vfio_state_pending_exact(vbasedev->name, *must_precopy, *can_postcopy,
-> -                                   stop_copy_size, migration->precopy_init_size,
-> +                                   migration->stopcopy_size,
-> +                                   migration->precopy_init_size,
->                                      migration->precopy_dirty_size);
->   }
->
-> --
-> 2.50.1
->
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
