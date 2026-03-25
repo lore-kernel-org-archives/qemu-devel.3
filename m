@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 917881093168
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9B2109C05D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5W17-0005yx-MZ; Wed, 25 Mar 2026 17:43:57 -0400
+	id 1w5W1Z-0006nj-6F; Wed, 25 Mar 2026 17:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5W16-0005xx-4A
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:43:56 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1w5W1Y-0006nD-41
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:44:24 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5W13-0001VM-Q3
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:43:55 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-829ac4670c4so251023b3a.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:43:53 -0700 (PDT)
+ id 1w5W1W-0001Yk-Ht
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:44:23 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-35c05d7e0e9so257301a91.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774475032; x=1775079832; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774475061; x=1775079861; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=809JX76yFRucAkT1pe5PiS2+CHvIuHQOo1wJQUdn3Qg=;
- b=hbZPyCjU0X8YgEn71huW+bQuC3AMvr8zTdK5ERXssgcFA5pFISyJiyMuS8OgwbmpHS
- UELz+VssCeei863aTtTQEOVJDrMvpaHA9elxXKCmMPQ/dv8aoWtpYW08SIuwFKFKhnTp
- fR/Tw3I2sRhxCRBOFpCthsuDoqHRKW3SA9QjRmYsM3kSQVu8LFcosUfv+nQxfrZxC8LJ
- M10ZLKQ+gKe+d6EDpJmibrAzI/U+to8hQnZlKCwsd2/456/J+DVCX+QWd2FzsuhfELez
- gum3mDEOOeqwoGoB7Wj5zMEme9doe/xjbBi6kFEzf0Q2Aw1SIf/rwmmbeu7qrg7MqyTi
- 4rNQ==
+ bh=hNafWsIOHQAvF8A3qc1Y8O94HCsA6t34dLoeAtEhKzY=;
+ b=p7GFVxoIHZcT4lqxwAIOmqfyDb4ZxAO7BoR3uOCPIkEV21b7qffZvG3J+RWofqf+h/
+ dCleM1pwsyJnp2ymkAJmXcu7SfA3TCBIzvD8woc7BNaj0BFVSxSgOzyAdSrYUokTAdb1
+ Lf6OySqlUkqifj2E/Y9YAupxSZ3GgbGsrPXX4msYYNCrnHRuDB5uwAPGhcs5szexRG5N
+ QFcNISLb3PAWeMJWe6adf4I2EHSp+fhW+Xy89wJISMLUGfvCRfO+6+OOPwrv89AUhC+O
+ BlfCVF/+34+1KqKciSf6IMVULjw8zG43b3pcRJ23O3JlQMsV5EC5iGjPseoRGlttpykN
+ a2Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774475032; x=1775079832;
+ d=1e100.net; s=20251104; t=1774475061; x=1775079861;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=809JX76yFRucAkT1pe5PiS2+CHvIuHQOo1wJQUdn3Qg=;
- b=EfYAMHO7oA086PrCa7zMQP++puZSALb62jKh0iaxwrFz1/8itdjCA1ch35A6Kb86cf
- 21puezMdt5gcCr+oqeHbYv12Ktfzek572GBKXtVGhnaU9MTR6P3puIKeKpT6uUFv48GM
- kafYkxiav6RMkc6UJDp/9KjkwiqYKlkj3/DiMBt/Ec56chYlj2GeMgGiuQRHo+ZS8TiQ
- rrFkJGguo2YbZMayDxjy67/KLR8Lj9rx93nSGqylDbxaVNt3cQolwvgaQhTPgUYtXDOn
- qaezLSRn2VvxaT9XR70scpzr3UX4EcnyWUdqYpBQ/0+3dJUzwubDvmIhBNtL0xPmtCb+
- vzyQ==
+ bh=hNafWsIOHQAvF8A3qc1Y8O94HCsA6t34dLoeAtEhKzY=;
+ b=oHa3op1oXqER+9JBPSDSIDWp4QSMi5TI+xL+oEbN4a++TtlMWLU7vVyC1nvSPEsVCC
+ j+pQx/Jacv84rkdDA3yYjz2UfvR4tIxnghNcyGuD8XVw1mcB1P/PahIX9gh+mO3lAdQb
+ WJ8ahAVx8Fcknb5JkjZqNY9trcmhIlXBc4QbKn1oKzfxe/CH94fxGfFaq3s+evCKYXnH
+ JhTSHiANv8a5yx8gUrmZ2M1ItctmjG4iUP3YB66fXD9IShz4wz10zTntCVbaVrFKZM1g
+ VWz1kkDDo5HbK5kI7C/ydJX5HuSROHAs+15vAKLlrJTfEX0D7oyzhBoFRQlVj/LLODWt
+ Uzuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqDy049xSp/673OeI36N9kHH0cgIywkJMeEO1R5bqMehF0WltXUjRl5CrUOoiw4iyGqjlBye1sRkhV@nongnu.org
-X-Gm-Message-State: AOJu0Yw4fQUTKn+W3L6GJNR+LvNRMy5dFNZBaeX+JMmlC2E7PkfJUKmo
- 1C5yMebKeMBgGiMxzy+zbfCPPxiHN1H+tI4BrabqiERMa9bXkkEK/KGxLhpscHVNIuM=
-X-Gm-Gg: ATEYQzwxkoMF5kD1042YP+HriyOpMvcRUzxwQOLK3X+VXbdDAv8QIIMBHYRx06U6M6J
- pF7pulckPSGElgA9KcXrizntSEX6HZP7dQ9IBYC8ibOapg+Hqhn1jgCOsf8nRXngPV2eVimUGxW
- FDCCvJveLjZU65zGW1/HCGdMcdZtDYVVyq9seuJlfy2vlQ+D6u4+eAN5y/Bk+fDrCBcpeGu1V3/
- vM5I/V/8Wo+Fh07QWWDY5kr0b5Z42+A7JBe+Ponl8HvnJwIIvlxs1lXadimVoCuUE53T5FlVg4o
- YH6yZ3RCegkVB/3WyOf3Y5TCww07USWUM6XVKdNuE6pD3eRFaILe57riBGDoo2Vdg4gFmMvrBfF
- 3TPgphG4hqEwoVFvxEqz/vkF1G++aFlW6YMxw9p/7eJ9B0UGO//6pvhruZrV8i7Gd9HNlaexUAA
- BLwN1F6NUmzw5lGwGzajpTB+uhrZbZ2wjCb2L96Rjddmm2xhrS+dZAvtnSBkQoQfudhZAr
-X-Received: by 2002:a05:6a20:9143:b0:39c:787:f188 with SMTP id
- adf61e73a8af0-39c4ae08a53mr5761498637.39.1774475031789; 
- Wed, 25 Mar 2026 14:43:51 -0700 (PDT)
+ AJvYcCVt6SgSjJ1rYsYciD0zz9zRj3Ar1n9itKVv9P0yzN3ykt6XIWksu8U+XAhbgwW8GMJhFKj5O7QceQ8o@nongnu.org
+X-Gm-Message-State: AOJu0YybvdGB5uJNvayCUwrsI3IbyEcvM4fP1Yy1bWKre9Wx9fJKU39Q
+ ljKPTQ62MHFsQ7YSMiAnUgsz1qSuhjyT3p8/L8AWV/Hhaww0xXZglfeyf7XnPCqSbK9UgsrcUAO
+ d+3yGdBk=
+X-Gm-Gg: ATEYQzzzxi6EUqIn14VoTMeBdpMDaFaUWNtNZPfoY7fJbnmXJs6yYj1I1PLl8TReOxH
+ uvaN2D/3g3yrCKksFy20PB03+KiEEcHfl6arOEk3jU+Ae4WhQDNE9QzMWOS+plOUcWgOKaAO6f9
+ NKkbR86vKcMFxs/Mlgsh/PWI1HKFE/CMg9B8cTEtOltuMgPsInWD350svndDxmvTpPBsrVdkHHD
+ IHGwRxMDTZ8dRpKJvoyrFWQ9cYXO2qXDukU54cZjpLBK68FCqlUJb0HH37Zt46qRPh8rmFm+Vvh
+ QvWdovhpzZxx9PoLHGk9nHKWjdtmatyB2i75eQUps6s8CyyubrdGcZhkIsPxKzI8zMweh/OBm3K
+ sm90KUJkLxwVwGMEqLg1i4YEsPvGmZPYgtZU2XizB6DZq1M0Z1xyVbLyTOwl/56Vopmb0ZOxnGI
+ R349+M3XrLX9Jr96HtGuM0aMx/igx1/QtsIpfwniQIsCqD/pmw9ev187Si5MbKQIeqI+To8P5AL
+ AMZUGE=
+X-Received: by 2002:a17:90b:55cf:b0:35b:8d89:719b with SMTP id
+ 98e67ed59e1d1-35c0dc62764mr4456017a91.1.1774475061050; 
+ Wed, 25 Mar 2026 14:44:21 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c767382bcecsm379326a12.13.2026.03.25.14.43.51
+ 98e67ed59e1d1-35c123c9710sm2518725a91.3.2026.03.25.14.44.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 14:43:51 -0700 (PDT)
-Message-ID: <c450e74d-e5f9-40c2-9e29-274a0d51631f@linaro.org>
-Date: Wed, 25 Mar 2026 14:43:50 -0700
+ Wed, 25 Mar 2026 14:44:20 -0700 (PDT)
+Message-ID: <6c1cbedc-a8ff-4fdb-997b-0b95e5795d05@linaro.org>
+Date: Wed, 25 Mar 2026 14:44:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 08/10] target/i386: Inline
- VMSTATE_UINTTL_SUB_ARRAY() macro
+Subject: Re: [PATCH-for-11.1 09/10] target/sparc: Replace
+ VMSTATE_VARRAY_MULTIPLY -> VMSTATE_UINTTL_ARRAY
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -84,10 +86,9 @@ Cc: Glenn Miles <milesg@linux.ibm.com>,
  <alistair.francis@wdc.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, qemu-riscv@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Anton Johansson <anjo@rev.ng>, Peter Xu <peterx@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
+ Anton Johansson <anjo@rev.ng>, Peter Xu <peterx@redhat.com>
 References: <20260325211728.89204-1-philmd@linaro.org>
- <20260325211728.89204-9-philmd@linaro.org>
+ <20260325211728.89204-10-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -123,18 +124,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260325211728.89204-9-philmd@linaro.org>
+In-Reply-To: <20260325211728.89204-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,63 +152,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/26 2:17 PM, Philippe Mathieu-Daudé wrote:
-> The x86 target is the single one using the VMSTATE_UINTTL_SUB_ARRAY
-> macro. Inline it to avoid further uses of this legacy macro on other
-> targets.
+> VMSTATE_VARRAY_MULTIPLY() seems to be an "optimized" version
+> of VMSTATE_UINTTL_ARRAY(), and is only used once. Prefer the
+> generic macro, removing the need for the VMS_MULTIPLY_ELEMENTS
+> field.
+> 
+> Bump the SPARC CPU migration stream version.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/migration/cpu.h | 4 ----
->   target/i386/machine.c   | 6 +++++-
->   2 files changed, 5 insertions(+), 5 deletions(-)
+>   include/migration/cpu.h     |  2 --
+>   include/migration/vmstate.h | 22 +++-------------------
+>   migration/vmstate.c         |  4 ----
+>   target/sparc/machine.c      |  7 +++----
+>   4 files changed, 6 insertions(+), 29 deletions(-)
 > 
-> diff --git a/include/migration/cpu.h b/include/migration/cpu.h
-> index 82a81b5d895..ea411d863ad 100644
-> --- a/include/migration/cpu.h
-> +++ b/include/migration/cpu.h
-> @@ -12,16 +12,12 @@
->       VMSTATE_UINT64_V(_f, _s, _v)
->   #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
->       VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
-> -#define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-> -    VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
->   #define vmstate_info_uinttl vmstate_info_uint64
->   #else
->   #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
->       VMSTATE_UINT32_V(_f, _s, _v)
->   #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
->       VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
-> -#define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-> -    VMSTATE_UINT32_SUB_ARRAY(_f, _s, _start, _num)
->   #define vmstate_info_uinttl vmstate_info_uint32
->   #endif
->   
-> diff --git a/target/i386/machine.c b/target/i386/machine.c
-> index 1f5c517e562..16b65bddcdd 100644
-> --- a/target/i386/machine.c
-> +++ b/target/i386/machine.c
-> @@ -1770,7 +1770,11 @@ const VMStateDescription vmstate_x86_cpu = {
->       .pre_save = cpu_pre_save,
->       .post_load = cpu_post_load,
->       .fields = (const VMStateField[]) {
-> -        VMSTATE_UINTTL_SUB_ARRAY(env.regs, X86CPU, 0, CPU_NB_REGS),
-> +#if TARGET_LONG_BITS == 64
-> +        VMSTATE_UINT64_SUB_ARRAY(env.regs, X86CPU, 0, CPU_NB_REGS),
-> +#else
-> +        VMSTATE_UINT32_SUB_ARRAY(env.regs, X86CPU, 0, CPU_NB_REGS),
-> +#endif
->           VMSTATE_UINTTL(env.eip, X86CPU),
->           VMSTATE_UINTTL(env.eflags, X86CPU),
->           VMSTATE_UINT32(env.hflags, X86CPU),
 
-I think it would be better to exclude this patch, and treat 
-VMSTATE_UINTTL_SUB_ARRAY with a generic approach, similar to what we 
-talked about VMSTATE_UINTTL*.
-
-In short, to add a field to VMStateField, with .target_long = true, that 
-indicates to migration code that size should be read from .size / 
-target_long_bits().
-
-Regards,
-Pierrick
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
