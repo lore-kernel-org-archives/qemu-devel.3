@@ -4,99 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E3B61093168
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F381093176
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Dhi-0003TW-Gd; Tue, 24 Mar 2026 22:10:42 -0400
+	id 1w5Did-00048h-GV; Tue, 24 Mar 2026 22:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w5Dhb-0003S7-AH
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:10:35 -0400
-Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
+ (Exim 4.90_1) (envelope-from <ihanzhzh@gmail.com>)
+ id 1w5Dia-00047a-Cz
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:11:37 -0400
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w5DhY-0005wL-BE
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:10:34 -0400
-Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-2bd9a485bd6so3540879eec.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:10:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ihanzhzh@gmail.com>)
+ id 1w5DiY-00063C-OH
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:11:36 -0400
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-12a71ade78cso2522933c88.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:11:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774404690; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bh249yPYS24fjL+s4/23xjdBUwKmn6jiRQ3F876MOkm2NtAThqoWOui7Oa0Sr+ZZ/2
+ 2kwstqUBOtY6iDHxxY3fE9J+g/C4horU9ddlzis4IBeBn+Sp3ywxWGhS2HKEa/Q/bUQp
+ vuQQBq3tXKqoiTKEXnnOEXcsWovrwAYLZRKFlJ3jQlmyb90mPoVjmEO12LxZjjiDvOhL
+ TFelBsiV9LhzEkVHUw5RfFyTK6yVgUDrKWQFBvWqdfaVmLhN2lkfEC4YChPRjoe8PNk2
+ I+BTskghmKlTt5By1DMjjnFCv2jCVbmPOvj2284pJkwNpS6oUdsSG1ppuBhKDw15oAjj
+ VJpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=x9s1+USFW1cgr2zZCDwis+WmhFpc+u2jTsZAMjxK+6I=;
+ fh=WlZ0NOPX9VRCtnVf1GW4HH+o9vTsrrZz9IxsJTj/FN0=;
+ b=Ky11dSJZKii+3ptI/ObDxZn7fRg8P5Ny7LEOn+IhjuUkeA9+DDoDXjWTFo1C5tNi5c
+ 8ZPYrRjjU20nw8J/TvyKFIvgclkSgmbAxpywFGamF14kBT1GLxwfYLy2ntwljcvA11K+
+ CVTPJ2KeBsA0y7+BlC/OEqFUdJyMfyzIUYqfm17MkW4jHEW3qMAuzgT3a2Ep50YyWiJ2
+ Sf1MbDvzzj5CaAzaJ3JtkRR6fbJ/minmTdWGmHz8sjqBU3WJyDmFAvmo0HTqKpdK7Cfk
+ tQptPO/E84iaLlCZFA+Bqwrug2dHQxACKj1OYRGf1jcXfW9Oxb0b2cz87b5hLon5g0Zm
+ QtYg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774404627; x=1775009427; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=cFjoGvd2eLLoSU20LveTmOuw9QejmOSilFdrCZhFt/Q=;
- b=ZLyqhLmVyOlja+8LV5quRey3Svp4x7vv8Z3vKlXnmMGddMepfAeEMSc8CRuALhO+9x
- H+PiOSHcFOKOFvXjPmjZjo5d2WMM8QFZuLTfVs6XfZbqzQdXdKNmzypmTZLw1hFAajpS
- 6g63Z85ofLdKhf/vlODSbJPH1QUNjuN65qja7lh46CoIg0v0GO6x1aKVGVJZygiWEE/Y
- QOn+DuVQDRn64rpnfc3RkJ19C5B5Vgd5Q0gw7AE76VWSD5jAN5xZkemzRWgNCpnppHI2
- uLT4nGaKKkrJU/IskSkv4FqlhwlsCixcaJTw7s259ZOpF5wpIGI/V2jGGx6uEAe8bPJE
- 3LWA==
+ d=gmail.com; s=20251104; t=1774404690; x=1775009490; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x9s1+USFW1cgr2zZCDwis+WmhFpc+u2jTsZAMjxK+6I=;
+ b=QjliHuzD81sg4bW+DJK6m9dj0DQC1wezt91vdQNTZlQcDAHNg31a/F/DrL9zqFJ3nQ
+ aGuKto2hhagxUR7VyzcSx5qfYSpQ+k/myIK2Ahf7bD3F8z8rEJszCV67zFqxWurejZAE
+ Yf21Mt0bh5JucvlBxqTGbaRgyRXJeoFLxemzZrst/17khzC8JK4jHLvHe2ZncM2le3H7
+ 3NOSo4lPj6+9d9OWBf6G3pFwkS4L4YBOv6nf+5TMdvcit2bfgiSVM8ygzVNEy+tUyQnH
+ XmPPlKg3VwKVP9iAuN5GG+PHGPyMz0uF1pco5mcsfpMMLBB3tXPND+vMnuTEulQpVKFO
+ zFaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774404627; x=1775009427;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cFjoGvd2eLLoSU20LveTmOuw9QejmOSilFdrCZhFt/Q=;
- b=Dpa0JpzRDovxRGrALBznWRrViPW8spgB4ILf/nwweR0sMv6GEASTyC+6iLN+uh48Gd
- tc5xpcnePnQsULRr3oBeMRHgVuKWpQkFj7isBy9CSB+/xaxgKNDaHKR3W10+mwi2rVec
- AZ+A4ovVK4BlEJBiHwdIHW1pF/JqxxSkXWVVBsOQ/jNWANft+AhMiIAkNOowYYMy4w2g
- KnTg/4f2IJVQJA4sVRMR9VMBhQy4cahIi5NLEtRWEKkRdgOJV26bzOirGu/aap6Lj1kX
- DIZBFBtxwHUwV1WBRAu4MZSQMtNe2pygNl1+E/Ep1jLhECuu+uRw77iFlLPh8MNjGwGT
- 5+2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWAM6zLDDiOzpm1Lf8OxA+l7b+05MCcxAp4XZLAA7Dr6bTE7PxpVcFBBa8dPotY7fUl5MxfDO1HksDD@nongnu.org
-X-Gm-Message-State: AOJu0YyMCfurdfolq0Jf3QZLPCtovawom/F53LdU6RpCtnMEHYUC1VNU
- QKhKWerA7KyMtMzOt/3OPorfxzPOoHiSvNX1sjEyOMn49R7C+ZktjpT/
-X-Gm-Gg: ATEYQzzDAXFF++MmBsYRghkQbfFx0QrjEAcf7SPFKH7BsGRryUr3HWJEl/Z/SpQJOtE
- QEFDFxRCp3TeC1qMPahg/LAfjymKcPaM4TMfyoEKev/Y8czW7vKoN/Xh+fFkK/Pmx0KasIZRfXn
- jaIqH07zRrS+jCZXS7mDk9Nm/BOyWfvzDuiZZ24Ty1aXWCj2INkSspnJsi6Bkoq9kYwyjGyWNq+
- QLwokTZrBx8pbAMVMjYCLMMJrJNF2uxN1kXwAVH10fE+Lv/bds806P8+uFi9F0eLCviw6uQ5ZTf
- rzjmUmAUP6sNSxiYRP4m1Vgv1AgVQ9DOP9z+brUz0GEeCax1YRSl0ELyxXX6ERSV7C2VfaNnb/Q
- AxiYgKwYeqLkwnokjFVEU2mRq427o7UMdftVeQNR1xAvDWdMcArFOhcbyys7er3k7mI7OS0zvfZ
- czrxESy/ZT5aIPvrrFEFPqNHv4f3iDoVkELPD8kFGJpFCP16mwDEvMR5MNL1NSSkqsnbUglAiZb
- mhG6mWnrE/P4CvvDZuH5ZA6gnNFl5BVf85k588t/Q==
-X-Received: by 2002:a05:7301:9bc6:b0:2b8:711:ae5c with SMTP id
- 5a478bee46e88-2c15d2ba7dbmr993322eec.7.1774404627421; 
- Tue, 24 Mar 2026 19:10:27 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2c10b1a88e5sm21409282eec.13.2026.03.24.19.10.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 19:10:27 -0700 (PDT)
-Date: Wed, 25 Mar 2026 10:10:05 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-riscv@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- Joel Stanley <joel@jms.id.au>, 
- Nicholas Joaquin <njoaquin@tenstorrent.com>,
- Ganesh Valliappan <gvalliappan@tenstorrent.com>
-Subject: Re: [PATCH v3 2/3] target/riscv: Fix vector whole ldst vstart check
-Message-ID: <acNDeIf7dpYFqX9T@ZEVORN-PC.localdomain>
-References: <20260321144554.606417-1-npiggin@gmail.com>
- <20260321144554.606417-3-npiggin@gmail.com>
+ d=1e100.net; s=20251104; t=1774404690; x=1775009490;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=x9s1+USFW1cgr2zZCDwis+WmhFpc+u2jTsZAMjxK+6I=;
+ b=jxvkXjxoGWwelXk7vdt8gG6kfClX5QqDD4kyxwee3RUtuThk/7N4qaJ9yLLAXt0+PN
+ ak8sigFuKEjPoIb3D5IQJw7U4kqNeHsXC2RyJpAfX+h3zPy4mr6N6CvsFSg6e/RXe7D3
+ 13kTco2F0OqwTMtVy+G9A7M19jJ4efvhzcC5rJOj7hJwR1420318/DgiYEilCP5K889V
+ w4LcX5TCmJyNzk1OUWoIyciXPz5uNv7ftiQbyTF1/n3my/4SJghs2g46M413ZfQ0aVHP
+ B1WKPEUnkjQCYE+uvTBvxOCQ2oJ0pEb0yISAYnlszWdmqncscmHuDhMPnY2kmiPHXPPB
+ EPBA==
+X-Gm-Message-State: AOJu0YwLj5BUnFKNQNmolSz3NtoXl8IwOoUjPe0bajtpymXPTqLGshIr
+ aVQF12FYNn7ZV1EdGu44Rwt5Q5PqfFAYSETASUPSYfpF8p5foWbx3DzS9Hu8epfR1PoUxej88KC
+ e4cRx79dtkheTU1QGmBzcVmpfoMLu2Q==
+X-Gm-Gg: ATEYQzyuYyCKsJHpyRbO5inwT4bm/TiNwlMgxJOKdWoVr8CAI4Ge1zk//iqAPPLkg6k
+ XRz6/C0m3kgmcEYrxr4vYaHBdrWwzviBgQRZC9M4kx9uwezSxvt49Vu1JHsqeOFwVE1jqXrAzMT
+ AKKyCgnuJj0NH+O1Q62sKExrEWfw8rmfMaiqeEttWj1fS9tVUmusx71zLGXhbck3dd6ceHpexqY
+ O8aAD+7cSK509seWhiqjnIl2NUjg2dy4C5pr+mqfwieyRerLK1voPdSdYJf8N6DbYQ4XRY6Hnk2
+ ln6Xvm1aklj3eQTP0Q==
+X-Received: by 2002:a05:7022:438a:b0:119:e55a:9bf6 with SMTP id
+ a92af1059eb24-12a96e73d7emr797427c88.18.1774404690304; Tue, 24 Mar 2026
+ 19:11:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260321144554.606417-3-npiggin@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
+References: <CAHjCdDAJomXwQ8Z0kkiDGn_8hLWredsby3Nwy4rRgeC9sywc8A@mail.gmail.com>
+ <cf2e482e-65fd-418e-bdda-9948c2b39ff3@redhat.com>
+In-Reply-To: <cf2e482e-65fd-418e-bdda-9948c2b39ff3@redhat.com>
+From: Han Zhang <ihanzhzh@gmail.com>
+Date: Wed, 25 Mar 2026 10:11:19 +0800
+X-Gm-Features: AaiRm51noEd9mnwe-5GgPU9nsQUhJaE27cy8f1JtO4mwzrshbzxUIAJkoOsiGLg
+Message-ID: <CAHjCdDAju_svU-RHMP11JYM3G+yu6gwNFTHrAEP3GZnRGLodyw@mail.gmail.com>
+Subject: Re: [GSoC 2026] vhost-user memory isolation proposal feedback request
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com, tfanelli@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=ihanzhzh@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,148 +116,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 22, 2026 at 12:45:53AM +1000, Nicholas Piggin wrote:
-> The whole vector ldst instructions do not include a vstart check, so an
-> overflowed vstart can result in an underflowed memory address offset and
-> crash:
-> 
->     accel/tcg/cputlb.c:1465:probe_access_flags:
->       assertion failed: (-(addr | TARGET_PAGE_MASK) >= size)
-> 
-> Add the VSTART_CHECK_EARLY_EXIT() check for these helpers.
-> 
-> This was found with a verification test generator based on RiESCUE.
-Good catch! I had previously fixed some vector helpers that were
-missing vstart checks, but I didn’t realize there were still some
-omissions.
+On Wed, Mar 25, 2026 at 1:26=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> =
+wrote:
+>
+> Hi Han,
+>
+> I=E2=80=99ve taken a look at your proposal, thanks for submitting it!
+>
+> It clearly shows you looked into the code and the vhost-user spec and
+> made yourself familiar with both, that=E2=80=99s very good. I find it a s=
+olid
+> concept. I also like your clear separation in fundamental work and later
+> optimization.
+>
+> I have one question: In the optimization section, you suggest using a
+> memory pool. I fully agree that=E2=80=99s a good optimization, but it mak=
+es me
+> wonder what model you have in mind for the original implementation. Do
+> you plan on allocating a new buffer for each request? (To be clear: I=E2=
+=80=99m
+> not saying that would be a bad idea for the initial proof-of-concept,
+> I=E2=80=99m just asking for clarification.)
+>
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Hi Hanna,
 
-Thanks,
-Chao
-> 
-> Reported-by: Nicholas Joaquin <njoaquin@tenstorrent.com>
-> Reported-by: Ganesh Valliappan <gvalliappan@tenstorrent.com>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  target/riscv/vector_helper.c             |  2 +
->  tests/tcg/riscv64/Makefile.target        |  5 ++
->  tests/tcg/riscv64/test-vstart-overflow.c | 78 ++++++++++++++++++++++++
->  3 files changed, 85 insertions(+)
->  create mode 100644 tests/tcg/riscv64/test-vstart-overflow.c
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index caa8dd9c12..4126447d11 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -825,6 +825,8 @@ vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
->      uint32_t esz = 1 << log2_esz;
->      int mmu_index = riscv_env_mmu_index(env, false);
->  
-> +    VSTART_CHECK_EARLY_EXIT(env, evl);
-> +
->      /* Calculate the page range of first page */
->      addr = base + (env->vstart << log2_esz);
->      page_split = -(addr | TARGET_PAGE_MASK);
-> diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
-> index 4da5b9a3b3..19a49b6467 100644
-> --- a/tests/tcg/riscv64/Makefile.target
-> +++ b/tests/tcg/riscv64/Makefile.target
-> @@ -18,3 +18,8 @@ TESTS += test-fcvtmod
->  test-fcvtmod: CFLAGS += -march=rv64imafdc
->  test-fcvtmod: LDFLAGS += -static
->  run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,zfa=true
-> +
-> +# Test for vstart >= vl
-> +TESTS += test-vstart-overflow
-> +test-vstart-overflow: CFLAGS += -march=rv64gcv
-> +run-test-vstart-overflow: QEMU_OPTS += -cpu rv64,v=on
-> diff --git a/tests/tcg/riscv64/test-vstart-overflow.c b/tests/tcg/riscv64/test-vstart-overflow.c
-> new file mode 100644
-> index 0000000000..6c904ab309
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/test-vstart-overflow.c
-> @@ -0,0 +1,78 @@
-> +/*
-> + * Test for VSTART set to overflow VL
-> + *
-> + * TCG vector instructions should call VSTART_CHECK_EARLY_EXIT() to check
-> + * this case, otherwise memory addresses can underflow and misbehave or
-> + * crash QEMU.
-> + *
-> + * TODO: Add stores and other instructions.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include <stdint.h>
-> +
-> +#define VSTART_OVERFLOW_TEST(insn)                \
-> +({                                                \
-> +    uint8_t vmem[64] = { 0 };                     \
-> +    uint64_t vstart;                              \
-> +    asm volatile("                           \r\n \
-> +    # Set VL=52 and VSTART=56                \r\n \
-> +    li          t0, 52                       \r\n \
-> +    vsetvli     x0, t0, e8, m4, ta, ma       \r\n \
-> +    li          t0, 56                       \r\n \
-> +    csrrw       x0, vstart, t0               \r\n \
-> +    li          t1, 64                       \r\n \
-> +    " insn "                                 \r\n \
-> +    csrr        %0, vstart                   \r\n \
-> +    " : "=r"(vstart), "+A"(vmem) :: "t0", "t1", "v24", "memory"); \
-> +    vstart;                                       \
-> +})
-> +
-> +int run_vstart_overflow_tests()
-> +{
-> +    /*
-> +     * An implementation is permitted to raise an illegal instruction
-> +     * exception when executing a vector instruction if vstart is set to a
-> +     * value that could not be produced by the execution of that instruction
-> +     * with the same vtype. If TCG is changed to do this, then this test
-> +     * could be updated to handle the SIGILL.
-> +     */
-> +    if (VSTART_OVERFLOW_TEST("vl1re16.v    v24, %1")) {
-> +        return 1;
-> +    }
-> +
-> +    if (VSTART_OVERFLOW_TEST("vs1r.v       v24, %1")) {
-> +        return 1;
-> +    }
-> +
-> +    if (VSTART_OVERFLOW_TEST("vle16.v      v24, %1")) {
-> +        return 1;
-> +    }
-> +
-> +    if (VSTART_OVERFLOW_TEST("vse16.v      v24, %1")) {
-> +        return 1;
-> +    }
-> +
-> +    if (VSTART_OVERFLOW_TEST("vluxei8.v    v24, %1, v20")) {
-> +        return 1;
-> +    }
-> +
-> +    if (VSTART_OVERFLOW_TEST("vloxei8.v    v24, %1, v20")) {
-> +        return 1;
-> +    }
-> +
-> +    if (VSTART_OVERFLOW_TEST("vlse16.v     v24, %1, t1")) {
-> +        return 1;
-> +    }
-> +
-> +    if (VSTART_OVERFLOW_TEST("vlseg2e8.v  v24, %1")) {
-> +        return 1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +int main()
-> +{
-> +    return run_vstart_overflow_tests();
-> +}
-> -- 
-> 2.51.0
-> 
-> 
+Thank you very much for reviewing my proposal carefully, and for
+raising such a precise question =E2=80=94 it is extremely helpful.
+
+To answer directly: yes, in the initial implementation phase I plan
+to allocate bounce buffers per request (more precisely, per
+VirtQueueElement) and release them once the request is completed.
+This is a correctness-first approach.
+
+> To help make these detail questions clearer, could you lay out how an
+> example request from the guest to the vhost-user back-end would go
+> through all the layers, and the response back?
+
+In the initial implementation, the request path from guest ->
+vhost-user backend -> guest is as follows:
+
+1. Guest submits the descriptor and kicks the queue.
+2. QEMU intercepts the request in the SVQ avail handler.
+3. QEMU allocates isolated bounce memory for the request and
+registers it to the backend via ADD_MEM_REG.
+4. For the guest->device buffer, QEMU copies data from guest RAM
+to bounce.
+5. QEMU constructs shadow descriptors pointing into bounce memory,
+injects them into the shadow vring, and forwards the request
+to the backend.
+6. The backend handles the request: it reads input segments and
+writes responses to output segments as needed, then updates
+the used ring.
+7. QEMU processes completion in the SVQ used handler.
+8. For the device->guest buffer, QEMU copies data back from bounce
+to guest RAM and completes the request for the guest.
+9. QEMU performs REM_MEM_REG and frees the requested resources.
+
+Once this path is functionally correct and covered by tests,
+I will prioritize evaluating and rolling out a memory pool approach:
+pre-allocate and pre-register a reusable set of bounce memory
+at device start, then lease/return during requests.
+The depth will be decided based on
+implementation complexity and measured benefit.
+
+If you think it makes sense, I can also add this "request lifecycle example=
+"
+to the proposal text for more clarity.
+
+Thank you!
+Han
 
