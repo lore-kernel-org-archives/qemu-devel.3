@@ -4,52 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682FCFEC11B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1882FEA83B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5LFQ-0007IM-9k; Wed, 25 Mar 2026 06:14:00 -0400
+	id 1w5LPm-0000WP-BP; Wed, 25 Mar 2026 06:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1w5LFN-0007Gu-ST; Wed, 25 Mar 2026 06:13:57 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1w5LFL-0003ak-Ti; Wed, 25 Mar 2026 06:13:57 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id A29DD49006;
- Wed, 25 Mar 2026 11:13:44 +0100 (CET)
-Message-ID: <fbe8115d-13c2-4bc3-9745-e8d34b9df39c@proxmox.com>
-Date: Wed, 25 Mar 2026 11:13:33 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5LPi-0000Vd-Oa
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:24:38 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5LPh-0006ow-6J
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:24:38 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-79a8e873ca1so9851967b3.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 03:24:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774434275; cv=none;
+ d=google.com; s=arc-20240605;
+ b=h0KlcCXUkEZ+3S/slmja2FN5xIsvbNSFwiLzacyUomDQW/5xpjC3cPYvUnBNp2wCNc
+ mhLIRuAH3FQFCeCU0GjhbSiStxgKw0ai1ZBDm95lauPpADcW6cmR8Hke+ILm6mrpgp5+
+ nJ/95++zX3WUk7mJ0XR1KuyRwvJW8xGU1eBtv0zqeEqhqc8YD+pEC5EieAtDtkwKiioL
+ 6BX1uo6JpXmBUZlRFTImqAENvYpMoZlwaKt5U3Q/wTJBt9njsqnUThvKVtZzt0WjoV5p
+ tCH8VkR+50SbCV93KPyknY1UmvTh3R/XNpSxUvapmGu+r+ImCfuPYiQxz1ID5CnDaAvG
+ j9IQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=aQmc0dYy0Wh3SGltSJl7LCmqYiu90biNWpWo8t353AI=;
+ fh=MgSwXghQJ4PELTALr7B2TiNgBRLUgy/oCeC7cm8iZ1U=;
+ b=bLuPxWpYDHh2a3kQNMWZgYE7zDqvQr/Et4rNZRMZbzlC0DATqi6GzuLrf1Wr+8ZCzv
+ 7Mjo5/H1VcFkbLWMyyFfn6Bhhi0fDR8wMJoL+Ns15Te/RSJT9Igd6zTip593xgQ3sqaC
+ BuWmTp5G+lAKPHiK/tqJ8VQz59O1y7sjljm0Eq/DVfXCOQK2aa/xmEPF0Am8t9vIAKyA
+ xSHDCyslPKGvthZlbQuKbFtI+UJ18i+PAsmSVEmKcPX2RDYuNNA2sjC1p1oHWG75Yx2x
+ M6OnCCO8Ld5MQstjX/RIUOgU3GZGITu9mTT7CZ4LECT9wNH9brl/4UqvLdgarFu91xw5
+ iFWw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774434275; x=1775039075; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aQmc0dYy0Wh3SGltSJl7LCmqYiu90biNWpWo8t353AI=;
+ b=h2X5STqn6oW5Vf1zBy8S1Qtcsm+UEILNgonb+d/2XmpC3uwD8e1YKiEUDcyd/x4bIC
+ 34KALbceiuuVUm4CpM5g8VDMcZCiKw2xsayZY1k9RvXnSm2xx4ggjN0hjBsdJ9+Om2t5
+ KrLuvxbWX/s2xdsABrSOnOQdfiUDIENeABX/rhT8UzBdeDsuKPO7yl0EOh0humbNzLod
+ hdIulR4AQmeRvIFqd+y7BzWmMoiC0mNoV1PwEX82wlA6Xm9kZW6yOC9GcvB2w17OXtsl
+ YXhCUb1faEw1kEH8jbSwQBI87PrvrqK8ZQk7lNH3YlkCSQ/hJpwtIGGTQdII8p7iuaiC
+ HSOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774434275; x=1775039075;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aQmc0dYy0Wh3SGltSJl7LCmqYiu90biNWpWo8t353AI=;
+ b=kxgMcbALu+Fk7Yhn2zVV4lY1fhPY1G0kPWdXMyUlhATTVUowJn0Zwjs1Gr+v+8sqhU
+ HdG09hXCxKTIh3Ddd6W5wjjf9sSFVBJ1lX5iVJe/fUrncgEG/pkT/OrsEiGLqanAvlD5
+ 4z02n3pydF7qzIC31Al7IhfDUuAwxtqGZxvOFOtK0m5McIRBatnSmFDmkiW6ztPLe2hK
+ DMai+1wJ/UVgh2hdqSFyyMcmQ5lsG1OeKJ6MXKsW7MS7SAFNtVxwWuZaPK+wATAOlEPK
+ QWhQapW6VVxEhHiDL0BLkv9lyAKtcoEvmJ8vzKyKQCit92YLSmr1Zb5rMXACnrNjtVdB
+ cYrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNPEg3yGXdSkEbz2P9mRrzRDb3UQVF5XK65N0+nhI3XyEckoFzBbKzGYth+LzGjVcb3u+1craqw/lo@nongnu.org
+X-Gm-Message-State: AOJu0YxQn0KCaMuk61I/x40WPJHia0h4dCOKmtzutf6Fx9cdSth6gUeU
+ XI+BY6NBWYoPJGfgcv7ewz4Uh1swkdH2Q4NWs5Izqa4LJmE82E/sCKf4y0hJEFh2AHN7WwTpt+O
+ JOzs3OJE7K7B1eoAV99ram41TYZtbCF/nm/U/tP/Vzw==
+X-Gm-Gg: ATEYQzzEUsw67iAFGDL5ljNfYSn5CYCSwf2prIMpZuDdnFwrRV6PtskV7b+mfClFl7o
+ GJsCGntRk2LbP+dK7aisvkYbowuzYN6W+9DoLvpSEVI9KbAyN8g455ScscHmqVvgS19B0Nb+iGs
+ 2YgDi0Nn11WIH9NuPgd0OEPmHoAClkM08elMX+m22Fc+k/wLkyt0Q3PtMHUf7QnMf7NnMKlrITy
+ gBab+4iuLI8HNuLje8N12M2WkN5iIkhadNlIArO2qnwv6klJtlLDxgsRTb5kdPYjXM/5Ryy7dT8
+ aYHzmmqSJvXoUB9Rb8XK6beJkFzJaq/19q6dQl9ne1Jto/0XjOCG4lQb4iyyZnaZNWg=
+X-Received: by 2002:a05:690e:b8a:b0:64c:9703:a84b with SMTP id
+ 956f58d0204a3-64ee53b47b2mr2595552d50.7.1774434275374; Wed, 25 Mar 2026
+ 03:24:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mirror: Fix missed dirty bitmap writes during startup
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, jsnow@redhat.com,
- jean-louis@dupond.be, dionbosschieter@gmail.com, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, pbonzini@redhat.com
-References: <20260219202446.312493-1-kwolf@redhat.com>
- <d7c3d44a-d42f-4232-b5e5-a7504fb62a73@yandex-team.ru>
- <aaqflohdSVTFpkRZ@redhat.com>
- <af3bec19-96ee-4de2-b9bf-3875d59aaed1@yandex-team.ru>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <af3bec19-96ee-4de2-b9bf-3875d59aaed1@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1774433576307
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
+ <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
+ <acOoVWw3jXfkfion@redhat.com>
+In-Reply-To: <acOoVWw3jXfkfion@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 25 Mar 2026 10:24:23 +0000
+X-Gm-Features: AaiRm53eM4OCabwg868vwo2J0ALE5DEWQ8zclFMOt50vHfaCn0j8kJVDnwVC9aI
+Message-ID: <CAFEAcA-Jzh0Wan9Dh+Pe9S3cHPeexV5mLaD+juXS8L9eMMd43g@mail.gmail.com>
+Subject: Re: QEMU requires a 64-bit CPU host architecture?
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, QEMU Development <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,123 +122,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 24.03.26 um 3:43 PM schrieb Vladimir Sementsov-Ogievskiy:
-> On 06.03.26 12:34, Kevin Wolf wrote:
->> Am 05.03.2026 um 19:34 hat Vladimir Sementsov-Ogievskiy geschrieben:
->>> On 19.02.26 23:24, Kevin Wolf wrote:
->>>> @@ -2099,9 +2111,6 @@ fail:
->>>>            g_free(s->replaces);
->>>>            blk_unref(s->target);
->>>>            bs_opaque->job = NULL;
->>>> -        if (s->dirty_bitmap) {
->>>> -            bdrv_release_dirty_bitmap(s->dirty_bitmap);
->>>> -        }
->>>>            job_early_fail(&s->common.job);
->>>>        }
->>>> @@ -2115,6 +2124,7 @@ fail:
->>>>        bdrv_graph_wrunlock();
->>>>        bdrv_drained_end(bs);
->>>> +    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
->>>
->>>
->>> Hmm. Shouldn't we change position of _release_ in
->>> mirror_exit_common() too?
->>>
->>> Now the sequence is:
->>>
->>> bdrv_release_dirty_bitmap(s->dirty_bitmap);
->>>
->>>
->>> < could mirror_top_bs access dirty_bitmap here, before drained begin? >
->>>
->>> ...
->>>
->>> drained begin
->>>
->>> .. a lot of logic, including actual removing of the mirror_top_bs
->>> from the chain ..
->>>
->>> drained end
->>>
->>> bdrv_unref(mirror_top_bs)
->>
->> I think you're right, but isn't this already a preexisting bug in
->> master? After releasing, we don't set s->dirty_bitmap = NULL, which
->> could have prevented the access in the code before this patch. So this
->> should probably be a separate patch.
->>
->> mirror_exit_common() runs in the main loop, so I assume you can
->> hit this when using an iothread.
->>
->> It seems that initially the release was later, but commit 2119882 moved
->> it earlier, without saying why it did that. Paolo, do you remember?
->>
->> Kevin
->>
-> 
-> On the other hand, in mirror_exit_common(), we are already in
-> 
-> bdrv_drained_begin(bs); section, started in mirror_run()...
-> 
-> Does bdrv_drained_begin(mirror_top_bs) add something to previous
-> bdrv_drained_begin(bs) ?
-> 
+On Wed, 25 Mar 2026 at 09:19, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Wed, Mar 25, 2026 at 11:08:41AM +0300, Michael Tokarev wrote:
+> > On 20.03.2026 09:45, Michael Tokarev wrote:
+> > > Hi!
+> > >
+> > > Is it intentional that qemu does not build utilities on 32bit hosts
+> > > anymore?
+> >
+> > This is
+> >
+> > commit 372ec46b9f1215f48a4717f2b7ed969f65bfadc6
+> > Author: Richard Henderson <richard.henderson@linaro.org>
+> > Date:   Thu Dec 18 09:56:27 2025 +1100
+> >
+> >     meson: Reject 32-bit hosts
+> >
+> >     32-bit hosts have been deprecated since 10.0.
+> >
+> > How would one build qemu-img and especially qemu-guest-agent, say,
+> > on i386 or armhf?
+> >
+> > I tried removing this error message from meson.build (in $subject),
+> > but it fails to build even the qga due to errors in atomic.h, -
+> > even if these aren't used by qga.
+> >
+> > That smells like a bad decision, - to drop qga and qemu-img support
+> > on 32bit architectures.  Especially qga.
+>
+> IMHO dropping the block related tools is reasonable, as if you keep
+> that, the dependencies that need to remain 32-bit compatible ripple
+> out across a very large part of the codebase.
+>
+> Not having qga though feels like a pretty undesirable consequence,
+> given our message overall is that we were dropping host support but
+> keeping 32-bit emulation.
 
-Looking at the history, it was added with:
+Yes, I'm not sure we quite realised that we would be no longer
+building QGA for 32-bits. How much effort would it be to
+reinstate that?
 
-> commit d2da5e288a2e71e82866c8fdefd41b5727300124
-> Author: Kevin Wolf <kwolf@redhat.com>
-> Date:   Mon Jul 22 17:44:27 2019 +0200
-> 
->     mirror: Keep mirror_top_bs drained after dropping permissions
->     
->     mirror_top_bs is currently implicitly drained through its connection to
->     the source or the target node. However, the drain section for target_bs
->     ends early after moving mirror_top_bs from src to target_bs, so that
->     requests can already be restarted while mirror_top_bs is still present
->     in the chain, but has dropped all permissions and therefore runs into an
->     assertion failure like this:
->     
->         qemu-system-x86_64: block/io.c:1634: bdrv_co_write_req_prepare:
->         Assertion `child->perm & BLK_PERM_WRITE' failed.
->     
->     Keep mirror_top_bs drained until all graph changes have completed.
-
-At this time, bdrv_drained_end(target_bs) happened before
-
-(1) bdrv_replace_node(mirror_top_bs, mirror_top_bs->backing->bs, ...)
-
-The order of those two operations was later switched, namely in:
-
-> commit ccd6a37947574707613e826e2bf04d55f1d5f238
-> Author: Kevin Wolf <kwolf@redhat.com>
-> Date:   Fri Oct 27 17:53:25 2023 +0200
-> 
->     block: Mark bdrv_replace_node() GRAPH_WRLOCK
->     
->     Instead of taking the writer lock internally, require callers to already
->     hold it when calling bdrv_replace_node(). Its callers may already want
->     to hold the graph lock and so wouldn't be able to call functions that
->     take it internally.
-
-There still is
-
-(2) bdrv_replace_node(to_replace, target_bs, ...)
-
-with the drained section for to_replace ending right afterwards. Looking
-at where mirror_top_bs is after (2):
-
-If to_replace == src, then mirror_top_bs will be on top of target_bs.
-If to_replace != src, then mirror_top_bs will still be on top of src.
-
-So it shouldn't matter that the drain for to_replace ends before (1).
-The drained sections for target_bs and src both end after (1).
-
-If this analysis is correct, it's possible to drop the drain for
-mirror_top_bs. Question is if it's not better to stay explicit about it
-rather than implicitly relying on src/target being drained.
-
-Best Regards,
-Fiona
-
+-- PMM
 
