@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF9B1093168
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E1B1099B44
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5VyK-0003Yy-9R; Wed, 25 Mar 2026 17:41:04 -0400
+	id 1w5VxI-0001se-KQ; Wed, 25 Mar 2026 17:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5VyE-0003On-0x
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:40:59 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1w5VxH-0001rS-0j
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:39:59 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5VyC-00015p-K0
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:40:57 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c742824e1d3so133085a12.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:40:55 -0700 (PDT)
+ id 1w5VxF-0000o1-KS
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:39:58 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c2af7d09533so292976a12.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774474855; x=1775079655; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774474796; x=1775079596; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Tq80hNm6CA3tcAZclslnzkRonuKvqM9y5BIr8qZPjxU=;
- b=Jl3Slb81xhLcUn36ZH/STUNklG5I1bqqLF5ZvkKDsXVDWJ6kzNEZvsXmhhbf3my60w
- 8CvURtatyON2L3gePKFF6PWEUiXxhlY7nKF4K3HEIE4Iths4WqkAcKuaWe+naJVgQvGi
- cA3wxfs1g57KhnLxjpNldt1VH7qtVZktKtqS7RftBRxSrGNnJgghnPO2Qcc+yXDzeha1
- 6Xsz6x2ptw6E0MyfRvb9Z1OQSXOPPkFNbw2lVup+hsugAz2+pxOvSitmqZ1gZr+H0yqf
- qZl2oVOgpVPTUsARwUEXGLedpKMqU6Bg2Pb8Pncs3srKVPLEYYmWqUB5mODMuVlngtwt
- E9Cw==
+ bh=KGb7FEaVSI66PmfG2XUShw5T3uik3Z5T9SJQbu9aEEs=;
+ b=wokaiqRnkfunY35+VSSH/zEt6WuJ6yXXqi0JO+nEqvwP+D4zwnILXSDV9aBJXY0G/P
+ jsiGfy+yF85QNvgnogm0i1AbypBg2keDLukf/IQrCeVMasNEKWpIPITd31qK8gBTDx7D
+ G2v95zpSSNbiHwvaHS/yK9Ud3PIE78xl/mkY4emectLpjJgdmDf3zvA5QJhATq61ZS0W
+ HZ/8BywPa5Hlx8KPVVQIHmpP+EgCozyWWaXfz+McNnTQ9gf2hXn8WTBfHx+oxlbqbrUr
+ 9jBiBDXKCMsiVfuuwzzQJettF3E0HU3IG6csk9ebeHvhVBBwtPv8dPxUbFto9ka3/AUA
+ vqRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774474855; x=1775079655;
+ d=1e100.net; s=20251104; t=1774474796; x=1775079596;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Tq80hNm6CA3tcAZclslnzkRonuKvqM9y5BIr8qZPjxU=;
- b=H7dZxmwR+wn2t/PB29hH2tzR7WpBn/OLM6ScqVnFnkcXPiyHXr1f78UzHt0QSdFdxj
- eiZgYX1YDmdEoSIoWeFE47Eq9Dc0hnjL9T5DIX9dJctT381hmYaaywZR4Ga3Ueo7u24K
- ga/QVLbr5fZVOrVN55rNXNyi/eUrzfqrn4x0oV2Wro4p1JZgwoOYe30hCwwQBM2tS9vh
- vew7w2iwmN+2Wn7jRU2no4tTSX/Qbp3b4JkQAvgM8uOG1ImInYDg7QjSrqYXwn4KRXbt
- ag4V25WQln4t5ytaO0QVBwOVevCwCL3VWuKGk58ofppYSygQ8WNbNRUPtNtZkBZj7IHr
- z8UQ==
+ bh=KGb7FEaVSI66PmfG2XUShw5T3uik3Z5T9SJQbu9aEEs=;
+ b=DaleEE6uBGC53EZYe0HYLpVY8g8FfpRnSuf/EghTHyC3ykYDRGH17StIzCErn/Xcn8
+ hEVhSdCqfGqlIQNyiK/s7EJByHzgeJ5GemtS1AizbIKZ/6o8QZiP3fQEqOz/6rgxeCEI
+ N7r/DieLSircl6hMfC40wNElAdlAYmeIigTUFuUqwamMdorbfJdGxvB0tzGVqhPl/e54
+ Gr6Aj22Zs4puHppMvYE95mP9y6aFdspv2aocYFOhb15K38HaCYb1tgJw4wbqDSD1urug
+ c/DOd8U3Y7DHzRBgmI2F9C48W0ev5IyVIXzhyOwSrG3PTGSl4f5/eH20Fns2g83xMgGE
+ t+FQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/xhjTXLBmGQNCx5auGDormTCN1lGqHnLKDXC34RExbTpCradc8HRWZ+SVeOOTWYlAPT3suXoS/FXZ@nongnu.org
-X-Gm-Message-State: AOJu0YwmxirpmBtUlknLoAaDj+pV/iXS+4t3lhNXhG9wQ0heYjihew9x
- 9CAiwoUO1ouUvGdsFuMsS8GwJbzfuc+IFXzIhW30MVxQvA6KXni+66jw5HIhM0if144=
-X-Gm-Gg: ATEYQzxmvs6AAuUG5gtzuNI8LIwkpryB0CazjWgebF6Mkb7Hgy3ftEO4XE/4g5RkF2k
- Fvp9pDUMLEJ7ylAfUhUksrfU9omqzklOaLMfjfCTtFUYUiabvE7/+A4k9x6LTLeNW0wJ4ntl2gH
- e6ds/Q7ahoUknlIqDyr01taCLOFRgGVVKdvtMUQ792BIVsjmqyWOWHHUhvVz+UeWfXYPos1wYY0
- MhKCVpt83hlRn2KCsNb8B1xqOvBovwyRj657ecEmbEv+Mx4noE8STWLbGsVSLuTA19HppXZ6sEM
- aupcDuXjJaXQSS83rcGYTmTx0yxTmivz/sV6aLkCqu8YbjHZtN5qgrJ//ePs8EN6W6lpJ1oFRe+
- mMDgsf0/B4hQdYdzxJ7UVJ/R766KX3BtVInBovKJVKS3W7UbfmMy1baq31nm08cn5AxUzQ4s4wf
- RwKzlDp6utZEqNZHIGcdYsdnGyEFeLvAGV7RGPPZtv3kceK/MVAuvDp1R72n/DMwvvDprm
-X-Received: by 2002:a05:6a21:a8b:b0:398:9f1d:8a03 with SMTP id
- adf61e73a8af0-39c4ae99adamr5284376637.61.1774474850066; 
- Wed, 25 Mar 2026 14:40:50 -0700 (PDT)
+ AJvYcCWT5F58EeREUomCFyx2sYm+2+mdlZ5lLztkMNIjn4jW4xC40IlIe31/avyUW5sTq7WZQeL4wA7sFkF5@nongnu.org
+X-Gm-Message-State: AOJu0YwtjJCMuondN7gWL1sCjT6IDzAacxPw0sbSIjrajRW3P+/MuhOI
+ TrvPqgX1t69c0Xqv54q/T0G0JMM0+GsVXZ4hRLbFar+0Mk49IKGBA/eFWoSatCnzamE=
+X-Gm-Gg: ATEYQzwEL6qUTkh+7uWiw0NH0/q8lOoBf3EG6D++7Vznd0GQwOl5z3PB0UyUZEv9UGI
+ b5aHEnzq9Ifp3IUIEdh5CmxPcfhlgwH/XdMbBQE2ukYpPBHEvUe4X/qWCPWYthLmh3SsJuUwnKB
+ 1EIoTJ409Z33k96kd6TbbVEC6b2whHWoiLPfnvQXIxACObi36p0sV0hkYDFzWmgb2f8M95dM7lL
+ pxizaZKfLGeGVCLARSZe6IV2mGRxGgkTt+DThSnu4tVZzUzDyJyPLBd7D/ltQoNddRSSRz3ddIi
+ WakEXemgG02vfr0o0Xp93EoZe2QQBaFSGwDz2CizW3OeNeqS9GUgtMUT3jj+mHAo0LHUTDS282H
+ pB5nZlV0Fcp6TF4lfLiK7Y6cWmAh8G/HD7vOR+Qrhia5a2Z7pmatKx3ZqeK9sL6nYbbo5PgKFo+
+ XFMt6vCgqQkvcBy60BhphsQFhrLODTnUS12GOfC0ZX6y9Qzh/DPHVD+UQKi5QmzvUmop7Z2H93T
+ CwOxQg=
+X-Received: by 2002:a05:6a00:1c81:b0:82a:6569:1f88 with SMTP id
+ d2e1a72fcca58-82c6dd8cb25mr4716179b3a.0.1774474796214; 
+ Wed, 25 Mar 2026 14:39:56 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76737f42dcsm391475a12.4.2026.03.25.14.40.49
+ d2e1a72fcca58-82c7cf78d9esm603265b3a.0.2026.03.25.14.39.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 14:40:49 -0700 (PDT)
-Message-ID: <079dbeef-34e9-4a93-8e74-6c5d00db2fc6@linaro.org>
-Date: Wed, 25 Mar 2026 14:40:49 -0700
+ Wed, 25 Mar 2026 14:39:55 -0700 (PDT)
+Message-ID: <a0791d1d-ddcc-4e3a-896b-0b8f856ece39@linaro.org>
+Date: Wed, 25 Mar 2026 14:39:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 07/10] target/i386: Expand
- VMSTATE_UINTTL_SUB_ARRAY for APX registers
+Subject: Re: [PATCH-for-11.1 03/10] migration: Revert "Add
+ VMSTATE_UINTTL_2DARRAY()"
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -84,10 +85,9 @@ Cc: Glenn Miles <milesg@linux.ibm.com>,
  <alistair.francis@wdc.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, qemu-riscv@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Anton Johansson <anjo@rev.ng>, Peter Xu <peterx@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
+ Anton Johansson <anjo@rev.ng>, Peter Xu <peterx@redhat.com>
 References: <20260325211728.89204-1-philmd@linaro.org>
- <20260325211728.89204-8-philmd@linaro.org>
+ <20260325211728.89204-4-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -123,11 +123,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260325211728.89204-8-philmd@linaro.org>
+In-Reply-To: <20260325211728.89204-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -151,13 +151,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/26 2:17 PM, Philippe Mathieu-Daudé wrote:
-> APX registers are only migrated for 64-bit binaries, so
-> VMSTATE_UINTTL_SUB_ARRAY() expands to VMSTATE_UINT64_SUB_ARRAY().
+> The VMSTATE_UINTTL_2DARRAY() macro was never used, remove it.
+> 
+> This reverts commit 4597992f624c015ceb51fedb4628b3fdb1e5bbaa.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/machine.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/migration/cpu.h | 6 ------
+>   1 file changed, 6 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
