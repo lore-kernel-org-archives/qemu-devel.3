@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819CE109C032
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 15:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2957109C032
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 15:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Pzn-0004qj-Fs; Wed, 25 Mar 2026 11:18:11 -0400
+	id 1w5Q01-0005aL-Rr; Wed, 25 Mar 2026 11:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5Pzi-0004kv-PH
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:18:08 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5Pzv-0005Cx-Mx
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:18:20 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5Pzg-0008Q4-7S
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:18:05 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-486fd5360d4so30229295e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 08:18:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5Pzt-0000Uy-Lp
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:18:19 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-486fb14227cso27726625e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 08:18:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774451882; x=1775056682; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774451896; x=1775056696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QxrAV8rmf30CF98liKz5B3rdomtAez5skkM9aGRME4I=;
- b=dgc7cLLR8UVmC8uoFDu+LeCwu1elh5cmVYIGeJgzF6Tq1+zSmFPD0O6ygCB7j9q3uH
- fBakTQojCGgCXRAqeJVulBp2cPbx7VwD2N4T3nvYarZkr86GyDKgopgZvH4IkPOYDdiO
- R5ZabHcAxRU3v+EF0IBwKVPGsQKrGJzf6637DgL5e8B5/hqFKtocdaBWdftZXZOuonfO
- GJQoxkviSqjqGiaVR2homItntotRoG8mX3RXr3tYEZ5j1boUhc5B1KnXnpxcmMPTVJrL
- KkB+mKVZDbvGCshwuo4OA48ojP6yDRNzaYgxykQgdyngTpqqoayyUNvJdypoTWOChYAh
- 2Yww==
+ bh=cHp+isFeJ+Vwq620YK3TTBZ1M5KgDnZyZo3PdDfV4Bw=;
+ b=mFjLHo9jYg43yirpOTJqhwgWbHEJYkPLWr956jdWuSTeBTBt9OIA2aBueU2+fBcwWo
+ +tKCkqTVeiX7/fpF21veSlIlbgXCtvqVnKOv+bWFal0Of+OQwfGXicHDv7oVwUXpy/S3
+ 8ujPuTDTPgBsbbt7XZmp2DRNRATOAY7d7qx8HoPyr1QWsPxpCN6CBRCtS6V01P+jWd0G
+ VAquij1iRRPZHq9u8WTWYlxHkZh0wWqiKo4DwlDU0F4rzaYxXXm1iufHMyvkwukjfRpe
+ 5munUnd4Z4MpIctWb/NL8jtjP6pjRbwGU9Mah7gkTaRBPNtn45xE/ZEOSBri1cXiXjNE
+ IUmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774451882; x=1775056682;
+ d=1e100.net; s=20251104; t=1774451896; x=1775056696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QxrAV8rmf30CF98liKz5B3rdomtAez5skkM9aGRME4I=;
- b=AU5AhuaFSpqjAtwE7UglxfiMR2nfOWrtA2wAR8rok6aq3YHGrIwg6JPpFkyJKzaequ
- 0SW6JLCxnokHSRe5k86/n8elc+CfibsbLdwxecSpRy8tAC3JtUi5agcyNgzHuDs1/E4X
- lpxIWFfMwRh2PojkPCX0R0Wp+kNTDyan4d1rOYjSuh5EJZbkUx73eUSVY7jAbA7/IwKG
- GUrOGMhtO5npT5ugvsOoqkYPpgdNiEH3kMAr+lAim3GvQt4GH53+mk5qw2mUDSkDtBdY
- JtOUHWUJhZFR3wZXefL75sRioWSwrRfu1l3AbVHuoOEQ33fuCU5yRQrfI6CrLzb9hZj+
- ITsA==
+ bh=cHp+isFeJ+Vwq620YK3TTBZ1M5KgDnZyZo3PdDfV4Bw=;
+ b=WBMSvTwsj2u9gIFp2ZqnQI/GRPVkPRsaWKBzFHyl+NPdct6SNvYsSOzr1RzsR7EWRi
+ 6QSqGw5hIMIGZdv6Kwc7W3rwziCwU+bhRb9XDQuubii4s1W8hdeYH1Irrq65SrtK+c9U
+ FwntwQj6NEPKqI9BLZvTrli7dAmubi17mMZCnU3Fi4x/8vk3oaTdKe5L7PDJGL6uKBNY
+ gsu7RS/ckl5iFqj3r7xJrrNcWkibk7lIv/PmFn5tv2r00cA4mTK4MjuYKWcxnd9z1KyQ
+ P34o1yS3vc0EkVnciL9Cp40sipzH9+KJPdZAU0FgVTYgaQLJJuJeuYnCHRkMPcr/bf+f
+ ME3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgV6CqN6hPtRsWGTV40m+ZucHcs1h7yLsz6px4kDw8pUJm61kkznV3DleGD7QoMa41AWToKcW4Gwtx@nongnu.org
-X-Gm-Message-State: AOJu0YwurXOccodE2SlxyPQeFv9vITIopKCFbkUcG0mVZvpU7lsUtUsP
- oFet//Xm38pJT8Shl9wLSv5A8zUJLL+6mXiGfJSmLI7wRFMY/cdJKN7HFLoaG7Aj0u0=
-X-Gm-Gg: ATEYQzzMRwqaXs64hoIvO/EBoTwHY/p4FmGjh9C9Go3pxxPdz+A2L24YymakUqKuGgC
- 176rUAHq03xQ9VGkZzl5cd9bzev3V6nC8xw4GiMKaHRuJ4euEAA+claYXaU+iIaneWM8csJrf4T
- HUcAeueteO3HO7UDjmRU9petxUmRsVBQiLIicJtrWLFKLiO/4S/Kxju80jY3W+Pl4buy03O4n4E
- cK9saNUzXoVohzqAwHqDLgeRxF+KpiAaiO7l3mKl9Wht3YwsvwOVB/IRkPz4YtXE7Wjbe83I5eJ
- GI3Sddm9rQMkXW+9OvR7n1rAXhenJktpcSQ2MAGUnrRH7NOa/3C5Ut3cHepi3bRZbC3SgSM+eNC
- AU+LUjgHzhzWzGClb+1aOgeFPPCNGlDF7ZgQRlyslxaW5xEYh487GK/cKsY8xo0ZA7BZjNpRoxA
- Vws3sqEhmgw0FTsV1uJJXXiN6nzCB8Akdl3/xsZaOn3vmwzsl1OB6Yc7FpMh6WKCOTiGapqy4I
-X-Received: by 2002:a05:600c:1e2a:b0:487:18c:7acf with SMTP id
- 5b1f17b1804b1-4871606d963mr61278415e9.25.1774451881686; 
- Wed, 25 Mar 2026 08:18:01 -0700 (PDT)
+ AJvYcCWhKVoOmeEWDKFtT5ZwUFEHOiTqKFrOZEBtkXEJQL77zet51u64psBRiTeEPE1ZSDXB9kizIhHnHJHe@nongnu.org
+X-Gm-Message-State: AOJu0YyjdiJkN47jrpn9/8ZMvMk8bVVPpq9XylyLbjFfOQHonnKmlhMU
+ qN9Bqc/WE7tV1aWCbkUuFfQfCr/N/dOH8/Cf1KNXN2WEZyA5sVTzL2/2TR0yJj3NM1TrZ09u0o1
+ Iy+g7+r8=
+X-Gm-Gg: ATEYQzxufFDgRrY2e+iMhUhexbMSDdSR+QgOwUZz0qHOnY8+9A5NsPom+6CKSILo7h1
+ CWTRpC/2NHQe29PRCE4cSyf2HUgb0SEgx7qGr3bB68GFjv/8n2lieyrbQikow4wksW1PhznHpVe
+ CW4cMCjxXnQSrFGC2CYG7PDDcLltXLGRx+umKr8U7nNG5BLcA4uLA49bGMonhJ4gzSDXeER3RLK
+ fvA1Itk91Jgpt3glhf6hD77vkspPgqrukkxSFa2OZgd0FLN8e+rEDsGmw7f0RYqx9Lo1fJfetWQ
+ 9M7xbHZQV5X+kAF10W0IxKpQnPSlsnqHLyCXGVXEtFAeMZR1zMgcF4rrRQpUqPd32Jfsa4xpfJ/
+ /T+qpzuxVHdR0Z7OHyKX1epjcU/fhd+V1cGgKG5aFhDRiqbNGX4ow6sarnzNxoLngkdn52HPdqk
+ E5W08m8aQXBaxSNJZmt1SOn+aq4zJbE6b2VDFJSgz2FiiJKY+vjmeem/QF/14qWT7V/H7l7RZ83
+ w4oUSMZxKU=
+X-Received: by 2002:a05:600c:a408:b0:485:3f58:d9f with SMTP id
+ 5b1f17b1804b1-487160a24e2mr43858395e9.30.1774451895998; 
+ Wed, 25 Mar 2026 08:18:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b919e265csm466393f8f.32.2026.03.25.08.17.59
+ 5b1f17b1804b1-4871e60322asm1408455e9.7.2026.03.25.08.18.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Mar 2026 08:18:00 -0700 (PDT)
+ Wed, 25 Mar 2026 08:18:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Michael Tokarev <mjt@tls.msk.ru>,
 	qemu-devel@nongnu.org
@@ -73,24 +75,19 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- kvm@vger.kernel.org, David Hildenbrand <david@kernel.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH-for-11.0? 4/6] qom: Declare compat properties API in
- 'qom/compat-properties.h'
-Date: Wed, 25 Mar 2026 16:17:26 +0100
-Message-ID: <20260325151728.45378-5-philmd@linaro.org>
+ kvm@vger.kernel.org
+Subject: [NOTFORMERGE PATCH 6/6] buildsys: Allow building guest-agent on
+ 32-bit hosts
+Date: Wed, 25 Mar 2026 16:17:28 +0100
+Message-ID: <20260325151728.45378-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260325151728.45378-1-philmd@linaro.org>
 References: <20260325151728.45378-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,183 +110,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While most of QEMU files use the QOM concept, few of them
-use the compatibility properties API (mostly use in system
-emulation). Move its prototype to a new "qom/compat-properties.h"
-header, keeping "qom/object.h" for generic QOM.
+Partially revert commit range 5053e0a65db...90e2e8ada7c.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qom/compat-properties.h | 8 ++++++++
- include/qom/object.h            | 8 --------
- accel/accel-system.c            | 1 +
- backends/hostmem.c              | 1 +
- hw/core/machine.c               | 1 +
- hw/core/qdev-properties.c       | 1 +
- hw/core/qdev.c                  | 1 +
- hw/i386/pc_q35.c                | 1 +
- system/rtc.c                    | 1 +
- system/vl.c                     | 1 +
- target/i386/sev.c               | 1 +
- ui/vdagent.c                    | 1 +
- 12 files changed, 18 insertions(+), 8 deletions(-)
+ configure   | 64 +++++++++++++++++++++++++++++++++++++++++++----------
+ meson.build |  2 +-
+ 2 files changed, 53 insertions(+), 13 deletions(-)
 
-diff --git a/include/qom/compat-properties.h b/include/qom/compat-properties.h
-index 6e44aabc26b..90f8320adfd 100644
---- a/include/qom/compat-properties.h
-+++ b/include/qom/compat-properties.h
-@@ -29,4 +29,12 @@ typedef struct GlobalProperty {
-     bool optional;
- } GlobalProperty;
+diff --git a/configure b/configure
+index eea90306728..e984ec2bd3c 100755
+--- a/configure
++++ b/configure
+@@ -381,6 +381,8 @@ fi
+ if test ! -z "$cpu" ; then
+   # command line argument
+   :
++elif check_define __i386__ ; then
++  cpu="i386"
+ elif check_define __x86_64__ ; then
+   if check_define __ILP32__ ; then
+     cpu="x32"
+@@ -399,22 +401,30 @@ elif check_define _ARCH_PPC64 ; then
+   else
+     cpu="ppc64"
+   fi
+-elif check_define __mips64 ; then
+-  cpu="mips64"
++elif check_define __mips__ ; then
++  if check_define __mips64 ; then
++    cpu="mips64"
++  fi
+ elif check_define __s390__ ; then
+   if check_define __s390x__ ; then
+     cpu="s390x"
+   else
+     cpu="s390"
+   fi
+-elif check_define __riscv && check_define _LP64 ; then
+-  cpu="riscv64"
++elif check_define __riscv ; then
++  if check_define _LP64 ; then
++    cpu="riscv64"
++  else
++    cpu="riscv32"
++  fi
++elif check_define __arm__ ; then
++  cpu="arm"
+ elif check_define __aarch64__ ; then
+   cpu="aarch64"
+ elif check_define __loongarch64 ; then
+   cpu="loongarch64"
+ elif check_define EMSCRIPTEN ; then
+-  error_exit "wasm64 must be specified to the cpu flag"
++  error_exit "wasm32 or wasm64 must be specified to the cpu flag"
+ else
+   # Using uname is really broken, but it is just a fallback for architectures
+   # that are going to use TCI anyway
+@@ -440,6 +450,18 @@ case "$cpu" in
+     linux_arch=arm64
+     ;;
  
-+void object_set_machine_compat_props(GPtrArray *compat_props);
-+void object_set_accelerator_compat_props(GPtrArray *compat_props);
-+void object_register_sugar_prop(const char *driver, const char *prop,
-+                                const char *value, bool optional);
-+void object_apply_compat_props(Object *obj);
-+bool object_apply_global_props(Object *obj, const GPtrArray *props,
-+                               Error **errp);
++  armv*b|armv*l|arm)
++    cpu=arm
++    host_arch=arm
++    ;;
 +
- #endif
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 26df6137b91..510885218ba 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -700,14 +700,6 @@ Object *object_new_with_propv(const char *typename,
-                               Error **errp,
-                               va_list vargs);
++  i386|i486|i586|i686)
++    cpu="i386"
++    host_arch=i386
++    linux_arch=x86
++    CPU_CFLAGS="-m32"
++    ;;
++
+   loongarch*)
+     cpu=loongarch64
+     host_arch=loongarch64
+@@ -448,7 +470,7 @@ case "$cpu" in
  
--bool object_apply_global_props(Object *obj, const GPtrArray *props,
--                               Error **errp);
--void object_set_machine_compat_props(GPtrArray *compat_props);
--void object_set_accelerator_compat_props(GPtrArray *compat_props);
--void object_register_sugar_prop(const char *driver, const char *prop,
--                                const char *value, bool optional);
--void object_apply_compat_props(Object *obj);
--
- /**
-  * object_set_props:
-  * @obj: the object instance to set properties on
-diff --git a/accel/accel-system.c b/accel/accel-system.c
-index 150af05bf5b..9176665202d 100644
---- a/accel/accel-system.c
-+++ b/accel/accel-system.c
-@@ -25,6 +25,7 @@
+   mips64*|mipsisa64*)
+     cpu=mips64
+-    host_arch=mips64
++    host_arch=mips
+     linux_arch=mips
+     ;;
  
- #include "qemu/osdep.h"
- #include "qemu/accel.h"
-+#include "qom/compat-properties.h"
- #include "qapi/qapi-commands-accelerator.h"
- #include "monitor/monitor.h"
- #include "hw/core/boards.h"
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 15d4365b697..cd2085fb3cd 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -18,6 +18,7 @@
- #include "qapi/qapi-builtin-visit.h"
- #include "qapi/visitor.h"
- #include "qemu/config-file.h"
-+#include "qom/compat-properties.h"
- #include "qom/object_interfaces.h"
- #include "qemu/mmap-alloc.h"
- #include "qemu/madvise.h"
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 6cf0e2f404e..6290b3556ee 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -21,6 +21,7 @@
- #include "qapi/qapi-visit-machine.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qemu/madvise.h"
-+#include "qom/compat-properties.h"
- #include "qom/object_interfaces.h"
- #include "system/cpus.h"
- #include "system/system.h"
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index ba8461e9a42..73539c727b3 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -10,6 +10,7 @@
- #include "qemu/units.h"
- #include "qemu/cutils.h"
- #include "qdev-prop-internal.h"
-+#include "qom/compat-properties.h"
- #include "qom/qom-qobject.h"
+@@ -464,8 +486,8 @@ case "$cpu" in
+     CPU_CFLAGS="-m64 -mlittle-endian"
+     ;;
  
- void qdev_prop_set_after_realize(DeviceState *dev, const char *name,
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index e48616b2c6f..b36101f3a75 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -32,6 +32,7 @@
- #include "qapi/visitor.h"
- #include "qemu/error-report.h"
- #include "qemu/option.h"
-+#include "qom/compat-properties.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/boards.h"
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index cb23322f5a4..6a0967ecd18 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -56,6 +56,7 @@
- #include "hw/usb/hcd-uhci.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "qom/compat-properties.h"
- #include "system/numa.h"
- #include "hw/hyperv/vmbus-bridge.h"
- #include "hw/mem/nvdimm.h"
-diff --git a/system/rtc.c b/system/rtc.c
-index 56951288c40..f13dd392a76 100644
---- a/system/rtc.c
-+++ b/system/rtc.c
-@@ -28,6 +28,7 @@
- #include "qemu/error-report.h"
- #include "qemu/option.h"
- #include "qemu/timer.h"
-+#include "qom/compat-properties.h"
- #include "qom/object.h"
- #include "system/replay.h"
- #include "system/system.h"
-diff --git a/system/vl.c b/system/vl.c
-index 38d7b849e0a..ec31fd76c0d 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -119,6 +119,7 @@
- #include "qapi/string-input-visitor.h"
- #include "qapi/opts-visitor.h"
- #include "qapi/clone-visitor.h"
-+#include "qom/compat-properties.h"
- #include "qom/object_interfaces.h"
- #include "semihosting/semihost.h"
- #include "crypto/init.h"
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 9dde972c118..261b6aaa37b 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -36,6 +36,7 @@
- #include "system/reset.h"
- #include "trace.h"
- #include "migration/blocker.h"
-+#include "qom/compat-properties.h"
- #include "qom/object.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp.h"
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index bb0c4aa14ca..bb55cbefc9c 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -5,6 +5,7 @@
- #include "qemu/error-report.h"
- #include "qemu/option.h"
- #include "qemu/units.h"
-+#include "qom/compat-properties.h"
- #include "hw/core/qdev.h"
- #include "hw/core/qdev-properties.h"
- #include "migration/blocker.h"
+-  riscv64)
+-    host_arch=riscv64
++  riscv32 | riscv64)
++    host_arch=riscv
+     linux_arch=riscv
+     ;;
+ 
+@@ -500,6 +522,9 @@ case "$cpu" in
+     linux_arch=x86
+     CPU_CFLAGS="-m64"
+     ;;
++  wasm32)
++    CPU_CFLAGS="-m32"
++    ;;
+   wasm64)
+     CPU_CFLAGS="-m64 -sMEMORY64=$wasm64_memory64"
+     ;;
+@@ -1287,7 +1312,7 @@ EOF
+     test "$bigendian" = no && rust_arch=${rust_arch}el
+     ;;
+ 
+-  riscv64)
++  riscv32|riscv64)
+     # e.g. riscv64gc-unknown-linux-gnu, but riscv64-linux-android
+     test "$android" = no && rust_arch=${rust_arch}gc
+     ;;
+@@ -1449,18 +1474,26 @@ probe_target_compiler() {
+         container_image=debian-all-test-cross
+         container_cross_prefix=aarch64-linux-gnu-
+         ;;
+-      alpha|hppa|m68k|mips|riscv64|sh4|sparc64)
++      hppa|m68k|mips|riscv64|sparc64)
+         container_image=debian-all-test-cross
+         ;;
+       mips64)
+         container_image=debian-all-test-cross
+         container_cross_prefix=mips64-linux-gnuabi64-
+         ;;
+-      ppc|ppc64|ppc64le)
++      ppc64|ppc64le)
+         container_image=debian-all-test-cross
+         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
+         ;;
+ 
++      # debian-legacy-test-cross architectures (need Debian 11)
++      # - libc6.1-dev-alpha-cross: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1054412
++      # - sh4-linux-user: binaries don't run with bookworm compiler
++
++      alpha|sh4)
++        container_image=debian-legacy-test-cross
++        ;;
++
+       # architectures with individual containers
+ 
+       aarch64)
+@@ -1930,7 +1963,14 @@ if test "$skip_meson" = no; then
+   if test "$cross_compile" = "yes"; then
+     echo "[host_machine]" >> $cross
+     echo "system = '$host_os'" >> $cross
+-    echo "cpu_family = '$cpu'" >> $cross
++    case "$cpu" in
++        i386)
++            echo "cpu_family = 'x86'" >> $cross
++            ;;
++        *)
++            echo "cpu_family = '$cpu'" >> $cross
++            ;;
++    esac
+     echo "cpu = '$cpu'" >> $cross
+     if test "$bigendian" = "yes" ; then
+         echo "endian = 'big'" >> $cross
+diff --git a/meson.build b/meson.build
+index d7c4095b395..ae412263ec7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -323,7 +323,7 @@ endif
+ # Compiler flags #
+ ##################
+ 
+-if cc.sizeof('void *') < 8
++if not have_ga and cc.sizeof('void *') < 8
+   error('QEMU requires a 64-bit CPU host architecture')
+ endif
+ 
 -- 
 2.53.0
 
