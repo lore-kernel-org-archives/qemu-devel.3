@@ -4,77 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EEC109C046
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B889109C048
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 17:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5RWy-0007b9-0o; Wed, 25 Mar 2026 12:56:33 -0400
+	id 1w5Rhu-0000wD-Og; Wed, 25 Mar 2026 13:07:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5RWn-0007ZV-5x
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:56:22 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5Rht-0000vl-0X
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:07:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5RWl-0001Ib-SW
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:56:20 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5Rhr-0007RA-DD
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:07:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774457779;
+ s=mimecast20190719; t=1774458465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=G+/uTuvEtJb2HVnt29ZkGdPbPyI8+bLQnZPQnbZTZPU=;
- b=MYqKahIf1Zrjpb5EgBmkwvDc0OuIL4utUwZ2wg8d5USXfshpgHxbPtHTatKfWPrERs2qgs
- H9BND2wb+70gdDPD7Evs7mCc2g1daFhZU3rtg2fb+rbm5Tk24Cxv8snin5v3Y7drRv0C3j
- wLrMLz8Zk8vEAdSzWSbpqfDuhBZjmdU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-0LlJFXYOMjaM-tJiTwr3kQ-1; Wed,
- 25 Mar 2026 12:56:17 -0400
-X-MC-Unique: 0LlJFXYOMjaM-tJiTwr3kQ-1
-X-Mimecast-MFC-AGG-ID: 0LlJFXYOMjaM-tJiTwr3kQ_1774457776
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0045B195608B; Wed, 25 Mar 2026 16:56:15 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.10])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6A35519560B1; Wed, 25 Mar 2026 16:56:13 +0000 (UTC)
-Date: Wed, 25 Mar 2026 12:56:11 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Jaehoon Kim <jhkim@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pbonzini@redhat.com, fam@euphon.net,
- armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
- eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-Subject: Re: [PATCH RFC v2 3/3] qapi/iothread: introduce poll-weight
- parameter for aio-poll
-Message-ID: <20260325165611.GB701300@fedora>
-References: <20260323135451.579655-1-jhkim@linux.ibm.com>
- <20260323135451.579655-4-jhkim@linux.ibm.com>
+ bh=N2lw7/zZDYpBP7c+P6ld1nNIZwotUhEH9R1hopqB+h8=;
+ b=hM0sNjz0McwftcBgHhEe5q0XhHVuj4IcgwyPsIOKUFDSN4SWy1VwiAihIz/PR5G8TpSfdv
+ knE9+3APfbGwVCTCr681z8ztUujtKtxGgUIwViMqAMOKlZkvR3ItkgHFSfWsK7raYrZvnE
+ zQ6JIzfqLMnSFiOnLym0SnagTQAmHss=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-uhbpv1x5OU6QXy62RAWsqg-1; Wed, 25 Mar 2026 13:07:43 -0400
+X-MC-Unique: uhbpv1x5OU6QXy62RAWsqg-1
+X-Mimecast-MFC-AGG-ID: uhbpv1x5OU6QXy62RAWsqg_1774458463
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5091327215dso255831cf.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 10:07:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774458463; x=1775063263; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=N2lw7/zZDYpBP7c+P6ld1nNIZwotUhEH9R1hopqB+h8=;
+ b=AJmRYZwGdLH2eRrizoSnzTxO59KBl2wYTvSoWNg6bauC82E4MX4aFVG9jJ8FDDH4fM
+ sUs7u//8YIrx5pMg4jba/tdPpMzaLNX89ZFPY753ntzC8XnJGuELejy+e8rDH3Lqmejg
+ 0Z3O14kC8vXSQH+Ap+d+T6tN5aetX6a0hRER7DWVMefx9WqjvQy3wtVTYfDqeUisWUEJ
+ jfKdxeEMW7Z8zYXF6jbuDxix1Nx1F3hL49IWaE0OZAM8QDTx3Yk1Vq/ukERIcSVd8bEI
+ 7XFI+0wJWcH7bmU1OOoPuqDj3l3X6K3kB/JAc8waLqhquNmdz2oQgfZXhXgnVIs7x/xm
+ JUNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774458463; x=1775063263;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N2lw7/zZDYpBP7c+P6ld1nNIZwotUhEH9R1hopqB+h8=;
+ b=hE5nsrvRNzM/5SQdUO/Y6nLSecL1DwHBg/zzKWKQdk/2cXvSjNzepF2JD04Hh8yRil
+ JoT96StNKU1agJ2snDgCBK2AwLl1apt0X8mpzEiY+2CKOzmpjs7mpR8cHqc2J1fEsMnd
+ z8QhXffTRlzb3LjN//nYWkzPjpXhNvKObtyjYsJSNutYelSOwMZbwC64wF4olYLXnm1u
+ yMiB8UrdtJo33mB4zIyTBVSV3+kUKLd0et1q++uEMh+bSbUamVZs06yJmO899VtNXhC6
+ SX4eWXT0135/+Vc2POQJmymY6ruJkkbt6cetkEkSggE5pJ/B/1+8UwtAYVLduKqGgIqh
+ 4hPw==
+X-Gm-Message-State: AOJu0Yw6wdGjS3Bk345kre2vhZ7KvEgCq+FySGaHQGrSDXMvRAflVeHr
+ Hlchj9lUzS1Itu4RAl28uKrKuqLlRj+bUModiNXFrLaKC3AhTjr683w8MmTEtQjCpGATOPRwxoJ
+ iw8BGQ+pi4FCE5u3jtFe9XNRKZpNlQVu7e2Q6sGvuy9xCrdjE0ZeGolQL
+X-Gm-Gg: ATEYQzxr7vk+gp1JcCLHstqy7tGs9zhRmQEj64mfZc1m5ZIysksZ9xOT8Vxtig9m88L
+ y91ht6lHfhqbXn3CQwp38n6WuulM4jfIrvpcNiJAwuKV7E7NOMZMv9BJOxaoEW9Ptvzylcz6COD
+ 4l14UskufX6VvFMIcs756Yyy4b7xK36N4MKt2cDTF8xcKwXWpAhKqRNODROZXAyIFTJQKmI0wxO
+ z0iTuSS8UqD09aYqshuToUtHrvSvR0/KBBAmCEVOuLRJQkysBvm5yBfdWinpIoi0MIKh9QuDM+J
+ 7PEiAFpBJhshTJdZ+P8UrtauYQwX4bCXHct6g4rYIv+Xfe/hsuhAskk6alQK3fVHtFLAGIJFqyJ
+ ba6imdw/RRvIELw==
+X-Received: by 2002:a05:622a:5b95:b0:509:2448:41a with SMTP id
+ d75a77b69052e-50b80de0052mr59922011cf.42.1774458462736; 
+ Wed, 25 Mar 2026 10:07:42 -0700 (PDT)
+X-Received: by 2002:a05:622a:5b95:b0:509:2448:41a with SMTP id
+ d75a77b69052e-50b80de0052mr59921411cf.42.1774458462154; 
+ Wed, 25 Mar 2026 10:07:42 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50b9239fd9bsm2893441cf.22.2026.03.25.10.07.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Mar 2026 10:07:41 -0700 (PDT)
+Date: Wed, 25 Mar 2026 13:07:40 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [RFC PATCH v1 05/17] vmstate: Remove vmdesc_loop
+Message-ID: <acQWXMP1VjSeXUvL@x1.local>
+References: <20260324194333.30004-1-farosas@suse.de>
+ <20260324194333.30004-6-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Zn4DK78pCdykUHQm"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260323135451.579655-4-jhkim@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20260324194333.30004-6-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,54 +116,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Mar 24, 2026 at 04:43:20PM -0300, Fabiano Rosas wrote:
+> The vmdesc_loop variable is being used as a hacky way of writing the
+> JSON description only for the first element of a compressed
+> array. There are also a few implicit uses, such as writing the JSON
+> for the first non-compressed element after a compressed portion.
+> 
+> Future work will have trouble with this. Use a simple boolean to be
+> explicit now.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/vmstate.c | 25 ++++++++++++++-----------
+>  1 file changed, 14 insertions(+), 11 deletions(-)
+> 
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index dec9cf920b..7a12245d36 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -622,8 +622,9 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+>              void *first_elem = opaque + field->offset;
+>              int i, n_elems = vmstate_n_elems(opaque, field);
+>              int size = vmstate_size(opaque, field);
+> -            JSONWriter *vmdesc_loop = vmdesc;
+>              bool is_null_prev = false;
+> +            bool use_vmdesc = true;
+> +
+>              /*
+>               * When this is enabled, it means we will always push a ptr
+>               * marker first for each element saying if it's populated.
+> @@ -673,7 +674,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                      is_null != is_null_prev) {
+>  
+>                      is_null_prev = is_null;
+> -                    vmdesc_loop = vmdesc;
+> +                    use_vmdesc = true;
+>  
+>                      for (int j = i + 1; j < n_elems; j++) {
+>                          void *elem = *(void **)(first_elem + size * j);
+> @@ -686,8 +687,13 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                      }
+>                  }
+>  
+> +                if (use_dynamic_array) {
+> +                    use_vmdesc = true;
+> +                }
 
---Zn4DK78pCdykUHQm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[1]
 
-On Mon, Mar 23, 2026 at 08:54:51AM -0500, Jaehoon Kim wrote:
-> @@ -831,7 +822,8 @@ void aio_context_destroy(AioContext *ctx)
->  }
-> =20
->  void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
-> -                                 int64_t grow, int64_t shrink, Error **e=
-rrp)
-> +                                 int64_t grow, int64_t shrink,
-> +                                 int64_t weight, Error **errp)
->  {
->      AioHandler *node;
-> =20
-> @@ -848,6 +840,7 @@ void aio_context_set_poll_params(AioContext *ctx, int=
-64_t max_ns,
->      ctx->poll_max_ns =3D max_ns;
->      ctx->poll_grow =3D grow;
->      ctx->poll_shrink =3D shrink;
-> +    ctx->poll_weight =3D weight;
->      ctx->poll_ns =3D 0;
-> =20
->      aio_notify(ctx);
+> +
+>                  ok = vmstate_save_field_with_vmdesc(f, curr_elem, size, vmsd,
+> -                                                    inner_field, vmdesc_loop,
+> +                                                    inner_field,
+> +                                                    use_vmdesc ? vmdesc : NULL,
+>                                                      i, max_elems, errp);
+>  
+>                  /* If we used a fake temp field.. free it now */
+> @@ -708,19 +714,16 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                       * NOTE: do not use vmstate_size() here because we want
+>                       * to dump the real VMSD object now.
+>                       */
+> -                    ok = vmstate_save_field_with_vmdesc(f, curr_elem,
+> -                                                        field->size, vmsd,
+> -                                                        field, vmdesc_loop,
+> -                                                        i, max_elems, errp);
+> +                    ok = vmstate_save_field_with_vmdesc(
+> +                        f, curr_elem, field->size, vmsd, field,
+> +                        use_vmdesc ? vmdesc : NULL, i, max_elems, errp);
+> +
+>                      if (!ok) {
+>                          goto out;
+>                      }
+>                  }
+>  
+> -                /* Compressed arrays only care about the first element */
+> -                if (vmdesc_loop && vmsd_can_compress(field)) {
+> -                    vmdesc_loop = NULL;
+> -                }
+> +                use_vmdesc = false;
 
-On second thought, now that the divide-by-0 protection has been removed
-and these fields are assumed to hold a valid value when poll_max_ns > 0,
-aio_context_set_poll_params() needs the same 0-protection as
-iothread_set_param().
+Hmm...
 
---Zn4DK78pCdykUHQm
-Content-Type: application/pgp-signature; name=signature.asc
+vmsd_can_compress() can return arbitrary things depending on the field
+itself, now we always do the dedup almost for everything.
 
------BEGIN PGP SIGNATURE-----
+The patch did add above [1] to make AUTO_ALLOC be ok, by enforce setting
+TRUE for it for every loop, but what about other cases where
+vmsd_can_compress() may return false (where the field does not support
+compression)?
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnEE6sACgkQnKSrs4Gr
-c8iCYAf/UEGVGeUCYBTYnTt6aeBoUFPvxd7MRcZgqmzP6BjofT9wjQYGreZKnbGK
-WR3Bj1ADzK35f1CcwXIRp6XUexoL7ZqRjO2UHRgdl127rRFEX/LQ1pzSR0Zmw6Wt
-VvUVVfZJA0EG6Eevb9vW95kZBj0w0TQqBkGsrOYYugFNLZAFcCdZSFso/cUVqJQj
-OeoZhENkrLNJfDtQKVHebBjcliaO1e5d9/6iB/N6hpkofamZ4MtcHxRqCCIz1dBD
-dKdM2BTn2pmazWYBaqSF4vss4TPFTR/5EjNRxp0F4xTJP+86FLTxAmCd70Ld6pwV
-FfqywFfUqeEY6EHkWu38t0BijsoGYg==
-=pQDn
------END PGP SIGNATURE-----
+>              }
+>          } else {
+>              if (field->flags & VMS_MUST_EXIST) {
+> -- 
+> 2.51.0
+> 
 
---Zn4DK78pCdykUHQm--
+-- 
+Peter Xu
 
 
