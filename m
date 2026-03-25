@@ -4,101 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6993109C03C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B4A109C03D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5REU-00033f-JM; Wed, 25 Mar 2026 12:37:26 -0400
+	id 1w5RH6-0003c9-CP; Wed, 25 Mar 2026 12:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5RES-00033U-Mp
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:37:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lawrence.hunter@codethink.co.uk>)
+ id 1w5RH3-0003aW-A8
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:40:05 -0400
+Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5REQ-0003CD-T6
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:37:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774456641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kSivG1+6jzGmG3zTOrAIc8C7zvlAQ8ESRrAqVCQDPBo=;
- b=fJdLz1Oz0TYXv1MFtOO+rPRCtAllSb45vXxM3c/dN0pNaeomaF/vCx231ApTaZGRFWRFlH
- oEeIAq7nDvSFYtV2qlfokwNLUbCPq1i9AF0R5+rLU8E/WJpkkbWjTU89NWQWySYIy3kjK4
- 2zzCYRO8I9pwkcaHeEGyq7UMHiGLwZE=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-3bfFbN8zNxe4CRKKTLAK9w-1; Wed, 25 Mar 2026 12:37:17 -0400
-X-MC-Unique: 3bfFbN8zNxe4CRKKTLAK9w-1
-X-Mimecast-MFC-AGG-ID: 3bfFbN8zNxe4CRKKTLAK9w_1774456637
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8cd827a356aso26492285a.3
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:37:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774456637; x=1775061437; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=kSivG1+6jzGmG3zTOrAIc8C7zvlAQ8ESRrAqVCQDPBo=;
- b=TqnK63ng9B8R0V/e+nSIqMpaNlbfZnO4UZquDR6Snh8ji/F1IxYgm+jDt4J9Fm0RI1
- rBuVJGy21NLiDn5PC5KomLx2CV2w2tIcZnbxKbuRv0R5CiXoiCk58HU1yjXq9MIiaGY5
- cvTIw46Zyw+KOU8VBD1e2nFPTsqiZk+QDe+3yvirLiBngkAXxJyTZb0LW9lFDRGOxwwK
- OpeDgs9PFNRg7JUvilegtGtg9bD/RyqYTtHJZHyihtlv9CmqaL/hiKHLGjYzA/hRxte3
- 51tfw9EjQ1xxS7zOVvC/YywY+xFTGg11Zf+WUdSDq1Qk/TAnmWTPfSKIybmTpJQbxO+2
- iwDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774456637; x=1775061437;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kSivG1+6jzGmG3zTOrAIc8C7zvlAQ8ESRrAqVCQDPBo=;
- b=avj11QHenvbkh6GYTuAKLckBgjm+6vUelA1sj9B1PpToJoH85Iqjx37cKOB+KJcMMT
- +jE5MNrAdaIgxEDuE01ND6ieFkj9JUeyDyFhdwjwkcTgVcC215kmRmeziK7+auDhXTyx
- AKaqlwddRYhSsF68HPw+niLLb5fFMEs5oMGn2UsFPtXHu8cY5wQQg1w0gC0bsl8n20zN
- NjBp6U6mKpBYoMfJ2VyqpTlYr+O+iwaf2iTGgcMx/ZFUJTPKmaDw3q2ysJrjzf+DHTSs
- n+CieMvdvRkixpCtCCqK3OW6vHv2Cw+Q1xmJ940feYDyC1l0hnutWxsKST+qR3YxwNu3
- Dztg==
-X-Gm-Message-State: AOJu0YzKXNtT3/s/H2ENWXicVP1czNUvWxp8fSuf46ZvP0gjusO0WPMt
- L5LYYQw2EFyFNL6Ri5S9oxVw5ZpRcQ1I9H/BevtyjZ7tcfEhPpuojD0SPACx6yyZRS/hcIrAad7
- MIu3fyjCJlOnbtdWFPm0inTDkZVaS7ZLOgsoT5rTyjym07/dK8Jg6Rxpg4wiY+tbd
-X-Gm-Gg: ATEYQzzvq9bJKVLQT+qzXt5LWbwblXw9yFP7sSD+bCVR4RSbGlPxayXVi49oPoKuLA/
- x4SI0VhJAldcQf6ky6VCnik7KzRpl5ffJdWJXS8SPrffc6MNb7sVGS3wjyKodbA9tGy4A74I/80
- Zts6RmGgjGfTFYMNX6U9rf/IprvQrr5QTPg+GyNQh6y0rPe+5H5Hnp6lvaG5HqozsE4HMohMCuN
- 97ID+nVUof1GO1hVHCUiTjFQtG7KgHstTV69yEimnyC9yKUp2BFuK9DFXk1b6aEuSa1ChX5w78O
- neOfxsmVt1JfaECEEApTt3dhW1HYmrGGy0m/bqLDxFtmwg0Ti4q4pAZSVCGCs1kgpFGwKBCw2bS
- Ljsp5j/2o9EA85Q==
-X-Received: by 2002:a05:620a:298e:b0:8cd:c086:98d5 with SMTP id
- af79cd13be357-8d000f1af74mr625380585a.22.1774456636526; 
- Wed, 25 Mar 2026 09:37:16 -0700 (PDT)
-X-Received: by 2002:a05:620a:298e:b0:8cd:c086:98d5 with SMTP id
- af79cd13be357-8d000f1af74mr625372485a.22.1774456635853; 
- Wed, 25 Mar 2026 09:37:15 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8d00e39fc17sm26679785a.5.2026.03.25.09.37.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 09:37:15 -0700 (PDT)
-Date: Wed, 25 Mar 2026 12:37:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [RFC PATCH v1 02/17] vmstate: Remove vmstate_use_marker_field
-Message-ID: <acQPOrC5YA89kr1P@x1.local>
-References: <20260324194333.30004-1-farosas@suse.de>
- <20260324194333.30004-3-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <lawrence.hunter@codethink.co.uk>)
+ id 1w5RH1-0003Ni-9F
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:40:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
+ Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:
+ Reply-To; bh=3rIH4W0DPUEYdLNMSMbUre7ZSuzB7pOdYtVMvUaVvZY=; b=sCVRudSXRuf21B4B
+ 13P5C7vrIrz4pXFmnXleTJ8K1jrDYvjREUKjB8VvbubzU2YkH2KvNRt4dEYxOorZo8diDBCHLghCR
+ VgkZmSMwJ1eHqSwXRzGqvznUJalKNneeaj+3+EG04mhfVtB2O7c6aKO1In8/Iauo6I6//ukV4QQA7
+ LYxCH3qOmuQStl/KCUPNytiiugfMYlpzSxEPFHAOpf1zy8Imo8hBjXRcyFkMRb8V0opEBIj5+Wj3t
+ a1VB9vOGKuaRiAirX8THspSD3GVcXOP035BMmNpHI5KSLPOmmWxCTEnVyo6jBfcZJGJmpMM8IC69l
+ Cud4/uGWm9oezlGdMQ==;
+Received: from ipa12.colo.codethink.co.uk ([78.40.148.178]
+ helo=webmail.codethink.co.uk)
+ by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
+ id 1w5PZx-009AA6-Ip; Wed, 25 Mar 2026 14:51:29 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260324194333.30004-3-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Date: Wed, 25 Mar 2026 14:51:29 +0000
+From: Lawrence Hunter <lawrence.hunter@codethink.co.uk>
+To: Andreas Schwab <schwab@suse.de>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Generic way to detect qemu linux-user emulation
+In-Reply-To: <mvm1puuiqvu.fsf@suse.de>
+References: <mvm1puuiqvu.fsf@suse.de>
+Message-ID: <903bec01a83b0c5580cd513ab85b0552@codethink.co.uk>
+X-Sender: lawrence.hunter@codethink.co.uk
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=78.40.148.171;
+ envelope-from=lawrence.hunter@codethink.co.uk; helo=imap5.colo.codethink.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,124 +70,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 24, 2026 at 04:43:17PM -0300, Fabiano Rosas wrote:
-> Bring back is_null, but set use_marker_field based on it. This makes
-> it clear that the compression logic is only because of the null
-> marker. When the marker is not null, it doesn't make sense to
-> compress.
+Hello,
 
-Yeah I see where this came from, I agree the is_null case is at least
-harder to follow now when without that variable being around.
+I don't have anything to offer around cython but I am also noticing this 
+posix_spawn issue with systemd >= tag v255 running inside a cross-arch 
+container. systemd specifically is fine under full QEMU or on an ARM64 
+host but when ran cross and therefore through qemu-user I see systemd 
+failing to fork off any processes i.e. immediately after posix_spawn the 
+child process is dying with SIGCHLD.
 
-I'll squash this into my commit for now, maybe I'll still try to keep the
-comments somewhere.
+```
+[  OK  ] Reached target rpcbind.target.
+Wed 2026-03-25 14:08:10 UTC src/core/service.c:1627: rpcbind.service: 
+Will spawn child (service_enter_start): /usr/sbin/rpcbind
+Wed 2026-03-25 14:08:10 UTC src/core/service.c:1658: rpcbind.service: 
+Passing 3 fds to service
+Wed 2026-03-25 14:08:11 UTC src/core/execute.c:345: rpcbind.service: 
+About to execute: /usr/sbin/rpcbind "\$RPCBIND_OPTIONS" -w -f
+Wed 2026-03-25 14:08:11 UTC src/core/execute.c:472: rpcbind.service: 
+Forked /usr/sbin/rpcbind as 37
+Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 40 
+(socket:[1181504])
+Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 39 
+(socket:[1181503])
+Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 38 
+(socket:[1181501])
+Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 41 
+(socket:[1193529])
+Wed 2026-03-25 14:08:11 UTC src/core/service.c:1269: rpcbind.service: 
+Changed dead -> start
+          Starting rpcbind.service...
+Wed 2026-03-25 14:08:11 UTC src/basic/log.c:1456: Received SIGCHLD from 
+PID 37 (11).
+Wed 2026-03-25 14:08:11 UTC src/core/manager.c:2804: Child 37 (11) died 
+(code=exited, status=1/FAILURE)
+Wed 2026-03-25 14:08:11 UTC src/core/manager.c:2769: init.scope: Child 
+37 belongs to init.scope.
+Wed 2026-03-25 14:08:11 UTC src/core/manager.c:2769: rpcbind.service: 
+Child 37 belongs to rpcbind.service.
+Wed 2026-03-25 14:08:11 UTC src/core/unit.c:6066: rpcbind.service: Main 
+process exited, code=exited, status=1/FAILURE
+Wed 2026-03-25 14:08:11 UTC src/core/unit.c:6024: rpcbind.service: 
+Failed with result 'exit-code'.
+Wed 2026-03-25 14:08:11 UTC src/core/service.c:1980: rpcbind.service: 
+Service will not restart (restart setting)
+Wed 2026-03-25 14:08:11 UTC src/core/service.c:1269: rpcbind.service: 
+Changed start -> failed
+Wed 2026-03-25 14:08:11 UTC src/core/job.c:997: rpcbind.service: Job 91 
+rpcbind.service/start finished, result=failed
+[FAILED] Failed to start rpcbind.service.
+See 'systemctl status rpcbind.service' for details.
+```
 
-Then I'll also hope we can remove the whole JSON blob very soon.  Do you
-plan to look into the "vmsd walker rewrite analyze-migration script" plan a
-bit?  Let me know if you want me to try; it'll not happen immediately, but
-after seeing this I'm more eager to try removing those..
+I have narrowed it down to 
+https://github.com/systemd/systemd/commit/bb5232b6a3b8af075ee06cc87416e5f49a6170d3 
+as being the change which breaks qemu-user mode with a bisect, and the 
+key bit seems to be around 
+https://github.com/systemd/systemd/blob/7e37e01768e2f223750ead2c9e08b4490243b8d1/src/basic/process-util.c#L2110 
+other fixes I found online around credentials or protect/restrictions do 
+not seem to make a difference.
 
-When those are ready, we should be able to remove is_null again.
+This can be reproduced by:
+```
+docker run --privileged --platform linux/arm64 -it fedora:40 /bin/bash
+$ dnf install -y systemd
+$ exec /sbin/init
+```
 
+Any help around this issue would be greatly helpful too.
+
+Best,
+Lawrence
+
+On 2025-03-18 10:18, Andreas Schwab wrote:
+> Is there a generic way for a program to detect that is it being run
+> inside the linux-user emulation?
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/vmstate.c | 36 ++++++++++--------------------------
->  1 file changed, 10 insertions(+), 26 deletions(-)
+> The purpose for that would be to work around limitations of the
+> emulation, like CLONE_VFORK being unsupported.  For example, python >=
+> 3.13 needs to avoid using posix_spawn in that case, because the
+> emulation of CLONE_VFORK as a true fork makes it impossible for it to
+> report errors back to the parent process.
 > 
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 7d7d9c7e18..7edfa3d990 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -240,22 +240,6 @@ static bool vmstate_post_load(const VMStateDescription *vmsd,
->      return true;
->  }
->  
-> -
-> -/*
-> - * If we will use a ptr marker in the stream for a field?  Two use cases:
-> - *
-> - * (1) When used with VMS_ARRAY_OF_POINTER_ALLOW_NULL, it must always be
-> - *     present to imply the population status of the pointer.
-> - *
-> - * (2) When used with normal VMSD array fields, only emit a null ptr marker
-> - *     if the pointer is NULL.
-> - */
-> -static inline bool
-> -vmstate_use_marker_field(void *ptr, int size, bool dynamic_array)
-> -{
-> -    return (!ptr && size) || dynamic_array;
-> -}
-> -
->  bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
->                         void *opaque, int version_id, Error **errp)
->  {
-> @@ -318,8 +302,8 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
->                      curr_elem = *(void **)curr_elem_p;
->                  }
->  
-> -                use_marker_field = vmstate_use_marker_field(curr_elem, size,
-> -                                                            use_dynamic_array);
-> +                use_marker_field = use_dynamic_array || (!curr_elem && size);
-> +
->                  if (use_marker_field) {
->                      /* Read the marker instead of VMSD first */
->                      if (!vmstate_ptr_marker_load(f, &load_field, errp)) {
-> @@ -634,7 +618,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->              int i, n_elems = vmstate_n_elems(opaque, field);
->              int size = vmstate_size(opaque, field);
->              JSONWriter *vmdesc_loop = vmdesc;
-> -            bool use_marker_field_prev = false;
-> +            bool is_null_prev = false;
->              /*
->               * When this is enabled, it means we will always push a ptr
->               * marker first for each element saying if it's populated.
-> @@ -651,7 +635,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->              for (i = 0; i < n_elems; i++) {
->                  void *curr_elem = first_elem + size * i;
->                  const VMStateField *inner_field;
-> -                bool use_marker_field;
-> +                bool use_marker_field, is_null;
->                  int max_elems = n_elems - i;
->  
->                  if (field->flags & VMS_ARRAY_OF_POINTER) {
-> @@ -659,8 +643,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->                      curr_elem = *(void **)curr_elem;
->                  }
->  
-> -                use_marker_field = vmstate_use_marker_field(curr_elem, size,
-> -                                                            use_dynamic_array);
-> +                is_null = (!curr_elem && size);
-> +                use_marker_field = use_dynamic_array || is_null;
->  
->                  if (use_marker_field) {
->                      inner_field = vmsd_create_ptr_marker_field(field);
-> @@ -681,16 +665,16 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->                   */
->                  if (vmdesc && vmsd_can_compress(field) &&
->                      (field->flags & VMS_ARRAY_OF_POINTER) &&
-> -                    use_marker_field != use_marker_field_prev) {
-> +                    is_null != is_null_prev) {
->  
-> -                    use_marker_field_prev = use_marker_field;
-> +                    is_null_prev = is_null;
->                      vmdesc_loop = vmdesc;
->  
->                      for (int j = i + 1; j < n_elems; j++) {
->                          void *elem = *(void **)(first_elem + size * j);
-> -                        bool elem_use_marker_field = !elem && size;
-> +                        bool elem_is_null = !elem && size;
->  
-> -                        if (use_marker_field != elem_use_marker_field) {
-> +                        if (is_null != elem_is_null) {
->                              max_elems = j - i;
->                              break;
->                          }
-> -- 
-> 2.51.0
-> 
-
--- 
-Peter Xu
-
+> --
+> Andreas Schwab, SUSE Labs, schwab@suse.de
+> GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA 
+> B9D7
+> "And now for something completely different."
 
