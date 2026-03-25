@@ -4,103 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AD9109C059
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 19:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF69F109C057
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 19:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Tuh-0005cA-42; Wed, 25 Mar 2026 15:29:11 -0400
+	id 1w5TxK-0006ip-Ol; Wed, 25 Mar 2026 15:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5Tuf-0005c0-RX
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 15:29:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w5TxJ-0006iY-Hq; Wed, 25 Mar 2026 15:31:53 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5Tud-0007Si-M8
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 15:29:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774466945;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YIIjpGIYHMcim7ckn3rjNpqIdyIStyEpF768RxPkmuc=;
- b=CjHPMW71aQnmEFBcSXTmt2uQ+7Oo0EJmtiApmWEhuCK6UcG4vmbXciM51WSezOkrhHBQ3h
- VTSRnWKTOr1ZU+r5BqshsHXKrW1ga7XkoucujIk9cQdQDsjCHcAw87COrw/aetgtekUzfd
- WD9RPJsU92XdjoWjjyFrhPGXP0jMaQ0=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-sICz0jR0NRysifkkcyMR3A-1; Wed, 25 Mar 2026 15:29:04 -0400
-X-MC-Unique: sICz0jR0NRysifkkcyMR3A-1
-X-Mimecast-MFC-AGG-ID: sICz0jR0NRysifkkcyMR3A_1774466943
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-50b52a2d70cso8534221cf.3
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 12:29:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774466943; x=1775071743; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=YIIjpGIYHMcim7ckn3rjNpqIdyIStyEpF768RxPkmuc=;
- b=sv3FgqjNy1/dxkvErnj9wdws5vGnnOKdzAeXQw5dDaUDYBHxyt0gnGWIPf8MRkgrs7
- ab8qRsClW6CmNinBMjhHE9t+8ZbV3kH/rt6x54yjOcOI6AB8cS5t4pc/Uv12APTUGkoE
- 36ItSn28TT3LmDO64AL1DfgRaY3sva+5Am+LViOVDJAiNG+wwa2lxLN+Spgf0jTaj5/Q
- vsltRXzxmV8iYCSkEy4LAmKTp407hvkPYCJ9sXbSnqORHR8XaVKtUdFyNCXEeikJZ5GP
- H0hhUSiGihaNXR8YnF1zG0zuNKNaNy1xGDzyoBF90b5HbojFttqxGK+SZ4n1/slkElNY
- TgXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774466943; x=1775071743;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YIIjpGIYHMcim7ckn3rjNpqIdyIStyEpF768RxPkmuc=;
- b=ZKFc5YrmxK+TVIMYMF0gBVur0EjoGt4YpddUmriT/wV5V63PzQNIYZfhJ/8Xg0T9sn
- l7We3DdPlfMuR4Zi6nHp1WxXkaZXrQQoxrmMqpHbFfRhmxL3q6ziB/IyvBotmXzI4frF
- +142xi2nzQtqb74D8y2thCdW6u8CqFsdOjxrl3hlYVv3huyzi7h/eRp4UwpvaxKCBtrX
- +RxiTdshebwKosoYJJXH96tDdsQKzxu+NlJtu/U04kRyJBq+VGdubbP6Pkc4SMJ8Pzod
- yFE1/u+N8DeaqEoZo5WQ9c87Yp+OIVNLkFvuiy5Q3ZlSTqaTzSfN8lJTPoYiBtL0s+az
- stJQ==
-X-Gm-Message-State: AOJu0YxvzfNAStpw0tIvHmfRQb5Vc++NbW/xXmoe0s3vyVqsKY1912OY
- cLjf94eoApTRR5R54CcILaBLKNj6KTfbPm6bHjht7PARiUzhZ8goay7YxSl9ajCqua3OsGTaF8X
- cPHBX3BLT5XqAHfoAxy+73aCkfxjcEMNttkWC7qMwy6JOG4vO93zxdraP
-X-Gm-Gg: ATEYQzxUxAOicjVZ0MNxvqCQw03b7raZF/ZehT5NZc5LbfbwdugFo/BZ87HUfSxweDe
- Tk8xqqGum4z05c9EEu7+lXTVBseKl4vA7ibRfi2jLQA/G6JxnAPELfQG8QPUQVTGUlowz3UCkzy
- iY/vafhpWhnCUhLLyPsb2sipURK/x1Smry6Ealmz0R4W61LG9+JIwoMHGqwc6BTix3tv42dbPDm
- nUfaPYmz+FVA5HTRCQ4gpG+KktGQbwGwcEi8Q3VlCh2ip1wc/s1iEUpByLrIYufd4Y9nfHJRwhO
- EyUaXbTk6Ulb5MuEzQj828bOQhKovDlFa5Sfvzk3TLshrSsPDUcb3PJVniSUTb9LYaCk0EmSTGZ
- HCdy5JNGBG6KxeQ==
-X-Received: by 2002:a05:622a:5c17:b0:50b:5024:9091 with SMTP id
- d75a77b69052e-50b80eb20d8mr69019351cf.68.1774466943228; 
- Wed, 25 Mar 2026 12:29:03 -0700 (PDT)
-X-Received: by 2002:a05:622a:5c17:b0:50b:5024:9091 with SMTP id
- d75a77b69052e-50b80eb20d8mr69018891cf.68.1774466942600; 
- Wed, 25 Mar 2026 12:29:02 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50b9214a72asm6277311cf.8.2026.03.25.12.29.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 12:29:02 -0700 (PDT)
-Date: Wed, 25 Mar 2026 15:29:01 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [RFC PATCH v1 13/17] vmstate: Drop VMS_ARRAY_OF_POINTER_AUTO_ALLOC
-Message-ID: <acQ3fae3pdLagfwV@x1.local>
-References: <20260324194333.30004-1-farosas@suse.de>
- <20260324194333.30004-14-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w5TxH-0001Ko-UR; Wed, 25 Mar 2026 15:31:53 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62PDwp5I1479684; Wed, 25 Mar 2026 19:31:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=TD4dH3
+ 7L7akavWJ1r7yKmGTebYljhEwS99oZC5qxLIs=; b=Kvm8C1J9GS6OQvGfBa+q8L
+ e3ZqDN5RF39sQ3w/EjONFDbSHovlo41qu3x/Y65djwHwe7mInZ0Atrxvd0YIfQ8t
+ Xg4dSzAzqe0u+lgl3hH7auOMoNV9U17DBDnnmD8R/Cwso7/t2MJb/q3tmSoQSRZ5
+ Ps+w+xt/F8EKCuzdHbqwgOQVU6IbtpNBzLGWZu1S8bNA/sVAH+/jEleJeTVUCFYV
+ eQEzCsqDW3mXtDmDcsZB4nAmOeM8pxQEaNF+VP3VBtcgq/Ok9kDZRYg/HvzXRmxL
+ oa4Zb4by2z9Pdp/+ZYMNcVB97nqft8yJectnyQLyjc+WjUBgajkVnfAbqg2iE07w
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kxqj5sq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Mar 2026 19:31:44 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62PFjeAR008745;
+ Wed, 25 Mar 2026 19:31:43 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d26nnr0bf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Mar 2026 19:31:43 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62PJVgrr26280676
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Mar 2026 19:31:42 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 217B358043;
+ Wed, 25 Mar 2026 19:31:42 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3E7F35805D;
+ Wed, 25 Mar 2026 19:31:41 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Mar 2026 19:31:41 +0000 (GMT)
+Message-ID: <c6830a19-c275-4a83-bb17-4430680b3d54@linux.ibm.com>
+Date: Wed, 25 Mar 2026 15:31:40 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260324194333.30004-14-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] docs/specs/tpm: document PPI support on ARM64 virt
+To: Mohammadfaiz Bawa <mbawa@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260324-tpm-tis-sysbus-ppi-v1-0-e59175210954@redhat.com>
+ <20260324-tpm-tis-sysbus-ppi-v1-1-e59175210954@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260324-tpm-tis-sysbus-ppi-v1-1-e59175210954@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: 47YVcLOGHnp2JyQq7Vcf4FatECr5q9rG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI1MDE0MSBTYWx0ZWRfXwweyqTsYRf3f
+ RSLAeyVuxpmmHACdjZhFK6LifU4xDy2h3bGHI1MPKPs3LnRRTtkoMHKmUN07Ynkt74cfCNMB+JF
+ yVWYf25VXCNmwSMXrPBb29YPLduS5EYxqF1ZKzCQoahbfAki6lK/WXxwTHFH1sGUYm8zt9C50oz
+ 18/yJZzkVeQHaeP+S/6ph0EkDBoaXj+b85HuGdhAwAhOgyldKX0zTz9rv6w5rAbI8D3y7uHBycW
+ 4JHmmRPE/NDipWX2Gfw2aYqIwkRv2gNpXO3tSAe3cxOF/yyiAwszErDFiMBYuut1qMIS+invcdU
+ VPPWvYnHOylBMusQ5XMH9i27tt8dadr6AGTxtzmrfeND5MR5w9ugPceGdix+yrCE/s7pisTh3qT
+ IevU3JqzjoS5RfFCFS/DvXWbPf2HIQyvfPfDuWCBgdhkiSgVNQWunVk9LGmVsW60Qm1r5uD6FEv
+ yHjrV42CRKUXPqRbQog==
+X-Authority-Analysis: v=2.4 cv=bLEb4f+Z c=1 sm=1 tr=0 ts=69c43820 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=EK3RDUQIZtOXZSihsbcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: gt-jLwj4XFiEjvuKpUmq7fsX2mrlfF2c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-25_05,2026-03-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 clxscore=1011 phishscore=0 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603250141
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,24 +128,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 24, 2026 at 04:43:28PM -0300, Fabiano Rosas wrote:
-> The semantics of the VMS_ARRAY_OF_POINTER_AUTO_ALLOC of allocating
-> memory dynamically for an array of pointers could be thought to be the
-> same as the currently non-existent combination of VMS_ARRAY_OF_POINTER
-> | VMS_ALLOC. The code is now able to handle such invalid combination,
-> so drop the new flag and enable the VMS_ARRAY_OF_POINTER | VMS_ALLOC
-> combo.
 
-I was intentionally leaving VMS_ALLOC only for the top layer vmsd field,
-but then.. I think you're right, there's no way the driver code can offload
-the allocation of top layer vmsd field, while without offloading together
-the pointer allocations inside the array altogether when it's
-VMS_ARRAY_OF_POINTERS.
 
-Let me see how I can incorporate this change, unless extremely awkward to
-rearrange, otherwise I'll make it not introduce this flag when repost.
+On 3/24/26 3:10 AM, Mohammadfaiz Bawa wrote:
+> Document that tpm-tis-device on the ARM virt machine supports PPI
+> with dynamically allocated MMIO via the platform bus, unlike x86
+> where PPI is at the fixed address 0xFED45000.
+> 
+> Also add hw/arm/virt-acpi-build.c and hw/acpi/tpm.c to the list
+> of files related to TPM ACPI tables.
+> 
+> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+> ---
+>   docs/specs/tpm.rst | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
+> 
+> diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
+> index b630a351b4f77a8d2512f22446d00a4d674c7777..63cc0b68cd79d64138d4dd05ae158430c6a74643 100644
+> --- a/docs/specs/tpm.rst
+> +++ b/docs/specs/tpm.rst
+> @@ -187,8 +187,30 @@ The location of the table is given by the fw_cfg ``tpmppi_address``
+>   field.  The PPI memory region size is 0x400 (``TPM_PPI_ADDR_SIZE``) to
+>   leave enough room for future updates.
+> 
+> +PPI on ARM64 virt
+> +-----------------
+> +
+> +The ARM virt machine supports PPI for ``tpm-tis-device`` as defined
+> +in the `PPI specification`_.
+> +
+> +Unlike the x86 TIS device where the PPI memory region is mapped at
+> +the fixed address ``0xFED45000`` (within the TIS MMIO range), the
+> +ARM64 sysbus device registers PPI memory as a second MMIO region
+> +on the platform bus. The platform bus assigns the guest physical
+> +address dynamically at device plug time. The ACPI ``_DSM`` method
+> +and PPI operation regions reference this dynamically resolved
+> +address.
+> +
+> +PPI is enabled by default and can be controlled with the ``ppi``
+> +property (e.g. ``-device tpm-tis-device,tpmdev=tpm0,ppi=on``).
+> +Without PPI support, guest operating systems such as Windows 11
+> +ARM64 will log errors when attempting to query TPM Physical
+> +Presence capabilities via the ACPI ``_DSM`` method.
 
--- 
-Peter Xu
+I remember having played around with TPM for QEMU on ARM64 (Raspberry 
+5(?)) a while ago and had the impression that there was something 
+related to caching that prevented the MMIO interface from working 
+correctly and Peter may have confirmed this back then on IRC .. I am not 
+sure what exactly it was that didn't work correctly when run natively on 
+ARM hardware. It worked well when run in CPU emulation on x86_64 for 
+example. So I am wondering whether there is a minimum requirement for an 
+ARM CPU or ARM CPU features related to caching that someone needs to 
+know about to be able to use TPM TIS successfully? If so, it would 
+probably be good to mention it here as well. If you know.
+
+Otherwise this looks good to me.
+
+> +
+>   QEMU files related to TPM ACPI tables:
+>    - ``hw/i386/acpi-build.c``
+> + - ``hw/arm/virt-acpi-build.c``
+> + - ``hw/acpi/tpm.c``
+>    - ``include/hw/acpi/tpm.h``
+> 
+>   TPM backend devices
+> 
+
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 
 
