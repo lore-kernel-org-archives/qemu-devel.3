@@ -4,57 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B4A109C03D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3485A109C041
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5RH6-0003c9-CP; Wed, 25 Mar 2026 12:40:08 -0400
+	id 1w5RKG-0004Hu-Bs; Wed, 25 Mar 2026 12:43:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lawrence.hunter@codethink.co.uk>)
- id 1w5RH3-0003aW-A8
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:40:05 -0400
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lawrence.hunter@codethink.co.uk>)
- id 1w5RH1-0003Ni-9F
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:40:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:
- Reply-To; bh=3rIH4W0DPUEYdLNMSMbUre7ZSuzB7pOdYtVMvUaVvZY=; b=sCVRudSXRuf21B4B
- 13P5C7vrIrz4pXFmnXleTJ8K1jrDYvjREUKjB8VvbubzU2YkH2KvNRt4dEYxOorZo8diDBCHLghCR
- VgkZmSMwJ1eHqSwXRzGqvznUJalKNneeaj+3+EG04mhfVtB2O7c6aKO1In8/Iauo6I6//ukV4QQA7
- LYxCH3qOmuQStl/KCUPNytiiugfMYlpzSxEPFHAOpf1zy8Imo8hBjXRcyFkMRb8V0opEBIj5+Wj3t
- a1VB9vOGKuaRiAirX8THspSD3GVcXOP035BMmNpHI5KSLPOmmWxCTEnVyo6jBfcZJGJmpMM8IC69l
- Cud4/uGWm9oezlGdMQ==;
-Received: from ipa12.colo.codethink.co.uk ([78.40.148.178]
- helo=webmail.codethink.co.uk)
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1w5PZx-009AA6-Ip; Wed, 25 Mar 2026 14:51:29 +0000
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5RKE-0004Hf-QM
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:43:22 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5RKD-0004HB-D0
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:43:22 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-649278a69c5so64462d50.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:43:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774457000; cv=none;
+ d=google.com; s=arc-20240605;
+ b=l3G2Pka2I+1ONj1o+RIri/w190SpRe+QZoRJ/Qz843kTlNLL0rlE3gLQiArF149y6s
+ ao6ZjOlfgKR3mToDjZPlTkSwPqou97QKaht1zsYek1EHMThBVJa/Ly2VwpB/S/XmSVYf
+ JmgotVM9GCqytOHvnDmS5LosbEnBaUTWnQ2tvUHpiBtZ5I5epKqbM4NgWf6+FldufhF6
+ 3IuzLHboHnKLR2ChN1pue2FW3gi+oaAIz9fH2/1dVb9ysl81/hXmqO9EgwLMkc0ivu0o
+ gS8QHTkb8kBQenEOdqxBh+DEeNxVldtdWenhI3owuJFxWSDMK8W70q82YGqjl63ze4Pr
+ EqrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=0bKgSG7hFOw6SE9DlRcmlaBQSYt+zNrknLETjspTdTo=;
+ fh=wTscW5iO7m35uSTIYQ3pZxPOxQqDb9ynmDWdK3BLrZs=;
+ b=AblCGbodh6ilIvMbZbLoiNBCj4wDeXI2RQg7LdzC+UwGI3UOpibQbYH2Ar3gy/dIpS
+ 6LyIIDRmMBpjQZhACsE1XwC0YW+jYxQmNrG7cLc6r7z8Z7dqviFUUjxuYRvbV5IVSq2c
+ kLDp4q62z3G8xwoiRExILaLoypYRnMumqYZmt5mQYktUYSk5YODTLnFFKsZtGCAW1D64
+ QStTJYggF+pjlyaiGnQV0lRHtUp/uXgDKZClN3htuvhYpzDzDhwMt3NM0ugDXVoIG3Oy
+ fCCxWk29kM0qLrDPDCZFdbsvr5jnsj8Mvg6xaq3QKqkUJIWCb/xUeL4LdOdutpB/GOq/
+ emmg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774457000; x=1775061800; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0bKgSG7hFOw6SE9DlRcmlaBQSYt+zNrknLETjspTdTo=;
+ b=jGwxy2Gtnr2XyvrxZNwrHfUvQvGBPy5CTkLoUGXPGlIvwBZkpMhaWOvOm4BUViUeSo
+ znyT7sI46nXBwLb13ixvth0cIruPDu0o5L9aeV9ECBQSAKd0gy6FwlSOW2g2OQse382M
+ +ErCBZi3iJ33YpAQFdofOvMQ4ssWvoPZbDBknBJzfMSd9Ye2dq0ffLldCsU0BzcoMyJ9
+ EnTD4hiHx4HvfM+s6mrQ6PxOUU6CTHRLpg6ytohURxmLjb91VCdEiqO3FiwjP8om0XMr
+ +Ge8Yt5875ElAzEeuJC47zH9UoLQzLrGf8+VwgEG2caXbutBH3mWls0TGIBa2JMHzScT
+ 0VzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774457000; x=1775061800;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0bKgSG7hFOw6SE9DlRcmlaBQSYt+zNrknLETjspTdTo=;
+ b=QpVD02bIgYK8j0jHh/feqQUHBG+JdegABzA5XvliRZD+OEnS8hAkVidV+s2yMBTz14
+ YlGrv3JzzVRq4GMc6pIvbzZQTzXom+crCivCR0SAtxvCzHtql9KF1Sm7WfoglVnJzyYV
+ 7yE8QG4BDNzCP9tf6fKX9As37DDFLEDMslQZyVlLKHQwHC03CUWrKiYnwax2dawXq9uo
+ h+9jDt42tBSQ1aUBShCpt1B4OO+cn3yoYvX1KXZ7AIcu2R4hmZ9APimWhlYSsCbngsIg
+ zL5madhXMhj481UVVX8fq+2zGWZtxKfR7VFxKJYFroQPJS1t4jWCEVtZbTtQUppLIoIm
+ zwiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBaKEN6Li6r+pfz6ZoWOCKYTiUoauJt6zKyOGDqZsKWLwogRNktvDPUU5apv2D3MoG+EZ1ljBmupka@nongnu.org
+X-Gm-Message-State: AOJu0Ywh7xX1nMGOxNJpTFELBI1ScsYh2+eIztBN/Al6k0SVzjNjnnHo
+ Jl60QLYROfNgWg180/dAGzswFl5v+p9bHuL+DgGK4vCXTwPcNP6GE3GIQypNhhKQhLP5+ahNoP6
+ ggQuyqyJLCSXlO2yVti9LDMBNnC8CzZs0dtztSlmE1g==
+X-Gm-Gg: ATEYQzyp7kAnYNCC5KLPFeRapmDGaTpLnj1Zlr7ybUlAaOxq7jsfSxX4qQ95p6lqkcg
+ WVwlAER2+nsBlB0U/kfZX2EY02zGQQgHl/XAviT7kNrcQf4qnbkOfVSB3R+na1y48d0gNA/tw7Q
+ VZ6Ljl9gy0+Ou5XGLXgY+EQ1Xoe0YG8RDlVkgpuwwuVkbqMaEcrY0YVjFzQmhVj4kSU+8mAgi+d
+ 8bTvKp3sT9mM3zk6T52EOuwZByJiZ+8pwr2qBEShymVV4CyaSBUFlbd+blMTExAY8LgSqD/NDlY
+ EUXxFenzTHw2ounXh6gwtHuwBxLgNBngOvfom2qdveJSlO1Df2czafdqmA/pLRYYSsM=
+X-Received: by 2002:a05:690e:4004:b0:64e:b826:de08 with SMTP id
+ 956f58d0204a3-64ee606d9c2mr3973014d50.11.1774456999645; Wed, 25 Mar 2026
+ 09:43:19 -0700 (PDT)
 MIME-Version: 1.0
-Date: Wed, 25 Mar 2026 14:51:29 +0000
-From: Lawrence Hunter <lawrence.hunter@codethink.co.uk>
-To: Andreas Schwab <schwab@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: Generic way to detect qemu linux-user emulation
-In-Reply-To: <mvm1puuiqvu.fsf@suse.de>
-References: <mvm1puuiqvu.fsf@suse.de>
-Message-ID: <903bec01a83b0c5580cd513ab85b0552@codethink.co.uk>
-X-Sender: lawrence.hunter@codethink.co.uk
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=lawrence.hunter@codethink.co.uk; helo=imap5.colo.codethink.co.uk
+References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
+ <ef2a0d92-c7f6-438b-a15a-2712e1c4373a@linaro.org>
+ <CAFEAcA-kk29mjGWLrAGjd9AiAW64v0TvWdedZypSH0i43WgQzw@mail.gmail.com>
+ <39b64118-7faa-4308-a603-d568cc78de47@linaro.org>
+ <878qbg410i.fsf@draig.linaro.org>
+ <f81e71f3-fe15-459a-9c27-2aea1592d155@linaro.org>
+In-Reply-To: <f81e71f3-fe15-459a-9c27-2aea1592d155@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 25 Mar 2026 16:43:08 +0000
+X-Gm-Features: AQROBzDLIP9iP_cqneYvqQdZXKkV8VJ4JKZxpSWhv6kj6UcpyB0YzmS7GfEZwUY
+Message-ID: <CAFEAcA_HLgphjGev_+HG_1KQChEZJKk3+9qP7_q79doG1EWD3Q@mail.gmail.com>
+Subject: Re: Cleaning up contrib/ and tools/
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,91 +127,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Wed, 25 Mar 2026 at 15:17, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 3/25/26 4:11 AM, Alex Benn=C3=A9e wrote:
+> > The aim have having these more complete plugins in the source tree was
+> > to ensure they where updated as APIs change as well as provide useful
+> > tools compared to the more toy like implementations we use for
+> > check-tcg.
+> >
+> > I'm not sure about having them directly in the plugins folder as their
+> > implementation is meant to be separated from the core QEMU code itself.
+> > Maybe tools/plugins?
+>
+> Fine for me.
+> Peter, is that ok for you too?
 
-I don't have anything to offer around cython but I am also noticing this 
-posix_spawn issue with systemd >= tag v255 running inside a cross-arch 
-container. systemd specifically is fine under full QEMU or on an ARM64 
-host but when ran cross and therefore through qemu-user I see systemd 
-failing to fork off any processes i.e. immediately after posix_spawn the 
-child process is dying with SIGCHLD.
+It doesn't really fit with "tools/ is where we put the things
+which --enable-tools causes us to build and which we document
+in docs/tools". The plugins are neither of those. That's why
+I thought some subdirectory of plugins/ would fit better.
 
-```
-[  OK  ] Reached target rpcbind.target.
-Wed 2026-03-25 14:08:10 UTC src/core/service.c:1627: rpcbind.service: 
-Will spawn child (service_enter_start): /usr/sbin/rpcbind
-Wed 2026-03-25 14:08:10 UTC src/core/service.c:1658: rpcbind.service: 
-Passing 3 fds to service
-Wed 2026-03-25 14:08:11 UTC src/core/execute.c:345: rpcbind.service: 
-About to execute: /usr/sbin/rpcbind "\$RPCBIND_OPTIONS" -w -f
-Wed 2026-03-25 14:08:11 UTC src/core/execute.c:472: rpcbind.service: 
-Forked /usr/sbin/rpcbind as 37
-Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 40 
-(socket:[1181504])
-Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 39 
-(socket:[1181503])
-Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 38 
-(socket:[1181501])
-Wed 2026-03-25 14:08:11 UTC src/shared/fdset.c:71: Closing set fd 41 
-(socket:[1193529])
-Wed 2026-03-25 14:08:11 UTC src/core/service.c:1269: rpcbind.service: 
-Changed dead -> start
-          Starting rpcbind.service...
-Wed 2026-03-25 14:08:11 UTC src/basic/log.c:1456: Received SIGCHLD from 
-PID 37 (11).
-Wed 2026-03-25 14:08:11 UTC src/core/manager.c:2804: Child 37 (11) died 
-(code=exited, status=1/FAILURE)
-Wed 2026-03-25 14:08:11 UTC src/core/manager.c:2769: init.scope: Child 
-37 belongs to init.scope.
-Wed 2026-03-25 14:08:11 UTC src/core/manager.c:2769: rpcbind.service: 
-Child 37 belongs to rpcbind.service.
-Wed 2026-03-25 14:08:11 UTC src/core/unit.c:6066: rpcbind.service: Main 
-process exited, code=exited, status=1/FAILURE
-Wed 2026-03-25 14:08:11 UTC src/core/unit.c:6024: rpcbind.service: 
-Failed with result 'exit-code'.
-Wed 2026-03-25 14:08:11 UTC src/core/service.c:1980: rpcbind.service: 
-Service will not restart (restart setting)
-Wed 2026-03-25 14:08:11 UTC src/core/service.c:1269: rpcbind.service: 
-Changed start -> failed
-Wed 2026-03-25 14:08:11 UTC src/core/job.c:997: rpcbind.service: Job 91 
-rpcbind.service/start finished, result=failed
-[FAILED] Failed to start rpcbind.service.
-See 'systemctl status rpcbind.service' for details.
-```
-
-I have narrowed it down to 
-https://github.com/systemd/systemd/commit/bb5232b6a3b8af075ee06cc87416e5f49a6170d3 
-as being the change which breaks qemu-user mode with a bisect, and the 
-key bit seems to be around 
-https://github.com/systemd/systemd/blob/7e37e01768e2f223750ead2c9e08b4490243b8d1/src/basic/process-util.c#L2110 
-other fixes I found online around credentials or protect/restrictions do 
-not seem to make a difference.
-
-This can be reproduced by:
-```
-docker run --privileged --platform linux/arm64 -it fedora:40 /bin/bash
-$ dnf install -y systemd
-$ exec /sbin/init
-```
-
-Any help around this issue would be greatly helpful too.
-
-Best,
-Lawrence
-
-On 2025-03-18 10:18, Andreas Schwab wrote:
-> Is there a generic way for a program to detect that is it being run
-> inside the linux-user emulation?
-> 
-> The purpose for that would be to work around limitations of the
-> emulation, like CLONE_VFORK being unsupported.  For example, python >=
-> 3.13 needs to avoid using posix_spawn in that case, because the
-> emulation of CLONE_VFORK as a true fork makes it impossible for it to
-> report errors back to the parent process.
-> 
-> --
-> Andreas Schwab, SUSE Labs, schwab@suse.de
-> GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA 
-> B9D7
-> "And now for something completely different."
+-- PMM
 
