@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9AA109C029
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 15:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8412D109C028
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 15:19:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5PzM-0004aE-Nu; Wed, 25 Mar 2026 11:17:44 -0400
+	id 1w5Q0X-0007UP-KE; Wed, 25 Mar 2026 11:18:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5PzK-0004Xo-IL
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:17:42 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5Q0U-0007O0-PY
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:18:56 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5PzI-0007ps-Vp
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:17:42 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4852afd42ceso19662095e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 08:17:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5Q0Q-0001cs-Mb
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 11:18:53 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-48702d51cd0so53581715e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 08:18:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774451859; x=1775056659; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hy+9vnQWvKgE9rUbjn7FvRJO+e6ousybrt19G3s47M0=;
- b=LDAQme2VOHwjgebU1CL+uUAQie8G7/E14yoKWgYYb8pAXK8FQ/lBEryvWwTiEmEn9+
- donmSHqQgbSpr0HxVfSZKz7UHU9tmSR9mnVhlLw5Rds9O8EgFwSb1qhzGOJc8NDSXfFr
- H6wu+7froYJTnc4q+HJvfZBavc/kfGAj1CY4p3vVKX9iK6Kt4G4vaVREZCxOzLqtQJWW
- kxDQ/EN1NUmnmudW3/UnCHd6GVbilo9ijAyZaFt27sDTcd5YQLeYv7uXTeoUnsrsk406
- Z60szEM0LG2iRDTG561uKXbQQqoBmuYfbapMfEIikSMAprNcFiW9HA3QCFn2qCJREUI7
- QQcA==
+ d=linaro.org; s=google; t=1774451928; x=1775056728; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5hvrUT+vRgYl+Hq0bVLw3A7u6UZFanM314YqRJb4heI=;
+ b=SazD2FqgmlB1go2fqnWxXke7iqAJrsKZJtlE2h54mLB8TK9YJww6/zesxExHWvkhY9
+ lpROWQScmDgRqNFeBRotWmu2TNJRB1cVEoMWMtk6G0HF+jRcD+QrmKj4hd0hvguITqkp
+ Ya62Qh3WWNyHpOzBv55YsPomjJgHMKdVuhX0pbtW2EPH1G41/jUPH4RbTbIgVNZmBinx
+ xyaZd8FzvX76l1drvKedbsKbJ9ujU0xzt2XZ8BEWr2w47RsO8Oq4YEczSv8FZele0a0q
+ QQ3Mb9XaJPxXf76QDBXWk/hq9JwOcAFUEvrXuJv40pAQHDYyy7y4EeujEbGvrHNxQXJ5
+ 6zBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774451859; x=1775056659;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hy+9vnQWvKgE9rUbjn7FvRJO+e6ousybrt19G3s47M0=;
- b=nWl5p+PDBFSMsTrarOq+RwaDt+bS2Ye6rAjl0wdX1RhAYaESh/JgxllqFo7t7uUMcV
- 7turGsJplaYZmy3EbKvRNXy8xVFgV+l0spbTgMLbJoRucPsrtr+NqLIu8J2PXOm6uBtT
- ytnYgnY8VYXh6qDBcF7nwpcaAoK8a0EhnB9tTbF9mXLovKI9Jsw23lL7fEkdJ0/FomyJ
- clwCiVECDraeOtQgbqKsJ8UjkgtyLF3EAe7SxfjIwgVJTV25hik0HYAkRMdcN1HcPMBo
- bF7LV3ELVTCE4844UzXu3LrHDsJmiwdSFg2AA/JEY7Xs9J4fL7iVYlQF7QLzg8a86xcs
- LlSw==
+ d=1e100.net; s=20251104; t=1774451928; x=1775056728;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5hvrUT+vRgYl+Hq0bVLw3A7u6UZFanM314YqRJb4heI=;
+ b=UZU4TrAIuoW58xQcS5wIspi17Cx1sMYTcym1bNzGJ+37dlbrrJ6M9Pgo9rUGYhENjI
+ ExeRX2UO1hY71PCFGeR++eRBKc6YfY9Hmd3J1MNOzvFAT7pJ3l0JO4Z5innp/F5PsojL
+ Gm4m5WjuDFx+tBxRlOs4xuTNjSWsRlzc8lq1cSfcuSZJq9gwtm7EKpuaV/wKP5rICmDQ
+ tmSCP8VF26OXeYbR2ZVEXv8ol9ZAnop4ySYU8wXVFmjxHbiPYUy7ZUA77b0ZgadAQClV
+ vBqHo4Q8cldEJAP9TaUUbf9QNvXORTMCHgdeA+SRUA1YTUHUnCc6+IDebFiIACOJjj58
+ +GAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjImZPD1ufcYTaa/l9C9SKHNen3kf3ILM9QY83iucUTulvCihhvTkZQ71LCDiNhU1farlBVPCcacSe@nongnu.org
-X-Gm-Message-State: AOJu0Yy9jA1n0tTZlPRzRW9WNxn34lSge/8XDBUI9rpeX862TOJayQam
- IXEKEm0UA28+PuUPk0jTHz22VVFj8IDT4rPmtqdgF248Z2eUe00nvMV7UawvXXWxn7k=
-X-Gm-Gg: ATEYQzyepcFDc1F9N834rDLE/T1F9/N6/tTtXRJyEzHpAV845WhTTSFiX08R8oDM5B8
- hhV7/tz8DlIBcLRjkllTi4WxePxCRp4yfeSFNYReIv4Z4NVdRosUZ7dVZg/kiO5D+QuJ0G0LyjW
- QtDmo2QHIgLPyS80aZkMXqs9C4/PBJdrkC0f/O1I/nGZ9r9dvxZkBbtJx2SavEpIzWiZzNFlz4s
- RgKhkCIBl3aPpdWU6DuNXUcC27hJ8vtH6k2jhUC5dJCvY8Flp0sDkNxnJLGd3EADfZAmFzcw5H8
- Z3+hvS5xqw0BVslgt9OewjUPTYA/aRKUXUehYVrzbGVMtHQ6BCpFsW4Z+GnIOWrLakqEF+pcaAw
- U99pKMYZwKFyxmUspSFx3eYqqWAdg3Wlp7Q1DT36MKj36TCA6x5KuIQZXaL4nQwM9Jgp9Idftsc
- fr8zecUW9YuydZvMTwxxNQ5vzjz0REe+W59/TtrCdhvPbG2A2uQZsgC5YqZlfqSSLX+eI9wOs3
-X-Received: by 2002:a05:600c:8b2a:b0:485:379b:57bb with SMTP id
- 5b1f17b1804b1-48715fc3793mr56408115e9.3.1774451859292; 
- Wed, 25 Mar 2026 08:17:39 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ AJvYcCULWLNM9Je3Mtfq00aZfOnpQsxSQqIP9gGYKEMudT/n3ZELy+5MCcFfcmAt5TNZNpf/yzZjRj772qMP@nongnu.org
+X-Gm-Message-State: AOJu0YyQUSS3RZbW+uUPu7Qf6+pr2gnxccjAFGZo4ao4tbz9OppEaaH6
+ 0/KaS3zTV4KIBsfBYX5j3s4CT0v9pR2xY1EGHbYe1Va9WI+JsQt8IPmtjB8AaRZR130=
+X-Gm-Gg: ATEYQzzehQoTGk8ATyXaFvY60eW0RnHmDb8S2gpR/FnDyiaalXF/WTt/Wfzbzn3Vn4P
+ V4MzXxELktL5sqn2ARa2dKgweSSTDjrgubsljMlZNeTY96KD59aAbbWXX7v5vDMNY1Sif/4rYKN
+ yoelOPjt6nbeGXJ/Vy/En97oSb5z6v0y3xYiX648r1JTYX91TRYzTM5+0T8kPhUBNjamNQbE/mC
+ 08CwZcgK4EncvpCLSdaXrUi0TVIbnwjCV+pcBRsz9cWERWkCwO3Jnvso9GCdOyiQdq62ZfwHYt+
+ Dq/6le8OuL1kmf3do6oZKiYZfEyacq373a4M/476z05XZpfPgdh/4SCa4ntSNbmerbW9rvcTUKn
+ Fs8czKvzo8SSjOK54rYYHMEZcIgwVnSpCR+xcS05EuY1HovKxhHXvwmhmWAX8sZ9XVYa5OiYyip
+ ZYfZ/Xc5GS0Sfwr+oDGRRT0k7CfPHjeCSnxySZrlk1lusc8hwDBV7x4gNxTyAWxLRiNYQTJEYhR
+ 69B
+X-Received: by 2002:a05:600c:46ce:b0:482:f564:d613 with SMTP id
+ 5b1f17b1804b1-4871600c29fmr55560215e9.15.1774451928492; 
+ Wed, 25 Mar 2026 08:18:48 -0700 (PDT)
+Received: from [192.168.69.229] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4871738c16dsm22045995e9.30.2026.03.25.08.17.37
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Mar 2026 08:17:37 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- kvm@vger.kernel.org
-Subject: [PATCH-for-11.0? 1/6] MAINTAINERS: Separate QDev section from QOM one
-Date: Wed, 25 Mar 2026 16:17:23 +0100
-Message-ID: <20260325151728.45378-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260325151728.45378-1-philmd@linaro.org>
-References: <20260325151728.45378-1-philmd@linaro.org>
+ 5b1f17b1804b1-4871e5ec998sm1825525e9.6.2026.03.25.08.18.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Mar 2026 08:18:46 -0700 (PDT)
+Message-ID: <b609440d-d416-4d79-839c-b7ab1369c28b@linaro.org>
+Date: Wed, 25 Mar 2026 16:18:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.1 0/2] target/i386: Allow 32-bit SMM code to be
+ used in the 64-bit binary
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260325120944.29391-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260325120944.29391-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,57 +106,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QDev is about QEMU devices model API, while
-QOM is about QEMU object model in plain C.
+On 25/3/26 13:09, Thomas Huth wrote:
+> Here are two patches that I just resurrected from an older branch
+> on my hard disk. They might come in handy when we finally switch
+> to an universal QEMU binary that contains both targets, the x86_64
+> and the i386 target at once. In this case we need the SMM code for
+> both, 32-bit and 64-bit mode in the binary, and select it during
+> runtime.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cd8ba144506..64466cf4082 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3546,24 +3546,29 @@ M: Paolo Bonzini <pbonzini@redhat.com>
- R: Daniel P. Berrange <berrange@redhat.com>
- S: Supported
- F: docs/devel/qom.rst
-+F: include/qom/
-+F: qapi/qom.json
-+F: scripts/coccinelle/qom-parent-type.cocci
-+F: scripts/qom-cast-macro-clean-cocci-gen.py
-+F: qom/
-+F: tests/unit/check-qom-interface.c
-+F: tests/unit/check-qom-proplist.c
-+F: tests/qtest/qom-test.c
-+
-+QDev
-+M: Paolo Bonzini <pbonzini@redhat.com>
-+R: Daniel P. Berrange <berrange@redhat.com>
-+S: Supported
- F: docs/qdev-device-use.txt
- F: hw/core/qdev*
- F: hw/core/bus.c
- F: hw/core/sysbus.c
- F: include/hw/qdev*
- F: include/monitor/qdev.h
--F: include/qom/
--F: qapi/qom.json
- F: qapi/qdev.json
--F: scripts/coccinelle/qom-parent-type.cocci
--F: scripts/qom-cast-macro-clean-cocci-gen.py
- F: system/qdev-monitor.c
- F: stubs/qdev.c
--F: qom/
--F: tests/unit/check-qom-interface.c
--F: tests/unit/check-qom-proplist.c
- F: tests/unit/test-qdev-global-props.c
--F: tests/qtest/qom-test.c
- 
- QOM boilerplate conversion script
- S: Orphan
--- 
-2.53.0
+Thanks!
 
 
