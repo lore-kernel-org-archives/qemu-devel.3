@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B470109C033
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A1B109C033
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5RLw-0004n8-A7; Wed, 25 Mar 2026 12:45:08 -0400
+	id 1w5RM6-0004tJ-QP; Wed, 25 Mar 2026 12:45:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w5RLr-0004hC-Fo
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:04 -0400
+ id 1w5RM5-0004rm-LF
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w5RLo-0004PH-U4
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:03 -0400
+ id 1w5RM3-0004dv-T4
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774457099;
+ s=mimecast20190719; t=1774457115;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=4Z3hJrPqohCZ7xz0oBjIkGXpc7omqy6yqnrqsopU7Fg=;
- b=Dzm2ULQr0BknuW0jUhYtXGEUP/SPa0ybrY3xBQSm0c452Jn9Cr4a6WQd2LaE69mEIzOqic
- qISiAg6yIVZPVYENjln1ZnCrlYeT78k1LRphjdeYagl8tN+KHhu1ojlbzSSnlCXzojrPli
- BXhzXDeD5mMcdbcNr2szcgNNXCX7QkI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iMwtdu8zITy6FiC5AzTGmGzrMXxG2qh+5n3w3ZMaSQU=;
+ b=ZA+QL2/lkDGfxxQ1f5apcaizDDPpKn4I0DSaOyCJeynDnnfoRFKr2mtfcpyqvs4XvDwBb5
+ RLYK5mMw6oPhP1J1ALxHsw1QfGjOPy6DcpVacophNUbpBE/7R9/HCZa+OyIUg0EI4lgCoQ
+ OthSCKUpSspweXmQi9mHQDgiMqTtRW8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-323-k1TFGmWMMgqozXClgqRhMg-1; Wed, 25 Mar 2026 12:44:57 -0400
-X-MC-Unique: k1TFGmWMMgqozXClgqRhMg-1
-X-Mimecast-MFC-AGG-ID: k1TFGmWMMgqozXClgqRhMg_1774457096
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-486fe36cf73so758395e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:44:56 -0700 (PDT)
+ us-mta-371-LBxyhtXbP6eaYcTxyLDq3Q-1; Wed, 25 Mar 2026 12:45:13 -0400
+X-MC-Unique: LBxyhtXbP6eaYcTxyLDq3Q-1
+X-Mimecast-MFC-AGG-ID: LBxyhtXbP6eaYcTxyLDq3Q_1774457112
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4362197d1easo2237311f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774457095; x=1775061895; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=4Z3hJrPqohCZ7xz0oBjIkGXpc7omqy6yqnrqsopU7Fg=;
- b=GEKHdwz6m9h7aY3fg+wfUDTPrqR7M3ThyLiyewLnrEsPhsBZKgwWMvbPYqWt5Ntx+y
- 4sP5fkg+WLJiOmEj4BLkavLf1M1yHGfyVc/tvHUUMPhU6PO36X92/Sk2OXOPAzIXdOaF
- DYiMmtfSRvol3IwJBvPe0wFH4Fh2FWoKvq9K0Ner1IMP/vcgVR2JKdqvNJoNIp4D2DPx
- GU0KmvCRI/GMkdMWrG8HdAmIsr/KKxdfBrU2+3Ltj3kKIEJGVUwGLe4fYB8LB2OHvMaK
- Tae2MZm5E+GVz1us13WATgL1qO5E0KhOmU1DemMXkyJt8oRKumBZfIVVdBOSBxQH90Vx
- 6C2g==
+ d=redhat.com; s=google; t=1774457112; x=1775061912; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iMwtdu8zITy6FiC5AzTGmGzrMXxG2qh+5n3w3ZMaSQU=;
+ b=iQ5ILKyqB+vyjqTodZWQ7hgiN9S7Gnoq67JHB0JTE5s1lGgERaxCKDox74EIFpaBbH
+ AZ7t9z+fKJ1T1AVwXEgf3/ky5WZuQz73Le38/v8dBiKpSPJiOJ+UazkyaNKS1aYzuKb3
+ sbDPuRE0LjXOtYtEZ8fXJpNMced98GKvNxAQWDmQqhTB1gfG0Nf97eGzMInYPsYN+Jf0
+ l5Qkq02zhyMYyiaM7nfYw6/u8EWs6JuHaFSr1VPc1j1pFaVZER9tl8O+shof8XjqNLRK
+ A1ipDdqMXOUsYa6i7NLmqoPRw2Q4D+Czdrnn/AYCYAXscsf8MJ0ACxk8r/QotJuyYKcc
+ cEiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774457095; x=1775061895;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4Z3hJrPqohCZ7xz0oBjIkGXpc7omqy6yqnrqsopU7Fg=;
- b=rq8mIFr7VwW9p1/N6nkWeW3BjifLBwF5kODv242DKdmof+kZyRnEhWZNKIlJUhBvZh
- 4DCN6/ohVAirz5V3mZwn42Gi2aAYyiVr5nSra+4Q+PpTyrqV16lWCYb311hggWL6TbtL
- 3u0F0EZGF6VYctbjAfPnXUNQCezs7JRPO2FH6LtHqQ4NsQfTi3t17rjaTPMLGr9ZnTiM
- XYgeWp8TLC5a5LRPqFcrUf03O2A/fiuyHXZm6d5rRyrf3PxnCTrS4kv+17cwiUZ7aoHZ
- 4OKKwK2ogBjcX0XQyWnwKayFybfRUYgVQZ6evuFk3LUEU613xV490jgF3wUtKJ767fjI
- hpxQ==
-X-Gm-Message-State: AOJu0YzbhfUK8Y03dTZ3b5/+mAQcsw6u/9KAf3cY28fq631CCttSEkZw
- 91v1nA0C4a7GUGt2Z4KCQ8g2UiLun+Rao6SNTDzlPb+VMXFyvmNQDGRZBFx5akb1X3Uw1VIiXcF
- 5hd+dOuM/tXJworyHWHnccKo62X2lsUPdeILiLwtJHkO+AMFI8skjC37J/Jc2a89buk8xkU5cwz
- Ldojs7JkhRP5LsxYjmCSe/mLkBP3B+K8gOGUDYAGuM
-X-Gm-Gg: ATEYQzyiCJUFE9Q1KLZXUQflvXUSbiVSWz7ia16BRJUGj9tfOXkqSOa8VJnrnnFL+ZB
- 3pde6vtiW2rf7a89BV2gw5+iPfiWKNCgZyFm93VxOZkbQk/bWVh0qGkmajnGKkXQT+uOutAWBpK
- Ub21dxssTagOkZNvbNjRdNhEDYVyg/c9KTbLU8g7Ee7zDiN+sjRkCjFZviziNJ37BZr1LUKyB8q
- 2U3BwTUKKsMEPcmkFWeDu4W41JxXzFUplS0XasRhE/s8oKsGNTHZJ3mU9CwTNHsr/yHsJ8joNL3
- hTKP3wJODRj98hAi6bI++7bE6AmCNZnTp/UWyexgep8fqEXTnSUPNXqMRFyQEytQGjVSdKU7ojn
- JeSKvUoNCJx0t591pBUB1RTJnabh3y3OzXhweg39S0ohaY20Quhkbqa2x7Z0mh+GqGEArrl1qYb
- L1eYp2q9LLPbuFmaH3TCitQdVM
-X-Received: by 2002:a05:600c:3154:b0:485:3ee1:eba5 with SMTP id
- 5b1f17b1804b1-4871608d862mr65928875e9.27.1774457095206; 
- Wed, 25 Mar 2026 09:44:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:3154:b0:485:3ee1:eba5 with SMTP id
- 5b1f17b1804b1-4871608d862mr65928345e9.27.1774457094642; 
- Wed, 25 Mar 2026 09:44:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774457112; x=1775061912;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=iMwtdu8zITy6FiC5AzTGmGzrMXxG2qh+5n3w3ZMaSQU=;
+ b=LWvY1fwKyXJ+2zWdgdGn6q0J2lMqp72mAczNBsX7WFBQ9fyf3lKByyC3DAbt/cPfla
+ +hnc7VQUJjg90eMHRVqYpEBAolTWXWmKVmvJpjGzxqv0BGR2msZliHs3yTWPqz0guBTp
+ 9fchr7V8XztiTynXBNSqE/AZhlgRFmx9NLOn3Y0qaHBRa7zc+G+QaQkzT4nQbpTOHgxC
+ xcLzc8pqJhC4Rl4URmJ23VBrYhgnda3AGxyxMyT7xvjmV24ijsvtI8s3SfHq0eqExnrZ
+ MBwBDW/EcnPhc9/16vlj/1V8gzkPpfgEbz+uWWF4PiHRIgukk86V4npPW6+Xf1Erj1pr
+ sMfQ==
+X-Gm-Message-State: AOJu0Yyut0rpNIRFq4G9imiNTtQO2ThT3ymunsi08SNcy84qbhYjf9L8
+ oy7JdyE+kveTqrHGzSVD/7JJ+9wIdca63/J5oIab1SFuwWNfRzB4zHa2b61N6ANS86xy+R9d1HD
+ TWIFf9Cm2b4dbhcePtBke6B+n8eu/Qx0rUtSFKkxlxyveSsKX43y4vN1KV+2W0DoyzdXZGMQQQ7
+ u/+ljyhuWjY2OQaslP2/J4xNM46NFpjARZskyLoo6V
+X-Gm-Gg: ATEYQzwpPGQ3SGZlpbzcZUGj/0rxKEBSoodtHuVVcUp8m4lQ8I7sJ5tJnTK1zW5mxE9
+ cJM7Jq6FtWFIZJQpgI0OTynUBNBhrxmaTxZWaXsEwtRNCKw8NPS09c1VqEybxK6bhChjcLmPvmr
+ 91Dx4YECFdhx0WHyJekestMRNnwOj8z+nhWfUqqyt2k4rzRUxCO9UuuyB0slVyICBfsISEEDIUF
+ utHrGLT2kilvj089N/9MsyTtgd5YExzvsg98TP1eTkSPehH1TFA5AZjS/GKaaTCz9etB6COEZz8
+ z40jqEi+/oLGsm5U5VSnhFmCAhsaWTb82vwrQDRpN1gVQ98Pm+rK0jCD/tdXcDKJ5gHuqgK6NlW
+ DekpGhg16UTe03bd+f8CZX6CVSgEYTiAZpFoHIwENsNH4Ufqa9LtOJA3wVV07EzGYGMTd4Eqqen
+ h5FNAl7jHpmSx2pALhBz0iqvmR
+X-Received: by 2002:a05:600c:1548:b0:487:338:b4df with SMTP id
+ 5b1f17b1804b1-48715fffad0mr67833705e9.15.1774457111618; 
+ Wed, 25 Mar 2026 09:45:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:1548:b0:487:338:b4df with SMTP id
+ 5b1f17b1804b1-48715fffad0mr67833235e9.15.1774457111068; 
+ Wed, 25 Mar 2026 09:45:11 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4871738c16dsm23505835e9.30.2026.03.25.09.44.54
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-43b919df903sm886778f8f.30.2026.03.25.09.45.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 09:44:54 -0700 (PDT)
+ Wed, 25 Mar 2026 09:45:10 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/19] Fixes (including big i386/emulate performance
- improvement) for 11.0-rc
-Date: Wed, 25 Mar 2026 17:44:34 +0100
-Message-ID: <20260325164453.72127-1-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 09/19] target/i386: emulate: add new callbacks
+Date: Wed, 25 Mar 2026 17:44:43 +0100
+Message-ID: <20260325164453.72127-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260325164453.72127-1-pbonzini@redhat.com>
+References: <20260325164453.72127-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -119,73 +121,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8e711856d7639cbffa51405f2cc2366e3d9e3a23:
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-  Merge tag 'hppa-fixes-for-v11-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-03-20 10:04:48 +0000)
+On Hyper-V fetching some guest registers is really expensive, so
+add a way to query some state from information provided by Hyper-V
+to save time on vmexits.
 
-are available in the Git repository at:
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260324151323.74473-7-mohamed@unpredictable.fr
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/emulate/x86_emu.h     | 3 +++
+ target/i386/emulate/x86_helpers.c | 6 ++++++
+ target/i386/emulate/x86_mmu.c     | 3 +++
+ 3 files changed, 12 insertions(+)
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to dfbc524fdd8932951791e78121be0ddca0529162:
-
-  target/i386: emulate: follow priv_check_exempt (2026-03-25 17:43:41 +0100)
-
-----------------------------------------------------------------
-* tests/functional: preserve PYTHONPATH entries
-* target/i386: show GMET feature
-* target/i386/emulate, whpx/i386: on-demand access to runtime state, MMU fixes
-* tdx: fix use-after-free in tdx_fetch_cpuid
-* treewide: replace qemu_hw_version() with QEMU_HW_VERSION
-* sb16: detect invalid migration stream
-
-----------------------------------------------------------------
-Alyssa Ross (1):
-      tests/functional: preserve PYTHONPATH entries
-
-Jenny Guanni Qu (1):
-      hw/audio/sb16: validate VMState fields in post_load
-
-Mohamed Mediouni (14):
-      whpx: i386: workaround for Windows 10 support
-      whpx: i386: enable exceptions VM exit only when needed
-      whpx: i386: skip TSC read for MMIO exits
-      whpx: i386: skip XCRs read for MMIO exits
-      whpx: i386: don't restore segment registers after MMIO handling
-      target/i386: emulate: add new callbacks
-      whpx: i386: add implementation of new x86_emul_ops
-      target/i386: emulate: indirect access to CRs
-      whpx: i386: indirect access to CRs
-      target/i386: emulate: segmentation rework
-      whpx: i386: fetch segments on-demand
-      whpx: i386: fast runtime state reads
-      target/i386: emulate: set PG_ERROR_W_MASK as expected
-      target/i386: emulate: follow priv_check_exempt
-
-Paolo Bonzini (3):
-      tdx: fix use-after-free in tdx_fetch_cpuid
-      treewide: replace qemu_hw_version() with QEMU_HW_VERSION
-      target/i386: expose AMD GMET feature
-
- include/hw/core/boards.h          |   6 -
- include/qemu/hw-version.h         |  18 +--
- target/i386/emulate/x86_emu.h     |   6 +
- hw/audio/sb16.c                   |   7 +
- hw/ide/core.c                     |   2 +-
- hw/scsi/megasas.c                 |   2 +-
- hw/scsi/scsi-bus.c                |   2 +-
- hw/scsi/scsi-disk.c               |   2 +-
- system/vl.c                       |   4 -
- target/i386/cpu.c                 |   2 +-
- target/i386/emulate/x86_helpers.c |  83 ++++++-----
- target/i386/emulate/x86_mmu.c     |  27 ++--
- target/i386/hvf/x86.c             |  11 ++
- target/i386/kvm/tdx.c             |   2 +-
- target/i386/whpx/whpx-all.c       | 284 ++++++++++++++++++++++++++++++++------
- target/s390x/cpu_models.c         |   2 +-
- util/osdep.c                      |  12 --
- tests/functional/meson.build      |  12 +-
- 18 files changed, 343 insertions(+), 141 deletions(-)
+diff --git a/target/i386/emulate/x86_emu.h b/target/i386/emulate/x86_emu.h
+index 0f284b0c3d1..4ed970bd536 100644
+--- a/target/i386/emulate/x86_emu.h
++++ b/target/i386/emulate/x86_emu.h
+@@ -32,6 +32,9 @@ struct x86_emul_ops {
+                       int size, int count);
+     void (*simulate_rdmsr)(CPUState *cs);
+     void (*simulate_wrmsr)(CPUState *cs);
++    bool (*is_protected_mode)(CPUState *cpu);
++    bool (*is_long_mode)(CPUState *cpu);
++    bool (*is_user_mode)(CPUState *cpu);
+ };
+ 
+ extern const struct x86_emul_ops *emul_ops;
+diff --git a/target/i386/emulate/x86_helpers.c b/target/i386/emulate/x86_helpers.c
+index 024f9a2afcf..ebbf40f2b05 100644
+--- a/target/i386/emulate/x86_helpers.c
++++ b/target/i386/emulate/x86_helpers.c
+@@ -211,6 +211,9 @@ bool x86_is_protected(CPUState *cpu)
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+     uint64_t cr0 = env->cr[0];
++    if (emul_ops->is_protected_mode) {
++        return emul_ops->is_protected_mode(cpu);
++    }
+ 
+     return cr0 & CR0_PE_MASK;
+ }
+@@ -234,6 +237,9 @@ bool x86_is_long_mode(CPUState *cpu)
+     uint64_t efer = env->efer;
+     uint64_t lme_lma = (MSR_EFER_LME | MSR_EFER_LMA);
+ 
++    if (emul_ops->is_long_mode) {
++        return emul_ops->is_long_mode(cpu);
++    }
+     return ((efer & lme_lma) == lme_lma);
+ }
+ 
+diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+index 4e39bae025e..670939acdba 100644
+--- a/target/i386/emulate/x86_mmu.c
++++ b/target/i386/emulate/x86_mmu.c
+@@ -49,6 +49,9 @@
+ 
+ static bool is_user(CPUState *cpu)
+ {
++    if (emul_ops->is_user_mode) {
++        return emul_ops->is_user_mode(cpu);
++    }
+     return false;
+ }
+ 
 -- 
 2.53.0
 
