@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B94103A999
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB2CB103A999
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Ds5-0006d5-3R; Tue, 24 Mar 2026 22:21:25 -0400
+	id 1w5DwY-0007ho-Bn; Tue, 24 Mar 2026 22:26:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5Drx-0006bx-KB
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:21:17 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1w5DwH-0007fX-EY
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:25:51 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5Dru-0007Uo-CJ
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:21:16 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b979d16dd0cso897954166b.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:21:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774405273; cv=none;
+ id 1w5DwF-0000Go-KK
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:25:45 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-667acaeae82so9462870a12.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:25:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774405541; cv=none;
  d=google.com; s=arc-20240605;
- b=K7a5EoinI3sQW5ru7F2BToB6HZCST+qs1D1G8c1Qoi93aNIIUt9o1QQrtXylPqmaud
- JF1kZeKe5aWVoItMMTzZoblGMbEhih7+AvLkmaUbUt2x6RRkMw3UI6e+0JXW6RZjKQKY
- yZZ3WPxnOIQM73H1ppuOYyoJl145kMiSj9sglqX/L7QWrAQ1jhHedbULdz5WnjZ24wCr
- QBhPXkNU3wKz8k0XJ2eKGNEk+zNf4Yjp1blt+WyXW/YIMaYUiwll9N+ahwj2wzZreHzI
- w2/CPF3IGtsInwpYwK68T3LDBRNL8HdODAQ+EB8roMob0FlIKHO5bqTkJo15z+9FCTgS
- 6U+g==
+ b=TiQ+wj50DmfborPXO2+iCpwXykosO/kEZAGuATBKkc/g/jo1yC/yDXkufuD10jSDfw
+ Z8x3dQ496zP/aLhjRSZmipvMyQL50W8fPdRNbs0a52nDB/jIHvABP1+LxoNJnYI4GS0r
+ aOdkDdXGMX3HhVbZPvMu+/clhvZBvSe6VLgK4ajmdXAB90B1CthZyTWsz1SMLijvDqTb
+ +9m0HIqygVBg047zBbPV1b0RL3ruK/EZ5ZMgB/QtmNlOlvKipXoxH9PvoK+4jQpGsHPk
+ ZpJvR+6l+fZC/uTT6BxVrGmAQba/ETmAWt85a5shQ63tsLL8RzdOYhRt8TLebWN+t2mt
+ acRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=R0KQhFx4IUtIoIWMtmfoysm490eA1E6cw8zO+88Btew=;
- fh=Zgl+7kiOUFXFIsHgLFVPxIe73w6S10Yy6NxNqk5hgw8=;
- b=B3d849MZ1vMta08vdYCMDNILDdNLFXk+9o78c0s1fU8WS5kGotLlc2UsSVv++ArK6g
- QWDdrTMiKSU8J9PkXfDE+UcZQTiMzkLQxjU3V1r4VqsoiIK5WogmoL6HEmtPTOjbpXZ9
- bNhu0W3cUBhmghlvAj/Adgh2hvxhH8VatkAQcOYvq8RniGtww5kncaw7Us7jHPvPYauH
- FZGvVpDOS1jaAZrG5+YzHT2WediOuUdZ1dSJoDFrnqUVotZaoYBnlnOdkL7mX55g6/Uh
- 1zBXPQT5Y87OdXQlR1AfzjilD7igT7iUOLTX0pr4idwg4M3kXWJ21lSGSO6xV6ij6ze+
- E5hw==; darn=nongnu.org
+ bh=Tr17RtyvbLxS1/0zRk7inMx/sws3cdzrQAORYOvU5AI=;
+ fh=Goub7LZgbm1v+svGrOo2k7EYKDHZ2ljEK1F5ta1PeDg=;
+ b=KPO/q4pznn1uBjn16Q1VhWPc3IOPd6SV1QqsD8t824kVXw1I9LEjfz9Yy9MlYsbJf5
+ CrTT8U0HB6FUlJRQTEwr6dT6A7uvFcwey3bksRl5AXc8B2fgxBWhhhz2XgJHD9IBnvgs
+ 2Nk99zbKj5EmPs4wr6kqSDN8miA07XsFwJclpRyAIy4HKIFKyNLL1/EcJX79ahomojwD
+ ZzwY3Sf+AqTasWZ7rURLbn+gkCcx+Bmz2d18tCJvUMHeSN7CfHG4p21Zj+HXnuiU5Xcr
+ GRxUqJfxhbUCcdc6v5LgiQwXzugUxmNSzLYilao1Y5osHI3bH7O5HWOM3BbY4ON68A8s
+ JRXA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774405273; x=1775010073; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774405541; x=1775010341; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R0KQhFx4IUtIoIWMtmfoysm490eA1E6cw8zO+88Btew=;
- b=VGbbkMxFD7kGfEzxlcMbM5Zr9hLJtQZkkqcufy+xHNI1iORi8tfeslmqYmxWT/VRgf
- AjVNw0cmBZ+vWRnSmIdony/LhbTnuRHHPrwC/OabW/OBjFnZu50fKzI+jAAmeYWOcB+K
- kZ90FHRj8/qm8etKSzwgxA/w/jwGwUwGUy2Nm8yY1mGEbiZ5Kc+yN28l57EBg3nVMwml
- ppGCjArMdNbN7xUBxeglyblCDRzWwszlzFFQ4LkuZimNWDdDdOSQ+U9wWsXo/8Goc5Qp
- UQbiAzuSI/001q9tZagSyVb9TEAqlKzeDiQ0klJ6Er44WWWFeJih83ki948keOo7+vMb
- RINw==
+ bh=Tr17RtyvbLxS1/0zRk7inMx/sws3cdzrQAORYOvU5AI=;
+ b=tH70NNMPwGak7o+F1/OIeBHobq4gBFBRBkEIvLx5hl2l4eiCqyALCUhMBBo7ebOm3I
+ DW8qxg4SHBGykoxi/U6P6tN0E/wpat7yxelbHxBVUJFZ6ZS634bzUVNq7IhcpAZJX6wH
+ OR4NupPK+m2C0iPT1PJXZD8p2I7Yj+/cmnXB5dvRaE5uwaSU521N0tfL7nlQfZhZrXTs
+ JJoWz+XnXw4zgYB8USrTB1//bKKvMT3hnDQJqTCAhWUc2Rh61KSPWWuzUs4NesU7DslJ
+ 4jbGYwZD32/4kAjlzYWWeb2BYcmQ2i3jg7gTnVsHiEi7+HQLIR91bppceSnL7x5vi3Wy
+ IGpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774405273; x=1775010073;
+ d=1e100.net; s=20251104; t=1774405541; x=1775010341;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=R0KQhFx4IUtIoIWMtmfoysm490eA1E6cw8zO+88Btew=;
- b=fZRr5Ga5/hq6in3qrY3dNQFu1ejxR0tqY4R5D+s2bPTwKqoIiZzDsQQtg28QS+MJ6g
- lx/b6oHYYD0xT6cIiS+I90sPRNgSRxk48wl0tm7aNe5HOp/H+iPCpKlczD88gcJXPy3A
- e9YadQ9+SlSz2orNPEt4hS/IMz+WgMkUA5Ma8PrNejWQ0LJY1tk333iXZOlZQoXhG8nR
- 6JSEUPn2uXH8h/UG/OUd1PwS6xy1EZ26V4gimfocgaqunhOpbzXbCdkHqiWyfpVA+/X8
- czDMyw+sWe4na2zXwfFzMDfe/J81yc4KA9NiUFO/i2SqER+awleQZ2A7H23x2yYdve76
- es/A==
+ bh=Tr17RtyvbLxS1/0zRk7inMx/sws3cdzrQAORYOvU5AI=;
+ b=saxpk195dtj6KUMwg4wf9Ish2C6t6zmETR8xIUpydEuaQvAxb3VVKhWvsYRqVL6swT
+ wp+orQWiZQejjt7Wds+WtX6du52DSf6FDBou//HgOsx0iVBgH9SgMFRjjXdVLGb7JV7p
+ KtozySLJxkFVWT8MYkTE+4liCg3I5SL+PON+1bSQ64zHVINGFvZG76tyTWvnOHEZZnyE
+ bE8FENI0cwJ17T0sw0s7E4sGS8FH7oYolOr1/OJa+2xaiOxgXyRuvVVN353aumzQW/KG
+ QdME6WxLBa9zTytOZuLZEXUblLtn6XjXT0yzAC82Rg8c/8rhF21OpbU6/1hSAld9WgPb
+ TOhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcoQGwYUtHDMfUQcxaIDSbb0HkKoM5CUUQjyz2BOpbkCNkt245fKnhHKUprnqfeq49jhY8Y0Iv1AfX@nongnu.org
-X-Gm-Message-State: AOJu0YyGQY909ofmfez8vseCDzsZqbmal7YnuOm2APu3eHstxMwID6p0
- uuJp2YcP12o0HFQhmiXAMoAOStxU0dlhn21TZ5qNB0ndS7WoauNADlSrHRPQX572YwR5om2mnIa
- yHpcez87Hay/koYLas+8OvtRtgmCRfKY=
-X-Gm-Gg: ATEYQzz02MxCGNpbcSsZogFv3YjmcmnPMXsR1JHmNhgmYrtM+oR9JCcJVY8xGSdYKom
- hKLdW+qUFZapk2cEycz+LXmcr6kDAKeOKdM92SZjR2/DOGCToiQLPb43mWuXqam/vU+YC35FvE3
- +vleUUAs+ONFbAeOVufxGSrQkKmvqPj0gqhxdHIwoqDB+si+uBNl9nQ/mwAi9nVmz5SDqKi9pYh
- nD4Bl8UkXyfRewLoyCO7I7CUPZmPRjGSTg53P7pA5J0NLcCSvVmeYHLqGbAIgRc9GfGtQqW/24M
- MH6A4HV+n5mLeBwUGL2TaGh+taw4iflnnntxfA==
-X-Received: by 2002:a17:906:f597:b0:b97:cebd:8273 with SMTP id
- a640c23a62f3a-b9b0f0fa536mr61458266b.24.1774405272649; Tue, 24 Mar 2026
- 19:21:12 -0700 (PDT)
+ AJvYcCUqBFtuYBj5N6pf9iI9k6qlvlKb1pcOhSJSyeU9sFjXRWRGs/DkyB0IELAQtMKlRmhwWY78Nz086qaC@nongnu.org
+X-Gm-Message-State: AOJu0YyiUGubBC7PWCqJeq6ThWOTGFjGMZTV7wNHXyPOqRyHxLmRv3Bh
+ spd1watCmpipp7b9jA8rBUp0tCBQSTnJD1jC/Ke1G6iE7ndN1BVBbJYpuP/BeCYDwHq7EagRr7Y
+ poRJ2hwIlB2hkDH6rRvotQrwmK4zdiEI=
+X-Gm-Gg: ATEYQzyK2ZYo6srUziC7++ciNW6Vj9RCkcZ3rgdqgwcVkNjKNrvrPqFqYq0wilBvLJP
+ RC13HTnJuAbthkxUS7qLukzL8ONqELQww3FI1NNXIHVT3Gpk4ucgFAJgFABNJ74QAeLD5qF/Uss
+ QOw4z7Wj4PEIb9nimhJ5njd1GHQrTxArS2MfHqgkVD15fmdnTIg7AcAOK/29y1iIFL2P0f8w0S/
+ CaeXvr2duIgVCWzdewA/En9vasVExdmtxSgIhRzuRKrjFiOXvEjrW14JCrb9Q4+fizm70aKmDeN
+ Tiqr3M3IGJU6rRo2VXhweda6uDKjJsbWHW0R9da7wqONrZck
+X-Received: by 2002:a17:906:a8d:b0:b98:86b9:f0cd with SMTP id
+ a640c23a62f3a-b9a542c7072mr84965366b.54.1774405540861; Tue, 24 Mar 2026
+ 19:25:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260321144554.606417-1-npiggin@gmail.com>
-In-Reply-To: <20260321144554.606417-1-npiggin@gmail.com>
+References: <20260320134254.217123-1-james.wainwright@lowrisc.org>
+In-Reply-To: <20260320134254.217123-1-james.wainwright@lowrisc.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 25 Mar 2026 12:20:46 +1000
-X-Gm-Features: AQROBzBEn4Crmvn43j_9IR6fZXWUvN_GG2TEs8scPR157S_PZTv5MrcJEJrk-zw
-Message-ID: <CAKmqyKN_not2pD=BeFveOnej0WiuofgcncpZXy2D2PyJOvkmqA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] target/riscv: corner case fixes
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-riscv@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
- Joel Stanley <joel@jms.id.au>
+Date: Wed, 25 Mar 2026 12:25:14 +1000
+X-Gm-Features: AQROBzCdQozVb5Ay3GxBiCfaxy9Ub88-7Rq1q-TMNhIN98mSMDydAzSN939B6bQ
+Message-ID: <CAKmqyKNTm51Gx4TEL_3nm+8K=mZa8pMfnL1PA9kcqHpq0Uw=ug@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] target/riscv: add draft RISC-V Zbr ext as xbr0p93
+To: James Wainwright <james.wainwright@lowrisc.org>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -124,28 +118,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 22, 2026 at 12:47=E2=80=AFAM Nicholas Piggin <npiggin@gmail.com=
-> wrote:
+On Fri, Mar 20, 2026 at 11:44=E2=80=AFPM James Wainwright
+<james.wainwright@lowrisc.org> wrote:
 >
-> Changes:
-> v3:
-> * Added vloxei8.v to overflow test.
-> * Added store variants of interrupted vector ops tests.
+> >  This patch fails checkpatch:
 >
-> v2:
-> * Added a tcg tests build-time check for vector intrinsics support
->   in target compiler before building new tests that require it.
->   ci images may not support these yet unfortunately, but upgrading
->   those will be a separate effort.
+> Oops, sorry about that. Fixed the license header but the original
+> `crc32c` file didn't have a `MAINTAINER` so I haven't assigned one to
+> this new file either. I hope that's okay.
 >
-> Thanks,
-> Nick
+> > Please keep previous tags in new versions
 >
+> Do you mean the `Reviewed-by` lines? I've kept those in this series.
 >
-> Nicholas Piggin (3):
->   target/riscv: Fix IALIGN check in misa write
->   target/riscv: Fix vector whole ldst vstart check
->   tests/tcg: Add riscv test for interrupted vector ops
+> James Wainwright (3):
+>   util: export CRC32[C] lookup tables
+>   target/riscv: add draft RISC-V Zbr ext as xbr0p93
+>   disas: diassemble RISC-V xlrbr (crc32) instructions
 
 Thanks!
 
@@ -154,20 +143,38 @@ Applied to riscv-to-apply.next
 Alistair
 
 >
->  target/riscv/csr.c                        |  16 +-
->  target/riscv/vector_helper.c              |   2 +
->  tests/tcg/riscv64/Makefile.softmmu-target |   5 +
->  tests/tcg/riscv64/Makefile.target         |  16 ++
->  tests/tcg/riscv64/misa-ialign.S           |  88 ++++++
->  tests/tcg/riscv64/test-interrupted-v.c    | 329 ++++++++++++++++++++++
->  tests/tcg/riscv64/test-vstart-overflow.c  |  78 +++++
->  7 files changed, 531 insertions(+), 3 deletions(-)
->  create mode 100644 tests/tcg/riscv64/misa-ialign.S
->  create mode 100644 tests/tcg/riscv64/test-interrupted-v.c
->  create mode 100644 tests/tcg/riscv64/test-vstart-overflow.c
+>  MAINTAINERS                               |  5 +-
+>  disas/meson.build                         |  3 +-
+>  disas/riscv-xlrbr.c                       | 79 ++++++++++++++++++++++
+>  disas/riscv-xlrbr.h                       | 19 ++++++
+>  disas/riscv.c                             |  2 +
+>  include/qemu/crc32.h                      | 14 ++++
+>  include/qemu/crc32c.h                     |  1 +
+>  target/riscv/bitmanip_helper.c            | 20 ++++++
+>  target/riscv/cpu.c                        |  4 +-
+>  target/riscv/cpu_cfg.h                    |  1 +
+>  target/riscv/cpu_cfg_fields.h.inc         |  1 +
+>  target/riscv/helper.h                     |  2 +
+>  target/riscv/insn_trans/trans_xlrbr.c.inc | 45 +++++++++++++
+>  target/riscv/meson.build                  |  1 +
+>  target/riscv/translate.c                  |  3 +
+>  target/riscv/xlrbr.decode                 | 30 +++++++++
+>  tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
+>  tests/tcg/riscv64/test-crc32.S            | 64 ++++++++++++++++++
+>  util/crc32.c                              | 81 +++++++++++++++++++++++
+>  util/crc32c.c                             |  4 +-
+>  util/meson.build                          |  1 +
+>  21 files changed, 380 insertions(+), 5 deletions(-)
+>  create mode 100644 disas/riscv-xlrbr.c
+>  create mode 100644 disas/riscv-xlrbr.h
+>  create mode 100644 include/qemu/crc32.h
+>  create mode 100644 target/riscv/insn_trans/trans_xlrbr.c.inc
+>  create mode 100644 target/riscv/xlrbr.decode
+>  create mode 100644 tests/tcg/riscv64/test-crc32.S
+>  create mode 100644 util/crc32.c
 >
 > --
-> 2.51.0
+> 2.48.1
 >
 >
 
