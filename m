@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F146C106B534
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1E51093168
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5VcZ-0001PC-Cx; Wed, 25 Mar 2026 17:18:35 -0400
+	id 1w5VeQ-0006Sz-VZ; Wed, 25 Mar 2026 17:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5VcN-0001JZ-PJ
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:18:26 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5VeP-0006QD-H6
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:20:29 -0400
 Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5VcF-0001Zy-J2
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:18:17 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5VeM-0002Mm-D0
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:20:27 -0400
 Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-486b9675d36so2787425e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:18:15 -0700 (PDT)
+ 5b1f17b1804b1-4852b81c73aso3025145e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774473494; x=1775078294; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fAfGwk5iQFxUtFp9tEuDqdstwJOUxCbrpEqefh8vUSI=;
- b=gpn/yO3x0nuCMVjW/94IJ/ZafvhAOpPV19SRnZd11NUzAsaTd0exC8SoGhbdCzyGM/
- IFG+iPWQLAYZvnm1ZOeLQRggalrdUUAtsOJVA7xWuhHVUP6uX8/niBQzhF4Bn779cRAr
- 5ETrs1aFQCsIREDqy2OVRfwTVidVn7dthXTkMqlKCES/Zw9I7pvRg2Oq5DDwfRJy0TI+
- pdELB5AFfS5Tp/72BYkQPVrESKKzQyw/inRCZ5K8mTczO8DrlHsArNMb3pAyjCOIKb8U
- 2tp9nvX511eZxFy0jLnY9oTvX3zvcx9xL3BOsDLTVpq9fqvnkwCV2kBo10NkEl1TwC/k
- jfLA==
+ d=linaro.org; s=google; t=1774473618; x=1775078418; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=plox9j/iUU8EZyl6U0OyV9sIvlUApm1bvH/zFY5odng=;
+ b=Jz34jRG5zS5oWFZ0kj6JbYpL7szl6MtfEXE3l5msz/ntH76zRC0kQbz2CjfpupJfsY
+ MZIYrDm9Iw7i3MuqRAIM7XHWRjA+asiYnE8rBcy9me9HNcr7i+oAb6nSaiSfiILMZB5A
+ Q7jb4GUU2Vl3zRU9KKWu9nYEJEi1ZxaydHuNeQ1/8NdBi/1LkLJtV2eY4U/UmFvnM2ob
+ oQ3x4lz4sUxeN0EwZDT1npEgJIzraijGpudR3AhIoSTmZZ9peWRSRTmkC9d46k81Bt1r
+ AF3jFFDL0G6x48GL0LC0aPxab56QCPoxDaziHICidWglB+hXfjfjLgzjwInoTsfhgzk4
+ Lxgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774473494; x=1775078294;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fAfGwk5iQFxUtFp9tEuDqdstwJOUxCbrpEqefh8vUSI=;
- b=E+VDJ7SE1BNGj9GYUnizbAUO8wcWtQnkAVVXS5ZMMta7IKw6JRXyw+zlsZFJEIh6i3
- dCLWR2fet+T7gAUtbDqg3F7qYaKu9sCTYZZjBcm7szEaYz4ZRKtYmy7IAj3Lgi4ka+IY
- 688uXUYs32OUL88tMC0/VEgjs+SVXwD4RpYseQ5S2Ot+4WkDF/l9M07hvOUu0HJxr9yq
- iwVBr+zXP9ST4pNJ4BInUNn5hgT5UgPcRbmhy2/t7x6sU5+RyRSIs/72PLpOdoRvHuKK
- OEDieXlOIHl17VDd9tgxp+emY86JPI3/2yFVF7KxzBeMQihoT4evn2eFUAkjOV0FO9aq
- qrHA==
-X-Gm-Message-State: AOJu0Yw0Ttxkb23gnsokGTZUOHxw5UmCThErEkga4K4XVpSoZ8/pBmc3
- UJOXwqegJfS6Nl6oj7/WTED+eM0J9Mkb4HoA4yWWR+91eBzaFt6Y1dratMqD0Pep7UiUEUDDS9d
- ItdaCI7M=
-X-Gm-Gg: ATEYQzw47AssiX67LCb+FhEDXGW9b/aRZrJ3/fpw66F2IicaPg2E7fKr/dlAV/rZ+SY
- j23MoArM20r4RfltwftkZOhRFA26axNWYa3yQxOO4Cj8eRUR8Vm3OuN8Wxs5CEdIJyZGR7x0KCN
- z5l9rx7WgaYPk/Eh8zPqqlMtN3jW+kyfsazS76W0Ypn7Wx94Vg/EKRTaN2HwjaVanqI48K9RC5+
- LBvgGOgj5r2QKCyG2m4NuxnfGCls0/weJH+ckRdjRQCItz2CsD3QumVIKZAsb2b8EDxwUa9nAYu
- E21TE0qOzK4xZk9BHEeXf0gku7Z7H5hsk5YhZxZ/h8ZWJTMAKW3moc7KVjndFbcjw9ZKX5VfBZg
- 5kM5n6j1qkmxDjWkjscjEuW81YIJFvnWx8VkgdhJFlI9LY6IxR1qsYuttxbrf1KJ6MJ1tD1MkVn
- kxZsCU+Nq2/GWoLr12xMfF6rOxRhUwQ9/2pEa/LzwrtSb6KMwEiu0/0RUMYcczuh6LCxVwW2sm
-X-Received: by 2002:a05:600c:c086:b0:485:2fc5:3a5 with SMTP id
- 5b1f17b1804b1-48716056385mr53086605e9.26.1774473493770; 
- Wed, 25 Mar 2026 14:18:13 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1774473618; x=1775078418;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=plox9j/iUU8EZyl6U0OyV9sIvlUApm1bvH/zFY5odng=;
+ b=Vafo0ZjfTIo5/QOq8dAeorkb8q4rd8/HESOqfBuZaQEsnsxQk2FmxhNwyYRrJ2cJfs
+ imMEcWjLTAwMaVhzvIA7YMwcSgK/6jam3s9bbzQxK5TIpW9dTCwSiGu8Z3jFT/Jw/ei+
+ ZppXc8sAMM1Sn3ASZAtVrYgFyXJYnnaRN9fAjK3Sp+FPoVbwRb38mfZP8t7Ou4VwlIyv
+ lJv0mNIeiArKYoNapv09nIwX8hM/p5qDvbfCdbQFMK2tlmvzssdOvr5PPAhgPxEDUYId
+ eJIM73FEUEwouYGE4ZvF1Ga5qCPv9YZCwIqiXoM4unF3ozz24I/4aYhvyjM7TmidqIHP
+ vCvQ==
+X-Gm-Message-State: AOJu0Yx/eIh2sUA21MRBkrlQLkf42/255+0E/5QuXlRoRZH7LoXj3xMM
+ NvS87ydasT6N6FKD30L3NuWMTpM9HFbImAovKyE9zDa7LkIcBXxeTeqc+DD+MlxZJQBMqHui5oo
+ iGMLRqp4=
+X-Gm-Gg: ATEYQzzQpwmd+E56m3WJiUea+nBuSeNj4yFnmMN7SGMdgEu6z4onEKVTEAGAWK5Los3
+ EnZFmUXJ2DdcgByZN021CYw+EzedxvRMkSFiQgn5TkNVYAeSBCjZS75YoEwNbNKLTuH7r5ZG1dx
+ AvS3e2rTnGYQ/r/yuqqXe/VqF3RKvVhzjC+MEUAYvOR56ZGEAYJhCaWrbeEp1dZYSNvYQoZYI4e
+ 2cyMKrBmNME12gyL4DlDScBe4AOreWHqAehyaTPxuWFOODvU1zuqQtXxZGvarQ1zEXBK1wV7fiv
+ Nlm3AKrL49TxjGuK1SR7+PHgbmc+lJiVRUD4agpTokRGyqE86sPFJUprTg85rny3EUBk/4QE532
+ ISIQ4+Pv09kedouLQFuEvFOs9j8s1hfj7xKppYp6U0RoQ/b+r9BlfnEYsQ4hmqALBzpaHJVgcGu
+ jkVeyTVztxlQK6iUk8nFeaoQPD/ifhFsQUoyqc8/cVsbIue9oer5qhpuT/BI0KozbGvcUR7mf+B
+ gmV
+X-Received: by 2002:a05:600c:3490:b0:486:f8e9:add5 with SMTP id
+ 5b1f17b1804b1-48716042c08mr76276895e9.19.1774473617920; 
+ Wed, 25 Mar 2026 14:20:17 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48711709b48sm150514935e9.7.2026.03.25.14.18.12
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Mar 2026 14:18:13 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ 5b1f17b1804b1-4872090368dsm340605e9.5.2026.03.25.14.20.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Mar 2026 14:20:17 -0700 (PDT)
+Message-ID: <54ddb814-5ab4-4883-b855-29a356bd8fc8@linaro.org>
+Date: Wed, 25 Mar 2026 22:20:16 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.1 10/10] migration: Restrict legacy
+ VMSTATE_UINTTL() macros to few targets
+Content-Language: en-US
 To: qemu-devel@nongnu.org
 Cc: Glenn Miles <milesg@linux.ibm.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>,
- Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Alistair Francis
+ <alistair.francis@wdc.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PATCH-for-11.1 06/10] target/mips: Inline qemu_get/put_betls()
-Date: Wed, 25 Mar 2026 22:17:24 +0100
-Message-ID: <20260325211728.89204-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260325211728.89204-1-philmd@linaro.org>
+ Peter Xu <peterx@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
 References: <20260325211728.89204-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ <20260325211728.89204-11-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260325211728.89204-11-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
@@ -113,80 +116,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use TargetInfo target_long_bits() helper at runtime to migrate
-the VPN register as 32 or 64-bits.
+On 25/3/26 22:17, Philippe Mathieu-Daudé wrote:
+> Only 5 base targets use VMSTATE_UINTTL (MIPS, PPC, X86, SPARC and
+> RISCV). In order to build a single binary (preliminary step toward
+> heterogeneous emulation) we need to remove it, but it will take some
+> time. Add a temporary TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API
+> definition to keep targets not using these macros clean while we keep
+> cleaning the last few targets one by one, preventing legacy uses to
+> creep back in.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/migration/cpu.h              | 24 +++++++++++-------------
+>   target/ppc/machine.c                 |  1 +
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/migration/cpu.h      |  6 ------
- target/mips/system/machine.c | 14 ++++++++++++--
- 2 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/include/migration/cpu.h b/include/migration/cpu.h
-index 87ca977a3fd..82a81b5d895 100644
---- a/include/migration/cpu.h
-+++ b/include/migration/cpu.h
-@@ -8,9 +8,6 @@
- #include "migration/vmstate.h"
- 
- #if TARGET_LONG_BITS == 64
--#define qemu_put_betls qemu_put_be64s
--#define qemu_get_betls qemu_get_be64s
--
- #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
-     VMSTATE_UINT64_V(_f, _s, _v)
- #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
-@@ -19,9 +16,6 @@
-     VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
- #define vmstate_info_uinttl vmstate_info_uint64
- #else
--#define qemu_put_betls qemu_put_be32s
--#define qemu_get_betls qemu_get_be32s
--
- #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
-     VMSTATE_UINT32_V(_f, _s, _v)
- #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
-diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
-index 8af11fd896b..20de322385b 100644
---- a/target/mips/system/machine.c
-+++ b/target/mips/system/machine.c
-@@ -1,7 +1,9 @@
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "cpu.h"
- #include "internal.h"
- #include "migration/cpu.h"
-+#include "migration/qemu-file-types.h"
- #include "fpu_helper.h"
- 
- static int cpu_post_load(void *opaque, int version_id)
-@@ -139,7 +141,11 @@ static int get_tlb(QEMUFile *f, void *pv, size_t size,
-     r4k_tlb_t *v = pv;
-     uint16_t flags;
- 
--    qemu_get_betls(f, &v->VPN);
-+    if (target_long_bits() == 64) {
-+        v->VPN = qemu_get_be64(f);
-+    } else {
-+        v->VPN = qemu_get_be32(f);
-+    }
-     qemu_get_be32s(f, &v->PageMask);
-     qemu_get_be16s(f, &v->ASID);
-     qemu_get_be32s(f, &v->MMID);
-@@ -182,7 +188,11 @@ static int put_tlb(QEMUFile *f, void *pv, size_t size,
-                       (v->D0 << 1) |
-                       (v->D1 << 0));
- 
--    qemu_put_betls(f, &v->VPN);
-+    if (target_long_bits() == 64) {
-+        qemu_put_be64(f, v->VPN);
-+    } else {
-+        qemu_put_be32(f, v->VPN);
-+    }
-     qemu_put_be32s(f, &v->PageMask);
-     qemu_put_be16s(f, &asid);
-     qemu_put_be32s(f, &mmid);
--- 
-2.53.0
+> diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+> index 05a1ddde343..4c8c9c34cc8 100644
+> --- a/include/migration/cpu.h
+> +++ b/include/migration/cpu.h
+> @@ -3,25 +3,23 @@
+>   #ifndef MIGRATION_CPU_H
+>   #define MIGRATION_CPU_H
+>   
+>   #include "exec/cpu-defs.h"
+> -#include "migration/qemu-file-types.h"
+>   #include "migration/vmstate.h"
 
+
+> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+> index 49cfdc6d674..f6169a128dc 100644
+> --- a/target/ppc/machine.c
+> +++ b/target/ppc/machine.c
+> @@ -5,6 +5,7 @@
+>   #include "helper_regs.h"
+>   #include "mmu-hash64.h"
+>   #include "migration/cpu.h"
+> +#include "migration/qemu-file-types.h"
+>   #include "qapi/error.h"
+>   #include "kvm_ppc.h"
+>   #include "power8-pmu.h"
+
+Oops, this change is part of patch #6 "Inline qemu_get/put_betls()".
 
