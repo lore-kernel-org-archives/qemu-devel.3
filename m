@@ -4,114 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3485A109C041
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B470109C033
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5RKG-0004Hu-Bs; Wed, 25 Mar 2026 12:43:24 -0400
+	id 1w5RLw-0004n8-A7; Wed, 25 Mar 2026 12:45:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5RKE-0004Hf-QM
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:43:22 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5RKD-0004HB-D0
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:43:22 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-649278a69c5so64462d50.3
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:43:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774457000; cv=none;
- d=google.com; s=arc-20240605;
- b=l3G2Pka2I+1ONj1o+RIri/w190SpRe+QZoRJ/Qz843kTlNLL0rlE3gLQiArF149y6s
- ao6ZjOlfgKR3mToDjZPlTkSwPqou97QKaht1zsYek1EHMThBVJa/Ly2VwpB/S/XmSVYf
- JmgotVM9GCqytOHvnDmS5LosbEnBaUTWnQ2tvUHpiBtZ5I5epKqbM4NgWf6+FldufhF6
- 3IuzLHboHnKLR2ChN1pue2FW3gi+oaAIz9fH2/1dVb9ysl81/hXmqO9EgwLMkc0ivu0o
- gS8QHTkb8kBQenEOdqxBh+DEeNxVldtdWenhI3owuJFxWSDMK8W70q82YGqjl63ze4Pr
- EqrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=0bKgSG7hFOw6SE9DlRcmlaBQSYt+zNrknLETjspTdTo=;
- fh=wTscW5iO7m35uSTIYQ3pZxPOxQqDb9ynmDWdK3BLrZs=;
- b=AblCGbodh6ilIvMbZbLoiNBCj4wDeXI2RQg7LdzC+UwGI3UOpibQbYH2Ar3gy/dIpS
- 6LyIIDRmMBpjQZhACsE1XwC0YW+jYxQmNrG7cLc6r7z8Z7dqviFUUjxuYRvbV5IVSq2c
- kLDp4q62z3G8xwoiRExILaLoypYRnMumqYZmt5mQYktUYSk5YODTLnFFKsZtGCAW1D64
- QStTJYggF+pjlyaiGnQV0lRHtUp/uXgDKZClN3htuvhYpzDzDhwMt3NM0ugDXVoIG3Oy
- fCCxWk29kM0qLrDPDCZFdbsvr5jnsj8Mvg6xaq3QKqkUJIWCb/xUeL4LdOdutpB/GOq/
- emmg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5RLr-0004hC-Fo
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5RLo-0004PH-U4
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774457099;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4Z3hJrPqohCZ7xz0oBjIkGXpc7omqy6yqnrqsopU7Fg=;
+ b=Dzm2ULQr0BknuW0jUhYtXGEUP/SPa0ybrY3xBQSm0c452Jn9Cr4a6WQd2LaE69mEIzOqic
+ qISiAg6yIVZPVYENjln1ZnCrlYeT78k1LRphjdeYagl8tN+KHhu1ojlbzSSnlCXzojrPli
+ BXhzXDeD5mMcdbcNr2szcgNNXCX7QkI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-323-k1TFGmWMMgqozXClgqRhMg-1; Wed, 25 Mar 2026 12:44:57 -0400
+X-MC-Unique: k1TFGmWMMgqozXClgqRhMg-1
+X-Mimecast-MFC-AGG-ID: k1TFGmWMMgqozXClgqRhMg_1774457096
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-486fe36cf73so758395e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774457000; x=1775061800; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0bKgSG7hFOw6SE9DlRcmlaBQSYt+zNrknLETjspTdTo=;
- b=jGwxy2Gtnr2XyvrxZNwrHfUvQvGBPy5CTkLoUGXPGlIvwBZkpMhaWOvOm4BUViUeSo
- znyT7sI46nXBwLb13ixvth0cIruPDu0o5L9aeV9ECBQSAKd0gy6FwlSOW2g2OQse382M
- +ErCBZi3iJ33YpAQFdofOvMQ4ssWvoPZbDBknBJzfMSd9Ye2dq0ffLldCsU0BzcoMyJ9
- EnTD4hiHx4HvfM+s6mrQ6PxOUU6CTHRLpg6ytohURxmLjb91VCdEiqO3FiwjP8om0XMr
- +Ge8Yt5875ElAzEeuJC47zH9UoLQzLrGf8+VwgEG2caXbutBH3mWls0TGIBa2JMHzScT
- 0VzQ==
+ d=redhat.com; s=google; t=1774457095; x=1775061895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4Z3hJrPqohCZ7xz0oBjIkGXpc7omqy6yqnrqsopU7Fg=;
+ b=GEKHdwz6m9h7aY3fg+wfUDTPrqR7M3ThyLiyewLnrEsPhsBZKgwWMvbPYqWt5Ntx+y
+ 4sP5fkg+WLJiOmEj4BLkavLf1M1yHGfyVc/tvHUUMPhU6PO36X92/Sk2OXOPAzIXdOaF
+ DYiMmtfSRvol3IwJBvPe0wFH4Fh2FWoKvq9K0Ner1IMP/vcgVR2JKdqvNJoNIp4D2DPx
+ GU0KmvCRI/GMkdMWrG8HdAmIsr/KKxdfBrU2+3Ltj3kKIEJGVUwGLe4fYB8LB2OHvMaK
+ Tae2MZm5E+GVz1us13WATgL1qO5E0KhOmU1DemMXkyJt8oRKumBZfIVVdBOSBxQH90Vx
+ 6C2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774457000; x=1775061800;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0bKgSG7hFOw6SE9DlRcmlaBQSYt+zNrknLETjspTdTo=;
- b=QpVD02bIgYK8j0jHh/feqQUHBG+JdegABzA5XvliRZD+OEnS8hAkVidV+s2yMBTz14
- YlGrv3JzzVRq4GMc6pIvbzZQTzXom+crCivCR0SAtxvCzHtql9KF1Sm7WfoglVnJzyYV
- 7yE8QG4BDNzCP9tf6fKX9As37DDFLEDMslQZyVlLKHQwHC03CUWrKiYnwax2dawXq9uo
- h+9jDt42tBSQ1aUBShCpt1B4OO+cn3yoYvX1KXZ7AIcu2R4hmZ9APimWhlYSsCbngsIg
- zL5madhXMhj481UVVX8fq+2zGWZtxKfR7VFxKJYFroQPJS1t4jWCEVtZbTtQUppLIoIm
- zwiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXBaKEN6Li6r+pfz6ZoWOCKYTiUoauJt6zKyOGDqZsKWLwogRNktvDPUU5apv2D3MoG+EZ1ljBmupka@nongnu.org
-X-Gm-Message-State: AOJu0Ywh7xX1nMGOxNJpTFELBI1ScsYh2+eIztBN/Al6k0SVzjNjnnHo
- Jl60QLYROfNgWg180/dAGzswFl5v+p9bHuL+DgGK4vCXTwPcNP6GE3GIQypNhhKQhLP5+ahNoP6
- ggQuyqyJLCSXlO2yVti9LDMBNnC8CzZs0dtztSlmE1g==
-X-Gm-Gg: ATEYQzyp7kAnYNCC5KLPFeRapmDGaTpLnj1Zlr7ybUlAaOxq7jsfSxX4qQ95p6lqkcg
- WVwlAER2+nsBlB0U/kfZX2EY02zGQQgHl/XAviT7kNrcQf4qnbkOfVSB3R+na1y48d0gNA/tw7Q
- VZ6Ljl9gy0+Ou5XGLXgY+EQ1Xoe0YG8RDlVkgpuwwuVkbqMaEcrY0YVjFzQmhVj4kSU+8mAgi+d
- 8bTvKp3sT9mM3zk6T52EOuwZByJiZ+8pwr2qBEShymVV4CyaSBUFlbd+blMTExAY8LgSqD/NDlY
- EUXxFenzTHw2ounXh6gwtHuwBxLgNBngOvfom2qdveJSlO1Df2czafdqmA/pLRYYSsM=
-X-Received: by 2002:a05:690e:4004:b0:64e:b826:de08 with SMTP id
- 956f58d0204a3-64ee606d9c2mr3973014d50.11.1774456999645; Wed, 25 Mar 2026
- 09:43:19 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774457095; x=1775061895;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4Z3hJrPqohCZ7xz0oBjIkGXpc7omqy6yqnrqsopU7Fg=;
+ b=rq8mIFr7VwW9p1/N6nkWeW3BjifLBwF5kODv242DKdmof+kZyRnEhWZNKIlJUhBvZh
+ 4DCN6/ohVAirz5V3mZwn42Gi2aAYyiVr5nSra+4Q+PpTyrqV16lWCYb311hggWL6TbtL
+ 3u0F0EZGF6VYctbjAfPnXUNQCezs7JRPO2FH6LtHqQ4NsQfTi3t17rjaTPMLGr9ZnTiM
+ XYgeWp8TLC5a5LRPqFcrUf03O2A/fiuyHXZm6d5rRyrf3PxnCTrS4kv+17cwiUZ7aoHZ
+ 4OKKwK2ogBjcX0XQyWnwKayFybfRUYgVQZ6evuFk3LUEU613xV490jgF3wUtKJ767fjI
+ hpxQ==
+X-Gm-Message-State: AOJu0YzbhfUK8Y03dTZ3b5/+mAQcsw6u/9KAf3cY28fq631CCttSEkZw
+ 91v1nA0C4a7GUGt2Z4KCQ8g2UiLun+Rao6SNTDzlPb+VMXFyvmNQDGRZBFx5akb1X3Uw1VIiXcF
+ 5hd+dOuM/tXJworyHWHnccKo62X2lsUPdeILiLwtJHkO+AMFI8skjC37J/Jc2a89buk8xkU5cwz
+ Ldojs7JkhRP5LsxYjmCSe/mLkBP3B+K8gOGUDYAGuM
+X-Gm-Gg: ATEYQzyiCJUFE9Q1KLZXUQflvXUSbiVSWz7ia16BRJUGj9tfOXkqSOa8VJnrnnFL+ZB
+ 3pde6vtiW2rf7a89BV2gw5+iPfiWKNCgZyFm93VxOZkbQk/bWVh0qGkmajnGKkXQT+uOutAWBpK
+ Ub21dxssTagOkZNvbNjRdNhEDYVyg/c9KTbLU8g7Ee7zDiN+sjRkCjFZviziNJ37BZr1LUKyB8q
+ 2U3BwTUKKsMEPcmkFWeDu4W41JxXzFUplS0XasRhE/s8oKsGNTHZJ3mU9CwTNHsr/yHsJ8joNL3
+ hTKP3wJODRj98hAi6bI++7bE6AmCNZnTp/UWyexgep8fqEXTnSUPNXqMRFyQEytQGjVSdKU7ojn
+ JeSKvUoNCJx0t591pBUB1RTJnabh3y3OzXhweg39S0ohaY20Quhkbqa2x7Z0mh+GqGEArrl1qYb
+ L1eYp2q9LLPbuFmaH3TCitQdVM
+X-Received: by 2002:a05:600c:3154:b0:485:3ee1:eba5 with SMTP id
+ 5b1f17b1804b1-4871608d862mr65928875e9.27.1774457095206; 
+ Wed, 25 Mar 2026 09:44:55 -0700 (PDT)
+X-Received: by 2002:a05:600c:3154:b0:485:3ee1:eba5 with SMTP id
+ 5b1f17b1804b1-4871608d862mr65928345e9.27.1774457094642; 
+ Wed, 25 Mar 2026 09:44:54 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.85.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4871738c16dsm23505835e9.30.2026.03.25.09.44.54
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Mar 2026 09:44:54 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/19] Fixes (including big i386/emulate performance
+ improvement) for 11.0-rc
+Date: Wed, 25 Mar 2026 17:44:34 +0100
+Message-ID: <20260325164453.72127-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
- <ef2a0d92-c7f6-438b-a15a-2712e1c4373a@linaro.org>
- <CAFEAcA-kk29mjGWLrAGjd9AiAW64v0TvWdedZypSH0i43WgQzw@mail.gmail.com>
- <39b64118-7faa-4308-a603-d568cc78de47@linaro.org>
- <878qbg410i.fsf@draig.linaro.org>
- <f81e71f3-fe15-459a-9c27-2aea1592d155@linaro.org>
-In-Reply-To: <f81e71f3-fe15-459a-9c27-2aea1592d155@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 25 Mar 2026 16:43:08 +0000
-X-Gm-Features: AQROBzDLIP9iP_cqneYvqQdZXKkV8VJ4JKZxpSWhv6kj6UcpyB0YzmS7GfEZwUY
-Message-ID: <CAFEAcA_HLgphjGev_+HG_1KQChEZJKk3+9qP7_q79doG1EWD3Q@mail.gmail.com>
-Subject: Re: Cleaning up contrib/ and tools/
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- QEMU Developers <qemu-devel@nongnu.org>,
- "Daniel P. Berrange" <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,26 +119,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Mar 2026 at 15:17, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 3/25/26 4:11 AM, Alex Benn=C3=A9e wrote:
-> > The aim have having these more complete plugins in the source tree was
-> > to ensure they where updated as APIs change as well as provide useful
-> > tools compared to the more toy like implementations we use for
-> > check-tcg.
-> >
-> > I'm not sure about having them directly in the plugins folder as their
-> > implementation is meant to be separated from the core QEMU code itself.
-> > Maybe tools/plugins?
->
-> Fine for me.
-> Peter, is that ok for you too?
+The following changes since commit 8e711856d7639cbffa51405f2cc2366e3d9e3a23:
 
-It doesn't really fit with "tools/ is where we put the things
-which --enable-tools causes us to build and which we document
-in docs/tools". The plugins are neither of those. That's why
-I thought some subdirectory of plugins/ would fit better.
+  Merge tag 'hppa-fixes-for-v11-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-03-20 10:04:48 +0000)
 
--- PMM
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to dfbc524fdd8932951791e78121be0ddca0529162:
+
+  target/i386: emulate: follow priv_check_exempt (2026-03-25 17:43:41 +0100)
+
+----------------------------------------------------------------
+* tests/functional: preserve PYTHONPATH entries
+* target/i386: show GMET feature
+* target/i386/emulate, whpx/i386: on-demand access to runtime state, MMU fixes
+* tdx: fix use-after-free in tdx_fetch_cpuid
+* treewide: replace qemu_hw_version() with QEMU_HW_VERSION
+* sb16: detect invalid migration stream
+
+----------------------------------------------------------------
+Alyssa Ross (1):
+      tests/functional: preserve PYTHONPATH entries
+
+Jenny Guanni Qu (1):
+      hw/audio/sb16: validate VMState fields in post_load
+
+Mohamed Mediouni (14):
+      whpx: i386: workaround for Windows 10 support
+      whpx: i386: enable exceptions VM exit only when needed
+      whpx: i386: skip TSC read for MMIO exits
+      whpx: i386: skip XCRs read for MMIO exits
+      whpx: i386: don't restore segment registers after MMIO handling
+      target/i386: emulate: add new callbacks
+      whpx: i386: add implementation of new x86_emul_ops
+      target/i386: emulate: indirect access to CRs
+      whpx: i386: indirect access to CRs
+      target/i386: emulate: segmentation rework
+      whpx: i386: fetch segments on-demand
+      whpx: i386: fast runtime state reads
+      target/i386: emulate: set PG_ERROR_W_MASK as expected
+      target/i386: emulate: follow priv_check_exempt
+
+Paolo Bonzini (3):
+      tdx: fix use-after-free in tdx_fetch_cpuid
+      treewide: replace qemu_hw_version() with QEMU_HW_VERSION
+      target/i386: expose AMD GMET feature
+
+ include/hw/core/boards.h          |   6 -
+ include/qemu/hw-version.h         |  18 +--
+ target/i386/emulate/x86_emu.h     |   6 +
+ hw/audio/sb16.c                   |   7 +
+ hw/ide/core.c                     |   2 +-
+ hw/scsi/megasas.c                 |   2 +-
+ hw/scsi/scsi-bus.c                |   2 +-
+ hw/scsi/scsi-disk.c               |   2 +-
+ system/vl.c                       |   4 -
+ target/i386/cpu.c                 |   2 +-
+ target/i386/emulate/x86_helpers.c |  83 ++++++-----
+ target/i386/emulate/x86_mmu.c     |  27 ++--
+ target/i386/hvf/x86.c             |  11 ++
+ target/i386/kvm/tdx.c             |   2 +-
+ target/i386/whpx/whpx-all.c       | 284 ++++++++++++++++++++++++++++++++------
+ target/s390x/cpu_models.c         |   2 +-
+ util/osdep.c                      |  12 --
+ tests/functional/meson.build      |  12 +-
+ 18 files changed, 343 insertions(+), 141 deletions(-)
+-- 
+2.53.0
+
 
