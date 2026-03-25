@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B1C103A9A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40E6103A9A1
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ED3-0003Dg-SJ; Tue, 24 Mar 2026 22:43:05 -0400
+	id 1w5ED5-0003FA-C6; Tue, 24 Mar 2026 22:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5ED2-0003D1-3v
+ id 1w5ED2-0003DF-K5
  for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:43:04 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5ED0-0002hU-Lk
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:43:03 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-82c28f0a4ecso3047800b3a.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:43:02 -0700 (PDT)
+ id 1w5ED0-0002hH-Lw
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:43:04 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-82ae379000fso239334b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:43:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774406581; x=1775011381; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774406579; x=1775011379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HXFYKSBtZ3rl5sjFkHrU2KpK/1VnbUweUNCoeUTZG00=;
- b=u9h8pdBcw1sQ/nUHEB5m4sZH6M3+DRdFjXOuwtEDgk1UXuavjlre8Ya3gBUh/fWzj6
- tVslWmXtMVlINpnY15rLtH4qDRHUM05DDe43gkTs9LFj1/4bAN/kkqGE5jFAJWJX0fEj
- BBOggac9poWeCZuSv1Uuc049MCoYCrg79nJvNjAxKp3i1D9dZ5ISaHwd3BcJfFWh8vOH
- D/4Aoc1tt6eur3+xIVCUp2Td+I821MyKnZOT6k25jS67jMYhrpVvTpDR77kTXkdreC8S
- MZvGPZMofZSYq5dRsf2iKbFKxU9sFkL1qOd54F4CbtwX4KYxNtzBzEClAxjbFH52bJrc
- L3fQ==
+ bh=wLUO20s9fc0WSyu9nkSPfkpNGOICK40fTp3wqsAJMak=;
+ b=IcB4jh031t79DQLkuQb0BNWY8KMcPmLoemX4GYIHPpvnshomqFroociPAfImEDmwdp
+ MyB3321zLeQBX9uNmayETm7zvQc3nqGA4U3gAIqZpzuA4+cD1xwE2HdrAUt/xms+vZZ0
+ Sn4kdgDMRC+mE8uWAc+52CC5nSzfKpd99DWnup9nuZr1SknOf4faBF7r7dLiEAMQVIuM
+ aRnFHwmp39v9HGmL1TBfIaZHUzgNKHu9JO1Jill8r2UQaNifm3+w5mh25Hu0XbVPFuwO
+ 9EZWLdFFVnMjnrMhKUgAOJ61NgJ/sYgngbyllx3r10Pp/RMkM6RZAq5zSo7rV9JmV/Gb
+ VfwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774406581; x=1775011381;
+ d=1e100.net; s=20251104; t=1774406579; x=1775011379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HXFYKSBtZ3rl5sjFkHrU2KpK/1VnbUweUNCoeUTZG00=;
- b=Pu5rgbfZgTdfuMsZ5FqHmZAZWwfLi6R2+ylr+4Kbdl79pQJ7b7cL7ju0ehbKKylK7x
- bQjE2CKfHzfdlKSpXb/sLkFIH4apEo70SbV8VihjfTIQB26diExjFA9DwYVCB+M8DJOO
- n2q6jc4rg3HhoIu/H7iFLyOWow6uBxkJJeihvtLmCCua6YdmWHIE46t+ngX51WVC9I6a
- iw0lhUsDDfVFuX/TbG288idKn0iepvx0GdCzibVdHBsXPYMUxFcxyvarPRd8GFqXND2q
- /ZZc2sr1Q5uXRikLCVttiiF6YNrROl1T//znCWH916veP731U5720y/2L2qRvAbKYGfD
- b5iw==
-X-Gm-Message-State: AOJu0Yxzo8B+PxkQbu/mcsXkEouzgclN+DSZzCiqR1kl29G0WlgxnJIx
- AGxV3cS0ffRygLyMH5bMB69Z/4EI7bAbBfzynfJuLSLVdvNVbgcG+5fh28zOTv47sPq2mI6M5+Y
- Fbjg7QdM=
-X-Gm-Gg: ATEYQzwHdZJpKFd88dG0oV9o2Ak3EOYLNZbQKE0754mpMROgpLl127Wd9/qTQljvfxo
- /zfY5UyozIw+ngbNDw8GimDcPtknKe3KDiz75LKuzP3G3w3bphwpTNMOd51xSTF1gavTM+E1VbI
- nSWcu/a/yskOCyhfCL+Ap99QLStgtY0jOdYBCGXymCw3uzCTzxvS+UpjhaLHgZXEc3pDN6FB2Hq
- IbmlEdeWvvYhfqyQ/tjww/NwAR8eVHP1N4ot+UJYKpCcyfnuvK3w2+5ct2F8deA5fQkqOcDJDP+
- 3muI83KlFgFGEXIUpZ+vg0DFe+2zD0s8VZT35wzfCahWMHny/sM8Rgh6heVAREYFzGN6S0eb59/
- 5fVifXCBPA7Z8F7onGRrpHAhsxNXKeOPzrsE/Kdcw356+BsZAHTX1o9oLtE7CC6tMZTBmmRsyPl
- F0cbb7lTzeO+7Rspmt6Vk38NvdwHwN7StlrRhqSGeuwH1Q2zacEn11UG0BehF+tVH45tscv60ZL
- 38X
-X-Received: by 2002:a05:6a00:f89:b0:82c:6c90:c77f with SMTP id
- d2e1a72fcca58-82c6e1353a3mr1742795b3a.50.1774406580978; 
- Tue, 24 Mar 2026 19:43:00 -0700 (PDT)
+ bh=wLUO20s9fc0WSyu9nkSPfkpNGOICK40fTp3wqsAJMak=;
+ b=CA4SBZuJJiYsTujOH23rWah3UojCCifnUTFENz7YI9q0g6OgQTD6TnE9ZnfNWtwT4g
+ JBo/ibANGYCkdojLUhyK9OLAgmQAdqP1md5BqRHEWAv+U1na4pM7sSx5V3D65i+FnV8P
+ fAX9PV6ZwftasDStRBC6xpAj53cjtOOuqI5sYcQh3UCus7VcbwKZPnO+R3CSEjB2yPcq
+ KZS2AmgFLlg985poMT4j14OYq7pbFXvREvWOtGk/NEQG3BvZznv4oF8v+/R1EjCESl/T
+ YrBPeKG/Vc5amKB3YcC2ynEJYOp5li08GraIycPjLstc07j9fdik6/QVG493iFXugHV9
+ +YQA==
+X-Gm-Message-State: AOJu0YwfCp6oGyRC64YPKWkn4dsVmHaQ9nLtpUBSABPf1vIxoUZLgHv0
+ Vii66PG5piE2snAO1q+Rgenb+Q3FidVTEXizNvO5bgnBjfzEc9NCZMUXWGrNQ3dzhy7MVnn/phd
+ r/iFySOQ=
+X-Gm-Gg: ATEYQzx41+W9yyJt6Kp2CljZslZfiQ9oxYRtSVWRFGbOaXMKhkPS2HLgXHPHS9pIMxR
+ Uu5EEde5ByMr2EmiEXsulgoiYWBN/0p40wP53s0tPFX+ixGaS6Wnh+KlXj7f0OMwA/Ebj2FKlw/
+ dGAeK+76/NkGZLT9+UpGL70/JC8o/hY/4U96G8ld6cqbo4NqefA2I3fTtvwUuyruqk2siozaGcy
+ 3jajzXzz/CvWtlVmThgtn+uCzCurDLyZ3ruGeaXEqDa2PM+YEL3fhGW87jghiurBitrnITKymbI
+ hQzDOwgvFJmCKs+cnBg5AGvtPtIXnHuHABcBeJbNEh29iagqvJp//7loTtsa9XrgAAR6h2TYTf3
+ vfm64fioM8XHT0yeFugEZ2DhpYVnkgu1YG7Tva47YHf+r6lkTg+g4A+MaknOLzuCUtUHUYTxEyE
+ aHxNdKkUD4NazIqRH4xHH9tNP7KJjDxqxBAJn5J6+q/5EVw9WlQxUjeEOGnGQq8wpC0z/98vGIP
+ clqfb3+mDOHIec=
+X-Received: by 2002:a05:6a00:2c95:b0:824:3d5b:3cd3 with SMTP id
+ d2e1a72fcca58-82c6d4e1df4mr1823738b3a.0.1774406579484; 
+ Tue, 24 Mar 2026 19:42:59 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82b04222f42sm16762716b3a.61.2026.03.24.19.43.00
+ d2e1a72fcca58-82b04222f42sm16762716b3a.61.2026.03.24.19.42.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 19:43:00 -0700 (PDT)
+ Tue, 24 Mar 2026 19:42:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -73,17 +73,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH 3/3] tests/tcg/plugins/mem.c: fix endian swap in
- update_region_info
-Date: Tue, 24 Mar 2026 19:42:52 -0700
-Message-ID: <20260325024252.3369186-4-pierrick.bouvier@linaro.org>
+Subject: [PATCH 1/3] tcg: Pass host-endian values to plugin_gen_mem_callbacks_*
+Date: Tue, 24 Mar 2026 19:42:50 -0700
+Message-ID: <20260325024252.3369186-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
 References: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,45 +105,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-value returned by qemu_plugin_mem_get_value() is always in host-endian
-order, so we need to convert TO target endianness and not FROM it.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+If the host does not support swapped-endian loads and stores,
+then we emulate those within the tcg expanders with explicit
+bswap operations.
+
+However, we were passing values to the plugin interface in
+the middle of those bswap operations, which meant that we
+would pass values of the wrong endianness to plugins when
+running on hosts without swapped-endian loads and stores.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3351
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/tcg/plugins/mem.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tcg/tcg-op-ldst.c | 52 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 25 deletions(-)
 
-diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
-index 1ee257f855b..6b0732dc0fd 100644
---- a/tests/tcg/plugins/mem.c
-+++ b/tests/tcg/plugins/mem.c
-@@ -154,20 +154,20 @@ static void update_region_info(uint64_t region, uint64_t offset,
-         val_size = 1;
-         break;
-     case QEMU_PLUGIN_MEM_VALUE_U16:
--        swapped_value.data.u16 = be ? GUINT16_FROM_BE(value.data.u16) :
--            GUINT16_FROM_LE(value.data.u16);
-+        swapped_value.data.u16 = be ? GUINT16_TO_BE(value.data.u16) :
-+            GUINT16_TO_LE(value.data.u16);
-         val_ptr = &swapped_value.data.u16;
-         val_size = 2;
-         break;
-     case QEMU_PLUGIN_MEM_VALUE_U32:
--        swapped_value.data.u32 = be ? GUINT32_FROM_BE(value.data.u32) :
--            GUINT32_FROM_LE(value.data.u32);
-+        swapped_value.data.u32 = be ? GUINT32_TO_BE(value.data.u32) :
-+            GUINT32_TO_LE(value.data.u32);
-         val_ptr = &swapped_value.data.u32;
-         val_size = 4;
-         break;
-     case QEMU_PLUGIN_MEM_VALUE_U64:
--        swapped_value.data.u64 = be ? GUINT64_FROM_BE(value.data.u64) :
--            GUINT64_FROM_LE(value.data.u64);
-+        swapped_value.data.u64 = be ? GUINT64_TO_BE(value.data.u64) :
-+            GUINT64_TO_LE(value.data.u64);
-         val_ptr = &swapped_value.data.u64;
-         val_size = 8;
-         break;
+diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
+index 354d9968f92..22211ccb452 100644
+--- a/tcg/tcg-op-ldst.c
++++ b/tcg/tcg-op-ldst.c
+@@ -262,9 +262,6 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+     addr_new = tci_extend_addr(addr);
+     copy_addr = plugin_maybe_preserve_addr(addr);
+     gen_ldst1(INDEX_op_qemu_ld, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
+-    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
+-                                 QEMU_PLUGIN_MEM_R);
+-    maybe_free_addr(addr, addr_new);
+ 
+     if ((orig_memop ^ memop) & MO_BSWAP) {
+         switch (orig_memop & MO_SIZE) {
+@@ -280,6 +277,10 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+             g_assert_not_reached();
+         }
+     }
++
++    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_R);
++    maybe_free_addr(addr, addr_new);
+ }
+ 
+ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+@@ -290,10 +291,10 @@ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+     tcg_gen_qemu_ld_i32_int(val, addr, idx, memop);
+ }
+ 
+-static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
++static void tcg_gen_qemu_st_i32_int(TCGv_i32 orig_val, TCGTemp *addr,
+                                     TCGArg idx, MemOp memop)
+ {
+-    TCGv_i32 swap = NULL;
++    TCGv_i32 val = orig_val;
+     MemOpIdx orig_oi, oi;
+     TCGTemp *addr_new;
+ 
+@@ -302,29 +303,29 @@ static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
+     orig_oi = oi = make_memop_idx(memop, idx);
+ 
+     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+-        swap = tcg_temp_ebb_new_i32();
++        val = tcg_temp_ebb_new_i32();
+         switch (memop & MO_SIZE) {
+         case MO_16:
+-            tcg_gen_bswap16_i32(swap, val, 0);
++            tcg_gen_bswap16_i32(val, orig_val, 0);
+             break;
+         case MO_32:
+-            tcg_gen_bswap32_i32(swap, val);
++            tcg_gen_bswap32_i32(val, orig_val);
+             break;
+         default:
+             g_assert_not_reached();
+         }
+-        val = swap;
+         memop &= ~MO_BSWAP;
+         oi = make_memop_idx(memop, idx);
+     }
+ 
+     addr_new = tci_extend_addr(addr);
+     gen_ldst1(INDEX_op_qemu_st, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
+-    plugin_gen_mem_callbacks_i32(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
++    plugin_gen_mem_callbacks_i32(orig_val, NULL, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_W);
+     maybe_free_addr(addr, addr_new);
+ 
+-    if (swap) {
+-        tcg_temp_free_i32(swap);
++    if (val != orig_val) {
++        tcg_temp_free_i32(val);
+     }
+ }
+ 
+@@ -360,9 +361,6 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+     addr_new = tci_extend_addr(addr);
+     copy_addr = plugin_maybe_preserve_addr(addr);
+     gen_ld_i64(val, addr_new, oi);
+-    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
+-                                 QEMU_PLUGIN_MEM_R);
+-    maybe_free_addr(addr, addr_new);
+ 
+     if ((orig_memop ^ memop) & MO_BSWAP) {
+         int flags = (orig_memop & MO_SIGN
+@@ -382,6 +380,10 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+             g_assert_not_reached();
+         }
+     }
++
++    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_R);
++    maybe_free_addr(addr, addr_new);
+ }
+ 
+ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+@@ -392,10 +394,10 @@ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+     tcg_gen_qemu_ld_i64_int(val, addr, idx, memop);
+ }
+ 
+-static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
++static void tcg_gen_qemu_st_i64_int(TCGv_i64 orig_val, TCGTemp *addr,
+                                     TCGArg idx, MemOp memop)
+ {
+-    TCGv_i64 swap = NULL;
++    TCGv_i64 val = orig_val;
+     MemOpIdx orig_oi, oi;
+     TCGTemp *addr_new;
+ 
+@@ -404,32 +406,32 @@ static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
+     orig_oi = oi = make_memop_idx(memop, idx);
+ 
+     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+-        swap = tcg_temp_ebb_new_i64();
++        val = tcg_temp_ebb_new_i64();
+         switch (memop & MO_SIZE) {
+         case MO_16:
+-            tcg_gen_bswap16_i64(swap, val, 0);
++            tcg_gen_bswap16_i64(val, orig_val, 0);
+             break;
+         case MO_32:
+-            tcg_gen_bswap32_i64(swap, val, 0);
++            tcg_gen_bswap32_i64(val, orig_val, 0);
+             break;
+         case MO_64:
+-            tcg_gen_bswap64_i64(swap, val);
++            tcg_gen_bswap64_i64(val, orig_val);
+             break;
+         default:
+             g_assert_not_reached();
+         }
+-        val = swap;
+         memop &= ~MO_BSWAP;
+         oi = make_memop_idx(memop, idx);
+     }
+ 
+     addr_new = tci_extend_addr(addr);
+     gen_st_i64(val, addr_new, oi);
+-    plugin_gen_mem_callbacks_i64(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
++    plugin_gen_mem_callbacks_i64(orig_val, NULL, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_W);
+     maybe_free_addr(addr, addr_new);
+ 
+-    if (swap) {
+-        tcg_temp_free_i64(swap);
++    if (val != orig_val) {
++        tcg_temp_free_i64(val);
+     }
+ }
+ 
 -- 
 2.47.3
 
