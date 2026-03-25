@@ -4,125 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E786EFEA82F
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 07:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641DBFEA82F
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ItZ-0003LZ-Dh; Wed, 25 Mar 2026 03:43:17 -0400
+	id 1w5JCT-00071d-S9; Wed, 25 Mar 2026 04:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w5ItX-0003LL-IJ
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:43:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5JCO-000714-Ln
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:02:45 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w5ItV-0007i0-9k
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:43:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774424592;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9cFcKqzUReN2Kb59QJDJyaHQhrpjICdAyYiji/oVqSc=;
- b=Lf9jMhStX8Xxyzh1DyH95eyXE51lXuWSlhgouw73PhpQ7Xl+H92OQZToDaYvwuxDoXt3rD
- 3tLPvCjcQ0cFBzmFy+aWXCBeI8WbYO3uASuH+cc1i+5ggklpUUgJuShDTkzgQVUwmw6kf8
- PZUsnaDI6T5McxtZu6/e5bJZL4BWOSQ=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-88-RsSa1PjLM-uSChTQ0V-JRA-1; Wed, 25 Mar 2026 03:43:10 -0400
-X-MC-Unique: RsSa1PjLM-uSChTQ0V-JRA-1
-X-Mimecast-MFC-AGG-ID: RsSa1PjLM-uSChTQ0V-JRA_1774424590
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-89cc5305180so35147056d6.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 00:43:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774424589; cv=none;
- d=google.com; s=arc-20240605;
- b=eptIF2WDy/0Mm12NMyxSc/kulQaredtxZdT3bUuVXzE2Z1GFlyGVMNjTAr4lr6Ltqz
- s2ZY1ielq3LAP45HAc7Zo5RFqD5S6uT1jAsXrzoNqQH8XSWHLAK+oAU2IbKT73OXvqx8
- XHczY/Pjo/yyXblqw4Z5nDe/mj6OvQ+gTmLDQPsHHGYeemYEsWVLCIMda/m+HGrKvfTT
- bRTF1dY2SIqA995G/EvWBBQCg8qDI+mTieGT1lIGM97STdtIznp/5EdLRWEv3xf9Mhuc
- 89asyERRnYI5pfKGrfJTnmo/r35raaU/Dt9m6uOHk4Kuaw4lQjLj6lPYsGGt8vsjqfxv
- QrNA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=9cFcKqzUReN2Kb59QJDJyaHQhrpjICdAyYiji/oVqSc=;
- fh=paY6DLCz1Xl/OSo6ZOZWU9H/qfLs/so0o6ytPY632Xs=;
- b=BOFgwRA6h9UDrbqgeblOVIidymTTXo4YvPzzVMSBfHQLrO+aj5c3+dO7Eo7uXzfS7j
- vmZUA4TA6PPvBnz8mvYaeoLlAURqVMGkZFGmfQnfgmYIR2EIZh9jHs/LJK4atW/00MIf
- NKABg9UVsgTlbV2GBQrQb4tPjcXNdUP9gGv+FERsVl2SbH+0VUM2Wetu95fQynSLt5WA
- frmXi4UH1hKiPZ0PsFBdWU0XwZApkOresCdsoHOsYT/qWOe8/iGmwtAF/P3khvqMvkpy
- yv9O6MqX/BGNdpTzO/11DUcKvot2t3UsfL3Wnx4E8q1mXKIwEYEk/kNb+fxCdjt8mU06
- 35Zg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774424589; x=1775029389; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9cFcKqzUReN2Kb59QJDJyaHQhrpjICdAyYiji/oVqSc=;
- b=SxNSIgIMlL77OmjF5lUG/P/ju/EWAqNR+xpJfSm1LzUhDcLOXY8/4WEX7cEI+cc386
- vhxRznTznkfAeuD+WMdOUNwWgHRiLdw4PKbBnOAo+0hVp68LCuh1m1okO1Bl48JXVaGO
- e5wRmxbZDt5H5Ew09shW5X/q1I9qBkS5Pw9usCo3W1GGhaPmWZF7Em2aP1IrJcKVwwb+
- sJ3/YkMBykCNYcXnAs9jFeXlFVRQ1QpJkqXvVAlHMu8+sBjfkmrSbMQgOQR089irh0uN
- xjzXBoooiyt3v06AY1VA4MaPgJn5aoK+G4142rR4OwqJYM+bcX7n/H51l+GahAedEpL/
- qcmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774424589; x=1775029389;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9cFcKqzUReN2Kb59QJDJyaHQhrpjICdAyYiji/oVqSc=;
- b=RGBd4SuoaIb40cgpI6Tqr5c0rKKsvvfAkpWpPl5j1ofmFzLSHkRn8OUFzojVA2PlDo
- 1+DScIAsI6YsfmXCgXU+d7rFBJEIcv0eA4jplbmLFMgP8KGUhb+efLRBcmxvCFxo/+ox
- BCvGkMDVVgIT5FFbjZykOB/BWpnMIlC2axnKhAuHGst/URuOUIU2VnH2GzBVYfTVi8Lh
- fBSf4YfxYnDAwS5j/cDjGrkaGNAbd58b4NkRF4S+HhJiqjDPemV0CCt0cah1cZAHegAL
- jyQIehZPW0HdEnsbp71ibOIPOSfnoTPCtk2AnOCfqvhfw0JxQ/DRiBcfu84Y7ho0xzAZ
- jyow==
-X-Gm-Message-State: AOJu0YwSMnWTWvCc1qqaPxiNtP4Eca8bwgJPlUjilE4uh1BZOiBu01xv
- TF1QjxfrdPsHssYFjh6RwDDXhh+B+IfYlZLOndmZvoMetzJwg4Z9l3TET1AdmbbnUkqYRlxMsFp
- OJpdjl6lc6TuoObMidUSEtYZOyiHW5ujCu/Fb5/BUMIhq+fRvQfKBPQt4cLAcCsvf1fuZvZ42sO
- /osWfQcEevKuem7O2Y0NQk14+KBn8uHYI=
-X-Gm-Gg: ATEYQzxyxK6dytt2i5QusU3+/R+1NOsiFiNpPaGkOgMIsPKXjtXP/mdvWV68eWqny7h
- zUy1fKLEAPfAnPY8N1kr2vi7VGbaBcuLdPSNscjgV1Sh5lNh6prHwK5NfBw0EFD3Lj3MwiDBxiW
- wG12pxFSDu9629SJDcaYjeipllv90idVAsHUMAiay8VoXuNfc+pE4Qb1SHLOB4PSLMPsmpFPniM
- 28IFq2c
-X-Received: by 2002:a05:6214:5f0b:b0:89a:116b:e67c with SMTP id
- 6a1803df08f44-89cc4abf04dmr41789036d6.45.1774424589602; 
- Wed, 25 Mar 2026 00:43:09 -0700 (PDT)
-X-Received: by 2002:a05:6214:5f0b:b0:89a:116b:e67c with SMTP id
- 6a1803df08f44-89cc4abf04dmr41788786d6.45.1774424589132; Wed, 25 Mar 2026
- 00:43:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5JCL-0003Qd-97
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:02:44 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62P82YAq055578
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 25 Mar 2026 17:02:34 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=RxQSz5Lzd+JXhSHBXYFOEwuUJq1+dt0uw5uZNp5kCc4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1774425754; v=1;
+ b=lRw3XtIYjjzq2OHK1+/ryIKqfX42WXx7szBJ9yoAmQrzyBkxz98URkV6yT9/fSVt
+ bNznZdqvz4CfTKZqHb5rhZ40Vk+/TAn8Rxnp0t6I4/5R+oFq9iJVN/Hfy7YGwU1m
+ Hfd9P0s8A5+K/OvhV25Iv/UQ08AJpF/vAmTDcARh25/5d3uUhYYV8PMV7Avun5Hf
+ jGfQK6NqKo/PypYaakgWkcCwdkA4yY7n5Z92isb28QVyIslknH5ERdo1Vmpgu9M2
+ QuV/xktVu65MbSfaWN/URc9NvWw2x5Ja99Tm+gdkNVqHrploxeFyu4t9gr4/xpqs
+ 1j3WzQL0lOEcQgPAQSc6xg==
+Message-ID: <c7ced616-2d9e-4180-ad40-c1f0d13fdc05@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 25 Mar 2026 17:02:33 +0900
 MIME-Version: 1.0
-References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 25 Mar 2026 09:42:58 +0200
-X-Gm-Features: AQROBzAKK3GaJNC9kD07QMq8_6w6Fz7YLwXkIqHsWYtFvbxPSo81PpweMcstRDs
-Message-ID: <CAPMcbCoT+HT14GQrCPjNpfivSM+o8oHF0h7mjGPWMYfnVdfbCA@mail.gmail.com>
-Subject: Re: Cleaning up contrib/ and tools/
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- "Daniel P. Berrange" <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Eric Blake <eblake@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000050f70c064dd46b43"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260319052023.2088685-1-vivek.kasireddy@intel.com>
+ <20260319052023.2088685-11-vivek.kasireddy@intel.com>
+ <6af4e73c-4ad5-4684-9982-04276b6b7daa@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71851291496AF53CF79309DAF849A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB71851291496AF53CF79309DAF849A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,182 +82,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000050f70c064dd46b43
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2026/03/25 14:29, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v12 10/10] virtio-gpu-dmabuf: Create dmabuf for
+>> blobs associated with VFIO devices
+>>
+>> On 2026/03/19 14:15, Vivek Kasireddy wrote:
+>>> In addition to memfd, a blob resource can also have its backing
+>>> storage in a VFIO device region. Since, there is no effective way
+>>> to determine where the backing storage is located, we first try to
+>>> create a dmabuf assuming it is in memfd. If that fails, we try to
+>>> create a dmabuf assuming it is in VFIO device region.
+>>>
+>>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+>>> backing storage is located in a memfd or not. If it is not, we invoke
+>>> the vfio_device_create_dmabuf_fd() API which identifies the right
+>>> VFIO device and eventually creates a dmabuf fd.
+>>>
+>>> Note that, for mmapping the dmabuf, we directly call mmap() if the
+>>> dmabuf fd was created via virtio_gpu_create_udmabuf() since we
+>> know
+>>> that the udmabuf driver supports mmap(). However, if the dmabuf
+>> was
+>>> created via vfio_device_create_dmabuf_fd(), we use the
+>>> vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
+>>>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Alex Williamson <alex@shazbot.org>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/virtio-gpu-dmabuf.c | 23 ++++++++++++++++++++---
+>>>    1 file changed, 20 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>> dmabuf.c
+>>> index 89aa487654..f953db0fbe 100644
+>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>> @@ -147,9 +147,26 @@ void virtio_gpu_init_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>            if (res->dmabuf_fd ==
+>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>>                error_free_or_abort(&local_err);
+>>>
+>>> -            qemu_log_mask(LOG_GUEST_ERROR,
+>>> -                          "Cannot create dmabuf: incompatible memory\n");
+>>> -            return;
+>>> +            res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
+>>> +                                                          res->iov_cnt,
+>>> +                                                          res->blob_size,
+>>
+>> The correspondence between (iov, iov_cnt) and blob_size is more of a
+>> internal concern of virtio-gpu, not of VFIO. This parameter is better
+>> removed from vfio_device_create_dmabuf_fd() and
+>> vfio_device_mmap_dmabuf().
+> I don't disagree. So, should we add the following check in
+> virtio_gpu_init_dmabuf() or somewhere?
+> if (iov_size(iov, iov_cnt) != blob_size)
 
-On Tue, Mar 24, 2026 at 7:09=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org>
-wrote:
+I suggest to have a check in virtio_gpu_create_mapping_iov() since it's 
+not even specific to DMA-BUF.
 
-> We have a couple of directories in our source tree which have
-> accumulated things in them that don't really belong there; this is a
-> proposal to clean up by moving things to more appropriate locations
-> (as 11.1 work, obviously).
->
-> Firstly, contrib/ has a tendency to be a dumping ground for stuff that
-> we didn't think hard enough about finding a good home for, and for
-> things in a weird "not really maintained" state. We should either
-> (a) care enough about something to give it a correct home and to
-> maintain it, or (b) not care about it, and kick it out of our tree.
->
-> Secondly, tools/ exists but is very under-used. I think it should be
-> for the set of standalone tools that we build if you configure
-> --enable-tools and which we document in docs/tools.  Currently it
-> contains two things, one of which doesn't match that idea...
->
-> So, starting with tools/:
->
->  * tools/ebpf/ is the source for the pre-generated
->    ebpf/rss.bpf.skeleton.h ; it should move to ebpf/
->  * tools/i386/qemu-vmsr-helper.c is the source for the
->    qemu-vmsr-helper tool; it can stay (should it lose its
->    i386/ subdir ?)
->  * the tools which currently are in the top level directory
->    should move into tools/:
->     - qemu-bridge-helper.c
->     - qemu-edid.c
->     - qemu-img.c
->     - qemu-io.c
->     - qemu-keymap.c
->     - qemu-nbd.c
->
-> And for contrib/, easy ones first:
->  * contrib/vhost-user-{blk,bridge,gpu,input,scsi} move to tools/
->  * contrib/elf2dmp moves to tools/
->  * contrib/ivshmem-client and contrib/ivshmem-server move to tools/
->  * contrib/plugins moves to plugins/plugins (or a different subdir
->    name of your choice)
->
-> For contrib/, ones I'm less sure about:
->
->  * contrib/vmapple/uuid.sh is a one-liner; we should either commit to
->    having this, by giving it a better name and documentation and
->    installing it in 'make install', or else junk it and have
->    docs/system/arm/vmapple.rst give you the plutil command and tell
->    you to run it directly.
->  * contrib/gitdm moves to scripts/ ? It's just config data for
->    generating statistics about patches, so with other
->    developer-related stuff makes sense.
->  * contrib/systemd -- we don't do anything with these (e.g.
->    'make install' ignores them), so I am sceptical about their
->    usefulness. We could drop them, or move them to scripts/, or put
->    them in tools/ and qga/ with the tools that they are systemd
->    scripts for.
->
+And instead let's ensure iov_size(iov, iov_cnt) >= blob_size and reject 
+otherwise instead. I cited Codex's reasoning for this, which I totally 
+agree. (I applied the Codex for Open Source program for access to Codex. 
+And just in case: we are currently not allowed to use LLMs for writing 
+patches and its use is restricted for the other purposes.)
 
-Not sure that we need qemu-guest-agent.service at all. Fedora/CentOS don't
-use it and create a different service file.
-I think this one can be dropped.
+It will be also more of a bug fix, so I think it is better to be sent as 
+an independent patch instead of including it into this series.
 
-Best Regards,
-Kostiantyn Kostiuk.
+Regards,
+Akihiko Odaki
 
+Below is the Codex's output based on commit 8e711856d763 ("Merge tag 
+'hppa-fixes-for-v11-pull-request' of 
+https://github.com/hdeller/qemu-hppa into staging"):
 
+In current QEMU, omitting the check leaves inconsistent state possible, 
+and the effect depends on the direction of the mismatch.
 
->
-> Then we can delete contrib/ entirely.
->
-> (scripts/ is also in danger of being "miscellaneous dumping
-> ground", of course. I have tried not to suggest it as the
-> destination when I could think of an alternative.)
->
-> -- PMM
->
->
+If iov_size < blob_size, this is the bad case. The dmabuf/export backing 
+is built from the iov lengths in virtio-gpu-udmabuf.c (line 45) and 
+virtio-gpu-udmabuf.c (line 63), but remap and scanout bounds use 
+blob_size in virtio-gpu-udmabuf.c (line 73) and virtio-gpu.c (line 761). 
+There is also a fast path that directly exposes iov_base as res->blob 
+for small single-iov blobs in virtio-gpu-udmabuf.c (line 136), and 
+scanout later uses that pointer as image data in virtio-gpu.c (line 662) 
+and virtio-gpu.c (line 674). So a too-small backing is not a clean or 
+obviously safe case.
+If iov_size > blob_size, it is mostly a semantics issue. QEMU still 
+bounds scanout using blob_size in virtio-gpu.c (line 761), so the extra 
+backing is usually just unused. But the resource state is still 
+inconsistent.
+QEMU does not currently enforce the relationship elsewhere. blob_size 
+and the iov are populated independently at blob creation in virtio-gpu.c 
+(line 362) and virtio-gpu.c (line 366), and later backing attach also 
+does not compare them in virtio-gpu.c (line 946).
+So if the question is “can we omit the check entirely?”, the answer is: 
+yes, but then you are knowingly accepting malformed guest state and 
+relying on later backend behavior. If you want a defensive check, 
+iov_size < blob_size is the one with a concrete justification. iov_size 
+!= blob_size is harder to defend from the spec.
 
---00000000000050f70c064dd46b43
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 24,=
- 2026 at 7:09=E2=80=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@=
-linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">We have a couple of directories in our =
-source tree which have<br>
-accumulated things in them that don&#39;t really belong there; this is a<br=
->
-proposal to clean up by moving things to more appropriate locations<br>
-(as 11.1 work, obviously).<br>
-<br>
-Firstly, contrib/ has a tendency to be a dumping ground for stuff that<br>
-we didn&#39;t think hard enough about finding a good home for, and for<br>
-things in a weird &quot;not really maintained&quot; state. We should either=
-<br>
-(a) care enough about something to give it a correct home and to<br>
-maintain it, or (b) not care about it, and kick it out of our tree.<br>
-<br>
-Secondly, tools/ exists but is very under-used. I think it should be<br>
-for the set of standalone tools that we build if you configure<br>
---enable-tools and which we document in docs/tools.=C2=A0 Currently it<br>
-contains two things, one of which doesn&#39;t match that idea...<br>
-<br>
-So, starting with tools/:<br>
-<br>
-=C2=A0* tools/ebpf/ is the source for the pre-generated<br>
-=C2=A0 =C2=A0ebpf/rss.bpf.skeleton.h ; it should move to ebpf/<br>
-=C2=A0* tools/i386/qemu-vmsr-helper.c is the source for the<br>
-=C2=A0 =C2=A0qemu-vmsr-helper tool; it can stay (should it lose its<br>
-=C2=A0 =C2=A0i386/ subdir ?)<br>
-=C2=A0* the tools which currently are in the top level directory<br>
-=C2=A0 =C2=A0should move into tools/:<br>
-=C2=A0 =C2=A0 - qemu-bridge-helper.c<br>
-=C2=A0 =C2=A0 - qemu-edid.c<br>
-=C2=A0 =C2=A0 - qemu-img.c<br>
-=C2=A0 =C2=A0 - qemu-io.c<br>
-=C2=A0 =C2=A0 - qemu-keymap.c<br>
-=C2=A0 =C2=A0 - qemu-nbd.c<br>
-<br>
-And for contrib/, easy ones first:<br>
-=C2=A0* contrib/vhost-user-{blk,bridge,gpu,input,scsi} move to tools/<br>
-=C2=A0* contrib/elf2dmp moves to tools/<br>
-=C2=A0* contrib/ivshmem-client and contrib/ivshmem-server move to tools/<br=
->
-=C2=A0* contrib/plugins moves to plugins/plugins (or a different subdir<br>
-=C2=A0 =C2=A0name of your choice)<br>
-<br>
-For contrib/, ones I&#39;m less sure about:<br>
-<br>
-=C2=A0* contrib/vmapple/uuid.sh is a one-liner; we should either commit to<=
-br>
-=C2=A0 =C2=A0having this, by giving it a better name and documentation and<=
-br>
-=C2=A0 =C2=A0installing it in &#39;make install&#39;, or else junk it and h=
-ave<br>
-=C2=A0 =C2=A0docs/system/arm/vmapple.rst give you the plutil command and te=
-ll<br>
-=C2=A0 =C2=A0you to run it directly.<br>
-=C2=A0* contrib/gitdm moves to scripts/ ? It&#39;s just config data for<br>
-=C2=A0 =C2=A0generating statistics about patches, so with other<br>
-=C2=A0 =C2=A0developer-related stuff makes sense.<br>
-=C2=A0* contrib/systemd -- we don&#39;t do anything with these (e.g.<br>
-=C2=A0 =C2=A0&#39;make install&#39; ignores them), so I am sceptical about =
-their<br>
-=C2=A0 =C2=A0usefulness. We could drop them, or move them to scripts/, or p=
-ut<br>
-=C2=A0 =C2=A0them in tools/ and qga/ with the tools that they are systemd<b=
-r>
-=C2=A0 =C2=A0scripts for.<br></blockquote><div><br></div><div>Not sure that=
- we need=C2=A0qemu-guest-agent.service at all. Fedora/CentOS don&#39;t use =
-it and create a different service file.</div><div>I think this one can be d=
-ropped.<br><div><br clear=3D"all"></div><div><div dir=3D"ltr" class=3D"gmai=
-l_signature"><div dir=3D"ltr"><div>Best Regards,</div><div>Kostiantyn Kosti=
-uk.</div></div></div></div><br></div><div>=C2=A0</div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">
-<br>
-Then we can delete contrib/ entirely.<br>
-<br>
-(scripts/ is also in danger of being &quot;miscellaneous dumping<br>
-ground&quot;, of course. I have tried not to suggest it as the<br>
-destination when I could think of an alternative.)<br>
-<br>
--- PMM<br>
-<br>
-</blockquote></div></div>
-
---00000000000050f70c064dd46b43--
+> 
+> Thanks,
+> Vivek
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>> +                                                          &local_err);
+>>> +            if (res->dmabuf_fd ==
+>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>> +                error_free_or_abort(&local_err);
+>>> +                qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                              "Cannot create dmabuf: incompatible memory\n");
+>>> +                return;
+>>> +            }
+>>> +
+>>> +            if (res->dmabuf_fd >= 0) {
+>>> +                pdata = vfio_device_mmap_dmabuf(res->iov, res->iov_cnt,
+>>> +                                                res->blob_size, &local_err);
+>>> +                if (!pdata) {
+>>> +                    virtio_gpu_destroy_dmabuf(res);
+>>> +                }
+>>> +            } else {
+>>> +                res->dmabuf_fd = -1;
+>>> +            }
+>>>            } else if (res->dmabuf_fd >= 0) {
+>>>                pdata = virtio_gpu_remap_dmabuf(res, &local_err);
+>>>                if (!pdata) {
+> 
 
 
