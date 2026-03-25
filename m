@@ -4,71 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A79AFEA830
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACA0FEA82F
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Jas-0002f2-5Q; Wed, 25 Mar 2026 04:28:02 -0400
+	id 1w5Jfa-0003df-UG; Wed, 25 Mar 2026 04:32:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w5Jao-0002ej-Bq
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:27:58 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w5JfY-0003d9-Lv
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:32:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w5Jai-0000Ob-39
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:27:55 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62P8RigX070787
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 25 Mar 2026 17:27:45 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=7/Qxkju2u10Tt4GdRGWifuVzAJCDQ9cjSufd8GeC3H0=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1774427265; v=1;
- b=kc4XYMO4zVlRgmceS6L6DHteNN7QyRQczxsQMG6MBjtjZvZWr+DxKQFUzozQ2l+P
- wOYymEpVCjy/c39JtEGRWEgpV6dCnOAW9CvlnUXG4Mxq5G6NGt84ekjtpTQEf49a
- AbQQ/J1XBS/wCTakyAccsbmOob0P/Or5DKCR2nDWvubBieYLJNKrhuzVMyNq5sBb
- iMofY4pz+93delgl87U3eiTTMcMz6qIAwzhlWs/wb+823zcJGxTMr9srQ7j3OloU
- A4EMCzwZXgUlm8Al7WGzHzfLFksCpJT3XZ1iaxq36Ww3Aj6mSwSb9zqllphs5CK9
- PKcmaTCvz9oFjpUYJWuB+A==
-Message-ID: <09f02fe2-63cb-4283-899e-4cffc5f60cf1@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 25 Mar 2026 17:27:44 +0900
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w5JfV-0002s9-Kk
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:32:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774427568;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BNETIHEw/0gjcPRxzendSQ15j6+aiq3Q4+YNI6el4Jg=;
+ b=CLguNCbbjbWBolyQgsrlF2d4qRVAiQ3Vufj/yrWH9BEexLIkR75Dj6QWDnKKvxz1HPoiw0
+ ZPH141L/57yjDOpfezgSIjLOrtKSDZD8+DdYCiqDw36ovCICY9HRJ2UAunGll8wEoNfNU3
+ KYf6hBc7HbPHD4jin5Dpn5WDHyYkS5U=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-07j5RbUZMHizNu0YTXwTOA-1; Wed, 25 Mar 2026 04:32:46 -0400
+X-MC-Unique: 07j5RbUZMHizNu0YTXwTOA-1
+X-Mimecast-MFC-AGG-ID: 07j5RbUZMHizNu0YTXwTOA_1774427565
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-82a782029b7so3995452b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 01:32:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774427565; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TXC8WlFHmQT+G6Psnn3LqJmgVRA7+gknD1nwWDDfYsD/Se7jburBcJPEpxh3vwJ5JK
+ 5dWgC3MmudQsjDw1pc5YREJ+nNfR0YFQwumX/WPEaimVeLJO6yfXI8Fl/PInu9y5cTO6
+ ByjyvzmQMghCB5JrdJDmZfT9rsBFkViDzg79DdiA67VBbPwp5GctLpC0xP4QIBaJywB3
+ 1oaQmB7Be1xFrP0NjdFZCbPaGI0EmcRgwOW1gKzA3gc68sxFESEvO9kffwU7G7iDCzeV
+ PLh5/OzeHScjdgJ7Kd7paq59Qc4D5HxErtdb7B6mfBOaNWahIP0tC/oez3jaLkAytJmg
+ alvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BNETIHEw/0gjcPRxzendSQ15j6+aiq3Q4+YNI6el4Jg=;
+ fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
+ b=lnqjpCLNtfmxigvIB0RH51syrTMvnT88VDb+hJeFYfPZBPIeqjrDVHbzrAmiFq+uP8
+ 39FDvsGpFBZ3JZfiODf6slbtUcn1NZSYRE2JmgBEE4ExGMS0aKzzI8DeKgsfW9esWqwd
+ r20Y5RAUrv7Q5JQWChzbY5QtU6Q2iZESsR5DZ6OC/WIkrmKOlmO4T5/m5OvGChA2uNHy
+ LO6Zb43K0f0jpDsqqEqszAEqx5OHQcrbMDtzK2vnJkTakxU4xg+5hGbDr2WowhqWam0G
+ h6vLN0tW/fmjWV7ddhhYtpFCzChZ+4COlkaCPfztCuDAetRPrcUy9IwB4RTiyRZ5E59f
+ 4Utg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774427565; x=1775032365; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BNETIHEw/0gjcPRxzendSQ15j6+aiq3Q4+YNI6el4Jg=;
+ b=RBaOO+laxS3ZSwRBL3OWx77IcdooZ7NQaAZv3F2PcsXH/b5DAPY3Xq0zTHfGXd25/3
+ +XrcSyKP6awfyvHizF8MBQ2Mdumv3aqbcJydkFi7Vwea4MlqfqbCwBF+i6Mwsmp3s1GC
+ HQUKGzi6zTUNGnuhWcsacNK0bWY6fwCEuAHg2MSykOb78wkHIoJlospYV+/rP2Wg1Kgq
+ DZNs6Hyhyks+MO4wCxguqlTekM4nHXgJF9FXtFSESk1R9CIRRV6i8pitJUSXTTjgRzfc
+ ik5OIOIBXyYFCxNpqlZJ2Dz9dWZRKdEIGLD8VUhf4iDVUzj3/DmMMaYenhzRj1nK6BUL
+ hSMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774427565; x=1775032365;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BNETIHEw/0gjcPRxzendSQ15j6+aiq3Q4+YNI6el4Jg=;
+ b=GxljmMXdqD7KREoi5c0BzDuxuIV1kx6errh9zeTt+rfkXT/RDvENwxeC/qRfKXxdaG
+ 10rMAlBXFS4eFjwTP/1kFw7E6WoX1B7YGb3BkWf+xxCQfbRvHpGvB3N9FUW8uY44jDiZ
+ v3DRWuPUw1ks/J7SRvVKuljyExtlLQqVcy+MRvvcpq8DMSFu+nV9aOcVAlhCiAIKHK/B
+ v2jSNNAONFakGWrzXuIfeQtZrrAp5au4jW/CULP5E8PxooIfcRI31TEi0f5xOneWqHzd
+ e1cIlMkmuBdzbLIJ7Ibrc0oKS3LtxRGVXtzlFVgbkX6TWjSwe36CbuAHH9Eul44uPoKK
+ LDVA==
+X-Gm-Message-State: AOJu0Yz3D26OR0OpiF3+VuuFooPSJRkOtsgjAgp4mJRZ5Umu9feYF+wj
+ 7OYwPv0kaizK+cjDdqftvlZtCBJwWIYIF7cK+U6c2HW69prO8PylYtJRfN+5jAI6gxeHSAKT6F0
+ x/yraUlDe0FmOuo6YVaYFNnrdWiiGn7BdUXmEl6lu0Z1oXmqoRDbAxquJy25w6V35pJcR1Ta/WH
+ LRXk+CbYDN59W0Sa/mUeV1IHSe9YzqIWR1bRVuzMtr4g==
+X-Gm-Gg: ATEYQzxHy094kPApEYuBlYFQsmcCH4Ncrm+hSVV7q8L7zG0B2EkEblB+XfPHxMm4TPC
+ J1rZpVz2+IgbSKY/83W4UbbjuaxA8ZOh5Zj0UkND8drUsO14W60w+xRi8BTUY1sjQ0EZU1cnxZc
+ pJA4/zX7T2ODBAHDMfkUKM0mP/jZD0Gq6W6QSiV272WeetGIVWoLWYKplNtTHkkNMEJoZTfafHT
+ Ae7XwTeR4fxMZ0PS9uhNQlV/duX59tUfqiFsmDsVeiFEqYH63Uqf8iwiJG2UmntLkI4WfF4lUCd
+ tv4c6zcmyH5KVb4piZNQYTw=
+X-Received: by 2002:a05:6a20:12c9:b0:398:f1ed:7fa0 with SMTP id
+ adf61e73a8af0-39c4adf2aa1mr2936324637.55.1774427564654; 
+ Wed, 25 Mar 2026 01:32:44 -0700 (PDT)
+X-Received: by 2002:a05:6a20:12c9:b0:398:f1ed:7fa0 with SMTP id
+ adf61e73a8af0-39c4adf2aa1mr2936301637.55.1774427564086; Wed, 25 Mar 2026
+ 01:32:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>
-References: <20260319052023.2088685-1-vivek.kasireddy@intel.com>
- <20260319052023.2088685-10-vivek.kasireddy@intel.com>
- <a112aab0-df42-47b6-a5de-f6827321c8d5@redhat.com>
- <IA0PR11MB718579B3F8EFCB2C2E2D1E93F848A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <3434becb-639b-435d-a36a-71b5a3760ba2@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71851F5FD322F30FAD53D1F4F849A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB71851F5FD322F30FAD53D1F4F849A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-60-48eb1dcf7b76@redhat.com>
+ <acKsobCZ2G8TE2XI@redhat.com>
+In-Reply-To: <acKsobCZ2G8TE2XI@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 25 Mar 2026 12:32:32 +0400
+X-Gm-Features: AaiRm51ZfKkXHQepsk5I2LeI9JW97kewfNgUXGViLpi0ilc17fLJn_o4GdHGrHs
+Message-ID: <CAMxuvaxv2o301O3wVacVMtEdOSzc+bO6jDKX93AnhXTT4wr_6w@mail.gmail.com>
+Subject: Re: [PATCH 60/60] contrib/qemu-vnc: add standalone VNC server over
+ D-Bus
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,274 +139,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/25 14:31, Kasireddy, Vivek wrote:
-> Hi Akihiko,
-> 
->> Subject: Re: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error
->> handling with 'Error **' and err enum
->>>>
->>>> On 3/19/26 06:15, Vivek Kasireddy wrote:
->>>>> Make the error handling more robust in virtio_gpu_init_udmabuf()
->>>>> by introducing 'Error **' parameter to capture errors and using
->>>>> an enum from VFIO to categorize different errors. This allows for
->>>>> better error reporting and handling of errors from
->>>>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
->>>>>
->>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>>>> Cc: Alex Williamson <alex@shazbot.org>
->>>>> Cc: Cédric Le Goater <clg@redhat.com>
->>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>>>> ---
->>>>>     hw/display/virtio-gpu-dmabuf.c | 67 +++++++++++++++++++++++--
->> -----
->>>> ----
->>>>>     1 file changed, 45 insertions(+), 22 deletions(-)
->>>>>
->>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
->>>> dmabuf.c
->>>>> index e35f7714a9..89aa487654 100644
->>>>> --- a/hw/display/virtio-gpu-dmabuf.c
->>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
->>>>> @@ -18,6 +18,7 @@
->>>>>     #include "ui/console.h"
->>>>>     #include "hw/virtio/virtio-gpu.h"
->>>>>     #include "hw/virtio/virtio-gpu-pixman.h"
->>>>> +#include "hw/vfio/vfio-device.h"
->>>>>     #include "trace.h"
->>>>>     #include "system/ramblock.h"
->>>>>     #include "system/hostmem.h"
->>>>> @@ -27,16 +28,18 @@
->>>>>     #include "standard-headers/linux/udmabuf.h"
->>>>>     #include "standard-headers/drm/drm_fourcc.h"
->>>>>
->>>>> -static void virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>> +static int virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res,
->>>>> +                                     Error **errp)
->>>>>     {
->>>>>         g_autofree struct udmabuf_create_list *list = NULL;
->>>>>         RAMBlock *rb;
->>>>>         ram_addr_t offset;
->>>>> -    int udmabuf, i;
->>>>> +    int udmabuf, i, fd;
->>>>>
->>>>>         udmabuf = udmabuf_fd();
->>>>>         if (udmabuf < 0) {
->>>>> -        return;
->>>>> +        error_setg(errp, "udmabuf device not available or enabled");
->>>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
->>>>
->>>> The function virtio_gpu_create_udmabuf() is returning
->> VFIO_DMABUF_*
->>>> enum
->>>> values, which is problematic because the function creates a
->> udmabuf,
->>>> not
->>>> a VFIO dmabuf.
->>>>
->>>> This creates a layering violation. The virtio-gpu-dmabuf code (which
->>>> handles both udmabuf and VFIO dmabuf creation) is using error
->> codes
->>>> defined in the VFIO-specific header.
->>
->> The rationale of using error codes is as follows:
->>
->>   > In that case, using it for udmabuf is cheating, but I think it's fine
->>   > since it's locally-contained in virtio-gpu-dmabuf.c, its intent is
->>   > still clear, and it has no adverse effect for users (at least there
->>   > will be no bug).
->>
->> https://lore.kernel.org/qemu-devel/becde56b-90bd-40ca-9329-
->> 0c92b9519a67@rsg.ci.i.u-tokyo.ac.jp/
->>
->>>>
->>>> Please find another solution.
->>> Other solutions I can think of are either move these error enums into
->> virtio-gpu
->>> (and disregard the error return type from vfio) or move them to some
->> other header
->>> where they are visible to both virtio-gpu and vfio. I'd like hear
->> Akihiko's thoughts/
->>> comments on how to proceed given that he had reviewed virtio-gpu
->> patches in
->>> this series.
->>
->> Disregarding the error conditions of VFIO is not OK. That can cause a
->> guest error to be reported as a host error.
->>
->> I think the simplest alternative is just to have a duplicate enum for
->> virtio-gpu.
-> That would address the layering violation but Cedric's other concern is
-> that he believes having errp is sufficient and using these error enums in
-> VFIO would be overkill.
+Hi
 
-It would be beneficial to describe the rationale behind the enums; the 
-patch message only says "better error reporting", which is quite 
-insufficient.
+On Tue, Mar 24, 2026 at 7:24=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Tue, Mar 17, 2026 at 12:51:14PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Add a standalone VNC server binary that connects to a running QEMU
+> > instance via the D-Bus display interface (org.qemu.Display1, via the bu=
+s
+> > or directly p2p). This allows serving a VNC display without compiling
+> > VNC support directly into the QEMU system emulator, and enables running
+> > the VNC server as a separate process with independent lifecycle and
+> > privilege domain.
+>
+> IIUC, this new binary is linking to all the existnig ui/vnc.c
+> code, so there's no actual new impl of the RFB protocol, just
+> a new glue layer for launching the existing impl with comms
+> over DBus instead of from direct callback functions ?
+>
+> > Built only when both VNC and D-Bus display support are enabled.
+> > If we wanted to have qemu -vnc disabled, and qemu-vnc built, we would
+> > need to split CONFIG_VNC. This is left as a future exercise.
+> >
+> > I left out for now:
+> >  - sasl & tls authz
+>
+> IMHO these are must have features, as the default VNC protocol
+> security is a very bad joke.
 
-The rationale is that we need a special handling for the INVALID_IOV 
-case. The INVALID_IOV case can happen in two cases:
-- The memory is backed by VFIO. It will result in the INVALID_IOV error
-   for the first attempt to use udmabuf, but this error can be properly
-   recovered by letting the VFIO code to create a DMA-BUF instead.
-- The memory is not backed by memfd nor VFIO. In this case, the error
-   is a guest's fault, so we should:
-   - Use qemu_log_mask(LOG_GUEST_ERROR, ...) instead of
-     error_report_err().
-   - Emit a message useful to diagnose the guest error, which we have
-     discussed in this thread.
+Ok that should be doable. One thing that bothers me a bit is mapping
+the -object options (authz) to a more regular CLI. Perhaps I'll just
+add -object args and wire it with the other options..
 
-A common pattern is to return -errno to let the caller implement a 
-special error handling, but in this case we specifically need to 
-distinguish the INVALID_IOV case from the others and these enums are 
-more convenient for this.
+>
+> >  - some runtime functionalities (better done by restarting)
+> >  - a few legacy options
+> >  - Windows support
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  MAINTAINERS                    |   5 +
+> >  docs/conf.py                   |   3 +
+> >  docs/interop/dbus-display.rst  |   2 +
+> >  docs/interop/dbus-vnc.rst      |  26 ++
+> >  docs/interop/index.rst         |   1 +
+> >  docs/meson.build               |   1 +
+> >  docs/tools/index.rst           |   1 +
+> >  docs/tools/qemu-vnc.rst        | 199 +++++++++++
+> >  meson.build                    |  17 +
+> >  contrib/qemu-vnc/qemu-vnc.h    |  46 +++
+> >  contrib/qemu-vnc/trace.h       |   4 +
+> >  contrib/qemu-vnc/audio.c       | 307 +++++++++++++++++
+> >  contrib/qemu-vnc/chardev.c     | 127 +++++++
+> >  contrib/qemu-vnc/clipboard.c   | 378 +++++++++++++++++++++
+> >  contrib/qemu-vnc/console.c     | 168 ++++++++++
+> >  contrib/qemu-vnc/dbus.c        | 439 ++++++++++++++++++++++++
+> >  contrib/qemu-vnc/display.c     | 456 +++++++++++++++++++++++++
+> >  contrib/qemu-vnc/input.c       | 239 ++++++++++++++
+> >  contrib/qemu-vnc/qemu-vnc.c    | 450 +++++++++++++++++++++++++
+> >  contrib/qemu-vnc/stubs.c       |  66 ++++
+> >  contrib/qemu-vnc/utils.c       |  59 ++++
+>
+> IMHO we should not really be adding more things to the contrib
+> directory, and rather wish most of the existing stuff was
+> not there. When I see "contrib" directories in projects, the
+> message is generally "unmaintained, abandoned junk".
+>
+> If this is a serious maintained feature we expect people to use,
+> it should be formally under the ui/ directory, possibly a
+> 'ui/dbus-vnc' subdir ?
 
-Regards,
-Akihiko Odaki
+It is intended to be maintained. (although I hope we can deprecate it
+in favour of qemu-rdp in the long term). I'll follow the "Cleaning up
+contrib/ and tools/" thread and see where it could land.
+.
 
-> 
-> Thanks,
-> Vivek
->>
->>>
->>>>
->>>>
->>>>
->>>>>         }
->>>>>
->>>>>         list = g_malloc0(sizeof(struct udmabuf_create_list) +
->>>>> @@ -45,7 +48,8 @@ static void virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>>         for (i = 0; i < res->iov_cnt; i++) {
->>>>>             rb = qemu_ram_block_from_host(res->iov[i].iov_base, false,
->>>> &offset);
->>>>>             if (!rb || rb->fd < 0) {
->>>>> -            return;
->>>>> +            error_setg(errp, "IOV memory address incompatible with
->>>> udmabuf ");
->>>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
->>>>>             }
->>>>>
->>>>>             list->list[i].memfd  = rb->fd;
->>>>> @@ -56,22 +60,28 @@ static void
->> virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>>         list->count = res->iov_cnt;
->>>>>         list->flags = UDMABUF_FLAGS_CLOEXEC;
->>>>>
->>>>> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
->>>>> -    if (res->dmabuf_fd < 0) {
->>>>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
->>>>> -                    strerror(errno));
->>>>> +    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
->>>>> +    if (fd < 0) {
->>>>> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl
->>>> failed");
->>>>> +        if (errno == EINVAL || errno == EBADFD) {
->>>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
->>>>> +        }
->>>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
->>>>>         }
->>>>> +    return fd;
->>>>>     }
->>>>>
->>>>> -static void virtio_gpu_remap_dmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>> +static void *virtio_gpu_remap_dmabuf(struct
->>>> virtio_gpu_simple_resource *res,
->>>>> +                                     Error **errp)
->>>>>     {
->>>>> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
->>>>> -                         MAP_SHARED, res->dmabuf_fd, 0);
->>>>> -    if (res->remapped == MAP_FAILED) {
->>>>> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
->>>>> -                    strerror(errno));
->>>>> -        res->remapped = NULL;
->>>>> +    void *map;
->>>>> +
->>>>> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
->>>> res->dmabuf_fd, 0);
->>>>> +    if (map == MAP_FAILED) {
->>>>> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
->>>>> +        return NULL;
->>>>>         }
->>>>> +    return map;
->>>>>     }
->>>>>
->>>>>     static void virtio_gpu_destroy_dmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>> @@ -125,22 +135,35 @@ bool virtio_gpu_have_udmabuf(void)
->>>>>
->>>>>     void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
->> *res)
->>>>>     {
->>>>> +    Error *local_err = NULL;
->>>>>         void *pdata = NULL;
->>>>>
->>>>> -    res->dmabuf_fd = -1;
->>>>>         if (res->iov_cnt == 1 &&
->>>>>             res->iov[0].iov_len < 4096) {
->>>>> +        res->dmabuf_fd = -1;
->>>>>             pdata = res->iov[0].iov_base;
->>>>>         } else {
->>>>> -        virtio_gpu_create_udmabuf(res);
->>>>> +        res->dmabuf_fd = virtio_gpu_create_udmabuf(res,
->> &local_err);
->>>>> +        if (res->dmabuf_fd ==
->>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
->>>>> +            error_free_or_abort(&local_err);
->>>>
->>>> Why not report the error in the QEMU log below ?
->>> I think the idea is that in the case of INVALID_IOV error, it is sufficient
->>> to just report that the Guest passed in incompatible memory
->> addresses.
->>> But I guess we could also just do:
->>> qemu_log_mask(LOG_GUEST_ERROR, "%s\n",
->> error_get_pretty(local_err));
->>
->> The error message may not be useful. e.g., "UDMABUF_CREATE_LIST:
->> ioctl
->> failed" does not tell what error the guest made and how to fix it.
->>
->> Regards,
->> Akihiko Odaki
->>
->>>
->>> Thanks,
->>> Vivek
->>>>
->>>>> +
->>>>> +            qemu_log_mask(LOG_GUEST_ERROR,
->>>>> +                          "Cannot create dmabuf: incompatible memory\n");
->>>>> +            return;
->>>>> +        } else if (res->dmabuf_fd >= 0) {
->>>>> +            pdata = virtio_gpu_remap_dmabuf(res, &local_err);
->>>>> +            if (!pdata) {
->>>>> +                virtio_gpu_destroy_dmabuf(res);
->>>>> +            }
->>>>> +        } else {
->>>>> +            res->dmabuf_fd = -1;
->>>>> +        }
->>>>> +
->>>>>             if (res->dmabuf_fd < 0) {
->>>>> +            error_report_err(local_err);
->>>>>                 return;
->>>>>             }
->>>>> -        virtio_gpu_remap_dmabuf(res);
->>>>> -        if (!res->remapped) {
->>>>> -            return;
->>>>> -        }
->>>>> -        pdata = res->remapped;
->>>>> +        res->remapped = pdata;
->>>>>         }
->>>>>
->>>>>         res->blob = pdata;
->>>
-> 
+>
+> >  tests/qtest/dbus-vnc-test.c    | 733 +++++++++++++++++++++++++++++++++=
+++++++++
+> >  contrib/qemu-vnc/meson.build   |  26 ++
+> >  contrib/qemu-vnc/qemu-vnc1.xml | 174 ++++++++++
+> >  contrib/qemu-vnc/trace-events  |  20 ++
+> >  meson_options.txt              |   2 +
+> >  scripts/meson-buildoptions.sh  |   3 +
+> >  tests/dbus-daemon.sh           |  14 +-
+> >  tests/qtest/meson.build        |   8 +
+> >  29 files changed, 3971 insertions(+), 3 deletions(-)
+> >
+>
+> > diff --git a/meson_options.txt b/meson_options.txt
+> > index 31d5916cfce..ef938e74793 100644
+> > --- a/meson_options.txt
+> > +++ b/meson_options.txt
+> > @@ -119,6 +119,8 @@ option('vfio_user_server', type: 'feature', value: =
+'disabled',
+> >         description: 'vfio-user server support')
+> >  option('dbus_display', type: 'feature', value: 'auto',
+> >         description: '-display dbus support')
+> > +option('qemu_vnc', type: 'feature', value: 'auto',
+> > +       description: 'standalone VNC server over D-Bus')
+>
+> Every option is about QEMU, so 'qemu_' on a name feels redundant,
+> and QEMU alrady has a VNC server too.
+>
+> I suggest 'dbus_vnc' is possibly a better name
+>
+
+Well, I just named the option after the binary's name. I think that's easie=
+r.
+
+>
+> >  option('tpm', type : 'feature', value : 'auto',
+> >         description: 'TPM support')
+> >  option('valgrind', type : 'feature', value: 'auto',
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
 
 
