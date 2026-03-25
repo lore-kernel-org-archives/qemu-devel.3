@@ -4,111 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77098108B91E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 01:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 596FE108B91E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 01:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5DA8-0002zY-Pv; Tue, 24 Mar 2026 21:36:00 -0400
+	id 1w5DDN-0004RK-IM; Tue, 24 Mar 2026 21:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5DA7-0002yx-6I
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:35:59 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5DDL-0004Qn-Uw
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:39:19 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5DA5-0007lD-AG
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:35:58 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-64ad9fabd08so6371976d50.2
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 18:35:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774402555; cv=none;
- d=google.com; s=arc-20240605;
- b=jBhT7ECYAUxNfW6ZhBceR7HdRzucRUlfzR4G1mTjxJC0kHF5fDBcMcl1K9+c3OTmDM
- I1tnOTW1tf0xGeqjw8bpdS1jMgGQr/MNwFWbijcs4hDSBzudY4L/H1ABarmlZddVd2e6
- se6tUf3EnKt18Ff0u325U3D/0ebnwt9Nzrc7uJsRtCDn3Uy0ARiCrkKNo9ZpLBYqIQD3
- EHw0oFOV1zSXMSDWvsLvNOVk9K+4k2yz+f54K4ZJ8VOsht9VYFSPAY7G+8nnsxDpVBd+
- 5X6m3H8Ows8Tvt6h1voiww0DwMJdmtElPQgExbigkBtsS5u6fpOaXl63AFHLsyeAKNqQ
- z0wQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=hVmw7nS6Awwi0HKrdCWhAqC/gnRZR++BvA55UgAXgdc=;
- fh=7k/U97Ta3TLJTR+yXa8ZC+Gk41Mo4g4FOxMRS9u3w/k=;
- b=ZsHSoe+jXzu0/6Lxs7YIzd9G1UPjXdcdntOOY7EMTQuB8cZnz8wJBf/bBmJkufUdkG
- R9AntexOTkN+t7WLwtkRkjvXy7k922GVlO8J4TECOaNYUgahFlZelLn8JdXW7jNxBJ84
- v0ESemoD6jNkGgpjebXoDgrGkuYMY+LNmvPLEHLKJLDspge7K3BkQvcjSdfgKMi5RdXw
- I+riujyJkZZR0GroLAfXGajv4GFXWl/CddNmRCH7FiVI78oT4V/QW/3ZXe0O+ZJtcf/I
- i8ytmC8YYlmNa2kAYPxTyYNcqEFoIB0EvsFGOxse1F5xoQIc0W8ViG4McsWaqr5aMSYs
- lonw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5DDJ-0008No-Mr
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:39:19 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-354a18c48b5so4908544a91.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 18:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774402555; x=1775007355; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hVmw7nS6Awwi0HKrdCWhAqC/gnRZR++BvA55UgAXgdc=;
- b=bylfikd5qCB4hOZ+x5b/965oZxJsiVqO79FXph40/xMNEl6N6sNzGREYrTkr5adLNS
- oLQxcr8XQZgCtH+uCFqYoDMZ5YYgXMap4Qrq5JiFiW53of5Bmv0t9uAVXYDjRlboeGLI
- U8gH2bwCJD42UV+DZPn9B+pKEOric24S/KfrgdMgFuCMFOdTPTDEMn5U3X9K39we4pkE
- PCJouLMPZ7eEJEM27hx5Ba5XsDXraa+GGi4mCrztsITrLzSKm7DLBQ3ehBqZBl51qhnu
- mlJaoCeCKQN3DMclrQ98EbUmnqeUwTg2e6hUCgZGB8HvttUmayqumV3jBOrFYowoHc2c
- jgaw==
+ d=linaro.org; s=google; t=1774402756; x=1775007556; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WgETYKRUZDrkXEHCsOEJS7i8mCHsuiLy2L493DWB41M=;
+ b=KUU2H0QKQOVhWiJgVcIdfIusLDQBagT9wShCz4zvhveieEYjsynGZNVItJdgXME6MT
+ mO7eVLD3f36AgGhVzgwpSDrWE2gWwLVZXZO9Ink3V3zUEvDnqkxusUMNvJFqfab9a8xX
+ NyfPq/0G1RcuLbAcAKH3DDYR6kTcqHzcXun71Sy7e4SZ7TArEkekIXZ2RBInTa6+4vix
+ dTuURqVFmJsg5mJNoA+qsK1ibKIQjeMhjZYa0t2mygxm9yntLA/z83Run37tpP0qIgEd
+ tYfyh0kF6djRkAPGxfXkUISuOYIkJ21sn4H7nZuKvGmRlP2LCXRsJAMperKjYyXiq4lJ
+ 1HsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774402555; x=1775007355;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hVmw7nS6Awwi0HKrdCWhAqC/gnRZR++BvA55UgAXgdc=;
- b=j6d359tbybcvutEOImqDIXuc9/+ZeNcwtngw3+dGGCqbuYCeNYcKTPFnuFnCbTgJVw
- iTkfmkbA2M6nXGtZInwCRqEmyzQ/JonZiolIiqY1VPtmrMuRhiG8vN3fhXMHdizWpY19
- y/JvlrWSE+FNRmsjoyl2kIWc6wwkXAKLWbO0/JQTafkfEpfNKcPA5qEG7aM3CjIuO9hz
- XpOpiDcVKoOGnvt5C4Qe4LkGsUvboMUYFPaPGr+hVnDIsBM9PnF7qEhxmPtiRjgtliba
- gFMwT01ymlSYuK3cctkMlnuw3j3Skivmkdm1N1umElz4nEAD4RjcGHZGFOzAT1s2TagJ
- MZFQ==
+ d=1e100.net; s=20251104; t=1774402756; x=1775007556;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WgETYKRUZDrkXEHCsOEJS7i8mCHsuiLy2L493DWB41M=;
+ b=Ta+tZPmAN0fjKLYAyBvy101EQBnv94kagDzMInCBOu2/Vm8OFMurtFvrDkxGZ1GVnz
+ Kb158Ke/9f2rY3lImotFxAW+b/gHzapzjQjjRWImewaEYNv1fAl3JOIjsyvfSa4kgEZj
+ flnMiY+NYh49N0eMB4y1Fd6L9iTM47LjLPe9R+gX/Sf2KYPqv3q5fxaFsN1OgFTbhXEG
+ J/O02WTcLNDCi2fHdlbsKniLkXRQqvWPz2kXqFlayTChryxy8GuLAR7NMQyyaO6btLP7
+ bQIMZiA6+PXfk/1caPAl17Vk4ZjQ2QC6dKLmoVcLR6PF97QQkzINnJhuygmD8AFHE899
+ 3IYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNGNMM3NE45XEsBpm0Gruh0yw/XD19UYDQhJkEJcLGVw4zRFBFc0eLRusB+BRT4nFObUCal3VIvS6f@nongnu.org
-X-Gm-Message-State: AOJu0YxBb9x6G2RrwpqX5j4DGRy5AkSQH/Ij1+DkB1AEXwWDqWKy57gD
- Mfk+S1r2Ic4XXaDnXNNqqgFdnSvLosnTVOrQBHF1mOy6QL6/FAEDqIaKgXFmGXi/PWYhg9dn/Lb
- Mq/iZz0/BDUQg0U5AOWM7mIq7nex1Bdo=
-X-Gm-Gg: ATEYQzyhLo4u3mFrmO0d8SYWayx+OoBDo6irDh0ZehWqVlwWJSmiBkBv/hLAW6ssQNh
- iKrMlVjCaJBi3nu2qz5QDA0nVy5WuTY+6dq1236xTKtsM9oFdxEmuwON5q2lKk+SRWXpV1A07GZ
- r2hH+sxYtU3EoaKMhsE4WzcpHcO0entNnykqGAv2HkqwroPFIQ7R0Mw202sW5cKWIXbxKoqFnf7
- Wh9b0XSZOlYxr5pKDcJRcEOo6QeHUDB2Ry9/1mL2hM+vWzBYYg2qbICExycE+32FFjMGiUrcigh
- A0HXNkErThUhubkLGSFIIqlc2U3QRIv8iTwRJw==
-X-Received: by 2002:a05:690e:b83:b0:63f:b444:da92 with SMTP id
- 956f58d0204a3-64ee60acee2mr1582948d50.31.1774402555032; Tue, 24 Mar 2026
- 18:35:55 -0700 (PDT)
+ AJvYcCV+kLl9BBmQoVt8QqkEjYnkUcL/orc/9eDCsg3MMMDggnZLMa+8ePKUj0O7E2pLDaUlehtRqlAn6Y52@nongnu.org
+X-Gm-Message-State: AOJu0YykNg1QVSBTxVvFUqqPpZfvJmmJ9yqo/SXggTo1pkTqqgrtMBHg
+ EH21kf7CHKwr8PWRODxEBMV5Iv2MdTDptqj7FHDmZ7cZFiGKJxADiT44eChm6YpAsEjTmHK5t5M
+ mFOSSpYU=
+X-Gm-Gg: ATEYQzz14k9h3eFvsN8PkHkKf5lWi5Y0rmhj8EQcnQ0HNG2Y2jz8yAJ7mX5/lWrdqjk
+ 6xiJW2SHqngnMwZJ8H2mFuTVka2/lNQ+eH421JfnIptT5mR3aMImkfXmcUC2CVQXX7EXUnQ56dm
+ 66+rDilVmEkvWEr9wTh7FpJmQhc6yqWiHOYsI5Xhg+/3uGSGDKZfIHE07GJu5CDzIg4FcgEvtz2
+ CzXF8Yz5rmjXZWvnALJ6L0+Kqz0BcbwLO1die4kVsmrlwIugLPz2RmC5WPK7AEGehF73DRpVbDR
+ mdOrit4HfsA25FMxtdTwg025cuxMPQQjMKeCUVsdYh+uVK6LxgbRxd1uUTqzvxS8ADQUGO36/jG
+ s495tB4rjOGT/jzuyqAWwdVqqD3C4VKBnarJXxnRyX0QtRG9/IO3K4XtBoZ/q/n8YSimsFfQ8n1
+ YxYgm7Q3ORjQCQLieCdS9QiZKf7IlJ15duDgwcZajGw9ohxLhbhJ0zHQ61BY4K+GjlkV2xtahyg
+ cR33T0=
+X-Received: by 2002:a17:903:440f:b0:2b0:700e:fc9b with SMTP id
+ d9443c01a7336-2b0b0aea735mr18871615ad.34.1774402755577; 
+ Tue, 24 Mar 2026 18:39:15 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b08365a62bsm215324575ad.46.2026.03.24.18.39.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Mar 2026 18:39:15 -0700 (PDT)
+Message-ID: <456faa09-4889-43e2-a35a-449888f9249e@linaro.org>
+Date: Tue, 24 Mar 2026 18:39:14 -0700
 MIME-Version: 1.0
-References: <20260321144554.606417-1-npiggin@gmail.com>
- <20260321144554.606417-2-npiggin@gmail.com>
-In-Reply-To: <20260321144554.606417-2-npiggin@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 25 Mar 2026 11:35:27 +1000
-X-Gm-Features: AaiRm51VUnGiafeER45DKPozTjuJ70UgEDedOjsaatBgPHHWvmrlvfbhJSz13Vo
-Message-ID: <CAKmqyKNbjvZBB0AL_7cLcfE87fX=xK5LmhgqvpNi43SsGr2bmg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] target/riscv: Fix IALIGN check in misa write
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-riscv@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
- Joel Stanley <joel@jms.id.au>, Nicholas Joaquin <njoaquin@tenstorrent.com>, 
- Ganesh Valliappan <gvalliappan@tenstorrent.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=alistair23@gmail.com; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0] tcg: Pass host-endian values to
+ plugin_gen_mem_callbacks_*
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260325004052.1026892-1-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260325004052.1026892-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,185 +140,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 22, 2026 at 12:47=E2=80=AFAM Nicholas Piggin <npiggin@gmail.com=
-> wrote:
->
-> The instruction alignment check for the C extension was inverted.
-> The new value should be checked for C bit clear (thus increasing
-> IALIGN). If IALIGN is incompatible, then the write to misa should
-> be suppressed, not just ignoring the update to the C bit.
->
-> From the ISA:
->
->   Writing misa may increase IALIGN, e.g., by disabling the "C"
->   extension. If an instruction that would write misa increases IALIGN,
->   and the subsequent instruction=E2=80=99s address is not IALIGN-bit alig=
-ned,
->   the write to misa is suppressed, leaving misa unchanged.
->
-> This was found with a verification test generator based on RiESCUE.
->
-> Reported-by: Nicholas Joaquin <njoaquin@tenstorrent.com>
-> Reported-by: Ganesh Valliappan <gvalliappan@tenstorrent.com>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Hi Richard,
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
+On 3/24/26 5:40 PM, Richard Henderson wrote:
+> If the host does not support swapped-endian loads and stores,
+> then we emulate those within the tcg expanders with explicit
+> bswap operations.
+> 
+> However, we were passing values to the plugin interface in
+> the middle of those bswap operations, which meant that we
+> would pass values of the wrong endianness to plugins when
+> running on hosts without swapped-endian loads and stores.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3351
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/riscv/csr.c                        | 16 ++++-
->  tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
->  tests/tcg/riscv64/misa-ialign.S           | 88 +++++++++++++++++++++++
->  3 files changed, 106 insertions(+), 3 deletions(-)
->  create mode 100644 tests/tcg/riscv64/misa-ialign.S
+> 
+> Hi Pierrick,
+> 
+> On IRC I expressed the opinion that there was an additional
+> big-endian bug with how we treat neg.plugin_mem_value_low,
+> but I now see that isn't true, because of how we adjust the
+> store address in plugin_gen_mem_callbacks_i32.
 >
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 5064483917..91421a2dd8 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2129,9 +2129,19 @@ static RISCVException write_misa(CPURISCVState *en=
-v, int csrno,
->      /* Mask extensions that are not supported by this hart */
->      val &=3D env->misa_ext_mask;
->
-> -    /* Suppress 'C' if next instruction is not aligned. */
-> -    if ((val & RVC) && (get_next_pc(env, ra) & 3) !=3D 0) {
-> -        val &=3D ~RVC;
-> +    /*
-> +     * misa writes that increase IALIGN beyond alignment of the next
-> +     * instruction cause the write to misa to be suppressed. Clearing
-> +     * "C" extension increases IALIGN.
-> +     */
-> +    if (!(val & RVC) && (get_next_pc(env, ra) & 3) !=3D 0) {
-> +        /*
-> +         * If the next instruction is unaligned mod 4 then "C" must be
-> +         * set or this instruction could not be executing, so we know
-> +         * this is is clearing "C" (and not just keeping it clear).
-> +         */
-> +        g_assert(env->misa_ext & RVC);
-> +        return RISCV_EXCP_NONE;
->      }
->
->      /* Disable RVG if any of its dependencies are disabled */
-> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv6=
-4/Makefile.softmmu-target
-> index eb1ce6504a..f176f87ed0 100644
-> --- a/tests/tcg/riscv64/Makefile.softmmu-target
-> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
-> @@ -36,5 +36,10 @@ run-plugin-interruptedmemory: interruptedmemory
->           $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $<.pout \
->           $(QEMU_OPTS)$<)
->
-> +EXTRA_RUNS +=3D run-misa-ialign
-> +run-misa-ialign: QEMU_OPTS :=3D -cpu rv64,c=3Dtrue,v=3Dtrue,x-misa-w=3Do=
-n $(QEMU_OPTS)
-> +run-misa-ialign: misa-ialign
-> +       $(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+
+Yes, we store the value directly swapped, so there is no further 
+transformation needed.
+
+> 
+> r~
+> ---
+>   tcg/tcg-op-ldst.c | 52 ++++++++++++++++++++++++-----------------------
+>   1 file changed, 27 insertions(+), 25 deletions(-)
+> 
+> diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
+> index 354d9968f9..22211ccb45 100644
+> --- a/tcg/tcg-op-ldst.c
+> +++ b/tcg/tcg-op-ldst.c
+> @@ -262,9 +262,6 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+>       addr_new = tci_extend_addr(addr);
+>       copy_addr = plugin_maybe_preserve_addr(addr);
+>       gen_ldst1(INDEX_op_qemu_ld, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
+> -    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
+> -                                 QEMU_PLUGIN_MEM_R);
+> -    maybe_free_addr(addr, addr_new);
+>   
+>       if ((orig_memop ^ memop) & MO_BSWAP) {
+>           switch (orig_memop & MO_SIZE) {
+> @@ -280,6 +277,10 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+>               g_assert_not_reached();
+>           }
+>       }
 > +
->  # We don't currently support the multiarch system tests
->  undefine MULTIARCH_TESTS
-> diff --git a/tests/tcg/riscv64/misa-ialign.S b/tests/tcg/riscv64/misa-ial=
-ign.S
-> new file mode 100644
-> index 0000000000..7f1eb30023
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/misa-ialign.S
-> @@ -0,0 +1,88 @@
-> +/*
-> + * Test for MISA changing C and related IALIGN alignment cases
-> + *
-> + * This test verifies that the "C" extension can be cleared and set in M=
-ISA,
-> + * that a branch to 2-byte aligned instructions can be executed when "C"=
- is
-> + * enabled, and that a write to MISA which would increase IALIGN and cau=
-se
-> + * the next instruction to be unaligned is ignored.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
+> +    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
+> +                                 QEMU_PLUGIN_MEM_R);
+> +    maybe_free_addr(addr, addr_new);
+>   }
+>   
+>   void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+> @@ -290,10 +291,10 @@ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+>       tcg_gen_qemu_ld_i32_int(val, addr, idx, memop);
+>   }
+>   
+> -static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
+> +static void tcg_gen_qemu_st_i32_int(TCGv_i32 orig_val, TCGTemp *addr,
+>                                       TCGArg idx, MemOp memop)
+>   {
+> -    TCGv_i32 swap = NULL;
+> +    TCGv_i32 val = orig_val;
+>       MemOpIdx orig_oi, oi;
+>       TCGTemp *addr_new;
+>   
+> @@ -302,29 +303,29 @@ static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
+>       orig_oi = oi = make_memop_idx(memop, idx);
+>   
+>       if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+> -        swap = tcg_temp_ebb_new_i32();
+> +        val = tcg_temp_ebb_new_i32();
+>           switch (memop & MO_SIZE) {
+>           case MO_16:
+> -            tcg_gen_bswap16_i32(swap, val, 0);
+> +            tcg_gen_bswap16_i32(val, orig_val, 0);
+>               break;
+>           case MO_32:
+> -            tcg_gen_bswap32_i32(swap, val);
+> +            tcg_gen_bswap32_i32(val, orig_val);
+>               break;
+>           default:
+>               g_assert_not_reached();
+>           }
+> -        val = swap;
+>           memop &= ~MO_BSWAP;
+>           oi = make_memop_idx(memop, idx);
+>       }
+>   
+>       addr_new = tci_extend_addr(addr);
+>       gen_ldst1(INDEX_op_qemu_st, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
+> -    plugin_gen_mem_callbacks_i32(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
+> +    plugin_gen_mem_callbacks_i32(orig_val, NULL, addr, orig_oi,
+> +                                 QEMU_PLUGIN_MEM_W);
+
+It works, but it is still not clear to me why the value orig_val (which 
+is not swapped and in target-endian order) gets stored swapped correctly 
+in neg.plugin_mem_value_low.
+
+I would expect it to be in target-endian order, since 
+plugin_gen_mem_callbacks_i32 uses tcg_gen_st_i32(val, env, ... 
+neg.plugin_mem_value_low) which does not perform any swap.
+
+>       maybe_free_addr(addr, addr_new);
+>   
+> -    if (swap) {
+> -        tcg_temp_free_i32(swap);
+> +    if (val != orig_val) {
+> +        tcg_temp_free_i32(val);
+>       }
+>   }
+>   
+> @@ -360,9 +361,6 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+>       addr_new = tci_extend_addr(addr);
+>       copy_addr = plugin_maybe_preserve_addr(addr);
+>       gen_ld_i64(val, addr_new, oi);
+> -    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
+> -                                 QEMU_PLUGIN_MEM_R);
+> -    maybe_free_addr(addr, addr_new);
+>   
+>       if ((orig_memop ^ memop) & MO_BSWAP) {
+>           int flags = (orig_memop & MO_SIGN
+> @@ -382,6 +380,10 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+>               g_assert_not_reached();
+>           }
+>       }
 > +
-> +#define RVC (1 << ('C'-'A'))
-> +#define RVV (1 << ('V'-'A'))
-> +
-> +.option norvc
-> +       .text
-> +       .global _start
-> +_start:
-> +       lla     t0, trap
-> +       csrw    mtvec, t0
-> +
-> +       csrr    t0, misa
-> +       li      t1, RVC
-> +       not     t1, t1
-> +       and     t0, t0, t1
-> +       csrw    misa, t0
-> +       csrr    t1, misa
-> +       li      a0, 2 # fail code
-> +       bne     t0, t1, _exit # Could not clear RVC in MISA
-> +
-> +       li      t1, RVC
-> +       or      t0, t0, t1
-> +       csrw    misa, t0
-> +       csrr    t1, misa
-> +       li      a0, 3 # fail code
-> +       bne     t0, t1, _exit # Could not set RVC in MISA
-> +
-> +       j       unalign
-> +. =3D . + 2
-> +unalign:
-> +
-> +       li      t1, RVC
-> +       not     t1, t1
-> +       and     t0, t0, t1
-> +       csrw    misa, t0
-> +       csrr    t1, misa
-> +       li      a0, 4 # fail code
-> +       beq     t0, t1, _exit # Was able to clear RVC in MISA
-> +
-> +       li      t0, (RVC|RVV)
-> +       not     t0, t0
-> +       and     t0, t0, t1
-> +       csrw    misa, t0
-> +       csrr    t0, misa
-> +       li      a0, 5 # fail code
-> +       bne     t0, t1, _exit # MISA write was not ignored (RVV was clear=
-ed)
-> +
-> +       j       realign
-> +. =3D . + 2
-> +realign:
-> +
-> +       # Success!
-> +       li      a0, 0
-> +       j       _exit
-> +
-> +trap:
-> +       # Any trap is a fail code 1
-> +       li      a0, 1
-> +
-> +# Exit code in a0
-> +_exit:
-> +       lla     a1, semiargs
-> +       li      t0, 0x20026     # ADP_Stopped_ApplicationExit
-> +       sd      t0, 0(a1)
-> +       sd      a0, 8(a1)
-> +       li      a0, 0x20        # TARGET_SYS_EXIT_EXTENDED
-> +
-> +       # Semihosting call sequence
-> +       .balign 16
-> +       slli    zero, zero, 0x1f
-> +       ebreak
-> +       srai    zero, zero, 0x7
-> +       j       .
-> +
-> +       .data
-> +       .balign 16
-> +semiargs:
-> +       .space  16
-> --
-> 2.51.0
->
->
+> +    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
+> +                                 QEMU_PLUGIN_MEM_R);
+> +    maybe_free_addr(addr, addr_new);
+>   }
+>   
+>   void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+> @@ -392,10 +394,10 @@ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+>       tcg_gen_qemu_ld_i64_int(val, addr, idx, memop);
+>   }
+>   
+> -static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
+> +static void tcg_gen_qemu_st_i64_int(TCGv_i64 orig_val, TCGTemp *addr,
+>                                       TCGArg idx, MemOp memop)
+>   {
+> -    TCGv_i64 swap = NULL;
+> +    TCGv_i64 val = orig_val;
+>       MemOpIdx orig_oi, oi;
+>       TCGTemp *addr_new;
+>   
+> @@ -404,32 +406,32 @@ static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
+>       orig_oi = oi = make_memop_idx(memop, idx);
+>   
+>       if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+> -        swap = tcg_temp_ebb_new_i64();
+> +        val = tcg_temp_ebb_new_i64();
+>           switch (memop & MO_SIZE) {
+>           case MO_16:
+> -            tcg_gen_bswap16_i64(swap, val, 0);
+> +            tcg_gen_bswap16_i64(val, orig_val, 0);
+>               break;
+>           case MO_32:
+> -            tcg_gen_bswap32_i64(swap, val, 0);
+> +            tcg_gen_bswap32_i64(val, orig_val, 0);
+>               break;
+>           case MO_64:
+> -            tcg_gen_bswap64_i64(swap, val);
+> +            tcg_gen_bswap64_i64(val, orig_val);
+>               break;
+>           default:
+>               g_assert_not_reached();
+>           }
+> -        val = swap;
+>           memop &= ~MO_BSWAP;
+>           oi = make_memop_idx(memop, idx);
+>       }
+>   
+>       addr_new = tci_extend_addr(addr);
+>       gen_st_i64(val, addr_new, oi);
+> -    plugin_gen_mem_callbacks_i64(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
+> +    plugin_gen_mem_callbacks_i64(orig_val, NULL, addr, orig_oi,
+> +                                 QEMU_PLUGIN_MEM_W);
+>       maybe_free_addr(addr, addr_new);
+>   
+> -    if (swap) {
+> -        tcg_temp_free_i64(swap);
+> +    if (val != orig_val) {
+> +        tcg_temp_free_i64(val);
+>       }
+>   }
+>   
+
+This solves the problem, thanks!
+
+I'll probably add another patch to document that better in plugin api, 
+and remove the additional swapping done in tests/tcg/plugins/mem.c.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+Thanks for the patch,
+Pierrick
 
