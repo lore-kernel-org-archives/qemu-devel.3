@@ -4,104 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D37109C05D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 917881093168
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5W0y-0005x2-V4; Wed, 25 Mar 2026 17:43:49 -0400
+	id 1w5W17-0005yx-MZ; Wed, 25 Mar 2026 17:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5W0y-0005wt-1X
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:43:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5W0w-0001V3-7E
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:43:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774475024;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n7WQVEhwypZmULuwGej09JGKzbfGrAefaMZ0cKUE20E=;
- b=hzUVOUAGgCciBGTdCO8g0hCNOpR7wIprQIkocHIBpPOnQrgKzKOGpeA1fUYlJMs1jOspYk
- 9Fgban+Z3rbMcWRf27Q+aOztvrkFDyS5E4vK5Qo/jqgDBwSEgzJVAB+IMSMa8FunWQ98Nd
- AVs8m5yzNVqLFzMynkSKzGCbiZytKRE=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-J6skp1AMMbmGUwcUa3Ls6g-1; Wed, 25 Mar 2026 17:43:41 -0400
-X-MC-Unique: J6skp1AMMbmGUwcUa3Ls6g-1
-X-Mimecast-MFC-AGG-ID: J6skp1AMMbmGUwcUa3Ls6g_1774475020
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-50b2cbe7223so12316141cf.2
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:43:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5W16-0005xx-4A
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:43:56 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5W13-0001VM-Q3
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:43:55 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-829ac4670c4so251023b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774475020; x=1775079820; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=n7WQVEhwypZmULuwGej09JGKzbfGrAefaMZ0cKUE20E=;
- b=cJSiQpJ1Hug8FEMPyTZ3phZElmG8V1m0XMbdfME/e7ZxcMisL+dOKzBN39vdMqIwsC
- DvO7OSqIc71WzKy05nXQhZeJDVhqc3UN5OfAVuWEOjy1LQ9axVXdlPD7kIXGO20h0uDF
- TjFH8mnumlIv4Bk89mfrqgPtx3Giw/vOBr9Rxl43FC0hXTcMpCYUiczvfvu+Kbmzsp0U
- Ay/0tA9Q8cDGwL5s0KSznFeMh0iT9rPt5QjLLaNP3Ga8KEaj/zib891sE1e9or7qmaos
- bNPvA6sYRfWWV2a21DABo9/z6Eb3BosPhMy+MA+ObChLyxUg9yM65hjvSMXQ+w55nPWV
- n6gQ==
+ d=linaro.org; s=google; t=1774475032; x=1775079832; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=809JX76yFRucAkT1pe5PiS2+CHvIuHQOo1wJQUdn3Qg=;
+ b=hbZPyCjU0X8YgEn71huW+bQuC3AMvr8zTdK5ERXssgcFA5pFISyJiyMuS8OgwbmpHS
+ UELz+VssCeei863aTtTQEOVJDrMvpaHA9elxXKCmMPQ/dv8aoWtpYW08SIuwFKFKhnTp
+ fR/Tw3I2sRhxCRBOFpCthsuDoqHRKW3SA9QjRmYsM3kSQVu8LFcosUfv+nQxfrZxC8LJ
+ M10ZLKQ+gKe+d6EDpJmibrAzI/U+to8hQnZlKCwsd2/456/J+DVCX+QWd2FzsuhfELez
+ gum3mDEOOeqwoGoB7Wj5zMEme9doe/xjbBi6kFEzf0Q2Aw1SIf/rwmmbeu7qrg7MqyTi
+ 4rNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774475020; x=1775079820;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n7WQVEhwypZmULuwGej09JGKzbfGrAefaMZ0cKUE20E=;
- b=PTqU8371zGa+yRVWCzm963AkCdea04ac4ELhDFYr9XlHpptirv7P2XbuD7kbV+IdbO
- S4ebpvwwR8a0gOqQqKFB7QZwwMmMLPD72WnrY2Z9cvD1t39+3YzkFInO9biVqZvxS/Mx
- wMB9RcflikyLpypFYYBUHiu/X4a+cWrCOhJj7hwbtYQpPN2tagDtc+IHZ94H/JDiOHhO
- c6wV302wFRKw1eOK83HgtVbEcCfqQlxwVTglxdSrwijL0auv/9VP9HQPdYXTpBO3Ak8A
- bUiVOejQoM6pa5JWkeAv+KesVDV+G6swlo75McidWfXNB/2Vq8Jp+yhmWRS2jPSOcRYQ
- 1xlA==
-X-Gm-Message-State: AOJu0Yy8DgKDXb44A+F1RpF/DQph/d4wVxncDYg+qLZL+sYiITgIjOjn
- YMCk5WiWcTwHCFWsuVAW0NahUD0RHBK5Qf4C/8FzDVjswnr4clqUYVeQ1qsP0f5VE2tuRDhAh+L
- rcBob2LelfHWu3BMeisruNTQv38Mcna3K8ac4MUEp72jqyIuU94CjdudD
-X-Gm-Gg: ATEYQzx7eQLZv2qf9TracqBj8uD0qkHlNWv9mkopTkIweHJnGei5cxm7ip+3ZQPMazX
- 5RzxQ8Cies7xsgsAlfeNtLNg68cuqwtjQZMapFL66Cc4HPBjwG/imGp+ZNZoWgk/HxEMk0hMdXt
- KB4xeIjLPeSTClgHNRch3anuEaGJPtD+6xFQ2DljoRl2rpWDZ+ABYTdzUTM4N5SNjss/oqQ5uJ+
- f2Km9rKZL1M6ruHwPwjyG8xwfUSGl1A5fmSgJcHHLdqDpaMSeMjznR9A7NtKOQzTa9rzQw8vqcE
- 0DutibGAoXQnmNePNTBrHedz5g9jds23QP7UWj/Wa2fNml5Mz3Z2ZuKQZQhghT/bpgmzfKAGxGL
- Cr5jk/EkQj4Px8A==
-X-Received: by 2002:ac8:5a13:0:b0:50b:3e24:f9b8 with SMTP id
- d75a77b69052e-50b80cca3c1mr77891681cf.14.1774475020368; 
- Wed, 25 Mar 2026 14:43:40 -0700 (PDT)
-X-Received: by 2002:ac8:5a13:0:b0:50b:3e24:f9b8 with SMTP id
- d75a77b69052e-50b80cca3c1mr77891471cf.14.1774475019841; 
- Wed, 25 Mar 2026 14:43:39 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50b9237c12asm8371601cf.20.2026.03.25.14.43.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 14:43:39 -0700 (PDT)
-Date: Wed, 25 Mar 2026 17:43:38 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [RFC PATCH v1 05/17] vmstate: Remove vmdesc_loop
-Message-ID: <acRXCqDehPZept5K@x1.local>
-References: <20260324194333.30004-1-farosas@suse.de>
- <20260324194333.30004-6-farosas@suse.de>
- <acQWXMP1VjSeXUvL@x1.local> <87pl4rkcdu.fsf@suse.de>
+ d=1e100.net; s=20251104; t=1774475032; x=1775079832;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=809JX76yFRucAkT1pe5PiS2+CHvIuHQOo1wJQUdn3Qg=;
+ b=EfYAMHO7oA086PrCa7zMQP++puZSALb62jKh0iaxwrFz1/8itdjCA1ch35A6Kb86cf
+ 21puezMdt5gcCr+oqeHbYv12Ktfzek572GBKXtVGhnaU9MTR6P3puIKeKpT6uUFv48GM
+ kafYkxiav6RMkc6UJDp/9KjkwiqYKlkj3/DiMBt/Ec56chYlj2GeMgGiuQRHo+ZS8TiQ
+ rrFkJGguo2YbZMayDxjy67/KLR8Lj9rx93nSGqylDbxaVNt3cQolwvgaQhTPgUYtXDOn
+ qaezLSRn2VvxaT9XR70scpzr3UX4EcnyWUdqYpBQ/0+3dJUzwubDvmIhBNtL0xPmtCb+
+ vzyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqDy049xSp/673OeI36N9kHH0cgIywkJMeEO1R5bqMehF0WltXUjRl5CrUOoiw4iyGqjlBye1sRkhV@nongnu.org
+X-Gm-Message-State: AOJu0Yw4fQUTKn+W3L6GJNR+LvNRMy5dFNZBaeX+JMmlC2E7PkfJUKmo
+ 1C5yMebKeMBgGiMxzy+zbfCPPxiHN1H+tI4BrabqiERMa9bXkkEK/KGxLhpscHVNIuM=
+X-Gm-Gg: ATEYQzwxkoMF5kD1042YP+HriyOpMvcRUzxwQOLK3X+VXbdDAv8QIIMBHYRx06U6M6J
+ pF7pulckPSGElgA9KcXrizntSEX6HZP7dQ9IBYC8ibOapg+Hqhn1jgCOsf8nRXngPV2eVimUGxW
+ FDCCvJveLjZU65zGW1/HCGdMcdZtDYVVyq9seuJlfy2vlQ+D6u4+eAN5y/Bk+fDrCBcpeGu1V3/
+ vM5I/V/8Wo+Fh07QWWDY5kr0b5Z42+A7JBe+Ponl8HvnJwIIvlxs1lXadimVoCuUE53T5FlVg4o
+ YH6yZ3RCegkVB/3WyOf3Y5TCww07USWUM6XVKdNuE6pD3eRFaILe57riBGDoo2Vdg4gFmMvrBfF
+ 3TPgphG4hqEwoVFvxEqz/vkF1G++aFlW6YMxw9p/7eJ9B0UGO//6pvhruZrV8i7Gd9HNlaexUAA
+ BLwN1F6NUmzw5lGwGzajpTB+uhrZbZ2wjCb2L96Rjddmm2xhrS+dZAvtnSBkQoQfudhZAr
+X-Received: by 2002:a05:6a20:9143:b0:39c:787:f188 with SMTP id
+ adf61e73a8af0-39c4ae08a53mr5761498637.39.1774475031789; 
+ Wed, 25 Mar 2026 14:43:51 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c767382bcecsm379326a12.13.2026.03.25.14.43.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Mar 2026 14:43:51 -0700 (PDT)
+Message-ID: <c450e74d-e5f9-40c2-9e29-274a0d51631f@linaro.org>
+Date: Wed, 25 Mar 2026 14:43:50 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87pl4rkcdu.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.1 08/10] target/i386: Inline
+ VMSTATE_UINTTL_SUB_ARRAY() macro
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Glenn Miles <milesg@linux.ibm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, Alistair Francis
+ <alistair.francis@wdc.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Anton Johansson <anjo@rev.ng>, Peter Xu <peterx@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260325211728.89204-1-philmd@linaro.org>
+ <20260325211728.89204-9-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260325211728.89204-9-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,151 +150,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 03:11:25PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 3/25/26 2:17 PM, Philippe Mathieu-Daudé wrote:
+> The x86 target is the single one using the VMSTATE_UINTTL_SUB_ARRAY
+> macro. Inline it to avoid further uses of this legacy macro on other
+> targets.
 > 
-> > On Tue, Mar 24, 2026 at 04:43:20PM -0300, Fabiano Rosas wrote:
-> >> The vmdesc_loop variable is being used as a hacky way of writing the
-> >> JSON description only for the first element of a compressed
-> >> array. There are also a few implicit uses, such as writing the JSON
-> >> for the first non-compressed element after a compressed portion.
-> >> 
-> >> Future work will have trouble with this. Use a simple boolean to be
-> >> explicit now.
-> >> 
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  migration/vmstate.c | 25 ++++++++++++++-----------
-> >>  1 file changed, 14 insertions(+), 11 deletions(-)
-> >> 
-> >> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> >> index dec9cf920b..7a12245d36 100644
-> >> --- a/migration/vmstate.c
-> >> +++ b/migration/vmstate.c
-> >> @@ -622,8 +622,9 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-> >>              void *first_elem = opaque + field->offset;
-> >>              int i, n_elems = vmstate_n_elems(opaque, field);
-> >>              int size = vmstate_size(opaque, field);
-> >> -            JSONWriter *vmdesc_loop = vmdesc;
-> >>              bool is_null_prev = false;
-> >> +            bool use_vmdesc = true;
-> >> +
-> >>              /*
-> >>               * When this is enabled, it means we will always push a ptr
-> >>               * marker first for each element saying if it's populated.
-> >> @@ -673,7 +674,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-> >>                      is_null != is_null_prev) {
-> >>  
-> >>                      is_null_prev = is_null;
-> >> -                    vmdesc_loop = vmdesc;
-> >> +                    use_vmdesc = true;
-> >>  
-> >>                      for (int j = i + 1; j < n_elems; j++) {
-> >>                          void *elem = *(void **)(first_elem + size * j);
-> >> @@ -686,8 +687,13 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-> >>                      }
-> >>                  }
-> >>  
-> >> +                if (use_dynamic_array) {
-> >> +                    use_vmdesc = true;
-> >> +                }
-> >
-> > [1]
-> >
-> >> +
-> >>                  ok = vmstate_save_field_with_vmdesc(f, curr_elem, size, vmsd,
-> >> -                                                    inner_field, vmdesc_loop,
-> >> +                                                    inner_field,
-> >> +                                                    use_vmdesc ? vmdesc : NULL,
-> >>                                                      i, max_elems, errp);
-> >>  
-> >>                  /* If we used a fake temp field.. free it now */
-> >> @@ -708,19 +714,16 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-> >>                       * NOTE: do not use vmstate_size() here because we want
-> >>                       * to dump the real VMSD object now.
-> >>                       */
-> >> -                    ok = vmstate_save_field_with_vmdesc(f, curr_elem,
-> >> -                                                        field->size, vmsd,
-> >> -                                                        field, vmdesc_loop,
-> >> -                                                        i, max_elems, errp);
-> >> +                    ok = vmstate_save_field_with_vmdesc(
-> >> +                        f, curr_elem, field->size, vmsd, field,
-> >> +                        use_vmdesc ? vmdesc : NULL, i, max_elems, errp);
-> >> +
-> >>                      if (!ok) {
-> >>                          goto out;
-> >>                      }
-> >>                  }
-> >>  
-> >> -                /* Compressed arrays only care about the first element */
-> >> -                if (vmdesc_loop && vmsd_can_compress(field)) {
-> >> -                    vmdesc_loop = NULL;
-> >> -                }
-> >> +                use_vmdesc = false;
-> >
-> > Hmm...
-> >
-> > vmsd_can_compress() can return arbitrary things depending on the field
-> > itself, now we always do the dedup almost for everything.
-> >
-> > The patch did add above [1] to make AUTO_ALLOC be ok, by enforce setting
-> > TRUE for it for every loop, but what about other cases where
-> > vmsd_can_compress() may return false (where the field does not support
-> > compression)?
-> >
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/migration/cpu.h | 4 ----
+>   target/i386/machine.c   | 6 +++++-
+>   2 files changed, 5 insertions(+), 5 deletions(-)
 > 
-> Hmm, I think you're right. But what I'm doing by setting
-> use_vmdesc=false here is just clearing it for the next iteration, where
-> it should be set according to necessity. So I'd leave this down here,
-> but up there change to:
-> 
->          if (vmdesc && vmsd_can_compress(field)) {
->              if (is_null != is_null_prev) {
->                  use_vmdesc = true;
->                  ...
->              }
-> -        }
-> -
-> -        if (use_dynamic_array) {
-> +        } else {
->              use_vmdesc = true;
->          }
+> diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+> index 82a81b5d895..ea411d863ad 100644
+> --- a/include/migration/cpu.h
+> +++ b/include/migration/cpu.h
+> @@ -12,16 +12,12 @@
+>       VMSTATE_UINT64_V(_f, _s, _v)
+>   #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+>       VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
+> -#define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
+> -    VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
+>   #define vmstate_info_uinttl vmstate_info_uint64
+>   #else
+>   #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+>       VMSTATE_UINT32_V(_f, _s, _v)
+>   #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+>       VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
+> -#define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
+> -    VMSTATE_UINT32_SUB_ARRAY(_f, _s, _start, _num)
+>   #define vmstate_info_uinttl vmstate_info_uint32
+>   #endif
+>   
+> diff --git a/target/i386/machine.c b/target/i386/machine.c
+> index 1f5c517e562..16b65bddcdd 100644
+> --- a/target/i386/machine.c
+> +++ b/target/i386/machine.c
+> @@ -1770,7 +1770,11 @@ const VMStateDescription vmstate_x86_cpu = {
+>       .pre_save = cpu_pre_save,
+>       .post_load = cpu_post_load,
+>       .fields = (const VMStateField[]) {
+> -        VMSTATE_UINTTL_SUB_ARRAY(env.regs, X86CPU, 0, CPU_NB_REGS),
+> +#if TARGET_LONG_BITS == 64
+> +        VMSTATE_UINT64_SUB_ARRAY(env.regs, X86CPU, 0, CPU_NB_REGS),
+> +#else
+> +        VMSTATE_UINT32_SUB_ARRAY(env.regs, X86CPU, 0, CPU_NB_REGS),
+> +#endif
+>           VMSTATE_UINTTL(env.eip, X86CPU),
+>           VMSTATE_UINTTL(env.eflags, X86CPU),
+>           VMSTATE_UINT32(env.hflags, X86CPU),
 
-I think this may still cause some confusion and inefficiency.
+I think it would be better to exclude this patch, and treat 
+VMSTATE_UINTTL_SUB_ARRAY with a generic approach, similar to what we 
+talked about VMSTATE_UINTTL*.
 
-For example, for uncompressed fields, we'll update this field twice for
-each of the elements (setting true here, clearing to false at the end).
+In short, to add a field to VMStateField, with .target_long = true, that 
+indicates to migration code that size should be read from .size / 
+target_long_bits().
 
-The old approach looks still better in that it only flips the pointer
-whenever needed.  Said that, it doesn't always need to be a pointer, we can
-still use a bool.
-
-> 
-> In words: all fields should appear in the JSON, unless its part of the
-> NULL portion of a compressed array. For compressed arrays only the first
-> element appears in the JSON. If a stream of NULLs is followed by a
-> non-NULL member, then that member should appear in the JSON after the
-> compressed entry.
-> 
-> These two catch all these corner-cases I think:
-> 
-> PYTHON=$(pwd)/pyvenv/bin/python3.11
-> QTEST_QEMU_BINARY=./qemu-system-s390x ./tests/qtest/migration-test -p
-> /s390x/migration/analyze-script
-> 
-> PYTHON=$(pwd)/pyvenv/bin/python3.11
-> QTEST_QEMU_BINARY=./qemu-system-ppc64 ./tests/qtest/migration-test-p
-> /ppc64/migration/analyze-script
-> 
-> >>              }
-> >>          } else {
-> >>              if (field->flags & VMS_MUST_EXIST) {
-> >> -- 
-> >> 2.51.0
-> >> 
-> 
-
--- 
-Peter Xu
-
+Regards,
+Pierrick
 
