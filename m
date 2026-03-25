@@ -4,99 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F82BFEA82E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A79AFEA830
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5JIH-0008JF-74; Wed, 25 Mar 2026 04:08:49 -0400
+	id 1w5Jas-0002f2-5Q; Wed, 25 Mar 2026 04:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w5JIF-0008Is-0p
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:08:47 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5Jao-0002ej-Bq
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:27:58 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w5JID-0005Sm-3o
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:08:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774426101; bh=SM91wa4t4E+QDwFZxbT5kSFr52tRJ9J8JeXVx8sU9e8=;
- h=Date:Subject:From:To:References:Cc:In-Reply-To;
- b=MJOxY9Kg4kUz4acQh3BYPRRztZSdme2tebFUlldz+9erAiSP9OQCjIn4DROUkQdNS
- DV3DbL265iyAnEqOSCW0c9FxNeQxbE67sS4yTuGBu+g3jGuI7sT6zDkqyU9Tbowl2f
- r5XxEgKz8wi2iIPpPGAcan/z/WnMdkrHcKuWa7S4VIH76ILy4dNEuPVBqQBmDjrLFe
- EiCPwJbpOnJ1LzlcdiOuDTf58cVo/bPCpZhu1gM2tx3nEuFdi9LWRYfPn1jOaB0ZfT
- yqani344ZVPVYDhq9Dc0mlhxVRvmM/5wY/dJuagnmQ3HrzLmlKyaHtVFHyM7dZy4S9
- 3dOI6KPu/B3qw==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 4744A197761;
- Wed, 25 Mar 2026 11:08:21 +0300 (MSK)
-Message-ID: <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
-Date: Wed, 25 Mar 2026 11:08:41 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5Jai-0000Ob-39
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 04:27:55 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62P8RigX070787
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 25 Mar 2026 17:27:45 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=7/Qxkju2u10Tt4GdRGWifuVzAJCDQ9cjSufd8GeC3H0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1774427265; v=1;
+ b=kc4XYMO4zVlRgmceS6L6DHteNN7QyRQczxsQMG6MBjtjZvZWr+DxKQFUzozQ2l+P
+ wOYymEpVCjy/c39JtEGRWEgpV6dCnOAW9CvlnUXG4Mxq5G6NGt84ekjtpTQEf49a
+ AbQQ/J1XBS/wCTakyAccsbmOob0P/Or5DKCR2nDWvubBieYLJNKrhuzVMyNq5sBb
+ iMofY4pz+93delgl87U3eiTTMcMz6qIAwzhlWs/wb+823zcJGxTMr9srQ7j3OloU
+ A4EMCzwZXgUlm8Al7WGzHzfLFksCpJT3XZ1iaxq36Ww3Aj6mSwSb9zqllphs5CK9
+ PKcmaTCvz9oFjpUYJWuB+A==
+Message-ID: <09f02fe2-63cb-4283-899e-4cffc5f60cf1@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 25 Mar 2026 17:27:44 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU requires a 64-bit CPU host architecture?
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: QEMU Development <qemu-devel@nongnu.org>
-References: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
+Subject: Re: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error handling with
+ 'Error **' and err enum
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>
+References: <20260319052023.2088685-1-vivek.kasireddy@intel.com>
+ <20260319052023.2088685-10-vivek.kasireddy@intel.com>
+ <a112aab0-df42-47b6-a5de-f6827321c8d5@redhat.com>
+ <IA0PR11MB718579B3F8EFCB2C2E2D1E93F848A@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <3434becb-639b-435d-a36a-71b5a3760ba2@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71851F5FD322F30FAD53D1F4F849A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB71851F5FD322F30FAD53D1F4F849A@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,34 +84,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.03.2026 09:45, Michael Tokarev wrote:
-> Hi!
+On 2026/03/25 14:31, Kasireddy, Vivek wrote:
+> Hi Akihiko,
 > 
-> Is it intentional that qemu does not build utilities on 32bit hosts
-> anymore?
+>> Subject: Re: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error
+>> handling with 'Error **' and err enum
+>>>>
+>>>> On 3/19/26 06:15, Vivek Kasireddy wrote:
+>>>>> Make the error handling more robust in virtio_gpu_init_udmabuf()
+>>>>> by introducing 'Error **' parameter to capture errors and using
+>>>>> an enum from VFIO to categorize different errors. This allows for
+>>>>> better error reporting and handling of errors from
+>>>>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
+>>>>>
+>>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>>>> Cc: Alex Williamson <alex@shazbot.org>
+>>>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>>>> ---
+>>>>>     hw/display/virtio-gpu-dmabuf.c | 67 +++++++++++++++++++++++--
+>> -----
+>>>> ----
+>>>>>     1 file changed, 45 insertions(+), 22 deletions(-)
+>>>>>
+>>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>>>> dmabuf.c
+>>>>> index e35f7714a9..89aa487654 100644
+>>>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>>>> @@ -18,6 +18,7 @@
+>>>>>     #include "ui/console.h"
+>>>>>     #include "hw/virtio/virtio-gpu.h"
+>>>>>     #include "hw/virtio/virtio-gpu-pixman.h"
+>>>>> +#include "hw/vfio/vfio-device.h"
+>>>>>     #include "trace.h"
+>>>>>     #include "system/ramblock.h"
+>>>>>     #include "system/hostmem.h"
+>>>>> @@ -27,16 +28,18 @@
+>>>>>     #include "standard-headers/linux/udmabuf.h"
+>>>>>     #include "standard-headers/drm/drm_fourcc.h"
+>>>>>
+>>>>> -static void virtio_gpu_create_udmabuf(struct
+>>>> virtio_gpu_simple_resource *res)
+>>>>> +static int virtio_gpu_create_udmabuf(struct
+>>>> virtio_gpu_simple_resource *res,
+>>>>> +                                     Error **errp)
+>>>>>     {
+>>>>>         g_autofree struct udmabuf_create_list *list = NULL;
+>>>>>         RAMBlock *rb;
+>>>>>         ram_addr_t offset;
+>>>>> -    int udmabuf, i;
+>>>>> +    int udmabuf, i, fd;
+>>>>>
+>>>>>         udmabuf = udmabuf_fd();
+>>>>>         if (udmabuf < 0) {
+>>>>> -        return;
+>>>>> +        error_setg(errp, "udmabuf device not available or enabled");
+>>>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+>>>>
+>>>> The function virtio_gpu_create_udmabuf() is returning
+>> VFIO_DMABUF_*
+>>>> enum
+>>>> values, which is problematic because the function creates a
+>> udmabuf,
+>>>> not
+>>>> a VFIO dmabuf.
+>>>>
+>>>> This creates a layering violation. The virtio-gpu-dmabuf code (which
+>>>> handles both udmabuf and VFIO dmabuf creation) is using error
+>> codes
+>>>> defined in the VFIO-specific header.
+>>
+>> The rationale of using error codes is as follows:
+>>
+>>   > In that case, using it for udmabuf is cheating, but I think it's fine
+>>   > since it's locally-contained in virtio-gpu-dmabuf.c, its intent is
+>>   > still clear, and it has no adverse effect for users (at least there
+>>   > will be no bug).
+>>
+>> https://lore.kernel.org/qemu-devel/becde56b-90bd-40ca-9329-
+>> 0c92b9519a67@rsg.ci.i.u-tokyo.ac.jp/
+>>
+>>>>
+>>>> Please find another solution.
+>>> Other solutions I can think of are either move these error enums into
+>> virtio-gpu
+>>> (and disregard the error return type from vfio) or move them to some
+>> other header
+>>> where they are visible to both virtio-gpu and vfio. I'd like hear
+>> Akihiko's thoughts/
+>>> comments on how to proceed given that he had reviewed virtio-gpu
+>> patches in
+>>> this series.
+>>
+>> Disregarding the error conditions of VFIO is not OK. That can cause a
+>> guest error to be reported as a host error.
+>>
+>> I think the simplest alternative is just to have a duplicate enum for
+>> virtio-gpu.
+> That would address the layering violation but Cedric's other concern is
+> that he believes having errp is sufficient and using these error enums in
+> VFIO would be overkill.
 
-This is
+It would be beneficial to describe the rationale behind the enums; the 
+patch message only says "better error reporting", which is quite 
+insufficient.
 
-commit 372ec46b9f1215f48a4717f2b7ed969f65bfadc6
-Author: Richard Henderson <richard.henderson@linaro.org>
-Date:   Thu Dec 18 09:56:27 2025 +1100
+The rationale is that we need a special handling for the INVALID_IOV 
+case. The INVALID_IOV case can happen in two cases:
+- The memory is backed by VFIO. It will result in the INVALID_IOV error
+   for the first attempt to use udmabuf, but this error can be properly
+   recovered by letting the VFIO code to create a DMA-BUF instead.
+- The memory is not backed by memfd nor VFIO. In this case, the error
+   is a guest's fault, so we should:
+   - Use qemu_log_mask(LOG_GUEST_ERROR, ...) instead of
+     error_report_err().
+   - Emit a message useful to diagnose the guest error, which we have
+     discussed in this thread.
 
-     meson: Reject 32-bit hosts
+A common pattern is to return -errno to let the caller implement a 
+special error handling, but in this case we specifically need to 
+distinguish the INVALID_IOV case from the others and these enums are 
+more convenient for this.
 
-     32-bit hosts have been deprecated since 10.0.
+Regards,
+Akihiko Odaki
 
-How would one build qemu-img and especially qemu-guest-agent, say,
-on i386 or armhf?
-
-I tried removing this error message from meson.build (in $subject),
-but it fails to build even the qga due to errors in atomic.h, -
-even if these aren't used by qga.
-
-That smells like a bad decision, - to drop qga and qemu-img support
-on 32bit architectures.  Especially qga.
-
-Thanks,
-
-/mjt
+> 
+> Thanks,
+> Vivek
+>>
+>>>
+>>>>
+>>>>
+>>>>
+>>>>>         }
+>>>>>
+>>>>>         list = g_malloc0(sizeof(struct udmabuf_create_list) +
+>>>>> @@ -45,7 +48,8 @@ static void virtio_gpu_create_udmabuf(struct
+>>>> virtio_gpu_simple_resource *res)
+>>>>>         for (i = 0; i < res->iov_cnt; i++) {
+>>>>>             rb = qemu_ram_block_from_host(res->iov[i].iov_base, false,
+>>>> &offset);
+>>>>>             if (!rb || rb->fd < 0) {
+>>>>> -            return;
+>>>>> +            error_setg(errp, "IOV memory address incompatible with
+>>>> udmabuf ");
+>>>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+>>>>>             }
+>>>>>
+>>>>>             list->list[i].memfd  = rb->fd;
+>>>>> @@ -56,22 +60,28 @@ static void
+>> virtio_gpu_create_udmabuf(struct
+>>>> virtio_gpu_simple_resource *res)
+>>>>>         list->count = res->iov_cnt;
+>>>>>         list->flags = UDMABUF_FLAGS_CLOEXEC;
+>>>>>
+>>>>> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>>>>> -    if (res->dmabuf_fd < 0) {
+>>>>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+>>>>> -                    strerror(errno));
+>>>>> +    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>>>>> +    if (fd < 0) {
+>>>>> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl
+>>>> failed");
+>>>>> +        if (errno == EINVAL || errno == EBADFD) {
+>>>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+>>>>> +        }
+>>>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+>>>>>         }
+>>>>> +    return fd;
+>>>>>     }
+>>>>>
+>>>>> -static void virtio_gpu_remap_dmabuf(struct
+>>>> virtio_gpu_simple_resource *res)
+>>>>> +static void *virtio_gpu_remap_dmabuf(struct
+>>>> virtio_gpu_simple_resource *res,
+>>>>> +                                     Error **errp)
+>>>>>     {
+>>>>> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+>>>>> -                         MAP_SHARED, res->dmabuf_fd, 0);
+>>>>> -    if (res->remapped == MAP_FAILED) {
+>>>>> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
+>>>>> -                    strerror(errno));
+>>>>> -        res->remapped = NULL;
+>>>>> +    void *map;
+>>>>> +
+>>>>> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
+>>>> res->dmabuf_fd, 0);
+>>>>> +    if (map == MAP_FAILED) {
+>>>>> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
+>>>>> +        return NULL;
+>>>>>         }
+>>>>> +    return map;
+>>>>>     }
+>>>>>
+>>>>>     static void virtio_gpu_destroy_dmabuf(struct
+>>>> virtio_gpu_simple_resource *res)
+>>>>> @@ -125,22 +135,35 @@ bool virtio_gpu_have_udmabuf(void)
+>>>>>
+>>>>>     void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
+>> *res)
+>>>>>     {
+>>>>> +    Error *local_err = NULL;
+>>>>>         void *pdata = NULL;
+>>>>>
+>>>>> -    res->dmabuf_fd = -1;
+>>>>>         if (res->iov_cnt == 1 &&
+>>>>>             res->iov[0].iov_len < 4096) {
+>>>>> +        res->dmabuf_fd = -1;
+>>>>>             pdata = res->iov[0].iov_base;
+>>>>>         } else {
+>>>>> -        virtio_gpu_create_udmabuf(res);
+>>>>> +        res->dmabuf_fd = virtio_gpu_create_udmabuf(res,
+>> &local_err);
+>>>>> +        if (res->dmabuf_fd ==
+>>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>>>> +            error_free_or_abort(&local_err);
+>>>>
+>>>> Why not report the error in the QEMU log below ?
+>>> I think the idea is that in the case of INVALID_IOV error, it is sufficient
+>>> to just report that the Guest passed in incompatible memory
+>> addresses.
+>>> But I guess we could also just do:
+>>> qemu_log_mask(LOG_GUEST_ERROR, "%s\n",
+>> error_get_pretty(local_err));
+>>
+>> The error message may not be useful. e.g., "UDMABUF_CREATE_LIST:
+>> ioctl
+>> failed" does not tell what error the guest made and how to fix it.
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>
+>>> Thanks,
+>>> Vivek
+>>>>
+>>>>> +
+>>>>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>>>>> +                          "Cannot create dmabuf: incompatible memory\n");
+>>>>> +            return;
+>>>>> +        } else if (res->dmabuf_fd >= 0) {
+>>>>> +            pdata = virtio_gpu_remap_dmabuf(res, &local_err);
+>>>>> +            if (!pdata) {
+>>>>> +                virtio_gpu_destroy_dmabuf(res);
+>>>>> +            }
+>>>>> +        } else {
+>>>>> +            res->dmabuf_fd = -1;
+>>>>> +        }
+>>>>> +
+>>>>>             if (res->dmabuf_fd < 0) {
+>>>>> +            error_report_err(local_err);
+>>>>>                 return;
+>>>>>             }
+>>>>> -        virtio_gpu_remap_dmabuf(res);
+>>>>> -        if (!res->remapped) {
+>>>>> -            return;
+>>>>> -        }
+>>>>> -        pdata = res->remapped;
+>>>>> +        res->remapped = pdata;
+>>>>>         }
+>>>>>
+>>>>>         res->blob = pdata;
+>>>
+> 
 
 
