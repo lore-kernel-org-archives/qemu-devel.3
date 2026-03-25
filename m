@@ -4,64 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C51FFEA837
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 08:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE3A3FEA83A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 09:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5K1I-0007wx-Dq; Wed, 25 Mar 2026 04:55:20 -0400
+	id 1w5KNo-0003XE-2h; Wed, 25 Mar 2026 05:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1w5K1F-0007wk-5s; Wed, 25 Mar 2026 04:55:17 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w5KNi-0003Wk-4l
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 05:18:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1w5K1C-0006oc-L9; Wed, 25 Mar 2026 04:55:16 -0400
-X-UUID: 4a012f24282811f1a21c59e7364eecb8-20260325
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.11, REQID:ee45a32f-ffaf-4bcd-9921-75d2f085acbc, IP:0,
- U
- RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
- release,TS:0
-X-CID-META: VersionHash:89c9d04, CLOUDID:33daf92fbfd1b051932e3f78995da9a0,
- BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:102|850|898,TC:nil,Content:0|15|50,EDM:-
- 3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,A
- V:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 4a012f24282811f1a21c59e7364eecb8-20260325
-X-User: zhaoguohan@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
- (envelope-from <zhaoguohan@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 1648777527; Wed, 25 Mar 2026 16:54:53 +0800
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- GuoHan Zhao <zhaoguohan@kylinos.cn>
-Subject: [PATCH] hw/i2c/aspeed_i2c: reset and migrate pending_intr_sts
-Date: Wed, 25 Mar 2026 16:54:50 +0800
-Message-ID: <20260325085450.126595-1-zhaoguohan@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w5KNe-0004El-AO
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 05:18:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774430304;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=q7odQe46fSul21qNLzBEjCx3OlL08F4B8HH7byekOM4=;
+ b=V7SCXpXfdmqIPpUkTVnfFcs489EKUrTO6n0mmyDkEmjBMKm9IWqTwFAM3zlWMcMlFgJTUs
+ WmjQ6z9r6I3S74S/gMvDqzRhOcqAgdsjKzlvgK1xLq1bzH6wPgbYuBBMavkLTjGMYtHavb
+ mhs3GxP2Lif3gm3vVK5ufnlbENUkuxw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-8EFFFxqSOVO2Km7Zhivi6Q-1; Wed,
+ 25 Mar 2026 05:18:21 -0400
+X-MC-Unique: 8EFFFxqSOVO2Km7Zhivi6Q-1
+X-Mimecast-MFC-AGG-ID: 8EFFFxqSOVO2Km7Zhivi6Q_1774430300
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D61541800763; Wed, 25 Mar 2026 09:18:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.14])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2A141800107; Wed, 25 Mar 2026 09:18:16 +0000 (UTC)
+Date: Wed, 25 Mar 2026 09:18:13 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: QEMU Development <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: QEMU requires a 64-bit CPU host architecture?
+Message-ID: <acOoVWw3jXfkfion@redhat.com>
+References: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
+ <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232;
- envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,53 +85,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 7e82393ed058 ("hw/i2c/aspeed: fix lost interrupts on
-back-to-back commands") introduced pending_intr_sts to preserve
-interrupt bits that collide with already pending status bits.
+On Wed, Mar 25, 2026 at 11:08:41AM +0300, Michael Tokarev wrote:
+> On 20.03.2026 09:45, Michael Tokarev wrote:
+> > Hi!
+> > 
+> > Is it intentional that qemu does not build utilities on 32bit hosts
+> > anymore?
+> 
+> This is
+> 
+> commit 372ec46b9f1215f48a4717f2b7ed969f65bfadc6
+> Author: Richard Henderson <richard.henderson@linaro.org>
+> Date:   Thu Dec 18 09:56:27 2025 +1100
+> 
+>     meson: Reject 32-bit hosts
+> 
+>     32-bit hosts have been deprecated since 10.0.
+> 
+> How would one build qemu-img and especially qemu-guest-agent, say,
+> on i386 or armhf?
+> 
+> I tried removing this error message from meson.build (in $subject),
+> but it fails to build even the qga due to errors in atomic.h, -
+> even if these aren't used by qga.
+> 
+> That smells like a bad decision, - to drop qga and qemu-img support
+> on 32bit architectures.  Especially qga.
 
-That deferred interrupt state is consumed later when the guest clears
-INTR_STS, but it is not reset in aspeed_i2c_bus_reset() and it is not
-part of the bus migration state. A reset can therefore leave stale
-deferred bits behind, and migration can silently drop them.
+IMHO dropping the block related tools is reasonable, as if you keep
+that, the dependencies that need to remain 32-bit compatible ripple
+out across a very large part of the codebase.
 
-Clear pending_intr_sts on reset and include it in VMState while keeping
-compatibility with older migration streams.
+Not having qga though feels like a pretty undesirable consequence,
+given our message overall is that we were dropping host support but
+keeping 32-bit emulation.
 
-Fixes: 7e82393ed058 ("hw/i2c/aspeed: fix lost interrupts on back-to-back commands")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
----
- hw/i2c/aspeed_i2c.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+IMHO, the qga probably ought to be a separate project, but it has
+a core dependancy on the QAPI code generator, and some of the related
+shared C code (qobject/, qapi/ and some parts of util/), but even that
+is quite a tangled web of deps.
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 5d18f8d49ea4..90f83a03fd4f 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -1134,10 +1134,11 @@ static const MemoryRegionOps aspeed_i2c_bus_pool_ops = {
- 
- static const VMStateDescription aspeed_i2c_bus_vmstate = {
-     .name = TYPE_ASPEED_I2C,
--    .version_id = 6,
-+    .version_id = 7,
-     .minimum_version_id = 6,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(regs, AspeedI2CBus, ASPEED_I2C_NEW_NUM_REG),
-+        VMSTATE_UINT32_V(pending_intr_sts, AspeedI2CBus, 7),
-         VMSTATE_UINT8_ARRAY(pool, AspeedI2CBus, ASPEED_I2C_BUS_POOL_SIZE),
-         VMSTATE_UINT64(dma_dram_offset, AspeedI2CBus),
-         VMSTATE_END_OF_LIST()
-@@ -1510,6 +1511,7 @@ static void aspeed_i2c_bus_reset(DeviceState *dev)
-     AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
- 
-     memset(s->regs, 0, sizeof(s->regs));
-+    s->pending_intr_sts = 0;
-     i2c_end_transfer(s->bus);
- }
- 
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
