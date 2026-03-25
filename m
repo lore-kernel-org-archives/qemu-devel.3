@@ -4,94 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A477FEA82D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6FDFEA82E
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 07:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5IdT-0000UU-ED; Wed, 25 Mar 2026 03:26:39 -0400
+	id 1w5IdY-0000Vd-FC; Wed, 25 Mar 2026 03:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w5IdR-0000UG-FN
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:26:37 -0400
-Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w5IdP-00042m-Pu
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:26:37 -0400
-Received: by mail-dl1-x1243.google.com with SMTP id
- a92af1059eb24-1273349c56bso6236122c88.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 00:26:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774423594; x=1775028394; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+b+NcI87RiS7zy39OEWrEyUUCHBcDYsmppdh0xWgHFU=;
- b=YPdPW/hdpYNpJaTmuAkwKVRwp8xNv4ndrH/G/ZeUHr8T/S1PDCk2q8DHnQbtujmY0o
- Xl1yFI36+5azQxNmIv94s5seizSZOKlb5SiEILJbl2qnWOWVBhrANS3EJlP8ono8dQQW
- y1347g1mxLPaSfV1S8uOAxrIOkaX4ihcn3JGwEJ3BXnNbK4KarGdQp2qhfqZ76UN/R4H
- FbGXYlCnQw03wJG1RsJRY9+Yd1iiTGIrcZAFcvtWBe711cTCv991LhlKOF+5tzv2k/AN
- RqTKMCaG+qeqnwQ7rEfcuC4blYaVhe1SCRnQSlN/4lwdHXcUcrHcgJKgYrjMbtKBB27I
- Jcug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774423594; x=1775028394;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+b+NcI87RiS7zy39OEWrEyUUCHBcDYsmppdh0xWgHFU=;
- b=iZBDvmi8ouprTzwh1aaxylWEpV93W1n60KzefZLKHeKzRRdRH4ESG0o3mwQwceN2Vt
- wOuMPqOvp6E1obxv+JjPPNBoWVAsu3ddBk31+9o+YsMDjKUb6SgEW5fTCFvg5em1QgaL
- mOPkdQFm08fqml+KpCKU89jIk7SE+k1Zru+rPVxCS7WRgTP7kLmBiarYDNAc5Fv5kez2
- miaUCEEvTxI9n6JoDJC4pnPMPJN1Ove49CpMu76G8ngYGu1mlBGQkoDaTkC/ToVtyZNE
- APAdEDwKPiwR3J7+7Ng4C7gsJO+M4UH9C/ERZCuXGusaTy9XxhMx1k2uHbdY2ukrzixg
- QQ9w==
-X-Gm-Message-State: AOJu0Yzn3x4qwU69vcSz8sf3ItywP2FTd3S6g3Tw/VC6HZWhzfVTSqDh
- hxLXmYfTL6izMN711zBRa/HEB3xKcYEoRT1a6FsL0FRv824/mhoRHPKS
-X-Gm-Gg: ATEYQzzTiI4YwDXbZd+PLfsqXACcy9YhoyszjJOOeRla41sYx5jmEaC76cnBnZwV2B3
- cu4W1OmD8ipnqDGPJ3DgoZfGSxpypYCPc8b3bOPrJEvVUhAkwgbIeYuFqveW/v4au5KHuvO0Unu
- jB/9DXY82VnVJjIZgsPWa6C98yE6imZKsctO+BeDqzRtVp1ryQSEUaLVzQEp/Zhk9BtZElQfGJF
- fUGZUJWPSv9XJ5/1wZYR3CAWMC4nyoejqIWFY1jj4/TYEnwFURxim//FKmWlDYbh0CGkoC2qD5Y
- Cpkholy0J/YBp4S+YjFnunMl4D2El63TnVU18/i5ZDnCuHmIuRQKvnXG3YK6Pzy8cOgm+46YbL5
- C8fhF6tD867d9+v8QDqJEjGl0WYmNdrUeQSmZX0e65jMNqnbGyIWdIhpJJCfUr+FOG6ZYVQrnOr
- DSRVGh8PaR9xAwWoAQ5vYueEhJfZLJMIGDBcfc7YY4PG+K60pOZN3ymQcSmvdzQJsCwoudrRMto
- xoCcVUGZrEx813CGwNBDc5UTfpz/KXBf+Ew5PEKAA==
-X-Received: by 2002:a05:7300:7b90:b0:2ba:8018:cc57 with SMTP id
- 5a478bee46e88-2c15d3680dcmr1113747eec.11.1774423593958; 
- Wed, 25 Mar 2026 00:26:33 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2c10b2cf068sm17069875eec.22.2026.03.25.00.26.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 00:26:33 -0700 (PDT)
-Date: Wed, 25 Mar 2026 15:26:12 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com" <cfu@mips.com>,
- "mst@redhat.com" <mst@redhat.com>, 
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, 
- "philmd@linaro.org" <philmd@linaro.org>,
- "alistair23@gmail.com" <alistair23@gmail.com>, 
- "thuth@redhat.com" <thuth@redhat.com>
-Subject: Re: [PATCH v5 1/7] target/riscv: Add big-endian CPU property
-Message-ID: <acON-ROjq3yW4eK6@ZEVORN-PC.localdomain>
-References: <20260324164007.549397-1-djordje.todorovic@htecgroup.com>
- <20260324164007.549397-2-djordje.todorovic@htecgroup.com>
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1w5IdS-0000UQ-VB
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:26:38 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1w5IdP-00042G-IC
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 03:26:38 -0400
+DKIM-Signature: a=rsa-sha256; bh=HZ75dORxjIw1V8rr7cp27pcFAphouxw/JWwEuEBTdgw=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1774423590; v=1;
+ b=Nnc2SHOuNWrpJIP7lwVV8rDw2k07ie1mAMCaWHE3qqsoexlMIiXmktqz2OwJ7qYmTbzrtQ77
+ rLjQP51JWG/CKyM5wrLGYhcSfpEk1M8u5yu+H5h+21O+fv0yJeBOAmlFIuhKZhpzKb4tmxuwTMg
+ ES4KHe6c3XWLZfxix+2dSFbc49JWb7FT7dTq/1lscdiahahbd2OLtl936TgFPe6miz/RThjL9dn
+ ppE8m4v5aPZ2OcpVVEJ6q51yAxjoIlNXb5R2Em9nPZJEKA3iMgxONbReJiUq1SJDTEe1V/pRUdX
+ X+Lei4dRMCQZTwId2aSGGj9SJ68GvGxN4cCfjP3Zx2GPA==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id A6A0A204D3;
+ Wed, 25 Mar 2026 07:26:30 +0000 (UTC)
+From: ~liuxu <liuxu@git.sr.ht>
+Date: Wed, 25 Mar 2026 14:31:56 +0800
+Subject: [PATCH qemu] hw/intc: Call sifive_plic_update() after writing
+ interrupt enable
+Message-ID: <177442359063.1954.8266696018975379698-0@git.sr.ht>
+X-Mailer: git.sr.ht
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260324164007.549397-2-djordje.todorovic@htecgroup.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,56 +62,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~liuxu <liuxu@nucleisys.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 24, 2026 at 04:40:15PM +0000, Djordje Todorovic wrote:
-> Add a "big-endian" boolean property to the RISC-V CPU configuration,
-> defaulting to false (little-endian). This property allows machine
-> models to configure individual HARTs for big-endian data operation.
-> 
-> The RISC-V ISA supports big-endian data accesses via the mstatus
-> SBE/MBE/UBE bits, while instructions remain always little-endian.
-> This property provides the configuration interface; subsequent
-> patches will connect it to the CPU state and translation logic.
-> 
-LGTM.
+From: lxx <1733205434@qq.com>
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+When a guest writes to the interrupt enable register, the PLIC state
+is updated but sifive_plic_update() is not called to re-evaluate the
+interrupt line to the hart. This causes a lost interrupt when the
+pending bit is set before the enable bit is written.
 
-Thanks,
-Chao
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->  target/riscv/cpu.c                | 1 +
->  target/riscv/cpu_cfg_fields.h.inc | 1 +
->  2 files changed, 2 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index e56470a374..4537305dfe 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2641,6 +2641,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
->  
->  static const Property riscv_cpu_properties[] = {
->      DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
-> +    DEFINE_PROP_BOOL("big-endian", RISCVCPU, cfg.big_endian, false),
->  
->      {.name = "pmu-mask", .info = &prop_pmu_mask},
->      {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index 70ec650abf..51436daabf 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
->  BOOL_FIELD(ext_xmipscmov)
->  BOOL_FIELD(ext_xmipslsp)
->  
-> +BOOL_FIELD(big_endian)
->  BOOL_FIELD(mmu)
->  BOOL_FIELD(pmp)
->  BOOL_FIELD(debug)
-> -- 
-> 2.34.1
-> 
+This is a level-triggered condition that must be re-evaluated whenever
+any of the three factors change: pending bits, enable bits, or
+threshold/priority. All other register writes that affect interrupt
+delivery (priority, pending, threshold) already call
+sifive_plic_update() after the write. Fix the enable register write
+handler to do the same.
+
+Signed-off-by: LIU Xu <liuxu@nucleisys.com>
+---
+ hw/intc/sifive_plic.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+index 9c84ff06a9f..f893384e4df 100644
+--- a/hw/intc/sifive_plic.c
++++ b/hw/intc/sifive_plic.c
+@@ -219,6 +219,7 @@ static void sifive_plic_write(void *opaque, hwaddr addr, =
+uint64_t value,
+=20
+         if (wordid < plic->bitfield_words) {
+             plic->enable[addrid * plic->bitfield_words + wordid] =3D value;
++            sifive_plic_update(plic);
+         } else {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "%s: Invalid enable write 0x%" HWADDR_PRIx "\n",
+--=20
+2.49.1
 
