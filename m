@@ -4,69 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7672106B50F
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 12:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1802E106B50C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 12:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5N3n-0002lG-7f; Wed, 25 Mar 2026 08:10:07 -0400
+	id 1w5NE1-0005yM-Fq; Wed, 25 Mar 2026 08:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5N3d-0002hV-WB
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 08:10:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5NDy-0005xv-OM; Wed, 25 Mar 2026 08:20:38 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5N3b-0000rX-Vd
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 08:09:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774440593;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=MMDUiO6svuyuPOoL0sZz5EfuZlB3kadk9In3iy3E0JQ=;
- b=QZUz2EVgMPEji3hLrI1ceZMCi8RTYBm2RtPJ7GDee8D9s3OGt332lZChipZXa85OzbJdvB
- qdtiYoIQ1hk9+lg/Xu/vbjQjxbrNrs100nVbVASOgyCqwFgx4Et5CUPKJnP1nk1JYeh1nr
- Kti9VGoQ7TrXfMtjlpbImcOrg5jrUpE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-XrrAT-R0NUGjMIqu8Zy3Pw-1; Wed,
- 25 Mar 2026 08:09:49 -0400
-X-MC-Unique: XrrAT-R0NUGjMIqu8Zy3Pw-1
-X-Mimecast-MFC-AGG-ID: XrrAT-R0NUGjMIqu8Zy3Pw_1774440588
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF95419560B5; Wed, 25 Mar 2026 12:09:48 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.34.139])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C2E41955F2E; Wed, 25 Mar 2026 12:09:46 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH for-11.1 0/2] target/i386: Allow 32-bit SMM code to be used in
- the 64-bit binary
-Date: Wed, 25 Mar 2026 13:09:42 +0100
-Message-ID: <20260325120944.29391-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5NDv-0004HK-Pm; Wed, 25 Mar 2026 08:20:38 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62PCK9Lr021409
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 25 Mar 2026 21:20:09 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=7qEUEgh9Pt11woJfLwJx0CiIokoPoqp0TDwXaflTVWM=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1774441209; v=1;
+ b=L3SN9HuAv1pPZoe2hIxcSQqzjGkTbamYSBqY2Hr/q4ro+vEcSl9qYMq2Inj7uSi2
+ iJgIMFeHYVze7yS/187qmWJFscZhGV57n9CnWvhZehCPZf+CAWEzW2s/nBJMbb0/
+ fAWvJeym2o+qgxADBhhenZSyYf7COajkcKSn7fu1XugiZBIl49tKjPxkyLHAr3xI
+ fQwjgogEfN3aDMKtHiMIsZRJ0AoRhgsFCITxK4OGPIlDqNNdlsw4lxcL55YppCdQ
+ dLUQehGdeoIU7aseqvnL7KN5yH7KFCR7gAtD4S3vpp/klcjDWaTTtfIqxIR1kXJU
+ C46bf1J1TebKQnh73ayX0w==
+Message-ID: <a273d3e3-4fcf-4969-b43c-4dadb94ea2c9@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 25 Mar 2026 21:20:09 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 7/7] hvf: do not merge: enable private ISA
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Alexander Graf <agraf@csgraf.de>
+References: <20260324204855.29759-1-mohamed@unpredictable.fr>
+ <20260324204855.29759-8-mohamed@unpredictable.fr>
+ <9cf3d5c9-32eb-4944-8fbf-4775e1cccecb@rsg.ci.i.u-tokyo.ac.jp>
+ <78785F86-CA85-4187-93A6-1D9852263964@unpredictable.fr>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <78785F86-CA85-4187-93A6-1D9852263964@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,23 +80,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here are two patches that I just resurrected from an older branch
-on my hard disk. They might come in handy when we finally switch
-to an universal QEMU binary that contains both targets, the x86_64
-and the i386 target at once. In this case we need the SMM code for
-both, 32-bit and 64-bit mode in the binary, and select it during
-runtime.
+On 2026/03/25 20:21, Mohamed Mediouni wrote:
+> 
+>> On 25. Mar 2026, at 12:07, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>
+>> On 2026/03/25 5:48, Mohamed Mediouni wrote:
+>>> Booting macOS Tahoe.
+>>> There in the series to show that's all it takes, but not
+>>> mergable as is. Testing this requires SIP to be disabled
+>>> and AMFI to be bypassed to be able to launch the executable.
+>>
+>>
+>> This is interesting. Do you have any idea what is the private ISA?
+>>
+>> Regards,
+>> Akihiko Odaki
+> 
+> Hello,
+> 
+> For the macOS vmapple target:
+> 
+> Apple PAC is paravirtualised and not trappable by the VMM without
+> patching the “hvc #0” to something else.
+> 
+> That’s the only private ISA bit being used there needed for boot.
+> 
+> The documentation for those HVCs:
+> https://github.com/matteyeux/darwin-xnu/blob/master/doc/vmapple_pac.md
+> 
+> Apple briefly pushed that there, and open-source XNU has that code present.
+> 
+> When private ISA is disabled, instead of the VMM being able to process those
+> HVCs, they return an error code and the guest dutifully goes into a infinite
+> loop.
+> 
+> For the vresearch1 target used for PCC VRE and iOS:
+> 
+> Bunch of private ISA used there, including GXF. Private ISA level 3 isn’t
+> enough to boot those, it wants private ISA level 4.
 
-Thomas Huth (2):
-  target/i386/tcg/sysemu: Move target specific SMM code to separate
-    functions
-  target/i386/tcg/sysemu: Allow 32-bit SMM code to be used in the 64-bit
-    binary
+It’s fascinating to learn about these Apple-specifics. The insight 
+regarding the GXF requirement for PCC VRE and iOS is also very 
+intriguing. Thanks for sharing the information.
 
- target/i386/tcg/system/smm_helper.c | 104 ++++++++++++++++++----------
- 1 file changed, 69 insertions(+), 35 deletions(-)
-
--- 
-2.53.0
-
+Regards,
+Akihiko Odaki
 
