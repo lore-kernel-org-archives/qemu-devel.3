@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9B2109C05D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 120AD109E521
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 21:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5W1Z-0006nj-6F; Wed, 25 Mar 2026 17:44:25 -0400
+	id 1w5W6a-00084P-Fo; Wed, 25 Mar 2026 17:49:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5W1Y-0006nD-41
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:44:24 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1w5W6Z-00083X-BH
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:49:35 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5W1W-0001Yk-Ht
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:44:23 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-35c05d7e0e9so257301a91.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:44:22 -0700 (PDT)
+ id 1w5W6X-0002ID-Dp
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 17:49:35 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-35a094cc3e9so202264a91.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 14:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774475061; x=1775079861; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774475371; x=1775080171; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hNafWsIOHQAvF8A3qc1Y8O94HCsA6t34dLoeAtEhKzY=;
- b=p7GFVxoIHZcT4lqxwAIOmqfyDb4ZxAO7BoR3uOCPIkEV21b7qffZvG3J+RWofqf+h/
- dCleM1pwsyJnp2ymkAJmXcu7SfA3TCBIzvD8woc7BNaj0BFVSxSgOzyAdSrYUokTAdb1
- Lf6OySqlUkqifj2E/Y9YAupxSZ3GgbGsrPXX4msYYNCrnHRuDB5uwAPGhcs5szexRG5N
- QFcNISLb3PAWeMJWe6adf4I2EHSp+fhW+Xy89wJISMLUGfvCRfO+6+OOPwrv89AUhC+O
- BlfCVF/+34+1KqKciSf6IMVULjw8zG43b3pcRJ23O3JlQMsV5EC5iGjPseoRGlttpykN
- a2Cw==
+ bh=svEIMfcV1hGwm2nQWkZz/3DsxNH0BPRvTGZZTKu0S6E=;
+ b=ba9H9Lb+Fpxc9Va5FYglKivhBNF6C+sOPynd3XxfQhInetijYl+7Dul3rnjhAqlRF4
+ 6+f/HxWMJv0/G8PV+jvny+awy8VNHP+en2zfjTjMJcvBkV6j/6LecUqfpGx9agBbfkpa
+ LRE/rDQfkzObZa+V9buYzZaF8Ixtv5wNOwLu6zHNFJZhQwLJEQj3h69c4lixqad0wMPg
+ Y7z5ATm4PBnDvvDuVsl/Sqx5d1tcTWmVsFVD8SBjKDyLNMNIzoUpFKFszR3gBowVnhqv
+ 12Sz5aAgo0/7OrjcOn+oPWQJz/h4wpwoBK/NAjSU8kY/FyQ6JDq19CWJrDoxTHjxuRzN
+ Br+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774475061; x=1775079861;
+ d=1e100.net; s=20251104; t=1774475371; x=1775080171;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hNafWsIOHQAvF8A3qc1Y8O94HCsA6t34dLoeAtEhKzY=;
- b=oHa3op1oXqER+9JBPSDSIDWp4QSMi5TI+xL+oEbN4a++TtlMWLU7vVyC1nvSPEsVCC
- j+pQx/Jacv84rkdDA3yYjz2UfvR4tIxnghNcyGuD8XVw1mcB1P/PahIX9gh+mO3lAdQb
- WJ8ahAVx8Fcknb5JkjZqNY9trcmhIlXBc4QbKn1oKzfxe/CH94fxGfFaq3s+evCKYXnH
- JhTSHiANv8a5yx8gUrmZ2M1ItctmjG4iUP3YB66fXD9IShz4wz10zTntCVbaVrFKZM1g
- VWz1kkDDo5HbK5kI7C/ydJX5HuSROHAs+15vAKLlrJTfEX0D7oyzhBoFRQlVj/LLODWt
- Uzuw==
+ bh=svEIMfcV1hGwm2nQWkZz/3DsxNH0BPRvTGZZTKu0S6E=;
+ b=BOm3iqbNduaOmhg/0DOYkSkBGsCgApi6lMkosSJBsYiTl/Peoh+seIedg4xqyHmVZE
+ K85lB96aCShzlVRATfl83KnFVAZdKMHpWoaJKG+TmOb4EPLqg9pujAst6PsJ+KYQfiW9
+ KWU513ZSgyaE0opZ0F5Udh5RRROheQ0Ur6gDZB7FWtemuUUyZart+a8K9YEo6bGizPyC
+ u2aZDBCKQEINy2WjVpClZJh0tWb8odUx0shUO3Mdb0qzpltMLliWS9hrPx+AsOjPMqyQ
+ FZYGMajNjK1+Nag1S0FpW4c5xKtwMUbBJHSxcCmi4FyRpSEsZ2Hwk+LiVeZbyiG+6JHm
+ nEeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVt6SgSjJ1rYsYciD0zz9zRj3Ar1n9itKVv9P0yzN3ykt6XIWksu8U+XAhbgwW8GMJhFKj5O7QceQ8o@nongnu.org
-X-Gm-Message-State: AOJu0YybvdGB5uJNvayCUwrsI3IbyEcvM4fP1Yy1bWKre9Wx9fJKU39Q
- ljKPTQ62MHFsQ7YSMiAnUgsz1qSuhjyT3p8/L8AWV/Hhaww0xXZglfeyf7XnPCqSbK9UgsrcUAO
- d+3yGdBk=
-X-Gm-Gg: ATEYQzzzxi6EUqIn14VoTMeBdpMDaFaUWNtNZPfoY7fJbnmXJs6yYj1I1PLl8TReOxH
- uvaN2D/3g3yrCKksFy20PB03+KiEEcHfl6arOEk3jU+Ae4WhQDNE9QzMWOS+plOUcWgOKaAO6f9
- NKkbR86vKcMFxs/Mlgsh/PWI1HKFE/CMg9B8cTEtOltuMgPsInWD350svndDxmvTpPBsrVdkHHD
- IHGwRxMDTZ8dRpKJvoyrFWQ9cYXO2qXDukU54cZjpLBK68FCqlUJb0HH37Zt46qRPh8rmFm+Vvh
- QvWdovhpzZxx9PoLHGk9nHKWjdtmatyB2i75eQUps6s8CyyubrdGcZhkIsPxKzI8zMweh/OBm3K
- sm90KUJkLxwVwGMEqLg1i4YEsPvGmZPYgtZU2XizB6DZq1M0Z1xyVbLyTOwl/56Vopmb0ZOxnGI
- R349+M3XrLX9Jr96HtGuM0aMx/igx1/QtsIpfwniQIsCqD/pmw9ev187Si5MbKQIeqI+To8P5AL
- AMZUGE=
-X-Received: by 2002:a17:90b:55cf:b0:35b:8d89:719b with SMTP id
- 98e67ed59e1d1-35c0dc62764mr4456017a91.1.1774475061050; 
- Wed, 25 Mar 2026 14:44:21 -0700 (PDT)
+ AJvYcCWi9IylRQEL7yc2eDyn8iUnTm5L/O1nhZPUvIBv5ZrVd5HzcfwV8UmnLeOoDam+xllFQ1C6N6xcB54k@nongnu.org
+X-Gm-Message-State: AOJu0YwN49XQOEW5jfQZZ1SpI8FuQIm13HjeD8/XvaNmJ3sAIYY7pfBc
+ gZTCLHPdNBgpPx4dPjYufCsfin1N1dsneVwHC6a1ZPCwsSMZ9e2B1vd5Q9seQ9msJEo=
+X-Gm-Gg: ATEYQzyCMbUzcA9crq7l2HRO3RxZsP+EJ1S4LdVq4b0O5V23c0+It+hGxdcNLADliGD
+ l/Aujzth+QflY4C98JpofZX0WxwaP5fH1Rhp+SqbsjDUKUgR6zgcWy8I7SsIg+3AQov20GQ6Oor
+ hFcbExJ4iQ8/drb5N/kQp8kr3pYPa4SJ+JyGWQmjiUTGEZm0YyTbPg8VN7/iBQnp7i93TULlzYn
+ xzfsa6JGLc69+1WAiwTDwhKFnZM9DB/dVov8RY3bc1lHSBIF991P0lKUYL60pEvy+GWagd8VJ7a
+ GuW/IUmFr/lqvgSZJoB62JgvcYgfjgeh+wN+fjCl+ex6M4LFTrNhyq1mMLvQ2x1EN+Lxty3+nbU
+ CCnV+nidvMPhznWEZ/Vly+4kXAShde7ifTf0/L18Jg2+ySAV5x+UngSbnHCCxpW8UeVYLYBepUE
+ FPio3V81yYaFdcWHAY63W4FhJh75NOzXiZe5zBiMQ8BG3AQxQ33zS4xX7ybfES/PYJatJU
+X-Received: by 2002:a05:6a21:99a6:b0:39b:e321:784f with SMTP id
+ adf61e73a8af0-39c4ae0936bmr5499417637.40.1774475371314; 
+ Wed, 25 Mar 2026 14:49:31 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c123c9710sm2518725a91.3.2026.03.25.14.44.20
+ 41be03b00d2f7-c7673984212sm372550a12.30.2026.03.25.14.49.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 14:44:20 -0700 (PDT)
-Message-ID: <6c1cbedc-a8ff-4fdb-997b-0b95e5795d05@linaro.org>
-Date: Wed, 25 Mar 2026 14:44:20 -0700
+ Wed, 25 Mar 2026 14:49:30 -0700 (PDT)
+Message-ID: <85cd9ae9-dff2-437f-82c1-638d349c5082@linaro.org>
+Date: Wed, 25 Mar 2026 14:49:30 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 09/10] target/sparc: Replace
- VMSTATE_VARRAY_MULTIPLY -> VMSTATE_UINTTL_ARRAY
+Subject: Re: [PATCH-for-11.1 10/10] migration: Restrict legacy
+ VMSTATE_UINTTL() macros to few targets
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -86,9 +84,13 @@ Cc: Glenn Miles <milesg@linux.ibm.com>,
  <alistair.francis@wdc.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, qemu-riscv@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Anton Johansson <anjo@rev.ng>, Peter Xu <peterx@redhat.com>
+ Anton Johansson <anjo@rev.ng>, Peter Xu <peterx@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
 References: <20260325211728.89204-1-philmd@linaro.org>
- <20260325211728.89204-10-philmd@linaro.org>
+ <20260325211728.89204-11-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -124,11 +126,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260325211728.89204-10-philmd@linaro.org>
+In-Reply-To: <20260325211728.89204-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -152,21 +154,217 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/26 2:17 PM, Philippe Mathieu-Daudé wrote:
-> VMSTATE_VARRAY_MULTIPLY() seems to be an "optimized" version
-> of VMSTATE_UINTTL_ARRAY(), and is only used once. Prefer the
-> generic macro, removing the need for the VMS_MULTIPLY_ELEMENTS
-> field.
-> 
-> Bump the SPARC CPU migration stream version.
+> Only 5 base targets use VMSTATE_UINTTL (MIPS, PPC, X86, SPARC and
+> RISCV). In order to build a single binary (preliminary step toward
+> heterogeneous emulation) we need to remove it, but it will take some
+> time. Add a temporary TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API
+> definition to keep targets not using these macros clean while we keep
+> cleaning the last few targets one by one, preventing legacy uses to
+> creep back in.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/migration/cpu.h     |  2 --
->   include/migration/vmstate.h | 22 +++-------------------
->   migration/vmstate.c         |  4 ----
->   target/sparc/machine.c      |  7 +++----
->   4 files changed, 6 insertions(+), 29 deletions(-)
+>   configs/targets/i386-softmmu.mak     |  1 +
+>   configs/targets/mips-softmmu.mak     |  1 +
+>   configs/targets/mips64-softmmu.mak   |  1 +
+>   configs/targets/mips64el-softmmu.mak |  1 +
+>   configs/targets/mipsel-softmmu.mak   |  1 +
+>   configs/targets/ppc-softmmu.mak      |  1 +
+>   configs/targets/ppc64-softmmu.mak    |  1 +
+>   configs/targets/riscv32-softmmu.mak  |  1 +
+>   configs/targets/riscv64-softmmu.mak  |  1 +
+>   configs/targets/sparc-softmmu.mak    |  1 +
+>   configs/targets/sparc64-softmmu.mak  |  1 +
+>   configs/targets/x86_64-softmmu.mak   |  1 +
+>   include/migration/cpu.h              | 24 +++++++++++-------------
+>   target/ppc/machine.c                 |  1 +
+>   scripts/make-config-poison.sh        |  1 +
+>   15 files changed, 25 insertions(+), 13 deletions(-)
 > 
+> diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
+> index 38a8f85201f..048ae17fdc5 100644
+> --- a/configs/targets/i386-softmmu.mak
+> +++ b/configs/targets/i386-softmmu.mak
+> @@ -4,3 +4,4 @@ TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+>   TARGET_XML_FILES= i386-32bit.xml
+>   TARGET_LONG_BITS=32
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/mips-softmmu.mak b/configs/targets/mips-softmmu.mak
+> index 95397af9442..81990d21880 100644
+> --- a/configs/targets/mips-softmmu.mak
+> +++ b/configs/targets/mips-softmmu.mak
+> @@ -2,3 +2,4 @@ TARGET_ARCH=mips
+>   TARGET_BIG_ENDIAN=y
+>   TARGET_LONG_BITS=32
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/mips64-softmmu.mak b/configs/targets/mips64-softmmu.mak
+> index f9cc41b9ed4..2f7873af06d 100644
+> --- a/configs/targets/mips64-softmmu.mak
+> +++ b/configs/targets/mips64-softmmu.mak
+> @@ -3,3 +3,4 @@ TARGET_BASE_ARCH=mips
+>   TARGET_BIG_ENDIAN=y
+>   TARGET_LONG_BITS=64
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/mips64el-softmmu.mak
+> index 4e7dedc5f30..62e74f77ba5 100644
+> --- a/configs/targets/mips64el-softmmu.mak
+> +++ b/configs/targets/mips64el-softmmu.mak
+> @@ -2,3 +2,4 @@ TARGET_ARCH=mips64
+>   TARGET_BASE_ARCH=mips
+>   TARGET_LONG_BITS=64
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/mipsel-softmmu.mak b/configs/targets/mipsel-softmmu.mak
+> index b0fba8a9d0a..57e556b93b8 100644
+> --- a/configs/targets/mipsel-softmmu.mak
+> +++ b/configs/targets/mipsel-softmmu.mak
+> @@ -1,3 +1,4 @@
+>   TARGET_ARCH=mips
+>   TARGET_LONG_BITS=32
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/ppc-softmmu.mak b/configs/targets/ppc-softmmu.mak
+> index 867898bd47c..1e28d40b440 100644
+> --- a/configs/targets/ppc-softmmu.mak
+> +++ b/configs/targets/ppc-softmmu.mak
+> @@ -3,3 +3,4 @@ TARGET_BIG_ENDIAN=y
+>   TARGET_KVM_HAVE_GUEST_DEBUG=y
+>   TARGET_XML_FILES= power-core.xml power-fpu.xml power-altivec.xml power-spe.xml
+>   TARGET_LONG_BITS=32
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/ppc64-softmmu.mak b/configs/targets/ppc64-softmmu.mak
+> index 10d7a2681e7..8c7171f9d5e 100644
+> --- a/configs/targets/ppc64-softmmu.mak
+> +++ b/configs/targets/ppc64-softmmu.mak
+> @@ -6,3 +6,4 @@ TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml
+>   # all boards require libfdt
+>   TARGET_NEED_FDT=y
+>   TARGET_LONG_BITS=64
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv32-softmmu.mak
+> index 26080599be7..a9cd8ae89ee 100644
+> --- a/configs/targets/riscv32-softmmu.mak
+> +++ b/configs/targets/riscv32-softmmu.mak
+> @@ -5,3 +5,4 @@ TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml ri
+>   TARGET_NEED_FDT=y
+>   TARGET_LONG_BITS=32
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
+> index 5059c550480..3f97cd6dfa5 100644
+> --- a/configs/targets/riscv64-softmmu.mak
+> +++ b/configs/targets/riscv64-softmmu.mak
+> @@ -6,3 +6,4 @@ TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml ri
+>   TARGET_NEED_FDT=y
+>   TARGET_LONG_BITS=64
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/sparc-softmmu.mak b/configs/targets/sparc-softmmu.mak
+> index 126ce12abb0..0630fa54b43 100644
+> --- a/configs/targets/sparc-softmmu.mak
+> +++ b/configs/targets/sparc-softmmu.mak
+> @@ -4,3 +4,4 @@ TARGET_XML_FILES=sparc32-cpu.xml sparc32-fpu.xml sparc32-cp0.xml
+>   TARGET_LONG_BITS=32
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+>   TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+> index 4e621fb8e39..500db845ea9 100644
+> --- a/configs/targets/sparc64-softmmu.mak
+> +++ b/configs/targets/sparc64-softmmu.mak
+> @@ -5,3 +5,4 @@ TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
+>   TARGET_LONG_BITS=64
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+>   TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
+> index c7f8746b4f5..18b3575e4e2 100644
+> --- a/configs/targets/x86_64-softmmu.mak
+> +++ b/configs/targets/x86_64-softmmu.mak
+> @@ -5,3 +5,4 @@ TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+>   TARGET_XML_FILES= i386-64bit.xml i386-64bit-apx.xml
+>   TARGET_LONG_BITS=64
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API=y
+> diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+> index 05a1ddde343..4c8c9c34cc8 100644
+> --- a/include/migration/cpu.h
+> +++ b/include/migration/cpu.h
+> @@ -3,25 +3,23 @@
+>   #ifndef MIGRATION_CPU_H
+>   #define MIGRATION_CPU_H
+>   
+> +#ifdef TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API
+> +
+>   #include "exec/cpu-defs.h"
+> -#include "migration/qemu-file-types.h"
+>   #include "migration/vmstate.h"
+>   
+>   #if TARGET_LONG_BITS == 64
+> -#define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+> -    VMSTATE_UINT64_V(_f, _s, _v)
+> -#define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+> -    VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
+> +#define VMSTATE_UINTTL(_f, _s) \
+> +    VMSTATE_UINT64_V(_f, _s, 0)
+> +#define VMSTATE_UINTTL_ARRAY(_f, _s, _n) \
+> +    VMSTATE_UINT64_ARRAY_V(_f, _s, _n, 0)
+>   #else
+> -#define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+> -    VMSTATE_UINT32_V(_f, _s, _v)
+> -#define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+> -    VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
+> +#define VMSTATE_UINTTL(_f, _s) \
+> +    VMSTATE_UINT32_V(_f, _s, 0)
+> +#define VMSTATE_UINTTL_ARRAY(_f, _s, _n) \
+> +    VMSTATE_UINT32_ARRAY_V(_f, _s, _n, 0)
+>   #endif
+>   
+> -#define VMSTATE_UINTTL(_f, _s)                                        \
+> -    VMSTATE_UINTTL_V(_f, _s, 0)
+> -#define VMSTATE_UINTTL_ARRAY(_f, _s, _n)                              \
+> -    VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, 0)
+> +#endif /* TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API */
+>   
+>   #endif
+> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+> index 49cfdc6d674..f6169a128dc 100644
+> --- a/target/ppc/machine.c
+> +++ b/target/ppc/machine.c
+> @@ -5,6 +5,7 @@
+>   #include "helper_regs.h"
+>   #include "mmu-hash64.h"
+>   #include "migration/cpu.h"
+> +#include "migration/qemu-file-types.h"
+>   #include "qapi/error.h"
+>   #include "kvm_ppc.h"
+>   #include "power8-pmu.h"
+> diff --git a/scripts/make-config-poison.sh b/scripts/make-config-poison.sh
+> index b4d61e8bc9e..a1c5fa77d9d 100755
+> --- a/scripts/make-config-poison.sh
+> +++ b/scripts/make-config-poison.sh
+> @@ -12,6 +12,7 @@ exec sed -n \
+>     -e '/CONFIG_SOFTMMU/d' \
+>     -e '/TARGET_NOT_USING_LEGACY_LDST_PHYS_API/d' \
+>     -e '/TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API/d' \
+> +  -e '/TARGET_USING_LEGACY_MIGRATION_VMSTATE_UINTTL_API/d' \
+>     -e '/^#define / {' \
+>     -e    's///' \
+>     -e    's/ .*//' \
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I'm not sure it's needed to have this flag.
+
+Indeed, it's not possible to eradicate VMSTATE_UINTTL because of 
+retrocompatibility, so it will never be completely removed. Thus, you 
+can leave it as it is and implement the hint mentioned on Patch 8, which 
+is retrocompatible by design.
+
+With this, no change will be needed in target code, and only migration 
+and include/migration/cpu.h will need a change.
+
+Regards,
+Pierrick
 
