@@ -4,95 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 877FA103A9A7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E57B5103A9AC
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 11:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5MIw-0006Gz-87; Wed, 25 Mar 2026 07:21:42 -0400
+	id 1w5MIo-0006EU-OP; Wed, 25 Mar 2026 07:21:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5MIo-0006FD-MU
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 07:21:34 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5MIm-0008FH-BL
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 07:21:33 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso7477225e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 04:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774437690; x=1775042490; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CvKEVKcv7f3BzA/1Uh0nPdE2w3AyCFo2zjW38XFHqq8=;
- b=ygBpsBp+F2Axxz+BeoVH/zIeBJD3FKO1XbF+pNgiK+4Emgv0fABvF6JAc4eSXie9HU
- CI5IkeMpmCv+/26XRBZfsPs6X4ABSTWRLgBTPDofGxrcHT/kyiH07d5EhDVG4coGrkbO
- vPp6R51YYETDauwfAvWsz5Zuc72hWqh4INp30ZDo1SXBmDY6U6asFqT5NOTkog0l0nd3
- +niCOhatugcNqepFT1ARxgxIeOl/431FRZaqLWM/wYOctnHhjnb+idC4E805qnwnnH1o
- 5Z+KzMDoHu7f6WmHY9H8i2gMdKTWvmn8Y+PD/RJOy6z/pCfKKLmGIb0uCmXy5q9+Vosz
- q6Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774437690; x=1775042490;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CvKEVKcv7f3BzA/1Uh0nPdE2w3AyCFo2zjW38XFHqq8=;
- b=EiUeJ/WpuZzPPI4HVLgJuS6tgis6+xKMxCruDv0XZAFGIyQpYN/83nMdffG6nCEaks
- S962Ury4+kxkCs/4HIRHsOOV4p40X98Fd/6bOaCKDjBKO4GFx2f29SQN2VlHI0C/mOsI
- wvGdi1/pq5fI7qqoIAQ0cOCeeZDV+IxRHs4Ehbu+lhJ8vCaQY8rpTEuUvlqgvgUTHJZi
- PYcy5uNF+DW6dGeFPLwz7E7p8A1IJ8IGGjmD1dFN4kwVq+QJXZjVUnlN/YrTF9a2l5cy
- QQLDBOyX05AbBqiU7leukke+KI0N3oNz4V25FXtn7VQQaUvLnfUhWIhJaLp/jVxLideO
- o9Cg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYn3Oq9mOUbD3neVU5vaPzksrvuvtImz3gmvEwfVHpAyfEC/Pu0mcAxi9zaMQ+nvzwifxivkbnlmx6@nongnu.org
-X-Gm-Message-State: AOJu0YxldKfOAcpKMcr19YDjf8s3Sg2MraP1D1uAUZ+qcuUuA0Ke0Uz/
- 2vxpsxE7tfgpmozoo8TI8rgDA6oGvLGUGrgaCbdHTU2tVhcx+4YVCUuoFrU5/NzPDsk=
-X-Gm-Gg: ATEYQzyaZBNUEmoaTE9M48v10AOKTTh3tphQooD3ibKN4EwCVYIUUSgxq856XEkK9XJ
- AVNVOhJm7ngCBymqY985qZaRkie8RUsqAAjlUdSlufyFUIEXHUfAfYVo7/rStk+shUyZOTbzp+O
- 5yZa0IXuxWIRv3L6X2azC6cCLGP/4/DDu+KNW95fB0fLQo01JO1ZSJv8nUlkxzSfJIRIDrbxycT
- /fjrq99bbN3dUgP7Qa291SK/0alD/m5uXnSPVWRbd5RMAh015UDwoJ241V5hpuNirOIMg8+rCWA
- Rdo5r9auld1HucjZH2OhvvROwHop3IzJpS0WpPXFNa79tt06RrLDSCeR+5rX+qJ7xKwXI08N4Nl
- wP/TXuv1DbtwAnr9cEmqI7P67WbtQmMjjXvtvbiTuog8Sw/VZYeEl1T0nxQT452qjb6AzLQ+IX3
- 9YvrrTTGpgJphgddI/i8c/ciOghErVXtVJlfjAq0R/BIvAY3BgutLlCqB2MQGzn2zawQ==
-X-Received: by 2002:a05:600c:4f89:b0:477:9890:9ab8 with SMTP id
- 5b1f17b1804b1-48715fc75b2mr40446795e9.3.1774437689570; 
- Wed, 25 Mar 2026 04:21:29 -0700 (PDT)
-Received: from [192.168.69.229] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48711701804sm126251425e9.4.2026.03.25.04.21.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 04:21:28 -0700 (PDT)
-Message-ID: <d2db3893-7691-4707-8f43-341d09ceac97@linaro.org>
-Date: Wed, 25 Mar 2026 12:21:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU requires a 64-bit CPU host architecture?
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-block <qemu-block@nongnu.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, QEMU Development
- <qemu-devel@nongnu.org>, Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <2c0d6ae0-eb06-4eed-87fe-0954ae59d951@tls.msk.ru>
- <fc32bb67-ea52-4244-9ad7-c18db3be339e@tls.msk.ru>
- <acOoVWw3jXfkfion@redhat.com>
- <CAFEAcA-Jzh0Wan9Dh+Pe9S3cHPeexV5mLaD+juXS8L9eMMd43g@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-Jzh0Wan9Dh+Pe9S3cHPeexV5mLaD+juXS8L9eMMd43g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5MIg-00067H-SE
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 07:21:28 -0400
+Received: from p-east2-cluster1-host7-snip4-2.eps.apple.com ([57.103.76.65]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5MIa-0008Dr-37
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 07:21:22 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-6 (Postfix) with ESMTPS id
+ DB3611800BFB; Wed, 25 Mar 2026 11:21:15 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774437678; x=1777029678;
+ bh=bJA+iuHctjTO9s1GECU57d6RXVIn/v7fG5rhnfeDQ6c=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=BkUOZPYaR6wRUDuWAxey4+2NNFcebSgEdjjBzZJmeW1z7EcfldHtWWFooZCL0nRfN7juzxdMXoRGR55sMduxxj2OTMA6oi2H64GzWpWdeAngM/rbrnVit2GBC0agdmyHIoQxwDdEqBqwJDyoAGqNHv5rjYa5JAPLZRUOIqIMh9VL2ueDUNlef7tUkS/NJ1MZlco56z+Zr3JIF+36YDzsWwFORpDqA1xMyRO8b6VKjBeGFQv+yaKdaUpT0BE/23+BvI4WakPW8ZCIGOMJj3mKMdNKZ1MOdJy13qTG7sWb/fElbuaxZOHlG2MB1FWYoxu1FC2Z/ffNcUj5UtlwALvWyg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-6 (Postfix) with ESMTPSA id
+ F2DBC1800E8C; Wed, 25 Mar 2026 11:21:13 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [RFC PATCH v7 7/7] hvf: do not merge: enable private ISA
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <9cf3d5c9-32eb-4944-8fbf-4775e1cccecb@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 25 Mar 2026 12:21:01 +0100
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Alexander Graf <agraf@csgraf.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <78785F86-CA85-4187-93A6-1D9852263964@unpredictable.fr>
+References: <20260324204855.29759-1-mohamed@unpredictable.fr>
+ <20260324204855.29759-8-mohamed@unpredictable.fr>
+ <9cf3d5c9-32eb-4944-8fbf-4775e1cccecb@rsg.ci.i.u-tokyo.ac.jp>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Authority-Info-Out: v=2.4 cv=II8PywvG c=1 sm=1 tr=0 ts=69c3c52c
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=ADnFLmdGAAAA:20 a=bWGPkEa5fn51Ohx-lacA:9
+ a=QEXdDO2ut3YA:10 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI1MDA4MCBTYWx0ZWRfX+iqnFjnXmpeM
+ 6nCtyxReJ02bxm/CF6vpVAr8JTaL4/kHxneAJnrTI2UCiWA7hKzFJgQ65h47JCqX+5r0GdyCw9A
+ LugWT3BHyPTtqlWbMiYM1WyRZCN3sTgi+Bu8ODV2fbWVl2tTreEz6aiWgCi3UEP5KbvnemZvnte
+ QSWExMBwsaU4TvaGSL7Ooyf4AlNcSJxcMIWG9m4YV24xyV6cxWrCXMrnm3Q5fmhnEpTR2N0QmGi
+ BXED7m1Cm4FtEiXps8SDEwt1SFAPEqkCIwjQyPMfzdr/o3ow6Jxy0wwgtoG3uSVuv0vCA/E14Dt
+ 12ueoTqtzfJJDFaXBGZ8Kq2kkiBs4VXme7ZcIzotYEN0GnoSLF90eZCvH68dqA=
+X-Proofpoint-GUID: 3IxXWuu204Ri1zXLTvM1fnOTaWdetOUW
+X-Proofpoint-ORIG-GUID: 3IxXWuu204Ri1zXLTvM1fnOTaWdetOUW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-25_03,2026-03-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=719
+ mlxscore=0 phishscore=0 bulkscore=0 spamscore=0
+ lowpriorityscore=0
+ clxscore=1030 suspectscore=0 adultscore=0 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603250080
+Received-SPF: pass client-ip=57.103.76.65;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,57 +101,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/26 11:24, Peter Maydell wrote:
-> On Wed, 25 Mar 2026 at 09:19, Daniel P. Berrangé <berrange@redhat.com> wrote:
->>
->> On Wed, Mar 25, 2026 at 11:08:41AM +0300, Michael Tokarev wrote:
->>> On 20.03.2026 09:45, Michael Tokarev wrote:
->>>> Hi!
->>>>
->>>> Is it intentional that qemu does not build utilities on 32bit hosts
->>>> anymore?
->>>
->>> This is
->>>
->>> commit 372ec46b9f1215f48a4717f2b7ed969f65bfadc6
->>> Author: Richard Henderson <richard.henderson@linaro.org>
->>> Date:   Thu Dec 18 09:56:27 2025 +1100
->>>
->>>      meson: Reject 32-bit hosts
->>>
->>>      32-bit hosts have been deprecated since 10.0.
->>>
->>> How would one build qemu-img and especially qemu-guest-agent, say,
->>> on i386 or armhf?
->>>
->>> I tried removing this error message from meson.build (in $subject),
->>> but it fails to build even the qga due to errors in atomic.h, -
->>> even if these aren't used by qga.
->>>
->>> That smells like a bad decision, - to drop qga and qemu-img support
->>> on 32bit architectures.  Especially qga.
->>
->> IMHO dropping the block related tools is reasonable, as if you keep
->> that, the dependencies that need to remain 32-bit compatible ripple
->> out across a very large part of the codebase.
->>
->> Not having qga though feels like a pretty undesirable consequence,
->> given our message overall is that we were dropping host support but
->> keeping 32-bit emulation.
-> 
-> Yes, I'm not sure we quite realised that we would be no longer
-> building QGA for 32-bits. How much effort would it be to
-> reinstate that?
 
- From the commits in 5053e0a65db...90e2e8ada7c we'd need to (partially)
-revert various of the buildsys ones (meson & configure).
+> On 25. Mar 2026, at 12:07, Akihiko Odaki =
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>=20
+> On 2026/03/25 5:48, Mohamed Mediouni wrote:
+>> Booting macOS Tahoe.
+>> There in the series to show that's all it takes, but not
+>> mergable as is. Testing this requires SIP to be disabled
+>> and AMFI to be bypassed to be able to launch the executable.
+>=20
+>=20
+> This is interesting. Do you have any idea what is the private ISA?
+>=20
+> Regards,
+> Akihiko Odaki
 
-Then we'd need to check if the Stat64 API (90e2e8ada7c) was used by
-the block tools, and if so also revert the atomic64 patches (around
-997d86a9bb1). If not some (sane) refactor is needed for some core
-components (disentangle qdev from qom due to the atomic uses). Still
-we rely heavily on atomic helpers for threads and co-routines used
-by the block layer (and also to reference the QOM objects...).
+Hello,
 
-How / where would we test that (and for how long)?
+For the macOS vmapple target:
+
+Apple PAC is paravirtualised and not trappable by the VMM without
+patching the =E2=80=9Chvc #0=E2=80=9D to something else.
+
+That=E2=80=99s the only private ISA bit being used there needed for =
+boot.
+
+The documentation for those HVCs:
+https://github.com/matteyeux/darwin-xnu/blob/master/doc/vmapple_pac.md
+
+Apple briefly pushed that there, and open-source XNU has that code =
+present.
+
+When private ISA is disabled, instead of the VMM being able to process =
+those
+HVCs, they return an error code and the guest dutifully goes into a =
+infinite
+loop.
+
+For the vresearch1 target used for PCC VRE and iOS:
+
+Bunch of private ISA used there, including GXF. Private ISA level 3 =
+isn=E2=80=99t
+enough to boot those, it wants private ISA level 4.
+
+Thanks,
+
 
