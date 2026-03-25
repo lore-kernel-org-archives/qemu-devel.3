@@ -4,89 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41208FEA83B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B125FFEA83B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5L7H-0005Uj-VS; Wed, 25 Mar 2026 06:05:36 -0400
+	id 1w5L84-00060v-0H; Wed, 25 Mar 2026 06:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5L6z-0005Qg-TX
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:05:19 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1w5L7y-00060d-MN
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:06:18 -0400
+Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w5L6w-0000n7-3R
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:05:16 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48541edecf9so20023715e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 03:05:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1w5L7p-0001rf-Tk
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:06:12 -0400
+Received: by mail-dy1-x132f.google.com with SMTP id
+ 5a478bee46e88-2c0c482e069so4055206eec.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 03:06:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774433168; cv=none;
+ d=google.com; s=arc-20240605;
+ b=er2YgaUGGRljaicHlX56Zc5jQYYiOgJ9ffHqxNfwCZsv78JN2QWlOmsI5cTFKcXbzN
+ qLmXcXxkRi4KWsDcufh9pD5kdUNR3nktAAcIW1yBAlSIhFDoZOogtdt6oOHAikMIyFfn
+ QZBd1FQfLvH62m8whGszEcf1u7YD3Hs5byw5hSB+i1VkNwRCscHDj6SKPfbyHvcZ5HHT
+ 3rM32cqMkyRujfXJHz9rcHw+hAFL0Sgv9bKrJMDrvPrl9SM+4+c0Vb7uGrp3ej4ptJYm
+ B8PQDEmgJn5ybSVwvRty9edoxWdRnaPQdQls4tulMGI8fh6+7pvu1yutrAWVcSJaSF7p
+ rT7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=jnp6JWiTBoYRWYcNZYzoWqXAJ73/8pnR58N37qdpm7I=;
+ fh=3njbElQ++1yr9UMmCfeh1jl4SvqJ7kPaxqFji3Xozp8=;
+ b=YJaDhGOMZQ7m4U2jxR1KZtS7RU2r6eCLOmJeDtTKKPXpm7lopkB8Sr/C46EuueVoHM
+ 2ONFdmT1b+/zmnop/lApQnwfSPTKNocAGwGBWBwVW56dCisz5m0Bvr5tThyhFwyAOHS/
+ QfHldYyTjzIdBBcPt1RtND0pOM3pYPpUQLFBtR9tLW7AnYV+zYp86Wu3UJ2AJtOVc8BA
+ vuThQeNOCoFH+iiFYoiUsrDg/dVMB1YZn5NyEn6Z0qG9VHwmKrL6VMaSgzHtshF2kyP7
+ KR/LxiEGBtnEcE8PFeUKEZHlyVDi5mN3LXIkP2KUlDlUKnv+kBaq+QnjKp5pK3xj2jMf
+ SaVQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774433107; x=1775037907; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4rsSIMYRklV6x/NBmnMy6MFV6R33BbxL0Bov6Ucneds=;
- b=mCbHwYpmiY8pQFsyMQsQnzCG7ZBFzhdf8GrPbOx54UQILV1FRB69oDuyINZwww4rRp
- MjyzBcfvpR62LZnWfwoUd5t3Io8rmsQ4twxpU6PcfeWdPtMlJhn1v0xjf8zmObdn48sw
- BzJBAbHEvA3ROOOU4Uxuy2hGVq8z23SbZ3AzzBZgUIU/Jf1GEuvOEcuXtpz6Y49YEfBx
- 5lo8tfVk4Z/KvUY0/K2QyobNs3P9+TcOcNMvDzNk/i0yAXphSjFXBkjtgS2Pnj9RamKh
- 0/00hXto7F1cz0hgjF8UmbpGxbT9Y6Qib1CpC5lqSoTQJMmEJiVUmEhjzoML/5RdwJ8A
- Ve2Q==
+ d=gmail.com; s=20251104; t=1774433168; x=1775037968; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jnp6JWiTBoYRWYcNZYzoWqXAJ73/8pnR58N37qdpm7I=;
+ b=U7XXHQjSMin0rj+yGPxoVmgfqlUi+zpU4U1dOAqQ2D22gg4z5/PgZyBOQ7zHGsxQfE
+ MwtcwMtPyPR+ETG1sBRGdOgmWPf2vBF83lZhxSxc2uhHc219/Zk/EAbRxBdeWEqClggF
+ pqr/hSSqW+8muvN25FHzNhvr37wM5MvCivDQGhLqu+G5UudMLizayrWZmzRsNE2eREiA
+ csDEvjuCoqrcUstI3cA5OqiGNXsyqyX2p1Ge3LbVYfy5dgw878rcY1BICbknquLJ526O
+ FSmeP7HV5lu9M1dwnCilYsW4YrGbfdZ4bUjSQo3b+bOUrdNaJXY2P3Hm7VLk+D08pSJX
+ 9cmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774433107; x=1775037907;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4rsSIMYRklV6x/NBmnMy6MFV6R33BbxL0Bov6Ucneds=;
- b=E8fOClCN+NDqdZVjO30dAmVxPIgsQsmTVGQfN7+3ljUbB5/CaUnysgVkES+gFtjk0z
- eR+auh62oDBixLHlSqwe7Rsp2/R6UUSFyFdfdUpR+B0DdVFTa9Y4Re7GbcMsDRAQ9HdP
- n/G2qNMWYDFILuEzY9F8xwMcIKdBk8EtaoROSJCV8ilb5GrEcKlwdRhAJyF4U0rLI80r
- xnsCiiI62g3qAwpxwhQ73yKUQlqa4nReYixeHxaIa5ofl/5ArZzFqmac544M+/hFdKAE
- TKEOQtHExzBvEWyOux/ndelC7Ji2ABXUEQjoJEXDE6wsvKEpxjoOhtnSujbj4bZtVORg
- uUgw==
+ d=1e100.net; s=20251104; t=1774433168; x=1775037968;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jnp6JWiTBoYRWYcNZYzoWqXAJ73/8pnR58N37qdpm7I=;
+ b=HQidN0TjbsGfgBWZZ+ygtqVdG8dpmBA7Qi5OShbSHTroKzAHZFN2A0L5Y+JIXAatwt
+ O2FFSeXm+K1JpFB2FGxTDtZ66Qa7Zkf9BZdEGHQm0ueG9yMejYE2G773npMppWyH0XmQ
+ gwDJkoOQBjRT+IGKM5ySrGW+PGWkBZ85XlcBZodThnxOXo7PmGScJJ8AtnGHX1ilznIj
+ LRbKaJ4RYjeyWGmqdeNOTxxeGEHQe6bnh8qZx/L+TCGYtVG2J3A3L1MZKKwS2NEabDP+
+ xuNftAXyd/UaBT2hGjvYRd3qTn2mZe1c2G0ePzRpb9Ra5M2oKlBpvLHMWgolfUgzhQWs
+ Cnmg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKTpTvfNlPzq0YQI2ZW+m07hJRLNEY/Oqh6vTeEJJGnls92uCGhI9JMIdrWrxStmBNZGXiQGY/KnnJ@nongnu.org
-X-Gm-Message-State: AOJu0YzHMe+X3CjtW4dNF58NAjPF4kKiFWzqbcNemR591gd+n8HAxImm
- crCbQ3Mw1/KkMPj6si5ko7OpTBKmy8rF+QCOL/HxoW+9UxDo2LakR/jPebU/gsu78xk=
-X-Gm-Gg: ATEYQzytRWOCoRyhxXuq3Ex8ayuIvJbk+YMfQGz7BtUEG/ouV68F3iISBLZEvqX6Pd9
- 3lLh1YtMWCJwTbHQT6VJxyyMIEbzafQEfvts3pb7JdQb3l0rhYlS6MraTdlHoOOyu/p2QH3ZjwC
- CKL5UEPA+IEC3oBBrYwNwDxrbCyVfJjYCqsO4IwSdyOwY+XZFV4EiY1SqWjQp5zxy6mFlut/P05
- MqrgqTbzS7azol5f+nnytVjG9miQjs/laFSgbC/GroSmxXXIXa9To5bb4prpxh1BsvczfD+m3ZO
- mkPA/Ic7KPkFM7IJbFWIOjubbDhOJwQHuxhY0BN3INCdNlZc4oF85XJX3ci5QdS8QwGYKoKJypc
- y4wLmh9aSRlrx6hEIwYgQs9XJXZrzb5mqRq+dXV2S+BebbA1WDTlLITJ11eGE9bIvWy5lX86EA5
- UVta4PSq9UMp9SwxFgvq4RSYyvLArcnupXIUNp+LlFlKG6JiM3YP6syyiSLIQXjYurtw==
-X-Received: by 2002:a05:600c:3154:b0:485:3ee1:eba5 with SMTP id
- 5b1f17b1804b1-4871608d862mr43935905e9.27.1774433106733; 
- Wed, 25 Mar 2026 03:05:06 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48711709b48sm113772105e9.7.2026.03.25.03.05.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 03:05:05 -0700 (PDT)
-Message-ID: <337da0e3-42c2-4a6c-bf12-8491da9dd740@linaro.org>
-Date: Wed, 25 Mar 2026 11:05:05 +0100
+ AJvYcCWHrx82XhskYv4eN9pgzkMLweFSP7JLrDyAxmFqiIW/um5xlTEgc2FJkoL5dvgFit50GF6JpgSoldXg@nongnu.org
+X-Gm-Message-State: AOJu0Yz9riszcg79IO+OWErAnYnVFZLALV8J3E+AWwFLCaLtoueAls0J
+ y5TuLESjmVBEf4DNy9NAMI9ptoEqCDGvrJx4ycJG2RJbJbB9nND1D06aE1FAPriPAUZBTIYV8pw
+ +O/aV5mwE/WOgKhpNofbplb+ACGjJ7QM=
+X-Gm-Gg: ATEYQzxPT/Hxed2S1C4Zwg6WmaE2UaeT13R2amnGUZ28p3DBaiF6hgW6uDVdvDW9WBB
+ aFvt5e4g72P6YNcCQGybiq2txwIA/+oC/pzGeODRjAH/9i8zUsNuQi2SOfHRd5K/ROhEwZAGpzd
+ O8dw7HbkbZDCix4XFAdNuP0UVS12EJzPe34Wo7zqG6f4zoMYzxtxKbs7EJngW9V4hH+3V+0k/Gs
+ hfjnXdwQl5LO5pe0grnJMTG4gWC2cckWWYJ1sShvrqx+XmSHkGCYCeXRc1gFIU5LUTLWbOcLy32
+ riwLAbklRJSRdeTCZDXm+9jhT0HJ1z459w+nU0E=
+X-Received: by 2002:a05:7300:f191:b0:2bd:b102:a022 with SMTP id
+ 5a478bee46e88-2c15d3c0932mr1471303eec.27.1774433168239; Wed, 25 Mar 2026
+ 03:06:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] tests/functional/qemu_test: Silence warnings from
- pylint in config.py
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260324163543.55503-1-thuth@redhat.com>
- <20260324163543.55503-5-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260324163543.55503-5-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
+ <ef2a0d92-c7f6-438b-a15a-2712e1c4373a@linaro.org>
+ <CAFEAcA-kk29mjGWLrAGjd9AiAW64v0TvWdedZypSH0i43WgQzw@mail.gmail.com>
+ <39b64118-7faa-4308-a603-d568cc78de47@linaro.org>
+ <acOpKJjdPUmtWeZd@redhat.com>
+In-Reply-To: <acOpKJjdPUmtWeZd@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 25 Mar 2026 14:05:56 +0400
+X-Gm-Features: AQROBzDmS_PJ2krTPcYqt_mdLUj_57znFfYFq6f36NBp62NhOrtst92sUKhInOY
+Message-ID: <CAJ+F1CLxwLzPR3aFNHDtS4PKKTq5SAoqjtNuyfxRgyWj99vTag@mail.gmail.com>
+Subject: Re: Cleaning up contrib/ and tools/
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Eric Blake <eblake@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,23 +127,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/3/26 17:35, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> Pylint complains here:
-> 
->   config.py:1:0: C0114: Missing module docstring (missing-module-docstring)
->   config.py:28:4: W0719: Raising too general exception: Exception (broad-exception-raised)
-> 
-> Add a module description and replace the general Exception to fix this.
-> And while we're at it, and since we've got a proper module description
-> string now, also replace the copy-n-pasted comment at the top of the file
-> with a proper SPDX identifier.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/qemu_test/config.py | 11 +++++++----
->   1 file changed, 7 insertions(+), 4 deletions(-)
+Hi
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Wed, Mar 25, 2026 at 1:22=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Tue, Mar 24, 2026 at 11:44:37AM -0700, Pierrick Bouvier wrote:
+> > On 3/24/26 11:33 AM, Peter Maydell wrote:
+> > > On Tue, 24 Mar 2026 at 18:28, Pierrick Bouvier
+> > > > Moving those sources will break build folder hierarchy also, which =
+is an
+> > > > issue for all existing binaries built from contrib anyway.
+> > > > I'm not sure there is anything sane to do to fix that except accept=
+ing
+> > > > the breaking change.
+> > >
+> > > What are we breaking here ? Nothing outside QEMU ought to be
+> > > depending on the layout of our source tree. When we move things
+> > > around we'll update the meson.build and the documentation.
+> > > I don't think we have 'contrib' in our installed-locations
+> > > layout (tools get installed into the bin/ dir, for instance),
+> > > but I might have missed something.
+> > >
+> >
+> > I was thinking more about users that might have custom scripts using va=
+rious
+> > contrib plugins, or using vhost-* binaries or ivshmem-server or elf2dmp=
+.
+> > They will be relocated because meson automatically uses layout of sourc=
+es in
+> > build folder.
+> > It's not a big deal anyway.
+>
+> If we're concerned about external users relying on stuff in contrib/,
+> then that is exactly the reason why contrib/ should go, and everything
+> be considered an officially supported deliverable of QEMU with an
+> appropriate home in the source tree, and covered by 'make install'.
+
+A solution worth considering is to split into various meson
+subprojects. I did it for libslirp, libvhost-user, and started qga a
+few years ago (https://patchew.org/QEMU/20220810124857.1360211-1-marcandre.=
+lureau@redhat.com/)
+
+This requires a bit of reorganization to have some common (internal)
+libraries, but imho, we would make the whole project cleaner that way.
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
