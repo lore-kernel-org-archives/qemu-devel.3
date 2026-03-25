@@ -4,113 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 047171093168
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E3B61093168
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:11:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Dg7-0002of-5X; Tue, 24 Mar 2026 22:09:03 -0400
+	id 1w5Dhi-0003TW-Gd; Tue, 24 Mar 2026 22:10:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5Dg6-0002oR-5W
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:09:02 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w5Dhb-0003S7-AH
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:10:35 -0400
+Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5Dg3-0005Mc-NI
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:09:01 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b93698bb57aso97850866b.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:08:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774404538; cv=none;
- d=google.com; s=arc-20240605;
- b=P6ErH9oETWC5ZA6Mk4Q1q/Nu7yePYRAx70SO0Va6HFia4LgQ/bmgjKoRJAqinFaiPG
- tK9/sRGz6QWkCC/iV+KT6Pm4YOO+IACPa9hvsN97heqS94I0yjBWYrA05SHs9vy8BBKQ
- Ypp72S1fftTW02iMpMRmUJDz+HgWsOEq3z3z7DqRwRvEO2Ie/YHPSpAxBp/gtv80FH+z
- 5Xj0JJfJFdCxzd8sqlIrfx0xUXX+71dU5yjU6RXRt/PpMKDceFvIsMsnHEpCCP9lQSIl
- MG4DB2J6AQubi/D/NF3dzzlne+vMYT4xSUBQjsJMhyRFVyO1bIqW1Ku2F9beiCBNF0K8
- CViA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=07oiRVKHJkRhMErOMJgQaNGho06xV/T+gbhZqqwx8kg=;
- fh=oxc//47PJYPQEvay9aICOKlni50QEUqoO/7LuDLpGec=;
- b=hCMrLujmp4BlncEyTWIcc0Cs0jE0ZSVyT0dcbIxGNKqWs035Te4IL++r5Xo2JemE40
- +tj8yJR/yfBYC5rN2/lMsO8Jf2aBJ1NMlcHvdondh7jl+ERzhyyKlk/CMHpLnlJLewF3
- gtAkDKmS71BQZiDwuNzNtVAOifHIUtIBzmHt8x5LPLRQ0XguiccMMNzhoDdRjfA+UFwu
- CYON89OF5RM5pLosi6Z2n7BVGi4k9YrMzLotihxUZTMap/RD4lNYdkf4FHrc2d8XYmAM
- nofjFdsLSr6VrFCOgmBi1TUNxvFeb8hUVAzz5wTtBUsoX0IBj2uYlP5flaVtpniub6f3
- 7s4A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w5DhY-0005wL-BE
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:10:34 -0400
+Received: by mail-dy1-x1341.google.com with SMTP id
+ 5a478bee46e88-2bd9a485bd6so3540879eec.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:10:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774404538; x=1775009338; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=07oiRVKHJkRhMErOMJgQaNGho06xV/T+gbhZqqwx8kg=;
- b=hb8k1R1xQi/uF7ZPIfRUrr5IqM2psypAp8aevQb5iaLtLWrvUEge+3GuURlhQtRKIx
- lI9XStlMgatbDEfsoZmqcfDYFhwkkUsEBOC4EnJJ6nR88i83w5PG7J64D6iQXaDW/T40
- zHRX2NGm6GXpYepkOrkH7gEhBZAzccNdnnS/GgvgVAhQgV3b8IBljEKjVZAGx6tbIXSf
- dTv5RNaWNF3eDxXQXRsinksP6tUQtNKRMdD0EK7vEL90JkTZO2dYvBhlX1I6QK1bMiga
- iUT60DgJZCIL5mwyFyyrBWeZ1pxRrVJkidGPklIizVnq3XU0Ap2vilhtcF9sBSF6Jr9H
- unpQ==
+ d=gmail.com; s=20251104; t=1774404627; x=1775009427; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=cFjoGvd2eLLoSU20LveTmOuw9QejmOSilFdrCZhFt/Q=;
+ b=ZLyqhLmVyOlja+8LV5quRey3Svp4x7vv8Z3vKlXnmMGddMepfAeEMSc8CRuALhO+9x
+ H+PiOSHcFOKOFvXjPmjZjo5d2WMM8QFZuLTfVs6XfZbqzQdXdKNmzypmTZLw1hFAajpS
+ 6g63Z85ofLdKhf/vlODSbJPH1QUNjuN65qja7lh46CoIg0v0GO6x1aKVGVJZygiWEE/Y
+ QOn+DuVQDRn64rpnfc3RkJ19C5B5Vgd5Q0gw7AE76VWSD5jAN5xZkemzRWgNCpnppHI2
+ uLT4nGaKKkrJU/IskSkv4FqlhwlsCixcaJTw7s259ZOpF5wpIGI/V2jGGx6uEAe8bPJE
+ 3LWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774404538; x=1775009338;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=07oiRVKHJkRhMErOMJgQaNGho06xV/T+gbhZqqwx8kg=;
- b=ZykanKtDVzEcWnXsux6G6bS0ujoxFbFo+vqxwjxtssGzJVEmJpVty7pIjj3IOvHdNz
- MJlIvAMdtmSlAP8j8BgctTu8jmd2VaVKqs2zEfFRONNUkTWgIusvbViMI9crAvXQCxOq
- 8ZXy1LpEPBcqUXIPwsCDiJ2ilmATbGId2kS777XPCAsJD5f+iw50nQH7L7tiKxHoGi58
- ZbTTPm3hzknY5+aDA4HKkWsIxowrUtO4djcBa2IuUOBCFv2HXqK0DoxLBlRu5Dhgtpmr
- 0mAvBHQ+KeXWVe1pGcPNxfFdnCVzxyEu8XJk4hSQ0vIvmAHu+49fxqv2NpZwn2NyL7VA
- ZgQg==
+ d=1e100.net; s=20251104; t=1774404627; x=1775009427;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cFjoGvd2eLLoSU20LveTmOuw9QejmOSilFdrCZhFt/Q=;
+ b=Dpa0JpzRDovxRGrALBznWRrViPW8spgB4ILf/nwweR0sMv6GEASTyC+6iLN+uh48Gd
+ tc5xpcnePnQsULRr3oBeMRHgVuKWpQkFj7isBy9CSB+/xaxgKNDaHKR3W10+mwi2rVec
+ AZ+A4ovVK4BlEJBiHwdIHW1pF/JqxxSkXWVVBsOQ/jNWANft+AhMiIAkNOowYYMy4w2g
+ KnTg/4f2IJVQJA4sVRMR9VMBhQy4cahIi5NLEtRWEKkRdgOJV26bzOirGu/aap6Lj1kX
+ DIZBFBtxwHUwV1WBRAu4MZSQMtNe2pygNl1+E/Ep1jLhECuu+uRw77iFlLPh8MNjGwGT
+ 5+2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU7J0+luVF2xdEvck4xgzAk9vw+mR11LMq7DsnPdxL8E+FK4v57UsQtQ/LafUbQm4XK6ruib/dI6nUU@nongnu.org
-X-Gm-Message-State: AOJu0Yx7U/jjaKh5mdjbXP4DSZ1WmiPZNfPyCX+cQQRSsZNoysa6l+oj
- 8/p2PGboD0xedlDJKdz1ccYW3XkZIc4nqdADfplAPeSYZD+8mlUKQaWwXCDFJdk1wrv7GMYpEgi
- Sf3e2ryeVtD0pnId3nZFWbs8f9RU0eeU=
-X-Gm-Gg: ATEYQzyrvNHuwJANNu5aA1wBqWn7uqBAUnIugynA5NgCqyRNDb93XBTKFENQxir9yEh
- TdJMzIcddvx4po6YC2TPTkLaOqhVYLVye2zR9l/PCgaAjpDc4MtR6Y77iQEbHHQgwdtB2bNaG+1
- DFDtr303OI1BwMyhmM+Prknldh+DtSBFtdEgLHvrvtNQiyOMHmkFJe3FEzwnyOVHeTiRFCXvXBm
- Tcskm56LFEw26GPmOrUau14C22s4nNhXKQuGAHAdd9qdZ2JdSubsh9w1QkohgGl89IMY7k/rt1D
- dqq4bkhSl6W4ASSoEzSt10YEynObIeUzmSqu/Q==
-X-Received: by 2002:a17:907:db02:b0:b97:be1a:3bac with SMTP id
- a640c23a62f3a-b988642a96amr354117066b.26.1774404537882; Tue, 24 Mar 2026
- 19:08:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260321144554.606417-1-npiggin@gmail.com>
- <20260321144554.606417-4-npiggin@gmail.com>
-In-Reply-To: <20260321144554.606417-4-npiggin@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 25 Mar 2026 12:08:31 +1000
-X-Gm-Features: AQROBzCl7P7H1GeYH5LBcLyCgGsyA_aCr8vGBMSn7Z9XcX9Eez7duOzO_poTMKQ
-Message-ID: <CAKmqyKOPAzi3g-BCGmqSpRnumq6RPLPSvV7ORP5Jh+5nrfVduw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] tests/tcg: Add riscv test for interrupted vector
- ops
+ AJvYcCWAM6zLDDiOzpm1Lf8OxA+l7b+05MCcxAp4XZLAA7Dr6bTE7PxpVcFBBa8dPotY7fUl5MxfDO1HksDD@nongnu.org
+X-Gm-Message-State: AOJu0YyMCfurdfolq0Jf3QZLPCtovawom/F53LdU6RpCtnMEHYUC1VNU
+ QKhKWerA7KyMtMzOt/3OPorfxzPOoHiSvNX1sjEyOMn49R7C+ZktjpT/
+X-Gm-Gg: ATEYQzzDAXFF++MmBsYRghkQbfFx0QrjEAcf7SPFKH7BsGRryUr3HWJEl/Z/SpQJOtE
+ QEFDFxRCp3TeC1qMPahg/LAfjymKcPaM4TMfyoEKev/Y8czW7vKoN/Xh+fFkK/Pmx0KasIZRfXn
+ jaIqH07zRrS+jCZXS7mDk9Nm/BOyWfvzDuiZZ24Ty1aXWCj2INkSspnJsi6Bkoq9kYwyjGyWNq+
+ QLwokTZrBx8pbAMVMjYCLMMJrJNF2uxN1kXwAVH10fE+Lv/bds806P8+uFi9F0eLCviw6uQ5ZTf
+ rzjmUmAUP6sNSxiYRP4m1Vgv1AgVQ9DOP9z+brUz0GEeCax1YRSl0ELyxXX6ERSV7C2VfaNnb/Q
+ AxiYgKwYeqLkwnokjFVEU2mRq427o7UMdftVeQNR1xAvDWdMcArFOhcbyys7er3k7mI7OS0zvfZ
+ czrxESy/ZT5aIPvrrFEFPqNHv4f3iDoVkELPD8kFGJpFCP16mwDEvMR5MNL1NSSkqsnbUglAiZb
+ mhG6mWnrE/P4CvvDZuH5ZA6gnNFl5BVf85k588t/Q==
+X-Received: by 2002:a05:7301:9bc6:b0:2b8:711:ae5c with SMTP id
+ 5a478bee46e88-2c15d2ba7dbmr993322eec.7.1774404627421; 
+ Tue, 24 Mar 2026 19:10:27 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2c10b1a88e5sm21409282eec.13.2026.03.24.19.10.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Mar 2026 19:10:27 -0700 (PDT)
+Date: Wed, 25 Mar 2026 10:10:05 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-riscv@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
- Joel Stanley <joel@jms.id.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, 
+ Nicholas Joaquin <njoaquin@tenstorrent.com>,
+ Ganesh Valliappan <gvalliappan@tenstorrent.com>
+Subject: Re: [PATCH v3 2/3] target/riscv: Fix vector whole ldst vstart check
+Message-ID: <acNDeIf7dpYFqX9T@ZEVORN-PC.localdomain>
+References: <20260321144554.606417-1-npiggin@gmail.com>
+ <20260321144554.606417-3-npiggin@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260321144554.606417-3-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,413 +112,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 22, 2026 at 12:47=E2=80=AFAM Nicholas Piggin <npiggin@gmail.com=
-> wrote:
->
-> riscv vector instructions can be interrupted with a trap, and partial
-> completion is recorded in the vstart register. Some causes are
-> implementation dependent, for example an asynchronous interrupt (which I
-> don't think TCG allows). Others are architectural, typically memory
-> access faults on vector load/store instructions.
->
-> Add some TCG tests for interrupting vector load instructions and
-> resuming partially completed ones.
->
-> This would have caught a recent (now reverted) regression in vector
-> stride load implementation, commit 28c12c1f2f50d ("Generate strided
-> vector loads/stores with tcg nodes.")
->
+On Sun, Mar 22, 2026 at 12:45:53AM +1000, Nicholas Piggin wrote:
+> The whole vector ldst instructions do not include a vstart check, so an
+> overflowed vstart can result in an underflowed memory address offset and
+> crash:
+> 
+>     accel/tcg/cputlb.c:1465:probe_access_flags:
+>       assertion failed: (-(addr | TARGET_PAGE_MASK) >= size)
+> 
+> Add the VSTART_CHECK_EARLY_EXIT() check for these helpers.
+> 
+> This was found with a verification test generator based on RiESCUE.
+Good catch! I had previously fixed some vector helpers that were
+missing vstart checks, but I didn’t realize there were still some
+omissions.
+
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
+Thanks,
+Chao
+> 
+> Reported-by: Nicholas Joaquin <njoaquin@tenstorrent.com>
+> Reported-by: Ganesh Valliappan <gvalliappan@tenstorrent.com>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
 > ---
->  tests/tcg/riscv64/Makefile.target      |  11 +
->  tests/tcg/riscv64/test-interrupted-v.c | 329 +++++++++++++++++++++++++
->  2 files changed, 340 insertions(+)
->  create mode 100644 tests/tcg/riscv64/test-interrupted-v.c
->
-> diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefi=
-le.target
-> index 19a49b6467..b2b2325843 100644
+>  target/riscv/vector_helper.c             |  2 +
+>  tests/tcg/riscv64/Makefile.target        |  5 ++
+>  tests/tcg/riscv64/test-vstart-overflow.c | 78 ++++++++++++++++++++++++
+>  3 files changed, 85 insertions(+)
+>  create mode 100644 tests/tcg/riscv64/test-vstart-overflow.c
+> 
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index caa8dd9c12..4126447d11 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -825,6 +825,8 @@ vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+>      uint32_t esz = 1 << log2_esz;
+>      int mmu_index = riscv_env_mmu_index(env, false);
+>  
+> +    VSTART_CHECK_EARLY_EXIT(env, evl);
+> +
+>      /* Calculate the page range of first page */
+>      addr = base + (env->vstart << log2_esz);
+>      page_split = -(addr | TARGET_PAGE_MASK);
+> diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+> index 4da5b9a3b3..19a49b6467 100644
 > --- a/tests/tcg/riscv64/Makefile.target
 > +++ b/tests/tcg/riscv64/Makefile.target
-> @@ -1,6 +1,10 @@
->  # -*- Mode: makefile -*-
->  # RISC-V specific tweaks
->
-> +# Not all environments have compilers with vector intrinsics yet.
-> +HAVE_RISCV_VECTOR_INTRINSICS :=3D $(shell echo '#ifndef __riscv_v_intrin=
-sic\n#error\n#endif' |  \
-> +                                  $(CC) -march=3Drv64gcv -E -x c - >/dev=
-/null 2>&1 && echo y)
+> @@ -18,3 +18,8 @@ TESTS += test-fcvtmod
+>  test-fcvtmod: CFLAGS += -march=rv64imafdc
+>  test-fcvtmod: LDFLAGS += -static
+>  run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,zfa=true
 > +
->  VPATH +=3D $(SRC_PATH)/tests/tcg/riscv64
->  TESTS +=3D test-div
->  TESTS +=3D noexec
-> @@ -23,3 +27,10 @@ run-test-fcvtmod: QEMU_OPTS +=3D -cpu rv64,d=3Dtrue,zf=
-a=3Dtrue
->  TESTS +=3D test-vstart-overflow
->  test-vstart-overflow: CFLAGS +=3D -march=3Drv64gcv
->  run-test-vstart-overflow: QEMU_OPTS +=3D -cpu rv64,v=3Don
-> +
-> +ifeq ($(HAVE_RISCV_VECTOR_INTRINSICS),y)
-> +# Test for interrupted vector instructions
-> +TESTS +=3D test-interrupted-v
-> +test-interrupted-v: CFLAGS +=3D -march=3Drv64gcv
-> +run-test-interrupted-v: QEMU_OPTS +=3D -cpu rv64,v=3Don
-> +endif
-> diff --git a/tests/tcg/riscv64/test-interrupted-v.c b/tests/tcg/riscv64/t=
-est-interrupted-v.c
+> +# Test for vstart >= vl
+> +TESTS += test-vstart-overflow
+> +test-vstart-overflow: CFLAGS += -march=rv64gcv
+> +run-test-vstart-overflow: QEMU_OPTS += -cpu rv64,v=on
+> diff --git a/tests/tcg/riscv64/test-vstart-overflow.c b/tests/tcg/riscv64/test-vstart-overflow.c
 > new file mode 100644
-> index 0000000000..3d0d21b49b
+> index 0000000000..6c904ab309
 > --- /dev/null
-> +++ b/tests/tcg/riscv64/test-interrupted-v.c
-> @@ -0,0 +1,329 @@
+> +++ b/tests/tcg/riscv64/test-vstart-overflow.c
+> @@ -0,0 +1,78 @@
 > +/*
-> + * Test for interrupted vector operations.
+> + * Test for VSTART set to overflow VL
 > + *
-> + * Some vector instructions can be interrupted partially complete, vstar=
-t will
-> + * be set to where the operation has progressed to, and the instruction =
-can be
-> + * re-executed with vstart !=3D 0. It is implementation dependent as to =
-what
-> + * instructions can be interrupted and what vstart values are permitted =
-when
-> + * executing them. Vector memory operations can typically be interrupted
-> + * (as they can take page faults), so these are easy to test.
+> + * TCG vector instructions should call VSTART_CHECK_EARLY_EXIT() to check
+> + * this case, otherwise memory addresses can underflow and misbehave or
+> + * crash QEMU.
+> + *
+> + * TODO: Add stores and other instructions.
 > + *
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
-> +#include <stdlib.h>
 > +#include <stdint.h>
-> +#include <stdbool.h>
-> +#include <string.h>
-> +#include <sys/mman.h>
-> +#include <stdio.h>
-> +#include <assert.h>
-> +#include <signal.h>
-> +#include <unistd.h>
-> +#include <riscv_vector.h>
 > +
-> +static unsigned long page_size;
+> +#define VSTART_OVERFLOW_TEST(insn)                \
+> +({                                                \
+> +    uint8_t vmem[64] = { 0 };                     \
+> +    uint64_t vstart;                              \
+> +    asm volatile("                           \r\n \
+> +    # Set VL=52 and VSTART=56                \r\n \
+> +    li          t0, 52                       \r\n \
+> +    vsetvli     x0, t0, e8, m4, ta, ma       \r\n \
+> +    li          t0, 56                       \r\n \
+> +    csrrw       x0, vstart, t0               \r\n \
+> +    li          t1, 64                       \r\n \
+> +    " insn "                                 \r\n \
+> +    csrr        %0, vstart                   \r\n \
+> +    " : "=r"(vstart), "+A"(vmem) :: "t0", "t1", "v24", "memory"); \
+> +    vstart;                                       \
+> +})
 > +
-> +static volatile int nr_segv;
-> +static volatile unsigned long fault_start, fault_end;
-> +static volatile bool fault_write;
-> +
-> +/*
-> + * Careful: qemu-user does not save/restore vector state in
-> + * signals yet, so any library or compiler autovec code will
-> + * corrupt our test.
-> + *
-> + * Do only minimal work in the signal handler.
-> + */
-> +static void SEGV_handler(int signo, siginfo_t *info, void *context)
+> +int run_vstart_overflow_tests()
 > +{
-> +    unsigned long page =3D (unsigned long)info->si_addr &
-> +                             ~(unsigned long)(page_size - 1);
-> +
-> +    assert((unsigned long)info->si_addr >=3D fault_start);
-> +    assert((unsigned long)info->si_addr < fault_end);
-> +    if (fault_write) {
-> +        mprotect((void *)page, page_size, PROT_READ | PROT_WRITE);
-> +    } else {
-> +        mprotect((void *)page, page_size, PROT_READ);
-> +    }
-> +    nr_segv++;
-> +}
-> +
-> +/* Use noinline to make generated code easier to inspect */
-> +static __attribute__((noinline))
-> +uint8_t unit_load(uint8_t *mem, size_t nr, bool ff)
-> +{
-> +    size_t vl;
-> +    vuint8m1_t vec, redvec, sum;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    if (ff) {
-> +        vec =3D __riscv_vle8ff_v_u8m1(mem, &vl, vl);
-> +    } else {
-> +        vec =3D __riscv_vle8_v_u8m1(mem, vl);
-> +    }
-> +    redvec =3D __riscv_vmv_v_x_u8m1(0, vl);
-> +    sum =3D __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
-> +    return __riscv_vmv_x_s_u8m1_u8(sum);
-> +}
-> +
-> +static __attribute__((noinline))
-> +uint8_t seg2_load(uint8_t *mem, size_t nr, bool ff)
-> +{
-> +    size_t vl;
-> +    vuint8m1x2_t segvec;
-> +    vuint8m1_t vec, redvec, sum;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    if (ff) {
-> +        segvec =3D __riscv_vlseg2e8ff_v_u8m1x2(mem, &vl, vl);
-> +    } else {
-> +        segvec =3D __riscv_vlseg2e8_v_u8m1x2(mem, vl);
-> +    }
-> +    vec =3D __riscv_vadd_vv_u8m1(__riscv_vget_v_u8m1x2_u8m1(segvec, 0),
-> +                   __riscv_vget_v_u8m1x2_u8m1(segvec, 1), vl);
-> +    redvec =3D __riscv_vmv_v_x_u8m1(0, vl);
-> +    sum =3D __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
-> +    return __riscv_vmv_x_s_u8m1_u8(sum);
-> +}
-> +
-> +static __attribute__((noinline))
-> +uint8_t strided_load(uint8_t *mem, size_t nr, size_t stride)
-> +{
-> +    size_t vl;
-> +    vuint8m1_t vec, redvec, sum;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    vec =3D __riscv_vlse8_v_u8m1(mem, stride, vl);
-> +    redvec =3D __riscv_vmv_v_x_u8m1(0, vl);
-> +    sum =3D __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
-> +    return __riscv_vmv_x_s_u8m1_u8(sum);
-> +}
-> +
-> +static __attribute__((noinline))
-> +uint8_t indexed_load(uint8_t *mem, size_t nr, uint32_t *indices)
-> +{
-> +    size_t vl;
-> +    vuint32m4_t idx;
-> +    vuint8m1_t vec, redvec, sum;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    idx =3D __riscv_vle32_v_u32m4(indices, vl);
-> +    vec =3D __riscv_vloxei32_v_u8m1(mem, idx, vl);
-> +    redvec =3D __riscv_vmv_v_x_u8m1(0, vl);
-> +    sum =3D __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
-> +    return __riscv_vmv_x_s_u8m1_u8(sum);
-> +}
-> +
-> +/* New store functions */
-> +static __attribute__((noinline))
-> +void unit_store(uint8_t *mem, size_t nr, vuint8m1_t vec)
-> +{
-> +    size_t vl;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    __riscv_vse8_v_u8m1(mem, vec, vl);
-> +}
-> +
-> +static __attribute__((noinline))
-> +void seg2_store(uint8_t *mem, size_t nr, vuint8m1x2_t segvec)
-> +{
-> +    size_t vl;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    __riscv_vsseg2e8_v_u8m1x2(mem, segvec, vl);
-> +}
-> +
-> +static __attribute__((noinline))
-> +void strided_store(uint8_t *mem, size_t nr, size_t stride, vuint8m1_t ve=
-c)
-> +{
-> +    size_t vl;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    __riscv_vsse8_v_u8m1(mem, stride, vec, vl);
-> +}
-> +
-> +static __attribute__((noinline))
-> +void indexed_store(uint8_t *mem, size_t nr, uint32_t *indices, vuint8m1_=
-t vec)
-> +{
-> +    size_t vl;
-> +    vuint32m4_t idx;
-> +
-> +    vl =3D __riscv_vsetvl_e8m1(nr);
-> +    idx =3D __riscv_vle32_v_u32m4(indices, vl);
-> +    __riscv_vsoxei32_v_u8m1(mem, idx, vec, vl);
-> +}
-> +
-> +/* Use e8 elements, 128-bit vectors */
-> +#define NR_ELEMS 16
-> +
-> +static int run_interrupted_v_tests(void)
-> +{
-> +    struct sigaction act =3D { 0 };
-> +    uint8_t *mem;
-> +    uint32_t indices[NR_ELEMS];
-> +    int i;
-> +
-> +    page_size =3D sysconf(_SC_PAGESIZE);
-> +
-> +    act.sa_flags =3D SA_SIGINFO;
-> +    act.sa_sigaction =3D &SEGV_handler;
-> +    if (sigaction(SIGSEGV, &act, NULL) =3D=3D -1) {
-> +        perror("sigaction");
-> +        exit(EXIT_FAILURE);
+> +    /*
+> +     * An implementation is permitted to raise an illegal instruction
+> +     * exception when executing a vector instruction if vstart is set to a
+> +     * value that could not be produced by the execution of that instruction
+> +     * with the same vtype. If TCG is changed to do this, then this test
+> +     * could be updated to handle the SIGILL.
+> +     */
+> +    if (VSTART_OVERFLOW_TEST("vl1re16.v    v24, %1")) {
+> +        return 1;
 > +    }
 > +
-> +    mem =3D mmap(NULL, NR_ELEMS * page_size, PROT_READ | PROT_WRITE,
-> +               MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-> +    assert(mem !=3D MAP_FAILED);
-> +    madvise(mem, NR_ELEMS * page_size, MADV_NOHUGEPAGE);
-> +
-> +    /*** Load tests ***/
-> +    fault_write =3D false;
-> +
-> +    /* Unit-stride tests load memory crossing a page boundary */
-> +    memset(mem, 0, NR_ELEMS * page_size);
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        mem[page_size - NR_ELEMS + i] =3D 3;
-> +    }
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        mem[page_size + i] =3D 5;
+> +    if (VSTART_OVERFLOW_TEST("vs1r.v       v24, %1")) {
+> +        return 1;
 > +    }
 > +
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
-> +    fault_end =3D fault_start + NR_ELEMS;
-> +    mprotect(mem, page_size * 2, PROT_NONE);
-> +    assert(unit_load(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, false)
-> +                    =3D=3D 8 * NR_ELEMS / 2);
-> +    assert(nr_segv =3D=3D 2);
-> +
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)&mem[page_size - NR_ELEMS];
-> +    fault_end =3D fault_start + NR_ELEMS * 2;
-> +    mprotect(mem, page_size * 2, PROT_NONE);
-> +    assert(seg2_load(&mem[page_size - NR_ELEMS], NR_ELEMS, false)
-> +                    =3D=3D 8 * NR_ELEMS);
-> +    assert(nr_segv =3D=3D 2);
-> +
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
-> +    fault_end =3D fault_start + (NR_ELEMS / 2);
-> +    mprotect(mem, page_size * 2, PROT_NONE);
-> +    assert(unit_load(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, true)
-> +                    =3D=3D 3 * NR_ELEMS / 2);
-> +    assert(nr_segv =3D=3D 1); /* fault-first does not fault the second p=
-age */
-> +
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)&mem[page_size - NR_ELEMS];
-> +    fault_end =3D fault_start + NR_ELEMS;
-> +    mprotect(mem, page_size * 2, PROT_NONE);
-> +    assert(seg2_load(&mem[page_size - NR_ELEMS], NR_ELEMS * 2, true)
-> +                    =3D=3D 3 * NR_ELEMS);
-> +    assert(nr_segv =3D=3D 1); /* fault-first does not fault the second p=
-age */
-> +
-> +    /* Following tests load one element from first byte of each page */
-> +    mprotect(mem, page_size * 2, PROT_READ | PROT_WRITE);
-> +    memset(mem, 0, NR_ELEMS * page_size);
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        mem[i * page_size] =3D 3;
-> +        indices[i] =3D i * page_size;
+> +    if (VSTART_OVERFLOW_TEST("vle16.v      v24, %1")) {
+> +        return 1;
 > +    }
 > +
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)mem;
-> +    fault_end =3D fault_start + NR_ELEMS * page_size;
-> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
-> +    assert(strided_load(mem, NR_ELEMS, page_size) =3D=3D 3 * NR_ELEMS);
-> +    assert(nr_segv =3D=3D NR_ELEMS);
-> +
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)mem;
-> +    fault_end =3D fault_start + NR_ELEMS * page_size;
-> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
-> +    assert(indexed_load(mem, NR_ELEMS, indices) =3D=3D 3 * NR_ELEMS);
-> +    assert(nr_segv =3D=3D NR_ELEMS);
-> +
-> +    /*** Store tests ***/
-> +    fault_write =3D true;
-> +
-> +    uint8_t store_data[NR_ELEMS];
-> +    uint8_t store_data_seg0[NR_ELEMS];
-> +    uint8_t store_data_seg1[NR_ELEMS];
-> +    vuint8m1_t vec;
-> +    vuint8m1x2_t segvec;
-> +    size_t vl =3D __riscv_vsetvl_e8m1(NR_ELEMS);
-> +
-> +    /* Create some data to store */
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        store_data[i] =3D i * 3;
-> +        store_data_seg0[i] =3D i * 5;
-> +        store_data_seg1[i] =3D i * 7;
-> +    }
-> +    vec =3D __riscv_vle8_v_u8m1(store_data, vl);
-> +    segvec =3D __riscv_vcreate_v_u8m1x2(
-> +        __riscv_vle8_v_u8m1(store_data_seg0, vl),
-> +        __riscv_vle8_v_u8m1(store_data_seg1, vl));
-> +
-> +    /* Unit-stride store test crossing a page boundary */
-> +    mprotect(mem, page_size * 2, PROT_READ | PROT_WRITE);
-> +    memset(mem, 0, page_size * 2);
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
-> +    fault_end =3D fault_start + NR_ELEMS;
-> +    mprotect(mem, page_size * 2, PROT_NONE);
-> +    unit_store(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, vec);
-> +    assert(nr_segv =3D=3D 2);
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        assert(mem[page_size - (NR_ELEMS / 2) + i] =3D=3D store_data[i])=
-;
+> +    if (VSTART_OVERFLOW_TEST("vse16.v      v24, %1")) {
+> +        return 1;
 > +    }
 > +
-> +    /* Segmented store test crossing a page boundary */
-> +    mprotect(mem, page_size * 2, PROT_READ | PROT_WRITE);
-> +    memset(mem, 0, page_size * 2);
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)&mem[page_size - NR_ELEMS];
-> +    fault_end =3D fault_start + NR_ELEMS * 2;
-> +    mprotect(mem, page_size * 2, PROT_NONE);
-> +    seg2_store(&mem[page_size - NR_ELEMS], NR_ELEMS, segvec);
-> +    assert(nr_segv =3D=3D 2);
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        assert(mem[page_size - NR_ELEMS + i * 2] =3D=3D store_data_seg0[=
-i]);
-> +        assert(mem[page_size - NR_ELEMS + i * 2 + 1] =3D=3D store_data_s=
-eg1[i]);
+> +    if (VSTART_OVERFLOW_TEST("vluxei8.v    v24, %1, v20")) {
+> +        return 1;
 > +    }
 > +
-> +    /* Strided store test to one element on each page */
-> +    mprotect(mem, NR_ELEMS * page_size, PROT_READ | PROT_WRITE);
-> +    memset(mem, 0, NR_ELEMS * page_size);
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)mem;
-> +    fault_end =3D fault_start + NR_ELEMS * page_size;
-> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
-> +    strided_store(mem, NR_ELEMS, page_size, vec);
-> +    assert(nr_segv =3D=3D NR_ELEMS);
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        assert(mem[i * page_size] =3D=3D store_data[i]);
+> +    if (VSTART_OVERFLOW_TEST("vloxei8.v    v24, %1, v20")) {
+> +        return 1;
 > +    }
 > +
-> +    /* Indexed store test to one element on each page */
-> +    mprotect(mem, NR_ELEMS * page_size, PROT_READ | PROT_WRITE);
-> +    memset(mem, 0, NR_ELEMS * page_size);
-> +    nr_segv =3D 0;
-> +    fault_start =3D (unsigned long)mem;
-> +    fault_end =3D fault_start + NR_ELEMS * page_size;
-> +    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
-> +    indexed_store(mem, NR_ELEMS, indices, vec);
-> +    assert(nr_segv =3D=3D NR_ELEMS);
-> +    for (i =3D 0; i < NR_ELEMS; i++) {
-> +        assert(mem[indices[i]] =3D=3D store_data[i]);
+> +    if (VSTART_OVERFLOW_TEST("vlse16.v     v24, %1, t1")) {
+> +        return 1;
 > +    }
 > +
-> +    munmap(mem, NR_ELEMS * page_size);
+> +    if (VSTART_OVERFLOW_TEST("vlseg2e8.v  v24, %1")) {
+> +        return 1;
+> +    }
 > +
 > +    return 0;
 > +}
 > +
-> +int main(void)
+> +int main()
 > +{
-> +    return run_interrupted_v_tests();
+> +    return run_vstart_overflow_tests();
 > +}
-> --
+> -- 
 > 2.51.0
->
->
+> 
+> 
 
