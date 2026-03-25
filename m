@@ -4,114 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B125FFEA83B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682FCFEC11B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 10:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5L84-00060v-0H; Wed, 25 Mar 2026 06:06:24 -0400
+	id 1w5LFQ-0007IM-9k; Wed, 25 Mar 2026 06:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1w5L7y-00060d-MN
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:06:18 -0400
-Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1w5L7p-0001rf-Tk
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 06:06:12 -0400
-Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-2c0c482e069so4055206eec.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 03:06:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774433168; cv=none;
- d=google.com; s=arc-20240605;
- b=er2YgaUGGRljaicHlX56Zc5jQYYiOgJ9ffHqxNfwCZsv78JN2QWlOmsI5cTFKcXbzN
- qLmXcXxkRi4KWsDcufh9pD5kdUNR3nktAAcIW1yBAlSIhFDoZOogtdt6oOHAikMIyFfn
- QZBd1FQfLvH62m8whGszEcf1u7YD3Hs5byw5hSB+i1VkNwRCscHDj6SKPfbyHvcZ5HHT
- 3rM32cqMkyRujfXJHz9rcHw+hAFL0Sgv9bKrJMDrvPrl9SM+4+c0Vb7uGrp3ej4ptJYm
- B8PQDEmgJn5ybSVwvRty9edoxWdRnaPQdQls4tulMGI8fh6+7pvu1yutrAWVcSJaSF7p
- rT7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=jnp6JWiTBoYRWYcNZYzoWqXAJ73/8pnR58N37qdpm7I=;
- fh=3njbElQ++1yr9UMmCfeh1jl4SvqJ7kPaxqFji3Xozp8=;
- b=YJaDhGOMZQ7m4U2jxR1KZtS7RU2r6eCLOmJeDtTKKPXpm7lopkB8Sr/C46EuueVoHM
- 2ONFdmT1b+/zmnop/lApQnwfSPTKNocAGwGBWBwVW56dCisz5m0Bvr5tThyhFwyAOHS/
- QfHldYyTjzIdBBcPt1RtND0pOM3pYPpUQLFBtR9tLW7AnYV+zYp86Wu3UJ2AJtOVc8BA
- vuThQeNOCoFH+iiFYoiUsrDg/dVMB1YZn5NyEn6Z0qG9VHwmKrL6VMaSgzHtshF2kyP7
- KR/LxiEGBtnEcE8PFeUKEZHlyVDi5mN3LXIkP2KUlDlUKnv+kBaq+QnjKp5pK3xj2jMf
- SaVQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774433168; x=1775037968; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jnp6JWiTBoYRWYcNZYzoWqXAJ73/8pnR58N37qdpm7I=;
- b=U7XXHQjSMin0rj+yGPxoVmgfqlUi+zpU4U1dOAqQ2D22gg4z5/PgZyBOQ7zHGsxQfE
- MwtcwMtPyPR+ETG1sBRGdOgmWPf2vBF83lZhxSxc2uhHc219/Zk/EAbRxBdeWEqClggF
- pqr/hSSqW+8muvN25FHzNhvr37wM5MvCivDQGhLqu+G5UudMLizayrWZmzRsNE2eREiA
- csDEvjuCoqrcUstI3cA5OqiGNXsyqyX2p1Ge3LbVYfy5dgw878rcY1BICbknquLJ526O
- FSmeP7HV5lu9M1dwnCilYsW4YrGbfdZ4bUjSQo3b+bOUrdNaJXY2P3Hm7VLk+D08pSJX
- 9cmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774433168; x=1775037968;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jnp6JWiTBoYRWYcNZYzoWqXAJ73/8pnR58N37qdpm7I=;
- b=HQidN0TjbsGfgBWZZ+ygtqVdG8dpmBA7Qi5OShbSHTroKzAHZFN2A0L5Y+JIXAatwt
- O2FFSeXm+K1JpFB2FGxTDtZ66Qa7Zkf9BZdEGHQm0ueG9yMejYE2G773npMppWyH0XmQ
- gwDJkoOQBjRT+IGKM5ySrGW+PGWkBZ85XlcBZodThnxOXo7PmGScJJ8AtnGHX1ilznIj
- LRbKaJ4RYjeyWGmqdeNOTxxeGEHQe6bnh8qZx/L+TCGYtVG2J3A3L1MZKKwS2NEabDP+
- xuNftAXyd/UaBT2hGjvYRd3qTn2mZe1c2G0ePzRpb9Ra5M2oKlBpvLHMWgolfUgzhQWs
- Cnmg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHrx82XhskYv4eN9pgzkMLweFSP7JLrDyAxmFqiIW/um5xlTEgc2FJkoL5dvgFit50GF6JpgSoldXg@nongnu.org
-X-Gm-Message-State: AOJu0Yz9riszcg79IO+OWErAnYnVFZLALV8J3E+AWwFLCaLtoueAls0J
- y5TuLESjmVBEf4DNy9NAMI9ptoEqCDGvrJx4ycJG2RJbJbB9nND1D06aE1FAPriPAUZBTIYV8pw
- +O/aV5mwE/WOgKhpNofbplb+ACGjJ7QM=
-X-Gm-Gg: ATEYQzxPT/Hxed2S1C4Zwg6WmaE2UaeT13R2amnGUZ28p3DBaiF6hgW6uDVdvDW9WBB
- aFvt5e4g72P6YNcCQGybiq2txwIA/+oC/pzGeODRjAH/9i8zUsNuQi2SOfHRd5K/ROhEwZAGpzd
- O8dw7HbkbZDCix4XFAdNuP0UVS12EJzPe34Wo7zqG6f4zoMYzxtxKbs7EJngW9V4hH+3V+0k/Gs
- hfjnXdwQl5LO5pe0grnJMTG4gWC2cckWWYJ1sShvrqx+XmSHkGCYCeXRc1gFIU5LUTLWbOcLy32
- riwLAbklRJSRdeTCZDXm+9jhT0HJ1z459w+nU0E=
-X-Received: by 2002:a05:7300:f191:b0:2bd:b102:a022 with SMTP id
- 5a478bee46e88-2c15d3c0932mr1471303eec.27.1774433168239; Wed, 25 Mar 2026
- 03:06:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1w5LFN-0007Gu-ST; Wed, 25 Mar 2026 06:13:57 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1w5LFL-0003ak-Ti; Wed, 25 Mar 2026 06:13:57 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id A29DD49006;
+ Wed, 25 Mar 2026 11:13:44 +0100 (CET)
+Message-ID: <fbe8115d-13c2-4bc3-9745-e8d34b9df39c@proxmox.com>
+Date: Wed, 25 Mar 2026 11:13:33 +0100
 MIME-Version: 1.0
-References: <CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com>
- <ef2a0d92-c7f6-438b-a15a-2712e1c4373a@linaro.org>
- <CAFEAcA-kk29mjGWLrAGjd9AiAW64v0TvWdedZypSH0i43WgQzw@mail.gmail.com>
- <39b64118-7faa-4308-a603-d568cc78de47@linaro.org>
- <acOpKJjdPUmtWeZd@redhat.com>
-In-Reply-To: <acOpKJjdPUmtWeZd@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 25 Mar 2026 14:05:56 +0400
-X-Gm-Features: AQROBzDmS_PJ2krTPcYqt_mdLUj_57znFfYFq6f36NBp62NhOrtst92sUKhInOY
-Message-ID: <CAJ+F1CLxwLzPR3aFNHDtS4PKKTq5SAoqjtNuyfxRgyWj99vTag@mail.gmail.com>
-Subject: Re: Cleaning up contrib/ and tools/
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- QEMU Developers <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Eric Blake <eblake@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mirror: Fix missed dirty bitmap writes during startup
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, jsnow@redhat.com,
+ jean-louis@dupond.be, dionbosschieter@gmail.com, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, pbonzini@redhat.com
+References: <20260219202446.312493-1-kwolf@redhat.com>
+ <d7c3d44a-d42f-4232-b5e5-a7504fb62a73@yandex-team.ru>
+ <aaqflohdSVTFpkRZ@redhat.com>
+ <af3bec19-96ee-4de2-b9bf-3875d59aaed1@yandex-team.ru>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <af3bec19-96ee-4de2-b9bf-3875d59aaed1@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1774433576307
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,51 +65,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Am 24.03.26 um 3:43 PM schrieb Vladimir Sementsov-Ogievskiy:
+> On 06.03.26 12:34, Kevin Wolf wrote:
+>> Am 05.03.2026 um 19:34 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>>> On 19.02.26 23:24, Kevin Wolf wrote:
+>>>> @@ -2099,9 +2111,6 @@ fail:
+>>>>            g_free(s->replaces);
+>>>>            blk_unref(s->target);
+>>>>            bs_opaque->job = NULL;
+>>>> -        if (s->dirty_bitmap) {
+>>>> -            bdrv_release_dirty_bitmap(s->dirty_bitmap);
+>>>> -        }
+>>>>            job_early_fail(&s->common.job);
+>>>>        }
+>>>> @@ -2115,6 +2124,7 @@ fail:
+>>>>        bdrv_graph_wrunlock();
+>>>>        bdrv_drained_end(bs);
+>>>> +    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
+>>>
+>>>
+>>> Hmm. Shouldn't we change position of _release_ in
+>>> mirror_exit_common() too?
+>>>
+>>> Now the sequence is:
+>>>
+>>> bdrv_release_dirty_bitmap(s->dirty_bitmap);
+>>>
+>>>
+>>> < could mirror_top_bs access dirty_bitmap here, before drained begin? >
+>>>
+>>> ...
+>>>
+>>> drained begin
+>>>
+>>> .. a lot of logic, including actual removing of the mirror_top_bs
+>>> from the chain ..
+>>>
+>>> drained end
+>>>
+>>> bdrv_unref(mirror_top_bs)
+>>
+>> I think you're right, but isn't this already a preexisting bug in
+>> master? After releasing, we don't set s->dirty_bitmap = NULL, which
+>> could have prevented the access in the code before this patch. So this
+>> should probably be a separate patch.
+>>
+>> mirror_exit_common() runs in the main loop, so I assume you can
+>> hit this when using an iothread.
+>>
+>> It seems that initially the release was later, but commit 2119882 moved
+>> it earlier, without saying why it did that. Paolo, do you remember?
+>>
+>> Kevin
+>>
+> 
+> On the other hand, in mirror_exit_common(), we are already in
+> 
+> bdrv_drained_begin(bs); section, started in mirror_run()...
+> 
+> Does bdrv_drained_begin(mirror_top_bs) add something to previous
+> bdrv_drained_begin(bs) ?
+> 
 
-On Wed, Mar 25, 2026 at 1:22=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Tue, Mar 24, 2026 at 11:44:37AM -0700, Pierrick Bouvier wrote:
-> > On 3/24/26 11:33 AM, Peter Maydell wrote:
-> > > On Tue, 24 Mar 2026 at 18:28, Pierrick Bouvier
-> > > > Moving those sources will break build folder hierarchy also, which =
-is an
-> > > > issue for all existing binaries built from contrib anyway.
-> > > > I'm not sure there is anything sane to do to fix that except accept=
-ing
-> > > > the breaking change.
-> > >
-> > > What are we breaking here ? Nothing outside QEMU ought to be
-> > > depending on the layout of our source tree. When we move things
-> > > around we'll update the meson.build and the documentation.
-> > > I don't think we have 'contrib' in our installed-locations
-> > > layout (tools get installed into the bin/ dir, for instance),
-> > > but I might have missed something.
-> > >
-> >
-> > I was thinking more about users that might have custom scripts using va=
-rious
-> > contrib plugins, or using vhost-* binaries or ivshmem-server or elf2dmp=
-.
-> > They will be relocated because meson automatically uses layout of sourc=
-es in
-> > build folder.
-> > It's not a big deal anyway.
->
-> If we're concerned about external users relying on stuff in contrib/,
-> then that is exactly the reason why contrib/ should go, and everything
-> be considered an officially supported deliverable of QEMU with an
-> appropriate home in the source tree, and covered by 'make install'.
+Looking at the history, it was added with:
 
-A solution worth considering is to split into various meson
-subprojects. I did it for libslirp, libvhost-user, and started qga a
-few years ago (https://patchew.org/QEMU/20220810124857.1360211-1-marcandre.=
-lureau@redhat.com/)
+> commit d2da5e288a2e71e82866c8fdefd41b5727300124
+> Author: Kevin Wolf <kwolf@redhat.com>
+> Date:   Mon Jul 22 17:44:27 2019 +0200
+> 
+>     mirror: Keep mirror_top_bs drained after dropping permissions
+>     
+>     mirror_top_bs is currently implicitly drained through its connection to
+>     the source or the target node. However, the drain section for target_bs
+>     ends early after moving mirror_top_bs from src to target_bs, so that
+>     requests can already be restarted while mirror_top_bs is still present
+>     in the chain, but has dropped all permissions and therefore runs into an
+>     assertion failure like this:
+>     
+>         qemu-system-x86_64: block/io.c:1634: bdrv_co_write_req_prepare:
+>         Assertion `child->perm & BLK_PERM_WRITE' failed.
+>     
+>     Keep mirror_top_bs drained until all graph changes have completed.
 
-This requires a bit of reorganization to have some common (internal)
-libraries, but imho, we would make the whole project cleaner that way.
+At this time, bdrv_drained_end(target_bs) happened before
 
---=20
-Marc-Andr=C3=A9 Lureau
+(1) bdrv_replace_node(mirror_top_bs, mirror_top_bs->backing->bs, ...)
+
+The order of those two operations was later switched, namely in:
+
+> commit ccd6a37947574707613e826e2bf04d55f1d5f238
+> Author: Kevin Wolf <kwolf@redhat.com>
+> Date:   Fri Oct 27 17:53:25 2023 +0200
+> 
+>     block: Mark bdrv_replace_node() GRAPH_WRLOCK
+>     
+>     Instead of taking the writer lock internally, require callers to already
+>     hold it when calling bdrv_replace_node(). Its callers may already want
+>     to hold the graph lock and so wouldn't be able to call functions that
+>     take it internally.
+
+There still is
+
+(2) bdrv_replace_node(to_replace, target_bs, ...)
+
+with the drained section for to_replace ending right afterwards. Looking
+at where mirror_top_bs is after (2):
+
+If to_replace == src, then mirror_top_bs will be on top of target_bs.
+If to_replace != src, then mirror_top_bs will still be on top of src.
+
+So it shouldn't matter that the drain for to_replace ends before (1).
+The drained sections for target_bs and src both end after (1).
+
+If this analysis is correct, it's possible to drop the drain for
+mirror_top_bs. Question is if it's not better to stay explicit about it
+rather than implicitly relying on src/target being drained.
+
+Best Regards,
+Fiona
+
 
