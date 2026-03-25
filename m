@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F381093176
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA601093176
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Did-00048h-GV; Tue, 24 Mar 2026 22:11:40 -0400
+	id 1w5DkU-0004gz-SD; Tue, 24 Mar 2026 22:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ihanzhzh@gmail.com>)
- id 1w5Dia-00047a-Cz
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:11:37 -0400
-Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ihanzhzh@gmail.com>)
- id 1w5DiY-00063C-OH
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:11:36 -0400
-Received: by mail-dl1-x1242.google.com with SMTP id
- a92af1059eb24-12a71ade78cso2522933c88.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:11:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774404690; cv=none;
- d=google.com; s=arc-20240605;
- b=bh249yPYS24fjL+s4/23xjdBUwKmn6jiRQ3F876MOkm2NtAThqoWOui7Oa0Sr+ZZ/2
- 2kwstqUBOtY6iDHxxY3fE9J+g/C4horU9ddlzis4IBeBn+Sp3ywxWGhS2HKEa/Q/bUQp
- vuQQBq3tXKqoiTKEXnnOEXcsWovrwAYLZRKFlJ3jQlmyb90mPoVjmEO12LxZjjiDvOhL
- TFelBsiV9LhzEkVHUw5RfFyTK6yVgUDrKWQFBvWqdfaVmLhN2lkfEC4YChPRjoe8PNk2
- I+BTskghmKlTt5By1DMjjnFCv2jCVbmPOvj2284pJkwNpS6oUdsSG1ppuBhKDw15oAjj
- VJpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=x9s1+USFW1cgr2zZCDwis+WmhFpc+u2jTsZAMjxK+6I=;
- fh=WlZ0NOPX9VRCtnVf1GW4HH+o9vTsrrZz9IxsJTj/FN0=;
- b=Ky11dSJZKii+3ptI/ObDxZn7fRg8P5Ny7LEOn+IhjuUkeA9+DDoDXjWTFo1C5tNi5c
- 8ZPYrRjjU20nw8J/TvyKFIvgclkSgmbAxpywFGamF14kBT1GLxwfYLy2ntwljcvA11K+
- CVTPJ2KeBsA0y7+BlC/OEqFUdJyMfyzIUYqfm17MkW4jHEW3qMAuzgT3a2Ep50YyWiJ2
- Sf1MbDvzzj5CaAzaJ3JtkRR6fbJ/minmTdWGmHz8sjqBU3WJyDmFAvmo0HTqKpdK7Cfk
- tQptPO/E84iaLlCZFA+Bqwrug2dHQxACKj1OYRGf1jcXfW9Oxb0b2cz87b5hLon5g0Zm
- QtYg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774404690; x=1775009490; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x9s1+USFW1cgr2zZCDwis+WmhFpc+u2jTsZAMjxK+6I=;
- b=QjliHuzD81sg4bW+DJK6m9dj0DQC1wezt91vdQNTZlQcDAHNg31a/F/DrL9zqFJ3nQ
- aGuKto2hhagxUR7VyzcSx5qfYSpQ+k/myIK2Ahf7bD3F8z8rEJszCV67zFqxWurejZAE
- Yf21Mt0bh5JucvlBxqTGbaRgyRXJeoFLxemzZrst/17khzC8JK4jHLvHe2ZncM2le3H7
- 3NOSo4lPj6+9d9OWBf6G3pFwkS4L4YBOv6nf+5TMdvcit2bfgiSVM8ygzVNEy+tUyQnH
- XmPPlKg3VwKVP9iAuN5GG+PHGPyMz0uF1pco5mcsfpMMLBB3tXPND+vMnuTEulQpVKFO
- zFaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774404690; x=1775009490;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=x9s1+USFW1cgr2zZCDwis+WmhFpc+u2jTsZAMjxK+6I=;
- b=jxvkXjxoGWwelXk7vdt8gG6kfClX5QqDD4kyxwee3RUtuThk/7N4qaJ9yLLAXt0+PN
- ak8sigFuKEjPoIb3D5IQJw7U4kqNeHsXC2RyJpAfX+h3zPy4mr6N6CvsFSg6e/RXe7D3
- 13kTco2F0OqwTMtVy+G9A7M19jJ4efvhzcC5rJOj7hJwR1420318/DgiYEilCP5K889V
- w4LcX5TCmJyNzk1OUWoIyciXPz5uNv7ftiQbyTF1/n3my/4SJghs2g46M413ZfQ0aVHP
- B1WKPEUnkjQCYE+uvTBvxOCQ2oJ0pEb0yISAYnlszWdmqncscmHuDhMPnY2kmiPHXPPB
- EPBA==
-X-Gm-Message-State: AOJu0YwLj5BUnFKNQNmolSz3NtoXl8IwOoUjPe0bajtpymXPTqLGshIr
- aVQF12FYNn7ZV1EdGu44Rwt5Q5PqfFAYSETASUPSYfpF8p5foWbx3DzS9Hu8epfR1PoUxej88KC
- e4cRx79dtkheTU1QGmBzcVmpfoMLu2Q==
-X-Gm-Gg: ATEYQzyuYyCKsJHpyRbO5inwT4bm/TiNwlMgxJOKdWoVr8CAI4Ge1zk//iqAPPLkg6k
- XRz6/C0m3kgmcEYrxr4vYaHBdrWwzviBgQRZC9M4kx9uwezSxvt49Vu1JHsqeOFwVE1jqXrAzMT
- AKKyCgnuJj0NH+O1Q62sKExrEWfw8rmfMaiqeEttWj1fS9tVUmusx71zLGXhbck3dd6ceHpexqY
- O8aAD+7cSK509seWhiqjnIl2NUjg2dy4C5pr+mqfwieyRerLK1voPdSdYJf8N6DbYQ4XRY6Hnk2
- ln6Xvm1aklj3eQTP0Q==
-X-Received: by 2002:a05:7022:438a:b0:119:e55a:9bf6 with SMTP id
- a92af1059eb24-12a96e73d7emr797427c88.18.1774404690304; Tue, 24 Mar 2026
- 19:11:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1w5DkT-0004gl-9J
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:13:33 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1w5DkR-0006Uh-M6
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:13:33 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62OMBoep2196018; Wed, 25 Mar 2026 02:13:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=LYrFKJz+q9bEfB6XK5DOHNwDk5Yff
+ tXOt1uk0Wsg9SU=; b=IRBm6sJV6reDJxgcrz11gnIF5E2NgP9NvxO6w4CHP12mr
+ nB4R6s6vCCd+Wu56dVFZCoZXOV88Eej+oTKDm8lzu27C2Uv9gBDILCubn6U0Qz0j
+ bEC+J4wGHK+Jr2NJi38rxRDsDNNDJK+I+E/iobmYhubaE6cKzQk9vWAusP88YrZr
+ oO8UUgGjvQxfLWOmwovf+W62K583StxI96uUpSkLbc/vhie4v5I8Jf4vom0wxidA
+ AJBhbWc5YXK40j5Y9UfZdauVbnGPYVEZRWeAUu+hLFDdd6g7MxwTdmbBG4REB4mI
+ PvwsoJhnvKG247+Dzexms9duo/pyDXrnpd9Lahovw==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4d1kgfnfp8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Mar 2026 02:13:24 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 62ON6BPm012401; Wed, 25 Mar 2026 02:13:23 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4d1hsgt0uu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Mar 2026 02:13:23 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62P2DNwA037166;
+ Wed, 25 Mar 2026 02:13:23 GMT
+Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 4d1hsgt0n9-1; Wed, 25 Mar 2026 02:13:23 +0000
+From: Dongli Zhang <dongli.zhang@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ dapeng1.mi@linux.intel.com, zhao1.liu@intel.com, sandipan.das@amd.com,
+ zide.chen@intel.com, joe.jin@oracle.com
+Subject: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD PMU
+ getter
+Date: Tue, 24 Mar 2026 19:12:36 -0700
+Message-ID: <20260325021236.14574-1-dongli.zhang@oracle.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-References: <CAHjCdDAJomXwQ8Z0kkiDGn_8hLWredsby3Nwy4rRgeC9sywc8A@mail.gmail.com>
- <cf2e482e-65fd-418e-bdda-9948c2b39ff3@redhat.com>
-In-Reply-To: <cf2e482e-65fd-418e-bdda-9948c2b39ff3@redhat.com>
-From: Han Zhang <ihanzhzh@gmail.com>
-Date: Wed, 25 Mar 2026 10:11:19 +0800
-X-Gm-Features: AaiRm51noEd9mnwe-5GgPU9nsQUhJaE27cy8f1JtO4mwzrshbzxUIAJkoOsiGLg
-Message-ID: <CAHjCdDAju_svU-RHMP11JYM3G+yu6gwNFTHrAEP3GZnRGLodyw@mail.gmail.com>
-Subject: Re: [GSoC 2026] vhost-user memory isolation proposal feedback request
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, tfanelli@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
- envelope-from=ihanzhzh@gmail.com; helo=mail-dl1-x1242.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-25_01,2026-03-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 suspectscore=0
+ malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
+ definitions=main-2603250015
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI1MDAxNCBTYWx0ZWRfX7kzJb5azxOc0
+ 6o0KQeqE5bzdytkBiWYa/SvUiZOYzRhr0d5hfVeh5IVyr+fJ/JlXt77xaW/rQQNp9hupPqfb7ZB
+ Vp3z+zfsS3kuH3en260EaCNbXuF64p/RTLy++B5+/7seGd9PYz2+0ZR0qogBhQp19mU55wv/3IQ
+ NRxasQj9TobOqMpTU1ZgfXZtNAELi5Jyjh3HN77N6bnmxqxv0tBhtoPZneM+5O00t7Ruv9EPIbT
+ Tadc6xsJNP9Yh/M/GDgxENDRujdGGFvZFSLh29aZT/oCqBKb7TlqCmzlNdQ6jPcujhAgOWZ/rLz
+ 0sg9gjBAdvskLccjq01Jpme/ku+o6BPuZ9847K+smeNqwQEj+hG8EK87yiHd2hBF2XFs98tIeMR
+ t60rUZW9aDmHCRVJlaJd20o9QDhptZ6FwSTAhitY8n/QAXNAywLfqy/ViYxAI8QYgi+KIxWaMLu
+ +aLQI+NSFYKslRaiEzNHtif2K2AC7YdC1gvLi1pY=
+X-Authority-Analysis: v=2.4 cv=aq+/yCZV c=1 sm=1 tr=0 ts=69c344c4 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117
+ a=zPCbziy225d3KhSqZt3L1A==:17
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
+ a=3I1J8UUJPc9JN9BFgKH3:22 a=yPCof4ZbAAAA:8 a=1y-OzW91WTj5pHlFRr8A:9 cc=ntf
+ awl=host:12272
+X-Proofpoint-ORIG-GUID: unwITvswENtPoXWq45Zl40YYPNS7rLKl
+X-Proofpoint-GUID: unwITvswENtPoXWq45Zl40YYPNS7rLKl
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,74 +114,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 1:26=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> =
-wrote:
->
-> Hi Han,
->
-> I=E2=80=99ve taken a look at your proposal, thanks for submitting it!
->
-> It clearly shows you looked into the code and the vhost-user spec and
-> made yourself familiar with both, that=E2=80=99s very good. I find it a s=
-olid
-> concept. I also like your clear separation in fundamental work and later
-> optimization.
->
-> I have one question: In the optimization section, you suggest using a
-> memory pool. I fully agree that=E2=80=99s a good optimization, but it mak=
-es me
-> wonder what model you have in mind for the original implementation. Do
-> you plan on allocating a new buffer for each request? (To be clear: I=E2=
-=80=99m
-> not saying that would be a bad idea for the initial proof-of-concept,
-> I=E2=80=99m just asking for clarification.)
->
+For Intel PMU, the counter and selector MSR ranges are disjoint. AMD PMU
+behaves the same way when PerfCore is unavailable.
 
-Hi Hanna,
+However, once PerfCore is present, AMD PMU switches to an interleaved
+layout in which selector and counter MSRs share a single alternating range.
 
-Thank you very much for reviewing my proposal carefully, and for
-raising such a precise question =E2=80=94 it is extremely helpful.
+MSR_F15H_PERF_CTL0 = 0xc0010200
+MSR_F15H_PERF_CTR0 = 0xc0010201
+... ...
+... ...
+MSR_F15H_PERF_CTL5 = 0xc001020a
+MSR_F15H_PERF_CTR5 = 0xc001020b
 
-To answer directly: yes, in the initial implementation phase I plan
-to allocate bounce buffers per request (more precisely, per
-VirtQueueElement) and release them once the request is completed.
-This is a correctness-first approach.
+The commit 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM
+reset") added the getter/putter pair for AMD PMU MSRs to clear them on
+reset, but it ignored that, without PerfCore, AMD reuses alternating MSR
+addresses for selectors and counters. env->msr_gp_counters[] holds the raw
+counts and env->msr_gp_evtsel[] holds the selectors, so with the
+interleaved layout we must translate the MSR address back to the logical
+counter index instead of treating the interleaved slot as the array index.
 
-> To help make these detail questions clearer, could you lay out how an
-> example request from the guest to the vhost-user back-end would go
-> through all the layers, and the response back?
+The arrays are sized to MAX_GP_COUNTERS = 18, so the code never writes past
+the end. And in the reset path QEMU simply zeroes everything, so that use
+case still works.
 
-In the initial implementation, the request path from guest ->
-vhost-user backend -> guest is as follows:
+However, the live migration is broken. The PMU state is stored at the
+wrong indices, so the destination VM reloads mismatched selector/counter
+pairs. Fix the getter to use the logical counter index rather than the raw
+interleaved offset.
 
-1. Guest submits the descriptor and kicks the queue.
-2. QEMU intercepts the request in the SVQ avail handler.
-3. QEMU allocates isolated bounce memory for the request and
-registers it to the backend via ADD_MEM_REG.
-4. For the guest->device buffer, QEMU copies data from guest RAM
-to bounce.
-5. QEMU constructs shadow descriptors pointing into bounce memory,
-injects them into the shadow vring, and forwards the request
-to the backend.
-6. The backend handles the request: it reads input segments and
-writes responses to output segments as needed, then updates
-the used ring.
-7. QEMU processes completion in the SVQ used handler.
-8. For the device->guest buffer, QEMU copies data back from bounce
-to guest RAM and completes the request for the guest.
-9. QEMU performs REM_MEM_REG and frees the requested resources.
+Fixes: 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM reset")
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+---
+ target/i386/kvm/kvm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Once this path is functionally correct and covered by tests,
-I will prioritize evaluating and rolling out a memory pool approach:
-pre-allocate and pre-register a reusable set of bounce memory
-at device start, then lease/return during requests.
-The depth will be decided based on
-implementation complexity and measured benefit.
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 9e352882c8..b4e549c62b 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -5239,9 +5239,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+              MSR_F15H_PERF_CTL0 + AMD64_NUM_COUNTERS_CORE * 2 - 1:
+             index = index - MSR_F15H_PERF_CTL0;
+             if (index & 0x1) {
+-                env->msr_gp_counters[index] = msrs[i].data;
++                env->msr_gp_counters[index >> 1] = msrs[i].data;
+             } else {
+-                env->msr_gp_evtsel[index] = msrs[i].data;
++                env->msr_gp_evtsel[index >> 1] = msrs[i].data;
+             }
+             break;
+         case HV_X64_MSR_HYPERCALL:
+-- 
+2.39.3
 
-If you think it makes sense, I can also add this "request lifecycle example=
-"
-to the proposal text for more clarity.
-
-Thank you!
-Han
 
