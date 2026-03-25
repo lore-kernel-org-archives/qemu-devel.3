@@ -4,67 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781B9109C04A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 17:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C469109C04A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 17:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5RwO-0003Rb-S1; Wed, 25 Mar 2026 13:22:48 -0400
+	id 1w5RxO-0003qE-W8; Wed, 25 Mar 2026 13:23:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5RwN-0003RF-2d
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:22:47 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5RxM-0003pS-Q7
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:23:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5RwL-0006iK-Iu
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:22:46 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w5RxL-0006oU-38
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 13:23:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774459364;
+ s=mimecast20190719; t=1774459426;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dSIoGAELBOvDIlGwV55y3aa6QDjd6egehwXD3AnnjIo=;
- b=MvV67YpXL1mTnn7eoyOUqv/n4owj7eCBjUZryiojqWEjftoVYOqMxrHqBBayHkFM9QDGPa
- p1UNTgJNnXlQGZDwNTg3bsUzykvBxh1TZVvkLfiySnxeH/BjqgBw7E47HY1K1fuH+fd8I4
- KeC1khkX4+X6r9NY3uWXMR2+gqLWgkc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-LQCubnE-NjqWwi3vhB8fOg-1; Wed,
- 25 Mar 2026 13:22:41 -0400
-X-MC-Unique: LQCubnE-NjqWwi3vhB8fOg-1
-X-Mimecast-MFC-AGG-ID: LQCubnE-NjqWwi3vhB8fOg_1774459360
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B3071800464; Wed, 25 Mar 2026 17:22:39 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.10])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2B6971800671; Wed, 25 Mar 2026 17:22:37 +0000 (UTC)
-Date: Wed, 25 Mar 2026 13:22:36 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Jaehoon Kim <jhkim@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pbonzini@redhat.com, fam@euphon.net,
- armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
- eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-Subject: Re: [PATCH RFC v2 1/3] aio-poll: avoid unnecessary polling time
- computation
-Message-ID: <20260325172236.GC701300@fedora>
-References: <20260323135451.579655-1-jhkim@linux.ibm.com>
- <20260323135451.579655-2-jhkim@linux.ibm.com>
+ bh=Z8fWxewrs9KPN7x2kWxrHbVJR8SfoWMVf5gopTsTVQQ=;
+ b=OAIdYS6N2N/B4yEZIzvqNixBDdj0dRGpVZQ3Onwexgk6F4Hn+B/VUINVDfKNR7wI5ReM9G
+ mSM+CDFYS3v9hjbCuRB0QgTf8L9Un/ZD3D8xdy48erGrPc4B4CQVsPU3iNNJDuNtZGhKrm
+ Bl1UD9C2pMoV5ATPjSelnvv1IuVZeqM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-456-c4XM1QrSNf-F6m0uZwzqjw-1; Wed, 25 Mar 2026 13:23:44 -0400
+X-MC-Unique: c4XM1QrSNf-F6m0uZwzqjw-1
+X-Mimecast-MFC-AGG-ID: c4XM1QrSNf-F6m0uZwzqjw_1774459424
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-439c794ec8eso55953f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 10:23:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774459423; x=1775064223; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z8fWxewrs9KPN7x2kWxrHbVJR8SfoWMVf5gopTsTVQQ=;
+ b=nu3FVXnqBvTNXgTjleqymRPQdUCG1pO5Vm7hLr9cjnr3gl9c15rbEF54Ik1Vl3HT6+
+ ipV5t/suzjV2GfIGT9YpR8puRCcUPlmj63qjrfr0lAzYFWN61Gjt5WdYk2q6qnyyVYpw
+ VdU4PSShK+DfTJ9fJ9hBsMuwTVLs4IXatrrUcmHvaGLvTTqoO7VmXjxRqt+14WOvyeYN
+ GIQLYqeikmMWrAYeW7ra26V2ddT+AMGpPWPxWn2hX1GwKp2KlHALesMoZqUPSjbtEO/W
+ 83tMQesduG6CY3In/TC+lakIZ7Hvt0VLoScoQ9XYIIvMZdMkKOKE8MHhe7ckBNthseIH
+ Q0yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774459423; x=1775064223;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Z8fWxewrs9KPN7x2kWxrHbVJR8SfoWMVf5gopTsTVQQ=;
+ b=TIuLMJ8uQF2/UiBAwL0G4ykr6TOoRDb2gUPTdOtDWPm80jcKXw9Gm/jL8MiJQjrKQC
+ IAQJ37vkc3RhJyUeDjfpFZdaVW2yvEp6SbQRInbWuyHmh+mlgPs6jcWerxujdq53rDO8
+ oFsKJBzYRei+8CDnhoqy+l5xxwNWjhE/wkS/0hyslXFBladRJTMoCm3aQxkCZZZgIP+W
+ pGLyEJMoL94JrljPLohtuGmOP87g6c/UBklcTTupmDTGDnoDDnkr+cASB7nBqyGGz6XQ
+ 8T3+Sw2/Tk3cPb5lr6gwG1Jq+6HioEQ7wgNwEiVhrzARJH2Nhx999/exjiK79pUXHcnq
+ 5G/w==
+X-Gm-Message-State: AOJu0YztDgjXwI1y/QgszcT+32GNSK+tLJ13ZdkuCpVz2859qLUsGgn9
+ gxUSfZQ3ggUk6ST7i28iK7HnelKFIeiZ3NdZ5cDOxHpodofRHsdmRmIKDOBRzdaLzRxkqRi1OCC
+ tzxWmv2G+slzko/ZmtjvY2j1nwhJgsR+xxXgJIJN4ilZL7y1JS0gKKO5/9Y9SulLyzPltNDkYI8
+ uNcDXisRTlZr0A+hk/gg64ODQbxsnD/tEWOE7VrwjR
+X-Gm-Gg: ATEYQzxiBtgjhELhqEvJxhOe4LoVg3Y9TrxWLsJ/9CjJ1FlLu+MaejfhSyzOTgNEbc1
+ 09sQP4p9mSe/k7Xue3QQp3SeW5TyVKb1pfc+liO3U/DVyWdH/2NBm/285GfT+IMEWlCpKfSwM7f
+ bRKg1LAxVy6heJBv7S+KffoJsT9E1Z4jVWe7gdnXKzao9Tt2PrTgUqW9la/BwAKl3ibJWjp3J5K
+ CdF4ycAV+b2XNKRMokhkvGOmZMvfbDzO/v8aq6KYSk0SoAvkoyKXCdxzUP0l6WInuZx1PWHiVWi
+ BCA9gufvlXHprPyvxUhHmlDx39D3PrUBMo7morolW1DTsvJqsu/OBEG97QOH6/cLqxyOaBTsmfV
+ 4u1p3bw0qOOPEIV196VJBCQW8ARsrE/Ce/mFE87N15mWgaHWC5ShaBM38KKFN2dTi62nkgHRzWt
+ zX4sM0gtO2hcwMvLS/ZKKYHI7N
+X-Received: by 2002:a05:6000:18a8:b0:43b:45da:f296 with SMTP id
+ ffacd0b85a97d-43b8896cdfbmr6292561f8f.11.1774459422770; 
+ Wed, 25 Mar 2026 10:23:42 -0700 (PDT)
+X-Received: by 2002:a05:6000:18a8:b0:43b:45da:f296 with SMTP id
+ ffacd0b85a97d-43b8896cdfbmr6292508f8f.11.1774459422106; 
+ Wed, 25 Mar 2026 10:23:42 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.85.67])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b9192e305sm1322998f8f.8.2026.03.25.10.23.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Mar 2026 10:23:39 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alyssa Ross <hi@alyssa.is>
+Subject: [PULL 01/19] tests/functional: preserve PYTHONPATH entries
+Date: Wed, 25 Mar 2026 18:23:37 +0100
+Message-ID: <20260325172337.87212-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260325172337.87212-1-pbonzini@redhat.com>
+References: <20260325172337.87212-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="LxvD6HeDdU0Cyk9I"
-Content-Disposition: inline
-In-Reply-To: <20260323135451.579655-2-jhkim@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,45 +121,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Alyssa Ross <hi@alyssa.is>
 
---LxvD6HeDdU0Cyk9I
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Otherwise, it's not possible to use a packaged qemu.qmp.
 
-On Mon, Mar 23, 2026 at 08:54:49AM -0500, Jaehoon Kim wrote:
-> Nodes are no longer added to poll_aio_handlers when adaptive polling is
-> disabled, preventing unnecessary try_poll_mode() calls. Additionally,
-> aio_poll() skips try_poll_mode() when timeout is 0.
+Fixes: 1497377857 ("tests/functional: Prepare the meson build system for the functional tests")
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
+Link: https://lore.kernel.org/r/20260323084739.1013748-1-hi@alyssa.is
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ tests/functional/meson.build | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-Skipping when timeout is 0 seems risky to me. VIRTIO devices disable
-guest kicks when polling mode is started. When aio_poll(ctx,
-blocking=false) is called, we will skip polling and
-ctx->fdmon_ops->need_wait(ctx) won't detect an event either. aio_poll()
-will return without noticing that the VIRTIO device's AioHandler is
-ready.
-
-Is skipping when timeout 0 necessary for performance or can it be
-dropped from the patch?
-
-Aside from this:
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---LxvD6HeDdU0Cyk9I
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnEGdwACgkQnKSrs4Gr
-c8gDswf/VHG8Jm8G0ZuMOl9gsLWmfjLyM5/cX/F4kNgleljTcpIgly+CrrJWwOsi
-mhcHN1e9IqiZOc3QZxBF0YTDuob4BBr6EZ/yXty7S1mxnhMVGAOtpj3JqCT0u4uU
-2Z7CL+buiwfdtUMHDdOf9yxCvMvpFjAgcsyWlpcdmx7YecrZ5WNG5UJH/FGa3YlT
-ae3A/Y2QjOYCzLCjs9Imrf4UGKCUWN2pe2a50aiWNRIrj1ZiB4EFEJFqLDVlKtYC
-WoGO9+UaFkNfG1d9o2G7zKGSavPDeCnf6G6Me9NW14kqJwxsbkzLCG/XLQ19gPJQ
-LMGCdmNEyeWuVw5ZKh1soo8E1tpIZg==
-=pnUL
------END PGP SIGNATURE-----
-
---LxvD6HeDdU0Cyk9I--
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 3b42299e7ce..c158197c4b7 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -76,8 +76,10 @@ foreach speed : ['quick', 'thorough']
+     endif
+     test_env.set('QEMU_TEST_QEMU_BINARY', test_emulator.full_path())
+     test_env.set('MESON_BUILD_ROOT', meson.project_build_root())
+-    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
+-                               meson.current_source_dir())
++    test_env.prepend('PYTHONPATH',
++                     meson.project_source_root() / 'python',
++                     meson.current_source_dir(),
++                     separator : ':')
+ 
+     # Define the GDB environment variable if gdb is available.
+     gdb = get_option('gdb')
+@@ -97,8 +99,10 @@ foreach speed : ['quick', 'thorough']
+       test_precache_env = environment()
+       test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
+       test_precache_env.set('MESON_BUILD_ROOT', meson.project_build_root())
+-      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
+-                                          meson.current_source_dir())
++      test_precache_env.prepend('PYTHONPATH',
++                                meson.project_source_root() / 'python',
++                                meson.current_source_dir(),
++                                separator : ':')
+       precache = custom_target('func-precache-' + testname,
+                                output: teststamp,
+                                command: [python, testpath],
+-- 
+2.53.0
 
 
