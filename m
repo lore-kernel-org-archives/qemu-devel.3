@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF68FEA803
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 05:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60FF7FEA803
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 05:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5GM5-0005du-S2; Wed, 25 Mar 2026 01:00:33 -0400
+	id 1w5GM4-0005b1-IL; Wed, 25 Mar 2026 01:00:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1w5GM0-0005Yi-9u
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 01:00:28 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1w5GLy-0005Ww-HF
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 01:00:26 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1w5GLx-00078T-AU
+ id 1w5GLw-00078L-Bv
  for qemu-devel@nongnu.org; Wed, 25 Mar 2026 01:00:26 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-35a04d6aeb0so3463538a91.0
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 22:00:24 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-35a288a2c00so917274a91.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 22:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=sifive.com; s=google; t=1774414823; x=1775019623; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gH+6/OkYs+jyl5RnS5Ne7ida5C4VujMkacknoAGjFRA=;
- b=X7SJY0BtuALJ0f4VbOSo+Sxz1i4sz0nUNRsngc0jfuC09FBONDCukcIDpZzJxVrFEW
- 33L9XrqXAfRYzzfiJe24gzLjyXFNJjce4T71I8tE0Vn3NTblWgAA2kp24p1iKiiRMKGG
- ptDErZOHzQ0Sevc7GeYSzYGztzUi28H2tXCiQTXQ5cMotWhRT1APAJ3V/yk8lbYZuz4d
- J7+1hnJBYrvhqAtdHi6K6RXvX/zV4nAo9VZUrgHjc8RxcsaW1vlmgcZzARWMIoivIMgO
- omVRmUQ9DaJETTTyNsEXymajGYjrGeWQX9/7gNcu8LH7xQGQ6ZwWA1oVuNrUjGpxpE9C
- QeKQ==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2Dnt+PDDAZp/+TV963oEFZh4GPDRIAX7fgbJmYYOAko=;
+ b=IuBGKRbBg8zVrtWJmtKQM+t0o/wZouY90oAOyUO2g+KTRkWIRsKLaciD79cSUf26wo
+ nwB61Gn22FCb/gU/QOxVMMYtdOQ+d5rhRhq3dC7t2LlVWeKbIQB4J9fgtcS0flKuZmOe
+ VtsWjmy1WCSnX0bUgP3LRds6UD/r+yKkwoa60SUOGA6ZsgsvOGDk/3NKgSkhsgHI78Vk
+ UFGNfUrAe9gxItK/8CqZ6krEdIlZ+GOSuEb/Xs4T633WisLskJyTw59JxK0vdThpcyxA
+ JmZVic6AfZL2//6ntmr5cDeKdiDE8NzTFkptT3KLTwFlk5MzVyWP02Y7BFC8oga4xMiM
+ ceaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1774414823; x=1775019623;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gH+6/OkYs+jyl5RnS5Ne7ida5C4VujMkacknoAGjFRA=;
- b=hcJIZSa+s8IaRG05HhP3yJ9rXFAewL9RvpNikKGUythxxPqDhOoSM0QLLOw4LlKu3+
- d5VdDlV9MJqz/I1drk/tANjg4CG/PVYgNBjx2sxGMJ4Mtu5iX2WIpSPvsBqmTN4k0LYu
- dHA49oakmbekKWV2k3UgScTkPUbj1zem3o5JvU2PV9SSO6022bySTNrFjzRBUOX8sT/U
- yW4TzAyFWRLJJzY2qjjPDEXsLlcS/J3qkw/sWTK7M5KlXxZvM8Y11GhHqwGSBxdl5avw
- NVaV06gxVbCz6AIpAWhGPTGmBpbkY0onk98FFIYO43Gv3/7ZYLGFy8nfvRCLIpPr2Bzx
- YuTA==
-X-Gm-Message-State: AOJu0Yw3Qmu/JvFa5OhaaGZIDGGEJ1/onGlgOHxSXfwSgWIjKtZvUbV3
- 1rqTY7BWwijazu1lztanEwU09BG5HRqLBoDjIYcBVCnQkarCDuSKBXjuLEPHVtN0b1Bu3NtrKO/
- GvQ5TJWxxxFOePD2sjgwTa+DnRRL/MHU0d8pIeZ4tDHj9OLb4YBR9DUj9t1xe1ZlXNjW/kX1uSs
- ZK5tusCrbY5rZNIqD5BBFieu4gW1jwjJWTGw8KdU5qsoU=
-X-Gm-Gg: ATEYQzxCkWx450+U97h4FHgOpLPJMfVeOg9lgKu0z7TBZGdbZct4a71771L4BvC1vC8
- P6GJoq1QMV6RLNP143//HFg51/pIuQLdz3tQqxbvtBnRJSPgkhQt0J3w1NURPKEE6TS9UZQ7fAS
- ppo2VCE7N6Zum3G/JvIRTgThecwDpo1pyBqtk8x9HfyPQkypawwJogpq9xIYls3uVFbf16RK1N8
- vuluu9K0F21nZnLBk4SfW1oaHKWOwq1b3+l1R0i0Gwtxf6pH9VV1Ee0FPxwl0ESN5ljW1dSbexf
- umaxwioyobeRyZDRsuU5Ua19ew6KYJAmEGsi64rDpak7/CSeFz1NC18eR6DcMUkLERP/VQrzFJ7
- VqaKABTksR4sMU9iSqeUXqhzu9/QeeT4g1XBWmi77LQqLaTRuJgWjEi6GTFiFf39Brcbd04i1CL
- +kiPdU70g4J7o18+eU7zGicgLe+ZdPuMcNsEgA+KkEHjrj1Vcbk9aLzCfwE7Zzag==
-X-Received: by 2002:a17:90b:2e49:b0:35b:a8cf:7960 with SMTP id
- 98e67ed59e1d1-35c0dc6276fmr1838065a91.3.1774414823330; 
- Tue, 24 Mar 2026 22:00:23 -0700 (PDT)
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2Dnt+PDDAZp/+TV963oEFZh4GPDRIAX7fgbJmYYOAko=;
+ b=oYpjd8+/EE1GezLIkQoCWRRWRhs7P9L2OlSp32PshXCxjzhsJ+UTLw6DV/LtLhArQe
+ JQYiZ6BY1u8suDD4xhiZ7bzjQS/mgjXs/A4EvJP3aVArBcoB6RzCJ4TMZ/Ng1cWQ7SDv
+ z+6Ud12F6q5mi3Dt7s7ftkNPTPdojU4DDa5jdVQSWjgHHhi7wii4Ge8z7staP7VJZWtg
+ P/hdahqpXxWTO3bNkfz0b9qlw0lTyjeI/HP76/onVGGKAd7PySA+xGHT/DhBue73S+hH
+ 0fF/5IKknbU3cmjqu1JlllRWFmAKKCYxesmmcw+GgRmCvQcoVRjYXYxaBSLny3qZtokJ
+ xHuA==
+X-Gm-Message-State: AOJu0YzllomEa0QaT7Auu8peWiclv9lKtWWq1184M5+9FKBxUW6AE0ce
+ s7eoCdGO2IAolYj4p+hiAqTbqmMGUIP5IL8OK4A0n+BtDCaNitljps3hn5wpdiidTkm9JCbalRv
+ fu0qSWM63UOkcug6oySGlOcV9nV6US8DS31VQBegcRo7T/h0SDicgi8m5L6TIa/SQNQ09zJlJmk
+ okoZxAyH0cHNvb9zTstS/VdydjNSQ3xtf1kCmkDkb35es=
+X-Gm-Gg: ATEYQzy+BSxUoRYy18u9hw1sWq1iaEmvqtHXUUanzLiUn+JKnk3a9DAAtwXbxiUbksY
+ wkOWva4xlI+uYg9dVuHRN4z3rSzTMeo5RyOKmnjggEuzFnN58TovquHuz1Gkt2crBd9Kh2ThEyU
+ hkfHfWteK+dTl/rydOuSQ8+X2sXXD2k/pd3qbKr6Ez7gUTgWBqT+5OeV8nYjBn1L12zYhyayXIy
+ eMsS5wuhwkeQYc/tF8/wkkJn5ifiIDY6LvncHdHfSwE3xV2UPkGe4kNAE3Yjb8917rmfJrCtKkC
+ 7Sn/Jd55YeCbp0InwsNcxH4Bz9BLIDEJS6KMnglKa+/4KVyRKcRd+ctuEo5+FqvXLZJWn8iZKNW
+ ty8dtC9VUA3yIATRiGyqnzYAk9nVKDEp4Cc7l3x+chQ4P44btYtAWxwJccEGJi9wUAh3hZuDcef
+ CcOAxsqlIHHmk6mOTg6v9uSIeiBK6XSvSJKzuozBvKubr+4oI6Pe3Q6kWeNJ9dCw==
+X-Received: by 2002:a17:90b:164c:b0:33b:bed8:891c with SMTP id
+ 98e67ed59e1d1-35c0ddc503bmr1804841a91.23.1774414817611; 
+ Tue, 24 Mar 2026 22:00:17 -0700 (PDT)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.163])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c03149db2sm4218866a91.9.2026.03.24.22.00.21
+ 98e67ed59e1d1-35c03149db2sm4218866a91.9.2026.03.24.22.00.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Mar 2026 22:00:22 -0700 (PDT)
+ Tue, 24 Mar 2026 22:00:17 -0700 (PDT)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -74,19 +73,15 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Jay Chang <jay.chang@sifive.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v2 1/2] hw/riscv/riscv-iommu-hpm: Fix irq_overflow_left
- residual value bug
-Date: Wed, 25 Mar 2026 13:00:10 +0800
-Message-ID: <20260325050011.66722-2-jay.chang@sifive.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>, Jay Chang <jay.chang@sifive.com>
+Subject: [PATCH v2 0/2] Bug fixes and IPSR.PMIP support 
+Date: Wed, 25 Mar 2026 13:00:09 +0800
+Message-ID: <20260325050011.66722-1-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260325050011.66722-1-jay.chang@sifive.com>
-References: <20260325050011.66722-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=jay.chang@sifive.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=jay.chang@sifive.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,29 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reset irq_overflow_left to 0 before setting up a new timer. Without
-this fix, a stale irq_overflow_left value from a previous timer setup
-could cause incorrect timer behavior.
+This series contains two fixes for the RISC-V IOMMU implementation:
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+1. Fix a bug in the HPM (Hardware Performance Monitor) timer setup where
+   irq_overflow_left was not properly reset, causing stale values from
+   previous timer setups to affect new timer behavior.
+
+2. Add proper RW1C (Read/Write 1 to Clear) support for the IPSR.PMIP
+   (Performance Monitor Interrupt Pending) bit, which was missing from
+   the IPSR register implementation.
+
 ---
- hw/riscv/riscv-iommu-hpm.c | 1 +
- 1 file changed, 1 insertion(+)
+Change in V2
+  Add commit message
 
-diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
-index c5034bff79..e8d284ac8b 100644
---- a/hw/riscv/riscv-iommu-hpm.c
-+++ b/hw/riscv/riscv-iommu-hpm.c
-@@ -228,6 +228,7 @@ static void hpm_setup_timer(RISCVIOMMUState *s, uint64_t value)
-     }
- 
-     overflow_at = (uint64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + overflow_ns;
-+    s->irq_overflow_left = 0;
- 
-     if (overflow_at > INT64_MAX) {
-         s->irq_overflow_left = overflow_at - INT64_MAX;
+Jay Chang (2):
+  hw/riscv/riscv-iommu-hpm: Fix irq_overflow_left residual value bug
+  hw/riscv/riscv-iommu: Add IPSR.PMIP RW1C support
+
+ hw/riscv/riscv-iommu-bits.h | 1 +
+ hw/riscv/riscv-iommu-hpm.c  | 1 +
+ hw/riscv/riscv-iommu.c      | 4 ++++
+ 3 files changed, 6 insertions(+)
+
 -- 
 2.48.1
 
