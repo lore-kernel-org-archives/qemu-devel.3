@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1E0109C046
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C51109C045
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 16:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5RMN-000590-Q6; Wed, 25 Mar 2026 12:45:35 -0400
+	id 1w5RMP-0005A3-CY; Wed, 25 Mar 2026 12:45:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w5RMH-0004v2-85
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:32 -0400
+ id 1w5RML-00050Q-0l
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w5RME-0004fy-IY
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:28 -0400
+ id 1w5RMF-0004fw-Lj
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 12:45:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1774457125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SDJ/PcBLUSV5Q5FoJHAa+eAa0xCv+PFTV5gWg0XZbs8=;
- b=fM9HK4WPpCMeWK0KkdBDP2DWc8xxtwDTL0aubuy8LrwH5/XIoXqCvia1lSMttQcSn3JmFD
- ynCtQ6qTTjyrh4wtSCC+28QglsLOnRLFr5jpvw+yCA6MgenPhILnjLMAClB/8K35pt8fvG
- bU07K0HD9ZMbwESxoM0QbwTbAst1xOQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n6sdL1vsVWO3ZuG6mgc20dg8BLq/JVi1oEu7UYtVDpI=;
+ b=T3e+dMX0z0mBp1nF3MSq2/Cl0CtlXbX0N5sVssDfHJECTIMDCu5BpV9VIrbkppGKiegZXy
+ XhqOIlUqX2PAYgQGbJHTdBRQ18Zmhk9+WGDfXG95c4kPccQBSVfVSEBWBkV8EgChFnFrms
+ ooIUREMGeUECnnk/7XlDWFxiby1Zd20=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-3OUkllTUOn-I4KXkZMaYtQ-1; Wed, 25 Mar 2026 12:45:23 -0400
-X-MC-Unique: 3OUkllTUOn-I4KXkZMaYtQ-1
-X-Mimecast-MFC-AGG-ID: 3OUkllTUOn-I4KXkZMaYtQ_1774457122
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-486f830f4e4so585985e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:45:22 -0700 (PDT)
+ us-mta-509-PETlQdw2OXCRUONf7NU0aA-1; Wed, 25 Mar 2026 12:45:24 -0400
+X-MC-Unique: PETlQdw2OXCRUONf7NU0aA-1
+X-Mimecast-MFC-AGG-ID: PETlQdw2OXCRUONf7NU0aA_1774457123
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48553fdd03dso420885e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 09:45:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774457121; x=1775061921; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774457122; x=1775061922; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SDJ/PcBLUSV5Q5FoJHAa+eAa0xCv+PFTV5gWg0XZbs8=;
- b=BpkclhlVH5psdU2fEPFxBeBlDDKosab9m+o6QszzVx37BFYAXyka23UjcSHWCeufbj
- evG9ikhII6mOxYLEXHOHsbXe5kCyUSA76+rbFrdlxdykFDWGNAjVRb+JBn9EGFZGyGqx
- /dqezZ4cs4gGTZctTWtvUyqaWZEyHcF4VOcJ0Xg2jXSzjefHJRObWZ+sBz4ULcihZxaf
- FkW3DREsQQx/OVNADZqgSPM+Y2cztYmKSx+KI2Ot4sQWILxhtYmb3b35LGt0E9ND1Gc2
- wiy+GaecXHkT4Z3Zbn/TFI5eb3ESqUr1a1D64tu0DMJA2SU5bZyRKr9e+GSxQ+slD2gc
- ntWw==
+ bh=n6sdL1vsVWO3ZuG6mgc20dg8BLq/JVi1oEu7UYtVDpI=;
+ b=a4O+iwd+UT8pQlSnOoe7hDZJ2b26MdKzkl7K6cN+24R8PxBJNo3PQ+qbeug7WwKxsh
+ Noe6W2Ram1Gg5Uu+qsJtChR4VBZn17F4Nd12MH/M9xz9sJjonIf3MH7a3nH0oYnK5oiV
+ XdRqMoG63wvpT7TTSCXqrgqug5iFDArzzwEo0dWE97ff/kZCY4ME1qVS8vwLdbB77u3/
+ TB6Ak1P8hkwyG2sRtFFnH+Q5vTffuPOAElES6bhpcMgNFqPgGAhc9XauYaXO7kxG5sZh
+ H3yCv0HtFwU7wD7nbEDiOdn5RuotxkipVEQEFQcJvXnvLjv6Omr1HoYUZBH+QtIQ1HWe
+ eqOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774457121; x=1775061921;
+ d=1e100.net; s=20251104; t=1774457122; x=1775061922;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SDJ/PcBLUSV5Q5FoJHAa+eAa0xCv+PFTV5gWg0XZbs8=;
- b=fM8k4RDZbXWRpOQ6OoJIQQBId7wLUVnrv7H+TyIlK0U0ZGPnDa1/7Z677R+dixcxBl
- zh/fNsWC2cWF0pUAIU1kXqw82RdMgfv3Z0TS6gJPkfH4vka0lBNKivRBd2Dop3mLbI+n
- 76NR6rmcj/JTTNwSiGOsIUeFulCJ73oa8cq19paoQSkh2ds7Le9JXcIM7wNf9pU0jblb
- /VfsjRDT6EPZa4EW+3UXvsZlq7FazCtp7bx06ugd7nIxwijsSQv2DYK71xlKlG3riQXQ
- FMRnSzqN7HAX6igMIEVS/TSUm3ylRFmAcDegAWSZYbERHqNn/x8DxFukAFTWTpL391YP
- 19Nw==
-X-Gm-Message-State: AOJu0YxId5xxswy/teZ+eTcKIg/QidHcXW07UfXx0NphWuxX9e8j69vR
- 5IysL3aBYn1fd3DwnWTgRBmcci5j0KYpblyMyWH5TF1uau6XjDiJCgeDGqfoLXDFRXc+etqGj1/
- kyB0Bb8fZ3J9DZQV7cVvR0uLljtjZxCs2JvEZnOzjsqQ1ewni/j/khFdJylB/27xBFe8PDBIW3s
- ZycM1wlq72PPghT+8VcwtiVV6f2AJjGDYCKs5aEAQE
-X-Gm-Gg: ATEYQzzYUJPsVd9Zilvmi8Dh+PtZ8NWpcd3p8vcQJMzFarAmyHTUx4PICWGyYBrmG5X
- BFimkUEss03Ih21It3a4td8fAygr5hYlbStUdCTOrXbo9mtNBk8ziiGvEpJOuRCEFDwyq44C36I
- FXlTFMy1q9kgV9Dp1fTS/V9Ego4Qa1tcpxHohKhhfgLxXLNUD4SSo4zhBGMItSYAbckETrUS5O2
- RbgPiX5WQ2G/Dgi1n8koq+O8s8X2sl73JFooiyUvZguzNbrmdo5irsk/UvSzboaXXrqmeqgWEAk
- 9J24pbh85hFlh6dK9/Rwtl4f2S03fWdTtZ5YWQhxuu2O9K4GHwfN4tq4UjsmXljeMZXnvCQR6wo
- pOvJ//G6uJgWPE2xb0ura9fntAy6E9sgesCsGOOApPNbSM+6K+FHX6+oihn4tsZ8O44yeDMwGC6
- zqBmmvDi+8J3M2nbd6QeG1Q9Wd
-X-Received: by 2002:a05:600c:3d90:b0:485:2a4b:7bc3 with SMTP id
- 5b1f17b1804b1-48715fc38f3mr62050785e9.4.1774457120733; 
- Wed, 25 Mar 2026 09:45:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d90:b0:485:2a4b:7bc3 with SMTP id
- 5b1f17b1804b1-48715fc38f3mr62050135e9.4.1774457120072; 
- Wed, 25 Mar 2026 09:45:20 -0700 (PDT)
+ bh=n6sdL1vsVWO3ZuG6mgc20dg8BLq/JVi1oEu7UYtVDpI=;
+ b=Mil2yJyVoxkHAN8CyoO6jK1KPVWAxObSLqlCL9IXHdjFVTxk05qPmS3vlAXyMrT64I
+ TB/4UQV6qgMc/RU59tpbVHNxeVcbwHrHr7QCgJ3boY0YrCdV39OCNoZqyir4+1XAPLRR
+ YV+kiCOYd0DwxLKkM+0UC4bu8y6Qb/bfo4kM6hAWwauMm3zmO6V6SsUGgbkdjuswxzY8
+ 5KrAQpIHdYpvx7s+Xy/4oDauIGenDuQ5USt1emGDpvZiTHAWnXK2X/eSi3gjNny0VgKr
+ dZAuAKR7Shk3ETfngNAsWuFUAM6PV//Rsz0JZV3qul5dJAV4xtK2lKfB7Zeb1DU0MaCB
+ DBTA==
+X-Gm-Message-State: AOJu0YxhwKNbJznrsYCAt80HZn6twzQDZryUFx6wOQIsUEgOEsyuW+jN
+ AYP+1Ya5CDeRg655BxsOoxItYAgB05LYIQBF7celxTEIcsPFEHhbIfxp5Oc59jeHoernQUdDiS9
+ n3lv3IZf9wqJ3fI032B7WTYetAPxI2MmCeHNMWMKd4e9iK/nR40FUCrBrYkl0r7hJQmlQq6sK6D
+ b7z1xP13vyVzT+66Q6PepfdmwlNNf8FaVfovgCEBGR
+X-Gm-Gg: ATEYQzxMMTR4dr1X4ap8RJZ8v2HosukdGn+UortMapsVNnfqcREuC+MnHv/fvSvgBfX
+ xWU6bZlsBB36m2b8wkQJ0/UsHEHD1STOLPg854s6NgFGKFSP9RlLqjHcEQ8xOknVqvdxyBNrrjr
+ A5ujjG7SCMHQ6BqQ9p6GklN38Jn1X7PysecrVjkKSbmNfBR2vtv4n5x4hZ6nz4tsMohIldugJxP
+ a3ABII3OtWnxE28GC0RGsVfasCzP2PjcdIYm/4IzJRVf4WCvctsu6riX4jrUpWXXE8nfcR6UtO7
+ Qnw1llAM09GWvIU5UIwJNWDOFrZTSbyyTWfiiFEJLNu4kWHb4NZ4nq3NgG6ULjsHJ0dueE2Up0x
+ Rkjgts1ADn4F7iFuQ3TGNCka+fPqt6FOm/+d833E0JFDeM7RYsN4NxZ4xNjdPz2WuuBLmSfGukG
+ onRgnsBknf51PXOKfnRAdpYygY
+X-Received: by 2002:a05:600c:8489:b0:485:6e40:5584 with SMTP id
+ 5b1f17b1804b1-48715fc38femr60002615e9.6.1774457121826; 
+ Wed, 25 Mar 2026 09:45:21 -0700 (PDT)
+X-Received: by 2002:a05:600c:8489:b0:485:6e40:5584 with SMTP id
+ 5b1f17b1804b1-48715fc38femr60002095e9.6.1774457121265; 
+ Wed, 25 Mar 2026 09:45:21 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4871e6cb664sm7908065e9.12.2026.03.25.09.45.17
+ 5b1f17b1804b1-4871e6aeef4sm6495635e9.9.2026.03.25.09.45.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 09:45:17 -0700 (PDT)
+ Wed, 25 Mar 2026 09:45:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 13/19] target/i386: emulate: segmentation rework
-Date: Wed, 25 Mar 2026 17:44:47 +0100
-Message-ID: <20260325164453.72127-14-pbonzini@redhat.com>
+Subject: [PULL 14/19] whpx: i386: fetch segments on-demand
+Date: Wed, 25 Mar 2026 17:44:48 +0100
+Message-ID: <20260325164453.72127-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260325164453.72127-1-pbonzini@redhat.com>
 References: <20260325164453.72127-1-pbonzini@redhat.com>
@@ -123,130 +123,105 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Make accesses to segments all go through read_segment_descriptor
-to be able to fetch segment state on-demand.
+Instead of save/restore, fetch segments dynamically.
 
-Switch away from SegmentCache to the x86_segment_descriptor
-that is already used by read_segment_descriptor.
+Rely on the fetched state instead of loading from memory.
+
+Or, if available, on the VM exit context.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260324151323.74473-11-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260324151323.74473-12-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/emulate/x86_helpers.c | 50 ++++++++++++-------------------
- 1 file changed, 19 insertions(+), 31 deletions(-)
+ target/i386/whpx/whpx-all.c | 71 +++++++++++++++++++++++++++++++------
+ 1 file changed, 60 insertions(+), 11 deletions(-)
 
-diff --git a/target/i386/emulate/x86_helpers.c b/target/i386/emulate/x86_helpers.c
-index c817015ef92..63bae3582fe 100644
---- a/target/i386/emulate/x86_helpers.c
-+++ b/target/i386/emulate/x86_helpers.c
-@@ -43,49 +43,37 @@ static CpuMode cpu_mode(CPUState *cpu)
-     return m;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 71b33a632ac..6f232786422 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -868,21 +868,70 @@ static int whpx_handle_portio(CPUState *cpu,
+     return 0;
  }
  
--static bool segment_type_ro(const SegmentCache *seg)
-+static bool segment_type_ro(const x86_segment_descriptor desc)
++static void whpx_segment_to_x86_descriptor(CPUState *cpu, WHV_X64_SEGMENT_REGISTER* reg,
++                                   struct x86_segment_descriptor *desc)
++{
++    uint32_t limit;
++    desc->g = reg->Granularity;
++
++    /*
++     * Hyper-V can return reg->Granularity == 0
++     * with a higher limit than 0xfffff.
++     *
++     * Detect that case and set desc->g
++     * with shifting the limit properly.
++     */
++    if (!desc->g && reg->Limit <= 0xfffff) {
++        limit = reg->Limit;
++    } else {
++        limit = (reg->Limit >> 12);
++        desc->g = 1;
++    }
++
++    x86_set_segment_limit(desc, limit);
++    x86_set_segment_base(desc, reg->Base);
++
++    desc->type = reg->SegmentType;
++    desc->s = reg->NonSystemSegment;
++    desc->dpl = reg->DescriptorPrivilegeLevel;
++    desc->p = reg->Present;
++    desc->avl = reg->Available;
++    desc->l = reg->Long;
++    desc->db = reg->Default;
++}
++
++static void whpx_read_segment_descriptor(CPUState *cpu, WHV_X64_SEGMENT_REGISTER* reg,
++                                    X86Seg seg)
++{
++    AccelCPUState *vcpu = cpu->accel;
++    WHV_REGISTER_NAME reg_name = WHvX64RegisterEs + seg;
++    WHV_REGISTER_VALUE val;
++
++    if (seg == R_CS) {
++        *reg = vcpu->exit_ctx.VpContext.Cs;
++        return;
++    }
++    if (vcpu->exit_ctx.ExitReason == WHvRunVpExitReasonX64IoPortAccess) {
++        if (seg == R_DS) {
++            *reg = vcpu->exit_ctx.IoPortAccess.Ds;
++            return;
++        } else if (seg == R_ES) {
++            *reg = vcpu->exit_ctx.IoPortAccess.Es;
++            return;
++        }
++    }
++
++    whpx_get_reg(cpu, reg_name, &val);
++    *reg = val.Segment;
++}
++
+ static void read_segment_descriptor(CPUState *cpu,
+                                     struct x86_segment_descriptor *desc,
+                                     enum X86Seg seg_idx)
  {
--    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    uint32_t type_ = desc.type;
-     return (type_ & (~RWRX_SEGMENT_TYPE)) == 0;
- }
- 
--static bool segment_type_code(const SegmentCache *seg)
-+static bool segment_type_code(const x86_segment_descriptor desc)
- {
--    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    uint32_t type_ = desc.type;
-     return (type_ & CODE_SEGMENT_TYPE) != 0;
- }
- 
--static bool segment_expands_down(const SegmentCache *seg)
-+static bool segment_expands_down(const x86_segment_descriptor desc)
- {
--    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    uint32_t type_ = desc.type;
- 
--    if (segment_type_code(seg)) {
-+    if (segment_type_code(desc)) {
-         return false;
-     }
- 
-     return (type_ & EXPAND_DOWN_SEGMENT_TYPE) != 0;
- }
- 
--static uint32_t segment_limit(const SegmentCache *seg)
-+static uint8_t segment_db(const x86_segment_descriptor desc)
- {
--    uint32_t limit = seg->limit;
--    uint32_t granularity = (seg->flags & DESC_G_MASK) != 0;
--
--    if (granularity != 0) {
--        limit = (limit << 12) | 0xFFF;
--    }
--
--    return limit;
-+    return desc.db;
- }
- 
--static uint8_t segment_db(const SegmentCache *seg)
-+static uint32_t segment_max_limit(const x86_segment_descriptor desc)
- {
--    return (seg->flags >> DESC_B_SHIFT) & 1;
--}
--
--static uint32_t segment_max_limit(const SegmentCache *seg)
--{
--    if (segment_db(seg) != 0) {
-+    if (segment_db(desc) != 0) {
-         return 0xFFFFFFFF;
-     }
-     return 0xFFFF;
-@@ -96,15 +84,15 @@ static int linearize(CPUState *cpu,
-                      X86Seg seg_idx)
- {
-     enum CpuMode mode;
+-    bool ret;
 -    X86CPU *x86_cpu = X86_CPU(cpu);
 -    CPUX86State *env = &x86_cpu->env;
 -    SegmentCache *seg = &env->segs[seg_idx];
--    target_ulong base = seg->base;
-+    struct x86_segment_descriptor desc;
-+    target_ulong base;
-     target_ulong logical_addr_32b;
-     uint32_t limit;
-     /* TODO: the emulator will not pass us "write" indicator yet */
-     bool write = false;
+-    x86_segment_selector sel = { .sel = seg->selector & 0xFFFF };
+-
+-    ret = x86_read_segment_descriptor(cpu, desc, sel);
+-    if (ret == false) {
+-        error_report("failed to read segment descriptor");
+-        abort();
+-    }
++    WHV_X64_SEGMENT_REGISTER reg;
++    whpx_read_segment_descriptor(cpu, &reg, seg_idx);
++    whpx_segment_to_x86_descriptor(cpu, &reg, desc);
+ }
  
-+    emul_ops->read_segment_descriptor(cpu, &desc, seg_idx);
-+    base = x86_segment_base(&desc);
-     mode = cpu_mode(cpu);
- 
-     switch (mode) {
-@@ -116,21 +104,21 @@ static int linearize(CPUState *cpu,
-         break;
-     case PROTECTED_MODE:
-     case REAL_MODE:
--        if (segment_type_ro(seg) && write) {
-+        if (segment_type_ro(desc) && write) {
-             error_report("Cannot write to read-only segment");
-             return -1;
-         }
- 
-         logical_addr_32b = logical_addr & 0xFFFFFFFF;
--        limit = segment_limit(seg);
-+        limit = x86_segment_limit(&desc);
- 
--        if (segment_expands_down(seg)) {
-+        if (segment_expands_down(desc)) {
-             if (logical_addr_32b >= limit) {
-                 error_report("Address exceeds limit (expands down)");
-                 return -1;
-             }
- 
--            limit = segment_max_limit(seg);
-+            limit = segment_max_limit(desc);
-         }
- 
-         if (logical_addr_32b > limit) {
+ static bool is_protected_mode(CPUState *cpu)
 -- 
 2.53.0
 
