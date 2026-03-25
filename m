@@ -4,97 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB2CB103A999
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B576F103A99C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5DwY-0007ho-Bn; Tue, 24 Mar 2026 22:26:02 -0400
+	id 1w5Dxu-0008I5-HR; Tue, 24 Mar 2026 22:27:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5DwH-0007fX-EY
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:25:51 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1w5Dxt-0008Hi-8b
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:27:25 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5DwF-0000Go-KK
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:25:45 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-667acaeae82so9462870a12.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:25:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774405541; cv=none;
+ id 1w5Dxr-0000Or-Ov
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:27:24 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b9961e4f71bso143239866b.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:27:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774405642; cv=none;
  d=google.com; s=arc-20240605;
- b=TiQ+wj50DmfborPXO2+iCpwXykosO/kEZAGuATBKkc/g/jo1yC/yDXkufuD10jSDfw
- Z8x3dQ496zP/aLhjRSZmipvMyQL50W8fPdRNbs0a52nDB/jIHvABP1+LxoNJnYI4GS0r
- aOdkDdXGMX3HhVbZPvMu+/clhvZBvSe6VLgK4ajmdXAB90B1CthZyTWsz1SMLijvDqTb
- +9m0HIqygVBg047zBbPV1b0RL3ruK/EZ5ZMgB/QtmNlOlvKipXoxH9PvoK+4jQpGsHPk
- ZpJvR+6l+fZC/uTT6BxVrGmAQba/ETmAWt85a5shQ63tsLL8RzdOYhRt8TLebWN+t2mt
- acRg==
+ b=GK1Zw1KMDKGabyYIMSyw1VWZ54tYBN92ieyeB+fWYDZmUNa638ng3xq3giEihnKXWd
+ oyszL52CRPbNx8o4c5PEgfXtiiomvFaJmmR1hLy2rENh+CepSrDRGZmP2negk2defOB3
+ EA7S9zWitCw3l9zKb50yNpogbJICOHkLrKlqA2B0xQBd7f2BjpqcimSoEmQoyPshI37W
+ pouTO0i9tTSx97AtvNMxHuWA4KXJHeHKPRbY2fPa0nMm5aHgKyRpqLgwoqtovDsBL+Ca
+ Oz5xe5hEv9NT4kyyOEze96QASNZ/1/N59k01KYzVDEMtYhgQRA9LPylffXgVvzTFCMhQ
+ urow==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Tr17RtyvbLxS1/0zRk7inMx/sws3cdzrQAORYOvU5AI=;
- fh=Goub7LZgbm1v+svGrOo2k7EYKDHZ2ljEK1F5ta1PeDg=;
- b=KPO/q4pznn1uBjn16Q1VhWPc3IOPd6SV1QqsD8t824kVXw1I9LEjfz9Yy9MlYsbJf5
- CrTT8U0HB6FUlJRQTEwr6dT6A7uvFcwey3bksRl5AXc8B2fgxBWhhhz2XgJHD9IBnvgs
- 2Nk99zbKj5EmPs4wr6kqSDN8miA07XsFwJclpRyAIy4HKIFKyNLL1/EcJX79ahomojwD
- ZzwY3Sf+AqTasWZ7rURLbn+gkCcx+Bmz2d18tCJvUMHeSN7CfHG4p21Zj+HXnuiU5Xcr
- GRxUqJfxhbUCcdc6v5LgiQwXzugUxmNSzLYilao1Y5osHI3bH7O5HWOM3BbY4ON68A8s
- JRXA==; darn=nongnu.org
+ bh=yw0mHhoVlzBYV73WlSVEIt/16UKQQ3fUztUm7IwdVks=;
+ fh=Ykz535V6Tkaof7buRypbHUBTN2MzFgl0yupx65lIR2A=;
+ b=NkzSpMxM3W8MWCvEPysEa9WWKng9qw8ZOo5JDGQXBRz0k+7jHZr8L8+zYyZe54SE/Y
+ maouy93XJhol3VUSSiWeh61rOi8BAJ7qrs6St/fjrKikEBGYFZJ95pKMkHA3WTaTUImE
+ R2fVYrj4wucC22nxKFFbVqOvVNJbRTn5mhb3GHDsHekmHqYwK8y0u1Yo+D1LJ4K1YHRV
+ WsOR1OblwViUpdciL84+iKYNeVqj6TkgK5+RbXLgmXYsvcnoYi7P0kOUY5AYH+HDQgw7
+ N9fYu3viGR0Y5s+Xz+xt/qlHsWCD4xFLb+uTbwXtTPCWaFWTGMS2y3yq92yeFxLwT/Gx
+ vIAA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774405541; x=1775010341; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774405642; x=1775010442; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Tr17RtyvbLxS1/0zRk7inMx/sws3cdzrQAORYOvU5AI=;
- b=tH70NNMPwGak7o+F1/OIeBHobq4gBFBRBkEIvLx5hl2l4eiCqyALCUhMBBo7ebOm3I
- DW8qxg4SHBGykoxi/U6P6tN0E/wpat7yxelbHxBVUJFZ6ZS634bzUVNq7IhcpAZJX6wH
- OR4NupPK+m2C0iPT1PJXZD8p2I7Yj+/cmnXB5dvRaE5uwaSU521N0tfL7nlQfZhZrXTs
- JJoWz+XnXw4zgYB8USrTB1//bKKvMT3hnDQJqTCAhWUc2Rh61KSPWWuzUs4NesU7DslJ
- 4jbGYwZD32/4kAjlzYWWeb2BYcmQ2i3jg7gTnVsHiEi7+HQLIR91bppceSnL7x5vi3Wy
- IGpg==
+ bh=yw0mHhoVlzBYV73WlSVEIt/16UKQQ3fUztUm7IwdVks=;
+ b=fmFhnqqPQ9fWVxZoXJbeGnQ+1qofCLwxXBZum9R425m/4XwojE8suMMw3TjLkjCIlW
+ CaEvRfWhteFPxuvJ+2ZEG4jFCFZlFs2xMmhcHSmSUA2WL3v2HhbhJV9qubnBI6l24bvO
+ 2SJn93tgnF2Lv2VP7JqfCe30SVtW1J0aM2VQ2H35V0fBiaWouELT9/S5FIkm7bunabnX
+ EGTPK7SsJSJRSEyGWDk8Nh6WgwUTeag95IAsW4OdyJNqFsphxHp7Pv981Jpeygk0V4AP
+ IcLwcu4mbkOUQVY7310hVMsQdEueBbg6bkhVLRAzjYVBrb3z54INhzRjnpf7T6BQi6P0
+ wS9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774405541; x=1775010341;
+ d=1e100.net; s=20251104; t=1774405642; x=1775010442;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Tr17RtyvbLxS1/0zRk7inMx/sws3cdzrQAORYOvU5AI=;
- b=saxpk195dtj6KUMwg4wf9Ish2C6t6zmETR8xIUpydEuaQvAxb3VVKhWvsYRqVL6swT
- wp+orQWiZQejjt7Wds+WtX6du52DSf6FDBou//HgOsx0iVBgH9SgMFRjjXdVLGb7JV7p
- KtozySLJxkFVWT8MYkTE+4liCg3I5SL+PON+1bSQ64zHVINGFvZG76tyTWvnOHEZZnyE
- bE8FENI0cwJ17T0sw0s7E4sGS8FH7oYolOr1/OJa+2xaiOxgXyRuvVVN353aumzQW/KG
- QdME6WxLBa9zTytOZuLZEXUblLtn6XjXT0yzAC82Rg8c/8rhF21OpbU6/1hSAld9WgPb
- TOhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUqBFtuYBj5N6pf9iI9k6qlvlKb1pcOhSJSyeU9sFjXRWRGs/DkyB0IELAQtMKlRmhwWY78Nz086qaC@nongnu.org
-X-Gm-Message-State: AOJu0YyiUGubBC7PWCqJeq6ThWOTGFjGMZTV7wNHXyPOqRyHxLmRv3Bh
- spd1watCmpipp7b9jA8rBUp0tCBQSTnJD1jC/Ke1G6iE7ndN1BVBbJYpuP/BeCYDwHq7EagRr7Y
- poRJ2hwIlB2hkDH6rRvotQrwmK4zdiEI=
-X-Gm-Gg: ATEYQzyK2ZYo6srUziC7++ciNW6Vj9RCkcZ3rgdqgwcVkNjKNrvrPqFqYq0wilBvLJP
- RC13HTnJuAbthkxUS7qLukzL8ONqELQww3FI1NNXIHVT3Gpk4ucgFAJgFABNJ74QAeLD5qF/Uss
- QOw4z7Wj4PEIb9nimhJ5njd1GHQrTxArS2MfHqgkVD15fmdnTIg7AcAOK/29y1iIFL2P0f8w0S/
- CaeXvr2duIgVCWzdewA/En9vasVExdmtxSgIhRzuRKrjFiOXvEjrW14JCrb9Q4+fizm70aKmDeN
- Tiqr3M3IGJU6rRo2VXhweda6uDKjJsbWHW0R9da7wqONrZck
-X-Received: by 2002:a17:906:a8d:b0:b98:86b9:f0cd with SMTP id
- a640c23a62f3a-b9a542c7072mr84965366b.54.1774405540861; Tue, 24 Mar 2026
- 19:25:40 -0700 (PDT)
+ bh=yw0mHhoVlzBYV73WlSVEIt/16UKQQ3fUztUm7IwdVks=;
+ b=bRMRXRLmwVqyITtlXbwaZ8LanfvoqJeFk59hlgbC+4XYVLslqTGwQmDi2s4T5XxAp+
+ Xi/h9MOLUXRad6t4jTslC146D3GKF7YxpAZEhoKYOkl0ePOCBex1I4XqyYTGNxDOCSIT
+ MUlEKOAJunWXfaKao8IsWAraYBvsS/N1zKRuJ0WJbwUDqGth6wothtlCLInPNxNRc4sh
+ 9vXdpPT4OdomADRVcMqwY5EaBEmeLUjeICOXWYN5wnjLUBi6/ZtyQSsRtfbPOWZ5DNk+
+ 3nPcDVQlCXyedBXHPZVQiqmqBLhcHx0kggro3mRa54484R9jIuhNg/B/txhyZxJwcECp
+ 8qQw==
+X-Gm-Message-State: AOJu0YzrE3CV7yYI81TjsCbNXBjEd1GSP+AGO6Zrite5Cg1ud3fQcPoA
+ hKFxqaWRIscPj2tPh2BK3Zo5ePAeSMG1SHh2JYepQhQHqeB8Vvdmq7biQTuNQDxTFGvyy6/uTHy
+ KnBqWO2cNURgqm6rRGfJB4ryD0TAlYEI=
+X-Gm-Gg: ATEYQzyKSEjBB5fnepGHMvafUEw5p81p13U6bjUA4UVt4CMwigsvnF5Wd9yJPTpAeWY
+ QuYoHnE3brmuoy4YCvNbksxCVSDxOcfvGCaQQhgvctB4OKKfpkSi4EEy17MSVsgvnC5/5J8CxmN
+ 6lGQb4+uEPfAZtm/KJTuPKtVUI3xcGycPI0xoihXHSIHzkj1Xqj8iJy7U9mp7pn2Ez0OCxv1Y+W
+ IH1ogoA/RcnGumk74tNvrcCYEj3f1vIY1KihNdcgYFXPXbfdGx14P2mOXjBGBXLH/QH3CUaxOKW
+ vWkXn91wG6eP/9xWiM4Bguqn3jkpyMCrc3imRw==
+X-Received: by 2002:a17:906:2551:b0:b73:2b08:ac70 with SMTP id
+ a640c23a62f3a-b9a542bba76mr87157766b.49.1774405641972; Tue, 24 Mar 2026
+ 19:27:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260320134254.217123-1-james.wainwright@lowrisc.org>
-In-Reply-To: <20260320134254.217123-1-james.wainwright@lowrisc.org>
+References: <20260325014856.58948-1-jay.chang@sifive.com>
+In-Reply-To: <20260325014856.58948-1-jay.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 25 Mar 2026 12:25:14 +1000
-X-Gm-Features: AQROBzCdQozVb5Ay3GxBiCfaxy9Ub88-7Rq1q-TMNhIN98mSMDydAzSN939B6bQ
-Message-ID: <CAKmqyKNTm51Gx4TEL_3nm+8K=mZa8pMfnL1PA9kcqHpq0Uw=ug@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] target/riscv: add draft RISC-V Zbr ext as xbr0p93
-To: James Wainwright <james.wainwright@lowrisc.org>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
+Date: Wed, 25 Mar 2026 12:26:55 +1000
+X-Gm-Features: AQROBzBJVjzHr-Xu02PLozIIOWaQGcbIn4lyD2s0qwIJWzHQ5XfOruYnl6vHyS0
+Message-ID: <CAKmqyKPYQWyYV91k-DkEOfQmUMQwkyZ4kHRje5YU9bAtxpUVVw@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/riscv/riscv-iommu: Use standard EN_PRI bit for PRI
+To: Jay Chang <jay.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Frank Chang <frank.chang@sifive.com>, 
+ Nutty Liu <nutty.liu@hotmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -118,61 +123,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 11:44=E2=80=AFPM James Wainwright
-<james.wainwright@lowrisc.org> wrote:
+On Wed, Mar 25, 2026 at 11:49=E2=80=AFAM Jay Chang <jay.chang@sifive.com> w=
+rote:
 >
-> >  This patch fails checkpatch:
+> Replace the temporary custom extension bit (TC[32]) with the
+> standard EN_PRI bit defined in RISC-V IOMMU specification.
 >
-> Oops, sorry about that. Fixed the license header but the original
-> `crc32c` file didn't have a `MAINTAINER` so I haven't assigned one to
-> this new file either. I hope that's okay.
+> Signed-off-by: Jay Chang <jay.chang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 >
-> > Please keep previous tags in new versions
->
-> Do you mean the `Reviewed-by` lines? I've kept those in this series.
->
-> James Wainwright (3):
->   util: export CRC32[C] lookup tables
->   target/riscv: add draft RISC-V Zbr ext as xbr0p93
->   disas: diassemble RISC-V xlrbr (crc32) instructions
+> Change in V2:
+>   Align code
 
-Thanks!
+In future don't include the changelog in the commit message please
 
-Applied to riscv-to-apply.next
+>
+> Signed-off-by: Jay Chang <jay.chang@sifive.com>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  hw/riscv/riscv-iommu.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 >
->  MAINTAINERS                               |  5 +-
->  disas/meson.build                         |  3 +-
->  disas/riscv-xlrbr.c                       | 79 ++++++++++++++++++++++
->  disas/riscv-xlrbr.h                       | 19 ++++++
->  disas/riscv.c                             |  2 +
->  include/qemu/crc32.h                      | 14 ++++
->  include/qemu/crc32c.h                     |  1 +
->  target/riscv/bitmanip_helper.c            | 20 ++++++
->  target/riscv/cpu.c                        |  4 +-
->  target/riscv/cpu_cfg.h                    |  1 +
->  target/riscv/cpu_cfg_fields.h.inc         |  1 +
->  target/riscv/helper.h                     |  2 +
->  target/riscv/insn_trans/trans_xlrbr.c.inc | 45 +++++++++++++
->  target/riscv/meson.build                  |  1 +
->  target/riscv/translate.c                  |  3 +
->  target/riscv/xlrbr.decode                 | 30 +++++++++
->  tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
->  tests/tcg/riscv64/test-crc32.S            | 64 ++++++++++++++++++
->  util/crc32.c                              | 81 +++++++++++++++++++++++
->  util/crc32c.c                             |  4 +-
->  util/meson.build                          |  1 +
->  21 files changed, 380 insertions(+), 5 deletions(-)
->  create mode 100644 disas/riscv-xlrbr.c
->  create mode 100644 disas/riscv-xlrbr.h
->  create mode 100644 include/qemu/crc32.h
->  create mode 100644 target/riscv/insn_trans/trans_xlrbr.c.inc
->  create mode 100644 target/riscv/xlrbr.decode
->  create mode 100644 tests/tcg/riscv64/test-crc32.S
->  create mode 100644 util/crc32.c
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 225394ea83..30343e98d0 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -1572,11 +1572,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *=
+s, RISCVIOMMUContext *ctx,
+>      riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
 >
+>      iot_cache =3D g_hash_table_ref(s->iot_cache);
+> -    /*
+> -     * TC[32] is reserved for custom extensions, used here to temporaril=
+y
+> -     * enable automatic page-request generation for ATS queries.
+> -     */
+> -    enable_pri =3D (iotlb->perm =3D=3D IOMMU_NONE) && (ctx->tc & BIT_ULL=
+(32));
+> +    enable_pri =3D (iotlb->perm =3D=3D IOMMU_NONE) &&
+> +                 (ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI);
+>      enable_pid =3D (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+>
+>      /* Check for ATS request. */
 > --
 > 2.48.1
 >
