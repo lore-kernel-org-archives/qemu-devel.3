@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2833109192D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 01:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94AE109192D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 01:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Cq7-0007Z3-1F; Tue, 24 Mar 2026 21:15:19 -0400
+	id 1w5Ctf-0008NC-6m; Tue, 24 Mar 2026 21:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w5Cq4-0007WZ-Nw
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:15:16 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1w5Cte-0008Mx-GG
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:18:58 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w5Cq2-00043t-S0
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:15:16 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2b061b6cf36so34453615ad.3
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 18:15:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774401313; cv=none;
+ id 1w5Ctc-0004Gi-Pw
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 21:18:58 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-35a1d4a095bso277803a91.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 18:18:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774401535; cv=none;
  d=google.com; s=arc-20240605;
- b=N7nn7EBdzPOqV6ekN212KLDLnvC75nBsGoqx0r/2ZTzHoTCQAoeDjl2x7mqlIlRidO
- DJzHf1rg+ubeD5vEI2d7wFeHNt9kDte5LklOhejPUCoV33E4TzIOf5wLXmIYIZMyQykc
- qLjdmFKINh/iJGoK+N6DNLidwYaVDOc6tdYEVd7pWTvd62z44GbJsMWme9h4yQOo3SWr
- xGD50AgyTL58YFa5CaFm8Z/uzS5evtp+TPhjxTmTweWbeT+x/2B8QMcVRt3Z8gu4EcIA
- vQi3EaOJ8XRrJVCnZK8VBI+L8OkB1nvc7vQZqTV3vDI58VzIkiEdvhS+xrHZ+/QOP6+g
- 3rCg==
+ b=aI8SwDVnL2yck0BLcfbx5vV1/CD+ZAek49IZVaDaUp/Jaaegmpn+INHt47uCnmbzK0
+ JXtT/R4Gf0fEEgMEhYP7VR+/+dJ8xe78NkMUXHCxQ2GziW6LAz3U5qsrwLzwd6MuUt1X
+ j1wHiirW7QhOb0m7MPSTz8+k7rzwy1Ghg/l98y6ZphXUUSyFHR4igk6F96J7slUnfzy/
+ SRzL5WpDPSVjNwsoNjfSh+i9NRcEtUVf4W/6sUdclKnxnccmTrsdQtwQud+YI9mGYXBw
+ znBrDxtViC89lcA5HpF0WCxxGQMBZe5578lof6uZe+lW+/Wzxfcynae3e8cssbPXjxx/
+ JfyQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=ubW0pXOIDHxwrPjJS2lJ2HY1rNVZKZBHw2aWGjwnMKI=;
+ bh=G2OgRpi0ri4EDkz5QWaDK9Prag90c3dEm8/KTMOsSjo=;
  fh=fJqGvtWqLDKIzOXW1wAsc3/gnAi5Otjc7uqp16gUscQ=;
- b=eVYNZK/aI0WWopr9XQBhRhUpS9+Q6gRbDh3cVI090d03hSA4Snt9fqwTGS9jtTtra5
- N2EORovEVYMUTv/YSCKs/To9tCJTtcCJzL22Q0lfRJyRVMO++ndR/hAaLYJueTNNeUTD
- cP42/T8wOLzCIDrQuaul6wWfYw7SkU998zSsJhLpMHBaifZg8F1/8flokOHYRBiwRfm0
- pmQWQWWkuIyPzOUVC4sXYeOTMVS+uDxIjP4y5bdNE61SwrIQ+uZKlv7bv+21qoGiKvRy
- pT/OWkl5P2TThcjbpTNxdAgiruO2tHr9aF1f9nzn5HuLFYrmQW7hzVhOXL4AyU8dM/ID
- xJMQ==; darn=nongnu.org
+ b=Np4Z6nQDFjSIVUJ3D5/szFSxeu+sygzc+xndADaLlIJnGjyNB4PEjmuDJdph7UKx0A
+ Ao4CFD3MixjIgBE/7rYoN8vyUiECZ2hj0Qwin3A6QJkOcz8vA49iCsOk1tTFeuCw5wNg
+ +ognMTNq9DYJLuRpVwOS8GYPqeCZ4khdYIqhzuRLy394iRUm47k+MRW97WmGOCvWL85A
+ hbcGp5vEYGOWdPgV8E3GnoRQoxPPiWvVGtxnDhWBPZqEzmQhHNHpQJ2l6MZS8LVih3Ek
+ iytfcTPWwyduIHUV3Zk5UbEP/NZqn+g1u9PotgCH/w2+zxH6gvzONXb20wgkAjQbKhUn
+ uiZQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774401313; x=1775006113; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774401535; x=1775006335; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ubW0pXOIDHxwrPjJS2lJ2HY1rNVZKZBHw2aWGjwnMKI=;
- b=ssWtaLnmFmAr22kZaxyNpaln0VYEAk6cwGA+ru1UlYlX/t4stXCgiscXvymOe544q9
- y9IZJAlz3CBT3nJtKLx2T6uDYzyHQMQpZxnDsGTIN2gcdA6DfaLF7XtqkpWLfIbUmiWM
- umDqxyV3JC02MvFrDnmUB84t1wXUEZZFxEkB569g+Qq3UCG+NsYZ45xxHuvu64YQMptQ
- rjB+DrocZtf/ZXjxmHR0JkidSBIsjnv/nH7ZWAOdXhqUmR7gWy6NKJWTpXTHIoE7/cPg
- xm2VsTrUvm1zPfgWPQIdwfHBJCqBqV/+A/lcRo1zglLrOqTxo0gzBjKkMf1hSBABnhbK
- wVNg==
+ bh=G2OgRpi0ri4EDkz5QWaDK9Prag90c3dEm8/KTMOsSjo=;
+ b=TtkMxFJRTAPB8hTAp7aF2AJZJiUHeEa/eixNNzUXv7jgXUpYZbuMGhqIpCQ822JQfj
+ HjP70yJSqa1XM9rVR3Ifb4M/xxqk1iSoC9aSrLlzKozl/ly2Gu4cbedgO0bO0CpT05C3
+ OzRMQFN4M7AHvCiAMAVwTQs6ntfKZUNoGE8hJzXULh1u7erfG41CjwOW65fwcmYZo4BC
+ 4GW5Pbn1CMCswdRGZujgexPup9N9nyyAc5dres8tqBv0DmfYzgNe5PXNu6b1gRDDaLiZ
+ AYZ0xK7CLyNFNy6ZVuEwkBGDzrECUZqKtIadSL9MRqXxQq8X9BqpM9JuNjVsGfiHvUa7
+ Xdfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774401313; x=1775006113;
+ d=1e100.net; s=20251104; t=1774401535; x=1775006335;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ubW0pXOIDHxwrPjJS2lJ2HY1rNVZKZBHw2aWGjwnMKI=;
- b=md63Vx6jUFyiiRRVIqRZJHfnvN+D4sz4EUo3yPOVIZIP9OTyTXSU1YxmDZKlfAsODL
- pLucXFV6erEfKtZTy4ysb6uT3CSh6LB6bp18/6hjb3Ow0xGqhwenU7CDyWfU0a5JITNb
- OEmBAPVIaf8eoXd/tDhY96bGdI3AYT+X42rICMrohZYmPL0jIYyKnpuh4VrdawIeLB6H
- a+NIJCar/A+Ljmrd60dAuNOLTyzwgPkrVdAEb3ktRPdgnVUpUeCjIQPAi1o+hal0JIDE
- BFAPEKmbk+QBgGzVGApDc0zLAsaXq/RTc2M85FEC/43PZNY6Cd5lFU6jI+ZzSTU+jPNT
- boEA==
-X-Gm-Message-State: AOJu0YzwS4EYFDMiw16imedK5g6VZskAfdElUFLN/OFRWoJIl33dOElS
- FaEV2QVMMe3MZXWTnA7t5x29RfIahwtGdLm6RSEXpjm7twGBUYj84v35yMmUDlXpSf7eNiar7eV
- HfMU2OMOSLTGtjZCwuRKvILM1dBmTeyc=
-X-Gm-Gg: ATEYQzwxYrcNl4aUlvy/kHrI3P5TRED7hMNmhLqkDosf1j8azfkqSdVOnsqNYR2xhDC
- Dchgq2KwsjkE/KKLiqVcmw7Lvn0tNzFz06Y47VJe7OBdmRV78lryDaRp0sT790bIzUb8OiyTcwR
- HkpbaIQcMKfzBaWtEj4oYFZxKGgKM6kTQPNkfMgwLXAhPiLLHgMnJ3+TcTGcEGvEOlDPiHkBRHO
- l47vg6okPGRdawHORPq22VAZhYtWejwM6TdA7OsbkOe0Rp2qIA9gvg3ll1waOs0ZbDw/oa4WsmI
- ofaJaxLTlJsjPGgaOxRoEeVOMZb/U201lDYmDKmJ/zqDhpZpBg==
-X-Received: by 2002:a17:903:2c0c:b0:2ae:ce35:2686 with SMTP id
- d9443c01a7336-2b0b09a7cc6mr17436235ad.5.1774401313221; Tue, 24 Mar 2026
- 18:15:13 -0700 (PDT)
+ bh=G2OgRpi0ri4EDkz5QWaDK9Prag90c3dEm8/KTMOsSjo=;
+ b=b1R+oXrVSVTEJR5ZVwlyqO4/t/B7xWMqVeFZ1rMCuwJvyLAkkTnoyd15q4m4UXzdiU
+ ch4/+F4JiCOMSVdBOQWK3c+T/lCH3Sugi+rwxbdrgp1rfbyEeCemq4GaWMZIdEetGm5+
+ E0LacYVBHxpurkoPXYeFFxzcyiKjAbubunDa9+cW1W/+6DAqn0f7KTsMHoLdr4YQUfiA
+ wfs01yiSjOhWB3RXRp0/Qj74YnmGAIu/t5HFGmn04eY1SJ3lP/qF8qTbZoY96w7+zSdU
+ lZNle6iQXbFR9p447jOfZG0+q0SA9yGV0C3OMW7rmp8sC/7YpLzr8M/wOVILLtkE4i1G
+ YGjg==
+X-Gm-Message-State: AOJu0Yxo1oQ+HmN8vs9Tiw4jJePGOMkGJrs+RJOrZouEBMy9PIXv11mI
+ ar9birk5QccNPtkSfu37EVxVlTQ3c7qtSJjElc3GxNEkzWM33admiPXuiVyhQMgkKXWRawjKB9m
+ qnbcihGmdnRtT9NmkIaWjVWXuBLbK0Cg=
+X-Gm-Gg: ATEYQzwlRuFARKfEdqCsO7be/m25hf3aoMw98J+MSM4cnQMR0AAl6USvFhYcyQODe0g
+ WW/SP+zJOFfD7kXQr+o8Y08LloPdQpyNejKCV6Tz44Sbxm8IBm9s48lkODVmz+zlzUHGUXlaBEb
+ W1kTswOAnt9iJhvaqy5vrVNctPuRszznTsijSu8qq1GXGnl+fjyRajX00apvblPxWCsZ/5dgoDS
+ j70nBIM02RKRYS34lHXcxFPIiHcdo0sKuJdBLPl//UFWEU1JVfCGz78Z6+KucBqaeJ2/VUGOvts
+ k3WCezhjmEp2m28UIoKobI9PuRiQNSPAfhNE0dbqxZS5hD0MBg==
+X-Received: by 2002:a17:90b:53c3:b0:35b:92ba:66e4 with SMTP id
+ 98e67ed59e1d1-35c0d12f216mr1441809a91.7.1774401535180; Tue, 24 Mar 2026
+ 18:18:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
- <b648b6b7ce4b4c1ab3bc00016d9233a5ede3563b.1774271525.git.matheus.bernardino@oss.qualcomm.com>
- <CAATN3Np8aWjb8PyoupVpWCWc8thTLghWn974OVC7M_-opqSrSQ@mail.gmail.com>
- <CABrGZ+GO+G2MrnP1W69vsSCrX_QcEsJw5Zhkd5yd_uhdoegpFQ@mail.gmail.com>
-In-Reply-To: <CABrGZ+GO+G2MrnP1W69vsSCrX_QcEsJw5Zhkd5yd_uhdoegpFQ@mail.gmail.com>
+ <831949008a7266559a6f313f99a394cd68cc9846.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <CAATN3NrZVn6W0pAyshZ7mhYVcY+gtRk9tJwz5WLLzxoPTDupwA@mail.gmail.com>
+ <CABrGZ+GmYG2tg0pWDoBuydWG3abTmMT2wxCu=06fXLQJQCS1YQ@mail.gmail.com>
+ <CAATN3NpNvqBLdsz7euvuUGTMYxCusQ+MYSyo0GHgFrvZHTBs7A@mail.gmail.com>
+ <CABrGZ+GDw1PwHHiBNpp0_FTOceB=d2uTNXg7nXRufubXR48hUw@mail.gmail.com>
+In-Reply-To: <CABrGZ+GDw1PwHHiBNpp0_FTOceB=d2uTNXg7nXRufubXR48hUw@mail.gmail.com>
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Tue, 24 Mar 2026 19:15:00 -0600
-X-Gm-Features: AaiRm50EfpfaHG57M0L7EXWlwLjLy61CIl18WfOWgwW3Upmc0vwFdvBU7A9Fki4
-Message-ID: <CAATN3Nq__JjhqFYGG84AkP5Jx5HDjM89ZDGee0QownsRh2sTew@mail.gmail.com>
-Subject: Re: [PATCH 07/13] target/hexagon: add v68 HVX IEEE float conversion
+Date: Tue, 24 Mar 2026 19:18:44 -0600
+X-Gm-Features: AaiRm51daLrTdKz8EFJ3uxWxW_VA0vJJvRMkE9VD0_uTHgEQQoEz8Yiy4-v8K_U
+Message-ID: <CAATN3Nqyiwwye-_DuTb_PEWXzhEDmAK_8oOMvwhZNPwGbm6zug@mail.gmail.com>
+Subject: Re: [PATCH 04/13] target/hexagon: add v68 HVX IEEE float arithmetic
  insns
 To: Matheus Bernardino <matheus.bernardino@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng, 
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org, 
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Content-Type: multipart/alternative; boundary="000000000000f6b05a064dceff84"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x636.google.com
+Content-Type: multipart/alternative; boundary="0000000000003182e2064dcf0d42"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,160 +121,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f6b05a064dceff84
+--0000000000003182e2064dcf0d42
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 24, 2026 at 3:04=E2=80=AFPM Matheus Bernardino <
+On Tue, Mar 24, 2026 at 2:00=E2=80=AFPM Matheus Bernardino <
 matheus.bernardino@oss.qualcomm.com> wrote:
 
-> On Mon, Mar 23, 2026 at 6:26=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gm=
+> On Tue, Mar 24, 2026 at 4:51=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gm=
 ail.com>
 > wrote:
 > >
 > >
 > >
-> > On Mon, Mar 23, 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino <
+> > On Tue, Mar 24, 2026 at 1:30=E2=80=AFPM Matheus Bernardino <
 > matheus.bernardino@oss.qualcomm.com> wrote:
 > >>
+> >> On Mon, Mar 23, 2026 at 5:29=E2=80=AFPM Taylor Simpson <
+> ltaylorsimpson@gmail.com> wrote:
 > >>
-> >> diff --git a/target/hexagon/mmvec/kvx_ieee.c
-> b/target/hexagon/mmvec/kvx_ieee.c
-> >> index 33621a15f3..bbeec09707 100644
-> >> --- a/target/hexagon/mmvec/kvx_ieee.c
-> >> +++ b/target/hexagon/mmvec/kvx_ieee.c
-> >> @@ -131,3 +131,101 @@ uint16_t qf_min_hf(uint16_t a1, uint16_t a2,
-> float_status *fp_status)
-> >>      if (float16_is_pos_nan(f2) || float16_is_neg_nan(f1)) return a1;
-> >>      return fp_min_hf(a1, a2, fp_status);
-> >>  }
-> >> +
-> >> +uint16_t f16_to_uh(uint16_t op1, float_status *fp_status)
-> >> +{
-> >> +    return float16_to_uint16_scalbn(make_float16(op1),
-> >> +                                    float_round_nearest_even,
+> >> >
+> >> > Do these instructions interact with the FP bits in USR (e.g.,
+> rounding mode, FP exceptions)?
+> >>
+> >> They do not. I'll add a new env->hvx_fp_status and use that for the
+> >> default nan. This way we can avoid messing up with the scalar
+> >> fp_status.
 > >
 > >
-> > Does HVX always use this rounding mode?  The scalar core uses the
-> rounding mode in USR.
+> > That will work for the nan.  Is there any programmer-visible state for
+> rounding mode or FP exceptions?
 >
-> Yeah, almost always this mode, with the exception of some
-> instructions. It's not configurable via USR (or anything else).
->
-
-You can set that in the hvx_fp_status, and the softfloat lib will handle it
-from there.
-
-
->
-> >> +
-> >> +int32_t conv_w_sf(uint32_t a, float_status *fp_status)
-> >> +{
-> >> +    float_status scratch_fpst =3D {};
-> >> +    const float32 W_MAX =3D int32_to_float32(INT32_MAX, &scratch_fpst=
-);
-> >> +    const float32 W_MIN =3D int32_to_float32(INT32_MIN, &scratch_fpst=
-);
-> >> +    float32 f1 =3D make_float32(a);
-> >> +
-> >> +    if (float32_is_any_nan(f1) || float32_is_infinity(f1) ||
-> >> +        float32_le_quiet(W_MAX, f1, fp_status) ||
-> >> +        float32_le_quiet(f1, W_MIN, fp_status)) {
-> >> +        return float32_is_neg(f1) ? INT32_MIN : INT32_MAX;
-> >> +    }
-> >
-> >
-> > Does float32_to_int32 handle these checks?
->
-> Hmm, I don't think they are exactly the same. For example,
-> float32_to_int32 will return INT32_MAX for any NAN. But the hexagon
-> implementation here returns INT32_MIN for negative NAN.
+> No, rounding is always float_round_nearest_even (the default) and
+> FWICT the HVX IEEE FP functions don't track or report any FP
+> exceptions.
 >
 
-Look around in the softfloat code - especially fields in float_status.  Ths
-scalar core has a few exceptions, but not alot.
+OK, then disregard my comments about checking the exceptions.
 
---000000000000f6b05a064dceff84
+--0000000000003182e2064dcf0d42
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 24,=
- 2026 at 3:04=E2=80=AFPM Matheus Bernardino &lt;<a href=3D"mailto:matheus.b=
+ 2026 at 2:00=E2=80=AFPM Matheus Bernardino &lt;<a href=3D"mailto:matheus.b=
 ernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>&gt; wro=
 te:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Mar =
-23, 2026 at 6:26=E2=80=AFPM Taylor Simpson &lt;<a href=3D"mailto:ltaylorsim=
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Mar =
+24, 2026 at 4:51=E2=80=AFPM Taylor Simpson &lt;<a href=3D"mailto:ltaylorsim=
 pson@gmail.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt; wrote:<b=
 r>
 &gt;<br>
 &gt;<br>
 &gt;<br>
-&gt; On Mon, Mar 23, 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino &lt=
-;<a href=3D"mailto:matheus.bernardino@oss.qualcomm.com" target=3D"_blank">m=
-atheus.bernardino@oss.qualcomm.com</a>&gt; wrote:<br>
+&gt; On Tue, Mar 24, 2026 at 1:30=E2=80=AFPM Matheus Bernardino &lt;<a href=
+=3D"mailto:matheus.bernardino@oss.qualcomm.com" target=3D"_blank">matheus.b=
+ernardino@oss.qualcomm.com</a>&gt; wrote:<br>
 &gt;&gt;<br>
+&gt;&gt; On Mon, Mar 23, 2026 at 5:29=E2=80=AFPM Taylor Simpson &lt;<a href=
+=3D"mailto:ltaylorsimpson@gmail.com" target=3D"_blank">ltaylorsimpson@gmail=
+.com</a>&gt; wrote:<br>
 &gt;&gt;<br>
-&gt;&gt; diff --git a/target/hexagon/mmvec/kvx_ieee.c b/target/hexagon/mmve=
-c/kvx_ieee.c<br>
-&gt;&gt; index 33621a15f3..bbeec09707 100644<br>
-&gt;&gt; --- a/target/hexagon/mmvec/kvx_ieee.c<br>
-&gt;&gt; +++ b/target/hexagon/mmvec/kvx_ieee.c<br>
-&gt;&gt; @@ -131,3 +131,101 @@ uint16_t qf_min_hf(uint16_t a1, uint16_t a2,=
- float_status *fp_status)<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 if (float16_is_pos_nan(f2) || float16_is_neg_n=
-an(f1)) return a1;<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 return fp_min_hf(a1, a2, fp_status);<br>
-&gt;&gt;=C2=A0 }<br>
-&gt;&gt; +<br>
-&gt;&gt; +uint16_t f16_to_uh(uint16_t op1, float_status *fp_status)<br>
-&gt;&gt; +{<br>
-&gt;&gt; +=C2=A0 =C2=A0 return float16_to_uint16_scalbn(make_float16(op1),<=
-br>
-&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 float_round_=
-nearest_even,<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; Do these instructions interact with the FP bits in USR (e.g.,=
+ rounding mode, FP exceptions)?<br>
+&gt;&gt;<br>
+&gt;&gt; They do not. I&#39;ll add a new env-&gt;hvx_fp_status and use that=
+ for the<br>
+&gt;&gt; default nan. This way we can avoid messing up with the scalar<br>
+&gt;&gt; fp_status.<br>
 &gt;<br>
 &gt;<br>
-&gt; Does HVX always use this rounding mode?=C2=A0 The scalar core uses the=
- rounding mode in USR.<br>
+&gt; That will work for the nan.=C2=A0 Is there any programmer-visible stat=
+e for rounding mode or FP exceptions?<br>
 <br>
-Yeah, almost always this mode, with the exception of some<br>
-instructions. It&#39;s not configurable via USR (or anything else).<br></bl=
-ockquote><div><br></div><div>You can set that in the hvx_fp_status, and the=
- softfloat lib=C2=A0will handle=C2=A0it from there.</div><div>=C2=A0</div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt;&gt; +<br>
-&gt;&gt; +int32_t conv_w_sf(uint32_t a, float_status *fp_status)<br>
-&gt;&gt; +{<br>
-&gt;&gt; +=C2=A0 =C2=A0 float_status scratch_fpst =3D {};<br>
-&gt;&gt; +=C2=A0 =C2=A0 const float32 W_MAX =3D int32_to_float32(INT32_MAX,=
- &amp;scratch_fpst);<br>
-&gt;&gt; +=C2=A0 =C2=A0 const float32 W_MIN =3D int32_to_float32(INT32_MIN,=
- &amp;scratch_fpst);<br>
-&gt;&gt; +=C2=A0 =C2=A0 float32 f1 =3D make_float32(a);<br>
-&gt;&gt; +<br>
-&gt;&gt; +=C2=A0 =C2=A0 if (float32_is_any_nan(f1) || float32_is_infinity(f=
-1) ||<br>
-&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 float32_le_quiet(W_MAX, f1, fp_status=
-) ||<br>
-&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 float32_le_quiet(f1, W_MIN, fp_status=
-)) {<br>
-&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return float32_is_neg(f1) ? INT32_MIN=
- : INT32_MAX;<br>
-&gt;&gt; +=C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt;<br>
-&gt; Does float32_to_int32 handle these checks?<br>
-<br>
-Hmm, I don&#39;t think they are exactly the same. For example,<br>
-float32_to_int32 will return INT32_MAX for any NAN. But the hexagon<br>
-implementation here returns INT32_MIN for negative NAN.<br></blockquote><di=
-v><br></div><div>Look around in the softfloat code - especially fields in f=
-loat_status.=C2=A0 Ths scalar core has a few exceptions, but not alot.</div=
-><div>=C2=A0</div></div></div>
+No, rounding is always float_round_nearest_even (the default) and<br>
+FWICT the HVX IEEE FP functions don&#39;t track or report any FP<br>
+exceptions.<br></blockquote><div><br></div><div>OK, then disregard my comme=
+nts about checking the exceptions.=C2=A0</div></div></div>
 
---000000000000f6b05a064dceff84--
+--0000000000003182e2064dcf0d42--
 
