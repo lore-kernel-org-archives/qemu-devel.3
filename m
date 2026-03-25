@@ -4,69 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E1AFEA80A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 05:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52792FEA80C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 05:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5Gu5-00054h-8R; Wed, 25 Mar 2026 01:35:41 -0400
+	id 1w5H9R-0007Jp-56; Wed, 25 Mar 2026 01:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5Gu3-00054Y-Qy
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 01:35:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5H9Q-0007Je-8Y
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 01:51:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5Gu2-0003LJ-6X
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 01:35:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5H9O-00060X-Oq
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 01:51:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774416936;
+ s=mimecast20190719; t=1774417888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RCDDlLhwgQlISxeohBXpCBYNgkHUhfuywrcigt4uDzU=;
- b=GW0D6HyAMJK80taYcLW3+IPu4pr7bVFdqOZyAa8P3sc7wQX4ymFDGCgU9jbhwDoTjVBu0y
- kASUiAygbgaD9jljCpyFtsoyPDU2xUBgqb6lhPMkE4emxQWQZ0kmzONTZrcPdR2kAZ4kWv
- Fz90rzT5Jxr3sqw5Xb8A7oakC2UKKw4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gHXmyUOYfW7IzxEt89LrgkcB4shs3Kpb2dNeeBcHAR8=;
+ b=Mzh4DAM3elFpS3RNyhVryC7NUKbfoJNTHlx8mGOUGQ8eJVILF2jM1UKQaei1tW4fWKgIgR
+ uStOYi9THTBZURopfKIWSG/PhRAs5LNPPCzAUQOc2VRM00HHEeBH2PiyceKu3xMfYopOrI
+ +LTogeYns0ZssFRO6J9/Nzj2HKaeeOY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-LcDKbjojN1qQ-qLEl4ldpg-1; Wed,
- 25 Mar 2026 01:35:34 -0400
-X-MC-Unique: LcDKbjojN1qQ-qLEl4ldpg-1
-X-Mimecast-MFC-AGG-ID: LcDKbjojN1qQ-qLEl4ldpg_1774416933
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-WZ3URSVUMt27atAZvmjMKA-1; Wed,
+ 25 Mar 2026 01:51:27 -0400
+X-MC-Unique: WZ3URSVUMt27atAZvmjMKA-1
+X-Mimecast-MFC-AGG-ID: WZ3URSVUMt27atAZvmjMKA_1774417885
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 976211944F0D
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 05:35:33 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71843195609D; Wed, 25 Mar 2026 05:51:25 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 551A61955F2E
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 05:35:33 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A33F31955D71; Wed, 25 Mar 2026 05:51:24 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EDB4A21E6937; Wed, 25 Mar 2026 06:35:30 +0100 (CET)
+ id 492AB21E6937; Wed, 25 Mar 2026 06:51:22 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 11/60] ui/console-vc: add UTF-8 input decoding with
- CP437 rendering
-In-Reply-To: <20260317-qemu-vnc-v1-11-48eb1dcf7b76@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 17 Mar 2026 12:50:25 +0400")
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-11-48eb1dcf7b76@redhat.com>
-Date: Wed, 25 Mar 2026 06:35:30 +0100
-Message-ID: <878qbgpj31.fsf@pond.sub.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-?=
+ =?utf-8?Q?Daud=C3=A9?=
+ <philmd@linaro.org>,  qemu-devel@nongnu.org,  Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Artyom Tarasenko
+ <atar4qemu@gmail.com>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH-for-11.1 v6 3/6] monitor: Have MonitorDef::get_value()
+ always return int64_t type
+In-Reply-To: <c0f35257-98ae-4cb8-a73e-2e36bac91a55@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 24 Mar 2026 11:34:38 -0700")
+References: <20260320091019.59902-1-philmd@linaro.org>
+ <20260320091019.59902-4-philmd@linaro.org>
+ <87pl4ts7vx.fsf@pond.sub.org>
+ <CAFEAcA_y5amOwF-HCM8L3xc1_bSbXxno+HjrLBiOaN25fCt4eA@mail.gmail.com>
+ <87tsu5qofj.fsf@pond.sub.org>
+ <c0f35257-98ae-4cb8-a73e-2e36bac91a55@linaro.org>
+Date: Wed, 25 Mar 2026 06:51:22 +0100
+Message-ID: <871ph8picl.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -93,26 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> The text console receives bytes that may be UTF-8 encoded (e.g. from
-> a guest running a modern distro), but currently treats each byte as a
-> raw character index into the VGA/CP437 font, producing garbled output
-> for any multi-byte sequence.
+> On 3/24/26 7:42 AM, Markus Armbruster wrote:
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>=20
+>>> On Tue, 24 Mar 2026 at 12:57, Markus Armbruster <armbru@redhat.com> wro=
+te:
+>>>>
+>>>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>>>
+>>>>> Simplify MonitorDef::get_value() handler by having it always
+>>>>> return a int64_t type. Truncate to 32-bit in the single caller.
+>>>>>
+>>>>> Note, this handler is only implemented once for the x86 targets.
+>>>
+>>>>> @@ -78,7 +80,8 @@ int get_monitor_def(Monitor *mon, int64_t *pval, co=
+nst char *name)
+>>>>>       for(; md->name !=3D NULL; md++) {
+>>>>>           if (hmp_compare_cmd(name, md->name)) {
+>>>>>               if (md->get_value) {
+>>>>> -                *pval =3D md->get_value(mon, md, md->offset);
+>>>>> +                int64_t val =3D md->get_value(mon, md, md->offset);
+>>>>> +                *pval =3D target_long_bits() =3D=3D 32 ? (int32_t)va=
+l : val;
+>>>>
+>>>> This assumes target_long_bits() returns either 32 or 64, doesn't it?
+>>>>
+>>>> Is this true today?
+>>>
+>>> It's certainly true today, and we insist on that: exec/target_long.h
+>>> handles TARGET_LONG_SIZE being 4 or 8 and will #error on anything else.
+>>=20
+>> Good.
+>>=20
+>>> What other values do you expect it could have ?
+>>=20
+>> There might be a need for 128 in the future.  Not an easy change to
+>> make.
+>>
 >
-> Add a proper UTF-8 decoder using Bjoern Hoehrmann's DFA.
-> The DFA inherently rejects overlong encodings, surrogates, and
-> codepoints above U+10FFFF.  Completed codepoints are then mapped to
-> CP437, unmappable characters are displayed as '?'.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> The day this will happen, there will be more places to fix than the=20
+> current patch, as it's assumed everywhere else that target_long_bits or=20
+> TARGET_LONG_BITS is 32 or 64 only. So I would not worry too much about=20
+> it at the moment.
 
-Have you considered the decoder in util/unicode.c?  Do we need two
-decoders, or could we replace one by the other?
+Yes, not an easy change to make.
 
-There's a mad UTF-8 test suite buried in tests/unit/check-qjson.c
-derived from Markus Kuhn's UTF-8 decoder capability and stress test at
-<http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt>.  How does
-this decoder do on these tests?
+I guess my comment came out of a feeling of unease about
+
+    target_long_bits() =3D=3D 32 ? [32 bit code] : [64 bit code]
+
+I feel there's a bit of friction between abstract requirements and the
+concrete software interface.  In the abstract, we need to ask a yes/no
+question here.  The concrete interface provides a function that returns
+32/64, which works, but isn't obvious from the type.  I guess it's
+obvious enough for anybody working in this area of the code.
+
+If truncating to the target's actual width is common, consider providing
+function for that.
+
+Feel free to ignore me :)
+
+[...]
 
 
