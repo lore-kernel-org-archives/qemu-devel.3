@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3369B103A9A2
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4F8103A9A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Mar 2026 02:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ED4-0003ES-HG; Tue, 24 Mar 2026 22:43:06 -0400
+	id 1w5ED5-0003Eu-0G; Tue, 24 Mar 2026 22:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5ED3-0003DP-78
+ id 1w5ED3-0003DQ-9p
  for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:43:05 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5ED0-0002hO-Lx
- for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:43:04 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-8297e0b27e5so2424433b3a.1
- for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:43:01 -0700 (PDT)
+ id 1w5ED0-0002hB-Nm
+ for qemu-devel@nongnu.org; Tue, 24 Mar 2026 22:43:05 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-82c70e4654eso121463b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Mar 2026 19:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774406580; x=1775011380; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A2E8rKgHUzP/UX9nRl+/RGcVIASB81IsTlG/cP9cy+I=;
- b=L5iZIPw+8DLUhYqYALChUIwxuF811PdYUXqKuDy7NYQs9aWAZHVkMGmjT2SBTRTu6V
- IfSG+ne+Pg8aRjNXShatDsOUbolxBaJ/U/TsoMflGdlt74D35EGtBz7HudOP9s59U08q
- 1Ok5Btlf2MAc/nsmU4bl1yRHwRbQedXtBq+jeHyIPKUrNdTY7n7qQVFDCVyZPDTe0iVm
- WgSD56igtP6YWrvU0MCHC2PFBy+EvHfJzuBASRUlocwJN9qF2cC9MXRAK+mKzkDSoVFW
- hBUqafz60kuvgdD8AwFbgEoHL2UaMroEUj+b6Ha5eMyXD0jClJFxbLQqG+Q1xB2lmwbr
- Bu2g==
+ d=linaro.org; s=google; t=1774406579; x=1775011379; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9hlpMtkDBxX5l/chmGTVybiK0SV2YTuFFSIEAzcHJnk=;
+ b=hBkKNtjOuV0Xp0XqnroTu3vp9kToc+N2bBHbrm+CxVjSvu77i0amDX1ZUW5XodFXLx
+ d1+es/a0OlcwaZBY00jxO1pioNcoH3e0c8pO+odCRlH8WmyVfewX83SGthe6Si06dgMh
+ FZPB7TFaskAAF/hSndPxKRQYb2JYQdizy+gv+DBiVaFwvc3ddO4HRoCwykSPDF0aWWuz
+ doOY5d/Wk6auVzigGyLDCpASO3uZb5hGzV09DkrK88tRDzv1WYWDK4eY7FJUsJ59lzRO
+ 7Y7gwiUg2VUmXINkWviGp18WJYH+KXhF2M9RnPyTbyHe6er5hwOa3vVy5gisoKnA6UuR
+ 0fWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774406580; x=1775011380;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=A2E8rKgHUzP/UX9nRl+/RGcVIASB81IsTlG/cP9cy+I=;
- b=Y0NSwMHWw2OzKP5BNCWkeOwPO2RB12Okx6JmcLClVRp46K91/K4/ffith/YVIsvPcU
- n1NzDcpcZydH9bURUhhJ4xarZzFLyW9T75ctsruiIEuMVk0RuqkG/yI++EoKAppIZYnc
- ltjzAYfswFo9OHHSHpGqVFvkRjgpyTYRtfA+LaZuITwAAKTHqkSE0wXoZNbvEO5eFWuN
- OdOtBZ/WTUeoBed7rqvxyZDC8U4+9VcmH8hl9P5vup6MziF3dom22rJl4TEIfsC/nw+U
- XwT/8j7DrEd6sTgy04OotYkIw/hlAgXkTvRWFKjSTwFckZAMAuz6mFZRdqjUbxCr6TVs
- wnIQ==
-X-Gm-Message-State: AOJu0YzHksVpfD+m32+NnBE72P7Pg+GjvYCNrAm6q/bhQA9ORV8A+XEi
- YIE3/vmgyg2gesaZac/2GP/rjyqi5zmE9/hxljNSGJg2IEIDPaY8scUa4CbSdrvLXIB/nAxMA2V
- y6I5HZH8=
-X-Gm-Gg: ATEYQzyfqiWxujybIkvQLbqpTpAOj5GAok0H/JkRD5+x4HR1u0cdUsLvQsGi5xt2h2d
- lAWB30Vfe6iBOH1F5b0BSL44IIy13Mxd1IBdptnt5Ee8T4WytBEwLsPHIWhjuYVydCWodlL9zPx
- kELqwfoBSmIfcthHB8NeHLzY4fTBIFhdrjlR32CN9dUQ/7vPffUy5BeyAwsw8uRTiLcG939j6ln
- mu2fspBxfZEh1Xyu/Iacdr+TzVY3Jqv91KdMtyGlMi4dczr7XnQlA01t3hqH2t3we/BEI2rRAPy
- 3PR9+9P56ZkxLxjE4RWYNKXwr+lcS4au00oilw341JqkW+l3LHQc0+eCAcGNFxjRijq1pjy7eEW
- Zv4MYKHnvFYnhptuBD+EEbSV/ezWucvjikQmn3I/yQ9oq2bNwHWw9HkQvwMpYnBhlNIS3ickZ6T
- WooD3eD8ZMi6KGmlsOSyKP6YMLr+qqBJaKkG2AhCfPW0iYKSfbH//6IzfOgyDYtiNZXrWmkhj6y
- Qi2
-X-Received: by 2002:a05:6a00:b486:b0:81f:4a36:1c7c with SMTP id
- d2e1a72fcca58-82c6df281e9mr1709709b3a.23.1774406580262; 
- Tue, 24 Mar 2026 19:43:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774406579; x=1775011379;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9hlpMtkDBxX5l/chmGTVybiK0SV2YTuFFSIEAzcHJnk=;
+ b=pr0kT2z2ibe3UxpCmSeWWX6vMFvkCGPVLEpsq0fJGLa0Rccfb87EMYJiw7BWYhHp1T
+ EpiFeSaLiQ4bgXh17WyvZSuC/1pCHf/7+VssrI8WwItF7xjqhvTGDJitWKlxdmR5vnZq
+ DVxM+ntzg+tyxnobuHjkVxn3G+DgleKkiV156HdDCXe6Qu8JBwVcWlKj3P7ETNv/RSjV
+ E1hm67En7jNBnXZVQAHn9tT49WC0zG/S4NVL5BSQSdRu6F70wgDU426AGKQ8U9dft6nt
+ frC1KryGLHlmDOxOYPIandGsIcSwSO1XavV7wLWWUtj+yWnbVsrA1je6B2Rs7JLejXJ6
+ F8OA==
+X-Gm-Message-State: AOJu0YxNjxQecgFV5TdvvyON0013i6+x8go0y9X+9ZLFD30ehhcc7KVS
+ 7wvjYxna59joLxOQH6aQFQiEZ6xycVL1yXqn120aRDl4kUTn+zuxvRBZIs9PxHSqJnedw1sZSOu
+ g7sZNDWE=
+X-Gm-Gg: ATEYQzxL2d373KLWmSSOhUfPg6m/3UqlUhvjl+A94n/d1sOi/TGGLAWrnbefpRpEYVL
+ g2l8gAT9BDHI8uCLKklerbRXuXWd2Y8LGYy2xsvASeoMDnf9pwFSnMrqr96SBO5+SXlSovQGtIF
+ gZiqbQ/EWhguovmEF8aE4NqZls9FkH4l02CIwkJ6yd4UegzJDzVvfvDkR13u8R9s4fJ+DhEkVEG
+ EnMdTwZYH+ArvI6FPDdf/5dsZnemjqC3JsiZiGAB+2GdAtGE/UY+3NfZFyZGYczUfbICbwzUP+3
+ Zv6S297B4fqP1p6MKGwXhxMsQaZ8QuLcl8TtKCKqpszpHcbbdleuY/4HSzQDsaJEWtzcdn2TASt
+ +MpzACdfZ931wIB2RdziBDsf71FMa3483N+AwMlcE0DT8XlkG3SMAEuqCYfWXeEKOWdojok+qwt
+ HslmDz1LNOy+WHDxgiQYW+JxNWyqMCAxK5+dVftp5atLjRECnbnb9FJYBvC535v/5WtL8Gc5eoP
+ 0mZ
+X-Received: by 2002:a05:6a00:a226:b0:824:36f8:346f with SMTP id
+ d2e1a72fcca58-82c6def062cmr1882826b3a.25.1774406578677; 
+ Tue, 24 Mar 2026 19:42:58 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82b04222f42sm16762716b3a.61.2026.03.24.19.42.59
+ d2e1a72fcca58-82b04222f42sm16762716b3a.61.2026.03.24.19.42.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Mar 2026 19:42:59 -0700 (PDT)
+ Tue, 24 Mar 2026 19:42:58 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -73,17 +72,15 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH 2/3] include/plugins/qemu-plugin.h: add note about endianness
- of value returned by qemu_plugin_mem_get_value
-Date: Tue, 24 Mar 2026 19:42:51 -0700
-Message-ID: <20260325024252.3369186-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH 0/3] plugins: fix endianness for qemu_plugin_mem_get_value()
+Date: Tue, 24 Mar 2026 19:42:49 -0700
+Message-ID: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
-References: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,34 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/plugins/qemu-plugin.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+This series fixes qemu_plugin_mem_get_value() endianness on non x64 hosts.
+As well, it updates documentation to make clear that value returned is in
+host-endian order. Finally, it fixes tests/tcg/plugins/mem.c.
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 2ce7a7fb6c3..4eb1d2cd85c 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -374,7 +374,8 @@ enum qemu_plugin_mem_value_type {
-  *
-  * @type: the memory access size
-  * @data: the value accessed during the memory operation (value after
-- *        read/write)
-+ *        read/write). It's directly stored following host endianness, so no
-+ *        further swap is needed.
-  */
- typedef struct {
-     enum qemu_plugin_mem_value_type type;
-@@ -682,7 +683,7 @@ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info);
-  * qemu_plugin_mem_get_value() - return last value loaded/stored
-  * @info: opaque memory transaction handle
-  *
-- * Returns: memory value
-+ * Returns: memory value in host-endian order (no further swap is necessary).
-  */
- QEMU_PLUGIN_API
- qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info);
+Pierrick Bouvier (2):
+  include/plugins/qemu-plugin.h: add note about endianness of value
+    returned by qemu_plugin_mem_get_value
+  tests/tcg/plugins/mem.c: fix endian swap in update_region_info
+
+Richard Henderson (1):
+  tcg: Pass host-endian values to plugin_gen_mem_callbacks_*
+
+ include/plugins/qemu-plugin.h |  5 ++--
+ tcg/tcg-op-ldst.c             | 52 ++++++++++++++++++-----------------
+ tests/tcg/plugins/mem.c       | 12 ++++----
+ 3 files changed, 36 insertions(+), 33 deletions(-)
+
 -- 
 2.47.3
 
