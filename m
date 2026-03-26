@@ -4,110 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C1A710A1E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E9810A1E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ii3-0002XM-5m; Thu, 26 Mar 2026 07:17:08 -0400
+	id 1w5iqh-0004fj-4w; Thu, 26 Mar 2026 07:26:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5ihr-0002WY-AP; Thu, 26 Mar 2026 07:16:56 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5ihp-00016F-K7; Thu, 26 Mar 2026 07:16:55 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62Q1s7pQ1687734; Thu, 26 Mar 2026 11:16:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=MQ1ES5O+WFAXFoKKM1jsiMvJVQBSRn
- vmyZK2oQV7mtA=; b=pi31fMAI+rtmgSRXhGUu/Rt6Q1P0ObcGtpT9hydgjqtWNV
- uzTfa8KGQ/dVLkZwD0Xu3v32cZQfDdgy3HUmCvGDEPE1Rltj5LfFAdtr7Jhqe+jC
- 7PS0Vc0BOUwoQPlYgVgRCtFjTgu6A0XGLrQQ7xX43DhStnV92mjNE5GP86Tqt9gf
- AuAbbA6TIprvSCSXc20PBb00g51XXghMmmpvNb0ARzuOCPDff5IDiXMUKsep3R1O
- QsA8vnzUoejlOkPfwFzj0cwPQIeFcH9p4ovGqP93tw8/xL3d+BDJp69H8ygmGGXh
- Ym4cSHFhOaAZZEjfcbr6WYOIDSqFcGyplM5Y6BLA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1ky0bump-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 11:16:48 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62Q8GEN8004407;
- Thu, 26 Mar 2026 11:16:48 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d28c2ae3u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 11:16:48 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62QBGiER44237082
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 26 Mar 2026 11:16:44 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5D6F2004B;
- Thu, 26 Mar 2026 11:16:43 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 44C1920040;
- Thu, 26 Mar 2026 11:16:41 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.123.10.203])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 26 Mar 2026 11:16:41 +0000 (GMT)
-Date: Thu, 26 Mar 2026 16:46:39 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org,
- Nathan Chancellor <nathan@kernel.org>,
- Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5iqf-0004et-Bq
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:26:01 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5iqc-00030q-OG
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:26:01 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-64ad9fabd08so947438d50.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 04:25:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774524357; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NfKQsRML0kbXysKi1Nmi/GQmlXmcmgnZ1noKTmv0eai0TZIX1jqCxLNEOxS+qyrerZ
+ 4jlg+bQZ/35YQT4FHHx/R8zW8nyVKn0V1td/pqbiLbYvwRZoIJ8onIMk4I2igoDMuWve
+ Xuovx6yq6XRVeGHx6vYlULlNJPSOUPAFo+DtfLq9MfW7YN+p9X3cs/QfWhHqWQd56ecS
+ RHVhvd+kSA/5NuJzw5ZtkQfPMZRoppL/UHRGaZKI5mB4iZvL1JRPVRQlZry+9Ng0LyLq
+ cQ2RP/JzjaQAsUdnVxBlvMqCec9fZshgnI6qCmxdqNcJeVniuL2dkMP/es0g0Bxb/8kG
+ en2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=K8H1CL0upw+6AEBN8OABjOhr2OIodMFHFRvrQgjLZPo=;
+ fh=w4/Pf5nSLMv8sd9OsiAIH2Qcy6NnrDybe8Vo6nCIxOk=;
+ b=TTwproIJq3WL01dHUjxFCvdNk4O0V8Ps8bTGwnahGMFKlHq6Uhtqk61p9ZlI9pqiw5
+ +awr/5+QKoffRzDa+7ubqH6EHtfX204eTlTLb9mUUhLLUQhygd/rhlRodu/5B6ZHKBDI
+ 3xgfV+iEpSPlhplmnw077F5eTAJmKAUfpfAlnsk5x3BkhLZ2mw/f9fMVKUOjibPttcqg
+ v6vEyyES0/Io4eNS4WlMJ6GstxQ3lslC2bWhvGXGCfETFFAcRUBWFKWc0Mh4dZ5fS6FT
+ IMlpKW8JiO+JrkuF/hqQheVry5U1VajNn3z22vYcrfZ0z8gTQ3PXILMxNR6YGBE9nAll
+ JWDA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774524357; x=1775129157; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=K8H1CL0upw+6AEBN8OABjOhr2OIodMFHFRvrQgjLZPo=;
+ b=HvI1toCdWtzaM6LAFS7BbDaAr3fevYE/jxZuW+ve0zrEJo0aE/1FD9F+E+OpkMBDnT
+ mFvVAfRZYgz7X4fNhNXY0lUdydmPoTxZ+GUdKOX4Jwhan7fIJjqGjg0RnSb6vTYK4ySH
+ kxl6LqJ265cNtU+DSOF+Q8Ngo7sPReF+HIgfD6arXUYcxwfj78VkWawTi4YkJcDM8BMn
+ SaIenHvpDt8ciZeGZQuS/+V78FeaN4Y2NJ3XMUBLhtqK8DZQMdg0dek7aiN45pKQh4ag
+ QVzY8P2/cDznk/u75wWd2Nc1ECFFgCOTGrflYeTwJ8x7ohy4rjBs3mctxzUHYc+TLv1S
+ dWIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774524357; x=1775129157;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K8H1CL0upw+6AEBN8OABjOhr2OIodMFHFRvrQgjLZPo=;
+ b=o61lTi7kXeqNiT9kBtI6ZOtUNA9rS/HVpfbJWdfgDvZAVo9AWIXKGwKlHmr408sjac
+ DFsNMfdP204pMU5KS1CN5wCRxSkt0y5J74681tf+Bihf/7X/tWwDk85soZL7KqELVOij
+ VHMLJ+eGM03eMG17ZtZegrM3e6lW1RwrzAdmQ0kV3tgSeILtSzkJaj4xXU8LKIjMo1iP
+ PSCHwDHOTQQIlhLlSbI1ZucXwURbPrdBcaUMlDRroBWNeXTbbVE1J3hbRESHTEG7FAPS
+ iWXdxIVoHGRfvrJQbMF16rgqNTlRZIdg0F4vwid9UUOE1gxQql5efDvo4Od/9Blm0XvB
+ scyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPK/CLI1iEJNiGnFJt9mU46bgW9c25HnmsNYnnD6wypo0YBkFG/M1CecDAlQBdnwK8C2dxw4EC+iP8@nongnu.org
+X-Gm-Message-State: AOJu0YyEnFsp3ymdwNbZQB2o90dSNhqbZQXEG77j39YyhiPwWPIuT5+f
+ E31QI8SuZ/eBTo5OCoApyv/A7fF085vnuNIwab1f5IZsnOrvh6WLmdZraD0VsKj54LtQtiXLzEW
+ wJO8a/Mlo1Zl3E2sXH8rJ+iCr8EiP2gQTBMcNXEZTFA==
+X-Gm-Gg: ATEYQzwDgVfH9AqBWfs0Xqxfn2fMXg7m0+9i7khAAJKcd7BoAWlfp6Hr2XJCBBI4uAu
+ C6TKQJx6cO6V6QmNhoGekMKdTOQbTrXIIawaYZOd7k1AyU3rrBtceapMweK8f5Hci6sHmvXdski
+ c8h5DjY1roHltbxffFDafD8GhhOzO/pOJJj5xpOjar7TlmbcdM6v6TW9N57fZmd3J5kYwlwpXkf
+ NqNQHqUFdpiWu2fmoOe14wHCPCFGRrALGAJ4B2XE3BtZj9WLODaeZPqbBgtJgOHahH8DlYfq0Mf
+ yV4tdRz/fwLnzySHFaDEQ/IHJM0G6C5vl8tiCEvHP9HFNa44K+EMwqQTY7aeeuJY00Y=
+X-Received: by 2002:a05:690e:d0c:b0:649:6139:b80c with SMTP id
+ 956f58d0204a3-64ee611fcefmr6643060d50.45.1774524356906; Thu, 26 Mar 2026
+ 04:25:56 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260324135026.247418-1-shivangu@linux.ibm.com>
+ <acUTurZoQJf8jRhJ@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+In-Reply-To: <acUTurZoQJf8jRhJ@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Mar 2026 11:25:45 +0000
+X-Gm-Features: AQROBzD9n4P5zKS_61mIwlXUC8qXp1u_EaoCSiiWqgKoiCyjiNM7T__w1_qSOSk
+Message-ID: <CAFEAcA-f+XQPgQ+udz9ts-V51E+jqBHwKpPsh=oArfs1d19wfg@mail.gmail.com>
 Subject: Re: [PATCH] ppc/pnv: generate dtb after machine initialization is
  complete
-Message-ID: <acUTurZoQJf8jRhJ@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260324135026.247418-1-shivangu@linux.ibm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260324135026.247418-1-shivangu@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDA3NCBTYWx0ZWRfX7PBHo9yBRKZ8
- lFmotDzOTw5rjSQXJIqQSKBdUTzVVxtd1iycYb1K1tJ3JcRs9jH6jnBwBz3wo2NTpUG6BAm6rD9
- 8RjlaXvfHkKHG5xLwBtmeyArWAYZcmmUmX64j/zteWcrpeK7u6WFky9F7TsZ6/aZMNZJmkkWaup
- HnBi9QoR7eacD5sb9Yvg4tHV0FXoG7KKS0FZLkRo9dlIwaeFn8w8IbdfN6i26uuzmsiRUZDjkBE
- ODMEfBT9w92wj3BxFe2C4c2bz11JYqyLBhQ98rVQxMEVhqMO504S+GnwFGtbU66Cso4ePKiacin
- 5gJct+5mVn6yFIvOKVLbjBT7gBfZyN/WUCZ03cgc8At/Frnf/bqXPTjRxCEX9oRFRWU2H44VuDK
- M8JD+5+cLvd/jQmNIaijzAmXU50QIoxoWoVLFVCoPtImS9x8rX7eKiYDjcm8Sr8QrSsoUk1uHvm
- BEf8ttaNSF+S6e9YqGQ==
-X-Authority-Analysis: v=2.4 cv=JK42csKb c=1 sm=1 tr=0 ts=69c515a0 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=WM5r8-xwWLsYA99Q0PsA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: WdtHMMKnimmzyNKYjqsOKLdV9FnxAHxp
-X-Proofpoint-GUID: WdtHMMKnimmzyNKYjqsOKLdV9FnxAHxp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_02,2026-03-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 adultscore=0
- spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603260074
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, npiggin@gmail.com, milesg@linux.ibm.com, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-stable@nongnu.org, Nathan Chancellor <nathan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,92 +120,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/24 07:20PM, Shivang Upadhyay wrote:
-> <...snip...>
+On Thu, 26 Mar 2026 at 11:16, Aditya Gupta <adityag@linux.ibm.com> wrote:
+> But still the dts we have is different from what we should have at
+> pnv_reset. Adding a pnv_dt_create at the end of pnv_reset, as it used to
+> be before, gives me a 'bmc' node also in device tree.
 >
-> +static void pnv_machine_init_done(Notifier *notifier, void *data)
-> +{
-> +    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
-> +    MachineState *machine = MACHINE(pnv);
-> +
-> +    if (!machine->fdt) {
-> +        machine->fdt = pnv_dt_create(machine);
-> +        _FDT((fdt_pack(machine->fdt)));
-> +    }
-> +}
-> +
->  static void pnv_init(MachineState *machine)
->  {
->      const char *bios_name = machine->firmware ?: FW_FILE_NAME;
-> @@ -1244,10 +1255,8 @@ static void pnv_init(MachineState *machine)
->          pmc->i2c_init(pnv);
->      }
->  
-> -    if (!machine->fdt) {
-> -        machine->fdt = pnv_dt_create(machine);
-> -        _FDT((fdt_pack(machine->fdt)));
-> -    }
-> +    pnv->machine_init_done.notify = pnv_machine_init_done;
-> +    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
->  }
->  
->  /*
+>         $ diff /tmp/dts.machinedone /tmp/dts.pnvreset
+>         16a17,33
+>         >       bmc {
+>         >
+>         >               sensors {
+>         >                       #size-cells = <0x00>;
+>         >                       #address-cells = <0x01>;
+>         >
+>         >                       sensor@0 {
+>         >                               ipmi-sensor-type = <0x23>;
+>         >                               ipmi-entity-instance = <0x01>;
+>         >                               ipmi-entity-id = <0x23>;
+>         >                               ipmi-sensor-reading-type = <0x6f>;
+>         >                               compatible = "ibm,ipmi-sensor";
+>         >                               reg = <0x00>;
+>         >                       };
+>         >               };
+>         >       };
+>         >
+>
+> This isn't handled at machine_init_done as 'pnv->bmc' is not set at this
+> time
+>
+> Two ways to fix it:
+> 1. Have pnv_dt_create in pnv_reset as well, like previously
+> 2. Move the pnv_bmc_find code in pnv_reset to pnv_init
+>
+> What do you say ?
 
-Thanks for fixing it. Just adding few more info from what I see.
-OPAL was stuck at cec-power-down, since it expects an ipmi-bt device for
-shutdown to work in QEMU.
+My feeling would be that the pnv_bmc_find() handling
+should move to the machine-init-done notifier. (pnv_init()
+would be too early -- the pnv_bmc_find() code is looking
+for a device that has been added via the -device command
+line option, so it won't be there yet in pnv_init().)
 
-So, the issue was not directly due to missing BMC device, rather due to
-missing 'isa-ipmi-bt' device, which the patch does fix, and hence the
-issue is fixed.
-
-But still the dts we have is different from what we should have at
-pnv_reset. Adding a pnv_dt_create at the end of pnv_reset, as it used to
-be before, gives me a 'bmc' node also in device tree.
-
-	$ diff /tmp/dts.machinedone /tmp/dts.pnvreset 
-	16a17,33
-	>       bmc {
-	> 
-	>               sensors {
-	>                       #size-cells = <0x00>;
-	>                       #address-cells = <0x01>;
-	> 
-	>                       sensor@0 {
-	>                               ipmi-sensor-type = <0x23>;
-	>                               ipmi-entity-instance = <0x01>;
-	>                               ipmi-entity-id = <0x23>;
-	>                               ipmi-sensor-reading-type = <0x6f>;
-	>                               compatible = "ibm,ipmi-sensor";
-	>                               reg = <0x00>;
-	>                       };
-	>               };
-	>       };
-	> 
-
-This isn't handled at machine_init_done as 'pnv->bmc' is not set at this
-time
-
-Two ways to fix it:
-1. Have pnv_dt_create in pnv_reset as well, like previously
-2. Move the pnv_bmc_find code in pnv_reset to pnv_init
-
-What do you say ?
-
-> --- a/include/hw/ppc/pnv.h
-> +++ b/include/hw/ppc/pnv.h
-> @@ -111,6 +111,8 @@ struct PnvMachineState {
->  
->      bool         big_core;
->      bool         lpar_per_core;
-> +
-> +    Notifier     machine_init_done;
-
-One minor note, all other machines in qemu use 'machine_done' as the
-notifier name, but I am good with 'machine_init_done' also, as this
-makes more sense to me.
-
-Thanks,
-- Aditya G
-
+-- PMM
 
