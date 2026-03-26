@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5520A10A1E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F7810A1E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5isD-0005Wk-N6; Thu, 26 Mar 2026 07:27:37 -0400
+	id 1w5isD-0005Wf-HA; Thu, 26 Mar 2026 07:27:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w5isC-0005WI-4m
+ id 1w5isC-0005WN-9L
  for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:27:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w5isA-0003B7-3c
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:27:35 -0400
+ id 1w5isA-0003BE-DA
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:27:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774524452;
+ s=mimecast20190719; t=1774524453;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ohN2fiB4s0vef49xAcpsOH5E8zzlSnaOj89GorM+m0A=;
- b=C5MVWIIlwxGu9QNwt6Uyv9cmcgIhbisEoCPttb21jp9iEHUcBydh4X/nqjePp+T6lGu9bm
- goBMnQ4AO4q/IrYTs7wy0K/2P2QwN3XO3S8p3xmCvGhIYolJ3Hd21Diky/+a/TNHuQgv7O
- X/m+JEp/dn0ovXuRnKobDSYI6JhlkNE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ylgpsnIn65PiH7fUhPOq6pqiv2Cy9LqY6Al99VFYinY=;
+ b=Do0HSzVjI5BKj+KFVsIBhinDNfk72gci3PQPOo2TfKrBTn/WLaFsPO1RqiMWHQqTgT0sYs
+ 6P6uV1ciG6H3Pl5SeSFV0v8KaMqhZe5TYUtgHxpr79fPokBt7siBGmw5MYH68QA7JLw9tM
+ 0a1htuMWXILNjce4kMhUcKxRh5Z2wj0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-gGOy8PwAMTaKLWShAQysgQ-1; Thu,
- 26 Mar 2026 07:27:29 -0400
-X-MC-Unique: gGOy8PwAMTaKLWShAQysgQ-1
-X-Mimecast-MFC-AGG-ID: gGOy8PwAMTaKLWShAQysgQ_1774524444
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-MlIerS1ONBWXKVXFrZ1SXQ-1; Thu,
+ 26 Mar 2026 07:27:30 -0400
+X-MC-Unique: MlIerS1ONBWXKVXFrZ1SXQ-1
+X-Mimecast-MFC-AGG-ID: MlIerS1ONBWXKVXFrZ1SXQ_1774524449
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 995381955DBB; Thu, 26 Mar 2026 11:27:22 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 02B9119560A1; Thu, 26 Mar 2026 11:27:29 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5195C1955D84; Thu, 26 Mar 2026 11:27:20 +0000 (UTC)
+ id 5F0E01955D71; Thu, 26 Mar 2026 11:27:26 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [RFC v2 5/7] test/qtest: Add test for tpm crb chunking
+Subject: Re: [RFC v2 6/7] hw/tpm: Add support for VM migration with TPM CRB
+ chunking
 From: marcandre.lureau@redhat.com
 To: Arun Menon <armenon@redhat.com>
 Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
@@ -62,26 +63,26 @@ Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Yanan Wang <wangyanan55@huawei.com>
-In-Reply-To: <20260319135316.37412-6-armenon@redhat.com>
+In-Reply-To: <20260319135316.37412-7-armenon@redhat.com>
 References: <20260319135316.37412-1-armenon@redhat.com>
- <20260319135316.37412-6-armenon@redhat.com>
+ <20260319135316.37412-7-armenon@redhat.com>
 Date: Thu, 26 Mar 2026 15:27:02 +0400
-Message-Id: <177452442287.34609.2774813943061790610.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2248;
+Message-Id: <177452442289.34609.7771820064527102277.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3512;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=H4EEjYNG84zMCVxAT3S68tqPtgv/tAS6+2QIwvCJeKE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpxRgJMVvIOT84PLzAPYb1DC5bW3XBVXEUuUx4B
- jLY7SdiZtOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCacUYCQAKCRDa6OEJdZac
- 5T4VD/9qegjJ1uBToyJO8orkoWNr1ElKBYqA863yx62OnssIJiUJPLdv4fDy5g5z+sQLLMXiZqX
- modfo23aMhxM7aqyIjQPGfWRpF4ES+/ZeOMtYW+jytmIvHUbCIeUV89GHNgdlREdZtpF7sFBZm4
- GJ91051Ng9MhBhn1ljTRhCW5c+PL4atvIQ/gmAJXbBcBWuVOhG/JVvnHN7dVH3kHQEx8G6C2kI4
- hMExHS07fi5gfPnpth6Pb68DOfah+jOuYiKQzh1sWcEoWRWaCjcXeCcnM6uNvDZSfcL2ibBb0EC
- KD40NsLx/D1Dy/EBNCxwHfLlzArwE8a/moXqK3tGbsj/3WyjJvaNHf4YYgRcsiLL1wL/E/cy/MJ
- GAvLo9Pz9hLZBiPTWurI7samV+T+5Kthtk1DRsRHVdsL05bVvvkSRzxlyxe6Bl4WgjHjTWacaJB
- lF7YKMOMkn1HpigicGiUXQY8Gf6DU8zVzQ7TdXVNWojr7Qqq8kihyZntJxzlMWtzUejYbpq2IWZ
- MzB6vc/0m/jg6W+Ab/87DOyBlWg13DDlsDcgKFO3+zT5A0+HC6l9juUQKelNinogHhpcobCoMJd
- SjijvVIEfAGGG5rUPBzDTMk3kE6uVhVZ6q35KsAvUj7w+eb77oSTG4kxwWtao5yLlKXD8vF55Jw
- 1oe7hZh8nfmQWrw==
+ bh=x61lQ1HjZpayRQirw845+1xcLBQbajcuZGlArC5Rkow=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpxRgJLihto11kyt4ueU65ZZ/VgNbf2HlKwCC7T
+ SH6vB9pIdSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCacUYCQAKCRDa6OEJdZac
+ 5RUCD/9GmhIwZLjrcgzEx8Nr/AQfcI2Nh/8JohBjSg3eXpCXUC3W0DUHsizTjCCjpgwA8miLDqS
+ tm52fbWjyqUGJPAERGeCH+vObkmHlWQQLFgyj+cPEhpWkbUrWOctmThQifQnT1ygQIxIa1Zx3ok
+ Chaaacrc8TyPCj+qWHXZsdn4AFuBbBxQ0qKhkvD548OhQcfMm7hFX/l6eUcAwvQRh1Tq2yQCCPx
+ zyuKas2f1ieSlK0JzQau0gm2YPfmBI9MP9EwjiHmNs3Vof9sUk6jt7D7+2DLGEFvbIlvjtbCxLu
+ mBQ2kHSyLKHhSgDZ0PZRhC4S5eBZvXah6jU5Xq9Yea3ea+w1g8yYncmDE9xj92zp8JcEJfH5V3j
+ e+DdHwBnizL2TZ62GpRs91ZFMMmwjinsD6FIBOJZ8ECxOG1JPybMoGUAfchUWp7r25n6M4UyzKl
+ eyEXaX+rHjrTh+F3NtJ6sd4ohLO9eMoVyOMWLhWnh7/P6zDUsb6Lx+3i+pb545ER9zdEepsCKeW
+ YjV7P+WTg2K9FwCWU07fcp4y9DvFOjcbnf3ojJXeBeRS7IkGf+p1eHjPhnhzvBkpfghkZMqqVpl
+ NbZJOD4UAjUIMphy+syJYPDpZQA26JUNsxpc6tTX0T8OcniLOWUcnkQxEPojUxIIFlG1w7yeWL7
+ Panrf1GYM0a1Qng==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
@@ -111,83 +112,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Mar 2026 19:23:14 +0530, Arun Menon <armenon@redhat.com> wrote:
+On Thu, 19 Mar 2026 19:23:15 +0530, Arun Menon <armenon@redhat.com> wrote:
 
 Hi
 
 >
-> diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-> index 2cb2dd47961..dfc1fd70b7f 100644
-> --- a/tests/qtest/tpm-util.c
-> +++ b/tests/qtest/tpm-util.c
-> @@ -14,16 +14,42 @@
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 6cf0e2f404e..fcd6043c992 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -40,6 +40,7 @@
 >  
->  #include "qemu/osdep.h"
->  #include <glib/gstdio.h>
-> +#include "system/memory.h"
+>  GlobalProperty hw_compat_10_2[] = {
 
-Use qemu/bswap.h instead
+Let's not forget to update this to 11.0 for 11.1 :)
 
+>
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index e61c04aee0b..9ce342fe8ac 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -33,6 +33,17 @@
+>  #include "trace.h"
+>  #include "qom/object.h"
 >  
->  #include "hw/acpi/tpm.h"
->  #include "libqtest.h"
->  #include "tpm-util.h"
->  #include "qobject/qdict.h"
->  
-> +#define CRB_ADDR_START (TPM_CRB_ADDR_BASE + A_CRB_CTRL_START)
-> +#define CRB_CTRL_STS (TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS)
-> +#define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_SIZE)
+> +/* command and response buffers; part of VM state when migrating */
+> +typedef struct TPMCRBMigState {
+> +    uint32_t cmd_size;
+> +    uint8_t *cmd_tmp;
 
-Shadows tpm.h macro. Use CRB_ADDR_CTRL_STS ?
+Could we name them after the name of the state fields?
+command_buffer_len && command_buffer_data ?
 
 > +
-> +#define BIT_START_INVOKE  (1 << 0)
+> +    uint32_t rsp_size;
+> +    uint8_t *rsp_tmp;
 
-Similar (although in tpm_crb.c unit)
+(response_buffer_len ..)
 
-> [ ... skip 11 lines ... ]
-> +            break;
-> +        }
-> +        if (g_get_monotonic_time() >= end_time) {
-> +            break;
-> +        }
+Actually, you should not need an extra MigState at all. Check how
+GByteArray are handled in in ui/vdagent.c for example. (I have a doubt
+that it may eventually leak if loading for a running state, where data
+!= NULL though, I would have to check - we may want to use realloc for
+buffers)
+
+> @@ -347,18 +361,118 @@ static int tpm_crb_pre_save(void *opaque)
+> [ ... skip 30 lines ... ]
+> +    } else {
+> +        s->mig.rsp_tmp = NULL;
+> +        s->mig.rsp_size = 0;
+> +    }
+> +    s->mig.rsp_offset = (uint32_t)s->response_offset;
+> +    return 0;
+
+If you get rid of MigState, the original response_offset field will
+proably have to be uint32_t too.
+
+> [ ... skip 14 lines ... ]
+> +        g_free(s->mig.cmd_tmp);
+> +        s->mig.cmd_tmp = NULL;
+> +        g_free(s->mig.rsp_tmp);
+> +        s->mig.rsp_tmp = NULL;
+> +        return false;
 > +    }
 
-Consider adding a g_assert() here
-
-> @@ -31,24 +57,74 @@ void tpm_util_crb_transfer(QTestState *s,
-> [ ... skip 30 lines ... ]
-> +
-> +    qtest_writeb(s, TPM_CRB_ADDR_BASE + A_CRB_LOC_CTRL, 1);
-> +
-> +    for (size_t i = 0 ; i < req_size; i += chunk_size) {
-> +        bool last_chunk = false;
-> +        size_t current_chunk_size = chunk_size ;
-
-Trailing whitespace before the semicolon.
+Suggesting g_clear_pointer(&ptr, g_free)
 
 > +
-> +        if (i + chunk_size > req_size) {
-> +            last_chunk = true;
-> +            current_chunk_size = req_size - i;
->          }
-> -        if (g_get_monotonic_time() >= end_time) {
-> -            break;
+> +    if (s->mig.cmd_tmp) {
+> +        if (s->command_buffer) {
+> +            g_byte_array_unref(s->command_buffer);
+> +        }
+
+Slightly neater:
+g_clear_pointer(&s->command_buffer, g_byte_array_unref);
+
+> +        s->command_buffer = g_byte_array_new_take(s->mig.cmd_tmp,
+> +                                                  s->mig.cmd_size);
+> +        s->mig.cmd_tmp = NULL;
+> +    } else {
+> +        if (s->command_buffer) {
+> +            g_byte_array_set_size(s->command_buffer, 0);
+> +        }
+> +    }
+> +    if (s->mig.rsp_tmp) {
+> +        if (s->response_buffer) {
+> +            g_byte_array_unref(s->response_buffer);
+> +        }
+
+Or you could simply without condition:
+
+g_clear_pointer(&s->command_buffer, g_byte_array_unref);
+s->command_buffer = g_byte_array_new_take(s->mig.cmd_tmp, s->mig.cmd_size);
+
+This will also reset the size to 0 if cmd_tmp is NULL and cmd_size is 0.
+
+> +        s->response_buffer = g_byte_array_new_take(s->mig.rsp_tmp,
+> +                                                   s->mig.rsp_size);
+> +        s->mig.rsp_tmp = NULL;
+> +    }
+
+Missing
+    s->response_offset = s->mig.rsp_offset;
+
+> +    return true;
+> +}
 > +
-> +        qtest_memwrite(s, caddr, req + i, current_chunk_size);
-> +
-> +        if (last_chunk) {
-> +            qtest_writel(s, CRB_ADDR_START , BIT_START_INVOKE);
+> +static const VMStateDescription vmstate_tpm_crb_chunk = {
+> +    .name = "tpm-crb/chunk",
+> +    .version_id = 1,
+> +    .needed = tpm_crb_chunk_needed,
+> +    .pre_save = tpm_crb_chunk_pre_save,
+> +    .post_load_errp = tpm_crb_chunk_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT32(mig.cmd_size, CRBState),
 
-Trailing whitespace before the comma.
-
-Style: should be tpm_sts per QEMU naming conventions.
-Style: declarations should be at the top of the function.
-Same: declaration mixed with statements.
-
-Style: should be tpm_sts per QEMU naming conventions.
-Style: declarations should be at the top of the function.
-Same: declaration mixed with statements.
+Could be version 0, I think.
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
