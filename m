@@ -4,91 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E4D106F2EA
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 08:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D102106F2F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 08:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5g1G-00034z-G6; Thu, 26 Mar 2026 04:24:46 -0400
+	id 1w5g1L-00036r-EC; Thu, 26 Mar 2026 04:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1w5g1D-00033m-JE
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 04:24:43 -0400
-Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1w5g1H-000353-1I; Thu, 26 Mar 2026 04:24:47 -0400
+Received: from fout-b5-smtp.messagingengine.com ([202.12.124.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1w5g1B-0006ki-EC
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 04:24:43 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.stl.internal (Postfix) with ESMTP id C97227A0203;
- Thu, 26 Mar 2026 04:24:37 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1w5g1F-0006lh-DS; Thu, 26 Mar 2026 04:24:46 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.stl.internal (Postfix) with ESMTP id BA9021D0020E;
+ Thu, 26 Mar 2026 04:24:43 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Thu, 26 Mar 2026 04:24:37 -0400
+ by phl-compute-04.internal (MEProxy); Thu, 26 Mar 2026 04:24:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm3; t=1774513477; x=1774599877; bh=0ojE2zDt02
- q+VyX4VkO8harfxDa4mKGLDDUf6MTHftk=; b=X7Y6k3PJ07eClyZ3B1TQl1yOpD
- oTZYC4Rhcn2B6ILJvg62uI7nBfVeJf6VJcKdWrNNXRKDTS/sH443lC/UY4EsR9LG
- W0dOCw6ySBRGXTgNq1oWgXOxBY2L68Dt79d5cdTilZZZ8xaSzQEVR0Jlm6zVDgXM
- Hy8cdEt9Q649REAOdBUcKKnkKj8G7iU6gjT05RSrJHFVis0iKxOL+zyAPzDWS7WN
- ++e+SrZvkxNNpICh/DpfljGRO/W2Mg8AaqT79IubY7mttcwROiHuAfASU+cP+9ys
- zRRknro7R5PyFGKWLzjKRIfC81R0R71RAyiNAvJLRSYPBG53jsdldJsJ74mA==
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1774513483; x=
+ 1774599883; bh=Xe0NNasWuj7ft2jRrG9JeA8yj0VbUSM2GM8CLq1zSVQ=; b=P
+ vVR5vTSATXKZk3n4O6TfjQCs4V8MnYV/W2AMDYjO/RIPJgCwRoVDpvFGI5XWmFr4
+ TmBV7sLc5gqHWRz0eDOZnu68zgYdXStkwm6BrUzPIp6QhRBopWVLp+gfUWqw9KKm
+ z+j9zuMW9VwmnMHHEPWBIIJLvK9A8RnDedqFLk0oM/vCGvR3HbLQ3vJrB/OHmKuB
+ 0bEpN8w66m6kT6Pd8sqvlWJ2lJHiUQGuWk4ReaMIbKtTbXD9jE4FCSz8vQSI2taH
+ RGxXUqzJpSJC1AY31CTP2vBVUgdRLlIYDIKgNSxjRymkv8RVU2n1rysxos/+pX9i
+ /VfUNLe9DLptLX35CGijQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1774513477; x=1774599877; bh=0ojE2zDt02q+VyX4VkO8harfxDa4mKGLDDU
- f6MTHftk=; b=lz+BBgmtrBObyWT0PRiAcliHfrji3el8ENpnt55tC6qA26Knt+Z
- en2VMS4JZbEAUJiZfjdu8il7WjvDM0nLghoh9sQnaGq8JwEuiNwHqPZZ4wrDx2RF
- 2yiv4oiU57WdMNh8KacKaSGuAxdNypHz3X7dNuIOeStpc+BOtsuahB4d4pPJHATC
- 5VXAfqHLhg9nnRmhxBD7rXxRFfoldPElQC2c8ITmqBYAHimF4eMnmW4s9ffGwFYr
- K9DvYmpChKvEul7prWkHpMBoMHlWL/i8AUDGByC46tOSmw+KV27cem+7SBBwn2Iu
- BISn/3sGWx5PfaNtl6AyLQ0aWV5eSkDeOgA==
-X-ME-Sender: <xms:RO3EaS5pQ1OLO6LloZblSxrgoMyeFTalSnhh4DD_0DbKMn80XMepnQ>
- <xme:RO3EaQMIM3yov5j0yOEjlaAFkYLTUCTndAEsP5sQNjQ7fPlwR_sQdWnU2lHPHOKP4
- cEW9kHWpYO3uGRTaBbeAH7E4W-JbpvfIK5RnnQ7wFFojE-jBG_-bY4>
-X-ME-Received: <xmr:RO3EaQnORZOrQRTf9nRrmsIRuwL13Wf6XjTkW0uX09Ti8gf6s6tr9TIRiMA1ahl0cs2OubX1h2FKy76DvlmzSCBJ-UNELMyZ4YPlAwlmuQ-9Utja6OMnWCvAUA>
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm1; t=1774513483; x=1774599883; bh=X
+ e0NNasWuj7ft2jRrG9JeA8yj0VbUSM2GM8CLq1zSVQ=; b=4r7XUjcsh7f2Az6P1
+ ucQpKFAxhOdfc2ecNoq0knbrNJXi656iGZ/vsc465E0wLumao13tj2eZDRIdWKLe
+ /coFwKQ0Ayh6Vk/S/59uGbvWL52PmHatRhlaWPetP+oacJeR0Yr4DIlt/q9EhGVK
+ kTrX3IyoSi5PTihQohWu0UwrV265T8tGe2nYCAF5chQIOjhu5Nok62l5Ca8XGBVo
+ 1a88HmJejXAHIjZC1lD7CpyOB2UhhrW+qhzSzKcwB7djQ6MdNWSHF0BJm3uBa+8a
+ UjZEiHlSct7PYDlBSZ/IVQ8NLl1XhAeXR9c80AYmyAM2J3UiyZrjWBLlO8jsYXD6
+ mFaQw==
+X-ME-Sender: <xms:S-3EaZBvXI38EkuLUBZ37m6I7fY9koSmc_K5Iyu2njuLp1XyNk-OUA>
+ <xme:S-3EaaHACigIOLEWbdHf5Nv2DEk19vJGYZs8csNs0g09dI7K8_FhR84E49Cp6KRgG
+ KLfKHDDpUMqHAeJZzDbEcK-EJhAcyDgal2yc7ag-oTCYODk1wJgE-M>
+X-ME-Received: <xmr:S-3EaYN_Lm--BxIpmABEzDkU9NkDU5AOwNPI7DzWmDLe9EWTA--B_VJqtqzNXwysx4aOPVP78hryR_rv2fk7_Nrj-mH3OVZevQFXsTC0a6y3MEjGxwT2n3H7Kw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdeikeekucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepmfhlrghushculfgv
- nhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnh
- epjeevheevhffhvdegveetjeevgfevgeeuueehffeuvedvjeejjeduheeiueffkefhnecu
- ffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggp
- rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdqug
- gvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghl
- lheslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunh
- hgrdgtohhm
-X-ME-Proxy: <xmx:RO3EaXTH8tt7BdgIaVxz-tmTgc7yvJE00uAKqPzyqbaV7VKMlPKxYQ>
- <xmx:RO3EacAs_3ALwJsNVbNFA4LLtTFWZBbkgJRY4hyQAiN2K3JV50SWeA>
- <xmx:RO3EaWQRpQjLDUCEg4kTIdkoSIJzMCYECbsnO0Rv_-LjJuazPAIgvA>
- <xmx:RO3EaSq7eSa1TnpOA2gpw7m4Ukk8liG_yXg5mkKYTX7h_I4wjLh5tw>
- <xmx:Re3EaVf6XW4tUYrpiOZTqMUosrAkK4RDwN2NxIUzq4A_dfpU9TEmI_0k>
+ gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghushcu
+ lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
+ hrnhepfeehteeghefffeegkefghfegieejkeevfffhjeevfeekudeiieevheetledujedu
+ necuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhn
+ sggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuh
+ dquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhigu
+ vghllheslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhgrihiguhgrnhhlihesnhhtuh
+ drvgguuhdrshhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdho
+ rhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpth
+ htohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhssehirhhr
+ vghlvghvrghnthdrughkpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpd
+ hrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:S-3EaT6yrFHGjVQALKI-GqDB7-a1gaW0oktv7A2L7WFEFnrzAdsyhA>
+ <xmx:S-3EaTjIU4VsHQ0hrRoE0rLqjRGuK1SvamTnJo-_VfAImktr5Xpjbw>
+ <xmx:S-3EaQdG0D_vmqslvCjJheKErZ1cwPj_8sgJM5_6N3mt3Ee_3euD9Q>
+ <xmx:S-3EaTwXE7SgqB99-iDtD1wmPPTW8XmBni5RyKjxL4j6Z1CYg-HgsQ>
+ <xmx:S-3EacrfNQh-7fcektdACvyQ6jgtVbq-1277xhgbvEw8y7QkhZI1q-oI>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Mar 2026 04:24:36 -0400 (EDT)
+ 26 Mar 2026 04:24:41 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 0/2] hw/nvme fixes
-Date: Thu, 26 Mar 2026 09:23:47 +0100
-Message-ID: <20260326082350.17374-1-its@irrelevant.dk>
+ Kaixuan Li <kaixuanli@ntu.edu.sg>, qemu-stable@nongnu.org,
+ Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org
+Subject: [PULL 2/2] hw/nvme: fix heap-buffer-overflow in nvme_abort
+Date: Thu, 26 Mar 2026 09:23:49 +0100
+Message-ID: <20260326082350.17374-3-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260326082350.17374-1-its@irrelevant.dk>
+References: <20260326082350.17374-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.158; envelope-from=its@irrelevant.dk;
- helo=fhigh-b7-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.148; envelope-from=its@irrelevant.dk;
+ helo=fout-b5-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,33 +115,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Kaixuan Li <kaixuanli@ntu.edu.sg>
 
-Hi,
+In nvme_abort(), the submission queue pointer is dereferenced from the
+guest-controlled sqid before validating it with nvme_check_sqid():
 
-The following changes since commit 007b29752ed06e467d3c830bc2c17a8851f8bcd3:
+    NvmeSQueue *sq = n->sq[sqid];
 
-  Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-25 09:16:13 +0000)
+Since sqid is a 16-bit value (range 0-65535) taken directly from CDW10,
+and n->sq[] is typically only max_ioqpairs+1 (65) entries, a malicious
+guest can trigger an out-of-bounds heap read by sending an Abort command
+with a large sqid.
 
-are available in the Git repository at:
+ASan reports this as heap-buffer-overflow in nvme_abort.
 
-  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20260326
+Fix this by moving the array dereference to after the nvme_check_sqid()
+bounds validation.
 
-for you to fetch changes up to eb5cc99aff17cbfdad16b18d3503c6f22233eeb5:
-
-  hw/nvme: fix heap-buffer-overflow in nvme_abort (2026-03-26 09:14:35 +0100)
-
-----------------------------------------------------------------
-nvme queue
-
-----------------------------------------------------------------
-Kaixuan Li (1):
-      hw/nvme: fix heap-buffer-overflow in nvme_abort
-
-Pankaj Raghav (1):
-      hw/nvme: re-enable wzds bit in namespace dlfeat
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3348
+Fixes: 75209c071a ("hw/nvme: actually implement abort")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Kaixuan Li <kaixuanli@ntu.edu.sg>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
  hw/nvme/ctrl.c | 4 +++-
- hw/nvme/ns.c   | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index cc4593cd427a..be6c7028cb58 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -6111,7 +6111,7 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
+ {
+     uint16_t sqid = le32_to_cpu(req->cmd.cdw10) & 0xffff;
+     uint16_t cid  = (le32_to_cpu(req->cmd.cdw10) >> 16) & 0xffff;
+-    NvmeSQueue *sq = n->sq[sqid];
++    NvmeSQueue *sq;
+     NvmeRequest *r, *next;
+     int i;
+ 
+@@ -6120,6 +6120,8 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
+         return NVME_INVALID_FIELD | NVME_DNR;
+     }
+ 
++    sq = n->sq[sqid];
++
+     if (sqid == 0) {
+         for (i = 0; i < n->outstanding_aers; i++) {
+             NvmeRequest *re = n->aer_reqs[i];
+-- 
+2.53.0
+
 
