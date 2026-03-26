@@ -4,87 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C9C10AB82A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 21:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E52410AB822
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 21:46:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5sVy-0006N5-LH; Thu, 26 Mar 2026 17:45:18 -0400
+	id 1w5sWY-0006T9-0G; Thu, 26 Mar 2026 17:45:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5sVx-0006Mu-0Q
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:45:17 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5sWW-0006Sw-O0
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:45:52 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5sVu-0005qa-Qk
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:45:16 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3590042fa8eso991226a91.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774561513; x=1775166313; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=58Cvhl7tWWsx7Unbvlpw4gd2DslC5STgxeibEU1KMc0=;
- b=kWAU4T9SxDkhWzbRl1dAaXxB7FSaMs5DuhcGg1/2yCXX8D6N2XuIDIyaOLEe4/N07l
- GDN+Mj3BhSnhKFAg7XaEjQbhGah8tBTThMghnRY01lYzfKvSWvpo6WTPPfs1oZU9qdOl
- dzlUDdudeCXVJBArB/etORz5h3+F8xIcGcbD5M2Zi9lNnU9/WFi2TDfbV4Piy/gpL24Z
- WjTk8N0nPgHWCaRtQX6YXafcuMLjdsG2MWbwYJ+ZWQexKW/hmGOzAeKWFLKX9Z7c4oxI
- 6pPqvJTMiyf2VnbN0fnWcxOs/ChrxO1Let9LEDP7PvnLZ30kuds0vEyCIDNZZji6UGr8
- gvgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774561513; x=1775166313;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=58Cvhl7tWWsx7Unbvlpw4gd2DslC5STgxeibEU1KMc0=;
- b=P7YcSw1N+Bkeqhzbgq2DynB9DwzNakWlW9GceN/peZOeEhAUAeVTCwWOwhNbp+MEuG
- Cc4SF2QpU0XaaU2KEUW8cXAmmO4TP/QQu74aDBUgLiCWZ/gMGXT89ElEEh1Qw2ewvrEG
- NKAu2R4+oSV+Q9U7njAWL+E00qztlWU7etfqdnsuHwVacS1WwnFlxLsDk5ddx94r4Ssg
- Km0z8KWcr26XJK6IU7nl64aHoWKs2L53986vQxccmvi0B9ew4QJvm95984aOlz4bVuzn
- 5EWPs1nUt6BHrKhi7ZzYI55poGeX+yaO8aHGAK8kj6IWtm/sDMZ1DWmbIQj9QIby4yB4
- P01Q==
-X-Gm-Message-State: AOJu0YxkS7aAePRtv97RiV23ATaGrwb6EdujwkYsQ6AkLrT5cye5LEOh
- TjS3br3RwE+WddSnV++yEDfQOljjS5hJTjJSuYsu3L1Ttgll6ppB4YtI5FFJ25xHPWat2Fajc8S
- SwvY4LpGZ2A==
-X-Gm-Gg: ATEYQzygJlhv7LaUl1qQNI+sF6o77bbzbESWRWYpDNhz6xPXIZUhwDoYr20KsLUagGt
- LpGuDpzMc97NdIl742CxxFZiPGmm58QKPMT1sKnaBuFmeNwRFLQVfqE5OJFtCGcFWByonRvASgf
- +ZtTMHb+OF8Td5Zb/NbRk7eXytwHZRt4qDyrI3psr9pq8Kx1pB1yJW3nCMWFcCTu6oqqi30dI5s
- 0YNxa5rBbopMD7QwclHTbLslLzfVeLhceK3A3+E7Ck9N/mTZt38aYDrLEfVhxgjhaiwTTv0MxQ7
- spg4sMdl49T+2eJMO+igi2la45onPj306Ctc19T1j9cDRUu6E4gfSH6UYWgS5m3hsoibmxGxGtx
- UPfR8wb4kIXAqq6gmfB5ACdQD87f/a2cvbXVqTkebfUns7w8IZTDr/HKazu490ArNSsDoLpU4QF
- S/8RBxFxEfW2DolLQvtJpIkNVhni9xuvuEGic3StDRgbSV6bvPNEMG2McFehJyIdOIo+6Bqr1tl
- lDb
-X-Received: by 2002:a17:90b:3e81:b0:35b:a8cf:7969 with SMTP id
- 98e67ed59e1d1-35c30000104mr167294a91.11.1774561512578; 
- Thu, 26 Mar 2026 14:45:12 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c22b9c152sm2573083a91.8.2026.03.26.14.45.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 14:45:12 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- richard.henderson@linaro.org, Peter Maydell <peter.maydell@linaro.org>,
- philmd@linaro.org
-Subject: [PATCH] docs and tests: assets moved after GitHub account renaming
-Date: Thu, 26 Mar 2026 14:44:36 -0700
-Message-ID: <20260326214436.256215-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5sWU-0005xI-J7
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:45:52 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D711221132;
+ Thu, 26 Mar 2026 21:45:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774561549; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3PY49rqrb3gZsoCVQ26efIKByZsntJlPggvKJ/pYdtU=;
+ b=JdnBQaPWKe0rUXosPDFNP/QipJLr7QTsvneU05AHiFoC6Yvs1jEfMtPJBNwiQhoYUU3AzQ
+ jUGJgF4qV6XolE8VsHWeiZcQ1ZLFYDkKBfKGyJzRvqyjG/ECOCRMqKIoBNyr7N33uUy97M
+ o4UrlGUaBLv2amlzpTlM8xlSOsMNTkc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774561549;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3PY49rqrb3gZsoCVQ26efIKByZsntJlPggvKJ/pYdtU=;
+ b=l92uuPw4+3kBw6fKdR/E1jWjEhKjQ0A+i26jSNGLEe/si9f6fpciCqnoppwu08PT42vZCy
+ gSj74P99Wscjp8Ag==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qISt25N6;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=SXOtTtDp
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774561548; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3PY49rqrb3gZsoCVQ26efIKByZsntJlPggvKJ/pYdtU=;
+ b=qISt25N6WkJ+g5EdEod5UAlN57l60qnSIdIaNslWjakprDLJkqe/ZIti0Vb0Ups5dZaj1i
+ 2rnIPclyKC+U0Z8d3bKvuzWpfdiZwO570nsRo2uVPPpv4DIXTsgFablgrnJa/cyvv16K+i
+ XDlEbz1Lcoc6qfQTNPe3PwIffBd2zBU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774561548;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3PY49rqrb3gZsoCVQ26efIKByZsntJlPggvKJ/pYdtU=;
+ b=SXOtTtDpQx4Vg7eB4xuC8nzkb3hACV8C7+MrA+78a/gRrYh1vTE9BvLRONhPAWxOQYoSfh
+ Bp7Vil+5RjcartDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 757A44A0A3;
+ Thu, 26 Mar 2026 21:45:48 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id IFNwEQypxWnJZgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 26 Mar 2026 21:45:48 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [RFC PATCH v1 12/17] vmstate: Introduce vmstate_next
+In-Reply-To: <acVARwOjj5gJlmhr@x1.local>
+References: <20260324194333.30004-1-farosas@suse.de>
+ <20260324194333.30004-13-farosas@suse.de> <acVARwOjj5gJlmhr@x1.local>
+Date: Thu, 26 Mar 2026 18:45:46 -0300
+Message-ID: <871ph6jmd1.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: D711221132
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,185 +123,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GitHub setup a permanent redirection for all repositories when accounts,
-so the old links will keep on working also.
+Peter Xu <peterx@redhat.com> writes:
 
-However, GitHub allow this username to be reused again. To ensure no one
-can inject malicious content, I took ownership of the (newly free)
-pbo-linaro account [1], so no one else can claim it.
+> On Tue, Mar 24, 2026 at 04:43:27PM -0300, Fabiano Rosas wrote:
+>> Similarly to vmstate_first(), introduce a vmstate_next(), which does
+>> the necessary dereferencing of pointers to get to the leaf element. On
+>> the load side, allow the caller to pass a flag indicating whether
+>> allocation is expected and call the allocation function if so.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/vmstate.c | 84 +++++++++++++++++++++------------------------
+>>  1 file changed, 39 insertions(+), 45 deletions(-)
+>> 
+>> diff --git a/migration/vmstate.c b/migration/vmstate.c
+>> index ab7c6fa4ab..c1ad0ef9a5 100644
+>> --- a/migration/vmstate.c
+>> +++ b/migration/vmstate.c
+>> @@ -127,24 +127,51 @@ static void *vmstate_first(void *opaque, const VMStateField *field,
+>>      return first;
+>>  }
+>>  
+>> -static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
+>> -                                    Error **errp)
+>> +static void *vmstate_next(void **first, const VMStateField *field,
+>> +                          int size, int i, bool alloc)
+>>  {
+>> -    int byte = qemu_get_byte(f);
+>> +    void **array_elem;
+>> +    void *next;
+>> +
+>> +    if (!(field->flags & VMS_ARRAY_OF_POINTER)) {
+>> +        next = (void *)first + size * i;
+>> +        return next;
+>> +    }
+>> +
+>> +    array_elem = first + i;
+>> +    next = *array_elem;
+>> +
+>> +    if (alloc) {
+>> +        if (!next || field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
+>> +            /*
+>> +             * NOTE: do not use vmstate_size() here, because we
+>> +             * need the object size, not entry size of the
+>> +             * array.
+>> +             */
+>> +            next = vmstate_handle_alloc(array_elem, field->size, 1);
+>> +        }
+>> +    }
+>> +    return next;
+>> +}
+>> +
+>> +static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field)
+>> +{
+>> +    int byte = qemu_peek_byte(f, 0);
+>
+> Here, peeking the marker for ...
+>
+>>  
+>>      if (byte == VMS_MARKER_PTR_NULL) {
+>>          /* When it's a null ptr marker, do not continue the load */
+>>          *load_field = false;
+>> +        qemu_file_skip(f, 1);
+>>          return true;
+>>      }
+>>  
+>>      if (byte == VMS_MARKER_PTR_VALID) {
+>>          /* We need to load this field right after the marker */
+>>          *load_field = true;
+>> +        qemu_file_skip(f, 1);
+>>          return true;
+>>      }
+>>  
+>> -    error_setg(errp, "Unexpected ptr marker: %d", byte);
+>>      return false;
+>>  }
+>>  
+>> @@ -273,41 +300,13 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+>>                  void *curr_elem;
+>>  
+>>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+>
+> ... every VMS_ARRAY_OF_POINTER case makes me feel uneasy.
+>
 
-[1] https://github.com/pbo-linaro
+There's 32k bytes in the buffer, this is likely to be just a
+dereference. But fair enough.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- docs/about/emulation.rst                      | 28 +++++++++----------
- .../aarch64/test_device_passthrough.py        |  4 +--
- tests/functional/aarch64/test_rme_sbsaref.py  |  4 +--
- tests/functional/aarch64/test_rme_virt.py     |  4 +--
- 4 files changed, 20 insertions(+), 20 deletions(-)
+> Note that we only have two use cases that both of them are certain on the
+> upcoming byte to come:
+>
+> (1) for the null-only pointer, which is before this series introduced, both
+> src/dst qemu knows 100% which ptr is NULL, so dest QEMU expects that 0x30
+> for each null pointer.
+>
+> (2) for the new _AUTO_ALLOC introduced here, we also know exactly either
+> 0x30 or 0x31 will come, and one of them must come before the real field
+> dump.
+>
+> I think we may shoot us in the foot if we see 0x30 but in reality it's just
+> the 1st byte of some array field's binary stream.
+>
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 469f31bab6a..3b4c365933d 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -898,24 +898,24 @@ As an example, we can trace qemu itself running git::
-     $ uftrace dump --chrome | gzip > ~/qemu_aarch64_git_help.json.gz
+Yeah, that's a good point...
+
+If you can put up with passing QEMUFile into vmstate_next(), we could
+get the byte only when we're expecting it. Something like:
+
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 25fd9e52bc..16d9c1753f 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -137,7 +137,7 @@ static void *vmstate_first(void *opaque, const VMStateField *field,
+ }
  
- For convenience, you can download this trace `qemu_aarch64_git_help.json.gz
--<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/qemu_aarch64_git_help.json.gz>`_.
-+<https://github.com/p-b-o/qemu-assets/raw/refs/heads/master/qemu-uftrace/qemu_aarch64_git_help.json.gz>`_.
- Download it and open this trace on https://ui.perfetto.dev/. You can zoom in/out
- using :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys.
- Some sequences taken from this trace:
+ static void *vmstate_next(void **first, const VMStateField *field,
+-                          int size, int i, bool alloc)
++                          int size, int i, QEMUFile *f)
+ {
+     void **array_elem;
+     void *next;
+@@ -150,8 +150,11 @@ static void *vmstate_next(void **first, const VMStateField *field,
+     array_elem = first + i;
+     next = *array_elem;
  
- - Loading program and its interpreter
+-    if (alloc) {
+-        if (!next || field->flags & VMS_ALLOC) {
++    if (f && (!next || field->flags & VMS_ALLOC)) {
++        bool alloc, ok;
++
++        ok = vmstate_ptr_marker_load(f, &alloc);
++        if (ok & alloc) {
+             /*
+              * NOTE: do not use vmstate_size() here, because we
+              * need the object size, not entry size of the
+@@ -315,18 +318,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+                              !(field->flags & VMS_ARRAY_OF_POINTER));
  
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/loader_exec.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/loader_exec.png?raw=true
-    :height: 200px
+         for (i = 0; i < n_elems; i++) {
+-            /* If we will process the load of field? */
+-            bool load_field = true;
+             void *curr_elem;
  
- - open syscall
+-            if (field->flags & VMS_ARRAY_OF_POINTER) {
+-                /* Peek a possible pointer marker instead of VMSD first */
+-                ok = vmstate_ptr_marker_load(f, &load_field);
+-            }
+-
+-            curr_elem = vmstate_next(head, field, size, i, load_field && ok);
++            curr_elem = vmstate_next(head, field, size, i, f);
  
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/open_syscall.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/open_syscall.png?raw=true
-    :height: 200px
+-            if (load_field) {
++            if (curr_elem) {
+                 ok = vmstate_load_field(f, curr_elem, size, field, errp);
+             }
  
- - TB creation
+@@ -673,7 +669,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
  
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/tb_translation.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/tb_translation.png?raw=true
-    :height: 200px
+         for (i = 0; i < n_elems; i++) {
+             bool save_field = true;
+-            void *curr_elem = vmstate_next(head, field, size, i, false);
++            void *curr_elem = vmstate_next(head, field, size, i, NULL);
+             int max_elems = n_elems - i;
  
- It's usually better to use ``uftrace record`` directly. However, tracing
-@@ -928,7 +928,7 @@ Example system trace
+             if (field->flags & VMS_ARRAY_OF_POINTER) {
+@@ -711,8 +707,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                         use_vmdesc = true;
  
- A full trace example (chrome trace, from instructions below) generated from a
- system boot can be found `here
--<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/aarch64_boot.json.gz>`_.
-+<https://github.com/p-b-o/qemu-assets/raw/refs/heads/master/qemu-uftrace/aarch64_boot.json.gz>`_.
- Download it and open this trace on https://ui.perfetto.dev/. You can see code
- executed for all privilege levels, and zoom in/out using
- :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys. You can find below some sequences
-@@ -936,27 +936,27 @@ taken from this trace:
+                         for (int j = i + 1; j < n_elems; j++) {
+-                            void *elem = vmstate_next(head, field, size, j,
+-                                                      false);
++                            void *elem = vmstate_next(head, field, size, j, NULL);
+                             bool elem_is_null = !elem;
  
- - Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/bl3_to_bl1.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/bl3_to_bl1.png?raw=true
-    :height: 200px
- 
- - U-boot initialization (until code relocation, after which we can't track it)
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/uboot.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/uboot.png?raw=true
-    :height: 200px
- 
- - Stat and open syscalls in kernel
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/stat.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/stat.png?raw=true
-    :height: 200px
- 
- - Timer interrupt
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/timer_interrupt.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/timer_interrupt.png?raw=true
-    :height: 200px
- 
- - Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/poweroff.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/poweroff.png?raw=true
-    :height: 200px
- 
- Build and run system example
-@@ -966,7 +966,7 @@ Build and run system example
- 
- Building a full system image with frame pointers is not trivial.
- 
--We provide a `simple way <https://github.com/pbo-linaro/qemu-linux-stack>`_ to
-+We provide a `simple way <https://github.com/p-b-o/qemu-linux-stack>`_ to
- build an aarch64 system, combining Arm Trusted firmware, U-boot, Linux kernel
- and debian userland. It's based on containers (``podman`` only) and
- ``qemu-user-static (binfmt)`` to make sure it's easily reproducible and does not depend
-@@ -974,18 +974,18 @@ on machine where you build it.
- 
- You can follow the exact same instructions for a x64 system, combining edk2,
- Linux, and Ubuntu, simply by switching to
--`x86_64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64>`_ branch.
-+`x86_64 <https://github.com/p-b-o/qemu-linux-stack/tree/x86_64>`_ branch.
- 
- You can follow the exact same instructions for a riscv64 system, combining
- opensbi, Linux, and Ubuntu, simply by switching to
--`riscv64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/riscv64>`_ branch.
-+`riscv64 <https://github.com/p-b-o/qemu-linux-stack/tree/riscv64>`_ branch.
- 
- To build and run the system::
- 
-     # Install dependencies
-     $ sudo apt install -y podman qemu-user-static
- 
--    $ git clone https://github.com/pbo-linaro/qemu-linux-stack
-+    $ git clone https://github.com/p-b-o/qemu-linux-stack
-     $ cd qemu-linux-stack
-     $ ./build.sh
- 
-diff --git a/tests/functional/aarch64/test_device_passthrough.py b/tests/functional/aarch64/test_device_passthrough.py
-index 10c73728f36..3ef4e7ddc1d 100755
---- a/tests/functional/aarch64/test_device_passthrough.py
-+++ b/tests/functional/aarch64/test_device_passthrough.py
-@@ -78,14 +78,14 @@
- 
- class Aarch64DevicePassthrough(QemuSystemTest):
- 
--    # https://github.com/pbo-linaro/qemu-linux-stack/tree/device_passthrough
-+    # https://github.com/p-b-o/qemu-linux-stack/tree/device_passthrough
-     # $ ./build.sh && ./archive_artifacts.sh out.tar.xz
-     #
-     # Linux kernel is compiled with defconfig +
-     # IOMMUFD + VFIO_DEVICE_CDEV + ARM_SMMU_V3_IOMMUFD
-     # https://docs.kernel.org/driver-api/vfio.html#vfio-device-cde
-     ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
--        ('https://github.com/pbo-linaro/qemu-linux-stack/'
-+        ('https://github.com/p-b-o/qemu-linux-stack/'
-          'releases/download/build/device_passthrough-a9612a2.tar.xz'),
-         'f7d2f70912e7231986e6e293e1a2c4786dd02bec113a7acb6bfc619e96155455')
- 
-diff --git a/tests/functional/aarch64/test_rme_sbsaref.py b/tests/functional/aarch64/test_rme_sbsaref.py
-index 4845c824960..efea80c5782 100755
---- a/tests/functional/aarch64/test_rme_sbsaref.py
-+++ b/tests/functional/aarch64/test_rme_sbsaref.py
-@@ -20,10 +20,10 @@ class Aarch64RMESbsaRefMachine(QemuSystemTest):
- 
-     # Stack is inspired from:
-     # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
--    # https://github.com/pbo-linaro/qemu-linux-stack/tree/rme_sbsa_release
-+    # https://github.com/p-b-o/qemu-linux-stack/tree/rme_sbsa_release
-     # ./build.sh && ./archive_artifacts.sh out.tar.xz
-     ASSET_RME_STACK_SBSA = Asset(
--        ('https://github.com/pbo-linaro/qemu-linux-stack/'
-+        ('https://github.com/p-b-o/qemu-linux-stack/'
-          'releases/download/build/rme_sbsa_release-6a2dfc5.tar.xz'),
-          '5adba482aa069912292a8da746c6b21268224d9d81c97fe7c0bed690579ebdcb')
- 
-diff --git a/tests/functional/aarch64/test_rme_virt.py b/tests/functional/aarch64/test_rme_virt.py
-index 5e23773f93d..dcb18678bfd 100755
---- a/tests/functional/aarch64/test_rme_virt.py
-+++ b/tests/functional/aarch64/test_rme_virt.py
-@@ -19,10 +19,10 @@ class Aarch64RMEVirtMachine(QemuSystemTest):
- 
-     # Stack is inspired from:
-     # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
--    # https://github.com/pbo-linaro/qemu-linux-stack/tree/rme_release
-+    # https://github.com/p-b-o/qemu-linux-stack/tree/rme_release
-     # ./build.sh && ./archive_artifacts.sh out.tar.xz
-     ASSET_RME_STACK_VIRT = Asset(
--        ('https://github.com/pbo-linaro/qemu-linux-stack/'
-+        ('https://github.com/p-b-o/qemu-linux-stack/'
-          'releases/download/build/rme_release-56bc99e.tar.xz'),
-          '0e3dc6b8a4b828dbae09c951a40dcb710eded084b32432b50c69cf4173ffa4be')
- 
+                             if (is_null != elem_is_null) {
 -- 
-2.47.3
+2.51.0
 
 
