@@ -4,110 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A4710A88C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC5F10A88D4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5mWM-000103-Hz; Thu, 26 Mar 2026 11:21:18 -0400
+	id 1w5maG-0001w0-6N; Thu, 26 Mar 2026 11:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5mWK-0000zR-5Q
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:21:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5mWI-0004k3-NL
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:21:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774538473;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TfqQ4LWJKUt4YB9XN3BplVPrOCzjn5MqnnVBhBkKaVU=;
- b=IagN5ZWIqpUbOrXTkE/3mmjqiOAStd4qeiBfos3Y7/MEDO0I/8pwuHqg4gDBOjmGKtDFQU
- c5igCAoTgm+sYOuKJpmsJ3CrkudOwdwIEqIcku0p6kHgJFvBYFZxrLXrOEbB/kgi9gnhFR
- 66LtapA40QDvrviM+C06cxeDi5F1E10=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-ogCvfvhfMyiNwdZn5xUNqg-1; Thu, 26 Mar 2026 11:21:11 -0400
-X-MC-Unique: ogCvfvhfMyiNwdZn5xUNqg-1
-X-Mimecast-MFC-AGG-ID: ogCvfvhfMyiNwdZn5xUNqg_1774538471
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-899f474fae1so90612986d6.0
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 08:21:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5maD-0001vf-Mz
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:25:17 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5maC-0005QR-5X
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:25:17 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-64f48a5c3d8so1387513d50.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 08:25:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774538714; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TbRQacmDpbAKEKmxrZ5wW/AcFOX6hVD21cdONvBubMBl0zu8X3enMyqQjQzYwwyKzu
+ x634FOsKxJ6JeZGI0B4OTvHEBDHKn533ygH7m2hvptSrTIIH928L5QTArNPfmCDPeM9I
+ AL/3QJ9WtBK/dW6ovIg/O6/wEki/t/cejLti7AxBvBSfvzpFZrmLU5gI2vU3QH5ngQSx
+ 0ifLzc5W23DZ8CprePh8C7BeJ1kdur+U5w/4R83xcuqWAP1M5hs2W9GiOC2BJTig7r5C
+ 0uzktbZixSo0WKpZUQmfVqruqoGGYjtorVlGnO0nc4zX9a1yoZm7W4vAecqjzivuwIfa
+ 4jEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=USXXcSwLW1EXRSE4f7p51QuIuMKDb4fP8WlWne/h+3s=;
+ fh=wenmdvXzFm2UTuSjK3Hs2ebVaHDwTR9Lx3OWz30VTOA=;
+ b=kDpksERYB2QAf4gy7yK95fzTyX+sY/1LoGcwGdAkzy6FFL9W71T8TrNsuadkzmnDZK
+ 4fejgbh/hIdsLWtSzHBcqAyID6/nMyY3kVUqWR4VohtpuPIP3mdEQ4LIhbnAC3Lh6o9g
+ qLSTJnENUGIVH4dCkgKo/rRwfXCbnfPtAFbNfSFV5W6DorvZuctGw+lTKwH6juNk8T/T
+ rDeYBl3hctu/Vc1xeNEzYUO0bbinP5Z1rUPtmEw5MgFXG42xO+S+3k5lcbWKMw5fQ2nT
+ +sNwri+aPJOL1wU+HRPyNSA93Egm22AJbezp/h+qhpZ0NjCoV1YJPcCW1zFX8cpGDCpN
+ A7sA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774538471; x=1775143271; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=TfqQ4LWJKUt4YB9XN3BplVPrOCzjn5MqnnVBhBkKaVU=;
- b=WO1JVuEayKd+ADN6XjUW0jJhc79mkFpDAWy2u2b9e/iQso7KNPNsEhN4MUM+qIgaSW
- OrRSsjpUXn0buEonVTm3dt1EcjqAHH2SgiAzJasFJUpjBxI9JzgSbZUaJbTrlUILNkLK
- k1stuxIdnKK8ZbSnknfKVffPcuYmhY5ZqqC7YnUoGwvMmgryN98rdukrYJN1E8AijgC0
- zuQl29I4V0+Bm3qrIHglywNIGxSpmagBbDA5UbGXBi5O2HzqFXcp93TT2bZvRTTCnvpz
- s72fLD/36ZYg7qTmMXGNNovI64IIMWbKg+HgogQEL7bUr9NkwJuW3aqtBibQuC+dtiqr
- oPtA==
+ d=linaro.org; s=google; t=1774538714; x=1775143514; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=USXXcSwLW1EXRSE4f7p51QuIuMKDb4fP8WlWne/h+3s=;
+ b=z49g5Hc75mrPnv3n+l+E7WEgNugbfnuN1KztjI2865qRr5U8s1SNH2ZHGLEEQGbXre
+ JiST88qXc8iUmSD0UGxxHDnXxSIqy+4RARcdkl1I454awCedaUgUmZYjDNl6dyWuDci8
+ boYXG2kddgzfN3rcKD16XMQLX4qHmpCBeFWmXvw9cuX3UEQmSijBKyc+l51gK5vyXGcj
+ PWxXbAsoVlRUvbfW591pM5NKfq5ea91AGU1ZOeP6WYvZzJ9/fmnb74h4H2u/LP+l1DyP
+ NQxTfVglgmHVeV+HOw7d/km63hKXcXHgFD78/380gNZGLZy+nU/fdOZ/TA7w/VYLv84H
+ nosw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774538471; x=1775143271;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TfqQ4LWJKUt4YB9XN3BplVPrOCzjn5MqnnVBhBkKaVU=;
- b=C0ePsOnAQdV6MUuZAKIRC0eprGaqM09IOgM26ANBS0h7antElEEdD3FXdLVxkFPKRV
- 60J0VTIU6fobyyhy/GWZYWFA8CukKtIKF0GA53Sdn6zTG27f5t0wEs4nKEhrAk/rIaAl
- 500P7nuybqO1ntQuVN8NgJkoZoIo2P/7kzDuuQ8ukK2Pyr59f5XNLQSbXf2SGNbhYvym
- erkIPyM0XWMwgF+UyG/QgO+BR6NRRldk0DJx2ho7Sg9Rk1L3LmiqbXcXsUEcT4WZJVof
- NY2UMDAcrPMKR1vnvdt223AiDW5o8/cwl3+K0qUSPTsU1+zrfNuLMVUPwZqpAatnvimV
- EHAQ==
+ d=1e100.net; s=20251104; t=1774538714; x=1775143514;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=USXXcSwLW1EXRSE4f7p51QuIuMKDb4fP8WlWne/h+3s=;
+ b=KBO8B9dcF+0hL5lhAv5aZxB/K0QxiaOxD9vOwvI5W/0QVVFhkwL54MdG3h8vyOh2u4
+ Ha0vcpa9qb56+rEanSSvhPf0SL7s2mXkT0K8AJRPCCLfYUDgd4pBgqOnlQT/ktFkKMQx
+ 7jOvUqeOlsi1kJXqPXJBUFUmh9NCfGfsZ8B1Y5hD+SxEp/VDNFxkWu6BCuMNo3PthTIt
+ X/4xc2jiZ8vc3KRi4kpATg/s5RNRYx8v78nxo2ZKohjbmbv56K35jIhR6r1oob5bL12u
+ gyR0vhH+0kBW5Y3tLQSoaW1mad3/GjnNFOODkH03qxvR1lNbPRjUMkhJQOaTTAlBvPyZ
+ SkAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhDDulPyOhmzzECGuqRW3Y5fm1Z8eyQsaUDHihcEuQn1OjZTaJLFHt18lYfi79S878KxrhDYXxlym6@nongnu.org
-X-Gm-Message-State: AOJu0Ywoglhqs5k15XH6BtSzybH/dJxN6v9hPBfuyTidHupBDZVyOX/P
- bgJqD8eSzxZGjZhj84KwWX7HDgc0K2hmit33ygpzVwgB3S9uMwZU/GboywuKUU2Sb0KVeZAFGB6
- k9+Xnaj7rk1NoHlcozBwtqzTnmWhIdNeJoeUUGrKkt2I/rL1DXsLRMOjf
-X-Gm-Gg: ATEYQzxDUr8HY8q9qAHERAqq2oPRbcOikLz4zIw5WSSdwsd7dHkyOJNZa6dQp7e2ddw
- kEz9sd6pRLubJYvSFPfX4V0/rrs0L+EKgMNYEICNGhJWf7eUPDbdlgdSCWlDAXxV2wvByMPVn86
- x5sU8diQ5ZJDymYxRUQ0oM9Oqfi/3eVxGxAtMffil2JEobPBZR8YRpoPk7C4Mt/T95yyVppIYsm
- CWdxWu0r37CK3G+AvevahQ33w9U1R6mggGygKdLa7KjLfW4LM9g/Zy8ayrv5dpvMjROwJn1pTlo
- IFSZUVVuMnKPynAxIVSPaNZDZnQQT2PS+ksSDr1Bz/aebAp5FN6z+jQn58N0x3oozQt1cAHK4ju
- gdBtsWdHEmFLa2A==
-X-Received: by 2002:a05:6214:5c90:b0:89c:50fb:31c0 with SMTP id
- 6a1803df08f44-89cdde0b110mr21357986d6.10.1774538470797; 
- Thu, 26 Mar 2026 08:21:10 -0700 (PDT)
-X-Received: by 2002:a05:6214:5c90:b0:89c:50fb:31c0 with SMTP id
- 6a1803df08f44-89cdde0b110mr21357526d6.10.1774538470286; 
- Thu, 26 Mar 2026 08:21:10 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89cd5ab2b13sm24619326d6.49.2026.03.26.08.21.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 08:21:09 -0700 (PDT)
-Date: Thu, 26 Mar 2026 11:21:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH v2 0/3] migration/file: fix type mismatch and NULL deref
- in multifd_file_recv_data
-Message-ID: <acVO5HUVb18FlIYf@x1.local>
-References: <20260316084618.52-1-junjie.cao@intel.com>
- <20260318140113.434-1-junjie.cao@intel.com>
- <20260324082738.841-1-junjie.cao@intel.com>
- <acJtbvE39JHM4g5c@redhat.com>
+ AJvYcCUxvG+zcSwaJNxasz4djKWBRSYlbA+J+70hyLYtoK5FA32ryYqE0yz8hDt+Dv8q5bKHrh4fLWdeoQUo@nongnu.org
+X-Gm-Message-State: AOJu0YxRoYeRNKj3kdK7Yh1bkrlmwqRXmY1gT2vqPne8d+jm5pjjp1XS
+ tG252Z62kSi4rm5yhDq2VCKecj0GK4JmBmc3OLpjXlsw+aenjs5LukQMLWszK4oJKTRHbCSBtEX
+ LR+PYJHPRPm2zz+tV18vsozLt0il+j4jHgAnuI7bMLcjcNVn6oz7xnTQ=
+X-Gm-Gg: ATEYQzwvBYZY3ltxNDUCrqRPFfZT5X75/HVB9Mrzizb2/HdLCyM51papUkDeawORlIF
+ eZ/o9l5tOBvuCTaXvalG+kctMOMy7c+p0yunEf+c7H5HyPoS92cQKWTos7Cy5sXBoaJA1VFzTPq
+ 5TIE7aVKCLPsu0v2G/AQ8EYvbbWr4tpM908m/dt8gYwh6e9bbdSTcl1ChQUI14dOuWPbffqhrOy
+ r33dqYYJ+Zugmtt/9ZqmrB25Gq5ONLbwrPg34/j1Uy70USLpcAokKKlOlWdoXFxYCzZ315aHQ/k
+ YuvhVBdg+/v7jjO89T9Nr6Lqp3qmX8K6SsqfpDj8Ep8D2abKgnPH7h96n67HFZ3cjWI=
+X-Received: by 2002:a05:690e:1603:b0:64c:a708:2b92 with SMTP id
+ 956f58d0204a3-64ee618987amr5998282d50.81.1774538714516; Thu, 26 Mar 2026
+ 08:25:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <acJtbvE39JHM4g5c@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260326113457.159065-1-thuth@redhat.com>
+ <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
+ <f6045fed-60fb-47b8-8241-a6fcb0af7292@redhat.com>
+ <CAFEAcA_VoSX2JK-HRpAN0P0LT2dj_WvSRyP2dom3ZQK76mtyfA@mail.gmail.com>
+ <67ae08fb-adc1-755b-a73b-789cd3e43049@eik.bme.hu>
+In-Reply-To: <67ae08fb-adc1-755b-a73b-789cd3e43049@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Mar 2026 15:25:03 +0000
+X-Gm-Features: AQROBzCEzJfKV_lU3uoh5unYRiw5OlDwXcpPzXqEGsNH1snuSDy2odl9u1BKxgk
+Message-ID: <CAFEAcA8D_NEkhRS4ppCrTzMjj_5BjRtSevD6OGRWX=4f2cWyYw@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga device
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,38 +122,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 24, 2026 at 10:54:38AM +0000, Daniel P. Berrangé wrote:
-> On Tue, Mar 24, 2026 at 04:27:38PM +0800, Junjie Cao wrote:
-> > Hi Peter, Daniel,
-> > 
-> > I wanted to follow up on this series.  Looking back, I went
-> > straight to adding new public API in io/channel.  I should 
-> > have confirmed my approach and whether the Suggested-by
-> > tag was appropriate here with you before sending.  Sorry for that.
-> > 
-> > I see two possible paths and would appreciate your guidance:
-> > 
-> >   (a) Keep it purely a fix in migration/file.c: add a local
-> >       retry loop around qio_channel_pread() in
-> >       multifd_file_recv_data(), fix the ssize_t/size_t
-> >       mismatch, and use ERRP_GUARD() so error_prepend()
-> >       is safe.
-> > 
-> >   (b) If pread_all() retry helpers are worth having as a
-> >       general facility in io/channel, I'm happy to propose
-> >       them as a separate RFC so we can discuss the API design
-> >       on its own merits.
-> > 
-> > I'm leaning toward (a) and can send a v3 quickly.
-> > Does that sound right?
-> 
-> Doing (b) is the right approach. We want these helpers in the
-> general code, so we don't create technical debt that has to be
-> fixed next time something else wants the same APIs.
+On Thu, 26 Mar 2026 at 15:17, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>
+> On Thu, 26 Mar 2026, Peter Maydell wrote:
+> > I do notice that the Cirrus devices have their own vmstate handle
+> > saving and restoring all the common VGA state, instead of using
+> > vmstate_vga_common, and they miss out all the vbe entries at
+> > the bottom...
+>
+> That might be OK as cirrus-vga does not seem to support Bochs DISPI VBE
+> ports so there should be nothing there to save/restore.
 
-Sorry for a late response, Junjie.  I agree with Dan.
+Mmm, I did wonder about that, but I couldn't see anything where
+we disabled exposing those ports to the guest. But looking closer
+the cirrus code never calls vga_init(), so it does indeed not
+expose any of the VBE state to the guest and doesn't need to
+migrate it.
 
--- 
-Peter Xu
-
+-- PMM
 
