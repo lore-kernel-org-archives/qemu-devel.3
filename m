@@ -4,78 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D156010A88C3
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A586610A88C4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5mRB-00077r-6O; Thu, 26 Mar 2026 11:15:57 -0400
+	id 1w5mSt-00082u-4E; Thu, 26 Mar 2026 11:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5mR9-00076N-BF
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:15:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w5mSr-00082l-Bk
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:17:41 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5mR7-0003sR-8J
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:15:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774538150;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vzpehDqYgCyCogpznJ1yRYvkvpNP6+3YYzUqRgqyluU=;
- b=BVG7UkoO6VgQlef+ucU1Jj5cgtahZ1BD9LLXxYZBsLlTvZFF4nvfskYBqlB0K9SJQTGY4N
- P+LzV44wIT95tTsMeZ9nfCORL5nJn0QNhAR2ezAUjuk7tZwJMKRzkXFEcMt4AYUlYy2R3s
- A4Dy2e+4BY/p4ev7GywY2hlPHoheMaM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-348-dVAnXoqzMDWhQysiOPlhcw-1; Thu,
- 26 Mar 2026 11:15:46 -0400
-X-MC-Unique: dVAnXoqzMDWhQysiOPlhcw-1
-X-Mimecast-MFC-AGG-ID: dVAnXoqzMDWhQysiOPlhcw_1774538145
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EEABB1956048; Thu, 26 Mar 2026 15:15:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 085F31955D84; Thu, 26 Mar 2026 15:15:42 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 952BA21E6937; Thu, 26 Mar 2026 16:15:40 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: <qemu-devel@nongnu.org>,  <anisa.su@samsung.com>,
- <berrange@redhat.com>,  <eblake@redhat.com>,
- <jonathan.cameron@huawei.com>,  <linux-cxl@vger.kernel.org>,
- <linuxarm@huawei.com>,  <lizhijian@fujitsu.com>,  <mst@redhat.com>,
- <pbonzini@redhat.com>,  <gourry@gourry.net>,  <nifan.cxl@gmail.com>,
- <me@linux.beauty>
-Subject: Re: [PATCH 9/9] hw/cxl: Add QMP status query for dynamic-capacity
- extent release
-In-Reply-To: <20260325184259.366-10-alireza.sanaee@huawei.com> (Alireza
- Sanaee's message of "Wed, 25 Mar 2026 18:42:57 +0000")
-References: <20260325184259.366-1-alireza.sanaee@huawei.com>
- <20260325184259.366-10-alireza.sanaee@huawei.com>
-Date: Thu, 26 Mar 2026 16:15:40 +0100
-Message-ID: <87mrzuei5f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w5mSp-00042Y-G3
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:17:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 31D9B596AC8;
+ Thu, 26 Mar 2026 16:17:35 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id nUpnhWZpDFEJ; Thu, 26 Mar 2026 16:17:33 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 2E574596ABD; Thu, 26 Mar 2026 16:17:33 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2C96F596AC6;
+ Thu, 26 Mar 2026 16:17:33 +0100 (CET)
+Date: Thu, 26 Mar 2026 16:17:33 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga
+ device
+In-Reply-To: <CAFEAcA_VoSX2JK-HRpAN0P0LT2dj_WvSRyP2dom3ZQK76mtyfA@mail.gmail.com>
+Message-ID: <67ae08fb-adc1-755b-a73b-789cd3e43049@eik.bme.hu>
+References: <20260326113457.159065-1-thuth@redhat.com>
+ <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
+ <f6045fed-60fb-47b8-8241-a6fcb0af7292@redhat.com>
+ <CAFEAcA_VoSX2JK-HRpAN0P0LT2dj_WvSRyP2dom3ZQK76mtyfA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,118 +72,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm a near-complete CXL ignoramus, and beg your patience.
-
-Alireza Sanaee <alireza.sanaee@huawei.com> writes:
-
-> Add a small status query so orchestration layers can check whether a tagged
-> extent is still pending, committed, or no longer present after a release
-> request.
-
-Why would they want to check?
-
-What is a "release request"?
-
+On Thu, 26 Mar 2026, Peter Maydell wrote:
+> On Thu, 26 Mar 2026 at 12:04, Thomas Huth <thuth@redhat.com> wrote:
+>>
+>> On 26/03/2026 12.59, Peter Maydell wrote:
+>>> On Thu, 26 Mar 2026 at 11:35, Thomas Huth <thuth@redhat.com> wrote:
+>>>>
+>>>> From: Thomas Huth <thuth@redhat.com>
+>>>>
+>>>> QEMU currently crashes when migrating a guest that uses the
+>>>> isa-vga device as display. This happens because vga_isa_class_initfn()
+>>>> registers a vmsd for vmstate_vga_common that operates on VGACommonState.
+>>>> But the isa-vga device is derived from ISADevice, not from VGACommonState,
+>>>> so the migration code tries to fill in the data for VGACommonState to
+>>>> the memory that is a ISADevice instead, which is of cause causing trouble.
+>>>>
+>>>> We need an indirection here as it's also e.g. done in vga-pci.c, so
+>>>> that the migration data gets filled into the right location.
+>>>>
+>>>> While we're at it, also drop the "global_vmstate = true" here. Since
+>>>> migration was broken for this device during the last 15 years (!) anyway,
+>>>> we don't have to worry about maintaining backward compatibility with this
+>>>> switch for older versions of QEMU anymore.
+>>>
+>>> That means the only remaining users of global_vmstate = true are:
+>>>   * TYPE_VGA_MMIO : used only by the MIPS Jazz board, which is not
+>>>     versioned, so we are OK with migration compat breaks
+>>>   * TYPE_ISA_CIRRUS_VGA
+>>>
+>>> I don't suppose that migration is also currently broken for Cirrus ? :-)
+>>
+>> No, Cirrus seems to be fine. But I think we should likely do something like
+>> commit 1fcfdc435a3e25ab9037f6f7b8ab for the isa-cirrus-vga device, too, so
+>> we can at least get rid of this in a couple of years...
 >
-> Introduce the ExtentStatus QAPI struct and the
-> cxl-release-dynamic-capacity-status command.
+> If we're going to do that it would be nice to get that in for 11.0.
 >
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> I do notice that the Cirrus devices have their own vmstate handle
+> saving and restoring all the common VGA state, instead of using
+> vmstate_vga_common, and they miss out all the vbe entries at
+> the bottom...
 
-[...]
+That might be OK as cirrus-vga does not seem to support Bochs DISPI VBE 
+ports so there should be nothing there to save/restore.
 
-> diff --git a/qapi/cxl.json b/qapi/cxl.json
-> index 81d6198ba0..53325ba530 100644
-> --- a/qapi/cxl.json
-> +++ b/qapi/cxl.json
-> @@ -636,3 +636,49 @@
->             },
->    'features': [ 'unstable' ]
->  }
-> +
-> +##
-> +# @ExtentStatus:
-
-Blank line here, please.
-
-> +# This is an object that describes the status of an extent.
-> +#
-> +# @status:   String indicating the overall result, e.g. "success".
-
-What are the possible values?  Are they defined in some spec?
-
-> +# @message:  Human-readable description of the outcome.
-
-Intended use?
-
-> +#
-> +# Since: 9.1
-
-11.1 most likely.
-
-> +##
-> +{ 'struct': 'ExtentStatus',
-> +      'data': { 'status': 'str', 'message': 'str' }
-> +}
-> +
-> +##
-> +# @cxl-release-dynamic-capacity-status:
-> +#
-> +# This commands checks if an extent tag has been released or not.
-
-Use imperative mood to describe commands: "Check whether an extent tag
-has been released."
-
-> +#
-> +# @path: path to the CXL Dynamic Capacity Device in the QOM tree.
-
-We commonly call such members @qom-path.
-
-> +#
-> +# @host-id: The "Host ID" field as defined in Compute Express Link
-> +#     (CXL) Specification, Revision 3.1, Table 7-71.
-> +#
-> +# @region: The "Region Number" field as defined in Compute Express
-> +#     Link Specification, Revision 3.1, Table 7-71.  Valid range
-> +#     is from 0-7.
-> +#
-> +# @tag: The "Tag" field as defined in Compute Express Link (CXL)
-> +#     Specification, Revision 3.1, Table 7-71.
-
-I guess the command interrogates something called "extent", and the
-something is related to the CXL device at @path in the QOM tree.
-Correct?
-
-How is it related?  Is it a part of the device?
-
-I further guess multiple extends can be so related, and @host-id,
-@region, and @tag identify select the one we want to interrogate.
-Correct?
-
-> +#
-> +# Features:
-> +#
-> +# @unstable: For now this command is subject to change.
-
-The conventional language is "This command is experimental."
-
-> +#
-> +# Since: 9.1
-
-11.1 most likely.
-
-> +##
-> +{ 'command': 'cxl-release-dynamic-capacity-status',
-> +  'data': { 'path': 'str',
-> +            'host-id': 'uint16',
-> +            'region': 'uint8',
-> +            'tag': 'str'
-> +          },
-> +  'features': [ 'unstable' ],
-> +  'returns': 'ExtentStatus'
-
-Swap these two lines, please.
-
-> +}
-
+Regards,
+BALATON Zoltan
 
