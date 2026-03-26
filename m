@@ -4,106 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3A1109E54B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69503109E558
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5eRl-0006i3-O8; Thu, 26 Mar 2026 02:44:02 -0400
+	id 1w5eZ4-0000Ah-Ly; Thu, 26 Mar 2026 02:51:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w5eRj-0006hu-Gp
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:43:59 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1w5eZ2-0000AP-AZ
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:51:32 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w5eRh-0005xH-Gt
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:43:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774507411; bh=4jPEZvZ6gctyCCaqfdCH9xKCb5073nIAO9Zviwnovdk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=IaHwCFnlUvYmpPnik8hmUaaAg/v7AWzR/fdqlz8fOJpG2OnvwOVaCQOXqTlUVoPfg
- bl2b1mSlkBh20HH3bKvc5o+i6H6QLd0Y6mkqdSWZJdXM26gZ3olyml/8LyVY6txwHX
- IEPB7uTs3NjIECIhVseVi70N8WrW66Sq8iLDzIl4m+XuyHURIMILjW2/gAiDyifUDn
- bykhPBRmGn84ReKt53NhQQr9En32RHNLz573wGRBCI0hAVOjiRyl6lEbNCUURaMTbd
- JvUKFfx6zGufvuwEaJnICtOU2JVPhS2x3PXy9rJTnAvtYg2a0qyrCV8gInXPSjAq4I
- otvCs6HmXHBMA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 606F0197BFA;
- Thu, 26 Mar 2026 09:43:31 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5B4603874A7;
- Thu, 26 Mar 2026 09:43:53 +0300 (MSK)
-Message-ID: <f5cf28ff-5f11-4ec1-b985-f32f1c0f0fcd@tls.msk.ru>
-Date: Thu, 26 Mar 2026 09:43:53 +0300
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1w5eYy-0000Qv-Rm
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:51:31 -0400
+X-UUID: 2f271de028e011f1a21c59e7364eecb8-20260326
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.11, REQID:1ea9415f-3aab-42ae-a742-a02b26f2c93a, IP:0,
+ U
+ RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+ :release,TS:25
+X-CID-META: VersionHash:89c9d04, CLOUDID:57232f90b651bdf86ccb35070357935b,
+ BulkI
+ D:nil,BulkQuantity:0,Recheck:0,SF:102|850|898,TC:nil,Content:0|15|50,EDM:5
+ ,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV
+ :0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 2f271de028e011f1a21c59e7364eecb8-20260326
+X-User: zhaoguohan@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+ (envelope-from <zhaoguohan@kylinos.cn>)
+ (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+ with ESMTP id 295054896; Thu, 26 Mar 2026 14:51:15 +0800
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	GuoHan Zhao <zhaoguohan@kylinos.cn>
+Subject: [PATCH] ui/dbus: associate add_client completion with its request
+Date: Thu, 26 Mar 2026 14:51:11 +0800
+Message-ID: <20260326065111.626236-1-zhaoguohan@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0? 0/6] qom: Restrict compat properties API to
- system emulation
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, kvm@vger.kernel.org
-References: <20260325151728.45378-1-philmd@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260325151728.45378-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=124.126.103.232;
+ envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,58 +75,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-25.03.2026 18:17, Philippe Mathieu-Daudé wrote:
-> Remove QDev uses from QOM to help build the guest-agent
-> binary without pulling in QDev methods.
-> 
-> After that only util/qsp.c is left (cond/mutex atomics),
-> see this thread:
-> https://lore.kernel.org/qemu-devel/a547c29b-3ab7-42fe-889a-19668bc9d090@tls.msk.ru/
-> 
-> Philippe Mathieu-Daudé (6):
->    MAINTAINERS: Separate QDev section from QOM one
->    hw/core: Move compat_props_add() to 'hw/core/boards.h'
->    qom: Declare GlobalProperty structure in 'qom/compat-properties.h'
->    qom: Declare compat properties API in 'qom/compat-properties.h'
->    qom: Restrict compat properties API to system emulation
->    buildsys: Allow building guest-agent on 32-bit hosts
+Commit 99997823bbbd ("ui/dbus: add p2p=on/off option")
+introduced an asynchronous D-Bus client setup path, with the completion
+handler reaching back into the global dbus_display state.
 
-Series:
+This makes the callback effectively operate on whatever request is
+current when it runs, rather than the one that created it. A completion
+from an older request can therefore clear a newer
+add_client_cancellable or install its connection after a replacement
+request has already been issued. It also relies on the DBusDisplay
+instance remaining alive until completion.
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Fix this by passing the DBusDisplay and GCancellable as callback data,
+taking references while the async setup is in flight, and only acting
+on completion if it still matches the current request. Also drop the
+previous cancellable before creating a new request.
 
-This definitely helps with qemu-ga issue (a few steps closer to it,
-anyway), makes things better separated and cleaner, and might even
-be simple enough for 11.0.  Though I'm not sure for the latter.
+Fixes: 99997823bbbd ("ui/dbus: add p2p=on/off option")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+---
+ ui/dbus.c | 44 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
 
-Thank you Philippe for this!
-
-/mjt
-
->   MAINTAINERS                       |  21 +++---
->   configure                         |  64 +++++++++++++----
->   meson.build                       |   2 +-
->   include/hw/core/boards.h          |  11 +++
->   include/hw/core/qdev-properties.h |   1 +
->   include/hw/core/qdev.h            |  27 -------
->   include/qom/compat-properties.h   |  40 +++++++++++
->   include/qom/object.h              |   8 ---
->   accel/accel-system.c              |   1 +
->   backends/hostmem.c                |   1 +
->   hw/core/machine.c                 |   1 +
->   hw/core/qdev-properties.c         |   1 +
->   hw/core/qdev.c                    |   1 +
->   hw/i386/pc_q35.c                  |   1 +
->   qom/compat-properties.c           | 116 ++++++++++++++++++++++++++++++
->   qom/object.c                      | 102 +-------------------------
->   system/rtc.c                      |   1 +
->   system/vl.c                       |   1 +
->   target/i386/sev.c                 |   1 +
->   ui/vdagent.c                      |   1 +
->   qom/meson.build                   |   3 +
->   21 files changed, 248 insertions(+), 157 deletions(-)
->   create mode 100644 include/qom/compat-properties.h
->   create mode 100644 qom/compat-properties.c
-> 
+diff --git a/ui/dbus.c b/ui/dbus.c
+index 4f24215555a4..7c54b6a502d2 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -263,22 +263,52 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+     }
+ }
+ 
++typedef struct DBusDisplayAddClientData {
++    DBusDisplay *display;
++    GCancellable *cancellable;
++} DBusDisplayAddClientData;
++
++static void dbus_display_add_client_data_free(DBusDisplayAddClientData *data)
++{
++    if (data->display) {
++        object_unref(OBJECT(data->display));
++        data->display = NULL;
++    }
++    g_clear_object(&data->cancellable);
++    g_free(data);
++}
++
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(DBusDisplayAddClientData,
++                              dbus_display_add_client_data_free)
++
+ static void
+ dbus_display_add_client_ready(GObject *source_object,
+                               GAsyncResult *res,
+                               gpointer user_data)
+ {
++    g_autoptr(DBusDisplayAddClientData) data = user_data;
++    DBusDisplay *display = data->display;
++    bool current = display->add_client_cancellable == data->cancellable;
+     g_autoptr(GError) err = NULL;
+     g_autoptr(GDBusConnection) conn = NULL;
+ 
+-    g_clear_object(&dbus_display->add_client_cancellable);
++    if (current) {
++        g_clear_object(&display->add_client_cancellable);
++    }
+ 
+     conn = g_dbus_connection_new_finish(res, &err);
+     if (!conn) {
+-        error_printf("Failed to accept D-Bus client: %s", err->message);
++        if (!g_error_matches(err, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
++            error_printf("Failed to accept D-Bus client: %s", err->message);
++        }
++        return;
+     }
+ 
+-    g_dbus_object_manager_server_set_connection(dbus_display->server, conn);
++    if (!current) {
++        return;
++    }
++
++    g_dbus_object_manager_server_set_connection(display->server, conn);
+     g_dbus_connection_start_message_processing(conn);
+ }
+ 
+@@ -290,6 +320,7 @@ dbus_display_add_client(int csock, Error **errp)
+     g_autoptr(GSocket) socket = NULL;
+     g_autoptr(GSocketConnection) conn = NULL;
+     g_autofree char *guid = g_dbus_generate_guid();
++    DBusDisplayAddClientData *data;
+ 
+     if (!dbus_display) {
+         error_setg(errp, "p2p connections not accepted in bus mode");
+@@ -298,6 +329,7 @@ dbus_display_add_client(int csock, Error **errp)
+ 
+     if (dbus_display->add_client_cancellable) {
+         g_cancellable_cancel(dbus_display->add_client_cancellable);
++        g_clear_object(&dbus_display->add_client_cancellable);
+     }
+ 
+ #ifdef WIN32
+@@ -318,6 +350,10 @@ dbus_display_add_client(int csock, Error **errp)
+     conn = g_socket_connection_factory_create_connection(socket);
+ 
+     dbus_display->add_client_cancellable = g_cancellable_new();
++    data = g_new0(DBusDisplayAddClientData, 1);
++    data->display = DBUS_DISPLAY(object_ref(OBJECT(dbus_display)));
++    data->cancellable = g_object_ref(dbus_display->add_client_cancellable);
++
+     GDBusConnectionFlags flags =
+         G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER |
+         G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING;
+@@ -332,7 +368,7 @@ dbus_display_add_client(int csock, Error **errp)
+                           NULL,
+                           dbus_display->add_client_cancellable,
+                           dbus_display_add_client_ready,
+-                          NULL);
++                          data);
+ 
+     return true;
+ }
+-- 
+2.43.0
 
 
