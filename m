@@ -4,99 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B2710A62FF
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 14:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6341310A62FF
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 14:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5m9k-0002cP-5G; Thu, 26 Mar 2026 10:57:56 -0400
+	id 1w5mAb-0003Jh-KE; Thu, 26 Mar 2026 10:58:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5m9h-0002c1-Ln
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:57:53 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1w5mAa-0003JV-EE
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:58:48 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5m9g-0006Dc-3K
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:57:53 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64ef161129bso977204d50.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 07:57:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774537071; cv=none;
+ id 1w5mAX-0006Ih-Dt
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:58:48 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64ad79dfb7cso1125117d50.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 07:58:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774537124; cv=none;
  d=google.com; s=arc-20240605;
- b=kGTayyw2hhbG1tgqyQuntB8cWfrupEB1LB0/kn1ZzvrfDIBO3R8zwzAdkq38ltp3jv
- SSvyscs41JpuSZm6FNwqYk1NpKDLfbFyxF0bdknwElvZbPW9uOe+E9sCOVS75+1nbQnZ
- DDZq3cXb+IpmdITzzjA6nxQh6it4F7rcT/GQ67DQEBEjq9P3dxUJm4uVIL8xDJ1D3Fmk
- AVVgNGhZjtaMDexVMdvveCs1CRDWqLI3qVrejD/fJBS/odQLRIFB4q1sinwUIDmJf1we
- e/lsTV8dNJgOE3Zk0agiT1pEyTFmtPxqgL59tn6IhEJrIHoU7sWg3UClRUVK+8xXpUpL
- e9XQ==
+ b=TY82W8E4MMyMId7c8Ap+YOkq3ruXKJs+EbJgeGC03OTV+lKr6Bv1xJdLGALhkm5Jpy
+ Eqa0J+zwFpWXHW40SVG5uQ5XC9o7IsiXCHg7zFUu2tUFTcYBfh/f6ShVdYYqZ+Ve7Fqd
+ MyWQxDTlYhicz1BPkhm+6T3J8FFK5Q9W9e5T/SSR2M8lO0ify4QwiLb6RBfTRUBZcbhp
+ khsEAEZoS7vaRX/EYBFghO3Tf4osgP2gJFiuVY3FDWTyJiNLQRUpAblFv+OCmOYusydO
+ fZPRMIq3yxYnpsxWPymxZkcr3FkX3sVpR8eFzHsyvucC2QkTT9mpHvIgdFLQl5mdFN/e
+ bOSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=U9lP9MZKcn5E1uRHCH2oogRQPzek67iKb1cwsF94szY=;
- fh=L7XiaM199YUAeJujWSjDkZHdtzvjC5QojsdLn/CKGC8=;
- b=i1aFgNy+b91xlSK6WG3MNN5dm8EkL1zw4b7QVViABS+g2k2SAEHYdfY/25Ao4fheof
- V0Wrl0wtW7JKCoiP5SaQzRQeHiTFwSuWkO9uuryzmhl+QOF5vl64hPgeNolsgd+yW03l
- EkftL7EBTE25iQX5pxMy2n7q9ruBmzvAqlRSBwjf6WqOtkdVGjqzc9cTGiTRt87zMvEs
- GFmFv4kMjqeqG2A7K1HTwuKxqO2qdRXUdGzYjxwv53Fz8whN7e8QZS8sbY2Hz8UQVJ7P
- JjCkFCw57oamOHBhj2/NP46ypr2iRH68rfOjrT2HLRiEYidonRD/dkyZ9z7xd0o8MRzO
- xuMA==; darn=nongnu.org
+ bh=GLFRCHpiGkAWWMWLAHlkZiq8ZWK/XLpYnyLtRgU0xsA=;
+ fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
+ b=LqObdio2STGDZLFNpcuEEzBGVYFYwbrS/ga8GjBpE/9faYsLJpAfr6yplr9RhNQlsd
+ eMbRdVyK8JSe0/g3baKqeKHn4FJe8qy+/0tdSBBeTmthP/l6uSB/HuIifbVoHzTVgiNP
+ UiXJA9GTf1EKuORmCUi8flTyb3irtKuhrEfwaCMfqQUablZbr/Ted4TuqlvESReqimVh
+ kEcU7X89417qufQmNMzbvoFqJjILCNCqS6RRaIWuonFZJ6RXFTufdRfZVLNtctVFR5ss
+ HESU2cTnVEJWpBMrZtv5wkaEYkO0Zd6ZSnakpDbFeMeLIYA3KJ+cI7kWxSzf1LxqLw1q
+ 9aPw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774537071; x=1775141871; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774537124; x=1775141924; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=U9lP9MZKcn5E1uRHCH2oogRQPzek67iKb1cwsF94szY=;
- b=a0FCiNvZaOvCKqzecherK89dU334SpchsLR5F1IRWNlNtx5TTZj4jcRCo/PzfnTO05
- BeJ5MQp9hq++DPhREDn8Ad+OKy3nSMMA7KlZmcKN1fLL77jHC0AyfS/qt8Y6ZRtkvQYB
- noCkGS7LTftix9dhmaALOZgRLQpuyVXK5pGz5WP/x4P8S9EdtY8QevKiCDNeu8CvPFC8
- Fi48N4VZJvlmj/jOvohSKIomWTt6dxd4H7EmbPDMviJdkprWG+8h09aZ2fHlzthjJ0jj
- e/ftFR2KJP7ElG7wlES+cO9tpsZqSnzRBMRrqIVFVoBEmRkNdCOwz87JNLxqFAZdfzsk
- kSqQ==
+ bh=GLFRCHpiGkAWWMWLAHlkZiq8ZWK/XLpYnyLtRgU0xsA=;
+ b=sLZ91SnGBg7aE9Lc619lirLgDwe5Lz3RgAPHy9UdQ7rRRyP9ZjHG9j3AKRdBEK4Ca6
+ JSxb+sacBGDZ2Vh2fw98dV6MpjiKnDb9LH2M9CCCbrWVGuLg5n6OmqiMK/azckSvpRlD
+ fQXxMc8Xl1D3hPBnoi1b25scNkV4BcAFUhW6Z4aUdLJzPPOhRlv4xWWeVMqe+CEweaLH
+ QX787WsCow4C/Sw5XWOijIXol50cXBx4Z7pSy2H3fhDuQ15T29McZmJgNsuPc64BVcOF
+ 7c09iwkhWj0vUN0BMtQPjiL3qyh+AqSZCC86/5ntNY6bwl332OsSQVKAf2Eee1PBOSP3
+ 9MpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774537071; x=1775141871;
+ d=1e100.net; s=20251104; t=1774537124; x=1775141924;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U9lP9MZKcn5E1uRHCH2oogRQPzek67iKb1cwsF94szY=;
- b=kh7Vz27r7ScppwfK7HABtEqnruHsoaeP+ThdvlGtwoM8iLLmE4wY76/XnAkA/JFqtJ
- SfN3Kdlm/BoFACCAjGUhCMb+X1+ETbEkZt6VtHLlp5x1GoiNdyALRlo8eKBSrIlwf3gT
- QE0Y4X/OOotGYrsJopPsN/0di0No5bSwiKncMeehWoxtuDsqxw1PK9IFGlvghe29kkTP
- 3ykpERBxh9RumbtVGSJggpM3dBYkqEstkq2COOq/PyMfSk+NcTnUkNakn2JvGWM1JbsM
- ysHE1U36Zx0Bw85psiywX0cEWiFh0BlEjX2hI2Jmu6uru9VhtIx+kT4uTTUodGlS9mD4
- pgiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFnuYjVgEEzJ7RcX6h4CLumZwZsOd5xN0KPjDXRX/Dgbt3g3ujL0XPkrHWUR7kKlqu/0/2jIyKuCbg@nongnu.org
-X-Gm-Message-State: AOJu0YzO6v5UTrpP4Xzq1hpODglqib8DHd2l7J97ntI+sRnUDJhEedPN
- IeF9zHIi8dmMNR3wLLdvA+MaWX9LcdVy+pX4PrdPfBxou5Nit+L6YhFr8Sy8WI9gW+/+orRyNXz
- kI6ddZB1u2A70udOyTLXDRPiIQXTSOtolyd/wL5Ww8Q==
-X-Gm-Gg: ATEYQzz6adgSdzJg+ZYylx0u0rYN9QTB0Gv4SbCFJ/AVfhjBXhO03+PSZEprfZuLfKg
- 0Wilg8TWYrwkh4siens2X86xwNjPG9vfmQ2mOnbSQNhVk3rq4naKpCQMCp6Q43ECHGYNqbEDvty
- LwtaF8nLZbjJqxcDOa4wlrV3VIV3/3TUy0MdrMimt3js3U+lFjfFNWYF3hBAFY3adNlNO5bPZns
- rpMueCwhnqsMulXoCGSUmG2sTgzStFjrJFX4xYmEe0o2wbZ710NQhjTOHOxMRca7upKasQ/xP0h
- F7ZjepLbVmIIkyoRpb/yHBBrYpEYgo2dQrwdJ7gPteeAeQDWMHetlT2pRlvrUgoYdRw=
-X-Received: by 2002:a05:690e:d42:b0:64e:c641:d06a with SMTP id
- 956f58d0204a3-64ee606f504mr7312000d50.4.1774537070960; Thu, 26 Mar 2026
- 07:57:50 -0700 (PDT)
+ bh=GLFRCHpiGkAWWMWLAHlkZiq8ZWK/XLpYnyLtRgU0xsA=;
+ b=mhTjxo92A02of41H24nFOnuQ4J6rQ+9AB00K5+H1NAXkLCJduXYUgIIMoTSX5Wlwy4
+ cC8JivxuFF2kq+YnzhWXD1bklywZxNlKbMPm1QYo7LGLKJRBkM0i4cFwNVpFdSCAzp2a
+ P0GLhmbaulijoBn1hp2FKbMevC6bStSrU0F9Infa5r8f0uDPCJD9mAJmwn+c3fIMteQz
+ iShu8Yy4lPz/1wGNHEqh/4ApSEN/FykNX35xO42AOi2QCVvUxnxSQP6J8dQG84O66zQy
+ sr+Zb9iOQNNMezMktAYT8cQE6BwgW6mOu9JadfjJRpEAPofcb8uSbD4yJibA6zPR536w
+ qIdw==
+X-Gm-Message-State: AOJu0YwVQG+MboRaoL4CQJcBR+eYOFcUxUN8+cO4OkEp2b7tYdk6XgVf
+ 8/eudyPgz3KLLKJTEftwwo0CtIf3sX70t/grJDP9E7m5P5yKIPpTKLS3gNBZPWqCuYfAmPQb3gg
+ ziEnpW9yCo0wvcwWcvRsPNAIlhDSs/6EDb2bz/YpEcA==
+X-Gm-Gg: ATEYQzwpWrVb8ty2lYgvMWDg2k8veAhBDycxKL8gWpPsMR5wNnI234ISfhQImZPfRO0
+ gQuJ+RPOVfThGxJXU9GNCmEZkCI/Thow4Zk4W2SSlqg7wu0hbJfl2zH4mmuv1wwmC5Ai0CiZC54
+ Z/NYlmrv1sAVXUi2XBZS/0GiNVqK81NayBTGLzGFwoB8AciikrHLduNR4jKYNttdwQw4CfIOQkD
+ JXGjhIiWnGPypYfOMAcwbiS8qfpSF2VaxMNWGug+dhlrCxaKYECABn3UFqsBQlDde39ibjg6O1J
+ zbrB41196bSJRSLX00KNF9SmHsGpxvwUG+DHUbPg/xndJVkhWd92+h1bKvLsBad8Q18=
+X-Received: by 2002:a53:d017:0:b0:63f:7de1:7acf with SMTP id
+ 956f58d0204a3-64ee60a9cd8mr7028281d50.22.1774537123785; Thu, 26 Mar 2026
+ 07:58:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260326113457.159065-1-thuth@redhat.com>
- <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
- <f6045fed-60fb-47b8-8241-a6fcb0af7292@redhat.com>
-In-Reply-To: <f6045fed-60fb-47b8-8241-a6fcb0af7292@redhat.com>
+References: <20260325215222.3678982-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260325215222.3678982-1-pierrick.bouvier@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Mar 2026 14:57:39 +0000
-X-Gm-Features: AQROBzApTN2U5b7lhjnw5vPbsl2rCayBhqtA9AZOCLRZrRB0-QF7A4IovdYnLOU
-Message-ID: <CAFEAcA_VoSX2JK-HRpAN0P0LT2dj_WvSRyP2dom3ZQK76mtyfA@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga device
-To: Thomas Huth <thuth@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Date: Thu, 26 Mar 2026 14:58:32 +0000
+X-Gm-Features: AQROBzDZuhu_fHo2R78L6cpwq6CTqiu40BDKlQBD6qQ40Qdqdx4Xc-gkI5sL19k
+Message-ID: <CAFEAcA_dQkQYxkakZ1=FTKSGCAgYAR9CYeeJUkNPmy_HB40E1Q@mail.gmail.com>
+Subject: Re: [PULL 0/3] plugins: fix endianness for qemu_plugin_mem_get_value()
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ stefanha@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,45 +114,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Mar 2026 at 12:04, Thomas Huth <thuth@redhat.com> wrote:
+On Wed, 25 Mar 2026 at 21:52, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
 >
-> On 26/03/2026 12.59, Peter Maydell wrote:
-> > On Thu, 26 Mar 2026 at 11:35, Thomas Huth <thuth@redhat.com> wrote:
-> >>
-> >> From: Thomas Huth <thuth@redhat.com>
-> >>
-> >> QEMU currently crashes when migrating a guest that uses the
-> >> isa-vga device as display. This happens because vga_isa_class_initfn()
-> >> registers a vmsd for vmstate_vga_common that operates on VGACommonState.
-> >> But the isa-vga device is derived from ISADevice, not from VGACommonState,
-> >> so the migration code tries to fill in the data for VGACommonState to
-> >> the memory that is a ISADevice instead, which is of cause causing trouble.
-> >>
-> >> We need an indirection here as it's also e.g. done in vga-pci.c, so
-> >> that the migration data gets filled into the right location.
-> >>
-> >> While we're at it, also drop the "global_vmstate = true" here. Since
-> >> migration was broken for this device during the last 15 years (!) anyway,
-> >> we don't have to worry about maintaining backward compatibility with this
-> >> switch for older versions of QEMU anymore.
-> >
-> > That means the only remaining users of global_vmstate = true are:
-> >   * TYPE_VGA_MMIO : used only by the MIPS Jazz board, which is not
-> >     versioned, so we are OK with migration compat breaks
-> >   * TYPE_ISA_CIRRUS_VGA
-> >
-> > I don't suppose that migration is also currently broken for Cirrus ? :-)
+> The following changes since commit 007b29752ed06e467d3c830bc2c17a8851f8bcd3:
 >
-> No, Cirrus seems to be fine. But I think we should likely do something like
-> commit 1fcfdc435a3e25ab9037f6f7b8ab for the isa-cirrus-vga device, too, so
-> we can at least get rid of this in a couple of years...
+>   Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-25 09:16:13 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260325
+>
+> for you to fetch changes up to e074c90947a162f795fe85a46e98922c887d6985:
+>
+>   tests/tcg/plugins/mem.c: fix endian swap in update_region_info (2026-03-25 14:51:15 -0700)
+>
+> ----------------------------------------------------------------
+> Changes:
+> - [PATCH 0/3] plugins: fix endianness for qemu_plugin_mem_get_value() (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
+>    Link: https://lore.kernel.org/qemu-devel/20260325024252.3369186-1-pierrick.bouvier@linaro.org
+>
 
-If we're going to do that it would be nice to get that in for 11.0.
 
-I do notice that the Cirrus devices have their own vmstate handle
-saving and restoring all the common VGA state, instead of using
-vmstate_vga_common, and they miss out all the vbe entries at
-the bottom...
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
 -- PMM
 
