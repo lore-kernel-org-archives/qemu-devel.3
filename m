@@ -4,61 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3049E10A62C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 12:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20EE110A62C4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5kAT-00018S-Vg; Thu, 26 Mar 2026 08:50:34 -0400
+	id 1w5kL3-0003cr-RP; Thu, 26 Mar 2026 09:01:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w5kAR-00017v-US
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:50:31 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5kKz-0003cV-Dw
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:01:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w5kAQ-0003Qu-Hj
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:50:31 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5kKx-0005CW-QE
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:01:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774529429;
+ s=mimecast20190719; t=1774530082;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=VbjUqL6GqDk5msE4RzJz0CxKgq6X5Uct3bzJSZajMO4=;
- b=K4oWBj24fWlpPw7ejvtj8Ux5t+bRchwKFX/7ryCuLWeXO4WLQcbojOUAiA1FxjYn4p9ZUJ
- 5doXDlV7tHxdaMDhRHCP298Yu+jhbnH7kVK2bW9HAe9mRFlj1dmpBNaw386XtJ5LzWnI9X
- FckWawh7X96F+vorxTBn5FiNrUcf/oo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dgqnh8YCVC64TnA3VJFCquY3LHbWRG2/wHmvHeqgzDw=;
+ b=GY+2M+RptLCcfW6nYQGPNPs6J5WUa0uNqKDh+50rdiJW4HX2kw6Y6wr940JLC9bLVo/+jK
+ U6p3TjjguC1NAIzoIya+p09fEwYdjTPECe34bshRqIDb/RS+7+/IEdJ6ILuELznwpCqw1O
+ eintz1vESrTBSIx5xrRSZx6rLf3JOT4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-J48L9_uLNNSATjNzSkVkFw-1; Thu,
- 26 Mar 2026 08:50:26 -0400
-X-MC-Unique: J48L9_uLNNSATjNzSkVkFw-1
-X-Mimecast-MFC-AGG-ID: J48L9_uLNNSATjNzSkVkFw_1774529425
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-dkj09fOLMO2CHio9kGdSLw-1; Thu,
+ 26 Mar 2026 09:01:19 -0400
+X-MC-Unique: dkj09fOLMO2CHio9kGdSLw-1
+X-Mimecast-MFC-AGG-ID: dkj09fOLMO2CHio9kGdSLw_1774530071
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3472919560B9; Thu, 26 Mar 2026 12:50:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.108])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 131F91955D84; Thu, 26 Mar 2026 12:50:20 +0000 (UTC)
-Date: Thu, 26 Mar 2026 13:50:18 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>, Hanna Czenczek <hreitz@redhat.com>
-Subject: Re: [PULL 0/4] Block layer patches
-Message-ID: <acUripAsWiW-YOR9@redhat.com>
-References: <20260324185619.296946-1-kwolf@redhat.com>
- <db795759-2751-4321-9315-c6840be7d030@tls.msk.ru>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F0EF1955F18; Thu, 26 Mar 2026 13:01:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 627103000223; Thu, 26 Mar 2026 13:01:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0600221E6937; Thu, 26 Mar 2026 14:01:07 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: <qemu-devel@nongnu.org>,  <anisa.su@samsung.com>,
+ <berrange@redhat.com>,  <eblake@redhat.com>,
+ <jonathan.cameron@huawei.com>,  <linux-cxl@vger.kernel.org>,
+ <linuxarm@huawei.com>,  <lizhijian@fujitsu.com>,  <mst@redhat.com>,
+ <pbonzini@redhat.com>,  <gourry@gourry.net>,  <nifan.cxl@gmail.com>,
+ <me@linux.beauty>
+Subject: Re: [PATCH 1/9] hw/mem: Add tag support to generic host memory
+ backends
+In-Reply-To: <20260326112921.000028e6.alireza.sanaee@huawei.com> (Alireza
+ Sanaee's message of "Thu, 26 Mar 2026 11:29:21 +0000")
+References: <20260325184259.366-1-alireza.sanaee@huawei.com>
+ <20260325184259.366-2-alireza.sanaee@huawei.com>
+ <87a4vuhnxy.fsf@pond.sub.org>
+ <20260326112921.000028e6.alireza.sanaee@huawei.com>
+Date: Thu, 26 Mar 2026 14:01:06 +0100
+Message-ID: <87bjgag2y5.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <db795759-2751-4321-9315-c6840be7d030@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,7 +77,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,30 +93,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 26.03.2026 um 06:02 hat Michael Tokarev geschrieben:
-> On 24.03.2026 21:56, Kevin Wolf wrote:
-> 
-> > ----------------------------------------------------------------
-> > Block layer patches
-> > 
-> > - linux-aio/io-uring: Resubmit tails of short reads/writes
-> > - curl: Fix memory leak
-> > 
-> > ----------------------------------------------------------------
-> > GuoHan Zhao (1):
-> >        block/curl: free s->password in cleanup paths
-> > 
-> > Hanna Czenczek (3):
-> >        linux-aio: Put all parameters into qemu_laiocb
-> >        linux-aio: Resubmit tails of short reads/writes
-> >        io-uring: Resubmit tails of short writes
-> 
-> Shouldn't all of this pull req be picked up for the stable series?
+Alireza Sanaee <alireza.sanaee@huawei.com> writes:
 
-I don't think any of these are very critical, but they are fixes (as
-should be everything merged during freeze) and have existed in previous
-releases, so yes, in that sense they are certainly suitable for stable.
+> On Thu, 26 Mar 2026 11:42:17 +0100
+> Markus Armbruster <armbru@redhat.com> wrote:
+>
+> Hi Markus,
+>
+>> Alireza Sanaee <alireza.sanaee@huawei.com> writes:
+>> 
+>> > Add a string tag property to HostMemoryBackend so that backends can be
+>> > identified by a user-assigned name at runtime. Expose the property through
+>> > QOM and add a host_memory_backend_find_by_tag() helper that walks the
+>> > object tree to locate a backend by its tag.  
+>> 
+>> Why can't you use the QOM ID?
+>> 
+>> $ qemu-system-x86_64 -S -display none -monitor stdio -object memory-backend-ram,id=fred,size=1M
+>> QEMU 10.2.90 monitor - type 'help' for more information
+>> (qemu) info qom-tree /objects/fred
+>> /fred (memory-backend-ram)
+>>   /fred[0] (memory-region)
+>> 
+>>  
+>
+> Fair question. The ID would have been a solution if it had accepted GUIDs. CXL spec 
+> requires GUIDs for extents as identification, hence new tag property.
 
-Kevin
+Your commit message should state that this needs to be a GUID and why.
+
+> alireza@blue-ocean:~/Downloads$ qemu-system-x86_64 -s -display none -monitor std
+> io -object memory-backend-ram,id=02bb2436-e87d-4aa1-b2be-aaffdd76bb79,size=1M
+> qemu-system-x86_64: -object memory-backend-ram,id=02bb2436-e87d-4aa1-b2be-aaffdd
+> 76bb79,size=1M: Parameter 'id' expects an identifier
+> Identifiers consist of letters, digits, '-', '.', '_', starting with a letter.
+>
+> Thanks,
+> Ali
 
 
