@@ -4,132 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 289A010A88D4
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D403210A88E6
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5nst-0001jZ-S3; Thu, 26 Mar 2026 12:48:40 -0400
+	id 1w5nvv-0002t7-0D; Thu, 26 Mar 2026 12:51:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5nsd-0001fR-KM
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:48:26 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5nsZ-0000KT-OQ
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:48:21 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-c742bc88d87so537836a12.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774543698; x=1775148498; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NmyGoENwJLaW9tDAc6KN4Q2XMSAgocRn/MvaZn+i+8U=;
- b=dsCl8EKBqAxk6Tg3XHGq+UdYx1rL+MV+vKhQOy6UPLyhjbOoJUv3VJdZOzcRx4BU9X
- s1Vx/f5am0/6IDAGaYV2IzyNddsPYcHx4mYT8iWyEQKybmtv3RBIxvq1GjsYsXObHt3u
- i+MEorrZ7EN1fn6FPph5MV/97gbC09aOFkTTBtitOasBZEin0WPjbzrAPzws3K59/hxe
- oICyxrA7af92hEOrX5aP5jKF6o4VcltGfc2wrWAcmk4ndY+EG9KSPWFB8wVfqhwI7CRP
- Tc/k6x/qxHCpoGUeeCEyOKw5Y713HiJXPCsTHR7y4hVFqRAiOrgncMn5n2e3DW65jKxy
- 5Kiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774543698; x=1775148498;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NmyGoENwJLaW9tDAc6KN4Q2XMSAgocRn/MvaZn+i+8U=;
- b=ESfa3WDW/U2A4MnBTPnVCwKq8DnE9508bRY4Wmast6V7Sf9+6AghjDUIKnNOV5+E5A
- CClFkayuN4J7mLmxxIsr6UiL/IM+GKqNep1g7F5d8Zy4ZYgJUMGFgPELQ1r48YbNIarj
- GoJ/hIFyKiTSG3neHvp3nZezOl+7wP3Ch0mm5v/TgrFqEt1c+qa9TBGCseyMsF01KO9O
- EB7SPKRnn+Jy2zaJElWHXd7dNIrQgpThXqINI/92r/lZ/fDnGy/IP+tZQc0SwdfVVlAN
- ZNHtBny+VX9bXOImK1Vc13VZq/1iAHndhqSDglVPk9Cc44Boxb9kZX0JB8EuIyDM64Jb
- WU5Q==
-X-Gm-Message-State: AOJu0Yx+JEC/YY9QZFnVBc/eFvO/btSF+UE9Cgs3qGzFYHjvf1k0dQnK
- KoCm4ZUUAz6/DT/1xajm4Ytd6IkhJzld8Ng1duvHLtYtV8wiUNY+fi6MZIdFUBmdt38=
-X-Gm-Gg: ATEYQzxbqh6Jg+7S6IOsU4vdZ4nnk6agYEhoh1IdA7QJ1g3FrB1Nv7HeVL7QGOQpGrR
- OOfIUSFoW2/QdAshvYIqgsyAcnngWOHbmXahHY9r55y/K1KMbp8lmjqc+T4W6p9eldJU/ASUl51
- lF69q1yYWgx7b28xPjY/0nB72OhIfSTJdbk9NJ7Z0zbqpN2eN1v/tZWw4bWBboeXt9vpsUS93A0
- RRJ0jB6xuVMxRMFlLt+fJdyuzyjeMfFe/fXDQbuylx5nGpX3a2pE9UB9SyxeuLaao9LYn50U21B
- aYvqWCuOnfL4jY0MucQagbgdCcFHmdvfCF5AUjDsXmmYPvMYP+s0m/4nu1PJo7JZyfBY7Q2+WuV
- pC8qbX5hjYX5cDW5zkZS9PupY8fy3X2GeLLvGZ15EGLnhbxnY5jnvWNx/vTXjXDUIp1wcAvSc2R
- 2pJiBEQuzv0EV9xJfpbz8z0gvIsOkAEdAqw4gJ7XT77DWO3G5WRr8WMsr8rSVNEsU+Nq6mjZ9jt
- s7Rbfo=
-X-Received: by 2002:a05:6a20:7f84:b0:39b:be6f:3d4d with SMTP id
- adf61e73a8af0-39c4ab5851fmr8528184637.23.1774543698022; 
- Thu, 26 Mar 2026 09:48:18 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76737f1e75sm2641921a12.3.2026.03.26.09.48.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 09:48:17 -0700 (PDT)
-Message-ID: <09297e78-b1bd-4281-919d-99de0a5a33ab@linaro.org>
-Date: Thu, 26 Mar 2026 09:48:16 -0700
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w5nvt-0002sj-2Q
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:51:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w5nvr-0002c6-EW
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:51:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774543902;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=o1KBBjUYqJEnfeVv5wHKdbXX2csFQ28RirQWc/5D4Os=;
+ b=YeRQDDilOxo0Y5C2h10KX16PoMk9NrYOzGd9fMWroktLxUNQ51hk8OsiAX/sV3ppVBcRbL
+ gddP1eugyN1JoNPbcRGLWfkm4iUWhap5D/3X8j/lclVSvOql2zVsdX2Xv93NEpHiyAhEDu
+ jmuovj6KIazdSzmmVZOH+vDvlqqeoX8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-581-GV6cZ7f-MPSuRfjgUfoipA-1; Thu,
+ 26 Mar 2026 12:51:38 -0400
+X-MC-Unique: GV6cZ7f-MPSuRfjgUfoipA-1
+X-Mimecast-MFC-AGG-ID: GV6cZ7f-MPSuRfjgUfoipA_1774543897
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC7471964CF2; Thu, 26 Mar 2026 16:51:34 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.45.226.108])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 50C531955D84; Thu, 26 Mar 2026 16:51:30 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, timao@redhat.com, hreitz@redhat.com, jsnow@redhat.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH] ide: Fix potential assertion failure on VM stop for PIO read
+ error
+Date: Thu, 26 Mar 2026 17:51:24 +0100
+Message-ID: <20260326165124.138593-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Misc changes to allow building with Windows Clang
-Content-Language: en-US
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
-References: <20260326160033.68318-1-kkostiuk@redhat.com>
- <E4E91C9F-222E-41CA-B51A-928480FDC405@unpredictable.fr>
- <CAPMcbCoPfE+c1851esnnWRgxFcgm1CRr9CGtOmBNWphX5kt1tA@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAPMcbCoPfE+c1851esnnWRgxFcgm1CRr9CGtOmBNWphX5kt1tA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,46 +80,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 9:43 AM, Kostiantyn Kostiuk wrote:
-> 
-> 
-> 
-> On Thu, Mar 26, 2026 at 6:35 PM Mohamed Mediouni 
-> <mohamed@unpredictable.fr <mailto:mohamed@unpredictable.fr>> wrote:
-> 
-> 
->      > On 26. Mar 2026, at 17:00, Kostiantyn Kostiuk
->     <kkostiuk@redhat.com <mailto:kkostiuk@redhat.com>> wrote:
->      >
->      > This is the first set of changes to allow building qemu-ga with
->     Microsoft Windows Clang.
->      > It includes some cleanups and fixes that also make the code more
->     portable.
->      > The main goal is to be able to build qemu-ga with the MSVC toolchain
->      > because MinGW-w64 is not available for ARM64 Windows.
->      >
->     Hello,
-> 
->     MinGW-w64 is available for arm64 Windows, although it’s more 
-> 
->     mature with Clang as a compiler instead of of MSVC.
-> 
-> 
-> I expect to use clang from the MSVC environment, not the MSVC compiler
->
+ide_sector_read() as well as its callers neglect to call ide_set_retry()
+before starting I/O. If the I/O fails, this means that the retry
+information is stale. In particular, ide_handle_rw_error() has an
+assertion that s->bus->retry_unit == s->unit, which can fail if either
+there was no previous request or it came from another device on the bus.
+If the assertion weren't there, a wrong request would be retried after
+resuming the VM.
 
-Is the difference that this clang does not come with mingw preinstalled, 
-and thus require using msvc headers/libraries instead?
+Fix this by adding a ide_set_retry() call to ide_sector_read().
 
-In all cases, it's just better to use msys2 environment. What is your 
-limitation with it?
+This affects only reads because ide_transfer_start() does call
+ide_set_retry(). For writes, the data transfer comes first and the I/O
+is only started when the data has been read into s->io_buffer, so by
+that time, ide_set_retry() has been called. For reads, however, the I/O
+comes first and only then the data is transferred to the guest, so the
+call in ide_transfer_start() is too late.
 
-> 
->     Is it more of a packaging issue with distributions?
-> 
->     Thank you,
->     -Mohamed
-> 
-> 
+Buglink: https://redhat.atlassian.net/browse/RHEL-153537
+Reported-by: Tingting Mao <timao@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ hw/ide/core.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index b45abf067b2..52a991fc482 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -799,6 +799,7 @@ static void ide_sector_read(IDEState *s)
+     s->error = 0; /* not needed by IDE spec, but needed by Windows */
+     sector_num = ide_get_sector(s);
+     n = s->nsector;
++    ide_set_retry(s);
+ 
+     if (n == 0) {
+         ide_transfer_stop(s);
+-- 
+2.53.0
 
 
