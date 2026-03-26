@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBDC109E543
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 03:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199DB109E54D
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 05:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5bci-0005FA-Im; Wed, 25 Mar 2026 23:43:09 -0400
+	id 1w5csA-0002BP-PK; Thu, 26 Mar 2026 01:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1w5bcf-0005Eb-Ok
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:43:06 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1w5bce-0006vO-3O
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:43:05 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2b061b6cf36so3662335ad.3
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 20:43:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1774496582; x=1775101382; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=452EKNfUmA2G5TPGOc8X6iyAUGUmA/KlYJbm/Arbkuw=;
- b=AHXSIkym1KP/A1HBQhhbj7J1d94JdNzeJCIw1kCbFezqB9hzMp40recZyQjwcHYefZ
- 36HfFI0oGdwcVEMUS30buZzOMCHOK2TTbkaro4U7gc5baLKX754sOgpAn9Tim7BKOYm4
- dYFuHE2nUP83hhXidpKTLgrzIeT6iTrynQsBk58KAENgku3qclrAcIUH4yjRHb90aIoJ
- Go2LivYPPlZo+qUtfQqCt85CslZFfCxpMScYGdnfFzswSjdh5K+PxWN33tX8rCBwXRQ3
- 09eIQ7UK3QwjX1aRhMwUNs1uTxYwH1St7zsDFlk+z9CedM/WqS5G9d6l6i9xvXyPQrKH
- aHBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774496582; x=1775101382;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=452EKNfUmA2G5TPGOc8X6iyAUGUmA/KlYJbm/Arbkuw=;
- b=N+2Pz34HVS+CmvZjA4xxCsBs14Qh/IB5pWlg1m42zQf+ba5mTGB/7ZtNJ4TI7B7Jwn
- 7rNvG6RYv26NHRrCUjSwbpocCmN8ulavkJBH1O7nLdWkxiogv0xanLuMLJWTT0TNxmRK
- HNRcPhH0pbfH0BHd2aTGFK3j5Oc88kJ6SxSB8GC994Jyye6DpbdpK+YDSC7VZHb4w9wr
- 2NCqZX/fse8aEZCwVoXOAXAl4QOdorvEFhCfHYY/nY33PciRR1uUUBjPaqr4ICbLKbJc
- JSfo1UCOsZ/1ifeTmLlfh60wi/U/WLU3qE7BBhXpGAy7iDEbm7JsCsTp//DUyvr9gkWI
- RUOg==
-X-Gm-Message-State: AOJu0Yx8U8dW8nRvEhCH8E+7sKlnVPi+mZOLFT5UmPWpKIhaEFWxzr1h
- uDNZPO7yMhPrPSbCJo2BnGlyt5kJXPWfGvEAWmR/NoM9aw8F/N6aHOH7TQXGdHxaHvQ=
-X-Gm-Gg: ATEYQzwBQjcMLJqzmNVjPjPR5kQSmAMsp225tj7SGreT5vcN5btkkBdTvawrSgS63uc
- cgB85R12h6twqZmdko2XJhyuSzpBfani5Ld86vVaAzS4P5Thw0AGQQj6z3UgbHGLsJSCSerC1Ta
- WUT4teE3fWmkqkwBeRLaF+RI2E3ZXr3CXosRSshH49o2YaS0C/gnDrAsfLIrcQsQkgD5s2AoyPu
- 07YxD8hAKj1rHKHT2HZlHlyj9wyKtcJypVMAByg5P/i92gPy88/WdFBaBPoZXrdLCuSiSjIybp0
- GMOwAH589iErVd5qwny8chjsNcM1E5CQGkR7dxi+Qwp4GNUJ4RXvqhONweBmbvCGnw2ZudVCLJc
- UgFfqBxxoWiyAZF7JYOG+iLBBngkAFZKaVi8MKcIdqWEFDChJfI+/WeDBoftnI6HMT8qKtCvR0q
- TT6faevjO7aI8DBiNfVpnSYO1uFDG0k3Qlct8t48Mc4grpNlQ5ZrSqHmXv27dylUF0
-X-Received: by 2002:a17:902:e951:b0:2b0:665b:c7de with SMTP id
- d9443c01a7336-2b0b0aef15cmr66910895ad.40.1774496582057; 
- Wed, 25 Mar 2026 20:43:02 -0700 (PDT)
-Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b0bc8b5dcbsm13458225ad.57.2026.03.25.20.42.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 20:43:01 -0700 (PDT)
-Date: Thu, 26 Mar 2026 11:42:58 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: Re: [PATCH v5 0/9] Add Zvfbfa extension support
-Message-ID: <acSqxQQxnO0HdB8M@sifive.com>
-References: <20260306071105.3328365-1-max.chou@sifive.com>
- <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
- <abKfuTO7zg5d67E8@sifive.com>
- <CAKmqyKOcCKAb2w2t2qYgOevswst75FjzKfihrYP9+odRAsCQmw@mail.gmail.com>
- <abe80eiIC4gXUHxk@sifive.com>
- <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w5cs0-00024J-Hu; Thu, 26 Mar 2026 01:03:03 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w5cry-0006Ih-Ll; Thu, 26 Mar 2026 01:03:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1774501351; bh=Vx0ZQiaO6gD5XIsSzHsN6UEvVXKAjoh9WuUgkbI7/go=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Dy/60E1124+2JchPhnBnLuB6mmeNpsKSAjxgewmszVq3ofEV07NIYH9XKsHzy+E8d
+ DAJDOnIaQQJe6CTHg2usgEbs+M4kaMhbPI8TcXG7wmy4B1R4h2vK3Y0ZKM8cq/oIHe
+ 64bsFaCM3dyud5cRQ2wjPW4P+aSpuoJkzkpNnydsS9A5IubhPzyMCc+5ff2gAUWBsN
+ HoBN1byU5ahwU/MdV6KtAg2GY80gJrvR3AV1qJ7xGDV1+4QoBWijFeyyXNFu+4W+IJ
+ 5EX9oKtUIfJS9dhygqyz9nNZvDPAElVup9RwlFicUdNASlqHT8g1+IcdH720l4tyKq
+ R8GNbawBxuLZg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 87DFE197B73;
+ Thu, 26 Mar 2026 08:02:31 +0300 (MSK)
+Message-ID: <db795759-2751-4321-9315-c6840be7d030@tls.msk.ru>
+Date: Thu, 26 Mar 2026 08:02:52 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/4] Block layer patches
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
+ Hanna Czenczek <hreitz@redhat.com>
+References: <20260324185619.296946-1-kwolf@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20260324185619.296946-1-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,39 +111,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-03-19 13:45, Alistair Francis wrote:
-> Yes, that's how things previously worked. Basically I think we just
-> need a tag (that won't be changed) in an official RISC-V repo that we
-> can point to. That way it's easy to say "this is the exact version we
-> used to write the QEMU implementation". Then if there is a version 0.2
-> we can easily see what has changed and update to match.
+On 24.03.2026 21:56, Kevin Wolf wrote:
+
+> ----------------------------------------------------------------
+> Block layer patches
 > 
+> - linux-aio/io-uring: Resubmit tails of short reads/writes
+> - curl: Fix memory leak
+> 
+> ----------------------------------------------------------------
+> GuoHan Zhao (1):
+>        block/curl: free s->password in cleanup paths
+> 
+> Hanna Czenczek (3):
+>        linux-aio: Put all parameters into qemu_laiocb
+>        linux-aio: Resubmit tails of short reads/writes
+>        io-uring: Resubmit tails of short writes
 
-Hi Alistair,
-
-The official riscv-isa-manual repository has added a new tag for the
-frozen Zvfbfa v0.9, as shown below:
-
-https://github.com/riscv/riscv-isa-manual/releases/tag/zvfbfa-0.9
-
-The current v5 implementation fully complies with this frozen
-specification.
-
-Since the Zvfbfa is frozen, should I prepare a v6 that removes the “x-“
-prefix from the zvfbfa property and updates the specification reference
-?
+Shouldn't all of this pull req be picked up for the stable series?
 
 Thanks,
-rnax
 
-> With the seemingly infinite number of draft extensions we need
-> something to manage the version and compatibility, and that seems like
-> the best bet.
-> 
-> Posting the draft PDF spec somewhere immutable would also work. We
-> just need to be able to point to something that won't change and
-> represents some sort of "release". So a git commit doesn't seem like
-> enough, we need a "release" that everyone can converge on.
-> 
-> Alistair
+/mjt
 
