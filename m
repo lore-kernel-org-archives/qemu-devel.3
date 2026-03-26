@@ -4,108 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC5F10A88D4
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD5F10A88D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5maG-0001w0-6N; Thu, 26 Mar 2026 11:25:20 -0400
+	id 1w5mbd-0002NZ-RZ; Thu, 26 Mar 2026 11:26:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5maD-0001vf-Mz
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:25:17 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5maC-0005QR-5X
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:25:17 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64f48a5c3d8so1387513d50.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 08:25:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774538714; cv=none;
- d=google.com; s=arc-20240605;
- b=TbRQacmDpbAKEKmxrZ5wW/AcFOX6hVD21cdONvBubMBl0zu8X3enMyqQjQzYwwyKzu
- x634FOsKxJ6JeZGI0B4OTvHEBDHKn533ygH7m2hvptSrTIIH928L5QTArNPfmCDPeM9I
- AL/3QJ9WtBK/dW6ovIg/O6/wEki/t/cejLti7AxBvBSfvzpFZrmLU5gI2vU3QH5ngQSx
- 0ifLzc5W23DZ8CprePh8C7BeJ1kdur+U5w/4R83xcuqWAP1M5hs2W9GiOC2BJTig7r5C
- 0uzktbZixSo0WKpZUQmfVqruqoGGYjtorVlGnO0nc4zX9a1yoZm7W4vAecqjzivuwIfa
- 4jEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=USXXcSwLW1EXRSE4f7p51QuIuMKDb4fP8WlWne/h+3s=;
- fh=wenmdvXzFm2UTuSjK3Hs2ebVaHDwTR9Lx3OWz30VTOA=;
- b=kDpksERYB2QAf4gy7yK95fzTyX+sY/1LoGcwGdAkzy6FFL9W71T8TrNsuadkzmnDZK
- 4fejgbh/hIdsLWtSzHBcqAyID6/nMyY3kVUqWR4VohtpuPIP3mdEQ4LIhbnAC3Lh6o9g
- qLSTJnENUGIVH4dCkgKo/rRwfXCbnfPtAFbNfSFV5W6DorvZuctGw+lTKwH6juNk8T/T
- rDeYBl3hctu/Vc1xeNEzYUO0bbinP5Z1rUPtmEw5MgFXG42xO+S+3k5lcbWKMw5fQ2nT
- +sNwri+aPJOL1wU+HRPyNSA93Egm22AJbezp/h+qhpZ0NjCoV1YJPcCW1zFX8cpGDCpN
- A7sA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774538714; x=1775143514; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=USXXcSwLW1EXRSE4f7p51QuIuMKDb4fP8WlWne/h+3s=;
- b=z49g5Hc75mrPnv3n+l+E7WEgNugbfnuN1KztjI2865qRr5U8s1SNH2ZHGLEEQGbXre
- JiST88qXc8iUmSD0UGxxHDnXxSIqy+4RARcdkl1I454awCedaUgUmZYjDNl6dyWuDci8
- boYXG2kddgzfN3rcKD16XMQLX4qHmpCBeFWmXvw9cuX3UEQmSijBKyc+l51gK5vyXGcj
- PWxXbAsoVlRUvbfW591pM5NKfq5ea91AGU1ZOeP6WYvZzJ9/fmnb74h4H2u/LP+l1DyP
- NQxTfVglgmHVeV+HOw7d/km63hKXcXHgFD78/380gNZGLZy+nU/fdOZ/TA7w/VYLv84H
- nosw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774538714; x=1775143514;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=USXXcSwLW1EXRSE4f7p51QuIuMKDb4fP8WlWne/h+3s=;
- b=KBO8B9dcF+0hL5lhAv5aZxB/K0QxiaOxD9vOwvI5W/0QVVFhkwL54MdG3h8vyOh2u4
- Ha0vcpa9qb56+rEanSSvhPf0SL7s2mXkT0K8AJRPCCLfYUDgd4pBgqOnlQT/ktFkKMQx
- 7jOvUqeOlsi1kJXqPXJBUFUmh9NCfGfsZ8B1Y5hD+SxEp/VDNFxkWu6BCuMNo3PthTIt
- X/4xc2jiZ8vc3KRi4kpATg/s5RNRYx8v78nxo2ZKohjbmbv56K35jIhR6r1oob5bL12u
- gyR0vhH+0kBW5Y3tLQSoaW1mad3/GjnNFOODkH03qxvR1lNbPRjUMkhJQOaTTAlBvPyZ
- SkAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxvG+zcSwaJNxasz4djKWBRSYlbA+J+70hyLYtoK5FA32ryYqE0yz8hDt+Dv8q5bKHrh4fLWdeoQUo@nongnu.org
-X-Gm-Message-State: AOJu0YxRoYeRNKj3kdK7Yh1bkrlmwqRXmY1gT2vqPne8d+jm5pjjp1XS
- tG252Z62kSi4rm5yhDq2VCKecj0GK4JmBmc3OLpjXlsw+aenjs5LukQMLWszK4oJKTRHbCSBtEX
- LR+PYJHPRPm2zz+tV18vsozLt0il+j4jHgAnuI7bMLcjcNVn6oz7xnTQ=
-X-Gm-Gg: ATEYQzwvBYZY3ltxNDUCrqRPFfZT5X75/HVB9Mrzizb2/HdLCyM51papUkDeawORlIF
- eZ/o9l5tOBvuCTaXvalG+kctMOMy7c+p0yunEf+c7H5HyPoS92cQKWTos7Cy5sXBoaJA1VFzTPq
- 5TIE7aVKCLPsu0v2G/AQ8EYvbbWr4tpM908m/dt8gYwh6e9bbdSTcl1ChQUI14dOuWPbffqhrOy
- r33dqYYJ+Zugmtt/9ZqmrB25Gq5ONLbwrPg34/j1Uy70USLpcAokKKlOlWdoXFxYCzZ315aHQ/k
- YuvhVBdg+/v7jjO89T9Nr6Lqp3qmX8K6SsqfpDj8Ep8D2abKgnPH7h96n67HFZ3cjWI=
-X-Received: by 2002:a05:690e:1603:b0:64c:a708:2b92 with SMTP id
- 956f58d0204a3-64ee618987amr5998282d50.81.1774538714516; Thu, 26 Mar 2026
- 08:25:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5mbP-0002Kb-Uc
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:26:33 -0400
+Received: from p-east2-cluster4-host9-snip4-6.eps.apple.com ([57.103.78.217]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5mbN-0005fj-G7
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:26:31 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPS id
+ 6F9D2180041D; Thu, 26 Mar 2026 15:26:26 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774538787; x=1777130787;
+ bh=w/urdvCZrd52R9D39ZIMQHtGZ2DYgsZO2e5sV+akbV4=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=JH+5v6wVCI1gbZML1SjZFdV4TaWULDfY8fhU599OZa4ft8FDt/l8xLcXggLJCrqrsiV/LUo3vC4u/mUm2JSsvI4pw+NgAwZiCLqdtxbiVWvHaEhV03wafJSNEPU5emV1NxcsfnebZhBLy7Kn2ckOztxPqBvciYKPvGhNpTDgIY/XV2VKafmSfGaIh++9wx1STjwY3XUWzgRtlZyzZZ7KfSuqR4EIDhnUPhliFHHtmF7/e9iJCTh+BZ9FemsG+Wyj/kfITqUmjD6ylEzGCvkc308cQ5mZrmdOVMo0aFB8XHMTyPl5n5wOaUQK+RoMu05H1qm8ze6M8JcuX2b4bZ+kXw==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPSA id
+ 42A851800403; Thu, 26 Mar 2026 15:26:25 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v2] docs: add WHPX section with initial info
+Date: Thu, 26 Mar 2026 16:26:22 +0100
+Message-ID: <20260326152622.92334-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20260326113457.159065-1-thuth@redhat.com>
- <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
- <f6045fed-60fb-47b8-8241-a6fcb0af7292@redhat.com>
- <CAFEAcA_VoSX2JK-HRpAN0P0LT2dj_WvSRyP2dom3ZQK76mtyfA@mail.gmail.com>
- <67ae08fb-adc1-755b-a73b-789cd3e43049@eik.bme.hu>
-In-Reply-To: <67ae08fb-adc1-755b-a73b-789cd3e43049@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Mar 2026 15:25:03 +0000
-X-Gm-Features: AQROBzCEzJfKV_lU3uoh5unYRiw5OlDwXcpPzXqEGsNH1snuSDy2odl9u1BKxgk
-Message-ID: <CAFEAcA8D_NEkhRS4ppCrTzMjj_5BjRtSevD6OGRWX=4f2cWyYw@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga device
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: YQZi4RJ_j0ZYRtyKKliqfJssYrnZqTpN
+X-Authority-Info-Out: v=2.4 cv=M8dA6iws c=1 sm=1 tr=0 ts=69c55022
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yMhMjlubAAAA:8 a=WaZvilOYPjjn8e_oVx0A:9
+X-Proofpoint-ORIG-GUID: YQZi4RJ_j0ZYRtyKKliqfJssYrnZqTpN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDEwOSBTYWx0ZWRfX3BwOkq+fGCDR
+ z+4ZFZ4GSjbjobs6xKuZLJCyWZoqN5rO0hvAKgzUzg3FP7gOYBbqX+IILEUQreyuv41eAN1Odyj
+ vskBdbgjbUQR392ju1LEieZslObqeg9hJRxoqhe/VVyreJPjJiZHA71ETHhdJJ2h0p8X6tGeOuv
+ r/SL86IsS/LkeMjca4s7lu4gpP5fH5XdmnGoQMEyrIToDSW9bdMulCjrsigoh042Ma/NHPCQv7P
+ BhzcrNpiLaf4SAYBatPsygZOIyVZ4gQvq61r/nBFd5/+k5G5ipwpSiZ8VyTZ1CO6xEc7Lk1LtVh
+ 4dGtbPCcBoiJ21npIzYB+SkG/5Sh6FfrIqyh1aqlWUoQserDuveE4xjRGeZY/c=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ malwarescore=0 mlxlogscore=999 lowpriorityscore=0 clxscore=1030 phishscore=0
+ spamscore=0 mlxscore=0 suspectscore=0 bulkscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603260109
+Received-SPF: pass client-ip=57.103.78.217;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,22 +89,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Mar 2026 at 15:17, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> On Thu, 26 Mar 2026, Peter Maydell wrote:
-> > I do notice that the Cirrus devices have their own vmstate handle
-> > saving and restoring all the common VGA state, instead of using
-> > vmstate_vga_common, and they miss out all the vbe entries at
-> > the bottom...
->
-> That might be OK as cirrus-vga does not seem to support Bochs DISPI VBE
-> ports so there should be nothing there to save/restore.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ MAINTAINERS           |   1 +
+ docs/system/index.rst |   1 +
+ docs/system/whpx.rst  | 136 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 138 insertions(+)
+ create mode 100644 docs/system/whpx.rst
 
-Mmm, I did wonder about that, but I couldn't see anything where
-we disabled exposing those ports to the guest. But looking closer
-the cirrus code never calls vga_init(), so it does indeed not
-expose any of the VBE state to the guest and doesn't need to
-migrate it.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cd8ba14450..eb7132e39d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -582,6 +582,7 @@ F: include/system/whpx.h
+ F: include/system/whpx-accel-ops.h
+ F: include/system/whpx-common.h
+ F: include/system/whpx-internal.h
++F: docs/system/whpx.rst
+ 
+ MSHV
+ M: Magnus Kulke <magnuskulke@linux.microsoft.com>
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index bb948e2993..4509630fa4 100644
+--- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -40,6 +40,7 @@ or Hypervisor.Framework.
+    confidential-guest-support
+    igvm
+    nitro
++   whpx
+    vm-templating
+    sriov
+    qemu-colo
+diff --git a/docs/system/whpx.rst b/docs/system/whpx.rst
+new file mode 100644
+index 0000000000..15360ebca9
+--- /dev/null
++++ b/docs/system/whpx.rst
+@@ -0,0 +1,136 @@
++Windows Hypervisor Platform
++===========================
++
++Windows Hypervisor Platform is the Windows API for use of
++third-party virtual machine monitors with hardware acceleration
++on Hyper-V.
++
++It's implemented on top of `Vid`, which is itself implemented
++on the same set of hypercalls as the `mshv` driver on Linux.
++
++WHPX is the name of the Windows Hypervisor Platform accelerator
++backend in QEMU. It enables using QEMU with hardware acceleration
++on both x86_64 and arm64 Windows machines.
++
++Prerequisites
++-------------
++
++WHPX requires the Windows Hypervisor Platform feature to be installed.
++
++Installation
++^^^^^^^^^^^^
++On client editions of Windows, that means installation through
++Windows Features (`optionalfeatures.exe`). On server editions,
++feature-based installation in Server Manager can be used.
++
++Alternatively, command line installation is also possible through:
++`DISM /online /Enable-Feature /FeatureName:HypervisorPlatform /All`
++
++Minimum OS version
++^^^^^^^^^^^^^^^^^^
++
++On x86_64, QEMU's Windows Hypervisor Platform backend is tested 
++starting from Windows 10 version 2004. Earlier Windows 10 releases
++*might* work but are not tested.
++
++On arm64, Windows 11 24H2 with the April 2025 optional updates
++or May 2025 security updates is the minimum required release. 
++
++Prior releases of Windows 11 version 24H2 on ARM64 shipped 
++with a pre-release version of the Windows Hypervisor Platform
++API, which is not supported in QEMU.
++
++Quick Start
++-----------
++
++Launching a virtual machine on x86_64 with WHPX acceleration::
++
++    $ qemu-system-x86_64.exe -accel whpx -M pc \
++        -smp cores=2 -m 2G -device ich9-usb-ehci1 \
++        -device usb-tablet -hda OS.qcow2
++
++Launching a virtual machine on arm64 with WHPX acceleration::
++
++    $ qemu-system-aarch64.exe -accel whpx -M virt \
++        -cpu host -smp cores=2 -m 2G \
++        -bios edk2-aarch64-code.fd \
++        -device ramfb -device nec-usb-xhci \
++        -device usb-kbd -device usb-tablet \
++        -hda OS.qcow2
++
++On arm64, for non-Windows guests, `-device virtio-gpu-pci` provides
++additional fuctionality compared to `-device ramfb`, but is
++incompatible with Windows's UEFI GOP implementation, which
++expects a linear framebuffer to be available.
++
++Known issues on x86_64
++----------------------
++
++Guests using legacy VGA modes
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++In guests using VGA modes that QEMU doesn't pass through framebuffer
++memory for, performance will be quite suboptimal.
++
++Workaround: for affected guests, use a more modern graphics mode.
++Alternatively, use TCG to run those guests.
++
++Guests using MMX, SSE or AVX instructions for MMIO
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++Currently, `target/i386/emulate` does not support guests that use
++MMX, SSE or AVX instructions for access to MMIO memory ranges.
++
++Attempts to run such guests will result in an `Unimplemented handler`
++warning for MMX and a failure to decode for newer instructions.
++
++`-M isapc`
++^^^^^^^^^^
++
++`-M isapc` doesn't disable the Hyper-V LAPIC on its own yet. To
++be able to use that machine, use `-accel whpx,hyperv=off,kernel-irqchip=off`.
++
++However, in QEMU 11.0, the guest will still be a 64-bit x86
++ISA machine with all the corresponding CPUID leaves exposed.
++
++gdbstub
++^^^^^^^
++
++As save/restore of xsave state is not currently present, state
++exposed through GDB will be incomplete.
++
++The same also applies to `info registers`.
++
++-cpu `type` ignored
++^^^^^^^^^^^^^^^^^^^
++
++In this release, -cpu is an ignored argument. 
++
++PIC interrupts on Windows 10
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++QEMU's Windows Hypervisor Platform backend is tested starting from
++Windows 10 version 2004. Earlier Windows 10 releases *might* work
++but are not tested.
++
++On Windows 10, a legacy PIC interrupt injected does not wake the guest
++from an HLT when using the Hyper-V provided interrupt controller.
++
++This has been addressed in QEMU 11.0 on Windows 11 platforms but
++functionality to make it available on Windows 10 isn't present.
++
++Workaround: for affected use cases, use `-M kernel-irqchip=off`.
++
++Known issues on Windows 11
++^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++Nested virtualisation-specific Hyper-V enlightenments are not
++currently exposed.
++
++arm64
++-----
++
++ISA feature support
++^^^^^^^^^^^^^^^^^^^
++
++SVE and SME are not currently supported.
+-- 
+2.50.1 (Apple Git-155)
 
--- PMM
 
