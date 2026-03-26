@@ -4,123 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B365910A62D5
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E1A10A62CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ku7-0005IH-QZ; Thu, 26 Mar 2026 09:37:43 -0400
+	id 1w5kvj-0006EH-Fb; Thu, 26 Mar 2026 09:39:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w5ku4-0005Hs-0s
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:37:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clayton@craftyguy.net>)
+ id 1w5dlQ-0003gg-Aq
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:00:16 -0400
+Received: from out-173.mta1.migadu.com ([95.215.58.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w5ku2-0000vu-8Z
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:37:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774532257;
+ (Exim 4.90_1) (envelope-from <clayton@craftyguy.net>)
+ id 1w5dlM-0008W4-4N
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:00:16 -0400
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+ s=key1; t=1774504806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mFQHmByGh3TTGSfBYHs0/nsoUb9gaPMy64snZE8mTkU=;
- b=fh63Sca/qWTBzZfa9xT11sWn0T0pYZttmrM2hAd2zBfGsf5eOd11WlLSSY9ik/RzugbO0E
- aUWGl2GS48kH8NVB1R8lwrT9D5jYLSKHgrwBysQdbpzg/NyR2Y9VSs0hg0IFuetMbDorOi
- E1h7OHVACSrqsuyglhAOOD8bXyZl5ug=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-282-ag472i24OKOft_OwWhpbbw-1; Thu, 26 Mar 2026 09:37:33 -0400
-X-MC-Unique: ag472i24OKOft_OwWhpbbw-1
-X-Mimecast-MFC-AGG-ID: ag472i24OKOft_OwWhpbbw_1774532252
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c73a4983fc0so809513a12.3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 06:37:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774532252; cv=none;
- d=google.com; s=arc-20240605;
- b=lwYBV2RVs6b28olYgFMpW8Lv4R6fHJ3wNf1Dc+HHgpWFNLCnumL4Pbb9/X0OZwMdtR
- m21Uhbe4tzDUcos/fJ3yrqcy6I9Ph9bAun0G+Ekjh3oyMUUCzclDUqAq128KWgEXZ2kR
- 6xazG3uQlMssnhOZOYRoKdRz0ArOFeH+qL7AJ2Nxu41EKu0qelheRmCS0b4Sj9/ig6sI
- eHLIF8RhNz+FLicPRB0oQy0EHBqKZ0OPerG12zYblhgUG+FuO+75zAa+FBhuvD6Q2+pJ
- ZAQ1YErgAzMk7Poo+fQlusmBe3HDld+Ay+EM7EgbtvqybucSoQFKm9EEwr/lMV7Pk00I
- gC5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mFQHmByGh3TTGSfBYHs0/nsoUb9gaPMy64snZE8mTkU=;
- fh=ckKiQtaduSoU7Do81eCOdreQ45xLs6uc450ueGmOpCM=;
- b=ICtk5ZLH3BOIJRIy+Z9YOr3fMQas8HFVDA/uNSkOfCsYdRLoiEHTVGCICyGd97/xI2
- tbduGJsC0HHQ8tlhDpe+3lRaMWd3o80wc3hrJTmNLO4SPW0cusS9ek1fsTLH4lBAclF8
- 16VdMVzFFaefc+YkNmtsRJzLRWwHhxDUAdGupi5sVfIWC4ZzUYtITbBCqvknxK6XcFFz
- AeaMSXv0hrzZRb0YyAxhEDCJaEj5Q53GJa0V2iPjjNXoAP1VAhyzq57ivugieSwQ3iIf
- aWjaHj1MJVl8I67rDDYHE6HsIHXMuTuAgNW54MsA/1uhVjuG9ZV/m1twPxlLKn8jagys
- OZ4A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774532252; x=1775137052; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mFQHmByGh3TTGSfBYHs0/nsoUb9gaPMy64snZE8mTkU=;
- b=Uhgv0PKodSvW8X8o0hBzWg/sdu7+7j41zTfGnRdNRndqDqg0hBlfauzPA4rSRg3OiV
- U8iCtZEKfIPTVi/qaq8lb1H1Btu7Qv+TPxfcl2pfVUWqwA9eI3EppdrQ3w+5XVu35HxZ
- TgPC4bVvzAXj9ai/qbHBSS19HEq8D9B/7UzlPBQxzkmg38eMgTM/oBSYkGCIwzwpjC2x
- MzFhywWa2jaXpozpzx4nbD9SkjdDsNL/zUAf7he6IMpXfw1rRvTxjIkTZhRgAtbbmHYH
- CPzIkRpZcV5/s6p04W7HxQ3DwZKx0gl3251i/861AchTD2EfX7i7y0enPIwOM+JVptVX
- DLvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774532252; x=1775137052;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mFQHmByGh3TTGSfBYHs0/nsoUb9gaPMy64snZE8mTkU=;
- b=KRY0uTKMNKtjLQALQZKNEL7ZKHD7zFKTUkHxG1wDIqFdWJuuPQDNing0rquCj24d1O
- qEWItWb7emVFunwDbGEVj306AZm5xbiP5Py5mOPnnK83evL9U62dJdRNrt+duucGJPS/
- IzH+zuWYmhYBQar8x3ib1SfRngR9RyMgMa05vELf+Xnr8RYicCk/YGV6CBpFUT0TZZZ9
- 8us7R7U2x1ABnJiVge654IXuJGDavI0Fsj6vSv/sjF8BFWXaQ9FsEFkOpi/Lbf6g9J8o
- OFRkychdED7gvxJboYUxxD/jXviRB4/uGoDXI0hdN6gY3qWpaic0uW7OlZgw4QXM3+YP
- A1og==
-X-Gm-Message-State: AOJu0Yxp/4XNfjlrFt2i29Cgj1r+RjJ+SmeLDMPbA+ZkDP55Fpr9cLIF
- RSPw2SI4xnaoO7q383rPRuF5HeQ7LxW5FGJYhsb3d27imSTmXQXq2yTU68RXtHS41FypVn+rd1N
- t5pUDI/raPNjKXR28AtzcEVQywbA4tMLUUygPOZGkAGDRdRhgw6X1bbvYSfL5/boRFFf4RlN8Bu
- uxw4e8r6k+xHoeGwIn3TYrWycM5Iq/9ets46ddEP0iug==
-X-Gm-Gg: ATEYQzz/Swr90jOymjeJPYqYYiuH8rWkBnB8bRdZLLLCNgCu1p01ym5QCkxm7pf3NTn
- BCeJCgcD4HUHAOyouGbu8w3I3yS3YB25wkrKECySoVNPk7qGhsva/akEH1vQXjsC5cJT6ypm6Bk
- Td7Cjg9DmQhVlYmZS7EnaQ5HYYsMKPRZX+jqtI2fVs7sIl8w37ztoSN3HzVCJi/a/iKkveZqZ9n
- ZXosYWaSIfHqe4Naoh6YCxyHHo+YgWZFRDTx49BH2t/iTXuTahTErMXhb49Hjqqxg==
-X-Received: by 2002:a05:6a20:3d06:b0:398:7eea:50a0 with SMTP id
- adf61e73a8af0-39c4ab43060mr8316844637.18.1774532252148; 
- Thu, 26 Mar 2026 06:37:32 -0700 (PDT)
-X-Received: by 2002:a05:6a20:3d06:b0:398:7eea:50a0 with SMTP id
- adf61e73a8af0-39c4ab43060mr8316807637.18.1774532251601; Thu, 26 Mar 2026
- 06:37:31 -0700 (PDT)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=A14hZowf3NuwCrwr5yL7wfdM9vMTn4vKiUnFd9wTGhY=;
+ b=T5ZscBA0lYVvCefmzgewS4vsklOW7FmfHGy7FNvJ8Zgu98LJSwDLirz9jGZaBppUcbX326
+ I1Nvw/C95RVeYez/ze7/wrZaVbJ4thY7m0ERrvs2iBYQDzAVyf4aJsexbcj5crHtIjQQ2m
+ fInnNFt5PTzUOjwJAn2VwnRr2BC61nTcGHZuda/Uv9csYUr2IgSoUjJ+BD5PlVy2NGERYR
+ I5JMbU7864A/biPGMEYCmpp9r/cAOUo0N2Kbhmmjco6XxQ5eyUOHPgjIOIImbCWM8VzdGE
+ aPOpQ9AUlE35O83tvbI7CwjsguaDda8dKsXcR2SFvLdeWQB+kbqfTEojjBQ4TA==
+From: Clayton Craft <craftyguy@postmarketos.org>
+Date: Wed, 25 Mar 2026 22:59:36 -0700
+Subject: [PATCH] linux-user: fix name_to_handle_at when
+ AT_HANDLE_MNT_ID_UNIQUE flag is set
 MIME-Version: 1.0
-References: <20260326065111.626236-1-zhaoguohan@kylinos.cn>
-In-Reply-To: <20260326065111.626236-1-zhaoguohan@kylinos.cn>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 26 Mar 2026 17:37:19 +0400
-X-Gm-Features: AQROBzCqCj3uc0kV0VjqsDhnJ7cwmb_O415ECeSP5sp0ZU43i32tYK39VjBnjN4
-Message-ID: <CAMxuvaxCkoRYkY17DRWC_3jXLtjpWjVvV_tnHrhTgZtFR=5uoQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/dbus: associate add_client completion with its request
-To: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net>
+X-B4-Tracking: v=1; b=H4sIAEfLxGkC/x2MSQqAMAwAvyI5G6hxofoV8VA0akCrtEUE8e8Gj
+ wMz80DkIByhyx4IfEmUwysUeQbj6vzCKJMykKHGlFTjLDd6tzOmA1WYNkaX0BAZO1NbsbWg7Rl
+ Yxf/bD+/7Aey6dDlnAAAA
+X-Change-ID: 20260325-fix-name-to-handle-at-02208f294e88
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Clayton Craft <craftyguy@postmarketos.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3315; i=clayton@craftyguy.net; 
+ h=from:subject:message-id;
+ bh=Ho8XpytcBpKaG3Fogbq2tol3XZ8ae7+JsKHuqwuhAsw=; 
+ b=owGbwMvMwCW20X/1yekyblWMp9WSGDKPnI6JVAiyNOv0yat+8Tb26e4b+hfX6Dla2VhOlhHIC
+ C+8IxXdUcrCIMbFICumyOKZsM5KdKWZonbgOwaYOaxMIEMYuDgFYCLmExkZttvuDXCbsE972S6L
+ iOCzOTv/7hP5GMKVFnJl39f9jIxhSgz/Ha9sTDiZylbNFL/acf6DcxO1VjNF8M9eFbH8xt6uUz4
+ HGQA=
+X-Developer-Key: i=clayton@craftyguy.net; a=openpgp;
+ fpr=3E5FFFD4A3CBAADFDA59395F1BD9F71B57D592B9
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.173; envelope-from=clayton@craftyguy.net;
+ helo=out-173.mta1.migadu.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 26 Mar 2026 09:39:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,142 +85,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
+is 64-bits. If name_to_handle_at is called with this flag set then qemu
+passes a 4 byte int to the kernel, which then tries to store 8 bytes in
+a 4 byte variable, causing a SIGSEGV[1][2].
 
-On Thu, Mar 26, 2026 at 10:56=E2=80=AFAM GuoHan Zhao <zhaoguohan@kylinos.cn=
-> wrote:
->
-> Commit 99997823bbbd ("ui/dbus: add p2p=3Don/off option")
-> introduced an asynchronous D-Bus client setup path, with the completion
-> handler reaching back into the global dbus_display state.
->
-> This makes the callback effectively operate on whatever request is
-> current when it runs, rather than the one that created it. A completion
-> from an older request can therefore clear a newer
-> add_client_cancellable or install its connection after a replacement
-> request has already been issued. It also relies on the DBusDisplay
-> instance remaining alive until completion.
->
-> Fix this by passing the DBusDisplay and GCancellable as callback data,
-> taking references while the async setup is in flight, and only acting
-> on completion if it still matches the current request. Also drop the
-> previous cancellable before creating a new request.
->
-> Fixes: 99997823bbbd ("ui/dbus: add p2p=3Don/off option")
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+This stores mount_id in a 64-bit var if the flag is set.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
+2. https://github.com/systemd/systemd/issues/41279
 
-thanks!
+Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
+---
+This fixes a crash experienced recently while running qemu user mode
+with e.g. systemd which set AT_HANDLE_MNT_ID_UNIQUE when calling
+name_to_handle_at. AT_HANDLE_MNT_ID_UNIQUE was added in Linux 6.12.
 
-> ---
->  ui/dbus.c | 44 ++++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 40 insertions(+), 4 deletions(-)
->
-> diff --git a/ui/dbus.c b/ui/dbus.c
-> index 4f24215555a4..7c54b6a502d2 100644
-> --- a/ui/dbus.c
-> +++ b/ui/dbus.c
-> @@ -263,22 +263,52 @@ dbus_display_complete(UserCreatable *uc, Error **er=
-rp)
->      }
->  }
->
-> +typedef struct DBusDisplayAddClientData {
-> +    DBusDisplay *display;
-> +    GCancellable *cancellable;
-> +} DBusDisplayAddClientData;
-> +
-> +static void dbus_display_add_client_data_free(DBusDisplayAddClientData *=
-data)
-> +{
-> +    if (data->display) {
-> +        object_unref(OBJECT(data->display));
-> +        data->display =3D NULL;
-> +    }
-> +    g_clear_object(&data->cancellable);
-> +    g_free(data);
-> +}
-> +
-> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(DBusDisplayAddClientData,
-> +                              dbus_display_add_client_data_free)
-> +
->  static void
->  dbus_display_add_client_ready(GObject *source_object,
->                                GAsyncResult *res,
->                                gpointer user_data)
->  {
-> +    g_autoptr(DBusDisplayAddClientData) data =3D user_data;
-> +    DBusDisplay *display =3D data->display;
-> +    bool current =3D display->add_client_cancellable =3D=3D data->cancel=
-lable;
->      g_autoptr(GError) err =3D NULL;
->      g_autoptr(GDBusConnection) conn =3D NULL;
->
-> -    g_clear_object(&dbus_display->add_client_cancellable);
-> +    if (current) {
-> +        g_clear_object(&display->add_client_cancellable);
-> +    }
->
->      conn =3D g_dbus_connection_new_finish(res, &err);
->      if (!conn) {
-> -        error_printf("Failed to accept D-Bus client: %s", err->message);
-> +        if (!g_error_matches(err, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
-> +            error_printf("Failed to accept D-Bus client: %s", err->messa=
-ge);
-> +        }
-> +        return;
->      }
->
-> -    g_dbus_object_manager_server_set_connection(dbus_display->server, co=
-nn);
-> +    if (!current) {
-> +        return;
-> +    }
-> +
-> +    g_dbus_object_manager_server_set_connection(display->server, conn);
->      g_dbus_connection_start_message_processing(conn);
->  }
->
-> @@ -290,6 +320,7 @@ dbus_display_add_client(int csock, Error **errp)
->      g_autoptr(GSocket) socket =3D NULL;
->      g_autoptr(GSocketConnection) conn =3D NULL;
->      g_autofree char *guid =3D g_dbus_generate_guid();
-> +    DBusDisplayAddClientData *data;
->
->      if (!dbus_display) {
->          error_setg(errp, "p2p connections not accepted in bus mode");
-> @@ -298,6 +329,7 @@ dbus_display_add_client(int csock, Error **errp)
->
->      if (dbus_display->add_client_cancellable) {
->          g_cancellable_cancel(dbus_display->add_client_cancellable);
-> +        g_clear_object(&dbus_display->add_client_cancellable);
->      }
->
->  #ifdef WIN32
-> @@ -318,6 +350,10 @@ dbus_display_add_client(int csock, Error **errp)
->      conn =3D g_socket_connection_factory_create_connection(socket);
->
->      dbus_display->add_client_cancellable =3D g_cancellable_new();
-> +    data =3D g_new0(DBusDisplayAddClientData, 1);
-> +    data->display =3D DBUS_DISPLAY(object_ref(OBJECT(dbus_display)));
-> +    data->cancellable =3D g_object_ref(dbus_display->add_client_cancella=
-ble);
-> +
->      GDBusConnectionFlags flags =3D
->          G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER |
->          G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING;
-> @@ -332,7 +368,7 @@ dbus_display_add_client(int csock, Error **errp)
->                            NULL,
->                            dbus_display->add_client_cancellable,
->                            dbus_display_add_client_ready,
-> -                          NULL);
-> +                          data);
->
->      return true;
->  }
-> --
-> 2.43.0
->
+I'm a bit unsure of defining AT_HANDLE_MNT_ID_UNIQUE like this,
+it's part of linux/fcntl.h but this header isn't included in
+qemu/linux-headers.
+
+1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
+2. https://github.com/systemd/systemd/issues/41279
+---
+ linux-user/syscall.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 7832a1aba5..3cb00c643e 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8166,6 +8166,9 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
+ #endif
+ 
+ #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
++#ifndef AT_HANDLE_MNT_ID_UNIQUE
++#define AT_HANDLE_MNT_ID_UNIQUE 0x001
++#endif
+ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+                                      abi_long handle, abi_long mount_id,
+                                      abi_long flags)
+@@ -8173,6 +8176,7 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     struct file_handle *target_fh;
+     struct file_handle *fh;
+     int mid = 0;
++    uint64_t mid64 = 0;
+     abi_long ret;
+     char *name;
+     unsigned int size, total_size;
+@@ -8196,7 +8200,12 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     fh = g_malloc0(total_size);
+     fh->handle_bytes = size;
+ 
+-    ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
++    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
++        ret = get_errno(name_to_handle_at(dirfd, path(name), fh,
++                                          (int *)&mid64, flags));
++    } else {
++        ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
++    }
+     unlock_user(name, pathname, 0);
+ 
+     /* man name_to_handle_at(2):
+@@ -8210,8 +8219,14 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     g_free(fh);
+     unlock_user(target_fh, handle, total_size);
+ 
+-    if (put_user_s32(mid, mount_id)) {
+-        return -TARGET_EFAULT;
++    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
++        if (put_user_u64(mid64, mount_id)) {
++            return -TARGET_EFAULT;
++        }
++    } else {
++        if (put_user_s32(mid, mount_id)) {
++            return -TARGET_EFAULT;
++        }
+     }
+ 
+     return ret;
+
+---
+base-commit: 007b29752ed06e467d3c830bc2c17a8851f8bcd3
+change-id: 20260325-fix-name-to-handle-at-02208f294e88
+
+Best regards,
+-- 
+Clayton Craft <clayton@craftyguy.net>
 
 
