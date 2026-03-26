@@ -4,81 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A0C10A62D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1355110A62D6
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 14:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5l7L-000286-TS; Thu, 26 Mar 2026 09:51:23 -0400
+	id 1w5lGr-0004OS-7Z; Thu, 26 Mar 2026 10:01:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5l7I-00025Y-J7
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:51:20 -0400
-Received: from p-west1-cluster5-host1-snip4-10.eps.apple.com ([57.103.66.181]
- helo=outbound.pv.icloud.com)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1w5lGl-0004O6-PN
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:01:09 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5l7G-00056h-0b
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:51:19 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-8 (Postfix) with ESMTPS id
- 7BE8A180027A; Thu, 26 Mar 2026 13:51:14 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774533075; x=1777125075;
- bh=aSSOgTeQRfGOn3tHCGwqYT9ZyEZxiCnj8df7DHyniaM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=OQewIG4vueSxhtGECjOqImcWuWjzaqje4eif7JNS9x+epP+JzDUWRTXxJo+MrU12b6f3iMQdznyEnLH2IXcE65K74rRX+EfIw1LHmsmtEJv6HF8W7L+7K3hTHj9lLLL0rmW91D1xO2PODd6qdgyfRO6xzy8MLFeQnMa0uETCaVUYckd0RwzB5m9MnsaBhBkyguJXQ0aO3r3RVSTrZ7hoNBgxKGN5vOGYusxTxwrtCKueABVTK2U97v/bYIPvp4vbZRMEySLmAr3qvUh+YaKf5eNdvXxeCep1BVI/tESebx5YVhLiT+BdqfururfNJiECbnyfnRJ9NVo2xaKssuf/cA==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-8 (Postfix) with ESMTPSA id
- E2D0D180013C; Thu, 26 Mar 2026 13:51:12 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] docs: add WHPX section with initial info
-Date: Thu, 26 Mar 2026 14:51:09 +0100
-Message-ID: <20260326135109.67394-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1w5lGf-0000Q7-T4
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:01:06 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id BC98742DDD
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:00:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1774533658;
+ bh=W5c+Qsq9yV1R3FVvmHJsInYMdQe2t/dDHc+vjYiUHQw=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=OnZmEjMHJKU3K6Gce6N6oPM0IxgieIbb0CSw3T9I1qHjeGo8A9t9G4qZ5EVaGkVH1
+ kR/anWcxyYuXkWmusnH0/DFHlND1rxUspLa0zEwhdOK093rN4dVQKeuTmX/YvjdpPI
+ 0pkj+olap+JA8IrDGVchNbzyBPDDl9Old1K06I39rBEWGGA50eHMgIl/H8KfADupj0
+ qlZfJc6YXRX7oGoKm1chwh1z7/Olc9K5XrknKlm55Mdrsww7p+pXczbQkz82gdGVm2
+ q+c2RdW13tvwBErqgxR9hrg+jx1HZsGbW6QlqXK2/QkMmVdBwIIzRCHk+tVgP7duz7
+ fOr+QMxiRRkjw==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id A40F27E1E3
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:00:58 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=FrEIPmrq c=1 sm=1 tr=0 ts=69c539d2
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yMhMjlubAAAA:8 a=rT9Fg11GqzwndlhJ3T4A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDA5NyBTYWx0ZWRfX1FpHmnOfBlBp
- vDa9G2CNgZrOnTwtnPTgT2OH9k+sD1PSqc04csKJpQ3DKSDSFurtzmzqL2fH1PEHO92gqyoGSkG
- ZQ/cOwrNEkEqSW7jdlteLVvySh3CtlcxiUwbpj/TmhaI+ChOIKEQW8WjaN8qTm6nsJPWZ24bDXC
- nAybAqQVYB768L3a/VgcTCKrr1ONesVUW++r2/I68qSG6Qk/xwM8J+Ykom8rNoF1Ax0h2SD4llP
- +h9DNSaBprWucW1csDyB5Lzi0gPGDnrQPTkKEXzvvrkYjT7hm1+GIUCUyoYXeKPX3a+vhtBU/lV
- Egrfki6k9ks5xHoBVw7P14H0HuJYHUw6iqzhkrdu+DlOpWUaVIhdvH9MSq4kcs=
-X-Proofpoint-GUID: cHrx5ZHh_taN1u4-_UYABLjI3egdm9X9
-X-Proofpoint-ORIG-GUID: cHrx5ZHh_taN1u4-_UYABLjI3egdm9X9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_02,2026-03-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- bulkscore=0 spamscore=0 mlxlogscore=999
- lowpriorityscore=0 clxscore=1030
- phishscore=0 malwarescore=0 mlxscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603260097
-Received-SPF: pass client-ip=57.103.66.181;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 26 Mar 2026 13:55:20 -0000
+From: Hector CAO <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe;
+ component=universe; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
+ sourcepackage=qemu-hwe; component=universe; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug-Tags: server-todo
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Hector CAO (hectorcao)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <177453332219.1569411.227598725851549169.launchpad@juju-98d295-prod-launchpad-7>
+Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
+ handler
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 4f6cce3a6a3ce510ccc0cb930412ffd1ba00336d
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -87,131 +112,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- MAINTAINERS           |  1 +
- docs/system/index.rst |  1 +
- docs/system/whpx.rst  | 83 +++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 85 insertions(+)
- create mode 100644 docs/system/whpx.rst
+** Also affects: qemu-hwe (Ubuntu)
+   Importance: Undecided
+       Status: New
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cd8ba14450..eb7132e39d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -582,6 +582,7 @@ F: include/system/whpx.h
- F: include/system/whpx-accel-ops.h
- F: include/system/whpx-common.h
- F: include/system/whpx-internal.h
-+F: docs/system/whpx.rst
- 
- MSHV
- M: Magnus Kulke <magnuskulke@linux.microsoft.com>
-diff --git a/docs/system/index.rst b/docs/system/index.rst
-index bb948e2993..4509630fa4 100644
---- a/docs/system/index.rst
-+++ b/docs/system/index.rst
-@@ -40,6 +40,7 @@ or Hypervisor.Framework.
-    confidential-guest-support
-    igvm
-    nitro
-+   whpx
-    vm-templating
-    sriov
-    qemu-colo
-diff --git a/docs/system/whpx.rst b/docs/system/whpx.rst
-new file mode 100644
-index 0000000000..a3a7ecd38f
---- /dev/null
-+++ b/docs/system/whpx.rst
-@@ -0,0 +1,83 @@
-+Windows Hypervisor Platform
-+===========================
-+
-+Common
-+------
-+
-+Windows Hypervisor Platform is available for installation through
-+Windows Features (`optionalfeatures.exe`).
-+
-+VM state save/restore is not implemented.
-+
-+Known issues on x86_64
-+----------------------
-+
-+Guests using legacy VGA modes
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+In guests using VGA modes that QEMU doesn't pass through framebuffer
-+memory for, performance will be quite suboptimal.
-+
-+Workaround: for affected guests, use a more modern graphics mode.
-+Alternatively, use TCG to run those guests.
-+
-+`-M isapc`
-+^^^^^^^^^^
-+
-+`-M isapc` doesn't disable the Hyper-V LAPIC on its own yet. To
-+be able to use that machine, use `-accel whpx,hyperv=off,kernel-irqchip=off`.
-+
-+However, in QEMU 11.0, the guest will still be a 64-bit x86
-+ISA machine with all the corresponding CPUID leaves exposed.
-+
-+gdbstub
-+^^^^^^^
-+
-+As save/restore of xsave state is not currently present, state
-+exposed through GDB will be incomplete.
-+
-+The same also applies to `info registers`.
-+
-+-cpu `type` ignored
-+^^^^^^^^^^^^^^^^^^^
-+
-+In this release, -cpu is an ignored argument. 
-+
-+PIC interrupts on Windows 10
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+QEMU's Windows Hypervisor Platform backend is tested starting from
-+Windows 10 version 2004. Earlier Windows 10 releases *might* work
-+but are not tested.
-+
-+On Windows 10, a legacy PIC interrupt injected does not wake the guest
-+from an HLT when using the Hyper-V provided interrupt controller.
-+
-+This has been addressed in QEMU 11.0 on Windows 11 platforms but
-+functionality to make it available on Windows 10 isn't present.
-+
-+Workaround: for affected use cases, use -M kernel-irqchip=off.
-+
-+Known issues on Windows 11
-+^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Nested virtualisation-specific Hyper-V enlightenments are not
-+currently exposed.
-+
-+arm64
-+-----
-+
-+OS baseline
-+^^^^^^^^^^^
-+
-+On Windows 11, Windows 11 24H2 with the April 2025 optional updates
-+or May 2025 security updates is the minimum required release. 
-+
-+Prior releases of Windows 11 version 24H2 shipped with a pre-release
-+version of the Windows Hypervisor Platform API, which is not 
-+supported in QEMU.
-+
-+ISA feature support
-+^^^^^^^^^^^^^^^^^^^
-+
-+SVE and SME are not currently supported.
--- 
-2.50.1 (Apple Git-155)
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
+
+Title:
+  [SRU] RISC-V vector state not restored by signal handler
+
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu-hwe package in Ubuntu:
+  New
+Status in qemu source package in Noble:
+  New
+Status in qemu-hwe source package in Noble:
+  New
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu-hwe source package in Plucky:
+  New
+Status in qemu source package in Questing:
+  New
+Status in qemu-hwe source package in Questing:
+  New
+Status in qemu source package in Resolute:
+  Confirmed
+Status in qemu-hwe source package in Resolute:
+  New
+
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
+
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
+
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
+
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
+
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
+
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
+
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
+
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
 
 
