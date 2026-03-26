@@ -4,123 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9FD910A88E0
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3669D10A88D4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5nqN-0008RG-2z; Thu, 26 Mar 2026 12:46:03 -0400
+	id 1w5nr3-00011v-6Y; Thu, 26 Mar 2026 12:46:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5nqJ-0008QW-TS
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:45:59 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5nqw-0000nD-OI
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:46:40 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5nqC-0006dE-RD
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:45:59 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-82735a41920so465041b3a.2
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:45:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5nqq-0006oZ-7N
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:46:37 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-64e8ae85700so1367848d50.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:46:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774543587; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MVag1wgtNEGagDsXmrF6WHV+zN4ykaedsHzm6qLfMHUxaTWQi8Ij7HzaEqRiJB/RRc
+ n20S4G5AuWS9UjZp+if13lA6qgghhgzhGyRGWkflcuB8yvGwuDTNNb3ju9JiCwt4QilV
+ mSCYu9kj3ci2EmXfGdHVfVxxCbrcbmDVKbk5Qu6hFOunInUxZ+jybj8XWyBOQT6wysJ3
+ 1/EzLMXN+8ZFwa+ivr+Ji808Byg1uMSlne4X3sn9zw3rNartRO2RWHHG95Zx8UF1l68O
+ TvquN4b2/uzrRF3rBSwUrrBRCQ88cNigkvRmaw1wGgXbhVUknLS+e38XAttbF52rHwS/
+ nrxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=mnyPeh6KmH7oLE/BbRTqALJJsRGykKyQvCC/hJxufdc=;
+ fh=HTPvbb48pvvew7vhUKgLof3MF4iC/k4XA4OrNYti4Kg=;
+ b=UCgnOcM1yHMTKDJiMpXBAlWXa/EfouUSvM11Wdevb5ee7Hb4IsOjYVwki7f/q35jP2
+ lvq/CUL1WPEp6WVEjDXxIpsvhZjqkkm8S8IsZGSRIgiaU6rczjp3rvlD069J7j+CsT5O
+ vv0bRXPsHt18fHL/5ZHw0eN456CqUCJIPIFXqj1AHh+0LA6T9qDm2xzRinZooCV+9B8Y
+ gJpXmb/dhNRP8Da0KDmqH68tCqol++w+GlDuKfaWZ2S82yCuPMjtjmfzefOr1aqbPUi2
+ U1CkJZTjBz6u+pKaZnFU1iEVGv2RxuTrzQ52yfcKeIxIKkFh9rTg+Av07cOi4zfvfifZ
+ 0JSA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774543551; x=1775148351; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hxn2iCJLZkigEK0VmVY2vlGaMJrmTxynIrTJmoRBWeU=;
- b=qPZLGSf1DMGSd3G9dRcgiyu3YXRfvzyJz5vumnUI6kMKBU2LN1+cB51QoSugQbem5d
- a1FHDepW4Xn01S55ntMgPoc6nYQEHrMSbcYT8zdSfNBnVNF7tMpdIVsT3lFlbvwn+nKF
- RfbNLvOzn8U7+gMQuJbhaWIltyjnxZJP7Slougc3O13IX1LROe6Bq8hUhpzmZKG3ehwR
- brT0rRitikUN74Ry7M7SA8z7qtxfaZatirAkw2Elm2iMtqeHsf2YrchraK2Z8Tf6uGIn
- PVIuUetaomXfZw7FlPSux5sfgewkILcw1wjhtyTfM8tcnK2lQ3DeDG2YGVc2UIq5QHzk
- T8jQ==
+ d=linaro.org; s=google; t=1774543587; x=1775148387; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mnyPeh6KmH7oLE/BbRTqALJJsRGykKyQvCC/hJxufdc=;
+ b=Xrpt1JMHgCmSM05w0Y2ZiNCvwpHGpqLp2i9PBcZu4egtUv9me/WxVbfG0GAfOjDHjb
+ PgAz7cUiCINXktSsbCdj19+5cJpcshCcYFdEUplSjNcUH8lLLj2UpAGX3MoYwoiVOQ1Q
+ L3tMOTFrGAxgop7Plxc2QkEqXnN879Xlw3MAWwDHQhOR+LD2/26uUQ8hI/6+gaduKX0F
+ YJszPf9JGpkLULqO7PdPWzJ3Ns/9N08OE776K7YgCbWJhQDiC92Ns4u9p760OfGOPZNS
+ 88QX/Q3QGH5OIyKXvnfTT1vVa2AWVmdknFJSoRMg+PA5f5FebuJkjcrN99/eSY0+XJBh
+ +SVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774543551; x=1775148351;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hxn2iCJLZkigEK0VmVY2vlGaMJrmTxynIrTJmoRBWeU=;
- b=RYpIV/9IM4fALPK1CcYf6/EySTNAQriwCQORu3Q44w0ehNGhJ25gmPJpGs2B/WbBEb
- Qh7/NGaBf2TlsESgegf+eRdaqfCNWeO90zUkm7IBKG1LzJT/PhQzX/pqnQ6DUsaIz/Eg
- 0WscG7hBcx27RLlTgm/1VzCBZ0WB2aeBDe7M6/3FWvbdXsQ+J5VFBTAeVHbsAv3Kx/r2
- dZomNePxITptfIwiPPdLcpQq6q5GK3+GL0kTIybRghdL2aO2i5f8kr04e68CedunUj7V
- eHqXOlfpznEQV55ffo4W6NsqAq9eps+EpAglFjzKOux8n+OHlhVKbHTXM39/WkkG9tpx
- inpQ==
-X-Gm-Message-State: AOJu0YyipPWwitNQrkE4Xwue2a7jSj5xy+OAp0KSyCh+Te9+pkPutxVA
- o43tsSqy5aZocNVFtvHZIEw/Dm8M4mrMH/pXxVQp3JEXp9m/cBAbUXu2tKgNl9MImW4=
-X-Gm-Gg: ATEYQzy3tzsHSCc3myy12iayeYHsHIOyZKZtLMtSNnZIlXaIN04OMRRtKvszOdW6u3s
- 7g1d/Zvf+14Q/h71se9Zi+f36PL/XJHNJLGArxdiNDIR51wBXtscGPu131XHIiOV5wOW/JsSxZR
- lAlLMb+qeJcnlgnwdI7Pl3g7maPNjiNn3ChLeLwqgC5wx9J2teFj4PjBRHcIV1OXVTKAXm+S1wA
- ePI+YZyHMkXbzZ1z1hxijB69KYFx6J2xk+RRvCNZq3ahMV15GHus7/fEYY2AOW8ReGUKX+mIjFe
- T2Yx86yV+V29Bp8B+rIMUMdi2mhIgeF4IYGpSuU9bum052y7L6Up5i7fUzrj45cCgB4f61NIPgx
- F6co2pESXzyEevne+GCx+jQurHrSTsdITjVLdfYKCU50JBfYJOQys8CvHVBHhOE96+ygitn7H3w
- 31lrSQ9DRieTmeg0DaLmaidGI3uKLdLNEzqkwMk1LWK6KeTsVEm3yDQbhacbcvz1anqG4H
-X-Received: by 2002:a05:6a00:a21e:b0:829:8990:3f86 with SMTP id
- d2e1a72fcca58-82c6df62cafmr7675469b3a.35.1774543551076; 
- Thu, 26 Mar 2026 09:45:51 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82c7d1e63b6sm3372472b3a.12.2026.03.26.09.45.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 09:45:50 -0700 (PDT)
-Message-ID: <2e4b59e6-bcc3-4a54-a71f-a11bbf7fa239@linaro.org>
-Date: Thu, 26 Mar 2026 09:45:49 -0700
+ d=1e100.net; s=20251104; t=1774543587; x=1775148387;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mnyPeh6KmH7oLE/BbRTqALJJsRGykKyQvCC/hJxufdc=;
+ b=SjqKwZwWsEN9wX9VSgT8CIo9wRg9HiIrY6CHsmMKVjtEf70wj1nDS6qS7MznTLHX/J
+ s7JbFP9wsM37lgSbv3WihwuObI1C2+6dkk2xxtE29Sct0WEVBKhnU60FigTXWcmb4TI0
+ DxHcqtjki2j/X+BGGaRXkpS+nYI3CgYsPbn1rO1UxkeE5vXnO3lLLIyOPjcz1SDzCEXd
+ Qw6g4K64nvLCZlbq2MdM5YbwQhMcQejZKv2MT7SChpeYpPwsvcp0b7sA1XoVpIKltrzl
+ 4bARIfuPf40dlu4sJPiqZzFYuH+ZPctZHjJ/aYk0/I7kyRVxjRCL3sxmKg8YBMyxs1QA
+ 2gcQ==
+X-Gm-Message-State: AOJu0YyBuiskBNVetBUPUWvsxptyQ5vOZBvyfgkqv5hZ7RMgAmOO0kTg
+ kzD6ChEpX+gSgryZfO1qeuqOPo0T2TScBsqkAUaoIsq5gm1mMcetgJ5oBgK1goEq2VDCCzyasmU
+ C8vbyiCD9dAHCnzA657ThpHhUP5m7Q3ErRGGBBnXeMg==
+X-Gm-Gg: ATEYQzzJylZj8nWFO9fhKR29PQHGU1xLQwfJeFBIAprcRabLA1LyiAsIaBoS453n1kV
+ bblLeR4w/9pS4CnCiG7uprtMy+MGf7Yrz2ypZMMufEWdohtzIjJ+n1FR73WDTsPc8jotVYPLuXF
+ BQvdteQQ5koDlLJjZ18tAP/THnoNsSR8z0Xicx1O/rJFOXrf+iF1xnnY1KE6KeZ/JA+ueSWcqAl
+ cYFm55S9p6AhF5s5gieMioN8RYFXa4hx+rIG07/RIsifJ2Yv0q7IOnqg0nB25VOoky4AF7H4yPc
+ gkbwjfnRs9dnQQBe5/g2/RawPv8OTh9qTgSGCsMYoYcROQiUViyhiQ9E+VYBVF1R+zw=
+X-Received: by 2002:a05:690e:408b:b0:64a:cff3:8f4c with SMTP id
+ 956f58d0204a3-64ee61574d3mr7882757d50.65.1774543586820; Thu, 26 Mar 2026
+ 09:46:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Misc changes to allow building with Windows Clang
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
 References: <20260326160033.68318-1-kkostiuk@redhat.com>
- <E4E91C9F-222E-41CA-B51A-928480FDC405@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <E4E91C9F-222E-41CA-B51A-928480FDC405@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+ <20260326160033.68318-3-kkostiuk@redhat.com>
+In-Reply-To: <20260326160033.68318-3-kkostiuk@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Mar 2026 16:46:15 +0000
+X-Gm-Features: AQROBzDFd2j0h63dkWbI4PYZ64yiL7Gv4bgiGMNnvmw_hIBaunZGNiK652GQaSs
+Message-ID: <CAFEAcA81M_3QaDDpDkNKZKh_m3yKSNGV1fMMKQqw8hKJvUekrA@mail.gmail.com>
+Subject: Re: [PATCH 2/7] qom: Use g_ascii_strcasecmp instead of strcasecmp
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,33 +119,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 9:34 AM, Mohamed Mediouni wrote:
-> 
->> On 26. Mar 2026, at 17:00, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrote:
->>
->> This is the first set of changes to allow building qemu-ga with Microsoft Windows Clang.
->> It includes some cleanups and fixes that also make the code more portable.
->> The main goal is to be able to build qemu-ga with the MSVC toolchain
->> because MinGW-w64 is not available for ARM64 Windows.
->>
-> Hello,
-> 
-> MinGW-w64 is available for arm64 Windows, although it’s more
-> mature with Clang as a compiler instead of of MSVC.
+On Thu, 26 Mar 2026 at 16:02, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrote:
 >
+> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> ---
+>  qom/object.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/qom/object.c b/qom/object.c
+> index ff8ede8a32..e5c0c2f53e 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -1193,8 +1193,8 @@ GSList *object_class_get_list(const char *implements_type,
+>
+>  static gint object_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
+>  {
+> -    return strcasecmp(object_class_get_name((ObjectClass *)a),
+> -                      object_class_get_name((ObjectClass *)b));
+> +    return g_ascii_strcasecmp(object_class_get_name((ObjectClass *)a),
+> +                              object_class_get_name((ObjectClass *)b));
+>  }
 
-As a complement to Mohamed message, this documentation will help you to 
-build QEMU on windows platforms (including arm64):
-https://www.qemu.org/docs/master/devel/build-environment.html#windows
+The commit message should note that this is a change in semantics
+(g_ascii_strcasecmp() doesn't honour locale but strcasecmp() does)
+but that this is OK for two reasons:
+ (1) we want the comparison on class names to be a plain ASCII
+     one, not to do weird things with "I" in Turkish locales,
+     so g_ascii_strcasecmp() is better as it's explicit about that
+ (2) QEMU always runs with the C locale so there's not an actual
+     behaviour change here
 
-Just make sure to do this from the console you get with:
-c:/msys64/msys2_shell.cmd -defterm -here -no-start -clangarm64
+(I forgot about point (2) in my email on the other branch of
+this thread -- apologies for the confusion.)
 
-> Is it more of a packaging issue with distributions?
-> 
-> Thank you,
-> -Mohamed
-> 
-> 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+-- PMM
 
