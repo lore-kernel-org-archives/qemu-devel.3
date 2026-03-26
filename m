@@ -4,81 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A5B10AB807
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B173810AB810
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5qTM-0006eh-1y; Thu, 26 Mar 2026 15:34:28 -0400
+	id 1w5qbc-0000w3-Nh; Thu, 26 Mar 2026 15:43:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5qT7-0006cW-03
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:34:13 -0400
-Received: from ci-2007a-snip4-1.eps.apple.com ([57.103.88.4]
- helo=outbound.ci.icloud.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5qbb-0000vi-C4
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:42:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5qT3-0001c3-RE
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:34:11 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPS id
- 5FEBE1800307; Thu, 26 Mar 2026 19:34:06 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774553648; x=1777145648;
- bh=FKSxblGBMJN9gDudhiJ4g/hzQy9Cx9uqiZTr40R8kdo=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Ev9AWxQua1X3aYJZv++BjYN4HZCelxQeqSfDBTE1a2mTdi47Te9cuLwYxrKeJlFXIYQFWnvM6WGgdyM/QhUElwckdOvu1tk0dso7dGyixbM85mgcZl3UkoOZL6Bvw5puvg0YVmnSBtZbS9l8TSLt3cSfvZCIThRrHQr5xvyocKXjYYBskOWQUiYfszgUOTAGB8UF2V16BXBBQUP5v9SuG13Nn/sGKEXCUOjPTrrdbVU0JlgV9g1CKhSf7BqA13wyD9yOUDnNdj7Ju4bm5J5sTXRKTPXiLC9rNt+TvoMKINl8bBsdfgvRivYOTRYyk9+yAQXPvUiOt51GIOkeE2tqjw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPSA id
- 55894180015D; Thu, 26 Mar 2026 19:34:04 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v4 2/3] whpx: i386: trace unsupported MSR accesses
-Date: Thu, 26 Mar 2026 20:33:57 +0100
-Message-ID: <20260326193358.97858-3-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260326193358.97858-1-mohamed@unpredictable.fr>
-References: <20260326193358.97858-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5qbZ-0004go-J1
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:42:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774554176;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=s/Zn1mFmKiqlAZWnUfv0oAdityv+s4n+d8Eyp13MmPc=;
+ b=CY5wV/Nw3g3HnkO649ksRy/ACZdDb7nBFpO3bcIRRWLmBIWGT/TTmGNFAGZqF1daTVXCQv
+ QfQtW1Ud7IOZ0SEsthlyOYfnrXep/vzpZuFsmP8Uj/KFS0DJ0EG0EVVtgnfN/YsYCIDAnh
+ hx1WJsW5SAiI22fPWawzk8MWHmlCRZA=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-6-ZshjaVKZMDC7J1BpIHdKkw-1; Thu, 26 Mar 2026 15:42:54 -0400
+X-MC-Unique: ZshjaVKZMDC7J1BpIHdKkw-1
+X-Mimecast-MFC-AGG-ID: ZshjaVKZMDC7J1BpIHdKkw_1774554174
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8cfcf23c0e1so357475185a.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 12:42:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774554174; x=1775158974; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=s/Zn1mFmKiqlAZWnUfv0oAdityv+s4n+d8Eyp13MmPc=;
+ b=jjd8VgC96oW3N7PFRCo3eqfFH3mhYnrpAr16wRpCbXfC7p3XDdE0iCjUDjFBRKuYmZ
+ QzA9IWt4Kt3dOhXCDqfwPcIJKsF9qZf/648fcZu69c7MVZbq0amsZGLpsBfSs7r/+jQT
+ h5Zj9yY254IXOxIGwt6Y1KXoOWF+uIjBorCeIlufVXU/Zc8+GmniLxgNk7G2Bpic+dMQ
+ pk+rQ6OJN84yPBwHGVPh+M0P4hz2bgp3EQKD2BBVnvxTXWtLQZdq6ZYxAmfMp1COW0qg
+ yflFarf2C/kJ7TthIzPFyHD/V4NIf9DEWGqqbNcLi7YqoYrMCPgyiTvy2kY5Lz2e3lGk
+ hGow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774554174; x=1775158974;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s/Zn1mFmKiqlAZWnUfv0oAdityv+s4n+d8Eyp13MmPc=;
+ b=P80V2CrtqPV4ZK9ugYufefDCYHb8r8SxnRDZG3OJqDKRkWBengoeR8V87LMoLTKhFS
+ k4G1VqMfcpWAbZcVJW31bUSGvzHgIN4PegY9EtzPU9ysRXpjDK0hS3EEn77UaN/R2k1T
+ RS5UMYpWN5BygOukjCr6f/IG67tTCp2U2sLTxDVDc/4YhImWuxW9AFMNbDrJ6c5L5/QM
+ sFPBk0dQKuHjjXifdCTOoIQcMGBDrGVeY7Oqfj7KgIuaiOojiJ2gsZqj0cCCyFH1fVqn
+ yqH3+zguT9W/RmKKVQ/eIseZIzLCeUdun3/iNzXZDF5pi4WGKdkcIypNAItmO0FwxyG0
+ 8Ttg==
+X-Gm-Message-State: AOJu0Yw74byVaSM78f/bWb7T3+1K3DVp7Um/HnPj6vO4NX2X0GYIzRj9
+ uKGPDBpL+gjATBnnXp9jX39b6/effG7ASREC/YNKtN4GJlLhBwg9rt1csmlNPqMKCncQv68Bt6k
+ Kr42ysxj2szY3wu1pSEmBDyaoIWfK+EmJCLodLW+AN7M4F31dAGJUovaW
+X-Gm-Gg: ATEYQzyNL5Wk3m4vji3PmoY+nAXArrZrOf82KFwtLoxWjCHHKqvQH2nTsCsGS+09vWz
+ Edb/8NX8wi6RHXs58NTlFJo56DjcTVoVNtxriElRz2m7+iOejoS9L75qWLVCFgzph/yK76P3N8p
+ 8DMetAvADyTNQvPdS1jYJ7TqgKOZWl8fxwqlC8bKaprmtMyDhZ47k7utQd4iSNyYZ3dk/ghQ2I6
+ wKUDL5kaDXoVbJaUufI24LKrph5QNPwRGEJspU4h8L3j71/rJr7rrUYd5kKidqRDjvld1wy2Aeh
+ /xSaP+is/6nVYGparGvM/+JLF2zuNxMLCaMwOH70ZI9TOcCzvDiuSS7+KKG7cfnsiQsot+sSoIh
+ lFPELX+C2dvq+PA==
+X-Received: by 2002:a05:620a:468c:b0:8cd:972d:335 with SMTP id
+ af79cd13be357-8d00100aff6mr1231469085a.43.1774554174095; 
+ Thu, 26 Mar 2026 12:42:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:468c:b0:8cd:972d:335 with SMTP id
+ af79cd13be357-8d00100aff6mr1231464985a.43.1774554173478; 
+ Thu, 26 Mar 2026 12:42:53 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8d00e4ceb95sm318341785a.26.2026.03.26.12.42.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Mar 2026 12:42:52 -0700 (PDT)
+Date: Thu, 26 Mar 2026 15:42:51 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [RFC PATCH v1 00/17] migration: vmstate_save|load changes for
+ peterx
+Message-ID: <acWMO4KZli736zEP@x1.local>
+References: <20260324194333.30004-1-farosas@suse.de>
+ <acQ61yMtzZPfLUAj@x1.local> <87mrzvk6us.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: XlePnXYmxVqhaISepmS5n-giOmGUmiax
-X-Proofpoint-ORIG-GUID: XlePnXYmxVqhaISepmS5n-giOmGUmiax
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDE0MCBTYWx0ZWRfXyjZLEQIoW9D1
- imDtzwCWSBaMXIW7fpud3zj9CcG3MYIcukuKRxIJElZjsoKkQWKONh66DXJHGFmWr5mCDdZYy86
- HkphWLqDmMZjp4WfJjfauHHJe/JLLohvGAGvsNITgWsiGreiJz+nkRe0hdCZk9l7JdD0x0pRcYn
- stVbNuWGbLwu1HJmAVV2zc6WKR4PdlVfo2T7wvY1xPKSKlxLC3exgKi7VFr+tRY5tKzkmeOFcJ0
- abHt25M34dW+KaLPInZEheVy/yRo7jwKhcc0yKItenWtvAMIfgqiUmEnRKLuiMS8+t+lkI9iKRl
- f6D+vzuBI2cigpdNgYZM/eN7D+w/sUwdEeuqdR6BHmG7+c6HP18Ge2776wedX8=
-X-Authority-Info-Out: v=2.4 cv=K+Av3iWI c=1 sm=1 tr=0 ts=69c58a2f
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=BggPbTrBReIH5vXiFLoA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=363 phishscore=0
- adultscore=0 mlxscore=0 spamscore=0 bulkscore=0 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603260140
-Received-SPF: pass client-ip=57.103.88.4;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87mrzvk6us.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,71 +117,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Not actionable information for users, so stop
-having it displayed unconditionally.
+On Wed, Mar 25, 2026 at 05:10:51PM -0300, Fabiano Rosas wrote:
+> Sure, if there's anything you still find valuable but won't take for the
+> repost let me know and I can send a separate series on top if that's the
+> case.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- meson.build                   | 1 +
- target/i386/whpx/trace-events | 1 +
- target/i386/whpx/trace.h      | 2 ++
- target/i386/whpx/whpx-all.c   | 5 +++--
- 4 files changed, 7 insertions(+), 2 deletions(-)
- create mode 100644 target/i386/whpx/trace-events
- create mode 100644 target/i386/whpx/trace.h
+I found that there're quite a few cleanups at latter patches, and it caused
+some rebase pain if the base series still need frequent update.
 
-diff --git a/meson.build b/meson.build
-index e6f17dd5f7..c19c5afa46 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3692,6 +3692,7 @@ if have_system or have_user
-     'target/hppa',
-     'target/i386',
-     'target/i386/kvm',
-+    'target/i386/whpx',
-     'target/loongarch',
-     'target/mips/tcg',
-     'target/ppc',
-diff --git a/target/i386/whpx/trace-events b/target/i386/whpx/trace-events
-new file mode 100644
-index 0000000000..ebdfa34b28
---- /dev/null
-+++ b/target/i386/whpx/trace-events
-@@ -0,0 +1 @@
-+whpx_unsupported_msr_access(uint32_t msr, int is_write) "WHPX: Unsupported MSR access (0x%x), IsWrite=%i"
-diff --git a/target/i386/whpx/trace.h b/target/i386/whpx/trace.h
-new file mode 100644
-index 0000000000..b7c090deff
---- /dev/null
-+++ b/target/i386/whpx/trace.h
-@@ -0,0 +1,2 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "trace/trace-target_i386_whpx.h"
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index acae61e089..e56ae2b343 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -41,6 +41,7 @@
- #include "emulate/x86_emu.h"
- #include "emulate/x86_flags.h"
- #include "emulate/x86_mmu.h"
-+#include "trace.h"
- 
- #include <winhvplatform.h>
- 
-@@ -1921,8 +1922,8 @@ int whpx_vcpu_run(CPUState *cpu)
-                         1 : 3;
- 
-             if (!is_known_msr) {
--                warn_report("WHPX: Unsupported MSR access (0x%x), IsWrite=%i", 
--                vcpu->exit_ctx.MsrAccess.MsrNumber, vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-+                trace_whpx_unsupported_msr_access(vcpu->exit_ctx.MsrAccess.MsrNumber,
-+                    vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-             }
- 
-             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
+So even if they look good in general to me, I want to leave them for later,
+reducing scope of dependency.  After the API conslidated, we can do
+cleanups on top.
+
+Let me mention what I did and plan to post later:
+
+> >>   vmstate: fixup the use of AUTO_ALLOC flag
+> >>   vmstate: Remove vmstate_use_marker_field
+
+I squashed these two.
+
+> >>   vmstate: Stop checking size for nullptr compression
+
+Picked.
+
+> >>   vmstate: Set error inside of vmstate_save_field_with_vmdesc
+
+Squashed.
+
+> >>   vmstate: Remove vmdesc_loop
+
+Starting from this one, I feel a bit uncertain, and maybe we can leave it
+for later.
+
+> >>   vmstate: Put array of pointers code together
+
+This is a major cleanup, I left it and a few ones later aside for now.
+
+> >>   vmstate: Create and save ptr marker in same function
+> >>   vmstate: Don't recompute size and n_elems in vmstate_size
+> >>   vmstate: Increase scope of vmstate_handle_alloc
+> >>   vmstate: Remove curr_elem_p
+
+I agree this is good, and..
+
+> >>   vmstate: Introduce vmstate_first
+> >>   vmstate: Introduce vmstate_next
+
+.. despite that I feel like the current vmstate_next() impl might be
+problematic (see my other reply), I also like this idea of having a _next
+helper to hide some details on the ptr markers.  I'll adopt that idea,
+thanks.
+
+> >>   vmstate: Drop VMS_ARRAY_OF_POINTER_AUTO_ALLOC
+
+Until I get corrected I think we'll need this flag, as said.  I feel like
+it's better to keep VMS_ALLOC semantics as before (when set, it must alloc
+the top field object ignoring stream data), then this one for the array
+elements separate (meanwhile, this one is "optionally done", based on the
+stream data).
+
+We have plenty of space for VMS_* flags and it's not ABI.  IMHO when we're
+not certain to merge flags we can always keep them separate until later too.
+
+> >>   vmstate: Move VMS_MUST_EXIST check
+> >>   vmstate: Invert exists check
+> >>   vmstate: Declare variables at the top
+> >>   vmstate: Reduce indentation levels
+
+All these seem to be cleanups.  I plan to leave them separately.
+
+I think it might be good I send another version directly, I'll do it very
+soon and keep it RFC.  If I missed something while reading this series,
+please then let me know.
+
 -- 
-2.50.1 (Apple Git-155)
+Peter Xu
 
 
