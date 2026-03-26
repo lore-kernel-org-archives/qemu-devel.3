@@ -4,72 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D6410A88E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3370710A88E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5n9L-0004YO-Hw; Thu, 26 Mar 2026 12:01:35 -0400
+	id 1w5nAA-0005fQ-Dk; Thu, 26 Mar 2026 12:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w5n8z-000482-Up
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:01:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w5n8r-0001gk-Jw
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:01:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774540846;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=WiqwYtIG7tcO6QxBcfjgkfDOFEQm7B4CUCa4zGnKzo0=;
- b=DIszlAQfMpwrFAxwAwjOXwUzADWFD811HozTs9RM9Go0YkVC8a3AOklhP1NIgQ3e02+hrB
- vNp6vy5UzwualMa819AF40+81iSZytp1YawaI+qTOcVLVkxTR1CSuY3MqqNW2T1/P2m68E
- 4iqEZSBNZYC475sHIFbHuC96WPgKmzw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-PfdcaHXZPTWjXGRKK3oR3A-1; Thu,
- 26 Mar 2026 12:00:41 -0400
-X-MC-Unique: PfdcaHXZPTWjXGRKK3oR3A-1
-X-Mimecast-MFC-AGG-ID: PfdcaHXZPTWjXGRKK3oR3A_1774540840
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 491621954B08; Thu, 26 Mar 2026 16:00:40 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.44.32.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31BAA3000223; Thu, 26 Mar 2026 16:00:36 +0000 (UTC)
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-block@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
-Subject: [PATCH 0/7] Misc changes to allow building with Windows Clang
-Date: Thu, 26 Mar 2026 18:00:26 +0200
-Message-ID: <20260326160033.68318-1-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5nA7-0005O6-5v
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:02:23 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5nA5-0001sq-7t
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:02:22 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-82c20b9f989so617017b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:02:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774540940; x=1775145740; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/o9nWHXjDFtQz7C1vrwujpY6ozwua+hB75u8xZA2CL4=;
+ b=kFJ27+CevN3E1wCt3y+/cu/ZhyeQS9vXTl2QpQZqw4xvEonJ+qHdxGyLFrnL95DUK4
+ 3WdBQ8ytkcULNkdYLB61WvOxFrFitP5LvoftFDu/kV9CsYUyvhedROBYFyVx8wOhykQu
+ QDfjoaSI43IY083iRet3eL0AQXqf7xhkk5PO826Uxz4+Mv1xELLvelL7+hMnQhlgJ5ln
+ GxlJJZixqlH7ssjfgOcGjRCDD8p9USoOwXVUo3AnQ8r2FOrVEsKinefDpeDHKrqH/M/c
+ Lee/uOWGzwoU4qSYmRXXD3vSJptktZhwqTYFAxb5ddPsb4mBMoi4vAiiexGJ5MJjhGsg
+ 9FDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774540940; x=1775145740;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/o9nWHXjDFtQz7C1vrwujpY6ozwua+hB75u8xZA2CL4=;
+ b=Sjoiw2eDMk8mIHm6eDzJ6AMajkKLhJCc1snGUCjRYdVQrI8A1xMZrCsmwlDD9Cf6kf
+ n4ZRMQKjaazn143XnpH8Zlv5ugk47OpP6i5nrQDJ3mqh77qRG+Y0BwDnzpzmcrPtjXyF
+ WkkES25BhjujCoPJRvogT4v1n3JXBNZSR59VfQnhPU5CU+V2Pj8KYgiuqxu4Fi1SZaOL
+ RXAQWD3WW6Z+FMbIe1KMiYUtSm6Nf8JBpKgYgk7/IljaPP5V9zNZ/m9pn/A9UakyIue8
+ uCUBSkcmFEfgE2e7jb29cTvykknhbMyimUvPWUxlx1rdUCPgKUKQ8yP11drRcAQSZIvF
+ HXWA==
+X-Gm-Message-State: AOJu0YwLfnUyL2hrcGHXG1TXu7Crx4eiVaKT0S6Wqs3mIAPbhpKx+acp
+ pnLakDAL6Iic6efhgwH5EWa4hxQkb9gdyP4Z6wFViovdU5YbSJdVdSFUSQUSy+YRfewmB28Ciis
+ VDZU8IYoftQ==
+X-Gm-Gg: ATEYQzwgiKoXOGzhfHYO4lMfIPCaWWhYTRpkBFajkpsy/vLN/8xJVNGGDU/PtibmGI9
+ U9MTJ2Q3ByuZ+xFunlTLul/sQUae/eTyK/QPAzBWd1e+IQeiNdMBoGKTSx1Mt3xrNgD9eaFYwQp
+ QyBkpAvh/Dta+8D6oykLkMmJvU3efC3iiGp5mvSsqL3ZJWApq5Y53mb+15fuI+MSuOq+pOrQKxR
+ 4ExAWf4HWOYz3BCkKYewtEWHh6xSuE6BgP/o7RJ0XPac5ge7bVF3wNzGiugtNbl2ZAWw4Rtih5J
+ PMg7XfZzsClgkMB5zzZsHjYi7Al3/zvb/wZC48uFckOs8ODfX+GfWJK6CcauMojsfAhEusGtoMq
+ SV8VzowrVR8WNcPdjT7qfzhNmyrmqBnm+3wcP0FmBbNcUdkLLXYR0YkSc52aXKXR8CNIk0t3EoX
+ OzENnysGHfYdEGiBJJW3jmuWC0mfYkLkzFF2jzVQi4qPKNZKwkhqyAeczZV+mlPx+CLKkR
+X-Received: by 2002:a05:6a20:6a0e:b0:39b:ce4a:f397 with SMTP id
+ adf61e73a8af0-39c4ab18d7dmr9065447637.18.1774540939714; 
+ Thu, 26 Mar 2026 09:02:19 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c7673819da1sm2932922a12.11.2026.03.26.09.02.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Mar 2026 09:02:19 -0700 (PDT)
+Message-ID: <585efcca-129d-4bbc-ba8f-91e80020b0f1@linaro.org>
+Date: Thu, 26 Mar 2026 09:02:18 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] plugins: fix endianness for
+ qemu_plugin_mem_get_value()
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>
+References: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,38 +140,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the first set of changes to allow building qemu-ga with Microsoft Windows Clang.
-It includes some cleanups and fixes that also make the code more portable.
-The main goal is to be able to build qemu-ga with the MSVC toolchain
-because MinGW-w64 is not available for ARM64 Windows.
+On 3/24/26 7:42 PM, Pierrick Bouvier wrote:
+> This series fixes qemu_plugin_mem_get_value() endianness on non x64 hosts.
+> As well, it updates documentation to make clear that value returned is in
+> host-endian order. Finally, it fixes tests/tcg/plugins/mem.c.
+> 
+> Pierrick Bouvier (2):
+>    include/plugins/qemu-plugin.h: add note about endianness of value
+>      returned by qemu_plugin_mem_get_value
+>    tests/tcg/plugins/mem.c: fix endian swap in update_region_info
+> 
+> Richard Henderson (1):
+>    tcg: Pass host-endian values to plugin_gen_mem_callbacks_*
+> 
+>   include/plugins/qemu-plugin.h |  5 ++--
+>   tcg/tcg-op-ldst.c             | 52 ++++++++++++++++++-----------------
+>   tests/tcg/plugins/mem.c       | 12 ++++----
+>   3 files changed, 36 insertions(+), 33 deletions(-)
+> 
 
-These changes were tested on CentOS Stream, Arch Linux, FreeBSD, NetBSD.
-Full QEMU tree was compiled without any issues on all these platforms.
+This was merged into master (0b4c378fbc4e40e26003765c0c65f7f95e5eac28).
 
-The full set of changes consists of about fifteen more patches.
-Once that is complete, I will add documentation on how to build
-qemu-ga with MSVC clang and a CI job that tests it.
-
-Kostiantyn Kostiuk (6):
-  meson: Use stddef.h instead of unistd.h
-  qom: Use g_ascii_strcasecmp instead of strcasecmp
-  osdep: Remove unused strings.h
-  Remove unused dirent.h
-  Remove unused sys/param.h
-  meson: Build block_syms and qemu_syms only when enable_modules
-
-Paolo Bonzini (1):
-  storage-daemon: use same link arguments as other tools
-
- include/qemu/osdep.h       |  1 -
- meson.build                | 35 +++++++++++++++++++----------------
- qom/object.c               |  4 ++--
- storage-daemon/meson.build | 16 ++++++++--------
- util/drm.c                 |  1 -
- util/path.c                |  2 --
- 6 files changed, 29 insertions(+), 30 deletions(-)
-
---
-2.52.0
-
+Regards,
+Pierrick
 
