@@ -4,89 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F0610A1E7E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9766D10A1E7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5iuE-0006ye-9H; Thu, 26 Mar 2026 07:29:42 -0400
+	id 1w5ixb-0000UD-Ui; Thu, 26 Mar 2026 07:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5iu0-0006xa-AZ
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:29:29 -0400
-Received: from p-west2-cluster3-host9-snip4-10.eps.apple.com ([57.103.69.73]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w5ixZ-0000Tn-VT
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:33:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5ity-0003Ul-40
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:29:28 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-0 (Postfix) with ESMTPS id
- 4862D18002B9; Thu, 26 Mar 2026 11:29:23 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774524564; x=1777116564;
- bh=cEkf88vrjYJ2D4dHZMjvUkr12OVbGNtZNCFcAWB+Uk4=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Ii9Sm7mLyw55kI878ospD77uggXnJOq39onnZexOYY53WyijdVnYQ9i7IWuoB8wWzXFWExwTEb1eFWVRszflqT1lVFkQwusTJ6OTenLUfQXiJ1ikZUGCDjvSbSMj05sGrzy1eXxmcQjV/RR3EZ+zWCbgbaf/gjwZ+kK3GhGWpNYWhR8Xv2okbv8PbO7Ls48aIacHGART4jWAVuJr/Sp/g+I1JaGHlCmzTVTFBN1qh/kj1LVhyRDlJwezxFfIhELHl3ckm43gfULUvwFYgrAMXnJ8XPdZWn1abENQEhNJ699eWvVxgtBwsEBEjA1YtDqeXOU0AIpnA3L+Fq4Esh2TIw==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-0 (Postfix) with ESMTPSA id
- C1C9B1801C58; Thu, 26 Mar 2026 11:29:20 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH 1/3] docs/specs/tpm: document PPI support on ARM64 virt
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <CAJg9Kky1q=5DFDPkh-i1hyxCKmpuEnR02hrHN-ncewY2VO0LQA@mail.gmail.com>
-Date: Thu, 26 Mar 2026 12:29:08 +0100
-Cc: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w5ixY-0006QA-4a
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:33:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774524786;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
+ b=h2pVt4i8VAXyfg96wDdgEi7d3qgiBBvafAmAWyYpuASpwLC8Jm1kIJz+pYa6ySOPXtykIa
+ 5E5wlFRWSSyZ7G5HoVGHh7eWEDmMKLTtk06/QbUQyC9eOxZtd5UUuP1TWDxXMGquwYjUnB
+ YM5pkidkAgElI81Cw80/qj0/m4MO4hE=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-656-YOVeIDSSOQyoR9wluzKzzA-1; Thu, 26 Mar 2026 07:33:05 -0400
+X-MC-Unique: YOVeIDSSOQyoR9wluzKzzA-1
+X-Mimecast-MFC-AGG-ID: YOVeIDSSOQyoR9wluzKzzA_1774524784
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c7414516609so707964a12.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 04:33:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774524784; cv=none;
+ d=google.com; s=arc-20240605;
+ b=XZhTT/Pvyw/4cKBCGuVaJl0qnSSbbg514iDoilm6zeysiVDxEURL1n4urrb57TSfi5
+ oHZk5Vd7NtPMB76Uc/uPY9KSl9L6/2xVGMOs2OqZeZzQcAPNTn5lIg9yJxG0M3h06GBs
+ AT4ebUHYIRin6VZDlRg1Ptbkr6gU2JAYG/NRMAuEx29VSwYJk3/65Ac09erHO1tmIaLS
+ asXLw4y0UJZ1rCa5K1pvNDJ0FvuTJnlTkdybOgdepXOmwprAk1iiDZHcrMcXwJht1Tob
+ +74h8ptdeQ+ZbKDEAjZ9i4S/+03g4FsPYPseJhn6sJ+H5wzR/38EuTiGpN59HsArjgBD
+ zlrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
+ fh=z6uibAafEEdEPwoLxuRjPMr66T7KT1R7Y8Wa3xPfp7A=;
+ b=SXRfq0MWZGdbUHaIIfl1F9rWhLdNwe74scLkczOJdsg1gZayd+rLmqfO/hnNpwR1pL
+ qKNkMaEdnCevKX8ggDgudYu69VmLFPgqr9np0eE6b3VIs50vhyQEMeNjGA5GZM8lm94g
+ mltgaXfGCNng4Ww9FcD/wSrA0SNfE7xLnY7sQfHPrix6GqCElSpYnQ3FlbealnxqWl6V
+ 0/voqYUN4AqMhVT47vnLOQ+g8w1gltFpheAHa4FvdB8aYKb/wtrb/UxXXwFhSWJmmm2O
+ 0bVxy7Wbd1lFcocpDPWgmYZwzAcdpPBWNNVLtDXQ47oD6s5U/9DKfXPme1DZB0wFb1bv
+ 4Msg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774524784; x=1775129584; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
+ b=jbM4i6iMchHZBQIuJ3mMKnV5YzQahQPyF3c4VE8Ikq+GQGblneOsTCvheF0c2j9hgf
+ W5NKxDZIB2YaZn1lHD2i57p5+hxYoWzcCsBz6H3OAXdgY3gpIYNpVU9Fj+j8wdcVix0g
+ 0I9i8KYAXy0yksc/oGSS6J5LPLn6khCV76+t4SpJ5XaxETa8Q+0MCLg+k1xauNqqojHJ
+ 5Op8gjNp05kaYTJs2GkdOxl0hXNYQpggWrg/5oCOMkSzFOjxqXDqyoBX5H+GKbkeBWi+
+ RjVOqCiRssr7nF5bobKTwHWNm7nEIlwuW5FVryjjO44xtujXcA53dSnujUyBoXjPiOP6
+ j/fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774524784; x=1775129584;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
+ b=j4A819dbwhpYKff9RlNevYhfqAgUPng4uHyqFTaAfiXUQe6hjSknmk3KNVzMBResMx
+ yjNwR+3Q8B5wg0KKAJ4aTtRdT1LBWSxOF0y1RVue8wfx0zU+hk6za+JjmlWwF1X7QkUG
+ k50t/0v6XeQJ7QeT+RB53avV2/4uYpf9tir0vtFyciAEs+Inn8k1WRazH3JpxWfKPFWM
+ YGEINl9LdfkIoS43VTegljtvZT3RbSlQmn4h9k5sB/UonZx1MhrAy/3RZSWrM7MKapIS
+ 90jHSAyMhcR/ggjBqPFe4NiaOx1k+1cGM9GrKusL6tR1QtvHLoNFey1aAX2dyoDgB1M/
+ XYAw==
+X-Gm-Message-State: AOJu0YyTMUcKz9XgH8jQ/KceKSH9eaYiTN0BFRHoJCHd5jvJ3SeCHGEM
+ wYFsK6IJvZCoE13EhuT3Z+1Rnh9vHo5avK6d1u/pd7d7cTKbcFIE2y/YhgPpPDdADNNcG1irAz8
+ HzQfmcN06gMt79BMOEqpbLrxN+72QqjZ+NcaInQLycxJt0D9mcN0EfTFxnGi1RjwyLd5mkrl2LB
+ pZWr2OiJK4TxGvpRI0osQklPZrJRDwXhE=
+X-Gm-Gg: ATEYQzz5aDCY3vo49LRUeoyUhvkqq2/O9FTRbTqEeezv0U0e48YG83Ll9lF6kWEBMTw
+ K7TudIuxGs/fMFgdpFyjw+zIz5PxO3Ujt8uN18hKLb30/pMuI30amotfuyqJeVVzInYOOPGur9z
+ ORSsstOWUID7uqSVjz4LkblRfZc50RRMWPjTOo4B+KMLqBuS2KOnsIQ7+/Yv5cD3vupk/tTDq4L
+ eA2JhaMM2BivPcZ5EByuncWuBIabRiyi2IrHMTuDUGel1r16XCB/+SJcBfVaBhacg==
+X-Received: by 2002:a05:6a20:914a:b0:39b:edcd:d92f with SMTP id
+ adf61e73a8af0-39c4aa68829mr7530156637.11.1774524784207; 
+ Thu, 26 Mar 2026 04:33:04 -0700 (PDT)
+X-Received: by 2002:a05:6a20:914a:b0:39b:edcd:d92f with SMTP id
+ adf61e73a8af0-39c4aa68829mr7530117637.11.1774524783773; Thu, 26 Mar 2026
+ 04:33:03 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260319135316.37412-1-armenon@redhat.com>
+ <20260319135316.37412-6-armenon@redhat.com>
+ <177452442287.34609.2774813943061790610.b4-review@b4>
+In-Reply-To: <177452442287.34609.2774813943061790610.b4-review@b4>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 26 Mar 2026 15:32:51 +0400
+X-Gm-Features: AQROBzAcffHOHf04na0eJesYrf_g-KvTNiw2afKjSXXw0v3IrE21R-rZdAKUSpI
+Message-ID: <CAMxuvaye8FiT2JeCV3N09pVX57ebKLvZPM4DQ2AhW_TUWmCUcg@mail.gmail.com>
+Subject: Re: [RFC v2 5/7] test/qtest: Add test for tpm crb chunking
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <EAD6E043-B77B-478E-91D6-863B0E185CFC@unpredictable.fr>
-References: <20260324-tpm-tis-sysbus-ppi-v1-0-e59175210954@redhat.com>
- <20260324-tpm-tis-sysbus-ppi-v1-1-e59175210954@redhat.com>
- <c6830a19-c275-4a83-bb17-4430680b3d54@linux.ibm.com>
- <A2BD2FA0-6D5F-47DC-BF2B-017ABE5F31AB@unpredictable.fr>
- <07ff064e-bea4-4beb-811a-f5f3485836d6@linux.ibm.com>
- <CAJg9Kky1q=5DFDPkh-i1hyxCKmpuEnR02hrHN-ncewY2VO0LQA@mail.gmail.com>
-To: Mohammadfaiz Bawa <mbawa@redhat.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-GUID: -U_7kk1a54YL9w4kChjJvkibyEXvkwHL
-X-Authority-Info-Out: v=2.4 cv=acpsXBot c=1 sm=1 tr=0 ts=69c51893
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=GaQpPoNlAAAA:8 a=pGLkceISAAAA:8 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=J4KwwQuTGy50yuDMXiEA:9 a=QEXdDO2ut3YA:10
- a=xF5q_uoM5gZT5J3czcBi:22
-X-Proofpoint-ORIG-GUID: -U_7kk1a54YL9w4kChjJvkibyEXvkwHL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDA4MCBTYWx0ZWRfX18TPm0S8utCR
- 9wqPAkLhTWnpVtahkdOsr2iZLGn9vVzI0/1E4nCS+wUMcNMmIJYjNC42nsTu5h0Akap0wEFRLeR
- p5B84wBYJzVqywvdUcGrNAkyu2NgjDPhCPjYElKFZygJkUdjso+JhhSftCBNSu2qw7PkdXV5eSD
- uQIZJ5fdrMqkRkguWnpRV0k2aB4HhuCusM7BRc1R2BYU3Ios+SQoyzBScWQc3UE+375PYVXFpEq
- AE3W1IcKggqOBGKALlcHzhbSfqhasG5vH+RSKOloOx3fRV/NZJ9EVZSKsyntq0dES4eEHwULmeD
- AJ5VoLJVlTp1sY5QEHtGA1mMfxp7gpJzlfcTW2VUMSqEHcypm8XzQ7eD8X17sY=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_02,2026-03-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 clxscore=1030 mlxscore=0
- malwarescore=0 suspectscore=0 adultscore=0 lowpriorityscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603260080
-Received-SPF: pass client-ip=57.103.69.73;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,125 +144,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
-> On 26. Mar 2026, at 08:27, Mohammadfaiz Bawa <mbawa@redhat.com> wrote:
->=20
-> On Thu, Mar 26, 2026 at 2:01=E2=80=AFAM Stefan Berger =
-<stefanb@linux.ibm.com> wrote:
->>=20
->>=20
->>=20
->> On 3/25/26 4:22 PM, Mohamed Mediouni wrote:
->>>=20
->>>> On 25. Mar 2026, at 20:31, Stefan Berger <stefanb@linux.ibm.com> =
-wrote:
->>>>=20
->>>>=20
->>>> I remember having played around with TPM for QEMU on ARM64 =
-(Raspberry 5(?)) a while ago and had the impression that there was =
-something related to caching that prevented the MMIO interface from =
-working correctly and Peter may have confirmed this back then on IRC .. =
-I am not sure what exactly it was that didn't work correctly when run =
-natively on ARM hardware. It worked well when run in CPU emulation on =
-x86_64 for example. So I am wondering whether there is a minimum =
-requirement for an ARM CPU or ARM CPU features related to caching that =
-someone needs to know about to be able to use TPM TIS successfully? If =
-so, it would probably be good to mention it here as well. If you know.
->>>>=20
->>>> Otherwise this looks good to me.
->>>=20
->>> Hi,
->>>=20
->>> There are two things here:
->>>=20
->>> - For Windows guests it=E2=80=99s a bit complicated
->>>=20
->>> Windows guests LDP accesses on the TPM register range which =
-doesn=E2=80=99t match ISV=3D1
->>=20
->> oh, yes, right ldp instruction.
->>=20
->>> syndrome requirements and needs a workaround in current QEMU.
->>>=20
->>> I _think_ the QEMU-side workaround described below went in, which =
-is:
->>>=20
->>> If we map the TPM register range as read directly, trap on write to =
-workaround
->>> usage of LDP then we hit...
->>>=20
->>> - FEAT_S2FWB
->>>=20
->>> This is part of Armv8.4 onwards officially* and allows KVM to force =
-a device
->>> memory type read to be promoted to write-back.
->>>> That allows the (easiest) workaround for (1) to work.
->>>=20
->>> However that=E2=80=99s not the _only_ workaround, you can remove it =
-and include
->>> =
-https://patchew.org/QEMU/20260317174740.31674-1-lucaaamaral@gmail.com/ =
-instead.
->>>=20
->>> That works fine and removes reliance on FEAT_S2FWB.
->>>=20
->>> * some older Arm chips implement equivalent semantics without =
-signalling it, but
->>> that might depend on SoC-level integration.
->>=20
->>=20
->> It would be good to mention in the docs what the user needs to know
->> about CPU requirements, if anything, so that it can actually work. If
->> these recent modifications/patches make the TIS work on any =
-processor,
->> then there's nothing to mention...
->>=20
->>>=20
->>> Thanks,
->>> -Mohamed
->>>=20
->=20
-> Thanks Stefan, Mohamed
->=20
-> I wasn't aware of the LDP / S2FWB angle, appreciate the context.
->=20
-Hello,
+On Thu, Mar 26, 2026 at 3:27=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
+:
+>
+> On Thu, 19 Mar 2026 19:23:14 +0530, Arun Menon <armenon@redhat.com> wrote=
+:
+>
+> Hi
+>
+> >
+> > diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
+> > index 2cb2dd47961..dfc1fd70b7f 100644
+> > --- a/tests/qtest/tpm-util.c
+> > +++ b/tests/qtest/tpm-util.c
+> > @@ -14,16 +14,42 @@
+> >
+> >  #include "qemu/osdep.h"
+> >  #include <glib/gstdio.h>
+> > +#include "system/memory.h"
+>
+> Use qemu/bswap.h instead
+>
+> >
+> >  #include "hw/acpi/tpm.h"
+> >  #include "libqtest.h"
+> >  #include "tpm-util.h"
+> >  #include "qobject/qdict.h"
+> >
+> > +#define CRB_ADDR_START (TPM_CRB_ADDR_BASE + A_CRB_CTRL_START)
+> > +#define CRB_CTRL_STS (TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS)
+> > +#define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_SIZE)
+>
+> Shadows tpm.h macro. Use CRB_ADDR_CTRL_STS ?
+>
+> > +
+> > +#define BIT_START_INVOKE  (1 << 0)
+>
+> Similar (although in tpm_crb.c unit)
+>
+> > [ ... skip 11 lines ... ]
+> > +            break;
+> > +        }
+> > +        if (g_get_monotonic_time() >=3D end_time) {
+> > +            break;
+> > +        }
+> > +    }
+>
+> Consider adding a g_assert() here
+>
+> > @@ -31,24 +57,74 @@ void tpm_util_crb_transfer(QTestState *s,
+> > [ ... skip 30 lines ... ]
+> > +
+> > +    qtest_writeb(s, TPM_CRB_ADDR_BASE + A_CRB_LOC_CTRL, 1);
+> > +
+> > +    for (size_t i =3D 0 ; i < req_size; i +=3D chunk_size) {
+> > +        bool last_chunk =3D false;
+> > +        size_t current_chunk_size =3D chunk_size ;
+>
+> Trailing whitespace before the semicolon.
+>
+> > +
+> > +        if (i + chunk_size > req_size) {
+> > +            last_chunk =3D true;
+> > +            current_chunk_size =3D req_size - i;
+> >          }
+> > -        if (g_get_monotonic_time() >=3D end_time) {
+> > -            break;
+> > +
+> > +        qtest_memwrite(s, caddr, req + i, current_chunk_size);
+> > +
+> > +        if (last_chunk) {
+> > +            qtest_writel(s, CRB_ADDR_START , BIT_START_INVOKE);
+>
+> Trailing whitespace before the comma.
+>
+> Style: should be tpm_sts per QEMU naming conventions.
+> Style: declarations should be at the top of the function.
+> Same: declaration mixed with statements.
+>
+> Style: should be tpm_sts per QEMU naming conventions.
+> Style: declarations should be at the top of the function.
+> Same: declaration mixed with statements.
+>
 
-> Looking into it, the FEAT_S2FWB requirement is for TPM TIS MMIO access
-> in general on ARM64 and predates this series.
+This is the first time I used "b4 review tui", this is strange. I'll
+check what happened :)
 
-Yes, it was added as a workaround for baseline Windows support.
-
-> The PPI region we're
-> adding is RAM-backed (memory_region_init_ram_device_ptr), so it
-> shouldn't be affected by that issue.
-
-FEAT_S2FWB is for the case where the guest tries to access as MMIO
-while the memory region is RAM-backed.
-
-=46rom a quick look at the Linux kernel driver it does a
-devm_ioremap_resource which assumes MMIO in drivers/char/tpm/tpm_tis.c
-
-Hence relying (further) on FEAT_S2FWB.
-
-> and for our testing we used an Ampere Altra Max M128-30 (Neoverse N1
-> r3p1, MIDR 0x413fd0c1).
-
-Neoverse N1 systems with the Arm CMN fabric aren=E2=80=99t exactly the =
-right
-system to test this. They don=E2=80=99t advertise FEAT_S2FWB but =
-technically
-have equivalent semantics.
-
-Once the ISV =3D 0 syndrome support patches get in, there=E2=80=99ll be =
-a nicer
-way than relying on undocumented support for those semantics or relying
-on FEAT_S2FWB without querying it, by switching those away from =
-RAM-backed
-to an MMIO trap.
-
-Thanks,
--Mohamed
-
+I'd recommend others to try it, especially those like me who lack a
+good "all-in-terminal" workflow for reviews.
 
 
