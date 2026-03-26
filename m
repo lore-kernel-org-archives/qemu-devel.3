@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7C7109E53C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95FD5109E52B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:15:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5aEP-0000K5-Gv; Wed, 25 Mar 2026 22:13:57 -0400
+	id 1w5aFx-00012s-QW; Wed, 25 Mar 2026 22:15:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aEO-0000IN-BJ
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:13:56 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1w5aFv-00012C-SS
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:15:31 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aEM-0008Uq-3j
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:13:55 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-65c4152313fso573604a12.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:13:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774491233; cv=none;
+ id 1w5aFt-0000Mq-IW
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:15:31 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b9825ba7e8dso63744166b.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:15:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774491328; cv=none;
  d=google.com; s=arc-20240605;
- b=Th1RVuvbFZ8o2QAssDUC0ESLIAasfj4LSu8DnUsOfEq2+RwiySXzed7+OjnlCRwicL
- rwj0IhjkxhftceqAkF79l7qKKrdL1Tudz8bUn1b30HwFPzRrTj6xWrTGfhWODe6jIDgW
- b6+USRJ/T4gJWz1wksMTHK2MQB7EmVsQqjjWb4Imr2oYIMNTT5ngrV9iiCMvsZzDoMx0
- FF0BSGA04KfQ5rpz1ITn0N08RaSryh11iIpI/k0aNhHctoI7kgF7MTJleUMWkaR2xyPK
- LfUoZDef+Li6HHiixMMFZa2au5ALV/VoQCMagfWK7MkvnQ5Z9leW+qu+OsWIy9jDd8VS
- URog==
+ b=c59B3Ba4HJ1CQLu8K6ZP7wL6145KlZN6eE2IA9yhg4UmF3XPCg7K+OjLW8l/sUTMRj
+ eOHDxv78mXq1DAm1MGV3PyW1sUBhb/UOi7EjN35qEqNONaEFy+iPVROc+PIC2UDc5iRV
+ WlRZelAFYX1WW8wiWE3HDGcGpNYb6Z7dD4K93WXANRHsa3OJ5hqtfCpTAuQNHsbS4teQ
+ lr3/ON0IzJmEcNF4iI7+f9qCB3i+kdaJ8IJH0bi3/Z1PQFCRpF/rnObiA1Px2KxJ98Ky
+ J3AEdltyL0QUZGaIVzQEpNIXAXj++AQ57gMcNCfpx9m45zHijofTeFymkOzXDqm1lAt8
+ x8FQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=cs84IbrIglVRkkFhPUbDAuyX4OlIb6qVjd5qMqnby7Y=;
+ bh=LWBXvcT8HTKeX/5fn5oWP2n08N8JYOVphEbatOOf5Yc=;
  fh=0bIOm+75pw/QTN9FDs8ZhfYo0XBcsOIKWWC6mti+rTw=;
- b=VqFzOJWWjHkBOzu30PeARfC42tVKA3lkkxNLdh9Y1EjF/EDUc9GGUuo+Yhgxqnnjdg
- iAVzZHk3cPZcrJeOVPG8ZPr/gdkTnx4DhvtlTn1ny6XGrwzfHB7+jqnR153WCCFYF7L7
- vCn6HPSJax8JHiBysTBH2O1T/c4Zrb/lRAtozEvxsJ+nS72Ip9Eru/JTtSH1p/r5uAdj
- AVfDzFiWG71sroaUgfd6Tce3BvBT8ecXRZ85NANSGcT/espFNFGQBpLC4gMq1VC8e/6k
- 4St97WfnlNZFE1ghwv4P0c/fmPx5IkLk2aWX93Vh8hQsJDJvnYHmRDxkc8iuAvOb7zAR
- x3DQ==; darn=nongnu.org
+ b=G/kYZy2Z89G3BQznf++uPtnWA8VQvEFEA/CRUnuriBh5Iic/dCRBQ4dV+ArlUvihHY
+ nGpe41JNYQ//iX9q5G2qSYnsU6fBi7yVu4/JGUgb1grghzPXZ4Q7iVlGmnv+lbZfwxsW
+ TzIIqOUWJJfJiGkONDpOc4hJD8Hz/ng5kltJR0wS3ohaxSfCBu+cbrRQr7AgBGojQwQa
+ Bbc78btEE+LVNhHE1zm2GaCXM0jG0xvR2dob5tWP5HXb6FQ0a2AWqlOuDhxZ30xQBXWi
+ 7eP/Q0Mtw4wYeZqfhI62MGJREkbYmUW8fiIgscnwrWcY38CYqGyhb/zSUXfPoEPmn8TE
+ Tk0Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774491233; x=1775096033; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774491328; x=1775096128; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cs84IbrIglVRkkFhPUbDAuyX4OlIb6qVjd5qMqnby7Y=;
- b=RmsndxvA8ZYzopMe8oe26f4qkvGxUTXJJ8gmJw1+dlg/C1y2rpUnIKVxt8zR7gsy+5
- 8CZTIYIK+6hwz+fzWQwhbWFK9IeGLNIu8a+mEW7pKn0pw0zFwrroRVq4IphqjLstbahd
- smjdCkP0JFLUt8F/y3oTZFAkutyceC7hsFKPQOJN5VQvvqoO+RZtsyh2Au5MwkDuZ3Js
- RPC2C+ij/2hPl8DHXoedy8oTTxqaCGz5MbwNuqW48E/2nhuHWBxEduyYNTWdMLByMkRl
- M7LWFretHhx6gmxVtSh0KRocsbhel4Autjx7PgWm/MEaIedGkFtx27l2K9C/PWFOJlP9
- 7APQ==
+ bh=LWBXvcT8HTKeX/5fn5oWP2n08N8JYOVphEbatOOf5Yc=;
+ b=jcr3skNOCAWzmB1EprkUwlOKyZiTk88n4w+qiHuqzZZcjgcHU3CHiGp5c0QJPwV6wx
+ DdUPIBcnlokHLrC23y7sqOsqqUX8NBLqdaNy6AtC2yuVIzo3GGDJXmUYZxBIj6J3n7F5
+ 2X7d/LZRpbg6gOJreQ5mOn4BHQStWVoq4AEjswwp9s3GJ9oXgoKzwj+k2oGYEFTePll1
+ BVzUnEHsISJYdHX7u5Xu6gZ+LatQ6agLBWBwyih1WGXBd5FsXIRCA1rQxpePm3XQNQdt
+ glL6TKL4veIN6761aSKGDXbjpuh/19TSz9vFTRpUMh5SYy3zaLC/R/rWcNFa+aMDM8Nz
+ kD1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774491233; x=1775096033;
+ d=1e100.net; s=20251104; t=1774491328; x=1775096128;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cs84IbrIglVRkkFhPUbDAuyX4OlIb6qVjd5qMqnby7Y=;
- b=glY7be1WmrpYaPpuvRhSlm8rFdtGQaVOIIQSTQDtRZJZ/jrj3j6lJyklnJUCVCxSmq
- IBrNWwfsdi3sWTLaXEo8+wQVgp3MiQaB/2Hj6vKDsZBTUTN1Q7DiEmDjfmk238/+rA6J
- yjI60BBNCxNXnUHhoaTfTlQcXnJfdIV4ytEywx5hRgjXcC76oB9MTgLPgmtuuiHn/shi
- KEpHDYpk6g2sm4UiTg7BfKxxnvYpMYRrbL3KG/2ZmchHNmrya7ZenuEHJ708ThFPU1Mr
- PLPp9AejzkkqYNB6PHOMzf5iS3l6vhTjTTO+ZeESIk8xU0PsWY5UZnpEKsM+DBq9+F9O
- bK9A==
-X-Gm-Message-State: AOJu0YyJDMgv0o6VysAvhD4x5zlLcMGW1XTeFPPaiABVHnWS9efrn7wd
- 7GPZfn2gB6zt1nK94JSjhko/hyFaOttSf305ZUmVtd9H2o3euQUdsWFWrSiZR6qROkFqI8DWT28
- hdweg/CjgwW9GmQXiYzZawghXT/WQrQI=
-X-Gm-Gg: ATEYQzyHhNs64Ke3fIELpTP22GsZ5Z7Aw9cDnBseNiVi27DwmPNBrKbN6ubFKTVYmfM
- M+qzmqNgAdGSYEqoURRNnGQcelcolyLSILNgcd3Wfxc11IozjuryqOO1HS7iEqmCk1QqwitDSrB
- PoGtU29H6nUZOHM5OTknXXFJvdy4zF5HIiClMDj2/VWA9osxuOTW5tCDORXAzXXbqtENyKd4PeF
- H+wX66Lqm2PFsIHpZwxusBP1OLYZwM6qaLlIWua6pwygaQ7Xqm/Iz2c1upn7GgAP5wA1flCrFu/
- 93nrxDJfk31UQImSIATTSHmiO6Opguuzr8PtGw==
-X-Received: by 2002:a17:906:1909:b0:b98:32c1:2452 with SMTP id
- a640c23a62f3a-b9a543c00a4mr324830766b.48.1774491232560; Wed, 25 Mar 2026
- 19:13:52 -0700 (PDT)
+ bh=LWBXvcT8HTKeX/5fn5oWP2n08N8JYOVphEbatOOf5Yc=;
+ b=hS356ouSKJPF24yioY74pR96ut8x0bCpGOy3Gc6TV3EURj5tFrJTco3qroNfyWdmTB
+ ByvpWaZ0ODMJgjzrVxrkE45kPM5DSfOHyPEB5bp8fzfNpYzmkOqAbX+GKZXMdnjH6qzX
+ VkB3lE8BHpa8oGjhW1g+GMu/+bwz8IMcOT4wvU2Sj/ouYYK7re+8MGdWcg5g0dIvwVkR
+ 0j3dLfF3itiXeeOgZlSY4vxpsCJmydKZDgflUuQ+QwpPIrZdoZslj5scbtLvrd71pko7
+ 59z7zCZ+l0P2r3Qg/Aw7nzhu/cwH6N55bX+uS8yI1cc0a9bvSJFVQvZVuCkSKJ8wpSov
+ fvgg==
+X-Gm-Message-State: AOJu0YwviGbOaX7sz8/vviNEvGgGvm+rfb8O0QSiUS7vTDYwSRlEmL42
+ VPD6GAEm8AHy/dzsU7BR4dMJGs5BVHtnDlpoRPiFLAunEctw9xCp+p/nQXd81O9QwpvwZuQYNdC
+ RC2HBDqL0wO4qxpnjZ0Cz56aq77ZVJsU=
+X-Gm-Gg: ATEYQzwOCqRTPLxVpLotn5ZJ/8nrQ3bzrUBRUXcKg/L819Ly6qOjdjJbrcV+bOGMXOo
+ vSqgNBf+IU08pdXaDEO+IDScVAw3m//52eNp+5F8QFsqXHuJyvEz8dCCRXRm79olY94XKyDEAES
+ B1agRQh/CY8r7bjxlXu5ZxtKX7Q/7Se8azYIglbYNvbDdjdfsLNZbnifOVVoMgcqLSH1ynEwE4b
+ 4vTH/n+32tsWRL2gGXhuYDgNlNahdpCWdA2ZKZIP3tthaCNCpxQkX2Y0p0bJuGCOsbIy1B9rcNb
+ UR4Ph2J4fDUElJprM0pjJFThjxo98tIi0lJEEA==
+X-Received: by 2002:a17:907:7286:b0:b98:155e:609 with SMTP id
+ a640c23a62f3a-b9a54221611mr367086566b.36.1774491327746; Wed, 25 Mar 2026
+ 19:15:27 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260318103122.97244-1-philmd@linaro.org>
- <20260318103122.97244-10-philmd@linaro.org>
-In-Reply-To: <20260318103122.97244-10-philmd@linaro.org>
+ <20260318103122.97244-11-philmd@linaro.org>
+In-Reply-To: <20260318103122.97244-11-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 26 Mar 2026 12:13:25 +1000
-X-Gm-Features: AQROBzC0upxUJaZQ9mGPpTwtr8spkF0CAPvQ4RmxrRT8OZrVqCSZLa7yS0hqhp4
-Message-ID: <CAKmqyKONNZaWKDYx8D9wUsHGbG=92W8D1RAB_bj2fsnbWqF7Aw@mail.gmail.com>
-Subject: Re: [PATCH-for-11.1 09/16] target/riscv: Expose mo_endian_env()
+Date: Thu, 26 Mar 2026 12:15:01 +1000
+X-Gm-Features: AQROBzDiQBRG4w8lSewUiJJdLMK9nOQXncyNTNIIGlCQ6nJPg5InVKv1BWI-7uc
+Message-ID: <CAKmqyKNX4T61eYLm8RjTfQt40LKK+wWypYB7HHjv1-RBgORiHA@mail.gmail.com>
+Subject: Re: [PATCH-for-11.1 10/16] target/riscv: Have gdbstub consider CPU
+ endianness
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
@@ -101,8 +102,8 @@ Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
  Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -129,9 +130,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Mar 18, 2026 at 8:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Move mo_endian_env() definition to "internals.h" for re-use.
-> Do not restrict to system emulation only because this will
-> also be used by user emulation code.
+> Consider CPU endianness when accessing registers.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
@@ -140,58 +139,32 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/internals.h | 12 ++++++++++++
->  target/riscv/op_helper.c | 14 --------------
->  2 files changed, 12 insertions(+), 14 deletions(-)
+>  target/riscv/gdbstub.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-> index 35b923c4bf5..860c47732b6 100644
-> --- a/target/riscv/internals.h
-> +++ b/target/riscv/internals.h
-> @@ -62,6 +62,18 @@ static inline bool mmuidx_2stage(int mmu_idx)
->      return mmu_idx & MMU_2STAGE_BIT;
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index a5c12638782..2c6ccd4761c 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -20,6 +20,7 @@
+>  #include "exec/gdbstub.h"
+>  #include "gdbstub/helpers.h"
+>  #include "cpu.h"
+> +#include "internals.h"
+>
+>  struct TypeSize {
+>      const char *gdb_type;
+> @@ -49,7 +50,7 @@ static const struct TypeSize vec_lanes[] =3D {
+>
+>  static uint64_t ldn(CPURISCVState *env, uint8_t *mem_buf, size_t regsz)
+>  {
+> -    return ldn_p(mem_buf, regsz);
+> +    return (mo_endian_env(env) =3D=3D MO_LE ? ldn_le_p : ldn_be_p)(mem_b=
+uf, regsz);
 >  }
 >
-> +static inline MemOp mo_endian_env(CPURISCVState *env)
-> +{
-> +    /*
-> +     * A couple of bits in MSTATUS set the endianness:
-> +     *  - MSTATUS_UBE (User-mode),
-> +     *  - MSTATUS_SBE (Supervisor-mode),
-> +     *  - MSTATUS_MBE (Machine-mode)
-> +     * but we don't implement that yet.
-> +     */
-> +    return MO_TE;
-> +}
-> +
->  /* share data between vector helpers and decode code */
->  FIELD(VDATA, VM, 0, 1)
->  FIELD(VDATA, LMUL, 1, 3)
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index 6ccc127c304..dde40a55493 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -28,20 +28,6 @@
->  #include "exec/tlb-flags.h"
->  #include "trace.h"
->
-> -#ifndef CONFIG_USER_ONLY
-> -static inline MemOp mo_endian_env(CPURISCVState *env)
-> -{
-> -    /*
-> -     * A couple of bits in MSTATUS set the endianness:
-> -     *  - MSTATUS_UBE (User-mode),
-> -     *  - MSTATUS_SBE (Supervisor-mode),
-> -     *  - MSTATUS_MBE (Machine-mode)
-> -     * but we don't implement that yet.
-> -     */
-> -    return MO_TE;
-> -}
-> -#endif
-> -
->  /* Exceptions processing helpers */
->  G_NORETURN void riscv_raise_exception(CPURISCVState *env,
->                                        RISCVException exception,
+>  int riscv_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n=
+)
 > --
 > 2.53.0
 >
