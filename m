@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6091010A1E63
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 18:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4298110A3D96
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 18:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5pXZ-0000bZ-Jg; Thu, 26 Mar 2026 14:34:45 -0400
+	id 1w5pZT-0001Mh-Ig; Thu, 26 Mar 2026 14:36:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5pXX-0000b4-S8
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 14:34:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5pZO-0001MP-Ee
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 14:36:39 -0400
+Received: from ci-2005l-snip4-11.eps.apple.com ([57.103.89.251]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w5pXV-0007xY-TQ
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 14:34:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774550080;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=A20kyknheAtGfvDLc+Ux14LobydOyzSsjHcvNaxPKXs=;
- b=RvdBb0AmK4ty/GBfC5+tQdvtna+b3mrseIMVNnrL4MoFExPhYyYYtGql36HFkupL0Rbh/K
- blt3GywrtatABIe7GSiXjA63my1n9VusnIZhNJze3GKJ7LGMI8EKyARVo+c1PHDcFz8f8f
- +hyvm4NlY00GteYFHxDDoEJjqFaspBg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-NnHyW7T9PMW9C7dk4ENv_g-1; Thu,
- 26 Mar 2026 14:34:35 -0400
-X-MC-Unique: NnHyW7T9PMW9C7dk4ENv_g-1
-X-Mimecast-MFC-AGG-ID: NnHyW7T9PMW9C7dk4ENv_g_1774550074
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C32EA1956046; Thu, 26 Mar 2026 18:34:33 +0000 (UTC)
-Received: from localhost (unknown [10.45.226.37])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CD87A1955D71; Thu, 26 Mar 2026 18:34:31 +0000 (UTC)
-Date: Thu, 26 Mar 2026 14:34:29 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: JAEHOON KIM <jhkim@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pbonzini@redhat.com, fam@euphon.net,
- armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
- eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-Subject: Re: [PATCH RFC v2 1/3] aio-poll: avoid unnecessary polling time
- computation
-Message-ID: <20260326183429.GA786313@fedora>
-References: <20260323135451.579655-1-jhkim@linux.ibm.com>
- <20260323135451.579655-2-jhkim@linux.ibm.com>
- <20260325172236.GC701300@fedora>
- <c2df581b-e8ab-4fbb-91ae-08d17eb52878@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5pZM-0008S2-IA
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 14:36:38 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-5 (Postfix) with ESMTPS id
+ F34F51800701; Thu, 26 Mar 2026 18:36:32 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774550195; x=1777142195;
+ bh=UP4PHAPvG4AbgTLmhBg39yt3vNpOGex89WBINyu7FaU=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=CV64KLhf74BFhXIFKRen9Pvc/WqWN4b19LbSxuEEj5L+hNzY+RiiB8ZTpGmWYbhJpTCkc7FC9QTzOJ/qWRI14TiyJIHpkoKSo1WvDbRWnpxFITlpykRXkDWJl/Q4nHhWb3OGpW+7PsjxZVgAQ6wXFYz2ZEAw+316dM5eNdfEEZrbbTSc3k+cTiDoSQ5MILrTBSF5u/lipUOuy9paPQgzAK7D475ViU4eqSjrTOAog7PKKRB4yfsk9qxz0Am0gEYZuUzmhcpXNjQ9AqdYrbeD8FsCIp+YQdE6v8BjP6RiRYl5xGqXc/gIH0ETpRg/OyeHvksHd4kMHNBN7UQl648pwA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-5 (Postfix) with ESMTPSA id
+ ABCE11800171; Thu, 26 Mar 2026 18:36:30 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, Wei Liu <wei.liu@kernel.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH v3 0/3] whpx: i386: documentation and demoting some warnings
+Date: Thu, 26 Mar 2026 19:36:25 +0100
+Message-ID: <20260326183628.79281-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="36h/Cu4eAdkKwrOs"
-Content-Disposition: inline
-In-Reply-To: <c2df581b-e8ab-4fbb-91ae-08d17eb52878@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=NLDYOk6g c=1 sm=1 tr=0 ts=69c57cb1
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=hPRIUQFq285SL03yr14A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: _QVtcXquJAjtgRFv5hMEDaaw5UnCyswb
+X-Proofpoint-GUID: _QVtcXquJAjtgRFv5hMEDaaw5UnCyswb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDEzMyBTYWx0ZWRfX7VZoU0sb7Irq
+ P58qG6xiyGQIfuPvaF+DjjiTOWLKsxDbAKeq+qvHIufjkGvATt//xJDD8WX7V21Ge5vHnsrQY5Q
+ gccRZeDalwTK6b0Nre6HRGqSN4at36031v+DSBaGCqt6Tvyi6htUGXBIasMtYwNkRnsgA6JoYPQ
+ zM92Aw3j+3B4aXEhr0xaGH/ZAPoxiDv8PC697Q9ChBrds3T4hIpWqELNFfZZzf60I3wOgKo+ZjV
+ DTgU5Jj9tHsL0w2x2MjoAxGy6EVHg13yEUtRFPhFuh6wQulOPiRKee7FCUYnqhmatSjRHZOftRX
+ Sa3EgEAXkpKGGDLQ7eGXaA1pEH8Q6vvJK9+js2foBEqr4bi+YKl3gCaHnLGfto=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ adultscore=0 bulkscore=0 clxscore=1030 phishscore=0 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 mlxlogscore=555 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603260133
+Received-SPF: pass client-ip=57.103.89.251;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,88 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Demoting some warnings that appeared too often to traces
+and adding some documentation.
 
---36h/Cu4eAdkKwrOs
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Mohamed Mediouni (3):
+  docs: add WHPX section with initial info
+  target/i386: emulate: make unmapped GPA warnings a trace
+  whpx: i386: trace unsupported MSR accesses
 
-On Thu, Mar 26, 2026 at 01:17:44PM -0500, JAEHOON KIM wrote:
-> On 3/25/2026 12:22 PM, Stefan Hajnoczi wrote:
-> > On Mon, Mar 23, 2026 at 08:54:49AM -0500, Jaehoon Kim wrote:
-> > > Nodes are no longer added to poll_aio_handlers when adaptive polling =
-is
-> > > disabled, preventing unnecessary try_poll_mode() calls. Additionally,
-> > > aio_poll() skips try_poll_mode() when timeout is 0.
-> > Skipping when timeout is 0 seems risky to me. VIRTIO devices disable
-> > guest kicks when polling mode is started. When aio_poll(ctx,
-> > blocking=3Dfalse) is called, we will skip polling and
-> > ctx->fdmon_ops->need_wait(ctx) won't detect an event either. aio_poll()
-> > will return without noticing that the VIRTIO device's AioHandler is
-> > ready.
-> >=20
-> > Is skipping when timeout 0 necessary for performance or can it be
-> > dropped from the patch?
-> >=20
-> > Aside from this:
-> >=20
-> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->=20
-> Thank you for the review!
-> Removing the (timeout !=3D 0) check does not cause any issue on my side,
-> so I plan to remove it in the next version.
->=20
-> However, I'd like to clarify: when timeout is 0, is there any concern
-> in the try_poll_mode function below that I might be missing?
-> I just want to make sure I understand correctly.
->=20
-> static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_list,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 int64_t *timeout)
-> {
-> =A0 =A0 AioHandler *node;
-> =A0 =A0 int64_t max_ns;
->=20
-> =A0 =A0 if (QLIST_EMPTY_RCU(&ctx->poll_aio_handlers)) {
-> =A0 =A0 =A0 =A0 return false;
-> =A0 =A0 }
->=20
-> =A0 =A0 max_ns =3D 0;
-> =A0 =A0 QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
-> =A0 =A0 =A0 =A0 max_ns =3D MAX(max_ns, node->poll.ns);
-> =A0 =A0 }
-> =A0 =A0 max_ns =3D qemu_soonest_timeout(*timeout, max_ns);
->=20
-> =A0 =A0 if (max_ns && !ctx->fdmon_ops->need_wait(ctx)) {
+ MAINTAINERS                      |   1 +
+ docs/system/index.rst            |   1 +
+ docs/system/whpx.rst             | 144 +++++++++++++++++++++++++++++++
+ meson.build                      |   2 +
+ target/i386/emulate/trace-events |   2 +
+ target/i386/emulate/trace.h      |   2 +
+ target/i386/emulate/x86_mmu.c    |   5 +-
+ target/i386/whpx/trace-events    |   1 +
+ target/i386/whpx/trace.h         |   2 +
+ target/i386/whpx/whpx-all.c      |   5 +-
+ 10 files changed, 161 insertions(+), 4 deletions(-)
+ create mode 100644 docs/system/whpx.rst
+ create mode 100644 target/i386/emulate/trace-events
+ create mode 100644 target/i386/emulate/trace.h
+ create mode 100644 target/i386/whpx/trace-events
+ create mode 100644 target/i386/whpx/trace.h
 
-I think you are pointing out that max_ns will be 0 and therefore polling
-will be skipped? At least this is what came to mind when I read this
-code again.
-
-That is a problem because the exact scenario I described in my reply to
-you can already happen in the existing code before your patch :(.
-
-Avoiding the timeout !=3D 0 check in your patch would help contain the bug
-in try_poll_mode() rather than extending it to aio_poll() as well.
-
-Thanks for pointing this out!
-
-Stefan
-
---36h/Cu4eAdkKwrOs
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnFfDUACgkQnKSrs4Gr
-c8jwkAgAl/pqwBWAlqofFKFMPyM1khKLbkT7t2aIcyso7e79vlpB5c1HXbbmY3ga
-gYNx2/Py6RsQRoiXTSsioZu5Zdg+d4+6rEdamNbrI89f9pNxFDYD82Mt7Q1Rhlf+
-atC4c7kkqTkKwIYFM04/TZB3stsQACDYILHOKh2FtmLKc/huRBSsUOaBNL1GZxLF
-zKhEi+iKGJ3ni4Swh7hDmmrucPHVHsnazob0GuYIsK0xYaHW3QhtXTy83tmS8hEP
-l8HphdW7Yzr2AOv7Up+S6mAQioeogS6qqVRSebypMB7mGa7V0G9cdWtI4B1h0K+C
-JtNRaO+zJAi7M+acEpHJEkuBoWGj7g==
-=5ViS
------END PGP SIGNATURE-----
-
---36h/Cu4eAdkKwrOs--
+-- 
+2.50.1 (Apple Git-155)
 
 
