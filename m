@@ -4,122 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9766D10A1E7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF47310A1E7E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ixb-0000UD-Ui; Thu, 26 Mar 2026 07:33:12 -0400
+	id 1w5izX-0001Wg-JA; Thu, 26 Mar 2026 07:35:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w5ixZ-0000Tn-VT
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:33:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5izU-0001RD-41
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:35:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w5ixY-0006QA-4a
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:33:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5izS-0006nB-14
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:35:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774524786;
+ s=mimecast20190719; t=1774524905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
- b=h2pVt4i8VAXyfg96wDdgEi7d3qgiBBvafAmAWyYpuASpwLC8Jm1kIJz+pYa6ySOPXtykIa
- 5E5wlFRWSSyZ7G5HoVGHh7eWEDmMKLTtk06/QbUQyC9eOxZtd5UUuP1TWDxXMGquwYjUnB
- YM5pkidkAgElI81Cw80/qj0/m4MO4hE=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-YOVeIDSSOQyoR9wluzKzzA-1; Thu, 26 Mar 2026 07:33:05 -0400
-X-MC-Unique: YOVeIDSSOQyoR9wluzKzzA-1
-X-Mimecast-MFC-AGG-ID: YOVeIDSSOQyoR9wluzKzzA_1774524784
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-c7414516609so707964a12.3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 04:33:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774524784; cv=none;
- d=google.com; s=arc-20240605;
- b=XZhTT/Pvyw/4cKBCGuVaJl0qnSSbbg514iDoilm6zeysiVDxEURL1n4urrb57TSfi5
- oHZk5Vd7NtPMB76Uc/uPY9KSl9L6/2xVGMOs2OqZeZzQcAPNTn5lIg9yJxG0M3h06GBs
- AT4ebUHYIRin6VZDlRg1Ptbkr6gU2JAYG/NRMAuEx29VSwYJk3/65Ac09erHO1tmIaLS
- asXLw4y0UJZ1rCa5K1pvNDJ0FvuTJnlTkdybOgdepXOmwprAk1iiDZHcrMcXwJht1Tob
- +74h8ptdeQ+ZbKDEAjZ9i4S/+03g4FsPYPseJhn6sJ+H5wzR/38EuTiGpN59HsArjgBD
- zlrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
- fh=z6uibAafEEdEPwoLxuRjPMr66T7KT1R7Y8Wa3xPfp7A=;
- b=SXRfq0MWZGdbUHaIIfl1F9rWhLdNwe74scLkczOJdsg1gZayd+rLmqfO/hnNpwR1pL
- qKNkMaEdnCevKX8ggDgudYu69VmLFPgqr9np0eE6b3VIs50vhyQEMeNjGA5GZM8lm94g
- mltgaXfGCNng4Ww9FcD/wSrA0SNfE7xLnY7sQfHPrix6GqCElSpYnQ3FlbealnxqWl6V
- 0/voqYUN4AqMhVT47vnLOQ+g8w1gltFpheAHa4FvdB8aYKb/wtrb/UxXXwFhSWJmmm2O
- 0bVxy7Wbd1lFcocpDPWgmYZwzAcdpPBWNNVLtDXQ47oD6s5U/9DKfXPme1DZB0wFb1bv
- 4Msg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774524784; x=1775129584; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
- b=jbM4i6iMchHZBQIuJ3mMKnV5YzQahQPyF3c4VE8Ikq+GQGblneOsTCvheF0c2j9hgf
- W5NKxDZIB2YaZn1lHD2i57p5+hxYoWzcCsBz6H3OAXdgY3gpIYNpVU9Fj+j8wdcVix0g
- 0I9i8KYAXy0yksc/oGSS6J5LPLn6khCV76+t4SpJ5XaxETa8Q+0MCLg+k1xauNqqojHJ
- 5Op8gjNp05kaYTJs2GkdOxl0hXNYQpggWrg/5oCOMkSzFOjxqXDqyoBX5H+GKbkeBWi+
- RjVOqCiRssr7nF5bobKTwHWNm7nEIlwuW5FVryjjO44xtujXcA53dSnujUyBoXjPiOP6
- j/fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774524784; x=1775129584;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cFWBGqsD+OTQvIlTBc+s/7XQkE8V29leRTjwPnyysws=;
- b=j4A819dbwhpYKff9RlNevYhfqAgUPng4uHyqFTaAfiXUQe6hjSknmk3KNVzMBResMx
- yjNwR+3Q8B5wg0KKAJ4aTtRdT1LBWSxOF0y1RVue8wfx0zU+hk6za+JjmlWwF1X7QkUG
- k50t/0v6XeQJ7QeT+RB53avV2/4uYpf9tir0vtFyciAEs+Inn8k1WRazH3JpxWfKPFWM
- YGEINl9LdfkIoS43VTegljtvZT3RbSlQmn4h9k5sB/UonZx1MhrAy/3RZSWrM7MKapIS
- 90jHSAyMhcR/ggjBqPFe4NiaOx1k+1cGM9GrKusL6tR1QtvHLoNFey1aAX2dyoDgB1M/
- XYAw==
-X-Gm-Message-State: AOJu0YyTMUcKz9XgH8jQ/KceKSH9eaYiTN0BFRHoJCHd5jvJ3SeCHGEM
- wYFsK6IJvZCoE13EhuT3Z+1Rnh9vHo5avK6d1u/pd7d7cTKbcFIE2y/YhgPpPDdADNNcG1irAz8
- HzQfmcN06gMt79BMOEqpbLrxN+72QqjZ+NcaInQLycxJt0D9mcN0EfTFxnGi1RjwyLd5mkrl2LB
- pZWr2OiJK4TxGvpRI0osQklPZrJRDwXhE=
-X-Gm-Gg: ATEYQzz5aDCY3vo49LRUeoyUhvkqq2/O9FTRbTqEeezv0U0e48YG83Ll9lF6kWEBMTw
- K7TudIuxGs/fMFgdpFyjw+zIz5PxO3Ujt8uN18hKLb30/pMuI30amotfuyqJeVVzInYOOPGur9z
- ORSsstOWUID7uqSVjz4LkblRfZc50RRMWPjTOo4B+KMLqBuS2KOnsIQ7+/Yv5cD3vupk/tTDq4L
- eA2JhaMM2BivPcZ5EByuncWuBIabRiyi2IrHMTuDUGel1r16XCB/+SJcBfVaBhacg==
-X-Received: by 2002:a05:6a20:914a:b0:39b:edcd:d92f with SMTP id
- adf61e73a8af0-39c4aa68829mr7530156637.11.1774524784207; 
- Thu, 26 Mar 2026 04:33:04 -0700 (PDT)
-X-Received: by 2002:a05:6a20:914a:b0:39b:edcd:d92f with SMTP id
- adf61e73a8af0-39c4aa68829mr7530117637.11.1774524783773; Thu, 26 Mar 2026
- 04:33:03 -0700 (PDT)
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GmJc25TpxiNuhXy0BlLDA1L6RtQk86BaW+oomGkSDB0=;
+ b=Liu+wzyBM3wuSpU7gzwEE897x7/vA/zLPL5CELTH72aIuB2fbXRcmSLYPDFoSMT1TNvNdW
+ blGkCi9wx1FD5csUZkhIg5ZXqLB/20aoq+N6VouUCiVafLm1HXa6piqlt0HLn4NX2JXLUW
+ Xn4WY0Y4DXeIatRRVnYNU/RrsmleeEk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-kAcu9s_vOL6-_3w5uZRkdQ-1; Thu,
+ 26 Mar 2026 07:35:03 -0400
+X-MC-Unique: kAcu9s_vOL6-_3w5uZRkdQ-1
+X-Mimecast-MFC-AGG-ID: kAcu9s_vOL6-_3w5uZRkdQ_1774524903
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C075B19560AA; Thu, 26 Mar 2026 11:35:02 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.28])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 843A41800361; Thu, 26 Mar 2026 11:34:58 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga device
+Date: Thu, 26 Mar 2026 12:34:57 +0100
+Message-ID: <20260326113457.159065-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20260319135316.37412-1-armenon@redhat.com>
- <20260319135316.37412-6-armenon@redhat.com>
- <177452442287.34609.2774813943061790610.b4-review@b4>
-In-Reply-To: <177452442287.34609.2774813943061790610.b4-review@b4>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 26 Mar 2026 15:32:51 +0400
-X-Gm-Features: AQROBzAcffHOHf04na0eJesYrf_g-KvTNiw2afKjSXXw0v3IrE21R-rZdAKUSpI
-Message-ID: <CAMxuvaye8FiT2JeCV3N09pVX57ebKLvZPM4DQ2AhW_TUWmCUcg@mail.gmail.com>
-Subject: Re: [RFC v2 5/7] test/qtest: Add test for tpm crb chunking
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -144,95 +80,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+From: Thomas Huth <thuth@redhat.com>
 
-On Thu, Mar 26, 2026 at 3:27=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
-:
->
-> On Thu, 19 Mar 2026 19:23:14 +0530, Arun Menon <armenon@redhat.com> wrote=
-:
->
-> Hi
->
-> >
-> > diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-> > index 2cb2dd47961..dfc1fd70b7f 100644
-> > --- a/tests/qtest/tpm-util.c
-> > +++ b/tests/qtest/tpm-util.c
-> > @@ -14,16 +14,42 @@
-> >
-> >  #include "qemu/osdep.h"
-> >  #include <glib/gstdio.h>
-> > +#include "system/memory.h"
->
-> Use qemu/bswap.h instead
->
-> >
-> >  #include "hw/acpi/tpm.h"
-> >  #include "libqtest.h"
-> >  #include "tpm-util.h"
-> >  #include "qobject/qdict.h"
-> >
-> > +#define CRB_ADDR_START (TPM_CRB_ADDR_BASE + A_CRB_CTRL_START)
-> > +#define CRB_CTRL_STS (TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS)
-> > +#define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_SIZE)
->
-> Shadows tpm.h macro. Use CRB_ADDR_CTRL_STS ?
->
-> > +
-> > +#define BIT_START_INVOKE  (1 << 0)
->
-> Similar (although in tpm_crb.c unit)
->
-> > [ ... skip 11 lines ... ]
-> > +            break;
-> > +        }
-> > +        if (g_get_monotonic_time() >=3D end_time) {
-> > +            break;
-> > +        }
-> > +    }
->
-> Consider adding a g_assert() here
->
-> > @@ -31,24 +57,74 @@ void tpm_util_crb_transfer(QTestState *s,
-> > [ ... skip 30 lines ... ]
-> > +
-> > +    qtest_writeb(s, TPM_CRB_ADDR_BASE + A_CRB_LOC_CTRL, 1);
-> > +
-> > +    for (size_t i =3D 0 ; i < req_size; i +=3D chunk_size) {
-> > +        bool last_chunk =3D false;
-> > +        size_t current_chunk_size =3D chunk_size ;
->
-> Trailing whitespace before the semicolon.
->
-> > +
-> > +        if (i + chunk_size > req_size) {
-> > +            last_chunk =3D true;
-> > +            current_chunk_size =3D req_size - i;
-> >          }
-> > -        if (g_get_monotonic_time() >=3D end_time) {
-> > -            break;
-> > +
-> > +        qtest_memwrite(s, caddr, req + i, current_chunk_size);
-> > +
-> > +        if (last_chunk) {
-> > +            qtest_writel(s, CRB_ADDR_START , BIT_START_INVOKE);
->
-> Trailing whitespace before the comma.
->
-> Style: should be tpm_sts per QEMU naming conventions.
-> Style: declarations should be at the top of the function.
-> Same: declaration mixed with statements.
->
-> Style: should be tpm_sts per QEMU naming conventions.
-> Style: declarations should be at the top of the function.
-> Same: declaration mixed with statements.
->
+QEMU currently crashes when migrating a guest that uses the
+isa-vga device as display. This happens because vga_isa_class_initfn()
+registers a vmsd for vmstate_vga_common that operates on VGACommonState.
+But the isa-vga device is derived from ISADevice, not from VGACommonState,
+so the migration code tries to fill in the data for VGACommonState to
+the memory that is a ISADevice instead, which is of cause causing trouble.
 
-This is the first time I used "b4 review tui", this is strange. I'll
-check what happened :)
+We need an indirection here as it's also e.g. done in vga-pci.c, so
+that the migration data gets filled into the right location.
 
-I'd recommend others to try it, especially those like me who lack a
-good "all-in-terminal" workflow for reviews.
+While we're at it, also drop the "global_vmstate = true" here. Since
+migration was broken for this device during the last 15 years (!) anyway,
+we don't have to worry about maintaining backward compatibility with this
+switch for older versions of QEMU anymore.
+
+Fixes: 7435b791ca9 ("vga-isa: convert to qdev")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/display/vga-isa.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/hw/display/vga-isa.c b/hw/display/vga-isa.c
+index 95d85ff69a5..5f55c884a1b 100644
+--- a/hw/display/vga-isa.c
++++ b/hw/display/vga-isa.c
+@@ -32,6 +32,7 @@
+ #include "qemu/timer.h"
+ #include "hw/core/loader.h"
+ #include "hw/core/qdev-properties.h"
++#include "migration/vmstate.h"
+ #include "ui/console.h"
+ #include "qom/object.h"
+ 
+@@ -62,7 +63,6 @@ static void vga_isa_realizefn(DeviceState *dev, Error **errp)
+     MemoryRegion *vga_io_memory;
+     const MemoryRegionPortio *vga_ports, *vbe_ports;
+ 
+-    s->global_vmstate = true;
+     if (!vga_common_init(s, OBJECT(dev), errp)) {
+         return;
+     }
+@@ -88,6 +88,15 @@ static void vga_isa_realizefn(DeviceState *dev, Error **errp)
+     rom_add_vga(VGABIOS_FILENAME);
+ }
+ 
++static const VMStateDescription vmstate_vga_isa = {
++    .name = "vga-isa",
++    .version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT(state, ISAVGAState, 0, vmstate_vga_common, VGACommonState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const Property vga_isa_properties[] = {
+     DEFINE_PROP_UINT32("vgamem_mb", ISAVGAState, state.vram_size_mb, 8),
+ };
+@@ -98,7 +107,7 @@ static void vga_isa_class_initfn(ObjectClass *klass, const void *data)
+ 
+     dc->realize = vga_isa_realizefn;
+     device_class_set_legacy_reset(dc, vga_isa_reset);
+-    dc->vmsd = &vmstate_vga_common;
++    dc->vmsd = &vmstate_vga_isa;
+     device_class_set_props(dc, vga_isa_properties);
+     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
+ }
+-- 
+2.53.0
 
 
