@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E6D10AB82E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 23:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F68910AB82E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 23:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5uB0-00086F-Kn; Thu, 26 Mar 2026 19:31:47 -0400
+	id 1w5uB8-00088I-Pr; Thu, 26 Mar 2026 19:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5uAx-00085Z-Dh
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:43 -0400
-Received: from ci-2002d-snip4-11.eps.apple.com ([57.103.88.171]
+ id 1w5uB3-00087L-ML
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:49 -0400
+Received: from ci-2002f-snip4-10.eps.apple.com ([57.103.88.190]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5uAv-0003lg-Ik
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:43 -0400
+ id 1w5uB2-0003ph-06
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:49 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-0 (Postfix) with ESMTPS id
- 9F6801800209; Thu, 26 Mar 2026 23:31:35 +0000 (UTC)
+ EF6DB1800103; Thu, 26 Mar 2026 23:31:42 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774567897; x=1777159897;
- bh=AgGFaFGJOz7Y9Fj6pPNpBMoHa1YUKbCUmRuYh71HsL4=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=TmATCasjhXp4lkfAvyz7h/HIILCH1NKjVQH+bQw32hXedSZV5lMeHSTKgZtfj5CW4CTOT5pV62JU44B+Lfed1xORv91rQOLSRnsSgFrt7uiHGdBQTYhV6mLUePAUpGN6ds11/hmIyFwvIB4U6bI9V0m2Y+6/8QKDkVh/srDl0oF4d2/yFVWqhDYVfh5EKGurAuuFbinKRvQWVxIo1ifol8b2uCmed6Eo4y8n2k1gNbt0hEgNMTD6SowFxXskV+nc7wgcE1IzcCr//Sk4VNti3U9VtL5t2ViFk3F3H19tLvd8FvhWbOzY4H82VFIt6SNqb/py6ES2lx/NzwDb9BNaoQ==
+ s=sig1; t=1774567905; x=1777159905;
+ bh=9F76Cc23dABknhkRSAI7rbUjPIKVT+f9IPw6XaqJqx4=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=MbgqTUuFwmpe6R5dxEcaBHfEeDZTuD+AqaTVr80X/BLb6gLzftGBxZ0iwd88lWqrnHaADMyyc6zFGY7ryZIDYmqJb2sk07uYMzDkpStVbbzrnCbEurcHATkzJKjxoBvkFfMChi+EEBXCtBmB+nCMKu4mX64LXKPZ0/jNBqGL+SXyNHBP6aDKsiD/gu9coKIUK51tqGVZHj0ShM+V7xPvAtHikhLY80wtAHgchxeFVHDnYPbotY0POceIZ8BYbVV7kb7h+0qrXV6NrhdSae7lms1kbjOn5ybexCKQYgfwjp1xWjrSGjQGSqqsXqRxhbXvqwHROJvctT6nSp/PWkrk0A==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-0 (Postfix) with ESMTPSA id
- 3D37B180012C; Thu, 26 Mar 2026 23:31:33 +0000 (UTC)
+ 985011800224; Thu, 26 Mar 2026 23:31:40 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
@@ -45,41 +45,42 @@ Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v5 0/6] whpx: i386: even more updates
-Date: Fri, 27 Mar 2026 00:31:24 +0100
-Message-ID: <20260326233130.59392-1-mohamed@unpredictable.fr>
+Subject: [PATCH v5 4/6] target/i386/emulate, whpx, hvf,
+ mshv: add read_segment_selector
+Date: Fri, 27 Mar 2026 00:31:28 +0100
+Message-ID: <20260326233130.59392-5-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260326233130.59392-1-mohamed@unpredictable.fr>
+References: <20260326233130.59392-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDE2NyBTYWx0ZWRfXwZaGk1q3BdGb
- O82i+s3vXyYbL6dWL+b6u7gHHsWwJ7CkqEPHc+QS5EPAWLhbMu7kTx4nyXHhA48YB9SiO423TXH
- 9JVtBCdmcm5EtxMKkoTar6Wn5nUdmIU2BAIaoifvwPx0ayyiQdBKMy0R85hyM0sdCirRjXPCiJV
- DHCYcJ8HqFvKAcdlEE5Cgz3d7HJX89pf38lflO0N4RyngdKDutxqnyzpWeFIFKnNNAxKSnnDQQ6
- cFy8+43ay8r9wHG0EUhHkGtnBIlqAxVtBCzfmKKjWHkvzRbe730YZX+6/ULjo93+uMEsoHoTiUa
- lUyEigtvSCDqRMKp2PYKxk5V9t7Ra5i+sMF8HLVwwse7KrrpoV43W1ihe5+5YM=
-X-Proofpoint-ORIG-GUID: KMKkVE1e6FJVxDBpuD6Ll8JH0BSS8URQ
-X-Authority-Info-Out: v=2.4 cv=A+Vh/qWG c=1 sm=1 tr=0 ts=69c5c1d8
+X-Proofpoint-GUID: fgbLqZLycrHx6-bghaemGGI_1oidSlaq
+X-Authority-Info-Out: v=2.4 cv=PPsCOPqC c=1 sm=1 tr=0 ts=69c5c1e0
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=r00tg9IzZes3XP5rG5AA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: KMKkVE1e6FJVxDBpuD6Ll8JH0BSS8URQ
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=iZGBPGrxHaysoRuNUwEA:9
+X-Proofpoint-ORIG-GUID: fgbLqZLycrHx6-bghaemGGI_1oidSlaq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDE2NyBTYWx0ZWRfX3uxqfl7Wgvwl
+ AEIQ6I7sqmnPzEDUMKCOy9mNilx5BGkWjHkA26kS59z0lxY+wr3W0V8n6rjEBfyu1b2DkzPJhKC
+ A75jUnNk39B52ZzvM5SCqG1CRSv4kGRWdpZNV0WNw4PBgeRvmO9/i0mIAjjhqjR8KAZlSeNZZK2
+ wcUSwp6fTCeFHkTLb3yakXqzbl3EI/pFA3syIBQ2y0f+E5mHA11dGYmxrEFJ9V/icok1CwTgdRm
+ TRMqXTNUHYgNsU39Dbh8eFlF6G48v9HI+IhU7GfcYfzzxeMyYUE/hv4Lo88atvn8z39mj++WabQ
+ +k3mSOLixbDeZlDB7kY8h3w/WNne6tdLCBnzxrHjQ87yvMIRChwOXQL6B9/cGY=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 malwarescore=0 clxscore=1030
- mlxscore=0 mlxlogscore=677 adultscore=0 phishscore=0 bulkscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2603260167
-Received-SPF: pass client-ip=57.103.88.171;
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 bulkscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ mlxlogscore=999 suspectscore=0 clxscore=1030 phishscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603260167
+Received-SPF: pass client-ip=57.103.88.190;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,38 +98,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Demoting some warnings that appeared too often
-and adding some documentation.
+Opens the door to implement SLDT in the instruction emulator.
 
-Also add emulation of SLDT (and STR done in the same vein)
-because of a bug report.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ target/i386/emulate/x86_emu.h |  1 +
+ target/i386/hvf/hvf.c         |  1 +
+ target/i386/mshv/mshv-cpu.c   | 11 +++++++++++
+ target/i386/whpx/whpx-all.c   | 10 ++++++++++
+ 4 files changed, 23 insertions(+)
 
-Mohamed Mediouni (6):
-  docs: add WHPX section with initial info
-  whpx: i386: trace unsupported MSR accesses
-  target/i386: emulate: remove redundant logging for unmapped MMIO
-    access
-  target/i386/emulate, whpx, hvf, mshv: add read_segment_selector
-  target/i386: emulate: include name of unhandled instruction
-  target/i386: emulate: emulate SLDT and STR
-
- MAINTAINERS                   |   1 +
- docs/system/index.rst         |   1 +
- docs/system/whpx.rst          | 144 ++++++++++++++++++++++++++++++++++
- meson.build                   |   1 +
- target/i386/emulate/x86_emu.c |  22 +++++-
- target/i386/emulate/x86_emu.h |   1 +
- target/i386/emulate/x86_mmu.c |   3 -
- target/i386/hvf/hvf.c         |   1 +
- target/i386/mshv/mshv-cpu.c   |  11 +++
- target/i386/whpx/trace-events |   1 +
- target/i386/whpx/trace.h      |   2 +
- target/i386/whpx/whpx-all.c   |  15 +++-
- 12 files changed, 196 insertions(+), 7 deletions(-)
- create mode 100644 docs/system/whpx.rst
- create mode 100644 target/i386/whpx/trace-events
- create mode 100644 target/i386/whpx/trace.h
-
+diff --git a/target/i386/emulate/x86_emu.h b/target/i386/emulate/x86_emu.h
+index a8d4c93098..2397c24200 100644
+--- a/target/i386/emulate/x86_emu.h
++++ b/target/i386/emulate/x86_emu.h
+@@ -28,6 +28,7 @@ struct x86_emul_ops {
+     MMUTranslateResult (*mmu_gva_to_gpa) (CPUState *cpu, target_ulong gva, uint64_t *gpa, MMUTranslateFlags flags);
+     void (*read_segment_descriptor)(CPUState *cpu, struct x86_segment_descriptor *desc,
+                                     enum X86Seg seg);
++    x86_segment_selector (*read_segment_selector)(CPUState *cpu, enum X86Seg seg);
+     target_ulong (*read_cr) (CPUState *cpu, int cr);
+     void (*handle_io)(CPUState *cpu, uint16_t port, void *data, int direction,
+                       int size, int count);
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index c0d028b147..8fda4429b3 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -254,6 +254,7 @@ static void hvf_read_segment_descriptor(CPUState *s, struct x86_segment_descript
+ 
+ static const struct x86_emul_ops hvf_x86_emul_ops = {
+     .read_segment_descriptor = hvf_read_segment_descriptor,
++    .read_segment_selector = vmx_read_segment_selector,
+     .handle_io = hvf_handle_io,
+     .simulate_rdmsr = hvf_simulate_rdmsr,
+     .simulate_wrmsr = hvf_simulate_wrmsr,
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 2bc978deb2..25e0de2eab 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1565,8 +1565,19 @@ static void read_segment_descriptor(CPUState *cpu,
+     }
+ }
+ 
++static x86_segment_selector read_segment_selector(CPUState *cpu, enum X86Seg seg_idx)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    SegmentCache *seg = &env->segs[seg_idx];
++    x86_segment_selector sel = { .sel = seg->selector & 0xFFFF };
++
++    return sel;
++}
++
+ static const struct x86_emul_ops mshv_x86_emul_ops = {
+     .read_segment_descriptor = read_segment_descriptor,
++    .read_segment_selector = read_segment_selector
+ };
+ 
+ void mshv_init_mmio_emu(void)
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index e56ae2b343..9a405118c5 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -998,6 +998,15 @@ static void read_segment_descriptor(CPUState *cpu,
+     whpx_segment_to_x86_descriptor(cpu, &reg, desc);
+ }
+ 
++static x86_segment_selector read_segment_selector(CPUState *cpu, enum X86Seg seg_idx)
++{
++    WHV_X64_SEGMENT_REGISTER reg;
++    x86_segment_selector sel;
++    whpx_read_segment_descriptor(cpu, &reg, seg_idx);
++    sel.sel = reg.Selector & 0xFFFF;
++    return sel;
++}
++
+ static bool is_protected_mode(CPUState *cpu)
+ {
+     AccelCPUState *vcpu = cpu->accel;
+@@ -1049,6 +1058,7 @@ static target_ulong read_cr(CPUState *cpu, int cr)
+ 
+ static const struct x86_emul_ops whpx_x86_emul_ops = {
+     .read_segment_descriptor = read_segment_descriptor,
++    .read_segment_selector = read_segment_selector,
+     .handle_io = handle_io,
+     .is_protected_mode = is_protected_mode,
+     .is_long_mode = is_long_mode,
 -- 
 2.50.1 (Apple Git-155)
 
