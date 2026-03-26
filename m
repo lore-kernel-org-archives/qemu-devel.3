@@ -4,52 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB1210A62F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 14:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5956410A62F9
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 14:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5lsa-0007fz-1j; Thu, 26 Mar 2026 10:40:12 -0400
+	id 1w5ltG-0007rN-Hm; Thu, 26 Mar 2026 10:40:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w5lsW-0007fZ-JE
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:40:10 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w5lsU-00034G-Mn
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:40:08 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id D220920B710C;
- Thu, 26 Mar 2026 07:40:02 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D220920B710C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1774536004;
- bh=VQvd1yPUC63N3E4bm+PKxKHtEmIfMxn1ymYCNxkvczk=;
- h=From:To:Cc:Subject:Date:From;
- b=nSdAWIM3wg6aIV5uaYp/OqPcWf6yQJFDFuxLsW4SHOahvvj+KFzpbQ2u31iXXxt1S
- EOqsSPUVEJL4t+0ZyVpts+mpt8rk7B0AQNSad9MBtH/SZzEhKRus1SI+Rci1OTXFi+
- iN5I6MnWUC6pZkwT0kBi/RiD5Vw6tQ6+dqSPWY3U=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH] accel/mshv: skip double unmap of mem regions
-Date: Thu, 26 Mar 2026 15:40:00 +0100
-Message-Id: <20260326144000.492037-1-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1w5ltE-0007rC-To
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:40:53 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1w5ltC-00037E-BT
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:40:52 -0400
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 625F93F620
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:40:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1774536048;
+ bh=aVeLRD6bSpyTFQYba6djbj0AzTU7073yz5Sc7AnUARA=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=P8Ch/LgtTUVNtG6M1gtIofX6N6dSneLK8CFGvthNDC/S3SeNTQ5YQPdcM4h1VzPiz
+ Ob11r3js6ooTNV771JKEFds9jKNtRn5UVUMcDFNfbpoQydn7fqqEZr4ZukSbILLleV
+ 150x+7c6hfBIfh+aSs3FmaXOlE0G6mxpeD7dXlyI5T/Y2paluMW5nRWw0XkPaNXIWY
+ nJShT8uMFo6t8HB52wL+IL5H9u43q4DVwPK5CaYp54Iyd/k2NpgWsnSRWESLqawb7I
+ edWCvHGJdI658sxLfSNVIQKjYzLp/iImY7L6FwIi33UL42vvJ8riWqAyNXvLnwTBMm
+ 6XwwIVVOh4JRbe3lH1Rvmee2YYvAZDu4nYOKz1+UWUc2q/qMl2AaoawkTMVMV/Xl0U
+ z5Cbeyr5pYz6FOiYje5P+DJsey2RZ8sqG5tj6BGRIsAAZww+wlZj1/ZBzk4j5KIDUT
+ rZRhjy1DZrHQzH+0tieuSkHHq9XYmIJdBJqdTRT1BR2Rr/nnxiZJ3xe6AP9qidONGy
+ JR8qZc2Ta7Y6Q4dVGxNj32hQxJxq3bQbXs32SynowuB6R8hCxJXUAun2t0djnBIjjK
+ xYgTqa4zoorcmtOhBfpZz5w3bRj/KSLSm1+SYnI9mgBOPFolKLSjR2BRd7oUmu4bET
+ F7tK0J/lgsgSyrgTPoBMudgw=
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48535f4d5e1so14337885e9.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 07:40:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774536048; x=1775140848;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aVeLRD6bSpyTFQYba6djbj0AzTU7073yz5Sc7AnUARA=;
+ b=PXyiFse0QktqMF+BnQc4xgnPZPBCYY8dMjj09lHsi3iEXL6bFXu2Sd7nM0Vcl63S7q
+ oL2bt0CrEcBdjL+7+KxiK39sJUBtHvsYW82JCFf/HOJ7UE2mBRkx94RRR3mIqwcuwcWv
+ fTwAuUiphiNZmAVWfLI8+h7NlydIckhiIpf1cRhCDsLge6UUC9zUoHbfIeNR736EG54H
+ s8me13dO7lpP4SdTxDEgtpp6zYP074QszfdUMsJdpM0HRQZSWQZzEt1zP34noNLqF7St
+ nKKM2rhMZvf0uRofMpk5h94vfxjACLQjHYZ7whYW/mSkFG6cpIvgo1SG8j0ANN8Eq2Zz
+ 0oGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMGwbQWmq/KPME+0t2p3cpnVkoIA51WXiriRAR/GV5bVhy5GipcT59sMArAjrGvbEwQ9vRQBPu2NeC@nongnu.org
+X-Gm-Message-State: AOJu0YwJGmzR24SSsPj6X6Nuk0fYQlGjMo4rmcBRcEIlunxhk4dTIj+2
+ iWrIyrfrVgwuyQXEy1QXCO3uSLGcNXuFgj4HFReRQc2NHOifvEjUobEEts1Vz0VNBjLupgCVJbF
+ tZ90hGDaRE7X4hjEkt9c7LehLJiz9NZkmHhkrJHErseQfCy0wzRlt+98WVkev9mK2H4tVsvZc
+X-Gm-Gg: ATEYQzyhfpqp0x3DL/+zfrkkvB42Q4lp1p6b8h9Z0+eWODkKjT6RrSZwWK64sg0NuCh
+ 912oQoaADZC40P4Izyayo4deMadZAcMulJRj1desy1KerM9ZT+iS8CoYBEk7KYOajd4AQJcHeuM
+ DNVysKumowBTZb7Y3/USJvKJ6EGWhFyDjqlbDnvZOlKhqfrRJbXN/3CF1fjGg3fmq9PpAZqyGcD
+ GMZ+5sDGcGoT8nLS7H+pKppxus3z99nqvEZKNBhht1bAO7ybHAAzfvER/x4ktmmiKBw5XsGlTnJ
+ APA7i/WznRzs4tWW+pnCpcl2oBvPnhZo8zhCNbDTHIEiMr1aUr2TsIIQEIY9q8UJ1mSjtwA4eRj
+ ruU0jILHb8txjmEHQbpqmdhq2xyGpGign5Jodfcu64PGp/EXctFEj0lIk5DZJdiawDTPGJUbuu7
+ xkrX+RmjqUXx5jKJxJabHilFw9AFF6DwTWQa+m6wNQGdHUUnkb0c4=
+X-Received: by 2002:a05:600c:3b12:b0:485:363b:fafe with SMTP id
+ 5b1f17b1804b1-48715fc37f7mr118007475e9.1.1774536047847; 
+ Thu, 26 Mar 2026 07:40:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b12:b0:485:363b:fafe with SMTP id
+ 5b1f17b1804b1-48715fc37f7mr118006935e9.1.1774536047429; 
+ Thu, 26 Mar 2026 07:40:47 -0700 (PDT)
+Received: from [192.168.103.137]
+ (ip-005-147-080-091.um06.pools.vodafone-ip.de. [5.147.80.91])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-487208b206dsm55435895e9.1.2026.03.26.07.40.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Mar 2026 07:40:46 -0700 (PDT)
+Message-ID: <eba3e18f-9dad-4f53-ac1b-47b625778062@canonical.com>
+Date: Thu, 26 Mar 2026 15:40:44 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/acpi: correct field sequence in SPCR table
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, Ani Sinha
+ <anisinha@redhat.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20260326121947.51200-1-heinrich.schuchardt@canonical.com>
+ <20260326093653-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <20260326093653-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,136 +126,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change addresses a regression that was introduced when the dynamic
-mapping handler was removed, from the MSHV controller, breaking OVMF
-support.
+On 3/26/26 14:41, Michael S. Tsirkin wrote:
+> the fix is correct, thanks!
+> something more to improve:
+> 
+> 
+> On Thu, Mar 26, 2026 at 01:19:47PM +0100, Heinrich Schuchardt wrote:
+>> On LoongArch and RISC-V invalid SPCR tables are created:
+>>
+>> Terrminal Type : 00
+>> Language : 03
+>>
+>> The correct values are:
+>>
+>> Terrminal Type : 03
+>> Language : 00
+>>
+>> This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
+>> SPCR creation to common location") that swapped the fields.
+>>
+>> See the specification of the table in
+>> https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+> 
+> should mention revision you are consulting.
 
-We introduce a small uaddr-indexed table to track mapped regions. The
-current logic turns an add into a remove op if a rom-device region is
-currently not in romd_mode.
+Revision 1.10 is the only version that is published at this site. But we 
+do not adhere to one specific revision. See below.
 
-We could ignore both map + unmap for this condition, but this misses a
-the case of a region transitioning from romd_mode=true => false. In this
-case we still do want to unmap a region.
+The bug exists for any revision from 1.00 to today's 1.10.
 
-Fixes: 626e5dc999 (Remove remap overlapping mappings code)
+According to the revision history version 0.95 removed language codes.
+Version 1.0 
+(https://download.microsoft.com/download/1/6/1/161ba512-40e2-4cc9-843a-923143f3456c/SPCR_Tbl-v100.doc) 
+called the language field "Reserved, must be 0".
+The sequence of the two fields considered in this patch did not change 
+since then.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- accel/mshv/mem.c          | 41 ++++++++++++++++++++++++++++++++++++---
- accel/mshv/mshv-all.c     |  1 +
- include/system/mshv_int.h |  1 +
- 3 files changed, 40 insertions(+), 3 deletions(-)
+> 
+>>
+>> Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
+>> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+> 
+> 
+> BTW I think the link to the spec should move to build_spcr.
+> 
+> And also:
+> /*
+>   * Serial Port Console Redirection Table (SPCR)
+>   * Rev: 1.07
+>   */
+> 
+> is probably wrong:
+> 1.07	Fixed incorrect description in Stop Bits field. Undo accidental removal of Flow Control field. Edited formatting.
+> 
+> it's likely not the earliest version we adhere to.
 
-diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
-index e55c38d4db..db28dcd83c 100644
---- a/accel/mshv/mem.c
-+++ b/accel/mshv/mem.c
-@@ -12,6 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qemu/main-loop.h"
- #include "linux/mshv.h"
- #include "system/address-spaces.h"
- #include "system/mshv.h"
-@@ -165,6 +166,25 @@ static hwaddr align_section(MemoryRegionSection *section, hwaddr *start)
-     return (size - delta) & qemu_real_host_page_mask();
- }
- 
-+static bool uaddr_is_mapped(MshvMemoryListener *mml, hwaddr start_addr)
-+{
-+    assert(bql_locked());
-+
-+    return g_hash_table_contains(mml->mapped_regions,
-+                                 GINT_TO_POINTER(start_addr));
-+}
-+
-+static void track_region(MshvMemoryListener *mml, hwaddr start_addr, bool add)
-+{
-+    assert(bql_locked());
-+
-+    if (add) {
-+        g_hash_table_add(mml->mapped_regions, GINT_TO_POINTER(start_addr));
-+    } else {
-+        g_hash_table_remove(mml->mapped_regions, GINT_TO_POINTER(start_addr));
-+    }
-+}
-+
- void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-                        bool add)
- {
-@@ -173,15 +193,19 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-     bool writable = !area->readonly && !area->rom_device;
-     hwaddr start_addr, mr_offset, size;
-     void *ram;
-+    bool is_mapped;
-     MshvMemoryRegion mshv_mr = {0};
- 
-     size = align_section(section, &start_addr);
-     trace_mshv_set_phys_mem(add, section->mr->name, start_addr);
- 
-     /*
--     * If the memory device is a writable non-ram area, we do not
--     * want to map it into the guest memory. If it is not a ROM device,
--     * we want to remove mshv memory mapping, so accesses will trap.
-+     * ROM devices (e.g. pflash) have ram=false, rom_device=true.
-+     * In romd_mode, they behave like RAM and should be mapped.
-+     * Outside romd_mode, accesses should trap to QEMU for emulation.
-+     *
-+     * For non-RAM, non-rom_device regions (writable MMIO), we never map.
-+     * For rom_device regions not in romd_mode, we want them unmapped.
-      */
-     if (!memory_region_is_ram(area)) {
-         if (writable) {
-@@ -195,6 +219,15 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-         return;
-     }
- 
-+    is_mapped = uaddr_is_mapped(mml, start_addr);
-+
-+    if (add && is_mapped) {
-+        return;
-+    }
-+    if (!add && !is_mapped) {
-+        return;
-+    }
-+
-     mr_offset = section->offset_within_region + start_addr -
-                 section->offset_within_address_space;
- 
-@@ -210,4 +243,6 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-         error_report("Failed to set memory region");
-         abort();
-     }
-+
-+    track_region(mml, start_addr, add);
- }
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index d4cc7f5371..0a30149030 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -371,6 +371,7 @@ static void register_mshv_memory_listener(MshvState *s, MshvMemoryListener *mml,
- 
-     mml->listener = mshv_memory_listener;
-     mml->listener.name = name;
-+    mml->mapped_regions = g_hash_table_new(g_direct_hash, g_direct_equal);
-     memory_listener_register(&mml->listener, as);
-     for (i = 0; i < s->nr_as; ++i) {
-         if (!s->as[i].as) {
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 35386c422f..4aa1b6962d 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -32,6 +32,7 @@ struct AccelCPUState {
- 
- typedef struct MshvMemoryListener {
-     MemoryListener listener;
-+    GHashTable *mapped_regions;
-     int as_id;
- } MshvMemoryListener;
- 
--- 
-2.34.1
+The revision level differs between LoongArch, ARM, and RISC-V in our 
+code for no obvious reason.
+
+The LoongArch and the ARM code call build_spcr() with rev = 2 which 
+implies specification revision <= 1.07. This matches the code comment.
+
+The RISC-V code calls build_spcr() with rev = 4 which implies 
+specification revision >= 1.09. We mention 1.10 in a comment.
+
+Best regards
+
+Heinrich
+
+> 
+> 
+>> ---
+>>   hw/acpi/aml-build.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+>> index 4b37405088..a999320e61 100644
+>> --- a/hw/acpi/aml-build.c
+>> +++ b/hw/acpi/aml-build.c
+>> @@ -2115,10 +2115,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+>>       build_append_int_noprefix(table_data, f->stop_bits, 1);
+>>       /* Flow Control */
+>>       build_append_int_noprefix(table_data, f->flow_control, 1);
+>> -    /* Language */
+>> -    build_append_int_noprefix(table_data, f->language, 1);
+>>       /* Terminal Type */
+>>       build_append_int_noprefix(table_data, f->terminal_type, 1);
+>> +    /* Language */
+>> +    build_append_int_noprefix(table_data, f->language, 1);
+>>       /* PCI Device ID  */
+>>       build_append_int_noprefix(table_data, f->pci_device_id, 2);
+>>       /* PCI Vendor ID */
+>> -- 
+>> 2.53.0
+> 
 
 
