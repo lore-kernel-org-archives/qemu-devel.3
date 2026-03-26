@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4977810A88E4
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C595E10A88E4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:26:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5nUY-0007cb-EP; Thu, 26 Mar 2026 12:23:31 -0400
+	id 1w5nXU-00015P-4R; Thu, 26 Mar 2026 12:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5nUO-0007Tf-OB
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:23:23 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1w5nXR-00012i-SN
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:26:29 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5nUH-0007re-01
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:23:19 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64ae2ce2fe1so1245665d50.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:23:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774542192; cv=none;
+ id 1w5nXP-0000GA-Ud
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:26:29 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64e8cdafeffso1533159d50.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:26:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774542386; cv=none;
  d=google.com; s=arc-20240605;
- b=bEPbJxR3fSI54G/CvbzO1wA/H/6N0ANUr448nuO4gI88TQd+8tBF9A6V6zhOGkLTsT
- nK2BLIo64lwdGqFDW7LOTIe48k2tOifc+UH6QQKEJ9pgWUzR8oN6WRQfmXv+p1OoNOUc
- ycEVZOqfVzeoSqT5lyYeiKDiyGnypQ62uDg5kVOr2zPkFOMMdS6EsviazIXuNCfSUgeJ
- c+8ytvBfYBZdtT1xt3Go83d6GNBnqaCYW0lLdDdL8sUt1eOvynW+71p0bzmfuek0vC1O
- 8/aqagNwzfj9wh3B2lTa8YstpnR3rWmjaEmjdsE0efJx6VkBVaXe2ioejwh8RjvS7SPz
- PjSw==
+ b=cxYw/6Y82yUdao4UHGESF7QzUs71GPUtp5wo7HgW2MZnm7zEl4OwvhlO0taaOvpnR+
+ 0fro0VmATjRcIO+8SCnWLwHdHEQ7HHdJ8tv4EzzRNNp1ynx4RAYP48gM8qB4yNwB3DQD
+ sW3RYCCDGE5zzr9+2gdV5B3xQpKS4pnNjkUqrI7l4FgvZbxB5rtESfA6+j1WUzmL6fI3
+ hmqB7ViR0dngDFkvjnrBc8fq7q9wpsZ+6LcMIXebEeumRwxI8IrvkZRzr+oKQHdlyOuG
+ ajS9eMl8g2LoTGJ9AgAM23Lv6n7+sKhO4fCTpEkyrcuzaOMhL9gHJHwYae6D+pIWKpJm
+ ZdsQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=E3KvqjIaNbm7a6LxNu7p2QBgZ49AFMq9LWiFN7Uh32E=;
+ bh=yaffYYovtD79pWvM9SxQeugim+qdZOSUgk9LSwNM3Ag=;
  fh=HTPvbb48pvvew7vhUKgLof3MF4iC/k4XA4OrNYti4Kg=;
- b=TN3WWLAo5kpHbDSMwDkM+t86Ixws9LXOq0rnmtTZd7YET+bI41zR7MMwTNaOXZcIuX
- V85Sy+uDnzl+fkf10qtZNDCRhScM9gUU2LuB5SoQemg0QRbdCpBM8Yob0P7iPHOfXCtY
- ic71aWxsg8MOGnVvV2MQ+BOjJeymm960W4MRX3bxfQWxjNUxCFrkkQvsPiZaMgiHvIoi
- PVP3lwPpvkFPGbbRX5WGIiBRGqxHXHh5kxsvq4iUMIw11dZEduRv2EiW5qZj9l3Zpzh7
- KZmv3h+fh8gkaVdwIAGecF0kBLp6Dy0p6qbayIMyA4Z27RYe2vBke1rruXpLdrpEeFWT
- zXwQ==; darn=nongnu.org
+ b=bqvacddhh3q/sJGh2H3zHX040tYcuAiCsRMqOu00A1v2pIFk/Qc8qmiBQ+8GHJEMMn
+ lKKhWdLJoRDh8YfuWsuvXfuF38QksvkoyCKVvyRTruKHIuLLXHm+YlmtBus66EwUadVo
+ EZOFEkZ5Hg2chOywq6St7z9fyuxrqq8FG+JN5U+4wDbsvS89snuNmkPYCFd/cWCivOvI
+ NDYfNRh+NF8jYRRIYX8V9bpmQM5LJZtOWmicRq+K/7spF36qe2JxvrJxTlDNdQ4VDVqj
+ 3Fw1E4d+Y758KNQjr8q6Pll7YqIV2dBmEtO0UbSPj3MqMqZgYgdvUOBhM1GIpQ5O17q3
+ v73Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774542192; x=1775146992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774542386; x=1775147186; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=E3KvqjIaNbm7a6LxNu7p2QBgZ49AFMq9LWiFN7Uh32E=;
- b=wOjj2Z9JBNk0bFXJ5+BMatc+iwQlr0beXFrw1pRew6PEwAEwzcMCj4XN/st9ZuYbs7
- QuxemFV92EHKVutkGCe7YlSG7TGegDmuiLdSPK6kSWqb/Cs2jq2yAR9cI2tWS7kMu4CQ
- Vw+U1Ru8j6UTy6p7zIy9G2mGjZadvJYmSDgehKrNPtOmbnYXKOsspe2a8GXUjXZaWDZr
- aaN/9CGxmwwkQfSKmOO6o1aJ2Bs6HitIJijfkklF2Q/E+NDY7JZcpWqf6ITh5BZtVE2y
- STAS5aKy1WoAbE//Xr1bLk9qAitZNoXtWTiUiOquqImfZNWzz+ACNRRzFwlU12yMD7JN
- SDaw==
+ bh=yaffYYovtD79pWvM9SxQeugim+qdZOSUgk9LSwNM3Ag=;
+ b=DOzLG2Jlyb1wmQJsmGOP9cuL7C842j6TF6HFyIgm9Ky/tXMkxgJSXWnM/kzp+KuAN7
+ M5CwcZfwkYRToBvk8QR/QcNCoYmgJfCTjJjCJppfZE6x0+1OZAoS1kHMWV5CZePJ9REP
+ Xohc54L4Fu4YgwCDx+UwMWry4VTtsub87mMHagNfPNE2/DRO3nNWZmYn+Di8VLtHZMBU
+ 2ypvLtqqlna38tpvtVItqEm7pIHzr4z/+sFkB1ALVDDuO+qFsotL8Pr/N3z4KpquHwSY
+ MBwgilQdCQlRHVttAh4oKyomMVrlm8TiO9m+PyNQg3y+JRbFcesJ5bqGOkEr7ERNHCOT
+ TpBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774542192; x=1775146992;
+ d=1e100.net; s=20251104; t=1774542386; x=1775147186;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E3KvqjIaNbm7a6LxNu7p2QBgZ49AFMq9LWiFN7Uh32E=;
- b=gMlZ1GqaAQ97KOdIqSWFKElQLwSBQpSz2enZ6r6elEP8YON4SLIYycXAXM9rhOhSTO
- 0BT7bmx8L2ujCU0T7fzsboVaU0xfdqZd9QaxysnRBCMRgpQNmMfc+0f9Prypmiw5S/UK
- 2gLcKGxiZSi6e3GN7gOZyS92Ttrh1Mmh47BNnbNB7uTPCUk1xz8ZsvPSXABE5QoWmY8d
- Ia7/HYEEbWymrLhGAhZRbBoWak9kgkx/CVD+P5FyCyX7XN8C66j0KodiNzzYoAxFynN7
- WU1RIK001EmpnbudCMB+h2AZbXcy0fSA6wwPMy0qMFl8CLGl5IHx3bRQuzWNE7JK6JEJ
- CrPw==
-X-Gm-Message-State: AOJu0YzkqA6GgWVI8lrN+r35DUYUeXrqIbhBIdl6J/cxQT8tUqc9hgi5
- KGtqJTcEpg5Yl+b0KmGfsUW6fcz6wncAg7OCj2kRIoU9N1Ao4/Cc5pUMSsrHOG7dsMOjYUZoTSk
- HxdZmZnKhK3yhhu/KYQbnCutNzdC6arJ6U1PhOQQQyw==
-X-Gm-Gg: ATEYQzwU/G8D7uktEpBsKo3kYeAYnsRsdWBN1ObgkaLDU3kJhlU73gsDkKe+DrFg9a6
- SgmvnBCrJwvVo5kY1PjBIFwnb3AiG+IXRaM2vFh6f1BU/Wp3dwkkGKNx8WyzbReRbAxZwHBPPF2
- zby+sKoBWfWOBMyMKl4fsja9g0M43xnRFpAJHAm9Ha7/Kro+NEQQO8g6I1wjTm8vxa9opKHqsUr
- +Q5JmwRIcwpNxEuwrcmOO0hFZOtXw14XWgd89TNnrDD/glzUYijoFxXnxr+/RsFLkxWyfBC+lGv
- oeaUjkknVEqh/bMt7+poAhJBiFEmXUa7G4p0zZ9abyWFAK37cO7JcNxqXfz9MlWKhV4=
-X-Received: by 2002:a05:690e:24d5:b0:64e:9cf7:95a5 with SMTP id
- 956f58d0204a3-64ee612f9eamr5792573d50.44.1774542191536; Thu, 26 Mar 2026
- 09:23:11 -0700 (PDT)
+ bh=yaffYYovtD79pWvM9SxQeugim+qdZOSUgk9LSwNM3Ag=;
+ b=oTPZXSS0wjpIITflSN9HdLOMky1PiwzH1Bdhz9pUeRatJV5gSi9+IFryIJkSmz4qVs
+ U6kW6J/H4xfQD91dq4Sa6tVcQY9TfAqg2sCfbFL55dAtdaJnHWAdp+DHtDYI2XWQV3K1
+ cwtvzP9LxF7OdCZm8dM6XSUEQv0Kpqz1l09+0ugetxx4E1gD8llvHODMXqu7D836CsZd
+ cW7WCpxTkGkVlHltH8VBUugPlENYPz+UH36uIlks+3LAb1GEokgVKH+AfidzyjOR72xi
+ BVMIF+YdGpZd/DhbKtNZcXG+wBkV2rfku2e1ofPqe1Qr0fbMqVMykmCxGWwPqfxi7P/O
+ FRTQ==
+X-Gm-Message-State: AOJu0YzCNoQNS2O5f943Ju4F3pzMZvrKYkjgs8m3FV3Jc/bziWT+sfp7
+ e8z+/yvNqfnYXs9AWxRVRA3HKJLFsBOZ28Riw7xCL4spgk2csq4ZhuvgBiKTq+ENMGuFD1LwHyP
+ j8yPXDo4ByDq9N6znC2bKlL0FPtxM2OIay36b7jxwxGuKw5SfRLBfIOk=
+X-Gm-Gg: ATEYQzxKMuP6/xkGT0HTgcqmVvQVf9LE8V92t4nw3QdyCh/TnEqeXJ6h/0FyLF0GfWQ
+ gXO9J3XAwSA7oCKDiB5lBpYQBgPPamzVw6l+bb5NUYTcIaudr9oG/28QqR9NLygkaaCS1xyNGMe
+ LkYbiRxYa3ork9u8bJOYO61ljtRA5/+Rw2pacx1b3MWtkIjIYFNWfC6uKgFCisYRupEQA0jUzOm
+ Z5TVwvbunbjnqEhLKcBe+ibeCg3hAQhl1c367H5U0L5FbXl7Up6l/num4XpIWrJsVlb68b2pfG1
+ 5GNZXYvu6r4+lesRbeUc4FBgyUW2q4+gcw0t+0fJ4fKRECdryTsdDldcoehAxWqrDbRE1lgCCTp
+ /RQ==
+X-Received: by 2002:a05:690e:130e:b0:64e:b173:544e with SMTP id
+ 956f58d0204a3-64fee26aff7mr1882284d50.25.1774542386030; Thu, 26 Mar 2026
+ 09:26:26 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260326160033.68318-1-kkostiuk@redhat.com>
- <20260326160033.68318-5-kkostiuk@redhat.com>
-In-Reply-To: <20260326160033.68318-5-kkostiuk@redhat.com>
+ <20260326160033.68318-6-kkostiuk@redhat.com>
+ <CAFEAcA8+qpP=TfSY3oa_2jpH2vD+ot7UxSnVWJCqUVshOCZbNA@mail.gmail.com>
+ <CAPMcbCp7GTnH=tJtDkJVFb_hfR_p3uaZV-XcwNdWbQqnH6+VSg@mail.gmail.com>
+In-Reply-To: <CAPMcbCp7GTnH=tJtDkJVFb_hfR_p3uaZV-XcwNdWbQqnH6+VSg@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Mar 2026 16:23:00 +0000
-X-Gm-Features: AQROBzAL6OMycNcPK4g6tPvQeDwu9YzsbCBKVyZA8MsDXLoI4LfW1Cs0juvRjns
-Message-ID: <CAFEAcA_JEHXu_FdfVxEG07XdM1gL7KE6K_5eVGaUVMY7zj=hAQ@mail.gmail.com>
-Subject: Re: [PATCH 4/7] Remove unused dirent.h
+Date: Thu, 26 Mar 2026 16:26:14 +0000
+X-Gm-Features: AQROBzDQumgf5F8BDOONnojIYZHfhP834qttPABj3X3V-gnFQhd9FVYmND7b84Y
+Message-ID: <CAFEAcA9WAbKWRhXyB0JnMCbq2VY36aU1bJT450UF-KiKcwdf_w@mail.gmail.com>
+Subject: Re: [PATCH 5/7] Remove unused sys/param.h
 To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -95,8 +98,8 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,47 +122,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Mar 2026 at 16:02, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrote:
+On Thu, 26 Mar 2026 at 16:22, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrote:
 >
-> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-> ---
->  util/drm.c  | 1 -
->  util/path.c | 1 -
->  2 files changed, 2 deletions(-)
+> Hi Peter,
 >
-> diff --git a/util/drm.c b/util/drm.c
-> index dae8ffebc8..afa9c400df 100644
-> --- a/util/drm.c
-> +++ b/util/drm.c
-> @@ -18,7 +18,6 @@
->  #include "qemu/drm.h"
->
->  #include <glob.h>
-> -#include <dirent.h>
->
->  int qemu_drm_rendernode_open(const char *rendernode)
->  {
+> This is a very old commit. I tested removing sys/param.h based on 512b794b109 (Update version for v11.0.0-rc1 release).
+> The full QEMU tree was compiled successfully, so I am not sure why we need it.
 
-This file uses opendir()/readdir()/closedir(), all of which
-are specified to be brought in by <dirent.h>, so we can't
-drop this include.
+Note that "it compiled OK" is not a 100% reliable way to
+check for "do we need this include?". For historical and
+backwards-compatibility reasons, the glibc headers have
+various places where one header might pull in another.
+The glibc developers have in the past done cleanup work where
+they fix that kind of thing so you only get the function
+definition when you include the header that the standards
+say you need for that function; it's quite plausible they
+might do that again in future. So the best approach is to
+check the POSIX spec etc to see which header it says you need
+to include, and include that one.
 
-> diff --git a/util/path.c b/util/path.c
-> index 8e174eb436..72a255890e 100644
-> --- a/util/path.c
-> +++ b/util/path.c
-> @@ -5,7 +5,6 @@
->  */
->  #include "qemu/osdep.h"
->  #include <sys/param.h>
-> -#include <dirent.h>
->  #include "qemu/cutils.h"
->  #include "qemu/path.h"
->  #include "qemu/thread.h"
-
-This one is OK to drop, because the rewrite of path.c in
-commit f3a8bdc1d5b26 removed the uses of the dirent.h functions.
-
-thanks
 -- PMM
 
