@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7AFF109E530
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11643109E530
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5a8C-0005tj-IU; Wed, 25 Mar 2026 22:07:32 -0400
+	id 1w5a8r-0006PM-U6; Wed, 25 Mar 2026 22:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5a8A-0005rY-Dj
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:07:30 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1w5a8r-0006Oy-3z
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:08:13 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5a88-0007sk-Qe
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:07:30 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-668e55bd36bso513842a12.3
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:07:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774490845; cv=none;
+ id 1w5a8p-0007w8-7S
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:08:12 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-668e55bd36bso514185a12.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:08:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774490890; cv=none;
  d=google.com; s=arc-20240605;
- b=byB/9FhUtotWtIHdwgGegG/X9NHEeaug/59N+x6/Pz30rVBIe55g8FOdzY/k+4c/fr
- 2eFCsTjCgG5t3qQCNw50chgpjfzkYHD28lVYStSojBUzyOEzVi2q+F8JvWJFGK4viEvw
- XV5UGomvNTAzLdwLPJAGSvFt1rMKiD8cmEpevUgJmAhL/p8FnYIasWzQUvztV4nVaQSz
- s04BK9SgOW9Cf6wh47pw0hQIa/KoP5KOf28zpqRxz6hQ3o3Y4KCFRw7o1WQCafQmzAez
- JcR/aqHONVMS/tFztLM7/pUlJ1vdFawrVQ6+CWgrToTunkpcVst9Jchn+R/x8a9Kg1yW
- DTRA==
+ b=XGF/Tw1JIXdP6RZihwg/Nd6/R2E26VCN/0a4A8ljisyYYlRS2ie/XWWJU+N/F4lHou
+ 5fsav3J2aKYGfye9dRhXYn9SInWmdirkaZo5QPxTaJy/me9pGtYuEyg3xMhpAwdo54+o
+ EQoMdv4dMy8TwBiYBX3HIGz6ezwfnJrvlR8jfxn/EUH02ZAfmuzqlr4TRtqHfzAdheuZ
+ o6Q0ETMcCI41BhM4EjaM86gcX5u3kLXoIT8nN0ZCknwCstLj/C6FoBS5FYMJBqcrclZv
+ 1h2FJojtJ1BmvamqjLP5lfxr4rcdJC6z9csGApPthrwI6hAIlgcQkvb/QohLemmQHo0d
+ OMMA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=N6jUDbhQuX9TsYYJpdTlv2DdFgf4Vdbf7ZqtQOQ9M8A=;
+ bh=K8teYu27digd8EQrR9LwZ7wrtR40+mfBOeaHOY2yR64=;
  fh=0bIOm+75pw/QTN9FDs8ZhfYo0XBcsOIKWWC6mti+rTw=;
- b=ggTpLfRNqZroKjK0oWl/kU+o4IrVci6jSOvyLXSCoX+vRkuXANo+WXwqinBfEGpeHd
- PDFdgziYxDvkWXPNzo+yExxOG/ilhqTrzNSib0vxgJX9h8Eb+EBMrHwzBq3RJtlomeub
- TEpDJAnql5q9Vb77CLex1GMvvxTk3pBIFmC6ANsghXyMSWBp/oAcsRDBvYHfC8kaN74h
- XVqlksw+DA5LDySPJu+us4q2NTJ0mBgeJzfRMEE7a9Pq9OrZtswMlD/rQiPCsPS7Gtco
- F+Gs+1h1b21IAnXpOKvT9ZLEF5MHdUdWzFKNdq0RWDaFPcuNk9NVCQVCQL11ptiU204i
- EG9A==; darn=nongnu.org
+ b=gTfuBcJxRDylo65FnMwB7cMOyfB3dOz/SXnDOfs9QRq4/gv+31u5qGSVMl8XVKinDW
+ dvDxlvqcd0oONactO5trwfY7RPz4SnzFuEmcQCdQVqX075CnKdZLWQ9DAKf9p/eDz/6R
+ TGXCp7C8/FsLJ4K4sPIFeDrG5djbjwbn3oJvWIFPFoS3IIOmFSjOrD/gt5L+D5+wpOxd
+ cjvawfBtXNVNAOpGBYyLyRt07NsbYspCZZycx7TsaRG8EYKT3ICc86Ti8FNO6PafjAnv
+ RNrH87RSGhm55jhnNOZF2J08tSq2SwvmyaFIkXXAW8rTF6yfXaVBnsGrtZdCVpAhjzWB
+ vk0A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774490845; x=1775095645; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774490890; x=1775095690; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N6jUDbhQuX9TsYYJpdTlv2DdFgf4Vdbf7ZqtQOQ9M8A=;
- b=J4+XJaH1v1wBX41W/K4q5qViyN55ZMOgdoThNjY9KMporXtPlqUn8kvCaFXLFfyUr1
- QGju+CFrNPXve+AHt3+hPLuFzlUTJiTyZyay47R8Dda9fv9/ualJuZMFYEnoRKN7Lbvb
- lrWJ4Kk9pitqPmLvEIJgMRCxHz4TsbmvVkjskpMNGKL7PZk8i3QbgkUbHscBBhCLyPxj
- ikRlhVgMnU5uDGq6G+usAhkt8VCyq2d4OCJCE791QARqf1Rq2E4WLop+QypG+7mEj+gb
- q2P01/5+vvR6kgAa5pttoM59/ken5HtJYE8KRkzxQPnkHOOVI0/VZFBV6iAiPV9q9hIo
- hK2Q==
+ bh=K8teYu27digd8EQrR9LwZ7wrtR40+mfBOeaHOY2yR64=;
+ b=FCEdpDY1KCPStbNivVRersj6RBVtzbK+Ktj1N4a3ULP6DvLMMF9xGpRx0Yr0tIoK4Q
+ HESQZGxlF3FqmZmxjebkcoY5YAFyyWpaO9SvNVHaH7vGyUkt58ExTLSxHIX34Uigyi6O
+ fRuF0ZNZNaLWOwPSRB7n9wFbuJEfTHTueOTfECpEEq9RJ8EdEp0p1xnmYCr9SunNbPj5
+ ESWprPBmbdxpqCj7/R1vvTU7h7Uhpg/Tj7Nk9JkX4XssckIuDuiWTAc3oCgTQvHNZKLy
+ seqwNbD0Jmgc7oDtBU2kIEUT5unTztKZsQRxjvp68AHQFQorwtI++9IpvN8vgzXZIal7
+ X0cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774490845; x=1775095645;
+ d=1e100.net; s=20251104; t=1774490890; x=1775095690;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=N6jUDbhQuX9TsYYJpdTlv2DdFgf4Vdbf7ZqtQOQ9M8A=;
- b=iqtWmtkKUuGugIZsw06tiHfF3txlZvqxeyaCHlwiy6KdswObtCUIQGnI2Iy3VTTmep
- Q9NZ+HU+9qeCs732SIaz+T1chZD+eXcfj9TW+WU8mTqn9aXtwGIJDM90BEW2QyOnVnSF
- +SUquVqKdhAl4RwggDq4bzFXdQoGhCn+EnS9VJJyfGSrwDUKobFsLlX2QFEseULtzaxy
- zO+3w8Y5GZcyFW7vHosEVHIbHlToz9wOwfY6B4ZclhGyi9HJoSA3xeCSoC9Z3tSKbZne
- r0R59EKlQG5OdvIK/2srQyzxjFOItjlVGzc1hP76rrblABj3fUc7DqiugeJDrkhPIpaK
- 7ozQ==
-X-Gm-Message-State: AOJu0Yzuu+ANdx9Bqi7HsxhtCQy0OWHo/pRggq+gWRu/835QR+NymThT
- Uw9m14DTX2j+EPyfbcew9aufokKAb9HLx7PhQNVLBGTn8a+PIZUHkA3DmXJFbUVfJXUevRzjUVc
- YcBwPzRzjZzB8cySrKeLotQk+aEOicSE=
-X-Gm-Gg: ATEYQzwAGnNY5PBbfHFPuiRtIUl/f3arXRk/2VhjEOLQFiotMtXGioCz5LJiaegiNFG
- S6PmIf03scRnLyOzRNiXtBtq1+2e6CRLmawVPjTp812B8wZq8SNJ/P7Y10w66PYja8ORQoPvcIG
- AOfSCu8/D+cPhbQyTxIls5h38aecsMKttCZpZXP0ztrEjgSfSJfj31cyfNf6gez2TCflvxwS4E5
- 3qcdqA9IlrBVt5P3NGw2kByDSFfuii4wQIrOjIuukcHAW3nJ6SLg6VMQ5KuJqSi9o4WrnNRYPuM
- p36EXHXCRgF4gGaMJm4pBBnT5JhGWY5FaEk/wg==
-X-Received: by 2002:a17:906:eecd:b0:b8f:e98b:4952 with SMTP id
- a640c23a62f3a-b9a5426c31fmr336789166b.41.1774490845054; Wed, 25 Mar 2026
- 19:07:25 -0700 (PDT)
+ bh=K8teYu27digd8EQrR9LwZ7wrtR40+mfBOeaHOY2yR64=;
+ b=Cg9PKnXkl0/gVmOmpZMnBwf2Riim0qripmauHkBsvbZfalV2xRCW03PmJgNy6yoiQx
+ R6uawWlicky+/TrX92xJvrd6PWduO5y2AMA4dQ8MZOkklfxfqnEoB8h+tL+gZCCCbqsM
+ kp0pHgpPdaiUdTIspfQ8QB3QbPrV+HvZTMjvWNSkgg/QwgdBKB6erAgCROk1zROR2msl
+ GAtGJFN8vPq7bxowhveWqGlgvKHVxfXF8cOcR5MGvAbU1kk9hon7wvoS+pmTrwzPE58E
+ 5xmxG+tzd1rM8H0b2+WM1yfZYK7RHhSkEVp9ytn6Qr8RRz5r+JOboYtcB8Qr8oRNwzhS
+ eswg==
+X-Gm-Message-State: AOJu0YyJhnaG+VmG4ZsWWjaggh9KSzCJ397ZKyu9Q4J9B8cKIJsEeCeB
+ gpzDm9bzP9iMSRUVKXy2UkFpXovJf97DStg2xRyN/QZ8ENf8us4HyE/bv2TN7QjwMHPJGSUE9wO
+ 5d4ilhTbxWvZjDtL9GZ//7nAFr3BXFyI=
+X-Gm-Gg: ATEYQzxRnlu3Zw94R7xK6gfIng/vZAQlV7yHAxujhg33uwQGr0b48SXD9O36s5bLlcV
+ R0+MTsj52XmTmh4/4gRqztnV2mDSOtTHwOG/9cTHGkbqNRgiXEUeG5R9gZpSS6E/opQr/C+5GSL
+ S6+yXpZXtg+VQ9PZejUdj5HFNJwXb3T5ou3NbzrYzocEllWqo/dMmDDbK7KnSzbkUNQzTmGhQDe
+ t2WBBKeW9NS35D7Xssn0kcCwunQUhe9F8Mr75GWU+DvL0srG4MkGeRLlHcsVf88uzZ3XS/pCvFV
+ 0mKpsKn1dSBuC2IquZFevsLlensbo5L/EFBurg==
+X-Received: by 2002:a17:907:a286:b0:b93:7d70:20a0 with SMTP id
+ a640c23a62f3a-b9a3f161d48mr372386166b.4.1774490889240; Wed, 25 Mar 2026
+ 19:08:09 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260318103122.97244-1-philmd@linaro.org>
- <20260318103122.97244-5-philmd@linaro.org>
-In-Reply-To: <20260318103122.97244-5-philmd@linaro.org>
+ <20260318103122.97244-6-philmd@linaro.org>
+In-Reply-To: <20260318103122.97244-6-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 26 Mar 2026 12:06:58 +1000
-X-Gm-Features: AQROBzDqkRvqjsyg9ydAZWA1CPaFO1AgTbOKLM_NsVXS-sMwVkhcvv1n3FhiZuE
-Message-ID: <CAKmqyKN_BSB-n5CJnniFkB+YXdrY6BuRbsZee9ity3v_vD64GQ@mail.gmail.com>
-Subject: Re: [PATCH-for-11.1 04/16] target/riscv: Remove MTTCG check for
- x-rv128 CPU model
+Date: Thu, 26 Mar 2026 12:07:42 +1000
+X-Gm-Features: AQROBzABQBPxBf_I3xqf61OlCa8PMjy0dFseMNNiCp9zI3yUlQ9GV9lJbegxzZc
+Message-ID: <CAKmqyKMkeZWrCoCcNKoONXuc6-9AxqdTPJAnRK_Q4aSBjuc1gw@mail.gmail.com>
+Subject: Re: [PATCH-for-11.1 05/16] target/riscv: Explode MO_TExx -> MO_TE |
+ MO_xx (again)
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
@@ -102,8 +102,8 @@ Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
  Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -130,19 +130,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Mar 18, 2026 at 8:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> From: Fr=C3=A9d=C3=A9ric P=C3=A9trot <frederic.petrot@univ-grenoble-alpes=
-.fr>
+> Following commit 73ae67fd4e6, extract the implicit MO_TE
+> definition in order to replace it.
 >
-> We had to check that mttcg was not used when executing QEMU with
-> -cpu x-rv128 as a single 128-bit access was done as two distinct
-> 64-bit accesses.
-> Now that we use the 128-bit ld/st that access the data atomically,
-> this check is no longer necessary.
+> Mechanical change using:
 >
-> Signed-off-by: Fr=C3=A9d=C3=A9ric P=C3=A9trot <frederic.petrot@univ-greno=
-ble-alpes.fr>
-> Message-ID: <20260101181442.2489496-3-frederic.petrot@univ-grenoble-alpes=
-.fr>
+>   $ for n in UW UL UQ UO SW SL SQ; do \
+>       sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
+>            $(git grep -l MO_TE$n target/riscv); \
+>     done
+>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
@@ -150,33 +147,148 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/tcg/tcg-cpu.c | 10 ----------
->  1 file changed, 10 deletions(-)
+>  target/riscv/insn_trans/trans_rvzalasr.c.inc | 12 ++++++------
+>  target/riscv/insn_trans/trans_xmips.c.inc    | 16 ++++++++--------
+>  target/riscv/insn_trans/trans_zilsd.c.inc    |  4 ++--
+>  3 files changed, 16 insertions(+), 16 deletions(-)
 >
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 988b2d905f5..3407191c224 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -1305,16 +1305,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Er=
-ror **errp)
+> diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/=
+insn_trans/trans_rvzalasr.c.inc
+> index bf86805cef6..525f01ca347 100644
+> --- a/target/riscv/insn_trans/trans_rvzalasr.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
+> @@ -49,20 +49,20 @@ static bool trans_lb_aqrl(DisasContext *ctx, arg_lb_a=
+qrl *a)
+>  static bool trans_lh_aqrl(DisasContext *ctx, arg_lh_aqrl *a)
+>  {
+>      REQUIRE_ZALASR(ctx);
+> -    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESW));
+> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TE | MO_SW));
+>  }
+>
+>  static bool trans_lw_aqrl(DisasContext *ctx, arg_lw_aqrl *a)
+>  {
+>      REQUIRE_ZALASR(ctx);
+> -    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESL));
+> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
+>  }
+>
+>  static bool trans_ld_aqrl(DisasContext *ctx, arg_ld_aqrl *a)
+>  {
+>      REQUIRE_64BIT(ctx);
+>      REQUIRE_ZALASR(ctx);
+> -    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TEUQ));
+> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TE | MO_UQ));
+>  }
+>
+>  static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp m=
+emop)
+> @@ -96,18 +96,18 @@ static bool trans_sb_aqrl(DisasContext *ctx, arg_sb_a=
+qrl *a)
+>  static bool trans_sh_aqrl(DisasContext *ctx, arg_sh_aqrl *a)
+>  {
+>      REQUIRE_ZALASR(ctx);
+> -    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESW));
+> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TE | MO_SW));
+>  }
+>
+>  static bool trans_sw_aqrl(DisasContext *ctx, arg_sw_aqrl *a)
+>  {
+>      REQUIRE_ZALASR(ctx);
+> -    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESL));
+> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
+>  }
+>
+>  static bool trans_sd_aqrl(DisasContext *ctx, arg_sd_aqrl *a)
+>  {
+>      REQUIRE_64BIT(ctx);
+>      REQUIRE_ZALASR(ctx);
+> -    return gen_store_release(ctx, a, (MO_ALIGN | MO_TEUQ));
+> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TE | MO_UQ));
+>  }
+> diff --git a/target/riscv/insn_trans/trans_xmips.c.inc b/target/riscv/ins=
+n_trans/trans_xmips.c.inc
+> index 9a72f3392f1..37572563ae9 100644
+> --- a/target/riscv/insn_trans/trans_xmips.c.inc
+> +++ b/target/riscv/insn_trans/trans_xmips.c.inc
+> @@ -56,11 +56,11 @@ static bool trans_ldp(DisasContext *ctx, arg_ldp *a)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_y);
+> -    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TESQ);
+> +    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TE | MO_SQ);
+>      gen_set_gpr(ctx, a->rd, dest0);
+>
+>      tcg_gen_addi_tl(addr, addr, 8);
+> -    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TESQ);
+> +    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TE | MO_SQ);
+>      gen_set_gpr(ctx, a->rs3, dest1);
+>
+>      return true;
+> @@ -77,11 +77,11 @@ static bool trans_lwp(DisasContext *ctx, arg_lwp *a)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_x);
+> -    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TESL);
+> +    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TE | MO_SL);
+>      gen_set_gpr(ctx, a->rd, dest0);
+>
+>      tcg_gen_addi_tl(addr, addr, 4);
+> -    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TESL);
+> +    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TE | MO_SL);
+>      gen_set_gpr(ctx, a->rs3, dest1);
+>
+>      return true;
+> @@ -99,10 +99,10 @@ static bool trans_sdp(DisasContext *ctx, arg_sdp *a)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_w);
+> -    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TEUQ);
+> +    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TE | MO_UQ);
+>
+>      tcg_gen_addi_tl(addr, addr, 8);
+> -    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TEUQ);
+> +    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TE | MO_UQ);
+>
+>      return true;
+>  }
+> @@ -118,10 +118,10 @@ static bool trans_swp(DisasContext *ctx, arg_swp *a=
+)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_v);
+> -    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TESL);
+> +    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TE | MO_SL);
+>
+>      tcg_gen_addi_tl(addr, addr, 4);
+> -    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TESL);
+> +    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TE | MO_SL);
+>
+>      return true;
+>  }
+> diff --git a/target/riscv/insn_trans/trans_zilsd.c.inc b/target/riscv/ins=
+n_trans/trans_zilsd.c.inc
+> index 369c33004b6..445406cf015 100644
+> --- a/target/riscv/insn_trans/trans_zilsd.c.inc
+> +++ b/target/riscv/insn_trans/trans_zilsd.c.inc
+> @@ -30,7 +30,7 @@ static bool gen_load_i64(DisasContext *ctx, arg_ld *a)
+>      TCGv addr =3D get_address(ctx, a->rs1, a->imm);
+>      TCGv_i64 tmp =3D tcg_temp_new_i64();
+>
+> -    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
+> +    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_TE | MO_SQ);
+>
+>      if (a->rd =3D=3D 0) {
+>          return true;
+> @@ -85,7 +85,7 @@ static bool gen_store_i64(DisasContext *ctx, arg_sd *a)
+>      } else {
+>          tcg_gen_concat_tl_i64(tmp, data_low, data_high);
 >      }
+> -    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
+> +    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_TE | MO_SQ);
 >
->  #ifndef CONFIG_USER_ONLY
-> -    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cpu);
-> -
-> -    if (mcc->def->misa_mxl_max >=3D MXL_RV128 && qemu_tcg_mttcg_enabled(=
-)) {
-> -        /* Missing 128-bit aligned atomics */
-> -        error_setg(errp,
-> -                   "128-bit RISC-V currently does not work with Multi "
-> -                   "Threaded TCG. Please use: -accel tcg,thread=3Dsingle=
-");
-> -        return false;
-> -    }
-> -
->      CPURISCVState *env =3D &cpu->env;
->
->      tcg_cflags_set(CPU(cs), CF_PCREL);
+>      return true;
+>  }
 > --
 > 2.53.0
 >
