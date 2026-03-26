@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1825810AB829
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 21:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E516810AB827
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 21:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5rtj-00047Y-RX; Thu, 26 Mar 2026 17:05:47 -0400
+	id 1w5rtl-00048H-6I; Thu, 26 Mar 2026 17:05:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rti-00047H-4K
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rtj-00047e-Ve
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rtg-00035s-H9
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:45 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rti-00036I-Hr
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774559143;
+ s=mimecast20190719; t=1774559146;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ubb/xNXuD8MO8IRZHm3DHAIE1nzess2O6rBQSwmPzBQ=;
- b=CpBEGPcLh9mf58XEnnrxAK0itfroDBDXzQIW9w91dn4/pjfdu1jU/EJMGr7R8wUOl2Goss
- 0XIXov9k/j+5++SlIeb8WjT0UUtkjMvaE5FywR6cuMVw8yZFVR+4tazHtg3K96PL5qhAmO
- AaCQxje7Sj74RfosMttA6VAAX+N3vTY=
+ bh=yAsrRY7tNnPZNv7QX95Jwwlg0RE4QfNAnLAWQ9HKoeI=;
+ b=PnR5viagpp76e/w2kFcESHagAJ3K0ZfXVU1NFrPLhwhre3B9AFO5BXhPR4c46G3dSM0FRk
+ tw4cWJgbQ/DBg4ki/Et6mrozc24zGqSj032kAldgXGVW/kgNHk7LswnxcFLtdam6eZKnEB
+ PBMrhPad4J0npzDNRXA4XhUNsqSc2Lc=
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
  [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-jq_vj9EcP_K1SOr8RUe7aA-1; Thu, 26 Mar 2026 17:05:42 -0400
-X-MC-Unique: jq_vj9EcP_K1SOr8RUe7aA-1
-X-Mimecast-MFC-AGG-ID: jq_vj9EcP_K1SOr8RUe7aA_1774559141
+ us-mta-658-i4Sc2zJeOca-m3b6YFoF8g-1; Thu, 26 Mar 2026 17:05:40 -0400
+X-MC-Unique: i4Sc2zJeOca-m3b6YFoF8g-1
+X-Mimecast-MFC-AGG-ID: i4Sc2zJeOca-m3b6YFoF8g_1774559140
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8cfcf23c0e1so377141785a.2
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:05:42 -0700 (PDT)
+ af79cd13be357-8cfdc479f5bso350116985a.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:05:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774559141; x=1775163941; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774559139; x=1775163939; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ubb/xNXuD8MO8IRZHm3DHAIE1nzess2O6rBQSwmPzBQ=;
- b=o/vx4a9z4M/cmeED2hz6EaX5+RrhGDmxFqRL5WpLeh7wLw6LYr5uwGc5m+nff524/r
- GVCehSGLMQhLrhokFwwbo/NEexwEqienkJGk0qQAAWBy1Zlool/xkngy+gEssACOpYqJ
- SbYtpSQGynZA8cYilY+nE0uUZKgxXKQN/uo89V6tXucd55eD6zorLSOO78C5uvlGJlAR
- OBBRe3nrRZh1CWqpApde45ivuqcuquf0VmKpihXHaA/lpd9kdbcOv43EU1Z+9WujDpC4
- ndtcxyfnq78Gr3ZyKdfb/DjyN78j1ZPVzDWT1K/0np+UQAd5Tt5hbzcaPIRUaB1QvBt2
- 0wYg==
+ bh=yAsrRY7tNnPZNv7QX95Jwwlg0RE4QfNAnLAWQ9HKoeI=;
+ b=BFBtj1gBOBsmK/HUhmWQQnvN2qZsrC9LZhol/4vJ5JCYxVQQ2NZr5UT0ri15RWzOHK
+ r5pzPmqNTzvYsTtJjR+NRt4eQgI/73TAwpbkoSmL6xgWRBQ1IdeabbVvH3L+b0nW06ov
+ UpCNCTTuwpQIeYU/05ZGoLfcdVFL72AxtYNjnqkoTww+y1y7m23s4Pbg51g0vgHcp+yG
+ oas79yAcN2sHtu1dQ3S3OWkICYmf1HDA8Uu80LJfKu4Ln7yUyJWQ+zTPLtgz12Cxc1I4
+ ol73yLxno8Olee9PBSNA75Nvkuj07qq9Wjl2EWxKxWSTSKOIfTy4FSrDBh4UH+jRwmus
+ 8lSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774559141; x=1775163941;
+ d=1e100.net; s=20251104; t=1774559139; x=1775163939;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ubb/xNXuD8MO8IRZHm3DHAIE1nzess2O6rBQSwmPzBQ=;
- b=IbMPjMzJEiLrEuU7KBuIFBCmvLRnuAUSDZwmZ/BNEKvXv+NboXfYnYEvYNaBwK9aaL
- R/JGR9BWxFT0tCu9KTa1Y7H+lu6ZOQHd0kYbSl25V60DybZAnV9SYMBvsDPc1/bxyZFB
- 4xzZVydzcJg1SHTrf18Pbbl4xAqVRKvbFffQhlz3YnOBAlz3gSsvVDEIT85DQInZ6vLA
- RXGYzHxoFh2awqhkABi19zEcHbwxoJHWDQ7h6mrFlc8muIUH07bxsNwPLbW8325M+b9U
- qTxr3juJSEDbC2Xe71uUkABbk4t1drASBygXoBRceXxuN7n6mLQseN03YlEQpZ9qBxBl
- y5jg==
-X-Gm-Message-State: AOJu0YzehAa2U1cJ/uZlDLVZIYPlTxkEutk4B1jhcOEAeKK2S0PY3B79
- bCdG0o8H0nq6LzsyPGbGe3SmjMBZp3X6Xz90H8k3LMSSRQEyMtV1IygfDQwYpc+wV/tDqX4x4iJ
- HPjo8HZALHJ6MtXAIaGfMPjidP62SWlZO44LmGBbi/V0yE2O6wooi8zTVHI3rFl8vwwOX3V7ahC
- KIN2IaLjGhwrV6DBo9YcaTCoolHI/oAmuKfXqXog==
-X-Gm-Gg: ATEYQzxYUh28Aqp+2zpbfzTN7FPhngWwK2GIyD/zS38essBn/TfOKofz0BWjW+7vqVx
- lieaW7UA+ucEtSWIQbNnujPsgLzA5J7VgBCPxsS25yJfoMZ8Uv+dZr4pSwCk3ZCGEEqSC/K/Pzf
- AJSCq45VGeQM0wOFiJG8YUXNJkIMH0yy20FT57m/gM94T4AO2p8zvT0ijFzhCJUK8f3L6qjkGWm
- mL9hJLjjlAGn4APS0PTzx/IugDjTsjYJnT4kHs056gi1j/eeXW0OoyRaUfvExls4oleJRArpfno
- GbQLzxSN46fjVV+MsMu26sr/LBDJVhFFH43rLvluBNPJX9sE6mWRnxw62HUNAQWeWcKQsBo6daP
- WZWNQDygBvRA=
-X-Received: by 2002:a05:620a:7014:b0:8cd:982d:4122 with SMTP id
- af79cd13be357-8d0010074b7mr1097938085a.39.1774559140969; 
- Thu, 26 Mar 2026 14:05:40 -0700 (PDT)
-X-Received: by 2002:a05:620a:7014:b0:8cd:982d:4122 with SMTP id
- af79cd13be357-8d0010074b7mr1097931585a.39.1774559140226; 
- Thu, 26 Mar 2026 14:05:40 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8d00e4fa7d9sm353479785a.32.2026.03.26.14.05.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=yAsrRY7tNnPZNv7QX95Jwwlg0RE4QfNAnLAWQ9HKoeI=;
+ b=IAsl3qxlcFPciomj/gwNwtz394a7kvZrH7bcVuKog682tvI1cmx2T3Kp+z3XZZg12R
+ k/7RccJkqY3s/TJO5CTfALsWP9iBPUPZ29IO2GTrcK9jbONsC78L/2xheIMSDNMJ810V
+ 82ex4vzC6X7oXpnG1y/WLo5HAutoTrJ2ytcsFVfEBCa3xeziyXb2hs5fQc89o5XT855x
+ G+dWPALb8NJCYE7SJ1C8g5qc+k3u43RJhxTH2vN8zzfNx8KsM3y1DNM5E6+j5NReeg9k
+ yXrvqGJSUtQ7zs4/iDyJskVTIEGBQtNO57NT9IsbybdxDUXIxEcdqHH6L/fP6rYYB+ap
+ FmrA==
+X-Gm-Message-State: AOJu0YwiSLw6pFGBFn6QNzBgJQXRhDt6slFJiXEsDrf5Ffk8A02bOlSI
+ nQFtYlpwSXbuInMxNk9Ys33xvo2qInaUSzfyWwxcl3liS0xYbN6zzW2P/I9j+Y95JtE6QbRDZm5
+ mqsK4WLeirD0ALvqkBBPDo9lY7YfpG/2uYloHU5/Dm0fuMRKB+u8eeen/TLn0E+vzWVfPAeFoCK
+ f/qPWICEW1JkZaTddFYtCuWDMavJJJNVdR4Ww4Cg==
+X-Gm-Gg: ATEYQzy93RmZgHtWJbVo8/p7/4DqvcA1USbfc2BZZNgGRqAk70v7zKN5393uGBgSOQS
+ Gpxg3CqOFXXDCFCLc07bjtg3kDGrQclVcvkYy09t0ockREa8bCaXwLxe6DNamn3elWIXrVAJGCt
+ gpSQJiBQIn+eGPkBldxBylNomcV2Y1fiT+yXetpA4adtOFKhHFTpE3YD7iE6iCDu4k7s6R/mOKB
+ MXaDfukVWcpIDrb4qltwAbMlW+mC8Cr6PdzUd86iP7+9QdAtZ6cfVg/MTCVA7/UhHponqhUl8aY
+ jWjFNebL/NjXMiTXGKtPg+PjnwU33OOScqCibpE54XXKquYTRizO66rMp7K7IxlGO1imbu18IKS
+ Pai3ovn/QvBQ=
+X-Received: by 2002:a05:620a:2805:b0:8cf:e946:b2d4 with SMTP id
+ af79cd13be357-8d00105203fmr1191627685a.69.1774559139188; 
  Thu, 26 Mar 2026 14:05:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:2805:b0:8cf:e946:b2d4 with SMTP id
+ af79cd13be357-8d00105203fmr1191620185a.69.1774559138515; 
+ Thu, 26 Mar 2026 14:05:38 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8d00e4fa7d9sm353479785a.32.2026.03.26.14.05.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Mar 2026 14:05:37 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH RFC v2 03/11] vmstate: Do not set size for VMS_ARRAY_OF_POINTER
-Date: Thu, 26 Mar 2026 17:05:24 -0400
-Message-ID: <20260326210532.379027-4-peterx@redhat.com>
+Subject: [PATCH RFC v2 02/11] vmstate: Pass in struct itself for
+ VMSTATE_VARRAY_OF_POINTER_UINT32
+Date: Thu, 26 Mar 2026 17:05:23 -0400
+Message-ID: <20260326210532.379027-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260326210532.379027-1-peterx@redhat.com>
 References: <20260326210532.379027-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -119,123 +120,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When VMS_ARRAY_OF_POINTER is specified, it means the vmstate field is an
-array of pointers.
-
-The size of the element is not relevant to whatever it is stored inside: it
-is always the host pointer size.
-
-Let's reserve the "size" field in this case for future use, update
-vmstate_size() so as to make it still work for array of pointers properly.
-
-When at this, provide rich documentation on how size / size_offset works in
-vmstate.
+Passing in a pointer almost never helps.  Convert it to pass in struct for
+further refactoring on VMS_ARRAY_OF_POINTER.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- include/migration/vmstate.h | 20 ++++++++++++++++----
- migration/savevm.c          |  3 +++
- migration/vmstate.c         | 10 +++++++++-
- 3 files changed, 28 insertions(+), 5 deletions(-)
+ include/hw/intc/riscv_aclint.h | 6 +++---
+ include/migration/vmstate.h    | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/include/hw/intc/riscv_aclint.h b/include/hw/intc/riscv_aclint.h
+index 5310615cbf..0e0b98acb0 100644
+--- a/include/hw/intc/riscv_aclint.h
++++ b/include/hw/intc/riscv_aclint.h
+@@ -80,8 +80,8 @@ enum {
+     RISCV_ACLINT_SWI_SIZE              = 0x4000
+ };
+ 
+-#define VMSTATE_TIMER_PTR_VARRAY(_f, _s, _f_n)                        \
+-VMSTATE_VARRAY_OF_POINTER_UINT32(_f, _s, _f_n, 0, vmstate_info_timer, \
+-                                                        QEMUTimer *)
++#define VMSTATE_TIMER_PTR_VARRAY(_f, _s, _f_n)                          \
++    VMSTATE_VARRAY_OF_POINTER_UINT32(_f, _s, _f_n, 0, vmstate_info_timer, \
++                                     QEMUTimer)
+ 
+ #endif
 diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 68fd954411..b4bc69486d 100644
+index 8992fba57d..68fd954411 100644
 --- a/include/migration/vmstate.h
 +++ b/include/migration/vmstate.h
-@@ -183,11 +183,26 @@ typedef enum {
- struct VMStateField {
-     const char *name;
-     size_t offset;
-+
-+    /*
-+     * @size or @size_offset specifies the size of the element embeded in
-+     * the field.  Only one of them should be present never both.  When
-+     * @size_offset is used together with VMS_VBUFFER, it means the size is
-+     * dynamic calculated instead of a constant.
-+     *
-+     * When the field is an array of any type, this stores the size of one
-+     * element of the array.
-+     *
-+     * NOTE: even if VMS_POINTER or VMS_ARRAY_OF_POINTER may be specified,
-+     * this parameter always reflects the real size of the objects that a
-+     * pointer point to.
-+     */
-     size_t size;
-+    size_t size_offset;
-+
-     size_t start;
-     int num;
-     size_t num_offset;
--    size_t size_offset;
-     const VMStateInfo *info;
-     enum VMStateFlags flags;
-     const VMStateDescription *vmsd;
-@@ -547,7 +562,6 @@ extern const VMStateInfo vmstate_info_qlist;
-     .version_id = (_version),                                        \
-     .num        = (_num),                                            \
-     .info       = &(_info),                                          \
--    .size       = sizeof(_type *),                                   \
-     .flags      = VMS_ARRAY|VMS_ARRAY_OF_POINTER,                    \
-     .offset     = vmstate_offset_array(_state, _field, _type*, _num), \
- }
-@@ -557,7 +571,6 @@ extern const VMStateInfo vmstate_info_qlist;
-     .version_id = (_v),                                              \
-     .num        = (_n),                                              \
-     .vmsd       = &(_vmsd),                                          \
--    .size       = sizeof(_type *),                                    \
-     .flags      = VMS_ARRAY|VMS_STRUCT|VMS_ARRAY_OF_POINTER,         \
-     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
- }
-@@ -567,7 +580,6 @@ extern const VMStateInfo vmstate_info_qlist;
+@@ -567,9 +567,9 @@ extern const VMStateInfo vmstate_info_qlist;
      .version_id = (_version),                                             \
      .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
      .info       = &(_info),                                               \
--    .size       = sizeof(_type *),                                          \
+-    .size       = sizeof(_type),                                          \
++    .size       = sizeof(_type *),                                          \
      .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
-     .offset     = vmstate_offset_pointer(_state, _field, _type *),          \
+-    .offset     = vmstate_offset_pointer(_state, _field, _type),          \
++    .offset     = vmstate_offset_pointer(_state, _field, _type *),          \
  }
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 8115203b51..f5a6fd0c66 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -868,6 +868,9 @@ static void vmstate_check(const VMStateDescription *vmsd)
  
-     if (field) {
-         while (field->name) {
-+            if (field->flags & VMS_ARRAY_OF_POINTER) {
-+                assert(field->size == 0);
-+            }
-             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
-                 /* Recurse to sub structures */
-                 vmstate_check(field->vmsd);
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index e98b5f5346..e29a8c3f49 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -110,13 +110,21 @@ static int vmstate_n_elems(void *opaque, const VMStateField *field)
- 
- static int vmstate_size(void *opaque, const VMStateField *field)
- {
--    int size = field->size;
-+    int size;
- 
-     if (field->flags & VMS_VBUFFER) {
-         size = *(int32_t *)(opaque + field->size_offset);
-         if (field->flags & VMS_MULTIPLY) {
-             size *= field->size;
-         }
-+    } else if (field->flags & VMS_ARRAY_OF_POINTER) {
-+        /*
-+         * For an array of pointer, the each element is always size of a
-+         * host pointer.
-+         */
-+        size = sizeof(void *);
-+    } else {
-+        size = field->size;
-     }
- 
-     return size;
+ #define VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, _num, _version, _vmsd, _type) { \
 -- 
 2.50.1
 
