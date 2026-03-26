@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF0010AB82F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 23:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868F910AB82E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 23:31:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5u9E-0006pB-No; Thu, 26 Mar 2026 19:29:56 -0400
+	id 1w5u9o-000764-1h; Thu, 26 Mar 2026 19:30:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5u9B-0006od-0w
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:29:53 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1w5u9j-00075a-KS
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:30:27 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5u99-0003OS-EB
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:29:52 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c06cb8004e8so638999a12.0
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 16:29:51 -0700 (PDT)
+ id 1w5u9i-0003el-1Q
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:30:27 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-82c70e4654eso669845b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 16:30:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774567790; x=1775172590; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774567824; x=1775172624; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WMdS+XsZ4x1Py4qRKNMadA0JNnKqQmrWtEOWqurclb8=;
- b=F6OwY/MqE5LVtd190O/fZD+8V94BFDhyvaSpEfUTJiuL6+x8BLHtY2N0p/9yVYizj2
- 9nYiyrzDIX6QhliIUJVYdKVKknUCEdW0PS0NBQmEIcHz+cPXFjHUNGxBN3GDMhKonXR7
- CbvvL9I6hB0ACNp1Q8qWkesh23Uv2DBAvxE6EolHmIlGepX9E/1oOs9I97P5GDQjfaML
- eNBotMINTAn/j4j/bNehD2N1E/u7JMhn3PYOfiRSZuciITvwg3MsCS6sWO7W0rqQdGaN
- 9GYY1w0iuYHGoBEwypBmJ9N3/vsmkXKcumGwgzvJvURXqAA8bNzzyddIJWAYqZNZ+wFi
- XQ4A==
+ bh=ZPDDHhudNQXMh6zAqQ0mAej9aSiebB1sLlzHOIiSes8=;
+ b=Ht8tXFQ7faC6A/8LmZ8aUKVYUYBvOdxGo96K79MNfvgalA5pWbVhXIs3FgkCEF3IoA
+ dRf8XwW4x2MCCb0jyQUn25U54Cky9fGGgq6mFGxykmefhxUdOLdbJcTQZ8Eflr+vYjEH
+ A6iAKRHq7nhxQx0VViRQ/HgshfxSfMQ/lV2wo3tMN4SLD5ApTRYWJeJwZlxl6W+GynNh
+ FLUmtUpB6kXbaYqAnG417u0WyxuLj9wcTPe6qQ4dIMLqCp+0jXKlnx1TcLK0QaLiEkCM
+ ayHfl2avmahjbWjQuxE1C2oVYH9q0lPOu4SGENV+HzpNsvKNDXvcPSh/qF/Sv9Q1cult
+ orvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774567790; x=1775172590;
+ d=1e100.net; s=20251104; t=1774567824; x=1775172624;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WMdS+XsZ4x1Py4qRKNMadA0JNnKqQmrWtEOWqurclb8=;
- b=B0qVMTXqDaq3utd3iMr4cHfCI9TcGbKJDpg46IGmgHdWGJLPrn7X+nTyQz2ELYUokA
- 5YKnh2a6eqPDCGIIzlkuKVxVVYakbCCiVZVAYe4OhYSrLqZbw5CVvkxxKclFmveD+DYH
- k8sGAdTYiSBQF6Z+y36Zx9soi7tFrBUCkpw2Mh7MSBuR3UZEoY5GfqQIYWFHzzbSP476
- 2MG+iMwOSOm3JGOC3ZQK5V7Do3OWC3WuiC52hZ2sYbX5hy4OWpPutsHHys+r/+i7fpMQ
- P1HXvivE8wuWt39Od26uZHjBEHF8KKmwTjR8wEj3nKoKlD6fQMx9QRR2HbguVdPsX8zz
- hnSQ==
+ bh=ZPDDHhudNQXMh6zAqQ0mAej9aSiebB1sLlzHOIiSes8=;
+ b=bvevVt/gkHzT2pnmhTylOB+QBhq7BB83Z9YAwu1e4rxZSPb/9pgQMafJpC93FnpPDU
+ tqnwjxu85vQByjtXh0U5+Ui45zVaqDLo8wMlc76BBt5PBvPTtva05xUeflEkxFTVZtcL
+ 2FNvbpfZprHWttGQ9f19Kcw0y56aNJh05vnwivI7GsFncb8IGOEOI8s5Vgur6S/HPoIM
+ glV0zTfOUUVSvP+cYYJ1TG4dD7dOmaZlMLlOSJtYCaTb1IbrK3WbcDV/Ka3no/z3Jt4h
+ P2uT1FSmN7CNZ3KvVdujl7jibTZoOHbWS8OpqoybbxLBJL+x4TkT8sRaCpm0YM2J+Q4Z
+ Zf5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLFmIKvvvZn5agZzuAR2kArPFVN+N2taFz/yqACGAr1+ILjdhfJ8E0zNlZK2j82ScbPAB2lqr0GNDC@nongnu.org
-X-Gm-Message-State: AOJu0Yws12iDFTXAgVX5C3kb2mnWag8SbFHGsi66v/4+SHhMewdT5zUe
- XVrtky4alaCE1r70pjT8toKwJvSyi/I4PD7Dh/4rqGihIgcmBeT29f0wMkMjo4xkVgU=
-X-Gm-Gg: ATEYQzzzgW04UD8rhVBZvUf2vrEqsn9pIdlVerUfqp/UqqZUkS/EAKfP+UccHBGmJ7Y
- 8TDcdiar96akkNpB+N/LUOOrVIkA33LybP+ekoRZqte2iOFmAuZAGsT76k2lpXj6a+UH/0Hqczy
- fEVBG6uYpWSuBdYuMLVBBrDO8007UpBk1EkrBsjQAz6F1EJsixy1YmGV8F5dSghbIHIqISQOJ/9
- yL5oPNhegVuJeaecmpXQVBdk09BOFdQf//7ObSB4uPdvJVHJKPGejywby7mMDvIrNwhpkmNACPL
- CGhU3L2p4J/JCbHr4zz9w9Qx3V+V7euRDjpvcsOCwWgDUrdBWw/UyMTk4eWROqrtZwctGX3qRR5
- r50r/OS4eF15gYbdjiyjtIw6TU9IZQcYfUWul9qKEh4uvhRIIacZTgp+l/0Ml4ndhuftHB9BDnv
- ixm/YL7r6hQzxMXKPS8Qg+fiD9Gl9HXdKVYOdHNOc3pQ==
-X-Received: by 2002:a05:6a20:72a3:b0:398:7d3e:95d7 with SMTP id
- adf61e73a8af0-39c8782526dmr486679637.22.1774567789734; 
- Thu, 26 Mar 2026 16:29:49 -0700 (PDT)
+ AJvYcCXwFlS/Em6B9XyaIEU34Qpj1DJNpy05xxl0F2+yw+AkQ2e6MrLMfzOKmPQRmI45BBfeJHIVzK6liXlH@nongnu.org
+X-Gm-Message-State: AOJu0YzRg1cfZEgewcfyPLFSZaJ0xeCIN8rr6U3GlPLnnFGtwCp4FS3c
+ i4NI6Js/j2Q8gJgtcdmzoT0BADVnm+OFp2PVopOLURo/WpiG+pGZ/nzLZAk6ZNFMwWo=
+X-Gm-Gg: ATEYQzxCdqbq55pC2wFOnVn4y77nF9wgmOVh7mzrCKtDFXjBU5utC0tq/dwOgz+hI40
+ a1u4wIi4LldNNAnY9ykYQ2a+9EY8zC8ctitIGkiTruAlwftuZu8n3gCIvndU0XyropxtuzS1KRN
+ ZVQ7tNJx3EuTfw1CfD/vpZ3WwMoJ6+4oav90WwKN8LtNXhI0/BHxxAZk074GztDWVDgKISE3MZ8
+ Dfrf8OlcLVyQC2w/CdrUZmnpHeOoWw7EEoy5hIipCKXyKfwyGf3nBS+ci7tGLZR7u2k7ljpwIEj
+ E14At9qfWTvY2Gqekief4IeUc1ipZGny3BunYUw0O6HDul+VADsAt3arNHogKSxqZOqPmrrB+dn
+ fTiNIvgA04CGEnAwX91oBCCbc7J1vGo7Q5Ax/6VYAAPFoLSYtumHfky9095ibsDkNE8JLkBrewZ
+ Gba7sKJxAj6oDT4DM7fDfy8dutoEBT+njdM9Mwszp2QA==
+X-Received: by 2002:a05:6a00:17a7:b0:82c:6f7f:53ce with SMTP id
+ d2e1a72fcca58-82c95e44b12mr291988b3a.16.1774567824421; 
+ Thu, 26 Mar 2026 16:30:24 -0700 (PDT)
 Received: from [172.16.11.156] ([103.100.225.140])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76737f28fasm3157092a12.7.2026.03.26.16.29.46
+ d2e1a72fcca58-82c7d20fc0fsm4425427b3a.19.2026.03.26.16.30.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 16:29:49 -0700 (PDT)
-Message-ID: <c39dac79-74e8-4163-b1b5-d7b113a05794@linaro.org>
-Date: Fri, 27 Mar 2026 09:29:42 +1000
+ Thu, 26 Mar 2026 16:30:24 -0700 (PDT)
+Message-ID: <8a54ee95-6b50-4fcb-8d2d-54775b387ec5@linaro.org>
+Date: Fri, 27 Mar 2026 09:30:18 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/7] target/arm: Flush TLB on MECID write
+Subject: Re: [RFC PATCH 2/7] target/cpu: Add two new address spaces for
+ FEAT_MEC
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: alex.bennee@linaro.org, peter.maydell@linaro.org
 References: <20260319022335.22523-1-gustavo.romero@linaro.org>
- <20260319022335.22523-2-gustavo.romero@linaro.org>
+ <20260319022335.22523-3-gustavo.romero@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260319022335.22523-2-gustavo.romero@linaro.org>
+In-Reply-To: <20260319022335.22523-3-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,27 +108,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/19/26 12:23, Gustavo Romero wrote:
-> Flush TLB on write to any MECID register. This allow us to take the slow
-> path and check if the MECID is the correct.
+> Add two new address spaces for FEAT_MEC. One is used to store the
+> substitute encrypted page, which is returned instead of the actual
+> encrypted page in case of a MECID mismatch. The other is used to store
+> the MECIDs themselves, associated with physical addresses.
 > 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Signed-off-by: Gustavo Bueno <gustavo.romero@linaro.org>
 > ---
->   target/arm/helper.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   target/arm/cpu.h | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 6bfab90981..ec25ec8444 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -5125,6 +5125,8 @@ static CPAccessResult mecid_access(CPUARMState *env,
->   static void mecid_write(CPUARMState *env, const ARMCPRegInfo *ri,
->                           uint64_t value)
->   {
-> +    tlb_flush(CPU(env_archcpu(env)));
-> +
->       value = extract64(value, 0, MECID_WIDTH);
->       raw_write(env, ri, value);
->   }
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 657ff4ab20..87c1787c9b 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -2364,7 +2364,9 @@ typedef enum ARMASIdx {
+>       ARMASIdx_S = 1,
+>       ARMASIdx_TagNS = 2,
+>       ARMASIdx_TagS = 3,
+> -    ARMASIdx_MAX = ARMASIdx_TagS
+> +    ARMASIdx_MEC = 4,
+> +    ARMASIdx_MEC_PAGE = 5,
+> +    ARMASIdx_MAX = ARMASIdx_MEC_PAGE
+>   } ARMASIdx;
+>   
+>   static inline ARMMMUIdx arm_space_to_phys(ARMSecuritySpace space)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
