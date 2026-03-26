@@ -4,127 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263EB10A88E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00B610A88E3
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:14:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5nDA-0002gH-Pm; Thu, 26 Mar 2026 12:05:32 -0400
+	id 1w5nLD-0005Bf-Pw; Thu, 26 Mar 2026 12:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5nD2-0002eb-Tb
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:05:26 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5nD0-0003fZ-8X
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:05:23 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-82a07738118so712017b3a.0
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774541119; x=1775145919; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QjJPZhm1NDoalRaV9hYbq9J5l3hwCDUSZbgz3tjqzvs=;
- b=NHeZ+h1CjPvJPdDvbTh/X4OHqxtkgwchd0qddrIAf8BZNwiPbytKb/BkhdjVNpBaIo
- SnjgsGloJ/71ae7uUA/SfZkK2bgkws2MIT74h39WVEvnSEi2ONMMFQei6pfrcOrDRUfT
- 02Nw6rcxwHg6/4GrvXnz5cW+tc3uGBz8FZXDXzcvTVMXacj0X3kVXSSd2VUeTo6AA7st
- JIn5kcZPjy5QtSuqy5I754vz1zN+qWSt0ld8T4FfcvDLEyFrYis0wkTjImFJWf4DuJC3
- 05fr8GIatGjTBmifLEZrcr0beUScpKyab0wRcPNmvB9P35EECLBbgfOVlngWTIqelWbu
- tlgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774541119; x=1775145919;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QjJPZhm1NDoalRaV9hYbq9J5l3hwCDUSZbgz3tjqzvs=;
- b=O1KKNHfurdk7ouVMUJB6lgTPjJXtWW1fY6Cp+WvhI4zwUqijIDb+dlV2NizSgzBjw9
- za7Ma545DxkjRvKLo5qq9Vh03ETLpcGE3sMD1oBaembmPqoM4rfS86j9K80TtZR/SXTm
- W+XINEWUEOiVt3DmFu6ML9lb3nEX5XaucoCC/z3hCZfTh1DPf102MUCSh76/x80GypS3
- fb2MCNODwIz42fWPMXSiIyxX9UmhMSew6GfDekPOgIKIPU/LTSRVDAjohHGYMfIXtvzk
- aOaYq0VmWPsDOQ/Qi7ybLVxBEkQ77XQJUc9/MRK8WwnvuQpAkcoPgthodESdSY1zpuCb
- bBtg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgN1T6Z5ssMsS6ZoQRl3iEcYCtZ0yOKu1J/UXl10KjARCLQuO9VuwXbHo0kCaSr8M1nh61ib0TmsCi@nongnu.org
-X-Gm-Message-State: AOJu0Yybgw/r2jK+0axa9g9dEkuD09jc6z1qvEvcDuWNvi5MzZCtirHv
- ilzQD79UgVdMMA3KNNuzFkTLSEz8On/iyHeu1tiCQ91lVVt2E9SWRjIzboSc8kJY/vO6/yhgtpQ
- UY/lW04BQSQ==
-X-Gm-Gg: ATEYQzzHCd3ILYmXUnFSpn5IFNldEf18KDElnFW5rnWL3xJQfE/IsY5qUKNMWCzPPQ6
- D7UMw14K1u2Gu8EPB4D1RvQQPQizFCsBmwZKFEJbhrCZ8UY0aGUa9PCujlXQESpUgixDzLW1ef+
- 5miq0tXuIy/VP74YI9eSzu/yWvPY9jhjkOkjRACsPAxqiS/YtdjpLmFAknL4bw+omQK+epgVfGZ
- 4PoT2Gey4JJ43phgwzOtavCB4vZA+2wyeDt/Y1M+A2A4/dArmizXmWDqc52O3ytrNb0zA1yzXf6
- WK65m9BstNpj5/PJ7ZV/lYAogEPwg+ox7Ne3OQPONP8zdw48T0veX1DDrGaxryjP9o4wrMWiJU7
- uX/VXciG0sc4j9kOGDzJXyVDOqS32rNyIhdeRnSJlOdkjhf8xZCQer1sVF6fpEf0c0nRFbay79n
- 53DngD3cOTWxBumuguF3gDhuSuTZBWKnkYo2+3Fu9F+YVaejYKuQaBWkqzRhZbDYGlJyYmHoWRi
- UuaR1Y=
-X-Received: by 2002:a05:6a00:ad84:b0:82a:1935:f21b with SMTP id
- d2e1a72fcca58-82c6e14aa83mr7703801b3a.55.1774541119443; 
- Thu, 26 Mar 2026 09:05:19 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82c7d3888e8sm3185625b3a.39.2026.03.26.09.05.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 09:05:18 -0700 (PDT)
-Message-ID: <52e3e8e4-3e60-4a42-abae-3c0e001aa2e9@linaro.org>
-Date: Thu, 26 Mar 2026 09:05:18 -0700
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1w5nLB-0005Aj-Vj; Thu, 26 Mar 2026 12:13:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1w5nLA-0005y4-BF; Thu, 26 Mar 2026 12:13:49 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62Q22Eku510743; Thu, 26 Mar 2026 16:13:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=a5m735
+ RuCIPo4EvuWNvqaZGI1e/4UQGOome3hmaf7Cs=; b=e4MD9IuLIIH4Xw4vh4OAJm
+ uXKheGdSuaRnSkrSxJ3CcMS59olYpSqvmmRV7Qrmo5piGlP6S5n1zLabDZ+x5gyP
+ XdpYpE8Hd2IZGXh4M/srJqt9lAL03xyiQajY5dYW7be5qilh6ER51Ltu/om2IRsl
+ a+TT190Ct0GM+BAxxdiTz+EubDMgfBWqBJChC6xDhqNxA9J4N/IGJfr/frGqGTnj
+ HdZLqvkaVRwvYJ2/EGvWFmMnEohGDZC99xKWb0KV+Ynm7+4QUx3HTcAs4HEpEu4l
+ OhMT8+Pq4vINKae0/g+VG7fk0FiTRZwcyeFSTs/IDPMcWduvwmxzLBcCp+8t6iDw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kwa63f7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Mar 2026 16:13:41 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62QFUDBv005983;
+ Thu, 26 Mar 2026 16:13:40 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d261yut01-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Mar 2026 16:13:40 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62QGDd4Q29032772
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 26 Mar 2026 16:13:39 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 283E55805D;
+ Thu, 26 Mar 2026 16:13:39 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7F6FC58054;
+ Thu, 26 Mar 2026 16:13:38 +0000 (GMT)
+Received: from [9.61.246.71] (unknown [9.61.246.71])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 26 Mar 2026 16:13:38 +0000 (GMT)
+Message-ID: <c4449a84-a1eb-4c43-a0ec-38b8b7270309@linux.ibm.com>
+Date: Thu, 26 Mar 2026 11:13:37 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs: add WHPX section with initial info
+Subject: Re: [PATCH RFC v2 3/3] qapi/iothread: introduce poll-weight parameter
+ for aio-poll
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, mjrosato@linux.ibm.com,
+ farman@linux.ibm.com, pbonzini@redhat.com, fam@euphon.net,
+ armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
+References: <20260323135451.579655-1-jhkim@linux.ibm.com>
+ <20260323135451.579655-4-jhkim@linux.ibm.com>
+ <20260325165611.GB701300@fedora>
 Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>
-References: <20260326152622.92334-1-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260326152622.92334-1-mohamed@unpredictable.fr>
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <20260325165611.GB701300@fedora>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: IwLW-Sr_b7v3vwHuQ7X-ZHOxFvTGIpCk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDExMiBTYWx0ZWRfX8xe8zBh0DE3u
+ 9MVn96NLT+79AQglQjvuCLqMgx388+Nm/ECvL29PpVqvb0DVriRc6gGR/V4/JwVn2zZbJ1Q2YQB
+ r9seDfWm3o8if8N4+zJl3d20lM3OugHjDQMZcs2jEnjLlHzu/rJN1ao0f/LevkLNss0FXuiWnI/
+ IoyMl6SNATW9Z1TfI0lTNpRyz2URRDOt2AqvQSu7SI/UyRnV2LXYC0PXv3Mqnj5XHXJNPnl7U6f
+ ufXZ49XRTtke6MAN18wk2AxgwSWdqbt65MT+gOsO2cAbm735UaHVct4dY5lZ94WXu9SN49jbeJv
+ ZuBSPleNAhnCLUs15FqblvPLC7MWfIcWen8iGMFOsb3ytfsEGh4/gWsa7v7uYXKWDyKcEYbICZY
+ wMelzwNDq7pNsL2cNgx5WCz2BzCnDxlsZXZ744r9xjB5f8wQ8ofc1y1bpfojG6pmJw/Vt0S60kr
+ Vog+nX26pC382VBACRw==
+X-Proofpoint-GUID: IwLW-Sr_b7v3vwHuQ7X-ZHOxFvTGIpCk
+X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c55b35 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=goUCaTe3GkpOFsHYKQ8A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 clxscore=1015 phishscore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603260112
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,21 +125,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 8:26 AM, Mohamed Mediouni wrote:
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   MAINTAINERS           |   1 +
->   docs/system/index.rst |   1 +
->   docs/system/whpx.rst  | 136 ++++++++++++++++++++++++++++++++++++++++++
->   3 files changed, 138 insertions(+)
->   create mode 100644 docs/system/whpx.rst
-> 
+On 3/25/2026 11:56 AM, Stefan Hajnoczi wrote:
+> On Mon, Mar 23, 2026 at 08:54:51AM -0500, Jaehoon Kim wrote:
+>> @@ -831,7 +822,8 @@ void aio_context_destroy(AioContext *ctx)
+>>   }
+>>   
+>>   void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
+>> -                                 int64_t grow, int64_t shrink, Error **errp)
+>> +                                 int64_t grow, int64_t shrink,
+>> +                                 int64_t weight, Error **errp)
+>>   {
+>>       AioHandler *node;
+>>   
+>> @@ -848,6 +840,7 @@ void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
+>>       ctx->poll_max_ns = max_ns;
+>>       ctx->poll_grow = grow;
+>>       ctx->poll_shrink = shrink;
+>> +    ctx->poll_weight = weight;
+>>       ctx->poll_ns = 0;
+>>   
+>>       aio_notify(ctx);
+> On second thought, now that the divide-by-0 protection has been removed
+> and these fields are assumed to hold a valid value when poll_max_ns > 0,
+> aio_context_set_poll_params() needs the same 0-protection as
+> iothread_set_param().
 
-That's a great addition, and a good way to document limitations.
-(I'll let you pull this as part of whpx maintenance)
+Thanks for pointing that out. I only considered the user settings and
+overlooked the possibility of this being configured in test code or
+other areas.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I will add divide-by-zero protection to aio_context_set_poll_params.
+and update the versioning to 11.1 in the next version.
 
 Regards,
-Pierrick
+Jaehoon
+
 
