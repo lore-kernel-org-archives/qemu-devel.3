@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91305106F310
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6675B106F30E
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 09:12:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5gl4-0002mG-3g; Thu, 26 Mar 2026 05:12:06 -0400
+	id 1w5gkr-0002jY-PH; Thu, 26 Mar 2026 05:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w5gl3-0002m4-88
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:12:05 -0400
+ id 1w5gkq-0002jO-Qt
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:11:52 -0400
 Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w5gl1-0003w6-JC
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:12:04 -0400
+ id 1w5gko-0003ur-PH
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:11:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774516324; x=1806052324;
+ t=1774516311; x=1806052311;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=gEO4mm7GUuNyoAnrhbBxoWB+2NKEH5s6i40gVa6WBEE=;
- b=Cv1BLycERgbHyzkKSSuM6ufRZMcVvyfb4aOirnfLQByabR12TRQq2C0T
- vy7hwEVXpOh1ZwUUc4uREjzSjbX7DbNRCZvy5+H+SgqNWW6SCuXm/tECx
- TMbq3Xz6Zfo5zwgbhDD0UijZJVXzRz5+5QxyGSDF+cPSmgCVnkUrlVB/u
- y4raG1zDFRK+w/cP7QG9gj0WFWoBqDO66wM3lWexRs3nfPfDru7v9EO7C
- lsFlCnfX/xWeSQJ3hNO/B4V252a5b6MwOqjXxDjNbrYNv8m7Rk5osayO2
- hazlrVif2cIlzr4TJfWDvFKLI918qi087Vgj7I3Z9voiTW1FJAQBAyMGX A==;
-X-CSE-ConnectionGUID: oA5K9hKqTq24X/MguxfbHg==
-X-CSE-MsgGUID: fl2gjsGHR7meD/cci/qBAg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11740"; a="75531340"
-X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; d="scan'208";a="75531340"
+ bh=/hc9OpwiIUiMzB1g2M8wqBhHlazPnVcuYIimrOV7Ios=;
+ b=ByNfgY9g2HYiJptdG5iYwHEdTTK9Hcg8CsGgi/tgppwzthHafeQhD9fU
+ PJ0PbS16XGZPRdaJmpL6SasVE+ag7kLS/f5yjhnSLWW8dfEQoXIT7mlTt
+ gzQdOhZS1xw7MQT/je4UOeD8lNYbn2er8tKnXBU2E+Q/xyZwujDWlYDOf
+ kvNDehOg7ziUtUMSJB8+qTQOxvLxP9pNOkoexOHQKlOBzgXnaEVQaQM/M
+ 7yCw7FTOXP8wAYKBNZl7PY8whHvcpCOEA+1N4fgEnK2IHVbAc0kzL/bF7
+ U3aT0GVyYkPMfHDoXeMz46kSVNsXT9MbiwPC6ojxeZyC4yd0B8ywLzzNf Q==;
+X-CSE-ConnectionGUID: +mLZMOL3RcSQ8r6LEIcK/g==
+X-CSE-MsgGUID: 3uuKz0UqSSKJaBYmziMtrw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11740"; a="75531307"
+X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; d="scan'208";a="75531307"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 02:12:03 -0700
-X-CSE-ConnectionGUID: 9tprphlWSHKHz6ua8uugNQ==
-X-CSE-MsgGUID: +7LL2XhMSUuFepMw2Q6Rtw==
+ 26 Mar 2026 02:11:49 -0700
+X-CSE-ConnectionGUID: LqTuVnOURP+CODT0IYPS+g==
+X-CSE-MsgGUID: m75a2V5xSUW8DGFue+aCsA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; d="scan'208";a="248368576"
+X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; d="scan'208";a="248368552"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 02:11:59 -0700
+ 26 Mar 2026 02:11:45 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,9 +53,10 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 05/14] intel_iommu: Change pasid property from bool to uint8
-Date: Thu, 26 Mar 2026 05:11:19 -0400
-Message-ID: <20260326091130.321483-6-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 01/14] vfio/iommufd: Extend attach/detach_hwpt callback
+ implementations with pasid
+Date: Thu, 26 Mar 2026 05:11:15 -0400
+Message-ID: <20260326091130.321483-2-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260326091130.321483-1-zhenzhong.duan@intel.com>
 References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
@@ -86,87 +87,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'x-pasid-mode' is a bool property, we need an extra 'pss' property to
-represent PASID size supported. Because there is no any device in QEMU
-supporting pasid capability yet, no guest could use the pasid feature
-until now, 'x-pasid-mode' takes no effect.
+For attachment with pasid, pasid together with flag VFIO_DEVICE_ATTACH_PASID
+should be passed in.
 
-So instead of an extra 'pss' property we can use a single 'pasid'
-property of uint8 type to represent if pasid is supported and the PASID
-bits size. A value of N > 0 means pasid is supported and N - 1 is the
-value in PSS field in ECAP register.
+Define IOMMU_NO_PASID to represent device attachment without pasid same as
+in kernel.
 
-PASID bits size should also be no more than 20 bits according to PCI spec.
+The implementation is similar for detachment.
 
+Suggested-by: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  2 +-
- include/hw/i386/intel_iommu.h  |  2 +-
- hw/i386/intel_iommu.c          | 11 +++++++++--
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ include/hw/core/iommu.h |  2 ++
+ hw/vfio/iommufd.c       | 44 +++++++++++++++++++++++++----------------
+ hw/vfio/trace-events    |  4 ++--
+ 3 files changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 11a53aa369..db4f186a3e 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -195,7 +195,7 @@
- #define VTD_ECAP_MHMV               (15ULL << 20)
- #define VTD_ECAP_SRS                (1ULL << 31)
- #define VTD_ECAP_NWFS               (1ULL << 33)
--#define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
-+#define VTD_ECAP_SET_PSS(x, v)      ((x)->ecap = deposit64((x)->ecap, 35, 5, v))
- #define VTD_ECAP_PASID              (1ULL << 40)
- #define VTD_ECAP_PDS                (1ULL << 42)
- #define VTD_ECAP_SMTS               (1ULL << 43)
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index e44ce31841..95c76015e4 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -314,7 +314,7 @@ struct IntelIOMMUState {
-     bool intr_eime;                 /* Extended interrupt mode enabled */
-     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
--    bool pasid;                     /* Whether to support PASID */
-+    uint8_t pasid;                  /* PASID supported in bits, 0 if not */
-     bool fs1gp;                     /* First Stage 1-GByte Page Support */
+diff --git a/include/hw/core/iommu.h b/include/hw/core/iommu.h
+index 86af315c15..bfcd511013 100644
+--- a/include/hw/core/iommu.h
++++ b/include/hw/core/iommu.h
+@@ -28,4 +28,6 @@ enum host_iommu_quirks {
+     HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
+ };
  
-     /* Transient Mapping, Reserved(0) since VTD spec revision 3.2 */
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index f395fa248c..a7b676cd13 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4203,7 +4203,7 @@ static const Property vtd_properties[] = {
-     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
-     DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
-     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
--    DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
-+    DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0),
-     DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
-     DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
-     DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp, true),
-@@ -5042,7 +5042,8 @@ static void vtd_cap_init(IntelIOMMUState *s)
-     }
- 
-     if (s->pasid) {
--        s->ecap |= VTD_ECAP_PASID | VTD_ECAP_PSS;
-+        VTD_ECAP_SET_PSS(s, s->pasid - 1);
-+        s->ecap |= VTD_ECAP_PASID;
-     }
++#define IOMMU_NO_PASID 0
++
+ #endif /* HW_IOMMU_H */
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 3e33dfbb35..93f1e61a8c 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -20,6 +20,7 @@
+ #include "trace.h"
+ #include "qapi/error.h"
+ #include "system/iommufd.h"
++#include "hw/core/iommu.h"
+ #include "hw/core/qdev.h"
+ #include "hw/vfio/vfio-cpr.h"
+ #include "system/reset.h"
+@@ -305,43 +306,48 @@ out:
+     return ret;
  }
  
-@@ -5583,6 +5584,12 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+-static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
+-                                         Error **errp)
++static int iommufd_cdev_pasid_attach_ioas_hwpt(VFIODevice *vbasedev,
++                                               uint32_t pasid, uint32_t id,
++                                               Error **errp)
+ {
+     int iommufd = vbasedev->iommufd->fd;
+     struct vfio_device_attach_iommufd_pt attach_data = {
+         .argsz = sizeof(attach_data),
+-        .flags = 0,
++        .flags = pasid == IOMMU_NO_PASID ? 0 : VFIO_DEVICE_ATTACH_PASID,
++        .pasid = pasid,
+         .pt_id = id,
+     };
+ 
+     /* Attach device to an IOAS or hwpt within iommufd */
+     if (ioctl(vbasedev->fd, VFIO_DEVICE_ATTACH_IOMMUFD_PT, &attach_data)) {
+         error_setg_errno(errp, errno,
+-                         "[iommufd=%d] error attach %s (%d) to id=%d",
+-                         iommufd, vbasedev->name, vbasedev->fd, id);
++                         "[iommufd=%d] error attach %s (%d) pasid %d to id=%d",
++                         iommufd, vbasedev->name, vbasedev->fd, pasid, id);
+         return -errno;
+     }
+ 
+-    trace_iommufd_cdev_attach_ioas_hwpt(iommufd, vbasedev->name,
+-                                        vbasedev->fd, id);
++    trace_iommufd_cdev_pasid_attach_ioas_hwpt(iommufd, vbasedev->name,
++                                              vbasedev->fd, pasid, id);
+     return 0;
+ }
+ 
+-static bool iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
++static bool iommufd_cdev_pasid_detach_ioas_hwpt(VFIODevice *vbasedev,
++                                                uint32_t pasid, Error **errp)
+ {
+     int iommufd = vbasedev->iommufd->fd;
+     struct vfio_device_detach_iommufd_pt detach_data = {
+         .argsz = sizeof(detach_data),
+-        .flags = 0,
++        .flags = pasid == IOMMU_NO_PASID ? 0 : VFIO_DEVICE_DETACH_PASID,
++        .pasid = pasid,
+     };
+ 
+     if (ioctl(vbasedev->fd, VFIO_DEVICE_DETACH_IOMMUFD_PT, &detach_data)) {
+-        error_setg_errno(errp, errno, "detach %s failed", vbasedev->name);
++        error_setg_errno(errp, errno, "detach %s pasid %d failed",
++                         vbasedev->name, pasid);
          return false;
      }
  
-+    if (s->pasid > PCI_EXT_CAP_PASID_MAX_WIDTH) {
-+        error_setg(errp, "PASID width %d, exceed Max PASID Width %d allowed "
-+                   "in PCI spec", s->pasid, PCI_EXT_CAP_PASID_MAX_WIDTH);
-+        return false;
-+    }
-+
-     if (s->svm) {
-         if (!x86_iommu->dt_supported) {
-             error_setg(errp, "Need to set device IOTLB for svm");
+-    trace_iommufd_cdev_detach_ioas_hwpt(iommufd, vbasedev->name);
++    trace_iommufd_cdev_pasid_detach_ioas_hwpt(iommufd, vbasedev->name, pasid);
+     return true;
+ }
+ 
+@@ -362,7 +368,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+     /* Try to find a domain */
+     QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
+         if (!cpr_is_incoming()) {
+-            ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
++            ret = iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID,
++                                                      hwpt->hwpt_id, errp);
+         } else if (vbasedev->cpr.hwpt_id == hwpt->hwpt_id) {
+             ret = 0;
+         } else {
+@@ -435,7 +442,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+         return false;
+     }
+ 
+-    ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
++    ret = iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID, hwpt_id,
++                                              errp);
+     if (ret) {
+         iommufd_backend_free_id(container->be, hwpt_id);
+         return false;
+@@ -488,7 +496,8 @@ static bool iommufd_cdev_attach_container(VFIODevice *vbasedev,
+ 
+     /* If CPR, we are already attached to ioas_id. */
+     return cpr_is_incoming() ||
+-           !iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
++           !iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID,
++                                                container->ioas_id, errp);
+ }
+ 
+ static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
+@@ -496,7 +505,7 @@ static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
+ {
+     Error *err = NULL;
+ 
+-    if (!iommufd_cdev_detach_ioas_hwpt(vbasedev, &err)) {
++    if (!iommufd_cdev_pasid_detach_ioas_hwpt(vbasedev, IOMMU_NO_PASID, &err)) {
+         error_report_err(err);
+     }
+ 
+@@ -922,7 +931,8 @@ host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+ {
+     VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
+ 
+-    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
++    return !iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID,
++                                                hwpt_id, errp);
+ }
+ 
+ static bool
+@@ -931,7 +941,7 @@ host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+ {
+     VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
+ 
+-    return iommufd_cdev_detach_ioas_hwpt(vbasedev, errp);
++    return iommufd_cdev_pasid_detach_ioas_hwpt(vbasedev, IOMMU_NO_PASID, errp);
+ }
+ 
+ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 846e3625c5..764a3e4855 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -182,8 +182,8 @@ vfio_vmstate_change_prepare(const char *name, int running, const char *reason, c
+ 
+ iommufd_cdev_connect_and_bind(int iommufd, const char *name, int devfd, int devid) " [iommufd=%d] Successfully bound device %s (fd=%d): output devid=%d"
+ iommufd_cdev_getfd(const char *dev, int devfd) " %s (fd=%d)"
+-iommufd_cdev_attach_ioas_hwpt(int iommufd, const char *name, int devfd, int id) " [iommufd=%d] Successfully attached device %s (%d) to id=%d"
+-iommufd_cdev_detach_ioas_hwpt(int iommufd, const char *name) " [iommufd=%d] Successfully detached %s"
++iommufd_cdev_pasid_attach_ioas_hwpt(int iommufd, const char *name, int devfd, uint32_t pasid, int id) " [iommufd=%d] Successfully attached device %s (%d) pasid %d to id=%d"
++iommufd_cdev_pasid_detach_ioas_hwpt(int iommufd, const char *name, uint32_t pasid) " [iommufd=%d] Successfully detached %s pasid %d"
+ iommufd_cdev_fail_attach_existing_container(const char *msg) " %s"
+ iommufd_cdev_alloc_ioas(int iommufd, int ioas_id) " [iommufd=%d] new IOMMUFD container with ioasid=%d"
+ iommufd_cdev_device_info(char *name, int devfd, int num_irqs, int num_regions, int flags) " %s (%d) num_irqs=%d num_regions=%d flags=%d"
 -- 
 2.47.3
 
