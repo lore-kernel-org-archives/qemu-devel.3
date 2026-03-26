@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC83109E52B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 03:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBDC109E543
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 03:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5bKR-0000r9-83; Wed, 25 Mar 2026 23:24:15 -0400
+	id 1w5bci-0005FA-Im; Wed, 25 Mar 2026 23:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5bKM-0000qZ-BP
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:24:11 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1w5bcf-0005Eb-Ok
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:43:06 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5bKK-0007wU-Qo
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:24:10 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-359fea895b5so394023a91.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 20:24:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1w5bce-0006vO-3O
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:43:05 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2b061b6cf36so3662335ad.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 20:43:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774495447; x=1775100247; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uTEt/a5eMiXktrPcS1L/JSSs1tC1//0c+yqvGQDucRc=;
- b=MmUB2rtH178HsisbO2La0tTMWBATUynzOnF+VvD+Y7g/hb5a8tdAgBiwWKC89c14h3
- 1pHw3xf2fwrX7VlkKPtLUTJrH9C5F2EniVYYjtlO9NcY/DHRxsnBgABL1IjyzsEQNNkY
- YifgBuGYkxLzONF36+QCizgBeC276HVzzBpId9wiFQbXklR6iGzbif+BfOC675Y5MwX4
- ejOR/tB422J6/PWkhwVOw477DnjcFNxAuKWhoTHmcLB3PC3CzwpL0UUKirij19E39IrP
- jgfcDL/GfnuYGEzf8275Ixn5w3A23HtnOnhi6AI4j2pPetmPYOifEURHIgXUX9DFcqAj
- 4tPg==
+ d=sifive.com; s=google; t=1774496582; x=1775101382; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=452EKNfUmA2G5TPGOc8X6iyAUGUmA/KlYJbm/Arbkuw=;
+ b=AHXSIkym1KP/A1HBQhhbj7J1d94JdNzeJCIw1kCbFezqB9hzMp40recZyQjwcHYefZ
+ 36HfFI0oGdwcVEMUS30buZzOMCHOK2TTbkaro4U7gc5baLKX754sOgpAn9Tim7BKOYm4
+ dYFuHE2nUP83hhXidpKTLgrzIeT6iTrynQsBk58KAENgku3qclrAcIUH4yjRHb90aIoJ
+ Go2LivYPPlZo+qUtfQqCt85CslZFfCxpMScYGdnfFzswSjdh5K+PxWN33tX8rCBwXRQ3
+ 09eIQ7UK3QwjX1aRhMwUNs1uTxYwH1St7zsDFlk+z9CedM/WqS5G9d6l6i9xvXyPQrKH
+ aHBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774495447; x=1775100247;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uTEt/a5eMiXktrPcS1L/JSSs1tC1//0c+yqvGQDucRc=;
- b=hB7wcpY1uShDuhoc7wFTAMISVXLPzdpdgECTEI24ewmVronNgdTGm9OQAwpTuB5qEZ
- 70OFdOrDphzrz+S8YfH41nu77U4qe4gUW2859WyohDav1xeLa8BotJlWjSqBEHO1HcOY
- WQXCasSTZyMFyPzRTLSDUCWBOPd4jjch36rp3r4nyxvlTqyuhu2Xk7tOF/qC6swD9Acl
- RSk4y1In63ynM7szS1c1ZoxVQR+ISDwm6AAxjS5fHZVYMrVGLR3A9jxH/bBaOP0tHpYr
- yrNkOJWk+L34CftWawqb7zske51ZfGPyZgp+KBygGtSy2ZRi1REhycyKfJTmyK15mmlI
- w5YQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/EBaluaGIkl+KejlHKwBACv9EtdjOyx61ck+pNztcjI0IdRmmJTITQP0JLe76K9OmLASkzVR69ZnW@nongnu.org
-X-Gm-Message-State: AOJu0Yzu9fu/+OA4MwOt0GjXQgr/UercYzE++2tsMGNFAHG47JLVxPyp
- uma+eYajUZ8PmjFc7HOdR5ldQamhHhLeIh5GTTVbwBVA1Zo8N24IPTJ115QVaAjvrw0=
-X-Gm-Gg: ATEYQzy631GeCPG+i2y3Snp/ptaDk2UC/V0MYO4rrlzCWBmw1aBMNW5EVgPOef58iOn
- OjOTb6y4H7/upwsTqFIXab5BuNyqJ2gtCjsKeKng8Cs69PRAaxkrMgtfhIKOA/hAOeNOllSafJc
- MBTH9g7vimL2FGFKX4kC+9LbhLRXDhcvVga6CgkJtw4IC35l9+dfB+VUw2KHehK9pnDkowDLNWQ
- SN9gexGegg4NTBFq4/+iXt5d6OkESYbRQY/8wNN3ao8hFMlyxzjnjCFEppAWqOeLK+JSwuV1OeD
- HTB5SNNTSg7uHEUAHJgrLBH0Mf0y6pqakqM2Q9VY59RZ008Q9oJlQ0JhWBIAddu9KP/GSEvGz/2
- 7nwm5oI9MUHmCV4bw/gP3gvihR6sn43JvAzkjzen4AkL3VdFzv/gJpO5H36b9XXMW2KC/A8GEp9
- IsjNHo/g1y6/3fcf4+45l9bc8Xd20Wxvpcy9KONFRygg==
-X-Received: by 2002:a17:90b:1dcd:b0:35b:a656:a60a with SMTP id
- 98e67ed59e1d1-35c0dcf48dbmr5536207a91.8.1774495446952; 
- Wed, 25 Mar 2026 20:24:06 -0700 (PDT)
-Received: from [172.16.11.156] ([103.100.225.140])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c0312ee89sm9177425a91.1.2026.03.25.20.24.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 20:24:06 -0700 (PDT)
-Message-ID: <23a0d240-6f77-4edb-8128-fd2c2b8354df@linaro.org>
-Date: Thu, 26 Mar 2026 13:23:58 +1000
+ d=1e100.net; s=20251104; t=1774496582; x=1775101382;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=452EKNfUmA2G5TPGOc8X6iyAUGUmA/KlYJbm/Arbkuw=;
+ b=N+2Pz34HVS+CmvZjA4xxCsBs14Qh/IB5pWlg1m42zQf+ba5mTGB/7ZtNJ4TI7B7Jwn
+ 7rNvG6RYv26NHRrCUjSwbpocCmN8ulavkJBH1O7nLdWkxiogv0xanLuMLJWTT0TNxmRK
+ HNRcPhH0pbfH0BHd2aTGFK3j5Oc88kJ6SxSB8GC994Jyye6DpbdpK+YDSC7VZHb4w9wr
+ 2NCqZX/fse8aEZCwVoXOAXAl4QOdorvEFhCfHYY/nY33PciRR1uUUBjPaqr4ICbLKbJc
+ JSfo1UCOsZ/1ifeTmLlfh60wi/U/WLU3qE7BBhXpGAy7iDEbm7JsCsTp//DUyvr9gkWI
+ RUOg==
+X-Gm-Message-State: AOJu0Yx8U8dW8nRvEhCH8E+7sKlnVPi+mZOLFT5UmPWpKIhaEFWxzr1h
+ uDNZPO7yMhPrPSbCJo2BnGlyt5kJXPWfGvEAWmR/NoM9aw8F/N6aHOH7TQXGdHxaHvQ=
+X-Gm-Gg: ATEYQzwBQjcMLJqzmNVjPjPR5kQSmAMsp225tj7SGreT5vcN5btkkBdTvawrSgS63uc
+ cgB85R12h6twqZmdko2XJhyuSzpBfani5Ld86vVaAzS4P5Thw0AGQQj6z3UgbHGLsJSCSerC1Ta
+ WUT4teE3fWmkqkwBeRLaF+RI2E3ZXr3CXosRSshH49o2YaS0C/gnDrAsfLIrcQsQkgD5s2AoyPu
+ 07YxD8hAKj1rHKHT2HZlHlyj9wyKtcJypVMAByg5P/i92gPy88/WdFBaBPoZXrdLCuSiSjIybp0
+ GMOwAH589iErVd5qwny8chjsNcM1E5CQGkR7dxi+Qwp4GNUJ4RXvqhONweBmbvCGnw2ZudVCLJc
+ UgFfqBxxoWiyAZF7JYOG+iLBBngkAFZKaVi8MKcIdqWEFDChJfI+/WeDBoftnI6HMT8qKtCvR0q
+ TT6faevjO7aI8DBiNfVpnSYO1uFDG0k3Qlct8t48Mc4grpNlQ5ZrSqHmXv27dylUF0
+X-Received: by 2002:a17:902:e951:b0:2b0:665b:c7de with SMTP id
+ d9443c01a7336-2b0b0aef15cmr66910895ad.40.1774496582057; 
+ Wed, 25 Mar 2026 20:43:02 -0700 (PDT)
+Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b0bc8b5dcbsm13458225ad.57.2026.03.25.20.42.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Mar 2026 20:43:01 -0700 (PDT)
+Date: Thu, 26 Mar 2026 11:42:58 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: Re: [PATCH v5 0/9] Add Zvfbfa extension support
+Message-ID: <acSqxQQxnO0HdB8M@sifive.com>
+References: <20260306071105.3328365-1-max.chou@sifive.com>
+ <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
+ <abKfuTO7zg5d67E8@sifive.com>
+ <CAKmqyKOcCKAb2w2t2qYgOevswst75FjzKfihrYP9+odRAsCQmw@mail.gmail.com>
+ <abe80eiIC4gXUHxk@sifive.com>
+ <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] target/riscv: Support runtime endianness in virtio
- via sysemu callback
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>
-References: <20260320150552.169480-1-djordje.todorovic@htecgroup.com>
- <20260320150552.169480-8-djordje.todorovic@htecgroup.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260320150552.169480-8-djordje.todorovic@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,24 +109,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/26 01:06, Djordje Todorovic wrote:
-> Implement the .virtio_is_big_endian SysemuCPUOps callback for RISC-V.
-> This makes cpu_virtio_is_big_endian() return the correct endianness
-> based on the hart's MSTATUS MBE/SBE/UBE bits, which is used by
-> virtio_current_cpu_endian() during guest-initiated device resets.
+On 2026-03-19 13:45, Alistair Francis wrote:
+> Yes, that's how things previously worked. Basically I think we just
+> need a tag (that won't be changed) in an official RISC-V repo that we
+> can point to. That way it's easy to say "this is the exact version we
+> used to write the QEMU implementation". Then if there is a version 0.2
+> we can easily see what has changed and update to match.
 > 
-> For bi-endian RISC-V targets, this ensures legacy virtio devices
-> correctly detect the guest's runtime data endianness, matching
-> how ARM handles its bi-endian support.
+
+Hi Alistair,
+
+The official riscv-isa-manual repository has added a new tag for the
+frozen Zvfbfa v0.9, as shown below:
+
+https://github.com/riscv/riscv-isa-manual/releases/tag/zvfbfa-0.9
+
+The current v5 implementation fully complies with this frozen
+specification.
+
+Since the Zvfbfa is frozen, should I prepare a v6 that removes the “x-“
+prefix from the zvfbfa property and updates the specification reference
+?
+
+Thanks,
+rnax
+
+> With the seemingly infinite number of draft extensions we need
+> something to manage the version and compatibility, and that seems like
+> the best bet.
 > 
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->   target/riscv/cpu.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-
-This is only for legacy virtio.
-RISC-V does not have legacy big-endian, therefore this should not exist.
-
-
-r~
+> Posting the draft PDF spec somewhere immutable would also work. We
+> just need to be able to point to something that won't change and
+> represents some sort of "release". So a git commit doesn't seem like
+> enough, we need a "release" that everyone can converge on.
+> 
+> Alistair
 
