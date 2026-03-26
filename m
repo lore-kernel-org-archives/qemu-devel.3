@@ -4,133 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38D7610AB80A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 648EC10AB80E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5q6X-0001hR-Tj; Thu, 26 Mar 2026 15:10:53 -0400
+	id 1w5qL9-0004RC-Kf; Thu, 26 Mar 2026 15:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5q6W-0001h5-ET
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:10:52 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w5q6U-0000kJ-L2
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:10:52 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2b04e6a989eso8552495ad.3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 12:10:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5qL7-0004Qn-Ue
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:25:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5qL4-0005gn-Js
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:25:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774553153;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=19N5Yq0TBXJb9i2HHk3PB48QZE9taJc0y4b3yOFOFaQ=;
+ b=i1JbZEYuSt81oopT4sg0WR28TCDVoiPPiqyjEmVXW3KaJk86gOoPrk7Ol+buh4nvOo0T7p
+ 6kcpRJYhp5F1MMyeH9dFIy6TEtCs2CaLUvbmzGHnUzmu0W0vDhDEfx2wyHVkaNjWiZFIRN
+ TRg41UphnIMFQXQ/SbH9i1h2/9QpeCo=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-2RQyf9M1M_WopUmm6LBufA-1; Thu, 26 Mar 2026 15:25:52 -0400
+X-MC-Unique: 2RQyf9M1M_WopUmm6LBufA-1
+X-Mimecast-MFC-AGG-ID: 2RQyf9M1M_WopUmm6LBufA_1774553151
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8cfdc479f68so192272085a.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 12:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774552248; x=1775157048; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=9mEKlZaOo1SmTr2/JJZnOTnoaPq9KrV/DOdGDyVTKz0=;
- b=Rmfy8901gu+QZ8FbwFjgbxgrI8NQFeq5g+kwzJeCdcGa+Ta2SxTIHKvUQJtN/UDs0m
- tWsQy3u55kkhpkYcTn4/iC4M75KkIrATBBlyMuWdWslpRsT1dirTe9HpvQAn37oLiXPK
- D9mvWuUUWvH9AsumeUihgxubvM90aOUGU1hqSYT8LENjRp900zpYZOJ9TSik8BIB9Yyd
- eIt2pcaUuHFvG1sbRV3rI3gr28aHEUiwdTKCe8xg7O/uq1FcFSGzL4hPWGbfgX2SUuqq
- uVTaKmwK7uoXyusxQ/zxzsmYB3eqSEjwrS3X3KDu3Q1KXUIroY2VYw23cyzdIvMj/yKT
- Pj1g==
+ d=redhat.com; s=google; t=1774553151; x=1775157951; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=19N5Yq0TBXJb9i2HHk3PB48QZE9taJc0y4b3yOFOFaQ=;
+ b=hO0jxObDJ/4FVzx4rPHB/iumeSxRZ6n55I8RYp7zGSADcDiXUvDM+suCo4hlYoILWm
+ xV/e3ldx/tzh9Ev6IKmX4ojHteiFmL8WRmCjr32gLMIgQoes4RxQsde3wTG9gRAqySmq
+ Mwky9I+lvUceQfUxNVgtbmNfAMUcqPAG9jNCk6ViK3k1BymWs0RrF5PBUUV3Y6Adm6Se
+ Fus/masPQZ+WwetHhjAw+SJ/07dOW8kTi/ZI5R08sHGvu72qMl6lzLensulGG12OIBPy
+ TbLcOsCY8yEEp5GPWVfewUHQlBCRteItFQ+vkco+BQgrg6W7qErNaiIdNFpTAq8yS1FU
+ NVag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774552248; x=1775157048;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9mEKlZaOo1SmTr2/JJZnOTnoaPq9KrV/DOdGDyVTKz0=;
- b=YkxkLfLDyp9X4rw9LoNQq0eEFzXlvd0YVlW4sRMg/vXSIlnHMLoOzcr1yMW4Gw4YP3
- LqLW7G/l53x/TFdtuS4hTV/K8fnrICUc1bIZJ0WGzFKxW7T7XjWIMv1HvFZwWiXHY3FN
- CdVVZRImzu0ez/UhvWku5btnolVFnB+MTOzRelKzhvQ7/z3/p3DaL70jXXXRZMM7eQts
- TA28F6sYZc+XaK/51A5esI7S9XzKfNoYBcYpb79EE2LvSaKSzsIM18ExwzT3mGTkGyUP
- RMD64qtre8i4JY5aSdikl3TS2QwmHbb83KHi+2oSa6liF0whF9l91UV3F8zhsVVGqoLQ
- YFiQ==
-X-Gm-Message-State: AOJu0YwWP6sUdXHQLDAyOKbwcGpeviIYab8Cqx7qDB+VH9Bbu5ooGtv0
- q8dULSjFy9qq+C8ZXJruQwJpHrCKNj7ymJCfLkahD+FpODOvMyUmgpRZ/j0P7ImshDM=
-X-Gm-Gg: ATEYQzwwn7ShCAJTjUAAvVitLvgBxCJOjOvBbKVXCJ+bFAkmwaVsDu/0N84H1gIshwl
- PbbF+3fQGPbOpKlekiiE8QD/rQBsQQHL6IIVfOJMi4C7R2JjjmUBr0fh6X/AHnrTTAy+IK92JgB
- iCNOwrLJ6IjwFK7eJw5DfL2T/57vANicmJFTp4/qlhbnBP5e5DxZ4bk1dvffFPPtbBytCp4dZfO
- 6yrK5hck7EVvlrvr42SLQ3EJWDVN1VLa/aIEryX514wZildOhKMvqwQvpeE2l4wOQ+olZbb4Okp
- tF0rbHWlgecgZzfeyb9suqq7G/+G0SUkAEeV9Srv0yyMI6We2eE+3ynq1g8kloagaweMjUfdk9N
- G3ki3Xlxn+57ULMz+jvP0DOBZrKE7r1AU0r0WTJ0gj9X1jCr7s7qqylTJEqOmjjdJhtU+EAmKOW
- W8ENkxo/jjE9WdYEGt9Mih/wRslvzx/oHLGONyrzEB8QdeOUeeCgzw46j1XBvwnNgxPyDQ
-X-Received: by 2002:a17:903:3884:b0:2ae:57e6:616c with SMTP id
- d9443c01a7336-2b0b0989326mr87202945ad.3.1774552248102; 
- Thu, 26 Mar 2026 12:10:48 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b0bc7a9deesm36532765ad.28.2026.03.26.12.10.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 12:10:47 -0700 (PDT)
-Message-ID: <efe2b0d0-4bab-488d-9fed-0b73dce24ecf@linaro.org>
-Date: Thu, 26 Mar 2026 12:10:47 -0700
+ d=1e100.net; s=20251104; t=1774553151; x=1775157951;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=19N5Yq0TBXJb9i2HHk3PB48QZE9taJc0y4b3yOFOFaQ=;
+ b=k0sPfHq4pLYqOjOEtI6/lwCRB7J/PHLDC6wSwENFkVC1xAwxGJQWY8vPIpTCi5B+Cz
+ v4d4DS8xdEest2xqNlijHsUU3RoTyOr2h1xRGi35yEkU8JPwZR9pIn8CB2QeGmWo55aF
+ wS/T52vwLv6963S4pWmnkr+7FVi0KoaByK7rVQ/NU//paOJCS2j4mKuYd7vyPGy/RmxU
+ KcGEOHrMmsHREj7cKNIr3VrGD9T9xhWDoFtzjOqFjqL1wpbsb/X0FTi1APKxi/bNmV17
+ qFdiTWwfYpV91ASY+TYxwUlAP/uP3yTrRC4wCUKqVROQlsFdBaiCnf5OndirDYtOZ+3K
+ gVZw==
+X-Gm-Message-State: AOJu0YyiwJAky2lXwfGaVoX0qE8/MOJ0eZ3pXgySFtha/vohntwXl8Sl
+ eZOFJFSwbsR5I2dXrYN8lfYK1F/wvvQu4l96m3b6Ghd+awTbvJigAHuoZY3zwhOn8sGMTsWY+zN
+ jqdzZt44IQeTthFrKHxXDCA5vQb8FYaTOwW5t9IwYA/XIpB1Y1MGks3x9oLHYRrsQ
+X-Gm-Gg: ATEYQzwCtNFQA7bLwm3asIoV4iIBnoyeTBXLYNbEuvK2r7JGgXuCXp+N98Z3xkOqF9f
+ 9k8Y6UUWYE9Bhsce7DO0n9tdUwvMFsOUzLWkQ+8CDtx0ONfiC0ll3yBEwmvogDE54jvPTckEzfj
+ pHq04VYEzWJ0T9T5OG3dB/aDIpT7fWXL0uvczQbWWFsmthetvOKH04voHWR8A7PHmFsxdom22Xq
+ q+hRG58ez5zeAi/Cm81Uc2TKyTOh2qbQNG21+vgjMIVQW4gj8+1U03MmONAqN9sfRuiRdqRrgV9
+ 7rFMBIWu0N5g1YHcOUsGo82qoWGzYbPFseeNbmp1B797mUcYshgq6cvrUalSI/9nImeEkeUIKSh
+ E+CJ0Px/3MC3Iqg==
+X-Received: by 2002:a05:620a:1a01:b0:8cf:ba85:e9f6 with SMTP id
+ af79cd13be357-8d000f1733dmr1262127885a.2.1774553151003; 
+ Thu, 26 Mar 2026 12:25:51 -0700 (PDT)
+X-Received: by 2002:a05:620a:1a01:b0:8cf:ba85:e9f6 with SMTP id
+ af79cd13be357-8d000f1733dmr1262122085a.2.1774553150315; 
+ Thu, 26 Mar 2026 12:25:50 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8d00e3bec81sm335735885a.11.2026.03.26.12.25.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Mar 2026 12:25:49 -0700 (PDT)
+Date: Thu, 26 Mar 2026 15:25:47 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH RFC 07/10] vmstate: Allow vmstate_info_nullptr to emit
+ non-NULL markers
+Message-ID: <acWIO0tMiXO_JRkK@x1.local>
+References: <20260317232332.15209-1-peterx@redhat.com>
+ <20260317232332.15209-8-peterx@redhat.com> <87cy0z35ub.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] target/i386: emulate: make unmapped GPA warnings a
- trace
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20260326183628.79281-1-mohamed@unpredictable.fr>
- <20260326183628.79281-3-mohamed@unpredictable.fr>
- <b1115dab-4f72-4c8a-8d81-3c24b3475faf@linaro.org>
- <6BB391D1-719D-45C5-B0F3-2CDBA65CC1E1@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <6BB391D1-719D-45C5-B0F3-2CDBA65CC1E1@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87cy0z35ub.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,65 +117,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 11:53 AM, Mohamed Mediouni wrote:
+On Thu, Mar 19, 2026 at 05:46:36PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
+> > We used to have one vmstate called "nullptr" which is only used to generate
+> > one-byte hint to say one pointer is NULL.
+> >
+> > Let's extend its use so that it will generate another byte to say the
+> > pointer is non-NULL.
+> >
+> > With that, the name of the info struct (or functions) do not apply anymore.
+> > Update correspondingly.
+> >
+> > No functional change intended yet.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  include/migration/vmstate.h |  9 +++++++--
+> >  migration/vmstate-types.c   | 34 ++++++++++++++++------------------
+> >  migration/vmstate.c         | 29 ++++++++++++++---------------
+> >  3 files changed, 37 insertions(+), 35 deletions(-)
+> >
+> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> > index 092e8f7e9a..2e51b5ea04 100644
+> > --- a/include/migration/vmstate.h
+> > +++ b/include/migration/vmstate.h
+> > @@ -282,9 +282,14 @@ extern const VMStateInfo vmstate_info_uint32;
+> >  extern const VMStateInfo vmstate_info_uint64;
+> >  extern const VMStateInfo vmstate_info_fd;
+> >  
+> > -/** Put this in the stream when migrating a null pointer.*/
+> > +/*
+> > + * Put this in the stream when migrating a pointer to reflect either a NULL
+> > + * or valid pointer.
+> > + */
+> >  #define VMS_MARKER_PTR_NULL          (0x30U)   /* '0' */
+> > -extern const VMStateInfo vmstate_info_nullptr;
+> > +#define VMS_MARKER_PTR_VALID         (0x31U)   /* '1' */
+> > +
+> > +extern const VMStateInfo vmstate_info_ptr_marker;
+> >  
+> >  extern const VMStateInfo vmstate_info_cpudouble;
+> >  
+> > diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> > index 7622cf8f01..b31689fc3c 100644
+> > --- a/migration/vmstate-types.c
+> > +++ b/migration/vmstate-types.c
+> > @@ -359,36 +359,34 @@ const VMStateInfo vmstate_info_fd = {
+> >      .save = save_fd,
+> >  };
+> >  
+> > -static bool load_nullptr(QEMUFile *f, void *pv, size_t size,
+> > -                         const VMStateField *field, Error **errp)
+> > +static bool load_ptr_marker(QEMUFile *f, void *pv, size_t size,
+> > +                            const VMStateField *field, Error **errp)
+> >  
+> >  {
+> > -    if (qemu_get_byte(f) == VMS_MARKER_PTR_NULL) {
+> > +    int byte = qemu_get_byte(f);
+> > +
+> > +    if (byte == VMS_MARKER_PTR_NULL || byte == VMS_MARKER_PTR_VALID) {
+> > +        /* TODO: process PTR_VALID case */
+> >          return true;
+> >      }
+> >  
+> > -    error_setg(errp, "vmstate: load_nullptr expected VMS_NULLPTR_MARKER");
+> > +    error_setg(errp, "%s: unexpected ptr marker: %d", __func__, byte);
+> >      return false;
+> >  }
+> >  
+> > -static bool save_nullptr(QEMUFile *f, void *pv, size_t size,
+> > -                         const VMStateField *field, JSONWriter *vmdesc,
+> > -                         Error **errp)
+> > +static bool save_ptr_marker(QEMUFile *f, void *pv, size_t size,
+> > +                            const VMStateField *field, JSONWriter *vmdesc,
+> > +                            Error **errp)
+> >  
+> >  {
+> > -    if (pv == NULL) {
+> > -        qemu_put_byte(f, VMS_MARKER_PTR_NULL);
+> > -        return true;
+> > -    }
+> > -
+> > -    error_setg(errp, "vmstate: save_nullptr must be called with pv == NULL");
+> > -    return false;
+> > +    qemu_put_byte(f, pv ? VMS_MARKER_PTR_VALID : VMS_MARKER_PTR_NULL);
+> > +    return true;
+> >  }
+> >  
+> > -const VMStateInfo vmstate_info_nullptr = {
+> > -    .name = "nullptr",
+> > -    .load = load_nullptr,
+> > -    .save = save_nullptr,
+> > +const VMStateInfo vmstate_info_ptr_marker = {
+> > +    .name = "ptr-marker",
+> > +    .load = load_ptr_marker,
+> > +    .save = save_ptr_marker,
+> >  };
+> >  
+> >  /* 64 bit unsigned int. See that the received value is the same than the one
+> > diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > index 5a6b352764..a3a5f25946 100644
+> > --- a/migration/vmstate.c
+> > +++ b/migration/vmstate.c
+> > @@ -55,12 +55,12 @@ vmstate_field_exists(const VMStateDescription *vmsd, const VMStateField *field,
+> >  }
+> >  
+> >  /*
+> > - * Create a fake nullptr field when there's a NULL pointer detected in the
+> > + * Create a ptr marker field when there's a NULL pointer detected in the
+> >   * array of a VMS_ARRAY_OF_POINTER VMSD field.  It's needed because we
+> >   * can't dereference the NULL pointer.
+> >   */
+> >  static const VMStateField *
+> > -vmsd_create_fake_nullptr_field(const VMStateField *field)
+> > +vmsd_create_ptr_marker_field(const VMStateField *field)
+> >  {
+> >      VMStateField *fake = g_new0(VMStateField, 1);
+> >  
+> > @@ -76,7 +76,7 @@ vmsd_create_fake_nullptr_field(const VMStateField *field)
+> >  
+> >      /* See vmstate_info_nullptr - use 1 byte to represent nullptr */
 > 
->> On 26. Mar 2026, at 19:46, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->>
->> On 3/26/26 11:36 AM, Mohamed Mediouni wrote:
->>> Some guest OSes trigger them way too often.
->>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->>> ---
->>>   meson.build                      | 1 +
->>>   target/i386/emulate/trace-events | 2 ++
->>>   target/i386/emulate/trace.h      | 2 ++
->>>   target/i386/emulate/x86_mmu.c    | 5 +++--
->>>   4 files changed, 8 insertions(+), 2 deletions(-)
->>>   create mode 100644 target/i386/emulate/trace-events
->>>   create mode 100644 target/i386/emulate/trace.h
->>
->> To justify the change, it could help if you could add a better commit description explaining:
->> - which OSes are concerned (older windows?)
->> - analysis why they do such a thing (at least see some QEMU backtraces when this happen).
-> Hello,
+> This comment needs updating.
+
+Fixed.
+
 > 
-> Neither Windows or Linux are concerned by this one, but the
-> ReactOS install ISO - among some other more rare OSes - trigger it.
+> >      fake->size = 1;
+> > -    fake->info = &vmstate_info_nullptr;
+> > +    fake->info = &vmstate_info_ptr_marker;
+> >      fake->flags = VMS_SINGLE;
+> >  
+> >      /* All the rest fields shouldn't matter.. */
+> > @@ -278,7 +278,7 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+> >                       * an array of pointers), use null placeholder and do
+> >                       * not follow.
+> >                       */
+> > -                    inner_field = vmsd_create_fake_nullptr_field(field);
+> > +                    inner_field = vmsd_create_ptr_marker_field(field);
+> >                  } else {
+> >                      inner_field = field;
+> >                  }
+> > @@ -567,7 +567,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+> >              int i, n_elems = vmstate_n_elems(opaque, field);
+> >              int size = vmstate_size(opaque, field);
+> >              JSONWriter *vmdesc_loop = vmdesc;
+> > -            bool is_prev_null = false;
+> > +            bool use_marker_field_prev = false;
 > 
-> Intriguingly, the ReactOS live ISO doesn’t trigger it.
->
+> The logic below won't handle valid pointer as well, will it? We could
+> leave the is_null/is_prev_null terminology because it's way more
+> descriptive. Right? We're adding the marker here because we're
+> compressing and know the field is null.
 
-Might be a good idea to report that to them, as it seems like something 
-wrong is going on, which was the point of having this (loud) warning in 
-the first place.
+I recovered the old bool for better readability.
 
->>
->>  From what I see, this code is triggered either from hvf, or when running an ins instruction, so you could explain which scenario you're covering.
-> 
-> WHPX has been moved to target/i386/emulate for 11.0, it’s no
-> longer using winhvemulation.
-> 
-> And that means that it’s a load bearing path through which
-> load/stores on every MMIO access by an emulated instruction
-> goes through. And even reading part of the instruction itself
-> if Hyper-V doesn’t give a complete one.
->
+One other note is I'll squash below analyze-migration.py change into this
+patch when repost, let me know if there's early comments:
 
-I see.
+===8<===
 
-In this case, maybe a better compromise than using custom trace events 
-would be to make it visible when using -d guest_errors.
-The problem is that custom trace events are hidden for users, and except 
-if you know it exists, it's impossible to guess it's there.
+From 82ac38a85ecd990a1aaa7b45b172e71f0d5b84da Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Thu, 26 Mar 2026 14:57:56 -0400
+Subject: [PATCH] scripts/analyze-migration.py: Support new ptr-marker field
 
-On the opposite, -d guest_errors can be discovered by someone curious 
-with `qemu-system-x86_64 -d help`, and it's the same flag for all 
-architectures.
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ scripts/analyze-migration.py | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-> Thanks,
-> -Mohamed
-> 
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index e81deab8f9..1771ff781b 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -469,26 +469,26 @@ def __init__(self, desc, file):
+         super(VMSDFieldIntLE, self).__init__(desc, file)
+         self.dtype = '<i%d' % self.size
+ 
+-class VMSDFieldNull(VMSDFieldGeneric):
++class VMSDFieldPtrMarker(VMSDFieldGeneric):
+     NULL_PTR_MARKER = b'0'
++    VALID_PTR_MARKER = b'1'
+ 
+     def __init__(self, desc, file):
+-        super(VMSDFieldNull, self).__init__(desc, file)
++        super(VMSDFieldPtrMarker, self).__init__(desc, file)
+ 
+     def __repr__(self):
+-        # A NULL pointer is encoded in the stream as a '0' to
+-        # disambiguate from a mere 0x0 value and avoid consumers
+-        # trying to follow the NULL pointer. Displaying '0', 0x30 or
+-        # 0x0 when analyzing the JSON debug stream could become
++        # A NULL / non-NULL pointer may be encoded in the stream as a
++        # '0'/'1' to represent the status of the pointer.  Displaying '0',
++        # 0x30 or 0x0 when analyzing the JSON debug stream could become
+         # confusing, so use an explicit term instead.
+-        return "nullptr"
++        return "null-ptr" if self.data == self.NULL_PTR_MARKER else "valid-ptr"
+ 
+     def __str__(self):
+         return self.__repr__()
+ 
+     def read(self):
+-        super(VMSDFieldNull, self).read()
+-        assert(self.data == self.NULL_PTR_MARKER)
++        super(VMSDFieldPtrMarker, self).read()
++        assert(self.data in [self.NULL_PTR_MARKER, self.VALID_PTR_MARKER])
+         return self.data
+ 
+ class VMSDFieldBool(VMSDFieldGeneric):
+@@ -642,7 +642,9 @@ def getDict(self):
+     "bitmap" : VMSDFieldGeneric,
+     "struct" : VMSDFieldStruct,
+     "capability": VMSDFieldCap,
+-    "nullptr": VMSDFieldNull,
++    # Keep the old nullptr for old binaries
++    "nullptr": VMSDFieldPtrMarker,
++    "ptr-marker": VMSDFieldPtrMarker,
+     "unknown" : VMSDFieldGeneric,
+ }
+ 
+-- 
+2.50.1
 
-Regards,
-Pierrick
+-- 
+Peter Xu
+
 
