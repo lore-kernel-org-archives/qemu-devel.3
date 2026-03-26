@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0432510AB82E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 23:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C9910AB82E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 23:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5uB8-00087T-5C; Thu, 26 Mar 2026 19:31:54 -0400
+	id 1w5uBB-00089E-2O; Thu, 26 Mar 2026 19:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5uAy-00085w-Ju
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:45 -0400
-Received: from ci-2002d-snip4-11.eps.apple.com ([57.103.88.171]
+ id 1w5uB5-00087W-8a
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:54 -0400
+Received: from ci-2002d-snip4-8.eps.apple.com ([57.103.88.169]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5uAw-0003o0-9P
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:44 -0400
+ id 1w5uB3-0003qX-6T
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 19:31:50 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-0 (Postfix) with ESMTPS id
- 27F5A1800104; Thu, 26 Mar 2026 23:31:38 +0000 (UTC)
+ 761BF180088B; Thu, 26 Mar 2026 23:31:46 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774567901; x=1777159901;
- bh=FKSxblGBMJN9gDudhiJ4g/hzQy9Cx9uqiZTr40R8kdo=;
+ s=sig1; t=1774567908; x=1777159908;
+ bh=hKEJoh4ZK0FFxEPysK5m7KR7gOdokjPvbVT9IIB4jTk=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Pnj+oVH7TD9BLHkamFEX9/20PV81u+dhczWAqnTQp5XoF7IXlrFB7oyvdnN9WXZSrP2ajUUFr1Fj99G3Cf0Iz687LeJaMiKhz1bORnn6jZOhSJQRZHW6GD6VJEeeaP2ZO5emNmyW4E8bx7RQlkw/hMiAsj7n9cN8wxXdZqcTIIMSbPN6v1JQTqUldwfzevu605XlC86HYT1Z6kn2G2qbQDNlCUeZ/LMYwCOV8Qnd8O7KxWKz2Dwdwl/3l9rwKcmUXwjYVNUOwjwk0YY+SDp/ggnZ8MCCnjqLCyMTYiJf1VqRLYpsmU/ir725F/O0quyOpPh/KKAIBpsb7yrcacgcOw==
+ b=N59A2/wHa7b9uxSCuece/GOCgaEDJvK+3TgSq9uTjZaIdRwjjpHUbBzuSewUoJhe7ZSKD7Pc9hcd8ocfqVoFQEc33o3zUwZzNEFMc8/lXkeLAS/E9TPhe+OmiHHTijgyD5K/Im3C2qYRBUmAwCim9aRZdM/Sj9hkv6aFdpa9OfxfqowMZTEXom5vLOt3YISLvHO3oOfQC+bYVDIfs3cvjeecpZgze/VeUEv5vp872Tx/o48hqhMIL1ECbBoamQnUVrFFCKTpaCdmf+j7zJGOVl/G0farSNvdcejFax75wpyV2udux4hYgNS/UsSBnE6L3MppmXrdPgOU2zHE540QrQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-0 (Postfix) with ESMTPSA id
- EB78A180011A; Thu, 26 Mar 2026 23:31:36 +0000 (UTC)
+ 44FC91800128; Thu, 26 Mar 2026 23:31:44 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
@@ -45,43 +45,41 @@ Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v5 2/6] whpx: i386: trace unsupported MSR accesses
-Date: Fri, 27 Mar 2026 00:31:26 +0100
-Message-ID: <20260326233130.59392-3-mohamed@unpredictable.fr>
+Subject: [PATCH v5 6/6] target/i386: emulate: emulate SLDT and STR
+Date: Fri, 27 Mar 2026 00:31:30 +0100
+Message-ID: <20260326233130.59392-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260326233130.59392-1-mohamed@unpredictable.fr>
 References: <20260326233130.59392-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: TBVAe0hvEA2jvCIQcagDeC6QmVKrUiTq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDE2NyBTYWx0ZWRfXwsKOX8hc4HEo
- s2E9Xa5vLpI9XaqiFl5/BTgEnbUclFM8EGI/3MAQz2iCC5dkPtumTk/KRtijJewWEdkzW2UBb9m
- 6gm16ho97pjcoy17XZ9eJUWzbvJjwRcCZ31iVA7c/ApYmFHaRmdHNlJEcTXnYIcI5RZ+l2GV3k+
- sYHgCin1Lbp0rzlq8ILDGtQAjII+h5LW+GSlkPaWZtlbwI+6djoA4b+MD+mBekQvouPuO2cZURF
- WJTOkSyaX+wQF+IKUrhrWACcCSKAsoAjiPOkWcsXaw8x/vg2iifVXDwlfULeEYhPAVbvYUjLNV2
- Vb8mZCy+NHMKwtvTHNxHHBY+GGfi435nwCXvND+ShozrfjZa2x1XJnidlfyv7w=
-X-Authority-Info-Out: v=2.4 cv=ffCgCkQF c=1 sm=1 tr=0 ts=69c5c1dc
+X-Proofpoint-GUID: sHnvFcskANbVaD-jyEe-y4qahMCdJ7dE
+X-Authority-Info-Out: v=2.4 cv=PPsCOPqC c=1 sm=1 tr=0 ts=69c5c1e3
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=BggPbTrBReIH5vXiFLoA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: TBVAe0hvEA2jvCIQcagDeC6QmVKrUiTq
+ a=p0WdMEafAAAA:8 a=h0iFb2CXyTZTJYbVGV0A:9
+X-Proofpoint-ORIG-GUID: sHnvFcskANbVaD-jyEe-y4qahMCdJ7dE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDE2NyBTYWx0ZWRfX9u0oB/qFs8/u
+ 4+vZwte520H0nbCOeIKIapX5SINcHLbUghESbj/hhsGcybo20r3TqI9aRPYgsjWrnP9hjWkUoXm
+ 2m4on3e7cid8DWpRBgm544c+U2fZot91I9IdJL4X6off4TSoxoCTT7WDSIOZ1Chldz4/NL6Pdpr
+ XrfG8RekiEJMTJfcBqpRXbRmq2am7E30+E8CYLDJBgORPCw0S5KCeQFnjNNgDOxMmq8J/SclS2X
+ wpbvES6KgEWe8Mud/q5BglbyGWxsZ8Rz0BmApYyRvANJQZgjFYR1bx5yNdENdlD2hUTj6w7E2vf
+ aYd9Mw5cPbRCJGpfP3t8BWZjzeERJhJ8FTUXNzC0V1S5MZS16RxgaSsPf8adtE=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- phishscore=0 adultscore=0 bulkscore=0
- malwarescore=0 spamscore=0
- clxscore=1030 mlxlogscore=388 mlxscore=0 lowpriorityscore=0 classifier=spam
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 bulkscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ mlxlogscore=794 suspectscore=0 clxscore=1030 phishscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603260167
-Received-SPF: pass client-ip=57.103.88.171;
+Received-SPF: pass client-ip=57.103.88.169;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,70 +97,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Not actionable information for users, so stop
-having it displayed unconditionally.
+Never saw that one being trapped and could not reproduce on AMD.
+But from the QEMU bug tracker, that looks like another story on
+Intel processors.
+
+Present in "whpx_failures.txt" on
+https://gitlab.com/qemu-project/qemu/-/work_items/3349#note_3195249254
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build                   | 1 +
- target/i386/whpx/trace-events | 1 +
- target/i386/whpx/trace.h      | 2 ++
- target/i386/whpx/whpx-all.c   | 5 +++--
- 4 files changed, 7 insertions(+), 2 deletions(-)
- create mode 100644 target/i386/whpx/trace-events
- create mode 100644 target/i386/whpx/trace.h
+ target/i386/emulate/x86_emu.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index e6f17dd5f7..c19c5afa46 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3692,6 +3692,7 @@ if have_system or have_user
-     'target/hppa',
-     'target/i386',
-     'target/i386/kvm',
-+    'target/i386/whpx',
-     'target/loongarch',
-     'target/mips/tcg',
-     'target/ppc',
-diff --git a/target/i386/whpx/trace-events b/target/i386/whpx/trace-events
-new file mode 100644
-index 0000000000..ebdfa34b28
---- /dev/null
-+++ b/target/i386/whpx/trace-events
-@@ -0,0 +1 @@
-+whpx_unsupported_msr_access(uint32_t msr, int is_write) "WHPX: Unsupported MSR access (0x%x), IsWrite=%i"
-diff --git a/target/i386/whpx/trace.h b/target/i386/whpx/trace.h
-new file mode 100644
-index 0000000000..b7c090deff
---- /dev/null
-+++ b/target/i386/whpx/trace.h
-@@ -0,0 +1,2 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "trace/trace-target_i386_whpx.h"
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index acae61e089..e56ae2b343 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -41,6 +41,7 @@
- #include "emulate/x86_emu.h"
- #include "emulate/x86_flags.h"
- #include "emulate/x86_mmu.h"
-+#include "trace.h"
+diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
+index c2da1a133f..e6e6500ea5 100644
+--- a/target/i386/emulate/x86_emu.c
++++ b/target/i386/emulate/x86_emu.c
+@@ -1338,6 +1338,22 @@ static bool exec_xadd(CPUX86State *env, struct x86_decode *decode)
+     return 0;
+ }
  
- #include <winhvplatform.h>
++static bool exec_sldt(CPUX86State *env, struct x86_decode *decode)
++{
++    x86_segment_selector seg = emul_ops->read_segment_selector(env_cpu(env), R_LDTR);
++    write_val_ext(env, &decode->op[0], seg.sel, 2);
++    env->eip += decode->len;
++    return 0;
++}
++
++static bool exec_str(CPUX86State *env, struct x86_decode *decode)
++{
++    x86_segment_selector seg = emul_ops->read_segment_selector(env_cpu(env), R_TR);
++    write_val_ext(env, &decode->op[0], seg.sel, 2);
++    env->eip += decode->len;
++    return 0;
++}
++
+ static struct cmd_handler {
+     enum x86_decode_cmd cmd;
+     bool (*handler)(CPUX86State *env, struct x86_decode *ins);
+@@ -1382,6 +1398,8 @@ static struct cmd_handler {
+     {X86_DECODE_CMD_MOVSX, exec_movsx},
+     {X86_DECODE_CMD_XCHG, exec_xchg},
+     {X86_DECODE_CMD_XADD, exec_xadd},
++    {X86_DECODE_CMD_SLDT, exec_sldt},
++    {X86_DECODE_CMD_STR, exec_str}
+ };
  
-@@ -1921,8 +1922,8 @@ int whpx_vcpu_run(CPUState *cpu)
-                         1 : 3;
- 
-             if (!is_known_msr) {
--                warn_report("WHPX: Unsupported MSR access (0x%x), IsWrite=%i", 
--                vcpu->exit_ctx.MsrAccess.MsrNumber, vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-+                trace_whpx_unsupported_msr_access(vcpu->exit_ctx.MsrAccess.MsrNumber,
-+                    vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-             }
- 
-             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
+ static struct cmd_handler _cmd_handler[X86_DECODE_CMD_LAST];
 -- 
 2.50.1 (Apple Git-155)
 
