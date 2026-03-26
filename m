@@ -4,97 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C122B10A62CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FDCC10A62CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5kvh-0006EA-Sj; Thu, 26 Mar 2026 09:39:21 -0400
+	id 1w5kxs-00083C-Hf; Thu, 26 Mar 2026 09:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roberto.foglietta@gmail.com>)
- id 1w5k7t-0000bn-IF
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:47:53 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roberto.foglietta@gmail.com>)
- id 1w5k7r-0002uf-Uc
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:47:53 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-79ab2f6ca48so1376637b3.2
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 05:47:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774529269; cv=none;
- d=google.com; s=arc-20240605;
- b=UwfDa4+u+7n1IYaBRtxDKJvA0cNYvKS4R5l7sShhTlal5m/kXuCT6X3fKpgPO5c/Zy
- y8KDaHxTDHZKjezCkLbPKFoEOGhq9VFwshhIpPkzPZm+zC/7NOXWuyUrkmfx4dL54i25
- Srl2XzjNrYp7ujer5O4mZWvc7VvYsfdUS08SINqHDOX1oIP8cq4K9pyP+jOCb2HB8hKC
- bL6zzHqBwYVEslqQmKjWA6HK3P68BacZZ2uSHWS5zzIGBeLO614SnIrir0kJ9XKnq7xD
- PQzzltVDWWydGkFbb5Bl43xNONTbFBgNJP4lMSQKhWmNcR30a9piiYQDHjc8mh6CA6Xf
- Zaww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=ED6vLNOaBcgBaZT/fcJy49Wl0w0+Cci154I+lSZLw4U=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=Tltgy8hlxRh6NJrpzDbZuMO1mgFq4TLsUxusqSk7X64epCow6HO4kdIRfbydP8SBbu
- eZaBoQUlWwNpfF3OOz7xAWHBYFEoEJ0lEMs0Mt2tcl8D2qprdigvWZUVwQluTy2Plrj5
- AmMl1CKbd6dX4IoYP48h+EslCMCHzOqXiG4qdTc2jg1pVxbhujIMgntdibCZzSJisxZM
- iuCOfveIRweio+RExFY38i86u6fG7H/cONN7TZZ+O+CjbAtLFzCQCEZu3VLSN1N99rDT
- XU1wkHHqAMXLz3zdhZkMw9OW+GTWOuGG6nIH9y5/9o6hgUXDJJyiIk1eZvIrKyow4mXN
- Irew==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w5kxo-0007wz-Ho
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:41:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w5kxm-0001yz-R2
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:41:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774532488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TW5QzDx784PFd9FvheYnQhwmjMzgkz4DyDcRuzVDEDk=;
+ b=F5tBADFqbEhIWV/yt84Iax0VQKTtxkH5G49KqknOhhRfJ3khjCzNQzOnvBJkgteVLBJj28
+ ZFKLOQNQuEuxpDyC+aITT5FeQ6y5OhsB8UhTKMTydIDV9TfroipTP6mmLZY64LcrHUjFiO
+ sfm0h2Ae/cv3LEHH7W3BWPFwmWBPIXc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-417-83psG4fTPkeSk20QNI0VWg-1; Thu, 26 Mar 2026 09:41:26 -0400
+X-MC-Unique: 83psG4fTPkeSk20QNI0VWg-1
+X-Mimecast-MFC-AGG-ID: 83psG4fTPkeSk20QNI0VWg_1774532485
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4852cf0318dso10788515e9.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 06:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774529269; x=1775134069; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ED6vLNOaBcgBaZT/fcJy49Wl0w0+Cci154I+lSZLw4U=;
- b=VZK0OpqqFHYRVfq1hi1OZI7vNZITENrIfsoAPPrXBsERunanxj5RErwQas8Jr1Og1N
- bJEeE2TDx9w3Wj7QMClCLAfZ6ZghUDj7sN71iIQEzcm5HaN0eBN0quFJfCGBudJO014B
- 1rn0OWyF5f6ci+fU0tNXXkeZs8Ca0Rm82KtB1YeVmccrlTmsEfMIDv9O61maDHLn6FwQ
- lEeSWc0MkNJvpCU4sCsEK9b7gSR4fDpr8sNfWlROuDb6i7XiabVEXCaid7TSuj8OU6wx
- XKJQkCGI3CElrsmRi8xgBx2/1APaokTKf6esTAzzgFrgEbPOkQjPfma9QvpAqeUpkgKB
- sJcA==
+ d=redhat.com; s=google; t=1774532485; x=1775137285; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=TW5QzDx784PFd9FvheYnQhwmjMzgkz4DyDcRuzVDEDk=;
+ b=SPzHQg0jzWRQvHcfDa1wQPG9ano7GhDmERwufCQ86cWvx22xfiH6R699g1kGy2rWEe
+ fXWcnTyCbGEijzJOFzjICntyFcYA3NBtcY8rZPegnxJpDhEn209+ZyUwXGuXK4WO7a55
+ arRl2WGPSE7zy8g7KuST0hmXTjoNj1XKNjzU2eYM7cpZl4R2wC0hWqXYtdQ2/mX6YtFG
+ HD0V6Tsi/uS9eleMEclDSEKUswiZQrYGqv4+u8iUchd1nVWwZw9+ZGm/gJ9vL3GWrpvh
+ 0JsHGkoEUpntZjPOPA8VLCCPxUdGUWCxrCy+j6C2l2s3ackJ5AoFZhhnKeRyvkaEs8LT
+ Hhdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774529269; x=1775134069;
- h=to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ED6vLNOaBcgBaZT/fcJy49Wl0w0+Cci154I+lSZLw4U=;
- b=HeYqsQ2g1AG4Q40IWtQ1W/iHmOBTPBdkyZAO8Uy2rjlVbONAZiknt/Ri5MH6IuQvtz
- E6jsed92it3og3Ogbv7z5J8MaMEpMWwtW2EKVqOfVh18+Z+fTP5ZsWcbKkm7yZ1S2bZr
- k02VnvBOyoHFAgn/BOuYCqZJOfDx4A28TP1waP62Ss6n+cKjc2bDQyMNIeBU/oBraa3K
- /Chrubw2QS+eT9Ubi4m38j3vCJOdTGzirzeQHyRRV2gy1ytmTkcUz7HyE+RyX7+b91iJ
- Ep64WOfHHCRHk1vLTXayRXT1rg3oprzlastyJyR16u1u61lpS4jztKOcwKHmcjgQU83+
- bK2g==
-X-Gm-Message-State: AOJu0YxJrb+xa9whGmW2rAVy6RGdKZ370SjK4tmYH/NOvvG+MCSH8HbI
- DwBmm+Md+5sOhZsdSdcEqcWCawVz4QN7BhsLrnt/Y9QA5iuDcw361IeHJl4RSoydGo6pNvfS4qI
- 0W7kkxNyJCvzECkayAk4wZBXBNznwCTu06W2VxIFV
-X-Gm-Gg: ATEYQzxYs67dImDRXoZJw5nM1NUK4qTTMx2WmmZcdZs9GozmcHefqVCs/2gyRNNfKP3
- pbKXM79+CxHdBA7DifJAVGYmYesD9Utm+ORhlLRo1dX3Lv4tGDHSA3dFrslHiulMHOxQ3dcGtWd
- OgpiWxDZwdpg7rLLI0Iz45BJJzaf7NZlqJRFpaj66/F+BvwD/Qd3e7lCXXJWPWdeCEJ0ZitzrZt
- ND0T+ON5NqCVDopyQ+JoFSAL4rMx90HctzxY9f/+tLal8Q7jZI83pc8WpCoPnzFG1hJxqdbqPbN
- ZH03XD9awTxaheSFj5skc3VEt6d0ER6oYg==
-X-Received: by 2002:a05:690c:c530:b0:79a:b46c:e60a with SMTP id
- 00721157ae682-79acf6c80ebmr72236217b3.44.1774529268860; Thu, 26 Mar 2026
- 05:47:48 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774532485; x=1775137285;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TW5QzDx784PFd9FvheYnQhwmjMzgkz4DyDcRuzVDEDk=;
+ b=PJewsSGVzRfhJV/flIkTdQI12ZvjSYRehp7RwfTdYL7nTcKDqMEkM/ixalGYdXrvd3
+ 3XtWYJnT84d6xmek797i1v5PrboARkzcwU1dihWscU9JRgvhwKCgJqms5TB4ddg0TjvL
+ 6+NsOq6hf1YRPUJeDmwy9m5LiBfhB70zmDZclWgIxu0jtg/A12hHM6XnyYeqq8yKZXlT
+ RafrtwHaJOtIudckX1DHack1LeRIINbp3Ffm5jtZsIFpTF1cMlTtk1pJFv1huwc9M+Rg
+ v6Kwb8S0fOv6+axEXcWijnisNANU0ZWB7tfH6KLHIaQzdkUfMBvb/O2k5uPe/tUCcZWv
+ Tp3A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGKRu6cIFqfS3gVlX1jz+Q8kCRojrwqEeIQKXdQPucQNyfwNLET2gkDwvIkP9MvX63hbBFaUOh+2SL@nongnu.org
+X-Gm-Message-State: AOJu0YwiBPtOxmjRZ8NDTFaToUx86ej4MELpK0zcpggRUNw6quXIMIaO
+ 83H5SxuEjeaesvND4GS2/RWeFHA2B7ByvmAqadO8xlieibDgsNIHxW2bqG1V0CCNTg6bfwugZt1
+ t7UFRIx6d7b4wD+kVzXfZs9BZK8z9+eTnRrty130UQ6p6RXhxGPsgJogq
+X-Gm-Gg: ATEYQzze+DDOh4OfA55zQOySAw2cbPROCCoIYhW05qXEiTKkmdeDFe0LshZm1GGOacv
+ VYSLgVFMu0AKy3vNT4m2H/+wy2FNv9O/toRno2B7yiXpbv2UQCqiGfmf/oXH7ICZ2SPCCnTV5+z
+ F5w026JV/38hGsxwAvyMnB1H6gS8zifwMrWoAHIGaPu/hb9h7DUaeiUdCMQZVbooSSgeKQVvMEq
+ yOhFQ75qsZkAJNlMO8aSvzDHKKvdHl99Ch7yqpNas8p2psKgER8ywbexak5fnH2eXVNUxUAFhhJ
+ ZRWVPSVMtTIFJ4Z1Qf83iuAMh+03ca0UB/szri/GLanlSKACB0M0yyn3cqEkFmMGLga6kk5H005
+ qKKMdXvqysFyQsPIN
+X-Received: by 2002:a05:600c:3154:b0:485:9a50:3369 with SMTP id
+ 5b1f17b1804b1-487160846d9mr106424115e9.29.1774532485045; 
+ Thu, 26 Mar 2026 06:41:25 -0700 (PDT)
+X-Received: by 2002:a05:600c:3154:b0:485:9a50:3369 with SMTP id
+ 5b1f17b1804b1-487160846d9mr106423625e9.29.1774532484413; 
+ Thu, 26 Mar 2026 06:41:24 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1525:da00:3ac2:1a22:72ff:4256])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48722cb0d83sm31270075e9.13.2026.03.26.06.41.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Mar 2026 06:41:23 -0700 (PDT)
+Date: Thu, 26 Mar 2026 09:41:21 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PATCH] hw/acpi: correct field sequence in SPCR table
+Message-ID: <20260326093653-mutt-send-email-mst@kernel.org>
+References: <20260326121947.51200-1-heinrich.schuchardt@canonical.com>
 MIME-Version: 1.0
-From: "Roberto A. Foglietta" <roberto.foglietta@gmail.com>
-Date: Thu, 26 Mar 2026 13:47:12 +0100
-X-Gm-Features: AQROBzDLPMNX2lr06bpctG3LdNkLHT2otjwhO_EoO_t5vhdkKSbgFEuGzhHKA84
-Message-ID: <CAJGKYO7o9RWK2QAvcUW7Gt_mhiO0MP26XTX7POPubyOyOc8Y2Q@mail.gmail.com>
-Subject: uChaoSys v0.6.5: frankenstein glibc-musl static u-qemu boots in 0.06s
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=roberto.foglietta@gmail.com; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260326121947.51200-1-heinrich.schuchardt@canonical.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 26 Mar 2026 09:39:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,41 +120,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+the fix is correct, thanks!
+something more to improve:
 
-uChaoSys v0.6.5: frankenstein glibc-musl static u-qemu boots in 0.06s
 
-It is worth to note that the whole package uChaoSys + u-QEMU +
-RNG_test once compressed -- by gzcmd.sh in a self-executable or by
-gzip into the initramfs.cpio.gz -- remains under 6 MB (precisely, 5.71
-MB).
+On Thu, Mar 26, 2026 at 01:19:47PM +0100, Heinrich Schuchardt wrote:
+> On LoongArch and RISC-V invalid SPCR tables are created:
+> 
+> Terrminal Type : 00
+> Language : 03
+> 
+> The correct values are:
+> 
+> Terrminal Type : 03
+> Language : 00
+> 
+> This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
+> SPCR creation to common location") that swapped the fields.
+> 
+> See the specification of the table in
+> https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
 
-uChaoSys is bzImage + initrmafs: 1.76Mb while the other two parts:
+should mention revision you are consulting.
 
-FILE: 'qemu-system-x86_64.gz.sh', HEAD: 1392 (4),
-GZIP: 2715646 (2652 Kb, 35 %), GZSH: v0.1.6
+> 
+> Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
+> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-FILE: 'RNG_test.gz.sh', HEAD: 1384 (4),
-GZIP: 927519 (906 Kb, 39 %), GZSH: v0.1.6
 
-~> https://github.com/robang74/uchaosys/tree/v065/qemu
+BTW I think the link to the spec should move to build_spcr.
 
-It is capable of executing itself `qemu-system-x86_64 -M help` when
-included into the initramfs. Instead, the complete self-hosting and
-self-emulating isn't yet tested thus granted (also self-emulation
-achieved, cfr. comments).
+And also:
+/*      
+ * Serial Port Console Redirection Table (SPCR)
+ * Rev: 1.07
+ */     
 
-This glibc-musl static qemu is capable of self-hosting and
-self-emulation. These aren't strictly necessary features, apart being
-the definitive binary healthy check.
+is probably wrong:
+1.07	Fixed incorrect description in Stop Bits field. Undo accidental removal of Flow Control field. Edited formatting.
 
-uChaoSys initial commit date: Wed Mar 18 23:04:46 2026 +0100
+it's likely not the earliest version we adhere to.
 
-Total working schedule on uChaoSys: 1-man, 7-days.
 
-Best regards,
--- 
-Roberto A. Foglietta
-+49.176.274.75.661
-+39.349.33.30.697
+> ---
+>  hw/acpi/aml-build.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 4b37405088..a999320e61 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -2115,10 +2115,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+>      build_append_int_noprefix(table_data, f->stop_bits, 1);
+>      /* Flow Control */
+>      build_append_int_noprefix(table_data, f->flow_control, 1);
+> -    /* Language */
+> -    build_append_int_noprefix(table_data, f->language, 1);
+>      /* Terminal Type */
+>      build_append_int_noprefix(table_data, f->terminal_type, 1);
+> +    /* Language */
+> +    build_append_int_noprefix(table_data, f->language, 1);
+>      /* PCI Device ID  */
+>      build_append_int_noprefix(table_data, f->pci_device_id, 2);
+>      /* PCI Vendor ID */
+> -- 
+> 2.53.0
+
 
