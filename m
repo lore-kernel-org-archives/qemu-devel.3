@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95FD5109E52B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B89DA109E53D
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:18:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5aFx-00012s-QW; Wed, 25 Mar 2026 22:15:33 -0400
+	id 1w5aIs-0001nV-Pe; Wed, 25 Mar 2026 22:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aFv-00012C-SS
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:15:31 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1w5aIq-0001nA-BE
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:18:32 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aFt-0000Mq-IW
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:15:31 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b9825ba7e8dso63744166b.3
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:15:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774491328; cv=none;
+ id 1w5aIn-0000dn-Qo
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:18:31 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-661b16ac011so730729a12.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:18:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774491501; cv=none;
  d=google.com; s=arc-20240605;
- b=c59B3Ba4HJ1CQLu8K6ZP7wL6145KlZN6eE2IA9yhg4UmF3XPCg7K+OjLW8l/sUTMRj
- eOHDxv78mXq1DAm1MGV3PyW1sUBhb/UOi7EjN35qEqNONaEFy+iPVROc+PIC2UDc5iRV
- WlRZelAFYX1WW8wiWE3HDGcGpNYb6Z7dD4K93WXANRHsa3OJ5hqtfCpTAuQNHsbS4teQ
- lr3/ON0IzJmEcNF4iI7+f9qCB3i+kdaJ8IJH0bi3/Z1PQFCRpF/rnObiA1Px2KxJ98Ky
- J3AEdltyL0QUZGaIVzQEpNIXAXj++AQ57gMcNCfpx9m45zHijofTeFymkOzXDqm1lAt8
- x8FQ==
+ b=Kq8WTmYsf8pbir/h+5FUUkSQ0PVTxhzTr1+LqnB7cETUGHaMuHleuo/cRmm9ipYCeo
+ LAqbb5zZJQXjOTLC/WGeqRoRq4a6byrjJ1VZIDzkuPqUEbYgzsRAwNh8puoQhyFe35YR
+ 7WMDlvMHGBTaC+KFvmPnuwzCU3eu5IqKY6twHxioJa4JZ6Bl32GJAXk3zvvokWeBO7Vx
+ M7gffqzY/0P8MGgJWeWu0qjOgrxY5BpR6e6pCr/NmdVEzHXryM2os0YYA4NVfoIz6esS
+ AOOlyjhzolCCzov+jfBAOexU9VAhzoFKgLlBlDsSw+Ugg853FmBSLYN9eO8CNX0cwVl4
+ BjLw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=LWBXvcT8HTKeX/5fn5oWP2n08N8JYOVphEbatOOf5Yc=;
+ bh=8AXnvnR1paAU8tXsYJNXvabCFiZCrLESdxiiwzMYMd0=;
  fh=0bIOm+75pw/QTN9FDs8ZhfYo0XBcsOIKWWC6mti+rTw=;
- b=G/kYZy2Z89G3BQznf++uPtnWA8VQvEFEA/CRUnuriBh5Iic/dCRBQ4dV+ArlUvihHY
- nGpe41JNYQ//iX9q5G2qSYnsU6fBi7yVu4/JGUgb1grghzPXZ4Q7iVlGmnv+lbZfwxsW
- TzIIqOUWJJfJiGkONDpOc4hJD8Hz/ng5kltJR0wS3ohaxSfCBu+cbrRQr7AgBGojQwQa
- Bbc78btEE+LVNhHE1zm2GaCXM0jG0xvR2dob5tWP5HXb6FQ0a2AWqlOuDhxZ30xQBXWi
- 7eP/Q0Mtw4wYeZqfhI62MGJREkbYmUW8fiIgscnwrWcY38CYqGyhb/zSUXfPoEPmn8TE
- Tk0Q==; darn=nongnu.org
+ b=C7f8CU+i/fMh2pT5IqO0EwCqkHiaeyeOiDqxj0Uzrr8r3ex35BtX2ONMoFldEG9zQv
+ jwzqid/ayDlxZeLM8RzB4dJBF6pIcbFcyX3Y0sCS5IpsBhj5yDehGy7towMVm2LIGRtH
+ l6wmeoav8FNRW+T1awWKUn5zCc4ZwS2ExxatNuuMB/usJB3W/QVP7bJBxqbkFgTwiK7g
+ QUjmqEQPPsqR7L/hs3kHbkPZAVb8h1eBrumRx01kA/C59RVPVBYXlXzD5AJIzJlGSZm/
+ HNy8iz0J2ae1JEfAEsBuZV0ZlXbkI6/gqBUji+erKW5kvVx+VrSOonJHKazVzyR6n01Z
+ RAAg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774491328; x=1775096128; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774491501; x=1775096301; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LWBXvcT8HTKeX/5fn5oWP2n08N8JYOVphEbatOOf5Yc=;
- b=jcr3skNOCAWzmB1EprkUwlOKyZiTk88n4w+qiHuqzZZcjgcHU3CHiGp5c0QJPwV6wx
- DdUPIBcnlokHLrC23y7sqOsqqUX8NBLqdaNy6AtC2yuVIzo3GGDJXmUYZxBIj6J3n7F5
- 2X7d/LZRpbg6gOJreQ5mOn4BHQStWVoq4AEjswwp9s3GJ9oXgoKzwj+k2oGYEFTePll1
- BVzUnEHsISJYdHX7u5Xu6gZ+LatQ6agLBWBwyih1WGXBd5FsXIRCA1rQxpePm3XQNQdt
- glL6TKL4veIN6761aSKGDXbjpuh/19TSz9vFTRpUMh5SYy3zaLC/R/rWcNFa+aMDM8Nz
- kD1w==
+ bh=8AXnvnR1paAU8tXsYJNXvabCFiZCrLESdxiiwzMYMd0=;
+ b=Nd7clNFbT22dPAN0TYbulKjylrgB7yLeCnDXXKFHYVPRzr+u/WBJF+QEpvHqtI1ptU
+ GcEX0mVipchKhIsw8H6jBGcmGnamgAUpW61wNRRnhqb4yb8C8YA/H+2AwyUtSpy5p9wU
+ +5wa+iLrMvCEaio41SIxhCege93clDQZ6WWWiJUVYBQbSI4pEUd4B1uRnKZGWGqKkDea
+ /G0SjqAH0HPnOWoIg4wgn6rz9TprfyT/zZdDlA0lNrr5YYVyrepBlzT5QNWkP0v81FY2
+ EnjYstDa6l0YwyQi7OvUzYGX0LeavCRls9709dgDXYniwDhGfrAaA37TyfJjGJfRFa+O
+ swHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774491328; x=1775096128;
+ d=1e100.net; s=20251104; t=1774491501; x=1775096301;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LWBXvcT8HTKeX/5fn5oWP2n08N8JYOVphEbatOOf5Yc=;
- b=hS356ouSKJPF24yioY74pR96ut8x0bCpGOy3Gc6TV3EURj5tFrJTco3qroNfyWdmTB
- ByvpWaZ0ODMJgjzrVxrkE45kPM5DSfOHyPEB5bp8fzfNpYzmkOqAbX+GKZXMdnjH6qzX
- VkB3lE8BHpa8oGjhW1g+GMu/+bwz8IMcOT4wvU2Sj/ouYYK7re+8MGdWcg5g0dIvwVkR
- 0j3dLfF3itiXeeOgZlSY4vxpsCJmydKZDgflUuQ+QwpPIrZdoZslj5scbtLvrd71pko7
- 59z7zCZ+l0P2r3Qg/Aw7nzhu/cwH6N55bX+uS8yI1cc0a9bvSJFVQvZVuCkSKJ8wpSov
- fvgg==
-X-Gm-Message-State: AOJu0YwviGbOaX7sz8/vviNEvGgGvm+rfb8O0QSiUS7vTDYwSRlEmL42
- VPD6GAEm8AHy/dzsU7BR4dMJGs5BVHtnDlpoRPiFLAunEctw9xCp+p/nQXd81O9QwpvwZuQYNdC
- RC2HBDqL0wO4qxpnjZ0Cz56aq77ZVJsU=
-X-Gm-Gg: ATEYQzwOCqRTPLxVpLotn5ZJ/8nrQ3bzrUBRUXcKg/L819Ly6qOjdjJbrcV+bOGMXOo
- vSqgNBf+IU08pdXaDEO+IDScVAw3m//52eNp+5F8QFsqXHuJyvEz8dCCRXRm79olY94XKyDEAES
- B1agRQh/CY8r7bjxlXu5ZxtKX7Q/7Se8azYIglbYNvbDdjdfsLNZbnifOVVoMgcqLSH1ynEwE4b
- 4vTH/n+32tsWRL2gGXhuYDgNlNahdpCWdA2ZKZIP3tthaCNCpxQkX2Y0p0bJuGCOsbIy1B9rcNb
- UR4Ph2J4fDUElJprM0pjJFThjxo98tIi0lJEEA==
-X-Received: by 2002:a17:907:7286:b0:b98:155e:609 with SMTP id
- a640c23a62f3a-b9a54221611mr367086566b.36.1774491327746; Wed, 25 Mar 2026
- 19:15:27 -0700 (PDT)
+ bh=8AXnvnR1paAU8tXsYJNXvabCFiZCrLESdxiiwzMYMd0=;
+ b=eQCnSbF9EySQn+zDBWz6YtxoCiCBF8I6plVk+PynGnjuthNYn8ZtRhfiYI1PBdYkbh
+ WlXyS5yPjYO5iWpMfDm5eLLKBWp3epzCP7dEIXjjqXS1chQVe2OcpfEW7WqggpGf4iUf
+ cVs47S8rz3UFfE+KT+gRyu4NQAZIsOY4uYfxWnqZRsykNqk1U2DbuGuBMjSygwnna68u
+ xk4AI5rUeeaj+kiSssstLjZP7XjsMZZOLcVZpF1VoCjzPsmH6RaIb8IKFeBbOvw5hY+0
+ VmWHHgWmH+98uGYXHuMIZyJRbB+tfnd3exCAfeloDAoXUFKvsIYCf8j2tQuMDfphfxLM
+ 3REg==
+X-Gm-Message-State: AOJu0YxIeQOxd6ICinKLwWTqtKmUMJ4qea/dhdj+0b0zRJACZNwx+/Zl
+ NMUGR6u4AS4dLMyGqDIe0bcgaVsh/r3dS6907XvI2wt1qLeXm12tTffYRQm5SBrr57Nji6g1f6x
+ ZPCKFVxdYfBWdLf9GzJPdTq/YdjMDOPc=
+X-Gm-Gg: ATEYQzz4cT5l94gXwBWT2SYaNlif1da6dmiLJSSgF59XXAOCB1FmM5pyGkO7lWkcI2v
+ QtyxEFzAxWdn7IZNkGvXF72pziXWH1B6RZ+V+bjOvn+fwAdrMXFp3rM8Ga++5j2+TPpceyeDLK3
+ 7PS0Gc8Pf/Vtn6/UGN0beZEquDQ2QDqvEUnrhYRryTEOkOtMiJySscqfWL6Qq91/7I7Ey07DfOu
+ wamAZa9JEM5Z1JGb2uMPoLvnI7FnNwfVNDvFwADRb7R878I6nApt5bpSvbq59jEpwoDz1M2EbIj
+ XdFFPnZq/BQxSu8czVZszpM6BdNjRpvQJoZK7w==
+X-Received: by 2002:a17:906:c14d:b0:b97:aba7:1969 with SMTP id
+ a640c23a62f3a-b9a5428e034mr403746866b.45.1774491501222; Wed, 25 Mar 2026
+ 19:18:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260318103122.97244-1-philmd@linaro.org>
- <20260318103122.97244-11-philmd@linaro.org>
-In-Reply-To: <20260318103122.97244-11-philmd@linaro.org>
+ <20260318103122.97244-12-philmd@linaro.org>
+In-Reply-To: <20260318103122.97244-12-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 26 Mar 2026 12:15:01 +1000
-X-Gm-Features: AQROBzDiQBRG4w8lSewUiJJdLMK9nOQXncyNTNIIGlCQ6nJPg5InVKv1BWI-7uc
-Message-ID: <CAKmqyKNX4T61eYLm8RjTfQt40LKK+wWypYB7HHjv1-RBgORiHA@mail.gmail.com>
-Subject: Re: [PATCH-for-11.1 10/16] target/riscv: Have gdbstub consider CPU
- endianness
+Date: Thu, 26 Mar 2026 12:17:54 +1000
+X-Gm-Features: AQROBzABXc_aGSUa_C52C1KRzYu65Ok8kn25q_lcCPfVsZ_T1qf99cZHbBUi2n8
+Message-ID: <CAKmqyKObn0jUY17TfYV8wu7-cxFPdkVY3H6eojoLaNBcpLAkrg@mail.gmail.com>
+Subject: Re: [PATCH-for-11.1 11/16] target/riscv: Replace MO_TE by mo_endian
+ (MIPS extension)
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
@@ -102,8 +102,8 @@ Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
  Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,7 +111,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,7 +130,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Mar 18, 2026 at 8:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Consider CPU endianness when accessing registers.
+> Replace compile-time MO_TE evaluation by runtime mo_endian()
+> one, which expand target endianness from DisasContext.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
@@ -139,32 +140,106 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/gdbstub.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  target/riscv/insn_trans/trans_xmips.c.inc | 24 +++++++++++++++--------
+>  1 file changed, 16 insertions(+), 8 deletions(-)
 >
-> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> index a5c12638782..2c6ccd4761c 100644
-> --- a/target/riscv/gdbstub.c
-> +++ b/target/riscv/gdbstub.c
-> @@ -20,6 +20,7 @@
->  #include "exec/gdbstub.h"
->  #include "gdbstub/helpers.h"
->  #include "cpu.h"
-> +#include "internals.h"
->
->  struct TypeSize {
->      const char *gdb_type;
-> @@ -49,7 +50,7 @@ static const struct TypeSize vec_lanes[] =3D {
->
->  static uint64_t ldn(CPURISCVState *env, uint8_t *mem_buf, size_t regsz)
->  {
-> -    return ldn_p(mem_buf, regsz);
-> +    return (mo_endian_env(env) =3D=3D MO_LE ? ldn_le_p : ldn_be_p)(mem_b=
-uf, regsz);
->  }
->
->  int riscv_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n=
+> diff --git a/target/riscv/insn_trans/trans_xmips.c.inc b/target/riscv/ins=
+n_trans/trans_xmips.c.inc
+> index 37572563ae9..c1a30156d36 100644
+> --- a/target/riscv/insn_trans/trans_xmips.c.inc
+> +++ b/target/riscv/insn_trans/trans_xmips.c.inc
+> @@ -47,6 +47,8 @@ static bool trans_ccmov(DisasContext *ctx, arg_ccmov *a=
 )
+>  /* Load Doubleword Pair. */
+>  static bool trans_ldp(DisasContext *ctx, arg_ldp *a)
+>  {
+> +    MemOp memop =3D MO_SQ | mo_endian(ctx);
+> +
+>      REQUIRE_XMIPSLSP(ctx);
+>      REQUIRE_64_OR_128BIT(ctx);
+>
+> @@ -56,11 +58,11 @@ static bool trans_ldp(DisasContext *ctx, arg_ldp *a)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_y);
+> -    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TE | MO_SQ);
+> +    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, memop);
+>      gen_set_gpr(ctx, a->rd, dest0);
+>
+>      tcg_gen_addi_tl(addr, addr, 8);
+> -    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TE | MO_SQ);
+> +    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, memop);
+>      gen_set_gpr(ctx, a->rs3, dest1);
+>
+>      return true;
+> @@ -69,6 +71,8 @@ static bool trans_ldp(DisasContext *ctx, arg_ldp *a)
+>  /* Load Word Pair. */
+>  static bool trans_lwp(DisasContext *ctx, arg_lwp *a)
+>  {
+> +    MemOp memop =3D MO_SL | mo_endian(ctx);
+> +
+>      REQUIRE_XMIPSLSP(ctx);
+>
+>      TCGv src =3D get_gpr(ctx, a->rs1, EXT_NONE);
+> @@ -77,11 +81,11 @@ static bool trans_lwp(DisasContext *ctx, arg_lwp *a)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_x);
+> -    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TE | MO_SL);
+> +    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, memop);
+>      gen_set_gpr(ctx, a->rd, dest0);
+>
+>      tcg_gen_addi_tl(addr, addr, 4);
+> -    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TE | MO_SL);
+> +    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, memop);
+>      gen_set_gpr(ctx, a->rs3, dest1);
+>
+>      return true;
+> @@ -90,6 +94,8 @@ static bool trans_lwp(DisasContext *ctx, arg_lwp *a)
+>  /* Store Doubleword Pair. */
+>  static bool trans_sdp(DisasContext *ctx, arg_sdp *a)
+>  {
+> +    MemOp memop =3D MO_UQ | mo_endian(ctx);
+> +
+>      REQUIRE_XMIPSLSP(ctx);
+>      REQUIRE_64_OR_128BIT(ctx);
+>
+> @@ -99,10 +105,10 @@ static bool trans_sdp(DisasContext *ctx, arg_sdp *a)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_w);
+> -    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TE | MO_UQ);
+> +    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, memop);
+>
+>      tcg_gen_addi_tl(addr, addr, 8);
+> -    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TE | MO_UQ);
+> +    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, memop);
+>
+>      return true;
+>  }
+> @@ -110,6 +116,8 @@ static bool trans_sdp(DisasContext *ctx, arg_sdp *a)
+>  /* Store Word Pair. */
+>  static bool trans_swp(DisasContext *ctx, arg_swp *a)
+>  {
+> +    MemOp memop =3D MO_SL | mo_endian(ctx);
+> +
+>      REQUIRE_XMIPSLSP(ctx);
+>
+>      TCGv src =3D get_gpr(ctx, a->rs1, EXT_NONE);
+> @@ -118,10 +126,10 @@ static bool trans_swp(DisasContext *ctx, arg_swp *a=
+)
+>      TCGv addr =3D tcg_temp_new();
+>
+>      tcg_gen_addi_tl(addr, src, a->imm_v);
+> -    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TE | MO_SL);
+> +    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, memop);
+>
+>      tcg_gen_addi_tl(addr, addr, 4);
+> -    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TE | MO_SL);
+> +    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, memop);
+>
+>      return true;
+>  }
 > --
 > 2.53.0
 >
