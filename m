@@ -4,146 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CA610A88E1
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4585010A88D4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 15:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5n0O-0000Sg-Vc; Thu, 26 Mar 2026 11:52:21 -0400
+	id 1w5n11-0000bD-Fi; Thu, 26 Mar 2026 11:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5n0N-0000SQ-QH
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:52:19 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1w5n0z-0000ax-Sr
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:52:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5n0M-0007VG-3a
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:52:19 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1w5n0y-0007aV-1u
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:52:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774540337;
+ s=mimecast20190719; t=1774540374;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=V+oCW4ug5vGxbdQn01leFVxP9sEeBxWFiIXtOC+kYiU=;
- b=OegxGCgyDJlsPXItjhoA3HcVnRCMzREyv1mFzbDL15UWJA3RepgCtmFMz2Dx/curUy1xUg
- COCs89/NJuu/zLkonpTNY5e+jlHg5Z7wS59bj2EWe9QYuMKVij+Y+9Aqy36QHUkF2SwwrS
- UQXpqJWJay2qERjBc9R0DrwN526aPpY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-8PpT0CbTPK-mEOOyzy5M9w-1; Thu, 26 Mar 2026 11:52:15 -0400
-X-MC-Unique: 8PpT0CbTPK-mEOOyzy5M9w-1
-X-Mimecast-MFC-AGG-ID: 8PpT0CbTPK-mEOOyzy5M9w_1774540334
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48378df3469so7013825e9.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 08:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774540334; x=1775145134; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=V+oCW4ug5vGxbdQn01leFVxP9sEeBxWFiIXtOC+kYiU=;
- b=POTX24RTPs5Ak/X5fOh0epG1fL43iCbIqtQst3bJtcXKDoXbRQZeFuKAq05RXZbNv4
- 8JK2UMtjZNhJjtx3JjKkc/Q6eaFb/No+pGsTUKkT7q+aUwdHCHYmaF/6DbAPWrzPXjtt
- 3BIOhov1jZeXk1WtLAV55KGzp6q28ISBdcMkseG4u8etpc/y26AEUSbVfpEBR9H2Y2/M
- HPDT9AjfJVheXE3Z8i9hs8a9WXEWvpwUPen/+Prfy5XiMyQmr52mBHcHTqbR+IgXBRfU
- JVDglbMnmlTU9mWdxBZUKVF7aeI0Ox7f6vilvlrWZHIataD0sWvr2I51mqhXjnYDK598
- x37A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774540334; x=1775145134;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=V+oCW4ug5vGxbdQn01leFVxP9sEeBxWFiIXtOC+kYiU=;
- b=rO791g0iw572KX22YVf8QvTqsINVE4FUJREmaVZeRBNDbB5SCWlPhu7G2u2wSF+h0B
- h3jgTbCE1UeWvLYbz2QmLddEnNUCTER/qcG/iXTNbcWk6+ffMPVxQlw02EuZUMwuGLXG
- z9d7SLLADL0R/MSLnG5+sawL33Sq4B7xthD4y0y33+Y7t9qThSv3OWLnhvvOONmNXbEQ
- tj/nEhxIqWX2lRRjILEQrVdJhkaAatjqn6jJDmnXi3UHeKUtm6v4O9dSqKZkchjaaWev
- ypoFjdUA7qEoj01L4niZ4ggnTf5HnfjWrY1rR3KjCe/fYNXR+b7lUt8a5on6lhqnaIn9
- tCkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhs6c+9EjySbaKiWx48EyDuLHJqMqsV0+YxTm2SPkO6Qo8XvZsQ2eLgtgC5xiBVFenD/NsOyjj4rBk@nongnu.org
-X-Gm-Message-State: AOJu0Yw1c7qWrwXLxVFggAanIUjsm/obOkbNQjkAWcww4gPpbgJWCKHv
- GQ7odeRPVdntKzhLKZKDBWMz5psEZ1kOlY+7S/Zu/7Dfc/Cc1Ki658fP7isxgsepZGO6dKAJzyf
- 8eV75LDRK+HPnzZqsXu0VBJSVLdPA+Y+rKtEM26+clXQTKUpflIUrlgYy
-X-Gm-Gg: ATEYQzw+lY23pEE89RRWN3x5x950NcJ+aVxawCm863xkZ3/Bx/iMrBXynVYaFVZx5dg
- 2+gbvGg8Eo1TL3DvLAf3bJ9UYkKdS9sqmTsctqe6VAWbNEqRDBkgwiA23kiYtHroCFT7l1ff9A0
- mqQV5hgWPyqszHZxTjIa6YPSJnJOGLGmgKYIQInX+lsAqyhb+VHqe6M8XGcJltRVLHsW5ZhX/1Y
- JG/VL6ytKuFU9zza/i9byZmqLQDJSz44Zgw9o0ynMXcrRI7Anwg19cFDTgBNqSbRnz3xYe2dB2P
- LhihjKiOsvsMQgEvrJGXAoXy4wM4ES/WU+99k42GNoRdCqHxNhL0WEbOszXtepW5vowsO6ts6yc
- 1fUJj/asOVdQZJSm9pQ==
-X-Received: by 2002:a05:600c:3e8e:b0:485:3989:b3e4 with SMTP id
- 5b1f17b1804b1-48722ba925amr34083725e9.6.1774540334440; 
- Thu, 26 Mar 2026 08:52:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:3e8e:b0:485:3989:b3e4 with SMTP id
- 5b1f17b1804b1-48722ba925amr34083285e9.6.1774540333900; 
- Thu, 26 Mar 2026 08:52:13 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.113.85]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48722fa8dc6sm68777035e9.1.2026.03.26.08.52.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 08:52:13 -0700 (PDT)
-Message-ID: <2a024c3b-7a4a-4ab1-92bd-1011fadf2c9c@redhat.com>
-Date: Thu, 26 Mar 2026 16:52:11 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=cow9JKCFXuC72wFVknLLm7bBQQk8rU8lQu13wbOx15k=;
+ b=cZqp9LWTeJcS2tWhtiOL7a0gl9aF6YXDzyZVgKmIVR971hwPGdhScIYobevbz1DoxIpCGV
+ 2ikIoPCf3AKjBFbJBj0Ui/92pf0J0MZwkUV1PEawzqRH2ZBwf1OpbWYbA66FN6HA0Vn6VX
+ oQGPXTBXNnxkwAFHoDlmqx56vu/j/gM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-I-7dPt8QPUaGsf1mcUYliQ-1; Thu,
+ 26 Mar 2026 11:52:48 -0400
+X-MC-Unique: I-7dPt8QPUaGsf1mcUYliQ-1
+X-Mimecast-MFC-AGG-ID: I-7dPt8QPUaGsf1mcUYliQ_1774540367
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BE711800614; Thu, 26 Mar 2026 15:52:46 +0000 (UTC)
+Received: from localhost (unknown [10.45.226.37])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8187F19560B1; Thu, 26 Mar 2026 15:52:42 +0000 (UTC)
+Date: Thu, 26 Mar 2026 11:52:41 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, virtio-fs@lists.linux.dev,
+ zhenwei pi <zhenwei.pi@linux.dev>, Hanna Reitz <hreitz@redhat.com>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH v2 4/4] vhost-user: add skip_drain param to GET_VRING_BASE
+Message-ID: <20260326155241.GE758087@fedora>
+References: <20260311084728.751169-1-dtalexundeer@yandex-team.ru>
+ <20260311084728.751169-5-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga device
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20260326113457.159065-1-thuth@redhat.com>
- <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
- <f6045fed-60fb-47b8-8241-a6fcb0af7292@redhat.com>
- <CAFEAcA_VoSX2JK-HRpAN0P0LT2dj_WvSRyP2dom3ZQK76mtyfA@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA_VoSX2JK-HRpAN0P0LT2dj_WvSRyP2dom3ZQK76mtyfA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Pqgfetn8TJeF5gYm"
+Content-Disposition: inline
+In-Reply-To: <20260311084728.751169-5-dtalexundeer@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -168,46 +95,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/2026 15.57, Peter Maydell wrote:
-> On Thu, 26 Mar 2026 at 12:04, Thomas Huth <thuth@redhat.com> wrote:
->>
->> On 26/03/2026 12.59, Peter Maydell wrote:
->>> On Thu, 26 Mar 2026 at 11:35, Thomas Huth <thuth@redhat.com> wrote:
->>>>
->>>> From: Thomas Huth <thuth@redhat.com>
->>>>
->>>> QEMU currently crashes when migrating a guest that uses the
->>>> isa-vga device as display. This happens because vga_isa_class_initfn()
->>>> registers a vmsd for vmstate_vga_common that operates on VGACommonState.
->>>> But the isa-vga device is derived from ISADevice, not from VGACommonState,
->>>> so the migration code tries to fill in the data for VGACommonState to
->>>> the memory that is a ISADevice instead, which is of cause causing trouble.
->>>>
->>>> We need an indirection here as it's also e.g. done in vga-pci.c, so
->>>> that the migration data gets filled into the right location.
->>>>
->>>> While we're at it, also drop the "global_vmstate = true" here. Since
->>>> migration was broken for this device during the last 15 years (!) anyway,
->>>> we don't have to worry about maintaining backward compatibility with this
->>>> switch for older versions of QEMU anymore.
->>>
->>> That means the only remaining users of global_vmstate = true are:
->>>    * TYPE_VGA_MMIO : used only by the MIPS Jazz board, which is not
->>>      versioned, so we are OK with migration compat breaks
->>>    * TYPE_ISA_CIRRUS_VGA
->>>
->>> I don't suppose that migration is also currently broken for Cirrus ? :-)
->>
->> No, Cirrus seems to be fine. But I think we should likely do something like
->> commit 1fcfdc435a3e25ab9037f6f7b8ab for the isa-cirrus-vga device, too, so
->> we can at least get rid of this in a couple of years...
-> 
-> If we're going to do that it would be nice to get that in for 11.0.
 
-I agree. Patch suggested here:
+--Pqgfetn8TJeF5gYm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-https://lore.kernel.org/qemu-devel/20260326154850.301609-1-thuth@redhat.com/
+On Wed, Mar 11, 2026 at 01:47:28PM +0500, Alexandr Moshkov wrote:
+> In case of migration of QEMU from the new version (where the
+> inllight-migration parameter is present), to the old one (where it is
+> absent) there is no way to disable this feature on the backend during
+> runtime.
+>=20
+> This commit slightly changes the semantics of the protocol feature
+> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+> adds a new parameter for GET_VRING_BASE, which allows to control the
+> drain in-flight requests on the backend.
+> Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
+> on anytime.
+>=20
+> In vhost-user-blk use inflight_migration param to enable skip_drain to
+> suspend in-flight I/O requests, and then migrate them throught inflight
+> subsection.
+>=20
+> Also now QEMU will always try to setup
+> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
+> backend. This will allow to use skip_drain parameter on GET_VRING_BASE
+> message.
+>=20
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>  docs/interop/vhost-user.rst    |  6 ++----
+>  hw/block/vhost-user-blk.c      | 29 +++++++++++++++++++++++------
+>  hw/virtio/vhost-user.c         |  3 +--
+>  hw/virtio/vhost.c              |  4 +---
+>  include/hw/virtio/vhost-user.h |  1 -
+>  5 files changed, 27 insertions(+), 16 deletions(-)
+>=20
+> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> index bfa75ff9a3..63efc87264 100644
+> --- a/docs/interop/vhost-user.rst
+> +++ b/docs/interop/vhost-user.rst
+> @@ -1255,14 +1255,12 @@ Front-end message types
+>    *suspended*, see :ref:`Suspended device state
+>    <suspended_device_state>`.
+> =20
+> -  The request payload's *num* field is currently reserved and must be
+> -  set to 0.
+> -
+>    By default, the back-end must complete all inflight I/O requests for t=
+he
+>    specified vring before stopping it.
+> =20
+>    If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+> -  feature has been negotiated, the back-end may suspend in-flight I/O
+> +  feature has been negotiated, using request payload's *num* field,
+> +  when *num* is set to 1, QEMU can tell the back-end to suspend in-fligh=
+t I/O
+>    requests and record them as described in :ref:`Inflight I/O tracking
+>    <inflight_io_tracking>` instead of completing them before stopping the=
+ vring.
+>    How to suspend an in-flight request depends on the implementation of t=
+he back-end
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index 1dc49c104e..8cc80eb0c3 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -134,10 +134,7 @@ static bool vhost_user_blk_inflight_needed(void *opa=
+que)
+>  {
+>      struct VHostUserBlk *s =3D opaque;
+> =20
+> -    bool inflight_migration =3D virtio_has_feature(s->dev.protocol_featu=
+res,
+> -                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFL=
+IGHT);
+> -
+> -    return inflight_migration;
+> +    return s->inflight_migration;
+>  }
+> =20
+> =20
+> @@ -232,11 +229,14 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+> =20
+> +    bool skip_drain =3D vhost_user_blk_inflight_needed(s) &&
+> +                      runstate_check(RUN_STATE_FINISH_MIGRATE);
+> +
+>      force_stop =3D s->skip_get_vring_base_on_force_shutdown &&
+>                   qemu_force_shutdown_requested();
+> =20
+>      ret =3D force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+> -                       vhost_dev_stop(&s->dev, vdev, true, false);
+> +                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
+> =20
+>      if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+>          error_report("vhost guest notifier cleanup failed: %d", ret);
+> @@ -364,7 +364,6 @@ static int vhost_user_blk_connect(DeviceState *dev, E=
+rror **errp)
+>      vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+> =20
+>      s->vhost_user.supports_config =3D true;
+> -    s->vhost_user.supports_inflight_migration =3D s->inflight_migration;
+>      ret =3D vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_U=
+SER, 0,
+>                           errp);
+>      if (ret < 0) {
+> @@ -580,10 +579,28 @@ static struct vhost_dev *vhost_user_blk_get_vhost(V=
+irtIODevice *vdev)
+>      return &s->dev;
+>  }
+> =20
+> +static bool vhost_user_blk_pre_save(void *opaqueue, Error **errp)
+> +{
+> +    VHostUserBlk *s =3D VHOST_USER_BLK(vdev);
 
-  Thomas
+This won't compile. "opaqueue" is unused and the vdev variable does not
+exist.
+
+> +
+> +    bool inflight_migration_enabled =3D vhost_user_has_protocol_feature(=
+&s->dev,
+
+vhost_user_has_protocol_feature() does not exist.
+
+> +                            VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGH=
+T);
+> +    if (vhost_user_blk_inflight_needed(s) && !inflight_migration_enabled=
+) {
+> +        error_setg(errp, "can't migrate vhost-user-blk device: "
+> +                         "backend doesn't support "
+> +                         "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
+> +                         "protocol feature");
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>  static const VMStateDescription vmstate_vhost_user_blk_inflight =3D {
+>      .name =3D "vhost-user-blk/inflight",
+>      .version_id =3D 1,
+>      .needed =3D vhost_user_blk_inflight_needed,
+> +    .pre_save_errp =3D vhost_user_blk_pre_save,
+>      .fields =3D (const VMStateField[]) {
+>          VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+>          VMSTATE_END_OF_LIST()
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index bb8f8eab77..ed95ec7523 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct vhost_dev=
+ *dev, void *opaque,
+>              }
+>          }
+> =20
+> -        if (!u->user->supports_inflight_migration ||
+> -            !virtio_has_feature(protocol_features,
+> +        if (!virtio_has_feature(protocol_features,
+>                                  VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+>              protocol_features &=3D ~(1ULL <<
+>                                 VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFL=
+IGHT);
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 4e196fc773..c04bb53159 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1390,12 +1390,10 @@ static int do_vhost_virtqueue_stop(struct vhost_d=
+ev *dev,
+>                                     unsigned idx, bool force,
+>                                     bool skip_drain)
+>  {
+> -    /* TODO: support skip drain */
+> -    assert(!skip_drain);
+
+The following assertion would be useful:
+
+  if (skip_drain) {
+      assert(virtio_has_feature(...protocol_features...,
+              VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT));
+  }
+
+> -
+>      int vhost_vq_index =3D dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>      struct vhost_vring_state state =3D {
+>          .index =3D vhost_vq_index,
+> +        .num =3D skip_drain,
+>      };
+>      int r =3D 0;
+> =20
+> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-use=
+r.h
+> index 53fe996686..c95bad5ddc 100644
+> --- a/include/hw/virtio/vhost-user.h
+> +++ b/include/hw/virtio/vhost-user.h
+> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
+>      GPtrArray *notifiers;
+>      int memory_slots;
+>      bool supports_config;
+> -    bool supports_inflight_migration;
+>  } VhostUserState;
+> =20
+>  /**
+> --=20
+> 2.34.1
+>=20
+
+--Pqgfetn8TJeF5gYm
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnFVkkACgkQnKSrs4Gr
+c8iwHgf/eUHChslddhQJiBdr7DqWZC6eY5aEJil7OmedxVE32X3/zCPuDnYxbi/S
+srPA7W4MoFOfaqRsNmOoNLies/gRjh6OtRoDLcGs37b4n/YWooySnevXcPPJgVJg
+11MiK8Jztj+pBfDTlXRGMTQMlMr9Y59RNe1mVL4ni64lQJCTGs6OIvVw0ypzePNV
+c04WhffltjJ8bxkYO//jYfoYRukVE9hxkQlxV8NKbBQPtKz8bXgYI/ScPJWmHLAO
+Mh8d6hAX/KlscOg0SiLMTAJ45f7xHTqUB4EoaNeYXqjJVcEUGZMkG6PEIUrHjMgF
+fdskGGLJhqnwxYFzMI02k0hEBVOclA==
+=UI0L
+-----END PGP SIGNATURE-----
+
+--Pqgfetn8TJeF5gYm--
 
 
