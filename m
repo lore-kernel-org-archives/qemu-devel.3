@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686A0106F312
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 09:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE12106F311
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 09:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5gtp-0000ps-DG; Thu, 26 Mar 2026 05:21:09 -0400
+	id 1w5gtm-0000oS-5F; Thu, 26 Mar 2026 05:21:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <silvan@quobyte.com>)
- id 1w5gtl-0000nx-S9
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:21:05 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1w5gtk-0000kx-NS
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:21:04 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <silvan@quobyte.com>)
- id 1w5gtk-0000Ks-2P
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:21:05 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-486fd5360d4so9422615e9.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 02:21:03 -0700 (PDT)
+ id 1w5gti-0000Kb-IW
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 05:21:04 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-486ff201041so6335725e9.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 02:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=quobyte.com; s=google; t=1774516862; x=1775121662; darn=nongnu.org;
+ d=quobyte.com; s=google; t=1774516861; x=1775121661; darn=nongnu.org;
  h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=HieXZL5piOqwNT+BgcNMrHvOisMf+bvhJjQFWY3kJhA=;
- b=2ocIbG3p9DB5wPk+GbbTmwRJUPNdYzafGEfDiN4oxmmv8qwiwueRhcX0gBKa2cSKOJ
- rigQD9J8YW4JZcYB5wi+4TYnib5K2TjgBlv2MLRr5p266Q9MODqHLbjgszqEbXVIZIX+
- VGwZywzN9icAxc0SqVhvEBsycKr2gxyIoAZOA=
+ bh=1z7eWHRCKyrRx5GJTpNLhbk7ddlC+qA+Hu4CTwSuwZ0=;
+ b=Y8bly2NbbTiFfHU1Pk+QI9sP8m3/h0cuyW8LX2OlT7dlBQp2GI6rvpBAUuKgjNfUqy
+ TubablGhweLHFk4KVhOM3AKmW+6dxyvkI1UKd5EpAR0NZ3vOyaoxdmY7Y164k5egfI8G
+ aaegaR/Pg7VlkOIi1w8N3vptpXjwNuuuGqstw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774516862; x=1775121662;
+ d=1e100.net; s=20251104; t=1774516861; x=1775121661;
  h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
  :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HieXZL5piOqwNT+BgcNMrHvOisMf+bvhJjQFWY3kJhA=;
- b=k/1q7mXh3HotCFv/ovHqBAZ8pt+l6bKiP7GNzQFm5Y0gvuksjrZY1PBUlKC91tH0px
- mVT4eSOxcJnoALJiaUklVtnP7UBZvH0TBfnJcdKJ0ctikl9xEW7/5QBX9xFUs8NQIgTW
- JnAC1jr81jG3EqKBY7wJVyl007c2bw3Zp26i59JIu9FuBEf9N/S5yZdkcDW0vyfBpeKR
- I3A81uLVGJuBQcFeiCQiFk5obsQuSFjQN1WeMCWtZqkgYnH7e+UiKkFMn5BMLcvRumkt
- tNeHm11CCTvnNj3ZZxVWJ+KR6BdkPrVPmwDWGIltfs6FOmUY9LAmXhR+GTEcb6NUXvdH
- jVYw==
-X-Gm-Message-State: AOJu0Yyivw8zyhll+Lm/rOiKFXgqwHbT5bbkM9qZMSgN7c6QedMQUwWM
- xHulSbQKALwmTe9CMpzEiCumVvLuWTdKz6Hcks5SgazXabWcnXl89Qykc4mZoC6YtdQbuEf5UHN
- Q89YL+DxuZO1hl+MIeZnoBKw77BGhSf+/GRebv55HCT+2FGVdTOb3pK5IFriSGh6EpMQt
-X-Gm-Gg: ATEYQzwYxuimMy83M59kpq3jUTp1MaMJoNxoHK2Gt/tv0EWOZPJv29EHpbMjsorTqWH
- qog0WgTt9S2fKToqyesrooCCYZxZSKvCoszjddDJQtfUvqnF3G6RID1vpAUqYrQp/C1JfTlWkQy
- W1yEN6VQj6wOzgKA3AF4HwKr0hOw1q/aDqbbm5FZa5oojzaPR5XW7mSiPOdiZbCTaPnqviVoqTu
- G5nKXfpkpUfWNTCztC8NpvswGnjfVzUXsVFzX8q4zivaFBR8JCQr1R6mK0DxxasNCC/2yFY7xXm
- h9k5l7TCbwzitJuctMxt1LI01t64ZMOJfDsZISLnpcdRy5EAqlpEDIuJbuc//OzzVGrd21d/q6Q
- Iit5cmPNmQMq5tv3H5aQT8GxkN+ZjaFG/nTVv4q8uYcpfH5F2X+zPkzvJWQpmjw8RuBP4sZNrE8
- Rui65fbaXTwk+AhIXgdTGN8WLnYc3vWSn2Qr/X1nke4XqIgELhgpJkLC+BZPPwk4gCEeekYcqHt
- h/9xsFOx3m+dFHTuEZ+ei5NjbUZ0fMzYAQwtBMLi40tZ/XMfkrmxw5zuds=
-X-Received: by 2002:a05:600c:3484:b0:485:5ba3:37d8 with SMTP id
- 5b1f17b1804b1-48715fd4649mr92903385e9.5.1774516862308; 
- Thu, 26 Mar 2026 02:21:02 -0700 (PDT)
+ bh=1z7eWHRCKyrRx5GJTpNLhbk7ddlC+qA+Hu4CTwSuwZ0=;
+ b=qIOOrOycCYXm7ctGdENGZz2eSg6aMjIGlf6PGy8CMOtbDgOcC6frbTLswMH22xbxpk
+ 9q8q5uLEeHQaeaovO12P/sZgPQF3zUTVbK6Frkx6y6Np3ZDwkijQ5YlGMr4FoMQOWqFe
+ g5eQLnTJYfLrSOBmO/CJaaIKHK2OPUAyX7RnQ9IfQS60Y1765YfWXucBBH9PGxdjNAzu
+ 5n+AcH+qYObDl5awdYXxsKciMqxeZnwlLx1gTCGfgDYaL+NtAPCga5vF/UBz3JBTAk1H
+ IvHhmglzQaFGkqn+QiaK4a2Xa3rohKQbnh5nOlZIUVrOyEwufR7mUah6TqBT9Zfgs6EI
+ PB7g==
+X-Gm-Message-State: AOJu0YwBIojQBDVyjqCC8BUvnMBCs6A4nnPBEYotyeJnFB6f8fIyg7xb
+ NAti67A5F8bck/gEQYYdF5R8uBQrO1DlQqZ73/KFfx85JLUCrcst3zv5fIgTHU/lOmcC3CPJ2Of
+ UcKIbDTtSfkZe56XcnIHBKyz4Xj6elDVvxyMhMxCXEJ0ZFl4fyUCJLCTxEvMSUXWt9TrM
+X-Gm-Gg: ATEYQzwr3326L8c1Qprltf4hkrO+IMb6aCibS3o1jhtdmOvROIBxal2C1FYcckRuC7P
+ f8BVaJ/jiMRb+XD+/azzD3BoTzZo+7lkOoIrTyRX9wnio3tRl554HzZrf6+ofRTHRF90zmX0reS
+ koIvowCLRvCsctjB9JVi1XesU7w7XnlxMQHlEDYI7lo8OVhxhyaVAjRjpSTNIxZvwIojClrHS+3
+ emaxHmX2/iJNyRfrDbSvl4eMRnDhehYya0DVKQgwgcGJYq8vtMBY3CBKJmBRaWZDbN54MJ55LXP
+ SHf28Hw3FGEDmSS1GWGTsDP/7gJhL7pJ6f2r7YSp0wWaJKJbMpvk0SSjFooCkFIlSp0zwkIDcp/
+ Z3AyZ/CWmw9xeAlzWpckK0v86M6K4f1SGclfhOFuIezhtJGEKpkiAilEQ6m7jGGxjv01lIhqXGA
+ xVtdll3l0SLtPctxg7vxhHe6Yfk/JjH9wx6fDeOmyf5TabC30AsFvw/9iPtsv5BRfMYc/xtlBus
+ nhyTM3nXsclyCxaACoy9EKQP4qZGihbxt7hWkeZjdTdujgtxxpvtUKhino=
+X-Received: by 2002:a05:600c:8219:b0:485:ae14:8187 with SMTP id
+ 5b1f17b1804b1-48715fc3250mr91970845e9.2.1774516861066; 
+ Thu, 26 Mar 2026 02:21:01 -0700 (PDT)
 Received: from kaisers.corp.quobyte.com ([24.134.167.61])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48722c9506dsm16474295e9.7.2026.03.26.02.21.01
+ 5b1f17b1804b1-48722c9506dsm16474295e9.7.2026.03.26.02.21.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 02:21:01 -0700 (PDT)
+ Thu, 26 Mar 2026 02:21:00 -0700 (PDT)
 From: Silvan Kaiser <silvan@quobyte.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
  pierrick.bouvier@linaro.org, eblake@redhat.com, armbru@redhat.com,
  Silvan Kaiser <silvan@quobyte.com>
-Subject: [PATCH 3/3] tests/qemu-iotests: Add test 315 for locking=posix
-Date: Thu, 26 Mar 2026 10:19:48 +0100
-Message-ID: <20260326091948.194529-4-silvan@quobyte.com>
+Subject: [PATCH 2/3] docs/system: Document locking=posix option for file block
+ driver
+Date: Thu, 26 Mar 2026 10:19:47 +0100
+Message-ID: <20260326091948.194529-3-silvan@quobyte.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260326091948.194529-1-silvan@quobyte.com>
 References: <20260326091948.194529-1-silvan@quobyte.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=silvan@quobyte.com; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=silvan@quobyte.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,119 +102,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Silvan Kaiser <silvan@quobyte.com>
 ---
- tests/qemu-iotests/315     | 88 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/315.out |  7 +++
- 2 files changed, 95 insertions(+)
- create mode 100755 tests/qemu-iotests/315
- create mode 100644 tests/qemu-iotests/315.out
+ docs/system/qemu-block-drivers.rst.inc |  3 +++
+ qemu-options.hx                        | 10 ++++++----
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/315 b/tests/qemu-iotests/315
-new file mode 100755
-index 0000000000..9ccc4b0439
---- /dev/null
-+++ b/tests/qemu-iotests/315
-@@ -0,0 +1,88 @@
-+#!/usr/bin/env bash
-+# group: rw quick
-+#
-+# Test image locking with locking=posix
-+#
-+# Unlike 'locking=on', which prefers OFD locks and falls back to POSIX
-+# with a warning, 'locking=posix' explicitly forces the use of POSIX
-+# locks without any warning.  This test verifies that:
-+#   - locking=posix does not emit a fallback warning
-+#   - locking=posix actually applies POSIX locks on the image
-+#
-+# The lock check uses qemu-storage-daemon opening the image via the
-+# 'file' protocol driver directly (no format layer on top), because
-+# POSIX locks are per-process and are silently released when any fd to
-+# the same inode is closed -- which happens during qcow2 initialisation
-+# inside a full QEMU instance.
-+#
-+# Copyright 2026 Quobyte Inc
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/docs/system/qemu-block-drivers.rst.inc b/docs/system/qemu-block-drivers.rst.inc
+index 384e95ba76..bdecbf39ca 100644
+--- a/docs/system/qemu-block-drivers.rst.inc
++++ b/docs/system/qemu-block-drivers.rst.inc
+@@ -882,6 +882,9 @@ the POSIX locking API will be used. In this case there is a risk that the lock
+ will get silently lost when doing hot plugging and block jobs, due to the
+ shortcomings of the POSIX locking API.
+ 
++To force the use of POSIX locks even when OFD locking is available, specify
++"locking=posix". The same caveats about silent lock loss apply.
 +
-+# creator
-+owner=silvan@quobyte.com
-+
-+seq="$(basename $0)"
-+echo "QA output created by $seq"
-+
-+tmp=/tmp/$$
-+status=1	# failure is the default!
-+
-+_cleanup()
-+{
-+    _cleanup_test_img
-+    if [ -f "$TEST_DIR/qsd.pid" ]; then
-+        kill -SIGTERM "$(cat "$TEST_DIR/qsd.pid")" 2>/dev/null
-+        rm -f "$TEST_DIR/qsd.pid"
-+    fi
-+    rm -f "$SOCK_DIR/qsd-315.sock"
-+}
-+trap "_cleanup; exit \$status" 0 1 2 3 15
-+
-+# get standard environment, filters and checks
-+. ./common.rc
-+. ./common.filter
-+
-+_supported_fmt qcow2
-+_supported_proto file
-+_supported_os Linux
-+
-+size=32M
-+
-+_make_test_img $size
-+
-+# locking=posix is an explicit choice, not a fallback, so the
-+# "falling back to POSIX file locks" warning must never appear,
-+# regardless of whether OFD locking is available on this host.
-+echo "Checking that locking=posix does not warn about OFD fallback"
-+if $QEMU_IMG info --image-opts \
-+        "driver=file,locking=posix,filename=$TEST_IMG" 2>&1 |
-+    grep -q 'falling back'; then
-+    _fail "FAIL: unexpected fallback warning with locking=posix"
-+fi
-+echo "OK: no fallback warning"
-+
-+# Use qemu-storage-daemon with driver=file (no format layer) to hold the
-+# image open with locking=posix, then verify POSIX locks appear in
-+# /proc/locks.  A format layer (e.g. qcow2) would trigger internal fd
-+# reopen operations that silently release POSIX locks, so we bypass it.
-+echo "Checking that locking=posix applies POSIX locks on the image"
-+$QSD \
-+    --blockdev "driver=file,node-name=file0,filename=$TEST_IMG,locking=posix" \
-+    --nbd-server "addr.type=unix,addr.path=$SOCK_DIR/qsd-315.sock" \
-+    --export "type=nbd,id=exp0,node-name=file0,writable=on" \
-+    --daemonize --pidfile "$TEST_DIR/qsd.pid"
-+
-+INODE=$(stat -c %i "$TEST_IMG")
-+if grep -q "POSIX.*:${INODE} " /proc/locks; then
-+    echo "OK: POSIX locks present on image"
-+else
-+    _fail "FAIL: no POSIX locks found on image"
-+fi
-+
-+kill -SIGTERM "$(cat "$TEST_DIR/qsd.pid")"
-+rm -f "$TEST_DIR/qsd.pid" "$SOCK_DIR/qsd-315.sock"
-+
-+# success, all done
-+echo "*** done"
-+rm -f $seq.full
-+status=0
-diff --git a/tests/qemu-iotests/315.out b/tests/qemu-iotests/315.out
-new file mode 100644
-index 0000000000..e90082fc64
---- /dev/null
-+++ b/tests/qemu-iotests/315.out
-@@ -0,0 +1,7 @@
-+QA output created by 315
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=33554432
-+Checking that locking=posix does not warn about OFD fallback
-+OK: no fallback warning
-+Checking that locking=posix applies POSIX locks on the image
-+OK: POSIX locks present on image
-+*** done
+ QEMU transparently handles lock handover during shared storage migration.  For
+ shared virtual disk images between multiple VMs, the "share-rw" device option
+ should be used.
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 21972f8326..23502c5aa6 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1540,10 +1540,12 @@ SRST
+             default: threads)
+ 
+         ``locking``
+-            Specifies whether the image file is protected with Linux OFD
+-            / POSIX locks. The default is to use the Linux Open File
+-            Descriptor API if available, otherwise no lock is applied.
+-            (auto/on/off, default: auto)
++            Specifies whether the image file is protected with locks.
++            'on' enables locking, preferring OFD (Open File Descriptor)
++            locks if available, but falling back to POSIX locks with a
++            warning. 'posix' forces the use of POSIX locks. 'auto' (the
++            default) enables locking only if OFD locks are available.
++            'off' disables locking. (on/off/auto/posix, default: auto)
+ 
+         Example:
+ 
 -- 
 2.47.3
 
