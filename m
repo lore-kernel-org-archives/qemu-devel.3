@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 046BA10AB819
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE5F10AB81D
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 20:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5qxu-0006xA-3l; Thu, 26 Mar 2026 16:06:02 -0400
+	id 1w5qxv-0006xm-Tk; Thu, 26 Mar 2026 16:06:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w5qxm-0006wi-O7
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 16:05:55 -0400
+ id 1w5qxp-0006wy-Ro
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 16:05:57 -0400
 Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w5qxh-0002oW-BC
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 16:05:53 -0400
+ id 1w5qxn-0002pE-0V
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 16:05:57 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 46376427A3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:47 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 1F3B142780
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1774555547;
- bh=B9uPaB4EdpbAmIrq2A0ivQJa4SdaLkbfC0NzsNA+x5g=;
+ s=20210803; t=1774555550;
+ bh=fuNZ93hoEfTb1HWqJIIjfHHEe+966qsJGoAUApb0J4U=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=Vjx8VmH6HFO5bJ0DsLeCKum5aHCzzmCxUBp5hO/72xRHEJLivMR637GzGTtfUd39j
- zuBHpQJE2uBAw1/tDcoqFCKDFWs1Kbwo9wBZEHu63IQN/WyOfX4hueybVLMj4KFg6C
- iznGX7sbyLZLc3A/WaGTfmmo2n+wuY/hFHh9/nQZpNf7YY4AztEohYVKKnq++03rLz
- dBsC7PsNjN40l39CmEK2v0UQJJ3f8bAasF+dSTVHd4+hp+I/e5HqwTJNrXUFpGaTM8
- Ox4L4O8jzpMPLH7Uzc52WQpS7JlkQAmTZVXE3lWrnozgiHq/WSjAFx5lrOZWVCMrZx
- s6aREaVCMt88A==
+ b=O98uShh6VE9XiA61x9IjVr4RqbRu4M9aNzzRFtumA9zQqe+78QResbqRK6w4kep94
+ vpp4U3k2h/J1kcw24XQAHu1HHIMghxnX9XBf/lh1rV8gkQfGB65vrBB7/x4VT5lFI0
+ hOOR1f08rW6ZN+AWGNGK5b6X4F2PepeY+7tRWQf9YC4Y/CyQRjAdBilK4MFMNRmPvy
+ ROd9niqbJDInxFXiUSjixq6fanJnqoWEIXCuaKwQxvvD0PJHru+cPVEMdcZokZX7Di
+ OZo6A+23DiE1+BfiwW+y3JXgGTNYZ/KfuEUtbUBmMiDK7obzXxKjv1aQL7WTXuiHRf
+ FlFbE4o5FxpVw==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 392677E16A
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:47 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 0C9BC7E163
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:50 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 26 Mar 2026 19:56:02 -0000
+Date: Thu, 26 Mar 2026 19:56:33 -0000
 From: Wesley Hershberger <2126951@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -75,7 +75,7 @@ X-Launchpad-Bug-Commenters: athos hectorcao mjt+launchpad-tls tjaalton
 X-Launchpad-Bug-Reporter: Wesley Hershberger (whershberger)
 X-Launchpad-Bug-Modifier: Wesley Hershberger (whershberger)
 References: <175977079933.1446079.11908449148472830395.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177455496256.1644230.854632163963211484.malone@juju-98d295-prod-launchpad-4>
+Message-Id: <177455499323.1641805.7619145689442828812.malone@juju-98d295-prod-launchpad-4>
 Subject: [Bug 2126951] Re: `block-stream` segfault with concurrent
  `query-named-block-nodes`
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -84,7 +84,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 6994edeff8426ad7266d8c4dd73dced34f731958
+X-Launchpad-Hash: fb4b9ddbb68488da8f929e91ce091c5fc89376d4
 Received-SPF: pass client-ip=185.125.188.251;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
@@ -111,48 +111,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 The crash is reproducible with the current version:
 
-wesley@qv0:~$ apt policy qemu-system-x86
+wesley@nv0:~$ apt policy qemu-system-x86
 qemu-system-x86:
-  Installed: 1:10.1.0+ds-5ubuntu2.4
-  Candidate: 1:10.1.0+ds-5ubuntu2.4
+  Installed: 1:8.2.2+ds-0ubuntu1.13
+  Candidate: 1:8.2.2+ds-0ubuntu1.13
   Version table:
- *** 1:10.1.0+ds-5ubuntu2.4 500
-        500 http://archive.ubuntu.com/ubuntu questing-updates/main amd64 Pa=
-ckages
-        500 http://security.ubuntu.com/ubuntu questing-security/main amd64 =
-Packages
+ *** 1:8.2.2+ds-0ubuntu1.13 500
+        500 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packa=
+ges
+        500 http://security.ubuntu.com/ubuntu noble-security/main amd64 Pac=
+kages
         100 /var/lib/dpkg/status
-     1:10.1.0+ds-5ubuntu2 500
-        500 http://archive.ubuntu.com/ubuntu questing/main amd64 Packages
+     1:8.2.2+ds-0ubuntu1 500
+        500 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages
 
-### Verfication done Questing ###
+### Verification done Noble ###
 
-wesley@qv0:~$ apt policy qemu-system-x86
+wesley@nv0:~$ apt policy qemu-system-x86
 qemu-system-x86:
-  Installed: 1:10.1.0+ds-5ubuntu2.5
-  Candidate: 1:10.1.0+ds-5ubuntu2.5
+  Installed: 1:8.2.2+ds-0ubuntu1.14
+  Candidate: 1:8.2.2+ds-0ubuntu1.14
   Version table:
- *** 1:10.1.0+ds-5ubuntu2.5 100
-        100 http://archive.ubuntu.com/ubuntu questing-proposed/main amd64 P=
-ackages
+ *** 1:8.2.2+ds-0ubuntu1.14 100
+        100 http://archive.ubuntu.com/ubuntu noble-proposed/main amd64 Pack=
+ages
         100 /var/lib/dpkg/status
-     1:10.1.0+ds-5ubuntu2.4 500
-        500 http://archive.ubuntu.com/ubuntu questing-updates/main amd64 Pa=
-ckages
-        500 http://security.ubuntu.com/ubuntu questing-security/main amd64 =
-Packages
-     1:10.1.0+ds-5ubuntu2 500
-        500 http://archive.ubuntu.com/ubuntu questing/main amd64 Packages
+     1:8.2.2+ds-0ubuntu1.13 500
+        500 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packa=
+ges
+        500 http://security.ubuntu.com/ubuntu noble-security/main amd64 Pac=
+kages
+     1:8.2.2+ds-0ubuntu1 500
+        500 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages
 
-wesley@qv0:~$ ./provision.sh
+wesley@nv0:~$ ./provision.sh
 + wget https://cloud-images.ubuntu.com/daily/server/noble/current/noble-ser=
 ver-cloudimg-amd64.img
---2026-03-26 08:56:59--  https://cloud-images.ubuntu.com/daily/server/noble=
+--2026-03-26 08:56:55--  https://cloud-images.ubuntu.com/daily/server/noble=
 /current/noble-server-cloudimg-amd64.img
 Resolving cloud-images.ubuntu.com (cloud-images.ubuntu.com)... 185.125.190.=
-40, 185.125.190.37, 2620:2d:4000:1::17, ...
+37, 185.125.190.40, 2620:2d:4000:1::1a, ...
 Connecting to cloud-images.ubuntu.com (cloud-images.ubuntu.com)|185.125.190=
-.40|:443... connected.
+.37|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 629987328 (601M) [application/octet-stream]
 Saving to: =E2=80=98noble-server-cloudimg-amd64.img.1=E2=80=99
@@ -160,10 +160,10 @@ Saving to: =E2=80=98noble-server-cloudimg-amd64.img.1=E2=80=99
 noble-server-cloudimg-amd64.img.1
 100%[=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D>]
-600.80M  1.60MB/s    in 21s
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D>]
+600.80M  26.4MB/s    in 38s
 
-2026-03-26 08:57:21 (28.4 MB/s) - =E2=80=98noble-server-cloudimg-amd64.img.=
+2026-03-26 08:57:34 (16.0 MB/s) - =E2=80=98noble-server-cloudimg-amd64.img.=
 1=E2=80=99
 saved [629987328/629987328]
 
@@ -184,32 +184,33 @@ size=3D10 --graphics none --network network=3Ddefault --cloud-init user-dat=
 a=3Duser-data,meta-data=3Dmeta-data,network-config=3Dnetwork-config
 ...
 
-wesley@qv0:~$ virsh list
+wesley@nv0:~$ virsh list
  Id   Name   State
 ----------------------
- 2    n0     running
+ 1    n0     running
 
-wesley@qv0:~$ ./blockrebase-crash.sh n0
+wesley@nv0:~$ ./blockrebase-crash.sh n0
 ...
 
 My connection to the testbed died about 5 hours in to the test; it
-filled up 10GB with snapshots and didn't crash:
+filled up 8GB with snapshots and didn't crash:
 
-wesley@qv0:~$ df -h
+wesley@nv0:~$ df -h
 Filesystem      Size  Used Avail Use% Mounted on
-tmpfs           391M  1.4M  389M   1% /run
+tmpfs           391M  1.3M  390M   1% /run
 efivarfs        256K   44K  208K  18% /sys/firmware/efi/efivars
-/dev/sda1        19G   11G  8.3G  55% /
+/dev/sda1        19G  9.8G  8.6G  54% /
+...
 
-wesley@qv0:~$ virsh list
+wesley@nv0:~$ virsh list
  Id   Name   State
 ----------------------
- 2    n0     running
+ 1    n0     running
 
-### Verfication done Questing ###
+### Verification done Noble ###
 
-** Tags removed: verification-needed-questing
-** Tags added: verification-done-questing
+** Tags removed: verification-needed-noble
+** Tags added: verification-done-noble
 
 --=20
 You received this bug notification because you are a member of qemu-
