@@ -4,153 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BEAB10A3D80
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 12:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCA610A3D80
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 12:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5jRz-0000eI-V8; Thu, 26 Mar 2026 08:04:36 -0400
+	id 1w5jh7-0003Xh-1W; Thu, 26 Mar 2026 08:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5jRx-0000eA-FV
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:04:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1w5jgt-0003T4-DV
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:20:00 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w5jRv-00070s-Hv
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:04:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774526666;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Zwhljb7kpSeHV3qL+TJux5THg5eFALv4HMYI/zEuzpA=;
- b=AF0ZCPnoS96x8D63nxOMbrqYRajeWU71eQu2c1hZtZca5DZPaX7P/4bBnwkMdo4/84zbKI
- CZBfOqyfND4D9o4NMb4Qkxgqrs2rpN4Li/SgIVAg9Vrufyjq64bFzKhjDrBTMgp99+PcQL
- wmJyN8/I/LE2tjPxrLW/tInXWfjcZHY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-aCeNwJMjMdaB_pBhC_IB8Q-1; Thu, 26 Mar 2026 08:04:25 -0400
-X-MC-Unique: aCeNwJMjMdaB_pBhC_IB8Q-1
-X-Mimecast-MFC-AGG-ID: aCeNwJMjMdaB_pBhC_IB8Q_1774526664
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b97f04b44b9so137416966b.0
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 05:04:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774526664; x=1775131464; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Zwhljb7kpSeHV3qL+TJux5THg5eFALv4HMYI/zEuzpA=;
- b=PfjP9QvZY8IinaqvXrmPVcaTeDV6IUcAI7UcP4FkEb0PCAzQ8/ubI3yvjc+zoyPAN6
- Zqk6h8vHb8lOqTcf/t+PIECLLDBfc0oLmcSlNAoFllubeoOF8fBHkel+TsHIz/0iQdeh
- 4K6b+fnosvyi+qNAKfiwZNgzRIf4ftttCg1M3nGEGBDeHwOWvtP6SnfRGDlr7YBl1vCU
- kg8Iga6zsQeQxsDVJQDznYd1P4PlePNT5nOu7VyG+SdGawiX9OJy0jpydLp8nC6OPbog
- F5iGBKGvn2i7ktIwqtmPnrJ3DH0KqL2U02EMvU+YI+bz81b/ex0s6RZGFkphtC8IK/iA
- CRew==
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1w5jgq-0003Sn-Sg
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 08:19:58 -0400
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 8973B3F452
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 12:19:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1774527593;
+ bh=2a4uksXmDEhXbA8oCTGNFyxIUIo38RL710NsO82kbCA=;
+ h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
+ b=pRrvARaGECMJm+iwN1ERuEH2Q9rtmWrcNA3INIBTa4kOp80NKRmQckc2Hh7qLD/XP
+ N+ezLONqAaqlFh7IdO+1QszrdxQDExFymS4PpqDo7Y7bIEXIiKOKwru2khsiCX/wtS
+ /CPv4wiP+mFSi4xGcaG6ezVvUNKc985QlnzMosxAE/HL070/ZueMHwlPa2wi9u88HV
+ l8/w6syv6dCNqr6Q+vMk4RmRCA7d1UgAf+4lUva3RRa7ZUUsZ8/7HRwLzwkaqwXmLx
+ STChmJ2NG3j0MRQEbtHaTvuQyyZCypVW1Dp4oqfoLiDpKLVBE+snUTXOVUhImeKIvG
+ L0vg+/U0qAxPhLhAGoubV4Pvs4Us18c1CZqyXh3P1NDUEueVBelkWFRKCKmxU79VWL
+ neDfL/f8LTmi83wUQfXJg9E4uxHA2eA1XF/XXP9FrbRskWkBbpgZgHsERjryoE9Bfx
+ Hw9AlXXN7AE6HsaK7qjcKMRjW+2ZD7waw3K/6Gye8DK5jpWqb5u5wi//2wPapR5VET
+ c2Hi274FGgeYATq2WhZq290mDZVDuh+vnlxUI6hHbWHUtc3Z+PzvtptqOm7KpI0x6C
+ ciKHU7dqe0w9YWFnQ24ul/qH3BNNKhkFdwUNbdG2vyhnprM6/axpmcZ1+ubFaMZkM1
+ BzyOK8fs1S3NuWcopTx1B+Tc=
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48553fdd03dso5793585e9.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 05:19:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774526664; x=1775131464;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1774527593; x=1775132393;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zwhljb7kpSeHV3qL+TJux5THg5eFALv4HMYI/zEuzpA=;
- b=bmjM7pJByNR51krqCV2rFoIssZoSE+1sce0VhLyhOC9cNiMiMv2+UB2Fg1CAABbROx
- ImATZgLNj00/VHqxgCOdVvaXaDRxGa4G3jcCsKiabTlYoMGwNltZz/RViattPbl3urCm
- GTUHRB8q2YvgfFKmqJC8HMFCw3UUV36aEtPsvXiXdUNUEeMs9E6V55ARNsGCn0dQec5W
- kqzD7lKWQ26xY5RmmirizDdjSEPeNLAnmveVbjtdanw6eGHjlCuQsR3gkxoyUpBWIJgu
- Ek4IBnf9Luxmo4CQZUdphcGaBuiXKoWEYsAa94iX3NE+y73lKHrNCsqW9wIa6p5SUgGE
- ZbbQ==
+ bh=2a4uksXmDEhXbA8oCTGNFyxIUIo38RL710NsO82kbCA=;
+ b=GzhymnmNkT0RduGn24FWC3PxncsDnWZYimIUYOAf+zaLhspEkNRikT9rJhLPktdM+Y
+ ALB5MHzOB2GaaZ99P0aChDcR1xHHT7d05RUXZUgh7Xbs0ht7MzTgMbuwqm+9d8FttVDK
+ u0Yx/iB5Ig6JbFYzq3HPGe9BibFB7w+dpCuaXv+j4LCwFBWb2/G7/HKpCQ7bI4XfS+Km
+ FIA2uig71DEN8zZrycATI5xEYgW9XSxWEJwsVd12aBfrPdAIU0WwZJJ1LdfiLOWSbvKT
+ oQivr+fcfcZ/j0/j8umTtGfPE8IOaKn108BPKk+WhYfdx0QdkJdnS3pClZjE0lxt4v9i
+ xoPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkWaBVJOkZxAbJLjgdqpJrymBc5vR5tFjbQ8XSH9nt3n8QjCTB7ysVUWrivBSZ8hF+8ELZQVDZDmtD@nongnu.org
-X-Gm-Message-State: AOJu0YzKgSsJWB7OO9mHdMjaX0nE3ljs6Cu7CMhDtr4A/7aGx5vuxtQE
- 00Mlu7TEPrn26xOlJdes4/sFBapM9cf47Qyjdqxy9MbOz5593FyC0j0Nf1wkSOd4FH1GNVagEaV
- A4FhI8O2bWx4HrAmgcyRBGp0K4WDIP1jxAcFcD7NqivXbHxpJVjbOngZ9
-X-Gm-Gg: ATEYQzx+LhwViBH9GoaCSKhgecWdkaX1VOf2466PPV8uQejEMZzVglMsknq8eozKqWX
- T21u+20754ujYO9fEducbfOX76livEU4YKson2fHZE48LlV6MmqHNlBjPQwOlS5zh5o81o66Jr8
- vpqfJBwjRazWNvSAUAhO4k946T+O7zJaFYTHAZevXKktkus7vRioQGIM0pGdkqfBoChTz9JPY1K
- X29d/VMRDA8P5E5Rg2D8O3LqmATlTVexxvjHbZA77cRl47GKwlFz3OK0zSTrH0/fjnARWAIlvt2
- 585IhTYZWGSAnwD8LLx+eZnMEJN4lk2q0JSa/qcYm/gWHxT9j8IbEK0Wrvg+It9viVE9odirG9k
- d3qzJxv9hTZZ+9R8yjw==
-X-Received: by 2002:a17:906:1542:b0:b98:70fe:cd95 with SMTP id
- a640c23a62f3a-b9a5428fd5emr447028266b.53.1774526664076; 
- Thu, 26 Mar 2026 05:04:24 -0700 (PDT)
-X-Received: by 2002:a17:906:1542:b0:b98:70fe:cd95 with SMTP id
- a640c23a62f3a-b9a5428fd5emr447025266b.53.1774526663502; 
- Thu, 26 Mar 2026 05:04:23 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.113.85]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9b2026654fsm113890466b.22.2026.03.26.05.04.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 05:04:22 -0700 (PDT)
-Message-ID: <f6045fed-60fb-47b8-8241-a6fcb0af7292@redhat.com>
-Date: Thu, 26 Mar 2026 13:04:21 +0100
+ AJvYcCWxCuvnn0+vE2R1YXZeiqgWTWOYhLPsDJZbGUCbKmWHvScF4QQy1/jNNQR72quXKPHoFvvE6Ldxekbm@nongnu.org
+X-Gm-Message-State: AOJu0YypXS+4ILnxUu2creR7i87RPSfQyNvB1rksXGrrqWnur8Vg7cRq
+ H1XzMQ0foCYfm/zMPMOD9JbwQ7LtVNKzecmJJOguThHCe06TYYd8gO2qk0qj+IJ9QLRv/KVGMbD
+ OoZozOIVZ5VjiKYiRTXcVxL0qDNadpZcmSyHL4kncQ/cwGtS1gJ5KNdnaLuP/DGUJMZlsYGa9
+X-Gm-Gg: ATEYQzwRpm1Euutz97RuvXrTzHFbF4CgSzV6G9W1fnBlNmihpSxADUbbAQaVnKqyH5j
+ J2zIHHGVmI7j+YVr7U6GVfA9ZbwUuMgdyIZ37LNqgjVRB22U8lj2h9bJOh4hov0ObkZAnaJ2kGW
+ +gJqcpO7SaOjrP8K7IFRMbAtm05eBK3Xk2MpJ9P2rBj1D5utfJaMpqdqacjmSLRsZL/oFkCMuQR
+ 9qLlZIVW6R72awCIRSTWj6glOsWixOctsMQXl+kmvONE6wvC/pPARp/+23Zh/VT+8zNAKU6qtpt
+ 6Gd2NkbSBZ1dzcVJUlKM/8rz8OrhdKZlGAo+3yaektjCvcofE1+LaGfG50gAa0oBtPLVWwd/bNo
+ Cs02W9Ix4B0s67vXImdlixbqmWznnUI+5VYK9PVdiS2LkZFpat19HDWMJg/oU4HL9AQ56fkuSSg
+ VFYrEuSW3wNhscIy4DRDxqqquIo3yFBbkYcsf1lfyhBxHF
+X-Received: by 2002:a05:600c:a010:b0:487:4cb:2fe4 with SMTP id
+ 5b1f17b1804b1-487160bccf1mr112645955e9.33.1774527592940; 
+ Thu, 26 Mar 2026 05:19:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:a010:b0:487:4cb:2fe4 with SMTP id
+ 5b1f17b1804b1-487160bccf1mr112645365e9.33.1774527592491; 
+ Thu, 26 Mar 2026 05:19:52 -0700 (PDT)
+Received: from workstation5 (ip-005-147-080-091.um06.pools.vodafone-ip.de.
+ [5.147.80.91]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b919e7111sm7587721f8f.37.2026.03.26.05.19.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Mar 2026 05:19:51 -0700 (PDT)
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Cc: Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Subject: [PATCH] hw/acpi: correct field sequence in SPCR table
+Date: Thu, 26 Mar 2026 13:19:47 +0100
+Message-ID: <20260326121947.51200-1-heinrich.schuchardt@canonical.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga device
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20260326113457.159065-1-thuth@redhat.com>
- <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URI_TRY_3LD=1.999 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,37 +118,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/2026 12.59, Peter Maydell wrote:
-> On Thu, 26 Mar 2026 at 11:35, Thomas Huth <thuth@redhat.com> wrote:
->>
->> From: Thomas Huth <thuth@redhat.com>
->>
->> QEMU currently crashes when migrating a guest that uses the
->> isa-vga device as display. This happens because vga_isa_class_initfn()
->> registers a vmsd for vmstate_vga_common that operates on VGACommonState.
->> But the isa-vga device is derived from ISADevice, not from VGACommonState,
->> so the migration code tries to fill in the data for VGACommonState to
->> the memory that is a ISADevice instead, which is of cause causing trouble.
->>
->> We need an indirection here as it's also e.g. done in vga-pci.c, so
->> that the migration data gets filled into the right location.
->>
->> While we're at it, also drop the "global_vmstate = true" here. Since
->> migration was broken for this device during the last 15 years (!) anyway,
->> we don't have to worry about maintaining backward compatibility with this
->> switch for older versions of QEMU anymore.
-> 
-> That means the only remaining users of global_vmstate = true are:
->   * TYPE_VGA_MMIO : used only by the MIPS Jazz board, which is not
->     versioned, so we are OK with migration compat breaks
->   * TYPE_ISA_CIRRUS_VGA
-> 
-> I don't suppose that migration is also currently broken for Cirrus ? :-)
+On LoongArch and RISC-V invalid SPCR tables are created:
 
-No, Cirrus seems to be fine. But I think we should likely do something like 
-commit 1fcfdc435a3e25ab9037f6f7b8ab for the isa-cirrus-vga device, too, so 
-we can at least get rid of this in a couple of years...
+Terrminal Type : 00
+Language : 03
 
-  Thomas
+The correct values are:
+
+Terrminal Type : 03
+Language : 00
+
+This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
+SPCR creation to common location") that swapped the fields.
+
+See the specification of the table in
+https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+
+Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+---
+ hw/acpi/aml-build.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 4b37405088..a999320e61 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2115,10 +2115,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+     build_append_int_noprefix(table_data, f->stop_bits, 1);
+     /* Flow Control */
+     build_append_int_noprefix(table_data, f->flow_control, 1);
+-    /* Language */
+-    build_append_int_noprefix(table_data, f->language, 1);
+     /* Terminal Type */
+     build_append_int_noprefix(table_data, f->terminal_type, 1);
++    /* Language */
++    build_append_int_noprefix(table_data, f->language, 1);
+     /* PCI Device ID  */
+     build_append_int_noprefix(table_data, f->pci_device_id, 2);
+     /* PCI Vendor ID */
+-- 
+2.53.0
 
 
