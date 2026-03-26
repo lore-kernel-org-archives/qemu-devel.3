@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43634109E530
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7AFF109E530
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5a7M-0005V7-5Y; Wed, 25 Mar 2026 22:06:40 -0400
+	id 1w5a8C-0005tj-IU; Wed, 25 Mar 2026 22:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5a7L-0005Un-Fs
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:06:39 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1w5a8A-0005rY-Dj
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:07:30 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5a7J-0007eI-SH
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:06:39 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b97ba4c2be2so62170666b.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:06:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774490795; cv=none;
+ id 1w5a88-0007sk-Qe
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:07:30 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-668e55bd36bso513842a12.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:07:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774490845; cv=none;
  d=google.com; s=arc-20240605;
- b=GYdxHeVLTS/AvsQTde9FFUO0gXrVjC+bSpoJwdg4i3fOaM+V77Xmy7OdihfKc7vYKw
- AN3RufbOHYWysHZmTFjPyOAUXtTpevEMa0two1yCwLnbJqRHXmpuJzoWPZXdn54ywl3e
- Ria3DlKxBHDPmWPvmqWN9PqbNJ35ryv8b5Ku6v8+VPQkqLbGzPWAmHv2AQHcrWfR4V3W
- MX6cXSwkU0+S7UkrZi3f5aUtfMkE/xcFXgEZ6GV+MOfI12S1iramI6sW7e5f+/3h66Fs
- ldozIV65g2OplTVf+MznR3TT1K0PQR/unJJF5ES16UoL39IieC70y+MO79weJe2J1J1b
- A7dA==
+ b=byB/9FhUtotWtIHdwgGegG/X9NHEeaug/59N+x6/Pz30rVBIe55g8FOdzY/k+4c/fr
+ 2eFCsTjCgG5t3qQCNw50chgpjfzkYHD28lVYStSojBUzyOEzVi2q+F8JvWJFGK4viEvw
+ XV5UGomvNTAzLdwLPJAGSvFt1rMKiD8cmEpevUgJmAhL/p8FnYIasWzQUvztV4nVaQSz
+ s04BK9SgOW9Cf6wh47pw0hQIa/KoP5KOf28zpqRxz6hQ3o3Y4KCFRw7o1WQCafQmzAez
+ JcR/aqHONVMS/tFztLM7/pUlJ1vdFawrVQ6+CWgrToTunkpcVst9Jchn+R/x8a9Kg1yW
+ DTRA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=ltQDW/PsjDZM1P5ztoIk6TbC2t56JUfC/0R+VubppuA=;
- fh=lFUxkpoCM9hr82iqiiFa4Ds135/KBT9UcU7ZSzbCbFA=;
- b=XsOcNLPBvA25R3nC8pELMM2Oje6ZN5MdcCS/N4sYzAOLWNof4XVGKEP9PSTttD5AY6
- Mk3KtgS2DQJHvB6mJRfPnVmnTV23ejCwTTtLaIm5T0Fko+bPNMVnWIlNHrm+XLbQqcoF
- 0eIV1k49Io68fOsSqA/cITAQT/ZkIjVcRm/clDFDhTlTnSdkO9PwJJGXDc49lq0V/ilu
- q7Ksi6VXReL6RZGwYXHq0/JX++Az/neqcwyP8w7EexZJlLXFYJeSKqXqG9dkmAbrCgJ0
- D1NIcvUtr+4/bYMSGut52vmyACtlwBQYmp78yY3aiZtkAdXvFzlCSfx6yoAb5mnIf93G
- dOEA==; darn=nongnu.org
+ bh=N6jUDbhQuX9TsYYJpdTlv2DdFgf4Vdbf7ZqtQOQ9M8A=;
+ fh=0bIOm+75pw/QTN9FDs8ZhfYo0XBcsOIKWWC6mti+rTw=;
+ b=ggTpLfRNqZroKjK0oWl/kU+o4IrVci6jSOvyLXSCoX+vRkuXANo+WXwqinBfEGpeHd
+ PDFdgziYxDvkWXPNzo+yExxOG/ilhqTrzNSib0vxgJX9h8Eb+EBMrHwzBq3RJtlomeub
+ TEpDJAnql5q9Vb77CLex1GMvvxTk3pBIFmC6ANsghXyMSWBp/oAcsRDBvYHfC8kaN74h
+ XVqlksw+DA5LDySPJu+us4q2NTJ0mBgeJzfRMEE7a9Pq9OrZtswMlD/rQiPCsPS7Gtco
+ F+Gs+1h1b21IAnXpOKvT9ZLEF5MHdUdWzFKNdq0RWDaFPcuNk9NVCQVCQL11ptiU204i
+ EG9A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774490795; x=1775095595; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774490845; x=1775095645; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ltQDW/PsjDZM1P5ztoIk6TbC2t56JUfC/0R+VubppuA=;
- b=mGKfLDncbZGKSszuCaYZdV39TlSYqp1RL6BA6FIy3Tf0B9Q4GqsyPBCj+XtXB1YdEO
- rlihjsqhzBiQuF905wBgWzwoOwYTwdaklAdlZRQ/AXHxHBdj4HSIyR72Hb5hb/ATq4mt
- Eiray39YCSks5xUX/miRDDs7dLPHAJmMEMkKh3EatIfeieDG1hdHQUnt+/2njtjZ9t5Z
- v6l3GLqqBSibGQwHOmudJi736N7DZLLT74gYY9mQ7I7m934bjPPBzCyOO7ZfDOZlxvIW
- QyOIWjhOCRbVRckQiRPceC19+fmGXXLmH2loIfUPcAjqZX0eWbFyFcR3EATCn27UokL8
- m6yg==
+ bh=N6jUDbhQuX9TsYYJpdTlv2DdFgf4Vdbf7ZqtQOQ9M8A=;
+ b=J4+XJaH1v1wBX41W/K4q5qViyN55ZMOgdoThNjY9KMporXtPlqUn8kvCaFXLFfyUr1
+ QGju+CFrNPXve+AHt3+hPLuFzlUTJiTyZyay47R8Dda9fv9/ualJuZMFYEnoRKN7Lbvb
+ lrWJ4Kk9pitqPmLvEIJgMRCxHz4TsbmvVkjskpMNGKL7PZk8i3QbgkUbHscBBhCLyPxj
+ ikRlhVgMnU5uDGq6G+usAhkt8VCyq2d4OCJCE791QARqf1Rq2E4WLop+QypG+7mEj+gb
+ q2P01/5+vvR6kgAa5pttoM59/ken5HtJYE8KRkzxQPnkHOOVI0/VZFBV6iAiPV9q9hIo
+ hK2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774490795; x=1775095595;
+ d=1e100.net; s=20251104; t=1774490845; x=1775095645;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ltQDW/PsjDZM1P5ztoIk6TbC2t56JUfC/0R+VubppuA=;
- b=BTOVvLZSZTC7XxhaG+p0FWx4yQuDgnUWXyOsQ1uIUhkwpGc/LUoMqAJEHxm4UGRx1J
- WRW70oBrc9bieHNVaeu6r5u2CKm9XtCj9IkH+1gFit8TG07pHJXDRQkBlqe5uXd+rgoL
- h/XGhmOe4CKq23pl5rDaOEtS2Zv5rEWddpLtVrU8dEH/TJ2XLZYOE8eTbrHgFbKhAWAE
- j1LxvfFqiA/WNXxJWdzB9t+3cM84IsGS6q4kxiybke3KR/FP44oSpluOD27v9frURNCu
- qUXwUJMK+9Nc5T6ZG+L0yctpCIUZWl6jRj/dir11pzzXVuOm0zJ9/OTn7jjmYuoJF6i6
- eITg==
-X-Gm-Message-State: AOJu0YylR7NRYuam7ag77yOSWb3YtDgyakD/KIHLs6Q7fsKlj0uPRmpd
- RjSw5NkhkynAYO07dy/ipOtB/T4loYW5vgjf0T4j8F5Hg042dEbZ6nnTpM1LKAqPYtKO2FNZ+He
- 0GtOSdOvkR4lWOoPLTCeRYC8fMXn9OkQ=
-X-Gm-Gg: ATEYQzzkwn96lOMFxV9vYKbpr69TknZWnPybROlZc44aNhxebfOGAQw9BNuL2MHs0Si
- aT5K+1GjOtJhZ6QkzqsLD4CfVPXwTcv42/CCuxEB160csdn/pCVqxQkblvDl/fdF+l+bFl/lYdJ
- gKZdyc0du4YQ1em4ajJEtbP1xfwmI1Rdk/HShpvWyRcS//kT2/6f/QEo/eG+Pm1GY2jB6BAmjsn
- Gz6G6jwNFR3VacqIPiedM7bhO94FixE/2zhY8Da+3CQtWWggb+6vwsmaSO/mWvx/v8tvVEV7qG9
- BTImxkpHE5lJMioiBast2l/WsNzPSunbOiflVQ==
-X-Received: by 2002:a17:906:35c9:b0:b98:667:2e1d with SMTP id
- a640c23a62f3a-b9a3f1b0cb7mr282045966b.25.1774490794337; Wed, 25 Mar 2026
- 19:06:34 -0700 (PDT)
+ bh=N6jUDbhQuX9TsYYJpdTlv2DdFgf4Vdbf7ZqtQOQ9M8A=;
+ b=iqtWmtkKUuGugIZsw06tiHfF3txlZvqxeyaCHlwiy6KdswObtCUIQGnI2Iy3VTTmep
+ Q9NZ+HU+9qeCs732SIaz+T1chZD+eXcfj9TW+WU8mTqn9aXtwGIJDM90BEW2QyOnVnSF
+ +SUquVqKdhAl4RwggDq4bzFXdQoGhCn+EnS9VJJyfGSrwDUKobFsLlX2QFEseULtzaxy
+ zO+3w8Y5GZcyFW7vHosEVHIbHlToz9wOwfY6B4ZclhGyi9HJoSA3xeCSoC9Z3tSKbZne
+ r0R59EKlQG5OdvIK/2srQyzxjFOItjlVGzc1hP76rrblABj3fUc7DqiugeJDrkhPIpaK
+ 7ozQ==
+X-Gm-Message-State: AOJu0Yzuu+ANdx9Bqi7HsxhtCQy0OWHo/pRggq+gWRu/835QR+NymThT
+ Uw9m14DTX2j+EPyfbcew9aufokKAb9HLx7PhQNVLBGTn8a+PIZUHkA3DmXJFbUVfJXUevRzjUVc
+ YcBwPzRzjZzB8cySrKeLotQk+aEOicSE=
+X-Gm-Gg: ATEYQzwAGnNY5PBbfHFPuiRtIUl/f3arXRk/2VhjEOLQFiotMtXGioCz5LJiaegiNFG
+ S6PmIf03scRnLyOzRNiXtBtq1+2e6CRLmawVPjTp812B8wZq8SNJ/P7Y10w66PYja8ORQoPvcIG
+ AOfSCu8/D+cPhbQyTxIls5h38aecsMKttCZpZXP0ztrEjgSfSJfj31cyfNf6gez2TCflvxwS4E5
+ 3qcdqA9IlrBVt5P3NGw2kByDSFfuii4wQIrOjIuukcHAW3nJ6SLg6VMQ5KuJqSi9o4WrnNRYPuM
+ p36EXHXCRgF4gGaMJm4pBBnT5JhGWY5FaEk/wg==
+X-Received: by 2002:a17:906:eecd:b0:b8f:e98b:4952 with SMTP id
+ a640c23a62f3a-b9a5426c31fmr336789166b.41.1774490845054; Wed, 25 Mar 2026
+ 19:07:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260318103122.97244-1-philmd@linaro.org>
- <20260318103122.97244-4-philmd@linaro.org>
-In-Reply-To: <20260318103122.97244-4-philmd@linaro.org>
+ <20260318103122.97244-5-philmd@linaro.org>
+In-Reply-To: <20260318103122.97244-5-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 26 Mar 2026 12:06:08 +1000
-X-Gm-Features: AQROBzBK9UvDAX6qerJ0r_r0-FIKhiMxPmcMjWfNegpd7VqVcdbHLqKQx0pRvas
-Message-ID: <CAKmqyKNHo9d7waRTq9osMCQPsf1ZXdt=4DWo89M8hjip5xoBqQ@mail.gmail.com>
-Subject: Re: [PATCH-for-11.1 03/16] target/riscv: Make LQ and SQ use 128-bit
- ld/st
+Date: Thu, 26 Mar 2026 12:06:58 +1000
+X-Gm-Features: AQROBzDqkRvqjsyg9ydAZWA1CPaFO1AgTbOKLM_NsVXS-sMwVkhcvv1n3FhiZuE
+Message-ID: <CAKmqyKN_BSB-n5CJnniFkB+YXdrY6BuRbsZee9ity3v_vD64GQ@mail.gmail.com>
+Subject: Re: [PATCH-for-11.1 04/16] target/riscv: Remove MTTCG check for
+ x-rv128 CPU model
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
@@ -99,12 +99,11 @@ Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, 
- Richard Henderson <richard.henderson@linaro.org>
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -128,23 +127,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 18, 2026 at 8:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Mar 18, 2026 at 8:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
 > From: Fr=C3=A9d=C3=A9ric P=C3=A9trot <frederic.petrot@univ-grenoble-alpes=
 .fr>
 >
-> The lq and sq helpers for the experimental rv128 architecture
-> currently use direct memory accesses.
-> Replace these direct accesses with the standard
-> tcg_gen_qemu_{ld,st}_i128 TCG helpers that handle endianness
-> issues.
+> We had to check that mttcg was not used when executing QEMU with
+> -cpu x-rv128 as a single 128-bit access was done as two distinct
+> 64-bit accesses.
+> Now that we use the 128-bit ld/st that access the data atomically,
+> this check is no longer necessary.
 >
-> Reported-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Fr=C3=A9d=C3=A9ric P=C3=A9trot <frederic.petrot@univ-greno=
 ble-alpes.fr>
-> Message-ID: <20260101181442.2489496-2-frederic.petrot@univ-grenoble-alpes=
+> Message-ID: <20260101181442.2489496-3-frederic.petrot@univ-grenoble-alpes=
 .fr>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
@@ -153,76 +150,33 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/insn_trans/trans_rvi.c.inc | 32 ++++++++++++++++++-------
->  1 file changed, 24 insertions(+), 8 deletions(-)
+>  target/riscv/tcg/tcg-cpu.c | 10 ----------
+>  1 file changed, 10 deletions(-)
 >
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
-trans/trans_rvi.c.inc
-> index 54b9b4f2413..2c82ae41a77 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -377,6 +377,9 @@ static bool gen_load_i128(DisasContext *ctx, arg_lb *=
-a, MemOp memop)
->      TCGv destl =3D dest_gpr(ctx, a->rd);
->      TCGv desth =3D dest_gprh(ctx, a->rd);
->      TCGv addrl =3D tcg_temp_new();
-> +    TCGv_i128 t16 =3D tcg_temp_new_i128();
-> +    TCGv_i64 tl =3D tcg_temp_new_i64();
-> +    TCGv_i64 th =3D tcg_temp_new_i64();
->
->      tcg_gen_addi_tl(addrl, src1l, a->imm);
->
-> @@ -388,10 +391,14 @@ static bool gen_load_i128(DisasContext *ctx, arg_lb=
- *a, MemOp memop)
->              tcg_gen_movi_tl(desth, 0);
->          }
->      } else {
-> -        /* assume little-endian memory access for now */
-> -        tcg_gen_qemu_ld_tl(destl, addrl, ctx->mem_idx, MO_TEUQ);
-> -        tcg_gen_addi_tl(addrl, addrl, 8);
-> -        tcg_gen_qemu_ld_tl(desth, addrl, ctx->mem_idx, MO_TEUQ);
-> +        tcg_gen_qemu_ld_i128(t16, addrl, ctx->mem_idx, memop);
-> +        if (mo_endian(ctx) =3D=3D MO_LE) {
-> +            tcg_gen_extr_i128_i64(tl, th, t16);
-> +        } else {
-> +            tcg_gen_extr_i128_i64(th, tl, t16);
-> +        }
-> +        tcg_gen_trunc_i64_tl(destl, tl);
-> +        tcg_gen_trunc_i64_tl(desth, th);
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 988b2d905f5..3407191c224 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -1305,16 +1305,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Er=
+ror **errp)
 >      }
 >
->      gen_set_gpr128(ctx, a->rd, destl, desth);
-> @@ -488,16 +495,25 @@ static bool gen_store_i128(DisasContext *ctx, arg_s=
-b *a, MemOp memop)
->      TCGv src2l =3D get_gpr(ctx, a->rs2, EXT_NONE);
->      TCGv src2h =3D get_gprh(ctx, a->rs2);
->      TCGv addrl =3D tcg_temp_new();
-> +    TCGv_i128 t16 =3D tcg_temp_new_i128();
-> +    TCGv_i64 tl =3D tcg_temp_new_i64();
-> +    TCGv_i64 th =3D tcg_temp_new_i64();
+>  #ifndef CONFIG_USER_ONLY
+> -    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cpu);
+> -
+> -    if (mcc->def->misa_mxl_max >=3D MXL_RV128 && qemu_tcg_mttcg_enabled(=
+)) {
+> -        /* Missing 128-bit aligned atomics */
+> -        error_setg(errp,
+> -                   "128-bit RISC-V currently does not work with Multi "
+> -                   "Threaded TCG. Please use: -accel tcg,thread=3Dsingle=
+");
+> -        return false;
+> -    }
+> -
+>      CPURISCVState *env =3D &cpu->env;
 >
->      tcg_gen_addi_tl(addrl, src1l, a->imm);
->
->      if ((memop & MO_SIZE) <=3D MO_64) {
->          tcg_gen_qemu_st_tl(src2l, addrl, ctx->mem_idx, memop);
->      } else {
-> -        /* little-endian memory access assumed for now */
-> -        tcg_gen_qemu_st_tl(src2l, addrl, ctx->mem_idx, MO_TEUQ);
-> -        tcg_gen_addi_tl(addrl, addrl, 8);
-> -        tcg_gen_qemu_st_tl(src2h, addrl, ctx->mem_idx, MO_TEUQ);
-> +
-> +        tcg_gen_ext_tl_i64(tl, src2l);
-> +        tcg_gen_ext_tl_i64(th, src2h);
-> +
-> +        if (mo_endian(ctx) =3D=3D MO_LE) {
-> +            tcg_gen_concat_i64_i128(t16, tl, th);
-> +        } else {
-> +            tcg_gen_concat_i64_i128(t16, th, tl);
-> +        }
-> +        tcg_gen_qemu_st_i128(t16, addrl, ctx->mem_idx, memop);
->      }
->      return true;
->  }
+>      tcg_cflags_set(CPU(cs), CF_PCREL);
 > --
 > 2.53.0
 >
