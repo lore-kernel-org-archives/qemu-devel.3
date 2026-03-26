@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8EC109E53D
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57BC1109E53D
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5aMT-0003qE-N1; Wed, 25 Mar 2026 22:22:17 -0400
+	id 1w5aSn-0005MP-02; Wed, 25 Mar 2026 22:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aMS-0003pQ-Jr
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:22:16 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1w5aSg-0005LU-EC
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:28:42 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aMR-0001UU-1p
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:22:16 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-661b16ac011so734771a12.2
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:22:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774491733; cv=none;
+ id 1w5aSe-0003tM-1S
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:28:41 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-66a922a3a05so697203a12.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:28:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774492117; cv=none;
  d=google.com; s=arc-20240605;
- b=I7o+OeZLuw5AW7Fje/k88UvJ1OFrdadFMknA0212tGraMDvhfgu2TIGy7BzfZERSGy
- 0fnsQnEN1mlc3fB1d8lKJPaxFyDHmPmIbPqtaRtc8L97rv9r+58ei8HYAf7+8Ec3Nga+
- 6zrIqxuVJXoR5guquvxfntJ03TeVvdAqyE/PAAw0ZnXKDM1Qzvlz0Ewa+OentSgGwQbi
- 9EO6/rRJK50+edX2hNsYBeCoD2XXdkFQkZkjTDBAjshghy05rnoW0P8LXsA4r5cRaRmL
- kMAK6ffT4tDFH4bAKq8FwjPi7BxGwxdVeFmcvE3gfOc8OlAaabA9YqfAGVCxb6PF7T18
- 2zuw==
+ b=c4kbxVBn//vaeOw5FQhdhYPaHZD7e90qgnVOgOYkK15S5LuRg8ARWyJnKzzXlliHwl
+ 38JrRC+tnE+YO2SaW3QLc6nAZMvwV9n+1ooqjiUN/lejyjDG0Mg/GLY1Lg+TUkXl6kQv
+ dSjrOKRbwS8G9TzKVpGRnvpNDnJIGBYs46OTJ6UH7H9J0hHuJu018ojKNQA5FyNX+cNb
+ tI0dS0dEvWoST1Qq8IhDaj0/n3lkGXoYB49jmB4DZwyunr8IQaBYh1kI7KqtbIKDlCk2
+ wEStJ2tOs+0Cb/k4NFeAbzC2Q+fF8y1tbFPwv84P+GkpNAvU3kQh9I/lWykgqKj4HVXg
+ vykA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=gc7k2niRX57O6P8a6ABCkGFtWJkfFT5g0OlBzxK2Glk=;
- fh=k5gHrRMGAaMlsU7LGqsh0wi5Q8Es9ss0BAxc5Yaemtg=;
- b=RDb+/DIxCiDPZ3n6TfqjcjKTcgIh9eYsheqdBXvRwLLCn7Ek4HWVPxGAmnpnngru2X
- lY7l9aOa3fcp7BpPhX37rqxVnzMgGFSLbCZRKroEH+R6F7jsMx0Kl58TaKEEdVRXIOLE
- VlmsYSuQhjNaGZ6VNj+oNPjq7qOJtIGkAE0w+4+Xzdi2+NLD1QkEg131N1vTtBFloW8I
- 8sjC1OmCQYRhEGJPjaI9hal3tiNeIlQisoPh934+W3RvdV3IQ3ZfCfJ/3CXqBaz7WdFV
- 1UtX+F6V8dOrjsTr8gWX6peLfz2rNzIAvtEBz9cXfMx6wW9lTBrh9pt9tfdk2PRd/OmP
- ajQg==; darn=nongnu.org
+ bh=zBkks+YbE/dGsEnJfl7QqTmNN/tijC+zkNp79whWMJ4=;
+ fh=0bIOm+75pw/QTN9FDs8ZhfYo0XBcsOIKWWC6mti+rTw=;
+ b=KPdYLLH5Tlnld2JQqW/Q9J2PZUX0mt4tV9d6ni1NFGApGVideArG4ZFt0N2MDmYyCE
+ HUxpH3yHiDQD10uoDJrDloYnY+JPcFkubFwcP1aMfc190EUbV4qe33Y/OcjaRzGaAlEo
+ 3NdofDriWwWziLNUnqpQ4TIDreHOTzmiSisoOO2sqloSXlhZ6/ZlP5RPo/T3a5cB7T59
+ c1uZN+dm1lp5tYu92eH2H4I0R9RajvdS7U5YdZ536RvjcTrYj1gTxVwuJAYzUjvFN8Hp
+ yxuMcZ0mi6Kg6Fc6mEY3lcGnOuSPE8qOV+Um2pApK9NHuUFSUa/FW+tMYxCQMbuxaFDe
+ V2fw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774491733; x=1775096533; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774492117; x=1775096917; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gc7k2niRX57O6P8a6ABCkGFtWJkfFT5g0OlBzxK2Glk=;
- b=acNMCZyXfHq/sy09YTG9XlQXoYawErKz1hf7AYxkb4bYP4l+iyUvFpmhXl2kKc/rTB
- gA0HR0bM/vt7cehlDi3GKBI9ixH5EQBqVRWdwc8q6BrYyJZBbBvsMCn0vIv1fESHq15L
- s8ZIJgZQ6DdBdXbM1QImRy9x/M6oXaGQZFwgHnnUnNBGGtM2q3cJaCE0p6p2tZbdO2O1
- +S7Rzq3CUmLH9XNpI7UT5ygPhNaguoy9FeD5CVSb/vMYTWOKE3hgLOXQFg3fUVPQsA0Q
- EQrORNIM8mlx045XNCTAevPxmSeExQfS0ql1ZgnFHC8PgT2320qZi95SYOStWW1EsGLe
- CPXQ==
+ bh=zBkks+YbE/dGsEnJfl7QqTmNN/tijC+zkNp79whWMJ4=;
+ b=addGSrXTcgWa7lXFqgOfoUGORP7nUW55Uyyl0LsLTAxFro9TXWyuus6FC1yXkd6QeN
+ 7MRPE3XbOHF27nWv1d03zvLFzePkUeBLyuYTKih7VIu9HASfXNbiR7WnSEWnaUMKpqHd
+ 1KqIf1v0DTgqXgt1+zHyDihl4VltHKS/ST+zwb3ppCXLujfuLTitaW2jZ9rHn3156JXK
+ MgKB+hrMfiOU5o+D823EuPtTJ1lvMhgB0lcOp0vg/Vu7630Er5JsU00erNYzMdpkcJuZ
+ TGBs4fjARms7uBqvZbdMtTl+AkF9CYZ5M4AO0tDJX9jMAINzFdlw5a+TA6SxhrIpBbAa
+ GcIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774491733; x=1775096533;
+ d=1e100.net; s=20251104; t=1774492117; x=1775096917;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gc7k2niRX57O6P8a6ABCkGFtWJkfFT5g0OlBzxK2Glk=;
- b=p/QCm7vhQf5f8oNAVrSaki92YIVV/uy1CS6UhT0d25yK9ItFhSKO07SjO051Df4Rcq
- /gfOuMqPAdZa8e7nnTGaEEvW5jhxgeBOHoMuVaPyGRx4E03JhX9zPmGLg/q0O0/gwzqe
- YUark++4cRcw9HFGXOzerfmzzZAe2mRL2RpV7MWMuolYFjdX/vqAuppIZ+QgY9lBqJxt
- yNgILdrcXItyvppR21WggGZYKTaJf99mmINGOzFXld2578+xekAV034yh9pf1eq05meo
- 53tWhfGahc1stP6hujXyubCaq5L4VAsewNMT2tsF9PV1ECb8LtN8TXU0dAm57MxObjIt
- 6DhA==
-X-Gm-Message-State: AOJu0YzEaIvC/rNTQJqAHFDO5JNQkUnlq/YTGemGof+kbXgH0Q1D4UIX
- S6kyMn/AIQEtVUYDwXuvk3lXaAVvHqxpVrXrbCDF9WdoT3bntHFT03yXgfxBy1A1+0B76b/e4K2
- qT62Ss8mWSDEMLiF6flwv6cm9Ku2Muxg=
-X-Gm-Gg: ATEYQzy7qD8nB8rcCNNYauSm/ujbbDKzEP9KFFL9bRLF3P0OAHvbYm6DEjjtA2+uZ1J
- MxI9JhSO117OseQn+uowEtfEU+ywfWjVB6bOb7qzZ+/TQV2V20Fd+Y0pFv1aibLLCYyM5S7Hfmn
- /fnBr222ckltcZOuYyfVZcwUPODxUJkyiwwuwePkjCYyBnh20nlLVMGL0Q3az4Sch4acWiLHmyt
- RVumMf8OEDwAXuFFFSe5Vl/4pz0nZLzVgtaAEXsVNgC3shrs0gG2RD26GBU+JmY3xqtadw+2yN9
- YYl8J3spAfFoBcXlNzG/6B43SFsrGjuewCEU+A==
-X-Received: by 2002:a17:907:806:b0:b96:dec7:5209 with SMTP id
- a640c23a62f3a-b9a3f1a00b7mr419866966b.17.1774491733326; Wed, 25 Mar 2026
- 19:22:13 -0700 (PDT)
+ bh=zBkks+YbE/dGsEnJfl7QqTmNN/tijC+zkNp79whWMJ4=;
+ b=aeicElgloEWYa7nX8jdiFi2Ov8ugz87+RocpHJd3yCkqolv4tMSzU959rQw9vguZ82
+ /OIupBjw7/c9jqMwbWQDVrdPheDbCOkkhvQeY5074nEC5pVEY78NO/WKq3hhaRxudWDF
+ /JxFiVPBCL/JKRjDJyoXTQIRDr9R9ZN3I6GfTdjQe+AYHeLe1Tn2fFQmdg7wZFJqonRK
+ 28MZQMUafo4JtHkMp9G/kKPREs64qJROEKBTUKDsJQtxE8+m0ZWvmbseI6KYMlPfXrf6
+ FGEbtMHD/ywOymu76pIKWw31Yt38bsO+qXvXdXUAsoydSPvKKk1ZKWKzdCskf8rBW7ew
+ ClyQ==
+X-Gm-Message-State: AOJu0Yw3am5SJC5TiI3l86DINQBWMjcxarCZdpKZvdEbW0byAJBQnjqp
+ xv3+RSiUdMZju3cPu2Qs5+j3sc/2nL0WzyJDjsbAIFC3/8GxZBEbFKyDAVok+11m8FTEcrMOPb+
+ +fyaXgsQv48XtzCnXAa66tXdesW60L6E=
+X-Gm-Gg: ATEYQzxA/J9Cn0lb+cE1w3EKXWjr8W8/TCcleqzBqmSyU5IRDQDHiSiF9MMWrKfHpgT
+ 1f/dhl89QN12nDaX54rRhCoqYsL0hjYbYdTyHlKSYyXWPkRD70pg1t/HVXYDLp9CpiTCCigfWOl
+ MWfxIpvYL1H+0VFiNqcRZyY+4FxmxJ5I+53dbjcVvfLvHfx8TycscncYAxQnV+dLvJcYHzsCaLy
+ Gc8SaqT1iuqR9in8ctrEVJaP6Ac8cNjDpp4zm+SHkFEOXwpVyBi0fd+zRTMnQUBUUGgb99VPp4j
+ FL3tSXWqqBKq8mRK2BpL9zsYS/9HcinV0ermM5LLDQuMjNzp
+X-Received: by 2002:a17:907:d303:b0:b97:7616:3362 with SMTP id
+ a640c23a62f3a-b9a542719b8mr358561866b.44.1774492117290; Wed, 25 Mar 2026
+ 19:28:37 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260318103122.97244-1-philmd@linaro.org>
- <20260318103122.97244-17-philmd@linaro.org>
-In-Reply-To: <20260318103122.97244-17-philmd@linaro.org>
+In-Reply-To: <20260318103122.97244-1-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 26 Mar 2026 12:21:47 +1000
-X-Gm-Features: AQROBzAoRxF4IJM_jId5CACiej5xKt0p_jn8cJsipDijiHtR6fzkXrm5Rth0thc
-Message-ID: <CAKmqyKMmTmts3HSciGciAc3UFMW=a_Zu=2uV+GhMmvrLR3HV4A@mail.gmail.com>
-Subject: Re: [PATCH-for-11.1 16/16] configs/targets: Forbid RISC-V to use
- legacy native endianness APIs
+Date: Thu, 26 Mar 2026 12:28:09 +1000
+X-Gm-Features: AQROBzBqeSrnkg-dvUZZsDZAnVYn5Gyj1rh3nPBNEqi5i-hKQdsRSM6ADReBkA0
+Message-ID: <CAKmqyKMs2km=xn3SH7-D1VqNDrJVhxgO9JxQ5c9rEGH7t7gpVw@mail.gmail.com>
+Subject: Re: [PATCH-for-11.1 00/16] target/riscv: Forbid to use legacy native
+ endianness API
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
@@ -99,12 +98,11 @@ Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- Laurent Vivier <laurent@vivier.eu>, Kyle Evans <kevans@freebsd.org>
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -128,81 +126,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 18, 2026 at 8:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Mar 18, 2026 at 8:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> All RISC-V related binaries are buildable without a single
-> use of the legacy "native endian" API. Set the transitional
-> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
-> further uses of the legacy API.
+> Thanks to Fr=C3=A9d=C3=A9ric patch on 128-bit registers, we can now
+> remove all legacy native endianness API uses of RISC-V.
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Djordje: You should (re)base your "Add RISC-V big-endian
+> target support" [*] series on this (after addressing the
+> review comments) before posting your v4.
+>
+> [*] https://lore.kernel.org/qemu-devel/20260311115910.564481-1-djordje.to=
+dorovic@htecgroup.com/
+>
+> Djordje Todorovic (1):
+>   target/riscv: Use MO_LE for instruction fetch
+>
+> Fr=C3=A9d=C3=A9ric P=C3=A9trot (2):
+>   target/riscv: Make LQ and SQ use 128-bit ld/st
+>   target/riscv: Remove MTTCG check for x-rv128 CPU model
+>
+> Philippe Mathieu-Daud=C3=A9 (13):
+>   hw/riscv: Mark RISC-V specific peripherals as little-endian
+>   target/riscv: Use explicit little-endian LD/ST API
+>   target/riscv: Explode MO_TExx -> MO_TE | MO_xx (again)
+>   target/riscv: Conceal MO_ALIGN|MO_TE within load_acquire /
+>     store_release
+>   target/riscv: Factor tiny ldn() helper in gdbstub
+>   target/riscv: Simplify riscv_cpu_gdb_write_register()
+>   target/riscv: Expose mo_endian_env()
+>   target/riscv: Have gdbstub consider CPU endianness
+>   target/riscv: Replace MO_TE by mo_endian (MIPS extension)
+>   target/riscv: Replace MO_TE by mo_endian (Zilsd extension)
+>   target/riscv: Replace MO_TE by mo_endian (Zalasr extension)
+>   target/riscv: Replace MO_TE -> MO_LE
+>   configs/targets: Forbid RISC-V to use legacy native endianness APIs
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  configs/targets/riscv32-linux-user.mak | 1 +
->  configs/targets/riscv32-softmmu.mak    | 1 +
->  configs/targets/riscv64-bsd-user.mak   | 1 +
->  configs/targets/riscv64-linux-user.mak | 1 +
->  configs/targets/riscv64-softmmu.mak    | 1 +
->  5 files changed, 5 insertions(+)
 >
-> diff --git a/configs/targets/riscv32-linux-user.mak b/configs/targets/ris=
-cv32-linux-user.mak
-> index f069ab9a0f9..d88fdf5e1b2 100644
-> --- a/configs/targets/riscv32-linux-user.mak
-> +++ b/configs/targets/riscv32-linux-user.mak
-> @@ -8,3 +8,4 @@ TARGET_SYSTBL_ABI=3D32
->  TARGET_SYSTBL_ABI=3Dcommon,32,riscv,memfd_secret
->  TARGET_SYSTBL=3Dsyscall.tbl
->  TARGET_LONG_BITS=3D32
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
-> diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv3=
-2-softmmu.mak
-> index 26080599be7..5d5016d0083 100644
-> --- a/configs/targets/riscv32-softmmu.mak
-> +++ b/configs/targets/riscv32-softmmu.mak
-> @@ -5,3 +5,4 @@ TARGET_XML_FILES=3D riscv-32bit-cpu.xml riscv-32bit-fpu.x=
-ml riscv-64bit-fpu.xml ri
->  TARGET_NEED_FDT=3Dy
->  TARGET_LONG_BITS=3D32
->  TARGET_NOT_USING_LEGACY_LDST_PHYS_API=3Dy
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
-> diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv=
-64-bsd-user.mak
-> index bc85d9ed04e..5b4e138099f 100644
-> --- a/configs/targets/riscv64-bsd-user.mak
-> +++ b/configs/targets/riscv64-bsd-user.mak
-> @@ -3,3 +3,4 @@ TARGET_BASE_ARCH=3Driscv
->  TARGET_ABI_DIR=3Driscv
->  TARGET_XML_FILES=3D riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-=
-fpu.xml riscv-64bit-virtual.xml
->  TARGET_LONG_BITS=3D64
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
-> diff --git a/configs/targets/riscv64-linux-user.mak b/configs/targets/ris=
-cv64-linux-user.mak
-> index bca08645124..35621520c56 100644
-> --- a/configs/targets/riscv64-linux-user.mak
-> +++ b/configs/targets/riscv64-linux-user.mak
-> @@ -8,3 +8,4 @@ TARGET_SYSTBL_ABI=3D64
->  TARGET_SYSTBL_ABI=3Dcommon,64,riscv,rlimit,memfd_secret
->  TARGET_SYSTBL=3Dsyscall.tbl
->  TARGET_LONG_BITS=3D64
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
-> diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv6=
-4-softmmu.mak
-> index 5059c550480..a10dc03c04c 100644
-> --- a/configs/targets/riscv64-softmmu.mak
-> +++ b/configs/targets/riscv64-softmmu.mak
-> @@ -6,3 +6,4 @@ TARGET_XML_FILES=3D riscv-64bit-cpu.xml riscv-32bit-fpu.x=
-ml riscv-64bit-fpu.xml ri
->  TARGET_NEED_FDT=3Dy
->  TARGET_LONG_BITS=3D64
->  TARGET_NOT_USING_LEGACY_LDST_PHYS_API=3Dy
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
+>  configs/targets/riscv32-linux-user.mak       |  1 +
+>  configs/targets/riscv32-softmmu.mak          |  1 +
+>  configs/targets/riscv64-bsd-user.mak         |  1 +
+>  configs/targets/riscv64-linux-user.mak       |  1 +
+>  configs/targets/riscv64-softmmu.mak          |  1 +
+>  target/riscv/internals.h                     | 12 ++++++
+>  hw/char/ibex_uart.c                          |  2 +-
+>  hw/char/shakti_uart.c                        |  2 +-
+>  hw/char/sifive_uart.c                        |  2 +-
+>  hw/misc/sifive_e_aon.c                       |  2 +-
+>  hw/misc/sifive_e_prci.c                      |  2 +-
+>  hw/misc/sifive_u_otp.c                       |  2 +-
+>  hw/misc/sifive_u_prci.c                      |  2 +-
+>  hw/riscv/riscv-iommu.c                       |  2 +-
+>  hw/sd/cadence_sdhci.c                        |  2 +-
+>  hw/timer/ibex_timer.c                        |  2 +-
+>  hw/timer/sifive_pwm.c                        |  2 +-
+>  target/riscv/cpu_helper.c                    |  4 +-
+>  target/riscv/gdbstub.c                       | 42 ++++++++------------
+>  target/riscv/op_helper.c                     | 14 -------
+>  target/riscv/tcg/tcg-cpu.c                   | 10 -----
+>  target/riscv/translate.c                     | 10 ++---
+>  target/riscv/insn_trans/trans_rvi.c.inc      | 32 +++++++++++----
+>  target/riscv/insn_trans/trans_rvzalasr.c.inc | 18 +++++----
+>  target/riscv/insn_trans/trans_xmips.c.inc    | 24 +++++++----
+>  target/riscv/insn_trans/trans_zilsd.c.inc    |  4 +-
+>  26 files changed, 104 insertions(+), 93 deletions(-)
+>
 > --
 > 2.53.0
 >
