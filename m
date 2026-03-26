@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC8B109E53C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7C7109E53C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 02:14:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5aDo-0008Gk-F6; Wed, 25 Mar 2026 22:13:21 -0400
+	id 1w5aEP-0000K5-Gv; Wed, 25 Mar 2026 22:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aDf-0008GL-Kd
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:13:12 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1w5aEO-0000IN-BJ
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:13:56 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w5aDc-0008RU-OJ
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:13:10 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-65c0891f4e9so781473a12.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:13:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774491187; cv=none;
+ id 1w5aEM-0008Uq-3j
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 22:13:55 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-65c4152313fso573604a12.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 19:13:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774491233; cv=none;
  d=google.com; s=arc-20240605;
- b=JGLCelkPT3AZ7ZjhDdBdWlhRjEWJb95ZiN8BsxDC3xz1DhJ8PjwTHG8KOUWReLUhA+
- qxGYkvXDkqzpp1R/AAi4ynm4ZS+0RejReiU/MZ2kAsHzO8T6x9otfnugeHFXbDb4n0M+
- M1ZISf7dha9Yl/kMMVBASV08u8iNwcZ4CDblIdpynb8JRdVQtQFEPjfoS49N45NDYDwD
- AZfIbIt5IMgD2nGaXdqhh9TRmx70D8Xkdx6QVC2w7k3jr78Ibqbfl1mVp44AAmGcJO5J
- nKkI/n70LCwYOFsyqv2ivgL6veAVK4PThgMxMxHbV/CDYK8fPngLmm60dNOYCwwyvTA6
- sdOg==
+ b=Th1RVuvbFZ8o2QAssDUC0ESLIAasfj4LSu8DnUsOfEq2+RwiySXzed7+OjnlCRwicL
+ rwj0IhjkxhftceqAkF79l7qKKrdL1Tudz8bUn1b30HwFPzRrTj6xWrTGfhWODe6jIDgW
+ b6+USRJ/T4gJWz1wksMTHK2MQB7EmVsQqjjWb4Imr2oYIMNTT5ngrV9iiCMvsZzDoMx0
+ FF0BSGA04KfQ5rpz1ITn0N08RaSryh11iIpI/k0aNhHctoI7kgF7MTJleUMWkaR2xyPK
+ LfUoZDef+Li6HHiixMMFZa2au5ALV/VoQCMagfWK7MkvnQ5Z9leW+qu+OsWIy9jDd8VS
+ URog==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=J6dTgU0vMGl/012DdcuBv+gl2ig8/GCvDaik9y2zfTI=;
+ bh=cs84IbrIglVRkkFhPUbDAuyX4OlIb6qVjd5qMqnby7Y=;
  fh=0bIOm+75pw/QTN9FDs8ZhfYo0XBcsOIKWWC6mti+rTw=;
- b=HFnVK7AdLC0msLZbG1Wr4R0/UCekTQ71sjx+mdNwVVBNWyIt1Z3bFNmIQDlauEcyyg
- jDa1wTpz6nwU1JQoeIyJ8D6WCgXUFDDBp7i55mZz5O7nLOYrhzPauYkFw7qYpVRsCUzp
- FjiAR8NnYoDH5DS1cgb5PLEX50SFnkZlJmJR63dh0eWAR4Q/s2yWKFCKR9eigFOUCgmy
- 0Xnw7DVx5pMBVkXVqnD3WDTgK9MqNTnVynwe/KThEhsa2jVZVYhfxm7nh4Js4IdJOCdt
- XRjRw0JQBmEKxLIO32WnH0bbSeIi+J6xc+5BKGOiwFNIF3VO+pQ6wlktIOSWmhokCMeq
- fzRQ==; darn=nongnu.org
+ b=VqFzOJWWjHkBOzu30PeARfC42tVKA3lkkxNLdh9Y1EjF/EDUc9GGUuo+Yhgxqnnjdg
+ iAVzZHk3cPZcrJeOVPG8ZPr/gdkTnx4DhvtlTn1ny6XGrwzfHB7+jqnR153WCCFYF7L7
+ vCn6HPSJax8JHiBysTBH2O1T/c4Zrb/lRAtozEvxsJ+nS72Ip9Eru/JTtSH1p/r5uAdj
+ AVfDzFiWG71sroaUgfd6Tce3BvBT8ecXRZ85NANSGcT/espFNFGQBpLC4gMq1VC8e/6k
+ 4St97WfnlNZFE1ghwv4P0c/fmPx5IkLk2aWX93Vh8hQsJDJvnYHmRDxkc8iuAvOb7zAR
+ x3DQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774491187; x=1775095987; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774491233; x=1775096033; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J6dTgU0vMGl/012DdcuBv+gl2ig8/GCvDaik9y2zfTI=;
- b=f32V8qcC5StjG28WC3t0lzppqBVsfsALBJm+UJxml7znFqdPxTxQMbfVaiuYm2j4c+
- c1V8QH68ptW9pX6YtvaXCQEfyhV87YdKDKcz2Qc/pI8if3EvUe8gt638QySPgUf5PxjH
- cO80laRZaHk3DX/bVirAkejlCCe9NFQbySAHzgDbHctvZffilYftmy5Xwz45KhG4PTt+
- Dioht9qR9x6SWud27GjiBCJONOrbVJ4dC+YieYM/A4yiI8Z2/dePbP7wFxuZXLmLNaX5
- hJQuSiizyrwHJ/dqJ3aZilxIPd5aoUXWcMieu6MHjqfFqTuxH3TnIMw7/JNUHFvnUkm5
- qrZA==
+ bh=cs84IbrIglVRkkFhPUbDAuyX4OlIb6qVjd5qMqnby7Y=;
+ b=RmsndxvA8ZYzopMe8oe26f4qkvGxUTXJJ8gmJw1+dlg/C1y2rpUnIKVxt8zR7gsy+5
+ 8CZTIYIK+6hwz+fzWQwhbWFK9IeGLNIu8a+mEW7pKn0pw0zFwrroRVq4IphqjLstbahd
+ smjdCkP0JFLUt8F/y3oTZFAkutyceC7hsFKPQOJN5VQvvqoO+RZtsyh2Au5MwkDuZ3Js
+ RPC2C+ij/2hPl8DHXoedy8oTTxqaCGz5MbwNuqW48E/2nhuHWBxEduyYNTWdMLByMkRl
+ M7LWFretHhx6gmxVtSh0KRocsbhel4Autjx7PgWm/MEaIedGkFtx27l2K9C/PWFOJlP9
+ 7APQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774491187; x=1775095987;
+ d=1e100.net; s=20251104; t=1774491233; x=1775096033;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=J6dTgU0vMGl/012DdcuBv+gl2ig8/GCvDaik9y2zfTI=;
- b=L/N/wczYtEJEuP88TfZMbPlD3r4NarBSQtsfjVy/McQhnAQCobEHSncuq9fAD65fX/
- ik4JPz5DV8tFQSMPouj6YNnw3YpsOa/T32xLUkYrlUXG92oE4QXShhMvdYHg5e0o0DZ0
- zYa8gEmF2TcHlVRJtsaesuiZy5CnJwUqBbhWqd1staAJ9zMf1vNIFSCzz7m6QveCe1WL
- UMQvJLxjA4mC3r37KkUYj6gcsjJ6PWDT2l2PG847nIfMbCqLj4+uLZIpR7+CRAl19IxW
- HvexG6LNjl3JBpj3WkLbG/HVP4vSwGUxCZUBiMinZYrSiGqe4NjVSNfqQ2DSg2VSC6N3
- YKnw==
-X-Gm-Message-State: AOJu0YzNDEAiWt4GmOwO0wu9ELDtWyzR2mZaRuhIBYBGTcU+Bsmo/NjL
- BF9031uaggA1l77T6/uPBEX1jhDGPoxQxhtd6axsscga/yqhOzF92fDouPE6HsyOrBRR6QednLI
- 5fDQnQalcFHCR3xajYccfJeHMCTUgHJU=
-X-Gm-Gg: ATEYQzwI76n7kU0RYrt3f34R0WKjWerVmw3D/NZSuaGVYiKc2CPbK3geJZIjCsAL3qJ
- SA3lwoUDfnWZZI2ebkW0MQQnoK1VC9zn9efOm2Kmwxtu6K508Yl2lz1GOh5KVuT3M5yBBBKDbs3
- pIuNcQ9wD3mZ96vgSCfuLk2JFfzc9ifg4EdjmKcVjLsf3ZkQXrD81KdMAI9gROvpbZ1dDL3wJL9
- ZDo+6+UBTr5jOw4SYRdLyiWRL6cyQ9aLJd4YkbdeK1L3Km/5paEkF8VhNKQNiVKkRhrdPWzEmtQ
- 6yUYWQdBBv+aUzygF55vd8HxHji4XQe1p016QRDCaTU/bKlx
-X-Received: by 2002:a17:907:e11c:b0:b98:4d8f:d968 with SMTP id
- a640c23a62f3a-b9a3f1718dbmr311866366b.12.1774491186917; Wed, 25 Mar 2026
- 19:13:06 -0700 (PDT)
+ bh=cs84IbrIglVRkkFhPUbDAuyX4OlIb6qVjd5qMqnby7Y=;
+ b=glY7be1WmrpYaPpuvRhSlm8rFdtGQaVOIIQSTQDtRZJZ/jrj3j6lJyklnJUCVCxSmq
+ IBrNWwfsdi3sWTLaXEo8+wQVgp3MiQaB/2Hj6vKDsZBTUTN1Q7DiEmDjfmk238/+rA6J
+ yjI60BBNCxNXnUHhoaTfTlQcXnJfdIV4ytEywx5hRgjXcC76oB9MTgLPgmtuuiHn/shi
+ KEpHDYpk6g2sm4UiTg7BfKxxnvYpMYRrbL3KG/2ZmchHNmrya7ZenuEHJ708ThFPU1Mr
+ PLPp9AejzkkqYNB6PHOMzf5iS3l6vhTjTTO+ZeESIk8xU0PsWY5UZnpEKsM+DBq9+F9O
+ bK9A==
+X-Gm-Message-State: AOJu0YyJDMgv0o6VysAvhD4x5zlLcMGW1XTeFPPaiABVHnWS9efrn7wd
+ 7GPZfn2gB6zt1nK94JSjhko/hyFaOttSf305ZUmVtd9H2o3euQUdsWFWrSiZR6qROkFqI8DWT28
+ hdweg/CjgwW9GmQXiYzZawghXT/WQrQI=
+X-Gm-Gg: ATEYQzyHhNs64Ke3fIELpTP22GsZ5Z7Aw9cDnBseNiVi27DwmPNBrKbN6ubFKTVYmfM
+ M+qzmqNgAdGSYEqoURRNnGQcelcolyLSILNgcd3Wfxc11IozjuryqOO1HS7iEqmCk1QqwitDSrB
+ PoGtU29H6nUZOHM5OTknXXFJvdy4zF5HIiClMDj2/VWA9osxuOTW5tCDORXAzXXbqtENyKd4PeF
+ H+wX66Lqm2PFsIHpZwxusBP1OLYZwM6qaLlIWua6pwygaQ7Xqm/Iz2c1upn7GgAP5wA1flCrFu/
+ 93nrxDJfk31UQImSIATTSHmiO6Opguuzr8PtGw==
+X-Received: by 2002:a17:906:1909:b0:b98:32c1:2452 with SMTP id
+ a640c23a62f3a-b9a543c00a4mr324830766b.48.1774491232560; Wed, 25 Mar 2026
+ 19:13:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260318103122.97244-1-philmd@linaro.org>
- <20260318103122.97244-9-philmd@linaro.org>
-In-Reply-To: <20260318103122.97244-9-philmd@linaro.org>
+ <20260318103122.97244-10-philmd@linaro.org>
+In-Reply-To: <20260318103122.97244-10-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 26 Mar 2026 12:12:39 +1000
-X-Gm-Features: AQROBzCSXwvx5sTs4n9wCzIbk6AJxGlunDdEcIQzQYS7OM2BxqlOXDrkXxS3nHI
-Message-ID: <CAKmqyKPGSWcLxPo-ROyD9qfhP7SmpZ0bgHB9hLORXuqQEYVf5g@mail.gmail.com>
-Subject: Re: [PATCH-for-11.1 08/16] target/riscv: Simplify
- riscv_cpu_gdb_write_register()
+Date: Thu, 26 Mar 2026 12:13:25 +1000
+X-Gm-Features: AQROBzC0upxUJaZQ9mGPpTwtr8spkF0CAPvQ4RmxrRT8OZrVqCSZLa7yS0hqhp4
+Message-ID: <CAKmqyKONNZaWKDYx8D9wUsHGbG=92W8D1RAB_bj2fsnbWqF7Aw@mail.gmail.com>
+Subject: Re: [PATCH-for-11.1 09/16] target/riscv: Expose mo_endian_env()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
@@ -102,8 +101,8 @@ Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
  Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,7 +110,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,7 +129,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Mar 18, 2026 at 8:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Use a single ldn() call, sign-extend once.
+> Move mo_endian_env() definition to "internals.h" for re-use.
+> Do not restrict to system emulation only because this will
+> also be used by user emulation code.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
@@ -139,58 +140,58 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
-> Note I'm skeptical about 128-bit registers path, but this
-> would be a pre-existing issue.
-> ---
->  target/riscv/gdbstub.c | 25 ++++++-------------------
->  1 file changed, 6 insertions(+), 19 deletions(-)
+>  target/riscv/internals.h | 12 ++++++++++++
+>  target/riscv/op_helper.c | 14 --------------
+>  2 files changed, 12 insertions(+), 14 deletions(-)
 >
-> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> index be42566bcc8..a5c12638782 100644
-> --- a/target/riscv/gdbstub.c
-> +++ b/target/riscv/gdbstub.c
-> @@ -84,33 +84,20 @@ int riscv_cpu_gdb_write_register(CPUState *cs, uint8_=
-t *mem_buf, int n)
->      RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cs);
->      RISCVCPU *cpu =3D RISCV_CPU(cs);
->      CPURISCVState *env =3D &cpu->env;
-> -    int length =3D 0;
-> -    uint64_t tmp;
-> +    const size_t regsize =3D mcc->def->misa_mxl_max =3D=3D MXL_RV32 ? 4 =
-: 8;
-> +    uint64_t tmp =3D ldn(env, mem_buf, regsize);
->
-> -    switch (mcc->def->misa_mxl_max) {
-> -    case MXL_RV32:
-> -        tmp =3D (int32_t)ldn(env, mem_buf, 4);
-> -        length =3D 4;
-> -        break;
-> -    case MXL_RV64:
-> -    case MXL_RV128:
-> -        if (env->xl < MXL_RV64) {
-> -            tmp =3D (int32_t)ldn(env, mem_buf, 8);
-> -        } else {
-> -            tmp =3D ldn(env, mem_buf, 8);
-> -        }
-> -        length =3D 8;
-> -        break;
-> -    default:
-> -        g_assert_not_reached();
-> +    if (env->xl < MXL_RV64) {
-> +        tmp =3D (int32_t)tmp;
->      }
-> +
->      if (n > 0 && n < 32) {
->          env->gpr[n] =3D tmp;
->      } else if (n =3D=3D 32) {
->          env->pc =3D tmp;
->      }
->
-> -    return length;
-> +    return regsize;
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index 35b923c4bf5..860c47732b6 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -62,6 +62,18 @@ static inline bool mmuidx_2stage(int mmu_idx)
+>      return mmu_idx & MMU_2STAGE_BIT;
 >  }
 >
->  static int riscv_gdb_get_fpu(CPUState *cs, GByteArray *buf, int n)
+> +static inline MemOp mo_endian_env(CPURISCVState *env)
+> +{
+> +    /*
+> +     * A couple of bits in MSTATUS set the endianness:
+> +     *  - MSTATUS_UBE (User-mode),
+> +     *  - MSTATUS_SBE (Supervisor-mode),
+> +     *  - MSTATUS_MBE (Machine-mode)
+> +     * but we don't implement that yet.
+> +     */
+> +    return MO_TE;
+> +}
+> +
+>  /* share data between vector helpers and decode code */
+>  FIELD(VDATA, VM, 0, 1)
+>  FIELD(VDATA, LMUL, 1, 3)
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index 6ccc127c304..dde40a55493 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -28,20 +28,6 @@
+>  #include "exec/tlb-flags.h"
+>  #include "trace.h"
+>
+> -#ifndef CONFIG_USER_ONLY
+> -static inline MemOp mo_endian_env(CPURISCVState *env)
+> -{
+> -    /*
+> -     * A couple of bits in MSTATUS set the endianness:
+> -     *  - MSTATUS_UBE (User-mode),
+> -     *  - MSTATUS_SBE (Supervisor-mode),
+> -     *  - MSTATUS_MBE (Machine-mode)
+> -     * but we don't implement that yet.
+> -     */
+> -    return MO_TE;
+> -}
+> -#endif
+> -
+>  /* Exceptions processing helpers */
+>  G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+>                                        RISCVException exception,
 > --
 > 2.53.0
 >
