@@ -4,113 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8951110A1E82
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 11:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B0C10A3D80
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 12:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5jJW-0005BL-M3; Thu, 26 Mar 2026 07:55:50 -0400
+	id 1w5jNT-0006Yp-1P; Thu, 26 Mar 2026 07:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5jJU-0005AD-0e; Thu, 26 Mar 2026 07:55:48 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5jJS-0005tq-AT; Thu, 26 Mar 2026 07:55:47 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62Q28LqE511489; Thu, 26 Mar 2026 11:55:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=g07LVYIUi04BUfiGNdCjVwQJRgDfsf
- 3qP47kIX6viNQ=; b=VZGsFWj/+yLhbqhyNkDL4gZ/OE5Qum6U2N6npdkZdMn8ok
- ny4OvSavyHruz6B/qm6Z1LurnXl81t3HKiTIJ+K7xlE50yOhUDopBb1egxJ08rV1
- GZ3swXyn1odGEvwUL1RFGL8TxKvEG2GAckMQe7XbnywonvINlDN7REMThQTGwog5
- 8pvlTKJAorZOz+WtrJptGDCxktjuObLiN8Zk+KB9eiD5orirxpWXj026oZstZ2HX
- FQClD/gJ2ZUe6OTD2uHmdJlRO+XE5stcpFiqrkkzpKUiygrVnJvjHTQ9NdLUmzpF
- 8fO7giYVScrgNuTrY9/7Djj6J67nKA41ZKSPFP+w==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kwa51fe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 11:55:29 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62Q809pW012177;
- Thu, 26 Mar 2026 11:55:28 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d27vkaksw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 11:55:28 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62QBtOGP48497132
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 26 Mar 2026 11:55:24 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A72320043;
- Thu, 26 Mar 2026 11:55:24 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6746320040;
- Thu, 26 Mar 2026 11:55:22 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.123.10.203])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 26 Mar 2026 11:55:22 +0000 (GMT)
-Date: Thu, 26 Mar 2026 17:25:20 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, npiggin@gmail.com, milesg@linux.ibm.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org,
- Nathan Chancellor <nathan@kernel.org>
-Subject: Re: [PATCH] ppc/pnv: generate dtb after machine initialization is
- complete
-Message-ID: <acUeF_LPXihjYkR7@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260324135026.247418-1-shivangu@linux.ibm.com>
- <acUTurZoQJf8jRhJ@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
- <CAFEAcA-f+XQPgQ+udz9ts-V51E+jqBHwKpPsh=oArfs1d19wfg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5jNI-0006YT-Nn
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:59:46 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w5jNH-0006H6-4T
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 07:59:44 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ae222d978so930781d50.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 04:59:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774526382; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Qoua1YEnqvdBZULifKutlKhW0wvM8/BT3A69hq3vxCCoeGWkl+feWnZ0jm9nIKt/BL
+ jOBbvAp+ZlWTl+kEVnF/685KrV7d/bnI9Y2DrM6XuPEvgTf3pobjLBpJHqfRBUIw+Txq
+ 70+4DyF1tlPHNg5jTWFq9Ede2Iz7Ev38EjMmfDhTjiF6wb6QO7bGDBo8l5JQdEp+brNg
+ xBGg4wIaeO5bV1OLM5d1Z7WQDvN7gqx71MH0+fbqd+90Qv2Zgv0vAM0wQIX6q1t7vSP2
+ k88JdwKWPKN+9ZetWOfZ7ZSKT6wy70DKZUBYb2ipaubNlz4ed/9Bo1RO0uWsl60ZXRCA
+ ogQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=+daOsqgBZoh7MvQOdx6+MJb7MCpIGfWmBJ2vFK1wPrU=;
+ fh=qIRbUau/68XnBAmiD27rrUxcnOG0pNPxjzyeFymZl84=;
+ b=ERlsnWpvl6CSSkZe0iKBseTM4SRjbvScUfXZZGVdJa6UoYWsI5Q/5fxOunGRp3Zs/3
+ LlN3gHThXXiYKK+UOb7DXsapFeVR8U+uA/e0VXQQXN8cP4yOQBjORLEE3yidEtUK4NjN
+ bPg4nB7qBtJYuCc67ArlD2AgEolg0j1TZnH9RmdN+XVKNz8Mi/PTpe0fIYKmmxLKtJMx
+ HDkNXfeOhqCPapiektErJwb4si1GE+sibFIGfdPKteN5AsPBP5GSaR1MhJnHBHz6Tsij
+ b/GRkfJOR0KQypwjMttv/UqihgTfOuEZv3DyvS1YSVxhHshgEkdvqLmMc1ZGjil0CGde
+ Y7Aw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774526382; x=1775131182; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+daOsqgBZoh7MvQOdx6+MJb7MCpIGfWmBJ2vFK1wPrU=;
+ b=ffhLzwwpsIEVJYCY6tyH4y5xUUNFDen+24KjCTjJT4M5lSOA0NiuZ6j8tbzQLDetyv
+ MxszKkuftf7wZmxX3gILJPl8j36dfAP+xGH8l4TZnQ20dwYhEuXKsYkU9n/PP19euhF/
+ EUdNNjyzqo6L+RlkcSEJHpdvVfPccgXEgkEQbeb6f7O1blw7CtswgXFbef2OlwJwibjE
+ /WGs+AiHNFiUTQhAkdff+CVg0hXCocKhf6x8Lo4E8nMTKZ5gCDygbKqLuIhbggvmCiqe
+ FHLq4LspThJdEGHF2YBmwQMa8l3SSHLn5bKAWMkDk5qFi7RnU1ckB3r6J5004/88OtaA
+ p/iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774526382; x=1775131182;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+daOsqgBZoh7MvQOdx6+MJb7MCpIGfWmBJ2vFK1wPrU=;
+ b=JdNKQfH8goqK4q7X99R10E5tcbZbQPP+qKNeFj4w6STnb6QPSmzrSfxaBuQf8tbr+H
+ YO74FTymZzfNbmDCycoyYWmOVbOFLn+RjFcHZN+yJQOCt3UXMwXJTXyjsVJJmdCfJqee
+ Sns5KXEvillCZouNe5wEzLLNXWxuZb/83xuwLMj97OPhFROkwzwRHO+Z2V/v2PEgqwnn
+ /BI5QA/Qw4qkNZ6U79gxqt6vPHOEvFEXz+jTYZkoyL8LntY/ztg5Onm1sA6vc55KBibg
+ ZhytKuh1UaR1pWPFD3kmkUziwJrdPZvJjNeSOcF8wf72t1SG7tyEx/HFTRfmW0R3yOgQ
+ GQ+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWu3Cm8ZKD0YCwApL4+2/1Q8LlsRTPGHx3q1+P7rG73UMobpcuDysMmBnAuV/4/kFFVNz9jcij3O31S@nongnu.org
+X-Gm-Message-State: AOJu0Yxp8if56p+yFNZ13aUP0Q1JPs5OvpKIsXIKsTSg34Y7qn3XTR+v
+ wbrBbvLOTqrFjFcT5cw3LmBi1G2QNohO3hgdj4WcZAZD8XyBIcNr/XkzGRhOTYR5XKWKzICtnvk
+ Il9rdDUnsEzOPxYyhSwawnKDSbH5iKfSTAYru/K7KEQ==
+X-Gm-Gg: ATEYQzySH8zquEs3/Drd9KTHnYr5wGKuu6scXaJFmq8IOQduiKeb6wOQFn2gAce7W7w
+ N3brpn9v6EW/6yaEovDxJd4zZjJGy1ULASNThjoxU1QgUuR9r1S7gzoafOhOuf11brvzH3+cahp
+ sd5VSD32Z0M4Vod17TAGIKqI5njTpwqPwspYTl5Js4blE8ofoCXpU1o03essC6QxtVcjnKhmf03
+ OE53IK1tIhcwjlIZnCTv/yE25BgC801BlxAcoJHfgwHLAXk53z34xggvKzoG2BYyhSErpJea6rY
+ f25p7NhrBE6SO//g28X9fGKF64gUUSqqwvebHNAW9wdIiTW+Me44UnZFaEkGVsJCe8Ao9w7jN3R
+ ZaQ==
+X-Received: by 2002:a53:5011:0:b0:64c:b68a:f519 with SMTP id
+ 956f58d0204a3-64ee618b729mr5622533d50.80.1774526381795; Thu, 26 Mar 2026
+ 04:59:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-f+XQPgQ+udz9ts-V51E+jqBHwKpPsh=oArfs1d19wfg@mail.gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: rsicwLSkNYbs8JdgnGGn0l9Vf4pgUFWN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDA4MiBTYWx0ZWRfX7BpcV1v+F76n
- 26gJENFP2WKVmpoCTdQ11YLM0wWf8IfvN+7XpN64Ivjbaq59BZhKYjAVZqkaXdnMyUCA++tg5GT
- v1vxRF4tFpNEG1bIVDPwa3HHjbNn688xhnH6uxS2vtLR117Sml2q6mfW2NwZiIJERxrFZ+S57Ry
- JDD0bGoKUVxeXI07HeVjZ1x2d0VXGjGaQM8Jv5NYUuj3+WNC5+QND/naQ8JZ/RUm3iTyeqqy0Gm
- 5D1EnwJeHnnV/tYToGDyC1YhndILlgIO2u+2cuT8JQI/Th+z4C8d3eDT8YmcMGSWBjLPYgTNLPh
- PO8V849Y+612qnQmLIosv5WG/wSETKjVO/ht96Fes2TnzXPOPiHr33H8e8NszY83E/OdjbazpSG
- UGV7x7NSyj4wS5Z/K5WOnptuGxnPKsxhb9JvStjgxQnyEyaIyBCUJ5CJ0JVaMwg9dXuGx8Yzgya
- QRCmUJc7BmMK+NKjMcQ==
-X-Proofpoint-GUID: F54UaSz7FUu8hkP_Ol4QjeAzmzieihEY
-X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c51eb2 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=lmEiTuvyoTZ7PBWBH6sA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_02,2026-03-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 clxscore=1015 phishscore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603260082
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260326113457.159065-1-thuth@redhat.com>
+In-Reply-To: <20260326113457.159065-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Mar 2026 11:59:30 +0000
+X-Gm-Features: AQROBzDMtZMohbF7R_RUzgNbSrhXqBCmu98R5aqI7AtFShILrXnADzHTErJwxsM
+Message-ID: <CAFEAcA-xWtr=Xgst=MOVcm+TxegSvNVXmDP_RDVDOvJJW76Qeg@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/vga-isa: Fix migration of the isa-vga device
+To: Thomas Huth <thuth@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,51 +118,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/26 11:25AM, Peter Maydell wrote:
-> On Thu, 26 Mar 2026 at 11:16, Aditya Gupta <adityag@linux.ibm.com> wrote:
-> > But still the dts we have is different from what we should have at
-> > pnv_reset. Adding a pnv_dt_create at the end of pnv_reset, as it used to
-> > be before, gives me a 'bmc' node also in device tree.
-> >
-> >         $ diff /tmp/dts.machinedone /tmp/dts.pnvreset
-> >         16a17,33
-> >         >       bmc {
-> >         >
-> >         >               sensors {
-> >         >                       #size-cells = <0x00>;
-> >         >                       #address-cells = <0x01>;
-> >         >
-> >         >                       sensor@0 {
-> >         >                               ipmi-sensor-type = <0x23>;
-> >         >                               ipmi-entity-instance = <0x01>;
-> >         >                               ipmi-entity-id = <0x23>;
-> >         >                               ipmi-sensor-reading-type = <0x6f>;
-> >         >                               compatible = "ibm,ipmi-sensor";
-> >         >                               reg = <0x00>;
-> >         >                       };
-> >         >               };
-> >         >       };
-> >         >
-> >
-> > This isn't handled at machine_init_done as 'pnv->bmc' is not set at this
-> > time
-> >
-> > Two ways to fix it:
-> > 1. Have pnv_dt_create in pnv_reset as well, like previously
-> > 2. Move the pnv_bmc_find code in pnv_reset to pnv_init
-> >
-> > What do you say ?
-> 
-> My feeling would be that the pnv_bmc_find() handling
-> should move to the machine-init-done notifier. (pnv_init()
-> would be too early -- the pnv_bmc_find() code is looking
-> for a device that has been added via the -device command
-> line option, so it won't be there yet in pnv_init().)
+On Thu, 26 Mar 2026 at 11:35, Thomas Huth <thuth@redhat.com> wrote:
+>
+> From: Thomas Huth <thuth@redhat.com>
+>
+> QEMU currently crashes when migrating a guest that uses the
+> isa-vga device as display. This happens because vga_isa_class_initfn()
+> registers a vmsd for vmstate_vga_common that operates on VGACommonState.
+> But the isa-vga device is derived from ISADevice, not from VGACommonState,
+> so the migration code tries to fill in the data for VGACommonState to
+> the memory that is a ISADevice instead, which is of cause causing trouble.
+>
+> We need an indirection here as it's also e.g. done in vga-pci.c, so
+> that the migration data gets filled into the right location.
+>
+> While we're at it, also drop the "global_vmstate = true" here. Since
+> migration was broken for this device during the last 15 years (!) anyway,
+> we don't have to worry about maintaining backward compatibility with this
+> switch for older versions of QEMU anymore.
 
-thanks! agreed, pnv_bmc_find wouldn't work in pnv_init.
-moving it to machine-init-done seems okay. if shivang decides to move
-pnv_bmc_find this should be good
+That means the only remaining users of global_vmstate = true are:
+ * TYPE_VGA_MMIO : used only by the MIPS Jazz board, which is not
+   versioned, so we are OK with migration compat breaks
+ * TYPE_ISA_CIRRUS_VGA
 
-- Aditya G
+I don't suppose that migration is also currently broken for Cirrus ? :-)
 
+-- PMM
 
