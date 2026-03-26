@@ -4,91 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F3C109E553
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F83E109E54B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5dmy-0004Bc-OI; Thu, 26 Mar 2026 02:01:52 -0400
+	id 1w5dsj-0005cX-Jp; Thu, 26 Mar 2026 02:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w5dmx-0004BE-NT
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:01:51 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w5dsh-0005c4-Dd
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:07:47 -0400
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w5dmu-0000G3-W0
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:01:51 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-c06cb8004e8so271172a12.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 23:01:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w5dsf-00035J-LV
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:07:47 -0400
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-12732165d1eso935537c88.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 23:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774504907; x=1775109707; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=kupUV4i4hPwNPk5q1NPJfQR4+oRKXq8N/9LiP1M5nuA=;
- b=QiUl+doR59Fvr0vO0cy9AMrKM88dtcrFRtzQvCUQN528oWiWRLeUlzhK2ND5hCJcxw
- 9OwlrlRT1ulireBKPxGEpzNfrMybalxYweXBlTskwt6cU5dw8PNyLstcMbQiH2z5qjFt
- BIwmcXNBIJfVhIPwFzEMaFzS4PlJGiU0oRiras0bmfuQAkTmXCpJuGtVj3I5MgGaF6+S
- Wlqv1Z8HSXLyJDuzXiauDlLAJ2WPQWk5ICILjjohgwHamo3QpZzRJRFizJ4BuLGJimeg
- kw3Q3cepaJ0HY/Kv4j5X4Kub9gKS+312LMiRz9eAWZR2LodR5XVB+1tpmtjMnMmRIPkU
- 2Nvw==
+ d=gmail.com; s=20251104; t=1774505264; x=1775110064; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=u6kTyR2kv0n3qJ+AKHIx1k+o7niZD2e3hhZ11ewIj4A=;
+ b=A3NOH1Qpqb9UoyMK0uUqFqcqJVqqI6cRJhRGa7s5Zq1bunRJclDzcpygZtWCFEr6X/
+ 9nUA3zTFN1zC5a+LHcH4T+cnhPeHZlZaqZc2X75NDlj1ND0vtS5Nz5+uSPWZpz9BUDeZ
+ KNCGjHNLAF8VbgGdR1M9cDCpemA5IMMRGhPH0XZqLaW1lJnrTLaM0dDJfD6a2OK8H9Xn
+ 4um7TT39Jn0UTNhCfLe+zYjfSvYTMqm1Hz3CzPflg+DP74/wnP2pbJVrXqzlayb/8E/i
+ MfWCZb4Z3x6yLxYLbmzkVq+A9Iv754UOURby9FsXTjEElEfmv6aJ9Zj7Ix2M8TPkiXAe
+ i9zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774504907; x=1775109707;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kupUV4i4hPwNPk5q1NPJfQR4+oRKXq8N/9LiP1M5nuA=;
- b=fapfobemxYx47cc1m81nRRFNL6/DoCZBdTN26yhHcSs9xkMmW4pCzuIuEZi5ZEcDJ5
- FsPYwULxoi9nZr4xZDOCNwlAeKzht0ywI1qKcl0rABVYrBXXXeu6Ip1zV10Zq2mOwquu
- Kf6x4HRlIOBfMKbR4p8xPEbiSpjPVTsbuzyU9FsZS3Ef6pqRlstkg6atxEj7C1EZ3usv
- go+BFteSnKc5x4DrLad4A9W3CEYLze0PHS2/XfaQrbV4bmcyU/bWs3PVNyN0fMxhGnVp
- Y67vFNLEWzV6alXzWnmARkAh8TsZmwiTZHN6XUvO8Tm2ck/XMNlgIAIuZFozrd6LWBkt
- vKuw==
-X-Gm-Message-State: AOJu0YzRnszkHy1iISplb75nfZ/BoVxJs66FNjJquQ6EOHWvoxCx4Kvd
- bPH90OXWvzo1PJ3RIVCAarwXCPU3dRJpYKncd6Q5VDfyXVTVH5G+pVTe
-X-Gm-Gg: ATEYQzyhRvMmJszKjOK1gbNe/PpHycozUsVz6N32dQHu8NZ2ew69EKvmYj5KBGdFVPB
- XHlo8xw40bBjC23EMixRSgPNNxbchVscaDO1uDlCbf7uFkDn7/gK+1J+IjjTQi9WaZgJXPQW64/
- tH60yquQDvCa/d2NeV6rSA65t5KyW41lqlmZuZ5FepkZ2UzhAqzIzCY84MgHG166kvYnqI4tB66
- 61WhcvpH8/0hTNgX7Kwkaue2CFpGY1tnTd9asA0aQFu+pdlNUnU3sXAG6HeJKdeS+74bFgG9oHn
- s8eZwHMS1vAcBDVP1zu5VTUcfTHEIDQybSZ5DBgdkvxgG9BozrhZRKvILNsq8vZ4P1FDfbD15MU
- dUo4pNcbFUjRTtfwcCA9dDkHAA+DX/WUS0J5GnycmBpgQ/kjyzXBSjTQqK5MlChsivbRKkoeY36
- XC2mkQW8VuPRAb0zGdVzjYEHtT78qu58BtOKmGEe4AI0krwyM6xdFvjZTHCG7yQ3o0
-X-Received: by 2002:a05:6a20:a123:b0:398:8a92:78a5 with SMTP id
- adf61e73a8af0-39c4ab915c1mr7212415637.28.1774504906719; 
- Wed, 25 Mar 2026 23:01:46 -0700 (PDT)
-Received: from localhost (103.95.112.190.qld.leaptel.network. [103.95.112.190])
+ d=1e100.net; s=20251104; t=1774505264; x=1775110064;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=u6kTyR2kv0n3qJ+AKHIx1k+o7niZD2e3hhZ11ewIj4A=;
+ b=fkaQS59cS6YDNZWBCQ5+EOuKPlpkcGQxK8bhD1ffuX3W4G2HuODhEA/T4p2owwmkEj
+ xqs2TpffbsnC8pUYq1v9ch9T2yOuouhTHC6+hV5tB8Cgc3w5WzBNkCwRcXQ13YkHAZhs
+ l68MiGJpc0uEgw66k0utQck8lbVO0DK5rOi12kCDBq9NkbfnaOAJb9yMLmX5Wtuh5AjH
+ N0dSQvjYJQ8A6zY9JxboknBR6ouHyaXRRp0rDXnh3JxBHY0lBc5VNokc9loPyS0nJlXK
+ lGVD5TjXV8SP7aMAOIsGVMBS+LV+DY/G7CLw9sx1m7uE7O6ErsY2C2vXzMmzWgLZtjL6
+ av+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXV6heWAqivYNI5xvtiIFLFfdMir+XY+ROxaDkKQb2SP1/MselQa+IMh6qh0rOQk0r123ubCbS8AXXI@nongnu.org
+X-Gm-Message-State: AOJu0YyLUakKTx+COv6Zvtazy5gEqi4ca9w0JPGUtsuVrv9umtY0uJt7
+ M0NVOhsaezhci5yC1gA395t5PArnG6RSBKXyZGzOKEtdt2/yUgyQLVsd
+X-Gm-Gg: ATEYQzzSyui55I1iF76BlxvtyUQIM3dtgiL89BUAThxH0Wz0upU1vYC5RdF73hvhHTW
+ 402polpJrrQCSYm6rZhPjGT+79kEKGGFFtkeag92rCZksyHO8vD0m4Ri9gtnq1Qlx7x1VkQS07J
+ iD0g6qNAWI1Qvn3G/zq/f7CeBJIR5PjrhuATcZou3zIEB80nH+CgBhaINMwClZ6737d1v3KD3jf
+ N0feoG2FXXAoh0xLddjUGoxYYOZIbz6sbN+x78jBFGmQuyeTlW+NkTp/kpGJgcxkqXOHxjxIClA
+ yOq6NRclQYaohOcMlZyWfyP/WziCR6A6cnkfP88sYZLc+hE3nwovlKn6cGglLXhUTuAcJosLhme
+ InkPTMycVzgcENQZoIUAi3jtd+ve5aJsnsDB1r3nQHqcv4F0u8azFNmF8YPuacBNuEhNzo4L37A
+ CqfS2+i5g2bXUfEidio01QsIOQHZ0+VkXprEdGsUYrXBnpx3+/0yyDBzjXImSv6fX4e5U+LMPex
+ H9epgKFcgcRcyc49SdlZfptLXU2i+Y=
+X-Received: by 2002:a05:7022:620:b0:128:d39a:b141 with SMTP id
+ a92af1059eb24-12a96e71260mr2850119c88.17.1774505263546; 
+ Wed, 25 Mar 2026 23:07:43 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c767397b235sm1135907a12.26.2026.03.25.23.01.45
+ a92af1059eb24-12aa762430bsm3020127c88.10.2026.03.25.23.07.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 23:01:45 -0700 (PDT)
-Date: Thu, 26 Mar 2026 16:01:42 +1000
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>, 
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
+ Wed, 25 Mar 2026 23:07:43 -0700 (PDT)
+Date: Thu, 26 Mar 2026 14:07:18 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 2/3] linux-user: Fix unlock_user API usage
-Message-ID: <acTKJSWVB8xrzRr7@lima-default>
-References: <20260321004836.500390-1-npiggin@gmail.com>
- <20260321004836.500390-3-npiggin@gmail.com>
- <ab-Q2znE0qdtTRsT@ZEVORN-PC.localdomain>
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v5 0/9] Add Zvfbfa extension support
+Message-ID: <acTIq7M94646OAA_@ZEVORN-PC.localdomain>
+References: <20260306071105.3328365-1-max.chou@sifive.com>
+ <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
+ <abKfuTO7zg5d67E8@sifive.com>
+ <CAKmqyKOcCKAb2w2t2qYgOevswst75FjzKfihrYP9+odRAsCQmw@mail.gmail.com>
+ <abe80eiIC4gXUHxk@sifive.com>
+ <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
+ <acSqxQQxnO0HdB8M@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ab-Q2znE0qdtTRsT@ZEVORN-PC.localdomain>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <acSqxQQxnO0HdB8M@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,83 +113,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 22, 2026 at 02:54:31PM +0800, Chao Liu wrote:
-> On Sat, Mar 21, 2026 at 10:48:35AM +1000, Nicholas Piggin wrote:
-> > Fix errors in unlock_user() calls:
-> > - unlock_user() with len=1 instead of len=written
-> > - unlock_user() with len=1 instead of len=0
-> > - unlock_user() with len=0 instead of len=1
+On Thu, Mar 26, 2026 at 11:42:58AM +0800, Max Chou wrote:
+> On 2026-03-19 13:45, Alistair Francis wrote:
+> > Yes, that's how things previously worked. Basically I think we just
+> > need a tag (that won't be changed) in an official RISC-V repo that we
+> > can point to. That way it's easy to say "this is the exact version we
+> > used to write the QEMU implementation". Then if there is a version 0.2
+> > we can easily see what has changed and update to match.
 > > 
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >  linux-user/linuxload.c | 2 +-
-> >  linux-user/syscall.c   | 6 +++---
-> >  2 files changed, 4 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
-> > index 85d700953e..79416a94c9 100644
-> > --- a/linux-user/linuxload.c
-> > +++ b/linux-user/linuxload.c
-> > @@ -19,7 +19,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src, unsigned long len)
-> >          return -TARGET_EFAULT;
-> >      }
-> >      memcpy(host_ptr, src, len);
-> > -    unlock_user(host_ptr, dest, 1);
-> > +    unlock_user(host_ptr, dest, len);
-> This fixes the writeback -- old code had 0 which meant
-> no flush at all, so getsockopt results were silently
-> lost under CONFIG_DEBUG_REMAP.
 > 
-> Minor observation: getsockopt returns actual bytes in
-> lv, so using lv rather than len would be more precise.
-> That said, the swap loop above also uses len, so this
-> is consistent with the existing code.
-
-I guess this comment is for the next hunk below.
-
-The swap loop as you noted stores to the full len, so I
-think it's better to use that. If the logic changes to
-only store lv, then the unlock would change.
-
-> >      return 0;
-> >  }
-> >  
-> > diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> > index 7832a1aba5..13b8bd9ed3 100644
-> > --- a/linux-user/syscall.c
-> > +++ b/linux-user/syscall.c
-> > @@ -2989,7 +2989,7 @@ get_timeout:
-> >              if (put_user_u32(lv, optlen)) {
-> >                  return -TARGET_EFAULT;
-> >              }
-> > -            unlock_user(results, optval_addr, 0);
-> > +            unlock_user(results, optval_addr, len);
-> >              break;
-> >          }
-
-Actually missing unlock on error too, I'll fix that up.
-
-> >  #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(4, 2, 0) */
-> > @@ -4006,7 +4006,7 @@ static inline abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
-> >          __put_user((*host_array)[i], &array[i]);
-> >      }
-> >      g_free(*host_array);
-> > -    unlock_user(array, target_addr, 1);
-> > +    unlock_user(array, target_addr, nsems * sizeof(unsigned short));
-> >  
-> >      return 0;
-> >  }
-> > @@ -7888,7 +7888,7 @@ static inline abi_long target_to_host_sigevent(struct sigevent *host_sevp,
-> >      host_sevp->sigev_notify = tswap32(target_sevp->sigev_notify);
-> >      host_sevp->sigev_notify_thread_id = tswap32(target_sevp->_sigev_un._tid);
-> >  
-> > -    unlock_user_struct(target_sevp, target_addr, 1);
-> > +    unlock_user_struct(target_sevp, target_addr, 0);
-> Right. This function only reads from target, so
-> copy=0 (no writeback) is the correct semantic.
+> Hi Alistair,
 > 
-> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> The official riscv-isa-manual repository has added a new tag for the
+> frozen Zvfbfa v0.9, as shown below:
+> 
+> https://github.com/riscv/riscv-isa-manual/releases/tag/zvfbfa-0.9
+> 
+> The current v5 implementation fully complies with this frozen
+> specification.
+> 
+> Since the Zvfbfa is frozen, should I prepare a v6 that removes the “x-“
+> prefix from the zvfbfa property and updates the specification reference
+> ?
+I think we need a v6 series, usually it's fine to implementation
+after spec tag is release.
+
+That said, we should defer to Alistair's thoughts on this.
+
+Additionally, my new debug spec series can be sent upstream later
+(base on the zvfbfa tb ext_flag patch), once zvfbfa ia all ready
+and pulled.
 
 Thanks,
-Nick
+Chao
+> 
+> Thanks,
+> rnax
+> 
+> > With the seemingly infinite number of draft extensions we need
+> > something to manage the version and compatibility, and that seems like
+> > the best bet.
+> > 
+> > Posting the draft PDF spec somewhere immutable would also work. We
+> > just need to be able to point to something that won't change and
+> > represents some sort of "release". So a git commit doesn't seem like
+> > enough, we need a "release" that everyone can converge on.
+> > 
+> > Alistair
 
