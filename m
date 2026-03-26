@@ -4,110 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B3D10AB80A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38D7610AB80A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5q1y-0000Gx-7p; Thu, 26 Mar 2026 15:06:10 -0400
+	id 1w5q6X-0001hR-Tj; Thu, 26 Mar 2026 15:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5q1s-0000G5-S4; Thu, 26 Mar 2026 15:06:06 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5q1f-0006rT-Ss; Thu, 26 Mar 2026 15:05:56 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62QAnh5a3792418; Thu, 26 Mar 2026 19:05:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=TmM46Lo3kd1WIaZix
- fJwNiMON3swWRzxjwlFnBItCyY=; b=qnCt8KJzdNV/pXRSgdMyAMKthESb1yPqF
- AhVcKnSTeFTuVQb6HHzygD++viI3Tp0Ab8N+wQ7nKZWZwzgCM7xzR2K/Dr80Au/o
- P+4xwTp3bykoMbO8/gOeRDyPy4LbbPFm7BUJVQK27XJLQSmpYgt9aVdnyCpbGifn
- dCsdpuKl3KvCx7VL4oTjfYCkMDd3+4O8W6KQxAk+8wQ6Q15cNj32m7RcntjWzluA
- FBZOpNE+AmnnDnBBocMJ5WNjBgVHCxS0RNOnAiy6HT8zrgduWKSevhVEkbYI493t
- fC/A0adPVacOs5Skz8tAnLc35b6fQ5m/expnMPgaENxUsTyfBy4sw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kxqpukk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 19:05:49 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62QGoF2A004392;
- Thu, 26 Mar 2026 19:05:48 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d28c2c368-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 19:05:48 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62QJ5iUW50987452
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 26 Mar 2026 19:05:44 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 914FF2004D;
- Thu, 26 Mar 2026 19:05:44 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2CA6A20043;
- Thu, 26 Mar 2026 19:05:40 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.221.9]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 26 Mar 2026 19:05:39 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: <qemu-devel@nongnu.org>
-Cc: <qemu-ppc@nongnu.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Zexiang Zhang <chan9yan9@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Miles Glenn <milesg@linux.ibm.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH 2/2] hw/pci: Replace assert with bounds check and return
-Date: Fri, 27 Mar 2026 00:34:38 +0530
-Message-ID: <20260326190438.734239-3-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260326190438.734239-1-adityag@linux.ibm.com>
-References: <20260326190438.734239-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5q6W-0001h5-ET
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:10:52 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w5q6U-0000kJ-L2
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:10:52 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2b04e6a989eso8552495ad.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 12:10:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774552248; x=1775157048; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=9mEKlZaOo1SmTr2/JJZnOTnoaPq9KrV/DOdGDyVTKz0=;
+ b=Rmfy8901gu+QZ8FbwFjgbxgrI8NQFeq5g+kwzJeCdcGa+Ta2SxTIHKvUQJtN/UDs0m
+ tWsQy3u55kkhpkYcTn4/iC4M75KkIrATBBlyMuWdWslpRsT1dirTe9HpvQAn37oLiXPK
+ D9mvWuUUWvH9AsumeUihgxubvM90aOUGU1hqSYT8LENjRp900zpYZOJ9TSik8BIB9Yyd
+ eIt2pcaUuHFvG1sbRV3rI3gr28aHEUiwdTKCe8xg7O/uq1FcFSGzL4hPWGbfgX2SUuqq
+ uVTaKmwK7uoXyusxQ/zxzsmYB3eqSEjwrS3X3KDu3Q1KXUIroY2VYw23cyzdIvMj/yKT
+ Pj1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774552248; x=1775157048;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9mEKlZaOo1SmTr2/JJZnOTnoaPq9KrV/DOdGDyVTKz0=;
+ b=YkxkLfLDyp9X4rw9LoNQq0eEFzXlvd0YVlW4sRMg/vXSIlnHMLoOzcr1yMW4Gw4YP3
+ LqLW7G/l53x/TFdtuS4hTV/K8fnrICUc1bIZJ0WGzFKxW7T7XjWIMv1HvFZwWiXHY3FN
+ CdVVZRImzu0ez/UhvWku5btnolVFnB+MTOzRelKzhvQ7/z3/p3DaL70jXXXRZMM7eQts
+ TA28F6sYZc+XaK/51A5esI7S9XzKfNoYBcYpb79EE2LvSaKSzsIM18ExwzT3mGTkGyUP
+ RMD64qtre8i4JY5aSdikl3TS2QwmHbb83KHi+2oSa6liF0whF9l91UV3F8zhsVVGqoLQ
+ YFiQ==
+X-Gm-Message-State: AOJu0YwWP6sUdXHQLDAyOKbwcGpeviIYab8Cqx7qDB+VH9Bbu5ooGtv0
+ q8dULSjFy9qq+C8ZXJruQwJpHrCKNj7ymJCfLkahD+FpODOvMyUmgpRZ/j0P7ImshDM=
+X-Gm-Gg: ATEYQzwwn7ShCAJTjUAAvVitLvgBxCJOjOvBbKVXCJ+bFAkmwaVsDu/0N84H1gIshwl
+ PbbF+3fQGPbOpKlekiiE8QD/rQBsQQHL6IIVfOJMi4C7R2JjjmUBr0fh6X/AHnrTTAy+IK92JgB
+ iCNOwrLJ6IjwFK7eJw5DfL2T/57vANicmJFTp4/qlhbnBP5e5DxZ4bk1dvffFPPtbBytCp4dZfO
+ 6yrK5hck7EVvlrvr42SLQ3EJWDVN1VLa/aIEryX514wZildOhKMvqwQvpeE2l4wOQ+olZbb4Okp
+ tF0rbHWlgecgZzfeyb9suqq7G/+G0SUkAEeV9Srv0yyMI6We2eE+3ynq1g8kloagaweMjUfdk9N
+ G3ki3Xlxn+57ULMz+jvP0DOBZrKE7r1AU0r0WTJ0gj9X1jCr7s7qqylTJEqOmjjdJhtU+EAmKOW
+ W8ENkxo/jjE9WdYEGt9Mih/wRslvzx/oHLGONyrzEB8QdeOUeeCgzw46j1XBvwnNgxPyDQ
+X-Received: by 2002:a17:903:3884:b0:2ae:57e6:616c with SMTP id
+ d9443c01a7336-2b0b0989326mr87202945ad.3.1774552248102; 
+ Thu, 26 Mar 2026 12:10:48 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b0bc7a9deesm36532765ad.28.2026.03.26.12.10.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Mar 2026 12:10:47 -0700 (PDT)
+Message-ID: <efe2b0d0-4bab-488d-9fed-0b73dce24ecf@linaro.org>
+Date: Thu, 26 Mar 2026 12:10:47 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] target/i386: emulate: make unmapped GPA warnings a
+ trace
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>
+References: <20260326183628.79281-1-mohamed@unpredictable.fr>
+ <20260326183628.79281-3-mohamed@unpredictable.fr>
+ <b1115dab-4f72-4c8a-8d81-3c24b3475faf@linaro.org>
+ <6BB391D1-719D-45C5-B0F3-2CDBA65CC1E1@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
+ eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
+ CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
+ gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
+ qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
+ 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
+ L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
+ IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
+ dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
+ tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
+ PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
+ F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
+ HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
+ CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
+ UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
+ uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
+ vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
+ FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
+ I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
+ oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
+ TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
+ y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
+ /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
+ YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
+ DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
+ v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
+ 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
+ 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
+ dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
+ 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
+ X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <6BB391D1-719D-45C5-B0F3-2CDBA65CC1E1@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 9zjOGUx1S_KgRM9w4eHfVZTnLEhuAQqx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDEzNSBTYWx0ZWRfX13NfFT4ma9Jn
- VJPUIHHxgRMm1VZD5kGJ4KfOcvht/YSp/txrQtqv5461nXZNgceLtqz1L9d1LzUEIlv3sjYYZKO
- wZSgNgjQhowe3MH9NTOlaa1okWunHBKA5oxINt/gaQtC8SiBC8nm/xLREeAC49uQuoF/404QxwK
- OHFt2nv3ETWTlJ6KczYlWt2eJdqZqa+mL60xqp1peyavWhTaFPO1LMU2ODjKx6y7paPiw+BpYVg
- Fb5lr1xcgWiUvLipstSqN9mnXxxlf74xoKZcgR1ZOn7E2UQh2Sd5vjg/3q9U1ypP7F+/gDtimhh
- pinUI71wNFKLE3ySaZ7V2gT/QytT0MzXPoGODifo6CyJpqllCc3ljsX2hEdEC7Ht+OHq6vsDhdz
- bMr5ZoXtXLMqRQTsqhaHrw3gy6IWOs2kRhGP2tF3qasXJWMOtdT9PyoYGT+I3P6+pCESNjepluC
- s81BIaNNJS/0I0OmZEA==
-X-Authority-Analysis: v=2.4 cv=bLEb4f+Z c=1 sm=1 tr=0 ts=69c5838d cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
- a=S5HtyE1eDOxyD5dW7SoA:9
-X-Proofpoint-GUID: tlL83mH6BSkgNrdfH6sWHEJhWYI07bfz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603260135
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,55 +146,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As reported in https://gitlab.com/qemu-project/qemu/-/work_items/3334,
-callers of 'pci_host_config_{read,write}_common' can pass length as 8,
-causing an assert failure
+On 3/26/26 11:53 AM, Mohamed Mediouni wrote:
+> 
+> 
+>> On 26. Mar 2026, at 19:46, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>>
+>> On 3/26/26 11:36 AM, Mohamed Mediouni wrote:
+>>> Some guest OSes trigger them way too often.
+>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>> ---
+>>>   meson.build                      | 1 +
+>>>   target/i386/emulate/trace-events | 2 ++
+>>>   target/i386/emulate/trace.h      | 2 ++
+>>>   target/i386/emulate/x86_mmu.c    | 5 +++--
+>>>   4 files changed, 8 insertions(+), 2 deletions(-)
+>>>   create mode 100644 target/i386/emulate/trace-events
+>>>   create mode 100644 target/i386/emulate/trace.h
+>>
+>> To justify the change, it could help if you could add a better commit description explaining:
+>> - which OSes are concerned (older windows?)
+>> - analysis why they do such a thing (at least see some QEMU backtraces when this happen).
+> Hello,
+> 
+> Neither Windows or Linux are concerned by this one, but the
+> ReactOS install ISO - among some other more rare OSes - trigger it.
+> 
+> Intriguingly, the ReactOS live ISO doesn’t trigger it.
+>
 
-The original issue with pnv_phb3 triggering the assert was fixed in a
-previous commit
+Might be a good idea to report that to them, as it seems like something 
+wrong is going on, which was the point of having this (loud) warning in 
+the first place.
 
-Instead of asserting on invalid length, check if the length is valid
-(<=4), otherwise return (with the failure error code in read)
+>>
+>>  From what I see, this code is triggered either from hvf, or when running an ins instruction, so you could explain which scenario you're covering.
+> 
+> WHPX has been moved to target/i386/emulate for 11.0, it’s no
+> longer using winhvemulation.
+> 
+> And that means that it’s a load bearing path through which
+> load/stores on every MMIO access by an emulated instruction
+> goes through. And even reading part of the instruction itself
+> if Hyper-V doesn’t give a complete one.
+>
 
-Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- hw/pci/pci_host.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+I see.
 
-diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-index 91e3885c7f62..2a7fdfa5636e 100644
---- a/hw/pci/pci_host.c
-+++ b/hw/pci/pci_host.c
-@@ -81,7 +81,12 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
-         return;
-     }
- 
--    assert(len <= 4);
-+    if (len > 4) {
-+        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
-+            len %d val %"PRIx32"\n", __func__, addr, len, val);
-+        return;
-+    }
-+
-     /* non-zero functions are only exposed when function 0 is present,
-      * allowing direct removal of unexposed functions.
-      */
-@@ -106,7 +111,12 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
-         return ~0x0;
-     }
- 
--    assert(len <= 4);
-+    if (len > 4) {
-+        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
-+            len %d val %"PRIx32"\n", __func__, addr, len, val);
-+        return ~0x0;
-+    }
-+
-     /* non-zero functions are only exposed when function 0 is present,
-      * allowing direct removal of unexposed functions.
-      */
--- 
-2.53.0
+In this case, maybe a better compromise than using custom trace events 
+would be to make it visible when using -d guest_errors.
+The problem is that custom trace events are hidden for users, and except 
+if you know it exists, it's impossible to guess it's there.
 
+On the opposite, -d guest_errors can be discovered by someone curious 
+with `qemu-system-x86_64 -d help`, and it's the same flag for all 
+architectures.
+
+> Thanks,
+> -Mohamed
+> 
+
+Regards,
+Pierrick
 
