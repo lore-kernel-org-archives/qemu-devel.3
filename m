@@ -4,89 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C6BD10A88E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE5B10A88E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5nA8-0005Ui-5d; Thu, 26 Mar 2026 12:02:24 -0400
+	id 1w5n9H-0004LC-0m; Thu, 26 Mar 2026 12:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chan9yan9@gmail.com>)
- id 1w5mb2-00026h-Jx
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:26:10 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chan9yan9@gmail.com>)
- id 1w5maz-0005ZF-0S
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:26:07 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-35c06831dd3so1131834a91.2
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 08:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774538763; x=1775143563; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=L/XOeeZJbH562gwsN3ZvedpHu8ETHOSgikP+7Qk+gTY=;
- b=owfc7ck3CFxBJGOsYV0H5TUzZLc8ypcTNphztNHIfC3myw35T2Xapm+hdZRey8WHTn
- 8uttWgzs4Vn5hTPMokWgpa460DUP2FS92wSjTL27J1JHoOsp7UmzviR9Gld+SgJZa2pM
- iiE4/DYkcCz+GqSUlHg8W+18DUQ6AxdFDQb7wl2dqSKfi07IhX2BM+ba8kdztR758H5K
- lI85N+rnORI7Cs9VWUH0k4V3hp2OoHa2FUXlPR/pgm1VSaC3QqBdaFYSpHh9eZ/lSL5S
- KoGJrKQCVWNuLyMS5vQsRgi0rhYbayk9Wgz/YYb1I6VwzInqDI367M8X15iMyRtaMRSK
- xE5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774538763; x=1775143563;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L/XOeeZJbH562gwsN3ZvedpHu8ETHOSgikP+7Qk+gTY=;
- b=tU7e3zM+buqbpOOroEDxrfOqFlOG0ne+EH8veMFh2qkIjbLZlV9oxsKyNRT8Y1Oiy0
- 1RV9Z+bKXm022qX2YEIbGNQ3nSC1ppeEtjR86rH1zNOtd3r8A1Ir4GgJJal5u+N8rLoq
- dc8fP4YspAhx+jZ8rVaiLdf+ud9WxasFodYfqbVJY8mYFzLC4lRwOVOoN7yG/M0c44+D
- iqLMJTTsT+T8cP2xrO6WsCsLoWeljbx7phS6e+QQXQmY0uNAMFe8tpxh42RbFqZJ4jdd
- wH6BBbgRsTF8+ORtHES7o1+hyCPj7bLCTJJgrv0StxZ6pcj/jeoobRKSzyChbrVeAnVd
- ZsgA==
-X-Gm-Message-State: AOJu0Yzh9uLAEvo1KkEr+EQXdD1uk3i7ZqHxe7wvtcp0/SMJG0gPQwEw
- NRfWTd5oGQkOSO6Jsj8mG/us5eOhOloEuoAVsjN+CXvoK4Pb2x6fnkjORaFJHitiuP1pIQ==
-X-Gm-Gg: ATEYQzxqhO0MFM1WlRx2heiiZzUwXP3WWMedlDIFFBwz/FGeyQB3ptlxtDKeoQZgpeT
- GEs7H/EydfeRenKb+fC6aaBN5HekvTknj0sT9ABHKJFht7X22Nsybwtvu2ITSwu9S9WaxbFmXXl
- KalJ1vROdGac0TSbfz6qWHefS3ltmGQ6Rs9MUSkQ/6E5BoKa3XvXbL3fRLLn3oAJCve7VIZacWW
- 75hJWGv8++PiM2gvuVW+JDMIArg43XCWNzpojx21ByI1hshU0UkHWNXfqz38iFGmoVsm8H+q3cr
- UKa6dYezU1pPSnm8KdsFTMJLNJm/wv+CSkd3sb2uSr8cRx7+Y7Sh5Vnv3KkPQ+uKHoFHobYcLVi
- 4O0xirJQeoVb5B41PXyPkh7nEyBAcw6ZiLAFrdj4puoghcdMzUyM9xeKIZ7jTzHyy95rjQEdfMl
- Ex0fs6mTILNQe5cDbImg6AAdeB3ODUubqOwWMQeOZY
-X-Received: by 2002:a17:90b:1d4c:b0:35b:aca5:db39 with SMTP id
- 98e67ed59e1d1-35c0dcb2a8amr7534683a91.9.1774538763081; 
- Thu, 26 Mar 2026 08:26:03 -0700 (PDT)
-Received: from localhost.localdomain ([36.33.26.5])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c22a82231sm3208677a91.6.2026.03.26.08.26.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 08:26:02 -0700 (PDT)
-From: Zexiang Zhang <chan9yan9@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- qemu-ppc@nongnu.org (open list:sPAPR (pseries)),
- kiki <Chan9Yan9@gmail.com>, Zexiang Zhang <chan9yan9@gmail.com>
-Subject: [PATCH] As reported in qemu-project/qemu#3324
-Date: Thu, 26 Mar 2026 23:25:57 +0800
-Message-Id: <20260326152557.344808-1-chan9yan9@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1w5n8z-00047l-Tx
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:01:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1w5n8t-0001is-Em
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:01:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774540866;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GMru4Qfm3nT6VSkibmFm1sG+p6Wk3D7PhAvTfNGTNEw=;
+ b=fZisstkyKFhTUNYwo7jixkCZc+oeqegnX1OSS2sk0gVInGPFFUIbg6RSAfM7kaea2YSUu/
+ iKhlxK4Lkr+W4vq+AYbdDsmfK5upROl4KgPGllkSIlD64fZMX8boJIxtPh7a+GUIxByVWY
+ 7vBeOoWqUVAKl4qaUsdFgE1GnhdMWf8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-142-km0SbM33OqWLGuISLG9tXA-1; Thu,
+ 26 Mar 2026 12:01:04 -0400
+X-MC-Unique: km0SbM33OqWLGuISLG9tXA-1
+X-Mimecast-MFC-AGG-ID: km0SbM33OqWLGuISLG9tXA_1774540863
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D5C7618002E9; Thu, 26 Mar 2026 16:01:02 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.44.32.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0217130002C3; Thu, 26 Mar 2026 16:00:59 +0000 (UTC)
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-block@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
+Subject: [PATCH 6/7] storage-daemon: use same link arguments as other tools
+Date: Thu, 26 Mar 2026 18:00:32 +0200
+Message-ID: <20260326160033.68318-7-kkostiuk@redhat.com>
+In-Reply-To: <20260326160033.68318-1-kkostiuk@redhat.com>
+References: <20260326160033.68318-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=chan9yan9@gmail.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 26 Mar 2026 12:02:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,40 +88,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: kiki <Chan9Yan9@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-A malformed IVE value can result in an invalid server field being
-passed to icp_irq(). The function assumes the server id is valid and
-may access invalid state otherwise, potentially leading to a crash.
-
-Fix this by validating the server id before using it and ignoring
-invalid values.
-
-Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/intc/xics.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ meson.build                |  8 ++++----
+ storage-daemon/meson.build | 16 ++++++++--------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/hw/intc/xics.c b/hw/intc/xics.c
-index 1d40c4386d..25c7b0c8a5 100644
---- a/hw/intc/xics.c
-+++ b/hw/intc/xics.c
-@@ -222,6 +222,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
+diff --git a/meson.build b/meson.build
+index 711dafa9ce..e1baa0ea80 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4496,15 +4496,15 @@ if xkbcommon.found()
+ endif
  
-     trace_xics_icp_irq(server, nr, priority);
+ if have_tools
+-  link_args = enable_modules ? ['@block.syms'] : []
++  tools_link_args = enable_modules ? ['@block.syms'] : []
+   qemu_img = executable('qemu-img', [files('qemu-img.c'), hxdep],
+-             link_args: link_args, link_depends: block_syms,
++             link_args: tools_link_args, link_depends: block_syms,
+              dependencies: [authz, block, crypto, io, qom, qemuutil], install: true)
+   qemu_io = executable('qemu-io', files('qemu-io.c'),
+-             link_args: link_args, link_depends: block_syms,
++             link_args: tools_link_args, link_depends: block_syms,
+              dependencies: [block, qemuutil], install: true)
+   qemu_nbd = executable('qemu-nbd', files('qemu-nbd.c'),
+-               link_args: link_args, link_depends: block_syms,
++               link_args: tools_link_args, link_depends: block_syms,
+                dependencies: [blockdev, qemuutil, selinux],
+                install: true)
  
-+    if (!icp) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
-+                      server, nr);
-+        ics_reject(ics, nr);
-+        return;
-+    }
+diff --git a/storage-daemon/meson.build b/storage-daemon/meson.build
+index 5e61a9d1bd..fc088cbea7 100644
+--- a/storage-daemon/meson.build
++++ b/storage-daemon/meson.build
+@@ -1,14 +1,14 @@
++assert(have_tools)
 +
-     if ((priority >= CPPR(icp))
-         || (XISR(icp) && (icp->pending_priority <= priority))) {
-         ics_reject(ics, nr);
+ qsd_ss = ss.source_set()
+ qsd_ss.add(files('qemu-storage-daemon.c'))
+ qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil)
+ 
+ subdir('qapi')
+ 
+-if have_tools
+-  qsd_ss = qsd_ss.apply({})
+-  qsd = executable('qemu-storage-daemon',
+-                   qsd_ss.sources(),
+-                   link_args: '@block.syms', link_depends: block_syms,
+-                   dependencies: qsd_ss.dependencies(),
+-                   install: true)
+-endif
++qsd_ss = qsd_ss.apply({})
++qsd = executable('qemu-storage-daemon',
++                 qsd_ss.sources(),
++                 link_args: tools_link_args, link_depends: block_syms,
++                 dependencies: qsd_ss.dependencies(),
++                 install: true)
 -- 
-2.34.1
+2.52.0
 
 
