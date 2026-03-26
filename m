@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06790109E542
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 03:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63ED5109E543
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 03:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5b6o-0006d3-UQ; Wed, 25 Mar 2026 23:10:10 -0400
+	id 1w5bJ1-0000Mm-E1; Wed, 25 Mar 2026 23:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5b6n-0006ch-TJ
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:10:09 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1w5bJ0-0000ML-9N
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:22:46 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5b6m-0003sZ-A2
- for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:10:09 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c70c112cb61so376381a12.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 20:10:07 -0700 (PDT)
+ id 1w5bIy-0007oq-It
+ for qemu-devel@nongnu.org; Wed, 25 Mar 2026 23:22:46 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ad9f316d68so2390475ad.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 20:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774494606; x=1775099406; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774495363; x=1775100163; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=t63ojoLzPgy6q+W81WYCyNGVhtHJcOvKnEZM7ipKw6M=;
- b=LvIDMuYGabcI5Nb6xVOGnNxFDfqC5+fxJ1UUpzd9VCy4H6CfdV566gkTfogcSpdIz6
- A+5mLw7AIuq/blT4O1HhEsoI2EPXOM7bVN1gPNVIivx4gBrYHm84zT+HqafqhEO7EWAt
- EG2DD5HbESzNhExhMbmsGqtRvtj7EAbH+qJmgDm873ohC4KudwExJUKPK7AW+ktaAnyD
- cuOflR/bWvy6p+kac2LNAA/Rr5Q2rCvlXzHahKZenaF6iUXF0Be5+8jmnpFo2zA1QWf6
- 7iKDLLx/GwmQ8o5ZeaGPkLaR6kIVdpGdC6MMKjr3hPuME9w7psCTOyXBT+EZZtGZ1fSh
- NL4w==
+ bh=TNzBK42/RI4ZFpHTJpnIhrZkGrb4kpEPZQyFB5ml6Lw=;
+ b=MqwydMPdCgCWnXPzrWXbNGLoB9Aos1MywBmEfVgZC8sBeD1GdztDfMzVri0UDBN2GA
+ 0pJb8jD/LyjJwSOwdzkKquC05oREahP3nzDJ4Wk/84xX7fZnHEOIMewQaZydjr2sj07S
+ KfKB/3kG9tzu2hrnrX3KllintBsEFMRC8qBCM+WpivJFKdqDW/dyvcJTjhiUE5UJAZnm
+ pQYgOTY5Vf/31Oz1yphmhUf1aMjrl1orlOVCVwK0CItdh2K29WDaxK1tjGDQgw4gFBPJ
+ 9wCGh3N+aOWdsrzu8D/Q/y2yNYepLVqbTVXENumIH0Zx8Ai7Tm5/7AdEbwt3vHwtf3VT
+ zMIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774494606; x=1775099406;
+ d=1e100.net; s=20251104; t=1774495363; x=1775100163;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=t63ojoLzPgy6q+W81WYCyNGVhtHJcOvKnEZM7ipKw6M=;
- b=jaI0al7MIPH4KMARJpTsxSSEQslYs7vGggFLXqfAJFrMVT2TsyIvOlZu71vlua45xi
- bIOi0LxCxzbcr46oST2kCwMKFgVyngjBAnDEthKmCPPD5tboaTG5nidM7O2cOE3GqF1q
- gZZy3vR7O0ydacOFToO/98UYGC6zlu49yPzBT1Za6GIY7xCJ2fDYXGa4BhzGgdYx1q52
- UQx76Ra29nZ6Lu0R9yKtsHpsbrzvgA9CEqkao0mQe/NCTXWlAPTSt6F/aO/v7ipghn4Y
- TrW2egyTWzYdrYRxnyt6JlCAlHumeH8y/y8+cloB3ZOehwWZOhjhcs4EpLtI4HWoinuc
- yKPw==
+ bh=TNzBK42/RI4ZFpHTJpnIhrZkGrb4kpEPZQyFB5ml6Lw=;
+ b=TlugbJ4sjycDl7Lm9B6h9OFHSV+nnsnN8S9/TwdnktJlzk1u7zYDqk3bLCcivU5hc4
+ s0E/iXNM12k2AVmUaYC3tfJopERBzljqd3U6y/AIB5WgaI0z8ikzqC+io7b1F15ziq2t
+ j+1tChqE870rek3i5K7uHNuBblR/GxwSULcSEhuM5vsL5rqe2dKdUeLHIQgA9Z+vIIfj
+ 4aYPxl2wcEd2VOVg7m5Aa60rA9UoABaRibrXWqHDooCtJk9mqxkRYcJ6nIrmrOTFRZrg
+ igCXUQBG0ZnVPqoqVxO4PRAreAq7FIdRU9gn2aNAEjGbGySugbEFl93hJja+7IOJ9grR
+ vw6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX31U+aF6rCQTz2RgjP+oQos8iuiJMh7UzVvZFklEmakgtRqa943eBn598Bule7uPsuIJ0vRKFUxCHZ@nongnu.org
-X-Gm-Message-State: AOJu0YwPmVDiWGNib3wibF78luPDVjrXXtbKzxCEDE0r9Qnwsa3PrzsU
- IybWOEgXA43cR7k6b29Pr4luOtgOul6QANr+YHYax9rkN+tsJfHmFALekxq6Oj7YsXk=
-X-Gm-Gg: ATEYQzzJsHtrSWYTM5hE15Lx82imLBa6qJ7VWfaUrMAFLpMVjhsDllUynEBAPU6EgkU
- QAgPMmTJ1lS7mX+tkM7qXRMPAMBD0KSfaR6hihTOXXdZrDzNuapJvJ8WMpO7fdf/Ek2DI3jsoIN
- tXzD6S+YFh761lrHBXfxAwC2zqwSYynUftT1IVrjbh4hprCyWgimc6PzYx6jUao5VgR/Q4CvVfN
- 1cJknAmdCvecZoHLzBnOYwUHVpqd1X37/XlAL4f9XuIkTSe3c8gX23KWBmad0A5VmpVnYe+uf+4
- 9tIWaMoXkaFY1ZlKKU8qHwk8rpNrOpsfUZIE+quuWSiuuieKppwZ2Rapj9Hl+NegnCuswFHTVJ5
- vnJUP8lsAY8+FIPXkai6t9MwW/iZv8mMWUI378iJtiQseUyohvdvNE7NyjK3z8DWVphN/8tGVwL
- IedsGbpL15NbrEZgvZd3H4vGJ7Ddf1fcBhPZBKJSM+3w==
-X-Received: by 2002:a05:6a20:6a2c:b0:39c:2da3:8d7e with SMTP id
- adf61e73a8af0-39c4ad535eemr6589600637.36.1774494606458; 
- Wed, 25 Mar 2026 20:10:06 -0700 (PDT)
+ AJvYcCUhmRU1m0JlF5KDjtaL4ipxSs5HZDoWJb78D0UIYUbSiYpqO3s60bDErq9CU72aNsy6B3OAIdg5n/7y@nongnu.org
+X-Gm-Message-State: AOJu0Yz7fV9oJUXxXijh8h5ed0T+9IIul71xYVglxUN5kHGWu0u7kPoV
+ 0USy3wQeAKxT3dHpYSutELUPGlOQqXKpCdQNF3sJHLA1Eaq6FvB+8tpSrLYRxYOR0wA=
+X-Gm-Gg: ATEYQzyjBSvl3MEVL3NtQA4LYDEj/eRfWDEeezPmCH3GRO4Mt9gHTj4++irzN117uy7
+ MilYjkMoSZQkTc8HHVEXlhsmGGmwy3PCWH1Dvl7qU1g0sowiLO25Pbinvi1cyZLJ6dXACIUIbyC
+ Vk3svPTOyX6n+ooi3029D1AMMAgU61QleFV1MXrtnTjpkH1ubZECA2/usCf0/+hURTx7Ny0wFfV
+ P/qgfUQ8VKYyw8vtagHlhnp4o2TSELhCqJYpWOaopeKahJO4d8p2BxxtgqnKCMxJGUIiGhkkQv1
+ LCR4Uc2yB/ikM9F+uvnzBgwOiNeIrDee0jw11X8ZAUB6l4xZnFyU9MfMTCHIHESXr/N9/GcSK0I
+ 6mFz5uCNnknCz0sunObPvPG+xh28n0VqXrq5uV7kbdK/dDgvTcv27rxjvXWmhtgNC5GUPbEO+z8
+ IAhY74i1zZ8Mntq45iYlY/a4A+yoMUENw/aBy13rmJzg==
+X-Received: by 2002:a17:903:f84:b0:2b0:6d56:8d29 with SMTP id
+ d9443c01a7336-2b0b0a75058mr69779995ad.32.1774495362692; 
+ Wed, 25 Mar 2026 20:22:42 -0700 (PDT)
 Received: from [172.16.11.156] ([103.100.225.140])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76739345b2sm681525a12.17.2026.03.25.20.10.03
+ d9443c01a7336-2b0bc87ebf1sm13336715ad.44.2026.03.25.20.22.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Mar 2026 20:10:06 -0700 (PDT)
-Message-ID: <c830f550-0c93-4c0f-b18f-eb6a08dc0ea8@linaro.org>
-Date: Thu, 26 Mar 2026 13:10:00 +1000
+ Wed, 25 Mar 2026 20:22:42 -0700 (PDT)
+Message-ID: <d974df44-b46e-4e51-9eec-b46e391c3462@linaro.org>
+Date: Thu, 26 Mar 2026 13:22:33 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] accel/tcg: Remove non-explicit endian cpu_ld*_code()
- wrappers
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260320074555.33974-1-philmd@linaro.org>
- <20260320074555.33974-3-philmd@linaro.org>
+Subject: Re: [PATCH v4 4/7] target/riscv: Implement runtime data endianness
+ via MSTATUS bits
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260320150552.169480-1-djordje.todorovic@htecgroup.com>
+ <20260320150552.169480-5-djordje.todorovic@htecgroup.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260320074555.33974-3-philmd@linaro.org>
+In-Reply-To: <20260320150552.169480-5-djordje.todorovic@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,19 +113,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/20/26 17:45, Philippe Mathieu-Daudé wrote:
-> All uses were converted to the cpu_ld*_code_mmu() helpers:
-> remove them. Update the documentation.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   docs/devel/loads-stores.rst  | 21 +++++++++------------
->   include/accel/tcg/cpu-ldst.h | 33 ++-------------------------------
->   2 files changed, 11 insertions(+), 43 deletions(-)
+On 3/21/26 01:06, Djordje Todorovic wrote:
+> +/*
+> + * Return true if data accesses are big-endian for the current privilege
+> + * level, based on the MSTATUS MBE/SBE/UBE bits.
+> + */
+> +static inline bool riscv_cpu_data_is_big_endian(CPURISCVState *env)
+> +{
+> +#if defined(CONFIG_USER_ONLY)
+> +    return false;
+> +#else
+> +    switch (env->priv) {
+> +    case PRV_M:
+> +        return env->mstatus & MSTATUS_MBE;
+> +    case PRV_S:
+> +        return env->mstatus & MSTATUS_SBE;
+> +    case PRV_U:
+> +        return env->mstatus & MSTATUS_UBE;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +#endif
+> +}
+
+This ifdef means ...
+
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -189,10 +189,17 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+>       flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
+>       flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
+>   
+> +    uint64_t cs_base = env->misa_ext;
+> +#ifndef CONFIG_USER_ONLY
+> +    if (riscv_cpu_data_is_big_endian(env)) {
+> +        cs_base |= TB_CSBASE_BIG_ENDIAN;
+> +    }
+> +#endif
+
+... you don't need this one.
+
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 5df5b73849..d7f1f8e466 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -119,6 +119,8 @@ typedef struct DisasContext {
+>       bool fcfi_lp_expected;
+>       /* zicfiss extension, if shadow stack was enabled during TB gen */
+>       bool bcfi_enabled;
+> +    /* Data endianness from MSTATUS UBE/SBE/MBE */
+> +    bool big_endian;
+
+Better to store MemOp here.
+
+>   } DisasContext;
+>   
+>   static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+> @@ -128,14 +130,7 @@ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+>   
+>   static inline MemOp mo_endian(DisasContext *ctx)
+>   {
+> -    /*
+> -     * A couple of bits in MSTATUS set the endianness:
+> -     *  - MSTATUS_UBE (User-mode),
+> -     *  - MSTATUS_SBE (Supervisor-mode),
+> -     *  - MSTATUS_MBE (Machine-mode)
+> -     * but we don't implement that yet.
+> -     */
+> -    return MO_LE;
+> +    return ctx->big_endian ? MO_BE : MO_LE;
+>   }
+
+... so that this expression is only computed once ...
 
 
+>   
+>   #ifdef TARGET_RISCV32
+> @@ -1346,6 +1341,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>       ctx->zero = tcg_constant_tl(0);
+>       ctx->virt_inst_excp = false;
+>       ctx->decoders = cpu->decoders;
+> +    ctx->big_endian = ctx->base.tb->cs_base & TB_CSBASE_BIG_ENDIAN;
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+... here.
+
 
 r~
 
