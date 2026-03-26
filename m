@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0238410AB808
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B516C10AB80A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5q0l-0008Cw-Gj; Thu, 26 Mar 2026 15:04:55 -0400
+	id 1w5q1u-0000G6-Ux; Thu, 26 Mar 2026 15:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5q0j-0008CG-AJ; Thu, 26 Mar 2026 15:04:53 -0400
+ id 1w5q1j-0000FP-J3; Thu, 26 Mar 2026 15:05:57 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w5q0h-00069g-Km; Thu, 26 Mar 2026 15:04:53 -0400
+ id 1w5q1f-0006rB-Ri; Thu, 26 Mar 2026 15:05:54 -0400
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62QGKJ1M510743; Thu, 26 Mar 2026 19:04:49 GMT
+ 62QF4H7L1516773; Thu, 26 Mar 2026 19:05:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=RtE/5clT7cu4GPqkbbTk72wJEe/QVJcNX4X0gZsO1
- iA=; b=L2f8A65VO17DBJppZcS2Nwi+Nv7YuEnRzfIPafaZcmEwfVTnl02JiJq/n
- UeLqVXdfNNr6EkhMETnTGRN2bViDu3R5WeHRXT8GQyNoSWvcrCoeRvA8dRejTmWZ
- My21/C/cpwlfOxbMyfv6WHlXVOtdbXdpmj4m6d/QMpxdoCV06+xOtgoYE/dD4Mk/
- 6Bdu3f6D6db3+HNDnJ5G278xu6dpB//iGu4W57t9kVvY9SDhLasxYmrqjcd65gqS
- bu/GWSMH/VG1kYnBMX0YKv4iNkqL1xVwy+D8Cx1wivlo+uNUcyqHsZk8ukn8XAeV
- gp826PULLh9hTW45+LF+kDZJFA1Cw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kwa6t1j-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=KjGRoqCMbHnrP2gt0
+ m8HYDFhtQnVbz7bSENElLJnbqo=; b=sBlPAM05dVtfSogmQq3LT3J/1RhkVzuLR
+ l2N2JyFqQgajR1lANuwzEvmz+10yZTLSbYIwfxxCKHfy1NWf/NrEk5vvwsJQEWim
+ XGsHZwL4h6c/tHY06xP1DGGo3VlvTknBqQuIQhmcvR6xGlHhvcpYkvtvbu5/lzAj
+ hzL4Ym6ac/GKy99SGf5Sen2NG5kuAcd7stXUCDo24YGDOfSRPllkfvRZ6OFMWBtj
+ qezk/JZHuhxjDM1OezDRukjpVQa3QkBd4Fc/n7dwHf+BhkPc4BHjeKB3/HoEgKed
+ NyzmIP9Myz4ekXrNSb0EUItwNGOzLpBJmq96ZV5D/usfzqGtaYiyg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kwa6t6k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 19:04:49 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62QGoF1l004392;
- Thu, 26 Mar 2026 19:04:48 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d28c2c31r-1
+ Thu, 26 Mar 2026 19:05:42 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62QIlIvw006009;
+ Thu, 26 Mar 2026 19:05:41 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d261yvexp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Mar 2026 19:04:48 +0000
+ Thu, 26 Mar 2026 19:05:41 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62QJ4i4H45023558
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62QJ5beB40436032
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 26 Mar 2026 19:04:44 GMT
+ Thu, 26 Mar 2026 19:05:37 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 54D362004B;
- Thu, 26 Mar 2026 19:04:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A564D2004B;
+ Thu, 26 Mar 2026 19:05:37 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A24B220043;
- Thu, 26 Mar 2026 19:04:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 07F4720043;
+ Thu, 26 Mar 2026 19:05:34 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.124.221.9]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 26 Mar 2026 19:04:40 +0000 (GMT)
+ Thu, 26 Mar 2026 19:05:33 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -64,28 +64,31 @@ Cc: <qemu-ppc@nongnu.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, Thomas Huth <thuth@redhat.com>,
  Miles Glenn <milesg@linux.ibm.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH 0/2] Replace assert with bound checks in PnvPHB3
-Date: Fri, 27 Mar 2026 00:34:36 +0530
-Message-ID: <20260326190438.734239-1-adityag@linux.ibm.com>
+Subject: [PATCH 1/2] ppc/pnv_phb3: Error out on invalid config access
+Date: Fri, 27 Mar 2026 00:34:37 +0530
+Message-ID: <20260326190438.734239-2-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260326190438.734239-1-adityag@linux.ibm.com>
+References: <20260326190438.734239-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: sY5NaZyT8yYhBlEtQMZWfAr7nNKIkG5D
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDEzNSBTYWx0ZWRfX6VtZtzu6CrQZ
- kZbAex+Vjnn8OxRTaNpQLJrDpsd0qjD5YEsp30VjI1MNnBELx1N+Iqmg3qASoH8hGkJmnlH4bDI
- xCCgjNUnKHg6RiGUAL9swIfzFESvDDsMy4nmWIaW+AjTP2UC7+ABzgOIMO4k7+7D77AU7S9AOxD
- omtO1oHzUNowJtwaiKrDzdSug+IstMOw4NbVhADlc5cK/PmoUlnaPZEOseBNx3MZGgev82sxLrJ
- NdBiTMW6H3t3XRIRPE3eUCxlBXMlTLgg3/lN8Z55AgmDtyS2krKGZfB+glO0PMy9YDCoLaTDoDh
- 07Ol7n1IY6GXRPXKPGT2iGOFCYB6TyIZrNpcssoSF9CbMCengIMlqWV3wnex7htibrzFoYboEMb
- XskmSn7Tm1qb3dxW1IezdFLy8hRAbfc6ZgqZmiRbApdDRInC8CfxiZHvEr/NIIKOlo21J3zei81
- etQJRIjqCGLCn88RgYA==
-X-Proofpoint-GUID: 9xOUEgvQKlqwdnJgEzN9vpQzUX1kvL5-
-X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c58351 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=p0WdMEafAAAA:8 a=8RAKwYI-Gsm1ulX1a24A:9
+X-Proofpoint-ORIG-GUID: pdhJ62bkmZ8g4ZycpfHrn-NLKcwYBDJp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDEzNSBTYWx0ZWRfX0XTT6+MrxmgW
+ bo5DyPPJBLZMPS7RA0YQMrxSCU/i16IymnU0Ubp5GWcT9UvKl+0KtDeJ6DUuGanKwFD8QTTqNKK
+ 41zGn4ljDaR8h6gQ6XVUw4sR2Wr8sLqExaLOBC4s3AmzTYBRDl0hVUs6Dl49HOWPa/C9NCTLKQg
+ /NUufeVDSpvNDBASkgW3bFbbsP/6wPjKCE6jr4Vb6XquyFR74+ck5TbWum9CS57QAvdnf4sNZ7z
+ 8jDL4sDF1gN2Q2sH7TkELNXYBRCre2lLux0SbLVz1R/h/LCmpVtwZ1pqQgpcQB/es+Y1Op/pAig
+ NzzWb1VmuDW2xiTFIbH+19OFgxtkO4necucHI3kkY8KfMdYTvSqRUlNgOs81FhLQtmBdQcqp9zZ
+ qjANs44tOiNlYtXiI29XJDoUEhgjiQNd+3L3D5lRG35jeaAwaYdFuBSVZsV1YH7unwVc8LKdAyg
+ iy8Riyo98FbrK2rWKzQ==
+X-Proofpoint-GUID: ii_VIQoQfjUuCBl2VYjjeNLVd4tO5ixJ
+X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c58387 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=Yq5XynenixoA:10 a=sWKEhP36mHoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=p0WdMEafAAAA:8
+ a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=x9OATstFSDA1Japifd4A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
@@ -119,9 +122,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Overview
-========
-
 PHB in Power8 supports 8 byte registers, and hence the ops structure
 allows accessing of 8 bytes in 'pnv_phb3_reg_ops'
 
@@ -133,46 +133,44 @@ This when called with size as 8, causes following assert failure in
 
     assert(len <= 4);
 
-This patch series splits it into two patches:
-1. Fix PnvPHB3 code so that it never calls pci_host_config_{read,write}_common
-   with read/write size of >4, thus fixing the assert problem
-2. Replace the assert with bounds checking
+Validate that size is <=4, before jumping to pci_host_config_{read,write}_common
 
-Patch #2 should not have any functional change, since the issue is
-already fixed by patch #1
-
-Testing
-=======
-
-1. Git repo with the patches: https://gitlab.com/adi-g15-ibm/qemu/tree/fix_assert_phb3
-
-2. Gitlab pipeline: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2410981612
-
-> Note: One test is failing in the pipeline, but the log shows some cargo error,
-> unrelated to the patch series
-
-3. Testcase provided by Zexiang Zhang, this will fail without the patches:
-
-  cat << "EOF" | ./qemu-system-ppc64 \
-    -M powernv8 -accel tcg -cpu POWER8 \
-    -display none \
-    -serial none -monitor none \
-    -qtest stdio -S \
-    -d guest_errors -D /tmp/pci_len_pnv.log
-  writeq 0x3fc009013c000 0x140
-  writeq 0x3fc009013c010 0x8000000000000000
-  writeq 0x3fc009013c000 0x130
-  readq 0x3fc009013c010
-  EOF
-
-Aditya Gupta (2):
-  ppc/pnv_phb3: Error out on invalid config access
-  hw/pci: Replace assert with bounds check and return
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3334
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Fixes: 9ae1329ee2fe ("ppc/pnv: Add models for POWER8 PHB3 PCIe Host bridge")
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
  hw/pci-host/pnv_phb3.c | 10 ++++++++++
- hw/pci/pci_host.c      | 14 ++++++++++++--
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ 1 file changed, 10 insertions(+)
 
+diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
+index d6ab5153374f..4ffdb4ce31ae 100644
+--- a/hw/pci-host/pnv_phb3.c
++++ b/hw/pci-host/pnv_phb3.c
+@@ -475,6 +475,11 @@ void pnv_phb3_reg_write(void *opaque, hwaddr off, uint64_t val, unsigned size)
+ 
+     /* Special case configuration data */
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return;
++        }
+         pnv_phb3_config_write(phb, off & 0x3, size, val);
+         return;
+     }
+@@ -597,6 +602,11 @@ uint64_t pnv_phb3_reg_read(void *opaque, hwaddr off, unsigned size)
+     uint64_t val;
+ 
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return ~0ull;
++        }
+         return pnv_phb3_config_read(phb, off & 0x3, size);
+     }
+ 
 -- 
 2.53.0
 
