@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D1510AB829
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD28210AB82A
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 21:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5rtt-0004B5-TF; Thu, 26 Mar 2026 17:05:57 -0400
+	id 1w5rtr-0004AM-Nt; Thu, 26 Mar 2026 17:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rtq-0004A0-SL
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rtm-00048d-TU
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rtp-00039Y-6K
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rtk-00037M-Ky
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774559152;
+ s=mimecast20190719; t=1774559148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BTcRRki4RVI+IH0q3dAynZQWyxZQTTE18znN3ItjLD4=;
- b=EBmXSVH3I9o/i6OYM80KziZ+6GuoCR3ItrDzblS2vIHBMhgdDhNfhszFUhMcMl7twxVFa6
- aEhdm1fyfJPC2ZRTaLM9ep0Yjm8RT59sS/zs7zxpAkhl7p1kRp98azti1Iub+QGen4wnPV
- s/pFmz5Ia7HRtIOBJftebREyrg75tqM=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=drzSSQlOSjoFXZvAA8C13NBR1l8WjpxMK8cEocL7tFk=;
+ b=gCshdkB7ghR2AhJ+umAT8Pnart6ak7znr5w37awV6yY4TYK0UjlxNNG4Wc9jOQObh5cr67
+ XM1qSBd20bUFLTJEd5Tw6Lq+OisfTQaveedIUFSx+pkNKdLH/+xHDuP3ffe59Jihut9jQf
+ nvux7i4qGsGoYDOfCyXt/wK3thyE/w0=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-Aiqq05axPSWobj6hgbuy8A-1; Thu, 26 Mar 2026 17:05:50 -0400
-X-MC-Unique: Aiqq05axPSWobj6hgbuy8A-1
-X-Mimecast-MFC-AGG-ID: Aiqq05axPSWobj6hgbuy8A_1774559150
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-89c4ec516e5so62601016d6.0
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:05:50 -0700 (PDT)
+ us-mta-628-3vcvptPhM3iQ_7TlSJOigA-1; Thu, 26 Mar 2026 17:05:46 -0400
+X-MC-Unique: 3vcvptPhM3iQ_7TlSJOigA-1
+X-Mimecast-MFC-AGG-ID: 3vcvptPhM3iQ_7TlSJOigA_1774559146
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8cfc61fc9b8so392397385a.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774559150; x=1775163950; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774559146; x=1775163946; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BTcRRki4RVI+IH0q3dAynZQWyxZQTTE18znN3ItjLD4=;
- b=ATCQ2GNE5zCX9ltgtp8JrzwulO2Nmq5wvAbnqD2F2GMEkTA89M6j8+lFWFOFJW8HTV
- TyiBhjhwjzFoy9VMNwKm62vYww8D2ukuTjHsloumiONBfnbHrfOQMj6U0qna6CYaZvSz
- F/VHw97bn9/eRDI0ns0OA/lCh8pt/IOWHT/mezskwEeQBB0/LRZLq7AfUKiwdQG0jf7R
- 9LMGWXq9MZitf31yU190kq+e++KqYHrOXZBckbQ0nb0YqI1vwz5Iuq9JZpRURDRI88zF
- YwTVWVfEKaClKNE54zNEXEdMiOlfi3PSI/yB7Y4YPxORihf2ktSIGSxmmsXmzaMdZttr
- oORA==
+ bh=drzSSQlOSjoFXZvAA8C13NBR1l8WjpxMK8cEocL7tFk=;
+ b=bmD0M9zm67szEcrqC5BBWxcb4YipPB0z9bxfNzo/FWopx2oFPHaJJAmNmSPWP1Mzws
+ K+m4vpKbotd4RCaYaKUkQlRcxUpOaN35ZEHQNCtEGq8lfaB0026lXRkiXy870RAlyaAy
+ EcrSs7B004KAAuCZ69tlWu0n9z5eC/CuMt808BXgQMVm96NORHDymGgsLMOyalQB2unh
+ qDk+ZuF+CAXtJ1N6KbA6NSkYTpw7p3k6OftCVMgQ9PttD/nuIa8Az5miuaFrv1bvSJ8L
+ yEF2QurBzCEcEe/OKc531/yBmjiTPRnTE8SE8vf7tN6mZGl9sLV37oNQEAJNDnwRYTHc
+ QzkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774559150; x=1775163950;
+ d=1e100.net; s=20251104; t=1774559146; x=1775163946;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BTcRRki4RVI+IH0q3dAynZQWyxZQTTE18znN3ItjLD4=;
- b=rjZSp81mc8L3AraJ7oTv1Shp//7kpVZotI0UA8aXQ9an8Di1ZJxpFd/sxvk4CFXMuf
- dKlb9VBl1IQpaWxMQkOE3FnNNUXD2EXiBBAJKJNOVuOzEAwpr0LIr+GOh+VjkxmXJI1K
- qY3F5izN0ayFuNhw+vfYo0DUWo+WtC3+ntG58M5dqB45WQuyc2qrmEgMFORQzz8oS7zc
- xn2+aTTbahHCYhXOGLJdkVApBTInhrlX76tmFhE4ZoTYvMREZg910NPX2BRCwz5VWCbO
- clL3WXBT9rD9J2uevlAw0Ey3EFsEVjZCyBMHYZzxToE67heR283cxc+HUvOBhiipCqL4
- muMg==
-X-Gm-Message-State: AOJu0Yx2ZLww8YYcEeE4uAzYDqWfa6ZyGqmydvScuc0PEPoz610poNEP
- zqePeYFptNLIC92gB9P+h++zEdOUeIp/vjafgaAjQO0gE5p6tzjVT0lObY935F329TGbz23RPyQ
- QBY1uWjs/SaHUQEeYxneZKPfq1GLr3vagplxii7Pso8HHD5QjjWwP+9uhUkL4g5AIFlNVoa7ZPr
- Rev8CapoRFqp5pCF6tCjn6F0h3+Kp5rbkQL2pKmA==
-X-Gm-Gg: ATEYQzyqAxwNQzx1zMIaLzF/gbC4ydSn7tk0LTauxIFjV0yMzYCGf3ojkk/Gx89254a
- 0VFXnUbGK83MPUvUJNQL4DQcoZK8ysSf0g4r+Hm22BcwYOQoNGmsemMxF1ggVvMpUp8g9QVzJp3
- NwfIihR4u+lofgQ5rrYLv06QUgW2mY6yVOqsiAZXjmAZGY4ue/OwS1jcJDwQMdOzbXPMQ6YL/iu
- BPKdJO9DH00fXkgsjTxBq+oV+d1qAXqDqQgjWf9LtDc8DLAzSCaRrcM3OJob0UixRD+djpNBt93
- ywSA32xLXNYETWtnd+CS3PNdcgdmPXK7l84HJVwMNkWVnhQs1wl0ogpSlxmUMs76/BpxwYvrScC
- OjrOBkcXfCP4=
-X-Received: by 2002:a05:620a:4449:b0:8cf:d469:8456 with SMTP id
- af79cd13be357-8d000f85e87mr1224703785a.4.1774559149547; 
- Thu, 26 Mar 2026 14:05:49 -0700 (PDT)
-X-Received: by 2002:a05:620a:4449:b0:8cf:d469:8456 with SMTP id
- af79cd13be357-8d000f85e87mr1224696785a.4.1774559148749; 
- Thu, 26 Mar 2026 14:05:48 -0700 (PDT)
+ bh=drzSSQlOSjoFXZvAA8C13NBR1l8WjpxMK8cEocL7tFk=;
+ b=I8lreW0MooP+niLBP+cElV8GdwX4J57KSgYVQbTZN3c0OYMJY1amS658iHgqxYN02L
+ 3grOl5Zrr18PhoS3vy+SUK0SzDvbVmZrfO7TyjK5qXqLoSVj/7zx1Jg08W+Bf45FMfXv
+ zcipUl8qNF/EksGLqvxbUwuQdVq/W3jtvfO4T9Rg3o6UlAJhrmalfTepgevr/djcFOol
+ c7oe2nFzzoOMAVYl+pJbkmLdEwIp6wmHtlWdtt48QWxNUQ2hxKpWNy0ViKik4M0oC/Bq
+ AGF/0I5x5tJrpy/bHFpqLe28YS2JPbTrKXecPwoi4w9PDvc549x1HF+1EuRp/uW2DPKo
+ Tllg==
+X-Gm-Message-State: AOJu0Yzd1f8Te6bySNvFfc+syhL9BvyKygASXUhuSHaQj7RPsj6FON2H
+ HW1No2QW895W3Gd2Npv41hc577J4CNNRS6rijI0qPTX3bJvHEi/prAJUsRMZzI2cijZHzdIksmq
+ HcGEVtMI1W4EPmO4uTQtRf1Xdl0JxHgZfTxexma45MPNKMPVp6AyhY902Cy8kIc9hM7iqN3smll
+ aS4F2Hju5HmJfFmDFFnS/YkiRZZBxx7TldKOGCKg==
+X-Gm-Gg: ATEYQzyvJgfN/8jQfmf0nzhFHGYCDMXkjGTCnm/gXLdQqFYryWkfKRBgV8+DOdEy302
+ 74Jyjb9skkRfxgIppMwhJ0Gxdp/oizBuIv8B9tYHwEDKenqhuf01KkU0IzwFx2dtmrdH2RUEStx
+ /lC+MHLT4hg2Sdr7/xThIrAIz0rPothfP+npQm3EQ/PcqMdSx3TaaskYyp3tLJEr3TshAuAXESP
+ KN5+MPeeSpPQLqSyZDuQWWIr1rWjVeD6ghuV/wBGXizKE59qU+tTPhVJxKFOD96cGdBIzhwPOeV
+ 0wH8t0T+UQLv4iuAJakxnQqa9PWVl66rLixCymtvDfrIY1nqbxYZOv1fFi6pD+ZA274xj1aDhTv
+ Afo5Fobwztfk=
+X-Received: by 2002:a05:620a:46aa:b0:8cf:ed8d:20a3 with SMTP id
+ af79cd13be357-8d0010f03a6mr1401551885a.42.1774559145591; 
+ Thu, 26 Mar 2026 14:05:45 -0700 (PDT)
+X-Received: by 2002:a05:620a:46aa:b0:8cf:ed8d:20a3 with SMTP id
+ af79cd13be357-8d0010f03a6mr1401544585a.42.1774559144888; 
+ Thu, 26 Mar 2026 14:05:44 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8d00e4fa7d9sm353479785a.32.2026.03.26.14.05.47
+ af79cd13be357-8d00e4fa7d9sm353479785a.32.2026.03.26.14.05.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 14:05:48 -0700 (PDT)
+ Thu, 26 Mar 2026 14:05:44 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>, peterx@redhat.com,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH RFC v2 11/11] tests/unit/test-vmstate: add tests for
- VMS_ARRAY_OF_POINTER_AUTO_ALLOC
-Date: Thu, 26 Mar 2026 17:05:32 -0400
-Message-ID: <20260326210532.379027-12-peterx@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
+Subject: [PATCH RFC v2 07/11] vmstate: Allow vmstate_info_nullptr to emit
+ non-NULL markers
+Date: Thu, 26 Mar 2026 17:05:28 -0400
+Message-ID: <20260326210532.379027-8-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260326210532.379027-1-peterx@redhat.com>
 References: <20260326210532.379027-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -120,121 +119,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+We used to have one vmstate called "nullptr" which is only used to generate
+one-byte hint to say one pointer is NULL.
 
-Add tests for VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC.
+Let's extend its use so that it will generate another byte to say the
+pointer is non-NULL.
 
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-[peterx: Removed two tests due to macro not used, rebase, fix warning]
+With that, the name of the info struct (or functions) do not apply anymore.
+Update correspondingly.
+
+Update analyze-migration.py to work with the new layout.
+
+No functional change intended yet.
+
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/unit/test-vmstate.c | 86 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 86 insertions(+)
+ include/migration/vmstate.h  |  9 +++++++--
+ migration/vmstate-types.c    | 34 ++++++++++++++++------------------
+ migration/vmstate.c          | 25 +++++++++++++------------
+ scripts/analyze-migration.py | 22 ++++++++++++----------
+ 4 files changed, 48 insertions(+), 42 deletions(-)
 
-diff --git a/tests/unit/test-vmstate.c b/tests/unit/test-vmstate.c
-index dae15786aa..df1fb4c778 100644
---- a/tests/unit/test-vmstate.c
-+++ b/tests/unit/test-vmstate.c
-@@ -702,6 +702,88 @@ static void test_arr_ptr_prim_0_load(void)
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 092e8f7e9a..2e51b5ea04 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -282,9 +282,14 @@ extern const VMStateInfo vmstate_info_uint32;
+ extern const VMStateInfo vmstate_info_uint64;
+ extern const VMStateInfo vmstate_info_fd;
+ 
+-/** Put this in the stream when migrating a null pointer.*/
++/*
++ * Put this in the stream when migrating a pointer to reflect either a NULL
++ * or valid pointer.
++ */
+ #define VMS_MARKER_PTR_NULL          (0x30U)   /* '0' */
+-extern const VMStateInfo vmstate_info_nullptr;
++#define VMS_MARKER_PTR_VALID         (0x31U)   /* '1' */
++
++extern const VMStateInfo vmstate_info_ptr_marker;
+ 
+ extern const VMStateInfo vmstate_info_cpudouble;
+ 
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index 7622cf8f01..b31689fc3c 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -359,36 +359,34 @@ const VMStateInfo vmstate_info_fd = {
+     .save = save_fd,
+ };
+ 
+-static bool load_nullptr(QEMUFile *f, void *pv, size_t size,
+-                         const VMStateField *field, Error **errp)
++static bool load_ptr_marker(QEMUFile *f, void *pv, size_t size,
++                            const VMStateField *field, Error **errp)
+ 
+ {
+-    if (qemu_get_byte(f) == VMS_MARKER_PTR_NULL) {
++    int byte = qemu_get_byte(f);
++
++    if (byte == VMS_MARKER_PTR_NULL || byte == VMS_MARKER_PTR_VALID) {
++        /* TODO: process PTR_VALID case */
+         return true;
      }
+ 
+-    error_setg(errp, "vmstate: load_nullptr expected VMS_NULLPTR_MARKER");
++    error_setg(errp, "%s: unexpected ptr marker: %d", __func__, byte);
+     return false;
  }
  
-+static uint8_t wire_arr_ptr_with_nulls[] = {
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x00,
-+    VMS_MARKER_PTR_NULL,
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x02,
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x03,
-+    QEMU_VM_EOF
-+};
-+
-+typedef struct {
-+    uint32_t       ar_items_num;
-+    TestStructTriv **ar;
-+} TestVArrayOfPtrToStuctWithNULLs;
-+
-+const VMStateDescription vmsd_arps_with_nulls = {
-+    .name = "test/arps_with_nulls",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(
-+            ar, TestVArrayOfPtrToStuctWithNULLs, ar_items_num,
-+            0, vmsd_tst, TestStructTriv),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void test_arr_ptr_nulls_str_save(void)
-+{
-+    TestStructTriv ar[AR_SIZE] = { {.i = 0}, {.i = 1}, {.i = 2}, {.i = 3} };
-+    TestVArrayOfPtrToStuctWithNULLs sample = {};
-+    int idx;
-+
-+    sample.ar_items_num = AR_SIZE;
-+    sample.ar = g_new0(TestStructTriv*, sample.ar_items_num);
-+    sample.ar[0] = g_new0(TestStructTriv, 1);
-+    *sample.ar[0] = ar[0];
-+    /* note, sample.ar[1] remains NULL */
-+    sample.ar[2] = g_new0(TestStructTriv, 1);
-+    *sample.ar[2] = ar[2];
-+    sample.ar[3] = g_new0(TestStructTriv, 1);
-+    *sample.ar[3] = ar[3];
-+
-+    save_vmstate(&vmsd_arps_with_nulls, &sample);
-+    compare_vmstate(wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls));
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        g_free(sample.ar[idx]);
-+    }
-+    g_free(sample.ar);
-+}
-+
-+static void test_arr_ptr_nulls_str_load(void)
-+{
-+    TestStructTriv ar_gt[AR_SIZE] = {{.i = 0}, {.i = 0}, {.i = 2}, {.i = 3} };
-+    TestVArrayOfPtrToStuctWithNULLs obj = {};
-+    int idx;
-+
-+    obj.ar_items_num = AR_SIZE;
-+    obj.ar = g_new0(TestStructTriv*, obj.ar_items_num);
-+
-+    save_buffer(wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls));
-+    SUCCESS(load_vmstate_one(
-+                &vmsd_arps_with_nulls, &obj, 1,
-+                wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls)));
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        if (idx == 1) {
-+            g_assert_cmpint((uintptr_t)(obj.ar[idx]), ==, 0);
-+        } else {
-+            /* compare the target array ar with the ground truth array ar_gt */
-+            g_assert_cmpint(ar_gt[idx].i, ==, obj.ar[idx]->i);
-+        }
-+    }
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        g_free(obj.ar[idx]);
-+    }
-+    g_free(obj.ar);
-+}
-+
- /* test QTAILQ migration */
- typedef struct TestQtailqElement TestQtailqElement;
+-static bool save_nullptr(QEMUFile *f, void *pv, size_t size,
+-                         const VMStateField *field, JSONWriter *vmdesc,
+-                         Error **errp)
++static bool save_ptr_marker(QEMUFile *f, void *pv, size_t size,
++                            const VMStateField *field, JSONWriter *vmdesc,
++                            Error **errp)
  
-@@ -1568,6 +1650,10 @@ int main(int argc, char **argv)
-                     test_arr_ptr_prim_0_save);
-     g_test_add_func("/vmstate/array/ptr/prim/0/load",
-                     test_arr_ptr_prim_0_load);
-+    g_test_add_func("/vmstate/array/ptr-nulls/str/save",
-+                    test_arr_ptr_nulls_str_save);
-+    g_test_add_func("/vmstate/array/ptr-nulls/str/load",
-+                    test_arr_ptr_nulls_str_load);
-     g_test_add_func("/vmstate/qtailq/save/saveq", test_save_q);
-     g_test_add_func("/vmstate/qtailq/load/loadq", test_load_q);
-     g_test_add_func("/vmstate/gtree/save/savedomain", test_gtree_save_domain);
+ {
+-    if (pv == NULL) {
+-        qemu_put_byte(f, VMS_MARKER_PTR_NULL);
+-        return true;
+-    }
+-
+-    error_setg(errp, "vmstate: save_nullptr must be called with pv == NULL");
+-    return false;
++    qemu_put_byte(f, pv ? VMS_MARKER_PTR_VALID : VMS_MARKER_PTR_NULL);
++    return true;
+ }
+ 
+-const VMStateInfo vmstate_info_nullptr = {
+-    .name = "nullptr",
+-    .load = load_nullptr,
+-    .save = save_nullptr,
++const VMStateInfo vmstate_info_ptr_marker = {
++    .name = "ptr-marker",
++    .load = load_ptr_marker,
++    .save = save_ptr_marker,
+ };
+ 
+ /* 64 bit unsigned int. See that the received value is the same than the one
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index b274204e66..b333aa1744 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -55,12 +55,12 @@ vmstate_field_exists(const VMStateDescription *vmsd, const VMStateField *field,
+ }
+ 
+ /*
+- * Create a fake nullptr field when there's a NULL pointer detected in the
++ * Create a ptr marker field when there's a NULL pointer detected in the
+  * array of a VMS_ARRAY_OF_POINTER VMSD field.  It's needed because we
+  * can't dereference the NULL pointer.
+  */
+ static const VMStateField *
+-vmsd_create_fake_nullptr_field(const VMStateField *field)
++vmsd_create_ptr_marker_field(const VMStateField *field)
+ {
+     VMStateField *fake = g_new0(VMStateField, 1);
+ 
+@@ -71,12 +71,12 @@ vmsd_create_fake_nullptr_field(const VMStateField *field)
+     fake->name = field->name;
+     fake->version_id = field->version_id;
+ 
+-    /* Do not need "field_exists" check as it always exists (which is null) */
++    /* Do not need "field_exists" check as it always exists */
+     fake->field_exists = NULL;
+ 
+-    /* See vmstate_info_nullptr - use 1 byte to represent nullptr */
++    /* See vmstate_info_ptr_marker - use 1 byte to represent ptr status */
+     fake->size = 1;
+-    fake->info = &vmstate_info_nullptr;
++    fake->info = &vmstate_info_ptr_marker;
+     fake->flags = VMS_SINGLE;
+ 
+     /* All the rest fields shouldn't matter.. */
+@@ -278,7 +278,7 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+                      * an array of pointers), use null placeholder and do
+                      * not follow.
+                      */
+-                    inner_field = vmsd_create_fake_nullptr_field(field);
++                    inner_field = vmsd_create_ptr_marker_field(field);
+                 } else {
+                     inner_field = field;
+                 }
+@@ -583,26 +583,27 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
+                 const VMStateField *inner_field;
+-                bool is_null;
+                 /* maximum number of elements to compress in the JSON blob */
+                 int max_elems = vmsd_can_compress(field) ? (n_elems - i) : 1;
++                bool use_marker_field, is_null;
+ 
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+                     assert(curr_elem);
+                     curr_elem = *(void **)curr_elem;
+                 }
+ 
+-                if (!curr_elem && size) {
++                is_null = !curr_elem && size;
++                use_marker_field = is_null;
++
++                if (use_marker_field) {
+                     /*
+                      * If null pointer found (which should only happen in
+                      * an array of pointers), use null placeholder and do
+                      * not follow.
+                      */
+-                    inner_field = vmsd_create_fake_nullptr_field(field);
+-                    is_null = true;
++                    inner_field = vmsd_create_ptr_marker_field(field);
+                 } else {
+                     inner_field = field;
+-                    is_null = false;
+                 }
+ 
+                 /*
+@@ -638,7 +639,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                                                     i, max_elems, errp);
+ 
+                 /* If we used a fake temp field.. free it now */
+-                if (is_null) {
++                if (use_marker_field) {
+                     g_clear_pointer((gpointer *)&inner_field, g_free);
+                 }
+ 
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index e81deab8f9..1771ff781b 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -469,26 +469,26 @@ def __init__(self, desc, file):
+         super(VMSDFieldIntLE, self).__init__(desc, file)
+         self.dtype = '<i%d' % self.size
+ 
+-class VMSDFieldNull(VMSDFieldGeneric):
++class VMSDFieldPtrMarker(VMSDFieldGeneric):
+     NULL_PTR_MARKER = b'0'
++    VALID_PTR_MARKER = b'1'
+ 
+     def __init__(self, desc, file):
+-        super(VMSDFieldNull, self).__init__(desc, file)
++        super(VMSDFieldPtrMarker, self).__init__(desc, file)
+ 
+     def __repr__(self):
+-        # A NULL pointer is encoded in the stream as a '0' to
+-        # disambiguate from a mere 0x0 value and avoid consumers
+-        # trying to follow the NULL pointer. Displaying '0', 0x30 or
+-        # 0x0 when analyzing the JSON debug stream could become
++        # A NULL / non-NULL pointer may be encoded in the stream as a
++        # '0'/'1' to represent the status of the pointer.  Displaying '0',
++        # 0x30 or 0x0 when analyzing the JSON debug stream could become
+         # confusing, so use an explicit term instead.
+-        return "nullptr"
++        return "null-ptr" if self.data == self.NULL_PTR_MARKER else "valid-ptr"
+ 
+     def __str__(self):
+         return self.__repr__()
+ 
+     def read(self):
+-        super(VMSDFieldNull, self).read()
+-        assert(self.data == self.NULL_PTR_MARKER)
++        super(VMSDFieldPtrMarker, self).read()
++        assert(self.data in [self.NULL_PTR_MARKER, self.VALID_PTR_MARKER])
+         return self.data
+ 
+ class VMSDFieldBool(VMSDFieldGeneric):
+@@ -642,7 +642,9 @@ def getDict(self):
+     "bitmap" : VMSDFieldGeneric,
+     "struct" : VMSDFieldStruct,
+     "capability": VMSDFieldCap,
+-    "nullptr": VMSDFieldNull,
++    # Keep the old nullptr for old binaries
++    "nullptr": VMSDFieldPtrMarker,
++    "ptr-marker": VMSDFieldPtrMarker,
+     "unknown" : VMSDFieldGeneric,
+ }
+ 
 -- 
 2.50.1
 
