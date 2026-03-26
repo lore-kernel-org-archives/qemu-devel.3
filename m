@@ -4,128 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EEFC106F2EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 08:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E4D106F2EA
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 08:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5fgI-0006gd-Bt; Thu, 26 Mar 2026 04:03:06 -0400
+	id 1w5g1G-00034z-G6; Thu, 26 Mar 2026 04:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w5fgG-0006gU-OS
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 04:03:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1w5g1D-00033m-JE
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 04:24:43 -0400
+Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w5fgB-00085k-Lg
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 04:03:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774512177;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Awjq4Yj3N0BTR6TqSs78a5NIbuNaZVh+hfK4iv2nQLM=;
- b=BlwJXVBYTZ/bxBgbLc90MP6/beY642lQTzNaqCaL/UQVGfjcwIePhh7cRq62+6++W/oqJp
- e52LipYtJ2MNY+5yv7N5s4eLu6S+QCl0yQDbIQZOLVM1TyjjMLlKAZtTAFaulRqNnEwWT7
- +wpTzSb+u93RTBeHsYSuyfsJi/FDDcE=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-261-jyTmfBLMOi-ZPahdIRveew-1; Thu, 26 Mar 2026 04:02:55 -0400
-X-MC-Unique: jyTmfBLMOi-ZPahdIRveew-1
-X-Mimecast-MFC-AGG-ID: jyTmfBLMOi-ZPahdIRveew_1774512175
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-7986c067508so21674167b3.2
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 01:02:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774512175; cv=none;
- d=google.com; s=arc-20240605;
- b=NYmf3hsOT2C/8ZdYYSYTNaWLuJPaYRKLSn9zQ05mKW30VP4XppNxLJtiwMAqBRtcsZ
- Lyp2LZg7HYwqMU0C2HxpVdman2Abn/DaFWf1rDKSmbofO8aglOP4cLAwCvzNxqy4Hg8W
- FzhPC0F2puzKdFjTlZw6oR6GjaOzSdEVNyxJTW5faYi7VoSgGtwgqBQz3fk3sjPu1fG7
- zReRN3evCju0WFAtRiQOOkmNkjEBRYKpWWaRc2MZw5dBOZKJ46Lg6BuUxMxXJ9JckKWf
- nJlPdI7eVtAdB/7JIIOfgvWsv5nFsI7WxET9EqozQm68XCuTYWWYiUDn8LgvLqA4wLN7
- GhpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Awjq4Yj3N0BTR6TqSs78a5NIbuNaZVh+hfK4iv2nQLM=;
- fh=/Q1walrJ1rQppfQIaR5kN+L7c1qEv+piY1FwYfW9K3g=;
- b=GgYUw/ARTneRjDW5JMX+YpKiA7Xg++v7zC/j+4aSqGk6h2Y5ml9knn38va/b+JinY1
- ModoC8Kcg/RX99UeF35fZvKcRkxcFnp8AhA+/UAB6ywRZI/tWKkmg6C4negaoNi/NO+M
- yosUUUE9BsrENCrDatqIjdctrIAAwUTYlRTi3aTpD9vxhbGiR8a1EnucqfRNg85ERs3g
- tb3WIKXzzNfdtqvgAsb7UwX9auFYqv9uRjj3STGUz555PgHNPvzMPyLSclyPuFVTAp1n
- +FwijHtUHPXEzSMzyDTUk3hnMHA+O7ZMM/wPa5qUym2i0F7VbqT8CPW0zI2byxnJPAfC
- D7cw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774512175; x=1775116975; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Awjq4Yj3N0BTR6TqSs78a5NIbuNaZVh+hfK4iv2nQLM=;
- b=CpUl84u74iGUDNW1d6G79SOVRDEu0R9EpQRq0ic05YqpgvCpkpa5o7bOiZ1L2dO68k
- EL1i7nUNO3Q55syxvhoX3HCGK6eFFmPbQkBkLpOf3siy9xUCPC93GU+LJJK/GFisie0I
- bUpAqPQ+7803oWiMCbElVFElvhLPUPK3HKNwDNynuhm/AMrAFQSC7U3k9ALPCcnr/gok
- RIySNylMUMS9TY1g3eJe6ob+Xzncat6Uuu8ZolE8wN+VFb1B3H6ZWRev3RRJpR+VVODB
- DkrkMFU1OxDNMZqkFkc/kVkMz63fAG+VDcQis+hXNzEFkKm2I22GCKTCxus8u1Y/9iKe
- rUJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774512175; x=1775116975;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Awjq4Yj3N0BTR6TqSs78a5NIbuNaZVh+hfK4iv2nQLM=;
- b=r2E+c2Um2BBj7nTFlT7zbjOkAZLlTBAint5FEcabSRdTPqX7vyBTUvZRtGWwJFRmjN
- pGkJz481X5CkOA2KSrhXaCeu2pyeLeB6RhGdPoZqUmPryAVmRC2dXUgO9P3XsKmZkwCo
- aKymk6u3SD0XqDvYuGWkkGmD5GntVMZZId8wEgjQhyPnw78gZRX+T95irEAi+hoQm3pw
- RB235EKWrpX5Lo6L0/fLw7ltBvAs3jkSPZF5rvsLJVxsAzAN04pVrjUYHORGePyE9rtQ
- GCpfDZXUzN9oeumgtkLg6n07vDOzflfRrPZV9w1EaawtgQtfrQyO8f69Zlgk50ZU0UDd
- cZaA==
-X-Gm-Message-State: AOJu0YwxqmqNB+qBEJOAVJRCciAQ57WVlNTUAOXlx8AtF5+ZruIUD7Va
- lHzDCebaezPuFmne0OG6w7UI+JeT4+UQtyzuo1RSe+tqVa01pidCsB6FpBf4DROy6Lxwis6x9Kl
- NYDnF+KeXEXF4HNp8VyHeMkfHNdZDMc8v2NlIDUug6PdANf1MFQu6EA8NwY1T2uOXoNVzVXzXmS
- gkM63X3zqBn+hChK0ygC8cxH1AQ7iTIHA=
-X-Gm-Gg: ATEYQzwfZGb+HhDhp6CecR/6m7Npk48He9iJxy/4tuiZUAY8ftzwYVGdGxOdA5Llw0W
- mrdWTBccwNcMlltpCwfjmPyNzKfYt7J2XCcJpCZYpvghmhhUNuYbdJkguN+ZoxTUlqtxZrC1MFI
- DGbGp9+g1S96JxE+SvhbrdWLx9KCLPTJMrKtKQGDAD+yGEn40IiMDcy7M8nHufhaJYq6P8cyiEi
- Qd7qQ==
-X-Received: by 2002:a05:690e:4090:b0:64a:d1ac:4528 with SMTP id
- 956f58d0204a3-64ee61203dcmr5792237d50.39.1774512175166; 
- Thu, 26 Mar 2026 01:02:55 -0700 (PDT)
-X-Received: by 2002:a05:690e:4090:b0:64a:d1ac:4528 with SMTP id
- 956f58d0204a3-64ee61203dcmr5792201d50.39.1774512174509; Thu, 26 Mar 2026
- 01:02:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1w5g1B-0006ki-EC
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 04:24:43 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id C97227A0203;
+ Thu, 26 Mar 2026 04:24:37 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Thu, 26 Mar 2026 04:24:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to; s=fm3; t=1774513477; x=1774599877; bh=0ojE2zDt02
+ q+VyX4VkO8harfxDa4mKGLDDUf6MTHftk=; b=X7Y6k3PJ07eClyZ3B1TQl1yOpD
+ oTZYC4Rhcn2B6ILJvg62uI7nBfVeJf6VJcKdWrNNXRKDTS/sH443lC/UY4EsR9LG
+ W0dOCw6ySBRGXTgNq1oWgXOxBY2L68Dt79d5cdTilZZZ8xaSzQEVR0Jlm6zVDgXM
+ Hy8cdEt9Q649REAOdBUcKKnkKj8G7iU6gjT05RSrJHFVis0iKxOL+zyAPzDWS7WN
+ ++e+SrZvkxNNpICh/DpfljGRO/W2Mg8AaqT79IubY7mttcwROiHuAfASU+cP+9ys
+ zRRknro7R5PyFGKWLzjKRIfC81R0R71RAyiNAvJLRSYPBG53jsdldJsJ74mA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1774513477; x=1774599877; bh=0ojE2zDt02q+VyX4VkO8harfxDa4mKGLDDU
+ f6MTHftk=; b=lz+BBgmtrBObyWT0PRiAcliHfrji3el8ENpnt55tC6qA26Knt+Z
+ en2VMS4JZbEAUJiZfjdu8il7WjvDM0nLghoh9sQnaGq8JwEuiNwHqPZZ4wrDx2RF
+ 2yiv4oiU57WdMNh8KacKaSGuAxdNypHz3X7dNuIOeStpc+BOtsuahB4d4pPJHATC
+ 5VXAfqHLhg9nnRmhxBD7rXxRFfoldPElQC2c8ITmqBYAHimF4eMnmW4s9ffGwFYr
+ K9DvYmpChKvEul7prWkHpMBoMHlWL/i8AUDGByC46tOSmw+KV27cem+7SBBwn2Iu
+ BISn/3sGWx5PfaNtl6AyLQ0aWV5eSkDeOgA==
+X-ME-Sender: <xms:RO3EaS5pQ1OLO6LloZblSxrgoMyeFTalSnhh4DD_0DbKMn80XMepnQ>
+ <xme:RO3EaQMIM3yov5j0yOEjlaAFkYLTUCTndAEsP5sQNjQ7fPlwR_sQdWnU2lHPHOKP4
+ cEW9kHWpYO3uGRTaBbeAH7E4W-JbpvfIK5RnnQ7wFFojE-jBG_-bY4>
+X-ME-Received: <xmr:RO3EaQnORZOrQRTf9nRrmsIRuwL13Wf6XjTkW0uX09Ti8gf6s6tr9TIRiMA1ahl0cs2OubX1h2FKy76DvlmzSCBJ-UNELMyZ4YPlAwlmuQ-9Utja6OMnWCvAUA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdeikeekucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepmfhlrghushculfgv
+ nhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnh
+ epjeevheevhffhvdegveetjeevgfevgeeuueehffeuvedvjeejjeduheeiueffkefhnecu
+ ffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggp
+ rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdqug
+ gvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghl
+ lheslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunh
+ hgrdgtohhm
+X-ME-Proxy: <xmx:RO3EaXTH8tt7BdgIaVxz-tmTgc7yvJE00uAKqPzyqbaV7VKMlPKxYQ>
+ <xmx:RO3EacAs_3ALwJsNVbNFA4LLtTFWZBbkgJRY4hyQAiN2K3JV50SWeA>
+ <xmx:RO3EaWQRpQjLDUCEg4kTIdkoSIJzMCYECbsnO0Rv_-LjJuazPAIgvA>
+ <xmx:RO3EaSq7eSa1TnpOA2gpw7m4Ukk8liG_yXg5mkKYTX7h_I4wjLh5tw>
+ <xmx:Re3EaVf6XW4tUYrpiOZTqMUosrAkK4RDwN2NxIUzq4A_dfpU9TEmI_0k>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Mar 2026 04:24:36 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 0/2] hw/nvme fixes
+Date: Thu, 26 Mar 2026 09:23:47 +0100
+Message-ID: <20260326082350.17374-1-its@irrelevant.dk>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
- <20260320142015.3856652-2-jonah.palmer@oracle.com>
- <CAJaqyWf5==jZxJErazeAea1NxpGB2SFNdpAPh7bi5tc69FytTw@mail.gmail.com>
- <cbe7eff3-179d-4bc7-8fcb-ab0ab805a46e@oracle.com>
-In-Reply-To: <cbe7eff3-179d-4bc7-8fcb-ab0ab805a46e@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 26 Mar 2026 09:02:17 +0100
-X-Gm-Features: AaiRm520nZ9fuYd_C_cj0Gt3vBqYsn_x2ivDWv1J580FkKmXF3qB74INUBKx3Ao
-Message-ID: <CAJaqyWdR2Rrk=V2rdap16PKvHCzbPSXwakj33gxGruo03tN4Sw@mail.gmail.com>
-Subject: Re: [RFC v2 01/14] machine,virtio-net: add early-mig property
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
- mst@redhat.com, sgarzare@redhat.com, jasowang@redhat.com, leiyang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, armbru@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.12.124.158; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b7-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,101 +104,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 24, 2026 at 3:07=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
->
->
-> On 3/23/26 6:25 AM, Eugenio Perez Martin wrote:
-> > On Fri, Mar 20, 2026 at 3:20=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
-le.com> wrote:
-> >>
-> >> Introduce a new 'early-mig' property that enables the early migration
-> >> path for virtio-net devices on machine types >=3D 10.2:
-> >>
-> >>   - virtio-net-device,early-mig=3Don
-> >>   - virtio-net-pci,early-mig=3Don
-> >>   - virtio-net-pci-transitional,early-mig=3Don
-> >>   - virtio-net-pci-non-transitional,early-mig=3Don
-> >>   - virtio-net-ccw,early-mig=3Don
-> >>
-> >> To preserve compatibility for older machine types (<=3D 10.1), add com=
-pat
-> >> overrides in hw_compat_10_1 to keep the legacy default (off).
-> >>
-> >> With this, machine types 10.2 and newer enable early migration by
-> >> default while older machine types retain the previous behavior. Users
-> >> may still override explicitly via:
-> >>
-> >>   -device virtio-net-pci,early-mig=3Doff
-> >>   or
-> >>   -global virtio-net-device.early-mig=3Doff
-> >>
-> >> Follow-up patches will implement the actual early migration feature fo=
-r
-> >> virtio-net devices.
-> >>
-> >> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> >> ---
-> >>   hw/core/machine.c              | 5 +++++
-> >>   hw/net/virtio-net.c            | 1 +
-> >>   include/hw/virtio/virtio-net.h | 1 +
-> >>   3 files changed, 7 insertions(+)
-> >>
-> >> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> >> index 6cf0e2f404..1b6c7db119 100644
-> >> --- a/hw/core/machine.c
-> >> +++ b/hw/core/machine.c
-> >> @@ -45,6 +45,11 @@ const size_t hw_compat_10_2_len =3D G_N_ELEMENTS(hw=
-_compat_10_2);
-> >>
-> >>   GlobalProperty hw_compat_10_1[] =3D {
-> >>       { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
-> >> +    { "virtio-net-device", "early-mig", "off" },
-> >> +    { "virtio-net-pci", "", "off" },
-> >> +    { "virtio-net-pci-transitional", "early-mig", "off" },
-> >> +    { "virtio-net-pci-non-transitional", "early-mig", "off" },
-> >> +    { "virtio-net-ccw", "early-mig", "off" },
-> >
-> > Is this needed even if we mark the VMState as optional?
-> >
-> > The source might not be able to send the device configuration in some
-> > cases. For example, if it cannot shadow CVQ. If the destination knows
-> > this field is optional, the QEMU source version is irrelevant.
-> >
->
-> I think it is still needed, yes. This series adds new VMSDs that are
-> registered as top-level savevm sections, and, IIUC, a destination guest
-> using an older version of Qemu would not be able to ignore these
-> "unknown" sections, even if they're optional for the source to send.
->
-> The compat property also preserves the pre-10.2 machine-type default, so
-> a 10.1 machine type doesn't silently change the migration behavior when
-> it's being run on a newer Qemu version.
->
+From: Klaus Jensen <k.jensen@samsung.com>
 
-Ok good point. I'm tempted to propose removing the cmdline argument
-then, but I see virtio-mem "x-early-migration" also adds it. I don't
-think increasing the migration's complexity by adding command-line
-cases is worth it, but I guess there is a reason for that. What about
-setting it to true by default?
+Hi,
 
-Also, maybe it is worth exploring using the same name for both
-properties. At the same time, I remember that x- prefix was
-discouraged so... I'll be happy with any option
-{x-,}early-mig{,ration}.
+The following changes since commit 007b29752ed06e467d3c830bc2c17a8851f8bcd3:
 
-Again, I wouldn't object to adding the cmdline parameter, I'm just
-trying to make this as easy to maintain in the future as possible :).
+  Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-25 09:16:13 +0000)
 
-> I do agree though that being unable to shadow some state should be
-> handled as a runtime check for early migration (like we do for
-> vhost-user), but that's separate from a machine-type compat default.
->
+are available in the Git repository at:
 
-Yes, I missed that vhost-user and vhost-vdpa were out of the series at
-this patch. It happened with a few comments. I should have gone back
-and solved them myself; apologies! If possible, and if you see it
-makes sense, you can expand the patch descriptions with the info.
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20260326
 
+for you to fetch changes up to eb5cc99aff17cbfdad16b18d3503c6f22233eeb5:
+
+  hw/nvme: fix heap-buffer-overflow in nvme_abort (2026-03-26 09:14:35 +0100)
+
+----------------------------------------------------------------
+nvme queue
+
+----------------------------------------------------------------
+Kaixuan Li (1):
+      hw/nvme: fix heap-buffer-overflow in nvme_abort
+
+Pankaj Raghav (1):
+      hw/nvme: re-enable wzds bit in namespace dlfeat
+
+ hw/nvme/ctrl.c | 4 +++-
+ hw/nvme/ns.c   | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
