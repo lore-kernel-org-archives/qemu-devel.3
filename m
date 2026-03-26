@@ -4,76 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AEB10A88E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6188210A88E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5n9H-0004Nv-Nh; Thu, 26 Mar 2026 12:01:31 -0400
+	id 1w5nA8-0005WV-C4; Thu, 26 Mar 2026 12:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w5n8z-00047p-UO
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:01:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w5n8r-0001hI-JG
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:01:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774540849;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3E/an/ScpBHqmyQhEHL1gnMfkfcrIOI84EYihB0640Q=;
- b=d/ZlhWOct9sWxY2wbY3zDBkk1DrqXCPKyNgBMgJdpyUhZB8OTzxajXIQSq7mkR2aKY31QW
- YOkqlyPvHUpEwGpBTOgOWCRuu2QyylArMtaS0MjHoK5pAGYS7gki5VdEcj+PJekA75Ta0V
- bu18CLyUAQW9SfCAEH/m2AteFrOhKl0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-hwDnHMrTOpOfiK83YDv_cw-1; Thu,
- 26 Mar 2026 12:00:46 -0400
-X-MC-Unique: hwDnHMrTOpOfiK83YDv_cw-1
-X-Mimecast-MFC-AGG-ID: hwDnHMrTOpOfiK83YDv_cw_1774540843
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57CBB1944E43; Thu, 26 Mar 2026 16:00:43 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.44.32.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD8323000223; Thu, 26 Mar 2026 16:00:40 +0000 (UTC)
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-block@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
-Subject: [PATCH 1/7] meson: Use stddef.h instead of unistd.h
-Date: Thu, 26 Mar 2026 18:00:27 +0200
-Message-ID: <20260326160033.68318-2-kkostiuk@redhat.com>
-In-Reply-To: <20260326160033.68318-1-kkostiuk@redhat.com>
-References: <20260326160033.68318-1-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <chan9yan9@gmail.com>)
+ id 1w5mcb-0002tF-Ev
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:27:45 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chan9yan9@gmail.com>)
+ id 1w5mcY-0005wd-Ux
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 11:27:45 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-829a9d08644so594209b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 08:27:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774538861; x=1775143661; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=L/XOeeZJbH562gwsN3ZvedpHu8ETHOSgikP+7Qk+gTY=;
+ b=mt8scnIwOqXzAh2Yl8IunTQnTcjlLVqS8PgXIzRHjvVONrPnutijGjRUbPtzQCzB9A
+ 1vjBF59nwTqx3bsstZmMG5jougl0r+kGMDTx6gGGX3i8KBEuEQP5Q6CyCDCdgLiNzDJ6
+ yrPzexo/Me2mponq6ZSM3hljX0hzIMcRqwe5LVeTNwQVL2+Lg66VZqWhRJ7ZJppCaeNZ
+ sqIPTgrXJpy/CHu5P3f3DcSjGAL8LtCKUbg4gfx7EK3O78TU3Wa23yJQYiexCotgswsV
+ JjzDnDdDv8MpnWeirIZjr5U8UycDfMwzNOxvi8eVV8LBgDMAB1LHagJ3QeLqZ1+7fHmi
+ PtFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774538861; x=1775143661;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L/XOeeZJbH562gwsN3ZvedpHu8ETHOSgikP+7Qk+gTY=;
+ b=UoRHLErYXCyrrYy2OeJj8c/nUYOPjzhYZpn8sBIwu523ziIqG9KplsGglI9akc/s53
+ iN36l9PGB1lI4SJQ4+2AXYQ3GBmWjV8z77yZ4P7kvk0LxyHL5LT3YyV96pq1rkbQ8eZQ
+ e+ljfYNFKVGhq0cklwBcEMSwG0Bp+RvvExK4gm58iP/4jHvMHq8ZIxiSpopP7XEUYHzJ
+ M3FFd78Vre3Rc86R4PbynjoAj9UZTnG5xNPrVspxL2hO3WG2OOaxEvS8MRQlK4euHy//
+ MTZowVDZdOiB12OQVS5cXZOyeAiBCJ2SmpkdVrwmgjDU0YXCjt72ziR9itXvCV11Si34
+ bekA==
+X-Gm-Message-State: AOJu0YzPnoQpFhNEjnWziL1Q3HWp1mtHwYJz+Zfo69OO0lXEV7zrquaM
+ QeDRJAOmw60XCQ9zQIHzFGo+CgbSo4z2q8C2FeeivfyeP0TybBGr4xeVcwtn26sQOrmQSw==
+X-Gm-Gg: ATEYQzzgfuy+L0X56R587jDzlVM72t5ncwjR2EMxHwLStalC/ClijfiNBqhFIDDV/HS
+ oSgoN5I68UxQNY9h5BFQtzhQjB3SvBdEu++yUE/zT/5d0Nmnnk7/rL8NcZYMduVCc9c8qhkxaJ/
+ taZjBEm/lgMm18UaeiHs+rwZuamqsKugEAf2SxNWWvv+9pZTG7tNlG1FpqRwlPbXxqr3LlOkGwJ
+ hQQJfjVDcQj4ey/il8IyA0bMUTFEhb/EoB0BLNYoRvnm98l8xvWesGkcU084iwcOJJNxIERNBxz
+ jhSy9FY4fvYQwNRZa/vI+YIXKqcfmY6F0Q9tcB/V5JJqyofH8TKGh9e96gdVf46YBj6UQBxrp1T
+ eqE/908cvJPLAsJuNCiPjZA2gjf28RO5LQOi02Y3H66cj4JrTDyO/+uANvNcNObJXtV8a0AwDXw
+ FjDsO7XiThcr+gaZ4TcArga+EwrRNNGBFXblLZ7Zm8
+X-Received: by 2002:a05:6a00:a21e:b0:82c:249d:d84f with SMTP id
+ d2e1a72fcca58-82c6df87c4bmr7286991b3a.37.1774538861326; 
+ Thu, 26 Mar 2026 08:27:41 -0700 (PDT)
+Received: from localhost.localdomain ([36.33.26.5])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82c7d3f76e3sm3136924b3a.52.2026.03.26.08.27.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Mar 2026 08:27:40 -0700 (PDT)
+From: Zexiang Zhang <chan9yan9@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: adityag@linux.ibm.com, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ qemu-ppc@nongnu.org (open list:sPAPR (pseries)),
+ kiki <Chan9Yan9@gmail.com>, Zexiang Zhang <chan9yan9@gmail.com>
+Subject: [PATCH] As reported in qemu-project/qemu#3324
+Date: Thu, 26 Mar 2026 23:27:33 +0800
+Message-Id: <20260326152733.344926-1-chan9yan9@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=chan9yan9@gmail.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 26 Mar 2026 12:02:08 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,27 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is more cross-platform way.
+From: kiki <Chan9Yan9@gmail.com>
 
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+A malformed IVE value can result in an invalid server field being
+passed to icp_irq(). The function assumes the server id is valid and
+may access invalid state otherwise, potentially leading to a crash.
+
+Fix this by validating the server id before using it and ignoring
+invalid values.
+
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
 ---
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/intc/xics.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index d7c4095b39..711dafa9ce 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1060,7 +1060,7 @@ endif
+diff --git a/hw/intc/xics.c b/hw/intc/xics.c
+index 1d40c4386d..25c7b0c8a5 100644
+--- a/hw/intc/xics.c
++++ b/hw/intc/xics.c
+@@ -222,6 +222,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
  
- if not cc.compiles('''
-   #include <glib.h>
--  #include <unistd.h>
-+  #include <stddef.h>
+     trace_xics_icp_irq(server, nr, priority);
  
-   #define QEMU_BUILD_BUG_ON(x) \
-   typedef char qemu_build_bug_on[(x)?-1:1] __attribute__((unused));
++    if (!icp) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
++                      server, nr);
++        ics_reject(ics, nr);
++        return;
++    }
++
+     if ((priority >= CPPR(icp))
+         || (XISR(icp) && (icp->pending_priority <= priority))) {
+         ics_reject(ics, nr);
 -- 
-2.52.0
+2.34.1
 
 
