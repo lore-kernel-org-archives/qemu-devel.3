@@ -4,105 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FDCC10A62CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A0C10A62D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 13:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5kxs-00083C-Hf; Thu, 26 Mar 2026 09:41:36 -0400
+	id 1w5l7L-000286-TS; Thu, 26 Mar 2026 09:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w5kxo-0007wz-Ho
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:41:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5l7I-00025Y-J7
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:51:20 -0400
+Received: from p-west1-cluster5-host1-snip4-10.eps.apple.com ([57.103.66.181]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1w5kxm-0001yz-R2
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:41:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774532488;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TW5QzDx784PFd9FvheYnQhwmjMzgkz4DyDcRuzVDEDk=;
- b=F5tBADFqbEhIWV/yt84Iax0VQKTtxkH5G49KqknOhhRfJ3khjCzNQzOnvBJkgteVLBJj28
- ZFKLOQNQuEuxpDyC+aITT5FeQ6y5OhsB8UhTKMTydIDV9TfroipTP6mmLZY64LcrHUjFiO
- sfm0h2Ae/cv3LEHH7W3BWPFwmWBPIXc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-83psG4fTPkeSk20QNI0VWg-1; Thu, 26 Mar 2026 09:41:26 -0400
-X-MC-Unique: 83psG4fTPkeSk20QNI0VWg-1
-X-Mimecast-MFC-AGG-ID: 83psG4fTPkeSk20QNI0VWg_1774532485
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4852cf0318dso10788515e9.3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 06:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774532485; x=1775137285; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=TW5QzDx784PFd9FvheYnQhwmjMzgkz4DyDcRuzVDEDk=;
- b=SPzHQg0jzWRQvHcfDa1wQPG9ano7GhDmERwufCQ86cWvx22xfiH6R699g1kGy2rWEe
- fXWcnTyCbGEijzJOFzjICntyFcYA3NBtcY8rZPegnxJpDhEn209+ZyUwXGuXK4WO7a55
- arRl2WGPSE7zy8g7KuST0hmXTjoNj1XKNjzU2eYM7cpZl4R2wC0hWqXYtdQ2/mX6YtFG
- HD0V6Tsi/uS9eleMEclDSEKUswiZQrYGqv4+u8iUchd1nVWwZw9+ZGm/gJ9vL3GWrpvh
- 0JsHGkoEUpntZjPOPA8VLCCPxUdGUWCxrCy+j6C2l2s3ackJ5AoFZhhnKeRyvkaEs8LT
- Hhdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774532485; x=1775137285;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TW5QzDx784PFd9FvheYnQhwmjMzgkz4DyDcRuzVDEDk=;
- b=PJewsSGVzRfhJV/flIkTdQI12ZvjSYRehp7RwfTdYL7nTcKDqMEkM/ixalGYdXrvd3
- 3XtWYJnT84d6xmek797i1v5PrboARkzcwU1dihWscU9JRgvhwKCgJqms5TB4ddg0TjvL
- 6+NsOq6hf1YRPUJeDmwy9m5LiBfhB70zmDZclWgIxu0jtg/A12hHM6XnyYeqq8yKZXlT
- RafrtwHaJOtIudckX1DHack1LeRIINbp3Ffm5jtZsIFpTF1cMlTtk1pJFv1huwc9M+Rg
- v6Kwb8S0fOv6+axEXcWijnisNANU0ZWB7tfH6KLHIaQzdkUfMBvb/O2k5uPe/tUCcZWv
- Tp3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGKRu6cIFqfS3gVlX1jz+Q8kCRojrwqEeIQKXdQPucQNyfwNLET2gkDwvIkP9MvX63hbBFaUOh+2SL@nongnu.org
-X-Gm-Message-State: AOJu0YwiBPtOxmjRZ8NDTFaToUx86ej4MELpK0zcpggRUNw6quXIMIaO
- 83H5SxuEjeaesvND4GS2/RWeFHA2B7ByvmAqadO8xlieibDgsNIHxW2bqG1V0CCNTg6bfwugZt1
- t7UFRIx6d7b4wD+kVzXfZs9BZK8z9+eTnRrty130UQ6p6RXhxGPsgJogq
-X-Gm-Gg: ATEYQzze+DDOh4OfA55zQOySAw2cbPROCCoIYhW05qXEiTKkmdeDFe0LshZm1GGOacv
- VYSLgVFMu0AKy3vNT4m2H/+wy2FNv9O/toRno2B7yiXpbv2UQCqiGfmf/oXH7ICZ2SPCCnTV5+z
- F5w026JV/38hGsxwAvyMnB1H6gS8zifwMrWoAHIGaPu/hb9h7DUaeiUdCMQZVbooSSgeKQVvMEq
- yOhFQ75qsZkAJNlMO8aSvzDHKKvdHl99Ch7yqpNas8p2psKgER8ywbexak5fnH2eXVNUxUAFhhJ
- ZRWVPSVMtTIFJ4Z1Qf83iuAMh+03ca0UB/szri/GLanlSKACB0M0yyn3cqEkFmMGLga6kk5H005
- qKKMdXvqysFyQsPIN
-X-Received: by 2002:a05:600c:3154:b0:485:9a50:3369 with SMTP id
- 5b1f17b1804b1-487160846d9mr106424115e9.29.1774532485045; 
- Thu, 26 Mar 2026 06:41:25 -0700 (PDT)
-X-Received: by 2002:a05:600c:3154:b0:485:9a50:3369 with SMTP id
- 5b1f17b1804b1-487160846d9mr106423625e9.29.1774532484413; 
- Thu, 26 Mar 2026 06:41:24 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1525:da00:3ac2:1a22:72ff:4256])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48722cb0d83sm31270075e9.13.2026.03.26.06.41.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 06:41:23 -0700 (PDT)
-Date: Thu, 26 Mar 2026 09:41:21 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH] hw/acpi: correct field sequence in SPCR table
-Message-ID: <20260326093653-mutt-send-email-mst@kernel.org>
-References: <20260326121947.51200-1-heinrich.schuchardt@canonical.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5l7G-00056h-0b
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 09:51:19 -0400
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-8 (Postfix) with ESMTPS id
+ 7BE8A180027A; Thu, 26 Mar 2026 13:51:14 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774533075; x=1777125075;
+ bh=aSSOgTeQRfGOn3tHCGwqYT9ZyEZxiCnj8df7DHyniaM=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=OQewIG4vueSxhtGECjOqImcWuWjzaqje4eif7JNS9x+epP+JzDUWRTXxJo+MrU12b6f3iMQdznyEnLH2IXcE65K74rRX+EfIw1LHmsmtEJv6HF8W7L+7K3hTHj9lLLL0rmW91D1xO2PODd6qdgyfRO6xzy8MLFeQnMa0uETCaVUYckd0RwzB5m9MnsaBhBkyguJXQ0aO3r3RVSTrZ7hoNBgxKGN5vOGYusxTxwrtCKueABVTK2U97v/bYIPvp4vbZRMEySLmAr3qvUh+YaKf5eNdvXxeCep1BVI/tESebx5YVhLiT+BdqfururfNJiECbnyfnRJ9NVo2xaKssuf/cA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-8 (Postfix) with ESMTPSA id
+ E2D0D180013C; Thu, 26 Mar 2026 13:51:12 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] docs: add WHPX section with initial info
+Date: Thu, 26 Mar 2026 14:51:09 +0100
+Message-ID: <20260326135109.67394-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260326121947.51200-1-heinrich.schuchardt@canonical.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=FrEIPmrq c=1 sm=1 tr=0 ts=69c539d2
+ cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yMhMjlubAAAA:8 a=rT9Fg11GqzwndlhJ3T4A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDA5NyBTYWx0ZWRfX1FpHmnOfBlBp
+ vDa9G2CNgZrOnTwtnPTgT2OH9k+sD1PSqc04csKJpQ3DKSDSFurtzmzqL2fH1PEHO92gqyoGSkG
+ ZQ/cOwrNEkEqSW7jdlteLVvySh3CtlcxiUwbpj/TmhaI+ChOIKEQW8WjaN8qTm6nsJPWZ24bDXC
+ nAybAqQVYB768L3a/VgcTCKrr1ONesVUW++r2/I68qSG6Qk/xwM8J+Ykom8rNoF1Ax0h2SD4llP
+ +h9DNSaBprWucW1csDyB5Lzi0gPGDnrQPTkKEXzvvrkYjT7hm1+GIUCUyoYXeKPX3a+vhtBU/lV
+ Egrfki6k9ks5xHoBVw7P14H0HuJYHUw6iqzhkrdu+DlOpWUaVIhdvH9MSq4kcs=
+X-Proofpoint-GUID: cHrx5ZHh_taN1u4-_UYABLjI3egdm9X9
+X-Proofpoint-ORIG-GUID: cHrx5ZHh_taN1u4-_UYABLjI3egdm9X9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_02,2026-03-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ bulkscore=0 spamscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1030
+ phishscore=0 malwarescore=0 mlxscore=0 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603260097
+Received-SPF: pass client-ip=57.103.66.181;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,70 +90,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the fix is correct, thanks!
-something more to improve:
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ MAINTAINERS           |  1 +
+ docs/system/index.rst |  1 +
+ docs/system/whpx.rst  | 83 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 85 insertions(+)
+ create mode 100644 docs/system/whpx.rst
 
-
-On Thu, Mar 26, 2026 at 01:19:47PM +0100, Heinrich Schuchardt wrote:
-> On LoongArch and RISC-V invalid SPCR tables are created:
-> 
-> Terrminal Type : 00
-> Language : 03
-> 
-> The correct values are:
-> 
-> Terrminal Type : 03
-> Language : 00
-> 
-> This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
-> SPCR creation to common location") that swapped the fields.
-> 
-> See the specification of the table in
-> https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
-
-should mention revision you are consulting.
-
-> 
-> Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
-> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-
-
-BTW I think the link to the spec should move to build_spcr.
-
-And also:
-/*      
- * Serial Port Console Redirection Table (SPCR)
- * Rev: 1.07
- */     
-
-is probably wrong:
-1.07	Fixed incorrect description in Stop Bits field. Undo accidental removal of Flow Control field. Edited formatting.
-
-it's likely not the earliest version we adhere to.
-
-
-> ---
->  hw/acpi/aml-build.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index 4b37405088..a999320e61 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -2115,10 +2115,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
->      build_append_int_noprefix(table_data, f->stop_bits, 1);
->      /* Flow Control */
->      build_append_int_noprefix(table_data, f->flow_control, 1);
-> -    /* Language */
-> -    build_append_int_noprefix(table_data, f->language, 1);
->      /* Terminal Type */
->      build_append_int_noprefix(table_data, f->terminal_type, 1);
-> +    /* Language */
-> +    build_append_int_noprefix(table_data, f->language, 1);
->      /* PCI Device ID  */
->      build_append_int_noprefix(table_data, f->pci_device_id, 2);
->      /* PCI Vendor ID */
-> -- 
-> 2.53.0
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cd8ba14450..eb7132e39d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -582,6 +582,7 @@ F: include/system/whpx.h
+ F: include/system/whpx-accel-ops.h
+ F: include/system/whpx-common.h
+ F: include/system/whpx-internal.h
++F: docs/system/whpx.rst
+ 
+ MSHV
+ M: Magnus Kulke <magnuskulke@linux.microsoft.com>
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index bb948e2993..4509630fa4 100644
+--- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -40,6 +40,7 @@ or Hypervisor.Framework.
+    confidential-guest-support
+    igvm
+    nitro
++   whpx
+    vm-templating
+    sriov
+    qemu-colo
+diff --git a/docs/system/whpx.rst b/docs/system/whpx.rst
+new file mode 100644
+index 0000000000..a3a7ecd38f
+--- /dev/null
++++ b/docs/system/whpx.rst
+@@ -0,0 +1,83 @@
++Windows Hypervisor Platform
++===========================
++
++Common
++------
++
++Windows Hypervisor Platform is available for installation through
++Windows Features (`optionalfeatures.exe`).
++
++VM state save/restore is not implemented.
++
++Known issues on x86_64
++----------------------
++
++Guests using legacy VGA modes
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++In guests using VGA modes that QEMU doesn't pass through framebuffer
++memory for, performance will be quite suboptimal.
++
++Workaround: for affected guests, use a more modern graphics mode.
++Alternatively, use TCG to run those guests.
++
++`-M isapc`
++^^^^^^^^^^
++
++`-M isapc` doesn't disable the Hyper-V LAPIC on its own yet. To
++be able to use that machine, use `-accel whpx,hyperv=off,kernel-irqchip=off`.
++
++However, in QEMU 11.0, the guest will still be a 64-bit x86
++ISA machine with all the corresponding CPUID leaves exposed.
++
++gdbstub
++^^^^^^^
++
++As save/restore of xsave state is not currently present, state
++exposed through GDB will be incomplete.
++
++The same also applies to `info registers`.
++
++-cpu `type` ignored
++^^^^^^^^^^^^^^^^^^^
++
++In this release, -cpu is an ignored argument. 
++
++PIC interrupts on Windows 10
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++QEMU's Windows Hypervisor Platform backend is tested starting from
++Windows 10 version 2004. Earlier Windows 10 releases *might* work
++but are not tested.
++
++On Windows 10, a legacy PIC interrupt injected does not wake the guest
++from an HLT when using the Hyper-V provided interrupt controller.
++
++This has been addressed in QEMU 11.0 on Windows 11 platforms but
++functionality to make it available on Windows 10 isn't present.
++
++Workaround: for affected use cases, use -M kernel-irqchip=off.
++
++Known issues on Windows 11
++^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++Nested virtualisation-specific Hyper-V enlightenments are not
++currently exposed.
++
++arm64
++-----
++
++OS baseline
++^^^^^^^^^^^
++
++On Windows 11, Windows 11 24H2 with the April 2025 optional updates
++or May 2025 security updates is the minimum required release. 
++
++Prior releases of Windows 11 version 24H2 shipped with a pre-release
++version of the Windows Hypervisor Platform API, which is not 
++supported in QEMU.
++
++ISA feature support
++^^^^^^^^^^^^^^^^^^^
++
++SVE and SME are not currently supported.
+-- 
+2.50.1 (Apple Git-155)
 
 
