@@ -4,106 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F3B10A88E0
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCCBB10A88E5
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5nfL-0002sc-BJ; Thu, 26 Mar 2026 12:34:39 -0400
+	id 1w5nfR-0002wG-QX; Thu, 26 Mar 2026 12:34:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5nfJ-0002pq-NK
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:34:37 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5nfG-0001j1-Cf
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:34:36 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-64ea73e7b60so1280528d50.3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 09:34:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774542873; cv=none;
- d=google.com; s=arc-20240605;
- b=S83aayVjRiCqF+GBopYWCcfGNz0MhTLn+XnJdpeHeIA0oXMvmEQM3lB49pnnrY/9Zw
- yNok6GqAFScAtoWvg15TY93vcN67EB1VmCBwP69ZLIkinReWSQIEgXdvNqYzKzrG9uk7
- AqkN9aqIAF3MNwpNaMv3RQlX2V16+3Pr7nUK8wAneCmtQzTsgC/0fVLwyrLFDZUmtwli
- h1DClggJupfm8UNXFG/qBzSC8uPGPkb8C3oL3JxOCQzE5qAqdiB9gadMT7iLNOhbVgld
- lbXYUyx3E949AkV76JstWujZERwHI1i4iGLFgIuFW+RzRxJK2UXQWbo46BGciZHsjVV8
- EMGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=QW1+0NajNhWghBEMbjMqAtjHpOo6yU6hvye6zdfH1PA=;
- fh=HTPvbb48pvvew7vhUKgLof3MF4iC/k4XA4OrNYti4Kg=;
- b=TBTstHyqCIJg1X0nzwBOuPxXQBU0l2ssxTii/k4pnaadAI7zNd7dSDUuxEECK+38HZ
- cwMPH6Ypn2ctG4OFLoBr2CqbHWzhK487JGTW3EnKfvTxbMR6mVp3dpdb4sP17CEseITE
- wgt59kKkKicwfKPSpRtxD//FBKRcX+wr+hGzEMJFwWKX5Z9+nTbVdmXud1OZbVIhvkaT
- wT6rkC1iMEaP+SJUPKH4zGxZ7bQdu1G8F96SFv/hz2icJBzhDk83ZE2Yyb0ScjbdZNX8
- 7J3edMzk9ImawoljM3L+IXOz9Z12/eqLxGCh0faHOgg/FDgW81SvjecaiDkDESAg0P/A
- t2pw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774542873; x=1775147673; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QW1+0NajNhWghBEMbjMqAtjHpOo6yU6hvye6zdfH1PA=;
- b=SwQpYL1VSWvmA9KQkRqzzb/zDTT/bjQFBobgVvFbkY0sVP1qavuuwdM0hCutBDscg3
- AYxIgch4e0mxEUJQJq+HT0G9bKQuY7ipU+IWFvkaFSJorVHRBeIs5w4VGzxq4045mIHr
- I44FehXPu7dx81udhRAXXtnJOG/V0ACgEj7Nis53fNcPxNljG+zYMUFjunHMro9IfPAS
- 769HQpouJkqN83Fnq4c958ZZdgAhtkLjKwFwyy1SD260VaI5DoZC1kC5TpEMgfcOomsH
- fEz15qLn4WpmdrCYHjFQzt2lBzS9rVoqC1VTrV3d5ZpxHUr8M6c8GYQC/nQwSbhxBjwX
- dN1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774542873; x=1775147673;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QW1+0NajNhWghBEMbjMqAtjHpOo6yU6hvye6zdfH1PA=;
- b=gOnMnM9GMKJwX8J3BntgPXwNGsHl93Mrj71FwKkSvwAOtS5w5/46G/HNzKxA/vMnjS
- iDgyyPhsLXoSEpbPIMpoXuPsW+tEu9kdhI6EPgANKzUXsmw18M6dh5HFLUGMWPNlsSzA
- cler9tTxb2vo0oBmU5NSEu8EOBPdaCJmfBM/DL244Ekt9ULWkBjwC/K5HBD0nO0so7KV
- A3ErXbkCkii7FERvkcqbKPKo1d/vSUj16llrmC08cXxK4e4eJrCXlA38bZH01YSBHeKZ
- 2M6auJ1x2ucGb/B+XnVAeKrXY13a7GznRFBrKSGvgS/FevoXQMJpIZsJc53Hf8ID9cU7
- xmtw==
-X-Gm-Message-State: AOJu0YyZhx4VbYS2uzFaHiKh3seXZqaRNknrjVIK12SvgHuoRq0nLo7u
- WVX20Ar8J2uPmuMHb7Z3iX5Fg4ZkClJAoU98TSvYb19PS6AvGrnIHjVfHj8Fp99TQVvD3iuCupt
- o+zwXrJl0h2mnKg0h4ceKeZyo7IOV1gFHbuskvjKAPQ==
-X-Gm-Gg: ATEYQzx3YRJE/Gxy2qJvi0ghvpONXOYYhctw90aG6ZXLI8FRqfw/4CsRmG1sJWL368a
- KMoNN4ealo98eerlpEZFlL/D7hS24oxtphTNJVcP5+3yYlxLZyi1ATGftPtGbaUG+1gfIVfciTj
- WygLOZm1BRYzX6iM4G4d9+zmELlE6UE1uEpVnWw94Y/oyxmI36bOQFBYyn+iZBBQW3tgf/QOw0G
- bcqYtkk6ov2NWdcVbPV/xf3RMNL8MS/gM8nBpInXn23hFE2YxWDDtK42EvBfPCoUje38ewC+4b7
- vT1UrlQNe4tPvt5reXfA1G0PIMiOOpT+wB00YPv9i57PYyz56S9UJLs6bjQXrTPnPW8=
-X-Received: by 2002:a53:d017:0:b0:64e:8d4a:d0c with SMTP id
- 956f58d0204a3-64ee60943aamr6945628d50.31.1774542873006; Thu, 26 Mar 2026
- 09:34:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260326160033.68318-1-kkostiuk@redhat.com>
- <20260326160033.68318-2-kkostiuk@redhat.com>
-In-Reply-To: <20260326160033.68318-2-kkostiuk@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Mar 2026 16:34:21 +0000
-X-Gm-Features: AQROBzDEKjM8-Eelb0VcnK-E5Pzuosn5SBkrgBGh63dxN78E_snsMwKT7ckCdFA
-Message-ID: <CAFEAcA_QcibXPCDpYPNTeO6RAZPaSAkFKMTnd8Uf0rK-FKLnQg@mail.gmail.com>
-Subject: Re: [PATCH 1/7] meson: Use stddef.h instead of unistd.h
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5nfP-0002v3-9O
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:34:43 -0400
+Received: from p-west1-cluster6-host9-snip4-5.eps.apple.com ([57.103.67.88]
+ helo=outbound.pv.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5nfN-0001nk-8x
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:34:43 -0400
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-1 (Postfix) with ESMTPS id
+ 70C2C18005FF; Thu, 26 Mar 2026 16:34:37 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774542879; x=1777134879;
+ bh=/XsmZsE7t169LBlFSfaEOUcCKSCVlhhpZpyFhFLVTA0=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=SxEqCGvERew/+rcDYuVMcjDVXG/xYWx7Kw0gHw1pUv06+RcpzchziaLgiGIV2iWl1s6igZkzRxc8KxVAmnqh9Wl7IxdzVRphlErTVX/2RAljs/rJuOaFN83alSCQDs4FAoXeCmtUXrAWQQYpIDR3OvPxe8/BGYLyOeLDwt89dlpmoHXLwE3uBgCD6ESFGtNyXrPoFdFh7gdOYvM4gsSn9lZ3ct2mEcNN3pW/rV+oj58tYXmvMpfGSFdi2uQLQx7UZUYZ3Mw6+dsngdJ9mLYzAYa+WaM/0hIeNALlennyB+kDKAekItm4hYJyCRH/+jPyF+egOGvZiX1JPK7DeriWGA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-1 (Postfix) with ESMTPSA id
+ EF4A8180033B; Thu, 26 Mar 2026 16:34:34 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH 0/7] Misc changes to allow building with Windows Clang
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260326160033.68318-1-kkostiuk@redhat.com>
+Date: Thu, 26 Mar 2026 17:34:22 +0100
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?=22Daniel_P_=2E_Berrang=C3=A9=22?= <berrange@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E4E91C9F-222E-41CA-B51A-928480FDC405@unpredictable.fr>
+References: <20260326160033.68318-1-kkostiuk@redhat.com>
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDExOCBTYWx0ZWRfXwlw1QccDcW5c
+ ua+Ca6GGQkWh8hMut1TtOC1TJSadcJ1RZhwQhmGHB70LO53YcfY/Oe4N0Tc+8DwPUCBOfzTPMEb
+ zNhUEklUhSLZNY2bQR5Bprywedn24bkGKYAnJAsfC10Vn+Y4+DeZuahUc2YbvP+1+DZH9D6DBie
+ WMeHuc7tzsxKBEBbDye9HONdqGc2qqTaTDAt8y7VFaj9JLvdXxNh0T60+zOHKXqnrEXcO2LYDjT
+ yNOCdWFds2Z23Ilv+pZ2OCuzHNPn4HixaBWLkGijzQHgSqIDM3T3Npx5RtW0g3fphOPWewAHjCl
+ 7HewN0Koa3FOLMMVaLOCoT7SlOWP8X3zwHqTa16iNMcwmzZPoI458mqaydXmEo=
+X-Proofpoint-GUID: _cLviY2t-nOn2j_5z68ou_I9G9sYmCaK
+X-Proofpoint-ORIG-GUID: _cLviY2t-nOn2j_5z68ou_I9G9sYmCaK
+X-Authority-Info-Out: v=2.4 cv=C7fkCAP+ c=1 sm=1 tr=0 ts=69c5601e
+ cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=20KFwNOVAAAA:8 a=iaFFB3VQxh4Zur26TvYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 clxscore=1030
+ malwarescore=0 mlxlogscore=634 spamscore=0 suspectscore=0 phishscore=0
+ classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2601150000 definitions=main-2603260118
+Received-SPF: pass client-ip=57.103.67.88;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,36 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Mar 2026 at 16:03, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrote:
->
-> This is more cross-platform way.
->
-> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-> ---
->  meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/meson.build b/meson.build
-> index d7c4095b39..711dafa9ce 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1060,7 +1060,7 @@ endif
->
->  if not cc.compiles('''
->    #include <glib.h>
-> -  #include <unistd.h>
-> +  #include <stddef.h>
 
-POSIX says stddef.h provides size_t, which is the only thing
-we care about here. (But it also says that unistd.h provides
-it, so your platform is broken.)
+> On 26. Mar 2026, at 17:00, Kostiantyn Kostiuk <kkostiuk@redhat.com> =
+wrote:
+>=20
+> This is the first set of changes to allow building qemu-ga with =
+Microsoft Windows Clang.
+> It includes some cleanups and fixes that also make the code more =
+portable.
+> The main goal is to be able to build qemu-ga with the MSVC toolchain
+> because MinGW-w64 is not available for ARM64 Windows.
+>=20
+Hello,
 
-This is the kind of detail that should be in the commit message:
-you need to explain why it is OK to make the change and why
-the previous code is wrong.
+MinGW-w64 is available for arm64 Windows, although it=E2=80=99s more
+mature with Clang as a compiler instead of of MSVC.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Is it more of a packaging issue with distributions?
 
-thanks
--- PMM
+Thank you,
+-Mohamed
+
 
