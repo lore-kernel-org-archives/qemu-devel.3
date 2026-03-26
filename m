@@ -4,102 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6107B10A88FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 18:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6199810A88FD
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 18:18:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5pH3-0006AC-ER; Thu, 26 Mar 2026 14:17:41 -0400
+	id 1w5pHR-0006EQ-M3; Thu, 26 Mar 2026 14:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5pGy-00069A-BN
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 14:17:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1w5pHM-0006ED-ND; Thu, 26 Mar 2026 14:18:00 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5pGw-0002x1-K0
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 14:17:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774549052;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IjmdZskmdj1/NAgge2xRFcfaj0TpXbjA61xYB0KBTa0=;
- b=RNJeXk4vwYQHnsqpobWIztvNGaR5aPASM5+6vva6ZaOrjTwAzc67ikfl67K0ltvbS1o2J4
- UKKg1CKrz6MkwdKKTW67zTmwmDcPTwgyP8xD/I82urWcV4lTNymjnnfRtowy2C/bPMcEhM
- NAVKdsta5IosnCssY7vPhfvqG63WJko=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-341-dgBzZS_VMVKjl9GUYIciWg-1; Thu, 26 Mar 2026 14:17:30 -0400
-X-MC-Unique: dgBzZS_VMVKjl9GUYIciWg-1
-X-Mimecast-MFC-AGG-ID: dgBzZS_VMVKjl9GUYIciWg_1774549050
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-89ce5eec0f0so5140816d6.3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 11:17:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774549050; x=1775153850; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IjmdZskmdj1/NAgge2xRFcfaj0TpXbjA61xYB0KBTa0=;
- b=rCzaXbJ58v5xot9/Yn08qDUbqnzyEdqKn6bNqY/Uyi5rGPqexijaB03KjDvrLlfv6A
- 7Wa57ZNrSi9G9eixjDxPg1BRAtOUp3VzrwjK81Ky72pPhuh+gVlDPGQuxLFgneCG3Gxb
- tkHMXrEJqo44GjEI+cZIZEJTPYYTc6M0+0Nsn7cwA/sdYZAI4MIIMq2K+NXLwDHHkmUt
- YL498f2/0dI68PSRaUr33IcIOX30JNmh2RTGxMwNjbJLFqbkwI0lTiefGDKuK8ntCfRt
- 70cCPAsAD0NSXkuYckHcL017qRASMmnr9deuvZC6hSED54JIFasEwFQ1B/44TzPYdM3x
- KDqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774549050; x=1775153850;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IjmdZskmdj1/NAgge2xRFcfaj0TpXbjA61xYB0KBTa0=;
- b=M4kExVUjTIBOA+NeJ8IeGXU5TUhN+7h+duZxoRBJd9irjVL+cm44wei0ZvxgPYzKLp
- mS7BX5c+GQHI6O2ecMgbuzLB7RzNS0t/IS1a5SfnG9wcMx7N6DAdqI4MtyNFgf/dpttb
- Bn1cJeRreyonvuoanD3PB3S3dxR47Wr5f1cMGajS+mE+GfcFAn8iiZzSnQ3mjblSVuVm
- RW4HxMYeZYxfxTb4KF/TdX76OjNm7wHaoIgV85igEeA+X33stAy8NHT8mLDWeCL1P8ic
- /PET5O5nQgBgmRL1FyIR45mJbfCO1Znfw2DF/NO498ZEeUajfvcTyekVSpc7U7UkGJY8
- hxUA==
-X-Gm-Message-State: AOJu0Yythp3zqiiefUT/oAUweEKIkilI51+YzP5VFzW+6ikR2wKLutks
- D9gUtZyz30Cq7o6+sURjU3BFxAdPt0PQ+w4PX/5q/a7KTRdACIGysULKiJ9ilDQ8GbIVZKdNC8u
- 6d2d3I7DVeGnVLSfDawvdLu1aprO1Lj/jc5YAnCaLBvPrEqMVs3+RzGKa
-X-Gm-Gg: ATEYQzyzqDyP0ym/gNLT7iQLCK0ev7iW/Efa9e56KyXZz2jDAJ28BIRAxlptZQ6IMsp
- iArzziYbyPkk4zHhUChV3Tf57lCz/r/2sZ+l80n+tkYVtkp0YkJ+OH/f7cjVte//UOG148FPQsD
- A3/mBjtvGyIbOnrv/PEk3W6isjHkjwVP/6Z6BpkrY8+Ud33v9Y6bIRbWLL1Dj4H0bNbz0HXOLF9
- IGIh3f5lqDTa/NEuwYncExTolpqphKQdN72qcditTVQ5e0qoTk7C90yOkkIzw1xxWoi1OnJ0AoA
- sn0QWznkLfFYihScA1NAKfZN/Q7QaXxXCWGw09ldROo4/4Qk4z4wZPUDxlpRNqueDAq7ElbGfb6
- hTYaOTBUn1gEnRw==
-X-Received: by 2002:a05:6214:5d0c:b0:89c:d931:62ee with SMTP id
- 6a1803df08f44-89cd9316facmr51248276d6.34.1774549049855; 
- Thu, 26 Mar 2026 11:17:29 -0700 (PDT)
-X-Received: by 2002:a05:6214:5d0c:b0:89c:d931:62ee with SMTP id
- 6a1803df08f44-89cd9316facmr51247786d6.34.1774549049215; 
- Thu, 26 Mar 2026 11:17:29 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89cd589a25csm30479096d6.15.2026.03.26.11.17.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 11:17:28 -0700 (PDT)
-Date: Thu, 26 Mar 2026 14:17:27 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v1] tests/qtest/migration: Fix slow test dirty_limit
-Message-ID: <acV4N7ENkELzx5V9@x1.local>
-References: <20260326164405.1626-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1w5pHJ-0003Ju-BK; Thu, 26 Mar 2026 14:18:00 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62QGKJw1510743; Thu, 26 Mar 2026 18:17:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qg47D9
+ sArcLJS6kQ8TDXUvK7NZN401TB5GtjtdYJqoM=; b=KUtihxadH2sz7drzf8zy74
+ vohvqqnS6VgEfx4gtGSZ/6EreSg81vMifHGvvxZMmjIVEYfAe5kRoR7PXIA9vjtS
+ b+R478fzKaH8bT+5AwPzGHbIoLKoopo/FFixHzHONXjD7w7AlQcVP1YlzKj7z5Un
+ I1cwBJwEjdgqwNkyU/ylGYi+9JVzyVbI6VVpoalmGEwGAlwaCemDSYmL8wiRZ8tR
+ 9Hi/rMv0zhiejvuwCOwSGEgA4eTMoAQwqqDW7TUfcvafwXRALkwjSvXP0rRcvGCd
+ tCsGArO+4v2P7iFpQDqU+Klrc58H2/Y0Ce2O/n+POYOG35GAJ4sMst/DjvfQTWBQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kwa6mej-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Mar 2026 18:17:49 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62QGRGMq026771;
+ Thu, 26 Mar 2026 18:17:48 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d275m42tq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Mar 2026 18:17:48 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62QIHlha6685652
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 26 Mar 2026 18:17:47 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1EECF5805C;
+ Thu, 26 Mar 2026 18:17:47 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E91E58062;
+ Thu, 26 Mar 2026 18:17:46 +0000 (GMT)
+Received: from [9.61.246.71] (unknown [9.61.246.71])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 26 Mar 2026 18:17:46 +0000 (GMT)
+Message-ID: <c2df581b-e8ab-4fbb-91ae-08d17eb52878@linux.ibm.com>
+Date: Thu, 26 Mar 2026 13:17:44 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260326164405.1626-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v2 1/3] aio-poll: avoid unnecessary polling time
+ computation
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, mjrosato@linux.ibm.com,
+ farman@linux.ibm.com, pbonzini@redhat.com, fam@euphon.net,
+ armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
+References: <20260323135451.579655-1-jhkim@linux.ibm.com>
+ <20260323135451.579655-2-jhkim@linux.ibm.com>
+ <20260325172236.GC701300@fedora>
+Content-Language: en-US
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <20260325172236.GC701300@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 9NOp8Ukv8gtDqDSTSmdzgjN1ePgTbz-L
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDEzMSBTYWx0ZWRfXyneHjI87MCp/
+ e/9BpE13w4jIqrUI9ZJT//EaQhejgkdaLk3pWiDlDcGr75NC3va/XGIHRSkvSJ2abUWhHOiinKL
+ ZAtgFexOwgardXTT01IkSOMmraujfaO20sr5aeNQ6XEhNqVm6rs88CjuZpvMTuJ6F4tpf+G7Kha
+ kU+at7/qEkkaCpMBGHj3kpxVd7RvJCxJfXB/FwycOMG+nMD5ZpN6hPn95rzKhYeUs5GcCc0bRYc
+ 3APCSyJEEi6guUfe12/5K+UXNkCDKFJOQU1TTwBcOaDJ7/bV/wa5MGf6a/ptKIbrzIl1lmoRZKs
+ KGRX8m3BtmLinFpqKwMT5mBQHMBTihGfDSLf8Vom4LEpfX9I+nbtuomyyHIolquK2I/nWfB9EeI
+ SWhGHxiX8tb+bH/kzxBaXMDjvoJUc3hryVw2F/p8Pn3E2v/UYNrfIvXlWfIsK3ajUgcVysyfkdy
+ +2R4fJV6mSVvRrDPqlw==
+X-Proofpoint-GUID: 9NOp8Ukv8gtDqDSTSmdzgjN1ePgTbz-L
+X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c5784d cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=20KFwNOVAAAA:8
+ a=aZu_EBGKBwqA9dl09EAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 clxscore=1015 phishscore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603260131
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,73 +126,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 26, 2026 at 01:44:05PM -0300, Fabiano Rosas wrote:
-> After the referenced commit, the incoming side doesn't exit
-> automatically after a failure. Tests that expect the destination to
-> fail should use -incoming defer, issue QMP migrate-incoming, wait for
-> the failure event and issue QMP quit.
-> 
-> Fix the dirty_limit test which wasn't updated properly.
-> 
-> Fixes: 4e8c4dda97 ("tests/qtest/migration: Force exit-on-error=false")
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On 3/25/2026 12:22 PM, Stefan Hajnoczi wrote:
+> On Mon, Mar 23, 2026 at 08:54:49AM -0500, Jaehoon Kim wrote:
+>> Nodes are no longer added to poll_aio_handlers when adaptive polling is
+>> disabled, preventing unnecessary try_poll_mode() calls. Additionally,
+>> aio_poll() skips try_poll_mode() when timeout is 0.
+> Skipping when timeout is 0 seems risky to me. VIRTIO devices disable
+> guest kicks when polling mode is started. When aio_poll(ctx,
+> blocking=false) is called, we will skip polling and
+> ctx->fdmon_ops->need_wait(ctx) won't detect an event either. aio_poll()
+> will return without noticing that the VIRTIO device's AioHandler is
+> ready.
+>
+> Is skipping when timeout 0 necessary for performance or can it be
+> dropped from the patch?
+>
+> Aside from this:
+>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Highly likely I missed something, but could you remind me what is the
-problem before the change, and why "defer" fixes it?
+Thank you for the review!
+Removing the (timeout != 0) check does not cause any issue on my side,
+so I plan to remove it in the next version.
 
-The current failure path in this test is:
+However, I'd like to clarify: when timeout is 0, is there any concern
+in the try_poll_mode function below that I might be missing?
+I just want to make sure I understand correctly.
 
-    /* Now cancel migrate and wait for dirty limit throttle switch off */
-    migrate_cancel(from);
-    wait_for_migration_status(from, "cancelled", NULL);
+static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_list,
+                           int64_t *timeout)
+{
+     AioHandler *node;
+     int64_t max_ns;
 
-    /* destination always fails after cancel */
-    migration_event_wait(to, "failed");
-    qtest_set_expected_status(to, EXIT_FAILURE);
-    qtest_quit(to);
+     if (QLIST_EMPTY_RCU(&ctx->poll_aio_handlers)) {
+         return false;
+     }
 
-It waits for "failed", so IIUC after switching to exit-on-error it'll make
-sure things got gracefully shutdown before qtest_quit().  So I'm a bit lost
-on what we're fixing.
+     max_ns = 0;
+     QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
+         max_ns = MAX(max_ns, node->poll.ns);
+     }
+     max_ns = qemu_soonest_timeout(*timeout, max_ns);
 
-PS: a nitpick is if we could always attach a "Link:" to the commit message,
-it might help a bit on knowing the original report too.
+     if (max_ns && !ctx->fdmon_ops->need_wait(ctx)) {
+         /*
+          * Enable poll mode. It pairs with the poll_set_started() in
+          * aio_poll() which disables poll mode.
+          */
+         poll_set_started(ctx, ready_list, true);
 
-> ---
->  tests/qtest/migration/precopy-tests.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index c6c8ae3004..a0e3ff0547 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -1070,11 +1070,10 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
->      args->start.hide_stderr = true;
->      args->start.use_dirty_ring = true;
->  
-> -    args->listen_uri = uri;
->      args->connect_uri = uri;
->  
->      /* Start src, dst vm */
-> -    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-> +    if (migrate_start(&from, &to, "defer", &args->start)) {
->          return;
->      }
->  
-> @@ -1082,6 +1081,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
->      migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
->  
->      /* Start migrate */
-> +    migrate_incoming_qmp(to, args->connect_uri, NULL, "{}");
->      migrate_qmp(from, to, args->connect_uri, NULL, "{}");
->  
->      /* Wait for dirty limit throttle begin */
-> -- 
-> 2.51.0
-> 
 
--- 
-Peter Xu
+     .....
+
+
+Regards,
+Jaehoon Kim.
+
 
 
