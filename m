@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6341310A62FF
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 14:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55269106F2F9
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 14:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5mAb-0003Jh-KE; Thu, 26 Mar 2026 10:58:49 -0400
+	id 1w5mAm-0003YY-M2; Thu, 26 Mar 2026 10:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5mAa-0003JV-EE
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:58:48 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ id 1w5mAk-0003Xp-UQ
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:58:58 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w5mAX-0006Ih-Dt
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:58:48 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-64ad79dfb7cso1125117d50.2
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 07:58:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774537124; cv=none;
+ id 1w5mAj-0006L9-HJ
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 10:58:58 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64acd19e1dfso1061545d50.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 07:58:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774537136; cv=none;
  d=google.com; s=arc-20240605;
- b=TY82W8E4MMyMId7c8Ap+YOkq3ruXKJs+EbJgeGC03OTV+lKr6Bv1xJdLGALhkm5Jpy
- Eqa0J+zwFpWXHW40SVG5uQ5XC9o7IsiXCHg7zFUu2tUFTcYBfh/f6ShVdYYqZ+Ve7Fqd
- MyWQxDTlYhicz1BPkhm+6T3J8FFK5Q9W9e5T/SSR2M8lO0ify4QwiLb6RBfTRUBZcbhp
- khsEAEZoS7vaRX/EYBFghO3Tf4osgP2gJFiuVY3FDWTyJiNLQRUpAblFv+OCmOYusydO
- fZPRMIq3yxYnpsxWPymxZkcr3FkX3sVpR8eFzHsyvucC2QkTT9mpHvIgdFLQl5mdFN/e
- bOSg==
+ b=EVxVL6UQNsxp5S3l0+fiB9HotXH47GWKsEIFrQZjNC6BL/XA1MkaLnAlTkwSBiuUrN
+ qbBoYrHO4uasEpN4rQRkiJuswuPSxRnE2Xpj4BuSnlmRR/DxKrr7QG2bwnW6kUWOCqAr
+ haq7oqDfoNlxJg2odgKk0wsXc2DZFXov4v9LnmxDswZ+CoJnnKTai00tsJFVdruGOBaQ
+ s+BP8UJtOb6aoLEgjbgsCQyQSsrGHszrTZw/tNui5/LATafLXJdUgdfD6pow2IyfKrlK
+ TFKPMKNeY55lbdJ83NxughuvkdZUV2JwK4urYHoWP2QAe6p6tXDto7Dcg7HtRnf5J5p6
+ Xh2g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=GLFRCHpiGkAWWMWLAHlkZiq8ZWK/XLpYnyLtRgU0xsA=;
- fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
- b=LqObdio2STGDZLFNpcuEEzBGVYFYwbrS/ga8GjBpE/9faYsLJpAfr6yplr9RhNQlsd
- eMbRdVyK8JSe0/g3baKqeKHn4FJe8qy+/0tdSBBeTmthP/l6uSB/HuIifbVoHzTVgiNP
- UiXJA9GTf1EKuORmCUi8flTyb3irtKuhrEfwaCMfqQUablZbr/Ted4TuqlvESReqimVh
- kEcU7X89417qufQmNMzbvoFqJjILCNCqS6RRaIWuonFZJ6RXFTufdRfZVLNtctVFR5ss
- HESU2cTnVEJWpBMrZtv5wkaEYkO0Zd6ZSnakpDbFeMeLIYA3KJ+cI7kWxSzf1LxqLw1q
- 9aPw==; darn=nongnu.org
+ bh=Wm+cYQQdXtRWanK2g8DoOwqHLD/nkrl33PwHLKdZ7SI=;
+ fh=pX01Iy5UbPWUSmSo/T1sZj7atqJo51a1a3xB5sMUAdU=;
+ b=IB8dcvbXDLFlBPDW+rJkJRh4PMn2V6yrYNTqCyDU8kP0z2cvNa8BxK34sIuwuV23UR
+ Xf8zGluZbGZoxWC9frrHlz2wi9g4/cXgmNHoeqpc9qW1PqpNue7TeVjeH3xb6gIJW858
+ zdKs2jx9nz5bL01jiie46HBM/CyjyzDMyh4rn7T/hfghwyS6DDdpnhidlnPzOZQ78IuO
+ f+dj3HqkYLZp5SWNKhYX64pYerCwZ6Jy9A9lBvBSUZ4MphqbpeBV36sN8kes1AZ4ODoV
+ SKmnLpo8CdAmRJAmnwsbqTkYxOEhCORH9WHkZb1SQE5xHlF0piHjCFr439ejMnJ8zwQq
+ gI7A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774537124; x=1775141924; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774537136; x=1775141936; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GLFRCHpiGkAWWMWLAHlkZiq8ZWK/XLpYnyLtRgU0xsA=;
- b=sLZ91SnGBg7aE9Lc619lirLgDwe5Lz3RgAPHy9UdQ7rRRyP9ZjHG9j3AKRdBEK4Ca6
- JSxb+sacBGDZ2Vh2fw98dV6MpjiKnDb9LH2M9CCCbrWVGuLg5n6OmqiMK/azckSvpRlD
- fQXxMc8Xl1D3hPBnoi1b25scNkV4BcAFUhW6Z4aUdLJzPPOhRlv4xWWeVMqe+CEweaLH
- QX787WsCow4C/Sw5XWOijIXol50cXBx4Z7pSy2H3fhDuQ15T29McZmJgNsuPc64BVcOF
- 7c09iwkhWj0vUN0BMtQPjiL3qyh+AqSZCC86/5ntNY6bwl332OsSQVKAf2Eee1PBOSP3
- 9MpQ==
+ bh=Wm+cYQQdXtRWanK2g8DoOwqHLD/nkrl33PwHLKdZ7SI=;
+ b=G39ld2v0QplyxxRtVbGTLFv2PzeUElvlhnhBDKtycRuwUaC/6DS/fYJ/NsQJKNnO3D
+ 374z3GxUPMJptSdA8EnBd2KW/SBDN3AYGnkXN7sgu5cTpD21rKckRqpTiJpuVZs0/09e
+ iYQN9g+Qa0OyF0bo78rTvQU2C5pZfoLbkak7AuVOA9LX+RuhgpEZig5n8hT061Pip6Qa
+ wmHcDRaQ5GQ+ooG4hJAQTd3uHl4DdnBX+89IZE4ufGJwcAfKurvEmnSAGpiFmQcWQiu6
+ yVzS/7SresLnJYy9gF69oWj8tRMPHt0Te+7GvNNPyDpHseCRKQ6kUolRNDpGsXnSJpy1
+ QajA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774537124; x=1775141924;
+ d=1e100.net; s=20251104; t=1774537136; x=1775141936;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GLFRCHpiGkAWWMWLAHlkZiq8ZWK/XLpYnyLtRgU0xsA=;
- b=mhTjxo92A02of41H24nFOnuQ4J6rQ+9AB00K5+H1NAXkLCJduXYUgIIMoTSX5Wlwy4
- cC8JivxuFF2kq+YnzhWXD1bklywZxNlKbMPm1QYo7LGLKJRBkM0i4cFwNVpFdSCAzp2a
- P0GLhmbaulijoBn1hp2FKbMevC6bStSrU0F9Infa5r8f0uDPCJD9mAJmwn+c3fIMteQz
- iShu8Yy4lPz/1wGNHEqh/4ApSEN/FykNX35xO42AOi2QCVvUxnxSQP6J8dQG84O66zQy
- sr+Zb9iOQNNMezMktAYT8cQE6BwgW6mOu9JadfjJRpEAPofcb8uSbD4yJibA6zPR536w
- qIdw==
-X-Gm-Message-State: AOJu0YwVQG+MboRaoL4CQJcBR+eYOFcUxUN8+cO4OkEp2b7tYdk6XgVf
- 8/eudyPgz3KLLKJTEftwwo0CtIf3sX70t/grJDP9E7m5P5yKIPpTKLS3gNBZPWqCuYfAmPQb3gg
- ziEnpW9yCo0wvcwWcvRsPNAIlhDSs/6EDb2bz/YpEcA==
-X-Gm-Gg: ATEYQzwpWrVb8ty2lYgvMWDg2k8veAhBDycxKL8gWpPsMR5wNnI234ISfhQImZPfRO0
- gQuJ+RPOVfThGxJXU9GNCmEZkCI/Thow4Zk4W2SSlqg7wu0hbJfl2zH4mmuv1wwmC5Ai0CiZC54
- Z/NYlmrv1sAVXUi2XBZS/0GiNVqK81NayBTGLzGFwoB8AciikrHLduNR4jKYNttdwQw4CfIOQkD
- JXGjhIiWnGPypYfOMAcwbiS8qfpSF2VaxMNWGug+dhlrCxaKYECABn3UFqsBQlDde39ibjg6O1J
- zbrB41196bSJRSLX00KNF9SmHsGpxvwUG+DHUbPg/xndJVkhWd92+h1bKvLsBad8Q18=
-X-Received: by 2002:a53:d017:0:b0:63f:7de1:7acf with SMTP id
- 956f58d0204a3-64ee60a9cd8mr7028281d50.22.1774537123785; Thu, 26 Mar 2026
- 07:58:43 -0700 (PDT)
+ bh=Wm+cYQQdXtRWanK2g8DoOwqHLD/nkrl33PwHLKdZ7SI=;
+ b=MQjs+dpjkddsZ/oyNpSGbJClErI+6TxZatcQHYf+7rayhAtjz3b4MRqZ9sU2eiV5Fq
+ fPclfsT0P65TGAo1VjPwYz3KeBtcHxvSHTZpwRbCHop8ks1PoJIRUL8luQAzltfEOBWE
+ /iRZot0Wh8x9IruYG4ZpcVCp0eKTv7V9hgaf6lT+7fIfpikDt84nPitjn8wdFFQYvzM4
+ c5T/lNJl8+mc1FKm9fXxymgiJQ0RyhzdANRvZVmxnpGYbDt0ZM3C0bGKm9sipMkf3y3R
+ 01PES7k0f1Bki1r/pvGhh57fWHdboxwsBiKPYpZ0h9OTnMB1MTJWnJGcfQRRew4KRuE7
+ Rt+A==
+X-Gm-Message-State: AOJu0YzTx4fqTdKbbV950gQcDezw2T8Fe2weyXmLtEyeyB5N5rdd3Uus
+ NdN1r5q0wHtD8mEpbt4cAhhIdwUA7jMF5fodu1TVh48MaVklOIzgbuCidjCAr6K3NOXBXjvSUY7
+ X7GRJwXZ/i4tw0FSOmr2kL7jo+oxhi+VhWLzMgVv8UA==
+X-Gm-Gg: ATEYQzzhMGs8kC76mJSKtgq7vw7IhizvwCXhNjMl/f3nMzYqxwS6Bk/Ov6DXy+tW1PS
+ dBpl75epuc3Ox8Kzm5AJNGQhIaHZO5+S25s/mKBdmZ1dvKaEyNbgCC+FKB9qpAlNIlwskyKcw2C
+ czhb+O6ycSpqMprKhoeZzKJAmG1mdpjCxWur5yLFxnsTpwiAYFBa0cos4rBzcq96pBdKeN2FNXx
+ vhUxGKs5R8NJhxNI5qV97nqNumxCcyRDIssewYUHq1DTjxLkDgvFg2Gr1e8Z7yPyv98TkIqKxZ3
+ fIcm4GijQXnQjAmJCE9zvk7b7+aHDxZxWE0x5wb5VvF3JsvBBskl3sjhVIDvp2iENrs=
+X-Received: by 2002:a05:690e:d8a:b0:64c:b242:496e with SMTP id
+ 956f58d0204a3-64ee609d0famr8204213d50.17.1774537136153; Thu, 26 Mar 2026
+ 07:58:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260325215222.3678982-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260325215222.3678982-1-pierrick.bouvier@linaro.org>
+References: <20260326082350.17374-1-its@irrelevant.dk>
+In-Reply-To: <20260326082350.17374-1-its@irrelevant.dk>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Mar 2026 14:58:32 +0000
-X-Gm-Features: AQROBzDZuhu_fHo2R78L6cpwq6CTqiu40BDKlQBD6qQ40Qdqdx4Xc-gkI5sL19k
-Message-ID: <CAFEAcA_dQkQYxkakZ1=FTKSGCAgYAR9CYeeJUkNPmy_HB40E1Q@mail.gmail.com>
-Subject: Re: [PULL 0/3] plugins: fix endianness for qemu_plugin_mem_get_value()
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- stefanha@redhat.com
+Date: Thu, 26 Mar 2026 14:58:44 +0000
+X-Gm-Features: AQROBzCnrSqZjOly1gcjIiu9UVH7BNaf8BPqNKbAKIdizgwa0JcRHyxFKM6tQiE
+Message-ID: <CAFEAcA9MULr1GcGhCnZRbK2VCRczaiR2ppCHYeWdddP+LeX9OQ@mail.gmail.com>
+Subject: Re: [PULL 0/2] hw/nvme fixes
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,8 +113,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Mar 2026 at 21:52, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Thu, 26 Mar 2026 at 08:24, Klaus Jensen <its@irrelevant.dk> wrote:
+>
+> From: Klaus Jensen <k.jensen@samsung.com>
+>
+> Hi,
 >
 > The following changes since commit 007b29752ed06e467d3c830bc2c17a8851f8bcd3:
 >
@@ -123,17 +125,16 @@ On Wed, 25 Mar 2026 at 21:52, Pierrick Bouvier
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260325
+>   https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20260326
 >
-> for you to fetch changes up to e074c90947a162f795fe85a46e98922c887d6985:
+> for you to fetch changes up to eb5cc99aff17cbfdad16b18d3503c6f22233eeb5:
 >
->   tests/tcg/plugins/mem.c: fix endian swap in update_region_info (2026-03-25 14:51:15 -0700)
+>   hw/nvme: fix heap-buffer-overflow in nvme_abort (2026-03-26 09:14:35 +0100)
 >
 > ----------------------------------------------------------------
-> Changes:
-> - [PATCH 0/3] plugins: fix endianness for qemu_plugin_mem_get_value() (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
->    Link: https://lore.kernel.org/qemu-devel/20260325024252.3369186-1-pierrick.bouvier@linaro.org
+> nvme queue
 >
+> ----------------------------------------------------------------
 
 
 
