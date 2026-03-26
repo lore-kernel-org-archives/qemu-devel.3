@@ -4,96 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61E6510AB80E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18B610AB80C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 19:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5qNK-000577-7C; Thu, 26 Mar 2026 15:28:15 -0400
+	id 1w5qRt-00069G-I5; Thu, 26 Mar 2026 15:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5qNC-00056k-S3
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:28:08 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w5qRr-00068w-CE
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:32:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5qNA-0006Yk-V5
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:28:06 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w5qRp-0001Qp-Lj
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 15:32:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774553284;
+ s=mimecast20190719; t=1774553571;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+AQFEM/bDUwhFhaUjquukyM/k0D8kUONqsyI1dILsh4=;
- b=LFVaHKTvo09/3mf1Zgs1h64CTZM9u7kXPy6og25t+mRHT4iaG9aYxouFHGFS/wxtO4OUPP
- tHoC6YeqFmGWKLKFTTr/lYw/ULbmrw+9VzNQiIg+jSr0aP6h//uwERw1NYbaIg4yd3wfCV
- gZNiA4FlX63z5m0he/kV2LEPAQxodiM=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-691-nBNOMUBdOQeBeqZ4vDdS5A-1; Thu, 26 Mar 2026 15:28:03 -0400
-X-MC-Unique: nBNOMUBdOQeBeqZ4vDdS5A-1
-X-Mimecast-MFC-AGG-ID: nBNOMUBdOQeBeqZ4vDdS5A_1774553282
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-50b4987c698so35359061cf.0
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 12:28:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774553282; x=1775158082; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+AQFEM/bDUwhFhaUjquukyM/k0D8kUONqsyI1dILsh4=;
- b=YgoALH8ZLm5ecxCZ0juW26U0aCVl9LScOJBSudZSaymhgW80jHNTlaJvOgTFNdqQCX
- f9L6IKoXClCU9rTSPkR7CRGBU4xT/7XOatIqLKDrnx/x0NgyDjIcYWGpe0emfLYk4Rej
- PAbaS5CXcITq7cO5KTsrbW3NAaAJC8m/5nHAaxt3f2c6qDZzh5MhWsUMQ6Oi2CzrSxPt
- cVMjENe0fkSkW7ar7xpnAcRt9QusY7IzgUiEI5rS/FMGnoKFZUtsGpvUoJC+5cEM6XCv
- C0swwJpSXupzCLMBM6ppS2wacjt4SE3xwRSKmkIgDcKbGTSlyp3zCqZY36rZdvFsgaxw
- J1qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774553282; x=1775158082;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+AQFEM/bDUwhFhaUjquukyM/k0D8kUONqsyI1dILsh4=;
- b=CJAdtJmlmGvm0unpkcvW/P0WUirU4J2DqwwQoAHItPj0dFPftPFR67WO2hv/kLgVGm
- EWGPh6S/ysdiZJzPxrPv3BSE/RfGrBtZG1ENVdcUHrRKVWW2R4yqk4QnDF5FMZZfcjph
- N/7y/w4A9Jrogg7fWAxfQEB4+/tIkuWP2AQn2bVpJ3jts9wZS48AP+425kWQrb6JLHQz
- s8QEPnjiaKuWHq+a70R5zHPWU3+8XDZhYxfFMV1/zfYZci59GZ0XvqsmuXv14H/hBE4x
- hxtIkHdW5HaY6t3iNvjrDNGSWOgm6cn5fvUzRNtm5ONcViz9snGrdKXqWgJ5OLnegf9D
- +UOQ==
-X-Gm-Message-State: AOJu0Yx+go7pivXlnn1IBfYwC/cAojFr3XU9qd5vOAbWrXTm6je3bl8t
- T4ojrrs2hu++r+JXTOjtZzBzWTQYG5mkHxiA9mSFJnMUdxzY7//cFw8Fhhg51Q+22cqPa3bKgOG
- K0kpi6xKD2RI15IiaNMy/ENsksaDWjqTqvdfgUqvUtp505pdznJ9VAs5VAG8yPNCDZjE1EmxCFu
- UaEvB228OiQzUfwerrG+9AfDlpxXyXAxjj5rhXPQ==
-X-Gm-Gg: ATEYQzzxppwXupJdIc6MN054MnxszYLO7EtR96uM/N3R69L5i/AaUJ638obXfF68Wh/
- KOuAYu93u7LCCv8PXJ0JFLdeywJETUspf74O2fLPBrSoQ1+MSNOhElJEGBrriYv1JFGh0WM6RWK
- cE7QIOviXrytgdQKGK1yYQtF0GW1p/nDBdbIvraxAJ9pesrjLF8eN7aPMmU2nrMPcUPVbejTr9x
- ufaPloW/hQjMBXdjJc5uJj/n/dAuj8WXF1Umd0XPSREFJuK0aa4iYcDo9fy1FzC02JqSOp7qfUf
- bLVzh4d3Suuq/TZtkMKlLTqxvcw7mgFGo4j3oMGozPWjRnQpen3td3HrWUlvAx5W3zJh6oPbqUF
- hkkJNya/BcxU+DQ==
-X-Received: by 2002:ac8:5f49:0:b0:50b:8b8c:f68b with SMTP id
- d75a77b69052e-50b9958e2b0mr35507161cf.39.1774553282105; 
- Thu, 26 Mar 2026 12:28:02 -0700 (PDT)
-X-Received: by 2002:ac8:5f49:0:b0:50b:8b8c:f68b with SMTP id
- d75a77b69052e-50b9958e2b0mr35506761cf.39.1774553281485; 
- Thu, 26 Mar 2026 12:28:01 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50b923dd712sm30944271cf.29.2026.03.26.12.28.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 12:28:01 -0700 (PDT)
-Date: Thu, 26 Mar 2026 15:27:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH RFC 04/10] vmstate: Limit the vmdesc_loop dedup trick to
- compressable field
-Message-ID: <acWIv8ZtxETTlXR_@x1.local>
-References: <20260317232332.15209-1-peterx@redhat.com>
- <20260317232332.15209-5-peterx@redhat.com>
+ bh=5jsknFxIQfKrGmKaAVWKJ9V7/paBghRvgTbnj5iE9mQ=;
+ b=iFJDDLOaTolgoMCZnR8jiH4XyvrT1PlhOPs10+iQb7EGqM30krpeFFa5s9/TxLTHbYLWZm
+ Palj2O72+eeUl+uNTCqTAbqUTqbyrtqUkDfpoRlmO73tydd+mSPS34VjdNmWpgBfV/TdJj
+ R9UHaP/jrSE/PX6r64zYiKT+bJsRlAk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-UlLWGP-dOcawTm_8Azhk4A-1; Thu,
+ 26 Mar 2026 15:32:46 -0400
+X-MC-Unique: UlLWGP-dOcawTm_8Azhk4A-1
+X-Mimecast-MFC-AGG-ID: UlLWGP-dOcawTm_8Azhk4A_1774553564
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D21F1954B1E; Thu, 26 Mar 2026 19:32:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.226.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 003D419560B1; Thu, 26 Mar 2026 19:32:41 +0000 (UTC)
+Date: Thu, 26 Mar 2026 20:32:39 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: hongmianquan <hongmianquan@bytedance.com>
+Cc: qemu-devel@nongnu.org, dave@treblig.org, armbru@redhat.com,
+ wubo.bob@bytedance.com
+Subject: Re: [RFC] monitor: Fix deadlock in monitor_cleanup
+Message-ID: <acWJ1-aAmegtcOCv@redhat.com>
+References: <20260323133744.46493-1-hongmianquan@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260317232332.15209-5-peterx@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260323133744.46493-1-hongmianquan@bytedance.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -118,123 +82,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 17, 2026 at 07:23:26PM -0400, Peter Xu wrote:
-> We have a trick in vmstate_save_vmsd_v() where we will try to compress
-> multiple JSON vmstate field dumps into one line with a count to avoid
-> duplicated entries.
+Am 23.03.2026 um 14:37 hat hongmianquan geschrieben:
+> During qemu_cleanup, if a non-coroutine QMP command (e.g.,
+> query-commands) is concurrently received and processed by the
+> mon_iothread, it can lead to a deadlock in monitor_cleanup.
 > 
-> That only applies to the cases where vmsd_can_compress() should return
-> true.  For example, vmsd_desc_field_start() later (who will take the
-> updated max_elems as the last parameter) will ignore the value passed in
-> when vmsd_can_compress() returns false.
+> The root cause is a race condition between the main thread's shutdown
+> sequence and the coroutine's dispatching mechanism. When handling a
+> non-coroutine QMP command, qmp_dispatcher_co schedules the actual
+> command execution as a bottom half in iohandler_ctx and then yields.
+> At this suspended point, qmp_dispatcher_co_busy remains true.
+> Subsequently, the main thread in monitor_cleanup(), sets
+> qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since
+> qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped.
+> The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it
+> executes the scheduled BH (do_qmp_dispatch_bh) via
+> aio_poll(iohandler_ctx, false), which attempts to wake up the
+> coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx.
+> The main thread then blocks indefinitely in aio_poll(qemu_aio_context,
+> true), while the coroutine's wake-up BH is starved in iohandler_ctx,
+> qmp_dispatcher_co never reaches termination, resulting in a deadlock.
+
+If the real problem is that the aio_poll() in the main thread is never
+woken up, does this fix the problem? (Completely untested, and would
+need a comment if we commit it.)
+
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index 9bb1e6a9f4a..0a0e9e07756 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -128,6 +128,7 @@ static void do_qmp_dispatch_bh(void *opaque)
+     data->cmd->fn(data->args, data->ret, data->errp);
+     monitor_set_cur(qemu_coroutine_self(), NULL);
+     aio_co_wake(data->co);
++    aio_wait_kick();
+ }
+
+ /*
+
+> The execution sequence is illustrated below:
 > 
-> Add that check to the trick too, it will be used later to bypass this logic
-> to some special new VMSD fields.
+>  IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
+>     |                                 |                                        |
+>     |-- query-commands                |                                        |
+>     |-- qmp_dispatcher_co_wake()      |                                        |
+>     |    (sets busy = true)           |                                        |
+>     |                                 |   <-- Wakes up in iohandler_ctx -->    |
+>     |                                 |                                        |-- qmp_dispatch()
+>     |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
+>     |                                 |                                        |-- qemu_coroutine_yield()
+>     |                                 |                                            [State: Suspended, busy=true]
+>     |   [ quit triggered ]            |
+>     |                                 |-- monitor_cleanup()
+>     |                                 |-- qmp_dispatcher_co_shutdown = true
+>     |                                 |-- qmp_dispatcher_co_wake()
+>     |                                 |    -> Checks busy flag. It's TRUE!
+>     |                                 |    -> Skips aio_co_wake().
+>     |                                 |
+>     |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
+>     |                                 |   |-- aio_poll(iohandler_ctx, false)
+>     |                                 |   |    -> Executes do_qmp_dispatch_bh
+>     |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
+>     |                                 |   |
+>     |                                 |   |-- aio_poll(qemu_aio_context, true)
+>     |                                 |   |    -> Blocks indefinitely! (Deadlock)
+>     |                                 |
+>     |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
 > 
-> No functional change intended in this patch alone.
+> To fix this, we should always wake up the dispatcher coroutine if shutdown is requested, bypassing the qmp_dispatcher_co_busy check. This ensures that the coroutine can process the shutdown signal and exit cleanly, breaking the deadlock.
 > 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+> Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
 > ---
->  migration/vmstate.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  monitor/monitor-internal.h | 1 +
+>  monitor/monitor.c          | 7 ++++++-
+>  monitor/qmp.c              | 6 ++++++
+>  3 files changed, 13 insertions(+), 1 deletion(-)
 > 
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index e29a8c3f49..caa7b50bce 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -578,7 +578,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->                  }
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index feca111ae3..943fc832f5 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -180,6 +180,7 @@ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+>  void monitor_data_destroy_qmp(MonitorQMP *mon);
+>  void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+>  void qmp_dispatcher_co_wake(void);
+> +void qmp_dispatcher_co_wake_force(void);
 >  
->                  /*
-> -                 * This logic only matters when dumping VM Desc.
-> +                 * This logic only matters when dumping VM Desc, and only
-> +                 * when the VMSD field can be compressed.
->                   *
->                   * Due to the fake nullptr handling above, if there's mixed
->                   * null/non-null data, it doesn't make sense to emit a
-> @@ -587,7 +588,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
->                   * vs. nullptr). Search ahead for the next null/non-null element
->                   * and start a new compressed array if found.
->                   */
-> -                if (vmdesc && (field->flags & VMS_ARRAY_OF_POINTER) &&
-> +                if (vmdesc && vmsd_can_compress(field) &&
-> +                    (field->flags & VMS_ARRAY_OF_POINTER) &&
->                      is_null != is_prev_null) {
+>  int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+>  void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 1273eb7260..f6c7811cf4 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -671,7 +671,12 @@ void monitor_cleanup(void)
+>      WITH_QEMU_LOCK_GUARD(&monitor_lock) {
+>          qmp_dispatcher_co_shutdown = true;
+>      }
+> -    qmp_dispatcher_co_wake();
+> +
+> +    /*
+> +     * Force wake up the dispatcher coroutine to
+> +     * make sure it notices the shutdown flag.
+> +     */
+> +    qmp_dispatcher_co_wake_force();
 >  
->                      is_prev_null = is_null;
-> -- 
-> 2.50.1
-> 
+>      AIO_WAIT_WHILE_UNLOCKED(NULL,
+>                     (aio_poll(iohandler_get_aio_context(), false),
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index 687019811f..1b4a55cabf 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -362,6 +362,12 @@ void qmp_dispatcher_co_wake(void)
+>      }
+>  }
+>  
+> +void qmp_dispatcher_co_wake_force(void)
+> +{
+> +    qatomic_set_mb(&qmp_dispatcher_co_busy, true);
+> +    aio_co_wake(qmp_dispatcher_co);
+> +}
+> +
 
-This patch unfortunately stops working when I start to test
-analyze-migration.py. I plan to use another similar patch below to replace
-this one:
+I think this is wrong for at least two reasons:
 
-From e72df6470e64715caaf3857a899fe63086bf4628 Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Tue, 17 Mar 2026 19:23:26 -0400
-Subject: [PATCH] vmstate: Update max_elems early and check field compressable
- once
+1. You don't know what the coroutine is currently doing and for what
+   it's waiting when you wake it up. For example, this could be a
+   coroutine QMP command and the coroutine is waiting for I/O to
+   complete. You didn't provide the result it expected, so it might go
+   on to do unexpected things.
 
-QEMU has a trick in vmstate_save_vmsd_v(), where it will try to compress
-multiple JSON entries into one with a count to avoid duplicated entries.
+2. If the iohandler context is ever polled again, there is nothing that
+   tells do_qmp_dispatch_bh() that the coroutine was already woken, so
+   it will try to wake it up a second time. The coroutine may not even
+   exist any more at this point, or it might crash because it's
+   scheduled twice, or you may wake it up at another unexpected time.
 
-That only applies to the cases where vmsd_can_compress() should return
-true.  For example, vmsd_desc_field_start() later (who will take the
-updated max_elems as the last parameter) will ignore the value passed in
-when vmsd_can_compress() returns false.
+It's also lacking the barrier and the check that the coroutine still
+exists that qmp_dispatcher_co_wake() currently has, so assuming they are
+there for a reason, that would probably cause additional problems.
 
-Do that check once at the start of loop, and use it to update max_elems, so
-that max_elems keeps 1 for uncompressable VMSD fields, which is more
-straightforward.
-
-This also paves way to make this counter work for ptr marker VMSD fields
-too.
-
-No functional change intended in this patch alone.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/vmstate.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index e29a8c3f49..05badef42f 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -556,7 +556,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 void *curr_elem = first_elem + size * i;
-                 const VMStateField *inner_field;
-                 bool is_null;
--                int max_elems = n_elems - i;
-+                /* maximum number of elements to compress in the JSON blob */
-+                int max_elems = vmsd_can_compress(field) ? (n_elems - i) : 1;
- 
-                 old_offset = qemu_file_transferred(f);
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
-@@ -587,7 +588,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                  * vs. nullptr). Search ahead for the next null/non-null element
-                  * and start a new compressed array if found.
-                  */
--                if (vmdesc && (field->flags & VMS_ARRAY_OF_POINTER) &&
-+                if (vmdesc && max_elems > 1 &&
-+                    (field->flags & VMS_ARRAY_OF_POINTER) &&
-                     is_null != is_prev_null) {
- 
-                     is_prev_null = is_null;
-@@ -626,7 +628,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
- 
-                 /* Compressed arrays only care about the first element */
--                if (vmdesc_loop && vmsd_can_compress(field)) {
-+                if (vmdesc_loop && max_elems > 1) {
-                     vmdesc_loop = NULL;
-                 }
-             }
--- 
-2.50.1
-
--- 
-Peter Xu
+Kevin
 
 
