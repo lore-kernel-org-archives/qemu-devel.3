@@ -4,93 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D1610A88E0
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D5710A88E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 16:45:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5nod-0006yy-12; Thu, 26 Mar 2026 12:44:15 -0400
+	id 1w5npN-0007kO-Dc; Thu, 26 Mar 2026 12:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5nob-0006yg-5U
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:44:13 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5noZ-0005sf-JS
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:44:12 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2CDF04D2E7;
- Thu, 26 Mar 2026 16:44:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774543449; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=XI4JG2g8xCq7fN/b+g0Uw4s01CkITDVeb+/ATAwGrlw=;
- b=TrIPu0bkVfA8Fgan+yyfrSHNcChK1OexXQLRgBX7GSjzhE47P1D5FGWm06DCRX34NiG9zl
- 6TIRH/tfotStGpd3148f9nqfaYTnnUM2Lqi2s97CaaGP1F3yNZ8/a6iZ0M8fzMQTeUcLRN
- EXC65Y3jekndwlKIOUxzMhpctrQYDbs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774543449;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=XI4JG2g8xCq7fN/b+g0Uw4s01CkITDVeb+/ATAwGrlw=;
- b=vzH947uQAtTrK+aE7dzolQxZ2EhnSjJWU1oWuqDgeOdKM5K0jMiAjz/dHVUWsri/dOOYis
- XPUebscdUkV3UcAA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774543449; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=XI4JG2g8xCq7fN/b+g0Uw4s01CkITDVeb+/ATAwGrlw=;
- b=TrIPu0bkVfA8Fgan+yyfrSHNcChK1OexXQLRgBX7GSjzhE47P1D5FGWm06DCRX34NiG9zl
- 6TIRH/tfotStGpd3148f9nqfaYTnnUM2Lqi2s97CaaGP1F3yNZ8/a6iZ0M8fzMQTeUcLRN
- EXC65Y3jekndwlKIOUxzMhpctrQYDbs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774543449;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=XI4JG2g8xCq7fN/b+g0Uw4s01CkITDVeb+/ATAwGrlw=;
- b=vzH947uQAtTrK+aE7dzolQxZ2EhnSjJWU1oWuqDgeOdKM5K0jMiAjz/dHVUWsri/dOOYis
- XPUebscdUkV3UcAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CD0264A0A3;
- Thu, 26 Mar 2026 16:44:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id zPm0JldixWkbOQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 26 Mar 2026 16:44:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v1] tests/qtest/migration: Fix slow test dirty_limit
-Date: Thu, 26 Mar 2026 13:44:05 -0300
-Message-ID: <20260326164405.1626-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1w5npM-0007jy-HB
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:45:00 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1w5npK-0006Jk-GA
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 12:45:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1774543498; x=1806079498;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=rIccaT+VwKipJ278pMCiIUaTF/DBDC92r3sj3BVmDlo=;
+ b=NLQjW23KEAIRdCX+CWOnha9xzrXumbduGjN/OTx45mfraORyI+DWmCcS
+ mzOz/TUBjMMqX3PJSWbHoHpnEDQRCD5pFzE4wivHq6omsx+MjJoFbQHA3
+ smFWUcI0ymUKV0HSJbSw1NhdYBF7KHtfQdDKMH1aKgo0dTkkWSRgxH1r2
+ bES5muliF3kYCa9XX0466tM5v0fRIRXf12IN9lx6w1ZPxdf2Gl3hMmp+B
+ 4nJ55QRObqIUneTbLG29yAUjFW6Gf8DOZ0ApTtsa5A2wcfm+VKCyJpiy3
+ w+NadZhu4Q6q9yJZWgkN3IoHI28P/ETmHfihyUewjQfSfFvmTGZj0cdZ4 w==;
+X-CSE-ConnectionGUID: VP1YRqANRiay8pChSJHFsw==
+X-CSE-MsgGUID: w6IphLwDQdqzZRkz63T83g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="75805868"
+X-IronPort-AV: E=Sophos;i="6.23,142,1770624000"; d="scan'208";a="75805868"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Mar 2026 09:44:55 -0700
+X-CSE-ConnectionGUID: BeKZ9IELS9qgXhrG5CKH2Q==
+X-CSE-MsgGUID: PAQOTfi+RwSlzSqIBZ5Qsw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,142,1770624000"; d="scan'208";a="255551931"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Mar 2026 09:44:54 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Thu, 26 Mar 2026 09:44:54 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Thu, 26 Mar 2026 09:44:54 -0700
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.45) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Thu, 26 Mar 2026 09:44:54 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DZI08WQ+1LjcAvcyjAnzJjocXDk+cjTghf1TmKYyPKZmRbKHhVlW792lRLxCJlL7ltqLtO3xazTrtIgGwyCWi6+egUONJosA2YcrfRj95VVCjGXWvf2tlWw+ydLIKeJdqSHWR24kNhB4AhjVkU442WVvLKlgDzTxbp+sTp2weIACfl70h8pG5+nYFP8ank89tgNInF9nou1FmsIK/fcCk9yM+1z03+zW+iYZedfQdwVaqR012AWMfHmmu5EI914Nb2Xf2dSYEVuXzU5cze17Iz0PpyJhD1UuZx3BSouHSvwBEeA4NGx9BuzfsESbGYwW7NjF+2FA4nBOqp1/gam+zg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XCeBgW/+9Z3kR8q+u/OgcWHaFVpEq+UBKE93TxmzL+A=;
+ b=Pe+93N5StFF87okVDxF1Uos3nfYNt73kTdKiFBaH+YQFD1kvomEKCLhad8whp78AkHmBi6RXwmmz7WK/TX0ii3M6Ejnrn5pRrR6AhL5aMGu/+DizVtkljra6+TsZ1C3nFAnCGlEbH7b+j1VrVDqCOywyCFs7reUJg3fpGPtcqqyU4ws81q7E8GbCJ+7bef7ylOzWjZxvfTAD/UXEwjy9pVShnInZDi0hv17o7v7BEterPO1UGyTajKlFRoX2rJdF7k0qgD23fEjfuEQXFWKzCqnEpHpMHfrpiSS3RiTuPdQChOc0egSYZMIrfk7xfUYnmu/JWLHLc0Q1VfthZRkhbg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from CO1PR11MB5091.namprd11.prod.outlook.com (2603:10b6:303:6c::11)
+ by DM4PR11MB6528.namprd11.prod.outlook.com (2603:10b6:8:8f::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Thu, 26 Mar
+ 2026 16:44:51 +0000
+Received: from CO1PR11MB5091.namprd11.prod.outlook.com
+ ([fe80::2449:4935:1adc:59bd]) by CO1PR11MB5091.namprd11.prod.outlook.com
+ ([fe80::2449:4935:1adc:59bd%6]) with mapi id 15.20.9769.006; Thu, 26 Mar 2026
+ 16:44:51 +0000
+From: "Chen, Zide" <zide.chen@intel.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "mtosatti@redhat.com" <mtosatti@redhat.com>,
+ "dapeng1.mi@linux.intel.com" <dapeng1.mi@linux.intel.com>, "Liu, Zhao1"
+ <zhao1.liu@intel.com>, "sandipan.das@amd.com" <sandipan.das@amd.com>,
+ "joe.jin@oracle.com" <joe.jin@oracle.com>
+Subject: RE: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD
+ PMU getter
+Thread-Topic: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD
+ PMU getter
+Thread-Index: AQHcu/z9xetbS6xwg0CdGSN6kBVRFbXBB19A
+Date: Thu, 26 Mar 2026 16:44:51 +0000
+Message-ID: <CO1PR11MB5091E0F44CAC1B8DAD9EF085F356A@CO1PR11MB5091.namprd11.prod.outlook.com>
+References: <20260325021236.14574-1-dongli.zhang@oracle.com>
+In-Reply-To: <20260325021236.14574-1-dongli.zhang@oracle.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CO1PR11MB5091:EE_|DM4PR11MB6528:EE_
+x-ms-office365-filtering-correlation-id: d1df14a7-39e7-4d2c-a46a-08de8b570058
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|38070700021|18002099003|22082099003|56012099003;
+x-microsoft-antispam-message-info: Mi7Z81VENR3rjCSfkZJHpBVzcon9giqAyiz3CcWyc+boDQaCPxWwQnl5ilm5BW7O9ZcYnY237q3AOqspI2DOcTu815VrYISBGXkVh7N/GTAsFyaFnQbx0lZEG1wK8ooBtOAkgdoedB2sjHszgu6AkVTF0cPxh6ZM92lVS0wWT4CjHda+Jo/poAMeOouzBMfop0m6IZIfYzjwzxF1K3W4Fw+St4EVGhyqzOhgptp9hfwBfgSzk35b6zHDidbtG29u8Hr6kRak7ypmRFxC2UCWq+AQgIBT+6a04HnylGBiqvb572GactkTm59gQyR0z7TRpeIhUtJ5CHLxHoZx70/gr3KCblXEhpwuZ24wxmfSgUjKYxp/WAvHjtpMmdBEZgOOZ3ui53MsZ2+Xv9agLEqek/jrB0BzFi5UTex9lHrhKp11KHrXacRZQFbPNrGisyZKKCruAzsynez8MPcVsR45trvqRypQgJNT3prmf8zKo9+pb8H/HTZukqkJgTsbKfOUTgDR3fNaIxR5Xpo4nT1fulrAJLybxWRs0iP+j5JO3pzYMQRdG1dBcu9qtv3t4mOjanSRFWjVfYpy5Rq3K1DDiM//L1I11+Ey1lTPSEaJZNXMAubFIBP+mVXUg+CQkClAKVoNiGgFY/SBoE6ji7HS11FDqkG4+QYc8xCYPc3v4Byhk6eE8BtTT+XXSCZ1YI+v+yg4MF/0BjVtcG/PAs01FTgPEH5FQ3iSd3LVcpuGz0mf6We3Ni9a8QltQi1o3ro4ILa3pQMz97nGEBzJQQSBT7eW1x8y82l5ef2K3Mm+92k=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CO1PR11MB5091.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700021)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?3P0+j81m97529vBDOZfibfMfVOJ3mEnMjU+NCL6doqO2SwKXJOfNlL/AmsiO?=
+ =?us-ascii?Q?+my49kcG22oMoYdJQXbMks/hMdHIO2AkmxkyDkOVnFswyZp8/6Qf/JI5liXQ?=
+ =?us-ascii?Q?9Q1mYcv+m/HtFVy63WmhNd/1hfQg1dyt0gazHPgtmzAOh8TvpatYC2SCmnVI?=
+ =?us-ascii?Q?4o9J2N7h59ytPAHpgL9FxyHvhFTsnpPZQOkBTncaH5eReYY3mdWD55tAcbnh?=
+ =?us-ascii?Q?ihY+o11zcO8ye9D5C/9w9sBUX0IfWDffjL79pWy+OKxORUaXupK05T+sMY8L?=
+ =?us-ascii?Q?cR/svjbAQ9EhKYhaqp/12bGcyW9ndGUODJDtb4+Bq78Gv0TSsChhZKByC0Hj?=
+ =?us-ascii?Q?aCp7Aw6R5Jt3nOfp0Od5MYBbCh5JeRcp/JAOVJH3rl1/BiGriKRi/HQQlGwZ?=
+ =?us-ascii?Q?NQc6MGx+poNM7zrB+/40hXc2jT6xkAJ8aqe88IZSJ9bAOu1QhBnBP5dhvoto?=
+ =?us-ascii?Q?OH7K6/wVGaKKg9tuyyQH5u9/lBpFl3ZsQ2iIOVwKtdj9rlL1+dA0hPAdoONU?=
+ =?us-ascii?Q?woHfzI06b1UxTZ4S6OZT2f1JE74j3+3K2rKy5s5TT0399dKEN/RpuCEUODqm?=
+ =?us-ascii?Q?gTqfEdZ+wrK5vOsvhuFCLhpghInbpKCxnKpsH8sVdBelIG62TYCQsC30PqXz?=
+ =?us-ascii?Q?zZUmJh+EckqBmFMC9xXwOXbzjYIRlWd5pIWdmVedgbif7D1Z+24p4Zr79vG0?=
+ =?us-ascii?Q?c19Ve+CKnA7z65Fs2bNgTeN8lalFkOG/OHyvmbi/GA4zP/iYLv+pCXFbZ5bM?=
+ =?us-ascii?Q?ycDg9d59zZTxRSvedIrzhz5sisNT74hNogJ5GKvIsLH2cugkHUTg11JiWB64?=
+ =?us-ascii?Q?8wHiSe2fHOAgsNxRKAxLO0/cpbXTHXNbFTnipM9LjcxlU2JcXa4uPlDS/1N7?=
+ =?us-ascii?Q?Lkia8ZerqG6Xemc9AjKevFF1IYKRBIgzECAPINzf+1KTW+aI7q4LZ2fULIy4?=
+ =?us-ascii?Q?ZvKBDMe6eI/Ik5uOJiUr/c8fP0skI2r/Y/yniozKsy1aYkvNnkmYU8NzeICZ?=
+ =?us-ascii?Q?pekHZVHg5if/aMVCD2OICczLPjINDTs9XDNz3vm7GRqqHsM6aa2nMTnelW+I?=
+ =?us-ascii?Q?9/WfpR0j45n4N0aq6SlGayL9g6uR1fWQNUy+kXWJNqTi+UKKA3vISgvYwgfU?=
+ =?us-ascii?Q?7/XmNP2Ogy7rb97cbznLCJ/WHHq3zXDkvkb4y1mLBMZpWVDGBNh9PMTITrmo?=
+ =?us-ascii?Q?LijUXolxZAoohnxU5vqqu2qwtBT3vO7VGTH0Uo3YjMOw8So3agvFz1V7AIAW?=
+ =?us-ascii?Q?uELz7tA42/x4X9kkfbuIeB1ICVCeve/Vq7sq9z7ta4N7rU2XhnLohffOp2sd?=
+ =?us-ascii?Q?uR2SQGcSSjZtKqMbetb7eRuuwylXyzJRkGFbM/9BGSfSBWQPxntp00fH2H0w?=
+ =?us-ascii?Q?kplGIhIPqqkEZf6QTg0Kn+5c5+azyglbnnxnSYW8vi/JVD/nWI9Y3u5kgRSc?=
+ =?us-ascii?Q?+7tLSscx6wvYxH55ZgpCpDOHEHwzCedXIRWSJSYKEPwiw465FT8E8eHZ6JoW?=
+ =?us-ascii?Q?1MFXbft3rgaOfhy2A2LfUt99bI9FzotIHsMn3MXlJZoNPwzsdN4w2YXXHXCM?=
+ =?us-ascii?Q?MIjo8avKCmpNprlGGmfCWTovXvtZi9DeDO8QSQB0V+3J40pwNEVFPxzRl/Ie?=
+ =?us-ascii?Q?pmXmMaLCysGRrByU+M/WTApcsAsX7l8uipfPJwb8aonrJ/Vdi+c7T2PIevyh?=
+ =?us-ascii?Q?unfcjS9Mzu7lwtwCMv0IVhS1WF9UR+9H9jx+XpEN6UlBdw2lovaZU155DQK7?=
+ =?us-ascii?Q?PQyFIoni/Q=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+X-Exchange-RoutingPolicyChecked: IBjqI4S1Yj3xLf0NIgOxvjekY93DAyk7jCg9+1VnGdkop6YZ9XdM6Ahn+tHJ+o+P/rLJe5/EuxjhZ0nkysoBP5KivwwPUXdzGVvprgoEc/DjgzMly8TIKNNAkyutMXvPLGN4FE8muhze2PRgCv1yl9P6yCqdCThiQupZJCU7L796FgXMJ3zN/SShjy3sYugSE/QXOV32sUjWvmZwOMdLWTLio6LfStKO/uR0qTAdg+TTEv6KPK/E3J+v7RDp9k3OHMWptTRgZSPRMSmRgrJqhFXl+i2N3oh3Cf6N2AdCE9zQtUD5Q6F3GrHv1Due42nZTfsblwjL6jqttL6YF0OM7w==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5091.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d1df14a7-39e7-4d2c-a46a-08de8b570058
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Mar 2026 16:44:51.7269 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 7+DpDbaN2f9l9D4lCjlUbpXeA2UJA7n1g8NqZAhi7B2WV1Dd3ivSzztIgRV18OEgxJj8vppYP4gvDUp0T4242w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6528
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -109,46 +182,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After the referenced commit, the incoming side doesn't exit
-automatically after a failure. Tests that expect the destination to
-fail should use -incoming defer, issue QMP migrate-incoming, wait for
-the failure event and issue QMP quit.
 
-Fix the dirty_limit test which wasn't updated properly.
 
-Fixes: 4e8c4dda97 ("tests/qtest/migration: Force exit-on-error=false")
-Reported-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration/precopy-tests.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> -----Original Message-----
+> From: Dongli Zhang <dongli.zhang@oracle.com>
+> Sent: Tuesday, March 24, 2026 7:13 PM
+> To: qemu-devel@nongnu.org
+> Cc: kvm@vger.kernel.org; pbonzini@redhat.com; mtosatti@redhat.com;
+> dapeng1.mi@linux.intel.com; Liu, Zhao1 <zhao1.liu@intel.com>;
+> sandipan.das@amd.com; Chen, Zide <zide.chen@intel.com>;
+> joe.jin@oracle.com
+> Subject: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD P=
+MU
+> getter
+>=20
+> For Intel PMU, the counter and selector MSR ranges are disjoint. AMD PMU
+> behaves the same way when PerfCore is unavailable.
+>=20
+> However, once PerfCore is present, AMD PMU switches to an interleaved
+> layout in which selector and counter MSRs share a single alternating rang=
+e.
+>=20
+> MSR_F15H_PERF_CTL0 =3D 0xc0010200
+> MSR_F15H_PERF_CTR0 =3D 0xc0010201
+> ... ...
+> ... ...
+> MSR_F15H_PERF_CTL5 =3D 0xc001020a
+> MSR_F15H_PERF_CTR5 =3D 0xc001020b
+>=20
+> The commit 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during
+> VM
+> reset") added the getter/putter pair for AMD PMU MSRs to clear them on
+> reset, but it ignored that, without PerfCore, AMD reuses alternating MSR
+> addresses for selectors and counters. env->msr_gp_counters[] holds the ra=
+w
+> counts and env->msr_gp_evtsel[] holds the selectors, so with the interlea=
+ved
+> layout we must translate the MSR address back to the logical counter inde=
+x
+> instead of treating the interleaved slot as the array index.
+>=20
+> The arrays are sized to MAX_GP_COUNTERS =3D 18, so the code never writes
+> past the end. And in the reset path QEMU simply zeroes everything, so tha=
+t
+> use case still works.
+>=20
+> However, the live migration is broken. The PMU state is stored at the wro=
+ng
+> indices, so the destination VM reloads mismatched selector/counter pairs.=
+ Fix
+> the getter to use the logical counter index rather than the raw interleav=
+ed
+> offset.
+>=20
+> Fixes: 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM
+> reset")
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> ---
 
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index c6c8ae3004..a0e3ff0547 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -1070,11 +1070,10 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
-     args->start.hide_stderr = true;
-     args->start.use_dirty_ring = true;
- 
--    args->listen_uri = uri;
-     args->connect_uri = uri;
- 
-     /* Start src, dst vm */
--    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-+    if (migrate_start(&from, &to, "defer", &args->start)) {
-         return;
-     }
- 
-@@ -1082,6 +1081,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
-     migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
- 
-     /* Start migrate */
-+    migrate_incoming_qmp(to, args->connect_uri, NULL, "{}");
-     migrate_qmp(from, to, args->connect_uri, NULL, "{}");
- 
-     /* Wait for dirty limit throttle begin */
--- 
-2.51.0
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+
+>  target/i386/kvm/kvm.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c index
+> 9e352882c8..b4e549c62b 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -5239,9 +5239,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+>               MSR_F15H_PERF_CTL0 + AMD64_NUM_COUNTERS_CORE * 2 - 1:
+>              index =3D index - MSR_F15H_PERF_CTL0;
+>              if (index & 0x1) {
+> -                env->msr_gp_counters[index] =3D msrs[i].data;
+> +                env->msr_gp_counters[index >> 1] =3D msrs[i].data;
+>              } else {
+> -                env->msr_gp_evtsel[index] =3D msrs[i].data;
+> +                env->msr_gp_evtsel[index >> 1] =3D msrs[i].data;
+>              }
+>              break;
+>          case HV_X64_MSR_HYPERCALL:
+> --
+> 2.39.3
 
 
