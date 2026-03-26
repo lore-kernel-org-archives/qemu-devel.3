@@ -4,128 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A9E610AB82C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 22:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AE410AB82A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 22:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5t82-0003f2-7B; Thu, 26 Mar 2026 18:24:38 -0400
+	id 1w5tXT-0008DN-TO; Thu, 26 Mar 2026 18:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1w5t80-0003dT-0J; Thu, 26 Mar 2026 18:24:36 -0400
-Received: from mail-westus3azon11010029.outbound.protection.outlook.com
- ([52.101.201.29] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1w5tXR-0008D8-KX
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 18:50:53 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1w5t7y-0001hG-E5; Thu, 26 Mar 2026 18:24:35 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eG0C+RKY6iv8g9BnDIY4NK6nVDObkWk51OjSs6kMlg+uOzsiZB7rhfnNk67ni0/rA3+dFyDXTSY76wgOEy2VC6Hj98N1MyDA1qdRxT2BzzOZ06yvRmFm5d8+mLViN/6EcrVuXK6wzzg9DzxEjmFnaB39qi/L4Y44MDI2i18Z6xBUD4/9DsPTNcBw4f4iisBYUIEb784FS3PMUmMGTyYMtdPYB7fpQr+cVPjwBoN2RyDBKs1mfH9fWLfXKd9EEeKA0jbSu6ihOnnL4dBU8XUQvw53/zgo9O8JtDO61IQXsDEbx3AvpOmUOXW19NlHvzPiH5CCKkMAXhwCgwOWJ789Lw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GXbRQYzEmVvrzLLx/iVh38/5dL6+vy20G/KaqM71yTk=;
- b=RcRsSQze2l0hx0iY/PCme5uLAAKPirRTI4wj/ISJLlzLyyFwPDlFjTi+YhxUvO0uyhWtSmKqxEosZocpVYyjUi3NNFGUvlBlIbDENa6bsblwvzLDDUeXxUM1Jm7hYLtf9P6ZBzQRb+Kjj+CP9XROPbhTpLahcztkevMne1/yXnsQTJGyf7/XsaQEaVVz8X/EznCLM1a6PKvJVbexYc5C2uu+JxpXUdeyTPX65ybdeJX+17DRrYc2cTPN4hwkm8luxjJEjFq8i2WzoZayarwj1rEbItzygS95IzLouw1pUsFqIsO8L/WHexM7ycbVOUu4uFOxyaNhQzCRM/gRUYir9A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GXbRQYzEmVvrzLLx/iVh38/5dL6+vy20G/KaqM71yTk=;
- b=bKmJHolB5PScxCS+9QNkqKDswbPqRA20hRM6ZC+eiuEImXPd6POXMm3UtKgUgrGOZRzTLISOHrsakSkZDnmqf2QWYUJJATdWDCbrvRca0nB8ARQCsBRRGITrO1ozVIoJ/TRCK0wbJqj2Cy7peY+JR8oKXZcAE/EoP2oyFE9cbMgSNpvcHFygJJXBsWbONlmiCG3TjxgicYgn/XRSmQd4QQKV3aredVT14CqHWBEwsa2HMJbvT+wZNbezNLr8KnQ7vrqGXfsJPFm9K2S2fpy8Hchf6Km6RC6qHnA1yzMN1PFp3EvbfulARA3g/GhNzxLBr98CrQeEdYcJZO+gc3PBBw==
-Received: from SJ0P220CA0024.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:41b::32)
- by MN6PR12MB8565.namprd12.prod.outlook.com (2603:10b6:208:47d::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.7; Thu, 26 Mar
- 2026 22:19:25 +0000
-Received: from CO1PEPF00012E7D.namprd03.prod.outlook.com
- (2603:10b6:a03:41b:cafe::73) by SJ0P220CA0024.outlook.office365.com
- (2603:10b6:a03:41b::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.22 via Frontend Transport; Thu,
- 26 Mar 2026 22:19:22 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CO1PEPF00012E7D.mail.protection.outlook.com (10.167.249.52) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9745.21 via Frontend Transport; Thu, 26 Mar 2026 22:19:24 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Mar
- 2026 15:19:09 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Mar
- 2026 15:19:09 -0700
-Received: from nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Thu, 26 Mar 2026 15:18:52 -0700
-Date: Thu, 26 Mar 2026 15:18:43 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-CC: <qemu-devel@nongnu.org>, <alex@shazbot.org>, <clg@redhat.com>,
- <eric.auger@redhat.com>, <mst@redhat.com>, <jasowang@redhat.com>,
- <jgg@nvidia.com>, <skolothumtho@nvidia.com>, <joao.m.martins@oracle.com>,
- <clement.mathieu--drif@bull.com>, <kevin.tian@intel.com>,
- <yi.l.liu@intel.com>, <xudong.hao@intel.com>, <qemu-arm@nongnu.org>
-Subject: Re: [PATCH v2 02/14] iommufd: Extend attach/detach_hwpt callbacks to
- support pasid
-Message-ID: <acWwwzfNEzBg4n96@nvidia.com>
-References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
- <20260326091130.321483-3-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1w5tXP-0008PE-44
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 18:50:53 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 27C2440D2E
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 22:50:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1774565449;
+ bh=N7pRsJ490wHbgrZnEznL0UPaz7sia0DbIvVUJEiLN8E=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=iHxRPl4oGgtJbwAza+Mukgn3qu1V/e9S/Ml+PpnY+rcjASBiH8VPjPERPIv/Y06Od
+ RhcdRUUiRkDvTXqErZpBGT+Xex0rjkP10GCR2hSpljop5TP4clclMr85/Ag2WDIFfY
+ AS1kENzHyipSm7saDvyo4IJJngoqL+Cexcb/J0aJ+s0i6pkqLY517oheeAgTydMqlU
+ M1DehflH71hZd4v6iYGf2AiSyLXl0f+hcaeaOryKzWYXTjKxnUFgaFxQhcY07IGNH3
+ hzazZo8C6E7czx9UU4OuKfgvb1Kz+rLfu5JpaXMjqmJDCeoX3jDuKHFiYAhAaX0Wl4
+ +Z6qGrEI7k3og==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 1AF557E16A
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 22:50:49 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20260326091130.321483-3-zhenzhong.duan@intel.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF00012E7D:EE_|MN6PR12MB8565:EE_
-X-MS-Office365-Filtering-Correlation-Id: acb56a54-3557-4337-cff9-08de8b85bcea
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|7416014|376014|36860700016|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: uHQ9H9g1NJt5J5qBXbCnLkafcff/HxuLLRGnxhdHl0ATyzns/16d8eMCPEolvgEN/CYLPiGHkDPDgf3yoh/aPFxIwJPcWzAwR/0PJAWRhA+SiQMSNnMM8wSH6ZpAr5EB7nONlU4n4YggSwDieuD04dhSlLcOOeQ3cK/HXDBFQbnPDH47iAJpvKhYy4mZXm0aDxXtiaOnJ3ONlTKAOSTIMzlNOUiLlLr1bjeUIh037SkRS1NVcE2dKTsYp8nUeYxC6lfp8O0gH0omq2rXBRoSZzmU8PNTzHwcBiXV200M5hXb56BjsBCxi4IHUqlF867sHy4Z5UoqH76OoRUkJxGT8nGgplvgn47w6Nz3EM+X/aVgpPvOePmL4D72gxzt8NKjL0GJma7krZInJYu5nz4GDr8ZIWtZwOd+x+POlwgX/3P/B4DBx+KIKt1kXSt08azNvIIt3iOGBnMOJa0bUKi/kNH7lsMJQu5U+qFFnjK/y1yraMJtl5vJ3qELXze4rAdrW1rQAl85Y/X+xD060ODiFN8UM/AS8GpDOxeJ71t5VktkxQW7nVE1rFc4cbudZPXzvQQ+ypZ+XrXipEzJsK26JBoraHt1lrsbRHdnSOgisi3pinOvU2/WAssoxRprxXpCYBm+/MpO+IgLbeuXy4rJddIXtQWz/Uu214tR9ZNOQy1sCaamuoR3+0TZe05EIpC1gpXzbqzgIUHASun3OkCLWy0fDlmI/94lb1t6yhLLHW5ybOj7ftURhR8n380HekzxwglIDHyUubLwod7R9WOgzA==
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(7416014)(376014)(36860700016)(56012099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: rc1FePby7+ahn46tKcX+juR7Rmzyafx+ESBPOOCoEDMKdmug08+2MiojhsxmBFYfAtKxolO7WhQ34OCquwyTBOT+YUUy1yhqS2x48W9yku6aGMpsYogDfA+SInAMVEnSVG9YeEvM1jKgNFPhOquo/PLkojzsD2c+FKj3FRDOil29YHtKwThfGYvNU6Wgrt75su9bk4K1GHQvLwbek2rhliZSezTROZJfy19VcrRDO4BUpLZXpWEoWR8ZdBs0M4OcKCY6j+JB10L6syh5qdVXxtaTnAcMZyhLGHM1AOgHH76EhahK36KbczmYeZMY/CMVfw9kj0T7GSpfrTFrPPoF2YA+rtlt4lqYfzK/wRuujCTst9JF9yLvnuxdccxHk2z7Rb5pf5XF3AfiGDYtVT/jI26Tlrne41DombydaWo28/7slyv1Rc3NqVblWaf2kqiS
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Mar 2026 22:19:24.8512 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: acb56a54-3557-4337-cff9-08de8b85bcea
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E7D.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8565
-Received-SPF: permerror client-ip=52.101.201.29;
- envelope-from=nicolinc@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 26 Mar 2026 22:40:43 -0000
+From: Launchpad Bug Tracker <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe;
+ component=universe; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
+ sourcepackage=qemu-hwe; component=universe; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug-Tags: server-todo
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <177456484418.2942052.10022246426649009497.launchpad@scripts-bzrsyncd.lp.internal>
+Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
+ handler
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: a9695f3b11b745b65eb6eae81e9be684bd5e129e
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -134,48 +112,170 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 26, 2026 at 05:11:16AM -0400, Zhenzhong Duan wrote:
-> @@ -138,14 +138,16 @@ struct HostIOMMUDeviceIOMMUFDClass {
->       *
->       * @idev: host IOMMU device backed by IOMMUFD backend.
+** Merge proposal linked:
+   https://code.launchpad.net/~hectorcao/ubuntu/+source/qemu/+git/qemu/+mer=
+ge/502787
 
-Not commenting against this patch, but I just found the "host IOMMU
-device" and the "HostIOMMUDeviceIOMMUFD" a bit ambiguous. It's not
-an "IOMMU device" right? Perhaps somebody can help me understand :)
+** Merge proposal linked:
+   https://code.launchpad.net/~hectorcao/ubuntu/+source/qemu/+git/qemu/+mer=
+ge/502788
 
-> +     * @pasid: target pasid of attach.
-> +     *
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
 
-How about "target pasid of the device to be attached"?
+Title:
+  [SRU] RISC-V vector state not restored by signal handler
 
-The uAPI docs has the narrative "pasid of this device", which makes
-it clearer. 
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu-hwe package in Ubuntu:
+  New
+Status in qemu source package in Noble:
+  New
+Status in qemu-hwe source package in Noble:
+  New
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu-hwe source package in Plucky:
+  New
+Status in qemu source package in Questing:
+  New
+Status in qemu-hwe source package in Questing:
+  New
+Status in qemu source package in Resolute:
+  Confirmed
+Status in qemu-hwe source package in Resolute:
+  New
 
->       * @hwpt_id: ID of IOMMUFD hardware page table.
->       *
->       * @errp: pass an Error out when attachment fails.
->       *
->       * Returns: true on success, false on failure.
->       */
-> -    bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *idev, uint32_t hwpt_id,
-> -                        Error **errp);
-> +    bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *idev, uint32_t pasid,
-> +                        uint32_t hwpt_id, Error **errp);
->      /**
->       * @detach_hwpt: detach host IOMMU device from IOMMUFD hardware page table.
->       * VFIO and VDPA device can have different implementation.
-> @@ -154,15 +156,19 @@ struct HostIOMMUDeviceIOMMUFDClass {
->       *
->       * @idev: host IOMMU device backed by IOMMUFD backend.
->       *
-> +     * @pasid: target pasid of detach.
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
 
-Ditto
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
 
-Otherwise,
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
+
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
+
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
+
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
+
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+
 
