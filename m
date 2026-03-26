@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56EDD10AB81F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 20:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0DEA10AB819
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 20:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5qxx-0006yA-LC; Thu, 26 Mar 2026 16:06:05 -0400
+	id 1w5qxy-0006yW-3m; Thu, 26 Mar 2026 16:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w5qxu-0006xd-Cn
+ id 1w5qxs-0006xS-E3
  for qemu-devel@nongnu.org; Thu, 26 Mar 2026 16:06:02 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w5qxq-0002qD-7k
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 16:06:02 -0400
+ id 1w5qxn-0002pq-Sv
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 16:05:58 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 352E6427D1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:57 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 819CE42B88
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1774555557;
- bh=xByyoXdr1tRiefpnZzBJ+bJLJqgclbHC8d+jsQ8Z1ZY=;
+ s=20210803; t=1774555554;
+ bh=skRjXOFgtXd+GsN2xG5YLOXnqzJpne9+4ESQqxIJw1U=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=voHEVTSY8Lem10gHNBKQDaaDM8WDrAy4HCQb4T3ZbNpZDJajCawXH+RJs1ehKwxOS
- mc3cTooWpSa7eFdS01w4C1+pcLvnwxsTtolbJKqnMtKYGL/q3JTPYoZqp7DD2xPX+P
- Vl5QwhFJu9P/9WSL/5jcmJ8vNFqGhgQbRGpTCkTI2LTIIoSjNSTdAWof26oq4DES39
- DHDh7InUbflGu1BKrOezPob7apYTLn/p72VHdUsWu5yphrk4ABXYAcW9ehEWed9fvT
- 6+fGYUe9C6x7TqFimZ/1YAFGxzTgIhbyV+BWaPiqIYDlWMPGruvICD/nhlv/moKCX6
- Zkieg56kzUZGg==
+ b=LDgrxiUaJiO2OrOxuAB0tuzvafIV9eNU2rRea3l2OLVn3y04lyRNPd+5XEkSZlYfM
+ dWnZPyBAS8GVGEKjva9e2lHYHotSR4iCvqy253L2bqV5vey01GgN+zr8uEwASjvyVi
+ vSrptFgPNCu21JJuWjJoBvuc+xq33pH4GIrh38RgM75iY3MPA8W/erCl/m/e1zXDXA
+ qApDtswt+aQS4ODfOKubGmQAPn/CggFktx3hjnoCbZNulustrEAQrmkmErQhIhomlf
+ 4t4upXvASRNFfaAKXtMOurQYXydj8cb1luMdloRXxGtC12uT2jz3owoPiIca6cAsmr
+ Ta1aEc7foxEuQ==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 1D64C7E173
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:57 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id CF5E37E6BD
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 20:05:53 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 26 Mar 2026 19:57:47 -0000
+Date: Thu, 26 Mar 2026 19:57:05 -0000
 From: Wesley Hershberger <2126951@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -75,7 +75,7 @@ X-Launchpad-Bug-Commenters: athos hectorcao mjt+launchpad-tls tjaalton
 X-Launchpad-Bug-Reporter: Wesley Hershberger (whershberger)
 X-Launchpad-Bug-Modifier: Wesley Hershberger (whershberger)
 References: <175977079933.1446079.11908449148472830395.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177455506710.2272630.6196261353367961197.malone@juju-98d295-prod-launchpad-7>
+Message-Id: <177455502601.2773271.8517543025423980553.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2126951] Re: `block-stream` segfault with concurrent
  `query-named-block-nodes`
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -84,9 +84,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: c4a19b6547ca84d06b20f5a06519ab080b9988b2
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Launchpad-Hash: 0c4b59abc00ec3330673c468a452b45680635cf7
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -109,10 +109,106 @@ Reply-To: Bug 2126951 <2126951@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This bug was fixed in qemu 1:10.2.1+ds-1ubuntu2 is Resolute.
+The crash is reproducible with the current version:
 
-** Changed in: qemu (Ubuntu Resolute)
-       Status: Fix Committed =3D> Fix Released
+wesley@jv0:~$ apt policy qemu-system-x86
+qemu-system-x86:
+  Installed: 1:6.2+dfsg-2ubuntu6.28
+  Candidate: 1:6.2+dfsg-2ubuntu6.28
+  Version table:
+ *** 1:6.2+dfsg-2ubuntu6.28 500
+        500 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packa=
+ges
+        500 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Pac=
+kages
+        100 /var/lib/dpkg/status
+     1:6.2+dfsg-2ubuntu6 500
+        500 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages
+
+### Verification done Jammy ###
+
+wesley@jv0:~$ apt policy qemu-system-x86
+qemu-system-x86:
+  Installed: 1:6.2+dfsg-2ubuntu6.29
+  Candidate: 1:6.2+dfsg-2ubuntu6.29
+  Version table:
+ *** 1:6.2+dfsg-2ubuntu6.29 500
+        500 http://archive.ubuntu.com/ubuntu jammy-proposed/main amd64 Pack=
+ages
+        100 /var/lib/dpkg/status
+     1:6.2+dfsg-2ubuntu6.28 500
+        500 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packa=
+ges
+        500 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Pac=
+kages
+     1:6.2+dfsg-2ubuntu6 500
+        500 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages
+
+wesley@jv0:~$ ./provision.sh
++ wget https://cloud-images.ubuntu.com/daily/server/noble/current/noble-ser=
+ver-cloudimg-amd64.img
+--2026-03-26 08:56:52--  https://cloud-images.ubuntu.com/daily/server/noble=
+/current/noble-server-cloudimg-amd64.img
+Resolving cloud-images.ubuntu.com (cloud-images.ubuntu.com)... 185.125.190.=
+37, 185.125.190.40, 2620:2d:4000:1::1a, ...
+Connecting to cloud-images.ubuntu.com (cloud-images.ubuntu.com)|185.125.190=
+.37|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 629987328 (601M) [application/octet-stream]
+Saving to: =E2=80=98noble-server-cloudimg-amd64.img.1=E2=80=99
+
+noble-server-cloudimg-amd64.img.1
+100%[=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+>]
+600.80M  22.0MB/s    in 42s
+
+2026-03-26 08:57:35 (14.2 MB/s) - =E2=80=98noble-server-cloudimg-amd64.img.=
+1=E2=80=99
+saved [629987328/629987328]
+
++ sudo cp noble-server-cloudimg-amd64.img /var/lib/libvirt/images/n0-root.q=
+cow2
++ sudo qemu-img create -f qcow2 /var/lib/libvirt/images/n0-blk0.qcow2 10G
+Formatting '/var/lib/libvirt/images/n0-blk0.qcow2', fmt=3Dqcow2 cluster_siz=
+e=3D65536 extended_l2=3Doff compression_type=3Dzlib size=3D10737418240 lazy=
+_refcounts=3Doff refcount_bits=3D16
++ touch network-config
++ touch meta-data
++ touch user-data
++ virt-install -n n0 --description 'Test noble minimal' --os-variant=3Dubun=
+tu24.04 --ram=3D1024 --vcpus=3D2 --import --disk path=3D/var/lib/libvirt/im=
+ages/n0-root.qcow2,bus=3Dvirtio,cache=3Dwritethrough,size=3D10 --disk path=
+=3D/var/lib/libvirt/images/n0-blk0.qcow2,bus=3Dvirtio,cache=3Dwritethrough,=
+size=3D10 --graphics none --network network=3Ddefault --cloud-init user-dat=
+a=3Duser-data,meta-data=3Dmeta-data,network-config=3Dnetwork-config
+...
+
+wesley@jv0:~$ virsh list
+ Id   Name   State
+----------------------
+ 2    n0     running
+
+wesley@jv0:~$ ./blockrebase-crash.sh n0
+...
+
+My connection to the testbed died about 5 hours in to the test; it
+filled up 8GB with snapshots and didn't crash:
+
+wesley@jv0:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        20G  9.0G   11G  47% /
+
+wesley@jv0:~$ virsh list
+ Id   Name   State
+----------------------
+ 2    n0     running
+
+### Verification done Jammy ###
+
+** Tags removed: verification-needed-jammy
+** Tags added: verification-done-jammy
 
 --=20
 You received this bug notification because you are a member of qemu-
