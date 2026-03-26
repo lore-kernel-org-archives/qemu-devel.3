@@ -4,100 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F83E109E54B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E391109E54B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:16:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5dsj-0005cX-Jp; Thu, 26 Mar 2026 02:07:49 -0400
+	id 1w5e0i-0007zW-Ed; Thu, 26 Mar 2026 02:16:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w5dsh-0005c4-Dd
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:07:47 -0400
-Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w5dsf-00035J-LV
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:07:47 -0400
-Received: by mail-dl1-x1242.google.com with SMTP id
- a92af1059eb24-12732165d1eso935537c88.1
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 23:07:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774505264; x=1775110064; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=u6kTyR2kv0n3qJ+AKHIx1k+o7niZD2e3hhZ11ewIj4A=;
- b=A3NOH1Qpqb9UoyMK0uUqFqcqJVqqI6cRJhRGa7s5Zq1bunRJclDzcpygZtWCFEr6X/
- 9nUA3zTFN1zC5a+LHcH4T+cnhPeHZlZaqZc2X75NDlj1ND0vtS5Nz5+uSPWZpz9BUDeZ
- KNCGjHNLAF8VbgGdR1M9cDCpemA5IMMRGhPH0XZqLaW1lJnrTLaM0dDJfD6a2OK8H9Xn
- 4um7TT39Jn0UTNhCfLe+zYjfSvYTMqm1Hz3CzPflg+DP74/wnP2pbJVrXqzlayb/8E/i
- MfWCZb4Z3x6yLxYLbmzkVq+A9Iv754UOURby9FsXTjEElEfmv6aJ9Zj7Ix2M8TPkiXAe
- i9zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774505264; x=1775110064;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u6kTyR2kv0n3qJ+AKHIx1k+o7niZD2e3hhZ11ewIj4A=;
- b=fkaQS59cS6YDNZWBCQ5+EOuKPlpkcGQxK8bhD1ffuX3W4G2HuODhEA/T4p2owwmkEj
- xqs2TpffbsnC8pUYq1v9ch9T2yOuouhTHC6+hV5tB8Cgc3w5WzBNkCwRcXQ13YkHAZhs
- l68MiGJpc0uEgw66k0utQck8lbVO0DK5rOi12kCDBq9NkbfnaOAJb9yMLmX5Wtuh5AjH
- N0dSQvjYJQ8A6zY9JxboknBR6ouHyaXRRp0rDXnh3JxBHY0lBc5VNokc9loPyS0nJlXK
- lGVD5TjXV8SP7aMAOIsGVMBS+LV+DY/G7CLw9sx1m7uE7O6ErsY2C2vXzMmzWgLZtjL6
- av+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXV6heWAqivYNI5xvtiIFLFfdMir+XY+ROxaDkKQb2SP1/MselQa+IMh6qh0rOQk0r123ubCbS8AXXI@nongnu.org
-X-Gm-Message-State: AOJu0YyLUakKTx+COv6Zvtazy5gEqi4ca9w0JPGUtsuVrv9umtY0uJt7
- M0NVOhsaezhci5yC1gA395t5PArnG6RSBKXyZGzOKEtdt2/yUgyQLVsd
-X-Gm-Gg: ATEYQzzSyui55I1iF76BlxvtyUQIM3dtgiL89BUAThxH0Wz0upU1vYC5RdF73hvhHTW
- 402polpJrrQCSYm6rZhPjGT+79kEKGGFFtkeag92rCZksyHO8vD0m4Ri9gtnq1Qlx7x1VkQS07J
- iD0g6qNAWI1Qvn3G/zq/f7CeBJIR5PjrhuATcZou3zIEB80nH+CgBhaINMwClZ6737d1v3KD3jf
- N0feoG2FXXAoh0xLddjUGoxYYOZIbz6sbN+x78jBFGmQuyeTlW+NkTp/kpGJgcxkqXOHxjxIClA
- yOq6NRclQYaohOcMlZyWfyP/WziCR6A6cnkfP88sYZLc+hE3nwovlKn6cGglLXhUTuAcJosLhme
- InkPTMycVzgcENQZoIUAi3jtd+ve5aJsnsDB1r3nQHqcv4F0u8azFNmF8YPuacBNuEhNzo4L37A
- CqfS2+i5g2bXUfEidio01QsIOQHZ0+VkXprEdGsUYrXBnpx3+/0yyDBzjXImSv6fX4e5U+LMPex
- H9epgKFcgcRcyc49SdlZfptLXU2i+Y=
-X-Received: by 2002:a05:7022:620:b0:128:d39a:b141 with SMTP id
- a92af1059eb24-12a96e71260mr2850119c88.17.1774505263546; 
- Wed, 25 Mar 2026 23:07:43 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12aa762430bsm3020127c88.10.2026.03.25.23.07.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 23:07:43 -0700 (PDT)
-Date: Thu, 26 Mar 2026 14:07:18 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Max Chou <max.chou@sifive.com>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v5 0/9] Add Zvfbfa extension support
-Message-ID: <acTIq7M94646OAA_@ZEVORN-PC.localdomain>
-References: <20260306071105.3328365-1-max.chou@sifive.com>
- <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
- <abKfuTO7zg5d67E8@sifive.com>
- <CAKmqyKOcCKAb2w2t2qYgOevswst75FjzKfihrYP9+odRAsCQmw@mail.gmail.com>
- <abe80eiIC4gXUHxk@sifive.com>
- <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
- <acSqxQQxnO0HdB8M@sifive.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5e0c-0007y1-C4
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:15:59 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w5e0Y-0005ju-Jk
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:15:57 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62Q6Fkp8079800
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 26 Mar 2026 15:15:46 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=RqDaR51bdyhAfveiktyrNwnK66F3M+NQSog/QVzqKj0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1774505746; v=1;
+ b=UA2TGzOkCBk2ID7dToiwjOQgqhCTkQ3y4gsAzRvSaOhyypfzSvSoONFWn+hAvyie
+ mEkpxVHB9A/VOZo3jl+bCtkUnpG0+suBBv9LQ9Jw9vv8GQfYfxLJXu+TRW7I3WNe
+ 23SJ/3Zvuj9n9HkZK4szbbM4ej1YSLYLPbhGgKBW6M73JOv648Nm4a5ZA7bZfzmK
+ 2ce22pI+BZ+h85susbWsyd+5bIs0OmDkwhPzFtyUMURMNScMoFY5sFXXqOji2GB2
+ phI/3tP8itMzmrEvS38SB6GlhY6mEYCBm6pg2IkSyx9enomtBTKxAGlq9giPaqNa
+ PurFafilZ8u3xJ1R3eXlDA==
+Message-ID: <d235dd90-a39f-41c2-ba19-6d7ffc30ca79@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 26 Mar 2026 15:15:45 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260319052023.2088685-1-vivek.kasireddy@intel.com>
+ <20260319052023.2088685-11-vivek.kasireddy@intel.com>
+ <6af4e73c-4ad5-4684-9982-04276b6b7daa@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71851291496AF53CF79309DAF849A@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <c7ced616-2d9e-4180-ad40-c1f0d13fdc05@rsg.ci.i.u-tokyo.ac.jp>
+ <CH3PR11MB7177A36C95F8700D66402086F856A@CH3PR11MB7177.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CH3PR11MB7177A36C95F8700D66402086F856A@CH3PR11MB7177.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <acSqxQQxnO0HdB8M@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,51 +84,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 26, 2026 at 11:42:58AM +0800, Max Chou wrote:
-> On 2026-03-19 13:45, Alistair Francis wrote:
-> > Yes, that's how things previously worked. Basically I think we just
-> > need a tag (that won't be changed) in an official RISC-V repo that we
-> > can point to. That way it's easy to say "this is the exact version we
-> > used to write the QEMU implementation". Then if there is a version 0.2
-> > we can easily see what has changed and update to match.
-> > 
+On 2026/03/26 14:52, Kasireddy, Vivek wrote:
+> Hi Akihiko,
 > 
-> Hi Alistair,
-> 
-> The official riscv-isa-manual repository has added a new tag for the
-> frozen Zvfbfa v0.9, as shown below:
-> 
-> https://github.com/riscv/riscv-isa-manual/releases/tag/zvfbfa-0.9
-> 
-> The current v5 implementation fully complies with this frozen
-> specification.
-> 
-> Since the Zvfbfa is frozen, should I prepare a v6 that removes the “x-“
-> prefix from the zvfbfa property and updates the specification reference
-> ?
-I think we need a v6 series, usually it's fine to implementation
-after spec tag is release.
+>> Subject: Re: [PATCH v12 10/10] virtio-gpu-dmabuf: Create dmabuf for
+>> blobs associated with VFIO devices
+>>
+>>>>
+>>>> On 2026/03/19 14:15, Vivek Kasireddy wrote:
+>>>>> In addition to memfd, a blob resource can also have its backing
+>>>>> storage in a VFIO device region. Since, there is no effective way
+>>>>> to determine where the backing storage is located, we first try to
+>>>>> create a dmabuf assuming it is in memfd. If that fails, we try to
+>>>>> create a dmabuf assuming it is in VFIO device region.
+>>>>>
+>>>>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+>>>>> backing storage is located in a memfd or not. If it is not, we invoke
+>>>>> the vfio_device_create_dmabuf_fd() API which identifies the right
+>>>>> VFIO device and eventually creates a dmabuf fd.
+>>>>>
+>>>>> Note that, for mmapping the dmabuf, we directly call mmap() if the
+>>>>> dmabuf fd was created via virtio_gpu_create_udmabuf() since we
+>>>> know
+>>>>> that the udmabuf driver supports mmap(). However, if the dmabuf
+>>>> was
+>>>>> created via vfio_device_create_dmabuf_fd(), we use the
+>>>>> vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
+>>>>>
+>>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>>>> Cc: Alex Williamson <alex@shazbot.org>
+>>>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>>>> ---
+>>>>>     hw/display/virtio-gpu-dmabuf.c | 23 ++++++++++++++++++++---
+>>>>>     1 file changed, 20 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>>>> dmabuf.c
+>>>>> index 89aa487654..f953db0fbe 100644
+>>>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>>>> @@ -147,9 +147,26 @@ void virtio_gpu_init_dmabuf(struct
+>>>> virtio_gpu_simple_resource *res)
+>>>>>             if (res->dmabuf_fd ==
+>>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>>>>                 error_free_or_abort(&local_err);
+>>>>>
+>>>>> -            qemu_log_mask(LOG_GUEST_ERROR,
+>>>>> -                          "Cannot create dmabuf: incompatible memory\n");
+>>>>> -            return;
+>>>>> +            res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
+>>>>> +                                                          res->iov_cnt,
+>>>>> +                                                          res->blob_size,
+>>>>
+>>>> The correspondence between (iov, iov_cnt) and blob_size is more of a
+>>>> internal concern of virtio-gpu, not of VFIO. This parameter is better
+>>>> removed from vfio_device_create_dmabuf_fd() and
+>>>> vfio_device_mmap_dmabuf().
+>>> I don't disagree. So, should we add the following check in
+>>> virtio_gpu_init_dmabuf() or somewhere?
+>>> if (iov_size(iov, iov_cnt) != blob_size)
+>>
+>> I suggest to have a check in virtio_gpu_create_mapping_iov() since it's
+>> not even specific to DMA-BUF.
+> I think virtio_gpu_resource_create_blob() might be a better place to put
+> this check in as blob_size is relevant (or valid) only for Guest based Blob
+> resources. Otherwise, we would have to pass blob_size as a new parameter
+> to virtio_gpu_create_mapping_iov() and modify all the call sites.
 
-That said, we should defer to Alistair's thoughts on this.
+All the call sites need to be modified since blob_size is present and 
+needs to be respected at all of them. It is a chore but necessary to 
+fully fix the bug Codex found, unfortunately.
 
-Additionally, my new debug spec series can be sent upstream later
-(base on the zvfbfa tb ext_flag patch), once zvfbfa ia all ready
-and pulled.
+Regards,
+Akihiko Odaki
 
-Thanks,
-Chao
+> 
+>>
+>> And instead let's ensure iov_size(iov, iov_cnt) >= blob_size and reject
+>> otherwise instead. I cited Codex's reasoning for this, which I totally
+>> agree. (I applied the Codex for Open Source program for access to Codex.
+>> And just in case: we are currently not allowed to use LLMs for writing
+>> patches and its use is restricted for the other purposes.)
+>>
+>> It will be also more of a bug fix, so I think it is better to be sent as
+>> an independent patch instead of including it into this series.
+> Ok, will send this fix as a separate patch.
 > 
 > Thanks,
-> rnax
+> Vivek
 > 
-> > With the seemingly infinite number of draft extensions we need
-> > something to manage the version and compatibility, and that seems like
-> > the best bet.
-> > 
-> > Posting the draft PDF spec somewhere immutable would also work. We
-> > just need to be able to point to something that won't change and
-> > represents some sort of "release". So a git commit doesn't seem like
-> > enough, we need a "release" that everyone can converge on.
-> > 
-> > Alistair
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>> Below is the Codex's output based on commit 8e711856d763 ("Merge tag
+>> 'hppa-fixes-for-v11-pull-request' of
+>> https://github.com/hdeller/qemu-hppa into staging"):
+>>
+>> In current QEMU, omitting the check leaves inconsistent state possible,
+>> and the effect depends on the direction of the mismatch.
+>>
+>> If iov_size < blob_size, this is the bad case. The dmabuf/export backing
+>> is built from the iov lengths in virtio-gpu-udmabuf.c (line 45) and
+>> virtio-gpu-udmabuf.c (line 63), but remap and scanout bounds use
+>> blob_size in virtio-gpu-udmabuf.c (line 73) and virtio-gpu.c (line 761).
+>> There is also a fast path that directly exposes iov_base as res->blob
+>> for small single-iov blobs in virtio-gpu-udmabuf.c (line 136), and
+>> scanout later uses that pointer as image data in virtio-gpu.c (line 662)
+>> and virtio-gpu.c (line 674). So a too-small backing is not a clean or
+>> obviously safe case.
+>> If iov_size > blob_size, it is mostly a semantics issue. QEMU still
+>> bounds scanout using blob_size in virtio-gpu.c (line 761), so the extra
+>> backing is usually just unused. But the resource state is still
+>> inconsistent.
+>> QEMU does not currently enforce the relationship elsewhere. blob_size
+>> and the iov are populated independently at blob creation in virtio-gpu.c
+>> (line 362) and virtio-gpu.c (line 366), and later backing attach also
+>> does not compare them in virtio-gpu.c (line 946).
+>> So if the question is "can we omit the check entirely?", the answer is:
+>> yes, but then you are knowingly accepting malformed guest state and
+>> relying on later backend behavior. If you want a defensive check,
+>> iov_size < blob_size is the one with a concrete justification. iov_size
+>> != blob_size is harder to defend from the spec.
+>>
+>>>
+>>> Thanks,
+>>> Vivek
+>>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+>>>>
+>>>>> +                                                          &local_err);
+>>>>> +            if (res->dmabuf_fd ==
+>>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>>>> +                error_free_or_abort(&local_err);
+>>>>> +                qemu_log_mask(LOG_GUEST_ERROR,
+>>>>> +                              "Cannot create dmabuf: incompatible memory\n");
+>>>>> +                return;
+>>>>> +            }
+>>>>> +
+>>>>> +            if (res->dmabuf_fd >= 0) {
+>>>>> +                pdata = vfio_device_mmap_dmabuf(res->iov, res->iov_cnt,
+>>>>> +                                                res->blob_size, &local_err);
+>>>>> +                if (!pdata) {
+>>>>> +                    virtio_gpu_destroy_dmabuf(res);
+>>>>> +                }
+>>>>> +            } else {
+>>>>> +                res->dmabuf_fd = -1;
+>>>>> +            }
+>>>>>             } else if (res->dmabuf_fd >= 0) {
+>>>>>                 pdata = virtio_gpu_remap_dmabuf(res, &local_err);
+>>>>>                 if (!pdata) {
+>>>
+> 
+
 
