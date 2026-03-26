@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69503109E558
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 789E9109E55C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:55:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5eZ4-0000Ah-Ly; Thu, 26 Mar 2026 02:51:34 -0400
+	id 1w5ece-00014f-O8; Thu, 26 Mar 2026 02:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1w5eZ2-0000AP-AZ
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:51:32 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
+ (Exim 4.90_1) (envelope-from <13824125580@163.com>)
+ id 1w5ecd-00014U-DQ
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:55:15 -0400
+Received: from m16.mail.163.com ([117.135.210.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1w5eYy-0000Qv-Rm
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:51:31 -0400
-X-UUID: 2f271de028e011f1a21c59e7364eecb8-20260326
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.11, REQID:1ea9415f-3aab-42ae-a742-a02b26f2c93a, IP:0,
- U
- RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
- :release,TS:25
-X-CID-META: VersionHash:89c9d04, CLOUDID:57232f90b651bdf86ccb35070357935b,
- BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:102|850|898,TC:nil,Content:0|15|50,EDM:5
- ,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV
- :0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 2f271de028e011f1a21c59e7364eecb8-20260326
-X-User: zhaoguohan@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
- (envelope-from <zhaoguohan@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 295054896; Thu, 26 Mar 2026 14:51:15 +0800
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
-To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	GuoHan Zhao <zhaoguohan@kylinos.cn>
-Subject: [PATCH] ui/dbus: associate add_client completion with its request
-Date: Thu, 26 Mar 2026 14:51:11 +0800
-Message-ID: <20260326065111.626236-1-zhaoguohan@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <13824125580@163.com>)
+ id 1w5ecZ-0004bz-3N
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:55:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
+ Message-ID; bh=eKFPfilZSJjUgBTJpntGgSHDkEJb7wK7+iF2fXLWktc=; b=I
+ JmU5GjdlKcJDhE3Fjvl0VzQ+1zlpOOKZ5bgekFZ9bR3NuteHsAlsGKZGLNNLFIiD
+ SZZbgtPbL8kGc4ZHJvw6sibauacMhUcLc8hoS+sOxzFlPj9HQt0YBUGJO+BRIdZ6
+ YLkAKvgCJ9QxfbAVT54F0jw6N22IS+TGtvModmPV6s=
+Received: from 13824125580$163.com ( [218.13.223.218] ) by
+ ajax-webmail-wmsvr-40-111 (Coremail) ; Thu, 26 Mar 2026 14:54:56 +0800
+ (CST)
+X-Originating-IP: [218.13.223.218]
+Date: Thu, 26 Mar 2026 14:54:56 +0800 (CST)
+From: tugouxp <13824125580@163.com>
+To: qemu-devel@nongnu.org
+Subject: =?UTF-8?Q?Contradiction_in_Intel_IOMMU_Two=E2=80=91S?=
+ =?UTF-8?Q?tage_Translation:_Stage=E2=80=AF1_Mapping_?=
+ =?UTF-8?Q?Requirements_Leaked_to_Hypervisor_?=
+ =?UTF-8?Q?Due_to_Host=E2=80=91Side_Driver_Interface.?=
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
+ 20251222(83accb85) Copyright (c) 2002-2026 www.mailtech.cn 163com
+X-NTES-SC: AL_Qu2cBvmbt0gi4CSdZ+kcmk8Rhe8/XsKws/gg1YdSc/kEtQ3UwTs7YlZoMXTy0s+1Bh21tyOdUyFg0eRDWrNVBJLAaCqdgJfAqieqxGNFyg==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_94063_1232434990.1774508096463"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232;
- envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Message-ID: <c304de5.6160.19d28ecbbd0.Coremail.13824125580@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: bygvCgD3V+xA2MRpqfaAAA--.4807W
+X-CM-SenderInfo: bprtmjyurskkiyq6il2tof0z/xtbC0ADRFGnE2ECo4gAA3q
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Received-SPF: pass client-ip=117.135.210.3; envelope-from=13824125580@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
+ FROM_LOCAL_HEX=0.006, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,125 +76,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 99997823bbbd ("ui/dbus: add p2p=on/off option")
-introduced an asynchronous D-Bus client setup path, with the completion
-handler reaching back into the global dbus_display state.
+------=_Part_94063_1232434990.1774508096463
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-This makes the callback effectively operate on whatever request is
-current when it runs, rather than the one that created it. A completion
-from an older request can therefore clear a newer
-add_client_cancellable or install its connection after a replacement
-request has already been issued. It also relies on the DBusDisplay
-instance remaining alive until completion.
+SGkgZm9sa3M6CkluIGEgdHdvLXN0YWdlIHRyYW5zbGF0aW9uIHNjaGVtZSwgdGhlIGZpcnN0IHN0
+YWdlIHNob3VsZCBiZSBoaWRkZW4gaW5zaWRlIHRoZSBWTSBkcml2ZXIuIEZvciBleGFtcGxlLCB0
+aGUgZW11bGF0ZWQgaGFyZHdhcmUgb2YgdGhlIFZNIG5lZWRzIHRvIHVzZSBTdGFnZeKArzEgdG8g
+bWFwIEdWQSAob3IgR0lPVkEpIHRvIEdQQSwgd2hpbGUgU3RhZ2XigK8yIHNob3VsZCBiZSBoYW5k
+bGVkIGJ5IHRoZSBoeXBlcnZpc29yLiBJIHVuZGVyc3RhbmQgdGhpcyBwcmluY2lwbGUuCgpIb3dl
+dmVyLCBpbiB0aGUgY3VycmVudCBJbnRlbCBJT01NVSBpbXBsZW1lbnRhdGlvbiBvZiB0d28tc3Rh
+Z2UgdHJhbnNsYXRpb24sIGl0IHNlZW1zIHRoYXQgYm90aCBTdGFnZeKArzIgYW5kIFN0YWdl4oCv
+MSByZXF1aXJlIGRpcmVjdGx5IGludm9raW5nIGRyaXZlciBpbnRlcmZhY2VzIGluIHRoZSBob3N0
+IGh5cGVydmlzb3IuIFRoaXMgYXBwcm9hY2ggZXhwb3NlcyB0aGUgVk3igJlzIGludGVybmFsIFN0
+YWdl4oCvMSBtYXBwaW5nIHJlcXVpcmVtZW50cyB0byB0aGUgaHlwZXJ2aXNvciwgd2hpY2ggY3Jl
+YXRlcyBhIGNvbnRyYWRpY3Rpb24uCgpIb3cgc2hvdWxkIFFFTVUgYW5kIExpbnV4IGltcGxlbWVu
+dCB0aGlzIHByb3Blcmx5PwoKQmVzdCB3aXNoZXMgdG8geW91IQoKemxjYW8u
+------=_Part_94063_1232434990.1774508096463
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Fix this by passing the DBusDisplay and GCancellable as callback data,
-taking references while the async setup is in flight, and only acting
-on completion if it still matches the current request. Also drop the
-previous cancellable before creating a new request.
-
-Fixes: 99997823bbbd ("ui/dbus: add p2p=on/off option")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
----
- ui/dbus.c | 44 ++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 4 deletions(-)
-
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 4f24215555a4..7c54b6a502d2 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -263,22 +263,52 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
-     }
- }
- 
-+typedef struct DBusDisplayAddClientData {
-+    DBusDisplay *display;
-+    GCancellable *cancellable;
-+} DBusDisplayAddClientData;
-+
-+static void dbus_display_add_client_data_free(DBusDisplayAddClientData *data)
-+{
-+    if (data->display) {
-+        object_unref(OBJECT(data->display));
-+        data->display = NULL;
-+    }
-+    g_clear_object(&data->cancellable);
-+    g_free(data);
-+}
-+
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(DBusDisplayAddClientData,
-+                              dbus_display_add_client_data_free)
-+
- static void
- dbus_display_add_client_ready(GObject *source_object,
-                               GAsyncResult *res,
-                               gpointer user_data)
- {
-+    g_autoptr(DBusDisplayAddClientData) data = user_data;
-+    DBusDisplay *display = data->display;
-+    bool current = display->add_client_cancellable == data->cancellable;
-     g_autoptr(GError) err = NULL;
-     g_autoptr(GDBusConnection) conn = NULL;
- 
--    g_clear_object(&dbus_display->add_client_cancellable);
-+    if (current) {
-+        g_clear_object(&display->add_client_cancellable);
-+    }
- 
-     conn = g_dbus_connection_new_finish(res, &err);
-     if (!conn) {
--        error_printf("Failed to accept D-Bus client: %s", err->message);
-+        if (!g_error_matches(err, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
-+            error_printf("Failed to accept D-Bus client: %s", err->message);
-+        }
-+        return;
-     }
- 
--    g_dbus_object_manager_server_set_connection(dbus_display->server, conn);
-+    if (!current) {
-+        return;
-+    }
-+
-+    g_dbus_object_manager_server_set_connection(display->server, conn);
-     g_dbus_connection_start_message_processing(conn);
- }
- 
-@@ -290,6 +320,7 @@ dbus_display_add_client(int csock, Error **errp)
-     g_autoptr(GSocket) socket = NULL;
-     g_autoptr(GSocketConnection) conn = NULL;
-     g_autofree char *guid = g_dbus_generate_guid();
-+    DBusDisplayAddClientData *data;
- 
-     if (!dbus_display) {
-         error_setg(errp, "p2p connections not accepted in bus mode");
-@@ -298,6 +329,7 @@ dbus_display_add_client(int csock, Error **errp)
- 
-     if (dbus_display->add_client_cancellable) {
-         g_cancellable_cancel(dbus_display->add_client_cancellable);
-+        g_clear_object(&dbus_display->add_client_cancellable);
-     }
- 
- #ifdef WIN32
-@@ -318,6 +350,10 @@ dbus_display_add_client(int csock, Error **errp)
-     conn = g_socket_connection_factory_create_connection(socket);
- 
-     dbus_display->add_client_cancellable = g_cancellable_new();
-+    data = g_new0(DBusDisplayAddClientData, 1);
-+    data->display = DBUS_DISPLAY(object_ref(OBJECT(dbus_display)));
-+    data->cancellable = g_object_ref(dbus_display->add_client_cancellable);
-+
-     GDBusConnectionFlags flags =
-         G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER |
-         G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING;
-@@ -332,7 +368,7 @@ dbus_display_add_client(int csock, Error **errp)
-                           NULL,
-                           dbus_display->add_client_cancellable,
-                           dbus_display_add_client_ready,
--                          NULL);
-+                          data);
- 
-     return true;
- }
--- 
-2.43.0
+PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
+Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdiBz
+dHlsZT0ibWFyZ2luOjA7Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOiAxNnB4OyI+SGkgZm9sa3M6
+PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+PGRpdiBzdHlsZT0ibWFyZ2luOiAx
+NnB4IDBweDsgcGFkZGluZzogMHB4OyBib3JkZXI6IDBweCBub25lIHJnYigxNSwgMTcsIDIxKTsg
+Zm9udC1zaXplOiAxNnB4OyBmb250LWZhbWlseTogcXVvdGUtY2prLXBhdGNoLCBJbnRlciwgc3lz
+dGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJ
+JnF1b3Q7LCBSb2JvdG8sIE94eWdlbiwgVWJ1bnR1LCBDYW50YXJlbGwsICZxdW90O09wZW4gU2Fu
+cyZxdW90OywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IHRleHQtaW5k
+ZW50OiAyZW07Ij5JbiBhIHR3by1zdGFnZSB0cmFuc2xhdGlvbiBzY2hlbWUsIHRoZSBmaXJzdCBz
+dGFnZSBzaG91bGQgYmUgaGlkZGVuIGluc2lkZSB0aGUgVk0gZHJpdmVyLiBGb3IgZXhhbXBsZSwg
+dGhlIGVtdWxhdGVkIGhhcmR3YXJlIG9mIHRoZSBWTSBuZWVkcyB0byB1c2UgU3RhZ2XigK8xIHRv
+IG1hcCBHVkEgKG9yIEdJT1ZBKSB0byBHUEEsIHdoaWxlIFN0YWdl4oCvMiBzaG91bGQgYmUgaGFu
+ZGxlZCBieSB0aGUgaHlwZXJ2aXNvci4gSSB1bmRlcnN0YW5kIHRoaXMgcHJpbmNpcGxlLjwvZGl2
+PjxwIGNsYXNzPSJkcy1tYXJrZG93bi1wYXJhZ3JhcGgiIHN0eWxlPSJtYXJnaW46IDE2cHggMHB4
+OyBjb2xvcjogcmdiKDE1LCAxNywgMjEpOyBmb250LWZhbWlseTogcXVvdGUtY2prLXBhdGNoLCBJ
+bnRlciwgc3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90
+O1NlZ29lIFVJJnF1b3Q7LCBSb2JvdG8sIE94eWdlbiwgVWJ1bnR1LCBDYW50YXJlbGwsICZxdW90
+O09wZW4gU2FucyZxdW90OywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7
+IGZvbnQtc2l6ZTogMTZweDsiPkhvd2V2ZXIsIGluIHRoZSBjdXJyZW50IEludGVsIElPTU1VIGlt
+cGxlbWVudGF0aW9uIG9mIHR3by1zdGFnZSB0cmFuc2xhdGlvbiwgaXQgc2VlbXMgdGhhdCBib3Ro
+IFN0YWdl4oCvMiBhbmQgU3RhZ2XigK8xIHJlcXVpcmUgZGlyZWN0bHkgaW52b2tpbmcgZHJpdmVy
+IGludGVyZmFjZXMgaW4gdGhlIGhvc3QgaHlwZXJ2aXNvci4gVGhpcyBhcHByb2FjaCBleHBvc2Vz
+IHRoZSBWTeKAmXMgaW50ZXJuYWwgU3RhZ2XigK8xIG1hcHBpbmcgcmVxdWlyZW1lbnRzIHRvIHRo
+ZSBoeXBlcnZpc29yLCB3aGljaCBjcmVhdGVzIGEgY29udHJhZGljdGlvbi48L3A+PHAgY2xhc3M9
+ImRzLW1hcmtkb3duLXBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi10b3A6IDE2cHg7IG1hcmdpbi1y
+aWdodDogMHB4OyBtYXJnaW4tbGVmdDogMHB4OyBjb2xvcjogcmdiKDE1LCAxNywgMjEpOyBmb250
+LWZhbWlseTogcXVvdGUtY2prLXBhdGNoLCBJbnRlciwgc3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVt
+LCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCBSb2JvdG8sIE94eWdl
+biwgVWJ1bnR1LCBDYW50YXJlbGwsICZxdW90O09wZW4gU2FucyZxdW90OywgJnF1b3Q7SGVsdmV0
+aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTZweDsgbWFyZ2luLWJvdHRv
+bTogMHB4ICFpbXBvcnRhbnQ7Ij5Ib3cgc2hvdWxkIFFFTVUgYW5kIExpbnV4IGltcGxlbWVudCB0
+aGlzIHByb3Blcmx5PzwvcD48cCBjbGFzcz0iZHMtbWFya2Rvd24tcGFyYWdyYXBoIiBzdHlsZT0i
+bWFyZ2luLXRvcDogMTZweDsgbWFyZ2luLXJpZ2h0OiAwcHg7IG1hcmdpbi1sZWZ0OiAwcHg7IGNv
+bG9yOiByZ2IoMTUsIDE3LCAyMSk7IGZvbnQtZmFtaWx5OiBxdW90ZS1jamstcGF0Y2gsIEludGVy
+LCBzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vn
+b2UgVUkmcXVvdDssIFJvYm90bywgT3h5Z2VuLCBVYnVudHUsIENhbnRhcmVsbCwgJnF1b3Q7T3Bl
+biBTYW5zJnF1b3Q7LCAmcXVvdDtIZWx2ZXRpY2EgTmV1ZSZxdW90Oywgc2Fucy1zZXJpZjsgZm9u
+dC1zaXplOiAxNnB4OyBtYXJnaW4tYm90dG9tOiAwcHggIWltcG9ydGFudDsiPkJlc3Qgd2lzaGVz
+IHRvIHlvdSE8L3A+PHAgY2xhc3M9ImRzLW1hcmtkb3duLXBhcmFncmFwaCIgc3R5bGU9Im1hcmdp
+bi10b3A6IDE2cHg7IG1hcmdpbi1yaWdodDogMHB4OyBtYXJnaW4tbGVmdDogMHB4OyBjb2xvcjog
+cmdiKDE1LCAxNywgMjEpOyBmb250LWZhbWlseTogcXVvdGUtY2prLXBhdGNoLCBJbnRlciwgc3lz
+dGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJ
+JnF1b3Q7LCBSb2JvdG8sIE94eWdlbiwgVWJ1bnR1LCBDYW50YXJlbGwsICZxdW90O09wZW4gU2Fu
+cyZxdW90OywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IGZvbnQtc2l6
+ZTogMTZweDsgbWFyZ2luLWJvdHRvbTogMHB4ICFpbXBvcnRhbnQ7Ij56bGNhby48L3A+PC9kaXY+
+PC9kaXY+
+------=_Part_94063_1232434990.1774508096463--
 
 
