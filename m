@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 570E7109E557
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F4E109E557
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5e53-000209-KF; Thu, 26 Mar 2026 02:20:33 -0400
+	id 1w5e7V-0002fW-H5; Thu, 26 Mar 2026 02:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w5e4y-0001yX-8y
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:20:29 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w5e7T-0002em-U1
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:23:03 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w5e4w-0000aK-Gu
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:20:27 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c742b9b7727so190185a12.0
- for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 23:20:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1w5e7S-0000k2-Af
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:23:03 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-82c2239140aso240687b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Mar 2026 23:23:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774506025; x=1775110825; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774506181; x=1775110981; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=uKJ2G65+6Az6+JvUTRTolTiEc6IYP2qfOIB7SaIBEnY=;
- b=W4eJv+KcmKi6fXzjfDwTC9Hu790KwuB8A2tWmBgAZ6nxz0bGgEmEoZs2KLU5s0MvHR
- /ETJKkkOvA8Nidwq5HDqLIBbuqbvLq/2r71WfQUVOZfUb5gXCsavEk3ZOQx0/SxDLw81
- z3KVBHrOT47OjwPDK6wn2Vox0XeiBSIyRtox2QZSbGsZY41xCqS448Uzp5k9Oe1T7/1I
- RzV1aCcREEjpTPAAeTcsr1NIFfYHAG83ycpOe3MNYOp6yyTwnNDEi5pbL+s+75De+n5Z
- 8VEYiS3rcQPCBd4xu9xXIgT0sY2529bJvpGV2hoQzQLwDJX/7QmQ1QopLw+xQapiqaSQ
- dwfQ==
+ bh=Z8zhMRK1D9tXS3RSuCcHKGiUSHxt9Dbl66Woarml9aY=;
+ b=ApJ/qeWTtWKneoAgz5SW0sjED3WyfQf3xc0YkLmOWD9PYoaR+Qnz/Iqn2B1etjaHL+
+ qnhlCIPNMm1d7ldx66wkq9WpHrA6XuyGV71DG9kLsdQrtN/WPslxnE6gqGE5GjxEUdWH
+ iZNEXfxSbMfEhPkqq5ELX56NZxsPJDdMriZQ7bMUnVh2sqJbvNO77gJk7Vx9dkrQwNQu
+ pixCz2WDuR96DnA5Ya8L1JtWo9tRd96Rlc6CozdfzRije+0bCsM6Q1Cu2LqyP0dik/5A
+ Yl913uPm/AQOEFSbbtCFPNVrVhiF7joWZRt8CyapMxa3H8IATEhKQa/EM5S+LV9o3aqy
+ ZvHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774506025; x=1775110825;
+ d=1e100.net; s=20251104; t=1774506181; x=1775110981;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uKJ2G65+6Az6+JvUTRTolTiEc6IYP2qfOIB7SaIBEnY=;
- b=kBG7NM98cJXlI/TscLQPqGdKBkH+MKdkhYRv9ZML7DlqHzz9/n/Y3YCXiGnvuSyi/b
- D67A7yMEpCM0ZueLfFqmQoxMesZApWFAPISViv4ZFh/M02E1/NJt5ixGoKrdhT3JvP9M
- M5rrEoM4uWHZhRBXlsv3VyWaZIMu9gtxaeSj5jb0KxoyjA0gCZgZBqILvyPUeVaMulo1
- na9pZT0Qgs4cQONaCNIP5DAU5q+icIO+nN5ZkdgKqJwuyAjZlU//SuOKMphY3JEpJq6r
- t5pVUI/E51RVG91uVdEO2ctCF+YhuOor3H35tFPe8eR1Js/b2JmDr97FAafv8B8Yzx2j
- yuMQ==
-X-Gm-Message-State: AOJu0YyZ0YpU2zrdMpR3/lofMh68TPdvbEh9BURYpm+P7cB+4R4M00mv
- 2LHMyhzyA08XUzaVieFqAj3LrXyobBvANd6zsaZ+Tp7dYfBaugF1gUNe
-X-Gm-Gg: ATEYQzwgUIOxfgP5HUrg5YhEj021Xt6XWjzjnSFe2IxRIC9lkduZTlXGuYsYHa8S3nG
- poSKxO3I+cdd1TPnIYG0OHRoNchbvVjaR4sB1nhLfdjgf5umE7e/NmEECn5ruimLIkaMFgot/qR
- YOJMQLKT4qIkU2VkgryzgteGJ0LmmHBhM4wsekBvDkwRjN8oHe87ztZlTNG9K+rhX0S1xD6DvZw
- 3PU6gP9NWLmcOJW+qIgaxldzPO32JcsAaDzY06chDFaQ0cZ0mANus5xsHiBx/yI3+VAfF0EDbN+
- JSxTPugP4zBUloD/UuR2niXoSZc9X7HaRlKIOs3NHc6T05mEU+JiCLmklc4zEoD2sZWX+/P39QG
- EN1k7gbzkP/4rYOPiZONp88M9Gdej4IR1Uh4A5/jhlU5emcz6PkbxXUYPo3gc0ji1q71LobNDap
- StpQvS9rQ1OXbiFfSUlRsIT5esa/3oSIvkjg15q121frShbqJ9SLlIcbgicExK2/HJ
-X-Received: by 2002:a05:6a20:4307:b0:39c:4e62:b843 with SMTP id
- adf61e73a8af0-39c7354cbd9mr507784637.10.1774506024649; 
- Wed, 25 Mar 2026 23:20:24 -0700 (PDT)
+ bh=Z8zhMRK1D9tXS3RSuCcHKGiUSHxt9Dbl66Woarml9aY=;
+ b=hzRUtmSiazFqkfUQruDTtflK3sOkx6RNCcFDtsfbCIiFagsBkVvXYkgb7zMTiNKY96
+ Azro2+cwoDtF58VHsAgkHKEBBJ2P3OSEwcaAue2RfiRCb7RX4e8col9kyZdQKbbWuIwE
+ /UfPdaWsdQLXnFbcD8LZ0E+MugCXsdKSYqDe7+eiOW44bcZx0BuWRSvDOHOgKBI/2pRa
+ vlZpnuQGaL10/IrrueKM38IGHq1qNr7Mrzu4BjxZLzYQ5Ks29eWcpVWQF+vCLyPmCJW2
+ zNWEa8f3HVaRALaCF9eDNdiX2G9OKc18Ozw4H6YHLnnaJxDcPmVknCgy1uho+sMcS7xA
+ vRNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3VFAx2zSvs1mpLo02kJz6XU/GyiP03AwKGYNMj6ShnLG7cz4KanAIF28Sr4E1U2Jxkuikrij1yE5c@nongnu.org
+X-Gm-Message-State: AOJu0YyrHz9FRLHfNWWMIUmr70dKQioeqC1tD/X8V9eweRhB2uXwAUAo
+ nqgFW2ZoIJfC5pYRSSwu2gtwbCrgW8B1ohHOtRhuSuW2F/e3dJ4w/AcP
+X-Gm-Gg: ATEYQzyoQtygkjmNSxxxmKMajwqbkjnxNFRu7cX5bM4muJGtqABTmFuuE86gm8Vhii+
+ sgNBk6WxpypVuFyHsz8vGWqm/DECyNKMKnmY/IXTlkULcSBEV7W6nqk5Hsl7RUaPj0evd/+/hL1
+ eF2wShfm+S2mbnj5aGD+RAHYbF4oWRsTLE80V0SASgwhMXjKMv6Jbi8AEpqDUSnQLPMjhkrsrM8
+ FR0CpjcY0lg9yHQom6feygLzd0Q6KpLJhuIONM8S7T9IY+mopXYQvyg37CLxbRMMgi6TiWmKSWa
+ muifLwvFVmkg4P12PsTpBEAqsr7SRFU6m/vDsUHCz11Qeil/sH2zSjLEy+JmeEckRAIc6yKI3WR
+ C0Ru5JVpw1RHaFgtEoNlrsutjjlwv2oJfGxPW+pKOA8BVfQMmzzBvDXMQy6EzX1XyOGEhTykNYU
+ XziEOM597qER9/LMJQUXCLCTq3ghgo5NvjDCEL8BYwSTOdaEGRs1O2wxE1Jy1tyMlF6YpL5fSuv
+ bA=
+X-Received: by 2002:a05:6a00:3a2a:b0:82c:24a9:d5f1 with SMTP id
+ d2e1a72fcca58-82c6dfb50eemr6173269b3a.30.1774506180743; 
+ Wed, 25 Mar 2026 23:23:00 -0700 (PDT)
 Received: from localhost (103.95.112.190.qld.leaptel.network. [103.95.112.190])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c7673933816sm1197650a12.21.2026.03.25.23.20.23
+ d2e1a72fcca58-82c7d3f959esm1550263b3a.56.2026.03.25.23.22.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Mar 2026 23:20:23 -0700 (PDT)
-Date: Thu, 26 Mar 2026 16:20:20 +1000
+ Wed, 25 Mar 2026 23:22:59 -0700 (PDT)
+Date: Thu, 26 Mar 2026 16:22:57 +1000
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>, 
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 2/3] linux-user: Fix unlock_user API usage
-Message-ID: <acTL0apZ1s0UO5Xs@lima-default>
-References: <20260321004836.500390-1-npiggin@gmail.com>
- <20260321004836.500390-3-npiggin@gmail.com>
- <CAKmqyKMifRr3bhRrApJEzRTi5UvHsr8TF7uOeOP-+nJL7fU6Ng@mail.gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v3 0/5] linux-user/riscv: add vector state to signal
+ context
+Message-ID: <acTQfgIzWONvJ6c4@lima-default>
+References: <20260321141345.599105-1-npiggin@gmail.com>
+ <CAKmqyKNmYtA7vnp-VLBWQeRFFi0GW-9eV+Mt3wNAPdEYe+UEzw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKMifRr3bhRrApJEzRTi5UvHsr8TF7uOeOP-+nJL7fU6Ng@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52f.google.com
+In-Reply-To: <CAKmqyKNmYtA7vnp-VLBWQeRFFi0GW-9eV+Mt3wNAPdEYe+UEzw@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,99 +112,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 11:46:45AM +1000, Alistair Francis wrote:
-> On Sat, Mar 21, 2026 at 10:50 AM Nicholas Piggin <npiggin@gmail.com> wrote:
+On Wed, Mar 25, 2026 at 02:45:24PM +1000, Alistair Francis wrote:
+> On Sun, Mar 22, 2026 at 12:16 AM Nicholas Piggin <npiggin@gmail.com> wrote:
 > >
-> > Fix errors in unlock_user() calls:
-> > - unlock_user() with len=1 instead of len=written
-> > - unlock_user() with len=1 instead of len=0
-> > - unlock_user() with len=0 instead of len=1
+> > Changes in v3:
+> > - Fixed up a bunch of good review comments that Richard made against
+> >   the v1 series here https://lore.kernel.org/all/06afcbdc-28e2-4d13-81d4-26fd257ed8a3@linaro.org/#r
+> >   in particular:
+> >   - Restoring vl/vtype state using CPU accessors rather than stuffing the
+> >     values into the registers directly.
+> >   - Fix ABI types.
+> >   - Fix some confusion with host/guest pointer mapping.
+> >   - Fix error handling to SIGSEGV.
+> >   - Style fixes.
+> > - Fixed build issue without riscv intrinsics header.
+> > - Add some more test cases.
+> >
+> > Changes in v2:
+> > - Fix 32-bit compile
+> > - Moved sizeof_rt_sigframe change to its correct patch (patch 2 is the
+> >   one that extends the size of rt_sigframe, patch 3 is adding new
+> >   extended state to the frame which is added dynamically).
+> >
+> > This series adds vector state to the linux-user signal handler,
+> > and adds a basic signal handling test case. As a sanity check, I
+> > also verified the signal handling test works in the same way when
+> > run under a real Linux kernel.
+> >
+> > Thanks,
+> > Nick
+> >
+> > Nicholas Piggin (5):
+> >   tests/tcg/riscv64: Add a user signal handling test
+> >   linux-user/riscv: Allow restore_sigcontext to return error
+> >   linux-user/riscv: Add extended state to sigcontext
+> >   linux-user/riscv: Add vector state to signal context
+> >   tests/tcg/riscv64: Add vector state to signal test
 > 
-> Can you explain what the errors are and why this fixes them?
-> 
-> At least to me (I don't know the linux-user stuff very well) I don't
-> understand what is being fixed here
+> Can you rebase this on the latest master branch?
 
-Yeah I should explain a bit better in the changelog.
-
-When CONFIG_DEBUG_REMAP=n, lock_user just validates the guest
-pointer is within the guest address space and gives you a pointer
-to host address that can be used with __get_user() etc. And
-unlock_user does nothing, which is why it accumulated all these
-errors.
-
-With CONFIG_DEBUG_REMAP=y, they allocate a separate area of
-memory for the host to work in, and that's the host pointer you
-get to work with. The lock is supposed to say if it reads the
-memory and if so it is copied in to your temp area. The unlock
-says the length written to and it copies it out from temp area
-back to guest image. End result is guest memory updates from
-syscalls don't take effect.
-
-The APIs are a bit clunky, might be able to be improved with
-minor changes. Biggest help would be to run DEBUG_REMAP=y from
-time to time in CI.
+Will do. I'll give a few more days then send out updates. Thanks
+for the reviews.
 
 Thanks,
 Nick
-
-> 
-> Alistair
-> 
-> >
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >  linux-user/linuxload.c | 2 +-
-> >  linux-user/syscall.c   | 6 +++---
-> >  2 files changed, 4 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
-> > index 85d700953e..79416a94c9 100644
-> > --- a/linux-user/linuxload.c
-> > +++ b/linux-user/linuxload.c
-> > @@ -19,7 +19,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src, unsigned long len)
-> >          return -TARGET_EFAULT;
-> >      }
-> >      memcpy(host_ptr, src, len);
-> > -    unlock_user(host_ptr, dest, 1);
-> > +    unlock_user(host_ptr, dest, len);
-> >      return 0;
-> >  }
-> >
-> > diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> > index 7832a1aba5..13b8bd9ed3 100644
-> > --- a/linux-user/syscall.c
-> > +++ b/linux-user/syscall.c
-> > @@ -2989,7 +2989,7 @@ get_timeout:
-> >              if (put_user_u32(lv, optlen)) {
-> >                  return -TARGET_EFAULT;
-> >              }
-> > -            unlock_user(results, optval_addr, 0);
-> > +            unlock_user(results, optval_addr, len);
-> >              break;
-> >          }
-> >  #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(4, 2, 0) */
-> > @@ -4006,7 +4006,7 @@ static inline abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
-> >          __put_user((*host_array)[i], &array[i]);
-> >      }
-> >      g_free(*host_array);
-> > -    unlock_user(array, target_addr, 1);
-> > +    unlock_user(array, target_addr, nsems * sizeof(unsigned short));
-> >
-> >      return 0;
-> >  }
-> > @@ -7888,7 +7888,7 @@ static inline abi_long target_to_host_sigevent(struct sigevent *host_sevp,
-> >      host_sevp->sigev_notify = tswap32(target_sevp->sigev_notify);
-> >      host_sevp->sigev_notify_thread_id = tswap32(target_sevp->_sigev_un._tid);
-> >
-> > -    unlock_user_struct(target_sevp, target_addr, 1);
-> > +    unlock_user_struct(target_sevp, target_addr, 0);
-> >      return 0;
-> >  }
-> >
-> > --
-> > 2.51.0
-> >
-> >
-> 
 
