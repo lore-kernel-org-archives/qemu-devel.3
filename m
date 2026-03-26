@@ -4,106 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B9B10AB827
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 21:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 065A810AB827
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 21:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5rtt-0004Ap-JA; Thu, 26 Mar 2026 17:05:57 -0400
+	id 1w5s15-0000fv-2M; Thu, 26 Mar 2026 17:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rto-00049J-Bi
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w5rtn-00038N-0k
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:05:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774559150;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5s13-0000fi-M7
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:13:21 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w5s12-00056Z-0D
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 17:13:21 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B024D4D3F8;
+ Thu, 26 Mar 2026 21:13:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774559597; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Xl4BeA9TjT4adRjjwuVr5ck8x18mt6Jrccqdq1Pqh9U=;
- b=Dsv0NW9VMPdkxo9LcUYol7hlaBUiBN+UJfoO8QgMe/tjVqymEueu2HFLiI+TxY5wPqGiqn
- 0krT6JhFs1i0XZPJ2G/S4AAwdZMV3t0rBsIRLKV2FJpib9jxYxuANQ17DgduOSsR28Nz/X
- y6+eNVOvxSCcptJglzikAGtUQLX+2fI=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-5L501rjRPY-PKxq6YZvyHg-1; Thu, 26 Mar 2026 17:05:49 -0400
-X-MC-Unique: 5L501rjRPY-PKxq6YZvyHg-1
-X-Mimecast-MFC-AGG-ID: 5L501rjRPY-PKxq6YZvyHg_1774559149
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8cb706313beso250159285a.3
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 14:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774559148; x=1775163948; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Xl4BeA9TjT4adRjjwuVr5ck8x18mt6Jrccqdq1Pqh9U=;
- b=RLknSWMGyC/CqluCmFJ2jn/cghqwN4Cxtl7UNIo3tKqt+KlYcOqL+1Y7J/ywFUpEPT
- NrYx72f17Qq+N5bBkPlZGagmZ/dJaKqdwGSYq5FTjWnqz5EwTguDTvE8xWxvO7Cr/KQO
- hhnR2P06Lxt9SeIKstgVAU3Lm6GUBmh6JuNgUYBZrwzxpkrJMN64OubAOVwniTQEPVF7
- WnVleLDyuFVAGqf3OpX6U9r2Ox4ZEX8sUL6HKw+1LxnXMfeJkJqjBReSZun2fQQ6c6To
- jEAuNqVjmVNXG1lYGJyyzrwPClQANV42+DxCCD6/MuOL6HOgwXKbNrXna3j28zlSjwP3
- fK0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774559148; x=1775163948;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Xl4BeA9TjT4adRjjwuVr5ck8x18mt6Jrccqdq1Pqh9U=;
- b=L1hBtHDQD82VKVanfdQsLdVUtQOzHHrGtOa/7a9APe/S7xOtmifUtlRkWnFvEa3jsc
- EiIu2pLv7nr9L3mjmYoASY2l6dlMx0WuurcO1lgM1ZmDwTloFel5o0EqPA1W/rB8xHyr
- 29VP26MIkSNJm6Bt03pJGh5h8ampL68yDalSeuqwg7bfwu3jyfU+mNmRsCkO2Didt17g
- pUdAwhU2/v0XksjzQ+jf2jleQMupUV3x6jkJmGifaYlxmiu6BbLDxt56IL/Gof2t+qtD
- AzMsJyKY/2BMld7nVMDHdpGdS1HZRxZ0EiMWSY7c0+2Z/qyUYJhKTLokYkFW2Ivi6zgK
- /McQ==
-X-Gm-Message-State: AOJu0YzQwKdYM2DASQROQYJFfpbxdkZfnngIouvqEF12+feU59cXqxCC
- 6HV5DaOY9JgVf5hlp6ErGaohYhrUec6y784UqB7XQUpQ92H+RXipqwEDO/4Wl4hoEZt2NtT+gjx
- Rdo3Z3O6eJe0BoEtathdu0EfCDOrBO5wqdHtjw343HAjqsz03Scrf2Ykaxg3HCZGSbuY6W6bucs
- SFZgMZPtFUFSIKZYdv/GxaPvJU9hFRlbztIMQ/5A==
-X-Gm-Gg: ATEYQzzvJGi1BqOYL0P7DU30QyZaVzKEwjejNq/N/Fr9Zm9fnLl2vFXJkAWZYKYMGNC
- EVwUNEPvBdWAU5VevRKVRev/95kxm0QrFLzSfall6pDCj8RtwyV3O0qH+IifiTZVjONwuoL8vxF
- aLboWfunh0/J/kqifuQj1irZ85FGDGZ/uo3djWQ507boU2C8NVJd3k5FawX7YX+wYFhR/CFGQbe
- eV+2ujBCY2smm9yNUo8dN6i38q+m8z/qLTElKUKfeSg2djH3vgazI+ELYmA3xVOOoKbGYCNAAy/
- TmZwO3Ei9YnvIaps4mvWvxf7BVs4NRYJFejEZlb66ZpRsfl+8ndY6qkwtGvYyhlro+n5f/GkxJm
- oPfKRA9k+IwQ=
-X-Received: by 2002:a05:620a:400b:b0:8cd:b61f:2f48 with SMTP id
- af79cd13be357-8d00100bc68mr1252415785a.42.1774559148325; 
- Thu, 26 Mar 2026 14:05:48 -0700 (PDT)
-X-Received: by 2002:a05:620a:400b:b0:8cd:b61f:2f48 with SMTP id
- af79cd13be357-8d00100bc68mr1252410185a.42.1774559147640; 
- Thu, 26 Mar 2026 14:05:47 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8d00e4fa7d9sm353479785a.32.2026.03.26.14.05.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 14:05:47 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>, peterx@redhat.com,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH RFC v2 10/11] vmstate: Stop checking size for nullptr
- compression
-Date: Thu, 26 Mar 2026 17:05:31 -0400
-Message-ID: <20260326210532.379027-11-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260326210532.379027-1-peterx@redhat.com>
-References: <20260326210532.379027-1-peterx@redhat.com>
+ bh=r6b/wOXevHUOfuIzyBaJyhhqOPC9uh/lCYba2n+rfLA=;
+ b=ajtKb2j+TETQ10e95QhsGnS+lqxhEINrJxMq/3EPp7lULniyr8j5tDX7tmA9QeJUdlybuu
+ cKmh2BM76ctk1f/GJQxFm9wd7dW+kaqC+qp48x93+Gl5YpICpLUmdxbHQxbzPtxxGHFPNs
+ fDZrb3Y8thklxY5p/bo4sOR4rfvwvn0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774559597;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r6b/wOXevHUOfuIzyBaJyhhqOPC9uh/lCYba2n+rfLA=;
+ b=bItrK41sNCjomgr2HqGsLq2IF6scEwKCGQwW0/PBdGMchf8Yhp3r3hTRvZJlEzP6hOdFaw
+ OqaMocbz3ye6PDDw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774559596; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r6b/wOXevHUOfuIzyBaJyhhqOPC9uh/lCYba2n+rfLA=;
+ b=RLymWVNxl54ZhAVdOQGwpSgUd0KLsaD2inL4d6MVcsJm42CJ7d3Fs8bbzqCck70PJYx7e7
+ AlrhtF93Ys67aBW2EsUBZsro+KiXBiw5V55+DeMO2tnWyrAB/M/l7HpAyHIv+Bq+LZZqws
+ JWdlUgfQVFFXwQEsXG1g5VzX6Q4+cBw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774559596;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r6b/wOXevHUOfuIzyBaJyhhqOPC9uh/lCYba2n+rfLA=;
+ b=IkTs/Pc2v2JK+DtSv1Sv/2mheLQko/aT1mZtnL7BBl1r4n9KAU5NIGC4IkJE0xQbBXbTqT
+ 1zb8gp1pYNVrbgAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4DA194A0A3;
+ Thu, 26 Mar 2026 21:13:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Aua6B2yhxWnxRgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 26 Mar 2026 21:13:16 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v1] tests/qtest/migration: Fix slow test dirty_limit
+In-Reply-To: <acV4N7ENkELzx5V9@x1.local>
+References: <20260326164405.1626-1-farosas@suse.de> <acV4N7ENkELzx5V9@x1.local>
+Date: Thu, 26 Mar 2026 18:13:14 -0300
+Message-ID: <877bqyjnv9.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,49 +116,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Peter Xu <peterx@redhat.com> writes:
 
-The NULL pointer marker code applies only to VMS_ARRAY_OF_POINTER,
-where the size is never NULL. Move the setting of is_null under
-VMS_ARRAY_OF_POINTER, so we can stop checking the size.
+> On Thu, Mar 26, 2026 at 01:44:05PM -0300, Fabiano Rosas wrote:
+>> After the referenced commit, the incoming side doesn't exit
+>> automatically after a failure. Tests that expect the destination to
+>> fail should use -incoming defer, issue QMP migrate-incoming, wait for
+>> the failure event and issue QMP quit.
+>> 
+>> Fix the dirty_limit test which wasn't updated properly.
+>> 
+>> Fixes: 4e8c4dda97 ("tests/qtest/migration: Force exit-on-error=false")
+>> Reported-by: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> Highly likely I missed something, but could you remind me what is the
+> problem before the change, and why "defer" fixes it?
+>
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/vmstate.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+The original issue was that on failure the incoming side exits abruptly
+and leaves resources in the io/channel.c and io/task.c without freeing
+and that triggers ASAN (when in use). The fix was to set
+exit-on-error=false always. -incoming defer is needed because -incoming
+uri has no means of setting the exit-on-error flag, we need an explicit
+call to migrate-incoming to be able to set the flag.
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 9cd0a88ce9..1923602f3b 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -673,14 +673,14 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 const VMStateField *inner_field;
-                 /* maximum number of elements to compress in the JSON blob */
-                 int max_elems = vmsd_can_compress(field) ? (n_elems - i) : 1;
--                bool use_marker_field, is_null;
-+                bool use_marker_field, is_null = false;
- 
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
-                     assert(curr_elem);
-                     curr_elem = *(void **)curr_elem;
-+                    is_null = !curr_elem;
-                 }
- 
--                is_null = !curr_elem && size;
-                 use_marker_field = use_dynamic_array || is_null;
- 
-                 if (use_marker_field) {
-@@ -708,7 +708,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
- 
-                     for (int j = i + 1; j < n_elems; j++) {
-                         void *elem = *(void **)(first_elem + size * j);
--                        bool elem_is_null = !elem && size;
-+                        bool elem_is_null = !elem;
- 
-                         if (is_null != elem_is_null) {
-                             max_elems = j - i;
--- 
-2.50.1
+The dirty_limit test was not updated properly because it's under g_slow
+and I forgot to test it. I removed the qtest_set_expected_status(to,
+EXIT_FAILURE) line, but didn't make sure exit-on-error is set to false
+for this test. So it's now aborting with "expected 0, got 1".
 
+> The current failure path in this test is:
+>
+>     /* Now cancel migrate and wait for dirty limit throttle switch off */
+>     migrate_cancel(from);
+>     wait_for_migration_status(from, "cancelled", NULL);
+>
+>     /* destination always fails after cancel */
+>     migration_event_wait(to, "failed");
+>     qtest_set_expected_status(to, EXIT_FAILURE);
+>     qtest_quit(to);
+>
+> It waits for "failed", so IIUC after switching to exit-on-error it'll make
+> sure things got gracefully shutdown before qtest_quit().  So I'm a bit lost
+> on what we're fixing.
+>
+> PS: a nitpick is if we could always attach a "Link:" to the commit message,
+> it might help a bit on knowing the original report too.
+>
+>> ---
+>>  tests/qtest/migration/precopy-tests.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+>> index c6c8ae3004..a0e3ff0547 100644
+>> --- a/tests/qtest/migration/precopy-tests.c
+>> +++ b/tests/qtest/migration/precopy-tests.c
+>> @@ -1070,11 +1070,10 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
+>>      args->start.hide_stderr = true;
+>>      args->start.use_dirty_ring = true;
+>>  
+>> -    args->listen_uri = uri;
+>>      args->connect_uri = uri;
+>>  
+>>      /* Start src, dst vm */
+>> -    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+>> +    if (migrate_start(&from, &to, "defer", &args->start)) {
+>>          return;
+>>      }
+>>  
+>> @@ -1082,6 +1081,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
+>>      migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
+>>  
+>>      /* Start migrate */
+>> +    migrate_incoming_qmp(to, args->connect_uri, NULL, "{}");
+>>      migrate_qmp(from, to, args->connect_uri, NULL, "{}");
+>>  
+>>      /* Wait for dirty limit throttle begin */
+>> -- 
+>> 2.51.0
+>> 
 
