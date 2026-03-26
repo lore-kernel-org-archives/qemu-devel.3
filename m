@@ -4,76 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941BC109E55C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62ECC109E55D
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Mar 2026 06:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5efQ-0001tA-Rq; Thu, 26 Mar 2026 02:58:08 -0400
+	id 1w5efJ-0001ry-ST; Thu, 26 Mar 2026 02:58:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5efP-0001t1-TK
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:58:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1w5efI-0001rn-1H
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:58:00 -0400
+Received: from mail-centralusazon11010051.outbound.protection.outlook.com
+ ([52.101.61.51] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w5efN-0005By-Sa
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:58:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774508284;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zrTRRA12XoF3Tbcx0OtGL8uHjh+JUS5huNv0oocD7sI=;
- b=NhaN9AnUZPm+ayQfNaQjzkWdAr3b51hBJWEbzV2fjXsa6BZtuDlfnCrm5XYkxNcB9doPpk
- NIByaa1PPdneP1b0digLZtbyCqS8qko+Un0jOWdpxyo01PrdJoviTH5iTVIbUydGyWdDo6
- WnH6kkWzSP0mxuslToa+TrT9OMMiW70=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-Fr146CYjNKCu-tUksuc5mw-1; Thu,
- 26 Mar 2026 02:58:01 -0400
-X-MC-Unique: Fr146CYjNKCu-tUksuc5mw-1
-X-Mimecast-MFC-AGG-ID: Fr146CYjNKCu-tUksuc5mw_1774508280
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E11C61954B1C; Thu, 26 Mar 2026 06:57:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AF2619560B1; Thu, 26 Mar 2026 06:57:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C3E1621E6937; Thu, 26 Mar 2026 07:57:56 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Samuel Zhang <guoqing.zhang@amd.com>
-Cc: <qemu-devel@nongnu.org>,  <peterx@redhat.com>,  <farosas@suse.de>,
- <lizhijian@fujitsu.com>,  <eblake@redhat.com>,  <armbru@redhat.com>,
- <Emily.Deng@amd.com>,  <Victor.Zhao@amd.com>,  <PengJu.Zhou@amd.com>,
- <Qing.Ma@amd.com>
-Subject: Re: [PATCH v2] migration/rdma: add x-rdma-chunk-size parameter
-In-Reply-To: <20260326025825.2427332-1-guoqing.zhang@amd.com> (Samuel Zhang's
- message of "Thu, 26 Mar 2026 10:58:25 +0800")
-References: <20260316062308.1240426-1-guoqing.zhang@amd.com>
- <20260326025825.2427332-1-guoqing.zhang@amd.com>
-Date: Thu, 26 Mar 2026 07:57:56 +0100
-Message-ID: <87jyuzhybv.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1w5efG-0005AZ-0W
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 02:57:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Sr0Vkh8G2h8VOTWRnNvpGjLThfUo+Pgj4AoDxTorq5XiIcRqwLziJ1cT2tZF2LGDNsmx09I+RStSB53SpAFzZ1r/NfXOn4fFGJWBswoSBuLXph9FVK0+QkbQ1zVE6iMvMybJ6FDXaOroJpGESlaTuKFVGd76g1+HJzrFCOD16jV4IzSGD/YfBTqZCC8UqIHpPztbWdc9j3ySLWwkGLwTO2Tg1HA2hKlYrYMd0luRRL0bij6OCRVt5w16z0fodQdUUWBvFYgoLHp5aesbtEcXvKiJg4eilU2ocDRtzEKK7kWC+SiW2nV37yg9+Cvix9ZEGkffp/jXvKW9ZTbWmaq/sg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=C6gpOqBqCQ8J0CiyAeD2dF2ICcfdBe5vPCceQbLdrP4=;
+ b=oKxXKM/UJLLa4WajbTAHwrXuAqSqF3QRlByJEhvtVs+QNK6pHPWvGLF6PzgL0tXnJWRRTNRy/RhqZQ6BueR8OfRK8cVqNEhb4Rd27Zo2NNWwjpj9p9w2jHLO2zm8pCXwMKpib15pAsoqqPqdlX2Hc8mHqMqmEhWBfxjDrYiFq63NCKG5Q47KRIx3kt4LThp8sABIXbC7pskodqXXwI9xZuwYx4hrt2N13+opXM0TQ0lHcNO3LA2YEC5GYjJ+zX8oo6cTfCJ1JhWbSdSPhpQ9Bmh2ZZD6g4eyw3NGYkmio5IdsXEEr99xpNBzPOPurf0DvQ00PFDdLDOovfRb0/xHmw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=C6gpOqBqCQ8J0CiyAeD2dF2ICcfdBe5vPCceQbLdrP4=;
+ b=3620s5Hw6MBXdYFkIjcDUkTXerl0gt5pV0i8ewaHMaQue04SguypzkpuWcPtGd8ltbvRGcO7ZiGI//cIWPYW8eHALQlVvrNJM1hN4FDGBp9HPVqL8BomCp9ydFsUXxe0uVn3VimeAlvWdoIRw9T0j4MzkaXAQ/6aCKjOWkZtkOU=
+Received: from PH7P220CA0118.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:32d::18)
+ by LV3PR12MB9353.namprd12.prod.outlook.com (2603:10b6:408:21b::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Thu, 26 Mar
+ 2026 06:52:50 +0000
+Received: from CY4PEPF0000EE3C.namprd03.prod.outlook.com
+ (2603:10b6:510:32d:cafe::cd) by PH7P220CA0118.outlook.office365.com
+ (2603:10b6:510:32d::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9723.32 via Frontend Transport; Thu,
+ 26 Mar 2026 06:52:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CY4PEPF0000EE3C.mail.protection.outlook.com (10.167.242.13) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9745.21 via Frontend Transport; Thu, 26 Mar 2026 06:52:48 +0000
+Received: from [10.143.201.178] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 26 Mar
+ 2026 01:52:45 -0500
+Message-ID: <7c01325b-c509-4121-9b16-c73e2e7dc2a0@amd.com>
+Date: Thu, 26 Mar 2026 12:22:37 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <qemu@demindiro.com>, <mst@redhat.com>,
+ <clement.mathieu--drif@eviden.com>, <pbonzini@redhat.com>,
+ <richard.henderson@linaro.org>, <eduardo@habkost.net>,
+ <boris.ostrovsky@oracle.com>
+Subject: Re: [PATCH 1/2] amd_iommu: Follow root pointer before page walk and
+ use 1-based levels
+Content-Language: en-US
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
+References: <20260311203943.2309841-1-alejandro.j.jimenez@oracle.com>
+ <20260311203943.2309841-2-alejandro.j.jimenez@oracle.com>
+ <2756c509-4286-444a-815c-d6266c3e3a91@amd.com>
+ <ba2d7018-7dcc-42d7-ba52-395d4e1d0298@oracle.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <ba2d7018-7dcc-42d7-ba52-395d4e1d0298@oracle.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3C:EE_|LV3PR12MB9353:EE_
+X-MS-Office365-Filtering-Correlation-Id: 177a32b7-e76d-44f9-8f21-08de8b044ae7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|376014|36860700016|30052699003|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: IhqKQPfY3L4dxL44Z/eVeVVS4E1ZClqvoa9BH/OhGvvZC3rbjfktRAfBorVZ+QQFAZpLJjcLZBZ9QIvEGSvltbeoMjqdsRKR0dXWip4tjVz2qF3qn/a0fe/O1awqTkTUXgdjMc83Yp2ZbXp0kqwGLzkKWp6y5BuNqxxgcjNS2tIJts44b4dfUYbGgcTTz6U9gE7/ZO90xR2dJIEb/I003YcDLmtmJcnJLgACXPThr5obH5oyTjK2Y5e3uxcyWLzbpAS1Zh8CRyldpRAcCHD1EnuoK+f4JFteAIkYskruaf4VwhG8x+Ynp7V4jw1bCQRUDLKpbGcNZahgmLwnL61eW+WRcHmrLVFo94dhs9rqVtoTT9EDM0XcOzG1kF3lo2pSqUayYa+lQdsUx2qBg/EAWPUGRi0SgBv0RPC1+HTPg1dAHhHGPEk6nFjpCpkYKHw59exLlK5xn1f5VSSPVpFgNpc14CSfNC2FCIq3nH5q/HXTBjE2T2thBRXeLsIrOdC6KrVUFDpAFC+3ykubqWGmlhFbildo5iuRUtAhtRPrFsLdbiwizI2Je8w0IGme4P1Cc9OCA6zcMhTHsaKmis8iivyBDI3PFDFT6c9G2YOi8XHhvACjS9Jdu3g2yXMl/IQdkpoQyG/lbZMdUF4ttGicUEteM3MS7jqjlbxZO9+t1qdJL4tlXe5PB5SZzPeGYugjTrFp7vl2Jtm5jtD6zwixIrM5JLltlTGP8JWqKkcRrtzhWqyjL+3ArxM9niXnDAFTj4tYdU7O58En04MeXUQ4vw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(30052699003)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: EP0RR/wmr+s7SVJWYYp5q4qTbWtQMbm+ToGGiQ0kAB6M4oFrLZxP382ygIcbsYY8hW1iwhgQNkYUlVLCm4XkjPjsUm3Y2ZuLR9p10weE4Hy4UMRN+gcr6P47fvpIVzq3l/a8UeVDRStze9wrN1oH5UJat/6Z31DO3AXZ6iDgUe7E29B8EHAKxGNGZsbhV2/zh6dGYhZzeB014aR3sOkn4WcXiKoAdbaiAguiOtuW4RoM8l2Hcs3flcaJa1BzL4rnwQyvHfrDNtfYMZ5M+8ltyxWstI6G5sT9PMwcw/H6nakL1G2teo8ddLF6WtX4MsRia0jxaTGHyqWXIj8U8/bpSWJO60txJeL3z2s9TKWrLCo+ArOReiewzaxiU3XovkFqrwtPmXNNJTbwIT4MAuubIyrI8A3diogILpWlXTRBcrAn59RUmYAjNabtN716ZZFt
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Mar 2026 06:52:48.5099 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 177a32b7-e76d-44f9-8f21-08de8b044ae7
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE3C.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9353
+Received-SPF: permerror client-ip=52.101.61.51;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,360 +134,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By convention, we don't post new patches in reply to old ones.  Next
-time :)
 
-Samuel Zhang <guoqing.zhang@amd.com> writes:
 
-> The default 1MB RDMA chunk size causes slow live migration because
-> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
-> 1MB chunk size produce ~15000 flushes vs ~3700 with 1024MB chunk size.
+On 3/24/2026 7:55 PM, Alejandro Jimenez wrote:
 >
-> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
-> faster migration.
-> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
+> On 3/23/26 7:01 AM, Sairaj Kodilkar wrote:
+>>
+>> On 3/12/2026 2:09 AM, Alejandro Jimenez wrote:
+>>> DTE[Mode] and PTE NextLevel encode page table levels as 1-based values, but
+>>> fetch_pte() currently uses a 0-based level counter, making the logic
+>>> harder to follow and requiring conversions between DTE mode and level.
+>>>
+>>> Switch the page table walk logic to use 1-based level accounting in
+>>> fetch_pte() and the relevant macro helpers. To further simplify the page
+>>> walking loop, split the root page table access from the walk i.e. rework
+>>> fetch_pte() to follow the DTE Page Table Root Pointer and retrieve the top
+>>> level pagetable entry before entering the loop, then iterate only over the
+>>> PDE/PTE entries.
+>>>
+>>> The reworked algorithm fixes a page walk bug where the page size was
+>>> calculated for the next level before checking if the current PTE was already
+>>> a leaf/hugepage. That caused hugepage mappings to be reported as 4K pages,
+>>> leading to performance degradation and failures in some setups.
+>>>
+>>> Fixes: a74bb3110a5b ("amd_iommu: Add helpers to walk AMD v1 Page Table
+>>> format")
+>>> Cc: qemu-stable@nongnu.org
+>>> Reported-by: David Hoppenbrouwers <qemu@demindiro.com>
+>>> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+>>> ---
+>>>    hw/i386/amd_iommu.c | 132 ++++++++++++++++++++++++++++++--------------
+>>>    hw/i386/amd_iommu.h |  11 ++--
+>>>    2 files changed, 97 insertions(+), 46 deletions(-)
+>>>
+> [...]
 >
-> Performance with RDMA live migration of 8GB RAM VM:
+>> Hi Alejandro,
+>>
+>> amdvi_sync_shadow_page_table_range() does not check if DTE
+>> **valid and translation valid** bit are set. I added this check in
+>> my reply to david's patch. Do you think we should include that
+>> check as well to ensure that only DTEs with **valid and translation valid**
+>> bit are passed to the fetch_pte ?
+>>
+> Right now the check for DTE[V] and DTE[TV] are implemented in
+> amdvi_as_to_dte(), which all callers of
+> amdvi_sync_shadow_page_table_range() use to extract the DTE that will be
+> passed as its argument. So I think if we were to add a check, an assert
+> would be more appropriate.
 >
-> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
-> |-----------------------|----------|-------------------|
-> | 1M (default)          | 37.915   |  1,007            |
-> | 32M                   | 17.880   |  2,260            |
-> | 1024M                 |  4.368   | 17,529            |
+> On the other hand, I am worried about sprinkling assertions around the
+> code, and I am actually considering removing the ones the original series
+> added to amdvi_sync_shadow_page_table_range(), fetch_pte(), and
+> amdvi_notify_iommu(), since any failures in these cases are likely to cause
+> immediate symptoms and I don't believe it creates any window for data
+> corruption.
 >
-> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
-> ---
-> v2:
-> - Renamed x-rdma-chunk-shift to x-rdma-chunk-size (byte count)
-> - Added validation in migrate_params_check()
-> - Added hmp_migrate_set_parameter() support
-> - Added hmp_info_migrate_parameters() support
-> - Added migrate_mark_all_params_present()
-> - Use qemu_strtosz() for size suffix support
+> With that in mind, to answer your question I would not add any additional
+> check on amdvi_sync_shadow_page_table_range(), and would rely on the
+> current convention to check when retrieving a DTE via the interface we
+> provided for it and all the code already uses i.e. amdvi_as_to_dte().
 >
->  migration/migration-hmp-cmds.c | 17 +++++++++++++++++
->  migration/options.c            | 32 +++++++++++++++++++++++++++++++-
->  migration/options.h            |  1 +
->  migration/rdma.c               | 30 ++++++++++++++++--------------
->  qapi/migration.json            | 11 +++++++++--
->  5 files changed, 74 insertions(+), 17 deletions(-)
 >
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 0a193b8f54..2c005c08a6 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -451,6 +451,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
->                             params->direct_io ? "on" : "off");
->          }
->  
-> +        if (params->has_x_rdma_chunk_size) {
-> +            monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
-> +                           MigrationParameter_str(
-> +                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
-> +                           params->x_rdma_chunk_size);
-> +        }
-> +
->          assert(params->has_cpr_exec_command);
->          monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
->      }
-> @@ -730,6 +737,16 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
->          p->has_mode = true;
->          visit_type_MigMode(v, param, &p->mode, &err);
->          break;
-> +    case MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE:
-> +        p->has_x_rdma_chunk_size = true;
-> +        ret = qemu_strtosz(valuestr, NULL, &valuebw);
+> For a follow up cleanup, maybe amdvi_as_to_dte() should be renamed with a
+> more suggestive name that clearly indicates that it validates for those
+> conditions. But in context, all of its callers rely on the fact that it
+> does this verification and its return values also encode it.
+>
+> While looking into this I noticed a chance for minor cleanup in this flow:
+> amdvi_do_translate()
+>      amdvi_as_to_dte()
+>      amdvi_page_walk()
+>
+> Where amdvi_page_walk() does an unnecessary check for DTE[TV], that
+> amd_vi_as_to_dte() already ensures is set.
 
-We use several variations of the conversion to size:
+Hi Alejandro,
+I agree with you about sprinkling assertions, I think some of the assertions
+should ideally deliver a events to the guest. But we can have this in later
+series
 
-                       default          examples
-function                suffix  scale     "1"         "64K"
------------------------------------------------------------
-qemu_strtosz()             B     1024      1        64*1024
-qemu_strtosz_MiB()         M     1024   1024*1024   64*1024
-qemu_strtosz_metric()      B     1000      1        64*1000
+Also for both the patches
 
-Unfortunate complication of the user interface if you ask me, but
-changing it now is likely a bad idea.  My point is: which one to use
-here?
+Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
 
-This function uses two: qemu_strtosz_MiB() directly, and qemu_strtosz()
-via visit_type_size().
+Thanks
+Sairaj
 
-Unless you have a specific reason to want default suffix 'M', use
-visit_type_size(), it's less code, and the error reporting is better.
-
-
-> +        if (ret != 0 || valuebw < (1<<20) || valuebw > (1<<30)
-> +            || !is_power_of_2(valuebw)) {
-> +            error_setg(&err, "Invalid size %s", valuestr);
-> +            break;
-> +        }
-
-This is partly redundant with the checking in migrate_params_check().
-
-If you use visit_type_size(), you don't need it at all.
-
-If you use qemu_strtosz_MiB(), you should check less.  Have a look at
-the other uses in this function.
-
-> +        p->x_rdma_chunk_size = valuebw;
-> +        break;
->      case MIGRATION_PARAMETER_DIRECT_IO:
->          p->has_direct_io = true;
->          visit_type_bool(v, param, &p->direct_io, &err);
-> diff --git a/migration/options.c b/migration/options.c
-> index f33b297929..91dd874b5e 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -90,6 +90,7 @@ const PropertyInfo qdev_prop_StrOrNull;
->  
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
-> +#define DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE           (1<<20) /* 1MB */
->  
->  const Property migration_properties[] = {
->      DEFINE_PROP_BOOL("store-global-state", MigrationState,
-> @@ -183,6 +184,9 @@ const Property migration_properties[] = {
->      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
->                         parameters.zero_page_detection,
->                         ZERO_PAGE_DETECTION_MULTIFD),
-> +    DEFINE_PROP_UINT64("x-rdma-chunk-size", MigrationState,
-> +                      parameters.x_rdma_chunk_size,
-> +                      DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE),
->  
->      /* Migration capabilities */
->      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-> @@ -993,6 +997,15 @@ ZeroPageDetection migrate_zero_page_detection(void)
->      return s->parameters.zero_page_detection;
->  }
->  
-> +uint64_t migrate_rdma_chunk_size(void)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    uint64_t size = s->parameters.x_rdma_chunk_size;
-> +
-> +    assert((1<<20) <= size && size <= (1<<30) && is_power_of_2(size));
-
-Suggest MiB <= size && size <= GiB.
-
-> +    return size;
-> +}
-> +
->  /* parameters helpers */
->  
->  AnnounceParameters *migrate_announce_params(void)
-> @@ -1055,7 +1068,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
->          &p->has_announce_step, &p->has_block_bitmap_mapping,
->          &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
->          &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
-> -        &p->has_cpr_exec_command,
-> +        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
->      };
->  
->      len = ARRAY_SIZE(has_fields);
-> @@ -1227,6 +1240,15 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->          return false;
->      }
->  
-> +    if (params->has_x_rdma_chunk_size &&
-> +        (params->x_rdma_chunk_size < (1<<20) ||
-> +         params->x_rdma_chunk_size > (1<<30) ||
-
-Suggest < MiB and > GiB.
-
-> +         !is_power_of_2(params->x_rdma_chunk_size))) {
-> +        error_setg(errp, "Option x_rdma_chunk_size expects "
-> +                   "a power of 2 in the range 1M to 1024M");
-> +        return false;
-> +    }
-> +
->      if (!check_dirty_bitmap_mig_alias_map(params->block_bitmap_mapping, errp)) {
->          error_prepend(errp, "Invalid mapping given for block-bitmap-mapping: ");
->          return false;
-> @@ -1391,6 +1413,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
->          dest->direct_io = params->direct_io;
->      }
->  
-> +    if (params->has_x_rdma_chunk_size) {
-> +        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
-> +    }
-> +
->      if (params->has_cpr_exec_command) {
->          dest->cpr_exec_command = params->cpr_exec_command;
->      }
-> @@ -1517,6 +1543,10 @@ static void migrate_params_apply(MigrationParameters *params)
->          s->parameters.direct_io = params->direct_io;
->      }
->  
-> +    if (params->has_x_rdma_chunk_size) {
-> +        s->parameters.x_rdma_chunk_size = params->x_rdma_chunk_size;
-> +    }
-> +
->      if (params->has_cpr_exec_command) {
->          qapi_free_strList(s->parameters.cpr_exec_command);
->          s->parameters.cpr_exec_command =
-> diff --git a/migration/options.h b/migration/options.h
-> index b502871097..b46221998a 100644
-> --- a/migration/options.h
-> +++ b/migration/options.h
-> @@ -87,6 +87,7 @@ const char *migrate_tls_creds(void);
->  const char *migrate_tls_hostname(void);
->  uint64_t migrate_xbzrle_cache_size(void);
->  ZeroPageDetection migrate_zero_page_detection(void);
-> +uint64_t migrate_rdma_chunk_size(void);
->  
->  /* parameters helpers */
->  
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 55ab85650a..3e37a1d440 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -45,10 +45,12 @@
->  #define RDMA_RESOLVE_TIMEOUT_MS 10000
->  
->  /* Do not merge data if larger than this. */
-> -#define RDMA_MERGE_MAX (2 * 1024 * 1024)
-> -#define RDMA_SIGNALED_SEND_MAX (RDMA_MERGE_MAX / 4096)
-> +static inline uint64_t rdma_merge_max(void)
-> +{
-> +    return migrate_rdma_chunk_size() * 2;
-> +}
->  
-> -#define RDMA_REG_CHUNK_SHIFT 20 /* 1 MB */
-> +#define RDMA_SIGNALED_SEND_MAX 512
->  
->  /*
->   * This is only for non-live state being migrated.
-> @@ -527,21 +529,21 @@ static int qemu_rdma_exchange_send(RDMAContext *rdma, RDMAControlHeader *head,
->  static inline uint64_t ram_chunk_index(const uint8_t *start,
->                                         const uint8_t *host)
->  {
-> -    return ((uintptr_t) host - (uintptr_t) start) >> RDMA_REG_CHUNK_SHIFT;
-> +    return ((uintptr_t) host - (uintptr_t) start) / migrate_rdma_chunk_size();
-
-Double-checking: this function isn't speed-critical, correct?
-
->  }
->  
->  static inline uint8_t *ram_chunk_start(const RDMALocalBlock *rdma_ram_block,
->                                         uint64_t i)
->  {
->      return (uint8_t *)(uintptr_t)(rdma_ram_block->local_host_addr +
-> -                                  (i << RDMA_REG_CHUNK_SHIFT));
-> +                                  (i * migrate_rdma_chunk_size()));
->  }
->  
->  static inline uint8_t *ram_chunk_end(const RDMALocalBlock *rdma_ram_block,
->                                       uint64_t i)
->  {
->      uint8_t *result = ram_chunk_start(rdma_ram_block, i) +
-> -                                         (1UL << RDMA_REG_CHUNK_SHIFT);
-> +                                         migrate_rdma_chunk_size();
->  
->      if (result > (rdma_ram_block->local_host_addr + rdma_ram_block->length)) {
->          result = rdma_ram_block->local_host_addr + rdma_ram_block->length;
-> @@ -1841,6 +1843,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
->      struct ibv_send_wr *bad_wr;
->      int reg_result_idx, ret, count = 0;
->      uint64_t chunk, chunks;
-> +    uint64_t chunk_size = migrate_rdma_chunk_size();
->      uint8_t *chunk_start, *chunk_end;
->      RDMALocalBlock *block = &(rdma->local_ram_blocks.block[current_index]);
->      RDMARegister reg;
-> @@ -1861,22 +1864,21 @@ retry:
->      chunk_start = ram_chunk_start(block, chunk);
->  
->      if (block->is_ram_block) {
-> -        chunks = length / (1UL << RDMA_REG_CHUNK_SHIFT);
-> +        chunks = length / chunk_size;
->  
-> -        if (chunks && ((length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-> +        if (chunks && ((length % chunk_size) == 0)) {
->              chunks--;
->          }
->      } else {
-> -        chunks = block->length / (1UL << RDMA_REG_CHUNK_SHIFT);
-> +        chunks = block->length / chunk_size;
->  
-> -        if (chunks && ((block->length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-> +        if (chunks && ((block->length % chunk_size) == 0)) {
->              chunks--;
->          }
->      }
->  
->      trace_qemu_rdma_write_one_top(chunks + 1,
-> -                                  (chunks + 1) *
-> -                                  (1UL << RDMA_REG_CHUNK_SHIFT) / 1024 / 1024);
-> +                                  (chunks + 1) * chunk_size / 1024 / 1024);
->  
->      chunk_end = ram_chunk_end(block, chunk + chunks);
->  
-> @@ -2176,7 +2178,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
->      rdma->current_length += len;
->  
->      /* flush it if buffer is too large */
-> -    if (rdma->current_length >= RDMA_MERGE_MAX) {
-> +    if (rdma->current_length >= rdma_merge_max()) {
->          return qemu_rdma_write_flush(rdma, errp);
->      }
->  
-> @@ -3522,7 +3524,7 @@ int rdma_registration_handle(QEMUFile *f)
->                  } else {
->                      chunk = reg->key.chunk;
->                      host_addr = block->local_host_addr +
-> -                        (reg->key.chunk * (1UL << RDMA_REG_CHUNK_SHIFT));
-> +                        (reg->key.chunk * migrate_rdma_chunk_size());
->                      /* Check for particularly bad chunk value */
->                      if (host_addr < (void *)block->local_host_addr) {
->                          error_report("rdma: bad chunk for block %s"
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 7134d4ce47..94d2c1c65f 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -806,7 +806,7 @@
->  #
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -831,6 +831,7 @@
->             'mode',
->             'zero-page-detection',
->             'direct-io',
-> +           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
->             'cpr-exec-command'] }
->  
->  ##
-> @@ -1007,9 +1008,13 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
-> +#     Default is 1M.  Must be a power of 2 in the range [1M, 1024M].
-
-Let's use 1MiB and 1024MiB for extra clarity.
-
-> +#     Only takes effect for RDMA migration.  (Since 11.1)
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -1046,6 +1051,8 @@
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
->              '*direct-io': 'bool',
-> +            '*x-rdma-chunk-size': { 'type': 'uint64',
-> +                                    'features': [ 'unstable' ] },
->              '*cpr-exec-command': [ 'str' ]} }
->  
->  ##
+>
+> Thank you,
+> Alejandro
+>
+>> Thanks
+>> Sairaj Kodilkar
+>>
 
 
