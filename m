@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6DA10AB83B
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 01:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC1010AB83A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 01:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5vkD-0005Hw-1Q; Thu, 26 Mar 2026 21:12:13 -0400
+	id 1w5vkD-0005Hy-4P; Thu, 26 Mar 2026 21:12:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5vkA-0005Gg-4m
+ id 1w5vkA-0005Ge-4e
  for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:10 -0400
-Received: from ci-2006j-snip4-11.eps.apple.com ([57.103.90.231]
+Received: from ci-2006d-snip4-11.eps.apple.com ([57.103.90.171]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5vk6-0006KT-9m
+ id 1w5vk6-0006KS-AN
  for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:09 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPS id
- DF87918000B4; Fri, 27 Mar 2026 01:11:57 +0000 (UTC)
+ 2F033180015E; Fri, 27 Mar 2026 01:11:56 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774573919; x=1777165919;
- bh=bhpzqF9f0sxVadieDFAu/pO43zamcXvwDEg98SWPzgo=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=cG6Eu3jWKzCOW8t6k/nWqwAwpSRwtBszWmo5qGZYxG1P6J0byacw/mSgB2yIdHpD9G4d2VdUR1COv9QPciHeA74Bbp59NxuxrEleU1dlYVLzb8S8UvYHjGQZzitSI269UpPkQdpnHitemYdQNz0+Kj6XdW9vjxwhFG/i9cfC0nnSKBISbVckE60uShzG4fcxPnm5qmlicSXbe3I9FIK7czEvO6+l05bRCXfDD4UanYkcwTfft3qMozOv4D4ZCDpABjYTWjEHAnJ9W3234aVksE8nv1amBo1sH53FWlwMA+DMhQsTXf0rSn3N+QZg3a3PB7ofKXqbcJDwZ1qVv8dgbw==
+ s=sig1; t=1774573918; x=1777165918;
+ bh=Ydz/hZxljWbu/ai9XltlyzziT/25kc5TG/SYqIJxPgc=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=JP+8fXhsgvVPPX52JdICd5p+W8osbSeLVHddXdDZ+bro5MWFnBbo7JypX8+JM15Xeq+vm9Nzb4Sy9eC7g3AkGoFuZO34VuRGAQW64REoHA//3QeccuQjaTGV5t1H5qoxwp82XGk52ZKAT+4gyQoZJO/U00XQq+xFoT6jPzDo4FagX/L+SJewrLDx6Gc/JL/jPMwlygXHpehDn49aZD7aRi/ZB5QtpmVJ58pnrYdOco+7AMxBFzZqRNEZ5aE0YjnXmPgME63hC4+bfBaD6HR5SvMvPyMbedr5S96VX2EUE9Xp0Kf8gFAlNLiqJcJifOQ8bmuvd5wsWplSG0sK8iM7qg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPSA id
- 59BDA180017B; Fri, 27 Mar 2026 01:11:56 +0000 (UTC)
+ 24E7918004B0; Fri, 27 Mar 2026 01:11:55 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -40,35 +40,34 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v6 1/4] meson.build: remove i386-softmmu WHPX support
-Date: Fri, 27 Mar 2026 02:11:49 +0100
-Message-ID: <20260327011152.4126-2-mohamed@unpredictable.fr>
+Subject: [PATCH v6 0/4] whpx: i386: even more updates
+Date: Fri, 27 Mar 2026 02:11:48 +0100
+Message-ID: <20260327011152.4126-1-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260327011152.4126-1-mohamed@unpredictable.fr>
-References: <20260327011152.4126-1-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=PaTyRyhd c=1 sm=1 tr=0 ts=69c5d95e
+X-Authority-Info-Out: v=2.4 cv=cqWWUl4i c=1 sm=1 tr=0 ts=69c5d95d
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=rusTielndRi_gjT-Gq0A:9
-X-Proofpoint-GUID: jk4L4hqcMayKqjXI_X5j8Bo1hDV8eczC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDAwOCBTYWx0ZWRfX0/UyKLe2RDAr
- R55senIbwLZKD/qs9Q6nziUCuaYaMaFAXcnOotCbauiuCG93Mv4EUwOfUKLTFSO45cS/SOJnPFK
- UcAuExJ9Da0oZCaruRoO0Uphd3NPqVFIwRjJADgkH+iS5PZXgtb7OBBHH8qD5qdR3iSPPJkIWcP
- xBsutvpeviYRMPqTAGqeQiy4nClKSXlozIBEEsC7DrtCInfMgROwrBRm1WzsReeeJZtl4aYMWTF
- GSfWB8UkaG4wGsxXlAEX6JEROYOfL1qk0BxUqgu1WyEND8KrCiiWuDlhknPOKd/JI5coeI0V9nN
- ZED3ncsmH/iwrq2P2nvpjdPLntWNIUwow5RWB8oad4nrn88dASfla42vsgLYTw=
-X-Proofpoint-ORIG-GUID: jk4L4hqcMayKqjXI_X5j8Bo1hDV8eczC
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=waBImidRqKZr_2MpZXoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: mU7CZMaCq3bjD8G2OilOhGNsNNz6ZGSO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDAwOCBTYWx0ZWRfX5liD4DLSCYt6
+ jutFTmycxsv6IoYaoY1f/X6cz0jXZKGKo3GHGIEYG2pxK6OL3tnlBF/gOIe//0hqQyoLnisZTyX
+ 9NPU1ihSg7ArY8tAZ9McA5g4Q7afNwF/yZsKdQLFPOcTxuXtS1yi6DAvgg1PDHBf7xC3CLi5iiC
+ A91wljmdt0zNEpn4Wl2tl42Y8r+RdlXPos3/EV7k/1kYDV4eRhzbuytz4WcKLgTifmkSrCN6Iv9
+ kuUeXQovc9aEyxXrt7vzINU4yt8XSeJaV8Y9zom0WEFEtmN514v9RiHo4d6BjZ86WSJO7NA6tV8
+ pW4w08hAYwb0k2riueAKcT+HPQH4sC/eSIr7FWqRzQq/YfCg189GW8IGeFla8A=
+X-Proofpoint-ORIG-GUID: mU7CZMaCq3bjD8G2OilOhGNsNNz6ZGSO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- clxscore=1030 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- mlxlogscore=823 bulkscore=0 lowpriorityscore=0 spamscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=728 malwarescore=0 adultscore=0 clxscore=1030
+ mlxscore=0 suspectscore=0 spamscore=0 phishscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603270008
-Received-SPF: pass client-ip=57.103.90.231;
+Received-SPF: pass client-ip=57.103.90.171;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -93,28 +92,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target/i386/emulate is pretty much incompatible
-with i386-softmmu and fixing that doesn't look
-worthwhile given the binary unification goals...
+Demoting some warnings that appeared too often
+and adding some documentation.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v5 to v6:
 
-diff --git a/meson.build b/meson.build
-index e6f17dd5f7..6f77309075 100644
---- a/meson.build
-+++ b/meson.build
-@@ -314,7 +314,7 @@ elif cpu == 'x86_64'
-     'CONFIG_HVF': ['x86_64-softmmu'],
-     'CONFIG_NITRO': ['x86_64-softmmu'],
-     'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
--    'CONFIG_WHPX': ['i386-softmmu', 'x86_64-softmmu'],
-+    'CONFIG_WHPX': ['x86_64-softmmu'],
-     'CONFIG_MSHV': ['x86_64-softmmu'],
-   }
- endif
+Remove emulation of SLDT and STR from this revision.
+Will continue seeing what to emulate or not for QEMU 11.1.
+
+The issues there turned out that target/i386/emulate causes
+state corruption across the board when using the i386-softmmu
+target. So disable WHPX support for that target as a workaround.
+
+Mohamed Mediouni (4):
+  meson.build: remove i386-softmmu WHPX support
+  docs: add WHPX section with initial info
+  whpx: i386: trace unsupported MSR accesses
+  target/i386: emulate: remove redundant logging for unmapped MMIO
+    access
+
+ MAINTAINERS                   |   1 +
+ docs/system/index.rst         |   1 +
+ docs/system/whpx.rst          | 144 ++++++++++++++++++++++++++++++++++
+ meson.build                   |   3 +-
+ target/i386/emulate/x86_mmu.c |   3 -
+ target/i386/whpx/trace-events |   1 +
+ target/i386/whpx/trace.h      |   2 +
+ target/i386/whpx/whpx-all.c   |   5 +-
+ 8 files changed, 154 insertions(+), 6 deletions(-)
+ create mode 100644 docs/system/whpx.rst
+ create mode 100644 target/i386/whpx/trace-events
+ create mode 100644 target/i386/whpx/trace.h
+
 -- 
 2.50.1 (Apple Git-155)
 
