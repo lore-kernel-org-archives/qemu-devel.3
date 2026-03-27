@@ -4,171 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B1F10BA420
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9CA10BA420
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5yNi-0004Xa-Aq; Fri, 27 Mar 2026 00:01:11 -0400
+	id 1w5yVn-0005ss-8L; Fri, 27 Mar 2026 00:09:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xudong.hao@intel.com>)
- id 1w5yNT-0004Vl-VL
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:00:56 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1w5yVk-0005sV-VB
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:09:29 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xudong.hao@intel.com>)
- id 1w5yNS-0000KZ-0n
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:00:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774584054; x=1806120054;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=9gHXTInN4zcvBm7cd/ClDcmVNaSdMREFwzfuoi6BorA=;
- b=Yfjc2x3CQJpCw92tLxc3KpL9X2JbijoVDqRWh4pR3ckDTXs3bCAqvbn0
- niDXJFWNrMwZeeEMgxnH7iZIfMTpohI2IAaviu2+JvFP1wnnASdznTNOe
- YZv3H201tBeDr0CbZ0SmIFLzdU9njZENMnG8Fa/2O53wF/ZCshYbE4BI1
- l4e72JfgIrdbkYl/Ct4VC5Q06d//jeJNyaCWLg/0udw/Bx3uwsSB11qhP
- rD+F+ILpybKoPCd++8KU6aSC+TXzlufBtiVwWXw0xcxXqWctGg8a+2zRK
- owcTy/dYelqyYjxTGCUi08AjSmWvKrQr2ffKCEpM7xMJJkgTPehMrXvEB g==;
-X-CSE-ConnectionGUID: ZktauzhpRhWELpXKPHsL6g==
-X-CSE-MsgGUID: EaaXeS5BRQm0ZTMaBGAPmA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="86349345"
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="86349345"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 21:00:51 -0700
-X-CSE-ConnectionGUID: 22PH8GPaQ8aIcNG7PhgZhg==
-X-CSE-MsgGUID: utwqUGpJQmWZrmtzS7JKKA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="229980134"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 21:00:52 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 26 Mar 2026 21:00:51 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 26 Mar 2026 21:00:51 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.39) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 26 Mar 2026 21:00:51 -0700
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1w5yVb-0002zp-43
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:09:28 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S/1OaKap08Lm/Mfdj6fS7jy5e3KgTv1UxCsP/H49voGzPCzjNET0n8StYZmpaRTfAc4ZVUz9xzlfYTJ2r6DL0zY03vgdsevQfni7A9MbA6BYn9VjhNhpsUWQQc6UmH2g/tTamYWI6EG82FXCNLAsQpFQOiy39pBKmiyK4pmvh2sXqKjV7LgvLPe1QdhSXaGapsPaxhdQHCgoNZRgvJvdzl53gEsbE/wKpEBptpiC3LfgJs6ETHbwdp2OC/i+7V5G0PIxsgVJQE17X5HKkAJ6isB01jGDKb0fYrIKNXIJtcP7d1Muy0iHU+xDz5VoSJYM3NodemZuY/sBTmYUhLr3SQ==
+ b=dUkG0Pn3fMD2T0f7AS2upLhiL5aGAtp9gXYxijC6MDeknkA9udyuY95Ocy3ln4hxHlCqnTTtUa3GKjXO2BQJwq6nh0fMfpq8p25wLMxzGKKMRQlH2SbLHzt9l8Zmc35vZ5giXT8pKO84GnQw4wZNGVuUc9nYXJq+E1H05pgZznmh89v6GHEkfgRLMDSzP7cLeVN5a6JofAa7ill7s7xZGAK+CX5nT4wyFTH6RfoDH8OJUdmGdgWdS888kOeSf01ZBFKNLr7msvAb4JMkuEzZKoVJU6w3QXwoEpOSfruiNg22WhoNVOzFVDThUIr8OxPhIv23vS2M/wXSMrFp7Hc4jw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cUssj3jACYAqIQdUpe2FG7BCigUsyIaRtT4Hcqu2bag=;
- b=ITYhZn/dHTTajAN6aYMQzL7NeNU3qjr+FUwVHj3WqjXq85kaERa7vCJZJwzw0UpzRuUdwk6oGVAWeJv66KTQFNWr9UPIQATYpNSsDb2y2PC9ILFbkxWk3BBc88FwtD69SQEia0I2i/kxd9QKhH9aoSPvU+sKCF5lzjWr5v92sNiRXmx/wGWJmOVlQNjdWGHDuFUGBwTWQTl2bQ94M62W6uNW/43hEDPMakX4r33t4040SsuSl92cLN1qU8M2vpRQSQsdHwMoMbMw8kFd8FxV+MtQhyIhWBvs44i/TyU4OVEVTm4segULGd2zlDgcBXDhcG9t0/zlnouZ4jDnoU3c3A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from DM4PR11MB5278.namprd11.prod.outlook.com (2603:10b6:5:389::19)
- by CH3PR11MB8520.namprd11.prod.outlook.com (2603:10b6:610:1af::11) with
+ bh=Ot08//oyHdVZuuanTueOzja8pBxK/UWsjA7GXtCkTx8=;
+ b=yJB0OgN2vaJbxlGqUgIyJQtpQ1c+eoWHehXzssyxhLTRBGCkKnav5CJ4tCkOZW1Oi8bIXj4AJ9REBRr9Wf7UbQFUWpJQ7BQKKuwjoaaXHF7Yi3JOiNUVDxx2WojbOu3ne6FmBECZyINW91Non0ZNo75Q2hwUT6d+feiLdkmBeCsYnR1ByXfswjOo0vGLuBpy9lnjRbMV6OHBxZ2EAVQw3CC8GM4P9E7lutBn1rw/vGg6sr8xZoVATw9+T2G4/ESy6Hc0A3xE9VEdIbD49qoTPRHHhh8mBbghkRQMNIL1RFomLGlS5hJCSljRErtel4NQLLKB4Am2P6TkKbVxkwqXQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ot08//oyHdVZuuanTueOzja8pBxK/UWsjA7GXtCkTx8=;
+ b=W32kCrg94T+zy9tkyAWBowmCcnx0DxY2kaCHRc27T6a5E9QkPqVgZffuHDsgVZH3/rEql5yS32R/Yy24GSAlhqYf+evi4JasnTn7dOns5JNNv9lbUzBhVvNgx5qvcReAWiUmhbDdvxpAE8Xg8ImBVYLEV3j4S+t4t5Voj4yAPL/nHrKoE+THWkuQxQzUp1WY2LWRClODxBOVlytQSH5xb/gu9IKD3AnEp4Uq5xjG++wghGR7d3J6Nh18Ai02H3W4D0rAKCa7b2MblvVwevHzlf2y2+l8RAynjBIUs0czcHsuH4UL2HSmNJJXnpqMlefTCubaKkf+omZNOIFewyWVSQ==
+Received: from CH2PR14CA0054.namprd14.prod.outlook.com (2603:10b6:610:56::34)
+ by DS2PR12MB9662.namprd12.prod.outlook.com (2603:10b6:8:27d::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Fri, 27 Mar
- 2026 04:00:47 +0000
-Received: from DM4PR11MB5278.namprd11.prod.outlook.com
- ([fe80::1ee8:ba94:dde9:5267]) by DM4PR11MB5278.namprd11.prod.outlook.com
- ([fe80::1ee8:ba94:dde9:5267%3]) with mapi id 15.20.9769.009; Fri, 27 Mar 2026
- 04:00:45 +0000
-From: "Hao, Xudong" <xudong.hao@intel.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.8; Fri, 27 Mar
+ 2026 04:09:07 +0000
+Received: from CH2PEPF0000009C.namprd02.prod.outlook.com
+ (2603:10b6:610:56:cafe::ff) by CH2PR14CA0054.outlook.office365.com
+ (2603:10b6:610:56::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.23 via Frontend Transport; Fri,
+ 27 Mar 2026 04:09:06 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CH2PEPF0000009C.mail.protection.outlook.com (10.167.244.24) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9745.21 via Frontend Transport; Fri, 27 Mar 2026 04:09:06 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Mar
+ 2026 21:09:04 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Thu, 26 Mar 2026 21:09:03 -0700
+Received: from nvidia.com (10.127.8.9) by mail.nvidia.com (10.126.190.181)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Thu, 26 Mar 2026 21:09:01 -0700
+Date: Thu, 26 Mar 2026 21:08:58 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+CC: "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "alex@shazbot.org"
+ <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
  "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
  <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>, "Tian,
- Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>
-Subject: RE: [PATCH 0/5] intel_iommu: Enable PRQ support for passthrough device
-Thread-Topic: [PATCH 0/5] intel_iommu: Enable PRQ support for passthrough
- device
-Thread-Index: AQHcvZTJ+WxRXZjLMk2//xMrh8lu0bXBwMKw
-Date: Fri, 27 Mar 2026 04:00:45 +0000
-Message-ID: <DM4PR11MB52784756F6707B7246B1B68F8857A@DM4PR11MB5278.namprd11.prod.outlook.com>
-References: <20260327025228.474257-1-zhenzhong.duan@intel.com>
-In-Reply-To: <20260327025228.474257-1-zhenzhong.duan@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM4PR11MB5278:EE_|CH3PR11MB8520:EE_
-x-ms-office365-filtering-correlation-id: ff2795eb-c24f-4625-d82a-08de8bb56c6e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|38070700021|18002099003|22082099003|56012099003;
-x-microsoft-antispam-message-info: +TeFOZd2n/XB938Adkv9nS+VG+2Ts8WwgWiDGIocCJNAWqCuDwCezAUM4tlM0PGYc2PmjPhVnmuwMBArYNrwjdeErpef1ba/NRixEa/Z7a9yQoJpWkwjCRtJljl7BEFtUuVNqiXmtSlidcDxqOSL3TgmW10JqwUSuHYKQlpphztlyztdt1MPDaErCHfRgsWxryip5Vo+BWmbspunMEolTOYUhO09oH2K2siOJ/VEgmkqzB0lvMMrsoriotQXE/V0OpnmP56vpXVWWDBMkspzdlL8V76nsZVFrY+h3APpu3uqNOtTZ5pnVbq4CRVtaxNIjciT6Kc7+AI2+MAyB9Nc/eDGmQoSv7x+aQ6572KgXGf87qr7mTZybZ/DajDxLlR0Ltjc+QxZf5lJ/9lE9wtEDxxpfiU7asdpu/JR6PTXFQ1x2HPKcVVTRVVTCaItgsuq7V6B4+fIV985EJg4vZfolfw1KfnZsNFuL0IfQ+KlgAfwIKbsINqSKzfpkNoUx80Vj6WgTgVyFXNZbnQXAbqd0Pmt4M/h1KDL8ZgdFOilSTbBd/i39VjxLl9AcxFNj2Ek+ilcBvgL9/efFgu+EP2KtEmzCK6a20shhJn9Mvza4yroc3dJArh8WEEWO/IHQUeaETFIZ04ftm4xbL8GYFReT7KjMssFKzAs//WVivlMKYgNYSZu6YnDB0Xut/Lc+sX0XF1kZMNZZrFrhR00KcxpJA0z1KFsGqP44/i/qTIENulliPf9udCCtWJNMVwEiWFFlGBx4O/8SYSWFl2gsR31lA9ftqT3QBOeqIF3SQCePljfNC2rz+4pI05SljOIY5jD
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR11MB5278.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(38070700021)(18002099003)(22082099003)(56012099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?QhEN/YVf0Tp6E4Om6p5Agw1hlsXWCc2txUd4+/HFaTdsMZ1rfhfXMkVVcwzg?=
- =?us-ascii?Q?A6fNXlgGTKQCb+tnPCO33Oqy66gAA2bKlVyK/bUC425HASN9+R2tohUqlC38?=
- =?us-ascii?Q?aDtZYTkdhluyafIZqMppAMBC+iPmuEM+hVF1CTIxWbZsnECGRZUnYks7szFm?=
- =?us-ascii?Q?UGs2Ctqn91rIAKEGRxmAFu1tU6SigPcsaJIHx07kh70Ol1TrRaWV9Mbqt6P6?=
- =?us-ascii?Q?3MZhnZD2JdY4PD3qGsmG9zEJs9yNFByeeExRUzP7eB1XXhk7r+OOW1c0W0GF?=
- =?us-ascii?Q?MEXyLNfOpFEueXi+sEKBUtcy5ShhFDMxFIGHEhai/EZzJ8SxBs0GPMzLjU2e?=
- =?us-ascii?Q?We+hp7McwHpg1O8jM7aGj/pxx3IbIQbNCaNgc8+V9l1B8kkLsZhcBprZIlgK?=
- =?us-ascii?Q?VIrdv5Ks9YHiSIYpSFiPaJdq/JmdxD4yLOHxfRL3+m8f0WfJ/5LrDDSpOwn+?=
- =?us-ascii?Q?gdpRLHC1A50V7hki6iQGxc+REl0wZsA0cRJU2MjC126WJF5Bokt5GzaEKCYm?=
- =?us-ascii?Q?pahXuu3UgwlTvzv/DY4eqHS7Y+vvDccL3xMSLhzj1iB0BiLlXNsExIC4A2+3?=
- =?us-ascii?Q?MQpaquv/TiMAPaR185aD39TAzvrMMwzSQC0ENahM1BFGAoUiWllZ1YEGS5n4?=
- =?us-ascii?Q?oo0dgjlEVlTXiaXSTgHTD4biRYLOXFC6vY7EvC47GitNtz4fx8MKhUfOr+wJ?=
- =?us-ascii?Q?F7MFyBubKiAflqcHblTEjTldur6JysZbvyHEpV5SQCddXRJaJqI390QW1Pey?=
- =?us-ascii?Q?LWVKSo7Y628pRzb/ZqTBY3Xd9ltfIuG7nhxpg1Ftsx1EntpkFSDsmDATkuwc?=
- =?us-ascii?Q?4V+FMObxPpCeLPUrPJHoF0oK8rkMI532TFReifm1rLryS5H2mu71utPP1iN+?=
- =?us-ascii?Q?V/XPUIPvsvsKnNR8MOCrJfXugGbJTAhskGVRY/iAG83LIOLal5HJcyuzqkFX?=
- =?us-ascii?Q?H0JRVEM0N/RB33wSje0DYTrWCr26zX9ZaVpsZo/qN9OjeFcoOSfIeyb3YYVk?=
- =?us-ascii?Q?y4PNLJg11F9zAlTCh3OPjtmokC2XWvgcPM1+MXjWLmTIGD0b0AP+NkkrhPrY?=
- =?us-ascii?Q?qyeX/yddBqWs+b+5VnnWIHh5HbZiXiGqNGGmhPxz1FrYNZOHauoXziOd61iA?=
- =?us-ascii?Q?vmyV2nz7OLiOBDuq0nJytNB2MrtSgQzxXKGdPefyvfBg52na66tkPtqF10dN?=
- =?us-ascii?Q?otjNV7CdfhKDcJEQifMBXTVduyIhXpur8v6bVaOrphukBM+MjPo6I2jSTFwj?=
- =?us-ascii?Q?ysd60TKpW9CFaZL1k5Lo7gNzkpc7PVmW31eYRa1TtLj5PbRsp+t7eu1n2VvG?=
- =?us-ascii?Q?sCRwTJ/tDZYFbyr5//oDqesb3BZdQ7K0yfr6MvvLzmfRGfu0+pYetjSbQWsl?=
- =?us-ascii?Q?CG8j8m9l8fQmtBX0bblBPsOkYC1Y8qx4FsTiGLbli2bId6I+xq4BArwRCZYX?=
- =?us-ascii?Q?WaK1I4dAHyCLYWyNhNUxb/aaWSSsS7lnlpdlFdqqiln7yqqgnN8eME68oF8D?=
- =?us-ascii?Q?N4VWTcjt5qNmcJQf7e+QSMv5E7Ug2c8a4J3n4tPP3aVPaL65iDkacSZ1nr4y?=
- =?us-ascii?Q?aSNeH89axEUaAU3ZpovLvtrj+BdpX05k+WomGIOKPrsv/b6He1HkHGk99bHY?=
- =?us-ascii?Q?1x5UpYJFQjsVF8BTkWo+meXtsa1H2YPu17QWlCTMibk9n5NJfFTZIznXBxxk?=
- =?us-ascii?Q?retGUHsxVN3mi2JqpHsGt1lZB0FVQP5DepyGMQ4dtVNRU5Dq+MO5Pm03nYKx?=
- =?us-ascii?Q?LdJkeAywFA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ "jgg@nvidia.com" <jgg@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@bull.com"
+ <clement.mathieu--drif@bull.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, 
+ Yi L" <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
+Subject: Re: [PATCH v2 03/14] vfio/iommufd: Create nesting parent hwpt with
+ IOMMU_HWPT_ALLOC_PASID flag
+Message-ID: <acYC2ko1r8OkAvq0@nvidia.com>
+References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
+ <20260326091130.321483-4-zhenzhong.duan@intel.com>
+ <acW5AXhPDT+wZ2qf@nvidia.com>
+ <IA3PR11MB9136D7618C06EFF1D66561549257A@IA3PR11MB9136.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: igWx5tlk6FK7CbaP66iqt2+syktbNNI+YEcEc/6tkGea7P7dP+Ac+pyw8rbjwqrQ73KFD1TT1Y8et2ULr0dbArBbLfFjyCM6H568+4w/0372Pb8KTE7Gq2GrklhKBRJ9fdweiuyBAV/NWf9gKvO976vhGWa5OxJMAPi22CvW1LnVAwT+a+T1Xg1pbz06yFt68gAJDhiKpzhv4VoYyrwx+Wa0l+a4ZohUv6vDU7WTxdVP4/KnBmAeAQwX+3GTeU0B3pQ0r380/MHdiHa6Kk79u1efdB6hRYyUnQ2ZKL+fFjglJHVYxppe65/Flr7BNCT3aY5wUU807jYgQHD+X3IsCA==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB5278.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff2795eb-c24f-4625-d82a-08de8bb56c6e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Mar 2026 04:00:45.7209 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CklW4Il3tt4tIQ+pf77GqYNDp89eBEAHCSqvWkGUB3mgXbKvdPoUq3xFCKqZnKk2/wxjxT8d3e6Ia1gdt7HQZg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8520
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=xudong.hao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <IA3PR11MB9136D7618C06EFF1D66561549257A@IA3PR11MB9136.namprd11.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000009C:EE_|DS2PR12MB9662:EE_
+X-MS-Office365-Filtering-Correlation-Id: eaa381ab-5008-437a-e4b0-08de8bb6971b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|30052699003|376014|7416014|82310400026|36860700016|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: LwLMTJLIZFWsPT2+5r+iS111JK9ZP3V3jS0QbPP8N2fn9wjcgIrFBd8Ez9z+IfczWRbAPWrdDYBv2pobIj+jPMGuuB+Pqyh1c79MFASUGnQV/N02aRUB/T34Lpj+/6CxCyTlXZLn1DqICimy/1luFaLpHpcWNvGBO+lZRyhvn0bKmjUcxzzEq8co+TZiBX87mWCSxkfz1wBcZenKlGmjqjGkCWykDNCN+kr8oq4GI/SaRcyWmcg5d/tHvU5HjDajaZmQO2IKO2MBrShTp8G8UTbBBlpNr1beNjxZqPFPoalMoe8LVndPySV0M1JQ69smDpUXVwlq+GuW6e+R5GxQcfavtuzlzc3G4U389hLAIXpdklx0ZF54mGy1z8jd/jwKRC2i4eE6EG1Emd1ZxEliIypTc5yU+yhwRq3isrQHAmm4lk9agHTYWeat4HwXREKM1Zm7TblZhRTrytGk2iS75a+cOK8U5dxVaWOZmenz8w4nUVBJorGU58JJvgZwVdMNH0Td7YDYRnSoEbJoe+UVh8veq+xjvwyqIhaAbVKGtp8jttnB1kShJGR2rZzq2G6ELnKS4HpSNL3ees2MSez0xlUqMZCnw1s2dzOaFuj5rSeuSD6spDjTYRuJRMOjg7dspkagIjLMMAL6qscbeYKzpgRndHyv1ZfVlCW5IMXvYMauaDQHXII3L057kO4v0xJMlylhdXxwWnZcfwUYTktL5viI9dyXXCbFO2tZ+5LVGwoisdVcyoRAgYVpB6wLVT9gfu9AnKuOKPAwx+a7WwFlcg==
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(30052699003)(376014)(7416014)(82310400026)(36860700016)(18002099003)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: RMZbuBThjTtofTFG6tdVmzsJMl3OOKST5geM7sjF1D7qJzY9iA5EW6YmhD2a7y1yZP/gIGi6AWIENysiC0wlaDYI4Kf5ifh0Udntp/UgWfd56jAgPyxI2J5dHcuSYKrfMhPfNXA+h6SVlGltIYN1RwuNhQFpND7BnUFlVCp+rMlhVkGxe9Hz1HbC6+0Cag4oujolXYu5BHDVG77GK2XLcyvHdGlniIssETkZ5Yghf8fb0gxkqYnlvdWa6rl4v48EF7yplJCUhIMEQIDkwYks63+Xl8MuD5dT3ndx7yYE8V1x6C6SzjdHESA5yoZS19PYp/i9y9aawgXN7GYLQ2j6RlmVacadhoBuBy7/veiGAK9nBCmOsYeVZBGLtpHZa/CXfpa22RuJplEkMxsZLJgLDQapZqprpTCpra58DozklBkCI6zxSa/2etNfDngtGZ1G
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 04:09:06.7252 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: eaa381ab-5008-437a-e4b0-08de8bb6971b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009C.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9662
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+ envelope-from=nicolinc@nvidia.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -184,78 +143,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Mar 27, 2026 at 02:29:20AM +0000, Duan, Zhenzhong wrote:
+> >-----Original Message-----
+> >From: Nicolin Chen <nicolinc@nvidia.com>
+> >Subject: Re: [PATCH v2 03/14] vfio/iommufd: Create nesting parent hwpt with
+> >IOMMU_HWPT_ALLOC_PASID flag
+> >
+> >On Thu, Mar 26, 2026 at 05:11:17AM -0400, Zhenzhong Duan wrote:
+> >> @@ -430,6 +431,11 @@ static bool
+> >iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+> >>          }
+> >>      }
+> >>
+> >> +    if (max_pasid_log2 &&
+> >> +        vfio_device_get_viommu_flags_pasid_supported(vbasedev)) {
+> >> +        flags |= IOMMU_HWPT_ALLOC_PASID;
+> >> +    }
+> >
+> >This would set it to:
+> >	IOMMU_HWPT_ALLOC_PASID | IOMMU_HWPT_ALLOC_NEST_PARENT
+> >which isn't supported on ARM :-/
+> 
+> I am a bit confused, if smmu supports dirty tracking, flags would be
+> set to IOMMU_HWPT_ALLOC_DIRTY_TRACKING | IOMMU_HWPT_ALLOC_NEST_PARENT,
+> in arm_smmu_domain_alloc_paging_flags(), I see it will return -EOPNOTSUPP.
+> So how did smmu work in this case?
 
+You hit a point. I almost forgot we need to do something with that
+dirty tracking flag. This is currently broken..
 
-> -----Original Message-----
-> From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> Sent: Friday, March 27, 2026 10:52 AM
-> To: qemu-devel@nongnu.org
-> Cc: alex@shazbot.org; clg@redhat.com; eric.auger@redhat.com;
-> mst@redhat.com; jasowang@redhat.com; jgg@nvidia.com;
-> nicolinc@nvidia.com; skolothumtho@nvidia.com;
-> joao.m.martins@oracle.com; clement.mathieu--drif@bull.com; Tian, Kevin
-> <kevin.tian@intel.com>; Liu, Yi L <yi.l.liu@intel.com>; Hao, Xudong
-> <xudong.hao@intel.com>; Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> Subject: [PATCH 0/5] intel_iommu: Enable PRQ support for passthrough
-> device
->=20
-> Hi,
->=20
-> When svm=3Don,pasid=3DN,x-flst=3Don is configured for virtual vtd, we ena=
-ble
-> guest's support for vSVM. In this case, the host VTD may generate
-> recoverable first stage page fault event, QEMU read the event and inject =
-it to
-> guest.
->=20
-> After guest handles the event, it sends a page group response, QEMU gets
-> the response and pass it to host VTD.
->=20
-> This series adds QEMU support for receiving such host events through the
-> FAULTQ interface and propagating them to the guest, then catching guest's
-> responses and propagating them to host.
->=20
-> This patchset depends on pasid support:
-> https://lore.kernel.org/qemu-devel/20260326091130.321483-1-
-> zhenzhong.duan@intel.com/#t
->=20
-> GIT branch:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_prq
->=20
-> Tests:
-> Tested with DSA wq attached to an user APP which triggers IO page fault o=
-n
-> process page table durging DMA.
->=20
-> Thanks
-> Zhenzhong
->=20
->=20
-> Zhenzhong Duan (5):
->   backends/iommufd: Introduce iommufd_backend_alloc_faultq
->   backends/iommufd: Extend iommufd_backend_alloc_hwpt() with fault_id
->   intel_iommu_accel: Add PRQ injection for passthrough device
->   intel_iommu_accel: Accept PRQ response for passthrough device
->   intel_iommu_accel: teardown FAULTQ resources in bottom half
->=20
->  hw/i386/intel_iommu_accel.h   |  16 +++
->  include/hw/i386/intel_iommu.h |   6 +
->  include/system/iommufd.h      |   7 +-
->  backends/iommufd.c            |  34 ++++-
->  hw/arm/smmuv3-accel.c         |   6 +-
->  hw/i386/intel_iommu.c         |   4 +
->  hw/i386/intel_iommu_accel.c   | 243
-> +++++++++++++++++++++++++++++++++-
->  hw/vfio/iommufd.c             |   2 +-
->  backends/trace-events         |   3 +-
->  hw/i386/trace-events          |   2 +
->  10 files changed, 308 insertions(+), 15 deletions(-)
->=20
-> --
-> 2.47.3
+For NVIDIA, the current generation Grace CPU doesn't support dirty
+tracking. So, our QEMU VMs don't set that flag. This is just lucky
+for us. Yet, it would trigger -EOPNOTSUPP on ARM CPU that supports,
+as you mentioned.
 
-Tested-by: Xudong Hao <xudong.hao@intel.com>
+For pasid attachment however, ARM doesn't need it: regular pasid=0
+attach already has the pointer to a stage-1 PASID table.
 
-DSA PF assignment to VM with vIOMMU scalable mode, userspace test tool dsa_=
-test passed in VM. https://github.com/intel/idxd-config
+Nicolin
 
