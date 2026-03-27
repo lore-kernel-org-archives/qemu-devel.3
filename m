@@ -4,123 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7FD10F2865
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 18:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93EB10F2865
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 18:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6ByN-0003F4-Nk; Fri, 27 Mar 2026 14:31:56 -0400
+	id 1w6CCb-00088k-Ni; Fri, 27 Mar 2026 14:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w6ByM-0003Ei-3d
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:31:54 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w6CCQ-00086G-T6
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:46:28 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w6ByK-0007R2-Gq
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:31:53 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-35a1230c60eso1215467a91.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 11:31:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w6CCO-0002px-OU
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:46:26 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-65006c99d38so228122d50.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 11:46:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774637180; cv=none;
+ d=google.com; s=arc-20240605;
+ b=N7foHAlqo32Hj3umHDTGA6ScSwVQ/B2rLFa6DEYW/Dt71PZrB6Ds4/bnzX5v6RArTG
+ Dz46cYYrtW+2bKjSSSiBd7TMPsf5XwfeWCJrs/u6qZwLFjjuROosSV94aAAlcN0N8yTf
+ Ph+J76OwWMpKxqOBqjAD4jxqcJDAl/UoFWg/vSgtVq/JRvj0AJ7AK9UWlWTV4/X+DjUC
+ ZzDdSUwtLWqe1j6EqOKxtuvd/rKpAXpFI46/eCiXbDSdptXj8mc07u9Gw/XNE0tq7FJZ
+ vUUaQ7wt79icXIZ4+nMvJBgqbSeJ9hGqUvovhaTyOI2aoGc+ERsazIvbgT1PtgjH+sNc
+ N2XA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Vo1vNJohjwePCOE1U/4xs4BMACehosBhajnI7Fo4Agk=;
+ fh=qJo+eYuOX1Hs9gvlBO+6VP2wDkpE7Fo9OW/RrPQyPo0=;
+ b=A4ykpnSHhpIsbuAnvlOiZcPFKWJFYoMtjid35KWEnNnyw2EyLyl9h+LOBptXNR2lH6
+ YA9PBBNYgGlw7nhvWapTMqIAbXgwJmeCM4F/wmSERAuoLrNZH1w9nu/huDJbMzMkOtCM
+ ojwxXhm1AqQ3S55z18qiiQeud9gyugPd3CdqJITmEFP8rE6u8e+We7ja/Q1PIvO3cZdR
+ vv0B3Keg3txtsCUElCSKGxzHcf9QFKWx/p6TTLZOgqLbk5nqurFkCW1HZycmOGTo5X/c
+ LE4tVYnUqWn/76XAWTmGSuZnoIp+cY5PxnRwweTBGV/LmEu9uRoaLrX/6fUdj1/tXmP5
+ b9hg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774636310; x=1775241110; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D9agshjLojojl89dNdGYibGqaA3mdVvSoSELyds6Ar4=;
- b=cAVMQWyzmYMpInqJ1Zo+MhJwUQ8icITgxHKYsCAzz2fYDUclVLU4iTVLr200vFWPeh
- qSq3xdiCc/nrupaMTfNi40SFMIGEzecHz8owVeS3+mi5MICfrpsXVQ7BDDKy0fr86XZD
- /JqkHG3swf/d6iRBWelvXn3ryglhWTXhMECO2J73Q4pnHgHESpKl7kJT3ehbM301o4lz
- jbhKe6N4v3ocG3YUbP1WPrd4k8yiADwgMI9NeZtK9XGQSHeHCFs9H9GpeIedhPf2mH6O
- MTByerVLgexsW/YzsBCCMFW/cdGhVGEujQeJYyAMnsOJMiDchbB7/bBw3B+8XUxvNzzT
- tNew==
+ d=linaro.org; s=google; t=1774637180; x=1775241980; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Vo1vNJohjwePCOE1U/4xs4BMACehosBhajnI7Fo4Agk=;
+ b=AvuYKPm0erPZEuCroHKZU1eAXrwj20/mEr6yRQBMzfud3sL7Cd8NrZ+ClPpFIlNTPi
+ oXxo+Gzvpt26PFdLJVamGxSty/0XGlZzsaW1UF9HFOS/+LN2gugjjBXyfXjev94gx0BW
+ MkzHQyKQ6VWomWsQ7w9gt/w9lO3p+7uIeap0pVabT5vBe+TVw1ECz+6bLzqPJ25Q4eiA
+ 7b5MIXqkYtQiYK0UKA0rq9xk66FfveCrxO55rRUkliSlHgIGx96YettAt21MLu0I6RZ0
+ gI9m5nfYSAlcs291YHo3FWnpIB3MncFoN95o56i2sheSSj19xwBkUNYUTsN3/uP9fyZu
+ P7VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774636310; x=1775241110;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D9agshjLojojl89dNdGYibGqaA3mdVvSoSELyds6Ar4=;
- b=p296zn5AaVStnketVr9Oom7WDFNCGs+CnzLiu3s90yN0B2ryGtfBI5CFhnzIEh/i0u
- G9MghDtvvAlNumm/4GWaWU8arwzX9q8sxok4AO09YY3A2VHW521HSweTnVmxxuxJsyPM
- 5PsSRBPUSmwfenSOrDmV1KWSYTeSLx4wFG9V01VZP9mg33653aWfe8R15MO6/mNPJugO
- czlepAzJABe3Z0ZUyG7tJYO9tSUqFj+ceezgoV54z+x4lgs4aQlgSZsgkWf+IuFN4mkC
- igaIBmnz0y7uu5D+TNm7colXT4pb/SucX8s4eGA8kqTZJJ5MPa3IPndHc/ZXckyOMVxe
- n9/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7kPHu8qdHu72a9RHBdMZ2WPuIMQSi87UNsMhyZjh59JjMuUm2mdyaL2N3e1QWGcbGaHRfiKsvQ5am@nongnu.org
-X-Gm-Message-State: AOJu0Yyzk2G/pyB3+RuArRuZagwGElyY3+xUKHR/1XptJb5s67Rv67H0
- a+Pnwaz8g3hP4jrMyw/USZAOu469lZzjSHsBPXj3MdTn09F/Ls3NE9PsrivheZuoaTY=
-X-Gm-Gg: ATEYQzwvTf7JBdkpoXAcGQjxaieEZM6/Xqk9iJ8RsaNRqnb3aJYj2MexkJ8hczg2T+N
- wDNdRWKRLTo6r+FeC7Veie+YkxKxeHtUaLulGJh58UOMQ0CT95ZxLPaAJjk24qQf1VOvQGlGkXn
- pv0NWwfTqxjkCI2Cmw6ojCpJhdS30oLK7d/3lirXdH7KcxjIva7maG0BdCrgW1afPzBks56zOLG
- BrQFzQZMNI0TKM3G+v+b3m8b6Jf2T0chrv1GgLOnzeu5JB9HU1r7xqpaZxtR4iuH6bpvmXtNFXH
- iXxi/20Ba8D7CViYFHJeaSld+DJZhHcvV1SdST7rDmA7dm83THbORKzb5RyqlwmNpsNvI4RKoae
- NntGvU2WN5qxxqTMp6Xsm2tAjXoC3VSaPgwWJzxB1KjKWIzOs7e5/1bFIgvqaDX8nm9qyqW4Y4L
- lNAEg+WrntCG/6Qfw2fpesSem+S65X/5Pk/Ehl7HpBtB5F91Qs2MMrSQ1GJ5StDP98cj/u
-X-Received: by 2002:a17:90b:3fcb:b0:35b:9958:4edd with SMTP id
- 98e67ed59e1d1-35c300bd7f6mr3831517a91.30.1774636310315; 
- Fri, 27 Mar 2026 11:31:50 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35c2eb708c8sm1323010a91.5.2026.03.27.11.31.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Mar 2026 11:31:49 -0700 (PDT)
-Message-ID: <2737926f-7834-4e64-be9e-d58561e7f4ef@linaro.org>
-Date: Fri, 27 Mar 2026 11:31:49 -0700
+ d=1e100.net; s=20251104; t=1774637180; x=1775241980;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Vo1vNJohjwePCOE1U/4xs4BMACehosBhajnI7Fo4Agk=;
+ b=RhiHI6/z4U+zP+jEOCsjXja+TtnJNd3zXTsBE+05nJ5ujP2WpzXe+bnap9fhZqHber
+ StFmiSfO282xxoFZg5F7OWkHmwalnIei/292m784xuGUV6tUMgwyBIgLclF13W2OU9be
+ VaYQUcVAWA8lGkNry6hM1/6ScllBpI6NXatMbWGwi3xOyFVQ1DsFhBknYqRsA+Tr3ijP
+ CkZUNYCRkid3JLU359fScKzbAajeepfin2nmtHK2GZhQ9cAM+Ub+ICvCHYdYdkpPDMbw
+ trBiL586j6ZlVFC4xHpGCfLs/Y54dQldzrnKvyouMAfc+s7VX+2pX+WSwuA3z6xtq7IV
+ 7qmg==
+X-Gm-Message-State: AOJu0YzdGQPzfcDMAFq2RCD+eEvuoW5fBZPP43/WQxQcJxsK+rSP9ZU2
+ Bipbj37VhQdTMiKS55S7kHwoGLcQqT6xZy1QZDpz0atRkGNxuinAh4utMNDi3rbSzEIDqkxuMkx
+ GRHu03PwBtRitVVS767ozNwHAWezWIrEPZhJkU/U1uQ==
+X-Gm-Gg: ATEYQzyAQf0eHbbb3J/wdly/+q7JEwOQ0mMk6yLG9DoHxklj+pIHnmzAZJq8QkKcKUw
+ bMU4kM+wH3ObXMK/Z675CnieDi84uW+sox+aJ/Q+9xoz6R0t4yBz3b8Fa2xNicb0cUrZtEyoyQw
+ TXZizzNzOgIz0n7AZtgcgWDkMQ+euIz1eSXXD7TU7lbxs5Pku9PKGlXSwuSOCliFpGUT++F/NB0
+ ZaYehU8Vabk+jHPxIMJIsG0pY1YIZc/jMA4mUzDTgPCzRblO6wm5p25IVjwjjTEIyQaqoifbDA8
+ BM4md6OuhMqj/rTGQ7mK3Dfdr+57dDtsjj4QpLRwhRKT8Z2CQjyO7eGCowJpZ97jjFs=
+X-Received: by 2002:a05:690e:4850:b0:64e:ebb4:1bd3 with SMTP id
+ 956f58d0204a3-64ff71d6b14mr2680737d50.26.1774637180134; Fri, 27 Mar 2026
+ 11:46:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/12] target/arm/tcg/translate.h: remove TARGET_AARCH64
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org
-References: <20260327165042.604105-1-pierrick.bouvier@linaro.org>
- <20260327165042.604105-5-pierrick.bouvier@linaro.org>
- <36d7e3d6-3907-484b-8a58-f05a9ef6cae4@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <36d7e3d6-3907-484b-8a58-f05a9ef6cae4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+References: <20260327174701.364328-1-pbonzini@redhat.com>
+In-Reply-To: <20260327174701.364328-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 27 Mar 2026 18:46:06 +0000
+X-Gm-Features: AQROBzDIeU7F3PZuHOniHL1CJUWd_7LZMrrttdQBM9qDgkhyfaLvzJD28WAKArI
+Message-ID: <CAFEAcA8R0qGsaBAQLgAGRgU1H+4JRpRCa8TaeAcdYo25R=dQww@mail.gmail.com>
+Subject: Re: [PATCH] hpet: fix bounds check for s->timer[]
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ "Yuma Kurogome, Ricerca Security, Inc." <yumak@ricsec.co.jp>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,48 +114,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/26 10:26 AM, Philippe Mathieu-Daudé wrote:
-> On 27/3/26 17:50, Pierrick Bouvier wrote:
->> We need to stub a64_translate_init and gen_a64_update_pc.
->> At this point, we don't need to do anything for aarch64_translator_ops
->> since it's just an external symbol.
->>
->> We can now include target/arm/tcg/translate.h from common code, since
->> all target specific bits have been removed, or can be specialized with
->> specific defines.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    target/arm/tcg/translate.h | 10 ----------
->>    target/arm/tcg/stubs32.c   | 17 +++++++++++++++++
->>    target/arm/tcg/meson.build |  1 +
->>    3 files changed, 18 insertions(+), 10 deletions(-)
->>    create mode 100644 target/arm/tcg/stubs32.c
-> 
-> 
->> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
->> index 5f591560551..3e96c77df73 100644
->> --- a/target/arm/tcg/meson.build
->> +++ b/target/arm/tcg/meson.build
->> @@ -21,6 +21,7 @@ gen_a32 = [
->>    
->>    arm_ss.add(gen_a32)
->>    arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
->> +arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
-> 
-> Add via stub_ss[]?
+On Fri, 27 Mar 2026 at 17:48, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> Fix an off-by-one issue in QEMU's HPET read and write MMIO handlers.
+> Both handlers check timer_id > s->num_timers instead of timer_id >=
+> s->num_timers, allowing a guest to access one timer beyond the valid
+> range.
+>
+> The affected slot is initialized properly in hpet_realize, which goes
+> through all HPET_MAX_TIMERS elements of the array, so even though
+> it is not reset in hpet_reset() the bug does not cause any use of
+> uninitialized host memory.  Because of this, and also because (even
+> though HPET_MAX_TIMERS is 32) the HPET only has room for 24 timers in
+> its MMIO region, the bug has no security implications.
+>
+> Commit 869b0afa4fa ("rust/hpet: Drop BqlCell wrapper for num_timers",
+> 2025-06-06) silently fixed the same bug in rust/hw/timer/hpet/src/device.rs.
+>
+> Reported-by: Yuma Kurogome, Ricerca Security, Inc. <yumak@ricsec.co.jp>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Unfortunately, libqemuutil is declared before iterating on targets, so 
-stub_ss is not what you expect at this point.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-stub_ss = stub_ss.apply({})
-It changes its type from source_set to source_configuration.
-Even if we used a new variable name, further changes to stub_ss would be 
-ignored.
+If we can only fit 24 timers into the MMIO region, should we do one of:
+ * lower HPET_MAX_TIMERS
+ * enlarge the MMIO region
+ * leave HPET_MAX_TIMERS where it is but make realize enforce
+   that num_timers <= 24 ?
 
-I will write a patch for it, but it's definitely out of the scope of 
-this series, so I'll leave the current patch as it is for now.
-
-Regards,
-Pierrick
+thanks
+-- PMM
 
