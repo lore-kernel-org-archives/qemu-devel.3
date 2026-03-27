@@ -4,101 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FCBE10BA43D
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 08:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF3F810BA458
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 09:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w62ud-00071O-V1; Fri, 27 Mar 2026 04:51:28 -0400
+	id 1w63Gx-0001X5-Il; Fri, 27 Mar 2026 05:14:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w62ua-00070g-Fu
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 04:51:24 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w63Go-0001Vd-Mo; Fri, 27 Mar 2026 05:14:23 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w62uX-0008Hd-Pg
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 04:51:24 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 713F14369D
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 08:51:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1774601479;
- bh=9cC31BnTf98yw9MSiEdtxT5M6Ilv9BUrnblhzqlq1fs=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=Fm+UUXzRTAUAXkoICYcl9IJbr8siF5UbyDEmbuu3v9hjyzJ1j9hmZ3DKBxuyofXxa
- FZzYTlJ07VQd0MBdQ8k+iAZuBP8T22ilXeHzx/no5d/d+noCik2MDj588zyCVq0MCT
- W6gr/8LqPn+8jOCJtIsRDzqNpemP0qqNHTu8XO4nDflrRnjD9ANSVIL2FFEmFjbU8g
- KH/qjhy8G07uhtFP9YARET6V4ppiC+7T7qLzMrykllrvpKnfJEJ7GAy63UnnUTrb3r
- 4MU+r8sk4EPC7jmlqYlUgmiHAtxqPnD2wTMwhVe4Xa2MiriHzhVEfEAL39e9VD/nIQ
- VAPovpk4SWDrQ==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 663757E160
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 08:51:19 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 27 Mar 2026 08:42:57 -0000
-From: Christian Ehrhardt <2133188@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=In Progress; importance=High; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe;
- component=universe; status=In Progress; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=In Progress; importance=High;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
- sourcepackage=qemu-hwe; component=universe; status=In Progress;
- importance=Undecided; assignee=None; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
-X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
-References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <177460097730.2853507.10838496233137624831.malone@juju-98d295-prod-launchpad-4>
-Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
- handler
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w63Gm-0002ss-9O; Fri, 27 Mar 2026 05:14:22 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 1CC2780635;
+ Fri, 27 Mar 2026 12:14:12 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b75::1:32] (unknown
+ [2a02:6bf:8080:b75::1:32])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 8ESXxH0ARW20-eiPc3mEF; Fri, 27 Mar 2026 12:14:10 +0300
 Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: cf6ffcc660b86b9719e9bef85e640814bae51edc
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1774602850;
+ bh=TOrGueS5ldHbjfsLLxnHQUxVgrfK5gdEBWidE+OThFM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=QtI3h6H6mbnHaG0aQ8CNGYg5i3zfciSItRsVy+ZHwLANUVkCEgCyz7/EVg6Nu5ml8
+ ZzhQQkKSrFqXgl/vJW1mXcsj6CKJzMeJRCg/xuAb/EsaIlMLe3oyJwV+jrWYdZa2PK
+ 13hzd7YsNKBtUabClYz+q1dNPEiCMC90sgoedUiM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <2428258b-663d-4b16-b6d7-80fdbe0b29fc@yandex-team.ru>
+Date: Fri, 27 Mar 2026 14:14:10 +0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] vhost-user: add skip_drain param to GET_VRING_BASE
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, virtio-fs@lists.linux.dev,
+ zhenwei pi <zhenwei.pi@linux.dev>, Hanna Reitz <hreitz@redhat.com>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <20260311084728.751169-1-dtalexundeer@yandex-team.ru>
+ <20260311084728.751169-5-dtalexundeer@yandex-team.ru>
+ <20260326155241.GE758087@fedora>
+Content-Language: en-US
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260326155241.GE758087@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,166 +83,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hector was so kind to bump this to v3 and extend it to cover qemu-hwe -
-MRs supersede the former ones and are both referenced from this bug
-already.
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133188
-
-Title:
-  [SRU] RISC-V vector state not restored by signal handler
-
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  In Progress
-Status in qemu-hwe package in Ubuntu:
-  In Progress
-Status in qemu source package in Noble:
-  New
-Status in qemu-hwe source package in Noble:
-  New
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu-hwe source package in Plucky:
-  New
-Status in qemu source package in Questing:
-  New
-Status in qemu-hwe source package in Questing:
-  New
-Status in qemu source package in Resolute:
-  In Progress
-Status in qemu-hwe source package in Resolute:
-  In Progress
-
-Bug description:
-  # Title
-  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
-et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
-
-  ## Summary
-  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
- 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
-gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
- (core dumped)" or "died with signal 4". The illegal instruction is observe=
-d inside glibc's memset implementation at an instruction that uses RISC-V v=
-ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
-e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
-nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
-lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
-code generation / state corruption), not a cmake bug.
-
-  ## Affects
-  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
-untu3)
-  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
-qemu-user static interpreter
-
-  ## Environment / Context
-  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
-  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
-  - Container image: ubuntu:26.04 for riscv64
-  - qemu package used:
-    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
-b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
--user_10.0.6+ds-0+deb13u2).=20
-    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
-ost and registered via /proc/sys/fs/binfmt_misc/register
-  - CMake version used inside container (bootstrap/build may use system-pro=
-vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
-ggers crash)
-  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
-eral consecutive successes or failures)
-  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
-t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
-QEMU_STRACE also makes it much harder to reproduce.
-   =20
-
-  ## Full reproduction steps
-  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
-ry:
-     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
-uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
-     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
--5ubuntu3_amd64
-     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
-in/qemu-riscv64-static
-
-  2. Register qemu-riscv64 with binfmt_misc:
-     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
-     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
-00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
-\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
- >/proc/sys/fs/binfmt_misc/register
-
-  3. Start riscv64 ubuntu container:
-     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
-4 bash
-     docker exec -it ubuntu26 bash -i
-
-  4. Inside container:
-     apt update
-     apt install -y build-essential cmake
-
-  5. Reproducer 1:
-     cmake --system-information
-     -> Often fails with:
-        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
-        Illegal instruction (core dumped)
-
-  6. Reproducer 2 (minimal C project):
-     Create test_cmake/CMakeLists.txt:
-     cmake_minimum_required(VERSION 3.10)
-     project(HelloCMake C)
-     add_executable(hello main.c)
-
-     Create test_cmake/main.c:
-     #include <stdio.h>
-     int main() {
-         printf("Hello, CMake!\n");
-         return 0;
-     }
-
-     cd test_cmake
-     cmake .
-     -> Crash with:
-        -- Detecting C compiler ABI info
-        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
-
-  7. Reproducer 3 (rebuild cmake from source inside container):
-     apt source cmake
-     cd cmake
-     apt-get build-dep .
-     dpkg-buildpackage -us -uc -b
-     -> Bootstrapping error:
-        Illegal instruction (core dumped)
-        Error when bootstrapping CMake:
-        Problem while running initial CMake
-
-  8. Observed crash location (from gdb/QEMU_STRACE when available):
-     - Illegal instruction is in memset@@GLIBC_2.27+0x52
-     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
-bit elements)
-
-
-  ## Workarounds
-  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
- using vectorized memset.
-  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
-=E2=80=94 both make the failure much less likely.
-
-  Note: The same workload does not reproduce the crash when run under
-  qemu-system (full-system emulation). The issue appears specific to
-  qemu-user
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
-
+On 3/26/26 20:52, Stefan Hajnoczi wrote:
+> On Wed, Mar 11, 2026 at 01:47:28PM +0500, Alexandr Moshkov wrote:
+>> In case of migration of QEMU from the new version (where the
+>> inllight-migration parameter is present), to the old one (where it is
+>> absent) there is no way to disable this feature on the backend during
+>> runtime.
+>>
+>> This commit slightly changes the semantics of the protocol feature
+>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+>> adds a new parameter for GET_VRING_BASE, which allows to control the
+>> drain in-flight requests on the backend.
+>> Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
+>> on anytime.
+>>
+>> In vhost-user-blk use inflight_migration param to enable skip_drain to
+>> suspend in-flight I/O requests, and then migrate them throught inflight
+>> subsection.
+>>
+>> Also now QEMU will always try to setup
+>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
+>> backend. This will allow to use skip_drain parameter on GET_VRING_BASE
+>> message.
+>>
+>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>> ---
+>>   docs/interop/vhost-user.rst    |  6 ++----
+>>   hw/block/vhost-user-blk.c      | 29 +++++++++++++++++++++++------
+>>   hw/virtio/vhost-user.c         |  3 +--
+>>   hw/virtio/vhost.c              |  4 +---
+>>   include/hw/virtio/vhost-user.h |  1 -
+>>   5 files changed, 27 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>> index bfa75ff9a3..63efc87264 100644
+>> --- a/docs/interop/vhost-user.rst
+>> +++ b/docs/interop/vhost-user.rst
+>> @@ -1255,14 +1255,12 @@ Front-end message types
+>>     *suspended*, see :ref:`Suspended device state
+>>     <suspended_device_state>`.
+>>   
+>> -  The request payload's *num* field is currently reserved and must be
+>> -  set to 0.
+>> -
+>>     By default, the back-end must complete all inflight I/O requests for the
+>>     specified vring before stopping it.
+>>   
+>>     If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+>> -  feature has been negotiated, the back-end may suspend in-flight I/O
+>> +  feature has been negotiated, using request payload's *num* field,
+>> +  when *num* is set to 1, QEMU can tell the back-end to suspend in-flight I/O
+>>     requests and record them as described in :ref:`Inflight I/O tracking
+>>     <inflight_io_tracking>` instead of completing them before stopping the vring.
+>>     How to suspend an in-flight request depends on the implementation of the back-end
+>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+>> index 1dc49c104e..8cc80eb0c3 100644
+>> --- a/hw/block/vhost-user-blk.c
+>> +++ b/hw/block/vhost-user-blk.c
+>> @@ -134,10 +134,7 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
+>>   {
+>>       struct VHostUserBlk *s = opaque;
+>>   
+>> -    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
+>> -                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>> -
+>> -    return inflight_migration;
+>> +    return s->inflight_migration;
+>>   }
+>>   
+>>   
+>> @@ -232,11 +229,14 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+>>           return 0;
+>>       }
+>>   
+>> +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
+>> +                      runstate_check(RUN_STATE_FINISH_MIGRATE);
+>> +
+>>       force_stop = s->skip_get_vring_base_on_force_shutdown &&
+>>                    qemu_force_shutdown_requested();
+>>   
+>>       ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+>> -                       vhost_dev_stop(&s->dev, vdev, true, false);
+>> +                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
+>>   
+>>       if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+>>           error_report("vhost guest notifier cleanup failed: %d", ret);
+>> @@ -364,7 +364,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+>>       vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+>>   
+>>       s->vhost_user.supports_config = true;
+>> -    s->vhost_user.supports_inflight_migration = s->inflight_migration;
+>>       ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
+>>                            errp);
+>>       if (ret < 0) {
+>> @@ -580,10 +579,28 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+>>       return &s->dev;
+>>   }
+>>   
+>> +static bool vhost_user_blk_pre_save(void *opaqueue, Error **errp)
+>> +{
+>> +    VHostUserBlk *s = VHOST_USER_BLK(vdev);
+> This won't compile. "opaqueue" is unused and the vdev variable does not
+> exist.
+>
+>> +
+>> +    bool inflight_migration_enabled = vhost_user_has_protocol_feature(&s->dev,
+> vhost_user_has_protocol_feature() does not exist.
+>
+>> +                            VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>> +    if (vhost_user_blk_inflight_needed(s) && !inflight_migration_enabled) {
+>> +        error_setg(errp, "can't migrate vhost-user-blk device: "
+>> +                         "backend doesn't support "
+>> +                         "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
+>> +                         "protocol feature");
+>> +        return false;
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>>   static const VMStateDescription vmstate_vhost_user_blk_inflight = {
+>>       .name = "vhost-user-blk/inflight",
+>>       .version_id = 1,
+>>       .needed = vhost_user_blk_inflight_needed,
+>> +    .pre_save_errp = vhost_user_blk_pre_save,
+>>       .fields = (const VMStateField[]) {
+>>           VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+>>           VMSTATE_END_OF_LIST()
+>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>> index bb8f8eab77..ed95ec7523 100644
+>> --- a/hw/virtio/vhost-user.c
+>> +++ b/hw/virtio/vhost-user.c
+>> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+>>               }
+>>           }
+>>   
+>> -        if (!u->user->supports_inflight_migration ||
+>> -            !virtio_has_feature(protocol_features,
+>> +        if (!virtio_has_feature(protocol_features,
+>>                                   VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+>>               protocol_features &= ~(1ULL <<
+>>                                  VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>> index 4e196fc773..c04bb53159 100644
+>> --- a/hw/virtio/vhost.c
+>> +++ b/hw/virtio/vhost.c
+>> @@ -1390,12 +1390,10 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+>>                                      unsigned idx, bool force,
+>>                                      bool skip_drain)
+>>   {
+>> -    /* TODO: support skip drain */
+>> -    assert(!skip_drain);
+> The following assertion would be useful:
+>
+>    if (skip_drain) {
+>        assert(virtio_has_feature(...protocol_features...,
+>                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT));
+>    }
+Thanks for reply! I'll fix it all
+>> -
+>>       int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>>       struct vhost_vring_state state = {
+>>           .index = vhost_vq_index,
+>> +        .num = skip_drain,
+>>       };
+>>       int r = 0;
+>>   
+>> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+>> index 53fe996686..c95bad5ddc 100644
+>> --- a/include/hw/virtio/vhost-user.h
+>> +++ b/include/hw/virtio/vhost-user.h
+>> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
+>>       GPtrArray *notifiers;
+>>       int memory_slots;
+>>       bool supports_config;
+>> -    bool supports_inflight_migration;
+>>   } VhostUserState;
+>>   
+>>   /**
+>> -- 
+>> 2.34.1
+>>
 
