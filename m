@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D67B310F287C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6935110BA434
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6GfH-0001cp-Cl; Fri, 27 Mar 2026 19:32:31 -0400
+	id 1w6GkD-0002XB-1d; Fri, 27 Mar 2026 19:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GfF-0001cQ-N6
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:32:29 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GkC-0002Ws-5b
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:37:36 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GfE-0007lX-2w
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:32:29 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so28186725e9.2
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:32:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GkA-0000Bt-DP
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:37:35 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso34633765e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774654346; x=1775259146; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774654652; x=1775259452; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SdlDVxlcbRhjw2pJuGzVZI2mDTbd6L4tJ1o5D1L64n8=;
- b=FPYg4B4gOk5c/26yXQHQYT65ZlVNoSvzdWXw03GnohECLxOuAtn+fQqkgVHthiCSiN
- sHQOSaHMvwAUERI31NGgXGeVSw5tWggo+BI9aHNDtHv+GaRlRgUA6PS8reiBra/AShwL
- 9SrC5CQOWvYKEqpud7ZlvyeJdFOgtNOP9VqfMhmpF/BzDBlFRNx3iNp+CZgbJyqiF0KF
- ATwqAkuPkYqi6YxYestenqVFHgh47+JsEB+vG0y+xrqCSX98nKZCIV25Iw+5GYMuf4bV
- ptdc7dMDADcN1X/1SyDk20etvsBwUyLAoxeN18cODrwY+S5y/Q6NEhRcQLs2qOpmHtnm
- OffQ==
+ bh=GPh5zuELW3Gv9po5dSTAKCbMAwXteQzdQsFJR1HQki0=;
+ b=N37ybUsN9lihTSnjHqsPfkWoOPS6jUin7EArA8LtgbT6GomhrCfhNjcm/Z2twNhu0i
+ kihE2a8OO8pcYRc7+Rpixu3iVCck/ymz2FxgpVPysBpS0TFpZAJ16K5AlULzEUoxeoVW
+ VJCbi577u2xa+9w+PY49/93XE2SH3Tg2rYtNaqok1Ib8WXZApXNQfLRTLfOu8sqonjbA
+ wl7a71fWSBclRIQJMxkOZ0x18uUTYU2b8YsAKkyR8lQxHI1xEghrg9sq80S80qvPTK4T
+ v/ZU9rl0HuoblArTtrjvBdpP6uPCBGx1Oz9oCVJUnZPl+YPmO6lXQU6QTboRdN0Iv+Xg
+ 0pCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774654346; x=1775259146;
+ d=1e100.net; s=20251104; t=1774654652; x=1775259452;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=SdlDVxlcbRhjw2pJuGzVZI2mDTbd6L4tJ1o5D1L64n8=;
- b=EUVjKm/UvicinBBvCVhpurDN4dzFeGwQdoTDyqAahXsfgQsg2t/EWqTgH2PN/mIGhN
- r0l3jauUE24ODBvDZdm8LQn6x+2EHaJoOktAA9PqC6bApVssXdTGpV1BrR8+gzLQzXc9
- psCMUMjPny4oDUblaQ1rEUAfwoeGAbFDMUlFHEXs1u1OhfvrlMYhsct4iJOdLRFJaM/q
- ijPUvqTfFFY1eA6GM4xlkQPeSEG+6sV8yjeospJKkjezW1TXrsXyDCHEEk6h4XZC/gPN
- psMT4weHeo+co/WB4ovWZwfhCJxWumYyAjLZp4iD3I/FEoGqrHW9N5ikU1ECOUOHM02D
- 165w==
+ bh=GPh5zuELW3Gv9po5dSTAKCbMAwXteQzdQsFJR1HQki0=;
+ b=iT+3knSoUUuPJ2ey0oagaxxlwRYoNwidXy8lesKbCD9MG/CyDxPx1QX6S+IEtaJsLC
+ UhYVwgfK2sUsaqcjZ8jfp2dl2RpTNPmYOhjnmkQkctkkcE2JYx296fV9PyRiqCS+z45z
+ DVLR8KTky+1JY3YrUb9duhWuNGTVD+G6midFscMBRsbVy2rfJO/xAChih981ubMai27j
+ iOEoff6ErZqoFSJ2vPbi3jDmd8zFD0GTo4FDw9mIBh3793r1sPQCyerHaBmoEibi4Chp
+ e4Ry77TRKhcFsbkcG5ya67sXj6JWMl3A7VVtdckhUU0kqAS2m14Pr9WgjQegfy6yT+14
+ /v2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTIbjqFbVzRVPlBNip8xM1j2GFATGP3JFm/pYBsFVljYW0cu6P215wx89C9OLqRjZddSW76/fn6tUs@nongnu.org
-X-Gm-Message-State: AOJu0YxUwdG+0F3kpDXO2Hea1bRUpbWDavwue4iMHN+vF+tgv5ho7lPR
- f8KqUQ/sNx4FPNeP9ZrwLaR+dKlSNHe7zGilTe2x3nMJRkBMbXS8YfUR5D5o2Ub7Of0=
-X-Gm-Gg: ATEYQzzbasUtNZgPPAvlXG/HJ416bMxwQCjm3EbrhOcz1gB6HGnZsRTjjTT8jbr6CSp
- QxRCnS46RntF2fjXlSXPCzxdidmJhSDlU3u12Crsl15EbcDV+0FCGcdD8Owj0w8CWr/rooolqqq
- Fy4pvn+si7ubk7gv31OZpciG765/AqOUCCq5PQWsETcuInXCZ4LsKLXoqOCM3X6pSvNob+VphJU
- WAdJwcPz/ZzVg9ri+EqxW12KDnN9MNZdtg5d7TF465mTZ0iDYAugBLK8Fip+9LwXdecvYeqEkqN
- TPu1+sfI+qsmewUsSzAHErO6HprZT0r1dG/zJ9PKvpAxxuoGgFseKqWP6iBgOHP4ZGfU7LBk6gY
- /E7vft/A88PmJjM7j5znIE+V/WDymDwoptLuMqDWLabs1BTIoDDUU6M7wWLYucvj5QCl4v8RetP
- 6jT47HHv9EM0fP3O2uv5/SjgHBQUnt77+gLtDbNPW/4c/24WnPTjgBwamyX1Otwg==
-X-Received: by 2002:a05:600c:3513:b0:486:fb5c:3b20 with SMTP id
- 5b1f17b1804b1-48727f23fccmr65102635e9.13.1774654345999; 
- Fri, 27 Mar 2026 16:32:25 -0700 (PDT)
+ AJvYcCUz8vDubqd8nS8E/KtnoRCohy/CS7RrYIeDlQ2KDPMfDSm29tlWsJkH89rOD3cB1eHT1rgTjzV2dM/h@nongnu.org
+X-Gm-Message-State: AOJu0Yw3kcn04FMjEQi5g+6gK4UHSrTbs5sEreqOGC1EMK6uS82qGshv
+ HXka+mx2BhcSQ6i0h+/sk5OEUmrb6FGB7NyP0a1sK+F4ojNwJaR67RtD6r8+bVUNJgk=
+X-Gm-Gg: ATEYQzw4uda0/sQIyPBCiDExrJhWx3tZ5HQl4XwRruh2SwNX2majLaKyAyWmfMVkwGj
+ OSkkPCC2c1WCcOdMGgyLkVQDgOWy11Nycu33xXLDiVt1sVBmH5VZKvpYAcHHCRiqpS/S81XaSBb
+ IqMwXOQ4OKbjmSALXeOupzhBeMde82qOZnxpvYiKlJMuFvUhV4XiPjliFUw68a8q1bFy0hS3sVo
+ aJfwJI3Eo7y8JdaOIU9NY6ImC3jwqDf5Q0Da02RBE6w27PHJzHykh4mUO1zD2UMlFbeFSOKMuPe
+ f6NPG1KAWvj++CmLVdHpHIZ6zlVLAK/G4HjDdD1ZUMGfdXRdyD1qrRO0lm9qeXb/6BYaZaLBFCb
+ dL6g8CjM9P8JR2SdgP4DJdv+h3mQiZZyVUewLH9ZuY0iow1N9FQwCGUhvA1crr7zsr99u5zmIcV
+ nQqbLNschNACyY6fDeqbMgfMhOEM+OPUyiJ1DimvWte1FZ9LLMfM793S2/bv/0pg==
+X-Received: by 2002:a05:600c:638e:b0:485:3c09:843 with SMTP id
+ 5b1f17b1804b1-48722be44b4mr135336735e9.9.1774654652271; 
+ Fri, 27 Mar 2026 16:37:32 -0700 (PDT)
 Received: from [10.202.147.66] (147.149.216.82.rev.sfr.net. [82.216.149.147])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48725ebe9dfsm35832795e9.4.2026.03.27.16.32.23
+ ffacd0b85a97d-43cf2570b18sm1347590f8f.31.2026.03.27.16.37.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Mar 2026 16:32:24 -0700 (PDT)
-Message-ID: <ca8ca985-d780-4c85-a91b-657560f47d2b@linaro.org>
-Date: Sat, 28 Mar 2026 00:32:22 +0100
+ Fri, 27 Mar 2026 16:37:31 -0700 (PDT)
+Message-ID: <01eb4b4a-b77f-421c-8ff8-bbd061482c8d@linaro.org>
+Date: Sat, 28 Mar 2026 00:37:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/16] ncr710, lsi: use same enums for command_complete
+Subject: Re: [PATCH v3 0/5] hw/tpm: Remove instance @ppi_enabled field
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-References: <20260327212547.460420-1-pbonzini@redhat.com>
- <20260327212547.460420-7-pbonzini@redhat.com>
+To: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260317120241.16320-1-philmd@linaro.org>
+ <70bd2f29-9f33-43e0-897f-52f0b2af111f@linaro.org>
+ <ece64b0e-7f05-43de-b326-38788a9abe8b@linux.ibm.com>
+ <2c06e37f-477a-49d6-a65b-fd826fcdc5b2@linux.ibm.com>
+ <184a1a43-d41b-4b23-bc53-768a12631884@linux.ibm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260327212547.460420-7-pbonzini@redhat.com>
+In-Reply-To: <184a1a43-d41b-4b23-bc53-768a12631884@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,94 +112,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/26 22:25, Paolo Bonzini wrote:
-> The ncr710 and lsi53c895a HBAs share some of the logic, also make
-> them use the same enum for the command_complete variable.  Change
-> the names for ncr710 to something that is more representative,
-> for example NCR710_CMD_DATA_READY might also indicate that the
-> device is ready to *receive* data, not just that it has data
-> ready to send.
+On 27/3/26 19:17, Stefan Berger wrote:
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/scsi/ncr53c710.h  |  4 ++--
->   hw/scsi/lsi53c895a.c | 16 +++++++++++-----
->   hw/scsi/ncr53c710.c  | 10 +++++-----
->   3 files changed, 18 insertions(+), 12 deletions(-)
+> 
+> On 3/27/26 11:21 AM, Stefan Berger wrote:
+>>
+>>
+>> On 3/27/26 11:18 AM, Stefan Berger wrote:
+>>>
+>>>
+>>> On 3/23/26 5:56 AM, Philippe Mathieu-Daudé wrote:
+>>>> On 17/3/26 13:02, Philippe Mathieu-Daudé wrote:
+>>>>
+>>>>> Philippe Mathieu-Daudé (5):
+>>>>>    hw/tpm: Factor tpm_ppi_enabled() out
+>>>>>    hw/tpm: Add TPMIfClass::ppi_enabled field
+>>>>>    hw/tpm: Remove CRBState::ppi_enabled field
+>>>>>    hw/tpm: Propagate @ppi_enabled to tpm_tis_reset() and remove in
+>>>>>      TPMState
+>>>>>    hw/tpm: Simplify tpm_ppi_enabled()
+>>>>
+>>>> Series queued for 11.1 (typo fixed), thanks.
+>>>>
+>>>
+>>> Here's another TPM PPI related series. It would make sense to 
+>>> upstream them together. Do you want to queue that one as well?
+>>>
+>>> https://lore.kernel.org/qemu-devel/20260327-tpm-tis-sysbus-ppi-v2-0- 
+>>> d8ec84d25dbc@redhat.com/T/#t
+>>>
+>>
+>> Actually, they will have to rebase on this series first...
+>>>
+>>
+> 
+> v3 is good now:
+> 
+> https://lore.kernel.org/qemu-devel/20260327173209.148180-1- 
+> mbawa@redhat.com/T/#t
+> 
+> If you want to take it let me know, otherwise I will have to wait for 
+> your series.
 
+Thanks for the head up, I'll queue it along and send the pull
+request after 11.0 is released.
 
-> diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-> index 54123f77579..6b0c97d98e3 100644
-> --- a/hw/scsi/lsi53c895a.c
-> +++ b/hw/scsi/lsi53c895a.c
-> @@ -209,6 +209,12 @@ enum {
->       LSI_WAIT_SCRIPTS, /* SCRIPTS stopped because of instruction count limit */
->   };
->   
-> +typedef enum {
-> +    LSI_CMD_SENT, /* command is running */
-> +    LSI_CMD_READY, /* one round of data transfer completed */
-> +    LSI_CMD_COMPLETE, /* command completed */
-> +} LSICommandState;
-> +
->   enum {
->       LSI_MSG_ACTION_COMMAND = 0,
->       LSI_MSG_ACTION_DISCONNECT = 1,
-> @@ -238,7 +244,7 @@ struct LSIState {
->       int current_lun;
->       /* The tag is a combination of the device ID and the SCSI tag.  */
->       uint32_t select_tag;
-> -    int command_complete;
-> +    LSICommandState command_complete;
->       QTAILQ_HEAD(, lsi_request) queue;
->       lsi_request *current;
->   
-> @@ -815,7 +821,7 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
->       out = (s->sstat1 & PHASE_MASK) == PHASE_DO;
->       trace_lsi_command_complete(req->status);
->       s->status = req->status;
-> -    s->command_complete = 2;
-> +    s->command_complete = LSI_CMD_COMPLETE;
->       if (s->waiting && s->dbc != 0) {
->           /* Raise phase mismatch for short transfers.  */
->           stop = lsi_bad_phase(s, out, PHASE_ST);
-> @@ -854,7 +860,7 @@ static void lsi_transfer_data(SCSIRequest *req, uint32_t len)
->       /* host adapter (re)connected */
->       trace_lsi_transfer_data(req->tag, len);
->       s->current->dma_len = len;
-> -    s->command_complete = 1;
-> +    s->command_complete = LSI_CMD_READY;
->       if (s->waiting) {
->           if (s->waiting == LSI_WAIT_RESELECT || s->dbc == 0) {
->               lsi_resume_script(s);
-> @@ -876,7 +882,7 @@ static void lsi_do_command(LSIState *s)
->           s->dbc = 16;
->       pci_dma_read(PCI_DEVICE(s), s->dnad, buf, s->dbc);
->       s->sfbr = buf[0];
-> -    s->command_complete = 0;
-> +    s->command_complete = LSI_CMD_PENDING;
+Regards,
 
-Where is LSI_CMD_PENDING defined?
-
-../../hw/scsi/lsi53c895a.c:885:27: error: use of undeclared identifier 
-'LSI_CMD_PENDING'
-   885 |     s->command_complete = LSI_CMD_PENDING;
-       |                           ^
-../../hw/scsi/lsi53c895a.c:909:32: error: use of undeclared identifier 
-'LSI_CMD_PENDING'
-   909 |     if (s->command_complete == LSI_CMD_PENDING) {
-       |                                ^
-
->   
->       id = (s->select_tag >> 8) & 0xf;
->       dev = scsi_device_find(&s->bus, 0, id, s->current_lun);
-> @@ -900,7 +906,7 @@ static void lsi_do_command(LSIState *s)
->           }
->           scsi_req_continue(s->current->req);
->       }
-> -    if (!s->command_complete) {
-> +    if (s->command_complete == LSI_CMD_PENDING) {
->           if (n) {
->               /* Command did not complete immediately so disconnect.  */
->               lsi_add_msg_byte(s, 2); /* SAVE DATA POINTER */
+Phil.
 
