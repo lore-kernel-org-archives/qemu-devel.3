@@ -4,100 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D40EAF532CC
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D39F532CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ycC-0007Pj-86; Fri, 27 Mar 2026 00:16:08 -0400
+	id 1w5ybs-0007AK-Ok; Fri, 27 Mar 2026 00:15:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5yc7-0007Ox-4u
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:16:03 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5yc5-0004Ja-Cy
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:16:02 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2b0abdde280so16680635ad.1
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 21:16:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774584960; x=1775189760; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y+S68uIrLvV6AJj403lbVxEftF5rGIOFW9dWbWeKYDo=;
- b=hjkzalialpQfyU/9LNM+T0bXw5EfoIS2ZlINhEb8PbWMpvKuaGWp3o3UIwVCLhdcCZ
- jORcbBQjjsD+YnTk9a6kEYMXeW6lq7x77tLVz2IM/M2BAT2N2f8lfPHlHl9OlqMCH7OH
- F8gcD+ohoKT9NE8OT6b8uQt6NuSaWwN5Mu079r22s3LLB1EnIjFVjs25EIJ412IGRdtf
- OR+U0YR4fXXcwKe4pOcE7QzZSyGyGihuX08YdzoyKlKUt7kAAmHkd5aNHn9evtT6lCyy
- q+av5OmoZnfyYCBFJc1Rw74pEwd/zSkLmGtJIECLE7VnS5JT+f9tYlRvoWT2VBguiRks
- RWLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774584960; x=1775189760;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y+S68uIrLvV6AJj403lbVxEftF5rGIOFW9dWbWeKYDo=;
- b=rx5DnDlomDwGk2mkrsxdkS1C2f51vH1f0ifK20AkcQkZiOv2Z+KcBTygHZNtOl4xnd
- OZvbM2k/QWj0WSNIAiuqH+k0t8z7mL4sKj2FfM7HY7BJ7xikUeNUzr9vH7/nLLEIJims
- 2N8vpAg7D8hs+iUrUVFWSXGnIJOCDpfqA+/BgsdhJNAlC/QtOegF7ZHoaSKc1HKriBxS
- akU/7/ETTOS9VkkG4Eow1pum3LK1+jLbfEEAOOKdKuK9ZNDui4JfMs1fh4e4Jpt0GRij
- eldBG9cT6Q7LaGkNY0j3fhzw6CKrm96tA97AMn43INeiuakLkOr4ZqeR4RQs8qfFBvqf
- V/NA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSjX+wZR/5x6tsANEo3KIpRjTd71lnAVp/t0wc3PPu61sG3H2b10dqtMYZYrPeZZ+l3QSdGqbcZiKt@nongnu.org
-X-Gm-Message-State: AOJu0Yxx0gVVYV5o1XRH7p41nN26fWDp6DfBBkZwaAXtWYoRY3yoUGG6
- 0RnBiA9+PsOm4DmFqoTJTKUuJ8gM40HQfbVbaAgUUcSzso/Po7DaiMTo6lwneA8Upz0=
-X-Gm-Gg: ATEYQzxuq9RUqr/WhJkDkKllS0NDWH4FTxDYX+jCbMbNc0cImkw3AtoEK7nsBur1dKt
- 28vXJWlkpWmFMZCwL5shQUYo6EfYu+s6eXcX3CbCPrrI+rYgrPi0XhGntFxWH5FWQboQVoRMUcf
- ivMYkmoUYdvn5wiDsrnrYF8bYnHI/3Q+j5U/V3+KWgvrjzUaaprb9vJ4gJA6qaMGHelOc/jqogH
- wnVsQQCjK22HI11d97wwDPb1a3v+PnCXGmZZ7Q98M7sDjwCcLoLt5JhsOuC5JXSEsDjbu5Dvma9
- wwcQpRbA5myjwPYpmW5coI3Bkk8ZoZ4BdqQjgNmLhKLbQwo7hYp3fz3djSu2Ow9fRDqKcp2QAn5
- jvwg1lVlGnGdSZU0QlacfcfgHWpOo/EuoRbPlqt73QFIVOhJEwdaKc2yzLi6mhuIgrO1N2VtPAe
- ioTXfdDmNQmWpIjY5CYXlYhjbM5/zEJhm1ahhjLNxaaD4qbwDsr/fH
-X-Received: by 2002:a17:902:d487:b0:2b0:ac1e:9720 with SMTP id
- d9443c01a7336-2b0cdc5d700mr11716795ad.23.1774584959764; 
- Thu, 26 Mar 2026 21:15:59 -0700 (PDT)
-Received: from [172.16.11.156] ([103.100.225.140])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b0bc773472sm45929635ad.7.2026.03.26.21.15.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 21:15:59 -0700 (PDT)
-Message-ID: <ad208f30-4454-41a9-a91d-756fb40930df@linaro.org>
-Date: Fri, 27 Mar 2026 14:15:52 +1000
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w5ybp-00076r-84
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:15:45 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w5ybn-0004HK-8z
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:15:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1774584923; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=ImtjCiydKRIg+gEb8ISLncPdr5a9tLnby18rdRLtoLHlVeycDUnm6okWSTakL6x2MWKI6bWPpaL9qHxuRbQfSHmQgUTYfRuLpmFdRwafxz+j3zcO9zgjNEfwn/wD/PmyjWbwsJvcsG2c/B8fH1znWt2Wsh79bMYVcpbcEjBQnS0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1774584923;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=0Vm9IVDWvJ7/Ee4bC/QNOgqMgCnDPlG2UmZyM6Ud3i0=; 
+ b=ReRuJBZ72G18IwkNgnc+w02f9mkgPkyURPoRji1wNktdSZKlMjcMHm7+oOnmvUWS3SQIZq2ZgtQoHSsfyLzJoySE0hW+cFERUgbt5jNm1KWDmG+ceIz4/ZYCUfUJXEUPSxN0ThevlVSVxdVUpwzOCN62h5ShFmxIsKB5cTjGIh0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774584923; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:Message-Id:Reply-To;
+ bh=0Vm9IVDWvJ7/Ee4bC/QNOgqMgCnDPlG2UmZyM6Ud3i0=;
+ b=rnbo+2l0BSwpggGsGhD+emzzUeU368IZQH69C1nybGkDKyCOWR4zI6wCAvWlBe3c
+ NihYHtl6v0MdNH+wSMQkFEsH3WfzSoKSksAiicgFRsXAC9mYUofOdTsErMw2bBWLUWq
+ 2o6sv1CPbnAcp60mj42ySZOsunNtvsViDxlu5Xc4=
+Received: by mx.zohomail.com with SMTPS id 1774584920509674.4537690700389;
+ Thu, 26 Mar 2026 21:15:20 -0700 (PDT)
+Date: Fri, 27 Mar 2026 04:15:15 +0000
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <liuwe@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v3 2/9] target/i386/mshv: fix cpuid propagation bug
+Message-ID: <20260327-hypersonic-fast-lizard-6f672e@anirudhrb>
+References: <20260323115711.353793-1-magnuskulke@linux.microsoft.com>
+ <20260323115711.353793-3-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/7] target/riscv: Support runtime endianness in virtio
- via sysemu callback
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>
-References: <20260324164007.549397-1-djordje.todorovic@htecgroup.com>
- <20260324164007.549397-7-djordje.todorovic@htecgroup.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260324164007.549397-7-djordje.todorovic@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260323115711.353793-3-magnuskulke@linux.microsoft.com>
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,63 +82,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/25/26 02:40, Djordje Todorovic wrote:
-> Implement the .virtio_is_big_endian SysemuCPUOps callback for RISC-V.
-> This makes cpu_virtio_is_big_endian() return the correct endianness
-> based on the hart's MSTATUS MBE/SBE/UBE bits, which is used by
-> virtio_current_cpu_endian() during guest-initiated device resets.
+On Mon, Mar 23, 2026 at 12:57:04PM +0100, Magnus Kulke wrote:
+> The list argument was missing a pointer and hence e.g. -cpu qemu64 and
+> -cpu EPYC would produce the same of cpuid leaves.
 > 
-> For bi-endian RISC-V targets, this ensures legacy virtio devices
-> correctly detect the guest's runtime data endianness, matching
-> how ARM handles its bi-endian support.
+> Fixes: 4fa04dd1621 ("target/i386: Register CPUID entries with MSHV")
 > 
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->   target/riscv/cpu.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Nack.
-
-I replied to v4 before I saw v5:
-https://lore.kernel.org/qemu-devel/23a0d240-6f77-4edb-8128-fd2c2b8354df@linaro.org/
-
-
-r~
-
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index eed5afd27e..f813acf579 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -32,6 +32,7 @@
->   #include "migration/vmstate.h"
->   #include "fpu/softfloat-helpers.h"
->   #include "system/device_tree.h"
-> +#include "system/hw_accel.h"
->   #include "system/kvm.h"
->   #include "system/tcg.h"
->   #include "kvm/kvm_riscv.h"
-> @@ -2713,11 +2714,21 @@ static int64_t riscv_get_arch_id(CPUState *cs)
->   
->   #include "hw/core/sysemu-cpu-ops.h"
->   
-> +static bool riscv_cpu_virtio_is_big_endian(CPUState *cs)
-> +{
-> +    RISCVCPU *cpu = RISCV_CPU(cs);
-> +    CPURISCVState *env = &cpu->env;
-> +
-> +    cpu_synchronize_state(cs);
-> +    return riscv_cpu_data_is_big_endian(env);
-> +}
-> +
->   static const struct SysemuCPUOps riscv_sysemu_ops = {
->       .has_work = riscv_cpu_has_work,
->       .get_phys_page_debug = riscv_cpu_get_phys_page_debug,
->       .write_elf64_note = riscv_cpu_write_elf64_note,
->       .write_elf32_note = riscv_cpu_write_elf32_note,
-> +    .internal_is_big_endian = riscv_cpu_virtio_is_big_endian,
->       .legacy_vmsd = &vmstate_riscv_cpu,
->   };
->   #endif
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 
 
