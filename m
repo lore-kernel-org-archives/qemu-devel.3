@@ -4,90 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A60810ED67F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 14:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF48010ED674
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 14:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w68Gz-0002my-Hy; Fri, 27 Mar 2026 10:34:53 -0400
+	id 1w68Iu-0003lf-Uc; Fri, 27 Mar 2026 10:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1w68Gw-0002mp-MA
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:34:51 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1w68Gu-00024r-Sx
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:34:50 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b949bf4easo1287100f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 07:34:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1w68It-0003kl-JN
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:36:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1w68Ir-0002Xt-Ke
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:36:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774622208;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=n1KaJRkHY4Kpb4ZZERFSbOT2VSGz74fMkW4MVssCRzc=;
+ b=BSWTfYwN2PeJXBkiVu/DwWtcdEPSOak8QhB2ev9A5xbMDamfr7LJgTitPa3TqXObhkWg4z
+ GXxlJdIqeVvzcMobLLgRz8DOnp2QaIl0MjdbP2yIBVmuCyJB7AAkifHHOnEDvQ3QHAgQJk
+ CDST3hZ5UtNnLVzqzC8N3cDRbuRSOMg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-45-2g8tWJc_MXOu8BR_bcU0sA-1; Fri, 27 Mar 2026 10:35:42 -0400
+X-MC-Unique: 2g8tWJc_MXOu8BR_bcU0sA-1
+X-Mimecast-MFC-AGG-ID: 2g8tWJc_MXOu8BR_bcU0sA_1774622141
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-439c54e0f6aso1538891f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 07:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec; t=1774622086; x=1775226886; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QJcL6p7alzRTJ3dPJyskl2pWpoSpOzUzdB70X70o3z8=;
- b=q20ZfF7iw1fE7hSrm+DGEOb34HsKi/5MuVZwAlwNFsyMEQwWrx+Hpl72Us3Tb41nsG
- 6T41Rt7+sme/UGyayGoNQXllTfYmqrA11NrVMoyoEAKo3R/bWbKuL930b7Ad7I2KlLEo
- bQjsMOPtijytRnFnwPuzZ+rC8vcZktCDFbkeVBhOLVZSxiKjsvY7o/ZevgzwXscwdhd1
- xdOIH6789eym8KZ1cMdXiv7Jd+E1qVNXVy0DR4CUIbfylggsK6EM3QJydLQV6WT9TY49
- ECKOwCBMYygdYfzsxIG9fH3mMTgPZWMadKSdVwE2ifVhwaY45Z6nWzmFHY/a56p+ZZW2
- 28hA==
+ d=redhat.com; s=google; t=1774622140; x=1775226940; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=n1KaJRkHY4Kpb4ZZERFSbOT2VSGz74fMkW4MVssCRzc=;
+ b=jI3HB/KgD+vto9UAyIN9I3kK6tQwDXSsqF//2i2IcFQpBKvA2Rts9hl6jHa0jdVHCQ
+ FxcrXKSRPLIVJZnEAlk4T9rYiNxntEbmAwqYayH78sAk8QFXNvJcHnjUW5tgc/N2Zjlz
+ y/y9WEZ0OjOz+q717ky/FOyXRb11kyqazHtbX0Qa4Xnf8dD3S9IIyjDF+vmQwUmN6ii9
+ K/Z+dZrrHElGaPtJgEDNhtYKiLGSqvhbXwujBmLXWwe8FprpQ7KqdjA23CnsHEsIO49Y
+ pDqENzqEJNRZ5EgzYXEkdJLjcL/NJ9Yn7KvlnxWyPlGecigr3UOMKTjqreJ3y9zYN2Ya
+ 7xNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774622086; x=1775226886;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QJcL6p7alzRTJ3dPJyskl2pWpoSpOzUzdB70X70o3z8=;
- b=NwMWgsSoB9dH+nPOfFfSFAyjSrBgWbDbbgTFOq6c7yeaLe2LdWhn1HTJlHKxYZS5oG
- 666O4vCBY+XUcpRzRw8Z7IAnxFpYDVKcpJFTszCXd4xDjZy8gcLjq7eZ5KgH5y4srBsB
- EsAG4hdUZNFKm3duKD+RZD0gFnD7cEWA1Gvu7LPCB62cuxvHw7pU1XJaHmj4vcxOP445
- c7o2/6Sj4oD9sFKYqCehz8hGzX7gnQTTrhXZgZ4OW6dF7hGgfBZ+M+hRSa8qEPxDsfJ1
- /ZYluZGbV2CbZzNbr82TCWu9zGtLhXr6eEeDzU5M5DwsZP73QNv3Fvp4pTmLubmt6oKR
- P7BA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWbR89nvMQAPiIbIrj8+3jmgOfuMPKVNd1kV6FQQWTmHBvu6EeVgBQ30jZACK/EIR2LKX9a08+GHA9@nongnu.org
-X-Gm-Message-State: AOJu0Ywt5ZPHRJqXL6INdrbMHimqHC5lpd7n1KAS0gkwhkHZYqXL92o3
- SeA0jXT225ZjsT63J0YZj0mR0fn38+kjHpBynyRtGrLvrr1IxFnh74Y9BDLB2ID0C2g=
-X-Gm-Gg: ATEYQzyLAnOagZZpBSIVUYsUoksfhQ2+q+GbRTehax0UD/6SnX0u06BuRUSyAj4dflv
- 9LRFZNoG1oIm2U/aDOuBCv0ZM4KBnpUVUGh8e/FkLw37q2YWZp/Bz27M6SpAV5ch7GLzTNR+llk
- GAZQi9jDr9oCvv3Q4Rc7wu7hgLpeteO4ciBgAE+HrymdbWo7z+Fz6Yf8KPmnlOFOVMnz4KOILeX
- T1IHNOIW8dWXtcCquIgM1WBC61oo84tUrLj8aqpiZCA0kjkIlurxtNxIBfqWnjTcYZ3MDN3f1wK
- 55mJLW6VCTdjrBIFYseAvUwcjtseZ3xbLxoCO99Nw8ZhPMGNruqYNrKdzXLt23iJguZ+ko9tJDX
- m5LfVjgluxyjp3QQOdvctZyvtIyys5wRT2A/+CehyU7PHIhJzNhdr5RdbRt0VdxCBrozw/Zf68c
- ltjcQPKrH2hjs6XekVo1TMp7ialJxidaowf3nzMDeUECNz4Ns3UolDE1GjS4Y+9DpPLHsHkyFiq
- SujwRoC96Qox3e50A==
-X-Received: by 2002:a05:6000:2409:b0:43b:4703:9dd5 with SMTP id
- ffacd0b85a97d-43b9eb10cbcmr4414844f8f.18.1774622085454; 
- Fri, 27 Mar 2026 07:34:45 -0700 (PDT)
-Received: from nuc.fritz.box
- (p200300faaf260200b5bd0daccf856f73.dip0.t-ipconnect.de.
- [2003:fa:af26:200:b5bd:dac:cf85:6f73])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b919cf2c8sm14563154f8f.20.2026.03.27.07.34.42
+ d=1e100.net; s=20251104; t=1774622140; x=1775226940;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=n1KaJRkHY4Kpb4ZZERFSbOT2VSGz74fMkW4MVssCRzc=;
+ b=LsjPlUUF9g9fcQdHpV2IOEN9uViAHXtChKqYdXgGaPynDSCQPEfi62BtemDP8UwZhn
+ NdByKV4zBjbuIKxoUPrKml3a/PhHXSTufwtSPUDObF8euS0AoiPQr79k0H+J+MNa7HbP
+ nP3sECfaM2ALYqrLSzUolZJN5J7AdBDVz/V19UFqwYYt44dH8/JNsk6OceeAOgIjMEEe
+ FCYO9KAz88Joibcc9DF9535v0pmJn+pLp6hNmioy5m5VTOVpF8eDwLnvi+E2Oyuv4cyc
+ aBGsnueDiqYKhG7Nn1IBC0mCzOX/JQHnIYhubPUdFVPcwF7BplAmd8HC1exHZrp9cPWB
+ HVag==
+X-Gm-Message-State: AOJu0YwGQ9Ra8uF1LPjSXRogUeSiLgLkpdxzg7dw+KZ/cHvK9mPYJhLV
+ lQhTvveaMq4YLX2eEUXfXhp1Mgh6+5gcc4w/mztkhUQEN1tQIw61S+rEdR3ZWUjXNgp/YxleukS
+ ICEYjk6Z28WnG6PWxMUwV3FirP2YAy4TFBcrLCLjkqNW/2RGfxJVPe6tU
+X-Gm-Gg: ATEYQzywOiaeIuNChnVe8LFGKsXkyjlEenH6n07aUOSz2pi0/DdAabRquF70oCX+Gi3
+ BJc+z6rp/qGXF96ipAJrkGwIGQ4X/CZU7tp1f65NUSQuXm/qUDYpfeXN7CqKZuAgiNrey7MMh1W
+ zN+Y275LIZeSlz7cuY8Dl5hZxdMnv4/iB6PumveZYtflSXmBFntX6QZSu1Sa7w58qRRhcEBWMY9
+ QSQyVx/pa5y2go7fxL6H1oCAi7/+j3ZdSsb3AS31vVpzTaOTiCsSlL68qjgunb+P9ueIhfsWFKB
+ tZ2UeBBG5Qt0blwUR4rRLsXutagolSCJCHTd5rZfuefF5tvCU+hH57Cm8tvMEazRZZwLiNSPovx
+ kAQ==
+X-Received: by 2002:a05:6000:26c6:b0:43b:97d8:9a3d with SMTP id
+ ffacd0b85a97d-43b9eaad57emr4212538f8f.9.1774622139766; 
+ Fri, 27 Mar 2026 07:35:39 -0700 (PDT)
+X-Received: by 2002:a05:6000:26c6:b0:43b:97d8:9a3d with SMTP id
+ ffacd0b85a97d-43b9eaad57emr4212464f8f.9.1774622139114; 
+ Fri, 27 Mar 2026 07:35:39 -0700 (PDT)
+Received: from fedora ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b9194311asm16744729f8f.10.2026.03.27.07.35.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 07:34:44 -0700 (PDT)
-From: Mathias Krause <minipli@grsecurity.net>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mathias Krause <minipli@grsecurity.net>
-Subject: [PATCH] gdbstub: Update x86 control register bits
-Date: Fri, 27 Mar 2026 15:34:13 +0100
-Message-ID: <20260327143413.254227-1-minipli@grsecurity.net>
-X-Mailer: git-send-email 2.53.0
+ Fri, 27 Mar 2026 07:35:38 -0700 (PDT)
+Date: Fri, 27 Mar 2026 15:35:35 +0100
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>, 
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
+ Joao Martins <joao.m.martins@oracle.com>, Alex Williamson <alex@shazbot.org>, 
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>, 
+ Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>, 
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-stable@nongnu.org
+Subject: Re: [PATCH RFC 01/12] migration: Fix low possibility downtime
+ violation
+Message-ID: <acaNfFWvNAEpFsFD@fedora>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-2-peterx@redhat.com>
+ <CAE8KmOyTq4wib3niowjXNfqh4TjwhcEDqUt99=mvuLs5vsSx9A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=mathias.krause@opensrcsec.com; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOyTq4wib3niowjXNfqh4TjwhcEDqUt99=mvuLs5vsSx9A@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,110 +126,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The control register bits haven't been updated in a few years, making
-them lack behind features QEMU ganied in these years.
+Hi Prasad,
 
-Update them to the current version of the SDM and sort the 32bit version
-to be in line with all the other definitions (descending order).
+On 2026-03-20 17:56, Prasad Pandit wrote:
+> On Fri, 20 Mar 2026 at 04:46, Peter Xu <peterx@redhat.com> wrote:
+> > When QEMU queried the estimated version of pending data and thinks it's
+> > ready to converge, it'll send another accurate query to make sure of it.
+> > It is needed to make sure we collect the latest reports and that equation
+> > still holds true.
+> >
+> > However we missed one tiny little difference here on "<" v.s. "<=" when
+> > comparing pending_size (A) to threshold_size (B)..
+> >
+> > QEMU src only re-query if A<B, but will kickoff switchover if A<=B.
+> >
+> > I think it means it is possible to happen if A (as an estimate only so far)
+> > accidentally equals to B, then re-query won't happen and switchover will
+> > proceed without considering new dirtied data.
+> >
+> > It turns out it was an accident in my commit 7aaa1fc072 when refactoring
+> > the code around.  Fix this by using the same equation in both places.
+> >
+> > Fixes: 7aaa1fc072 ("migration: Rewrite the migration complete detect logic")
+> > Cc: qemu-stable@nongnu.org
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/migration.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 5c9aaa6e58..dfc60372cf 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -3242,7 +3242,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+> >           * postcopy started, so ESTIMATE should always match with EXACT
+> >           * during postcopy phase.
+> >           */
+> > -        if (pending_size < s->threshold_size) {
+> > +        if (pending_size <= s->threshold_size) {
+> >              qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+> >              pending_size = must_precopy + can_postcopy;
+> >              trace_migrate_pending_exact(pending_size, must_precopy,
+> 
+> * What is the 'size' difference between < s->threshold_size  Vs  <=
+> s->threshold_size?  Going through the source IIUC
+> 1) 'pending_size' is measured in Bytes.
+>      static void ram_state_pending_exact/_estimate()
+>          remaining_size = rs->migration_dirty_pages *
+> TARGET_PAGE_SIZE(=4096 bytes);
+>          100 dirty pages * 4096bytes  => 409600 dirty bytes => 409600
+> * 8 => 3,276,800 dirty bits
+> 
+> 2) 's->threshold_size' is derived from bandwidth (100M bits/s) and
+> downtime(=300 ms)
+>         100,000,000 bits/s => 100,000 bits/ms
+>         100,000 bits/ms * 300ms => 30,000,000 bits in 300 ms
+>         30,000,000 bits / 8  =>  3,750,000 Bytes / 300 ms
+>         s->threshold_size = 30,000,000 bits (= 3.75MBytes) can be
+> transferred in 300ms downtime.
+> 
+> * Are we comparing pending_size(=409600 bytes)  <=
+> s->threshold_size(=30,000,000 bits)?
 
-This should remove confusion when debugging, for example, CET-enabled
-guests:
+While threshold_size is indeed derived from bandwidth, bandwidth is in
+bytes:
 
-- before the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ PGE MCE PAE PSE ]
+    current_bytes = migration_transferred_bytes();
+    transferred = current_bytes - s->iteration_initial_bytes;
+    time_spent = current_time - s->iteration_start_time;
+    bandwidth = (double)transferred / time_spent;
 
-- after the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
+Conversion to bits only happens for the mbps statistic:
 
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
----
- gdbstub/gdb-xml/i386-32bit.xml | 47 +++++++++++++++++++---------------
- gdbstub/gdb-xml/i386-64bit.xml |  7 +++++
- 2 files changed, 34 insertions(+), 20 deletions(-)
+    s->mbps = (((double) transferred * 8.0) /
+               ((double) time_spent / 1000.0)) / 1000.0 / 1000.0;
 
-diff --git a/gdbstub/gdb-xml/i386-32bit.xml b/gdbstub/gdb-xml/i386-32bit.xml
-index 7a66a02b67e3..1dec40e1d2c1 100644
---- a/gdbstub/gdb-xml/i386-32bit.xml
-+++ b/gdbstub/gdb-xml/i386-32bit.xml
-@@ -87,27 +87,34 @@
-   </flags>
- 
-   <flags id="i386_cr4" size="4">
--	<field name="VME" start="0" end="0"/>
--	<field name="PVI" start="1" end="1"/>
--	<field name="TSD" start="2" end="2"/>
--	<field name="DE" start="3" end="3"/>
--	<field name="PSE" start="4" end="4"/>
--	<field name="PAE" start="5" end="5"/>
--	<field name="MCE" start="6" end="6"/>
--	<field name="PGE" start="7" end="7"/>
--	<field name="PCE" start="8" end="8"/>
--	<field name="OSFXSR" start="9" end="9"/>
--	<field name="OSXMMEXCPT" start="10" end="10"/>
--	<field name="UMIP" start="11" end="11"/>
--	<field name="LA57" start="12" end="12"/>
--	<field name="VMXE" start="13" end="13"/>
--	<field name="SMXE" start="14" end="14"/>
--	<field name="FSGSBASE" start="16" end="16"/>
--	<field name="PCIDE" start="17" end="17"/>
--	<field name="OSXSAVE" start="18" end="18"/>
--	<field name="SMEP" start="20" end="20"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
-+	<field name="PKE" start="22" end="22"/>
-+	<field name="PKE" start="22" end="22"/>
- 	<field name="SMAP" start="21" end="21"/>
--	<field name="PKE" start="22" end="22"/>
-+	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
-+	<field name="OSXSAVE" start="18" end="18"/>
-+	<field name="PCIDE" start="17" end="17"/>
-+	<field name="FSGSBASE" start="16" end="16"/>
-+	<field name="SMXE" start="14" end="14"/>
-+	<field name="VMXE" start="13" end="13"/>
-+	<field name="LA57" start="12" end="12"/>
-+	<field name="UMIP" start="11" end="11"/>
-+	<field name="OSXMMEXCPT" start="10" end="10"/>
-+	<field name="OSFXSR" start="9" end="9"/>
-+	<field name="PCE" start="8" end="8"/>
-+	<field name="PGE" start="7" end="7"/>
-+	<field name="MCE" start="6" end="6"/>
-+	<field name="PAE" start="5" end="5"/>
-+	<field name="PSE" start="4" end="4"/>
-+	<field name="DE" start="3" end="3"/>
-+	<field name="TSD" start="2" end="2"/>
-+	<field name="PVI" start="1" end="1"/>
-+	<field name="VME" start="0" end="0"/>
-   </flags>
- 
-   <flags id="i386_efer" size="4">
-diff --git a/gdbstub/gdb-xml/i386-64bit.xml b/gdbstub/gdb-xml/i386-64bit.xml
-index 6d889692114d..9ac9164e6a99 100644
---- a/gdbstub/gdb-xml/i386-64bit.xml
-+++ b/gdbstub/gdb-xml/i386-64bit.xml
-@@ -102,9 +102,16 @@
-   </flags>
- 
-   <flags id="x64_cr4" size="8">
-+	<field name="FRED" start="32" end="32"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
- 	<field name="PKE" start="22" end="22"/>
- 	<field name="SMAP" start="21" end="21"/>
- 	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
- 	<field name="OSXSAVE" start="18" end="18"/>
- 	<field name="PCIDE" start="17" end="17"/>
- 	<field name="FSGSBASE" start="16" end="16"/>
--- 
-2.53.0
+> 
+> *  static void migration_update_counters()
+>         transferred = current_bytes - s->iteration_initial_bytes;
+>         bandwidth = (double)transferred / time_spent
+>         if (switchover_bw) {
+>             expected_bw_per_ms = (double)switchover_bw / 1000;
+>         } else {
+>             expected_bw_per_ms = bandwidth;
+>         }
+> => ^^^^^^^  Should we divide 'bandwidth' by 1000 here (for bw_per_ms) ?
+
+switchover_bw is expected to be in bytes/sec, however, time_spent is
+already in msec, thus bandwidth is also bytes/msec, the existing code is
+correct.
+
+@Peter, not sure if it is necessary, but it could be usefull to mention
+in MigrationParameters docs, that avail-switchover-bandwidth is in
+bytes, not bits?
+
+> 
+>       s->threshold_size = expected_bw_per_ms * migrate_downtime_limit();
+> 
+> migration_iteration_run():
+>    /* Should we switch to postcopy now? */
+>    if (must_precopy <= s->threshold_size &&
+>       can_switchover && qatomic_read(&s->start_postcopy)) {
+>       if (postcopy_start(s, &local_err)) {
+>           migrate_error_propagate(s, error_copy(local_err));
+>           error_report_err(local_err);
+>       }
+>       return MIG_ITERATE_SKIP;
+>    }
+> * Here we should check pending_size <= s->threshold_size,  because
+> must_precopy is zero(0) when postcopy is enabled. And we switch to
+> postcopy mode even when pending_size > s->threshold_size.
+>   I wonder if we really need both 'must_precopy' and 'can_postcopy'
+> variables, they seem to complicate things.
+
+With devices that implement pending method, don't support postcopy, and
+are not yet migrated, must_precopy would not be zero.
+
+Both, must_precopy and can_postcopy are required, that is what allows
+postcopy to switchover early. pending_size is the overall total that
+includes also postcopiable data, hence why it is only used to trigger
+precopy completion.
+
+However, the majority of devices don't implement pending methods (yet)
+and thus are not counted towards the estimate even if they don't support
+postcopy and affect the downtime.
+
+Wondering if VMSD devices could implement some pending estimates based
+on their defined fields, this would also improve not violating the
+downtime requirements.
+
+> ===
+> # virsh migrate --verbose --live --auto-converge --postcopy
+> --postcopy-after-precopy f42vm
+> qemu+ssh://destination-machine.com/system
+> # less /var/log/libvirt/qemu/f42vm.log
+> ...
+> migration_iteration_run: estimated pending_size: 50577408 bytes,
+> s->threshold_size: 36282361
+> migration_iteration_run: estimated pending_size: 43757568 bytes,
+> s->threshold_size: 36282361
+> migration_iteration_run: estimated pending_size: 36413440 bytes,
+> s->threshold_size: 34334680
+> migration_iteration_run: estimated pending_size: 29069312 bytes,
+> s->threshold_size: 34334680
+> 
+> migration_iteration_run: exact pending_size: 4339167232 bytes, 0,
+> 4339167232              <== exact size is calculated once.
+> migration_iteration_run: estimated pending_size: 4332871680 bytes,
+> s->threshold_size: 35651363
+> migration_iteration_run: switching to postcopy: 4332871680, 0,
+> 4332871680                    <== switch to postcopy with
+> must_precopy(=0) <= s->threshold_size
+> 
+> migration_iteration_run: estimated pending_size: 4332892160 bytes,
+> s->threshold_size: 35651363
+> migration_iteration_run: estimated pending_size: 4323188736 bytes,
+> s->threshold_size: 27243109
+> migration_iteration_run: estimated pending_size: 4315320320 bytes,
+> s->threshold_size: 27243109
+> migration_iteration_run: estimated pending_size: 4308221952 bytes,
+> s->threshold_size: 37695433
+> ===
+> * Here, the exact pending_size is calculated only once, because we
+> switch to Postcopy mode even when pending_size is > s->threshold_size.
+> 
+> Thank you.
+> ---
+>   - Prasad
+> 
 
 
