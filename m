@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F26610BA420
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 02:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06F710BA421
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 02:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5xNs-0008KN-Os; Thu, 26 Mar 2026 22:57:16 -0400
+	id 1w5xNt-0008LL-N4; Thu, 26 Mar 2026 22:57:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1w5xNp-0008Jt-Tq
+ id 1w5xNp-0008JX-2D
  for qemu-devel@nongnu.org; Thu, 26 Mar 2026 22:57:13 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1w5xNm-0000PO-UR
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 22:57:13 -0400
+ (envelope-from <lixianglai@loongson.cn>) id 1w5xNl-0000PN-LT
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 22:57:12 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxFMH98cVpjCgfAA--.42066S3;
- Fri, 27 Mar 2026 10:57:01 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx_8L78cVppX5eAA--.49748S4;
+ by gateway (Coremail) with SMTP id _____8Dx_8P88cVphigfAA--.23746S3;
  Fri, 27 Mar 2026 10:57:00 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJCx_8L78cVppX5eAA--.49748S2;
+ Fri, 27 Mar 2026 10:56:59 +0800 (CST)
 From: Xianglai Li <lixianglai@loongson.cn>
 To: qemu-devel@nongnu.org,
 	lixianglai@loongson.cn
@@ -32,15 +32,13 @@ Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  "Huacai Chen" <zltjiangshi@gmail.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH V4 2/4] hw/loongarch: add rtc acpi table
-Date: Fri, 27 Mar 2026 10:31:23 +0800
-Message-Id: <20260327023125.3802140-3-lixianglai@loongson.cn>
+Subject: [PATCH V4 0/4] add rtc acpi table
+Date: Fri, 27 Mar 2026 10:31:21 +0800
+Message-Id: <20260327023125.3802140-1-lixianglai@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260327023125.3802140-1-lixianglai@loongson.cn>
-References: <20260327023125.3802140-1-lixianglai@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx_8L78cVppX5eAA--.49748S4
+X-CM-TRANSID: qMiowJCx_8L78cVppX5eAA--.49748S2
 X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,63 +66,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the acpi table to the loongson rtc hardware so that the virtual machine
+1.Add the acpi table to the loongson rtc hardware so that the virtual machine
 kernel can use the loongson RTC-related drivers.
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
+2.Delete the interrupt information in the rtc fdt table. 
+
+change:
+V3->V4:
+Update the test data in the directory "tests/qtest/bios-tables-test"
+
+V2->V3:
+Split the modifications related to ACPI and FDT for RTC into two patches
+
+V1->V2:
+1.Add a comment to explain why the acpi table no longer provides interrupt numbers
+2.Delete the interrupt number from the rtc fdt table 
+
 Cc: Song Gao <gaosong@loongson.cn> 
 Cc: Bibo Mao <maobibo@loongson.cn> 
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com> 
 Cc: "Huacai Chen"<zltjiangshi@gmail.com>
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com> 
 
- hw/loongarch/virt-acpi-build.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+Xianglai Li (4):
+  bios-tables-test-allowed-diff.h: Allow LoongArch DSDT.*
+  hw/loongarch: add rtc acpi table
+  tests/qtest/bios-tables-test: Update DSDT blobs after loongarch rtc
+    change
+  hw/loongarch: modify rtc fdt table
 
-diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-index 3e34bedcd6..42820001d7 100644
---- a/hw/loongarch/virt-acpi-build.c
-+++ b/hw/loongarch/virt-acpi-build.c
-@@ -460,6 +460,30 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
- }
- #endif
- 
-+static void acpi_dsdt_add_rtc(Aml *scope)
-+{
-+    Aml *dev = aml_device("RTC");
-+
-+    aml_append(dev, aml_name_decl("_HID", aml_string("LOON0001")));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+
-+    Aml *crs = aml_resource_template();
-+    aml_append(crs,
-+        aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
-+                         AML_NON_CACHEABLE, AML_READ_WRITE,
-+                         0, VIRT_RTC_REG_BASE,
-+                         VIRT_RTC_REG_BASE + VIRT_RTC_LEN - 1,
-+                         0, VIRT_RTC_LEN));
-+    /*
-+     * The virtual machine model does not support suspend and wake-up,
-+     * and rtc is no longer the wake-up source. Therefore, the current
-+     * rtc table no longer provides the rtc alarm interrupt number to
-+     * avoid the software initializing alarm.
-+     */
-+    aml_append(dev, aml_name_decl("_CRS", crs));
-+    aml_append(scope, dev);
-+}
-+
- /* build DSDT */
- static void
- build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-@@ -475,6 +499,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-     for (i = 0; i < VIRT_UART_COUNT; i++) {
-         build_uart_device_aml(dsdt, i);
-     }
-+    acpi_dsdt_add_rtc(dsdt);
-     build_pci_device_aml(dsdt, lvms);
-     build_la_ged_aml(dsdt, machine);
-     build_flash_aml(dsdt, lvms);
+ hw/loongarch/virt-acpi-build.c                |  25 ++++++++++++++++++
+ hw/loongarch/virt-fdt-build.c                 |  16 +++++------
+ tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4689 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5910 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4695 bytes
+ .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4991 bytes
+ 6 files changed, 33 insertions(+), 8 deletions(-)
+
 -- 
 2.39.1
 
