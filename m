@@ -4,104 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFF110F286F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 20:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BBC10F286F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 20:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6E5K-00038q-P8; Fri, 27 Mar 2026 16:47:14 -0400
+	id 1w6EAJ-0005GE-2y; Fri, 27 Mar 2026 16:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6E5I-00038P-TJ
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 16:47:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1w6EAH-0005Fz-TD; Fri, 27 Mar 2026 16:52:21 -0400
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6E5H-0001my-9j
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 16:47:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774644429;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=nQN6BGEz2uMzaWLtnDgvxzEtfd2FYHTGxTkLOU4YzLs=;
- b=HWlbBKjpjxeQbNAbIo4mPlr7K3G9Ig9khtDony5MjNcYFVTufjDPeRvnOPX7Kk1/P9eDFy
- tMEQSAR53NL8+z8vOgIKmIOvB/WFyFk8iIIh1nD9/ww8uu2rsX10jsaHKDaj/moe7qvFIq
- 8D4VI91cazosiqMaO90yTkdxlg2wsBg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-jJWs1YiOPBS4XRDw2wIXMA-1; Fri, 27 Mar 2026 16:47:08 -0400
-X-MC-Unique: jJWs1YiOPBS4XRDw2wIXMA-1
-X-Mimecast-MFC-AGG-ID: jJWs1YiOPBS4XRDw2wIXMA_1774644427
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439cbfcfc21so2195226f8f.2
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 13:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774644426; x=1775249226; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nQN6BGEz2uMzaWLtnDgvxzEtfd2FYHTGxTkLOU4YzLs=;
- b=jYZII2Z/4DCflq5XYfCFxWdXzgQxKJ35n5CXnLfns3AsF61TtGq2JY8pMbNEXT63YH
- 23vZ7hLMGy/eCMBSSjQuJfHGbCMXj7DbvaI5k87qB+r8VNAbXjTWFfOtjAUWX7+S/YO1
- 5CTcFu3mRgPJp4r7hKtSO4kt1tubRvAaqEYWcTU5YLrsskrYjjyUSdT+4R3lB3dPWJSI
- QaByVCfdAD63VU6poFrhFpxZa9DIFW/EVlgaWtsOpyHVzMFImHCrkKuyH7ihSWoZPpDm
- Sqy3n9S6yXVozqqqPEYvxSsZDtFEIUcb2h5g84mpU4EDZSlvV4JzWnjRpwhmfO2i2GvG
- nPnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774644426; x=1775249226;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nQN6BGEz2uMzaWLtnDgvxzEtfd2FYHTGxTkLOU4YzLs=;
- b=ROIaDAXvH4MrfJiNBuHCiZh2f4+1HFgaqOgJgKg5XE6Q+8j6UAm4jcnNvPqcaSW3+q
- Pt0UMf5rl5i8t6mT3RAGszvDjVGAG99WuLhWwpveHW4kyQfbUn+SZWrJ20nwJuHjz6dZ
- tE+l4WpM5lSrbZwDV2XzBgLjx3MWU6Y6SzaYoNDrlH0A5No7wuAv0D6Do1nTO337i6bB
- g07NAJLWAMIIyYp98EWmQ41BUSZEQDjuXGmBP42Lgo7I/WimfCKiMOHubYLgNyWG2RDs
- jKIl4HnQX6SWco3an1vhve1KhDnnDkDZnCmno+Ata3NDm9R4p1H+ssUfMo9ZeyUK3yaU
- HCcw==
-X-Gm-Message-State: AOJu0YzXhFuh33Jigtv8kXCa9XGuo8yUElzBTNsqHjIjRg+kCmgJXzmB
- f1/eMUXuvW/8JV1BxpPEpkZjtBXRuvNTVyVBNr60jP1Y+H5KNZt4M7NQAQ3eH+iJbCgHnmK1Wiv
- viyzjKo7g8i0i/Vd8iqaONsEKwIFxJbFj/ac+WRSCOLsEY6LLiakxcSmA5j3xRpwktDxi29FSih
- /zga3dPFAjD3886eoHIJTLL5fZC/ibR3HAEVmDia9/
-X-Gm-Gg: ATEYQzwlE33/qyIKcxjX3XAiJViJWFepBUzrjXOLqecRlVF/z7OKNI2UaajU14JbsNa
- Cv8F5CpygzpmT+kV+mWQp6mvQyutIcDGt6oauY2RMJsigeU4KGqUEsJFFOapEK47bzvJTP3SKkX
- hoIHEZP4pmIGFwWPkZPaFT97oslx1BkRRidixDFDxDUgNYk4XKHWPjjaft+CX+xZXGWY8chycaG
- BhuvMnfwnC1G0KRVX99dDq3362+e2WND9cQbFh3P40+urHny7+ITtGzAIPm8aoVFNlpR3yeOrUt
- kH3Rv0GF2XPILlv6Gcw+3PEu6P6NNGRuAagaFI+JVEAxErPvoGKnNxgC+GgTDrM/W0jzweVpAua
- OSIkG/R7JnP//BDviPv9q6SIlSy423W7/5NoWXlVXmYCfpJ/828GX1gtgRq1s7aSitRCMjP1QcB
- /kmz5C29ax8CxUZdxrs8eePhRX
-X-Received: by 2002:a5d:5f45:0:b0:439:b3c5:ea1f with SMTP id
- ffacd0b85a97d-43b9e997916mr6907991f8f.16.1774644426207; 
- Fri, 27 Mar 2026 13:47:06 -0700 (PDT)
-X-Received: by 2002:a5d:5f45:0:b0:439:b3c5:ea1f with SMTP id
- ffacd0b85a97d-43b9e997916mr6907956f8f.16.1774644425623; 
- Fri, 27 Mar 2026 13:47:05 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.85.67])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf2580168sm516219f8f.36.2026.03.27.13.47.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 13:47:05 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH] hpet: lower HPET_MAX_TIMERS to 24
-Date: Fri, 27 Mar 2026 21:47:04 +0100
-Message-ID: <20260327204704.424158-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1w6EAG-00034t-FV; Fri, 27 Mar 2026 16:52:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YjllrLbquPTNjuB8s+PYN54yr5/3H2RuWjmbpJ4F3pA25NO6kB/bCFzGQCI52o01Y/3n9dLtDVvIdhiwOmYv+h5jpk5QCXrpFTAYuS5ldNDgsG7DfNb96MSUfRVad/cSTy9Nku06dZfl8NhthkUeJBsm+kMmaX8md2NxjTnw1Ab01MfhaAhsS7sWpUeJeajTKn7TWYz9rvRysVVUMo2udWWfJGpu/qZnzRRulDyLVPZrolB8x0PZjQEEM5s340GodI7kILDjXry/Y7cC5cx1HQXPBValVxfRBXDHBEZMiJgvldvRlr5GYuVJMC9kZ8NiK8Hnp8qpQq4gmYlU6odGcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=j/+P8ZpzDyuvj8HPn+7aseuFbYhZ+ZRc5oszUlvwI+0=;
+ b=Nyr1UuAeBfdm+J2l9hLLfmNlu87ZTMzuChyUUyPiSccRzQgoSx7SA1K09RxAodv2DqfjLMz6PqYnpzlvyn/W1oQSP4Bw1ccOP/x8v4QBjyldKBRGPMOw8ZfD4Q8nL5fNJUYZoCVFaXHAXTIT0FDy77WzoubLTLP36D/DBSdyaOzzPs/thw+VxwgUHVhxOq77f7Xrk+kk8E8p9ExeAD3BBUOem3NziDZXcSmtJNwCdvLhNViUFUE5CfvZYlGl3rlxMA4xgj6i7CyHgMWrw9CqPvgtKRLdJog+7mXMtE2Rgh615ZOEekxWQanv81nmx5MxLWlhGEiNry4NEak7Yg9tyw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=j/+P8ZpzDyuvj8HPn+7aseuFbYhZ+ZRc5oszUlvwI+0=;
+ b=ntazmXVCRtKf+UGPc3cuJnwCs/vwtsEfc/itGRl88VPajV9BG8G5Gyv1l+OW5TBxCox5JLvdAgUHrz7+Ehnq4q2xzThe/i3wAkBa+eZP2QggGsSegoCXm+wmRTUb0SAXe+HHGH2VJIr8IF+b3FtMvncDvCCyR2uc8tGVEJ3mKhOz5jvaAnaEhGd81wiWr3Kr0N+E5f9fxHEA94QIR8hE52ps+bkC/U7RpO5D8IEBjxVRReApU8hbqmzRcSYf2/Xv7ni7lBjZC2Fh3WXaubEm42hlHpbjmeUXBaXuTN2DZFwrcMgLZkg/oJon3FwFGvY1P+vAY7lkCQKMEJrhwA/CIw==
+Received: from CH0PR13CA0004.namprd13.prod.outlook.com (2603:10b6:610:b1::9)
+ by SA3PR12MB9199.namprd12.prod.outlook.com (2603:10b6:806:398::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Fri, 27 Mar
+ 2026 20:52:13 +0000
+Received: from CH2PEPF0000014A.namprd02.prod.outlook.com
+ (2603:10b6:610:b1:cafe::a) by CH0PR13CA0004.outlook.office365.com
+ (2603:10b6:610:b1::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.23 via Frontend Transport; Fri,
+ 27 Mar 2026 20:52:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH2PEPF0000014A.mail.protection.outlook.com (10.167.244.107) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9745.21 via Frontend Transport; Fri, 27 Mar 2026 20:52:13 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 27 Mar
+ 2026 13:52:06 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 27 Mar
+ 2026 13:52:05 -0700
+Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.129.68.7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Fri, 27 Mar 2026 13:52:00 -0700
+Date: Fri, 27 Mar 2026 13:52:00 -0700
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+CC: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "alex@shazbot.org" <alex@shazbot.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "skolothumtho@nvidia.com"
+ <skolothumtho@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@bull.com"
+ <clement.mathieu--drif@bull.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, 
+ Yi L" <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+Subject: Re: [PATCH v2 02/14] iommufd: Extend attach/detach_hwpt callbacks to
+ support pasid
+Message-ID: <acbt8FaZwzDaXtmT@nvidia.com>
+References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
+ <20260326091130.321483-3-zhenzhong.duan@intel.com>
+ <acWwwzfNEzBg4n96@nvidia.com>
+ <IA3PR11MB9136FC71017C3B05CE3C881D9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <acX9/RjKaO0bBI/d@nvidia.com>
+ <IA3PR11MB9136D9DAD0B8698841CEF4429257A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <e97aec85-c9f0-449c-99e9-bc4b4f2d33d8@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <e97aec85-c9f0-449c-99e9-bc4b4f2d33d8@redhat.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000014A:EE_|SA3PR12MB9199:EE_
+X-MS-Office365-Filtering-Correlation-Id: 117f108f-8c36-49ff-3dd7-08de8c42b8ff
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|82310400026|1800799024|36860700016|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: 8Ze/qkRz52dbVFhZPW3Gh7o2aJ8/YckV/Bxx/ZPEwzKgGrenZy1ZYX+pDZz42lFEPNB5QjJu/A450JiYDC1vcIeG/CHO39iwXfX9+TfB3iMFOIwH8VS7FTtI/FCZ741EyYsfj0kgajITNEY0fcG40YAHXBmPrnfFnEnU8mzta4XVoWntTE8n4yLR+f/upEgmzSY/SUB1MRDYvFxkOzYJ7g9CzcNhrDg3x3FcLMKCjScrlON7/PbQH8B5cWHoF9xK0HcDBYyC+Ehs+IoF6+Pq8lLHLt3yOypXO8ZzExlrR0PmZ+cJDn/W7Ru/N7FM5MI5lZAx0MKArsb4Oqh5X/H3gPtEOZ5YAO/gPMyAUXxzQTXejvPqEVwwZ4Nwdqq09rsEvaMUMxwXJ7hG4M1euvlxdTTF+2vwpMpDGHEuwtDcj1Pyc9gR4wRL0X/LOBaoywjGApexT9PlhA4Fb9NnQYXz7JB9jL/D1qxOVlxvFXWZa2zo8C3Xd7XmZ0IqKatJ/XzMHZleuHuRxUeH1wkua2f1LSkcTWJs/1Tfks0RMNprtBQEZLBO0uwmIzdEaTBVCVKZ5NFcby5Ji8HfewX9ROSB2+gL1jci5FAwq4loPRWD+/bCQmN7m9R9puCzUR899Jtkrdj0KaRv1G4zs6IaNdBA7s5WeCAMHDEp+kZRtQg2HF0LGIXJFgcWeskptbgM0xAam03oh7NPkJtMW7XxVC9K2PT2d8l2ISFWVNQDyU+6P+t1LvefrzHdGV6AzMpFfM/tzQGCJ22nfmbGE8tHw/KI8g==
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(82310400026)(1800799024)(36860700016)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 7gwRlp+pgPk7xLo2ZFS+MzkIwaARiQf+vLrKpi95cYO/Rf/cB2Zsb3V4NtoM5ovOyKtcEDMM+4RR3eoUcULy82WNzqMuze65+hi1fjtaaChkIuwnE3qT7svi7GqK8sPgYVj/4i4Vmjk95/e0WKmopU1APSD3AirGuragoC6gIEklQpeXfefbYNpz0JixhsJWobEAq9e4sD8BK1azKraSnBfKPNotgARAU/m1d+iBYZK1zc4b7FoShOfoB9jJ+nrk3jOxcBnDfznS1jkhLg2EaaG5qzILV3YCkfc/bTkXGahFzgWGMGl/0Cm0WlbnIpLetElZ8WxBnNigpBulicSGEC1ehuSq20qYXOLoaQxH4uOLj12r4ay3cdAf2kok2JEDiZd08ey+A9ofDna7M5G1USOU0QURFQHnhLsGxpGpba6gY5d/ZV7adXAHbhOsZt0v
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 20:52:13.1113 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 117f108f-8c36-49ff-3dd7-08de8c42b8ff
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000014A.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9199
+Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,46 +142,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
+From:  Nicolin Chen via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each timer block occupies 32 bytes, but they only start at
-offset 256 of the 1024-byte MMIO register space.  Therefore
-the correct limit for HPET_MAX_TIMERS is 24, not 32.
+On Fri, Mar 27, 2026 at 10:34:01AM +0100, Cédric Le Goater wrote:
+> On 3/27/26 07:44, Duan, Zhenzhong wrote:
+> > 
+> > 
+> > > -----Original Message-----
+> > > From: Nicolin Chen <nicolinc@nvidia.com>
+> > > Subject: Re: [PATCH v2 02/14] iommufd: Extend attach/detach_hwpt callbacks to
+> > > support pasid
+> > > 
+> > > On Fri, Mar 27, 2026 at 02:32:57AM +0000, Duan, Zhenzhong wrote:
+> > > > > -----Original Message-----
+> > > > > From: Nicolin Chen <nicolinc@nvidia.com>
+> > > > > Subject: Re: [PATCH v2 02/14] iommufd: Extend attach/detach_hwpt callbacks
+> > > to
+> > > > > support pasid
+> > > > > 
+> > > > > On Thu, Mar 26, 2026 at 05:11:16AM -0400, Zhenzhong Duan wrote:
+> > > > > > @@ -138,14 +138,16 @@ struct HostIOMMUDeviceIOMMUFDClass {
+> > > > > >        *
+> > > > > >        * @idev: host IOMMU device backed by IOMMUFD backend.
+> > > > > 
+> > > > > Not commenting against this patch, but I just found the "host IOMMU
+> > > > > device" and the "HostIOMMUDeviceIOMMUFD" a bit ambiguous. It's not
+> > > > > an "IOMMU device" right? Perhaps somebody can help me understand :)
+> > > > 
+> > > > A host device under host IOMMU?
+> > > 
+> > > "host device" would make sense, not "host IOMMU device", right?
+> > 
+> > We want to emphasize that it's a "host device" backed by "host IOMMU",
+> > "host device" is not enough, I think.
+> Yes. These are related to the Host IOMMU device backends :
+> 
+>   - VFIO IOMMU Type1, a.k.a legacy backend
+>   - IOMMUFD,
+> 
+> There are other implementations. VFIO IOMMU Type1 is versioned and
+> a ppc flavor exists.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/hw/timer/hpet.h          | 2 +-
- rust/hw/timer/hpet/src/device.rs | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+But the @idev here is a passthrough device (VFIO/PCI)?
 
-diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
-index c2656f7f0be..84be4c3529a 100644
---- a/include/hw/timer/hpet.h
-+++ b/include/hw/timer/hpet.h
-@@ -22,7 +22,7 @@
- 
- #define FS_PER_NS 1000000       /* 1000000 femtoseconds == 1 ns */
- #define HPET_MIN_TIMERS         3
--#define HPET_MAX_TIMERS         32
-+#define HPET_MAX_TIMERS         24
- 
- #define HPET_NUM_IRQ_ROUTES     32
- 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 0a5c131819b..ec0bca4496d 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -32,7 +32,7 @@
- /// Minimum recommended hardware implementation.
- const HPET_MIN_TIMERS: usize = 3;
- /// Maximum timers in each timer block.
--const HPET_MAX_TIMERS: usize = 32;
-+const HPET_MAX_TIMERS: usize = 24;
- 
- /// Flags that HPETState.flags supports.
- const HPET_FLAG_MSI_SUPPORT_SHIFT: usize = 0;
--- 
-2.53.0
+"IOMMU device" would be SMMU, VT-d...
 
+Especially we are adding @pasid parameter. Relating it to SMMU or
+VT-d sounds weird.
+
+Nicolin
 
