@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C2A10F2865
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78DD210F2872
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6EhT-0003CR-3v; Fri, 27 Mar 2026 17:26:39 -0400
+	id 1w6Ehc-0003Fi-RZ; Fri, 27 Mar 2026 17:26:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6EhR-00035P-El
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:37 -0400
+ id 1w6Ehb-0003FD-It
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6EhP-0003gJ-Qx
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:37 -0400
+ id 1w6Eha-0003hd-9w
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774646795;
+ s=mimecast20190719; t=1774646805;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cUsd9sUtiSiyq2C2ZiaTTBXPp31lw16nowEZdc00IaI=;
- b=AxXj8/kkjJT8T4VB6My2V5bXEA99FVMF4Dc6ZswdZhMdx0rTYWlmqBep1MXhZq3SrbfTZC
- MvlFSAfLp5lZ2u/mCcYf6Lsv8cLSEAapNJKnSAq8fjAIAJc+RHr8WQ5OtTmMNguR4U91nX
- 4cTvVe1S1Il1O0rek4O6Qtv2z/xEPhQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2JQ9Yj7brdIqvdNhWPI2MQ1hWd0faHyBLi+vTK2i8O4=;
+ b=fOzT0DfiufFm6ZEQqnxejUD09TiyLegGYt6AgNIdLWJiwx+ipUyU1LJXztEaQLRgcFoHgz
+ Gix8rHmJhUwwxTj2BA7EIeYX4PnY0NcRe4aM+KKJxt4YS6HTtmhSCQtEb/RVk0ClY8e41U
+ KGD6WZfzYPppyBfV3wQDbC1SbOuG8cc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-eiqHmz1MNsqbAqmgxCTQWA-1; Fri, 27 Mar 2026 17:26:33 -0400
-X-MC-Unique: eiqHmz1MNsqbAqmgxCTQWA-1
-X-Mimecast-MFC-AGG-ID: eiqHmz1MNsqbAqmgxCTQWA_1774646792
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43ba0d2e46dso812023f8f.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:26:33 -0700 (PDT)
+ us-mta-619-VCrYhd-3Nw2SuqOlQCfsoQ-1; Fri, 27 Mar 2026 17:26:44 -0400
+X-MC-Unique: VCrYhd-3Nw2SuqOlQCfsoQ-1
+X-Mimecast-MFC-AGG-ID: VCrYhd-3Nw2SuqOlQCfsoQ_1774646803
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4852ccff333so23885025e9.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:26:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774646790; x=1775251590; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774646801; x=1775251601; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cUsd9sUtiSiyq2C2ZiaTTBXPp31lw16nowEZdc00IaI=;
- b=L9z9IXAcy4WvW85xDAddNB/01/asuAm5ojRCfdG5FO5X/kmiHNyOq3D6mBFp3PSSoH
- 5qdMlWgCtKhjBI0cO6VHxK/1OwRYIp2TsWZzdM7/bt8o8mXPNXS0mw3PSexwul6I+Dj3
- VOTJEofffAvtBBBVGoO6MVWD82V8J/XoipalleBFLVuvrLd0cFvHaWRKOhyOOJol/Clc
- Sn4EJuumeOz7eXQNs/0qZShnLA0517RZUbqbwIIZ/2mGqQhmdLb92+fXAkAVM24yCpPz
- hx0SQAZylnsohWnR6O/QAnANHmVfGCsKPviC49Z3izm3cEdmjgSa9EVMsu5xiA8wR4fT
- JTZQ==
+ bh=2JQ9Yj7brdIqvdNhWPI2MQ1hWd0faHyBLi+vTK2i8O4=;
+ b=tkmaRVwFr5XSuv0Gmm07c50f/lxA8nq770VIQFjdZNkC1+DN2HEStNfpMVVMielXCP
+ XHrOYygz7KIOk2JHH6ZS062U3XHsXSvELSVimKrF64TUuUubuIG+jPC2ouKTuE3cMMWN
+ mfjVitJhC3DVLizpdmVrAQiydgG+v46JiZ4Y+LsESOrzzLrn0V4VHur7Em9nNWeFy1WI
+ ACFBiaSkW8tEOuUHVp5HqjWPfvD4YvR9NcFowSRakyOeS6/KFIqS7xmrbps52Wde+eQ4
+ UweWkzP2DCM+v3NlrdamOWSu/gbZhao6XWYQPrtRvZcXAhevEWjYNkbsLN9DLISU//gs
+ 5mvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774646790; x=1775251590;
+ d=1e100.net; s=20251104; t=1774646801; x=1775251601;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cUsd9sUtiSiyq2C2ZiaTTBXPp31lw16nowEZdc00IaI=;
- b=WeCvbn4WilOx0h0CagWAlnjUj6ViMmn+hu+UkIEZYvn+cfyKkHQmyrL9zo39UPJUmv
- EkeFydDRvOx++h8H8G3LoOPETcXI5vhvYtXFFuhOPXb1l5tfc1Pk2ywIvmK1/z2Y+iit
- PRxLD16kFn/c9wuUVVcpRE5QltIHLAdUFFJkRTjklRKF4qElxpnJK/4G/sbxyRStF+qI
- T/ZS69Ns0YWY8i4Me0NDhktdUaupJgHTZ9bHNWbNxQda9GxfgNaz2HrlMBgv8VF/3dfD
- bASxi78T0+e3jtf+hBbDla/6iv22JLZVZh0mDRKYN5d7mzXJkOvMUFfkY4z9mbUakKxk
- ztXw==
-X-Gm-Message-State: AOJu0Yz95lG02hkzvpUbWLPcKgrrQbJTe5gZWDiuJxYqgyZbh3hWmiyv
- chnpulpR1lNOomazRf8a6QbsaDwA5jmIvP5DIknSUsQs0dYsqI4HHOjUG6juMrFOFWBeymsuYOe
- k2uCACT8MVzOi7oC1U22pKf+R7mwnBFGek3jg+609QfWMwHpPO07Nfjf59NgWl9vr5PdO4/a6Qp
- 5qT+1bsi+Wthg89kngNNEidPzN20ri+BcYDaEvcA2T
-X-Gm-Gg: ATEYQzzKgtBW69DtXtiL2H/lt2036qupD4u0wltkquiK0dZr2t9j9gzmxQAVLJlKnQX
- 9AgLCaRtwdn6cMuNpeue1L0NMyToWUaWFgn4oVyFVOVzpDpV/Jw4tnZ8MPl9c5hwe7la2Ay0Cbp
- yJqddb23dLsdedNO8MyqEKTzxQYDHQYx/Y9ZkYGddzHtjU7EopDx645KRqWt4a6UMm9aC25GRwm
- MgurLOWX4mtqgwWT/1F8bmUr/xorCClkYf+I6Uxe2l2ltTPS7JtcNE3tATM9ufE8yZ2gdGQZR4S
- 9xp53IubSazEzpw8aQQts3ifELT0kbHngxZn6M/+UkXpP0CPR4DjLurIKYZIha1okKVmBUoXv06
- EItgmsM6kpsI2Rzrhouf03UE12vpuoy56PvmuGfRtpIZ+SEbulJb0srfGN1RXBQSc7Lu8MwMkD1
- gNashtld7QQymcseUZL5wZu2WB
-X-Received: by 2002:a05:600c:8207:b0:485:3f1c:d887 with SMTP id
- 5b1f17b1804b1-48727ee4d13mr67741965e9.26.1774646790190; 
- Fri, 27 Mar 2026 14:26:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:8207:b0:485:3f1c:d887 with SMTP id
- 5b1f17b1804b1-48727ee4d13mr67741705e9.26.1774646789627; 
- Fri, 27 Mar 2026 14:26:29 -0700 (PDT)
+ bh=2JQ9Yj7brdIqvdNhWPI2MQ1hWd0faHyBLi+vTK2i8O4=;
+ b=WSpggwNPYFIfnOCUjy9zrGk8aMV0iANaqc4YOQNwEKJjnumc6XqCZcdfeWexiBm+qN
+ 6tjiCMJLrys1PoUXdJMvFGBfRbKEukiyBNUadKRC7ipoqeJ0QNLTEHYRzHdR9u8Itwdm
+ PGC3s/uvlSuMvVPpikmPHDagCvtcvZYrEacvsk+OiTtsCQ6VpcDtIf+Bu90/rs2LFgCj
+ Ftb3ELsZBLjY7gb/7uYD6PU83R5YXo87jLFNR2tUtZRdh4IuBfBDolz110sAxmnPRNvE
+ 83srxYbn4RzUJG0z+Sua4oEmXWGSDlCR59aH+wYolHPVqITubY1qCiyxjM7CdYzaMB1i
+ PGGQ==
+X-Gm-Message-State: AOJu0YwKRx+ze54svSIisSqoBI5dJRzlO7hSUXFAfbZOKRWXX/IeCXId
+ EBwKRWRXlOqy7NEqKjSuTH2pxsYLDHQCotCLYV/WXwKuwAeRWaUj0Ysykyt7HiN3QGzC4ocBo9r
+ sli1oSmT0cXBpl0n+9DW5fOidICo163jFw1MW8YFBVYa3bJqgHu4pewRXH556tqvTlrIgl56VEe
+ 5cnvuTfEROU+9pxY+E9XUH87u2NpXCpxhHC/PE2ITu
+X-Gm-Gg: ATEYQzxBlG7TOCZJbfgggFTI3PoCChppFVpE6l+ZCIRKkROQflz2RCBTVF/mJTdpBjS
+ UpTtaGJ5IfyD5t0iNj43Sxpt4KmOxcu9bH7TAXxmXd2ucE3vv0p5G5wxk6eJKeAy3x8l5wG5UVF
+ Zjp9yhkrCXM9xkCMHYE3ntVZospuQg0CA0u0/Q0SmdbCw7mGSbtPBRAYOi3TMuYllUkVvr/oNO5
+ z8jw9taqTI68A9BclSPAvxmtOral1Fh45s78RuQ0eMPnkr0mBIB1L/IrSRDB9Zvux2AqmnIY1vD
+ W33HywsCn3DU1JxQl6vbe9A4T3ya2Ad13d0eRcTwbQpHcAOccqvWoUo/OgouBAZJUgPNZL/EKmL
+ jitO7vHFD95JcpRG0W6o7FVGP28KSRh/VvuH2piObmJwlPDnFGmdqU/W1bd+2RIvjd3uQaovkdH
+ e+n+AEdKWYvG+Let0/ndOhPbQ0
+X-Received: by 2002:a05:600c:524a:b0:486:f9a4:d487 with SMTP id
+ 5b1f17b1804b1-48727c816e6mr65883865e9.0.1774646801023; 
+ Fri, 27 Mar 2026 14:26:41 -0700 (PDT)
+X-Received: by 2002:a05:600c:524a:b0:486:f9a4:d487 with SMTP id
+ 5b1f17b1804b1-48727c816e6mr65883615e9.0.1774646800481; 
+ Fri, 27 Mar 2026 14:26:40 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21f173dsm909682f8f.15.2026.03.27.14.26.24
+ 5b1f17b1804b1-48730688605sm13189985e9.10.2026.03.27.14.26.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 14:26:24 -0700 (PDT)
+ Fri, 27 Mar 2026 14:26:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 06/16] ncr710, lsi: use same enums for command_complete
-Date: Fri, 27 Mar 2026 22:25:37 +0100
-Message-ID: <20260327212547.460420-7-pbonzini@redhat.com>
+Subject: [PATCH 08/16] ncr710: simplify ncr710_clear_pending_irq
+Date: Fri, 27 Mar 2026 22:25:39 +0100
+Message-ID: <20260327212547.460420-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260327212547.460420-1-pbonzini@redhat.com>
 References: <20260327212547.460420-1-pbonzini@redhat.com>
@@ -121,146 +121,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ncr710 and lsi53c895a HBAs share some of the logic, also make
-them use the same enum for the command_complete variable.  Change
-the names for ncr710 to something that is more representative,
-for example NCR710_CMD_DATA_READY might also indicate that the
-device is ready to *receive* data, not just that it has data
-ready to send.
+The same checks are done in ncr710_request_free.  If req->hba_private is
+anything, it is the NCR710Request that points to req, so it would be
+cleared.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/ncr53c710.h  |  4 ++--
- hw/scsi/lsi53c895a.c | 16 +++++++++++-----
- hw/scsi/ncr53c710.c  | 10 +++++-----
- 3 files changed, 18 insertions(+), 12 deletions(-)
+ hw/scsi/ncr53c710.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
-index 00b6a01577c..97f1bf5fe22 100644
---- a/hw/scsi/ncr53c710.h
-+++ b/hw/scsi/ncr53c710.h
-@@ -100,8 +100,8 @@ typedef enum {
- } NCR710WaitState;
- 
- typedef enum {
--    NCR710_CMD_PENDING = 0,
--    NCR710_CMD_DATA_READY = 1,
-+    NCR710_CMD_SENT = 0,
-+    NCR710_CMD_READY = 1,
-     NCR710_CMD_COMPLETE = 2
- } NCR710CommandState;
- 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index 54123f77579..6b0c97d98e3 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -209,6 +209,12 @@ enum {
-     LSI_WAIT_SCRIPTS, /* SCRIPTS stopped because of instruction count limit */
- };
- 
-+typedef enum {
-+    LSI_CMD_SENT, /* command is running */
-+    LSI_CMD_READY, /* one round of data transfer completed */
-+    LSI_CMD_COMPLETE, /* command completed */
-+} LSICommandState;
-+
- enum {
-     LSI_MSG_ACTION_COMMAND = 0,
-     LSI_MSG_ACTION_DISCONNECT = 1,
-@@ -238,7 +244,7 @@ struct LSIState {
-     int current_lun;
-     /* The tag is a combination of the device ID and the SCSI tag.  */
-     uint32_t select_tag;
--    int command_complete;
-+    LSICommandState command_complete;
-     QTAILQ_HEAD(, lsi_request) queue;
-     lsi_request *current;
- 
-@@ -815,7 +821,7 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
-     out = (s->sstat1 & PHASE_MASK) == PHASE_DO;
-     trace_lsi_command_complete(req->status);
-     s->status = req->status;
--    s->command_complete = 2;
-+    s->command_complete = LSI_CMD_COMPLETE;
-     if (s->waiting && s->dbc != 0) {
-         /* Raise phase mismatch for short transfers.  */
-         stop = lsi_bad_phase(s, out, PHASE_ST);
-@@ -854,7 +860,7 @@ static void lsi_transfer_data(SCSIRequest *req, uint32_t len)
-     /* host adapter (re)connected */
-     trace_lsi_transfer_data(req->tag, len);
-     s->current->dma_len = len;
--    s->command_complete = 1;
-+    s->command_complete = LSI_CMD_READY;
-     if (s->waiting) {
-         if (s->waiting == LSI_WAIT_RESELECT || s->dbc == 0) {
-             lsi_resume_script(s);
-@@ -876,7 +882,7 @@ static void lsi_do_command(LSIState *s)
-         s->dbc = 16;
-     pci_dma_read(PCI_DEVICE(s), s->dnad, buf, s->dbc);
-     s->sfbr = buf[0];
--    s->command_complete = 0;
-+    s->command_complete = LSI_CMD_PENDING;
- 
-     id = (s->select_tag >> 8) & 0xf;
-     dev = scsi_device_find(&s->bus, 0, id, s->current_lun);
-@@ -900,7 +906,7 @@ static void lsi_do_command(LSIState *s)
-         }
-         scsi_req_continue(s->current->req);
-     }
--    if (!s->command_complete) {
-+    if (s->command_complete == LSI_CMD_PENDING) {
-         if (n) {
-             /* Command did not complete immediately so disconnect.  */
-             lsi_add_msg_byte(s, 2); /* SAVE DATA POINTER */
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 57967e7a84f..7113ce2d8a9 100644
+index 7113ce2d8a9..9832d833b37 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -849,7 +849,7 @@ void ncr710_transfer_data(SCSIRequest *req, uint32_t len)
+@@ -316,11 +316,7 @@ static inline int ncr710_irq_on_rsl(NCR710State *s)
+ static void ncr710_clear_pending_irq(NCR710State *s)
+ {
+     if (s->current) {
+-        if (s->current->req) {
+-            s->current->req->hba_private = NULL;
+-        }
+         ncr710_request_free(s, s->current);
+-        s->current = NULL;
      }
+ }
  
-     /* Host adapter (re)connected */
--    s->command_complete = NCR710_CMD_DATA_READY;
-+    s->command_complete = NCR710_CMD_READY;
-     if (!s->current) {
-         return;
+@@ -739,9 +735,6 @@ static void ncr710_add_msg_byte(NCR710State *s, uint8_t data)
+ 
+ static void ncr710_request_free(NCR710State *s, NCR710Request *p)
+ {
+-    if (!p) {
+-        return;
+-    }
+     if (p->req && p->req->hba_private == p) {
+         p->req->hba_private = NULL;
      }
-@@ -924,7 +924,7 @@ static void ncr710_do_command(NCR710State *s)
-     s->dbc -= bytes_read;
-     s->sfbr = buf[0];
- 
--    s->command_complete = NCR710_CMD_PENDING;
-+    s->command_complete = NCR710_CMD_SENT;
-     id = (s->select_tag >> 8) & 0xff;
-     s->lcrc = id;
- 
-@@ -1279,7 +1279,7 @@ void ncr710_reselection_retry_callback(void *opaque)
-     p->pending = 0;
- 
-     SCSIRequest *req = p->req;
--    s->command_complete = NCR710_CMD_PENDING;
-+    s->command_complete = NCR710_CMD_SENT;
-     p->dma_len = len;
- 
-     s->scntl1 |= NCR710_SCNTL1_CON;
-@@ -1466,7 +1466,7 @@ again:
-                 break;
-             case 1: /* Disconnect */
- 
--                if (s->command_complete != NCR710_CMD_PENDING) {
-+                if (s->command_complete != NCR710_CMD_SENT) {
-                     s->scntl1 &= ~NCR710_SCNTL1_CON;
-                     s->istat &= ~NCR710_ISTAT_CON;
-                     s->waiting = NCR710_WAIT_NONE;
-@@ -1640,7 +1640,7 @@ again:
-                                            "preserved for driver processing\n");
-                             ncr710_script_dma_interrupt(s,
-                                                         NCR710_DSTAT_SIR);
--                            s->command_complete = NCR710_CMD_PENDING;
-+                            s->command_complete = NCR710_CMD_SENT;
-                         } else {
-                             ncr710_script_dma_interrupt(s, NCR710_DSTAT_SIR);
-                         }
 -- 
 2.53.0
 
