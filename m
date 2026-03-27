@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE7410ED65C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98D410ED65E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65Dn-0001ZR-NA; Fri, 27 Mar 2026 07:19:23 -0400
+	id 1w65Dm-0001Up-Vi; Fri, 27 Mar 2026 07:19:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65CT-0007Ra-Oz
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:03 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1w65Ca-0007kV-DU
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:08 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65CP-00007V-Hm
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:59 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so17946355e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:17:57 -0700 (PDT)
+ id 1w65CX-0000GE-2n
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:08 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-439b2965d4bso1507118f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774610276; x=1775215076; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774610280; x=1775215080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gTUziQEVWjn9piO6EeGgVOTutbNf5BnV2m5899YvZ3g=;
- b=cUqSbO9nzmxo2VI53+LCOhe2gKgyOZbQ9yPwnM3zji3xYtwMQzJEuEMow91LFEcso2
- mQg48ncXcosnG0Zh4A43rU4AXd0qpQXvLouHAeqaUrE6fT/d210+Ng0rj48uFlhN97i+
- MOuqGhDPF7YioRkKl+/tXskvfe44Tv78nYjeV0MTCU6IB1tPXLKPUDkovEHEj69GikxO
- LLeM1qKRIDgQJcl59oAbvAZgRbMyGC1srOAUztlk8DKp7q1IHbX619aszGwhQYTEXAOb
- jy64Yv2v7GwlZ4O99PFQ+LJkJmRANxu4iHzsbcpe7z0Z+xdKoBqNpPXslnogeZqc2FqD
- QzzQ==
+ bh=1bFuTPS3UTloN9GePWn+4uta9cNIKepddcVURPyhzcE=;
+ b=g9HJU6ypSgFWlnmGM2ZZPHM/GqKKagifzBykiBZP2fBtXpWDnsDc9FDvEn13QTaozP
+ OKckfMzX3uIyQLh9fs7r1nKEKxmUs4089DQ3YFyIPjfylId/srojm9YBgVUys0Cb8gAG
+ U2UDqxW+kmCFyGypKexteakJsY2EsaIdfgdMid9NS4LYnbbd1SkyGQskeVdzSGmd13iH
+ KbIgcq+wPlZB6RzrpAFseYf/58diqmCcoPFb81uR6t3hk19BqmivgwzV+RsFYpQ1k5s+
+ AgoKtBJNnwfBiC0lHpCb7JE1BPlVWCS59pXOW2FyUcwntNSg3BHyiBFsi2Q9Naug5lZj
+ NTLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774610276; x=1775215076;
+ d=1e100.net; s=20251104; t=1774610280; x=1775215080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gTUziQEVWjn9piO6EeGgVOTutbNf5BnV2m5899YvZ3g=;
- b=g/P3xipJD4ByTDQjfmMFMXa/iZEdMpUg1j7dSSEBtUL2SH00aCW4QtEbZris3lu0gQ
- GRO4WHZ4C9n98RPL4+ukST/NsfTO+uU7mrj2KaH9u4YdpPxBmY8cpAJzMvngdN7xfcbL
- r7w7ay7X7j4eaUqyvqWzm8aWxGTtOzb/md6SqHe4THwm6cL7u/wfL+pauN3tJVFQcODy
- AvVEW87m09S0Hl8G8wWLMKfadVZCcWKXJToPa8YC5JLFpYdbQdOjCzAeQlHPQLnoyEMc
- SXapnfmNUfdjVH76C4eeGPxvynpYcMUB+l5F6nVYhaiF/pJmtLbd1GyuWUWjwFovpq48
- AUNw==
+ bh=1bFuTPS3UTloN9GePWn+4uta9cNIKepddcVURPyhzcE=;
+ b=d2TAnxx2pdRak1V2anibO57snzvhfhc8Dt9Y/KJZfNcyl19jx+L8mFz5Pnd+Lnp9D0
+ 8/bjZ8uQzeoqMyGEskdOmuNmmjUAlqhgmyKlRvh+uJldGipiixNdH4v97K7bvpuu7VE7
+ A1qYnkxvxlync2Ms1abjiFvroD/g+kmvmfzbyOwqR5CaFQ5BYBqMoayAYNQIdOuaU76h
+ +E4ykdMTOxHiZX21m1rKNQOGxp9i5oCSjLDfAE2X875bwnaRb8biimKwLvBxGx6NIb4U
+ lfVvtfEStv9Uxf4keG6JnEMFrgjkn2/LVyDSd3k6zZE1Wyq/jinxL/2Zet3WD2lgd2ws
+ eehw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWSzEdz3NfFLjmryk/f2XayasPteOjEzQH3M3/itQ98P1QgDjhlmm0m60RQdboEV903Yw72DKftBXi@nongnu.org
-X-Gm-Message-State: AOJu0Yxy9bKwYpv+D+x07UV1nFH2iW3TmzWlR+mLZzEdcv3oI4jiS8wr
- 8LpkhsTYV/UohXegPD+l7AApFUQucll/kCNUP1B0qc6EACJ9q+dKzCicWnbyA7tkyR8=
-X-Gm-Gg: ATEYQzxvzGCTQVtNIiOmleelCFH0zrui9TFcyptNX57v5mCcnpLteFbDF0Dd0n5fTVI
- Mxa4Sy8FZy3UqffQxRD0NsoKxNKc1AchrVO/08MEIhCrEvBuy7OUIs8XT5Wrf2mssWLZlzzFZvH
- eR9GMWJYfs35YEIq6HMj6W/n7LgfF5YagzOGbkJhc9tneIA3ifel3OAoUfSUzwiV/mNdXj/DdGn
- br1vkwnqmqkrYHYMZCacF4gpDLvmcc9MtSCQywudGVLuvizwhNGKdQmcgpYcyRxPuPnLAdrbpMq
- a4A1eTBYuxp+nO2VyAi/CNdixtevckDQkbYccb09eMEmN6he4I86Ope7KCHihdU0rqVl4PwSDVi
- NkNIctg5Et00BNQV3fNFZEzkF/vMHJ7MBKXO7viWNfE+i6ff8CYzwKGOJAVRAcuBa0dVuxLPRmt
- PPQe31sNDiVxIdbLw0bBOOJF9zHyqlOtaFAkD9t1VsZx2crMA9BwewB6AV97rVpMYkEkXoYkgrk
- Vnj+qqeDge5nJlA2uQgmLYuHLpMKpU=
-X-Received: by 2002:a05:6000:2311:b0:43b:4d37:cd37 with SMTP id
- ffacd0b85a97d-43b9e9d9566mr3123740f8f.7.1774610275983; 
- Fri, 27 Mar 2026 04:17:55 -0700 (PDT)
+ AJvYcCXnSpt8CbKm8D+taz399PJ0wSz7e5vsseFGvapLDPAmYIPcVYyKu/zRStFZOn1YPKLknk5mYdlJhiDU@nongnu.org
+X-Gm-Message-State: AOJu0YwUWRwPx2veAecUFIweTsx9a93nsk9OcEbIe13lgyC3s7Ls0nAH
+ kSgaWh/7HFdFE5WyodPOZB2M/mhG94HgpSmqCREBZbP8kqOqs1/sH8KGIbgl5fq+mcA=
+X-Gm-Gg: ATEYQzzvEWXr6YOwfjwZAkVIzHxF5KlmyRSPcBlk0SKLU4hjWAX7KNo4F2sHwTFe7q9
+ eMoxd3X01zQPLaHlsPCtGyLK41cs7eZpdOsdGz6pg3Lqggzs5piUfWX5iZsPMgcD0IQYbuPHTHn
+ /zU6YVO/sw3xojQ2cr0vYYuMKPYvaYAyh7Zqnm/NT6iejZbMhdcrJYO/qFM8hTFli7RcVetYLmo
+ nnp71MmLK9iFYMQzgLXMiFmimQYfK8VC4McldtoHDotDMQHERfuaVYVVO3KR/eBxIGIDUbUxNje
+ Ta2rBNyzZ/5vFFcKuVRAE+lifajbf9GLIrRPuixNc/Mi/jjjjNNf9JBxpFC7MOwFgPAGMTjsyaV
+ aH5sbjDzVTEdf+eA8fVpZWyYdB9TlMcMJOM8CBIiT5fMti+GhQ+yX6JeIPRlO19v8StHYgwEYbD
+ PKdJsKc5xxTRawEZ2vCiJznpTf4+svu69KjMyiaterZ1WU8oJySV/hKHle7q1DTj7c9kWiXBlVT
+ c1p/EZ3PuDlL1q0Il8Knj4ieana8yI=
+X-Received: by 2002:a5d:64e4:0:b0:43a:16aa:1448 with SMTP id
+ ffacd0b85a97d-43b9e9e8f13mr3404046f8f.22.1774610280282; 
+ Fri, 27 Mar 2026 04:18:00 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.55
+ ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 04:17:55 -0700 (PDT)
+ Fri, 27 Mar 2026 04:17:59 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 57/65] hw/arm/virt: Move MSI controller creation out of
- create_gic()
-Date: Fri, 27 Mar 2026 11:16:52 +0000
-Message-ID: <20260327111700.795099-58-peter.maydell@linaro.org>
+Subject: [PATCH v2 61/65] hw/arm/virt: Advertise GICv5 in the DTB
+Date: Fri, 27 Mar 2026 11:16:56 +0000
+Message-ID: <20260327111700.795099-62-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260327111700.795099-1-peter.maydell@linaro.org>
 References: <20260327111700.795099-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +103,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The create_gic() function also creates the MSI controller; however
-there isn't really a strong linkage here, and for the GICv5 it will
-be more convenient to separate it out.  Move it to a new
-create_msi_controller() function.
+Advertise the GICv5 in the DTB. This binding is final as it is in
+the upstream Linux kernel as:
+Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- hw/arm/virt.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ hw/arm/virt.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 91097e25ec..544605244b 100644
+index b6a04f868b..7a34af766a 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -958,11 +958,21 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-     }
- 
-     fdt_add_gic_node(vms);
-+}
- 
--    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
-+static void create_msi_controller(VirtMachineState *vms)
-+{
-+    switch (vms->msi_controller) {
-+    case VIRT_MSI_CTRL_ITS:
-         create_its(vms);
--    } else if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
-+        break;
-+    case VIRT_MSI_CTRL_GICV2M:
-         create_v2m(vms);
-+        break;
-+    case VIRT_MSI_CTRL_NONE:
-+        break;
-+    default:
-+        g_assert_not_reached();
-     }
+@@ -794,6 +794,72 @@ static void create_v2m(VirtMachineState *vms)
+     vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
  }
  
-@@ -2514,6 +2524,7 @@ static void machvirt_init(MachineState *machine)
-     virt_flash_fdt(vms, sysmem, secure_sysmem ?: sysmem);
++static void fdt_add_gicv5_node(VirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    const char *nodename = "/intc";
++    g_autofree char *irsnodename = NULL;
++    g_autofree uint32_t *cpu_phandles = g_new(uint32_t, ms->smp.cpus);
++    g_autofree uint16_t *iaffids = g_new(uint16_t, ms->smp.cpus);
++
++    vms->gic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
++    qemu_fdt_setprop_cell(ms->fdt, "/", "interrupt-parent", vms->gic_phandle);
++
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", vms->gic_phandle);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "arm,gic-v5");
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 3);
++    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#address-cells", 0x2);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#size-cells", 0x2);
++    qemu_fdt_setprop(ms->fdt, nodename, "ranges", NULL, 0);
++
++    /* The IRS node is a child of the top level /intc node */
++    irsnodename = g_strdup_printf("%s/irs@%" PRIx64,
++                                  nodename,
++                                  vms->memmap[VIRT_GICV5_IRS_NS].base);
++    qemu_fdt_add_subnode(ms->fdt, irsnodename);
++    qemu_fdt_setprop_string(ms->fdt, irsnodename, "compatible",
++                            "arm,gic-v5-irs");
++    /*
++     * "reg-names" describes the frames whose address/size is in "reg";
++     * at the moment we have only the NS config register frame.
++     */
++    qemu_fdt_setprop_string(ms->fdt, irsnodename, "reg-names", "ns-config");
++    qemu_fdt_setprop_sized_cells(ms->fdt, irsnodename, "reg",
++                                 2, vms->memmap[VIRT_GICV5_IRS_NS].base,
++                                 2, vms->memmap[VIRT_GICV5_IRS_NS].size);
++    qemu_fdt_setprop_cell(ms->fdt, irsnodename, "#address-cells", 0x2);
++    qemu_fdt_setprop_cell(ms->fdt, irsnodename, "#size-cells", 0x2);
++    qemu_fdt_setprop(ms->fdt, irsnodename, "ranges", NULL, 0);
++
++    /*
++     * The "cpus" property is an array of phandles to the CPUs, and
++     * "iaffids" is an array of uint16 IAFFIDs. For virt, our IAFFIDs
++     * are the CPU indexes.  This function is called after
++     * fdt_add_cpu_nodes(), which allocates the cpu_phandles array.
++     */
++    assert(vms->cpu_phandles);
++    for (int i = 0; i < ms->smp.cpus; i++) {
++        /*
++         * We have to byteswap each element here because we're setting the
++         * whole property value at once as a lump of raw data, not via a
++         * helper like qemu_fdt_setprop_cell() that does the swapping for us.
++         */
++        cpu_phandles[i] = cpu_to_be32(vms->cpu_phandles[i]);
++        iaffids[i] = cpu_to_be16(i);
++    }
++    qemu_fdt_setprop(ms->fdt, irsnodename, "cpus", cpu_phandles,
++                     ms->smp.cpus * sizeof(*cpu_phandles));
++    qemu_fdt_setprop(ms->fdt, irsnodename, "arm,iaffids", iaffids,
++                     ms->smp.cpus * sizeof(*iaffids));
++
++    /*
++     * When we implement the GICv5 IRS, it gets a DTB node which is a
++     * child of the IRS node.
++     */
++}
++
+ static void create_gicv5(VirtMachineState *vms, MemoryRegion *mem)
+ {
+     MachineState *ms = MACHINE(vms);
+@@ -835,6 +901,8 @@ static void create_gicv5(VirtMachineState *vms, MemoryRegion *mem)
+      * that information is communicated directly between a GICv5 IRS and
+      * the GICv5 CPU interface via our equivalent of the stream protocol.
+      */
++
++    fdt_add_gicv5_node(vms);
+ }
  
-     create_gic(vms, sysmem);
-+    create_msi_controller(vms);
- 
-     virt_post_cpus_gic_realized(vms, sysmem);
- 
+ /*
 -- 
 2.43.0
 
