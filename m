@@ -4,105 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBBF10ED656
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 10:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6520210ED659
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w64jc-0005nL-Ck; Fri, 27 Mar 2026 06:48:13 -0400
+	id 1w64zW-0002Cv-Iu; Fri, 27 Mar 2026 07:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w64jV-0005h1-Jg
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 06:48:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w64zR-0002CP-Bo
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:04:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w64jU-0007gt-3w
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 06:48:05 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w64zP-0002di-GD
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:04:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774608483;
+ s=mimecast20190719; t=1774609469;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2e70TqyElXs1dHMuovwhb3cSXYJNL6gxMQAxLGlX0oM=;
- b=E462BRtOzToI0PjlymIIs9us8Aa0bmckHpXQK8NajKMa4KRZl/XXSnL1OIXHHIL9gelhOa
- 7z+4lWpSzjAkiX3gW/TS8ZV9HW5z66Wq3FlCvlWlrEw/aaGnqZmdqipEZU9R2qxwY0mKBu
- 8TgkkNPK4ImmIPHTV+tTX72j91lhNUk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=mZpCcTF5vcb8c3hR5GSSbS6PwWKFR4qlQpkpKjSKfnY=;
+ b=hgzjKsprMoWRyDOd+gBeLoSwP3Xbv4GAjWtCqszDSQebohG+Qx8QG1784pLb2K7XAVC/mI
+ LtouMKSkuYlT6JZQZE4wZcCZDWe7ElyoOpydj1e4H7P6nZzqOGzcJGlRi1ymhJwxB1dVkz
+ bNcC0Jv1BawxDLB+We4HlXr0Zp9VLss=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-ijMIKIFtP32CxBH9Wt2fnQ-1; Fri,
- 27 Mar 2026 06:48:02 -0400
-X-MC-Unique: ijMIKIFtP32CxBH9Wt2fnQ-1
-X-Mimecast-MFC-AGG-ID: ijMIKIFtP32CxBH9Wt2fnQ_1774608481
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-U6hsU90MOg-YJTWC1xCx8Q-1; Fri,
+ 27 Mar 2026 07:04:26 -0400
+X-MC-Unique: U6hsU90MOg-YJTWC1xCx8Q-1
+X-Mimecast-MFC-AGG-ID: U6hsU90MOg-YJTWC1xCx8Q_1774609465
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F1BD118005BE; Fri, 27 Mar 2026 10:48:00 +0000 (UTC)
-Received: from [10.45.226.47] (unknown [10.45.226.47])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 86D551955D84; Fri, 27 Mar 2026 10:47:58 +0000 (UTC)
-Message-ID: <a5a61b29-adea-457d-a3e8-c62e88cf8ff6@redhat.com>
-Date: Fri, 27 Mar 2026 11:47:57 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5DAC0195609E; Fri, 27 Mar 2026 11:04:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.239])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22EFF180058C; Fri, 27 Mar 2026 11:04:22 +0000 (UTC)
+Date: Fri, 27 Mar 2026 12:04:20 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yan Vugenfirer <yvugenfi@redhat.com>
 Subject: Re: [PATCH 7/7] meson: Build block_syms and qemu_syms only when
  enable_modules
-To: Kevin Wolf <kwolf@redhat.com>, Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yan Vugenfirer <yvugenfi@redhat.com>
+Message-ID: <acZkNMFwyT6hz4-C@redhat.com>
 References: <20260326160033.68318-1-kkostiuk@redhat.com>
- <20260326160033.68318-8-kkostiuk@redhat.com> <acVonq8XqzPItFxx@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <acVonq8XqzPItFxx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ <20260326160033.68318-8-kkostiuk@redhat.com>
+ <acVonq8XqzPItFxx@redhat.com>
+ <a5a61b29-adea-457d-a3e8-c62e88cf8ff6@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a5a61b29-adea-457d-a3e8-c62e88cf8ff6@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -127,23 +90,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 18:10, Kevin Wolf wrote:
-> Am 26.03.2026 um 17:00 hat Kostiantyn Kostiuk geschrieben:
->> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Am 27.03.2026 um 11:47 hat Paolo Bonzini geschrieben:
+> On 3/26/26 18:10, Kevin Wolf wrote:
+> > Am 26.03.2026 um 17:00 hat Kostiantyn Kostiuk geschrieben:
+> > > Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> > 
+> > I'm not a meson expert, but the change itself looks ok to me.
+> > 
+> > However, the commit message is definitely a bit too empty. It should say
+> > why you want to make this change.
 > 
-> I'm not a meson expert, but the change itself looks ok to me.
+> Agreed, I *think* it's because scripts/undefsym.py would immediately exit
+> here:
 > 
-> However, the commit message is definitely a bit too empty. It should say
-> why you want to make this change.
+>     if len(args) <= 3:
+>         sys.exit(0)
+> 
+> but it should be spelled out.
 
-Agreed, I *think* it's because scripts/undefsym.py would immediately 
-exit here:
+If that's a problem, why doesn't ./configure --disable-modules fail on
+Linux?
 
-     if len(args) <= 3:
-         sys.exit(0)
-
-but it should be spelled out.
-
-Paolo
+Kevin
 
 
