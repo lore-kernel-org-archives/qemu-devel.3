@@ -4,71 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D729210F285E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 17:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5BFC10F285E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 17:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6B3E-0006fb-MZ; Fri, 27 Mar 2026 13:32:52 -0400
+	id 1w6BAw-0001wp-UJ; Fri, 27 Mar 2026 13:40:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w6B3B-0006cy-KN
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:32:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1w6BAv-0001wg-AQ
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:40:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w6B39-0007zP-CR
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:32:48 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1w6BAt-0002vD-D7
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:40:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774632766;
+ s=mimecast20190719; t=1774633246;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pN4OiFiCaqsGj9lyQmbZVPazjyuFfOnaBFT4eYnbIuU=;
- b=fRPBNdCRQkSWX3ddSOy0xy1XlgUhkB7H7jHbp2bC9gaU+wPE6xB+tIyJHgJVOhDejR6I+G
- B0RZ31CiV1bS3m5Yts4Ys6AeyekIcrfUAqKz7Ta77A8Z5+De8JoX+dRSFVfg6B8iuCBizG
- 4RTvpM30IQbf3U7oh28JcH/q69+8esA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-SDElpmZlPJeI79AtHzENaA-1; Fri,
- 27 Mar 2026 13:32:44 -0400
-X-MC-Unique: SDElpmZlPJeI79AtHzENaA-1
-X-Mimecast-MFC-AGG-ID: SDElpmZlPJeI79AtHzENaA_1774632763
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B62C3195608E; Fri, 27 Mar 2026 17:32:42 +0000 (UTC)
-Received: from mbawa-thinkpadt14gen5.bengluru.csb (unknown [10.74.88.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1C4C53000223; Fri, 27 Mar 2026 17:32:36 +0000 (UTC)
-From: Mohammadfaiz Bawa <mbawa@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanb@linux.vnet.ibm.com, pierrick.bouvier@linaro.org,
- "Michael S . Tsirkin" <mst@redhat.com>, imammedo@redhat.com,
- anisinha@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
- qemu-arm@nongnu.org, mohamed@unpredictable.fr, philmd@linaro.org,
- Mohammadfaiz Bawa <mbawa@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v3 3/3] hw/tpm: add PPI support to tpm-tis-device for ARM64
- virt
-Date: Fri, 27 Mar 2026 23:02:09 +0530
-Message-ID: <20260327173209.148180-4-mbawa@redhat.com>
-In-Reply-To: <20260327173209.148180-1-mbawa@redhat.com>
-References: <20260327173209.148180-1-mbawa@redhat.com>
+ bh=lGUlWvrYdtVJTmtFJxoPEtWF4tSkA6a4Db88DvaWTSo=;
+ b=P4ihFQ8d+XuVGY78Be+IwyqA8RxWhMvsAWqWN2iUblUF6AGUjTT/yg+d+cnD0S7KcmFdde
+ cEB3iPFHfCfn5TSDn7wXzbnhPoj2/0vnsAYz7RHFhSvXUDHcyBJWo/AR0z90QTwBViTNqb
+ JbrEM9vB6WyF68N4sH06X1diiRY3vY0=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-684-awZaE-o1NCCGtlDiJ8Vznw-1; Fri, 27 Mar 2026 13:40:44 -0400
+X-MC-Unique: awZaE-o1NCCGtlDiJ8Vznw-1
+X-Mimecast-MFC-AGG-ID: awZaE-o1NCCGtlDiJ8Vznw_1774633244
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-509044f54aaso70940451cf.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 10:40:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774633244; cv=none;
+ d=google.com; s=arc-20240605;
+ b=aJlnwrGx5qzyTUJYVmh3iwxCslYv8Eju6OCIyrFeNTGbHzUb7RpSsnxy5GcLJuK6Db
+ C4f9I1FpwdIC7LAgfz6/+J+GSEItIWX7EHi3Uj9DmI7TaKmh82c/yhBVuyhKcOQoLn7Q
+ zXmOR/aIJAKxoaKO7SZcsG3C3QV8C3tKgq4RbBgO+LXFmkixbZ5KZ/MWhZ53mOApZ0S9
+ 0XBgwqjr82ijGAkPYYWwq0u0jkDLA7dtA+CzUZZn+zim5NpQXplto2htFGFSrMYMlQb7
+ NO2DuP180IsfYQ+CqSiUrBJQNZUL4DQqmn9eue4x4qJ+bujSKaudCIySkwKwxuyKg3It
+ 8/ww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=lGUlWvrYdtVJTmtFJxoPEtWF4tSkA6a4Db88DvaWTSo=;
+ fh=BeZRKHJnXg5VKpZp9pIG1L6JBImdwLr5Kxe/kRWzq0c=;
+ b=ZnEeGXRnSaz+Qz14YzHP7PLr4J8zCEtMJ1RSIng9xRtqu1WimPk5B9KmhQxfUx5KiS
+ Ud078/Ac7hSTVQPaeN1O6lVD+8LaGOUDiyiulZ8iEpQshkneduzlXJrSyS4sWhv5oxeN
+ 6Mgxjuusu/aOJsr/Wer+gkTmv1OPOy/ggqqKPfiweeLHNEWfTKu8kdyN8XXFIYWXPD+6
+ vZfVO8tkuAixsNN5BtDYnQTtCH+kqI9S7aXyLWXAN5rbohVUzRhlHboyOgk/DcFEewyf
+ /hj5/G7FmCaxQ2+/KEce2tO0YRBEs6v7kpDPlprbUgK25II+i6oRV4FRnIkZf0Q1QRxS
+ +Vjg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774633244; x=1775238044; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lGUlWvrYdtVJTmtFJxoPEtWF4tSkA6a4Db88DvaWTSo=;
+ b=e+ZBpw8rr78NVV/Erdh3s7vIE/kDV1+muquQSe+WfoEqhsrIYdjUlI0dAeoaQ7qkwS
+ 74/oxtSAhJ0IF2ob6EeBJwTuC3tQN/zMbY4dyzmcHKXpTKttOGey69ooqMH5gZwFhpk8
+ PFZnhRYDKk7hu9aj310dLpVghsXFLKrIu9kWKTtZUdo0cYRuXQ/1vSi+r3k+Oq5V3h6k
+ VjRyeP3tSf0iTfoMTESYqLrcvchLPAytaogfngY2Io776Kmw7SIOoapgc14dm9o96tLi
+ fKX9p6GA0bFYJiUbBPlf18lhRBhfjGhWGdFizsBiri0Q1n8SBUyCn1jVkAkLQVEbhufQ
+ QR5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774633244; x=1775238044;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lGUlWvrYdtVJTmtFJxoPEtWF4tSkA6a4Db88DvaWTSo=;
+ b=snThP3QU7Bex8ZA+IIS9LHkSJZKwAQofNE0wM9XziY9020KXQ7gAJ5RkDmy8OBX3B2
+ WbbHiQ1n9KDEizOT+NoB8VVdvvH1MyeWXSFAz1VF7Fe0uYd9pIxVA/ZgHOcOkamnqBNc
+ UfDUST61gdot1TO/AQ5VhWWLOqH5e8mm0c5MdH5mcjbLs0+N0oM5U882g7oiWqTdXR3z
+ 8h+p+nVHrm9XVjb27SzP9kaUXtsOvbunOBTvj4oRdnaApI+ZcuuHTx/qEbGmA9fWGgjD
+ WUB4edlAJjI5iPoqA+oau7HnIIOrkYlohN23NQem5r45FPVbNZvojhS3vE8FGGAnDerT
+ MXeQ==
+X-Gm-Message-State: AOJu0Yw96o/GEmKP8UM20c/q5Lg9I/c5njRmbEzSBwiUSMKK2U7YKtbH
+ jgwMpBG7aZP6O0Gz3Ul1XyXD/53TRQRQEnKiQXQDO9YbHXCzTIkBuwHlzfHgHNQPtWPVBlQib6o
+ 8GYW10RoLvA4lydEz3SB7WEZpMiJAE+vN1fsL/z4FPfEyIIvWtX1IkeH35aiMuSw31TA48PLrAb
+ HpX0Uj/lJdwfb9IZCrippTiefIeW+xunI=
+X-Gm-Gg: ATEYQzx0PxbwvSMeK+rt7czkBfU6yTo8jovozk6db3KWW2JkzLhqXLqnM4Uw3Vag1Sl
+ rYb9tw3ICT2YJiD33RYrMXdlAr3/NS5z8uhPvqpvVCQXU6D+iJI/yr43ZkSPE5BA2xd5eUq3f3l
+ Kjm2XyhWuw1p+UCQ+/YmWD4nSXDFsfYocCQdUt3o9N8XNyvnv1xvHDJr1dPbCXS4Lg1MshX70Gq
+ VJohEfU
+X-Received: by 2002:a05:622a:1aa9:b0:50b:404a:746e with SMTP id
+ d75a77b69052e-50ba39128ccmr44161791cf.47.1774633243652; 
+ Fri, 27 Mar 2026 10:40:43 -0700 (PDT)
+X-Received: by 2002:a05:622a:1aa9:b0:50b:404a:746e with SMTP id
+ d75a77b69052e-50ba39128ccmr44161351cf.47.1774633243145; Fri, 27 Mar 2026
+ 10:40:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mbawa@redhat.com;
+References: <20260317094806.1944053-1-peter.maydell@linaro.org>
+ <CAFEAcA_VF9iztXv9hEp1BvVoqphFM8qnmh1nJC3VUKRbVMeB2g@mail.gmail.com>
+In-Reply-To: <CAFEAcA_VF9iztXv9hEp1BvVoqphFM8qnmh1nJC3VUKRbVMeB2g@mail.gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Fri, 27 Mar 2026 19:40:32 +0200
+X-Gm-Features: AQROBzCjl2n4oCvMnHdS4qcNs-fWLSq-dzP2aP5H8G5iVCo0_iliEYgktI8knB4
+Message-ID: <CAPMcbCp_TZOXOAgnnMWWUY_8U903NVRZVYLzXxHHDG2h6-yZMg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] fsfreeze-hook: fix bashisms, syslog fallback logic
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="00000000000010a0ea064e0500a1"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,95 +133,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add PPI memory region and ACPI _STA, _DSM to tpm-tis-sysbus so
-Windows 11 ARM64 guests no longer log Event ID 15 errors from
-tpm.sys on every boot.
+--00000000000010a0ea064e0500a1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
----
- hw/arm/virt-acpi-build.c |  9 ++++++++-
- hw/tpm/tpm_tis_sysbus.c  | 11 +++++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+On Fri, Mar 27, 2026 at 7:03=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 591cfc993c..5b5ac551f8 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -240,7 +240,8 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
-     Aml *dev = aml_device("TPM0");
-     aml_append(dev, aml_name_decl("_HID", aml_string("MSFT0101")));
-     aml_append(dev, aml_name_decl("_STR", aml_string("TPM 2.0 Device")));
--    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
-+    aml_append(dev, aml_name_decl("_STA", aml_int(0xF)));
- 
-     Aml *crs = aml_resource_template();
-     aml_append(crs,
-@@ -248,6 +249,12 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
-                                   (uint32_t)memory_region_size(sbdev_mr),
-                                   AML_READ_WRITE));
-     aml_append(dev, aml_name_decl("_CRS", crs));
-+
-+    hwaddr ppi_base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
-+    if (ppi_base != -1) {
-+        ppi_base += pbus_base;
-+        tpm_build_ppi_acpi(TPM_IF(sbdev), dev, ppi_base);
-+    }
-     aml_append(scope, dev);
- }
- #endif
-diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-index dd30344d5a..6bec30c36f 100644
---- a/hw/tpm/tpm_tis_sysbus.c
-+++ b/hw/tpm/tpm_tis_sysbus.c
-@@ -30,6 +30,7 @@
- #include "hw/core/sysbus.h"
- #include "tpm_tis.h"
- #include "qom/object.h"
-+#include "qemu/memalign.h"
- 
- struct TPMStateSysBus {
-     /*< private >*/
-@@ -99,6 +100,7 @@ static void tpm_tis_sysbus_initfn(Object *obj)
- {
-     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(obj);
-     TPMState *s = &sbdev->state;
-+    size_t host_page_size = qemu_real_host_page_size();
- 
-     memory_region_init_io(&s->mmio, obj, &tpm_tis_memory_ops,
-                           s, "tpm-tis-mmio",
-@@ -106,6 +108,12 @@ static void tpm_tis_sysbus_initfn(Object *obj)
- 
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
-+
-+    s->ppi.buf = qemu_memalign(host_page_size,
-+                                ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
-+    memory_region_init_ram_device_ptr(&s->ppi.ram, obj, "tpm-ppi",
-+                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->ppi.ram);
- }
- 
- static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
-@@ -122,6 +130,8 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
-         error_setg(errp, "'tpmdev' property is required");
-         return;
-     }
-+
-+    vmstate_register_ram(&s->ppi.ram, dev);
- }
- 
- static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
-@@ -132,6 +142,7 @@ static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
-     device_class_set_props(dc, tpm_tis_sysbus_properties);
-     dc->vmsd  = &vmstate_tpm_tis_sysbus;
-     tc->model = TPM_MODEL_TPM_TIS;
-+    tc->ppi_enabled = true;
-     dc->realize = tpm_tis_sysbus_realizefn;
-     device_class_set_legacy_reset(dc, tpm_tis_sysbus_reset);
-     tc->request_completed = tpm_tis_sysbus_request_completed;
--- 
-2.53.0
+> On Tue, 17 Mar 2026 at 09:48, Peter Maydell <peter.maydell@linaro.org>
+> wrote:
+> >
+> > This patchset fixes some issues with the fsfreeze-hook guest-agent
+> > script reported in
+> https://gitlab.com/qemu-project/qemu/-/work_items/3339
+> >
+> >  * the script is a #!/bin/sh one, but it uses various bash-isms.
+> >    Most are easy fixes, but getting rid of the PIPESTATUS usage
+> >    is a little less obvious, so that gets its own patch
+> >  * a bug in the logic determining whether to log to file or syslog
+> >    means that if the logfile doesn't exist on first run, the script
+> >    will create the logfile but log to syslog (and then log to file
+> >    on second and subsequent runs)
+> >
+> > NB: I have tested this by setting up the script and running it
+> > manually in a temp directory, but not as a "real world" fsfreeze.
+>
+> These have been reviewed, do you plan to take them into a pullreq ?
+>
+
+Yes. I keep it for comments from other people.
+
+Do you prefer to merge it into v11.0 or v11.1?
+
+
+>
+> thanks
+> -- PMM
+>
+>
+
+--00000000000010a0ea064e0500a1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 27, 2026=
+ at 7:03=E2=80=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linar=
+o.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt; wrote:<br></div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">On Tue, 17 Mar 2026 at 09:=
+48, Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D=
+"_blank">peter.maydell@linaro.org</a>&gt; wrote:<br>
+&gt;<br>
+&gt; This patchset fixes some issues with the fsfreeze-hook guest-agent<br>
+&gt; script reported in <a href=3D"https://gitlab.com/qemu-project/qemu/-/w=
+ork_items/3339" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qem=
+u-project/qemu/-/work_items/3339</a><br>
+&gt;<br>
+&gt;=C2=A0 * the script is a #!/bin/sh one, but it uses various bash-isms.<=
+br>
+&gt;=C2=A0 =C2=A0 Most are easy fixes, but getting rid of the PIPESTATUS us=
+age<br>
+&gt;=C2=A0 =C2=A0 is a little less obvious, so that gets its own patch<br>
+&gt;=C2=A0 * a bug in the logic determining whether to log to file or syslo=
+g<br>
+&gt;=C2=A0 =C2=A0 means that if the logfile doesn&#39;t exist on first run,=
+ the script<br>
+&gt;=C2=A0 =C2=A0 will create the logfile but log to syslog (and then log t=
+o file<br>
+&gt;=C2=A0 =C2=A0 on second and subsequent runs)<br>
+&gt;<br>
+&gt; NB: I have tested this by setting up the script and running it<br>
+&gt; manually in a temp directory, but not as a &quot;real world&quot; fsfr=
+eeze.<br>
+<br>
+These have been reviewed, do you plan to take them into a pullreq ?<br></bl=
+ockquote><div><br></div><div>Yes. I keep it for comments from other people.=
+=C2=A0</div><div><br></div><div>Do you prefer=C2=A0to merge it into v11.0 o=
+r v11.1?</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
+:1ex">
+<br>
+thanks<br>
+-- PMM<br>
+<br>
+</blockquote></div></div>
+</div>
+
+--00000000000010a0ea064e0500a1--
 
 
