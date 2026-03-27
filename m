@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD8B910ED659
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0334C10ED659
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65Cc-0007pw-3Q; Fri, 27 Mar 2026 07:18:10 -0400
+	id 1w65EB-0003Ed-Ii; Fri, 27 Mar 2026 07:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65CI-00076t-Fl
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:51 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1w65Cb-0007qY-TD
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:09 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65CF-0008NE-Vp
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:50 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b871dd06eso1154739f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:17:46 -0700 (PDT)
+ id 1w65CX-0000Hh-Sf
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:09 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439b7c2788dso1186502f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774610266; x=1775215066; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774610282; x=1775215082; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+PpzUIdcaAGfh+t+PosoBjEM0xn6FihXvA5kZznGsJk=;
- b=GJUv4C5ehAF9a44rDUtuswEQY/b+Yx91eF+CGHZ9enpgYUV8jpOYQ36kOpVtgaPSis
- 5G6mYVcv49yrVle4vod2AEAehNqAk32Pm32bjIL/hTlAYp82h7k6fRa3UChZRkml69Mv
- fSGIrrU9rTJ4WtoXy6MnvXBFpd+lKGvGqfpM3iQYaN8cX7RlH/ayYknnYtHsoGE0gOTo
- oDZQSqZwUxtV1zntl2Apx1+gteHPoFqtUvZTgR/tk9niIVUT4YiLgdYCnwa/a4LxNNFA
- Y+c00VsdCTWs2tNCzsE86zRLMZjtoiOUFsdvb8SdLnEP3BffZ689MVsRvZTWmDuk5fG0
- qm2Q==
+ bh=qVpl4q4Ew+AJPdH2wb74AVCkix8tQh3kXY3l2KghFQY=;
+ b=W1BOGURdIr9YoqmLB/mtIQnBr9YBAhED60FgNcYiV/83dGa6RPMDRmFZcAKVrK9cDK
+ F8v9HQAIpTt0B8qembESSDYFMGjpNdNkFyWRrmRoyNePXAX1ofc621IleNfke8sv7QfC
+ BDq4cqmZpdxhOZhTXJ9BY6U627G1St0sZBPkSO8LAxIPj6bf9SbQislI7BV3SjXGQROq
+ CImRCxhKcts1H7pV9BYowadPxq9NDMY3oQUzK+6bUGlANN/GUQ9oQqfxxTw0V4+6JBcI
+ EbnPjHID0Fl8YdD9LSopYb/V99T9U4GfmBoF3C2ye/HBiYBgmh4DS6jkA/A7JC1WZmEh
+ +LXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774610266; x=1775215066;
+ d=1e100.net; s=20251104; t=1774610282; x=1775215082;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+PpzUIdcaAGfh+t+PosoBjEM0xn6FihXvA5kZznGsJk=;
- b=DAJrrFXdEBCIw4VRxepDlpleG/V6nIH4THrkfJxT1CwnJ8DV8kPGxxE2RY9r/jdnQl
- 2mkX9ps27CjRYFmEtntLHmKHJ0LngIA4dNYn+bfoojznbKE2zO3Xm83cUNb8lvH8svFN
- wnVhzD8ZuDbXpHAQHOdfQx2iy+OAzKAk9TlgU1C4fDuOIX5GqStHFVgK13kpTwRSA4HF
- oOD41KqxaxAqv35ivy67YNdrc5flVh4LUX0gxaGWo5sX98J/IJCh7URPX89lpa/BYU6U
- 3OjLZ0njB2jccG3Hvaee1a9fkg+NQbxy/kNH0aBqKaJ/lD/9twMGEiU7UIncezIF+Qqa
- nKLw==
+ bh=qVpl4q4Ew+AJPdH2wb74AVCkix8tQh3kXY3l2KghFQY=;
+ b=Bz+oHJztTZl9Y2sVIVpcH0TPN6qBas/N/v8MhdweQFm3QKAoWIFeIdVwjMAAsoj7+2
+ uGuq/bTeP8O558C2rGa7dbnSbAnJnz7ZWEpwqz3Pw+euYR8xBbMQmZ9pU2qmSKhExha6
+ vyt3BL9WN0JlrvwHu279QhESzYCiTBbdBOIMG1wETfNh2BMTK5vDULbVYySxM3cHkrFJ
+ ctzJqaKD2/n200toO8486SDGOuB1q00oZQm2eCYRK0BrU7kAfzg13qfHD39wWPZgJPix
+ O3XbO/kMQTmjEyWi2eCDwKdLY7rwUndNCdPVUM1K1VbD/StZbo/g+gRZsNobPXDKf9Pv
+ 7TQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVr/gVRRYIbLcfbGJAlbNawsGqlmHX6fna6EZlvqZ1j+yOfGOYBDjRCn+lm7tie98k+QUDjrUrnOKdJ@nongnu.org
-X-Gm-Message-State: AOJu0Yxisq4w/Pr4FZGQwX/E4N07EYjRZj00J4mQUJqCKfB2HUtJu69o
- VS0AUiFRAgN6UHDJrJAC3JBc69KwmmCWfLF+hjRbOhFKFbz5Gwbbqru6CiulX28ZIJY=
-X-Gm-Gg: ATEYQzzDh5FkIavangXwGOwESl5jnAAkB7RL9CMrq0ff453R07jFlNZeRnnYmRJxmcb
- Sx4tJvWOA/ECDkYtHUbhoJ+N0MvIDFDhIBR5ik6wJoW03rbhkGbawcF5S9oY1M6cG39vdvcNO9Q
- 5OayqfUdyLVJ45JJ7eqn/yHQKuaaS7nXnIeTBfjM3Z87EggUsqZnsBrUVF2oH7HbyF6LPaA+Tl9
- SGhvkR7Rpd8qI7hgWCdQu0Y8T5uDtw/eQRgUpSETgWa7kr88OISRqtCMP6hTjYCFe7CV5egrgfD
- 47VgDt576IYL12quLEUw6PN1n+5hSrVRby5jVD6Tzqi6ol6IgvNXo66L4QB8e2Hv20iXgRvd1Fz
- Q3GBNsUia2EEoVziKsNI0/r5bGGql/0xxdAQxCvJwIk+KMdiRaY3t+T1B3zdTbvftJyTdlc3tBG
- jB/FawV+KYAxmN1KOGT44MxSKcR6GiygtRzxgbEB6547ag2+mDslxEbrg/mPGu6Poi9q+a0xe9p
- W/YFCeGyXatl8cmxOnCpvY3DnDTrNA=
-X-Received: by 2002:a05:6000:22c8:b0:43b:4966:744a with SMTP id
- ffacd0b85a97d-43b9ea77b34mr3305556f8f.50.1774610265741; 
- Fri, 27 Mar 2026 04:17:45 -0700 (PDT)
+ AJvYcCXkYg11bX7DEYDoc6x4W/RBGRoXLZVu5jRio4SIO8beF2qc/fbgowbAGA8Ke/h9opRAuDLxTk+HDZ/h@nongnu.org
+X-Gm-Message-State: AOJu0YznaO0u8sovkZkVgXWJ6FB1n3Ww6Ac94L3Sh3GFQ0HDsVs09IQK
+ TbzK4Y+7TkXRiNfxXtIt9mtCsOtBvgFwJuUGD+vn1QHc9McOpIuL/jhLIA1a+bKFr5nIQYWmPrB
+ ytZ7D7FE=
+X-Gm-Gg: ATEYQzwe/jFuK+PK/Umb9tsjoB5jVDvkspOS4P82MMcVscm2uoCtqLIGHLzY/KNFye9
+ gPhkZbAZv7M7a6grneBJ1E6OvPPMlNueq1sZPrWZxLv233OGhyPxeHNSlSMFgubhrlqVB4dYqi6
+ xZsVI/91RtxF1Z0ojmi/06CKL3X5R9MXma/XJsRxKuSU9p97yA5gMLqq8RpXJJNoHJtsoLZjNxR
+ u/dO8FzHPAYTpjL0iBcRLuMyhWnFhmqDglodgD06e+4jyPgMMjM9cwP7W3RDwPRegyFf5bMP8ep
+ cmAtbC/fvHhDihhapo0agIb1x0eGThpxATvWzBEz0vyX+7LnNS9iw4eARTDGPk3U0DFNhw0qEEw
+ gdioTbbGhYUTkaeOznpYJZpSa8X75zmn9Jhw2XeSG9HraqZIr3xinJh8SLmXOR10dD0c8QAwXUm
+ 785MJfgXY6JxSDfPlnQA683X4PzCpbPAu22Uy0yFrOoddaefGJxy3H7ezBMrlpSVVyhj5kMFEdr
+ 4rbhjaxOCqjdRMeKZzP8nTjLJVsQqQ=
+X-Received: by 2002:a05:6000:4212:b0:439:cb10:dfcd with SMTP id
+ ffacd0b85a97d-43b9ea623eamr3195847f8f.39.1774610282128; 
+ Fri, 27 Mar 2026 04:18:02 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.44
+ ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.18.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 04:17:45 -0700 (PDT)
+ Fri, 27 Mar 2026 04:18:01 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 46/65] target/arm: GICv5 cpuif: Implement ICC_HPPIR_EL1
-Date: Fri, 27 Mar 2026 11:16:41 +0000
-Message-ID: <20260327111700.795099-47-peter.maydell@linaro.org>
+Subject: [PATCH v2 63/65] hw/arm/virt: Use correct interrupt type for GICv5
+ SPIs in the DTB
+Date: Fri, 27 Mar 2026 11:16:58 +0000
+Message-ID: <20260327111700.795099-64-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260327111700.795099-1-peter.maydell@linaro.org>
 References: <20260327111700.795099-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,156 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement ICC_HPPIR_EL1, which the guest can use to read the current
-highest priority pending interrupt.  Like APR, PCR and CR0, this is
-banked, with the _EL1 register reading the answer for the current
-logical interrupt domain, and the _EL3 register reading the answer
-for the EL3 interrupt domain.
+The GICv5 devicetree binding specifies that the "interrupts" property
+for devices connected to it should use the architectural INTID.TYPE
+values to specify whether the interrupt is an SPI, LPI or PPI.  This
+is different to the GICv2 and GICv3, so instead of hardcoding the
+GIC_FDT_IRQ_TYPE_SPI constant when we create "interrupts" bindings,
+create a new function gic_fdt_irq_type_spi() that returns the right
+value for the interrupt controller in use.
+
+For SPIs, the INTID.ID and the trigger-mode fields of the
+"interrupts" property remain the same for GICv5 and the older GIC
+versions.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- hw/intc/arm_gicv5.c                | 10 +++++
- include/hw/intc/arm_gicv5_stream.h | 13 +++++++
- target/arm/tcg/gicv5-cpuif.c       | 61 ++++++++++++++++++++++++++++++
- 3 files changed, 84 insertions(+)
+ hw/arm/virt.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 12cbf9c51e..605cf6fd6f 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -527,6 +527,16 @@ static void irs_recall_hppis(GICv5 *s, GICv5Domain domain)
-     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index bc49cf244f..15d833ad8f 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -295,6 +295,16 @@ static bool ns_el2_virt_timer_present(void)
+         arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
  }
  
-+GICv5PendingIrq gicv5_get_hppi(GICv5Common *cs, GICv5Domain domain,
-+                               uint32_t iaffid)
-+{
-+    GICv5 *s = ARM_GICV5(cs);
-+    int cpuidx = irs_cpuidx_from_iaffid(cs, iaffid);
-+
-+    assert(cpuidx >= 0);
-+    return s->hppi[domain][cpuidx];
-+}
-+
- static hwaddr l1_iste_addr(GICv5Common *cs, const GICv5ISTConfig *cfg,
-                            uint32_t id)
- {
-diff --git a/include/hw/intc/arm_gicv5_stream.h b/include/hw/intc/arm_gicv5_stream.h
-index 60c470b84c..cc1c7cc438 100644
---- a/include/hw/intc/arm_gicv5_stream.h
-+++ b/include/hw/intc/arm_gicv5_stream.h
-@@ -175,4 +175,17 @@ uint64_t gicv5_request_config(GICv5Common *cs, uint32_t id, GICv5Domain domain,
-  */
- void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain);
- 
-+/**
-+ * gicv5_get_hppi
-+ * @cs: GIC IRS to query
-+ * @domain: interrupt domain to act on
-+ * @iaffid: IAFFID of this CPU interface
-+ *
-+ * Ask the IRS for the highest priority pending interrupt that it has
-+ * for this CPU. This returns the equivalent of what in the stream
-+ * protocol is the outstanding interrupt sent with a Forward packet.
++/*
++ * The correct value to use in a DTB "interrupts" property for an SPI
++ * depends on the GIC version.
 + */
-+GICv5PendingIrq gicv5_get_hppi(GICv5Common *cs, GICv5Domain domain,
-+                               uint32_t iaffid);
-+
- #endif
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index b44b0d5398..36bbb70c4a 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -51,6 +51,10 @@ FIELD(ICC_CR0, PID, 38, 1)
- 
- FIELD(ICC_PCR, PRIORITY, 0, 5)
- 
-+FIELD(ICC_HPPIR_EL1, ID, 0, 24)
-+FIELD(ICC_HPPIR_EL1, TYPE, 29, 3)
-+FIELD(ICC_HPPIR_EL1, HPPIV, 32, 1)
-+
- /*
-  * We implement 24 bits of interrupt ID, the mandated 5 bits of priority,
-  * and no legacy GICv3.3 vcpu interface (yet)
-@@ -114,6 +118,51 @@ static uint64_t gic_running_prio(CPUARMState *env, GICv5Domain domain)
-     return hap < 32 ? hap : PRIO_IDLE;
- }
- 
-+static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
++static int gic_fdt_irq_type_spi(const VirtMachineState *vms)
 +{
-+    /*
-+     * Return the current highest priority pending interrupt for the
-+     * specified domain, if it has sufficient priority to preempt. The
-+     * intid field of the return value will be in the format of the
-+     * ICC_HPPIR register (and will be zero if and only if there is no
-+     * interrupt that can preempt).
-+     */
-+
-+    GICv5Common *gic = gicv5_get_gic(env);
-+    GICv5PendingIrq best, irs_hppi;
-+
-+    if (!(env->gicv5_cpuif.icc_cr0[domain] & R_ICC_CR0_EN_MASK)) {
-+        /* If cpuif is disabled there is no HPPI */
-+        return (GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE };
-+    }
-+
-+    irs_hppi = gicv5_get_hppi(gic, domain, env->gicv5_iaffid);
-+
-+    /*
-+     * If the best PPI and the best interrupt from the IRS have the
-+     * same priority, it's IMPDEF which we pick (R_VVBPS). We choose
-+     * the PPI.
-+     */
-+    if (env->gicv5_cpuif.ppi_hppi[domain].prio <= irs_hppi.prio) {
-+        best = env->gicv5_cpuif.ppi_hppi[domain];
-+    } else {
-+        best = irs_hppi;
-+    }
-+
-+    /*
-+     * D_MSQKF: an interrupt has sufficient priority if its priority
-+     * is higher than the current running priority and equal to or
-+     * higher than the priority mask.
-+     */
-+    if (best.prio == PRIO_IDLE ||
-+        best.prio > env->gicv5_cpuif.icc_pcr[domain] ||
-+        best.prio >= gic_running_prio(env, domain)) {
-+        return (GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE };
-+    }
-+    best.intid |= R_ICC_HPPIR_EL1_HPPIV_MASK;
-+    return best;
++    return vms->gic_version == VIRT_GIC_VERSION_5 ?
++        GICV5_SPI : GIC_FDT_IRQ_TYPE_SPI;
 +}
 +
- static void gic_recalc_ppi_hppi(CPUARMState *env)
+ static void create_fdt(VirtMachineState *vms)
  {
-     /*
-@@ -407,6 +456,13 @@ static void gic_icc_pcr_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-     }
- }
+     MachineState *ms = MACHINE(vms);
+@@ -1183,7 +1193,7 @@ static void create_uart(const VirtMachineState *vms, int uart,
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                      2, base, 2, size);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                               GIC_FDT_IRQ_TYPE_SPI, irq,
++                               gic_fdt_irq_type_spi(vms), irq,
+                                GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "clocks",
+                                vms->clock_phandle, vms->clock_phandle);
+@@ -1225,7 +1235,7 @@ static void create_rtc(const VirtMachineState *vms)
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                  2, base, 2, size);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                           GIC_FDT_IRQ_TYPE_SPI, irq,
++                           gic_fdt_irq_type_spi(vms), irq,
+                            GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "clocks", vms->clock_phandle);
+     qemu_fdt_setprop_string(ms->fdt, nodename, "clock-names", "apb_pclk");
+@@ -1344,7 +1354,7 @@ static void create_gpio_devices(const VirtMachineState *vms, int gpio,
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "#gpio-cells", 2);
+     qemu_fdt_setprop(ms->fdt, nodename, "gpio-controller", NULL, 0);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                           GIC_FDT_IRQ_TYPE_SPI, irq,
++                           gic_fdt_irq_type_spi(vms), irq,
+                            GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "clocks", vms->clock_phandle);
+     qemu_fdt_setprop_string(ms->fdt, nodename, "clock-names", "apb_pclk");
+@@ -1425,7 +1435,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
+         qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                      2, base, 2, size);
+         qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                               GIC_FDT_IRQ_TYPE_SPI, irq,
++                               gic_fdt_irq_type_spi(vms), irq,
+                                GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
+         qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
+         g_free(nodename);
+@@ -1625,10 +1635,11 @@ static void create_pcie_irq_map(const MachineState *ms,
+     int devfn, pin;
+     uint32_t full_irq_map[4 * 4 * 10] = { 0 };
+     uint32_t *irq_map = full_irq_map;
++    const VirtMachineState *vms = VIRT_MACHINE(ms);
  
-+static uint64_t gic_icc_hppir_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    GICv5Domain domain = gicv5_logical_domain(env);
-+    GICv5PendingIrq hppi = gic_hppi(env, domain);
-+    return hppi.intid;
-+}
-+
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-     /*
-      * Barrier: wait until the effects of a cpuif system register
-@@ -522,6 +578,11 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_hm[1]),
-         .resetvalue = PPI_HMR1_RESET,
-     },
-+    {   .name = "ICC_HPPIR_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 3,
-+        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .readfn = gic_icc_hppir_el1_read,
-+    },
-     {   .name = "ICC_PPI_ENABLER0_EL1", .state = ARM_CP_STATE_AA64,
-         .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 6,
-         .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+     for (devfn = 0; devfn <= 0x18; devfn += 0x8) {
+         for (pin = 0; pin < 4; pin++) {
+-            int irq_type = GIC_FDT_IRQ_TYPE_SPI;
++            int irq_type = gic_fdt_irq_type_spi(vms);
+             int irq_nr = first_irq + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
+             int irq_level = GIC_FDT_IRQ_FLAGS_LEVEL_HI;
+             int i;
+@@ -1669,10 +1680,10 @@ static void create_smmuv3_dt_bindings(const VirtMachineState *vms, hwaddr base,
+     qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
+ 
+     qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
+-            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
++            gic_fdt_irq_type_spi(vms), irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            gic_fdt_irq_type_spi(vms), irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            gic_fdt_irq_type_spi(vms), irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            gic_fdt_irq_type_spi(vms), irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
+ 
+     qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
+                      sizeof(irq_names));
 -- 
 2.43.0
 
