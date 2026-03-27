@@ -4,117 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 204DF10F2841
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 15:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947E210F2843
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 15:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w690h-000584-2v; Fri, 27 Mar 2026 11:22:07 -0400
+	id 1w692M-0005gm-Mk; Fri, 27 Mar 2026 11:23:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w690f-00057q-61; Fri, 27 Mar 2026 11:22:05 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w690d-0005xJ-Iv; Fri, 27 Mar 2026 11:22:04 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62R303fv573231; Fri, 27 Mar 2026 15:22:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=sf1JHa
- PW1xkLnT0Z/mqpzmZhPESR3UnGMmCzF83noFw=; b=dUkK/VB81yJX5pYl66DdO1
- iMzVAFSBm3iRmNaeWdbVMLy6fQi1qkozBar6/BCku2cL9mbm1j4bIcGSF1TPkkIC
- SJhLLkaLqPTS+bFf2Sd79uFyC+tRWB4/QmxdkoLV3AHMId+kSmUydXtQVTZe+BWz
- /H1U82kz0CBNc2EWlRgRTkb5b31RGw419mzrXuXEtrMyHeUd9Ir+wCayrqkxLu6V
- Vtvi0FBqAoFLzdWLHpPRBQlih3CqoRWoY4LVeB/pcoMu95UrsrUPQ+hNJ/aMPelE
- wHfdotoQsUwNt6XNjvzd7c5LrYa8mjhoSEYt6sZfH3gmNeYY4esDpOeYYE7eb8qg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1ky0hjnd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Mar 2026 15:22:00 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62RBm4eB004380;
- Fri, 27 Mar 2026 15:21:59 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d28c2frnh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Mar 2026 15:21:59 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62RFLwr663504884
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Mar 2026 15:21:58 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4F0CE58052;
- Fri, 27 Mar 2026 15:21:58 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A434558064;
- Fri, 27 Mar 2026 15:21:57 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 27 Mar 2026 15:21:57 +0000 (GMT)
-Message-ID: <2c06e37f-477a-49d6-a65b-fd826fcdc5b2@linux.ibm.com>
-Date: Fri, 27 Mar 2026 11:21:57 -0400
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w6924-0005dd-EY
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 11:23:33 -0400
+Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w6920-0006Jk-FE
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 11:23:30 -0400
+Received: by mail-dy1-x1342.google.com with SMTP id
+ 5a478bee46e88-2c107ef474fso3864335eec.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 08:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774625006; x=1775229806; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=PzJcmu/U65FU4wQTMalP+dP1gUaMd8JFyXaRRb0LPKo=;
+ b=OofQAQRWVprCDkZ98kqt4LWTVLuqdlJSbc8BahfMER4WSlmzY/U+eN9fK9eVt1VUcB
+ RvDCs1DPfpG1bcOGmC7d+CScnAU3nZfZM5ZwC1FfQTR/Yti2S1pzOo7TfsTYYOKVswSw
+ /SBNR4Y309fdHsnpL5SzgneoQn0e3MePhIePy2byzKBJ0zC9EvHcvYpWNdeLJzCPPVa7
+ YcIu6aXIIhtM3cO+Od7RwRTsGt6Lt+sf3NNIJPBp9UAEpifKR7dqNSfhFxsest8rfvd3
+ OPLhjfZVyfB3sp/1eid9YPNKxwE7D30z0OhhPqmd9JgYIiewHCCxXBQaieNcct542Eqh
+ JiFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774625006; x=1775229806;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PzJcmu/U65FU4wQTMalP+dP1gUaMd8JFyXaRRb0LPKo=;
+ b=IO8NXIHwEmsJTqfn4vCtqL/rmYxL755fjyVzTimFp/hRd6lqLv6T9HNitLMzPhAqBJ
+ OvOobBjSQlrqMKut84JFMgZ+PAJZQ2y1BESqThBoQ0U+oU3yPGrjlRY/lTTi0kOs47tU
+ CwKE/OFsKXmqOwE9wxpe0nWlvS+Wg/qBxHQ6pmRmMuLTU+lucpcV2HxT1RDsScNfz7Dn
+ eiAFPENtm/X3ivYPiHRdWYjOtaRxRvJ1B2EXEpZXD1MUEwWZjAIUqNZQLujSTsrsuoBW
+ OskcV8tamdXxmF2uxILfCMbxs3tKUg6IU2EfphyYy1l6yiNEC4ez7Al5uutLyhImlTZg
+ UOaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvduR0Iup4EzvSQ+XYAeyasDactQ0bda+g0OrPu5cdInQzd5m+BReSsg4/6wgEjb5YqIiF8l3kH1Gh@nongnu.org
+X-Gm-Message-State: AOJu0YxV1GMZ8vKjuE5RE8j7gPmaaQSlp8BPvh91F1dNtBcduXSoesRx
+ 5RIViSL4M2ryy7B9rz2dny6eau/33Q3eqJLrfQK/1QsZulZWEVL1IGYm
+X-Gm-Gg: ATEYQzyWYZMdg9Ac5565qCByynvranwxJf7KxwLgDhnULgxqfXRb8+NYNWs/ayvNQv3
+ ihpE4+WvIf69l8VWc/XI6JzP0Kq4pLqtN6PjVpstVZQzNQkD55CkOygW0ADt/fFmv6Cwo8SSfY8
+ IaVlF7UaA6wus/r3DZePMPEGqeobN53IXE7iVCrCF4UWPbvZbRd1MCR3EnXHYjpjRGVHfjg2d03
+ MfjGkZHyjPFYWfCR0+93MM2kV7+Gtjbwe0uPL8lhaAvsAJlqBnHQIGnlrcqtCqvnZ3ECy42j3g9
+ 0sFUpD1R28alVALxp1KEPb2QqoFO3BdZSEwdUTpyJrnYw4BYz+XDVE6QqTg1uoNEKYGTt/EkT5X
+ OJP1Z1qL3CbhWmaGMod03GYorQOBjkz2guUE9Jit/yChYEIY0Kubkp7KLcxh+8Td9t9jriEibU9
+ u0KPUAW48lxBuoera8j8dYmgZiu1vCuGcTc34QPqDdNjgtIlzcXUNHTmRY7mc0HB1ziH/GUseT3
+ //0b4OHY9sJ2uuNUhuaPavP1Jk7/pc=
+X-Received: by 2002:a05:7300:3254:b0:2c0:d92c:2c68 with SMTP id
+ 5a478bee46e88-2c185fad9e0mr1793181eec.31.1774625006061; 
+ Fri, 27 Mar 2026 08:23:26 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2c16ec4934asm5319735eec.8.2026.03.27.08.23.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Mar 2026 08:23:25 -0700 (PDT)
+Date: Fri, 27 Mar 2026 23:22:49 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Peter Maydell <peter.maydell@linaro.org>, Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: Re: [PATCH v2 07/15] target/riscv: Use glib2 instead of
+ strcasecmp/strncasecmp
+Message-ID: <acagsTxLwZYmZaf-@ZEVORN-PC.localdomain>
+References: <20260327134401.270186-1-kkostiuk@redhat.com>
+ <20260327134401.270186-8-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] hw/tpm: Remove instance @ppi_enabled field
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260317120241.16320-1-philmd@linaro.org>
- <70bd2f29-9f33-43e0-897f-52f0b2af111f@linaro.org>
- <ece64b0e-7f05-43de-b326-38788a9abe8b@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <ece64b0e-7f05-43de-b326-38788a9abe8b@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDEwNSBTYWx0ZWRfX3WqfcS+VbZgS
- I5dhKqBKxW2Wa4hlMckXdhakmAOodNV96CXbvk68pwd258rqEwl+t47/+bTUtD1T5BOfH7ePW1t
- gbnu6/gyG2oI1mgTgtceJa2KwxhVQ9nrYrw0bpKtHSzN+CEOHzDleXzr3lIXlx5vVVFHHQTmnH8
- XuHTdiP5gZMc9wjm66BZlBvRbhT1ntM5uRGcfC7gXyu9/zIbJbI+OpGeyr2fNhwd/1a6adVE51N
- 3+2ybYD6+ZTUbk3stPHgPFFniCr+NChSxL3CskZmyuUiop7rk/0DqZ6DHfPPHBfvvE8yT/ewPmY
- kEwDNJYmhnDs1jlBd+XuuFw/EaSollDui4APpmxPbE3LuHGUx0c/P2uE2oCNhu0ltnKgir8wj6m
- lhSkQefevSaQs2nx593zZNo+3sTohYJSSUB5+QuShhhJFmDfpb1q2nDxG4wHvZdgIUUiq3VIg4L
- EQtZxyO4GPMSRHNDutA==
-X-Authority-Analysis: v=2.4 cv=JK42csKb c=1 sm=1 tr=0 ts=69c6a098 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=20KFwNOVAAAA:8 a=M8OJGBi02ddCFTyw1esA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: nCQ20Hv67ot-alypNETmTyqQZjoJWnSc
-X-Proofpoint-GUID: 8aAVQ44mOUgQg6Pq_Gj-QnDgBZp5OJHo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 adultscore=0
- spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603270105
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260327134401.270186-8-kkostiuk@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,33 +120,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Mar 27, 2026 at 03:43:53PM +0200, Kostiantyn Kostiuk wrote:
+> This is a change in semantics. g_ascii_strcasecmp() doesn't honour
+> locale but strcasecmp() does. But this is OK for at least one reason:
+>  (1) QEMU always runs with the C locale so there's not an actual
+>      behaviour change here
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-
-On 3/27/26 11:18 AM, Stefan Berger wrote:
+Thanks,
+Chao
+> 
+> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> ---
+>  target/riscv/monitor.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+> index a9d3111444..bca04a7580 100644
+> --- a/target/riscv/monitor.c
+> +++ b/target/riscv/monitor.c
+> @@ -303,7 +303,7 @@ static bool reg_is_vreg(const char *name)
+>      }
+>  
+>      for (int i = 0; i < 32; i++) {
+> -        if (strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
+> +        if (g_ascii_strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
+>              return true;
+>          }
+>      }
+> @@ -358,7 +358,7 @@ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
+>              continue;
+>          }
+>  
+> -        if (strcasecmp(csr_ops[csrno].name, name) != 0) {
+> +        if (g_ascii_strcasecmp(csr_ops[csrno].name, name) != 0) {
+>              continue;
+>          }
+>  
+> -- 
+> 2.52.0
 > 
 > 
-> On 3/23/26 5:56 AM, Philippe Mathieu-Daudé wrote:
->> On 17/3/26 13:02, Philippe Mathieu-Daudé wrote:
->>
->>> Philippe Mathieu-Daudé (5):
->>>    hw/tpm: Factor tpm_ppi_enabled() out
->>>    hw/tpm: Add TPMIfClass::ppi_enabled field
->>>    hw/tpm: Remove CRBState::ppi_enabled field
->>>    hw/tpm: Propagate @ppi_enabled to tpm_tis_reset() and remove in
->>>      TPMState
->>>    hw/tpm: Simplify tpm_ppi_enabled()
->>
->> Series queued for 11.1 (typo fixed), thanks.
->>
-> 
-> Here's another TPM PPI related series. It would make sense to upstream 
-> them together. Do you want to queue that one as well?
-> 
-> https://lore.kernel.org/qemu-devel/20260327-tpm-tis-sysbus-ppi-v2-0- 
-> d8ec84d25dbc@redhat.com/T/#t
-> 
-
-Actually, they will have to rebase on this series first...
-> 
-
 
