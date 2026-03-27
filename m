@@ -4,100 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2C610F286F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB9810F286F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:31:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6EiR-0006jf-GN; Fri, 27 Mar 2026 17:27:39 -0400
+	id 1w6Elz-0003YB-Lm; Fri, 27 Mar 2026 17:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6EiP-0006Sg-CV
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w6Elv-0003XE-6q
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:31:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6EiN-0003rI-Ho
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w6Elt-0005Lu-P9
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:31:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774646855;
+ s=mimecast20190719; t=1774647073;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=64HjyIw3YSOllArTTqZkAithVHrT5AIrg1J84ohe30s=;
- b=WkN5nqrokkzpOkXW63o0+n92FCI8yIsFnaXDZhjUywfNpX+ov4SQHjxSsOpbwy5ME/sWRN
- LpSepOMQ5G4BZJOP+beqV81jtzHl+KO25m8j/7myuXooO8ZE9zeL50GFIPkI6zK/clDyt1
- HgvAXRRW6EG/B5XSltb/Rh/AqzQyJGA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PUI+iptfIF6f2fhx1pDkASoTPDEFIG0hDB0zsAdPlgo=;
+ b=fV3Ejvfnoid+qnQQdvrFTSe686XhSt08ghhVjZSz+DUijsX2DNbxdePTJdJVpIOn8BTwwu
+ 2Qm++mDIm7zm6VDVYXo+TIpY0jI1YPbgorMegQN2BvJ30pBhfy9ejuo/si7Txco2uzl2fR
+ nwlpaNFY4SKV0kpsmQhllLUrRsnsD6Q=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-cps7H3i9MPSJMSaccNPM_Q-1; Fri, 27 Mar 2026 17:27:32 -0400
-X-MC-Unique: cps7H3i9MPSJMSaccNPM_Q-1
-X-Mimecast-MFC-AGG-ID: cps7H3i9MPSJMSaccNPM_Q_1774646851
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-486fcc05b20so17776225e9.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:27:32 -0700 (PDT)
+ us-mta-492-kXHmReFFP8GquNx-FKGDbw-1; Fri, 27 Mar 2026 17:31:09 -0400
+X-MC-Unique: kXHmReFFP8GquNx-FKGDbw-1
+X-Mimecast-MFC-AGG-ID: kXHmReFFP8GquNx-FKGDbw_1774647069
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-50b802961ecso35220021cf.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774646848; x=1775251648; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=64HjyIw3YSOllArTTqZkAithVHrT5AIrg1J84ohe30s=;
- b=G2LLFIsQFMR4a0rGW510A8gngRubwYeBlrvDeGfdvD3K4yP5I3p+HCIFeQZY0cbGGL
- 16v3zfsSD/EIM/uGaI/1NSPc913Bl4wqXWsKbJdvwth6Yk1ykZZMDXBu3hQ9Zuy61tMX
- ObB7u9RN8/WPDYWg7zNw/nFSc1INbJw3+rSZtI5g+oqgaoDZzbN7jxChn4IhuT4RuXg5
- lg8wRTnRsXmdXmlQWyQv6iEepGDDtfUbrGFynRlIrptzZxqHXreKfsRjHGE2nx/VMFIN
- nqbmGJhi1dkfGB6R5di+gyNHOxQf9d8gguM//fCBVisNcN4lLjQmCMOpdVFYIcxHxfvY
- akhg==
+ d=redhat.com; s=google; t=1774647069; x=1775251869; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=PUI+iptfIF6f2fhx1pDkASoTPDEFIG0hDB0zsAdPlgo=;
+ b=BSdpObnms1hqT8tD1f6QJgblzjv47CAZiiCt7eTDhAgDkabeVjDiO/DpZmRXPBucB8
+ 84xcwYcE76bnBy8QgPVWrnytxCdQoHnrPrnCD5Ekbmplen2fipuE1YTMJ5tnUwsYBHo2
+ q1jX7qh34nf2C3OEn3Zl/Js6GsvDlIOR4FLpf5hpSjZy5WYz1E2sBCOq1tcsW9EkqyQB
+ Bz0nqFczzP2G/xMgvuTn4IcTe+0eS8JUsIkHiZZdlltnHlIQXMTgzAMphf57Lj2AnNFQ
+ zvjoWUN6oqOhYoRHD7ylOetwZpIzh7M99smIe5jcpSokiJkoGwv914C/GZcn/9dlWm4c
+ qP7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774646848; x=1775251648;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=64HjyIw3YSOllArTTqZkAithVHrT5AIrg1J84ohe30s=;
- b=dF7ie5M4cknNWoxrWAWNlYDV+OdNx5GJDNL59CIxTHXGo6CDUFGwHgnuVPFrBBKY56
- 1ogMKkTji6CSvlU3ITmzFsMeySxDLPOdZOLNAT7JxXu613NbDLT8y74D8xNeKZgJnUBh
- /Bg0olY53nmgMod9hs23mGnNmBYHQliOyP3RTdlveDohXUtPDmiBMgmLFxO8RM0iB7Sc
- o/K/1bOGeg3yPH7/BG3tYR8jY+Twb+euUiFr49JOprAcskRgDddse1pW/obHRhbq5PVm
- of3w638ktBuxBdlgebUUVQ+xBOjswMxrOPzRFar8YtnKIwb2GDMUeoFJ0XSOtA2RQ2Lp
- D9ZA==
-X-Gm-Message-State: AOJu0Yxk4adozl7ytqtdRTOz8TtELwQmp16fRnC7IL6w0v5cyV6iMAls
- D3HiZ2nUOlnXuGw35+A5vhk/YJ7lCQKVjxX6sRV8ZChJDTkHD7b2rohTNToDftx0RUI6aIp5msh
- UmLgHVcIFO0m3CDdUZV42PFZPPT41mcNhTldFPlMUlrsuLYv7w/Xz653heHwBL/Rja3nQlkAId6
- sdEVJbSARkxpUROc5JzNaqRLZuMPxPccBLXcI5z2J1
-X-Gm-Gg: ATEYQzzPSEFWlfAmDwz43tz4uDmtqzoC2z1gUUFRMaY048raIH35LI07XMCwx0OkQKm
- exqwsILPFUdpmNrICTs0sqDHyANjSOSzXr71j3b3X1cNF8B0r3+qlcNB+YgEaYQp1cuLIMLwxxm
- QveItue50b82TNPp3PCDuDeZRrs5m14Xoy6RHl+1RN5kS1XRCrSn8z/tM2/kbTncNI4Tjvxj9MR
- ZUcGXNdsQd6TOb9PqTckBu+HcfrJze8dIzZso+VXiOvTAEJxqeWbELC85cM2Y9Eu+gVhC4RVrUk
- SSyKT+RN/MdRORowN/ynXFhVYkyLiKYa29Tot13a2vw7wCMo99LwDHZcP6YJRPiEoB7hG9NhWdQ
- T/+L0z1jRnGl3DRwOKEKOrl3bjoeNpNTKTGijuVbKm+cQpECGmEa159zJwQhuRbcVd4te+e2ADS
- oEuBhgdpA73e7vwPuWq6nu90NK
-X-Received: by 2002:a05:600c:3e88:b0:487:1108:48b8 with SMTP id
- 5b1f17b1804b1-48727ee9897mr62252185e9.2.1774646848459; 
- Fri, 27 Mar 2026 14:27:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:3e88:b0:487:1108:48b8 with SMTP id
- 5b1f17b1804b1-48727ee9897mr62251915e9.2.1774646847953; 
- Fri, 27 Mar 2026 14:27:27 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.85.67])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48722c9506dsm112708875e9.7.2026.03.27.14.27.21
+ d=1e100.net; s=20251104; t=1774647069; x=1775251869;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PUI+iptfIF6f2fhx1pDkASoTPDEFIG0hDB0zsAdPlgo=;
+ b=Ou1j44DvJVLpNFBrnA5smgBOfIVNv0K5cT9lH8bDMXRDtlh5I4wswlOWabDhjydNG4
+ 6K4D8U6/gGhmz2KFhds+BvSb+um88tCvPr7dbEmYQP6CRw1WHzy2NDHek4DRGrbDv9uF
+ BJiAOePN9WjFaCnfiWFtVZd9eFmCQ+ZPkxrepurKrUx0l9ma3aRed7nU1rvKRL4zbYQf
+ R1DGPk9fBZF5At+qzPQyvP9DeVK6gyWlSe2T7IIVe17EOp+vdM+qYADup2gHs655nsk7
+ mh32h0HHzoqAJSP+giWXKwE8QYo9tAyg5OEDGib1dW3OkQjJk0Jy8yol6HKv/75ld9JO
+ MNbA==
+X-Gm-Message-State: AOJu0YyJ48XptDN/xOb6GWWBNwxJbdSUeLW9NsFi1wdljPlQ31Xt2KmO
+ 2VZv9s728O8oxi4luFDH/ynzv+jXSEXcQa0qwkYsASTUU3Za6YqYlLTKdzkuLmFxzQW8mjxSK7P
+ MrLskMF2zvdJHHuQKp2bwZX8ahxcEatRqW2Ew+FSHKGR/J4zbtzoqnApa
+X-Gm-Gg: ATEYQzw427YoiPLFRiN6u+tFrt84u0QnQzIHZKBDV1LtcXtc4yNlF3I17fokH1EQF1P
+ sVXOGe6T8+qOvQw8oWZphqx6+6QZNNHLG0MbwTclouXmIu2Fa9MVxhoebdHbZZJPamp83CBGXHb
+ qF2b65Ut6iCk+euEcOBdG6tmKwX5ZwhfijIocMfatFWPCO/+9FISowa5YlAIpP2TgZMm2ZosAEt
+ IVInK5NGxtLjhqFG36Eg1RBDGuOdEsJiVg02gHMd5NhsBaUuOhy+x4IMWAYQnbXPqqwprFxvcbN
+ Je6bjSuM1be4kcRZNpSfOCZvlx1kjJTSItI7++zj7AeN3qZvYvz4X/QqSldjANEorj5wZy8dTLA
+ dDZvLOmwzAeXtiA==
+X-Received: by 2002:a05:622a:548:b0:50b:34f1:6309 with SMTP id
+ d75a77b69052e-50ba394cb72mr52843661cf.49.1774647068908; 
+ Fri, 27 Mar 2026 14:31:08 -0700 (PDT)
+X-Received: by 2002:a05:622a:548:b0:50b:34f1:6309 with SMTP id
+ d75a77b69052e-50ba394cb72mr52843251cf.49.1774647068312; 
+ Fri, 27 Mar 2026 14:31:08 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50bb2e0fe31sm3681511cf.20.2026.03.27.14.31.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 14:27:21 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 15/16] ncr710: copy reference counting fixes over from
- lsi53c895a
-Date: Fri, 27 Mar 2026 22:25:46 +0100
-Message-ID: <20260327212547.460420-16-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260327212547.460420-1-pbonzini@redhat.com>
-References: <20260327212547.460420-1-pbonzini@redhat.com>
+ Fri, 27 Mar 2026 14:31:07 -0700 (PDT)
+Date: Fri, 27 Mar 2026 17:31:06 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-riscv@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Anton Johansson <anjo@rev.ng>
+Subject: Re: [PATCH-for-11.1 03/10] migration: Revert "Add
+ VMSTATE_UINTTL_2DARRAY()"
+Message-ID: <acb3GtWg9Xw232YJ@x1.local>
+References: <20260325211728.89204-1-philmd@linaro.org>
+ <20260325211728.89204-4-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <20260325211728.89204-4-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,7 +112,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,204 +128,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are mostly the smae, with only the "if (p == s->current) case of
-ncr710_command_complete needing some care to check that it's safe to
-remove.
+On Wed, Mar 25, 2026 at 10:17:21PM +0100, Philippe Mathieu-Daudé wrote:
+> The VMSTATE_UINTTL_2DARRAY() macro was never used, remove it.
+> 
+> This reverts commit 4597992f624c015ceb51fedb4628b3fdb1e5bbaa.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-s->current is dereferenced:
-- in ncr710_clear_pending_irq - guarded by if (s->current), just to free it
-- in ncr710_do_dma - guarded by assert (s->current); only called from
-  Data In/Data Out phases, which are entered after scsi_req_new and
-  left after scsi_req_cancel
-- in ncr710_command_complete - guarded by if (p), command is not complete
-- in ncr710_transfer_data - coming from the req field of NCR710Request,
-  with assertion that !p->orphan
-- in ncr710_transfer_data, later - guarded by if (!s->current) return
-- in ncr710_do_command, after assignment
-- in ncr710_do_msgout - guarded by if (current_req), would be bad if
-  the request is already complete
-- in ncr710_reselection_retry_callback - guarded by short-circuiting
-  s->current check
-- in ncr710_execute_script - guarded by if (s->current)
-- in ncr710_reg_readb - guarded by short-circuiting s->current check
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Nothing relies on the post-completion s->current being alive, so get rid
-of this case and clear s->current immediately as in the lsi53c895a device.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/scsi/ncr53c710.h |  1 +
- hw/scsi/ncr53c710.c | 65 ++++++++++++++++++++++++++-------------------
- 2 files changed, 39 insertions(+), 27 deletions(-)
-
-diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
-index ee6980753d5..b15e331f060 100644
---- a/hw/scsi/ncr53c710.h
-+++ b/hw/scsi/ncr53c710.h
-@@ -133,6 +133,7 @@ struct NCR710Request {
-     bool active;
-     uint8_t *dma_buf;
-     bool out;
-+    bool orphan;
-     uint32_t resume_offset;
-     uint32_t saved_dnad;
- };
-diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index ea114a0cb40..f7b1e153960 100644
---- a/hw/scsi/ncr53c710.c
-+++ b/hw/scsi/ncr53c710.c
-@@ -299,7 +299,7 @@ static const char *ncr710_reg_name(int offset);
- static void ncr710_script_scsi_interrupt(NCR710State *s, int stat0);
- static void ncr710_update_irq(NCR710State *s);
- static void ncr710_script_dma_interrupt(NCR710State *s, int stat);
--static void ncr710_request_free(NCR710State *s, NCR710Request *p);
-+static void ncr710_request_orphan(NCR710State *s, NCR710Request *p);
- static inline void ncr710_dma_read(NCR710State *s, uint32_t addr,
-                                    void *buf, uint32_t len);
- static inline void ncr710_dma_write(NCR710State *s, uint32_t addr,
-@@ -316,7 +316,7 @@ static inline int ncr710_irq_on_rsl(NCR710State *s)
- static void ncr710_clear_pending_irq(NCR710State *s)
- {
-     if (s->current) {
--        ncr710_request_free(s, s->current);
-+        ncr710_request_orphan(s, s->current);
-     }
- }
- 
-@@ -683,42 +683,52 @@ static void ncr710_do_dma(NCR710State *s, int out)
-     uint32_t count;
-     uint32_t addr;
-     SCSIDevice *dev;
-+    SCSIRequest *req;
-+    NCR710Request *p;
-+
-     assert(s->current);
-     if (!s->current->dma_len) {
-         /* We wait until data is available.  */
-         return;
-     }
- 
--    dev = s->current->req->dev;
-+    p = s->current;
-+    req = scsi_req_ref(p->req);
-+    dev = req->dev;
-     assert(dev);
- 
-     count = s->dbc;
--    if (count > s->current->dma_len) {
--        count = s->current->dma_len;
-+    if (count > p->dma_len) {
-+        count = p->dma_len;
-     }
- 
-     addr = s->dnad;
- 
-     s->dnad += count;
-     s->dbc -= count;
--    if (s->current->dma_buf == NULL) {
--        s->current->dma_buf = scsi_req_get_buf(s->current->req);
-+    if (p->dma_buf == NULL) {
-+        p->dma_buf = scsi_req_get_buf(req);
-     }
-     /* ??? Set SFBR to first data byte.  */
-     if (out) {
--        ncr710_dma_read(s, addr, s->current->dma_buf, count);
-+        ncr710_dma_read(s, addr, p->dma_buf, count);
-     } else {
--        ncr710_dma_write(s, addr, s->current->dma_buf, count);
-+        ncr710_dma_write(s, addr, p->dma_buf, count);
-     }
--    s->current->dma_len -= count;
--    if (s->current->dma_len == 0) {
--        s->current->dma_buf = NULL;
--        s->current->pending = 0;
--        s->waiting = NCR710_WAIT_DMA;
--        scsi_req_continue(s->current->req);
-+    if (p->orphan) {
-+        scsi_req_unref(req);
-         return;
-+    }
-+    scsi_req_unref(req);
-+
-+    p->dma_len -= count;
-+    if (p->dma_len == 0) {
-+        p->dma_buf = NULL;
-+        p->pending = 0;
-+        s->waiting = NCR710_WAIT_DMA;
-+        scsi_req_continue(req);
-     } else {
--        s->current->dma_buf += count;
-+        p->dma_buf += count;
-         s->waiting = NCR710_WAIT_NONE;
-         ncr710_execute_script(s);
-     }
-@@ -733,14 +743,18 @@ static void ncr710_add_msg_byte(NCR710State *s, uint8_t data)
-     }
- }
- 
--static void ncr710_request_free(NCR710State *s, NCR710Request *p)
-+static void ncr710_request_orphan(NCR710State *s, NCR710Request *p)
- {
--    p->req->hba_private = NULL;
-+    p->orphan = true;
-     if (p == s->current) {
-         s->current = NULL;
-     }
-     scsi_req_unref(p->req);
--    g_free(p);
-+}
-+
-+static void ncr710_free_request(SCSIBus *bus, void *priv)
-+{
-+    g_free(priv);
- }
- 
- void ncr710_request_cancelled(SCSIRequest *req)
-@@ -748,7 +762,7 @@ void ncr710_request_cancelled(SCSIRequest *req)
-     NCR710State *s = ncr710_from_scsi_bus(req->bus);
-     NCR710Request *p = (NCR710Request *)req->hba_private;
-     if (p) {
--        ncr710_request_free(s, p);
-+        ncr710_request_orphan(s, p);
-     }
- }
- 
-@@ -790,11 +804,7 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
-     ncr710_set_phase(s, PHASE_ST);
- 
-     if (p) {
--        if (p == s->current) {
--            req->hba_private = NULL;
--        } else {
--            ncr710_request_free(s, p);
--        }
-+        ncr710_request_orphan(s, p);
-     }
- 
-     if (s->waiting == NCR710_WAIT_RESELECT || s->waiting == NCR710_WAIT_DMA) {
-@@ -806,11 +816,11 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
- void ncr710_transfer_data(SCSIRequest *req, uint32_t len)
- {
-     NCR710State *s = ncr710_from_scsi_bus(req->bus);
-+    NCR710Request *p = (NCR710Request *)req->hba_private;
- 
--    assert(req->hba_private);
-+    assert(!p->orphan);
- 
-     if (s->waiting == NCR710_WAIT_DMA) {
--        NCR710Request *p = (NCR710Request *)req->hba_private;
-         if (p) {
-             p->dma_len = len;
-         }
-@@ -2248,6 +2258,7 @@ static const struct SCSIBusInfo ncr710_scsi_info = {
-     .transfer_data = ncr710_transfer_data,
-     .complete = ncr710_command_complete,
-     .cancel = ncr710_request_cancelled,
-+    .free_request = ncr710_free_request,
- };
- 
- static const MemoryRegionOps ncr710_mmio_ops = {
 -- 
-2.53.0
+Peter Xu
 
 
