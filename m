@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AEF110F286F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 286BC10F2865
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6EiW-0006pk-Cm; Fri, 27 Mar 2026 17:27:44 -0400
+	id 1w6EiH-0005mh-A6; Fri, 27 Mar 2026 17:27:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6EiV-0006pF-4h
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:43 -0400
+ id 1w6EiF-0005Yu-Cb
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6EiT-0003uT-Q3
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:42 -0400
+ id 1w6EiD-0003p5-OZ
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774646861;
+ s=mimecast20190719; t=1774646843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Kn3TlGxvri/ygLm6oWXfbfHTV18razK+0DgQDbp4zwI=;
- b=EJqXLSDFjcxmTdh6g7MR3EvTxehYVLH1Gnszy2Q1NWreMIZpsup+oLukx3qzy6LyOLKeH7
- mTIqC4EbQbOITmYPv3EYVkfMRlwaCfJ3w6mNXa6r/z6EWHilJIt11/XXDPMXspaNn2/3Fd
- HTgaNfM3XjuDKdhTSAPgCeSPUfPMmLU=
+ bh=V8WL7DzJeKU4ayulWVhy2puPdPuY2wFd4bIkD8S1wS0=;
+ b=XmNZ6bDZqrh6CIkC5o8c7+5wGcMsKQnK4ORxKPP09/DD336PBkxaUtLAm3t/6c0n3n6sja
+ U07z8ckNpWMG43huCZVoaZwPiSmtuAg0Uz/ENntKOvxvCQu+9d/txFsGcw2MVjRgcSoMS7
+ LbgM+9ibpoNlb9VhzIMPLoKCp/QUjtA=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-fysDzwhVP9ijGUCagEkUXg-1; Fri, 27 Mar 2026 17:27:37 -0400
-X-MC-Unique: fysDzwhVP9ijGUCagEkUXg-1
-X-Mimecast-MFC-AGG-ID: fysDzwhVP9ijGUCagEkUXg_1774646856
+ us-mta-586-uydHhSxyOyqO2FRWK0zR4w-1; Fri, 27 Mar 2026 17:27:14 -0400
+X-MC-Unique: uydHhSxyOyqO2FRWK0zR4w-1
+X-Mimecast-MFC-AGG-ID: uydHhSxyOyqO2FRWK0zR4w_1774646831
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43b86de58d9so2133853f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:27:37 -0700 (PDT)
+ ffacd0b85a97d-43b96365ea8so2481924f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774646855; x=1775251655; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774646826; x=1775251626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Kn3TlGxvri/ygLm6oWXfbfHTV18razK+0DgQDbp4zwI=;
- b=TTWhWo1echKEbAIqXF17DWA45LDlMmrogIqw8i1M8yBaeN5sQOcjTMA0y08ZvjlWa2
- 3yLIXhD68AeQu5kj2TLzHp3oWcFPyXFACx6pF/E9rNE22LCwe9fIXqP33mZNQ2XLn2va
- nUGfVOERFyduU06/CI93+loYBuUIuohJyQi/3VrqeIwnTTDw7mBWs6HZ1ut1rPq0lyMf
- Au8rJsBsmD+N+QNguHul4vfMYSXki9KPfN5QZY1L2r+Iv4ov7OqfD0apwezMfruRD+DB
- zyPEfQo0uwRZWkkY48aXhljIML3zot9jxpdQ5v0HepIW/Fwe1ccTKDN5+E/w6FIp206m
- UmaQ==
+ bh=V8WL7DzJeKU4ayulWVhy2puPdPuY2wFd4bIkD8S1wS0=;
+ b=qsrVPpO2EWe+ZMcUfPdBYh6GZHKhY9KZRumETfQVYKSYNh706SBIZgnIZFVwDg45kv
+ w3eY/ldxxO8dphS8MLYTl9uEuXf+E4svDWHJRJmQqDgLtOScECSmBh3X49rxErFgIh3L
+ 888c871YMcX8H8mCh2k2l+eILJNqq4zEMChd+nj+9M/aLYqth3dA86n2PkMnWscpsBZq
+ Xo5IrOegGRgNrMikhV6mpxYPgdd1wX0H+CuOrp/7LZhNVAt25HbtuD2CaWxTDvH3nr1G
+ Ssw7l9ONZ/keRXn3oXi3WA00pFobVHoX++EgdtdTSYys7C5RG3CEH+Wdhmd4fATe0mpY
+ xfPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774646855; x=1775251655;
+ d=1e100.net; s=20251104; t=1774646826; x=1775251626;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Kn3TlGxvri/ygLm6oWXfbfHTV18razK+0DgQDbp4zwI=;
- b=LUZ8JcScbwgNRPSvWy9eyj3Dap9yfxWX/aXTM+rfwp66FEaarUDF5t6Y/shgetiiZw
- LO7JVfQAAyIHQII9Q2A6s3Gw35DqzPtcEQxjvQAAveJRTJvxsp2tXqmnIc7uFTYc0VEI
- c+dL+bGpPX3jAcFC0aLyOYP/vXqfpGoDuH6q/cqZWuLUdWpUU2t9GBG0U9J+F+XJAtgx
- kgFPXXVVbHX5T4J1WdRGSBL+DF950N+4NypTRb9kfKHbToAqsyh0sYlfR5D5XtU5LgbV
- Ky1FVRNulM1Blx0NWJrfD5lOZ/j6ZZ2Y/vrD4yPL/MPyUTfOeRe+w8e/I//xBlDVDsMo
- nWsw==
-X-Gm-Message-State: AOJu0YzGPDBTM3z5QsAq9ySvX1Zix8CPFUuAiOgi1cloJnfZ4CTHqwGs
- 2Ht7FBClCAqB7kCx3S3ej6F4dD+cyX81D4k9AcKKK32fL+2LEOHzV5K//1lpDeNfJtOX8nNpr4e
- fdVGNg0YFwAuf/ELiOmV7NMuizBQdXFsmtqDCzRRDPaL8k9YJ0BBTUfLTwGxzKFk6SqDqv5ORDi
- rI+GHTlmi80iZvjuVzzCENg47RMv1H+Lbuuedroko4
-X-Gm-Gg: ATEYQzyxRoZqyH4pd+lGXLKgRTmF2B0oahQ+Yhirz/Nkg/xemrkT0aYuH/eCRE2d8V2
- RPpOkHxkKUVh42K+jJec2jPNpenGnbjFlCVh+TS9r23SIOSAeCSPkGyWB2Aa5zfqhp7jeSiKcOl
- HX8jUnKML09dY5i1MmfyEgQVwGVCHvdkXWvBFufkZBO6ieB9lv/PO+38yFSfu+++27ytCb6we4p
- KQRlbV7C3JBdZjRTInNtqCSInFcbIng9/M09wx73Mp5fNaM8sOZE6PZgkMIrtVG1idG7KgF0C5T
- T33eW3ZTLdIAjXTHFykX2/2l5AwxQqBosViRn0j6iSsdwe8Zy3lsn7tYupH7MToGitERU3BlOUr
- e19ZbaClNotSyUna4qs7//Lvce1FC0RGS2hzETyX+y8/J6pXXzT0hBV3XuPzBhhmXqfRqkim2dw
- 99doXwkFkyTBrvJgfob+Q+Drxl
-X-Received: by 2002:a05:6000:2382:b0:43b:4757:cc5 with SMTP id
- ffacd0b85a97d-43b9e9e8e21mr6297921f8f.19.1774646855208; 
- Fri, 27 Mar 2026 14:27:35 -0700 (PDT)
-X-Received: by 2002:a05:6000:2382:b0:43b:4757:cc5 with SMTP id
- ffacd0b85a97d-43b9e9e8e21mr6297897f8f.19.1774646854694; 
- Fri, 27 Mar 2026 14:27:34 -0700 (PDT)
+ bh=V8WL7DzJeKU4ayulWVhy2puPdPuY2wFd4bIkD8S1wS0=;
+ b=Tq1yglkcKuRJAgCax0dtcxv6DRF4uZuNHkUomI71YyHeB1VE+jGRig5X5fSiRi5bIq
+ 1QcY0nLArpJZ2UKu8YkGtufbsbdH/NQl6rsNtoi6wRMs8S55tsVkt7NC7NpRPuYoGr/v
+ I+OBWmHN7OlIvwnt1ZU4HUdkysBwloc0T4eJKWlOIUNMxee+JV9f7k2g2924jqi4msf6
+ naxR0EyrInB1ieKbwdkfFq5LyEp4/5qwQNCUN5cfmFcCgP8IonwpqgGiLKIzMQOfoRsj
+ oUqsQNpIgOJPaSnTO2rFEFbICVBBpqstfNHmzpt3g9ul1Y3R62wJH8vAuNdWvwpD/5g9
+ nbvA==
+X-Gm-Message-State: AOJu0YymdPxlZocJ3uztl1wcAeUzUcwey/dL7GjdCgMEl42DcORvseGd
+ E1Nj8XJP2uVH+aeRkdd7t+0xzPzfNz3XA31WKLsdYj5yvaDUcoZt4E91novDkQ/NxSMjtiNbSHb
+ 40RP67w18384OJMIIiqOfdGlpx7BUX4I66/H2eN3uNfnajUTgRd34qz8FmWfI+IuQsYocE3TdmZ
+ x6AB8dtlGavcEpgOB4p5I1aOWHjXvYrlZj+XH2rUAm
+X-Gm-Gg: ATEYQzyggaVrS65RPX2eYUxalhcR1ZmG2Qn20qfr4NTxbctGANSBUe5EElgFMuPoPgQ
+ otvpEr0j/y1rsF9U3Ajc1VJ0bgLB02ptISc3IsaCbaNMKYf25Ls9eMlhiF1rex/UmNG3S98moCL
+ Je6MPASjrNH7wKo7pYhT84L9ts3LCfShV1JmUhVi/ei2/XFGNI2wUk0JqexM+ocv1GbTtQvkXZc
+ 6jLVxiGPWtpWLC7G9i4Dzb5Fn4aBjO51HcHphpsBMjivQNi3Ok7iFJ/50H+fVMybCYoV7hEo7vD
+ SW9QQChxtBlYzCgfpABWKV7Zy9D9Wjb10eKBnA5DGiwr6I0pCbAU2QV6tQwxsTKEDov0ubou+qO
+ SePnkU5ACUi7rxEWlvRspic3C2Wjkb61Cjgj+2uz8z3QR3FlWkQf6vn4y+rzQFronaUS0IhaVb4
+ v9p3Pe6D1T0Ht5S89ZsKAjooz7
+X-Received: by 2002:a05:6000:40cb:b0:43b:5003:e300 with SMTP id
+ ffacd0b85a97d-43b9ea66e1emr6684259f8f.43.1774646825988; 
+ Fri, 27 Mar 2026 14:27:05 -0700 (PDT)
+X-Received: by 2002:a05:6000:40cb:b0:43b:5003:e300 with SMTP id
+ ffacd0b85a97d-43b9ea66e1emr6684205f8f.43.1774646825382; 
+ Fri, 27 Mar 2026 14:27:05 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21eb95fsm823760f8f.12.2026.03.27.14.27.28
+ ffacd0b85a97d-43cf21f1749sm790860f8f.14.2026.03.27.14.26.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 14:27:28 -0700 (PDT)
+ Fri, 27 Mar 2026 14:27:00 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 16/16] ncr710: unify two conditionals
-Date: Fri, 27 Mar 2026 22:25:47 +0100
-Message-ID: <20260327212547.460420-17-pbonzini@redhat.com>
+Subject: [PATCH 12/16] ncr710: clean up ncr710_transfer_data
+Date: Fri, 27 Mar 2026 22:25:43 +0100
+Message-ID: <20260327212547.460420-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260327212547.460420-1-pbonzini@redhat.com>
 References: <20260327212547.460420-1-pbonzini@redhat.com>
@@ -121,30 +121,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Move the short ncr710_execute_script case first.  Remove redundant
+s->current check.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/ncr53c710.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ hw/scsi/ncr53c710.c | 65 ++++++++++++++++++++++-----------------------
+ 1 file changed, 32 insertions(+), 33 deletions(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index f7b1e153960..25a1018ab11 100644
+index fd03f243eda..f768ad74237 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -797,13 +797,10 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
-     s->status = req->status;
-     s->command_complete = NCR710_CMD_COMPLETE;
- 
--    if (p) {
--        p->pending = 0;
--    }
--
-     ncr710_set_phase(s, PHASE_ST);
- 
-     if (p) {
-+        p->pending = 0;
-         ncr710_request_orphan(s, p);
+@@ -842,43 +842,42 @@ void ncr710_transfer_data(SCSIRequest *req, uint32_t len)
      }
+     s->current->dma_len = len;
  
+-    if (s->waiting) {
+-        s->scntl1 |= NCR710_SCNTL1_CON;
+-        s->istat |= NCR710_ISTAT_CON;
+-        s->sbcl = NCR710_SBCL_IO | NCR710_SBCL_CD | NCR710_SBCL_MSG |
+-                  NCR710_SBCL_BSY | NCR710_SBCL_SEL | NCR710_SBCL_REQ;
+-        uint8_t host_id = (s->scid & 0x07);
+-
+-        /* Special case: both target and host are ID 0 */
+-        if (req->dev->id == 0 && host_id == 0) {
+-            s->sfbr = 0x00;
+-        } else {
+-            s->sfbr = (req->dev->id == 0 ? 0 : (1 << req->dev->id)) |
+-                      (host_id == 0 ? 0 : (1 << host_id));
++    if (!s->waiting) {
++        if (!s->script_active) {
++            ncr710_execute_script(s);
+         }
+-
+-        ncr710_set_phase(s, PHASE_MI);
+-
+-        if (s->current) {
+-            uint8_t identify_msg = 0x80 | (req->lun & 0x07);
+-            ncr710_add_msg_byte(s, identify_msg);
+-
+-            if (s->current->tag) {
+-                ncr710_add_msg_byte(s, 0x20);  /* SIMPLE_TAG_MSG */
+-                ncr710_add_msg_byte(s, s->current->tag & 0xff);
+-            }
+-        }
+-
+-        s->sstat0 |= NCR710_SSTAT0_SEL;
+-        s->istat |= NCR710_ISTAT_SIP;
+-        s->dsps = RESELECTED_DURING_SELECTION;
+-        s->waiting = NCR710_WAIT_NONE;
+-        ncr710_update_irq(s);
+         return;
+     }
+-    if (!s->script_active && !s->waiting) {
+-        ncr710_execute_script(s);
++
++    s->scntl1 |= NCR710_SCNTL1_CON;
++    s->istat |= NCR710_ISTAT_CON;
++    s->sbcl = NCR710_SBCL_IO | NCR710_SBCL_CD | NCR710_SBCL_MSG |
++              NCR710_SBCL_BSY | NCR710_SBCL_SEL | NCR710_SBCL_REQ;
++    uint8_t host_id = (s->scid & 0x07);
++
++    /* Special case: both target and host are ID 0 */
++    if (req->dev->id == 0 && host_id == 0) {
++        s->sfbr = 0x00;
++    } else {
++        s->sfbr = (req->dev->id == 0 ? 0 : (1 << req->dev->id)) |
++                  (host_id == 0 ? 0 : (1 << host_id));
+     }
++
++    ncr710_set_phase(s, PHASE_MI);
++
++    uint8_t identify_msg = 0x80 | (req->lun & 0x07);
++    ncr710_add_msg_byte(s, identify_msg);
++
++    if (s->current->tag) {
++        ncr710_add_msg_byte(s, 0x20);  /* SIMPLE_TAG_MSG */
++        ncr710_add_msg_byte(s, s->current->tag & 0xff);
++    }
++
++    s->sstat0 |= NCR710_SSTAT0_SEL;
++    s->istat |= NCR710_ISTAT_SIP;
++    s->dsps = RESELECTED_DURING_SELECTION;
++    s->waiting = NCR710_WAIT_NONE;
++    ncr710_update_irq(s);
+ }
+ 
+ static int idbitstonum(uint8_t id)
 -- 
 2.53.0
 
