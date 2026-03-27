@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6563310F2840
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 15:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFA510F2840
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 15:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w69Bu-0007pO-6H; Fri, 27 Mar 2026 11:33:42 -0400
+	id 1w69CW-0007xA-Tl; Fri, 27 Mar 2026 11:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w69Bs-0007oh-Kp; Fri, 27 Mar 2026 11:33:40 -0400
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w69CT-0007vm-56; Fri, 27 Mar 2026 11:34:17 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w69Bq-0008R2-Nr; Fri, 27 Mar 2026 11:33:40 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w69CR-00007I-OO; Fri, 27 Mar 2026 11:34:16 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62RF0ISr3850414; Fri, 27 Mar 2026 15:33:33 GMT
+ 62R6GvFc510428; Fri, 27 Mar 2026 15:34:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/YZ0Ly
- 4c4KrV1x9rNR9OAW3uMj5iYre+VmmbyihamrA=; b=PcJ2fkq8ES8Ix/Ra+fj7nI
- Dd8HUdl2jnZCZGNcB9IYWv5wRihUSNrFUGSHCBljy1XMJPGn47okGQnkMrb6uMaY
- QPopf6y3N3BXuGYfTPFy0lkdmBQ6jmJ0G7JskOMMrxlYAPrvKTpRTlTZbq7dwA6Q
- jgzdIZYibOIiaIa/+dsELjcZIAORcwXOlhlKK9lBY5C8Gbrjx1CTE7/mUmgBU1BZ
- 5dUr/30dWyzWrHC22cBK45JnzC98TrdP1KAwFYcEJ56E+AALmqS9NoFHqfdnkhfC
- Xc1F/7/5HvZOUmNu+RRz1qKzPdJV70s/kZjqqwqv09P8t/trdFQpBi7CI5pPDPXw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=n8TyVn
+ rpunaUhbbVbWqddBsOrVZCG94gOjG+haFY8Fw=; b=LTbJFvXwwF+PeF6Dl78YaG
+ yOLvXNyZOWDYQgiq1w77uNmHYZjsJoINku+KSuuFQgsUI6xcc8CHGDzaaFZiP30c
+ ak7hikEoTDfW0hCsiXnPGQUCVjIBpEsUorWrsfeKPfEnFcH0bdOymKCV1zDq5kEB
+ P5LW6gm7l2Zvt4s7tQq7p0UANMZUTVaJI1QMxnVpD9fRkWxINvSdp+jHioCg6h3g
+ jgGbjb8I58tbW5VLjOFDo8u8P+8exT3+N2XS+8O2PIT28dJ6O+RjFcx56lslCHOU
+ p+SowfPhdDf/Y0CgbmOr6sFUn2ZQx/kwE1k4B6VmaJNXvgo8fPrzGCvFhtZoNPGQ
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kxqtx9f-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1kwaav8v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Mar 2026 15:33:32 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62REs4qB031583;
- Fri, 27 Mar 2026 15:33:31 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d25nt860q-1
+ Fri, 27 Mar 2026 15:33:59 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62RAsSDZ008745;
+ Fri, 27 Mar 2026 15:33:58 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d26np0293-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Mar 2026 15:33:31 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62RFXUnt28770966
+ Fri, 27 Mar 2026 15:33:58 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62RFXsP156426924
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Mar 2026 15:33:30 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B09A5805E;
- Fri, 27 Mar 2026 15:33:30 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 689FE58052;
- Fri, 27 Mar 2026 15:33:29 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 27 Mar 2026 15:33:29 +0000 (GMT)
-Message-ID: <59933dce-f3b9-4eee-b694-15bb894c3f26@linux.ibm.com>
-Date: Fri, 27 Mar 2026 11:33:28 -0400
+ Fri, 27 Mar 2026 15:33:54 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5B98B20040;
+ Fri, 27 Mar 2026 15:33:54 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C6E2620043;
+ Fri, 27 Mar 2026 15:33:51 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.124.223.21])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 27 Mar 2026 15:33:51 +0000 (GMT)
+Message-ID: <8f88329a0ebcabe15ac3afd95526e924bc2a0ad3.camel@linux.ibm.com>
+Subject: Re: [PATCH v2] ppc/pnv: generate dtb after machine initialization
+ is complete
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, Harsh Prateek
+ Bora	 <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org,
+ Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 27 Mar 2026 21:03:49 +0530
+In-Reply-To: <CAFEAcA86otB1+BeQ_Gca7VcF4c+rJ4r9SxwhkTOkCHEAas_KWw@mail.gmail.com>
+References: <20260327124136.983955-1-shivangu@linux.ibm.com>
+ <CAFEAcA86otB1+BeQ_Gca7VcF4c+rJ4r9SxwhkTOkCHEAas_KWw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hw/acpi/tpm: parameterize PPI base address in
- tpm_build_ppi_acpi
-To: Mohammadfaiz Bawa <mbawa@redhat.com>, qemu-devel@nongnu.org
-Cc: stefanb@linux.vnet.ibm.com, pierrick.bouvier@linaro.org,
- "Michael S . Tsirkin" <mst@redhat.com>, imammedo@redhat.com,
- anisinha@redhat.com, peter.maydell@linaro.org,
- shannon.zhaosl@gmail.com, qemu-arm@nongnu.org, mohamed@unpredictable.fr
-References: <20260327-tpm-tis-sysbus-ppi-v2-0-d8ec84d25dbc@redhat.com>
- <20260327-tpm-tis-sysbus-ppi-v2-2-d8ec84d25dbc@redhat.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20260327-tpm-tis-sysbus-ppi-v2-2-d8ec84d25dbc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: QsCJO1kGmO2tfiGhPqaOM_JQUwUq2-vh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDEwNSBTYWx0ZWRfX4Xi6DJdYbM7g
- bi/fbt96fxRkOZawgoec9RgV4jmXBE+cxv3s/7Mtc6dlMRPpM1/VhfkW99q/MhJStfitXayCjsb
- QEegeeooOe5jvNkgVH0KeR+k0bBMaK7YWzMux1erR68qOAgRjpEVBjbTMyB+3uFixM2HKHqd6Qx
- hXx/4XUQISFPq9JLdtCnBiisJax66Tp7mLyS9CqA90MkO/4Kjmuu7HjyX1WUXWob2NmYDAjXK/V
- qtIhky9W5Iyz/5QBcAwJQoPQTj2VsrIyQhLvlO46hv3DoLc4UKXpWp+WNHQVe+mUwaiCyoowPXE
- GJHgz7owMj3YHXTKWEFjqni3cboIXR72fk3CLCFCdjxFrz6ZE7ghV2cCOPVilxX1RXxq+/tTeoQ
- xDgSmzJ+slILU+SltlceCBKtj/ae/0L6vxkXwoLfw7AFHYCBpVXs2YD3luRqTuh9GBFfmsatzdt
- EFBToI3P+PZMNl0c9iQ==
-X-Authority-Analysis: v=2.4 cv=bLEb4f+Z c=1 sm=1 tr=0 ts=69c6a34c cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: DGZzYK4svF2rAIAaL-MeeS98b86nctqx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDEwNSBTYWx0ZWRfXyIqhAb2RdO0h
+ Aswqf6uk1lbnbBxLCWO6aZAvesjqCU3SoNxjc/5DNcMMouaK+b3XpM+unDmGE/0RqlOt4EmS6lJ
+ 4L+WJ60dWI8rM3PW2tcFnvMlC3Ha68Nd//keJoQC1UJ255x9mTUuyCSLX4Bo9Y22FtKUWsThB/c
+ wznyu7AMxSoHw4kcaJuklBvCZ0KrzwjanuBsn86khoGnTEIdsgKFjsv+mk4lNdIMdzk8hQG/Ug4
+ kZhWdqZHGKuznv8x9EEzIRpVpl0QeTshc0mQjzaVDMXBz2n6kAFXIzdsAs3JilKZxzD19iLvBam
+ ZDK8H5YdW5yDvLJHiZANZ46rh/JWTD68dpBHLLmcht86JOffDQ+cIr1/5NI7ChPJJHC05tHbU+M
+ 40clL9spdiPJ9cmbaGDZCv6W4xahrO0iZvyBmk2eCbHdp+M6NwK12oaCH/a79n0tB166teb+Ko+
+ 3qTVij7CAHRHnaxbVeQ==
+X-Proofpoint-GUID: 9jRPn2Op6XonSqHs9zPspXXqkL8Uk21a
+X-Authority-Analysis: v=2.4 cv=OsZCCi/t c=1 sm=1 tr=0 ts=69c6a368 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=ODhlqupQsFDcI_HUKJIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: R_sjn1WpLxJ8U7pn7RAWlhnIzlB2_5tD
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=KKAkSRfTAAAA:8
+ a=hqwLdyxPSz1zucFdf7cA:9 a=QEXdDO2ut3YA:10 a=vj2x8GP_oQgA:10
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603270105
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ impostorscore=0 adultscore=0 clxscore=1015 phishscore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603270105
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -127,114 +127,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 2026-03-27 at 12:54 +0000, Peter Maydell wrote:
+>=20
+>=20
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Thanks Peter.
 
-
-On 3/27/26 7:48 AM, Mohammadfaiz Bawa wrote:
-> Add a ppi_base parameter to tpm_build_ppi_acpi() instead of
-> hardcoding TPM_PPI_ADDR_BASE. This prepares for ARM64 support where
-> PPI memory is dynamically allocated by the platform bus and the
-> address is not known at compile time.
-> 
-> Update the x86 ISA TIS caller to pass TPM_PPI_ADDR_BASE explicitly.
-> No behavioral change.
-> 
-> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
-
-You need to adapt this call as well.
-
-../hw/i386/acpi-build.c: In function ‘build_dsdt’:
-../hw/i386/acpi-build.c:1222:9: error: too few arguments to function 
-‘tpm_build_ppi_acpi’; expected 3, have 2
-  1222 |         tpm_build_ppi_acpi(tpm, dev);
-       |         ^~~~~~~~~~~~~~~~~~
-In file included from ../hw/i386/acpi-build.c:45:
-/home/stefanb/dev/qemu-tpm/include/hw/acpi/tpm.h:254:6: note: declared here
-   254 | void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base);
-       |      ^~~~~~~~~~~~~~~~~~
-
-
-
-> ---
->   hw/acpi/tpm.c         | 8 ++++----
->   hw/tpm/tpm_tis_isa.c  | 2 +-
->   include/hw/acpi/tpm.h | 3 ++-
->   3 files changed, 7 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/acpi/tpm.c b/hw/acpi/tpm.c
-> index cdc022753659af102e56ea4148423b94de1531f6..c4ff2f8cb836c16b00f70865bf55781d5c402aa2 100644
-> --- a/hw/acpi/tpm.c
-> +++ b/hw/acpi/tpm.c
-> @@ -20,7 +20,7 @@
->   #include "qapi/error.h"
->   #include "hw/acpi/tpm.h"
->   
-> -void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
-> +void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base)
->   {
->       Aml *method, *field, *ifctx, *ifctx2, *ifctx3, *func_mask,
->           *not_implemented, *pak, *tpm2, *tpm3, *pprm, *pprq, *zero, *one;
-> @@ -40,7 +40,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
->        */
->       aml_append(dev,
->                  aml_operation_region("TPP2", AML_SYSTEM_MEMORY,
-> -                                    aml_int(TPM_PPI_ADDR_BASE + 0x100),
-> +                                    aml_int(ppi_base + 0x100),
->                                       0x5A));
->       field = aml_field("TPP2", AML_ANY_ACC, AML_NOLOCK, AML_PRESERVE);
->       aml_append(field, aml_named_field("PPIN", 8));
-> @@ -56,7 +56,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
->       aml_append(dev,
->                  aml_operation_region(
->                      "TPP3", AML_SYSTEM_MEMORY,
-> -                   aml_int(TPM_PPI_ADDR_BASE +
-> +                   aml_int(ppi_base +
->                              0x15a /* movv, docs/specs/tpm.rst */),
->                              0x1));
->       field = aml_field("TPP3", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
-> @@ -78,7 +78,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
->   
->           aml_append(method,
->               aml_operation_region("TPP1", AML_SYSTEM_MEMORY,
-> -                aml_add(aml_int(TPM_PPI_ADDR_BASE), op, NULL), 0x1));
-> +                aml_add(aml_int(ppi_base), op, NULL), 0x1));
->           field = aml_field("TPP1", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
->           aml_append(field, aml_named_field("TPPF", 8));
->           aml_append(method, field);
-> diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
-> index 61e95434f5b824fa99f0a2aff7f151e87ea631ed..e30bef49558673f4c857c02dae059ce3361a1bc7 100644
-> --- a/hw/tpm/tpm_tis_isa.c
-> +++ b/hw/tpm/tpm_tis_isa.c
-> @@ -162,7 +162,7 @@ static void build_tpm_tis_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
->        */
->       /* aml_append(crs, aml_irq_no_flags(isadev->state.irq_num)); */
->       aml_append(dev, aml_name_decl("_CRS", crs));
-> -    tpm_build_ppi_acpi(ti, dev);
-> +    tpm_build_ppi_acpi(ti, dev, TPM_PPI_ADDR_BASE);
->       aml_append(scope, dev);
->   }
->   
-> diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
-> index d2bf6637c5424b92ad99f5baa938fd6cea3520bf..2ab186a7455593df205a7ffecbea2abdfdbd11d5 100644
-> --- a/include/hw/acpi/tpm.h
-> +++ b/include/hw/acpi/tpm.h
-> @@ -20,6 +20,7 @@
->   #include "hw/core/registerfields.h"
->   #include "hw/acpi/aml-build.h"
->   #include "system/tpm.h"
-> +#include "exec/hwaddr.h"
->   
->   #ifdef CONFIG_TPM
->   
-> @@ -250,7 +251,7 @@ REG32(CRB_DATA_BUFFER, 0x80)
->    */
->   #define TPM_I2C_INT_ENABLE_MASK   0x0
->   
-> -void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev);
-> +void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base);
->   
->   #endif /* CONFIG_TPM */
->   
-> 
-
+~Shivang.
 
