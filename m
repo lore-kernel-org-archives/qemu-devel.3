@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A2610ED660
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 350B210ED65C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65gU-0006wQ-Tr; Fri, 27 Mar 2026 07:49:02 -0400
+	id 1w65gU-0006w7-Ru; Fri, 27 Mar 2026 07:49:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w65gR-0006u9-1m
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:48:59 -0400
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w65gJ-0006rI-DY
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:48:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w65gP-0000R2-BX
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:48:58 -0400
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w65gH-0000N2-QW
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:48:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774612136;
+ s=mimecast20190719; t=1774612129;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vNfBpMAfcLKVWxGQFoc6sYSvJTCHtumHh8ghhvrEnQM=;
- b=IMbODeMzZYlkA8MKtRkfOKgC8m2DDb9l8iMSUYW8IUedB9LNLYT3NvX8RjyaF8AglCHMbd
- qapqJ6fSRx0Q6BpayAu7K/wDVwJHKUiEs5xyzBcybxnLLRMHnAEofkk3MsrXku551uiQTO
- PfvrT9S7dO6Tghr8xHxudZRYYjEf/Zs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=dvogLia3c1ViymgIXbXa1aDkmcVZpBH2hoZ4U3I42KI=;
+ b=CtwBCzpl6bzxbxrH06bpmzrPcriaXVGgxos4lMGgqc8GLx7ByMeE7+fucxcbIf24sQGavv
+ Nwd9QJpf/6mSi8ZzovYymPzAHhFZamqBLmCD/BAQ2ehNJ8HxnCz/sVbkWXvDUWwaPA2xdJ
+ /XxlWjAyCqvQXGfl4KisGwujs6P+7t0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-eZXR0pF_MKqnysy0nIhaYw-1; Fri,
- 27 Mar 2026 07:48:53 -0400
-X-MC-Unique: eZXR0pF_MKqnysy0nIhaYw-1
-X-Mimecast-MFC-AGG-ID: eZXR0pF_MKqnysy0nIhaYw_1774612132
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-_wgW-klzPE-WOoRSNXGCug-1; Fri,
+ 27 Mar 2026 07:48:47 -0400
+X-MC-Unique: _wgW-klzPE-WOoRSNXGCug-1
+X-Mimecast-MFC-AGG-ID: _wgW-klzPE-WOoRSNXGCug_1774612125
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E087E195608C; Fri, 27 Mar 2026 11:48:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 393ED18005BB; Fri, 27 Mar 2026 11:48:45 +0000 (UTC)
 Received: from mbawa-thinkpadt14gen5.bengluru.csb (unknown [10.74.88.10])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E6BC219560B1; Fri, 27 Mar 2026 11:48:45 +0000 (UTC)
+ id 2728D19560B1; Fri, 27 Mar 2026 11:48:38 +0000 (UTC)
 From: Mohammadfaiz Bawa <mbawa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanb@linux.vnet.ibm.com, pierrick.bouvier@linaro.org,
@@ -52,10 +52,9 @@ Cc: stefanb@linux.vnet.ibm.com, pierrick.bouvier@linaro.org,
  anisinha@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
  qemu-arm@nongnu.org, mohamed@unpredictable.fr,
  Mohammadfaiz Bawa <mbawa@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v2 2/3] hw/acpi/tpm: parameterize PPI base address in
- tpm_build_ppi_acpi
-Date: Fri, 27 Mar 2026 17:18:23 +0530
-Message-ID: <20260327-tpm-tis-sysbus-ppi-v2-2-d8ec84d25dbc@redhat.com>
+Subject: [PATCH v2 1/3] docs/specs/tpm: document PPI support on ARM64 virt
+Date: Fri, 27 Mar 2026 17:18:22 +0530
+Message-ID: <20260327-tpm-tis-sysbus-ppi-v2-1-d8ec84d25dbc@redhat.com>
 In-Reply-To: <20260327-tpm-tis-sysbus-ppi-v2-0-d8ec84d25dbc@redhat.com>
 References: <20260327-tpm-tis-sysbus-ppi-v2-0-d8ec84d25dbc@redhat.com>
 MIME-Version: 1.0
@@ -87,96 +86,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a ppi_base parameter to tpm_build_ppi_acpi() instead of
-hardcoding TPM_PPI_ADDR_BASE. This prepares for ARM64 support where
-PPI memory is dynamically allocated by the platform bus and the
-address is not known at compile time.
+Document that tpm-tis-device on the ARM virt machine supports PPI
+with dynamically allocated MMIO via the platform bus, unlike x86
+where PPI is at the fixed address 0xFED45000.
 
-Update the x86 ISA TIS caller to pass TPM_PPI_ADDR_BASE explicitly.
-No behavioral change.
+Also add hw/arm/virt-acpi-build.c and hw/acpi/tpm.c to the list
+of files related to TPM ACPI tables.
 
 Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
 ---
- hw/acpi/tpm.c         | 8 ++++----
- hw/tpm/tpm_tis_isa.c  | 2 +-
- include/hw/acpi/tpm.h | 3 ++-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ docs/specs/tpm.rst | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/hw/acpi/tpm.c b/hw/acpi/tpm.c
-index cdc022753659af102e56ea4148423b94de1531f6..c4ff2f8cb836c16b00f70865bf55781d5c402aa2 100644
---- a/hw/acpi/tpm.c
-+++ b/hw/acpi/tpm.c
-@@ -20,7 +20,7 @@
- #include "qapi/error.h"
- #include "hw/acpi/tpm.h"
+diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
+index b630a351b4f77a8d2512f22446d00a4d674c7777..ba2b0d726745fdf8ebc4c73c9c42e1ff8047a9db 100644
+--- a/docs/specs/tpm.rst
++++ b/docs/specs/tpm.rst
+@@ -187,8 +187,32 @@ The location of the table is given by the fw_cfg ``tpmppi_address``
+ field.  The PPI memory region size is 0x400 (``TPM_PPI_ADDR_SIZE``) to
+ leave enough room for future updates.
  
--void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
-+void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base)
- {
-     Aml *method, *field, *ifctx, *ifctx2, *ifctx3, *func_mask,
-         *not_implemented, *pak, *tpm2, *tpm3, *pprm, *pprq, *zero, *one;
-@@ -40,7 +40,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
-      */
-     aml_append(dev,
-                aml_operation_region("TPP2", AML_SYSTEM_MEMORY,
--                                    aml_int(TPM_PPI_ADDR_BASE + 0x100),
-+                                    aml_int(ppi_base + 0x100),
-                                     0x5A));
-     field = aml_field("TPP2", AML_ANY_ACC, AML_NOLOCK, AML_PRESERVE);
-     aml_append(field, aml_named_field("PPIN", 8));
-@@ -56,7 +56,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
-     aml_append(dev,
-                aml_operation_region(
-                    "TPP3", AML_SYSTEM_MEMORY,
--                   aml_int(TPM_PPI_ADDR_BASE +
-+                   aml_int(ppi_base +
-                            0x15a /* movv, docs/specs/tpm.rst */),
-                            0x1));
-     field = aml_field("TPP3", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
-@@ -78,7 +78,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
++PPI on ARM64 virt
++-----------------
++
++The ARM virt machine supports PPI for ``tpm-tis-device`` as defined
++in the `PPI specification`_.
++
++Unlike the x86 TIS device where the PPI memory region is mapped at
++the fixed address ``0xFED45000`` (within the TIS MMIO range), the
++ARM64 sysbus device registers PPI memory as a second MMIO region
++on the platform bus. The platform bus assigns the guest physical
++address dynamically at device plug time. The ACPI ``_DSM`` method
++and PPI operation regions reference this dynamically resolved
++address.
++
++PPI is controlled by the ``ppi`` property (default ``on``)::
++
++    -device tpm-tis-device,tpmdev=tpm0,ppi=on
++
++Without PPI, guest operating systems such as Windows 11
++ARM64 will log errors when attempting to query TPM Physical
++Presence capabilities via the ACPI ``_DSM`` method.
++
+ QEMU files related to TPM ACPI tables:
+  - ``hw/i386/acpi-build.c``
++ - ``hw/arm/virt-acpi-build.c``
++ - ``hw/acpi/tpm.c``
+  - ``include/hw/acpi/tpm.h``
  
-         aml_append(method,
-             aml_operation_region("TPP1", AML_SYSTEM_MEMORY,
--                aml_add(aml_int(TPM_PPI_ADDR_BASE), op, NULL), 0x1));
-+                aml_add(aml_int(ppi_base), op, NULL), 0x1));
-         field = aml_field("TPP1", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
-         aml_append(field, aml_named_field("TPPF", 8));
-         aml_append(method, field);
-diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
-index 61e95434f5b824fa99f0a2aff7f151e87ea631ed..e30bef49558673f4c857c02dae059ce3361a1bc7 100644
---- a/hw/tpm/tpm_tis_isa.c
-+++ b/hw/tpm/tpm_tis_isa.c
-@@ -162,7 +162,7 @@ static void build_tpm_tis_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
-      */
-     /* aml_append(crs, aml_irq_no_flags(isadev->state.irq_num)); */
-     aml_append(dev, aml_name_decl("_CRS", crs));
--    tpm_build_ppi_acpi(ti, dev);
-+    tpm_build_ppi_acpi(ti, dev, TPM_PPI_ADDR_BASE);
-     aml_append(scope, dev);
- }
- 
-diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
-index d2bf6637c5424b92ad99f5baa938fd6cea3520bf..2ab186a7455593df205a7ffecbea2abdfdbd11d5 100644
---- a/include/hw/acpi/tpm.h
-+++ b/include/hw/acpi/tpm.h
-@@ -20,6 +20,7 @@
- #include "hw/core/registerfields.h"
- #include "hw/acpi/aml-build.h"
- #include "system/tpm.h"
-+#include "exec/hwaddr.h"
- 
- #ifdef CONFIG_TPM
- 
-@@ -250,7 +251,7 @@ REG32(CRB_DATA_BUFFER, 0x80)
-  */
- #define TPM_I2C_INT_ENABLE_MASK   0x0
- 
--void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev);
-+void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base);
- 
- #endif /* CONFIG_TPM */
- 
+ TPM backend devices
 
 -- 
 2.53.0
