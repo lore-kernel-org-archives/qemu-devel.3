@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5045910F2865
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1087510F286F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6EiC-0005KU-UO; Fri, 27 Mar 2026 17:27:24 -0400
+	id 1w6Ehj-0003Sl-IS; Fri, 27 Mar 2026 17:26:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6EiA-0005Ct-N6
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:22 -0400
+ id 1w6Ehh-0003Ro-VF
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6Ei9-0003oh-D8
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:27:22 -0400
+ id 1w6Ehg-0003hx-H4
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774646840;
+ s=mimecast20190719; t=1774646811;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4hPfYq4/WFarXboY4nnyRVuUgvfU5bRhiXWfm+ko4U8=;
- b=K1wJh/fLvMtJsI+wwqBiimS1g++Z27THTf/V2C9rMKaeQ6iOKlQ0qvnsL37NZDfg3qv/Le
- sYkUDPRrQTAkLH4akaLz72xyEmjtlQZuVL92V6wYStunWQSX+871+UF9dQsmSkt/CK/B21
- HhKWFKayZZeuGlg0NTUdf/bt5HtCIYw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=87D9hfkXTy21U107ad64fZEaWnZ7Kh+l8r3zoihxcCE=;
+ b=Arm2faUwO8NNJo6LZW9wryF23Ri0+M6bLkM9GfCRLhJOHtIdII/S9QPRzLbzgH7eWSkKug
+ xlA6FdCoq1Z5PPq2KHp8iGnoEKau35WSAncLav09TPVUdoDdUg1lztTG6B9MucXfrToGZl
+ mDYWN05R7fkLvGKwHZEbk32pJ5t6/4o=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-59-OaygELqpNhyapIMMBB32qw-1; Fri, 27 Mar 2026 17:27:19 -0400
-X-MC-Unique: OaygELqpNhyapIMMBB32qw-1
-X-Mimecast-MFC-AGG-ID: OaygELqpNhyapIMMBB32qw_1774646838
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43b9a86b9b0so1556727f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:27:19 -0700 (PDT)
+ us-mta-673-NmCMyRGAN02RHgvTfHylDg-1; Fri, 27 Mar 2026 17:26:50 -0400
+X-MC-Unique: NmCMyRGAN02RHgvTfHylDg-1
+X-Mimecast-MFC-AGG-ID: NmCMyRGAN02RHgvTfHylDg_1774646809
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4852cf0318dso26741375e9.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:26:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774646835; x=1775251635; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774646807; x=1775251607; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4hPfYq4/WFarXboY4nnyRVuUgvfU5bRhiXWfm+ko4U8=;
- b=pUwdrosOn9D1rh7KcmLZlm3wHD/cXPk6dkzflbFPZqYCMlZN5sFxDq/f7i0JIsn+rU
- 7O2hoKJfBiMp3Fbp9qftEgMo23pe3siiCnzA/OAGsf+Ys2/dMqjYzxsl36YOMCbH4xKp
- e38Moferjw/DaZFLo4f3sjcBuP/OM3xzWIFZ13mKrvfARiAn/SjVX3lAgnowJOgNkkGg
- DCi2tZtCCxjD+7h0C43LLPe4ZbveTKfgPZ7jjgF3FHttrRdumLmkaQ7guYIdNUCNfJiB
- 6uO3fVj0vEuUNr2DFU06x3OIM/IlWqAhM+kSmwpZ7zwfSH3GOS9AyzNFwJ6vpWqevd16
- VHfQ==
+ bh=87D9hfkXTy21U107ad64fZEaWnZ7Kh+l8r3zoihxcCE=;
+ b=iqSO6vqMLKiPVPCUwb9tYGLTKYWGC60SxmLj4CL6ouVsqO8lrkHKYc5Fjc4a4gjcWY
+ GS84JArG9Hwy4eOudBqV00jbxlpGLtkIPhooDRyrd3kDebviy9U7hSoQXVVF2kS4OEsd
+ Wn9mTDWgqik09PD0hz8Ek1q8HlLJyAcM7BF+p0lp0rnsIVvqkql16cxGMNih/4GSwQ/b
+ IWq+VVALPayEnQUFAvaSSjPPYoxfZZ/GRGCICH/pGe8Yy7iVYtdKzzOerj7YiN7DlX04
+ fTz35PNThzvyJ1C+PXQKvwu0bfV2O8hhh54yUpc1Ql5LXpnaGZcZd6EkmKFnBXauOHsz
+ APDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774646835; x=1775251635;
+ d=1e100.net; s=20251104; t=1774646807; x=1775251607;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4hPfYq4/WFarXboY4nnyRVuUgvfU5bRhiXWfm+ko4U8=;
- b=SSiNk9kHy06DQ3ZTGDIPdXUx5VaPCrD0W7moVgcbUOC0oiZtutXOQmQ7k4H40niZIm
- jm9xVyyD+ak0tW2+h+hS/pz+RgdlQzSVANXzBIG3AQoCOtvP8PbREOkRN6AfKxbpfqKc
- foxgI5V0vZxfTQNuKwza+hD+x2TUX5QvDtS5KyliDbJ5i5FqwjPKGt+ab6VMqgaG3Drh
- DnF/9O4n61ldz6FsJg9sQeRgk4MVbsLxZ1gPoie4SaAQbxJ7mDFeADLdKAv+bCrrGjZf
- mIf9OfdgLRWt4sbmsORTpjLMcmhviyX70ic8sSheGHgLgiEosRqHOlLOpqOmRSEmzDvZ
- KqNw==
-X-Gm-Message-State: AOJu0YziD0FMguiTiWSfE+Qdty3dQr0dB3DzuB8bsS0HVOKqEl96P1iT
- mawkJOb3n1D2oD2dfuA/mfXApc7Aw+8kDlsmHGtJMqhq3DRzTRQW8WmtBBNetzihjuN0elPrSbc
- ULZovbXrbxA8p9bUp/R14z60KO9q1qvPAUisyAbBKbH02fwlKNDiJOgjgggW3VPrL53ovCpftk/
- oTaFQ5AvwmwFmXsdvIhsxVXveezNeFp7KahGAzpwA0
-X-Gm-Gg: ATEYQzy1SCUFPYecsqCGfoRrf52DsKWVSp2FcL3T3VOe4Vkfwlo99TmLXXCqp+DTCVp
- qrJN7QzrlBbjnArn1rwSPBw0kcNfP7croCRiwUl9ZZ3enxj4bvmQLlAHHMmR8n2ukJCqMzHmfOe
- SVGobjOtDmaJ3xrij11gpJPHnyii43/oJ+O1W/WIMyELURQ2K0gNQi0cv7tkVotlB+wGiYlQwS2
- 6CQ/Ni1ELo1aa1JX2+BBneuxoLdWP0YDKifPV1IKlHAbvCTFzWsCVSY/EnA3pkwuSIiEsuvliyu
- 6V+lu8X86fN25aKhp8eIt3SvK2zj9o1Qo0TkZEuEwGH3FhlEZ4tBhXiQrMSks+XPTpCFOw9bMmb
- BKdyBCQGOTYUfhfbJuaL9hVz/Pubw32JiAwRQsrFMO7qIcXD968hgV7wZrMtFGPC3BIQKuxixpS
- EzJWTACkUWvMBlCeztW2ck5W8k
-X-Received: by 2002:a5d:584b:0:b0:43b:7ff5:fdf7 with SMTP id
- ffacd0b85a97d-43b9ea4a3a8mr6435933f8f.29.1774646835586; 
- Fri, 27 Mar 2026 14:27:15 -0700 (PDT)
-X-Received: by 2002:a5d:584b:0:b0:43b:7ff5:fdf7 with SMTP id
- ffacd0b85a97d-43b9ea4a3a8mr6435901f8f.29.1774646835078; 
- Fri, 27 Mar 2026 14:27:15 -0700 (PDT)
+ bh=87D9hfkXTy21U107ad64fZEaWnZ7Kh+l8r3zoihxcCE=;
+ b=bSMLYEPKR2GGelLS1XONC+IKIh4J81g+Z6D3Y5FV3hFG0lMN/BCe9LVIzuTmiMfFN0
+ rx/W6Pszk7AXng3WxK2ew1cKEholr1AMl4NLw/N/lrYZR4kKzWkohWX8cQveVfrQpdyn
+ SVNOZpSHUqPKwwp72R80QpzWVEW7p2B60v/1OqcI/ZqOfa+pxf4xBCSs2/U0tMepEHCf
+ v9aQepAfIEaPFLrwW0hV8PLl5vWgalu6/pxtCPmtk92HM6smtV8/0Z/X6q/6SSElilyx
+ ZYkASbPMHSn+3GNAJ/GqLWEKikziUL9S3bTDoBhCuJ55LeRQXudsw3QVQc3uccxcu+Y3
+ PT5Q==
+X-Gm-Message-State: AOJu0Yx1nJ9JSvjERZbbFBXe2rbsWjG0iuzUVNLM4ET2Wr6pn6x+vwKk
+ i+2xv/VTqz3CDrTmw82pzF0Ck7PHikhGBJJNE/H/p7Im2TQvSOcfZzUHKrh2PQ41xXOFBI5JutI
+ Nx9fciQL+CGQ4Bqu4FudYunEtaELhmX2kDE+mpcWcSq3Jlj/fffeSgeRsIyJRqno45Fs/mJVfCE
+ Clb1Qc7bV4/+oQKAaeAF6n6tN9HUFDIbyQj6vAbN3d
+X-Gm-Gg: ATEYQzwrrYE29ORf2TVYqKH+61djeRw2HYuL0wXWpBt4CgTA1FgosVY4XKlpNLTfZD/
+ aZRKO3WwJe/91/75KsreB6L6QEyk/ozJKyRLxSGrcOlGLiEnvtAYTZ+9a6uqJRH4B+zsGNobMTH
+ 7klgRHfH+G8qXFYCaKnuDf4HYyKzabZqX2puRsDc4G1LyyWaXVk6tLI8iRIgRukDCQGZbFMzsxO
+ rYteJUGXcjUKBoztr4MzIOOWi5UzIaEFs28jD1TGBt4lFGD00HSj6vHW2UtyyFQ5oA8bZK9Df5d
+ VplxCHa01r4kgdNg6d8KaSX69VeiMMKDkvExaQ6GLOxdROzazxYA3LJxv7D2tNJLJ0Hdfrx6FPg
+ I5meYTeUKYSDOM9PSZk1LONEDUzr8LYSmSVQJytJzGSdBdDa66AUMzRLQ8557TYx/dXNcPZ826s
+ zpIUDT/YQeLEIblCFgYHL/VpSS
+X-Received: by 2002:a05:600c:c87:b0:486:f308:94ec with SMTP id
+ 5b1f17b1804b1-48727edf6eemr68427105e9.24.1774646807108; 
+ Fri, 27 Mar 2026 14:26:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:c87:b0:486:f308:94ec with SMTP id
+ 5b1f17b1804b1-48727edf6eemr68426855e9.24.1774646806609; 
+ Fri, 27 Mar 2026 14:26:46 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21e2487sm812846f8f.5.2026.03.27.14.27.06
+ 5b1f17b1804b1-4873061f44csm8893305e9.1.2026.03.27.14.26.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 14:27:06 -0700 (PDT)
+ Fri, 27 Mar 2026 14:26:41 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 13/16] ncr710: do not load s->current in advance
-Date: Fri, 27 Mar 2026 22:25:44 +0100
-Message-ID: <20260327212547.460420-14-pbonzini@redhat.com>
+Subject: [PATCH 09/16] ncr710: reuse ncr710_clear_pending_irq in
+ ncr10_do_command
+Date: Fri, 27 Mar 2026 22:25:40 +0100
+Message-ID: <20260327212547.460420-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260327212547.460420-1-pbonzini@redhat.com>
 References: <20260327212547.460420-1-pbonzini@redhat.com>
@@ -121,38 +122,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is unnnecessary and potentially could use stale data.  Load
-s->current just before use.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/ncr53c710.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ hw/scsi/ncr53c710.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index f768ad74237..298e0317b70 100644
+index 9832d833b37..7503d791205 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -1040,8 +1040,6 @@ static void ncr710_do_msgin(NCR710State *s)
+@@ -928,10 +928,7 @@ static void ncr710_do_command(NCR710State *s)
+         return;
+     }
  
- static void ncr710_do_msgout(NCR710State *s)
- {
--    NCR710Request *current_req = s->current;
--
-     while (s->dbc > 0) {
-         int to_move = MIN((int)s->dbc, NCR710_SCSI_FIFO_SIZE);
-         uint8_t temp_buf[NCR710_SCSI_FIFO_SIZE];
-@@ -1169,8 +1167,8 @@ static void ncr710_do_msgout(NCR710State *s)
-                 break;
+-    if (s->current) {
+-        ncr710_request_free(s, s->current);
+-        s->current = NULL;
+-    }
++    ncr710_clear_pending_irq(s);
  
-             case 0x0d: /* ABORT TAG */
--                if (current_req) {
--                    scsi_req_cancel(current_req->req);
-+                if (s->current) {
-+                    scsi_req_cancel(s->current->req);
-                 }
-                 ncr710_disconnect(s);
-                 break;
+     s->current = g_new0(NCR710Request, 1);
+     s->current->tag = s->select_tag;
 -- 
 2.53.0
 
