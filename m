@@ -4,103 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44ED610ED664
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 12:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BECC10ED66D
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 12:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w66Ky-0001ck-Q2; Fri, 27 Mar 2026 08:30:52 -0400
+	id 1w66LS-00025l-9V; Fri, 27 Mar 2026 08:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w66Kv-0001ah-IK
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:30:49 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w66Kt-0005fA-Rg
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:30:49 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w66LQ-00025B-Lj
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:31:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w66LP-0005pV-2Y
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:31:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774614677;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FTETYdc5HyoZBB2140cBdzLG6JianjCznypgVR7apV0=;
+ b=JOueBIU0jrQiFWkUHULL1eDtMt5R+I7rIo3GvZL17lxz653vxqaD8/8kAPBYaVKRqDYuJt
+ NwMQthPfBbEMjqEaey//DB8/hvMcns67nLtMPKIBO5VICdbv624Dpm50jbDzIeygA+rKWI
+ X0gN0CR4/F7ZMNK3A2zSX4a4vEXNhxk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-494-GMzU9XtYMYqgdEmzp2Z1SA-1; Fri,
+ 27 Mar 2026 08:31:15 -0400
+X-MC-Unique: GMzU9XtYMYqgdEmzp2Z1SA-1
+X-Mimecast-MFC-AGG-ID: GMzU9XtYMYqgdEmzp2Z1SA_1774614674
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B73F54D385;
- Fri, 27 Mar 2026 12:30:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774614646; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RdrUFYWYXuRcvRm8fMYb4N77A0pJh4m+sxA73GjnAJA=;
- b=0rcynqY4slCz+wgjfx4mM5SF4irtyqn7NS5ABGpz0ElhuUyFJ8Pwam8E/G8FbAXStGG9Ze
- Q4yDVS3qbNPM0IXZz4XnrHZcuPmZZTxLUjkx0tgRHvrjS0ouX9Zgeq1R7k+OO9HzrR/B1G
- BFAUNR+aURIdL26z0Ep6+xlJElaNLFs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774614646;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RdrUFYWYXuRcvRm8fMYb4N77A0pJh4m+sxA73GjnAJA=;
- b=yKyFuuNq06VJGljrel8xTgCYRBJt/UVuBCdTu4snhbwsGf5Qgc3V5G4x4LgSPvowhKKPVZ
- kLJZMhe/nazp9jCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774614646; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RdrUFYWYXuRcvRm8fMYb4N77A0pJh4m+sxA73GjnAJA=;
- b=0rcynqY4slCz+wgjfx4mM5SF4irtyqn7NS5ABGpz0ElhuUyFJ8Pwam8E/G8FbAXStGG9Ze
- Q4yDVS3qbNPM0IXZz4XnrHZcuPmZZTxLUjkx0tgRHvrjS0ouX9Zgeq1R7k+OO9HzrR/B1G
- BFAUNR+aURIdL26z0Ep6+xlJElaNLFs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774614646;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RdrUFYWYXuRcvRm8fMYb4N77A0pJh4m+sxA73GjnAJA=;
- b=yKyFuuNq06VJGljrel8xTgCYRBJt/UVuBCdTu4snhbwsGf5Qgc3V5G4x4LgSPvowhKKPVZ
- kLJZMhe/nazp9jCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 150E14A0A2;
- Fri, 27 Mar 2026 12:30:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 07ANNHV4xmkuWAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 27 Mar 2026 12:30:45 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>, peterx@redhat.com,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH RFC v2 08/11] vmstate: Implement load of ptr marker in
- vmstate core
-In-Reply-To: <20260326210532.379027-9-peterx@redhat.com>
-References: <20260326210532.379027-1-peterx@redhat.com>
- <20260326210532.379027-9-peterx@redhat.com>
-Date: Fri, 27 Mar 2026 09:30:40 -0300
-Message-ID: <87ecl5ihe7.fsf@suse.de>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35E7418005BA; Fri, 27 Mar 2026 12:31:14 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.239])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88B4E18001FE; Fri, 27 Mar 2026 12:31:11 +0000 (UTC)
+Date: Fri, 27 Mar 2026 13:31:08 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yan Vugenfirer <yvugenfi@redhat.com>
+Subject: Re: [PATCH 7/7] meson: Build block_syms and qemu_syms only when
+ enable_modules
+Message-ID: <acZ4jBdg9dvR2o4f@redhat.com>
+References: <20260326160033.68318-1-kkostiuk@redhat.com>
+ <20260326160033.68318-8-kkostiuk@redhat.com>
+ <acVonq8XqzPItFxx@redhat.com>
+ <a5a61b29-adea-457d-a3e8-c62e88cf8ff6@redhat.com>
+ <acZkNMFwyT6hz4-C@redhat.com>
+ <CAPMcbCo5SLnh=YV=QxE67X4wNz9UFFgR8sL13j0ODA_PPFQBtw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPMcbCo5SLnh=YV=QxE67X4wNz9UFFgR8sL13j0ODA_PPFQBtw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,122 +94,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Am 27.03.2026 um 12:10 hat Kostiantyn Kostiuk geschrieben:
+> On Fri, Mar 27, 2026 at 1:04 PM Kevin Wolf <kwolf@redhat.com> wrote:
+> 
+> > Am 27.03.2026 um 11:47 hat Paolo Bonzini geschrieben:
+> > > On 3/26/26 18:10, Kevin Wolf wrote:
+> > > > Am 26.03.2026 um 17:00 hat Kostiantyn Kostiuk geschrieben:
+> > > > > Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> > > >
+> > > > I'm not a meson expert, but the change itself looks ok to me.
+> > > >
+> > > > However, the commit message is definitely a bit too empty. It should
+> > say
+> > > > why you want to make this change.
+> > >
+> > > Agreed, I *think* it's because scripts/undefsym.py would immediately exit
+> > > here:
+> > >
+> > >     if len(args) <= 3:
+> > >         sys.exit(0)
+> > >
+> > > but it should be spelled out.
+> >
+> > If that's a problem, why doesn't ./configure --disable-modules fail on
+> > Linux?
+> 
+> It does not fail because it exits with 0, no error.
+> Problem in my environment because nm is missing,
+> but at the same time, running undefsym when modules
+> are disabled has zero sense because nothing will be generated
 
-> The loader side of ptr marker is pretty straightforward, instead of playing
-> the inner_field trick, just do the load manually assuming the marker layout
-> is a stable ABI (which it is true already).
->
-> This will remove some logic while loading VMSD, and hopefully it makes it
-> slightly easier to read.  Unfortunately, we still need to keep the sender
-> side because of the JSON blob we're maintaining..
->
-> This paves way for future processing of non-NULL markers as well.
->
-> When at it, not check "size" anymore for existing NULL markers, and move it
-> under the same VMS_ARRAY_OF_POINTER section because that's the only place
-> that NULL marker can happen (which guarantess size==host ptr size, which is
-> non-zero).
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/vmstate-types.c | 12 ++++------
->  migration/vmstate.c       | 46 ++++++++++++++++++++++++---------------
->  2 files changed, 32 insertions(+), 26 deletions(-)
->
-> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-> index b31689fc3c..ae465c5c2c 100644
-> --- a/migration/vmstate-types.c
-> +++ b/migration/vmstate-types.c
-> @@ -363,14 +363,10 @@ static bool load_ptr_marker(QEMUFile *f, void *pv, size_t size,
->                              const VMStateField *field, Error **errp)
->  
->  {
-> -    int byte = qemu_get_byte(f);
-> -
-> -    if (byte == VMS_MARKER_PTR_NULL || byte == VMS_MARKER_PTR_VALID) {
-> -        /* TODO: process PTR_VALID case */
-> -        return true;
-> -    }
-> -
-> -    error_setg(errp, "%s: unexpected ptr marker: %d", __func__, byte);
-> +    /*
-> +     * Load is done in vmstate core, see vmstate_ptr_marker_load().
-> +     */
-> +    g_assert_not_reached();
->      return false;
->  }
->  
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index b333aa1744..47812eb882 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -142,6 +142,21 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
->      }
->  }
->  
-> +static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
-> +                                    Error **errp)
-> +{
-> +    int byte = qemu_get_byte(f);
-> +
-> +    if (byte == VMS_MARKER_PTR_NULL) {
-> +        /* When it's a null ptr marker, do not continue the load */
-> +        *load_field = false;
-> +        return true;
-> +    }
-> +
-> +    error_setg(errp, "Unexpected ptr marker: %d", byte);
-> +    return false;
-> +}
-> +
->  static bool vmstate_pre_load(const VMStateDescription *vmsd, void *opaque,
->                               Error **errp)
->  {
-> @@ -264,30 +279,25 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
->              }
->  
->              for (i = 0; i < n_elems; i++) {
-> -                bool ok;
-> +                /* If we will process the load of field? */
-> +                bool load_field = true;
-> +                bool ok = true;
->                  void *curr_elem = first_elem + size * i;
-> -                const VMStateField *inner_field;
->  
->                  if (field->flags & VMS_ARRAY_OF_POINTER) {
->                      curr_elem = *(void **)curr_elem;
-> +                    if (!curr_elem) {
-> +                        /* Read the marker instead of VMSD itself */
-> +                        if (!vmstate_ptr_marker_load(f, &load_field, errp)) {
-> +                            trace_vmstate_load_field_error(field->name,
-> +                                                           -EINVAL);
-> +                            return false;
-> +                        }
-> +                    }
->                  }
->  
-> -                if (!curr_elem && size) {
-> -                    /*
-> -                     * If null pointer found (which should only happen in
-> -                     * an array of pointers), use null placeholder and do
-> -                     * not follow.
-> -                     */
-> -                    inner_field = vmsd_create_ptr_marker_field(field);
-> -                } else {
-> -                    inner_field = field;
-> -                }
-> -
-> -                ok = vmstate_load_field(f, curr_elem, size, inner_field, errp);
-> -
-> -                /* If we used a fake temp field.. free it now */
-> -                if (inner_field != field) {
-> -                    g_clear_pointer((gpointer *)&inner_field, g_free);
-> +                if (load_field) {
-> +                    ok = vmstate_load_field(f, curr_elem, size, field, errp);
->                  }
->  
->                  if (ok) {
+Ok, makes sense. Then how about making the subject line something like
+"meson: Don't require nm for non-modular builds", and explaining in the
+commit message on which platform nm is missing and that the change is
+harmless because it already didn't do anything before?
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Kevin
+
 
