@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8D610F287B
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4DB10F287A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:18:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6GQU-0003yh-53; Fri, 27 Mar 2026 19:17:14 -0400
+	id 1w6GRN-00047t-GY; Fri, 27 Mar 2026 19:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GQR-0003y1-Rq
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:17:11 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GRM-00047T-8u
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:18:08 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GQQ-0004YE-9s
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:17:11 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-486507134e4so29682385e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:17:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GRK-0005BN-Mr
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:18:07 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48538c5956bso25644215e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:18:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774653426; x=1775258226; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774653485; x=1775258285; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=g3o9B5rS2v+zuJDkRNb2jiOp5U6oRogxyU3DR52E1PE=;
- b=c2v0qyxvhQ7e8gLgcOme8CwsW9a5DuQFhUxQMBth/Vow5KPsazVqARkhqRnuEk/fxR
- 2HFPsdZtqbQ3lXQCDd5dCF20rxqHmCgHPSuCf++GJxXlMHgiSHQmNX06y3Rqk5Yu2Jpp
- 13C8ctAk888jZn7I9z8+rvaX43CbOfsfd/VxNwXZclwM+PT7LTHAcXMGyhHDu62G4TwK
- 5QpLt+mgY+IoeLxazz0qAqzCTr5JKOd5ojMhae6FSlq3J4ftBPhJl/Srb/smRyY2eNiy
- NOIgOlNI2EtVekot28OS2VCj6r+YNEmRw/VuN3PoxKosJ32etg7NiUhrN69uUnkmi8Iv
- I6fw==
+ bh=42DWK7Uvm9wPSL+j8TxXgYd3LgAa9ZplJ7LttkR4FNM=;
+ b=JBKSiz2OFPeRyjmVftTz4LupZXqXDra/RjFdrvfojm9YkxKagQLVdxayJkKXZ8DoyD
+ rub5pZqn+o/OAmg5uJJX9G7nXhc4EpLW2LZg6txuC9S+ffRb58qP3jSMqCCLNg62G1ox
+ iSdjltZXg0zWJeI3yu5HkeUXmn5PkXJQDJFp5jmOMGmmVuq5tdAOqQke+8ZTy+AeTDzM
+ CMDjKBWBM1RyRDFcl77c2N8UdOaX/hil4mzXVtOmWUw1rwTAd0H2vjZeJ+iSZhjfoo4A
+ jivnKLa49u1kWMXW8+3EnTvOAVGxwDQDAb7yh6+vlQBmmOqypjmZn0HSMNnBAMa6Rf6k
+ azdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774653426; x=1775258226;
+ d=1e100.net; s=20251104; t=1774653485; x=1775258285;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=g3o9B5rS2v+zuJDkRNb2jiOp5U6oRogxyU3DR52E1PE=;
- b=jgl/jg4vKon5CWqTOEG2ROdfE2d3brGZYhOuQ/ggsTXhVTHq2g/vplKvdlETWnW1Sl
- j48kqkc8T8R499EP7aPE9POQjOV55EUrNEOCWkRipPIeEiGnIH7n4YwCDyoWV5NzFoYv
- YiXUUCmz1Bu8u2hD7IqgixYFhDU7rkzFNdUipBe9eHNxxS97dKgofp6azJNx7B49NX5r
- zF0hDPs9NF0VW0DrwNnEFw8iUvUvIyj0epCwge2Trw6YkPofXPwVzQ7XXbb4vzSUnhzC
- A+2cM/b918/HjHfF93EOgL6YqfbkuPW5n0rMoYhcFrge/byf0qLsSJSQKHTuBhbQA3cp
- ObrQ==
+ bh=42DWK7Uvm9wPSL+j8TxXgYd3LgAa9ZplJ7LttkR4FNM=;
+ b=AICqfi16xaxEp/leOxxFczclhpjHVz9lQ1Ikvix3b/BjqjSEg+CR11upcnkIwsO/v1
+ 9OrIvsZoA61ua/ukrRkkJsNvzU46Z1W+PIlD4bO/Nra853+H2fx6tfJFHEFYYvd6TMVe
+ O+fQkkKZNAx4CWp/dHTCWp9DjNGQlKYQ4DxlJcTDZMlo+ETVWdumhEk6syclrlWauDkI
+ NIFbokL72u5kQ8HGnRc6MBLNKo+K5Uk7VLxNmGJhauPIT+t/K9LURloAbvlRALrE5WDO
+ EiIEm5GlfpoMmCsJNFsXszJ6li0g4GjU1rVcqiyWgQSnLsPXtMvgSb6dLzcGo3D6i+pL
+ lyJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrPWA0f7H3dWXXpmPVp5IAkP9od21gFtuw+6nBWdUrD1CaTbezH979s5RpdCHhF3deFWP0tLVLzr0v@nongnu.org
-X-Gm-Message-State: AOJu0YzFuhNaFn8KWhYauwqQ0nkkGDJUIHxkOzmSBFLlfxPJgJf0Te/x
- 6pukRKhxDtvmJN9I5b++QnuzJFFLs1xy2juq4OLRjdec4eqQjlGxQTA//5O8e8cTU4k=
-X-Gm-Gg: ATEYQzx32OScjUiFRH+XDe2bQADvFXkYUn7GpepLJp10kD6YUpECS56nIXc+k9q7s/P
- XkiBk1KE5ZMOuAgQzkYfZRp7lHTo4UedIiUoJQj6I8UCxHCmfocc9a/Arl03TNK9sl3JVLPjm0O
- il8pbJ30mgxBprn8pBHxOXM+PWoTc7mlzw0KbroXJOz/kKOHMXiaaVqy2UOcb7x1UmQGRf7XJV/
- C4X6T4d2LgDrBj0QJnAPjBbKoMnji1TUwbcnpHfB/mODy58OUyZWbIF8PYx0scRTMCRLWJ2cSkX
- EKu4ANZaq8GivKvELrl+HCCVldHo9L0mX64BycPA4QpY5PPBHo2QYyKdLKkhzN22lEOf89jfhI9
- JIDU4td8SRUrcFjOISQx8/4nsWRJokDbHUMeAivcJNWSct8uiBWkDqQHFPULLjA1pLB4x7B5Qp+
- oiqByV7ZdpD+Nkt1C06kOxVhyWuU74O9HqdvPpOKf8qoHAzITRvtkDHc7vqH+5mg==
-X-Received: by 2002:a05:600c:a108:b0:485:4388:348b with SMTP id
- 5b1f17b1804b1-48727c81d77mr60701165e9.0.1774653426512; 
- Fri, 27 Mar 2026 16:17:06 -0700 (PDT)
+ AJvYcCUS5zGAyMZxFzbEYqCvFRWfN0dSAS/Pcp7/vu80JuGIAXkTg7+EGBlG74bdHzgrNE3MJE+pH7kzidTt@nongnu.org
+X-Gm-Message-State: AOJu0Yy5k/KIWy1huDvpwuDueE4LLq4fQTn4nCDpNoF3y2F6jQepQLRY
+ +M/BN4fIQNWKDrvHQIIuX0PbvQvqJMNP4Z3wSOFZI0hSER4HnhcqEcrVICZnB6ldaDU=
+X-Gm-Gg: ATEYQzwk1CAO4+y6t4H3MjDFeFuD1IYd0l0+FY5epJv8JtHImRFrjIgEa3/8uLKsR7l
+ kUUJrxW28M3gfAO75UXd0nYco8jQxQD/F3B8q4P+wkBPfzsvrwiJ4Yp+ZdODi5HrDlr9Nu0ny5G
+ SUnooaSgLaQk0FXtOC7gA9ofy5QcLM2OJtJWGlrs4nxGtTi/JuR+yEEcm52UPBOtCs6oiIx52mI
+ HYEopejDDpxf/Sul+gzEWtkUEEgzXKcjGzn5prvLgi2z+VsIMYXgm2gnFuoSLsDPhezB19+9T64
+ iRia3RT2e22P3RQX2Lr03R06fYGu5hmYaSI/8sn3z7vHiGTQ/kQCVOSQU3a8IfjjIMjyi6wT73R
+ ugQl1aTkSL+08Vl8zAuv9kpyHGSXkd9ZrXyW5WH7YlYFfaYcsP/ne+NCOOnwyUNtsMBt7Ma7Z3i
+ QkC2aZOAQ30EomtxP0BSwcQ1VbJ/j8BHOtgaDqWJmbJ70KRPXxgKixvnWwGfA6bg==
+X-Received: by 2002:a05:600c:a207:b0:485:3038:72c2 with SMTP id
+ 5b1f17b1804b1-48722c15389mr74224545e9.17.1774653484903; 
+ Fri, 27 Mar 2026 16:18:04 -0700 (PDT)
 Received: from [10.202.147.66] (147.149.216.82.rev.sfr.net. [82.216.149.147])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48722d2366dsm114298845e9.10.2026.03.27.16.17.04
+ ffacd0b85a97d-43cf21e3602sm1360100f8f.4.2026.03.27.16.18.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Mar 2026 16:17:05 -0700 (PDT)
-Message-ID: <96574787-aa87-44be-8209-3fcc7880f2f3@linaro.org>
-Date: Sat, 28 Mar 2026 00:16:56 +0100
+ Fri, 27 Mar 2026 16:18:03 -0700 (PDT)
+Message-ID: <f5b31bb6-f03d-424c-8879-a887f3f56ce8@linaro.org>
+Date: Sat, 28 Mar 2026 00:18:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hpet: fix bounds check for s->timer[]
+Subject: Re: [PATCH v5 04/12] target/arm/tcg/translate.h: remove TARGET_AARCH64
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- "Yuma Kurogome, Ricerca Security, Inc." <yumak@ricsec.co.jp>
-References: <20260327174701.364328-1-pbonzini@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org
+References: <20260327165042.604105-1-pierrick.bouvier@linaro.org>
+ <20260327165042.604105-5-pierrick.bouvier@linaro.org>
+ <36d7e3d6-3907-484b-8a58-f05a9ef6cae4@linaro.org>
+ <2737926f-7834-4e64-be9e-d58561e7f4ef@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260327174701.364328-1-pbonzini@redhat.com>
+In-Reply-To: <2737926f-7834-4e64-be9e-d58561e7f4ef@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,27 +107,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/26 18:47, Paolo Bonzini wrote:
-> Fix an off-by-one issue in QEMU's HPET read and write MMIO handlers.
-> Both handlers check timer_id > s->num_timers instead of timer_id >=
-> s->num_timers, allowing a guest to access one timer beyond the valid
-> range.
+On 27/3/26 19:31, Pierrick Bouvier wrote:
+> On 3/27/26 10:26 AM, Philippe Mathieu-Daudé wrote:
+>> On 27/3/26 17:50, Pierrick Bouvier wrote:
+>>> We need to stub a64_translate_init and gen_a64_update_pc.
+>>> At this point, we don't need to do anything for aarch64_translator_ops
+>>> since it's just an external symbol.
+>>>
+>>> We can now include target/arm/tcg/translate.h from common code, since
+>>> all target specific bits have been removed, or can be specialized with
+>>> specific defines.
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>    target/arm/tcg/translate.h | 10 ----------
+>>>    target/arm/tcg/stubs32.c   | 17 +++++++++++++++++
+>>>    target/arm/tcg/meson.build |  1 +
+>>>    3 files changed, 18 insertions(+), 10 deletions(-)
+>>>    create mode 100644 target/arm/tcg/stubs32.c
+>>
+>>
+>>> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+>>> index 5f591560551..3e96c77df73 100644
+>>> --- a/target/arm/tcg/meson.build
+>>> +++ b/target/arm/tcg/meson.build
+>>> @@ -21,6 +21,7 @@ gen_a32 = [
+>>>    arm_ss.add(gen_a32)
+>>>    arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
+>>> +arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
+>>
+>> Add via stub_ss[]?
 > 
-> The affected slot is initialized properly in hpet_realize, which goes
-> through all HPET_MAX_TIMERS elements of the array, so even though
-> it is not reset in hpet_reset() the bug does not cause any use of
-> uninitialized host memory.  Because of this, and also because (even
-> though HPET_MAX_TIMERS is 32) the HPET only has room for 24 timers in
-> its MMIO region, the bug has no security implications.
+> Unfortunately, libqemuutil is declared before iterating on targets, so 
+> stub_ss is not what you expect at this point.
 > 
-> Commit 869b0afa4fa ("rust/hpet: Drop BqlCell wrapper for num_timers",
-> 2025-06-06) silently fixed the same bug in rust/hw/timer/hpet/src/device.rs.
+> stub_ss = stub_ss.apply({})
+> It changes its type from source_set to source_configuration.
+> Even if we used a new variable name, further changes to stub_ss would be 
+> ignored.
 > 
-> Reported-by: Yuma Kurogome, Ricerca Security, Inc. <yumak@ricsec.co.jp>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/timer/hpet.c | 11 +++++++----
->   1 file changed, 7 insertions(+), 4 deletions(-)
+> I will write a patch for it, but it's definitely out of the scope of 
+> this series, so I'll leave the current patch as it is for now.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Good you already thought about it :)
+
 
