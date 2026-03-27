@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471ED10ED656
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 10:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBBF10ED656
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 10:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w64hD-0004ms-RJ; Fri, 27 Mar 2026 06:45:43 -0400
+	id 1w64jc-0005nL-Ck; Fri, 27 Mar 2026 06:48:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w64hC-0004ls-B8
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 06:45:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w64jV-0005h1-Jg
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 06:48:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w64hA-0007Of-Pj
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 06:45:41 -0400
+ id 1w64jU-0007gt-3w
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 06:48:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774608340;
+ s=mimecast20190719; t=1774608483;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Ws3HKhlH0ZqymhOELx0eF9VH+zb+AdDUUQtguFoH/30=;
- b=MKrYnjD8mKk81gJOdjiufT4vJIh64w3sYHxIU5xgNRykiNhs8x2O5MlAZ0y4bl0WWyYh+H
- oSwma/yipZMDg1zrJbZz1i/IPz38SDemZqPbmdAmfdk0Ix8XriCG57ZDArjm/3CsVk78tL
- rdkRvxBXLzjiGm3cDqFpSjk/5zxdxYk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=2e70TqyElXs1dHMuovwhb3cSXYJNL6gxMQAxLGlX0oM=;
+ b=E462BRtOzToI0PjlymIIs9us8Aa0bmckHpXQK8NajKMa4KRZl/XXSnL1OIXHHIL9gelhOa
+ 7z+4lWpSzjAkiX3gW/TS8ZV9HW5z66Wq3FlCvlWlrEw/aaGnqZmdqipEZU9R2qxwY0mKBu
+ 8TgkkNPK4ImmIPHTV+tTX72j91lhNUk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-uCVmJx_fNB2FpUgQQNE-Bg-1; Fri,
- 27 Mar 2026 06:45:35 -0400
-X-MC-Unique: uCVmJx_fNB2FpUgQQNE-Bg-1
-X-Mimecast-MFC-AGG-ID: uCVmJx_fNB2FpUgQQNE-Bg_1774608334
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-ijMIKIFtP32CxBH9Wt2fnQ-1; Fri,
+ 27 Mar 2026 06:48:02 -0400
+X-MC-Unique: ijMIKIFtP32CxBH9Wt2fnQ-1
+X-Mimecast-MFC-AGG-ID: ijMIKIFtP32CxBH9Wt2fnQ_1774608481
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C8761944EB0; Fri, 27 Mar 2026 10:45:34 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F1BD118005BE; Fri, 27 Mar 2026 10:48:00 +0000 (UTC)
 Received: from [10.45.226.47] (unknown [10.45.226.47])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 82F3F1800671; Fri, 27 Mar 2026 10:45:31 +0000 (UTC)
-Message-ID: <bb116e30-68aa-4176-9f0c-4c370a25c4c9@redhat.com>
-Date: Fri, 27 Mar 2026 11:45:30 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 86D551955D84; Fri, 27 Mar 2026 10:47:58 +0000 (UTC)
+Message-ID: <a5a61b29-adea-457d-a3e8-c62e88cf8ff6@redhat.com>
+Date: Fri, 27 Mar 2026 11:47:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] Remove unused dirent.h
-To: Peter Maydell <peter.maydell@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: Re: [PATCH 7/7] meson: Build block_syms and qemu_syms only when
+ enable_modules
+To: Kevin Wolf <kwolf@redhat.com>, Kostiantyn Kostiuk <kkostiuk@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
+ Yan Vugenfirer <yvugenfi@redhat.com>
 References: <20260326160033.68318-1-kkostiuk@redhat.com>
- <20260326160033.68318-5-kkostiuk@redhat.com>
- <CAFEAcA_JEHXu_FdfVxEG07XdM1gL7KE6K_5eVGaUVMY7zj=hAQ@mail.gmail.com>
+ <20260326160033.68318-8-kkostiuk@redhat.com> <acVonq8XqzPItFxx@redhat.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -99,11 +98,11 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <CAFEAcA_JEHXu_FdfVxEG07XdM1gL7KE6K_5eVGaUVMY7zj=hAQ@mail.gmail.com>
+In-Reply-To: <acVonq8XqzPItFxx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,7 +111,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,20 +127,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 17:23, Peter Maydell wrote:
->>
->>   #include <glob.h>
->> -#include <dirent.h>
->>
->>   int qemu_drm_rendernode_open(const char *rendernode)
->>   {
->
-> This file uses opendir()/readdir()/closedir(), all of which
-> are specified to be brought in by <dirent.h>, so we can't
-> drop this include.
+On 3/26/26 18:10, Kevin Wolf wrote:
+> Am 26.03.2026 um 17:00 hat Kostiantyn Kostiuk geschrieben:
+>> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> 
+> I'm not a meson expert, but the change itself looks ok to me.
+> 
+> However, the commit message is definitely a bit too empty. It should say
+> why you want to make this change.
 
-It's also compiled only if host_os != 'windows', so it doesn't matter 
-for the purpose of compiling qemu-ga with MSVC/clang-cl.
+Agreed, I *think* it's because scripts/undefsym.py would immediately 
+exit here:
+
+     if len(args) <= 3:
+         sys.exit(0)
+
+but it should be spelled out.
 
 Paolo
 
