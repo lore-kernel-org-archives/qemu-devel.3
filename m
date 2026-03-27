@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 595CB10F287C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDAC10F287C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6Gl4-0002jm-2s; Fri, 27 Mar 2026 19:38:30 -0400
+	id 1w6Gu5-0004Z3-63; Fri, 27 Mar 2026 19:47:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6Gl0-0002jR-QK
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:38:26 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6Gty-0004Yf-4s
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:47:42 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6Gkz-0000Ms-AN
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:38:26 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-486ff201041so24618075e9.1
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:38:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6Gtw-0002Hn-6P
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:47:41 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-486507134e4so29829795e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774654704; x=1775259504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774655258; x=1775260058; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/4C6T8Bvc84JSNJ9moUVxE6PYm+POpf05K2xJHhaPqg=;
- b=hczXWAvsrK/CAECOjxqWqUdxCosiMO6gM+/HIzURri47uwwO4uIlyrUBXE5i7AzT0V
- U+WolM5PL2Z94m9KfXl3kS+FhJ25rEAV2Vo9BocK9svdsW2VTr/XIAL/Fl0rno6eh2EZ
- Hol7LLESLZzf6YUTNFcRY5nN9p+7iCc0kXvOrpTgKXGRUItM/DRcj8NKHp7Q2GBA4w0A
- 8Z2CbmZZxcmOiOp0hD/IfZlMvk8upWyub72lR6usDsw7MVyP1cPB2fjhYwVYstN+ntJe
- YXvETf2jkVfVBkzjxDLYiiFT/ahPIT3bCOlBhSriECINE0k8GYIr6QJ5svhWYSm1KrdO
- 91dQ==
+ bh=8U0NFvxINT5B0OqgCTNmJYQAGf5nVzmIxrMl9fgV8RU=;
+ b=AU0FWZpSPnMGV+kLzwm8FBO9Z706xz71S/6oWMz2euiUFFAnpXRoAU4fZE6J3EYNKM
+ efg7Ob4i1CJnfS7+oTq93/mGKk2iBa98r64QXSgyP63sxbV3bvcc5QGKw+cf+nRBopTd
+ qKx/RnIvXPT+xVnpr6Ynt4dxLEXjbgGuj1O1hHhfZ1zgbMDl6GE37oRS17oGJk5BseaA
+ Dt1fgXLJ+EUoyJ8i0uzzUp3ERUyUb8Go52rV4MJs1wGMS+TyWMLBw2dZ7jzUoLUXr5uQ
+ vvQ6vTiog02IsFvpyz1hkjlJ1PQ5X7RXNAErtmliEojOoPIt7Z7UAiGUAEnIpaumPwka
+ +Vjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774654704; x=1775259504;
+ d=1e100.net; s=20251104; t=1774655258; x=1775260058;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/4C6T8Bvc84JSNJ9moUVxE6PYm+POpf05K2xJHhaPqg=;
- b=PCFQJmojnS99/AhuGPm+81S76Ok83A6awg6knnfenD8yxYv9bNL86wrkFBWqsHoRcI
- tmnoQn2AXy6Ms7+jL/dlse0a3ThU5CnhUpdqZ8Fa4cdSmTnEAcmwHgNdYqE49vpc51g+
- 6gy5xDlE4wrOPVQHYd2YzkcPkB4J1T9yo9MomrM4F2oIMwNos6TKbiv8vAvi+NieHQG0
- 5FG8dJjXiLVgaWUMxSfD+ODn/8JC3Gsu5dMEakK/sv14uxrpvaNf4fzFwu3hce6S+EfD
- FDXnO9kxzd5ir4rmLNwN+TVV9Zu4r2H4YnP5OOfvKQGOnsWWDmhQWW/VFpczWIcU8km3
- QVZg==
+ bh=8U0NFvxINT5B0OqgCTNmJYQAGf5nVzmIxrMl9fgV8RU=;
+ b=P8aIcGS8U20L8JUmLQVPNakFhe/YTO8EahXCnTy6GOw6BRaA4n5Nl+OXTjA8XUnQ5+
+ Zv7ad6HGPMK5xSdNZgCRRfWZsyTOrQttDRmjGLl08/rahLmD0sDY+DvjgIsymwB/TDQe
+ oeNW6+HO8l8tTZoL41DYVWzbgMxmoUtyyx3eGuv4hwd/hp8ZEKrxri80K/16/jN8VepS
+ FFMlrf6n8DTx8NemaJsW8t1FufYEndul/TWP6hkc0XPJZIL4Z/VIcpanDcy0/ZlJBjiT
+ gQEZURNWjIsuqT5RcEWRfkXzfi4Eii/Q25wW1foRSdc72hW3N+rsUvUJlRzzVttvvqSj
+ mN+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXibAzirnTug9kEwMO/TKSfJYTyd/UlUihuUB5Pvf45E9ekg28B1RIHcRAz/txl2fUyAQ69fH0LnLSN@nongnu.org
-X-Gm-Message-State: AOJu0Yw41GcQRQEtKpEg+ljA0VGVx3qXHg8ZfDUilIBipXQKmf8gXYx5
- O7Vf9hqsDig7clI1lBi5IKnecgdkLiFadEhbB0YeA4YMJWQ1c02BYba78IUkVznsE2k=
-X-Gm-Gg: ATEYQzzV7bXVAI+uu0bICZbS/VibpuvBGBTJHCRQcjyU0K0a7RkNRGHzqbsOcp6vSzk
- u3I/VPczm0pdwdrTsmYVO2kRfVdtCE22SCt5m3cVwksqDbhDAImWZhxEUMid3VxMhsUcpK8BQmR
- OSrDVh4+gLXTyJ68ybReRpX1iDUnR1w9MCK13GObLG/5rl9BRKbHbyJlv/SmtTqfTJg8r4z4gjF
- //6viHegjmSytZD0Gtx7UamHBCOsTbcjclRsRHmImYu8tptjt0SXJhp2oe7NhrHa4AIRZh8ipUa
- XUtPLeTh9WQBBCfexAIyqiwbbp5sPqFAuy8p5abLeDOIkXMtdkmFgt4I78lJWT9+wFBKsI8+ubS
- OUCtYxT5ji2zpM90g9noiToJCUdXkcSp7Kb6SmEMtpjjEDSU+fbWF5EnoBX6ihCwWXR3vnvbdnJ
- Dx7pSCaTuRoZAkDe3XLGRZiYmk4Ti7jCkBdclDiUPF6W6YZavnVbrr5qvu95HF2RYSrdRKfv82
-X-Received: by 2002:a05:600c:3f0a:b0:485:4eaf:eb54 with SMTP id
- 5b1f17b1804b1-48727ec733dmr66913935e9.20.1774654703688; 
- Fri, 27 Mar 2026 16:38:23 -0700 (PDT)
+ AJvYcCXxY4QfR2V1NxlHnZiZQ8czEX4nM3HzwYDIiNYX4ftuvCSU2mbXWyo+4kQEYOE3MoVp1TSxfL5vvtse@nongnu.org
+X-Gm-Message-State: AOJu0YySVDcQzMeFwnfCr/+k8i0SKr9pCHYTUX+I4UI3g0FPkaUyikp6
+ t68qN/3jincnHapC5U3bLcLtgtBNeAYQSzM3DXCizVUigJe0/McA9wbBYztYO/OU7YfLQlNPAE0
+ Zyg9XGAg=
+X-Gm-Gg: ATEYQzyYScvo0+pmrRcvmX5o7sAgDlFs5YoH6urBaGb7hyQ/mTjTzdHCch6rvLZrVys
+ J4nOaUvIYGaM88nvoarXPAoS2AbH7npgkxdRLdsLRIXeJ7L5qVg9H4v2smmbSCWakQ1OJnb+3Bc
+ PtpXwss/6XdsBOZDfVOw0SO4YJDbuhASmfwGCVJ6bMVhM0NT6hr00/9HTdFunLN8H4oWWBVw73i
+ pKeAvQcVKeZSe6sBYJeiW5x7pggAuPoNw+BfdCZS0+Pxxn5+VKDcw1g9V4SiiFFa/nKvdX0sszm
+ TV6tSgAt7553bpSF45npfyMf/DHeOJW5tWhGas1kbCKVLYh8nf4ytSwKF/MX9E51AL6WBI8ItNe
+ EyQ19v44dDNq6CMkaGEt+EpwTadPB3WGXxSjE/+2qkQ4T6YBclT755wvcf/rtruqtdNf3H6LzhR
+ jLi7qidyUeH5hHlHqLT9Yqu2kzPi4K2exRXfOCH3Gwd34WzOZ24J/xx/92BBhj8g==
+X-Received: by 2002:a05:600c:46c4:b0:485:3a03:ceca with SMTP id
+ 5b1f17b1804b1-48727f0e53bmr76254025e9.23.1774655257674; 
+ Fri, 27 Mar 2026 16:47:37 -0700 (PDT)
 Received: from [10.202.147.66] (147.149.216.82.rev.sfr.net. [82.216.149.147])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf1db08e6sm2981651f8f.0.2026.03.27.16.38.21
+ 5b1f17b1804b1-4873068858bsm11296985e9.9.2026.03.27.16.47.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Mar 2026 16:38:22 -0700 (PDT)
-Message-ID: <262c9195-b189-4354-8c2b-a2ece3dcc801@linaro.org>
-Date: Sat, 28 Mar 2026 00:38:20 +0100
+ Fri, 27 Mar 2026 16:47:36 -0700 (PDT)
+Message-ID: <6cb600f2-5f0a-4b77-a972-967deee93698@linaro.org>
+Date: Sat, 28 Mar 2026 00:47:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] hw/acpi/tpm: parameterize PPI base address in
- tpm_build_ppi_acpi
+Subject: Re: [PATCH v3 3/3] hw/tpm: add PPI support to tpm-tis-device for
+ ARM64 virt
 Content-Language: en-US
 To: Mohammadfaiz Bawa <mbawa@redhat.com>, qemu-devel@nongnu.org
 Cc: stefanb@linux.vnet.ibm.com, pierrick.bouvier@linaro.org,
@@ -79,13 +80,13 @@ Cc: stefanb@linux.vnet.ibm.com, pierrick.bouvier@linaro.org,
  qemu-arm@nongnu.org, mohamed@unpredictable.fr,
  Stefan Berger <stefanb@linux.ibm.com>
 References: <20260327173209.148180-1-mbawa@redhat.com>
- <20260327173209.148180-3-mbawa@redhat.com>
+ <20260327173209.148180-4-mbawa@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260327173209.148180-3-mbawa@redhat.com>
+In-Reply-To: <20260327173209.148180-4-mbawa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,23 +109,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
+
 On 27/3/26 18:32, Mohammadfaiz Bawa wrote:
-> Add a ppi_base parameter to tpm_build_ppi_acpi() instead of
-> hardcoding TPM_PPI_ADDR_BASE. This prepares for ARM64 support where
-> PPI memory is dynamically allocated by the platform bus and the
-> address is not known at compile time.
-> 
-> Update the x86 callers (ISA TIS and CRB) to pass TPM_PPI_ADDR_BASE
-> explicitly. No behavioral change.
+> Add PPI memory region and ACPI _STA, _DSM to tpm-tis-sysbus so
+> Windows 11 ARM64 guests no longer log Event ID 15 errors from
+> tpm.sys on every boot.
 > 
 > Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 > Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
 > ---
->   hw/acpi/tpm.c         | 8 ++++----
->   hw/i386/acpi-build.c  | 2 +-
->   hw/tpm/tpm_tis_isa.c  | 2 +-
->   include/hw/acpi/tpm.h | 3 ++-
->   4 files changed, 8 insertions(+), 7 deletions(-)
+>   hw/arm/virt-acpi-build.c |  9 ++++++++-
+>   hw/tpm/tpm_tis_sysbus.c  | 11 +++++++++++
+>   2 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 591cfc993c..5b5ac551f8 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -240,7 +240,8 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
+>       Aml *dev = aml_device("TPM0");
+>       aml_append(dev, aml_name_decl("_HID", aml_string("MSFT0101")));
+>       aml_append(dev, aml_name_decl("_STR", aml_string("TPM 2.0 Device")));
+> -    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
+> +    aml_append(dev, aml_name_decl("_STA", aml_int(0xF)));
+>   
+>       Aml *crs = aml_resource_template();
+>       aml_append(crs,
+> @@ -248,6 +249,12 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
+>                                     (uint32_t)memory_region_size(sbdev_mr),
+>                                     AML_READ_WRITE));
+>       aml_append(dev, aml_name_decl("_CRS", crs));
+> +
+> +    hwaddr ppi_base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
+> +    if (ppi_base != -1) {
+> +        ppi_base += pbus_base;
+> +        tpm_build_ppi_acpi(TPM_IF(sbdev), dev, ppi_base);
+
+Matter of style, I'd rather:
+
+            tpm_build_ppi_acpi(TPM_IF(sbdev), dev, pbus_base + ppi_base);
+
+> +    }
+>       aml_append(scope, dev);
+>   }
+>   #endif
+
+Hmm I see in tests/qtest/bios-tables-test.c that test_acpi_tcg_tpm()
+only tests X86 (Q35). Could you see how to add coverage for Aarch64
+virt machine? (It could be a patch on top, no need to repost a v4).
+
+Otherwise,
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
