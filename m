@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F1D10ED659
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1778210ED65C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65Ji-0002ld-8N; Fri, 27 Mar 2026 07:25:30 -0400
+	id 1w65Dr-0001wQ-A2; Fri, 27 Mar 2026 07:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w65JM-0002Wk-Iv
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:25:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w65JK-0002Y1-2D
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:25:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774610703;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FNCT5ZoHgHqOwm6hSuQVycDXB94uRJgvK7uT2R8m9o8=;
- b=GrK5QXnp10YCuz1RhgHRr9KQBksBh+84y24JBS3RkmxBw7/H8MEk4oKkh5LYMmxLWOdOO3
- Ql+Vi+fGLb0nlRVF5JoZbF5f7oSJ21zfCJ5ebZO2DP6NsKbT2WjSJAKNn8oEua2+Vxmuxh
- zpYbKhf89rbyj6E+zBLOHjoEL7OHLTA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-kqBgc_Q_ObOA5yxSaUVCaw-1; Fri,
- 27 Mar 2026 07:25:00 -0400
-X-MC-Unique: kqBgc_Q_ObOA5yxSaUVCaw-1
-X-Mimecast-MFC-AGG-ID: kqBgc_Q_ObOA5yxSaUVCaw_1774610698
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CBD019560AE; Fri, 27 Mar 2026 11:24:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F2D7F1955D84; Fri, 27 Mar 2026 11:24:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ABAE821E6937; Fri, 27 Mar 2026 12:24:55 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>
-Cc: Samuel Zhang <guoqing.zhang@amd.com>,  <qemu-devel@nongnu.org>,
- <peterx@redhat.com>,  <farosas@suse.de>,  <lizhijian@fujitsu.com>,
- <eblake@redhat.com>,  <Emily.Deng@amd.com>,  <Victor.Zhao@amd.com>,
- <PengJu.Zhou@amd.com>,  <Qing.Ma@amd.com>
-Subject: Re: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
-In-Reply-To: <9b6b3d6a-4f48-4e90-b2fc-7cfcc6c8651d@amd.com> (GuoQing Zhang's
- message of "Fri, 27 Mar 2026 18:27:07 +0800")
-References: <20260327065006.2567463-1-guoqing.zhang@amd.com>
- <87h5q17gh8.fsf@pond.sub.org>
- <9b6b3d6a-4f48-4e90-b2fc-7cfcc6c8651d@amd.com>
-Date: Fri, 27 Mar 2026 12:24:55 +0100
-Message-ID: <87y0jd5xbs.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w65CY-0007Xu-3J
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:06 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w65CT-0000AW-FM
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:04 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-439b9cf8cb5so1919646f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:17:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774610278; x=1775215078; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CReBByvpzpB+DOsYFrY4nglOIG+4SryQVlLfXuYbQ0g=;
+ b=jZ7by7kJ8hX3IEPTeLgmw5+0iyVNOLMunl6XZfylrLinzr9j2N/lZpOeYyWfoM+YNr
+ dk0NL0jZBFc9fablhI/99a4iWTB3av9c+ywDQvI0+3PSM8rbpV62LdH5HVRnCgWrWBav
+ bN+dI7BEh0gxvU/ZkBr256BeS0iN8CQinwpBfCLuO5+f6e73Etg/z4zAXnaNyhUC1Ma+
+ ZwylSKf3YkUW0TX0CSWtcetcdCOgo6kHcrHZTE4J8rrca7r8FO/lsxJsQSxBqG4BlYVK
+ vEZYfjJddRuWQwLCtsaPKkD0mPcpUq+qsMo2nE9Fm1xfyo3xilzrYO/mCnp8E5CwJO+6
+ 0Pkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774610278; x=1775215078;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CReBByvpzpB+DOsYFrY4nglOIG+4SryQVlLfXuYbQ0g=;
+ b=RknIOKoq8WER3vnxIOXrZT4gb3DE24+6x2NS4z+8aqSW2+pgtyaugeLA7Wt0+OA8am
+ Y3OMLYFqh2NcWLcKekLnW0KZCjdSg5QIWAN7TwhEVn66D83NtO3QWikn1wriyblOIgPH
+ q6iTIhEgXegbAgLukjtqIxpWSGyXwsDk2Nd1Rw8RKJFfKjpGV/OqzptjbiLEK//+06R1
+ r3teWeI5zEVT/oG03XS9OPEiYzCMWPFGGWCKM4RCg+k83wIgSY42mz2N8niThpNUrfrA
+ XSER8CzX8fKHAt5GLuxxGyG/mGzMfW6oj3Oh49jGaSoqIn8ubu846nDG29YeIG/vVw8g
+ ZVew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzcIeD8SswEudh2CJKzkQF4DPbeH0ZUqqbE2GGISHoYtYXbdcslvzUJqm05iv42KJ0DZB8V9Wt/jMV@nongnu.org
+X-Gm-Message-State: AOJu0YxOtBTJe0i38jgRTsV52Qr6kTt6oxAgFbCSh6cGX+PoG3nxsrns
+ bF0K2/zOdth4RJnYbaXw9sA0TsyAHVB8qvz6o4oSNk0yvS7sqcThwWlLaFpjMl6nHgE=
+X-Gm-Gg: ATEYQzwNfVdJ1wTpQpnyUfy/CEglbs+V7Yv+9lxCTcqNr1D7pBM8yJSMzJwl+VP6NF2
+ 6Dz4urx/Qqhc1Fy4/0C/NlG63/gaA8kzGOl84yn8m5nh2oIpeDpQIiCoK7bziKJoU5ZUfbyf//a
+ Wyz7ME/GVWkywWFaot56DRJ2h3Hkq5MJ0s7Drkhac5t43InxcVdbHHHCvn/r9nwmQj27Z0wp0p4
+ Lio4xO6mLWmxy8VsTuL1csE997aMBlnoGBAxdmY1vGV0c9XAycPEuqKZdXQ08q3Q4fKUqORx8c5
+ vzwnniGjds+h2zjMwoC1WeKZgH4VjBS1LR5Z7qVGat57Cn8KcIjAHKNRyftzXymcYO8Hf1V6FvN
+ 8EjVD5SYHkAX6GSoIcspY0nXRUKYLnePhjDor38dUrTPHJ9KjGm2g13cniL4LRgiWiSjFwo9B63
+ ewiIhyb1E3J3XdS67hErlV8HkzSJxFb8NyIv/kXz0nA0EoU2X7KBOlHiEmTjDKKpzQUSrTijRzH
+ jz4nUOhMaEGOoQ2QeZPvI51rrIUdW0=
+X-Received: by 2002:a05:6000:2884:b0:43b:54c9:85f4 with SMTP id
+ ffacd0b85a97d-43b9eaad5e6mr3657995f8f.39.1774610277750; 
+ Fri, 27 Mar 2026 04:17:57 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Mar 2026 04:17:57 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Subject: [PATCH v2 59/65] hw/arm/virt: Split GICv2 and GICv3/4 creation
+Date: Fri, 27 Mar 2026 11:16:54 +0000
+Message-ID: <20260327111700.795099-60-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260327111700.795099-1-peter.maydell@linaro.org>
+References: <20260327111700.795099-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,96 +103,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Zhang, GuoQing (Sam)" <guoqzhan@amd.com> writes:
+Currently create_gic() handles GICv2 and GICv3/4 in a single
+function, with large sections that are conditional on the
+vms->gic_version.  GICv5 will be different to both.
 
-> On 2026/3/27 17:45, Markus Armbruster wrote:
->> Samuel Zhang <guoqing.zhang@amd.com> writes:
->>
->>> The default 1MB RDMA chunk size causes slow live migration because
->>> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
->>> 1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
->>>
->>> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
->>> faster migration.
->>> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
->>>
->>> Performance with RDMA live migration of 8GB RAM VM:
->>>
->>> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
->>> |-----------------------|----------|-------------------|
->>> | 1M (default)          | 37.915   |  1,007            |
->>> | 32M                   | 17.880   |  2,260            |
->>> | 1024M                 |  4.368   | 17,529            |
->>>
->>> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
+Refactor into create_gicv2() and create_gicv3().
 
-[...]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+---
+ hw/arm/virt.c | 137 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 82 insertions(+), 55 deletions(-)
 
->>> diff --git a/qapi/migration.json b/qapi/migration.json
->>> index 7134d4ce47..292d96c95a 100644
->>> --- a/qapi/migration.json
->>> +++ b/qapi/migration.json
->>> @@ -806,7 +806,7 @@
->>>  #
->>>  # Features:
->>>  #
->>> -# @unstable: Members @x-checkpoint-delay and
->>> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
->>>  #     @x-vcpu-dirty-limit-period are experimental.
->>>  #
->>>  # Since: 2.4
->>> @@ -831,6 +831,7 @@
->>>             'mode',
->>>             'zero-page-detection',
->>>             'direct-io',
->>> +           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
->>>             'cpr-exec-command'] }
->>>  
->>>  ##
->>> @@ -1007,9 +1008,14 @@
->>>  #     is @cpr-exec.  The first list element is the program's filename,
->>>  #     the remainder its arguments.  (Since 10.2)
->>>  #
->>> +# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
->>> +#     Default is 1MiB.  Must be a power of 2 in the range
->>> +#     [1MiB, 1024MiB].  Only takes effect for RDMA migration.
->>
->> I believe it applies to channels whose migration address type is is
->> "rdma".  In MigrationChannel syntax
->>
->>      {"channel-type": ..., "addr": {"transport": "rdma", ...}}
->>
->> Correct?
->
->
-> Correct! Is it OK to update the doc to the following one? Thank you!
->
-> `Only takes effect when migration address transport is "rdma".`
-
-The phrasing in the patch feels okay as is.  Perhaps "Only applies when
-migrating via RDMA" to more closely match the description of
-MigrationAddressType @rdma: Migrate via RDMA.
-
-Either way, QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
-
->>> +#     (Since 11.1)
->>> +#
->>>  # Features:
->>>  #
->>> -# @unstable: Members @x-checkpoint-delay and
->>> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
->>>  #     @x-vcpu-dirty-limit-period are experimental.
->>>  #
->>>  # Since: 2.4
->>> @@ -1046,6 +1052,8 @@
->>>              '*mode': 'MigMode',
->>>              '*zero-page-detection': 'ZeroPageDetection',
->>>              '*direct-io': 'bool',
->>> +            '*x-rdma-chunk-size': { 'type': 'uint64',
->>> +                                    'features': [ 'unstable' ] },
->>>              '*cpr-exec-command': [ 'str' ]} }
->>  
->>>  ##
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 5a2cb81919..8c383d7e40 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -861,26 +861,58 @@ static void gic_connect_ppis(VirtMachineState *vms)
+     }
+ }
+ 
+-static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
++static void create_gicv2(VirtMachineState *vms, MemoryRegion *mem)
+ {
+     MachineState *ms = MACHINE(vms);
+     /* We create a standalone GIC */
+     SysBusDevice *gicbusdev;
+-    const char *gictype;
+     unsigned int smp_cpus = ms->smp.cpus;
+-    uint32_t nb_redist_regions = 0;
+-    int revision;
+ 
+-    if (vms->gic_version == VIRT_GIC_VERSION_2) {
+-        gictype = gic_class_name();
+-    } else {
+-        gictype = gicv3_class_name();
++    if (kvm_enabled() && vms->virt) {
++        error_report("KVM EL2 is only supported with in-kernel GICv3");
++        exit(1);
+     }
+ 
++    vms->gic = qdev_new(gic_class_name());
++    qdev_prop_set_uint32(vms->gic, "revision", 2);
++    qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
++    /*
++     * Note that the num-irq property counts both internal and external
++     * interrupts; there are always 32 of the former (mandated by GIC spec).
++     */
++    qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
++    if (!kvm_irqchip_in_kernel()) {
++        qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
++        qdev_prop_set_bit(vms->gic, "has-virtualization-extensions", vms->virt);
++    }
++
++    gicbusdev = SYS_BUS_DEVICE(vms->gic);
++    sysbus_realize_and_unref(gicbusdev, &error_fatal);
++    sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
++    sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_CPU].base);
++    if (vms->virt) {
++        sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_GIC_HYP].base);
++        sysbus_mmio_map(gicbusdev, 3, vms->memmap[VIRT_GIC_VCPU].base);
++    }
++
++    gic_connect_ppis(vms);
++
++    fdt_add_gic_node(vms);
++}
++
++static void create_gicv3(VirtMachineState *vms, MemoryRegion *mem)
++{
++    MachineState *ms = MACHINE(vms);
++    /* We create a standalone GIC */
++    SysBusDevice *gicbusdev;
++    unsigned int smp_cpus = ms->smp.cpus;
++    uint32_t nb_redist_regions;
++    int revision;
++    QList *redist_region_count;
++    uint32_t redist0_capacity = virt_redist_capacity(vms, VIRT_GIC_REDIST);
++    uint32_t redist0_count = MIN(smp_cpus, redist0_capacity);
++
+     switch (vms->gic_version) {
+-    case VIRT_GIC_VERSION_2:
+-        revision = 2;
+-        break;
+     case VIRT_GIC_VERSION_3:
+         revision = 3;
+         break;
+@@ -897,10 +929,11 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+         exit(1);
+     }
+ 
+-    vms->gic = qdev_new(gictype);
++    vms->gic = qdev_new(gicv3_class_name());
+     qdev_prop_set_uint32(vms->gic, "revision", revision);
+     qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
+-    /* Note that the num-irq property counts both internal and external
++    /*
++     * Note that the num-irq property counts both internal and external
+      * interrupts; there are always 32 of the former (mandated by GIC spec).
+      */
+     qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
+@@ -908,40 +941,28 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+         qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
+     }
+ 
+-    if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-        QList *redist_region_count;
+-        uint32_t redist0_capacity = virt_redist_capacity(vms, VIRT_GIC_REDIST);
+-        uint32_t redist0_count = MIN(smp_cpus, redist0_capacity);
++    nb_redist_regions = virt_gicv3_redist_region_count(vms);
+ 
+-        nb_redist_regions = virt_gicv3_redist_region_count(vms);
++    redist_region_count = qlist_new();
++    qlist_append_int(redist_region_count, redist0_count);
++    if (nb_redist_regions == 2) {
++        uint32_t redist1_capacity =
++            virt_redist_capacity(vms, VIRT_HIGH_GIC_REDIST2);
+ 
+-        redist_region_count = qlist_new();
+-        qlist_append_int(redist_region_count, redist0_count);
+-        if (nb_redist_regions == 2) {
+-            uint32_t redist1_capacity =
+-                virt_redist_capacity(vms, VIRT_HIGH_GIC_REDIST2);
++        qlist_append_int(redist_region_count,
++                         MIN(smp_cpus - redist0_count, redist1_capacity));
++    }
++    qdev_prop_set_array(vms->gic, "redist-region-count", redist_region_count);
+ 
+-            qlist_append_int(redist_region_count,
+-                MIN(smp_cpus - redist0_count, redist1_capacity));
+-        }
+-        qdev_prop_set_array(vms->gic, "redist-region-count",
+-                            redist_region_count);
+-
+-        if (!kvm_irqchip_in_kernel()) {
+-            if (vms->tcg_its) {
+-                object_property_set_link(OBJECT(vms->gic), "sysmem",
+-                                         OBJECT(mem), &error_fatal);
+-                qdev_prop_set_bit(vms->gic, "has-lpi", true);
+-            }
+-        } else if (vms->virt) {
+-            qdev_prop_set_uint32(vms->gic, "maintenance-interrupt-id",
+-                                 ARCH_GIC_MAINT_IRQ);
+-        }
+-    } else {
+-        if (!kvm_irqchip_in_kernel()) {
+-            qdev_prop_set_bit(vms->gic, "has-virtualization-extensions",
+-                              vms->virt);
++    if (!kvm_irqchip_in_kernel()) {
++        if (vms->tcg_its) {
++            object_property_set_link(OBJECT(vms->gic), "sysmem", OBJECT(mem),
++                                     &error_fatal);
++            qdev_prop_set_bit(vms->gic, "has-lpi", true);
+         }
++    } else if (vms->virt) {
++        qdev_prop_set_uint32(vms->gic, "maintenance-interrupt-id",
++                             ARCH_GIC_MAINT_IRQ);
+     }
+ 
+     if (gicv3_nmi_present(vms)) {
+@@ -951,18 +972,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     gicbusdev = SYS_BUS_DEVICE(vms->gic);
+     sysbus_realize_and_unref(gicbusdev, &error_fatal);
+     sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
+-    if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-        sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_REDIST].base);
+-        if (nb_redist_regions == 2) {
+-            sysbus_mmio_map(gicbusdev, 2,
+-                            vms->memmap[VIRT_HIGH_GIC_REDIST2].base);
+-        }
+-    } else {
+-        sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_CPU].base);
+-        if (vms->virt) {
+-            sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_GIC_HYP].base);
+-            sysbus_mmio_map(gicbusdev, 3, vms->memmap[VIRT_GIC_VCPU].base);
+-        }
++    sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_REDIST].base);
++    if (nb_redist_regions == 2) {
++        sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_HIGH_GIC_REDIST2].base);
+     }
+ 
+     gic_connect_ppis(vms);
+@@ -970,6 +982,21 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     fdt_add_gic_node(vms);
+ }
+ 
++static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
++{
++    switch (vms->gic_version) {
++    case VIRT_GIC_VERSION_2:
++        create_gicv2(vms, mem);
++        break;
++    case VIRT_GIC_VERSION_3:
++    case VIRT_GIC_VERSION_4:
++        create_gicv3(vms, mem);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static void create_msi_controller(VirtMachineState *vms)
+ {
+     switch (vms->msi_controller) {
+-- 
+2.43.0
 
 
