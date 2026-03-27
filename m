@@ -4,106 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35EF10ED66E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 12:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F380610ED676
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w66hu-0005xZ-Ri; Fri, 27 Mar 2026 08:54:35 -0400
+	id 1w66xr-0000ph-WA; Fri, 27 Mar 2026 09:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w66hm-0005wo-4W
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:54:26 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w66xo-0000pY-Ue
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:11:01 -0400
+Received: from va-1-111.ptr.blmpb.com ([209.127.230.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w66hj-00012T-HA
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:54:25 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64eaf8aa893so2131858d50.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 05:54:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774616062; cv=none;
- d=google.com; s=arc-20240605;
- b=I66qjiebiVRbv7uyRhxJTQw/Yj3MTzkhzJpchewPWDAL6d/URlHJ4H6WlMKoXM9Tw2
- ap3No4HG381xocevEVPR6bo6G2HdZK/zi2hdatS8TPZfYQchLbrGMuvEekxQXIIov3wP
- Ow7uPaivxAS8dkgm8j+GLMNT96zMJJ3Qj/KFDdkKJGiCBt2tfqZyqG3Usn6Dlinui07d
- sC5gG6mUmAhi5A2wFfH9ir8T17pOG5AX+5PyqmmKs7DPTl/FKLDS5wkSWwXteAsgaPO4
- LqRnc2BdDmqpD8YvgbhRT+NCC0cpvRkc/3YEWSDPKfLtPlxE8HRf3CNetqbp09J4ox3Z
- 7HiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=kzCFKM309Nm5jK3yHzstQFGM7mkWdc7TRJRU68FREYk=;
- fh=i9b00taZvWmeuP8ICDgmYTu097WQUtGk3SraBdL9nps=;
- b=Wba/k2YW9znd2+2C2GxCh2olBS+0W4/z9ShndKrZ35LneKf1qbYHq4T4YgEc1jJ2dS
- 9FyGVsNbX3F+Z5HunySzvlVSJZBpUgyBpB/0yhRixHFRUiVcbo+9Pn6lT4tGmBiBzbSw
- Q4C0htMZH3PQRLphZxwuu9G7chMYtGKaNbY90AehbTnojAvZEr3VFFzG+8FTiaojoZ2a
- k4h0gLkKU+oun4mHYAswCh6EPaZsFsR/ovY8rCKCI9Id1bo5wRsaq6u/ERNAKdFDMP8w
- syqLiiFqC7yuk8dZCHtPokoX/W5ltVmFZ//yqmOEIyRBWy6Rzn7shCAMn5HcxaF6lf4u
- 57Rw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774616062; x=1775220862; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kzCFKM309Nm5jK3yHzstQFGM7mkWdc7TRJRU68FREYk=;
- b=j67wFQruIS/ttWsK2sKhKXTz6IZccq3nilruHr7EbbI1nFZOawhfd1nFToSdYi2d6N
- lwE4gY7/WAISvkGpyiCQTrq2VMzo5WGIyVjCU4xCEhYDdiTeFtAUnLD5gJrv5S15YFoH
- y8jIhtrxOl6uRxjSQkq19e4JzBSLVKvIe5yCi12lh/4GafauWlLBnQmn2OjE+K2I879B
- ZWca5jrF+ZyIgOecCcWvEoc6r7ljTHohtoKT+eEHK4744SN6BjgZa8eDEuSzLog4u9cX
- gcf1DK5vE3/PCr2X/tNTyV2FUt5D8I1/lQ3G8fr+RU8I7mvjOOsWgoJsbLYPZx0wFPpB
- SXAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774616062; x=1775220862;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kzCFKM309Nm5jK3yHzstQFGM7mkWdc7TRJRU68FREYk=;
- b=pUM9LKAbI5ORnyhemVKKW+/nlJMQqMWTEydzXRNr5qaOYXjzjsn9+Q2PW4/VhiP2Ze
- OGQ1tAhZ+WM5+DZFtFfD6i8pFOdWDNKZzY5SoTE1louxKw8HnzM81ilhkK1L9g2qLaQm
- BnvcJGNH/EzUQrVTqXzxrba+pcqjT3Q43nMbb48OE+in+EZ+jQ5YaUdE/jF+uBE1PQtD
- rOTItCnHq7DuiGK8ptHIONencMazhVSBR8NjJgqBYHICdTAiy86xEJ4nsvb0aao7cNgU
- MF4j2FnRq1XxMu/xFaKG7LnHLfdcAZcDmPZ4wxvS99T60dzhu+jXEKhmpmAondPa1tMa
- PHdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCiYBZWUdhP3iYpLGUQinsdmaZsp0EqUjkj0SGhLUBAjPx71VQq6kDRZKtZYWOYltJyxXEtbNpM1KY@nongnu.org
-X-Gm-Message-State: AOJu0YwIDFQzbashotjr8E51BaV6a3kOQVel0W1Tp6C3RI9GDB2aV+So
- aQoAEcaIsGmUSARU/VUqyS9jqmXUhJ3DItjiawDnekNXx/HxXoT1Gtgu+yYxeT46ZSKibARnkCn
- 1LbcJiP2k6LDgV3OpYL6UKMRt8CX2cdYDB+he/TMxDQ==
-X-Gm-Gg: ATEYQzzwpuj9XYOUV63dHFnJNJi9TBlVtCx70Os5z2OZwFEdlIsLqS4rxMTLgK0kkj1
- f6Prs7Vm0V78ZeMAC4XJm51mrEB+d3HGVQfn6Qc5bEfOzT7BPYYTjBhty9AEQWlTlKeXtg8poPW
- Z4PB5VzI+eGWypxO5MlrmP5/PMXAeBniP7G4Uq1yeVet7aWzumyJ91Sd+ZomClKYlTWN5kTrmnr
- Uqpv3BM182u9qqWV4yZgjaewe311g1Sraj/xLd1RzPUGUhnwrXUSioTH3hW3DlVlLqyvYGrUXzC
- VMQktEaESuJd90ulgkNvWO12C3fEtPAmMisFmvqNj5DmZIeunCPuH7lbhdfCNo0+xV4=
-X-Received: by 2002:a05:690e:b42:b0:64e:b88a:2e9c with SMTP id
- 956f58d0204a3-64ff7222b21mr2324216d50.31.1774616061848; Fri, 27 Mar 2026
- 05:54:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260327124136.983955-1-shivangu@linux.ibm.com>
-In-Reply-To: <20260327124136.983955-1-shivangu@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Mar 2026 12:54:10 +0000
-X-Gm-Features: AQROBzDOA9TkS0FFuDrYvUVOQlPZ08CG4RkcUI7f2HVA9DQY1Y7I4GyzSN60Xt8
-Message-ID: <CAFEAcA86otB1+BeQ_Gca7VcF4c+rJ4r9SxwhkTOkCHEAas_KWw@mail.gmail.com>
-Subject: Re: [PATCH v2] ppc/pnv: generate dtb after machine initialization is
- complete
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com, 
- milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-stable@nongnu.org, Nathan Chancellor <nathan@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w66xm-0005zZ-0o
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:11:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1774617040; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=l/lgnMIV8DNoZCBSRTWY7xYrOxj5DgN3eWBfLFhjboU=;
+ b=jfcNvF8tFlaYJ1nkitWy70Ksy9cV2OqJRFntlKCrttASDwgPUYNQUlz88np3agWqK5mctP
+ xJ6vD1oZRbgDNN01SsrQUvcwyWOmD8YkjZYiNXZKICHH3ECkO+f6EYU8f/a/k6pWX6CTrP
+ VsC58JKx2k3aH/fpIPsxwCCLuysGdGZd/6M2A4YDWK5X8yL5CgMi/+/a0gtyPuSMBsXNG7
+ kx1NuxSsnFF+6xygoGjK+nTS9Cr7KJ2JQnwTe306CVamsSyUqudhdlyzS9GDzpvCQUi2PP
+ wkjdvp6Qt/0aaaMlUMOjVygMzfJYXUxr4IluzjsIMcdnLmAXjA5PrdoMZDn8lw==
+Date: Fri, 27 Mar 2026 21:10:24 +0800
+X-Mailer: git-send-email 2.32.1 (Apple Git-133)
+To: <qemu-devel@nongnu.org>
+Cc: <kwolf@redhat.com>, <armbru@redhat.com>, <michael.roth@amd.com>, 
+ <wubo.bob@bytedance.com>, "hongmianquan" <hongmianquan@bytedance.com>
+Message-Id: <20260327131024.51947-1-hongmianquan@bytedance.com>
+Mime-Version: 1.0
+X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+X-Lms-Return-Path: <lba+269c681ce+2f99e9+nongnu.org+hongmianquan@bytedance.com>
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Subject: [PATCH v2] monitor: Fix deadlock in monitor_cleanup
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Received-SPF: pass client-ip=209.127.230.111;
+ envelope-from=hongmianquan@bytedance.com; helo=va-1-111.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,29 +67,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Mar 2026 at 12:42, Shivang Upadhyay <shivangu@linux.ibm.com> wrote:
->
-> Currently, the machine dtb is generated in pnv_init(), before all devices
-> are fully initialized. This can result in an incomplete dtb for the system,
-> as seen in bug [1].
->
-> Fix this by deferring dtb generation until machine initialization is complete,
-> using the machine_init_done_notifier hook.
->
-> [1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
->
-> Cc: Aditya Gupta <adityag@linux.ibm.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Cc: BALATON Zoltan <balaton@eik.bme.hu>
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Nathan Chancellor <nathan@kernel.org>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
->
+During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
+received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+The root cause is a race condition between the main thread's shutdown sequence and the coroutine's dispatching mechanism. When handling a non-coroutine QMP command, qmp_dispatcher_co schedules the actual command execution as a bottom half in iohandler_ctx and then yields. At this suspended point, qmp_dispatcher_co_busy remains true.
+Subsequently, the main thread in monitor_cleanup(), sets qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx, false), which attempts to wake up the coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx. The main thread then blocks indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches termination, resulting in a deadlock.
 
-thanks
--- PMM
+The execution sequence is illustrated below:
+
+ IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
+    |                                 |                                        |
+    |-- query-commands                |                                        |
+    |-- qmp_dispatcher_co_wake()      |                                        |
+    |    (sets busy = true)           |                                        |
+    |                                 |   <-- Wakes up in iohandler_ctx -->    |
+    |                                 |                                        |-- qmp_dispatch()
+    |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
+    |                                 |                                        |-- qemu_coroutine_yield()
+    |                                 |                                            [State: Suspended, busy=true]
+    |   [ quit triggered ]            |
+    |                                 |-- monitor_cleanup()
+    |                                 |-- qmp_dispatcher_co_shutdown = true
+    |                                 |-- qmp_dispatcher_co_wake()
+    |                                 |    -> Checks busy flag. It's TRUE!
+    |                                 |    -> Skips aio_co_wake().
+    |                                 |
+    |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
+    |                                 |   |-- aio_poll(iohandler_ctx, false)
+    |                                 |   |    -> Executes do_qmp_dispatch_bh
+    |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
+    |                                 |   |
+    |                                 |   |-- aio_poll(qemu_aio_context, true)
+    |                                 |   |    -> Blocks indefinitely! (Deadlock)
+    |                                 |
+    |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
+
+To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh() to break the main loop out of its blocking poll, allowing it to evaluate the loop condition and poll iohandler_ctx.
+
+Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
+---
+ qapi/qmp-dispatch.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index 9bb1e6a9f4..e3897d5197 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -128,6 +128,16 @@ static void do_qmp_dispatch_bh(void *opaque)
+     data->cmd->fn(data->args, data->ret, data->errp);
+     monitor_set_cur(qemu_coroutine_self(), NULL);
+     aio_co_wake(data->co);
++
++    /*
++     * If the QMP dispatcher coroutine is waiting to be scheduled
++     * in iohandler_ctx, we must kick the main loop. This ensures
++     * that AIO_WAIT_WHILE_UNLOCKED() in monitor_cleanup() doesn't
++     * block indefinitely waiting for an event in qemu_aio_context,
++     * but actually gets the chance to poll iohandler_ctx and resume
++     * the coroutine.
++     */
++    aio_wait_kick();
+ }
+ 
+ /*
+-- 
+2.32.1 (Apple Git-133)
 
