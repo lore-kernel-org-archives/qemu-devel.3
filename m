@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E68D10F2861
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 17:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F6B10F2861
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 17:33:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6B0x-0005gO-Lp; Fri, 27 Mar 2026 13:30:31 -0400
+	id 1w6B3E-0006eL-6h; Fri, 27 Mar 2026 13:32:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6B0u-0005fx-Il
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:30:29 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6B0s-0006UJ-DD
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:30:27 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-486fe36cfabso17940615e9.1
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 10:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774632624; x=1775237424; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=l5Lx3JK81pqLAUzWvhxlraOcK3hBgKuV6WCWXqOBalc=;
- b=w/AHbNeA1WuXWQjwLubnAsew88cn+UMQY2o0K55y2W+mXxPxSKgFx5Ji/FyJMXJ+Zi
- VVeDHFYp93wEAk6ujM9mCu4Dj5wkN4GkxcqemmmnAtLJ3STNfGJaE6D78HwQ4tGTgC4K
- SuAfhvgrb1jiJNbR7sAd7ZVeUw235W85IxKIns2FXH4nL749znImVp//pvrCyLwqA1YU
- xybcaNSEYuHwtJs9qdAl+1kt+C+pW/f8h9UdRK0aRNjJi2fRSnvPUd0gHEZS8FubeFkH
- OGGDv3j9N0lClHHcREPx38pd9+QC/9bpgA2zZS6tEmzDh3okSuYOKcao9LU0hcP4sp/0
- QgcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774632624; x=1775237424;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=l5Lx3JK81pqLAUzWvhxlraOcK3hBgKuV6WCWXqOBalc=;
- b=SoU+ClCTTeCOfq5g/h5Nc8VGjKZ6ha4W854zYJ34KX+OJMEQkB0UpR11mt/kPgZLcT
- eCzq84t2jjj0SbyjfUwcXhJ4M1bQlJUXYlEW2o96dL4QtsnCZfhyZTBxsCCWhQcqfF1d
- hVdXZHZdP+oxWzpwcQRHHs4TVfQGjjeKvwCIpdYTGb1n0Nnv5BFjZawct2J/AjFM28EU
- ehvxRk7gyRqPIWOgguikxdYqogJqewYcUhNmEnFnqQHRara5nQlsYRxxJOXX6YfbL4xf
- rwDrV2JyoFKTSzOYc73HdujQYsGi3tymDBZdqJJO+9+jQesoo3hz77ifHXYUkMMxIjeO
- AGNQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2BRCCmxvydYavOUirMH2EzDsVECtRcl/ZeoOG5hpTh3spp3e6y50uDaUItOlEAaADrG+PjSuxM5GL@nongnu.org
-X-Gm-Message-State: AOJu0Yziwhj9I1Gut6SWpdOTXMVwPb3AeYuXv9iG7Poxbjr2tkiLMC9K
- YQ7GaFx6USrSJUmT5xC/uXfdQM8CZ8lNPJ1ZatD17aAbw6wlw6h64piPyaeQJSbZfms=
-X-Gm-Gg: ATEYQzwxejlzQ3wEnO6VAulITsdyqD5gClExEKil+EqCT5ZBifRCTXZ2yY76B5L78q3
- TPxsRJjnUHG+eit1Mm9wrhoI7RjZV84AHySvf6uF8++y8yZf3g6a3mcM4/RRHFGZ1Pkcoxpnczs
- RHJJoeJKgvdaBb5M50AmIYP7q0zY6AVXu04iw7uYr8BdE0KspxwpholN7m7PVNoiN9dm2dp8o/M
- pti6XBIvmZZNyJuOhkCedfeEhHaBBaUUpnahB7e/1WCaBKy5y4dS33AOz25vMUIuXsOQ0gf428W
- 1lpX3FgsY2rIrknxrlW2UJvOYpIfF9av6cLt6/I+37F9Tbe6ubawZn5By8hYMKKe1fzTJjmLZOu
- YnsQ1FkWKgBwOL0tyRweHhD3EzqwZvW3Tf8+63EXcvKhzDcTSrwOmokaxBcJ8bMiRsC9SP/nX6A
- ylM8OTdBWIHuDCV2TJ7fGX7ia525eRqgONHi1IW/g7Ub/Ottg/7zvA78wRRdQp0BP3ilwZIgB4
-X-Received: by 2002:a05:600c:358f:b0:486:fcc7:6811 with SMTP id
- 5b1f17b1804b1-48722be4497mr126283025e9.10.1774632624307; 
- Fri, 27 Mar 2026 10:30:24 -0700 (PDT)
-Received: from [10.202.147.66] (109.243.130.77.rev.sfr.net. [77.130.243.109])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b91945b28sm14709421f8f.15.2026.03.27.10.30.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Mar 2026 10:30:23 -0700 (PDT)
-Message-ID: <9a7be223-0b30-44e0-b6da-fcf614a1a052@linaro.org>
-Date: Fri, 27 Mar 2026 18:30:21 +0100
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w6B36-0006aD-UG
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:32:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1w6B35-0007yt-Be
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:32:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774632762;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1l0fA9dLaPFhQ3AtiN7mPv0FR5CxBzjNHadXvLmdK6s=;
+ b=W2P1VPA1kupXqEv1oEjktLum9Lc2/Z659w7FLkp8cEesL1bdiKtxc7WAP5nQpRKY3AoIJ9
+ ZExpEg7C3IfaXNMZP6DYSxZehVnsQWjeod0hArWvaj4jd6FomessbSR9CFkEgWDjt5cYcz
+ jszBR3BjM0pE/SpOwW/44uML9qrYX9g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-OWOwgaU7MXang1WWexYB7Q-1; Fri,
+ 27 Mar 2026 13:32:37 -0400
+X-MC-Unique: OWOwgaU7MXang1WWexYB7Q-1
+X-Mimecast-MFC-AGG-ID: OWOwgaU7MXang1WWexYB7Q_1774632756
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B39F1800464; Fri, 27 Mar 2026 17:32:36 +0000 (UTC)
+Received: from mbawa-thinkpadt14gen5.bengluru.csb (unknown [10.74.88.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7A5A830001A1; Fri, 27 Mar 2026 17:32:29 +0000 (UTC)
+From: Mohammadfaiz Bawa <mbawa@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: stefanb@linux.vnet.ibm.com, pierrick.bouvier@linaro.org,
+ "Michael S . Tsirkin" <mst@redhat.com>, imammedo@redhat.com,
+ anisinha@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ qemu-arm@nongnu.org, mohamed@unpredictable.fr, philmd@linaro.org,
+ Mohammadfaiz Bawa <mbawa@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v3 2/3] hw/acpi/tpm: parameterize PPI base address in
+ tpm_build_ppi_acpi
+Date: Fri, 27 Mar 2026 23:02:08 +0530
+Message-ID: <20260327173209.148180-3-mbawa@redhat.com>
+In-Reply-To: <20260327173209.148180-1-mbawa@redhat.com>
+References: <20260327173209.148180-1-mbawa@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 12/12] target/arm/tcg/translate.c: replace target_ulong
- with uint32_t
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org
-References: <20260327165042.604105-1-pierrick.bouvier@linaro.org>
- <20260327165042.604105-13-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260327165042.604105-13-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mbawa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,38 +86,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/26 17:50, Pierrick Bouvier wrote:
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/tcg/translate.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-> index 4546bbeeeff..204f9657993 100644
-> --- a/target/arm/tcg/translate.c
-> +++ b/target/arm/tcg/translate.c
-> @@ -6450,7 +6450,7 @@ static void arm_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
->        * fields here.
->        */
->       uint32_t condexec_bits;
-> -    target_ulong pc_arg = dc->base.pc_next;
-> +    uint32_t pc_arg = dc->base.pc_next;
->   
->       if (tb_cflags(dcbase->tb) & CF_PCREL) {
->           pc_arg &= ~TARGET_PAGE_MASK;
-> @@ -6612,7 +6612,7 @@ static void thumb_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
->       bool is_16bit;
->       /* TCG op to rewind to if this turns out to be an invalid ECI state */
->       TCGOp *insn_eci_rewind = NULL;
-> -    target_ulong insn_eci_pc_save = -1;
-> +    uint32_t insn_eci_pc_save = -1;
->   
->       /* Misaligned thumb PC is architecturally impossible. */
->       assert((dc->base.pc_next & 1) == 0);
+Add a ppi_base parameter to tpm_build_ppi_acpi() instead of
+hardcoding TPM_PPI_ADDR_BASE. This prepares for ARM64 support where
+PPI memory is dynamically allocated by the platform bus and the
+address is not known at compile time.
 
-I'd have expected vaddr, but uint32_t is correct enough.
+Update the x86 callers (ISA TIS and CRB) to pass TPM_PPI_ADDR_BASE
+explicitly. No behavioral change.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+---
+ hw/acpi/tpm.c         | 8 ++++----
+ hw/i386/acpi-build.c  | 2 +-
+ hw/tpm/tpm_tis_isa.c  | 2 +-
+ include/hw/acpi/tpm.h | 3 ++-
+ 4 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/hw/acpi/tpm.c b/hw/acpi/tpm.c
+index 5fe95f2e3f..e703775984 100644
+--- a/hw/acpi/tpm.c
++++ b/hw/acpi/tpm.c
+@@ -20,7 +20,7 @@
+ #include "qapi/error.h"
+ #include "hw/acpi/tpm.h"
+ 
+-void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
++void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base)
+ {
+     Aml *method, *field, *ifctx, *ifctx2, *ifctx3, *func_mask,
+         *not_implemented, *pak, *tpm2, *tpm3, *pprm, *pprq, *zero, *one;
+@@ -40,7 +40,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
+      */
+     aml_append(dev,
+                aml_operation_region("TPP2", AML_SYSTEM_MEMORY,
+-                                    aml_int(TPM_PPI_ADDR_BASE + 0x100),
++                                    aml_int(ppi_base + 0x100),
+                                     0x5A));
+     field = aml_field("TPP2", AML_ANY_ACC, AML_NOLOCK, AML_PRESERVE);
+     aml_append(field, aml_named_field("PPIN", 8));
+@@ -56,7 +56,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
+     aml_append(dev,
+                aml_operation_region(
+                    "TPP3", AML_SYSTEM_MEMORY,
+-                   aml_int(TPM_PPI_ADDR_BASE +
++                   aml_int(ppi_base +
+                            0x15a /* movv, docs/specs/tpm.rst */),
+                            0x1));
+     field = aml_field("TPP3", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
+@@ -78,7 +78,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
+ 
+         aml_append(method,
+             aml_operation_region("TPP1", AML_SYSTEM_MEMORY,
+-                aml_add(aml_int(TPM_PPI_ADDR_BASE), op, NULL), 0x1));
++                aml_add(aml_int(ppi_base), op, NULL), 0x1));
+         field = aml_field("TPP1", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
+         aml_append(field, aml_named_field("TPPF", 8));
+         aml_append(method, field);
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 4f01e2c476..0d7c83d5e9 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1219,7 +1219,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dev, aml_name_decl("_STA", aml_int(0xf)));
+         aml_append(dev, aml_name_decl("_UID", aml_int(1)));
+ 
+-        tpm_build_ppi_acpi(tpm, dev);
++        tpm_build_ppi_acpi(tpm, dev, TPM_PPI_ADDR_BASE);
+ 
+         aml_append(sb_scope, dev);
+     }
+diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
+index 1ca403241d..2b1267133a 100644
+--- a/hw/tpm/tpm_tis_isa.c
++++ b/hw/tpm/tpm_tis_isa.c
+@@ -159,7 +159,7 @@ static void build_tpm_tis_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
+      */
+     /* aml_append(crs, aml_irq_no_flags(isadev->state.irq_num)); */
+     aml_append(dev, aml_name_decl("_CRS", crs));
+-    tpm_build_ppi_acpi(ti, dev);
++    tpm_build_ppi_acpi(ti, dev, TPM_PPI_ADDR_BASE);
+     aml_append(scope, dev);
+ }
+ 
+diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
+index d2bf6637c5..2ab186a745 100644
+--- a/include/hw/acpi/tpm.h
++++ b/include/hw/acpi/tpm.h
+@@ -20,6 +20,7 @@
+ #include "hw/core/registerfields.h"
+ #include "hw/acpi/aml-build.h"
+ #include "system/tpm.h"
++#include "exec/hwaddr.h"
+ 
+ #ifdef CONFIG_TPM
+ 
+@@ -250,7 +251,7 @@ REG32(CRB_DATA_BUFFER, 0x80)
+  */
+ #define TPM_I2C_INT_ENABLE_MASK   0x0
+ 
+-void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev);
++void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base);
+ 
+ #endif /* CONFIG_TPM */
+ 
+-- 
+2.53.0
 
 
