@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F7610BA445
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 08:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FCBE10BA43D
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 08:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w62lB-0004VY-Tf; Fri, 27 Mar 2026 04:41:42 -0400
+	id 1w62ud-00071O-V1; Fri, 27 Mar 2026 04:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w62l3-0004Sz-4T
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 04:41:34 -0400
+ id 1w62ua-00070g-Fu
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 04:51:24 -0400
 Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w62kx-00037P-2Y
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 04:41:29 -0400
+ id 1w62uX-0008Hd-Pg
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 04:51:24 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id C0EE04369D
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 08:41:24 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 713F14369D
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 08:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1774600884;
- bh=CBtfOraiO6yggR3ivX1C3znqAzPS5463r0+QQYJGTeU=;
+ s=20210803; t=1774601479;
+ bh=9cC31BnTf98yw9MSiEdtxT5M6Ilv9BUrnblhzqlq1fs=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=ZE3KxyvCPNHrI8jjbxGCOVX0hUeeFRhENYVdYzA6ZcUnQARBN3JLHnV/S2mcJ5j2N
- GOcj60lyrXSQJPSeB1oC4+cc/ypxWYMSKzEhOKqHE0SI86qaX8dQtYAOEdmHfH4NWS
- qFFl6cEwV75jCy4l7bCsJgGMKfE4R/Lzf+9EcZDJEfrxkPXMNvmruTPgNnNOkZ8FSx
- auSPAOoIJ+GkLxDIZRnPT8jg1THfTAq/oeTJMojXBMQPRv4rLwu7otj5UOM+Jl2/yl
- 9nr0lEqeDvsEsz8S0fHoBINdMlreyzcMaliRantT0rsYWSALFLpFE5Pu/DZkTiZ5tB
- XsgWgsE1Zn1OA==
+ b=Fm+UUXzRTAUAXkoICYcl9IJbr8siF5UbyDEmbuu3v9hjyzJ1j9hmZ3DKBxuyofXxa
+ FZzYTlJ07VQd0MBdQ8k+iAZuBP8T22ilXeHzx/no5d/d+noCik2MDj588zyCVq0MCT
+ W6gr/8LqPn+8jOCJtIsRDzqNpemP0qqNHTu8XO4nDflrRnjD9ANSVIL2FFEmFjbU8g
+ KH/qjhy8G07uhtFP9YARET6V4ppiC+7T7qLzMrykllrvpKnfJEJ7GAy63UnnUTrb3r
+ 4MU+r8sk4EPC7jmlqYlUgmiHAtxqPnD2wTMwhVe4Xa2MiriHzhVEfEAL39e9VD/nIQ
+ VAPovpk4SWDrQ==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id AB8487F3B1
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 08:41:24 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 663757E160
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 08:51:19 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 27 Mar 2026 08:31:50 -0000
-From: Hector CAO <2133188@bugs.launchpad.net>
+Date: Fri, 27 Mar 2026 08:42:57 -0000
+From: Christian Ehrhardt <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
@@ -80,9 +80,9 @@ X-Launchpad-Bug-Private: no
 X-Launchpad-Bug-Security-Vulnerability: no
 X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Hector CAO (hectorcao)
+X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <177460031226.4004754.2825047783446030356.launchpad@juju-98d295-prod-launchpad-2>
+Message-Id: <177460097730.2853507.10838496233137624831.malone@juju-98d295-prod-launchpad-4>
 Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
  handler
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -91,7 +91,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 1003d563b67aa8b252abb4fbd8196e66d9a6d70f
+X-Launchpad-Hash: cf6ffcc660b86b9719e9bef85e640814bae51edc
 Received-SPF: pass client-ip=185.125.188.251;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
@@ -116,11 +116,9 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-** Changed in: qemu-hwe (Ubuntu Resolute)
-       Status: New =3D> In Progress
-
-** Changed in: qemu (Ubuntu Resolute)
-       Status: Confirmed =3D> In Progress
+Hector was so kind to bump this to v3 and extend it to cover qemu-hwe -
+MRs supersede the former ones and are both referenced from this bug
+already.
 
 --=20
 You received this bug notification because you are a member of qemu-
