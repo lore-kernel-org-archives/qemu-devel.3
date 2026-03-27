@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E9B10ED674
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 393F710ED661
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w67Uv-0006Kh-4u; Fri, 27 Mar 2026 09:45:13 -0400
+	id 1w67Ud-0005yK-Dj; Fri, 27 Mar 2026 09:44:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67Uo-0006Ff-80
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:06 -0400
+ id 1w67Ua-0005vb-EM
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:44:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67Um-0006TG-Mn
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:05 -0400
+ id 1w67UY-0006FA-Ps
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:44:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774619104;
+ s=mimecast20190719; t=1774619090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S64lHc8nDcDVXki4gsEE1CO0XdJngbvvtfp4BSK2uts=;
- b=HjnvTr4t/d3LRHoKVb4Sqvsn+EosbWO7F7puO9NiDNcscFACFzo5qBzQakhinZLTE2EQf/
- BpURS0YHVcz6JdWtVh3zX3MFUslERsar7v1XGEArQaAQSlbXx2GpfkfjlS7tVLc/eixBvm
- vyjfoK0ffI2xq8FdnSduYo+mqXrUoKk=
+ bh=Oau2fifASnQbpebMTARmA8OnZaBg3IV2l8eaVyRBc2o=;
+ b=THnlnNA0rFkQqXGY9Gby/tvhnRMKW0oGr8qmgYz1XzDeTX6/y418U4Vrz5X/ZN1fnQ8/vA
+ jygFkqM+olMhm3DK3zJa3vOs3gi8giJ3C7zPJgYVeG16zgYnidCyS3Z7wqd8PBRjrHhN6k
+ IW3cGzqdybLN9T+2cwJqKOZhZhASI3k=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-pR8oze6NPIeb-CDJB9r1aQ-1; Fri,
- 27 Mar 2026 09:45:00 -0400
-X-MC-Unique: pR8oze6NPIeb-CDJB9r1aQ-1
-X-Mimecast-MFC-AGG-ID: pR8oze6NPIeb-CDJB9r1aQ_1774619097
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-GOveJysMPtaJS8S-ON0VNQ-1; Fri,
+ 27 Mar 2026 09:44:46 -0400
+X-MC-Unique: GOveJysMPtaJS8S-ON0VNQ-1
+X-Mimecast-MFC-AGG-ID: GOveJysMPtaJS8S-ON0VNQ_1774619083
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 541481800281; Fri, 27 Mar 2026 13:44:57 +0000 (UTC)
+ id EA37818005B0; Fri, 27 Mar 2026 13:44:42 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.150])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C548E1800671; Fri, 27 Mar 2026 13:44:50 +0000 (UTC)
+ id 33D291800671; Fri, 27 Mar 2026 13:44:35 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
@@ -66,10 +66,9 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 06/15] target/sparc: Use glib2 instead of
- strcasecmp/strncasecmp
-Date: Fri, 27 Mar 2026 15:43:52 +0200
-Message-ID: <20260327134401.270186-7-kkostiuk@redhat.com>
+Subject: [PATCH v2 04/15] io: Use glib2 instead of strcasecmp/strncasecmp
+Date: Fri, 27 Mar 2026 15:43:50 +0200
+Message-ID: <20260327134401.270186-5-kkostiuk@redhat.com>
 In-Reply-To: <20260327134401.270186-1-kkostiuk@redhat.com>
 References: <20260327134401.270186-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
@@ -104,34 +103,37 @@ This is a change in semantics. g_ascii_strcasecmp() doesn't honour
 locale but strcasecmp() does. But this is OK for at least one reason:
  (1) QEMU always runs with the C locale so there's not an actual
      behaviour change here
- (2) we want the comparison on boolean property value to be a plain
+ (2) we want the comparison data in HTTP header and it should be a plain
      ASCII one, not to do weird things with "I" in Turkish locales,
      so g_ascii_strcasecmp() is better as it's explicit about that
 
 Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- target/sparc/cpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ io/channel-websock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 1493336e7a..7704610428 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -174,10 +174,10 @@ static void sparc_cpu_parse_features(const char *typename, char *features,
-              * TODO: remove minus-override-plus semantics after
-              *       warning for a few releases
-              */
--            if (!strcasecmp(val, "on") ||
--                !strcasecmp(val, "off") ||
--                !strcasecmp(val, "true") ||
--                !strcasecmp(val, "false")) {
-+            if (!g_ascii_strcasecmp(val, "on") ||
-+                !g_ascii_strcasecmp(val, "off") ||
-+                !g_ascii_strcasecmp(val, "true") ||
-+                !g_ascii_strcasecmp(val, "false")) {
-                 error_setg(errp, "Boolean properties in format %s=%s"
-                                  " are not supported", name, val);
-                 return;
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 9902b014f7..85b22a8822 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -457,7 +457,7 @@ static void qio_channel_websock_handshake_process(QIOChannelWebsock *ioc,
+     connectionv = g_strsplit(connection, ",", 0);
+     for (i = 0; connectionv != NULL && connectionv[i] != NULL; i++) {
+         g_strstrip(connectionv[i]);
+-        if (strcasecmp(connectionv[i],
++        if (g_ascii_strcasecmp(connectionv[i],
+                        QIO_CHANNEL_WEBSOCK_CONNECTION_UPGRADE) == 0) {
+             upgraded = true;
+         }
+@@ -468,7 +468,7 @@ static void qio_channel_websock_handshake_process(QIOChannelWebsock *ioc,
+         goto bad_request;
+     }
+ 
+-    if (strcasecmp(upgrade, QIO_CHANNEL_WEBSOCK_UPGRADE_WEBSOCKET) != 0) {
++    if (g_ascii_strcasecmp(upgrade, QIO_CHANNEL_WEBSOCK_UPGRADE_WEBSOCKET) != 0) {
+         error_setg(errp, "Incorrect upgrade method '%s'", upgrade);
+         goto bad_request;
+     }
 -- 
 2.52.0
 
