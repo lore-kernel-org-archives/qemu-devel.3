@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D37F510ED674
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 14:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D67D210ED674
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 14:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w682C-0006Fh-6b; Fri, 27 Mar 2026 10:19:36 -0400
+	id 1w682v-0007BW-Fv; Fri, 27 Mar 2026 10:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6827-0006BR-BS
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:19:33 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1w682s-0006xe-Fo
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:20:18 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6823-0007UG-1r
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:19:30 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64937edbc9eso2080434d50.2
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 07:19:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774621164; cv=none;
+ id 1w682q-0007sI-P8
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 10:20:18 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-65005a8840dso43782d50.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 07:20:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774621216; cv=none;
  d=google.com; s=arc-20240605;
- b=NIMGuYo17gsoUi3w4QXw9SrRMEFatCBiqR4yZYAidKrTDUJa3AM+/8t6mU5dwCahbD
- ly3fNg+uXSuvaP+QSGdUulgxS5859ZXFEKH10sf3NxGhZTJXXHiVFrRj3rfovstCkGrQ
- j8najM7wwoKB92ywM4uwZuW/t/KxknBplVdMWMUN2TxYxsC+LgBYX64/D4Hcu9SMXzbI
- GDMaAk1b4+zY34XbzH1my3hh3JsWmEaLzx49AMNUOTp6ta6h0HPh3yDa34I7KClAaduh
- QD1JpMRa2wgen7oHoc17uNfOoLPUx/dabrsHAX0UwYQcQ+Jyxw4wgLW1uz71W2Pf9SRy
- x+bg==
+ b=Dqop7c2T4iDE1qaVKVKZ56lw4fZlrizE02STE541hl3H6vEw1UFQ+MX2VAM8ChK4As
+ bo8VSy0sckywYkU7BOqo9u/7OJpauq74/Vo0auuC3t/PtzhmCxUcH7mNh2JY0j0JnKVJ
+ fQA4BsHYbttJB+iLh9AhHQwqI+SnPQcTelCbOthGVz+NrBoGPYGFeOh9jBWKepUL07kc
+ 6tpow2glbx0lhjvax7fj9Ur3QlhXoY9/jvbOo5U5gQ9VOS932BMB4I5dI99cJ1Zh5n4Y
+ ZQm/+NGf9Rql8usdw7PDHQkm0bh1wNZva8WDI3/iyYRWerzHK8EnNrKFa83zPbryAhFZ
+ J8uQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=4WjmeaXgV82+aZtxwTz6uUGHzaGhq1ymgyGOqGfqkNs=;
- fh=j+Jf8Zo7HcoLWhELk7s24DG6J3SeNcVMMul7UByBgFc=;
- b=TBG3NFIN4+1tlJIj/h8SnWwpOBvKNc9e+d68FjQbRePpt0i/QmtjdN653fcc4cQFPV
- 1UqsLgGI1Ko3ZCNeHwUChh4Kt4KXHD8G1dyfxdLBcyT5LIJC0Us3Csmfl2mnVbaIuuDw
- Gflah8CAEITzUppHK3X2P9ilhq4+WUkmggPg57oAz4m+/xpMKAIE11IF3/v+x8s0HeQE
- +yrq9cM8qGHoh+5NtruswFcG1uprgXjNObxZ3iMK7xav0DfjTFCY3bbrACdVsYXty7Hw
- 9YkSLlT1eJUq/6qo8dkhmvy/hOAM2GNpBlaRtt3e8ac59f//qYpq0Atr4L/JNMrjiK1l
- j7VQ==; darn=nongnu.org
+ bh=h4EmkHMn9ibIoN2/Jf+eFFYHaBZUJUVQrG0xettR+is=;
+ fh=w+LpouDh30NtiNlKwr9dDyCbDsk9PDvxuqtAWQibE8Q=;
+ b=QFm5ntNKUpubswWycx80ITrpA6JDJe+czHNTBvsf1OP4xP4f+vCDqwimpNzulisYyK
+ EnzD171yXUc+A4/2nm6i5ZiP866SBo6nyJ9H0rJDPFjC+Hrj/o9nzZ9jW31qD/HJbnKY
+ zEt364yE5FYGbHkXuN+Dn+k+yNQ1HQmaNqjMGvODWuC0vvCgTtakAQVcObWHcSWBP8+h
+ +QJR9HVQfjEVUhjtTBRjRrtztYG2QKTuNw3LLsurxuZ/w9SVqpbIr1tP9HTZckn6JTh1
+ iMuAJW3ZXGWlGjRkjWVy/2qN+r6wWXJlEdWo6ivY0oxK5Yhxi9ggqqk3vcJT1LJESHE3
+ OWqA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774621164; x=1775225964; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774621216; x=1775226016; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4WjmeaXgV82+aZtxwTz6uUGHzaGhq1ymgyGOqGfqkNs=;
- b=E9GO3Hs5UEJzTOylNTclcKT9dATa9kBCJVuzKZZ00AGOXS6aqsbCgWXWF0dCvPN4qA
- Etsy67mE0lE19UiguMi+bJW1que4j3SZgnVFXHEHtAXtkPVsuiKqe+y106CoY/jEwLWd
- r2YuhOppvIDzE4w7UwPQDtXsh/KlaO7KnT3CDNIkD3IGeRJYAdHUnYFMTT/DwxGtt1ac
- a1CJNM4X2zsJhM8d8yOnobN+gutePvrjGvf4fYvpkBSjee/ngjab9SVn79yT9fQyDcQ0
- ZVK7Zzt3tYuZJIRpzGFI8xg0JBTFcn6maCgHgJsd6vruYIqjg9eW9UcatSZavZ3Gr1Uo
- UgTw==
+ bh=h4EmkHMn9ibIoN2/Jf+eFFYHaBZUJUVQrG0xettR+is=;
+ b=xTgfCjTbYihpd1RNACURld87BixgNhJIGo/ot94Xk7xkpGVs2YVvwO4ythP92a07Y3
+ CCsVi59aznA2Rk2JN85Qr6eY/eeVEsnstpLGGvcNXL5wDAcToAVJrOK0fHd5hKwHWMpS
+ 3FsBWhIjBI+5OmvSDN8DBv+eDlxbMhv8DD29ln+RfNDg+C39g47UloVQTTd6pnqnEdvd
+ zaFxfEr/l/idInhybxIBJA7k++fvuVLHJ0u4lKhXFwdcJZ2B5eMdLipzmIeRV7fG5OsH
+ 6QqmOALTcKARQ2JOmvkUGpKdao2o48LoLrDG3bZeu1vrbt/Woe0jYhJRzCodkgRTdvAr
+ nGvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774621164; x=1775225964;
+ d=1e100.net; s=20251104; t=1774621216; x=1775226016;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4WjmeaXgV82+aZtxwTz6uUGHzaGhq1ymgyGOqGfqkNs=;
- b=VaTX+cvUDaHZ/ke2kVZKKs48UfBEjUluQK4M9EJfNlTXVmX2S3bJdZQt1+IyWcQEoe
- vhpjA4GU9Y7G4JoYQ0afuHv7z5W7VvYCy8Z4KDROZsHB82D5xsv73G/7YAiVeifT8jHz
- Xk9zvs7pSUIP4eQlkWGZykGjZmNRisy2Gbr7gtiC3oLOaB8XinkO29Bi3OYtIdoVRzCn
- 0qCxvV1/DClpqbsfdbsg44FVlBNJw4oKDAMyhUPORYdDlYfv7RlKw7kJN1eGxj1AqydW
- N1Jwxe3LGpp+H26DdfM0Icp1vGfeP3fki3Hr4/TSAns7JCbCUHU9YD9+MNM5DOj7rEzi
- KMeg==
+ bh=h4EmkHMn9ibIoN2/Jf+eFFYHaBZUJUVQrG0xettR+is=;
+ b=ikGqbVDxD3vQLwnOCNwu4M+hl63XZEUVT56i1mUBZq3jKrplOC+A623s/YNdOfl6q4
+ B4kDv6b/DXR8tZwKlUYft11hJEWz4hBNF//yNh8ps8VxDZyfFaX/JPEr2NrVVmnz/Wxd
+ mrfpwpIPJm2/HP/bVfqr4YIP34cGtBnIIpI4+mE6CGnARJBmu+hQX44gTp6XuWvMrYZe
+ r1CPedH1xDO/E4IFBGfELCP/CXAbhXdYiPgcEWBMSySbcjuN7WLPiu1RLc0EtcDnZ17K
+ 5ihoUnlcV9wx39lE5Tok5BtU69ipi8KbMN+JdkqDnx9AQekdTPO20maZO90c7M5GrQiJ
+ ILSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeqdFjgCSgxbMU2Wvndx/tR3ROo1+d8OzjNpx1d0Ft9mqvPJZbd8p4AuybpAehrJO7/Tzs4Oe7Rgkc@nongnu.org
-X-Gm-Message-State: AOJu0Yzmx4vw10+sTQfMLsj6vdl4qDGu9qZFsptRwpLNxKcrBsAPL6wc
- PtkTdlnR185xtrggUl9E7Pi50GOWese8oWeM/yzKFV/8bFy3r6VeZosvJz+mhnLzMAyF3UvHxpB
- yqaSnohmOhK0LraMAEKhWijduUeiXz74pE+ZclFrzEA==
-X-Gm-Gg: ATEYQzwrGQv0AyGvUPjB3kowjGIy8JZDR5bfjgLIrDEhsMxTRRTFYCCSitKCbyHbcLK
- QkAPMzjYjwldSKc7S+aF5Km9nbzkkFz2b/RPM/nVwXXLYulwp9MXriOb/uZIkqM9vXn1w2E2FVA
- e3+u1RRiTRndCBibrTsA9C4fHGPMw32CDhpryqbK4ixwMoMYzHzjSGORMFozBgBzlpf0RcTQqDJ
- qLhHeVu4BLY7Cq7OBowtrRJSepTrahfDJg3Zq2B5Eo0klYAcN1f/GgpPIWbgWJIIwM7oxes8R9g
- DJxMxNIjltbmhWPsjk06rvghd/Q9MlQqyoKdGIPFNs+mSKHzCBVgOe0cR/u86BtRbS4=
-X-Received: by 2002:a05:690e:4810:b0:64d:6193:a760 with SMTP id
- 956f58d0204a3-64ff71d6b38mr2131553d50.27.1774621164224; Fri, 27 Mar 2026
- 07:19:24 -0700 (PDT)
+ AJvYcCXpSA8PYTuAIozZpy7o04OwgM+MS2w2jBu+bcPwjaeEgo2f1i6JIKt35rnqxDuNZgnm16Qbchw4D6om@nongnu.org
+X-Gm-Message-State: AOJu0YzdBi7nQdClnFG/c79zeCkkP1GXu8IpqCON0asbxoo1FqTI316r
+ W8FipvDK8PQFttSCJpKmxbxDoEWxRrmkEYIGw2iroewXmKbU6Omq9vr9TAkIWP6/zu37xfTAWRe
+ 8EwGbCIEBDxmvlaQDl+O9PwwCwngwsHxMDZgAWqlrqQ==
+X-Gm-Gg: ATEYQzy7zQgFUANXzupPqxnLGwpC+8+XadslILw4KXHWOVItGd11wbdkSO9p2Z8lkkt
+ LNsmbo8u3a/ZfEIWrVOZuW5NMmNevn23bCvcxeeEn97u38Ac94PLEZfSUpR01RFoj6Ptrxy9bQE
+ 2BLszthDNERVLqCY7iRC3kt6XRIdkETuV/Xj7dtolQfPub2tordgeNBcnSfnMVrD8oiTPtLBGtl
+ J+kCIWT5m8RUhjaRyfExjxsV8B3ihZjrxmChYSk2mWf+vlgx4eKELv2n0kRx5/yVKl5U8sVNCeJ
+ O4xKXpMdS9s/Upfqu4NjXjeYfcgWGRVDSLlhC0LaY6IHf2VDvEKzZEdhhhwVCdIEJFnCuEKMpQC
+ MXw==
+X-Received: by 2002:a53:d60d:0:b0:64e:f106:60e5 with SMTP id
+ 956f58d0204a3-64ff73b6081mr1959808d50.52.1774621215306; Fri, 27 Mar 2026
+ 07:20:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260327134401.270186-1-kkostiuk@redhat.com>
- <20260327134401.270186-12-kkostiuk@redhat.com>
-In-Reply-To: <20260327134401.270186-12-kkostiuk@redhat.com>
+ <20260327134401.270186-14-kkostiuk@redhat.com>
+In-Reply-To: <20260327134401.270186-14-kkostiuk@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Mar 2026 14:19:12 +0000
-X-Gm-Features: AQROBzDFKAtaDnZ_CkP8sLNQj62KF0xDt5c24sJEJyOSFn4rOw6Vt4Bc3wmhX_U
-Message-ID: <CAFEAcA-7uAnDm56JLJh-ASDGdSAv6EGoB5NNcKtbVGPuZzAYPA@mail.gmail.com>
-Subject: Re: [PATCH v2 11/15] osdep: Remove unused strings.h
+Date: Fri, 27 Mar 2026 14:20:03 +0000
+X-Gm-Features: AQROBzBFRtQAiDsGDqgRuOyZis6C54lKjmWtnXZGQUZFVhOVaki8E6WZtmCjCXU
+Message-ID: <CAFEAcA_B7hU2+YXEem-9-avrz64cvz6X=NB+bb8hfdMu9PdgGQ@mail.gmail.com>
+Subject: Re: [PATCH v2 13/15] util: Remove unused sys/param.h
 To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org, 
@@ -107,8 +108,8 @@ Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,13 +134,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 27 Mar 2026 at 13:45, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrote:
 >
-> We don't use strcasecmp/strncasecmp anymore. Also, we don't
-> use any other strings.h function. So this include is no more
-> needed.
+> We dropped the use of PATH_MAX in commit f3a8bdc1d5b26 (which
+> basically completely rewrote the path handling).
+> Now we don't need any sys/param.h defines.
 >
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+(If you need to do a v3 for some reason you could merge this
+with the previous patch; but it's not worth respinning just
+to do that.)
 
 thanks
 -- PMM
