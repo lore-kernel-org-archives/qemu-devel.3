@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27F510BA422
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D40EAF532CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5yb9-0006tv-Bd; Fri, 27 Mar 2026 00:15:03 -0400
+	id 1w5ycC-0007Pj-86; Fri, 27 Mar 2026 00:16:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5yb7-0006tK-KC
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:15:01 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1w5yc7-0007Ox-4u
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:16:03 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w5yb5-00043E-OA
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:15:01 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2a8fba3f769so7078395ad.2
- for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 21:14:58 -0700 (PDT)
+ id 1w5yc5-0004Ja-Cy
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:16:02 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2b0abdde280so16680635ad.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 21:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774584898; x=1775189698; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774584960; x=1775189760; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=rfFYIlpzNHk2zeOvZkib3A3vy/jnnzQMvBbUrq2adIw=;
- b=CPPnyMOQjCNoSYRhLJ6SrHTNDomwIzkPvvrzk9Tq6FCmrLUv7FV72tWy5WSBSxHY8z
- z0OgJSM+4S/EjQPgaGRMxO+aomMXft7siSXgLskvQt66RcALCH3FYoCvFPxtAMAt6U29
- OfiIa9FZylTVS3YWMDnHyKOQTYuHnHLAK0VZayPaCjIMXRuTjIzH38rPSV/Jzcs62OVj
- wjd+DpEaFpwhrzmHE78BXOMJEp/4CTV6g9X+ZPwwmyntOOi3pgFe/QHvnLdmTnYq3+Xr
- 6QzE5UDOz7F86p9PSnwXH8I3BBmNI+G76VxZ484ACWOeMy8dDlpV6XYs1RclsjOMFxk5
- 59RQ==
+ bh=Y+S68uIrLvV6AJj403lbVxEftF5rGIOFW9dWbWeKYDo=;
+ b=hjkzalialpQfyU/9LNM+T0bXw5EfoIS2ZlINhEb8PbWMpvKuaGWp3o3UIwVCLhdcCZ
+ jORcbBQjjsD+YnTk9a6kEYMXeW6lq7x77tLVz2IM/M2BAT2N2f8lfPHlHl9OlqMCH7OH
+ F8gcD+ohoKT9NE8OT6b8uQt6NuSaWwN5Mu079r22s3LLB1EnIjFVjs25EIJ412IGRdtf
+ OR+U0YR4fXXcwKe4pOcE7QzZSyGyGihuX08YdzoyKlKUt7kAAmHkd5aNHn9evtT6lCyy
+ q+av5OmoZnfyYCBFJc1Rw74pEwd/zSkLmGtJIECLE7VnS5JT+f9tYlRvoWT2VBguiRks
+ RWLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774584898; x=1775189698;
+ d=1e100.net; s=20251104; t=1774584960; x=1775189760;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rfFYIlpzNHk2zeOvZkib3A3vy/jnnzQMvBbUrq2adIw=;
- b=YnBMb9QZBHAxcswDO1kpYxi/J4o4GDiPQ49qfTw9oqmMUL4Jl97yVaNc8kTtjT4hfn
- DdLjgi5A3wEV7KgQga4qKDg/0ut11k5GBFdr579tqrYG8mYudGVGTvDc+bwV8VPqKrTb
- S3tWMBSNgDw8smYdOCC6FSspb+qDgY/e6EyVMH8Vxco8UbUBeCQdumXRFvbM8fMP7MMC
- PvvWVmBL7/FEI+FzznVNZ17pOFt2jzpXb5t5beGxtCZJbtD8yyZXPVhDb02ydQ2NNV3K
- y790jcVwox59CZTxLkKz/0tmu80rWL40810JMu23Rn/kzllBaPXNd3FPB+DMqExj4dGR
- WSdA==
+ bh=Y+S68uIrLvV6AJj403lbVxEftF5rGIOFW9dWbWeKYDo=;
+ b=rx5DnDlomDwGk2mkrsxdkS1C2f51vH1f0ifK20AkcQkZiOv2Z+KcBTygHZNtOl4xnd
+ OZvbM2k/QWj0WSNIAiuqH+k0t8z7mL4sKj2FfM7HY7BJ7xikUeNUzr9vH7/nLLEIJims
+ 2N8vpAg7D8hs+iUrUVFWSXGnIJOCDpfqA+/BgsdhJNAlC/QtOegF7ZHoaSKc1HKriBxS
+ akU/7/ETTOS9VkkG4Eow1pum3LK1+jLbfEEAOOKdKuK9ZNDui4JfMs1fh4e4Jpt0GRij
+ eldBG9cT6Q7LaGkNY0j3fhzw6CKrm96tA97AMn43INeiuakLkOr4ZqeR4RQs8qfFBvqf
+ V/NA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+Uj4t5BPoXfKmwbRP+0FENtASXDc6ev8q0EHz2NnmbRZavgAWGzLYmFIeg415ocGvxvDsXNasDrKK@nongnu.org
-X-Gm-Message-State: AOJu0Yx5blvOay3fm0aQbosZU25lM/bigTudzuyBrOZV3HfqFseSyLPs
- VMQSab3QpWGjXVqGaoKfUPSCmN23poE2HfaG5VWGiSTXaz+fpiv90Wh/WOQmRMUekak=
-X-Gm-Gg: ATEYQzwElbXhtYLZtwNJAYrG336qkB2ecPp+4QKn3rWYA3tiPhd+51KI4/IPDI0iXYY
- 6r/92A0kYY80G9rLZ1/n4hi+0UB14sa+59M45x2fGspnEC23ghdAlaMzRY+fDDIStiF+nMoHhf6
- 2s+0AJW31R9RJN51sfl2NY4mL7yGbdUzRxx3uVQhToOHM/9XMNljbeJGmYus4VLJKv5CxPWEjTv
- sfNPe3chsxZ4FYBY7KInye0fhZVa2+SeEjIk4yDe88Pyk/tz0WI1aZ+etx+tB2+9HlIm7pcLfn5
- bXs7xN+J8JNmoTor+igAfdfalImsCvFw7eP+32xU3ExcF1rgxITa/JQsQsEqM8MOH2FzkZJwsKw
- fSLsETr4l4Og0YfUikh6P/1/sPgDkatY+D7d73gwMv+1SmqTRPq7z41JjlStZNQTQ6uYy+VXNHn
- bxuVps1slZBzKOh1HFJvNg7WPvb4oYnG/stFEcTarQcg==
-X-Received: by 2002:a17:902:e952:b0:2b0:571f:6f09 with SMTP id
- d9443c01a7336-2b0cdcd5695mr13332295ad.44.1774584897703; 
- Thu, 26 Mar 2026 21:14:57 -0700 (PDT)
+ AJvYcCXSjX+wZR/5x6tsANEo3KIpRjTd71lnAVp/t0wc3PPu61sG3H2b10dqtMYZYrPeZZ+l3QSdGqbcZiKt@nongnu.org
+X-Gm-Message-State: AOJu0Yxx0gVVYV5o1XRH7p41nN26fWDp6DfBBkZwaAXtWYoRY3yoUGG6
+ 0RnBiA9+PsOm4DmFqoTJTKUuJ8gM40HQfbVbaAgUUcSzso/Po7DaiMTo6lwneA8Upz0=
+X-Gm-Gg: ATEYQzxuq9RUqr/WhJkDkKllS0NDWH4FTxDYX+jCbMbNc0cImkw3AtoEK7nsBur1dKt
+ 28vXJWlkpWmFMZCwL5shQUYo6EfYu+s6eXcX3CbCPrrI+rYgrPi0XhGntFxWH5FWQboQVoRMUcf
+ ivMYkmoUYdvn5wiDsrnrYF8bYnHI/3Q+j5U/V3+KWgvrjzUaaprb9vJ4gJA6qaMGHelOc/jqogH
+ wnVsQQCjK22HI11d97wwDPb1a3v+PnCXGmZZ7Q98M7sDjwCcLoLt5JhsOuC5JXSEsDjbu5Dvma9
+ wwcQpRbA5myjwPYpmW5coI3Bkk8ZoZ4BdqQjgNmLhKLbQwo7hYp3fz3djSu2Ow9fRDqKcp2QAn5
+ jvwg1lVlGnGdSZU0QlacfcfgHWpOo/EuoRbPlqt73QFIVOhJEwdaKc2yzLi6mhuIgrO1N2VtPAe
+ ioTXfdDmNQmWpIjY5CYXlYhjbM5/zEJhm1ahhjLNxaaD4qbwDsr/fH
+X-Received: by 2002:a17:902:d487:b0:2b0:ac1e:9720 with SMTP id
+ d9443c01a7336-2b0cdc5d700mr11716795ad.23.1774584959764; 
+ Thu, 26 Mar 2026 21:15:59 -0700 (PDT)
 Received: from [172.16.11.156] ([103.100.225.140])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b0bc8fb099sm43418685ad.72.2026.03.26.21.14.52
+ d9443c01a7336-2b0bc773472sm45929635ad.7.2026.03.26.21.15.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Mar 2026 21:14:57 -0700 (PDT)
-Message-ID: <dcab4982-1ced-43d8-ae32-5477604054ed@linaro.org>
-Date: Fri, 27 Mar 2026 14:14:49 +1000
+ Thu, 26 Mar 2026 21:15:59 -0700 (PDT)
+Message-ID: <ad208f30-4454-41a9-a91d-756fb40930df@linaro.org>
+Date: Fri, 27 Mar 2026 14:15:52 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/7] target/riscv: Implement runtime data endianness
- via MSTATUS bits
+Subject: Re: [PATCH v5 6/7] target/riscv: Support runtime endianness in virtio
+ via sysemu callback
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
@@ -83,14 +83,14 @@ Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
  "alistair23@gmail.com" <alistair23@gmail.com>,
  "thuth@redhat.com" <thuth@redhat.com>
 References: <20260324164007.549397-1-djordje.todorovic@htecgroup.com>
- <20260324164007.549397-4-djordje.todorovic@htecgroup.com>
+ <20260324164007.549397-7-djordje.todorovic@htecgroup.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260324164007.549397-4-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260324164007.549397-7-djordje.todorovic@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,167 +113,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I replied to v4 before I saw a v5 was already posted:
-https://lore.kernel.org/qemu-devel/d974df44-b46e-4e51-9eec-b46e391c3462@linaro.org/
-
 On 3/25/26 02:40, Djordje Todorovic wrote:
-> Implement runtime big-endian data support by reading the MSTATUS
-> UBE/SBE/MBE bits to determine data endianness per privilege level.
+> Implement the .virtio_is_big_endian SysemuCPUOps callback for RISC-V.
+> This makes cpu_virtio_is_big_endian() return the correct endianness
+> based on the hart's MSTATUS MBE/SBE/UBE bits, which is used by
+> virtio_current_cpu_endian() during guest-initiated device resets.
 > 
-> The key changes are:
-> 
-> - Add riscv_cpu_data_is_big_endian() helper in cpu.h that checks
->    the appropriate MSTATUS endianness bit based on current privilege
->    level (MBE for M-mode, SBE for S-mode, UBE for U-mode).
-> 
-> - Update mo_endian() in translate.c to return MO_BE or MO_LE based
->    on a new 'big_endian' field in DisasContext, rather than the
->    previous hardcoded MO_TE.
-> 
-> - Update mo_endian_env() in op_helper.c to call the new helper,
->    giving hypervisor load/store helpers correct runtime endianness.
-> 
-> - Pack the endianness flag into cs_base bit 32 (alongside misa_ext
->    in bits 0-25) in riscv_get_tb_cpu_state(), ensuring translation
->    blocks are correctly separated by data endianness.
-> 
-> Note: instruction fetches continue to use MO_LE unconditionally
-> (from the previous patch), as RISC-V instructions are always
-> little-endian per the ISA specification.
+> For bi-endian RISC-V targets, this ensures legacy virtio devices
+> correctly detect the guest's runtime data endianness, matching
+> how ARM handles its bi-endian support.
 > 
 > Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
 > ---
->   target/riscv/cpu.h         | 28 ++++++++++++++++++++++++++++
->   target/riscv/internals.h   |  9 +--------
->   target/riscv/tcg/tcg-cpu.c |  9 ++++++++-
->   target/riscv/translate.c   | 12 ++++--------
->   4 files changed, 41 insertions(+), 17 deletions(-)
+>   target/riscv/cpu.c | 11 +++++++++++
+>   1 file changed, 11 insertions(+)
+
+Nack.
+
+I replied to v4 before I saw v5:
+https://lore.kernel.org/qemu-devel/23a0d240-6f77-4edb-8128-fd2c2b8354df@linaro.org/
+
+
+r~
+
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 35d1f6362c..ef870d05b3 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -703,6 +703,12 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
->   FIELD(TB_FLAGS, PM_PMM, 29, 2)
->   FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index eed5afd27e..f813acf579 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -32,6 +32,7 @@
+>   #include "migration/vmstate.h"
+>   #include "fpu/softfloat-helpers.h"
+>   #include "system/device_tree.h"
+> +#include "system/hw_accel.h"
+>   #include "system/kvm.h"
+>   #include "system/tcg.h"
+>   #include "kvm/kvm_riscv.h"
+> @@ -2713,11 +2714,21 @@ static int64_t riscv_get_arch_id(CPUState *cs)
 >   
-> +/*
-> + * cs_base carries misa_ext (bits 0-25) plus additional flags.
-> + * Bit 32 is used for data endianness since TB_FLAGS has no free bits.
-> + */
-> +#define TB_CSBASE_BIG_ENDIAN  (1ULL << 32)
-> +
->   #ifdef TARGET_RISCV32
->   #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
->   #else
-> @@ -718,6 +724,28 @@ static inline const RISCVCPUConfig *riscv_cpu_cfg(CPURISCVState *env)
->       return &env_archcpu(env)->cfg;
->   }
+>   #include "hw/core/sysemu-cpu-ops.h"
 >   
-> +/*
-> + * Return true if data accesses are big-endian for the current privilege
-> + * level, based on the MSTATUS MBE/SBE/UBE bits.
-> + */
-> +static inline bool riscv_cpu_data_is_big_endian(CPURISCVState *env)
+> +static bool riscv_cpu_virtio_is_big_endian(CPUState *cs)
 > +{
-> +#if defined(CONFIG_USER_ONLY)
-> +    return false;
-> +#else
-> +    switch (env->priv) {
-> +    case PRV_M:
-> +        return env->mstatus & MSTATUS_MBE;
-> +    case PRV_S:
-> +        return env->mstatus & MSTATUS_SBE;
-> +    case PRV_U:
-> +        return env->mstatus & MSTATUS_UBE;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +#endif
+> +    RISCVCPU *cpu = RISCV_CPU(cs);
+> +    CPURISCVState *env = &cpu->env;
+> +
+> +    cpu_synchronize_state(cs);
+> +    return riscv_cpu_data_is_big_endian(env);
 > +}
 > +
->   #if !defined(CONFIG_USER_ONLY)
->   static inline int cpu_address_mode(CPURISCVState *env)
->   {
-> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-> index 460346dd6d..e2f0334da8 100644
-> --- a/target/riscv/internals.h
-> +++ b/target/riscv/internals.h
-> @@ -64,14 +64,7 @@ static inline bool mmuidx_2stage(int mmu_idx)
->   
->   static inline MemOp mo_endian_env(CPURISCVState *env)
->   {
-> -    /*
-> -     * A couple of bits in MSTATUS set the endianness:
-> -     *  - MSTATUS_UBE (User-mode),
-> -     *  - MSTATUS_SBE (Supervisor-mode),
-> -     *  - MSTATUS_MBE (Machine-mode)
-> -     * but we don't implement that yet.
-> -     */
-> -    return MO_LE;
-> +    return riscv_cpu_data_is_big_endian(env) ? MO_BE : MO_LE;
->   }
->   
->   /* share data between vector helpers and decode code */
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 3407191c22..fa42197e98 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -189,10 +189,17 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->       flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
->       flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
->   
-> +    uint64_t cs_base = env->misa_ext;
-> +#ifndef CONFIG_USER_ONLY
-> +    if (riscv_cpu_data_is_big_endian(env)) {
-> +        cs_base |= TB_CSBASE_BIG_ENDIAN;
-> +    }
-> +#endif
-> +
->       return (TCGTBCPUState){
->           .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
->           .flags = flags,
-> -        .cs_base = env->misa_ext,
-> +        .cs_base = cs_base,
->       };
->   }
->   
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 5df5b73849..d7f1f8e466 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -119,6 +119,8 @@ typedef struct DisasContext {
->       bool fcfi_lp_expected;
->       /* zicfiss extension, if shadow stack was enabled during TB gen */
->       bool bcfi_enabled;
-> +    /* Data endianness from MSTATUS UBE/SBE/MBE */
-> +    bool big_endian;
->   } DisasContext;
->   
->   static inline bool has_ext(DisasContext *ctx, uint32_t ext)
-> @@ -128,14 +130,7 @@ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
->   
->   static inline MemOp mo_endian(DisasContext *ctx)
->   {
-> -    /*
-> -     * A couple of bits in MSTATUS set the endianness:
-> -     *  - MSTATUS_UBE (User-mode),
-> -     *  - MSTATUS_SBE (Supervisor-mode),
-> -     *  - MSTATUS_MBE (Machine-mode)
-> -     * but we don't implement that yet.
-> -     */
-> -    return MO_LE;
-> +    return ctx->big_endian ? MO_BE : MO_LE;
->   }
->   
->   #ifdef TARGET_RISCV32
-> @@ -1346,6 +1341,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
->       ctx->zero = tcg_constant_tl(0);
->       ctx->virt_inst_excp = false;
->       ctx->decoders = cpu->decoders;
-> +    ctx->big_endian = ctx->base.tb->cs_base & TB_CSBASE_BIG_ENDIAN;
->   }
->   
->   static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+>   static const struct SysemuCPUOps riscv_sysemu_ops = {
+>       .has_work = riscv_cpu_has_work,
+>       .get_phys_page_debug = riscv_cpu_get_phys_page_debug,
+>       .write_elf64_note = riscv_cpu_write_elf64_note,
+>       .write_elf32_note = riscv_cpu_write_elf32_note,
+> +    .internal_is_big_endian = riscv_cpu_virtio_is_big_endian,
+>       .legacy_vmsd = &vmstate_riscv_cpu,
+>   };
+>   #endif
 
 
