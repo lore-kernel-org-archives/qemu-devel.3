@@ -4,104 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A848610F2861
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 17:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F1A10F2862
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 17:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6BK4-0004UD-CP; Fri, 27 Mar 2026 13:50:16 -0400
+	id 1w6BMC-0006xr-98; Fri, 27 Mar 2026 13:52:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6BJx-0004Td-Ph
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:50:10 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6BJw-0006SS-4a
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:50:09 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-64ea73e7b60so2569156d50.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 10:50:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774633807; cv=none;
- d=google.com; s=arc-20240605;
- b=Dy/mhbqOCXWPVFs1veEjU9EuCVm0DBwT7FQX5LH1cI8lfoZAApBNCB7jxnLibgzsNT
- 7na6obUm+jzKhYH2HjuTWzGeBM2vzkWfl2bbJK/pLz8VX3cRCmVWGs9z9KEkraVHD6XH
- wXWxQHQ8gsiBD3D3MgpaV9Uq3JHBYN206UrshdIMw1HyfxMqn62o2b5B4fbckCeUlppl
- nC1Ub+9b/IgfC6RUZesTn0PGCjb9aPlc4VFnhGFqCAnCR+WwEXYK6SgQ3tyEhtEGGNB7
- UPQnuhfqLD3d1jLzMYjEDj6MY/3UtbOXbTT2L6paZ/J7gfp9/bXOdhX9mpM6NCf2PRsi
- YEGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=o7NfbAaQ6PnBVQMzsMvByNm8WJHV/YlMxjQhD5kWImQ=;
- fh=s7VG75S3gruSNn7BODeRWfKJC95HAzYSe3gW+38i0ek=;
- b=e1ql+LYe5BwBj7XcHji6454upEgcyv7wacW3EODhIriF48M6DLaYYRBHi/RkQgbhU/
- TDh5N6MWjq7httx/QzVBdoEcnDYASPQDO65GIgrraJSKhnVcGopvV356XuEuLeAMmcWR
- s4tJy5cP3foDgFKR+kYyC4+jrCG92d0af95M2ozhlFyoFQ9Nxym0jwZ5zhvupHeweiMn
- 21KTzqk04eesh+ygDiQS/AN3160g1niJz35OoWeyWeQX4ywK6MirQHcvlqDROccYA8vz
- F6IvT1eufMOC2Na+oYpABwvqFyUJ6yQtONKRZDkmRy6tkBlWXB18vASWTqKt6SCjToZk
- Pv7Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w6BM6-0006wB-If
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:52:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w6BM1-00075y-Gk
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 13:52:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774633935;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=L9LZfeLB6OgC8kK/SGZ8BUIrwAjG4muW1CCUuEnvJTtyq5Sgx5ea6dAFbibUy++4sJ2zp4
+ 5KMNHJdomlVLkoCwgTyWWLkBRzMQgSAXJlUO9v+0n0/JBjAIwvhquk4qNixGtevgAo1VY5
+ uubzS5jFIi7NdIELG0w+dumFZO7Gd98=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-c1eKDbRXNQupW9ukzuP6xQ-1; Fri, 27 Mar 2026 13:52:13 -0400
+X-MC-Unique: c1eKDbRXNQupW9ukzuP6xQ-1
+X-Mimecast-MFC-AGG-ID: c1eKDbRXNQupW9ukzuP6xQ_1774633933
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4852ccff333so22158895e9.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 10:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774633807; x=1775238607; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1774633933; x=1775238733; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o7NfbAaQ6PnBVQMzsMvByNm8WJHV/YlMxjQhD5kWImQ=;
- b=QwhMGMaxIhRfuz7/Amr36ct77udcMek6qFFm9jABjoOC4cE/ojHmT9L8cYQs4aWV/k
- dOSg+qtizfwxfIYY/ugi2bxXLrQk2vKqRJi/PDC97GiaqUW5Zabe/lsBQ+YML4YKUukR
- c7aGViaac2TtqwgfjT+XkmUtuUdEj06KsBslean020ucbIqzbdb3TfxleB6WXdWenl0K
- wI+to1VlGYyZmXAZsz0UNrClHOOCNMJrro8IbSa7ikwsS07J9bAk5/KpvFM8NBoNk7/Y
- zq4gGSoqPHBxx7h/PsFhqV1U52DE4Q7QlO+xPKU0AoyHwL/4b2zEaCuS6oTQ660o3m8W
- Zjjg==
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=kJA/g/oX+qKjMqgLJBxIyWTCJquw4pmgovxXHz+2rxDfslSNcnKKZEYYq8qGginFp4
+ LUDdgAwJwP9LPtXgkZL9+oRp/z0D9hOXy6ffC3+ICYR3bX9YzvtITOrmtVyjjxtImJAz
+ BlI91whNC31W+71pCLLbvDX/xHM3BZmlskoJKUZWkT4CzmRDYU90Hc6cVdDjfKEAnKnt
+ fH00How/iJdVgt6KAevfbnI2dFwDn2ZKx+K+mofXQvYc1pJ8ewvLZzrqZNJcuZuc2rHM
+ An6TCtiMtE0I792A5AglkCaOasFjnsG9BnWuy5Icqo/RcOzDwQ9/1sHkshhMnNPAlynT
+ rjCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774633807; x=1775238607;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1774633933; x=1775238733;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=o7NfbAaQ6PnBVQMzsMvByNm8WJHV/YlMxjQhD5kWImQ=;
- b=XTpsRUwOPxjyUWL76F+oGLJZ6KiigjpqJPCma9t+jp2hXx3svCcA1h1YKFodXwrKPk
- O3+sZFB0IfUb4r5GB8RzHnSINZUaVScqZvqt9RU5uDaEnqKTHwxtDtm5fxZZvjm7h8PL
- oP2V9uyhw1I/juqw7/XCpASR3F7/YI0Wx7haNCfwkMGwFXtkBZDX3KF8q6h/SlCQlnhe
- flJt5caVZbVzimUYrQOlrT9gjIrvnnDURrEl+XE2VGzGUQ8jT2x2mqiaEVGOlA1ZnOPG
- XHKNMtvz058inh9g90fcPds5+Ru2l+N3A1hVxWke0mp/rgqA/RdbESwz1TNJBsrx5P+B
- P/rQ==
-X-Gm-Message-State: AOJu0Yw4LQgDSWXvJ85OzxfwaMax1tlQL4PRwWnEo88EWRS4zH6ui3j0
- CUmabuILNrZ64BBUwLmjHpwl5wQ9Hl9OppKqcQ61OQL8cXTBe14SVC7K/chT0SGp99VyLnyYKUt
- LKNEAW/O9M+mGP2vygIhv3xoTj2uQxAmVXRGjuRGUAg==
-X-Gm-Gg: ATEYQzyToyRjan4zwlV9/VvZjT4CNhemVJodhB5j8OjZOGbWM5GHpZcj9PLesnSxLv9
- yo0kG2d2gaAf8i5J8aq2850W62MuWkU0QPVY75fEdYeJhaSKhTCppX23LsUDOsdYzvyXuqxdbEM
- hqtxIMNvCQHNCDEx+XKlMgO8eGTt9bZYvg8ztPdYSd83cvlqMBvLYmDMNPPO1BIkoNZcWT7xmL0
- Smz5/BMK4NGy0gAqCxiRcMFG9XV3qDl+hzW9gdtTmvYWDxdLHrKjDG6s43H5f8fM0Z7wQI7vRNV
- fMRC6l/WyrTVzVHka4xoeE14xrT/Wg4+fTgNGufdqJxQOSetZGAk6taWo7ObOj00ujs=
-X-Received: by 2002:a05:690e:440e:b0:64c:af3f:e2a3 with SMTP id
- 956f58d0204a3-64ff74158efmr2989569d50.55.1774633806716; Fri, 27 Mar 2026
- 10:50:06 -0700 (PDT)
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=DPPVAxXQhHYIJ766ZrRg640pR2pXhpQRM7AAo3F42OjxiItcKA1zhVHBUyfO+vr8kE
+ NlaJL0vcR8TFt8Ys/QLGAqDLQvKc27zs+PUKgW3unuSeSNgdrTfSdAn91cYCi0Q2bOkw
+ rxE8s07z4KJJzGiAnO8ipkuDXVZWqhvX1a7Z8dn3tuJzHYNsvZs3T+OGLaA7+AsFE8TT
+ j9eOYLDQoe+ZE4gT7iM9PkYDjC54xLWVLzbHOXmS7+AFEg5daKiPYfwWnx8oLotTVVZ2
+ wlcmQEbLVAS4feZALAGnoUo1lWey9XdnSdtEkjxnUUgbEniY0wv6YQqVyLYW6vhcfFEV
+ d46Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUXpG01YUvnlGFizIFkgJr+E0XeAnuMvnACvn2uzWvytH86WN/VlW7M6ySYTEDyX9VjXDb+EjwfR8Sj@nongnu.org
+X-Gm-Message-State: AOJu0YxcvfzjpVR0mlqR79Z9kWcqrMB9dW+P8XgncAGPXy3Xw60uDidK
+ Ruc//SDO8wIEYE25XmxrR9kb8/fikoVRPuvmCaBhXkNbQ26RyuwrE3rjk7NB81SsotkM8PWCrgp
+ ZFcN4Dj/T7SyrMh49lnjEoAYen6GCyJp97V4+QsHnPqeXk1ljYT9UV/zB
+X-Gm-Gg: ATEYQzwya50D+FuatRIkOtrkcacNAwULPn9YVzx77CQZEh/T31SS6plw5A1hAMvlv0f
+ +F6rQTS6UkxGtQSyfZFFwznaKfHwjOYGf+HoULuiS5mc6lBR8PbOVtBuzluD2QnFtdfnF3Ady+6
+ rS3LX25L1azmoHR1MHNK9K5kBiUbGI0LXkxu6irQufwdZ2btw3K59amnybYh9x9LI5IaLjafC6/
+ zh6GZgio6oInEkn2O+VOqwhE/8275CHFNdcJIOb1qiCS45gLImodk26SYQJPcmrS1DfolGoQdKp
+ A6Waikgf/uszspLHZilsteCIIpQ/tCoOR7eBn+RJeAFYw/XTnITFkAJpnHiOFaswKWup2GO6Fhu
+ xqBMjWkJIdrm+aB4qtmCSelrESsZPa0QD0iRp0JV5lFj3SAvijEiEbA9uREABZ3YS8oY2Q/Y22m
+ DrwmulT1pSo7B75Pa7pz/bS4e5
+X-Received: by 2002:a05:600c:8207:b0:485:3f1c:d887 with SMTP id
+ 5b1f17b1804b1-48727ee4d13mr59113495e9.26.1774633932644; 
+ Fri, 27 Mar 2026 10:52:12 -0700 (PDT)
+X-Received: by 2002:a05:600c:8207:b0:485:3f1c:d887 with SMTP id
+ 5b1f17b1804b1-48727ee4d13mr59113085e9.26.1774633932172; 
+ Fri, 27 Mar 2026 10:52:12 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.85.67])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b9194311asm17582893f8f.10.2026.03.27.10.52.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Mar 2026 10:52:11 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Mathias Krause <minipli@grsecurity.net>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] gdbstub: Update x86 control register bits
+Date: Fri, 27 Mar 2026 18:52:10 +0100
+Message-ID: <20260327175210.369113-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260327143413.254227-1-minipli@grsecurity.net>
+References: 
 MIME-Version: 1.0
-References: <20260317094806.1944053-1-peter.maydell@linaro.org>
- <CAFEAcA_VF9iztXv9hEp1BvVoqphFM8qnmh1nJC3VUKRbVMeB2g@mail.gmail.com>
- <CAPMcbCp_TZOXOAgnnMWWUY_8U903NVRZVYLzXxHHDG2h6-yZMg@mail.gmail.com>
-In-Reply-To: <CAPMcbCp_TZOXOAgnnMWWUY_8U903NVRZVYLzXxHHDG2h6-yZMg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Mar 2026 17:49:54 +0000
-X-Gm-Features: AQROBzAJzkxDuWsedUgkauMTVium3lj1YiiTDvDR0Zk_ZsSPoPO_uv_zUHIB4Vo
-Message-ID: <CAFEAcA8ExdecnLtWAPCf2yCAVkNNAVoTOMeYXhu40Q71fz-9ZQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] fsfreeze-hook: fix bashisms, syslog fallback logic
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,41 +124,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Mar 2026 at 17:40, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrot=
-e:
->
->
->
-> On Fri, Mar 27, 2026 at 7:03=E2=80=AFPM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
->>
->> On Tue, 17 Mar 2026 at 09:48, Peter Maydell <peter.maydell@linaro.org> w=
-rote:
->> >
->> > This patchset fixes some issues with the fsfreeze-hook guest-agent
->> > script reported in https://gitlab.com/qemu-project/qemu/-/work_items/3=
-339
->> >
->> >  * the script is a #!/bin/sh one, but it uses various bash-isms.
->> >    Most are easy fixes, but getting rid of the PIPESTATUS usage
->> >    is a little less obvious, so that gets its own patch
->> >  * a bug in the logic determining whether to log to file or syslog
->> >    means that if the logfile doesn't exist on first run, the script
->> >    will create the logfile but log to syslog (and then log to file
->> >    on second and subsequent runs)
->> >
->> > NB: I have tested this by setting up the script and running it
->> > manually in a temp directory, but not as a "real world" fsfreeze.
->>
->> These have been reviewed, do you plan to take them into a pullreq ?
->
->
-> Yes. I keep it for comments from other people.
->
-> Do you prefer to merge it into v11.0 or v11.1?
+Queued, thanks.
 
-It's a user-reported bug, so I think 11.0 would be nice unless
-you think it's too risky or needs more testing.
+Paolo
 
--- PMM
 
