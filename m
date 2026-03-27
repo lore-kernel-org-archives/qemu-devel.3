@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCAD10ED65C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F1D10ED659
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65Dq-0001v1-Q7; Fri, 27 Mar 2026 07:19:27 -0400
+	id 1w65Ji-0002ld-8N; Fri, 27 Mar 2026 07:25:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65Cb-0007qV-Q1
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:09 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65CX-0000JY-Re
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:09 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43b7481f9d3so1157578f8f.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:18:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774610284; x=1775215084; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9Sc6A8mUH5H33CEhbJhf4m2nOob0B+CIV382Sacc+zU=;
- b=CQWhW8mxpojBqTu4WsPGMT5aR6KideQbgdCncVkUgpeKqR6zEC946GZI3vVoaPgKW9
- LiHr5Wuy/qat/pjyN7vj1Z+i0vryOq7KOtTtf3dMFE3TV2m5VNzoLy6Njg+eXfLR+cIx
- LBhxaeq7s8Uzbc7efWXqfKfrmO5B8uLxXeKRgxegO4SFbcUQ0emPXpYW6C5lO19YwfLl
- DsQkd86rz0JmZemcQ/QBzY/06Mq7OilmTGEncalKDpWUZpN7fOEBpyAfOz2ZBoe3ssMs
- 8Oi1TraPLN39ZFaQYFFLUP7lPT8dJAg7j42JbsX8bIoOO2qUNfLFEZUg0J9+9LAxNYmn
- lvhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774610284; x=1775215084;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9Sc6A8mUH5H33CEhbJhf4m2nOob0B+CIV382Sacc+zU=;
- b=ct4BsuB8HYNcSTLB5ig/qxnnMwT3ojPX6rKZ7PSwtmmmUHfBxdyNtISLgXhho6QMz4
- otXFipIl1qIJpV5FBWPRaFVRYc2Cg2B1j0iDQjCtUsMQd8bBUq7k9ef/fUHX6xpsG+d1
- BgpSfu7LPVHcEh8tCb6AJqv/9PVlbUGThIuz2ug58N0iMOet5Wtw5/RYIxPN+TLYmv/z
- lMVgtugRkpwrKhz5HjY0sz2TxoR0//Hp+05W15MkzNQm6IjIzau7Vj7AvqXhGed6Wq53
- QtO1O6FqOK5cLQK23J5dXIgQidwrMzl1FO/E4tkP5OmOOyve6eeh7D+IrVdZDjT8ZOMf
- GS2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxw24k9Fu5HvCtArMG/ENEnzfhm2uvOLwiw5BsYcQPzxk2rSEtXKGMChOegPsPSPJg/AEm4AFoMris@nongnu.org
-X-Gm-Message-State: AOJu0YyZuhenEX/dkWAKnnaWKjrARTFraXsGzvFlLxVq8jP+zj1Ow06x
- leaYnVrC4bovhN5bwZlFLZ6aNyr0Y/IVd1cgk9CbxHP/ZDMa3rfaX3Q0uIRJ2JPJz9s=
-X-Gm-Gg: ATEYQzxTr3idkRZVgZyI2PQlMbFJ7+spf52KnyBHB7KauRan1MZh0GR6x+I7mBgI/ST
- Vvz4artLubh4VxmuNqk3cBM9SC/4DCIfVIBQCPUy2xkoaiN28kJ7ykjxsyYl5hxzDVdbfauXb3f
- WOSEpS9bZp7BqsslLQZ271B21irY+3R102kVPMSfRQ+w4nSvlZIAiRPztFad0Vs271EVrwJURH0
- LePsKymVLRN1VShFwkpBMsJUY13LJgGhuIcTquNm7KBOlBVGM10m1CrkZ+OrAjVFKA0GKQHifeL
- ZTcnqLr7AEhAckNgL9mMr571xhZ1tMcBAA9mVVL4laLuBEumiKceA/jMKWLWCubauXCJ6Mwr0qS
- PmqPG8+gJBkIKjfRvA5Er8rOiRQRw1/NJT/OFl3NsHfhirFS0oxyF2X8wrI8E2afWtUbwYUeY2A
- 9AigNwgvWYOYamDcmw3Mu859tgRfeac07poah733z5pjGDCPvBr/4YLycYHxBi0VEJPxvz9r4kB
- BcNhRSJu6vRkuj7nW5wk7Du8SDxkIHkfg9P31LsUQ==
-X-Received: by 2002:a5d:5f42:0:b0:439:de1d:74ae with SMTP id
- ffacd0b85a97d-43b9e9fa204mr3373603f8f.22.1774610283900; 
- Fri, 27 Mar 2026 04:18:03 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.18.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 04:18:03 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 65/65] hw/arm/virt: Allow user to select GICv5
-Date: Fri, 27 Mar 2026 11:17:00 +0000
-Message-ID: <20260327111700.795099-66-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260327111700.795099-1-peter.maydell@linaro.org>
-References: <20260327111700.795099-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w65JM-0002Wk-Iv
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:25:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w65JK-0002Y1-2D
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:25:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774610703;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FNCT5ZoHgHqOwm6hSuQVycDXB94uRJgvK7uT2R8m9o8=;
+ b=GrK5QXnp10YCuz1RhgHRr9KQBksBh+84y24JBS3RkmxBw7/H8MEk4oKkh5LYMmxLWOdOO3
+ Ql+Vi+fGLb0nlRVF5JoZbF5f7oSJ21zfCJ5ebZO2DP6NsKbT2WjSJAKNn8oEua2+Vxmuxh
+ zpYbKhf89rbyj6E+zBLOHjoEL7OHLTA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-kqBgc_Q_ObOA5yxSaUVCaw-1; Fri,
+ 27 Mar 2026 07:25:00 -0400
+X-MC-Unique: kqBgc_Q_ObOA5yxSaUVCaw-1
+X-Mimecast-MFC-AGG-ID: kqBgc_Q_ObOA5yxSaUVCaw_1774610698
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CBD019560AE; Fri, 27 Mar 2026 11:24:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2D7F1955D84; Fri, 27 Mar 2026 11:24:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id ABAE821E6937; Fri, 27 Mar 2026 12:24:55 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>
+Cc: Samuel Zhang <guoqing.zhang@amd.com>,  <qemu-devel@nongnu.org>,
+ <peterx@redhat.com>,  <farosas@suse.de>,  <lizhijian@fujitsu.com>,
+ <eblake@redhat.com>,  <Emily.Deng@amd.com>,  <Victor.Zhao@amd.com>,
+ <PengJu.Zhou@amd.com>,  <Qing.Ma@amd.com>
+Subject: Re: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
+In-Reply-To: <9b6b3d6a-4f48-4e90-b2fc-7cfcc6c8651d@amd.com> (GuoQing Zhang's
+ message of "Fri, 27 Mar 2026 18:27:07 +0800")
+References: <20260327065006.2567463-1-guoqing.zhang@amd.com>
+ <87h5q17gh8.fsf@pond.sub.org>
+ <9b6b3d6a-4f48-4e90-b2fc-7cfcc6c8651d@amd.com>
+Date: Fri, 27 Mar 2026 12:24:55 +0100
+Message-ID: <87y0jd5xbs.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,110 +89,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow the user to select a GICv5 via '-machine gic-version=x-5', and
-document this.  The 'x-' prefix indicates that the emulation is still
-in an "experimental" state as far as QEMU is concerned; the
-documentation describes what "experimental" means for the user and
-what parts are not yet implemented.
+"Zhang, GuoQing (Sam)" <guoqzhan@amd.com> writes:
 
-We do not make 'gic-version=max' enable GICv5 here because:
+> On 2026/3/27 17:45, Markus Armbruster wrote:
+>> Samuel Zhang <guoqing.zhang@amd.com> writes:
+>>
+>>> The default 1MB RDMA chunk size causes slow live migration because
+>>> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
+>>> 1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
+>>>
+>>> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
+>>> faster migration.
+>>> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
+>>>
+>>> Performance with RDMA live migration of 8GB RAM VM:
+>>>
+>>> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
+>>> |-----------------------|----------|-------------------|
+>>> | 1M (default)          | 37.915   |  1,007            |
+>>> | 32M                   | 17.880   |  2,260            |
+>>> | 1024M                 |  4.368   | 17,529            |
+>>>
+>>> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
 
- * the GICv5 architectural spec is still at the EAC level and could
-   have minor changes between now and its final version; only users
-   who specifically want to start working with the GICv5 should
-   select it
- * QEMU's implementation here is still not fully featured, and
-   selecting it instead of GICv3 will mean losing functionality such
-   as MSIs
- * the GICv5 is not backwards compatible with the GICv3/GICv4 for
-   system software, so silently "upgrading" an existing command line
-   to GICv5 is just going to break existing guest kernels
+[...]
 
-The last one in particular suggests that even when the emulation
-moves out of "experimental" status we will probably not want to
-change "max".
+>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>> index 7134d4ce47..292d96c95a 100644
+>>> --- a/qapi/migration.json
+>>> +++ b/qapi/migration.json
+>>> @@ -806,7 +806,7 @@
+>>>  #
+>>>  # Features:
+>>>  #
+>>> -# @unstable: Members @x-checkpoint-delay and
+>>> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+>>>  #     @x-vcpu-dirty-limit-period are experimental.
+>>>  #
+>>>  # Since: 2.4
+>>> @@ -831,6 +831,7 @@
+>>>             'mode',
+>>>             'zero-page-detection',
+>>>             'direct-io',
+>>> +           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+>>>             'cpr-exec-command'] }
+>>>  
+>>>  ##
+>>> @@ -1007,9 +1008,14 @@
+>>>  #     is @cpr-exec.  The first list element is the program's filename,
+>>>  #     the remainder its arguments.  (Since 10.2)
+>>>  #
+>>> +# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
+>>> +#     Default is 1MiB.  Must be a power of 2 in the range
+>>> +#     [1MiB, 1024MiB].  Only takes effect for RDMA migration.
+>>
+>> I believe it applies to channels whose migration address type is is
+>> "rdma".  In MigrationChannel syntax
+>>
+>>      {"channel-type": ..., "addr": {"transport": "rdma", ...}}
+>>
+>> Correct?
+>
+>
+> Correct! Is it OK to update the doc to the following one? Thank you!
+>
+> `Only takes effect when migration address transport is "rdma".`
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
----
- docs/system/arm/virt.rst | 19 +++++++++++++++++++
- hw/arm/virt.c            | 11 ++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+The phrasing in the patch feels okay as is.  Perhaps "Only applies when
+migrating via RDMA" to more closely match the description of
+MigrationAddressType @rdma: Migrate via RDMA.
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index fbe3ca9e12..f811e662d6 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -161,6 +161,25 @@ gic-version
-     GICv3. This allows up to 512 CPUs.
-   ``4``
-     GICv4. Requires ``virtualization`` to be ``on``; allows up to 317 CPUs.
-+  ``x-5``
-+    GICv5 (experimental). This is an experimental emulation of the GICv5,
-+    based on the EAC release of the GICv5 architecture specification.
-+    Experimental means:
-+
-+    - guest-visible behaviour may change when the final version of
-+      the specification is released and QEMU implements it
-+    - migration support is not yet implemented
-+    - the GICv5 is not exposed to the guest via ACPI tables, only via DTB
-+    - the way the interrupt controller is exposed to the guest and the
-+      command line syntax for enabling it may change
-+
-+    The current implementation supports only an EL1 guest (no EL2 or
-+    EL3 and no Realm support), and does not implement the ITS (no
-+    MSI support).
-+
-+    Note that as the GICv5 is an Armv9 feature, enabling it will
-+    automatically disable support for AArch32 at all exception levels
-+    except for EL0 (userspace).
-   ``host``
-     Use the same GIC version the host provides, when using KVM
-   ``max``
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0aff58bc3c..0064491063 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3223,6 +3223,9 @@ static char *virt_get_gic_version(Object *obj, Error **errp)
-     const char *val;
- 
-     switch (vms->gic_version) {
-+    case VIRT_GIC_VERSION_5:
-+        val = "x-5";
-+        break;
-     case VIRT_GIC_VERSION_4:
-         val = "4";
-         break;
-@@ -3240,7 +3243,9 @@ static void virt_set_gic_version(Object *obj, const char *value, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
- 
--    if (!strcmp(value, "4")) {
-+    if (!strcmp(value, "x-5")) {
-+        vms->gic_version = VIRT_GIC_VERSION_5;
-+    } else if (!strcmp(value, "4")) {
-         vms->gic_version = VIRT_GIC_VERSION_4;
-     } else if (!strcmp(value, "3")) {
-         vms->gic_version = VIRT_GIC_VERSION_3;
-@@ -3252,7 +3257,7 @@ static void virt_set_gic_version(Object *obj, const char *value, Error **errp)
-         vms->gic_version = VIRT_GIC_VERSION_MAX; /* Will probe later */
-     } else {
-         error_setg(errp, "Invalid gic-version value");
--        error_append_hint(errp, "Valid values are 2, 3, 4, host, and max.\n");
-+        error_append_hint(errp, "Valid values are 2, 3, 4, x-5, host, and max.\n");
-     }
- }
- 
-@@ -3827,7 +3832,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                   virt_set_gic_version);
-     object_class_property_set_description(oc, "gic-version",
-                                           "Set GIC version. "
--                                          "Valid values are 2, 3, 4, host and max");
-+                                          "Valid values are 2, 3, 4, x-5, host and max");
- 
-     object_class_property_add_str(oc, "iommu", virt_get_iommu, virt_set_iommu);
-     object_class_property_set_description(oc, "iommu",
--- 
-2.43.0
+Either way, QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
+>>> +#     (Since 11.1)
+>>> +#
+>>>  # Features:
+>>>  #
+>>> -# @unstable: Members @x-checkpoint-delay and
+>>> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+>>>  #     @x-vcpu-dirty-limit-period are experimental.
+>>>  #
+>>>  # Since: 2.4
+>>> @@ -1046,6 +1052,8 @@
+>>>              '*mode': 'MigMode',
+>>>              '*zero-page-detection': 'ZeroPageDetection',
+>>>              '*direct-io': 'bool',
+>>> +            '*x-rdma-chunk-size': { 'type': 'uint64',
+>>> +                                    'features': [ 'unstable' ] },
+>>>              '*cpr-exec-command': [ 'str' ]} }
+>>  
+>>>  ##
 
 
