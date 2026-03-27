@@ -4,83 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA83A10F2862
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 18:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7FD10F2865
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 18:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6Bsq-0001hL-Hx; Fri, 27 Mar 2026 14:26:12 -0400
+	id 1w6ByN-0003F4-Nk; Fri, 27 Mar 2026 14:31:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w6BsV-0001g0-I2
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:25:54 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1w6ByM-0003Ei-3d
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:31:54 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w6BsT-00068U-2Z
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:25:51 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2b0ba3bfe16so20919045ad.1
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 11:25:48 -0700 (PDT)
+ id 1w6ByK-0007R2-Gq
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:31:53 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-35a1230c60eso1215467a91.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 11:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774635947; x=1775240747; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ACXZcnQ52zjYTW/ftpwQA5MmC2zbnyVVr8sE0KsfMA8=;
- b=xXMw5B+XzpTz79S7BMqxHrtkNdyyLbx6Yh6bHWbMQXVvsS3+YchqlaKwCiiZJQCH5A
- bldPM5v56WDTtHDDUwOg+UiQycqKAgsII1/j21zV9qhU4OI6i8XjAbSwkMQEJv23L/7d
- Hihllrw/8dwX5via3jxbTQ0lFZl4HLZ0Q73KruyKp2XUjB3pkZf2Nt2ClEYiGwvH4imz
- ZvKdaegEtU2FYrqylkMGOehNgwFqIGLlqi+JTgEqzk1klS5hwaR9NfnJ7OMKiXNxPsja
- KHN8IR95bHztaqHI5QhA/s+IEkov6OH7zQJipQWG/X0bbyzW6AS842Z/xeLJA51LXkKu
- OMrQ==
+ d=linaro.org; s=google; t=1774636310; x=1775241110; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D9agshjLojojl89dNdGYibGqaA3mdVvSoSELyds6Ar4=;
+ b=cAVMQWyzmYMpInqJ1Zo+MhJwUQ8icITgxHKYsCAzz2fYDUclVLU4iTVLr200vFWPeh
+ qSq3xdiCc/nrupaMTfNi40SFMIGEzecHz8owVeS3+mi5MICfrpsXVQ7BDDKy0fr86XZD
+ /JqkHG3swf/d6iRBWelvXn3ryglhWTXhMECO2J73Q4pnHgHESpKl7kJT3ehbM301o4lz
+ jbhKe6N4v3ocG3YUbP1WPrd4k8yiADwgMI9NeZtK9XGQSHeHCFs9H9GpeIedhPf2mH6O
+ MTByerVLgexsW/YzsBCCMFW/cdGhVGEujQeJYyAMnsOJMiDchbB7/bBw3B+8XUxvNzzT
+ tNew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774635947; x=1775240747;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ACXZcnQ52zjYTW/ftpwQA5MmC2zbnyVVr8sE0KsfMA8=;
- b=TZoGveu1n28+QsPNnYP6Oq6HxZNpoREnSLn4gdb6kIixZJaLCBVLBw230Fo+v9dthq
- ZzGZDr5cJGkdJimhTo7iOc/UiJ3OrD5grCra32ZE7k5uo6nlz/sH0XyJhmN7NsMtpu2K
- 7qMLA7KAAjFTe/HGajAbh+ONUpfjT6uhcw9LZ4GOzNNafHxXacjOhrWAKrc6jp2l5kdr
- UKMqPUW75ouUUaGTNiN1StYBXltCEKRuyi74XlirSbpa9U2EOyKzBbMn+QmyyLsGTHIi
- kY7vS05R/TshtoPExX+aYvLCyF36ekhi1AcRi1l9Gdgjl7ZPMwFvyOW0oW3PSWMyTHbu
- D2WA==
-X-Gm-Message-State: AOJu0YySI37dtkV76Gh2IvpoHnOSP97Vy0SLxz3CSShptXhO3p2uDiiT
- UVNWDszmUcmucRSgeTiTIPFguDeVxu/HjSka96ZvRWKIgg8XUEPaMKxR9D79vklM/V7a7y9r6ZK
- v115gfzA=
-X-Gm-Gg: ATEYQzzSRfZEyCjBB8DEiw2VeObXxcCB5mXm05Zgd85C71l7r2EsX1dy08kP3HR/nF5
- YfRhW9VE13uZYu+xZ/bBtsBRSfc+gLaEKXNnMLRQD+OwM7C7jkn45+jCUfg90R362EXp0U+k5EQ
- WsJhviTbspbJvJSC97WfGU8kmA3RKhdD/hXGIWLACdLIHBlRi1vZoZqeLjM+5P2oOVSaZRK/Azb
- HLPgWbLiScJYJkTJm5Q9p8MHsoOTLV4PLp78A0k0OGMfmqxLwl0yA7PJpV26KGv+xmHbe8am5AW
- ivyXJ906cNhLsh49kBDeVEBPZafpRJOgoG1e3i9Fk9yCKvs9/fExQY+mSTYjn4Di6RLzReJ9vmz
- sNPITFJwwsSOghUJZKjcJIGACSNGg+jd6PAFWwLH4W+FAup24+R6eZcTCBz3FXAktXhuFYMmcCW
- VDI3wbSN3tMsGTRYBEeZP4xUbG5MWsrzuB2rTpbKlHqmnX4APrJU/FBKHlR4D8otLBkE0l5Mha5
- iqZ
-X-Received: by 2002:a17:902:dac7:b0:2ae:be67:722f with SMTP id
- d9443c01a7336-2b0ce5c4c51mr34470145ad.22.1774635946768; 
- Fri, 27 Mar 2026 11:25:46 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b0bc7a9deesm64463315ad.28.2026.03.27.11.25.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 11:25:46 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 1/1] docs and tests: assets moved after GitHub account renaming
-Date: Fri, 27 Mar 2026 11:25:41 -0700
-Message-ID: <20260327182541.691078-2-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260327182541.691078-1-pierrick.bouvier@linaro.org>
-References: <20260327182541.691078-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20251104; t=1774636310; x=1775241110;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D9agshjLojojl89dNdGYibGqaA3mdVvSoSELyds6Ar4=;
+ b=p296zn5AaVStnketVr9Oom7WDFNCGs+CnzLiu3s90yN0B2ryGtfBI5CFhnzIEh/i0u
+ G9MghDtvvAlNumm/4GWaWU8arwzX9q8sxok4AO09YY3A2VHW521HSweTnVmxxuxJsyPM
+ 5PsSRBPUSmwfenSOrDmV1KWSYTeSLx4wFG9V01VZP9mg33653aWfe8R15MO6/mNPJugO
+ czlepAzJABe3Z0ZUyG7tJYO9tSUqFj+ceezgoV54z+x4lgs4aQlgSZsgkWf+IuFN4mkC
+ igaIBmnz0y7uu5D+TNm7colXT4pb/SucX8s4eGA8kqTZJJ5MPa3IPndHc/ZXckyOMVxe
+ n9/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7kPHu8qdHu72a9RHBdMZ2WPuIMQSi87UNsMhyZjh59JjMuUm2mdyaL2N3e1QWGcbGaHRfiKsvQ5am@nongnu.org
+X-Gm-Message-State: AOJu0Yyzk2G/pyB3+RuArRuZagwGElyY3+xUKHR/1XptJb5s67Rv67H0
+ a+Pnwaz8g3hP4jrMyw/USZAOu469lZzjSHsBPXj3MdTn09F/Ls3NE9PsrivheZuoaTY=
+X-Gm-Gg: ATEYQzwvTf7JBdkpoXAcGQjxaieEZM6/Xqk9iJ8RsaNRqnb3aJYj2MexkJ8hczg2T+N
+ wDNdRWKRLTo6r+FeC7Veie+YkxKxeHtUaLulGJh58UOMQ0CT95ZxLPaAJjk24qQf1VOvQGlGkXn
+ pv0NWwfTqxjkCI2Cmw6ojCpJhdS30oLK7d/3lirXdH7KcxjIva7maG0BdCrgW1afPzBks56zOLG
+ BrQFzQZMNI0TKM3G+v+b3m8b6Jf2T0chrv1GgLOnzeu5JB9HU1r7xqpaZxtR4iuH6bpvmXtNFXH
+ iXxi/20Ba8D7CViYFHJeaSld+DJZhHcvV1SdST7rDmA7dm83THbORKzb5RyqlwmNpsNvI4RKoae
+ NntGvU2WN5qxxqTMp6Xsm2tAjXoC3VSaPgwWJzxB1KjKWIzOs7e5/1bFIgvqaDX8nm9qyqW4Y4L
+ lNAEg+WrntCG/6Qfw2fpesSem+S65X/5Pk/Ehl7HpBtB5F91Qs2MMrSQ1GJ5StDP98cj/u
+X-Received: by 2002:a17:90b:3fcb:b0:35b:9958:4edd with SMTP id
+ 98e67ed59e1d1-35c300bd7f6mr3831517a91.30.1774636310315; 
+ Fri, 27 Mar 2026 11:31:50 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35c2eb708c8sm1323010a91.5.2026.03.27.11.31.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 27 Mar 2026 11:31:49 -0700 (PDT)
+Message-ID: <2737926f-7834-4e64-be9e-d58561e7f4ef@linaro.org>
+Date: Fri, 27 Mar 2026 11:31:49 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/12] target/arm/tcg/translate.h: remove TARGET_AARCH64
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org
+References: <20260327165042.604105-1-pierrick.bouvier@linaro.org>
+ <20260327165042.604105-5-pierrick.bouvier@linaro.org>
+ <36d7e3d6-3907-484b-8a58-f05a9ef6cae4@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <36d7e3d6-3907-484b-8a58-f05a9ef6cae4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,187 +143,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GitHub setup a permanent redirection for all repositories when accounts,
-so the old links will keep on working also.
+On 3/27/26 10:26 AM, Philippe Mathieu-Daudé wrote:
+> On 27/3/26 17:50, Pierrick Bouvier wrote:
+>> We need to stub a64_translate_init and gen_a64_update_pc.
+>> At this point, we don't need to do anything for aarch64_translator_ops
+>> since it's just an external symbol.
+>>
+>> We can now include target/arm/tcg/translate.h from common code, since
+>> all target specific bits have been removed, or can be specialized with
+>> specific defines.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    target/arm/tcg/translate.h | 10 ----------
+>>    target/arm/tcg/stubs32.c   | 17 +++++++++++++++++
+>>    target/arm/tcg/meson.build |  1 +
+>>    3 files changed, 18 insertions(+), 10 deletions(-)
+>>    create mode 100644 target/arm/tcg/stubs32.c
+> 
+> 
+>> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+>> index 5f591560551..3e96c77df73 100644
+>> --- a/target/arm/tcg/meson.build
+>> +++ b/target/arm/tcg/meson.build
+>> @@ -21,6 +21,7 @@ gen_a32 = [
+>>    
+>>    arm_ss.add(gen_a32)
+>>    arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
+>> +arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
+> 
+> Add via stub_ss[]?
 
-However, GitHub allow this username to be reused again. To ensure no one
-can inject malicious content, I took ownership of the (newly free)
-pbo-linaro account [1], so no one else can claim it.
+Unfortunately, libqemuutil is declared before iterating on targets, so 
+stub_ss is not what you expect at this point.
 
-[1] https://github.com/pbo-linaro
+stub_ss = stub_ss.apply({})
+It changes its type from source_set to source_configuration.
+Even if we used a new variable name, further changes to stub_ss would be 
+ignored.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260326214436.256215-1-pierrick.bouvier@linaro.org
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- docs/about/emulation.rst                      | 28 +++++++++----------
- .../aarch64/test_device_passthrough.py        |  4 +--
- tests/functional/aarch64/test_rme_sbsaref.py  |  4 +--
- tests/functional/aarch64/test_rme_virt.py     |  4 +--
- 4 files changed, 20 insertions(+), 20 deletions(-)
+I will write a patch for it, but it's definitely out of the scope of 
+this series, so I'll leave the current patch as it is for now.
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 469f31bab6a..3b4c365933d 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -898,24 +898,24 @@ As an example, we can trace qemu itself running git::
-     $ uftrace dump --chrome | gzip > ~/qemu_aarch64_git_help.json.gz
- 
- For convenience, you can download this trace `qemu_aarch64_git_help.json.gz
--<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/qemu_aarch64_git_help.json.gz>`_.
-+<https://github.com/p-b-o/qemu-assets/raw/refs/heads/master/qemu-uftrace/qemu_aarch64_git_help.json.gz>`_.
- Download it and open this trace on https://ui.perfetto.dev/. You can zoom in/out
- using :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys.
- Some sequences taken from this trace:
- 
- - Loading program and its interpreter
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/loader_exec.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/loader_exec.png?raw=true
-    :height: 200px
- 
- - open syscall
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/open_syscall.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/open_syscall.png?raw=true
-    :height: 200px
- 
- - TB creation
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/tb_translation.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/tb_translation.png?raw=true
-    :height: 200px
- 
- It's usually better to use ``uftrace record`` directly. However, tracing
-@@ -928,7 +928,7 @@ Example system trace
- 
- A full trace example (chrome trace, from instructions below) generated from a
- system boot can be found `here
--<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/aarch64_boot.json.gz>`_.
-+<https://github.com/p-b-o/qemu-assets/raw/refs/heads/master/qemu-uftrace/aarch64_boot.json.gz>`_.
- Download it and open this trace on https://ui.perfetto.dev/. You can see code
- executed for all privilege levels, and zoom in/out using
- :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys. You can find below some sequences
-@@ -936,27 +936,27 @@ taken from this trace:
- 
- - Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/bl3_to_bl1.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/bl3_to_bl1.png?raw=true
-    :height: 200px
- 
- - U-boot initialization (until code relocation, after which we can't track it)
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/uboot.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/uboot.png?raw=true
-    :height: 200px
- 
- - Stat and open syscalls in kernel
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/stat.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/stat.png?raw=true
-    :height: 200px
- 
- - Timer interrupt
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/timer_interrupt.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/timer_interrupt.png?raw=true
-    :height: 200px
- 
- - Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
- 
--.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/poweroff.png?raw=true
-+.. image:: https://github.com/p-b-o/qemu-assets/blob/master/qemu-uftrace/poweroff.png?raw=true
-    :height: 200px
- 
- Build and run system example
-@@ -966,7 +966,7 @@ Build and run system example
- 
- Building a full system image with frame pointers is not trivial.
- 
--We provide a `simple way <https://github.com/pbo-linaro/qemu-linux-stack>`_ to
-+We provide a `simple way <https://github.com/p-b-o/qemu-linux-stack>`_ to
- build an aarch64 system, combining Arm Trusted firmware, U-boot, Linux kernel
- and debian userland. It's based on containers (``podman`` only) and
- ``qemu-user-static (binfmt)`` to make sure it's easily reproducible and does not depend
-@@ -974,18 +974,18 @@ on machine where you build it.
- 
- You can follow the exact same instructions for a x64 system, combining edk2,
- Linux, and Ubuntu, simply by switching to
--`x86_64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64>`_ branch.
-+`x86_64 <https://github.com/p-b-o/qemu-linux-stack/tree/x86_64>`_ branch.
- 
- You can follow the exact same instructions for a riscv64 system, combining
- opensbi, Linux, and Ubuntu, simply by switching to
--`riscv64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/riscv64>`_ branch.
-+`riscv64 <https://github.com/p-b-o/qemu-linux-stack/tree/riscv64>`_ branch.
- 
- To build and run the system::
- 
-     # Install dependencies
-     $ sudo apt install -y podman qemu-user-static
- 
--    $ git clone https://github.com/pbo-linaro/qemu-linux-stack
-+    $ git clone https://github.com/p-b-o/qemu-linux-stack
-     $ cd qemu-linux-stack
-     $ ./build.sh
- 
-diff --git a/tests/functional/aarch64/test_device_passthrough.py b/tests/functional/aarch64/test_device_passthrough.py
-index 10c73728f36..3ef4e7ddc1d 100755
---- a/tests/functional/aarch64/test_device_passthrough.py
-+++ b/tests/functional/aarch64/test_device_passthrough.py
-@@ -78,14 +78,14 @@
- 
- class Aarch64DevicePassthrough(QemuSystemTest):
- 
--    # https://github.com/pbo-linaro/qemu-linux-stack/tree/device_passthrough
-+    # https://github.com/p-b-o/qemu-linux-stack/tree/device_passthrough
-     # $ ./build.sh && ./archive_artifacts.sh out.tar.xz
-     #
-     # Linux kernel is compiled with defconfig +
-     # IOMMUFD + VFIO_DEVICE_CDEV + ARM_SMMU_V3_IOMMUFD
-     # https://docs.kernel.org/driver-api/vfio.html#vfio-device-cde
-     ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
--        ('https://github.com/pbo-linaro/qemu-linux-stack/'
-+        ('https://github.com/p-b-o/qemu-linux-stack/'
-          'releases/download/build/device_passthrough-a9612a2.tar.xz'),
-         'f7d2f70912e7231986e6e293e1a2c4786dd02bec113a7acb6bfc619e96155455')
- 
-diff --git a/tests/functional/aarch64/test_rme_sbsaref.py b/tests/functional/aarch64/test_rme_sbsaref.py
-index 4845c824960..efea80c5782 100755
---- a/tests/functional/aarch64/test_rme_sbsaref.py
-+++ b/tests/functional/aarch64/test_rme_sbsaref.py
-@@ -20,10 +20,10 @@ class Aarch64RMESbsaRefMachine(QemuSystemTest):
- 
-     # Stack is inspired from:
-     # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
--    # https://github.com/pbo-linaro/qemu-linux-stack/tree/rme_sbsa_release
-+    # https://github.com/p-b-o/qemu-linux-stack/tree/rme_sbsa_release
-     # ./build.sh && ./archive_artifacts.sh out.tar.xz
-     ASSET_RME_STACK_SBSA = Asset(
--        ('https://github.com/pbo-linaro/qemu-linux-stack/'
-+        ('https://github.com/p-b-o/qemu-linux-stack/'
-          'releases/download/build/rme_sbsa_release-6a2dfc5.tar.xz'),
-          '5adba482aa069912292a8da746c6b21268224d9d81c97fe7c0bed690579ebdcb')
- 
-diff --git a/tests/functional/aarch64/test_rme_virt.py b/tests/functional/aarch64/test_rme_virt.py
-index 5e23773f93d..dcb18678bfd 100755
---- a/tests/functional/aarch64/test_rme_virt.py
-+++ b/tests/functional/aarch64/test_rme_virt.py
-@@ -19,10 +19,10 @@ class Aarch64RMEVirtMachine(QemuSystemTest):
- 
-     # Stack is inspired from:
-     # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
--    # https://github.com/pbo-linaro/qemu-linux-stack/tree/rme_release
-+    # https://github.com/p-b-o/qemu-linux-stack/tree/rme_release
-     # ./build.sh && ./archive_artifacts.sh out.tar.xz
-     ASSET_RME_STACK_VIRT = Asset(
--        ('https://github.com/pbo-linaro/qemu-linux-stack/'
-+        ('https://github.com/p-b-o/qemu-linux-stack/'
-          'releases/download/build/rme_release-56bc99e.tar.xz'),
-          '0e3dc6b8a4b828dbae09c951a40dcb710eded084b32432b50c69cf4173ffa4be')
- 
--- 
-2.47.3
-
+Regards,
+Pierrick
 
