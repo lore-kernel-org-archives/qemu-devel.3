@@ -4,175 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB785F532CC
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CCFF532CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:26:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5ykx-0003bQ-1p; Fri, 27 Mar 2026 00:25:11 -0400
+	id 1w5ymA-0004a7-8m; Fri, 27 Mar 2026 00:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w5ykv-0003bD-Bd
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:25:09 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
+ id 1w5ym8-0004Zk-DY
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:26:24 -0400
+Received: from mail-northcentralusazon11013052.outbound.protection.outlook.com
+ ([40.107.201.52] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w5yks-0005Xp-CE
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:25:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774585506; x=1806121506;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=ZO+fEXsTVzfBkO0QExq5HYwfZcDdpaO3MKlhVoIEC24=;
- b=hnsMZjJ2iVv5HXfQkQ9q27VdvjVUw8hWS28aB2Yi6PR2lqSiA6Qakz74
- OCEb1mQiYf0DbOXgk4z729rNThrX9mW1nDZOumFI4Y7mBN5er6noBMszX
- 7uJtBdiVp+5bRkxGvawOahNG3GFk5QGgaSgurYYX+im/GJ9ce57Ey4IAs
- KpnXZtiHShwOiGlMGHWI7IdjqLo7FoNEY+5axntnwD8mdJxs5loazeBi/
- Fo8/MCd5E+8mouuGtzOTGjL7kzThvTVAPcNwcu3O2FzZs74aYZjwXc5fY
- LCQLTxDJiONfGUY8UTrubyG4Myseiq6Q8fZ3eAe9cjCyD/l22c1lm7mBC g==;
-X-CSE-ConnectionGUID: 3j1CdgPFRCWfxbPoPieJEA==
-X-CSE-MsgGUID: c5kNjkKLR02VKqF2LKztdQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="74838539"
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="74838539"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 21:24:59 -0700
-X-CSE-ConnectionGUID: C7TyONFLRxa2PQ2DPshUUw==
-X-CSE-MsgGUID: /BkIlzw/TK6BHaoQ3ScsQg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="225215901"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 21:24:59 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 26 Mar 2026 21:24:58 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 26 Mar 2026 21:24:58 -0700
-Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.36) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 26 Mar 2026 21:24:58 -0700
+ (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
+ id 1w5ym5-0005fa-DM
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:26:24 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hnzIwRs6pRd7ZU2ISNb/D0yr0XWxRgu9G5nLGIFQ84zjD+GoagJRXoCuleM7nYlurKzDigjOT1a/ZpzQp+3skKPthhW57doYo2Y4z8aiWyGV7Uc9U9gOAZzTZh0BRmSim+785xXpNSQAS+419tRdoRC9Fjn3x+mRi+aWo3JGyUzQoZNQ3AiYbsKiCPAzNniw4xEuyXK3SvVw4c7fbdoex9WfDNsDPJLTbcFs58j5VCChhc06NAFKPnX04fbnNhqePg4I+lb/Ha1v80xuE2AvdichQpkw5M95doPqW3zsvNU6TFqcvKzcrLaJOgUZvFRLwReAU1Qh16mslbQrlC0s+Q==
+ b=n0ys+7eFvwrQESwvAZb9SN4gxaPEupRu3WhIMkZv8lRfjzcTn5uc6tto8KGJ5c985KYzcgswLZKAMBvcUaSbN4GIttuO+cX8yzf0of4iAyhgz9LHMFXaQj742QFLxdoAPYqU9vzaQvQTPmR5aKBd8jzI3ZG67VjF3jIAPDTL7trFj4o/LWsViiXRMSlejBiydJ5ySLW3TSgwf4OS3RxXEPAKbdeF1N3fWKp7iikz9PAOS4ixZIjPTuM7yC2GlRzJhiep3f5sMyex9uHvcw835sK4JnYt60XrstwOyuvATo5CZHIy+ytrATZmBTcqCyA9vFl3fI01u8NAcWDf1DQQFQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=s6+SQ1Lb/+OWwkXdyNeT3bk5ZBjX1QiySktljLR5xvE=;
- b=LmEhoEVHr0aMiCyumCRXl1FBhsJ9bN84DlsYXJ7vNxrM4AuY5n8BEzaNP2Xh8l7J3Wai+/KJsbS6XDwTv+aeTL3KImBLiTnDdgtT+VqyzSDrFmLIXQr44mEYMq8SqV9lVmEf6Bj0H6NZGTejFzLwQaOFRi56jdFmQjb1hWAQWukjF/axOtvwYTKWHAeXhG8mhiJcW6LEyoD24nQA5rRbvd1moTOtw5o51LjP6vGCpm8FAcv86BBztaY55vkDFWiSKq/I0Av8JymuVvfolOXwSoyZazt6C7MeKbT02m8Fb376upyN26AOb+eAxUabo77q5u8DqB0YzOMfe3hXkODzsg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
- by SA1PR11MB9614.namprd11.prod.outlook.com (2603:10b6:806:4c4::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.7; Fri, 27 Mar
- 2026 04:24:57 +0000
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.20.9769.006; Fri, 27 Mar 2026
- 04:24:57 +0000
-Message-ID: <1e3b2e0f-a6e1-4355-b440-e9e37c7981b5@intel.com>
-Date: Fri, 27 Mar 2026 12:32:38 +0800
+ bh=KCOwg0+aKilgm+EWPPSnR8C0GvS2TNhqidxrFXXOsCk=;
+ b=bNjiZCGqB9PHxmOMeey9mTtlutWK7z7QulVOB73waDvzA9fGz5jyEvcafnlKBFqn1+JQc0cjALPkkobTqa7KfNIRmWvEJF+/vOl6xek/ST2OLyLPhIF50xH0OHCW6vH7BoaxXzikms0p/3wWtK6UwnB4nqpTUTK5/cXITwS4jgXIHd7pBJEBJV24c90l/ZEUCPENVJGJRR9Ukl5sA+tQ2+0V5fEyOx8X/4W/u4Q7uJ85GhYIYnTxFdlLJsyUcff6hvv6y291sWpPyHDCP+Ww6G63YzuET8C2C7UhaklpAveaEnvzksO2w5Za7cP9FNr9sCL/fiRtpNX8Kd3Te7wSvQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KCOwg0+aKilgm+EWPPSnR8C0GvS2TNhqidxrFXXOsCk=;
+ b=1zfCIkSx54Zsc3JKxNAu4/MrltWo2NFQuiN/307GUZcRY8el7VymGEh6iMtVyJdrfsfEU+Q8Ns3T2KDK933hicvqIJKwA7blQ/lD4SG1FJ9q1T5pe7ELZvphY2xTqOcgHwgrZPvZTRBJhV1dlgA/xFz9OWfb/XJ0lIwuCFSJYWU=
+Received: from DM6PR03CA0044.namprd03.prod.outlook.com (2603:10b6:5:100::21)
+ by LV8PR12MB9408.namprd12.prod.outlook.com (2603:10b6:408:208::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.10; Fri, 27 Mar
+ 2026 04:21:11 +0000
+Received: from DS1PEPF00017098.namprd05.prod.outlook.com
+ (2603:10b6:5:100:cafe::3b) by DM6PR03CA0044.outlook.office365.com
+ (2603:10b6:5:100::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.22 via Frontend Transport; Fri,
+ 27 Mar 2026 04:21:11 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DS1PEPF00017098.mail.protection.outlook.com (10.167.18.102) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9745.21 via Frontend Transport; Fri, 27 Mar 2026 04:21:11 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 26 Mar
+ 2026 23:21:11 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 26 Mar
+ 2026 21:21:10 -0700
+Received: from [10.67.184.128] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Thu, 26 Mar 2026 23:21:08 -0500
+Message-ID: <7251ce8a-d5d6-491d-b885-44e4424c8b3e@amd.com>
+Date: Fri, 27 Mar 2026 12:21:07 +0800
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/14] intel_iommu_accel: Support pasid
- binding/unbinding and PIOTLB flushing
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
-CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
- <mst@redhat.com>, <jasowang@redhat.com>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <skolothumtho@nvidia.com>,
- <joao.m.martins@oracle.com>, <clement.mathieu--drif@bull.com>,
- <kevin.tian@intel.com>, <xudong.hao@intel.com>
-References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
- <20260326091130.321483-12-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH v2] migration/rdma: add x-rdma-chunk-size parameter
+To: Markus Armbruster <armbru@redhat.com>, Samuel Zhang <guoqing.zhang@amd.com>
+CC: <qemu-devel@nongnu.org>, <peterx@redhat.com>, <farosas@suse.de>,
+ <lizhijian@fujitsu.com>, <eblake@redhat.com>, <Emily.Deng@amd.com>,
+ <Victor.Zhao@amd.com>, <PengJu.Zhou@amd.com>, <Qing.Ma@amd.com>
+References: <20260316062308.1240426-1-guoqing.zhang@amd.com>
+ <20260326025825.2427332-1-guoqing.zhang@amd.com>
+ <87jyuzhybv.fsf@pond.sub.org>
 Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260326091130.321483-12-zhenzhong.duan@intel.com>
+From: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>
+In-Reply-To: <87jyuzhybv.fsf@pond.sub.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: KU2P306CA0024.MYSP306.PROD.OUTLOOK.COM
- (2603:1096:d10:3b::7) To LV8PR11MB8509.namprd11.prod.outlook.com
- (2603:10b6:408:1e6::15)
-MIME-Version: 1.0
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|SA1PR11MB9614:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9b1aa5b3-b782-44a3-90b1-08de8bb8cd6a
+X-MS-TrafficTypeDiagnostic: DS1PEPF00017098:EE_|LV8PR12MB9408:EE_
+X-MS-Office365-Filtering-Correlation-Id: b63f0b08-b512-4623-5e93-08de8bb8471f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|42112799006|376014|7416014|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: mMV3tQlP3tvVhTkAvhZ/QqG00gOeQVyHSDFJSAL8gLmjCKGK5aP3IQn9hNndFIDe2ixluvAzSTfKHlzByV8PIFZzQq0rRUK+scBuNjR5ZQehYA1SYAMeAxWyTeESo1rkTHZ9pUAJBFlVwaGyn8DKosm1tojLZWVRrnBxucFnRdWpUJQAwbJ4uCne61pc3F3KlTF+8tlElQf2HSwddiQVi6IeqDpQZ35oY387e4/bRbYi1r64SmKNSSKh9V75OK0h4liPuevGWeYiNLlDvbnDpcAkqgoDp1o4ftlC8nY6bMi+tRnQ1a5w+9Gfs0AgRphm3kPayz5eTfg2qxPkSzzI5qqNcUyw2CwIgA38XQF9KP0W+Z/PNqR/5Q2osxooMJ0o/1JBqj8xsMcmShXhlYYSgQHyUczdXqWQ+rEpXijnqcW57oea59wjGeaDKY1aGhQVtHQfSCLku8/bEcRsX9qkGHn0oYmLgNj5vw+6uq4Q77y9BuaX8ObZDTxjXWw5tjYwu/OWrw2iLQpu9AZaD4LVbTj9umwn3O9KYds+ziefTv18TuBHw3CJ1UEhMFRMTieG8hzrxAQu5k/0l23E8ebmxfxElDI7CiphAtmo9DlMRyhwmtMAVyw12pELWtow7I13E2ROutLFopDDyk3Pt7/4bS/dIRFX2P0YU4N6DBihZGTB/aebBuxjLU78dXmaMHrduZFthigUBvFFq1+uYdiURjmRkvCPjQLnqM1hqRynCUA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(42112799006)(376014)(7416014)(22082099003)(56012099003)(18002099003);
+ ARA:13230040|82310400026|376014|36860700016|1800799024|13003099007|56012099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: ImigphvfFQ+cpjYZ2nhg+pDuR6r+/WOJiGyhG5wh6siZpvVCY+Kdy2wp2X+ZZaiRkGELUSl86rMikVjoNcyug9ARZznG4c3jF/OVhlnVjItjh9IcoMFL4lO3O5KDpUjUUGaM7gGDlHuhbujhpTIbE5dkW4/giqgZIwLiSSgTyuVBfiHNPNcXSiqODBnSCeShJMa2K8CGa3B3tkAWFWwUIdBEdK0mIj9G1XfARejYIXreH8AClPW/wd4SZi+I1VePbj1KajPD0yjcDMly7vtQOAzc4rdzNUvJ70xFNBj/Wh+nG7T2wEkJc/LzCXFpGu1mxgFwmKi8WNkpWqFw1U50rgL7lp+SRBEn/zzY+1h94zg7paqM5M0hBoVytDYH4+DPsRU5n7pbHKcaEBxLQjDv0fle7IrbIjaNShQS6NpxrnI+n1fO49RsDIPstNhC3ErUtOTD+mCUJ+T/1F93486VSR6P2VZrPep29RSedgf6UvfHZk/25rmeGU8UithasRgUw7GtY5qAEoYSWpth6zFXPk34unAbDR5fyGO0Ih8eksreeGZzPsXrvt60uUvCR3di49rsDllJHh7XDB8y054z3tld6/ujiCCE81fXO7M+Bd5t3D6X/pTrO/tBVocF3FRSswj4bK7UId0RQBMrRN10bwdZETBIzEIDu6ufRAbm57aKScCvt8p04ihdkLzc7nCEZMeCb/ul0lIrHcAhlplamO70amgY6Fy3TlTwiUsWZeNfbrhdCQvuynUZkRpp32Ae8vVyApThWQy8qywINuLmVA==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(36860700016)(1800799024)(13003099007)(56012099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?alltRmxqR1NPTGQyeEFLYzZST2p1RXY0OEVWNzJVUHJ4U3pkdlRteHBlTXlj?=
- =?utf-8?B?N243NXM1UXpXTDlUR3FZOWhZTndIQWpsb2d0em94emlQejNJWngzNEtHNWhv?=
- =?utf-8?B?dG96WHVocUZiVk5icmFxK1hrZEZSNEZ2Zno3ZWhySnNSUTNaaXljRlhQRVFM?=
- =?utf-8?B?dVlBQ1FJT0pjWmxDTzlLSTdmN1pQYlJTTzd6bFVJVzExOHVtTlZxMGwzQWdF?=
- =?utf-8?B?cUxZcWxnNkRERnNBZXpHOCtyU1Blb1lvclRETmpSeU9OM0pMWUp2WmZrNWFl?=
- =?utf-8?B?ZTBlTDhpeWd1ZnlLcDY0Wmo1eVN4ZjczaENPT1JhajBMcFpQU0dIaTdQcDla?=
- =?utf-8?B?K2xRQ1ZkdjgzQzBubWsyNzNOMCtvalpvaGViVFZ5UStJajFXOVRDdnBad2pN?=
- =?utf-8?B?ZTFTQVVrSXBHd2NyQ2xtbnNvQlJKNnRkZCszR1J6WUx3NWsvdUFMZWhFNUJn?=
- =?utf-8?B?M0xTcXNlMjZYclRWVnRFMVJhNkEvQ0tXbXZqbitRaXlET21ybEVMVmpnVXd5?=
- =?utf-8?B?V2g4VXQrdG9vMDFzYjI5L2x3TmovdUl5R2p4OEJMQVNnR1A1ZzQxbVdDeVpG?=
- =?utf-8?B?MXl2bks3QWsycjNOZU1TZ2xNeCtzSHdJckxzd1RCeU9tNnd6cHF2RFVZNmI5?=
- =?utf-8?B?MVhXY1gvWml4NTIyUFpSYU9UMkpsMUd3cUlKQ0pjQmJDR1BtazgwUEduOFBm?=
- =?utf-8?B?TTRCK0RlSkJldDRmRGRPNElGYTJYMHBTWlpnT2d3MGRJYUhYaTdIRVNqZlp6?=
- =?utf-8?B?YzJQcHBiNmNNKzZZOTdXc2VlZDU0RXoyaWJaNzNDa3dSRTE1UXZRa2ViSTA5?=
- =?utf-8?B?UWJYaFdYU3p0eExib0pUQzJyd1hrbmU0cGNUeW9CekRiM3VBKy8zNzhXTkpF?=
- =?utf-8?B?a3pma3E3MVR1aFI5L1FJRyt3Q2xjLzMzQ3I5dDJFNVZneVJDN0dtbnFVaGFG?=
- =?utf-8?B?SENMZVFhUE5keGxDYzQwV1Rad3dQcHppTmg2SmMrUnF3dGQ1UjFIZWFQODI5?=
- =?utf-8?B?OHNEcXNkTmRTaTZTNDc2ek4rcG5leFc5a05PbHJYQko2RWFka2hBb1I4RHVa?=
- =?utf-8?B?OU1CNXpLNzM1cFoxazYwbExkdFlaQk9SZk1Cb1I0RnlFaXEybklZY0tqeXdw?=
- =?utf-8?B?QVU3RHZRTzYvTWdZbVN2MFRwWHc1MVRMaXczVStGQ3crMkwvdWhlSXc4aDk5?=
- =?utf-8?B?bjBHZ1poRGZndXdSRUYvbE5Dc1RIUzdQZ0tMeWpObnpGd2FwSDNjNzd5bSsv?=
- =?utf-8?B?ZjU3MkpJTWRTOHBrS2UraThpVk4yZ1k2ajJsSTdYUURIdEFrYUp5MmZrWWhk?=
- =?utf-8?B?U25rRDFodVVSQThybTBSUE9HaTlYTzhrY3oxVlJJZ3pmMDZZRDl2eng1K1hq?=
- =?utf-8?B?eEhmUmZFV2wzK1lHZTc3aTZKeW9UTXNjSkpHM3dIWkJxYzY4NEFnTnVJUlF2?=
- =?utf-8?B?Vk94SWFub2tBNk9IMDRwTTlZOTE4VzV5TEl4UHVlV0lWNzdsSEV2TTNrdWJh?=
- =?utf-8?B?WXZPSi92WjlocHNxOHJWUmxhTkVzSEgwRG9Xb3FyaXFMbjBVNnB1RERSRlJt?=
- =?utf-8?B?bmhTekFXVmZZb3VGZk9Xa0ppRmlhRXJvakc1bU1zYUJpcWQwNHNmeE9UU1gv?=
- =?utf-8?B?RGVha1E2ZzhyazQ0bHJzZjl4NkR6S3I5Tk9hUmtycnRDQTFtTlBYVWZySm0w?=
- =?utf-8?B?N3lHVFhmUFRzQ0pkWFJZS2ZjZWw2YUpHY3pFS1NRMzJWb2RiNlBON1FOQ0xa?=
- =?utf-8?B?Qk1QTUIyWU9peHpUY2ltRlJUZGlESHJTMWNoMmpXUFRqeE9sNmw3bldEeHov?=
- =?utf-8?B?NE5jSjc2MEZUU2JsSnVVY1pDU3dJT0hjK2NldW9aL0N5SGdUOWJ2cFJld2Jh?=
- =?utf-8?B?cVh0YlB4ZUdmSTRPV0t2SFhveThQSzc5dG8xZ0VMS0NsWi94WEV0MDRKOU8y?=
- =?utf-8?B?M1M5Ri8yWmxWVUxlYitjOUZzZWw1aU1SazhIOXcybjVhUHR4SVg0QnBGWmZ6?=
- =?utf-8?B?ZVROUmMrTlBacHBodnVkVDVpL1pnMnVKUUg2T05QTlM3dHFZaEVGT1VVYzRj?=
- =?utf-8?B?bDQ4KzlxT1RmQ3NTcGVFRDcxS2tGNklmeXNxMFkzaUJTNGxCWWlDdHRzeUdT?=
- =?utf-8?B?ck1MS1ZxZHF1dVowZzYzWDdhbXlXWUtGeXQ1Z0FwNm1KUS9UNlJ2bmNmckpX?=
- =?utf-8?B?MW8rWVZEY1lxTnNxWnVYanZMRU9OZGFpTE9WNmRMTWF3d2V3cXJpYWorcUxx?=
- =?utf-8?B?RWFDSVVFM2xhamRIbXY4aEc3Y2ExNWViWGJzTFpDdjMwM24yaUprclJQNG9M?=
- =?utf-8?B?aHU2cjRPWEIrNDlVN3hCbU5zVXZVamg2cEpabXl4WjJEckxWN2lHQT09?=
-X-Exchange-RoutingPolicyChecked: ZUKjjeaKE0BIyUtYBzUfpdK7h6BQIV4AUdI8l/2QU47xfPTuUdXKd8/wtUtOLcSd68K9FVKtN85hdBqs4myj9VtfzAagpccU9j6C2l8I26fC3M8kU8F9YxqH3zcwUYq1mi35ascmFL6YS7j4GaaPTdZQhNzgHgxi3wwsl5WUqOyvhUlXrRTBd6Nf5/yJXksh8tQ0sUz81GTS1rxTj7ccJk0ARDmt6sNqYdnZuzgByHxA+LU2bGDAnYtKLO4zK27lMNRh1s9xkjaaUWFt7Dzv+q/3dD9vX/jmam/SL30y14zCnkPxGutSIq/iG+5gZlTbZ3mcyiezbioAFI8mqgDFfw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b1aa5b3-b782-44a3-90b1-08de8bb8cd6a
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 04:24:57.1133 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PuzYbe2ONlLz7tZmY0Jy45nQcmRyv9se47c25PcvgZNrXuCu3GOw0iLr0sSMxu3z59YCQa0KbsP1ds1HEy0qPw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB9614
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-AntiSpam-MessageData-0: 60seuoIqeCza0AC7a5llB8g+naTLCd3hCSPm1/GCQnGIdNEraOEdMQbLyJDBkwYkpWp6kONcGYE/pPGaiOTXaAZbMVN3EPrK+q6F1JcZzIGSY6Uttjv4G8JztPZxur6PqVlUMiybza68kZag6tfy7P19dlxU2AOJLF/BIHIRZ3VhfODVJOAZnhAt0NXXDdCiNlNJfcjOT6rDd8F9Y9bcNy1Pi3Y/mHk9Pk+B8v3xCfcw/jIYIzHJdbka38jurcIPYyjyGGzqRDazQJU8d2GWKDkeBpaFwqgbWMjvN32vEUqOOn4VxVkAV5ZccucMcxoRTUHgZoPmIr5z+AN85WHpdrgnOueHU5TOXGfSgnIe9e3GzXbTnvyl14Wr33vqwNkHNrHoy+qrn+6soO+1rV67pkkzNK6AzjSiCiDi9Gc/8JxXz8MfV2qko5qUBzIOVIiY
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 04:21:11.5919 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b63f0b08-b512-4623-5e93-08de8bb8471f
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017098.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9408
+Received-SPF: permerror client-ip=40.107.201.52;
+ envelope-from=GuoQing.Zhang@amd.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -189,393 +135,365 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 17:11, Zhenzhong Duan wrote:
-> We just switched to use VTDAccelPASIDCacheEntry to cache pasid entry of
-> passthrough device, also need to switch the binding/unbinding and PIOTLB
-> flushing functions to use the same structure.
- > > After the switching, we could remove accel related code from
-> vtd_pasid_cache_[reset/sync]_locked() to make intel_iommu.c cleaner.
-> 
-> The VTDAddressSpace of PASID_0 is still useful as VTD supports a legacy
-> mode which needs shadow page table instead of nested page table.
-This patch does quite a few things. But I don't have a good idea to
-split it. So wish to have a nice description.
 
-FYI.
+On 2026/3/26 14:57, Markus Armbruster wrote:
+> [You don't often get email from armbru@redhat.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>
+> By convention, we don't post new patches in reply to old ones.  Next
+> time :)
+>
+> Samuel Zhang <guoqing.zhang@amd.com> writes:
+>
+>> The default 1MB RDMA chunk size causes slow live migration because
+>> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
+>> 1MB chunk size produce ~15000 flushes vs ~3700 with 1024MB chunk size.
+>>
+>> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
+>> faster migration.
+>> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
+>>
+>> Performance with RDMA live migration of 8GB RAM VM:
+>>
+>> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
+>> |-----------------------|----------|-------------------|
+>> | 1M (default)          | 37.915   |  1,007            |
+>> | 32M                   | 17.880   |  2,260            |
+>> | 1024M                 |  4.368   | 17,529            |
+>>
+>> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
+>> ---
+>> v2:
+>> - Renamed x-rdma-chunk-shift to x-rdma-chunk-size (byte count)
+>> - Added validation in migrate_params_check()
+>> - Added hmp_migrate_set_parameter() support
+>> - Added hmp_info_migrate_parameters() support
+>> - Added migrate_mark_all_params_present()
+>> - Use qemu_strtosz() for size suffix support
+>>
+>>   migration/migration-hmp-cmds.c | 17 +++++++++++++++++
+>>   migration/options.c            | 32 +++++++++++++++++++++++++++++++-
+>>   migration/options.h            |  1 +
+>>   migration/rdma.c               | 30 ++++++++++++++++--------------
+>>   qapi/migration.json            | 11 +++++++++--
+>>   5 files changed, 74 insertions(+), 17 deletions(-)
+>>
+>> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>> index 0a193b8f54..2c005c08a6 100644
+>> --- a/migration/migration-hmp-cmds.c
+>> +++ b/migration/migration-hmp-cmds.c
+>> @@ -451,6 +451,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>>                              params->direct_io ? "on" : "off");
+>>           }
+>>
+>> +        if (params->has_x_rdma_chunk_size) {
+>> +            monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
+>> +                           MigrationParameter_str(
+>> +                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
+>> +                           params->x_rdma_chunk_size);
+>> +        }
+>> +
+>>           assert(params->has_cpr_exec_command);
+>>           monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
+>>       }
+>> @@ -730,6 +737,16 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+>>           p->has_mode = true;
+>>           visit_type_MigMode(v, param, &p->mode, &err);
+>>           break;
+>> +    case MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE:
+>> +        p->has_x_rdma_chunk_size = true;
+>> +        ret = qemu_strtosz(valuestr, NULL, &valuebw);
+> We use several variations of the conversion to size:
+>
+>                         default          examples
+> function                suffix  scale     "1"         "64K"
+> -----------------------------------------------------------
+> qemu_strtosz()             B     1024      1        64*1024
+> qemu_strtosz_MiB()         M     1024   1024*1024   64*1024
+> qemu_strtosz_metric()      B     1000      1        64*1000
+>
+> Unfortunate complication of the user interface if you ask me, but
+> changing it now is likely a bad idea.  My point is: which one to use
+> here?
+>
+> This function uses two: qemu_strtosz_MiB() directly, and qemu_strtosz()
+> via visit_type_size().
+>
+> Unless you have a specific reason to want default suffix 'M', use
+> visit_type_size(), it's less code, and the error reporting is better.
+>
+>
+>> +        if (ret != 0 || valuebw < (1<<20) || valuebw > (1<<30)
+>> +            || !is_power_of_2(valuebw)) {
+>> +            error_setg(&err, "Invalid size %s", valuestr);
+>> +            break;
+>> +        }
+> This is partly redundant with the checking in migrate_params_check().
+>
+> If you use visit_type_size(), you don't need it at all.
+>
+> If you use qemu_strtosz_MiB(), you should check less.  Have a look at
+> the other uses in this function.
+>
+>> +        p->x_rdma_chunk_size = valuebw;
+>> +        break;
+>>       case MIGRATION_PARAMETER_DIRECT_IO:
+>>           p->has_direct_io = true;
+>>           visit_type_bool(v, param, &p->direct_io, &err);
+>> diff --git a/migration/options.c b/migration/options.c
+>> index f33b297929..91dd874b5e 100644
+>> --- a/migration/options.c
+>> +++ b/migration/options.c
+>> @@ -90,6 +90,7 @@ const PropertyInfo qdev_prop_StrOrNull;
+>>
+>>   #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
+>>   #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
+>> +#define DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE           (1<<20) /* 1MB */
+>>
+>>   const Property migration_properties[] = {
+>>       DEFINE_PROP_BOOL("store-global-state", MigrationState,
+>> @@ -183,6 +184,9 @@ const Property migration_properties[] = {
+>>       DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
+>>                          parameters.zero_page_detection,
+>>                          ZERO_PAGE_DETECTION_MULTIFD),
+>> +    DEFINE_PROP_UINT64("x-rdma-chunk-size", MigrationState,
+>> +                      parameters.x_rdma_chunk_size,
+>> +                      DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE),
+>>
+>>       /* Migration capabilities */
+>>       DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+>> @@ -993,6 +997,15 @@ ZeroPageDetection migrate_zero_page_detection(void)
+>>       return s->parameters.zero_page_detection;
+>>   }
+>>
+>> +uint64_t migrate_rdma_chunk_size(void)
+>> +{
+>> +    MigrationState *s = migrate_get_current();
+>> +    uint64_t size = s->parameters.x_rdma_chunk_size;
+>> +
+>> +    assert((1<<20) <= size && size <= (1<<30) && is_power_of_2(size));
+> Suggest MiB <= size && size <= GiB.
+>
+>> +    return size;
+>> +}
+>> +
+>>   /* parameters helpers */
+>>
+>>   AnnounceParameters *migrate_announce_params(void)
+>> @@ -1055,7 +1068,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
+>>           &p->has_announce_step, &p->has_block_bitmap_mapping,
+>>           &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
+>>           &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
+>> -        &p->has_cpr_exec_command,
+>> +        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
+>>       };
+>>
+>>       len = ARRAY_SIZE(has_fields);
+>> @@ -1227,6 +1240,15 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>>           return false;
+>>       }
+>>
+>> +    if (params->has_x_rdma_chunk_size &&
+>> +        (params->x_rdma_chunk_size < (1<<20) ||
+>> +         params->x_rdma_chunk_size > (1<<30) ||
+> Suggest < MiB and > GiB.
+>
+>> +         !is_power_of_2(params->x_rdma_chunk_size))) {
+>> +        error_setg(errp, "Option x_rdma_chunk_size expects "
+>> +                   "a power of 2 in the range 1M to 1024M");
+>> +        return false;
+>> +    }
+>> +
+>>       if (!check_dirty_bitmap_mig_alias_map(params->block_bitmap_mapping, errp)) {
+>>           error_prepend(errp, "Invalid mapping given for block-bitmap-mapping: ");
+>>           return false;
+>> @@ -1391,6 +1413,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
+>>           dest->direct_io = params->direct_io;
+>>       }
+>>
+>> +    if (params->has_x_rdma_chunk_size) {
+>> +        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
+>> +    }
+>> +
+>>       if (params->has_cpr_exec_command) {
+>>           dest->cpr_exec_command = params->cpr_exec_command;
+>>       }
+>> @@ -1517,6 +1543,10 @@ static void migrate_params_apply(MigrationParameters *params)
+>>           s->parameters.direct_io = params->direct_io;
+>>       }
+>>
+>> +    if (params->has_x_rdma_chunk_size) {
+>> +        s->parameters.x_rdma_chunk_size = params->x_rdma_chunk_size;
+>> +    }
+>> +
+>>       if (params->has_cpr_exec_command) {
+>>           qapi_free_strList(s->parameters.cpr_exec_command);
+>>           s->parameters.cpr_exec_command =
+>> diff --git a/migration/options.h b/migration/options.h
+>> index b502871097..b46221998a 100644
+>> --- a/migration/options.h
+>> +++ b/migration/options.h
+>> @@ -87,6 +87,7 @@ const char *migrate_tls_creds(void);
+>>   const char *migrate_tls_hostname(void);
+>>   uint64_t migrate_xbzrle_cache_size(void);
+>>   ZeroPageDetection migrate_zero_page_detection(void);
+>> +uint64_t migrate_rdma_chunk_size(void);
+>>
+>>   /* parameters helpers */
+>>
+>> diff --git a/migration/rdma.c b/migration/rdma.c
+>> index 55ab85650a..3e37a1d440 100644
+>> --- a/migration/rdma.c
+>> +++ b/migration/rdma.c
+>> @@ -45,10 +45,12 @@
+>>   #define RDMA_RESOLVE_TIMEOUT_MS 10000
+>>
+>>   /* Do not merge data if larger than this. */
+>> -#define RDMA_MERGE_MAX (2 * 1024 * 1024)
+>> -#define RDMA_SIGNALED_SEND_MAX (RDMA_MERGE_MAX / 4096)
+>> +static inline uint64_t rdma_merge_max(void)
+>> +{
+>> +    return migrate_rdma_chunk_size() * 2;
+>> +}
+>>
+>> -#define RDMA_REG_CHUNK_SHIFT 20 /* 1 MB */
+>> +#define RDMA_SIGNALED_SEND_MAX 512
+>>
+>>   /*
+>>    * This is only for non-live state being migrated.
+>> @@ -527,21 +529,21 @@ static int qemu_rdma_exchange_send(RDMAContext *rdma, RDMAControlHeader *head,
+>>   static inline uint64_t ram_chunk_index(const uint8_t *start,
+>>                                          const uint8_t *host)
+>>   {
+>> -    return ((uintptr_t) host - (uintptr_t) start) >> RDMA_REG_CHUNK_SHIFT;
+>> +    return ((uintptr_t) host - (uintptr_t) start) / migrate_rdma_chunk_size();
+> Double-checking: this function isn't speed-critical, correct?
 
-Subject:
-intel_iommu: Switch to VTDAccelPASIDCacheEntry for PASID bind/unbind and 
-PIOTLB invalidation
 
-Commit message:
-This patch switches from VTDAddressSpace to VTDAccelPASIDCacheEntry for
-handling PASID bind/unbind operations and PIOTLB invalidations in
-passthrough scenarios. VTDAccelPASIDCacheEntry was introduced to cache
-PASID entries for passthrough devices and is now ready to propagate
-PASID bind/unbind operations and PIOTLB invalidations to the host.
-Unlike the previous approach, VTDAccelPASIDCacheEntry supports both
-PASID_0 (rid_pasid) and other valid PASIDs, so this switch drops the
-PASID_0 limitations that existed in the prior PASID bind/unbind and
-PIOTLB invalidation path. For PASID_0 of passthrough devices,
-VTDAddressSpace continues to handle shadow page modifications to the
-host, but no longer manages PASID bind/unbind operations or PIOTLB
-invalidations for passthrough scenarios.
+It's not. it is called once per chunk during live-migration. And no 
+performance change is observed when comparing with original implementation.
 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/i386/intel_iommu_accel.h   |   2 +-
->   include/hw/i386/intel_iommu.h |   2 -
->   hw/i386/intel_iommu.c         |  17 +----
->   hw/i386/intel_iommu_accel.c   | 125 +++++++++++++++++-----------------
->   4 files changed, 64 insertions(+), 82 deletions(-)
-> 
-> diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-> index 1fb7ca0af6..c72856a8ff 100644
-> --- a/hw/i386/intel_iommu_accel.h
-> +++ b/hw/i386/intel_iommu_accel.h
-> @@ -16,6 +16,7 @@ typedef struct VTDAccelPASIDCacheEntry {
->       VTDHostIOMMUDevice *vtd_hiod;
->       VTDPASIDEntry pasid_entry;
->       uint32_t pasid;
-> +    uint32_t fs_hwpt_id;
->       QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
->   } VTDAccelPASIDCacheEntry;
->   
-> @@ -23,7 +24,6 @@ typedef struct VTDAccelPASIDCacheEntry {
->   bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
->                             Error **errp);
->   VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as);
-> -bool vtd_propagate_guest_pasid(VTDAddressSpace *vtd_as, Error **errp);
->   void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
->                                         uint32_t pasid, hwaddr addr,
->                                         uint64_t npages, bool ih);
-> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-> index 95c76015e4..1842ba5840 100644
-> --- a/include/hw/i386/intel_iommu.h
-> +++ b/include/hw/i386/intel_iommu.h
-> @@ -154,8 +154,6 @@ struct VTDAddressSpace {
->        * with the guest IOMMU pgtables for a device.
->        */
->       IOVATree *iova_tree;
-> -
-> -    uint32_t fs_hwpt_id;
->   };
->   
->   struct VTDIOTLBEntry {
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index b022f3cb9e..f53642a611 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -86,8 +86,6 @@ static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
->           VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
->           if (pc_entry->valid) {
->               pc_entry->valid = false;
-> -            /* It's fatal to get failure during reset */
-> -            vtd_propagate_guest_pasid(vtd_as, &error_fatal);
->           }
->       }
->   }
-> @@ -3126,8 +3124,6 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
->       VTDPASIDEntry pe;
->       IOMMUNotifier *n;
->       uint16_t did;
-> -    const char *err_prefix = "Attaching to HWPT failed: ";
-> -    Error *local_err = NULL;
->   
->       if (vtd_dev_get_pe_from_pasid(vtd_as, &pe)) {
->           if (!pc_entry->valid) {
-> @@ -3148,9 +3144,6 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
->               vtd_address_space_unmap(vtd_as, n);
->           }
->           vtd_switch_address_space(vtd_as);
-> -
-> -        err_prefix = "Detaching from HWPT failed: ";
-> -        goto do_bind_unbind;
->       }
->   
->       /*
-> @@ -3178,20 +3171,12 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
->       if (!pc_entry->valid) {
->           pc_entry->pasid_entry = pe;
->           pc_entry->valid = true;
-> -    } else if (vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
-> -        err_prefix = "Replacing HWPT attachment failed: ";
-> -    } else {
-> +    } else if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
->           return;
->       }
->   
->       vtd_switch_address_space(vtd_as);
->       vtd_address_space_sync(vtd_as);
-> -
-> -do_bind_unbind:
-> -    /* TODO: Fault event injection into guest, report error to QEMU for now */
-> -    if (!vtd_propagate_guest_pasid(vtd_as, &local_err)) {
-> -        error_reportf_err(local_err, "%s", err_prefix);
-> -    }
->   }
->   
->   static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-> index e9e67eb1a0..26543489fb 100644
-> --- a/hw/i386/intel_iommu_accel.c
-> +++ b/hw/i386/intel_iommu_accel.c
-> @@ -111,23 +111,24 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
->   }
->   
->   static void vtd_destroy_old_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+Should I change it to `>> ctz64(migrate_rdma_chunk_size())` ?
 
-vtd_hiod can be retrived from vtd_pce?
 
-> -                                    VTDAddressSpace *vtd_as)
-> +                                    VTDAccelPASIDCacheEntry *vtd_pce)
->   {
->       HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
->   
-> -    if (!vtd_as->fs_hwpt_id) {
-> +    if (!vtd_pce->fs_hwpt_id) {
->           return;
->       }
-> -    iommufd_backend_free_id(idev->iommufd, vtd_as->fs_hwpt_id);
-> -    vtd_as->fs_hwpt_id = 0;
-> +    iommufd_backend_free_id(idev->iommufd, vtd_pce->fs_hwpt_id);
-> +    vtd_pce->fs_hwpt_id = 0;
->   }
->   
-> -static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-> -                                      VTDAddressSpace *vtd_as, Error **errp)
-> +static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
-> +                                      Error **errp)
->   {
-> +    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
->       HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> -    VTDPASIDEntry *pe = &vtd_as->pasid_cache_entry.pasid_entry;
-> -    uint32_t hwpt_id = idev->hwpt_id;
-> +    VTDPASIDEntry *pe = &vtd_pce->pasid_entry;
-> +    uint32_t hwpt_id = idev->hwpt_id, pasid = vtd_pce->pasid;
->       bool ret;
->   
->       /*
-> @@ -147,14 +148,13 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
->           }
->       }
->   
-> -    ret = host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID, hwpt_id,
-> -                                                errp);
-> -    trace_vtd_device_attach_hwpt(idev->devid, vtd_as->pasid, hwpt_id, ret);
-> +    ret = host_iommu_device_iommufd_attach_hwpt(idev, pasid, hwpt_id, errp);
-> +    trace_vtd_device_attach_hwpt(idev->devid, pasid, hwpt_id, ret);
->       if (ret) {
->           /* Destroy old fs_hwpt if it's a replacement */
-> -        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-> +        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_pce);
->           if (vtd_pe_pgtt_is_fst(pe)) {
-> -            vtd_as->fs_hwpt_id = hwpt_id;
-> +            vtd_pce->fs_hwpt_id = hwpt_id;
->           }
->       } else if (vtd_pe_pgtt_is_fst(pe)) {
->           iommufd_backend_free_id(idev->iommufd, hwpt_id);
-> @@ -163,16 +163,17 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
->       return ret;
->   }
->   
-> -static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-> -                                      VTDAddressSpace *vtd_as, Error **errp)
-> +static bool vtd_device_detach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
-> +                                      Error **errp)
->   {
-> +    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
->       HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> -    IntelIOMMUState *s = vtd_as->iommu_state;
-> -    uint32_t pasid = vtd_as->pasid;
-> +    IntelIOMMUState *s = vtd_hiod->iommu_state;
-> +    uint32_t pasid = vtd_pce->pasid;
->       bool ret;
->   
-> -    if (s->dmar_enabled && s->root_scalable) {
-> -        ret = host_iommu_device_iommufd_detach_hwpt(idev, IOMMU_NO_PASID, errp);
-> +    if (pasid != IOMMU_NO_PASID || (s->dmar_enabled && s->root_scalable)) {
-> +        ret = host_iommu_device_iommufd_detach_hwpt(idev, pasid, errp);
->           trace_vtd_device_detach_hwpt(idev->devid, pasid, ret);
->       } else {
->           /*
-> @@ -180,72 +181,47 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
->            * we fallback to the default HWPT which contains shadow page table.
->            * So guest DMA could still work.
->            */
-> -        ret = host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID,
-> +        ret = host_iommu_device_iommufd_attach_hwpt(idev, pasid,
->                                                       idev->hwpt_id, errp);
->           trace_vtd_device_reattach_def_hwpt(idev->devid, pasid, idev->hwpt_id,
->                                              ret);
->       }
->   
->       if (ret) {
-> -        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-> +        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_pce);
->       }
->   
->       return ret;
->   }
->   
-> -bool vtd_propagate_guest_pasid(VTDAddressSpace *vtd_as, Error **errp)
-> -{
-> -    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-> -    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
-> -
-> -    /* Ignore emulated device or legacy VFIO backed device */
-> -    if (!vtd_as->iommu_state->fsts || !vtd_hiod) {
-> -        return true;
-> -    }
-> -
-> -    if (pc_entry->valid) {
-> -        return vtd_device_attach_iommufd(vtd_hiod, vtd_as, errp);
-> -    }
-> -
-> -    return vtd_device_detach_iommufd(vtd_hiod, vtd_as, errp);
-> -}
-> -
->   /*
-> - * This function is a loop function for the s->vtd_address_spaces
-> - * list with VTDPIOTLBInvInfo as execution filter. It propagates
-> - * the piotlb invalidation to host.
-> + * This function is a loop function for the s->vtd_host_iommu_dev
-> + * and vtd_hiod->pasid_cache_list lists with VTDPIOTLBInvInfo as
-> + * execution filter. It propagates the piotlb invalidation to host.
->    */
-> -static void vtd_flush_host_piotlb_locked(gpointer key, gpointer value,
-> -                                         gpointer user_data)
-> +static void vtd_flush_host_piotlb(VTDAccelPASIDCacheEntry *vtd_pce,
-> +                                  VTDPIOTLBInvInfo *piotlb_info)
->   {
-> -    VTDPIOTLBInvInfo *piotlb_info = user_data;
-> -    VTDAddressSpace *vtd_as = value;
-> -    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
-> -    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-> +    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
-> +    VTDPASIDEntry *pe = &vtd_pce->pasid_entry;
->       uint16_t did;
->   
-> -    if (!vtd_hiod) {
-> -        return;
-> -    }
-> -
-> -    assert(vtd_as->pasid == PCI_NO_PASID);
-> -
->       /* Nothing to do if there is no first stage HWPT attached */
-> -    if (!pc_entry->valid ||
-> -        !vtd_pe_pgtt_is_fst(&pc_entry->pasid_entry)) {
-> +    if (!vtd_pe_pgtt_is_fst(pe)) {
->           return;
->       }
->   
-> -    did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
-> +    did = VTD_SM_PASID_ENTRY_DID(pe);
->   
-> -    if (piotlb_info->domain_id == did && piotlb_info->pasid == PASID_0) {
-> +    if (piotlb_info->domain_id == did && piotlb_info->pasid == vtd_pce->pasid) {
-
-have you considered to use IOMMU_NO_PASID instead of PASID_0 before
-this? When reading this change, I'm wondering why this changes
-PASID_0 to vtd_pce->pasid while other parts of this patch changes
-IOMMU_NO_PASID to vtd_pce->pasid. I think we've already have the 
-consensus that IOMMU_NO_PASID is 0, so you may have a patch to switch
-using IOMMU_NO_PASID instead of PASID_0.
-
->           HostIOMMUDeviceIOMMUFD *idev =
->               HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
->           uint32_t entry_num = 1; /* Only implement one request for simplicity */
->           Error *local_err = NULL;
->           struct iommu_hwpt_vtd_s1_invalidate *cache = piotlb_info->inv_data;
->   
-> -        if (!iommufd_backend_invalidate_cache(idev->iommufd, vtd_as->fs_hwpt_id,
-> +        if (!iommufd_backend_invalidate_cache(idev->iommufd,
-> +                                              vtd_pce->fs_hwpt_id,
->                                                 IOMMU_HWPT_INVALIDATE_DATA_VTD_S1,
->                                                 sizeof(*cache), &entry_num, cache,
->                                                 &local_err)) {
-> @@ -261,6 +237,8 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
->   {
->       struct iommu_hwpt_vtd_s1_invalidate cache_info = { 0 };
->       VTDPIOTLBInvInfo piotlb_info;
-> +    VTDHostIOMMUDevice *vtd_hiod;
-> +    GHashTableIter as_it;
-
-s/as_it/hiod_it/
-
->       cache_info.addr = addr;
->       cache_info.npages = npages;
-> @@ -271,12 +249,19 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
->       piotlb_info.inv_data = &cache_info;
->   
->       /*
-> -     * Go through each vtd_as instance in s->vtd_address_spaces, find out
-> -     * affected host devices which need host piotlb invalidation. Piotlb
-> -     * invalidation should check pasid cache per architecture point of view.
-> +     * Go through each vtd_pce in vtd_hiod->pasid_cache_list for each host
-> +     * device, find out affected host device pasid which need host piotlb
-> +     * invalidation. Piotlb invalidation should check pasid cache per
-> +     * architecture point of view.
->        */
-> -    g_hash_table_foreach(s->vtd_address_spaces,
-> -                         vtd_flush_host_piotlb_locked, &piotlb_info);
-> +    g_hash_table_iter_init(&as_it, s->vtd_host_iommu_dev);
-> +    while (g_hash_table_iter_next(&as_it, NULL, (void **)&vtd_hiod)) {
-> +        VTDAccelPASIDCacheEntry *vtd_pce;
-> +
-> +        QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
-> +            vtd_flush_host_piotlb(vtd_pce, &piotlb_info);
-> +        }
-> +    }
->   }
->   
->   static void vtd_pasid_cache_invalidate_one(VTDAccelPASIDCacheEntry *vtd_pce,
-> @@ -284,6 +269,7 @@ static void vtd_pasid_cache_invalidate_one(VTDAccelPASIDCacheEntry *vtd_pce,
->   {
->       VTDPASIDEntry pe;
->       uint16_t did;
-> +    Error *local_err = NULL;
->   
->       /*
->        * VTD_INV_DESC_PASIDC_G_DSI and VTD_INV_DESC_PASIDC_G_PASID_SI require
-> @@ -309,6 +295,9 @@ static void vtd_pasid_cache_invalidate_one(VTDAccelPASIDCacheEntry *vtd_pce,
->            * to be either all-zero or non-present. Either case means existing
->            * pasid cache should be invalidated.
->            */
-> +        if (!vtd_device_detach_iommufd(vtd_pce, &local_err)) {
-> +            error_reportf_err(local_err, "%s", "Detaching from HWPT failed: ");
-> +        }
->           QLIST_REMOVE(vtd_pce, next);
->           g_free(vtd_pce);
->   
-> @@ -333,11 +322,17 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
->                                 VTDPASIDEntry *pe)
->   {
->       VTDAccelPASIDCacheEntry *vtd_pce;
-> +    Error *local_err = NULL;
->   
->       QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
->           if (vtd_pce->pasid == pasid) {
->               if (vtd_pasid_entry_compare(pe, &vtd_pce->pasid_entry)) {
->                   vtd_pce->pasid_entry = *pe;
-> +
-> +                if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-> +                    error_reportf_err(local_err, "%s",
-> +                                      "Replacing HWPT attachment failed: ");
-> +                }
->               }
->               return;
->           }
-> @@ -348,6 +343,10 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
->       vtd_pce->pasid = pasid;
->       vtd_pce->pasid_entry = *pe;
->       QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
-> +
-> +    if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-> +        error_reportf_err(local_err, "%s", "Attaching to HWPT failed: ");
-> +    }
->   }
->   
->   /*
-
+>
+>>   }
+>>
+>>   static inline uint8_t *ram_chunk_start(const RDMALocalBlock *rdma_ram_block,
+>>                                          uint64_t i)
+>>   {
+>>       return (uint8_t *)(uintptr_t)(rdma_ram_block->local_host_addr +
+>> -                                  (i << RDMA_REG_CHUNK_SHIFT));
+>> +                                  (i * migrate_rdma_chunk_size()));
+>>   }
+>>
+>>   static inline uint8_t *ram_chunk_end(const RDMALocalBlock *rdma_ram_block,
+>>                                        uint64_t i)
+>>   {
+>>       uint8_t *result = ram_chunk_start(rdma_ram_block, i) +
+>> -                                         (1UL << RDMA_REG_CHUNK_SHIFT);
+>> +                                         migrate_rdma_chunk_size();
+>>
+>>       if (result > (rdma_ram_block->local_host_addr + rdma_ram_block->length)) {
+>>           result = rdma_ram_block->local_host_addr + rdma_ram_block->length;
+>> @@ -1841,6 +1843,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
+>>       struct ibv_send_wr *bad_wr;
+>>       int reg_result_idx, ret, count = 0;
+>>       uint64_t chunk, chunks;
+>> +    uint64_t chunk_size = migrate_rdma_chunk_size();
+>>       uint8_t *chunk_start, *chunk_end;
+>>       RDMALocalBlock *block = &(rdma->local_ram_blocks.block[current_index]);
+>>       RDMARegister reg;
+>> @@ -1861,22 +1864,21 @@ retry:
+>>       chunk_start = ram_chunk_start(block, chunk);
+>>
+>>       if (block->is_ram_block) {
+>> -        chunks = length / (1UL << RDMA_REG_CHUNK_SHIFT);
+>> +        chunks = length / chunk_size;
+>>
+>> -        if (chunks && ((length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
+>> +        if (chunks && ((length % chunk_size) == 0)) {
+>>               chunks--;
+>>           }
+>>       } else {
+>> -        chunks = block->length / (1UL << RDMA_REG_CHUNK_SHIFT);
+>> +        chunks = block->length / chunk_size;
+>>
+>> -        if (chunks && ((block->length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
+>> +        if (chunks && ((block->length % chunk_size) == 0)) {
+>>               chunks--;
+>>           }
+>>       }
+>>
+>>       trace_qemu_rdma_write_one_top(chunks + 1,
+>> -                                  (chunks + 1) *
+>> -                                  (1UL << RDMA_REG_CHUNK_SHIFT) / 1024 / 1024);
+>> +                                  (chunks + 1) * chunk_size / 1024 / 1024);
+>>
+>>       chunk_end = ram_chunk_end(block, chunk + chunks);
+>>
+>> @@ -2176,7 +2178,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
+>>       rdma->current_length += len;
+>>
+>>       /* flush it if buffer is too large */
+>> -    if (rdma->current_length >= RDMA_MERGE_MAX) {
+>> +    if (rdma->current_length >= rdma_merge_max()) {
+>>           return qemu_rdma_write_flush(rdma, errp);
+>>       }
+>>
+>> @@ -3522,7 +3524,7 @@ int rdma_registration_handle(QEMUFile *f)
+>>                   } else {
+>>                       chunk = reg->key.chunk;
+>>                       host_addr = block->local_host_addr +
+>> -                        (reg->key.chunk * (1UL << RDMA_REG_CHUNK_SHIFT));
+>> +                        (reg->key.chunk * migrate_rdma_chunk_size());
+>>                       /* Check for particularly bad chunk value */
+>>                       if (host_addr < (void *)block->local_host_addr) {
+>>                           error_report("rdma: bad chunk for block %s"
+>> diff --git a/qapi/migration.json b/qapi/migration.json
+>> index 7134d4ce47..94d2c1c65f 100644
+>> --- a/qapi/migration.json
+>> +++ b/qapi/migration.json
+>> @@ -806,7 +806,7 @@
+>>   #
+>>   # Features:
+>>   #
+>> -# @unstable: Members @x-checkpoint-delay and
+>> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+>>   #     @x-vcpu-dirty-limit-period are experimental.
+>>   #
+>>   # Since: 2.4
+>> @@ -831,6 +831,7 @@
+>>              'mode',
+>>              'zero-page-detection',
+>>              'direct-io',
+>> +           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+>>              'cpr-exec-command'] }
+>>
+>>   ##
+>> @@ -1007,9 +1008,13 @@
+>>   #     is @cpr-exec.  The first list element is the program's filename,
+>>   #     the remainder its arguments.  (Since 10.2)
+>>   #
+>> +# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
+>> +#     Default is 1M.  Must be a power of 2 in the range [1M, 1024M].
+> Let's use 1MiB and 1024MiB for extra clarity.
+>
+>> +#     Only takes effect for RDMA migration.  (Since 11.1)
+>> +#
+>>   # Features:
+>>   #
+>> -# @unstable: Members @x-checkpoint-delay and
+>> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+>>   #     @x-vcpu-dirty-limit-period are experimental.
+>>   #
+>>   # Since: 2.4
+>> @@ -1046,6 +1051,8 @@
+>>               '*mode': 'MigMode',
+>>               '*zero-page-detection': 'ZeroPageDetection',
+>>               '*direct-io': 'bool',
+>> +            '*x-rdma-chunk-size': { 'type': 'uint64',
+>> +                                    'features': [ 'unstable' ] },
+>>               '*cpr-exec-command': [ 'str' ]} }
+>>
+>>   ##
 
