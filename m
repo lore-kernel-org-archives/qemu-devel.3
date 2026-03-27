@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2566010ED679
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107EA10ED67E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:48:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w67Vt-0007nc-Bg; Fri, 27 Mar 2026 09:46:13 -0400
+	id 1w67Vy-0008Rf-9R; Fri, 27 Mar 2026 09:46:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67VK-0006nq-Ek
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:46 -0400
+ id 1w67VU-0006va-R4
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67VI-0006ak-Nd
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:38 -0400
+ id 1w67VS-0006d8-AG
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774619135;
+ s=mimecast20190719; t=1774619145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=H/XDk77uMM0K3ipW2XJci7E6+UCDLhxSXeqP3bT3a4k=;
- b=SbNmDyR1MXVsm6XOnyZAfO4gUHeVID2HoBz4dJjiTm+VBeQ42+TnwHc5GWZeyF52kAKYwr
- rFp97Jaj0bwxWJaGgg2gJqORYBHctM84tjN/QOXy6+/xpHyc2Le7YYZbcJ0w7NnBfGqLjU
- gjSeePx6Oy3LOIkEqlJephlsFBPOXEI=
+ bh=9JzUxiWgZKU4O9M4M3xcPRJsDXu15tLrDMHHzBytk4Q=;
+ b=ZdhFQK5t/D7Qtpw0FH+ovP/v0BxoQZfcRRF/n13Am1ddVe4Rv/IwTu6dB0moKtvPA2CBqR
+ LNLPAPqnP7fr7daWljQGLaLx6W6NE6zgEOODK/ySYQOBFVwRvNl/6rs/Pr6Tns2jwMC2KO
+ w+06Hz0Rg4FxAiRXs6cPv2+D9L6On+8=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-DOJP0ZnzNQusPNRZ2L7tGQ-1; Fri,
- 27 Mar 2026 09:45:29 -0400
-X-MC-Unique: DOJP0ZnzNQusPNRZ2L7tGQ-1
-X-Mimecast-MFC-AGG-ID: DOJP0ZnzNQusPNRZ2L7tGQ_1774619127
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-_BZLUMrgO5OwUxmnCD4LLQ-1; Fri,
+ 27 Mar 2026 09:45:37 -0400
+X-MC-Unique: _BZLUMrgO5OwUxmnCD4LLQ-1
+X-Mimecast-MFC-AGG-ID: _BZLUMrgO5OwUxmnCD4LLQ_1774619134
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D6E21956094; Fri, 27 Mar 2026 13:45:27 +0000 (UTC)
+ id 31BC0195609D; Fri, 27 Mar 2026 13:45:34 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.150])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0681D1800673; Fri, 27 Mar 2026 13:45:19 +0000 (UTC)
+ id 8A55C180036E; Fri, 27 Mar 2026 13:45:27 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
@@ -66,9 +66,9 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 10/15] hw/ppc: Use glib2 instead of strcasecmp/strncasecmp
-Date: Fri, 27 Mar 2026 15:43:56 +0200
-Message-ID: <20260327134401.270186-11-kkostiuk@redhat.com>
+Subject: [PATCH v2 11/15] osdep: Remove unused strings.h
+Date: Fri, 27 Mar 2026 15:43:57 +0200
+Message-ID: <20260327134401.270186-12-kkostiuk@redhat.com>
 In-Reply-To: <20260327134401.270186-1-kkostiuk@redhat.com>
 References: <20260327134401.270186-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
@@ -83,7 +83,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,29 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a change in semantics. g_ascii_strcasecmp() doesn't honour
-locale but strcasecmp() does. But this is OK for at least one reason:
- (1) QEMU always runs with the C locale so there's not an actual
-     behaviour change here
+We don't use strcasecmp/strncasecmp anymore. Also, we don't
+use any other strings.h function. So this include is no more
+needed.
 
 Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- hw/ppc/spapr_caps.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/qemu/osdep.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-index 170795ad6a..f4a26a85b5 100644
---- a/hw/ppc/spapr_caps.c
-+++ b/hw/ppc/spapr_caps.c
-@@ -129,7 +129,7 @@ static void spapr_cap_set_string(Object *obj, Visitor *v, const char *name,
-         return;
-     }
-     for (i = 0; i < cap->possible->num; i++) {
--        if (!strcasecmp(val, cap->possible->vals[i])) {
-+        if (!g_ascii_strcasecmp(val, cap->possible->vals[i])) {
-             spapr->cmd_line_caps[cap->index] = true;
-             spapr->eff.caps[cap->index] = i;
-             return;
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 92856decd4..3718fae351 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -114,7 +114,6 @@ QEMU_EXTERN_C int daemon(int, int);
+ #include <stdio.h>
+ 
+ #include <string.h>
+-#include <strings.h>
+ #include <inttypes.h>
+ #include <limits.h>
+ /* Put unistd.h before time.h as that triggers localtime_r/gmtime_r
 -- 
 2.52.0
 
