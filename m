@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576DD10F287A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8BC10F287C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 23:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6GXu-00068B-Gg; Fri, 27 Mar 2026 19:24:54 -0400
+	id 1w6GYF-00068x-4z; Fri, 27 Mar 2026 19:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GXq-00067b-Ie
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:24:50 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GXy-00068d-CL
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:24:58 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GXp-0006kw-5p
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:24:50 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-439b611274bso1405213f8f.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:24:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w6GXw-0006ls-VM
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 19:24:58 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4852afd42ceso20211435e9.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 16:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774653888; x=1775258688; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774653895; x=1775258695; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hWXl9JV0rE+rpJaSlQxZ62n6iMAe7KcIalG3ENfsSQQ=;
- b=Pl2orZUMjNpTLUYdlnZV5hsiYFumDH19OZIRr2QyX8CsVfeuwMpXVjzhRyoSAIzZa7
- XDFfffnPeny4e4xY3K9YgeLph92zFJ2AgW+/Ar7rXAz3GJfGKXeUchLasHtAvDfD4RY9
- omFbC7kvxm++dIbBJtWHBBTpdjBCf3jMcyYm/EUi2GO9VNtTAZLRtTcvijhtgx3y0qej
- v/hx7TbaeFfK86/6iHV9wWx5b7XwkMcSd8Ntt4uy0ry3Ys6wFAJTXL7ePPjm5Lyikfhp
- iVjvkwYhU/qUodF15MW6DjTnjRNVakPFqc5cXJAm2HKxcBd3Z7bxQHRVsQe0EdLJ/dyL
- EJJw==
+ bh=W2/gOOKoMrQUy+L9lJpCpmUT/jIZgAqDu7oe8h12NpE=;
+ b=BzOnNBolc3UnDOBdLkBmNhN/LChim+BxZlQE4CaGIrMd4vSEkG3yFM3f1mfWyHuaJg
+ WJq9ysL//UnUJuJx9RUtbTuFSdQCoSBF7IOkHj1eOvOPLGVLZsKVbvB8oFO3tlAx26JC
+ AoHbSmYVYdTKnBd3di/u2QOOhnF58wE0VPErL0h55kf6LrLOZSfw7whGtEWI/0h55ajA
+ w3kNpw/wQJgPiPcHsdgcs3qI8QhCAqXQaC75pEnc6Z/b37lbunzyzckdmkhR0E5B4erv
+ zQLpGSt04qr5CWlMtD1XH08L4o6nxL9HpOd1tx8iSFP/bMEPkMYoDgHBJBG/KBuzD2HB
+ X4HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774653888; x=1775258688;
+ d=1e100.net; s=20251104; t=1774653895; x=1775258695;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hWXl9JV0rE+rpJaSlQxZ62n6iMAe7KcIalG3ENfsSQQ=;
- b=mpW9ijhyP1i7cyh5eirAKnW6d+KdUT/1h6I76/iftSuhk7vSMeKX2dtL+j28AG7pqb
- YnsUDincd+kISelIaHUP6IQ5g8Lw/LmrcBE0TCHERalCOAS51rFWynzJq7iiT8C3N7JA
- Ir6szEFVuBT/gJpyGhjRZUK+6VPiQQ/dIJ9bSbvPjIA64vRW8cgSreHcgjV3BTVyVv+Q
- agGto8hiUH7jhX3UWdhLV3OHnNbVuJAeqL8LSLQH2cE1SSZyAf6MhbgAuVAM6nyaKvOo
- 6zfLv7nAu87m3MGW9qoF3OW5lud9QLzOYMMUFwCl/hTjR9zS6SgrgZIokqMbW1f3GLeh
- swXg==
+ bh=W2/gOOKoMrQUy+L9lJpCpmUT/jIZgAqDu7oe8h12NpE=;
+ b=THyofm957zDZ+JOEvBM7ZZTaIlCCCzLbFRfwhmxE6lHLNhw8uMD7tKnQFfBImRlDDC
+ RRj+bqk0oWAguMnvTVyXib7EFqTcCZU4BDrNwf59kHXe9s/U1KUhSc1kBQwQMfg04Vtd
+ /Z9XsvZyWx/36xq85NdUlWLqcA5Mh448v1VI3CdxL4wa07DeqQCC5TrQ8fJBF1hXmX2u
+ PVKMsjhW88fQMpk0DcgbA3r601W60pctoZ52b+ttuEnD6FwU2TNHbZk2lat5wfPqPJG1
+ xSjqohqAvaJn01zqFaG8x8e+4SUve8xTT7EoSwonfCVkrUytvUxm2wj8wzwjXnc+rcmk
+ xf2Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJgZ+aj6XlDmXP9bXUKRjHrU5urvPYZt+TusDEdLLujhARDFcYis+o2U0k1+L4Di8B+F9bKdxy0PDN@nongnu.org
-X-Gm-Message-State: AOJu0Yxq3JZyY/O6BfiQZBnXRf0gYp62KVuyGZ4q1AsN8/NFcO/jO1x5
- x8WIoUDYKOruS2KomLuEW5P9w93RBf8oP83QhBL+bmE9n6LkHKOwPiwQZ6LLZ0WsjlhBTJT1/UA
- k0w0tvVA=
-X-Gm-Gg: ATEYQzyg58+fdpbMb+MeNIryttYGWvvGG4D2rjSk1+rGfqALV1rfsaoiTAaD4HQaRjk
- piFmiDVfuRSBVfwyxJc+yPjrBzLAGlCmHTvcguyiutnzr7UEJucKB/8idx/7qsOXFmTJZJLFRea
- G2r3KBvW3YwNXgQsUKe3W9+JrWxn8/lTaRdG6JqwIOC+mCEb86Q4E/Tu6jZSYmV9JVktkzmyypG
- qr7FISiRZ1O1bdDEHAs7CRQtgIEDQq4oMjLRj33qxI3DjeDddsGXSBuIJRgalCYSy5jAWJIDM8a
- h9xi2xeDcDL/FFxYMXjAtabEqpnLBAUlz9Vuq1fKCPepxMYpHWiKSJe+Z0sN6ha2E0aPoYMLTdj
- fShAWBoE0AtlSxAHjhgPvRZ42sci/qsKff24Dj/LjtMff+uVwuKKZenlDoYd9qupJQ4sNssiCHi
- 5g19Cb8uYiN8mOZUVQw95ZPPu/u4w2dCrB/MQj1FGoihnSKagMevtzhpZWI2qoWIuBSPunR5p/
-X-Received: by 2002:a05:6000:288c:b0:43b:4720:1102 with SMTP id
- ffacd0b85a97d-43b9ea4aad1mr6708659f8f.32.1774653887581; 
- Fri, 27 Mar 2026 16:24:47 -0700 (PDT)
+ AJvYcCU9kn9ySSs/rvrTsEdjxuuWfFNhwLMKj6oHlVbNTJWr/T4/P6TmyWbXSlftX12XRUXPO3OM3Sk/AGqR@nongnu.org
+X-Gm-Message-State: AOJu0YxjPNdv8bTuSlyXUn00ww0C+zbMCBpUUpMPq6yHtQ+Jz5o+NMW6
+ wNgWOxVt8PfPx7I7tMMznPPAvLCLYGhJhj2G2LGZ3b8XBbWFNKVvvgtPg+mITLNwVZI=
+X-Gm-Gg: ATEYQzxV+RYzV5vgOdj0PzqasWaq4nXf9djBHHm8off8sNNgvHN3mkgUuF1vzgn1/zw
+ 3Kcw5BEBO0vhqan9DY5Z+89sglFvKdSRfOTbOsBN9HzFy96gvgBvpv7lskQf/kpN9PGecVfSucS
+ t8tQ6NbnDtKKIAcgtr80WRrpeRAAsXLyWk/1nC1Vb+aE7zADO60/SEihHLYCR2Zv+Td9QZzME3O
+ OOWwyCRWNqLwHWwlXEuh3iqLxKOfrxYkqVMI0JiOTLD/fccZStEVVoAFfdOXFVIu+80+t8HraIj
+ KCfuhibXN9roKVrb0ts+bUq7mqHRCfOpL7w1taOL/rbHWGLhPrZZvh4EV71oK92weyZqNMRIQuC
+ yL0VGTjHnCOSzYUkI9L+QzanWWO16YczGTQQRNgfqhY1SdFU6NsPTXNW5X+LOD+GHz7MKzL/vKO
+ +jdGjgHOjVPkyppL4L0QgetiN+jReTuaWf0r6p67m0QQvQAM7IoI9Ek//7CipYCPxI/Z3HBlGI
+X-Received: by 2002:a05:600c:46c4:b0:485:3a03:ceca with SMTP id
+ 5b1f17b1804b1-48727f0e53bmr75333485e9.23.1774653895217; 
+ Fri, 27 Mar 2026 16:24:55 -0700 (PDT)
 Received: from [10.202.147.66] (147.149.216.82.rev.sfr.net. [82.216.149.147])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21eb95fsm1327164f8f.12.2026.03.27.16.24.45
+ 5b1f17b1804b1-487270af027sm41602025e9.3.2026.03.27.16.24.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Mar 2026 16:24:46 -0700 (PDT)
-Message-ID: <94f1f365-2ef1-4882-ba11-530a318c543c@linaro.org>
-Date: Sat, 28 Mar 2026 00:24:45 +0100
+ Fri, 27 Mar 2026 16:24:54 -0700 (PDT)
+Message-ID: <9283c8fc-fd66-4f74-a5da-1c2cd414bd51@linaro.org>
+Date: Sat, 28 Mar 2026 00:24:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 16/16] ncr710: unify two conditionals
@@ -79,9 +78,9 @@ References: <20260327212547.460420-1-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20260327212547.460420-17-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,25 +108,6 @@ On 27/3/26 22:25, Paolo Bonzini wrote:
 > ---
 >   hw/scsi/ncr53c710.c | 5 +----
 >   1 file changed, 1 insertion(+), 4 deletions(-)
-> 
-> diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-> index f7b1e153960..25a1018ab11 100644
-> --- a/hw/scsi/ncr53c710.c
-> +++ b/hw/scsi/ncr53c710.c
-> @@ -797,13 +797,10 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
->       s->status = req->status;
->       s->command_complete = NCR710_CMD_COMPLETE;
->   
-> -    if (p) {
-> -        p->pending = 0;
-> -    }
-> -
->       ncr710_set_phase(s, PHASE_ST);
->   
->       if (p) {
-> +        p->pending = 0;
->           ncr710_request_orphan(s, p);
->       }
->   
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
