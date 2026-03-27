@@ -4,126 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8262A10BA430
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 07:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C8610BA430
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 07:41:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w61ii-0006xm-Bk; Fri, 27 Mar 2026 03:35:04 -0400
+	id 1w61oD-00006a-TI; Fri, 27 Mar 2026 03:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w61ig-0006xM-3N
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 03:35:02 -0400
-Received: from smtpout8.mo534.mail-out.ovh.net ([54.36.140.179])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1w61oC-00006J-2w
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 03:40:44 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w61id-0005wy-DB
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 03:35:01 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [152.228.215.222])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4fhsqJ2Vknz68mn;
- Fri, 27 Mar 2026 07:34:51 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Fri, 27 Mar 2026 07:34:51 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.137])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4fhsqH4CgRz5vZr; Fri, 27 Mar 2026 07:34:51 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 51581240398F; Fri, 27 Mar 2026 07:34:50 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-107S0016f9a3581-68b5-4bb5-a196-ab15fb86ad8c,
- 4AD7B9C179601A6B587B1B6029592EA05C058FDA) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <5a9a3f1f-6811-4f1c-954a-f5aeff64fb8f@kaod.org>
-Date: Fri, 27 Mar 2026 08:34:48 +0100
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1w61o9-0007CP-Cz
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 03:40:43 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 54EE742FA6
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 07:40:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1774597239;
+ bh=mPNNDx346m+X8ZpRIkjdyno59g5uyJ7ftuJZeGLdtnc=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=ZwRD+7RsRU+M21CFFon7STzuR4pFflvDheSId2oznDMySBtTeeFavhs7t9aCRvOuS
+ AoicdeJQglhzuZUSj8yb7pzjB1KbwAXv3X8jAnOpZXf4KKL1tfY6lnUoSTKnBZiU3m
+ 3ym0WnSeVkKc0ArkVTsPIlY8jttxYSF0t9ePbuT5Ucoqx6MghYawJrK14w4umZWbtK
+ J9ROpxQffVSwySc5gMH9OYWd9lycbjF8QSr1aIUFbfbcQzIajxdnajBZ0+2FJqN0XE
+ mPLrqtTy96AzolQ23sV4tsNGSnU1qHHFqaqCuVH7509E7LxAtgOK2Js/d0K3JmitYe
+ RFLzVR/rQBJrA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 360537F3B0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 07:40:39 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i2c/aspeed_i2c: reset and migrate pending_intr_sts
-To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>,
- GuoHan Zhao <zhaoguohan@kylinos.cn>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20260325085450.126595-1-zhaoguohan@kylinos.cn>
- <cbc2f8e2-82d6-426e-b269-4921fa95b219@kaod.org>
- <fd4b0bdd-fb93-48c6-b0f4-228a7abfc8da@oss.qualcomm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <fd4b0bdd-fb93-48c6-b0f4-228a7abfc8da@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 3682537121528458262
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFs/yR9kAvj3BylXnODJd9SC5OheT1nKO+nA4OZKiMaj5WoScYi8wzwsWu8JiLgNxvQqg9yk7d0WZurqdPmIV11XPfHgqFDs6kHU/06EiuvgNGnSJtaKPVNNfdujFcukBr34dMBZFYZPg+gv/WHTytMXT5sAVrIRjTurJTt+XH0e02xv2Ix9X7hWdi+yBscEDYmTDNIwq7fShJrKZJ+p6Pcy+sG940wHWUuaQh+HlsamdtTzb8XBuwP/4lEo3IO1bgLGsGpwAFD3w9I9ajvHub4DfgT7Jzf/wZ7jRiUyDYXsQmKHF9f4Q2Md8tuzsnxlTp7c6KNRBp0OOinSV0HpKVzRRhw6+vFgwPbb9Nmvdtqc0I0G/CX+ouU5FJuBfA2/UZbdtfEw2fiPsMamDppXsTRMUznQPnmF3Fo65iDvo2I3tRHnkpcHcD28qoNTD7baxcPFtATymtvyKlpSfMXCPwimcDxenxR/s/S4dPuMKKqcy3Lq3T/v5/SKQNF5Kx1AqhPgEzMFEmgysTBDBlNVLyhOF813Y60gccBCNQTllIA4fIkcBU/Q2eh2SEFOiECCSMS3oTRFZfjaV2TLu3vxTS9oobLlyF5wuTo5NObU0GUKKwmEFnOXzkF4FfHEYSAaeYLSO8Fi2AC+twMN+McRTffc7Qu/5HBXCPnxBGPAWN2jA
-DKIM-Signature: a=rsa-sha256; bh=7kL4UjaNloK5PRXwxVDs5zIlIRJI02LKMlm/H/CV1Jc=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1774596894; v=1;
- b=Uw0mH41YK42QqrvNrSFOHY/lIMBvwqDqhbDNBxQjEUF4I6nUv97y819TPLMlWVnY6CzH2SAm
- D5FSoRVpzijWuEfOE1nZ31eNiZwc5Ds7ZCwueBBOK/fnXYeJ3ushaGigE9rG0SAj7wlwTk/Yrfd
- pKUFPmVEVhQrbv4EYicCyA4I4zRSOeKgwBZCLtuTVuap90b68n/vtgYW8gKrHhOqm/MIkm6SMUh
- DVTbieXNwGF2oQBImx3IKJhvro6viTuMx1Hq7kU4MUGrIKWTf3Fd/VWIefERCXq7PBUDEYd+k2N
- zxSGi5U/O63ZmlqVL+ZBE857CPGMPIT5eRL7d9mFQL8GQ==
-Received-SPF: pass client-ip=54.36.140.179; envelope-from=clg@kaod.org;
- helo=smtpout8.mo534.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 27 Mar 2026 07:32:02 -0000
+From: Christian Ehrhardt <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe;
+ component=universe; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
+ sourcepackage=qemu-hwe; component=universe; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug-Tags: server-todo
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <177459672293.2741626.14006002739845176893.malone@juju-98d295-prod-launchpad-4>
+Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
+ handler
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="561ec5bf26473fffe30568d6750c495df0ae299c";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 6b914f8131489a255e1a1de92751f8d0b9076dd1
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -132,22 +112,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 23:57, Jithu Joseph wrote:
-> On 3/25/2026 3:54 AM, Cédric Le Goater wrote:
->> +Jithu
->>
-> 
-> Thanks for looping me in Cédric. Will be mindful of these next-time
+The MR looks good, I'm soon uploading together with other changes queued up=
+ for qemu.
+And in regard to the timing it is a pure bug fix not needing an FFE AFAICS.
 
-Migration support of the Aspeed machines used to work. Maintaining
-compatibility with older QEMU versions is best effort since it is
-not a critical feature. But, who knows, may be, we will virtualise
-the BMCs one day.
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
 
-Thanks,
+Title:
+  [SRU] RISC-V vector state not restored by signal handler
 
-C.
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu-hwe package in Ubuntu:
+  New
+Status in qemu source package in Noble:
+  New
+Status in qemu-hwe source package in Noble:
+  New
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu-hwe source package in Plucky:
+  New
+Status in qemu source package in Questing:
+  New
+Status in qemu-hwe source package in Questing:
+  New
+Status in qemu source package in Resolute:
+  Confirmed
+Status in qemu-hwe source package in Resolute:
+  New
+
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
+
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
+
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
+
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
+
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
+
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
+
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
+
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+
 
