@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6EA10ED65C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A676210ED65E
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65C6-0006rC-4a; Fri, 27 Mar 2026 07:17:38 -0400
+	id 1w65Bp-0006Tc-7q; Fri, 27 Mar 2026 07:17:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65C3-0006o4-L2
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:35 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1w65Bk-0006Q8-OS
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:17 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65C1-00083m-W9
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:35 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43b3d9d0695so1384403f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:17:33 -0700 (PDT)
+ id 1w65Bh-0007oM-HG
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:16 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-439d8df7620so1408911f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:17:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774610252; x=1775215052; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774610232; x=1775215032; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BIEYPH/8UZWbZO+zeq/wWjHQtbsxlRNvPAOsbq37PZQ=;
- b=adxYthpynXYu9Cn6Kn7uSzgSOlaVS9mbxyBaoBBLFL8MY7BEpIJIobR71lEe9vDfL/
- LJGDf0pJDy5HBO9mEQn1fn14dH9Nsk0vvEevHCbCPb3jEDoUNqpOTJWjm59yT/JDVq/J
- A6dhT97/g6x0vCeGQRfqogbxby/FbP2esru+ULlu37gOu6eMEKyCaen9Nq02RVJY1zYA
- YStijQIIb5BvX+6Evpu2alKK7juTgnOkf2x9r9R4iIa3aex8MbZUmhEa0KBsH/sBCUQ8
- 7BDfcfnWHfSIRE3eAeQ0GJIHT14tdR2hXsmty+o8ikun/bE/o2kdeKux6TnSl1JdCVyT
- /bUg==
+ bh=bXiijkgjBmWXs5fWCEwDdMcGLXqq1ZdmOeeZ74VWNOI=;
+ b=wZI2/gjVtjPPmzMbGx5pppjSbNh4ocqvcbeGD1s6tfnSZ2ZPURakiSORoErorDZCZJ
+ 4yVwANy7hJ/wWblRKyy/XHmm0YEIGUfzTvlDfD89fsDPWIDkhlXVn4L8jSXqusZr3MQG
+ 44xv8GQBS2mvysVtuNUI14lfSPdoYGm8EwL0bczjiaBGKCmd4KAw/kmKBmz4jBNZ6uFS
+ 5Z1YhUfxR/4OCun1rWfNOQZqaN9+n5CJ3I75HjdxrPqxH34TkFpKqFpvjSR8hlcKKsxv
+ hLPkxvcGUZANhmVvVVz0isT4jDOfdsx1xUyUqOXbfE70whw8IUilWSvJhfRX+3kNF/cY
+ euJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774610252; x=1775215052;
+ d=1e100.net; s=20251104; t=1774610232; x=1775215032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BIEYPH/8UZWbZO+zeq/wWjHQtbsxlRNvPAOsbq37PZQ=;
- b=siEEzE9qrBSM21Q+34xrfz7hkVeLmJp+gA2Ya3J14QpdkGc6P6LcaLb0RTwMqKPPPM
- AoK5fkzYz4eG8Z2Pz76tXBcRrgNqR/AN0yuJh/3DKoOdZejljoG3itCiKJ5TuCbl27Ra
- Moq0ClLWR1peDS2pimuCxhwFFSWSg21OI+VuRm6Rq2rcQvueNBNy7WsYq8so9MkSLeFp
- R44Hia3191ZyJFZZc9z5TliTY67QftRv0DgHHMdsiR0ABhCDP0okKVUCH8KRbZ8hKyu7
- oU7uODdbDstlO6kAvnOuUC360Fthg8LtInaqRKZVmev+rxd3bxLcjZjZ36pj+2IEesnm
- eOCQ==
+ bh=bXiijkgjBmWXs5fWCEwDdMcGLXqq1ZdmOeeZ74VWNOI=;
+ b=nE1UOYPJeP4ZbHt4LLXkcVRpv/gdHEajrcAJtXHjgXlt9UZQS9hsYZ+tnMRMw+ALxP
+ 1zTi8HYNBXGJ7mYazl20gS088xJpSnba4vUUeQ1ZX4rG0itB3zBKsY7Od3qOD28rz3G3
+ gTYKbsP0p1d5FCZlGDaYs969Y5kHSyharr9EPowx9CnzNKxF8dRLdWZebYdqZhh3b9NH
+ o8C1i60rssIUnJGBA10iDEbfJW7OYvt1YLke/ewuVUx2cCz6RbDbo/WjmdZ2dax41NvG
+ 2uKZdXLC40jDAosfbISf1vhZuhMgNDgSeRAH62V71G4UcqvTifkk27xuIgRUZvtyMJhE
+ n2eQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrPX35rmdEq9IH+VTNm2t1spZbUziP7mZ5SoPQ9Blx8WMyUV3MND9z8HpMhqp+BtQnGRiJ44Ene4qn@nongnu.org
-X-Gm-Message-State: AOJu0YzyYT+sFdEkUwfwIl8qePNXh9ngmzPvLxqVIS7Z/LfJy6GhPd0t
- jAArD5yZLYAAIDkQpFt+u2ESk1ft+XtnKkC1Ss25ihtXu1sm5Z+8znLt3Eq8wgsjTok=
-X-Gm-Gg: ATEYQzwZcZwoRbL9rIQSkE1IpA773lz63RFGfEmTmaePFUlbGWhLeO2jlWXP2+ecd6c
- sNUDOO85ktVjbhxhKP9uxXWjzQB9TK39kkenGXyOb7/mmZXOr1WGHa0bWjnpuZacMwm3+g7v7TU
- /lmtYT/CyaDOkMBJh2SeUBEs2u1bjdYJl4SDD2wC3qQ8RMXBEgP3KVapCebyqTLc3whpOELAxyw
- z6JpFmEjcQCZO6IkEekRvfpZs0ZdExEM49GPRg/gR8ByIbQsQp2SkIDjQqCsuWGqCmaKS/3vrVu
- PmRooL5/4AqMj8vM9/t7O53eHfz3tFkraIev2H8TdIW4B880HHQa2VPHYZyv1EtfsYgvoeoWdyK
- EQGzWza2fnJoZNmUiBGGN288+hgYUWp7fKqC8wmYkCVeiV2hMjSltKn/t5shDWEeyWP/PlwVoov
- s1/J61IzjUqeNzRZC8l0jwaVWv3TnDelg3LDA+9MnkwZ5mff91kHj6uf/8ePZYI7AJOgV17RoRS
- mh0aEdL5rLYGYqQOAtNX4+U9vBJGRQ=
-X-Received: by 2002:adf:eac9:0:b0:43b:9f7e:c912 with SMTP id
- ffacd0b85a97d-43b9f7ec96bmr2076070f8f.1.1774610252416; 
- Fri, 27 Mar 2026 04:17:32 -0700 (PDT)
+ AJvYcCXK6WKE8MDJcdWZXmjNZX7ugMgezSJOTm5U3lEK0CZC2X9gCCJe40mLitbNZEb6/bP8C5cRMrfuli7F@nongnu.org
+X-Gm-Message-State: AOJu0YyG1GPnUzO7IGZEWXrLLL6O7o1c+cPoneJM1FLjswXIqwEf3fSY
+ HX92qjwRqx1nmAXZLo3NqT4XjgdjCL8n8hXfBLXNUQLajh7JPHH+CPV8qQD8Iu5avab2TsEMOiM
+ FaNR+3UA=
+X-Gm-Gg: ATEYQzwLN/b4UeEOCB8fhgOgEcoGW0cUIXsZgXfdQy8D5c/2vJGb45wqQlZR5iTem8l
+ +OIbbnM9rTBaFjQgZvlxrmwG4k/CSsaCHR2/EBsiM2+xu7UvNrlSQ7cbMzdlhSrbstuwuvBIqnM
+ nmthOrr5CDMDGDdlwzCGzxNIaJw+H3YvS3wmKVOiD3K3HZshYrD+7SpPols8quc1PO3uyVi294G
+ B+dZsK6+V5TmrkwQbNFGGa4+wy2MrPbONijQYX1Ds/7g5JeBgz1JxNpeL8G0yzw7WPDcHshjsFE
+ HD9q1W/u4Gi6BZhnpOfXyOFD3e+cN1u20DHFVN+jfYGCd+MTToiD15Kaltv1AOa9EvwbTloP0bK
+ 2wqmKxPycqvSh0ihRYwOeIQvxaiH63UCRYE6fi93V7oZqZbfPSrOn9qPyFjTu3MjD3a0v3ALVBQ
+ mm16jp6W/960tYxfzkjaR450hgcxnCAEVSHFIwZplHjBUvWn7J/P/iZBMvShZPdR0y69PBpY3sh
+ c435Ri/iBGSKtohY19Od/HFiyrE4kE=
+X-Received: by 2002:a05:6000:2313:b0:43b:905d:f89f with SMTP id
+ ffacd0b85a97d-43b9ea66dccmr3277541f8f.39.1774610231739; 
+ Fri, 27 Mar 2026 04:17:11 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.31
+ ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 04:17:31 -0700 (PDT)
+ Fri, 27 Mar 2026 04:17:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 32/65] hw/intc/arm_gicv5: Implement CoreSight ID registers
-Date: Fri, 27 Mar 2026 11:16:27 +0000
-Message-ID: <20260327111700.795099-33-peter.maydell@linaro.org>
+Subject: [PATCH v2 10/65] hw/intc/arm_gicv5: Implement IRS ID regs
+Date: Fri, 27 Mar 2026 11:16:05 +0000
+Message-ID: <20260327111700.795099-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260327111700.795099-1-peter.maydell@linaro.org>
 References: <20260327111700.795099-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,77 +104,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 register blocks all implement the usual Arm CoreSight ID
-registers; implement these for the IRS.  Although we only have one
-callsite at the moment, the ITS config frame uses the same ID
-register values, so we abstract this out into a function we can reuse
-later.
+Implement the IRS frame ID registers IRS_IDR[0-7], IRS_IIDR and
+IRS_AIDR.  These are all 32-bit registers.
+
+We make these fields in the GIC state struct rather than just
+hardcoding them in the register read function so that we can later
+code "do this only if X is implemented" as a test on the ID register
+value.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ hw/intc/arm_gicv5.c                | 115 +++++++++++++++++++++++++++++
+ include/hw/intc/arm_gicv5_common.h |  38 ++++++++++
+ 2 files changed, 153 insertions(+)
 
 diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index a95a9dc16b..866c1333c3 100644
+index 4c1ec8f30a..250925f004 100644
 --- a/hw/intc/arm_gicv5.c
 +++ b/hw/intc/arm_gicv5.c
-@@ -285,6 +285,9 @@ REG64(IRS_SWERR_SYNDROMER0, 0x3c8)
- REG64(IRS_SWERR_SYNDROMER1, 0x3d0)
-     FIELD(IRS_SWERR_SYNDROMER2, ADDR, 3, 53)
- 
-+REG32(IRS_IDREGS, 0xffd0)
-+REG32(IRS_DEVARCH, 0xffbc)
+@@ -268,6 +268,65 @@ REG64(IRS_SWERR_SYNDROMER1, 0x3d0)
+ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+                          uint64_t *data, MemTxAttrs attrs)
+ {
++    GICv5Common *cs = ARM_GICV5_COMMON(s);
++    uint32_t v = 0;
 +
- FIELD(L1_ISTE, VALID, 0, 1)
- FIELD(L1_ISTE, L2_ADDR, 12, 44)
- 
-@@ -310,6 +313,31 @@ FIELD(ICSR, HM, 5, 1)
- FIELD(ICSR, PRIORITY, 11, 5)
- FIELD(ICSR, IAFFID, 32, 16)
- 
-+#define IRS_DEVARCH_VALUE ((0x23b << 31) | (0x1 << 20) | 0x5a19)
++    switch (offset) {
++    case A_IRS_IDR0:
++        v = cs->irs_idr0;
++        /* INT_DOM reports the domain this register is for */
++        v = FIELD_DP32(v, IRS_IDR0, INT_DOM, domain);
++        if (domain != GICV5_ID_REALM) {
++            /* MEC field RES0 except for the Realm domain */
++            v &= ~R_IRS_IDR0_MEC_MASK;
++        }
++        if (domain == GICV5_ID_EL3) {
++            /* VIRT is RES0 for EL3 domain */
++            v &= ~R_IRS_IDR0_VIRT_MASK;
++            /* ...which means VIRT_ONE_N is also RES0 */
++            v &= ~R_IRS_IDR0_VIRT_ONE_N_MASK;
++        }
++        return true;
 +
-+static uint32_t gicv5_idreg(int regoffset)
++    case A_IRS_IDR1:
++        *data = cs->irs_idr1;
++        return true;
++
++    case A_IRS_IDR2:
++        *data = cs->irs_idr2;
++        return true;
++
++    case A_IRS_IDR3:
++        /* In EL3 IDR0.VIRT is 0 so this is RES0 */
++        *data = domain == GICV5_ID_EL3 ? 0 : cs->irs_idr3;
++        return true;
++
++    case A_IRS_IDR4:
++        /* In EL3 IDR0.VIRT is 0 so this is RES0 */
++        *data = domain == GICV5_ID_EL3 ? 0 : cs->irs_idr4;
++        return true;
++
++    case A_IRS_IDR5:
++        *data = cs->irs_idr5;
++        return true;
++
++    case A_IRS_IDR6:
++        *data = cs->irs_idr6;
++        return true;
++
++    case A_IRS_IDR7:
++        *data = cs->irs_idr7;
++        return true;
++
++    case A_IRS_IIDR:
++        *data = cs->irs_iidr;
++        return true;
++
++    case A_IRS_AIDR:
++        *data = cs->irs_aidr;
++        return true;
++    }
++
+     return false;
+ }
+ 
+@@ -422,6 +481,60 @@ static void gicv5_reset_hold(Object *obj, ResetType type)
+     }
+ }
+ 
++static void gicv5_set_idregs(GICv5Common *cs)
 +{
-+    /*
-+     * As with the main IRS_IIDR, we don't identify as a specific
-+     * hardware GICv5 implementation. Arm suggests that the
-+     * Implementer, Product, etc in IRS_IIDR should also be reported
-+     * here, so we do that.
-+     */
-+    static const uint8_t gic_ids[] = {
-+        QEMU_GICV5_IMPLEMENTER >> 8, 0x00, 0x00, 0x00, /* PIDR4..PIDR7 */
-+        QEMU_GICV5_PRODUCTID & 0xff, /* PIDR0 */
-+        ((QEMU_GICV5_PRODUCTID >> 8) |
-+         ((QEMU_GICV5_IMPLEMENTER & 0xf) << 4)), /* PIDR1 */
-+        ((QEMU_GICV5_REVISION << 4) | (1 << 3) |
-+         ((QEMU_GICV5_IMPLEMENTER & 0x70) >> 4)), /* PIDR2 */
-+        QEMU_GICV5_VARIANT << 4, /* PIDR3 */
-+        0x0D, 0xF0, 0x05, 0xB1, /* CIDR0..CIDR3 */
-+    };
++    /* Set the ID register value fields */
++    uint32_t v;
 +
-+    regoffset /= 4;
-+    return gic_ids[regoffset];
++    /*
++     * Fields in IDR0 for optional parts of the spec that we don't
++     * implement are 0.
++     */
++    v = 0;
++    /*
++     * We can handle physical addresses of any size, so report support
++     * for 56 bits of physical address space.
++     */
++    v = FIELD_DP32(v, IRS_IDR0, PA_RANGE, 7);
++    v = FIELD_DP32(v, IRS_IDR0, IRSID, cs->irsid);
++    cs->irs_idr0 = v;
++
++    v = 0;
++    v = FIELD_DP32(v, IRS_IDR1, PE_CNT, cs->num_cpus);
++    v = FIELD_DP32(v, IRS_IDR1, IAFFID_BITS, QEMU_GICV5_IAFFID_BITS - 1);
++    v = FIELD_DP32(v, IRS_IDR1, PRI_BITS, QEMU_GICV5_PRI_BITS - 1);
++    cs->irs_idr1 = v;
++
++    v = 0;
++    /* We always support physical LPIs with 2-level ISTs of all sizes */
++    v = FIELD_DP32(v, IRS_IDR2, ID_BITS, QEMU_GICV5_ID_BITS);
++    v = FIELD_DP32(v, IRS_IDR2, LPI, 1);
++    v = FIELD_DP32(v, IRS_IDR2, MIN_LPI_ID_BITS, QEMU_GICV5_MIN_LPI_ID_BITS);
++    v = FIELD_DP32(v, IRS_IDR2, IST_LEVELS, 1);
++    v = FIELD_DP32(v, IRS_IDR2, IST_L2SZ, 7);
++    /* Our impl does not need IST metadata, so ISTMD and ISTMD_SZ are 0 */
++    cs->irs_idr2 = v;
++
++    /* We don't implement virtualization yet, so these are zero */
++    cs->irs_idr3 = 0;
++    cs->irs_idr4 = 0;
++
++    /* These three have just one field each */
++    cs->irs_idr5 = FIELD_DP32(0, IRS_IDR5, SPI_RANGE, cs->spi_range);
++    cs->irs_idr6 = FIELD_DP32(0, IRS_IDR6, SPI_IRS_RANGE, cs->spi_irs_range);
++    cs->irs_idr7 = FIELD_DP32(0, IRS_IDR7, SPI_BASE, cs->spi_base);
++
++    v = 0;
++    v = FIELD_DP32(v, IRS_IIDR, IMPLEMENTER, QEMU_GICV5_IMPLEMENTER);
++    v = FIELD_DP32(v, IRS_IIDR, REVISION, QEMU_GICV5_REVISION);
++    v = FIELD_DP32(v, IRS_IIDR, VARIANT, QEMU_GICV5_VARIANT);
++    v = FIELD_DP32(v, IRS_IIDR, PRODUCTID, QEMU_GICV5_PRODUCTID);
++    cs->irs_iidr = v;
++
++    /* This is a GICv5.0 IRS, so all fields are zero */
++    cs->irs_aidr = 0;
 +}
 +
- static GICv5SPIState *spi_for_selr(GICv5Common *cs, GICv5Domain domain)
+ static void gicv5_realize(DeviceState *dev, Error **errp)
  {
-     /*
-@@ -1124,6 +1152,13 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
-         }
-         *data = v;
-         return true;
-+    case A_IRS_DEVARCH:
-+        *data = IRS_DEVARCH_VALUE;
-+        return true;
-+    case A_IRS_IDREGS ... A_IRS_IDREGS + 0x2f:
-+        /* CoreSight ID registers */
-+        *data = gicv5_idreg(offset - A_IRS_IDREGS);
-+        return true;
-     }
+     GICv5Common *cs = ARM_GICV5_COMMON(dev);
+@@ -448,6 +561,8 @@ static void gicv5_realize(DeviceState *dev, Error **errp)
+      * NS domain.
+      */
+     cs->implemented_domains = (1 << GICV5_ID_NS);
++
++    gicv5_set_idregs(cs);
+     gicv5_common_init_irqs_and_mmio(cs, gicv5_set_spi, config_frame_ops);
+ }
  
-     return false;
+diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
+index 10276d652f..906870e49f 100644
+--- a/include/hw/intc/arm_gicv5_common.h
++++ b/include/hw/intc/arm_gicv5_common.h
+@@ -65,6 +65,18 @@ struct GICv5Common {
+     /* Bits here are set for each physical interrupt domain implemented */
+     uint8_t implemented_domains;
+ 
++    /* ID register values: set at realize, constant thereafter */
++    uint32_t irs_idr0;
++    uint32_t irs_idr1;
++    uint32_t irs_idr2;
++    uint32_t irs_idr3;
++    uint32_t irs_idr4;
++    uint32_t irs_idr5;
++    uint32_t irs_idr6;
++    uint32_t irs_idr7;
++    uint32_t irs_iidr;
++    uint32_t irs_aidr;
++
+     /* Properties */
+     uint32_t num_cpus;
+     ARMCPU **cpus;
+@@ -84,6 +96,32 @@ struct GICv5CommonClass {
+ 
+ #define IRS_CONFIG_FRAME_SIZE 0x10000
+ 
++/*
++ * The architecture allows a GICv5 to implement less than the full
++ * width for various ID fields. QEMU's implementation always supports
++ * the full width of these fields. These constants define our
++ * implementation's limits.
++ */
++
++/* Number of INTID.ID bits we support */
++#define QEMU_GICV5_ID_BITS 24
++/* Min LPI_ID_BITS supported */
++#define QEMU_GICV5_MIN_LPI_ID_BITS 14
++/* IAFFID bits supported */
++#define QEMU_GICV5_IAFFID_BITS 16
++/* Number of priority bits supported in the IRS */
++#define QEMU_GICV5_PRI_BITS 5
++
++/*
++ * There are no TRMs currently published for hardware implementations
++ * of GICv5 that we might identify ourselves as. Instead, we borrow
++ * the Arm Implementer code and pick an arbitrary product ID (ASCII "Q")
++ */
++#define QEMU_GICV5_IMPLEMENTER 0x43b
++#define QEMU_GICV5_PRODUCTID 0x51
++#define QEMU_GICV5_REVISION 0
++#define QEMU_GICV5_VARIANT 0
++
+ /**
+  * gicv5_common_init_irqs_and_mmio: Create IRQs and MMIO regions for the GICv5
+  * @s: GIC object
 -- 
 2.43.0
 
