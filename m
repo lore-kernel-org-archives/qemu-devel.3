@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7D310ED65E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECCBA10ED660
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65DS-0000NR-PZ; Fri, 27 Mar 2026 07:19:04 -0400
+	id 1w65CD-00071v-MS; Fri, 27 Mar 2026 07:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65CT-0007Rf-SU
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:18:03 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1w65CB-00070Q-Vl
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:44 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w65CO-00006q-PL
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:59 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-439b2965d4bso1507057f8f.2
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:17:56 -0700 (PDT)
+ id 1w65C8-0008Dd-Ox
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:17:43 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43b949bf4easo1165334f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 04:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774610275; x=1775215075; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774610259; x=1775215059; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zg0JdMYpNPucplnhgObUVKgc6cBxcpxKCbSlMlmDTlo=;
- b=j8D3pVma0SwUF2JB7puMBVFO4rnfV3/MHoBIKmRxA9YRvvMIjkKNAebiQ5mB2e9CCz
- FhOcMTUzURNtOmik5aZa/4opeWlB1htRHTszYds4XYJLaIvYiO/CHqkV5uA90hWDnusw
- Wq6z3tWAj+etEiFgxMGKYI4ZhgKSzEdef4NlH+hgb/SjfTMfXydJCyvPZWaeltbss28O
- wl55mvKW/og1Yi58/1vJWv3/7L7nOyp9jZO/mVuINd3UY8fUL4aHyW57/nrjmglKqAIA
- i79/5mykcFqcBfXWiS93nqRdhaC0MaQ9aA4+nQUHcZnMwPEEt/KuFIZDR19xKqKGpD8Q
- Toqw==
+ bh=7oXt+HGm1k+OhZUlKvZnQCKSizbDBAvFnTtOI2ID7Ok=;
+ b=r0fDB4E9MZUHtpkrQaJ8ue+BgUxRYyPUUAy1NJV+C2Hx5ScJAvDjk0MH0t6yEpW69f
+ Mgrkg9o9CghD3MwsNYJab4BvFA9/672Oh6IXJFg4ud5ReFzvkUimtkA55Int8U5sERDd
+ GYIvM6/+L+tAMTHNArACGyT6uugYwyyUyyLtNoPWCCsx6ZQAmaWTKZjq0rBiRjoMeLMV
+ pOnEpE80b4QVtxtEg91/e6DbcRQ2ssVMZ+g8M/HrbEtHXtacApKB/lUatf/vj4i4XUnm
+ YCRYl0vKZ1jrLa4EgRVRGOPt0OQmsH2qG20bAnpdA0P/WxziyBsNrs4J0v7zpAt4IG3f
+ l6Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774610275; x=1775215075;
+ d=1e100.net; s=20251104; t=1774610259; x=1775215059;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zg0JdMYpNPucplnhgObUVKgc6cBxcpxKCbSlMlmDTlo=;
- b=fhp0mRFxQs3wCRXGBzAgQV2j/It6/Fs8ppF+BUOnbG7AoH5Rw1toQvqYDc5xcplz/9
- yCM50O5rjxW3ObHAzIWC+EoqJh6xKG+1kVrXGQzzhz7pj7mBKNrpEOlxNMqO8X3llmbK
- rtgf5wqYmDHeaIVAmBcZld8gKq19AVLeXck9aXFKnYKD7O2SpBes9+1F83yhJv41wwpn
- wcvS3wHZJpdL5a5y33aafUj/a3cAc6wvj+tLd7s+UOTbYhz+AuHPdYztr29N8glXJqmb
- AH3j2bWPSjD33lcZwrydNjINJV1J2ioQFB8uR94WanDi2g6oMpPwFsHDcSufmJQiBZmW
- 02XA==
+ bh=7oXt+HGm1k+OhZUlKvZnQCKSizbDBAvFnTtOI2ID7Ok=;
+ b=c3KSFbjqSfeSAPhjRDXAKWnH6KJgBBVYB70A0MsN4+BTNywKjJ8E5YBR4UBiDtv8vz
+ fisqOhZvh038R/nIHWRvcU9qPgzmpAREB3uxGYc3GSfW3WTcT6HDYElQKgPS81RmM1KW
+ McUIQp0BuTsivoZW4XI/NvRX217GQq3XkCPMxD7Nj/1zurDfN9F0olzEilwYPkwYsMNU
+ vW4+4CQCnRCxY/0JrQxZsNmKkxZwjsI1AhEXaFNDpr9x+RCNqpvM6640GLjTWoFQcCTt
+ Oc/LRBP4KUOtMSlsAdJxnSYAEwf2iUAkWBBz5AuTqZY4gV/9mRGjMwMCoxsIPTiFEZxL
+ GTGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWX0D8Z/ALpQO3RZVN/FLpX/SwkpyF97POfH+TZdXQD3xmqyUPijX7yPYmOFTbM6Qfm76DF5BZf36z0@nongnu.org
-X-Gm-Message-State: AOJu0YzHoSEjsTaNyE7QedW5QsV9cICOahKTliAjqT73H5EJOTz1Hr/b
- LiVnLfFcLYIC8rSRbiojIndq+PN7VD6pMpO8i3QZJCsvHgLFssn9OqKs9m8vLkfULpM=
-X-Gm-Gg: ATEYQzzywLwMpBexc8FWlCAIBHMXS1CxYvBCOO0vTpQ77gkBXVp3wNGZ8ICGvG3C46v
- 3+GPbmeG72fUhJlQDyio0UZ9XRoGJOBcYoMBBAt2L4mZDP7E9rN+B5IdQ6aVm4EJ8LObT3tboMh
- dkBjd9j8d62VWF5YaNXZPf7o3zyTJnw5G9X1796uqQ19WcyQqA4quXG7MZfS4hFniLTPYQvlCZH
- 4ZC9dPrN5r3h1SSEyrcGOZCSOyAMnyrVwNHlbrgyHYkTTfy1m8y0YQpht/dwBzbdsJjOTvHFbJ2
- QS9AlmBj2kDKi675QNnhHWbHrkatj3EIF/UbhMIdYiP8ogQTsrtPROiYTRhmmvwmC7ZQam5CMJ/
- wkMIMRKhct8JTxpVuSQmLlm7yyLLg6FDf/yPjtSTWC0+BU5tUh56FjUPSQQTAb6w3qKWxfuolax
- d/C+9xmGmS27qP5dg1y1aNCgzuSIZ/l303HEQXvnq6Soc5X7wIfItBPZdt9pL7b449equpPH9sE
- yrywbi0OwyDNUvIQmsOmk7rEt43Uk0=
-X-Received: by 2002:a5d:64e6:0:b0:43b:5037:7ef3 with SMTP id
- ffacd0b85a97d-43b9e9e8bdamr3113357f8f.20.1774610275201; 
- Fri, 27 Mar 2026 04:17:55 -0700 (PDT)
+ AJvYcCXl4kSG4W+N+HLIa4s4ffdIzdDoHSodhffHRHAure9hn6MJQThxErs7Usa6P8k102q/Mdcs/lgaFlKh@nongnu.org
+X-Gm-Message-State: AOJu0YwAcCxhgUqJECHB5XpYoSVzknstjobI05FSUumMmKqVlylxqWrQ
+ FfMq8CFv3SbUugpIjZvj1U5hu5rsDZ2ij/CocpneNY2VlBQfE3gpwhWpVDvlEZH/toA=
+X-Gm-Gg: ATEYQzxmbTLQgKgNVO2281iR/G0iizzjOoOOpqheOLrXjMotvVd+ulestZm35IUhrE4
+ 3eV+SD8jWlDz2VP+dEws6+K7ZO4d0jtAiiZf4jdRfhbauYJ1g81nsQO0G0EQGfquslNOOQnIo/Q
+ LiOPuxaqredlTCNED4bNDwTcMV1CAdIyBd7o6to9Sn+8d9+FE88RNI7W8oaf0mbIZD52hIn2+Nl
+ RJKYu0oYE288w+6NW0IDkt7JaAnxUgb6qE3PtP/dmvUs7QOqtauJfMY9MeVV3t7BOD/TWJtSWv9
+ ELjuwT8xkvpA2PKOgNP+giH2/k8U00QhjmBpDPaNiwBvKb3l+ITXxF7pcJNDl0D4C+iHQA7Na9k
+ T14Ghe7kGt91QNBubTdkAwLVhkXpXbZB2CtU28+jniSroOVpMyx8RyNVAP+abtEX2NB+qaFblGw
+ iM97QzeWwOf0QAqCVvis+xwBJJZjc3FXAxd7BguJZro5KrR4KKn/eNCiIfOv0+1ROJzT9cZ9uyO
+ nZhv+r+9ok+pHhPtdOeqWzx5TG9hqs=
+X-Received: by 2002:a05:6000:4703:b0:43b:9fee:939f with SMTP id
+ ffacd0b85a97d-43b9fee9571mr2783082f8f.5.1774610259262; 
+ Fri, 27 Mar 2026 04:17:39 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.54
+ ffacd0b85a97d-43b919cf2b2sm15484227f8f.18.2026.03.27.04.17.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 04:17:54 -0700 (PDT)
+ Fri, 27 Mar 2026 04:17:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 56/65] hw/arm/virt: Remember CPU phandles rather than
- looking them up by name
-Date: Fri, 27 Mar 2026 11:16:51 +0000
-Message-ID: <20260327111700.795099-57-peter.maydell@linaro.org>
+Subject: [PATCH v2 39/65] target/arm: GICv5 cpuif: Implement PPI enable
+ register
+Date: Fri, 27 Mar 2026 11:16:34 +0000
+Message-ID: <20260327111700.795099-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260327111700.795099-1-peter.maydell@linaro.org>
 References: <20260327111700.795099-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,124 +104,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In fdt_add_cpu_nodes(), we currently add phandles for each CPU node
-if we are going to add a topology description, and when we do, we
-re-look-up the phandle by node name when creating the topology
-description.
-
-For GICv5 we will also want to refer to the CPU phandles; so always
-add a phandle, and keep track of those phandles in the
-VirtMachineState so we don't have to look them up by name in the dtb
-every time.
-
-The phandle property is extra data in the final DTB, but only a tiny
-amount, so it's not worth trying to carefully track the conditions
-when we're going to need them so we only emit them when required.
-
-(We need to change the smp_cpus variable to unsigned because
-otherwise gcc thinks that we might be passing a negative number to
-g_new0() and produces an error:
-
-/usr/include/glib-2.0/glib/gmem.h:270:19: error: argument 1 range [18446744071562067968, 18446744073709551615] exceeds maximum object size 9223372036854775807 [-Werror=alloc-size-larger-than=]
-  270 |             __p = g_##func##_n (__n, __s);                      \
-      |                   ^~~~~~~~~~~~~~~~~~~~~~~
-/usr/include/glib-2.0/glib/gmem.h:332:57: note: in expansion of macro ‘_G_NEW’
-  332 | #define g_new0(struct_type, n_structs)                  _G_NEW (struct_type, n_structs, malloc0)
-      |                                                         ^~~~~~
-../../hw/arm/virt.c:469:25: note: in expansion of macro ‘g_new0’
-  469 |     vms->cpu_phandles = g_new0(uint32_t, smp_cpus);
-      |                         ^~~~~~
-
-)
+Implement the GICv5 register which holds the enable state of PPIs:
+ICC_PPI_ENABLER<n>_EL1.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- hw/arm/virt.c         | 19 ++++++++++---------
- include/hw/arm/virt.h |  1 +
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ target/arm/cpu.h             |  1 +
+ target/arm/tcg/gicv5-cpuif.c | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ec0d8475ca..91097e25ec 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -431,13 +431,13 @@ static void fdt_add_timer_nodes(const VirtMachineState *vms)
-     }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 980abda3ca..915a225f8e 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -607,6 +607,7 @@ typedef struct CPUArchState {
+         uint64_t ppi_active[GICV5_NUM_PPIS / 64];
+         uint64_t ppi_hm[GICV5_NUM_PPIS / 64];
+         uint64_t ppi_pend[GICV5_NUM_PPIS / 64];
++        uint64_t ppi_enable[GICV5_NUM_PPIS / 64];
+     } gicv5_cpuif;
+ 
+     struct {
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index ee97d98d7e..09cd56cbfa 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -219,6 +219,12 @@ static void gic_ppi_spend_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     raw_write(env, ri, old | value);
  }
  
--static void fdt_add_cpu_nodes(const VirtMachineState *vms)
-+static void fdt_add_cpu_nodes(VirtMachineState *vms)
- {
-     int cpu;
-     int addr_cells = 1;
-     const MachineState *ms = MACHINE(vms);
-     const VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
--    int smp_cpus = ms->smp.cpus;
-+    unsigned int smp_cpus = ms->smp.cpus;
- 
-     /*
-      * See Linux Documentation/devicetree/bindings/arm/cpus.yaml
-@@ -465,10 +465,13 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
-     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", addr_cells);
-     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
- 
-+    vms->cpu_phandles = g_new0(uint32_t, smp_cpus);
++static void gic_ppi_enable_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                 uint64_t value)
++{
++    raw_write(env, ri, value);
++}
 +
-     for (cpu = smp_cpus - 1; cpu >= 0; cpu--) {
-         char *nodename = g_strdup_printf("/cpus/cpu@%d", cpu);
-         ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(cpu));
-         CPUState *cs = CPU(armcpu);
-+        uint32_t phandle;
- 
-         qemu_fdt_add_subnode(ms->fdt, nodename);
-         qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "cpu");
-@@ -493,10 +496,9 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
-                 ms->possible_cpus->cpus[cs->cpu_index].props.node_id);
-         }
- 
--        if (!vmc->no_cpu_topology) {
--            qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle",
--                                  qemu_fdt_alloc_phandle(ms->fdt));
--        }
-+        phandle = qemu_fdt_alloc_phandle(ms->fdt);
-+        qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", phandle);
-+        vms->cpu_phandles[cpu] = phandle;
- 
-         g_free(nodename);
-     }
-@@ -521,7 +523,6 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
-         qemu_fdt_add_subnode(ms->fdt, "/cpus/cpu-map");
- 
-         for (cpu = smp_cpus - 1; cpu >= 0; cpu--) {
--            char *cpu_path = g_strdup_printf("/cpus/cpu@%d", cpu);
-             char *map_path;
- 
-             if (ms->smp.threads > 1) {
-@@ -539,10 +540,10 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
-                     cpu % ms->smp.cores);
-             }
-             qemu_fdt_add_path(ms->fdt, map_path);
--            qemu_fdt_setprop_phandle(ms->fdt, map_path, "cpu", cpu_path);
-+            qemu_fdt_setprop_cell(ms->fdt, map_path, "cpu",
-+                                  vms->cpu_phandles[cpu]);
- 
-             g_free(map_path);
--            g_free(cpu_path);
-         }
-     }
- }
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 5fcbd1c76f..22bbc34ca8 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -171,6 +171,7 @@ struct VirtMachineState {
-     uint32_t gic_phandle;
-     uint32_t msi_phandle;
-     uint32_t iommu_phandle;
-+    uint32_t *cpu_phandles;
-     int psci_conduit;
-     uint8_t virtio_transports;
-     hwaddr highest_gpa;
+ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+     /*
+      * Barrier: wait until the effects of a cpuif system register
+@@ -334,6 +340,18 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_hm[1]),
+         .resetvalue = PPI_HMR1_RESET,
+     },
++    {   .name = "ICC_PPI_ENABLER0_EL1", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 6,
++        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_enable[0]),
++        .writefn = gic_ppi_enable_write,
++    },
++    {   .name = "ICC_PPI_ENABLER1_EL1", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 7,
++        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_enable[1]),
++        .writefn = gic_ppi_enable_write,
++    },
+     {   .name = "ICC_PPI_CPENDR0_EL1", .state = ARM_CP_STATE_AA64,
+         .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 4,
+         .access = PL1_RW, .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
 -- 
 2.43.0
 
