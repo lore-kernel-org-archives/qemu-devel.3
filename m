@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CBD510BA422
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4ECF532CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5yid-0001RO-0u; Fri, 27 Mar 2026 00:22:47 -0400
+	id 1w5yj2-00025K-1x; Fri, 27 Mar 2026 00:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w5yiW-0001ID-2k
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:22:40 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ id 1w5yiz-00022h-GU
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:23:09 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w5yiU-00056A-Ah
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:22:39 -0400
+ id 1w5yiw-00058W-To
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:23:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774585358; x=1806121358;
+ t=1774585387; x=1806121387;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=rg8jsOtG+kuYaPQnf8pActTwgLf2b7dx7Vb40Rws12Q=;
- b=Cf4cdAjE+nNQSmRjihe6FT/nz+lgCZH8o9YQHOW9r5BovCaIhBfhGJVd
- xGPNMzA77aXbV4AX/94KJ5PqJkwcmuUWeEO3pCjy2xjIh8xrQXdTUqlBS
- jeUQg8piFUVPES1cr07cIxCBySyxgfF3fKWkcvFkfNwQuyxeabhP8P0aN
- osbQKvfGVYzMHUYK0BI98LaVZnG9HLuYkTxiFHnoxfeoUYYJ/LYwnPCnQ
- g/sE+zFSAsNpyPzEy7nHsS0ldtttt7EDJbXbZFiPrmb0Ob7UbyY/1YsuI
- mx7Zq8LfUKlaBC9zWmMydB2h6rHKB0lIR8Lqa/26m45BSSydsGLFHX8dz Q==;
-X-CSE-ConnectionGUID: hapxoFHnSfiVr/94coJojw==
-X-CSE-MsgGUID: Fh+lhcgRQCqGR4QKMmCyHg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="79560877"
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="79560877"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 21:22:36 -0700
-X-CSE-ConnectionGUID: aFAjJapLQ+6p3x0sHeqcOw==
-X-CSE-MsgGUID: GJn9Ay1ES5a/Yn5CdrhClw==
+ bh=IjvUjwt7IRdg1S0UAqGVSTMBYYBsrlKDJMQuq3Wx8Tw=;
+ b=iogcQyDNc9VqwuRJLisTiJVfce1/nD98oymv7aqVqB9sS6jURA/11sYD
+ Xyh7x6uFBv1EspyywBQBetEmXzYQsmWGYgG7U74lGo2QwSxn01oQDyE4g
+ wPqDSzg8D5Cl02K2l2Ofy39KX8gtILJYu86sI+/CIeNdR9Bz/pFSxQgau
+ Ciw9y4WdhYXlVbUgKhSG63hBUDO/lqahB9AcrqXlc84UCIYxmb/lCCIt1
+ m6uqBBL6af921Ua4yxKSLUE6U56LVQj1Arq+59c3aHReKRF2U+fr75N5c
+ 1l91kjqsgULJdtAYWUrF8IVrX+T6KuHt11NExZg5K0ZFuBDevXBgviank g==;
+X-CSE-ConnectionGUID: +1UkaaSPTSm/Gys3k8zKHQ==
+X-CSE-MsgGUID: LGwR1zr6Ryqc82Lwa0UPCw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="101115041"
+X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="101115041"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Mar 2026 21:23:05 -0700
+X-CSE-ConnectionGUID: jf6ymU84SPqENKwH4YrlVg==
+X-CSE-MsgGUID: CcPOnhlcQhKa/L0G3yLeuA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="255697089"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
- by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 21:22:35 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="221890063"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Mar 2026 21:23:04 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 26 Mar 2026 21:22:34 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.2.2562.37; Thu, 26 Mar 2026 21:23:04 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 26 Mar 2026 21:22:34 -0700
-Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.69) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ 15.2.2562.37 via Frontend Transport; Thu, 26 Mar 2026 21:23:04 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.26)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 26 Mar 2026 21:22:32 -0700
+ 15.2.2562.37; Thu, 26 Mar 2026 21:23:02 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K+oBKpASV0gNAbycXWM8YkBRgO8LiBWMLHW6Aya29bUqKT59o4VeOusH7NJ37DFyKFU/RlhHx0bjDsWqkvmozDxxWbx9xMFLwaXAiYHhw4sQoBdtuLxgkDwRdX0dwQn1JZJKa0y2O7lVXLCMxRFHKcLNkG1wxwpF11zZMLAJgpOBCIasDnf08bvpjCEqpt0uWSweI5k/loVi4r+1e4Lhofc8gQoOdOLof7ZGNBLnjMl9B3hCQ2s9QLqzIt/4P8Wm6beqobQW/5wj1oj67Njs6lktBug/09PNGKR+kGmze0ye73LwNtuOEs+F53Zu7K99svUzP6wyFiQ0vHPceob54w==
+ b=mR4JzfLmtuWegOelHeimmX5eBwq4TOs90AQTLEtrN/lKVzvtQC6fXD7P8jr384Q+ZgTZmqcVyQ9YiowBT+TKld7thcNatOoAu8LEE4KBuN10tsJqtl7rMvaTTao7dPvtSlgPg0wdN5m/odzdOZQsRiApm54dOxm4iEYLSy3Zl1sl5g0+G0RyaXmPfCal6uD1a5Tbg5EXHy8XTwx+zSRONtiKAgHdLl99UyWrsqJJgNatlJkgQgzPAxucZYXBLYU2zob0mVRAYkqqhr1lLaiRrSpM7KNo+T6p34H9bnIfr+7XV1R1TEqkux+F8W7ake9P2g+A1ZwJmSkQEnjYmYbatw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=a0HiwySUOLnznTzgeZBQ1b5nkSJMtKFEvNqL0LndeOE=;
- b=JDaFalvytms2+craeSh68r4HylBs7fiPbqBTHzWY/F4NBTW3NX976N5gyF4q6Q8XQA6iDEpUhx5bNm6+FgvqCLLwcszFWDluP8HaodfzC6Wsa63ueKSSgv/crVZp/fJ2lAEoePTsRKyWOlvzoFMsGAbm33bMEWgxl7WyRqhqBOL/xxRgOdjt0avBy+xKN38eCgiwHs/c6Koxwc/Rq3M4BSel4ZxRG4i8OhcfgwgEbHUThzz121ebdgIvqgqkS8rCLXSFFFe2rTtsgm1dXuJv1YTbKfHDtXFNeJM0eGL0BvDJIHFDZv/4n8FZbnp71wL/qG1nHywgFHSRzJ7IDw6S/A==
+ bh=/Y0cgH5uCFyETrf3Q46hSGCo32RyXsEhaEUG74x2FV8=;
+ b=L2Dx3od8l2igYfBL/rkYG5vav7g6ouQDG6riVwwcqXK9bY9WKK3nvvq9RpHN5mUIVxu/jLkr7KqAdqXwPoS+PqZFMVPnnrOgZDFESwhChW8SOVQySAIV9aJrIeWOpLj/XuawHUkF1W7zj/58TU0sDzkKl0PKf15NBWH+5bjffVnnPWNGfaeYLmpZgS8w0L11/vYC2MfTJ0dhu40HhrlvN+G5bpNUJrr7QcWbdr01fERZLDdNRw+lLJIvjK4vw0SxtByQkv5hutE6Jf0pBkXzQRusx0ZmTIeLpkCb73lBCeA7QPxyodrtJDNjjugk+VGQxE6vOJ0r8VPP7p7KJiicWw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -74,16 +74,16 @@ Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
  by SA1PR11MB9614.namprd11.prod.outlook.com (2603:10b6:806:4c4::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.7; Fri, 27 Mar
- 2026 04:22:30 +0000
+ 2026 04:22:56 +0000
 Received: from LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.20.9769.006; Fri, 27 Mar 2026
- 04:22:30 +0000
-Message-ID: <e5422d16-8728-47e3-b2e7-c8f1a076a2e5@intel.com>
-Date: Fri, 27 Mar 2026 12:30:14 +0800
+ 04:22:56 +0000
+Message-ID: <1e76a065-3155-4a1d-9d9e-38a90594fcd2@intel.com>
+Date: Fri, 27 Mar 2026 12:30:40 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/14] intel_iommu: Change pasid property from bool to
- uint8
+Subject: Re: [PATCH v2 07/14] intel_iommu_accel: Handle PASID entry addition
+ for pc_inv_dsc request
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
 CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <mst@redhat.com>, <jasowang@redhat.com>, <jgg@nvidia.com>,
@@ -91,80 +91,80 @@ CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <joao.m.martins@oracle.com>, <clement.mathieu--drif@bull.com>,
  <kevin.tian@intel.com>, <xudong.hao@intel.com>
 References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
- <20260326091130.321483-6-zhenzhong.duan@intel.com>
+ <20260326091130.321483-8-zhenzhong.duan@intel.com>
 Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260326091130.321483-6-zhenzhong.duan@intel.com>
+In-Reply-To: <20260326091130.321483-8-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0054.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:3::18) To LV8PR11MB8509.namprd11.prod.outlook.com
+X-ClientProxiedBy: TP0P295CA0057.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:910:3::16) To LV8PR11MB8509.namprd11.prod.outlook.com
  (2603:10b6:408:1e6::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|SA1PR11MB9614:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7a1c8524-f305-4c34-62bd-08de8bb8760e
+X-MS-Office365-Filtering-Correlation-Id: cffef964-e9ce-484b-b131-08de8bb88539
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|42112799006|366016|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info: VvJ5azgeHUsf2+tVt+cNVpIPN+0xXi28M2bIinPuJSJvilsg1ztQuGd+GMtVCnS10JCwzgCw9Y2X6OBuJ/i4GjWuj794zakoESUZ80nouMlCb9jKyp/aLNuH1Ff/lo+PdnvtAh/8nnUNEhxcXyxwIntvwpul3R2NzCRsv5+V1X1iCCkfHDLSoqsJ0pY20n/EK2Gb7A/f0wOMNqhMuBgasrKOIi7bt++gdUj5niPLHGcgzoPKt1CLzsAZ80rzoLe6D5eehIfOLss0AxVg3TdpkTv6xECzcvfAkSpOJ7LGYyb1pSwIoD0PqIbsIvllWQnZKuuj4uU230wXKEq2hT355NLPVfMfunxOhsbERmmPSExw+RheAN365AlrrpaHlA5zv7ozprtTa8J8qBHjSZ0XNZVFhon/ONdCdY+AF9li8NP+YkLm7l+7hsiJByNru+fkdVwvnWrpSLkz2dCLTsjY0qnuyW+jZvR85dv49hJmTVz6IpnmPJRlfA0tAxtXMgatkWds8a+lb9BfQcofKWhB+EdlIx91LSXq0F/FeWU7DhFX/Qko9jvckIHtVgOSrmxhxjbfdXFVSL/UwAahA1YrV3Ip1qeph8jYDOVK3UJl9CYXppMPCJmvN4i0K4aKIvTEMednIl0Oi4UepVrPJgG+ZJb+C0O9CN8RutfKvsl6EVStxqFxcI2DdKqg/6hlxYhtCtXBPBmWF5mHXz7yGVKnjo6dr66bB1Y97RuXq7QoaKk=
+ ARA:13230040|376014|7416014|1800799024|42112799006|366016|3613699012|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 2o9TRWuidl4SHp7c+gw/60SeSg6v+MoxaTDMLL1k/P69mfGopQAXZtmg34q4zeLk0QRgMKMPcEvh2Mp+kTcO/liLaRENiPT5t1CbtwgoQ2azYWyYtZMLImz5ZZAQamR6sqkkL5oX8PMHOmujLSu7fcSa03gQ3xOTCcFKfChmwWW51t1YJKod/f/kdwgJj0+GNiWus0XxytSvKMInFMKy45mB7nYmHKK0l3xI/tejYcnZzFM1OvwBX6BBlV31Gt+95/xk8IJo615HOyJvXtlk/BNGbBRw9jnOtU5C0K8FuXR+AU2Z9/mw/adEqKpEeZ9BJNNP+m2BcFLgaqOrBGclkRcjtz/JfOLxNSP4c6l6SfX0eY54YkB4oPTKoMTv0kRk2GfdwpaZaHc8bxe+qVKeicoSeXZAV6jXFNtFSRiYSxTcTa9qNG4OAbYgeV0mYqzlCLZNi1DLucT3wz1QR7geT9owBlwGo9mHzM+nrmH31HAe9VgxWT0brqvWxFFrgd86QROys0f3cSdh+dcP8YAIVdc7F2CmA2HQOZcTpOoUnuwtC+FTqsE6gQGw5nF8NgCAIdMyLGAfsBNuuoBkapTydNqNQDzO8ZZCfNosYQjvvykBdXu+IzkgCkoYA0Ss7INDYXM6EhPmaH5qMEPV28GpWWh9mtU4572hVR0D9uszZNPaQ1DNxUaAQHnZ4skbviq1f/cFgpZm2rtgOog+884/7WEiUSZrWx+3hzEf72vjkEsEksa+obPrnFumDmYp5WnDXupYwaJH0UhVfRZGpNlNp9tWD63yTP+8Gx/kOw9iK+I=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(42112799006)(366016)(18002099003)(56012099003)(22082099003);
+ SFS:(13230040)(376014)(7416014)(1800799024)(42112799006)(366016)(3613699012)(18002099003)(56012099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TTkzUmQvQnJ3azdZckZiVGk3b25qcmkrYmdqSW50Y3lqWW5DOWZLSDZiLzdC?=
- =?utf-8?B?YnYvM241Y3k3N2NYTDM3TmxFU0xwU1hkTE9JQVRCbW00R0hCM2FxR09NZWFa?=
- =?utf-8?B?T2IzMFNYYUJ3cTdWWHJOMlRhbzNQdEs1VlR5M1VLUHp4Vk5pM3RiOFBPUnBC?=
- =?utf-8?B?SzFpRnVVRXpnSDA0bHRyR0FXeVJFeVhYSW5RbzNORDZ6Wlc4VTlVQmJQclZr?=
- =?utf-8?B?blNHNy9vV3ZkbzdjaENxczVOc21GcXFtZ2ZuY3gwYjhZTHFoY3pWMnFYZkNa?=
- =?utf-8?B?MVF4clo2YkpETk56cldoL0pxbEdGZDZxOFFoTlZoVU5MbHluYW9YT0FlWkxW?=
- =?utf-8?B?bERrcW14MjlsZFEzUndmVlZ6cXY2VGsxMTVSSWFrVHozVFBibUo2MEZqc3ZG?=
- =?utf-8?B?UWduU3N4Q0pNT2MxNVZjNmk0OUVZQk8wSFVwa0ZtSmNYaWl6VmxGcVRNeXlu?=
- =?utf-8?B?SUVNbVBvN3ZaMGV6NHR0aTlyQjVXSGY0VWFOb2QySlpCOWhHYWNtVkF1Nk9n?=
- =?utf-8?B?cHUvRWNyLzBzTnk1UXY3Q0R4U0F3K2FWR0lXTU55a3NZNTlvK2R3ZWFKQmRx?=
- =?utf-8?B?azJMQ3hIWjdxQnJ3dkt0OXBqSzhHbjJ0L09ycnQ4elMraWZUcFZkMm1td041?=
- =?utf-8?B?YzJVNXFXaG9ZcmN0TldhQzJjTjViOHU0NWgvREt5TS8zZHBFZmczbGhmd280?=
- =?utf-8?B?aHNjR3RSYXZjVWRsMVdZK213WCtBUTRkSXh6VHFFSzRaY2RkUDR4UkFYVThN?=
- =?utf-8?B?Q1ZtSDJ2dW5Wd1dEb3VWK0RuTkpvWVgwUGsvMzdYNlVrbGQ2WUZYcVVlQnRi?=
- =?utf-8?B?ajg4d0FnK25BQnhzcklzMWJpR0dUU0tKbmFzYklQdTJSR0NkYmovWWdpT3JY?=
- =?utf-8?B?d2RpU2Q2MmRUaURRZlVEZWN2VHBUWkhsbzZUaUJzQ0RtcUVCUk5WWlJwNVhO?=
- =?utf-8?B?QzFoNXdNMEE1VkFuSWc1WStNMXU3bkxLcTZwbGxPZ3J0aEorYTVPQ29jbEht?=
- =?utf-8?B?ODNJZ05Nb1BmeUxGUUNSVHBVNjVOMnJEcHQ3eTF5ZmlGcUNRWUR4bjZQYjYz?=
- =?utf-8?B?dTIwUEtvTU5BVEpRMFdOaGRiaXJQb2svSlVEbndnYlV2c2oyUjFyeHRXVDNh?=
- =?utf-8?B?NjRMNlIxQVpyaXBGa0IxUUQ2bzRzRkxGSkhIdWxmV0h6Umd2TUx1MkpCQ1Nh?=
- =?utf-8?B?SU5DZlB4SFl2SVFXb0xpckc0Z0w3OXQvY2d2MDNXUXhqZjdyWlFEa1BQOHcr?=
- =?utf-8?B?SzNkQ0RGVnNzZjF3NE1HUlo3aHgxcE41dk1FRGFMVTVaY0o0RFFHZHN0bG9l?=
- =?utf-8?B?dEZYSlFEYTFocWJMV2lZR2EyNnB1UzZiUTBSa3FWaXc4TWdicFZmbEEwcGM0?=
- =?utf-8?B?R2lUSjRQQUI0bDBENlRZN0ZBN2hjZjBKeFNXaXgyM1ZuZ0tPUzR3ZHNiY3Yz?=
- =?utf-8?B?dGhDbkpPMUZXZ3ZlcnNqODJwU0FZZUJIWGhObDkwazVGVmNJWUxBOTlkcmJx?=
- =?utf-8?B?N2xLSzcwTWJhaFVDeHp3Ti95cnJTeFNvNDEzYXpoM3pzQk5QN0g0SEQyQXFk?=
- =?utf-8?B?TkdMTktoRHNUWUpUWGkrWUxwOHBoekJtNDdocGR6TzBRV3JwaDYvM0Z2V25N?=
- =?utf-8?B?MnR6V1Q1cGxGa1dhSm5ETEgrcHJZQWFkVS9VbUZoVGg3Yk9wdW5jaUVEL05H?=
- =?utf-8?B?Y25WMVJBTzlqU25Qbkx3WCtoSWxGM1k5djRlaXRDa2kzRjErVTQ3M1dHeDZM?=
- =?utf-8?B?Y2dxYlVWVlJnY3RCaFdmY0lpRHFRTWN4bHhja3lSM2hsbjJkQmhsd0RkYjUz?=
- =?utf-8?B?clorYXJ6djJKVmdDWkVVNkJLczcrNWxvekRPbG5ZL29BRUtVdldsTUtOMjJt?=
- =?utf-8?B?ZHA1Sm5jUk90b3Z1OFBTMTlYaHV3ZmlvRGlVZVZhWUR5WWhUNW9QU2U1WjZs?=
- =?utf-8?B?dzdHblcwNDBlUFBqL2FRSXI1TFhyQTFhRSt6eXdvT2piNGlDc3dLMzFVUFE5?=
- =?utf-8?B?OFhiaDFmbzM5SjJsMUdnOERyUVFFVjFwelJVNy9YZGkwVE5KUUw5V2hydFda?=
- =?utf-8?B?SEZtcUdISW82dnFoRm1obzkzZnNBT2NrK1JtdEYzcEtOS2szZWlSNDdkRzVV?=
- =?utf-8?B?UEE0NG9SWmV2QlRpWFRzZS9iVlEydGVZVDBPY3drOGlmVDEyWE5hT3REa2R2?=
- =?utf-8?B?K256OWpEdTlTOFhaREJCSnRDbDJyMVNFa2FjRjA0N29FdmRSVklWd1ZaZEx5?=
- =?utf-8?B?UVFER0d4ODQ5ZzUvc3lLdHRMZzNsU1VKeWI3WXQ1UW9KQmNyWWNMMEJMcFdu?=
- =?utf-8?B?eXl5S0tUTjlXYUVVWERRdGc5dERMMWt5R0duTXNuRFhWcGRVdFdXZz09?=
-X-Exchange-RoutingPolicyChecked: HCJxf6a6q+oFo7XNvUQaauPrkIoDE+NlVhaEBUJ5rGNUm9zjy20iDTnoyI1H/w6w6xzaMDzSDiHDrW6Oht2CfCwz7wIAy/INmPq14LEYe9QX1zRwOR5flyoIF+tL+2wad3jUtZP1ZWbGMKiJop8dge91RVglOAMcKhy/GVz6w85MxI5TlurRDWLLF4E8UR+6U9JnfGrCkvV2AjbvDzXqAIsf4RsNLXvY8Fzwmi9DVXM44tjcXqTAJC+lXIvQIJAB4EkV7Q9RNqnomW7+E1U6L4RiZIaJuU05Xfdux2BNralr4jifW2efmb/wSQLWoSd6qne37UAVFo9CNf5t1n6PVg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a1c8524-f305-4c34-62bd-08de8bb8760e
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RGc2bHhqdm41bGNEM0JUbUF6L3VuY21QNXpxMUhjYmMxcS9DSHhVai93aDN6?=
+ =?utf-8?B?U0w3YU00cVV3bXdtbDJHaTVIQ3h0TURnMWlFelFwMHFyUVdRSm9zUVZscEZU?=
+ =?utf-8?B?Y29ZbHNIWnZFaEhqUklHY2srUHl6cmtVOTlOU0lZSUF4VFREbEplUGZ6UllC?=
+ =?utf-8?B?K1QybjZ6UkVQRTZLR080NW9JaTZ3NlYvS1k2R1NkZDdCdXdSTCtYTTNFWVRv?=
+ =?utf-8?B?OGNKVm0xZ2tRWEJMNlVqSCtFYW5ReHlYTVI4TUlBa3hWQVVKdCtuTTQvTHlS?=
+ =?utf-8?B?ZnlnVWx1clZWTE1uN2E3dDNiTjFMVjAySEhCOG5KU1FKcUlRMTF2UHRnc2Y5?=
+ =?utf-8?B?M2xiZEZuQ3NyM2JadTFFMUNUbE01MllHQkNIVEVqUFZUekRpZy9GVmlMeHBL?=
+ =?utf-8?B?SWR3VW1VWmxudzg5RkxiM25XbDBNb0JxWXJDK3J6WkN5TlhXVHdCb3RvMmo0?=
+ =?utf-8?B?aUVjZ1FmaHhML0VFdmRzcEt3dDljQ3RxOW9wWXFiL0E5ZmNpSDB5aEdxdjV3?=
+ =?utf-8?B?d3RkYk5POEU5ZTkvUXdWMnppYkJ2UWpOZ2U3NkhHb1ZiSTVPbXlPbGFxUEV2?=
+ =?utf-8?B?MDAwcDI5OWM1UjQzaHRFcWFvZjV2Mk5wQkdqNytTZnZGZmVVbW1UZVRaZ0ox?=
+ =?utf-8?B?UHJPU1FLTTlXSHFRSXhyN0tid1V4c0t2Mm1pQUxWNitIa3VzZG80ZXNEMjY0?=
+ =?utf-8?B?amlDd1VveWZ2cjFJdlRLZkxia0RkRDR3VHVGOXJ5WDA2WVhqREhGVC9qc3Jm?=
+ =?utf-8?B?azJzV2dIY0oxUlBrV0ZJZTd5Y3VMc3lOcjRGQ0dkUml4bjR2N1krenF0TkZn?=
+ =?utf-8?B?Z0IreFcwRmU0RUMyTUlDT0ovSzFBZVhqL3MrdmNrYVR3QlJveXJJcjFnUWE1?=
+ =?utf-8?B?QlczUnpJcVZtNi9vTFZHY3FSRCtpbWlQbUw2WkNOU1VoSmNvdUVRWlRBUUtF?=
+ =?utf-8?B?czB2c0o4RHBNMWlOWUFkcGthWmxUTERjRDVzMWJYY05Cd2gwK1hVSkxLcXd2?=
+ =?utf-8?B?TG1QNzRERGxDMm1pQXVuUlgvKzRPWWp3bGdNOVNvdG1aQyt2SVlBWDdoRFR5?=
+ =?utf-8?B?QTFDRkw3eDViSjN4MzlFUUUxTGZVR2s4ck1vOEpmWVp6dmZ5bHA0YnoyZjQ2?=
+ =?utf-8?B?MHQ1Qis5cHBjQTRTTS8vZXJsWUR0U1laaHBNQlJrSVBTdUdQMTlMQitCV3RB?=
+ =?utf-8?B?eVMxWWhNOWJvdms3YkxxalhHd1M2b2V5aUhTbWt6Y1lQZFVYbThWNGdkUnAx?=
+ =?utf-8?B?K0MwV0pRNVZnby9Pc1ZqWnNjYWJpdU5IbkZqRTZhcm5BNjlQZzlTV0hkM3N2?=
+ =?utf-8?B?VERURGdtYkdrMkdra0RFVkZvTFRFM2tacTBrcTVkR0JkRGRaVjY4dW81cXJo?=
+ =?utf-8?B?TVZXTGlwMlVRMzE1L1N3VU9EMTZjMnVlcVdqSDA0KzZoSXhLaVkrNncvSnVj?=
+ =?utf-8?B?MkVkK3Y0MjJyKys3WHhOeHRySEw3Nno1UGFQc0pab2VmdW13RjY4bWpkbUVv?=
+ =?utf-8?B?K0I1M1JFbGJmOGc0WGcya3I3YXppVDU2QllzM2xIbnpVSkRXLzlxRXZEMElY?=
+ =?utf-8?B?TGNNL05YMlkvZzlYQk9HYVVreXlLRWdyNCtHdXA3QmpManF0OG1DT0xQQmUv?=
+ =?utf-8?B?ZFhJUENuS0RZWExDTGxmM2xwV2pWcW5HTUV5dlIvdDFSaVVoUWNOd2lLcFU1?=
+ =?utf-8?B?K1dPam1RNEx0eGprK2pwWE5Ta0RDc0JFQk0ybTBPeXlrNjZ0VzFUOGNCZERO?=
+ =?utf-8?B?RlgxRmY3TlppdTdYdldBTmFOMWZJeG5ZR2ZrY3ZwbmxHa01qOVlxZ293Wjd6?=
+ =?utf-8?B?cGVQMjlFZHgzTmVJT2ozQXNGZHlVWXRtN2g4V1hmbUE5czZFdW8ybFFuWDA2?=
+ =?utf-8?B?SzJoOUhoeUp0S2M0L1dqR05EMWtvRUFaV1pEMTJhQ1I5bXBXTGFIY0IxU3E4?=
+ =?utf-8?B?UXUwbU9PbGdlcUJidXBBcVdzSVB1R1hLNkFnbng2YWVhNUkrcUZMVWh5SnRG?=
+ =?utf-8?B?MjZHYVhPcmQ3M2htNSszdXFZckxQMnRwUWNrK2xUYXdvVHBmZzdoMkZOM25Q?=
+ =?utf-8?B?L3BjTXp5aUZxL3BmWW1IeWxhUTRqTnQwb0ZGZmMvWU5WczB1OCtRV0t2dEp2?=
+ =?utf-8?B?Mkt4bDhJblNoT2lGRDR1a2FKbHlKSUxUQm5IVmIxZ1ZvYXRpSXV1dFZGQ0FS?=
+ =?utf-8?B?SGI4R2h5UkVyeHY2enhaR08rY3lwdlhoYTQ2VjhSTXpEVXpWRWNMT3V0K2pX?=
+ =?utf-8?B?WkdjZGxCMm1ZdTZieU4zZC9mVjRnTEpDS2gzQkt5Sit4RzhLSHk1SlRaalVm?=
+ =?utf-8?B?QUp6dzE5bmpZemdKbHhLWVFNdzhkWlE3NUFKc2ZEb0p1eWsvcU9KQT09?=
+X-Exchange-RoutingPolicyChecked: YMZyNiX95kLjvnghx9W+3TJa/rF2hYl3bd0sYtphHP04PGjDWryddshl12l4IKf72Fh6VHbDn6iKhp8rnexieldJPhtQL9N8ZA3W6B+cmJOI0I9XLalZ/zAoriNvuPI05dIhOGvv3p0s4++M8XX8Xar1az6Sqj2pK+FHHLKXHP0MKe/6xcac1L+dgp7xJWoRfnzRHslKL1B91K3doMKLF+++zg3EiIwAiZZCBCooWt6se0KVda+pEqSa0Qml9GI3amawou02yhgy/CBYn92VwfrOavBaEv2RtfS6k+p26Nl1zjnmRzxQ4xg00xch3VnoEwcbFBRFzpmPO4rN1lY/7w==
+X-MS-Exchange-CrossTenant-Network-Message-Id: cffef964-e9ce-484b-b131-08de8bb88539
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 04:22:30.8234 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 04:22:55.9944 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: kAbUf1Zv8IUhShIPtSH7UJ2If29ma0IEIQKOKQSUyMM3PRbavIOP+AvvYH0mN8S08WYyy/6i45YmXEexqEPqNw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: of5OSnF+iRXbEyfimA6brmF3Mi3/JZF9TWxQgNzPopRX76/BXn3Fg2mKI6Pcm1bpm4Fd/EmvtonnIDENlqTHWw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB9614
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=yi.l.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=yi.l.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -190,93 +190,337 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/26/26 17:11, Zhenzhong Duan wrote:
-> 'x-pasid-mode' is a bool property, we need an extra 'pss' property to
-> represent PASID size supported. Because there is no any device in QEMU
-> supporting pasid capability yet, no guest could use the pasid feature
-> until now, 'x-pasid-mode' takes no effect.
+> Structure VTDAddressSpace includes some elements suitable for emulated
+> device and passthrough device without PASID, e.g., address space,
+> different memory regions, etc, it is also protected by vtd iommu lock,
+> all these are useless and become a burden for passthrough device with
+> PASID.
 > 
-> So instead of an extra 'pss' property we can use a single 'pasid'
-> property of uint8 type to represent if pasid is supported and the PASID
-> bits size. A value of N > 0 means pasid is supported and N - 1 is the
-> value in PSS field in ECAP register.
+> When there are lots of PASIDs used in one device, the AS and MRs are
+> all registered to memory core and impact the whole system performance.
 > 
-> PASID bits size should also be no more than 20 bits according to PCI spec.
+> So instead of using VTDAddressSpace to cache pasid entry for each pasid
+> of a passthrough device, we define a light weight structure
+> VTDAccelPASIDCacheEntry with only necessary elements for each pasid. We
+> will use this struct as a parameter to conduct binding/unbinding to
+> nested hwpt and to record the current bound nested hwpt. It's also
+> designed to support PASID_0.
 > 
+> VTDAccelPASIDCacheEntry is designed to only be used in intel_iommu_accel.c,
+> similarly VTDPASIDCacheEntry should only be used in hw/i386/intel_iommu.c
+> 
+> When guest creates new PASID entries, QEMU will capture the pc_inv_dsc
+> (pasid cache invalidation) request, walk through each pasid in each
+> passthrough device for valid pasid entries, create a new
+> VTDAccelPASIDCacheEntry if not existing yet.
+> 
+> PASID_0 of passthrough device still need to register MRs in case guest
+> does not operate in scalable mode. So for PASID_0, we have both
+> VTDAPASIDCacheEntry and VTDAccelPASIDCacheEntry.
+> 
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+
+perhaps togather with a co-d-b tag, otherwise this s-o-b tag is strange.
+same to other commits in this series. :)
+
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->   hw/i386/intel_iommu_internal.h |  2 +-
->   include/hw/i386/intel_iommu.h  |  2 +-
->   hw/i386/intel_iommu.c          | 11 +++++++++--
->   3 files changed, 11 insertions(+), 4 deletions(-)
+>   hw/i386/intel_iommu_accel.h    |  13 +++
+>   hw/i386/intel_iommu_internal.h |   8 ++
+>   hw/i386/intel_iommu.c          |   3 +
+>   hw/i386/intel_iommu_accel.c    | 170 +++++++++++++++++++++++++++++++++
+>   4 files changed, 194 insertions(+)
 > 
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index 11a53aa369..db4f186a3e 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -195,7 +195,7 @@
->   #define VTD_ECAP_MHMV               (15ULL << 20)
->   #define VTD_ECAP_SRS                (1ULL << 31)
->   #define VTD_ECAP_NWFS               (1ULL << 33)
-> -#define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
-> +#define VTD_ECAP_SET_PSS(x, v)      ((x)->ecap = deposit64((x)->ecap, 35, 5, v))
-
-does this change still meet the limit commented by "* limit: 
-MemTxAttrs::pid */"?
-
->   #define VTD_ECAP_PASID              (1ULL << 40)
->   #define VTD_ECAP_PDS                (1ULL << 42)
->   #define VTD_ECAP_SMTS               (1ULL << 43)
-> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-> index e44ce31841..95c76015e4 100644
-> --- a/include/hw/i386/intel_iommu.h
-> +++ b/include/hw/i386/intel_iommu.h
-> @@ -314,7 +314,7 @@ struct IntelIOMMUState {
->       bool intr_eime;                 /* Extended interrupt mode enabled */
->       OnOffAuto intr_eim;             /* Toggle for EIM cabability */
->       uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
-> -    bool pasid;                     /* Whether to support PASID */
-> +    uint8_t pasid;                  /* PASID supported in bits, 0 if not */
->       bool fs1gp;                     /* First Stage 1-GByte Page Support */
+> diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
+> index e5f0b077b4..c5981a23bf 100644
+> --- a/hw/i386/intel_iommu_accel.h
+> +++ b/hw/i386/intel_iommu_accel.h
+> @@ -12,6 +12,13 @@
+>   #define HW_I386_INTEL_IOMMU_ACCEL_H
+>   #include CONFIG_DEVICES
 >   
->       /* Transient Mapping, Reserved(0) since VTD spec revision 3.2 */
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index f395fa248c..a7b676cd13 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -4203,7 +4203,7 @@ static const Property vtd_properties[] = {
->       DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
->       DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
->       DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
-> -    DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
-> +    DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0),
->       DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
->       DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
->       DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp, true),
-> @@ -5042,7 +5042,8 @@ static void vtd_cap_init(IntelIOMMUState *s)
->       }
->   
->       if (s->pasid) {
-> -        s->ecap |= VTD_ECAP_PASID | VTD_ECAP_PSS;
-> +        VTD_ECAP_SET_PSS(s, s->pasid - 1);
-> +        s->ecap |= VTD_ECAP_PASID;
->       }
+> +typedef struct VTDAccelPASIDCacheEntry {
+> +    VTDHostIOMMUDevice *vtd_hiod;
+> +    VTDPASIDEntry pasid_entry;
+> +    uint32_t pasid;
+> +    QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
+> +} VTDAccelPASIDCacheEntry;
+> +
+>   #ifdef CONFIG_VTD_ACCEL
+>   bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+>                             Error **errp);
+> @@ -20,6 +27,7 @@ bool vtd_propagate_guest_pasid(VTDAddressSpace *vtd_as, Error **errp);
+>   void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
+>                                         uint32_t pasid, hwaddr addr,
+>                                         uint64_t npages, bool ih);
+> +void vtd_pasid_cache_sync_accel(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info);
+>   void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
+>   #else
+>   static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
+> @@ -49,6 +57,11 @@ static inline void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s,
+>   {
 >   }
 >   
-> @@ -5583,6 +5584,12 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
->           return false;
->       }
+> +static inline void vtd_pasid_cache_sync_accel(IntelIOMMUState *s,
+> +                                              VTDPASIDCacheInfo *pc_info)
+> +{
+> +}
+> +
+>   static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
+>   {
+>   }
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index c7e107fe87..d5f212ded9 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -616,6 +616,7 @@ typedef struct VTDRootEntry VTDRootEntry;
+>   #define VTD_CTX_ENTRY_SCALABLE_SIZE   32
 >   
-> +    if (s->pasid > PCI_EXT_CAP_PASID_MAX_WIDTH) {
-> +        error_setg(errp, "PASID width %d, exceed Max PASID Width %d allowed "
-> +                   "in PCI spec", s->pasid, PCI_EXT_CAP_PASID_MAX_WIDTH);
-
-s/exceed/exceeds/
-
-> +        return false;
+>   #define PASID_0                             0
+> +#define VTD_SM_CONTEXT_ENTRY_PDTS(x)        extract64((x)->val[0], 9, 3)
+>   #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
+>   #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
+>   #define VTD_SM_CONTEXT_ENTRY_PRE            0x10ULL
+> @@ -646,6 +647,7 @@ typedef struct VTDPIOTLBInvInfo {
+>   #define VTD_PASID_DIR_BITS_MASK       (0x3fffULL)
+>   #define VTD_PASID_DIR_INDEX(pasid)    (((pasid) >> 6) & VTD_PASID_DIR_BITS_MASK)
+>   #define VTD_PASID_DIR_FPD             (1ULL << 1) /* Fault Processing Disable */
+> +#define VTD_PASID_TABLE_ENTRY_NUM     (1ULL << 6)
+>   #define VTD_PASID_TABLE_BITS_MASK     (0x3fULL)
+>   #define VTD_PASID_TABLE_INDEX(pasid)  ((pasid) & VTD_PASID_TABLE_BITS_MASK)
+>   #define VTD_PASID_ENTRY_FPD           (1ULL << 1) /* Fault Processing Disable */
+> @@ -711,6 +713,7 @@ typedef struct VTDHostIOMMUDevice {
+>       PCIBus *bus;
+>       uint8_t devfn;
+>       HostIOMMUDevice *hiod;
+> +    QLIST_HEAD(, VTDAccelPASIDCacheEntry) pasid_cache_list;
+>   } VTDHostIOMMUDevice;
+>   
+>   /*
+> @@ -768,6 +771,11 @@ static inline int vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
+>       return memcmp(p1, p2, sizeof(*p1));
+>   }
+>   
+> +static inline uint32_t vtd_sm_ce_get_pdt_entry_num(VTDContextEntry *ce)
+> +{
+> +    return 1U << (VTD_SM_CONTEXT_ENTRY_PDTS(ce) + 7);
+> +}
+> +
+>   int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base, uint32_t pasid,
+>                                     VTDPASIDDirEntry *pdire);
+>   int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s, uint32_t pasid,
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index b5d18ae321..451ede7530 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -3202,6 +3202,8 @@ static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
+>       g_hash_table_foreach(s->vtd_address_spaces, vtd_pasid_cache_sync_locked,
+>                            pc_info);
+>       vtd_iommu_unlock(s);
+> +
+> +    vtd_pasid_cache_sync_accel(s, pc_info);
+>   }
+>   
+>   static void vtd_replay_pasid_bindings_all(IntelIOMMUState *s)
+> @@ -4759,6 +4761,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>       vtd_hiod->devfn = (uint8_t)devfn;
+>       vtd_hiod->iommu_state = s;
+>       vtd_hiod->hiod = hiod;
+> +    QLIST_INIT(&vtd_hiod->pasid_cache_list);
+>   
+>       if (!vtd_check_hiod(s, vtd_hiod, errp)) {
+>           g_free(vtd_hiod);
+> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+> index c2757f3bcd..32d8ab0ef9 100644
+> --- a/hw/i386/intel_iommu_accel.c
+> +++ b/hw/i386/intel_iommu_accel.c
+> @@ -257,6 +257,176 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
+>                            vtd_flush_host_piotlb_locked, &piotlb_info);
+>   }
+>   
+> +static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
+> +                              VTDPASIDEntry *pe)
+> +{
+> +    VTDAccelPASIDCacheEntry *vtd_pce;
+> +
+> +    QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
+> +        if (vtd_pce->pasid == pasid) {
+> +            if (vtd_pasid_entry_compare(pe, &vtd_pce->pasid_entry)) {
+> +                vtd_pce->pasid_entry = *pe;
+> +            }
+> +            return;
+> +        }
 > +    }
 > +
->       if (s->svm) {
->           if (!x86_iommu->dt_supported) {
->               error_setg(errp, "Need to set device IOTLB for svm");
+> +    vtd_pce = g_malloc0(sizeof(VTDAccelPASIDCacheEntry));
+> +    vtd_pce->vtd_hiod = vtd_hiod;
+> +    vtd_pce->pasid = pasid;
+> +    vtd_pce->pasid_entry = *pe;
+> +    QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
+> +}
+> +
+> +/*
+> + * This function walks over PASID range within [start, end) in a single
+> + * PASID table for entries matching @info type/did, then create
+> + * VTDAccelPASIDCacheEntry if not exist yet.
+> + */
+> +static void vtd_sm_pasid_table_walk_one(VTDHostIOMMUDevice *vtd_hiod,
+> +                                        dma_addr_t pt_base,
+> +                                        int start,
+> +                                        int end,
+> +                                        VTDPASIDCacheInfo *info)
+> +{
+> +    IntelIOMMUState *s = vtd_hiod->iommu_state;
+> +    VTDPASIDEntry pe;
+> +    int pasid;
+> +
+> +    for (pasid = start; pasid < end; pasid++) {
+> +        if (vtd_get_pe_in_pasid_leaf_table(s, pasid, pt_base, &pe) ||
+> +            !vtd_pe_present(&pe)) {
+> +            continue;
+> +        }
+> +
+> +        if ((info->type == VTD_INV_DESC_PASIDC_G_DSI ||
+> +             info->type == VTD_INV_DESC_PASIDC_G_PASID_SI) &&
+> +            (info->did != VTD_SM_PASID_ENTRY_DID(&pe))) {
+> +            /*
+> +             * VTD_PASID_CACHE_DOMSI and VTD_PASID_CACHE_PASIDSI
+> +             * requires domain id check. If domain id check fail,
+> +             * go to next pasid.
+> +             */
+> +            continue;
+> +        }
+> +
+> +        vtd_accel_fill_pc(vtd_hiod, pasid, &pe);
+> +    }
+> +}
+> +
+> +/*
+> + * In VT-d scalable mode translation, PASID dir + PASID table is used.
+> + * This function aims at looping over a range of PASIDs in the given
+> + * two level table to identify the pasid config in guest.
+> + */
+> +static void vtd_sm_pasid_table_walk(VTDHostIOMMUDevice *vtd_hiod,
+> +                                    dma_addr_t pdt_base,
+> +                                    int start, int end,
+> +                                    VTDPASIDCacheInfo *info)
+> +{
+> +    VTDPASIDDirEntry pdire;
+> +    int pasid = start;
+> +    int pasid_next;
+> +    dma_addr_t pt_base;
+> +
+> +    while (pasid < end) {
+> +        pasid_next = (pasid + VTD_PASID_TABLE_ENTRY_NUM) &
+> +                     ~(VTD_PASID_TABLE_ENTRY_NUM - 1);
+> +        pasid_next = pasid_next < end ? pasid_next : end;
+> +
+> +        if (!vtd_get_pdire_from_pdir_table(pdt_base, pasid, &pdire)
+> +            && vtd_pdire_present(&pdire)) {
+> +            pt_base = pdire.val & VTD_PASID_TABLE_BASE_ADDR_MASK;
+> +            vtd_sm_pasid_table_walk_one(vtd_hiod, pt_base, pasid, pasid_next,
+> +                                        info);
+> +        }
+> +        pasid = pasid_next;
+> +    }
+> +}
+> +
+> +static void vtd_replay_pasid_bind_for_dev(VTDHostIOMMUDevice *vtd_hiod,
+> +                                          int start, int end,
+> +                                          VTDPASIDCacheInfo *pc_info)
+
+s/vtd_replay_pasid_bind_for_dev/vtd_accel_replay_pasid_bind_for_dev/
+
+> +{
+> +    IntelIOMMUState *s = vtd_hiod->iommu_state;
+> +    VTDContextEntry ce;
+> +    int dev_max_pasid = 1 << vtd_hiod->hiod->caps.max_pasid_log2;
+> +
+> +    if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_hiod->bus),
+> +                                  vtd_hiod->devfn, &ce)) {
+> +        VTDPASIDCacheInfo walk_info = *pc_info;
+> +        uint32_t ce_max_pasid = vtd_sm_ce_get_pdt_entry_num(&ce) *
+> +                                VTD_PASID_TABLE_ENTRY_NUM;
+> +
+> +        end = MIN(end, MIN(dev_max_pasid, ce_max_pasid));
+> +
+> +        vtd_sm_pasid_table_walk(vtd_hiod, VTD_CE_GET_PASID_DIR_TABLE(&ce),
+> +                                start, end, &walk_info);
+> +    }
+> +}
+> +
+> +/*
+> + * This function replays the guest pasid bindings by walking the two level
+> + * guest PASID table. For each valid pasid entry, it creates an entry
+> + * VTDAccelPASIDCacheEntry dynamically if not exist yet. This entry holds
+> + * info specific to a pasid
+> + */
+> +void vtd_pasid_cache_sync_accel(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
+
+I think it's nice to name it as vtd_accel_pasid_cache_sync().
+
+> +{
+> +    int start = PASID_0, end = 1 << s->pasid;
+> +    VTDHostIOMMUDevice *vtd_hiod;
+> +    GHashTableIter hiod_it;
+> +
+> +    if (!s->fsts) {
+> +        return;
+> +    }
+> +
+> +    /*
+> +     * VTDPASIDCacheInfo honors PCI pasid but VTDAccelPASIDCacheEntry honors
+> +     * iommu pasid
+> +     */
+> +    if (pc_info->pasid == PCI_NO_PASID) {
+> +        pc_info->pasid = PASID_0;
+> +    }
+> +
+> +    switch (pc_info->type) {
+> +    case VTD_INV_DESC_PASIDC_G_PASID_SI:
+> +        start = pc_info->pasid;
+> +        end = pc_info->pasid + 1;
+> +        /* fall through */
+> +    case VTD_INV_DESC_PASIDC_G_DSI:
+> +        /*
+> +         * loop all assigned devices, do domain id check in
+> +         * vtd_sm_pasid_table_walk_one() after get pasid entry.
+> +         */
+> +        break;
+> +    case VTD_INV_DESC_PASIDC_G_GLOBAL:
+> +        /* loop all assigned devices */
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    /*
+> +     * In this replay, one only needs to care about the devices which are
+> +     * backed by host IOMMU. Those devices have a corresponding vtd_hiod
+> +     * in s->vtd_host_iommu_dev. For devices not backed by host IOMMU, it
+> +     * is not necessary to replay the bindings since their cache should be
+> +     * created in the future DMA address translation.
+
+above words can be dropped since this code lays in the _accel.c.
+Instead, I think you can add words like "Loop all the vtd_hiod
+instances to sync the "pasid cache" per the guest pasid configuration."
+
+> +     *
+> +     * VTD translation callback never accesses vtd_hiod and its corresponding
+> +     * cached pasid entry, so no iommu lock needed here.
+> +     */
+> +    g_hash_table_iter_init(&hiod_it, s->vtd_host_iommu_dev);
+> +    while (g_hash_table_iter_next(&hiod_it, NULL, (void **)&vtd_hiod)) {
+> +        if (!object_dynamic_cast(OBJECT(vtd_hiod->hiod),
+> +                                 TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+> +            continue;
+> +        }
+> +        vtd_replay_pasid_bind_for_dev(vtd_hiod, start, end, pc_info);
+> +    }
+> +}
+> +
+>   static uint64_t vtd_get_host_iommu_quirks(uint32_t type,
+>                                             void *caps, uint32_t size)
+>   {
 
 
