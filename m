@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 079C910AB83A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 01:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6DA10AB83B
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 01:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5vkA-0005Gd-4n; Thu, 26 Mar 2026 21:12:10 -0400
+	id 1w5vkD-0005Hw-1Q; Thu, 26 Mar 2026 21:12:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5vk9-0005GR-4q
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:09 -0400
-Received: from ci-2006b-snip4-11.eps.apple.com ([57.103.90.151]
+ id 1w5vkA-0005Gg-4m
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:10 -0400
+Received: from ci-2006j-snip4-11.eps.apple.com ([57.103.90.231]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w5vk6-0006Kd-9F
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:08 -0400
+ id 1w5vk6-0006KT-9m
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:09 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPS id
- 3406518000A5; Fri, 27 Mar 2026 01:11:59 +0000 (UTC)
+ DF87918000B4; Fri, 27 Mar 2026 01:11:57 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774573921; x=1777165921;
- bh=ah7iVUifv115vhXY2mVssdsatbmluyAIZvG5NnZFtHY=;
+ s=sig1; t=1774573919; x=1777165919;
+ bh=bhpzqF9f0sxVadieDFAu/pO43zamcXvwDEg98SWPzgo=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Vy7r/hUmwiLL4I8qr1fnTzgF0z2FO0ri3qKAfxlh60WS1rpHetUD6xq/+A0w6FDzO3/hkkBh7sz8C9fwXXUvhG2Cwdl5nwhhhOtL7jtUaNO6hCA6/hZdOQ4EDrCoOKXdEcCw9o4guT2KjXdv4HhUzOAu4o7MX+N04B173R7YMuuIkrFaZwPD8Yut+c5SQij087RJlnqypArlcVXcfCf6JE08DaFY15r9++V5+tGFr0SFwb4MBYC+YS4Gd36ys6ctx2OqfCkpJi1AclV5WVRm3zpyr4Xhmmcg4c8PZtRflhcYQV+TpfVBPi9qllhsvi1DTL9x7sCLwWub7YU06qXALg==
+ b=cG6Eu3jWKzCOW8t6k/nWqwAwpSRwtBszWmo5qGZYxG1P6J0byacw/mSgB2yIdHpD9G4d2VdUR1COv9QPciHeA74Bbp59NxuxrEleU1dlYVLzb8S8UvYHjGQZzitSI269UpPkQdpnHitemYdQNz0+Kj6XdW9vjxwhFG/i9cfC0nnSKBISbVckE60uShzG4fcxPnm5qmlicSXbe3I9FIK7czEvO6+l05bRCXfDD4UanYkcwTfft3qMozOv4D4ZCDpABjYTWjEHAnJ9W3234aVksE8nv1amBo1sH53FWlwMA+DMhQsTXf0rSn3N+QZg3a3PB7ofKXqbcJDwZ1qVv8dgbw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPSA id
- 88906180008A; Fri, 27 Mar 2026 01:11:57 +0000 (UTC)
+ 59BDA180017B; Fri, 27 Mar 2026 01:11:56 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -40,35 +40,35 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v6 2/4] docs: add WHPX section with initial info
-Date: Fri, 27 Mar 2026 02:11:50 +0100
-Message-ID: <20260327011152.4126-3-mohamed@unpredictable.fr>
+Subject: [PATCH v6 1/4] meson.build: remove i386-softmmu WHPX support
+Date: Fri, 27 Mar 2026 02:11:49 +0100
+Message-ID: <20260327011152.4126-2-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260327011152.4126-1-mohamed@unpredictable.fr>
 References: <20260327011152.4126-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=GoFPO01C c=1 sm=1 tr=0 ts=69c5d95f
+X-Authority-Info-Out: v=2.4 cv=PaTyRyhd c=1 sm=1 tr=0 ts=69c5d95e
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yMhMjlubAAAA:8 a=WaZvilOYPjjn8e_oVx0A:9
-X-Proofpoint-ORIG-GUID: jgg4yKr3zxcBA-mOvcl5-dOJ1qoKsCkG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDAwOCBTYWx0ZWRfX7sKsBEWLT2VY
- j1Xm9Gm5/ArT83YVSU9zFXrOY1ZUYBztI05ZbLZ1iYf6ed436yoHyfFVftremgMBLOS7bdfOq1L
- 28Qtb1FweQUoCEEQ9hMOekimYdg9vRQJ4WkeqZ46o/L8iUJ6O8RA/EKm6eWA0x4DQNdy1Q3hwqF
- eoviUAQabOyzp7SMW6vIxNsKaDMtG41xMVXBi7Qb6V/mI8tqK19pVgJiev7YsAWVJt+cUJm3SeW
- zBITH7bddXvwD6BCuw8DkeN2VqzKn32hyK/eoyLl+pQEgLhLPR6MP6Fw695a1HSXG2IVqJ6TJmg
- TMDy//9UGKQbTIQ+AKPq1XfFlyYFYG5Kq1NlFt4KhIs3SCLPRqwvGRQZpMIliA=
-X-Proofpoint-GUID: jgg4yKr3zxcBA-mOvcl5-dOJ1qoKsCkG
+ a=rusTielndRi_gjT-Gq0A:9
+X-Proofpoint-GUID: jk4L4hqcMayKqjXI_X5j8Bo1hDV8eczC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDAwOCBTYWx0ZWRfX0/UyKLe2RDAr
+ R55senIbwLZKD/qs9Q6nziUCuaYaMaFAXcnOotCbauiuCG93Mv4EUwOfUKLTFSO45cS/SOJnPFK
+ UcAuExJ9Da0oZCaruRoO0Uphd3NPqVFIwRjJADgkH+iS5PZXgtb7OBBHH8qD5qdR3iSPPJkIWcP
+ xBsutvpeviYRMPqTAGqeQiy4nClKSXlozIBEEsC7DrtCInfMgROwrBRm1WzsReeeJZtl4aYMWTF
+ GSfWB8UkaG4wGsxXlAEX6JEROYOfL1qk0BxUqgu1WyEND8KrCiiWuDlhknPOKd/JI5coeI0V9nN
+ ZED3ncsmH/iwrq2P2nvpjdPLntWNIUwow5RWB8oad4nrn88dASfla42vsgLYTw=
+X-Proofpoint-ORIG-GUID: jk4L4hqcMayKqjXI_X5j8Bo1hDV8eczC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999
- spamscore=0 suspectscore=0 mlxscore=0 clxscore=1030 phishscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2603270008
-Received-SPF: pass client-ip=57.103.90.151;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ mlxlogscore=823 bulkscore=0 lowpriorityscore=0 spamscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603270008
+Received-SPF: pass client-ip=57.103.90.231;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -93,188 +93,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+target/i386/emulate is pretty much incompatible
+with i386-softmmu and fixing that doesn't look
+worthwhile given the binary unification goals...
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- MAINTAINERS           |   1 +
- docs/system/index.rst |   1 +
- docs/system/whpx.rst  | 144 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 146 insertions(+)
- create mode 100644 docs/system/whpx.rst
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cd8ba14450..eb7132e39d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -582,6 +582,7 @@ F: include/system/whpx.h
- F: include/system/whpx-accel-ops.h
- F: include/system/whpx-common.h
- F: include/system/whpx-internal.h
-+F: docs/system/whpx.rst
- 
- MSHV
- M: Magnus Kulke <magnuskulke@linux.microsoft.com>
-diff --git a/docs/system/index.rst b/docs/system/index.rst
-index bb948e2993..4509630fa4 100644
---- a/docs/system/index.rst
-+++ b/docs/system/index.rst
-@@ -40,6 +40,7 @@ or Hypervisor.Framework.
-    confidential-guest-support
-    igvm
-    nitro
-+   whpx
-    vm-templating
-    sriov
-    qemu-colo
-diff --git a/docs/system/whpx.rst b/docs/system/whpx.rst
-new file mode 100644
-index 0000000000..2f906ec586
---- /dev/null
-+++ b/docs/system/whpx.rst
-@@ -0,0 +1,144 @@
-+Windows Hypervisor Platform
-+===========================
-+
-+Windows Hypervisor Platform is the Windows API for use of
-+third-party virtual machine monitors with hardware acceleration
-+on Hyper-V.
-+
-+It's implemented on top of `Vid`, which is itself implemented
-+on the same set of hypercalls as the `mshv` driver on Linux.
-+
-+WHPX is the name of the Windows Hypervisor Platform accelerator
-+backend in QEMU. It enables using QEMU with hardware acceleration
-+on both x86_64 and arm64 Windows machines.
-+
-+Prerequisites
-+-------------
-+
-+WHPX requires the Windows Hypervisor Platform feature to be installed.
-+
-+Installation
-+^^^^^^^^^^^^
-+On client editions of Windows, that means installation through
-+Windows Features (`optionalfeatures.exe`). On server editions,
-+feature-based installation in Server Manager can be used.
-+
-+Alternatively, command line installation is also possible through:
-+`DISM /online /Enable-Feature /FeatureName:HypervisorPlatform /All`
-+
-+Minimum OS version
-+^^^^^^^^^^^^^^^^^^
-+
-+On x86_64, QEMU's Windows Hypervisor Platform backend is tested 
-+starting from Windows 10 version 2004. Earlier Windows 10 releases
-+*might* work but are not tested.
-+
-+On arm64, Windows 11 24H2 with the April 2025 optional updates
-+or May 2025 security updates is the minimum required release. 
-+
-+Prior releases of Windows 11 version 24H2 on ARM64 shipped 
-+with a pre-release version of the Windows Hypervisor Platform
-+API, which is not supported in QEMU.
-+
-+Quick Start
-+-----------
-+
-+Launching a virtual machine on x86_64 with WHPX acceleration::
-+
-+    $ qemu-system-x86_64.exe -accel whpx -M pc \
-+        -smp cores=2 -m 2G -device ich9-usb-ehci1 \
-+        -device usb-tablet -hda OS.qcow2
-+
-+Launching a virtual machine on arm64 with WHPX acceleration::
-+
-+    $ qemu-system-aarch64.exe -accel whpx -M virt \
-+        -cpu host -smp cores=2 -m 2G \
-+        -bios edk2-aarch64-code.fd \
-+        -device ramfb -device nec-usb-xhci \
-+        -device usb-kbd -device usb-tablet \
-+        -hda OS.qcow2
-+
-+On arm64, for non-Windows guests, `-device virtio-gpu-pci` provides
-+additional fuctionality compared to `-device ramfb`, but is
-+incompatible with Windows's UEFI GOP implementation, which
-+expects a linear framebuffer to be available.
-+
-+Some tracing options
-+--------------------
-+
-+x86_64
-+^^^^^^
-+
-+`-trace whpx_unsupported_msr_access` can be used to log accesses
-+to undocumented MSRs.
-+
-+`-d invalid_mem` allows to trace accesses to unmapped
-+GPAs.
-+
-+Known issues on x86_64
-+----------------------
-+
-+Guests using legacy VGA modes
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+In guests using VGA modes that QEMU doesn't pass through framebuffer
-+memory for, performance will be quite suboptimal.
-+
-+Workaround: for affected guests, use a more modern graphics mode.
-+Alternatively, use TCG to run those guests.
-+
-+Guests using MMX, SSE or AVX instructions for MMIO
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Currently, `target/i386/emulate` does not support guests that use
-+MMX, SSE or AVX instructions for access to MMIO memory ranges.
-+
-+Attempts to run such guests will result in an `Unimplemented handler`
-+warning for MMX and a failure to decode for newer instructions.
-+
-+`-M isapc`
-+^^^^^^^^^^
-+
-+`-M isapc` doesn't disable the Hyper-V LAPIC on its own yet. To
-+be able to use that machine, use `-accel whpx,hyperv=off,kernel-irqchip=off`.
-+
-+However, in QEMU 11.0, the guest will still be a 64-bit x86
-+ISA machine with all the corresponding CPUID leaves exposed.
-+
-+gdbstub
-+^^^^^^^
-+
-+As save/restore of xsave state is not currently present, state
-+exposed through GDB will be incomplete.
-+
-+The same also applies to `info registers`.
-+
-+-cpu `type` ignored
-+^^^^^^^^^^^^^^^^^^^
-+
-+In this release, -cpu is an ignored argument. 
-+
-+PIC interrupts on Windows 10
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+On Windows 10, a legacy PIC interrupt injected does not wake the guest
-+from an HLT when using the Hyper-V provided interrupt controller.
-+
-+This has been addressed in QEMU 11.0 on Windows 11 platforms but
-+functionality to make it available on Windows 10 isn't present.
-+
-+Workaround: for affected use cases, use `-M kernel-irqchip=off`.
-+
-+Known issues on Windows 11
-+^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Nested virtualisation-specific Hyper-V enlightenments are not
-+currently exposed.
-+
-+arm64
-+-----
-+
-+ISA feature support
-+^^^^^^^^^^^^^^^^^^^
-+
-+SVE and SME are not currently supported.
+diff --git a/meson.build b/meson.build
+index e6f17dd5f7..6f77309075 100644
+--- a/meson.build
++++ b/meson.build
+@@ -314,7 +314,7 @@ elif cpu == 'x86_64'
+     'CONFIG_HVF': ['x86_64-softmmu'],
+     'CONFIG_NITRO': ['x86_64-softmmu'],
+     'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
+-    'CONFIG_WHPX': ['i386-softmmu', 'x86_64-softmmu'],
++    'CONFIG_WHPX': ['x86_64-softmmu'],
+     'CONFIG_MSHV': ['x86_64-softmmu'],
+   }
+ endif
 -- 
 2.50.1 (Apple Git-155)
 
