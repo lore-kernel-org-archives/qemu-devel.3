@@ -4,73 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A1D10BA420
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 02:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F26610BA420
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 02:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5xJY-0005Xc-Ir; Thu, 26 Mar 2026 22:52:48 -0400
+	id 1w5xNs-0008KN-Os; Thu, 26 Mar 2026 22:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w5xJU-0005Wa-Nq
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 22:52:45 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w5xJT-00083T-1k
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 22:52:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774579963; x=1806115963;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=w5vSF8KYox0CHnA35X/HlNBRury1CbOEj6ktSvWYxDg=;
- b=M1paV1vQkF+G/CDgyTbT1vn/NSBmRnQc8lAnTnYaqQLXEyHsFByWo0UH
- 2oDGqIb+PuOoGEt7BPibqb/WIUpKxK4NvJFnGjIrSiDfmReVF4qgZSMlF
- k0KhR0ct1/4s0YISoXaIhmcXpKFN0DBnsNcbQqnj8sqw41EzPX5nsD07z
- udJQSeZbr6iQoQ7NM5yziGWSQItXnF/RkNNZDyZdZvwFxxp+ccNgEHV7W
- 22SoxOVzzlUn+9Re0aL8ko3SJwKnsOvbidoUWp3RYsrZ/PxxLVMEyg8Mn
- vvAF3WTOMl13mOCW1We2jZkldAWhWpVJWFnqZ3NqOcKcOP0M1KxK9gfMF Q==;
-X-CSE-ConnectionGUID: FZ0KGynHSdmlRgIdzW0NbA==
-X-CSE-MsgGUID: /jCtXBf2SfCaTvyZi6X92g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="75719878"
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="75719878"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 19:52:42 -0700
-X-CSE-ConnectionGUID: KyFET4/UQgmFgo1t+CeniA==
-X-CSE-MsgGUID: hJ5UlfSaQ/Kwxe02QtYgjg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; d="scan'208";a="221874380"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2026 19:52:38 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 1/5] backends/iommufd: Introduce iommufd_backend_alloc_faultq
-Date: Thu, 26 Mar 2026 22:52:23 -0400
-Message-ID: <20260327025228.474257-2-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260327025228.474257-1-zhenzhong.duan@intel.com>
-References: <20260327025228.474257-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1w5xNp-0008Jt-Tq
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 22:57:13 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1w5xNm-0000PO-UR
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 22:57:13 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxFMH98cVpjCgfAA--.42066S3;
+ Fri, 27 Mar 2026 10:57:01 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJCx_8L78cVppX5eAA--.49748S4;
+ Fri, 27 Mar 2026 10:57:00 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
+To: qemu-devel@nongnu.org,
+	lixianglai@loongson.cn
+Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ "Huacai Chen" <zltjiangshi@gmail.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>
+Subject: [PATCH V4 2/4] hw/loongarch: add rtc acpi table
+Date: Fri, 27 Mar 2026 10:31:23 +0800
+Message-Id: <20260327023125.3802140-3-lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20260327023125.3802140-1-lixianglai@loongson.cn>
+References: <20260327023125.3802140-1-lixianglai@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.14;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJCx_8L78cVppX5eAA--.49748S4
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,75 +68,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new helper for IOMMU_FAULT_QUEUE_ALLOC ioctl to allocate a fault
-handling object which will be used in hwpt allocation.
+Add the acpi table to the loongson rtc hardware so that the virtual machine
+kernel can use the loongson RTC-related drivers.
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 ---
- include/system/iommufd.h |  3 +++
- backends/iommufd.c       | 21 +++++++++++++++++++++
- backends/trace-events    |  1 +
- 3 files changed, 25 insertions(+)
+Cc: Song Gao <gaosong@loongson.cn> 
+Cc: Bibo Mao <maobibo@loongson.cn> 
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com> 
+Cc: "Huacai Chen"<zltjiangshi@gmail.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com> 
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index 45a9e87cb0..d4ba8434a5 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -100,6 +100,9 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
-                                    uint32_t *out_veventq_id,
-                                    uint32_t *out_veventq_fd, Error **errp);
- 
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *fault_id,
-+                                  uint32_t *fault_fd, Error **errp);
-+
- bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
-                                         bool start, Error **errp);
- bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index ab612e4874..9496377a25 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -337,6 +337,27 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
-     return true;
+ hw/loongarch/virt-acpi-build.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 3e34bedcd6..42820001d7 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -460,6 +460,30 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
  }
+ #endif
  
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *fault_id,
-+                                  uint32_t *fault_fd, Error **errp)
++static void acpi_dsdt_add_rtc(Aml *scope)
 +{
-+    int ret, fd = be->fd;
-+    struct iommu_fault_alloc cmd = {
-+        .size = sizeof(cmd),
-+    };
++    Aml *dev = aml_device("RTC");
 +
-+    ret = ioctl(fd, IOMMU_FAULT_QUEUE_ALLOC, &cmd);
-+    trace_iommufd_backend_alloc_faultq(fd, cmd.out_fault_id, cmd.out_fault_fd,
-+                                       ret);
-+    if (ret) {
-+        error_setg_errno(errp, errno, "Failed to allocate fault queue");
-+        return false;
-+    }
++    aml_append(dev, aml_name_decl("_HID", aml_string("LOON0001")));
++    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
 +
-+    *fault_id = cmd.out_fault_id;
-+    *fault_fd = cmd.out_fault_fd;
-+    return true;
++    Aml *crs = aml_resource_template();
++    aml_append(crs,
++        aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
++                         AML_NON_CACHEABLE, AML_READ_WRITE,
++                         0, VIRT_RTC_REG_BASE,
++                         VIRT_RTC_REG_BASE + VIRT_RTC_LEN - 1,
++                         0, VIRT_RTC_LEN));
++    /*
++     * The virtual machine model does not support suspend and wake-up,
++     * and rtc is no longer the wake-up source. Therefore, the current
++     * rtc table no longer provides the rtc alarm interrupt number to
++     * avoid the software initializing alarm.
++     */
++    aml_append(dev, aml_name_decl("_CRS", crs));
++    aml_append(scope, dev);
 +}
 +
- bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be,
-                                         uint32_t hwpt_id, bool start,
-                                         Error **errp)
-diff --git a/backends/trace-events b/backends/trace-events
-index b9365113e7..6820a9939e 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -17,6 +17,7 @@ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, u
- iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
- iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
-+iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%d fault_fd=%d (%d)"
- iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
- iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
- iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ /* build DSDT */
+ static void
+ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+@@ -475,6 +499,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+     for (i = 0; i < VIRT_UART_COUNT; i++) {
+         build_uart_device_aml(dsdt, i);
+     }
++    acpi_dsdt_add_rtc(dsdt);
+     build_pci_device_aml(dsdt, lvms);
+     build_la_ged_aml(dsdt, machine);
+     build_flash_aml(dsdt, lvms);
 -- 
-2.47.3
+2.39.1
 
 
