@@ -4,130 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9CA10BA420
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27F510BA422
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 04:15:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5yVn-0005ss-8L; Fri, 27 Mar 2026 00:09:31 -0400
+	id 1w5yb9-0006tv-Bd; Fri, 27 Mar 2026 00:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1w5yVk-0005sV-VB
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:09:29 -0400
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1w5yVb-0002zp-43
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:09:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dUkG0Pn3fMD2T0f7AS2upLhiL5aGAtp9gXYxijC6MDeknkA9udyuY95Ocy3ln4hxHlCqnTTtUa3GKjXO2BQJwq6nh0fMfpq8p25wLMxzGKKMRQlH2SbLHzt9l8Zmc35vZ5giXT8pKO84GnQw4wZNGVuUc9nYXJq+E1H05pgZznmh89v6GHEkfgRLMDSzP7cLeVN5a6JofAa7ill7s7xZGAK+CX5nT4wyFTH6RfoDH8OJUdmGdgWdS888kOeSf01ZBFKNLr7msvAb4JMkuEzZKoVJU6w3QXwoEpOSfruiNg22WhoNVOzFVDThUIr8OxPhIv23vS2M/wXSMrFp7Hc4jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ot08//oyHdVZuuanTueOzja8pBxK/UWsjA7GXtCkTx8=;
- b=yJB0OgN2vaJbxlGqUgIyJQtpQ1c+eoWHehXzssyxhLTRBGCkKnav5CJ4tCkOZW1Oi8bIXj4AJ9REBRr9Wf7UbQFUWpJQ7BQKKuwjoaaXHF7Yi3JOiNUVDxx2WojbOu3ne6FmBECZyINW91Non0ZNo75Q2hwUT6d+feiLdkmBeCsYnR1ByXfswjOo0vGLuBpy9lnjRbMV6OHBxZ2EAVQw3CC8GM4P9E7lutBn1rw/vGg6sr8xZoVATw9+T2G4/ESy6Hc0A3xE9VEdIbD49qoTPRHHhh8mBbghkRQMNIL1RFomLGlS5hJCSljRErtel4NQLLKB4Am2P6TkKbVxkwqXQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ot08//oyHdVZuuanTueOzja8pBxK/UWsjA7GXtCkTx8=;
- b=W32kCrg94T+zy9tkyAWBowmCcnx0DxY2kaCHRc27T6a5E9QkPqVgZffuHDsgVZH3/rEql5yS32R/Yy24GSAlhqYf+evi4JasnTn7dOns5JNNv9lbUzBhVvNgx5qvcReAWiUmhbDdvxpAE8Xg8ImBVYLEV3j4S+t4t5Voj4yAPL/nHrKoE+THWkuQxQzUp1WY2LWRClODxBOVlytQSH5xb/gu9IKD3AnEp4Uq5xjG++wghGR7d3J6Nh18Ai02H3W4D0rAKCa7b2MblvVwevHzlf2y2+l8RAynjBIUs0czcHsuH4UL2HSmNJJXnpqMlefTCubaKkf+omZNOIFewyWVSQ==
-Received: from CH2PR14CA0054.namprd14.prod.outlook.com (2603:10b6:610:56::34)
- by DS2PR12MB9662.namprd12.prod.outlook.com (2603:10b6:8:27d::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.8; Fri, 27 Mar
- 2026 04:09:07 +0000
-Received: from CH2PEPF0000009C.namprd02.prod.outlook.com
- (2603:10b6:610:56:cafe::ff) by CH2PR14CA0054.outlook.office365.com
- (2603:10b6:610:56::34) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.23 via Frontend Transport; Fri,
- 27 Mar 2026 04:09:06 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- CH2PEPF0000009C.mail.protection.outlook.com (10.167.244.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9745.21 via Frontend Transport; Fri, 27 Mar 2026 04:09:06 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Mar
- 2026 21:09:04 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Thu, 26 Mar 2026 21:09:03 -0700
-Received: from nvidia.com (10.127.8.9) by mail.nvidia.com (10.126.190.181)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Thu, 26 Mar 2026 21:09:01 -0700
-Date: Thu, 26 Mar 2026 21:08:58 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-CC: "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "alex@shazbot.org"
- <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@bull.com"
- <clement.mathieu--drif@bull.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, 
- Yi L" <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
-Subject: Re: [PATCH v2 03/14] vfio/iommufd: Create nesting parent hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
-Message-ID: <acYC2ko1r8OkAvq0@nvidia.com>
-References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
- <20260326091130.321483-4-zhenzhong.duan@intel.com>
- <acW5AXhPDT+wZ2qf@nvidia.com>
- <IA3PR11MB9136D7618C06EFF1D66561549257A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w5yb7-0006tK-KC
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:15:01 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w5yb5-00043E-OA
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 00:15:01 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a8fba3f769so7078395ad.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Mar 2026 21:14:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774584898; x=1775189698; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rfFYIlpzNHk2zeOvZkib3A3vy/jnnzQMvBbUrq2adIw=;
+ b=CPPnyMOQjCNoSYRhLJ6SrHTNDomwIzkPvvrzk9Tq6FCmrLUv7FV72tWy5WSBSxHY8z
+ z0OgJSM+4S/EjQPgaGRMxO+aomMXft7siSXgLskvQt66RcALCH3FYoCvFPxtAMAt6U29
+ OfiIa9FZylTVS3YWMDnHyKOQTYuHnHLAK0VZayPaCjIMXRuTjIzH38rPSV/Jzcs62OVj
+ wjd+DpEaFpwhrzmHE78BXOMJEp/4CTV6g9X+ZPwwmyntOOi3pgFe/QHvnLdmTnYq3+Xr
+ 6QzE5UDOz7F86p9PSnwXH8I3BBmNI+G76VxZ484ACWOeMy8dDlpV6XYs1RclsjOMFxk5
+ 59RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774584898; x=1775189698;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rfFYIlpzNHk2zeOvZkib3A3vy/jnnzQMvBbUrq2adIw=;
+ b=YnBMb9QZBHAxcswDO1kpYxi/J4o4GDiPQ49qfTw9oqmMUL4Jl97yVaNc8kTtjT4hfn
+ DdLjgi5A3wEV7KgQga4qKDg/0ut11k5GBFdr579tqrYG8mYudGVGTvDc+bwV8VPqKrTb
+ S3tWMBSNgDw8smYdOCC6FSspb+qDgY/e6EyVMH8Vxco8UbUBeCQdumXRFvbM8fMP7MMC
+ PvvWVmBL7/FEI+FzznVNZ17pOFt2jzpXb5t5beGxtCZJbtD8yyZXPVhDb02ydQ2NNV3K
+ y790jcVwox59CZTxLkKz/0tmu80rWL40810JMu23Rn/kzllBaPXNd3FPB+DMqExj4dGR
+ WSdA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+Uj4t5BPoXfKmwbRP+0FENtASXDc6ev8q0EHz2NnmbRZavgAWGzLYmFIeg415ocGvxvDsXNasDrKK@nongnu.org
+X-Gm-Message-State: AOJu0Yx5blvOay3fm0aQbosZU25lM/bigTudzuyBrOZV3HfqFseSyLPs
+ VMQSab3QpWGjXVqGaoKfUPSCmN23poE2HfaG5VWGiSTXaz+fpiv90Wh/WOQmRMUekak=
+X-Gm-Gg: ATEYQzwElbXhtYLZtwNJAYrG336qkB2ecPp+4QKn3rWYA3tiPhd+51KI4/IPDI0iXYY
+ 6r/92A0kYY80G9rLZ1/n4hi+0UB14sa+59M45x2fGspnEC23ghdAlaMzRY+fDDIStiF+nMoHhf6
+ 2s+0AJW31R9RJN51sfl2NY4mL7yGbdUzRxx3uVQhToOHM/9XMNljbeJGmYus4VLJKv5CxPWEjTv
+ sfNPe3chsxZ4FYBY7KInye0fhZVa2+SeEjIk4yDe88Pyk/tz0WI1aZ+etx+tB2+9HlIm7pcLfn5
+ bXs7xN+J8JNmoTor+igAfdfalImsCvFw7eP+32xU3ExcF1rgxITa/JQsQsEqM8MOH2FzkZJwsKw
+ fSLsETr4l4Og0YfUikh6P/1/sPgDkatY+D7d73gwMv+1SmqTRPq7z41JjlStZNQTQ6uYy+VXNHn
+ bxuVps1slZBzKOh1HFJvNg7WPvb4oYnG/stFEcTarQcg==
+X-Received: by 2002:a17:902:e952:b0:2b0:571f:6f09 with SMTP id
+ d9443c01a7336-2b0cdcd5695mr13332295ad.44.1774584897703; 
+ Thu, 26 Mar 2026 21:14:57 -0700 (PDT)
+Received: from [172.16.11.156] ([103.100.225.140])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b0bc8fb099sm43418685ad.72.2026.03.26.21.14.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Mar 2026 21:14:57 -0700 (PDT)
+Message-ID: <dcab4982-1ced-43d8-ae32-5477604054ed@linaro.org>
+Date: Fri, 27 Mar 2026 14:14:49 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <IA3PR11MB9136D7618C06EFF1D66561549257A@IA3PR11MB9136.namprd11.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000009C:EE_|DS2PR12MB9662:EE_
-X-MS-Office365-Filtering-Correlation-Id: eaa381ab-5008-437a-e4b0-08de8bb6971b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|30052699003|376014|7416014|82310400026|36860700016|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info: LwLMTJLIZFWsPT2+5r+iS111JK9ZP3V3jS0QbPP8N2fn9wjcgIrFBd8Ez9z+IfczWRbAPWrdDYBv2pobIj+jPMGuuB+Pqyh1c79MFASUGnQV/N02aRUB/T34Lpj+/6CxCyTlXZLn1DqICimy/1luFaLpHpcWNvGBO+lZRyhvn0bKmjUcxzzEq8co+TZiBX87mWCSxkfz1wBcZenKlGmjqjGkCWykDNCN+kr8oq4GI/SaRcyWmcg5d/tHvU5HjDajaZmQO2IKO2MBrShTp8G8UTbBBlpNr1beNjxZqPFPoalMoe8LVndPySV0M1JQ69smDpUXVwlq+GuW6e+R5GxQcfavtuzlzc3G4U389hLAIXpdklx0ZF54mGy1z8jd/jwKRC2i4eE6EG1Emd1ZxEliIypTc5yU+yhwRq3isrQHAmm4lk9agHTYWeat4HwXREKM1Zm7TblZhRTrytGk2iS75a+cOK8U5dxVaWOZmenz8w4nUVBJorGU58JJvgZwVdMNH0Td7YDYRnSoEbJoe+UVh8veq+xjvwyqIhaAbVKGtp8jttnB1kShJGR2rZzq2G6ELnKS4HpSNL3ees2MSez0xlUqMZCnw1s2dzOaFuj5rSeuSD6spDjTYRuJRMOjg7dspkagIjLMMAL6qscbeYKzpgRndHyv1ZfVlCW5IMXvYMauaDQHXII3L057kO4v0xJMlylhdXxwWnZcfwUYTktL5viI9dyXXCbFO2tZ+5LVGwoisdVcyoRAgYVpB6wLVT9gfu9AnKuOKPAwx+a7WwFlcg==
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(30052699003)(376014)(7416014)(82310400026)(36860700016)(18002099003)(56012099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: RMZbuBThjTtofTFG6tdVmzsJMl3OOKST5geM7sjF1D7qJzY9iA5EW6YmhD2a7y1yZP/gIGi6AWIENysiC0wlaDYI4Kf5ifh0Udntp/UgWfd56jAgPyxI2J5dHcuSYKrfMhPfNXA+h6SVlGltIYN1RwuNhQFpND7BnUFlVCp+rMlhVkGxe9Hz1HbC6+0Cag4oujolXYu5BHDVG77GK2XLcyvHdGlniIssETkZ5Yghf8fb0gxkqYnlvdWa6rl4v48EF7yplJCUhIMEQIDkwYks63+Xl8MuD5dT3ndx7yYE8V1x6C6SzjdHESA5yoZS19PYp/i9y9aawgXN7GYLQ2j6RlmVacadhoBuBy7/veiGAK9nBCmOsYeVZBGLtpHZa/CXfpa22RuJplEkMxsZLJgLDQapZqprpTCpra58DozklBkCI6zxSa/2etNfDngtGZ1G
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 04:09:06.7252 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: eaa381ab-5008-437a-e4b0-08de8bb6971b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009C.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9662
-Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
- envelope-from=nicolinc@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/7] target/riscv: Implement runtime data endianness
+ via MSTATUS bits
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260324164007.549397-1-djordje.todorovic@htecgroup.com>
+ <20260324164007.549397-4-djordje.todorovic@htecgroup.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260324164007.549397-4-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,42 +113,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 27, 2026 at 02:29:20AM +0000, Duan, Zhenzhong wrote:
-> >-----Original Message-----
-> >From: Nicolin Chen <nicolinc@nvidia.com>
-> >Subject: Re: [PATCH v2 03/14] vfio/iommufd: Create nesting parent hwpt with
-> >IOMMU_HWPT_ALLOC_PASID flag
-> >
-> >On Thu, Mar 26, 2026 at 05:11:17AM -0400, Zhenzhong Duan wrote:
-> >> @@ -430,6 +431,11 @@ static bool
-> >iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-> >>          }
-> >>      }
-> >>
-> >> +    if (max_pasid_log2 &&
-> >> +        vfio_device_get_viommu_flags_pasid_supported(vbasedev)) {
-> >> +        flags |= IOMMU_HWPT_ALLOC_PASID;
-> >> +    }
-> >
-> >This would set it to:
-> >	IOMMU_HWPT_ALLOC_PASID | IOMMU_HWPT_ALLOC_NEST_PARENT
-> >which isn't supported on ARM :-/
+I replied to v4 before I saw a v5 was already posted:
+https://lore.kernel.org/qemu-devel/d974df44-b46e-4e51-9eec-b46e391c3462@linaro.org/
+
+On 3/25/26 02:40, Djordje Todorovic wrote:
+> Implement runtime big-endian data support by reading the MSTATUS
+> UBE/SBE/MBE bits to determine data endianness per privilege level.
 > 
-> I am a bit confused, if smmu supports dirty tracking, flags would be
-> set to IOMMU_HWPT_ALLOC_DIRTY_TRACKING | IOMMU_HWPT_ALLOC_NEST_PARENT,
-> in arm_smmu_domain_alloc_paging_flags(), I see it will return -EOPNOTSUPP.
-> So how did smmu work in this case?
+> The key changes are:
+> 
+> - Add riscv_cpu_data_is_big_endian() helper in cpu.h that checks
+>    the appropriate MSTATUS endianness bit based on current privilege
+>    level (MBE for M-mode, SBE for S-mode, UBE for U-mode).
+> 
+> - Update mo_endian() in translate.c to return MO_BE or MO_LE based
+>    on a new 'big_endian' field in DisasContext, rather than the
+>    previous hardcoded MO_TE.
+> 
+> - Update mo_endian_env() in op_helper.c to call the new helper,
+>    giving hypervisor load/store helpers correct runtime endianness.
+> 
+> - Pack the endianness flag into cs_base bit 32 (alongside misa_ext
+>    in bits 0-25) in riscv_get_tb_cpu_state(), ensuring translation
+>    blocks are correctly separated by data endianness.
+> 
+> Note: instruction fetches continue to use MO_LE unconditionally
+> (from the previous patch), as RISC-V instructions are always
+> little-endian per the ISA specification.
+> 
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> ---
+>   target/riscv/cpu.h         | 28 ++++++++++++++++++++++++++++
+>   target/riscv/internals.h   |  9 +--------
+>   target/riscv/tcg/tcg-cpu.c |  9 ++++++++-
+>   target/riscv/translate.c   | 12 ++++--------
+>   4 files changed, 41 insertions(+), 17 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 35d1f6362c..ef870d05b3 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -703,6 +703,12 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+>   FIELD(TB_FLAGS, PM_PMM, 29, 2)
+>   FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+>   
+> +/*
+> + * cs_base carries misa_ext (bits 0-25) plus additional flags.
+> + * Bit 32 is used for data endianness since TB_FLAGS has no free bits.
+> + */
+> +#define TB_CSBASE_BIG_ENDIAN  (1ULL << 32)
+> +
+>   #ifdef TARGET_RISCV32
+>   #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+>   #else
+> @@ -718,6 +724,28 @@ static inline const RISCVCPUConfig *riscv_cpu_cfg(CPURISCVState *env)
+>       return &env_archcpu(env)->cfg;
+>   }
+>   
+> +/*
+> + * Return true if data accesses are big-endian for the current privilege
+> + * level, based on the MSTATUS MBE/SBE/UBE bits.
+> + */
+> +static inline bool riscv_cpu_data_is_big_endian(CPURISCVState *env)
+> +{
+> +#if defined(CONFIG_USER_ONLY)
+> +    return false;
+> +#else
+> +    switch (env->priv) {
+> +    case PRV_M:
+> +        return env->mstatus & MSTATUS_MBE;
+> +    case PRV_S:
+> +        return env->mstatus & MSTATUS_SBE;
+> +    case PRV_U:
+> +        return env->mstatus & MSTATUS_UBE;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +#endif
+> +}
+> +
+>   #if !defined(CONFIG_USER_ONLY)
+>   static inline int cpu_address_mode(CPURISCVState *env)
+>   {
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index 460346dd6d..e2f0334da8 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -64,14 +64,7 @@ static inline bool mmuidx_2stage(int mmu_idx)
+>   
+>   static inline MemOp mo_endian_env(CPURISCVState *env)
+>   {
+> -    /*
+> -     * A couple of bits in MSTATUS set the endianness:
+> -     *  - MSTATUS_UBE (User-mode),
+> -     *  - MSTATUS_SBE (Supervisor-mode),
+> -     *  - MSTATUS_MBE (Machine-mode)
+> -     * but we don't implement that yet.
+> -     */
+> -    return MO_LE;
+> +    return riscv_cpu_data_is_big_endian(env) ? MO_BE : MO_LE;
+>   }
+>   
+>   /* share data between vector helpers and decode code */
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 3407191c22..fa42197e98 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -189,10 +189,17 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+>       flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
+>       flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
+>   
+> +    uint64_t cs_base = env->misa_ext;
+> +#ifndef CONFIG_USER_ONLY
+> +    if (riscv_cpu_data_is_big_endian(env)) {
+> +        cs_base |= TB_CSBASE_BIG_ENDIAN;
+> +    }
+> +#endif
+> +
+>       return (TCGTBCPUState){
+>           .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
+>           .flags = flags,
+> -        .cs_base = env->misa_ext,
+> +        .cs_base = cs_base,
+>       };
+>   }
+>   
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 5df5b73849..d7f1f8e466 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -119,6 +119,8 @@ typedef struct DisasContext {
+>       bool fcfi_lp_expected;
+>       /* zicfiss extension, if shadow stack was enabled during TB gen */
+>       bool bcfi_enabled;
+> +    /* Data endianness from MSTATUS UBE/SBE/MBE */
+> +    bool big_endian;
+>   } DisasContext;
+>   
+>   static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+> @@ -128,14 +130,7 @@ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+>   
+>   static inline MemOp mo_endian(DisasContext *ctx)
+>   {
+> -    /*
+> -     * A couple of bits in MSTATUS set the endianness:
+> -     *  - MSTATUS_UBE (User-mode),
+> -     *  - MSTATUS_SBE (Supervisor-mode),
+> -     *  - MSTATUS_MBE (Machine-mode)
+> -     * but we don't implement that yet.
+> -     */
+> -    return MO_LE;
+> +    return ctx->big_endian ? MO_BE : MO_LE;
+>   }
+>   
+>   #ifdef TARGET_RISCV32
+> @@ -1346,6 +1341,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>       ctx->zero = tcg_constant_tl(0);
+>       ctx->virt_inst_excp = false;
+>       ctx->decoders = cpu->decoders;
+> +    ctx->big_endian = ctx->base.tb->cs_base & TB_CSBASE_BIG_ENDIAN;
+>   }
+>   
+>   static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
 
-You hit a point. I almost forgot we need to do something with that
-dirty tracking flag. This is currently broken..
-
-For NVIDIA, the current generation Grace CPU doesn't support dirty
-tracking. So, our QEMU VMs don't set that flag. This is just lucky
-for us. Yet, it would trigger -EOPNOTSUPP on ARM CPU that supports,
-as you mentioned.
-
-For pasid attachment however, ARM doesn't need it: regular pasid=0
-attach already has the pointer to a stage-1 PASID table.
-
-Nicolin
 
