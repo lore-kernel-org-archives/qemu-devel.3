@@ -4,50 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9375E10AB838
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 00:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6527010AB83C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 01:12:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w5vWR-0001kL-7Z; Thu, 26 Mar 2026 20:57:59 -0400
+	id 1w5vkC-0005HL-IQ; Thu, 26 Mar 2026 21:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1w5vWO-0001jl-Nm
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 20:57:56 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1w5vWM-00024d-0V
- for qemu-devel@nongnu.org; Thu, 26 Mar 2026 20:57:56 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxWcII1sVp2yAfAA--.23775S3;
- Fri, 27 Mar 2026 08:57:44 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJAxXcL+1cVpvmpeAA--.46622S2;
- Fri, 27 Mar 2026 08:57:35 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5vkA-0005Gf-4g
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:10 -0400
+Received: from ci-2006a-snip4-10.eps.apple.com ([57.103.90.140]
+ helo=outbound.ci.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w5vk6-0006Ki-9D
+ for qemu-devel@nongnu.org; Thu, 26 Mar 2026 21:12:09 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPS id
+ 2DD601800791; Fri, 27 Mar 2026 01:12:01 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774573923; x=1777165923;
+ bh=5S7KGKEy49UgCD0FUZ1I15cZ4AJCf9WeQ1uRb+nbjmM=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=WEt13kj5l+4uTtz8PfYB41PuFuoko8xXoFQ52u2Osy20FwJF4gs9Qo6n7CIbntp+X+feNOydHQkRznFl4BsOUMJ2n0taVjS6MNzWfy4N9lJZywPlw5JqDulj13LQqGyO8b76xLsEl6k4ZORSBR6A3rpd3wmWnU+uMa/XzUsm2Bz2cvRcGVKHah9eF5YSbh62fzgh3HE7Gl9eYPK0AExO1HZDKdn5YX8U20RdNhTjqHlvHbiWQMLnibGgSvUvOEvVybErZH50KPSr2FDsi+CuXiTrXVr3i3gNKBBAbW6YgkK7BIAFVBKeJzgoWzQcVK8HkFfeXc46BDEBGNgXtUonCQ==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPSA id
+ D1B1A1800144; Fri, 27 Mar 2026 01:11:59 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, philmd@linaro.org, jiaxun.yang@flygoat.com,
- richard.henderson@linaro.org, lixianglai@loongson.cn
-Subject: [PATCH] target/loongarch: Add support for dbar hint variants
-Date: Fri, 27 Mar 2026 08:32:06 +0800
-Message-Id: <20260327003206.3749780-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v6 4/4] target/i386: emulate: remove redundant logging for
+ unmapped MMIO access
+Date: Fri, 27 Mar 2026 02:11:52 +0100
+Message-ID: <20260327011152.4126-5-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260327011152.4126-1-mohamed@unpredictable.fr>
+References: <20260327011152.4126-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxXcL+1cVpvmpeAA--.46622S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Proofpoint-ORIG-GUID: ZydV8DToMU2TVMR528hx2macgQ-8eN7n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDAwOCBTYWx0ZWRfX0WNvLpytuKvp
+ 2fIbTJ3KZxleyqhoBlYLwzF1Z3JwamY7MgJ9IeGV9neWgysEiRTkdE+WbOcOe3uj07IfJ7hPELi
+ TMddtmXTWpNzuuKUQPyO5jc7O4PvU2WBlHWmji+FRy26kSl71ZZZqQXrMh9b8iRZhYDW4WF3z3+
+ PiiA761jFpvFMqt+gwv19hAwT8bmkD3zf7hkOERfDfL+lRFP4+otVilFY7FCh63blh1FmsC1UPs
+ uMenjWFx0JheLdARGCHoiZ+TJO0rHUMa+fYeJScUwC9DtifoEnHunTb8Ej6FyDwFeMZ88VXbgHC
+ mySRrrnlADD/K5bDYfDCt5NlLXx5m3ACSX5sv9zOLY41XJC0wP6UobN2ABYoGs=
+X-Authority-Info-Out: v=2.4 cv=PeXyRyhd c=1 sm=1 tr=0 ts=69c5d961
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=nKRBnGPCAAAA:8 a=Pf3sjxmatUTUh5CUccMA:9 a=JhrwjW1jOIvqYJKOqOMI:22
+X-Proofpoint-GUID: ZydV8DToMU2TVMR528hx2macgQ-8eN7n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ malwarescore=0 phishscore=0 mlxlogscore=879 spamscore=0 mlxscore=0
+ suspectscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603270008
+Received-SPF: pass client-ip=57.103.90.140;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,191 +93,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LoongArch architecture (since LA664) introduces fine-grained dbar
-hints that allow controlling which memory accesses are ordered by
-the barrier. Previously, all dbar instructions were treated as a
-full barrier (TCG_MO_ALL | TCG_BAR_SC).
+ReactOS's install ISO does a bunch of 4-byte accesses
+to 0xffdff124. This doesn't happen for the boot ISO.
 
-This patch adds support for decoding dbar hints and emitting the
-appropriate TCG memory barrier flags. For CPUs that do not advertise
-the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
-fall back to a full barrier, preserving compatibility.
+It looks to be an access relative to the Windows KPCR
+which is at 0xffdff000 but mistakenly done prior to
+paging being on...
 
-The hint encoding follows the LoongArch v1.10 specification:
-- Bit4: 0 = completion barrier, 1 = ordering barrier
-        (ignored by TCG as TCG only supports ordering barriers)
-- Bit3: barrier for previous reads (0 = enforce, 1 = relax)
-- Bit2: barrier for previous writes (0 = enforce, 1 = relax)
-- Bit1: barrier for succeeding reads (0 = enforce, 1 = relax)
-- Bit0: barrier for succeeding writes (0 = enforce, 1 = relax)
+As this logging is redundant with -d invalid_mem,
+remove it.
 
-The mapping to TCG memory order flags is as follows:
-- TCG_MO_LD_LD is set if both previous and succeeding reads are ordered.
-- TCG_MO_ST_LD is set if previous write and succeeding read are ordered.
-- TCG_MO_LD_ST is set if previous read and succeeding write are ordered.
-- TCG_MO_ST_ST is set if both previous and succeeding writes are ordered.
+https://geoffchappell.com/studies/windows/km/ntoskrnl/inc/ntos/i386_x/kpcr.htm
 
-If the resulting flags describe an acquire or release barrier,
-TCG_BAR_LDAQ or TCG_BAR_STRL is used accordingly; otherwise a
-full SC barrier (TCG_BAR_SC) is emitted.
-
-Special hint handling:
-- hint 0x700: LL/SC loop barrier, treated as a full barrier as recommended.
-- hint 0xf and 0x1f: reserved/no-op, treated as no operation
-
-Signed-off-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/loongarch/cpu.c                        |  4 +
- .../tcg/insn_trans/trans_memory.c.inc         | 82 ++++++++++++++++++-
- target/loongarch/tcg/translate.c              |  1 +
- target/loongarch/translate.h                  |  3 +
- 4 files changed, 88 insertions(+), 2 deletions(-)
+ target/i386/emulate/x86_mmu.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index e22568c84a..d8d106b07e 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
-         data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
-         data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
-         cpu->env.cpucfg[2] = data;
-+
-+        data = cpu->env.cpucfg[3];
-+        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
-+        cpu->env.cpucfg[3] = data;
-     }
- }
+diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+index c69ae96acb..007de582de 100644
+--- a/target/i386/emulate/x86_mmu.c
++++ b/target/i386/emulate/x86_mmu.c
+@@ -21,7 +21,6 @@
+ #include "cpu.h"
+ #include "system/address-spaces.h"
+ #include "system/memory.h"
+-#include "qemu/error-report.h"
+ #include "emulate/x86.h"
+ #include "emulate/x86_emu.h"
+ #include "emulate/x86_mmu.h"
+@@ -287,7 +286,6 @@ static MMUTranslateResult x86_write_mem_ex(CPUState *cpu, void *data, target_ulo
+                             MEMTXATTRS_UNSPECIFIED, data, copy);
  
-diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-index e287d46363..99bc486119 100644
---- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-@@ -137,11 +137,89 @@ static bool trans_preldx(DisasContext *ctx, arg_preldx * a)
-     return true;
- }
+         if (mem_tx_res == MEMTX_DECODE_ERROR) {
+-            warn_report("write to unmapped mmio region gpa=0x%" PRIx64 " size=%i", gpa, bytes);
+             return MMU_TRANSLATE_GPA_UNMAPPED;
+         } else if (mem_tx_res == MEMTX_ACCESS_ERROR) {
+             return MMU_TRANSLATE_GPA_NO_WRITE_ACCESS;
+@@ -339,7 +337,6 @@ static MMUTranslateResult x86_read_mem_ex(CPUState *cpu, void *data, target_ulon
+                            data, copy);
  
-+/*
-+ * Decode dbar hint and emit appropriate TCG memory barrier.
-+ *
-+ * The hint is a 5-bit field (0-31) encoded in the instruction.
-+ * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
-+ *
-+ * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
-+ */
- static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
- {
-     tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
--    return true;
--}
-+    int hint = a->imm;
-+    TCGBar bar_flags = 0;
-+
-+    /* Reserved/no-op hints: 0xf and 0x1f */
-+    if (hint == 0xf || hint == 0x1f) {
-+        return true;
-+    }
-+
-+    /* If the CPU does not support fine-grained hints,or for the special LL/SC
-+     * loop barrier (0x700), emit a full barrier.
-+     */
-+    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
-+        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-+        return true;
-+    }
-+
-+    /*
-+     * Fine-grained hint decoding:
-+     * Bits 3-0 control which accesses must be ordered.
-+     *   bit3: barrier previous reads?   (0 = enforce, 1 = relax)
-+     *   bit2: barrier previous writes?  (0 = enforce, 1 = relax)
-+     *   bit1: barrier succeeding reads? (0 = enforce, 1 = relax)
-+     *   bit0: barrier succeeding writes?(0 = enforce, 1 = relax)
-+     *
-+     * For each combination, we set the corresponding TCG_MO_* flag if both
-+     * sides of the barrier require ordering.
-+     */
-+    bool prev_rd = !(hint & 0x08);   /* need barrier for previous reads */
-+    bool prev_wr = !(hint & 0x04);   /* need barrier for previous writes */
-+    bool succ_rd = !(hint & 0x02);   /* need barrier for succeeding reads */
-+    bool succ_wr = !(hint & 0x01);   /* need barrier for succeeding writes */
-+
-+    if (prev_rd && succ_rd) {
-+        bar_flags |= TCG_MO_LD_LD;
-+    }
-+    if (prev_wr && succ_rd) {
-+        bar_flags |= TCG_MO_ST_LD;
-+    }
-+    if (prev_rd && succ_wr) {
-+        bar_flags |= TCG_MO_LD_ST;
-+    }
-+    if (prev_wr && succ_wr) {
-+        bar_flags |= TCG_MO_ST_ST;
-+    }
-+
-+    /* If no flags were set, this is a no-op barrier */
-+    if (bar_flags == 0) {
-+        return true;
-+    }
-+
-+    /*
-+     * Use acquire/release semantics when possible to generate more efficient
-+     * code. Otherwise, fall back to a sequential consistency barrier.
-+     *
-+     * Acquire: order loads before loads/stores (LD_LD | LD_ST)
-+     * Release: order stores before stores/loads (ST_ST | ST_LD)
-+     */
-+    if ((bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST)) &&
-+        !(bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD))) {
-+        /* Only acquire flags present */
-+        tcg_gen_mb(bar_flags | TCG_BAR_LDAQ);
-+    } else if ((bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD)) &&
-+               !(bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST))) {
-+        /* Only release flags present */
-+        tcg_gen_mb(bar_flags | TCG_BAR_STRL);
-+    } else {
-+        /* Mixed or full barrier */
-+        tcg_gen_mb(bar_flags | TCG_BAR_SC);
-+    }
-+
-+     return true;
-+ }
- 
- static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
- {
-diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-index b9ed13d19c..49280b1dd3 100644
---- a/target/loongarch/tcg/translate.c
-+++ b/target/loongarch/tcg/translate.c
-@@ -149,6 +149,7 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
- 
-     ctx->cpucfg1 = env->cpucfg[1];
-     ctx->cpucfg2 = env->cpucfg[2];
-+    ctx->cpucfg3 = env->cpucfg[3];
- }
- 
- static void loongarch_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
-diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-index ba1c89e57b..8aa8325dc6 100644
---- a/target/loongarch/translate.h
-+++ b/target/loongarch/translate.h
-@@ -43,6 +43,8 @@
- #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LLACQ_SCREL))
- #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
- 
-+#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, DBAR_HINTS))
-+
- /*
-  * If an operation is being performed on less than TARGET_LONG_BITS,
-  * it may require the inputs to be sign- or zero-extended; which will
-@@ -66,6 +68,7 @@ typedef struct DisasContext {
-     bool va32; /* 32-bit virtual address */
-     uint32_t cpucfg1;
-     uint32_t cpucfg2;
-+    uint32_t cpucfg3;
- } DisasContext;
- 
- void generate_exception(DisasContext *ctx, int excp);
+         if (mem_tx_res == MEMTX_DECODE_ERROR) {
+-            warn_report("read from unmapped mmio region gpa=0x%" PRIx64 " size=%i", gpa, bytes);
+             return MMU_TRANSLATE_GPA_UNMAPPED;
+         } else if (mem_tx_res == MEMTX_ACCESS_ERROR) {
+             return MMU_TRANSLATE_GPA_NO_READ_ACCESS;
 -- 
-2.47.3
+2.50.1 (Apple Git-155)
 
 
