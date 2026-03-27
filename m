@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78DD210F2872
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD67C10F2865
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6Ehc-0003Fi-RZ; Fri, 27 Mar 2026 17:26:48 -0400
+	id 1w6Eh2-0002nX-SD; Fri, 27 Mar 2026 17:26:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6Ehb-0003FD-It
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:47 -0400
+ id 1w6Eh1-0002mz-OM
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6Eha-0003hd-9w
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:47 -0400
+ id 1w6Eh0-0003ZH-Cz
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774646805;
+ s=mimecast20190719; t=1774646769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2JQ9Yj7brdIqvdNhWPI2MQ1hWd0faHyBLi+vTK2i8O4=;
- b=fOzT0DfiufFm6ZEQqnxejUD09TiyLegGYt6AgNIdLWJiwx+ipUyU1LJXztEaQLRgcFoHgz
- Gix8rHmJhUwwxTj2BA7EIeYX4PnY0NcRe4aM+KKJxt4YS6HTtmhSCQtEb/RVk0ClY8e41U
- KGD6WZfzYPppyBfV3wQDbC1SbOuG8cc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zFuDFxFNBz8vOIyKGhG3CH3xVbSczlhaNd9Na1ywSeg=;
+ b=XdLPOvEwosTVwZ9qPP9Wqblh7u0GwpTAyl70GFjfvPKiFoVNXWRVSwSac3ptIBilNQixzG
+ po/mtO0CP4u7xg30kFAZDH37DF85alBhpsEKGzknkRHicIHK4sis4Qv38hcK80vonEKqcB
+ vgmXKaLxt6uXhTFw2MYdMFbkGWhiW3M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-VCrYhd-3Nw2SuqOlQCfsoQ-1; Fri, 27 Mar 2026 17:26:44 -0400
-X-MC-Unique: VCrYhd-3Nw2SuqOlQCfsoQ-1
-X-Mimecast-MFC-AGG-ID: VCrYhd-3Nw2SuqOlQCfsoQ_1774646803
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4852ccff333so23885025e9.2
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:26:44 -0700 (PDT)
+ us-mta-689-xb1ssxpIN-C3VSlnInsv4g-1; Fri, 27 Mar 2026 17:26:08 -0400
+X-MC-Unique: xb1ssxpIN-C3VSlnInsv4g-1
+X-Mimecast-MFC-AGG-ID: xb1ssxpIN-C3VSlnInsv4g_1774646767
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4853466655dso10106695e9.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774646801; x=1775251601; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774646765; x=1775251565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2JQ9Yj7brdIqvdNhWPI2MQ1hWd0faHyBLi+vTK2i8O4=;
- b=tkmaRVwFr5XSuv0Gmm07c50f/lxA8nq770VIQFjdZNkC1+DN2HEStNfpMVVMielXCP
- XHrOYygz7KIOk2JHH6ZS062U3XHsXSvELSVimKrF64TUuUubuIG+jPC2ouKTuE3cMMWN
- mfjVitJhC3DVLizpdmVrAQiydgG+v46JiZ4Y+LsESOrzzLrn0V4VHur7Em9nNWeFy1WI
- ACFBiaSkW8tEOuUHVp5HqjWPfvD4YvR9NcFowSRakyOeS6/KFIqS7xmrbps52Wde+eQ4
- UweWkzP2DCM+v3NlrdamOWSu/gbZhao6XWYQPrtRvZcXAhevEWjYNkbsLN9DLISU//gs
- 5mvA==
+ bh=zFuDFxFNBz8vOIyKGhG3CH3xVbSczlhaNd9Na1ywSeg=;
+ b=IxmJJrM7LolAv7QTDnSCejukZ+ES7R8UdGyklccecEWiq0cnhYtddC9IxfttIEWzjB
+ rs75THSrmUczZ2DckbnOmsxTRwISXKrdUkRJQnj5i0VdUFY3GwEnbilwaWBhOgFjM6mf
+ o1x3vn8pWpA/JjeIrpXgwaGM/q6H2RpOw9px7hlDRc0AUyhGUPMui1NPKbc3yaTrVlFf
+ FivfCFk/BMtk5JfkMlwvgYU0pT52468b7xDsPNiQ1o174JGwGnO0nFO+KeubJWulZkj1
+ YdjSVxPk99pNn3Agbiy4Z+4Itn5lnAhNC3ZxGw0Blt8IIbSMKJ7XsR5XgWo6lFkiCr6O
+ WHvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774646801; x=1775251601;
+ d=1e100.net; s=20251104; t=1774646765; x=1775251565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2JQ9Yj7brdIqvdNhWPI2MQ1hWd0faHyBLi+vTK2i8O4=;
- b=WSpggwNPYFIfnOCUjy9zrGk8aMV0iANaqc4YOQNwEKJjnumc6XqCZcdfeWexiBm+qN
- 6tjiCMJLrys1PoUXdJMvFGBfRbKEukiyBNUadKRC7ipoqeJ0QNLTEHYRzHdR9u8Itwdm
- PGC3s/uvlSuMvVPpikmPHDagCvtcvZYrEacvsk+OiTtsCQ6VpcDtIf+Bu90/rs2LFgCj
- Ftb3ELsZBLjY7gb/7uYD6PU83R5YXo87jLFNR2tUtZRdh4IuBfBDolz110sAxmnPRNvE
- 83srxYbn4RzUJG0z+Sua4oEmXWGSDlCR59aH+wYolHPVqITubY1qCiyxjM7CdYzaMB1i
- PGGQ==
-X-Gm-Message-State: AOJu0YwKRx+ze54svSIisSqoBI5dJRzlO7hSUXFAfbZOKRWXX/IeCXId
- EBwKRWRXlOqy7NEqKjSuTH2pxsYLDHQCotCLYV/WXwKuwAeRWaUj0Ysykyt7HiN3QGzC4ocBo9r
- sli1oSmT0cXBpl0n+9DW5fOidICo163jFw1MW8YFBVYa3bJqgHu4pewRXH556tqvTlrIgl56VEe
- 5cnvuTfEROU+9pxY+E9XUH87u2NpXCpxhHC/PE2ITu
-X-Gm-Gg: ATEYQzxBlG7TOCZJbfgggFTI3PoCChppFVpE6l+ZCIRKkROQflz2RCBTVF/mJTdpBjS
- UpTtaGJ5IfyD5t0iNj43Sxpt4KmOxcu9bH7TAXxmXd2ucE3vv0p5G5wxk6eJKeAy3x8l5wG5UVF
- Zjp9yhkrCXM9xkCMHYE3ntVZospuQg0CA0u0/Q0SmdbCw7mGSbtPBRAYOi3TMuYllUkVvr/oNO5
- z8jw9taqTI68A9BclSPAvxmtOral1Fh45s78RuQ0eMPnkr0mBIB1L/IrSRDB9Zvux2AqmnIY1vD
- W33HywsCn3DU1JxQl6vbe9A4T3ya2Ad13d0eRcTwbQpHcAOccqvWoUo/OgouBAZJUgPNZL/EKmL
- jitO7vHFD95JcpRG0W6o7FVGP28KSRh/VvuH2piObmJwlPDnFGmdqU/W1bd+2RIvjd3uQaovkdH
- e+n+AEdKWYvG+Let0/ndOhPbQ0
-X-Received: by 2002:a05:600c:524a:b0:486:f9a4:d487 with SMTP id
- 5b1f17b1804b1-48727c816e6mr65883865e9.0.1774646801023; 
- Fri, 27 Mar 2026 14:26:41 -0700 (PDT)
-X-Received: by 2002:a05:600c:524a:b0:486:f9a4:d487 with SMTP id
- 5b1f17b1804b1-48727c816e6mr65883615e9.0.1774646800481; 
- Fri, 27 Mar 2026 14:26:40 -0700 (PDT)
+ bh=zFuDFxFNBz8vOIyKGhG3CH3xVbSczlhaNd9Na1ywSeg=;
+ b=OiC6CUdcgQbsjTYUrDMEp1ME+p3fJn7J7xIgdBcy5eAh62w19kEWQzx+qD+X2cePed
+ jkZMxotuaTcmWUJxYopZyUDoLxmFOF8LdwSTta2m1/csLs0V3Cn75FJ1lBRYPBZ7uPJo
+ d5BiVh9uvYGSgihdZjzJ902I46qm8bx5vURJuhDGQZPGxFGTcJzW5n22f/Awbgv8kl31
+ eKcOIJf9wvc1HEOogZGnkXvgTNFJflNHRSfCrfToRPuR11FlkqMdU/6jOF68OtA+zOsV
+ pXnBqTOqsbsDWlU6DGS9+8Ej+5C4f33HwFrCAtfAMoGtB1eziN/v8Z2ga2ht3f/pYFv/
+ KUJw==
+X-Gm-Message-State: AOJu0YygIKBoUnMQmx3cWKqhP7WICdEwqIdsYjJIl+UXDj9O2zW7XF3J
+ 7uoKpMo4yw8bJfrSDV//AwqdlM4piO4KnuQkOGl/W9z+4TeOr3Q5ViLZ7ulxpjq+k/EBMdd5BuE
+ +NzIfAAa8GYLSvzdje5MvOO8kPuDUBVcy6c+JfrwDkekaHH+lb444pr554LPPjCk57dKAKsIH3/
+ 90/XSJ9Km1GACKUuFNPinPYy9r9F1svz3e/RpLA1XZ
+X-Gm-Gg: ATEYQzxVD7TBHNTqFEXwq6emBhhpAymzdAXlCLh5WqtiK3B6/QOf8mAchXr1LFQ8LLg
+ 5iwKXtWKrmJx5A0muquYJw35VJTlTlnH6aL44KfxlWKoSj5tnnBqGPzKGui1DkomeyimSQ1ohrN
+ 3UvI4G8es/n1bMv9G7gf8oFhaUkEfd0AJI5Vkr12Kf4oqgbo0AIbEsqqQQBtZUsPrStdVgEApCI
+ KxhjpUNpfHa3ppiwy4PJ9Ml/JgBNq00cAtH/EbjPt0kTJ0iKpBiuRG4DPl2EfHlGna4SEfCRGOD
+ i4gqHGB4TzpK2VLFWmBZ7u7IQkuO67R4ZMOSANBBy2oZal6aQJl16Z7FuoO4grg8kNqFweouC5s
+ dfW3hUCRBuv9fql9mtZXzDyae0f+LyeEyC0dEJhYBFkDlZjwY8waclUIOBGQWvKM1BN9fApzdDj
+ Eznfa5Fk5qfvsKyLoXuxU5vd9H
+X-Received: by 2002:a05:600c:81c5:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-48727e90ec7mr60750035e9.15.1774646764876; 
+ Fri, 27 Mar 2026 14:26:04 -0700 (PDT)
+X-Received: by 2002:a05:600c:81c5:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-48727e90ec7mr60749765e9.15.1774646764337; 
+ Fri, 27 Mar 2026 14:26:04 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48730688605sm13189985e9.10.2026.03.27.14.26.35
+ 5b1f17b1804b1-4873068858bsm6251665e9.9.2026.03.27.14.25.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 14:26:35 -0700 (PDT)
+ Fri, 27 Mar 2026 14:26:00 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 08/16] ncr710: simplify ncr710_clear_pending_irq
-Date: Fri, 27 Mar 2026 22:25:39 +0100
-Message-ID: <20260327212547.460420-9-pbonzini@redhat.com>
+Cc: Helge Deller <deller@gmx.de>,
+	qemu-stable@nongnu.org
+Subject: [PATCH 02/16] lsi53c895a: do not do anything else is a reset is
+ requested by writing ISTAT0
+Date: Fri, 27 Mar 2026 22:25:33 +0100
+Message-ID: <20260327212547.460420-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260327212547.460420-1-pbonzini@redhat.com>
 References: <20260327212547.460420-1-pbonzini@redhat.com>
@@ -121,41 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The same checks are done in ncr710_request_free.  If req->hba_private is
-anything, it is the NCR710Request that points to req, so it would be
-cleared.
+If the device is reset, anything that is done before will not really
+be visible.  So do the reset and exit immediately if that is one
+if the requests in the value written to ISTAT0.
 
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/ncr53c710.c | 7 -------
- 1 file changed, 7 deletions(-)
+ hw/scsi/lsi53c895a.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 7113ce2d8a9..9832d833b37 100644
---- a/hw/scsi/ncr53c710.c
-+++ b/hw/scsi/ncr53c710.c
-@@ -316,11 +316,7 @@ static inline int ncr710_irq_on_rsl(NCR710State *s)
- static void ncr710_clear_pending_irq(NCR710State *s)
- {
-     if (s->current) {
--        if (s->current->req) {
--            s->current->req->hba_private = NULL;
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 90643b26ab8..81b4f93f4d3 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -1949,6 +1949,10 @@ static void lsi_reg_writeb(LSIState *s, int offset, uint8_t val)
+     CASE_SET_REG32(dsa, 0x10)
+     case 0x14: /* ISTAT0 */
+         s->istat0 = (s->istat0 & 0x0f) | (val & 0xf0);
++        if (val & LSI_ISTAT0_SRST) {
++            device_cold_reset(DEVICE(s));
++            return;
++        }
+         if (val & LSI_ISTAT0_ABRT) {
+             lsi_script_dma_interrupt(s, LSI_DSTAT_ABRT);
+         }
+@@ -1962,9 +1966,6 @@ static void lsi_reg_writeb(LSIState *s, int offset, uint8_t val)
+             s->dsp = s->dnad;
+             lsi_execute_script(s);
+         }
+-        if (val & LSI_ISTAT0_SRST) {
+-            device_cold_reset(DEVICE(s));
 -        }
-         ncr710_request_free(s, s->current);
--        s->current = NULL;
-     }
- }
- 
-@@ -739,9 +735,6 @@ static void ncr710_add_msg_byte(NCR710State *s, uint8_t data)
- 
- static void ncr710_request_free(NCR710State *s, NCR710Request *p)
- {
--    if (!p) {
--        return;
--    }
-     if (p->req && p->req->hba_private == p) {
-         p->req->hba_private = NULL;
-     }
+         break;
+     case 0x16: /* MBOX0 */
+         s->mbox0 = val;
 -- 
 2.53.0
 
