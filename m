@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1087510F286F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD9010F2865
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 21:27:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6Ehj-0003Sl-IS; Fri, 27 Mar 2026 17:26:55 -0400
+	id 1w6EhY-0003Eb-By; Fri, 27 Mar 2026 17:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6Ehh-0003Ro-VF
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:53 -0400
+ id 1w6EhW-0003E5-KA
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w6Ehg-0003hx-H4
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:53 -0400
+ id 1w6EhV-0003h4-76
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 17:26:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774646811;
+ s=mimecast20190719; t=1774646800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=87D9hfkXTy21U107ad64fZEaWnZ7Kh+l8r3zoihxcCE=;
- b=Arm2faUwO8NNJo6LZW9wryF23Ri0+M6bLkM9GfCRLhJOHtIdII/S9QPRzLbzgH7eWSkKug
- xlA6FdCoq1Z5PPq2KHp8iGnoEKau35WSAncLav09TPVUdoDdUg1lztTG6B9MucXfrToGZl
- mDYWN05R7fkLvGKwHZEbk32pJ5t6/4o=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ag0x9W61+MLi+fSgFl+jWBLoe9JN7um6jSU0ZIBfrJQ=;
+ b=NSaWbBuo9x/R8XU6/do4jI39zULSbd1ugdaiRjJwGqyScj1tTL2/iSgRXwGCDiP7ojOwoV
+ FhCNZUNOQxfANBanO9GOwEA7qF2r9J7dSVznNyNsDWaxDDfE0gf8+FJC3bEroFkR4jVjE1
+ Id+nyiSGCd153NLvLVGNQYKSXi4jTSQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-673-NmCMyRGAN02RHgvTfHylDg-1; Fri, 27 Mar 2026 17:26:50 -0400
-X-MC-Unique: NmCMyRGAN02RHgvTfHylDg-1
-X-Mimecast-MFC-AGG-ID: NmCMyRGAN02RHgvTfHylDg_1774646809
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4852cf0318dso26741375e9.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:26:50 -0700 (PDT)
+ us-mta-561-LAf42xDPORuFuAcIyP2UeA-1; Fri, 27 Mar 2026 17:26:39 -0400
+X-MC-Unique: LAf42xDPORuFuAcIyP2UeA-1
+X-Mimecast-MFC-AGG-ID: LAf42xDPORuFuAcIyP2UeA_1774646798
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48534941525so32035095e9.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 14:26:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774646807; x=1775251607; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774646795; x=1775251595; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=87D9hfkXTy21U107ad64fZEaWnZ7Kh+l8r3zoihxcCE=;
- b=iqSO6vqMLKiPVPCUwb9tYGLTKYWGC60SxmLj4CL6ouVsqO8lrkHKYc5Fjc4a4gjcWY
- GS84JArG9Hwy4eOudBqV00jbxlpGLtkIPhooDRyrd3kDebviy9U7hSoQXVVF2kS4OEsd
- Wn9mTDWgqik09PD0hz8Ek1q8HlLJyAcM7BF+p0lp0rnsIVvqkql16cxGMNih/4GSwQ/b
- IWq+VVALPayEnQUFAvaSSjPPYoxfZZ/GRGCICH/pGe8Yy7iVYtdKzzOerj7YiN7DlX04
- fTz35PNThzvyJ1C+PXQKvwu0bfV2O8hhh54yUpc1Ql5LXpnaGZcZd6EkmKFnBXauOHsz
- APDA==
+ bh=Ag0x9W61+MLi+fSgFl+jWBLoe9JN7um6jSU0ZIBfrJQ=;
+ b=I+rVMam6zBIEhspQP+bERPn4izbkbZfHp/qErWBlKatjnydB+gVu6YQ6jUIL9NdLaw
+ XR5V/eM3ouXsO8FQWW7wi6bE+oDYQpJaVD2IlRkZSVFynZPhoRxoEXEZDl83XOpSCKD/
+ R1pr1sgrk/Y/CBZpn/gnTPLaMIBmZ2wtzFOTrG26nJOCg7mZaem7YhgHGZbi69wdDt4Y
+ OoXNIavaHQfoXq7swZmacv8Uc8oh6JSq7gCebPwuueds+BSpDrUX6LSimZh5HN0B+o7T
+ VV/DQoVltNhLfpom2Ykj8KMgwVge6cUQZsPvDjkA7cWr2oh9z5HWqFOD8/YATw1cGaZ/
+ CJdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774646807; x=1775251607;
+ d=1e100.net; s=20251104; t=1774646795; x=1775251595;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=87D9hfkXTy21U107ad64fZEaWnZ7Kh+l8r3zoihxcCE=;
- b=bSMLYEPKR2GGelLS1XONC+IKIh4J81g+Z6D3Y5FV3hFG0lMN/BCe9LVIzuTmiMfFN0
- rx/W6Pszk7AXng3WxK2ew1cKEholr1AMl4NLw/N/lrYZR4kKzWkohWX8cQveVfrQpdyn
- SVNOZpSHUqPKwwp72R80QpzWVEW7p2B60v/1OqcI/ZqOfa+pxf4xBCSs2/U0tMepEHCf
- v9aQepAfIEaPFLrwW0hV8PLl5vWgalu6/pxtCPmtk92HM6smtV8/0Z/X6q/6SSElilyx
- ZYkASbPMHSn+3GNAJ/GqLWEKikziUL9S3bTDoBhCuJ55LeRQXudsw3QVQc3uccxcu+Y3
- PT5Q==
-X-Gm-Message-State: AOJu0Yx1nJ9JSvjERZbbFBXe2rbsWjG0iuzUVNLM4ET2Wr6pn6x+vwKk
- i+2xv/VTqz3CDrTmw82pzF0Ck7PHikhGBJJNE/H/p7Im2TQvSOcfZzUHKrh2PQ41xXOFBI5JutI
- Nx9fciQL+CGQ4Bqu4FudYunEtaELhmX2kDE+mpcWcSq3Jlj/fffeSgeRsIyJRqno45Fs/mJVfCE
- Clb1Qc7bV4/+oQKAaeAF6n6tN9HUFDIbyQj6vAbN3d
-X-Gm-Gg: ATEYQzwrrYE29ORf2TVYqKH+61djeRw2HYuL0wXWpBt4CgTA1FgosVY4XKlpNLTfZD/
- aZRKO3WwJe/91/75KsreB6L6QEyk/ozJKyRLxSGrcOlGLiEnvtAYTZ+9a6uqJRH4B+zsGNobMTH
- 7klgRHfH+G8qXFYCaKnuDf4HYyKzabZqX2puRsDc4G1LyyWaXVk6tLI8iRIgRukDCQGZbFMzsxO
- rYteJUGXcjUKBoztr4MzIOOWi5UzIaEFs28jD1TGBt4lFGD00HSj6vHW2UtyyFQ5oA8bZK9Df5d
- VplxCHa01r4kgdNg6d8KaSX69VeiMMKDkvExaQ6GLOxdROzazxYA3LJxv7D2tNJLJ0Hdfrx6FPg
- I5meYTeUKYSDOM9PSZk1LONEDUzr8LYSmSVQJytJzGSdBdDa66AUMzRLQ8557TYx/dXNcPZ826s
- zpIUDT/YQeLEIblCFgYHL/VpSS
-X-Received: by 2002:a05:600c:c87:b0:486:f308:94ec with SMTP id
- 5b1f17b1804b1-48727edf6eemr68427105e9.24.1774646807108; 
- Fri, 27 Mar 2026 14:26:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:c87:b0:486:f308:94ec with SMTP id
- 5b1f17b1804b1-48727edf6eemr68426855e9.24.1774646806609; 
- Fri, 27 Mar 2026 14:26:46 -0700 (PDT)
+ bh=Ag0x9W61+MLi+fSgFl+jWBLoe9JN7um6jSU0ZIBfrJQ=;
+ b=PW0CudDSuDh7gbfjsu29CgHs52vG4rcK5SHCoRHQ6LSpLvz21WNTFII2NabMll4DhH
+ 9dm6a1lgo94657Q8LtPLnFxsP9EzAxRJ+rC3FjYbvEKArdNtFGGo5bIykJ72aMwm8Lcg
+ fg6Oo/N9Z4Dj0+Rq6o+GVllPmko14CW9r9DXU1URu6jkcCs0XPqNE4Hoi8Z/T4azfqC0
+ Bb0rr5oQSRJ2mO/BZ+u/VwoXFgaDar0RZADIoxS3bB68Z1C4fTjgvHDUPPgten2+Q27W
+ 6dtjs0nUdspbapqZtdLUQUyfO16JcxJRQl/ooxqpadRZZ6plzpOL1TYHzkRylzbVEu50
+ nI3Q==
+X-Gm-Message-State: AOJu0YwTgEjJdMYbMUuPE+rc4L86crb9zXI4RFhl5aifGkheYBBkRzVe
+ 0J2hCgN3h1MP1UQwiiEcfUGvoh/1bp46MQqKCvDs4DAzkMoj2cumA23ui7quMc8FnM3veRzFXZz
+ M/7RJcn4+xc2At/UDl3px0ed7U4O9amGx7gVM79KYvgw+2MMK0wXTZlBn3wATU3BE3qEBO5KsDC
+ HIOhIas7bORf2+4q9a9moQdWBFq/XVWBX/ZeBbb0/l
+X-Gm-Gg: ATEYQzz56PsJejLwHkOravjLy8FsvdCSl1K1t7OW+CRe7i1ijoTJqKOmHMMqs5yO6Ac
+ gsE1Kyrq3MbirMX8ryP6YVvAknB2vukWmH7K8Cv7TC4ACN1jqj6YjQv4HBGgeh2VSCNiLF9W76N
+ BII+QF3V4M4j5ZyNjfYnyzKTFWn4wiebPcStNSMLm0QRbBH1c2z4PdP6uoW4nkIfT2+961CYUjP
+ lUqcRTA9lXn17ABG9U45L+63zZE52Uv1rG7o7MMhb3SPSJR7SsYC7d+AokE9wjmXP3vCXsYoRBA
+ GZvFutVO1xqye4atL7k4dbGOFEFaw4YkIPGy0x/6e7U+YI1aS4amEJwXkV249yx1YiyGsUaOENg
+ LeJye5bdfmptMvgBZlu4j66cxOHTx0Ctpn87PJUJXT1JmVK8e7GO3KhimCDfY7i4j7I0ku6t9zK
+ 0ifD73hYonIweG9C5vFfKC30CI
+X-Received: by 2002:a05:600c:6487:b0:485:3d00:efd with SMTP id
+ 5b1f17b1804b1-48727d679e5mr66323035e9.7.1774646795475; 
+ Fri, 27 Mar 2026 14:26:35 -0700 (PDT)
+X-Received: by 2002:a05:600c:6487:b0:485:3d00:efd with SMTP id
+ 5b1f17b1804b1-48727d679e5mr66322815e9.7.1774646794952; 
+ Fri, 27 Mar 2026 14:26:34 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4873061f44csm8893305e9.1.2026.03.27.14.26.41
+ 5b1f17b1804b1-48725ebe9dfsm33989145e9.4.2026.03.27.14.26.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Mar 2026 14:26:41 -0700 (PDT)
+ Fri, 27 Mar 2026 14:26:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 09/16] ncr710: reuse ncr710_clear_pending_irq in
- ncr10_do_command
-Date: Fri, 27 Mar 2026 22:25:40 +0100
-Message-ID: <20260327212547.460420-10-pbonzini@redhat.com>
+Subject: [PATCH 07/16] lsi53c895a: always use enum constants for s->waiting
+Date: Fri, 27 Mar 2026 22:25:38 +0100
+Message-ID: <20260327212547.460420-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260327212547.460420-1-pbonzini@redhat.com>
 References: <20260327212547.460420-1-pbonzini@redhat.com>
@@ -124,25 +123,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/ncr53c710.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ hw/scsi/lsi53c895a.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 9832d833b37..7503d791205 100644
---- a/hw/scsi/ncr53c710.c
-+++ b/hw/scsi/ncr53c710.c
-@@ -928,10 +928,7 @@ static void ncr710_do_command(NCR710State *s)
-         return;
-     }
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 6b0c97d98e3..6f65a2188c1 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -201,13 +201,13 @@ typedef struct lsi_request {
+     QTAILQ_ENTRY(lsi_request) next;
+ } lsi_request;
  
--    if (s->current) {
--        ncr710_request_free(s, s->current);
--        s->current = NULL;
--    }
-+    ncr710_clear_pending_irq(s);
+-enum {
++typedef enum {
+     LSI_NOWAIT, /* SCRIPTS are running or stopped */
+     LSI_WAIT_RESELECT, /* Wait Reselect instruction has been issued */
+     LSI_DMA_SCRIPTS, /* processing DMA from lsi_execute_script */
+     LSI_DMA_IN_PROGRESS, /* DMA operation is in progress */
+     LSI_WAIT_SCRIPTS, /* SCRIPTS stopped because of instruction count limit */
+-};
++} LSIWaitState;
  
-     s->current = g_new0(NCR710Request, 1);
-     s->current->tag = s->select_tag;
+ typedef enum {
+     LSI_CMD_SENT, /* command is running */
+@@ -239,7 +239,7 @@ struct LSIState {
+     int msg_action;
+     int msg_len;
+     uint8_t msg[LSI_MAX_MSGIN_LEN];
+-    int waiting;
++    LSIWaitState waiting;
+     SCSIBus bus;
+     int current_lun;
+     /* The tag is a combination of the device ID and the SCSI tag.  */
+@@ -605,7 +605,7 @@ static int lsi_bad_phase(LSIState *s, int out, int new_phase)
+ /* Resume SCRIPTS execution after a DMA operation.  */
+ static void lsi_resume_script(LSIState *s)
+ {
+-    if (s->waiting != 2) {
++    if (s->waiting != LSI_DMA_SCRIPTS) {
+         s->waiting = LSI_NOWAIT;
+         lsi_execute_script(s);
+     } else {
+@@ -822,11 +822,11 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
+     trace_lsi_command_complete(req->status);
+     s->status = req->status;
+     s->command_complete = LSI_CMD_COMPLETE;
+-    if (s->waiting && s->dbc != 0) {
++    if (s->waiting != LSI_NOWAIT && s->dbc != 0) {
+         /* Raise phase mismatch for short transfers.  */
+         stop = lsi_bad_phase(s, out, PHASE_ST);
+         if (stop) {
+-            s->waiting = 0;
++            s->waiting = LSI_NOWAIT;
+         }
+     } else {
+         lsi_set_phase(s, PHASE_ST);
+@@ -861,7 +861,7 @@ static void lsi_transfer_data(SCSIRequest *req, uint32_t len)
+     trace_lsi_transfer_data(req->tag, len);
+     s->current->dma_len = len;
+     s->command_complete = LSI_CMD_READY;
+-    if (s->waiting) {
++    if (s->waiting != LSI_NOWAIT) {
+         if (s->waiting == LSI_WAIT_RESELECT || s->dbc == 0) {
+             lsi_resume_script(s);
+         } else {
 -- 
 2.53.0
 
