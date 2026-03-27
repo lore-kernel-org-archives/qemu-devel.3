@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20AC110ED661
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12B7410ED674
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:46:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w67VC-0006cV-N9; Fri, 27 Mar 2026 09:45:38 -0400
+	id 1w67UZ-0005uK-AO; Fri, 27 Mar 2026 09:44:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67Uw-0006O7-4G
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:16 -0400
+ id 1w67UT-0005sp-UN
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:44:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67Uu-0006V3-Ip
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:45:13 -0400
+ id 1w67UR-0006Dx-Ne
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:44:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774619111;
+ s=mimecast20190719; t=1774619083;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ca4K08Noqjd4qeO37YQnqMAg5xrqZUVUykdWTjWe6W4=;
- b=QDUQOkZynlfSYJThRsgbjiozqAnZugDzn+TPTXB9PT6eXyuIdg2BR8Oe80xqyZpe223FIa
- U4ddD2nOh1IsqgAdVAzvvGv4zYI4uZjSk1PPG06n994xnKdZuRZx6yDfbxu7+AG//8NDp5
- Q6ofVlAV32b3O8fcJXI+fUfE0tQCDLc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=CchJGhUuuvvblu2UT/R6MNYAdi5C/aV9FBoBW6aVsYY=;
+ b=hq4a1ypQe+itwoMBSgpxZHy74aGpN926jFj9LeBYg82EW9LyOfCh9YNdvDxKqPFjgNyvia
+ bnwZ6sxHLSwqsEd1JAnn6fEpBUgWot9ogSVcoy4UwZVdwOKK7SEDzFjCDwQLK50eGD/GI7
+ 4+Lres6wu/co5ym+1p8xlSkNZYTXpNo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-VWg1GV-OOK6OoqH5vzTEiQ-1; Fri,
- 27 Mar 2026 09:45:07 -0400
-X-MC-Unique: VWg1GV-OOK6OoqH5vzTEiQ-1
-X-Mimecast-MFC-AGG-ID: VWg1GV-OOK6OoqH5vzTEiQ_1774619104
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-w73SYVBfPsmpuZQBgO4lYg-1; Fri,
+ 27 Mar 2026 09:44:38 -0400
+X-MC-Unique: w73SYVBfPsmpuZQBgO4lYg-1
+X-Mimecast-MFC-AGG-ID: w73SYVBfPsmpuZQBgO4lYg_1774619076
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B872F180034E; Fri, 27 Mar 2026 13:45:04 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BCDDB195608C; Fri, 27 Mar 2026 13:44:35 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.150])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF26C1800673; Fri, 27 Mar 2026 13:44:57 +0000 (UTC)
+ id 129BC1800673; Fri, 27 Mar 2026 13:44:28 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
@@ -66,10 +66,9 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 07/15] target/riscv: Use glib2 instead of
- strcasecmp/strncasecmp
-Date: Fri, 27 Mar 2026 15:43:53 +0200
-Message-ID: <20260327134401.270186-8-kkostiuk@redhat.com>
+Subject: [PATCH v2 03/15] block: Use glib2 instead of strcasecmp/strncasecmp
+Date: Fri, 27 Mar 2026 15:43:49 +0200
+Message-ID: <20260327134401.270186-4-kkostiuk@redhat.com>
 In-Reply-To: <20260327134401.270186-1-kkostiuk@redhat.com>
 References: <20260327134401.270186-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
@@ -104,34 +103,30 @@ This is a change in semantics. g_ascii_strcasecmp() doesn't honour
 locale but strcasecmp() does. But this is OK for at least one reason:
  (1) QEMU always runs with the C locale so there's not an actual
      behaviour change here
+ (2) we want the comparison on url prefix and it should be a plain ASCII
+     one, not to do weird things with "I" in Turkish locales,
+     so g_ascii_strcasecmp() is better as it's explicit about that
 
 Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- target/riscv/monitor.c | 4 ++--
+ block/curl.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index a9d3111444..bca04a7580 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -303,7 +303,7 @@ static bool reg_is_vreg(const char *name)
+diff --git a/block/curl.c b/block/curl.c
+index 66aecfb20e..bb72962d25 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -871,8 +871,8 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
+         goto out;
      }
  
-     for (int i = 0; i < 32; i++) {
--        if (strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
-+        if (g_ascii_strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
-             return true;
-         }
-     }
-@@ -358,7 +358,7 @@ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
-             continue;
-         }
- 
--        if (strcasecmp(csr_ops[csrno].name, name) != 0) {
-+        if (g_ascii_strcasecmp(csr_ops[csrno].name, name) != 0) {
-             continue;
-         }
- 
+-    if ((!strncasecmp(s->url, "http://", strlen("http://"))
+-        || !strncasecmp(s->url, "https://", strlen("https://")))
++    if ((!g_ascii_strncasecmp(s->url, "http://", strlen("http://"))
++        || !g_ascii_strncasecmp(s->url, "https://", strlen("https://")))
+         && !s->accept_range) {
+         pstrcpy(state->errmsg, CURL_ERROR_SIZE,
+                 "Server does not support 'range' (byte ranges).");
 -- 
 2.52.0
 
