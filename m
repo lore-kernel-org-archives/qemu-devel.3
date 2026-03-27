@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C67F410ED679
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8E410ED674
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 13:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w67W2-0000Uj-9f; Fri, 27 Mar 2026 09:46:22 -0400
+	id 1w67UD-0005gc-7v; Fri, 27 Mar 2026 09:44:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67Vn-0007Qc-Hd
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:46:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w67UC-0005gD-1U
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:44:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w67Vj-0006g6-09
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:46:06 -0400
+ id 1w67UA-00066E-KL
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 09:44:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774619161;
+ s=mimecast20190719; t=1774619065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ozMMMbc5i4osCd27yTtYVpRq0NefVxtoYxUcTIpyOtQ=;
- b=P/DSxC+hv/nZsj5qmhWgDQncxgnem8E9O+QLkqpX+ZsS+Wq0hK1MrqyYBHGG996C+z9t9x
- TUnrfbigMB9Z/Fp+ApOk1TghE7CFkC0rkQaSVWfYQ+4dgMRhsJfZZNMvvRrBBGLxj/jwzw
- pYdxeC21GKh1rHzHPHUrJkmHCybo+74=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=7tcxKslIn6LU9r2hkVjCtK7yULes57vCUXv6/td3HUM=;
+ b=ZAV6nsadnBicwa3xcePbPJ4u6KldrMiEdMHg+2wVtYn1Bn/Nkfl81KXoUtKcrSwCs6Rz4y
+ hVWkRlz+6mbkqsZsbIz9NNKMeDW9WRUQotWa2+bu1NtD45AsYrgsrIq+/UmXW3g7JaySuJ
+ Czn2dj98VfDggmwIcpIH+MX25URlp4k=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-Oq34NabwP6-24Tg-o-cfLg-1; Fri,
- 27 Mar 2026 09:45:57 -0400
-X-MC-Unique: Oq34NabwP6-24Tg-o-cfLg-1
-X-Mimecast-MFC-AGG-ID: Oq34NabwP6-24Tg-o-cfLg_1774619155
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-Z6RWgCS5N9ebqJHyzjf_2Q-1; Fri,
+ 27 Mar 2026 09:44:22 -0400
+X-MC-Unique: Z6RWgCS5N9ebqJHyzjf_2Q-1
+X-Mimecast-MFC-AGG-ID: Z6RWgCS5N9ebqJHyzjf_2Q_1774619060
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A42818005B0; Fri, 27 Mar 2026 13:45:55 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C18F41955F18; Fri, 27 Mar 2026 13:44:19 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.150])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7719A1800673; Fri, 27 Mar 2026 13:45:48 +0000 (UTC)
+ id 8CAC8180075C; Fri, 27 Mar 2026 13:44:12 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
@@ -66,16 +66,15 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 14/15] storage-daemon: use same link arguments as other
- tools
-Date: Fri, 27 Mar 2026 15:44:00 +0200
-Message-ID: <20260327134401.270186-15-kkostiuk@redhat.com>
+Subject: [PATCH v2 01/15] meson: Use stddef.h instead of unistd.h
+Date: Fri, 27 Mar 2026 15:43:47 +0200
+Message-ID: <20260327134401.270186-2-kkostiuk@redhat.com>
 In-Reply-To: <20260327134401.270186-1-kkostiuk@redhat.com>
 References: <20260327134401.270186-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,7 +83,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,66 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+POSIX says stddef.h provides size_t, which is the only thing
+we care about here. unistd.h can be missing in non-POSIX runtimes,
+so include stddef.h instead.
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- meson.build                |  8 ++++----
- storage-daemon/meson.build | 16 ++++++++--------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/meson.build b/meson.build
-index 1087e8c106..4a3fc306b7 100644
+index 6c712f8b0d..1087e8c106 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -4507,15 +4507,15 @@ if xkbcommon.found()
- endif
+@@ -1057,7 +1057,7 @@ endif
  
- if have_tools
--  link_args = enable_modules ? ['@block.syms'] : []
-+  tools_link_args = enable_modules ? ['@block.syms'] : []
-   qemu_img = executable('qemu-img', [files('qemu-img.c'), hxdep],
--             link_args: link_args, link_depends: block_syms,
-+             link_args: tools_link_args, link_depends: block_syms,
-              dependencies: [authz, block, crypto, io, qom, qemuutil], install: true)
-   qemu_io = executable('qemu-io', files('qemu-io.c'),
--             link_args: link_args, link_depends: block_syms,
-+             link_args: tools_link_args, link_depends: block_syms,
-              dependencies: [block, qemuutil], install: true)
-   qemu_nbd = executable('qemu-nbd', files('qemu-nbd.c'),
--               link_args: link_args, link_depends: block_syms,
-+               link_args: tools_link_args, link_depends: block_syms,
-                dependencies: [blockdev, qemuutil, selinux],
-                install: true)
+ if not cc.compiles('''
+   #include <glib.h>
+-  #include <unistd.h>
++  #include <stddef.h>
  
-diff --git a/storage-daemon/meson.build b/storage-daemon/meson.build
-index 5e61a9d1bd..fc088cbea7 100644
---- a/storage-daemon/meson.build
-+++ b/storage-daemon/meson.build
-@@ -1,14 +1,14 @@
-+assert(have_tools)
-+
- qsd_ss = ss.source_set()
- qsd_ss.add(files('qemu-storage-daemon.c'))
- qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil)
- 
- subdir('qapi')
- 
--if have_tools
--  qsd_ss = qsd_ss.apply({})
--  qsd = executable('qemu-storage-daemon',
--                   qsd_ss.sources(),
--                   link_args: '@block.syms', link_depends: block_syms,
--                   dependencies: qsd_ss.dependencies(),
--                   install: true)
--endif
-+qsd_ss = qsd_ss.apply({})
-+qsd = executable('qemu-storage-daemon',
-+                 qsd_ss.sources(),
-+                 link_args: tools_link_args, link_depends: block_syms,
-+                 dependencies: qsd_ss.dependencies(),
-+                 install: true)
+   #define QEMU_BUILD_BUG_ON(x) \
+   typedef char qemu_build_bug_on[(x)?-1:1] __attribute__((unused));
 -- 
 2.52.0
 
