@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A39A10ED666
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46F8B10ED65C
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 12:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w669o-0005Dv-T9; Fri, 27 Mar 2026 08:19:20 -0400
+	id 1w66AB-0005Iv-8O; Fri, 27 Mar 2026 08:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w669j-0005De-Sg
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:19:16 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w66A7-0005Gz-Ak
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:19:40 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w669i-0000sz-Dp
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:19:15 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w66A5-0000vu-Fk
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:19:38 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B675B5BDD3;
- Fri, 27 Mar 2026 12:19:10 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 408A34D206;
+ Fri, 27 Mar 2026 12:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774613950; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774613976; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=/WDaU6/5xC+3Hka5oEKVP93keIrSbzLey+AzIsZDKco=;
- b=wrlZtsT/Qd4NGWujHBSHeJnpvRT1wE11r51WOoIg5IsR6XiB1m11vjilKkc0SuK2tpHQNy
- srCgWon2kV8RwRt6UytN59DeR+oAZR9QgjYlBmwfa5bLGYT29tjmEjTJKOWwuOcSIoAYEN
- ADQStSp0RU1Mz0Ec6TllqTGZHHklyes=
+ b=zfqR5sUwVtMRpefKENvj5w43V6NbGPY00N/EFVIcM1k2bBFbx2WSkjxvywNQufOnZ11jiQ
+ YUJ3DbXR387QULxA1bUS2g0P1pXbguprg6/+U0FHcqmRWDPak0jlr8ik8IuUXdfljfaQZG
+ AkIc65RjRCRGVsRNY52L7drdslVtZds=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774613950;
+ s=susede2_ed25519; t=1774613976;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=/WDaU6/5xC+3Hka5oEKVP93keIrSbzLey+AzIsZDKco=;
- b=8YgI9fYzMOvmcYmNjTZS0DoAOWqH4sGWWiGVHLrnIbUDRiu+dxkPhqRtczZpktqUIEPoau
- 9CaWNL6c16Tpz+AQ==
-Authentication-Results: smtp-out2.suse.de;
+ b=uAiHDRvKRz8gx4EosKpDPJjfpbDfy4a91+74xco8YF6a9qcxeKhM1cw7Bc+2sermHmYk8K
+ pq/Oh3tdASRecwCQ==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774613950; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1774613976; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=/WDaU6/5xC+3Hka5oEKVP93keIrSbzLey+AzIsZDKco=;
- b=wrlZtsT/Qd4NGWujHBSHeJnpvRT1wE11r51WOoIg5IsR6XiB1m11vjilKkc0SuK2tpHQNy
- srCgWon2kV8RwRt6UytN59DeR+oAZR9QgjYlBmwfa5bLGYT29tjmEjTJKOWwuOcSIoAYEN
- ADQStSp0RU1Mz0Ec6TllqTGZHHklyes=
+ b=zfqR5sUwVtMRpefKENvj5w43V6NbGPY00N/EFVIcM1k2bBFbx2WSkjxvywNQufOnZ11jiQ
+ YUJ3DbXR387QULxA1bUS2g0P1pXbguprg6/+U0FHcqmRWDPak0jlr8ik8IuUXdfljfaQZG
+ AkIc65RjRCRGVsRNY52L7drdslVtZds=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774613950;
+ s=susede2_ed25519; t=1774613976;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=/WDaU6/5xC+3Hka5oEKVP93keIrSbzLey+AzIsZDKco=;
- b=8YgI9fYzMOvmcYmNjTZS0DoAOWqH4sGWWiGVHLrnIbUDRiu+dxkPhqRtczZpktqUIEPoau
- 9CaWNL6c16Tpz+AQ==
+ b=uAiHDRvKRz8gx4EosKpDPJjfpbDfy4a91+74xco8YF6a9qcxeKhM1cw7Bc+2sermHmYk8K
+ pq/Oh3tdASRecwCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5437E4A0A2;
- Fri, 27 Mar 2026 12:19:10 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D2A534A0A2;
+ Fri, 27 Mar 2026 12:19:35 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id HiNgCb51xmlmTAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 27 Mar 2026 12:19:10 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id raEnKNd1xmmVTAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 27 Mar 2026 12:19:35 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>, peterx@redhat.com,
  Juraj Marcin <jmarcin@redhat.com>, Alexander Mikhalitsyn
  <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH RFC v2 01/11] vmstate: Pass in struct itself for
- VMSTATE_ARRAY_OF_POINTER
-In-Reply-To: <20260326210532.379027-2-peterx@redhat.com>
+Subject: Re: [PATCH RFC v2 02/11] vmstate: Pass in struct itself for
+ VMSTATE_VARRAY_OF_POINTER_UINT32
+In-Reply-To: <20260326210532.379027-3-peterx@redhat.com>
 References: <20260326210532.379027-1-peterx@redhat.com>
- <20260326210532.379027-2-peterx@redhat.com>
-Date: Fri, 27 Mar 2026 09:19:07 -0300
-Message-ID: <87y0jdihxg.fsf@suse.de>
+ <20260326210532.379027-3-peterx@redhat.com>
+Date: Fri, 27 Mar 2026 09:19:33 -0300
+Message-ID: <87v7ehihwq.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
@@ -93,8 +93,8 @@ X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  RCVD_COUNT_TWO(0.00)[2];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
