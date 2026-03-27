@@ -4,78 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCF810ED65C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F5010ED65C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 11:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w65Yx-0005Pq-Q3; Fri, 27 Mar 2026 07:41:15 -0400
+	id 1w65fk-0006nC-FE; Fri, 27 Mar 2026 07:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w65Yn-0005PH-UB
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:41:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w65Yk-0007D5-Iq
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:41:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774611661;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d2abvhO4lwnFpJqSctaxIc1ivGIABeHqj/k3gAbmXQM=;
- b=Kfr06iMIGQdfuWYHjIGc4JtlLrqJ2NiyP4gCdw/8skwi4s9f2OthKuKRl2H5yH5Kl3+bLg
- miCLxQ8SD7WxMhzJJVKZt+ODdgHGxGMc81UJtGuTw1EA1jAVfisTgZkIH/Z094/vkaW+3b
- Apr58GYBuLZ8zvIb97OvBzLXawCQo6Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-FU7T0eChM52L9zawaCDC1Q-1; Fri,
- 27 Mar 2026 07:40:59 -0400
-X-MC-Unique: FU7T0eChM52L9zawaCDC1Q-1
-X-Mimecast-MFC-AGG-ID: FU7T0eChM52L9zawaCDC1Q_1774611658
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61B1118005B0; Fri, 27 Mar 2026 11:40:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.112])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7046E1800576; Fri, 27 Mar 2026 11:40:55 +0000 (UTC)
-Date: Fri, 27 Mar 2026 11:40:51 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Silvan Kaiser <silvan@quobyte.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, pierrick.bouvier@linaro.org, eblake@redhat.com,
- armbru@redhat.com
-Subject: Re: [PATCH v1 0/3] block: Add 'posix' option for file locking
-Message-ID: <acZsw79BucObyWwx@redhat.com>
-References: <20260326091948.194529-1-silvan@quobyte.com>
- <acT9pOs5-9D8OqSm@redhat.com>
- <CALsyUnNqhkeA4jNP3XvNkUTJwa+O9MtkY38Kg3LK4TvB8J3BDw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALsyUnNqhkeA4jNP3XvNkUTJwa+O9MtkY38Kg3LK4TvB8J3BDw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w65fi-0006ms-8D
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:48:14 -0400
+Received: from va-1-115.ptr.blmpb.com ([209.127.230.115])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w65fg-0000Is-97
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 07:48:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1774612082; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=JsbOBj5i/lT4839SreJ+wtV51TnPNoLLGXFIaKDpXuU=;
+ b=e9HO0P9mo9lddAybTwGhaUIoA+DDTWm8UjsvQcww8sYAJ1nf6pVuZTDWsyIXGx6BOkZBhN
+ 8OfDKG3TzxfdPfGBhWSKrh+T2dP4Byl67co9pl6jxXSSUqS0qDCY2I4I6FKrvF2BEJXl6s
+ wCAaRPQ2YSQPENUqhulp3SVGu6Fx20/pOTMR6Y5vxChdiUmEbiVU6Xd37uRjBYlZhlNbWj
+ 2PSTTRUMnRFoCHZAuFVQRXo9qkD3W8SqTpUOFT3NgkIoCGTo5UTJSIliC4N4Wwr/8DG5/I
+ o1A93es9e1rrSYisMSzx8PRJAiGhMksFEQ8AGWJKSI24sqBNNVL8YiF+6Vnhfg==
+References: <20260323133744.46493-1-hongmianquan@bytedance.com>
+ <acWJ1-aAmegtcOCv@redhat.com>
+ <ac3b2678-e184-41b1-9fd3-92371e626ef3@bytedance.com>
+ <acZe0gC1yvagJbP0@redhat.com>
+X-Lms-Return-Path: <lba+269c66e71+ba24d9+nongnu.org+hongmianquan@bytedance.com>
+From: "hongmainquan" <hongmianquan@bytedance.com>
+Subject: Re: [RFC] monitor: Fix deadlock in monitor_cleanup
+Mime-Version: 1.0
+In-Reply-To: <acZe0gC1yvagJbP0@redhat.com>
+X-Original-From: hongmainquan <hongmianquan@bytedance.com>
+To: "Kevin Wolf" <kwolf@redhat.com>
+Cc: <qemu-devel@nongnu.org>, <dave@treblig.org>, <armbru@redhat.com>, 
+ <wubo.bob@bytedance.com>
+User-Agent: Mozilla Thunderbird
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 27 Mar 2026 19:47:51 +0800
+Message-Id: <16bd902d-da8c-4601-bdf7-61d0a50e632b@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Received-SPF: pass client-ip=209.127.230.115;
+ envelope-from=hongmianquan@bytedance.com; helo=va-1-115.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,49 +70,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 27, 2026 at 12:25:41PM +0100, Silvan Kaiser wrote:
-> On FUSE, OFD locks are indeed indistinguishable from POSIX locks for the
-> underlying fs, which is part of the problem — the filesystem can't ensure
-> the correct handling.
-
-QEMU will currently request an OFD lock, which will silently degrade
-to be POSIX lock semantics on FUSE. QEMU is fine with POSIX lock
-semantics in general, we merely prefer OFD if possible.
-
-This patch adding a "posix" option will cause QEMU to request a POSIX
-lock, which will have the same semantics we already get.
-
-How is adding this 'posix' option a benefit ?
-
-> The practical issue we're hitting is stale locks not being cleaned up
-> across service restarts (e.g. Kolla/Cinder container restarts), which can
-> block volume access.
-
-How does this patch help solve that ?
-
-> There's also a detection caveat: QEMU probes OFD capability against
-> /dev/null, which reliably reflects kernel support but says nothing about
-> the locking semantics of a remote filesystem actually serving the images.
-> Combined with varying OFD support across different versions of various
-> remote file systems, an explicit POSIX flag would give operators a
-> straightforward way to ensure consistent, predictable behaviour in setups
-> where OFD lock semantics cannot be relied upon.
-
-The distinction between OFD & POSIX only matter at a client process
-level, it shouldn't affect remote use. OFD locks just fix the crazy
-POSIX semantics where closing any FD pointing to the file in QEMU
-would release the locks, even if thy were held on a different FD in
-QEMU.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+=E5=9C=A8 2026/3/27 18:41, Kevin Wolf =E5=86=99=E9=81=93:
+> Am 27.03.2026 um 08:56 hat hongmainquan geschrieben:
+>> =E5=9C=A8 2026/3/27 03:32, Kevin Wolf =E5=86=99=E9=81=93:
+>>> Am 23.03.2026 um 14:37 hat hongmianquan geschrieben:
+>>>> During qemu_cleanup, if a non-coroutine QMP command (e.g.,
+>>>> query-commands) is concurrently received and processed by the
+>>>> mon_iothread, it can lead to a deadlock in monitor_cleanup.
+>>>>
+>>>> The root cause is a race condition between the main thread's shutdown
+>>>> sequence and the coroutine's dispatching mechanism. When handling a
+>>>> non-coroutine QMP command, qmp_dispatcher_co schedules the actual
+>>>> command execution as a bottom half in iohandler_ctx and then yields.
+>>>> At this suspended point, qmp_dispatcher_co_busy remains true.
+>>>> Subsequently, the main thread in monitor_cleanup(), sets
+>>>> qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since
+>>>> qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped.
+>>>> The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it
+>>>> executes the scheduled BH (do_qmp_dispatch_bh) via
+>>>> aio_poll(iohandler_ctx, false), which attempts to wake up the
+>>>> coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx.
+>>>> The main thread then blocks indefinitely in aio_poll(qemu_aio_context,
+>>>> true), while the coroutine's wake-up BH is starved in iohandler_ctx,
+>>>> qmp_dispatcher_co never reaches termination, resulting in a deadlock.
+>>>
+>>> If the real problem is that the aio_poll() in the main thread is never
+>>> woken up, does this fix the problem? (Completely untested, and would
+>>> need a comment if we commit it.)
+>>>
+>> After our reproduction tests, this change also resolves the issue and
+>> proves to be a more appropriate solution.
+>> Should we proceed with this commit based on our discussion, or do you
+>> require further validation?
+>=20
+> If it works for you, let's move forward with this. I think we just
+> should add a comment like "if we're in AIO_WAIT_WHILE_UNLOCKED() in
+> monitor_cleanup(), make sure that it doesn't wait for an event in the
+> main context, but iohandler_ctx is polled" in the real commit because
+> it's not obvious why the aio_wait_kick() is needed here.
+>=20
+>> Thanks,
+>>> diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+>>> index 9bb1e6a9f4a..0a0e9e07756 100644
+>>> --- a/qapi/qmp-dispatch.c
+>>> +++ b/qapi/qmp-dispatch.c
+>>> @@ -128,6 +128,7 @@ static void do_qmp_dispatch_bh(void *opaque)
+>>>        data->cmd->fn(data->args, data->ret, data->errp);
+>>>        monitor_set_cur(qemu_coroutine_self(), NULL);
+>>>        aio_co_wake(data->co);
+>>> +    aio_wait_kick();
+>>>    }
+>=20
+> Do you want to send a v2 patch that takes this approach, or would you
+> prefer if I send it as a proper patch?
+>=20
+> Kevin
+>=20
+I will send a v2 patch adopting this approach later. Thank you for your=20
+advice.
 
