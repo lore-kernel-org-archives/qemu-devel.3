@@ -4,100 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93EB10F2865
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 18:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6736710F2865
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 19:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6CCb-00088k-Ni; Fri, 27 Mar 2026 14:46:37 -0400
+	id 1w6DF9-00026K-6X; Fri, 27 Mar 2026 15:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6CCQ-00086G-T6
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:46:28 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6CCO-0002px-OU
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 14:46:26 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-65006c99d38so228122d50.3
- for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 11:46:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774637180; cv=none;
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1w6DF7-00025y-Hy
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 15:53:17 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1w6DF6-0004CR-5f
+ for qemu-devel@nongnu.org; Fri, 27 Mar 2026 15:53:17 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62RI2i6C1458620
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 19:53:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Qd0Pk74ydHdV4h1UgEkpT8cLx7DkI2ZsW4jMdkVqiiM=; b=ISgHeZz22edg0g+W
+ tRehEIluxPAM+06wJwYsxKgMmL06DKVTxMdGyTsrmDp7HYDE7JejeAByDVzyg/PG
+ Hg2Nm+YOPRiNOyGrY0Bd7EyLeiiU/kMAhBF8Uo18wKwr4ZZl3LqwtCTKl1YCb4L4
+ hgqxF8saLLTfJH7iUsu59UcuffxVnsBEBb2h7xQP9VE6MEwR5CHDIGgzawCrT/p/
+ hKhe8SDaM2/mJSWSf9KEJW3qKRijdAzVzCO1HvTs6s1S2dolZjk51KAU4Fo77Y2L
+ ALSfV8ITZJK97IFfR2vUQYBJbG61UdeZR/Zsh2qsUasWahLavjLithRGHNgRpNCc
+ GZcghw==
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5dd6m6en-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 19:53:13 +0000 (GMT)
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-79ac9fad874so42259817b3.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Mar 2026 12:53:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774641193; cv=none;
  d=google.com; s=arc-20240605;
- b=N7foHAlqo32Hj3umHDTGA6ScSwVQ/B2rLFa6DEYW/Dt71PZrB6Ds4/bnzX5v6RArTG
- Dz46cYYrtW+2bKjSSSiBd7TMPsf5XwfeWCJrs/u6qZwLFjjuROosSV94aAAlcN0N8yTf
- Ph+J76OwWMpKxqOBqjAD4jxqcJDAl/UoFWg/vSgtVq/JRvj0AJ7AK9UWlWTV4/X+DjUC
- ZzDdSUwtLWqe1j6EqOKxtuvd/rKpAXpFI46/eCiXbDSdptXj8mc07u9Gw/XNE0tq7FJZ
- vUUaQ7wt79icXIZ4+nMvJBgqbSeJ9hGqUvovhaTyOI2aoGc+ERsazIvbgT1PtgjH+sNc
- N2XA==
+ b=ScFu4fp8YTGXBZLPv7zLYkUlOLIU7k4YJkwWJC2mRhw/d+KrWXEV7kfBfcvIR5IePq
+ KxFxLF0kFGlAaX73B+ugGkCHqqmyRlF2s5qOczfwSa0EmQm8qKe7tf5Di8DuSnyJz5gC
+ pCYQQQ9cVcFFjiWHXmwQPBUQgMo3WVs+J4LyahQMrzsXtFKk3aSCM8EYWcKZeUbOa25g
+ 7Z2TKKrRIul5QE4uygvbIioPczdkkOLFpVYUZaUn5U3T0TPwBsEjx44AtCSAlZV3pLOG
+ ooArOMB36BJinTtSEthJn67m5EtsdHIatoinQe+r3DqHYEDtnD3ciz/apzuM72Y+JyIs
+ QbqQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Vo1vNJohjwePCOE1U/4xs4BMACehosBhajnI7Fo4Agk=;
- fh=qJo+eYuOX1Hs9gvlBO+6VP2wDkpE7Fo9OW/RrPQyPo0=;
- b=A4ykpnSHhpIsbuAnvlOiZcPFKWJFYoMtjid35KWEnNnyw2EyLyl9h+LOBptXNR2lH6
- YA9PBBNYgGlw7nhvWapTMqIAbXgwJmeCM4F/wmSERAuoLrNZH1w9nu/huDJbMzMkOtCM
- ojwxXhm1AqQ3S55z18qiiQeud9gyugPd3CdqJITmEFP8rE6u8e+We7ja/Q1PIvO3cZdR
- vv0B3Keg3txtsCUElCSKGxzHcf9QFKWx/p6TTLZOgqLbk5nqurFkCW1HZycmOGTo5X/c
- LE4tVYnUqWn/76XAWTmGSuZnoIp+cY5PxnRwweTBGV/LmEu9uRoaLrX/6fUdj1/tXmP5
- b9hg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Qd0Pk74ydHdV4h1UgEkpT8cLx7DkI2ZsW4jMdkVqiiM=;
+ fh=D097zTbKkV0h0ZARb1Gldh/JYIcedmez16P/3jPTZfs=;
+ b=KDplb5r3EcHdYjFrhE8dQpNoP4X/uxfG4RxyguDJwOYYceRSJhE0nBXfJYUrwMwRrO
+ +ZzT0kFeRlCJb2om7IcUISWhZVWvp3CAvTZE1q48hyn2+TNYI/oqxSc+6F8TwnjC0rsr
+ 7t7MXwiVualU7aNQQoWuX+EFB3vyh20mI4s+2Rw+8i62MvdeI606wE4ZnmDr4zNx6Api
+ k98Xz/mwgyobVFYLSssq2/JI8tg9HlV++YXKg1zxJwEuAvciGxeOfNVxsyHHBayBp3SX
+ xWER9v3QYbfyBZKkLqqSwEkaCrl2EfJriG5wl6WDmF+sWAXDjCE4lXDEtkbK5p5n0N0B
+ aYhw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774637180; x=1775241980; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Vo1vNJohjwePCOE1U/4xs4BMACehosBhajnI7Fo4Agk=;
- b=AvuYKPm0erPZEuCroHKZU1eAXrwj20/mEr6yRQBMzfud3sL7Cd8NrZ+ClPpFIlNTPi
- oXxo+Gzvpt26PFdLJVamGxSty/0XGlZzsaW1UF9HFOS/+LN2gugjjBXyfXjev94gx0BW
- MkzHQyKQ6VWomWsQ7w9gt/w9lO3p+7uIeap0pVabT5vBe+TVw1ECz+6bLzqPJ25Q4eiA
- 7b5MIXqkYtQiYK0UKA0rq9xk66FfveCrxO55rRUkliSlHgIGx96YettAt21MLu0I6RZ0
- gI9m5nfYSAlcs291YHo3FWnpIB3MncFoN95o56i2sheSSj19xwBkUNYUTsN3/uP9fyZu
- P7VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774637180; x=1775241980;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1774641193; x=1775245993; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Vo1vNJohjwePCOE1U/4xs4BMACehosBhajnI7Fo4Agk=;
- b=RhiHI6/z4U+zP+jEOCsjXja+TtnJNd3zXTsBE+05nJ5ujP2WpzXe+bnap9fhZqHber
- StFmiSfO282xxoFZg5F7OWkHmwalnIei/292m784xuGUV6tUMgwyBIgLclF13W2OU9be
- VaYQUcVAWA8lGkNry6hM1/6ScllBpI6NXatMbWGwi3xOyFVQ1DsFhBknYqRsA+Tr3ijP
- CkZUNYCRkid3JLU359fScKzbAajeepfin2nmtHK2GZhQ9cAM+Ub+ICvCHYdYdkpPDMbw
- trBiL586j6ZlVFC4xHpGCfLs/Y54dQldzrnKvyouMAfc+s7VX+2pX+WSwuA3z6xtq7IV
- 7qmg==
-X-Gm-Message-State: AOJu0YzdGQPzfcDMAFq2RCD+eEvuoW5fBZPP43/WQxQcJxsK+rSP9ZU2
- Bipbj37VhQdTMiKS55S7kHwoGLcQqT6xZy1QZDpz0atRkGNxuinAh4utMNDi3rbSzEIDqkxuMkx
- GRHu03PwBtRitVVS767ozNwHAWezWIrEPZhJkU/U1uQ==
-X-Gm-Gg: ATEYQzyAQf0eHbbb3J/wdly/+q7JEwOQ0mMk6yLG9DoHxklj+pIHnmzAZJq8QkKcKUw
- bMU4kM+wH3ObXMK/Z675CnieDi84uW+sox+aJ/Q+9xoz6R0t4yBz3b8Fa2xNicb0cUrZtEyoyQw
- TXZizzNzOgIz0n7AZtgcgWDkMQ+euIz1eSXXD7TU7lbxs5Pku9PKGlXSwuSOCliFpGUT++F/NB0
- ZaYehU8Vabk+jHPxIMJIsG0pY1YIZc/jMA4mUzDTgPCzRblO6wm5p25IVjwjjTEIyQaqoifbDA8
- BM4md6OuhMqj/rTGQ7mK3Dfdr+57dDtsjj4QpLRwhRKT8Z2CQjyO7eGCowJpZ97jjFs=
-X-Received: by 2002:a05:690e:4850:b0:64e:ebb4:1bd3 with SMTP id
- 956f58d0204a3-64ff71d6b14mr2680737d50.26.1774637180134; Fri, 27 Mar 2026
- 11:46:20 -0700 (PDT)
+ bh=Qd0Pk74ydHdV4h1UgEkpT8cLx7DkI2ZsW4jMdkVqiiM=;
+ b=YX2SxLEbfBpSyd5Xwz83TqAJSELPYtRx84f1/0j/+D7QNu/6DDIMJqNCnHyyp7/Ie1
+ zzmvnivoccCuxc9d9fMBtE9AjCmU56YC83c7UsyAifx5w4m4UZACO/DU1wcg9CML4DgL
+ 6oSAM5vvmOELZK1ypT1ZcWRMse0EYLeU1yz3lKON8p5LY6xdXreYkJzKx3U2F1cvq/ir
+ 6YGPMb/B+772sN4g93gPTrP75dYXsU1W9T9jcapO01taM10l/u40SatfaPWTPxRklpFG
+ MDUgRt2a8595SSS1sIK3cp23vz+OA8GuW8MlD4u+x5nVtmwFnGodBukfIR3HbfPkB66U
+ ZQdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774641193; x=1775245993;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Qd0Pk74ydHdV4h1UgEkpT8cLx7DkI2ZsW4jMdkVqiiM=;
+ b=rNIuJ8Ww0gFmPZmifsHUnPZEGZo3QLyRFJbaXrwJPpyEt40Z1srggn04QuWU4jh6wK
+ uG0cYsRozZzeGzj4OxmBCc5skofQliqxVG4iXQequ5in7HmuLo6zEMhZhquBNfPwu4Rt
+ qWhYWXmGqgi8Xft+MzMF9i7iwFRWdhzbbSCofe2yfF8ekh5xL5t7qwPr8BpkooveFqsF
+ IBl3s0/YnmYS6jAzZcGXPmZ2yvYwjVGvOyi0Y7IFjzkqK4LzASzt/TWW3i86vI94Ax8o
+ iTLC0YHfUX+B3nTx4b8Gg8vtjcqPdjI7YV/ZmRoPI50nJk5afO7YD+zvZjXLkS9aN6T7
+ JBnQ==
+X-Gm-Message-State: AOJu0YwmtoJH7pogen3/Ce0kcOniVKD2AN8izih2yez+7yvhHSqnXUs0
+ jqjB6hp77YG1n8Y4L9XtfWob3Eid1mpRaSPZJG4ovwKc0GCqEBBDxW239YVvTR00iACFRX4v99b
+ XPIkY470HDRUhjQTS5LIEfopB3EbNpjVzEo9FCngBXa+awMVEMf1uDY9IUER8Y60tea6KcHzeF3
+ s7lb5UeJKaZVNhSNZxL4SUlJci3au5bh+K
+X-Gm-Gg: ATEYQzyub5h+z1dmfqW1tWDpZbgCAchJOxiRuhUGUY1rkw+FqGcEX2q4LOqd2J38TwJ
+ cgudGoow4/BzetxesVTHrE3Kc4e86jivTIa3Sm3M2j5iHacIBIgB+GlSFzCRAd0u1v7n9bRhzlB
+ TFOWZRhm3oFpoqmZPDBz7HDvD63qfLoLvVlHWVCXA+HKYDqaR/GeNQz8/v4uWrhcXCnYM1TB+5o
+ qf9+NM=
+X-Received: by 2002:a05:690e:4005:b0:64e:a7d4:473a with SMTP id
+ 956f58d0204a3-64ff7448831mr3829350d50.67.1774641192795; 
+ Fri, 27 Mar 2026 12:53:12 -0700 (PDT)
+X-Received: by 2002:a05:690e:4005:b0:64e:a7d4:473a with SMTP id
+ 956f58d0204a3-64ff7448831mr3829325d50.67.1774641192322; Fri, 27 Mar 2026
+ 12:53:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260327174701.364328-1-pbonzini@redhat.com>
-In-Reply-To: <20260327174701.364328-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Mar 2026 18:46:06 +0000
-X-Gm-Features: AQROBzDIeU7F3PZuHOniHL1CJUWd_7LZMrrttdQBM9qDgkhyfaLvzJD28WAKArI
-Message-ID: <CAFEAcA8R0qGsaBAQLgAGRgU1H+4JRpRCa8TaeAcdYo25R=dQww@mail.gmail.com>
-Subject: Re: [PATCH] hpet: fix bounds check for s->timer[]
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- "Yuma Kurogome, Ricerca Security, Inc." <yumak@ricsec.co.jp>
+References: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
+ <20260217212245.95321-8-ltaylorsimpson@gmail.com>
+In-Reply-To: <20260217212245.95321-8-ltaylorsimpson@gmail.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Fri, 27 Mar 2026 14:53:01 -0500
+X-Gm-Features: AQROBzD2I4NLqXrxEcwVIsGCh8XUGu43Qh_1nUq6tsPaBrLq9TQ4MCiVeqB3_o4
+Message-ID: <CAJ+KCYPf+Ux_ustV4iOma+Q5kV5H__JVAeHxfDSe32ig0NXPmg@mail.gmail.com>
+Subject: Re: [PATCH v3 7/8] tests/tcg/hexagon: Add test for revision-gated
+ instruction decoding
+To: Taylor Simpson <ltaylorsimpson@gmail.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com,
+ matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=NenrFmD4 c=1 sm=1 tr=0 ts=69c6e029 cx=c_pps
+ a=NMvoxGxYzVyQPkMeJjVPKg==:117 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=_glEPmIy2e8OvE2BGh3C:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=oiUj86p4EGMqR00RCskA:9 a=QEXdDO2ut3YA:10 a=kLokIza1BN8a-hAJ3hfR:22
+X-Proofpoint-GUID: BH5aLjAHk71i12beNV1F27v6tmlITp_c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDEzOCBTYWx0ZWRfX8cE75V7maEwk
+ aGjIjnZBWFsNpJWBYWtPTmXrlJRpzAjcyU/NEsJNPNIFFC1nWiiqkPWJyHNvrLln0QAmVj6hDbx
+ atH9IkO56K9JoLP8t4xK2nUfVCbRaZDF3smdCtFwvKic7ppPZ+VlsfYJB6BxDdah07XZ4+ZNjn0
+ zVNrQTIq9C9EI8szIUQxGTU85dfHYs+8nCKXVNL4D0Ndk2stewwqy5DqYkmNQJTbWh5m51xvTe5
+ 3ksuOptFKhiEFo5O+UwfrGM2NstXai/VbPbN+f0HlkMAevM+1Y6gCE3bOj4Mcq6Um6/DBuCIYbO
+ Ts1zAPbRrwY1C+/3l5IY4+Y36PHjE8eZucGmgOQipLvQCVWnHAnEcWu2uH1rpmcvl/zWP/TS6zY
+ 2QrUvmlKqf0V1AdpqKVnEcHj7QRH9sXxqP8f9OgOqWw932GTGMFdscLskuxw78mAPvFq4h0VbYm
+ 59JNY1uNw9laRtlbuBA==
+X-Proofpoint-ORIG-GUID: BH5aLjAHk71i12beNV1F27v6tmlITp_c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-27_01,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
+ clxscore=1015 suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603270138
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,34 +165,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Mar 2026 at 17:48, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Tue, Feb 17, 2026 at 3:23=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
+l.com> wrote:
 >
-> Fix an off-by-one issue in QEMU's HPET read and write MMIO handlers.
-> Both handlers check timer_id > s->num_timers instead of timer_id >=
-> s->num_timers, allowing a guest to access one timer beyond the valid
-> range.
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
 >
-> The affected slot is initialized properly in hpet_realize, which goes
-> through all HPET_MAX_TIMERS elements of the array, so even though
-> it is not reset in hpet_reset() the bug does not cause any use of
-> uninitialized host memory.  Because of this, and also because (even
-> though HPET_MAX_TIMERS is 32) the HPET only has room for 24 timers in
-> its MMIO region, the bug has no security implications.
+> Add check_rev_gating, a linux-user test that verifies the decoder
+> rejects instructions from a newer CPU revision than the one selected
+> by the ELF binary's e_flags.
 >
-> Commit 869b0afa4fa ("rust/hpet: Drop BqlCell wrapper for num_timers",
-> 2025-06-06) silently fixed the same bug in rust/hw/timer/hpet/src/device.rs.
->
-> Reported-by: Yuma Kurogome, Ricerca Security, Inc. <yumak@ricsec.co.jp>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualco=
+mm.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  tests/tcg/hexagon/check_rev_gating.c | 141 +++++++++++++++++++++++++++
+>  tests/tcg/hexagon/Makefile.target    |   6 ++
+>  2 files changed, 147 insertions(+)
+>  create mode 100644 tests/tcg/hexagon/check_rev_gating.c
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-If we can only fit 24 timers into the MMIO region, should we do one of:
- * lower HPET_MAX_TIMERS
- * enlarge the MMIO region
- * leave HPET_MAX_TIMERS where it is but make realize enforce
-   that num_timers <= 24 ?
-
-thanks
--- PMM
+Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 
