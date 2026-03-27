@@ -4,81 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BECC10ED66D
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 12:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4201D10ED66E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Mar 2026 12:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w66LS-00025l-9V; Fri, 27 Mar 2026 08:31:22 -0400
+	id 1w66WI-0003rF-Gt; Fri, 27 Mar 2026 08:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w66LQ-00025B-Lj
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:31:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w66WG-0003qa-33; Fri, 27 Mar 2026 08:42:32 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w66LP-0005pV-2Y
- for qemu-devel@nongnu.org; Fri, 27 Mar 2026 08:31:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774614677;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FTETYdc5HyoZBB2140cBdzLG6JianjCznypgVR7apV0=;
- b=JOueBIU0jrQiFWkUHULL1eDtMt5R+I7rIo3GvZL17lxz653vxqaD8/8kAPBYaVKRqDYuJt
- NwMQthPfBbEMjqEaey//DB8/hvMcns67nLtMPKIBO5VICdbv624Dpm50jbDzIeygA+rKWI
- X0gN0CR4/F7ZMNK3A2zSX4a4vEXNhxk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-494-GMzU9XtYMYqgdEmzp2Z1SA-1; Fri,
- 27 Mar 2026 08:31:15 -0400
-X-MC-Unique: GMzU9XtYMYqgdEmzp2Z1SA-1
-X-Mimecast-MFC-AGG-ID: GMzU9XtYMYqgdEmzp2Z1SA_1774614674
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35E7418005BA; Fri, 27 Mar 2026 12:31:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.239])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88B4E18001FE; Fri, 27 Mar 2026 12:31:11 +0000 (UTC)
-Date: Fri, 27 Mar 2026 13:31:08 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yan Vugenfirer <yvugenfi@redhat.com>
-Subject: Re: [PATCH 7/7] meson: Build block_syms and qemu_syms only when
- enable_modules
-Message-ID: <acZ4jBdg9dvR2o4f@redhat.com>
-References: <20260326160033.68318-1-kkostiuk@redhat.com>
- <20260326160033.68318-8-kkostiuk@redhat.com>
- <acVonq8XqzPItFxx@redhat.com>
- <a5a61b29-adea-457d-a3e8-c62e88cf8ff6@redhat.com>
- <acZkNMFwyT6hz4-C@redhat.com>
- <CAPMcbCo5SLnh=YV=QxE67X4wNz9UFFgR8sL13j0ODA_PPFQBtw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1w66WE-0007RB-59; Fri, 27 Mar 2026 08:42:31 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62R303SN573231; Fri, 27 Mar 2026 12:42:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=rM5CqSwxGGyRgiWjqee5/1pXOOhnnNzwwZd0Yc5ms
+ bQ=; b=g12EANPS9AtPljqcOAo9N+HW637jazRWrm5mgeQksSicRclnu8Yt8JT4B
+ HqlhbBGZq4fLDKhXr2OcpBu+oL0xRW3fDj+95uFzdDeaPfrwh7iyJm7t8Go6ViA/
+ Atb/esepcLyBzJbJ7kWIS0OWQACVtayTGIcZtBU+xfmNsBGfgyCXUeHbP/YHog5i
+ +B96y6nqK7U0UVr+F4n1wk6+4iPVAG4FgJOfpri3gMWVzly+BP6aCJy+dOwSqbk+
+ 0NJGpiWUS6xOYrQXgCXOvmmtsMUvR3Q79IDW1gn6At70lCSSMutfc0WyslIzMhj2
+ TVXlVD909rXp6sbGk45lpEWDileyQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d1ky0gwk4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 27 Mar 2026 12:42:15 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62RB5u0l012213;
+ Fri, 27 Mar 2026 12:42:14 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d27vkfabs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 27 Mar 2026 12:42:14 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62RCgAc330867958
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 27 Mar 2026 12:42:10 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF2D22004B;
+ Fri, 27 Mar 2026 12:42:10 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 61D0220043;
+ Fri, 27 Mar 2026 12:42:07 +0000 (GMT)
+Received: from shivang.com (unknown [9.124.223.21])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 27 Mar 2026 12:42:07 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, milesg@linux.ibm.com,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org,
+ Nathan Chancellor <nathan@kernel.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2] ppc/pnv: generate dtb after machine initialization is
+ complete
+Date: Fri, 27 Mar 2026 18:11:36 +0530
+Message-ID: <20260327124136.983955-1-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPMcbCo5SLnh=YV=QxE67X4wNz9UFFgR8sL13j0ODA_PPFQBtw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDA4NCBTYWx0ZWRfX27iXYD2XvAEg
+ z/AvgdP5ElKJWyn0q9eiZr5QSoyJsfOaDElnL7Q6kHQ2JOrgaPjJiHvO5RlSWSPRNRCbyYhKHvA
+ mxM166uzn2AxU3a0SPkyw7SZIE3xJXgEXRqU9V69BPMJNOIe1YZnL/He+wzA3vBJ3jXjDKvHRzp
+ oQL3rujdlovJkOHVxEQtTcfEC9YWra4PKXwOl3QZCrbYGKXB/bRsWIlevTauUvz8e39pOGcOgM/
+ BMPTw03Zl7wqlh8qHyWXsWkg5kRivg6/M+AmJaK+aN5aMInAVWBY3aX93w8M5/LeTBf88PS0Sgm
+ pzzlOxXYOucBt3msg9kZqAxAA2sxpXRIJbJKnfTCVdNowxPg7N7UXHH046qHd8X/SUTw4OppLkW
+ KLEBtWpJCBGlicYGPiE54ci0TxOzPNmi6F1nNlTQ7V4WDVs8wm1Ni4KXSpmhT1ao5HMTp29C1rj
+ 5H8AOTY8ZDbjZ5U5bIQ==
+X-Authority-Analysis: v=2.4 cv=JK42csKb c=1 sm=1 tr=0 ts=69c67b27 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=KKAkSRfTAAAA:8 a=EF3hw48zBu3OhOgeIqkA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: S8BiI-sJ9k9MEIHVLcnIwksJPpYN-Vm3
+X-Proofpoint-GUID: uquMS-PIIoPErc8R3hnE0TqxIUa38oFR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 adultscore=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603270084
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,41 +124,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.03.2026 um 12:10 hat Kostiantyn Kostiuk geschrieben:
-> On Fri, Mar 27, 2026 at 1:04 PM Kevin Wolf <kwolf@redhat.com> wrote:
-> 
-> > Am 27.03.2026 um 11:47 hat Paolo Bonzini geschrieben:
-> > > On 3/26/26 18:10, Kevin Wolf wrote:
-> > > > Am 26.03.2026 um 17:00 hat Kostiantyn Kostiuk geschrieben:
-> > > > > Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-> > > >
-> > > > I'm not a meson expert, but the change itself looks ok to me.
-> > > >
-> > > > However, the commit message is definitely a bit too empty. It should
-> > say
-> > > > why you want to make this change.
-> > >
-> > > Agreed, I *think* it's because scripts/undefsym.py would immediately exit
-> > > here:
-> > >
-> > >     if len(args) <= 3:
-> > >         sys.exit(0)
-> > >
-> > > but it should be spelled out.
-> >
-> > If that's a problem, why doesn't ./configure --disable-modules fail on
-> > Linux?
-> 
-> It does not fail because it exits with 0, no error.
-> Problem in my environment because nm is missing,
-> but at the same time, running undefsym when modules
-> are disabled has zero sense because nothing will be generated
+Currently, the machine dtb is generated in pnv_init(), before all devices
+are fully initialized. This can result in an incomplete dtb for the system,
+as seen in bug [1].
 
-Ok, makes sense. Then how about making the subject line something like
-"meson: Don't require nm for non-modular builds", and explaining in the
-commit message on which platform nm is missing and that the change is
-harmless because it already didn't do anything before?
+Fix this by deferring dtb generation until machine initialization is complete,
+using the machine_init_done_notifier hook.
 
-Kevin
+[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
+
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-stable@nongnu.org
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+
+---
+Changes:
+
+v2:
+* moved pnv->bmc initialization to pnv_machine_init_done.
+
+v1:
+* https://lore.kernel.org/all/20260324135026.247418-1-shivangu@linux.ibm.com/
+---
+ hw/ppc/pnv.c         | 58 +++++++++++++++++++++++++-------------------
+ include/hw/ppc/pnv.h |  2 ++
+ 2 files changed, 35 insertions(+), 25 deletions(-)
+
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 7e54b6bc60..524563dcfc 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -748,31 +748,10 @@ static void pnv_powerdown_notify(Notifier *n, void *opaque)
+ 
+ static void pnv_reset(MachineState *machine, ResetType type)
+ {
+-    PnvMachineState *pnv = PNV_MACHINE(machine);
+-    IPMIBmc *bmc;
+     void *fdt;
+ 
+     qemu_devices_reset(type);
+ 
+-    /*
+-     * The machine should provide by default an internal BMC simulator.
+-     * If not, try to use the BMC device that was provided on the command
+-     * line.
+-     */
+-    bmc = pnv_bmc_find(&error_fatal);
+-    if (!pnv->bmc) {
+-        if (!bmc) {
+-            if (!qtest_enabled()) {
+-                warn_report("machine has no BMC device. Use '-device "
+-                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
+-                            "to define one");
+-            }
+-        } else {
+-            pnv_bmc_set_pnor(bmc, pnv->pnor);
+-            pnv->bmc = bmc;
+-        }
+-    }
+-
+     fdt = machine->fdt;
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+ }
+@@ -984,6 +963,37 @@ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
+     return chip_id == 0 ? 1 * GiB : QEMU_ALIGN_DOWN(ram_per_chip, 1 * MiB);
+ }
+ 
++static void pnv_machine_init_done(Notifier *notifier, void *data)
++{
++    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
++    MachineState *machine = MACHINE(pnv);
++    IPMIBmc *bmc;
++
++    /*
++     * The machine should provide by default an internal BMC simulator.
++     * If not, try to use the BMC device that was provided on the command
++     * line.
++     */
++    bmc = pnv_bmc_find(&error_fatal);
++    if (!pnv->bmc) {
++        if (!bmc) {
++            if (!qtest_enabled()) {
++                warn_report("machine has no BMC device. Use '-device "
++                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
++                            "to define one");
++            }
++        } else {
++            pnv_bmc_set_pnor(bmc, pnv->pnor);
++            pnv->bmc = bmc;
++        }
++    }
++
++    if (!machine->fdt) {
++        machine->fdt = pnv_dt_create(machine);
++        _FDT((fdt_pack(machine->fdt)));
++    }
++}
++
+ static void pnv_init(MachineState *machine)
+ {
+     const char *bios_name = machine->firmware ?: FW_FILE_NAME;
+@@ -1244,10 +1254,8 @@ static void pnv_init(MachineState *machine)
+         pmc->i2c_init(pnv);
+     }
+ 
+-    if (!machine->fdt) {
+-        machine->fdt = pnv_dt_create(machine);
+-        _FDT((fdt_pack(machine->fdt)));
+-    }
++    pnv->machine_init_done.notify = pnv_machine_init_done;
++    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
+ }
+ 
+ /*
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index 24f8843a40..90028f974d 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -111,6 +111,8 @@ struct PnvMachineState {
+ 
+     bool         big_core;
+     bool         lpar_per_core;
++
++    Notifier     machine_init_done;
+ };
+ 
+ PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
+-- 
+2.53.0
 
 
