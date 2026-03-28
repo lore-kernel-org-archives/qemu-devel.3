@@ -4,101 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 067EA10BA425
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 06:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 424DF10BA424
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 07:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6NcN-0002EA-VV; Sat, 28 Mar 2026 02:58:00 -0400
+	id 1w6O26-0006qq-Tm; Sat, 28 Mar 2026 03:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w6NcE-0002CM-S4; Sat, 28 Mar 2026 02:57:52 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w6NcC-0003qK-Bs; Sat, 28 Mar 2026 02:57:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774681037; bh=FlFKF9yf/2Wm9un3pL3Ky1AUXd9m3ci6cug3ZtHnJGo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=uyXWxamh7005rnkP7Pyu1QFGn9oAUDtFDVgyOS/XBXy4l2A1yXgYph1ZhZdXfcWB4
- CqHk253AqTIki+4TISflgwpPOojmWAd2hRqmxrww0/f7+on83mM055YS4u4YE5HhJQ
- 68YwH9h1VZFzImlQ/YHJK6fAc/Zt8hO1e+Ti+k7S3AVayVDcK4orU8yGmsL8uN4qfB
- HC7Sdw9dfyijGLY70IMH704fQgI6HZD4reJO5yImwwbchAhbd+096Wh9FVKgPiYVac
- A5tMelO5PpaiV+jbWHmQmhT/41Q4VYOLiWk/OHKiU0Bo1r2hIxDa6o+Kd3JrbBla9X
- 9nZGdEJ5LeJjA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 7A9B3198624;
- Sat, 28 Mar 2026 09:57:17 +0300 (MSK)
-Message-ID: <445c4892-b403-49dd-b676-f7d1c07ebcdd@tls.msk.ru>
-Date: Sat, 28 Mar 2026 09:57:43 +0300
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w6O25-0006qf-AP
+ for qemu-devel@nongnu.org; Sat, 28 Mar 2026 03:24:34 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w6O23-000101-LV
+ for qemu-devel@nongnu.org; Sat, 28 Mar 2026 03:24:33 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-35d971fb6f1so145344a91.0
+ for <qemu-devel@nongnu.org>; Sat, 28 Mar 2026 00:24:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774682670; x=1775287470; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rkGbqrRIaNoI0eLMZJPokRYI36vWC2mPB9X260ixyX0=;
+ b=UvRwweYQsriVH8S93tv9hB0PFDXcl19DQ/Jz71+ka40S8/oGzDrpLkWWslrow5QUqE
+ EPCY5i1Y358+UzkZy70D7ncbptdjed1H73hq4lLuSsn3RVaIgT/abDtDp/pkfJLH0XCD
+ Z2iBJNe/DhDW+7P8DGrO2QXC54B3ZAg7rU5+cKB5Xt0eToHG6GyC5ELdYLD9OmbW7MsX
+ rGKb6ZP3cM1/CpCF1eKXqpZ3tZ6+FLEFtiF1eRuhgXIDLCfrHNeJoV3iAKsc3lOP1L5r
+ ZqvKG8WyqIGaHoiIHy2C+bahpyU6Oh8c+PPoWjOJRTVni+201F9cLyuryivZxw4d9qjZ
+ ChXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774682670; x=1775287470;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rkGbqrRIaNoI0eLMZJPokRYI36vWC2mPB9X260ixyX0=;
+ b=cDEhW08cqeTB6/88uQKOn1U4KOjvvLef5hLTU9TFutazVbbyW5IxsYOCS8I14nJ+Sd
+ d7wYW58Q/4g9G4pabp55mBSzpj2VwpEAbwEj0Gqj82vrsQJFLzD5sU7mlOJ810/I2t1E
+ 9+GBdqFozTtbOd6pygMSmioLmoO586c5K4nxxSXfTikFqYwLDpEJ2nOwEUm4pbhR0oK/
+ VWr80gDGTg0cnmrS2srF16pRu5BBujFQQjF9/r6szzjO1dCe87nknWwsh43Rep6UBiv5
+ VYW1I7MPLue7MQddUAvORNedjWruKjFqbCZZAIg4Xa31D9Cib3cMdy8d+YfZhf8SNWAG
+ ODew==
+X-Gm-Message-State: AOJu0YxuFnjlZ11oNiLUWx9m2gaecFMKnclne8EyLno1we+VW1DpAUKa
+ +9kzYCP6AHXs+TgfZZhgr+BOtowjMyiAQACkau+1m2m3Z6bmdMXRGCAIbxBGEIG4
+X-Gm-Gg: ATEYQzxRRy76go/NN92M82O8FuRGDhDHzFStzrrah2+KZYk8Fk26ACbew1gEqIR02d/
+ Zlf1dwYnLXSC5O42s3OK2TSqwYwkQg2Iujzgq3lspogr2f7cz3ucVx0eLcxLaPWFKMWDi6cVP1j
+ gEHyzEavAqWwGU82HVc27gGZDI2WoXN8QaMQ28HCZUSf9JDUyX5KK0aGHV2hllbykeOvoI/NM8i
+ MaH1mrKyO8Vy0RIwv7NVMXner4Wf3j5x7az6TV3mK4uZIakyto0i4XOzvk4dP5PtPu1bLIBxeRV
+ OAORd/RbNcWwI58udHrtaJGAu/cLOIyAHEHzJy4vO5GB4NaX86z+Mq4H0R4ogbG+b4wCw5qZ0xJ
+ 5QUDlRN4YzD2HA53zFG/DmtO+rVE2j3Q/PhajbD/QKNCZNXz7dCoHTK2XJRgoEqsLxB5ELGInyb
+ j8D7BYfauy2nQTWJ6Qi+7Fg/Oq+B9/S3LSzrKst3JXN8NLNJUbse+6p9dWbqYWD9cERwivjwz7j
+ yZsWW/Tmg==
+X-Received: by 2002:a17:90a:d406:b0:359:7c55:c166 with SMTP id
+ 98e67ed59e1d1-35c2ffa80c1mr5192836a91.7.1774682669585; 
+ Sat, 28 Mar 2026 00:24:29 -0700 (PDT)
+Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local
+ ([27.122.242.65]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35d9507d505sm1145089a91.10.2026.03.28.00.24.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 28 Mar 2026 00:24:29 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Trieu Huynh <vikingtc4@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] migration: validate page_size in mapped-ram header before use
+Date: Sat, 28 Mar 2026 16:24:24 +0900
+Message-ID: <20260328072424.10611-1-vikingtc4@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/2] hw/nvme: re-enable wzds bit in namespace dlfeat
-To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Pankaj Raghav <p.raghav@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
- Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260326082350.17374-1-its@irrelevant.dk>
- <20260326082350.17374-2-its@irrelevant.dk>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260326082350.17374-2-its@irrelevant.dk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,37 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.03.2026 11:23, Klaus Jensen wrote:
-> From: Pankaj Raghav <p.raghav@samsung.com>
-> 
-> dlfeat was changed from 0x9 to 0x1 when PI support was added.
-> It was removed because we can't rely on unmap and have to physically
-> clear it to get the checksums right but that doesnt mean that we do not
-> support the bit.
-> 
-> The spec says that if wzds is enabled, then the controller supports
-> deallocate (DEAC) on write zeroes. But DEAC bit in write zeroes command
-> is only a hint, the controller might choose to physically write zeroes in
-> those areas.
-> 
-> As we are sending write zeroes command with BDRV_REQ_MAY_UNMAP to the
-> underlying block device anyway (if the unmap operation is supported),
-> change the dlfeat value back to 0x9.
-> 
-> A new flag FALLOC_FL_WRITE_ZEROES has been introduced in linux for
-> fallocate which will use the wzds bit in dlfeat to quickly zeroout extents
-> using unmap operation whenever possible[1].
-> 
-> [1] https://lore.kernel.org/linux-fsdevel/20250619111806.3546162-1-yi.zhang@huaweicloud.com/
-> 
-> Fixes: 146f720c55 ("hw/block/nvme: end-to-end data protection")
+mapped_ram_read_header() reads page_size from the migration stream and
+stores it in MappedRamHeader, but does not validate that the value is
+non-zero before it is later used in parse_ramblock_mapped_ram():
 
-Shouldn't this one be picked up for current qemu stable releases too?
+num_pages = length / header.page_size;
 
-I'm picking it up for 10.0 and 10.2 series, please let me know
-if I shouldn't.
+If a corrupted or malformed migration stream provides page_size = 0,
+QEMU unexpectedly crashes.
 
-Thanks,
+Add validation in mapped_ram_read_header() to reject zero page_size
+values early and return an error instead of continuing with an invalid
+header.
 
-/mjt
+Steps to reproduce:
+
+Create a migration snapshot with mapped-ram enabled:
+(qemu) migrate_set_capability mapped-ram on
+(qemu) migrate file:/tmp/qemu-snapshots/snapshot.bin
+Modify the snapshot so that MappedRamHeader.page_size becomes 0.
+Restore the snapshot:
+(qemu) migrate_set_capability mapped-ram on
+(qemu) migrate_incoming file:/tmp/qemu-bug-test/snapshot.bin
+
+As-is: qemu crashes immediately
+(qemu) Floating point exception (core dumped)
+To-be: qemu continue running
+(qemu) qemu-system-x86_64: Migration mapped-ram header has invalid
+page_size of 0
+
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+---
+ migration/ram.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/migration/ram.c b/migration/ram.c
+index 979751f61b..2a7e958e87 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3088,6 +3088,11 @@ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
+     }
+ 
+     header->page_size = be64_to_cpu(header->page_size);
++    if (header->page_size == 0) {
++        error_setg(errp, "Migration mapped-ram header has invalid "
++                   "page_size of 0");
++        return false;
++    }
+     header->bitmap_offset = be64_to_cpu(header->bitmap_offset);
+     header->pages_offset = be64_to_cpu(header->pages_offset);
+ 
+-- 
+2.43.0
+
 
