@@ -4,98 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0540210F3DE3
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 10:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722D510F3DE2
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 12:13:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6RA9-0001Ba-Np; Sat, 28 Mar 2026 06:45:05 -0400
+	id 1w6SWv-0000MF-LU; Sat, 28 Mar 2026 08:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6RA8-00017h-D2
- for qemu-devel@nongnu.org; Sat, 28 Mar 2026 06:45:04 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w6SWf-0000Kt-W9
+ for qemu-devel@nongnu.org; Sat, 28 Mar 2026 08:12:26 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6RA6-0000L5-TO
- for qemu-devel@nongnu.org; Sat, 28 Mar 2026 06:45:04 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64fc6b21789so2203708d50.3
- for <qemu-devel@nongnu.org>; Sat, 28 Mar 2026 03:45:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774694701; cv=none;
- d=google.com; s=arc-20240605;
- b=Y/ewwiFTTHtHOmjzPUnUD8Tro0OfH+xjV/ZO1ZZzEZDu38L/7JCS4GVPNMAGBM99kz
- HYjyZMp5Cyuw1RAtgEiwj6saJON+G0OylXPyl6fqjjChkb2AvafnJH2eBN+tvIBkzdR7
- C7qjoPQDt3dQFnPh3SMlc1JXMpT9qHlazB6gMcL230oCtp4TH01aFfNE0Ddv+E4Avpku
- 9P/XIARQT+vgExUDirXT6EBNfWAP1PBzDw0xYrqVUseKcznPaB+DN68lwMxvdld++1mL
- NtRl0MX8oY5vUo/oTBMuYLG06XRMet6xKq55hzzlefH3y54z8qIeYvcKKmAhJVTSv2ie
- H2Cw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Y0jvTgUwG1awVyECYlbFaK8wuV2RmtvNy8DZCijlPgs=;
- fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
- b=Yu4JatFgUcMYitXXKB6dDijXjdTMj49Iinzk6nzpU+neE09mPNvWLLIilC9Vod4wP8
- +wDX66eyDZIuoDJptiOdsY+zpC0of/FYqxzuiAs9W/GE5+xvfVCdRi4VcQ8npKDRppXr
- L4Sr6/kQT18fPTSXwtzTrzuUfVEXRFFdWhN2YciCJEOyBNrF4/2HLxZMCLwdgmXOmsRB
- uBR0LHjuPB2/75J1feQx49MRTMWGhcGVfQMx1PAT+m0sowTx7BvL1NNnwX94ecsKGJ04
- UZVyaOJKBnzFjNDT0n/Q1Rr1dnQMD2Bqkusdg27qQZTfqrUJNOJKByYB7N7DiuAjYLh+
- 5UVA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w6SWe-00022n-3l
+ for qemu-devel@nongnu.org; Sat, 28 Mar 2026 08:12:25 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-35d9749c26dso248578a91.2
+ for <qemu-devel@nongnu.org>; Sat, 28 Mar 2026 05:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774694701; x=1775299501; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Y0jvTgUwG1awVyECYlbFaK8wuV2RmtvNy8DZCijlPgs=;
- b=TlSfVERqglvV9mhvntWcJSzVMJNyxKz3c2JiJT1fIvsTotTJlh6Dsn7T0TFZpFHepU
- ow64cfMC9AmNZJnVcTdAnxTao0CK832t71Dm5DsxZbAROb6cYTCy3QfRjVhypfxBcWtu
- 4rSChxiJVA6Us4SOBY/xYJGMd+aWeF1jiOX8RPV1/iFU2vQf706w/AZNHUoTBBFmPQuO
- h7MjsRydta8ElNQVO8qhs+dyqqqP6ngRs93YsZTQJPOk9ZZ5NoEFnSyRyAC20t+KEAOr
- JFuTXsl1pIbF3v9VffRJFaTzOuRASNd/EFqlCw2GpcqfZQqbnUvM+Fc73fVi5eKier3z
- 4vTA==
+ d=gmail.com; s=20251104; t=1774699942; x=1775304742; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=P94kZ6gNvJnQQgGZCSXhoFOZYrayE3/o+VsQAx7U6uA=;
+ b=ZRE+Dp6Bo3CD0/0wxNCLGBceW6FupFTpS/iQ91JfOiPMzN6rnmTGs9fz59r/RnS1Sl
+ nNUEgejWNB1WbC5brfmtHMhyNnBlOArUReOq1SrkgrCRcDQjnZzrv0oUje2JT2LSrxRC
+ bd2z1zCaKw9j3AYQ1fKAJkLUwUaUWgQ/C7yI4kQstYjbTt+kf+SwTT0Tu4GrWwn3tsOS
+ ajg7rJJRRpEZHRJd3h123mU0ocEw9CQxgxjVJa4nmNa081sfg3e3zDyynfQQZlckd31o
+ jSb/ooPTI2ctsb3xk+stvCap45whYsQJMMLwWyOpe+ltw1GZo3NRqnRATDck/HZbDsp6
+ KRbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774694701; x=1775299501;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1774699942; x=1775304742;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y0jvTgUwG1awVyECYlbFaK8wuV2RmtvNy8DZCijlPgs=;
- b=Qh8q5ofF4jSZ/zWYOTiV4DWR4l9SnxLXfL2SSor+86wfFMg2HJn7Q/wfoP+GNWPJLR
- iDEMQFvl3uOW5K6hCp4wEwEXdlT9n8cIB1IU1vJcSw7LbVaCeRj/3P5swGV3IivooJPq
- j21qhXrcVXQ8hcrENw0o/rk+y6zm5l+1UCsY+1hAzMZG9dqzMq4zMtY1pypJlF2jbwVi
- 4JvIsdg+3GuORM1HuaC3xsT7xXu+olqm5K75O98AkBbkjhB3HD2BAcV4xqArzARE625c
- PIsL7uI9sGocYRU8LS0WR51qfRbySOt30b/npjKoHchSrHCnF2LGtusUGYl2XMMFpxd1
- 65KA==
-X-Gm-Message-State: AOJu0YzmRo/r74BvZ9l32XqNtwBJGYRgbv9Bq91NORf9q4evdaHufmr/
- xqp4yZxrxGlTfsOO/ZIGIfM44GXFOp20Slw9ENAHkOmKWMvjpXSUuSzWi5g3J95tZh2/jkauuIE
- KtR/2ju7ix8usiMmrTHLfcVq1OiRgMz1mMACfCftoZA==
-X-Gm-Gg: ATEYQzyxdZaD662QroEHI4fnDPylP1q8z6wyCJqHeDMoBaWauFjwL/WsMnk8RwZAFHP
- hMMN1iIV/DCjkO01y/9Ai1h91yYlUa7w1mbMQWAINfPVyw2G0IndapRecnfAEdbhk9nEozfiMjW
- j2Q0crdJK2XIW1ywzsKUA6Q1IyVjq4LgLbPifF0hvUFmFwLx0b4mwckKf1kXxJlPkpCid0k0XhE
- 40Vng+l+qjRgpwdvIsoJJTkN9aRZa4cdOgTeaT6dmhZ9whJObudUMfWGfrKyS0gE10gNixgsQDx
- 3ZU2X+y7/nPKduQcArkHxCSvSv0pA7YNY18FHvQmJFgMOhpovV6Bm/9RTPZ/MefUPJE=
-X-Received: by 2002:a53:ac88:0:b0:64e:def1:31c7 with SMTP id
- 956f58d0204a3-64ff7466580mr5881180d50.73.1774694701540; Sat, 28 Mar 2026
- 03:45:01 -0700 (PDT)
+ bh=P94kZ6gNvJnQQgGZCSXhoFOZYrayE3/o+VsQAx7U6uA=;
+ b=W/hEWuOSO9gX9bugGI4pGM8ryh5pqrSzSZx6gLbct2WkvsZ7D1FUOixdw0meabIwq5
+ ak6ruyS8Ya5a9k5zF5JqQUVtguAAEbVeP3hWJwy8gfCILspUyVq4o0GJmSNIUsAmxLGn
+ oVyi6dVUflSWVYQ/bsgAgB4CWiqcsV4OgJFtONKOyOsi26A9E+3Clm/7g9YRhcC+QobN
+ OlOuOjB891xoOA8NtIcOArQ3xd8y0sxKwIYwkQqr/oIhM+KxU1JageQ/W3gfcvNaQO3o
+ uxxI5M9jC+ttJ/mspPAmSgpqAfN/HDZaOAUqEwmrO34vbrI5uaquGrWCddaNaLFEt9g8
+ Hukg==
+X-Gm-Message-State: AOJu0YyMrDEyqA0B7q56JfsWKjp3zYX5z+veYvhFZrSJXYQIooJu11gH
+ rAWU2SgUNo6zmE1WTjvqLAsVUNEp9UTAciwhbhF3eVBOFgMI01N4jjBXmakZJGer
+X-Gm-Gg: ATEYQzwP1E92CLI6MyBrZaNqsktee2cFxpPUnyTTKhkHT/EUv1dMTKoGJBSGRM630CU
+ 9zxM//KC96QlCh2QCbRAEQTwlz/m0H2GhPO+xVYLc1p73jxJ1DvZ5NLFeOf2ZaezCPwfaiLJkeV
+ HGwvGrIqLuc9lvL/AoRRIs58jvnnvWe9rkCSXLyDzQnHSiEIonAOUaaRwDpyURF22wGqDIIDPZq
+ L/A2RQa9jRsa93u/ZzotFYrZP8wkg0CXJij/27RExXhKQKg1ujihuIIDjhaB239Lmakru0gsruT
+ nnQyeu3PJObw4Oqe1HorCMIoB6S+AxSP+U4zyW9irjyAr3hl2S8RYjhr3S79Lzr48VuLp4VoKd5
+ hAxycwpx9p+UD46SKTmdAkXLwcFKrWU+Gp2SJrah+We+wCuB8ijjHp08zWasIx4AHnicssRLLau
+ mtYVmkmp6JZe4tqYU3Oxa9M9NYc+PkEGDJbgv9xepENn/jgzsTLlkGyIkTlcx4hmDgrOK975MN/
+ 97pHIFToXzZ3a3tWbY5
+X-Received: by 2002:a17:90a:d44c:b0:35b:e844:3bf with SMTP id
+ 98e67ed59e1d1-35c300bec56mr5848803a91.29.1774699941747; 
+ Sat, 28 Mar 2026 05:12:21 -0700 (PDT)
+Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local
+ ([27.122.242.65]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35d94d289f5sm2611535a91.5.2026.03.28.05.12.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 28 Mar 2026 05:12:21 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Trieu Huynh <vikingtc4@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] migration: fix QIOChannelFile leak on error in
+ file_connect_outgoing
+Date: Sat, 28 Mar 2026 21:12:14 +0900
+Message-ID: <20260328121215.159532-1-vikingtc4@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260327204704.424158-1-pbonzini@redhat.com>
-In-Reply-To: <20260327204704.424158-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 28 Mar 2026 10:44:50 +0000
-X-Gm-Features: AQROBzDAyVeUDNgnxfDqpuboXWxOJU4luavvmS7tB6G8uw0L3y5RZ9Xji7Tez9M
-Message-ID: <CAFEAcA_2bBZNg7FW8L8Z8h_GZ_10Dm5qRQjtoMUHczr9jTcP=g@mail.gmail.com>
-Subject: Re: [PATCH] hpet: lower HPET_MAX_TIMERS to 24
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,21 +101,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Mar 2026 at 20:47, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> Each timer block occupies 32 bytes, but they only start at
-> offset 256 of the 1024-byte MMIO register space.  Therefore
-> the correct limit for HPET_MAX_TIMERS is 24, not 32.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  include/hw/timer/hpet.h          | 2 +-
->  rust/hw/timer/hpet/src/device.rs | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
+Commit 03a680c978 changed g_autoptr(QIOChannelFile) to a plain pointer
+but failed to restore the necessary object_unref() calls on error paths.
+Previously, these were handled implicitly by the g_autoptr cleanup
+mechanism.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Two error paths currently leak the QIOChannelFile object and its
+underlying file descriptor:
 
-thanks
--- PMM
+  1. When ftruncate() fails (e.g., on character or block devices).
+  2. When qio_channel_io_seek() fails after the channel is created.
+
+In environments that retry migration automatically (e.g., libvirt),
+these FDs accumulate until QEMU hits RLIMIT_NOFILE and fails with
+EMFILE (Too many open files).
+
+Add the missing object_unref() calls to both error paths to ensure
+resources are properly released.
+
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+---
+ migration/file.c                   |  2 ++
+ tests/qtest/migration/file-tests.c | 48 ++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+)
+
+diff --git a/migration/file.c b/migration/file.c
+index 5618aced49..962b4b3a1b 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -112,6 +112,7 @@ QIOChannel *file_connect_outgoing(MigrationState *s,
+         error_setg_errno(errp, errno,
+                          "failed to truncate migration file to offset %" PRIx64,
+                          offset);
++        object_unref(OBJECT(fioc));
+         goto out;
+     }
+ 
+@@ -119,6 +120,7 @@ QIOChannel *file_connect_outgoing(MigrationState *s,
+ 
+     ioc = QIO_CHANNEL(fioc);
+     if (offset && qio_channel_io_seek(ioc, offset, SEEK_SET, errp) < 0) {
++        object_unref(OBJECT(fioc));
+         ioc = NULL;
+         goto out;
+     }
+diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+index 5d1b861cf6..fef172068f 100644
+--- a/tests/qtest/migration/file-tests.c
++++ b/tests/qtest/migration/file-tests.c
+@@ -20,6 +20,51 @@
+ 
+ static char *tmpfs;
+ 
++static int count_proc_fds(pid_t pid)
++{
++    g_autofree char *fddir = g_strdup_printf("/proc/%d/fd", (int)pid);
++    GDir *dir = g_dir_open(fddir, 0, NULL);
++    int count = 0;
++
++    if (!dir) {
++        return -1;
++    }
++    while (g_dir_read_name(dir)) {
++        count++;
++    }
++    g_dir_close(dir);
++    return count;
++}
++
++static void test_file_connect_outgoing_fd_leak(char *name, MigrateCommon *args)
++{
++    QTestState *from, *to;
++    int fd_before, fd_after;
++    const int retries = 5;
++    int i;
++    if (!g_file_test("/dev/full", G_FILE_TEST_EXISTS)) {
++        g_test_skip("/dev/full not available");
++        return;
++    }
++
++    args->listen_uri = "defer";
++    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
++        return;
++    }
++
++    fd_before = count_proc_fds(qtest_pid(from));
++    g_assert_cmpint(fd_before, >, 0);
++    for (i = 0; i < retries; i++) {
++        migrate_qmp_fail(from, "file:/dev/full", NULL, "{}");
++        migration_event_wait(from, "failed");
++    }
++
++    fd_after = count_proc_fds(qtest_pid(from));
++    g_assert_cmpint(fd_after, >, 0);
++    g_assert_cmpint(fd_after, ==, fd_before);
++    migrate_end(from, to, false);
++}
++
+ static void test_precopy_file(char *name, MigrateCommon *args)
+ {
+     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
+@@ -314,6 +359,9 @@ void migration_test_add_file(MigrationTestEnv *env)
+     migration_test_add("/migration/precopy/file/offset/bad",
+                        test_precopy_file_offset_bad);
+ 
++    migration_test_add("/migration/precopy/file/connect-outgoing-fd-leak",
++                       test_file_connect_outgoing_fd_leak);
++
+     migration_test_add("/migration/precopy/file/mapped-ram",
+                        test_precopy_file_mapped_ram);
+     migration_test_add("/migration/precopy/file/mapped-ram/live",
+-- 
+2.43.0
+
 
