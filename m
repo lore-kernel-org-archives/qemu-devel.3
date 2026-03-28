@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F8610BA425
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 06:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 540E110BA425
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 06:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6N3m-0005D1-Kz; Sat, 28 Mar 2026 02:22:14 -0400
+	id 1w6N5b-0005j6-AY; Sat, 28 Mar 2026 02:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w6N3k-0005CW-Mv; Sat, 28 Mar 2026 02:22:13 -0400
+ id 1w6N5Y-0005ir-FI; Sat, 28 Mar 2026 02:24:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w6N3i-0007UI-OM; Sat, 28 Mar 2026 02:22:12 -0400
+ id 1w6N5X-0007Z7-1c; Sat, 28 Mar 2026 02:24:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774678899; bh=9DmqZJZ/SnMo7WwUy9sEvD/8a7x5U410pgn69cEZkDg=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=JU59sQ1fW1HPBT7aS9oJWS+HSGbNM95k7guLDjblZFdvv1YTjA/WKEyF08IhQlZvZ
- +VrMxAEV3CoTt9YjG/OeggOz0y1XTUjm6/qLc6um2RM2UqWoSE63/9AJ+XSvF5V4wG
- +qV7hCv9IuA90oQA9pezZCAyzJpGDNo8tp+AHY8WUhslIARQjpzGajJMcfz2QYZ4qm
- qLUOv+P9Mh5Nx4V64EEXWPeSFBbAxvdiFfjCxje52LLrXcYo/1MJwiptZcDFz6EM2S
- KZ/TZeiAbK2Xr2ECHvUle0VIoUA+vaPkBgB2LwnYgdPKf8I54ia8W1wvIDC9gsJInf
- Oths18LIJdfSQ==
+ t=1774679014; bh=eU34RfNbclwp98ZO901f//cCkqwOENPi9QEKYOkcPL8=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=Hiwlw8AU7fvDTSJPSgjPUu9sL37XWgmBZQPWWKEJjzXAxnmfJMjW37ZZcS+rJYCnz
+ 1apc5igb+GyMezhYtHGFnbNnMeDWY7DCiWf0EmT/EqonamTYNWBXfTukGgT5PqW0Hk
+ kcJUVkTA6iOIRl6T4Hu6+6JFnWo5QsH/Y9XkxMvoympC5w+RsXZNNig7RSs7YDIWrF
+ kXmMJAi6jiIwSNkEgp5vMOvt905oHruFyLFSb6eFlDOXqqAisJowxt3IAxJJyYprpr
+ PMmSYAmPV4y+RW/5HmMrMreoV7VywfJ9f1SYCKYaB9LzgDAOnTJgnR2mtJPLA2o2GW
+ iQd63JCKQvIiw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 4AF69198618;
- Sat, 28 Mar 2026 09:21:39 +0300 (MSK)
-Message-ID: <63ca897c-9547-4ed9-b1a0-7a8d69aca7ca@tls.msk.ru>
-Date: Sat, 28 Mar 2026 09:22:04 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id AD9CF19861B;
+ Sat, 28 Mar 2026 09:23:34 +0300 (MSK)
+Message-ID: <334d78ed-51b3-43e3-add5-bc807a1e1f60@tls.msk.ru>
+Date: Sat, 28 Mar 2026 09:24:00 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/3] plugins: fix endianness for
  qemu_plugin_mem_get_value()
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
  qemu-stable <qemu-stable@nongnu.org>
 References: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
+ <63ca897c-9547-4ed9-b1a0-7a8d69aca7ca@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -87,7 +88,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <63ca897c-9547-4ed9-b1a0-7a8d69aca7ca@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,25 +115,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.03.2026 05:42, Pierrick Bouvier wrote:
-> This series fixes qemu_plugin_mem_get_value() endianness on non x64 hosts.
-> As well, it updates documentation to make clear that value returned is in
-> host-endian order. Finally, it fixes tests/tcg/plugins/mem.c.
-> 
-> Pierrick Bouvier (2):
->    include/plugins/qemu-plugin.h: add note about endianness of value
->      returned by qemu_plugin_mem_get_value
->    tests/tcg/plugins/mem.c: fix endian swap in update_region_info
-> 
-> Richard Henderson (1):
->    tcg: Pass host-endian values to plugin_gen_mem_callbacks_*
+On 28.03.2026 09:22, Michael Tokarev wrote:
 
-Hi!
+> Should this series be picked up for qemu-stable (10.2.x)?
+> (I'm not picking it up currently).
 
-Should this series be picked up for qemu-stable (10.2.x)?
-(I'm not picking it up currently).
+Ah, n/m - it's already marked for-stable.
 
-Thanks,
-
+Thank you for remembering about stable!
 /mjt
 
