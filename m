@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 540E110BA425
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 06:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 067EA10BA425
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Mar 2026 06:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6N5b-0005j6-AY; Sat, 28 Mar 2026 02:24:07 -0400
+	id 1w6NcN-0002EA-VV; Sat, 28 Mar 2026 02:58:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w6N5Y-0005ir-FI; Sat, 28 Mar 2026 02:24:04 -0400
+ id 1w6NcE-0002CM-S4; Sat, 28 Mar 2026 02:57:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w6N5X-0007Z7-1c; Sat, 28 Mar 2026 02:24:04 -0400
+ id 1w6NcC-0003qK-Bs; Sat, 28 Mar 2026 02:57:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774679014; bh=eU34RfNbclwp98ZO901f//cCkqwOENPi9QEKYOkcPL8=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To;
- b=Hiwlw8AU7fvDTSJPSgjPUu9sL37XWgmBZQPWWKEJjzXAxnmfJMjW37ZZcS+rJYCnz
- 1apc5igb+GyMezhYtHGFnbNnMeDWY7DCiWf0EmT/EqonamTYNWBXfTukGgT5PqW0Hk
- kcJUVkTA6iOIRl6T4Hu6+6JFnWo5QsH/Y9XkxMvoympC5w+RsXZNNig7RSs7YDIWrF
- kXmMJAi6jiIwSNkEgp5vMOvt905oHruFyLFSb6eFlDOXqqAisJowxt3IAxJJyYprpr
- PMmSYAmPV4y+RW/5HmMrMreoV7VywfJ9f1SYCKYaB9LzgDAOnTJgnR2mtJPLA2o2GW
- iQd63JCKQvIiw==
+ t=1774681037; bh=FlFKF9yf/2Wm9un3pL3Ky1AUXd9m3ci6cug3ZtHnJGo=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=uyXWxamh7005rnkP7Pyu1QFGn9oAUDtFDVgyOS/XBXy4l2A1yXgYph1ZhZdXfcWB4
+ CqHk253AqTIki+4TISflgwpPOojmWAd2hRqmxrww0/f7+on83mM055YS4u4YE5HhJQ
+ 68YwH9h1VZFzImlQ/YHJK6fAc/Zt8hO1e+Ti+k7S3AVayVDcK4orU8yGmsL8uN4qfB
+ HC7Sdw9dfyijGLY70IMH704fQgI6HZD4reJO5yImwwbchAhbd+096Wh9FVKgPiYVac
+ A5tMelO5PpaiV+jbWHmQmhT/41Q4VYOLiWk/OHKiU0Bo1r2hIxDa6o+Kd3JrbBla9X
+ 9nZGdEJ5LeJjA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id AD9CF19861B;
- Sat, 28 Mar 2026 09:23:34 +0300 (MSK)
-Message-ID: <334d78ed-51b3-43e3-add5-bc807a1e1f60@tls.msk.ru>
-Date: Sat, 28 Mar 2026 09:24:00 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 7A9B3198624;
+ Sat, 28 Mar 2026 09:57:17 +0300 (MSK)
+Message-ID: <445c4892-b403-49dd-b676-f7d1c07ebcdd@tls.msk.ru>
+Date: Sat, 28 Mar 2026 09:57:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] plugins: fix endianness for
- qemu_plugin_mem_get_value()
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+Subject: Re: [PULL 1/2] hw/nvme: re-enable wzds bit in namespace dlfeat
+To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Pankaj Raghav <p.raghav@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
+ Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20260325024252.3369186-1-pierrick.bouvier@linaro.org>
- <63ca897c-9547-4ed9-b1a0-7a8d69aca7ca@tls.msk.ru>
+References: <20260326082350.17374-1-its@irrelevant.dk>
+ <20260326082350.17374-2-its@irrelevant.dk>
 Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -88,7 +88,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <63ca897c-9547-4ed9-b1a0-7a8d69aca7ca@tls.msk.ru>
+In-Reply-To: <20260326082350.17374-2-its@irrelevant.dk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -115,13 +115,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.03.2026 09:22, Michael Tokarev wrote:
+On 26.03.2026 11:23, Klaus Jensen wrote:
+> From: Pankaj Raghav <p.raghav@samsung.com>
+> 
+> dlfeat was changed from 0x9 to 0x1 when PI support was added.
+> It was removed because we can't rely on unmap and have to physically
+> clear it to get the checksums right but that doesnt mean that we do not
+> support the bit.
+> 
+> The spec says that if wzds is enabled, then the controller supports
+> deallocate (DEAC) on write zeroes. But DEAC bit in write zeroes command
+> is only a hint, the controller might choose to physically write zeroes in
+> those areas.
+> 
+> As we are sending write zeroes command with BDRV_REQ_MAY_UNMAP to the
+> underlying block device anyway (if the unmap operation is supported),
+> change the dlfeat value back to 0x9.
+> 
+> A new flag FALLOC_FL_WRITE_ZEROES has been introduced in linux for
+> fallocate which will use the wzds bit in dlfeat to quickly zeroout extents
+> using unmap operation whenever possible[1].
+> 
+> [1] https://lore.kernel.org/linux-fsdevel/20250619111806.3546162-1-yi.zhang@huaweicloud.com/
+> 
+> Fixes: 146f720c55 ("hw/block/nvme: end-to-end data protection")
 
-> Should this series be picked up for qemu-stable (10.2.x)?
-> (I'm not picking it up currently).
+Shouldn't this one be picked up for current qemu stable releases too?
 
-Ah, n/m - it's already marked for-stable.
+I'm picking it up for 10.0 and 10.2 series, please let me know
+if I shouldn't.
 
-Thank you for remembering about stable!
+Thanks,
+
 /mjt
 
