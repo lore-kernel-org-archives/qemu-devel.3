@@ -4,64 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E863F3D605
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 16:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 750ABFC97EB
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 19:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6sXs-00078S-TP; Sun, 29 Mar 2026 11:59:24 -0400
+	id 1w6vUJ-0003Bc-5Q; Sun, 29 Mar 2026 15:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w6sXl-00077c-Oa; Sun, 29 Mar 2026 11:59:19 -0400
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net ([162.243.161.220])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w6sXh-0003KT-I7; Sun, 29 Mar 2026 11:59:17 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCXnqJJTMlpj0EzAA--.17437S2;
- Sun, 29 Mar 2026 23:59:05 +0800 (CST)
-Received: from [192.168.31.176] (unknown [222.244.183.215])
- by mail (Coremail) with SMTP id AQAAf8DwJpRBTMlpRkgHAA--.18633S2;
- Sun, 29 Mar 2026 23:59:01 +0800 (CST)
-Message-ID: <690eef53-203d-4565-a19b-f1bf3e861af6@phytium.com.cn>
-Date: Sun, 29 Mar 2026 23:58:57 +0800
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w6vUG-0003An-Vx
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 15:07:53 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w6vUE-0003cS-Nz
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 15:07:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 778755969F2;
+ Sun, 29 Mar 2026 21:07:44 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id d8mP16rD8pph; Sun, 29 Mar 2026 21:07:42 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 727175968DE; Sun, 29 Mar 2026 21:07:42 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 703E85968DD;
+ Sun, 29 Mar 2026 21:07:42 +0200 (CEST)
+Date: Sun, 29 Mar 2026 21:07:42 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Thomas Huth <thuth@redhat.com>
+cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: VGA default endianness (was: [PATCH] hw/display/cirrus_vga_isa:
+ Disable global_vmstate by default for new machines)
+In-Reply-To: <20260326154850.301609-1-thuth@redhat.com>
+Message-ID: <30981a1a-b895-3829-0f9c-7b22e72bd0fa@eik.bme.hu>
+References: <20260326154850.301609-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 4/4] [NOT-MERGE] tests/qtest: add q35 SMM-only x86 attrs
- coverage
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260323133210.1523868-1-tangtao1634@phytium.com.cn>
- <20260323133210.1523868-5-tangtao1634@phytium.com.cn>
- <acJKzHQf1AP2iUA2@ZEVORN-PC.localdomain>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <acJKzHQf1AP2iUA2@ZEVORN-PC.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAf8DwJpRBTMlpRkgHAA--.18633S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAJBWnIKvkcBgABsk
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKFWUJw1xAr48Cr13Zr4ruFg_yoW3GF15pF
- yDAFsIkF4xtF1xZF17Xw4DWF1aqFs7Ka4UCr47Gw1rAFZ8Crn7CrWq93ZY9F9rJrWvvw1r
- Za1UXasxWFn8taDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.161.220;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjeumjiw.icoremail.net
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,215 +70,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chao,
+On Thu, 26 Mar 2026, Thomas Huth wrote:
+> In the long run, we would like to get rid of the code that allows to
 
-On 3/24/2026 4:29 PM, Chao Liu wrote:
-> On Mon, Mar 23, 2026 at 09:32:10PM +0800, Tao Tang wrote:
->> Add a q35-only test path for x86 secure attrs by introducing an optional
->> test-only RAM region that is mapped only into the SMM address space.
->>
->> The new qtest-x86-attrs-test enables this region with
->> `-global mch.x-smm-test-ram=on` and verifies that accesses with the
->> `secure` attribute reach the SMM-only region, while default accesses do
->> not. This provides the x86 cross-verification that qtest-attrs-test does
->> not cover, where normal RAM is visible from both the default and SMM
->> address spaces.
->>
->> This is a NOT-MERGE commit.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/pci-host/q35.c                  |  24 +++++++
->>   include/hw/pci-host/q35.h          |   8 +++
->>   tests/qtest/meson.build            |   1 +
->>   tests/qtest/qtest-x86-attrs-test.c | 109 +++++++++++++++++++++++++++++
->>   4 files changed, 142 insertions(+)
->>   create mode 100644 tests/qtest/qtest-x86-attrs-test.c
->>
->> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
->> index e85e4227b3..5c23375dd6 100644
->> --- a/hw/pci-host/q35.c
->> +++ b/hw/pci-host/q35.c
->> @@ -572,6 +572,11 @@ static void mch_realize(PCIDevice *d, Error **errp)
->>           return;
->>       }
->>   
->> +    if (mch->enable_smm_test_ram && !mch->has_smm_ranges) {
->> +        error_setg(errp, "x-smm-test-ram requires SMM support");
->> +        return;
->> +    }
->> +
->>       /* setup pci memory mapping */
->>       pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
->>   
->> @@ -653,6 +658,23 @@ static void mch_realize(PCIDevice *d, Error **errp)
->>       memory_region_add_subregion(&mch->smram, MCH_HOST_BRIDGE_SMBASE_ADDR,
->>                                   &mch->smbase_window);
->>   
->> +    if (mch->enable_smm_test_ram) {
->> +        /*
->> +         * This is a QEMU-specific, test-only region. It is mapped only into
->> +         * mch->smram so qtest can verify that x86 secure attrs select the SMM
->> +         * address space rather than the default one.
->> +         */
->> +        memory_region_init_ram(&mch->smm_test_ram, OBJECT(mch),
->> +                               "smm-test-ram",
->> +                               MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE, errp);
->> +        if (*errp) {
->> +            return;
->> +        }
-> if errp is ever NULL this will crash.
->
-> The safer pattern is ERRP_GUARD() at the top of mch_realize(),
-> or a local Error * with error_propagate(). Even for NOT-MERGE
-> code it is worth getting right since copy-paste propagates
-> patterns.
+Not related to this patch but there's another hack in vga that might be 
+good to get rid of similarly. At hw/display/vga.c:2263 it says:
 
+     /*
+      * Set default fb endian based on target, could probably be turned
+      * into a device attribute set by the machine/platform to remove
+      * all target endian dependencies from this file.
+      */
+     s->default_endian_fb = target_big_endian();
+     s->big_endian_fb = s->default_endian_fb;
 
-Yes you are right. I checked include/qapi/error.h and found the 
-reference usage.
+I think this does not make much sense as VGA is little endian but since 
+this hack is there since forever just changing it may break some guests. 
+I've tried that changing the default_endian_fb to false at least breaks 
+OpenBIOS and its QEMU VGA NDRV for MacOS. So at least those might need 
+some backward compatibility property until they are fixed. I don't know 
+what else could it break but maybe it would be a good opportunity to 
+change it with new machine types with a property that could also be set by 
+users if something breaks just to find out what might need fixing and 
+eventually be able to remove it. Anybody wants to make a patch?
 
-https://gitlab.com/qemu-project/qemu/-/blob/master/include/qapi/error.h#L140
-
-
->
->> +        memory_region_add_subregion(&mch->smram,
->> +                                    MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE,
->> +                                    &mch->smm_test_ram);
->> +    }
->> +
->>       object_property_add_const_link(qdev_get_machine(), "smram",
->>                                      OBJECT(&mch->smram));
->>   }
->> @@ -661,6 +683,8 @@ static const Property mch_props[] = {
->>       DEFINE_PROP_UINT16("extended-tseg-mbytes", MCHPCIState, ext_tseg_mbytes,
->>                          64),
->>       DEFINE_PROP_BOOL("smbase-smram", MCHPCIState, has_smram_at_smbase, true),
->> +    DEFINE_PROP_BOOL("x-smm-test-ram", MCHPCIState, enable_smm_test_ram,
->> +                     false),
->>   };
->>   
->>   static void mch_class_init(ObjectClass *klass, const void *data)
->> diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
->> index ddafc3f2e3..1ca26f0e63 100644
->> --- a/include/hw/pci-host/q35.h
->> +++ b/include/hw/pci-host/q35.h
->> @@ -49,8 +49,10 @@ struct MCHPCIState {
->>       MemoryRegion smram, low_smram, high_smram;
->>       MemoryRegion tseg_blackhole, tseg_window;
->>       MemoryRegion smbase_blackhole, smbase_window;
->> +    MemoryRegion smm_test_ram;
->>       bool has_smram_at_smbase;
->>       bool has_smm_ranges;
->> +    bool enable_smm_test_ram;
->>       Range pci_hole;
->>       uint64_t below_4g_mem_size;
->>       uint64_t above_4g_mem_size;
->> @@ -99,6 +101,12 @@ struct Q35PCIHost {
->>   #define MCH_HOST_BRIDGE_PCIEXBAR_SIZE          8       /* 64bit register */
->>   #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
->>   #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
->> +/*
->> + * Optional qtest-only RAM window used to expose an address that exists only
->> + * in the SMM address space, so x86 secure attrs can be cross-checked.
->> + */
->> +#define MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE      0xfef00000
->> +#define MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE      (64 * KiB)
->>   #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
->>   #define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 26))
->>   #define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 25))
->> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> index 87aa104d23..fcdd95bf7f 100644
->> --- a/tests/qtest/meson.build
->> +++ b/tests/qtest/meson.build
->> @@ -116,6 +116,7 @@ qtests_i386 = \
->>      'cpu-plug-test',
->>      'migration-test',
->>      'qtest-attrs-test',
->> +   'qtest-x86-attrs-test',
->>     ]
->>   
->>   if dbus_display and config_all_devices.has_key('CONFIG_VGA')
->> diff --git a/tests/qtest/qtest-x86-attrs-test.c b/tests/qtest/qtest-x86-attrs-test.c
->> new file mode 100644
->> index 0000000000..d9a67d5309
->> --- /dev/null
->> +++ b/tests/qtest/qtest-x86-attrs-test.c
->> @@ -0,0 +1,109 @@
->> +/*
->> + * QTest for x86 memory access with transaction attributes
->> + *
->> + * Verify q35 SMM address-space access with the secure attribute.
->> + *
->> + * Copyright (c) 2026 Phytium Technology
->> + *
->> + * Author:
->> + *  Tao Tang <tangtao1634@phytium.com.cn>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "libqtest.h"
->> +
->> +#define TEST_ADDR_OFFSET_NS     0x1000ULL
->> +#define TEST_X86_BASE           0x0ULL
->> +#define TEST_X86_SMM_BASE       0xfef00000ULL
->> +
->> +#define TEST_ADDR_X86           (TEST_X86_BASE + TEST_ADDR_OFFSET_NS)
->> +
->> +#define X86_MACHINE_ARGS        "-machine q35,smm=on -m 1G -accel tcg " \
->> +                                "-global mch.x-smm-test-ram=on"
->> +
->> +static void test_x86_scalar_attrs(void)
->> +{
->> +    QTestState *qts;
->> +    uint8_t val;
->> +
->> +    if (!qtest_has_machine("q35")) {
->> +        g_test_skip("q35 machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(X86_MACHINE_ARGS);
->> +
->> +    qtest_writeb_attrs(qts, TEST_ADDR_X86, 0x11, NULL);
->> +    val = qtest_readb_attrs(qts, TEST_ADDR_X86, NULL);
->> +    g_assert_cmpuint(val, ==, 0x11);
->> +
->> +    qtest_writeb_attrs(qts, TEST_ADDR_X86 + 0x1, 0x22, "secure");
->> +    val = qtest_readb_attrs(qts, TEST_ADDR_X86 + 0x1, "secure");
->> +    g_assert_cmpuint(val, ==, 0x22);
->> +
->> +
-> nit: extra blank line.
->
->> +    qtest_writeb_attrs(qts, TEST_X86_SMM_BASE + 0x2, 0x33, "secure");
->> +    val = qtest_readb_attrs(qts, TEST_X86_SMM_BASE + 0x2, "secure");
->> +    g_assert_cmpuint(val, ==, 0x33);
-> The commit message says "secure accesses reach the
-> SMM-only region, while default accesses do not", but
-> the test only checks the secure-can-access half. It
-> would strengthen the coverage to also verify that a
-> default (non-secure) read of TEST_X86_SMM_BASE returns
-> different data or an ERR, confirming the address-space
-> isolation actually works. Without that, a bug where
-> both address spaces map the region would pass silently.
->
-> Thanks,
-> Chao
-
-
-Good point, thanks. I will add a negative test for a default access to 
-TEST_X86_SMM_BASE as well.
-
-
-Thanks again for your time on this series. I'll push v4 in the next few 
-days.
-
-
-Best regards,
-
-Tao
-
+Regards,
+BALATON Zoltan
 
