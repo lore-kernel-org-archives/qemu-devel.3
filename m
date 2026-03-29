@@ -4,110 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1AA3F3D5F5
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 07:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AABF3D5FF
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 11:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6kcD-0005I4-VB; Sun, 29 Mar 2026 03:31:22 -0400
+	id 1w6oSi-0002Mv-74; Sun, 29 Mar 2026 07:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w6kcB-0005Hh-1q; Sun, 29 Mar 2026 03:31:19 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w6kc9-0000fB-91; Sun, 29 Mar 2026 03:31:18 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62T6xPhD2985290; Sun, 29 Mar 2026 07:31:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0/ysY/
- BHfIGPg6D1bMEkI353lRhkJ4FVMlD9TaOlbQg=; b=id4IJd0K+dyypHkumMsdIZ
- UOWF1BWC1PHb0mhHxzQMhwD1CL6ceIPIJr6R+HmVzKeWMMXhLXqPS3KDrIhPtDZs
- ztxxJrLFypnOc+I/fi4QbxpBF/8urffykum4opKV6flu7wWqB1wc0pR5Yi9+9EhX
- 902w/jD+3KNaHCGqYGxY6lv7A54JSnQX1XHDy2Zg3JKSTa4aoHbQlb+keie2ryfT
- UzZPktOm6Zbd8495lzscpYggX55Aj7vsjffxWTW6vC3SyljGmy1GfDNHzjNWr+Pw
- cEbEnlkb+AjrJYeFndXvaS/B/soBta/3XDfID6nNjjbwmTfuxKeNonLjriNpYsWw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66g1jwdf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 29 Mar 2026 07:31:14 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62T7LoxU021665;
- Sun, 29 Mar 2026 07:31:13 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d6sas8v0k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 29 Mar 2026 07:31:13 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62T7VAQ452166926
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 29 Mar 2026 07:31:10 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EBAED2004B;
- Sun, 29 Mar 2026 07:31:09 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7598F20040;
- Sun, 29 Mar 2026 07:31:08 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.221.238])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Sun, 29 Mar 2026 07:31:08 +0000 (GMT)
-Date: Sun, 29 Mar 2026 13:01:05 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Zexiang Zhang <chan9yan9@gmail.com>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "open list:sPAPR (pseries)" <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH] As reported in qemu-project/qemu#3324
-Message-ID: <acjT4ENff_tcJQtz@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260326152733.344926-1-chan9yan9@gmail.com>
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w6oSe-0002Li-GE
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 07:37:44 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w6oSb-00042A-Ot
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 07:37:43 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c7412b07f22so1849638a12.0
+ for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 04:37:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774784259; x=1775389059; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=f6tBx4kE4tawEvFskmw/LuVxmCKqiEYHJXY2wQ9tAY4=;
+ b=d3j+SEuf1g7Zd/mTmFZ3+N2QGnMm34su4AkYnVziVKA1vuFVP3qEwfr24ddgKNwikU
+ SINCn+wOLZbyPSIkwqvugf08ZWRYkfvGtb+vDx6kQ5upprkqZDvI3zDftI9fcKJRiPrl
+ 2Z4QFhAIa5rJnL9/Wv4K07SYrleppyCV19ZiPXYjWfwHFFBIuCEAkpcsqw+7rmRtqpsZ
+ 1CCU5xKppfRzbPhQx3efc/riGFQoiB20hEckrcv/Hs9ckUPeBaoyDVDqi2o1Ow9r2cib
+ WUv3Aq5TsDRRkiAu6IGM2NcllnsEMf/Npl9Vc1R/5lNg2fwwCEQRGa4QB0cFN5nEccjB
+ Deag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774784259; x=1775389059;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f6tBx4kE4tawEvFskmw/LuVxmCKqiEYHJXY2wQ9tAY4=;
+ b=B1CH5ztCK6w5HZvMbQwJsP90wtD1HxTwOiYhtmAZWQYb8QmzxLLRNadvnliSweZupT
+ nn7pbALM1v/hRM3j2P/phF9AVdDVwOywnodD8ZCqqDPSBgG2NpZxhQCxz2Uv3VVnw+z4
+ xTXsOiEfCU8VWSudLLE2MAFOrO6xQEkbej5O6RH+/bJOf+n8jdpAL5pT0Asup22kLB71
+ G1sj9Su+Pm57J3Fdca/RFUFMDQ4v8Zb6XX0mrWZqFn/q239PRmsswBOSi7Xd3y353AUo
+ UuJyRfn8ufMm7r4mMIyhH28M4QAZwkHojMMDmhYZG7XZ7dq7h4jnRXe9VXk0i9cG6YpA
+ pldQ==
+X-Gm-Message-State: AOJu0YxSivVZ7ywNWHZxC16YeQI4lqx4WH6h8tEqKACSrsL4U+4qUGpV
+ 7TvqVrAG2oe5WtR/ZYRgE94q8wSLpKJmfA8Zc4W6XGLSlhDaObTbWXPZbR6gALkw2M4=
+X-Gm-Gg: ATEYQzx1Q0KL/byKI0s0ijH3XcVKmSWshVMekFNu9K+Ehp+/FEcbsdLsmPViLl1djWI
+ lSVR6px98bwlDwVV8M6Cphu1ggMXMSOnuDM1Y1ZHlvfowB086XjY4LoC7IX/2xUZ7xxpSO6oINB
+ Z5JweiAsGFiGdtmCO3NPz7mgLYaEqZUELYNJlxo321U9G5YoLTHHbQfM7cKPLjD0fGpJy83ep0V
+ ZQMAF7JuyF9WECxss3LEBubJkTfgnOK0biKe0BheWjB0zH3QmpRfOe7yYjxwt0Smp5H4ETYMRC0
+ wQ0fZgQ1oRImY/FTTA656pt49vmH4+tu4YDnApLlZo3okqW/Oar1bPtalROcwq40SwXAjsbslpH
+ ZKkqXPFr63d7BdjYCubw6qE/aLqOG3NZBXGaFL70/S2iY94OA/Wmol83akorU3XbD0xso+xrOKM
+ oEDF9LeYnj3/8jUBVCgZ7LhTYS1UAvuv5YAoJ99PKhjWHpdQtTtAKkNyZTYy3Jwzjc9kSAxOX8a
+ ij2VzDEDg==
+X-Received: by 2002:a05:6a20:3d87:b0:39c:373b:3b48 with SMTP id
+ adf61e73a8af0-39c8ab9ef24mr8169182637.25.1774784259463; 
+ Sun, 29 Mar 2026 04:37:39 -0700 (PDT)
+Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local
+ ([27.122.242.65]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82ca8467824sm4353108b3a.17.2026.03.29.04.37.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 29 Mar 2026 04:37:38 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Trieu Huynh <vikingtc4@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PATCH] target/mips: save CP0 timer in vmstate
+Date: Sun, 29 Mar 2026 20:37:32 +0900
+Message-ID: <20260329113732.482619-1-vikingtc4@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260326152733.344926-1-chan9yan9@gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Fdo6BZ+6 c=1 sm=1 tr=0 ts=69c8d543 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=pGLkceISAAAA:8
- a=M7vallN8fe5NbUhNrHoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: goZQlISw8kggOFHUTeeFNP_0w5Agby4C
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI5MDA1NCBTYWx0ZWRfX2n0e9mdbyKYC
- UIo3EqOmOV1baI+ynq13e3+r9dQFYneyCfRxMxMNtmWoS0mmbdZ1ebYefYhOp3LstDzU7NkTG+d
- WV3Lkc32HxK4HbUeFu9fGMJQJFl4QNk7gcefUSERrFpH/70sc4gV6bG5Yp56wc72eCEwnJdjXAK
- IlSfAsJJG6xP+u+XZMt85jVVRGkI+N6vE0JPodz6mejIesPCtDMkCTCr8ZVrpBGM//Q0S9+VKuU
- 36iLVrxwz3WhfG3jQJqVt9pB+djd/iS852LO6blazKY59lKXIZM7stE+pwZL9ufMwVV6e1VRim7
- fOo5okq6TzHX91oQHufViK7Ua41uZUoGkcUbADzqji5jwww6kcGl5OxxQ9lF48aN1icyNpWy7tP
- clvoQ4iDAORoRiB7ERUhojtxNiqgf5FWaUJLacGu9UobJkcApbsGl6YL3iaS/uOU8A+vDbZDC2m
- cpGed6H4PSJ9YEhNhmw==
-X-Proofpoint-GUID: 49JeXaK6lWxsdumWKdr2EzYV7Dz7QPXk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-29_02,2026-03-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501
- adultscore=0 malwarescore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603290054
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,72 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Zexiang,
+The MIPS R4K CP0 timer (env->timer) is not included in vmstate_mips_cpu,
+so after loadvm the QEMUTimer has no scheduled expiry. This causes
+qemu_poll_ns() to block indefinitely and the guest to freeze until an
+external I/O event (e.g. a keypress) wakes the main loop.
 
-On 26/03/26 11:27PM, Zexiang Zhang wrote:
-> From: kiki <Chan9Yan9@gmail.com>
-> 
-> A malformed IVE value can result in an invalid server field being
-> passed to icp_irq(). The function assumes the server id is valid and
-> may access invalid state otherwise, potentially leading to a crash.
-> 
-> Fix this by validating the server id before using it and ignoring
-> invalid values.
-> 
-> Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-> Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
+Fix by adding an optional vmstate subsection for the timer, following
+the same pattern used by ARM (gt_timer), RISC-V (env.stimer), SPARC
+(qtimer), and OpenRISC (timer).
 
-About subject, can you change the subject to decribe the fix, something
-like 'ppc/pnv: Fix Null Pointer Deref in PHB3', what do you say ?
+The .needed callback returns false when env->timer is NULL (KVM mode),
+keeping the subsection optional for backwards compatibility with
+existing snapshots.
 
-There's a build error:
+nit: when trying to reproduce of this bug requires savevm to work on
+MIPS Malta. That is currently broken by a separate crash in
+vmsd_can_compress() introduced by commit 7aa563630b ("pc: Start with
+modern CPU hotplug interface by default"), which is being tracked and
+fixed independently [1], [2]. This fix is independent of that crash and
+touches no shared code.
 
-	../hw/intc/xics.c: In function ‘icp_irq’:
-	../hw/intc/xics.c:226:9: error: implicit declaration of function ‘qemu_log_mask’; did you mean ‘qemu_log’? [-Wimplicit-function-declaration]
-	  226 |         qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
-	      |         ^~~~~~~~~~~~~
-	      |         qemu_log
-	../hw/intc/xics.c:226:9: error: nested extern declaration of ‘qemu_log_mask’ [-Werror=nested-externs]
-	../hw/intc/xics.c:226:23: error: ‘LOG_GUEST_ERROR’ undeclared (first use in this function); did you mean ‘MOD_ESTERROR’?
-	  226 |         qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
-	      |                       ^~~~~~~~~~~~~~~
-	      |                       MOD_ESTERROR
-	../hw/intc/xics.c:226:23: note: each undeclared identifier is reported only once for each function it appears in
-	cc1: all warnings being treated as errors
+[1] https://lore.kernel.org/qemu-devel/20260316194759.22672-1-farosas@suse.de/
+[2] https://lore.kernel.org/qemu-devel/87341zsvmc.fsf@suse.de/
 
-Add '#include "qemu/log.h", maybe after osdep.h include, to fix above
-error.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1987
 
-Also, I will recommend running 'make check-functional-ppc64 -j4' to test
-the patch before post.
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+---
+ target/mips/system/machine.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-> ---
->  hw/intc/xics.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/hw/intc/xics.c b/hw/intc/xics.c
-> index 1d40c4386d..25c7b0c8a5 100644
-> --- a/hw/intc/xics.c
-> +++ b/hw/intc/xics.c
-> @@ -222,6 +222,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
->  
->      trace_xics_icp_irq(server, nr, priority);
->  
-> +    if (!icp) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
-> +                      server, nr);
-> +        ics_reject(ics, nr);
-> +        return;
-> +    }
-> +
->      if ((priority >= CPPR(icp))
->          || (XISR(icp) && (icp->pending_priority <= priority))) {
->          ics_reject(ics, nr);
-
-The change looks good to me. Can you post a v2 with the subject and
-build fixed ?
-
-Thanks,
-- Aditya G
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index 8af11fd896..473d3ab036 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -3,6 +3,7 @@
+ #include "internal.h"
+ #include "migration/cpu.h"
+ #include "fpu_helper.h"
++#include "qemu/timer.h"
+ 
+ static int cpu_post_load(void *opaque, int version_id)
+ {
+@@ -219,6 +220,23 @@ static const VMStateDescription vmstate_tlb = {
+ 
+ /* MIPS CPU state */
+ 
++static bool mips_timer_needed(void *opaque)
++{
++    MIPSCPU *cpu = opaque;
++    return cpu->env.timer != NULL;
++}
++
++static const VMStateDescription mips_vmstate_timer = {
++    .name = "cpu/timer",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mips_timer_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_TIMER_PTR(env.timer, MIPSCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_mips_cpu = {
+     .name = "cpu",
+     .version_id = 21,
+@@ -333,4 +351,8 @@ const VMStateDescription vmstate_mips_cpu = {
+ 
+         VMSTATE_END_OF_LIST()
+     },
++    .subsections = (const VMStateDescription * const []) {
++        &mips_vmstate_timer,
++        NULL
++    }
+ };
+-- 
+2.43.0
 
 
