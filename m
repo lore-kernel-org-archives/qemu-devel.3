@@ -4,120 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F78FC97F2
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 21:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08894FC97EE
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 21:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6xJT-0005oZ-8X; Sun, 29 Mar 2026 17:04:51 -0400
+	id 1w6xiH-0000ky-T6; Sun, 29 Mar 2026 17:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w6xJO-0005nt-V3
- for qemu-devel@nongnu.org; Sun, 29 Mar 2026 17:04:46 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w6xiB-0000kZ-AD
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 17:30:23 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w6xJN-0003Hu-4a
- for qemu-devel@nongnu.org; Sun, 29 Mar 2026 17:04:46 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2aaf59c4f7cso15387915ad.1
- for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 14:04:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w6xi9-0007KX-Ck
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 17:30:23 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-35c2fe0d90fso1332164a91.1
+ for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 14:30:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774818283; x=1775423083; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=USRWpu/TsI4prWiurkC7iIjtzTH/YeeJr1hwOgX/fgI=;
- b=EFCnkF3WPJ+2k19XSjuuaS+PNgcNujjEkYEMLoEuzy5T9JBhIxADZm37iK7coNKd6t
- G9JufPRwx3Y9IgWUlvuoZjWD/o4/qSEkAhGcF/baAb4JIHbOFqs5vroQHJGjIlfT+ikr
- y0kfoB3n621PcDlTgL3p/UUivcXF+k6KLYciYngrGs0FIX9OkddSMFK4cRrfU2NrI5O1
- j3vTo0k/stk3M+ASfUYHe43Q3J8c5ynyb75v9ErS4YVVhSPyPKIf5FTY5AI8Kf2s0et+
- 8Fp/A7U2DxnRfUlH0boMmEJMtBdsfBTBozDTsSwiYYLIJYLzq4fRcSH51gMD1JWo/LVF
- bF5Q==
+ d=linaro.org; s=google; t=1774819819; x=1775424619; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=53K8eaux8XzmY+23kbJkDV1nwI3zj95XEutby50E49w=;
+ b=TuhdHA4jiJD4Q1sG+CRt9h8M5fS7Z15tNejuJdfUE/oTGYmOiTHtFT67JlM2BmW7Kz
+ GUjINcONnzKs9AXILUiygqHLoWOP88R2siSIeA49CTZYPFjuvHsBKavObXr5zZTBI1Iw
+ 4x5j6mR09qgsk8Rg+BWQxJE4oa78idWJcnbF1iodbuoPdeHTyNpRpB8tSbIsmUYkKB+P
+ oDh6pm9x71mdxy0LX4N1a3bGfwoiYpE7C0DnOE7iU9WwUOLP0yBSDk/c0OzaOsBYZzZb
+ 9OTIl1hk8IPw/yxNwXuD3iD+OOeZxEvDpYJJJqFOTXldWT+ftQqNH9yFhB3e4tQ1addp
+ PVxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774818283; x=1775423083;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=USRWpu/TsI4prWiurkC7iIjtzTH/YeeJr1hwOgX/fgI=;
- b=n+lS4z75NUoCuIlcSTrpQmWTf3HHFL09Jl2Jduzkx3R5ywOVtlBUPjIB+H3OAwsc51
- rC8a6/uWiqrN3yL1mlwbshdFvINVRdtlA6Umwpjh7g1c4TX2+bxh1e9cIMD7eZcBKItQ
- Jd2hRHO1pfgh6SN/VZZZAzPqgw7vyd8vkjAfSfUtdpHtdInWYEQRBDe8yOeU6Q65xdql
- RQOVBLFGq4Of5OlrE7pcsdnOg++2fzUSHGHBHd9/QoIMN23qaMQwDZDI2O/mMRnaVAgJ
- 6m2wYBht1rBhooS7uUjpcp+LESjLcgRwlx6n9qoIZESwy9AS1Rox7bQenj3/X3LUuDqN
- HCJQ==
-X-Gm-Message-State: AOJu0YxAbguAmLjqVHOwxFfApzbcVOAtb8j6wsc5T0Iszd9kSlD88l0G
- 3Td8ns6AyZOkEMmdzfqTnNUHLMlcSux4QbaqfzfiZE1d3KS7ZqULeySqJcIV68Exg0KwJdWh8Fs
- RqfquNH4=
-X-Gm-Gg: ATEYQzygmHLD961XcOzk6YAsBxjiNJ0bn7/WQl+0SznWgr2hWMM4e6x+YgzlFqrHqfd
- 2srcs6zUyWHHPSG/4vZNYp0Mk5WRPKPR75h1y2VVpcmo1Isyl2mGsbWFoIhUFVZm34axBdE/+yo
- fh1HWxQZ9r9nDWg0Zma6CYnCXkwLvB4MiR50ChUXHA3g60CxYdkN3WfQi/ugKBC/OYH60ivhIVy
- Y/pUe7f8A8/q3SKSpZLJhmrFuNn3XKWuIMTkFcDtHtsmvmTyf+gJRSuKc2KgxBYorjdHezoGDJY
- BT4q8lW8WI4lDdABQrVvlVLGQp6FXZiiUroQekV18YtSoQ3Y3NCb/NPb4PXh1XpZ+vDqYXnDSaW
- RNg9iFJXBAmdGSziJ1mVbCLsq49t2pboYKJ0cYj7cLN8LTlC5S2pWNK1mVSrRYqMY7IdPmi3TrO
- 2uoOGUbNfsW30pEpfMc0XuRYqynTStYrOqjAhhPd+/9TKPxXELCxetsu4dYmIx/Oufuq9HKYMdH
- +1dRtQ=
-X-Received: by 2002:a17:903:1b65:b0:2b0:afad:7aad with SMTP id
- d9443c01a7336-2b0cdd3e3abmr103871375ad.45.1774818282827; 
- Sun, 29 Mar 2026 14:04:42 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ d=1e100.net; s=20251104; t=1774819819; x=1775424619;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=53K8eaux8XzmY+23kbJkDV1nwI3zj95XEutby50E49w=;
+ b=MUdCoQeWmL9WPe1KuFAX/LAgPi+ImczTXZNTvSw6gjj93eHNkJRyElpAoDaH1Z0zGE
+ /EwlrwT46Zk/9L0niKTrxiQjiFTfkG7mfSfowkDAXgNKs/2pmN1sx0RcTPhumuLmJYrp
+ 5UNEVGPLtXrSXmzV2wFg+qP9gf/wOuRhbo0hBTMM/bv36/0ks7OQZcrlFD3WhBKxCqrn
+ fYlnET+bIM5mjEkOJTNoshRf/O2QRvLkeB4dg7qo3qFqZx0gGoo170BxAuBSR0F+jpGX
+ tLO695qjuHJNQfXl2p5i1RZtp2HmkWgS+5F34H+VlSwbRX6L7jBcQua8U1D9AX9GBWgM
+ V0qg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUKqxELAeZk3v2cFfJTnzLmAJwvuJAkIrJcMunnUEicgiUlG7cai5CHWdtrpiFaGjt40qPKO4AjdoO@nongnu.org
+X-Gm-Message-State: AOJu0YzGLj/ObXd3yppsb1RWyAxD8/4uYmfLeOcb0hSNiKyMDRL6d8vV
+ I2LVtsBkX26gVvzieh+DEaT6tXs7S94w5ykoD+uddxtZEFjnYOfqRSORYR575dN3/Ec=
+X-Gm-Gg: ATEYQzxONtiSfHrT10JTpgHxAQ7fmSX/flG8pb0jhFKzQmA0RlPfidblbg7CTvv30gd
+ K3xZViFBVMRiDh/MOr82CAUjTsj/GB3oegJHQ3m+bOl/1/AsT3EtgLyCgihlJDBeaxF5Tc+NwCE
+ qxhU2D37GK8lRar7isv0g0/XdXk2hd5Uk09vDCVZmvEDjYKBJv04TMEq24lwE8/vFYFEFXRFAK5
+ kYQreDyHQmSiZc8A3mg3oorv/X6LFcczXmRbdoYgMT6y5DQGToRCHzb+ndNB9ro1ueuoygX+2gM
+ V/F3p492V3XjXIkaW5u34jCor3RBx67VSiEGZHccwTcEQ7riKuUXBMFvtV6w5W0v2TGLh3SjrD4
+ OlmT6hcmNgXSsWOgqVmY+7cSKhPwkDylmbfVpDjrzSYYCzXl+T/QNbZZalPfRocIhTzM/JRNivk
+ EbPGqq6s4BcifGuqq5S9/u7o+eoCHD5oSX+5sDtAYRa3LEca01mw==
+X-Received: by 2002:a17:90b:3b4f:b0:35c:cba:3453 with SMTP id
+ 98e67ed59e1d1-35c30076fe2mr9990941a91.22.1774819818698; 
+ Sun, 29 Mar 2026 14:30:18 -0700 (PDT)
+Received: from [192.168.4.112] ([103.73.85.111])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b24265e7basm69864555ad.21.2026.03.29.14.04.41
+ 98e67ed59e1d1-35da9ef1b70sm642405a91.16.2026.03.29.14.30.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 29 Mar 2026 14:04:42 -0700 (PDT)
-Message-ID: <937e6d77-6da8-44b9-bc4e-87c0620b10ad@linaro.org>
-Date: Sun, 29 Mar 2026 14:04:41 -0700
+ Sun, 29 Mar 2026 14:30:18 -0700 (PDT)
+Message-ID: <a700c7c2-9d70-4237-9ddd-dc09b75dbc1c@linaro.org>
+Date: Mon, 30 Mar 2026 07:30:11 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs and tests: assets moved after GitHub account renaming
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- richard.henderson@linaro.org, Peter Maydell <peter.maydell@linaro.org>,
- philmd@linaro.org
-References: <20260326214436.256215-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH-for-11.1 v6 2/6] monitor: Remove MonitorDef::type field
+ and MD_TLONG / MD_I32
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20260320091019.59902-1-philmd@linaro.org>
+ <20260320091019.59902-3-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
- eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
- CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
- gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
- qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
- 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
- L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
- IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
- dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
- tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
- PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
- F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
- HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
- CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
- UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
- uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
- vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
- FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
- I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
- oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
- TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
- y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
- /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
- YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
- DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
- v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
- 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
- 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
- dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
- 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
- X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260326214436.256215-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260320091019.59902-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,27 +114,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/26 2:44 PM, Pierrick Bouvier wrote:
-> GitHub setup a permanent redirection for all repositories when accounts,
-> so the old links will keep on working also.
+On 3/20/26 19:10, Philippe Mathieu-Daudé wrote:
+> None of the few targets still using MonitorDef use MD_TLONG,
+> they either use MD_I32 or the %get_value handler. Remove the
+> MonitorDef::type and its definitions altogether: simply check
+> for the %get_value handler, if NULL then consider 32-bit.
 > 
-> However, GitHub allow this username to be reused again. To ensure no one
-> can inject malicious content, I took ownership of the (newly free)
-> pbo-linaro account [1], so no one else can claim it.
-> 
-> [1] https://github.com/pbo-linaro
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   docs/about/emulation.rst                      | 28 +++++++++----------
->   .../aarch64/test_device_passthrough.py        |  4 +--
->   tests/functional/aarch64/test_rme_sbsaref.py  |  4 +--
->   tests/functional/aarch64/test_rme_virt.py     |  4 +--
->   4 files changed, 20 insertions(+), 20 deletions(-)
+>   include/monitor/hmp-target.h |  4 ----
+>   monitor/hmp-target.c         | 12 +-----------
+>   target/i386/monitor.c        |  2 +-
+>   target/m68k/monitor.c        | 24 ++++++++++++------------
+>   target/sparc/monitor.c       | 14 +++++++-------
+>   5 files changed, 21 insertions(+), 35 deletions(-)
 > 
+> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+> index 5167d17d41d..56322ceddd4 100644
+> --- a/include/monitor/hmp-target.h
+> +++ b/include/monitor/hmp-target.h
+> @@ -34,13 +34,9 @@ struct MonitorDef {
+>       int offset;
+>       target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
+>                                int val);
+> -    int type;
+>   };
+>   #endif
+>   
+> -#define MD_TLONG 0
+> -#define MD_I32   1
+> -
+>   const MonitorDef *target_monitor_defs(void);
+>   int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
+>   
+> diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+> index 420969bd6eb..3f019ae2a28 100644
+> --- a/monitor/hmp-target.c
+> +++ b/monitor/hmp-target.c
+> @@ -82,17 +82,7 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+>               } else {
+>                   CPUArchState *env = mon_get_cpu_env(mon);
+>                   ptr = (uint8_t *)env + md->offset;
+> -                switch(md->type) {
+> -                case MD_I32:
+> -                    *pval = *(int32_t *)ptr;
+> -                    break;
+> -                case MD_TLONG:
+> -                    *pval = *(target_long *)ptr;
+> -                    break;
+> -                default:
+> -                    *pval = 0;
+> -                    break;
+> -                }
+> +                *pval = *(int32_t *)ptr;
+>               }
+>               return 0;
+>           }
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index 446428602ef..977f65fe16c 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -602,7 +602,7 @@ static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+>   
+>   const MonitorDef monitor_defs[] = {
+>   #define SEG(name, seg) \
+> -    { name ".limit", offsetof(CPUX86State, segs[seg].limit), NULL, MD_I32 },
+> +    { name ".limit", offsetof(CPUX86State, segs[seg].limit) },
+>       SEG("cs", R_CS)
+>       SEG("ds", R_DS)
+>       SEG("es", R_ES)
+> diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+> index 08ced037b47..94bb12833af 100644
+> --- a/target/m68k/monitor.c
+> +++ b/target/m68k/monitor.c
+> @@ -24,18 +24,18 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>   }
+>   
+>   static const MonitorDef monitor_defs[] = {
+> -    { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_I32 },
+> -    { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_I32 },
+> -    { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_I32 },
+> -    { "sfc", offsetof(CPUM68KState, sfc), NULL, MD_I32 },
+> -    { "dfc", offsetof(CPUM68KState, dfc), NULL, MD_I32 },
+> -    { "urp", offsetof(CPUM68KState, mmu.urp), NULL, MD_I32 },
+> -    { "srp", offsetof(CPUM68KState, mmu.srp), NULL, MD_I32 },
+> -    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]), NULL, MD_I32 },
+> -    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]), NULL, MD_I32 },
+> -    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]), NULL, MD_I32 },
+> -    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]), NULL, MD_I32 },
+> -    { "mmusr", offsetof(CPUM68KState, mmu.mmusr), NULL, MD_I32 },
+> +    { "ssp", offsetof(CPUM68KState, sp[0]) },
+> +    { "usp", offsetof(CPUM68KState, sp[1]) },
+> +    { "isp", offsetof(CPUM68KState, sp[2]) },
+> +    { "sfc", offsetof(CPUM68KState, sfc) },
+> +    { "dfc", offsetof(CPUM68KState, dfc) },
+> +    { "urp", offsetof(CPUM68KState, mmu.urp) },
+> +    { "srp", offsetof(CPUM68KState, mmu.srp) },
+> +    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]) },
+> +    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]) },
+> +    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]) },
+> +    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]) },
+> +    { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
+>       { NULL },
+>   };
+>   
+> diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+> index e9300ded4ad..a60671a60a4 100644
+> --- a/target/sparc/monitor.c
+> +++ b/target/sparc/monitor.c
+> @@ -41,13 +41,13 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>   
+>   const MonitorDef monitor_defs[] = {
+>   #ifdef TARGET_SPARC64
+> -    { "asi", offsetof(CPUSPARCState, asi), NULL, MD_I32 },
+> -    { "pstate", offsetof(CPUSPARCState, pstate), NULL, MD_I32 },
+> -    { "cansave", offsetof(CPUSPARCState, cansave), NULL, MD_I32 },
+> -    { "canrestore", offsetof(CPUSPARCState, canrestore), NULL, MD_I32 },
+> -    { "otherwin", offsetof(CPUSPARCState, otherwin), NULL, MD_I32 },
+> -    { "wstate", offsetof(CPUSPARCState, wstate), NULL, MD_I32 },
+> -    { "cleanwin", offsetof(CPUSPARCState, cleanwin), NULL, MD_I32 },
+> +    { "asi", offsetof(CPUSPARCState, asi) },
+> +    { "pstate", offsetof(CPUSPARCState, pstate) },
+> +    { "cansave", offsetof(CPUSPARCState, cansave) },
+> +    { "canrestore", offsetof(CPUSPARCState, canrestore) },
+> +    { "otherwin", offsetof(CPUSPARCState, otherwin) },
+> +    { "wstate", offsetof(CPUSPARCState, wstate) },
+> +    { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
+>   #endif
+>       { NULL },
+>   };
 
-This was merged into master (bbaad5ee25cc93e5592afc85a66530cd8b69b2d1).
+Doesn't this completely revert patch 1?
 
-Regards,
-Pierrick
+r~
 
