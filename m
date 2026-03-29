@@ -4,95 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 244EFF3D5FF
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 12:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 617EEF3D5FF
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 12:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6pJT-0002Vh-CF; Sun, 29 Mar 2026 08:32:19 -0400
+	id 1w6pMa-0004XC-No; Sun, 29 Mar 2026 08:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6pJS-0002T6-4z
- for qemu-devel@nongnu.org; Sun, 29 Mar 2026 08:32:18 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1w6pMY-0004We-Sy
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 08:35:30 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6pJQ-0005hd-Hy
- for qemu-devel@nongnu.org; Sun, 29 Mar 2026 08:32:17 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-64ea73e7b60so4390221d50.3
- for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 05:32:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774787535; cv=none;
+ id 1w6pMW-000683-WD
+ for qemu-devel@nongnu.org; Sun, 29 Mar 2026 08:35:30 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-649278a69c5so3721654d50.3
+ for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 05:35:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774787726; cv=none;
  d=google.com; s=arc-20240605;
- b=MiTzR9LjyqgU+w9Iz20+TSZ+qH2s8DH48u+tKJbs2ecUC9bu46zX+Kklu2M0UHoqpw
- NavnkIVm9LGIZEr6CPXAyQbTGKRkaRBQh4EPVhlBOcye0Pr5O9b0igRTxI0tlYXZMPpC
- HH6ghy1Z/Utkl+tjlmM6XB9oVLg21nos8CDbrxD5petqXJ4ODJyM0xV114EiEbVGlH8Q
- rACa7AEggu+xhL2pnD4LkejM7sRiv1oRmnFN12+D+uvFYTgPUHc+S5oe1DDriRiOBlXW
- nQMKo/fXOdgV2qRpf5SPFBvR42DabdzBIIUp0FKoViDUmaxhALyaCSVy4/U+R7sRbpxy
- xOtA==
+ b=XfVg1LXiylLvGN8fDr7TAv5qeutag6pxQfMg/GJp6Zx90l1hnt03EWxCteqD42Y7NK
+ Bwz3klaCov/kc5SRPAoW6CjV/D1FmPBDCA8NlFzC/oOXnzOU0wPFIDP2BLSTttXyIKuX
+ HNP0nNTtpnVaVIMtUH/tq4j9JVC9V7Vh/8g6oODCsZFQlm1KM+7nLBM2CYYazLs2h24d
+ zz77eMKU0rF8HFkfk41mtrBq69VF/QQZmDATARMRTebo+Wj6ZMuld8W+ZxEbtXv6opKT
+ AQzglBLtFYFoHfEtz7DQyFHcrSjmCHJMDYJ6UcDMX/dn7V2yZ5AG7ZPiWUC/I+cY0jj0
+ bFng==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=MjG+DFEPRt9SmIPKJZSw5wGdjCQImeKH7mCepcevsAM=;
- fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
- b=WnYKo+55l/bvDB2crw1LdBDfFz/uHLoJg0yz1t2V0IM9Tw+4qDxreJ6LXIC3c6hRXo
- 5DlSg5fFnLNdiaysKWGSCdCE0s0AtjkBLtQaQNhrOSfQ02jyqRi4NYDKtjvxJp0bBZXW
- FvX7c0Ldu2uIGrbW9k5jsx/sTcRFOH58sobQzf3XPyPPBREp3Lgep9c9Z+v6gwJTtfxR
- AjEqH4QIhoSL1gQBRnwVObz6nH+webevnM8DRukWXdr7A1O2FkvqR8mF95yWWlm8htgO
- H0KEOdV+Y0Kgrw4Bdfr5kLq1QSalAPVvpIHIb57YtiBfHEwqzbN0J+a5RbUbyfAPfw7s
- HcWg==; darn=nongnu.org
+ bh=+q6nQVl2h0KkxHbhRc66VeEvzbqgF6Zbzia7nzZxOYk=;
+ fh=gLaL7nOF2xtlRMHS7Q3Mc3/IqeloQ9eUotsoI9565CU=;
+ b=IniuFjFTgyVNvFB3/HY8wZvJF57TTLxniYok+7/1ANG7W7DxfVvTFZFtij8vuzI4BL
+ UzbQgydI3KCm/Nc7pSBIifCN9S+lalPL6U3/ilaFCa81o3taJ7GSjP3ETS1k0rRKapTY
+ k/opDCeo+CAvVJK8IBlVES5JkpSUvG66GJAxM7Q4k9rabYbtZC5EJLPWxlGzIVNxGovX
+ SH1I69IPHDgUeTHX0CA/Jf+poa4koJ2le4nS4Z7GKQCl/rrMB/x5VtMmiu4VN1iCRBF3
+ SJP84ARhMDe2NCk5byagIlu91KLev5MnvhCrvRKnANFu6Oy6JC0RpBhl5N+VX/4Rrcjn
+ r31Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774787535; x=1775392335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774787726; x=1775392526; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MjG+DFEPRt9SmIPKJZSw5wGdjCQImeKH7mCepcevsAM=;
- b=bOaiJsmOFtVbCf2HmYReHjq+8n+KbA2j4pgtbU+D7WJ9gF8CjsCie9KT2NHRGfIuoX
- ItJoPUBZxwjOGDsDFpLRm+VOV10dCgUuPSV5rCoCktt5qGE20SSMpcZW2TQgdn3QZV4a
- 6VQnWf8MTdAAWL4Ag1QLwK7gBMuZI7Jfq5bBOVaJDjDLJfhQ0Tku0PoXxVJ0S6OFgQtg
- W/6XtvTTOmGs8qpRG0G0CQwWYC58sixbEHMMPeSDuNACgYXXj0KdBkVwjGY9pgRLEJxA
- iH9GyTBOeNhZjT4epFnw1blwGIHnyvdcyc3XxNJ1foRdAYC9AWW/kavhy/ikYDHBDzri
- yguw==
+ bh=+q6nQVl2h0KkxHbhRc66VeEvzbqgF6Zbzia7nzZxOYk=;
+ b=RnTGkulOzZsQM4lYD+U0Z8uMNvDLxoWxH+44yzCSwU/JuyHMqJe7W8vD0Ty93az5pd
+ RLffMDdJe7VtRIcFCI+fRClMOb/Lifu3LG0jrb5UIBeioQ1RLOYRGvVrCBNYvzOgZ2RJ
+ ppreGq/bNomN0kOa49nG9CB0G7rHgXxptVH5cOWCZ7BVwPAzj1mcfO+k4/VkHrEDDYav
+ QQSnmoEle/Q9ymZQV1Ke22vwWC4grscz8QbuJfSxt9jIAPdVosEfshz0wvsUNdb8p+0g
+ x3UfrphzgDuKMP1cIaJ8LSwsOrIIgJPekU6rAPHRouqhqaPhVFcavSxl6VTMoa9y+qdX
+ 66hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774787535; x=1775392335;
+ d=1e100.net; s=20251104; t=1774787726; x=1775392526;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MjG+DFEPRt9SmIPKJZSw5wGdjCQImeKH7mCepcevsAM=;
- b=Kb1rRnG10lkMqbdbEYfm3ppFOzxtevDzfFY5mo5reoQFMbPhOba3eYTjl+eUqwIAjY
- dOBkSMkrtpnc0AmkPVa1HN1p4074bGlwAyIfegEC5bttOtqgffqn66XCr9folSk76N3e
- Dfa0d+WjsWNu0MEYo7RVxgTPJUUkcS4GHUWqy61jvWEbmdl8XoNUbZqZpT1wPJt5LnFx
- zXHHXcb239jZHRblwDKQP8I40ORn86y8/9dSek6kmiWPEiyBKH5J8inWNwunNRn0+3zL
- q34aioIZfjUvUo+fgkwNxVAeumcJVyv3znC3dIJ9jm3wcBhSqDZwpVAlCWnF+dOrij9S
- VtFg==
-X-Gm-Message-State: AOJu0Yz4+7ZB6zCnk7GDpdKP6VWG8lWH71vBkD4uNQ6Tw5N4YChwICe3
- 8Tw9iyzXTZyR7jv1u3u02sFrhIJZ39KoOcusttbR8sLJwdfdjjEjCGA8/WXgmVgX1XlNYxaQBhy
- Tgj86/rmSe9sTecefGWGT9e27b5zp/d9dfO/33cnuFHB1K1HWfguPiu4=
-X-Gm-Gg: ATEYQzy5U+JgqQv986e4BkC56D89w9yarJ5O6tqkYNxDThE9BD7hrLKxyeMU1L+3zN+
- Xc+425uXia13v9NC/ovNrFiSRW0k80io03iORdrr9MdVvqKGiWJ8K0NCTwUECiuJamT/M4JSh32
- rMuiEPSvS6kXN7HLri8kjcgKhOGpOtxfv3e7btMsyOO9MUhMk2MENFFA9hcyUrDMJwN4Q/w1yDz
- 3w3PYodSInF6T20JdunIyHmbLMOW2rFpYTfL4AsDyhLFUMe+KNcHjJH8DqTnj47dGeBRoaOFX/D
- wBCOjQbfijlPucFsOurpHxXNzPPCbf/7iNmLsK3cgJBOk5RPDb9700wUYkAzjWy2PIw=
-X-Received: by 2002:a05:690e:4814:b0:64e:7d41:29aa with SMTP id
- 956f58d0204a3-64ff72092bemr5697968d50.25.1774787535058; Sun, 29 Mar 2026
- 05:32:15 -0700 (PDT)
+ bh=+q6nQVl2h0KkxHbhRc66VeEvzbqgF6Zbzia7nzZxOYk=;
+ b=c43kWiyfW3znyFokYDHFt8GrmimmKKjs7bqo0XEMSSCSyFjGd0qFy07vzwyzRV+oxo
+ so33ns0A0ldYRAU4HX1xX5oVcttqXVCCIYBXLq6Y+FFSRazaMKFwhKXIfjGyHxnFhZHL
+ bXAC57jfToFh5IU4r8otUprzZlqM6qxsNHKN67h35816tg8p4FltAK0d4QNJ3I88lWID
+ nJz8dBobQa7KExhHRQwzvUWv4+HrJKAkdpiXBOAC5YaKVUDf0YqZB0ib7G1M06aQrI4C
+ o7GOldIRhhSSLVl35SOmFF8zRUygmm1Gnz72irviQljK2uOZJ4CGyKNjnTLyMMIHqoU+
+ NEng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQ/qUdjgEI6QxHdCR+d8iD30dVrFr5kpIKZo/tnBIHl389gSYbxrEOEoExHbZzTFoesad1roKoTH7d@nongnu.org
+X-Gm-Message-State: AOJu0Yz/jj+cTz26GZscbl7OxdSCN5ZS7h1KyJehgwZUmx/5AJu97Nkp
+ msBJvADrXgSBkqRpalyOWW4N2ejShwSDCuLiElj56bjs9k/6SRqja6FdNYTnCp9N5BrZeCjkHyz
+ kbygX95bV0Irhpg4qBGTbntduEVPH+wu5lFKhAx1qwg==
+X-Gm-Gg: ATEYQzyTAjOs4chOO3w7vPpUwPREgSUAAOjRKHkvaP5jJmxP3VeT1JtBxLk/JEfwIvP
+ nKqiye62FjAbW4vjumdvBKYrkwZPYugdVz8ZP/oFIQs8YOT6P/gajq8Jwb/MjzZy47Wg7mMdg1p
+ tgz+lf/5OiqjjhUOkm358OfS49+j1tjSToUHsAtzANNGs9HvZ7Rz+eyhr7zuWCb6pUjkQpTzCG5
+ qEAjeiGp55XRShuzyZkZ1QpMgiGmwhhhYSlzxPWh1Q5kJLzOhel99Y/BJL1sDOM4QbrVfXejoeZ
+ GGLO+aEcxcHKt0tcdpkxjd/acNWHZXj7txGm5c76qzrai40apQHska1dh7GLD9TnNwA=
+X-Received: by 2002:a05:690e:1488:b0:650:19c7:c5c8 with SMTP id
+ 956f58d0204a3-65019c7cd5bmr806120d50.64.1774787726582; Sun, 29 Mar 2026
+ 05:35:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260327182541.691078-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260327182541.691078-1-pierrick.bouvier@linaro.org>
+References: <20260212144244.22579-1-pbonzini@redhat.com>
+ <20260212144244.22579-5-pbonzini@redhat.com>
+ <CAFEAcA-O4g5ZrRdK1s5kBjMfRbWhPnD0hLZwhpVHVHVbE7LKdQ@mail.gmail.com>
+ <abjXUtJNrcmSFUP4@intel.com>
+In-Reply-To: <abjXUtJNrcmSFUP4@intel.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 29 Mar 2026 13:32:02 +0100
-X-Gm-Features: AQROBzBoZsUBkOPdO5kSiY04KNUgLx73308bmtAWdFJpXsahg9qUjD2Xsc0zkTY
-Message-ID: <CAFEAcA8ttmbdVNoCVF8_hcO9ugSD5uLytYiP6k1pHe-mruP__Q@mail.gmail.com>
-Subject: Re: [PULL 0/1] docs and tests: assets moved after GitHub account
- renaming
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- stefanha@redhat.com
+Date: Sun, 29 Mar 2026 13:35:15 +0100
+X-Gm-Features: AQROBzAdb8ypUANn6q5EMKigiSHm_j1hKdBPTV4iJ5CEVevgKyIhEabJG-RhvFQ
+Message-ID: <CAFEAcA8FJz1WgKxU_VMc_MVGgAWk5iy2=S67SFsUSPKh1yiE8A@mail.gmail.com>
+Subject: Re: [PULL 04/41] pc: Start with modern CPU hotplug interface by
+ default
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,34 +123,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Mar 2026 at 18:25, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Tue, 17 Mar 2026 at 03:57, Zhao Liu <zhao1.liu@intel.com> wrote:
 >
-> The following changes since commit 770f50c14f098717fd40ae6e826a495681152447:
+> +Philippe & Aurelien
 >
->   Merge tag 'pull-nvme-20260326' of https://gitlab.com/birkelund/qemu into staging (2026-03-26 10:26:39 +0000)
+> (And seeking Igor's input)
 >
-> are available in the Git repository at:
+> > The problem is that the vmstate_cpu_hotplug VMStateDescription
+> > that is being used has a NULL "fields" (it is the "stub" one).
+> > This used to be OK because the "piix4_pm/cpuhp" vmstate had
+> > a "needed" function that would return false for Malta, so we
+> > never tried to use the stub code.
+> >
+> > What's the intention here ? Shouldn't we still have a "needed"
+> > function that returns "false" for the cases where we would be
+> > using the stub version of vmstate_cpu_hotplug ? Otherwise we
+> > would be changing the migration data. We can permit a compat
+> > break for MIPS boards, but the commit message suggests that
+> > this wasn't intended to be a compat break.
 >
->   https://gitlab.com/pbo-linaro/qemu tags/pr-gh_rename-20260327
+> Thanks, this is my bad - I didn't realize it would break Malta. The
+> "needed" method looks necessary, but previously making the "stub" one
+> depend on cpu_hotplug_legacy=true also sounds a bit not proper.
 >
-> for you to fetch changes up to d5a678c87c4d70c1b5ec4397f1daea7ff0186dc8:
+> Maybe in the needed() method we should also check whether the board/
+> machine supports CPU hotplug: check mc->has_hotpluggable_cpus. IIUC,
+> Malta doesn't support this.
 >
->   docs and tests: assets moved after GitHub account renaming (2026-03-27 11:25:02 -0700)
+> > In this thread Fabiano suggests a fix which is probably OK
+> > if we want to take the "break migration compat" route:
+> > https://lore.kernel.org/qemu-devel/CAFEAcA9BzSp9F8yv4eZv5eeUM4JXSy9T-QnRr_UbJZpNmhtHyw@mail.gmail.com/T/#m6f4a672ddfa8a0a34dfdf9b57bb04e529ab5c9a4
 >
-> ----------------------------------------------------------------
-> Changes:
-> - [PATCH] docs and tests: assets moved after GitHub account renaming (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
->   Link: https://lore.kernel.org/qemu-devel/20260326214436.256215-1-pierrick.bouvier@linaro.org
+> I think Fabiano's patch is a clean solution. Or I think there's another
+> option: we can bring needed() back but check mc->has_hotpluggable_cpus
+> instead, like acpi-ged/cpuhp did ().
 >
-> ----------------------------------------------------------------
+> Igor, what do you think?
 
+Hi, what's the plan here ? We need to fix this before 11.0
+releases. Are you going to send your proposed ich9.c fix
+as a proper patch ?
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
+thanks
 -- PMM
 
