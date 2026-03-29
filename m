@@ -4,110 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 617EEF3D5FF
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 12:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B629EF3D605
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Mar 2026 14:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w6pMa-0004XC-No; Sun, 29 Mar 2026 08:35:32 -0400
+	id 1w6rGc-00020Z-3f; Sun, 29 Mar 2026 10:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6pMY-0004We-Sy
- for qemu-devel@nongnu.org; Sun, 29 Mar 2026 08:35:30 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w6pMW-000683-WD
- for qemu-devel@nongnu.org; Sun, 29 Mar 2026 08:35:30 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-649278a69c5so3721654d50.3
- for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 05:35:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774787726; cv=none;
- d=google.com; s=arc-20240605;
- b=XfVg1LXiylLvGN8fDr7TAv5qeutag6pxQfMg/GJp6Zx90l1hnt03EWxCteqD42Y7NK
- Bwz3klaCov/kc5SRPAoW6CjV/D1FmPBDCA8NlFzC/oOXnzOU0wPFIDP2BLSTttXyIKuX
- HNP0nNTtpnVaVIMtUH/tq4j9JVC9V7Vh/8g6oODCsZFQlm1KM+7nLBM2CYYazLs2h24d
- zz77eMKU0rF8HFkfk41mtrBq69VF/QQZmDATARMRTebo+Wj6ZMuld8W+ZxEbtXv6opKT
- AQzglBLtFYFoHfEtz7DQyFHcrSjmCHJMDYJ6UcDMX/dn7V2yZ5AG7ZPiWUC/I+cY0jj0
- bFng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=+q6nQVl2h0KkxHbhRc66VeEvzbqgF6Zbzia7nzZxOYk=;
- fh=gLaL7nOF2xtlRMHS7Q3Mc3/IqeloQ9eUotsoI9565CU=;
- b=IniuFjFTgyVNvFB3/HY8wZvJF57TTLxniYok+7/1ANG7W7DxfVvTFZFtij8vuzI4BL
- UzbQgydI3KCm/Nc7pSBIifCN9S+lalPL6U3/ilaFCa81o3taJ7GSjP3ETS1k0rRKapTY
- k/opDCeo+CAvVJK8IBlVES5JkpSUvG66GJAxM7Q4k9rabYbtZC5EJLPWxlGzIVNxGovX
- SH1I69IPHDgUeTHX0CA/Jf+poa4koJ2le4nS4Z7GKQCl/rrMB/x5VtMmiu4VN1iCRBF3
- SJP84ARhMDe2NCk5byagIlu91KLev5MnvhCrvRKnANFu6Oy6JC0RpBhl5N+VX/4Rrcjn
- r31Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774787726; x=1775392526; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+q6nQVl2h0KkxHbhRc66VeEvzbqgF6Zbzia7nzZxOYk=;
- b=RnTGkulOzZsQM4lYD+U0Z8uMNvDLxoWxH+44yzCSwU/JuyHMqJe7W8vD0Ty93az5pd
- RLffMDdJe7VtRIcFCI+fRClMOb/Lifu3LG0jrb5UIBeioQ1RLOYRGvVrCBNYvzOgZ2RJ
- ppreGq/bNomN0kOa49nG9CB0G7rHgXxptVH5cOWCZ7BVwPAzj1mcfO+k4/VkHrEDDYav
- QQSnmoEle/Q9ymZQV1Ke22vwWC4grscz8QbuJfSxt9jIAPdVosEfshz0wvsUNdb8p+0g
- x3UfrphzgDuKMP1cIaJ8LSwsOrIIgJPekU6rAPHRouqhqaPhVFcavSxl6VTMoa9y+qdX
- 66hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774787726; x=1775392526;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+q6nQVl2h0KkxHbhRc66VeEvzbqgF6Zbzia7nzZxOYk=;
- b=c43kWiyfW3znyFokYDHFt8GrmimmKKjs7bqo0XEMSSCSyFjGd0qFy07vzwyzRV+oxo
- so33ns0A0ldYRAU4HX1xX5oVcttqXVCCIYBXLq6Y+FFSRazaMKFwhKXIfjGyHxnFhZHL
- bXAC57jfToFh5IU4r8otUprzZlqM6qxsNHKN67h35816tg8p4FltAK0d4QNJ3I88lWID
- nJz8dBobQa7KExhHRQwzvUWv4+HrJKAkdpiXBOAC5YaKVUDf0YqZB0ib7G1M06aQrI4C
- o7GOldIRhhSSLVl35SOmFF8zRUygmm1Gnz72irviQljK2uOZJ4CGyKNjnTLyMMIHqoU+
- NEng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQ/qUdjgEI6QxHdCR+d8iD30dVrFr5kpIKZo/tnBIHl389gSYbxrEOEoExHbZzTFoesad1roKoTH7d@nongnu.org
-X-Gm-Message-State: AOJu0Yz/jj+cTz26GZscbl7OxdSCN5ZS7h1KyJehgwZUmx/5AJu97Nkp
- msBJvADrXgSBkqRpalyOWW4N2ejShwSDCuLiElj56bjs9k/6SRqja6FdNYTnCp9N5BrZeCjkHyz
- kbygX95bV0Irhpg4qBGTbntduEVPH+wu5lFKhAx1qwg==
-X-Gm-Gg: ATEYQzyTAjOs4chOO3w7vPpUwPREgSUAAOjRKHkvaP5jJmxP3VeT1JtBxLk/JEfwIvP
- nKqiye62FjAbW4vjumdvBKYrkwZPYugdVz8ZP/oFIQs8YOT6P/gajq8Jwb/MjzZy47Wg7mMdg1p
- tgz+lf/5OiqjjhUOkm358OfS49+j1tjSToUHsAtzANNGs9HvZ7Rz+eyhr7zuWCb6pUjkQpTzCG5
- qEAjeiGp55XRShuzyZkZ1QpMgiGmwhhhYSlzxPWh1Q5kJLzOhel99Y/BJL1sDOM4QbrVfXejoeZ
- GGLO+aEcxcHKt0tcdpkxjd/acNWHZXj7txGm5c76qzrai40apQHska1dh7GLD9TnNwA=
-X-Received: by 2002:a05:690e:1488:b0:650:19c7:c5c8 with SMTP id
- 956f58d0204a3-65019c7cd5bmr806120d50.64.1774787726582; Sun, 29 Mar 2026
- 05:35:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1w6rGU-0001tP-8f; Sun, 29 Mar 2026 10:37:22 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1w6rGO-0006xu-4B; Sun, 29 Mar 2026 10:37:21 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBHTaENOclpfukyAA--.17438S2;
+ Sun, 29 Mar 2026 22:37:01 +0800 (CST)
+Received: from [192.168.31.176] (unknown [222.244.183.215])
+ by mail (Coremail) with SMTP id AQAAf8Dw0pILOclpE0YHAA--.16065S2;
+ Sun, 29 Mar 2026 22:36:59 +0800 (CST)
+Message-ID: <63e1cb8a-4653-483e-a87d-ace0c241b185@phytium.com.cn>
+Date: Sun, 29 Mar 2026 22:36:58 +0800
 MIME-Version: 1.0
-References: <20260212144244.22579-1-pbonzini@redhat.com>
- <20260212144244.22579-5-pbonzini@redhat.com>
- <CAFEAcA-O4g5ZrRdK1s5kBjMfRbWhPnD0hLZwhpVHVHVbE7LKdQ@mail.gmail.com>
- <abjXUtJNrcmSFUP4@intel.com>
-In-Reply-To: <abjXUtJNrcmSFUP4@intel.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 29 Mar 2026 13:35:15 +0100
-X-Gm-Features: AQROBzAdb8ypUANn6q5EMKigiSHm_j1hKdBPTV4iJ5CEVevgKyIhEabJG-RhvFQ
-Message-ID: <CAFEAcA8FJz1WgKxU_VMc_MVGgAWk5iy2=S67SFsUSPKh1yiE8A@mail.gmail.com>
-Subject: Re: [PULL 04/41] pc: Start with modern CPU hotplug interface by
- default
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v3 1/4] tests/qtest: Add attrs support to qtest server
+ memory commands
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260323133210.1523868-1-tangtao1634@phytium.com.cn>
+ <20260323133210.1523868-2-tangtao1634@phytium.com.cn>
+ <acH32HUGWnbF2_PY@ZEVORN-PC.localdomain>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <acH32HUGWnbF2_PY@ZEVORN-PC.localdomain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAf8Dw0pILOclpE0YHAA--.16065S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAJBWnIKvkb-QAAsZ
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3GF1DZr1xAF4DKrykuFW3ZFb_yoW7Kry3pr
+ 47AF15XFs8tF18ua4xKr13Wa43K39agr1UGr9xtF92yrn0kFn3Wr1fuw15Cr1DGry7t3ZY
+ 9w47J3y3C3Z8Ga7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: 1
+X-Spam_score: 0.1
+X-Spam_bar: /
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,47 +76,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Mar 2026 at 03:57, Zhao Liu <zhao1.liu@intel.com> wrote:
->
-> +Philippe & Aurelien
->
-> (And seeking Igor's input)
->
-> > The problem is that the vmstate_cpu_hotplug VMStateDescription
-> > that is being used has a NULL "fields" (it is the "stub" one).
-> > This used to be OK because the "piix4_pm/cpuhp" vmstate had
-> > a "needed" function that would return false for Malta, so we
-> > never tried to use the stub code.
-> >
-> > What's the intention here ? Shouldn't we still have a "needed"
-> > function that returns "false" for the cases where we would be
-> > using the stub version of vmstate_cpu_hotplug ? Otherwise we
-> > would be changing the migration data. We can permit a compat
-> > break for MIPS boards, but the commit message suggests that
-> > this wasn't intended to be a compat break.
->
-> Thanks, this is my bad - I didn't realize it would break Malta. The
-> "needed" method looks necessary, but previously making the "stub" one
-> depend on cpu_hotplug_legacy=true also sounds a bit not proper.
->
-> Maybe in the needed() method we should also check whether the board/
-> machine supports CPU hotplug: check mc->has_hotpluggable_cpus. IIUC,
-> Malta doesn't support this.
->
-> > In this thread Fabiano suggests a fix which is probably OK
-> > if we want to take the "break migration compat" route:
-> > https://lore.kernel.org/qemu-devel/CAFEAcA9BzSp9F8yv4eZv5eeUM4JXSy9T-QnRr_UbJZpNmhtHyw@mail.gmail.com/T/#m6f4a672ddfa8a0a34dfdf9b57bb04e529ab5c9a4
->
-> I think Fabiano's patch is a clean solution. Or I think there's another
-> option: we can bring needed() back but check mc->has_hotpluggable_cpus
-> instead, like acpi-ged/cpuhp did ().
->
-> Igor, what do you think?
+Hi Chao,
 
-Hi, what's the plan here ? We need to fix this before 11.0
-releases. Are you going to send your proposed ich9.c fix
-as a proper patch ?
+On 3/24/2026 10:40 AM, Chao Liu wrote:
+> On Mon, Mar 23, 2026 at 09:32:07PM +0800, Tao Tang wrote:
+>> Extend qtest memory access commands to accept an optional attrs argument.
+>>
+>> Supported attrs:
+>> - secure (x86/Arm)
+>> - space=non-secure|secure|root|realm (Arm-only)
+>>
+>> For memory commands, parse attrs, select the corresponding AddressSpace
+>> with cpu_asidx_from_attrs(), and issue accesses with the matching
+>> MemTxAttrs.
+>>
+>> Cover scalar and bulk memory commands, including:
+>> - read{b,w,l,q} / write{b,w,l,q}
+>> - read / write
+>> - b64read / b64write
+>> - memset
+>>
+>> Also reject invalid attrs and excessive arguments, and document the new
+>> command forms in qtest.c, and use qtest_send_memtx_error() to return
+>> ERR for memory access failures.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   system/qtest.c | 517 +++++++++++++++++++++++++++++++++++++++++++------
+>>   1 file changed, 463 insertions(+), 54 deletions(-)
+>>
+>> diff --git a/system/qtest.c b/system/qtest.c
+>> index cf90cd53ad..30c2a95020 100644
+>> --- a/system/qtest.c
+>> +++ b/system/qtest.c
+>> @@ -22,6 +22,7 @@
+>>   #include "hw/core/qdev.h"
+>>   #include "hw/core/irq.h"
+>>   #include "hw/core/cpu.h"
+>> +#include "hw/arm/arm-security.h"
+>>   #include "qemu/accel.h"
+>>   #include "system/cpu-timers.h"
+>>   #include "qemu/config-file.h"
+>> @@ -113,6 +114,14 @@ static void *qtest_server_send_opaque;
+>>    * PIO and memory access:
+>>    * """"""""""""""""""""""
+>>    *
+>> + * Memory access commands allow specifying memory transaction attributes,
+>> + * which is useful for testing devices that behave differently based on
+>> + * security state (e.g., Arm TrustZone/CCA or System Management Mode in x86).
+>> + *
+>> + * Only the following attributes are supported by the qtest server:
+>> + * ``secure`` sets MemTxAttrs.secure=1 (x86/Arm).
+>> + * ``space=...`` is Arm-specific and accepts: non-secure, secure, root, realm.
+>> + *
+>>    * .. code-block:: none
+>>    *
+>>    *  > outb ADDR VALUE
+>> @@ -150,13 +159,42 @@ static void *qtest_server_send_opaque;
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > writeb ADDR VALUE secure
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > writeb ADDR VALUE space=realm
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > writew ADDR VALUE
+>>    *  < OK
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > writew ADDR VALUE secure
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > writew ADDR VALUE space=realm
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > writel ADDR VALUE
+>>    *  < OK
+>> + * .. code-block:: none
+>> + *
+>> + *  > writel ADDR VALUE secure
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > writel ADDR VALUE space=root
+>> + *  < OK
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> @@ -165,49 +203,147 @@ static void *qtest_server_send_opaque;
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > writeq ADDR VALUE secure
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > writeq ADDR VALUE space=non-secure
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > readb ADDR
+>>    *  < OK VALUE
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > readb ADDR secure
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > readb ADDR space=root
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > readw ADDR
+>>    *  < OK VALUE
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > readw ADDR secure
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > readw ADDR space=root
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > readl ADDR
+>>    *  < OK VALUE
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > readl ADDR secure
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > readl ADDR space=root
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > readq ADDR
+>>    *  < OK VALUE
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > readq ADDR secure
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > readq ADDR space=root
+>> + *  < OK VALUE
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > read ADDR SIZE
+>>    *  < OK DATA
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > read ADDR SIZE secure
+>> + *  < OK DATA
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > read ADDR SIZE space=root
+>> + *  < OK DATA
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > write ADDR SIZE DATA
+>>    *  < OK
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > write ADDR SIZE DATA secure
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > write ADDR SIZE DATA space=root
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > b64read ADDR SIZE
+>>    *  < OK B64_DATA
+>>    *
+>>    * .. code-block:: none
+>>    *
+>> + *  > b64read ADDR SIZE secure
+>> + *  < OK B64_DATA
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > b64read ADDR SIZE space=root
+>> + *  < OK B64_DATA
+>> + *
+>> + * .. code-block:: none
+>> + *
+>>    *  > b64write ADDR SIZE B64_DATA
+>>    *  < OK
+>> + * .. code-block:: none
+> There are a few places where the blank line before
+> ``.. code-block:: none`` is missing (around writel and
+> b64write sections). RST requires a blank ``*`` line
+> before every directive, otherwise the doc build will
+> break or silently mis-render.
 
-thanks
--- PMM
+
+Thanks for the review.
+
+
+I'll add the missing line in V4.
+
+>
+>> + *
+>> + *  > b64write ADDR SIZE B64_DATA secure
+>> + *  < OK
+>> + * .. code-block:: none
+>> + *
+>> + *  > b64write ADDR SIZE B64_DATA space=root
+>> + *  < OK
+>>    *
+>>    * .. code-block:: none
+>>    *
+>>    *  > memset ADDR SIZE VALUE
+>>    *  < OK
+>>    *
+>> + * .. code-block:: none
+>> + *
+>> + *  > memset ADDR SIZE VALUE secure
+>> + *  < OK
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > memset ADDR SIZE VALUE space=root
+>> + *  < OK
+> The documentation is very thorough but also very
+> repetitive -- every command x every attrs variant gets
+> its own code-block. It might be worth consolidating
+> this into a single description of the attrs syntax
+> followed by a note that it applies to all memory
+> commands. That would cut ~80 lines while keeping the
+> same information.
+
+
+I agree the attrs examples can be trimmed a bit. So I would prefer a 
+lighter cleanup here rather than collapsing everything into a single 
+generic block after an additional comment like "The optional attrs 
+argument applies to all memory access commands listed below."
+
+
+> Thanks,
+> Chao
+
+Best regards,
+
+Tao
+
 
