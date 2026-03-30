@@ -4,64 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FC9FF493A
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 05:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C1CFF4941
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 05:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w74nZ-0008Uc-8Q; Mon, 30 Mar 2026 01:04:25 -0400
+	id 1w74qB-0000zg-On; Mon, 30 Mar 2026 01:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w74nP-0008UJ-Jp
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:04:15 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ id 1w74qA-0000zK-Bn
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:07:06 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w74nM-0000tk-Ko
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:04:15 -0400
+ id 1w74q8-0001fl-QC
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:07:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774847052; x=1806383052;
+ t=1774847225; x=1806383225;
  h=from:to:cc:subject:date:message-id:mime-version:
  content-transfer-encoding;
- bh=uB5hZL02kf+UCJUlzQM8BF3GydpZBlRmoe2BMjmxlsI=;
- b=AvA+SGUNiffDcaJqVpHGFucYLJ+d7hMNjthYVnciL7jwtAog42mh2N6D
- t/nkAGo9UF6q1GJYNhG8NJ87JsjUGtx+LSSPEErCd+W5f71GQOH1EVVPL
- A8/r0onSysjqsbNoI7HC+B+7wnSTG8eL4sEL4S6XlJu6LLJVJcs5gndBL
- sZZXRBugtcKGGZFGY80p0hFSC5MeVLmmq86I0g83LBx9pj5CkB1Ys28hW
- SzvrSi64Nyvj8RrB9nZYsnx69Gf1KJi5AStCqZOP6eE0OfQWtxyrPnur5
- pRYk0NUYlOc5V49nLFUjipdjI167Z8wf4AEG5u7dBJ/5azrQpynqbkMSD Q==;
-X-CSE-ConnectionGUID: s94FMtI9SRGDCEIEytoW1A==
-X-CSE-MsgGUID: /AoxKB54QNS23MT6IcB2qA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="93410530"
-X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="93410530"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2026 22:04:06 -0700
-X-CSE-ConnectionGUID: SUP2hOa6Q2aQQouqXL9Eog==
-X-CSE-MsgGUID: 23G4wYxrS96onc0sYqKpjQ==
+ bh=DjdOLgMldMmJy0IrwB1jcfFi+yHryWupaDG3cGqwz9g=;
+ b=aXjNECercL/NEG8ZV06lH+19tMXTeyfM9WNAzslMuvVZRYDhCr4+aoTj
+ UO0UGMkEO/IqLVlk2bEAps3KBmr6S9t6ybJMgVUJ5Up4cQiyXmNIHHYb0
+ vV+n41VFdCY4NwxZ08a27p5IivhOhVfd2bgIunjsyFEztM4v4UnO9SKJB
+ IIsM5opJAXa7VugRuLCkGD8lsaYecCfNC+699aWZnkZEXBia8d40nSHSN
+ 5X9zndpvJVA6AuQzoNkBUATlKrICblwaBR2tHyIHQ3frnxlufshNu0YYM
+ ltG1wNwBIMAo+1vO1YdhHQqUQVlN3nLm3PDZiNvkENhwLjIaMJYBwfptk g==;
+X-CSE-ConnectionGUID: rz4CcjynQsOlKw+hZRwERA==
+X-CSE-MsgGUID: fA3E/6jESkmeLIZAj48O/Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="101288404"
+X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="101288404"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2026 22:07:00 -0700
+X-CSE-ConnectionGUID: bt9uLYe2TZyB8uBjxYktrA==
+X-CSE-MsgGUID: S9IE+wNCRg6fDAQukE4fow==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="221547545"
+X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="230013974"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 29 Mar 2026 22:04:04 -0700
+ by orviesa003.jf.intel.com with ESMTP; 29 Mar 2026 22:06:59 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=83?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Peter Maydell <peter.maydell@linaro.org>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH for v11.0] hw/acpi: Do not save/load cpuhp state
- unconditionally
-Date: Mon, 30 Mar 2026 13:30:08 +0800
-Message-Id: <20260330053008.2721532-1-zhao1.liu@intel.com>
+Subject: [PATCH] tests/functional/migration.py: Skip migration_with_exec() if
+ socat is not available
+Date: Mon, 30 Mar 2026 13:33:00 +0800
+Message-Id: <20260330053300.2721608-1-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -86,109 +82,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 7aa563630b6b ("pc: Start with modern CPU hotplug interface
-by default") removed the .needed callback (vmstate_test_use_cpuhp)
-from vmstate_cpuhp_state in both piix4.c and ich9.c.
+Commit 643a171f5668 ("tests: Replace ncat with socat in migration test
+and drop ncat from containers") replaced ncat with socat, but missed to
+skip related test cases if socat is not available, which will cause test
+errors on the system without socat.
 
-However, PIIX4 is also used by non-PC boards - MIPS Malta, which does
-not select CONFIG_ACPI_CPU_HOTPLUG. For MIPS Malta, the linker resolves
-vmstate_cpu_hotplug to the stub one in acpi-cpu-hotplug-stub.c, which is
-a zero-initialized VMStateDescription with .fields == NULL.
+Fix this by checking socat instead of the original ncat.
 
-Before commit 7aa563630b6b, .needed() of PIIX4's vmstate_cpuhp_state
-returned false for MIPS Malta since PIIX4PMState always initialized the
-field cpu_hotplug_legacy as true. Malta implicitly relies on this
-initial value to bypass vmstate_cpuhp_state. However, this is unstable
-because Malta itself does not support CPU hotplugging, whether via the
-legacy way or the modern way.
-
-Commit 7aa563630b6b removed .needed() check for vmstate_cpuhp_state,
-this broke the existing dependency that Malta had relied on, forcing
-Malta to save and load vmstate_cpuhp_state during the save/load process,
-which in turn caused a segmentation fault due to NULL fields in the
-stub-compiled code.
-
-Fix this by bringing back the .needed = cpuhp_needed callback for
-vmstate_cpuhp_state of PIIX4, that checks
-MachineClass::has_hotpluggable_cpus. Boards that do not support CPU
-hotplug (only MIPS Malta) will skip this subsection entirely, which
-is both correct and consistent with the previous behavior.
-
-At the same time, add a similar .needed() check to ICH9. Although no
-boards with ICH9 are affected by this issue, this helps avoid potential
-issues in the future.
-
-Reproducer (MIPS Malta):
-  $ qemu-img create -f qcow2 dummy.qcow2 32M
-  $ qemu-system-mipsel -nographic \
-      -drive if=none,format=qcow2,file=dummy.qcow2
-  [Type "C-a c" to get the "(qemu)" monitor prompt)]
-  (qemu) savevm foo    # segfault
-
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 7aa563630b6b ("pc: Start with modern CPU hotplug interface by default")
+Fixes: 643a171f5668 ("tests: Replace ncat with socat in migration test and drop ncat from containers")
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Tested with the following cases:
- * savevm for MIPS Malta
- * i386 migration:
-   pc v10.2 (before 7aa563) <-> pc v10.2 (with this fix)
-   q35 v10.2 (before 7aa563) <-> q35 v10.2 (with this fix)
-   pc v10.2 (w/o this fix) <-> pc v10.2 (with this fix)
-   q35 v10.2 (w/o this fix) <-> q35 v10.2 (with this fix)
-   pc v11.0 (w/o this fix) <-> pc v11.0 (with this fix)
-   q35 v11.0 (w/o this fix) <-> q35 v11.0 (with this fix)
----
- hw/acpi/ich9.c  | 8 ++++++++
- hw/acpi/piix4.c | 8 ++++++++
- 2 files changed, 16 insertions(+)
+ tests/functional/migration.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index bbb1bd60a206..5c7dfb2c69db 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -184,10 +184,18 @@ static const VMStateDescription vmstate_tco_io_state = {
-     }
- };
+diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+index 2395119d6c66..144f091ba8aa 100644
+--- a/tests/functional/migration.py
++++ b/tests/functional/migration.py
+@@ -80,8 +80,8 @@ def migration_with_unix(self):
+         self.migrate(dst_uri)
  
-+static bool cpuhp_needed(void *opaque)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-+
-+    return mc->has_hotpluggable_cpus;
-+}
-+
- static const VMStateDescription vmstate_cpuhp_state = {
-     .name = "ich9_pm/cpuhp",
-     .version_id = 1,
-     .minimum_version_id = 1,
-+    .needed = cpuhp_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_CPU_HOTPLUG(cpuhp_state, ICH9LPCPMRegs),
-         VMSTATE_END_OF_LIST()
-diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-index 43860d122780..9b7f50c7afac 100644
---- a/hw/acpi/piix4.c
-+++ b/hw/acpi/piix4.c
-@@ -195,10 +195,18 @@ static const VMStateDescription vmstate_memhp_state = {
-     }
- };
- 
-+static bool cpuhp_needed(void *opaque)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-+
-+    return mc->has_hotpluggable_cpus;
-+}
-+
- static const VMStateDescription vmstate_cpuhp_state = {
-     .name = "piix4_pm/cpuhp",
-     .version_id = 1,
-     .minimum_version_id = 1,
-+    .needed = cpuhp_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_CPU_HOTPLUG(cpuhp_state, PIIX4PMState),
-         VMSTATE_END_OF_LIST()
+     def migration_with_exec(self):
+-        if not which('ncat'):
+-            self.skipTest('ncat is not available')
++        if not which('socat'):
++            self.skipTest('socat is not available')
+         with Ports() as ports:
+             free_port = self._get_free_port(ports)
+             dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
 -- 
 2.34.1
 
