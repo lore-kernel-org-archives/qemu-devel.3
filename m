@@ -4,54 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651CD1061B08
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1947B1061B22
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7K0u-0000o7-Ap; Mon, 30 Mar 2026 17:19:12 -0400
+	id 1w7KA3-0007vD-M0; Mon, 30 Mar 2026 17:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7K0s-0000nL-Tj
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:19:10 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1w7K9u-0007tY-Lw
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:28:31 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7K0r-0003kP-9e
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:19:10 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id B19BC6013C;
- Mon, 30 Mar 2026 21:19:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89053C2BCB0;
- Mon, 30 Mar 2026 21:19:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1774905548;
- bh=zAa11ZFgSx+DUq09y122Xryo9i20PCt3LH07vapF8iI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=BCoAS3W6k1RCebEL+pBV3zoz3EakVrmXSAOYZtSPWM3iYwZTSczJd2+N8GErAfvFL
- 9DoTyHsPGrjSecTcIfY/XXu5w9brWl5MagwSTBVZM4W0ity5vG/6xi4Lyz117ydnx1
- 3Pbmt48PEg7zAHP613rQsI9+kIaAUuiom3kA2taFYKtzvRO1jBd76+ZQE33HDPU56/
- br+8FUH1yEzRZzsU+GL2lvpjXRQWMP/l6IE7UqsOYnqWjoRcQvSawH+Az6ZxnyNrFG
- Dxs+hTLC893WaqjgWaMaFbGMJ/HeTa7BdU7C52Uo2qC6S3/8y28FkuubaKVpuk9dxo
- kOZG3HK8M9lUQ==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: deller@gmx.de,
-	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 05/11] hw/pci-host/astro: Implement LMMIO registers
-Date: Mon, 30 Mar 2026 23:18:52 +0200
-Message-ID: <20260330211859.19317-6-deller@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260330211859.19317-1-deller@kernel.org>
-References: <20260330211859.19317-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1w7K9t-0006FG-43
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:28:30 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62UDE6mO2688944; Mon, 30 Mar 2026 21:28:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=OoS4kr3LWWHZmmMk91qsAoRO55rJk
+ Whon8rF5413HTk=; b=VpHv6s6z71FbGtlu0LvjgrPvXJlGlx66XPyB10wg7qFDf
+ t44j6Oxam+Bua9Rk1GSQEED9mnULcpcEsjoz2jL7fvKl3tvZE6P4sZkNk0BuNv2H
+ zRe5UymBp2lb9hac5QoECAPBqTkjmH4eQ49rUSl+G6n3aZS9et0DikqzaUHFx6uv
+ vs6zQmGiJvPHPJ33LOr5GBwbeTPuAgrW+NX7eUriwHWY7VCxFRZsAJlDmSXw286l
+ 7WeeZA6yuzaCgfNinBDPK9P7VY4mWlEtkShT5EJdCp9F8AQXXQ7VJ9PJey4PXixs
+ GvqRHzDsSazY6Kug3g2WsBNQ6ZvGauOn4ad+vBbtw==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4d66v5k3em-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Mar 2026 21:28:19 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 62UK8467036391; Mon, 30 Mar 2026 21:28:18 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4d65efn53v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Mar 2026 21:28:18 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62ULSISv018888;
+ Mon, 30 Mar 2026 21:28:18 GMT
+Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
+ (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.250.206])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 4d65efn53s-1; Mon, 30 Mar 2026 21:28:18 +0000
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: mst@redhat.com, sarunkod@amd.com, qemu@demindiro.com, qemu-devel@nongnu.org
+Cc: alejandro.j.jimenez@oracle.com
+Subject: [PATCH for-11.0 0/2] amd_iommu fixes for 11.0-rc2
+Date: Mon, 30 Mar 2026 21:28:15 +0000
+Message-ID: <20260330212817.992673-1-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-30_01,2026-03-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=692
+ mlxscore=0 adultscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
+ definitions=main-2603300182
+X-Proofpoint-GUID: HJZ2QkOc0RhSvuvDz69LyH8K0_7M_TDA
+X-Authority-Analysis: v=2.4 cv=G7cR0tk5 c=1 sm=1 tr=0 ts=69caeaf3 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117
+ a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
+ a=EIcjfB9IiI4px24ztqRk:22 a=VwQbUJbxAAAA:8 a=RWxpEp7VAAAA:8 a=p0WdMEafAAAA:8
+ a=NEAV23lmAAAA:8 a=te4cm0NsdgC6RsF14IMA:9 a=3unh6Pbajv6CBnL1DxgC:22 cc=ntf
+ awl=host:12276
+X-Proofpoint-ORIG-GUID: HJZ2QkOc0RhSvuvDz69LyH8K0_7M_TDA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMwMDE4MiBTYWx0ZWRfX6GIcpxJGHXoH
+ I4+lC62XPc+TLr1hE26w+1ou8Hgut/VdHPBP4p/YN2huXeFFWwaU6vk5vs/0nkcJx+w3h+I71fm
+ Uc4d+qYTGl7teuYBwKHLowu1di+38FSFYfFhchwcPkr1S7OEfqVkskIeAP6EBqxtsZe6lsui/RB
+ AyrqT3x8cmfICeabsoLDOgOAMl32n/TZf0rzfGLtosrZP1KmpA6wjEpDYhw9dr51U/4aoVqDTYy
+ OzqqV6vFOvjkfqLjrYoyO9HuZmXnnK2kTJtJYlKV3n1HQ0WRpM196OIdZMDo/8OoAAauyIId132
+ BFosdaxgLreTxwXBYZpwvJIzP7eAm6tY9eY1fJwXughjMPas5AtTgbHTAKARbW68WcLTGz987jO
+ H8zMrI1H3oaYPUfyHi140QSApk2KJ7S+KCgLoKuOO8LhqhGhndPLHRMHOI2O8D/KgmeWZsgcJ54
+ FYm1f39BUm7n6N8/GSyoK2MMjtovzAeldMY6WDH0=
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -69,155 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+Hi,
 
-Add code to adjust the memory mapping windows according to the LMMIO registers
-in Astro.  This allows SeaBIOS-hppa to configure Astro depending on existing
-PCI cards, and especially makes it possible to enable a VGA PCI card.
+Please consider these AMD vIOMMU fixes for 11.0-rc2.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+This series fixes a bug in the current page walker implementation.
+When triggered, the issue leads to extremely slow boot or hangs and missing
+devices in the guest, as reported in:
+
+https://lore.kernel.org/qemu-devel/20260225145831.28275-3-qemu@demindiro.com/
+
+Thank you,
+Alejandro
+
 ---
- hw/pci-host/astro.c         | 84 +++++++++++++++++++++++++++++++++----
- include/hw/pci-host/astro.h |  8 +++-
- 2 files changed, 81 insertions(+), 11 deletions(-)
+Also available on github:
 
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 87bc98f553..4af35ea92f 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -530,6 +530,78 @@ static ElroyState *elroy_init(int num)
-  * Astro Runway chip.
-  */
- 
-+static void adjust_LMMIO_mapping(AstroState *s)
-+{
-+    MemoryRegion *lmmio;
-+    uint64_t map_addr, map_size, align_mask;
-+    uint32_t map_route, map_enabled, i;
-+
-+    lmmio = &s->lmmio;
-+
-+    /* read LMMIO distributed route and calculate size */
-+    map_route = s->ioc_ranges[(0x370 - 0x300) / 8] >> 58;
-+    map_route = MIN(MAX(map_route, 20), 23);
-+
-+    /* calculate size of each mapping, sum of all is 8-64 MB */
-+    map_size  = 1ULL << map_route;
-+    align_mask = ~(map_size - 1);
-+
-+    /* read LMMIO_DIST_BASE for mapping address */
-+    map_addr  = s->ioc_ranges[(0x360 - 0x300) / 8];
-+    map_enabled = map_addr & 1;
-+    map_addr  &= MAKE_64BIT_MASK(24, 5);
-+    map_addr  |= MAKE_64BIT_MASK(29, 36);
-+    map_addr  &= align_mask;
-+    s->ioc_ranges[(0x360 - 0x300) / 8] = map_addr | map_enabled;
-+
-+    /* make sure the lmmio region is initially turned off */
-+    if (lmmio->enabled) {
-+        memory_region_set_enabled(lmmio, false);
-+    }
-+
-+    /* exit if range is not enabled */
-+    if (!map_enabled) {
-+        return;
-+    }
-+
-+    if (!lmmio->name) {
-+        memory_region_init_io(lmmio, OBJECT(s), &unassigned_io_ops, s,
-+                    "LMMIO", ROPES_PER_IOC * map_size);
-+        memory_region_add_subregion_overlap(get_system_memory(),
-+                    map_addr, lmmio, 1);
-+    }
-+
-+    memory_region_set_address(lmmio, map_addr);
-+    memory_region_set_size(lmmio, ROPES_PER_IOC * map_size);
-+    memory_region_set_enabled(lmmio, true);
-+
-+    for (i = 0; i < ELROY_NUM; i++) {
-+        MemoryRegion *alias;
-+        ElroyState *elroy;
-+        int rope;
-+
-+        elroy = s->elroy[i];
-+        alias = &elroy->lmmio_alias;
-+        rope = elroy_rope_nr[i];
-+        if (alias->enabled) {
-+            memory_region_set_enabled(alias, false);
-+        }
-+
-+        if (!alias->name) {
-+            memory_region_init_alias(alias, OBJECT(elroy),
-+                 "lmmio-alias", &elroy->pci_mmio, 0, map_size);
-+            memory_region_add_subregion_overlap(lmmio, rope * map_size,
-+                 alias, 2);
-+        }
-+
-+        memory_region_set_address(alias, rope * map_size);
-+        memory_region_set_alias_offset(alias,
-+                (uint32_t) (map_addr + rope * map_size));
-+        memory_region_set_size(alias, map_size);
-+        memory_region_set_enabled(alias, true);
-+    }
-+}
-+
- static void adjust_LMMIO_DIRECT_mapping(AstroState *s, unsigned int reg_index)
- {
-     MemoryRegion *lmmio_alias;
-@@ -689,6 +761,9 @@ static MemTxResult astro_chip_write_with_attrs(void *opaque, hwaddr addr,
-         if (index < LMMIO_DIRECT_RANGES * 3) {
-             adjust_LMMIO_DIRECT_mapping(s, index);
-         }
-+        if (addr >= 0x360 && addr <= 0x370 + 7) {
-+            adjust_LMMIO_mapping(s);
-+        }
-         break;
-     case 0x10200:
-     case 0x10220:
-@@ -892,15 +967,6 @@ static void astro_realize(DeviceState *obj, Error **errp)
-         elroy->mmio_base[(0x0240 - 0x200) / 8] = rope * map_size | 0x01;
-         elroy->mmio_base[(0x0248 - 0x200) / 8] = 0x0000e000;
- 
--        /* map elroys mmio */
--        map_size = LMMIO_DIST_BASE_SIZE / ROPES_PER_IOC;
--        map_addr = F_EXTEND(LMMIO_DIST_BASE_ADDR + rope * map_size);
--        memory_region_init_alias(&elroy->pci_mmio_alias, OBJECT(elroy),
--                                 "pci-mmio-alias",
--                                 &elroy->pci_mmio, (uint32_t) map_addr, map_size);
--        memory_region_add_subregion(get_system_memory(), map_addr,
--                                 &elroy->pci_mmio_alias);
--
-         /* map elroys io */
-         map_size = IOS_DIST_BASE_SIZE / ROPES_PER_IOC;
-         map_addr = F_EXTEND(IOS_DIST_BASE_ADDR + rope * map_size);
-diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
-index 5eb1fa57c1..0cd384bceb 100644
---- a/include/hw/pci-host/astro.h
-+++ b/include/hw/pci-host/astro.h
-@@ -61,9 +61,10 @@ struct ElroyState {
-     MemoryRegion this_mem;
- 
-     MemoryRegion pci_mmio;
--    MemoryRegion pci_mmio_alias;
--    MemoryRegion pci_hole;
-     MemoryRegion pci_io;
-+
-+    MemoryRegion gmmio_alias;
-+    MemoryRegion lmmio_alias;
- };
- 
- struct AstroState {
-@@ -89,6 +90,9 @@ struct AstroState {
-     MemoryRegion this_mem;
-     MemoryRegion lmmio_direct[LMMIO_DIRECT_RANGES];
- 
-+    MemoryRegion lmmio;
-+    MemoryRegion gmmio;
-+
-     IOMMUMemoryRegion iommu;
-     AddressSpace iommu_as;
- };
+The following changes since commit dd3ee9c63d96b223c8d41bf5d65392eb898be626:
+
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-30 13:54:56 +0100)
+
+are available in the Git repository at:
+
+  https://github.com/aljimenezb/qemu.git tags/amdvi-11.0-rc2-fixes-20260330
+
+for you to fetch changes up to 9728f609a871606b272fc37226f5af30df7ac51a:
+
+  amd_iommu: Reject non-decreasing NextLevel in fetch_pte() (2026-03-30 17:23:54 +0000)
+
+----------------------------------------------------------------
+amd_iommu fixes for 11.0-rc2
+
+- Fix hugepage mappings being reported as 4K pages during page walks
+- Reject non-decreasing NextLevel values to avoid invalid page-walk loops
+- Both patches should be picked when porting to stable release
+
+----------------------------------------------------------------
+
+Alejandro Jimenez (2):
+  amd_iommu: Follow root pointer before page walk and use 1-based levels
+  amd_iommu: Reject non-decreasing NextLevel in fetch_pte()
+
+ hw/i386/amd_iommu.c | 136 +++++++++++++++++++++++++++++++-------------
+ hw/i386/amd_iommu.h |  11 ++--
+ 2 files changed, 101 insertions(+), 46 deletions(-)
+
+
+base-commit: dd3ee9c63d96b223c8d41bf5d65392eb898be626
 -- 
-2.53.0
+2.47.3
 
 
