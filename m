@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B3FFB3CE5
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74A9FB3CE5
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79In-0005Ol-4r; Mon, 30 Mar 2026 05:52:57 -0400
+	id 1w79Iy-0005Ry-DM; Mon, 30 Mar 2026 05:53:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1w79Ib-0005Mm-70; Mon, 30 Mar 2026 05:52:47 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1w79Ic-0005N3-JY; Mon, 30 Mar 2026 05:52:48 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1w79IY-000640-KD; Mon, 30 Mar 2026 05:52:44 -0400
+ id 1w79IY-00063t-KC; Mon, 30 Mar 2026 05:52:46 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A3243C01E5;
- Mon, 30 Mar 2026 12:52:35 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2C0E1C0159;
+ Mon, 30 Mar 2026 12:52:34 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex-team.ru (unknown
  [2a02:6bf:8080:78d::1:13])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id QqVNFG1Af4Y0-XlRxK0sQ; Mon, 30 Mar 2026 12:52:35 +0300
+ ESMTPSA id QqVNFG1Af4Y0-pZ3lppPK; Mon, 30 Mar 2026 12:52:33 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1774864355;
- bh=cmwYlbRQeO8i6Sbb89Cm3qYzyWoFQi611UFOyJsDgVI=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=YS9HkHhnegztKtTz0nTwS+9rSCTCeV51yUorWZj6rAvkmHG0dC/O771bPtoYTQNTd
- iaRneoCMFsgMmNDLwRZY0EZJk4Aqg7JxmJhDW5avvYQVHItxjroNADplU8tZDky6WL
- sJvNR7OKl6HTZvyBhFLqrcqpfLM3j2PrF9wz1HiI=
+ s=default; t=1774864353;
+ bh=1C8NOcIgMKyf0TAnc/Kx3aqOpisIbfms5084DDXyy/U=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=rnSKKWF/uXE9K7oj8AUMDP+10r6IbnkBKoMqWbkK5RPMfJpE+O8W7qc6pa+zGC49/
+ VYon0R3gOelvWs1nNNDqZPZd0lvK/wfB39y4TPDkDqzu4sKAYniE2v/XTMJGSp66Qz
+ paDsNmn3Wluz3CuKBbUaygTXN5gEuDHxemhNMy0s=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -52,25 +51,23 @@ Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
  Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v3 1/5] vhost-user.rst: fix typo
-Date: Mon, 30 Mar 2026 14:52:22 +0500
-Message-Id: <20260330095226.158386-2-dtalexundeer@yandex-team.ru>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v3 0/5] vhost-user-blk: fix compatibility with older qemu
+ versions
+Date: Mon, 30 Mar 2026 14:52:21 +0500
+Message-Id: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
-References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,26 +82,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
----
- docs/interop/vhost-user.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v2 -> v3:
+- fix complile problems
+- add assert check in do_vhost_virtio_stop
+- make inflight-migration property mutable
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 137c9f3669..bfa75ff9a3 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -1268,7 +1268,7 @@ Front-end message types
-   How to suspend an in-flight request depends on the implementation of the back-end
-   but it typically can be done by aborting or cancelling the underlying I/O
-   request. The ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT``
--  protocol feature must only be neogotiated if
-+  protocol feature must only be negotiated if
-   ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD`` is also negotiated.
- 
- ``VHOST_USER_SET_VRING_KICK``
+v1 -> v2:
+- reorganize commits: make refactor commits first, then core semantic change
+- add additional pre_save check for inflight migration possibility
+
+---
+
+This is a small continuation of my series about inflight migration for vhost-user-blk.
+
+This series is designed to solve the problem of compatibility with older versions of qemu, where this feature has not yet been introduced (for example, if we want to downgrade versions due to some problems).
+
+In the current version for vhost-user-blk, this feature is enabled using the parameter and further migration of the inflight region will depend on whether the vhost-user has accepted the new protocol feature or not. This creates an inconvenient dependency, because there is no way to disable this feature without reconnecting to the backend.
+This series slightly changes the semantics of the introduced protocol feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature adds a new parameter for GET_VRING_BASE message - skip_drain, which allows to control drain in-flight requests on the backend.
+
+Thus, user can enable or disable inflight-migration param for vhost-user-blk to maintain compatibility with older versions of QEMU.
+
+Alexandr Moshkov (5):
+  vhost-user.rst: fix typo
+  vhost-user-blk: make inflight-migration prop mutable
+  vhost-user: add skip_drain param to do_vhost_virtqueue_stop
+  vhost-user-blk: move inflight_needed higher
+  vhost-user: add skip_drain param to GET_VRING_BASE
+
+ backends/cryptodev-vhost.c     |  2 +-
+ backends/vhost-user.c          |  2 +-
+ docs/interop/vhost-user.rst    |  8 +++----
+ hw/block/vhost-user-blk.c      | 43 +++++++++++++++++++++++++++-------
+ hw/net/vhost_net.c             |  9 +++----
+ hw/scsi/vhost-scsi-common.c    |  2 +-
+ hw/virtio/vdpa-dev.c           |  2 +-
+ hw/virtio/vhost-user-base.c    |  2 +-
+ hw/virtio/vhost-user-fs.c      |  2 +-
+ hw/virtio/vhost-user-scmi.c    |  2 +-
+ hw/virtio/vhost-user.c         |  3 +--
+ hw/virtio/vhost-vsock-common.c |  2 +-
+ hw/virtio/vhost.c              | 29 ++++++++++++++++-------
+ include/hw/virtio/vhost-user.h |  1 -
+ include/hw/virtio/vhost.h      |  7 ++++--
+ 15 files changed, 76 insertions(+), 40 deletions(-)
+
 -- 
 2.34.1
 
