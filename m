@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34EC51061B20
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946121061B18
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7KNO-00044Y-Nk; Mon, 30 Mar 2026 17:42:26 -0400
+	id 1w7KWz-0007Ay-Am; Mon, 30 Mar 2026 17:52:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7KNN-00044L-LC
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:42:25 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7KWq-0007Ac-0F
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:52:12 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7KNM-0007kl-44
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:42:25 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-486fe655187so65048245e9.2
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 14:42:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7KWo-0000oc-5u
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:52:11 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48702d51cd0so59747925e9.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 14:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774906942; x=1775511742; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774907527; x=1775512327; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zCVneCbJODfdck4Im0qpnSJfY8H8uZI6wtgYAqDGvZg=;
- b=k7Ng75TLWSQ/XmMWrrl44Ry4L3zm6SjK+Z/K+e2UdEFcvFKZHhUuMc4McHNEMvZspf
- BZ02GCtJiqQoFz3Lbr76DQWoGjpU38y4jD9t1nfvb7u4oVaLkGqEX0XcVousYvA3aEms
- Eg23dsuFpftihH34TDQbHDDING8KyIJPz40g21S3Fw/+yIpfmdvntJCgbI6HX2hP9aEF
- 9vNWA9MIm79rFk4utbZzDJjyPMCeM62u2kVpAANwATEox7T7g+6VSA9CgIw/I8yIOjUs
- yXBKcbizimVEPRNry3Y90l1QoUgnkU1c7UiOyHhP7ziftGz9Bqj7+3MJJkQWU554+rzU
- A5cQ==
+ bh=w0CHXWdnpA+pfVNLBYwJ8ceXz+QZlOVSZ6n6RMjhwtA=;
+ b=uMvDGHaqJS2tdDYPC6ketLE9/B/xENXVzhrBL7BaTBeDBNnezbBocwIrfDbpVfve2D
+ GbDYdusclDOQc0eQHL15CaVjDHHpr2ONIBD9Re51ecIXN/2/e45uJttzjK94d5tZFpOc
+ 7zHqC9+2E7aj8ZmmGfZeqmAnJXH2sx1e9LUNMQtDfwmH4Lyp5CXBYKWEQpBNsihQCqbJ
+ YxLFx6YpPGgPW6ILhBdkFablorShwpdi6CMI4l0N7ospR6t2jMqFR16FoxkyS3MmXOru
+ yWiTBApNJwWO3LKzM3hUe1Eesn/gVZiw2iwXnho32UD8xk8+JA7NaUi7zu9IhyWREZ9n
+ nEig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774906942; x=1775511742;
+ d=1e100.net; s=20251104; t=1774907527; x=1775512327;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zCVneCbJODfdck4Im0qpnSJfY8H8uZI6wtgYAqDGvZg=;
- b=h5eyMmenELZkOa2tWVx3Bj95AJrIZ30jmDqA80n842L2ThpJIqc4cTMUOHpyKtqUmt
- 62YXBZ+B0Yh9qMRTw5vj27mXTAPgGYQ1BAqSzcBPvggP2OIzB0TI76ToxKsVS1t3xsXe
- XoV3qgQ2HuahWOezAozNs6Ap0sWxMtvIj81TgZMK6HOnFUVp1/SWhAOKCGvH4QvKqLhC
- ZLM2X3p3nk00LnR+eB298HBKtdS8VfOpkIdSP5yut8OBKRh3360z3VWJk7GOBfOgV/Wy
- sdl/GY4IFswCRXeJWDd4c9yYpd9JLXoJk1NyB6cqRGPq/Tva9ZqLwGpoK0wR0Iq0Xcw+
- 5GLw==
+ bh=w0CHXWdnpA+pfVNLBYwJ8ceXz+QZlOVSZ6n6RMjhwtA=;
+ b=JnVq+wW0UOku5jvaB7he6P6DdOYq+gjUz8zpVC+v7Bmml2dN+s1iiicuulIqAtygeR
+ QAycdq1foQP0zL0L088O5dwuVFaiHIKW0jEbM0PjAiHqIRtzj7G6nHN4UknzIeLssw8T
+ jvatWEGspVAVA4HVSCsLfZnAP2MZgZlcS8vg3geq3ptYK20NmpNJMjSQ3R3exCiGYKDw
+ FqXr5dBgHeYh1R6cORGywfg76xZCQXjjAh+7rTppbEB43ZMnOdYYBlLk8WlxucwoAaii
+ 0/xINvp3yAXMJw/SjG5Ew1kYclV1tFdrZfSC5vEFiQ5nfUr6UhfAteXlOlAm00hNAM1g
+ euKA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbmnDoMt90+9o+wHr0f8/XYfFZr9XpWRUggNeI6/oryFweVzDD7HCLK/y00eMLy8lAeWCIsQpx+AHj@nongnu.org
-X-Gm-Message-State: AOJu0YyFlmi9Ktxlw2E1oSEzHP2qHuUhtZ6hYI/uScSJ4ZfMM5uD6xJD
- F8pXoHpgqi72zFsbr/78atAoLOwRcEsoAorkPfSoa0pkNM8daES+Jw3bFexT1lHsLEY=
-X-Gm-Gg: ATEYQzyKbPe2K6/XOUWV7S+IcBn2RKp0q5o7pUWBSDytIEL6gMatc3CUZ4tv1Zsnw/R
- nNv8776RWKomKYe7olm8qsY0yNMrGE7G55W/OnR9+L6uGpYYdEdT8Wc7kqkT8rUgCkklbWT7NTe
- lC/amCIXTb53rZiP1Mq9bwXeT/d5pC8zHYkCgRnpDcEqFLs2Qm0b/iWMrBeYB+pOWklRsEoqa9N
- Bv+PsnZO1TOphI57yfg9ypN51Hi8Kh8KAgqK63FLZ+r4zpUTiAZIlI9WxadceucDM0klMSpigo3
- mS+31fiIlmlFhUJ3apMZXT24LvTXPKnzQlwf1Xgi34GDqIhmekPvPzyaygtacS8836jdB4eaOcH
- J3kNLBZr/d++4l61veq5UX3LYE5zWI6PN2gg5S8AQwB7zyw+W/hN4p8rkC2EqFAvyyeB5DgJNus
- qnOGZyJj0QuF9rk5bC7gLM5Fd3k2xr4n6EE7DOSIvw5vGX/K+uB+ouwsTeLFMBlAWR9PeHxJw=
-X-Received: by 2002:a05:600c:4e15:b0:485:2ce2:4c87 with SMTP id
- 5b1f17b1804b1-48727d45881mr242541315e9.4.1774906942264; 
- Mon, 30 Mar 2026 14:42:22 -0700 (PDT)
+ AJvYcCWyiiAQa0egb9ZKesYXFAQmddi3vJwz7wu3VVPXtVH6LvjNa9l07IT0Y9u151wAHBCPWx7vd7Juh6MV@nongnu.org
+X-Gm-Message-State: AOJu0YyFls962kS1e5ic9T6qHlk9rZwGydEJHe1/eTL4WGnPc0HxQV6c
+ 6GhxSfY0oBaa1uFKKiF4Ae4cwOr7TKCE+SsQxTwotWS9J55+jIN6QTft6S7H9eHRYcI=
+X-Gm-Gg: ATEYQzxX3rjNWcDkMR+VVmJq1jA+brMRXh9SO8g1gcZNPHxvfMlJ+LO3c3SygCDyWqU
+ gr6OOAyg6FofGvbk7Vt8ETgFVijx4xTXzf1/JlMHUllr662XJ6uJui05w1Mq8iw7y+l5nOC9ZpU
+ Nx4iDQEblfHBwTNW1s7LJSx+zMqJ0CaQVgm6IiDARsC4Uw6SfE3fr5/1Ac4ozXzPrtTePgqjxi/
+ V3Jx/VCN9Yp3zCENfP144KWOc+L/WEuUhzJgCipB7f97ksV8WfZL5qIxmnaQ2j9hFvyRUbjOkH2
+ 9cjmUbXf+rdUCkgiWcA8It4TmS/mgloRrUmuwpmVtMPh12ufBvxJ9lIEMIf9+DiqyKoqLVwNhd1
+ Q3woQNfN9J/024UYCoGfTSqFUsf81iIHUBgBQYpxGomtamZ5oB3zoPyhMbmJ0qQcF3U2brEApCs
+ ocIpJnoTp0nspmtgXN7EeePiHwQ48yicXsqVUilkEOtlHVd/MuKo4Xo4jxaf5y
+X-Received: by 2002:a05:600c:a44:b0:487:59c:2bad with SMTP id
+ 5b1f17b1804b1-48727efcbffmr223444305e9.24.1774907527123; 
+ Mon, 30 Mar 2026 14:52:07 -0700 (PDT)
 Received: from [10.193.39.66] (246.148.216.82.rev.sfr.net. [82.216.148.246])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21e3602sm22449308f8f.4.2026.03.30.14.42.21
+ 5b1f17b1804b1-48727192012sm90577355e9.32.2026.03.30.14.52.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Mar 2026 14:42:21 -0700 (PDT)
-Message-ID: <04942b9e-ed2f-4553-b4c7-73d5499f342a@linaro.org>
-Date: Mon, 30 Mar 2026 23:42:20 +0200
+ Mon, 30 Mar 2026 14:52:05 -0700 (PDT)
+Message-ID: <c7c58059-3970-4116-9a8c-07b805dd3b25@linaro.org>
+Date: Mon, 30 Mar 2026 23:52:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] hw/hppa: Disable Artist graphics card on 64-bit
- machines
+Subject: Re: [PATCH 09/11] target/hppa: Fix TOC handler for 64-bit CPUs
 Content-Language: en-US
 To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
 Cc: deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>
 References: <20260330211859.19317-1-deller@kernel.org>
- <20260330211859.19317-3-deller@kernel.org>
+ <20260330211859.19317-10-deller@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260330211859.19317-3-deller@kernel.org>
+In-Reply-To: <20260330211859.19317-10-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,45 +106,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 30/3/26 23:18, Helge Deller wrote:
 > From: Helge Deller <deller@gmx.de>
 > 
-> The original Artist graphics used the GSC bus, was often installed in old
-> 32-bit machines (e.g. 715) and can not be used on 64-bit machines.
-> This is why this patch makes the artist driver dependend on the Lasi chip,
-> which was never used in a 64-bit machine.
-> 
-> Note that there exists a variant of Artist for the PCI-bus (Visualize-EG PCI).
-> It has quite some differences in the registers, and would require that we write
-> a PCI ROM for it, so that Linux and HP-UX would be able to use it.
-> 
-> Instead, for now, users can simply use a standard VGA or ATI PCI graphics card
-> on Linux.  This can be enabled on the command line with "-device ati-vga" or
-> "-device VGA".  If the "-nographic" option is omitted, a PCI OCHI controller
-> with USB keyboard and USB mouse will be added automatically.
-> 
-> This fixes graphics support on 64-bit hppa machines and allows us to boot up a
-> 64-bit Linux installation with VGA graphics.
+> When the TOC handler is triggered, e.g. by using the "NMI" command
+> in the QEMU monitor, make sure to call the full 64-bit TOC handler
+> address in SeaBIOS-hppa firmware.
+> This fixes the TOC handler on 64-bit CPUs (and 64-bit SeaBIOS).
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
 > ---
->   hw/hppa/machine.c | 3 ++-
+>   target/hppa/int_helper.c | 3 ++-
 >   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-> index 3663bac53b..58e76bee2e 100644
-> --- a/hw/hppa/machine.c
-> +++ b/hw/hppa/machine.c
-> @@ -384,7 +384,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
->       SysBusDevice *s;
+> diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+> index d5a20cd549..fd4b99069e 100644
+> --- a/target/hppa/int_helper.c
+> +++ b/target/hppa/int_helper.c
+> @@ -203,7 +203,8 @@ void hppa_cpu_do_interrupt(CPUState *cs)
 >   
->       /* Graphics setup. */
-> -    if (machine->enable_graphics && vga_interface_type != VGA_NONE) {
-> +    if (lasi_dev && machine->enable_graphics &&
-> +        vga_interface_type != VGA_NONE) {
+>       /* step 7 */
+>       if (i == EXCP_TOC) {
+> -        env->iaoq_f = hppa_form_gva(env, 0, FIRMWARE_START);
+> +        env->iaoq_f = hppa_form_gva(env, 0,
+> +                ((uint64_t) FIRMWARE_HIGH) << 32 | FIRMWARE_START);
 
-Pre-existing, 'lasi_dev' being a static variable isn't really helpful.
+Maybe we can define that directly and use? Such PDC_FIRMWARE_START?
 
-Back to this patch:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Or have some hppa_pdc_addr() helper?
 
-Although a distinct descriptive boolean variable could be used
-instead for clarity, rather than testing LASI presence.
+>           /* help SeaBIOS and provide iaoq_b and iasq_back in shadow regs */
+>           env->gr[24] = env->cr_back[0];
+>           env->gr[25] = env->cr_back[1];
+
 
