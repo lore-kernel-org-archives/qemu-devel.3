@@ -4,108 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFFF10D14A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C83AF10D14A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7B97-0003bV-Ck; Mon, 30 Mar 2026 07:51:17 -0400
+	id 1w7B9q-0004Mg-4d; Mon, 30 Mar 2026 07:51:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7B8h-0003Rk-Uf
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w7B8u-0003cB-UV
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7B8f-0005wP-VM
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:39 -0400
+ id 1w7B8s-0005xq-9J
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774871436;
+ s=mimecast20190719; t=1774871447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5fKt7A2FD1i1SFTtrZ6g0b8Qc8madY+JGGQ0SAw4LSg=;
- b=GL6lC1BHccK6bWNl+fR1DlLwW+cdK2zcrIYDE/QaGinB83D7G5o0OI05b4HM2lC3LO239T
- xd4vtID+xu/oUAzoPfwlvAaVmCxdN7yDoPKuCBhKKNKzs8aNjlDZyorUJNtd14SFUMkidP
- rK5xBsgpkFOmy8N4nK62dLoVFwRiNRk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N96Cvh9nP6r8XFXHnMsPNyo3ZrU8DUpNDRPrE2edM1c=;
+ b=EobMz3zA7YsWNdOHQEbQB2W6YV7WXJJkOBVg4fFWthf4+Tp3g7Ozw5P5TYiifziCriLSS0
+ 1U0C+uKuFd1CYcgVPkJ3t2rEETexUFV0uzM5riz/+SUthmdNqW2POw5yurgDelKFDF2wVf
+ SKCQNKjIpTV74kyLtx1UMskf8LpU92w=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-Vno_V2PkOwyCRYN7gdjzEw-1; Mon, 30 Mar 2026 07:50:35 -0400
-X-MC-Unique: Vno_V2PkOwyCRYN7gdjzEw-1
-X-Mimecast-MFC-AGG-ID: Vno_V2PkOwyCRYN7gdjzEw_1774871435
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43cfc3bf7f6so1449277f8f.2
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 04:50:35 -0700 (PDT)
+ us-mta-180-2Yyro-DEMH62zTrvbSU3tg-1; Mon, 30 Mar 2026 07:50:46 -0400
+X-MC-Unique: 2Yyro-DEMH62zTrvbSU3tg-1
+X-Mimecast-MFC-AGG-ID: 2Yyro-DEMH62zTrvbSU3tg_1774871445
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-486fe36cf73so33475335e9.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 04:50:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774871433; x=1775476233; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774871444; x=1775476244; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5fKt7A2FD1i1SFTtrZ6g0b8Qc8madY+JGGQ0SAw4LSg=;
- b=Nw+H6iCTgyJxRyB1285wQaitr/8FF7t+KGxyutvLIGUaTmcQq9y+ijK3y1gltjfdD3
- OKmCd7ALWzWgJCVPjMaLeGj9e//X1EyVcaxd76qcUiIDf5sFiCcKd4BdUTdYNyXvAchX
- lanYyEU5dQuImwgnGfTcb7PeQcQIsp925vBgUCru7/VB5+OR2CftwZCHgSRSQvAoNFAl
- aNDdrvLCrjKo4HKvAL96gehwbUf3kuyeJ3nW8PTX/hcpjwISWIB6/VVwOfsM/LFfFHPU
- HvUl5pac5tmc++ewV2mlrNj/akKIwFmQFViysWMUx5g5pH5KgIDXx+MqsOFyUliTh8+K
- jHQA==
+ bh=N96Cvh9nP6r8XFXHnMsPNyo3ZrU8DUpNDRPrE2edM1c=;
+ b=gWmUOgHjM14MC8DTKb8VQiePPfvpfsVI5zUrLMdA2rbn8qSo63zBppINEOqtB6WhDB
+ j3R8MoG5ZyGRrjO6PujNkXSxvI9shO2j6CxBB4cDqWjKeZiSYXekYOU2fLGmzXpHVrj8
+ iN225LsmAdoPN8CTplsB4HZ0DYG2g6ZjFLZOQLxKVw7Y3r+w1R0KW5L7Wa78pStHLQQ6
+ dZccv2Yx4sDymNFlI4i2uErbVn3GuUwXnK2GE4TvstLPwWntlWnoXB0ZX3uC7Jolusr2
+ ssQgZjQhnHtbnfSPhBOQ5Wjso6jVQnuLerqFWB+VgwpUJL3wI956SoY0gx7HAA9ceozE
+ 7HnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774871433; x=1775476233;
+ d=1e100.net; s=20251104; t=1774871444; x=1775476244;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5fKt7A2FD1i1SFTtrZ6g0b8Qc8madY+JGGQ0SAw4LSg=;
- b=Mqm6DCu8KvZnvXx2dONzRUWwGw+NeM/57tVIAab21aH/lh/d0bkoKlilJK3mr+AP16
- lzODYGf2rXbkzmQaJgFDcyolM+K1mC5xycLMRh69pZdLtHZUyzDkRi0G1OjML5O4RPX7
- MslJ6vAyLg8zGeHDCTo6eFF1xxf7SgKLH/lYmBK5woYOn2EYrqKYZKc8Tn2b9uImlCki
- Y6+gz32tnOhwCtEb+kCnj/23FOlm/Xvu8EqxYpnhYgl+xpCUl7tONslcQwqTzdRWKw0S
- +8mly5RQZLzch03Q8lMJ8PsJuIxfq8DBmxXNdWAzE64uo1UsFw3HOBLNXjZvTkdCqoVh
- aWUQ==
-X-Gm-Message-State: AOJu0YxuQ9KrS61OD/SX6bHmhdMZ26WXznXemf0LzWf4qb6uMzVHLe7z
- KkZ2sK+DoTfa4mcRK7c/t8KXDNWYk+ggm6C+5scHckq9SnRpVj2QanKLtvpHkvUHJ3/mNzGQqZ8
- 9ieGJiSL2v/ZQe5INbjysjcNcIb7P07/9uNxwQrqNRMOXDtSFGV3fMkSHPGq1BW0ItZ8ZtZHEL9
- sF3+eVPUMJZnDt4awEPDjH+O72k2JFWTbo9vhBIjM/
-X-Gm-Gg: ATEYQzzuQqODn0aqb3JIGR+Iur+QrblnVqLf9EqDiBht1aNHnYAe8TQvBmZWHdTtW/6
- g+JUm7pk5cEyVfwkT67BW2lGk9c6LYM9sNVvGPQWfInVensGhypG8aQxoxvlEXwST9QC5dK4fA0
- AVJcmbb63MR3ruLm0WdlWeN9WrFEoTCMdLCGoPHpF4bBLNIrHR3A48GbaB314ooURx/TPzQLEml
- z7b9NzfwSSCgNLlx80475kWv6mK9ifAVWjfJsg8b0JOr6EYy+k8Es3H1uSXLa1bnXCBcUifZSNd
- sl2VsVmkj3nlftmC78k4NQmNb4kb4Jv1A06DXiQTwcTiG1iE3aDegx+yOZiJx9cS6OlISPw3nud
- V4Shvm1F6nZYgNWhn44otH8b/jhZ8VKdtT7s9Ysf4v3T2oFrxaz2NDSLmuuWLCfgsZcXrsOaP8I
- mtxl1iXOkQ+bHMYqcy0AGSrX5s
-X-Received: by 2002:a05:600c:1593:b0:485:3bc7:a231 with SMTP id
- 5b1f17b1804b1-487341a3df0mr70764595e9.29.1774871433294; 
- Mon, 30 Mar 2026 04:50:33 -0700 (PDT)
-X-Received: by 2002:a05:600c:1593:b0:485:3bc7:a231 with SMTP id
- 5b1f17b1804b1-487341a3df0mr70764275e9.29.1774871432709; 
- Mon, 30 Mar 2026 04:50:32 -0700 (PDT)
+ bh=N96Cvh9nP6r8XFXHnMsPNyo3ZrU8DUpNDRPrE2edM1c=;
+ b=JbKfltReGeX0wfH8mt7Qpv+P4qHotBaJ/Cw7CHcvtl2SZF4N8cKoC5LlyZQoix22MN
+ j/IlVrQzjPjIzGy3fnNV6yXioMfemOtyrwPqqr8j2vMBfws93Zp1Oc6DzSlT5j4B5xMa
+ SF5C8s6Zk97x7OxWc5uWc87Q0vCKeFezyWxo6FBhB+oHgxjnUSDmj30dQoUEWb1hHukc
+ SYPnCNftgoIzfFi3Xqj6B25K7+SvuKuuP8gQARhTZIY3Rmj6VGitAJDfD1ZVLVF7Qv0e
+ ViEDJytQYxkrhJu/9okjAb4z21Z3Eq2ypZMX065GYhkQ1npTanY0VnMrwkP560FHWCu1
+ Ht/w==
+X-Gm-Message-State: AOJu0Yz+LXSZVNH9fmrZE4hYuMDo2F7ZSB4W3D0472wpMdarafOYOCAX
+ GWeCUDs4fry3ZCcr0kS2wtSVZSnAzBOQYAUmgJrNpr1SvhPSOkt71yAFCfTwBCUATXA18QxukZn
+ 4qykGM9B5aGrlMLgE+YIAqrxoLrU2RJ4Gwu7datA7L+3V91umJ/1cb7bMm+vL3zEFUmLOdi+2Sc
+ 8mnILekGQXDkHCrlUomvzzgtqIFPwSEyE5WGYyOEsF
+X-Gm-Gg: ATEYQzzbib8TSW1Wu6RWdewTqn9g8Kmh49NkHMKcJ8gkzU6wbLyTSzzYSkNpzTdGFxo
+ TSCRlUZzFP1ZTcG9dGYIbvUjP2F3zkqQofx3ZOR8O1SQ2aqdxQubvzkhB3q0lLMJfFsqi2ojarY
+ nTReEzKe6DzMwx9QRYnMCK/5CibUtCjFhvp6uiQM5oYhby0n6NwwkOGIZu+Y56qBkRgblluhDx0
+ yX1+N4+MhhHUPRz5UqqfOZM1+bJgLQTpnoWqO0zs3r6QxnOJh4ikX1DNz8uSxLdXXXgoZvTuKQy
+ dEcgoN0tyHcyXYHJrB9B76OEXrq8Gn635DgNtMKQQAHuAiL+QixDbfV4jmwUbTdhcwAzekJEclV
+ ndFkHJzq767jr0TuYJ7C1gZbsBiPOJRrnnZ27Cyg5pWfP27/IID85QHE2RhTQgnpNYrPfBMIHrN
+ XW6SXIHEIby5Tlvl4uzMJE6iPT
+X-Received: by 2002:a05:600c:4744:b0:485:4278:2558 with SMTP id
+ 5b1f17b1804b1-48727d5a313mr204229935e9.6.1774871443577; 
+ Mon, 30 Mar 2026 04:50:43 -0700 (PDT)
+X-Received: by 2002:a05:600c:4744:b0:485:4278:2558 with SMTP id
+ 5b1f17b1804b1-48727d5a313mr204229495e9.6.1774871443075; 
+ Mon, 30 Mar 2026 04:50:43 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48727c0cdf6sm221937835e9.2.2026.03.30.04.50.30
+ ffacd0b85a97d-43cf245f8a3sm19825485f8f.24.2026.03.30.04.50.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 04:50:30 -0700 (PDT)
+ Mon, 30 Mar 2026 04:50:42 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: "Yuma Kurogome, Ricerca Security, Inc." <yumak@ricsec.co.jp>
-Subject: [PULL 05/12] hpet: fix bounds check for s->timer[]
-Date: Mon, 30 Mar 2026 13:50:09 +0200
-Message-ID: <20260330115017.256211-6-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org
+Subject: [PULL 10/12] lsi53c895a: keep lsi_request alive as long as the
+ SCSIRequest
+Date: Mon, 30 Mar 2026 13:50:14 +0200
+Message-ID: <20260330115017.256211-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330115017.256211-1-pbonzini@redhat.com>
 References: <20260330115017.256211-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+X-Spam_score_int: -6
+X-Spam_score: -0.7
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,66 +122,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix an off-by-one issue in QEMU's HPET read and write MMIO handlers.
-Both handlers check timer_id > s->num_timers instead of timer_id >=
-s->num_timers, allowing a guest to access one timer beyond the valid
-range.
+To protect against using the lsi_request after SCSIRequest has been freed,
+keep the HBA-private data alive until the last reference to the SCSIRequest
+is gone.  Because req->hba_private was used (even if just for an assertion)
+to check that the request was still either current or queued, add a boolean
+field that is set when the SCSIRequest is cancelled or completed, which
+is when the lsi_request would have been unqueued.
 
-The affected slot is initialized properly in hpet_realize, which goes
-through all HPET_MAX_TIMERS elements of the array, so even though
-it is not reset in hpet_reset() the bug does not cause any use of
-uninitialized host memory.  Because of this, and also because (even
-though HPET_MAX_TIMERS is 32) the HPET only has room for 24 timers in
-its MMIO region, the bug has no security implications.
-
-Commit 869b0afa4fa ("rust/hpet: Drop BqlCell wrapper for num_timers",
-2025-06-06) silently fixed the same bug in rust/hw/timer/hpet/src/device.rs.
-
-Reported-by: Yuma Kurogome, Ricerca Security, Inc. <yumak@ricsec.co.jp>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/timer/hpet.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ hw/scsi/lsi53c895a.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 767093c431a..42285cff762 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -464,13 +464,14 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
-         }
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 1180e601811..b882fc02276 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -197,6 +197,7 @@ typedef struct lsi_request {
+     uint8_t *dma_buf;
+     uint32_t pending;
+     int out;
++    bool orphan;
+     QTAILQ_ENTRY(lsi_request) next;
+ } lsi_request;
+ 
+@@ -748,14 +749,20 @@ static lsi_request *lsi_find_by_tag(LSIState *s, uint32_t tag)
+     return NULL;
+ }
+ 
+-static void lsi_request_free(LSIState *s, lsi_request *p)
++static void lsi_request_orphan(LSIState *s, lsi_request *p)
+ {
++    p->orphan = true;
+     if (p == s->current) {
+         s->current = NULL;
      } else {
-         uint8_t timer_id = (addr - 0x100) / 0x20;
--        HPETTimer *timer = &s->timer[timer_id];
-+        HPETTimer *timer;
- 
--        if (timer_id > s->num_timers) {
-+        if (timer_id >= s->num_timers) {
-             trace_hpet_timer_id_out_of_range(timer_id);
-             return 0;
-         }
- 
-+        timer = &s->timer[timer_id];
-         switch (addr & 0x1f) {
-         case HPET_TN_CFG: // including interrupt capabilities
-             return timer->config >> shift;
-@@ -564,13 +565,15 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-         }
-     } else {
-         uint8_t timer_id = (addr - 0x100) / 0x20;
--        HPETTimer *timer = &s->timer[timer_id];
-+        HPETTimer *timer;
- 
-         trace_hpet_ram_write_timer_id(timer_id);
--        if (timer_id > s->num_timers) {
-+        if (timer_id >= s->num_timers) {
-             trace_hpet_timer_id_out_of_range(timer_id);
-             return;
-         }
+         QTAILQ_REMOVE(&s->queue, p, next);
+     }
+-    g_free(p);
++    scsi_req_unref(p->req);
++}
 +
-+        timer = &s->timer[timer_id];
-         switch (addr & 0x18) {
-         case HPET_TN_CFG:
-             trace_hpet_ram_write_tn_cfg(addr & 4);
++static void lsi_free_request(SCSIBus *bus, void *priv)
++{
++    g_free(priv);
+ }
+ 
+ static void lsi_request_cancelled(SCSIRequest *req)
+@@ -763,9 +770,7 @@ static void lsi_request_cancelled(SCSIRequest *req)
+     LSIState *s = LSI53C895A(req->bus->qbus.parent);
+     lsi_request *p = req->hba_private;
+ 
+-    req->hba_private = NULL;
+-    lsi_request_free(s, p);
+-    scsi_req_unref(req);
++    lsi_request_orphan(s, p);
+ }
+ 
+ /* Record that data is available for a queued command.  Returns zero if
+@@ -817,9 +822,7 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
+     }
+ 
+     if (req->hba_private == s->current) {
+-        req->hba_private = NULL;
+-        lsi_request_free(s, s->current);
+-        scsi_req_unref(req);
++        lsi_request_orphan(s, s->current);
+     }
+     if (!stop) {
+         lsi_resume_script(s);
+@@ -830,10 +833,11 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
+ static void lsi_transfer_data(SCSIRequest *req, uint32_t len)
+ {
+     LSIState *s = LSI53C895A(req->bus->qbus.parent);
++    lsi_request *p = req->hba_private;
+     int out;
+ 
+-    assert(req->hba_private);
+-    if (s->waiting == LSI_WAIT_RESELECT || req->hba_private != s->current ||
++    assert(!p->orphan);
++    if (s->waiting == LSI_WAIT_RESELECT || p != s->current ||
+         (lsi_irq_on_rsl(s) && !(s->scntl1 & LSI_SCNTL1_CON))) {
+         if (lsi_queue_req(s, req, len)) {
+             return;
+@@ -2325,7 +2329,8 @@ static const struct SCSIBusInfo lsi_scsi_info = {
+ 
+     .transfer_data = lsi_transfer_data,
+     .complete = lsi_command_complete,
+-    .cancel = lsi_request_cancelled
++    .cancel = lsi_request_cancelled,
++    .free_request = lsi_free_request,
+ };
+ 
+ static void scripts_timer_cb(void *opaque)
 -- 
 2.53.0
 
