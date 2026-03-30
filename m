@@ -4,110 +4,199 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99F410D14AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 13:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7412910D14B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 13:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7CP2-0001Hv-0h; Mon, 30 Mar 2026 09:11:36 -0400
+	id 1w7CXT-0004U5-Ox; Mon, 30 Mar 2026 09:20:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7COz-0001HQ-Eb
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 09:11:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1w7CXN-0004TH-8S
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 09:20:14 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7COx-0003ai-A6
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 09:11:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774876289;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yI769wTpE+t8FxBKO7VU051bty+og5B3l4YNhV+DygM=;
- b=K2OwgF1JedxDYCpGIp3vpXAy9dhERfei+CxX7dQflgs1JN9h5dahcvE+sgxpLuQMxaC2Rm
- PFxjkzVtfVSpgakO+cKmbvOMgeP8z8ulzPRAEc2vXferz4yZRy/jB/PrVM/yMdslvLmw+/
- wKKPCQM1dkC19UMyvp/UiEjnJ7XQySM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-DD5IYUVGMiS1-CZNZeafKA-1; Mon,
- 30 Mar 2026 09:11:26 -0400
-X-MC-Unique: DD5IYUVGMiS1-CZNZeafKA-1
-X-Mimecast-MFC-AGG-ID: DD5IYUVGMiS1-CZNZeafKA_1774876285
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C88F718005B4; Mon, 30 Mar 2026 13:11:24 +0000 (UTC)
-Received: from [10.44.35.213] (unknown [10.44.35.213])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 229DA19560AB; Mon, 30 Mar 2026 13:11:21 +0000 (UTC)
-Message-ID: <1ab56126-1279-4d43-a6aa-3319d5a37b47@redhat.com>
-Date: Mon, 30 Mar 2026 15:11:20 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1w7CX8-0004fM-Uz
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 09:20:12 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62UDEGAN3391915; Mon, 30 Mar 2026 13:14:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=ZQ4xwUp4yVFR25h4JDHuR25cQGaFx/a5pwWglTClyfw=; b=
+ VtMJHpLGwiodmJ9JVQBeXgpnvl92XzuUnjBp5jFvE+Jcl169uiELZEkVSxhVyhzl
+ nUdeWvCaViArPtg1yVE1aM0bGM5SXYe2SuUubLjR9IFL3DoI+wUO0u5P3/Ug6zij
+ VCoQFaJE4KIFGtEdHmK3YI7KuOjSMnfpKGk7OTxQDsUbllMOmXTy0qxvNtQABkVr
+ KmcIlBZjmzlCZVJT/oVPwSDcMpw7DtKqPEbjUAfN3hKMQv3GumQyJ4cdZ0AYo4hx
+ OMOYc8KmSAd0yFTz3eHkKRxUv6MJSSNBgNVrRHCLmG6sIGyzbM+PiZuE6/lVrKra
+ RQqjy/zZwsSI1AEAcGDzJw==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4d66kqt58c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Mar 2026 13:14:47 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 62UBlmjT007552; Mon, 30 Mar 2026 13:14:46 GMT
+Received: from ph8pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11012003.outbound.protection.outlook.com [40.107.209.3])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4d65e8gaq8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Mar 2026 13:14:46 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LlZMyfY6MoCl0rA09U27vSjpM8TrG1d6byG17LMysNUOr7H7kP7+pJMZuiZmUtu77PtiVbIKq1WmHlDIpRKpwy64dajeyZnRtkXG0ajHoxDbEJxJ4g+DGDmgWHZisoeaEo3cG9/jZhrvZyKqAN7A0SLzkVWFXjvJKLv4MnDP6ZESLuBfJCxOhDgfcjZs3ADF+Pb4h5yjWvsj36M1jT6ZfiXz4SVqEnfa19ZDq1ml381VAh97qjysjNWtC1tTMR1xqoq3b15WF2cXdENgzZyoQ+5vNww7hQyEpLYEV9QgoCHDPtSpMUxrr2Rb3wyjGLJS1lgs3bX7Vj1UKQwaY04hFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZQ4xwUp4yVFR25h4JDHuR25cQGaFx/a5pwWglTClyfw=;
+ b=KCrGh3EHMhc4X7tNG9lrdJ2qFhwjk8LaDN0Gt3g69BLIu45IsGfzWfp6peDY4kLbjAB18pVAWxM9NpBwbHMKyAURwjqcmWITl5Toz+UG4zt+Udi2XQF4wDrqyuY9MzwoHutDDpizXsAIBRwM7FB0pp+Y1pMgVNlXgDWxgmSsES8YnBEfpJ40TvC+D4miKpIypb81AyrKjj7UadWcch0MhSusqijtkltkALpsJFjc4B8xnl7QxC0jGige89CBmW1zcB8WrifullIp3nBRx0VcTVxL78ILXKZsD9dIWEHywrQuSyhJj8OdH1PrG2fC79KB0T5d2a8y7+cgrYCOBdVZoA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZQ4xwUp4yVFR25h4JDHuR25cQGaFx/a5pwWglTClyfw=;
+ b=AcTPV5lc7ZMmH6uUfVaItRHsB5SN68LgGV9auR1LrG1pnEIDz202l7QbCRHIKrNRIkOkK/E+Hgsj/zSMYNIZYyAmhJBvIYP14/Pgysbc2paqCqWHhmdjiqkFHrUM+qNxJCAG29fURRouU4mIofNq23Hy9BuvoZtZ266Dp/c/wxc=
+Received: from DM6PR10MB4363.namprd10.prod.outlook.com (2603:10b6:5:21e::21)
+ by DM6PR10MB4379.namprd10.prod.outlook.com (2603:10b6:5:21e::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.28; Mon, 30 Mar
+ 2026 13:14:41 +0000
+Received: from DM6PR10MB4363.namprd10.prod.outlook.com
+ ([fe80::90f9:3960:8442:de85]) by DM6PR10MB4363.namprd10.prod.outlook.com
+ ([fe80::90f9:3960:8442:de85%7]) with mapi id 15.20.9745.027; Mon, 30 Mar 2026
+ 13:14:40 +0000
+Message-ID: <4df4b541-c26f-4d4e-b898-177718930bf4@oracle.com>
+Date: Mon, 30 Mar 2026 09:14:37 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0] scsi: Don't consider LOGICAL UNIT NOT SUPPORTED
- guest recoverable
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: stefanha@redhat.com, gveitmic@redhat.com, bmarzins@redhat.com,
- fam@euphon.net, qemu-devel@nongnu.org
-References: <20260330121635.49205-1-kwolf@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC v2 01/14] machine,virtio-net: add early-mig property
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ mst@redhat.com, sgarzare@redhat.com, jasowang@redhat.com,
+ leiyang@redhat.com, si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
+ armbru@redhat.com
+References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
+ <20260320142015.3856652-2-jonah.palmer@oracle.com>
+ <CAJaqyWf5==jZxJErazeAea1NxpGB2SFNdpAPh7bi5tc69FytTw@mail.gmail.com>
+ <cbe7eff3-179d-4bc7-8fcb-ab0ab805a46e@oracle.com>
+ <CAJaqyWdR2Rrk=V2rdap16PKvHCzbPSXwakj33gxGruo03tN4Sw@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260330121635.49205-1-kwolf@redhat.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
+In-Reply-To: <CAJaqyWdR2Rrk=V2rdap16PKvHCzbPSXwakj33gxGruo03tN4Sw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BL1PR13CA0213.namprd13.prod.outlook.com
+ (2603:10b6:208:2bf::8) To DM6PR10MB4363.namprd10.prod.outlook.com
+ (2603:10b6:5:21e::21)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR10MB4363:EE_|DM6PR10MB4379:EE_
+X-MS-Office365-Filtering-Correlation-Id: aaf198c9-a483-43d6-67bf-08de8e5e4cb7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|366016|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: weQi8ZmbMOJaAVt3SwBBJAk1vrL/EqEzwwYmc1CjInmvtkkWyvYxzG2F7UaP3HnBwBPnVHWSDWpjKFFL245r8YQZCIHzsZDMZ2knCg0ylkibzHQj94ivF3A4KSUyzVgEde538sM4KcGCSnDadIDSibzmXxMe15OAA5EpGGm3OPCgVlb5gOIM0DxgBjZvyPxmo29RKt9WhzUfcRUeEPUu6LWq+p34QNLK99sBKAN0YLqzQhWxBc3D6n4A/JDhjr24D5ICUzSEhsIC3yswtsNt+mnuXTYPrIV3Mp4v9ofb0BmaKLz6SgdtsNbLbRPRkqStsmvwSM1etnRwTVApcViZpJciwfgPAII27/a5x2UZDIRwyDbDjcN7Kf2ZeH6780eH/uI+mhkUYYsc8NF9Ew6tksr2DwT+Cx6WOfIaUV+RBbJRP+URrL+JHtp4Pd3v2lyIIJksa6FinlmSrtNOaxw2i4go6WrtVuJappuIH7ZLluYknYWbar5SJotGBax0AbvJz0vXSg0xQJHqfa9h/NxNPxZIpmxWMLgfdovh/r9HsZlN8HJYzmuBG48clt0hkc6uG+Qap/JUmUM68H8RlpmdIN+BSzB6z8rkTmKSghOhevKhq6+J5/9EXMRfsgK5xBB4H9psyUDysCAcqssApxfsDrFly9TaP6j2SeDtP0+9v8EoH17Nt7aY+gOnRyUhQ6T9FeS2etGemvsL93vGCyF25fp2vRHNW0Tl2iUA9wtZKHQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR10MB4363.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dXYyeUdLUWpiWGJWRjQxN2NIK3NPdUM5N3d6N25aZVBqTUhPVGtKYktwa3pr?=
+ =?utf-8?B?YUpQRCsyZTNrVWZQMmd1QUF1bGI2UXdlaFA2YUZpT3B3NEZYTGZVcWxlbHZZ?=
+ =?utf-8?B?Tmg1RjlxWmVrOUJpWmpNaEc3LzVZckdxaDk3U2JwY2V5bTU5WUVrYTFXcVRV?=
+ =?utf-8?B?RVRsMzNUQ3ZSUW1vdFNFbTdXNE1Uajh2THR4MGRKZ1ZldDVvMkh2NndWVnoy?=
+ =?utf-8?B?YWR2aHl1WEJEWGhBcm1DZ20weE10SXllbktyejBmOHh3S1FERnpLbVdrKzlD?=
+ =?utf-8?B?NldoWFNQQTFQNW9oVWx5cnFrK1V1RUZTYmRqOWlQY2xaQnk1TFl3SG10MmZC?=
+ =?utf-8?B?M1YxcGJoeHJxMzRkUUdTUmFDSHJOVGcra25id0loeEFtUVJhMFZXTlBmQWp0?=
+ =?utf-8?B?NlNzUERyTWZRb01OT1FTTUdHcE91NW9Pck9NQ0lzd1dvOWZQejJyNGNzNzN5?=
+ =?utf-8?B?OFdwaGkyMXhxT2lUMGhpVUFZZWF1cFJXTG9Oamh5TzdrQUpBSmxPWHZSOUxF?=
+ =?utf-8?B?R29pSi81WVQ4eWQram5DZGZyMWRvWTREKzFtdUxDTjNQZldaSkNuc2dJTUwx?=
+ =?utf-8?B?T0N4U090VHBiQVFDRHk0YXdybnVNVy9MSndXbDNIcGZLVTBxNjVLM0FnTC8w?=
+ =?utf-8?B?MFNaNkNSek5ZaVhYajQxWGQ4d1dLMHdIaUlkRmU5Y0RtY3p6Slg5Yy8wTlhH?=
+ =?utf-8?B?M2o3cE4vK0ZKZ2ViMHBpZHlPZ3R4bEdPMmV4Yll5bGh1OWdkS0d5Vk5wbWJV?=
+ =?utf-8?B?VnZhemZwYVFaenFyd0JtZ0Q5dUNQOHFSQThnZnhGQnJWbHhlVm9ESUFMZDRN?=
+ =?utf-8?B?OEoxRXhlNmVvMG40aVpkUGxKKzlIdStCak5jWG10YkR3K0VGMElLRjUxZjhk?=
+ =?utf-8?B?RWVkTytnVndSYjRIaDc5ME9iQTB3cldyaVBUQnZUNlMraDA1RWljY1MzOWpC?=
+ =?utf-8?B?ZGt4R0kxdDJ5eUxuWVFuUDdmV2R4MmhaREs0VFNRS09NY09pTnlySCtYMEpN?=
+ =?utf-8?B?dkdWZ1VITGVmNzJ3OXhDSk5FM3VKWDFGZTFmcENQeWtHdTVhOTEzQzN0N2sw?=
+ =?utf-8?B?SWdYV3FrbGJXWndQOVh0RVhUL3VlenJLTGN0UEMvS0V0Q1RZbWVJdStvQ1dj?=
+ =?utf-8?B?ZzJCVGJYdUdsYm9RNnlCaFQ3aWdkN3NhdFBzMDFNaU83bngxOWlxMlp1VVVS?=
+ =?utf-8?B?azV1VU5oQ3ZOOWkrTTVjYVBJV0ZCL3B6VWdZZWwrQ3JCSXJJVnN4dEtQYlg4?=
+ =?utf-8?B?SmJSUEZkUCtpQytKdnl2UklnbnVDZXBPMFpNNVpWQUxkZ2g1dXlJcVV1d0F3?=
+ =?utf-8?B?NElVK2RDbTRkL2pUNllvYjl6NUdhNi9aNmJVbDRkY3dXTGpNRGl4cDJIY0RN?=
+ =?utf-8?B?dXo3MjJYRVZhY1AxWnAwNjRGTHJSRm83N09QeUdPSkJwSGVwZmlEb2c1RTlL?=
+ =?utf-8?B?WXc2WWcvcmFUay9IQlg5azl2VHZ5a2hFNWcyb25vVU9pK2pVSFlVZ3h2QWlu?=
+ =?utf-8?B?L2NhUVRwTjZUU0JPc2FFa2hIVFIvc1NFNUpjVDg1Y1hDc3htUXM0cWhMYnNv?=
+ =?utf-8?B?MVA4Z09LY2QrVWNpUzlLTU9KN2o1aDhXdXYxUnR1WERiUTF3UjRlOHBQSDFj?=
+ =?utf-8?B?OVpRZndwcEJDMElSczhlUWlqRE9rekJ1ZUNrbTgwN2xHOC9yMlJlWHNTWTdh?=
+ =?utf-8?B?dmd5ZUxySXdkTm1DZUllcWN4T1hGQ1Q0eU0yN0VoellwZys5RUhFMUROOWt6?=
+ =?utf-8?B?VVIrcHJRdGIwd0VZbTVBeXMzSTRZS2Q1RzZZckYrbTAyZkMxbUQ0ZzhpaWlo?=
+ =?utf-8?B?S2NGdWd0elNOYTRoa2RMWFZ6VFlkS3RodHhyYWtaUzJ6ZVdhdExZL2ZNNVJJ?=
+ =?utf-8?B?S25SdG5kOW9ydndFYkJKazF4ZWhNWU51YWJqU0hKL1dMblJaOXZ0UkJPS2Na?=
+ =?utf-8?B?aVhScFpxcGxCcFZMc2xyTkZRbzluTDluQmJ1SSt2WHBhK1RXTldPU3RGWnJF?=
+ =?utf-8?B?ZTlQWktCTHV0ckIxUTBQbHRZeVdjMGRFWEJCU1o5ZjdjcmRJWDRyb3o3aVZW?=
+ =?utf-8?B?TXpGbkR5UzBRKytjRHVFMnZGelRLYXhSWHVsLzgyQWZsNFdiaWtXWW53WmdJ?=
+ =?utf-8?B?bVcwK2d4T0VPRWpKbXR2UHRrdmJaU0p3Z3F3QnA0V2MvQjFNY2Zsdkh1YUUw?=
+ =?utf-8?B?dmp1OXNhNFhwSis5aWtVbks1WDRjbDNuY0pDN3RBVU55RGphczFpOVhGNjg4?=
+ =?utf-8?B?VmVKaEhBT2ZXYWlFUXhiUEc5cmg4UHI1ZEJmc1JaMmViZ1d4RktUcTBTTW9L?=
+ =?utf-8?B?NjlJN1I2MUxzcUg3WU9Oc01uT25JanRCWXZOcTE3Q3NqSmdEbE5EQT09?=
+X-Exchange-RoutingPolicyChecked: moNraIxN9NqxdCakO6czX1WAxDr61ANI/QLmqYnIHvGZ8/vx5zzZ5BDDw2cpu1Tw6X9QJcH/zWGS7jMPExx5T4p5vCCvqYupY8XIs5yMdAtecaXfwXEmgLy5Rd40MhkYIeJ+oECmrdCw7tnTxLO+CU967r5f0WZiERuTM2HVUOOrnVh4SKIY9kt/NLvCNQWK3lUKxgOugJbHCybqx17XfCDdAi37pUPNQqayAlc4LtakxxD44N5q5CIEQUbcrv6H62z3HICCbXbzKLhOOZr4Bk4TqsVytCppt9DFUCBsiEDaoWP4CinH++qZw9/diXddkGuRsK3HSX+ht8VmmgMr8g==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 1KJNHEVBhLFbMv2+elGYnzrn858zem5nLLFBQXUeQYpeSZbdNBy9UhixjZzyCFlsh1EdGhF/IxAib77BtoNQvXkBqvr/XkKC3fLRQQGjTBPr2kkJHQSABePtkcnzJM5xrrWZBv6uI033ZlDD1rVZJGnVDVj2V/Pvi8eQ790cQUXHyH3e/mSihbUjMzxsKg7StZdt4iNrbg3rP3Qq/zMC/hnYceHrtCcIwCkHutoWPvpl/PKMBPesDkHEyB7H/xdTOrBLFAPWP82KvWtYkItfAwKcem0GYm7NX5LQge1fT5/EcHp0kecqm8WGXV6icBM7ffflnQp32rgH/EQgz8GyA68i/+mbMBq/8F1WtytZ+TJs9i2bjtSIjlGWSyPM6iok247UxzHEy8r8vwXzWkOM3idOcunH78kx3W0LHfB/eH7+6EaaJ0YUaaGU3TQgHOhr29IDlL9ZudzP3ieP2bMfFSdUDD6R6rZooK96OEcFom4xz1VUWBjDGzOE9gKD50C4mwLRjM0B6MnaaGJbdwfpDWoWULIYEkQIVyuSwIRJdb+d1+EtfuwbTOqGPOvGE/JJby34cxD3ru9TbgdvUVKl64yDItd/r+GqYL7FakK7cKA=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aaf198c9-a483-43d6-67bf-08de8e5e4cb7
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR10MB4363.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2026 13:14:40.3311 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Url+HMs6cb/Wah8OcoOIMVcISAMqCiFz+DbRyatH+RlvShiT8b3gDmnChq84DYbuIY2GAngEiP0tEUiTIXdgmQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR10MB4379
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-29_05,2026-03-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ bulkscore=0 spamscore=0
+ malwarescore=0 mlxlogscore=999 phishscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
+ definitions=main-2603300103
+X-Authority-Analysis: v=2.4 cv=PqaergM3 c=1 sm=1 tr=0 ts=69ca7747 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117
+ a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=yPCof4ZbAAAA:8
+ a=J_gzRdOAL9rF5LRi1ZIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMwMDEwMyBTYWx0ZWRfX4NY3o7kzkD6S
+ YDhbY9f7c5GMJY3OfuIXx2pilexBhdefIpDkfVaV+o126OnADIHJNKefyWpO7C2IpYp47HfLnO5
+ 36nXM8cc0iVvqmqUzJKUCNPdhTr/RfKUZDDgmd3hxfyJTowdE7LXGTitb1vsZIzU2yWgH+f3zPU
+ 3RYiEtqR/3F/3BeCSoqY1rkTct+BG+YXL3i3E8Ia7cHT6CwgwW35YShwI/ZuqMziTDT4OATrXrk
+ TUSscNLUzkx2gdMWOOZ6x88kXmsA0vkKGTBj52QsVsuyqAXRIktuY9aFp5SMMspKolhsbdOU94H
+ 9TlOomnu9IoCuRYXblaZW2oxE/xUjAUuxOdwfIJrqh5lN+e3wGUL78xtNjK9pR8oEq9CAwojqoA
+ QKfrs0U5LnJIgebGGkVqxOHMkfgdiGqBAFxUwWlWyGZ9fYDsvjyyGAzCTxptg8/mAXnzV4VeUSn
+ ickhlPFRvSPl7UjSdKw==
+X-Proofpoint-ORIG-GUID: 7Ke3Xg6v3D2sT9zLj2ivyRT9zz1h32H8
+X-Proofpoint-GUID: 7Ke3Xg6v3D2sT9zLj2ivyRT9zz1h32H8
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,55 +212,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/30/26 14:16, Kevin Wolf wrote:
-> When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
-> it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
-> sense codes. It doesn't really explain how the codes to be in the list
-> were selected.
-
-I think I mostly looked at what codes QEMU generates itself and excluded 
-those.  But if LUN_NOT_SUPPORTED happens like that for storage arrays, 
-that is the correct thing to do.
 
 
-> As the LUN doesn't come from the guest, but from the block backend
-> (usually the SCSI device on the host that was opened with host_device,
-> but it could also be the iscsi block driver), there is really no way the
-> guest could influence this.
+On 3/26/26 4:02 AM, Eugenio Perez Martin wrote:
+> On Tue, Mar 24, 2026 at 3:07 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
+>>
+>>
+>>
+>> On 3/23/26 6:25 AM, Eugenio Perez Martin wrote:
+>>> On Fri, Mar 20, 2026 at 3:20 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
+>>>>
+>>>> Introduce a new 'early-mig' property that enables the early migration
+>>>> path for virtio-net devices on machine types >= 10.2:
+>>>>
+>>>>    - virtio-net-device,early-mig=on
+>>>>    - virtio-net-pci,early-mig=on
+>>>>    - virtio-net-pci-transitional,early-mig=on
+>>>>    - virtio-net-pci-non-transitional,early-mig=on
+>>>>    - virtio-net-ccw,early-mig=on
+>>>>
+>>>> To preserve compatibility for older machine types (<= 10.1), add compat
+>>>> overrides in hw_compat_10_1 to keep the legacy default (off).
+>>>>
+>>>> With this, machine types 10.2 and newer enable early migration by
+>>>> default while older machine types retain the previous behavior. Users
+>>>> may still override explicitly via:
+>>>>
+>>>>    -device virtio-net-pci,early-mig=off
+>>>>    or
+>>>>    -global virtio-net-device.early-mig=off
+>>>>
+>>>> Follow-up patches will implement the actual early migration feature for
+>>>> virtio-net devices.
+>>>>
+>>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+>>>> ---
+>>>>    hw/core/machine.c              | 5 +++++
+>>>>    hw/net/virtio-net.c            | 1 +
+>>>>    include/hw/virtio/virtio-net.h | 1 +
+>>>>    3 files changed, 7 insertions(+)
+>>>>
+>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>>>> index 6cf0e2f404..1b6c7db119 100644
+>>>> --- a/hw/core/machine.c
+>>>> +++ b/hw/core/machine.c
+>>>> @@ -45,6 +45,11 @@ const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
+>>>>
+>>>>    GlobalProperty hw_compat_10_1[] = {
+>>>>        { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+>>>> +    { "virtio-net-device", "early-mig", "off" },
+>>>> +    { "virtio-net-pci", "", "off" },
+>>>> +    { "virtio-net-pci-transitional", "early-mig", "off" },
+>>>> +    { "virtio-net-pci-non-transitional", "early-mig", "off" },
+>>>> +    { "virtio-net-ccw", "early-mig", "off" },
+>>>
+>>> Is this needed even if we mark the VMState as optional?
+>>>
+>>> The source might not be able to send the device configuration in some
+>>> cases. For example, if it cannot shadow CVQ. If the destination knows
+>>> this field is optional, the QEMU source version is irrelevant.
+>>>
+>>
+>> I think it is still needed, yes. This series adds new VMSDs that are
+>> registered as top-level savevm sections, and, IIUC, a destination guest
+>> using an older version of Qemu would not be able to ignore these
+>> "unknown" sections, even if they're optional for the source to send.
+>>
+>> The compat property also preserves the pre-10.2 machine-type default, so
+>> a 10.1 machine type doesn't silently change the migration behavior when
+>> it's being run on a newer Qemu version.
+>>
 > 
-> It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
-> happen during failover operations. When combined with multipath, the
-> request should be retried on another path instead of being reported to
-> the guest, which would offline the filesystem in response.
+> Ok good point. I'm tempted to propose removing the cmdline argument
+> then, but I see virtio-mem "x-early-migration" also adds it. I don't
+> think increasing the migration's complexity by adding command-line
+> cases is worth it, but I guess there is a reason for that. What about
+> setting it to true by default?
 > 
-> Simply returning false in scsi_sense_buf_is_guest_recoverable() will
-> enable the retry logic in file-posix, and will also make sure that if
-> the error persists, the configured error policy is respected so that the
-> VM can be stopped.
+> Also, maybe it is worth exploring using the same name for both
+> properties. At the same time, I remember that x- prefix was
+> discouraged so... I'll be happy with any option
+> {x-,}early-mig{,ration}.
 > 
-> Buglink: https://redhat.atlassian.net/browse/RHEL-158212
-> Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-
-Paolo
-
-> ---
->   scsi/utils.c | 1 -
->   1 file changed, 1 deletion(-)
+> Again, I wouldn't object to adding the cmdline parameter, I'm just
+> trying to make this as easy to maintain in the future as possible :).
 > 
-> diff --git a/scsi/utils.c b/scsi/utils.c
-> index 545956f4f95..daee90ecf0e 100644
-> --- a/scsi/utils.c
-> +++ b/scsi/utils.c
-> @@ -373,7 +373,6 @@ static bool scsi_sense_is_guest_recoverable(int key, int asc, int ascq)
->       case 0x1a00: /* PARAMETER LIST LENGTH ERROR */
->       case 0x2000: /* INVALID OPERATION CODE */
->       case 0x2400: /* INVALID FIELD IN CDB */
-> -    case 0x2500: /* LOGICAL UNIT NOT SUPPORTED */
->       case 0x2600: /* INVALID FIELD IN PARAMETER LIST */
->   
->       case 0x2104: /* UNALIGNED WRITE COMMAND */
+
+IIUC, for new machine types (>= 10.2), this patch turns it on by 
+default. For older types (<= 10.1), it's off by default.
+
+With regards to maintenance, you could argue that it helps us in this 
+case. For example, it does keep the policy in one place (compat override 
+for old machine types) plus runtime eligibility checks for cases where 
+this early path isn't supported (e.g. vhost-user). Without the property, 
+we'd need some special case policy path and/or more machine-type/version 
+checks in device code.
+
+The ability to explicitly override this also would allow for debugging 
+issues.
+
+>> I do agree though that being unable to shadow some state should be
+>> handled as a runtime check for early migration (like we do for
+>> vhost-user), but that's separate from a machine-type compat default.
+>>
+> 
+> Yes, I missed that vhost-user and vhost-vdpa were out of the series at
+> this patch. It happened with a few comments. I should have gone back
+> and solved them myself; apologies! If possible, and if you see it
+> makes sense, you can expand the patch descriptions with the info.
+> 
+
+No problem! I'll try to be more explicit about it in patches/CV. Next 
+series version should include vhost-vdpa support.
 
 
