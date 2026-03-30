@@ -4,119 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34EB1061B1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 18:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8BC1061B1C
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 19:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7HpU-0002Dk-Qd; Mon, 30 Mar 2026 14:59:17 -0400
+	id 1w7HvQ-0003o0-IV; Mon, 30 Mar 2026 15:05:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1w7HpK-0002CE-Oz
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:59:07 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7HvO-0003nW-PT
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:22 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1w7HpJ-000470-57
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:59:06 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b79f8f7ea43so940532266b.2
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 11:59:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774897143; cv=none;
- d=google.com; s=arc-20240605;
- b=fgq1IFoqXvb+4rIgzaAh+mI5Er0TY+pDLhdeP5E/pIzMCAjV4Imm9kqa5HHsskk6LX
- smOr4opjZQciYyRPu1WrE57KbTBXFBHW1OBSPm+3VMUaS6Lv++CcbQghpJ5jAxblX4k4
- HUeWZjDaeE5XfjldhVpa5wK+TilkbNCARSCpr8Y63se8cLgRDwyCF4UC96fNj9NnT8L4
- Tjo/YQ6ABnCGVwvnL/wuxyMOyIayK7JCBuo1OCyVr8dq9i2/A9Vx4VQOQ12zbD20kck2
- x4evvMW3ZvbhE+gp1xRLL1vZmRksZ8Em1WXDUfbwRcM51r7DabfjNpCdc809eZzV2eFC
- YLfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=k4rAoAoPNN+VzZnBKbPKnqdI75IN2AVUh/oLxv4NemQ=;
- fh=xopoZxAxfwA5WIpxTaonJ6ni507NJjSH9E3qLXTQufM=;
- b=kduBMNhT7hyp6872+WFG4dbx76cD+6vCck8ASlwRuZ/nBd4l7xCh+syB/4QTU63GP4
- GjcW6642xhlHExK05ksItNYO834FCYUn/eZanLh5dwHGqERhW3HS11dsaSNK+eVo+rGi
- sKRCIoU2gb2ZhJhatf25n8naSC7auXfhtnUZap0LebwLd5sGCSjCTnXifkKZQzxw+CSV
- XukXZv4BicFRBeMplQPq27bWkAUur6OiWcKWot2vlmeU1AEMw3htZ08MUzMX72bwcJDK
- zOc73BDJxqtfRJKI1tOwSD1y8nISyDyidLdcgV52z4a4m8mfael4cv8Ow9Fig9IodUtH
- WfGw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774897143; x=1775501943; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k4rAoAoPNN+VzZnBKbPKnqdI75IN2AVUh/oLxv4NemQ=;
- b=ZnPVG9rdQLWKdgjrbnkep90iUCCEm33edeYiIOv6eNJCA/GJ7OFVmBSMNLoBt6ZrNF
- zbWIDjO6BWVwCw78Y7UPl+gn7P5jxNGu6vKX+CA3iD4Ap6PekPo9R5GRmJXZQ9sfLs5F
- YAwsy3hQzgos+ByNVlVjIska/WtIvNFNJlTGM9rq+xVOHnOpRyTfxOl47LV3P9OJBO3z
- 265It7zNXiuw+v5taLdgnN2XMJb/54JX0+KCeUMqclefZAWu0/grKmPc31e7QW0vu0uT
- fl9VVyu9GRHl/ILRgPCm25cNiOMFLjjR89UExSZjILmOVG6+ezdrxO5F77DnNYQ83dSv
- /Vrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774897143; x=1775501943;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=k4rAoAoPNN+VzZnBKbPKnqdI75IN2AVUh/oLxv4NemQ=;
- b=NPDC+dKr8+TrmR8m+dro9qNCjKj0icdCPSsb+CZeN13YLKst3veGkp8VqUDVVG67xY
- I0KlY+78OhRzMYPHy6OyqFP7LS/4tZFgGbgZz0ai/aeFzznNnqvxqLDCe+Fk7jZvcZEp
- CAr8vi/IX36aK2qYs705bzLfFfXNU+DuNOIU/23+eXsQwx2j9807MnHy6n0LBDlO6YsT
- A2pAO05LGO4Hqts7EFrfTmlQwSmnz6Ab24p/+Sji1fvaWU2JO2PgtIxW5qdPMahKESib
- tr4ZsxbYjB/WTWUVcBSbH18ZqX0Nrpy/AArW3kecp0/W3stsZPeSUceGBQB8StwkyZKQ
- xwNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAY9mp6OAkfWg9IRtLH65gXjzd0MEoKVoiVNAbpjhTFmdaf+/68q5xhj28MQO91ft7bP9iQ0TIqrWr@nongnu.org
-X-Gm-Message-State: AOJu0YySHthE2iAkbLxxC4OIfdyKM15qLOil64Vd6G2YfilgDhz54YhE
- EzcXOo345A5AbgAKXeDhPUI26+Rz9+SQMGn9vRPhNwPjq057A+g4jeamqtBwJmIOTf5BWxJuE7Q
- VEvgMynwak5eCHvTe9w1xhacYNf63+ok=
-X-Gm-Gg: ATEYQzyQ5Ndr8bh9U6f82VNvPISCp+cxpet429DKC+XtiMBI4RNKk1qGDKsX6fSLCB2
- FmdwMRUeMKC11Hc9N5yzQVvYADdAwR6lUoW48CiTXKpe1yjr6lj6L/3LqbbHTeh2l++FVFsjDG3
- h4GuW4tNydY3kkkgrutZukYkxVZCK4ljQYBcJMEMViTADHN4HYJQG8MLczfG9ZaUYhKupQLxd8Q
- jylzFypspTXN1Zf6xRIlX4IggLzNgRr+TsIvgsmyR5aDSc2l/wLGEr0OLNz4gbx5As39220Vp/B
- 8Fsy8pZS
-X-Received: by 2002:a17:907:94c2:b0:b95:6687:4d15 with SMTP id
- a640c23a62f3a-b9b50937e83mr873615566b.42.1774897143252; Mon, 30 Mar 2026
- 11:59:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7HvM-0005CM-Vq
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:22 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 67B4A4D532;
+ Mon, 30 Mar 2026 19:05:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774897512; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2NyAqFvU5AnxXJNtvWx1acfMxJ5R90ZFEUhywru5LWE=;
+ b=Q+g/XOtNgKA/MR8y51mAgA0qitt791/EEsX8mFyII76Q23PrdWrSnQSWQaPxEooeHV17ne
+ jF6ZZ3rk/uv9QvKT4xLaZpiKHZJbvdIaIS1tGhN6jK/eZEiAiuojMDH+40t1G/2pAFJo4w
+ kEwXljyXfy4rPQrqeqp7NfUYxZaodnc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774897512;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2NyAqFvU5AnxXJNtvWx1acfMxJ5R90ZFEUhywru5LWE=;
+ b=eZPy28Lrz5G1dMDNiq1V3n7JaO50LaCJHoXDUduQU2oCoT9Wn27YFCr+/pgpcIpnWqI1tD
+ 7J/MLkWBUb2EZMAQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Q+g/XOtN";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=eZPy28Lr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774897512; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2NyAqFvU5AnxXJNtvWx1acfMxJ5R90ZFEUhywru5LWE=;
+ b=Q+g/XOtNgKA/MR8y51mAgA0qitt791/EEsX8mFyII76Q23PrdWrSnQSWQaPxEooeHV17ne
+ jF6ZZ3rk/uv9QvKT4xLaZpiKHZJbvdIaIS1tGhN6jK/eZEiAiuojMDH+40t1G/2pAFJo4w
+ kEwXljyXfy4rPQrqeqp7NfUYxZaodnc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774897512;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2NyAqFvU5AnxXJNtvWx1acfMxJ5R90ZFEUhywru5LWE=;
+ b=eZPy28Lrz5G1dMDNiq1V3n7JaO50LaCJHoXDUduQU2oCoT9Wn27YFCr+/pgpcIpnWqI1tD
+ 7J/MLkWBUb2EZMAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 686044A0B0;
+ Mon, 30 Mar 2026 19:05:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id gDIrDmfJymlGdQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 30 Mar 2026 19:05:11 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+	Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 1/3] migration: Fix up error message for max-cpu-throttle
+Date: Mon, 30 Mar 2026 16:05:06 -0300
+Message-ID: <20260330190508.8634-2-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260330190508.8634-1-farosas@suse.de>
+References: <20260330190508.8634-1-farosas@suse.de>
 MIME-Version: 1.0
-References: <20260305142459.52559-5-zhangckid@gmail.com>
- <20260309081502.GC39949@fedora>
- <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
- <20260312052422.GA116604@fedora> <87bjgtxv9b.fsf@pond.sub.org>
- <CAK3tnvJc2U+c=sx=RASKHCAjcTQMx9dg0iOpe5eEui9U0-Ft_g@mail.gmail.com>
- <87jyv9fyn5.fsf@pond.sub.org>
- <CAJSP0QWnRRRATvgRtWss_hw4ygqB_bHgBuWQd3mqUcbb1q48KA@mail.gmail.com>
- <CAK3tnv+9pdVG_FzEYbux3JDHv8T1ywbwLBvA6j4xJ=ATdNtxAQ@mail.gmail.com>
- <875x6dzo50.fsf@pond.sub.org> <20260330133155.GA154632@fedora>
- <CAK3tnvJJKUgmJQ0oV4kOX7Lppo4=90EHUUzyGiTOMZjX44fevQ@mail.gmail.com>
- <CAJSP0QXTEHphbgR_xxqBSvcvqNo=aGe6S1M7wksC=3BHEgKRAA@mail.gmail.com>
-In-Reply-To: <CAJSP0QXTEHphbgR_xxqBSvcvqNo=aGe6S1M7wksC=3BHEgKRAA@mail.gmail.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 31 Mar 2026 02:58:26 +0800
-X-Gm-Features: AQROBzBniL2odKJZf73za_PjubpCIhtAYA7MACyOkOT21wkTHjEdPS_sbFZdvdw
-Message-ID: <CAK3tnvLJWkgqnsA0D3iUdgptfE-GfxdtHGDcnmMQf1xu1Xy8DA@mail.gmail.com>
-Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
- holder name
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>, 
- "Dr . David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns, suse.de:dkim, suse.de:mid, suse.de:email]
+X-Rspamd-Queue-Id: 67B4A4D532
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,33 +129,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 31, 2026 at 1:53=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com=
-> wrote:
->
-> Hi Chen,
-> It seems to be an email delivery issue. You can check the mailing list
-> archives if you are worried about missing emails:
-> https://lore.kernel.org/qemu-devel/20260305142459.52559-1-zhangckid@gmail=
-.com/T/#t
->
+From: Markus Armbruster <armbru@redhat.com>
 
-OK, but the lore can't catch the mail too....
+Fixes: 1a739d301232 (migration: Do away with usage of QERR_INVALID_PARAMETER_VALUE)
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260326074247.188674-2-armbru@redhat.com
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/options.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-2026-03-30  3:13                 ` Zhang Chen
-     [not found]                   ` <875x6dzo50.fsf@pond.sub.org>
-2026-03-30 13:31                     ` Stefan Hajnoczi
+diff --git a/migration/options.c b/migration/options.c
+index 658c578191..3eb5b39186 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1207,7 +1207,7 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+ 
+     if (params->max_cpu_throttle < params->cpu_throttle_initial ||
+         params->max_cpu_throttle > 99) {
+-        error_setg(errp, "max_Option cpu_throttle expects "
++        error_setg(errp, "Option max_cpu_throttle expects "
+                    "an integer in the range of cpu_throttle_initial to 99");
+         return false;
+     }
+-- 
+2.51.0
 
-And like this:
-https://mail.gnu.org/archive/html/qemu-devel/2026-03/msg08030.html
-
-That's irrelevant to what we're discussing, I'm just curious, thank you.
-
-Thanks
-Chen
-
-> Markus' reply arrived in my @redhat.com inbox but seems not to have
-> reached the mailing list yet. It could be due to slow mailing list
-> servers or temporary email delivery problems.
->
-> Stefan
 
