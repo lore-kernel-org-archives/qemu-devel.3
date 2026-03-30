@@ -4,116 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC021061B0F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 283151061B0F
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7FPK-0003J0-Eo; Mon, 30 Mar 2026 12:24:06 -0400
+	id 1w7FYr-0006U8-LM; Mon, 30 Mar 2026 12:33:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Stepan.Popov@kaspersky.com>)
- id 1w7FP9-0003GX-Dn
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:23:56 -0400
-Received: from mx9.kaspersky-labs.com ([195.122.169.44])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w7FYm-0006Sq-7r
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:33:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Stepan.Popov@kaspersky.com>)
- id 1w7FP4-0007eV-Mp
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:23:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kaspersky.com;
- s=mail202505; t=1774887825;
- bh=Quya0BzXbsiUAgi/EXNtiWQQJwjEn4SsQ0vC4c4JGMM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
- b=hPfoPKOZDEiOKqQGZ8EGoU50f+9HYcXtk5KVaKLz9VQgsoeAEr6cSS0oMi6Ervywj
- 9ASuB1y/Cr9QSvpoeTGB0GX5ob3LoiXUuNKfPDmJ47mjPtwRorBxxjjxwkwX/t0jLS
- ynobDm4TT+CcLUpir+hB0etOiGW+PjBXXpnEx3cdDQopGfd9WEJR3ZGQ5Eg3MrfXGI
- E1JMv5l5KOjZv/0cQLBw294XctTn+wetwGCR8tEL18E+XKKcYJgiRjV9OFaV1weWo+
- ygOY05ooIXXZ4/+74bu2k4Cj16C01dwYaV6FpFcSEIKe/F/MZjMWh8CINTNNpVkg5w
- o/h/5rvWRlwxw==
-Received: from relay9.kaspersky-labs.com (localhost [127.0.0.1])
- by relay9.kaspersky-labs.com (Postfix) with ESMTP id 438CF8A0BDF;
- Mon, 30 Mar 2026 19:23:45 +0300 (MSK)
-Received: from mail-hq2.kaspersky.com (unknown [91.103.66.208])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (Client CN "mail-hq2.kaspersky.com",
- Issuer "Kaspersky MailRelays CA G3" (verified OK))
- by mailhub9.kaspersky-labs.com (Postfix) with ESMTPS id 0F2D88A079C;
- Mon, 30 Mar 2026 19:23:45 +0300 (MSK)
-Received: from stepan-vm.localdomain (10.16.90.37) by HQMAILSRV1.avp.ru
- (10.64.57.51) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Mon, 30 Mar
- 2026 19:23:06 +0300
-From: Stepan Popov <Stepan.Popov@kaspersky.com>
-To: <qemu-devel@nongnu.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Stepan Popov <Stepan.Popov@kaspersky.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2] meson: add missing semicolon in pthread_condattr_setclock
- test
-Date: Mon, 30 Mar 2026 19:22:50 +0300
-Message-ID: <20260330162250.97380-1-Stepan.Popov@kaspersky.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w7FYk-0000pL-Od
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:33:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774888430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EATB10RjB0LTDllTMDZXYHij/mQfy7ZamzgOG4aDnoI=;
+ b=WP0ctNb80N1hXvXGj427TdvAL2cNi/Y8XLd6/Y5rcW8P1xEcrM625PMplTkEci9+pzuwQy
+ Ma/wUReSFYdPA5EshgjYk7FLQFFye7YAxQXX3kL1PtA3KRAKT89ypzlWJz8YeM9vqvvcHB
+ 6gim5iC8di+JZBRB92sD8teTt9arc10=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-IGxdj7sZONenADq2992fkg-1; Mon,
+ 30 Mar 2026 12:33:46 -0400
+X-MC-Unique: IGxdj7sZONenADq2992fkg-1
+X-Mimecast-MFC-AGG-ID: IGxdj7sZONenADq2992fkg_1774888426
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 921391956096; Mon, 30 Mar 2026 16:33:45 +0000 (UTC)
+Received: from [10.44.35.213] (unknown [10.44.35.213])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 83FC81955D84; Mon, 30 Mar 2026 16:33:41 +0000 (UTC)
+Message-ID: <b7d47483-167a-48bf-b494-87b2f7bfbe69@redhat.com>
+Date: Mon, 30 Mar 2026 18:33:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson.build: Add --enable-use-pdb option
+To: Steve Aarnio <saarnio@qti.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
+References: <MN2PR02MB6622718572E2A2B5E4EE3C039B4EA@MN2PR02MB6622.namprd02.prod.outlook.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <MN2PR02MB6622718572E2A2B5E4EE3C039B4EA@MN2PR02MB6622.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.16.90.37]
-X-ClientProxiedBy: HQMAILSRV5.avp.ru (10.64.57.55) To HQMAILSRV1.avp.ru
- (10.64.57.51)
-X-KSE-ServerInfo: HQMAILSRV1.avp.ru, 9
-X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 6.1.1, Database issued on: 03/30/2026 16:07:17
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 0
-X-KSE-AntiSpam-Info: Lua profiles 201797 [Mar 30 2026]
-X-KSE-AntiSpam-Info: Version: 6.1.1.22
-X-KSE-AntiSpam-Info: Envelope from: Stepan.Popov@kaspersky.com
-X-KSE-AntiSpam-Info: LuaCore: 95 0.3.95
- 0e4b6d4f1992c354ebd6a5cc3c5624a3b0aa8cbc
-X-KSE-AntiSpam-Info: {Tracking_cluster_exceptions}
-X-KSE-AntiSpam-Info: {Tracking_real_kaspersky_domains}
-X-KSE-AntiSpam-Info: {Tracking_black_eng_exceptions}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: 127.0.0.199:7.1.2;
- d41d8cd98f00b204e9800998ecf8427e.com:7.1.1; kaspersky.com:5.0.1,7.1.1
-X-KSE-AntiSpam-Info: {Tracking_white_helo}
-X-KSE-AntiSpam-Info: FromAlignment: s
-X-KSE-AntiSpam-Info: Rate: 0
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Deterministic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 03/30/2026 16:09:00
-X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
- rules found
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean, bases: 3/30/2026 2:56:00 PM
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
-X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
- rules found
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
-X-KSMG-AntiPhishing: NotDetected
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
- bases: 2026/03/30 05:24:00 #28352470
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 52
-Received-SPF: pass client-ip=195.122.169.44;
- envelope-from=Stepan.Popov@kaspersky.com; helo=mx9.kaspersky-labs.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,35 +122,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test code was missing a semicolon after the pthread_condattr_t
-variable declaration.
+On 3/18/26 20:18, Steve Aarnio wrote:
+> This option will (attempt to) modify the QEMU compile and link flags to
+> emit PDB symbol files rather than the standard (DWARF?) symbol output
+> from gcc/clang.
+> 
+> This enables using native Windows debug tools (Windbg/Visual Studio) for
+> debugging QEMU.
+> 
+> Signed-off-by: Steve Aarnio <saarnio@qti.qualcomm.com>
 
-Fixes: 657ac98b58 ("thread-posix: use monotonic clock for QemuCond and
-QemuSemaphore")
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
----
-v2:
-- Added Fixes: tag
+I would prefer to have support for this in Meson itself, but anyway, I 
+have some questions below
 
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +if get_option('debug') and get_option('use_pdb')
+> +  qemu_common_flags += cc.get_supported_arguments('-g','-gcodeview','- 
+> gcolumn-info','-fno-omit-frame-pointer')
 
-diff --git a/meson.build b/meson.build
-index d7c4095b39..5447504ea8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2882,7 +2882,7 @@ config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix +
- 
-   int main(void)
-   {
--    pthread_condattr_t attr
-+    pthread_condattr_t attr;
-     pthread_condattr_init(&attr);
-     pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
-     return 0;
--- 
-2.34.1
+GCC documentation says -gcolumn-info enabled by default, also who is 
+enabling -fomit-frame-pointer so that you have to drop it?
+
+> +  qemu_ldflags += cc.get_supported_link_arguments('-g','-Wl,--pdb=')
+
+What linkers support --pdb=, and what goes after the equal sign?
+
+Also, the update to scripts/meson-buildoptions.sh is missing, just 
+running "make" will regenerate it.
+
+Paolo
 
 
