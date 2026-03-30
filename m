@@ -4,114 +4,183 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F988FF494B
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 06:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B301FF4954
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 06:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w76ZJ-0005CW-29; Mon, 30 Mar 2026 02:57:49 -0400
+	id 1w76aS-0005ad-SR; Mon, 30 Mar 2026 02:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1w76ZG-0005CK-Ro
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:57:46 -0400
-Received: from mail-eastusazon11012042.outbound.protection.outlook.com
- ([52.101.53.42] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w76aQ-0005Zr-IL
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:58:58 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1w76ZD-0003WG-SE
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:57:46 -0400
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w76aM-0003cs-M7
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:58:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1774853935; x=1806389935;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=CEQz1LLSiLmq/6nQc9bgZ7RZIJzCF7JQdD8bLrfVcCA=;
+ b=DatAYxuyzRrzmVFDIhuahQKK/ahbQqIRDV2mGWH1xztxlBkIV6Gip1ZC
+ EHfbn4BvlmUOGbvqNKBqrjEQ6Qeqq1qZyM8UBWLpujwJ04ZcJAnhu5vQi
+ 9uQyWHpURHtbIY0GMl5aLNOvpSzShvP1EKdpYZQJH795INePTn2U6gbCl
+ Rgp/cKNGxVZEjjlQxopd/H2YiD+PByB4hHL7AEo9ykEwOBb3XStkpIHSU
+ FJyKRpmKL7iftCP64Tdk8Ltq2mUhjOuubzx1RPaAP+Tht0G8aEfxFHBSe
+ Q1OBU6jC6BoQZ/gscGwqcSzpPPQkP5LKhO69pfhNWfPrORwPmXX1LnRZX A==;
+X-CSE-ConnectionGUID: oHuiaHTzTf6L/S0dhgySRA==
+X-CSE-MsgGUID: ajmxVuwMSHyEz8tsh3Q9Ig==
+X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="75549347"
+X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="75549347"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2026 23:58:37 -0700
+X-CSE-ConnectionGUID: gWDVFNBYRWCap+V3pq8XUA==
+X-CSE-MsgGUID: hSr/y/PYSmST7vUfc9HHjA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="219324274"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2026 23:58:36 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Sun, 29 Mar 2026 23:58:36 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Sun, 29 Mar 2026 23:58:36 -0700
+Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.33) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Sun, 29 Mar 2026 23:58:33 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iqqbEEEl1OyZW5LvY8O7tFmc9fNF4j6av+FHYHyubQg11G3ZPI3oWnrQ0+NNLJgAtjOy3A9QyWCQ/sIb/odnR3I9epLLC/0Rx6yst1npESPreXy0PGrvdhhTCYWhtZorPq4zrCMYy1zkxKQm77dJinwP6pBSqTepMBrZQF2mYrevB3fwp0QeEvinciguBxwOwmx+UZ4zjcqkKinDwHSQEVWZG1Jg40wOG0jzELDTz3BenNVjfooBldraIBjMwouXzkIaR6xI5TxnklXFL6CLGoVYV66plxsE8/RuLhpTDjUKi0D5wbDbjdRFSd0FYPCAAritJ78nFbfq9WnkgSG1vQ==
+ b=N85IAgb6Ss+gD5kBQ48546pXYJG1nue8kb8p3JSz1kykJidz6isHrP3ySF7SMmLXDHqajdzBXD7hrYNM/wR8rYI3XpwO2I0RP5vtGa8otBV24ZXhtmpegOE1v8H8JGuequhsGrTWVxcC67UakpqlW7iKoX/c8ClHeDNXDIx8BIumvo2iaUNjp5wyQgXxhMdKQDb/+n2eGMRnFT38ojjRzHP5wLnWvDgGvPCBhhp3mDz1ySEcWNCetFq3Ixx6F2OCB7L6m0Kh7ggJV1EM4lUA39DIhsOKHRZzwXQkQJxESWXjR4VN9TNp5oS2q1ES1+YFjO6CNDEyYxEf6slO3RP8+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ke5kFyl8xovVspHdlYJQUwJ6ZP09TMERrWYpKUoLCrQ=;
- b=SpdrpGNpTIazeHeXga4h/p9yBNgUmQQRII9Qnfee0YoWNZplbWnk7FGZW+qTahHNMkhK5W821Zqu5iQE0ddK9QpZ/X377ncpAMci3Yx5IPgFkTgEdXaR2Xz8yAw3fgN0mkNiBipEu4TXd9ztfM3jvY0AKbPLxH4TAOnNHZFB50l++43fVmgTOMSRn0mLnZ/CD/YSUT5u+1Wj4mb5x79sr2YKUD7zjn7T+cqCe+qBC8glb3/90v7cwhL4AzThu+ZxRqllhDW37jYaWsia1zakm2sa6+5gCrfETwFm5HWJv9VRuV6XJLppPJFavTl7Hz4eBwY0rZWgmHpytvPfnjCrWw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ke5kFyl8xovVspHdlYJQUwJ6ZP09TMERrWYpKUoLCrQ=;
- b=OYRLMy+6FYBORgdV81Mt21nJUtCQshoKEGN2WdtxDmw9R13v4xXzpdPVUCLK+6QCgCVSTq2+VIEQzlPAJaq3Ed3G976SSNQFH8dHSc9/Y4JeOCFy8reR4o5Atu45E1JrZ5Mdv6G+pb/vJJ+X5u4FOgsGJru5/UAWgUV9PqZLmeQ=
-Received: from SA0PR11CA0190.namprd11.prod.outlook.com (2603:10b6:806:1bc::15)
- by LV2PR12MB5774.namprd12.prod.outlook.com (2603:10b6:408:17a::14)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=CEQz1LLSiLmq/6nQc9bgZ7RZIJzCF7JQdD8bLrfVcCA=;
+ b=EImkc5UeIFoxubBVH8JkcAR72/KCxKBYEhOBR1E0o/bBDD7NuIz1euF/v0jirSwkEe7RWYyXloaPJiY0P8HJ1yNsblSY0B0koYqTxjBJgBSxHiPYA0wmg1COkt61Wk4pHhVLkmWNkJ1n9TeSFTuqfIheGhaMbtWYh1AnaOOcuKtBpdNwIsgJokDvYDhXLJTt0xLBwf5yqpI20SBIWKpYZn9Sfw1urZ1NEgUxprLf3InLNepo2Vvf4tTf99b7bXvibKZEr1fY5G++EfglHS4OcLaV2RgXmY3HX+CHx6YMYVzlAHbBK7cq0VqxZ9lTFJck5lXWcFB77qf0fe9JE/A+Ww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by DS0PR11MB7558.namprd11.prod.outlook.com (2603:10b6:8:148::11) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Mon, 30 Mar
- 2026 06:52:35 +0000
-Received: from SN1PEPF0002BA50.namprd03.prod.outlook.com
- (2603:10b6:806:1bc:cafe::58) by SA0PR11CA0190.outlook.office365.com
- (2603:10b6:806:1bc::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.28 via Frontend Transport; Mon,
- 30 Mar 2026 06:52:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SN1PEPF0002BA50.mail.protection.outlook.com (10.167.242.73) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9745.21 via Frontend Transport; Mon, 30 Mar 2026 06:52:34 +0000
-Received: from hjbog-srdc-36.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 30 Mar
- 2026 01:52:30 -0500
-From: Samuel Zhang <guoqing.zhang@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <peterx@redhat.com>, <farosas@suse.de>, <lizhijian@fujitsu.com>,
- <eblake@redhat.com>, <armbru@redhat.com>, <Emily.Deng@amd.com>,
- <Victor.Zhao@amd.com>, <PengJu.Zhou@amd.com>, <Qing.Ma@amd.com>, Samuel Zhang
- <guoqing.zhang@amd.com>
-Subject: [PATCH v4] migration/rdma: add x-rdma-chunk-size parameter
-Date: Mon, 30 Mar 2026 14:47:58 +0800
-Message-ID: <20260330064758.2816891-1-guoqing.zhang@amd.com>
-X-Mailer: git-send-email 2.43.7
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002BA50:EE_|LV2PR12MB5774:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8c4d7f61-e533-4d49-e35e-08de8e28ec17
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|36860700016|1800799024|376014|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: SehqD4EJXbu0TNRbIhNggL1Z0H2/haYSFeODkU6jZR2hmlHUwXK6OdCaygO4tOcaJNhOjvlReOP9Ep3HM/zwGQsqBGPvTORoHByrJM1oDJl4PduHle/oDM/4DWKfQPZHc0qBNEkz0FdCfU111TvayaG2zhoTzvbTTsdjwguQAYL/cT2QNck+I1UBShTaCLnXkMxvHuo1Fugd+fiOabPEv6VXyvxGfUkh/GRMy8H+9alBzXiUdDiC4rXqntqjgkvg0NOXtWFxUnMThuKAl/VWjXFKvi4wLkUuYp+tG4fS1Aa/iry+yVFoZfsVSAM/1yzfzPzOfFvKJWo2qnxyT6xP0TrwezPIj6oaf9UtEoEHqIyVxlNXDWftAf8AG/06M46IupuZR2aqRV6jY48UDpeGSRb6f47CoSwBNqbXdGYl4y0JIdqFRV+Xj1iyIfPh2K16bNKyhnlqukTUCO+C4zjO+Ov+1MvTRCWSGVGqSTDTKJvCv0rdJNkrPhGgZMpUxzSwyuyDt02Ro3GCNYSj/9bqjnSnNjIwkYNd3KJ41Ym6DLavmCmah2pe30f7+ZOS7Mx0AnMWzOuFwzUFJ0BAyd42uoE3uwPHbnSDYmXvidp70cx006WWG4VFDVn4RXXjYLfYrJQp+Qg3t+5VxyR02IQuCk5P7tnpKRd6+xzs1WTHSmBXUTLEPZQ/in3Pn9xuKzxNuzjP+FXK7ySW6jqi4kEGaAWwoqX50pcOOC/dExyx0h96DZyFuTjWYgtcFofzpSj6La1GnkxwikxP62G97u9LTw==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(36860700016)(1800799024)(376014)(56012099003)(18002099003);
+ 2026 06:58:31 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9769.011; Mon, 30 Mar 2026
+ 06:58:30 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@bull.com" <clement.mathieu--drif@bull.com>, "Tian,
+ Kevin" <kevin.tian@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
+Subject: RE: [PATCH v2 08/14] intel_iommu_accel: Handle PASID entry removal
+ for pc_inv_dsc request
+Thread-Topic: [PATCH v2 08/14] intel_iommu_accel: Handle PASID entry removal
+ for pc_inv_dsc request
+Thread-Index: AQHcvQCoC6l9yHv4F0eqZM7WHm0EQLXBywUAgATf2EA=
+Date: Mon, 30 Mar 2026 06:58:30 +0000
+Message-ID: <IA3PR11MB91364D7A9ABCC169946E100B9252A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
+ <20260326091130.321483-9-zhenzhong.duan@intel.com>
+ <b133ead4-d871-4037-af7a-e7b534e20954@intel.com>
+In-Reply-To: <b133ead4-d871-4037-af7a-e7b534e20954@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DS0PR11MB7558:EE_
+x-ms-office365-filtering-correlation-id: 2d655b6b-93ba-4175-2701-08de8e29c079
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|7416014|1800799024|38070700021|18002099003|22082099003|56012099003|3613699012;
+x-microsoft-antispam-message-info: stXNKsUPPiLnZJAzvtkQjwiLl+EyDnL5bWVEYiJfVmuqdRhGtuZZlt4CDCaddNjCOsigPoykMtGyt9nUeERUugkitdmhjiNTVKt+80q7ZtLvkRzzImeL3TJwkpqRXAuBnOgW3gPqnGKrhz1WU1xJch4ONyXdy363amKfMrH8co7osSSEUkshtvdUmWRC6492gX0CqrlTvhKddh7pBydVAZbgcuO/HL6+vOtxGYJnKpF9U6mLuVR87XKUFt43sf0BGewhSxmnolbYgXg73OBHVweWb/PYmGbgF8R4DooxgGwjovvM9o68xKEL924WB5T/j+wGP34JnMpORh6vmvl8chOehlUQeJ8sm2fOkfvG23M6OsAqd8KeA0qo6kTke8x8xcPYu8a0/fWG8PjdXsfNBJ/vyABTPaiDbMKxV39e217yLt0k+T0mYAeneruCaLyfDIrfgzsjLNtkrcAriLOZRhFPNXJuCKtZfE8uOjaYQeJpYglc86g2lqu+6AXpW3tqbsjeu4kP9Caf86riHFxJjiDu4eT+t0WLx1ZOM9X0qmUfftzO+quCGgVn15jf1yV5OEQHQ+30jbPCr7BlGB/L5Qz/+m2wlTzr6HaVukzzLnE8imkdA6slxhPZYtf66mDDLcCL7LLk7otnhF+N7rPQkTj6oXbGfYkg9Pcl7/HxgpRaTgsCo011SVyzO0j5oK8IDeouhOR1Uno3yMTuHgOjavamzOj2qdof/r+9Tse+sXFCe2tPDhcBzQCg659Ml8tDd5ZTD3D4VQdGFU+Gh67gZ4uZvVSInZg1VXe3c8eTYByo1rwgsTZGsatRB5riVH9c
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700021)(18002099003)(22082099003)(56012099003)(3613699012);
  DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: s4RETuM2G9EPxezwpA74yZuuiGPFxctyyI9Q1xl/WGUAiSLZfyYf/a1NeDXqU1gzSZ2YN5jq7Pucfe97dq/KVBzOaGbw6qHzR/MKR+M2jVZ56oJCcyjvQpSvYcoHIyaxydr2cbWSRtja5Wagxh98YlRzE4xwRr/v+yZ4ajqrrY9vtA5VAAIPQEpqEAC5gs3tbnPeA8s+sDcufjxzS1lH+A3yPmAs+lXi30lsHiiu6OLQAnaZMxfUUZTnyVvmItr+bylquXGYK3VInRUHr9MEwZsXpzmkaQl2sN6fdIGRKJ5m+x+f9xnMtgX8UZdvd1WN1X3b1akN78mkFwmYk/EB0poesTx9q2+/uZyV0I7KTwPFyDPY+1R29/YX1yfwn7S/Nws2xbLtuNR2ck3gZBXLtJu2tQz5PjKlNfTO3bwBsiU6pL3EFVnvQwsZN1SaSXoE
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2026 06:52:34.3392 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8c4d7f61-e533-4d49-e35e-08de8e28ec17
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002BA50.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5774
-Received-SPF: permerror client-ip=52.101.53.42;
- envelope-from=GuoQing.Zhang@amd.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cEFseFdKV2FuMXM5R1c4Y3NCUEFwVTJ4SGg5Q1VGcm9RY01vYmlmRVlHcVdm?=
+ =?utf-8?B?SVQ3QUFvNVZOQmFNWDdDRGNpak1rQktDYityd3ZVY1NQTXdoL3hUeUdvZUk4?=
+ =?utf-8?B?Q2FqN3h1dGdybmZTU2V0aWVCTEJhM1BuK21IbXFLdWxzKzFDNjU4VmxrcWFP?=
+ =?utf-8?B?TjJ1VGhhUVFnZC9QSzhkRDRkU2ZUNkh5TklNZGZMblVobXg4R3l3ZzNwMmpu?=
+ =?utf-8?B?RDNZMWNVREV1c01rV0s1Wlg1RlBtdVNXN1FieWd5ZlZHWGZtcnlpcVRTbVpN?=
+ =?utf-8?B?cEYwR01lSUhiU3Z5bHcvSFdaTWYwTmxzNHJURVJ3T0hQMlIzRU1hc3NzaCtF?=
+ =?utf-8?B?S0ZwSzlyaG9hSFRRZmJvNkNPT29HQXlVOHdVQzhvdEpaY2ZPYjA0ZDJka2JG?=
+ =?utf-8?B?ZG9JcEZ5WkN1aE5CSm01U0laWHppUnZubjdkUE9KUUxQYlJNdHpmSTgrSENJ?=
+ =?utf-8?B?ZHlsVVJLUytyZ2ViNkdpVUZKTGw4T1lXdWRydUVVUE54QkNhb0pVdjFNYVBz?=
+ =?utf-8?B?WlJIS3BqVnFaRmxabmIwV1Nsc0lad2U1UWlkS25qYVNmT3NIaE04Qkc5NG8w?=
+ =?utf-8?B?WG5kU1RIMnhwOEpWYm43ajhBUDNpMWVMSklRZWxZMW92eWpqQ1ZwT0ljYzgy?=
+ =?utf-8?B?Y2dITXViSFdFa2YweENFWjBrekErMitGaGJwOVFGOWt4ZnRCR0M3UWVrelhL?=
+ =?utf-8?B?OXUzbHh3UnR3RDVSYXllTGEyY0JJdjE0eVFOU2pkTXVwWXZtWmFtZHUzdkZU?=
+ =?utf-8?B?WWdjSjVIZkRONkFJcUdQTnR0KzhJK3d3RjRyS3NyMWMvc1NvUzVqYmoyOTR2?=
+ =?utf-8?B?RFlIUHhwbmJjN1MvVytUWE4zTkVLRytLdUV5M0RsSDIxcnpiQ1ZwOCsxdEtN?=
+ =?utf-8?B?VklURENDQ25aOXFleElXNXduenN3bGRwcmE0WTZKTkp4bkNGcjFGVkJ1V1FT?=
+ =?utf-8?B?c2tuQ2w0eVJKaTlxVjZsWVdoZWJIS3ZIaCtTY2pMblk0RjdObzhnRGd4NUhz?=
+ =?utf-8?B?Y0E4NzlvRFgrL3dLYlYxUFlzbUhDSFp2VUNyd0ljRGRCVEVYbHZMdm9oc2RT?=
+ =?utf-8?B?UXlqR3hwQkpJelk4dUoxRkh3Uml2TG04d3h3dnRycitPL08zNW1lY2NndUpx?=
+ =?utf-8?B?eHJtY2xsNml1MExsbGI1cWlBellBYzVIQlFHNFIwL2JEUDJlb3ZscHFBZ3Iw?=
+ =?utf-8?B?aWFwUms5c0JtR3Y1enNvUmQ0T0djaWpDTzdwY3RDeDVjR0l4SHlNSGJmeEpK?=
+ =?utf-8?B?cVVJNTZVSGZrbExZKzVXWEFhOWYrSFNxQ29RZDZBbW1scVNlZFBiTU1URUdJ?=
+ =?utf-8?B?VW5IRUFNTXN3Nm9INEpVa1FNaU1wYkhqZ1orU1BQS3ZQanpTQzhqaWh1bWFu?=
+ =?utf-8?B?YkRzeVBJMzRLUDJVNmkyV09sQkYycXFHc3czUnFSb0xtU01zanlUK1o0N0NV?=
+ =?utf-8?B?N3lOcUJSU0lINVFrb2x6MGNjejVnaUh3bXhWNkZLM3ZTckRZdDFtNDJIWHFJ?=
+ =?utf-8?B?UDJ1N3RkLzVVcEQ4SXI3Nms5aWkxTTRBU3gyZzhzOTBoTnJUN2JySnJNU3pU?=
+ =?utf-8?B?T1c2cEJNTEM3MUY4Tk5xUTNNSUNVQTFoZUoyMng0RTdsTnlKdWd4MnppRzFG?=
+ =?utf-8?B?Rlp5TzR4a0FKK3JUZ0c5S3VKQ0ZXVVJwSlpvMWhTTnNLMmszajRCVUgvbzZp?=
+ =?utf-8?B?ckN4akxIbFpUVTNHZm5RMVBnbXo1RHFBdWRERDRvaW1ycmsvU0xac25xcDhm?=
+ =?utf-8?B?NktVRWdLRVB6Nis5K2hUaUsyN1dzZzYwN0laSlI1N0NNWWtBT1ZOY1VoMFFq?=
+ =?utf-8?B?aDIwcWNtdXAvS1I1RjdRUTJCVzBXc3YxeXZXV1hKZ1AwbW9PWGQzYVNGcXBL?=
+ =?utf-8?B?RUdEVkExT1lEZ0FWVmV5aXRacWFkVzMwaE9pR1lmKzJEQ1B5M1A0TktsVFB5?=
+ =?utf-8?B?M0d4WWoxOUZVczhBNUwzcGRTQjNxUkRoaFN3UE5DMnk1eS9GL1ZsUEJ5MjBG?=
+ =?utf-8?B?R1hkMlVjaEpwZXpuR29zd0ZGaXh2R3RudFJBUHFvREpHZ2sxMWhvdUxGY3Q5?=
+ =?utf-8?B?SWptSDZ2QXhvOFk0K1FPZVZBYnRJK0ZVckptWUh3dU1rNnlxdW4yQkw1UUhQ?=
+ =?utf-8?B?aGxmczhKZk1XeVZkd0kxalkxTEhKQ3JqOUFBVkNOc1BkeWVYTDU5YUNqbjYv?=
+ =?utf-8?B?RkoyakNyUHp1c2Q1U2R5cTZJb29xdU9OdTdFcWRoaWgxRjNmZUNnelhWYzBv?=
+ =?utf-8?B?UFRSQUVXODc0SjFkempiTWlTZGExR2FleXNaRUdoSnRUbStYK0FjNWoxdERn?=
+ =?utf-8?B?SUhuTTdGcW5qQjhkMnBlQVdUWG8yb1hqMVNaSEJXcEM3dnBQb1hqZz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: dQYcOpnkxi9qiByGDkoqScahSWKMBZLOzi5dMg/j9MgvAfOxiSyhRzt16SsGoEPH5wKHNuNHzyd4aU7XNr3SmwTPZkOxEknhIKmOlGDnfLmbmsBNBZ2ktzewwx7kVrkDJCvqzmgQxfwUUfQ8XrReOdxgUpxNol+SFz1EpS0ssdPi16GxSJ/JyHq8ziobTxuRAV+agXfXfk0BKZxSehT+enU+7s7JJ0MpN587YtUxIWDctk2PY7QjJhaXaVXYpS3HR9sZZcFJOi//IVj3Tt6cGtO+zzyoIqsvCp8kUlIA70GEm0OA0OuNPKC0i7xmWcz4Ee8Ve83gB1s2yMkVoNRGzg==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d655b6b-93ba-4175-2701-08de8e29c079
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Mar 2026 06:58:30.6937 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vCX7gUs/JOyQsTX7siKZ+W5h+27OTQnGUwrrUawLYC0KSas1PiHMTXuRRfzgZmFHy82ijZOAxA5lNbWRcfRBVtlDg6A+IsHw2shr2PBkjSk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7558
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.20;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,326 +196,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default 1MB RDMA chunk size causes slow live migration because
-each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
-1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
-
-Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
-faster migration.
-Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
-
-Performance with RDMA live migration of 8GB RAM VM:
-
-| x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
-|-----------------------|----------|-------------------|
-| 1M (default)          | 37.915   |  1,007            |
-| 32M                   | 17.880   |  2,260            |
-| 1024M                 |  4.368   | 17,529            |
-
-Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
----
-v2:
-- Renamed x-rdma-chunk-shift to x-rdma-chunk-size (byte count)
-- Added validation in migrate_params_check()
-- Added hmp_migrate_set_parameter() support
-- Added hmp_info_migrate_parameters() support
-- Added migrate_mark_all_params_present()
-- Use qemu_strtosz() for size suffix support
-v3: [Markus]
-- Use visit_type_size() in HMP set parameter
-- Use MiB/GiB constants
-v4: [Markus]
-- Remove superfluous comment on DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE
-- Use "Only applies when migrating via RDMA" in QAPI doc
-
- migration/migration-hmp-cmds.c | 11 +++++++++++
- migration/options.c            | 33 ++++++++++++++++++++++++++++++++-
- migration/options.h            |  1 +
- migration/rdma.c               | 30 ++++++++++++++++--------------
- qapi/migration.json            | 12 ++++++++++--
- 5 files changed, 70 insertions(+), 17 deletions(-)
-
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 0a193b8f54..4f6c1dbf89 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -451,6 +451,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
-                            params->direct_io ? "on" : "off");
-         }
- 
-+        if (params->has_x_rdma_chunk_size) {
-+            monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
-+                           MigrationParameter_str(
-+                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
-+                           params->x_rdma_chunk_size);
-+        }
-+
-         assert(params->has_cpr_exec_command);
-         monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
-     }
-@@ -734,6 +741,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
-         p->has_direct_io = true;
-         visit_type_bool(v, param, &p->direct_io, &err);
-         break;
-+    case MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE:
-+        p->has_x_rdma_chunk_size = true;
-+        visit_type_size(v, param, &p->x_rdma_chunk_size, &err);
-+        break;
-     case MIGRATION_PARAMETER_CPR_EXEC_COMMAND: {
-         /*
-          * NOTE: g_autofree will only auto g_free() the strv array when
-diff --git a/migration/options.c b/migration/options.c
-index f33b297929..b3565235d7 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qemu/units.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
-@@ -90,6 +91,7 @@ const PropertyInfo qdev_prop_StrOrNull;
- 
- #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
- #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
-+#define DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE           MiB
- 
- const Property migration_properties[] = {
-     DEFINE_PROP_BOOL("store-global-state", MigrationState,
-@@ -183,6 +185,9 @@ const Property migration_properties[] = {
-     DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
-                        parameters.zero_page_detection,
-                        ZERO_PAGE_DETECTION_MULTIFD),
-+    DEFINE_PROP_UINT64("x-rdma-chunk-size", MigrationState,
-+                      parameters.x_rdma_chunk_size,
-+                      DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE),
- 
-     /* Migration capabilities */
-     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-@@ -993,6 +998,15 @@ ZeroPageDetection migrate_zero_page_detection(void)
-     return s->parameters.zero_page_detection;
- }
- 
-+uint64_t migrate_rdma_chunk_size(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    uint64_t size = s->parameters.x_rdma_chunk_size;
-+
-+    assert(MiB <= size && size <= GiB && is_power_of_2(size));
-+    return size;
-+}
-+
- /* parameters helpers */
- 
- AnnounceParameters *migrate_announce_params(void)
-@@ -1055,7 +1069,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_announce_step, &p->has_block_bitmap_mapping,
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
--        &p->has_cpr_exec_command,
-+        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
-     };
- 
-     len = ARRAY_SIZE(has_fields);
-@@ -1266,6 +1280,15 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-         return false;
-     }
- 
-+    if (params->has_x_rdma_chunk_size &&
-+        (params->x_rdma_chunk_size < MiB ||
-+         params->x_rdma_chunk_size > GiB ||
-+         !is_power_of_2(params->x_rdma_chunk_size))) {
-+        error_setg(errp, "Option x_rdma_chunk_size expects "
-+                   "a power of 2 in the range 1MiB to 1024MiB");
-+        return false;
-+    }
-+
-     return true;
- }
- 
-@@ -1391,6 +1414,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
-         dest->direct_io = params->direct_io;
-     }
- 
-+    if (params->has_x_rdma_chunk_size) {
-+        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
-+    }
-+
-     if (params->has_cpr_exec_command) {
-         dest->cpr_exec_command = params->cpr_exec_command;
-     }
-@@ -1517,6 +1544,10 @@ static void migrate_params_apply(MigrationParameters *params)
-         s->parameters.direct_io = params->direct_io;
-     }
- 
-+    if (params->has_x_rdma_chunk_size) {
-+        s->parameters.x_rdma_chunk_size = params->x_rdma_chunk_size;
-+    }
-+
-     if (params->has_cpr_exec_command) {
-         qapi_free_strList(s->parameters.cpr_exec_command);
-         s->parameters.cpr_exec_command =
-diff --git a/migration/options.h b/migration/options.h
-index b502871097..b46221998a 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -87,6 +87,7 @@ const char *migrate_tls_creds(void);
- const char *migrate_tls_hostname(void);
- uint64_t migrate_xbzrle_cache_size(void);
- ZeroPageDetection migrate_zero_page_detection(void);
-+uint64_t migrate_rdma_chunk_size(void);
- 
- /* parameters helpers */
- 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 55ab85650a..3e37a1d440 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -45,10 +45,12 @@
- #define RDMA_RESOLVE_TIMEOUT_MS 10000
- 
- /* Do not merge data if larger than this. */
--#define RDMA_MERGE_MAX (2 * 1024 * 1024)
--#define RDMA_SIGNALED_SEND_MAX (RDMA_MERGE_MAX / 4096)
-+static inline uint64_t rdma_merge_max(void)
-+{
-+    return migrate_rdma_chunk_size() * 2;
-+}
- 
--#define RDMA_REG_CHUNK_SHIFT 20 /* 1 MB */
-+#define RDMA_SIGNALED_SEND_MAX 512
- 
- /*
-  * This is only for non-live state being migrated.
-@@ -527,21 +529,21 @@ static int qemu_rdma_exchange_send(RDMAContext *rdma, RDMAControlHeader *head,
- static inline uint64_t ram_chunk_index(const uint8_t *start,
-                                        const uint8_t *host)
- {
--    return ((uintptr_t) host - (uintptr_t) start) >> RDMA_REG_CHUNK_SHIFT;
-+    return ((uintptr_t) host - (uintptr_t) start) / migrate_rdma_chunk_size();
- }
- 
- static inline uint8_t *ram_chunk_start(const RDMALocalBlock *rdma_ram_block,
-                                        uint64_t i)
- {
-     return (uint8_t *)(uintptr_t)(rdma_ram_block->local_host_addr +
--                                  (i << RDMA_REG_CHUNK_SHIFT));
-+                                  (i * migrate_rdma_chunk_size()));
- }
- 
- static inline uint8_t *ram_chunk_end(const RDMALocalBlock *rdma_ram_block,
-                                      uint64_t i)
- {
-     uint8_t *result = ram_chunk_start(rdma_ram_block, i) +
--                                         (1UL << RDMA_REG_CHUNK_SHIFT);
-+                                         migrate_rdma_chunk_size();
- 
-     if (result > (rdma_ram_block->local_host_addr + rdma_ram_block->length)) {
-         result = rdma_ram_block->local_host_addr + rdma_ram_block->length;
-@@ -1841,6 +1843,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
-     struct ibv_send_wr *bad_wr;
-     int reg_result_idx, ret, count = 0;
-     uint64_t chunk, chunks;
-+    uint64_t chunk_size = migrate_rdma_chunk_size();
-     uint8_t *chunk_start, *chunk_end;
-     RDMALocalBlock *block = &(rdma->local_ram_blocks.block[current_index]);
-     RDMARegister reg;
-@@ -1861,22 +1864,21 @@ retry:
-     chunk_start = ram_chunk_start(block, chunk);
- 
-     if (block->is_ram_block) {
--        chunks = length / (1UL << RDMA_REG_CHUNK_SHIFT);
-+        chunks = length / chunk_size;
- 
--        if (chunks && ((length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-+        if (chunks && ((length % chunk_size) == 0)) {
-             chunks--;
-         }
-     } else {
--        chunks = block->length / (1UL << RDMA_REG_CHUNK_SHIFT);
-+        chunks = block->length / chunk_size;
- 
--        if (chunks && ((block->length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-+        if (chunks && ((block->length % chunk_size) == 0)) {
-             chunks--;
-         }
-     }
- 
-     trace_qemu_rdma_write_one_top(chunks + 1,
--                                  (chunks + 1) *
--                                  (1UL << RDMA_REG_CHUNK_SHIFT) / 1024 / 1024);
-+                                  (chunks + 1) * chunk_size / 1024 / 1024);
- 
-     chunk_end = ram_chunk_end(block, chunk + chunks);
- 
-@@ -2176,7 +2178,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
-     rdma->current_length += len;
- 
-     /* flush it if buffer is too large */
--    if (rdma->current_length >= RDMA_MERGE_MAX) {
-+    if (rdma->current_length >= rdma_merge_max()) {
-         return qemu_rdma_write_flush(rdma, errp);
-     }
- 
-@@ -3522,7 +3524,7 @@ int rdma_registration_handle(QEMUFile *f)
-                 } else {
-                     chunk = reg->key.chunk;
-                     host_addr = block->local_host_addr +
--                        (reg->key.chunk * (1UL << RDMA_REG_CHUNK_SHIFT));
-+                        (reg->key.chunk * migrate_rdma_chunk_size());
-                     /* Check for particularly bad chunk value */
-                     if (host_addr < (void *)block->local_host_addr) {
-                         error_report("rdma: bad chunk for block %s"
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 7134d4ce47..f78a20f65a 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -806,7 +806,7 @@
- #
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay and
-+# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
- #     @x-vcpu-dirty-limit-period are experimental.
- #
- # Since: 2.4
-@@ -831,6 +831,7 @@
-            'mode',
-            'zero-page-detection',
-            'direct-io',
-+           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
-            'cpr-exec-command'] }
- 
- ##
-@@ -1007,9 +1008,14 @@
- #     is @cpr-exec.  The first list element is the program's filename,
- #     the remainder its arguments.  (Since 10.2)
- #
-+# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
-+#     Default is 1MiB.  Must be a power of 2 in the range
-+#     [1MiB, 1024MiB].  Only applies when migrating via RDMA.
-+#     (Since 11.1)
-+#
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay and
-+# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
- #     @x-vcpu-dirty-limit-period are experimental.
- #
- # Since: 2.4
-@@ -1046,6 +1052,8 @@
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
-             '*direct-io': 'bool',
-+            '*x-rdma-chunk-size': { 'type': 'uint64',
-+                                    'features': [ 'unstable' ] },
-             '*cpr-exec-command': [ 'str' ]} }
- 
- ##
--- 
-2.43.7
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IExpdSwgWWkgTCA8eWkubC5s
+aXVAaW50ZWwuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMDgvMTRdIGludGVsX2lvbW11
+X2FjY2VsOiBIYW5kbGUgUEFTSUQgZW50cnkgcmVtb3ZhbCBmb3INCj5wY19pbnZfZHNjIHJlcXVl
+c3QNCj4NCj5PbiAzLzI2LzI2IDE3OjExLCBaaGVuemhvbmcgRHVhbiB3cm90ZToNCj4+IFdoZW4g
+Z3Vlc3QgZGVsZXRlcyBQQVNJRCBlbnRyaWVzLCBRRU1VIHdpbGwgY2FwdHVyZSB0aGUgcGFzaWQg
+Y2FjaGUNCj4+IGludmFsaWRhdGlvbiByZXF1ZXN0LCB3YWxrIHRocm91Z2ggcGFzaWRfY2FjaGVf
+bGlzdCBpbiBlYWNoIHBhc3N0aHJvdWdoDQo+PiBkZXZpY2UgdG8gZmluZCBzdGFsZSBWVERBY2Nl
+bFBBU0lEQ2FjaGVFbnRyeSBhbmQgZGVsZXRlIHRoZW0uDQo+DQo+PiBUaGlzIGhhcHBlbiBiZWZv
+cmUgdGhlIFBBU0lEIGVudHJ5IGFkZGl0aW9uLCBiZWNhdXNlIGEgbmV3IGFkZGVkIGVudHJ5DQo+
+PiBzaG91bGQgbmV2ZXIgYmUgcmVtb3ZlZC4NCj4NCj5kcm9wIGFib3ZlIGxpbmUuDQoNCk9LLg0K
+DQo+DQo+PiBTaWduZWQtb2ZmLWJ5OiBaaGVuemhvbmcgRHVhbiA8emhlbnpob25nLmR1YW5AaW50
+ZWwuY29tPg0KPj4gLS0tDQo+PiAgIGh3L2kzODYvaW50ZWxfaW9tbXVfYWNjZWwuYyB8IDc1DQo+
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPj4gICAxIGZpbGUgY2hhbmdl
+ZCwgNzUgaW5zZXJ0aW9ucygrKQ0KPj4NCj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lv
+bW11X2FjY2VsLmMgYi9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmMNCj4+IGluZGV4IDMyZDhh
+YjBlZjkuLmMxMjg1Y2UzMzEgMTAwNjQ0DQo+PiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2Fj
+Y2VsLmMNCj4+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXVfYWNjZWwuYw0KPj4gQEAgLTE2LDYg
+KzE2LDI4IEBADQo+PiAgICNpbmNsdWRlICJody9wY2kvcGNpX2J1cy5oIg0KPj4gICAjaW5jbHVk
+ZSAidHJhY2UuaCINCj4+DQo+PiArc3RhdGljIGlubGluZSBpbnQgdnRkX2hpb2RfZ2V0X3BlX2Zy
+b21fcGFzaWQoVlREQWNjZWxQQVNJRENhY2hlRW50cnkNCj4qdnRkX3BjZSwNCj4+ICsgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBWVERQQVNJREVudHJ5ICpwZSkN
+Cj4+ICt7DQo+PiArICAgIFZUREhvc3RJT01NVURldmljZSAqdnRkX2hpb2QgPSB2dGRfcGNlLT52
+dGRfaGlvZDsNCj4+ICsgICAgSW50ZWxJT01NVVN0YXRlICpzID0gdnRkX2hpb2QtPmlvbW11X3N0
+YXRlOw0KPj4gKyAgICB1aW50MzJfdCBwYXNpZCA9IHZ0ZF9wY2UtPnBhc2lkOw0KPj4gKyAgICBW
+VERDb250ZXh0RW50cnkgY2U7DQo+PiArICAgIGludCByZXQ7DQo+PiArDQo+PiArICAgIGlmICgh
+cy0+ZG1hcl9lbmFibGVkIHx8ICFzLT5yb290X3NjYWxhYmxlKSB7DQo+PiArICAgICAgICByZXR1
+cm4gLVZURF9GUl9SVEFERFJfSU5WX1RUTTsNCj4+ICsgICAgfQ0KPj4gKw0KPj4gKyAgICByZXQg
+PSB2dGRfZGV2X3RvX2NvbnRleHRfZW50cnkocywgcGNpX2J1c19udW0odnRkX2hpb2QtPmJ1cyks
+DQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2dGRfaGlvZC0+ZGV2Zm4s
+ICZjZSk7DQo+PiArICAgIGlmIChyZXQpIHsNCj4+ICsgICAgICAgIHJldHVybiByZXQ7DQo+PiAr
+ICAgIH0NCj4+ICsNCj4+ICsgICAgcmV0dXJuIHZ0ZF9jZV9nZXRfcGFzaWRfZW50cnkocywgJmNl
+LCBwZSwgcGFzaWQpOw0KPj4gK30NCj4+ICsNCj4+ICAgYm9vbCB2dGRfY2hlY2tfaGlvZF9hY2Nl
+bChJbnRlbElPTU1VU3RhdGUgKnMsIFZUREhvc3RJT01NVURldmljZQ0KPip2dGRfaGlvZCwNCj4+
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBFcnJvciAqKmVycnApDQo+PiAgIHsNCj4+IEBA
+IC0yNTcsNiArMjc5LDUyIEBAIHZvaWQNCj52dGRfZmx1c2hfaG9zdF9waW90bGJfYWxsX2xvY2tl
+ZChJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQxNl90IGRvbWFpbl9pZCwNCj4+ICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIHZ0ZF9mbHVzaF9ob3N0X3Bpb3RsYl9sb2NrZWQsICZwaW90bGJfaW5m
+byk7DQo+PiAgIH0NCj4+DQo+PiArc3RhdGljIHZvaWQgdnRkX3Bhc2lkX2NhY2hlX2ludmFsaWRh
+dGVfb25lKFZUREFjY2VsUEFTSURDYWNoZUVudHJ5DQo+KnZ0ZF9wY2UsDQo+PiArICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lEQ2FjaGVJbmZvICpwY19p
+bmZvKQ0KPj4gK3sNCj4+ICsgICAgVlREUEFTSURFbnRyeSBwZTsNCj4+ICsgICAgdWludDE2X3Qg
+ZGlkOw0KPj4gKw0KPj4gKyAgICAvKg0KPj4gKyAgICAgKiBWVERfSU5WX0RFU0NfUEFTSURDX0df
+RFNJIGFuZCBWVERfSU5WX0RFU0NfUEFTSURDX0dfUEFTSURfU0kNCj5yZXF1aXJlDQo+PiArICAg
+ICAqIERJRCBjaGVjay4gSWYgRElEIGRvZXNuJ3QgbWF0Y2ggdGhlIHZhbHVlIGluIGNhY2hlIG9y
+IG1lbW9yeSwgdGhlbg0KPj4gKyAgICAgKiBpdCdzIG5vdCBhIHBhc2lkIGVudHJ5IHdlIHdhbnQg
+dG8gaW52YWxpZGF0ZS4NCj4+ICsgICAgICovDQo+PiArICAgIHN3aXRjaCAocGNfaW5mby0+dHlw
+ZSkgew0KPj4gKyAgICBjYXNlIFZURF9JTlZfREVTQ19QQVNJRENfR19QQVNJRF9TSToNCj4+ICsg
+ICAgICAgIGlmIChwY19pbmZvLT5wYXNpZCAhPSB2dGRfcGNlLT5wYXNpZCkgew0KPj4gKyAgICAg
+ICAgICAgIHJldHVybjsNCj4+ICsgICAgICAgIH0NCj4+ICsgICAgICAgIC8qIEZhbGwgdGhyb3Vn
+aCAqLw0KPj4gKyAgICBjYXNlIFZURF9JTlZfREVTQ19QQVNJRENfR19EU0k6DQo+PiArICAgICAg
+ICBkaWQgPSBWVERfU01fUEFTSURfRU5UUllfRElEKCZ2dGRfcGNlLT5wYXNpZF9lbnRyeSk7DQo+
+PiArICAgICAgICBpZiAocGNfaW5mby0+ZGlkICE9IGRpZCkgew0KPj4gKyAgICAgICAgICAgIHJl
+dHVybjsNCj4+ICsgICAgICAgIH0NCj4+ICsgICAgfQ0KPj4gKw0KPj4gKyAgICBpZiAodnRkX2hp
+b2RfZ2V0X3BlX2Zyb21fcGFzaWQodnRkX3BjZSwgJnBlKSkgew0KPj4gKyAgICAgICAgLyoNCj4+
+ICsgICAgICAgICAqIE5vIHZhbGlkIHBhc2lkIGVudHJ5IGluIGd1ZXN0IG1lbW9yeS4gZS5nLiBw
+YXNpZCBlbnRyeSB3YXMgbW9kaWZpZWQNCj4+ICsgICAgICAgICAqIHRvIGJlIGVpdGhlciBhbGwt
+emVybyBvciBub24tcHJlc2VudC4gRWl0aGVyIGNhc2UgbWVhbnMgZXhpc3RpbmcNCj4+ICsgICAg
+ICAgICAqIHBhc2lkIGNhY2hlIHNob3VsZCBiZSBpbnZhbGlkYXRlZC4NCj4+ICsgICAgICAgICAq
+Lw0KPj4gKyAgICAgICAgUUxJU1RfUkVNT1ZFKHZ0ZF9wY2UsIG5leHQpOw0KPj4gKyAgICAgICAg
+Z19mcmVlKHZ0ZF9wY2UpOw0KPg0KPmNvdWxkIHlvdSB3cmFwIGFib3ZlIHR3byBsaW5lcyBpbnRv
+IGEgaGVscGVyIG5lYXIgdG8gdGhlDQo+dnRkX2FjY2VsX2ZpbGxfcGMoKT8gQWx0aG91Z2ggbm8g
+b3RoZXIgY2FsbGVycywganVzdCBtb3JlIHJlYWRhYmxlLiA6KQ0KDQpTdXJlLCB3aWxsIGRvLg0K
+DQo+DQo+PiArICAgIH0NCj4+ICt9DQo+PiArDQo+PiArLyogRGVsZXRlIGludmFsaWQgcGFzaWQg
+Y2FjaGUgZW50cnkgZnJvbSBwYXNpZF9jYWNoZV9saXN0ICovDQo+DQo+YWJvdmUgY29tbWVudCBp
+cyBub3QgcXVpdGUgbmVjZXNzYXJ5Lg0KDQpXaWxsIGRyb3AuDQoNCj4NCj4+ICtzdGF0aWMgdm9p
+ZCB2dGRfcGFzaWRfY2FjaGVfaW52YWxpZGF0ZShWVERIb3N0SU9NTVVEZXZpY2UgKnZ0ZF9oaW9k
+LA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBBU0lEQ2Fj
+aGVJbmZvICpwY19pbmZvKQ0KPj4gK3sNCj4+ICsgICAgVlREQWNjZWxQQVNJRENhY2hlRW50cnkg
+KnZ0ZF9wY2UsICpuZXh0Ow0KPj4gKw0KPj4gKyAgICBRTElTVF9GT1JFQUNIX1NBRkUodnRkX3Bj
+ZSwgJnZ0ZF9oaW9kLT5wYXNpZF9jYWNoZV9saXN0LCBuZXh0LCBuZXh0KSB7DQo+PiArICAgICAg
+ICB2dGRfcGFzaWRfY2FjaGVfaW52YWxpZGF0ZV9vbmUodnRkX3BjZSwgcGNfaW5mbyk7DQo+PiAr
+ICAgIH0NCj4+ICt9DQo+PiArDQo+PiAgIHN0YXRpYyB2b2lkIHZ0ZF9hY2NlbF9maWxsX3BjKFZU
+REhvc3RJT01NVURldmljZSAqdnRkX2hpb2QsIHVpbnQzMl90IHBhc2lkLA0KPj4gICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBWVERQQVNJREVudHJ5ICpwZSkNCj4+ICAgew0KPj4gQEAg
+LTQyMyw2ICs0OTEsMTMgQEAgdm9pZCB2dGRfcGFzaWRfY2FjaGVfc3luY19hY2NlbChJbnRlbElP
+TU1VU3RhdGUNCj4qcywgVlREUEFTSURDYWNoZUluZm8gKnBjX2luZm8pDQo+PiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIFRZUEVfSE9TVF9JT01NVV9ERVZJQ0VfSU9NTVVGRCkp
+IHsNCj4+ICAgICAgICAgICAgICAgY29udGludWU7DQo+PiAgICAgICAgICAgfQ0KPj4gKw0KPj4g
+KyAgICAgICAgLyoNCj4+ICsgICAgICAgICAqIFBBU0lEIGVudHJ5IHJlbW92YWwgaXMgaGFuZGxl
+ZCBiZWZvcmUgYWRkaXRpb24gaW50ZW50aW9uYWxseSwNCj4+ICsgICAgICAgICAqIGJlY2F1c2Ug
+aXQncyB1bm5lY2Vzc2FyeSB0byBpdGVyYXRlIG9uIGFuIGVudHJ5IHRoYXQgd2lsbCBiZQ0KPj4g
+KyAgICAgICAgICogcmVtb3ZlZC4NCj4+ICsgICAgICAgICAqLw0KPj4gKyAgICAgICAgdnRkX3Bh
+c2lkX2NhY2hlX2ludmFsaWRhdGUodnRkX2hpb2QsIHBjX2luZm8pOw0KPg0KPnMvdnRkX3Bhc2lk
+X2NhY2hlX2ludmFsaWRhdGUvdnRkX2FjY2VsX3Bhc2lkX2NhY2hlX2ludmFsaWRhdGUvDQoNCk9L
+Lg0KDQpUaGFua3MNClpoZW56aG9uZw0K
 
