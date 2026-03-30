@@ -4,122 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB42AFB3CF7
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB8BFB3CFA
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79cd-000501-Lq; Mon, 30 Mar 2026 06:13:27 -0400
+	id 1w79jD-0006TD-4p; Mon, 30 Mar 2026 06:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w79cU-0004xb-4G
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:13:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79jA-0006Sk-Mj
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:20:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w79cS-0003IW-LZ
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:13:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79j9-000489-2F
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:20:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774865596;
+ s=mimecast20190719; t=1774866009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LA0ZDZS7OsMnBwWlkhq27STqYWfDwqgl+NEJ6H+mZOk=;
- b=JR/GpR116mn8q6CkedwFkWLrPNXFyjZkWygo24wboWACWcG1Y+T/2ofPdeK9NF48A5Oq7B
- Ou3CxaRb1obQ1RYYQawMHeUTufsz+9FmpsLnRqfPqGkM1l64PekK4WykYQdKxWwBwCGWeu
- ivhgLQwvUEUt/p+p+YaPXO6ilpMyS4c=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qA6TdSH6oogS1ysRXj99x3VtUPTVoVwGh3u1zNEL/8U=;
+ b=Al8fpQ8SDSvRR92XBjcGyGDGcWX8B5oxzDTmfmSVyPSnvFGzGtPgkf2kenACbX75fbdqVm
+ FuoYEK5lTE9M9khqFF5401HJUQuZrVOOdtyj9mPkeHVXBm12A37BYXMEORjj9dW9L6w9ZL
+ W/mKeUeVRBGuO+Hau3VcAfWSABdM4ZU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-70-711qVxZOODWpNQlwE3eE7g-1; Mon, 30 Mar 2026 06:13:14 -0400
-X-MC-Unique: 711qVxZOODWpNQlwE3eE7g-1
-X-Mimecast-MFC-AGG-ID: 711qVxZOODWpNQlwE3eE7g_1774865593
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43b4dcdb372so3786524f8f.0
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 03:13:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774865593; cv=none;
- d=google.com; s=arc-20240605;
- b=Cub2KNqRQKhfiM2Kr3ApqPSeZMFT+aOkTY34Zhc8aekYI+WZzrawTZXVEHn3s7z25+
- BpyMCdpBHZL9nwch7sBtirPY9waWWhKtxJhu6z3fHmEHJTl4GRose3KO/V636ny7AGsZ
- I9ystifOjycz4DRYdb80cXy6t5ctw1O0sYy4GwSY3F2YDTmHXPH9fhV+j2MlRVr1Ek6j
- ilrbRGkTugbJLXB/3AabEzqz3VjnW1zCthZ42O+AvUF4mYnlxmqKJVT7rlPPdUDsyRUZ
- ToT5wiBM5ahzdaS1MZVOcv6tRQiH8bsQwD8c/W0T1A47fs3iUanwa875IlziYbHPoaDj
- SPtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=LA0ZDZS7OsMnBwWlkhq27STqYWfDwqgl+NEJ6H+mZOk=;
- fh=dWjkl4Mq/j1gKjXKVcd8FEUInjvmiQY4ai9d0PTzr1s=;
- b=Q/qJWD1763My/SInp/Bk3ecskccmDEU4TcvHd2ru2GzRqAn+SC6kJfh2OZAvC8DBPX
- 6ayHuuv757Mv0qXPQzKo53dYd0Mw5z+7zIxuzJqCNvCLsaYZY6MHhVFTbS8b5WOKmKxD
- zWMwngzujr1WBOCOxvYgy3+6Jun4GSA2hyOdAAd5Gr4aNuVwsLskAy1g4BjMfQl5xI01
- 5KP7rcdrclrJYGoySEveBu0l0lQeVJLj8EbgPTfdbYy3L4ASHFCPelkTUBUC0kXAVFgv
- 4lFkcmAvll2/Q5jwUOKM1A0v2URcQwCzak74/LmTD5R1EHRrmmsUrrcGYoWsMUKnUE5D
- HU5A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-674-5sw9FyBAOM61K6XZXf8DDQ-1; Mon, 30 Mar 2026 06:20:08 -0400
+X-MC-Unique: 5sw9FyBAOM61K6XZXf8DDQ-1
+X-Mimecast-MFC-AGG-ID: 5sw9FyBAOM61K6XZXf8DDQ_1774866007
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48722073bd2so27672585e9.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 03:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774865593; x=1775470393; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LA0ZDZS7OsMnBwWlkhq27STqYWfDwqgl+NEJ6H+mZOk=;
- b=HHFF+LF43L/Jij/EExtTrNuXktVML4oOkkjlmjWpjKg7rCHAfSvE+RHYr+frpZYUB5
- vUEPSHfjRkIHDTtA9VllI/uW2EdBTP8yZxE1WXgtwlmZ4e6gGZLXAez8xzR5dWvHnp7n
- ZnFXIqpckulC5XfTLr6gq1YYMhrNbLNcMt5nhHzk9v58tYIm0Ke948DXoZQFcG3tGxi8
- 6UfD9bLPFaswVtb6BpYArz5mVcGqbzj5UmalcrVMwjmcNlPm0QGtHp37ZTH1E8JBUJr7
- roCz1eg9rDyuKGJTyiSz6d+2/LNjVRsUIl57J2nWMAiOPJlzEG0prSqMmInUqZTlEfdT
- k4Qg==
+ d=redhat.com; s=google; t=1774866007; x=1775470807; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=qA6TdSH6oogS1ysRXj99x3VtUPTVoVwGh3u1zNEL/8U=;
+ b=gGIjyUYqXqyZpkcGUJ3IiN9Ak69OwdaQrxUY+k0Ex1c5ONdHrYb1A68DgNUYEbNXEP
+ VrCJDkNpPiNrIOTCAepeHdyey9FqAYXSWTx12xipXR0UIAVB++hB4PA1sUUYpXgGBz+D
+ hcaPRnTJgNzCWIJUu/2eC8lPOf9OG05/rmXQTN/NO4jbaUPrtNUE3CRNeVl6uiJdXhNa
+ HngkuP9qb0jZXXuTh3NlWIiUu6ICBCgRC75yQFQFq7mkGF4qTQsa2YEPDTpx65X+nymM
+ ePOwjcgB18eBVoDYoXbtCNrO94Cu8D+u3WBbwXuvjXIo3BOHNP1P+EutIfBw467oVkN3
+ MKLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774865593; x=1775470393;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LA0ZDZS7OsMnBwWlkhq27STqYWfDwqgl+NEJ6H+mZOk=;
- b=mHizOKT1dpjc2YdpHbZWv1t/jUedj/ObMtKBa6B5673wOH0K2Ked8Ogy71NzFAV14I
- O7eHhE1E15QGl3J9Hyf6j9a8j17Wkqk7lLypkb8zZetxostf5UW21tb+D4KX9bdxh04n
- wClJRJhtCOfuhPg+CsgNcdGLqJq1gh2qb/9saL4A+z4z55ItbKCY2nFypBi5qrVw0LvL
- S0y0iX+5hYXKp0IokzGO+ASPdJhfFeIOEhJv+CB5WaWAZT7fjmyneu1ojYQhsk8ynOM3
- MjRP0XGWu/sd2zIoI7ucLqkUgbyMHvaBOvFqtCL68SfmLQKZY0vzMwTRZsibM+bHMzpk
- LH8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUnUSYjFSsc9aoXUZz+Ewf5sXH4xlaWkQahxJHXPDr3bb+3a9K1RY5Uj6nRjbFg7QrsbqWDdRwNUOgM@nongnu.org
-X-Gm-Message-State: AOJu0Yyg/k2l9UrvauNPrRJks/bwPh5n1mROt+XH1CBnjUunjXq+sJ1v
- KLV6dzaCcNWEJwPIJ6rr45ne2qYZ388bP9gu4KE01syb8nvP9ckZtOP8nl87e0lF5ZkRk60c6TW
- OqJSNtlmm4PQ/vWWYrKNxTCbXD2v18Lu45uZ+dZzIcuBaAf1KQK33FNzeTWxDn9jr5/f6uuJo3G
- p3cEccoW+6R3KsV0vvnJ9MlXLT57C8LKQ=
-X-Gm-Gg: ATEYQzzxZtwxDOsrCjhKYWJkJB99NLngxyLmNRPwaYtZ05+abiZKAXCH5PjQngb+Q2E
- HIO805QuKar65OODqfSm6uX12lEUj0XFz1HZ+micrPaiGMyU8oKhroN/kTe7Y2Xp2ewAzTDFsni
- N9/ItyMLmXHAVXVvTwimBON7GJlF1Q49ixPzQh3sZsEjqvT6FJ91HFsbQ8eRj4lpvM7qAWQNPoH
- 6ZYDTIDGJTIO2fBGknqoHWz3ytjeY8Zwsk8Tcpyx4mnmiRkjIXpYlDtvNcUmJY6/UogqjpaKkqn
- 0Vz+
-X-Received: by 2002:a5d:584b:0:b0:43b:8f38:3b88 with SMTP id
- ffacd0b85a97d-43b9ea4acdfmr19432575f8f.25.1774865588562; 
- Mon, 30 Mar 2026 03:13:08 -0700 (PDT)
-X-Received: by 2002:a5d:584b:0:b0:43b:8f38:3b88 with SMTP id
- ffacd0b85a97d-43b9ea4acdfmr19432525f8f.25.1774865588071; Mon, 30 Mar 2026
- 03:13:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774866007; x=1775470807;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qA6TdSH6oogS1ysRXj99x3VtUPTVoVwGh3u1zNEL/8U=;
+ b=Y7SP05VAAphBqmUMHJlKrfT2HxuId6hRWb+zZTd/lB8QP8KV1h79t+989FTtv0z8IM
+ FKYrDpXTWuXTZQnuFAbvd1dJ8BPMYShbTptFFAnKK6FkSokZoY2uTx0cAd1VT7Ryczhm
+ sfM1ibnGkzTCQSMCa0G7+0Yuf3ssuzlBEEZfCZI/uvGqcKwzSCFSow0YAtBUFlySqAuv
+ /k4scvEZ6q9jdm7KKJxar5qQpH18noad3m8XBTQm3Bl1wxkCxbGNECBsQPUsAtiENpjW
+ YKnwd4ErSdQ9QlrCCv4+HBlqT1rwHsmqWbZN350rkfBYUDZHhiuDQ/g1ZsgQ5hF2Vnfy
+ 9qDg==
+X-Gm-Message-State: AOJu0YwgpEYPuXRUEWmevG+8YVjuhVu+sSbr+qEvPSK6kBM0aXybxbYk
+ FCJeE2hZYf2xzh9J627v5NpluuqSdGsuKHqKaroCy+0Ck7fNyi/aHrn0sWsi7lLh38iClkf8RsW
+ 8EuCD7zq/WF/9T/OlYTlB5HQamxaZWC2eLTflkfa5TYj2GzUKV1XwKFmAKnp596b3
+X-Gm-Gg: ATEYQzwY064quTr64Zmtj+NYtG/FxOXvC9LHJQ0SYbXIPJh9lfzyXNYSeNawT/pqz78
+ cEf+t5s9r3R0hnafITd0FeyDKhO1L/sjAex3JU3vvlcA2hdTNT9XMIlDToMoPvY5WanXuaeaoWS
+ uj7giC1eUYjAcflD/WM2l5YHC482wX0HLgTwA5CzJf8TnJCJ2mKV6jNQ6eQIyJkatJoZw0Y/wOs
+ dVI2acLhIpUPG3YffTwMuT3oTULcnc9EH2D6vrrpboMY8I+8VJ5jWkJXDWk8y3D57pH+evMzdRy
+ 7je1NtY0xVqkupnRV6nXIqiCjk9Q77yRUG49mduQ/YnyQ0LPgGzH5g4QcoD+pFmhPMRttE/soib
+ 3T5fa5U/03Zs59C5IDw==
+X-Received: by 2002:a05:600c:8b66:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-48739547940mr71222985e9.11.1774866006906; 
+ Mon, 30 Mar 2026 03:20:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b66:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-48739547940mr71222495e9.11.1774866006489; 
+ Mon, 30 Mar 2026 03:20:06 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.85]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48725eb5417sm106975745e9.3.2026.03.30.03.20.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Mar 2026 03:20:04 -0700 (PDT)
+Message-ID: <386cc456-fa0d-487f-989f-971864c791e1@redhat.com>
+Date: Mon, 30 Mar 2026 12:20:03 +0200
 MIME-Version: 1.0
-References: <20260327145012.907264-1-peter.maydell@linaro.org>
- <f31d3ba2-b843-4322-aa8e-2c5a1cd76fdf@redhat.com>
- <CAFEAcA8UQsrFo3nQRN_3F6CAKQGWCgv1AsEP7w8FD5-EWDh8rg@mail.gmail.com>
-In-Reply-To: <CAFEAcA8UQsrFo3nQRN_3F6CAKQGWCgv1AsEP7w8FD5-EWDh8rg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 30 Mar 2026 12:12:55 +0200
-X-Gm-Features: AQROBzBR-96Sp3AhCSf4Wx6xHqGUpD4ew0_7X9DIw0JviR6KuU3niLuWwrIGrBA
-Message-ID: <CABgObfbBuV0G8t0Ueq4xzhU5c0uBgXbbo_EpPZLyHtDp9=+dHw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/xilinx_zynq: Use strcasecmp to parse boot-mode
- option values
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional/migration.py: Skip migration_with_exec()
+ if socat is not available
+To: Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+References: <20260330053300.2721608-1-zhao1.liu@intel.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260330053300.2721608-1-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -6
 X-Spam_score: -0.7
@@ -144,17 +163,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 30, 2026 at 11:48=E2=80=AFAM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
-> OK, great. I'm going to do a pullreq before rc2, so I'll put
-> this in there. Or if you're going to take Kostiantyn's series
-> and send it out for rc2 then feel free to put this patch in
-> there instead of the one that fixes up this file.
+On 30/03/2026 07.33, Zhao Liu wrote:
+> Commit 643a171f5668 ("tests: Replace ncat with socat in migration test
+> and drop ncat from containers") replaced ncat with socat, but missed to
+> skip related test cases if socat is not available, which will cause test
+> errors on the system without socat.
+> 
+> Fix this by checking socat instead of the original ncat.
+> 
+> Fixes: 643a171f5668 ("tests: Replace ncat with socat in migration test and drop ncat from containers")
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   tests/functional/migration.py | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+> index 2395119d6c66..144f091ba8aa 100644
+> --- a/tests/functional/migration.py
+> +++ b/tests/functional/migration.py
+> @@ -80,8 +80,8 @@ def migration_with_unix(self):
+>           self.migrate(dst_uri)
+>   
+>       def migration_with_exec(self):
+> -        if not which('ncat'):
+> -            self.skipTest('ncat is not available')
+> +        if not which('socat'):
+> +            self.skipTest('socat is not available')
 
-I wasn't planning to send his patches until after the release, since
-alone they don't do much (they're not enough to allow the MSVC build
-to complete).
+Oops, thanks for fixing it!
 
-Paolo
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+and queued for my next pull request.
+
+  Thomas
 
 
