@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4581061B1D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 19:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75EDD1061B1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 19:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7IGS-0003at-QT; Mon, 30 Mar 2026 15:27:08 -0400
+	id 1w7IO7-00065X-W6; Mon, 30 Mar 2026 15:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maxpain177@gmail.com>)
- id 1w7IGR-0003aG-6U
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:27:07 -0400
+ id 1w7IO1-000658-9Q
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:34:58 -0400
 Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <maxpain177@gmail.com>)
- id 1w7IGP-0008GF-JV
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:27:06 -0400
+ id 1w7INz-00016q-Tc
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:34:57 -0400
 Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-5a12cd0bcd8so3508405e87.3
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 12:27:05 -0700 (PDT)
+ 2adb3069b0e04-5a0fc5e2c59so5608882e87.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 12:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774898823; x=1775503623; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774899294; x=1775504094; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=O84wtaC2zyHfbP85d7pv0VHeETj9qzSLnqvEcLsal64=;
- b=FMg2kczLvg75pJZ4+kaOUqfhYBmhKe4dPW9HU90bnCZi/jxpEG73+tl4sOURiHEFHB
- bgg6PnuXUNQosmnjDpyhK4+hXk4PwnkLdGg2UERmT1E/gVTq3dJ1sQ1oXUzc08tUa77V
- hwh+VuKkSHQh3z8BnnstpfG7xGn/bluE8iOT5d6RpO+QF/NLQtSVwJAJEZqpzbjDzL1h
- Vbor5rCMUE5lqm468HzfHH3y9OEE9m2VSuELSa5bxPW1s3nsoMtmCOvr5IsyMtRRvzLY
- SvmhcnIVvBUVBqqZhL72KVPMbOP0EKI2QaQs2UhLaazpn43zzyi3MevErTmY9IT1jGbb
- WZOw==
+ bh=bftrVlRCkBO3MiDQm70utbwn7FaBGkwSQdi8+5tsnqU=;
+ b=R9YgtUjtELhjvEqJz/s4c5TN1bGSORKWrh4j0BY3Os7ISpZULvQla+8U7V87Rw2lKS
+ utvT2gBHlATBMLM6nosZCofcfDsnXeLEhC2vD+jHoVtEkGsY6KBVM+4GW+Nw82ATy3MJ
+ 5VKDP/CIqG7LYexz0CIpO0ourN9uTU2E1bhhOTPV8GVJTor6FOPbEMnWg6w6bVOhTphz
+ z0v944J6PiFvcO+i5bH6BvB6aOVdhDHpcrTlNIikvHeOvdXmvXOuh4bhUWUFxuFzRREm
+ amcGdc1xS4qLXEq/BO+0vXf16nONgdelgXpPdeu6aKyr/4J1PsFpo6Nor6Zi616HruGH
+ lE0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774898823; x=1775503623;
+ d=1e100.net; s=20251104; t=1774899294; x=1775504094;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O84wtaC2zyHfbP85d7pv0VHeETj9qzSLnqvEcLsal64=;
- b=gFB6YEeF8ETo6quZ0cHSBdsQ73OVUKh3aY7E/QkWsXz7rE7/bjgTSY1h0Cl/3A4Pbx
- KAdOJ5z1qHYXu6CPDgJtcca4jMmswoiOG32BaWa4D9pWo0Rqwtnpx4Cz9ZE65TcQwB6z
- fq6wCxicp+ZyRKcUxbI2pcV8tbtUZWP+AysT/4wgKfYbMv3yxttEypspFsWpYPKCF6m/
- 44d+i+jEur2GeRVIUcoOKpK+hA6c+HEjvcDzw+Rir09FA7D1wiMwDcjKJZfVT6DkfiYT
- QKmlaFc6StfI0NaujfD/uUzWjIfCehgxT3Gmcdgwj2GsK85g4zj0XJMJFYlfnxR0NpIY
- in9A==
-X-Gm-Message-State: AOJu0YyczCzeGT3tAEMTfKe12YWLxT5Iz9X1fbGgcF4fkJ0nHYTfYVz+
- rvWjAMQhFx+hJ0WhCMJJG8ZcAbztLny7VXl96ngOrf1VrbLj3kbu33kpHiuIqF5J
-X-Gm-Gg: ATEYQzzQ4t8aIOAkFz738rcr9vkFgE/10mcBMZ6Y5u6/UuZutW32YQ0QIC92zbn9dwI
- KUMMseZYJEEiz3MPYoVmio5+TZKwswP73lwPqg3GDkPftL/oTgXWrega7x7uBunZa7z0jJwCDDL
- zXjE8cynsCIUpnDFpZ2EeXGOc4s5sAXAyc7OqIVQz7U3wxIZ/veDkvdotTtIpQCMdJE1aGnCV16
- BNR/fj5mpC3vkusjpnp9G1lO8HvckunLWaztqkqoQEi2Mt7DnEz4hfeou7uGMztF4zNlg3hHdPa
- nvkmC93jD0Fq6DftRRDbhPEDUJ88YNU2YM/ukpvGWgUoNHpyAN6g+LtiHD1T/3vexWksdysHvZ0
- eNT/JLw+gV6RwdPFzRYS9kD4eOMXpo7b+JlfcOv1jFF+WbD9H4HAAsr1GB5NBmDV5R3hEwHvuty
- fn/3I+civQtCQhUzFL8WmifhIUdLV5xnrjqh+v6B/kkG7m1Q==
-X-Received: by 2002:a05:6512:33c7:b0:5a2:b2e1:39fa with SMTP id
- 2adb3069b0e04-5a2b2e13a66mr2650137e87.12.1774898822793; 
- Mon, 30 Mar 2026 12:27:02 -0700 (PDT)
+ bh=bftrVlRCkBO3MiDQm70utbwn7FaBGkwSQdi8+5tsnqU=;
+ b=XZBDG27SCwrW173tgH4mvazoaDWdOsU2+LUhat2u6Frzfhik2Purq8k3C7a83fyEFy
+ u6sFQ/CQrWmWOaEliEGLDfR86ePIt3aWxxTeVHbwjL5ikCbR6BH8U8AKOku6VnnqLbZw
+ RINiXfv3NaDP2H90XDnhPSdOC11g8pn1V5wAubKQbyd98Q/jWwF3yw0FefPqNc4nYFCR
+ VYcZ+hGtpP8OvUBW9ERE3NeO46MyL0qYpp0gPoK6q3ba3PC9njyWJQXJgMnzl6amF9KO
+ ds/mTdaUQBlPqh2zqgN35D9QffDMWZRgU68fOHXz8dGOK3OuiIwiqf/QYpJveMG0xIgZ
+ R2dQ==
+X-Gm-Message-State: AOJu0YyUzA3ppcpyng+ALI7vOsluyEke3XMHR8ecWEVYWROZPB7wLVvq
+ Ya0DbSQ+nMY+QSg3odHTesp+x29FApEtWxqI6r/mLbbO7nCbQTky9Yo3sF03ZBf+
+X-Gm-Gg: ATEYQzwUNx6Q1BderF/bS8MUmcG0hK/AuK+tjbGWzkPQmLljSWBcd5zCnLOFJ7Zz+Qr
+ +jvGLqID4jGYsj2cvEmUU8bB2McnshjMRejCpm1WTv74NeFyVmwoY3ZtT0PBM9H+uVPj1ArEGUm
+ RQjQJzKxQ22j4RaMLOtDuJeH1V3MYlz0yEM9G7Cz+KgJNwFNP+Avv13N8gIiW2CkLzbziOWEBoB
+ iz2kk9ekUPTiyq4yAKzvdeWy2+VcqgCs7RWivmFKUPI4F5T3jg+09Iz0OPahnQcDuRrJBbSQ/+2
+ FWxaU3dzgyb5hir7UEwYWn71sXZtTrmRoldZDpcy0k5tUM/AVFWnzeG9cL0H3fIxUi3Hsyuu1VO
+ fwneOhsJkT2o2MqWmbVH3HZV8Tc9h9Mlwaif4YcNb8YucK3xgSrfEElCACTeLtMnqLUSkcF5iAR
+ NtY4zD5/wc3WuLMNKqtYlLO6hweo12NynSiPisYbyt3Ax9oQ==
+X-Received: by 2002:a05:6512:6c8:b0:5a2:5b88:a8a3 with SMTP id
+ 2adb3069b0e04-5a2ab92854fmr5097955e87.31.1774899293462; 
+ Mon, 30 Mar 2026 12:34:53 -0700 (PDT)
 Received: from localhost.localdomain ([89.21.130.68])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5a2b1455e14sm1846904e87.64.2026.03.30.12.27.01
+ 2adb3069b0e04-5a2b13f4339sm1886198e87.12.2026.03.30.12.34.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Mar 2026 12:27:02 -0700 (PDT)
+ Mon, 30 Mar 2026 12:34:52 -0700 (PDT)
 From: Max Makarov <maxpain177@gmail.com>
 X-Google-Original-From: Max Makarov <maxpain@linux.com>
 To: qemu-devel@nongnu.org
@@ -70,10 +70,10 @@ Cc: qemu-block@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Max Makarov <maxpain@linux.com>
-Subject: [PATCH] vhost-user-blk-server: fix opt_io_size=1 causing severe
+Subject: [PATCH v2] vhost-user-blk-server: fix opt_io_size=1 causing severe
  Windows I/O degradation
-Date: Mon, 30 Mar 2026 22:27:01 +0300
-Message-ID: <20260330192701.75780-1-maxpain@linux.com>
+Date: Mon, 30 Mar 2026 22:34:51 +0300
+Message-ID: <20260330193451.76037-1-maxpain@linux.com>
 X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -115,19 +115,20 @@ these values.
 Set both to 0 which means "not reported" per the SCSI Block Limits
 VPD spec, allowing Windows to use its own optimal I/O size defaults.
 
-Buglink: https://github.com/spdk/spdk/issues/3199
 Signed-off-by: Max Makarov <maxpain@linux.com>
 ---
+v2: Rebased on clean master (v1 depended on a separate size_max patch).
+    Removed unrelated Buglink.
  block/export/vhost-user-blk-server.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/block/export/vhost-user-blk-server.c b/block/export/vhost-user-blk-server.c
-index 827502d..e421f72 100644
+index e89422b..67912a3 100644
 --- a/block/export/vhost-user-blk-server.c
 +++ b/block/export/vhost-user-blk-server.c
 @@ -242,8 +242,8 @@ vu_blk_initialize_config(BlockDriverState *bs,
      config->blk_size = cpu_to_le32(blk_size);
-     config->size_max = cpu_to_le32(4096);
+     config->size_max = cpu_to_le32(0);
      config->seg_max = cpu_to_le32(128 - 2);
 -    config->min_io_size = cpu_to_le16(1);
 -    config->opt_io_size = cpu_to_le32(1);
