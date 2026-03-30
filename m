@@ -4,108 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE64FF493A
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 04:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FC9FF493A
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 05:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w74R4-0004nM-JV; Mon, 30 Mar 2026 00:41:10 -0400
+	id 1w74nZ-0008Uc-8Q; Mon, 30 Mar 2026 01:04:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w74R2-0004mk-BR
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 00:41:08 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w74R0-00078r-TB
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 00:41:08 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b9358dd7f79so726928766b.1
- for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 21:41:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774845665; cv=none;
- d=google.com; s=arc-20240605;
- b=Bul4UCaLYSbUC3rBx33bg81/egcC+sLutrvKLtWDXOmFC27nMO6opwgX9wYLRB6T6v
- Tr4vo4mtRwVptKymL/cyqtWAFRzu9qNnyOBwsTA/awBj4F6eVlUkfof0z2KzmO/zmSgc
- ne0jbXR7DxK0p+fm3983Or240ihff6zDkOPKZC6TefgfEonsznnnKSxbR7yTL87mA2v8
- zmEYeyCLNdeoEVaAg1/gxo15MzyxWpr/uckh9hurxKrL0juQbBaLJ7wQa7JmTxEv5+w6
- FG/2nLHViPjIdrP26npbzJKRvTxin5R3nfDn1QSP41qU/5HjiAbuipdEmB+3C7A7611s
- FJng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1W70ohp22ExhfoPnRFf2rMAjXTIG2HfvYYcJJ8iqOio=;
- fh=c5t5J5DuZ07TpANKDNQXBQqHNrBr5lv/14VrOPTGi+M=;
- b=EgGjSqzZiIJvilsaRrmLp5MeQGopOgAYtf5B56xLrVkwnJOeyceSsrfr9wOMrnAkjW
- OFtBEphx4MaOsdYkK9N1RI/zlEJbbTi/k4jtfEB0FOeypHmqav9kvqz7sMCA3qVg6K7u
- l+eLZ3Z89v9n7zurkDMR5Am//aL6D5dpzeyzFdYkrXHVpfS7FaqgyWzloST/hStqLtTR
- AEV7TL8sR7JKkLkl8ZVcVH9iT/TqQdLju3fmwYrudxIvLVSufWaPjf/rX26wV0EYUCPy
- xTJl7rmeDl5yPrvbJZHqJyXHhzoA5RA8wBhxJuJlGiPYNUQ2VuwZ9G/o1OtikDZu5IL4
- ub+g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774845665; x=1775450465; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1W70ohp22ExhfoPnRFf2rMAjXTIG2HfvYYcJJ8iqOio=;
- b=dje1j4OYE3dDvDtME8oZ9YLFEb8Hm87LSvCiqqQlJGlZL9rnYcIadjPPf1Rp6V2A5d
- cmCW0g9z2IrWyGtcKdUXiC/UJUQ+FExVTqubrXx1YTfh6g0yQQtbxmAXgeiX9HDnsr00
- f6mHTGqFOkKO5fA5bKVanPpZI08mfBlgcHnR4HnCQLb+vhdTGHUW6DakGUhcs38A/fvw
- gynwVydpG4LxPgv5qnywmQClL1JBrpwiGGdL/2fkq1EPw/sOhqiz5HSyoreYTYpEdPNZ
- +X4qNIIhe68DVXujI4PoHraGAxR6LxpyypJclIDWkgWFuqDbSB9Neh+j2tyWsZ0TLa4o
- G+CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774845665; x=1775450465;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1W70ohp22ExhfoPnRFf2rMAjXTIG2HfvYYcJJ8iqOio=;
- b=mIEcTpI/b+1cuLho0tdyXAjjKfaDsx7Cs+3aveQ/A3KVvQ8eAnWlrNLydOV0HChZQK
- L94G93Qq2D6U9Tp0aSmP7a/6qT/ZwGpfEko+erwAmD85kJIytZ09ah+YXMypO8k7erGw
- SIGIQXfNU7RbMSpJlTe9Mx7t+CcOGFx84sn46U7yC728fBCirg0ZQOjnS4cy4dr9eYCf
- RqWk3PC2HRO+KWithBlvzJmGlXM9c602CYVY4J/mvNjWt5AjUaMfNtbXLay04/4xqAfG
- QTFeNFxOpDnB1IGa6O7HfLoEpBBC8qa9kM78kLYjQ2NAce7ucXNA1J6226D0/udU0iwX
- C+Tg==
-X-Gm-Message-State: AOJu0YzUk2xd8kNtciPLH2Erq9v9iKFPhNg9VSBwezDWVwyJwQVzXD8b
- Uqfbz0reCk9f4vHTXA/T8lrKofoFpC6Zpgme691YhGJ8pQ80wBbDVcuqx7OukCy2NuRoVgxjw3N
- fnpi2ftuKmLdt30dBNpvgkGQHeUA+gMQ=
-X-Gm-Gg: ATEYQzzrVcIDv3ta10nt9uapYQ1Ued4EC5sph5ULpe+vY156g1/CgNsL6aKSNLZJ+UE
- U1rVKpUFoUbVHEsu1E5vt9ovNuOto9rtX98fIfU5hn98QSXrsQ7CICLEguQW37MraCa65fP+OAl
- uN9Md0Ba5FDNEljMwO1/jqyEUHWALiwFQ4zj/lrZ4QRWYUXzqNUQ1pq4fGfefP3jrVanczfO54w
- YnvuPDInRxmYcRB/2vt0IRiMzwL/mhGTuPgTv+nGRl9JRP4ti4eJc+It8P3nEq3bMXiGvAdinQ9
- nO8XLVemDleniaEpw5WavVxKRi4nfFZqbwl9zg==
-X-Received: by 2002:a17:907:9605:b0:b98:4d8f:d968 with SMTP id
- a640c23a62f3a-b9b502bccdfmr667406766b.12.1774845664801; Sun, 29 Mar 2026
- 21:41:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1w74nP-0008UJ-Jp
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:04:15 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1w74nM-0000tk-Ko
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:04:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1774847052; x=1806383052;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=uB5hZL02kf+UCJUlzQM8BF3GydpZBlRmoe2BMjmxlsI=;
+ b=AvA+SGUNiffDcaJqVpHGFucYLJ+d7hMNjthYVnciL7jwtAog42mh2N6D
+ t/nkAGo9UF6q1GJYNhG8NJ87JsjUGtx+LSSPEErCd+W5f71GQOH1EVVPL
+ A8/r0onSysjqsbNoI7HC+B+7wnSTG8eL4sEL4S6XlJu6LLJVJcs5gndBL
+ sZZXRBugtcKGGZFGY80p0hFSC5MeVLmmq86I0g83LBx9pj5CkB1Ys28hW
+ SzvrSi64Nyvj8RrB9nZYsnx69Gf1KJi5AStCqZOP6eE0OfQWtxyrPnur5
+ pRYk0NUYlOc5V49nLFUjipdjI167Z8wf4AEG5u7dBJ/5azrQpynqbkMSD Q==;
+X-CSE-ConnectionGUID: s94FMtI9SRGDCEIEytoW1A==
+X-CSE-MsgGUID: /AoxKB54QNS23MT6IcB2qA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="93410530"
+X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="93410530"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2026 22:04:06 -0700
+X-CSE-ConnectionGUID: SUP2hOa6Q2aQQouqXL9Eog==
+X-CSE-MsgGUID: 23G4wYxrS96onc0sYqKpjQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="221547545"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa010.fm.intel.com with ESMTP; 29 Mar 2026 22:04:04 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Igor Mammedov <imammedo@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=83?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH for v11.0] hw/acpi: Do not save/load cpuhp state
+ unconditionally
+Date: Mon, 30 Mar 2026 13:30:08 +0800
+Message-Id: <20260330053008.2721532-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20260325050011.66722-1-jay.chang@sifive.com>
-In-Reply-To: <20260325050011.66722-1-jay.chang@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 30 Mar 2026 14:40:38 +1000
-X-Gm-Features: AQROBzCXaxpn2Qj2nW6jpbBGlCJ-x-p56Y0XOCXvMzprxZPk05wLlJdn49uJZrA
-Message-ID: <CAKmqyKP4mnW8MjH3a-SChUmP7EHBRu2T5gdEn4xydCV4DUhcjA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Bug fixes and IPSR.PMIP support
-To: Jay Chang <jay.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,41 +86,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 3:01=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wr=
-ote:
->
-> This series contains two fixes for the RISC-V IOMMU implementation:
->
-> 1. Fix a bug in the HPM (Hardware Performance Monitor) timer setup where
->    irq_overflow_left was not properly reset, causing stale values from
->    previous timer setups to affect new timer behavior.
->
-> 2. Add proper RW1C (Read/Write 1 to Clear) support for the IPSR.PMIP
->    (Performance Monitor Interrupt Pending) bit, which was missing from
->    the IPSR register implementation.
+Commit 7aa563630b6b ("pc: Start with modern CPU hotplug interface
+by default") removed the .needed callback (vmstate_test_use_cpuhp)
+from vmstate_cpuhp_state in both piix4.c and ich9.c.
 
-Thanks!
+However, PIIX4 is also used by non-PC boards - MIPS Malta, which does
+not select CONFIG_ACPI_CPU_HOTPLUG. For MIPS Malta, the linker resolves
+vmstate_cpu_hotplug to the stub one in acpi-cpu-hotplug-stub.c, which is
+a zero-initialized VMStateDescription with .fields == NULL.
 
-Applied to riscv-to-apply.next
+Before commit 7aa563630b6b, .needed() of PIIX4's vmstate_cpuhp_state
+returned false for MIPS Malta since PIIX4PMState always initialized the
+field cpu_hotplug_legacy as true. Malta implicitly relies on this
+initial value to bypass vmstate_cpuhp_state. However, this is unstable
+because Malta itself does not support CPU hotplugging, whether via the
+legacy way or the modern way.
 
-Alistair
+Commit 7aa563630b6b removed .needed() check for vmstate_cpuhp_state,
+this broke the existing dependency that Malta had relied on, forcing
+Malta to save and load vmstate_cpuhp_state during the save/load process,
+which in turn caused a segmentation fault due to NULL fields in the
+stub-compiled code.
 
->
-> ---
-> Change in V2
->   Add commit message
->
-> Jay Chang (2):
->   hw/riscv/riscv-iommu-hpm: Fix irq_overflow_left residual value bug
->   hw/riscv/riscv-iommu: Add IPSR.PMIP RW1C support
->
->  hw/riscv/riscv-iommu-bits.h | 1 +
->  hw/riscv/riscv-iommu-hpm.c  | 1 +
->  hw/riscv/riscv-iommu.c      | 4 ++++
->  3 files changed, 6 insertions(+)
->
-> --
-> 2.48.1
->
->
+Fix this by bringing back the .needed = cpuhp_needed callback for
+vmstate_cpuhp_state of PIIX4, that checks
+MachineClass::has_hotpluggable_cpus. Boards that do not support CPU
+hotplug (only MIPS Malta) will skip this subsection entirely, which
+is both correct and consistent with the previous behavior.
+
+At the same time, add a similar .needed() check to ICH9. Although no
+boards with ICH9 are affected by this issue, this helps avoid potential
+issues in the future.
+
+Reproducer (MIPS Malta):
+  $ qemu-img create -f qcow2 dummy.qcow2 32M
+  $ qemu-system-mipsel -nographic \
+      -drive if=none,format=qcow2,file=dummy.qcow2
+  [Type "C-a c" to get the "(qemu)" monitor prompt)]
+  (qemu) savevm foo    # segfault
+
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 7aa563630b6b ("pc: Start with modern CPU hotplug interface by default")
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+Tested with the following cases:
+ * savevm for MIPS Malta
+ * i386 migration:
+   pc v10.2 (before 7aa563) <-> pc v10.2 (with this fix)
+   q35 v10.2 (before 7aa563) <-> q35 v10.2 (with this fix)
+   pc v10.2 (w/o this fix) <-> pc v10.2 (with this fix)
+   q35 v10.2 (w/o this fix) <-> q35 v10.2 (with this fix)
+   pc v11.0 (w/o this fix) <-> pc v11.0 (with this fix)
+   q35 v11.0 (w/o this fix) <-> q35 v11.0 (with this fix)
+---
+ hw/acpi/ich9.c  | 8 ++++++++
+ hw/acpi/piix4.c | 8 ++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+index bbb1bd60a206..5c7dfb2c69db 100644
+--- a/hw/acpi/ich9.c
++++ b/hw/acpi/ich9.c
+@@ -184,10 +184,18 @@ static const VMStateDescription vmstate_tco_io_state = {
+     }
+ };
+ 
++static bool cpuhp_needed(void *opaque)
++{
++    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
++
++    return mc->has_hotpluggable_cpus;
++}
++
+ static const VMStateDescription vmstate_cpuhp_state = {
+     .name = "ich9_pm/cpuhp",
+     .version_id = 1,
+     .minimum_version_id = 1,
++    .needed = cpuhp_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_CPU_HOTPLUG(cpuhp_state, ICH9LPCPMRegs),
+         VMSTATE_END_OF_LIST()
+diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
+index 43860d122780..9b7f50c7afac 100644
+--- a/hw/acpi/piix4.c
++++ b/hw/acpi/piix4.c
+@@ -195,10 +195,18 @@ static const VMStateDescription vmstate_memhp_state = {
+     }
+ };
+ 
++static bool cpuhp_needed(void *opaque)
++{
++    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
++
++    return mc->has_hotpluggable_cpus;
++}
++
+ static const VMStateDescription vmstate_cpuhp_state = {
+     .name = "piix4_pm/cpuhp",
+     .version_id = 1,
+     .minimum_version_id = 1,
++    .needed = cpuhp_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_CPU_HOTPLUG(cpuhp_state, PIIX4PMState),
+         VMSTATE_END_OF_LIST()
+-- 
+2.34.1
+
 
