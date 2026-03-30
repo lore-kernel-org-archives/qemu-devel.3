@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BAC10F3DCD
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D2C0FF495E
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7DN4-000369-JG; Mon, 30 Mar 2026 10:13:38 -0400
+	id 1w7DRo-00043O-2B; Mon, 30 Mar 2026 10:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7DN0-00035n-Ka
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:13:34 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7DMy-00088V-Tp
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:13:34 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-64eee7b83cfso4538199d50.3
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 07:13:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774880011; cv=none;
- d=google.com; s=arc-20240605;
- b=Otrc+/C0iPQYrq2gl4snYY08dkys0hjO/sgTVrLIe6rOE+DEL94BrfBugt8ZWPU1vB
- APnZfFJUsiblEBf2jGq5elg8QtSPzqBGNtjQhmG7dFnjbRmw7jkmiKP3q6N5Unz/LdJ8
- df2EAb4N6kh/viNPtfIwzv/jmtJhzIX8k+auGojy7Fg6zeQdf6i21aNLbqX87Acg7rYa
- cLk65IPMKBrlC/oEgxtSnkx9KjqIwfI8JIIKCNctzXwIw28K2Yhqdd3iKZVGSph6VvwQ
- QhKUnhiH12b5DUCwYwbRRCmZvdpKmVpPnmAZCKw6U+1VyzHbbuXsUtqclbxkMKGv9jGg
- KJdQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=BvLqtlGVtGlPQMcsApYnXEWEnUZNZLfSvVHOdXb6KWE=;
- fh=qNOYlnUqFDykRQWM4aj8lmCUcFY6RlKAzClmjGUuhAY=;
- b=R4DHcHDsKv+Teo2mr/ev1sZi1WtFF+lxyQNQlx4P/3FGky2eRTH5hPFbiTIlR2oc0U
- 59j0Ik8UvZemFGysbmx75r203cvt79S9vaqzk2TPJNPyFYiyDF7qELOp0kNbOm6fs51V
- l0Th2wh7a7o27XfButWOoV/GG6Pwb29hj0QO1M58CQh/u3yShYnHKo0x0X/ct2VLm0yD
- aQw6JWMZo6N5w+gc00IlZyndQ0Ic0ggG10Xbp7rqFR3/nwQQL2ZMnMYuydeIR1oukRzu
- ZHNQmDJg7qvv4luBoqllnnYjCucTPjTzzod3vcGHErt/9C+2/MYNvDwCLz2IlWLh2h2Y
- 1pWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w7DRl-000431-Ep
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:18:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w7DRi-0000cq-G0
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:18:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774880304;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=yXY+tUsnoMaN/Ux1syF3v+VajHKWT9WhN4BtA+Pwhqk=;
+ b=OccxEV4rysqSyv/IyP+RIb8tOB1raebvq3XR8ZM2P81GhdPh6eSf3FTBJsNMCnkp69yKA9
+ b6+5puZv3/NLLBPfpS2CCh2IPCjLtHMpuqp1nUH6liTXjQS+DQK6uz+oPpsGzbgNrBuGEp
+ LkKiThoqRG6tGjV+bbOUFyT++wGNdVE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-215-GTVJAfxsO96rMOw2mQczWw-1; Mon, 30 Mar 2026 10:18:22 -0400
+X-MC-Unique: GTVJAfxsO96rMOw2mQczWw-1
+X-Mimecast-MFC-AGG-ID: GTVJAfxsO96rMOw2mQczWw_1774880301
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-43cfb72377bso858414f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 07:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774880011; x=1775484811; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BvLqtlGVtGlPQMcsApYnXEWEnUZNZLfSvVHOdXb6KWE=;
- b=z3Awa7L9zO7cn2M7z9RfryPI2AB2fHcyioUmCgysrnXxYpAxbykDTnUxsHTjdiA2xV
- OylI0hoQqsrincZ5IZhxyqMNVbSxkiOCfPiaj0b9rUmurj6d9z0nwa4RvaPJ3F9IX3Ci
- GpAVbm51F2oRqrH5EnIUE1vsjwzDaRFvg7fUQhm5/eLYX66rKVQfxHhZoRKoxEtreL5r
- ZUWaBvVXtPaWrEMZOh96AXf4JczwkGUG6yRG/uAAD0tnfReC2zBF2IRiXmf0zmJsqkwy
- PFcQcn5wqhqnH2pxT/F68AinSqqhkc8E2grAEDhcyMAf849KTddy/Q8DdafVXzZYCsN5
- ryDQ==
+ d=redhat.com; s=google; t=1774880301; x=1775485101; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yXY+tUsnoMaN/Ux1syF3v+VajHKWT9WhN4BtA+Pwhqk=;
+ b=OQj6j2NKjXYWJFaJxgmy53en4yenQDt1dAgmSa4bj4JQ+sHZ4aGtceiC2ORpN5Iptw
+ NjrFJFZ68l5Vlmfj6Z3hGbFRi3hO/USPVcwVBYaHKQwQ+LRMsNTAGns67fM5nWa4f6Qn
+ wvICwXA5QiMdIZNH/nv/Smda3QErtMwM/zfh6+YDhC54nAJ4daKbiPcTjrnjR0D4vphp
+ fQQubMUZ3w/5sscARzrRyRif55TukTFydwiEtDRT1dPzYfzXCcb9iziNrI7gbhX+cgWn
+ vmixc8dqZUiPHGO4l3U2fnePNZnxzzqFIapilA9Sn4yQsj3T7uFlsr/IHxAPtFXqfvUK
+ oUgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774880011; x=1775484811;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1774880301; x=1775485101;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BvLqtlGVtGlPQMcsApYnXEWEnUZNZLfSvVHOdXb6KWE=;
- b=ak46IDxeIBpD6dq5hDrkNCQsjONUetO2HcUxj6nHybRykXIbWB7zXoGD1uZ417ns2n
- CWYNzBMnykrhNosE+CHBEb7aca4xNglj42DdSNAJpbFcS5yQ75+d53/RG9YvrxKFfxvP
- 5UtDEpt1o8vEknrfMNzTDLKChg0QYAjd0kLo/j3cHCKBgLyFiHlVgr6+HCJI0nxb6rB3
- RumQR/AvW3eccInhvElFtCmv89/1JloJffygoOcPwvZvVjcMcO/SuCz0wMnPR/5qhQEW
- UuyX7qP+Nq8Zhf+2buQ88mwwSI5/1CeGUP7t5TdMVctYeYvB+faXzcRbHDawFhMJ3Cnd
- 0eww==
-X-Gm-Message-State: AOJu0Yw4zmlzSYHlux7gJh5XEEuLGw6FKI9QTgCXKLwWuurVswwEzv5q
- nbfBgnHYWwL2XuUN8tD55pqopL11ufg1SKjSwRINOal45afso/j7Cbn/aNNImtuS9lBb+oFLc+j
- yZbTaHKAr4VzpMRjt5VcRMS0Iv1z6E7IkRgyRg0kuow==
-X-Gm-Gg: ATEYQzzkAZIDXyCoWNM86pv8KemJWi98qkom6UvIa59MjCz8PEsfUYamDR5ur5lr2/m
- +AigXzigvOObYJJnnjj/Vq0mvvBWHPw9wDEp4zo0aPRTCCAnNN5/7f0+5jjLo+v3mMF/eLH3ORF
- NNnura+iKE1lzldYn5H5qy3EYBzhnY3BVRq1L+FZbx08wdDKSomLxDs+7s75nZFurnAVLpkvEVv
- K65m2k/YAnkF6IXVnuok2CtPPOak3hA61Mw60PTLWOyXDqPzYHt9KfmYJoPvRWdzTQR0sNmnbS/
- P+6TajDBRK7P/b4Fb55R4mSjohigI8isfEJUdszjQ4Jb399Ok2f37ckMCROk5yQn0ms=
-X-Received: by 2002:a05:690e:134d:b0:64e:e82e:8413 with SMTP id
- 956f58d0204a3-64ff71c285emr12767552d50.1.1774880010601; Mon, 30 Mar 2026
- 07:13:30 -0700 (PDT)
+ bh=yXY+tUsnoMaN/Ux1syF3v+VajHKWT9WhN4BtA+Pwhqk=;
+ b=dsuY5myhd42LHeltcXAdFMmP3Gn2FIHwo8KCDWXxWA8mjKtkhbrSp2WwRrM/GcVPiY
+ 9qRRKJyCmfA30Ba8gFbUkAjgFbzoay+sP7Gjsjb8zQPz7Q+icucfrxAh+h3GmACYrqpm
+ 7NVHs43eShkhHF77Hv3/Skzj75kHGTN82td7uMjwZVSsOv063+wkOjL8Q1cgF2WMGN0F
+ JSq/bbednRdGdUMgGRjWsmme0OhrK+JdFFigwA263Z/oUsSBQGlTLOKRORlcQoyDfrmz
+ zgWUiiWlSmmQt3rF1Dcaa7c/EccTmduDk/rAl1/7URYnEBVdprxCJolzaz5I7b7v/mRx
+ jFyw==
+X-Gm-Message-State: AOJu0Yy+B/XKo9mH3nYoXRd2hYlnH0Umtpm5Pq4164FpAFvs/QocLbxI
+ VEjNRCjSzzUXpEBmFFTQFWU8gfCp7shGnES6uUEJQdIjNiHHLKfHo07PQrrYT+aH/Go8n1bvSTl
+ 6+JTZg/4Qb4pI4t1EMGAadDV+e85kbaHTzTR8OZfdMT/xvXCHaFlpvl5PVd3fSm8fOi2TLXOxoB
+ s6DJjbMAjkP5EBj65JmyNg0yOUAHza0y2W3zKLN66F
+X-Gm-Gg: ATEYQzyacTSn+R9YXN05GyMlLq/p9vxZnZYEEDP7d6LNz4ibQAIz5+MqKtTw/gg1iSp
+ cteLN3tWJGipHmA5qh2RjNsBP5kArdRjzviLarBVG3Dxnv/meI6uEox3mMUseTlXXv4iVaOk9SG
+ zwhs6zBowSo0uvY0jQgadCFkrPelqjIlTQLVdWOQJorz8IgBX84fBjTIUpIW/djWvbuuYiC8ys8
+ lVA2XfogmWJGz21fhXzbMX4OPEzVcHxjfPtsM0zn9PT1VOQmiMlqPD+ypMVosx6eT/3/b6VuNfk
+ jmkNsx+A7DOohNqYwLwslaUJxm7/EabjZvfU+lP0uC1j1Qqh87CnzxgasQE+MP4Tipb94j2iUVF
+ 0LnZdB9cS/ozEVTBesejyOYztPPGzH2tZm2qxixHwpsqpR6y9Pc43eklB1I3pCvzQ0OiAAdqIai
+ nR/p/W6lr2maSllIQ7M9vv0KnY
+X-Received: by 2002:a05:600c:c102:b0:485:3812:36f6 with SMTP id
+ 5b1f17b1804b1-48727f7bd61mr151249405e9.21.1774880300502; 
+ Mon, 30 Mar 2026 07:18:20 -0700 (PDT)
+X-Received: by 2002:a05:600c:c102:b0:485:3812:36f6 with SMTP id
+ 5b1f17b1804b1-48727f7bd61mr151248775e9.21.1774880299792; 
+ Mon, 30 Mar 2026 07:18:19 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.85.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48730688605sm297329635e9.10.2026.03.30.07.18.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Mar 2026 07:18:19 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kkostiuk@redhat.com
+Subject: [PATCH] thread-win32: replace CRITICAL_SECTION with SRWLOCK
+Date: Mon, 30 Mar 2026 16:18:18 +0200
+Message-ID: <20260330141818.286412-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20250501212113.2961531-1-richard.henderson@linaro.org>
- <20250501212113.2961531-56-richard.henderson@linaro.org>
- <CAFEAcA8qDz9a21bmrLLrBWa7b5vcDQj82+iSgm-nEzbqD5MjsA@mail.gmail.com>
-In-Reply-To: <CAFEAcA8qDz9a21bmrLLrBWa7b5vcDQj82+iSgm-nEzbqD5MjsA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Mar 2026 15:13:17 +0100
-X-Gm-Features: AQROBzAMFdsMW_yHFpbcMsmAR0DZfbuoLVZBSynBLZZBsc9g6_wjqWD3F6Hz-4I
-Message-ID: <CAFEAcA88R_-RFtQ_YdNicO3kLRd38b-=EFK-kSNHkCX2Vc8SDA@mail.gmail.com>
-Subject: Re: [PULL 55/59] include/user: Use vaddr in guest-host.h
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Laurent Vivier <Laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,64 +117,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Mar 2026 at 12:40, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Thu, 1 May 2025 at 22:31, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > Replace abi_ptr and abi_ulong with vaddr.
-> >
-> > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > ---
-> >  include/user/guest-host.h | 14 +++++++-------
-> >  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> Hi; it looks like this commit (7804c84a56f92) causes regressions
-> for some target architectures (at least m68k), as reported here:
-> https://gitlab.com/qemu-project/qemu/-/work_items/3333
->
-> The problem is that for a syscall like mlock, we do:
->
->         return get_errno(mlock(g2h(cpu, arg1), arg2));
->
-> where arg1 is an "abi_long" corresponding to the syscall argument.
->
-> Before this commit, g2h() took the address as an "abi_ptr"
-> type (which is an unsigned type of 32 bits for 32-bit targets
-> and 64 bits for 64-bit targets). With this commit we now
-> declare the address argument as 'vaddr', which is a uintptr_t,
-> so its width is based on the host, and these days is always a
-> 64 bit unsigned type.
->
-> So before, for 32-bit targets, we took the signed 32-bit arg1,
-> cast it to an unsigned 32-bit value, and then inside g2h_untagged()
-> cast it to an unsigned 64-bit value to add to guest_base.
-> Now, we cast the signed 32-bit arg1 directly to an unsigned
-> 64-bit value, which sign extends it, so we get the wrong answer
-> if the guest address is above 2GB.
->
-> Why did we make this change? abi_ptr seems like it is the correct
-> type here -- we want whatever the pointer type is for the guest
-> architecture.
+SRWLOCK is a much cheaper primitive than CRITICAL_SECTION, which
+basically exists only as a legacy API.  The SRWLOCK is a single word
+in memory and it is cheaper to just initialize it always.
 
-I had a play around with this and it feels rather awkward
-either way. We could insist on every place where we start with
-a guest address in an abi_long carefully casting it to abi_ptr
-before calling g2h() and friends, but that seems bug-prone.
-And we're really only interested in a vaddr version of the functions
-for one source file, accel/tcg/user-exec.c.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ util/qemu-thread-win32.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-The thing I have currently that seems least-worst is to have
-the header provide two versions:
- * g2h_vaddr() uses the 'vaddr' type, and is provided always
- * g2h() uses the 'abi_ptr' type, and is provided when
-   COMPILING_PER_TARGET
+diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+index 272afc33856..3037732a6fe 100644
+--- a/util/qemu-thread-win32.c
++++ b/util/qemu-thread-win32.c
+@@ -242,7 +242,7 @@ struct QemuThreadData {
+     /* Only used for joinable threads. */
+     bool              exited;
+     void             *ret;
+-    CRITICAL_SECTION  cs;
++    SRWLOCK           lock;
+ };
+ 
+ static bool atexit_registered;
+@@ -295,9 +295,9 @@ void qemu_thread_exit(void *arg)
+     notifier_list_notify(&data->exit, NULL);
+     if (data->mode == QEMU_THREAD_JOINABLE) {
+         data->ret = arg;
+-        EnterCriticalSection(&data->cs);
++        AcquireSRWLockExclusive(&data->lock);
+         data->exited = true;
+-        LeaveCriticalSection(&data->cs);
++        ReleaseSRWLockExclusive(&data->lock);
+     } else {
+         g_free(data);
+     }
+@@ -328,7 +328,6 @@ void *qemu_thread_join(QemuThread *thread)
+         CloseHandle(handle);
+     }
+     ret = data->ret;
+-    DeleteCriticalSection(&data->cs);
+     g_free(data);
+     return ret;
+ }
+@@ -357,6 +356,7 @@ void qemu_thread_create(QemuThread *thread, const char *name,
+     struct QemuThreadData *data;
+ 
+     data = g_malloc(sizeof *data);
++    InitializeSRWLock(&data->lock);
+     data->start_routine = start_routine;
+     data->arg = arg;
+     data->mode = mode;
+@@ -364,10 +364,6 @@ void qemu_thread_create(QemuThread *thread, const char *name,
+     data->name = g_strdup(name);
+     notifier_list_init(&data->exit);
+ 
+-    if (data->mode != QEMU_THREAD_DETACHED) {
+-        InitializeCriticalSection(&data->cs);
+-    }
+-
+     hThread = (HANDLE) _beginthreadex(NULL, 0, win32_start_routine,
+                                       data, 0, &thread->tid);
+     if (!hThread) {
+@@ -406,14 +402,14 @@ HANDLE qemu_thread_get_handle(QemuThread *thread)
+         return NULL;
+     }
+ 
+-    EnterCriticalSection(&data->cs);
++    AcquireSRWLockExclusive(&data->lock);
+     if (!data->exited) {
+         handle = OpenThread(SYNCHRONIZE | THREAD_SUSPEND_RESUME |
+                             THREAD_SET_CONTEXT, FALSE, thread->tid);
+     } else {
+         handle = NULL;
+     }
+-    LeaveCriticalSection(&data->cs);
++    ReleaseSRWLockExclusive(&data->lock);
+     return handle;
+ }
+ 
+-- 
+2.53.0
 
-That way all the existing code that expects the logically
-correct abi_ptr type will continue to work as it always
-has, and only the one user-exec.c file that needs vaddr
-types has to be tweaked.
-
--- PMM
 
