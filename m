@@ -4,125 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16CBFF4954
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 06:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F988FF494B
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 06:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w76Un-0003fN-01; Mon, 30 Mar 2026 02:53:09 -0400
+	id 1w76ZJ-0005CW-29; Mon, 30 Mar 2026 02:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w76Ul-0003eo-M3
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:53:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
+ id 1w76ZG-0005CK-Ro
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:57:46 -0400
+Received: from mail-eastusazon11012042.outbound.protection.outlook.com
+ ([52.101.53.42] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w76Uj-0002VH-4U
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:53:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774853583;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
- b=Z6Jv4XJq+W3Wa4d89/G42J/cYkipheVfgyNiAao53dDKAGLlvfHc2gRzBbEjmjwUHlJXnt
- MjbxNYxFiVCa4f28ST1/uXl5yUU8OzFCGNslaDo1jK1b3o45YonhZg7MkW42uVKHl2JTnl
- R0pp2n9O0C7AgYq7pfXHDDspcke1BUc=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477-sMLPZaEOPjGS6E5k6ukGsg-1; Mon, 30 Mar 2026 02:53:01 -0400
-X-MC-Unique: sMLPZaEOPjGS6E5k6ukGsg-1
-X-Mimecast-MFC-AGG-ID: sMLPZaEOPjGS6E5k6ukGsg_1774853581
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50b52a2d70cso124609061cf.3
- for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 23:53:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774853580; cv=none;
- d=google.com; s=arc-20240605;
- b=DxdgLRwVoQqJpmTTkVxw714lqD9WgEoHhRpC1GjUFrwMlSMNKM9ZhvuT45uDbWlArB
- 2yi7Vs8H/GAC056nh3VdvJ7MI31D+UxsiFLe1H7mMf/mf4BZDBmh8yU0wIbnayaPEQ4K
- sIcGKH775TlT1GutEAP5JcTGoUd6l/y8rnSJfqyOHXhXWwsJTIJb11ES4vkDWgo+/Kbz
- Psd0S4PQnJ/09HDdUsKEbBaidmTSv0SfesvEhNkYdc6sD5734JlaJYHGh4HkaIc0CMJV
- MrPIPYSKQNticoDkGphVmByxKBk5HDz2CLwhsHBvabYAb8BOPl2vfCgt5ekjM6btEoQ3
- GpPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
- fh=3ZOfzaKfpZLpAyqiSwIuDni0h5/3VpLid8goAI8W3cU=;
- b=F34iOTMP7rXzkLjN6xCD4z4s2BLnpGyOOfobDwJzcoWFbyZpBbq3PnAgF+EP9eAXvn
- pt4KvF3kwIltqrzFGv9Gy4wTGOvql+TwI+ecrAXgTqSVu6Ozc9PmgRwohAhx3yXHdz13
- IISNRF1gkfRntKnNxY8jUrrZPIqXAQ1EVL9MjKZcjHxtp6+dKQsefpSHjH9MydNLJ8lg
- xhHa9l5JVrN0ZdGj/j0AgbaXFwl+Xuimlzzc1b2jL1c/0IsWltgdaiYaLX4Ht2cgv9P6
- 68dmPYp5SNKGGaw0eFyVpWPUyse05mvhQ29RI3Aq7yz6tekqvpoEEjzUm/uzFibo6b8C
- sFgQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774853580; x=1775458380; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
- b=To9k44cUra8LFevuhk0me5lh0tyOTHAZjZEPbdmjSH6ipQfTnh9+WcJWzGDZTPO3Pv
- hJQdMnTaB6sgpzxFsNBcsBtMcUxBObyTwnCXEdTGSo9y3dmw/LT47RUVgTWjNCWvBww7
- SLB3dOht7wa1PSSZ0ZmcWVkFsDr5x4rnfl7IK+SQTklfEKJyaW2GXbAjM/G/egt183US
- CQ+ESDAPPSmE5Wwch0lXBT/5cyjynI3FygQ37tc9qVfLjOKxDn5HAjM5z87IooEp90D2
- eUVqwyGIsf8yNEjbwUjIYHkXUe/0Y5+nWdeROST84ffWlcgg8XiCMTv3EIz43QKvc1Hy
- EQSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774853580; x=1775458380;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
- b=qvXXSNHSv/hIgAMreb3i5IRdWY9UM/DZPsWyHjPlAKXIojTCd/pJWVaKqmmLtrCHHm
- WhRq73Iyxl4y+dKE5FwT39viVQhLOg6ywlVlP5n0kaTd8sBlGD5X1mc5B8fwJC90xKB9
- +lZyMi47CJio/9y4NcnXRc8re6dNMGwNMEFKA4tcLmDNjKrDrUiv0Poq7Y5tciaoA9XL
- 0KFhAbX2mbgSmmfPT+0AwOB1jKh2pcLFscc71Kdz42Z548HFLZ/kZBKwnrkk7xYNbarV
- La96DUf59NxpjNE1I5gT3gsNIHRPlzSn4RrOPt0cKVORM7H4ZR1c1Wtp5irAGtmtFFLm
- 2NcA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGgs653m4C3kFFP+WOztr5/gL1xtAMJ+L7zWYyXVdCr5q0b/gJXlyd2ko4Bbmn9/huXBSQKPbB4mMO@nongnu.org
-X-Gm-Message-State: AOJu0Yzk8Mdj+Wi32xjDY6Mb8sMSV0DLrFJ7jaw52rJezcONQd4Xbh8t
- 21EuwXnh12chMzMCev3jrAMVFRhMVzWCtq994DfFc4pSzzBD1hUSqYHd8FXttK8F5g1X2iy0Nh1
- Yhmkx7GvZKKyyrP3FTfKefR8HJiBhAZhLTn0o8MWTZiwZa6W6ty4/ZFBq2H+vit2K426nDmcutA
- H7HDEmu6EVqlIAsxNfbWD3WSyPONdLMlg=
-X-Gm-Gg: ATEYQzxl2eMuWjJ7NBI9MLyaadgR9U66jya6jVNIMyGcaYpV62d6Bwske8B8QK4ufuQ
- VEXrxx9fU8TzvQJuCSpHgpetzAddxMhJPHgVPSCgKVn+BivUrk98LrXCykJ4kF4jDmsBzmLsZpn
- giAS5n2Ji9O3v3weOkQ5hwwadc+FRh6SgaBb05jC5/9aLrn30OiFsLUWj/1mIAuW0zxFRffP5a+
- A2FPJjC
-X-Received: by 2002:ac8:5754:0:b0:509:4d26:25df with SMTP id
- d75a77b69052e-50ba39c1849mr147012241cf.66.1774853580536; 
- Sun, 29 Mar 2026 23:53:00 -0700 (PDT)
-X-Received: by 2002:ac8:5754:0:b0:509:4d26:25df with SMTP id
- d75a77b69052e-50ba39c1849mr147011961cf.66.1774853580022; Sun, 29 Mar 2026
- 23:53:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
+ id 1w76ZD-0003WG-SE
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:57:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iqqbEEEl1OyZW5LvY8O7tFmc9fNF4j6av+FHYHyubQg11G3ZPI3oWnrQ0+NNLJgAtjOy3A9QyWCQ/sIb/odnR3I9epLLC/0Rx6yst1npESPreXy0PGrvdhhTCYWhtZorPq4zrCMYy1zkxKQm77dJinwP6pBSqTepMBrZQF2mYrevB3fwp0QeEvinciguBxwOwmx+UZ4zjcqkKinDwHSQEVWZG1Jg40wOG0jzELDTz3BenNVjfooBldraIBjMwouXzkIaR6xI5TxnklXFL6CLGoVYV66plxsE8/RuLhpTDjUKi0D5wbDbjdRFSd0FYPCAAritJ78nFbfq9WnkgSG1vQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ke5kFyl8xovVspHdlYJQUwJ6ZP09TMERrWYpKUoLCrQ=;
+ b=SpdrpGNpTIazeHeXga4h/p9yBNgUmQQRII9Qnfee0YoWNZplbWnk7FGZW+qTahHNMkhK5W821Zqu5iQE0ddK9QpZ/X377ncpAMci3Yx5IPgFkTgEdXaR2Xz8yAw3fgN0mkNiBipEu4TXd9ztfM3jvY0AKbPLxH4TAOnNHZFB50l++43fVmgTOMSRn0mLnZ/CD/YSUT5u+1Wj4mb5x79sr2YKUD7zjn7T+cqCe+qBC8glb3/90v7cwhL4AzThu+ZxRqllhDW37jYaWsia1zakm2sa6+5gCrfETwFm5HWJv9VRuV6XJLppPJFavTl7Hz4eBwY0rZWgmHpytvPfnjCrWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ke5kFyl8xovVspHdlYJQUwJ6ZP09TMERrWYpKUoLCrQ=;
+ b=OYRLMy+6FYBORgdV81Mt21nJUtCQshoKEGN2WdtxDmw9R13v4xXzpdPVUCLK+6QCgCVSTq2+VIEQzlPAJaq3Ed3G976SSNQFH8dHSc9/Y4JeOCFy8reR4o5Atu45E1JrZ5Mdv6G+pb/vJJ+X5u4FOgsGJru5/UAWgUV9PqZLmeQ=
+Received: from SA0PR11CA0190.namprd11.prod.outlook.com (2603:10b6:806:1bc::15)
+ by LV2PR12MB5774.namprd12.prod.outlook.com (2603:10b6:408:17a::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Mon, 30 Mar
+ 2026 06:52:35 +0000
+Received: from SN1PEPF0002BA50.namprd03.prod.outlook.com
+ (2603:10b6:806:1bc:cafe::58) by SA0PR11CA0190.outlook.office365.com
+ (2603:10b6:806:1bc::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.28 via Frontend Transport; Mon,
+ 30 Mar 2026 06:52:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SN1PEPF0002BA50.mail.protection.outlook.com (10.167.242.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9745.21 via Frontend Transport; Mon, 30 Mar 2026 06:52:34 +0000
+Received: from hjbog-srdc-36.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 30 Mar
+ 2026 01:52:30 -0500
+From: Samuel Zhang <guoqing.zhang@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <peterx@redhat.com>, <farosas@suse.de>, <lizhijian@fujitsu.com>,
+ <eblake@redhat.com>, <armbru@redhat.com>, <Emily.Deng@amd.com>,
+ <Victor.Zhao@amd.com>, <PengJu.Zhou@amd.com>, <Qing.Ma@amd.com>, Samuel Zhang
+ <guoqing.zhang@amd.com>
+Subject: [PATCH v4] migration/rdma: add x-rdma-chunk-size parameter
+Date: Mon, 30 Mar 2026 14:47:58 +0800
+Message-ID: <20260330064758.2816891-1-guoqing.zhang@amd.com>
+X-Mailer: git-send-email 2.43.7
 MIME-Version: 1.0
-References: <20260327145012.907264-1-peter.maydell@linaro.org>
- <CAKmqyKMUaHQ2uiqVnT7M98AFenmZOGJd5AAShgtKt5RgDo8APg@mail.gmail.com>
-In-Reply-To: <CAKmqyKMUaHQ2uiqVnT7M98AFenmZOGJd5AAShgtKt5RgDo8APg@mail.gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 30 Mar 2026 09:52:49 +0300
-X-Gm-Features: AQROBzCXE40WsDV_T-TLJrQn6B1LEDwJXzRbTAX9rpgTk5rJ71CwAci0IXeeaS0
-Message-ID: <CAPMcbCqFHi=se+RRLJAeekaSxVCv7ft6vcRV-u=QGDCOWyRLRA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/xilinx_zynq: Use strcasecmp to parse boot-mode
- option values
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Content-Type: multipart/alternative; boundary="0000000000002a831b064e384d6a"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002BA50:EE_|LV2PR12MB5774:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8c4d7f61-e533-4d49-e35e-08de8e28ec17
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700016|1800799024|376014|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info: SehqD4EJXbu0TNRbIhNggL1Z0H2/haYSFeODkU6jZR2hmlHUwXK6OdCaygO4tOcaJNhOjvlReOP9Ep3HM/zwGQsqBGPvTORoHByrJM1oDJl4PduHle/oDM/4DWKfQPZHc0qBNEkz0FdCfU111TvayaG2zhoTzvbTTsdjwguQAYL/cT2QNck+I1UBShTaCLnXkMxvHuo1Fugd+fiOabPEv6VXyvxGfUkh/GRMy8H+9alBzXiUdDiC4rXqntqjgkvg0NOXtWFxUnMThuKAl/VWjXFKvi4wLkUuYp+tG4fS1Aa/iry+yVFoZfsVSAM/1yzfzPzOfFvKJWo2qnxyT6xP0TrwezPIj6oaf9UtEoEHqIyVxlNXDWftAf8AG/06M46IupuZR2aqRV6jY48UDpeGSRb6f47CoSwBNqbXdGYl4y0JIdqFRV+Xj1iyIfPh2K16bNKyhnlqukTUCO+C4zjO+Ov+1MvTRCWSGVGqSTDTKJvCv0rdJNkrPhGgZMpUxzSwyuyDt02Ro3GCNYSj/9bqjnSnNjIwkYNd3KJ41Ym6DLavmCmah2pe30f7+ZOS7Mx0AnMWzOuFwzUFJ0BAyd42uoE3uwPHbnSDYmXvidp70cx006WWG4VFDVn4RXXjYLfYrJQp+Qg3t+5VxyR02IQuCk5P7tnpKRd6+xzs1WTHSmBXUTLEPZQ/in3Pn9xuKzxNuzjP+FXK7ySW6jqi4kEGaAWwoqX50pcOOC/dExyx0h96DZyFuTjWYgtcFofzpSj6La1GnkxwikxP62G97u9LTw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700016)(1800799024)(376014)(56012099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: s4RETuM2G9EPxezwpA74yZuuiGPFxctyyI9Q1xl/WGUAiSLZfyYf/a1NeDXqU1gzSZ2YN5jq7Pucfe97dq/KVBzOaGbw6qHzR/MKR+M2jVZ56oJCcyjvQpSvYcoHIyaxydr2cbWSRtja5Wagxh98YlRzE4xwRr/v+yZ4ajqrrY9vtA5VAAIPQEpqEAC5gs3tbnPeA8s+sDcufjxzS1lH+A3yPmAs+lXi30lsHiiu6OLQAnaZMxfUUZTnyVvmItr+bylquXGYK3VInRUHr9MEwZsXpzmkaQl2sN6fdIGRKJ5m+x+f9xnMtgX8UZdvd1WN1X3b1akN78mkFwmYk/EB0poesTx9q2+/uZyV0I7KTwPFyDPY+1R29/YX1yfwn7S/Nws2xbLtuNR2ck3gZBXLtJu2tQz5PjKlNfTO3bwBsiU6pL3EFVnvQwsZN1SaSXoE
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2026 06:52:34.3392 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8c4d7f61-e533-4d49-e35e-08de8e28ec17
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002BA50.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5774
+Received-SPF: permerror client-ip=52.101.53.42;
+ envelope-from=GuoQing.Zhang@amd.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,179 +127,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002a831b064e384d6a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The default 1MB RDMA chunk size causes slow live migration because
+each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
+1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
+faster migration.
+Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
 
-On Mon, Mar 30, 2026 at 7:32=E2=80=AFAM Alistair Francis <alistair23@gmail.=
-com>
-wrote:
+Performance with RDMA live migration of 8GB RAM VM:
 
-> On Sat, Mar 28, 2026 at 12:51=E2=80=AFAM Peter Maydell <peter.maydell@lin=
-aro.org>
-> wrote:
-> >
-> > In zynq_set_boot_mode() where we parse the string the user has set
-> > the boot-mode option to, we use strncasecmp(str, "qspi", 4) and so
-> > on.  This is wrong, because it means that we will ignore any trailing
-> > junk on the end of the option string, and handle
-> >  -machine boot-mode=3DsdXYZZY
-> > the same as
-> >  -machine boot-mode=3Dsd
-> >
-> > In the documentation we say:
-> >  Supported values are ``jtag``, ``sd``, ``qspi`` and ``nor``.
-> > and that's obviously what we meant to implement.
-> >
-> > The correct tool for this job is a simple strcasecmp operation.
-> > Switch to that.
-> >
-> > We use the g_ascii_strcasecmp() rather than plain strcasecmp()
-> > because we're comparing ASCII strings here and don't want the
-> > potentially locale-specific behaviour that strcasecmp() implies (and
-> > we're trying to standardize on the glib function for this kind of
-> > string comparison).
-> >
-> > Fixes: 7df3747c92d13 ("hw/arm/xilinx_zynq: Add boot-mode property")
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->
-> Alistair
->
-> > ---
-> > Kostiantyn: I sent this patch out while it was on my mind, but
-> > don't worry about conflicts with your series -- assuming your
-> > patchset goes in first I'll fix this one up later.
-> > ---
-> >  hw/arm/xilinx_zynq.c | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-> > index d43f36b718..9dcded9219 100644
-> > --- a/hw/arm/xilinx_zynq.c
-> > +++ b/hw/arm/xilinx_zynq.c
-> > @@ -186,13 +186,13 @@ static void zynq_set_boot_mode(Object *obj, const
-> char *str,
-> >      ZynqMachineState *m =3D ZYNQ_MACHINE(obj);
-> >      uint8_t mode =3D 0;
-> >
-> > -    if (!strncasecmp(str, "qspi", 4)) {
-> > +    if (!g_ascii_strcasecmp(str, "qspi")) {
-> >          mode =3D 1;
-> > -    } else if (!strncasecmp(str, "sd", 2)) {
-> > +    } else if (!g_ascii_strcasecmp(str, "sd")) {
-> >          mode =3D 5;
-> > -    } else if (!strncasecmp(str, "nor", 3)) {
-> > +    } else if (!g_ascii_strcasecmp(str, "nor")) {
-> >          mode =3D 2;
-> > -    } else if (!strncasecmp(str, "jtag", 4)) {
-> > +    } else if (!g_ascii_strcasecmp(str, "jtag")) {
-> >          mode =3D 0;
-> >      } else {
-> >          error_setg(errp, "%s boot mode not supported", str);
-> > --
-> > 2.43.0
-> >
-> >
->
->
+| x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
+|-----------------------|----------|-------------------|
+| 1M (default)          | 37.915   |  1,007            |
+| 32M                   | 17.880   |  2,260            |
+| 1024M                 |  4.368   | 17,529            |
 
---0000000000002a831b064e384d6a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+---
+v2:
+- Renamed x-rdma-chunk-shift to x-rdma-chunk-size (byte count)
+- Added validation in migrate_params_check()
+- Added hmp_migrate_set_parameter() support
+- Added hmp_info_migrate_parameters() support
+- Added migrate_mark_all_params_present()
+- Use qemu_strtosz() for size suffix support
+v3: [Markus]
+- Use visit_type_size() in HMP set parameter
+- Use MiB/GiB constants
+v4: [Markus]
+- Remove superfluous comment on DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE
+- Use "Only applies when migrating via RDMA" in QAPI doc
 
-<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
-v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
-il_attr">On Mon, Mar 30, 2026 at 7:32=E2=80=AFAM Alistair Francis &lt;<a hr=
-ef=3D"mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt; wrote:<br><=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex">On Sat, Mar 28, 2026=
- at 12:51=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@lina=
-ro.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt; wrote:<br>
-&gt;<br>
-&gt; In zynq_set_boot_mode() where we parse the string the user has set<br>
-&gt; the boot-mode option to, we use strncasecmp(str, &quot;qspi&quot;, 4) =
-and so<br>
-&gt; on.=C2=A0 This is wrong, because it means that we will ignore any trai=
-ling<br>
-&gt; junk on the end of the option string, and handle<br>
-&gt;=C2=A0 -machine boot-mode=3DsdXYZZY<br>
-&gt; the same as<br>
-&gt;=C2=A0 -machine boot-mode=3Dsd<br>
-&gt;<br>
-&gt; In the documentation we say:<br>
-&gt;=C2=A0 Supported values are ``jtag``, ``sd``, ``qspi`` and ``nor``.<br>
-&gt; and that&#39;s obviously what we meant to implement.<br>
-&gt;<br>
-&gt; The correct tool for this job is a simple strcasecmp operation.<br>
-&gt; Switch to that.<br>
-&gt;<br>
-&gt; We use the g_ascii_strcasecmp() rather than plain strcasecmp()<br>
-&gt; because we&#39;re comparing ASCII strings here and don&#39;t want the<=
-br>
-&gt; potentially locale-specific behaviour that strcasecmp() implies (and<b=
-r>
-&gt; we&#39;re trying to standardize on the glib function for this kind of<=
-br>
-&gt; string comparison).<br>
-&gt;<br>
-&gt; Fixes: 7df3747c92d13 (&quot;hw/arm/xilinx_zynq: Add boot-mode property=
-&quot;)<br>
-&gt; Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linar=
-o.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
-<br>
-Reviewed-by: Alistair Francis &lt;<a href=3D"mailto:alistair.francis@wdc.co=
-m" target=3D"_blank">alistair.francis@wdc.com</a>&gt;<br>
-<br>
-Alistair<br>
-<br>
-&gt; ---<br>
-&gt; Kostiantyn: I sent this patch out while it was on my mind, but<br>
-&gt; don&#39;t worry about conflicts with your series -- assuming your<br>
-&gt; patchset goes in first I&#39;ll fix this one up later.<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/arm/xilinx_zynq.c | 8 ++++----<br>
-&gt;=C2=A0 1 file changed, 4 insertions(+), 4 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c<br>
-&gt; index d43f36b718..9dcded9219 100644<br>
-&gt; --- a/hw/arm/xilinx_zynq.c<br>
-&gt; +++ b/hw/arm/xilinx_zynq.c<br>
-&gt; @@ -186,13 +186,13 @@ static void zynq_set_boot_mode(Object *obj, cons=
-t char *str,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 ZynqMachineState *m =3D ZYNQ_MACHINE(obj);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint8_t mode =3D 0;<br>
-&gt;<br>
-&gt; -=C2=A0 =C2=A0 if (!strncasecmp(str, &quot;qspi&quot;, 4)) {<br>
-&gt; +=C2=A0 =C2=A0 if (!g_ascii_strcasecmp(str, &quot;qspi&quot;)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 1;<br>
-&gt; -=C2=A0 =C2=A0 } else if (!strncasecmp(str, &quot;sd&quot;, 2)) {<br>
-&gt; +=C2=A0 =C2=A0 } else if (!g_ascii_strcasecmp(str, &quot;sd&quot;)) {<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 5;<br>
-&gt; -=C2=A0 =C2=A0 } else if (!strncasecmp(str, &quot;nor&quot;, 3)) {<br>
-&gt; +=C2=A0 =C2=A0 } else if (!g_ascii_strcasecmp(str, &quot;nor&quot;)) {=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 2;<br>
-&gt; -=C2=A0 =C2=A0 } else if (!strncasecmp(str, &quot;jtag&quot;, 4)) {<br=
->
-&gt; +=C2=A0 =C2=A0 } else if (!g_ascii_strcasecmp(str, &quot;jtag&quot;)) =
-{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;%s boot mode =
-not supported&quot;, str);<br>
-&gt; --<br>
-&gt; 2.43.0<br>
-&gt;<br>
-&gt;<br>
-<br>
-</blockquote></div>
+ migration/migration-hmp-cmds.c | 11 +++++++++++
+ migration/options.c            | 33 ++++++++++++++++++++++++++++++++-
+ migration/options.h            |  1 +
+ migration/rdma.c               | 30 ++++++++++++++++--------------
+ qapi/migration.json            | 12 ++++++++++--
+ 5 files changed, 70 insertions(+), 17 deletions(-)
 
---0000000000002a831b064e384d6a--
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 0a193b8f54..4f6c1dbf89 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -451,6 +451,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+                            params->direct_io ? "on" : "off");
+         }
+ 
++        if (params->has_x_rdma_chunk_size) {
++            monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
++                           MigrationParameter_str(
++                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
++                           params->x_rdma_chunk_size);
++        }
++
+         assert(params->has_cpr_exec_command);
+         monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
+     }
+@@ -734,6 +741,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+         p->has_direct_io = true;
+         visit_type_bool(v, param, &p->direct_io, &err);
+         break;
++    case MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE:
++        p->has_x_rdma_chunk_size = true;
++        visit_type_size(v, param, &p->x_rdma_chunk_size, &err);
++        break;
+     case MIGRATION_PARAMETER_CPR_EXEC_COMMAND: {
+         /*
+          * NOTE: g_autofree will only auto g_free() the strv array when
+diff --git a/migration/options.c b/migration/options.c
+index f33b297929..b3565235d7 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -13,6 +13,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qemu/units.h"
+ #include "exec/target_page.h"
+ #include "qapi/clone-visitor.h"
+ #include "qapi/error.h"
+@@ -90,6 +91,7 @@ const PropertyInfo qdev_prop_StrOrNull;
+ 
+ #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
+ #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
++#define DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE           MiB
+ 
+ const Property migration_properties[] = {
+     DEFINE_PROP_BOOL("store-global-state", MigrationState,
+@@ -183,6 +185,9 @@ const Property migration_properties[] = {
+     DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
+                        parameters.zero_page_detection,
+                        ZERO_PAGE_DETECTION_MULTIFD),
++    DEFINE_PROP_UINT64("x-rdma-chunk-size", MigrationState,
++                      parameters.x_rdma_chunk_size,
++                      DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE),
+ 
+     /* Migration capabilities */
+     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+@@ -993,6 +998,15 @@ ZeroPageDetection migrate_zero_page_detection(void)
+     return s->parameters.zero_page_detection;
+ }
+ 
++uint64_t migrate_rdma_chunk_size(void)
++{
++    MigrationState *s = migrate_get_current();
++    uint64_t size = s->parameters.x_rdma_chunk_size;
++
++    assert(MiB <= size && size <= GiB && is_power_of_2(size));
++    return size;
++}
++
+ /* parameters helpers */
+ 
+ AnnounceParameters *migrate_announce_params(void)
+@@ -1055,7 +1069,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
+         &p->has_announce_step, &p->has_block_bitmap_mapping,
+         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
+         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
+-        &p->has_cpr_exec_command,
++        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
+     };
+ 
+     len = ARRAY_SIZE(has_fields);
+@@ -1266,6 +1280,15 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+         return false;
+     }
+ 
++    if (params->has_x_rdma_chunk_size &&
++        (params->x_rdma_chunk_size < MiB ||
++         params->x_rdma_chunk_size > GiB ||
++         !is_power_of_2(params->x_rdma_chunk_size))) {
++        error_setg(errp, "Option x_rdma_chunk_size expects "
++                   "a power of 2 in the range 1MiB to 1024MiB");
++        return false;
++    }
++
+     return true;
+ }
+ 
+@@ -1391,6 +1414,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
+         dest->direct_io = params->direct_io;
+     }
+ 
++    if (params->has_x_rdma_chunk_size) {
++        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
++    }
++
+     if (params->has_cpr_exec_command) {
+         dest->cpr_exec_command = params->cpr_exec_command;
+     }
+@@ -1517,6 +1544,10 @@ static void migrate_params_apply(MigrationParameters *params)
+         s->parameters.direct_io = params->direct_io;
+     }
+ 
++    if (params->has_x_rdma_chunk_size) {
++        s->parameters.x_rdma_chunk_size = params->x_rdma_chunk_size;
++    }
++
+     if (params->has_cpr_exec_command) {
+         qapi_free_strList(s->parameters.cpr_exec_command);
+         s->parameters.cpr_exec_command =
+diff --git a/migration/options.h b/migration/options.h
+index b502871097..b46221998a 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -87,6 +87,7 @@ const char *migrate_tls_creds(void);
+ const char *migrate_tls_hostname(void);
+ uint64_t migrate_xbzrle_cache_size(void);
+ ZeroPageDetection migrate_zero_page_detection(void);
++uint64_t migrate_rdma_chunk_size(void);
+ 
+ /* parameters helpers */
+ 
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 55ab85650a..3e37a1d440 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -45,10 +45,12 @@
+ #define RDMA_RESOLVE_TIMEOUT_MS 10000
+ 
+ /* Do not merge data if larger than this. */
+-#define RDMA_MERGE_MAX (2 * 1024 * 1024)
+-#define RDMA_SIGNALED_SEND_MAX (RDMA_MERGE_MAX / 4096)
++static inline uint64_t rdma_merge_max(void)
++{
++    return migrate_rdma_chunk_size() * 2;
++}
+ 
+-#define RDMA_REG_CHUNK_SHIFT 20 /* 1 MB */
++#define RDMA_SIGNALED_SEND_MAX 512
+ 
+ /*
+  * This is only for non-live state being migrated.
+@@ -527,21 +529,21 @@ static int qemu_rdma_exchange_send(RDMAContext *rdma, RDMAControlHeader *head,
+ static inline uint64_t ram_chunk_index(const uint8_t *start,
+                                        const uint8_t *host)
+ {
+-    return ((uintptr_t) host - (uintptr_t) start) >> RDMA_REG_CHUNK_SHIFT;
++    return ((uintptr_t) host - (uintptr_t) start) / migrate_rdma_chunk_size();
+ }
+ 
+ static inline uint8_t *ram_chunk_start(const RDMALocalBlock *rdma_ram_block,
+                                        uint64_t i)
+ {
+     return (uint8_t *)(uintptr_t)(rdma_ram_block->local_host_addr +
+-                                  (i << RDMA_REG_CHUNK_SHIFT));
++                                  (i * migrate_rdma_chunk_size()));
+ }
+ 
+ static inline uint8_t *ram_chunk_end(const RDMALocalBlock *rdma_ram_block,
+                                      uint64_t i)
+ {
+     uint8_t *result = ram_chunk_start(rdma_ram_block, i) +
+-                                         (1UL << RDMA_REG_CHUNK_SHIFT);
++                                         migrate_rdma_chunk_size();
+ 
+     if (result > (rdma_ram_block->local_host_addr + rdma_ram_block->length)) {
+         result = rdma_ram_block->local_host_addr + rdma_ram_block->length;
+@@ -1841,6 +1843,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
+     struct ibv_send_wr *bad_wr;
+     int reg_result_idx, ret, count = 0;
+     uint64_t chunk, chunks;
++    uint64_t chunk_size = migrate_rdma_chunk_size();
+     uint8_t *chunk_start, *chunk_end;
+     RDMALocalBlock *block = &(rdma->local_ram_blocks.block[current_index]);
+     RDMARegister reg;
+@@ -1861,22 +1864,21 @@ retry:
+     chunk_start = ram_chunk_start(block, chunk);
+ 
+     if (block->is_ram_block) {
+-        chunks = length / (1UL << RDMA_REG_CHUNK_SHIFT);
++        chunks = length / chunk_size;
+ 
+-        if (chunks && ((length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
++        if (chunks && ((length % chunk_size) == 0)) {
+             chunks--;
+         }
+     } else {
+-        chunks = block->length / (1UL << RDMA_REG_CHUNK_SHIFT);
++        chunks = block->length / chunk_size;
+ 
+-        if (chunks && ((block->length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
++        if (chunks && ((block->length % chunk_size) == 0)) {
+             chunks--;
+         }
+     }
+ 
+     trace_qemu_rdma_write_one_top(chunks + 1,
+-                                  (chunks + 1) *
+-                                  (1UL << RDMA_REG_CHUNK_SHIFT) / 1024 / 1024);
++                                  (chunks + 1) * chunk_size / 1024 / 1024);
+ 
+     chunk_end = ram_chunk_end(block, chunk + chunks);
+ 
+@@ -2176,7 +2178,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
+     rdma->current_length += len;
+ 
+     /* flush it if buffer is too large */
+-    if (rdma->current_length >= RDMA_MERGE_MAX) {
++    if (rdma->current_length >= rdma_merge_max()) {
+         return qemu_rdma_write_flush(rdma, errp);
+     }
+ 
+@@ -3522,7 +3524,7 @@ int rdma_registration_handle(QEMUFile *f)
+                 } else {
+                     chunk = reg->key.chunk;
+                     host_addr = block->local_host_addr +
+-                        (reg->key.chunk * (1UL << RDMA_REG_CHUNK_SHIFT));
++                        (reg->key.chunk * migrate_rdma_chunk_size());
+                     /* Check for particularly bad chunk value */
+                     if (host_addr < (void *)block->local_host_addr) {
+                         error_report("rdma: bad chunk for block %s"
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 7134d4ce47..f78a20f65a 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -806,7 +806,7 @@
+ #
+ # Features:
+ #
+-# @unstable: Members @x-checkpoint-delay and
++# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+ #     @x-vcpu-dirty-limit-period are experimental.
+ #
+ # Since: 2.4
+@@ -831,6 +831,7 @@
+            'mode',
+            'zero-page-detection',
+            'direct-io',
++           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+            'cpr-exec-command'] }
+ 
+ ##
+@@ -1007,9 +1008,14 @@
+ #     is @cpr-exec.  The first list element is the program's filename,
+ #     the remainder its arguments.  (Since 10.2)
+ #
++# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
++#     Default is 1MiB.  Must be a power of 2 in the range
++#     [1MiB, 1024MiB].  Only applies when migrating via RDMA.
++#     (Since 11.1)
++#
+ # Features:
+ #
+-# @unstable: Members @x-checkpoint-delay and
++# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+ #     @x-vcpu-dirty-limit-period are experimental.
+ #
+ # Since: 2.4
+@@ -1046,6 +1052,8 @@
+             '*mode': 'MigMode',
+             '*zero-page-detection': 'ZeroPageDetection',
+             '*direct-io': 'bool',
++            '*x-rdma-chunk-size': { 'type': 'uint64',
++                                    'features': [ 'unstable' ] },
+             '*cpr-exec-command': [ 'str' ]} }
+ 
+ ##
+-- 
+2.43.7
 
 
