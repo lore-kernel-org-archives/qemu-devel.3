@@ -4,94 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDDBBFF495F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 08:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67731F3D60F
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 08:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w77vh-0002za-QR; Mon, 30 Mar 2026 04:25:01 -0400
+	id 1w77zX-0003oz-TX; Mon, 30 Mar 2026 04:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1w77vg-0002zD-7m
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 04:25:00 -0400
-Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1w77ve-000075-N1
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 04:24:59 -0400
-Received: by mail-dl1-x1229.google.com with SMTP id
- a92af1059eb24-12732e6a123so2588004c88.1
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 01:24:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774859097; x=1775463897; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=g5TduLyOB2E5auatV1YEbPKRJcZ4ZLa0E2+8Df6dxNQ=;
- b=RHI7wC7JHyPU5Nuz2pnarMWVW+F3aqOfYlQfirKl0px21VeSWn6FMBrl2l5Cc5nhi5
- dvzYTrJgUFS7KFLN1K9M+Vl47G2PQEFcWx9OAL9G0hL4OJf8PmTwrUPdiwamo7681fCH
- AheNmB4JOc2pzToRoFukZN4ZMYHwel9wzBblA7K/NSrdg12vB+dBTs9ZFfgNVa625iyu
- C0xNHbjkw6Lo3N8P3aKIzx5NnHzhx9CRnfjA/QdBNrF9x5ZR7VFMzwNmKBKmvSYVuK0H
- HY0ADXKS8t7TUZJ0tg3oT5gMaEeO5QHOKjinw5At1RwzWmol2PwGd+7XXlPAVYRyxbWD
- hR+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774859097; x=1775463897;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=g5TduLyOB2E5auatV1YEbPKRJcZ4ZLa0E2+8Df6dxNQ=;
- b=CaKlxhQrQ7PYinnaz/TW8PjNUUsxop0uKVJj5akztcj3kTRycHdCE5nlIDxDbKR/ta
- rJAisp34krmfsToMcgLkaeLCC6ADGsdULt3bTFwdtXSwaGrEvA1X37D20hNGJgIFLpe7
- 9wxYtx8tVD2qBgsa/r0FOU6pi7zeSVmKkiPUrRmQ91ftgBmV2nZfaaQRh9xHMnvNFcA2
- hoXn2NE3VSZNmvCibAMDb3+OXS7zMiBrignB56rOFnV+ymRIq3oatlrvvGCbBlyJByPa
- xLmO2XEVgL76VOy3y5QJiYZqCj1S69qksSzHBLXaXuC1YER4XJRsm5dokhJk2XcrgryF
- CcWA==
-X-Gm-Message-State: AOJu0Yyc5HrlkvURMvEkriwyq/x89BvadzIiLlpQajoccYtHb8qxREFF
- AGHucrrtxRgkOeoH36yMDJuMg/+v9D4tglh4tjvfszo4k6qgYJbOkyXt
-X-Gm-Gg: ATEYQzw1rqDuR2ZT7a0N50Gh44fMQV2376ao4w1OeWMR458ZKQgwYESfX2N2utD3H78
- kzgA5Ly+a5q2n8yRliJb6V24cDUgSEPfpidwkvAWxgAnTgXSh2jHYW1N8WqsyEbNM8peZmnSWU/
- XuBYfdjvQoyokLW4jflNC6nh3EXuWKsd+SXJg3w/E0kPnOFmLW6HB4MkOl2OD+uyXkZ9NA7AX4C
- y+k4aNPZ3sib8mJrPezXqNyxAYlfHfCbAcKRSEbbDbcZjRlphTG8rOn4ShG7D4zqYO6jFFrunL0
- Mzzqb2CK0M6lCbwBv6dNkVJKNcrigcs1ZwPJ9pQf0+9GDO6o+uSQL5W4Zgn8P4HxAscFabWLvSc
- c1E2CWs/Anvw3SEKwxrimVFB2t+IHRugForcSyerbCEz/lP/6uKv+FRu6lIy7k0WeTXuJBGYnji
- eD+6vfxl3bj4U+uNjyYIC0XuB0gX7q0sb9EfvRrsEg5Ez8s9duTpfN4e/sTDFcnauf7aNFaWesF
- s08zTIcj2+u
-X-Received: by 2002:a05:701b:221a:b0:12a:b3c4:c3b6 with SMTP id
- a92af1059eb24-12ab3c4c608mr3436080c88.21.1774859096593; 
- Mon, 30 Mar 2026 01:24:56 -0700 (PDT)
-Received: from 4470NRD-ASU.ssi.samsung.com
- (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12ab97e7a57sm8777404c88.6.2026.03.30.01.24.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 01:24:56 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Mon, 30 Mar 2026 01:24:54 -0700
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, berrange@redhat.com,
- eblake@redhat.com, jonathan.cameron@huawei.com,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com,
- lizhijian@fujitsu.com, mst@redhat.com, pbonzini@redhat.com,
- gourry@gourry.net, nifan.cxl@gmail.com, me@linux.beauty
-Subject: Re: [PATCH 5/9] hw/cxl: Map lazy memory backend after host acceptance
-Message-ID: <acozVjvVT1THZP_S@4470NRD-ASU.ssi.samsung.com>
-References: <20260325184259.366-1-alireza.sanaee@huawei.com>
- <20260325184259.366-6-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1w77zN-0003oX-Nd
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 04:28:51 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1w77zK-0000cd-AG
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 04:28:49 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Bx08A1NMpptuMfAA--.31741S3;
+ Mon, 30 Mar 2026 16:28:37 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJCxfcIpNMpp5ZtgAA--.51661S3;
+ Mon, 30 Mar 2026 16:28:28 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: Add support for dbar hint variants
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, jiaxun.yang@flygoat.com, richard.henderson@linaro.org, 
+ lixianglai@loongson.cn
+References: <20260327003206.3749780-1-gaosong@loongson.cn>
+ <c28274cf-5957-67d9-80d8-3cf94427e961@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <0f7941d8-3244-9965-8534-68bcc8b5ec90@loongson.cn>
+Date: Mon, 30 Mar 2026 16:29:51 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260325184259.366-6-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
- envelope-from=anisa.su887@gmail.com; helo=mail-dl1-x1229.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+In-Reply-To: <c28274cf-5957-67d9-80d8-3cf94427e961@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJCxfcIpNMpp5ZtgAA--.51661S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3JryDWFy7ZF15KF1DWr4kuFX_yoWfWw1rpr
+ 1kAFWUKFWUJrn3Zw18J34UZFyUZr48G3W7Xw10qFy8ur47Gr1jgr10grZ0gF1UGw4kXF1U
+ AF4UZwnrZFnxXFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
+ vfC2KfnxnUUI43ZEXa7IU8j-e5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.988,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,67 +83,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 06:42:53PM +0000, Alireza Sanaee wrote:
-> In the dc-regions-total-size flow, a requested extent is not backed when it
-> is queued. It becomes usable only after the host accepts it with Add
-> Dynamic Capacity Response.
-> 
-> Use that response path to look up the first pending group's metadata for
-> each accepted extent, enable the selected host backend, and move the
-> backend and fixed-window references onto the committed extent list. The
-> accepted range is then marked backed just like the non-lazy path.
-> 
-> This wires host acceptance to the lazy backend lifecycle and leaves the
-> fixed-window direct aliasing to the following patch.
-> 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 76 ++++++++++++++++++++++++++++++++++++--
->  1 file changed, 73 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index c5427adb3a..cc7be6e68c 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-[snip]
->  static CXLRetCode cxl_dcd_add_dyn_cap_rsp_dry_run(CXLType3Dev *ct3d,
->          const CXLUpdateDCExtentListInPl *in)
->  {
-> @@ -3718,8 +3740,12 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
->      CXLUpdateDCExtentListInPl *in = (void *)payload_in;
->      CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
->      CXLDCExtentList *extent_list = &ct3d->dc.extents;
-> +    struct CXLFixedWindow *fw;
-> +    HostMemoryBackend *hmb_dc;
-> +    uint8_t tag[0x10];
->      uint32_t i, num;
->      uint64_t dpa, len;
-> +    int rid;
->      CXLRetCode ret;
->  
->      if (len_in < sizeof(*in)) {
-> @@ -3756,10 +3782,54 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
->      for (i = 0; i < in->num_entries_updated; i++) {
->          dpa = in->updated_entries[i].start_dpa;
->          len = in->updated_entries[i].len;
-> +        if (ct3d->dc.total_capacity_cmd) {
-               memcpy(tag, in->updated_entries[i], 0x10);
-> +            bool found;
-> +            MemoryRegion *mr;
-> +
-> +            found = cxl_extent_find_extent_detail(&ct3d->dc.extents_pending,
-> +                                                  dpa, len, tag,
-> +                                                  &hmb_dc, &fw, &rid);
-> +
-Btw, I'm using this patchset to test my current DCD RFC :) The main thing is I
-want to test having multiple extents in the same add request for the new
-requirements for tags on the host side. Since we can only add/remove tagged
-capacity at once (no incremental add/partial release), would it be possible to
-support that? Sorry I didn't have a look sooner
+在 2026/3/30 下午3:57, Bibo Mao 写道:
+>
+>
+> On 2026/3/27 上午8:32, Song Gao wrote:
+>> LoongArch architecture (since LA664) introduces fine-grained dbar
+>> hints that allow controlling which memory accesses are ordered by
+>> the barrier. Previously, all dbar instructions were treated as a
+>> full barrier (TCG_MO_ALL | TCG_BAR_SC).
+>>
+>> This patch adds support for decoding dbar hints and emitting the
+>> appropriate TCG memory barrier flags. For CPUs that do not advertise
+>> the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
+>> fall back to a full barrier, preserving compatibility.
+>>
+>> The hint encoding follows the LoongArch v1.10 specification:
+>> - Bit4: 0 = completion barrier, 1 = ordering barrier
+>>          (ignored by TCG as TCG only supports ordering barriers)
+>> - Bit3: barrier for previous reads (0 = enforce, 1 = relax)
+>> - Bit2: barrier for previous writes (0 = enforce, 1 = relax)
+>> - Bit1: barrier for succeeding reads (0 = enforce, 1 = relax)
+>> - Bit0: barrier for succeeding writes (0 = enforce, 1 = relax)
+>>
+>> The mapping to TCG memory order flags is as follows:
+>> - TCG_MO_LD_LD is set if both previous and succeeding reads are ordered.
+>> - TCG_MO_ST_LD is set if previous write and succeeding read are ordered.
+>> - TCG_MO_LD_ST is set if previous read and succeeding write are ordered.
+>> - TCG_MO_ST_ST is set if both previous and succeeding writes are 
+>> ordered.
+>>
+>> If the resulting flags describe an acquire or release barrier,
+>> TCG_BAR_LDAQ or TCG_BAR_STRL is used accordingly; otherwise a
+>> full SC barrier (TCG_BAR_SC) is emitted.
+>>
+>> Special hint handling:
+>> - hint 0x700: LL/SC loop barrier, treated as a full barrier as 
+>> recommended.
+>> - hint 0xf and 0x1f: reserved/no-op, treated as no operation
+>>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   target/loongarch/cpu.c                        |  4 +
+>>   .../tcg/insn_trans/trans_memory.c.inc         | 82 ++++++++++++++++++-
+>>   target/loongarch/tcg/translate.c              |  1 +
+>>   target/loongarch/translate.h                  |  3 +
+>>   4 files changed, 88 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index e22568c84a..d8d106b07e 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
+>>           data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
+>>           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
+>>           cpu->env.cpucfg[2] = data;
+>> +
+>> +        data = cpu->env.cpucfg[3];
+>> +        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
+>> +        cpu->env.cpucfg[3] = data;
+>>       }
+>>   }
+>>   diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
+>> index e287d46363..99bc486119 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
+>> @@ -137,11 +137,89 @@ static bool trans_preldx(DisasContext *ctx, 
+>> arg_preldx * a)
+>>       return true;
+>>   }
+>>   +/*
+>> + * Decode dbar hint and emit appropriate TCG memory barrier.
+>> + *
+>> + * The hint is a 5-bit field (0-31) encoded in the instruction.
+>> + * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
+>> + *
+>> + * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
+>> + */
+>>   static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
+>>   {
+>>       tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
+> I am not familiar with memory order. I only point out the possible 
+> problem purely from code.
+>
+> Should tcg_gen_mb() be moved afterward, otherwise there may be two 
+> times calling with tcg_gen_mb().
+yes , you are right.   this tcg_gen_mb() should remove.
 
-Thanks,
-Anisa
- -- 
-> 2.50.1 (Apple Git-155)
-> 
+>
+>> -    return true;
+>> -}
+>> +    int hint = a->imm;
+>> +    TCGBar bar_flags = 0;
+>> +
+>> +    /* Reserved/no-op hints: 0xf and 0x1f */
+>> +    if (hint == 0xf || hint == 0x1f) {
+>> +        return true;
+>> +    }
+> Ditto, should it move afterward?
+here ,  no-op hint we juet return true,
+
+Thanks.
+Song Gao
+>
+> Regards
+> Bibo Mao
+>> +
+>> +    /* If the CPU does not support fine-grained hints,or for the 
+>> special LL/SC
+>> +     * loop barrier (0x700), emit a full barrier.
+>> +     */
+>> +    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
+>> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+>> +        return true;
+>> +    }
+>> +
+>> +    /*
+>> +     * Fine-grained hint decoding:
+>> +     * Bits 3-0 control which accesses must be ordered.
+>> +     *   bit3: barrier previous reads?   (0 = enforce, 1 = relax)
+>> +     *   bit2: barrier previous writes?  (0 = enforce, 1 = relax)
+>> +     *   bit1: barrier succeeding reads? (0 = enforce, 1 = relax)
+>> +     *   bit0: barrier succeeding writes?(0 = enforce, 1 = relax)
+>> +     *
+>> +     * For each combination, we set the corresponding TCG_MO_* flag 
+>> if both
+>> +     * sides of the barrier require ordering.
+>> +     */
+>> +    bool prev_rd = !(hint & 0x08);   /* need barrier for previous 
+>> reads */
+>> +    bool prev_wr = !(hint & 0x04);   /* need barrier for previous 
+>> writes */
+>> +    bool succ_rd = !(hint & 0x02);   /* need barrier for succeeding 
+>> reads */
+>> +    bool succ_wr = !(hint & 0x01);   /* need barrier for succeeding 
+>> writes */
+>> +
+>> +    if (prev_rd && succ_rd) {
+>> +        bar_flags |= TCG_MO_LD_LD;
+>> +    }
+>> +    if (prev_wr && succ_rd) {
+>> +        bar_flags |= TCG_MO_ST_LD;
+>> +    }
+>> +    if (prev_rd && succ_wr) {
+>> +        bar_flags |= TCG_MO_LD_ST;
+>> +    }
+>> +    if (prev_wr && succ_wr) {
+>> +        bar_flags |= TCG_MO_ST_ST;
+>> +    }
+>> +
+>> +    /* If no flags were set, this is a no-op barrier */
+>> +    if (bar_flags == 0) {
+>> +        return true;
+>> +    }
+>> +
+>> +    /*
+>> +     * Use acquire/release semantics when possible to generate more 
+>> efficient
+>> +     * code. Otherwise, fall back to a sequential consistency barrier.
+>> +     *
+>> +     * Acquire: order loads before loads/stores (LD_LD | LD_ST)
+>> +     * Release: order stores before stores/loads (ST_ST | ST_LD)
+>> +     */
+>> +    if ((bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST)) &&
+>> +        !(bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD))) {
+>> +        /* Only acquire flags present */
+>> +        tcg_gen_mb(bar_flags | TCG_BAR_LDAQ);
+>> +    } else if ((bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD)) &&
+>> +               !(bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST))) {
+>> +        /* Only release flags present */
+>> +        tcg_gen_mb(bar_flags | TCG_BAR_STRL);
+>> +    } else {
+>> +        /* Mixed or full barrier */
+>> +        tcg_gen_mb(bar_flags | TCG_BAR_SC);
+>> +    }
+>> +
+>> +     return true;
+>> + }
+>>     static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
+>>   {
+>> diff --git a/target/loongarch/tcg/translate.c 
+>> b/target/loongarch/tcg/translate.c
+>> index b9ed13d19c..49280b1dd3 100644
+>> --- a/target/loongarch/tcg/translate.c
+>> +++ b/target/loongarch/tcg/translate.c
+>> @@ -149,6 +149,7 @@ static void 
+>> loongarch_tr_init_disas_context(DisasContextBase *dcbase,
+>>         ctx->cpucfg1 = env->cpucfg[1];
+>>       ctx->cpucfg2 = env->cpucfg[2];
+>> +    ctx->cpucfg3 = env->cpucfg[3];
+>>   }
+>>     static void loongarch_tr_tb_start(DisasContextBase *dcbase, 
+>> CPUState *cs)
+>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+>> index ba1c89e57b..8aa8325dc6 100644
+>> --- a/target/loongarch/translate.h
+>> +++ b/target/loongarch/translate.h
+>> @@ -43,6 +43,8 @@
+>>   #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, 
+>> LLACQ_SCREL))
+>>   #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
+>>   +#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, 
+>> DBAR_HINTS))
+>> +
+>>   /*
+>>    * If an operation is being performed on less than TARGET_LONG_BITS,
+>>    * it may require the inputs to be sign- or zero-extended; which will
+>> @@ -66,6 +68,7 @@ typedef struct DisasContext {
+>>       bool va32; /* 32-bit virtual address */
+>>       uint32_t cpucfg1;
+>>       uint32_t cpucfg2;
+>> +    uint32_t cpucfg3;
+>>   } DisasContext;
+>>     void generate_exception(DisasContext *ctx, int excp);
+>>
+
 
