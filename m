@@ -4,82 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38611061B0F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF1F1061B17
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 17:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Fo9-0002Yi-Gu; Mon, 30 Mar 2026 12:49:45 -0400
+	id 1w7GG2-0000om-LJ; Mon, 30 Mar 2026 13:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w7Fo0-0002Wl-17
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:49:37 -0400
-Received: from ci-2006g-snip4-11.eps.apple.com ([57.103.90.201]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w7Fnv-0003Ko-To
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:49:33 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-10 (Postfix) with ESMTPS id
- 018E61800169; Mon, 30 Mar 2026 16:49:23 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1774889365; x=1777481365;
- bh=QD+ZefaqxbGHLuNSknPSMW7y3d42Wk1UUlLO+LdNqn4=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=B7nn9LkDHLtiU1Gnz+lXIfGur1MUi/UCfOz2dADTMoZ4rEocjBTuG4otPcrarJkNUKlAfxhnjLqu2tZLKYJU3MhQmtvURC9d2hevTY8LemwJQ38A/G1l6HqRiJVzJtUNlsgTCJnz5rext5xSUJ1Hz0m0aM7hYZq0y8ivaPQ8uL9KXlKbIolRVmHc+daxZKAazypB9tx9hzvKZb7V9I27QqTV2LOwtjFBH+oc0tVoP+PzgcMPnx7H/0wwffLL/rOjgA17B7lRlJQbxZ6lh4PhU2bonJU6b9ZNIaIN61zeUT4aeGFU8fcKGAl+BKE3nFaD2U86YDMTFL4Rb24srjzADA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-10 (Postfix) with ESMTPSA id
- 69FFF1800178; Mon, 30 Mar 2026 16:49:22 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH] meson.build: Add --enable-use-pdb option
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <b7d47483-167a-48bf-b494-87b2f7bfbe69@redhat.com>
-Date: Mon, 30 Mar 2026 18:49:10 +0200
-Cc: Steve Aarnio <saarnio@qti.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1CCFA763-8BF1-4975-A758-F480BD9D314C@unpredictable.fr>
-References: <MN2PR02MB6622718572E2A2B5E4EE3C039B4EA@MN2PR02MB6622.namprd02.prod.outlook.com>
- <b7d47483-167a-48bf-b494-87b2f7bfbe69@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-GUID: uqvK3fk1DjWE8aQ_xBzoCj2bbpMXQT2j
-X-Authority-Info-Out: v=2.4 cv=C9DkCAP+ c=1 sm=1 tr=0 ts=69caa994
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Twlkf-z8AAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
- a=u95PIktiEcSF7GJu_fMA:9 a=CjuIK1q_8ugA:10 a=-74SuR6ZdpOK_LpdRCUo:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMwMDEzNiBTYWx0ZWRfX5hptgcuSOtvd
- 5KXs9EnUppfZZafez+rE7dYJcbmEYD+hdYl1Xh2CQnowNvDB7b78QFHzt8/0qjNQq1uo99JEEBe
- P1xywDoNPBpuneG1HfMGiWSI0fCUHIsralfvhvqPpW51eamfeT1CGbF3HePyxHH82a8ovPWmeBV
- pBMXc0QYC9OxjMjnJYWHxAr7vsMZvqDFy8SfWSbqFAD3oNRxfGfRHsGknMGW1+5D+/v8AFDULQY
- es21Or5eU83HOajVfdSfYZZHcmW0Qs+mnvUOzZlP5p0J9YYpQOWdbIVbX6XYxaWuyEwvovZLbaU
- cWM0viVbv4U4/XSkJJbioF0smMUz7iOTRaVnQDz7SX2c27+mXr6XYAj/rdA8m4=
-X-Proofpoint-ORIG-GUID: uqvK3fk1DjWE8aQ_xBzoCj2bbpMXQT2j
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-29_05,2026-03-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 mlxscore=0 spamscore=0
- adultscore=0 malwarescore=0 phishscore=0 mlxlogscore=761 clxscore=1030
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2603300136
-Received-SPF: pass client-ip=57.103.90.201;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1w7GFy-0000oN-4R
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 13:18:30 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1w7GFw-0000sb-CY
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 13:18:29 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-6501d242e3fso2171612d50.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 10:18:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774891107; x=1775495907; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5WYAmZnCUHifIrZd5FYL4WM8RKjkmJnsMatxYMxfE54=;
+ b=D16qWPamrjm0on9YrrHIyRChrpANKb3AnywB9JkJstYx4HgoKUXamfBcy0Rz2a/uyb
+ YF8fEGW152EJf5d3TqCGualwIC5gesPvrsEqIYeU+NIIoN/cL8QAAlnA7toxP6DarVbK
+ 9B19VivQlQ8Ayob59OxBzgSc+mX0huIJfU1ABy7x6kGFZVFetWCkjcZ1oIbYdnPvsBAO
+ rYl6YII8B0ZS+jJGp2a6jRLeQRblCMTPbXhmNh7pAQAD9VYn68Ml1VhrgTkWYMsFix24
+ mEzKhMdFNSqQNyx8uQtlF2j9fsi4RY3HFtyX8bVGLVaHucpJsNBFB0l8CDMRg5GLORUX
+ sTRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774891107; x=1775495907;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5WYAmZnCUHifIrZd5FYL4WM8RKjkmJnsMatxYMxfE54=;
+ b=rmfzGX6v0LiCKPRB/PFh0oFt9HRBxUUKx1HLkPKAlsSGRYHVwJ76W1siLMQZU7Tn8U
+ M0YMrmPyO5fx+LvRg1pKxCuU2h8nTdS+Nk3bpWkWrQZzL6WcGmFlV+wKtgvD8tqJhTck
+ JRXHSmVwitEdTp5KE85MfNfss1EJh6wcAwPuMdmRuWCnH1haf8g+bYYG8KRMeYf7cTCJ
+ IGYVdrr+X/cuRwNlAHW/8sA1UiSuYDAgZTSM/2A4f9BkVDgoOMYWbshWbkRwC3ITHHZg
+ vt/MnoQ3O3MyjKnsq94hpCHpUaM2HdWh+/2Q/ga8wFinaud+zex18T9oAdd1/tmqtu59
+ q6uw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLoNuxFfmm3oxGoQ10UhhvdiHLn28Hpc6HW8k8+HvibOqhHIr5Ofl6H7YbaZgYvJ7XQpmlpZ9J3Smf@nongnu.org
+X-Gm-Message-State: AOJu0YxTPtDNHl57cCf6Dh1M/LGQ9YPSwntY12hfQVaicR1muULwVYs8
+ up3N9D14Avf6nzZ2KtRspvlTt0TyqX28spFLdPPP1Mh5aacJ5MVlCBgM
+X-Gm-Gg: ATEYQzwiFq6KtzMaX/qCVyYeMWVF1lzJ5jjKJ14wlCq8OmxAK0M+sLHv3yK9N7vAu8g
+ ObfgxDko4Nu8F1Znib6B2eT3qbpcfHvwO4eyqMiYVV0qSNJF9yZA8SUMcJEUMmKj2jDC/shmRo0
+ UHozziPP5WQs17cyiRMRQ8Wnfhe1uAGUSPA5gq0EcRiThXLZvNo7JP1xwM3NaMClB3HFhkALLjI
+ ZvPU1FV7FQ7EfVDQfkHHT05ljO5D7x+DQE4YtOjja26Qj/FPFwK2oVypDPLh9kTF05CP4GT1zw5
+ sa045SV0lYde/h3EpaT6N5Jo+fdaTa2CFzb43Z+9cd0iDPtJcs43XHLju4Rn7224oNHR8sj04mk
+ IEn/bLTtAiPBFCCGC9bFINdvP29UhxMWwrbVHLQYzlGRmiqypmrbxzaTO2M0Jzk4cyEQXfoEqav
+ /YC2BH2Wd3ccAhQhBsqPIIZVBaMnuiamoLK+JwJ2rvaA==
+X-Received: by 2002:a05:690c:6d84:b0:7a0:17f4:e754 with SMTP id
+ 00721157ae682-7a017f4eaf1mr21444297b3.17.1774891106656; 
+ Mon, 30 Mar 2026 10:18:26 -0700 (PDT)
+Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-79cb4521761sm38442557b3.0.2026.03.30.10.18.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Mar 2026 10:18:25 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Mon, 30 Mar 2026 10:18:22 -0700
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
+ jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
+ linuxarm@huawei.com, lizhijian@fujitsu.com, mst@redhat.com,
+ pbonzini@redhat.com, gourry@gourry.net, nifan.cxl@gmail.com,
+ me@linux.beauty
+Subject: Re: [PATCH 5/9] hw/cxl: Map lazy memory backend after host acceptance
+Message-ID: <acqwXl37T1mquQvD@4470NRD-ASU.ssi.samsung.com>
+References: <20260325184259.366-1-alireza.sanaee@huawei.com>
+ <20260325184259.366-6-alireza.sanaee@huawei.com>
+ <acozVjvVT1THZP_S@4470NRD-ASU.ssi.samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <acozVjvVT1THZP_S@4470NRD-ASU.ssi.samsung.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=anisa.su887@gmail.com; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,56 +109,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 30. Mar 2026, at 18:33, Paolo Bonzini <pbonzini@redhat.com> wrote:
->=20
-> On 3/18/26 20:18, Steve Aarnio wrote:
->> This option will (attempt to) modify the QEMU compile and link flags =
-to
->> emit PDB symbol files rather than the standard (DWARF?) symbol output
->> from gcc/clang.
->> This enables using native Windows debug tools (Windbg/Visual Studio) =
-for
->> debugging QEMU.
->> Signed-off-by: Steve Aarnio <saarnio@qti.qualcomm.com>
->=20
-> I would prefer to have support for this in Meson itself, but anyway, I =
-have some questions below
->=20
->> +if get_option('debug') and get_option('use_pdb')
->> +  qemu_common_flags +=3D =
-cc.get_supported_arguments('-g','-gcodeview','- =
-gcolumn-info','-fno-omit-frame-pointer')
->=20
-> GCC documentation says -gcolumn-info enabled by default, also who is =
-enabling -fomit-frame-pointer so that you have to drop it?
-
-Hello,
-
-=
-https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang=
--fomit-frame-pointer
-
-Clang documentation says:
-On many targets, -O1 and higher omit the frame pointer by default
-
->=20
->> +  qemu_ldflags +=3D =
-cc.get_supported_link_arguments('-g','-Wl,--pdb=3D')
->=20
-> What linkers support --pdb=3D, and what goes after the equal sign?
-
-lld, and pdb=3D is enough to have an autogenerated path (output[.pdb]).
-
-gcc and GNU ld don't support this.
-
->=20
-> Also, the update to scripts/meson-buildoptions.sh is missing, just =
-running "make" will regenerate it.
->=20
-> Paolo
->=20
->=20
-
+On Mon, Mar 30, 2026 at 01:24:54AM -0700, Anisa Su wrote:
+> On Wed, Mar 25, 2026 at 06:42:53PM +0000, Alireza Sanaee wrote:
+> > In the dc-regions-total-size flow, a requested extent is not backed when it
+> > is queued. It becomes usable only after the host accepts it with Add
+> > Dynamic Capacity Response.
+> > 
+> > Use that response path to look up the first pending group's metadata for
+> > each accepted extent, enable the selected host backend, and move the
+> > backend and fixed-window references onto the committed extent list. The
+> > accepted range is then marked backed just like the non-lazy path.
+> > 
+> > This wires host acceptance to the lazy backend lifecycle and leaves the
+> > fixed-window direct aliasing to the following patch.
+> > 
+> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> > ---
+> >  hw/cxl/cxl-mailbox-utils.c | 76 ++++++++++++++++++++++++++++++++++++--
+> >  1 file changed, 73 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > index c5427adb3a..cc7be6e68c 100644
+> > --- a/hw/cxl/cxl-mailbox-utils.c
+> > +++ b/hw/cxl/cxl-mailbox-utils.c
+> [snip]
+> >  static CXLRetCode cxl_dcd_add_dyn_cap_rsp_dry_run(CXLType3Dev *ct3d,
+> >          const CXLUpdateDCExtentListInPl *in)
+> >  {
+> > @@ -3718,8 +3740,12 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+> >      CXLUpdateDCExtentListInPl *in = (void *)payload_in;
+> >      CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> >      CXLDCExtentList *extent_list = &ct3d->dc.extents;
+> > +    struct CXLFixedWindow *fw;
+> > +    HostMemoryBackend *hmb_dc;
+> > +    uint8_t tag[0x10];
+> >      uint32_t i, num;
+> >      uint64_t dpa, len;
+> > +    int rid;
+> >      CXLRetCode ret;
+> >  
+> >      if (len_in < sizeof(*in)) {
+> > @@ -3756,10 +3782,54 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+> >      for (i = 0; i < in->num_entries_updated; i++) {
+> >          dpa = in->updated_entries[i].start_dpa;
+> >          len = in->updated_entries[i].len;
+> > +        if (ct3d->dc.total_capacity_cmd) {
+>                memcpy(tag, in->updated_entries[i], 0x10);
+^sorry that was totally wrong lol! ignore that. but I did encounter a null tag
+on host side when I sent the qmp tag-based rls cmd that resolved when I changed
+it to prescriptive, so let me see what happened there
+> > +            bool found;
+> > +            MemoryRegion *mr;
+> > +
+> > +            found = cxl_extent_find_extent_detail(&ct3d->dc.extents_pending,
+> > +                                                  dpa, len, tag,
+> > +                                                  &hmb_dc, &fw, &rid);
+> > +
+> Btw, I'm using this patchset to test my current DCD RFC :) The main thing is I
+> want to test having multiple extents in the same add request for the new
+> requirements for tags on the host side. Since we can only add/remove tagged
+> capacity at once (no incremental add/partial release), would it be possible to
+> support that? Sorry I didn't have a look sooner
+> 
+> Thanks,
+> Anisa
+>  -- 
+> > 2.50.1 (Apple Git-155)
+> > 
 
