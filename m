@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 866B01061B07
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 15:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BBDFC97F3
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 15:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7E6w-0001mD-4t; Mon, 30 Mar 2026 11:01:05 -0400
+	id 1w7ED4-00047O-P8; Mon, 30 Mar 2026 11:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1w7E6s-0001lg-7X; Mon, 30 Mar 2026 11:00:58 -0400
-Received: from mout.kundenserver.de ([212.227.17.24])
+ id 1w7ECv-00046p-OE; Mon, 30 Mar 2026 11:07:13 -0400
+Received: from mout.kundenserver.de ([212.227.126.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1w7E6q-00071L-9m; Mon, 30 Mar 2026 11:00:57 -0400
+ id 1w7ECq-00087l-Oy; Mon, 30 Mar 2026 11:07:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
- s=s1-ionos; t=1774882845; x=1775487645; i=laurent@vivier.eu;
- bh=D3Txvpywx39/ry9p/RYEqdwXrp4uGqRB5FJe4V0Yclg=;
+ s=s1-ionos; t=1774883226; x=1775488026; i=laurent@vivier.eu;
+ bh=kQ5954plKxBBKQ3q3RjNNNB0TMx0FHMLAJvX6Jzsc4Y=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=2b5W9Z5pDGpNxxB6TnuU7mDJVjPnLhss7VHLa5jIWIyWRjLJKiPkbbTLLLnWwvuW
- 5c8uMkct0wCTZYNwXQjuVHQkIl6dPZzV+OsRIl26rOq5WPhU/+5/FbuZsR+4Wrirg
- bk3M+Nivn18pq/se4sAnQdf0s/CVtGyW21n2w/GVmXboW6q/yC37aIhoPo+Lfye66
- A+X0mZDuJTr10l7GD0bqRKupVrSAtokeBUV3H81dwYSFzu4JSkrb4IEmqp5jpzLgO
- BL+DwpchpUMNNr4OSjvqAjfW+bs5TIcHqGGfH7ZR24DIl/xnrMW0uEMjzRVSbusVH
- lCEmS+ObvvCXchFaTA==
+ b=OjY7YTZcVRxCWU0nNlXvGZbFRPdNtzRmrDPKgt4XpWL8HgxW9qiUoPrzIFbTYyjI
+ W6T95JnJoXg4tE9jBPAFQd27ihl+ojnJ7Ju2v0KdR7608ZrIH8pWEjzvNCQWgTJ0i
+ /XzUbWbq5T/RZtcOyM7E6AyTOHJZBxqgLwD01tiYHAaKQq+JKoOX2Qabid1FnCkjD
+ psLWB9YdF4B+wfNE1VpMsgu2CqQxajZecXv8/w7TojlPQ5aL+NV5NPywwuoamjJrx
+ UNjHqd/9HDleP8RHcoAOGAgvN4EpgMWExM4sFP9mCcRL6OMNnFPzrtdv5Iw5d9Lus
+ qkxaFizocWgDkfArPw==
 X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue109
- [212.227.15.152]) with ESMTPSA (Nemesis) id 1M72wT-1wAFZS1zwd-0010AF; Mon, 30
- Mar 2026 17:00:45 +0200
-Message-ID: <64cec2e2-97c2-45f7-9feb-0d341145b25f@vivier.eu>
-Date: Mon, 30 Mar 2026 17:00:43 +0200
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue011
+ [212.227.17.165]) with ESMTPSA (Nemesis) id 1N2lzA-1vO6qM1U20-014xMP; Mon, 30
+ Mar 2026 17:07:06 +0200
+Message-ID: <0fa506d4-8031-48c4-ba72-533c05322f96@vivier.eu>
+Date: Mon, 30 Mar 2026 17:07:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] include: Don't include guest-host.h in cpu-ldst.h
+Subject: Re: [PATCH 2/2] include/user/guest-host.h: Provide g2h etc for both
+ abi_ptr and vaddr
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
  Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20260330143123.1685142-1-peter.maydell@linaro.org>
- <20260330143123.1685142-2-peter.maydell@linaro.org>
+ <20260330143123.1685142-3-peter.maydell@linaro.org>
 Content-Language: fr
 From: Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=laurent@vivier.eu; keydata=
@@ -91,50 +92,50 @@ Autocrypt: addr=laurent@vivier.eu; keydata=
  OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
  JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
  ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <20260330143123.1685142-2-peter.maydell@linaro.org>
+In-Reply-To: <20260330143123.1685142-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rYfOjPbL+juxptyeFCuBkhSILZz9ahwI5TOnNEjOoUNyK5iiJux
- h+dBabarY8xjjtLZJf5VsKN1cngIul9o4kyRBQ7Fuzx3CxAB2mBDhDx06aQINTMpOwjx5b/
- FaPlFF+XbEDRfRpqsaVvvrMNW5wKWiwSNGAoMpORhDJWkTgydF60Lm/HybiLZQ71uT2dRGF
- PtE0cb3tX7OcVq3Lr24LQ==
-UI-OutboundReport: notjunk:1;M01:P0:E4K+1M/BGws=;kY3YX/2NmpGTwsLicb1gnfayxCe
- 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
- 1qY1hXhmXWlrfzN6E5xHy0gH7l+4c=
-Received-SPF: pass client-ip=212.227.17.24; envelope-from=laurent@vivier.eu;
+X-Provags-ID: V03:K1:lwG/i6Uz5vwcsDo++QdkGgeLt9Hc9YsIqrm7wNaYESwIO/e8lU2
+ 9McShQUeyUDOaupD478JUxEJguGtUaTLwlWEovR8PCXOcy/KCS7rBLN8nBvobfuSBLI6gDM
+ J4uMr/eWFK3E6/XjFzJJkKArQiYz0UnPsD0QYjsa454mN6DVV3+HjR8douKMHQ7oC/nuNK/
+ EhQj2abVJL2e9zTL54Crw==
+UI-OutboundReport: notjunk:1;M01:P0:A7lCcRC3R2A=;tVNn0kMXXYhmmwsMPkAgKPYTm4Y
+ 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
+ 0QB6EqO4juoxWcacgFeuPsO3qjWlA=
+Received-SPF: pass client-ip=212.227.126.131; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: 0
 X-Spam_score: -0.1
 X-Spam_bar: /
 X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -153,65 +154,275 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Le 30/03/2026 =C3=A0 16:31, Peter Maydell a =C3=A9crit=C2=A0:
-> We currently include user/guest-host.h from accel/tcg/cpu-ldst.h.
-> However that file doesn't need anything from guest-host.h, since we
-> removed the uses of g2h() in commit 9b74d403b30e ("accel/tcg: Move
-> user-only tlb_vaddr_to_host out of line").
+> In commit 7804c84a ("include/user: Use vaddr in guest-host.h") we
+> changed all the functions in guest-host.h that took or returned their
+> guest address argument in type abi_ptr to instead use vaddr.
 >=20
-> Move the include of guest-host.h to where it's actually needed.
+> This introduced regressions for the case of a 32-bit guest and an
+> address above 2GB for the common situation where the address is a
+> syscall argument stored in a variable of type 'abi_long'.  With
+> abi_ptr (which will be an unsigned 32-bit type for 32-bit guests),
+> the address is cast to unsigned 32-bit, and then zero-extended to
+> 64-bits in g2h_untagged_vaddr().  With the switch to vaddr (which is
+> always a 64-bit unsigned type), the guest address will instead be
+> sign-extended to 64 bits, which gives the wrong answer.
 >=20
+> Fix this by providing two versions of the affected functions: the
+> standard names (g2h(), g2h_untagged(), guest_addr_valid_untagged(),
+> guest_range_valid_untagged(), cpu_untagged_addr()) return to using
+> the logically-correct abi_ptr type; new versions with a _vaddr()
+> prefix use the vaddr type.
+>=20
+> accel/tcg/user-exec.c must change to use the _vaddr() versions; this
+> is the only file that uses guest-host.h that we want to compile once.
+> All the other uses are in linux-user and bsd-user code that
+> inherently has to know the sizes of target-ABI types.
+>=20
+> Cc: qemu-stable@nongnu.org
+> Fixes: 7804c84a ("include/user: Use vaddr in guest-host.h")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3333
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> This isn't needed for the following bugfix patch, but it made
-> it a bit easier for me to understand where we're actually using
-> the functions.
-> ---
->   bsd-user/qemu.h              | 1 +
->   include/accel/tcg/cpu-ldst.h | 4 ----
->   linux-user/qemu.h            | 1 +
->   3 files changed, 2 insertions(+), 4 deletions(-)
+>   accel/tcg/user-exec.c     | 26 ++++++++--------
+>   include/user/guest-host.h | 62 +++++++++++++++++++++++++++++++++++----
+>   2 files changed, 69 insertions(+), 19 deletions(-)
 >=20
-> diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-> index 2c586e546f..b0b2c249fb 100644
-> --- a/bsd-user/qemu.h
-> +++ b/bsd-user/qemu.h
-> @@ -27,6 +27,7 @@
->   #include "user/abitypes.h"
->   #include "user/cpu_loop.h"
->   #include "user/page-protection.h"
-> +#include "user/guest-host.h"
+> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+> index f8b4a26711..d283d3cc72 100644
+> --- a/accel/tcg/user-exec.c
+> +++ b/accel/tcg/user-exec.c
+> @@ -647,7 +647,7 @@ void tb_lock_page0(tb_page_addr_t address)
 >  =20
->   extern char **environ;
+>       if (prot & PAGE_WRITE) {
+>           pageflags_set_clear(start, last, 0, PAGE_WRITE);
+> -        mprotect(g2h_untagged(start), last - start + 1,
+> +        mprotect(g2h_untagged_vaddr(start), last - start + 1,
+>                    prot & (PAGE_READ | PAGE_EXEC) ? PROT_READ : PROT_NON=
+E);
+>       }
+>   }
+> @@ -734,7 +734,7 @@ int page_unprotect(CPUState *cpu, tb_page_addr_t add=
+ress, uintptr_t pc)
+>           if (prot & PAGE_EXEC) {
+>               prot =3D (prot & ~PAGE_EXEC) | PAGE_READ;
+>           }
+> -        mprotect((void *)g2h_untagged(start), len, prot & PAGE_RWX);
+> +        mprotect((void *)g2h_untagged_vaddr(start), len, prot & PAGE_RW=
+X);
+>       }
+>       mmap_unlock();
 >  =20
-> diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
-> index a5711bc15a..ea2cbf40fe 100644
-> --- a/include/accel/tcg/cpu-ldst.h
-> +++ b/include/accel/tcg/cpu-ldst.h
-> @@ -71,10 +71,6 @@
->   #include "accel/tcg/cpu-mmu-index.h"
->   #include "exec/abi_ptr.h"
+> @@ -763,7 +763,7 @@ static int probe_access_internal(CPUArchState *env, =
+vaddr addr,
+>           g_assert_not_reached();
+>       }
 >  =20
-> -#if defined(CONFIG_USER_ONLY)
-> -#include "user/guest-host.h"
-> -#endif /* CONFIG_USER_ONLY */
-> -
->   static inline uint32_t
->   cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintp=
-tr_t ra)
+> -    if (guest_addr_valid_untagged(addr)) {
+> +    if (guest_addr_valid_untagged_vaddr(addr)) {
+>           int page_flags =3D page_get_flags(addr);
+>           if (page_flags & acc_flag) {
+>               if (access_type !=3D MMU_INST_FETCH
+> @@ -792,7 +792,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr=
+, int size,
+>  =20
+>       g_assert(-(addr | TARGET_PAGE_MASK) >=3D size);
+>       flags =3D probe_access_internal(env, addr, size, access_type, nonf=
+ault, ra);
+> -    *phost =3D (flags & TLB_INVALID_MASK) ? NULL : g2h(env_cpu(env), ad=
+dr);
+> +    *phost =3D (flags & TLB_INVALID_MASK) ? NULL : g2h_vaddr(env_cpu(en=
+v), addr);
+>       return flags;
+>   }
+>  =20
+> @@ -805,13 +805,13 @@ void *probe_access(CPUArchState *env, vaddr addr, =
+int size,
+>       flags =3D probe_access_internal(env, addr, size, access_type, fals=
+e, ra);
+>       g_assert((flags & ~TLB_MMIO) =3D=3D 0);
+>  =20
+> -    return size ? g2h(env_cpu(env), addr) : NULL;
+> +    return size ? g2h_vaddr(env_cpu(env), addr) : NULL;
+>   }
+>  =20
+>   void *tlb_vaddr_to_host(CPUArchState *env, vaddr addr,
+>                           MMUAccessType access_type, int mmu_idx)
 >   {
-> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-> index 85e68eff7b..cfe5f45fc4 100644
-> --- a/linux-user/qemu.h
-> +++ b/linux-user/qemu.h
-> @@ -10,6 +10,7 @@
->   #include "syscall_defs.h"
->   #include "target_syscall.h"
->   #include "accel/tcg/vcpu-state.h"
-> +#include "user/guest-host.h"
+> -    return g2h(env_cpu(env), addr);
+> +    return g2h_vaddr(env_cpu(env), addr);
+>   }
 >  =20
->   /*
->    * This is the size of the host kernel's sigset_t, needed where we mak=
-e
+>   tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+> @@ -822,7 +822,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState=
+ *env, vaddr addr,
+>       flags =3D probe_access_internal(env, addr, 1, MMU_INST_FETCH, fals=
+e, 0);
+>       g_assert(flags =3D=3D 0);
+>  =20
+> -    *hostp =3D g2h_untagged(addr);
+> +    *hostp =3D g2h_untagged_vaddr(addr);
+>       return addr;
+>   }
+>  =20
+> @@ -938,7 +938,7 @@ static void *cpu_mmu_lookup(CPUState *cpu, vaddr add=
+r,
+>           cpu_loop_exit_sigbus(cpu, addr, type, ra);
+>       }
+>  =20
+> -    ret =3D g2h(cpu, addr);
+> +    ret =3D g2h_vaddr(cpu, addr);
+>       set_helper_retaddr(ra);
+>       return ret;
+>   }
+> @@ -968,7 +968,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>           }
+>           if (is_write) {
+>               if (flags & PAGE_WRITE) {
+> -                memcpy(g2h(cpu, addr), buf, l);
+> +                memcpy(g2h_vaddr(cpu, addr), buf, l);
+>               } else {
+>                   /* Bypass the host page protection using ptrace. */
+>                   if (fd =3D=3D -1) {
+> @@ -987,13 +987,13 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>                    */
+>                   tb_invalidate_phys_range(NULL, addr, addr + l - 1);
+>                   written =3D pwrite(fd, buf, l,
+> -                                 (off_t)(uintptr_t)g2h_untagged(addr));
+> +                                 (off_t)(uintptr_t)g2h_untagged_vaddr(a=
+ddr));
+>                   if (written !=3D l) {
+>                       goto out_close;
+>                   }
+>               }
+>           } else if (flags & PAGE_READ) {
+> -            memcpy(buf, g2h(cpu, addr), l);
+> +            memcpy(buf, g2h_vaddr(cpu, addr), l);
+>           } else {
+>               /* Bypass the host page protection using ptrace. */
+>               if (fd =3D=3D -1) {
+> @@ -1003,7 +1003,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>                   }
+>               }
+>               if (pread(fd, buf, l,
+> -                      (off_t)(uintptr_t)g2h_untagged(addr)) !=3D l) {
+> +                      (off_t)(uintptr_t)g2h_untagged_vaddr(addr)) !=3D =
+l) {
+>                   goto out_close;
+>               }
+>           }
+> @@ -1231,7 +1231,7 @@ static void *atomic_mmu_lookup(CPUState *cpu, vadd=
+r addr, MemOpIdx oi,
+>           cpu_loop_exit_atomic(cpu, retaddr);
+>       }
+>  =20
+> -    ret =3D g2h(cpu, addr);
+> +    ret =3D g2h_vaddr(cpu, addr);
+>       set_helper_retaddr(retaddr);
+>       return ret;
+>   }
+> diff --git a/include/user/guest-host.h b/include/user/guest-host.h
+> index 8f7ef75896..ef83ad8a18 100644
+> --- a/include/user/guest-host.h
+> +++ b/include/user/guest-host.h
+> @@ -29,7 +29,12 @@ extern unsigned long reserved_va;
+>    */
+>   extern unsigned long guest_addr_max;
+>  =20
+> -static inline vaddr cpu_untagged_addr(CPUState *cs, vaddr x)
+> +/*
+> + * These functions take the guest virtual address as a vaddr,
+> + * and are suitable for use from target-independent code.
+> + */
+> +
+> +static inline vaddr cpu_untagged_addr_vaddr(CPUState *cs, vaddr x)
+>   {
+>       const TCGCPUOps *tcg_ops =3D cs->cc->tcg_ops;
+>       if (tcg_ops->untagged_addr) {
+> @@ -39,22 +44,22 @@ static inline vaddr cpu_untagged_addr(CPUState *cs, =
+vaddr x)
+>   }
+>  =20
+>   /* All direct uses of g2h and h2g need to go away for usermode softmmu=
+.  */
+> -static inline void *g2h_untagged(vaddr x)
+> +static inline void *g2h_untagged_vaddr(vaddr x)
+>   {
+>       return (void *)((uintptr_t)(x) + guest_base);
+>   }
+>  =20
+> -static inline void *g2h(CPUState *cs, vaddr x)
+> +static inline void *g2h_vaddr(CPUState *cs, vaddr x)
+>   {
+> -    return g2h_untagged(cpu_untagged_addr(cs, x));
+> +    return g2h_untagged_vaddr(cpu_untagged_addr_vaddr(cs, x));
+>   }
+>  =20
+> -static inline bool guest_addr_valid_untagged(vaddr x)
+> +static inline bool guest_addr_valid_untagged_vaddr(vaddr x)
+>   {
+>       return x <=3D guest_addr_max;
+>   }
+>  =20
+> -static inline bool guest_range_valid_untagged(vaddr start, vaddr len)
+> +static inline bool guest_range_valid_untagged_vaddr(vaddr start, vaddr =
+len)
+>   {
+>       return len - 1 <=3D guest_addr_max && start <=3D guest_addr_max - =
+len + 1;
+>   }
+> @@ -73,4 +78,49 @@ static inline bool guest_range_valid_untagged(vaddr s=
+tart, vaddr len)
+>       h2g_nocheck(x); \
+>   })
+>  =20
+> +#ifdef COMPILING_PER_TARGET
+> +
+> +/*
+> + * These functions take the guest virtual address as an abi_ptr.  This
+> + * is an important difference from a vaddr for the common case where
+> + * the address is a syscall argument in a variable of type abi_long,
+> + * which may be smaller than the vaddr type. If you pass an address in
+> + * an abi_long to these functions then the value will be converted to
+> + * an unsigned type and then zero extended to give the vaddr. If you
+> + * use the g2h_vaddr() and similar functions which take an argument of
+> + * type vaddr, then the value will be sign-extended, giving the wrong
+> + * answer for addresses above the 2GB mark on 32-bit guests.
+> + *
+> + * Providing these functions with their traditional QEMU semantics is
+> + * less bug-prone than requiring many callsites to remember to cast
+> + * their abi_long variable to an abi_ptr before calling.
+> + */
+> +
+> +static inline void *g2h(CPUState *cs, abi_ptr x)
+> +{
+> +    return g2h_vaddr(cs, x);
+> +}
+> +
+> +static inline void *g2h_untagged(abi_ptr x)
+> +{
+> +    return g2h_untagged_vaddr(x);
+> +}
+> +
+> +static inline bool guest_addr_valid_untagged(abi_ptr x)
+> +{
+> +    return guest_addr_valid_untagged_vaddr(x);
+> +}
+> +
+> +static inline bool guest_range_valid_untagged(abi_ptr start, abi_ptr le=
+n)
+> +{
+> +    return guest_range_valid_untagged_vaddr(start, len);
+> +}
+> +
+> +static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
+> +{
+> +    return cpu_untagged_addr_vaddr(cs, x);
+> +}
+> +
+> +#endif
+> +
+>   #endif
+
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
