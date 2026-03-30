@@ -4,85 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4E31061B1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 18:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34EB1061B1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 18:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Hjj-0007lx-E3; Mon, 30 Mar 2026 14:53:20 -0400
+	id 1w7HpU-0002Dk-Qd; Mon, 30 Mar 2026 14:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7HjD-0007hZ-D1
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:52:47 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1w7HpK-0002CE-Oz
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:59:07 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7HjA-00039I-0z
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:52:46 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43cf5ad500fso1875967f8f.0
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 11:52:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1w7HpJ-000470-57
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:59:06 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b79f8f7ea43so940532266b.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 11:59:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774897143; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fgq1IFoqXvb+4rIgzaAh+mI5Er0TY+pDLhdeP5E/pIzMCAjV4Imm9kqa5HHsskk6LX
+ smOr4opjZQciYyRPu1WrE57KbTBXFBHW1OBSPm+3VMUaS6Lv++CcbQghpJ5jAxblX4k4
+ HUeWZjDaeE5XfjldhVpa5wK+TilkbNCARSCpr8Y63se8cLgRDwyCF4UC96fNj9NnT8L4
+ Tjo/YQ6ABnCGVwvnL/wuxyMOyIayK7JCBuo1OCyVr8dq9i2/A9Vx4VQOQ12zbD20kck2
+ x4evvMW3ZvbhE+gp1xRLL1vZmRksZ8Em1WXDUfbwRcM51r7DabfjNpCdc809eZzV2eFC
+ YLfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=k4rAoAoPNN+VzZnBKbPKnqdI75IN2AVUh/oLxv4NemQ=;
+ fh=xopoZxAxfwA5WIpxTaonJ6ni507NJjSH9E3qLXTQufM=;
+ b=kduBMNhT7hyp6872+WFG4dbx76cD+6vCck8ASlwRuZ/nBd4l7xCh+syB/4QTU63GP4
+ GjcW6642xhlHExK05ksItNYO834FCYUn/eZanLh5dwHGqERhW3HS11dsaSNK+eVo+rGi
+ sKRCIoU2gb2ZhJhatf25n8naSC7auXfhtnUZap0LebwLd5sGCSjCTnXifkKZQzxw+CSV
+ XukXZv4BicFRBeMplQPq27bWkAUur6OiWcKWot2vlmeU1AEMw3htZ08MUzMX72bwcJDK
+ zOc73BDJxqtfRJKI1tOwSD1y8nISyDyidLdcgV52z4a4m8mfael4cv8Ow9Fig9IodUtH
+ WfGw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774896762; x=1775501562; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=p8uB8xGKHFafOJAt7VvZZu5jT93acMkkOA2W6vmo5NM=;
- b=aP2GC6Syft03GqE6Dz51PNraQxzhHVwaaJVHGdVkTjTkeBpbeSWzsFc4vHlfhzrCWg
- +6v81YNGfbVmbgD07EVlvSORr/G8EC1AdOA1fghbyrB3pyuFkmLYg8M87vufuyPEvdCV
- dFxyRudItY2HIA88UL8lo6kx/qPVRWP40VulAu/j47q/2wOX253cb8p13nQp5XTJgUQc
- ArX/3l2ipb6CrXQSf1O49SblI4bxxQliBSh8/yDI3yB8nHC4gbsvBl5sZJ2wwMaoG+zB
- LNdD9OqkPRdIFTwegvPjwyGqMtmgupS4l+BPXrTuyhc/x1hD7lJUelpuyhUMMw4Tv3GV
- s5Ew==
+ d=gmail.com; s=20251104; t=1774897143; x=1775501943; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k4rAoAoPNN+VzZnBKbPKnqdI75IN2AVUh/oLxv4NemQ=;
+ b=ZnPVG9rdQLWKdgjrbnkep90iUCCEm33edeYiIOv6eNJCA/GJ7OFVmBSMNLoBt6ZrNF
+ zbWIDjO6BWVwCw78Y7UPl+gn7P5jxNGu6vKX+CA3iD4Ap6PekPo9R5GRmJXZQ9sfLs5F
+ YAwsy3hQzgos+ByNVlVjIska/WtIvNFNJlTGM9rq+xVOHnOpRyTfxOl47LV3P9OJBO3z
+ 265It7zNXiuw+v5taLdgnN2XMJb/54JX0+KCeUMqclefZAWu0/grKmPc31e7QW0vu0uT
+ fl9VVyu9GRHl/ILRgPCm25cNiOMFLjjR89UExSZjILmOVG6+ezdrxO5F77DnNYQ83dSv
+ /Vrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774896762; x=1775501562;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=p8uB8xGKHFafOJAt7VvZZu5jT93acMkkOA2W6vmo5NM=;
- b=VMWOgverhJ1AAjfTu5n8Bm4ahrvjTsbF3fvfC9wB99YRiTjesp/wBmM+jZHeIKM5dR
- mR9U5FCsptwACaH2q72dwyqO6+7Grhq1cVxjC1JJ7NJMPR2tnxf9rgxRnI2ewqMDwVS7
- 5h+uufh6JlcgAJ3VV33V4gfZB5/GoK0yHSZulGjzWr53SWn0f5xypAfgKXlfzW1cuz3E
- 98QXh40qcPRcnWOLvLSD8O46hAmlq2qvViiFx+ag++XfGBS4UYWCQD50YCnU7O5VcW+B
- bgyoPB1KQm6eLHzIdfbRHr3O1KhkJRkpLDqHlR5eYMILpS37e+HkARGAImoSLYPKiJEJ
- PG+g==
-X-Gm-Message-State: AOJu0Yx3+FsjMJfMXFhyfp6u2bR730ljXU7hfmqqLNMnLSkQVK+hayQc
- nN6E8PgQhIIHRLPnCyfpdCKx4nfs4QlFsno3NT8jvbVfBRv6YWN/yeFxiEFivQOa5NGKWKizhfd
- EChD0SRw=
-X-Gm-Gg: ATEYQzy9FJiURsWM8PxoyD/7SzWVOw8OmKudlmcI/GtMRHyAHLHvXcm6jmEjzv7Nqp/
- z1c6mdvyQExjcTUavLywH8yHq7eAPND/7IiDdpWYHQPw2NByap59gOs/RlTIqRe8DnEP/n/72sr
- g5awkHTY0xzNNja32HjkKuyNWlbK+q8BJwGzJDXKPdMd6a9W+f363qZD//SNYHjlTrgH2HGicxJ
- 8078BZzZ5RnNY4BaKUFuF/WITVR2TSv6epvphN31eqiMwwFG2l05u4Io8q7ZKeh2J0TocpbeDmF
- mwjlVzvn8EezlEnSGfZxW1pOO174si/uiWA0toPW6X3Z6jqsW1sBT7r1MXYHv6JCCrsMKEE+plk
- ZR06ES+SlYLAk9lojQp14bJlckgmg4M9/2SnlkjHx1Omb1bk/bNn0iwLhTIcgdsnPObG+EoDKM5
- HVRrv1NGnJboxGE0AfSCCvtWT4fnmqbIqr7+2uhw17ve1ERE4dryZmCXzrHoJq4FlQcAf7rMSdl
- W2GVTRCerlNOF6jCbvtLzuXCSNSi74=
-X-Received: by 2002:a05:6000:2911:b0:43b:9cff:e32c with SMTP id
- ffacd0b85a97d-43b9e99792cmr22652341f8f.18.1774896762100; 
- Mon, 30 Mar 2026 11:52:42 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21f1749sm21229400f8f.14.2026.03.30.11.52.40
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 11:52:41 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 3/5] MAINTAINERS: Remove Riku Voipio
-Date: Mon, 30 Mar 2026 19:52:34 +0100
-Message-ID: <20260330185236.1905636-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260330185236.1905636-1-peter.maydell@linaro.org>
-References: <20260330185236.1905636-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1774897143; x=1775501943;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k4rAoAoPNN+VzZnBKbPKnqdI75IN2AVUh/oLxv4NemQ=;
+ b=NPDC+dKr8+TrmR8m+dro9qNCjKj0icdCPSsb+CZeN13YLKst3veGkp8VqUDVVG67xY
+ I0KlY+78OhRzMYPHy6OyqFP7LS/4tZFgGbgZz0ai/aeFzznNnqvxqLDCe+Fk7jZvcZEp
+ CAr8vi/IX36aK2qYs705bzLfFfXNU+DuNOIU/23+eXsQwx2j9807MnHy6n0LBDlO6YsT
+ A2pAO05LGO4Hqts7EFrfTmlQwSmnz6Ab24p/+Sji1fvaWU2JO2PgtIxW5qdPMahKESib
+ tr4ZsxbYjB/WTWUVcBSbH18ZqX0Nrpy/AArW3kecp0/W3stsZPeSUceGBQB8StwkyZKQ
+ xwNw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXAY9mp6OAkfWg9IRtLH65gXjzd0MEoKVoiVNAbpjhTFmdaf+/68q5xhj28MQO91ft7bP9iQ0TIqrWr@nongnu.org
+X-Gm-Message-State: AOJu0YySHthE2iAkbLxxC4OIfdyKM15qLOil64Vd6G2YfilgDhz54YhE
+ EzcXOo345A5AbgAKXeDhPUI26+Rz9+SQMGn9vRPhNwPjq057A+g4jeamqtBwJmIOTf5BWxJuE7Q
+ VEvgMynwak5eCHvTe9w1xhacYNf63+ok=
+X-Gm-Gg: ATEYQzyQ5Ndr8bh9U6f82VNvPISCp+cxpet429DKC+XtiMBI4RNKk1qGDKsX6fSLCB2
+ FmdwMRUeMKC11Hc9N5yzQVvYADdAwR6lUoW48CiTXKpe1yjr6lj6L/3LqbbHTeh2l++FVFsjDG3
+ h4GuW4tNydY3kkkgrutZukYkxVZCK4ljQYBcJMEMViTADHN4HYJQG8MLczfG9ZaUYhKupQLxd8Q
+ jylzFypspTXN1Zf6xRIlX4IggLzNgRr+TsIvgsmyR5aDSc2l/wLGEr0OLNz4gbx5As39220Vp/B
+ 8Fsy8pZS
+X-Received: by 2002:a17:907:94c2:b0:b95:6687:4d15 with SMTP id
+ a640c23a62f3a-b9b50937e83mr873615566b.42.1774897143252; Mon, 30 Mar 2026
+ 11:59:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+References: <20260305142459.52559-5-zhangckid@gmail.com>
+ <20260309081502.GC39949@fedora>
+ <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
+ <20260312052422.GA116604@fedora> <87bjgtxv9b.fsf@pond.sub.org>
+ <CAK3tnvJc2U+c=sx=RASKHCAjcTQMx9dg0iOpe5eEui9U0-Ft_g@mail.gmail.com>
+ <87jyv9fyn5.fsf@pond.sub.org>
+ <CAJSP0QWnRRRATvgRtWss_hw4ygqB_bHgBuWQd3mqUcbb1q48KA@mail.gmail.com>
+ <CAK3tnv+9pdVG_FzEYbux3JDHv8T1ywbwLBvA6j4xJ=ATdNtxAQ@mail.gmail.com>
+ <875x6dzo50.fsf@pond.sub.org> <20260330133155.GA154632@fedora>
+ <CAK3tnvJJKUgmJQ0oV4kOX7Lppo4=90EHUUzyGiTOMZjX44fevQ@mail.gmail.com>
+ <CAJSP0QXTEHphbgR_xxqBSvcvqNo=aGe6S1M7wksC=3BHEgKRAA@mail.gmail.com>
+In-Reply-To: <CAJSP0QXTEHphbgR_xxqBSvcvqNo=aGe6S1M7wksC=3BHEgKRAA@mail.gmail.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 31 Mar 2026 02:58:26 +0800
+X-Gm-Features: AQROBzBniL2odKJZf73za_PjubpCIhtAYA7MACyOkOT21wkTHjEdPS_sbFZdvdw
+Message-ID: <CAK3tnvLJWkgqnsA0D3iUdgptfE-GfxdtHGDcnmMQf1xu1Xy8DA@mail.gmail.com>
+Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
+ holder name
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,32 +133,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Riku Voipio doesn't wish to be listed in MAINTAINERS any more;
-remove his email from the relevant sections.
+On Tue, Mar 31, 2026 at 1:53=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com=
+> wrote:
+>
+> Hi Chen,
+> It seems to be an email delivery issue. You can check the mailing list
+> archives if you are worried about missing emails:
+> https://lore.kernel.org/qemu-devel/20260305142459.52559-1-zhangckid@gmail=
+.com/T/#t
+>
 
-This moves the "overall usermode emulation" section to Orphan status.
+OK, but the lore can't catch the mail too....
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260323134741.4114629-2-peter.maydell@linaro.org
----
- MAINTAINERS | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+2026-03-30  3:13                 ` Zhang Chen
+     [not found]                   ` <875x6dzo50.fsf@pond.sub.org>
+2026-03-30 13:31                     ` Stefan Hajnoczi
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index eb7132e39d..ae356d886f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4054,8 +4054,7 @@ F: hw/core/resetcontainer.c
- Usermode Emulation
- ------------------
- Overall usermode emulation
--M: Riku Voipio <riku.voipio@iki.fi>
--S: Odd Fixes
-+S: Orphan
- F: accel/tcg/user-exec*.c
- F: hw/core/cpu-user.c
- F: include/user/
--- 
-2.43.0
+And like this:
+https://mail.gnu.org/archive/html/qemu-devel/2026-03/msg08030.html
 
+That's irrelevant to what we're discussing, I'm just curious, thank you.
+
+Thanks
+Chen
+
+> Markus' reply arrived in my @redhat.com inbox but seems not to have
+> reached the mailing list yet. It could be due to slow mailing list
+> servers or temporary email delivery problems.
+>
+> Stefan
 
