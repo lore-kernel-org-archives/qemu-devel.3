@@ -4,111 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27457FB3CEB
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF07FB3CEB
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79Ez-0004CI-30; Mon, 30 Mar 2026 05:49:05 -0400
+	id 1w79Ip-0005P8-2Z; Mon, 30 Mar 2026 05:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w79Ej-0004BJ-GB
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:48:45 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w79Eh-0004rC-Ml
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:48:45 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-6501cbb52e5so1114570d50.2
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 02:48:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774864122; cv=none;
- d=google.com; s=arc-20240605;
- b=Jnr6G/6v/s0oxzV0gIMnbbFh2KIu8Oio04qas3wKiiHPirw8wwCetOd615CRi5WaK0
- 2e527FWR47ciGfUTqRJzsPTyqHGzgtqh6djuOW/KrFUMOdIJMYxOxQi+x3UItWiw7IDk
- iVBEHfJT0xNcCJmtGtthjxYdfH2V9N0mqj1UWmgpo/IzOZgk371RNHaPUI2w6xtJ3SVX
- 5uqn+gFvPDSajekh+bBDyPg97feECySdgOVjwdwJrY9P9AMdgBPsBZA+J7EUulzyVOC4
- 1WkebWCaGpNVPCW4PudGBoOJx1CtLMCI01YVzddKkFtFIMzbxEGlehNcfbB3ZVOaoQWy
- 4dRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=iycBXHR4OTtAqOojCOVJqRWbKeXzzC5WpBs226XflUw=;
- fh=AEBg2FGFISbLihcAZizbFzQQBOdP+MZ/WH8KBCvFEmI=;
- b=FLaLtXEgT4cxFWdzuZUkacfCLj/WgIsp9z1rKN63WHwUtMojjTGS+F+FlfbptpleXY
- LrF3WzYHR07zZTLw5kMYXgSLRRxNiHGsHve/PnkoNAf8Mw9ovxi3/KS7L9GewhxvonHK
- HJ60cxHkGHZhqpTafttXg0M2L1v+DHfvSRhg21txpEaSSxuqm9V5gNFiOp3ns+Nnlt9n
- AhilTAtRcnjfKnYP++ie+oUh31KezbbAYAuDeb5ovscX17IeFGPVmHIqXxbiMeeecc7z
- m2qh15X8doBXJAyiL4lPSg2YBrp4HyMd68sx5CiLpE15StWJGk77Kyg7+fuIJcpV/Fy4
- am+g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774864122; x=1775468922; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iycBXHR4OTtAqOojCOVJqRWbKeXzzC5WpBs226XflUw=;
- b=ruYXpEr9ZYy3j6YVrbaj9F4d9kaXuHPmUfsVOwGR7IG89f6ztp+lP1Qb2ec2r+BFeP
- 2tfXOP5puZvwMSyVD8seya90JADqz1OoolrrgUQPUAEecG35XsXu7RhQbp9PsbdF9XYq
- MJMs2ANZYdSal3Zdk4xRXEFXzYikKwtHgTthtrdIBRXsZuT7rREGYY0D0Q53wsNjHzYC
- m1R5R2BhWw0tuGhBA0Wdz5mK6IdC/RVmMOaCmLqDVQb+ZTbn35r7LAdUR/tpscuq5Ahg
- 2IoLPs3B+QilTseXEPta7Rb7ym37PDLkaby1Odw9DlJ2DUo8KuiH9QwjIltckcQHSUq4
- 6w8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774864122; x=1775468922;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iycBXHR4OTtAqOojCOVJqRWbKeXzzC5WpBs226XflUw=;
- b=Wx/h6VZ613UPLKA/yxRdPdpT5oBU4i8v/rnHt63hoHPCFRPNK51Im6dTNzgaCgDnft
- ajG3GeIUM/OhqS5NNaLtJC0KiNfSJYCzie4GJQoP0rfOSOa2x+qijRsaEFV8V7ANRT5u
- GaYlkhPlqZAwMyoOl2OLrYAR0mjCgj6adwLMx88juvZ2XHdUHeFbPw41FsIA1k1qr6vd
- 4KK5H4ze1MWioayESanEHfvbEeAnQ9Fh91GjqW03EwfAATooVYPlK53J5cmi/7LLNzez
- mD5LIos4n+Y1pGEX04wpz/NunEsU1JLt8Z0eRQpf3hJAcm0jQMp04IQwoat+rPR5YCiK
- fXQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbmrVmw572fQaHcvtcKxb+tedlA0zWCDHx443o+IkHyVrz0p57Ev2/7O4Of8VqdKRhWQgSzzejxe5S@nongnu.org
-X-Gm-Message-State: AOJu0YxitL0hyoMCSTig8FHL/6HQ5wNDJ4ziI2VHoT7rt+0HG43Y21XU
- 43y/GB51EIlgERmieWo7coMQJXZvvpb2pWY0kEAq+regCCPs3qXUUemvb0V9J1Uh64+tVx3TGsN
- fd1aWSFCBkauL/KSywLBMmUxYegkAQUExPsCEgAoEag==
-X-Gm-Gg: ATEYQzxiYEo+vRB28tL8UN28bwmvYenejjREbBD927Hfs8EPwMww7hb2mpE0RuBza4K
- iBhdXO9qmcVaE08mAS/9RSQb2T30KuUSzqDuhKvhDvgfB4/2QOBhSA00tkfhfwi5CD+M/jRV6cY
- ZVq3Eh6bKpi2s4Zlru7sF7PHNQ6XrKLRVOdL7PCYWUKt80ERrdo2TIBifad69W4t3yXz52ylUXf
- 1DHNjKwQnKTrU0aC0k+S+sDyV2DmCK8YaR5F2o0ynNW091wA97Mb+lnuJzZtBiIK8kAjrSqMnp0
- L5zNaYxUeQD1WUN1uZzpJeBuZAF8zmx2qVuPBgWr3rlUam5sxRuNY6+kJwge3frOBXY=
-X-Received: by 2002:a05:690e:2251:b0:64e:a1f3:e5c9 with SMTP id
- 956f58d0204a3-64ff741d88cmr7876521d50.57.1774864121679; Mon, 30 Mar 2026
- 02:48:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w79Id-0005N7-3f; Mon, 30 Mar 2026 05:52:48 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w79IZ-00064W-3x; Mon, 30 Mar 2026 05:52:46 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9989EC0203;
+ Mon, 30 Mar 2026 12:52:41 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6bf:8080:78d::1:13])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id QqVNFG1Af4Y0-5AOJ86sv; Mon, 30 Mar 2026 12:52:40 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1774864360;
+ bh=Hh5LG4Doo1WyRSeiFJBSkiaSBS0yCBvqInUEe434a44=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=LRYxjwiMbBzC7+zDw44jqlEVvTVB+c0ttr229s8mU327X7ixmhIVuTrqLEJCWBxNz
+ yy9sUmLKw/Q2lo8DBvyfs5owDPIiq1Ehbm8m/6MWqLYuvhz15/FYnpp1Jrno1mEr+z
+ /Y3jybaki2fs06GZ1lg1SEmWrkIh6RYT+4tRBWdY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Milan Zamazal <mzamazal@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Hanna Reitz <hreitz@redhat.com>,
+ virtio-fs@lists.linux.dev, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v3 5/5] vhost-user: add skip_drain param to GET_VRING_BASE
+Date: Mon, 30 Mar 2026 14:52:26 +0500
+Message-Id: <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
+References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
-References: <20260327145012.907264-1-peter.maydell@linaro.org>
- <f31d3ba2-b843-4322-aa8e-2c5a1cd76fdf@redhat.com>
-In-Reply-To: <f31d3ba2-b843-4322-aa8e-2c5a1cd76fdf@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Mar 2026 10:48:30 +0100
-X-Gm-Features: AQROBzCrCjyaQBwlWbMfmSV8leTPOggZ0jndM_HDgwKjxlOLP347-UrJGdJj008
-Message-ID: <CAFEAcA8UQsrFo3nQRN_3F6CAKQGWCgv1AsEP7w8FD5-EWDh8rg@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/xilinx_zynq: Use strcasecmp to parse boot-mode
- option values
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -120,47 +85,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Mar 2026 at 08:35, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On 3/27/26 15:50, Peter Maydell wrote:
-> > In zynq_set_boot_mode() where we parse the string the user has set
-> > the boot-mode option to, we use strncasecmp(str, "qspi", 4) and so
-> > on.  This is wrong, because it means that we will ignore any trailing
-> > junk on the end of the option string, and handle
-> >   -machine boot-mode=sdXYZZY
-> > the same as
-> >   -machine boot-mode=sd
-> >
-> > In the documentation we say:
-> >   Supported values are ``jtag``, ``sd``, ``qspi`` and ``nor``.
-> > and that's obviously what we meant to implement.
-> >
-> > The correct tool for this job is a simple strcasecmp operation.
-> > Switch to that.
-> >
-> > We use the g_ascii_strcasecmp() rather than plain strcasecmp()
-> > because we're comparing ASCII strings here and don't want the
-> > potentially locale-specific behaviour that strcasecmp() implies (and
-> > we're trying to standardize on the glib function for this kind of
-> > string comparison).
-> >
-> > Fixes: 7df3747c92d13 ("hw/arm/xilinx_zynq: Add boot-mode property")
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->
-> Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
->
-> > Kostiantyn: I sent this patch out while it was on my mind, but
-> > don't worry about conflicts with your series -- assuming your
-> > patchset goes in first I'll fix this one up later.
->
-> No worries, go ahead since you can apply this even for 11.0; I'll take
-> Kostiantyn's patches and handle the conflicts.
+In case of migration of QEMU from the new version (where the
+inllight-migration parameter is present), to the old one (where it is
+absent) there is no way to disable this feature on the backend during
+runtime.
 
-OK, great. I'm going to do a pullreq before rc2, so I'll put
-this in there. Or if you're going to take Kostiantyn's series
-and send it out for rc2 then feel free to put this patch in
-there instead of the one that fixes up this file.
+This commit slightly changes the semantics of the protocol feature
+VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+adds a new parameter for GET_VRING_BASE, which allows to control the
+drain in-flight requests on the backend.
+Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
+on anytime.
 
-thanks
--- PMM
+In vhost-user-blk use inflight_migration param to enable skip_drain to
+suspend in-flight I/O requests, and then migrate them throught inflight
+subsection.
+
+Also now QEMU will always try to setup
+VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
+backend. This will allow to use skip_drain parameter on GET_VRING_BASE
+message.
+
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+---
+ docs/interop/vhost-user.rst    |  6 ++----
+ hw/block/vhost-user-blk.c      | 30 ++++++++++++++++++++++++------
+ hw/virtio/vhost-user.c         |  3 +--
+ hw/virtio/vhost.c              |  1 +
+ include/hw/virtio/vhost-user.h |  1 -
+ 5 files changed, 28 insertions(+), 13 deletions(-)
+
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index bfa75ff9a3..63efc87264 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -1255,14 +1255,12 @@ Front-end message types
+   *suspended*, see :ref:`Suspended device state
+   <suspended_device_state>`.
+ 
+-  The request payload's *num* field is currently reserved and must be
+-  set to 0.
+-
+   By default, the back-end must complete all inflight I/O requests for the
+   specified vring before stopping it.
+ 
+   If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+-  feature has been negotiated, the back-end may suspend in-flight I/O
++  feature has been negotiated, using request payload's *num* field,
++  when *num* is set to 1, QEMU can tell the back-end to suspend in-flight I/O
+   requests and record them as described in :ref:`Inflight I/O tracking
+   <inflight_io_tracking>` instead of completing them before stopping the vring.
+   How to suspend an in-flight request depends on the implementation of the back-end
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index a3ecd83f54..522e9d34b5 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -134,10 +134,7 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
+ {
+     struct VHostUserBlk *s = opaque;
+ 
+-    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
+-                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+-
+-    return inflight_migration;
++    return s->inflight_migration;
+ }
+ 
+ 
+@@ -232,11 +229,14 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+         return 0;
+     }
+ 
++    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
++                      runstate_check(RUN_STATE_FINISH_MIGRATE);
++
+     force_stop = s->skip_get_vring_base_on_force_shutdown &&
+                  qemu_force_shutdown_requested();
+ 
+     ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+-                       vhost_dev_stop(&s->dev, vdev, true, false);
++                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
+ 
+     if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+         error_report("vhost guest notifier cleanup failed: %d", ret);
+@@ -364,7 +364,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+ 
+     s->vhost_user.supports_config = true;
+-    s->vhost_user.supports_inflight_migration = s->inflight_migration;
+     ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
+                          errp);
+     if (ret < 0) {
+@@ -580,10 +579,29 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+     return &s->dev;
+ }
+ 
++static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
++{
++    VHostUserBlk *s = VHOST_USER_BLK(opaque);
++
++    bool inflight_migration_enabled = virtio_has_feature(
++        s->dev.protocol_features,
++        VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
++    if (vhost_user_blk_inflight_needed(s) && !inflight_migration_enabled) {
++        error_setg(errp, "can't migrate vhost-user-blk device: "
++                         "backend doesn't support "
++                         "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
++                         "protocol feature");
++        return false;
++    }
++
++    return true;
++}
++
+ static const VMStateDescription vmstate_vhost_user_blk_inflight = {
+     .name = "vhost-user-blk/inflight",
+     .version_id = 1,
+     .needed = vhost_user_blk_inflight_needed,
++    .pre_save_errp = vhost_user_blk_pre_save,
+     .fields = (const VMStateField[]) {
+         VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+         VMSTATE_END_OF_LIST()
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index bb8f8eab77..ed95ec7523 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+             }
+         }
+ 
+-        if (!u->user->supports_inflight_migration ||
+-            !virtio_has_feature(protocol_features,
++        if (!virtio_has_feature(protocol_features,
+                                 VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+             protocol_features &= ~(1ULL <<
+                                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index ac4d6fca73..54e4ce2660 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1398,6 +1398,7 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_state state = {
+         .index = vhost_vq_index,
++        .num = skip_drain,
+     };
+     int r = 0;
+ 
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index 53fe996686..c95bad5ddc 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -69,7 +69,6 @@ typedef struct VhostUserState {
+     GPtrArray *notifiers;
+     int memory_slots;
+     bool supports_config;
+-    bool supports_inflight_migration;
+ } VhostUserState;
+ 
+ /**
+-- 
+2.34.1
+
 
