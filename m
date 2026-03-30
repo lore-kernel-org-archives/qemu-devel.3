@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2B41061B08
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB901061B23
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7JrQ-0006je-Ri; Mon, 30 Mar 2026 17:09:24 -0400
+	id 1w7JrR-0006jg-6k; Mon, 30 Mar 2026 17:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w7JrO-0006ie-M9
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:09:22 -0400
+ id 1w7JrP-0006iy-Py
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:09:23 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w7JrM-0001XB-KW
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:09:22 -0400
+ id 1w7JrM-0001XM-RW
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:09:23 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A0F9C596A1D;
- Mon, 30 Mar 2026 23:09:17 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A09D2596A2C;
+ Mon, 30 Mar 2026 23:09:19 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id wPWSbvpw7bFK; Mon, 30 Mar 2026 23:09:15 +0200 (CEST)
+ id OkTHR36y2fOX; Mon, 30 Mar 2026 23:09:17 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 860D75968DE; Mon, 30 Mar 2026 23:09:15 +0200 (CEST)
-Message-ID: <cover.1774904832.git.balaton@eik.bme.hu>
+ id 9F7BF5969F9; Mon, 30 Mar 2026 23:09:17 +0200 (CEST)
+Message-ID: <541ffffdaa4c67b9dcbca6c2498e69b137bce95d.1774904832.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1774904832.git.balaton@eik.bme.hu>
+References: <cover.1774904832.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 0/2] ati-vga Coverity fixes
+Subject: [PATCH 2/2] ati-vga: Add upper limit to x-linear-aper-size property
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +42,7 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Mar 2026 23:09:15 +0200 (CEST)
+Date: Mon, 30 Mar 2026 23:09:17 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: 1
@@ -64,16 +66,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Small patches to address Coverity warnings.
+Coverity warns in CID 1645968 about possible integer overflow. This
+should never happen but to ensure that, add an upper limit on the
+x-linear-aper-size. This may not silence the warning but makes sure
+users cannot cause an overflow.
 
-BALATON Zoltan (2):
-  ati-vga: Silence warning about operator precedence
-  ati-vga: Add upper limit to x-linear-aper-size property
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hw/display/ati.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- hw/display/ati.c    | 4 ++++
- hw/display/ati_2d.c | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
-
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index fc19737d1f..97d871b1e2 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -1130,6 +1130,10 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+             s->linear_aper_sz = ATI_R100_LINEAR_APER_SIZE;
+         }
+     }
++    if (s->linear_aper_sz > 256 * MiB) {
++        error_setg(errp, "x-linear-aper-size is too large (maximum 256 MiB)");
++        return;
++    }
+     if (s->linear_aper_sz < 16 * MiB) {
+         error_setg(errp, "x-linear-aper-size is too small (minimum 16 MiB)");
+         return;
 -- 
 2.41.3
 
