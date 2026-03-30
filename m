@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420F51061B16
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38611061B0F
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:50:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7FhF-0001E3-L5; Mon, 30 Mar 2026 12:42:37 -0400
+	id 1w7Fo9-0002Yi-Gu; Mon, 30 Mar 2026 12:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxpain177@gmail.com>)
- id 1w7EIs-0005eG-KN
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:13:23 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <maxpain177@gmail.com>)
- id 1w7EIp-0002Hg-Ir
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:13:22 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-5a0fc5e2c59so5315905e87.1
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 08:13:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774883596; x=1775488396; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=n7HlmvMzBYazc7D6vTdfmqu/05s3azuW4vD89xhQmnk=;
- b=lEZd9TIvUzlbV5KcdpcdJGlbz89r8IGiLfqC67rgrS+QZPNBdayx4ITz4RBJJ8UdST
- /o50gfrqUouuKgBCvVvc5D6YCd44dyudO7M3EibrgPFeyzUR5YO63cmzyFb9bFofcLzJ
- rwKvvkZUAc80r+Gs4eHleyaFRlJNfSzRlpfvrBxhyIJpVIbvetx5IReyDVyQC2xNlMyE
- tCxIxlK4sQEdeJUr5FcQqZ/7u9ibxnVcR9Ogscv+ZKpZufk72Ry6L8Tbh/p33KOf9sli
- CvL7YxenjeZ/e1HvJcgPz8aWJsBjBC/uXu56dczomQ1R+JOSjTc5ubdDcfGwb1cWM5mB
- 2N2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774883596; x=1775488396;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n7HlmvMzBYazc7D6vTdfmqu/05s3azuW4vD89xhQmnk=;
- b=UtabvPvGnHhtRhWxhGJgLzJv817vWEdldn2S53++chduIKEa0QAhy8k3IdGYhx09Z3
- m21a98ims4fHV5+QhgO7LL7LAhNMS/dQtPwhDpMp2NcWYPkDHDzfTN07XpUOQLR2ZBpQ
- cqdORBl+nKHJctYDyaVOYm6jzzbZgpsUoLEmh4srNPxQLeiLK96qEqzeKWnn6GRO8K2F
- f7iTD91mrwVfXUDZ8kuGw+3EXUGz11getlWeWYRByjys0wAJLLFmjQtZouZ6pj/3zWIC
- ik5il9lFKvnAsU6Dqv5v+Ps4K2i5TnbelGKH3MX/DG9y4BablxYKADc/Jo8o4sVvSkXd
- YFXg==
-X-Gm-Message-State: AOJu0YyyfL0uoRO1oCLM5bzfoOqKxYrH6x3cF62IQxM5GjG+3xE4RFBA
- unPuKChadvKsvMWVjLSCSkvtWMZGanyQqFhtZ/BIOaVIZvsbFLox97ixyBlxm5et
-X-Gm-Gg: ATEYQzxgIBfNZfIxJ+8neJnebtNNB1Wqt/N7n2fs1HOhX4Se9mCh4X+dy7rhLm7Ui2b
- +qQ5SvFceaCcv0IgW4cOsjaxGhR6Tp0tRdxGc0+bfu95uC6Mlro9EJW0D0mtr5eotPfZe/HLVqt
- Zquo+Ko8wzV7+D+Ot+kgsHerx1oeD4VroF3t4SYeB6g1WGvGE6+9zzKrxxCn1jUtNsgn8dJK4JP
- XUgz/DlTifbaMkzkVzcaN8us5NBlIwABIzzzyImPDcH4g5j8xr7AjZC7Gi01zhRr7UMDoozFD3v
- KcwNbOY75m7sUMmXmlVi24rUyuOD3+TggWo76IQ92EL66rdPiJQdLlndHO4CCYXGFjw3SbMzDl0
- njZUpf/VY+snfOwMq/ivIx07f1ETSyR/Mw6Z0fjdifPpwEwTP93lBoXEd4Sg4JR8klo3CswYBVG
- GrvnlgewUrFHcNqbbtcx3sciKC3QoTox7XVjpV4k4jP3PICA==
-X-Received: by 2002:a05:6512:1391:b0:5a1:2e83:a7f1 with SMTP id
- 2adb3069b0e04-5a2ab91cfddmr4325669e87.23.1774883595471; 
- Mon, 30 Mar 2026 08:13:15 -0700 (PDT)
-Received: from localhost.localdomain ([89.21.130.68])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5a2b144f75bsm1718129e87.60.2026.03.30.08.13.14
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Mar 2026 08:13:14 -0700 (PDT)
-From: Max Makarov <maxpain177@gmail.com>
-X-Google-Original-From: Max Makarov <maxpain@linux.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Max Makarov <maxpain@linux.com>
-Subject: [PATCH] vhost-user-blk-server: fix size_max=0 breaking Windows guests
-Date: Mon, 30 Mar 2026 18:13:13 +0300
-Message-ID: <20260330151313.66318-1-maxpain@linux.com>
-X-Mailer: git-send-email 2.50.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=maxpain177@gmail.com; helo=mail-lf1-x129.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w7Fo0-0002Wl-17
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:49:37 -0400
+Received: from ci-2006g-snip4-11.eps.apple.com ([57.103.90.201]
+ helo=outbound.ci.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w7Fnv-0003Ko-To
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:49:33 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-10 (Postfix) with ESMTPS id
+ 018E61800169; Mon, 30 Mar 2026 16:49:23 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1774889365; x=1777481365;
+ bh=QD+ZefaqxbGHLuNSknPSMW7y3d42Wk1UUlLO+LdNqn4=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=B7nn9LkDHLtiU1Gnz+lXIfGur1MUi/UCfOz2dADTMoZ4rEocjBTuG4otPcrarJkNUKlAfxhnjLqu2tZLKYJU3MhQmtvURC9d2hevTY8LemwJQ38A/G1l6HqRiJVzJtUNlsgTCJnz5rext5xSUJ1Hz0m0aM7hYZq0y8ivaPQ8uL9KXlKbIolRVmHc+daxZKAazypB9tx9hzvKZb7V9I27QqTV2LOwtjFBH+oc0tVoP+PzgcMPnx7H/0wwffLL/rOjgA17B7lRlJQbxZ6lh4PhU2bonJU6b9ZNIaIN61zeUT4aeGFU8fcKGAl+BKE3nFaD2U86YDMTFL4Rb24srjzADA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-10 (Postfix) with ESMTPSA id
+ 69FFF1800178; Mon, 30 Mar 2026 16:49:22 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] meson.build: Add --enable-use-pdb option
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <b7d47483-167a-48bf-b494-87b2f7bfbe69@redhat.com>
+Date: Mon, 30 Mar 2026 18:49:10 +0200
+Cc: Steve Aarnio <saarnio@qti.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1CCFA763-8BF1-4975-A758-F480BD9D314C@unpredictable.fr>
+References: <MN2PR02MB6622718572E2A2B5E4EE3C039B4EA@MN2PR02MB6622.namprd02.prod.outlook.com>
+ <b7d47483-167a-48bf-b494-87b2f7bfbe69@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-GUID: uqvK3fk1DjWE8aQ_xBzoCj2bbpMXQT2j
+X-Authority-Info-Out: v=2.4 cv=C9DkCAP+ c=1 sm=1 tr=0 ts=69caa994
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Twlkf-z8AAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
+ a=u95PIktiEcSF7GJu_fMA:9 a=CjuIK1q_8ugA:10 a=-74SuR6ZdpOK_LpdRCUo:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMwMDEzNiBTYWx0ZWRfX5hptgcuSOtvd
+ 5KXs9EnUppfZZafez+rE7dYJcbmEYD+hdYl1Xh2CQnowNvDB7b78QFHzt8/0qjNQq1uo99JEEBe
+ P1xywDoNPBpuneG1HfMGiWSI0fCUHIsralfvhvqPpW51eamfeT1CGbF3HePyxHH82a8ovPWmeBV
+ pBMXc0QYC9OxjMjnJYWHxAr7vsMZvqDFy8SfWSbqFAD3oNRxfGfRHsGknMGW1+5D+/v8AFDULQY
+ es21Or5eU83HOajVfdSfYZZHcmW0Qs+mnvUOzZlP5p0J9YYpQOWdbIVbX6XYxaWuyEwvovZLbaU
+ cWM0viVbv4U4/XSkJJbioF0smMUz7iOTRaVnQDz7SX2c27+mXr6XYAj/rdA8m4=
+X-Proofpoint-ORIG-GUID: uqvK3fk1DjWE8aQ_xBzoCj2bbpMXQT2j
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-29_05,2026-03-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 mlxscore=0 spamscore=0
+ adultscore=0 malwarescore=0 phishscore=0 mlxlogscore=761 clxscore=1030
+ classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2601150000 definitions=main-2603300136
+Received-SPF: pass client-ip=57.103.90.201;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 30 Mar 2026 12:42:36 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,48 +95,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QSD vhost-user-blk export sets size_max=0 in the virtio config,
-but the vhost-user-blk frontend unconditionally advertises
-VIRTIO_BLK_F_SIZE_MAX. This creates a spec-violating state: the
-feature bit tells the guest that size_max is valid, but the value
-is 0.
 
-Native virtio-blk-pci does not advertise VIRTIO_BLK_F_SIZE_MAX when
-size_max=0, so guests never see this contradiction there.
 
-The Windows viostor driver trusts the feature bit and uses size_max=0
-in its MaximumTransferLength calculation, producing malformed
-scatter-gather requests. The disk appears completely empty to Windows
-(no GPT, no partitions in diskpart), causing INACCESSIBLE_BOOT_DEVICE
-BSOD. Linux is unaffected because its virtio_blk driver falls back to
-PAGE_SIZE when size_max=0.
+> On 30. Mar 2026, at 18:33, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>=20
+> On 3/18/26 20:18, Steve Aarnio wrote:
+>> This option will (attempt to) modify the QEMU compile and link flags =
+to
+>> emit PDB symbol files rather than the standard (DWARF?) symbol output
+>> from gcc/clang.
+>> This enables using native Windows debug tools (Windbg/Visual Studio) =
+for
+>> debugging QEMU.
+>> Signed-off-by: Steve Aarnio <saarnio@qti.qualcomm.com>
+>=20
+> I would prefer to have support for this in Meson itself, but anyway, I =
+have some questions below
+>=20
+>> +if get_option('debug') and get_option('use_pdb')
+>> +  qemu_common_flags +=3D =
+cc.get_supported_arguments('-g','-gcodeview','- =
+gcolumn-info','-fno-omit-frame-pointer')
+>=20
+> GCC documentation says -gcolumn-info enabled by default, also who is =
+enabling -fomit-frame-pointer so that you have to drop it?
 
-Set size_max to 4096 (PAGE_SIZE) to provide a valid segment size limit
-that matches what Linux assumes as a fallback. This fixes Windows
-Server 2025 (and likely all Windows versions) booting from
-vhost-user-blk.
+Hello,
 
-Buglink: https://github.com/spdk/spdk/issues/3199
-Buglink: https://github.com/virtio-win/kvm-guest-drivers-windows/issues/692
-Signed-off-by: Max Makarov <maxpain@linux.com>
----
- block/export/vhost-user-blk-server.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+=
+https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang=
+-fomit-frame-pointer
 
-diff --git a/block/export/vhost-user-blk-server.c b/block/export/vhost-user-blk-server.c
-index e89422b..827502d 100644
---- a/block/export/vhost-user-blk-server.c
-+++ b/block/export/vhost-user-blk-server.c
-@@ -240,7 +240,7 @@ vu_blk_initialize_config(BlockDriverState *bs,
-     config->capacity =
-         cpu_to_le64(bdrv_getlength(bs) >> VIRTIO_BLK_SECTOR_BITS);
-     config->blk_size = cpu_to_le32(blk_size);
--    config->size_max = cpu_to_le32(0);
-+    config->size_max = cpu_to_le32(4096);
-     config->seg_max = cpu_to_le32(128 - 2);
-     config->min_io_size = cpu_to_le16(1);
-     config->opt_io_size = cpu_to_le32(1);
--- 
-2.53.0
+Clang documentation says:
+On many targets, -O1 and higher omit the frame pointer by default
+
+>=20
+>> +  qemu_ldflags +=3D =
+cc.get_supported_link_arguments('-g','-Wl,--pdb=3D')
+>=20
+> What linkers support --pdb=3D, and what goes after the equal sign?
+
+lld, and pdb=3D is enough to have an autogenerated path (output[.pdb]).
+
+gcc and GNU ld don't support this.
+
+>=20
+> Also, the update to scripts/meson-buildoptions.sh is missing, just =
+running "make" will regenerate it.
+>=20
+> Paolo
+>=20
+>=20
 
 
