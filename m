@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E37FB3CE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306A9FB3CE4
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w78eF-0006FO-So; Mon, 30 Mar 2026 05:11:05 -0400
+	id 1w78eO-0006T2-A4; Mon, 30 Mar 2026 05:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1w78dr-00067Y-5d
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:10:39 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1w78dv-00069M-KY
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:10:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1w78dp-0000Pa-4W
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:10:38 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1w78dt-0000Q8-0i
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:10:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774861834;
+ s=mimecast20190719; t=1774861840;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JCiM3aSs/f1RsAuqeti67op//+DqhHvZTedMuAAYf4w=;
- b=Sw17PCiD+uReuAiseG5SattOGpTvGVcfp9p+swltT+RTg4QuZPKqBjb47kh/5EN7P3vMdV
- FWV2/6gIUrQEuEcU7gOSRLl6egC1ssMLTt+BruIbkaTYLGGg6nO8j7RQE22Q0IJcXkQoJo
- 7nGy4EBng8PVVCoJOOJQaTSHbDvuwTU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=b3CqbJi2MH8xVeq0Ual/M4Y93TyxFUpwdAas+AN4prc=;
+ b=DKM4I1zy769AwH66BvsfmfgUS81ovGV0coxaXvskN4xCiWIq9k7avl9MZWwjYv+UoCoerR
+ bHSIKJj01UG2W14KubgTbDC4fEcf8KW7op7WnO38zmU332eNEs/KS5xfrN2R98za10seVR
+ WNAbapwj3V3rXLEhX5dkJgiJe8T/9BI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-yRAAiayANlWoY3rpqRISPA-1; Mon,
- 30 Mar 2026 05:10:32 -0400
-X-MC-Unique: yRAAiayANlWoY3rpqRISPA-1
-X-Mimecast-MFC-AGG-ID: yRAAiayANlWoY3rpqRISPA_1774861831
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-OtkyH6U5P6-sJYQu2gy6JQ-1; Mon,
+ 30 Mar 2026 05:10:36 -0400
+X-MC-Unique: OtkyH6U5P6-sJYQu2gy6JQ-1
+X-Mimecast-MFC-AGG-ID: OtkyH6U5P6-sJYQu2gy6JQ_1774861835
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4E7719560A1; Mon, 30 Mar 2026 09:10:31 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D97A1944EB3; Mon, 30 Mar 2026 09:10:35 +0000 (UTC)
 Received: from S2.redhat.com (unknown [10.72.112.39])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 422DD19560AB; Mon, 30 Mar 2026 09:10:27 +0000 (UTC)
+ id 6720B19560AB; Mon, 30 Mar 2026 09:10:32 +0000 (UTC)
 From: Cindy Lu <lulu@redhat.com>
 To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, zhangckid@gmail.com,
  lizhijian@fujitsu.com, jmarcin@redhat.com, qemu-devel@nongnu.org
-Subject: [RFC v3 4/7] net/filter-redirector: add AF_PACKET capture path
-Date: Mon, 30 Mar 2026 16:58:12 +0800
-Message-ID: <20260330090944.1008027-5-lulu@redhat.com>
+Subject: [RFC v3 5/7] net/filter-redirector: add AF_PACKET inject path
+Date: Mon, 30 Mar 2026 16:58:13 +0800
+Message-ID: <20260330090944.1008027-6-lulu@redhat.com>
 In-Reply-To: <20260330090944.1008027-1-lulu@redhat.com>
 References: <20260330090944.1008027-1-lulu@redhat.com>
 MIME-Version: 1.0
@@ -81,210 +81,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire the capture-side AF_PACKET socket into filter-redirector.
+Allow redirector packets to be injected back into a vhost-backed TAP
+backend without going through the normal peer queue.
 
-When the redirector owns an AF_PACKET capture socket, install a read
-handler that drains PACKET_OUTGOING frames from the TAP device and forwards
-them into the existing redirector chardev path. Reuse the normal chardev
-packet framing so downstream code sees the same transport format as it
-already handles today, and keep redirector statistics updated through the
-same helper.
+Export a redirector helper that sends an iov directly through the
+redirector's AF_PACKET inject socket, and teach qemu_netfilter_pass_to_next()
+to use it when the sender is backed by vhost. This lets the redirector
+reinject traffic into the TAP device even when the regular userspace path
+is bypassed by vhost.
 
-AF_PACKET delivers a raw Ethernet frame while the redirector chardev path
-can carry packets with an empty vnet header wrapper. When the backend has a
-vnet header length, prepend an empty legacy virtio-net header before the
-frame so the captured packet can move through the same chardev transport as
-regular redirector traffic.
+The redirector chardev transport may carry an empty vnet header wrapper
+before the Ethernet frame. Detect the longest supported all-zero wrapper
+and strip it before sendmsg() so the AF_PACKET inject side always writes a
+raw L2 frame back to TAP.
 
-Hook the fd handler up during setup, status changes and VM state changes so
-capture is only active when the redirector is enabled and allowed to run in
-the current VM state.
+Propagate sendmsg() failures through ssize_t so the caller can report
+partial/failed injection cleanly.
 
 Signed-off-by: Cindy Lu <lulu@redhat.com>
 ---
- net/filter-mirror.c | 121 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+ include/net/filter.h |  6 +++
+ net/filter-mirror.c  | 94 ++++++++++++++++++++++++++++++++++++++++++++
+ net/filter.c         | 11 +++++-
+ 3 files changed, 110 insertions(+), 1 deletion(-)
 
+diff --git a/include/net/filter.h b/include/net/filter.h
+index f0673c9163..68076a66ad 100644
+--- a/include/net/filter.h
++++ b/include/net/filter.h
+@@ -91,6 +91,12 @@ ssize_t qemu_netfilter_pass_to_next(NetClientState *sender,
+                                     int iovcnt,
+                                     void *opaque);
+ 
++bool qemu_netfilter_redirector_inject_netdev(NetFilterState *nf,
++                                             NetClientState *sender,
++                                             const struct iovec *iov,
++                                             int iovcnt,
++                                             ssize_t *retp);
++
+ void colo_notify_filters_event(int event, Error **errp);
+ 
+ #endif /* QEMU_NET_FILTER_H */
 diff --git a/net/filter-mirror.c b/net/filter-mirror.c
-index d9f6a11d6b..e114ddb7d1 100644
+index e114ddb7d1..165a7ee1ea 100644
 --- a/net/filter-mirror.c
 +++ b/net/filter-mirror.c
-@@ -43,6 +43,7 @@ DECLARE_INSTANCE_CHECKER(MirrorState, FILTER_REDIRECTOR,
-                          TYPE_FILTER_REDIRECTOR)
+@@ -74,6 +74,100 @@ typedef struct FilterSendCo {
+     int ret;
+ } FilterSendCo;
  
- #define REDIRECTOR_MAX_LEN NET_BUFSIZE
-+#define REDIRECTOR_AF_PACKET_WRAP_LEN sizeof(struct virtio_net_hdr)
- 
- struct MirrorState {
-     NetFilterState parent_obj;
-@@ -181,6 +182,17 @@ static int redirector_chr_can_read(void *opaque)
-     return REDIRECTOR_MAX_LEN;
- }
- 
-+static bool filter_redirector_input_active(NetFilterState *nf, bool enable)
++static size_t filter_redirector_wrapped_vnet_hdr_len(const struct iovec *iov,
++                                                     int iovcnt)
 +{
-+    MirrorState *s = FILTER_REDIRECTOR(nf);
++    static const size_t lens[] = {
++        sizeof(struct virtio_net_hdr_v1_hash_tunnel),
++        sizeof(struct virtio_net_hdr_v1_hash),
++        sizeof(struct virtio_net_hdr_mrg_rxbuf),
++        sizeof(struct virtio_net_hdr),
++    };
++    uint8_t hdr[sizeof(struct virtio_net_hdr_v1_hash_tunnel)] = { 0 };
++    uint8_t zero[sizeof(hdr)] = { 0 };
++    size_t total = iov_size(iov, iovcnt);
++    size_t len;
++    int i;
 +
-+    if (!enable) {
++    for (i = 0; i < ARRAY_SIZE(lens); i++) {
++        len = lens[i];
++        if (len >= total) {
++            continue;
++        }
++        if (iov_to_buf(iov, iovcnt, 0, hdr, len) == len &&
++            !memcmp(hdr, zero, len)) {
++            return len;
++        }
++    }
++
++    return 0;
++}
++
++
++bool qemu_netfilter_redirector_inject_netdev(NetFilterState *nf,
++                                             NetClientState *sender,
++                                             const struct iovec *iov,
++                                             int iovcnt,
++                                             ssize_t *retp)
++{
++    MirrorState *s;
++    struct iovec local_iov = { 0 };
++    struct msghdr msg = {
++        .msg_iov = (struct iovec *)iov,
++        .msg_iovlen = iovcnt,
++    };
++    ssize_t ret;
++    size_t size;
++    size_t wrapped_vnet_hdr_len;
++
++    if (!object_dynamic_cast(OBJECT(nf), TYPE_FILTER_REDIRECTOR)) {
 +        return false;
 +    }
 +
-+    return runstate_is_running() || s->enable_when_stopped;
-+}
-+
- static void redirector_chr_read(void *opaque, const uint8_t *buf, int size)
- {
-     NetFilterState *nf = opaque;
-@@ -217,6 +229,91 @@ static void redirector_chr_event(void *opaque, QEMUChrEvent event)
-     }
- }
- 
-+static int filter_redirector_send_chardev_iov(MirrorState *s,
-+                                              const struct iovec *iov,
-+                                              int iovcnt)
-+{
-+    int ret;
-+
-+    if (!qemu_chr_fe_backend_connected(&s->chr_out)) {
-+        return 0;
++    s = FILTER_REDIRECTOR(nf);
++    if (s->out_netfd < 0 || !sender || sender != nf->netdev) {
++        return false;
 +    }
 +
-+    ret = filter_send(s, iov, iovcnt);
-+    if (ret > 0) {
-+        s->outdev_packets++;
-+        s->outdev_bytes += ret;
-+    }
-+
-+    return ret;
-+}
-+
-+static void filter_redirector_capture_netdev_read(void *opaque)
-+{
-+    NetFilterState *nf = opaque;
-+    MirrorState *s = FILTER_REDIRECTOR(nf);
-+    char vnet_hdr[REDIRECTOR_AF_PACKET_WRAP_LEN] = { 0 };
-+    struct iovec iov[2];
-+    struct sockaddr_ll sll;
-+    socklen_t sll_len;
-+    ssize_t len;
-+    size_t wrap_vnet_hdr_len;
-+    int iovcnt;
-+    int ret;
-+
-+    if (!s->in_netbuf || s->in_netfd < 0) {
-+        return;
-+    }
-+
-+    for (;;) {
-+        sll_len = sizeof(sll);
-+        len = recvfrom(s->in_netfd, s->in_netbuf, REDIRECTOR_MAX_LEN, 0,
-+                       (struct sockaddr *)&sll, &sll_len);
-+        if (len <= 0) {
-+            break;
-+        }
-+
-+        if (sll.sll_pkttype != PACKET_OUTGOING) {
-+            continue;
-+        }
-+
++    wrapped_vnet_hdr_len = (!s->vnet_hdr && qemu_get_vnet_hdr_len(sender)) ?
++                           filter_redirector_wrapped_vnet_hdr_len(iov, iovcnt) :
++                           0;
++    if (wrapped_vnet_hdr_len) {
 +        /*
-+         * AF_PACKET gives us a raw Ethernet frame. Wrap it as a regular
-+         * redirector payload by prepending an empty legacy virtio-net header,
-+         * so the downstream chardev path can treat it like a normal packet.
++         * Redirector chardev packets can carry an empty virtio-net header
++         * before the Ethernet frame. Strip the longest supported wrapped
++         * header before injecting the packet back to TAP.
 +         */
-+        wrap_vnet_hdr_len = qemu_get_vnet_hdr_len(nf->netdev) ?
-+                            REDIRECTOR_AF_PACKET_WRAP_LEN : 0;
-+        if (len + wrap_vnet_hdr_len > REDIRECTOR_MAX_LEN) {
-+            error_report("filter redirector packet too large after wrap(%zd)",
-+                         len);
-+            continue;
-+        }
-+
-+        iov[0].iov_base = s->in_netbuf;
-+        iov[0].iov_len = len;
-+        iovcnt = 1;
-+        if (wrap_vnet_hdr_len) {
-+            iov[0].iov_base = vnet_hdr;
-+            iov[0].iov_len = wrap_vnet_hdr_len;
-+            iov[1].iov_base = s->in_netbuf;
-+            iov[1].iov_len = len;
-+            iovcnt = 2;
-+        }
-+
-+        ret = filter_redirector_send_chardev_iov(s, iov, iovcnt);
-+        if (ret < 0) {
-+            error_report("filter redirector send failed(%s)", strerror(-ret));
-+        }
++        local_iov.iov_len = iov_size(iov, iovcnt) - wrapped_vnet_hdr_len;
++        local_iov.iov_base = g_malloc(local_iov.iov_len);
++        iov_to_buf(iov, iovcnt, wrapped_vnet_hdr_len,
++                   local_iov.iov_base,
++                   local_iov.iov_len);
++        msg.msg_iov = &local_iov;
++        msg.msg_iovlen = 1;
 +    }
 +
-+    if (len < 0 && errno != EAGAIN && errno != EWOULDBLOCK &&
-+        errno != EINTR) {
-+        error_report("filter redirector read netdev failed(%s)",
-+                     strerror(errno));
++    size = iov_size(iov, iovcnt);
++    if (local_iov.iov_base) {
++        size = local_iov.iov_len;
 +    }
++    do {
++        ret = sendmsg(s->out_netfd, &msg, 0);
++    } while (ret < 0 && errno == EINTR);
++
++    if (ret < 0) {
++        *retp = -errno;
++    } else if (ret != size) {
++        *retp = -EIO;
++    } else {
++        *retp = ret;
++    }
++
++    g_free(local_iov.iov_base);
++
++    return true;
 +}
 +
- static ssize_t filter_mirror_receive_iov(NetFilterState *nf,
-                                          NetClientState *sender,
-                                          unsigned flags,
-@@ -353,6 +450,14 @@ static void filter_redirector_vm_state_change(void *opaque, bool running,
+ static int _filter_send(MirrorState *s,
+                        char *buf,
+                        ssize_t size)
+diff --git a/net/filter.c b/net/filter.c
+index 76345c1a9d..847dd34698 100644
+--- a/net/filter.c
++++ b/net/filter.c
+@@ -81,7 +81,7 @@ ssize_t qemu_netfilter_pass_to_next(NetClientState *sender,
+                                     int iovcnt,
+                                     void *opaque)
+ {
+-    int ret = 0;
++    ssize_t ret = 0;
+     int direction;
      NetFilterState *nf = opaque;
-     MirrorState *s = FILTER_REDIRECTOR(nf);
-     NetClientState *nc = nf->netdev;
-+    bool active = filter_redirector_input_active(nf, nf->on);
-+
-+    if (s->in_netfd >= 0) {
-+        qemu_set_fd_handler(s->in_netfd,
-+                            active ?
-+                            filter_redirector_capture_netdev_read : NULL,
-+                            NULL, active ? nf : NULL);
-+    }
- 
-     if (!running && s->enable_when_stopped && nc->info->read_poll) {
-         nc->info->read_poll(nc, true);
-@@ -448,6 +553,7 @@ static void filter_redirector_setup(NetFilterState *nf, Error **errp)
- {
-     MirrorState *s = FILTER_REDIRECTOR(nf);
-     Chardev *chr;
-+    bool active = filter_redirector_input_active(nf, nf->on);
- 
-     if (!s->indev && !s->outdev) {
-         error_setg(errp, "filter redirector needs 'indev' or "
-@@ -501,6 +607,13 @@ static void filter_redirector_setup(NetFilterState *nf, Error **errp)
-     s->vmsentry = qemu_add_vm_change_state_handler(
-         filter_redirector_vm_state_change, nf);
- 
-+    if (s->in_netfd >= 0) {
-+        qemu_set_fd_handler(s->in_netfd,
-+                            active ?
-+                            filter_redirector_capture_netdev_read : NULL,
-+                            NULL, active ? nf : NULL);
-+    }
-+
-     filter_redirector_maybe_enable_read_poll(nf);
- 
-     filter_redirector_refresh_allow_send_when_stopped(nf);
-@@ -509,6 +622,7 @@ static void filter_redirector_setup(NetFilterState *nf, Error **errp)
- static void filter_redirector_status_changed(NetFilterState *nf, Error **errp)
- {
-     MirrorState *s = FILTER_REDIRECTOR(nf);
-+    bool active = filter_redirector_input_active(nf, nf->on);
- 
-     if (s->indev) {
-         if (nf->on) {
-@@ -521,6 +635,13 @@ static void filter_redirector_status_changed(NetFilterState *nf, Error **errp)
-         }
-     }
- 
-+    if (s->in_netfd >= 0) {
-+        qemu_set_fd_handler(s->in_netfd,
-+                            active ?
-+                            filter_redirector_capture_netdev_read : NULL,
-+                            NULL, active ? nf : NULL);
-+    }
-+
-     if (nf->on) {
-         filter_redirector_maybe_enable_read_poll(nf);
+     NetFilterState *next = NULL;
+@@ -124,6 +124,15 @@ ssize_t qemu_netfilter_pass_to_next(NetClientState *sender,
+      * deleted while we go through filters.
+      */
+     if (sender && sender->peer) {
++        if (get_vhost_net(sender) &&
++            qemu_netfilter_redirector_inject_netdev(nf, sender,
++                                                    iov, iovcnt, &ret)) {
++            if (ret < 0) {
++                error_report("filter redirector AF_PACKET send failed(%s)",
++                             strerror(-ret));
++            }
++            goto out;
++        }
+         qemu_net_queue_send_iov(sender->peer->incoming_queue,
+                                 sender, flags, iov, iovcnt, NULL);
      }
 -- 
 2.52.0
