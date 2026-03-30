@@ -4,137 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6707210F9972
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A65F10F9977
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYaF-0006lD-JZ; Wed, 08 Apr 2026 15:29:03 -0400
+	id 1wAYaF-0006lG-KW; Wed, 08 Apr 2026 15:29:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAY8I-00088h-8N
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:00:10 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAY8E-00083v-Bx; Wed, 08 Apr 2026 15:00:06 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAKQN-0005i2-1h
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:21:56 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 637M6pF52451580
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:21:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- u4RjKyvpnz+y/VOl95Hj6W3WCKJiAaBCbdGTrB3Z9UQ=; b=UGXV7GznwDDaqaYL
- dT8/rIDg31ZXke6sRDgo6Pab2R6tX6fyIC0e/d6yT6sGKS+eYAsIBB5pdYYxnbhi
- tphJ1BlyWLSJKZOSBUimXcJivLt07InBxZa5b/LChkJKEE7J504kS1Ltwn1lVQs6
- DyAOU8AJuknPHzn9nXZUiKJoQMuBC28Z9HfYA4LwUMIE0TkUT2c/QqZ6VHY6askA
- J7NePKKz+ymRobAaFvprb5lhsHc1bZJflEWwAkMyEV5dyHgB7y2qnirKQJHBOT/H
- Ez+70tBD2l6YhBzxz5AJUAPGgxymJFJSwTBopChYqdDZ+R1x/tHX9+YS5Ssw7r5z
- N0IG7A==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddae68wra-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:21:54 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-12c0ed22849so283088c88.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:21:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775622113; x=1776226913; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u4RjKyvpnz+y/VOl95Hj6W3WCKJiAaBCbdGTrB3Z9UQ=;
- b=bS83ycVotwlZbyJzBFPLluT7kfrmHG4QBNjr7mP/4VVn7gNTiQKnpJeX5GFrkeoKv1
- /bhTGloWaB7x7Pau3mcsrDFHVEOMkIduuWakVJntohaTEsUzgjZNhPTh18tMDLgJS9Ln
- X/eYwB3kZA2B585yrqphXoJMKndX4pQaNIgiOmNEsjL+H8x548cfe8c35sb/G4QyFhgI
- 5ZUXXOCtHSGLbIctTEKLAtpVnUuepWbBAra2ZzQh6jKuGfJBALjC8KsmWwlrxAEw4wDf
- koESNfPRAlLbMvAKOK3Ur7yn/PS9u8+sDd7COvZc0qXd1EzLqIolBXel9E6+9VdzjLQc
- SexQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775622113; x=1776226913;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=u4RjKyvpnz+y/VOl95Hj6W3WCKJiAaBCbdGTrB3Z9UQ=;
- b=rc0lvwrfzGqQ75tD+AnpU9a6cImhNW19pgf8FhXKhDfPCnHS1f4IXuyEZcjVF3uKxd
- Z1o7ht8387n9k7BAmNE6pz0QnNJNGymtnCY78Pq+m7uNjNih9OA3CMFgc2LFrOzopiV1
- xQVT+QlZKQ46sB22XeulbWaz//7cRjcBDkiOqCvp/QRBbMosyl5xA0mhBOVo3SJ6LXaz
- 41ZOjdeIAv/bTGI0FI1DVumv5gz8g++FqNUTgSn7BgSwON00bHQb7kmLmwSYFioDW1fw
- hJuCI+2eLU0tD8t1rKUgevY1+yFV7vgRJrNuY5o8UPCeWL0JVOA0rT06NL1agV32VqFB
- S/Gg==
-X-Gm-Message-State: AOJu0YyKW/Y70wtiHSrizUj3d5aLLNyVNNHT4cyMIIdUPKCOQ05Ouis1
- Z/JFQIDMv8r7m1DiIk4tlVKHiqx7MBycugsUT8P7rnOQRE4LFx51YYiC7fcj/YtB5e19URs1NJa
- CdSKa3vOTKb/cL3SZEhR1CsTuvptDwOPpqjg1BD70tJKVy/mKlrv2KmV/OwGh4O2BFw==
-X-Gm-Gg: AeBDievw2L+u0kU0MkqSkMO8YtXoVU1DmJ5M37SWKX3Y+wKEsR4WFJFfbp7dv2hD9wB
- ewEVKOKxghq227ATeBjG/hqBx6EwEqoXFPb4hafjoT0fHxLVN6FtDhqD9ZgzIDW3vbZzHGRnUVt
- dkT+f+oFQ2rU6+9MqP28Nhi7rWndV2U8S3v0uBktjiomfbK+o3MLQcsVVygFMmWnEQ2cODwX2ac
- 8T/I9l7uJ4Y8l8Hpcy9Z4MzcHWTPoTqQuS/Pa44Hvn0fghJ53zzQb75phn7U/n0nc4IJlt4000S
- J1XrKBhKDxZhfPtazFq0Wy0opU7Ai+vS7B1WlGXtsPCTBkGIaLw8qUi7AQYs1XUsmj19CvL2BEy
- 0tPX76X9iv8hPIPGACvQ16FTprp4OqfLEgEtrDg817qXEJBHNoOJSqEU8IybWdy4GVw9L5g==
-X-Received: by 2002:a05:7022:220b:b0:11e:3e9:3e92 with SMTP id
- a92af1059eb24-12bf08ba9f5mr9309261c88.23.1775622112817; 
- Tue, 07 Apr 2026 21:21:52 -0700 (PDT)
-X-Received: by 2002:a05:7022:220b:b0:11e:3e9:3e92 with SMTP id
- a92af1059eb24-12bf08ba9f5mr9309248c88.23.1775622112205; 
- Tue, 07 Apr 2026 21:21:52 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12bed93f861sm23474816c88.0.2026.04.07.21.21.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 21:21:51 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng
-Subject: [PATCH v4 1/9] hw/hexagon: Add globalreg model
-Date: Tue,  7 Apr 2026 21:21:40 -0700
-Message-Id: <20260408042149.1902796-2-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260408042149.1902796-1-brian.cain@oss.qualcomm.com>
-References: <20260408042149.1902796-1-brian.cain@oss.qualcomm.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAQmk-00035s-7h; Wed, 08 Apr 2026 07:09:30 -0400
+DKIM-Signature: a=rsa-sha256; bh=ZA2+dmzCQ47DoV5d7urmI6Q6z1RsJBnCE0wafplIIgI=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1775646440; v=1;
+ b=PMSK4mVy3nNd2MhuxwgsoOix+WuD6o369d1nbIuerI17h1WDlAOzMYYHxJbgjj0QcCaEcQ1Y
+ cMQ3oQBmKWhDBdnjhtaL1g6khNWO7llbY7pX6uruiY4pg/kJBoMYaTaZAHOfALTYyEt5GAVWicf
+ ey7m4Mtj1xBAEaBM7NKf/WU/jlx95WoBgynOHsQu0dzHBqx5BK7DkRoey9DN6es6WtHiHc20SZx
+ 8zPmhpPG39ULOp/zLjx1BhQrSiC/oobQzmAdy1TmyCCzuMc5ikRlF7tpqPGo0TCtsRwMHGMlnOB
+ wW+/FOaC3SmUWojd9oOX2qrGyegbEWo4JmVRCBSjQZfPQ==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 4BF6B207F5;
+ Wed, 08 Apr 2026 11:07:20 +0000 (UTC)
+From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
+Date: Mon, 30 Mar 2026 15:34:56 +0100
+Subject: [PATCH qemu v2 1/7] Rename ibex_uart to ot_uart
+Message-ID: <177564643888.23414.7922925369077631439-1@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <177564643888.23414.7922925369077631439-0@git.sr.ht>
+To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
+ Amit Kumar-Hermosillo <amitkh@google.com>, nabihestefan@google.com
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNiBTYWx0ZWRfX/gjSg6/pyc1Y
- bSM604X+WFQEJg1pJvbfplw8vfEXkKLzGKU3H+ev48U6WjXvudO2CxYvSd9F1/EgKLSGGJhBN/7
- H8FmtlEdvSynauZ9sB1WcPNvMcpwSCEAHm2txIn8CT8q1mqRfpjdymBoPCfbRAgfEZqxYEe0sxx
- yf94651C4hi/DkJhuwCw1lG7R968RDOdXmYb3dRfSU0Q2a+p/F3dIjFDkDlr3GU1IDTZOjFIhp6
- ufhhJPNJMtppuUWhLF0qPKneouBIJhKGj+RvT479KHUouZEypRGui5bueoAKFuwEIpxNMejXuLh
- n9K5LR3XxkIAMese8qMhSEa/g6eYwj5Ch3Iv+XU/O1GswjQs6A505fSHYbDzgSmjq3sx25+kSgA
- AOVGyWYVU7u8B7mlzYzwUgQTyKrIEbdfyx3PIcuSF0cBXQkC5+OyTs/IoAzAssdgkXKssMuXJGF
- Y9cJbfDfDCjJB9nA4RA==
-X-Proofpoint-GUID: kS3jqrbuIebPWIbj1pMDGZ8n3_W5xcDQ
-X-Proofpoint-ORIG-GUID: kS3jqrbuIebPWIbj1pMDGZ8n3_W5xcDQ
-X-Authority-Analysis: v=2.4 cv=K4AS2SWI c=1 sm=1 tr=0 ts=69d5d7e2 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=issYwmIsIXpfOU_0AR4A:9 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
- phishscore=0 malwarescore=0 spamscore=0 bulkscore=0 adultscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604080036
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 17
+X-Spam_score: 1.7
+X-Spam_bar: +
+X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,202 +68,583 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-U29tZSBvZiB0aGUgc3lzdGVtIHJlZ2lzdGVycyBhcmUgc2hhcmVkIGFtb25nIGFsbCB0aHJlYWRz
-CmluIHRoZSBjb3JlLiAgVGhpcyBvYmplY3QgY29udGFpbnMgdGhlIHJlcHJlc2VudGF0aW9uIGFu
-ZAppbnRlcmZhY2UgdG8gdGhlIHN5c3RlbSByZWdpc3RlcnMuCgpTaWduZWQtb2ZmLWJ5OiBCcmlh
-biBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogaW5jbHVkZS9ody9oZXhh
-Z29uL2hleGFnb25fZ2xvYmFscmVnLmggfCAgNTYgKysrKysrCiBody9oZXhhZ29uL2hleGFnb25f
-Z2xvYmFscmVnLmMgICAgICAgICB8IDI0NSArKysrKysrKysrKysrKysrKysrKysrKysrCiAyIGZp
-bGVzIGNoYW5nZWQsIDMwMSBpbnNlcnRpb25zKCspCiBjcmVhdGUgbW9kZSAxMDA2NDQgaW5jbHVk
-ZS9ody9oZXhhZ29uL2hleGFnb25fZ2xvYmFscmVnLmgKIGNyZWF0ZSBtb2RlIDEwMDY0NCBody9o
-ZXhhZ29uL2hleGFnb25fZ2xvYmFscmVnLmMKCmRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L2hleGFn
-b24vaGV4YWdvbl9nbG9iYWxyZWcuaCBiL2luY2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uX2dsb2Jh
-bHJlZy5oCm5ldyBmaWxlIG1vZGUgMTAwNjQ0CmluZGV4IDAwMDAwMDAwMDAwLi5jOWU3MmYzMGIw
-YQotLS0gL2Rldi9udWxsCisrKyBiL2luY2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uX2dsb2JhbHJl
-Zy5oCkBAIC0wLDAgKzEsNTYgQEAKKy8qCisgKiBIZXhhZ29uIEdsb2JhbCBSZWdpc3RlcnMgUU9N
-IE9iamVjdAorICoKKyAqIENvcHlyaWdodCAoYykgUXVhbGNvbW0gVGVjaG5vbG9naWVzLCBJbmMu
-IGFuZC9vciBpdHMgc3Vic2lkaWFyaWVzLgorICogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQ
-TC0yLjAtb3ItbGF0ZXIKKyAqLworCisjaWZuZGVmIEhFWEFHT05fR0xPQkFMUkVHX0gKKyNkZWZp
-bmUgSEVYQUdPTl9HTE9CQUxSRUdfSAorCisjaW5jbHVkZSAiaHcvY29yZS9xZGV2LmgiCisjaW5j
-bHVkZSAiaHcvY29yZS9zeXNidXMuaCIKKyNpbmNsdWRlICJxb20vb2JqZWN0LmgiCisjaW5jbHVk
-ZSAidGFyZ2V0L2hleGFnb24vY3B1LmgiCisKKyNkZWZpbmUgVFlQRV9IRVhBR09OX0dMT0JBTFJF
-RyAiaGV4YWdvbi1nbG9iYWxyZWciCitPQkpFQ1RfREVDTEFSRV9TSU1QTEVfVFlQRShIZXhhZ29u
-R2xvYmFsUmVnU3RhdGUsIEhFWEFHT05fR0xPQkFMUkVHKQorCitzdHJ1Y3QgSGV4YWdvbkdsb2Jh
-bFJlZ1N0YXRlIHsKKyAgICBTeXNCdXNEZXZpY2UgcGFyZW50X29iajsKKworICAgIC8qIEFycmF5
-IG9mIHN5c3RlbSByZWdpc3RlcnMgKi8KKyAgICB1aW50MzJfdCByZWdzW05VTV9TUkVHU107CisK
-KyAgICAvKiBHbG9iYWwgcGVyZm9ybWFuY2UgY3ljbGUgY291bnRlciBiYXNlICovCisgICAgdWlu
-dDY0X3QgZ19wY3ljbGVfYmFzZTsKKworICAgIC8qIFByb3BlcnRpZXMgZm9yIGdsb2JhbCByZWdp
-c3RlciByZXNldCB2YWx1ZXMgKi8KKyAgICB1aW50MzJfdCBib290X2V2YjsgICAgICAgICAgIC8q
-IEJvb3QgRXhjZXB0aW9uIFZlY3RvciBCYXNlIChIRVhfU1JFR19FVkIpICovCisgICAgdWludDY0
-X3QgY29uZmlnX3RhYmxlX2FkZHI7ICAvKiBDb25maWd1cmF0aW9uIHRhYmxlIGJhc2UgKi8KKyAg
-ICB1aW50MzJfdCBkc3BfcmV2OyAgICAgICAgICAgLyogRFNQIHJldmlzaW9uIHJlZ2lzdGVyIChI
-RVhfU1JFR19SRVYpICovCisKKyAgICAvKiBJU0RCIHByb3BlcnRpZXMgKi8KKyAgICBib29sIGlz
-ZGJlbl9ldG1fZW5hYmxlOyAgICAgLyogSVNEQiBFVE0gZW5hYmxlIGJpdCAqLworICAgIGJvb2wg
-aXNkYmVuX2RmZF9lbmFibGU7ICAgICAvKiBJU0RCIERGRCBlbmFibGUgYml0ICovCisgICAgYm9v
-bCBpc2RiZW5fdHJ1c3RlZDsgICAgICAgIC8qIElTREIgdHJ1c3RlZCBtb2RlIGJpdCAqLworICAg
-IGJvb2wgaXNkYmVuX3NlY3VyZTsgICAgICAgICAvKiBJU0RCIHNlY3VyZSBtb2RlIGJpdCAqLwor
-fTsKKworLyogUHVibGljIGludGVyZmFjZSBmdW5jdGlvbnMgKi8KK3VpbnQzMl90IGhleGFnb25f
-Z2xvYmFscmVnX3JlYWQoSGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzLCB1aW50MzJfdCByZWcsCisg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IGh0aWQpOwordm9pZCBoZXhh
-Z29uX2dsb2JhbHJlZ193cml0ZShIZXhhZ29uR2xvYmFsUmVnU3RhdGUgKnMsIHVpbnQzMl90IHJl
-ZywKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3QgdmFsdWUsIHVpbnQzMl90
-IGh0aWQpOwordWludDMyX3QgaGV4YWdvbl9nbG9iYWxyZWdfbWFza2VkX3ZhbHVlKEhleGFnb25H
-bG9iYWxSZWdTdGF0ZSAqcywgdWludDMyX3QgcmVnLAorICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIHVpbnQzMl90IHZhbHVlKTsKK3ZvaWQgaGV4YWdvbl9nbG9iYWxyZWdf
-d3JpdGVfbWFza2VkKEhleGFnb25HbG9iYWxSZWdTdGF0ZSAqcywgdWludDMyX3QgcmVnLAorICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3QgdmFsdWUpOwordm9pZCBo
-ZXhhZ29uX2dsb2JhbHJlZ19yZXNldChIZXhhZ29uR2xvYmFsUmVnU3RhdGUgKnMpOworCisvKiBH
-bG9iYWwgcGVyZm9ybWFuY2UgY3ljbGUgY291bnRlciBhY2Nlc3MgKi8KK3VpbnQ2NF90IGhleGFn
-b25fZ2xvYmFscmVnX2dldF9wY3ljbGVfYmFzZShIZXhhZ29uR2xvYmFsUmVnU3RhdGUgKnMpOwor
-dm9pZCBoZXhhZ29uX2dsb2JhbHJlZ19zZXRfcGN5Y2xlX2Jhc2UoSGV4YWdvbkdsb2JhbFJlZ1N0
-YXRlICpzLAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDY0X3Qg
-dmFsdWUpOworCisjZW5kaWYgLyogSEVYQUdPTl9HTE9CQUxSRUdfSCAqLwpkaWZmIC0tZ2l0IGEv
-aHcvaGV4YWdvbi9oZXhhZ29uX2dsb2JhbHJlZy5jIGIvaHcvaGV4YWdvbi9oZXhhZ29uX2dsb2Jh
-bHJlZy5jCm5ldyBmaWxlIG1vZGUgMTAwNjQ0CmluZGV4IDAwMDAwMDAwMDAwLi42MzRkM2IxNjlm
-ZAotLS0gL2Rldi9udWxsCisrKyBiL2h3L2hleGFnb24vaGV4YWdvbl9nbG9iYWxyZWcuYwpAQCAt
-MCwwICsxLDI0NSBAQAorLyoKKyAqIEhleGFnb24gR2xvYmFsIFJlZ2lzdGVycworICoKKyAqIENv
-cHlyaWdodCAoYykgUXVhbGNvbW0gVGVjaG5vbG9naWVzLCBJbmMuIGFuZC9vciBpdHMgc3Vic2lk
-aWFyaWVzLgorICogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAtb3ItbGF0ZXIKKyAq
-LworCisjaW5jbHVkZSAicWVtdS9vc2RlcC5oIgorI2luY2x1ZGUgImh3L2hleGFnb24vaGV4YWdv
-bi5oIgorI2luY2x1ZGUgImh3L2hleGFnb24vaGV4YWdvbl9nbG9iYWxyZWcuaCIKKyNpbmNsdWRl
-ICJody9jb3JlL3FkZXYtcHJvcGVydGllcy5oIgorI2luY2x1ZGUgImh3L2NvcmUvc3lzYnVzLmgi
-CisjaW5jbHVkZSAiaHcvY29yZS9yZXNldHRhYmxlLmgiCisjaW5jbHVkZSAibWlncmF0aW9uL3Zt
-c3RhdGUuaCIKKyNpbmNsdWRlICJxb20vb2JqZWN0LmgiCisjaW5jbHVkZSAidGFyZ2V0L2hleGFn
-b24vY3B1LmgiCisjaW5jbHVkZSAidGFyZ2V0L2hleGFnb24vaGV4X3JlZ3MuaCIKKyNpbmNsdWRl
-ICJxZW11L2xvZy5oIgorI2luY2x1ZGUgInFhcGkvZXJyb3IuaCIKKworI2RlZmluZSBJTU1VVEFC
-TEUgKH4wKQorI2RlZmluZSBJTlZBTElEX1JFR19WQUwgMHhkZWFkYmVlZgorCisvKiBHbG9iYWwg
-c3lzdGVtIHJlZ2lzdGVyIG11dGFiaWxpdHkgbWFza3MgKi8KK3N0YXRpYyBjb25zdCB1aW50MzJf
-dCBnbG9iYWxfc3JlZ19pbW11dF9tYXNrc1tOVU1fU1JFR1NdID0geworICAgIFtIRVhfU1JFR19F
-VkJdID0gMHgwMDAwMDBmZiwKKyAgICBbSEVYX1NSRUdfTU9ERUNUTF0gPSBJTU1VVEFCTEUsCisg
-ICAgW0hFWF9TUkVHX1NZU0NGR10gPSAweDgwMDAxYzAwLAorICAgIFtIRVhfU1JFR19JUEVOREFE
-XSA9IElNTVVUQUJMRSwKKyAgICBbSEVYX1NSRUdfVklEXSA9IDB4ZmMwMGZjMDAsCisgICAgW0hF
-WF9TUkVHX1ZJRDFdID0gMHhmYzAwZmMwMCwKKyAgICBbSEVYX1NSRUdfQkVTVFdBSVRdID0gMHhm
-ZmZmZmUwMCwKKyAgICBbSEVYX1NSRUdfSUFITF0gPSAweDAwMDAwMDAwLAorICAgIFtIRVhfU1JF
-R19TQ0hFRENGR10gPSAweGZmZmZmZWUwLAorICAgIFtIRVhfU1JFR19DRkdCQVNFXSA9IElNTVVU
-QUJMRSwKKyAgICBbSEVYX1NSRUdfRElBR10gPSAweDAwMDAwMDAwLAorICAgIFtIRVhfU1JFR19S
-RVZdID0gSU1NVVRBQkxFLAorICAgIFtIRVhfU1JFR19JU0RCU1RdID0gSU1NVVRBQkxFLAorICAg
-IFtIRVhfU1JFR19JU0RCQ0ZHMF0gPSAweGUwMDAwMDAwLAorICAgIFtIRVhfU1JFR19CUktQVFBD
-MF0gPSAweDAwMDAwMDAzLAorICAgIFtIRVhfU1JFR19CUktQVENGRzBdID0gMHhmYzAwNzAwMCwK
-KyAgICBbSEVYX1NSRUdfQlJLUFRQQzFdID0gMHgwMDAwMDAwMywKKyAgICBbSEVYX1NSRUdfQlJL
-UFRDRkcxXSA9IDB4ZmMwMDcwMDAsCisgICAgW0hFWF9TUkVHX0lTREJNQlhJTl0gPSBJTU1VVEFC
-TEUsCisgICAgW0hFWF9TUkVHX0lTREJNQlhPVVRdID0gMHgwMDAwMDAwMCwKKyAgICBbSEVYX1NS
-RUdfSVNEQkVOXSA9IDB4ZmZmZmZmZmUsCisgICAgW0hFWF9TUkVHX1RJTUVSTE9dID0gSU1NVVRB
-QkxFLAorICAgIFtIRVhfU1JFR19USU1FUkhJXSA9IElNTVVUQUJMRSwKK307CisKK3N0YXRpYyB2
-b2lkIGhleGFnb25fZ2xvYmFscmVnX2luaXQoT2JqZWN0ICpvYmopCit7CisgICAgSGV4YWdvbkds
-b2JhbFJlZ1N0YXRlICpzID0gSEVYQUdPTl9HTE9CQUxSRUcob2JqKTsKKworICAgIG1lbXNldChz
-LT5yZWdzLCAwLCBzaXplb2YodWludDMyX3QpICogTlVNX1NSRUdTKTsKK30KKworc3RhdGljIGlu
-bGluZSB1aW50MzJfdCBhcHBseV93cml0ZV9tYXNrKHVpbnQzMl90IG5ld192YWwsIHVpbnQzMl90
-IGN1cl92YWwsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMy
-X3QgcmVnX21hc2spCit7CisgICAgaWYgKHJlZ19tYXNrKSB7CisgICAgICAgIHJldHVybiAobmV3
-X3ZhbCAmIH5yZWdfbWFzaykgfCAoY3VyX3ZhbCAmIHJlZ19tYXNrKTsKKyAgICB9CisgICAgcmV0
-dXJuIG5ld192YWw7Cit9CisKK3VpbnQzMl90IGhleGFnb25fZ2xvYmFscmVnX3JlYWQoSGV4YWdv
-bkdsb2JhbFJlZ1N0YXRlICpzLCB1aW50MzJfdCByZWcsCisgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHVpbnQzMl90IGh0aWQpCit7CisgICAgdWludDMyX3QgdmFsdWU7CisKKyAgICBn
-X2Fzc2VydChyZWcgPCBOVU1fU1JFR1MpOworICAgIGdfYXNzZXJ0KHJlZyA+PSBIRVhfU1JFR19H
-TEJfU1RBUlQpOworICAgIGdfYXNzZXJ0KHMpOworCisgICAgdmFsdWUgPSBzLT5yZWdzW3JlZ107
-CisKKyAgICByZXR1cm4gdmFsdWU7Cit9CisKK3ZvaWQgaGV4YWdvbl9nbG9iYWxyZWdfd3JpdGUo
-SGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzLCB1aW50MzJfdCByZWcsCisgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHVpbnQzMl90IHZhbHVlLCB1aW50MzJfdCBodGlkKQoreworICAgIGdfYXNz
-ZXJ0KHMpOworICAgIGdfYXNzZXJ0KHJlZyA8IE5VTV9TUkVHUyk7CisgICAgZ19hc3NlcnQocmVn
-ID49IEhFWF9TUkVHX0dMQl9TVEFSVCk7CisgICAgcy0+cmVnc1tyZWddID0gdmFsdWU7Cit9CisK
-K3VpbnQzMl90IGhleGFnb25fZ2xvYmFscmVnX21hc2tlZF92YWx1ZShIZXhhZ29uR2xvYmFsUmVn
-U3RhdGUgKnMsIHVpbnQzMl90IHJlZywKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICB1aW50MzJfdCB2YWx1ZSkKK3sKKyAgICB1aW50MzJfdCByZWdfbWFzazsKKworICAg
-IGdfYXNzZXJ0KHMpOworICAgIGdfYXNzZXJ0KHJlZyA8IE5VTV9TUkVHUyk7CisgICAgZ19hc3Nl
-cnQocmVnID49IEhFWF9TUkVHX0dMQl9TVEFSVCk7CisgICAgcmVnX21hc2sgPSBnbG9iYWxfc3Jl
-Z19pbW11dF9tYXNrc1tyZWddOworICAgIHJldHVybiByZWdfbWFzayA9PSBJTU1VVEFCTEUgPwor
-ICAgICAgICAgICAgcy0+cmVnc1tyZWddIDoKKyAgICAgICAgICAgIGFwcGx5X3dyaXRlX21hc2so
-dmFsdWUsIHMtPnJlZ3NbcmVnXSwgcmVnX21hc2spOworfQorCit2b2lkIGhleGFnb25fZ2xvYmFs
-cmVnX3dyaXRlX21hc2tlZChIZXhhZ29uR2xvYmFsUmVnU3RhdGUgKnMsIHVpbnQzMl90IHJlZywK
-KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IHZhbHVlKQorewor
-ICAgIGdfYXNzZXJ0KHMpOworICAgIHMtPnJlZ3NbcmVnXSA9IGhleGFnb25fZ2xvYmFscmVnX21h
-c2tlZF92YWx1ZShzLCByZWcsIHZhbHVlKTsKK30KKwordWludDY0X3QgaGV4YWdvbl9nbG9iYWxy
-ZWdfZ2V0X3BjeWNsZV9iYXNlKEhleGFnb25HbG9iYWxSZWdTdGF0ZSAqcykKK3sKKyAgICBnX2Fz
-c2VydChzKTsKKyAgICByZXR1cm4gcy0+Z19wY3ljbGVfYmFzZTsKK30KKwordm9pZCBoZXhhZ29u
-X2dsb2JhbHJlZ19zZXRfcGN5Y2xlX2Jhc2UoSGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzLAorICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDY0X3QgdmFsdWUpCit7Cisg
-ICAgZ19hc3NlcnQocyk7CisgICAgcy0+Z19wY3ljbGVfYmFzZSA9IHZhbHVlOworfQorCitzdGF0
-aWMgdm9pZCBkb19oZXhhZ29uX2dsb2JhbHJlZ19yZXNldChIZXhhZ29uR2xvYmFsUmVnU3RhdGUg
-KnMpCit7CisgICAgdWludDMyX3QgaXNkYmVuX3ZhbCA9IDA7CisKKyAgICBnX2Fzc2VydChzKTsK
-KyAgICBtZW1zZXQocy0+cmVncywgMCwgc2l6ZW9mKHVpbnQzMl90KSAqIE5VTV9TUkVHUyk7CisK
-KyAgICBzLT5nX3BjeWNsZV9iYXNlID0gMDsKKworICAgIHMtPnJlZ3NbSEVYX1NSRUdfRVZCXSA9
-IHMtPmJvb3RfZXZiOworICAgIHMtPnJlZ3NbSEVYX1NSRUdfQ0ZHQkFTRV0gPSBIRVhBR09OX0NG
-R19BRERSX0JBU0Uocy0+Y29uZmlnX3RhYmxlX2FkZHIpOworICAgIHMtPnJlZ3NbSEVYX1NSRUdf
-UkVWXSA9IHMtPmRzcF9yZXY7CisKKyAgICBpZiAocy0+aXNkYmVuX2V0bV9lbmFibGUpIHsKKyAg
-ICAgICAgaXNkYmVuX3ZhbCB8PSAoMSA8PCAwKTsgIC8qIEVUTSBlbmFibGUgYml0ICovCisgICAg
-fQorICAgIGlmIChzLT5pc2RiZW5fZGZkX2VuYWJsZSkgeworICAgICAgICBpc2RiZW5fdmFsIHw9
-ICgxIDw8IDEpOyAgLyogREZEIGVuYWJsZSBiaXQgKi8KKyAgICB9CisgICAgaWYgKHMtPmlzZGJl
-bl90cnVzdGVkKSB7CisgICAgICAgIGlzZGJlbl92YWwgfD0gKDEgPDwgMik7ICAvKiBUcnVzdGVk
-IGJpdCAqLworICAgIH0KKyAgICBpZiAocy0+aXNkYmVuX3NlY3VyZSkgeworICAgICAgICBpc2Ri
-ZW5fdmFsIHw9ICgxIDw8IDMpOyAgLyogU2VjdXJlIGJpdCAqLworICAgIH0KKyAgICBzLT5yZWdz
-W0hFWF9TUkVHX0lTREJFTl0gPSBpc2RiZW5fdmFsOworICAgIHMtPnJlZ3NbSEVYX1NSRUdfTU9E
-RUNUTF0gPSAweDE7CisKKyAgICAvKgorICAgICAqIFRoZXNlIHJlZ2lzdGVyIGluZGljZXMgYXJl
-IHBsYWNlaG9sZGVycyBpbiB0aGVzZSBhcnJheXMKKyAgICAgKiBhbmQgdGhlaXIgYWN0dWFsIHZh
-bHVlcyBhcmUgc3ludGhlc2l6ZWQgZnJvbSBzdGF0ZSBlbHNld2hlcmUuCisgICAgICogV2UgY2Fu
-IGluaXRpYWxpemUgdGhlc2Ugd2l0aCBpbnZhbGlkIHZhbHVlcyBzbyB0aGF0IGlmIHdlCisgICAg
-ICogbWlzdGFrZW5seSBnZW5lcmF0ZSByZWFkcywgdGhleSB3aWxsIGxvb2sgb2J2aW91c2x5IHdy
-b25nLgorICAgICAqLworICAgIHMtPnJlZ3NbSEVYX1NSRUdfUENZQ0xFTE9dID0gSU5WQUxJRF9S
-RUdfVkFMOworICAgIHMtPnJlZ3NbSEVYX1NSRUdfUENZQ0xFSEldID0gSU5WQUxJRF9SRUdfVkFM
-OworICAgIHMtPnJlZ3NbSEVYX1NSRUdfVElNRVJMT10gPSBJTlZBTElEX1JFR19WQUw7CisgICAg
-cy0+cmVnc1tIRVhfU1JFR19USU1FUkhJXSA9IElOVkFMSURfUkVHX1ZBTDsKKyAgICBzLT5yZWdz
-W0hFWF9TUkVHX1BNVUNOVDBdID0gSU5WQUxJRF9SRUdfVkFMOworICAgIHMtPnJlZ3NbSEVYX1NS
-RUdfUE1VQ05UMV0gPSBJTlZBTElEX1JFR19WQUw7CisgICAgcy0+cmVnc1tIRVhfU1JFR19QTVVD
-TlQyXSA9IElOVkFMSURfUkVHX1ZBTDsKKyAgICBzLT5yZWdzW0hFWF9TUkVHX1BNVUNOVDNdID0g
-SU5WQUxJRF9SRUdfVkFMOworICAgIHMtPnJlZ3NbSEVYX1NSRUdfUE1VQ05UNF0gPSBJTlZBTElE
-X1JFR19WQUw7CisgICAgcy0+cmVnc1tIRVhfU1JFR19QTVVDTlQ1XSA9IElOVkFMSURfUkVHX1ZB
-TDsKKyAgICBzLT5yZWdzW0hFWF9TUkVHX1BNVUNOVDZdID0gSU5WQUxJRF9SRUdfVkFMOworICAg
-IHMtPnJlZ3NbSEVYX1NSRUdfUE1VQ05UN10gPSBJTlZBTElEX1JFR19WQUw7Cit9CisKK3N0YXRp
-YyB2b2lkIGhleGFnb25fZ2xvYmFscmVnX3JlYWxpemUoRGV2aWNlU3RhdGUgKmRldiwgRXJyb3Ig
-KiplcnJwKQoreworfQorCit2b2lkIGhleGFnb25fZ2xvYmFscmVnX3Jlc2V0KEhleGFnb25HbG9i
-YWxSZWdTdGF0ZSAqcykKK3sKKyAgICBkb19oZXhhZ29uX2dsb2JhbHJlZ19yZXNldChzKTsKK30K
-Kworc3RhdGljIHZvaWQgaGV4YWdvbl9nbG9iYWxyZWdfcmVzZXRfaG9sZChPYmplY3QgKm9iaiwg
-UmVzZXRUeXBlIHR5cGUpCit7CisgICAgSGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzID0gSEVYQUdP
-Tl9HTE9CQUxSRUcob2JqKTsKKyAgICBkb19oZXhhZ29uX2dsb2JhbHJlZ19yZXNldChzKTsKK30K
-Kworc3RhdGljIGNvbnN0IFZNU3RhdGVEZXNjcmlwdGlvbiB2bXN0YXRlX2hleGFnb25fZ2xvYmFs
-cmVnID0geworICAgIC5uYW1lID0gImhleGFnb25fZ2xvYmFscmVnIiwKKyAgICAudmVyc2lvbl9p
-ZCA9IDEsCisgICAgLm1pbmltdW1fdmVyc2lvbl9pZCA9IDEsCisgICAgLmZpZWxkcyA9IChjb25z
-dCBWTVN0YXRlRmllbGRbXSl7CisgICAgICAgIFZNU1RBVEVfVUlOVDMyX0FSUkFZKHJlZ3MsIEhl
-eGFnb25HbG9iYWxSZWdTdGF0ZSwgTlVNX1NSRUdTKSwKKyAgICAgICAgVk1TVEFURV9VSU5UNjQo
-Z19wY3ljbGVfYmFzZSwgSGV4YWdvbkdsb2JhbFJlZ1N0YXRlKSwKKyAgICAgICAgVk1TVEFURV9V
-SU5UMzIoYm9vdF9ldmIsIEhleGFnb25HbG9iYWxSZWdTdGF0ZSksCisgICAgICAgIFZNU1RBVEVf
-VUlOVDY0KGNvbmZpZ190YWJsZV9hZGRyLCBIZXhhZ29uR2xvYmFsUmVnU3RhdGUpLAorICAgICAg
-ICBWTVNUQVRFX1VJTlQzMihkc3BfcmV2LCBIZXhhZ29uR2xvYmFsUmVnU3RhdGUpLAorICAgICAg
-ICBWTVNUQVRFX0JPT0woaXNkYmVuX2V0bV9lbmFibGUsIEhleGFnb25HbG9iYWxSZWdTdGF0ZSks
-CisgICAgICAgIFZNU1RBVEVfQk9PTChpc2RiZW5fZGZkX2VuYWJsZSwgSGV4YWdvbkdsb2JhbFJl
-Z1N0YXRlKSwKKyAgICAgICAgVk1TVEFURV9CT09MKGlzZGJlbl90cnVzdGVkLCBIZXhhZ29uR2xv
-YmFsUmVnU3RhdGUpLAorICAgICAgICBWTVNUQVRFX0JPT0woaXNkYmVuX3NlY3VyZSwgSGV4YWdv
-bkdsb2JhbFJlZ1N0YXRlKSwKKyAgICAgICAgVk1TVEFURV9FTkRfT0ZfTElTVCgpCisgICAgfQor
-fTsKKworc3RhdGljIGNvbnN0IFByb3BlcnR5IGhleGFnb25fZ2xvYmFscmVnX3Byb3BlcnRpZXNb
-XSA9IHsKKyAgICBERUZJTkVfUFJPUF9VSU5UMzIoImJvb3QtZXZiIiwgSGV4YWdvbkdsb2JhbFJl
-Z1N0YXRlLCBib290X2V2YiwgMHgwKSwKKyAgICBERUZJTkVfUFJPUF9VSU5UNjQoImNvbmZpZy10
-YWJsZS1hZGRyIiwgSGV4YWdvbkdsb2JhbFJlZ1N0YXRlLAorICAgICAgICAgICAgICAgICAgICAg
-ICBjb25maWdfdGFibGVfYWRkciwgMHhmZmZmZmZmZlVMTCksCisgICAgREVGSU5FX1BST1BfVUlO
-VDMyKCJkc3AtcmV2IiwgSGV4YWdvbkdsb2JhbFJlZ1N0YXRlLCBkc3BfcmV2LCAwKSwKKyAgICBE
-RUZJTkVfUFJPUF9CT09MKCJpc2RiZW4tZXRtLWVuYWJsZSIsIEhleGFnb25HbG9iYWxSZWdTdGF0
-ZSwKKyAgICAgICAgICAgICAgICAgICAgIGlzZGJlbl9ldG1fZW5hYmxlLCBmYWxzZSksCisgICAg
-REVGSU5FX1BST1BfQk9PTCgiaXNkYmVuLWRmZC1lbmFibGUiLCBIZXhhZ29uR2xvYmFsUmVnU3Rh
-dGUsCisgICAgICAgICAgICAgICAgICAgICBpc2RiZW5fZGZkX2VuYWJsZSwgZmFsc2UpLAorICAg
-IERFRklORV9QUk9QX0JPT0woImlzZGJlbi10cnVzdGVkIiwgSGV4YWdvbkdsb2JhbFJlZ1N0YXRl
-LAorICAgICAgICAgICAgICAgICAgICAgaXNkYmVuX3RydXN0ZWQsIGZhbHNlKSwKKyAgICBERUZJ
-TkVfUFJPUF9CT09MKCJpc2RiZW4tc2VjdXJlIiwgSGV4YWdvbkdsb2JhbFJlZ1N0YXRlLAorICAg
-ICAgICAgICAgICAgICAgICAgaXNkYmVuX3NlY3VyZSwgZmFsc2UpLAorfTsKKworc3RhdGljIHZv
-aWQgaGV4YWdvbl9nbG9iYWxyZWdfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqa2xhc3MsIGNvbnN0
-IHZvaWQgKmRhdGEpCit7CisgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVWSUNFX0NMQVNTKGtsYXNz
-KTsKKyAgICBSZXNldHRhYmxlQ2xhc3MgKnJjID0gUkVTRVRUQUJMRV9DTEFTUyhrbGFzcyk7CisK
-KyAgICBkYy0+cmVhbGl6ZSA9IGhleGFnb25fZ2xvYmFscmVnX3JlYWxpemU7CisgICAgcmMtPnBo
-YXNlcy5ob2xkID0gaGV4YWdvbl9nbG9iYWxyZWdfcmVzZXRfaG9sZDsKKyAgICBkYy0+dm1zZCA9
-ICZ2bXN0YXRlX2hleGFnb25fZ2xvYmFscmVnOworICAgIGRjLT51c2VyX2NyZWF0YWJsZSA9IGZh
-bHNlOworICAgIGRldmljZV9jbGFzc19zZXRfcHJvcHMoZGMsIGhleGFnb25fZ2xvYmFscmVnX3By
-b3BlcnRpZXMpOworfQorCitzdGF0aWMgY29uc3QgVHlwZUluZm8gaGV4YWdvbl9nbG9iYWxyZWdf
-aW5mbyA9IHsKKyAgICAubmFtZSA9IFRZUEVfSEVYQUdPTl9HTE9CQUxSRUcsCisgICAgLnBhcmVu
-dCA9IFRZUEVfU1lTX0JVU19ERVZJQ0UsCisgICAgLmluc3RhbmNlX3NpemUgPSBzaXplb2YoSGV4
-YWdvbkdsb2JhbFJlZ1N0YXRlKSwKKyAgICAuaW5zdGFuY2VfaW5pdCA9IGhleGFnb25fZ2xvYmFs
-cmVnX2luaXQsCisgICAgLmNsYXNzX2luaXQgPSBoZXhhZ29uX2dsb2JhbHJlZ19jbGFzc19pbml0
-LAorfTsKKworc3RhdGljIHZvaWQgaGV4YWdvbl9nbG9iYWxyZWdfcmVnaXN0ZXJfdHlwZXModm9p
-ZCkKK3sKKyAgICB0eXBlX3JlZ2lzdGVyX3N0YXRpYygmaGV4YWdvbl9nbG9iYWxyZWdfaW5mbyk7
-Cit9CisKK3R5cGVfaW5pdChoZXhhZ29uX2dsb2JhbHJlZ19yZWdpc3Rlcl90eXBlcykKLS0gCjIu
-MzQuMQoK
+From: Lex Bailey <lex.bailey@lowrisc.org>
+
+This UART device is not specifically tied to ibex. Currently it is only used =
+in the
+opentitan machine, which does use an ibex core, but an opentitan machine with=
+ a
+different core would still use this UART, hence it should be considered a par=
+t of
+opentitan more than a part of ibex.
+
+Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
+---
+ MAINTAINERS                                |   1 +
+ hw/char/Kconfig                            |   3 +
+ hw/char/meson.build                        |   2 +-
+ hw/char/{ibex_uart.c =3D> ot_uart.c}         | 177 ++++++++++-----------
+ hw/riscv/Kconfig                           |   1 +
+ hw/riscv/opentitan.c                       |   2 +-
+ include/hw/char/{ibex_uart.h =3D> ot_uart.h} |  20 +--
+ include/hw/riscv/opentitan.h               |   4 +-
+ 8 files changed, 107 insertions(+), 103 deletions(-)
+ rename hw/char/{ibex_uart.c =3D> ot_uart.c} (75%)
+ rename include/hw/char/{ibex_uart.h =3D> ot_uart.h} (84%)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ad215eced8..9bd0b98f09 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1719,6 +1719,7 @@ L: qemu-riscv@nongnu.org
+ S: Supported
+ F: hw/riscv/opentitan.c
+ F: hw/*/ibex_*.c
++F: hw/*/ot_*.c
+ F: include/hw/riscv/opentitan.h
+ F: include/hw/*/ibex_*.h
+=20
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 020c0a84bb..23ddab6b78 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -95,3 +95,6 @@ config IP_OCTAL_232
+     bool
+     default y
+     depends on IPACK
++
++config OT_UART
++    bool
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index fc3d7ee506..056153085f 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -2,7 +2,7 @@ system_ss.add(when: 'CONFIG_CADENCE', if_true: files('cadence=
+_uart.c'))
+ system_ss.add(when: 'CONFIG_CMSDK_APB_UART', if_true: files('cmsdk-apb-uart.=
+c'))
+ system_ss.add(when: 'CONFIG_ESCC', if_true: files('escc.c'))
+ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_apbuart.c'))
+-system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_uart.c'))
++system_ss.add(when: 'CONFIG_OT_UART', if_true: files('ot_uart.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_serial.c'))
+ system_ss.add(when: 'CONFIG_IP_OCTAL_232', if_true: files('ipoctal232.c'))
+ system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('parallel-isa.c'))
+diff --git a/hw/char/ibex_uart.c b/hw/char/ot_uart.c
+similarity index 75%
+rename from hw/char/ibex_uart.c
+rename to hw/char/ot_uart.c
+index 26ed1aea14..b3eb619641 100644
+--- a/hw/char/ibex_uart.c
++++ b/hw/char/ot_uart.c
+@@ -1,5 +1,5 @@
+ /*
+- * QEMU lowRISC Ibex UART device
++ * QEMU OpenTitan UART device
+  *
+  * Copyright (c) 2020 Western Digital
+  *
+@@ -26,7 +26,7 @@
+  */
+=20
+ #include "qemu/osdep.h"
+-#include "hw/char/ibex_uart.h"
++#include "hw/char/ot_uart.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
+@@ -74,7 +74,7 @@ REG32(OVRD, 0x28)
+ REG32(VAL, 0x2C)
+ REG32(TIMEOUT_CTRL, 0x30)
+=20
+-static void ibex_uart_update_irqs(IbexUartState *s)
++static void ot_uart_update_irqs(OtUARTState *s)
+ {
+     if (s->uart_intr_state & s->uart_intr_enable & R_INTR_STATE_TX_WATERMARK=
+_MASK) {
+         qemu_set_irq(s->tx_watermark, 1);
+@@ -101,9 +101,9 @@ static void ibex_uart_update_irqs(IbexUartState *s)
+     }
+ }
+=20
+-static int ibex_uart_can_receive(void *opaque)
++static int ot_uart_can_receive(void *opaque)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+=20
+     if ((s->uart_ctrl & R_CTRL_RX_ENABLE_MASK)
+            && !(s->uart_status & R_STATUS_RXFULL_MASK)) {
+@@ -113,9 +113,9 @@ static int ibex_uart_can_receive(void *opaque)
+     return 0;
+ }
+=20
+-static void ibex_uart_receive(void *opaque, const uint8_t *buf, int size)
++static void ot_uart_receive(void *opaque, const uint8_t *buf, int size)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+     uint8_t rx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_RXILVL_MASK)
+                             >> R_FIFO_CTRL_RXILVL_SHIFT;
+=20
+@@ -133,13 +133,13 @@ static void ibex_uart_receive(void *opaque, const uint8=
+_t *buf, int size)
+         s->uart_intr_state |=3D R_INTR_STATE_RX_WATERMARK_MASK;
+     }
+=20
+-    ibex_uart_update_irqs(s);
++    ot_uart_update_irqs(s);
+ }
+=20
+-static gboolean ibex_uart_xmit(void *do_not_use, GIOCondition cond,
+-                               void *opaque)
++static gboolean ot_uart_xmit(void *do_not_use, GIOCondition cond,
++                             void *opaque)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+     uint8_t tx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_TXILVL_MASK)
+                             >> R_FIFO_CTRL_TXILVL_SHIFT;
+     int ret;
+@@ -155,7 +155,7 @@ static gboolean ibex_uart_xmit(void *do_not_use, GIOCondi=
+tion cond,
+         s->uart_status |=3D R_STATUS_TXEMPTY_MASK;
+         s->uart_intr_state |=3D R_INTR_STATE_TX_EMPTY_MASK;
+         s->uart_intr_state &=3D ~R_INTR_STATE_TX_WATERMARK_MASK;
+-        ibex_uart_update_irqs(s);
++        ot_uart_update_irqs(s);
+         return G_SOURCE_REMOVE;
+     }
+=20
+@@ -168,7 +168,7 @@ static gboolean ibex_uart_xmit(void *do_not_use, GIOCondi=
+tion cond,
+=20
+     if (s->tx_level) {
+         guint r =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP,
+-                                        ibex_uart_xmit, s);
++                                        ot_uart_xmit, s);
+         if (!r) {
+             s->tx_level =3D 0;
+             return G_SOURCE_REMOVE;
+@@ -176,7 +176,7 @@ static gboolean ibex_uart_xmit(void *do_not_use, GIOCondi=
+tion cond,
+     }
+=20
+     /* Clear the TX Full bit */
+-    if (s->tx_level !=3D IBEX_UART_TX_FIFO_SIZE) {
++    if (s->tx_level !=3D OT_UART_TX_FIFO_SIZE) {
+         s->uart_status &=3D ~R_STATUS_TXFULL_MASK;
+     }
+=20
+@@ -191,20 +191,20 @@ static gboolean ibex_uart_xmit(void *do_not_use, GIOCon=
+dition cond,
+         s->uart_intr_state |=3D R_INTR_STATE_TX_EMPTY_MASK;
+     }
+=20
+-    ibex_uart_update_irqs(s);
++    ot_uart_update_irqs(s);
+     return G_SOURCE_REMOVE;
+ }
+=20
+-static void uart_write_tx_fifo(IbexUartState *s, const uint8_t *buf,
++static void uart_write_tx_fifo(OtUARTState *s, const uint8_t *buf,
+                                int size)
+ {
+     uint64_t current_time =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+     uint8_t tx_fifo_level =3D (s->uart_fifo_ctrl & R_FIFO_CTRL_TXILVL_MASK)
+                             >> R_FIFO_CTRL_TXILVL_SHIFT;
+=20
+-    if (size > IBEX_UART_TX_FIFO_SIZE - s->tx_level) {
+-        size =3D IBEX_UART_TX_FIFO_SIZE - s->tx_level;
+-        qemu_log_mask(LOG_GUEST_ERROR, "ibex_uart: TX FIFO overflow");
++    if (size > OT_UART_TX_FIFO_SIZE - s->tx_level) {
++        size =3D OT_UART_TX_FIFO_SIZE - s->tx_level;
++        qemu_log_mask(LOG_GUEST_ERROR, "ot_uart: TX FIFO overflow");
+     }
+=20
+     memcpy(s->tx_fifo + s->tx_level, buf, size);
+@@ -216,10 +216,10 @@ static void uart_write_tx_fifo(IbexUartState *s, const =
+uint8_t *buf,
+=20
+     if (s->tx_level >=3D tx_fifo_level) {
+         s->uart_intr_state |=3D R_INTR_STATE_TX_WATERMARK_MASK;
+-        ibex_uart_update_irqs(s);
++        ot_uart_update_irqs(s);
+     }
+=20
+-    if (s->tx_level =3D=3D IBEX_UART_TX_FIFO_SIZE) {
++    if (s->tx_level =3D=3D OT_UART_TX_FIFO_SIZE) {
+         s->uart_status |=3D R_STATUS_TXFULL_MASK;
+     }
+=20
+@@ -227,9 +227,9 @@ static void uart_write_tx_fifo(IbexUartState *s, const ui=
+nt8_t *buf,
+               (s->char_tx_time * 4));
+ }
+=20
+-static void ibex_uart_reset(DeviceState *dev)
++static void ot_uart_reset(DeviceState *dev)
+ {
+-    IbexUartState *s =3D IBEX_UART(dev);
++    OtUARTState *s =3D OT_UART(dev);
+=20
+     s->uart_intr_state =3D 0x00000000;
+     s->uart_intr_state =3D 0x00000000;
+@@ -248,10 +248,10 @@ static void ibex_uart_reset(DeviceState *dev)
+=20
+     s->char_tx_time =3D (NANOSECONDS_PER_SECOND / 230400) * 10;
+=20
+-    ibex_uart_update_irqs(s);
++    ot_uart_update_irqs(s);
+ }
+=20
+-static uint64_t ibex_uart_get_baud(IbexUartState *s)
++static uint64_t ot_uart_get_baud(OtUARTState *s)
+ {
+     uint64_t baud;
+=20
+@@ -262,10 +262,9 @@ static uint64_t ibex_uart_get_baud(IbexUartState *s)
+     return baud;
+ }
+=20
+-static uint64_t ibex_uart_read(void *opaque, hwaddr addr,
+-                                       unsigned int size)
++static uint64_t ot_uart_read(void *opaque, hwaddr addr, unsigned int size)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+     uint64_t retvalue =3D 0;
+=20
+     switch (addr >> 2) {
+@@ -342,25 +341,25 @@ static uint64_t ibex_uart_read(void *opaque, hwaddr add=
+r,
+     return retvalue;
+ }
+=20
+-static void ibex_uart_write(void *opaque, hwaddr addr,
+-                                  uint64_t val64, unsigned int size)
++static void ot_uart_write(void *opaque, hwaddr addr, uint64_t val64,
++                          unsigned int size)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+     uint32_t value =3D val64;
+=20
+     switch (addr >> 2) {
+     case R_INTR_STATE:
+         /* Write 1 clear */
+         s->uart_intr_state &=3D ~value;
+-        ibex_uart_update_irqs(s);
++        ot_uart_update_irqs(s);
+         break;
+     case R_INTR_ENABLE:
+         s->uart_intr_enable =3D value;
+-        ibex_uart_update_irqs(s);
++        ot_uart_update_irqs(s);
+         break;
+     case R_INTR_TEST:
+         s->uart_intr_state |=3D value;
+-        ibex_uart_update_irqs(s);
++        ot_uart_update_irqs(s);
+         break;
+=20
+     case R_CTRL:
+@@ -393,7 +392,7 @@ static void ibex_uart_write(void *opaque, hwaddr addr,
+                           "%s: UART_CTRL_RXBLVL is not supported\n", __func_=
+_);
+         }
+         if (value & R_CTRL_NCO_MASK) {
+-            uint64_t baud =3D ibex_uart_get_baud(s);
++            uint64_t baud =3D ot_uart_get_baud(s);
+=20
+             s->char_tx_time =3D (NANOSECONDS_PER_SECOND / baud) * 10;
+         }
+@@ -448,122 +447,122 @@ static void ibex_uart_write(void *opaque, hwaddr addr,
+     }
+ }
+=20
+-static void ibex_uart_clk_update(void *opaque, ClockEvent event)
++static void ot_uart_clk_update(void *opaque, ClockEvent event)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+=20
+     /* recompute uart's speed on clock change */
+-    uint64_t baud =3D ibex_uart_get_baud(s);
++    uint64_t baud =3D ot_uart_get_baud(s);
+=20
+     s->char_tx_time =3D (NANOSECONDS_PER_SECOND / baud) * 10;
+ }
+=20
+ static void fifo_trigger_update(void *opaque)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+=20
+     if (s->uart_ctrl & R_CTRL_TX_ENABLE_MASK) {
+-        ibex_uart_xmit(NULL, G_IO_OUT, s);
++        ot_uart_xmit(NULL, G_IO_OUT, s);
+     }
+ }
+=20
+-static const MemoryRegionOps ibex_uart_ops =3D {
+-    .read =3D ibex_uart_read,
+-    .write =3D ibex_uart_write,
++static const MemoryRegionOps ot_uart_ops =3D {
++    .read =3D ot_uart_read,
++    .write =3D ot_uart_write,
+     .endianness =3D DEVICE_LITTLE_ENDIAN,
+     .impl.min_access_size =3D 4,
+     .impl.max_access_size =3D 4,
+ };
+=20
+-static int ibex_uart_post_load(void *opaque, int version_id)
++static int ot_uart_post_load(void *opaque, int version_id)
+ {
+-    IbexUartState *s =3D opaque;
++    OtUARTState *s =3D opaque;
+=20
+-    ibex_uart_update_irqs(s);
++    ot_uart_update_irqs(s);
+     return 0;
+ }
+=20
+-static const VMStateDescription vmstate_ibex_uart =3D {
+-    .name =3D TYPE_IBEX_UART,
++static const VMStateDescription vmstate_ot_uart =3D {
++    .name =3D TYPE_OT_UART,
+     .version_id =3D 1,
+     .minimum_version_id =3D 1,
+-    .post_load =3D ibex_uart_post_load,
++    .post_load =3D ot_uart_post_load,
+     .fields =3D (const VMStateField[]) {
+-        VMSTATE_UINT8_ARRAY(tx_fifo, IbexUartState,
+-                            IBEX_UART_TX_FIFO_SIZE),
+-        VMSTATE_UINT32(tx_level, IbexUartState),
+-        VMSTATE_UINT64(char_tx_time, IbexUartState),
+-        VMSTATE_TIMER_PTR(fifo_trigger_handle, IbexUartState),
+-        VMSTATE_UINT32(uart_intr_state, IbexUartState),
+-        VMSTATE_UINT32(uart_intr_enable, IbexUartState),
+-        VMSTATE_UINT32(uart_ctrl, IbexUartState),
+-        VMSTATE_UINT32(uart_status, IbexUartState),
+-        VMSTATE_UINT32(uart_rdata, IbexUartState),
+-        VMSTATE_UINT32(uart_fifo_ctrl, IbexUartState),
+-        VMSTATE_UINT32(uart_fifo_status, IbexUartState),
+-        VMSTATE_UINT32(uart_ovrd, IbexUartState),
+-        VMSTATE_UINT32(uart_val, IbexUartState),
+-        VMSTATE_UINT32(uart_timeout_ctrl, IbexUartState),
++        VMSTATE_UINT8_ARRAY(tx_fifo, OtUARTState,
++                            OT_UART_TX_FIFO_SIZE),
++        VMSTATE_UINT32(tx_level, OtUARTState),
++        VMSTATE_UINT64(char_tx_time, OtUARTState),
++        VMSTATE_TIMER_PTR(fifo_trigger_handle, OtUARTState),
++        VMSTATE_UINT32(uart_intr_state, OtUARTState),
++        VMSTATE_UINT32(uart_intr_enable, OtUARTState),
++        VMSTATE_UINT32(uart_ctrl, OtUARTState),
++        VMSTATE_UINT32(uart_status, OtUARTState),
++        VMSTATE_UINT32(uart_rdata, OtUARTState),
++        VMSTATE_UINT32(uart_fifo_ctrl, OtUARTState),
++        VMSTATE_UINT32(uart_fifo_status, OtUARTState),
++        VMSTATE_UINT32(uart_ovrd, OtUARTState),
++        VMSTATE_UINT32(uart_val, OtUARTState),
++        VMSTATE_UINT32(uart_timeout_ctrl, OtUARTState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+=20
+-static const Property ibex_uart_properties[] =3D {
+-    DEFINE_PROP_CHR("chardev", IbexUartState, chr),
++static const Property ot_uart_properties[] =3D {
++    DEFINE_PROP_CHR("chardev", OtUARTState, chr),
+ };
+=20
+-static void ibex_uart_init(Object *obj)
++static void ot_uart_init(Object *obj)
+ {
+-    IbexUartState *s =3D IBEX_UART(obj);
++    OtUARTState *s =3D OT_UART(obj);
+=20
+     s->f_clk =3D qdev_init_clock_in(DEVICE(obj), "f_clock",
+-                                  ibex_uart_clk_update, s, ClockUpdate);
+-    clock_set_hz(s->f_clk, IBEX_UART_CLOCK);
++                                  ot_uart_clk_update, s, ClockUpdate);
++    clock_set_hz(s->f_clk, OT_UART_CLOCK);
+=20
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_watermark);
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_watermark);
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_empty);
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_overflow);
+=20
+-    memory_region_init_io(&s->mmio, obj, &ibex_uart_ops, s,
+-                          TYPE_IBEX_UART, 0x400);
++    memory_region_init_io(&s->mmio, obj, &ot_uart_ops, s,
++                          TYPE_OT_UART, 0x400);
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+ }
+=20
+-static void ibex_uart_realize(DeviceState *dev, Error **errp)
++static void ot_uart_realize(DeviceState *dev, Error **errp)
+ {
+-    IbexUartState *s =3D IBEX_UART(dev);
++    OtUARTState *s =3D OT_UART(dev);
+=20
+     s->fifo_trigger_handle =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                           fifo_trigger_update, s);
+=20
+-    qemu_chr_fe_set_handlers(&s->chr, ibex_uart_can_receive,
+-                             ibex_uart_receive, NULL, NULL,
++    qemu_chr_fe_set_handlers(&s->chr, ot_uart_can_receive,
++                             ot_uart_receive, NULL, NULL,
+                              s, NULL, true);
+ }
+=20
+-static void ibex_uart_class_init(ObjectClass *klass, const void *data)
++static void ot_uart_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc =3D DEVICE_CLASS(klass);
+=20
+-    device_class_set_legacy_reset(dc, ibex_uart_reset);
+-    dc->realize =3D ibex_uart_realize;
+-    dc->vmsd =3D &vmstate_ibex_uart;
+-    device_class_set_props(dc, ibex_uart_properties);
++    device_class_set_legacy_reset(dc, ot_uart_reset);
++    dc->realize =3D ot_uart_realize;
++    dc->vmsd =3D &vmstate_ot_uart;
++    device_class_set_props(dc, ot_uart_properties);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+ }
+=20
+-static const TypeInfo ibex_uart_info =3D {
+-    .name          =3D TYPE_IBEX_UART,
++static const TypeInfo ot_uart_info =3D {
++    .name          =3D TYPE_OT_UART,
+     .parent        =3D TYPE_SYS_BUS_DEVICE,
+-    .instance_size =3D sizeof(IbexUartState),
+-    .instance_init =3D ibex_uart_init,
+-    .class_init    =3D ibex_uart_class_init,
++    .instance_size =3D sizeof(OtUARTState),
++    .instance_init =3D ot_uart_init,
++    .class_init    =3D ot_uart_class_init,
+ };
+=20
+-static void ibex_uart_register_types(void)
++static void ot_uart_register_types(void)
+ {
+-    type_register_static(&ibex_uart_info);
++    type_register_static(&ot_uart_info);
+ }
+=20
+-type_init(ibex_uart_register_types)
++type_init(ot_uart_register_types)
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 0222c93f87..cb4bb5f442 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -38,6 +38,7 @@ config OPENTITAN
+     default y
+     depends on RISCV32
+     select IBEX
++    select OT_UART
+     select SIFIVE_PLIC
+     select UNIMP
+=20
+diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+index 309125e854..97c33d1b53 100644
+--- a/hw/riscv/opentitan.c
++++ b/hw/riscv/opentitan.c
+@@ -132,7 +132,7 @@ static void lowrisc_ibex_soc_init(Object *obj)
+=20
+     object_initialize_child(obj, "plic", &s->plic, TYPE_SIFIVE_PLIC);
+=20
+-    object_initialize_child(obj, "uart", &s->uart, TYPE_IBEX_UART);
++    object_initialize_child(obj, "uart", &s->uart, TYPE_OT_UART);
+=20
+     object_initialize_child(obj, "timer", &s->timer, TYPE_IBEX_TIMER);
+=20
+diff --git a/include/hw/char/ibex_uart.h b/include/hw/char/ot_uart.h
+similarity index 84%
+rename from include/hw/char/ibex_uart.h
+rename to include/hw/char/ot_uart.h
+index 882796e0c6..517324b65d 100644
+--- a/include/hw/char/ibex_uart.h
++++ b/include/hw/char/ot_uart.h
+@@ -1,5 +1,5 @@
+ /*
+- * QEMU lowRISC Ibex UART device
++ * QEMU OpenTitan UART device
+  *
+  * Copyright (c) 2020 Western Digital
+  *
+@@ -22,28 +22,28 @@
+  * THE SOFTWARE.
+  */
+=20
+-#ifndef HW_IBEX_UART_H
+-#define HW_IBEX_UART_H
++#ifndef HW_OT_UART_H
++#define HW_OT_UART_H
+=20
+ #include "hw/core/sysbus.h"
+ #include "chardev/char-fe.h"
+ #include "qemu/timer.h"
+ #include "qom/object.h"
+=20
+-#define IBEX_UART_TX_FIFO_SIZE 16
+-#define IBEX_UART_CLOCK 50000000 /* 50MHz clock */
++#define OT_UART_TX_FIFO_SIZE 16
++#define OT_UART_CLOCK 50000000 /* 50MHz clock */
+=20
+-#define TYPE_IBEX_UART "ibex-uart"
+-OBJECT_DECLARE_SIMPLE_TYPE(IbexUartState, IBEX_UART)
++#define TYPE_OT_UART "ot-uart"
++OBJECT_DECLARE_SIMPLE_TYPE(OtUARTState, OT_UART)
+=20
+-struct IbexUartState {
++struct OtUARTState {
+     /* <private> */
+     SysBusDevice parent_obj;
+=20
+     /* <public> */
+     MemoryRegion mmio;
+=20
+-    uint8_t tx_fifo[IBEX_UART_TX_FIFO_SIZE];
++    uint8_t tx_fifo[OT_UART_TX_FIFO_SIZE];
+     uint32_t tx_level;
+=20
+     uint32_t rx_level;
+@@ -70,4 +70,4 @@ struct IbexUartState {
+     qemu_irq tx_empty;
+     qemu_irq rx_overflow;
+ };
+-#endif /* HW_IBEX_UART_H */
++#endif /* HW_OT_UART_H */
+diff --git a/include/hw/riscv/opentitan.h b/include/hw/riscv/opentitan.h
+index 5b9016e1d8..f2b4bf3814 100644
+--- a/include/hw/riscv/opentitan.h
++++ b/include/hw/riscv/opentitan.h
+@@ -21,7 +21,7 @@
+=20
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/intc/sifive_plic.h"
+-#include "hw/char/ibex_uart.h"
++#include "hw/char/ot_uart.h"
+ #include "hw/timer/ibex_timer.h"
+ #include "hw/ssi/ibex_spi_host.h"
+ #include "hw/core/boards.h"
+@@ -43,7 +43,7 @@ struct LowRISCIbexSoCState {
+     /*< public >*/
+     RISCVHartArrayState cpus;
+     SiFivePLICState plic;
+-    IbexUartState uart;
++    OtUARTState uart;
+     IbexTimerState timer;
+     IbexSPIHostState spi_host[OPENTITAN_NUM_SPI_HOSTS];
+=20
+--=20
+2.49.1
+
 
