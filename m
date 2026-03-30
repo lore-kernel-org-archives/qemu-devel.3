@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1730710D14A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E0510D14A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:50:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7B8Z-0002wO-MP; Mon, 30 Mar 2026 07:50:33 -0400
+	id 1w7B8e-0003HO-OR; Mon, 30 Mar 2026 07:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7B8V-0002qP-78
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:27 -0400
+ id 1w7B8a-00032E-RJ
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7B8S-0005u8-1P
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:26 -0400
+ id 1w7B8Z-0005vJ-0R
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774871422;
+ s=mimecast20190719; t=1774871430;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=AtLFjjmIXc63zaKE/Bi8BHRcLRHQMdA48VRbb4WG0rQ=;
- b=Jug1oaLsADSjup/QqZ0GaJdxPne/rw/5fxYcID1p64KV2UD3zgQee3Oq/64vRU7CqO60YT
- tHoUK7KXuQQiP0Dh5JyJW9TkFey2VwV3eJR4wPgu5DGGWwcwEGkJ4HU7NqLWd0oyOPLz4K
- lPhAeaWCREJ5XV36Gigh9+/LPru5biY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SofHkglzIlj7gRwriJoYpIXXE5BjbplBzBVQuvwtZxM=;
+ b=CIl4FmFyAfwSZu7ijckhpvqHQKKDhmdUvUopdDTowhDsMYa+BrHQp1tM2JtCtjdBPdMWdZ
+ JNPR2nT5LMTZyri3nIGxiwgKx/eGXF6v1POgSSyJ6B1IMBV7MwU1FYz544NH+CyoSJxKjx
+ Rr0AtyTFrlkRXHtlRwh8K+NPc3x9Nsg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-154--Sx_bifsPgaz1JJJn2gNZQ-1; Mon, 30 Mar 2026 07:50:21 -0400
-X-MC-Unique: -Sx_bifsPgaz1JJJn2gNZQ-1
-X-Mimecast-MFC-AGG-ID: -Sx_bifsPgaz1JJJn2gNZQ_1774871420
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43cf5b4dac8so1634041f8f.0
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 04:50:21 -0700 (PDT)
+ us-mta-422-Z8a-alT-PAOB_mHNIMl95A-1; Mon, 30 Mar 2026 07:50:29 -0400
+X-MC-Unique: Z8a-alT-PAOB_mHNIMl95A-1
+X-Mimecast-MFC-AGG-ID: Z8a-alT-PAOB_mHNIMl95A_1774871428
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43cf7e96d4cso1432316f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 04:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774871419; x=1775476219; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=AtLFjjmIXc63zaKE/Bi8BHRcLRHQMdA48VRbb4WG0rQ=;
- b=F9iyUd8rhf49wwgXJZmTRswXGjIhAbxu0NC+oblOzfcIltLWhYIFd/rakNCmRA1uQG
- Id5fJbF/N+K04wDdg9u/lbmeC1i80lR6pA8GawHQWtvHZXxbLHT5L3vurzq7Pc7roZx2
- Fjj3EYLq1NeqsDtuz6gfFVnHfBboH24q9o2jGXHpWOov0resp8/zKSs/NHzBgkr8pCOQ
- AatoMvrFaJ3RXJm4ESUuLgX0yEODwGpP0ge+zfBmNCxdcUpzdXw0PsguMCNrrm7RxXBd
- W68zLO0WG//hR+ukBEXK1kbBIH6jBWejHKJ5VdfXQeFKBvX+w1gZHTrC+Tas4VK2SrI2
- zH7A==
+ d=redhat.com; s=google; t=1774871426; x=1775476226; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SofHkglzIlj7gRwriJoYpIXXE5BjbplBzBVQuvwtZxM=;
+ b=rxqcLwROLmKiZe2nB+G62duAIVRnInSSSIw8Ban6Mwh4aCSIk0hDfM6OsGFb+QZPo+
+ kuw8UMAd+kfA1MVzjpQq6+QhtSUUQy2O4lDLu7kBBxk13rM8A++T8Im3IufVs+6kqEbg
+ X/CYR0KV/KonGA6iJGoh7xxKbW5WlBlFuzo/debEPhc1RbkPUWjbztyzd1vMLGA1PggR
+ 1WA5RRea921J8Uc3Ez27h6sAhEUWN0/E2myu5XTd1Qad5izvBCVTRV5K+Pc0ckqNcxgE
+ yTN9NoHGz0GQ3vmPxk/WslLegFbtZ6p7A7ynx1f9bCzyMzS+QKjO84eQuZpOJX2OBnPJ
+ Hrdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774871419; x=1775476219;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AtLFjjmIXc63zaKE/Bi8BHRcLRHQMdA48VRbb4WG0rQ=;
- b=UAPWcuuYryq7LLrMnkHeR3xi9TXP1bNIBrCrv6VQampypujPh3P436RM0+7VpBEBr+
- UIkRc4YwF7TCfhes58LPCx80z6weXAcXP/Hlk8T7kAE157Bh6haxh/Djw5aWCc8vZjlI
- 84qDjeiEcGDiTDvv7haBXqpcpgPxpIDyAbkWJ8PwF+ckpuWp+JWEDXdYR8isnJLEkvCG
- kK6Rh9ywn9Mfr4FixRs+QZHpeB4J0abMvYxHB7DH7EGCcmXcYYJ+G4Px+0OA7WekgXkd
- VHDGJeB6uNK8lEtgOQZ59AKGM/Zun50d08mKyT+JqVvtnd+thTrbArs0wAyE1OoGH3bA
- JikA==
-X-Gm-Message-State: AOJu0YwhsWs73ObBp6PENpuC8Y2XBzaxVj/tctuqueGLkR/NRRm59WAx
- L9+aBO+JFpg+B8ddUpv9lBeV9dLT6nTGu+JwI0WvLe+R51qxQojkFy4A6kHp/8T2fH+fRFL0FlS
- hoa3b1pXS9JhgGH9sgOKliTTLzBfIJ9eUMGfiW0TXT9Ty+JfMKanFEhq+DD1YuvuAHUFD6TK6x9
- vgJUckF8kxH6NPOtqSnFFw0oKYWSjdfEcr4MWcpF3l
-X-Gm-Gg: ATEYQzxHU1TY4l9Pryw1EJbmNFrbyRz3VWaXJL/07NkVJuvp+rPIM0/qEb0TXlZQYlc
- yHS58gx9rzejFpo77j7Qjh/TUdArPt3ef/HJgM+RTo0zIRxiDrQ517vIKLF/HIk8kDjsE2/2n8R
- gLRxOKsQJAIuPiD8LaiTBW1BGUxxc5rMZNj/AwBJnTH7sBdYUCwPg+PWh62c5Z0VpJfbqA5yAZv
- x8UjSHgbg0K/RDKSu4JNF3L0XdLk0NaKnPgSJ03+yIMevnRW/vEjx3WghRNbdFTYM2HDnlE16EA
- l9hbaa7tWEfBfctjNi9x4sccU2ZMtVH4JNlrIZhlGZkRZw4nxnP9X+jWnib2F6Xu8RKw65fZOex
- IF6s/pp2NjKuLCDbpUuaY3SD+T6S3DP/pHdrPOrdDJEQGGbvPB2IX0ldc1FO40F9wN+eeYw2oBh
- 2+owVJJ6VPjLnknjlUNVXtcVkn
-X-Received: by 2002:a5d:5d10:0:b0:439:ae2a:755e with SMTP id
- ffacd0b85a97d-43b9e9a9785mr21097650f8f.23.1774871419004; 
- Mon, 30 Mar 2026 04:50:19 -0700 (PDT)
-X-Received: by 2002:a5d:5d10:0:b0:439:ae2a:755e with SMTP id
- ffacd0b85a97d-43b9e9a9785mr21097576f8f.23.1774871418306; 
- Mon, 30 Mar 2026 04:50:18 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774871426; x=1775476226;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SofHkglzIlj7gRwriJoYpIXXE5BjbplBzBVQuvwtZxM=;
+ b=pu3nBOLxl/twx1Q6iIctw7BQZ2E+uyQ6XCSxokG/Jo43+mGinq9uMC5ZMV+EnGRLvo
+ eqkGqNeUHpkLqfmJvC7bDtrHLs5ZcKp9q9FfCBu19n2KuIqBE4bgHVwoPT0ydbdpasKH
+ ZaP6Iy5uKH3e95lZ0y8wUvyjg8aRdPkYXt573Q+XQed4t8MFch6kHgHufBXUGwxXPSkV
+ xcEwiiI1sNpChZwA62C8swcL5AF8rVtDmYmA6ZiZ7Xz6YcGJm7mfDPeGqoSYQMBqEq+c
+ fohEyh6irnlq+z5x5mtF0Lf4i9jw4tTjkZFfq80i3JpGHlKRxbqf5uEJoqVqRctjDBFj
+ VI2w==
+X-Gm-Message-State: AOJu0YwsSiFY3logwhYyUIHaQ6vbK3lFeTm7Xii1rxDQ8k5/rNpXtBqV
+ jvev0wYZzEmKFfOilyn+/Oy5hPFiWG1Smd6lrXASzQeB8NDLknK2ovwZ6a1dOfr9aaVDtNVyd30
+ KGwNWJlcwAnTeDUY+d/cXh90efvNoUZWqwL9q9fryofWr6E0ll9qL9sdVBgOq9GCyJp2KIGR28P
+ 950oQJGvgaUNJRwpWEYhCB/vaIaEtVW2tTi8xhBqLr
+X-Gm-Gg: ATEYQzxRpiJh61EUxa09/biRCckaTsw+knqXeOUahXXDZNudH8aboyHI8wPLRUr3ziD
+ wrBtUNTuT0WjgGyqLovYO2biMR1eIujmALort81rGIICJrfH8GZl0kqKqqW08doPyZ1W1v0aY/n
+ vjHbCjXcZ+bwJHA1IbqSbgykamCwSMlqvyfT2TmLu3xfUwrc2yNyF42CbBpQhLG+aYDTM//kxr2
+ KiHs8WpZsUc/Ex+LZK+SLReDAO3ZpDnUY1gC0KXP81jPNW3BYQsKRc1GkzaxLjoO2qx8YMWpVq+
+ W8bopi1ha/bNQODRVpWTjzryq4ncyc7fqXnQptHf3S1BUHQAXXyFr24QZGer/8FiKN0IXFowPU5
+ WKjA3gll3a3WHa9R2dXRKEZ+7UwlP2jx4JcIDrCXBjfuQl3PxrUTIpC2VJTM+fGHFYpWbGWZfo8
+ 19hk1Bs9wheAr00xGDKlMK/xmu
+X-Received: by 2002:a05:6000:268a:b0:43b:45da:f296 with SMTP id
+ ffacd0b85a97d-43b9e987d45mr20423212f8f.11.1774871426284; 
+ Mon, 30 Mar 2026 04:50:26 -0700 (PDT)
+X-Received: by 2002:a05:6000:268a:b0:43b:45da:f296 with SMTP id
+ ffacd0b85a97d-43b9e987d45mr20423138f8f.11.1774871425717; 
+ Mon, 30 Mar 2026 04:50:25 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21eb95fsm20521958f8f.12.2026.03.30.04.50.17
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-43cf21e2727sm20201581f8f.2.2026.03.30.04.50.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 04:50:17 -0700 (PDT)
+ Mon, 30 Mar 2026 04:50:23 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/12] i386, lsi patches for QEMU 11.0-rc2
-Date: Mon, 30 Mar 2026 13:50:04 +0200
-Message-ID: <20260330115017.256211-1-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 03/12] whpx: i386: trace unsupported MSR accesses
+Date: Mon, 30 Mar 2026 13:50:07 +0200
+Message-ID: <20260330115017.256211-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260330115017.256211-1-pbonzini@redhat.com>
+References: <20260330115017.256211-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -117,63 +122,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 91f6a9cb1b0f11afa74ef7fb20d5579d9dfbe020:
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-  Merge tag 'qga-pull-2026-03-27' of https://github.com/kostyanf14/qemu into staging (2026-03-27 18:41:05 +0000)
+Not actionable information for users, so stop
+having it displayed unconditionally.
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 0f254f70d4fcf668b27bd7c5970761afe13589c7:
-
-  hw/acpi: Do not save/load cpuhp state unconditionally (2026-03-30 12:14:22 +0200)
-
-----------------------------------------------------------------
-* more WHPX fixes and documentation
-* hpet: fix bounds check for s->timer[]
-* hpet: lower HPET_MAX_TIMERS to 24
-* lsi53c895a: keep SCSIRequest alive during DMA
-* lsi53c895a: keep device alive during SCRIPTS execution
-* hw/acpi: fix save/restore for MIPS Malta machine
-
-----------------------------------------------------------------
-Mohamed Mediouni (4):
-      meson.build: remove i386-softmmu WHPX support
-      docs: add WHPX section with initial info
-      whpx: i386: trace unsupported MSR accesses
-      target/i386: emulate: remove redundant logging for unmapped MMIO access
-
-Paolo Bonzini (7):
-      hpet: fix bounds check for s->timer[]
-      hpet: lower HPET_MAX_TIMERS to 24
-      lsi53c895a: keep a reference to the device while SCRIPTS execute
-      lsi53c895a: do not do anything else if a reset is requested by writing ISTAT0
-      lsi53c895a: keep lsi_request and SCSIRequest in local variables
-      lsi53c895a: keep lsi_request alive as long as the SCSIRequest
-      lsi53c895a: keep SCSIRequest alive during DMA
-
-Zhao Liu (1):
-      hw/acpi: Do not save/load cpuhp state unconditionally
-
- MAINTAINERS                      |   1 +
- docs/system/index.rst            |   1 +
- docs/system/whpx.rst             | 144 +++++++++++++++++++++++++++++++++++++++
- meson.build                      |   3 +-
- include/hw/timer/hpet.h          |   2 +-
- target/i386/whpx/trace.h         |   2 +
- hw/acpi/ich9.c                   |   8 +++
- hw/acpi/piix4.c                  |   8 +++
- hw/scsi/lsi53c895a.c             |  71 ++++++++++++-------
- hw/timer/hpet.c                  |  11 +--
- target/i386/emulate/x86_mmu.c    |   3 -
- target/i386/whpx/whpx-all.c      |   5 +-
- rust/hw/timer/hpet/src/device.rs |   2 +-
- target/i386/whpx/trace-events    |   1 +
- 14 files changed, 224 insertions(+), 38 deletions(-)
- create mode 100644 docs/system/whpx.rst
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/r/20260327011152.4126-4-mohamed@unpredictable.fr
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build                   | 1 +
+ target/i386/whpx/trace.h      | 2 ++
+ target/i386/whpx/whpx-all.c   | 5 +++--
+ target/i386/whpx/trace-events | 1 +
+ 4 files changed, 7 insertions(+), 2 deletions(-)
  create mode 100644 target/i386/whpx/trace.h
  create mode 100644 target/i386/whpx/trace-events
+
+diff --git a/meson.build b/meson.build
+index 407eef5b4ed..daa58e46a3c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3687,6 +3687,7 @@ if have_system or have_user
+     'target/hppa',
+     'target/i386',
+     'target/i386/kvm',
++    'target/i386/whpx',
+     'target/loongarch',
+     'target/mips/tcg',
+     'target/ppc',
+diff --git a/target/i386/whpx/trace.h b/target/i386/whpx/trace.h
+new file mode 100644
+index 00000000000..b7c090deff3
+--- /dev/null
++++ b/target/i386/whpx/trace.h
+@@ -0,0 +1,2 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "trace/trace-target_i386_whpx.h"
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index acae61e089d..e56ae2b3433 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -41,6 +41,7 @@
+ #include "emulate/x86_emu.h"
+ #include "emulate/x86_flags.h"
+ #include "emulate/x86_mmu.h"
++#include "trace.h"
+ 
+ #include <winhvplatform.h>
+ 
+@@ -1921,8 +1922,8 @@ int whpx_vcpu_run(CPUState *cpu)
+                         1 : 3;
+ 
+             if (!is_known_msr) {
+-                warn_report("WHPX: Unsupported MSR access (0x%x), IsWrite=%i", 
+-                vcpu->exit_ctx.MsrAccess.MsrNumber, vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
++                trace_whpx_unsupported_msr_access(vcpu->exit_ctx.MsrAccess.MsrNumber,
++                    vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
+             }
+ 
+             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
+diff --git a/target/i386/whpx/trace-events b/target/i386/whpx/trace-events
+new file mode 100644
+index 00000000000..ebdfa34b281
+--- /dev/null
++++ b/target/i386/whpx/trace-events
+@@ -0,0 +1 @@
++whpx_unsupported_msr_access(uint32_t msr, int is_write) "WHPX: Unsupported MSR access (0x%x), IsWrite=%i"
 -- 
 2.53.0
 
