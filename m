@@ -4,110 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A85FFF495E
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD51FF495E
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7DTF-0004sD-Pt; Mon, 30 Mar 2026 10:20:01 -0400
+	id 1w7DTR-0004yc-Sa; Mon, 30 Mar 2026 10:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7DTA-0004rv-Vo
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:19:58 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7DTQ-0004uP-2A
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:20:12 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7DT8-00016Q-C0
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:19:56 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-6501e465a8eso2213173d50.1
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 07:19:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774880393; cv=none;
- d=google.com; s=arc-20240605;
- b=c1FQSWYp/JCkI94GRJiO0ihu1GQN+iUh7NhtwZE1u5fnOEe/7SkAPdyj7SDLp4LVoY
- GwgxQmOQAzNU9FziPZyIXaV/iZFbBVCKpoo7H2NGIw7ZDPJ7oOATFvMb5PwXPmOm+dtr
- 1PI7wmvmrRcnH7lvPYf2QvJjn7nPQ/rBTmXOcCSpc1wGkOYpjvEMFSTPh3DSirhcH+0j
- HJfAmqBWHJVlGYOG4KJCUx1hVPiAi67FGiELLeJ+E6Tl/BOSNEqd2dsyTyvURrFXhNsA
- g5Xw7hT3jv4Gd81iBXATAFHoIQv8loyiaZx1UuiRW/rhaK1JPOLuGM0+5bxXDvYSyIgR
- EV9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=tR5FOJz+5DQHmqc+c6AJWccDv1GR0BrIFths8oMTH6o=;
- fh=Je9naKQ53aBoHQbud5n3Gez/U2h3YW5ODMZfHm9wdH4=;
- b=QtDSnH2ddaPR9eFmfT9iXM3/ygKw4KhyHfW5jQUkBevmTkQHHbxnkrtH8MRIyRb/52
- Xl8T7FHIF+KQ0WBoHzuPRsKAvKrde1FCvtS11DzMJ/j1VsLiNjPQaD68PrUeOYcz+BSV
- 2pba6wQvFQAkGbErWkjcFqMzk5XO6xFZsEijcKDTw4k5nc/dkF556XVyVTmnSsa2uhWw
- Rqt5hF+VsNWn0cZmHhhvhIMihuZ/2pRdamSfD8aolizERra367phvrzy2TSTAbzLXf1f
- u7w1uOjzksPuzdS5PMk0cIfLoDo7AeTNe+Cc/e7PwcPnvRpTurir6v8gNL0QRrNsw8Mr
- Ao+g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774880393; x=1775485193; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tR5FOJz+5DQHmqc+c6AJWccDv1GR0BrIFths8oMTH6o=;
- b=BBoJ+5YbXIxiJG5xh7CVKMB6XI4CQvkYe2OPvaTdls+74GIZ/tA+mwMzGjc4zIQ6Zh
- jyK63UaTbjSesr4pxMvEvvs+xo10h4XYBN1oiLiZbTGa9E2xfsSDQ1zSI68eU0Gpg1U3
- pNso2vWh9I5hqqE6ERefToIjrTxmoubdHNy3ryrmn/n1wX8z6jLKZrigtsinK97jfTQe
- cbWoOZO9YyLZyLjODzsQH3KHLs/pPzr+copTGi7hGHwJKEJz/Ac9X8R62j5G3ZQyCr4R
- ToIhaKTr/Uo7pYcteXBtyox0i3f+YtvcPnbtzHrfQHdABhyOBDEPq1ghFfwdREm1qz/C
- XDRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774880393; x=1775485193;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tR5FOJz+5DQHmqc+c6AJWccDv1GR0BrIFths8oMTH6o=;
- b=NRBcraGJjUkyoBrnaVgYSqZZtE/3bFMz7sox/8LET0BNhLiRSDkJ+QwfJEecz72weH
- FgsncGOj9Cxzr18fpHZI1asGQ+5yfoMAYZy0Ts9IWvpWjjVvvP21r3wCSqN5tZC6lHcC
- PrR3G51CEJIvMN6ChM/GMaYaJTiDaE6eyENh5Had4js4wgRyNiPooYLG4pAZIVhd/Yyq
- dAFbwGlowYlDln9XgfH8d3BDaN5vVyB8rG3gKjAK+JSnHHv8RWDcKT6crwxqOmnROAmk
- W6VpBqoRbLoubEayfpo+kGFwarFuFMkuI7ACWhYyCKq2CYJl75bHGj5Zv8lDjTznLA4D
- ERWg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUsI2jfplxSVeZUvTRlzMNqlPYQ/OXMQiGl7avJzhDycLo0AHu6rcjxLAdyVLRG5QKSOInH8i0rqGZz@nongnu.org
-X-Gm-Message-State: AOJu0YyYI+eqRBl7VdlMDqCCQU5CDobs5mDY+gPjVz2bepqnJr+v9znv
- 6auC79O31siKjThK5zi7INSd/SHSMWxo7Y+Ed2/AWCsYthnFI2bX0NssmO2vWWLAfWoVyXX8b5G
- lVVBADBZpFJuikcugxu/4DgjMPTZ9su48zY5O7tJZvu3Ykr4n7cqSwS4=
-X-Gm-Gg: ATEYQzw5/teU0SPJsYasGc2hpmO9d0QoDvyn6sN2IwsjaH5AksW1Thc79uMophybCEA
- hWiQ2u4IQCQc5AaLIhtzC/XeN1zjQDg5sMjyR/XDshvMBeQETk2MejxZ6R3ItTC3JzO5osl5JaJ
- gIe406ICtpe3Ttz1C74dzOcNWjMtdTH4TMNdNlV+yXGX1f+XX5+ALlln9caTDZtDF+2N3iBpcVF
- 1A/V3bAHO9DtX2nh4obTYnc+zsxFEAhgf2Fl30pKZK+Njg/Nx8Sul+dsARHXm2OsVLvNGUz7toG
- tL1gWDw70cYZjDM2OwGdgSiCIYjUfcPilgkC0K+gV2L0tgBH75KY+XauvVBiyIYA747/GQa8LKG
- asw==
-X-Received: by 2002:a05:690e:4388:b0:650:68b:de67 with SMTP id
- 956f58d0204a3-650068bdfbbmr5604337d50.32.1774880392886; Mon, 30 Mar 2026
- 07:19:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7DTO-0001J6-4x
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:20:11 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F3EB35BCD0;
+ Mon, 30 Mar 2026 14:20:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774880405; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=glnreZ/s/aweLmjh0T9wlRV4Lgn4u9N6pyoesQ+ZZxQ=;
+ b=WR0xBlkzCOcg7XIC5JWfPXVoEFVODpM6z995VfMeeDEksYGpov5M/Q4fOYu/wmPlUgmppN
+ RRXOJZpv8iiHMUYAScLditx36vUY3VszHDLE7Hz0qARX4QTWv1jBOM8Y9d2ZM32qnuLFpm
+ QNUgJd2tJ9h4UWA7B8K+mW8iYAIRZ/I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774880405;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=glnreZ/s/aweLmjh0T9wlRV4Lgn4u9N6pyoesQ+ZZxQ=;
+ b=yf+VuLJSdYTEkkF1zgVYnepj3fP3volkPoPPT2Q4z7a69sntpucUBnjoxaQjiD2OiYYzC3
+ Yi4RKYGvo+zXh0Dw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1774880405; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=glnreZ/s/aweLmjh0T9wlRV4Lgn4u9N6pyoesQ+ZZxQ=;
+ b=WR0xBlkzCOcg7XIC5JWfPXVoEFVODpM6z995VfMeeDEksYGpov5M/Q4fOYu/wmPlUgmppN
+ RRXOJZpv8iiHMUYAScLditx36vUY3VszHDLE7Hz0qARX4QTWv1jBOM8Y9d2ZM32qnuLFpm
+ QNUgJd2tJ9h4UWA7B8K+mW8iYAIRZ/I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1774880405;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=glnreZ/s/aweLmjh0T9wlRV4Lgn4u9N6pyoesQ+ZZxQ=;
+ b=yf+VuLJSdYTEkkF1zgVYnepj3fP3volkPoPPT2Q4z7a69sntpucUBnjoxaQjiD2OiYYzC3
+ Yi4RKYGvo+zXh0Dw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 912604A0A2;
+ Mon, 30 Mar 2026 14:20:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id P1g6GJSGymlhUQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 30 Mar 2026 14:20:04 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Takeru Hayasaka <hayatake396@gmail.com>, qemu-devel@nongnu.org
+Cc: hayatake396@gmail.com, lvivier@redhat.com, pbonzini@redhat.com,
+ peterx@redhat.com
+Subject: Re: [PATCH v2] tests/qtest/migration: Add mapped-ram/postcopy
+ validation test
+In-Reply-To: <20260327164705.1990226-1-hayatake396@gmail.com>
+References: <CADFiAc+uCn1diKbpHGJ9yBUJbzaCEwSdmd3mF-42_SeZngqRVQ@mail.gmail.com>
+ <20260327164705.1990226-1-hayatake396@gmail.com>
+Date: Mon, 30 Mar 2026 11:20:02 -0300
+Message-ID: <87se9hh019.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260330131406.87080-1-Stepan.Popov@kaspersky.com>
- <CAMxuvawBPPBfBhLy-9H43fPT64M6iJV+LZiE0CmqP6BfJkAFQA@mail.gmail.com>
- <acp8VmIN1cwNAxE-@redhat.com>
-In-Reply-To: <acp8VmIN1cwNAxE-@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Mar 2026 15:19:40 +0100
-X-Gm-Features: AQROBzCMH-S0NhdpCM1c5lsnY2Qp9GM5NIoYfeiVVy8Ri5DqhZAl9OSE7ghyh8w
-Message-ID: <CAFEAcA8Rt6VwDksVHjEAWKsYc15JGjry=kozHsx8PrwW6sEH2A@mail.gmail.com>
-Subject: Re: [PATCH] meson: add missing semicolon in pthread_condattr_setclock
- test
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Stepan Popov <Stepan.Popov@kaspersky.com>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[gmail.com,redhat.com];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,29 +117,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Mar 2026 at 14:36, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Mon, Mar 30, 2026 at 05:32:33PM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi
-> >
-> > On Mon, Mar 30, 2026 at 5:21=E2=80=AFPM Stepan Popov <Stepan.Popov@kasp=
-ersky.com> wrote:
-> > >
-> > > The test code was missing a semicolon after the pthread_condattr_t
-> > > variable declaration.
-> > >
-> > > Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
-> >
-> > Fixes: 657ac98b58 ("thread-posix: use monotonic clock for QemuCond and
-> > QemuSemaphore")
->
-> IOW, that commit has been dead code since it was first added years ago,
-> we've never used the monotonic clock
+Takeru Hayasaka <hayatake396@gmail.com> writes:
 
-Yes. So are we confident enough in that never-tested feature to want to
-enable it at this point in the release cycle, or should we hold off on
-this bugfix until 11.1 ?
+> The migration capability checks reject enabling postcopy-ram together
+> with mapped-ram, but there is no qtest covering this incompatibility.
+>
+> Add a validation test that verifies QMP rejects the combination in
+> both capability ordering cases and returns the expected error.
+>
+> This keeps the existing capability boundary covered without changing
+> migration behavior.
+>
+> Signed-off-by: Takeru Hayasaka <hayatake396@gmail.com>
+> ---
+> Built with:
+>   ./configure --target-list=x86_64-softmmu --disable-werror
+>   ninja -C build tests/qtest/migration-test qemu-system-x86_64
+>
+> Tested with:
+>   QTEST_QEMU_BINARY=./build/qemu-system-x86_64 \
+>   ./build/tests/qtest/migration-test --full \
+>   -p /x86_64/migration/validate_caps/mapped_ram_postcopy
+>
+>  v2:
+>    - Rename do_test_validate_capability_pair to validate_caps_pair
+>    - Move migrate_start/migrate_end to caller for VM reuse
+>    - Set only_source to skip target VM
+>    - Generalize test using migration_test_add_suffix pattern
 
--- PMM
+Hi, thank you for the patch. It looks good aside from a small functional
+issue I'll mention below.
+
+Let me just point out that is customary to not send patches in reply to
+the previous thread. So this v2 should have been its own thread
+completely independent of the first version. This helps the community
+keep track of the various series on the list without patches getting
+lost deep inside mail threads.
+
+> ---
+>  tests/qtest/migration/misc-tests.c | 50 ++++++++++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+>
+> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+> index 196f1ca84287..4131e7b0614d 100644
+> --- a/tests/qtest/migration/misc-tests.c
+> +++ b/tests/qtest/migration/misc-tests.c
+> @@ -215,6 +215,53 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+>      migrate_end(from, to, false);
+>  }
+>  
+> +static void validate_caps_pair(QTestState *from,
+> +                               const char *first_capability,
+> +                               const char *second_capability,
+> +                               const char *expected_error)
+> +{
+> +    QDict *rsp;
+> +    const char *error_desc;
+> +
+> +    migrate_set_capability(from, first_capability, true);
+> +
+> +    rsp = qtest_qmp_assert_failure_ref(
+> +        from,
+> +        "{ 'execute': 'migrate-set-capabilities',"
+> +        "  'arguments': { 'capabilities': [ { "
+> +        "      'capability': %s, 'state': true } ] } }",
+> +        second_capability);
+> +
+> +    error_desc = qdict_get_str(rsp, "desc");
+> +    g_assert_cmpstr(error_desc, ==, expected_error);
+> +    qobject_unref(rsp);
+> +
+> +    migrate_set_capability(from, first_capability, false);
+> +}
+> +
+> +static void test_validate_caps_pair(char *test_path, MigrateCommon *args)
+> +{
+> +    g_autofree char *cap_pair = g_path_get_basename(test_path);
+> +    QTestState *from, *to;
+> +
+> +    args->start.hide_stderr = true;
+> +    args->start.only_source = true;
+> +
+> +    if (migrate_start(&from, &to, "defer", &args->start)) {
+> +        return;
+> +    }
+> +
+> +    if (g_str_equal(cap_pair, "mapped_ram_postcopy")) {
+> +        const char *error =
+> +            "Mapped-ram migration is incompatible with postcopy";
+> +
+> +        validate_caps_pair(from, "mapped-ram", "postcopy-ram", error);
+> +        validate_caps_pair(from, "postcopy-ram", "mapped-ram", error);
+> +    }
+> +
+> +    qtest_quit(from);
+
+This will leave the "src_serial" file behind in the test directory and
+will cause cleanup of the tests to fail. However, I see that using
+migrate_end() here would cause an access to the not-initialized "to"
+pointer. I actually misremembered the code we have in master when I
+suggested to use only_source for this, I have a patch making
+migrate_end() accept NULL that has not been merged yet.
+
+As a temporary solution, we could just unlink() the src_serial file here
+directly. I'll do that myself when applying the patch, you don't need to
+send a new version.
+
+> +}
+> +
+>  static void test_validate_uri_channels_both_set(char *name, MigrateCommon *args)
+>  {
+>      args->listen_uri = "defer",
+> @@ -276,4 +323,7 @@ void migration_test_add_misc(MigrationTestEnv *env)
+>                         test_validate_uri_channels_both_set);
+>      migration_test_add("/migration/validate_uri/channels/none_set",
+>                         test_validate_uri_channels_none_set);
+> +    migration_test_add_suffix("/migration/validate_caps/",
+> +                              "mapped_ram_postcopy",
+> +                              test_validate_caps_pair);
+>  }
 
