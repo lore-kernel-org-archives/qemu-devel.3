@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 977E71061B15
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 18:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B5B1061B18
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 18:08:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7GyV-0002ah-Si; Mon, 30 Mar 2026 14:04:31 -0400
+	id 1w7H25-0004Op-K5; Mon, 30 Mar 2026 14:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1w7GxJ-0002LN-SR
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:03:30 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7H1l-0004II-R5
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:07:59 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1w7GxH-0001UV-DC
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:03:17 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64d5a7926cfso6640876d50.2
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 11:03:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7H1h-0002LX-KN
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:07:51 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso39597775e9.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 11:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774893794; x=1775498594; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VSSej4rQP/km8NEhv3cfELxnfJmGjoS8RTsivRF4Ji8=;
- b=J+CR5QDqPMlMGeKfWNUAc+3zrNNhWJ8qlk5LbuX612I8YXdZmQHQnhGiv0iBKMemip
- 8dC1A7uLG7YSQL0prDnFIZ+iIpi25JpB9IxL2skwfOJniCL930QbJM/Dz9srbjjrWwz1
- JCZeZjckjPzKhPEU8k3MxfKapG2RlFBi4CzvLtX4Z69FRM7bNlTXVGVtuTirvlC6Yipf
- gSwfrIGQHZEJEer3WDOdzRss46v0SFjupolDsjADiDO2QdnQDuoxiPXe1DqoZINTq4mB
- fTLN1GKQwMCfFqyAtu8HqjiWfZtDU8duIT5nvX6anxs08N7RhxEO8kl1r3Oselh4CRxs
- JsVQ==
+ d=linaro.org; s=google; t=1774894063; x=1775498863; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=92b5QUB1yQCcsiShMBI2EDfqTplZvRI7/jv+VGujLys=;
+ b=AbxrDA1Q4UEwTjbPrIS5UXHjwkgRNXgKpZ62KzIsyfrhSRZkevyivA2dBw/9VNG4A3
+ 1JMRXkOsdbZQmg/3IMCRNjpQfYoc9gCaO349cjcl5x1pmG2lXQFTdws3clYv6orpbFaV
+ J3KsubFPXZb2CtdOdF0CGPPOOu/5pPAS9z0/oUmpDTq4ZpqxshR/Ir3YAuvudmK/Znc5
+ FqLInHfCw/G0CPHcrb4jCK6BUXXR43HaEM5OHREqGIuM3VRF7QH7FZiQKiFHDt85iqiI
+ 7nRloywMkVdU9oQY8UZw90PXp8OKmBgLdDAtT4wjfShbV4cNcqDi0igceQlxGoFW/GuI
+ h+uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774893794; x=1775498594;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VSSej4rQP/km8NEhv3cfELxnfJmGjoS8RTsivRF4Ji8=;
- b=OU+LxAtTJ32EekWdHAvSxM3fsDPKmSeszY9LyaJSjDMqFSAzCUk6/RXvgdtqbO6JQd
- r3k6ZSJbFsTMfosFtCTIqqUk+1uYKHcluTXaDtaCpIjU7MWXBHtKdr4Ee2pln5SQPk6g
- K/hHCMGBIYaWgrHCZZ7ndyXcl8q/ZfLEhIMv+glbG7Jj++SoXC2S9lDeOtXGeMeZJhjl
- B8GQHyOjKqbr8pKwM9EP786SRs+eU3EOr4qHItmtP+NqVQryIqKDZJOe5LmNLyd44qsJ
- V8/a/thgx7ZkNWItPrIYEbxQ4621XOmH66EbcYZO/VQY3jA8zi3RhO/EpmUCy3UUuIXK
- rbyA==
-X-Gm-Message-State: AOJu0YzEuKlUKbDb2nejry/urEXUcWIeSsOw1NuuQHymoykAMNjcLWbF
- dykDn+Y0/jat5MQ6+fRnK2IJl7GaH6qIYrHqBrQHh0dHy9fFjFDZ01Bp
-X-Gm-Gg: ATEYQzyVfYL2k/inRrQwEOatWGvcDk5ffaDD6oUCcqeOATcnaanv4z1OebSsnTC6HeC
- vIZ0Z+WbXPyvxRX4qu0e3QF7KOBA7YWPxBes/3z1teFScenVrCrkA04LAdbN7E7wE6fYcMX+CRA
- TxtN5GXIqrzYpw6Rdxbq0W7vrPBfSQBy5QQTs8K+EnoFWthHcC0LUfaaaGJHD3oiH68KK6FowDs
- GoIIEtLXt7qmWXo7JYPLS6/+bNi2L/qJv8yk+w5joXOK/w81iSyhNhupcOh23sxrLObyvwoCP3X
- CIsZkl6RWxXpsB+ZUFYflF9yisMn3KyOV6Gp83jhextkUto16Nd64dXLl1JO0LC+xRQIM+r04Pe
- oMbwI2107yL7YiNhaMPB8OzAit6YOzLZ8C8ndMtRTUOHUA8cEVUfhCdJZT90uUpxQbWFN3w1q37
- snNd9YWXi+PU1HY3qzvL2BqqTs1TU7AOqDl6xcv2CQrA==
-X-Received: by 2002:a05:690c:6a10:b0:796:5a14:87c6 with SMTP id
- 00721157ae682-79bddcd9a75mr136950247b3.4.1774893794063; 
- Mon, 30 Mar 2026 11:03:14 -0700 (PDT)
-Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
+ d=1e100.net; s=20251104; t=1774894063; x=1775498863;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=92b5QUB1yQCcsiShMBI2EDfqTplZvRI7/jv+VGujLys=;
+ b=Kvnir8W/D/6/mVkqIXraM5PWc36l0nLw9esBGhnCaq2L5DpOl9KwvAJr0YaF24Z4yH
+ zv00GMs/F4j0QVGxjXn4IAW2D71yqYYPlC7gxHUAdBy5I/7MQsY6fURjmGAYVAd13hNE
+ RFLd5jqlZo6k385cZ2CBonn4Z6TrkzwqyhKld4+cYjB0IA6Y5Msuro61giNEhCrFIG5D
+ BOBz8Y2rTJyPB9N5jT8odUpiLpyHYSJkAPQun6pTBichES8BwwdA32TguTo6GtNK7hlz
+ ii7gmzei7/SfesvCFqG9MOVHFbO98+MVoRvi91TV6ZZayvcQVOSEBQR00vTC2xFIZ37U
+ CqfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLik4VBVEVDV2+vTt6pt5yGEXO/hV8vgllT0JpBqNEkW1T0pehPy8DCTnQG1OTCj25bgN4IYpjllFS@nongnu.org
+X-Gm-Message-State: AOJu0Yx8GFQ5JglW7g3xTmfWjUgPGky38SgNUfTUEncsb3NosCX9vfwb
+ qqSQUmrx0VsAWbZNJeiSWyHPZ9mXnmL7soYID4/M9p3pQ88g9++u8qmXScspvZeHy40=
+X-Gm-Gg: ATEYQzzXJlEcQ9Eeh1kKIaiurkB6Khq2KuDwpYlSYSVzmADd74ssVpPGdCp23rYmneY
+ dMMbyT+aKbblkQH/fDKlcIOjSLcfPYJnCcX1Dd4+IMQT8ny8LY1hdr/0UI6UD7kfsL++0+mPBDh
+ Bt7c2s/aUgAW8e47qKpMIxEpGM7kg3C7nvXUkc6N+vVQt/D8RhpTNNjxw8Vcfh1xpffvu8EAyxc
+ gT7JM2dhK40ryjxNxMC40CwT0kxvbTMtVEzTKpbMESl/j3M/y7qwdnIEJglP1+CEVQAtUFUvStN
+ JjKEjOT0gDulR8TfE6G3nf86sukz2E2KQFbP8IWXFvZNEkpu1kGz4kUQ0VFxb1BHREJH9mBrVtk
+ stTGghArdYm4g9jc5p3HGquUWrJy9wwa6wkuWcXtYLrr2ImEYjZZrMsrQrLJ8jaD/Eo49GQsUm0
+ buOYA3PmNKhqB4DlFv5vCCnB29ud9kfzzDv9N4gRt5mgi8o7DD2Zy/3YuYxm1l8vITsw==
+X-Received: by 2002:a05:600c:8207:b0:480:4a8f:2d5c with SMTP id
+ 5b1f17b1804b1-48727ee4444mr233926475e9.29.1774894063231; 
+ Mon, 30 Mar 2026 11:07:43 -0700 (PDT)
+Received: from [10.193.39.66] (246.148.216.82.rev.sfr.net. [82.216.148.246])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-79cb7135bd2sm38243927b3.2.2026.03.30.11.03.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 11:03:13 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Mon, 30 Mar 2026 11:03:10 -0700
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, berrange@redhat.com,
- eblake@redhat.com, jonathan.cameron@huawei.com,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com,
- lizhijian@fujitsu.com, mst@redhat.com, pbonzini@redhat.com,
- gourry@gourry.net, nifan.cxl@gmail.com, me@linux.beauty
-Subject: Re: [PATCH 8/9] hw/cxl: Add tag-based dynamic-capacity release support
-Message-ID: <acq63qeubIux3W0p@4470NRD-ASU.ssi.samsung.com>
-References: <20260325184259.366-1-alireza.sanaee@huawei.com>
- <20260325184259.366-9-alireza.sanaee@huawei.com>
+ 5b1f17b1804b1-48733c094dasm66077495e9.17.2026.03.30.11.07.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Mar 2026 11:07:42 -0700 (PDT)
+Message-ID: <4e09e0d1-bbb8-4140-9246-71a12a3d68da@linaro.org>
+Date: Mon, 30 Mar 2026 20:07:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260325184259.366-9-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=anisa.su887@gmail.com; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] cirrus-vga: Add property to set frame buffer
+ endianness and make it default to little endian
+Content-Language: en-US
+To: Fabiano Rosas <farosas@suse.de>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
+ Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>
+References: <20260330140655.31EC55968DE@zero.eik.bme.hu>
+ <87mrzpgucz.fsf@suse.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87mrzpgucz.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,108 +106,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 06:42:56PM +0000, Alireza Sanaee wrote:
-> Add support for the tag-based dynamic-capacity release policy via the QMP
-> interface. The new path scans committed extents, selects those whose stored
-> tag matches the requested UUID, and emits a Release Dynamic Capacity event
-> for each matching range.
+On 30/3/26 18:22, Fabiano Rosas wrote:
+> BALATON Zoltan <balaton@eik.bme.hu> writes:
 > 
-> This is intentionally scoped to tag-driven selection. Prescriptive release
-> handling and the underlying extent teardown stay in the existing paths.
+>> I've tried this but it does not seem to work and leaves default to
+>> auto. Could somebody tell how this should work?
+>>
 > 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->  hw/mem/cxl_type3.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
+> This patch sets the hw_compat to "off" so when new code migrates to/from
+> an old machine type, it will set the endianness to LE due to the
+> conditional you added.
 > 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 6b73d58358..d5fa8a530a 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -2492,6 +2492,63 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
->      cxl_create_dc_event_records_for_extents(dcd, type, extents, num_extents);
->  }
->  
-> +static void qmp_cxl_process_dynamic_capacity_tag_based(const char *path,
-> +        uint16_t hid, CXLDCEventType type, uint8_t rid, const char *tag,
-> +        CxlDynamicCapacityExtentList *records, Error **errp)
-> +{
-> +    Object *obj;
-> +    CXLType3Dev *dcd;
-> +    CXLDCExtentList *list = NULL;
-> +    CXLDCExtent *ent;
-> +    g_autofree CXLDCExtentRaw *extents = NULL;
-> +
-> +    obj = object_resolve_path_type(path, TYPE_CXL_TYPE3, NULL);
-> +    if (!obj) {
-> +        error_setg(errp, "Unable to resolve CXL type 3 device");
-> +        return;
-> +    }
-> +
-> +    dcd = CXL_TYPE3(obj);
-> +    if (!dcd->dc.num_regions) {
-> +        error_setg(errp, "No dynamic capacity support from the device");
-> +        return;
-> +    }
-> +
-> +    if (rid >= dcd->dc.num_regions) {
-> +        error_setg(errp, "region id is too large");
-> +        return;
-> +    }
-> +
-> +    QemuUUID uuid_req;
-> +    qemu_uuid_parse(tag, &uuid_req);
-> +
-> +    list = &dcd->dc.extents;
-> +    size_t cap = 8, n = 0;
-> +    extents = g_new0(CXLDCExtentRaw, cap);
-> +    QTAILQ_FOREACH(ent, list, node) {
-> +        QemuUUID uuid_ext;
-> +        memcpy(&uuid_ext.data, ent->tag, sizeof(ent->tag));
-> +        if (!qemu_uuid_is_equal(&uuid_req, &uuid_ext)) {
-> +            continue;
-> +        }
-> +
-> +        if (n == cap) {
-> +            cap *= 2;
-> +            extents = g_renew(CXLDCExtentRaw, extents, cap);
-> +        }
-> +
-> +        extents[n++] = (CXLDCExtentRaw){ .start_dpa = ent->start_dpa,
-> +                                         .len = ent->len,
-> +                                         .shared_seq = 0 };
-	extents[n] = (CXLDCExtentRaw){ .start_dpa = ent->start_dpa,
-                                       .len = ent->len,
-                                       .shared_seq = 0 };
-        memcpy(extents[n].tag, uuid_ext.data, 0x10);
-        n++;
+>    ./qemu-system-x86_64 -display none -nodefaults -vga cirrus -M pc-q35-10.2
+>    s->big_endian_fb: 2 --> s->vga.big_endian_fb: 0
+> 
+> overriding works:
+> 
+>    ./qemu-system-x86_64 -display none -nodefaults -vga cirrus -M pc-q35-10.2 -global cirrus-vga.x-big-endian-fb=on
+>    s->big_endian_fb: 1 --> s->vga.big_endian_fb: 1
+>    
+>    ./qemu-system-x86_64 -display none -nodefaults -vga cirrus -M pc-q35-10.2 -global cirrus-vga.x-big-endian-fb=off
+>    s->big_endian_fb: 2 --> s->vga.big_endian_fb: 0
+> 
+> The default value is a separate thing, this patch sets it to "auto" so
+> unless the hw_compat or the user overrides it, that's what you get.
+> 
+>    ./qemu-system-x86_64 -display none -nodefaults -vga cirrus
+>    s->big_endian_fb: 0
+>    (s->vga.big_endian_fb: 0, unchanged)
+>    
+>    ./qemu-system-x86_64 -display none -nodefaults -vga cirrus -global cirrus-vga.x-big-endian-fb=on
+>    s->big_endian_fb: 1 --> s->vga.big_endian_fb: 1
+>    
+>    ./qemu-system-x86_64 -display none -nodefaults -vga cirrus -global cirrus-vga.x-big-endian-fb=off
+>    s->big_endian_fb: 2 --> s->vga.big_endian_fb: 0
+> 
+> Maybe what you want is to say the old behavior is auto? Then set the
+> default to off.
 
-That should fix the issue I was talking about earlier in the other thread haha
-(I tested it this time)
-> +    }
-> +
-> +    if (n == 0) {
-> +        return;
-> +    }
-> +    extents = g_renew(CXLDCExtentRaw, extents, n);
-> +    cxl_create_dc_event_records_for_extents(dcd, type, extents, n);
-> +}
-> +
->  void qmp_cxl_add_dynamic_capacity(const char *path, uint16_t host_id,
->                                    CxlExtentSelectionPolicy sel_policy,
->                                    uint8_t region, const char *tag,
-> @@ -2537,6 +2594,10 @@ void qmp_cxl_release_dynamic_capacity(const char *path, uint16_t host_id,
->                                                        region, tag,
->                                                        extents, errp);
->          return;
-> +    case CXL_EXTENT_REMOVAL_POLICY_TAG_BASED:
-> +        qmp_cxl_process_dynamic_capacity_tag_based(path, host_id, type, region,
-> +                                                   tag, extents, errp);
-> +        return;
->      default:
->          error_setg(errp, "Removal policy not supported");
->          return;
-> -- 
-> 2.50.1 (Apple Git-155)
+Probably better.
+
 > 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/core/machine.c                | 2 ++
+>>   hw/display/cirrus_vga.c          | 6 ++++++
+>>   hw/display/cirrus_vga_internal.h | 2 ++
+>>   hw/display/cirrus_vga_isa.c      | 2 ++
+>>   4 files changed, 12 insertions(+)
+>>
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index 0aa77a57e9..e573ef46bc 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -41,6 +41,8 @@
+>>   GlobalProperty hw_compat_10_2[] = {
+>>       { "scsi-block", "migrate-pr", "off" },
+>>       { "isa-cirrus-vga", "global-vmstate", "true" },
+>> +    { "isa-cirrus-vga", "x-big-endian-fb", "off" },
+>> +    { "cirrus-vga", "x-big-endian-fb", "off" },
+>>   };
+>>   const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
+>>   
+>> diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
+>> index 629b34fc68..e379f125ae 100644
+>> --- a/hw/display/cirrus_vga.c
+>> +++ b/hw/display/cirrus_vga.c
+>> @@ -2930,6 +2930,10 @@ void cirrus_init_common(CirrusVGAState *s, Object *owner,
+>>       s->vga.cursor_invalidate = cirrus_cursor_invalidate;
+>>       s->vga.cursor_draw_line = cirrus_cursor_draw_line;
+>>   
+>> +    if (s->big_endian_fb != ON_OFF_AUTO_AUTO) {
+>> +        s->vga.big_endian_fb = (s->big_endian_fb == ON_OFF_AUTO_ON);
+>> +    }
+>> +
+>>       qemu_register_reset(cirrus_reset, s);
+>>   }
+>>   
+>> @@ -2987,6 +2991,8 @@ static const Property pci_vga_cirrus_properties[] = {
+>>                          cirrus_vga.vga.vram_size_mb, 4),
+>>       DEFINE_PROP_BOOL("blitter", struct PCICirrusVGAState,
+>>                        cirrus_vga.enable_blitter, true),
+>> +    DEFINE_PROP_ON_OFF_AUTO("x-big-endian-fb", struct PCICirrusVGAState,
+>> +                            cirrus_vga.big_endian_fb, ON_OFF_AUTO_AUTO),
+>>   };
+>>   
+>>   static void cirrus_vga_class_init(ObjectClass *klass, const void *data)
+>> diff --git a/hw/display/cirrus_vga_internal.h b/hw/display/cirrus_vga_internal.h
+>> index a78ebbd920..7c07201f18 100644
+>> --- a/hw/display/cirrus_vga_internal.h
+>> +++ b/hw/display/cirrus_vga_internal.h
+>> @@ -26,6 +26,7 @@
+>>   #ifndef CIRRUS_VGA_INTERNAL_H
+>>   #define CIRRUS_VGA_INTERNAL_H
+>>   
+>> +#include "hw/core/qdev-properties.h"
+
+"qapi/qapi-types-common.h" instead.
+
+>>   #include "vga_int.h"
+>>   
+>>   /* IDs */
+>> @@ -94,6 +95,7 @@ typedef struct CirrusVGAState {
+>>       int real_vram_size; /* XXX: suppress that */
+>>       int device_id;
+>>       int bustype;
+>> +    OnOffAuto big_endian_fb;
+>>   } CirrusVGAState;
+>>   
+>>   void cirrus_init_common(CirrusVGAState *s, Object *owner,
+>> diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
+>> index 76034a8860..c2b0b61476 100644
+>> --- a/hw/display/cirrus_vga_isa.c
+>> +++ b/hw/display/cirrus_vga_isa.c
+>> @@ -75,6 +75,8 @@ static const Property isa_cirrus_vga_properties[] = {
+>>                        cirrus_vga.enable_blitter, true),
+>>       DEFINE_PROP_BOOL("global-vmstate", struct ISACirrusVGAState,
+>>                        cirrus_vga.vga.global_vmstate, false),
+>> +    DEFINE_PROP_ON_OFF_AUTO("x-big-endian-fb", struct PCICirrusVGAState,
+> 
+> s/PCICirrusVGAState/ISACirrusVGAState/
+> 
+>> +                            cirrus_vga.big_endian_fb, ON_OFF_AUTO_AUTO),
+>>   };
+>>   
+>>   static void isa_cirrus_vga_class_init(ObjectClass *klass, const void
+>>   *data)
+
 
