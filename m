@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC69D1061B1C
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 19:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6256C1061B1D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 19:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7HvL-0003la-RY; Mon, 30 Mar 2026 15:05:19 -0400
+	id 1w7HvV-0003oj-FI; Mon, 30 Mar 2026 15:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7HvI-0003kM-DF
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:16 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <hayatake396@gmail.com>)
+ id 1w7HvT-0003oM-7l
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:27 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7HvG-0005BU-Cp
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:16 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 101064D24C;
- Mon, 30 Mar 2026 19:05:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774897512; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=BV6/ieqDhLD55ea54Y2LTQVshcZ5mIEbRV4dLloXh2c=;
- b=hsyTAimgHLIiIUYHfZYi4MUVLudzhJ3yaERv4WPIklM0qyFBqgPIulArb2Wc9c6U6obv2k
- Vw8gLcWe6voBLnXyd/U/hEtnF2QP+uz+M07zUeJVeRucGgglLFbwZ/xcWXudEyDUkI2gTo
- TltzYAh3nA4tV/i1Y75yPQkM/ZliNiE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774897512;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=BV6/ieqDhLD55ea54Y2LTQVshcZ5mIEbRV4dLloXh2c=;
- b=IZA958xeYsxXHTp56vugzTpg5yW/tTh9j4L4kTM3sAfjixhgi2AzyGll2ih5Yz8iRmRFpu
- 4eKiKh1HTPmDKBCg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=G6AzIfxD;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ZpDo5flX
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774897511; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=BV6/ieqDhLD55ea54Y2LTQVshcZ5mIEbRV4dLloXh2c=;
- b=G6AzIfxDcf91/nrOS+3D6jnlrMr/vLhvB8cznhnJ0NryUhDYojnIInoJCmnLAgerIaWEzq
- bS/kZ9iuuSYmCsOOjrKLCaeyfT2NFbagg7I3anAL1Y5lJrgO3Yx8+9tHQLBrO/dFt47fjc
- c46M0g9qvXTtJs6b0ZdKAwNGfvO/jl8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774897511;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=BV6/ieqDhLD55ea54Y2LTQVshcZ5mIEbRV4dLloXh2c=;
- b=ZpDo5flXZT5ux/opPu7vNKCC6UXhsHZaMg2iCmP2IDgxIrJ74WmfhPeGfhuHqD5u/Jl+xY
- UrWyMKOYe/XVN/Dw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 452FD4A0A2;
- Mon, 30 Mar 2026 19:05:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id eMV1BWbJymlGdQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 30 Mar 2026 19:05:10 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 0/3] Migration patches for 2026-03-30
-Date: Mon, 30 Mar 2026 16:05:05 -0300
-Message-ID: <20260330190508.8634-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <hayatake396@gmail.com>)
+ id 1w7HvQ-0005D7-PW
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:26 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-82bae83318bso2229450b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 12:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774897523; x=1775502323; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NLMeB1T35Du6zyw6/fw6tijVm1QevyhJIHM/mSx3rws=;
+ b=VwXVQodRa04vSfG+y5zzG+0+XTcXmFo3mnvFvUc8qHdR63Y1opHXZAS84MC8WZOT06
+ 4urh6Y+Exz6ISPs1Jl+ZMs7PcA1oer5AQHXfDSfUx0rNZaxjF5jegcaLHTVyTDBEZp63
+ vP0Cw8u6H6YnmOQTiatNSx+vIc+ly/0BS0iJZWLCYYKD4+QfHhx1hECnZcg6Yu48o99N
+ IoepHFwDmxOhFV56pQAUn5rs4t/U8lp3rvU95VD/tjIHJIcJ11wCU6XFqX70CK56U2vz
+ KXzkcBKUgyMu4pDr3aG9eSCRnSVOGbCsletmpni7AejGUyvlR23hJlWohMfyW56R+F4o
+ h0zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774897523; x=1775502323;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NLMeB1T35Du6zyw6/fw6tijVm1QevyhJIHM/mSx3rws=;
+ b=N3sw5T6bT00OAYjQaA5i0L8BgtaMjmnWY2Wcou88y9nao0gRigJH/pZr8QSzW89tkG
+ koqQwdDfO/tCFEeQsLliUSpfzMAuJu2CeDCCOoPdDN+gpEPmYAIUdm/2AuYLvUacRjD/
+ m/3SjC0G8oJsfQywhzZI7dEArctcyXUfhcrUIBVgbl2p/qYihfdefwJILZnbSXmDGemU
+ G6NHmP6+BNftg0UL9uXgxbXBqYR0hhTomYu9bwrs+TvJ6yxmG5q4X733OqGb3cDqj0tY
+ 4Qibv2lS5gKPc8fNFe0WRE2HwNUBdFHZQCMFqQvhaQkXMI7XrJub+pLkqy0LUSnEa9KF
+ Kk8Q==
+X-Gm-Message-State: AOJu0Yx/Q9su3MAr2K922eBbcTU3MWyWiZTZt/SEng/i2v4aMWVlADha
+ y9AyqrNamJpz3TL7CCTLL/QYmdC+71W3CF7fSQCg9kevhssSTQ9nf8O6+ArmyQ==
+X-Gm-Gg: ATEYQzzHgXEK0GGhgFBfxxSzmxg4Zlu66PFAynwxzDH2k0YDbmG/aJBUtZgItGW76Tx
+ 77bm3+yTF9ELzaqeuVBJWThmc7m58W8RZ/uBliBL+qwLirubPlGdt6Gw3RYXpo3tKJ/HRA5wS2i
+ bGvi2BvrHVnN6oBNkC8cixWQwFm928sEUIvQSZdFmf+7c+5SqWSJ1LGJPm7qHX7HyvPVYis8RLy
+ CREfF2Rl/OEVcFEUesPsIlmbZTRMDbUKnNtLsyKC5QXu4bfChkjOSaXvOsePIrgN3WLhET6FfFa
+ od8SwL+VKv3gA1IXfHuOjP+NYoxcqIoYcNesP7Jf9y8mLcUpa326Kwmtc6meeOt0tDaieig3nKy
+ FXRjRHPFcDLv2lOSKkGFxnQGw0fcPqnrafHOL5Q8YMcRlK8ti/g3s6qR6w0RIJ51GeGSXp1UfmY
+ guep/Y29rvSUfTMPnlXR99gjkPDJPXqFpg/moO7YhkYFIsKCGB1EbDDZ0i3hEn/U07n55WClR8H
+ wsmEP/FRDf1GonBaA==
+X-Received: by 2002:a05:6a00:9510:b0:81c:c98c:aeb7 with SMTP id
+ d2e1a72fcca58-82c95d341c7mr13229839b3a.7.1774897522723; 
+ Mon, 30 Mar 2026 12:05:22 -0700 (PDT)
+Received: from [127.0.1.1] (191.68.231.218.rev.ocx2915.net. [218.231.68.191])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82ca84644d9sm8496989b3a.13.2026.03.30.12.05.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Mar 2026 12:05:22 -0700 (PDT)
+From: Takeru Hayasaka <hayatake396@gmail.com>
+Subject: [PATCH 0/3] migration/postcopy: Preparatory refactoring for fast
+ snapshot load
+Date: Mon, 30 Mar 2026 19:04:40 +0000
+Message-Id: <20260330-fast-snapshot-refactor-v1-0-22143e70c467@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2]; TO_DN_SOME(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, gitlab.com:url,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 101064D24C
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEjJymkC/yXMQQqDMBCF4avIrB3QWBzoVYqLJI46LhLJxFIQ7
+ 26sy4/H+w9QTsIK7+qAxF9RiaGgrSvwiw0zo4zFYBrTN50hnKxm1GA3XWLGxJP1OSbsfO/ci4w
+ jIijnrSzy+4c/w2Pd3co+3zU4zwsmJ3pyegAAAA==
+X-Change-ID: 20260327-fast-snapshot-refactor-3c6bb472b777
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Takeru Hayasaka <hayatake396@gmail.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=hayatake396@gmail.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,38 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e389503e73f1726c997531447288ce154394d07a:
+This series refactors postcopy and mapped-ram code to make the
+userfaultfd infrastructure reusable beyond postcopy live migration.
+The goal is to prepare for fast snapshot load, which will use
+userfaultfd to load guest RAM pages on demand from a snapshot file
+instead of reading all pages before starting the VM.
 
-  Merge tag 'pull-request-2026-03-30' of https://gitlab.com/thuth/qemu into staging (2026-03-30 11:50:24 +0100)
+All three patches are pure refactoring with no functional change.
 
-are available in the Git repository at:
+Patch 1 introduces a callback for the fault thread's page request
+handler, so the page supply mechanism can be swapped (network for
+postcopy, local file for snapshot load).
 
-  https://gitlab.com/farosas/qemu.git tags/migration-20260330-pull-request
+Patch 2 extracts generic uffd setup (open, register, fault thread,
+temp pages) from postcopy_ram_incoming_setup() into a shared
+uffd_setup_incoming() function.
 
-for you to fetch changes up to 6f33b6eebb7d406871150b0285c36454a1b4d0d3:
+Patch 3 splits parse_ramblock_mapped_ram() so that the header and
+bitmap can be read without immediately loading all page data. This
+allows a future caller to read only the metadata and defer page
+loading to a fault handler.
 
-  tests/qtest/migration: Fix slow test dirty_limit (2026-03-30 10:48:12 -0300)
+Tested with mapped-ram precopy file migration tests. Postcopy tests
+require userfaultfd, which was not available in my test environment,
+but no postcopy logic was changed.
 
-----------------------------------------------------------------
-Migration pull request
+This work is part of my preparation for the GSoC 2026 "Fast Snapshot
+Load" project.
 
-- Fix dirty limit (-m thorough) test
-- Fix a few error message strings
+Signed-off-by: Takeru Hayasaka <hayatake396@gmail.com>
+---
+Takeru Hayasaka (3):
+      migration/postcopy: Extract page fault handler callback
+      migration/postcopy: Factor out uffd_setup_incoming() from postcopy setup
+      migration/ram: Split mapped-ram header and page loading
 
-----------------------------------------------------------------
+ migration/migration.h    |  5 +++
+ migration/postcopy-ram.c | 86 +++++++++++++++++++++++++++++++++++-------------
+ migration/postcopy-ram.h | 27 +++++++++++++++
+ migration/ram.c          | 52 +++++++++++++++++++++++++----
+ 4 files changed, 142 insertions(+), 28 deletions(-)
+---
+base-commit: 8e711856d7639cbffa51405f2cc2366e3d9e3a23
+change-id: 20260327-fast-snapshot-refactor-3c6bb472b777
 
-Fabiano Rosas (1):
-  tests/qtest/migration: Fix slow test dirty_limit
-
-Markus Armbruster (2):
-  migration: Fix up error message for max-cpu-throttle
-  migration: Fix references to parameter names in error messages
-
- migration/options.c                   | 36 +++++++++++++--------------
- tests/qtest/migration/precopy-tests.c |  4 +--
- 2 files changed, 20 insertions(+), 20 deletions(-)
-
--- 
-2.51.0
+Best regards,
+--  
+Takeru Hayasaka <hayatake396@gmail.com>
 
 
