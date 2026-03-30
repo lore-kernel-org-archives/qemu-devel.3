@@ -4,103 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC0AA1061B1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 19:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B3D1061B1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 19:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Hwd-0004nk-7I; Mon, 30 Mar 2026 15:06:39 -0400
+	id 1w7HwW-0004cC-Dl; Mon, 30 Mar 2026 15:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7Hvf-0003qi-Sz
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:42 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <hayatake396@gmail.com>)
+ id 1w7HvY-0003pM-EN
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:34 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w7Hvc-0005GP-Mn
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:38 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 112144D26D;
- Mon, 30 Mar 2026 19:05:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774897515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WAdxWJq9wsA0mzm41Hj6XyPkybBNhxV73lDqleIqwPA=;
- b=TYn4AZMmFUXa/YhJhKVrrbR1ploA6t1RXEZKw4BZxhqYeHR5smHYW3ArlQ8N+c3FgBgRIZ
- 1AK25CuXOFnZHP5Skz4/HCBAgl1v71N9Gs3NycFOOhFKEAeNdtqdAV+mh8FSV+8bOocMw4
- QDUhVt8C3MU4e7zdL60bCWMFIRivW7o=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774897515;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WAdxWJq9wsA0mzm41Hj6XyPkybBNhxV73lDqleIqwPA=;
- b=gW8wYwKAyOLPL1f/BikkoBBPRvlducqOJnxNKm+Any1Z1XH6q06w2vUggTGktZPj7SWgXN
- 7dSpLe0O1k/8iZCg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1774897515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WAdxWJq9wsA0mzm41Hj6XyPkybBNhxV73lDqleIqwPA=;
- b=TYn4AZMmFUXa/YhJhKVrrbR1ploA6t1RXEZKw4BZxhqYeHR5smHYW3ArlQ8N+c3FgBgRIZ
- 1AK25CuXOFnZHP5Skz4/HCBAgl1v71N9Gs3NycFOOhFKEAeNdtqdAV+mh8FSV+8bOocMw4
- QDUhVt8C3MU4e7zdL60bCWMFIRivW7o=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1774897515;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WAdxWJq9wsA0mzm41Hj6XyPkybBNhxV73lDqleIqwPA=;
- b=gW8wYwKAyOLPL1f/BikkoBBPRvlducqOJnxNKm+Any1Z1XH6q06w2vUggTGktZPj7SWgXN
- 7dSpLe0O1k/8iZCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 189EF4A0A2;
- Mon, 30 Mar 2026 19:05:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CCdPNmnJymlGdQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 30 Mar 2026 19:05:13 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Thomas Huth <thuth@redhat.com>
-Subject: [PULL 3/3] tests/qtest/migration: Fix slow test dirty_limit
-Date: Mon, 30 Mar 2026 16:05:08 -0300
-Message-ID: <20260330190508.8634-4-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260330190508.8634-1-farosas@suse.de>
-References: <20260330190508.8634-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <hayatake396@gmail.com>)
+ id 1w7HvW-0005Dy-1w
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 15:05:32 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-82bae83318bso2229487b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 12:05:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774897528; x=1775502328; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=2mYxx14F73G5Col0sHTzc8b/F7FosUZb5oC/eLDVHtM=;
+ b=kTI0YU1sCj2nTAJ2BINKBVXbIEZa3iw2TnFDRz70pdvdUrz0LWMfAHGdvmQTkdKSaO
+ GtDi6SzfWN3+BMpkqMRbiAvcCdhkkkntq2J0uRyUiL5BIPLXWTsD/pGAy3gsz+NUk0n7
+ Aa2vdSledGihXrHFsW/j4XtLJ/SfVpYVXzKG0SmQsJnhiQW9TnwRTvXAVH7YKV+JXBbM
+ aa+j4G80EFgnjJXs8IwIpPis+7FtULRefQ7bpfMdfKMuxpu9ya2Un3WW0XOVCv5+ZagP
+ w7zzVpmlAbtUBRLVwQEfh5LvwXmFL3sLAL6yEFHiUfC7TrP+GeQHn1VvdVjQIzTB3lkn
+ Pxag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774897528; x=1775502328;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=2mYxx14F73G5Col0sHTzc8b/F7FosUZb5oC/eLDVHtM=;
+ b=AGson6+7q8oot0rnsh3egaHTVr22/uyk4To7i5efDIy8WD6mA2H/ZrHGokMdJviF62
+ vn8cdcFjDND81Bu3WGFkoxw4TmSyKfKz4PbzKolwF8IjpU428ao2ych50eRS8bHSAMpU
+ ITY/AVXaNta7M+r+DTbdJKQ+1Q9zj0gr6taYwIIkhUSqDmi51UKFz9H57WCee6bOV7mT
+ BNmf0hVVTiCN9ZtIGEHPZioR31TsGijUcs5fcHR8yWg2fFydSZw7B6Hf4OizBQmMsbAg
+ j49E6zTjQKZbxTStX/kbuAUEwzRE+hBj88uDGnLPb0j4v+29JGX4wwRLdlqmntyuT7/k
+ Ek9w==
+X-Gm-Message-State: AOJu0YxcUGTXIy4Tw0h3M2E/zC8h7FI6e8B4Kq8OAEIKx8HP/Y/xUlrU
+ AZgjItN0fqco31WAu5ZtWajbD6W1+lwljIV8zG0beVmVe9ChgaQIhxfqI1i9Dw==
+X-Gm-Gg: ATEYQzwDaKTUPM4+eGQOHpfMjF0UKbKI78G//ZParSoSQ3FvaG6K3pk+rVbqwYaStYj
+ pHu60AyQbVEFVoAI6f6NaSCp0Wmui8bBe/qoYJSQno0Mqly9Mj68x82Emb+GwGZuTi7QVESkKm1
+ fPUPLcRTQLIB+xNhC+8qyyrOz2QwcWUfgU3S2U7/mcPqARqEleNMkAH6geE897tGmnV2NhjwOCO
+ Yc3r3vx+Pip5S9cfrZ06qNSqdWMjyLT3ic9uH4Mq+kFUBEHUt1NoRSU4EllKvcjnwbcNIdHsFp8
+ 3fLEmNi+tCg+JySC80mScoictXnZuMPYBwp06wplO+63JE3JDjThchp/1OopDQdceEhI3H+U4W/
+ n3DF8SUmMSxT0tcnGeJtK3ME/njP1QJzBKXIP/GPZGfbPcq56qV53a8PfKw4GzSHJdCpFSNX8p7
+ EUdEGcBN/iTluvcgMYecA193PX+hOHvQQn17G/iPkDp9mkswiTP7X/OaCiowrrhOcpV9D6bS698
+ ttTGM/Mch1+9F/kbLvJht5mCmi8
+X-Received: by 2002:a05:6a00:8d3:b0:7aa:a2a8:9808 with SMTP id
+ d2e1a72fcca58-82c95e650a6mr13547225b3a.20.1774897528018; 
+ Mon, 30 Mar 2026 12:05:28 -0700 (PDT)
+Received: from [127.0.1.1] (191.68.231.218.rev.ocx2915.net. [218.231.68.191])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82ca84644d9sm8496989b3a.13.2026.03.30.12.05.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Mar 2026 12:05:27 -0700 (PDT)
+From: Takeru Hayasaka <hayatake396@gmail.com>
+Date: Mon, 30 Mar 2026 19:04:43 +0000
+Subject: [PATCH 3/3] migration/ram: Split mapped-ram header and page
+ loading
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260330-fast-snapshot-refactor-v1-3-22143e70c467@gmail.com>
+References: <20260330-fast-snapshot-refactor-v1-0-22143e70c467@gmail.com>
+In-Reply-To: <20260330-fast-snapshot-refactor-v1-0-22143e70c467@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Takeru Hayasaka <hayatake396@gmail.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=hayatake396@gmail.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,48 +103,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After the referenced commit, the incoming side doesn't exit
-automatically after a failure. Tests that expect the destination to
-fail should use -incoming defer, issue QMP migrate-incoming, wait for
-the failure event and issue QMP quit.
+Split parse_ramblock_mapped_ram() into two stages:
 
-Fix the dirty_limit test which wasn't updated properly.
+- parse_ramblock_mapped_ram_header(): reads the MappedRamHeader and
+  dirty bitmap, storing pages_offset and file_bmap on the RAMBlock
+  for later use.
 
-Fixes: 4e8c4dda97 ("tests/qtest/migration: Force exit-on-error=false")
-Reported-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260326164405.1626-1-farosas@suse.de
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+- parse_ramblock_mapped_ram_pages(): reads all page data using the
+  bitmap and pages_offset populated by the header stage.
+
+The original parse_ramblock_mapped_ram() becomes a thin wrapper that
+calls both in sequence, preserving the existing behavior.
+
+The bitmap is now stored in block->file_bmap (which already exists
+on RAMBlock for the save side) instead of a function-local variable.
+The pages function frees the bitmap after loading is complete.
+
+This separation prepares for fast snapshot load, which will call
+only the header stage at load time and defer page loading to a
+userfaultfd-based demand paging mechanism.
+
+No functional change.
+
+Signed-off-by: Takeru Hayasaka <hayatake396@gmail.com>
 ---
- tests/qtest/migration/precopy-tests.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ migration/ram.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 46 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index c6c8ae3004..a0e3ff0547 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -1070,11 +1070,10 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
-     args->start.hide_stderr = true;
-     args->start.use_dirty_ring = true;
+diff --git a/migration/ram.c b/migration/ram.c
+index 979751f61b30..301ef9758e25 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4152,10 +4152,15 @@ err:
+     return false;
+ }
  
--    args->listen_uri = uri;
-     args->connect_uri = uri;
+-static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+-                                      ram_addr_t length, Error **errp)
++/*
++ * Read the mapped-ram header and dirty bitmap for a RAM block.
++ *
++ * Populates block->pages_offset and block->file_bmap so that page
++ * data can be loaded later (either eagerly or on demand).
++ */
++static void parse_ramblock_mapped_ram_header(QEMUFile *f, RAMBlock *block,
++                                             ram_addr_t length, Error **errp)
+ {
+-    g_autofree unsigned long *bitmap = NULL;
+     MappedRamHeader header;
+     size_t bitmap_size;
+     long num_pages;
+@@ -4187,19 +4192,54 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+     num_pages = length / header.page_size;
+     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
  
-     /* Start src, dst vm */
--    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-+    if (migrate_start(&from, &to, "defer", &args->start)) {
+-    bitmap = g_malloc0(bitmap_size);
+-    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
++    block->file_bmap = g_malloc0(bitmap_size);
++    if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
+                            header.bitmap_offset) != bitmap_size) {
+         error_setg(errp, "Error reading dirty bitmap");
++        g_free(block->file_bmap);
++        block->file_bmap = NULL;
+         return;
+     }
++}
++
++/*
++ * Read all page data for a mapped-ram RAM block using the bitmap
++ * and pages_offset previously populated by parse_ramblock_mapped_ram_header().
++ */
++static void parse_ramblock_mapped_ram_pages(QEMUFile *f, RAMBlock *block,
++                                            ram_addr_t length, Error **errp)
++{
++    long num_pages;
+ 
+-    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
++    if (!block->file_bmap) {
++        /* Shared block that was skipped during header parsing */
          return;
      }
  
-@@ -1082,6 +1081,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
-     migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
++    num_pages = length / TARGET_PAGE_SIZE;
++
++    if (!read_ramblock_mapped_ram(f, block, num_pages,
++                                  block->file_bmap, errp)) {
++        goto out;
++    }
++
+     /* Skip pages array */
+     qemu_set_offset(f, block->pages_offset + length, SEEK_SET);
++
++out:
++    g_free(block->file_bmap);
++    block->file_bmap = NULL;
++}
++
++static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
++                                      ram_addr_t length, Error **errp)
++{
++    parse_ramblock_mapped_ram_header(f, block, length, errp);
++    if (*errp) {
++        return;
++    }
++
++    parse_ramblock_mapped_ram_pages(f, block, length, errp);
+ }
  
-     /* Start migrate */
-+    migrate_incoming_qmp(to, args->connect_uri, NULL, "{}");
-     migrate_qmp(from, to, args->connect_uri, NULL, "{}");
- 
-     /* Wait for dirty limit throttle begin */
+ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+
 -- 
-2.51.0
+2.43.0
 
 
