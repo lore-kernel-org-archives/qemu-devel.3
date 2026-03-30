@@ -4,102 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F8B1061B20
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 20:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFECF1061B1E
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 20:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7J1y-0006Fp-JV; Mon, 30 Mar 2026 16:16:14 -0400
+	id 1w7J3Z-0007Dv-Hz; Mon, 30 Mar 2026 16:17:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w7J1v-0006Fa-18
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 16:16:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1w7J3G-00079I-9v; Mon, 30 Mar 2026 16:17:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w7J1s-0000k4-Dk
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 16:16:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774901766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=g/wIESYO0he0AQHMRMcq3J6TLmkstJH0T5Ma1DC8QVE=;
- b=ZlCZksayrO7sWw/7uiJ2kWtaEyGEGpPj0kSI+h94e8m1Zb1QI0GEQ1wlTTqAqvrI/lnXQj
- 5ZD1qRindb6DiXHfr1LVuDv3nIV3E12pswS0lEYWam4EloRP93aLYFM0oQgClybkw1QHuD
- NGu8qxd1hVUMfXvkjIOOlTH1ia6uJr4=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-4HnQAXn4MNyZOv5atsdl3Q-1; Mon, 30 Mar 2026 16:16:05 -0400
-X-MC-Unique: 4HnQAXn4MNyZOv5atsdl3Q-1
-X-Mimecast-MFC-AGG-ID: 4HnQAXn4MNyZOv5atsdl3Q_1774901765
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8cfdc479f68so572921885a.1
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 13:16:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774901764; x=1775506564; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=g/wIESYO0he0AQHMRMcq3J6TLmkstJH0T5Ma1DC8QVE=;
- b=JFyDaRXYepiGEfkoh+ufaJmwcMMVTACTuQIbRYie5TvgJqgAOY7wa8bREo9urZrUGN
- WhhCPw0eEbrasyRIjMR3mlFa8xrcP4iQ+S/tUUEQ+GaESkKHyUNCoPWoWCmtmOPbZVbE
- wFcAQYVjppvQWsx7LEa1vS+UiEMSVIvM0v0S0hkbjFVEq1cDfTdM2dJhn8gdRbb7d13l
- G6o71XL3kYNXGPcQkLSJq8sc1F47QwhCDcdn58Gk2ROOlgDz5ypa11X3wDSNIu2Bi0ct
- MHm6YNORaxIZC7sj0UA2q9AR7NjE9I+HJmWEneJtxFDmPlFj0Zk/JZJDUzZtLvhCTA3k
- q+iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774901765; x=1775506565;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=g/wIESYO0he0AQHMRMcq3J6TLmkstJH0T5Ma1DC8QVE=;
- b=LBZdrsoy88Aiz1yeXiNfXTHf5cErtMwOS9JnGA97GfzEeo1GSdTAbltGqKsIMbFiaK
- uCyz9lYQtFTDDcOPZaKoGyPtbLf0mTPvGNj2Zd8xLr6yB0w6GBx3aEpDsszAuTnxiBet
- btSxgDw/q1hxrBZ/wbxoM14ivbncNUW5prLrTeI7ykeJYywpz+gyHbtAJZRMSuMLAAQL
- uyUMKWTRUI4hjvvf1QgvukYNOI+ezGj/ICZ0fLEw0h0p1wT/VoTVafdw23aIztaZynDj
- 9nFZeLcBqpBtuxdeGVqxK6+RE238vyJ2P15NbmuZTZOQX0uzNXvhui9J9mxRURTkWX45
- B/gQ==
-X-Gm-Message-State: AOJu0YwALF8neeqFohO1uE9y1kQX0mKMdsFgExpjM6CWkfY4g1i7sCJf
- 2mzpgqSJSUpB6MLhPi0sQt/J0x9Sm1dkeIIza0QAEUcvGpYn5g++IfGng2OlHWEuPXBioRIK9Mm
- YXjpw0D8joUH6m1Ttu4gnjwdnK+4f1MCsWXgFRD/RJHMncqUdyg8bx25I
-X-Gm-Gg: ATEYQzy7XpG0vOGbUMmJHRDZ15+CNIL5LeVPuiTRVyhHHwwRTh7ZjWLX9ebPgFb8qbE
- 14aCgtogb5EpSWpUMgytZiVHtCPwJTTHbhNguPoQonYM2BUzxe7N05pl/HXPB9qslEx4j90tMG2
- Qs2HfIassa93BRatMVvbEjDx4cwBOoYjtg66tmO15RDk3ugtdB0lovyCeY4H5GBWFNysxAqLS+p
- UzxBDHDZgtlN7VyhXvcfLrPriPS4EX1qAapi0niaKQEYY0o18gNUoFfy6dnBjQ1uXJIgaWMwUJ6
- 2xiP6o3dS7MsbSr2+VxR4meYFEFmEKbDAtSTyTGVeCxl7AZsGYwv6OUXsirxNwTUGTLj05YxaNY
- gC7BtcKTObedMmQ==
-X-Received: by 2002:a05:620a:44d1:b0:8cb:4ba9:cce6 with SMTP id
- af79cd13be357-8d01c83f23emr1830261785a.66.1774901764438; 
- Mon, 30 Mar 2026 13:16:04 -0700 (PDT)
-X-Received: by 2002:a05:620a:44d1:b0:8cb:4ba9:cce6 with SMTP id
- af79cd13be357-8d01c83f23emr1830255985a.66.1774901763714; 
- Mon, 30 Mar 2026 13:16:03 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8d028090f43sm686774485a.45.2026.03.30.13.16.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 13:16:03 -0700 (PDT)
-Date: Mon, 30 Mar 2026 16:16:02 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Takeru Hayasaka <hayatake396@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 0/3] migration/postcopy: Preparatory refactoring for fast
- snapshot load
-Message-ID: <acraAru2XIjMIpXW@x1.local>
-References: <20260330-fast-snapshot-refactor-v1-0-22143e70c467@gmail.com>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1w7J3E-0000u1-KH; Mon, 30 Mar 2026 16:17:34 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62UEInU9142146; Mon, 30 Mar 2026 20:17:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3TTtfo
+ /HLBwuRSmSJpw8ExFGkt3NfdtCuRb1vZRjpu8=; b=FfBzQU6340rMXCiLSojQ5u
+ ErafogEU6OstaUzb7dJ2+MuF8hJuRPpWgYu1OHgoCfrAK0g/Pqkvy7U6lGrCzXa+
+ cXs3SjSZdiObOt+XlPnrNmnfy6iBI/qNIBbv/xNWUKYXVQmqMBW57Crxb48G5LEt
+ 3ATu9NjiTv5vo65XzT/o/dvENRDF8TOichBvWjDuQOGpqcSpV0Fu09eEtThUNQn+
+ sR3TaVoB02Ytm7g1fy6UmNZvO4aBmrX3mpjDe3yIiteptH0fPKD/LzEiAZbSP1dt
+ zaghweppFoEkF+rIebfwj5VbB4Yj5AuO6sBznxI+ZXKRX1BNL7bbN5F3192LkmRQ
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d64dggae7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Mar 2026 20:17:25 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62UJ0D0A021696;
+ Mon, 30 Mar 2026 20:17:24 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d6sasefey-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Mar 2026 20:17:24 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62UKGwA729098582
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Mar 2026 20:16:59 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0968558043;
+ Mon, 30 Mar 2026 20:17:23 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 25B1258061;
+ Mon, 30 Mar 2026 20:17:21 +0000 (GMT)
+Received: from [9.61.25.90] (unknown [9.61.25.90])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 30 Mar 2026 20:17:21 +0000 (GMT)
+Message-ID: <8ebba892-f77e-4976-bafc-30562f1ef132@linux.ibm.com>
+Date: Mon, 30 Mar 2026 16:17:20 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260330-fast-snapshot-refactor-v1-0-22143e70c467@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 22/30] pc-bios/s390-ccw: Add additional security checks
+ for secure boot
+To: Collin Walling <walling@linux.ibm.com>, thuth@redhat.com,
+ berrange@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
+ david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ jdaley@linux.ibm.com
+References: <20260305224146.664053-1-zycai@linux.ibm.com>
+ <20260305224146.664053-23-zycai@linux.ibm.com>
+ <655c1663-787d-4a42-a90e-36798506c303@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <655c1663-787d-4a42-a90e-36798506c303@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMwMDE2NiBTYWx0ZWRfX/NEj73KyPcHo
+ PAxQVmsSswIVus6KHHydL5Z/rkyuFF5xu3LJzP9O0houRVfwdn29fKIU6hkINlqkJwhMq+rn7HR
+ w5fOsdIMthOA6AIMD5QphhFiBMSSPGzXRkwLDy8FSXBT2nydQFp1rbfDoKHK+o9EkwWDw6RX7rc
+ bohUhwssPS8rXogQHyYm0OZtF2XKC+0MjGHgL8NBplvnC60O/34y98+FJ5SRzrQhSZ3ALCJ2ojM
+ dGRRoisLY/n0OUnMWcyiCLmsqfN7kBIxGJsdfpY1z4w5H0kVg34m3XgqjVPoyagH5puf550JC2w
+ Dr60RnucpdrRH7Xegf4hEZWAfZ/PNkXFSPDYpITJ7UwtxAQ4sPLG+X0uNfWlE4ykNxlqmH17xtZ
+ UBgdNFAr3POtVqUBkbSZl+BC7102R5PhIIkPMtuBcYuDTlMhr9oOBwnbIt/fGGmwOQaDN1yRN7h
+ fftUM/tOoi2yL6wT2cQ==
+X-Authority-Analysis: v=2.4 cv=QKZlhwLL c=1 sm=1 tr=0 ts=69cada55 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=afb8Tjryq-pnIDj9U0sA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: NnG0Bg3H6_3HVX5qQUO4hKdv3JltzrWW
+X-Proofpoint-ORIG-GUID: NnG0Bg3H6_3HVX5qQUO4hKdv3JltzrWW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-30_01,2026-03-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 impostorscore=0 clxscore=1015
+ spamscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603300166
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,85 +130,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Takeru,
-
-On Mon, Mar 30, 2026 at 07:04:40PM +0000, Takeru Hayasaka wrote:
-> This series refactors postcopy and mapped-ram code to make the
-> userfaultfd infrastructure reusable beyond postcopy live migration.
-> The goal is to prepare for fast snapshot load, which will use
-> userfaultfd to load guest RAM pages on demand from a snapshot file
-> instead of reading all pages before starting the VM.
+On 3/17/26 2:54 AM, Collin Walling wrote:
+> On 3/5/26 17:41, Zhuoying Cai wrote:
+>> Add additional checks to ensure that components do not overlap with
+>> signed components when loaded into memory.
+>>
+>> Add additional checks to ensure the load addresses of unsigned components
+>> are greater than or equal to 0x2000.
+>>
+>> When the secure IPL code loading attributes facility (SCLAF) is installed,
+>> all signed components must contain a secure code loading attributes block
+>> (SCLAB).
+>>
+>> The SCLAB provides further validation of information on where to load the
+>> signed binary code from the load device, and where to start the execution
+>> of the loaded OS code.
+>>
+>> When SCLAF is installed, its content must be evaluated during secure IPL.
+>> However, a missing SCLAB will not be reported in audit mode. The SCALB
+>> checking will be skipped in this case.
+>>
+>> Add IPL Information Error Indicators (IIEI) and Component Error
+>> Indicators (CEI) for IPL Information Report Block (IIRB).
 > 
-> All three patches are pure refactoring with no functional change.
+> This goes back to my comment in patch 19: who/what is going to make use
+> of the IIRB? If no one or nothing will inspect this data structure, then
+> perhaps it's sufficient enough to simply log the errors?
 > 
-> Patch 1 introduces a callback for the fault thread's page request
-> handler, so the page supply mechanism can be swapped (network for
-> postcopy, local file for snapshot load).
+>>
+>> When SCLAF is installed, additional secure boot checks are performed
+>> during zipl and store results of verification into IIRB.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  include/hw/s390x/ipl/qipl.h   |  29 +++-
+>>  pc-bios/s390-ccw/s390-ccw.h   |   1 +
+>>  pc-bios/s390-ccw/sclp.c       |   8 +
+>>  pc-bios/s390-ccw/sclp.h       |   1 +
+>>  pc-bios/s390-ccw/secure-ipl.c | 314 +++++++++++++++++++++++++++++++++-
+>>  pc-bios/s390-ccw/secure-ipl.h |  42 +++++
+>>  6 files changed, 391 insertions(+), 4 deletions(-)
+>>
+
+[...]
+
+>>  
+>> @@ -391,10 +691,20 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+>>          }
+>>      }
+>>  
+>> -    if (signed_count == 0) {
+>> -        zipl_secure_handle("Secure boot is on, but components are not signed");
+>> +    /* validate load PSW with PSW specified in the final entry */
+>> +    if (sclab_info.load_psw) {
+>> +        comp_entry = (comp_entry_idx < MAX_CERTIFICATES) ?
+>> +                     &comp_list.device_entries[comp_entry_idx] : NULL;
 > 
-> Patch 2 extracts generic uffd setup (open, register, fault thread,
-> temp pages) from postcopy_ram_incoming_setup() into a shared
-> uffd_setup_incoming() function.
+> Silently accepting a NULL component makes it seem like an error should
+> be thrown, or a special case should be handled.
 > 
-> Patch 3 splits parse_ramblock_mapped_ram() so that the header and
-> bitmap can be read without immediately loading all page data. This
-> allows a future caller to read only the metadata and defer page
-> loading to a fault handler.
-
-Thanks for your interest and enthusiasm to the QEMU community.  Said that,
-please hold off a bit on sending patches that enable fast snapshot load for
-now, even for preparations.
-
-The problem is, this topic, as announced, is to be developed by a GSoC
-student only later. We want to make sure this topic will be done during the
-GSoC period by the selected candidate, and we will also need to evalute the
-progress no matter who is doing it.
-
-I'm not sure if it's fair if any of the applicants start sending patches.
-I also don't hope to see multiple versions of impl floating around.  IMHO
-it's slightly against how collaboration works upstream when we know there
-can be work collisions and we should avoid it from happening.
-
-Feel free to send whatever patches that do not have direct involvement with
-this specific topic.
-
+> It looks like these `check_*()` functions only need the `cei` field of
+> the `comp_entry`.  Instead of passing the entire `comp_entry` to these
+> functions, pass something like an independent `cei_flags` variable. The
+> functions will set the appropriate error bits where appropriate.  This
+> also eliminates the various checks for `comp_entry != NULL`.
 > 
-> Tested with mapped-ram precopy file migration tests. Postcopy tests
-> require userfaultfd, which was not available in my test environment,
-> but no postcopy logic was changed.
+> Then change `comp_list_add()` to accept the `cei_flags` field and set it
+> in the respective component while still accounting for the
+> `MAX_CERTIFICATES` check.
+> 
+>> +        check_load_psw(comp_addr_range, addr_range_index,
+>> +                       sclab_info.load_psw, entry->compdat.load_psw, comp_entry);
+>> +        comp_list_add(&comp_list, comp_entry_idx, -1,
+>> +                      entry->compdat.load_psw, 0, 0x00);
+> 
+> Why is the exec component added to the list?  It wasn't added before
+> this patch.
 
-When postcopy code is changed, I think it needs to be tested.
-
-Could you explain what do you mean by "userfaultfd, which was not available
-in my test environment"?  Are you using Linux?
-
-Thanks,
+The exec component is included in the component list because it is used
+to validate the Load PSW field of the global SCLAB. Since validation
+relies on the exec component, it's added to the list for auditing purpose.
 
 > 
-> This work is part of my preparation for the GSoC 2026 "Fast Snapshot
-> Load" project.
-> 
-> Signed-off-by: Takeru Hayasaka <hayatake396@gmail.com>
-> ---
-> Takeru Hayasaka (3):
->       migration/postcopy: Extract page fault handler callback
->       migration/postcopy: Factor out uffd_setup_incoming() from postcopy setup
->       migration/ram: Split mapped-ram header and page loading
-> 
->  migration/migration.h    |  5 +++
->  migration/postcopy-ram.c | 86 +++++++++++++++++++++++++++++++++++-------------
->  migration/postcopy-ram.h | 27 +++++++++++++++
->  migration/ram.c          | 52 +++++++++++++++++++++++++----
->  4 files changed, 142 insertions(+), 28 deletions(-)
-> ---
-> base-commit: 8e711856d7639cbffa51405f2cc2366e3d9e3a23
-> change-id: 20260327-fast-snapshot-refactor-3c6bb472b777
-> 
-> Best regards,
-> --  
-> Takeru Hayasaka <hayatake396@gmail.com>
-> 
+>>      }
+>>  
 
--- 
-Peter Xu
+[...]
 
 
