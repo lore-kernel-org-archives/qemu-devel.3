@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 495BF1061B08
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E061061B08
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7K0z-0000pz-I3; Mon, 30 Mar 2026 17:19:17 -0400
+	id 1w7K0t-0000nN-2N; Mon, 30 Mar 2026 17:19:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7K0x-0000pG-J3
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:19:15 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7K0q-0000mB-D6
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:19:08 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7K0w-0003kP-BP
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:19:15 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7K0o-0003iL-LT
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:19:08 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id E7C0C60142;
- Mon, 30 Mar 2026 21:19:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3489C4AF09;
- Mon, 30 Mar 2026 21:19:12 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 18DFE6013E;
+ Mon, 30 Mar 2026 21:19:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5498C4CEF7;
+ Mon, 30 Mar 2026 21:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1774905553;
- bh=odEaddXKvNX8iluvKti5gftibq7UJ7OHwzuPqWjSmaM=;
+ s=k20201202; t=1774905545;
+ bh=AuICZFWN7vigdzNA1Ykm1FWkoI02fhhCrYU1xOdsHC4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=dd49DotskDvcGLFH7QKjjjeGVj66HFeXL2at04MpC8X+19UENolCkYw9p6CW+STvt
- dFoJq6C20rojI2b1Htkas3+r4M3RpG4pR37KpOV1SdIAofIYJ5eA5YLrI8IXafH3e6
- W6lM6OvO0akwsVsPGa0Mv4uhK38WR5uc7QsgBhILRkvzDvs1sZrkpuQfT0VwzxsE5h
- MNaPJ8usfGAFYs/QJrAYxfRNrR5JBn90Q3gWRh0smOCtYzDRb9n83QUw/E+IyiogYM
- UdNgf5h461W1yCwFPUWU0iAr1gnvcKJue4nSHkNlUL81clUt+ibl0/utM3Za0AMyEA
- PaRdsT091VM5Q==
+ b=kQY+tSUh+dh26BlgdC1CMLG2grO8iloisB2hci2s0qsjTI0SFCrabm2Cxv3CcrEHz
+ erbU63H4/bFAZGZwPL6dN+ixjBSEcbLaMXsOO6PTto7CFIxxGblqFhlOF8gwMGd5rE
+ 13s0PQANQPgVPzsuTr5nQaOkK2HdRhPai4XQjHTyCPZMFRP+QEBVrfqiu2BEwRnr1e
+ aT4SkgcxmF2PIZeBsiE83TPT9R8f7BOWEupo9z1SxkLrdx56K9kRL6ff8FhEEIkF+I
+ +iU9SuDsCFmDOwfzwmJ1RVICLzHVwvIBOtrP991I6rjM6pr9YFCPTubnP2ZNAWRwAF
+ szpzwfXAWmuCw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 09/11] target/hppa: Fix TOC handler for 64-bit CPUs
-Date: Mon, 30 Mar 2026 23:18:56 +0200
-Message-ID: <20260330211859.19317-10-deller@kernel.org>
+Subject: [PATCH 03/11] hw/pci-host/astro: Make astro address arrays accessible
+ for other users
+Date: Mon, 30 Mar 2026 23:18:50 +0200
+Message-ID: <20260330211859.19317-4-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330211859.19317-1-deller@kernel.org>
 References: <20260330211859.19317-1-deller@kernel.org>
@@ -71,30 +72,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-When the TOC handler is triggered, e.g. by using the "NMI" command
-in the QEMU monitor, make sure to call the full 64-bit TOC handler
-address in SeaBIOS-hppa firmware.
-This fixes the TOC handler on 64-bit CPUs (and 64-bit SeaBIOS).
+Move the tables out of astro_realize(). This is needed because follow-up
+patches will need those tables.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/hppa/int_helper.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/pci-host/astro.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index d5a20cd549..fd4b99069e 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -203,7 +203,8 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+index 59d8007a1a..6a09dc15e7 100644
+--- a/hw/pci-host/astro.c
++++ b/hw/pci-host/astro.c
+@@ -37,6 +37,11 @@
+ #include "qom/object.h"
+ #include "exec/target_page.h"
  
-     /* step 7 */
-     if (i == EXCP_TOC) {
--        env->iaoq_f = hppa_form_gva(env, 0, FIRMWARE_START);
-+        env->iaoq_f = hppa_form_gva(env, 0,
-+                ((uint64_t) FIRMWARE_HIGH) << 32 | FIRMWARE_START);
-         /* help SeaBIOS and provide iaoq_b and iasq_back in shadow regs */
-         env->gr[24] = env->cr_back[0];
-         env->gr[25] = env->cr_back[1];
++static const int elroy_hpa_offsets[ELROY_NUM] = {
++            0x30000, 0x32000, 0x38000, 0x3c000 };
++static const char elroy_rope_nr[ELROY_NUM] = {
++            0, 1, 4, 6 }; /* busnum path, e.g. [10:6] */
++
+ /*
+  * Helper functions
+  */
+@@ -843,10 +848,6 @@ static void astro_realize(DeviceState *obj, Error **errp)
+ 
+     /* Create Elroys (PCI host bus chips).  */
+     for (i = 0; i < ELROY_NUM; i++) {
+-        static const int elroy_hpa_offsets[ELROY_NUM] = {
+-                    0x30000, 0x32000, 0x38000, 0x3c000 };
+-        static const char elroy_rope_nr[ELROY_NUM] = {
+-                    0, 1, 4, 6 }; /* busnum path, e.g. [10:6] */
+         int addr_offset;
+         ElroyState *elroy;
+         hwaddr map_addr;
 -- 
 2.53.0
 
