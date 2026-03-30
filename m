@@ -4,138 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4311061B0F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 15:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F571061B0F
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 15:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7EYQ-0001iE-HG; Mon, 30 Mar 2026 11:29:26 -0400
+	id 1w7EhC-0004hA-N1; Mon, 30 Mar 2026 11:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonkuchin@nebius.com>)
- id 1w7EYE-0001hv-RU
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:29:15 -0400
-Received: from mail-norwayeastazon11023074.outbound.protection.outlook.com
- ([40.107.159.74] helo=OSPPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonkuchin@nebius.com>)
- id 1w7EYB-0004e4-Of
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:29:14 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=U6DqU79h17rmDClGv18srMd5/EckzQeA7DemuZwZuRwxmZyNzi6BDoTFFdGa6FHDzLeg2hbcgK3EVi14W6sULzYr3OZZe9MdHNbhmDjlUfiDfgfiTHj2MvEIuzfA43iORxExK/zRUNDadVxLe0R5P0WHjW63UA0rp006IUlwg0aKs9vX2WexCO4ZR2Mx3kTApnGTG6uZcsRFpBow1KlCkb6FFkY1jQ6r6LIbUQ0gdKiV53R0NiyRZTzadFv+mNFX7oPsLDDogcEVsrB0DzkQ1ijuGLPk0ycomzEA36186FVR6Udh75SQAGZ4W7bTmfFd2t2WwrIdq1iCo/44ogD7ig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Rzaz7ZY6ue6f7vFcMRaOfPeq9u/hpsSKlN421iqQlBQ=;
- b=skvlMRWYaGoSVsPJ2OyfJ5o25Diy/0LFsV694M4NoMQuMU/IUK1VykQefJ8MI3fqwgHSqN57fRNZmvr968IkUEhtNJEscvfBJi0H6ggVq4kWtQljYvwxs4y6XcjPTqZH3X9sci8GuCTH112PFRpqpCELuuqUTU+G1PqoPw5BDCm3beMF3zYtrV4vvblAq0jCeR/YoKhtQr7+K7YnuuE6DEfQmb9riwH0mRSpzJTwUeUTlwkhXT0LlLDPSz7x6P7KKfG9P/a3F2oGZoI4/WXJFbTQIA/6F96X7Kp7gymLNJurfhMNiBqlz/rOCjb9QA6ugRe9LtMDrMeF+9b+VGCK+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nebius.com; dmarc=pass action=none header.from=nebius.com;
- dkim=pass header.d=nebius.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nebius.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Rzaz7ZY6ue6f7vFcMRaOfPeq9u/hpsSKlN421iqQlBQ=;
- b=MuMQopOhIy5KQZAGlu2fmtKxB85iAEyzCWWYCLfrjLluLmAg9FwHQN7Z1MHXvz1PdSYY3ZkwFz8qD+mF7HDu3o8oTfPrIeGgBpbDVzR4mTcZ/wdPpPhTOD1Ry9i9dIwwIrrWYREHkD+q+p+H/H7uyKVv6CQmhROB4XMW6CNweIzirSdBsVk1UBLK5ze/kykxsqiw2y3HHdUQSZBFa9wIEqW/qGYjOwxmCvWN9ZtTCF1XpnEHOFrdXp7n3Hmf0cCkPi/Q3TWx6cNMUWs7htCZQ/kE3cOtKZt4S4jw/zZcw7PLbMSThe6Ehrbs5RO8FgAOyXw/iA2+Rd6GbxAkHfwG2w==
-Received: from DB8P190MB0714.EURP190.PROD.OUTLOOK.COM (2603:10a6:10:125::20)
- by AM9P190MB1026.EURP190.PROD.OUTLOOK.COM (2603:10a6:20b:264::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.28; Mon, 30 Mar
- 2026 15:24:07 +0000
-Received: from DB8P190MB0714.EURP190.PROD.OUTLOOK.COM
- ([fe80::6b04:e38f:74b4:1b00]) by DB8P190MB0714.EURP190.PROD.OUTLOOK.COM
- ([fe80::6b04:e38f:74b4:1b00%4]) with mapi id 15.20.9745.027; Mon, 30 Mar 2026
- 15:24:06 +0000
-From: Anton Kuchin <antonkuchin@nebius.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Gerd Hoffmann
- <kraxel@redhat.com>, NB-Core Team <NB-CoreTeam@nebius.com>
-Subject: Re: [PATCH] tests: don't build audio tests when no audio drivers are
- enabled
-Thread-Topic: [PATCH] tests: don't build audio tests when no audio drivers are
- enabled
-Thread-Index: AQHcvgjgUT1oTb9j8kWtDX5sFatTp7XG30GAgAAENICAABZuyw==
-Date: Mon, 30 Mar 2026 15:24:06 +0000
-Message-ID: <DB8P190MB0714A01F3BAE878AA0F7888BDB52A@DB8P190MB0714.EURP190.PROD.OUTLOOK.COM>
-References: <DB8P190MB07142E1BA8DEEA8B2E41D5B2DB57A@DB8P190MB0714.EURP190.PROD.OUTLOOK.COM>
- <CAMxuvaygbUf3eS+r-6=dxiZfHp5KrD7_QLhhnTf7KHfxU+CjPw@mail.gmail.com>
- <CAMxuvax+1omtWMs964yg1ZgFrHn_f2JP98540hY8uPfD-HF8Mg@mail.gmail.com>
-In-Reply-To: <CAMxuvax+1omtWMs964yg1ZgFrHn_f2JP98540hY8uPfD-HF8Mg@mail.gmail.com>
-Accept-Language: en-NL, en-US
-Content-Language: aa
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-reactions: allow
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nebius.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB8P190MB0714:EE_|AM9P190MB1026:EE_
-x-ms-office365-filtering-correlation-id: 0976abe1-0767-4b67-e649-08de8e706236
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|10070799003|1800799024|38070700021|22082099003|18002099003|56012099003;
-x-microsoft-antispam-message-info: 9Uz8IWplqf8mJCnYOoduSePwQwfpCbcv3P/cb0+oewUn3Al/lMVwz9C2Oqyf6JZKWeQzyBtJZIg7plBMmnHXSL2MISTYirlHvFO8Ky3aciDqc7MpuFueENLCV7ZHTOI/FzZZfDyxLtIg/pE1ndTc6mQHK5xGDjUlSs3FjHCTWWDWCtRZZNEhTmOja0TVznGmBOjn8FAvYXT/ZdeU5CCV4HaD5B/7PHmxgW/Ep0e/IsGGBRc6EDNptlxnO74IS4Jo0LmQLSqrEtV4lrBSBtgKGqM6VnZ5SP80ZHj/chdY1bKQ222iiXuI/9smwjYYtK8tCJJ3NJIZzmtkF17UwwTAQZ+hQ77r8TenfsoNXVgLYo8YNCsqxSBgP7Z4sjmZ1mppTuXZ58+RU7CyTxH+pHhqTwruxOUYrjUAu11TCADu/DWNtuwc/01xBW++phXk1ho5iab8ICbda+URJzxx+amH9DAAyEGxKrc0uO7Sns3kx0fmRmowYJOkOu7oe4SsbQskI9Qu5MqPKgL3FLRlWfKoE8dSGmczwvDatp6/p1jhpWVC298NhKNWhA4Gy6CJeeP2q0kr/O59CquJmVAbA4QGKmg8O0Kn5ffrO8aJVVG18c54jKIjr57CF9eepP7ZHMDQrn3KSZTHOUThf/SbnulED5G71X+ps24lFrj9m1Pmt30aFvymGZn/90hw8an+YpzoV2V43pf9TKXo71s3bWe1uD7eBroeiMS3WytIsq+TGc7o6ZqyNKqh1dz2pl7Dr9wWUDp+pAV+w09Vdju/F+dN0eo4PoRnSMNCgZ5HLM3qxqU=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DB8P190MB0714.EURP190.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(38070700021)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?o2GH0txyr919MxCzh/AGEETZU+rVQR+l3p7AJO8nRCqNcbD5FsB5lwY80+?=
- =?iso-8859-1?Q?L7XogpIRWiWgyn2OS/dx6jBBjqtGXdKYIQwoLo4P0LkFrlip1zIwBs9RDW?=
- =?iso-8859-1?Q?9OxYiZeh8S7joAFP0juvGOKjux2evzHWwr5Us3glXCGpFfrSPDc4eguhtm?=
- =?iso-8859-1?Q?bXDfQ+VA3CGaWXtgjaXJb7Nrk4QZqKUOeJ+y2iOgFbFdJYrnJGpKNfOf+c?=
- =?iso-8859-1?Q?uHgylVNzbQV4fCTELr+TE7V0T2f2Ciirj5Hg4fxU+E/UFL0B7rfR9S09K/?=
- =?iso-8859-1?Q?kGMpESY9jrdUnJdBmJ4lGmnhNWXXRZEiPSDLrG/jI2xrKLAsK3iq+WWBuI?=
- =?iso-8859-1?Q?Ewx+3NF7LdwRCUQEWf/UuKymW54GSNaiD2swPbeh6W3nxrovF59Q7ioT7r?=
- =?iso-8859-1?Q?cDYSip7IjUtlIebVyS4baSqBcP2+4t+FEXT1GkDw/3tegr5kJxyofaMx3t?=
- =?iso-8859-1?Q?CKIUQuZfPbTllFsLEmTIChOYbjc4fJPuo1Up+hwGVeBjn4i7qcx3o1vB9S?=
- =?iso-8859-1?Q?lAJkWOYS9wh+ItqqXvq7ZplbBK811wJGq73ZOgmuRsmj8XughYtmOmLOYd?=
- =?iso-8859-1?Q?DrFeYlclcO+7wy+qQsAkFN+OwvhN+KKtI61AqHB9QLfIeGHUiv1OAoDi9s?=
- =?iso-8859-1?Q?HAJ4+ZRMw48za2XA8L+x5P1h05olYKpzvHG+t9ob8gniIExyJLi1tmnoYq?=
- =?iso-8859-1?Q?0IpcHqp9t5om/QVFIquMvsQJb/Zwq/T4MktSy0585Xl4VprsTbdDFkFatY?=
- =?iso-8859-1?Q?ZIlbFoyJ7ZoX88LeGA261ZdGF1oROQFBWYWKYq+YkYBwQEnTMxA0lCr9Ks?=
- =?iso-8859-1?Q?Z5pAHgXoj8SbTW4rxGN9jAZwHFyBB3CgpGmnlpErJmJJb2RoaltdGhbW1k?=
- =?iso-8859-1?Q?NwiiR2ukLpdWmMKdZea0iY0Yr8xeIAqb/MX4MjiJidcnJz4ipZYRON42Am?=
- =?iso-8859-1?Q?Ps9NhEJmDP6BXWPik9cnHRA92H/7Pw/PVXj9GHCHiC+vglVDiLgZdcKAfn?=
- =?iso-8859-1?Q?TT6DUnApT3rR0K8T4EeqiHdoxusXAjJGgDdheBPBWbqpIxc4KGY29iEby4?=
- =?iso-8859-1?Q?0dEwq0xWHEhAHs9cTOBfzJuWVofwauzpU0eINSMhPUJ8LK2XxaL+jgy+gs?=
- =?iso-8859-1?Q?FaHWFrkluH1eCve8AlZoKWJ6tzMTBViXtUCI3LXBwvTjvfGJRdOzN6hioP?=
- =?iso-8859-1?Q?gM0V4cyuUJhWxp57PHUT7zIr2FqVOZTI46+AMlz9TUQjaQzYe2hhkIRbdB?=
- =?iso-8859-1?Q?N3ncXi21wk2nFsSg0vPJ/TUqyzBLlhnctAa2fxJTdfd2p0la+7XvlfDveQ?=
- =?iso-8859-1?Q?0A+B4prEk2KJ2eIzW0rOre4WsvRktlPPxuUW/u1MVLiKkJGXomtdTQ6hml?=
- =?iso-8859-1?Q?xsZ4U0UVwF0yMM40gCgiEGU4B/Xph4lxhWTJG6fkKrmx1zXFE0cgJW7sIi?=
- =?iso-8859-1?Q?Cx+1fadx9LrL4zQ60IsQ/DrvYDJHA7q+HlITYO1Div3LWgqRA43CaNC9/p?=
- =?iso-8859-1?Q?Xe4OXcuAjcvxKcjd22gEmrZB1eHTKRVphNjHocP652nG4PI/FRtt9qddsZ?=
- =?iso-8859-1?Q?Rsv5JTaesP94Wx3I/rlRfB7MnftM6Fuk/0IBMYSEEew7wbnqNNGIWH/Qob?=
- =?iso-8859-1?Q?Xk/99HY+gkOTCO+FT86Zo00r+5YcZXUY46unhmWMPNUE3f5R3IpbMIrBwB?=
- =?iso-8859-1?Q?fwWNSXPMOSKzAHk5WZdxUU/L9Wv9brV0lbPEyqafecx8a4F4hc7E8NPn4c?=
- =?iso-8859-1?Q?47q/4nNyQLwCZ9lW4Vo6F3O4/qrOFlmWw1ygid7UWz49jaI2I6D/sYth35?=
- =?iso-8859-1?Q?LC4+HuiICv8tuO47CZfuazyFkeo5/PHMlFMfrTUGJbdRQS6ljnPQ?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w7EhA-0004gT-Sh
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:38:28 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w7Eh8-0006Oo-Kv
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:38:28 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-82a646c96bdso3752721b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 08:38:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774885105; x=1775489905; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gpxabWmEMaK2M+zPDPE44PqFVUiw2En+VUqwLw1gCoU=;
+ b=XTk+9RwhXFpCgoGr0TEHDVSHU0QoRUjg5VbXKjs9hnBAhNmXvCUpAtpVV4jjYwdweG
+ IWl/NBt7De5TH/d0839tKahON/TExJXXeJhppMfJ2H191REnja/dHAMXIWadeJD+eQXb
+ lZbmSmpgQYKF5CqEkcbbE7JTGeRoY47PlIKeNdKfWVwbu5UTmhnDyChfENoKwZdN3ta0
+ PGhhzMMAl2Z63dfj8ZgsilzGmBxlU04ybW9eb8LAhimGqjmWFnCappTHgL1DRg8Zykpk
+ HPV4tWWnUDKml7XeCJWEqYCa12H/sUFY0nTU4afFsMCXHHn8DHP8xVSF8yryUFMelQw1
+ QTOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774885105; x=1775489905;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gpxabWmEMaK2M+zPDPE44PqFVUiw2En+VUqwLw1gCoU=;
+ b=RzPjdaSy/pIJtjt3q3TOH2moitZ12jVYzBBeMLiALk3+93oF+KNaodIzCvhV+RUumx
+ cDCIC9MjUjONnE3fwAYv8Pbjns72Msc+ffaFWMg9S62lvwmkyoQnh0beAZf+jgxGA/dO
+ JvW/8X+QyBPHRb8V5WwtlEDNp6dVUsJqyGcBRC3eZKva7X4TskVi4eXO7Y8nvSNMdRCD
+ SK+658KBOD0M8yD7+HgSV8f77DilrhiYy9QLtajr3gkVVKeFdHKIf43l2nlvL/UarNG3
+ lC5uhmBI9mzKpmvDcAWe5BdEbGloDgxrFSSGDZPyHENsJLSMufdh0G8xvRVOKINj9nI2
+ L+1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPggmdJuiWWc1yyTXCpi9ZhUlOV9L3IcLCr4iWYlEgusHqA0IddzM5I65p/4tYTQgsn/ex8lan+fdL@nongnu.org
+X-Gm-Message-State: AOJu0YxumrT/oD7iNX9n49Urh3uCpK4Ee0iwqbdDgurJKygZr1giMKIi
+ 85O2LNAJuHsEVeUs5AJ9eNfT/2uJJdjA9UjRAFH8VGtDLKaDO6bp94638vbJ5PJQwBk=
+X-Gm-Gg: ATEYQzzffqzGttQlXFMhxNm9Ja4zvJSxRp5/ep9USLcoOjLy53HVtFLoRuQy3bagMPz
+ R+X5omXoV+RIRXoJTaYvIFADUm0kerJREqegnUMN9cjpM8gh1Ok4eHpMqkfew5UT34JYTRIspjL
+ wPMVVsrMETNCJUbm3x7CkyCukMbfaOMzHyL1kYyoF549csgksC4gxDRbVCPVtcg+J2tO8yxBipj
+ bF8bKDiaNU9VOx5QFPwNH7FXst/Tx+gQ0k167BzPIKfzBW/8tstLoDnuEXvZH/DAHgfaMOjY2YE
+ twRYr9xVoHh3QT25zQlWccZpP6WC1bapMpmbFnqg3Rqi1luUNlmodpATiotGXiZg/vVyroklAq4
+ 765lp/5/vuge5j1iQ/LGr6oDMTZ8/pRpUkCuzJD95VCP8STgFVXauYnh4yX/Gnav6TcmKNTzgQn
+ +jeraRhBHnJ5L7kUqvbHL8pVV+wdIRB0+GdU1Ual2gy2xOia935tpbg7cnQDn1sWWEdBfY
+X-Received: by 2002:a05:6a00:299a:b0:82c:28e8:a009 with SMTP id
+ d2e1a72fcca58-82c9601c031mr12735185b3a.51.1774885104397; 
+ Mon, 30 Mar 2026 08:38:24 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82ca85eeea8sm7603543b3a.41.2026.03.30.08.38.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Mar 2026 08:38:23 -0700 (PDT)
+Message-ID: <c94c2f42-812d-48fc-a971-fe5bb7379a06@linaro.org>
+Date: Mon, 30 Mar 2026 08:38:23 -0700
 MIME-Version: 1.0
-X-OriginatorOrg: nebius.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB8P190MB0714.EURP190.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0976abe1-0767-4b67-e649-08de8e706236
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Mar 2026 15:24:06.8232 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4eb23c52-f3a5-49bc-b555-0b061267a984
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WuNECd00a6kwMcokhWGYnmCNtOVkwkHT5eCn/LZ48clCDuALknOnPfEu+DmaTV8H7iymHmU3kbXHuQ84mCAsRA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9P190MB1026
-Received-SPF: pass client-ip=40.107.159.74;
- envelope-from=antonkuchin@nebius.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/12] target/arm/tcg/translate-vfp.c: make compilation
+ unit common
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, philmd@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, jim.macarthur@linaro.org
+References: <20260327165042.604105-1-pierrick.bouvier@linaro.org>
+ <20260327165042.604105-6-pierrick.bouvier@linaro.org>
+ <b6895297-c24b-4605-8d2a-a8566dfd3604@linaro.org>
+ <1c34141c-7b26-4e15-885e-27c15382ac07@linaro.org>
+ <8e71cd16-7938-487e-91b9-2863f1eef15f@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <8e71cd16-7938-487e-91b9-2863f1eef15f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,61 +145,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andr=E9!=0A=
-Thanks for the quick review.=0A=
-=0A=
-> From:=A0Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>=0A=
-> Sent:=A0Monday, March 30, 2026 12:27:29 pm=0A=
-> =0A=
-> Could you check if this is good enough and resend:=0A=
-> -if not have_system or audio_modinfo_files.length() =3D=3D 0=0A=
-> +if not have_system=0A=
-> =A0=A0 subdir_done()=0A=
-> =A0endif=0A=
-> =0A=
-> =A0modinfo_dep =3D not_found=0A=
-> -if enable_modules=0A=
-> +if enable_modules and audio_modinfo_files.length() !=3D 0=0A=
-> =A0=A0=A0=A0 modinfo_src =3D custom_target('modinfo.c',=0A=
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0 output: 'modinfo.c',=0A=
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0 input: audio_modinfo_files,=0A=
-=0A=
-I checked this and configure passes, but then build fails with:=0A=
-=0A=
-FAILED: tests/audio/test-audio =0A=
-clang -m64  -o tests/audio/test-audio libqemuaudio.a.p/audio_audio.c.o libq=
-emuaudio.a.p/audio_audio-be.c.o libqemuaudio.a.p/audio_audio-mixeng-be.c.o =
-libqemuaudio.a.p/audio_mixeng.c.o libqemuaudio.a.p/audio_noaudio.c.o libqem=
-uaudio.a.p/audio_wavaudio.c.o libqom.a.p/qom_container.c.o libqom.a.p/qom_o=
-bject.c.o libqom.a.p/qom_object_interfaces.c.o libqom.a.p/qom_qom-qobject.c=
-.o libevent-loop-base.a.p/event-loop-base.c.o tests/audio/test-audio.p/test=
--audio.c.o tests/audio/test-audio.p/audio-stubs.c.o -Wl,--as-needed -Wl,--n=
-o-undefined -pie -Wl,-z,relro -Wl,-z,now -g -O2 -fdebug-prefix-map=3D/home/=
-antonkuchin/src/qemu-upstream/build-with-fix/..=3D. -Wformat -Werror=3Dform=
-at-security -Wdate-time -D_FORTIFY_SOURCE=3D2 -DVENDOR_UBUNTU -Wl,-Bsymboli=
-c-functions -Wl,-z,relro -Wl,--as-needed -Wl,--start-group libqemuutil.a su=
-bprojects/libvhost-user/libvhost-user-glib.a subprojects/libvhost-user/libv=
-host-user.a -lnuma /usr/lib/x86_64-linux-gnu/libglib-2.0.so -Wl,--export-dy=
-namic /usr/lib/x86_64-linux-gnu/libgmodule-2.0.so -pthread /usr/lib/x86_64-=
-linux-gnu/libgnutls.so -lm /usr/lib/x86_64-linux-gnu/libpixman-1.so -Wl,--e=
-nd-group=0A=
-/usr/bin/ld: tests/audio/test-audio.p/test-audio.c.o: in function `main':=
-=0A=
-/home/antonkuchin/src/qemu-upstream/build-with-fix/../tests/audio/test-audi=
-o.c:588:(.text+0xff): undefined reference to `qemu_modinfo'=0A=
-clang: error: linker command failed with exit code 1 (use -v to see invocat=
-ion)=0A=
-=0A=
-I think that's because "executable('test-audio',..." is outside of conditio=
-nal block and it doesn't work with "modinfo_dep =3D not_found".=0A=
-If I move "executable('test-audio',..." inside the block configure and buil=
-d work but I'm not sure if this is what we want here.=0A=
-From the structure of the original patch I assume that test-audio is suppos=
-ed to be built even when enable_modules is False. Does it?=0A=
-Or should we build test-audio only when modules are enabled?=0A=
-=0A=
---=0A=
-Anton=
+On 3/29/26 8:46 PM, Richard Henderson wrote:
+> On 3/30/26 12:34, Pierrick Bouvier wrote:
+>>>> -arm_common_system_ss.add(files(
+>>>> +arm_common_system_ss.add(
+>>>> +  decodetree.process('vfp.decode', extra_args: '--decode=disas_vfp'),
+>>>> +  decodetree.process('vfp-uncond.decode', extra_args: '--decode=disas_vfp_uncond'),
+>>>
+>>> How are you not removing the other decodetree invocations at the top of the file?
+>>>
+>>
+>> They are still needed for user binaries.
+>> As explained in commit message, we don't have control in which folder those .c.inc are
+>> produced, so we have to duplicate them to make them visible for system_common code. Since
+>> they are not proper compilation units but templated C, we don't really have a choice here.
+>>
+>> The only alternative, if you prefer it, is to remove them from gen_a32 array, and add them
+>> to arm_user_ss. In all cases, duplication is still needed.
+> 
+> Maybe I'm wrong about how meson works, but does invoking .process() twice result in two
+> executions of decodetree, two different file objects, possibly with identical names?
+> 
+> If you want to share these, do we need one invocation, storing the file object in a local
+> variable?  Akin to
+> 
+> vfp_d = decodetree.process('vfp.decode', extra_args: '--decode=disas_vfp')
+> 
+> gen_a32 = [
+>     ...
+>     vfp_d,
+>     ...
+> ]
+> 
+> arm_common_system_ss.add(
+>     vfp_d,
+>     ...
+> )
+> 
+> 
+> r~
+
+Yes, your idea works. It will still result in duplicated .c.inc though.
+
+We can't have a single invocation of the generator, since the result 
+will be private to a specific binary/library.
+
+You can see it by inspecting build.ninja directly:
+
+$ grep 'decodetree.py.*decode-vfp.c.inc' build/build.ninja
+... -o libsystem_arm.a.p/decode-vfp.c.inc
+... -o libqemu-aarch64-linux-user.a.p/decode-vfp.c.inc
+...
+
+As you see, the output folder is releated to the final library (or 
+executable) that will include it, and not to where we are in terms in 
+source folder.
+build/libsystem_arm.a.p is only included for common-system-arm code 
+while libqemu-aarch64-linux-user.a.p is only visible for arm-user code.
+
+Pierrick
 
