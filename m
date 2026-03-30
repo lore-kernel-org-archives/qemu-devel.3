@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3DDC1061B22
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B401061B22
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Kaj-0000K6-Eb; Mon, 30 Mar 2026 17:56:13 -0400
+	id 1w7Kd3-00016E-Vy; Mon, 30 Mar 2026 17:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Kah-0000Jy-OW
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:56:11 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Kcz-00015t-T3
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:58:34 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Kag-0001M6-8I
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:56:11 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-486fe655187so65144785e9.2
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 14:56:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Kcw-0001Yg-Ck
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:58:33 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4873ce69ba9so15256005e9.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 14:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774907769; x=1775512569; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774907909; x=1775512709; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MnNQU3ttoxAU2eFyjeik3i5dnHhuPIJngsLCgvGahig=;
- b=VsGBjB8MEPDrOWvnLyZtTeVW6anOM487NhrUU9jm/CZD7ar+9InBhbr7xqQ2uR7fN0
- 3Rik9Y+BZDTCv8nSBdpO3hu3S8vWKmxjL0wXcnR6SxbRxtep+mqyT0MK6TKlqkwgr9oS
- 5qFcdjxFILdlB+ShwfyShEjHOJsAXtY+ZogTIOSuF+3AxujZ81pUKx9PZfF4/1nQX3cx
- BhyYrGILqOnkteLmp0wL/A/Q4YyPphTAFJ86z4KAXwVV7qKUh9DNMX+fhQG/AZJEflvc
- tIiXaHgykSwF1TVZa1TPDCPgxkn2T5cji/w+/sb/2ITNErdJrz3vyry2IVumWSPaUaRb
- fhmw==
+ bh=mvYK8xsRHKLVYcUoNPBOaYi1/RzqbOQeBKzf0CNIZyQ=;
+ b=dGJhvUC/DC6c3LCu1S1D0XsRNB4hTucwQciVZPlr8K7zsvw7uYbqnIOlNRF6sLRRAJ
+ mwCjHdiPDa2KDlPYp6GHzWavlYJnU9TUC6P9Gq+FRhD+J6mehFL+kTqnIZyUSJvpyY5R
+ pmCN13/FS3+2EZku4d4RtAyGFBtuypXAChebuLB29UTEoadc7myE3Tl773v78iVPZyf9
+ VpnHBW12mj76/aAlkAPPmYRuYTfRJjkt9stFoKVEJuq2+VsYzsoiNrJa95fR1tOkePNI
+ fF1z1pwHunQeAhht/wSCsHld7WuXdf9vojChwdwc+cgzZmVm+xMYcnr4r1DeJEew7CNu
+ WuLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774907769; x=1775512569;
+ d=1e100.net; s=20251104; t=1774907909; x=1775512709;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MnNQU3ttoxAU2eFyjeik3i5dnHhuPIJngsLCgvGahig=;
- b=gPZd3ucZW6kJdhEgNCZtYPFnSckIFHvZxvXng2cU5QNK+grZBu2dnCq3OFpl3c+XMU
- rLs+C/GOCq+xVnT+B9BKMoIDCHvDnjva9ObSpXeRJpBgy+sl3yKKpb4n4t876Rix/ERO
- qpuBJgBhbaPFTY9qa0mOOqSUm3P7YV7KDGEkcRdGOnrY8ztdcwWlIqZHx/DHWm8PpQCP
- dnjy16vYLLJ7bfXgMuRKkp1Oz9bJ20H0pN+YQ3rnoavktZv+ry6byTJ5t4mppGfZQj4B
- CJBDdZb6XUSu8U20lRAm082aLSoXvT9kRhpM/XqO91SDEPcbzvoql46Yxh6qniT0MBvT
- vQVg==
+ bh=mvYK8xsRHKLVYcUoNPBOaYi1/RzqbOQeBKzf0CNIZyQ=;
+ b=JBEuht1p9R7tRGkR9kX5Zi/T3VGOXJFquwXd4x7aZnZ+6VXj44h4ixaieqw8ANcWCg
+ 41Du5xRdBhq7Qc2qxVHDs7Hm2qLDjxstGlchIuc6UHD4kwCmQIxDyYZvkGdlBmPbys52
+ nMCL6kdOM9i8NKF72lDItOtIclYPi1zkECn6gtkaWdurZpFFmZS1/srOiDn8d+2Z+DN3
+ G9yU2GMh2QhbkAc67q01UWK/hguoT/5n6KryYowQ1Y6Yu7sKGYmj/Br9f2qj2u9Hil54
+ c9IS1nMwupVf+T1CtX9++HJlk6O1zU7rkTPpqMGV1AjMBdWvwISR+KU+egX2tUtJrYyO
+ Uu5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDDnntutCD0/7Qax0cM0y9qmVpFlnpleR1uk0wsiOQ6hWOJVGEUNWt5UbPZsLQhWotuxqnc/IgvoeB@nongnu.org
-X-Gm-Message-State: AOJu0YzaQpsG6jA5bewrEyvhc9aqg4ucPKgh5ftehiFe8zWsR3ZZ4y2z
- yaSiywdzHRVLvWz6DVReeriNu0XrEAswLE5HhZMR/IWFUQuTKrYfTpLuiW3j5LFVwtM=
-X-Gm-Gg: ATEYQzwkncLduEGQU5QZpI4J4ffFBtrllFj3pEb3q7OSH2n0fwCJJ8p8ijB0xuxC/Ej
- P5npk4Z5WaYMUTkPi37hMkmb/aAl6In9B95DPfymqd53McCL0KmXVdKi5IqrHjIM3a9F3esY2Ow
- y/raCu1xZUSlnyDEPF5jgG8O3sf+3tiP61ZWQ0/r5d7QPv6glho/fVui7Di9+TJjbag/ImioxWo
- ngHQqkLkfdtgv4jGXX+PDEMMXg7hlgNRqzyWUfDRNYHhEeyWNr3MKLTewhljXry7rM02JnrzhUk
- D8Tegyd5ioOTUL8LDxMbVfHn04MBto9R+El7Q8hzFfoUXR5jIgC3aXETZSuYnQuATM6J2fFGC1S
- Ozn6Ze6XwDxEoEPXJaetMe9Y/IzG3f7Uyptl11+yb9F8aoYxN7fi8ENExzCf3wENMcmsYsXB1/u
- HYClL8wAv9+YaKBAkJFfVs7vDzKbWirNi2O+QyPthjtTm8oRmx79/Pc9n36esE
-X-Received: by 2002:a05:600c:6387:b0:487:cd8:4c9 with SMTP id
- 5b1f17b1804b1-48727ed5618mr236117125e9.27.1774907768813; 
- Mon, 30 Mar 2026 14:56:08 -0700 (PDT)
+ AJvYcCU1WT9DRwsYAncVnpOXf3r0TvSqo9MQcDEJSuXmgWcECx5IFuELEBNcJMvphgIAANuBzHyFaXvaw/Ya@nongnu.org
+X-Gm-Message-State: AOJu0YwtZbauXSEni14Y+CQN69hSrFrNs1D2AG8AYJbXrxb9pg8hkEOr
+ ooDEELShLRFgl/Puwt/LnnSd/2pMLF5yebgccuXTfOZPTIXsmefFyxiJq3nUv6Qth7Y=
+X-Gm-Gg: ATEYQzxWOFNLfvEH6PRKET0MXBVcMUlil8yHGEvUJqRZshZxSUxjyHC3uJ+OrMpDxGC
+ bYOOwC3W/mOXnviIG68deSrXeyvwPWIG8iBhxJ4yS38CQbkcBm49ghOuRKQ/t23QKFLa5pm2ioA
+ G74cGw0PDpKCscLTdnXpNOzmuCWi3vs6rmPYHSPe6dNPO8hyqW/EMNjwHc9scwTxnLi5NiW1HN2
+ SyjmFwmHHuBaPWlJX8j0pFkS8DBCf914zV6+tkCCBmkqUyEUQyH/yakhNYMYIJjGFSTUiS9nUMD
+ IDFD6tHeL9s6BVYsMk8ljtzvNW9aXPaswaKNsRxtrqkvXQo6xe+3g9GyjsvoGCUulQNt/GXTWrk
+ Ii5MnlJrho5hftjOkwYJKC2dZcU6ioavv0+RpjBY6HwLScW0IY2lhJT6RmEZJcNGEbR4N8jsI6K
+ S07twiUVAAWN6wLT8xU5KJViGxakewI16PC9tVqOqJv2EijAbJM3fUsPw8Devz
+X-Received: by 2002:a05:600c:4e08:b0:485:363b:fafe with SMTP id
+ 5b1f17b1804b1-48727d5e971mr258090465e9.1.1774907908612; 
+ Mon, 30 Mar 2026 14:58:28 -0700 (PDT)
 Received: from [10.193.39.66] (246.148.216.82.rev.sfr.net. [82.216.148.246])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887adae019sm2598625e9.25.2026.03.30.14.56.07
+ 5b1f17b1804b1-4887adadf4fsm2299695e9.11.2026.03.30.14.58.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Mar 2026 14:56:08 -0700 (PDT)
-Message-ID: <9aaf1736-c355-4ba6-b6cb-6bdd03930eb2@linaro.org>
-Date: Mon, 30 Mar 2026 23:56:07 +0200
+ Mon, 30 Mar 2026 14:58:27 -0700 (PDT)
+Message-ID: <6aa40bb8-4d1b-40b6-9350-9e806a1c98f4@linaro.org>
+Date: Mon, 30 Mar 2026 23:58:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/11] hw/pci-host/astro: Add GMMIO mapping
+Subject: Re: [PATCH] target/i386: Treat qtest like TCG for supported-features
 Content-Language: en-US
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>
-References: <20260330211859.19317-1-deller@kernel.org>
- <20260330211859.19317-8-deller@kernel.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20260330151437.1787008-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260330211859.19317-8-deller@kernel.org>
+In-Reply-To: <20260330151437.1787008-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/3/26 23:18, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
+On 30/3/26 17:14, Peter Maydell wrote:
+> In x86_cpu_get_supported_feature_word() we figure out the supported
+> features differently for each accelerator. The default case is
+> "set all feature bits"; however this triggers a warning because
+> it enables two features which conflict with each other:
 > 
-> Implement the GMMIO mapping.
-
-As this point in the release process, this is a bit out of scope IMHO.
-
-> Signed-off-by: Helge Deller <deller@gmx.de>
+> $ ./build/x86/qemu-system-x86_64   -cpu max -accel qtest -S
+> qemu-system-x86_64: warning: this feature conflicts with APX: CPUID[eax=07h,ecx=00h].EBX.mpx [bit 14]
+> qemu-system-x86_64: warning: this feature conflicts with MPX: CPUID[eax=07h,ecx=01h].EDX.apxf [bit 21]
+> 
+> Treat qtest like TCG here, to avoid the complaint.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/pci-host/astro.c | 71 ++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 70 insertions(+), 1 deletion(-)
+> This suggests to me that the default case is not something
+> we ever want to be in, and we should instead be exhaustively
+> enumerating the accelerators and asserting if we don't know
+> how to handle this for the accelerator in use. But there are
+> several accelerators that we don't have code for here...
 
+Indeed. Meanwhile:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> ---
+>   target/i386/cpu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
