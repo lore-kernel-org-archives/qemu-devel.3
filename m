@@ -4,103 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C94BFB3CE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F9C0FB3CE2
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w78aU-0002t9-AS; Mon, 30 Mar 2026 05:07:10 -0400
+	id 1w78cY-0004hB-7A; Mon, 30 Mar 2026 05:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1w78aH-0002qC-Qh; Mon, 30 Mar 2026 05:06:59 -0400
-Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1w78a9-0008Oc-81; Mon, 30 Mar 2026 05:06:53 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id CC5A0EC01D3;
- Mon, 30 Mar 2026 05:06:44 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Mon, 30 Mar 2026 05:06:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1774861604; x=
- 1774948004; bh=uArIj+6txqa3ZBAl5RdVWl7BayKDGz0f94+Z5vAak50=; b=Y
- 3c/lnMaKxDwf8s2ZrNd2n8VUdhwsUOltQ4nKEKKW0Rw5xzy8duuQjMCeNS9RKKrV
- 6BkGp+6VKzEVXPfH0OiQMJ0pNaxkXryzOTP2fSP/gF4ePG9gSn6FymyNrFCE9NsS
- kI0NbMKAhwysjenqgw8vSfd6sZiP5lZcx1d+xn3akopfuvm/80nPdyKouQQkMnZj
- VnOb1xdZCpmgx9n6ujeNOYICdC8ItRbUTGQM09RM88ogfK1XTyObKKfcRt8FbedD
- 9uq8ecRbyytRfFBJOBsR1vn7S/nPmd97h+isyxqcxW9vWoILDPkiiB5wL3CsE8o0
- clrEYjGQczZqD8nLECL7Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1774861604; x=1774948004; bh=uArIj+6txqa3ZBAl5RdVWl7BayKDGz0f94+
- Z5vAak50=; b=ONx8P5u5pG/eZFWK0mi6KyVpfm4AFOlQDmQsXmJiq/IjvAl7XgQ
- zE/0fkPw5EID/t3tFn5+MeXKNnkhpIb7HJ14XdP6Mzlh6SmUQsAOMqxIHsLKNaby
- 2/7KqeFiYP+xAyUpykQr/WVmVXYgfZ5QelkofCBO1ABMfkUqe0u4Y+JFmdisNRTW
- rGalRU+oYo4oFRbWKgxCxD96EeFton4FcKA2XO4bNe4DF6jO84uLmy+o30uIOJw/
- WN9MxunwiaLs9C2cUDlL/6Tg4bJt/257OMZhLLdEOOBfVul/lSmU/zK03RDXHwil
- JuRwsnohgWLnwYtak9miQZGOnUH94EbGbnA==
-X-ME-Sender: <xms:Iz3KaZVKZ8L3ac_dAheOTRGFlAJVqrFBoxoyzaHYxXca2HDjl6HBEw>
- <xme:Iz3KaWKGJAIrcscMkZtuYVAtQHmIVzn5OAPfqU-0V-dPXz0mNxj5_qmlyhKywgqo-
- x4GsIZ8gXJspHJJdxTiZyb21EE0AS9v-UC8fH-Zh9qSMOs95lQ8lzw>
-X-ME-Received: <xmr:Iz3KaZ18RwyQGjQMaiNovDJ-lZdaDZWyS9ZV2W8Hpn2iUXk9AgvwCWmxvbMk7ifELZVJ-44LWPqq4cZ4dFVaCQSJRZDGR-0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeekheekucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushcu
- lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
- hrnhepffduvdfhheejudfgieejueeileegveduvdelhfekhffgteetffdtvdekveeileef
- necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhn
- sggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhjth
- esthhlshdrmhhskhdrrhhupdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhn
- uhdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdroh
- hrghdprhgtphhtthhopehprdhrrghghhgrvhesshgrmhhsuhhnghdrtghomhdprhgtphht
- thhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehksghush
- gthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdr
- ihhtpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtph
- htthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:Iz3KaTIelqvILy_dxFbmP6-1Au7eX_9LiLup5Epk4u1-i9V_LOFKYQ>
- <xmx:Iz3KaUifQXzEg0cukqq-RafcnjEaGRWaICciJAYk7qdob3cvBv9U3Q>
- <xmx:Iz3KaTD5bfwRCa4ePdFRIk188EwNwK-H8HPqLeA2hyuQ-6TPtagGrA>
- <xmx:Iz3KaW6itDQEMnEE9ySYaEmrW3zsHcx-9gP6dvABj-w7rdMemzN41A>
- <xmx:JD3KaU_MDGcdPRMEhRLttn0XCQDp-jKNbbh4dQH5TiEkTDK-lq3d-NuB>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Mar 2026 05:06:42 -0400 (EDT)
-Date: Mon, 30 Mar 2026 11:06:40 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pankaj Raghav <p.raghav@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
- Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL 1/2] hw/nvme: re-enable wzds bit in namespace dlfeat
-Message-ID: <aco9IJkNY_t-rfKY@AALNPWKJENSEN.aal.scsc.local>
-References: <20260326082350.17374-1-its@irrelevant.dk>
- <20260326082350.17374-2-its@irrelevant.dk>
- <445c4892-b403-49dd-b676-f7d1c07ebcdd@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w78cW-0004ga-Hj
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:09:16 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w78cU-00006W-Vd
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 05:09:16 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-66b8110361fso3170837a12.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 02:09:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774861751; x=1775466551; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nGNkKpmndyexZQ+E7c1TGfjTwkVShOD/yB1VKK/J/ZU=;
+ b=US7rk3estCB5ll8u2GpYAvSdfB5hU1lFJ42TBuwP+y6FNDBxpYWfGy5QUpr0Z0TpzD
+ hxQjSD703JBDMHRcu8O+GOV31F5Qa5aqIgAhEJ7cK7r1DffcsAaQTlwJAOof17oRiul6
+ Cvjs6egBitbB82eJIZN47DTLqWlvdf2G4JsVm4UrUGPaXFnEz4TSMCaQgpOuNqU7dEaT
+ jqZHW7NLr0V4s857ixfJHDixC1ZS0jE+9W5mxDGup/5Tx7disDV4UfhYYl3QUcj0c27J
+ inXNQZjD9G1sP+aLljTaMETE75fXu8kMTujKqaI94v2lygDWbSzXMmtR+kVkT7OjjGiW
+ F3eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774861751; x=1775466551;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nGNkKpmndyexZQ+E7c1TGfjTwkVShOD/yB1VKK/J/ZU=;
+ b=q+4Lle+UItQoA4oWkKo1NRfGlUOwOu5sFIjhsVKn8nbfb6dHjpxXAhzOA/WgKT59AV
+ rzbh/8Kz2hM3NJwARTyT1AjMT1cI1HlvmCAchMsEg9DpVW2zU1/Y9GxG2TNU8srWGp17
+ /vQGDeQQ7GdH0/KjrcaIW38coEICRrbtGy2S6ocdFy5DzSgayYEuMi5uAuaX6eea7G49
+ TCrnP2HIPZAIWyWfk4AL1OjtpVt8uSu7pxBNAfiNkV72DmtJyoIWLBvt+ZcN3ocTfLpu
+ qD23CrsC3kUACVGauulP1JkUNBJ0ibgOyTC58Tud/yELNR6XQQtP2dtmQUcN3JGPGkTl
+ Llgg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAPPC78Quc0Aftd2w+pnA0BMQrypopUHspLhAuafRoYHk+DonSD/s9f+86dg6nc9sP8XfC9+Ir33U6@nongnu.org
+X-Gm-Message-State: AOJu0YzSejkRQvzQuGyLbcnwV7TeF1sOq8AkYjQeyXH/8lgiPwq0iMIC
+ cvbJwizJwKUyHtoJ0v6IN0s52wpWH3iGpiZTbkobxeiSyPpUuCsLEXKlCdlQhrBmjWA=
+X-Gm-Gg: ATEYQzxCMEx2dtE8HWKzBjQ3q38sQKB2MaXvvK0HS6oTs7lA23XDsyH+UTM6hSCRtRM
+ PoBmD4Zg3NSDeGxDg8kv8IVXLz2xeaWqXI95YE/miJWhsayAKQnv7QaoC6HsdaxxNUZNpaswO8+
+ lrryLHyZIVHwPQ7MyguvTgV4UqOhzdHv5N1IDbcOX0yQOzRyS6sAExO9OLxL53s6MA72UqNgcJq
+ 4kEJ+WuyRYT5idwAR6/1At0KPnJRtaV5pEWwXnqiTYe+1zLgJLUY7/ba/fMr/rF/CxAd50tOmPA
+ WGJs7/nhUgcpsxybBV3/C2vmBwLtQ2zLclQ7c6avMcE0Iee55WJ/x2yomrDfkjVkbjuSBzw/5mJ
+ N/m3M/lCKkLywfF6sdppm+ZxAm2pXqMdOYjCKvjR2iCWRKSVTR8srVi9EEMwJAFXbhpt6Q9Ip/D
+ xxZLKXpFFhdsQMA1uj3BK+9Js=
+X-Received: by 2002:a05:6402:504a:b0:668:732a:edaa with SMTP id
+ 4fb4d7f45d1cf-66b28464e95mr5248591a12.11.1774861750679; 
+ Mon, 30 Mar 2026 02:09:10 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-66baa0dfaf6sm1909774a12.28.2026.03.30.02.09.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Mar 2026 02:09:10 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 563DF5F8D7;
+ Mon, 30 Mar 2026 10:09:09 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org, Demi Marie
+ Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com, Eric Blake
+ <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
+ <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
+ <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>, Max Chou <max.chou@sifive.com>, Mark Burton
+ <mburton@qti.qualcomm.com>, mdean@redhat.com, "Ho, Nelson"
+ <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
+ <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
+ Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU Community Call 31/3/2026 agenda items
+User-Agent: mu4e 1.14.0; emacs 30.1
+Date: Mon, 30 Mar 2026 10:09:09 +0100
+Message-ID: <87y0j9ptu2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="uu+knFf4qzO2Xe+X"
-Content-Disposition: inline
-In-Reply-To: <445c4892-b403-49dd-b676-f7d1c07ebcdd@tls.msk.ru>
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=its@irrelevant.dk;
- helo=fout-a6-smtp.messagingengine.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
 X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,70 +129,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---uu+knFf4qzO2Xe+X
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Mar 28 09:57, Michael Tokarev wrote:
-> On 26.03.2026 11:23, Klaus Jensen wrote:
-> > From: Pankaj Raghav <p.raghav@samsung.com>
-> >=20
-> > dlfeat was changed from 0x9 to 0x1 when PI support was added.
-> > It was removed because we can't rely on unmap and have to physically
-> > clear it to get the checksums right but that doesnt mean that we do not
-> > support the bit.
-> >=20
-> > The spec says that if wzds is enabled, then the controller supports
-> > deallocate (DEAC) on write zeroes. But DEAC bit in write zeroes command
-> > is only a hint, the controller might choose to physically write zeroes =
-in
-> > those areas.
-> >=20
-> > As we are sending write zeroes command with BDRV_REQ_MAY_UNMAP to the
-> > underlying block device anyway (if the unmap operation is supported),
-> > change the dlfeat value back to 0x9.
-> >=20
-> > A new flag FALLOC_FL_WRITE_ZEROES has been introduced in linux for
-> > fallocate which will use the wzds bit in dlfeat to quickly zeroout exte=
-nts
-> > using unmap operation whenever possible[1].
-> >=20
-> > [1] https://lore.kernel.org/linux-fsdevel/20250619111806.3546162-1-yi.z=
-hang@huaweicloud.com/
-> >=20
-> > Fixes: 146f720c55 ("hw/block/nvme: end-to-end data protection")
->=20
-> Shouldn't this one be picked up for current qemu stable releases too?
->=20
-> I'm picking it up for 10.0 and 10.2 series, please let me know
-> if I shouldn't.
->=20
+The KVM/QEMU community call is at:
 
-Michael,
+https://meet.jit.si/kvmcallmeeting
+@
+31/03/2026 14:00 UTC
 
-Yes, please include in stable.
+Are there any agenda items for the sync-up?
 
-As always, thanks for being vigilant and picking this up!
-
-
-Thanks,
-Klaus
-
---uu+knFf4qzO2Xe+X
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnKPR0ACgkQTeGvMW1P
-DemchQf9FEdjxAurwqz8R+vSfSJjlfpnLpiN5mGB8IRSlWRIL8PuFizeo1yJqsl1
-/jaYNcrenGg3ha+G7rHL7kfU+TNkrVLgEVALV8bp4euf6zfuNB83hDLBVHzT2LcN
-Zat/cOPKe9dwkbBJviqRXnzcTgZMkyHUpZNYkGTQWZ1hHdpnqMccTCFn6OqMMPYl
-muqTQdEYKrXYMzBJvTpigtzt0m1c9ONGV0p2QNyQqtmE2GRw3omKyS8hbR6geWrm
-USVCDhUvZSR0fdwbkumEZ+Qgc/nCdGwWXlODAbuLwCbUQxn4b/BTcS6eDnWHJ1hv
-Tw8d9wb7l/k7hEmaRkmAZJeAa/0+0w==
-=iPGC
------END PGP SIGNATURE-----
-
---uu+knFf4qzO2Xe+X--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
