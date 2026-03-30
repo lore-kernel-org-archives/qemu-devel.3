@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F325FB3D02
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C36EFFB3D03
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:29:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79rO-00016r-55; Mon, 30 Mar 2026 06:28:42 -0400
+	id 1w79rS-0001C6-MP; Mon, 30 Mar 2026 06:28:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rD-000153-El
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rL-00016D-VH
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79r8-0005DN-UD
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rK-0005Ef-Hj
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774866506;
+ s=mimecast20190719; t=1774866517;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lXctzuMBnKmSSaLbuFK9SoZip/mQN4+AOqcorvMya80=;
- b=NcG0ZSdDx1me1tnIhPnvmCdXzkiIvdbcQldJUFx0vVhD03e+XjX/kg5Rm6qE+9mcgbyyc6
- BITFo2hzipkG5YuJkolMSCdcXq5/EkVPahGJyvzo05a0lpo3DE4WLSr9Ajc0UyliN7N9iY
- M7CfZFeAiQ8TEB5NGRZwyG7Nv1PKRC0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Ww94gMkt11Wk7lcnwhAkRmngRIfU7Z3lB/Oh9OuXyhI=;
+ b=dCVfsgl7t/Atxa4WgiqWl3QtRQqcIV2ZhvXPlsf9SOxwNGAeXrVQBJglj/NUGZZP7CgcOM
+ Fkf8ZG1w7XvziTLTDKCgufN3E3E4ZllHTyoD+G9W58i7ZlAJHBg6sk0qPhSG8lfFpP7xr8
+ PhCyBLuSjxEXcA6FM69l4+3bD7oEuL4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-AUZTsYhBP_uta5heMbDVaw-1; Mon,
- 30 Mar 2026 06:28:24 -0400
-X-MC-Unique: AUZTsYhBP_uta5heMbDVaw-1
-X-Mimecast-MFC-AGG-ID: AUZTsYhBP_uta5heMbDVaw_1774866503
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-LoQfeR6_OqG1p21QcL0q8g-1; Mon,
+ 30 Mar 2026 06:28:34 -0400
+X-MC-Unique: LoQfeR6_OqG1p21QcL0q8g-1
+X-Mimecast-MFC-AGG-ID: LoQfeR6_OqG1p21QcL0q8g_1774866513
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75728180034F; Mon, 30 Mar 2026 10:28:23 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A911619560A2; Mon, 30 Mar 2026 10:28:32 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.35.14])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9510D30001A1; Mon, 30 Mar 2026 10:28:21 +0000 (UTC)
+ id 596A530001A2; Mon, 30 Mar 2026 10:28:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 2/7] tests/functional/qemu_test: Split huge fetch() function in
- asset.py
-Date: Mon, 30 Mar 2026 12:28:10 +0200
-Message-ID: <20260330102815.6759-3-thuth@redhat.com>
+Subject: [PULL 5/7] hw/display/cirrus_vga_isa: Disable global_vmstate by
+ default for new machines
+Date: Mon, 30 Mar 2026 12:28:13 +0200
+Message-ID: <20260330102815.6759-6-thuth@redhat.com>
 In-Reply-To: <20260330102815.6759-1-thuth@redhat.com>
 References: <20260330102815.6759-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -61,14 +61,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,86 +86,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The fetch() function has become really huge and pylint complains about
-that. Extract the internal retry-three-times-download loop into a
-separate function to make it a little bit more readable and to make
-pylint happy about this file again.
+In the long run, we would like to get rid of the code that allows to
+register migration state globally, so set global_vmstate to false when
+using the isa-cirrus-vga device with new machines, and only enable it
+for older machines to avoid breaking the migration there.
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260324163543.55503-4-thuth@redhat.com>
+Message-ID: <20260326154850.301609-1-thuth@redhat.com>
 ---
- tests/functional/qemu_test/asset.py | 43 ++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+ hw/core/machine.c           | 1 +
+ hw/display/cirrus_vga_isa.c | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 1cd03c2a9a9..51a434b2b70 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -133,24 +133,7 @@ def _save_time_stamp(self):
-         '''
-         self.cache_file.with_suffix(".stamp").write_text(f"{int(time.time())}")
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 6cf0e2f404e..0aa77a57e95 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -40,6 +40,7 @@
  
--    def fetch(self):
--        '''Download the asset from the internet'''
--        if not self.cache_dir.exists():
--            self.cache_dir.mkdir(parents=True, exist_ok=True)
--
--        if self.valid():
--            self.log.debug("Using cached asset %s for %s",
--                           self.cache_file, self.url)
--            self._save_time_stamp()
--            return str(self.cache_file)
--
--        if not self.fetchable():
--            raise AssetError(self,
--                             "Asset cache is invalid and downloads disabled")
--
--        self.log.info("Downloading %s to %s...", self.url, self.cache_file)
--        tmp_cache_file = self.cache_file.with_suffix(".download")
--
-+    def _try_to_fetch(self, tmp_cache_file):
-         for _retries in range(3):
-             try:
-                 with tmp_cache_file.open("xb") as dst:
-@@ -176,7 +159,7 @@ def fetch(self):
-                                "waiting for other thread to finish...",
-                                tmp_cache_file)
-                 if self._wait_for_other_download(tmp_cache_file):
--                    return str(self.cache_file)
-+                    return True
-                 self.log.debug("%s seems to be stale, "
-                                "deleting and retrying download...",
-                                tmp_cache_file)
-@@ -213,6 +196,28 @@ def fetch(self):
-                 tmp_cache_file.unlink()
-                 raise AssetError(self, f"Unable to download: {e}",
-                                  transient=True) from e
-+        return False
-+
-+    def fetch(self):
-+        '''Download the asset from the internet'''
-+        if not self.cache_dir.exists():
-+            self.cache_dir.mkdir(parents=True, exist_ok=True)
-+
-+        if self.valid():
-+            self.log.debug("Using cached asset %s for %s",
-+                           self.cache_file, self.url)
-+            self._save_time_stamp()
-+            return str(self.cache_file)
-+
-+        if not self.fetchable():
-+            raise AssetError(self,
-+                             "Asset cache is invalid and downloads disabled")
-+
-+        self.log.info("Downloading %s to %s...", self.url, self.cache_file)
-+        tmp_cache_file = self.cache_file.with_suffix(".download")
-+
-+        if self._try_to_fetch(tmp_cache_file):
-+            return str(self.cache_file)
+ GlobalProperty hw_compat_10_2[] = {
+     { "scsi-block", "migrate-pr", "off" },
++    { "isa-cirrus-vga", "global-vmstate", "true" },
+ };
+ const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
  
-         if not os.path.exists(tmp_cache_file):
-             raise AssetError(self, "Download retries exceeded", transient=True)
+diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
+index bad9ec7599c..76034a88605 100644
+--- a/hw/display/cirrus_vga_isa.c
++++ b/hw/display/cirrus_vga_isa.c
+@@ -56,7 +56,6 @@ static void isa_cirrus_vga_realizefn(DeviceState *dev, Error **errp)
+                    s->vram_size_mb);
+         return;
+     }
+-    s->global_vmstate = true;
+     if (!vga_common_init(s, OBJECT(dev), errp)) {
+         return;
+     }
+@@ -74,6 +73,8 @@ static const Property isa_cirrus_vga_properties[] = {
+                        cirrus_vga.vga.vram_size_mb, 4),
+     DEFINE_PROP_BOOL("blitter", struct ISACirrusVGAState,
+                      cirrus_vga.enable_blitter, true),
++    DEFINE_PROP_BOOL("global-vmstate", struct ISACirrusVGAState,
++                     cirrus_vga.vga.global_vmstate, false),
+ };
+ 
+ static void isa_cirrus_vga_class_init(ObjectClass *klass, const void *data)
 -- 
 2.53.0
 
