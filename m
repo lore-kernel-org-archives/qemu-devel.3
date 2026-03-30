@@ -4,83 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A74B1061B04
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF4A1061B00
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Dhb-0003Fd-TX; Mon, 30 Mar 2026 10:34:53 -0400
+	id 1w7Dhq-0003UD-8l; Mon, 30 Mar 2026 10:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w7DhH-0003CH-Bd
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:34:35 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7Dhh-0003L7-JP
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:35:00 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w7DhF-0002zD-Lr
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:34:31 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b97905516faso605921866b.1
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 07:34:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7Dhf-00031W-AI
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:34:56 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-6501d242e2fso1576523d50.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 07:34:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774881293; cv=none;
+ d=google.com; s=arc-20240605;
+ b=A1xbLWAZot+EpRPWnBYeGgVMNMvhkxcLCfzho9Uid+Cs6XjxTz9TqyzGdcS8qbMAm/
+ NWR9SxBKquoGSJrmckooSadO2FWYFLtqfNjFZlpgRxcD1Nzh1MGlI1fycyibqZ51LOog
+ FFHS9klwiw+JXsjVpNHhVXEdZ32/VuulUVzG79BM3lFnMt1eNSk/0NCKwK4jvu6rg+v6
+ cBtF1AJ3+DbMjkaXhjM0V3hlVCxSFzI0vE4Ac9QAXapcIbcN8ZJOZVV6SGSm7791ZU9p
+ IiKyvs0z8j/q+a8i3ae7aVD1ZNHg4cFePQJHtAD8K6PRlHdnSR1+z1GrN5Oci2/KjdLN
+ EdCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=eGmC6ISR4eICpFRyQtInOa86aZ3GqanzfizPphF8LOc=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=EwNGyiGZvCodvrn3B3uXReoIYikJxoT0YzcdJ9FtUrD/VEXgS+tb7xp2nuRBPpftOl
+ tYHSQLl1tcHzkds36vAobIeRCPWNso52KX7AhXY0aqHAPTjNVcxsR/QfoLurrYxTCFaI
+ QNMaRrHaNB+P2Cs/tOIobP6ilERZFq7TUgrUDcBLT1oXm7zGrHibn4OUU5A8ev39kGgG
+ 8XErPMaZcqdP9FdL3YFcJCTfiAbXzU5I/aQ7CRcOHxYNV9THkGQYvjmD5Ozwq4jJDDGe
+ ru+EufwO7aMDo4+lj2pTHRtslp9NfGtXNDf5Ma31jmIDTA/PRsX1BwXo4uCnslU2k/Gi
+ 9Odg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774881267; x=1775486067; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0OnW3Nzm3A2tuGDk+KBHWjD1GqJ6hpIYk6t5qncrmZA=;
- b=sSfEa+dib3c5ZV8LIqeo4uYSGrOfnqrt3VWah4dPIWI6yYg5N3qJlZdhPm5jAt8t3N
- 7+EaLMzoYy6syvM5KBRf4wSV8uPN5V9uh+3Lx0NkHGJqEgYW8P/g6X0dljjkCD6kI6tc
- L5bfiH/uVAprapAMI8ODLZ/H9YCX2R2Jp+p9I6v+UcSgrhPA3b8g/DWkw+YwifpjX/HT
- KsaLhcNr0WT3NyP2L2DECmPOaArnaVFavNUk2+vMp6EZTRmVGSwDnIRkJ/gAkNiH6Tk6
- SDxRNvnSOCuQ8HmIzhRXqPrDCWNvbo2r0bN7p96FmzDvOxhNMpVmQnyAkQkLX5QAPFED
- y+Dw==
+ d=linaro.org; s=google; t=1774881293; x=1775486093; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=eGmC6ISR4eICpFRyQtInOa86aZ3GqanzfizPphF8LOc=;
+ b=ObopGxWy7uD/+4/D+aBYMa/fc9XNXeil0pQUgyOEt62JT/LdBgILo9GmQbanJYdLWt
+ c88Q29qPLlkB7RsWzjI0+mUlB0QiokwN5ZLS7jC65eStkJRZzj8+AkoS/VCkubdG3Yup
+ Nao7zY0EJ2MKle9kdg7EkqaciXZYfJnooyjQb1X+V3tFoG9rVvJY1l1LttxltStziEFQ
+ R7upvQ3umquEFKJF+Q+MxIe+hjpsyNlX2IpEnz2AXLMn0g4bYs+bzwHexPYOjRqRQotZ
+ nR/8Zkyjq+iSFJ158DCkRagPeDemIgPz2o0aeqW6LbVjeZErZAQC51NxWHb92rdHiIWR
+ Mcbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774881267; x=1775486067;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0OnW3Nzm3A2tuGDk+KBHWjD1GqJ6hpIYk6t5qncrmZA=;
- b=msPX/igOZ8eTU+e0GpYjGImYsZGumrq6RPpFcFO/m0cGFXDdwa9ia9H3Q0em1VEslh
- rMWb/MKmiHNXSlkYROXkqiAHfiBxDrgi+3ITyCIUi+XQW/yj8j7DFRLfmQ8iuFNv8081
- ReE7HcPMobqfePPCtvojgH74XvT1mkP7cqgGE/iM7Mxvv3K2i/S2QfOm5XxA97qVeOUy
- /N0xn2ZoTvhldvZX0S4mXrlJzvM9Vcd/7zMKJYRhkBzWVlx569I8b57MQ9LbQ2o1h0YM
- /0zP4jS8PhiK51gtpAjrhaXL+YJqYzEAO72A/mtNU9XHgYfyrD48mz2NUWb6aqu8UWqH
- Ro2w==
-X-Gm-Message-State: AOJu0Yy/4vjAr4LVx9uXR4bOr42y+NxKk3sNgI0Vt20fKS+jWqjZ1lGP
- RXBlB3WDMy+YtvEZlmz4n8pVIJUY8o8IHCCk03A9q8+VAeO/MhRihqZR77Uy0k+/jZk=
-X-Gm-Gg: ATEYQzzIE7lTWUdyjHXwRsZXuQEE3NzQx6esxQI/2BS7KQKmOlmVGGH4ae4iFHa1xG9
- XbRST9ZDCoKdnvqlsCRHc2s8lPB3j5EaExncq3LM7BREZlVtpQCWs8o0tOtRXhvMU1r5xzPhst/
- X8cBYARwvc29i4iMoWSwRDDhrFNXPKEBB++0/pXh28T5nJrwKEzMFviUvUrnFpRCnorOOj7uOFA
- NVNfatS1QiKHH2w9Rha25HtP4YDWDmkdHgZwRwulFIQsJK4xgC76+ArXrxhJDYRSWTkVPIKtCJy
- IFfVtUsyQxs5XtTUMMzPPQHYakPgb701oQ8UsfnTaPZYbH0D43PooAau3eyeC8XIaGmhcB2pGc+
- byh8xzNo20LVDl0a5cDocrm6+96cegvaKB7xSlAPS27jg113LdKulbUuBfc6mG6eaDejqMRWmik
- r4B+LMtn0862dMR1vRLAzz1y8=
-X-Received: by 2002:a17:907:1b09:b0:b98:4c2a:d503 with SMTP id
- a640c23a62f3a-b9b5090af40mr747117066b.38.1774881266132; 
- Mon, 30 Mar 2026 07:34:26 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9b7b1a65c2sm302295666b.34.2026.03.30.07.34.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 07:34:25 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5F1175F713;
- Mon, 30 Mar 2026 15:34:24 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org,  qemu-trivial@nongnu.org
-Subject: Re: [PATCH] hw/display/vga: Fix debug message
-In-Reply-To: <20260330140656.46FE55969F2@zero.eik.bme.hu> (BALATON Zoltan's
- message of "Mon, 30 Mar 2026 16:06:56 +0200 (CEST)")
-References: <20260330140656.46FE55969F2@zero.eik.bme.hu>
-User-Agent: mu4e 1.14.0; emacs 30.1
-Date: Mon, 30 Mar 2026 15:34:24 +0100
-Message-ID: <87ecl1perz.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1774881293; x=1775486093;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eGmC6ISR4eICpFRyQtInOa86aZ3GqanzfizPphF8LOc=;
+ b=cY4dyrpInV+URvn2OKzaeNs3Lt4tx31VE7oP0xrqxNVJF+DRBbDqURDe1gTYs0Lovo
+ yW2OTsuRn2A5eAqoO6eVv+eg7MgHzfDtLmQVl2mhLD5GtCu6d43Yc292TJbHcJ37/u2q
+ QYWeTaD3kP4MlXd7deNQFvYc3SVemM2dy4Rm43PeH2f0e1Tw0HpXvVBF72GYJZtrxlBn
+ re2sgyWs7aFP8uKN2N0+f5wSKLDLvyT0MKn+Ve42FCd4TgUFPhNDFBB3+TIg7k7oQ2wW
+ 5UN5HvWEgv0nzvu7TyBdlvmWnItYi/YvOn3s+LFqxmPSzMccByhCyvZ6RnWSxt1NcZbB
+ AVeQ==
+X-Gm-Message-State: AOJu0YxWq9+5uGFtLOpMkTGLdYdl4rfHoqCkF1M2890n48kFv1m7wtem
+ GILrCwIOJ5M3y+YicoqNG99CZXwZZLNIjQXswpR4OgGquCoI0uh7hBEuhYRCOKzfqrO+17o/iHH
+ KEcUgot8KYgIv1841a5b7o+67f31IT+0pFp6FO4C2vg==
+X-Gm-Gg: ATEYQzyWrqRneGweeQRWDCpGXDO1jjrpvAtESulKaZXhVM4wAZ8VqCoSlpG9bANirup
+ jF6PnMyAIO2IEhF3Gaj+DLogTv5TZuwVX+ukqYzSUExix+u7rBsx/y45XuiMhWOWe7a0x7PpMni
+ T3MVCLYHufGJcUaqQMvlFuaWUpmP+n1uDFndhZuBeU4hZ24Dvizxp6UqF6pRdkP8f+WBwhKD1/O
+ 24344VvZNLRz5cd4TRoAaGzYz2ZNyatFPNUAbzNgg5g9E//Ir0tiqjUSZhhz5bqXSOoSNbDB64A
+ ZER4Gtyt60sA/ogd0ucVo4G3SG8cIeGqhgU0rN6SyXdx+sZpA1JNUsUwP5Lk1GV0ovM=
+X-Received: by 2002:a05:690e:138f:b0:64f:fc0d:6247 with SMTP id
+ 956f58d0204a3-64ffc0d63acmr13579361d50.1.1774881293329; Mon, 30 Mar 2026
+ 07:34:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+References: <20260330115017.256211-1-pbonzini@redhat.com>
+In-Reply-To: <20260330115017.256211-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Mar 2026 15:34:42 +0100
+X-Gm-Features: AQROBzAAuEHpUbSkYWWmoLlGiIP54FlTH7KRz8nOvY6leINQiJ5H7_mDLGi7T9M
+Message-ID: <CAFEAcA8DdyHM-5BOhWvMGHi=+g0HJ4jLw0AVaQ06s_3j8hUxJQ@mail.gmail.com>
+Subject: Re: [PULL 00/12] i386, lsi patches for QEMU 11.0-rc2
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,38 +113,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BALATON Zoltan <balaton@eik.bme.hu> writes:
-
-> Fixes: f9b925fd41 vga: introduce VGADisplayParams
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  hw/display/vga.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, 30 Mar 2026 at 12:50, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> diff --git a/hw/display/vga.c b/hw/display/vga.c
-> index ee7d97b5c2..26039f0020 100644
-> --- a/hw/display/vga.c
-> +++ b/hw/display/vga.c
-> @@ -1662,7 +1662,7 @@ static void vga_draw_graphic(VGACommonState *s, int=
- full_update)
->=20=20
->  #if 0
->      printf("w=3D%d h=3D%d v=3D%d line_offset=3D%d cr[0x09]=3D0x%02x cr[0=
-x17]=3D0x%02x linecmp=3D%d sr[0x01]=3D0x%02x\n",
-> -           width, height, v, line_offset, s->cr[9], s->cr[VGA_CRTC_MODE],
-> +           width, height, v, s->params.line_offset, s->cr[9], s->cr[VGA_=
-CRTC_MODE],
->             s->params.line_compare, sr(s, VGA_SEQ_CLOCK_MODE));
->  #endif
->      addr1 =3D (s->params.start_addr * 4);
+> The following changes since commit 91f6a9cb1b0f11afa74ef7fb20d5579d9dfbe020:
+>
+>   Merge tag 'qga-pull-2026-03-27' of https://github.com/kostyanf14/qemu into staging (2026-03-27 18:41:05 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to 0f254f70d4fcf668b27bd7c5970761afe13589c7:
+>
+>   hw/acpi: Do not save/load cpuhp state unconditionally (2026-03-30 12:14:22 +0200)
+>
+> ----------------------------------------------------------------
+> * more WHPX fixes and documentation
+> * hpet: fix bounds check for s->timer[]
+> * hpet: lower HPET_MAX_TIMERS to 24
+> * lsi53c895a: keep SCSIRequest alive during DMA
+> * lsi53c895a: keep device alive during SCRIPTS execution
+> * hw/acpi: fix save/restore for MIPS Malta machine
+>
+> ----------------------------------------------------------------
 
-Really it would be worth just deleting the #if 0 code - if it's really
-useful for debugging you could turn it into a tracepoint.
 
-There are a bunch of other #if 0/#if DEBUG_* statements that could also
-be dumped/modernised.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
