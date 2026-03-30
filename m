@@ -4,100 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2DF10D14AD
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 12:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99F410D14AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 13:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7C8o-0006So-Ju; Mon, 30 Mar 2026 08:54:50 -0400
+	id 1w7CP2-0001Hv-0h; Mon, 30 Mar 2026 09:11:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7C8n-0006ST-KZ
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 08:54:49 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7C8k-0001Fb-Mf
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 08:54:47 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-6501d242e3fso1360705d50.0
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 05:54:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774875285; cv=none;
- d=google.com; s=arc-20240605;
- b=KbTUHdLrZ2SpTLXUEEOCrdb53TzmgmqstkFmqtF9Xee/mK/4e1vW3Edwb9KDobvuJF
- 7/G/BLvzhqP7GbqL1XlNwJoG5yoxIa3JGzBZlRB8PsXD7MSL3Oa/Ql5H0rw3Gr7MnUtg
- A3hp2I+5xd66PGUmPeWLCyg1JxOdfo1TzFRO4j4fRb11nM0rVjRKMFZSE6DRYmJs289E
- 59l0wooZJszcQXJaitnfpNhhEGbgt5it5mxBHjlLHwp8CNFbidBkP0XDKalWt4j+D4yq
- qIWUbJ29uXhLf3OiLidrl0vJIZakAieoEFCmIRQ0BLnFFXkLX5lVrJJUNfZp+uf9BZCM
- bWsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=S1wCI8O0Q/dMkwH4iUBbg5E8nkpHphA7yLZ40n6XoeE=;
- fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
- b=OMEgiZQ/1ABvrm0LdGXm1ArvS28YBjX5vplb2Zpc+lVInyuPKqFtMMFIJSDx+bejKz
- bkWNbXTKwD4GR65jlIGnvIlnEeT6tUGQBKDF0s3udrva/ygbXbrEi615JYWtS9vRt3Y9
- q08B2n5ZgYhiZqlMiJfqQK48uIuKepIoJCfBmHs7cGgtdGOM36BDxBnW5+xmU0tDDcE4
- 3s0izv57k1Wg5Htogl+dZnHpBjo6eJ+ULo+o8o1VnpTGznGPtkouUyj7XlZrX/FGgm7x
- RURUqhZ6IzWeVmdVdrcFFNeMC9TVnj2pppEwAHKS+cBFq4NB6aGBCwL9MYTTqSLvmPF2
- gs1w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774875285; x=1775480085; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=S1wCI8O0Q/dMkwH4iUBbg5E8nkpHphA7yLZ40n6XoeE=;
- b=GRLJg20+dz0GrbiQnekQRa/sVvRN9lv09wXF5TnmGTJUG5npEOuL77oLCoZUFh72G2
- 4oHhKhGfwRCBIA0NaxFA5p/1iBCXrLpvrEKvB4amkIzukSJ2xyhUQHFiUF7d2fd9Ekar
- 7mypV6Rii6Qz5oN/33up+hxqu+OQy/OqKbvrwQfTG5l1ybC4gaWL3mOp6zdGOpILUN78
- rJJAfPRPIfQOt2hy3OhNRjBDAOJ8rX31TbUEzeTeL78PaAqJirnPu5PEQ+5dIpV2dFxz
- gdxqgY26vzxSRI+tOcX6IVGYG/oGjA9TCvDAunXIs9RquPQQni5vYBdrqrOgnNLlb4gI
- /4Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774875285; x=1775480085;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S1wCI8O0Q/dMkwH4iUBbg5E8nkpHphA7yLZ40n6XoeE=;
- b=PGvPfbtpF3iKqDl+2d5HI1BcXsohdtpkepDrbyH82bL4/8Tpy2eL3NZK+ZbcSDLYrT
- O78G6WaeorCt3HaRQfPulPq3W9KvO+DCic5oZF/TDsLcZz1AmV3Wi852gHuCIfT6VAZn
- QwQjmiHErr6600A5Kh6wUHpBnhpo+7haMMXKcBjErr0+5Hskmv3ltWAlyxOb1pcAF/WN
- Fld1MCKmgzAnfTxMWzPMnQnoKrI4Exg6hSTJkOiKcPW9jVfABRauptdxpzGZTv8hC4aa
- 5TLm/1X0BXJRoaVVijSo6Bop2cFrYWBSVcNZPR2tauGldxMTDWoVg/WPe9yRQ8jSw01E
- jSqA==
-X-Gm-Message-State: AOJu0YzH8ph6481ksjGZJ2vJORUiNWYLnn8te47gRHZOGHfgIPWrYXje
- 3uyLAEyLX+T1S/5bmzJQrLF6cAgokfPT6q44IFX0H/98UA7H1Hjz4pnU/blb5y+G+KvDHI4Sdtv
- vertciYk7nPXTNhkV2p1j9giaGXhVTZEeJQwS4+RTGg==
-X-Gm-Gg: ATEYQzzrz6C9QiON37uEvnEcOh80kl3FVnkVlWi3P5O/CA+DYR+iobegykXjLM9Fwi2
- h3TKoS8hdRML6S+MmrXF2HBWQxxAOSAm/Qn5p/VVh+zG1czWMJFKwMNQ2ixHmWtk5+XNZr+QtsD
- de8+qEtqHP51yN4eSAlygKU4lHOEaQm59DRB79hLsnIECy2E8Ot3dZrZ0oN18V9fmb3sdKaHrpC
- /zAs7GQPHGwTHT9wzp9gVY6TaCH7a2VhQJuw7OAgZTdiMPDbCcmNfoj1t1f4FnUDoRXKhUilM0c
- URr4DgoHEAClbbuZNDwUREP6wF6FdGbQUm2fo3MYORfYwf5WJaovH1mN8sFOaGTOfIo=
-X-Received: by 2002:a05:690e:b4b:b0:650:1724:f63c with SMTP id
- 956f58d0204a3-6501724fe4bmr4475886d50.20.1774875284698; Mon, 30 Mar 2026
- 05:54:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w7COz-0001HQ-Eb
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 09:11:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w7COx-0003ai-A6
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 09:11:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774876289;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=yI769wTpE+t8FxBKO7VU051bty+og5B3l4YNhV+DygM=;
+ b=K2OwgF1JedxDYCpGIp3vpXAy9dhERfei+CxX7dQflgs1JN9h5dahcvE+sgxpLuQMxaC2Rm
+ PFxjkzVtfVSpgakO+cKmbvOMgeP8z8ulzPRAEc2vXferz4yZRy/jB/PrVM/yMdslvLmw+/
+ wKKPCQM1dkC19UMyvp/UiEjnJ7XQySM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-DD5IYUVGMiS1-CZNZeafKA-1; Mon,
+ 30 Mar 2026 09:11:26 -0400
+X-MC-Unique: DD5IYUVGMiS1-CZNZeafKA-1
+X-Mimecast-MFC-AGG-ID: DD5IYUVGMiS1-CZNZeafKA_1774876285
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C88F718005B4; Mon, 30 Mar 2026 13:11:24 +0000 (UTC)
+Received: from [10.44.35.213] (unknown [10.44.35.213])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 229DA19560AB; Mon, 30 Mar 2026 13:11:21 +0000 (UTC)
+Message-ID: <1ab56126-1279-4d43-a6aa-3319d5a37b47@redhat.com>
+Date: Mon, 30 Mar 2026 15:11:20 +0200
 MIME-Version: 1.0
-References: <20260330102815.6759-1-thuth@redhat.com>
-In-Reply-To: <20260330102815.6759-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Mar 2026 13:54:33 +0100
-X-Gm-Features: AQROBzDCxjQSHSXj6tdV61BxIUA4tEyjbHMaIi6Pdof9M2-BtMNVj4M0Yyoanx4
-Message-ID: <CAFEAcA8KHCd6QkHwXj8yeMczX7ei5=v11UAcXU_X5HdJ0HLM+g@mail.gmail.com>
-Subject: Re: [PULL 0/7] Fixes for QEMU v11.0-rc2
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0] scsi: Don't consider LOGICAL UNIT NOT SUPPORTED
+ guest recoverable
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: stefanha@redhat.com, gveitmic@redhat.com, bmarzins@redhat.com,
+ fam@euphon.net, qemu-devel@nongnu.org
+References: <20260330121635.49205-1-kwolf@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <20260330121635.49205-1-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,32 +123,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Mar 2026 at 11:28, Thomas Huth <thuth@redhat.com> wrote:
->
-> The following changes since commit 770f50c14f098717fd40ae6e826a495681152447:
->
->   Merge tag 'pull-nvme-20260326' of https://gitlab.com/birkelund/qemu into staging (2026-03-26 10:26:39 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-30
->
-> for you to fetch changes up to c0eaf14d93135e13d8b003f7cb41187e3510373d:
->
->   tests/functional/migration.py: Skip migration_with_exec() if socat is not available (2026-03-30 12:21:09 +0200)
->
-> ----------------------------------------------------------------
-> * Fix some warnings from pylint in the functional tests
-> * Fix migration of the isa-cirrus-vga device
-> * Remove obsolete linuxboot.bin prebuilt blob
-> * Fix migration functional test to check for socat instead of ncat now
+On 3/30/26 14:16, Kevin Wolf wrote:
+> When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
+> it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
+> sense codes. It doesn't really explain how the codes to be in the list
+> were selected.
+
+I think I mostly looked at what codes QEMU generates itself and excluded 
+those.  But if LUN_NOT_SUPPORTED happens like that for storage arrays, 
+that is the correct thing to do.
 
 
+> As the LUN doesn't come from the guest, but from the block backend
+> (usually the SCSI device on the host that was opened with host_device,
+> but it could also be the iscsi block driver), there is really no way the
+> guest could influence this.
+> 
+> It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
+> happen during failover operations. When combined with multipath, the
+> request should be retried on another path instead of being reported to
+> the guest, which would offline the filesystem in response.
+> 
+> Simply returning false in scsi_sense_buf_is_guest_recoverable() will
+> enable the retry logic in file-posix, and will also make sure that if
+> the error persists, the configured error policy is respected so that the
+> VM can be stopped.
+> 
+> Buglink: https://redhat.atlassian.net/browse/RHEL-158212
+> Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
-Applied, thanks.
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+Paolo
 
--- PMM
+> ---
+>   scsi/utils.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/scsi/utils.c b/scsi/utils.c
+> index 545956f4f95..daee90ecf0e 100644
+> --- a/scsi/utils.c
+> +++ b/scsi/utils.c
+> @@ -373,7 +373,6 @@ static bool scsi_sense_is_guest_recoverable(int key, int asc, int ascq)
+>       case 0x1a00: /* PARAMETER LIST LENGTH ERROR */
+>       case 0x2000: /* INVALID OPERATION CODE */
+>       case 0x2400: /* INVALID FIELD IN CDB */
+> -    case 0x2500: /* LOGICAL UNIT NOT SUPPORTED */
+>       case 0x2600: /* INVALID FIELD IN PARAMETER LIST */
+>   
+>       case 0x2104: /* UNALIGNED WRITE COMMAND */
+
 
