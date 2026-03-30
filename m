@@ -4,72 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A52CB10D14A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C3D910D14A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7B0G-0005Ne-H4; Mon, 30 Mar 2026 07:41:56 -0400
+	id 1w7B7f-0002OJ-7a; Mon, 30 Mar 2026 07:49:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w7Axv-0003uP-M0
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:39:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w7B7K-0002Kj-Et
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:49:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w7Axr-0003Zn-NN
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:39:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w7B7G-0005b4-M1
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:49:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774870766;
+ s=mimecast20190719; t=1774871339;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/AYVBGV9kCCmNP1aEjPgIRE1RHKwWqOWlM+Y9O5E0oE=;
- b=J42eMfotodkqDGtfarHL4mUIMbrb4ipjNbdvxgtFD0IOJVR/jvcn+ZevHDXtSTL4G+2p2B
- 0hzlvv9wETzn1od7yhBkBRFUMemQ4+gOfbFrLU3P1hTHZBHPIb1abiKaV1ti/RioUW3vby
- lVsY2ENt9rq1HtDH1WOaxwS9YuwKczk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4jE+ZYiBrnOR0/wEXwh1m8IxQyar2F5yvKNyUAoO6L0=;
+ b=gsAjBC3DJXcVR5E8iAhWEn9toizKs7lPV3ZwqwtkBVVyCw9CGHU10KHeB1vDj2+AXhSW2z
+ bkziVXRqaq+b6K+sEpKt+goPxQJxmpuQDn+olDWzsa1L83pMoZhQH63HuiDSBjEIkQn9wU
+ n9CP+Um2YQg1q/fwA3VXaGm2zEACNjI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-V5KUNUJyM6WYd7PwbeIP5w-1; Mon,
- 30 Mar 2026 07:39:25 -0400
-X-MC-Unique: V5KUNUJyM6WYd7PwbeIP5w-1
-X-Mimecast-MFC-AGG-ID: V5KUNUJyM6WYd7PwbeIP5w_1774870764
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-LyNTwu3oMZafzkVwBLkd1g-1; Mon,
+ 30 Mar 2026 07:48:57 -0400
+X-MC-Unique: LyNTwu3oMZafzkVwBLkd1g-1
+X-Mimecast-MFC-AGG-ID: LyNTwu3oMZafzkVwBLkd1g_1774871337
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FA991955DB6; Mon, 30 Mar 2026 11:39:24 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.44.33.150])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 93E5C1800760; Mon, 30 Mar 2026 11:39:22 +0000 (UTC)
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>
-Subject: [PATCH 6/7] qga/vss: Remove unused undefs
-Date: Mon, 30 Mar 2026 14:39:05 +0300
-Message-ID: <20260330113906.168002-7-kkostiuk@redhat.com>
-In-Reply-To: <20260330113906.168002-1-kkostiuk@redhat.com>
-References: <20260330113906.168002-1-kkostiuk@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E42531800BEA; Mon, 30 Mar 2026 11:48:56 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.47])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 815021800361; Mon, 30 Mar 2026 11:48:55 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 0/2] aspeed queue
+Date: Mon, 30 Mar 2026 13:48:51 +0200
+Message-ID: <20260330114853.638753-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,39 +80,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't include any headers that provides VSS_E*, so
-no need to undefine it before including vss.h
+The following changes since commit 91f6a9cb1b0f11afa74ef7fb20d5579d9dfbe020:
 
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
----
- qga/vss-win32/vss-common.h | 13 -------------
- 1 file changed, 13 deletions(-)
+  Merge tag 'qga-pull-2026-03-27' of https://github.com/kostyanf14/qemu into staging (2026-03-27 18:41:05 +0000)
 
-diff --git a/qga/vss-win32/vss-common.h b/qga/vss-win32/vss-common.h
-index 0e67e7822c..db849127c2 100644
---- a/qga/vss-win32/vss-common.h
-+++ b/qga/vss-win32/vss-common.h
-@@ -33,19 +33,6 @@
- #undef uuid
- #define uuid(x)
- 
--/* Undef some duplicated error codes redefined in vss.h */
--#undef VSS_E_BAD_STATE
--#undef VSS_E_PROVIDER_NOT_REGISTERED
--#undef VSS_E_PROVIDER_VETO
--#undef VSS_E_OBJECT_NOT_FOUND
--#undef VSS_E_VOLUME_NOT_SUPPORTED
--#undef VSS_E_VOLUME_NOT_SUPPORTED_BY_PROVIDER
--#undef VSS_E_OBJECT_ALREADY_EXISTS
--#undef VSS_E_UNEXPECTED_PROVIDER_ERROR
--#undef VSS_E_INVALID_XML_DOCUMENT
--#undef VSS_E_MAXIMUM_NUMBER_OF_VOLUMES_REACHED
--#undef VSS_E_MAXIMUM_NUMBER_OF_SNAPSHOTS_REACHED
--
- #include <vss.h>
- #include "vss-handles.h"
- 
--- 
-2.52.0
+are available in the Git repository at:
+
+  https://github.com/legoater/qemu/ tags/pull-aspeed-20260330
+
+for you to fetch changes up to 9160305d92d2750e6ca3ada8f048305c9290f03c:
+
+  net/ftgmac100: preserve full VLAN TCI in TX tag insertion (2026-03-30 07:36:25 +0200)
+
+----------------------------------------------------------------
+aspeed queue:
+
+* Complete lost interrupts fix in the Aspeed I2C model
+* Fix a vlan tag insertion issue in the ftgmac100 model
+
+----------------------------------------------------------------
+GuoHan Zhao (1):
+      hw/i2c/aspeed_i2c: reset and migrate pending_intr_sts
+
+linhuang (1):
+      net/ftgmac100: preserve full VLAN TCI in TX tag insertion
+
+ hw/i2c/aspeed_i2c.c | 4 +++-
+ hw/net/ftgmac100.c  | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
 
