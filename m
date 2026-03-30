@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 399521061B0A
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 15:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D211061B0A
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 15:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7EIt-0005eB-Jh; Mon, 30 Mar 2026 11:13:23 -0400
+	id 1w7EKA-0006Hj-VC; Mon, 30 Mar 2026 11:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7EIp-0005ds-IJ
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:13:19 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1w7EK9-0006HM-KT
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:14:41 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7EIk-0002ED-DQ
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:13:17 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso37906055e9.3
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 08:13:12 -0700 (PDT)
+ id 1w7EK8-0002WL-04
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 11:14:41 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-487012ce896so28358785e9.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 08:14:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774883591; x=1775488391; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774883678; x=1775488478; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=s2wYGWZyiLSf+BhQWVn+YKYXyYsHikf5YHf0S051JMI=;
- b=YUz3LdjhFG3QPoqGQL3nrVutBiZ/tTD8c0y8FQD70YC8i0d0XHyPrVEqYAHqidHx8l
- dhE5XRkoGzVkTv+pbOEnvsdIlaXL/s4evAAeTNC40EV1EYLrnpBYdEphV50+q0dW/m9P
- /zX4lE3Gzfr6xHtOKIf2d3YEm57KRSexbVytXXq2f2nKRw/dm2k1/z01DMZW7y6CwoUE
- ECBMKN12LI+53zaj3o8waV985Wy+yJNK+kgRebDBHR2ipGElxJ0lUCAvevmOB8RxeeLW
- cp86PNU6RPV7JHE2yStHlR+zQUBN41zC9R6vw6FhOi0uuKqigL1dZ3aUAbwPLnfU6IyV
- mMDQ==
+ bh=rDe9mceskDtU6tRQQCH8dZM09+QgHTJN3mHBBgRHyng=;
+ b=wfKquJCbg2qe/HUNfbJiJycMyk1eHfNL8YWcmftMq1pi5gHs1E8aqmkP2V54XO/ZqX
+ ow9p41nmcdTOYJzkVj0zHx99cwcx8FBO359qExGRZHdEBG66pNTmrB5P/uNzsHi/vlCy
+ s6LTwSA8ZlSj5Op2Z/8T4StTwmor3mBJd4Fce8WnjZayS2gINLnXDCqkl5un6jF5xmE4
+ ml2wVPyNJwRy7d8l9IvEv6+28cJ/6Q8J6AfBpdqo8WxMuNwvuergSs7boYGRFh5tjetr
+ CDz5ox9Ep5aF7vh9HPnMP1QSpznngH4io+hUkEnP/2z9g5YNOa5nSToMDPHdjY1Za76Z
+ BwZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774883591; x=1775488391;
+ d=1e100.net; s=20251104; t=1774883678; x=1775488478;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s2wYGWZyiLSf+BhQWVn+YKYXyYsHikf5YHf0S051JMI=;
- b=AxvVhI5g2vljytKc32liqnZ6OisGb97kjYe0ezp6Il5l7O5jfity3q1eG5FjBOG0Zj
- mSmKk0Aht3dMHZQrRPBv3S503T/iIyjGhNodeTgPsFmvuMk1YvRQgFv1+AcEE4mmEeED
- z/oiUy2L5CmuXyamcqm5v9bjcvJOWWAKmQj2Gd+YXL/fgkRymAIiO+h6VZT/hfFGEuT0
- 5g+Cx6hTzB2ztOgiZ7odAz9XiBTk0zxYc1lVyP9UheVJK6SmjOeEU7dMhoZXGYCy+Co2
- RYef8N324Vnbn2rK9vNFi+y0fusyuJYFdz+lUPooj49HW+T+AAsTm7PqQwarBsYzgQqZ
- KEZg==
-X-Gm-Message-State: AOJu0Yxt9jB/KW75QzMI1sl551uD7GuOz++hShQyf+pvC7qX92PScZ9Q
- c3ndWonXTL2nguoNkvEoVIKH9T8L4Xi3RsvCSN+Z1+OjRXljl7CNOHhVGUniK+VmLp6AuUh3AJX
- 086VkhfA=
-X-Gm-Gg: ATEYQzw0JVUZH+TA+Yj+H3/1NsewPVC8EieXBJw1SZh7MQ2mXTexxYu6uzQu8/SawvT
- u8ZKw1c4M/OqWp0OPEYCDzQyR5wuQkkCqEZAneaEY3uqLHQiZTrGDKrf2h8Fit4r9xhls4OTBo2
- 3QA6gaj+DxBw/U+hhY0XSZZTQUTFfZVCaI8WbNz01iSiRNRtxuagmu3yw9naZ8otTXBmhjKx4mm
- 8MzTKKM4PBESHvZWGyaciQ8RRr0f8o6nOVxf4IfO89d/StkHXVb5YWn3CwEFtWe5My6oWpkZEUc
- bduknEL8Uqpwd5uxxIkUzigs+vuV85gR76m5XtrSrIrVfTwEBfFUOTIifAmixmPq4L/KFD6y1Bj
- rem0zFPfwld7fd2JG48kYrGl8CNnW5JZ0eF8Uq12wjYRQ/BuDdpaCLr7z+MhVaLGeRq6/FpO8Wj
- YDNc2IybAB0oKKNg3hoBF7xfU2jmLS/8TP2UHJW/G4enOl0bSW/9kr4TAfRU670MedWATdsxR4g
- akOTu8yllRzDj4PNlAXSRYMXLqYbxw=
-X-Received: by 2002:a05:600c:1d15:b0:485:2fc5:3a5 with SMTP id
- 5b1f17b1804b1-48727edf4f5mr212057845e9.26.1774883591424; 
- Mon, 30 Mar 2026 08:13:11 -0700 (PDT)
+ bh=rDe9mceskDtU6tRQQCH8dZM09+QgHTJN3mHBBgRHyng=;
+ b=feX+UEnK3PSjRZYucbbLMmaAcL44ecqO7XpHZFSFaCb133BNeD6Pjvs1WNgd47liGU
+ kln2nKsm2qpxlBTbjoxiEjyXFHrgRs7GO6vYrgMktUn7JO3ZevXbthMUHI/0rH1LXDKv
+ SAX5cmi0BUefWM/8PSxWPbyfzxrIGkWhR6c0h1wUx9O7c/FUaC3wRDGmQu+PclVPFbkt
+ I06h4kZw0vVA8Un1/lNVJdGMO7lxocKcx2FfFG97GDITjpI4MI62J3YAqPMx5+IC4Wy2
+ gU9XZWGLdbxZRXWbNUI7Hyc2Y7EtCMxVz1FpuvZndMWbi77NSlGMRMCUuauh8GCVJZ7B
+ +a9Q==
+X-Gm-Message-State: AOJu0YzhYZHz25VJExqgfgTwIjqfAIOfQhHf5RFVgKc6BKJR/7XqRg7c
+ C9CpZSd5dlqrt9HDlu/v6T9QtRJpNKDOKmWUA32WXkT5mga1OWRe93yz8jDE0sc3f1yd2XTioE5
+ zIQWztxQ=
+X-Gm-Gg: ATEYQzyo0q3RTCDjQx7/V+cOiTOMp8t70hTR6+lZo4rdDx+sPC6b5v/VAVEXnk22rxx
+ YapVwftj+Yog+h3A5kUXMWEXgj3jSEXt57BP3koJjhssyq8kqKNBltj33gmGk100Lo2NwlJQgct
+ LAUgxA69G/oicKCIOEAJAFyesJ+Bf/ftHHI9Zvcr1MSZ/JkWuHsn0hNkAMeCjw6aFHYKTvPoEMK
+ bf59aFnuinzeTbPSggjrIIzfWPGp2e8G23BEg7BAS7w3X57DIacaPWFLyoSGdfLXRPh0TanCBCZ
+ lP3HUxql1Y7w/zSmif9DDJD+DEvmZqCJ3IaqwiPbGdlzbj2EwGBgPe0GW6J8zeGZ5Hmv5A4gfcQ
+ u1GQcF1ZMk9Njnz5kdQVnRJnklawQlKuJzwyLzSdp79AaxR0fW5v/9woKe6/+cgS99UUpSlVZXD
+ CVCWas4HecpXd4li3YJhq5/Bx11YMpMpIsocq78ozj/ga05NRcYiMKRtdSk02Q8f2ctQgbt2qQv
+ ALxdad14nM4vvnHId4VZpjMkwEOZnU=
+X-Received: by 2002:a05:600c:c178:b0:487:59c:2bb8 with SMTP id
+ 5b1f17b1804b1-48727ef16bamr220414415e9.27.1774883678453; 
+ Mon, 30 Mar 2026 08:14:38 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48722d40741sm300065015e9.13.2026.03.30.08.13.10
+ 5b1f17b1804b1-48722c9506dsm274817715e9.7.2026.03.30.08.14.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 08:13:10 -0700 (PDT)
+ Mon, 30 Mar 2026 08:14:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] target/i386/cpu.c: Correct minor grammar error in warning
-Date: Mon, 30 Mar 2026 16:13:09 +0100
-Message-ID: <20260330151309.1786787-1-peter.maydell@linaro.org>
+Subject: [PATCH] target/i386: Treat qtest like TCG for supported-features
+Date: Mon, 30 Mar 2026 16:14:37 +0100
+Message-ID: <20260330151437.1787008-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,39 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix a minor error in the grammar of the warning messages
-produced if both MPX and APX are enabled:
+In x86_cpu_get_supported_feature_word() we figure out the supported
+features differently for each accelerator. The default case is
+"set all feature bits"; however this triggers a warning because
+it enables two features which conflict with each other:
 
 $ ./build/x86/qemu-system-x86_64   -cpu max -accel qtest -S
 qemu-system-x86_64: warning: this feature conflicts with APX: CPUID[eax=07h,ecx=00h].EBX.mpx [bit 14]
 qemu-system-x86_64: warning: this feature conflicts with MPX: CPUID[eax=07h,ecx=01h].EDX.apxf [bit 21]
 
-Fixes: 91bc4d81078a ("i386/cpu: Add APX EGPRs into xsave area")
+Treat qtest like TCG here, to avoid the complaint.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-As a side note, it seems a bit harsh to turn off *both*
-the conflicting features if they're both set, rather than
-removing only the older one.
+This suggests to me that the default case is not something
+we ever want to be in, and we should instead be exhaustively
+enumerating the accelerators and asserting if we don't know
+how to handle this for the accelerator in use. But there are
+several accelerators that we don't have code for here...
 ---
- target/i386/cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/i386/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index d02f6f0653..3b0a7c7363 100644
+index 3b0a7c7363..c6fd1dc00e 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -9628,9 +9628,9 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-     if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX) &&
-         (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF)) {
-         mark_unavailable_features(cpu, FEAT_7_0_EBX, CPUID_7_0_EBX_MPX,
--            "this feature is conflict with APX");
-+            "this feature conflicts with APX");
-         mark_unavailable_features(cpu, FEAT_7_1_EDX, CPUID_7_1_EDX_APXF,
--            "this feature is conflict with MPX");
-+            "this feature conflicts with MPX");
-     }
- 
-     x86_cpu_enable_xsave_components(cpu);
+@@ -8087,7 +8087,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+         r = hvf_get_supported_cpuid(wi->cpuid.eax,
+                                     wi->cpuid.ecx,
+                                     wi->cpuid.reg);
+-    } else if (tcg_enabled()) {
++    } else if (tcg_enabled() || qtest_enabled()) {
+         r = wi->tcg_features;
+     } else {
+         return ~0;
 -- 
 2.43.0
 
