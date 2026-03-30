@@ -4,108 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400301061B18
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D721061B0F
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:36:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7FYl-0006ST-5F; Mon, 30 Mar 2026 12:33:51 -0400
+	id 1w7Fb0-0008E8-Ji; Mon, 30 Mar 2026 12:36:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7FYh-0006RX-Gt
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:33:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7FYf-0000nd-DZ
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:33:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774888424;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IUXK/6zCVQUmImS+Z8D24dtKQkIf1gSTL1biXaVApkk=;
- b=BnUKwTNCyOiUNx3nl6mrR+QV+FJLYRFMcUQUXbuKKf5jdD52ah1rxvwjKEtVRdqkV4mqsq
- hNHiufJrg8ZhZoKl+S6HhddYzH6akjntXumhP/EEZISfhagqAjiQQJdbKRS8B8rcn4tRzt
- ku/6oHmM6o7XKdmw6RypuqdOReLMaZk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-9fbhnWOMPhS7U_GJLJHulQ-1; Mon,
- 30 Mar 2026 12:33:42 -0400
-X-MC-Unique: 9fbhnWOMPhS7U_GJLJHulQ-1
-X-Mimecast-MFC-AGG-ID: 9fbhnWOMPhS7U_GJLJHulQ_1774888421
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0833519560B1; Mon, 30 Mar 2026 16:33:41 +0000 (UTC)
-Received: from [10.44.35.213] (unknown [10.44.35.213])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6BBB61955D84; Mon, 30 Mar 2026 16:33:38 +0000 (UTC)
-Message-ID: <72de7dbb-ba81-4a59-9710-7e88707de31c@redhat.com>
-Date: Mon, 30 Mar 2026 18:33:24 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7Faz-0008Dn-4D
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:36:09 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7Fav-0001JP-4i
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:36:07 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64eaf8aa893so5912570d50.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 09:36:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774888563; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QiPqb4uKn3gDL2xFm2ysPv0K+s0ck7Of4I1DVq8yGfukaTyXgmV+IkTy6cD+bfeSKU
+ DUuX4SEWt9TWJVaeJ7k71EBEFA9WE6hBW4NpXpHIv93YgOzgqVsWa2ZzkIkmbuTRVzoF
+ mh4+cLslkW8iXsfeiCoftvoRH9jZ/yS/HKUMm4ZGw10zCEde6mNSNFoBody7eJGzPFPs
+ vIOxymno5HwsDa5Bb93u9MRLBbQXzfYSniSP2uhECky+FFYHROi4t2L8sMgVClUrnhzd
+ HrOf8qRVbJgMGPXzSxqcVlWh4KXa+nrsnMrMbdt9Frquz0jPlfYczVjuFE+I5b8LjZti
+ A1cw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=QYWfOkUaIVU2qhF1iKF+8gjo/t2fX3hPitm6nM8sVHE=;
+ fh=tNFTkejswgEc8cgNACMB0VSqv/YC+CH1d+OSqqH5zlY=;
+ b=KU+9zenlWDnfEBc1WjBDxKjGG8ehoqrNziL6HNOyDpoEnkQbaNl9MbZgMhWsUPgt5e
+ BBWXvGfb6p6vTb9qDJ1EjYA+amGmkEve0VSRkQQTucC1DvTk9pZ1kXs/c4uuKhjw44WX
+ UYhL3j6piResURUh402J90REPyi7T+RCfoklhJtDZmNuCo2zzwiKJZr28BDjcQ0XVobS
+ zNpP4G/hbsFLMaC9uTb82cZFq/oLOIXBgPX4R9E8YfPk1P97s6/b6GzyZg2oZ6Tbh8kt
+ ttZL5H5XCvYGj6xHowAEvtjKgYZ/bEIK8RgMG3dvkmjKbdRTz1gah63LVS5Kob0DatQf
+ zL5w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774888563; x=1775493363; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QYWfOkUaIVU2qhF1iKF+8gjo/t2fX3hPitm6nM8sVHE=;
+ b=fzQekSbW/XaxcPuRKHcYF/3Eoe9+l/j0uBvhn7mcX/98jCHq/SwuLXxZCCQR/NpT56
+ FCWrPLnrqDCqD7GXnsSkn+Ev/hPBEMKg9EBlftzjK942dch3puozNLmrpQyZW7kwTe8f
+ Q/laY+1pSdb3qqaX9UEcPRFiGZKH6JpYl290YbCqBsyx+/1FzILnS7Czz7vrm629LNwH
+ FcypQBtv9aXBitUUoCctOOqk1qBdfKinHaAqc3TkFl6MTi02/AsJbxvBMGkg5tea4tb5
+ yW54XVDYmXeU3Eo7RclerYjbgxlXphr09O1LcxV4YDvYCPEG8f9dEFY2B5IuABKWtOFz
+ i+dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774888563; x=1775493363;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QYWfOkUaIVU2qhF1iKF+8gjo/t2fX3hPitm6nM8sVHE=;
+ b=KfkOSjhEA5uHJZSKKjyPYuoNkN61b3J1l1ErMSRvIx77bQAmTG4GUh5EBf05feFAgi
+ jrUDGmLd8VMSJ9xvfdERbz4jkwALo4/zAgVPgHl+vDeA0gJUKTs3X6lpk2+8XfJFe/KW
+ RFkRmr7xwUGkxhugC5gCzxAEENug9tTHeuY0HzSQcVnBtNLVvwLzXeJTKGhy6PcdiJp3
+ GPf1kqK1Bof8qc+isiXaWVLaiUuA91JJcyuGIInZ0/SMIJbAeexd/eKccO8eRdZTqJ+W
+ xSrX75lpKU9sDwYm5NQstqSkoUy2fvUt8csZZqbEdrM0S5UpSJJn0pXsfbdoomENgEJg
+ 9Eaw==
+X-Gm-Message-State: AOJu0YwHRy/GGfVwLaSVTwa6kyO93a0+k+A8OwHM69s+goxL5rUZM6NN
+ BuFVQdKSKj1wktr01JH0o85ls+ap/3SmjzowXsiCl++V4pPIsKcWqLFVZstLWviSYlqVNdyliG8
+ wNLHi6cYzhrUflQwGQNvHrsm8m8tIUj1gUMKZuw5vJQ==
+X-Gm-Gg: ATEYQzx0MOrYAiynjxeUX4d5sa7pUnFVidVKbz1Fhw0Tphh8d4pAhK3rEI/NxF+Ctv4
+ 1xo6pKjJlqErTuOjlxNilcdK1IOymHBP/IeUlX8FmJsgYPMZnC1YaFVd4dFq47XxQPP/8u8knEI
+ I3/yek7vkxFzyFGFBj4pjz2EHtnhHZRzEqqtYPe9PKuzgaT3eR+CqyzIaIhAP0eL+HnKg9x2S2o
+ QxJgOhcFLlcZ5SanhGLAtN+9DATBOoXLWkjAVA8G6i5C9NlHFI2OPxCe0N/2acAyezHwJz3UFCf
+ CO8V+9KjvGSvksGjF4l8ibUuP1GZfd+QCWwGw82+5+HhMTma4eRYak5ph5vtRcnADu3WuY2Kk+9
+ uYg==
+X-Received: by 2002:a05:690e:12c4:b0:650:1b79:9a14 with SMTP id
+ 956f58d0204a3-6501b799dbamr4055424d50.13.1774888563423; Mon, 30 Mar 2026
+ 09:36:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] thread-pool: signal condition variable while holding lock
-To: Stepan Popov <Stepan.Popov@kaspersky.com>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20260330130104.85200-1-Stepan.Popov@kaspersky.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260330130104.85200-1-Stepan.Popov@kaspersky.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <ab26760db215ca858141a6252b79f3da@codethink.co.uk>
+In-Reply-To: <ab26760db215ca858141a6252b79f3da@codethink.co.uk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Mar 2026 17:35:50 +0100
+X-Gm-Features: AQROBzAdVNA06xcP-F8WHCdHkkS7MNPC1iDD-Z-JjRJK8X_VrOVogQUNFm2cR7o
+Message-ID: <CAFEAcA-qe12nCCe3qMdZVBtmSrqDrhKOPwkCCMBy+QcdXQQQFg@mail.gmail.com>
+Subject: Re: QEMU leaks memory when handling pthreads
+To: Lawrence Hunter <lawrence.hunter@codethink.co.uk>
+Cc: Qemu Devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,37 +114,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/30/26 15:01, Stepan Popov wrote:
-> Move qemu_cond_signal() inside the critical section protected by pool->lock.
-> Signaling while holding the lock imposes more predictable scheduling behavior.
-> 
-> Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
-> ---
->   util/thread-pool.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/util/thread-pool.c b/util/thread-pool.c
-> index 8f8cb38d5c..8e55aefd07 100644
-> --- a/util/thread-pool.c
-> +++ b/util/thread-pool.c
-> @@ -265,8 +265,8 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
->           spawn_thread(pool);
->       }
->       QTAILQ_INSERT_TAIL(&pool->request_list, req, reqs);
-> -    qemu_mutex_unlock(&pool->lock);
->       qemu_cond_signal(&pool->request_cond);
-> +    qemu_mutex_unlock(&pool->lock);
->       return &req->common;
->   }
+On Mon, 30 Mar 2026 at 17:19, Lawrence Hunter
+<lawrence.hunter@codethink.co.uk> wrote:
+>
+> Hello,
+>
+> I discovered when I run an application under qemu-user (10.1.2) which
+> uses pthreads if the application cycles create and joining threads then
+> under heaptrace it is observable to watch the memory usage continuously
+> grow. I've attached the example C program and a heaptrace.
+>
+> We think this is linked to tcg_register_thread having no antonym to free
+> the allocated thread.
 
-In this code, in the past even very small changes had big impact on 
-performance.  So, without some measurement I am wary of taking this change.
+This seems unlikely, because the user-mode version of that
+function doesn't allocate anything; the TCG context for
+a user-mode thread is just a thread-local variable:
 
-What is "more predictable scheduling behavior" is unclear, too.  If 
-thead_pool_submit_aio() is preempted between qemu_cond_signal() and 
-qemu_mutex_unlock(), then not only the waiting thread cannot start the 
-work, but the mutex is taken and no one else can submit other requests.
+void tcg_register_thread(void)
+{
+    tcg_ctx = &tcg_init_ctx;
+}
 
-Paolo
+> I did also spot a previous thread looking at
+> implementing a tcg_unregister_thread
+> https://lore.kernel.org/qemu-devel/20231204194039.56169-1-philmd@linaro.org/
 
+That thread is about implementing it for system emulation, where
+we might be leaking memory on a vCPU hot-unplug.
+
+It definitely is quite likely that there are leaks that we need
+to deal with in linux-user when threads exit (I posted some
+patches to fix a MIPS-specific one recently, for instance.)
+
+My suggestion for a start would be that you look at current
+head of git rather than 10.1.2, and look at it with some tooling
+that can give useful backtraces of specific leaks. I've found
+the clang address sanitizers helpful here. If you can track
+down what exactly is leaking then we can look at fixing it.
+
+thanks
+-- PMM
 
