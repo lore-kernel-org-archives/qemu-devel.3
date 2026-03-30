@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40B110F3DCD
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4968CFF495E
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 14:21:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7DTl-0005D8-E0; Mon, 30 Mar 2026 10:20:33 -0400
+	id 1w7DUH-0005s2-1M; Mon, 30 Mar 2026 10:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w7DTj-0005Aw-D1
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:20:31 -0400
+ id 1w7DUB-0005p2-OJ
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:21:00 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w7DTf-0001KK-Gh
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:20:30 -0400
+ id 1w7DU7-0001Lf-HB
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 10:20:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774880427; x=1806416427;
+ t=1774880455; x=1806416455;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=Tve9qn/j7kSthh8NTWiiiFPSRxdmkB42Wi4X15EMmQA=;
- b=GAZ3dTDTyk7mJ0DhVYgE+SbDoaSDaBitff43xx+13NXHLgeozw89ryLe
- HGrRTxzcMQxriqxnxHQg4EVOrO85yBO5BX8RVMYGu6DD0cYJxVNJep6Nw
- kXHvlqJ5msencxIDwx5V1bY9Mmfong4uCw2EO/wlYCNr/AbtMdE4zU+0p
- 6OevU0ClsE5fvF12n8oJy5Zosotj45HG6hqP2kUdDz1JBIXUKVvj0qzA6
- P1orsGFGZok1eIQAIpRd6rww5QnU1dvzNG3OH2n2UxS05NNNFyM97hNPT
- It8qJMSzgHF5b3pFcmby95TLsEsJncbGfXqc6yTpD3JN4CQbbtybA4Dlp g==;
-X-CSE-ConnectionGUID: 4f5SZkwMQvGYwPMxMVvJCA==
-X-CSE-MsgGUID: 0CSjqt3BT/u+k9RJRSwNxg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="86492317"
-X-IronPort-AV: E=Sophos;i="6.23,150,1770624000"; d="scan'208";a="86492317"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ bh=22GkSOAtYDFxxAHLYXg5xg2/hA3MQ/7dJYjD3LB6oAE=;
+ b=Ta5jgClRwszgllbTlN6xs5CGU/D0H4f2/FcFSF4nhXJ6XR/lY3/zaS2m
+ wiArl+11AqjqwXAENkIi1fBhGZvuDOXPs2SZE0biYbdvGKG0EpRCi1AYv
+ J4Pew8VEF8c1kwBbsdJarkVJQQc+pJMo9T12Pzqe3igQWB8Of1nNLrRmm
+ MEOP4YjVnmUTKm4nC2kqGqU3xKt2oad08W6Ss99DZg/9guEl3HZj8Q94o
+ LVBYpfIUusMrD7K2fvyo0VoXBH6qHLS0m2idJTUBLa9lPk7UOxK82/kVf
+ 7XQJwWCUj+1rXPE0xdpBjArF9UAkE1GyATmLM8V29ZF0mov+8+dvobe9H A==;
+X-CSE-ConnectionGUID: jwkr50wfTk+A00KkPTaNiA==
+X-CSE-MsgGUID: iVspQ8n+QYSvzKw3sDx3JA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="86492359"
+X-IronPort-AV: E=Sophos;i="6.23,150,1770624000"; d="scan'208";a="86492359"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Mar 2026 07:20:25 -0700
-X-CSE-ConnectionGUID: IkbiNFbYSaOgBkHdQDUsYg==
-X-CSE-MsgGUID: /XX0vHfBTcaiBHTOgh5aGw==
+ 30 Mar 2026 07:20:50 -0700
+X-CSE-ConnectionGUID: 6iaOF4yXSNCzgwoqiFSmVA==
+X-CSE-MsgGUID: 32h/nnPFTzGf032SMZQANQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,150,1770624000"; d="scan'208";a="226050689"
+X-IronPort-AV: E=Sophos;i="6.23,150,1770624000"; d="scan'208";a="230982557"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 30 Mar 2026 07:20:24 -0700
-Date: Mon, 30 Mar 2026 22:46:42 +0800
+ by orviesa005.jf.intel.com with ESMTP; 30 Mar 2026 07:20:48 -0700
+Date: Mon, 30 Mar 2026 22:47:06 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>,
+Cc: qemu-devel@nongnu.org,
  "Yuma Kurogome, Ricerca Security, Inc." <yumak@ricsec.co.jp>
 Subject: Re: [PATCH] hpet: fix bounds check for s->timer[]
-Message-ID: <acqM0he6SpiY7LOK@intel.com>
+Message-ID: <acqM6oef6t5F7d5g@intel.com>
 References: <20260327174701.364328-1-pbonzini@redhat.com>
- <CAFEAcA8R0qGsaBAQLgAGRgU1H+4JRpRCa8TaeAcdYo25R=dQww@mail.gmail.com>
- <CABgObfYxPmG+M1t8VakdKiKEkunQ8cyLfoo8dtVQTTR4RtxUug@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABgObfYxPmG+M1t8VakdKiKEkunQ8cyLfoo8dtVQTTR4RtxUug@mail.gmail.com>
+In-Reply-To: <20260327174701.364328-1-pbonzini@redhat.com>
 Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -28
@@ -86,40 +83,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 27, 2026 at 09:02:09PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 27 Mar 2026 21:02:09 +0100
+On Fri, Mar 27, 2026 at 06:47:01PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 27 Mar 2026 18:47:01 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH] hpet: fix bounds check for s->timer[]
+> Subject: [PATCH] hpet: fix bounds check for s->timer[]
+> X-Mailer: git-send-email 2.53.0
 > 
-> Il ven 27 mar 2026, 19:46 Peter Maydell <peter.maydell@linaro.org> ha
-> scritto:
+> Fix an off-by-one issue in QEMU's HPET read and write MMIO handlers.
+> Both handlers check timer_id > s->num_timers instead of timer_id >=
+> s->num_timers, allowing a guest to access one timer beyond the valid
+> range.
 > 
-> > > (even
-> > > though HPET_MAX_TIMERS is 32) the HPET only has room for 24 timers in
-> > > its MMIO region,
-
-It seems like a missing case for HPET spec v1.0a (about how to extend
-MMIO). The MMIO size (HPET_LEN = 0x400) and max timers (HPET_MAX_TIMERS
-= 32) are both from the spec. And general capabilities register
-allocates bits 8-12 for NUM_TIM_CAP (up to 32 timers).
-
-The spec only mentions for IA64 platform, the timer register space can
-be up to 64K bytes with page protection capability. :(
-
-> If we can only fit 24 timers into the MMIO region, should we do one of:
-> >  * lower HPET_MAX_TIMERS
-> >  * enlarge the MMIO region
-> >  * leave HPET_MAX_TIMERS where it is but make realize enforce
-> >    that num_timers <= 24 ?
-> >
+> The affected slot is initialized properly in hpet_realize, which goes
+> through all HPET_MAX_TIMERS elements of the array, so even though
+> it is not reset in hpet_reset() the bug does not cause any use of
+> uninitialized host memory.  Because of this, and also because (even
+> though HPET_MAX_TIMERS is 32) the HPET only has room for 24 timers in
+> its MMIO region, the bug has no security implications.
 > 
-> Lowering HPET_MAX_TIMERS is the easiest, yes. No one really uses anything
-> but the default anyway.
+> Commit 869b0afa4fa ("rust/hpet: Drop BqlCell wrapper for num_timers",
+> 2025-06-06) silently fixed the same bug in rust/hw/timer/hpet/src/device.rs.
+> 
+> Reported-by: Yuma Kurogome, Ricerca Security, Inc. <yumak@ricsec.co.jp>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  hw/timer/hpet.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
 
-yes, I agree, maybe no vender implememnts more than 24 timers, which is
-why HPET doesn't provide further details on MMIO extensions I think.
-
-Regards,
-Zhao
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
