@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47537FB3CEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7326EFB3CF1
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 09:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79Ix-0005R6-JW; Mon, 30 Mar 2026 05:53:07 -0400
+	id 1w79Ix-0005R7-KC; Mon, 30 Mar 2026 05:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1w79Ic-0005N4-Jz; Mon, 30 Mar 2026 05:52:48 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1w79Ic-0005N5-Jv; Mon, 30 Mar 2026 05:52:48 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1w79IY-00064M-U7; Mon, 30 Mar 2026 05:52:46 -0400
+ id 1w79IY-00064A-UF; Mon, 30 Mar 2026 05:52:46 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2869AC0200;
- Mon, 30 Mar 2026 12:52:40 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 346B6C01FC;
+ Mon, 30 Mar 2026 12:52:37 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex-team.ru (unknown
  [2a02:6bf:8080:78d::1:13])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id QqVNFG1Af4Y0-NyqoIar9; Mon, 30 Mar 2026 12:52:39 +0300
+ ESMTPSA id QqVNFG1Af4Y0-8tPIkIoj; Mon, 30 Mar 2026 12:52:36 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1774864359;
- bh=cM/Vyd4WfmKyR8Aw4O7A4tlOTXfmYaFOA9HmSDbiY40=;
+ s=default; t=1774864356;
+ bh=tvpetmyA7aRUautwgNAeiVLIXNe7ZPT4ooJEso7UfBg=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ZKUQHXLHo2yvTB/D1//L80K+DCIDC4YhX3BOIYaiQnYJgdX9Z0ROKUXhgZzxHRv62
- 61u5kZZh7j43/8yk0VBSpPDmzcleK7YnjoJ24V9xg3u52qH1AEmH4QKFQcTuuqx1Kd
- Kxnc+vwbz2DR0lHjNE7KJygen5TvUD02xVYRONgQ=
+ b=Y7StvfMdG2Y6ODvynRtmLOJJ7PI6ce07buwgUWgk8gxCFTlT0iKv59ZpsTAr32DFQ
+ 2/L49NLbuwLuULrj2TAvCl2Tvh3fgZRadSVs++ACmgwjh+Rmew01tDqUrxHLpYgCHs
+ DjjkY9wWZaSRmYddF1IAbhjXpWGtHGfKWLegbY0k=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -51,25 +52,24 @@ Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
  Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v3 4/5] vhost-user-blk: move inflight_needed higher
-Date: Mon, 30 Mar 2026 14:52:25 +0500
-Message-Id: <20260330095226.158386-5-dtalexundeer@yandex-team.ru>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v3 2/5] vhost-user-blk: make inflight-migration prop mutable
+Date: Mon, 30 Mar 2026 14:52:23 +0500
+Message-Id: <20260330095226.158386-3-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
 References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,53 +84,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Will be used in future commits for adding skip_drain param
+Now this property can be turned on or off using the qom-set
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 ---
- hw/block/vhost-user-blk.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ hw/block/vhost-user-blk.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 718fc94a29..a3ecd83f54 100644
+index c151e83677..179f027cb4 100644
 --- a/hw/block/vhost-user-blk.c
 +++ b/hw/block/vhost-user-blk.c
-@@ -130,6 +130,17 @@ const VhostDevConfigOps blk_ops = {
-     .vhost_dev_config_notifier = vhost_user_blk_handle_config_change,
+@@ -603,6 +603,8 @@ static const VMStateDescription vmstate_vhost_user_blk = {
+     }
  };
  
-+static bool vhost_user_blk_inflight_needed(void *opaque)
-+{
-+    struct VHostUserBlk *s = opaque;
++static PropertyInfo vhost_user_blk_inflight_migration_prop;
 +
-+    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
-+                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
-+
-+    return inflight_migration;
-+}
-+
-+
- static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
+ static const Property vhost_user_blk_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
+     DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+@@ -616,8 +618,9 @@ static const Property vhost_user_blk_properties[] = {
+                       VIRTIO_BLK_F_WRITE_ZEROES, true),
+     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
+                      skip_get_vring_base_on_force_shutdown, false),
+-    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
+-                     inflight_migration, false),
++    DEFINE_PROP("inflight-migration", VHostUserBlk, inflight_migration,
++                vhost_user_blk_inflight_migration_prop, bool,
++                .set_default = true, .defval.u = false),
+ };
+ 
+ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
+@@ -649,6 +652,9 @@ static const TypeInfo vhost_user_blk_info = {
+ 
+ static void virtio_register_types(void)
  {
-     VHostUserBlk *s = VHOST_USER_BLK(vdev);
-@@ -569,16 +580,6 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
-     return &s->dev;
++    vhost_user_blk_inflight_migration_prop = qdev_prop_bool;
++    vhost_user_blk_inflight_migration_prop.realized_set_allowed = true;
++
+     type_register_static(&vhost_user_blk_info);
  }
  
--static bool vhost_user_blk_inflight_needed(void *opaque)
--{
--    struct VHostUserBlk *s = opaque;
--
--    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
--                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
--
--    return inflight_migration;
--}
--
- static const VMStateDescription vmstate_vhost_user_blk_inflight = {
-     .name = "vhost-user-blk/inflight",
-     .version_id = 1,
 -- 
 2.34.1
 
