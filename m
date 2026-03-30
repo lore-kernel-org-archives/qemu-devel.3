@@ -4,96 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF1F1061B17
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 17:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF8EC1061B15
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 17:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7GG2-0000om-LJ; Mon, 30 Mar 2026 13:18:34 -0400
+	id 1w7GSC-0003F4-7T; Mon, 30 Mar 2026 13:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1w7GFy-0000oN-4R
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 13:18:30 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1w7GFw-0000sb-CY
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 13:18:29 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-6501d242e3fso2171612d50.0
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 10:18:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w7GRo-0003EJ-01
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 13:30:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w7GRl-0004Ji-3f
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 13:30:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774891839;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tr0d1X0tAI5Jm8VGPCg93bMytwvGFsi7JB0t4XpbKJs=;
+ b=QQjuNDC1UNkqbKjHmgkvMeZn0U8PLbjLc4z1OUiorvtWKv/ZjhSnZndZll28VKZfAv0vui
+ 89nfXtht614iiDJ3x1TNxRceUlFpNkmMSgSEwBxlJdUTpTKPHHoQAof36EmCZGq0bjZM5d
+ dTMQTAGwK9HibE08EuLzUngwESqxA/o=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-101-IWi0qRyePE2m-zDc5mr6ig-1; Mon, 30 Mar 2026 13:30:38 -0400
+X-MC-Unique: IWi0qRyePE2m-zDc5mr6ig-1
+X-Mimecast-MFC-AGG-ID: IWi0qRyePE2m-zDc5mr6ig_1774891837
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8cd80bea54dso1205880085a.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 10:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774891107; x=1775495907; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774891837; x=1775496637; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5WYAmZnCUHifIrZd5FYL4WM8RKjkmJnsMatxYMxfE54=;
- b=D16qWPamrjm0on9YrrHIyRChrpANKb3AnywB9JkJstYx4HgoKUXamfBcy0Rz2a/uyb
- YF8fEGW152EJf5d3TqCGualwIC5gesPvrsEqIYeU+NIIoN/cL8QAAlnA7toxP6DarVbK
- 9B19VivQlQ8Ayob59OxBzgSc+mX0huIJfU1ABy7x6kGFZVFetWCkjcZ1oIbYdnPvsBAO
- rYl6YII8B0ZS+jJGp2a6jRLeQRblCMTPbXhmNh7pAQAD9VYn68Ml1VhrgTkWYMsFix24
- mEzKhMdFNSqQNyx8uQtlF2j9fsi4RY3HFtyX8bVGLVaHucpJsNBFB0l8CDMRg5GLORUX
- sTRA==
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=tr0d1X0tAI5Jm8VGPCg93bMytwvGFsi7JB0t4XpbKJs=;
+ b=dG4NxunMaKNyL4yGxBg7Nlr4MD60FUvwGGMQuEk8IMAYfyGhIri6kO8HYR/1mxXNbC
+ JNPfA8Df7jtkm3IDd70+fM1ErSAevNbb/QZj8tw0lNN9uDzzD1Jieqs4BsM47DQVJaOo
+ cqETogLpoKAx5MTFNY79e182CweFT+DCMCBFPKGC6V1ImTU/Prst5usT5Gm6cG3+M24q
+ cYhG3Tf0eKl5z17V6L9im2QC+zy3MDmuNUezkp6X9U0iZAgFs0Gp5w95ijEhMKv/rF7E
+ kLHG8OTEXgBXTLf4q3fw3TEkx4is5a83VBH+tIYI5UFaa9RdW13g9XmyQis0ZxqQCFPi
+ 389g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774891107; x=1775495907;
+ d=1e100.net; s=20251104; t=1774891837; x=1775496637;
  h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5WYAmZnCUHifIrZd5FYL4WM8RKjkmJnsMatxYMxfE54=;
- b=rmfzGX6v0LiCKPRB/PFh0oFt9HRBxUUKx1HLkPKAlsSGRYHVwJ76W1siLMQZU7Tn8U
- M0YMrmPyO5fx+LvRg1pKxCuU2h8nTdS+Nk3bpWkWrQZzL6WcGmFlV+wKtgvD8tqJhTck
- JRXHSmVwitEdTp5KE85MfNfss1EJh6wcAwPuMdmRuWCnH1haf8g+bYYG8KRMeYf7cTCJ
- IGYVdrr+X/cuRwNlAHW/8sA1UiSuYDAgZTSM/2A4f9BkVDgoOMYWbshWbkRwC3ITHHZg
- vt/MnoQ3O3MyjKnsq94hpCHpUaM2HdWh+/2Q/ga8wFinaud+zex18T9oAdd1/tmqtu59
- q6uw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLoNuxFfmm3oxGoQ10UhhvdiHLn28Hpc6HW8k8+HvibOqhHIr5Ofl6H7YbaZgYvJ7XQpmlpZ9J3Smf@nongnu.org
-X-Gm-Message-State: AOJu0YxTPtDNHl57cCf6Dh1M/LGQ9YPSwntY12hfQVaicR1muULwVYs8
- up3N9D14Avf6nzZ2KtRspvlTt0TyqX28spFLdPPP1Mh5aacJ5MVlCBgM
-X-Gm-Gg: ATEYQzwiFq6KtzMaX/qCVyYeMWVF1lzJ5jjKJ14wlCq8OmxAK0M+sLHv3yK9N7vAu8g
- ObfgxDko4Nu8F1Znib6B2eT3qbpcfHvwO4eyqMiYVV0qSNJF9yZA8SUMcJEUMmKj2jDC/shmRo0
- UHozziPP5WQs17cyiRMRQ8Wnfhe1uAGUSPA5gq0EcRiThXLZvNo7JP1xwM3NaMClB3HFhkALLjI
- ZvPU1FV7FQ7EfVDQfkHHT05ljO5D7x+DQE4YtOjja26Qj/FPFwK2oVypDPLh9kTF05CP4GT1zw5
- sa045SV0lYde/h3EpaT6N5Jo+fdaTa2CFzb43Z+9cd0iDPtJcs43XHLju4Rn7224oNHR8sj04mk
- IEn/bLTtAiPBFCCGC9bFINdvP29UhxMWwrbVHLQYzlGRmiqypmrbxzaTO2M0Jzk4cyEQXfoEqav
- /YC2BH2Wd3ccAhQhBsqPIIZVBaMnuiamoLK+JwJ2rvaA==
-X-Received: by 2002:a05:690c:6d84:b0:7a0:17f4:e754 with SMTP id
- 00721157ae682-7a017f4eaf1mr21444297b3.17.1774891106656; 
- Mon, 30 Mar 2026 10:18:26 -0700 (PDT)
-Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-79cb4521761sm38442557b3.0.2026.03.30.10.18.24
+ bh=tr0d1X0tAI5Jm8VGPCg93bMytwvGFsi7JB0t4XpbKJs=;
+ b=Rmu3JS6ggOzp2GF8iGSZQ0rn5Yii3y5N3/Qby3yn8KcDBnyAKnyDrFZZj2Mb4o6Ubv
+ U+Tx65fSwWduniSw4C7AJeq2X/zmBoLopuHRK61Bw8GMZr0lEMe55Mr2W/0y+4lJRZ4n
+ D9IfPZZa1TgBA5RuS7Og+d9HBA22QIMmhrSewu3o2BFNa4yKkB1dWSnHGC4EDxuOeH6A
+ tQZX743UfNB7J0fk13nxomZ2JFFZEoa63awKMGXZTVCpqxdOiH0AJ4XPtC93CIcJCM8u
+ +K/Fa/Cok1vNItHM41+UtLLnr8aM8TX9cZlhNY/ubH9mSKscB5ERYlsE3LSY9WAycSzd
+ W8wQ==
+X-Gm-Message-State: AOJu0YyCivoeAXXGJ4/iZduulaL3SUUUArpebNFzX0JkaPeeA3wgdwvN
+ ihtWPM/PNQN+mbU7d83oalWKn7aIokle0pJawQ/Bsq6Xyvbing2qn52oHXCGBJj6MihPGpquzg3
+ N10qZHAyJEhLbavJ8waHTtDE5x5oMunzUKfRzawxl3imUbAX0b1mNWjTo
+X-Gm-Gg: ATEYQzxgovfyc5ihqcdK+quoG/N2kcN+gBt+uAUgr0jvi9U6cPRKuMI9IFnwrCM08Li
+ J2RoMdMf+VXMb3YwSbUw5Tyskj2x9rWt32L5ZYNPJfPUr968Vqlxq6N9ohlHX2xQhIQzOY0xUAV
+ oLDjXqRZM09z/Npvxrnkju3F/pOaEFxVcId0ZQ1yRfEfvsv1IySD2ntg3RTeY9TR2cPHq7Ve7mx
+ kiiKLB7BY/ms3c7a2rmmH8Lb6RhgT3h8WqHk4vNXlzN7I/uoqbKmZmY4GgzQ4kcb3WXL3GLnbIP
+ CqirbtmSYdqpXwqHOaJmpHWNe82CZzxYeW2Kl3Hg4/C/rElcDN+ED4nKgUbrUs206oOW6HsHyFf
+ sFpy/7q4SZXA9ow==
+X-Received: by 2002:a05:620a:19a6:b0:8c7:1119:2994 with SMTP id
+ af79cd13be357-8d01c7fdfe6mr1871716085a.64.1774891836805; 
+ Mon, 30 Mar 2026 10:30:36 -0700 (PDT)
+X-Received: by 2002:a05:620a:19a6:b0:8c7:1119:2994 with SMTP id
+ af79cd13be357-8d01c7fdfe6mr1871696185a.64.1774891835380; 
+ Mon, 30 Mar 2026 10:30:35 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8d027edb8e0sm778515685a.8.2026.03.30.10.30.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 10:18:25 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Mon, 30 Mar 2026 10:18:22 -0700
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
- armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
- jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
- linuxarm@huawei.com, lizhijian@fujitsu.com, mst@redhat.com,
- pbonzini@redhat.com, gourry@gourry.net, nifan.cxl@gmail.com,
- me@linux.beauty
-Subject: Re: [PATCH 5/9] hw/cxl: Map lazy memory backend after host acceptance
-Message-ID: <acqwXl37T1mquQvD@4470NRD-ASU.ssi.samsung.com>
-References: <20260325184259.366-1-alireza.sanaee@huawei.com>
- <20260325184259.366-6-alireza.sanaee@huawei.com>
- <acozVjvVT1THZP_S@4470NRD-ASU.ssi.samsung.com>
+ Mon, 30 Mar 2026 10:30:34 -0700 (PDT)
+Date: Mon, 30 Mar 2026 13:30:34 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: validate page_size in mapped-ram header
+ before use
+Message-ID: <acqzOqkSC3oXSznV@x1.local>
+References: <20260328072424.10611-1-vikingtc4@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <acozVjvVT1THZP_S@4470NRD-ASU.ssi.samsung.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=anisa.su887@gmail.com; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260328072424.10611-1-vikingtc4@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,71 +115,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 30, 2026 at 01:24:54AM -0700, Anisa Su wrote:
-> On Wed, Mar 25, 2026 at 06:42:53PM +0000, Alireza Sanaee wrote:
-> > In the dc-regions-total-size flow, a requested extent is not backed when it
-> > is queued. It becomes usable only after the host accepts it with Add
-> > Dynamic Capacity Response.
-> > 
-> > Use that response path to look up the first pending group's metadata for
-> > each accepted extent, enable the selected host backend, and move the
-> > backend and fixed-window references onto the committed extent list. The
-> > accepted range is then marked backed just like the non-lazy path.
-> > 
-> > This wires host acceptance to the lazy backend lifecycle and leaves the
-> > fixed-window direct aliasing to the following patch.
-> > 
-> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> > ---
-> >  hw/cxl/cxl-mailbox-utils.c | 76 ++++++++++++++++++++++++++++++++++++--
-> >  1 file changed, 73 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > index c5427adb3a..cc7be6e68c 100644
-> > --- a/hw/cxl/cxl-mailbox-utils.c
-> > +++ b/hw/cxl/cxl-mailbox-utils.c
-> [snip]
-> >  static CXLRetCode cxl_dcd_add_dyn_cap_rsp_dry_run(CXLType3Dev *ct3d,
-> >          const CXLUpdateDCExtentListInPl *in)
-> >  {
-> > @@ -3718,8 +3740,12 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
-> >      CXLUpdateDCExtentListInPl *in = (void *)payload_in;
-> >      CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> >      CXLDCExtentList *extent_list = &ct3d->dc.extents;
-> > +    struct CXLFixedWindow *fw;
-> > +    HostMemoryBackend *hmb_dc;
-> > +    uint8_t tag[0x10];
-> >      uint32_t i, num;
-> >      uint64_t dpa, len;
-> > +    int rid;
-> >      CXLRetCode ret;
-> >  
-> >      if (len_in < sizeof(*in)) {
-> > @@ -3756,10 +3782,54 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
-> >      for (i = 0; i < in->num_entries_updated; i++) {
-> >          dpa = in->updated_entries[i].start_dpa;
-> >          len = in->updated_entries[i].len;
-> > +        if (ct3d->dc.total_capacity_cmd) {
->                memcpy(tag, in->updated_entries[i], 0x10);
-^sorry that was totally wrong lol! ignore that. but I did encounter a null tag
-on host side when I sent the qmp tag-based rls cmd that resolved when I changed
-it to prescriptive, so let me see what happened there
-> > +            bool found;
-> > +            MemoryRegion *mr;
-> > +
-> > +            found = cxl_extent_find_extent_detail(&ct3d->dc.extents_pending,
-> > +                                                  dpa, len, tag,
-> > +                                                  &hmb_dc, &fw, &rid);
-> > +
-> Btw, I'm using this patchset to test my current DCD RFC :) The main thing is I
-> want to test having multiple extents in the same add request for the new
-> requirements for tags on the host side. Since we can only add/remove tagged
-> capacity at once (no incremental add/partial release), would it be possible to
-> support that? Sorry I didn't have a look sooner
+On Sat, Mar 28, 2026 at 04:24:24PM +0900, Trieu Huynh wrote:
+> mapped_ram_read_header() reads page_size from the migration stream and
+> stores it in MappedRamHeader, but does not validate that the value is
+> non-zero before it is later used in parse_ramblock_mapped_ram():
 > 
-> Thanks,
-> Anisa
->  -- 
-> > 2.50.1 (Apple Git-155)
-> > 
+> num_pages = length / header.page_size;
+> 
+> If a corrupted or malformed migration stream provides page_size = 0,
+> QEMU unexpectedly crashes.
+> 
+> Add validation in mapped_ram_read_header() to reject zero page_size
+> values early and return an error instead of continuing with an invalid
+> header.
+> 
+> Steps to reproduce:
+> 
+> Create a migration snapshot with mapped-ram enabled:
+> (qemu) migrate_set_capability mapped-ram on
+> (qemu) migrate file:/tmp/qemu-snapshots/snapshot.bin
+> Modify the snapshot so that MappedRamHeader.page_size becomes 0.
+> Restore the snapshot:
+> (qemu) migrate_set_capability mapped-ram on
+> (qemu) migrate_incoming file:/tmp/qemu-bug-test/snapshot.bin
+> 
+> As-is: qemu crashes immediately
+> (qemu) Floating point exception (core dumped)
+> To-be: qemu continue running
+> (qemu) qemu-system-x86_64: Migration mapped-ram header has invalid
+> page_size of 0
+> 
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> ---
+>  migration/ram.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 979751f61b..2a7e958e87 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3088,6 +3088,11 @@ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
+>      }
+>  
+>      header->page_size = be64_to_cpu(header->page_size);
+> +    if (header->page_size == 0) {
+> +        error_setg(errp, "Migration mapped-ram header has invalid "
+> +                   "page_size of 0");
+> +        return false;
+> +    }
+
+Thanks for the patch.
+
+When at this, one more thing we could do is verify the value is exactly
+target psize; afaict that's the assumption across the whole mapped-ram
+feature.
+
+>      header->bitmap_offset = be64_to_cpu(header->bitmap_offset);
+>      header->pages_offset = be64_to_cpu(header->pages_offset);
+>  
+> -- 
+> 2.43.0
+> 
+
+-- 
+Peter Xu
+
 
