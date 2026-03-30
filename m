@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93C1FF4947
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 05:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB46FF494A
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 05:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w75O0-0006DU-S0; Mon, 30 Mar 2026 01:42:04 -0400
+	id 1w75O5-0006EC-HY; Mon, 30 Mar 2026 01:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w75Nq-0006Ch-16
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:41:55 -0400
-Received: from smtpout1.mo534.mail-out.ovh.net ([51.210.94.140])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w75O1-0006Ds-VB
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:42:07 -0400
+Received: from smtpout1.mo533.mail-out.ovh.net ([51.210.94.138])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w75Nl-0000Rj-RQ
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:41:53 -0400
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w75Nx-0000St-SX
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 01:42:05 -0400
 Received: from director3.derp.mail-out.ovh.net
  (director3.derp.mail-out.ovh.net [152.228.215.222])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4fkg9P6nt7z6Bwx
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 05:41:45 +0000 (UTC)
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4fkg9d68vRz5w1w;
+ Mon, 30 Mar 2026 05:41:57 +0000 (UTC)
 Received: from director3.derp.mail-out.ovh.net
  (director3.derp.mail-out.ovh.net. [127.0.0.1])
  by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 05:41:45 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.13])
+ for <jamin_lin@aspeedtech.com>; Mon, 30 Mar 2026 05:41:57 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.121])
  by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4fkg9P5Dvnz5vgL
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 05:41:45 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
+ 4fkg9d17JCz5vcx; Mon, 30 Mar 2026 05:41:57 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 81E191923979
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 05:41:45 +0000 (UTC)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 0CF65941574; 
+ Mon, 30 Mar 2026 05:41:56 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-98R002ee8c894b-630b-426b-8e21-22ca0fb555bb,
+ (GARM-97G00230b7952a-f3f7-4917-8935-328f9af28683,
  7D556D2DDFF67F75045F04EBDED03CA4E39E484C) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <42a44467-ba26-42cd-9e56-d687b7e5255f@kaod.org>
-Date: Mon, 30 Mar 2026 07:41:45 +0200
+Message-ID: <5483de6e-6bc9-4267-8371-15fc3f748ee6@kaod.org>
+Date: Mon, 30 Mar 2026 07:41:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net/ftgmac100: preserve full VLAN TCI in TX tag insertion
-To: qemu-devel@nongnu.org
-References: <1471e413d3589b6734819bda2b59b725b74f273a.d551129b.99fc.47f6.86dc.0759227268a2@feishu.cn>
+Subject: Re: [PATCH] hw/i2c/aspeed_i2c: reset and migrate pending_intr_sts
+To: GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20260325085450.126595-1-zhaoguohan@kylinos.cn>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,29 +93,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1471e413d3589b6734819bda2b59b725b74f273a.d551129b.99fc.47f6.86dc.0759227268a2@feishu.cn>
+In-Reply-To: <20260325085450.126595-1-zhaoguohan@kylinos.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 943785600634760203
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 947163299149229067
 X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: dmFkZTEw7rXryZvNcH2i4s2WytF6qw3Ut/Gsw4eLNzbRAd04uZW5PHQV8aeM63VJAIC2fs3uwkVPnG1M/TEW7g+rh79dvC+azMhaCgBJoOxI4/MDfmNjSHDTWnsgRNy3ISmGSc1FKBQ6tK2rA/jUZEinHNMSudabLeHGAEk4OAcmR7ys91L47wi38M8EUsNo2DoMD8GV++mwVd5x96LRrFT7y7tBpdfOu1yJuYObmSrxN0uof7HrmHEEqNQFLJGuuLWTVUhFGJh1/7dYFPZvALe3oo6CxPnlqr5wCfuoyit0yPETneYkjEo2IWuMDsJud0fEfm7yB5nnoIRNs2+2zw2QzAqpe7cnOYOr0gj8elYLYYXHw5650Y6o3TulBLHPgxQp9eOFqBzMi2hunJ+mYuSjLoAE4e94l6OpTEOOF/bWMIZuoVxjH9NqT623VVSI/3Z3j3CFQXggBf4e3FP3LyblFaUzC+DmO3s8xTndRXKVSdLLSvCc7ubeMhuu7jhNrIC4l+NCOQSpozvEU6S/mGFxF1AuFCtocRaAoeLk8Fs/YNb9uNWoFB3Q2lP3RK+w7w+5Cdgi77nL+3sxExnuOKZJS3aEqSUqx3sjR2ZDxPJNAghl+9Blh6b7kX1iWD6cWmCWQsf9R5s/PSs2LBbQ744t1vmgu1W3+j/SKn9VlBIy/BdYPA
-DKIM-Signature: a=rsa-sha256; bh=eAIf4rGgEMPa64Fv2bLAh9avk9qms9C3xnH57NSNI3M=; 
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGLFD9Zh5VsOcL9uqYoQ4sZ750kGI1mZJbQY/UR6SUQfcAV93EzPxzb9paIP6+C1lHhNuwGuttx04zrsQWo012a4PuPa5yFuDkT+2J0fKg1ekWq9W7mmdFV+q9vqYSdAH2KKfnIBJq4Okl+h0RhNpVhujnFGRfSWEFDbvQnIKID/ZVLMizg9Ylwm0QfWGkjBLJsX4bG+SEy2axo/Qy6pb+y68Z/A0uGRXFDKCiabNfB90V9QvFW7kkUvPjy5nHUqJrGQYNXnfscqfpQrzZsc6Msw9787XfG9ETd8LDbZnOD7oL/G+WXqDFeop0rnP+L8Q3C5m5nj50NyWF97OFMPU6hgTTajXuMXzrJS0Ce+IqYhBpc2+OX5F3P7kvUi8xZkc6fGITV1GyVDF2r1buEfwHR97pWM0xVbKrUdtSRZRxb4yAqZr7e0yVMcp83jju+L3Sx4B67uEbztbmSqc1vO4XYQ0++dfq/+7LoYiHCcVMjQG4Ezo11+us4WYN7XNXYx4c50UxivG93/uLkq2+akGjlq9nHdB7CNrxPwoyA1Z949PeRkng6PG1cAlaseB9sGSphYbB+4EonvmOQliOxRV+TVdcbJcaz+pQGg+MeDrVv3JQEaRw9De8Tag+4lpTUS4YP+aWexIHaCOutFslXClx0k/dhpmi8z4lOzouBtxyWzA
+DKIM-Signature: a=rsa-sha256; bh=s4IHBSo4pLjvZNu50zRkqteOFW6eot0lc4BEU48dW1o=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1774849306; v=1;
- b=hVzgsqpg3aZMwk72HJNv75N3BklA/mSJrL/r1bNVlofqnHBjwJm9ofpOTe/r/GAgusUIcE2o
- a8scSMYBjQk9K/mSOsqOaGvUrSpjKAGlrBzWRnw4svMYAM8RS9x+GkFwcyGMYHJm+hTuhcCEC9g
- vyzDYdBeV3zdyZN4czMlLrN1GBUiFIH70f4C4GGWNKaIF6XV/Oud9YALpnVtf1oisX/wQyIW6Xs
- tREc+/PJWgMF2d4FTOqjDIFGmaNoq3KMllnT1QUnFAAxU2cw5xu+vUQ58lVCMr7mFEmzYWqt2XM
- Yu23plcYnTjsZNZu4ejsasZj6y425z56FAmriE6YWNyeg==
-Received-SPF: pass client-ip=51.210.94.140; envelope-from=clg@kaod.org;
- helo=smtpout1.mo534.mail-out.ovh.net
+ t=1774849319; v=1;
+ b=I5DOddVYlj1mOEp+9I8Ad1M1kmUMx+op+U4NygZjAav67QSVgNf97OmtYTaPNBdnrh0c7Fsi
+ oWqx2by2cZRFAYWzo51rx2QhYb4wEPpxH/C2i2MPOIJp2D7r4WnlA4nCs1f9AoZDqjWKyviea2f
+ f9dEN6UvgtMO0ymdtq1Twto33UZGKHHppZaMXVX1mDteX1Q8wamku80i12aYiYtNK9lewTnG0kX
+ P8BrNMMAPnyLNe21nJVFyv57zdWuivRxRHaSKq/3HZa65mfKf/RgPwB653d1gC68L/Vda5m0BAR
+ g27SJf63Es37XyndnTWkbC01tUoIzrPu2XyDTjlxFLkZw==
+Received-SPF: pass client-ip=51.210.94.138; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo533.mail-out.ovh.net
 X-Spam_score_int: 0
 X-Spam_score: -0.1
 X-Spam_bar: /
 X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -130,36 +133,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/26 08:39, linhuang wrote:
+On 3/25/26 09:54, GuoHan Zhao wrote:
+> Commit 7e82393ed058 ("hw/i2c/aspeed: fix lost interrupts on
+> back-to-back commands") introduced pending_intr_sts to preserve
+> interrupt bits that collide with already pending status bits.
 > 
-> The VLAN tag insertion helper took vlan_tci as an 8-bit value, while
-> the descriptor provides a 16-bit VLAN TCI. This truncated egress tags
-> and caused VLAN ID corruption (for example, 4088/0x0ff8 became
-> 248/0x00f8 at the receiver).
+> That deferred interrupt state is consumed later when the guest clears
+> INTR_STS, but it is not reset in aspeed_i2c_bus_reset() and it is not
+> part of the bus migration state. A reset can therefore leave stale
+> deferred bits behind, and migration can silently drop them.
 > 
-> Change vlan_tci to uint16_t in the TX VLAN insertion path so the full
-> 802.1Q TCI is preserved and transmitted correctly.
+> Clear pending_intr_sts on reset and include it in VMState while keeping
+> compatibility with older migration streams.
 > 
-> Signed-off-by: linhuang <linhuang@ruijie.com.cn <mailto:linhuang@ruijie.com.cn>>
+> Fixes: 7e82393ed058 ("hw/i2c/aspeed: fix lost interrupts on back-to-back commands")
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > ---
->   hw/net/ftgmac100.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/i2c/aspeed_i2c.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-> index 2f05bba11d..b3da48c343 100644
-> --- a/hw/net/ftgmac100.c
-> +++ b/hw/net/ftgmac100.c
-> @@ -498,7 +498,7 @@ static int ftgmac100_write_bd(FTGMAC100Desc *bd, dma_addr_t addr)
->   }
-> 
->   static int ftgmac100_insert_vlan(FTGMAC100State *s, int frame_size,
-> -                                  uint8_t vlan_tci)
-> +                                 uint16_t vlan_tci)
->   {
->       uint8_t *vlan_hdr = s->frame + (ETH_ALEN * 2);
->       uint8_t *payload = vlan_hdr + sizeof(struct vlan_header);
-> --
-> 2.34.1
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 5d18f8d49ea4..90f83a03fd4f 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -1134,10 +1134,11 @@ static const MemoryRegionOps aspeed_i2c_bus_pool_ops = {
+>   
+>   static const VMStateDescription aspeed_i2c_bus_vmstate = {
+>       .name = TYPE_ASPEED_I2C,
+> -    .version_id = 6,
+> +    .version_id = 7,
+>       .minimum_version_id = 6,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32_ARRAY(regs, AspeedI2CBus, ASPEED_I2C_NEW_NUM_REG),
+> +        VMSTATE_UINT32_V(pending_intr_sts, AspeedI2CBus, 7),
+>           VMSTATE_UINT8_ARRAY(pool, AspeedI2CBus, ASPEED_I2C_BUS_POOL_SIZE),
+>           VMSTATE_UINT64(dma_dram_offset, AspeedI2CBus),
+>           VMSTATE_END_OF_LIST()
+> @@ -1510,6 +1511,7 @@ static void aspeed_i2c_bus_reset(DeviceState *dev)
+>       AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
+>   
+>       memset(s->regs, 0, sizeof(s->regs));
+> +    s->pending_intr_sts = 0;
+>       i2c_end_transfer(s->bus);
+>   }
+>   
 
 Applied to aspeed-next.
 
