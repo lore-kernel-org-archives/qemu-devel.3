@@ -4,141 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB8BFB3CFA
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167CFFB3CFF
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79jD-0006TD-4p; Mon, 30 Mar 2026 06:20:15 -0400
+	id 1w79qE-0000k7-3G; Mon, 30 Mar 2026 06:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79jA-0006Sk-Mj
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:20:12 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w79qC-0000jY-8l
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:27:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79j9-000489-2F
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:20:12 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w79qA-00059K-1U
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:27:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774866009;
+ s=mimecast20190719; t=1774866444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qA6TdSH6oogS1ysRXj99x3VtUPTVoVwGh3u1zNEL/8U=;
- b=Al8fpQ8SDSvRR92XBjcGyGDGcWX8B5oxzDTmfmSVyPSnvFGzGtPgkf2kenACbX75fbdqVm
- FuoYEK5lTE9M9khqFF5401HJUQuZrVOOdtyj9mPkeHVXBm12A37BYXMEORjj9dW9L6w9ZL
- W/mKeUeVRBGuO+Hau3VcAfWSABdM4ZU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
+ b=QYAtiMBZVAFT1HHgAgHrfq8iY0WVjx4ifbTyJdG3jXHFhKoPCr2IsJlW4iSeRg1RGO4ldT
+ OqU0EEQDKrk2qktweauIDO4XAbxZX/RB80XqfB/Uynr78qcSYpBbWdUK9+uUwHVWMPHzzR
+ Bj3RiDBJhNlpig7dFQiFDHroIHQo6Ww=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-5sw9FyBAOM61K6XZXf8DDQ-1; Mon, 30 Mar 2026 06:20:08 -0400
-X-MC-Unique: 5sw9FyBAOM61K6XZXf8DDQ-1
-X-Mimecast-MFC-AGG-ID: 5sw9FyBAOM61K6XZXf8DDQ_1774866007
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48722073bd2so27672585e9.0
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 03:20:08 -0700 (PDT)
+ us-mta-530-NwZ8AoVLOryHuTAa_DZxYA-1; Mon, 30 Mar 2026 06:27:22 -0400
+X-MC-Unique: NwZ8AoVLOryHuTAa_DZxYA-1
+X-Mimecast-MFC-AGG-ID: NwZ8AoVLOryHuTAa_DZxYA_1774866441
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b630b4d8d52so2750861a12.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 03:27:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774866441; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KH7N6cnDnwWBOAjVp0W2cs/GdVf/2XlwclI/429H+gdEs9ag2JMrJyJyYuvOXDkLeQ
+ MxLO0fL+LLeITMNcJdpqtjCo/qTDPYD5/a2AM6EJvFdTRBQ09wJcPgP6GZfe0FXmyJki
+ JkgwkSVa71dg5mlo9+6NrdoTgvUoswDR04FPU1XzbV4dXdrd3MT+/fUAol5CbJbHy63E
+ A6RPCf2UmrQWKNdSs7hRvbiTsGckOeYS7SY1keazJGDnxfS/jAeRHZqk47MTpJ5Qcyfx
+ yMWCnqxgxPG6iLjCPkfhqNf1Xz45LSz2/I3t9rcvGdMbSdbMYsvXxQ/Z+IOXXqFT5wnR
+ 2z9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
+ fh=EOstN047P43BMWYiYfNjXAFqxVDAuquNnj26iYRON0Q=;
+ b=BvMCDUzJ6iS5IlAoj6EFKve7BjBSCEAwdoB+7LH2PGMrtdsjqjfiFUpAcdI3HUt95Q
+ 97gSDoLBSj6U9m2tT32cXdaWi2TvV1Z9FMs4H6f+aYfBmwe8pR1jL/McU0sDatD++t3W
+ ORpEA+xUF4+NCenFKxbPd/SFsObIeHUj43HLpIoK8aHaZqWHmr++/qlUkmfLYU43v+Jy
+ /ewWMQ5xaIBGOc+Rl3sc4gyzIInSMn2qX3sOOqeTQtybparoTwEaDJnYs4NOQL6OEGJE
+ YItHQEGP1nhSc5yTXJnotNLwmGvTDln7+GRawFQaG6/Gq9v6ybkSRwenCpR5MXjZa8Kg
+ nA0Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774866007; x=1775470807; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=qA6TdSH6oogS1ysRXj99x3VtUPTVoVwGh3u1zNEL/8U=;
- b=gGIjyUYqXqyZpkcGUJ3IiN9Ak69OwdaQrxUY+k0Ex1c5ONdHrYb1A68DgNUYEbNXEP
- VrCJDkNpPiNrIOTCAepeHdyey9FqAYXSWTx12xipXR0UIAVB++hB4PA1sUUYpXgGBz+D
- hcaPRnTJgNzCWIJUu/2eC8lPOf9OG05/rmXQTN/NO4jbaUPrtNUE3CRNeVl6uiJdXhNa
- HngkuP9qb0jZXXuTh3NlWIiUu6ICBCgRC75yQFQFq7mkGF4qTQsa2YEPDTpx65X+nymM
- ePOwjcgB18eBVoDYoXbtCNrO94Cu8D+u3WBbwXuvjXIo3BOHNP1P+EutIfBw467oVkN3
- MKLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774866007; x=1775470807;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1774866441; x=1775471241; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qA6TdSH6oogS1ysRXj99x3VtUPTVoVwGh3u1zNEL/8U=;
- b=Y7SP05VAAphBqmUMHJlKrfT2HxuId6hRWb+zZTd/lB8QP8KV1h79t+989FTtv0z8IM
- FKYrDpXTWuXTZQnuFAbvd1dJ8BPMYShbTptFFAnKK6FkSokZoY2uTx0cAd1VT7Ryczhm
- sfM1ibnGkzTCQSMCa0G7+0Yuf3ssuzlBEEZfCZI/uvGqcKwzSCFSow0YAtBUFlySqAuv
- /k4scvEZ6q9jdm7KKJxar5qQpH18noad3m8XBTQm3Bl1wxkCxbGNECBsQPUsAtiENpjW
- YKnwd4ErSdQ9QlrCCv4+HBlqT1rwHsmqWbZN350rkfBYUDZHhiuDQ/g1ZsgQ5hF2Vnfy
- 9qDg==
-X-Gm-Message-State: AOJu0YwgpEYPuXRUEWmevG+8YVjuhVu+sSbr+qEvPSK6kBM0aXybxbYk
- FCJeE2hZYf2xzh9J627v5NpluuqSdGsuKHqKaroCy+0Ck7fNyi/aHrn0sWsi7lLh38iClkf8RsW
- 8EuCD7zq/WF/9T/OlYTlB5HQamxaZWC2eLTflkfa5TYj2GzUKV1XwKFmAKnp596b3
-X-Gm-Gg: ATEYQzwY064quTr64Zmtj+NYtG/FxOXvC9LHJQ0SYbXIPJh9lfzyXNYSeNawT/pqz78
- cEf+t5s9r3R0hnafITd0FeyDKhO1L/sjAex3JU3vvlcA2hdTNT9XMIlDToMoPvY5WanXuaeaoWS
- uj7giC1eUYjAcflD/WM2l5YHC482wX0HLgTwA5CzJf8TnJCJ2mKV6jNQ6eQIyJkatJoZw0Y/wOs
- dVI2acLhIpUPG3YffTwMuT3oTULcnc9EH2D6vrrpboMY8I+8VJ5jWkJXDWk8y3D57pH+evMzdRy
- 7je1NtY0xVqkupnRV6nXIqiCjk9Q77yRUG49mduQ/YnyQ0LPgGzH5g4QcoD+pFmhPMRttE/soib
- 3T5fa5U/03Zs59C5IDw==
-X-Received: by 2002:a05:600c:8b66:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-48739547940mr71222985e9.11.1774866006906; 
- Mon, 30 Mar 2026 03:20:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b66:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-48739547940mr71222495e9.11.1774866006489; 
- Mon, 30 Mar 2026 03:20:06 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.113.85]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48725eb5417sm106975745e9.3.2026.03.30.03.20.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Mar 2026 03:20:04 -0700 (PDT)
-Message-ID: <386cc456-fa0d-487f-989f-971864c791e1@redhat.com>
-Date: Mon, 30 Mar 2026 12:20:03 +0200
+ bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
+ b=Sa115RA/6/Qa6pFGBbvGPyq8jHJ3539sinjFKe1PKw2jJE0A6JHYJEARddgqXeOpaY
+ xPdb9Iuza5hcXo2/kUzW0Jct5w8Gx8rmg6PNBnwQH3cYHStgFnzwwAagy7zCmtfsYcK0
+ I0fVXBtJfs+HT74qS+h+/coOuS7YB/Th8ItnKQeq1Sb45aZqUg8c2djQHziybvmoA7fM
+ 4ZVaOGJzqUK8kG8WxFcSeJF43rkkNRq7HvUA9Z4VLhlohf6ZYaW92D8OHoXUDjPQ1wrc
+ 0FGkmLCG9epPJwO41jTqK4ZtiMVhXXU7957XM0LRZihGguQl2aUvKIniwu+MD3P9OfFB
+ /9ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774866441; x=1775471241;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
+ b=Xupo2fK5uC3zDzLe/BsRyqWzV3uYy/qqGa7tiOPwS6g0hOhLdcBTAqxKxpuPyp5/Q/
+ 1BU4aoNjswleE5K9jwu5KLAqMzCPX6+2olSv+s4xfDX3t4dY869UXPR0qt4veE9hvlHn
+ xHFHo3oPM8rPUg6+rHw0snssmTxmCzOsF32L2EZTvXi8Ge9zBJ23fqukOS/sFmSc5Exl
+ IDeuMmPcEqu/Pqsp5k+sG2oxW7jLB0UrU7qOdB1JZynTeDgPc7665ML0BEslA1QlKVnn
+ ahcYcpqlanbukxnVAacucQo7ATtYFzcvenGcoOjgIjkg3ALjzIDtn3uRYlW6gG/aviOu
+ 1QhQ==
+X-Gm-Message-State: AOJu0YyUWkgxng1KMBUmzZXJoLAepzwyhPaAoD0e9k7VZh8zxivQDkxu
+ xgme6SqrUGqncg3mJY9XLG4LzeZkdsA8SsnqJl33Alhslc+zYz7LbWGeM2WvDxVFlR0ViFtfkVh
+ benMxryy8294hDRLghlebpjEXjapJyuhTtcc5rQu+FggALYB+CykwnioZSNcbBhWWxUsVTblez0
+ TQDDq+SyucLv9tdqi7jKyIIgfVKQb7kuo=
+X-Gm-Gg: ATEYQzzvQIk0JKBDM3SlV+OyKT2kiZN4eWKBdlTRrJU24Ye0iikZJqbs+bv2aS8bBc3
+ ghsbWw4UNNCtANlZU3AoXgZmS+cA8aXREZu+1ev3a2kYaQMYxDjFv5Rqbsp4bJOqzCJ/f001e14
+ W9q+xVFxgy4Vl7RsofJfOnc4lH3kWQud6V2mmkNMNWhJAwA3mGiBA270W45Si0ucE7cRAmAAh18
+ GIxgdCAKJ3Bsq5xOr780EtJmWFufx9hgnpYVwwdVKd4k2YSywmBLh3efvBGXKhB0D2DFxRK0rQD
+ /bj61jWGBREMYwRaLprYGJI=
+X-Received: by 2002:a05:6a21:113:b0:398:80a5:8bf4 with SMTP id
+ adf61e73a8af0-39c87823bccmr13472806637.10.1774866441505; 
+ Mon, 30 Mar 2026 03:27:21 -0700 (PDT)
+X-Received: by 2002:a05:6a21:113:b0:398:80a5:8bf4 with SMTP id
+ adf61e73a8af0-39c87823bccmr13472784637.10.1774866440966; Mon, 30 Mar 2026
+ 03:27:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/migration.py: Skip migration_with_exec()
- if socat is not available
-To: Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-References: <20260330053300.2721608-1-zhao1.liu@intel.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260330053300.2721608-1-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+References: <DB8P190MB07142E1BA8DEEA8B2E41D5B2DB57A@DB8P190MB0714.EURP190.PROD.OUTLOOK.COM>
+ <CAMxuvaygbUf3eS+r-6=dxiZfHp5KrD7_QLhhnTf7KHfxU+CjPw@mail.gmail.com>
+In-Reply-To: <CAMxuvaygbUf3eS+r-6=dxiZfHp5KrD7_QLhhnTf7KHfxU+CjPw@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 30 Mar 2026 14:27:09 +0400
+X-Gm-Features: AQROBzBNyjPAdGEqD_ruMYwM9kU5jOxAxvzenOWmIN1Sox-zfFDp-sJdCeqEcTw
+Message-ID: <CAMxuvax+1omtWMs964yg1ZgFrHn_f2JP98540hY8uPfD-HF8Mg@mail.gmail.com>
+Subject: Re: [PATCH] tests: don't build audio tests when no audio drivers are
+ enabled
+To: Anton Kuchin <antonkuchin@nebius.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, NB-Core Team <NB-CoreTeam@nebius.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -6
 X-Spam_score: -0.7
@@ -163,39 +139,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/03/2026 07.33, Zhao Liu wrote:
-> Commit 643a171f5668 ("tests: Replace ncat with socat in migration test
-> and drop ncat from containers") replaced ncat with socat, but missed to
-> skip related test cases if socat is not available, which will cause test
-> errors on the system without socat.
-> 
-> Fix this by checking socat instead of the original ncat.
-> 
-> Fixes: 643a171f5668 ("tests: Replace ncat with socat in migration test and drop ncat from containers")
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   tests/functional/migration.py | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-> index 2395119d6c66..144f091ba8aa 100644
-> --- a/tests/functional/migration.py
-> +++ b/tests/functional/migration.py
-> @@ -80,8 +80,8 @@ def migration_with_unix(self):
->           self.migrate(dst_uri)
->   
->       def migration_with_exec(self):
-> -        if not which('ncat'):
-> -            self.skipTest('ncat is not available')
-> +        if not which('socat'):
-> +            self.skipTest('socat is not available')
+Hi
 
-Oops, thanks for fixing it!
+On Mon, Mar 30, 2026 at 2:12=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Hi
+>
+> On Fri, Mar 27, 2026 at 8:46=E2=80=AFPM Anton Kuchin <antonkuchin@nebius.=
+com> wrote:
+> >
+> > When there are no audio drivers configure fails with "ERROR: Command
+> > cannot have '@INPUT@', since no input files were specified".
+> >
+>
+> thanks for the report
+>
+> > Fixes: 3220b38a8d ("tests: start manual audio backend test")
+> > Signed-off-by: Anton Kuchin <antonkuchin@nebius.com>
+> > ---
+> >  tests/audio/meson.build | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/tests/audio/meson.build b/tests/audio/meson.build
+> > index 84754bde22..322755b880 100644
+> > --- a/tests/audio/meson.build
+> > +++ b/tests/audio/meson.build
+> > @@ -1,6 +1,6 @@
+> >  # SPDX-License-Identifier: GPL-2.0-or-later
+> >
+> > -if not have_system
+> > +if not have_system or audio_modinfo_files.length() =3D=3D 0
+>
+> audio_modinfo_files is only populated and used when modules are
+> enabled though, so this should only be checked in this case
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Could you check if this is good enough and resend:
+-if not have_system or audio_modinfo_files.length() =3D=3D 0
++if not have_system
+   subdir_done()
+ endif
 
-and queued for my next pull request.
-
-  Thomas
+ modinfo_dep =3D not_found
+-if enable_modules
++if enable_modules and audio_modinfo_files.length() !=3D 0
+     modinfo_src =3D custom_target('modinfo.c',
+                                 output: 'modinfo.c',
+                                 input: audio_modinfo_files,
 
 
