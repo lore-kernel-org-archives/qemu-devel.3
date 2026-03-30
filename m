@@ -4,117 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167CFFB3CFF
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74523FB3D00
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79qE-0000k7-3G; Mon, 30 Mar 2026 06:27:30 -0400
+	id 1w79rM-00016E-9v; Mon, 30 Mar 2026 06:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w79qC-0000jY-8l
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:27:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rA-000143-J3
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w79qA-00059K-1U
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:27:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79r8-0005DH-FP
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774866444;
+ s=mimecast20190719; t=1774866505;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
- b=QYAtiMBZVAFT1HHgAgHrfq8iY0WVjx4ifbTyJdG3jXHFhKoPCr2IsJlW4iSeRg1RGO4ldT
- OqU0EEQDKrk2qktweauIDO4XAbxZX/RB80XqfB/Uynr78qcSYpBbWdUK9+uUwHVWMPHzzR
- Bj3RiDBJhNlpig7dFQiFDHroIHQo6Ww=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-NwZ8AoVLOryHuTAa_DZxYA-1; Mon, 30 Mar 2026 06:27:22 -0400
-X-MC-Unique: NwZ8AoVLOryHuTAa_DZxYA-1
-X-Mimecast-MFC-AGG-ID: NwZ8AoVLOryHuTAa_DZxYA_1774866441
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-b630b4d8d52so2750861a12.3
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 03:27:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774866441; cv=none;
- d=google.com; s=arc-20240605;
- b=KH7N6cnDnwWBOAjVp0W2cs/GdVf/2XlwclI/429H+gdEs9ag2JMrJyJyYuvOXDkLeQ
- MxLO0fL+LLeITMNcJdpqtjCo/qTDPYD5/a2AM6EJvFdTRBQ09wJcPgP6GZfe0FXmyJki
- JkgwkSVa71dg5mlo9+6NrdoTgvUoswDR04FPU1XzbV4dXdrd3MT+/fUAol5CbJbHy63E
- A6RPCf2UmrQWKNdSs7hRvbiTsGckOeYS7SY1keazJGDnxfS/jAeRHZqk47MTpJ5Qcyfx
- yMWCnqxgxPG6iLjCPkfhqNf1Xz45LSz2/I3t9rcvGdMbSdbMYsvXxQ/Z+IOXXqFT5wnR
- 2z9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
- fh=EOstN047P43BMWYiYfNjXAFqxVDAuquNnj26iYRON0Q=;
- b=BvMCDUzJ6iS5IlAoj6EFKve7BjBSCEAwdoB+7LH2PGMrtdsjqjfiFUpAcdI3HUt95Q
- 97gSDoLBSj6U9m2tT32cXdaWi2TvV1Z9FMs4H6f+aYfBmwe8pR1jL/McU0sDatD++t3W
- ORpEA+xUF4+NCenFKxbPd/SFsObIeHUj43HLpIoK8aHaZqWHmr++/qlUkmfLYU43v+Jy
- /ewWMQ5xaIBGOc+Rl3sc4gyzIInSMn2qX3sOOqeTQtybparoTwEaDJnYs4NOQL6OEGJE
- YItHQEGP1nhSc5yTXJnotNLwmGvTDln7+GRawFQaG6/Gq9v6ybkSRwenCpR5MXjZa8Kg
- nA0Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774866441; x=1775471241; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
- b=Sa115RA/6/Qa6pFGBbvGPyq8jHJ3539sinjFKe1PKw2jJE0A6JHYJEARddgqXeOpaY
- xPdb9Iuza5hcXo2/kUzW0Jct5w8Gx8rmg6PNBnwQH3cYHStgFnzwwAagy7zCmtfsYcK0
- I0fVXBtJfs+HT74qS+h+/coOuS7YB/Th8ItnKQeq1Sb45aZqUg8c2djQHziybvmoA7fM
- 4ZVaOGJzqUK8kG8WxFcSeJF43rkkNRq7HvUA9Z4VLhlohf6ZYaW92D8OHoXUDjPQ1wrc
- 0FGkmLCG9epPJwO41jTqK4ZtiMVhXXU7957XM0LRZihGguQl2aUvKIniwu+MD3P9OfFB
- /9ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774866441; x=1775471241;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lB9g6cJ7pvXEd5gsj3fSShep0Cl+KV1Ov+pWZ8yNjPM=;
- b=Xupo2fK5uC3zDzLe/BsRyqWzV3uYy/qqGa7tiOPwS6g0hOhLdcBTAqxKxpuPyp5/Q/
- 1BU4aoNjswleE5K9jwu5KLAqMzCPX6+2olSv+s4xfDX3t4dY869UXPR0qt4veE9hvlHn
- xHFHo3oPM8rPUg6+rHw0snssmTxmCzOsF32L2EZTvXi8Ge9zBJ23fqukOS/sFmSc5Exl
- IDeuMmPcEqu/Pqsp5k+sG2oxW7jLB0UrU7qOdB1JZynTeDgPc7665ML0BEslA1QlKVnn
- ahcYcpqlanbukxnVAacucQo7ATtYFzcvenGcoOjgIjkg3ALjzIDtn3uRYlW6gG/aviOu
- 1QhQ==
-X-Gm-Message-State: AOJu0YyUWkgxng1KMBUmzZXJoLAepzwyhPaAoD0e9k7VZh8zxivQDkxu
- xgme6SqrUGqncg3mJY9XLG4LzeZkdsA8SsnqJl33Alhslc+zYz7LbWGeM2WvDxVFlR0ViFtfkVh
- benMxryy8294hDRLghlebpjEXjapJyuhTtcc5rQu+FggALYB+CykwnioZSNcbBhWWxUsVTblez0
- TQDDq+SyucLv9tdqi7jKyIIgfVKQb7kuo=
-X-Gm-Gg: ATEYQzzvQIk0JKBDM3SlV+OyKT2kiZN4eWKBdlTRrJU24Ye0iikZJqbs+bv2aS8bBc3
- ghsbWw4UNNCtANlZU3AoXgZmS+cA8aXREZu+1ev3a2kYaQMYxDjFv5Rqbsp4bJOqzCJ/f001e14
- W9q+xVFxgy4Vl7RsofJfOnc4lH3kWQud6V2mmkNMNWhJAwA3mGiBA270W45Si0ucE7cRAmAAh18
- GIxgdCAKJ3Bsq5xOr780EtJmWFufx9hgnpYVwwdVKd4k2YSywmBLh3efvBGXKhB0D2DFxRK0rQD
- /bj61jWGBREMYwRaLprYGJI=
-X-Received: by 2002:a05:6a21:113:b0:398:80a5:8bf4 with SMTP id
- adf61e73a8af0-39c87823bccmr13472806637.10.1774866441505; 
- Mon, 30 Mar 2026 03:27:21 -0700 (PDT)
-X-Received: by 2002:a05:6a21:113:b0:398:80a5:8bf4 with SMTP id
- adf61e73a8af0-39c87823bccmr13472784637.10.1774866440966; Mon, 30 Mar 2026
- 03:27:20 -0700 (PDT)
+ bh=ZzLI3i6RBHWPskf4fOd5vHu0dONnrjAKnFaoAf5UPjI=;
+ b=c2HkHd9iJ2SOMQFW+hZlQONIb0cUTgfU6466G3v1vl4ytxhscfh4ig506CinVK5MHH3EGP
+ 9jP8GlsHBPVYP6bIebP3kkmta6ht8NEVB8ZD8M8HSlkCIIotVDar4zL+kTcc1ldtavjZrT
+ fx4D16HPUBUALGM0AKMqpSrG7g14Fd4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-6bZCYok2Mwib60jHzdHliQ-1; Mon,
+ 30 Mar 2026 06:28:22 -0400
+X-MC-Unique: 6bZCYok2Mwib60jHzdHliQ-1
+X-Mimecast-MFC-AGG-ID: 6bZCYok2Mwib60jHzdHliQ_1774866501
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 224991800283; Mon, 30 Mar 2026 10:28:21 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.35.14])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D8B4830001A1; Mon, 30 Mar 2026 10:28:19 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: [PULL 1/7] tests/functional/qemu_test: Silence (most) warnings from
+ pylint in asset.py
+Date: Mon, 30 Mar 2026 12:28:09 +0200
+Message-ID: <20260330102815.6759-2-thuth@redhat.com>
+In-Reply-To: <20260330102815.6759-1-thuth@redhat.com>
+References: <20260330102815.6759-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <DB8P190MB07142E1BA8DEEA8B2E41D5B2DB57A@DB8P190MB0714.EURP190.PROD.OUTLOOK.COM>
- <CAMxuvaygbUf3eS+r-6=dxiZfHp5KrD7_QLhhnTf7KHfxU+CjPw@mail.gmail.com>
-In-Reply-To: <CAMxuvaygbUf3eS+r-6=dxiZfHp5KrD7_QLhhnTf7KHfxU+CjPw@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 30 Mar 2026 14:27:09 +0400
-X-Gm-Features: AQROBzBNyjPAdGEqD_ruMYwM9kU5jOxAxvzenOWmIN1Sox-zfFDp-sJdCeqEcTw
-Message-ID: <CAMxuvax+1omtWMs964yg1ZgFrHn_f2JP98540hY8uPfD-HF8Mg@mail.gmail.com>
-Subject: Re: [PATCH] tests: don't build audio tests when no audio drivers are
- enabled
-To: Anton Kuchin <antonkuchin@nebius.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Gerd Hoffmann <kraxel@redhat.com>, NB-Core Team <NB-CoreTeam@nebius.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -6
 X-Spam_score: -0.7
@@ -139,52 +82,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+From: Thomas Huth <thuth@redhat.com>
 
-On Mon, Mar 30, 2026 at 2:12=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Hi
->
-> On Fri, Mar 27, 2026 at 8:46=E2=80=AFPM Anton Kuchin <antonkuchin@nebius.=
-com> wrote:
-> >
-> > When there are no audio drivers configure fails with "ERROR: Command
-> > cannot have '@INPUT@', since no input files were specified".
-> >
->
-> thanks for the report
->
-> > Fixes: 3220b38a8d ("tests: start manual audio backend test")
-> > Signed-off-by: Anton Kuchin <antonkuchin@nebius.com>
-> > ---
-> >  tests/audio/meson.build | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/tests/audio/meson.build b/tests/audio/meson.build
-> > index 84754bde22..322755b880 100644
-> > --- a/tests/audio/meson.build
-> > +++ b/tests/audio/meson.build
-> > @@ -1,6 +1,6 @@
-> >  # SPDX-License-Identifier: GPL-2.0-or-later
-> >
-> > -if not have_system
-> > +if not have_system or audio_modinfo_files.length() =3D=3D 0
->
-> audio_modinfo_files is only populated and used when modules are
-> enabled though, so this should only be checked in this case
+Pylint currently complains:
 
-Could you check if this is good enough and resend:
--if not have_system or audio_modinfo_files.length() =3D=3D 0
-+if not have_system
-   subdir_done()
- endif
+ asset.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ asset.py:21:0: C0115: Missing class docstring (missing-class-docstring)
+ asset.py:28:15: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+ asset.py:34:0: C0115: Missing class docstring (missing-class-docstring)
+ asset.py:49:15: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+ asset.py:73:4: C0116: Missing function or method docstring (missing-function-docstring)
+ asset.py:80:4: C0116: Missing function or method docstring (missing-function-docstring)
+ asset.py:83:4: C0116: Missing function or method docstring (missing-function-docstring)
+ asset.py:125:4: C0116: Missing function or method docstring (missing-function-docstring)
+ asset.py:181:43: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+ asset.py:190:39: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+ asset.py:201:39: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+ asset.py:213:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ asset.py:218:35: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+ asset.py:125:4: R0912: Too many branches (16/12) (too-many-branches)
+ asset.py:125:4: R0915: Too many statements (64/50) (too-many-statements)
+ asset.py:228:4: C0116: Missing function or method docstring (missing-function-docstring)
+ asset.py:249:4: C0116: Missing function or method docstring (missing-function-docstring)
+ asset.py:257:4: C0116: Missing function or method docstring (missing-function-docstring)
 
- modinfo_dep =3D not_found
--if enable_modules
-+if enable_modules and audio_modinfo_files.length() !=3D 0
-     modinfo_src =3D custom_target('modinfo.c',
-                                 output: 'modinfo.c',
-                                 input: audio_modinfo_files,
+Fix all the warnings except for the R0912 and R0915 which will be tackled
+in a later commit.
+And while we're at it, also add a proper SPDX license identifier.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260324163543.55503-3-thuth@redhat.com>
+---
+ tests/functional/qemu_test/asset.py | 53 +++++++++++++++++++++--------
+ 1 file changed, 38 insertions(+), 15 deletions(-)
+
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 45a2e01e2e6..1cd03c2a9a9 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -1,9 +1,12 @@
+-# Test utilities for fetching & caching assets
++# SPDX-License-Identifier: GPL-2.0-or-later
+ #
+ # Copyright 2024 Red Hat, Inc.
+ #
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
++'''
++Test utilities for fetching & caching assets
++'''
+ 
+ import hashlib
+ import logging
+@@ -18,21 +21,27 @@
+ from shutil import copyfileobj
+ from urllib.error import HTTPError, URLError
+ 
++
+ class AssetError(Exception):
++    '''This exception will be raised if an asset is not usable'''
+     def __init__(self, asset, msg, transient=False):
+         self.url = asset.url
+         self.msg = msg
+         self.transient = transient
+ 
+     def __str__(self):
+-        return "%s: %s" % (self.url, self.msg)
++        return f"{self.url}: {self.msg}"
+ 
+-# Instances of this class must be declared as class level variables
+-# starting with a name "ASSET_". This enables the pre-caching logic
+-# to easily find all referenced assets and download them prior to
+-# execution of the tests.
+-class Asset:
+ 
++class Asset:
++    '''
++    This class is used to represent an asset that gets downloaded from
++    the internet and will be stored in the local asset cache.
++    Instances of this class must be declared as class level variables
++    starting with a name "ASSET_". This enables the pre-caching logic
++    to easily find all referenced assets and download them prior to
++    execution of the tests.
++    '''
+     def __init__(self, url, hashsum):
+         self.url = url
+         self.hash = hashsum
+@@ -46,8 +55,7 @@ def __init__(self, url, hashsum):
+         self.log = logging.getLogger('qemu-test')
+ 
+     def __repr__(self):
+-        return "Asset: url=%s hash=%s cache=%s" % (
+-            self.url, self.hash, self.cache_file)
++        return f"Asset: url={self.url} hash={self.hash} cache={self.cache_file}"
+ 
+     def __str__(self):
+         return str(self.cache_file)
+@@ -71,6 +79,7 @@ def _check(self, cache_file):
+         return self.hash == hl.hexdigest()
+ 
+     def valid(self):
++        '''Check whether the file exists in the cache and has the right hash'''
+         if os.getenv("QEMU_TEST_REFRESH_CACHE", None) is not None:
+             self.log.info("Force refresh of asset %s", self.url)
+             return False
+@@ -78,9 +87,11 @@ def valid(self):
+         return self.cache_file.exists() and self._check(self.cache_file)
+ 
+     def fetchable(self):
++        '''Check whether we are allowed to download assets from the internet'''
+         return not os.environ.get("QEMU_TEST_NO_DOWNLOAD", False)
+ 
+     def available(self):
++        '''Check whether the asset is either in the cache or fetchable'''
+         return self.valid() or self.fetchable()
+ 
+     def _wait_for_other_download(self, tmp_cache_file):
+@@ -123,6 +134,7 @@ def _save_time_stamp(self):
+         self.cache_file.with_suffix(".stamp").write_text(f"{int(time.time())}")
+ 
+     def fetch(self):
++        '''Download the asset from the internet'''
+         if not self.cache_dir.exists():
+             self.cache_dir.mkdir(parents=True, exist_ok=True)
+ 
+@@ -179,7 +191,7 @@ def fetch(self):
+                 # server or networking problem
+                 if e.code == 404:
+                     raise AssetError(self, "Unable to download: "
+-                                     "HTTP error %d" % e.code) from e
++                                     f"HTTP error {e.code}") from e
+                 continue
+             except URLError as e:
+                 # This is typically a network/service level error
+@@ -187,8 +199,9 @@ def fetch(self):
+                 tmp_cache_file.unlink()
+                 self.log.error("Unable to download %s: URL error %s",
+                                self.url, e.reason)
+-                raise AssetError(self, "Unable to download: URL error %s" %
+-                                 e.reason, transient=True) from e
++                raise AssetError(self,
++                                 f"Unable to download: URL error{e.reason}",
++                                 transient=True) from e
+             except ConnectionError as e:
+                 # A socket connection failure, such as dropped conn
+                 # or refused conn
+@@ -198,7 +211,7 @@ def fetch(self):
+                 continue
+             except Exception as e:
+                 tmp_cache_file.unlink()
+-                raise AssetError(self, "Unable to download: %s" % e,
++                raise AssetError(self, f"Unable to download: {e}",
+                                  transient=True) from e
+ 
+         if not os.path.exists(tmp_cache_file):
+@@ -210,12 +223,12 @@ def fetch(self):
+                         self.url.encode('utf8'))
+             os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
+                         self.hash.encode('utf8'))
+-        except Exception as e:
++        except OSError as e:
+             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
+ 
+         if not self._check(tmp_cache_file):
+             tmp_cache_file.unlink()
+-            raise AssetError(self, "Hash does not match %s" % self.hash)
++            raise AssetError(self, f"Hash does not match {self.hash}")
+         tmp_cache_file.replace(self.cache_file)
+         self._save_time_stamp()
+         # Remove write perms to stop tests accidentally modifying them
+@@ -226,6 +239,10 @@ def fetch(self):
+ 
+     @staticmethod
+     def precache_test(test):
++        '''
++        Look for variables starting with "ASSET_" and try to fetch the asset
++        that is specified there.
++        '''
+         log = logging.getLogger('qemu-test')
+         log.setLevel(logging.DEBUG)
+         handler = logging.StreamHandler(sys.stdout)
+@@ -247,6 +264,9 @@ def precache_test(test):
+ 
+     @staticmethod
+     def precache_suite(suite):
++        '''
++        Iterate through all tests/suites in a suite and precache their assets
++        '''
+         for test in suite:
+             if isinstance(test, unittest.TestSuite):
+                 Asset.precache_suite(test)
+@@ -255,6 +275,9 @@ def precache_suite(suite):
+ 
+     @staticmethod
+     def precache_suites(path, cache_tstamp):
++        '''
++        Get the available test suite and precache their assets
++        '''
+         loader = unittest.loader.defaultTestLoader
+         tests = loader.loadTestsFromNames([path], None)
+ 
+-- 
+2.53.0
 
 
