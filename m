@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1415410D14AE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBEA010D14AC
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 12:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Bxp-0003X1-2R; Mon, 30 Mar 2026 08:43:30 -0400
+	id 1w7ByB-0003Ze-62; Mon, 30 Mar 2026 08:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1w7Bxd-0003WC-AL
+ id 1w7Bxe-0003WE-Ey
  for qemu-devel@nongnu.org; Mon, 30 Mar 2026 08:43:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1w7Bxa-0000He-S4
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 08:43:16 -0400
+ id 1w7Bxc-0000Hi-0a
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 08:43:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1774874594;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gZcL+D6MVYJs6bUuhFAMif/UHwsuKpsbEXAkCXYB5OA=;
- b=WayCOX5wp+RK908GZuUSWUT0Sn4+VgQevetoxHIQU6OJz3cAf7aCU8s77w/gPmIIxcg17A
- GGD395zMqnW6rdCw8zPWbjISnQaVCxIH8UeF6z5LkqE/Z0pFOtapB2hHI2Cute7Dt/vzig
- 5p8Fn5WY30JpZTzBpYE882YZPLOEM2w=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FYwLR3GgX+Ye3iUWaFjRjfsbK6gNISvyQ1hn9Dx/s98=;
+ b=FbEMXDHmI2tZB8nc/fp65kqWlnx6Ol8T5mA7TBYFCKeFQ0eIb6d45epIljdAdsb9HQcyNz
+ OU4EP6eXVPfODjyY6h0dLlev6ntJCXjYZm1WIo92zmLwORLPNykNckp9B7uDw+6pwxmfvO
+ nsotNLuh9zo9yNX2barIL7ffT8tC57E=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-287-ZG0TwRuGNKSEH3Dqf50Gfw-1; Mon, 30 Mar 2026 08:43:12 -0400
-X-MC-Unique: ZG0TwRuGNKSEH3Dqf50Gfw-1
-X-Mimecast-MFC-AGG-ID: ZG0TwRuGNKSEH3Dqf50Gfw_1774874591
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-486f830f4e4so30221655e9.1
+ us-mta-515-FGXM6XwMPW6MGwU0AyOzvg-1; Mon, 30 Mar 2026 08:43:13 -0400
+X-MC-Unique: FGXM6XwMPW6MGwU0AyOzvg-1
+X-Mimecast-MFC-AGG-ID: FGXM6XwMPW6MGwU0AyOzvg_1774874592
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43b91b5dd24so2444058f8f.2
  for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 05:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774874591; x=1775479391; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774874592; x=1775479392; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gZcL+D6MVYJs6bUuhFAMif/UHwsuKpsbEXAkCXYB5OA=;
- b=i7PIx1QTtCvQNu/AibNYewrU8VTNo2+jqC7vGZ3g1GUVHjbioAphXhNndYV7+TM/Mb
- mtieq0VzPCGwQvirwEaHq+hxpIloKU6+FnGQZbUtqbIpSZvjSSFSwtG1Vw8y0IEl2R0j
- WnLNnjW5jrVY9gubXfMDUSGhXP7HqJIaQJR6ox21Y39IOzS6ofH8Eo9Y9TUkSWw+0KmE
- nN9DLq8xCFoNNVcccdPvxO6zULcmCZZzCfVdkD9sLj7SqK2cSUXtX2CnXjo/02ohOhLv
- ZXwM6N+pfHg7E0+txMFSqTdUdu6zjdyrJB90e+YrD/2O8U1shErJOZyy6PlyvuhLoDLK
- EBtQ==
+ :reply-to; bh=FYwLR3GgX+Ye3iUWaFjRjfsbK6gNISvyQ1hn9Dx/s98=;
+ b=jF7ytXhl2EPFv3MWz6HNGvCL4yAuGiEpPYoda49m31rnb1S7U33mprf67d/XDAUEw+
+ xRl64POsjMgXQy6qjBwVQPjLqYA5PCL5yTnMR1F+/+0uXIvQY36ohvnXN8pBxkc8vvPS
+ 1JUmpvBOvmPtYCasFqzOhfVYCRSSUOEFiRCU4EWwM4eCszQ3Cnp4a7jbwGWJa360+t1N
+ mF3U5a4Q74EjY/HqG9KkMt6me23iMSImjZga8QnRPSMpA1oAZWPiFRRHxA1HEwjp4oFI
+ oJS53uVi5dMdpFYYNsCFOMmwyqafxMiTE5Bmi3ntzNWWZlrV+5M41MBZj3fbHj52NXM6
+ QaWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774874591; x=1775479391;
+ d=1e100.net; s=20251104; t=1774874592; x=1775479392;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=gZcL+D6MVYJs6bUuhFAMif/UHwsuKpsbEXAkCXYB5OA=;
- b=nhamLibJgbWCUlZlzsjhaJNGeTE/8wcUyq7ksI1jTcl+SYWsMkQyCidhfE52843Ovq
- fZHxGW5kju3jNYJKVnMtCm+V4XIc9Eg/F0F9sVgZCMmVmA3vF5DqdXndNm3EhgIxqPK1
- GAEeEzmm3cv8T3M2iAnqTUHli3+QtLTzfFc9GLJ8AOQ8rpTf29nS9x5+1wmO42BV3zd4
- erHrYe5Yvtzx8okiKaIyAXXYP8A1KRAzEgjd8+MsG870cO2dqcifW4wqALteaPNoifKQ
- KchZGaQLMbgGt4NBiiFPQBEqBtZMPab7PEeaOj7YeHXWzQB7WR6JxdBMrC/GrpbSCS1v
- GU0g==
-X-Gm-Message-State: AOJu0YxEcX5j5pZ+8s9uX8JCH9iu+niC4bZguLqYJJYjBAszURhh83JK
- N6R4X34kT1swWJYfXCJrznI4ZYPeOq6H8Jc+ioQKALEPKj3A22wB3XxpPlt/ivw3MtMzvawtOja
- SnWlkmlQbjswqgxI7QiI1pWg22/AmFpuSWgFCxrEwwpR7SeatpJH7503M
-X-Gm-Gg: ATEYQzy/5zKPIsuOa9WlsKgAZI24kMdQ2hQeJZ7KAz74p3+CnVOn1KucB0JJ6EtAeqa
- vOhiwL4Y3/z+T78ByjmLj7f+p0v/I+/iruCe4NcFmOEQjt88SwKQZGLStqL/ASRW/kW7YGUaEvF
- SSYhto3x5Iw1PZ29yKjmsvyNL56sto+K9fZEs365+VgpvDS9LF4E6DqfomIOzn1HlnhrOMVK0+w
- NjN+pp9WcXfhEbBk0nDXt8O2xDMpoa+0Oby5jQ+/18mkqwsxLXza0L+KwPDy61H732IgczMpUup
- ZZvXb1FT5OQ6Sfj2OqCy2dW9Fw+2IcqJgGOsCaVfMZpNfUogFzSnQQhRD/CPU+s/yrNFLrdPBiF
- qBtpUnXVB/ORXRM7VjOo4QlUc7uM/JTtxLfaVMA4cAtXxrLqHI34drYoFmqcC
-X-Received: by 2002:a05:600c:1393:b0:487:288:1199 with SMTP id
- 5b1f17b1804b1-48727ef16c5mr218225445e9.28.1774874590965; 
- Mon, 30 Mar 2026 05:43:10 -0700 (PDT)
-X-Received: by 2002:a05:600c:1393:b0:487:288:1199 with SMTP id
- 5b1f17b1804b1-48727ef16c5mr218225125e9.28.1774874590536; 
- Mon, 30 Mar 2026 05:43:10 -0700 (PDT)
+ bh=FYwLR3GgX+Ye3iUWaFjRjfsbK6gNISvyQ1hn9Dx/s98=;
+ b=F/c8fj6L6vUTO49WhvflzZwwPAFY/ZHWI8uZnUH1PddTJxICik0FfaCKaXQ8rRqIFz
+ wWSMdn2tcSDiWvxRhelTkJpOPgdqWJxjwImdEp3x/XwMcKPKzLWlZRVqFzYecfwQQ7DZ
+ qG/3lfETHI7Wv7Ep/tLEsf6pcJdNv2NNM+Md6Wr7LWAisJ134e5PKf/kZokIUGGdln4Y
+ S3ZIrg/xLiX0MmgvQ6Oyb/+n3ZA4S2UaUR9RLBl6+aY9j5tSLQgxowny0A4v+1GAZ5Qm
+ +8GVwwr5VNCrHxs3EvLFraIhIaHien2PX2gV0L9v2rpKs4zrpP2kp5IhNfxAtW/q2gRR
+ yRRw==
+X-Gm-Message-State: AOJu0Yzm49S17BuStckCngi9H5ItCLOnVExmMU9H8Nk7e+oMMN1lTU1P
+ Ptz76MQalCgbX1TPqRZfG9I2kbXaX0fxmd/2VqI3AoATA7AtO7NDgIHkhbEcs5wq1CVsvlIb+jj
+ 9onnjes447OoBjU5D1htkaWETb2PeW5ElZaal72WXoyRcWSIS1kR0FGkb
+X-Gm-Gg: ATEYQzwrXkU3i2rXE/l3Ybfho7sRMsP6baltTxELxdDYNJ27/uVOr6hNv9tW2B24zP7
+ 4cY2UMP3X2a4Oq5UlU0vD3HWcI+YtFx5OOo6ZWpWuQUjvHcgEeAxy6VSE8jhQ2EM0P3NKrGhhjt
+ mo5CtTpn3l4lfcbDUFSTtugt6WaDKswyDmBB176FfQ2Cqg964R+QseChZzZAQARHlTilo03vrqz
+ n67vNVqGqw/Yy+uFdwgbWU/uomiDa3S+A6jWRVj5T4JSt013jqsnAy1fW1JnBolKNyCB/zZvR4f
+ YfBuL8+XG3Tbk0VYLLaWhsjMBumW5tGsqueAPh7cChBc1u5eie5wDHPY5l4gS/dOWtzpevPrrbm
+ TxYsK56X0WmSfs3dv5ziBfqjy5WuUexQGmEBAePfcniXj6rBOccecG79Jh0Yl
+X-Received: by 2002:a05:600c:3513:b0:486:fa9c:185 with SMTP id
+ 5b1f17b1804b1-48727f235bamr200649135e9.31.1774874591850; 
+ Mon, 30 Mar 2026 05:43:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:3513:b0:486:fa9c:185 with SMTP id
+ 5b1f17b1804b1-48727f235bamr200648675e9.31.1774874591346; 
+ Mon, 30 Mar 2026 05:43:11 -0700 (PDT)
 Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-487306996cbsm165319385e9.13.2026.03.30.05.43.09
+ 5b1f17b1804b1-487306996cbsm165319385e9.13.2026.03.30.05.43.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 05:43:10 -0700 (PDT)
+ Mon, 30 Mar 2026 05:43:11 -0700 (PDT)
 From: Luigi Leonardi <leonardi@redhat.com>
-Date: Mon, 30 Mar 2026 14:43:08 +0200
-Subject: [PATCH 2/3] igvm: fix memory leak on failed memory region init
+Date: Mon, 30 Mar 2026 14:43:09 +0200
+Subject: [PATCH 3/3] igvm: fix parent object type in IgvmCfg struct
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260330-igvm_fixes-v1-2-03587a5a808b@redhat.com>
+Message-Id: <20260330-igvm_fixes-v1-3-03587a5a808b@redhat.com>
 References: <20260330-igvm_fixes-v1-0-03587a5a808b@redhat.com>
 In-Reply-To: <20260330-igvm_fixes-v1-0-03587a5a808b@redhat.com>
 To: qemu-devel@nongnu.org
@@ -121,34 +121,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When memory_region_init_* fail, `igvm_pages` is not freed causing a leak.
+IgvmCfg is defined as an Object but, currently, its first member is an
+ObjectClass.
 
-Free `igvm_pages` in the error path.
+Replace ObjectClass with Object.
 
 Fixes: c1d466d267cf ("backends/igvm: Add IGVM loader and configuration")
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 ---
- backends/igvm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/system/igvm-internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 50f0d6fb9a7bacddce91f095b6e2710ecbc79c6f..c347d0c17e7ee744e450d42e677946abad8a7211 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -216,11 +216,13 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-             ctx->machine_state->cgs->require_guest_memfd) {
-             if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
-                                                     region_name, size, errp)) {
-+                g_free(igvm_pages);
-                 return NULL;
-             }
-         } else {
-             if (!memory_region_init_ram(igvm_pages, NULL, region_name, size,
-                                         errp)) {
-+                g_free(igvm_pages);
-                 return NULL;
-             }
-         }
+diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
+index 76ae1bc3be9249cc1796bd7eec77dd9084358f98..7f131c4d0392214e4d53ca84d60713b3c1493334 100644
+--- a/include/system/igvm-internal.h
++++ b/include/system/igvm-internal.h
+@@ -19,7 +19,7 @@
+ #include <igvm/igvm.h>
+ 
+ struct IgvmCfg {
+-    ObjectClass parent_class;
++    Object parent_obj;
+ 
+     /*
+      * filename: Filename that specifies a file that contains the configuration
 
 -- 
 2.53.0
