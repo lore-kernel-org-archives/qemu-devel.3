@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A20EA1061B14
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF0C1061B12
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 16:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7F5x-00057f-Ky; Mon, 30 Mar 2026 12:04:05 -0400
+	id 1w7F6O-0005EY-CU; Mon, 30 Mar 2026 12:04:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7F5X-0004tx-Cz
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:03:45 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7F6L-0005E3-PT
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:04:29 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7F5Q-0003tO-9q
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:03:37 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48700b1ba53so41630495e9.1
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 09:03:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7F6J-0004I0-Pq
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 12:04:29 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-66bb7e098b1so1435971a12.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 09:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774886606; x=1775491406; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774886666; x=1775491466; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=c6nXK4vduDW/HOxuQ/JtFSDWomQu+PdfsvqXxNj5Wzo=;
- b=Rm94Mo+1KLpBh8FVbmXe6rOClYTaLPMGpA8QvlWd7LSQEI6SYqz2wrmhPpp4hkgIe3
- yKliyx2HTd4QaFtTrabqeHM2pbfzqi2UJnBU6LQk9SU9Fh3I9bAs63oCwAL3H75BL7Aq
- TyLS2eeHG6G3iBJy9y+/Yu918r8cpvsWnUBVCkI5GWkAMQT+OPlnBoRinFYSmo+QnEQn
- veLt8fzUBA8K6vKyPMrCiLesAyOsfrnqmQ0S+GvlKU1ev+K604AwhROOUxmdOWpcF94g
- Cf1qOH8x0QIgHM9jvPTgST+vAeSsSbO73c4waeZpciNTnvUBDpxzpoiBdqwgkYatP8WC
- w4Dw==
+ bh=/NMoX3efZP+cHnDhORxzhusK8C2AHQfnHOU25vW1VMM=;
+ b=Nco2wQ0LjnER6YCUUMmS78KxUeubcx2DZCfDOqXUVuLZzL359v5ydaGuQpJvzg6hMx
+ ORQKywGg3iv3v3cKZ+a8vvn0rxPaQivUYj3kqBslZp7yrnb0UcV1nhLFhnChhRsvGCcd
+ Bg5xW+U4XnzGY4VMiJj3gD6YehBKey2cGSfw/0qF95u8sE6eUwFu/dpGiBjPY5p2hEiL
+ U03+VXffxGt5jzSlJtzwIecPyh2MVHzkqv5Sr6plsKYI54c9vkIGEUMJ1GWIHg5oT7Dt
+ QYmpFLNCI4I8W9fD24ZsNohEIXjVvKEDoyB44NS/rub5R8G/Bq7pytOkU6/YdHK3Wo3X
+ lEYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774886606; x=1775491406;
+ d=1e100.net; s=20251104; t=1774886666; x=1775491466;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=c6nXK4vduDW/HOxuQ/JtFSDWomQu+PdfsvqXxNj5Wzo=;
- b=T7ClK4Mt9xbfBZ0MeDo7QFn9I46TRkTyR8M4S4Qe5URw2i46o0mcKugMVGnwPVGARr
- S1dG42Bcm9k5f5IQpwQF4f4jftiBLRf30CNDp4P7mKnYeN9PnvBFpOFtmR0oYNjUnK+i
- qbn73KRZ7786WwPnFvnmDR3aLMS4xuETqnw/cwipkdvWvqeHIJkKhUGfizP7KwOVTzY6
- PzgdCAciRA3AWpyN646DpK/HYa+Vh2iZtpol9/dWNASNrmmSTuut3962dJqh0DziBB3Z
- W0im0KeBhi9WuEP01IRfJRyvtQnmnm9YaYcSXQVpsozNp87jDiDv2czBhlJFuv+qRJZc
- oIig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWUOuxaNIHgga9rXQrJ3axOqTrGPN/6aBgEWjd/iRY2SAeBn+TGt1pdxGjncKxaRw/2xUrWqF20OTPJ@nongnu.org
-X-Gm-Message-State: AOJu0YyHrmrUg6ZAAEkQ6AilYwFWokP34fbF7zj4mZzu6p20jXqxt9jM
- PmhpWhTHvC0Gd8gwJhUIMl2a1qbaWvEZiWlgxyHHcbYKxC8zY0T5WH+DRSZdRn6QKE4=
-X-Gm-Gg: ATEYQzwb9l/xvCVCUk8GlWtZ0XjKZo9xH6NrYuRQuo9KyRiIduHxYigDmHhN5qwpfsH
- mPKg0vK3/BsKdjt5l+T3NtzSrfjDIMhofeX7P1gGeoXGosRFNs2HniIejwrGUtGS+2LeY5Aesb2
- dpeetMVzSYl/p8m0icCqVc54cqbgJBi0c6/78FKNK1lJDlX5QNaKrkv4dEQOi7u6SqGY+l8ReSi
- GTPgHy9VRKIA0rmxGZhwIy7WG+SovH8+xn3X58NJo9l+LLWFq1La50kbRAxLKX7xIxW3VdNvp70
- eIBDyWXhz/oPzcvtindNfiXEp/en3bo5Qf/AtNf3CWg+EF6RTXCCcEt9JD9ZEVaKo0cqdl7vwQ7
- 4mkjT1LqyFBfmhMSY1nueDRnc935dJCqIAZ1vWXrFOxVAEG723y2GccDUPBBKYr06BpiFq/CPNc
- h6tNRKdTRHw7UKzrh1FMDVjSKnFCGGSrM4mj8ojgGgpjGKWV7k2dOOmL1kOS52LeY=
-X-Received: by 2002:a05:600c:8489:b0:485:39b2:a47c with SMTP id
- 5b1f17b1804b1-4872809fdb3mr218981205e9.25.1774886604523; 
- Mon, 30 Mar 2026 09:03:24 -0700 (PDT)
+ bh=/NMoX3efZP+cHnDhORxzhusK8C2AHQfnHOU25vW1VMM=;
+ b=QbLMOSKTMCzygNRQ8/F4ZNcjrAksqX009OBP4KUQ99O+Wvldmq5nKqiOSenfZCnw+k
+ Ex/yBZoOUpHMuXdhidezMhGsr+txcIur6KgV6OBohF+kIJK8f3Ez2WP3d87M7OaEeABm
+ K2YA4yXDCaZDfJCrl9qo/Ewg6dcMZ1I/TtK8PfGop3bp0ZdVogMF69RYP8xlNi1z1FSv
+ ze8VnXYPWAHoeSmuSFf0bEqhOecntXdlbAEJBh2JNsI5MLyetjRZijoG08klsMNA1kLB
+ X5vvng1vJFKSHvycD4FKNddeCCwh+rFrqC1o4o44/qUbfT/CZa3CWFV1iKxEJdn5//GI
+ i76Q==
+X-Gm-Message-State: AOJu0Yw/qvPQ6Vm2N73laIS932UQ8pReICBT+92KSTJUpbyMUVyol5FU
+ 31I9+cXS50Xd/Y/BvAq505T6fc/jCihuoRg3f53M+idVB/dwW2mmLQHwGTM7NERA8Hs=
+X-Gm-Gg: ATEYQzyKrJ/EZMAkaRDjDd1nCvOoRReYn07RTT9OU2FhuUSP4WPqHP8uT52GtjCh8+M
+ dvEe99XELcAByeTyIomOfkGiXN5Xk7PvGVJIYUsrnf6ouUgQgmOadJJM4CBcZJMNTEIaSI2swCG
+ p7n80q7J35CS+z0l3IbWxJWmfYvQHipTWJuB7VdH4bRmjh+KC2dDq0EKpAE77fUG71fupcWpJSO
+ StldKkH3IInj5QW5mysdLaF1xip5O9TbheKl3z8hcJpysVINFkU+nTIJ+Dpq5zWOhTgZQ2AYcRM
+ PbeCE7Z2CDSjdY9M6EZLpV7w0GJbyc3B0yKRGtqgKngRUub+18ZQz3KxdCWY+qOQ1+ufKntMFSx
+ fL7c0ZP7v71J+5P7XEtLceddpGoDSIU/vfk43sKVzc/TPzajyvmc1w2m68AlDt/11vSF0O892/T
+ 9Wzk0RqyymVh6wCA0/gSR0QgPvokAF54UpoNIhj3f08NSSM/i0uP2QKuCfjJ/h694=
+X-Received: by 2002:a05:6402:52d2:b0:668:1479:3c72 with SMTP id
+ 4fb4d7f45d1cf-66b28c52218mr6941852a12.15.1774886665798; 
+ Mon, 30 Mar 2026 09:04:25 -0700 (PDT)
 Received: from [192.168.1.67] (91-163-26-170.subs.proxad.net. [91.163.26.170])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4872712acb7sm83941455e9.18.2026.03.30.09.03.23
+ 4fb4d7f45d1cf-66c074f0a49sm730979a12.1.2026.03.30.09.04.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Mar 2026 09:03:23 -0700 (PDT)
-Message-ID: <96d3b045-1cff-4f51-8c30-9db586be82d5@linaro.org>
-Date: Mon, 30 Mar 2026 18:03:22 +0200
+ Mon, 30 Mar 2026 09:04:24 -0700 (PDT)
+Message-ID: <6bbe4954-b99c-4bc0-a1db-ebfc0a24fe50@linaro.org>
+Date: Mon, 30 Mar 2026 18:04:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hpet: lower HPET_MAX_TIMERS to 24
+Subject: Re: [PATCH for v11.0] hw/acpi: Do not save/load cpuhp state
+ unconditionally
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20260327204704.424158-1-pbonzini@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260330053008.2721532-1-zhao1.liu@intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260327204704.424158-1-pbonzini@redhat.com>
+In-Reply-To: <20260330053008.2721532-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +105,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/26 21:47, Paolo Bonzini wrote:
-> Each timer block occupies 32 bytes, but they only start at
-> offset 256 of the 1024-byte MMIO register space.  Therefore
-> the correct limit for HPET_MAX_TIMERS is 24, not 32.
+On 30/3/26 07:30, Zhao Liu wrote:
+> Commit 7aa563630b6b ("pc: Start with modern CPU hotplug interface
+> by default") removed the .needed callback (vmstate_test_use_cpuhp)
+> from vmstate_cpuhp_state in both piix4.c and ich9.c.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> However, PIIX4 is also used by non-PC boards - MIPS Malta, which does
+> not select CONFIG_ACPI_CPU_HOTPLUG. For MIPS Malta, the linker resolves
+> vmstate_cpu_hotplug to the stub one in acpi-cpu-hotplug-stub.c, which is
+> a zero-initialized VMStateDescription with .fields == NULL.
+> 
+> Before commit 7aa563630b6b, .needed() of PIIX4's vmstate_cpuhp_state
+> returned false for MIPS Malta since PIIX4PMState always initialized the
+> field cpu_hotplug_legacy as true. Malta implicitly relies on this
+> initial value to bypass vmstate_cpuhp_state. However, this is unstable
+> because Malta itself does not support CPU hotplugging, whether via the
+> legacy way or the modern way.
+> 
+> Commit 7aa563630b6b removed .needed() check for vmstate_cpuhp_state,
+> this broke the existing dependency that Malta had relied on, forcing
+> Malta to save and load vmstate_cpuhp_state during the save/load process,
+> which in turn caused a segmentation fault due to NULL fields in the
+> stub-compiled code.
+> 
+> Fix this by bringing back the .needed = cpuhp_needed callback for
+> vmstate_cpuhp_state of PIIX4, that checks
+> MachineClass::has_hotpluggable_cpus. Boards that do not support CPU
+> hotplug (only MIPS Malta) will skip this subsection entirely, which
+> is both correct and consistent with the previous behavior.
+> 
+> At the same time, add a similar .needed() check to ICH9. Although no
+> boards with ICH9 are affected by this issue, this helps avoid potential
+> issues in the future.
+> 
+> Reproducer (MIPS Malta):
+>    $ qemu-img create -f qcow2 dummy.qcow2 32M
+>    $ qemu-system-mipsel -nographic \
+>        -drive if=none,format=qcow2,file=dummy.qcow2
+>    [Type "C-a c" to get the "(qemu)" monitor prompt)]
+>    (qemu) savevm foo    # segfault
+> 
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: 7aa563630b6b ("pc: Start with modern CPU hotplug interface by default")
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   include/hw/timer/hpet.h          | 2 +-
->   rust/hw/timer/hpet/src/device.rs | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+> Tested with the following cases:
+>   * savevm for MIPS Malta
+>   * i386 migration:
+>     pc v10.2 (before 7aa563) <-> pc v10.2 (with this fix)
+>     q35 v10.2 (before 7aa563) <-> q35 v10.2 (with this fix)
+>     pc v10.2 (w/o this fix) <-> pc v10.2 (with this fix)
+>     q35 v10.2 (w/o this fix) <-> q35 v10.2 (with this fix)
+>     pc v11.0 (w/o this fix) <-> pc v11.0 (with this fix)
+>     q35 v11.0 (w/o this fix) <-> q35 v11.0 (with this fix)
+> ---
+>   hw/acpi/ich9.c  | 8 ++++++++
+>   hw/acpi/piix4.c | 8 ++++++++
+>   2 files changed, 16 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
