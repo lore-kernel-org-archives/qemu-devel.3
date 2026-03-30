@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E87FB3D02
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E59FB3D00
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 10:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w79rQ-00018W-LY; Mon, 30 Mar 2026 06:28:44 -0400
+	id 1w79rV-0001Df-0z; Mon, 30 Mar 2026 06:28:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rE-00015D-To
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rS-0001BY-5r
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rD-0005Dk-70
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w79rP-0005FG-Cz
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 06:28:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774866509;
+ s=mimecast20190719; t=1774866522;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W+zizsw5NO/Uy/oRaR3PlM9wC4bLCHOCqFM6SNZRYho=;
- b=ZZpwDC8Z2keUoaO56rRWCpFWWHmxRL6f2YwIlFimw33Rbzwb3ld12DQzttfRaPUdAKlNmV
- iBANR4/VFJmQfiVymh8koB9zJsG5Ajn/YUSC7nBiO8b9tE+iyO4iAZHkCfkew9D8rWIE82
- 7eIxkkMrqWhonRwrRYXVmnrLNp/mo7I=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Z1d9tiJ2T0B368nmiqeZ/3YpPq5mj4POOCDgcmZzlJg=;
+ b=AizZe/s4vIBRVSOPUsy48I2+zwKvJoO5YpXvG/mG3xqfelWCDx3kVaabWlz+p/XE8hXmEU
+ J8toZ0geY0Q+ushmbHRs7Umh7SsJwKanZIYT4/9dmGl/QZQTUkEoQJVaaPkIx9II1rZ1pE
+ 2f1WoJ7G/xskHcSQB73dhTjL7PblltU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-RLrW-9oNOyui_sYxe2wTTg-1; Mon,
- 30 Mar 2026 06:28:27 -0400
-X-MC-Unique: RLrW-9oNOyui_sYxe2wTTg-1
-X-Mimecast-MFC-AGG-ID: RLrW-9oNOyui_sYxe2wTTg_1774866507
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-40vnokgLPHerRlVnGPl8LA-1; Mon,
+ 30 Mar 2026 06:28:39 -0400
+X-MC-Unique: 40vnokgLPHerRlVnGPl8LA-1
+X-Mimecast-MFC-AGG-ID: 40vnokgLPHerRlVnGPl8LA_1774866518
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 835381944EB3; Mon, 30 Mar 2026 10:28:26 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8DFD219560A6; Mon, 30 Mar 2026 10:28:38 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.35.14])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D5E930001A2; Mon, 30 Mar 2026 10:28:23 +0000 (UTC)
+ id 370173000223; Mon, 30 Mar 2026 10:28:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 3/7] tests/functional/qemu_test: Silence warnings from pylint
- in config.py
-Date: Mon, 30 Mar 2026 12:28:11 +0200
-Message-ID: <20260330102815.6759-4-thuth@redhat.com>
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 7/7] tests/functional/migration.py: Skip migration_with_exec()
+ if socat is not available
+Date: Mon, 30 Mar 2026 12:28:15 +0200
+Message-ID: <20260330102815.6759-8-thuth@redhat.com>
 In-Reply-To: <20260330102815.6759-1-thuth@redhat.com>
 References: <20260330102815.6759-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -84,58 +83,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Pylint complains here:
+Commit 643a171f5668 ("tests: Replace ncat with socat in migration test
+and drop ncat from containers") replaced ncat with socat, but missed to
+skip related test cases if socat is not available, which will cause test
+errors on the system without socat.
 
- config.py:1:0: C0114: Missing module docstring (missing-module-docstring)
- config.py:28:4: W0719: Raising too general exception: Exception (broad-exception-raised)
+Fix this by checking socat instead of the original ncat.
 
-Add a module description and replace the general Exception to fix this.
-And while we're at it, and since we've got a proper module description
-string now, also replace the copy-n-pasted comment at the top of the file
-with a proper SPDX identifier.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 643a171f5668 ("tests: Replace ncat with socat in migration test and drop ncat from containers")
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Message-ID: <20260330053300.2721608-1-zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260324163543.55503-5-thuth@redhat.com>
 ---
- tests/functional/qemu_test/config.py | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ tests/functional/migration.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/qemu_test/config.py b/tests/functional/qemu_test/config.py
-index e0893f630ee..5d44b6fa4c0 100644
---- a/tests/functional/qemu_test/config.py
-+++ b/tests/functional/qemu_test/config.py
-@@ -1,4 +1,4 @@
--# Test class and utilities for functional tests
-+# SPDX-License-Identifier: GPL-2.0-or-later
- #
- # Copyright 2018, 2024 Red Hat, Inc.
- #
-@@ -10,6 +10,9 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
-+'''
-+Functions related to the configuration of the tests and of the host system
-+'''
+diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+index 2395119d6c6..144f091ba8a 100644
+--- a/tests/functional/migration.py
++++ b/tests/functional/migration.py
+@@ -80,8 +80,8 @@ def migration_with_unix(self):
+         self.migrate(dst_uri)
  
- import os
- from pathlib import Path
-@@ -25,9 +28,9 @@ def _build_dir():
-     if root is not None:
-         return Path(root)
- 
--    raise Exception("Missing MESON_BUILD_ROOT environment variable. " +
--                    "Please use the '<BUILD-DIR>/run' script if invoking " +
--                    "directly instead of via make/meson")
-+    raise RuntimeError("Missing MESON_BUILD_ROOT environment variable. " +
-+                       "Please use the '<BUILD-DIR>/run' script if invoking " +
-+                       "directly instead of via make/meson")
- 
- BUILD_DIR = _build_dir()
- 
+     def migration_with_exec(self):
+-        if not which('ncat'):
+-            self.skipTest('ncat is not available')
++        if not which('socat'):
++            self.skipTest('socat is not available')
+         with Ports() as ports:
+             free_port = self._get_free_port(ports)
+             dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
 -- 
 2.53.0
 
