@@ -4,177 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E539DFF4946
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 06:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16CBFF4954
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 06:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w75vm-0005CS-Ot; Mon, 30 Mar 2026 02:16:58 -0400
+	id 1w76Un-0003fN-01; Mon, 30 Mar 2026 02:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w75vg-00056W-FR
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:16:52 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1w76Ul-0003eo-M3
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:53:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w75ve-0005Vh-B7
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:16:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774851410; x=1806387410;
- h=message-id:date:subject:from:to:cc:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=fLymVruOUuDc1akPKC7EAioBXRst8/ebweKAL5tR46E=;
- b=b0M9XPw/4j2Thx1kxgnkO3I3VnxZVKr2Q3OpQgHUdRAtRRMbFq01Ycg9
- 1spObXxO4Tzl/3H80DgiHFCuFbkduICDU9b0OqxuMJ2/kvR2PXdTnkHRO
- +Elhmojwk4FF4wERUSnmgL5boGCD1TOKNDZ+mtnURL+G0nXSRfdk2ToXB
- C98kniiqLlmVaY0VpL9J0muxSBHQCbTo32u2XMpJD/PJEalzGcucSfnA4
- i+hkrfXRfEFxtTKxlmbq3V1EWYLuf9xzC9OXnYhn6CkudcCeb8THIC+JP
- T1ntmO/OfNQg9n/lBcK0Z+9J5dTkYTngo/0k6VZdtssgklLb3ru1aWPKM g==;
-X-CSE-ConnectionGUID: IWvMzDFIS9OWXGcDyVXFmA==
-X-CSE-MsgGUID: LkzVhzq3T4u+DxY1fprvIQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="79436829"
-X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="79436829"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2026 23:16:48 -0700
-X-CSE-ConnectionGUID: L8iYZJmNT3CETrheKbAcXA==
-X-CSE-MsgGUID: D3UPPXoHSmyNicW7bHCf7g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; d="scan'208";a="221562023"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2026 23:16:48 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Sun, 29 Mar 2026 23:16:47 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Sun, 29 Mar 2026 23:16:47 -0700
-Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.52) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Sun, 29 Mar 2026 23:16:45 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CWzBWomsOzBByHBK2ubbg2pEy6Dyr/foj72LIfWo0IDX6+ywIQ+0j7JlBEdMzMG3aq5OORtXw3e3/Qdl+GxHTLioruJka/KflDWqkVo8pva+n4bpRBbPqhMoAi+nAtadJmJy8S81ntiEx+ZR1yKogRi9gIOPqszrmMJwtD4x11swnVoSjJnTlez9a+D3ZA/6ipGxL4R5FFHo+mQ+a2Er7E1PsTJMs7wdnvRpqhaJnAqdP99z5A02+lnYKGGos6YrQ1oGSwAk2ZnXHY0N+rQ+7dA5Qpj2NQ+siP4OjGar/zdLAnxOcAOu7NbbfvPCnYuE/D+po8/RRNV/B81zMRVemg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uCmd/dIoBKF3w8YiBwokdiPyewCygxKTsU0TSb8kf/E=;
- b=CU97p0QDeB0k5HzOoyW1ewa8iOjEUnRuk4B4PrQSv5tYhGShQv/7ClI/pS7S2ahiIYfFMMY9nI89ZRpNCj72+liCPGEVlBRD8OFF/ON89YsIFWox3EECjV9sgTbavcWxqvPPdpAK4fU0m4Jq8c9q2ae8pfi2PhdkPAtNCSjtXv6gq9Lrk6dIfNPs6qfCgsScPYHV2ggX5iKxTn7ipwCE1Aztv6fjialz0JLvxwRgJef3z8qaJqNSLejVjZhap9W470oHIsZz327geYnH3naYfHMXaechebcceFGU8QQB7ml9JKSKsAfRQSSBH8nM4fWd3bCA4YCYe0HaJxaXFbYRBA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
- by SJ2PR11MB8401.namprd11.prod.outlook.com (2603:10b6:a03:539::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Mon, 30 Mar
- 2026 06:16:43 +0000
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.20.9769.014; Mon, 30 Mar 2026
- 06:16:43 +0000
-Message-ID: <a04bebd4-3fbb-48c5-9fda-9b5b57182d05@intel.com>
-Date: Mon, 30 Mar 2026 14:24:24 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/14] intel_iommu_accel: Handle PASID entry removal
- for system reset
-From: Yi Liu <yi.l.liu@intel.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
-CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
- <mst@redhat.com>, <jasowang@redhat.com>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <skolothumtho@nvidia.com>,
- <joao.m.martins@oracle.com>, <clement.mathieu--drif@bull.com>,
- <kevin.tian@intel.com>, <xudong.hao@intel.com>
-References: <20260326091130.321483-1-zhenzhong.duan@intel.com>
- <20260326091130.321483-11-zhenzhong.duan@intel.com>
- <73392b21-f9b4-48f1-b712-30119cbc8648@intel.com>
-Content-Language: en-US
-In-Reply-To: <73392b21-f9b4-48f1-b712-30119cbc8648@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SG2PR02CA0101.apcprd02.prod.outlook.com
- (2603:1096:4:92::17) To LV8PR11MB8509.namprd11.prod.outlook.com
- (2603:10b6:408:1e6::15)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1w76Uj-0002VH-4U
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 02:53:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774853583;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
+ b=Z6Jv4XJq+W3Wa4d89/G42J/cYkipheVfgyNiAao53dDKAGLlvfHc2gRzBbEjmjwUHlJXnt
+ MjbxNYxFiVCa4f28ST1/uXl5yUU8OzFCGNslaDo1jK1b3o45YonhZg7MkW42uVKHl2JTnl
+ R0pp2n9O0C7AgYq7pfXHDDspcke1BUc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-477-sMLPZaEOPjGS6E5k6ukGsg-1; Mon, 30 Mar 2026 02:53:01 -0400
+X-MC-Unique: sMLPZaEOPjGS6E5k6ukGsg-1
+X-Mimecast-MFC-AGG-ID: sMLPZaEOPjGS6E5k6ukGsg_1774853581
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-50b52a2d70cso124609061cf.3
+ for <qemu-devel@nongnu.org>; Sun, 29 Mar 2026 23:53:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774853580; cv=none;
+ d=google.com; s=arc-20240605;
+ b=DxdgLRwVoQqJpmTTkVxw714lqD9WgEoHhRpC1GjUFrwMlSMNKM9ZhvuT45uDbWlArB
+ 2yi7Vs8H/GAC056nh3VdvJ7MI31D+UxsiFLe1H7mMf/mf4BZDBmh8yU0wIbnayaPEQ4K
+ sIcGKH775TlT1GutEAP5JcTGoUd6l/y8rnSJfqyOHXhXWwsJTIJb11ES4vkDWgo+/Kbz
+ Psd0S4PQnJ/09HDdUsKEbBaidmTSv0SfesvEhNkYdc6sD5734JlaJYHGh4HkaIc0CMJV
+ MrPIPYSKQNticoDkGphVmByxKBk5HDz2CLwhsHBvabYAb8BOPl2vfCgt5ekjM6btEoQ3
+ GpPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
+ fh=3ZOfzaKfpZLpAyqiSwIuDni0h5/3VpLid8goAI8W3cU=;
+ b=F34iOTMP7rXzkLjN6xCD4z4s2BLnpGyOOfobDwJzcoWFbyZpBbq3PnAgF+EP9eAXvn
+ pt4KvF3kwIltqrzFGv9Gy4wTGOvql+TwI+ecrAXgTqSVu6Ozc9PmgRwohAhx3yXHdz13
+ IISNRF1gkfRntKnNxY8jUrrZPIqXAQ1EVL9MjKZcjHxtp6+dKQsefpSHjH9MydNLJ8lg
+ xhHa9l5JVrN0ZdGj/j0AgbaXFwl+Xuimlzzc1b2jL1c/0IsWltgdaiYaLX4Ht2cgv9P6
+ 68dmPYp5SNKGGaw0eFyVpWPUyse05mvhQ29RI3Aq7yz6tekqvpoEEjzUm/uzFibo6b8C
+ sFgQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774853580; x=1775458380; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
+ b=To9k44cUra8LFevuhk0me5lh0tyOTHAZjZEPbdmjSH6ipQfTnh9+WcJWzGDZTPO3Pv
+ hJQdMnTaB6sgpzxFsNBcsBtMcUxBObyTwnCXEdTGSo9y3dmw/LT47RUVgTWjNCWvBww7
+ SLB3dOht7wa1PSSZ0ZmcWVkFsDr5x4rnfl7IK+SQTklfEKJyaW2GXbAjM/G/egt183US
+ CQ+ESDAPPSmE5Wwch0lXBT/5cyjynI3FygQ37tc9qVfLjOKxDn5HAjM5z87IooEp90D2
+ eUVqwyGIsf8yNEjbwUjIYHkXUe/0Y5+nWdeROST84ffWlcgg8XiCMTv3EIz43QKvc1Hy
+ EQSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774853580; x=1775458380;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TLbww21pZiHN2WIuueS8p9qQpEMTdf0rmHSqoGzQQQo=;
+ b=qvXXSNHSv/hIgAMreb3i5IRdWY9UM/DZPsWyHjPlAKXIojTCd/pJWVaKqmmLtrCHHm
+ WhRq73Iyxl4y+dKE5FwT39viVQhLOg6ywlVlP5n0kaTd8sBlGD5X1mc5B8fwJC90xKB9
+ +lZyMi47CJio/9y4NcnXRc8re6dNMGwNMEFKA4tcLmDNjKrDrUiv0Poq7Y5tciaoA9XL
+ 0KFhAbX2mbgSmmfPT+0AwOB1jKh2pcLFscc71Kdz42Z548HFLZ/kZBKwnrkk7xYNbarV
+ La96DUf59NxpjNE1I5gT3gsNIHRPlzSn4RrOPt0cKVORM7H4ZR1c1Wtp5irAGtmtFFLm
+ 2NcA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGgs653m4C3kFFP+WOztr5/gL1xtAMJ+L7zWYyXVdCr5q0b/gJXlyd2ko4Bbmn9/huXBSQKPbB4mMO@nongnu.org
+X-Gm-Message-State: AOJu0Yzk8Mdj+Wi32xjDY6Mb8sMSV0DLrFJ7jaw52rJezcONQd4Xbh8t
+ 21EuwXnh12chMzMCev3jrAMVFRhMVzWCtq994DfFc4pSzzBD1hUSqYHd8FXttK8F5g1X2iy0Nh1
+ Yhmkx7GvZKKyyrP3FTfKefR8HJiBhAZhLTn0o8MWTZiwZa6W6ty4/ZFBq2H+vit2K426nDmcutA
+ H7HDEmu6EVqlIAsxNfbWD3WSyPONdLMlg=
+X-Gm-Gg: ATEYQzxl2eMuWjJ7NBI9MLyaadgR9U66jya6jVNIMyGcaYpV62d6Bwske8B8QK4ufuQ
+ VEXrxx9fU8TzvQJuCSpHgpetzAddxMhJPHgVPSCgKVn+BivUrk98LrXCykJ4kF4jDmsBzmLsZpn
+ giAS5n2Ji9O3v3weOkQ5hwwadc+FRh6SgaBb05jC5/9aLrn30OiFsLUWj/1mIAuW0zxFRffP5a+
+ A2FPJjC
+X-Received: by 2002:ac8:5754:0:b0:509:4d26:25df with SMTP id
+ d75a77b69052e-50ba39c1849mr147012241cf.66.1774853580536; 
+ Sun, 29 Mar 2026 23:53:00 -0700 (PDT)
+X-Received: by 2002:ac8:5754:0:b0:509:4d26:25df with SMTP id
+ d75a77b69052e-50ba39c1849mr147011961cf.66.1774853580022; Sun, 29 Mar 2026
+ 23:53:00 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|SJ2PR11MB8401:EE_
-X-MS-Office365-Filtering-Correlation-Id: 981cc388-def4-4d61-e8c2-08de8e23e977
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|42112799006|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 26QjEeut6m/KX5Ve++v3rYLnrb4yOBf8KuOH6OhOmIBwEERHdpuR0T4XLZDP7uIfmOno43YZsxmZmoeGRI0lzh+nBf0XyTWF+PTYyyC9CHPyAN4pDMsIdieexRLSCW90utAMTqdyV4+uyXyPIjJZHl6bu+0kmnEqh50RSLrFDloTjKBkjXjFw1Qgl7Cm19uwLAxg1V98lWp4PWB+nll1Ms8SimQz6pO+QPmIjdP/qoCzD1dxyCdsG3LV9GzNcW9Nd6+0g4l0nhL5MU92G2weuiI7d/Vhy2W46J0nSrUw7rKWbDsmJ82+fO22T4y9JW+OmnQbiGYjzm+8fUr1MhBp6lx706iO5/hJIT0aIWsT2sIxZrQ21Q15zX22PY6vt8sFquDNnywOLYcxwvRpTE5LL7dOcp13OYFUDpTz/Xfyx42Tli/7VtEq0vmCaE7MS2t0SU/fGqxBrIc7Ng9duXa5jpA2VwDJ9Q81HmEJiWRJCJunmWRSTPRMzzpzjKAx5qtpz8g1kQyjO0dFni/UlgHtGM7SDHpdIK6fsFhCTtMxBn+/qTcp1uqsK3JvEjT2vCzVtqa6SWVBqgB/aTxJZm8OOHH7+Et6+3+sCGaMNSoODYNCMAirzthcLNFjnlmAaiSDGN3gkcq9NyYkRD9yqRPWNwoKJVsfriKnW0a7tn81xabOaxy+o/d1tDO2sfqd6+F0g4xl6Bo1os/ZSBaR4Rqjd1TgdOfQ4y1Wf87WS9Spb4c=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(42112799006)(56012099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a2RDV25BcDIwWnZzdFNDUmtlQng2RUpFR1UxRWhmMDNzMHBObkJGVVgwSWYz?=
- =?utf-8?B?dVYyUGhNWS91UTk0aXVYb2M3MkVqcW1GRzN5NmczM05HZFVhMk5BcTNVd0xy?=
- =?utf-8?B?Ulgza0NwdGtzbFNIQmhPWkozWlIvc0ZlZjAzc0w4Z3dMcFl4QmtBcVcvY04y?=
- =?utf-8?B?TFdDRTdJaldncHFBVUZZSGFtNnhQaW9lRm1HMFZyZmFnRGZoY2Q0L1FMN25u?=
- =?utf-8?B?RkFVOExoZFNUSXkxTGNjNmNQcUUvMjJ1MkxLdk5VeW0wQnA5c28zTGZmODN0?=
- =?utf-8?B?MXZHaHk0Q1pYcFREWXZrRmc5dHNUb2tqN2c4Q0JTWUdIa1QyUGhLUGViMXQr?=
- =?utf-8?B?STJyTnlXdFZ0MWJINDJiY3hXTVdVc0NPT0pjRjM1Y1hBbmxTcW93dzNtSHBs?=
- =?utf-8?B?cVcwdWNUTXVIejRqTkpTTVhZVDdXaktCTjZ3alNLQzRSVkFZcGZDN0xkbHU3?=
- =?utf-8?B?REZabEoxRmUyT1p1QTgzd3pYbll4ZktoaFBqY05VeFVVcllSZGNoYWY2amV2?=
- =?utf-8?B?czdZRDU2QlAvTTBCVmhMdUFTUlVyKzIzQm1XaGkwck50UnM1MjAwdHFjclJF?=
- =?utf-8?B?YkZrNmdVLytrNGhkZkVlMlF3UWhXZlZqR0VEeW0yOTFHL2UvR01FN1RSUjlO?=
- =?utf-8?B?cE1tQWI1QzdjR2FLcWVVa3puSHJOVitBaUNYNnZQMCtXaExsRzQva1pFOGM2?=
- =?utf-8?B?TUJWNk1CUjczTWdEODlZeDArcFpCSnFLZEVrT1cvQi8zZnJSaUh1RWpVS2hz?=
- =?utf-8?B?R2dWT2V3S1oyRHRsMmVGQzVZTXlXNzUyajFjSFRkL0RBOUQyOGdKYkR6SlUz?=
- =?utf-8?B?djRTbVpJRktHY2plN2FQNEpMQ0pIODIxQmtpdDlxTzVNU1FVTENQYllCTndi?=
- =?utf-8?B?Mk54WWZNeEIzUWhJVTRVRnNMZjRMWTdKZmFkRW1IVEZHOUsrSjk2dzNweFFC?=
- =?utf-8?B?Y04xS0hEZnBvU1k0MjJSbXI1WWY3Mng0c28yYTBCUWwrNUc5bi9ScWs0Z2xi?=
- =?utf-8?B?dG9zRjdhOFNDa0xjQnJvdXdFRGdOVEtTaTEyalJnS2JYZTRoZmlrbDNwMjZZ?=
- =?utf-8?B?Q0FjZG5IcW5FYWkzbVR2K1dVTjdhMWY4VlRPTTYxV3FkRHAyQkVyZTlkczc1?=
- =?utf-8?B?My8ySE9SOThVTDRjZ3ZOMERBdHZsTWxtR2ZnN2UyUm1UOGllRS9TbU5zY3pt?=
- =?utf-8?B?aXpjS2dPTlJNM2JObDZyUVJTQ3JQRlU4NExTdGNPcUtJZ1hVY2s0OWEzdkdE?=
- =?utf-8?B?bndKVDUxOTRDbVZEcEhwLzh2WW1SM0VLVTh0ZXp2VWdNU0RyUy9ySTdqelV5?=
- =?utf-8?B?MzVSWUI1K0RKbExpc0c5Tnp6Yk9YNGxBa3VSSkZGei8wbjV6SEVDMFkvOU50?=
- =?utf-8?B?UVR2RlRYY0NidU5JS3hlRDJuY1M5S2lBSlNocHhXd1R2VzVOb0haS3l1UUhw?=
- =?utf-8?B?NGk2Um9nUkFHZUpNcjdUKy9XRGZ3c3hYWkFqZzh4MnlrWmt0OFluOHBVTUxw?=
- =?utf-8?B?N0FOTHdFb05ncFg0UHRIakFGMmlEaWQ3KzhYR1lhNWV2NmRza3NwNFcxVGlq?=
- =?utf-8?B?bGFkMTRkVFcvSHF1bGVmQWZhenU5dkVnZmY4OWVLR3V5T21WQ1lIanNoMGYz?=
- =?utf-8?B?bjJwVFBGT2QrelpxeFhKM0xNbVI1TG9XT0ZnQm9wRzg3RVFWSlhMVjFMMFgz?=
- =?utf-8?B?RzlTRGZ4d3NsaDFoRkVkSHZzb1QvVVRUUjlhYU9GamV4cUgyZERwUjVwR0h6?=
- =?utf-8?B?RWE2a2JOQlFmQWZZSm5yRnhqRnQ3OEFlMXRQNnBXbllPajkySTR6M3NVeDJz?=
- =?utf-8?B?aHZVUnFEYkhscnRtQ3BHVUNGYzlYOGhIMzdJQ2FsUG1GeHIyQUIzellsNGFn?=
- =?utf-8?B?UW9WSUN3cFVtZUJURjYwaG83QWpxZUZuYXhWci9WS3Irbi9ZenZBSlhUZnZ0?=
- =?utf-8?B?OEZmbGQ4dWZ5a1A1d05ISlhuT3FMaE9ET3lMd3A0VDdCUERLamdUMzYxa1JV?=
- =?utf-8?B?THRFWitxZ2VmcFBUU2xVZVhESzl0Tld4Zmc2Q2pHMlZBVFBhNEhDcGwxRDB6?=
- =?utf-8?B?c05IQ1RhQkxJVzJwLzZoeWpOTGhTdnBHYmxYTUFGZnJDcldDb3Y2eDZCMTRI?=
- =?utf-8?B?WmJLWWJ0YXAwdEhXNGVJbVRwL0N6Q1RiTGhBWHo3dEhLOVQ2Nngrd2dna3dU?=
- =?utf-8?B?TENSM2ZaajkwZEJlWWZpdDhnNzNaS2d4b0s4b1FES1JyRnFnMEszdk4xRk9y?=
- =?utf-8?B?dGlhOVRtYysvNU8wZmZONWNqRzdWSUtDTXJsM3lxVzFaaFcxVUs2L1ZCVjhm?=
- =?utf-8?B?Y1lHY0x4d1FrMllYZ1FnQXhuKytBai9HL0JOWGRoM0xyQWdmdEF6QT09?=
-X-Exchange-RoutingPolicyChecked: A6zj7vf2QLWSk48YZtISmW21C7X/sL3JkfzSJhYteGXwN6E3M+tkyBfHLEmFFyr5ldHT9hOzkmRcTCMsBtI+trupzAOQy/USKtpvApbSEkeOq+fOOsKY1c3vVKkcceY43nmg7ARm8ndk2hTAh5VSvAMw8HdAzBe7al2wzHz3fkWG+2oBMAsoIcvJsr3XTYr2kJ53gZ+CA3eJowYDB8j3Ccb1ktSnq8ML0DYzWISvCiSIMqkqGl0g7muq+WG4DyxpTwM/X81+jOhdp+H3LONZv0nFKI4OeQjJ4wJdQsb81kAJjur0VBCEebAF1iAq/cl8PJpS3jj2dzQxUe5WhhqbXw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 981cc388-def4-4d61-e8c2-08de8e23e977
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2026 06:16:42.9433 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: D+l8c2ULoBExswnXKuFvbGvgcIPEP8rOTzM+GOH7QbmFtB5krFTmtkQGzyASx2h7KBUWmQJrGu1cyWHaRe9qOQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB8401
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+References: <20260327145012.907264-1-peter.maydell@linaro.org>
+ <CAKmqyKMUaHQ2uiqVnT7M98AFenmZOGJd5AAShgtKt5RgDo8APg@mail.gmail.com>
+In-Reply-To: <CAKmqyKMUaHQ2uiqVnT7M98AFenmZOGJd5AAShgtKt5RgDo8APg@mail.gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 30 Mar 2026 09:52:49 +0300
+X-Gm-Features: AQROBzCXE40WsDV_T-TLJrQn6B1LEDwJXzRbTAX9rpgTk5rJ71CwAci0IXeeaS0
+Message-ID: <CAPMcbCqFHi=se+RRLJAeekaSxVCv7ft6vcRV-u=QGDCOWyRLRA@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/xilinx_zynq: Use strcasecmp to parse boot-mode
+ option values
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Content-Type: multipart/alternative; boundary="0000000000002a831b064e384d6a"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -190,95 +138,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/26 12:32, Yi Liu wrote:
-> On 3/26/26 17:11, Zhenzhong Duan wrote:
->> When system level reset, DMA translation is turned off, all PASID
->> entries become stale and should be deleted.
->>
->> vtd_hiod list is never accessed without BQL, so no need to guard with
->> iommu lock.
->>
->> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->> ---
->>   hw/i386/intel_iommu_accel.h |  5 +++++
->>   hw/i386/intel_iommu.c       |  2 ++
->>   hw/i386/intel_iommu_accel.c | 13 +++++++++++++
->>   3 files changed, 20 insertions(+)
->>
->> diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
->> index c5981a23bf..1fb7ca0af6 100644
->> --- a/hw/i386/intel_iommu_accel.h
->> +++ b/hw/i386/intel_iommu_accel.h
->> @@ -28,6 +28,7 @@ void 
->> vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
->>                                         uint32_t pasid, hwaddr addr,
->>                                         uint64_t npages, bool ih);
->>   void vtd_pasid_cache_sync_accel(IntelIOMMUState *s, 
->> VTDPASIDCacheInfo *pc_info);
->> +void vtd_pasid_cache_reset_accel(IntelIOMMUState *s);
->>   void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
->>   #else
->>   static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
->> @@ -62,6 +63,10 @@ static inline void 
->> vtd_pasid_cache_sync_accel(IntelIOMMUState *s,
->>   {
->>   }
->> +static inline void vtd_pasid_cache_reset_accel(IntelIOMMUState *s)
->> +{
->> +}
->> +
->>   static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
->>   {
->>   }
->> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->> index 451ede7530..b022f3cb9e 100644
->> --- a/hw/i386/intel_iommu.c
->> +++ b/hw/i386/intel_iommu.c
->> @@ -391,6 +391,8 @@ static void vtd_reset_caches(IntelIOMMUState *s)
->>       vtd_reset_context_cache_locked(s);
->>       vtd_pasid_cache_reset_locked(s);
->>       vtd_iommu_unlock(s);
->> +
->> +    vtd_pasid_cache_reset_accel(s);
->>   }
->>   static uint64_t vtd_get_iotlb_gfn(hwaddr addr, uint32_t level)
->> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
->> index 1e27c0feb8..e9e67eb1a0 100644
->> --- a/hw/i386/intel_iommu_accel.c
->> +++ b/hw/i386/intel_iommu_accel.c
->> @@ -511,6 +511,19 @@ void vtd_pasid_cache_sync_accel(IntelIOMMUState 
->> *s, VTDPASIDCacheInfo *pc_info)
->>       }
->>   }
->> +/* Fake a gloal pasid cache invalidation to remove all pasid cache 
->> entries */
+--0000000000002a831b064e384d6a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-nit : s/gloal/global/
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
->> +void vtd_pasid_cache_reset_accel(IntelIOMMUState *s)
->> +{
->> +    VTDPASIDCacheInfo pc_info = { .type = 
->> VTD_INV_DESC_PASIDC_G_GLOBAL };
->> +    VTDHostIOMMUDevice *vtd_hiod;
->> +    GHashTableIter as_it;
->> +
->> +    g_hash_table_iter_init(&as_it, s->vtd_host_iommu_dev);
->> +    while (g_hash_table_iter_next(&as_it, NULL, (void **)&vtd_hiod)) {
-> 
-> s/as_it/hiod_it/
-> 
-> other part LGTM.
-> 
-> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+On Mon, Mar 30, 2026 at 7:32=E2=80=AFAM Alistair Francis <alistair23@gmail.=
+com>
+wrote:
 
-this function is better to be vtd_accel_pasid_cache_reset()
->> +        vtd_pasid_cache_invalidate(vtd_hiod, &pc_info);
->> +    }
->> +}
->> +
->>   static uint64_t vtd_get_host_iommu_quirks(uint32_t type,
->>                                             void *caps, uint32_t size)
->>   {
-> 
+> On Sat, Mar 28, 2026 at 12:51=E2=80=AFAM Peter Maydell <peter.maydell@lin=
+aro.org>
+> wrote:
+> >
+> > In zynq_set_boot_mode() where we parse the string the user has set
+> > the boot-mode option to, we use strncasecmp(str, "qspi", 4) and so
+> > on.  This is wrong, because it means that we will ignore any trailing
+> > junk on the end of the option string, and handle
+> >  -machine boot-mode=3DsdXYZZY
+> > the same as
+> >  -machine boot-mode=3Dsd
+> >
+> > In the documentation we say:
+> >  Supported values are ``jtag``, ``sd``, ``qspi`` and ``nor``.
+> > and that's obviously what we meant to implement.
+> >
+> > The correct tool for this job is a simple strcasecmp operation.
+> > Switch to that.
+> >
+> > We use the g_ascii_strcasecmp() rather than plain strcasecmp()
+> > because we're comparing ASCII strings here and don't want the
+> > potentially locale-specific behaviour that strcasecmp() implies (and
+> > we're trying to standardize on the glib function for this kind of
+> > string comparison).
+> >
+> > Fixes: 7df3747c92d13 ("hw/arm/xilinx_zynq: Add boot-mode property")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>
+> Alistair
+>
+> > ---
+> > Kostiantyn: I sent this patch out while it was on my mind, but
+> > don't worry about conflicts with your series -- assuming your
+> > patchset goes in first I'll fix this one up later.
+> > ---
+> >  hw/arm/xilinx_zynq.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+> > index d43f36b718..9dcded9219 100644
+> > --- a/hw/arm/xilinx_zynq.c
+> > +++ b/hw/arm/xilinx_zynq.c
+> > @@ -186,13 +186,13 @@ static void zynq_set_boot_mode(Object *obj, const
+> char *str,
+> >      ZynqMachineState *m =3D ZYNQ_MACHINE(obj);
+> >      uint8_t mode =3D 0;
+> >
+> > -    if (!strncasecmp(str, "qspi", 4)) {
+> > +    if (!g_ascii_strcasecmp(str, "qspi")) {
+> >          mode =3D 1;
+> > -    } else if (!strncasecmp(str, "sd", 2)) {
+> > +    } else if (!g_ascii_strcasecmp(str, "sd")) {
+> >          mode =3D 5;
+> > -    } else if (!strncasecmp(str, "nor", 3)) {
+> > +    } else if (!g_ascii_strcasecmp(str, "nor")) {
+> >          mode =3D 2;
+> > -    } else if (!strncasecmp(str, "jtag", 4)) {
+> > +    } else if (!g_ascii_strcasecmp(str, "jtag")) {
+> >          mode =3D 0;
+> >      } else {
+> >          error_setg(errp, "%s boot mode not supported", str);
+> > --
+> > 2.43.0
+> >
+> >
+>
+>
+
+--0000000000002a831b064e384d6a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
+v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Mon, Mar 30, 2026 at 7:32=E2=80=AFAM Alistair Francis &lt;<a hr=
+ef=3D"mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt; wrote:<br><=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">On Sat, Mar 28, 2026=
+ at 12:51=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@lina=
+ro.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt; wrote:<br>
+&gt;<br>
+&gt; In zynq_set_boot_mode() where we parse the string the user has set<br>
+&gt; the boot-mode option to, we use strncasecmp(str, &quot;qspi&quot;, 4) =
+and so<br>
+&gt; on.=C2=A0 This is wrong, because it means that we will ignore any trai=
+ling<br>
+&gt; junk on the end of the option string, and handle<br>
+&gt;=C2=A0 -machine boot-mode=3DsdXYZZY<br>
+&gt; the same as<br>
+&gt;=C2=A0 -machine boot-mode=3Dsd<br>
+&gt;<br>
+&gt; In the documentation we say:<br>
+&gt;=C2=A0 Supported values are ``jtag``, ``sd``, ``qspi`` and ``nor``.<br>
+&gt; and that&#39;s obviously what we meant to implement.<br>
+&gt;<br>
+&gt; The correct tool for this job is a simple strcasecmp operation.<br>
+&gt; Switch to that.<br>
+&gt;<br>
+&gt; We use the g_ascii_strcasecmp() rather than plain strcasecmp()<br>
+&gt; because we&#39;re comparing ASCII strings here and don&#39;t want the<=
+br>
+&gt; potentially locale-specific behaviour that strcasecmp() implies (and<b=
+r>
+&gt; we&#39;re trying to standardize on the glib function for this kind of<=
+br>
+&gt; string comparison).<br>
+&gt;<br>
+&gt; Fixes: 7df3747c92d13 (&quot;hw/arm/xilinx_zynq: Add boot-mode property=
+&quot;)<br>
+&gt; Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linar=
+o.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
+<br>
+Reviewed-by: Alistair Francis &lt;<a href=3D"mailto:alistair.francis@wdc.co=
+m" target=3D"_blank">alistair.francis@wdc.com</a>&gt;<br>
+<br>
+Alistair<br>
+<br>
+&gt; ---<br>
+&gt; Kostiantyn: I sent this patch out while it was on my mind, but<br>
+&gt; don&#39;t worry about conflicts with your series -- assuming your<br>
+&gt; patchset goes in first I&#39;ll fix this one up later.<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/arm/xilinx_zynq.c | 8 ++++----<br>
+&gt;=C2=A0 1 file changed, 4 insertions(+), 4 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c<br>
+&gt; index d43f36b718..9dcded9219 100644<br>
+&gt; --- a/hw/arm/xilinx_zynq.c<br>
+&gt; +++ b/hw/arm/xilinx_zynq.c<br>
+&gt; @@ -186,13 +186,13 @@ static void zynq_set_boot_mode(Object *obj, cons=
+t char *str,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ZynqMachineState *m =3D ZYNQ_MACHINE(obj);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 uint8_t mode =3D 0;<br>
+&gt;<br>
+&gt; -=C2=A0 =C2=A0 if (!strncasecmp(str, &quot;qspi&quot;, 4)) {<br>
+&gt; +=C2=A0 =C2=A0 if (!g_ascii_strcasecmp(str, &quot;qspi&quot;)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 1;<br>
+&gt; -=C2=A0 =C2=A0 } else if (!strncasecmp(str, &quot;sd&quot;, 2)) {<br>
+&gt; +=C2=A0 =C2=A0 } else if (!g_ascii_strcasecmp(str, &quot;sd&quot;)) {<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 5;<br>
+&gt; -=C2=A0 =C2=A0 } else if (!strncasecmp(str, &quot;nor&quot;, 3)) {<br>
+&gt; +=C2=A0 =C2=A0 } else if (!g_ascii_strcasecmp(str, &quot;nor&quot;)) {=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 2;<br>
+&gt; -=C2=A0 =C2=A0 } else if (!strncasecmp(str, &quot;jtag&quot;, 4)) {<br=
+>
+&gt; +=C2=A0 =C2=A0 } else if (!g_ascii_strcasecmp(str, &quot;jtag&quot;)) =
+{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 0;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 } else {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;%s boot mode =
+not supported&quot;, str);<br>
+&gt; --<br>
+&gt; 2.43.0<br>
+&gt;<br>
+&gt;<br>
+<br>
+</blockquote></div>
+
+--0000000000002a831b064e384d6a--
 
 
