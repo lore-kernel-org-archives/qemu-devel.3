@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354271061B18
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 18:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FAA1061B1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 18:53:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7HjD-0007hX-B5; Mon, 30 Mar 2026 14:52:47 -0400
+	id 1w7HjM-0007i2-VQ; Mon, 30 Mar 2026 14:53:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7HjB-0007h3-Lc
+ id 1w7HjB-0007h4-Nb
  for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:52:45 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7Hj9-00039C-7J
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:52:44 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-439d8df7620so3447354f8f.0
+ id 1w7Hj9-00038d-7Y
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 14:52:45 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so58652145e9.3
  for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 11:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774896761; x=1775501561; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774896760; x=1775501560; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BF7n0AeribVf5J8IKbflMfLGP0Uet1AjDdCOhZOnHQw=;
- b=bzo5q2yDcGVSZrrZJ21hpzmKIE6m3Kmml/RcDUehKEBzodFZneUQjm3ulFe8XxTtdA
- 7FQMxKRkz9oU7HMYrEMOIoiNMHA7Lr0R5j6l7+D6hUtodxFVIe8PmQKW2MXjtiyI4s/K
- +JDXHl34hVuHsbBaWp8sFg6LcBJAEP6/+bP2Jmdb5z1IcutJX4PeU8HSBMSoGzleBneD
- 0Y3fl9N9EkczZSpCJ2Bcn32oZ9j7B/A5kQwweCYJF2I1s+byGA2nvgKWWyBtvhprh6tf
- ZcGZf3YYicWx3iL5qhFHutEft8m4zmYYwy4CsEEx8I6OQ86BH4zhtVgCRZXK7A/hHKmv
- wDlw==
+ :reply-to; bh=ceVDVX8xD+d+HSxRibRQlzvG5AaZb0ZMAVIgjx6IF9o=;
+ b=OUgWogsHpwlK8uE58Z5Z2lFcMGmKCP10c9NCnG0mkidx06bvODFZKm/60gjxM2ximn
+ S4ybmnRDbXL9qroeLmkP+L1l0hA+mrAG8K5NFMO6FJGxM7vAIw0MgluvimEjNR8m0oKz
+ 2DwjDBuP5/PeWs5vSpO+NokXifS/qcAwO10Dp9H9raTvyOQWeffFeZqKbEOz83P/koD2
+ v9VdB8zjkBwpk+kxIRDrgCXTdqwTaL/52YZM+XWkZi0FevAwEDhRBbq7RDk9vyg2QNLN
+ dWPbmQsUiVOZSjOyS1DjTCkotOZ6zxNj1qpgK18MmI+OuMEK6dxzJHo92zdzkP6wU7Of
+ eeEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774896761; x=1775501561;
+ d=1e100.net; s=20251104; t=1774896760; x=1775501560;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=BF7n0AeribVf5J8IKbflMfLGP0Uet1AjDdCOhZOnHQw=;
- b=ofMwTaIV28HRYPHD1MlQduUdOHveCK1sjO8cd/feMOYvRbASOnqdx0reC2UhmpMOUb
- H8abVUjJOwX0GkcitkmDGCF/wGC4uIYvkTs217A3Srb2oO8+2Eyf0SnbscbkfsYyKRdd
- 9l0ViswrYdi+x4cUnCcetDsMQ1ItKo9BTfQFMJfxCqOW262tyq3ZbPX8/ykHMspa1X4k
- EeKTdKP/hqiAg0/AWLiKCJI7MMZbNMUqd5ptebd81iHfWWTHYow/HFz2fRdGvEbGoc7u
- sKC8aM369jn37u9d5XlEcjYWnn6pDtS3R4lGSj3fcHHM9oVpwBfvtgvixy2+4WzKynPS
- 6eYw==
-X-Gm-Message-State: AOJu0Yx6pMYl+gMImNFVyFatdQRi3dneyW4yX261x3LbESEedFR+TrgZ
- B7NtBnBxFXU/r9KjdPZiDCo7wRFEPcSyW3vq/H65AkdK6pOltSxaVawPYzzDY8OHLT1VCuByFNX
- oECAr9Ec=
-X-Gm-Gg: ATEYQzw3SeKqU3mIADQEARvEqlVXkz2oVGDVISTRd41wifwUV8EeKdAZ5+2TU9CQJfo
- 8TI4VApNqiCLfCxPbpnLgDRnE0LORVLbhbid8qHl6FKDm7fSVvaqJ+DcMNnrhH7+FDQNyXahz1T
- cALbOKSf5zYNiOpL66vXl5bvR+TPRpxOUY+MC+pxEHnX7kvtdXjjzVhX5UyaPnGBOej9ZpVeRI/
- JTQSaCR8WWidC9E9d9r7G7hLhrimnKRgOFf7BbFvNAlouvVqzK6TR2iKV5hNclrF5DG2G7KlHX8
- RdVWuIoZcpJzhdGKWUdiuNV4UOWI7vxAB0immSONDRCeqKJ1LamHMJZBM/uRrD2aThanQviu3xH
- LWWOFRp055407SEKUhg5U1sTnJ1GO+PYVFKv07G4HJvOI9YOLxFPa5q0VN0alE2boWKBcXLpu7S
- MfW0Ko0K7fCFxy2SqjfwKsQm8+cj+btz1mHJdA7P/VDr2694usgscY1xp0d2iesa6ZRuDlg9vzp
- JWIb1gN4VJTqK2RLANYSEcV1YAWWp4=
-X-Received: by 2002:a5d:5d12:0:b0:43d:6e0:9458 with SMTP id
- ffacd0b85a97d-43d06e09528mr3281574f8f.39.1774896760726; 
- Mon, 30 Mar 2026 11:52:40 -0700 (PDT)
+ bh=ceVDVX8xD+d+HSxRibRQlzvG5AaZb0ZMAVIgjx6IF9o=;
+ b=p4hlluaJS3KvyTXGhWx+NzoO/3JuJPQZu56iBXVpCGLSxhPQ5SEofopFT3SJmxIytD
+ Mt/6Y5f69r+c7L8d1UE+omZ14U4mqdFx0xcv2DOBSCOSQ8X1HqxsEK+OsfqdwgME52si
+ x20YOOBQueGWe6tXID4E7hBNAeKDoGZBEizuzdRvaLPOz3KVYGnDBqeCIyhvwS+xtYvy
+ detfBiS0+acG1873tD5xItd/oSpRNOra+7bqZ6WFwzIIgZiRUYsfH5WpBVd0wWM1k4y3
+ QYt02vup2VRVjQVeVTrywcLuhwWQJx86QpRtNET0/22PMDNEa3Uzl0U1TVqW8T19h3Gu
+ mw8A==
+X-Gm-Message-State: AOJu0YxGNMObS6DwQi2JYjFtjt8JKD4cK5wFLoQaJ0glMmd+QQt0j7xS
+ EtOIwyUqBT7Yb24VP/bJDtCsIEibjwRSboxFx5Ey5OzHAGu6j5wS22UHepYkl/K8HfY8MGVfs6w
+ Fn4vGrT0=
+X-Gm-Gg: ATEYQzz7JlPAUGB22Jm8CV2HE33GYRbIjwSLcApHm2G6F2i4zJkROunJEzaQeez+ziA
+ yYz7jCBt+WcN9IcmcrBotpoqeVSQP+Mr8sMSJxGrSDCCF6KfZ8+DStUx0sFYzxXonZz1hmZZwxF
+ Y48U8edImk9PIyy2JgMkbHMId6A3iHodEWTR8NPg8hObkaxWeL3b98KObJfD+V2gt8Mfc/GPgbG
+ PpIAWen+T20ZgqczUK8Qu/ee1b7W5nvUoQp8v2Ve+XAckdugLYBW1B/xcUHju0Miff88fbQ4z5Q
+ V4CoCvcFxNVsLWKzeFmYZ9heoy+5ZhCOlEGHEqJieIhECQeYPhAZlQNHexayUn/MFhmJx+xc5oB
+ mz9prt+DRO1u5hSTLp+E4z4ew1xcSHjd+mRgqQdBjYWW2CFuturJJfY602AqqlGWVnnS0LLCtJU
+ Drui6vZ8liGgmhs8SbCmHNGyEyJwk0dFJDFDspCE+l40po56dxdmnojioRxnlBKYYuK650V43xo
+ VF4QmBAOH1X4AOnnHYoJttjbwKoEKE07eojLOd6LQ==
+X-Received: by 2002:a05:600c:19cc:b0:487:300:d9ca with SMTP id
+ 5b1f17b1804b1-48727ee9ea9mr207332015e9.31.1774896759432; 
+ Mon, 30 Mar 2026 11:52:39 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21f1749sm21229400f8f.14.2026.03.30.11.52.39
+ ffacd0b85a97d-43cf21f1749sm21229400f8f.14.2026.03.30.11.52.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 11:52:39 -0700 (PDT)
+ Mon, 30 Mar 2026 11:52:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/5] hw/net/rocker: Avoid double-free of l2_flood.group_ids
-Date: Mon, 30 Mar 2026 19:52:33 +0100
-Message-ID: <20260330185236.1905636-3-peter.maydell@linaro.org>
+Subject: [PULL 1/5] target/arm: Don't skip access flag fault for AccessType_AT
+Date: Mon, 30 Mar 2026 19:52:32 +0100
+Message-ID: <20260330185236.1905636-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260330185236.1905636-1-peter.maydell@linaro.org>
 References: <20260330185236.1905636-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,39 +100,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In of_dpa_cmd_add_l2_flood(), we allocate memory for the
-group->l2_flood.group_ids array, freeing any previous array.
-However, in the error-exit path we free the group_ids memory but do
-not clear the pointer to NULL.  This means that if the guest causes
-us to take the error-exit path and then later call the function
-again, we will try again to free the memory we already freed.
+From: Zenghui Yu <zenghui.yu@linux.dev>
 
-Fix this by clearing the group_ids pointer in the error exit
-path, so we maintain the invariant of "either it points at
-allocated memory, or it is NULL" (both being valid to g_free()).
+As per the pseudo code from DDI0487 M.a.a (on J1-16021) AArch64.S1Walk():
+
+  // Check descriptor AF bit
+  elsif (descriptor<10> == '0' && walkparams.ha == '0' &&
+          (!accdesc.acctype IN {AccessType_DC, AccessType_IC} ||
+           boolean IMPLEMENTATION_DEFINED "Generate access flag fault on IC/DC operations")) then
+      fault.statuscode = Fault_AccessFlag;
+
+an access flag fault should be generated for AccessType_AT, if the AF bit
+is 0 and !param.ha.
+
+Besides, we should continue to not raise the access flag fault for
+in_debug = true which is what we've been doing previously (before commit
+efebeec13d07) for LPAE and is what intention of the debugger access
+codepath is.
 
 Cc: qemu-stable@nongnu.org
-Fixes: dc488f88806 ("rocker: add new rocker switch device")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3253
+Fixes: efebeec13d07 ("target/arm: Skip AF and DB updates for AccessType_AT")
+Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+Message-id: 20260324160321.96347-1-zenghui.yu@linux.dev
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260324193530.375628-1-peter.maydell@linaro.org
 ---
- hw/net/rocker/rocker_of_dpa.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/ptw.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 814f19afc5..3190a0e75c 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -2059,6 +2059,7 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
- err_out:
-     group->l2_flood.group_count = 0;
-     g_free(group->l2_flood.group_ids);
-+    group->l2_flood.group_ids = NULL;
-     g_free(tlvs);
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index e289f88124..08a76bd3f1 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2118,6 +2118,14 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     descaddr &= ~(hwaddr)(page_size - 1);
+     descaddr |= (address & (page_size - 1));
  
-     return err;
++    if (likely(!ptw->in_debug)) {
++        /* Check descriptor AF bit */
++        if (!(descriptor & (1 << 10)) && !param.ha) {
++            fi->type = ARMFault_AccessFlag;
++            goto do_fault;
++        }
++    }
++
+     /*
+      * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
+      * and it is IMPLEMENTATION DEFINED whether AF is updated
+@@ -2127,15 +2135,9 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         /*
+          * Access flag.
+          * If HA is enabled, prepare to update the descriptor below.
+-         * Otherwise, pass the access fault on to software.
+          */
+-        if (!(descriptor & (1 << 10))) {
+-            if (param.ha) {
+-                new_descriptor |= 1 << 10; /* AF */
+-            } else {
+-                fi->type = ARMFault_AccessFlag;
+-                goto do_fault;
+-            }
++        if (!(descriptor & (1 << 10)) && param.ha) {
++            new_descriptor |= 1 << 10; /* AF */
+         }
+ 
+         /*
 -- 
 2.43.0
 
