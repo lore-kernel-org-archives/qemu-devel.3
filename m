@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E0510D14A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B2510D14A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 11:51:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7B8e-0003HO-OR; Mon, 30 Mar 2026 07:50:36 -0400
+	id 1w7B8b-00030F-SV; Mon, 30 Mar 2026 07:50:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7B8a-00032E-RJ
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:33 -0400
+ id 1w7B8V-0002qN-4V
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7B8Z-0005vJ-0R
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:32 -0400
+ id 1w7B8S-0005uD-OR
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 07:50:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774871430;
+ s=mimecast20190719; t=1774871424;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SofHkglzIlj7gRwriJoYpIXXE5BjbplBzBVQuvwtZxM=;
- b=CIl4FmFyAfwSZu7ijckhpvqHQKKDhmdUvUopdDTowhDsMYa+BrHQp1tM2JtCtjdBPdMWdZ
- JNPR2nT5LMTZyri3nIGxiwgKx/eGXF6v1POgSSyJ6B1IMBV7MwU1FYz544NH+CyoSJxKjx
- Rr0AtyTFrlkRXHtlRwh8K+NPc3x9Nsg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4x2nEljhP4GBRpi+aWlvnI5jZW7bysIFD+mCf4NR8SU=;
+ b=Zq9MYUxXKRphXL6UxsMRcsCyhpu0T8Ar2T/wHCRjDzPYQUnZE5HIBZOsCMuUEmfLJp6SSX
+ fOdJjo8Ccjt19FAysGEVvHYz/3Gjo/EvflRHYBbHGvLkJky3SmqcXEFjvTBrxTHGykxFAM
+ OxvY4PFlyXRaK22ICW708a2ztGuadms=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-Z8a-alT-PAOB_mHNIMl95A-1; Mon, 30 Mar 2026 07:50:29 -0400
-X-MC-Unique: Z8a-alT-PAOB_mHNIMl95A-1
-X-Mimecast-MFC-AGG-ID: Z8a-alT-PAOB_mHNIMl95A_1774871428
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43cf7e96d4cso1432316f8f.1
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 04:50:29 -0700 (PDT)
+ us-mta-404-jZDT2V4SN829-9ox_zGCQg-1; Mon, 30 Mar 2026 07:50:22 -0400
+X-MC-Unique: jZDT2V4SN829-9ox_zGCQg-1
+X-Mimecast-MFC-AGG-ID: jZDT2V4SN829-9ox_zGCQg_1774871421
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-486fe36cf73so33473365e9.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 04:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774871426; x=1775476226; darn=nongnu.org;
+ d=redhat.com; s=google; t=1774871420; x=1775476220; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SofHkglzIlj7gRwriJoYpIXXE5BjbplBzBVQuvwtZxM=;
- b=rxqcLwROLmKiZe2nB+G62duAIVRnInSSSIw8Ban6Mwh4aCSIk0hDfM6OsGFb+QZPo+
- kuw8UMAd+kfA1MVzjpQq6+QhtSUUQy2O4lDLu7kBBxk13rM8A++T8Im3IufVs+6kqEbg
- X/CYR0KV/KonGA6iJGoh7xxKbW5WlBlFuzo/debEPhc1RbkPUWjbztyzd1vMLGA1PggR
- 1WA5RRea921J8Uc3Ez27h6sAhEUWN0/E2myu5XTd1Qad5izvBCVTRV5K+Pc0ckqNcxgE
- yTN9NoHGz0GQ3vmPxk/WslLegFbtZ6p7A7ynx1f9bCzyMzS+QKjO84eQuZpOJX2OBnPJ
- Hrdw==
+ bh=4x2nEljhP4GBRpi+aWlvnI5jZW7bysIFD+mCf4NR8SU=;
+ b=OqxUgRmmoK726ycInFFXbuMTZpxFFH05PULCdvmezA2qcFP/x+4ygl0K6eYnlJOOpE
+ 8NuH2QblGdyYdwP93aFtX+nOXx8n1lsHnQuGaSvRCA7CbHLMqVOyEiGIrB8tlaR1VNSe
+ 5bQa52W2mNDuZ2zXLF3m2uZJ5ifs8uYtqshTRqsY//wXYXgvq4Y9yoj5L66AC9enFe+F
+ GVtCBj4sUSq/zhW4YYVM46rf+Tg70yNgLBcKJFfx0f6HA8gu/CRh2MMuSSihEk8YVmtb
+ sLhZv659KQVMxzwGSo41jw3WXRFb4DBFneEgAxc8ibPHJb3lWbYIIdCMnVhcmCLatKKK
+ 6fkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774871426; x=1775476226;
+ d=1e100.net; s=20251104; t=1774871420; x=1775476220;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SofHkglzIlj7gRwriJoYpIXXE5BjbplBzBVQuvwtZxM=;
- b=pu3nBOLxl/twx1Q6iIctw7BQZ2E+uyQ6XCSxokG/Jo43+mGinq9uMC5ZMV+EnGRLvo
- eqkGqNeUHpkLqfmJvC7bDtrHLs5ZcKp9q9FfCBu19n2KuIqBE4bgHVwoPT0ydbdpasKH
- ZaP6Iy5uKH3e95lZ0y8wUvyjg8aRdPkYXt573Q+XQed4t8MFch6kHgHufBXUGwxXPSkV
- xcEwiiI1sNpChZwA62C8swcL5AF8rVtDmYmA6ZiZ7Xz6YcGJm7mfDPeGqoSYQMBqEq+c
- fohEyh6irnlq+z5x5mtF0Lf4i9jw4tTjkZFfq80i3JpGHlKRxbqf5uEJoqVqRctjDBFj
- VI2w==
-X-Gm-Message-State: AOJu0YwsSiFY3logwhYyUIHaQ6vbK3lFeTm7Xii1rxDQ8k5/rNpXtBqV
- jvev0wYZzEmKFfOilyn+/Oy5hPFiWG1Smd6lrXASzQeB8NDLknK2ovwZ6a1dOfr9aaVDtNVyd30
- KGwNWJlcwAnTeDUY+d/cXh90efvNoUZWqwL9q9fryofWr6E0ll9qL9sdVBgOq9GCyJp2KIGR28P
- 950oQJGvgaUNJRwpWEYhCB/vaIaEtVW2tTi8xhBqLr
-X-Gm-Gg: ATEYQzxRpiJh61EUxa09/biRCckaTsw+knqXeOUahXXDZNudH8aboyHI8wPLRUr3ziD
- wrBtUNTuT0WjgGyqLovYO2biMR1eIujmALort81rGIICJrfH8GZl0kqKqqW08doPyZ1W1v0aY/n
- vjHbCjXcZ+bwJHA1IbqSbgykamCwSMlqvyfT2TmLu3xfUwrc2yNyF42CbBpQhLG+aYDTM//kxr2
- KiHs8WpZsUc/Ex+LZK+SLReDAO3ZpDnUY1gC0KXP81jPNW3BYQsKRc1GkzaxLjoO2qx8YMWpVq+
- W8bopi1ha/bNQODRVpWTjzryq4ncyc7fqXnQptHf3S1BUHQAXXyFr24QZGer/8FiKN0IXFowPU5
- WKjA3gll3a3WHa9R2dXRKEZ+7UwlP2jx4JcIDrCXBjfuQl3PxrUTIpC2VJTM+fGHFYpWbGWZfo8
- 19hk1Bs9wheAr00xGDKlMK/xmu
-X-Received: by 2002:a05:6000:268a:b0:43b:45da:f296 with SMTP id
- ffacd0b85a97d-43b9e987d45mr20423212f8f.11.1774871426284; 
- Mon, 30 Mar 2026 04:50:26 -0700 (PDT)
-X-Received: by 2002:a05:6000:268a:b0:43b:45da:f296 with SMTP id
- ffacd0b85a97d-43b9e987d45mr20423138f8f.11.1774871425717; 
- Mon, 30 Mar 2026 04:50:25 -0700 (PDT)
+ bh=4x2nEljhP4GBRpi+aWlvnI5jZW7bysIFD+mCf4NR8SU=;
+ b=F9O4AkyA2rFOYH0qs/g0AOrdUOj2NRIaYjOOe3udOb7gWIwuGfkeloaYTEwrDkZ4FB
+ b49Zqe3GtyX25U1CtjIErPJBnLT+FMvzjJmrD1RFhX7lFs+DzGOCDdPG8M0AWrZiJ2Lj
+ Hh75XhPksu2nsFPUnLp0MvzfuqVpsiPmmygL23OOtTbAUH0ngwO1lfjH6OoSz2Ljy3i6
+ 7TLMiyzftZmr0sDsTY8yq+2TIS+d3yGpX/joHcPUxIF51NuZLeM4yaPj7VdsMlLwd1Qm
+ eJbfmm6XcAj/Qx1zwz60AL8xSLrX1HU2gwXfaj0nPiBqF3+UE0EdX0AQOPkViLnfDtKO
+ DvQA==
+X-Gm-Message-State: AOJu0YwXLxksVbpMcmz2s6FMgCnTEceBHNQeQhYaoxKHb+uvQBxmO1Im
+ nMvmuaKc+6CO5B+ZM5BqBoHyjRGqGP9XC6oCUVHAjjO0wjnY6YEUmzzYL39TRMXmHO3OV7LQtJ8
+ OXodENFVmEGI4ackDkz7Ljq7+lenbg45B2nJm8mVYdT1sNOL1Up50Njp874l5nsZI+nTOOvKAfo
+ HnaLnbXM+1YJXQmkf9UqWnAoSWso2ln7WWnfWf8x68
+X-Gm-Gg: ATEYQzxh34w30dljNluty/lVKsjqvKsAc3el1JJ0ZSDRi512GTfgRxmKkwnF5QrMkP3
+ DwQCr+4L3xksTUNO2pVlwQuLbIIITckEn/2AVqHG3kvEj5Tvf3zPIgRiAJK5pdqp2r68MJnJLN5
+ VdnV6drS2VelyJdoN0iE389CsYKLgstuF4ZE/EMH48hpLACsYVx9zdDQufctD9Gi8wPJ1U/l9ur
+ Ko5MNiLwTkhJk/S5lRt2X2KCpA2Ye1NiDIgV9NYfq1rKNiw24AOF2mwHH3EEvMjlDxvt/DAEzNT
+ iWtisl2G1/AB8qazaZYbySJOOdbHgzV+so6Jys0AdBVqpGmOgqs+XyrTV9az7iccvTTgUzO6Xvw
+ tL1cOoCKwrDMgK82K/1EGZnewkS8y1VOGXWsAJtc+WwElPQeHw1i21Il12AHvpRofObERJ6NyPs
+ n38FpVmLBvrEzFSMKMKKw+q/wD
+X-Received: by 2002:a05:600c:4e08:b0:485:363b:fafe with SMTP id
+ 5b1f17b1804b1-48727d5e971mr219190425e9.1.1774871420226; 
+ Mon, 30 Mar 2026 04:50:20 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e08:b0:485:363b:fafe with SMTP id
+ 5b1f17b1804b1-48727d5e971mr219189785e9.1.1774871419685; 
+ Mon, 30 Mar 2026 04:50:19 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21e2727sm20201581f8f.2.2026.03.30.04.50.23
+ 5b1f17b1804b1-48730688605sm283026285e9.10.2026.03.30.04.50.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 04:50:23 -0700 (PDT)
+ Mon, 30 Mar 2026 04:50:19 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 03/12] whpx: i386: trace unsupported MSR accesses
-Date: Mon, 30 Mar 2026 13:50:07 +0200
-Message-ID: <20260330115017.256211-4-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 01/12] meson.build: remove i386-softmmu WHPX support
+Date: Mon, 30 Mar 2026 13:50:05 +0200
+Message-ID: <20260330115017.256211-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330115017.256211-1-pbonzini@redhat.com>
 References: <20260330115017.256211-1-pbonzini@redhat.com>
@@ -124,72 +123,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Not actionable information for users, so stop
-having it displayed unconditionally.
+target/i386/emulate is pretty much incompatible
+with i386-softmmu and fixing that doesn't look
+worthwhile given the binary unification goals...
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/r/20260327011152.4126-4-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260327011152.4126-2-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                   | 1 +
- target/i386/whpx/trace.h      | 2 ++
- target/i386/whpx/whpx-all.c   | 5 +++--
- target/i386/whpx/trace-events | 1 +
- 4 files changed, 7 insertions(+), 2 deletions(-)
- create mode 100644 target/i386/whpx/trace.h
- create mode 100644 target/i386/whpx/trace-events
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/meson.build b/meson.build
-index 407eef5b4ed..daa58e46a3c 100644
+index d7c4095b395..407eef5b4ed 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -3687,6 +3687,7 @@ if have_system or have_user
-     'target/hppa',
-     'target/i386',
-     'target/i386/kvm',
-+    'target/i386/whpx',
-     'target/loongarch',
-     'target/mips/tcg',
-     'target/ppc',
-diff --git a/target/i386/whpx/trace.h b/target/i386/whpx/trace.h
-new file mode 100644
-index 00000000000..b7c090deff3
---- /dev/null
-+++ b/target/i386/whpx/trace.h
-@@ -0,0 +1,2 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "trace/trace-target_i386_whpx.h"
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index acae61e089d..e56ae2b3433 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -41,6 +41,7 @@
- #include "emulate/x86_emu.h"
- #include "emulate/x86_flags.h"
- #include "emulate/x86_mmu.h"
-+#include "trace.h"
- 
- #include <winhvplatform.h>
- 
-@@ -1921,8 +1922,8 @@ int whpx_vcpu_run(CPUState *cpu)
-                         1 : 3;
- 
-             if (!is_known_msr) {
--                warn_report("WHPX: Unsupported MSR access (0x%x), IsWrite=%i", 
--                vcpu->exit_ctx.MsrAccess.MsrNumber, vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-+                trace_whpx_unsupported_msr_access(vcpu->exit_ctx.MsrAccess.MsrNumber,
-+                    vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-             }
- 
-             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
-diff --git a/target/i386/whpx/trace-events b/target/i386/whpx/trace-events
-new file mode 100644
-index 00000000000..ebdfa34b281
---- /dev/null
-+++ b/target/i386/whpx/trace-events
-@@ -0,0 +1 @@
-+whpx_unsupported_msr_access(uint32_t msr, int is_write) "WHPX: Unsupported MSR access (0x%x), IsWrite=%i"
+@@ -314,7 +314,7 @@ elif cpu == 'x86_64'
+     'CONFIG_HVF': ['x86_64-softmmu'],
+     'CONFIG_NITRO': ['x86_64-softmmu'],
+     'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
+-    'CONFIG_WHPX': ['i386-softmmu', 'x86_64-softmmu'],
++    'CONFIG_WHPX': ['x86_64-softmmu'],
+     'CONFIG_MSHV': ['x86_64-softmmu'],
+   }
+ endif
 -- 
 2.53.0
 
