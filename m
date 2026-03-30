@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B401061B22
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 21:58:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B11C01061B24
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Mar 2026 22:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Kd3-00016E-Vy; Mon, 30 Mar 2026 17:58:38 -0400
+	id 1w7Khv-0002VD-9G; Mon, 30 Mar 2026 18:03:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Kcz-00015t-T3
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:58:34 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Kho-0002Sh-Rr
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 18:03:34 -0400
 Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Kcw-0001Yg-Ck
- for qemu-devel@nongnu.org; Mon, 30 Mar 2026 17:58:33 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Khl-0002QV-D3
+ for qemu-devel@nongnu.org; Mon, 30 Mar 2026 18:03:32 -0400
 Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4873ce69ba9so15256005e9.2
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 14:58:29 -0700 (PDT)
+ 5b1f17b1804b1-486b9675d36so41847045e9.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 15:03:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774907909; x=1775512709; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774908208; x=1775513008; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mvYK8xsRHKLVYcUoNPBOaYi1/RzqbOQeBKzf0CNIZyQ=;
- b=dGJhvUC/DC6c3LCu1S1D0XsRNB4hTucwQciVZPlr8K7zsvw7uYbqnIOlNRF6sLRRAJ
- mwCjHdiPDa2KDlPYp6GHzWavlYJnU9TUC6P9Gq+FRhD+J6mehFL+kTqnIZyUSJvpyY5R
- pmCN13/FS3+2EZku4d4RtAyGFBtuypXAChebuLB29UTEoadc7myE3Tl773v78iVPZyf9
- VpnHBW12mj76/aAlkAPPmYRuYTfRJjkt9stFoKVEJuq2+VsYzsoiNrJa95fR1tOkePNI
- fF1z1pwHunQeAhht/wSCsHld7WuXdf9vojChwdwc+cgzZmVm+xMYcnr4r1DeJEew7CNu
- WuLw==
+ bh=Vt05lAnyLjXRvX1IXvgqr1r0NUqr0NThbYDX1DCl8oU=;
+ b=YsuswK/JDhThs6PANEkWg8hsxdfjEC76UJKi9uq5aRXUYdDmVTQwhop3JTx02C4WiC
+ NDy1PBayjPyDg+5PeK21nwa6VzPIz8kU6Fk+9s0peE1pFSEC8mNC02TSMZ9wra7BpgKb
+ REgA7Fm9R8j2XxnEU7VaBXdh6e6VmAERIWQzeZukLSCLWu5stvMNtnjZVtrb3+MkXd58
+ D4S8UegMiUVDpLRhB1IY5ekzV0JmKwTK+u/z4bvodpmMLXNVk2aJNUcXG8CVZviL8Uqg
+ P0q+JRaaX8AHBhrIaRPDBYURcImTuxdVFh4zrCnAlkH/dSauzbckOP5ePQeB6D5BXaBW
+ sEkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774907909; x=1775512709;
+ d=1e100.net; s=20251104; t=1774908208; x=1775513008;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mvYK8xsRHKLVYcUoNPBOaYi1/RzqbOQeBKzf0CNIZyQ=;
- b=JBEuht1p9R7tRGkR9kX5Zi/T3VGOXJFquwXd4x7aZnZ+6VXj44h4ixaieqw8ANcWCg
- 41Du5xRdBhq7Qc2qxVHDs7Hm2qLDjxstGlchIuc6UHD4kwCmQIxDyYZvkGdlBmPbys52
- nMCL6kdOM9i8NKF72lDItOtIclYPi1zkECn6gtkaWdurZpFFmZS1/srOiDn8d+2Z+DN3
- G9yU2GMh2QhbkAc67q01UWK/hguoT/5n6KryYowQ1Y6Yu7sKGYmj/Br9f2qj2u9Hil54
- c9IS1nMwupVf+T1CtX9++HJlk6O1zU7rkTPpqMGV1AjMBdWvwISR+KU+egX2tUtJrYyO
- Uu5A==
+ bh=Vt05lAnyLjXRvX1IXvgqr1r0NUqr0NThbYDX1DCl8oU=;
+ b=Ti26khXDSOqKHRGiObB3arEFrXiOlrjFYxtIzpIgzUn+BfN5RJKgOPdPeC6aNhQjHX
+ XhCdrit4kD3SXHRGUHauT7ADOr7PFp9uJ42jovZ1QOPksMAyNuco+RHZYB3yTMEUyKP4
+ jDigXJGG4V+S+p9LCcEGjxtBIA96AJiDEFQ4Y3hrLYxWBFHgL3LaGKigduJSPN7A1s9U
+ lwyGgpAihK/4Ec8hz8nSvSnd5BOjULzkZGziostysTghgv2WM0LF2f7bTmCvRhYyZK+u
+ xppHda7NDI9tkDFxFiWo5Kar3WtQ/JxShql/YWhdgsiPaBi5j5QRBSHoixzzz5kQCjbJ
+ slPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1WT9DRwsYAncVnpOXf3r0TvSqo9MQcDEJSuXmgWcECx5IFuELEBNcJMvphgIAANuBzHyFaXvaw/Ya@nongnu.org
-X-Gm-Message-State: AOJu0YwtZbauXSEni14Y+CQN69hSrFrNs1D2AG8AYJbXrxb9pg8hkEOr
- ooDEELShLRFgl/Puwt/LnnSd/2pMLF5yebgccuXTfOZPTIXsmefFyxiJq3nUv6Qth7Y=
-X-Gm-Gg: ATEYQzxWOFNLfvEH6PRKET0MXBVcMUlil8yHGEvUJqRZshZxSUxjyHC3uJ+OrMpDxGC
- bYOOwC3W/mOXnviIG68deSrXeyvwPWIG8iBhxJ4yS38CQbkcBm49ghOuRKQ/t23QKFLa5pm2ioA
- G74cGw0PDpKCscLTdnXpNOzmuCWi3vs6rmPYHSPe6dNPO8hyqW/EMNjwHc9scwTxnLi5NiW1HN2
- SyjmFwmHHuBaPWlJX8j0pFkS8DBCf914zV6+tkCCBmkqUyEUQyH/yakhNYMYIJjGFSTUiS9nUMD
- IDFD6tHeL9s6BVYsMk8ljtzvNW9aXPaswaKNsRxtrqkvXQo6xe+3g9GyjsvoGCUulQNt/GXTWrk
- Ii5MnlJrho5hftjOkwYJKC2dZcU6ioavv0+RpjBY6HwLScW0IY2lhJT6RmEZJcNGEbR4N8jsI6K
- S07twiUVAAWN6wLT8xU5KJViGxakewI16PC9tVqOqJv2EijAbJM3fUsPw8Devz
-X-Received: by 2002:a05:600c:4e08:b0:485:363b:fafe with SMTP id
- 5b1f17b1804b1-48727d5e971mr258090465e9.1.1774907908612; 
- Mon, 30 Mar 2026 14:58:28 -0700 (PDT)
+ AJvYcCXup+BP5WMABLKA6o2QEGLLAoS8V1xgy6umhA5xJpsOlzjmHu/cyWs7n8kcMhjp0JfHPCE2wwQL5y8N@nongnu.org
+X-Gm-Message-State: AOJu0Yw8VWYZHVTdeVwfoPasQq/CQ7l5BDTuGi2tq5Llks+o7xravxr7
+ 5G5cCv8fNkFvy4nQUxbNiHPK8f0amRJKGEifP1k6YuHxyQEG61A83MlpJds/vILg1NY=
+X-Gm-Gg: ATEYQzzaZ+exCkbkmlFGm0v8s28F6GooBgaDFmJemyfch/t36F16NPSScpjHD+/Z7U3
+ JhmEf0cpSTnhWzTbyp73kfXmDU7Qv2uSkIBcYVL+ZFKkiUFeulb40Wg+xkuxaLD8YbPpkCBFtZ/
+ 8LsGk92QhkMDdkJ6rvFr7DLXTXWcTsrciAAuEK2IIs2BeWHI0DH+QyCh2FN2PqSC0oaIkIs8FI7
+ eZQsVicHR7roslzivVK7CY9Hmv6+Dn8RcOsnyXWRa3R4vQCNOwBfhTnJDnMSOr2biXN/OdFaMO1
+ Z/OvSRr3fBiI6jVcbl/ZrmH6hNiBUj5S+0SJPlf1VSF/bVd0aZo9afhGI2nwElJByTVkEZWxYik
+ YBi9KUNhDjYpmbRxMO7QGtD1aghgClHBDjpMpFSMrYCxCclARSYOL/4XLeT4GUs0fNitjvHRdrN
+ P0pi4pliWRyApMGOU1uYFTfFJH0QVujrKkv25ZvPBuC1PYfzreKTBq4xDqJyXt
+X-Received: by 2002:a05:600c:3b95:b0:486:fa35:aef2 with SMTP id
+ 5b1f17b1804b1-48727d59448mr221959575e9.4.1774908207671; 
+ Mon, 30 Mar 2026 15:03:27 -0700 (PDT)
 Received: from [10.193.39.66] (246.148.216.82.rev.sfr.net. [82.216.148.246])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887adadf4fsm2299695e9.11.2026.03.30.14.58.26
+ 5b1f17b1804b1-4887ad9bac6sm3184845e9.4.2026.03.30.15.03.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Mar 2026 14:58:27 -0700 (PDT)
-Message-ID: <6aa40bb8-4d1b-40b6-9350-9e806a1c98f4@linaro.org>
-Date: Mon, 30 Mar 2026 23:58:25 +0200
+ Mon, 30 Mar 2026 15:03:26 -0700 (PDT)
+Message-ID: <bf16eeaa-d6d9-4bd8-a05b-08a0e3459a3a@linaro.org>
+Date: Tue, 31 Mar 2026 00:03:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Treat qtest like TCG for supported-features
+Subject: Re: VGA default endianness
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20260330151437.1787008-1-peter.maydell@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>, Thomas Huth <thuth@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20260326154850.301609-1-thuth@redhat.com>
+ <30981a1a-b895-3829-0f9c-7b22e72bd0fa@eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260330151437.1787008-1-peter.maydell@linaro.org>
+In-Reply-To: <30981a1a-b895-3829-0f9c-7b22e72bd0fa@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::336;
@@ -102,30 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/3/26 17:14, Peter Maydell wrote:
-> In x86_cpu_get_supported_feature_word() we figure out the supported
-> features differently for each accelerator. The default case is
-> "set all feature bits"; however this triggers a warning because
-> it enables two features which conflict with each other:
+On 29/3/26 21:07, BALATON Zoltan wrote:
+> On Thu, 26 Mar 2026, Thomas Huth wrote:
+>> In the long run, we would like to get rid of the code that allows to
 > 
-> $ ./build/x86/qemu-system-x86_64   -cpu max -accel qtest -S
-> qemu-system-x86_64: warning: this feature conflicts with APX: CPUID[eax=07h,ecx=00h].EBX.mpx [bit 14]
-> qemu-system-x86_64: warning: this feature conflicts with MPX: CPUID[eax=07h,ecx=01h].EDX.apxf [bit 21]
+> Not related to this patch but there's another hack in vga that might be 
+> good to get rid of similarly. At hw/display/vga.c:2263 it says:
 > 
-> Treat qtest like TCG here, to avoid the complaint.
+>      /*
+>       * Set default fb endian based on target, could probably be turned
+>       * into a device attribute set by the machine/platform to remove
+>       * all target endian dependencies from this file.
+>       */
+>      s->default_endian_fb = target_big_endian();
+>      s->big_endian_fb = s->default_endian_fb;
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> This suggests to me that the default case is not something
-> we ever want to be in, and we should instead be exhaustively
-> enumerating the accelerators and asserting if we don't know
-> how to handle this for the accelerator in use. But there are
-> several accelerators that we don't have code for here...
+> I think this does not make much sense as VGA is little endian but since 
+> this hack is there since forever just changing it may break some guests. 
+> I've tried that changing the default_endian_fb to false at least breaks 
+> OpenBIOS and its QEMU VGA NDRV for MacOS. So at least those might need 
+> some backward compatibility property until they are fixed. I don't know 
+> what else could it break but maybe it would be a good opportunity to 
+> change it with new machine types with a property that could also be set 
+> by users if something breaks just to find out what might need fixing and 
+> eventually be able to remove it.
 
-Indeed. Meanwhile:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> ---
->   target/i386/cpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On the Jazz machine there is a bus bridge chipset handling such
+endianness conversion, but we don't model it. I suppose something
+similar is used on those machines, and the VGA chipset behind the
+bridge is indeed a pure little endian one. Mostly because it is
+cheaper for manufacturer to use that setup than synthetize a big
+endian VGA chipset.
 
