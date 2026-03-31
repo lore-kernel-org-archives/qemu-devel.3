@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C996109B462
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D552109B468
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Yxq-00081d-JJ; Tue, 31 Mar 2026 09:17:02 -0400
+	id 1w7Z0p-0002ho-9y; Tue, 31 Mar 2026 09:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Yxh-0007oZ-7c
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:54 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Z0n-0002g8-LD
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:20:05 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Yxe-0004ED-6u
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:52 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43cf5d14d6eso2308209f8f.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:16:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Z0k-0004dk-PN
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:20:05 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48540d21f7dso68739745e9.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774963008; x=1775567808; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EfBNunGxsX5Za9qOZ3QZ/1tl+TL5Gxf184cmua7DLVc=;
- b=QdbKccuWwgHIrCaKBWgER2A1JDPb0ATeQpeO/7naZTaLPgTQ9j3Uzc4PN7+BQLkVii
- +JeMOB6Ek7h7celaepgG0sype4LvON+iyUWkWR5Cjb5+r/FBRqZTgX3qatcRvs3l/qxL
- Dd4rL+GhDa8DZ6yQmFN++qY8mincGzzYRC/1eDQZ4g6VKgpTUq+bdJ3/u4jt1yrYiVRw
- uQ4Y9sWUSzXwu2iWmk5TG8KlWrU+0tSKpC316ij1vvTDWXhAkmyQm8Bl/gdH7JqmAB8i
- RBkxZ4p1Ls90Q4N278JxhFfgQkVD3uM1mgGVwgPdCLldyIfByhIVduAPcCx5n5pgXnPg
- pTZg==
+ d=linaro.org; s=google; t=1774963201; x=1775568001; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vpZWb/Xr06j6y+c297zVddDxDkXuJByamNTk20R0bTE=;
+ b=pSELSrxnL9FaHGeTnq0adAOu4e4aqLhZF4vXr/3vJ0OnH155etC3faCnZhERL+ZAFs
+ +3gDp28/73gMri/La94t/DJoLVeQYSBwfrDqnrrDiWbPJbWcZzuYnxPMDO38+PmoD/T1
+ PZLwnm9ojgPo/DR4Me9PfC6LwZVo2/jXGayFsI620wJtaIB1cOTwfYCdUl7dHnyC5sqL
+ jPPpkjNFZGevB7VYu2T9bjJmpMzJJdx29C9uD+dwd5EAlDou/cnCroZeWpRKXsBgyDxA
+ +juvyxBPI2yvFPoeZuZ4AmPaQmB/IWqJCCDYLiJR75yZGfhhMu+thH6MV6l2wCqVxBmw
+ IrOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774963008; x=1775567808;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=EfBNunGxsX5Za9qOZ3QZ/1tl+TL5Gxf184cmua7DLVc=;
- b=s7DUXx/hXXOoPtBnZzHabAEyaov3CQQBOru3tb9HL7nfUW1tvQV3BNlW9WZYgMCBlI
- ynRlYMJ5f1m6tHtmXdLLa03jzvcHuJUmvT7kzvaBJkAVW/Ms6fndUWiLKuhCZcXDRp6q
- ot2M4OZg6HuZs7THQAw9Z6BuuBos5bXDyKqbV2WBzAWxStIc4kkKXDfNRcapkthlgWm5
- vrkaukl5KsTt2Xzak7QgX6IbT/PvO/2fkHHPy/9XI+qLZITlE7ZF7xGbpkskJ8wfl0vd
- +lDUl4wGLBxMxpobkDXh46NmPEGMFKTEs13ahyyxBl0Bl9uxqZwOyC7pazclPAGsvUPD
- Q1VA==
-X-Gm-Message-State: AOJu0Yx7EDzXtVGCrrai6mN8g3Gj8endugCVtLM0joYnEGb6QGgr7znk
- Ye0iAFHC8Hx4Q7l+u+yDDKl3izNrahZvXr7oL5yOcpGWB59vN6iRm+AtLCe2Yae1Q3VR7pehaSF
- EjVIaFsY=
-X-Gm-Gg: ATEYQzwz9VGIr4r242w3+NfSNqgU/uf79P64dyazYNpCgURWj14W2uhmzYOatsr/5eP
- c9ppIr9sn2a/Arezc7A0fSMsotgClExKHtaxvnkHr+qflZlUH6WUX8Nbq/y9+Y4DDg2CUI93NA+
- kMz0W5UiMFCxu1o2WpJiT7k2cFVGrZ9/GUad4NhDbF859ParIFnt3mkAc3R4cvtgZK7rRX1PwGR
- /FQT3HyZ0yenwUnGbLESTiovK2IDn0VyUTUmMX9Z7BvNGVNVF8UvW9l0esk8YzCv0OnuFFeXH8x
- ki568FNp6rPoWdZMvkj0uqCBJbBR4WEBF/YPKb9xPgvDAVsahj3oqDIUunoWSjoIHgxSaEWSLnV
- 2RJgfhFbd+Juvob6f6iYrt7ZuX6vJwm9QmjhIekJVJHjr2bBJ4geIGVs5hAhoZ5nEl6Dl6SNzpE
- FrkM1vMKxq8kWDIMpHcca2qyEuZBtidX+veI1/uiFkwMtTDKNXLPEpBmTcASU0BZi8R98=
-X-Received: by 2002:a05:6000:4027:b0:43a:580:f60d with SMTP id
- ffacd0b85a97d-43b9ea4a5b4mr28407686f8f.35.1774963008160; 
- Tue, 31 Mar 2026 06:16:48 -0700 (PDT)
-Received: from localhost.localdomain (43.149.216.82.rev.sfr.net.
- [82.216.149.43]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21ebef9sm28605465f8f.13.2026.03.31.06.16.47
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Mar 2026 06:16:47 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 11/11] MAINTAINERS: fix OSUOSL typo
-Date: Tue, 31 Mar 2026 15:15:13 +0200
-Message-ID: <20260331131514.21152-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260331131514.21152-1-philmd@linaro.org>
-References: <20260331131514.21152-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1774963201; x=1775568001;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vpZWb/Xr06j6y+c297zVddDxDkXuJByamNTk20R0bTE=;
+ b=H4POZGQcL0rUf4BOSBrnQAf1SePVqUyTSw6Pec3gkvRwDmjsSN/Txvzom26RacRrII
+ FgIE7QOwdFCxJPWabFGkiGLSu3bmXlli8vydDaLIjX3n+JHl50nYLHymUvwwDko/3HUy
+ m+c7dMtrQwPlXUPK2EmtysTBqcjMppe1Ld5U77bBJaE0LgMdG3XwZlaVjpOwILWFUS02
+ MrbHgBbuuGspps/en6a353yZor4cHSW8pUfgqlDBSS22wsipHZKkHdWL+sfNZyYhLy3M
+ TkUK1ZL6hOegF9w7ugiXneXSCAPqkh1xLCKpTVogbozaeRe0AE6s8rB56aFaX8yhwlek
+ 7BZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXjO8xGdbUL4JPpy1O58CuItUo2Gcd8JX/tZ0IyBlUkkxVsEJ/LeqlvBK9GLYlY/oPdQG0pSH/74n3F@nongnu.org
+X-Gm-Message-State: AOJu0Yz8PJA52KBt7opSzgPl91TCSKxCIGcbXjPjGxihsjZDD4XAx3iK
+ puKG6xlm3fm3sEhQsFzMwxcIYle1mFpclNJCENvVs9BvR+/VCdFvRIMI3jr50LX0M/EFEFF1Pj0
+ E05KifAI=
+X-Gm-Gg: ATEYQzwtuu4rtocHsURBLMsOc+tXne/w4mY6etQY0DcJAkvThq2on45DbPG+B0ODotY
+ LLeDMptpIM+YYXOta8PjVCHtprOQiH+Fe/LcjJ+FWNuCPhiPo9fc+cRxBR73BIumfg+9Z0ypV9F
+ 8cpG/5p5BkwUZRxLjR8ZVri08gebBi/0uOylk2RlXtccMJkHeBlT3EjVnmYb4SoC003KcaeqgNE
+ 6yTgErDaS36YZyQiwqDbiO6J0Rb5L/KGyBhfsAxE0k0+jbH0nvZXZh8e4esrHmKx093jACJd4k0
+ /JQiAKsIeyX56hdyPVm+zICcZ3T6irDkEGkovV9jEfZvHiqOuemX59PVEqKPkG8RiaKY1I/bDMd
+ ++g/Chf/i5JrbJckCQleJk4Nr8w2DwAqZqQZqXVzejgu5NnpaAKDGrZCsvhcqfY61Ca96s4r4K0
+ KMzos8uD6cfE6p+7+f9kIZ5xBnNttljI8yOgDfZ4uldm1qsbE5okUyyWv2MfuqV1WLGCUv
+X-Received: by 2002:a05:600c:8b63:b0:482:f564:d613 with SMTP id
+ 5b1f17b1804b1-48727eafa46mr249847485e9.15.1774963200790; 
+ Tue, 31 Mar 2026 06:20:00 -0700 (PDT)
+Received: from [10.193.39.66] (43.149.216.82.rev.sfr.net. [82.216.149.43])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4887c8797ecsm33572065e9.8.2026.03.31.06.19.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 31 Mar 2026 06:19:59 -0700 (PDT)
+Message-ID: <16410351-5181-47ed-aac4-f3a90fe80568@linaro.org>
+Date: Tue, 31 Mar 2026 15:19:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: do_ats_write(): avoid assertion when ptw
+ failed
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20260331092305.2062580-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260331092305.2062580-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,32 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+On 31/3/26 11:23, Peter Maydell wrote:
+> In do_ats_write() we try to assert that the cacheattrs from
+> get_phys_addr_for_at() are in the form we expect:
+> 
+>      /*
+>       * ATS operations only do S1 or S1+S2 translations, so we never
+>       * have to deal with the ARMCacheAttrs format for S2 only.
+>       */
+>      assert(!res.cacheattrs.is_s2_format);
+> 
+> However, the GetPhysAddrResult struct documents that its fields are
+> only valid when the page table walk succeeded.  For a two stage page
+> table walk which fails during stage two, we will return early from
+> get_phys_addr_twostage() and depending on the fault type the
+> res.cacheattrs may have been initialized with the stage 2 cache attr
+> information in stage 2 format.  In this case we will incorrectly
+> assert here.
+> 
+> Fix the assertion to not look at the res fields if the lookup failed.
+> 
+> Note for stable backports: the do_ats_write() function is in
+> target/arm/helper.c in older QEMU versions, but the change to the
+> assert line is the same.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3328
+> Fixes: 9f225e607f21 ("target/arm: Postpone interpretation of stage 2 descriptor attribute bits")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Not a regression, but it's a very safe fix, so this will probably
+> get into 11.0.
+> 
+>   target/arm/tcg/cpregs-at.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-It stands for Oregon State University Open Source Lab.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260331070401.1125840-1-alex.bennee@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index de8819b7aaa..ad215eced84 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4530,7 +4530,7 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Maintained
- F: tests/tcg/Makefile.target
- 
--GitLab custom runners (HW sponsored by Linaro, OSOUL and IBM)
-+GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
- M: Alex Bennée <alex.bennee@linaro.org>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Maintained
--- 
-2.53.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
