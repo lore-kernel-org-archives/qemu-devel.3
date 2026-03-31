@@ -4,52 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E75B6FF60C6
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 06:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031A6FF60C8
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 06:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7SFt-0000OS-OK; Tue, 31 Mar 2026 02:07:13 -0400
+	id 1w7SGj-0000j7-Og; Tue, 31 Mar 2026 02:08:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1w7SFs-0000O6-2J
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:07:12 -0400
-Received: from oxygen.pond.sub.org ([94.130.129.15])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1w7SGc-0000hq-5L
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:07:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1w7SFq-0002Xf-73
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:07:11 -0400
-Received: from blackfin.pond.sub.org
- (p200300d36f125200d4b07119e720e6da.dip0.t-ipconnect.de
- [IPv6:2003:d3:6f12:5200:d4b0:7119:e720:e6da])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- by oxygen.pond.sub.org (Postfix) with ESMTPSA id B46DC20EC2
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 08:10:26 +0200 (CEST)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F36B421E6A28; Tue, 31 Mar 2026 08:07:04 +0200 (CEST)
-To: Elizabeth Ashurov <eashurov@redhat.com>
-Cc: qemu-devel@nongnu.org,  kkostiuk@redhat.com,  yvugenfi@redhat.com,
- berrange@redhat.com
-Subject: Re: [PATCH v2] qga: add security info to guest-get-osinfo
-In-Reply-To: <20260330151941.2207789-1-eashurov@redhat.com> (Elizabeth
- Ashurov's message of "Mon, 30 Mar 2026 18:19:41 +0300")
-References: <20260330151941.2207789-1-eashurov@redhat.com>
-Date: Tue, 31 Mar 2026 08:07:04 +0200
-Message-ID: <87tstwwn07.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=94.130.129.15; envelope-from=armbru@pond.sub.org;
- helo=oxygen.pond.sub.org
-X-Spam_score_int: 3
-X-Spam_score: 0.3
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1w7SGY-0002a8-OR
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:07:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774937272;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SOMNRPZtXE9cpNpBdcolJkPdPk+qioaOp51N7BXgYlQ=;
+ b=czzbXlwbLtg8oBjZhcNXOdut4ZdYq3JwWAciNB9+yhN0dYT6aW9apS3rZsGL6dv5SYkqvw
+ liBBXK5keRghAQtCDTBGfX1Yu8jXmO9zXZ5zfnpXvqlkyRg/0xK99bLMvcRgW9Qh0ve4KM
+ xg7l0vJyPWjpBOsoZyOeuz0PR0mbiFQ=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-aLj4PYkaMPyfw88jQQNtpQ-1; Tue, 31 Mar 2026 02:07:51 -0400
+X-MC-Unique: aLj4PYkaMPyfw88jQQNtpQ-1
+X-Mimecast-MFC-AGG-ID: aLj4PYkaMPyfw88jQQNtpQ_1774937270
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-82c70d1f65aso3455681b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 23:07:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774937269; x=1775542069; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SOMNRPZtXE9cpNpBdcolJkPdPk+qioaOp51N7BXgYlQ=;
+ b=qQ/osgi+Ek5BhY6JJrlVateTjfxKql78XPclJLicXACzRgnvxwoz3XnFQvh66ZEY76
+ Rg5taUmCk6uOKLUOxpM3RQ6U4Rl5NgMnUEeozHrVUKM3xBTMzASp0WqToAfFq8vNmPFT
+ dfuQV88rUBIdeTjY28X64jDc0PalmP7WUFhnCJ7czAzU/yf5+48uyYHCwmjFAe0cDWgt
+ eunemC1mDh0FCdMeuWuX7gewCns9ShM1gTWI8bXmUL4odptvaNtxks6kwg9DnUfqQmkv
+ 79Gw0QwBvl4IwQtGMggPP/o6WgzDgYjbW1QAS6N5rwBd9BX4s1lXns3Vc8VuOgx7jpcN
+ 4dvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774937269; x=1775542069;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SOMNRPZtXE9cpNpBdcolJkPdPk+qioaOp51N7BXgYlQ=;
+ b=O1TTF3lYSRX9NThodb6eIneZtX0ioq9bsXqDYfjGZLqss0t66HQnQ5K1g3BNxvGMgB
+ FrzwSGroFQhyP/IlM4nODKwfOZ1pwSZtI5ahQmqqLrL0J+Lct0OTbW6D2WTZn3u83Q3Q
+ qivdzh4DM3S4+M0IhYjhA4oPznV8oBkqOx8wttM+sSV7+mGqOs1X0jzIY2Ro2KyZZgyb
+ EPbKhrk2agx5WPmgHL3ZOTQB5W4FIZa682mvYg/RnRVUF3dxLwqv5Njo++hR//CvCVbt
+ ylCQ5QimSpiDGDXlxQQ0OH/0Dp8G6odtrbX8yaF5V43gk8nL+/wfYhvLijmiltzVrA3l
+ o4Sg==
+X-Gm-Message-State: AOJu0YyZ/j1QvfrMaXc4F5eKtiGkQbCEts0ygn4yl1d+GpacArc681ZO
+ PFZKgT/oGC3YpWAkwsxKf+TyCV8CvL3gGLXGtdPBaD6rHoy+mJiI8T0uY45QL83eIxR6dp+UMek
+ OtDqSX19MvLj7disQGtCsOwPtNDLKT+PWTZNCnNmawMZbrJETBhiK5/0r3kMVLcBk
+X-Gm-Gg: ATEYQzydfqPicbAoLWrMd1EStLE7VoJoqGucNloTHjdGj/coVVdH+Lo8frxCgKPqb9i
+ 5Yp1FEAjzRltWWmEwiWEAXR9tgFniZ31XfUrKPQ22a5t1GO1hFAEUhdl5s79RJKpIz9l2ZnGM9m
+ 3e1oYZFyInAJ//z7PEr17PN9AN7Ez3EkE3Gxn4bLFrD29hBQ0luPTQ8g9slUImdXh+8p0DjMC3U
+ eVt3ox+8pOFqxyDuE94DtjgjqeDKsd8UPazVV4iVfngZOwmwlEnXs1RpxWK3tqD+bcrLhTg+7hG
+ HQhbMiN9YpB3eaQCTcbSFNJCm4ZB1PJ4A/kjlp4n5EDnmkqhcq/e3DwVZUFJ6LWtIWVcn+EEe/X
+ ysgG8TQR1+mRmgLK4AwnUgrxPjwn0Zu2GNY05/Za2Qhsw++gKnROnndyWSLVfSQ5j/ZI4crv/RK
+ 8=
+X-Received: by 2002:a05:6a00:8d3:b0:7aa:a2a8:9808 with SMTP id
+ d2e1a72fcca58-82c95e650a6mr15395843b3a.20.1774937269448; 
+ Mon, 30 Mar 2026 23:07:49 -0700 (PDT)
+X-Received: by 2002:a05:6a00:8d3:b0:7aa:a2a8:9808 with SMTP id
+ d2e1a72fcca58-82c95e650a6mr15395823b3a.20.1774937268994; 
+ Mon, 30 Mar 2026 23:07:48 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82ca843b818sm11144762b3a.6.2026.03.30.23.07.46
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 30 Mar 2026 23:07:48 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH 3/3] igvm: fix parent object type in IgvmCfg struct
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20260330-igvm_fixes-v1-3-03587a5a808b@redhat.com>
+Date: Tue, 31 Mar 2026 11:37:34 +0530
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Oliver Steffen <osteffen@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9B544E78-E4CD-488B-BB87-A33998910CAC@redhat.com>
+References: <20260330-igvm_fixes-v1-0-03587a5a808b@redhat.com>
+ <20260330-igvm_fixes-v1-3-03587a5a808b@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: Apple Mail (2.3864.400.21)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,156 +122,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Markus Armbruster <armbru@redhat.com>
-From:  Markus Armbruster via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Elizabeth!  You neglected to cc: me.  Recommend to use
-scripts/get_maintainer.pl to find all the possibly involved maintainers,
-then use common sense to trim.
 
-Elizabeth Ashurov <eashurov@redhat.com> writes:
 
-> Extend guest-get-osinfo to include security features status
-> (VBS, Secure Boot, TPM) in a nested 'security' field.
-> OS-specific data (e.g. Windows DeviceGuard) is separated
-> using a union to allow future per-OS extensions.
->
-> The implementation queries Win32_DeviceGuard and Win32_Tpm via
-> WMI, and reads the SecureBoot UEFI variable through
-> GetFirmwareEnvironmentVariable().
->
-> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+> On 30 Mar 2026, at 6:13=E2=80=AFPM, Luigi Leonardi =
+<leonardi@redhat.com> wrote:
+>=20
+> IgvmCfg is defined as an Object but, currently, its first member is an
+> ObjectClass.
+>=20
+> Replace ObjectClass with Object.
+>=20
+> Fixes: c1d466d267cf ("backends/igvm: Add IGVM loader and =
+configuration")
+> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 
-[...]
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index c57bc9a02f..2247f77cff 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1490,6 +1490,8 @@
->  #     * POSIX: as defined by os-release(5)
->  #     * Windows: contains string "server" or "client"
->  #
-> +# @security: Security features status (since 10.3)
-> +#
+> ---
+> include/system/igvm-internal.h | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/include/system/igvm-internal.h =
+b/include/system/igvm-internal.h
+> index =
+76ae1bc3be9249cc1796bd7eec77dd9084358f98..7f131c4d0392214e4d53ca84d60713b3=
+c1493334 100644
+> --- a/include/system/igvm-internal.h
+> +++ b/include/system/igvm-internal.h
+> @@ -19,7 +19,7 @@
+> #include <igvm/igvm.h>
+>=20
+> struct IgvmCfg {
+> -    ObjectClass parent_class;
+> +    Object parent_obj;
+>=20
+>     /*
+>      * filename: Filename that specifies a file that contains the =
+configuration
+>=20
+> --=20
+> 2.53.0
+>=20
 
-When is this member present?
-
-Since 11.1.  More of the same below, not flagging it again.
-
->  # .. note:: On POSIX systems the fields @id, @name, @pretty-name,
->  #    @version, @version-id, @variant and @variant-id follow the
->  #    definition specified in os-release(5).  Refer to the manual page
-> @@ -1508,7 +1510,8 @@
->        '*kernel-release': 'str', '*kernel-version': 'str',
->        '*machine': 'str', '*id': 'str', '*name': 'str',
->        '*pretty-name': 'str', '*version': 'str', '*version-id': 'str',
-> -      '*variant': 'str', '*variant-id': 'str' } }
-> +      '*variant': 'str', '*variant-id': 'str',
-> +      '*security': 'GuestSecurityInfo' } }
->  
->  ##
->  # @guest-get-osinfo:
-> @@ -1952,3 +1955,89 @@
->    'returns': ['GuestNetworkRoute'],
->    'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
->  }
-> +
-> +##
-> +# @GuestSecurityInfoWindows:
-> +#
-> +# Windows-specific security features from Win32_DeviceGuard.
-> +#
-> +# @vbs-status: VirtualizationBasedSecurityStatus
-
-PleaseWriteNemberDescriptionsInEnglish: words, spaces, punctuation, the
-works.
-
-> +#
-> +# @available-security-properties:
-> +#     AvailableSecurityProperties
-> +#
-> +# @code-integrity-policy-enforcement-status:
-> +#     CodeIntegrityPolicyEnforcementStatus
-> +#
-> +# @required-security-properties: RequiredSecurityProperties
-> +#
-> +# @security-services-configured:
-> +#     SecurityServicesConfigured
-> +#
-> +# @security-services-running: SecurityServicesRunning
-> +#
-> +# @usr-cfg-code-integrity-policy-enforcement-status:
-> +#     UsermodeCodeIntegrityPolicyEnforcementStatus
-> +#
-> +# Since: 10.3
-> +##
-> +{ 'struct': 'GuestSecurityInfoWindows',
-> +  'data': {
-> +      '*vbs-status': 'int',
-> +      '*available-security-properties': ['int'],
-> +      '*code-integrity-policy-enforcement-status': 'int',
-> +      '*required-security-properties': ['int'],
-> +      '*security-services-configured': ['int'],
-> +      '*security-services-running': ['int'],
-> +      '*usr-cfg-code-integrity-policy-enforcement-status':
-> +          'int' } }
-
-Please don't break this line.
-
-> +
-> +##
-> +# @GuestSecurityInfoType:
-> +#
-> +# Guest operating system type for security info.
-> +#
-> +# @windows: Microsoft Windows
-> +#
-> +# Since: 10.3
-> +##
-> +{ 'enum': 'GuestSecurityInfoType',
-> +  'data': ['windows'] }
-> +
-> +##
-> +# @GuestSecurityInfoOs:
-> +#
-> +# OS-specific security information.
-> +#
-> +# @type: guest operating system type
-> +#
-> +# Since: 10.3
-> +##
-> +{ 'union': 'GuestSecurityInfoOs',
-> +  'base': { 'type': 'GuestSecurityInfoType' },
-> +  'discriminator': 'type',
-> +  'data': {
-> +      'windows': 'GuestSecurityInfoWindows' } }
-> +
-> +##
-> +# @GuestSecurityInfo:
-> +#
-> +# Guest security features status.  Fields are optional; a missing
-> +# field means the information is not available on this platform.
-
-What do you mean by "platform"?  Host, guest, both?
-
-> +#
-> +# @tpm-present: Whether a TPM device is present
-> +#
-> +# @tpm-version: TPM specification version (e.g. "2.0")
-> +#
-> +# @secure-boot: Whether UEFI Secure Boot is enabled
-> +#
-> +# @os: OS-specific security information
-> +#
-> +# Since: 10.3
-> +##
-> +{ 'struct': 'GuestSecurityInfo',
-> +  'data': {
-> +      '*tpm-present': 'bool',
-> +      '*tpm-version': 'str',
-> +      '*secure-boot': 'bool',
-> +      '*os': 'GuestSecurityInfoOs' } }
 
