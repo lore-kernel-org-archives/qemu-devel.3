@@ -4,59 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A6FCFF60C6
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 06:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54801FF60CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 06:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7SLh-0003iR-6y; Tue, 31 Mar 2026 02:13:13 -0400
+	id 1w7SOk-0006Bv-KS; Tue, 31 Mar 2026 02:16:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1w7SLb-0003gP-AA
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:13:07 -0400
-Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1w7SOf-00069l-7d
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:16:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1w7SLX-00032T-2r
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:13:05 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1w7SOc-0003P1-MJ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:16:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774937773;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xwSTjmxOqzSs8Ym3BrnjUX2LlqVOKTiadNNhypWKqyM=;
+ b=R29ZDlL35SsuTsWpWraW5xQ4GzUj2pZt03a/Fd4cNP26NXJq0Va5/ILxLi4H360I65OP8H
+ 5Q5Ey4Rl8epUXDsz1/TwsSDMxHyzsHBWZ8MehBzlEM3wFAbWYYpS8PBKFFXpw+wo0L/f22
+ Xd2/CcDe7Bp3uViGZ+qroRqum1wNdCY=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-495-dITMbWvMOW21CWX5Xc3rsA-1; Tue, 31 Mar 2026 02:16:11 -0400
+X-MC-Unique: dITMbWvMOW21CWX5Xc3rsA-1
+X-Mimecast-MFC-AGG-ID: dITMbWvMOW21CWX5Xc3rsA_1774937770
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c70f19f0f37so3290254a12.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 23:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1774937569; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
- bh=k/Pw/7AwyXnbAwlCyIMzZnhcQ+HaOc0N3Dc1HQuWsgo=;
- b=i2yoM02uJSQKXvXuxDQUSGbaV4U1/j2rjjLTlSkILYXWK2qkxEyjJ7gqkCKRf9Z6FcZIH/l7R8MOBpEJN7tplaFQMsy9R2GTurpNZkugosdkrimzzADBBWCQWKEdkwaVwqxTNmANKA39d0RfFB4uYGNRa7Nuu5HbEPn1KLmUBk8=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R671e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
- TI=SMTPD_---0X03E62i_1774937251; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X03E62i_1774937251 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 31 Mar 2026 14:07:40 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	richard.henderson@linaro.org,
-	philmd@linaro.org
-Subject: [PATCH] memory: Optimize flatview_simplify() to eliminate redundant
- memmove calls
-Date: Tue, 31 Mar 2026 14:07:31 +0800
-Message-ID: <20260331060731.82641-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.118;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
-X-Spam_score_int: -154
-X-Spam_score: -15.5
-X-Spam_bar: ---------------
-X-Spam_report: (-15.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ d=redhat.com; s=google; t=1774937770; x=1775542570; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xwSTjmxOqzSs8Ym3BrnjUX2LlqVOKTiadNNhypWKqyM=;
+ b=rRTh/eFWjed+Rz+TU+JoHfi2/bbDfrGgSD+68gs3iO8JdwCnlNgoiP/ee6ZPzhYfbS
+ FmsO5OWb5r19whbTL26yhdLXSt+kMoNOF0AlqOv7BXtpcCVDf+mwRpqcqqRDGewoj/mr
+ kobA/L/ifgW8jQ1g+ha4rqAE4fWYNQ4SljEm4z6WKdP3YEMoOONlLAI3UN/DRk1XT9vl
+ ISI9PU88CHae0jgcvylq3S0n3V2bQGZuXrAYR0HHvQYGmMzg/RP1ECWpc8gaNYfJj64q
+ ADuH1kSg79ZOIN+j1+SUo2+UgCjd9k1edGVRqSVJEnEIHYZnlJ6jtYOPIeBMHU7rKbi+
+ BMfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774937770; x=1775542570;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xwSTjmxOqzSs8Ym3BrnjUX2LlqVOKTiadNNhypWKqyM=;
+ b=nHJ/dP6Q6kgFLAzdKGbMpbQ6zwsS/zsCS+SOnRXxf9bnIgPyhA19HMrXhW79Nxh1M8
+ QTToEFZAa0PDjz4R3BO1kTCVoMEMoFfglPUxdnXr6niqTsgUIZe+RWzf3x8thx2Kp1iV
+ +r9Bt65HTk3gc4uEUGXSJRyy35GSY2c6Pi7oKrg3sJJEGGcZwUTT3z2aS9x5+aP10Zl5
+ kVf72c+MscCty1Mv5OUdNE9Lb951BWZ4d3VylTRFoSaUwkPbdHjz+ia5L8/Q3wQqb776
+ QFBXbzLLh7IDmQQiwnB+zhoRvBlG/ULOx5J+gnmtq+MH1NgvQiWGuhcK+cIKEDOTKhWF
+ VUfA==
+X-Gm-Message-State: AOJu0YwVvVVxNCnZGXMMKw+x864BbbV2VdBA94X+m4zdNK9a/mAcojti
+ Xl5KuzWqe0fEovWiuBvB5TOT+iQvfV5hB/ubp0giVwBtVqs1IbP2OyoNDhyFDwTKkJDz4G64NY6
+ ag6cQ8RQapD3ad1uLOUQaof6IRT5SkJ3gtIQ726dmzhGqzLedvO5KNoInaWsCXub8
+X-Gm-Gg: ATEYQzxvDobXfTQRPWlFPOJXDAhTdTIUWx8/9oCQqSDSkqXtLxvtn8QNR7LRz8iN1Ow
+ mMbQxNoEXizaHV2NkFuA2dLkMeraMCWrIG/BERdaY28L6K8mtIckI8YWe/OHDVO5JGbAsjV40p0
+ mdDtZStq9ANhHiFBSn6+G/cOpx1+obM+RHabn72LK9+9I9ffhNO8Hnv2eCL6m+KPX0fzZm1jcgi
+ 59Jdtk8OfSc28NQKPk6yd5F9rPX3AJhCf+ZFBXVUnqo5ddPrug0mCH8kI3riZnbwlXSFwsgb7bh
+ 0hFujwWiILMBBPqAIxxOsx2h/A9iAlnjPGoicvJrodK5cWRfkNLwPQEkJuUqFL4HGYrsF4Ez2nh
+ eCpyUU2sUIc89D4lR37z6tZkWNnCSDKaKr9GNmEIRNF8Lcf+jGPsU/XPm9C15y08KWOCxKfgJew
+ 8=
+X-Received: by 2002:a05:6a00:2da8:b0:82a:146d:36a3 with SMTP id
+ d2e1a72fcca58-82cd65ed997mr2182447b3a.21.1774937770130; 
+ Mon, 30 Mar 2026 23:16:10 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2da8:b0:82a:146d:36a3 with SMTP id
+ d2e1a72fcca58-82cd65ed997mr2182420b3a.21.1774937769654; 
+ Mon, 30 Mar 2026 23:16:09 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82caa8be173sm8326144b3a.55.2026.03.30.23.16.07
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 30 Mar 2026 23:16:09 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH 2/3] igvm: fix memory leak on failed memory region init
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20260330-igvm_fixes-v1-2-03587a5a808b@redhat.com>
+Date: Tue, 31 Mar 2026 11:45:55 +0530
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Oliver Steffen <osteffen@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F98D82E4-5C4B-4A36-A386-1B2FF91034DD@redhat.com>
+References: <20260330-igvm_fixes-v1-0-03587a5a808b@redhat.com>
+ <20260330-igvm_fixes-v1-2-03587a5a808b@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: Apple Mail (2.3864.400.21)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,66 +125,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original flatview_simplify() implementation uses memmove() to shift
-array elements after each merge operation, resulting in O(n²) time
-complexity in the worst case. This is inefficient for VMs with large
-memory topologies containing hundreds of MemoryRegions.
 
-Replace the memmove-based approach with a two-pointer in-place compression
-algorithm that achieves O(n) time complexity. The new algorithm uses a
-write pointer i and a read pointer j, where i ≤ j is always maintained.
-This invariant ensures we never overwrite unprocessed data, making memmove
-unnecessary.
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- system/memory.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+> On 30 Mar 2026, at 6:13=E2=80=AFPM, Luigi Leonardi =
+<leonardi@redhat.com> wrote:
+>=20
+> When memory_region_init_* fail, `igvm_pages` is not freed causing a =
+leak.
+>=20
+> Free `igvm_pages` in the error path.
+>=20
+> Fixes: c1d466d267cf ("backends/igvm: Add IGVM loader and =
+configuration")
+> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+> ---
+> backends/igvm.c | 2 ++
+> 1 file changed, 2 insertions(+)
+>=20
+> diff --git a/backends/igvm.c b/backends/igvm.c
+> index =
+50f0d6fb9a7bacddce91f095b6e2710ecbc79c6f..c347d0c17e7ee744e450d42e677946ab=
+ad8a7211 100644
+> --- a/backends/igvm.c
+> +++ b/backends/igvm.c
+> @@ -216,11 +216,13 @@ static void *qigvm_prepare_memory(QIgvm *ctx, =
+uint64_t addr, uint64_t size,
+>             ctx->machine_state->cgs->require_guest_memfd) {
+>             if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
+>                                                     region_name, size, =
+errp)) {
+> +                g_free(igvm_pages);
 
-diff --git a/system/memory.c b/system/memory.c
-index 56f3225b21..0ff066c348 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -336,24 +336,25 @@ static bool can_merge(FlatRange *r1, FlatRange *r2)
- /* Attempt to simplify a view by merging adjacent ranges */
- static void flatview_simplify(FlatView *view)
- {
--    unsigned i, j, k;
-+    unsigned i, j;
-+
-+    if (view->nr <= 1) {
-+        return;
-+    }
- 
-     i = 0;
--    while (i < view->nr) {
--        j = i + 1;
--        while (j < view->nr
--               && can_merge(&view->ranges[j-1], &view->ranges[j])) {
-+    for (j = 1; j < view->nr; j++) {
-+        if (can_merge(&view->ranges[i], &view->ranges[j])) {
-             int128_addto(&view->ranges[i].addr.size, view->ranges[j].addr.size);
--            ++j;
--        }
--        ++i;
--        for (k = i; k < j; k++) {
--            memory_region_unref(view->ranges[k].mr);
-+            memory_region_unref(view->ranges[j].mr);
-+        } else {
-+            i++;
-+            if (i != j) {
-+                view->ranges[i] = view->ranges[j];
-+            }
-         }
--        memmove(&view->ranges[i], &view->ranges[j],
--                (view->nr - j) * sizeof(view->ranges[j]));
--        view->nr -= j - i;
-     }
-+    view->nr = i + 1;
- }
- 
- static void adjust_endianness(MemoryRegion *mr, uint64_t *data, MemOp op)
--- 
-2.50.1 (Apple Git-155)
+Why not use g_autofree? That way you do not need to explicitly free it.
+
+
+>                 return NULL;
+>             }
+>         } else {
+>             if (!memory_region_init_ram(igvm_pages, NULL, region_name, =
+size,
+>                                         errp)) {
+> +                g_free(igvm_pages);
+>                 return NULL;
+>             }
+>         }
+>=20
+> --=20
+> 2.53.0
+>=20
 
 
