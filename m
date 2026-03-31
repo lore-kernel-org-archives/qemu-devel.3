@@ -4,96 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B6D10F9303
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 21:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A73A010F9304
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 22:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7gnP-0006xf-T1; Tue, 31 Mar 2026 17:38:48 -0400
+	id 1w7hCF-000601-D1; Tue, 31 Mar 2026 18:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w7gnN-0006xL-QX; Tue, 31 Mar 2026 17:38:45 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1w7hC4-0005xv-Kn
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 18:04:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w7gnM-0007UI-9r; Tue, 31 Mar 2026 17:38:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774993089; bh=eqKSPA/zK+eRnDaE3eWsBcbwyYsO/8V59RbBErHmi2g=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=tAFmR48A14eY6952haeTDDNs4JS9d+vL7Dh7ENyLvzK0fr4FVi5yI4KXFejUQGcG/
- LEgLMLJbCMGjrhbsqJ6srXZYYEkbKUYcvJYAXL6EI7NuTItlMbMnXwhggce9n6WqkU
- uxSKRArXiUnLeY790NyeaxTSGa7bSH3W26YLnh0bblk56lLUzODNHCerC+mppLqHBX
- dllCq5QrIpI+bkLbP0HGTAyxUXahejldVBdG7GPmabRb0Gdn4iq+sCWcDl2/Jcdx4V
- 0r+rI/k3yyIGWHE8zkctDx7I3FlIidnFwFJQnBkKMWz3PrBPnTNHdsJwktm1BAre0Y
- 49yB9o0xkFhlw==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id B3C04199565;
- Wed, 01 Apr 2026 00:38:09 +0300 (MSK)
-Message-ID: <78e18aaf-2231-42c8-9307-829fd4dd44a3@tls.msk.ru>
-Date: Wed, 1 Apr 2026 00:38:42 +0300
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1w7hC2-000272-MO
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 18:04:16 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62VIF6PG718546
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:04:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 9eTFejE88BgLr4eSQi6yaNLoVr9AG5pyURCDC6O6aMc=; b=JDa2L/vzseFri3j6
+ O1Oo6Lp/4xq2GdrieJX+j3gII1IRAx60sVWFAdH80j9yNx+N80Cs0Q4CKk75Ar6J
+ vKGedS16PT2seGU56dbnGzW/MYg62qJebg+nVuvh8UMsa9w2Y5dmAXK/WoMIF1OJ
+ vB+go1G8Zz4Z8W7A2hLWQBveF2M5iEknXnalmpAde30MKfKfT4dfsnS63TxAFhTx
+ EMVRdvh1ksJsfZY47SZ2/sqfSGTomwLhKHITxt2czPOKUelvbV4IGi3vSsLePOAi
+ MiPHB4se6IyYLbs+6oZFkiJS68y/7jks3yQa2A308t6q86YZ5UsF6ZFjYtFK/9mV
+ vS8/hA==
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d8kcsry88-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:04:10 +0000 (GMT)
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-7d496d080d8so15090439a34.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 15:04:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774994650; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iHzL2XPdpw6w4y22/gnwesNHigKjgxGANVkMPPdUSL/rQ5cedG6uDKL14FDrAV7osy
+ WnjHTqfCgvmHMpUwH80PE1zeL63cAs36D8+3gmJVZrpXHd+wC6E6dO7oPAtdzVn32IT2
+ dcG3p4+TYHTxILFpf/wuaSaU+LMTSjN326eHMAm/T4WStMfsoRB//0/Jzq1fRO6NDGmP
+ +WACzHPshJMRbS4MnnS18S7eFEUblC0U/5bBW/+5yQ8vOhd0BSn1FM7DCmCwyTR2Rvy+
+ viDiyz3vOfXOXRAvgsqas9jgS6oaBKHt295g3A/sSg/SVcOHQOW9ywq3aL0qaJDaLoqW
+ Y9Tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=9eTFejE88BgLr4eSQi6yaNLoVr9AG5pyURCDC6O6aMc=;
+ fh=GIsXnfQ1rlTLuqMVRnuWQs1/XCKcI3goSMKmOb1sBfk=;
+ b=RL/cP21IZu7t7ZBoUJlj+PVkWAW0Z2lpDkIlthZcf0az0PTljMKmCBwWlig7upyI+l
+ YehEq9xkT+yv7b0tO6u5nov9XHwzhpKXsHyssdPO6o7/JoQwFttRyCSJeygh9Oontdb8
+ Q3YlQfcqASxW8sxcf+dspyG9uq1hV60pTy/YE3X7QH7RimB6sLzXfmZLSXcEwx05hp9X
+ IRgOi8Z6g4EW8wHASmdHsoBpCrYekEQRRy/kR3/0bWE9s0FdXzFODicnXw05DZwwTFOr
+ 8ZussYGnx3Mvr3CCEvkMOpQEzJtg/MwCMXxRR3NyTE/Joxq3UvFmCwykTve1FtHYlFI9
+ owBw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1774994650; x=1775599450; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9eTFejE88BgLr4eSQi6yaNLoVr9AG5pyURCDC6O6aMc=;
+ b=JdLr8mfyo1JdMV9jZXElDh72BNdvT2dXhx4UfXHgwPf4Z93k/2zlZ2QM9bUHfR+4GD
+ UA6K2y21c2Y09JqbXSN0bCjOOIHwnuaF+MgAhDnTiT6Jm4QNjLg9/6hXCPfWSceW5qW8
+ BM6evSglMe0MZiYFy8OpUwKYP2hW2M8vDAq8maR90e/WorPRN41XhYhm3F2teMARlxNh
+ L2vsYGx0fZq/+ZGXMJAJhg242BflkHUVsKqZdSbmJ0y3Lusluvza2o/LL1IemTynfXfK
+ O2BxIjiLvtLOytrFOi4r71G8//sWeQXABamE2DDGZMUNbLLmmJFiFRDXi6gjgbQQDJ/7
+ VCug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774994650; x=1775599450;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9eTFejE88BgLr4eSQi6yaNLoVr9AG5pyURCDC6O6aMc=;
+ b=hv2B5cF6GqagtICbqpMnhOMX+rpYGAGwkCs+9Q1c8/6tUZWvEeANW4ddjO1ZpccN2t
+ 2tZM2gl0jBOzwqJxva6rIQN2+IWtqx9r/mNNjPKaH9NSDdVidClCaQS839jxJUOzpOFL
+ V9TomTCuPTasEtGgpVjAS2P4QVjvl9QYlxpkzJzimHlAZA8acbIWM0OC+Z2IOpi0UbDO
+ n7QnZpbC2PFoERP8NtPceSeduj5yDRD07dYmRYkvoI8OjeteCfYzLV8g8afO3KnT8uAk
+ AJfQC8PkcHvfZOjkgxyvuxwDI0j9k7h1+Xi1we29rVq8n3t9KCQzvjrA5gjfwCtfmcMr
+ GMkw==
+X-Gm-Message-State: AOJu0Yw7V2vJgmD/zZD8/a95rcp5tbKUV/UsG1ls3NFJRTmRBGoMvj1X
+ mQ5qxzbtR2MB4txlXhJzptxkCa1AKXEBtScJYf/omhTZHTvwqfRYdkV38RpduJdws9n4mk9XhYn
+ 8PkEVwWNdCB7gjvSPfBEL1DDIQBY4Tj+q3kp50nqmPzlVzr4ABAlffsigWz5/dsSVYAT/Ovrr8J
+ /630ujkrg9QZHoe2iCtqQXVG9WcmRPy29X
+X-Gm-Gg: ATEYQzx37apmIW7NisI9+JXCKIfqAssql9NrSegPkt6KlwBnaZAeAS3lfBXrGu0iGnd
+ hWExNm9q/OWqIEk3BIVPtnrYUg4DNV+gQmoAVZFhLIcwq/bUiNib01wjVUTwWyTF/5XCDjxnhwr
+ 36YOzwiGrg9U/LkMV5j/cIJNroM3Fpj2ET+GlERJe2B2nZBtALgO0Yr3iHFiSf/CBVjA6nbCcyG
+ DBlkN4=
+X-Received: by 2002:a05:6830:83bb:b0:7d7:ccf4:8dd4 with SMTP id
+ 46e09a7af769-7db993bf922mr809532a34.27.1774994650052; 
+ Tue, 31 Mar 2026 15:04:10 -0700 (PDT)
+X-Received: by 2002:a05:6830:83bb:b0:7d7:ccf4:8dd4 with SMTP id
+ 46e09a7af769-7db993bf922mr809507a34.27.1774994649610; Tue, 31 Mar 2026
+ 15:04:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] monitor: Fix deadlock in monitor_cleanup
-To: hongmianquan <hongmianquan@bytedance.com>, qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, armbru@redhat.com, michael.roth@amd.com,
- wubo.bob@bytedance.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20260327131024.51947-1-hongmianquan@bytedance.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260327131024.51947-1-hongmianquan@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: 0
-X-Spam_score: 0.0
+References: <cover.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <003328f47c0b5e286ef06ba55cc9734e7bba4af8.1774271525.git.matheus.bernardino@oss.qualcomm.com>
+ <CAATN3NqVcXGf+ND8KAhR_e78YD8nRJy1_ZL9y-0QBkkQ5rweVw@mail.gmail.com>
+In-Reply-To: <CAATN3NqVcXGf+ND8KAhR_e78YD8nRJy1_ZL9y-0QBkkQ5rweVw@mail.gmail.com>
+From: Matheus Bernardino <matheus.bernardino@oss.qualcomm.com>
+Date: Tue, 31 Mar 2026 19:03:58 -0300
+X-Gm-Features: AQROBzCt7onyhj2wu7VO3D-uwaLn8oZ9XAcaJMGNLh0tTCDOoidht-FENpSt7-0
+Message-ID: <CABrGZ+GQK7Z+vXWR_zKFHYGpmNvPNPvPc-jesKkD5YDXUEe3kw@mail.gmail.com>
+Subject: Re: [PATCH 09/13] target/hexagon: add v73 HVX IEEE bfloat16 insns
+To: Taylor Simpson <ltaylorsimpson@gmail.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, philmd@linaro.org,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMxMDIxNCBTYWx0ZWRfX7w8q19kH6O91
+ 83W/Y04XLau4YuWRg9qLGKQp0XMuY2ZBLHMaFlFPaZB1UqM8T3Wf/GE0yuPSgME7xTYknPYn4DZ
+ SqZxlm+togSOxdMXIzp1xeF3L/WFTEJJswZTQTyDMK3V2Eoiq80oKFV0t1HLpkoRF8tlXZlhQRh
+ sqOF5Ldszju6LMoySmvmqR2RJHRx79+DRa5ZGfPe6vmdquABnCmt4cX9WsvZsHcs/rPmMKThQXV
+ uyEhZ29uHVJiptt7k9RBRj63a9XViNuWrxBuCv6mt6eHkceBfaAVrbowfQ+zieDYa2krEgwNw/g
+ 29J5U5ykWQidSfLHOXO5bA4Rs0WtHFeXv9TUWymNuIFOZv3Z6zKa9fxjHQFAXUjvZw2IdaXPyNj
+ 4M2+ZZZRSOHsbUaLibArNy3HauYI9J0CBO8s9vmEzXLJqT1JMpscJM5vkJM8MVVtMd5ib6FTMkI
+ qciE4GIRn5n240CrZjw==
+X-Authority-Analysis: v=2.4 cv=KNlXzVFo c=1 sm=1 tr=0 ts=69cc44da cx=c_pps
+ a=OI0sxtj7PyCX9F1bxD/puw==:117 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=gowsoOTTUOVcmtlkKump:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=FMVOZK9DQ2HKKJpTbhsA:9 a=QEXdDO2ut3YA:10 a=Z1Yy7GAxqfX1iEi80vsk:22
+X-Proofpoint-ORIG-GUID: riYTeFN4H_YEL3f_ERHgqWyzYT8IM26z
+X-Proofpoint-GUID: riYTeFN4H_YEL3f_ERHgqWyzYT8IM26z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-31_05,2026-03-31_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ suspectscore=0 clxscore=1015 phishscore=0 bulkscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603310214
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
 X-Spam_bar: /
-X-Spam_report: (0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -111,49 +166,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.03.2026 16:10, hongmianquan wrote:
-> During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
-> received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
-> 
-> The root cause is a race condition between the main thread's shutdown sequence and the coroutine's dispatching mechanism. When handling a non-coroutine QMP command, qmp_dispatcher_co schedules the actual command execution as a bottom half in iohandler_ctx and then yields. At this suspended point, qmp_dispatcher_co_busy remains true.
-> Subsequently, the main thread in monitor_cleanup(), sets qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx, false), which attempts to wake up the coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx. The main thread then blocks indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches termination, resulting in a deadlock.
-> 
-> The execution sequence is illustrated below:
-> 
->   IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
->      |                                 |                                        |
->      |-- query-commands                |                                        |
->      |-- qmp_dispatcher_co_wake()      |                                        |
->      |    (sets busy = true)           |                                        |
->      |                                 |   <-- Wakes up in iohandler_ctx -->    |
->      |                                 |                                        |-- qmp_dispatch()
->      |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
->      |                                 |                                        |-- qemu_coroutine_yield()
->      |                                 |                                            [State: Suspended, busy=true]
->      |   [ quit triggered ]            |
->      |                                 |-- monitor_cleanup()
->      |                                 |-- qmp_dispatcher_co_shutdown = true
->      |                                 |-- qmp_dispatcher_co_wake()
->      |                                 |    -> Checks busy flag. It's TRUE!
->      |                                 |    -> Skips aio_co_wake().
->      |                                 |
->      |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
->      |                                 |   |-- aio_poll(iohandler_ctx, false)
->      |                                 |   |    -> Executes do_qmp_dispatch_bh
->      |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
->      |                                 |   |
->      |                                 |   |-- aio_poll(qemu_aio_context, true)
->      |                                 |   |    -> Blocks indefinitely! (Deadlock)
->      |                                 |
->      |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
-> 
-> To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh() to break the main loop out of its blocking poll, allowing it to evaluate the loop condition and poll iohandler_ctx.
+On Mon, Mar 23, 2026 at 7:03=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
+l.com> wrote:
+>
+> On Mon, Mar 23, 2026 at 7:16=E2=80=AFAM Matheus Tavares Bernardino <mathe=
+us.bernardino@oss.qualcomm.com> wrote:
+>>
+>> diff --git a/target/hexagon/mmvec/macros.h b/target/hexagon/mmvec/macros=
+.h
+>> index c342507d1a..b70996578e 100644
+>> --- a/target/hexagon/mmvec/macros.h
+>> +++ b/target/hexagon/mmvec/macros.h
+>> @@ -25,6 +25,9 @@
+>>  #include "accel/tcg/probe.h"
+>>  #include "mmvec/kvx_ieee.h"
+>>
+>> +#define fBFLOAT()
+>> +#define fCVI_VX_NO_TMP_LD()
+>> +
+>>  #ifndef QEMU_GENERATE
+>>  #define VdV      (*(MMVector *restrict)(VdV_void))
+>>  #define VsV      (*(MMVector *restrict)(VsV_void))
+>> @@ -366,4 +369,6 @@
+>>      (int16_t)(A) > (int16_t)(B) : \
+>>      float16_compare((A), (B), &env->fp_status) =3D=3D float_relation_gr=
+eater)
+>>
+>> +#define fCMPGT_BF(A, B) fCMPGT_SF(((int)A) << 16, ((int)B) << 16)
+>
+>
+> bfloat16_to_flloat32
 
-Shouldn't this one too be picked up for the stable series?
-Sounds like a good candidate to me.
-
-Thanks,
-
-/mjt
-
+I've been experimenting with this, but it looks like softfloat's
+bfloat16_to_flloat32 conversion will handle NaNs in a way that is
+incompatible with Hexagon. I think we will have to stick with the
+16-bits shift
 
