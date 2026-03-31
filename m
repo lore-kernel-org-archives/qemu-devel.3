@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF9D7FF60F4
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04E63FF60F4
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7caG-0003oa-15; Tue, 31 Mar 2026 13:08:56 -0400
+	id 1w7caN-0004EK-Rc; Tue, 31 Mar 2026 13:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1w7caA-0003hc-SB
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:08:53 -0400
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
+ id 1w7caL-00041X-0Q
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:09:01 -0400
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1w7ca9-0003CE-DH
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:08:50 -0400
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-82cd5c07f93so603160b3a.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:08:49 -0700 (PDT)
+ id 1w7caJ-0003Cw-7v
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:09:00 -0400
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-82cd5c07f93so603224b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774976927; x=1775581727; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1774976937; x=1775581737; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J8ahBUFbg7fqe92Gw6f+jugDAsKFBZJ7p8mHe2Ycic4=;
- b=JwsznwfbB8YkzGn8KdqRGUoeu7a/0ApAlZz9CnfNCIPMhujb8OJW4Ue6DGWsUYALow
- ovHtrZZgmDICbZxp6m45t3uFig8v2dfyJER8s8tvtG0jAKUB0IINlvVXBwF71e7E7xWC
- 00X+WljHK3I8MBQe4rbpyOojIAKlvZsATy6PlZU2eVI05x9LZyJCA3Fdq8y+OOOIub4J
- /Q6id811pzQjQ15+mbz6hbM36dMRL1v4Tj9tqJb2GY+rH4J1IgrLZN17Bsk+k9+5RlTx
- J8THBQeytU4+O2syvOADN+d3VyQavRwRIW1mN173w9KbYnSgDOWxcKReOjBLApEGo3of
- glRg==
+ bh=r6LmsEgjBpvDaeps0oORvh1u7wQKk8Q2dxRBNItGx1w=;
+ b=lB9+2sk7LMfrC1aNV+yH3ljBXh2kiENduHNH1eAEV+ZukviyPwjWrClGXM2gqluTEZ
+ 6fTu3lvA9+yZA9NABSTzamhSzNjuHNVzu1YIkasY2/BPxIcWS0uvPvwmL4XK6fn97gac
+ +U+WOVkSNFxHYmnEjp3XMg5LW8PefIiDAOz4vY7wMNORCLxdOLnPt7dix7vJJkDyIWPC
+ W+kuoRZMeFVvCQJWGyIcdxqLDxZzIgAN+gb3/3X4d26i3STK+c5sFSsGxHRvEgyJKQtI
+ 8f3LTg16cbNTzcXodlRLEdLs4RHWraLOPBSU4Ez42u5U5wI7KCRDNVEaNSpNAQ2H7JMB
+ yAfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774976927; x=1775581727;
+ d=1e100.net; s=20251104; t=1774976937; x=1775581737;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=J8ahBUFbg7fqe92Gw6f+jugDAsKFBZJ7p8mHe2Ycic4=;
- b=Sb3/0jZzmm2e3dGkBC2ORFf2uCSd7NMxlq0AWFxmy7Z5nC6VXlAEq21McU+s4rfPk/
- x9ThzaCclfvh4qOWy/xdi+5hqWWvpYT/QNCbJaN/tRsC9dZr1C2flWyNN6HR08T1UtwE
- WBNPlkMlPjd1ySO4Nh30XfhzCbwYlx1Uyf9P7jT6UIbsGq3BVMk3DG3LujIRYO7iYuw7
- EK+L70M5x/emtIQy/9FS0UGojZaagqDYoxDdxKpVQQZ/4DiEjUDLfrKKTF7g/qg647hS
- YcNE8SNF+oj0lbNj8eNmKZZlv9v1nyEJb1GqtAAfy9uryNxGX3JEJIoiT+mmy11ozARZ
- esdQ==
-X-Gm-Message-State: AOJu0YxCyJ3OR8Kih6aVvqt9kQCEU+Sevzr/oaaWkWmMsGqZ051wm1VN
- 6fAYiSswCeoJdyAjS1yF5z7T7WDgaS3qLlaaDA1ZNNBs1judXzihvTifh1Ykd2ai
-X-Gm-Gg: ATEYQzyLCqzgVewUu6btsWqgeQf/qF4JAkKz3aaYAiil0+M+CqOcViqjm9Bun6WCW0M
- 6LAY2v6CdQp5KQAVFtplcQ1NRIEYzEf6wUamyc+/Vvgoy9TQBH92efVSOAcyNrv9CzFo8r9VP1E
- vmJZ1HVqgYMSsPCKZ3/EL579H851//UWPumGpr5bVaaAFe/E6nVHIqNhfSTKWLvmGsuweAo0loW
- 1VEgFPBGtnbKC4k8rfyH8WCDnxyWTqboUZgFEFis+0KTIkSAvnHYhQmn0QTiKGLOHNlC1P6TEtK
- +MNow347BIbFU9Spxx9aXwcAaOo9vW+JuCjuwSEVxROfDo+7tyVls1xpWXP5FBsDzx+4jfQ2A4t
- 9zVSptTrFxaO7GAjIsO9xXm6Bf6/mv01s7jucHXoVL/QVkE19SfDAbslllF35P88kCCk0r5iaQF
- 2EAVKPuIOHpPE3TZVUOKzISibXYOEALGDzVmAKIbr1E4Re/gKSorKOcEXZjTbK9yxombBoxY+Nh
- ogMxJzhYTyRcxbgdjwATk9APDIHibDXeq+slmCTXSh0r76PF3pAOU4twe1Rne++P2Tfshwl1gul
- M5pS/esx
-X-Received: by 2002:a05:6a00:4fd1:b0:823:3fd0:7a08 with SMTP id
- d2e1a72fcca58-82ce8b42ef2mr333552b3a.49.1774976927503; 
- Tue, 31 Mar 2026 10:08:47 -0700 (PDT)
+ bh=r6LmsEgjBpvDaeps0oORvh1u7wQKk8Q2dxRBNItGx1w=;
+ b=aMDBeB65CIXFu/ClWhQGjqRT6mzFCRFwEmO6WnG/2f9a8jZAIlDB0cb4UwEcoSiSwM
+ 6SzhFhOW7VAAOw3L+T5QDI883jBHtrZ8nrvsg+YaEEUX1boTYsczK5y3z2ONkxAc2Oxz
+ rrDAlyZgNqAZscjw1NJ63pW+unPcsHnfY6gl6SvnmLBdP8tvmTrmxJXFOBcvbP5HfByA
+ jXvk8dyyewb+Ws70hksIa460fXPTPxv4EW3tgfTmenTiQs5Oq87sPfjUXnbkhqTssrnq
+ 3w6SQT/T/eL00+1192OR5bePRvKH3nmoafDlmyVRVChXD+75GHwj1lsgo06Tn6QLp6UK
+ iQeA==
+X-Gm-Message-State: AOJu0YypnOU3Z3zD8og79jKwst2Lo5LIL8+l7z8NsTdOZqs/Uz/F1B9M
+ eDBbl9u8j8QKkPQfD3p7WkLJn0I1sgo7EUn5zvGG5sbqp0ZiAVC2emxSCxB/DTeR
+X-Gm-Gg: ATEYQzyMJZtpWZ/pY5AuQrgNNKaiXIEAdVu5aAhCwL9/f8xGD7fbbI7XuqEgKO+PPss
+ o5skH/aEzagiL+1lKql5MYlzZU2TMlI3ipQSXMJVOhYpFzV095FVdVs2dVzK1RoUagesj5ruUpa
+ hyagq8eSX2Xp17u5u8EU9K2/ga6kWN5ujurqse5a6sr3VjUKCz5czY+fHtZ3kGchUgkKn23e0mJ
+ Jzzv8pct2Hgs0GoO3xcIa1am8YIuwqzFxEOkcBXBpJ5LhpZ7FE0+0V9wsRV4bCe7uWnoSpdnvtQ
+ r4YxJ4zlLtWnIEWpYxj4MuTy6wdN2PP8tPIYyUivna9KDffMopfss9HWcmklPP/vRcXrhiYHJah
+ R+YvAwWl6427TgQYvNo+MX3mPRhUr78qw1Dc/JsjfaAMHlADXbPBzI45gAtGiVBT7VAyk7isMqp
+ n0lFkehP/ZKWsmbQTNCQGiyZYXrmLv4wZzMHDM73DtCwMxZggpmf5x7oOWhNZp+hAORgjXDV//2
+ t8YQk+Vxh4So38SZ9S9mwd5whiDardVj0CH0WFT5lfz6WCIhroi5JwizwtrBg93DWsLFBzDoo28
+ X5L5Vv1+
+X-Received: by 2002:a05:6a00:4505:b0:82c:7f08:8826 with SMTP id
+ d2e1a72fcca58-82ce892c23emr342082b3a.17.1774976937342; 
+ Tue, 31 Mar 2026 10:08:57 -0700 (PDT)
 Received: from fedora ([103.2.232.250]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82ca843b818sm13647889b3a.6.2026.03.31.10.08.42
+ d2e1a72fcca58-82ca843b818sm13647889b3a.6.2026.03.31.10.08.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 31 Mar 2026 10:08:47 -0700 (PDT)
+ Tue, 31 Mar 2026 10:08:56 -0700 (PDT)
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -75,17 +75,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alex Golovko <alex@browserling.com>, ShengYi Hung <aokblast@FreeBSD.org>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [RFC PATCH 3/5] input/hid: emit protocol aware mouse reports with pan
- support
-Date: Tue, 31 Mar 2026 22:38:21 +0530
-Message-ID: <20260331170823.72511-4-soumyajyotisarkar23@gmail.com>
+Subject: [RFC PATCH 5/5] input/hid: apply multiplier scaling with residual
+ accumulation
+Date: Tue, 31 Mar 2026 22:38:23 +0530
+Message-ID: <20260331170823.72511-6-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
 References: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x441.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x444.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,79 +109,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement protocol-aware mouse report output to support both boot
-protocol (protocol 0) and report protocol (protocol 1).
+Implement multiplier-based scaling with residual accumulation for
+fine-grained mouse wheel and pan sensitivity control in report mode.
 
-Boot protocol: 4-byte reports (button, dx, dy, dz)
-Report protocol: 6-byte reports with report ID 0x01 + pan byte
+Applies divisor based scaling (1, 4, 8, 16) based on negotiated
+multiplier values.
+Then uses residual based approach to prevent precision loss:
 
-Both modes now support the 'pan' field for horizontal scrolling. The
-distinction ensures correct behavior across different guest operating
-systems and their HID implementations.
+  residual += delta
+  output = residual / divisor
+  residual -= output * divisor
+
+Residual state preserved across VM migrations via VMState.
 
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 ---
- hw/input/hid.c | 44 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 33 insertions(+), 11 deletions(-)
+ hw/input/hid.c         | 60 ++++++++++++++++++++++++++++++++++++++++++
+ include/hw/input/hid.h |  2 ++
+ 2 files changed, 62 insertions(+)
 
 diff --git a/hw/input/hid.c b/hw/input/hid.c
-index 457dbb0096..d0b7af7c13 100644
+index d0b7af7c13..9b800faeb0 100644
 --- a/hw/input/hid.c
 +++ b/hw/input/hid.c
-@@ -403,20 +403,42 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
+@@ -365,6 +365,7 @@ void hid_pointer_activate(HIDState *hs)
+ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
+ {
+     int dx, dy, dz, pan, l;
++    int wheel_divisor, pan_divisor;
+     int index;
+     HIDPointerEvent *e;
 
-     /* Appears we have to invert the wheel direction */
+@@ -392,6 +393,54 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
+     e->pan -= pan;
+
+
++    if (hs->kind == HID_MOUSE && hs->protocol != 0) {
++        switch (hs->ptr.wheel_multiplier & 0x03) {
++        case 0:
++            wheel_divisor = 1;
++            break;
++        case 1:
++            wheel_divisor = 4;
++            break;
++        case 2:
++            wheel_divisor = 8;
++            break;
++        default:
++            wheel_divisor = 16;
++            break;
++        }
++
++        switch (hs->ptr.pan_multiplier & 0x03) {
++        case 0:
++            pan_divisor = 1;
++            break;
++        case 1:
++            pan_divisor = 4;
++            break;
++        case 2:
++            pan_divisor = 8;
++            break;
++        default:
++            pan_divisor = 16;
++            break;
++        }
++
++        if (wheel_divisor > 1) {
++            hs->ptr.wheel_residual += dz;
++            dz = hs->ptr.wheel_residual / wheel_divisor;
++            hs->ptr.wheel_residual -= dz * wheel_divisor;
++        } else {
++            hs->ptr.wheel_residual = 0;
++        }
++
++        if (pan_divisor > 1) {
++            hs->ptr.pan_residual += pan;
++            pan = hs->ptr.pan_residual / pan_divisor;
++            hs->ptr.pan_residual -= pan * pan_divisor;
++        } else {
++            hs->ptr.pan_residual = 0;
++        }
++    }
++
+     if (hs->n &&
+         !e->dz &&
+         !e->pan &&
+@@ -405,6 +454,7 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
      dz = 0 - dz;
-+    pan = 0 - pan;
+     pan = 0 - pan;
      l = 0;
++
      switch (hs->kind) {
      case HID_MOUSE:
--        if (len > l) {
--            buf[l++] = e->buttons_state;
--        }
--        if (len > l) {
--            buf[l++] = dx;
--        }
--        if (len > l) {
--            buf[l++] = dy;
--        }
--        if (len > l) {
--            buf[l++] = dz;
-+        if (hs->protocol == 0) {
-+            if (len > l) {
-+                buf[l++] = e->buttons_state;
-+            }
-+            if (len > l) {
-+                buf[l++] = dx;
-+            }
-+            if (len > l) {
-+                buf[l++] = dy;
-+            }
-+            if (len > l) {
-+                buf[l++] = dz;
-+            }
-+        } else {
-+            if (len > l) {
-+                buf[l++] = 0x01;
-+            }
-+            if (len > l) {
-+                buf[l++] = e->buttons_state;
-+            }
-+            if (len > l) {
-+                buf[l++] = dx;
-+            }
-+            if (len > l) {
-+                buf[l++] = dy;
-+            }
-+            if (len > l) {
-+                buf[l++] = dz;
-+            }
-+            if (len > l) {
-+                buf[l++] = pan;
-+            }
-         }
+         if (hs->protocol == 0) {
+@@ -528,6 +578,11 @@ void hid_reset(HIDState *hs)
+     case HID_MOUSE:
+     case HID_TABLET:
+         memset(hs->ptr.queue, 0, sizeof(hs->ptr.queue));
++        hs->ptr.mouse_grabbed = 0;
++        hs->ptr.wheel_multiplier = 0;
++        hs->ptr.pan_multiplier = 0;
++        hs->ptr.wheel_residual = 0;
++        hs->ptr.pan_residual = 0;
          break;
+     }
+     hs->head = 0;
+@@ -619,6 +674,7 @@ static const VMStateDescription vmstate_hid_ptr_queue = {
+         VMSTATE_INT32(xdx, HIDPointerEvent),
+         VMSTATE_INT32(ydy, HIDPointerEvent),
+         VMSTATE_INT32(dz, HIDPointerEvent),
++        VMSTATE_INT32(pan, HIDPointerEvent),
+         VMSTATE_INT32(buttons_state, HIDPointerEvent),
+         VMSTATE_END_OF_LIST()
+     }
+@@ -636,6 +692,10 @@ const VMStateDescription vmstate_hid_ptr_device = {
+         VMSTATE_UINT32(n, HIDState),
+         VMSTATE_INT32(protocol, HIDState),
+         VMSTATE_UINT8(idle, HIDState),
++        VMSTATE_UINT8(ptr.wheel_multiplier, HIDState),
++        VMSTATE_UINT8(ptr.pan_multiplier, HIDState),
++        VMSTATE_INT32(ptr.wheel_residual, HIDState),
++        VMSTATE_INT32(ptr.pan_residual, HIDState),
+         VMSTATE_END_OF_LIST(),
+     }
+ };
+diff --git a/include/hw/input/hid.h b/include/hw/input/hid.h
+index 1a1941d371..db902fa023 100644
+--- a/include/hw/input/hid.h
++++ b/include/hw/input/hid.h
+@@ -25,6 +25,8 @@ typedef struct HIDMouseState {
+     int mouse_grabbed;
+     uint8_t wheel_multiplier;
+     uint8_t pan_multiplier;
++    int32_t wheel_residual;
++    int32_t pan_residual;
+ } HIDMouseState;
 
+ typedef struct HIDKeyboardState {
 --
 2.53.0
 
