@@ -4,104 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6054210F92E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230DA10F92E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7cRc-0005Ux-SI; Tue, 31 Mar 2026 13:00:00 -0400
+	id 1w7cYs-0002Pj-Lh; Tue, 31 Mar 2026 13:07:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cRb-0005UX-3L
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:59:59 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cRZ-0002CA-Mw
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:59:58 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-64d5a7926cfso8951991d50.2
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:59:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774976396; cv=none;
- d=google.com; s=arc-20240605;
- b=WshoT2JarUtIYTdINsy0htbEO4QsubmGNEW1nPvWlLSuqrWp6m2120QA909n2/guLe
- 52DwUZwIuvvPPCioeoHNyn6nYhmlICMbPyx8PwqwZ4zIVaB8YXvEOKQe24ZiwuH1zFhH
- VUR6bSn1uuXa6qryVhtjMPZXHNPmoiqInEm9SWVBFfa7pz26ZUJp4RXUeNCTqvl81wBT
- oIj5u0tVUMyXfqK/RwejCnlXdr/2dNnVy6TnG6hcTAXTHPyrgOWZdl2zkAEt1PdCQYjA
- xEjA/8rWNh40CIy8LkRgAGpIdw8xz6HhbZ+t+j78OeldQ6WYdU+Z8Xo90v2rXEiSJ45B
- 8isA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=iMDREFWEMPXLywfoQ5kD3fONGP27XaMe1I3ynxwtKt8=;
- fh=j0m/KHqzOQ6CKKktQSBLLiVo/M7SZnjHIyl4bugXt+Y=;
- b=guJ595Wxw0p/cMKUL7sv+gwOOEDoldFU6Nt0+aqOJ7zJRUpi/1Pdhv+GkHmpLCM7GM
- UOVcBLMr9Ob9oN2Ah99nhvFEpD2+9zuTiddpXIDeapayRvdwlMO0fIwtku0aa7/yo+uq
- 2D+mIbWAnHjllg1S05VsyQethJ+U07zUNFexbj4QnXZ5YtaRWDXX+1s5VgoY3ElEMGF1
- t7DC2pFIi/pwjHWcIQNM8VPZxGB8Zd1hd6/YB/ebffTZj/xFxYUJjguwYCtxv1WZu6gV
- f/YZ+xcrWZCUEFk8BVEPWrVjHXF+HCtCfq0O+h3HQEFKQwAben7/ZhzgGbBNp2EY2mCg
- ZUPQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1w7cYo-0002Od-Ex
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:07:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1w7cYm-00036e-G4
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:07:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774976840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wEG7/7ib7BLy8Vy/hlPRTm091we8TR/osV1Th07AGjA=;
+ b=ijHSsNZu+602z4COnwYtCA3vuRjruTq5IC2xNi+/XGpTwghDMcTjbmTIhgNpw9Ztf9eMxd
+ FU/zFfbyGAr9E05xvrWa8fCY9AjnH3F8EVj8miNHWMG+HmMKMBSFkXGqseR8RQQEp+cfqF
+ AOhrIgJ43XQP6rQXQ5cf1wu8JCcLqEo=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-3CWGJIMsPzG5PBC2ncfOqQ-1; Tue, 31 Mar 2026 13:07:18 -0400
+X-MC-Unique: 3CWGJIMsPzG5PBC2ncfOqQ-1
+X-Mimecast-MFC-AGG-ID: 3CWGJIMsPzG5PBC2ncfOqQ_1774976838
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-b6097ca315bso13871666a12.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774976396; x=1775581196; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iMDREFWEMPXLywfoQ5kD3fONGP27XaMe1I3ynxwtKt8=;
- b=gfDfuvFbn0mt4Qip/Nn8UVBIbTzh/cIPKxkBpPx07ICWLTDeNiQnwkewHfRz5aYm4E
- LET8d3SbHorRxhOK34N9afmw7db49QycBhwn3wQRF/rmxOoNJE4m2WHhxmdNI3x4ZD70
- 2yOtK3tRxJ79e6bwGqrWDBN7nqwCvHlradLLTTuMTKaRIjJS9s/CDEGLH6MfZQYjyRxy
- No75MK8M2sQkFi9ZrBNYacI06v2bzYqdApQMEC+P0p2FeQxeCZHfIZM4Lija5oRDuFrj
- tsm6pXFjpsCistVhQ8mdK5Ca3t14mOLxN1mNiPTH56/fEDxWZwPYChhZa9+Eth+G+X5o
- 0HeA==
+ d=redhat.com; s=google; t=1774976838; x=1775581638; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wEG7/7ib7BLy8Vy/hlPRTm091we8TR/osV1Th07AGjA=;
+ b=pU2utzOsapEUS1QzmOik01kScZ3+VxtVYK+Vslg3A6SE+bFq8YxlPbMjt5ViNsYonN
+ P6kxe49KRiSEUJJncbnYVoYKURWDlEdyha6+Q6O/TCUfnabHgfRkdnZBQ5kWq/zqshIo
+ o+U26MwmOTYW67WYyHo5uTSulbc/OWewAQ9axXyDPqGBxEz0b/S4ZTwok7MHjLRROoPv
+ DA/HK+x9qaF5O/DHTVUGe5gbsyiBPSn/v+MdGhwndpe7tgBlrP29c5hBTd4PnNnHgMKi
+ z2QUq4OYsrbKlb6CcHnBldD0um3bJoHXlE+3vlChAKNU7NkUq9dj/7lyhBgadHOXIF/B
+ pEdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774976396; x=1775581196;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iMDREFWEMPXLywfoQ5kD3fONGP27XaMe1I3ynxwtKt8=;
- b=MLtvowba611uD4bvfplc5/jrq4ye21CxUY7Ro3JMiZreVHdCTEkviuYeLv+qfVB+c3
- eJ+tIQgQTFcGqXSMiGFrZrkT0U8Anlb9kzbLcbpezYfjeHmuUcM0kWPqApJfCo+Dp1/i
- GE0mFjOu3wSX7TToPdXkCLCpfkgphgqT577Gh1nSiiJkwRgJJJ6bcjuqiIAhHmFVpeR7
- dTsU9GoPuJrbCG8xQga561IQgKbxaapgD2c0Ux+YmpAYga38qeO5VwrHONFYyVpN/n5t
- 70pO+BWO3lVsDNDGauGlnwAlO6rhI0IbZHQ0oXuAcshMHBUBeJt27qbzxDvsGbG4RfVr
- HZFw==
-X-Gm-Message-State: AOJu0Yx42NvEXdbliD6nkEvtX8xyqeb4NhiNfeNapBlbekTisSEKsowf
- +diOk4BOTRKgQR6v5zInKUFF/ycVKCfhyE7KZcjVrWrlY6h5UuOzwFqusAGbHEqnxkpR6hRbd0P
- saSOr4Fb0Wl6gBzT5onosq55af8pPcadMBoBaE/5MIg==
-X-Gm-Gg: ATEYQzw/AHNoqLBRS1CaHz8TEcd0KSfO/FS8Ruj+PnReNgNgZ/4hR535GfIzvUl6EcA
- k7G50/wT8kZOcT1wM8le7dFNjLB/7sKLS4NZdnwi7FTebUhLKuPwOQb/uTjZ7QLhmo/Vb5DRsnU
- PobeZ2k2t0p9yP0YiYrdIUtN9cDb/0E6HAwk/lgbXWLJmh4PgW3xC7AbTztdbVOw6LGpCzcvQIJ
- AN7pyUp6KB6kZnhA4hF4lwPFbOlpx3AjAxmA6EZC+QA3LsP/VIKVGf8BCzlJMHjzkEd1MqN6jQy
- zMV4eafAkl1W3zLZSXtcnIVZ8EeV7NVCj/o0dRf+DYowxl3Zy5UPDZtlIym5JvZ8e/BO3F1k+7I
- f9g==
-X-Received: by 2002:a05:690e:428f:20b0:64e:e380:c83f with SMTP id
- 956f58d0204a3-64ff73cbbe3mr14146920d50.46.1774976396057; Tue, 31 Mar 2026
- 09:59:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774976838; x=1775581638;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wEG7/7ib7BLy8Vy/hlPRTm091we8TR/osV1Th07AGjA=;
+ b=a4tWfEBPhXC171UDSv+YUNTRCejfsqQ5WF7iRmByLQXRWULiw2YCrI84I8rrvuHnGo
+ bRRITDCnQLJvbnPxMi6gsH3f8rlfhHaUdY0Vg6Wi+OpKtQQncCkPtbxalSlqIevDUnPb
+ IdYpxcsq0zbryvrOQ/DXjKj8SE70xF9GBuZBdAgyYWkI+hR0v/BpfgQcClXllhNGlOIA
+ qpmc7yhghOnnChOiX+3RgdGMa5QpBLPeK3kz9VXdBMMgLY75q1wzDGGOmJT6GlOyKezu
+ TzvXtKSt5St26gMU4Ymhp7+MKEhjgSGa/K7C+pK77pNv2ZatGnP7msjI159stgeYPQZ6
+ m3XA==
+X-Gm-Message-State: AOJu0YyX8d21ZuLoPzwEqI9WUtES/dPIM/m3XiM1Tx0WdhLQTfUntvjD
+ EO99JJr1CHEWpAQgiObkSl8BPMP42DIc6jWc9TYLXVWaqjGpaC94IgNKgE3CvlcfD2SspYGeyfF
+ 2jztFSaGioCoxgCt75w453muEFPAj3nB7z0lIqgZwXfhiTYsNb/iL8g+A
+X-Gm-Gg: ATEYQzyygZPK9X5bY+TKw7YFIgpwspfa8RpZ2oZtZioYH9dOU7uWpqtj9a7E2Zo3rEf
+ co5ZnmVRu02bLBF2bKH897CCGrXI2nYm4cNXN6dsiesnuwfFw+Nq05BoGdEh3ttsD4Slenu+rOE
+ KDViJVQR5tqj60vwx6YRI9gR1LgayudeFmiu8h3d0Ld2ednKElI37LW8Ksmnx2z+v2Rx79OBTeW
+ KpFGFWoItp/hWltEKQXdcDGIeTKkNlaQa4Jg3uChxtNSJrFelt/8OD9aE2HmcyShbAwuwWkwH+T
+ YxsV+3ajESq6zFTBKI2le4umqcK/fuzUbT3NYfH+zsU0G3aAyVNAVKMAtHpvTIjTmOK7AMw/DIj
+ 5s03wNgorjjDE
+X-Received: by 2002:a05:6a00:2e94:b0:81f:31c3:2e34 with SMTP id
+ d2e1a72fcca58-82ce8949688mr409529b3a.25.1774976835069; 
+ Tue, 31 Mar 2026 10:07:15 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2e94:b0:81f:31c3:2e34 with SMTP id
+ d2e1a72fcca58-82ce8949688mr409486b3a.25.1774976834395; 
+ Tue, 31 Mar 2026 10:07:14 -0700 (PDT)
+Received: from fedora ([49.36.108.104]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82ca86286dbsm11136254b3a.56.2026.03.31.10.07.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 31 Mar 2026 10:07:13 -0700 (PDT)
+Date: Tue, 31 Mar 2026 22:37:06 +0530
+From: Arun Menon <armenon@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Stefan Berger <stefanb@linux.ibm.com>
+Subject: Re: [RFC v2 4/7] hw/tpm: Implement TPM CRB chunking logic
+Message-ID: <acv_OgPqHED_rQbq@fedora>
+References: <20260319135316.37412-1-armenon@redhat.com>
+ <20260319135316.37412-5-armenon@redhat.com>
+ <177452442285.34609.12928739139262714987.b4-review@b4>
 MIME-Version: 1.0
-References: <20260321135624.581398-1-npiggin@gmail.com>
-In-Reply-To: <20260321135624.581398-1-npiggin@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 17:59:44 +0100
-X-Gm-Features: AQROBzBniHr2TcrbiuKPFeKJRtYKWPxMmXX6KW53z9Nh14Ok5NwaBowLuVeaOD0
-Message-ID: <CAFEAcA_iwWDmZf1hojzZ8+N5RTRC4WXDSSK7SugNNRd6kdk8Gw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] user: recursive signal delivery fix and test
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <177452442285.34609.12928739139262714987.b4-review@b4>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,32 +129,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 21 Mar 2026 at 13:56, Nicholas Piggin <npiggin@gmail.com> wrote:
->
-> I found this recursive delivery problem when testing new riscv vector
-> state support patches (plus a minor lock user balance bug).
->
-> This or similar type of issue was fixed with 8bd3773cce1 but I couldn't
-> see exactly what scenario that was addressing. Is there any other way a
-> signal can be generated during handle_pending_signal()? The SIGTTIN
-> case, perhaps?
->
-> Thanks,
-> Nick
->
-> Nicholas Piggin (3):
->   linux-user: sigaltstack lock_user_struct missing unlock
->   bsd-user, linux-user: signal: recursive signal delivery fix
->   tests/tcg: add recursive signal delivery tests
+Hi Marc-André,
 
-I'm going to take patches 2 and 3 into a pullreq I'm doing for
-linux-user fixes for rc2, so we can get the fix into 11.0.
-(I've made a s/__chk_error/do_chk_error/ adjustment to patch 3.)
+Thank you for the review.
 
-Patch 1 I had a review comment on and in any case it is only
-a problem if you build with CONFIG_DEBUG_REMAP, so if that
-drifts out to 11.1 that's fine.
+On Thu, Mar 26, 2026 at 03:27:02PM +0400, marcandre.lureau@redhat.com wrote:
+> On Thu, 19 Mar 2026 19:23:13 +0530, Arun Menon <armenon@redhat.com> wrote:
+> 
+> Hi,
+> 
+> >
+> > diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> > index 5ea1a4a9706..e61c04aee0b 100644
+> > --- a/hw/tpm/tpm_crb.c
+> > +++ b/hw/tpm/tpm_crb.c
+> > @@ -80,6 +82,8 @@ enum crb_ctrl_req {
+> >  
+> >  enum crb_start {
+> >      CRB_START_INVOKE = BIT(0),
+> > +    CRB_START_RESP_RETRY = BIT(1),
+> 
+> Hmm, maybe we should rename that field, since it is "Start" in the spec (it changed?).
 
-thanks
--- PMM
+The Start has not changed from before.
+Yes, I shall make changes to the other 2.
+
+> 
+> > +    CRB_START_NEXT_CHUNK = BIT(2),
+> >  };
+> 
+> And follow the spec naming here "RspRetry" -> RSP_RETRY
+> 
+> > @@ -122,6 +126,68 @@ static uint8_t tpm_crb_get_active_locty(CRBState *s)
+> > [ ... skip 23 lines ... ]
+> > +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS, tpmSts, 1);
+> > +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
+> > +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
+> > +            tpm_crb_clear_internal_buffers(s);
+> > +            error_report("Command size '%d' less than TPM header size '%d'",
+> > +                         total_request_size, TPM_HEADER_SIZE);
+> 
+> Use PRIu32 to avoid sign sign-mismatch
+
+Yes. Will do.
+
+> 
+> > [ ... skip 28 lines ... ]
+> > +    if (to_copy < CRB_CTRL_CMD_SIZE) {
+> > +        memset((guint8 *)mem + to_copy, 0, CRB_CTRL_CMD_SIZE - to_copy);
+> > +    }
+> > +
+> > +    s->response_offset += to_copy;
+> > +    memory_region_set_dirty(&s->cmdmem, 0, CRB_CTRL_CMD_SIZE);
+> 
+> Those lines are repeated below and could be factorized.
+
+Yes, I will move it into a separate function
+
+> 
+> > @@ -152,20 +218,48 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+> > [ ... skip 21 lines ... ]
+> > +            if (!(s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE)) {
+> > +                if (!tpm_crb_append_command_request(s)) {
+> > +                    break;
+> > +                }
+> > +                ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 1);
+> > +                g_byte_array_set_size(s->response_buffer, s->be_buffer_size);
+> 
+> This pre-allocates the response buffer before the backend has written
+> anything. Since response_buffer->len > 0 now, a subsequent nextChunk
+> from the guest would enter tpm_crb_fill_command_response() and serve
+> uninitialized data.
+> 
+> Before this patch we would serve guest input data, which wasn't great either.
+> 
+> 
+> We could add a separate flag to track response readiness instead. This
+> will need to be migrated too.
+
+Good catch. I did not think of what happens when the guest issues a
+subsequent nextChunk while the tpm backend has not yet processed the
+command.
+
+I am wondering, checking if the start invoke bit is set will alone
+prevent such a situation in the first place.
+
+For example adding the following at the beginning,
+
+case A_CRB_CTRL_START:
+    if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
+        break;
+    }
+
+That way, a subsequent nextChunk or rspRetry will not be processed in
+the first place. Do you see any problem with this approach? This will
+also allow us to keep the migration logic as is.
+
+> 
+> > +                s->cmd = (TPMBackendCmd) {
+> > +                    .in = s->command_buffer->data,
+> > +                    .in_len = s->command_buffer->len,
+> > +                    .out = s->response_buffer->data,
+> > +                    .out_len = s->response_buffer->len,
+> > +                };
+> > +                tpm_backend_deliver_request(s->tpmbe, &s->cmd);
+> > +            }
+> > +        } else if (val & CRB_START_NEXT_CHUNK) {
+> > +            /*
+> > +             * nextChunk is used both while sending and receiving data.
+> > +             * To distinguish between the two, response_buffer is checked
+> 
+> Missing .
+
+Will correct.
+
+> 
+> > +             * If it does not have data, then that means we have not yet
+> > +             * sent the command to the tpm backend, and therefore call
+> > +             * tpm_crb_append_command_request()
+> > +             */
+> > +            if (s->response_buffer->len > 0 &&
+> > +                s->response_offset < s->response_buffer->len) {
+> > +                    tpm_crb_fill_command_response(s);
+> 
+> Indentation <4
+
+Yes.
+
+> 
+> > +            } else {
+> > +                if (!tpm_crb_append_command_request(s)) {
+> > +                    break;
+> > +                }
+> > +            }
+> > +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
+> > +        } else if (val & CRB_START_RESP_RETRY) {
+> > +            if (s->response_buffer->len > 0) {
+> 
+> I'd suggest adding a trace here.
+
+Sure, will add.
+
+> 
+> > @@ -205,13 +299,36 @@ static const MemoryRegionOps tpm_crb_memory_ops = {
+> > [ ... skip 15 lines ... ]
+> > +
+> > +        /*
+> > +         * Send the first chunk. Subsequent chunks will be sent using
+> > +         * tpm_crb_fill_command_response()
+> > +         */
+> > +        uint32_t to_copy = MIN(CRB_CTRL_CMD_SIZE, s->response_buffer->len);
+> 
+> QEMU coding style: declaration not mixed with statements.
+
+I will add this to the top of the block.
+
+> 
+> > +        memcpy(mem, s->response_buffer->data, to_copy);
+> > +
+> > +        if (to_copy < CRB_CTRL_CMD_SIZE) {
+> > +            memset((guint8 *)mem + to_copy, 0, CRB_CTRL_CMD_SIZE - to_copy);
+> > +        }
+> > +        s->response_offset += to_copy;
+> >      }
+> >      memory_region_set_dirty(&s->cmdmem, 0, CRB_CTRL_CMD_SIZE);
+> 
+> Consider factorizing
+> 
+> > +    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
+> 
+> redundant clear
+
+yes, shall remove.
+
+> 
+> -- 
+> Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> 
+
+Regards,
+Arun Menon
+
 
