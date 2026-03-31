@@ -4,92 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D552109B468
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A943109B462
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Z0p-0002ho-9y; Tue, 31 Mar 2026 09:20:07 -0400
+	id 1w7Z19-0002zc-LY; Tue, 31 Mar 2026 09:20:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Z0n-0002g8-LD
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:20:05 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Z14-0002x6-Qp
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:20:22 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Z0k-0004dk-PN
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:20:05 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48540d21f7dso68739745e9.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:20:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Z13-0004sB-0P
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:20:22 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4888244e9f9so70255e9.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:20:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774963201; x=1775568001; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774963219; x=1775568019; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vpZWb/Xr06j6y+c297zVddDxDkXuJByamNTk20R0bTE=;
- b=pSELSrxnL9FaHGeTnq0adAOu4e4aqLhZF4vXr/3vJ0OnH155etC3faCnZhERL+ZAFs
- +3gDp28/73gMri/La94t/DJoLVeQYSBwfrDqnrrDiWbPJbWcZzuYnxPMDO38+PmoD/T1
- PZLwnm9ojgPo/DR4Me9PfC6LwZVo2/jXGayFsI620wJtaIB1cOTwfYCdUl7dHnyC5sqL
- jPPpkjNFZGevB7VYu2T9bjJmpMzJJdx29C9uD+dwd5EAlDou/cnCroZeWpRKXsBgyDxA
- +juvyxBPI2yvFPoeZuZ4AmPaQmB/IWqJCCDYLiJR75yZGfhhMu+thH6MV6l2wCqVxBmw
- IrOQ==
+ bh=ohAWYYOPoezuaXSWOFgisCaDLAMCR62aVpyAHH86ztw=;
+ b=ocI3ZHxnMpul7t+HSk9YISOjSMA2sE38nhOpMqbMQQQz4EcxZNeQBl4foP/kZ8sRb/
+ 0PLP7Pf5eg1sidT02puIItyXKMrL8g/p2o4RQLA1Ks153624qLm2JIVVZSvUY7e8/3r5
+ pEAp/fcGszeHFoaibWoTUx1PBdQQpW2pa34tfGQTA0EkIemDQWJBRu0o0uOZAoEWv9b8
+ rimeD94xBhas9FAmY45zZtV7l7Ujf+uW4Jx7VJYDaw6ZW3Za24dNL4Vrxb3U6AlXUEic
+ R+3SGnFaJfgzzyRqs9mfjQaVxwOzgaq8XxieSRbR4iqAtE/xtOmdVklUneiuqO0D0XHc
+ zbow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774963201; x=1775568001;
+ d=1e100.net; s=20251104; t=1774963219; x=1775568019;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vpZWb/Xr06j6y+c297zVddDxDkXuJByamNTk20R0bTE=;
- b=H4POZGQcL0rUf4BOSBrnQAf1SePVqUyTSw6Pec3gkvRwDmjsSN/Txvzom26RacRrII
- FgIE7QOwdFCxJPWabFGkiGLSu3bmXlli8vydDaLIjX3n+JHl50nYLHymUvwwDko/3HUy
- m+c7dMtrQwPlXUPK2EmtysTBqcjMppe1Ld5U77bBJaE0LgMdG3XwZlaVjpOwILWFUS02
- MrbHgBbuuGspps/en6a353yZor4cHSW8pUfgqlDBSS22wsipHZKkHdWL+sfNZyYhLy3M
- TkUK1ZL6hOegF9w7ugiXneXSCAPqkh1xLCKpTVogbozaeRe0AE6s8rB56aFaX8yhwlek
- 7BZw==
+ bh=ohAWYYOPoezuaXSWOFgisCaDLAMCR62aVpyAHH86ztw=;
+ b=ItZxIWU7R1Z/Jp7hBAM4fuFItPHOxRqjoJgPIR0PcVJ4tMwA5spclMs4RSTO6+YSzZ
+ QT58keJpoowFOEE5MaXSb6/43JEFdZCF2sYRPnYOF7gcfLFLDY7Es2uX6gF+tDixsc37
+ ctfVvgGS3Hvxfx3+rnGmt4oARytBdXNIltqI0cad6y9agzOtyY9JFci/MPnbXur565Vc
+ XZF/KN6JsChz33XniSWiD3aoaqMuf0MWS9qt9yLicD3vxfRctIQ3LQqtmpa0JgksKAOp
+ oU1KlJdM6UAh89IQMdtqT6zFyUOq4+oVbkip/V3QAq8hFuQ7NWofn9DlcKzGQFwpR1Ps
+ ZtLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXjO8xGdbUL4JPpy1O58CuItUo2Gcd8JX/tZ0IyBlUkkxVsEJ/LeqlvBK9GLYlY/oPdQG0pSH/74n3F@nongnu.org
-X-Gm-Message-State: AOJu0Yz8PJA52KBt7opSzgPl91TCSKxCIGcbXjPjGxihsjZDD4XAx3iK
- puKG6xlm3fm3sEhQsFzMwxcIYle1mFpclNJCENvVs9BvR+/VCdFvRIMI3jr50LX0M/EFEFF1Pj0
- E05KifAI=
-X-Gm-Gg: ATEYQzwtuu4rtocHsURBLMsOc+tXne/w4mY6etQY0DcJAkvThq2on45DbPG+B0ODotY
- LLeDMptpIM+YYXOta8PjVCHtprOQiH+Fe/LcjJ+FWNuCPhiPo9fc+cRxBR73BIumfg+9Z0ypV9F
- 8cpG/5p5BkwUZRxLjR8ZVri08gebBi/0uOylk2RlXtccMJkHeBlT3EjVnmYb4SoC003KcaeqgNE
- 6yTgErDaS36YZyQiwqDbiO6J0Rb5L/KGyBhfsAxE0k0+jbH0nvZXZh8e4esrHmKx093jACJd4k0
- /JQiAKsIeyX56hdyPVm+zICcZ3T6irDkEGkovV9jEfZvHiqOuemX59PVEqKPkG8RiaKY1I/bDMd
- ++g/Chf/i5JrbJckCQleJk4Nr8w2DwAqZqQZqXVzejgu5NnpaAKDGrZCsvhcqfY61Ca96s4r4K0
- KMzos8uD6cfE6p+7+f9kIZ5xBnNttljI8yOgDfZ4uldm1qsbE5okUyyWv2MfuqV1WLGCUv
-X-Received: by 2002:a05:600c:8b63:b0:482:f564:d613 with SMTP id
- 5b1f17b1804b1-48727eafa46mr249847485e9.15.1774963200790; 
- Tue, 31 Mar 2026 06:20:00 -0700 (PDT)
+ AJvYcCVh9XoIjeWh+g+0d0buMleXY/LYphVGuu00Jx+4GwVClhqpiwNWrej4VP8gn1rlX7d0OdDVrrpX4BjP@nongnu.org
+X-Gm-Message-State: AOJu0YxN+W/HYy0ouOgUyGZDYY1CGf0G387fAKN4DjMbLoMpNxijei+Z
+ hw35nJPEvsQyLxyVe7RXsUR5T5A4ei61GWUy2rDupNF81jbudO0N78qWVxyLb6KTRjs=
+X-Gm-Gg: ATEYQzx2mdAa9KvH6/a7NI3DCCR341/Q2wVLDXhDFCXv8N9tQzeGxe3UUYNDjhUomKH
+ Zc7q410A/GpcvcPCgyp2AIINMUnSxMOCSDey74TyLB5rwfNj1OfYKaxsPbra/LfSFUAkJlECUJq
+ 7GNfDhn3Px0xfySHKj5recFEbQ4J6CoACj5JraZ1F3+b0GjlkBbK0z4M7qQ1j7QN0OU72YN712n
+ FhHk0Fi7teWVdVYzuGMDsRsZ21m6o0UKQ05WQZKe2BqHzNlXDioavRu3vW98HG99+/IebDzmoDk
+ t/XoNwJ6ysdkcNn9SSq3AI3914B8lRMNsOyl2Fhemdsl4wI73DcPfodtKIdH7PoYRyiaFkEpx9i
+ rX+IIVOGgzsI37391NFCII7kFrJ5P+kjQBMk93NHfW4+zbub5+OiS1OHHMkX7ibqgvnyh7uYbJw
+ YMxs+3DvhPOQ3A26QlHyQHOWzkdDsiJznixw8Ij9+iZVej17i+ijU0csdxWS+tozPeZl4f
+X-Received: by 2002:a05:600c:43d4:b0:488:7ebd:78 with SMTP id
+ 5b1f17b1804b1-4887ebd0102mr19769605e9.14.1774963219450; 
+ Tue, 31 Mar 2026 06:20:19 -0700 (PDT)
 Received: from [10.193.39.66] (43.149.216.82.rev.sfr.net. [82.216.149.43])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887c8797ecsm33572065e9.8.2026.03.31.06.19.58
+ 5b1f17b1804b1-4887eb5aff3sm47732705e9.15.2026.03.31.06.20.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 06:19:59 -0700 (PDT)
-Message-ID: <16410351-5181-47ed-aac4-f3a90fe80568@linaro.org>
-Date: Tue, 31 Mar 2026 15:19:57 +0200
+ Tue, 31 Mar 2026 06:20:18 -0700 (PDT)
+Message-ID: <886b2e1a-9781-493d-8d85-d2f492d52701@linaro.org>
+Date: Tue, 31 Mar 2026 15:20:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: do_ats_write(): avoid assertion when ptw
- failed
+Subject: Re: [PATCH v2] ppc/pnv: generate dtb after machine initialization is
+ complete
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-ppc@nongnu.org,
  qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20260331092305.2062580-1-peter.maydell@linaro.org>
+Cc: npiggin@gmail.com, milesg@linux.ibm.com,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org,
+ Nathan Chancellor <nathan@kernel.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260327124136.983955-1-shivangu@linux.ibm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260331092305.2062580-1-peter.maydell@linaro.org>
+In-Reply-To: <20260327124136.983955-1-shivangu@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +109,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/3/26 11:23, Peter Maydell wrote:
-> In do_ats_write() we try to assert that the cacheattrs from
-> get_phys_addr_for_at() are in the form we expect:
+On 27/3/26 13:41, Shivang Upadhyay wrote:
+> Currently, the machine dtb is generated in pnv_init(), before all devices
+> are fully initialized. This can result in an incomplete dtb for the system,
+> as seen in bug [1].
 > 
->      /*
->       * ATS operations only do S1 or S1+S2 translations, so we never
->       * have to deal with the ARMCacheAttrs format for S2 only.
->       */
->      assert(!res.cacheattrs.is_s2_format);
+> Fix this by deferring dtb generation until machine initialization is complete,
+> using the machine_init_done_notifier hook.
 > 
-> However, the GetPhysAddrResult struct documents that its fields are
-> only valid when the page table walk succeeded.  For a two stage page
-> table walk which fails during stage two, we will return early from
-> get_phys_addr_twostage() and depending on the fault type the
-> res.cacheattrs may have been initialized with the stage 2 cache attr
-> information in stage 2 format.  In this case we will incorrectly
-> assert here.
+> [1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
 > 
-> Fix the assertion to not look at the res fields if the lookup failed.
-> 
-> Note for stable backports: the do_ats_write() function is in
-> target/arm/helper.c in older QEMU versions, but the change to the
-> assert line is the same.
-> 
+> Cc: Aditya Gupta <adityag@linux.ibm.com>
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Cc: BALATON Zoltan <balaton@eik.bme.hu>
 > Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3328
-> Fixes: 9f225e607f21 ("target/arm: Postpone interpretation of stage 2 descriptor attribute bits")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Not a regression, but it's a very safe fix, so this will probably
-> get into 11.0.
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 > 
->   target/arm/tcg/cpregs-at.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> ---
+> Changes:
+> 
+> v2:
+> * moved pnv->bmc initialization to pnv_machine_init_done.
+> 
+> v1:
+> * https://lore.kernel.org/all/20260324135026.247418-1-shivangu@linux.ibm.com/
+> ---
+>   hw/ppc/pnv.c         | 58 +++++++++++++++++++++++++-------------------
+>   include/hw/ppc/pnv.h |  2 ++
+>   2 files changed, 35 insertions(+), 25 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Queued via hw-misc tree, thanks.
 
