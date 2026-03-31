@@ -4,69 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C440AFF60E7
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 08:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FD3FF60EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 08:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7UKb-0001d5-Ai; Tue, 31 Mar 2026 04:20:15 -0400
+	id 1w7UbT-0006r8-UL; Tue, 31 Mar 2026 04:37:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w7UKV-0001ac-Fn
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:20:07 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w7UKL-0003aM-Te
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:20:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1774945198; x=1806481198;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=gJWdUwK586GJa5VW9QzsnFo5SqAsT+/I4KOMATeviiU=;
- b=Yz3JvBRlKHh5DRIfaLN66Eo2Z7wDkuqfjlyUn/bgJFwLGauNV69m8N2J
- 3sXKE6U3bkgK/AKanKvOgOxcp5vOY5SSnBVEG1t530m9PfSKzzrUtpOR7
- P2eRKRdfK/oWQpE4aUxpGIS0xhcObe65rNL3UDC2HUbN0sFQqa78GR1yL
- ForSAZ0JQSS9hc1HHsycMNLzykInvvIAZ0M2lmMXucf7Qh3vmx1qoTPJz
- vdwLyU66CqNZWLTavjO/zkQrRhKFhkXJmj54Q334kxn2KLzUuDf2S4K5l
- t0BNo3/s767VEhUWs7afHsZq4I+S6cmGN801jKIOvxMbIvq/3KMll8Fd2 w==;
-X-CSE-ConnectionGUID: iaZImlXIScWdycW80+kj3g==
-X-CSE-MsgGUID: 8P0NS2lCSiCfa1bE1eyUhQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11744"; a="87342467"
-X-IronPort-AV: E=Sophos;i="6.23,151,1770624000"; d="scan'208";a="87342467"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Mar 2026 01:19:55 -0700
-X-CSE-ConnectionGUID: jecDXw03TyW5D+uveOUWRQ==
-X-CSE-MsgGUID: aVx8ZMafQG6N/YIspLgExA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,151,1770624000"; d="scan'208";a="222999326"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 31 Mar 2026 01:19:54 -0700
-Date: Tue, 31 Mar 2026 16:46:13 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] target/i386: Treat qtest like TCG for supported-features
-Message-ID: <acuJ1c5J3sTVzvy0@intel.com>
-References: <20260330151437.1787008-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7UbQ-0006qt-Nd
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:37:36 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7UbP-0005lm-44
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:37:36 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-66aa2204e9dso79022a12.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 01:37:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774946253; cv=none;
+ d=google.com; s=arc-20240605;
+ b=R4FL0KJ3AgfXI4jF+CJfr4Uf04CxPLc2ffumcfWoxOuo/K+p7PfrHj5L3pPdz9gX2d
+ oeYrFFtjm6gJ3byswb7YSYOEVGqZaXgdhPn1LL0bplc46IJ1JC8qhKx9Jla1qwtCY/+O
+ XMUQnv09cbZaZgMtwbdTdRPmyA4Ql3rlMFQLzdELBIHA10p1nUqf8F0JnARBaejTQxnw
+ zrU4Spo7jJvGxeIaPIdANXdi+EF8csp+HeanhOZ3/hB6nUBOHrx/j6uBR8Ij6IbwQClz
+ +CP6/k1RBDM6XELHUPifGrxgq+E71EP03G9U8ematJgrB6JComCyxVHLhebZGtOzyyR/
+ ucWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=+uqtgV6HA1q3+c9dEfyiuKwP1ezMGxwV+bF3jSIhz54=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=ir0XDlQjA3ru3MOdMmPt+sWF1AICsNO5jTQza7NQo6zmaRiqFLtuM3YSbPko8y4H5g
+ LZ2NDbG6Ax428lWqW06w+czFPPSj/2Ny1fUrXVE51H/rpuOG6jnma7OqLxhRarVq2mN0
+ 1166EpNA+dlCLL1u/7c/5K8ITJNCG4aP0uBFVklOih4nHTVKWClar4nN/vRcuhWxWJ2p
+ GyKl3dHGry065vQ8pCZlsod/JJuUnRb9wvYDVR0PW6GWQNILO0GYgGdDRAa36XMbL1lB
+ 0IIjRj/dJJ1coTKQLzjeTB7zNYDQCvxEmCeRUjVcyDX0JEXi6C6ENglizd56FmXR4t6T
+ uV6w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774946253; x=1775551053; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+uqtgV6HA1q3+c9dEfyiuKwP1ezMGxwV+bF3jSIhz54=;
+ b=uS6HcQXMpIJpXqFB4sWcXasgfjMaNrGs++E+XRtedjG8iy9yEZR5bC11n0qxfU5wzs
+ bcjq74OmyyM6L7unAhQJUpnfqzLNEW4kbg2z/vHaA9d6QRJoNhX0NNvbVW8QO38BzKz7
+ kgRQrQlv2WS5CyAmQ60BupXRJwSN0hMjOOyrlVQu+xsczda96gA/wI3WRTQEVavRXADj
+ N1SUgoQtkY/KyYNEnVPl5oSN7Ld6ZmL7jjjc/Tk3nJbgtK6MEjf/jKTB4pCr1767LQlE
+ mF7LBZbowzu4CJ6NTvA9sSPQX7YdcgggrjG5WofqwowvCh3+we+5lQYKj1kW+yc1mqNT
+ kBPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774946253; x=1775551053;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+uqtgV6HA1q3+c9dEfyiuKwP1ezMGxwV+bF3jSIhz54=;
+ b=f+DweFgfKzE/iVl8Uur8mG2D5NA9eJGMv/Wh0+DbNgB+/m5AEwzCUeusod5LBKnoQ+
+ txYTdwzggOFIwexUhAXtb+P2xyM0SP4orer/nDJ0zYgG7hHoUrc54tKIAUP9Hv/7lMfQ
+ 8uANNhTRq6BdYBqN4m6BILb7Pmt+H6Fai83okWlXll1KS2a2eMmFUfy9tX7OxVZudh7C
+ y3IndWZjw3H3efm9iEnGmLwxbmusSPPg2lvlGFK4IC9xQMDMXy/J/R3yyGzfnn6pxMEp
+ 9xxOur4CcuKJV50Lj0wJ4rVG4Kn8h/Or8DH2szqg7KnYlJ98cRM7VDwfJFvqIhZTeBYC
+ w8Vw==
+X-Gm-Message-State: AOJu0Yw5ANlADzHtylece48G1cLeSBb/uCvXMCcFAQA5zTI4h3THHEWY
+ 1iDWJKAxupvKVzmpYy3JcfeMHX58pnNR7p9Gkw4/ACbl56oijtRtGwn8NVQ/r92sWC4h8gNnSBn
+ OaodMSTMp7ais9GzI7F2oE2Jlt59dnWDKu4/algWHCaDw8r5PB/JoJt8=
+X-Gm-Gg: ATEYQzylrRipYnhzcQ/LrsPShhSpBCWwXBiaufAJ72BvJVl5M1XyW756LgSUlLhRQg1
+ XmZ2YRklqkSgoOm0zga/kcBwkC44iBzgjfVtFMP5u+Az4dghw5Nb6vqd0rgZ93WjezeLOXE7Vx9
+ F78M5F5uNFQegoHXZ+rFQlBB72tphrswn3T0svMys6X0rjllVe4pnpd9eFh+D/N0ZzFlIm2s6h1
+ ZjsaUuAkHk9ObHsdZKZQFBkNSbrxAKAbDANhk3wGi+izSqC9tItx3auKDMxfRED3837gX18vj8E
+ ztX4g4OmxHfyRbbnr2VNxuuTz8LXw8p6QcLaRpRRtqS2/n1ae1Ffs47YWwMdkUS7a8E=
+X-Received: by 2002:a05:6402:460f:10b0:66b:d73e:b5dd with SMTP id
+ 4fb4d7f45d1cf-66c3388beb9mr1037344a12.15.1774946252779; Tue, 31 Mar 2026
+ 01:37:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260330151437.1787008-1-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+References: <20260330185236.1905636-1-peter.maydell@linaro.org>
+In-Reply-To: <20260330185236.1905636-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 31 Mar 2026 09:37:19 +0100
+X-Gm-Features: AQROBzBy8xK6FGAWNij-BGE-_3cnC82DiJjaq8jH6L7EVH2QfurWlB1-7t3w5Ds
+Message-ID: <CAFEAcA9Nj0ZFD=5NLgZ7tOi_FC8Tas8dBj9KxJ5YSk+Gq3m=Sw@mail.gmail.com>
+Subject: Re: [PULL 0/5] target-arm queue
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,42 +112,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 30, 2026 at 04:14:37PM +0100, Peter Maydell wrote:
-> Date: Mon, 30 Mar 2026 16:14:37 +0100
-> From: Peter Maydell <peter.maydell@linaro.org>
-> Subject: [PATCH] target/i386: Treat qtest like TCG for supported-features
-> X-Mailer: git-send-email 2.43.0
-> 
-> In x86_cpu_get_supported_feature_word() we figure out the supported
-> features differently for each accelerator. The default case is
-> "set all feature bits"; however this triggers a warning because
-> it enables two features which conflict with each other:
-> 
-> $ ./build/x86/qemu-system-x86_64   -cpu max -accel qtest -S
-> qemu-system-x86_64: warning: this feature conflicts with APX: CPUID[eax=07h,ecx=00h].EBX.mpx [bit 14]
-> qemu-system-x86_64: warning: this feature conflicts with MPX: CPUID[eax=07h,ecx=01h].EDX.apxf [bit 21]
-> 
-> Treat qtest like TCG here, to avoid the complaint.
+On Mon, 30 Mar 2026 at 19:52, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> The following changes since commit dd3ee9c63d96b223c8d41bf5d65392eb898be626:
+>
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-30 13:54:56 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260330
+>
+> for you to fetch changes up to 36212b4e859d1ccb25ab37deac152d67421ac425:
+>
+>   hw/arm/xilinx_zynq: Use strcasecmp to parse boot-mode option values (2026-03-30 16:18:07 +0100)
+>
+> ----------------------------------------------------------------
+> target-arm queue:
+>  * target/arm: Don't skip access flag fault for AccessType_AT
+>  * hw/net/rocker: Avoid double-free of l2_flood.group_ids
+>  * MAINTAINERS updates
+>  * hw/arm/xilinx_zynq: Use strcasecmp to parse boot-mode option values
+>
+> ----------------------------------------------------------------
 
-I see, this is a proper way to resolve this for max cpu with qtest,
 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-so,
+Applied, thanks.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
-> ---
-> This suggests to me that the default case is not something
-> we ever want to be in, and we should instead be exhaustively
-> enumerating the accelerators and asserting if we don't know
-> how to handle this for the accelerator in use. But there are
-> several accelerators that we don't have code for here...
-
-yes, when I have some time, I¡¯d see if I can sort this out, to clarify
-what accelerator needs to be covered here.
-
-Regards,
-Zhao
-
+-- PMM
 
