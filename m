@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA8F10F92E6
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257EA10F92E9
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7dKH-0002Nq-RT; Tue, 31 Mar 2026 13:56:29 -0400
+	id 1w7dNh-00052F-Ac; Tue, 31 Mar 2026 14:00:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dKC-0002KI-6S
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:56:24 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dNM-000502-G3
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:59:42 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dKA-0001hw-IH
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:56:23 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43cff5dafc3so2061065f8f.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:56:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dNK-0002D5-Hy
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:59:40 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43b95e5b3afso3509896f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774979779; x=1775584579; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1774979976; x=1775584776; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gr2lIIqRlJHu165UF73aSFemXfmSDNRnZalK7wBdGvk=;
- b=CfcdA1DTBDE2rQAn+RsxKb0iXSojelilNP0c17qIJkg055JiROV6OGqZB+ZgQwKefG
- ZQNcOcnkFN/eKTPs0+Y1AdIePBnws4OuEEObw1HHvGmUVP0oP+7IjE35VwzNsthE3kEX
- SGNGP2rREMndbp3ivF1RPvvwA4tt62Xagot9bTD72pTg1vBgF5gN1WcVrajJWc/RvlTR
- 4/qIR8T8fKYx1UGGdbrOeOLst++XhVmJ4U5SSu/Wjb+NnOWhDfNLUZG5kkYSx9zPQQms
- y+3h3sf02XXHlVNsWmSeO2NsDfoJ4lDyxw+q5ZEby0/cLrN9D7blCyt7a07OohsakU7d
- dSRg==
+ bh=/qS+cREq1W+RKiBSVyZFuDdd6d5V1toNRsD4H7dDYCw=;
+ b=IigPJroyVtZf6XBgDUUZ0/eey5FNzGmHcd+vPHxKFDTix+upKisy6v++RhQLwvMwnY
+ ugK09Os2ArgJFT2kfcGH+3MYi/z74vEHcXWoSmyErn3UVhZOIvR5lEtMHMbDwwg9VaqK
+ SHR5963eN5ymdFNJfurgd/5ueYElr2Xl7vDXBdn1i3g+yEoY4yi2r8nDXYZGjWuvI7Su
+ 0kj5BZ1nCV4a7ONpPMcoxY026WOJfkVZPlFSMoHF/g8CE3j8ur/UnqHG9chGMYyWSZz7
+ d7QKlA5onsoBrqujCm0Mn0UrVukwfzzPl07X/SZSV9/XbpjPTJmJRQlaPHXt2s2XVnPJ
+ dMSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774979779; x=1775584579;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1774979976; x=1775584776;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gr2lIIqRlJHu165UF73aSFemXfmSDNRnZalK7wBdGvk=;
- b=amw2cZdd2TvGqRDlNXXdUqhpBQHzPriBxc1q4+An5Dx2Vapm4UmXEiQ4+fmNa+yjqx
- ZLT/Z9RfmMqWKQYGpIhej+PfN0wCeMvDNOzrRjdfnDfvv1lqfjZ3m+9lUvQkhEAXWLNw
- jAkQXg9MYBUrJrKtM2W+sNN7rFX0KPfVRNnLNnboFgH3vsMf/FZB0FMnnGcwlJnNQtgw
- EbvVteU5fBtTFPcsBEa3omVu1YRzgkrvmwQKN/oZQTGqsjrcd8iLy6OYnbRkQ2UUG6HU
- XAUkchk1y3O2XihFQcb6WGNYcMdKPGcub7T5f+cGGMGesjwDuJOY6k/YIJq0oYqb9An1
- oRgg==
-X-Gm-Message-State: AOJu0YzUeWz+ETFs+7cyuCah4nPTr/LNtgIVVWnERcOIWrRU556eI+uO
- yZT/wQqqkBDYSc2uckAwmJKQwHopOkvlNLfJKdrgf+FNPu1yxapfReqsHO7nBcyWjbU=
-X-Gm-Gg: ATEYQzzazlSLix26ILz0xS4wxrXLHZ/mCo4C7H/w6Mo9aftKgE/h0WzgbCCC0v9UcDu
- /jCZZVmU2tMknZufMhTU4+1Mwr58nbFRHSbfsgNfaezRCJ8EXAYinJWydV9rxOLfN+KrEM5z24p
- J1MhIyhOgNMrXFjmW/aaoAb+QLtRd6koZYV5WiflReQy2X9yYesvfxJN38Evdn3EhpL9wec4urh
- kMNqIXn17gYBvH7GpKfbDiz3G69Cg6dIhCCo3p3JyNQv6YHF4ye2EKQawOiJ9pCuDxTaAcoXh4Q
- K1xxyLOaWWGh8lHdIMIGhEVqbqWSb6YyUw6F1mplCMwJ+b+iVpMhoNKDod4z1ftYOyi0fR5BlB9
- a1hmOuhlQ50x0o1yZlr4qItTBYICV9CXU49F5+0ofJE1StGBpx/NxMNom1AC/kxL5JnUCb/XuyB
- JuzcJEC9K27lyrMLgnHdXCZXoqb1clTtMRlFgn9bk7+SHNhEbRik5AUsRfrxpHAQjdFg==
-X-Received: by 2002:a05:600c:c10d:b0:486:fab9:a578 with SMTP id
- 5b1f17b1804b1-48883575c11mr4415675e9.11.1774979778796; 
- Tue, 31 Mar 2026 10:56:18 -0700 (PDT)
+ bh=/qS+cREq1W+RKiBSVyZFuDdd6d5V1toNRsD4H7dDYCw=;
+ b=cNhSjC3RnWh9v4726E6qDAgbbLZgJijONV/G9bFuXNLVVtvyBIRjwHgrwy2TI/eox4
+ puegBzlhvQCjwed2U7SYbxQB7uKveAqiVf+r/O5U1h6sjVIF03c/XdrAcGjAlvAmquVb
+ yWmSb1J9HmHg1P2pRpITCVNZHavuBRgoJFSUSKy/3kF0Wmk4B46CU0jOt0L4GuT1lFo2
+ KUHBw9sCgWL25Wi5fxqRAgRaPzueKsz2Fmmp+ZF85KJU8zZVs1EehqxFfkjurhnU1veX
+ MRRLdzn8tpxPLKbVIVUf48rBrDBx/es1yzE3BzcS7GqFBzJ8agNe/5Xi0dSPHLCm0Zdm
+ dnKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVok+VJ6nnHC1ejUZs03UE5mY5VtMzQsW1m+xASPYmVEZbObj926L2c14Z5e6ZsjIAuu6RGR4AGMctI@nongnu.org
+X-Gm-Message-State: AOJu0Yw+XnxV7JDL3uDQaKQeISw5w97SkbJZolh32Xg38qz6uyStuMbe
+ P28qahkp0Fs5t1GES6W8kUGKWilbWpLgr3X1WLqmQZmFU41M8GhpphtKL4MrJ2EYxvE=
+X-Gm-Gg: ATEYQzyKuztR8rYu+llqpeWsHzoyIVU9qu7B6AM85k2SnnN6cTQyASqq6u7+FUwgGEG
+ hRIUd7H8a0XqwZxna6oSS75qDAhfCVpGHYv9QjH89SeOzc29nklFe7JQnq5bLsHi8N/XK6y7Lbu
+ hIzlTWIsIoxs2k8Bfo1MYvAt3DKUWMhC3NB/Sveuch+nV344WVQ4NZLCrNjJ5VaTvOoqncChy9W
+ VlAPqRbMh+BdfCTitKgJV3a0wTHJG4O6BD9lrOpVIanM27jXyZJcYaH3O9bSLn1dyGKwKz4NNoW
+ vEsESPkO9f5enDaaOMS3IwPbJq8+niPr3FuK8SwiuihgxmjCnr4068zPci6NH/eXngaEKnLk1Eg
+ ADwFh/FB+s32yB4SbXJF7A6EGZrxxQA3uEeG9knkz2yAEFCS4bCHrO6KMewzY6qiV5M26EZLDHH
+ nVjV0lATCQuXF91lV4h3rVc/dOOK46TGjpbK9YIE1c24r5sHBnTrbHJB6s783YVhqsOg==
+X-Received: by 2002:a05:6000:4008:b0:43d:714:34de with SMTP id
+ ffacd0b85a97d-43d150f1b6fmr926070f8f.45.1774979975869; 
+ Tue, 31 Mar 2026 10:59:35 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e93c014sm60975925e9.10.2026.03.31.10.56.17
+ ffacd0b85a97d-43cf245e2f6sm29929612f8f.18.2026.03.31.10.59.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 10:56:18 -0700 (PDT)
-Message-ID: <182de182-bb2c-48f0-8a0e-4a8e4f651acb@linaro.org>
-Date: Tue, 31 Mar 2026 19:56:16 +0200
+ Tue, 31 Mar 2026 10:59:35 -0700 (PDT)
+Message-ID: <de8a5eb2-b7e0-48c2-a83e-2d1d4f1e94fb@linaro.org>
+Date: Tue, 31 Mar 2026 19:59:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] ati-vga Coverity fixes
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1774904832.git.balaton@eik.bme.hu>
- <1122d60a-c7f9-466d-ab2b-c7bac6c66245@linaro.org>
- <58689216-a72e-de88-de61-cca626e1bde9@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] hw/pci/pci: Enforce pci_setup_iommu_per_bus() is called
+ only once per bus
 Content-Language: en-US
-In-Reply-To: <58689216-a72e-de88-de61-cca626e1bde9@eik.bme.hu>
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ mst@redhat.com, skolothumtho@nvidia.com, nicolinc@nvidia.com,
+ nathanc@nvidia.com
+References: <20260323183024.4069032-1-eric.auger@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260323183024.4069032-1-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,20 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/3/26 15:45, BALATON Zoltan wrote:
-> On Tue, 31 Mar 2026, Philippe Mathieu-Daudé wrote:
->> On 30/3/26 23:09, BALATON Zoltan wrote:
->>> Small patches to address Coverity warnings.
->>>
->>> BALATON Zoltan (2):
->>>    ati-vga: Silence warning about operator precedence
->>>    ati-vga: Add upper limit to x-linear-aper-size property
->>
->> Queued via hw-misc tree, thanks.
+On 23/3/26 19:30, Eric Auger wrote:
+> Currently it is possible to attach several arm-smmuv3 devices to the
+> same bus although it is a wrong setup.
 > 
-> Thanks. Could somebody review the cirrus-vga patch too so it could be 
-> picked up?
+> Change the prototype of pci_setup_iommu_per_bus to pass an error
+> handle. This latter is set when iommu_per_bus is already set and
+> used by the single caller (smmu_base_realize) to report a useful
+> error to the end-user.
+> 
+> While at it document pci_setup_iommu_per_bus callback in the header.
+> 
+> Fixes: 66d2f665e163 ("hw/arm/virt: Allow user-creatable SMMUv3 dev instantiation")
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>   include/hw/pci/pci.h | 16 +++++++++++++++-
+>   hw/arm/smmu-common.c |  2 +-
+>   hw/pci/pci.c         |  9 +++++++--
+>   3 files changed, 23 insertions(+), 4 deletions(-)
 
-I skipped them because Gerd left a comment.
 
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index 58c4452b1f5..a3aeb5a8796 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -981,7 +981,7 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+>           }
+>   
+>           if (s->smmu_per_bus) {
+> -            pci_setup_iommu_per_bus(pci_bus, s->iommu_ops, s);
+> +            pci_setup_iommu_per_bus(pci_bus, s->iommu_ops, s, errp);
+
+Should we return if the caller returned false? More code could be added
+at the end of this function.
+
+>           } else {
+>               pci_setup_iommu(pci_bus, s->iommu_ops, s);
+>           }
 
