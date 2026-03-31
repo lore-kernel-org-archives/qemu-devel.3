@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C1F10F92E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 16:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14BF10F92E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 16:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7cIS-0005As-VP; Tue, 31 Mar 2026 12:50:33 -0400
+	id 1w7cNn-0001lj-35; Tue, 31 Mar 2026 12:56:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cHD-0002x9-9v
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:49:15 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1w7cNl-0001lM-Cg
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:01 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cH9-0000jA-SY
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:49:13 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64eb84d1e37so7340777d50.2
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:49:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774975749; cv=none;
+ id 1w7cNj-0001oJ-Mo
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:01 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-64eaf8aa893so8099823d50.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:55:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774976158; cv=none;
  d=google.com; s=arc-20240605;
- b=Ygh67IQtlXF63DGd/N5STejVRsmwAkcpUQS8FmEGrUQN95sm/y14PtONnFGb6JcoRe
- 8rcN4KMgO+IXO2a0EjNLk3nbDZ+7JvTZdw2vLR5n2t8QY2cOuufYB+gLw54DAc9CaIRS
- 6/c1nUqniwjeUOCnWovp/gvKU1o+EioJd0hufQ20Fnc0ZD4nZkDdQQqzkN76Pl6dGLYR
- rBlBulLLXSu3zv6G37aok2dYN1ALEcDdUBTZBOuwO7ubhHQ2UT6eZLbVze/X65Uw7bdn
- 47EKfGIQqVXRTAKEbYDN9pIzTDHKKPMrbe+Nfs54CENvtF3yc8+ihcHUbeRfCMexfqKJ
- CG+g==
+ b=J6UTGLgDH1mmBuYvIfEYGVqvL46o/UAeOIg7IgK0nZuaW+nr9z8Tqcqeydva99g2V5
+ eCkzCvxRvktlSCEYrp/Af3CZbCoQHEef3BRJx7jHfr0WPqzPJ6EpmnHZk5V8GMsy36FD
+ gK9ZDB76OF3FrqnuMLzB05VHkBslE6CdGMNRWo8AhGRmAI1OwROSLnx39zXbD682aWgl
+ n4kw8gfCDdRxGnB4r4SJUmZ2RqeVYe9UZ79V/dxt8a5SCcY8PxjfvFKTjuARApWoiJRz
+ 5VMJRS9oCoL5dTSmDfuxg2HQeOAfBJ3tGP+vssEstm0X+Qbak/9iHXMcbXhdCXTf5aib
+ lrxQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=m4QdvmL3h1yrMq2hECA8e22VT3f2QJLlzFBq6xX6KhM=;
- fh=j0m/KHqzOQ6CKKktQSBLLiVo/M7SZnjHIyl4bugXt+Y=;
- b=hcG2X4ybDfLYVt29c84l4/oqoUx5yqQ/e7PasDz0/wYsVgg0Q8virMXyr0dpdFegfq
- Q67UOU0hNEXNMOjmL/InJXXkT95rp52GOOdqnQSimhITf0EHXIb8sMlW84ur40aASbqs
- SCqCSOaWLCe7oSpb2pS1oeGWgjoJ02JVP7vHFSlkibFFktvXWg05Z94UXOkrvVs90tIf
- AZEedymu6vOUCzZIc8jarZdNFbCnJkPDwpfi2tzQ09+iI9rKahB19WHUHfl9u6250WZq
- 85pMnKJl3duivL7HPsspP9wrmXeojuLS513FXiKn+OhAh7K0l8PNJuayz/jT2FzCTIkj
- NHag==; darn=nongnu.org
+ bh=r30PW/vpTEB5JhBFy+HoE0iTIU2BVdLxLZWWG0cRwho=;
+ fh=evrtiTOpvKWHw+YOJsogrRLGrJRLilGjxlOe6ADeHns=;
+ b=ZpNO2i+7qHH0HKcpEFACBH5piRMoOg91eya3lVI7W2+YauIsS9gT1EcgI1/+5YuUu/
+ 6n7TTxjgFqLc0CQ/nvC1lJ9MYT4PhxtHC2NqdJOuJcFWYFiIobXGZvuvoJfIAneNBa0O
+ BPZSAaT3r727p870J3NrSHKHioh4f8nKoe072aEQ7VF6aA7989mLFXxSNdGjUkRgFKmC
+ 25KprCygVNWNCI1HptNRCDX6d31MI+rQC9g1Y+HiaWlpXhBnPHDbjG+7av5dZWkfXm3k
+ hSzxdE9gcT8uOhmsHx/Ez/VQiXwLPs0jKLLn4rKfP+EP7Vs9cxWTo847I//fzyuc+5Db
+ ZmBg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774975749; x=1775580549; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774976158; x=1775580958; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=m4QdvmL3h1yrMq2hECA8e22VT3f2QJLlzFBq6xX6KhM=;
- b=g5guuspgzy9yvmysKUxByZn7T0/MGOtWjAJYoL30VgLI0Izw4FYo3chsTNKNNQMHtS
- A59Ngs43saR0P6NHfpQE5AqnCY167UpJclq07xLd2qhHmed8qmwca1qZQAr0I7Ylf8N7
- Y7+//1qlurbosAcz8Ce270R0LPRsK9ZtDomAWv8+n8+v1/b3f4FfRdpyxftijGfp/Loa
- e5T0CfaPOffLGSm749z6yDmoPj42ySTIOfpGIw6WBXPRMPSpvjxScSyKjS+YZSH1Gles
- R5pcB+626lv8tpjg7rlp1DwHaDiQqhBA8+2guuQb2XHTCPTtBcaA5cXoPgn99+LIeWeO
- CzsA==
+ bh=r30PW/vpTEB5JhBFy+HoE0iTIU2BVdLxLZWWG0cRwho=;
+ b=US2+euA8pRxy6Rwqz0zB4RnKCIK9DkuBCWyKBVTmlWU1xeotQFUpvJQxhanpRfY6KW
+ 1e4PSfs/mUbs/U4glWAD20w+1nJ5guVjlDPLcR7/jMFaYb8lGw/TyXd+z1ZFTKjkplvT
+ oHuZL7Fn4wH8e870+tBS7CGgjx1FjvIzipI850kcw8QAB70sMUqs4cpxWXKxPVeF70WE
+ uvBOQB26/6VPaGFenSLCBgrROYya60uvof/jtb5Ex2hzFFH3QD169vUzoC7zA/ruQg0e
+ VEtuyb/hBzkHWKWGjp2z7KeLdc0VTHg91mh6zYOF4HUl7R/RmwXgBjlIuSKG3CWX854j
+ fRSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774975749; x=1775580549;
+ d=1e100.net; s=20251104; t=1774976158; x=1775580958;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m4QdvmL3h1yrMq2hECA8e22VT3f2QJLlzFBq6xX6KhM=;
- b=freVF2VTToVVS+obfRpy+f2sfJAVjMhycLPHqKqkuVH7ZSKtcgS6WenC/AwowEowKN
- VAAbKnWM2vHC6vpdTq076luwt8FNNMEhJ2cfsPO7H1EWjst3Zht0kQE9FmGy2cZ1vuwb
- DZqWdyZixSVETp6LG0zH1SFq8pJQyAmw602wTQCyCYYJViNX5AysfCTPHtTq9uJ4ToTn
- D6ogo8vML1HLBqCjSj0cM8BTmFy31iVjBzCnJBH71GHnLfMQZlPqUx6zATMt6AZ7zmWX
- sqOyOwBBVcphW7I40lomHrLEeMwIgk+MgpsEx+66cD9WP26sYb0jkvLYD3RkOR6JQo/V
- Fjkw==
-X-Gm-Message-State: AOJu0YxY9yB8D1NX0SkThIbDbIbJaDk6lxfIh77D281WaYBfQ/2iFr3Y
- dh86x9b5wEjwcdauzAsQj06C0TidbO+i0zmAZgN2rql6rszm8vkaCY7EQXRYcYAvPJPovwPA706
- 2+z9TiyGpKc1oocp+ZkJj6ycTnW9VniHF9VzWdn9Y4w==
-X-Gm-Gg: ATEYQzwtIWGWbOFRRFHH03VmSPVZGvhoTLRSjRPHMyUy1FDny+p29kf68iQAux7a+qt
- 5pCUta338QqfKKdYEJVLm9zLiKZutQRx2rQYz+zlF708bj8NZoNSIh7VvIErezrHKXIzAZEYAbi
- vS6P0xtiWkuYQXB1SoCPUGpH1x6qKRBoDuINjjEs1+7KLodNpULTM1aIZh2/wNNxQkXyeRkCWoO
- adZ9UGmifVVO5101dpU7CgzMYKpwAp28u8TmGjFWS3L3Qcm59dlG5Z/p98zKFMIANIRrjXNH3wQ
- p05UY1nR4EBYERE5WhDZ/JW1Qa8W8Lf8df2s7Pnb59gUp5KFAv+mMa7ZqJy1kCqkS9w=
-X-Received: by 2002:a53:e101:0:b0:64e:f106:60f0 with SMTP id
- 956f58d0204a3-64ff73cb80amr13166674d50.51.1774975749412; Tue, 31 Mar 2026
- 09:49:09 -0700 (PDT)
+ bh=r30PW/vpTEB5JhBFy+HoE0iTIU2BVdLxLZWWG0cRwho=;
+ b=TaDpAFvJYa7c7sNP9KDFMkNyuQKWmALZXVR1v7OFjpP3v8SFzJGO7cZw/pMlyiq8ME
+ 8fkvxM21DYIc1QM20chyQmA8wA9Na+B4lVlyipwKmsQNq7EtwlMpsXt16CPdEKcbByj6
+ F8Xr25mfIiARdkvztd7WxjpXKUWgryeOuiPt2yQeg6sVn68azzSOBTDYM2rsMvFeDZzc
+ gskm/waI1tAQbGYAWcY9WaOgzLWaeghiABVs7gQ2biRktNgez/NPPGm6aZlFIqF4ew7q
+ a0cASd3g5ahfMgWnRnpeDMOpInwYGRC/6UiDma096UxdtbGd70Tys7NA663mZd9jDChD
+ TSow==
+X-Gm-Message-State: AOJu0YyFcT0BcVFMjhHdO3v/AaG9X4UKYFCrCb1n28Y8bUt1brLUZTtH
+ 89ynQIUlTPPn3jEcGL67WICINa/w6I8LYpPxZpNAbbb0DpQmZBmdp8aIkzk3o33YkFAHz4O4/dJ
+ YiVkK8g/gaaFGjZAfQk3agtc8jtc1f7cv3vNWqe4Xln/B4VrqHrpIS5w=
+X-Gm-Gg: ATEYQzwI0Udy3tVVnMB88JVtvNT0uXwHS3f0kmGU1SpYCkpa6Ygc3nYyKx4qLblX8RQ
+ gh6hprppbjFxSCvzRdsgWH3JmzP5QhpnqD4LxxHoMBMzJvQiTVnyLpTxZqSZbQ0E92YY1LJSzD2
+ yKRy1mJuVx5Ab716lw28gjjeeNnAwTEkCHvRJFn+to/VchLgrTXxgNhdrFUIhqY9JewhF0n1fE8
+ VWKuOhI7EZ8DmyifCT5+9o5bDGB6PlW5oS3UBYgMStdxn+NadRfddJegX2xEzE7q5SapRtlOoRF
+ aJu8ma5tjMUr0HuLN5X5BmDikgXxFniVxBA6aUz1gEAPlCoE/LyBHrmbfp/YRoj4zdccyXl92eh
+ JxQ==
+X-Received: by 2002:a53:e8c9:0:b0:64c:9f31:e33 with SMTP id
+ 956f58d0204a3-64ff7414876mr12474719d50.65.1774976158321; Tue, 31 Mar 2026
+ 09:55:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260321135624.581398-1-npiggin@gmail.com>
-In-Reply-To: <20260321135624.581398-1-npiggin@gmail.com>
+References: <20260330143123.1685142-1-peter.maydell@linaro.org>
+In-Reply-To: <20260330143123.1685142-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 17:48:55 +0100
-X-Gm-Features: AQROBzD9qx1xkyhy1eCZzZCj2s9CSdAnQxzSYYwJ0XrB76yK8O8eCMcVAghSWIs
-Message-ID: <CAFEAcA82PE6UNCJdQ7grwb=Br35egPeY1v2+3qyipED_aw-JKQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] user: recursive signal delivery fix and test
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Date: Tue, 31 Mar 2026 17:55:44 +0100
+X-Gm-Features: AQROBzDZk6nYvl4bGsmXlGMU3Un8cLKFydxeVEiqtY_nCzLIFXZeuW6f8NWfRHs
+Message-ID: <CAFEAcA-mF1E6k8S+3wokNu+0FeHuvNw948M38od8VmaT9nXuQA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] linux-user: Fix incorrect sign-extension of guest
+ addresses
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,22 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 21 Mar 2026 at 13:56, Nicholas Piggin <npiggin@gmail.com> wrote:
+On Mon, 30 Mar 2026 at 15:31, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> I found this recursive delivery problem when testing new riscv vector
-> state support patches (plus a minor lock user balance bug).
+> In commit 7804c84a ("include/user: Use vaddr in guest-host.h") we
+> changed all the functions in guest-host.h that took or returned their
+> guest address argument in type abi_ptr to instead use vaddr.
 >
-> This or similar type of issue was fixed with 8bd3773cce1 but I couldn't
-> see exactly what scenario that was addressing. Is there any other way a
-> signal can be generated during handle_pending_signal()? The SIGTTIN
-> case, perhaps?
+> This introduced regressions for the case of a 32-bit guest and an
+> address above 2GB for the common situation where the address is a
+> syscall argument stored in a variable of type 'abi_long'.  With
+> abi_ptr (which will be an unsigned 32-bit type for 32-bit guests),
+> the address is cast to unsigned 32-bit, and then zero-extended to
+> 64-bits in g2h_untagged_vaddr().  With the switch to vaddr (which is
+> always a 64-bit unsigned type), the guest address will instead be
+> sign-extended to 64 bits, which gives the wrong answer.
 
-I think 8bd3773cce1 is fixing "we try to deliver a non-synchronous
-signal, and in the process of delivery we got a signal", whereas
-this patchset is the rather similar "while delivering a synchronous
-signal we got another signal". I think you're right that the only
-signal we can actually get during handle_pending_signal() in practice
-is the SIGSEGV.
+I'm going to pick these up for a pullreq I'm putting together
+for this and some other recent linux-user bug fixes, because
+I think it's better to have the fix in rc2 than delayed into rc3.
+I know this has only been on the list a day or so, but I think
+tweaking it in rc3 if needed is better than definitely slipping it
+into rc3.
 
+thanks
 -- PMM
 
