@@ -4,105 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB62FF60D8
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 06:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 068ADFF60D5
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 07:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7T3h-000375-1D; Tue, 31 Mar 2026 02:58:41 -0400
+	id 1w7T6K-0004NK-Gf; Tue, 31 Mar 2026 03:01:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7T3f-00036l-HQ
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:58:39 -0400
+ id 1w7T6I-0004N7-W0
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 03:01:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w7T3d-0001KS-K8
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 02:58:39 -0400
+ id 1w7T6H-0001e1-F9
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 03:01:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774940316;
+ s=mimecast20190719; t=1774940480;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=2ZUJNaxOsCTBLh08NnJ9ojiTGlUxdcHds8nirOg4kP0=;
- b=Ckye4ylCoqswuWZZnBI85Rq/pOa7TT7CLobWX4FPN6NR25gH3ljuY01g6NW5XWQlACqfmf
- rzNUcID5zePGYAK2EQMQA3oEAai8lESvreoWRtTuqyqAIl2HYY4ZXNCg0WnMS6Vrxp/anH
- V3noZCZ7RhEmZl2HyWgJzEsKxmsPlQA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-J2cTbLF7P0y1wdyTi4bHNA-1; Tue, 31 Mar 2026 02:58:35 -0400
-X-MC-Unique: J2cTbLF7P0y1wdyTi4bHNA-1
-X-Mimecast-MFC-AGG-ID: J2cTbLF7P0y1wdyTi4bHNA_1774940314
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-487018c8244so34371995e9.3
- for <qemu-devel@nongnu.org>; Mon, 30 Mar 2026 23:58:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774940313; x=1775545113; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2ZUJNaxOsCTBLh08NnJ9ojiTGlUxdcHds8nirOg4kP0=;
- b=aeKUya/tFgiQRhEVRNFaeSTTltiZNtNBrHmoAgE6OSr9mtEjBOm2/aDfOemCZxFZ0i
- NToo1CNPTkml3GIB2cU+q8CmA/im2X8tqRMfJAagTHrEHgVaBmRBDAZQTNyTbMUyhQCc
- /ibIVEdVp66oer561z1GpKnaDF94hG1/lvZLIDrIG42E7bY0e6rph6hR6lno2agG+PKH
- 9N6H28p9seX2PKRUudY9/4W39gV6vsFJT4W9A4umgX4KsBSb1WfKKqO72SOrlNmS+7fW
- wbPCzbf8hiqds5zloTSMmIdpO6Lo183ZOWfR8G84OEXaA8ywluAr9bb4N8XPRkM5Wx4x
- mH5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774940313; x=1775545113;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2ZUJNaxOsCTBLh08NnJ9ojiTGlUxdcHds8nirOg4kP0=;
- b=BtdFnvrwDZaBw7FDADBVJa61RmNNtNeNodnsAxcAPJeVN6iD+rmOZmERFoqqAU/2KM
- H+1rkRxj+OqvAygZ3Zp2N/a36jam83mcpeMzxMuUuXyMOPbh3Vy8jlcdZfa4hm4v2dyk
- QVQpKlf3MxLZ1+VFCIqoMEbLOYNN4xCmTtgbzPgkdFRV7fsyHMpWA9zhZRbTU7upF8Cf
- EQDww8pmscc119mOq8dx2L1Oz0Brnt2SkjVsHI2r9PAF80B77lS/pHbfK9zyH7BjZgqn
- iNizCjgbCvMjYaJ4RovfsAiphKoU6H5ElMD2Thzy4xIQ2A3OtaY6QVws/Gp4zXsmDow0
- y2ag==
-X-Gm-Message-State: AOJu0Yy4VngPsmQNGtH8FfFwKxh4s2lpTeC9rRgxQEt9pUzKhL/wBwgP
- rnqr2QFArZmM25l72/TZPpVNShrgLzv6UIYHx6sfjn+atPPTB7LIsD3uIoj4JNjTybQJCuVawxE
- eTC2DzzKIQPal+iDqfrdQxJWnVOVFftfQLv4GG/W2TY063PvuzzCkOAAYHoiuEpVTFvi2RYLHoB
- XwIZ7mYxGhSMS+5gnlB78XcZqR+UI0UZ7aIsb1Lwxp
-X-Gm-Gg: ATEYQzzHnYy5APKU6Dc+SXqLYpj3UERmEQIMjmGKV+ta5R0xNaqPRN9GK4ERoypAu7h
- cPhUyS4zjU0kwn4Nxruv8hJZSfei5Q0Kg5f23rKaSUNYrVpylTjLB/PHXei11oJ185BbQ4JZW+m
- KUuZ7aU5A5QIg3qRVk1Ntt7+ThEomR3mfV3tPpEjkYwx8ame2D0FCDNe+GODw1J1bvzumkTlqbj
- cmpPFHYs6tM58BDK1zhhyors2bop/PKUyqYo0NyE5TAkeRiAG3RFBuxvhrbBENiWupbtQctR+uA
- YTK1ypYkY7Pz6HCC25y1jyRhhRvfWzUcPYU0/CGTDVakDhjl8uOvNNacLSmbRg+4ABP8m9QFZdX
- spWCPjTbvqz8ctU9ns7enPgxnzIr6KP+tcYnPCcjJ58AppSV2ciq+IJn3/JYcZKEOuK7cYunAh8
- ByVCEeQ2oV+8K2fCymyOOTLHEm
-X-Received: by 2002:a05:600c:4fc9:b0:485:2fe9:336f with SMTP id
- 5b1f17b1804b1-487280ba3a8mr240440825e9.30.1774940313472; 
- Mon, 30 Mar 2026 23:58:33 -0700 (PDT)
-X-Received: by 2002:a05:600c:4fc9:b0:485:2fe9:336f with SMTP id
- 5b1f17b1804b1-487280ba3a8mr240440425e9.30.1774940312841; 
- Mon, 30 Mar 2026 23:58:32 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.85.67])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21f173dsm28238720f8f.15.2026.03.30.23.58.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Mar 2026 23:58:32 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] target/i386/tcg: fix decoding of MOVBE and CRC32 in 16-bit
- mode
-Date: Tue, 31 Mar 2026 08:58:31 +0200
-Message-ID: <20260331065831.423094-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=RvfvACAp9Td7F/nsycEhUjAyNTaOjBQ5kkBHeIJahco=;
+ b=QbwHrdwawqOtUMcG/CKgJrZZa9Wy2RIkeBlbUO9SgHjTn7ir2nBDwd8mdtACZhJgTFUY1C
+ 6oj0+rGvwS2aAvvB1JmnX5Ru5nEWARcW6enYIslsbKDDSLsKUqFATWnMuZgWEoqy/GqDU2
+ zuA8hSbcarobvLagALpS+DPP6Snp8O4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-TW-xo3exP_iQxay4vOkymA-1; Tue,
+ 31 Mar 2026 03:01:16 -0400
+X-MC-Unique: TW-xo3exP_iQxay4vOkymA-1
+X-Mimecast-MFC-AGG-ID: TW-xo3exP_iQxay4vOkymA_1774940475
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D35519560AB; Tue, 31 Mar 2026 07:01:15 +0000 (UTC)
+Received: from [10.44.33.100] (unknown [10.44.33.100])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0FAC2180075B; Tue, 31 Mar 2026 07:01:13 +0000 (UTC)
+Message-ID: <9d9706b5-372c-4627-b361-ef53a8417b73@redhat.com>
+Date: Tue, 31 Mar 2026 09:01:12 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] Misc QGA changes to allow building with Windows Clang
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
+Cc: Yan Vugenfirer <yvugenfi@redhat.com>, Michael Roth <michael.roth@amd.com>
+References: <20260330113906.168002-1-kkostiuk@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260330113906.168002-1-kkostiuk@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,82 +121,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Table A-4 of the SDM shows
+On 3/30/26 13:38, Kostiantyn Kostiuk wrote:
+> Kostiantyn Kostiuk (7):
+>    qga/win: Use swprintf instead of snwprintf
+>    qga/meson: Remove unused lib stdc++
+>    qga/meson: Use windows.compile_resources instead of custom_target
+>    qga/meson: Allow to use MSVC message compiler 'mc'
+>    qga/vss: Use MAX_PATH instead of PATH_MAX
+>    qga/vss: Remove unused undefs
+>    qga/vss: Drop unused define uuid(x)
 
-                    F0                     F1
---------------------------------------------------------
-     NP           MOVBE Gy,My           MOVBE My,Gy
-     66           MOVBE Gw,Mw           MOVBW Mw,Gw
-     F2           CRC32 Gd,Eb           CRC32 Gd,Ey
-  66+F2           CRC32 Gd,Eb           CRC32 Gd,Ew
+What is missing after these?
 
-However, this is incorrect.  Both MOVBE and (for 0xF1) CRC32
-take Gv, Ev or Mv operands.  In 16-bit mode therefore the
-operand is of 16-bit size without prefix and 32-bit mode
-with 0x66 (the data size override).
+Thanks,
 
-For example, with NASM you get:
-
-                                 bits 16
-   67 0F 38 F0 02                movbe ax, [edx]
-   66 67 0F 38 F0 02             movbe eax, [edx]
-
-   67 F2 0F 38 F0 02             crc32 ax, word [edx]
-   66 67 F2 0F 38 F0 02          crc32 eax, dword [edx]
-
-versus
-
-                                 bits 32
-   66 0F 38 F0 02                movbe ax, [edx]
-   0F 38 F0 02                   movbe eax, [edx]
-
-   66 F2 0F 38 F1 02             crc32 eax, word [edx]
-   F2 0F 38 F1 02                crc32 eax, dword [edx]
-
-The instruction is listed correctly in the APX documentation
-as "SCALABLE" (which means it has v-size operands).
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.c.inc | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index bc105aab9ea..c8b5bd6ad26 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -875,19 +875,23 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
- 
- /* five rows for no prefix, 66, F3, F2, 66+F2  */
- static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
-+    /*
-+     * MOVBE and CRC32 are incorrectly listed as always doing 32-bit operation
-+     * without prefix and 16-bit operation with 0x66.
-+     */
-     [0] = {
--        X86_OP_ENTRYwr(MOVBE, G,y, M,y, cpuid(MOVBE)),
--        X86_OP_ENTRYwr(MOVBE, G,w, M,w, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
-         {},
-         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
-         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
-     },
-     [1] = {
--        X86_OP_ENTRYwr(MOVBE, M,y, G,y, cpuid(MOVBE)),
--        X86_OP_ENTRYwr(MOVBE, M,w, G,w, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
-         {},
--        X86_OP_ENTRY2(CRC32, G,d, E,y, cpuid(SSE42)),
--        X86_OP_ENTRY2(CRC32, G,d, E,w, cpuid(SSE42)),
-+        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
-+        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
-     },
-     [2] = {
-         X86_OP_ENTRY3(ANDN, G,y, B,y, E,y, vex13 cpuid(BMI1)),
--- 
-2.53.0
+Paolo
 
 
