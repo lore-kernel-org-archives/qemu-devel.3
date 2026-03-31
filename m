@@ -4,125 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89CD1061B2B
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 11:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037DE1061B2B
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 11:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7X14-0006XK-D5; Tue, 31 Mar 2026 07:12:14 -0400
+	id 1w7XI6-00074y-8I; Tue, 31 Mar 2026 07:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w7X0z-0006X7-7Y
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:12:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1w7XHk-0006vy-Tb
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:29:29 -0400
+Received: from mail-japanwestazlp170110001.outbound.protection.outlook.com
+ ([2a01:111:f403:c407::1] helo=OS0P286CU010.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w7X0w-0002LR-Rc
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:12:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774955525;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eoW9LC+oDQA04drjFpoWj7eIotgjGn//y509tcmXMz4=;
- b=HKzLr1uPz2Jcfvxn4OzZ1joyKJXL3A1Tt+XhlIULfjmFU9OnRQ142F/FVY7HGQNMKqWqJw
- ACBr666JTTzTwp76HHcsRMM97qRyIFSr/VF6pB8+pdfabtfWn0t7r903yM4oU1FiYxUxaH
- IdUm4re5//7U7KmX+QEEz63w0gm5+ys=
-Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
- [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-l7MgOoC3NV24enSp8a1ssg-1; Tue, 31 Mar 2026 07:12:03 -0400
-X-MC-Unique: l7MgOoC3NV24enSp8a1ssg-1
-X-Mimecast-MFC-AGG-ID: l7MgOoC3NV24enSp8a1ssg_1774955523
-Received: by mail-yx1-f70.google.com with SMTP id
- 956f58d0204a3-64ffe451e14so6442884d50.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 04:12:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774955523; cv=none;
- d=google.com; s=arc-20240605;
- b=eof8peBuwu6TD8ZgfG83kZHvco5WheHHs02XicqSnPb9E/uAtE9h1sq5aFIkLgpMgd
- W720ZF+gR8ujIUI+OlbW+n9DU64vetlRtROB24bpx3QOCOhADJka5jFXNmfTdeHl6v4S
- wngvQYMYKojnpb2l8s0t8j2fSQzrzRlmkpCGPWgP3ZxQMaX156h8oDHWR10ksJhPhe51
- zJWPPxBewRBdEbeULu6oyzOuYlJCnQJsEHIFJlR+rY/Mt8A6cq18D5EXKq/pE8JnpNTc
- SEtQo8X8QVbCj+FP0M/jXlHrawaNqufRdrz00kPLlmn5fAP5l+4kD3eFj+ig003gca93
- CNfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=eoW9LC+oDQA04drjFpoWj7eIotgjGn//y509tcmXMz4=;
- fh=2j1OPIc+H3IgInHX+gBxX5VNmvDfIM4Z/c1hsqkYxuE=;
- b=GIZ9y5qdkb4MdwTDuIz3szNizeYGrztxyyrk6TCAUW9L93Sk7nHTuOxJOKH9RO10sx
- nePxWKYIimMvaQ/GVGQkzeMy613H3JJPLH+N55Ndr5LS4vq6li9ZKhwFWmI8py+h4QGf
- mNa3OagrkPL0823FuS6QmJdA9jDjRXMy0dxcZCLKXnIIkMW9JCe2Xv7dFA7SbyDDf8Bb
- 2ctN3d/ucKId6hBrDHEMTfKS3NDQir8dGBRT6LDVoXW13EElAqAQUqA4RXutn16Di/VK
- yT0IJDmvW11NIfjvH2kCxxLiVLoEucgt8GmFo7R4Ujfeplh9T6U2c0bwYZs4TC6rkxte
- J5CA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774955523; x=1775560323; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eoW9LC+oDQA04drjFpoWj7eIotgjGn//y509tcmXMz4=;
- b=qMdtLruf28isqcGd0j39yaFE0oaut6JSzmfAk7jeLpN8NwsF3rdnmj1OU5C+C9XP09
- o9ko5740cKl1aAG9ujqUR658OuizCoaCYnMNnfBMrUOW0PO6rwB8uM9kfCCjr8zZd+td
- a4EJ3NCpPTh8V9C1nI+NKXJ3hPDLYKEWpUPyA3ILV5WAmygkACYy9L04lUE3GZ4Z7iOu
- X3t2ugZvjLkaiKlerKRlN7YDTip3U3DRkcOmiEfj7+0N5EsfCSKuCONQLse2WWtSBuq+
- PZ1M8WIzZocnWuJGHK+Pl307kg2UU/0lFxzG8HmyFp7ldnRKei8ZuIu6ohZKCnyTNyBh
- w+Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774955523; x=1775560323;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=eoW9LC+oDQA04drjFpoWj7eIotgjGn//y509tcmXMz4=;
- b=crjGdOjEKjLS+Ka5OT3N7xCeZWXYGW5os3rA3krA352MT7YpHyZO2NU+rr7RluNgri
- uxTOHl4KPiToi7rZ4uURt9qePDh3w6vQgrn3AKb7+RIpMUO8YpSSHfsgyIJ74UKNEaox
- P2iOAHvBMtSUoAw23T59DRAWTzxZ+Hy46mHWDPMBiXt3+/MdBrMiukhjdNrIdwlP5RyH
- ir2vkaJPh4OqGS6zWuGcKacw0ASWBBc34UQr7kGeyH2P7Y10HiTrmJV3ZlabQdqthu2r
- AoDxYXzTUnBWQleuu3d5MfhCKCIo4LOpi/RHqPkL7ZZH4c0hP271rTrkGalu8DpjNJ9r
- qsVg==
-X-Gm-Message-State: AOJu0YycaicHfbi2J3KaHkuxm389x/jxU52HeKyDIlMx/7qhi1PP36wh
- DlcCSZnfMVoasixCgFQgnpYgD3ZYeCaAWmoayY661Vaqk6cXTdikD1FmQIJkwOqtV6Kytb8PLje
- WPxZSKR4eOd6dBst5gfifqqhbPO7RMD7pb6q+9NQbvb2APIg7fyAkHUF7LDW4bWYLZKcqQJAL3a
- 03NdsJ9R/QO5NyVt6+0u1dXxnlEkI5RpE=
-X-Gm-Gg: ATEYQzw2exz2MVW4AZWcWVosxWQhSV75FeIuzLvOgmXyqVNLzvQoj2NtekD4sx/ITL9
- F8tPXuYoWUw22405OaOxdMV39QbormQFlzVrD2XNmdMYd6KLK48nxC9z8rFF2IOQUDjhV19R/2I
- ZoU/E/lt2k657AR9w8rVJP3XF6FCw3DxFohZEl6psuoPTZyT5NutbEURxDI+HrXf5bNNrU6l385
- ETYNiFu67A3JQat7OSvtrUxdeXWBuzcQyHDdX6Z
-X-Received: by 2002:a05:690c:e3ee:b0:79d:4f01:5bb7 with SMTP id
- 00721157ae682-79d4f0160d6mr109121727b3.58.1774955523037; 
- Tue, 31 Mar 2026 04:12:03 -0700 (PDT)
-X-Received: by 2002:a05:690c:e3ee:b0:79d:4f01:5bb7 with SMTP id
- 00721157ae682-79d4f0160d6mr109121357b3.58.1774955522512; Tue, 31 Mar 2026
- 04:12:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1w7XHi-0004v8-U0
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:29:28 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qK2RmRMNZZGm6PUTAMeXVSKGxb4vzS7a1V8df5vAHxLd2xEADCiCmuQwluTgdNfFpOpOAsQIYL+porArUbSpOzEwDZIxPcwR24ws9ohmKOxbcL7Fyy+KfHrpTn0uquyiqSb+tRRsEyYauo/rowDbjETiimwbhVpTKPc2Ikpz1RZ4GUmPt+yadzx9hCcLRIlcUQjG9CXvOR1Ttj/atSGvaq5uRuKL+Kr5C1iXUEvKFYft/FJSckKs9ngwYw1N31+A9/z3+T3xhWPP6tQETeSBp6U45oRrjM39UyOFRCOU3cHNG0w5Q12moasyMpR32tTA+uB6RKGiwkOd0PjD965Xkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NFfNmOR+B3EHAkfxOKt/eRvKVRjQhX4BT8E/FgBaXIE=;
+ b=d/b/LJvNmON8KKVaOQAHsB7tSl6+fTlbH+xizKWpyk7DxcKjAp9xLOGnkxera/0hQVD+Icdct8fMff62df6BIt7rjVxs7diz9KRcNCHc6u3TW2jOqD/xKjDCUMvkuIm1Nz0xU+5g/BdFrl45rfN9kHojsPOY6uzJG0Hsr5osnQBQ+17RaTZDYF4MrJeK5z9wNmCQbilvmJMssSk6PLollZF1RwQmHiYWoVgyOFuUvGNtWcM/nNFjeWZMLBmFbaVQisvNkVQWREjZLL/XvMIIt7ZCfdhGVnkJycrJj6bc33xgMkCRikVm4+IhNYuPamchz/pHtBd5KbK00W0x9k6PJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fujitsu.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NFfNmOR+B3EHAkfxOKt/eRvKVRjQhX4BT8E/FgBaXIE=;
+ b=iwKeQ8fRubUeSpUDXqPlEdmhkyLdcSOYR+75hEZ5E8AKYGdwcyCKwYqiJmiImCtYQzXVAZTqm2jPaGbzthLoLS8Ao3N/uiazmT54Z7L/yqyYCf/dGed8jONIPwm7lVPK452OTSiI7CKE3Wo1uEgj38LV07LjRvQLILU77R1Ux6YJO/umrRB7q2gIqBQ/q9yuJvow3CRvpGFWM1LLsZIocGbarkcG1p7/2Hz+5K2FO2M7INTOLClGM1y3UBiyK05Nialkpndjre78yEh6y7hGrdIif1ye9Jbhf5Mv6tL4GazdgWl4kGlpY2hrZi0oG72wMPwnCMr0+ChAXFvo3z4c7Q==
+Received: from TY7PR01MB16837.jpnprd01.prod.outlook.com
+ (2603:1096:405:32e::20) by TY4PR01MB17260.jpnprd01.prod.outlook.com
+ (2603:1096:405:339::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.28; Tue, 31 Mar
+ 2026 11:29:22 +0000
+Received: from TY7PR01MB16837.jpnprd01.prod.outlook.com
+ ([fe80::5812:babf:b430:670f]) by TY7PR01MB16837.jpnprd01.prod.outlook.com
+ ([fe80::5812:babf:b430:670f%4]) with mapi id 15.20.9745.027; Tue, 31 Mar 2026
+ 11:29:22 +0000
+From: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+To: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>, Peter Xu <peterx@redhat.com>,
+ Samuel Zhang <guoqing.zhang@amd.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "farosas@suse.de"
+ <farosas@suse.de>, "eblake@redhat.com" <eblake@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>, "Emily.Deng@amd.com"
+ <Emily.Deng@amd.com>, "Victor.Zhao@amd.com" <Victor.Zhao@amd.com>,
+ "PengJu.Zhou@amd.com" <PengJu.Zhou@amd.com>, "Qing.Ma@amd.com"
+ <Qing.Ma@amd.com>
+Subject: Re: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
+Thread-Topic: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
+Thread-Index: AQHcvbYDFS/bHmyF/0mRIclEy2/9xLXHQ/SAgAC98QCAAHZIgIAAD6OA
+Date: Tue, 31 Mar 2026 11:29:22 +0000
+Message-ID: <a016361c-01ca-4617-b3ac-4cdf6bbdd2ac@fujitsu.com>
+References: <20260327065006.2567463-1-guoqing.zhang@amd.com>
+ <acqgZShXRkqzBU1C@x1.local>
+ <e3b261a3-25fa-42f9-a926-306e5a19cf75@fujitsu.com>
+ <02a44178-eebc-4fef-a8fb-802dac76c11f@amd.com>
+In-Reply-To: <02a44178-eebc-4fef-a8fb-802dac76c11f@amd.com>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY7PR01MB16837:EE_|TY4PR01MB17260:EE_
+x-ms-office365-filtering-correlation-id: 58d1e97d-b069-473a-4ffe-08de8f18c187
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|38070700021|18002099003|22082099003|56012099003|1580799027;
+x-microsoft-antispam-message-info: e1l807AsmFW5S1xRbxj59Z1cOYbylew35P+JSKX24LNNn6RtzrhECHO+EOAqcJ5CAZppoe0qo82X/o5FDsX+ct90qUgNOVnJBJxDEdCww1ykLUWCoFAG2I1VVaOYimOzvxsdFs4IS1VfQImqoXLP9RUSO4IeSiaOaA/SsoAVmPKEYf5T9qPL5adEykDc2P7zVwJw8xObm5qdpczl9RjZn72paZ+p6QxWttpkYqefYuZz4Hi7K6z4LwuO+uli6ePRbQ4tiJIJzihqbJb3bQx/wKjGjmKWSBLqg7IA5201W7QDFiBA98PprwbRLagxbnCwF9PTUbLtgcqum6qnPBQCGLvmikbfXKDM7NbfRayMv9UpxT/wJ2JZko4Sff15Xxi2sP4B9pFM8LUkWy0GjbcqN0tgRQhjeYmW3NIc8n7ipEYPZTGG9cUeKzCORZoZeDtKNQOsJcpxFmjjXJOWp7JsUeHLTDuWeA1GXb6Yt0GQihWSvDwo0rVXhd5NvYkn/9ercJA731yNYLOxe9uPWaWxPJuLnWWZjymfql8WxqmyCsKNUw55o/KkuE9Smx2Le1d5F3ckKHXQVWEn/sIKSszrkfg+F/MYyvQITbDv7RR5yXW0RIPFZFk0X6B0lNFk56PvvtO+5SIPHMy+wr5Yf0V01BCt+HZuvRLCih1nffXE0xeWOtut40W6VZojnqVCZhuBEFz/wfrgh1mEL3itpUsjWF+0wb8HaCPnh1OI43KnvLc8lt8QnvTcYS2VnPzIY6QuUOKjqIlezd1LfUAQGOU5l2yU6v3qr/lzsAABjP5zcNSYn4vFji4l0zegNtwZ6470
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY7PR01MB16837.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700021)(18002099003)(22082099003)(56012099003)(1580799027);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L0JZdVIxZGdnaXJ4Y1l0dW9BVUxHbzkwQmxVUjNGWWw2d1VQTC9HdnUyVTIz?=
+ =?utf-8?B?VGwrbkJtZjFudHlJOUhDYWRLSGh2MWtxWEswZXZoekI1aFJmdzFqSlNiR092?=
+ =?utf-8?B?aWcvd3BqRkV6R0w1cCsvK21aV1NuT3pSTG1idkdaOTE3T0FkZkVWUUxEOE43?=
+ =?utf-8?B?TUw5b2J4ZWEveTdFYnE3UmhWRzdmcE9XRzNhc1ZXR1Q1TmJac21LTFFhNWRL?=
+ =?utf-8?B?WHFmS1c0Y3E5cnBOSy8zK3VQU2hZamorVUlZZHRJSVBUakQ0dXZPazlvUDJn?=
+ =?utf-8?B?RFQ3ZmYxY2M3RU02dGVjREJlVE1ML2pDdWpDQjIwNWkwZ2p1M0VqSC9XZjRH?=
+ =?utf-8?B?WUhIdXNDYk10SE93RldaLzFOa0Rlc1ZtUm9qbzdtMmRmMjdjU3FjaEtNQWww?=
+ =?utf-8?B?ckp1S3ppYllHT2pvWTREdWlnNXNPVG1PVGU5R3ZTNEZpUTJXVzQzUktZWjQy?=
+ =?utf-8?B?MVkxbk5US2s5OE9qS0Y1Z2VHaVFlZktDbU1rQ0djNmtSK0MvNU8zRDZiL1JC?=
+ =?utf-8?B?VHdiT3BsWDVMUXlGK29aL0Z6NHdEclo2WUppREpGTVdHTEZWVE4zMTh4NkJX?=
+ =?utf-8?B?WXFmR3Z2NEFoY3AxUVhvNUR6elpVVHdEWjEyNHA1ekJZenF2Q0ZocHVuc0ho?=
+ =?utf-8?B?WmRuUGx6SVloL2ZoUSs1ZzNCWHpBekM5UWlhbml2SmNmVGlmb1pqR2Z1UmJU?=
+ =?utf-8?B?VVNvRytwZjhhRitRZEE5d3B3SzIvelloaHAyU1FWemJGV1NkczFsbWpZS0xM?=
+ =?utf-8?B?RVZjZmt4Rng0eHdBYjhtTDJhb3NCREg2SjR6dm5Jc0NlVWZoUFI1aXhKajgv?=
+ =?utf-8?B?NXlaZ1ZzSUxIUzVtZGVZc3R6TFhhV3FCL3U4aitqOFpQOC9mdXNLQ2kvWHlP?=
+ =?utf-8?B?RXNCV20yY3lzcUhNdzFmUUJFK1UxMUg2M08vSU0wK3B6dGZjL3ZEWWltaFRv?=
+ =?utf-8?B?bk8wa0ZqbGdnUkQxUUEzQUcvaFo4QndMOUd2azQraGZBbDJmK2VhTUExa2xU?=
+ =?utf-8?B?L2FwU3cvczhDUWNSa1VvQzRBZVF0Y3ZjOE5Md3V5UXcvYjRRbGVnaGdFWlkz?=
+ =?utf-8?B?SUluSjFjZ1pIU2txMFhTNzZGZmFDQmZJSVNOTXlBTmVDQkIwb1UrdWpDMEQx?=
+ =?utf-8?B?cDJSWWcrN3hkQ0pWa2pMYzM1SXZmTUhzd3BhNjUrOXRCdDRZTmlXTTJ5ZnA3?=
+ =?utf-8?B?eWlFU3BLNVh3Q0RqTThJY1g0M0tMb2JSS0RsZEU0U0p0Z2xLMEN0S01jZTFQ?=
+ =?utf-8?B?a0hZQ3UrYVlXY2xjVmpadGpEQm05TTB2VHB4U0R6Z3V4M3ludExWNmx0NTdV?=
+ =?utf-8?B?RnAzYURSdmYram5TNGsralpDbUJGNmtMZVlIS0lxWUxrMTBIQmFURDlWb0pm?=
+ =?utf-8?B?WDJlSkt1aU9jVzdOd3FramtKaGFWWU1kL1UrMEM0Yzk1eVVRS2tjbGdldDQ2?=
+ =?utf-8?B?Wk5TcnZmSzA4UWMzOTFOdUFPM1FZSTRiTmpsM2RaTEpFcTRNOGRZSnJSVG4y?=
+ =?utf-8?B?eWN1WXAzNmw1UHNNY09VeFVLUGo2TVNYZXloTklDT0c4RlMwVmhNUnFwUnNq?=
+ =?utf-8?B?SzJBS1lVVW5jVkR4R2haN2hxSTJKZDl3c1p1OG5BNXlVMWZzSjY3SWlycEMw?=
+ =?utf-8?B?aVVzY3lLWGw1bnB3WkMyTjhGR1ZDYjRCeHJCU2xXVEVjY0NDUXhHbnczc1BE?=
+ =?utf-8?B?UW9ienBiM0tadit4T29MK0xCQTVmTitrT1N5UlRybUcycTJ6NisraEhSTnlo?=
+ =?utf-8?B?Nmx0b2dwOFo2aU8wY0tGN21RYURxa2NXbFNtbHNzOGErVGZJS3pnNHlIOVow?=
+ =?utf-8?B?NUswNkVHa0VVeXhISGhQU1llaTR3REVvQjdIMVJndm1ZOG45T2FnMmRrQ1Z3?=
+ =?utf-8?B?R3pjNnM1eWNwYU03aHlLOEF5SXNBVlRoZXVGRExtaEltNy85UUFEUzRUVGhm?=
+ =?utf-8?B?NUVsWTFmVFpqQVJDRGV0Q28rYXRvajU0RG9xbmo2TTl6NmNsaE9qV0UwRE90?=
+ =?utf-8?B?ekQ2WTRHSFlKbGdUd3kray9VS2Z4SGxkNmQxZ2JDZFNLUXI0WWF2WVNMRjdD?=
+ =?utf-8?B?YVpzd1NteXJLZjR1cnVqM3dYM3lLTFg1cS9CUHdPSzg2WEpHa1pxVEVPQWpy?=
+ =?utf-8?B?R0kvTGo0ZWtKTHViUDkwK0c0V3VHa0xQbndFK2JYY21pKzVsZng1NEtEblJU?=
+ =?utf-8?B?MUZMeTA3VTZQZWZtV3NEWFE0YkJ1d3Z6ZEo0M0pXcGJkdGJlR0ZiMzlCc09M?=
+ =?utf-8?B?cTE5b3BBYVA0WmV2MFk2SEhtVUo3bmtCZHp5eFZ1a1Z1c3grN1BJc0RJcEFh?=
+ =?utf-8?B?OEFoalNCd0laZE9lUlVPZ2V6UWpqMXdhcUc1VEd3RzNiMnR2OVR1RjIyU0Q1?=
+ =?utf-8?Q?rZsudtVO6Rri2/Ik=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5EC5B079B444B5419FF6D2A8BC151E09@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20260330122917.468225-1-kdutta@redhat.com>
-In-Reply-To: <20260330122917.468225-1-kdutta@redhat.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 31 Mar 2026 13:11:25 +0200
-X-Gm-Features: AQROBzBcPGiKV1i_n1hk97pF8CgBAlTuZ3fQnbbO1xOIFO8Q_voOe3NloeH-Swg
-Message-ID: <CAJaqyWd3CqDQXizLxNcMYM9CA=K1LfR_XDaO6ksrnw6StWDBKg@mail.gmail.com>
-Subject: Re: [PATCH v4] hw/net/virtio-net: add support for notification
- coalescing
-To: Koushik Dutta <kdutta@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Exchange-RoutingPolicyChecked: brv8UUCmjAEaj9l+JOvUG2sfjkcD4lnHQbAvBjtkt0HvZOwj3yjSpGukHz+xre+js31c0SsBF2PPYYNuDXKVj60fw9Cc7J3NGwJhy/m1QlayffNIgo7KfZbjhd4aoNkXN+zVHYPonT0x0ru7bYpaQCRmwaP8SRpJV53ixdpbzWEz7TNn/7pSkBXfA7ORuxD72rxpZNvRTXe5pKgIS56J/0VO2uVZO/U0SSz/MhOrGddNNbXUgOBpQVzgCFvDyWj+0X+7hPPMiBhTqnUmQ4J3Vk/jdwAOfpkcC0gLhvROnUN3I/y6AWQebSjp/FVZjn4vTOSeKLTMqtDEyhOKz2qctw==
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY7PR01MB16837.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58d1e97d-b069-473a-4ffe-08de8f18c187
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2026 11:29:22.1466 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ubrRWgWVMkyMWkhkIeWnTGpIjVeJyVqjltawzd37OhkTGn3ff3dA1ayCupuxRDAqYErPqqeL599mgrVlAXncGQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4PR01MB17260
+Received-SPF: pass client-ip=2a01:111:f403:c407::1;
+ envelope-from=lizhijian@fujitsu.com;
+ helo=OS0P286CU010.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,372 +163,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 30, 2026 at 2:29=E2=80=AFPM Koushik Dutta <kdutta@redhat.com> w=
-rote:
->
-> Implement VirtIO Network Notification Coalescing (Bit 53).
-> This allows the guest to manage interrupt frequency using ethtool
-> -C for both RX and TX paths.
->
-> - Added VIRTIO_NET_F_NOTF_COAL to host features.
-> - Implemented VIRTIO_NET_CTRL_NOTF_COAL class handling in
->   virtio_net_handle_ctrl_iov.
-> - Added logic to store and apply rx/tx usecs and max_packets.
-> - Added packet counters and threshold logic for both RX and TX data paths=
-.
-> - Dynamic Dispatcher: Implemented a dispatcher mechanism that
->   dynamically switches/activates the notification callback logic
->   only after the guest enables TX coalescing via ethtool.
->
-> vhost-vdpa: add support for SVQ interrupt coalescing.
->
-
-This patch still does not add vhost-vdpa support.
-
-> This reduces interrupt overhead by batching notifications based on
-> either a packet count or a time-based threshold.
->
-> Signed-off-by: Koushik Dutta <kdutta@redhat.com>
-> ---
->  hw/net/virtio-net.c            | 137 +++++++++++++++++++++++++++++----
->  include/hw/virtio/virtio-net.h |   8 ++
->  net/vhost-vdpa.c               |   2 +
->  3 files changed, 131 insertions(+), 16 deletions(-)
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index eccb48ad42..16f197cbdb 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -131,6 +131,8 @@ static const VirtIOConfigSizeParams cfg_size_params =
-=3D {
->      .feature_sizes =3D feature_sizes
->  };
->
-> +static void virtio_net_tx_timer(void *opaque);
-> +
-
-Nit: I think it's better to move yhis declaration just before the
-function that uses it.
-
->  static VirtIONetQueue *virtio_net_get_subqueue(NetClientState *nc)
->  {
->      VirtIONet *n =3D qemu_get_nic_opaque(nc);
-> @@ -157,6 +159,15 @@ static void flush_or_purge_queued_packets(NetClientS=
-tate *nc)
->   * - we could suppress RX interrupt if we were so inclined.
->   */
->
-> +static void virtio_net_rx_notify(void *opaque)
-> +{
-> +    VirtIONet *n =3D opaque;
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +
-> +    n->rx_pkt_cnt =3D 0;
-> +    virtio_notify(vdev, n->vqs[0].rx_vq);
-
-If we keep the code this way, this function should iterate through all
-the rx queues.
-
-I'm ok with this version, but it feels more natural to me if each RX
-VQ has its own RX timer. This paves the way for per-vq coalescing and
-aligns with the tx code. This version has fewer timers and simplifies
-some things, so I think it is ok for the moment.
-
-> +}
-> +
->  static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
->  {
->      VirtIONet *n =3D VIRTIO_NET(vdev);
-> @@ -1081,6 +1092,43 @@ static int virtio_net_handle_offloads(VirtIONet *n=
-, uint8_t cmd,
->      }
->  }
->
-> +static int virtio_net_handle_coal(VirtIONet *n, uint8_t cmd,
-> +                                  struct iovec *iov, unsigned int iov_cn=
-t)
-> +{
-> +    struct virtio_net_ctrl_coal coal;
-> +    VirtIONetQueue *q;
-> +    size_t s;
-> +    int i;
-> +
-> +    s =3D iov_to_buf(iov, iov_cnt, 0, &coal, sizeof(coal));
-> +    if (s !=3D sizeof(coal)) {
-> +        return VIRTIO_NET_ERR;
-> +    }
-> +
-> +    if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_RX_SET) {
-> +        n->rx_coal_usecs =3D le32_to_cpu(coal.max_usecs);
-> +        n->rx_coal_packets =3D le32_to_cpu(coal.max_packets);
-> +        if (!n->rx_index_timer) {
-
-n->rx_index_timer && n->rx_coal_usecs > 0 ? Also delete it if
-rx_coal_usecs =3D=3D 0?
-
-> +            n->rx_index_timer =3D timer_new_us(QEMU_CLOCK_VIRTUAL,
-> +                                             virtio_net_rx_notify, n);
-> +        }
-> +    } else if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_TX_SET) {
-> +        n->tx_coal_usecs =3D le32_to_cpu(coal.max_usecs);
-> +        n->tx_coal_packets =3D le32_to_cpu(coal.max_packets);
-> +        n->tx_timeout =3D n->tx_coal_usecs * 1000;
-
-If n->tx_timeout is only used to convert us to ms, we should not
-allocate a variable for this and just multiply by 1000 at the timer
-creation time.
-
-> +        for (i =3D 0; i < n->max_queue_pairs; i++) {
-> +            q =3D &n->vqs[i];
-> +            if (!q->tx_timer) {
-> +                q->tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> +                                           virtio_net_tx_timer,
-> +                                           q);
-> +            }
-> +        }
-> +    }
-> +
-> +    return VIRTIO_NET_OK;
-> +}
-> +
->  static int virtio_net_handle_mac(VirtIONet *n, uint8_t cmd,
->                                   struct iovec *iov, unsigned int iov_cnt=
-)
->  {
-> @@ -1582,6 +1630,8 @@ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vde=
-v,
->          status =3D virtio_net_handle_mq(n, ctrl.cmd, iov, out_num);
->      } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_GUEST_OFFLOADS) {
->          status =3D virtio_net_handle_offloads(n, ctrl.cmd, iov, out_num)=
-;
-> +    } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_NOTF_COAL) {
-> +        status =3D virtio_net_handle_coal(n, ctrl.cmd, iov, out_num);
->      }
->
->      s =3D iov_from_buf(in_sg, in_num, 0, &status, sizeof(status));
-> @@ -2041,7 +2091,22 @@ static ssize_t virtio_net_receive_rcu(NetClientSta=
-te *nc, const uint8_t *buf,
->      }
->
->      virtqueue_flush(q->rx_vq, i);
-> -    virtio_notify(vdev, q->rx_vq);
-> +
-> +    /* rx coalescing */
-> +    n->rx_pkt_cnt +=3D i;
-> +    if (n->rx_coal_usecs =3D=3D 0 || n->rx_pkt_cnt >=3D n->rx_coal_packe=
-ts) {
-> +        if (n->rx_index_timer) {
-> +            timer_del(n->rx_index_timer);
-> +        }
-
-How does the next tick occurs if we delete the timer here?
-
-> +        virtio_net_rx_notify(n);
-> +    } else {
-> +        if (n->rx_index_timer) {
-> +            if (!timer_pending(n->rx_index_timer)) {
-> +                timer_mod(n->rx_index_timer,
-> +                          qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + n->rx_=
-coal_usecs);
-> +            }
-> +        }
-> +    }
->
->      return size;
->
-> @@ -2818,7 +2883,6 @@ detach:
->      return -EINVAL;
->  }
->
-> -static void virtio_net_tx_timer(void *opaque);
->
->  static void virtio_net_handle_tx_timer(VirtIODevice *vdev, VirtQueue *vq=
-)
->  {
-> @@ -2900,6 +2964,12 @@ static void virtio_net_tx_timer(void *opaque)
->      if (ret =3D=3D -EBUSY || ret =3D=3D -EINVAL) {
->          return;
->      }
-> +    if (n->tx_pkt_cnt < ret) {
-> +        n->tx_pkt_cnt =3D 0;
-> +    } else {
-> +        n->tx_pkt_cnt -=3D ret;
-> +    }
-> +
->      /*
->       * If we flush a full burst of packets, assume there are
->       * more coming and immediately rearm
-> @@ -2919,6 +2989,7 @@ static void virtio_net_tx_timer(void *opaque)
->      ret =3D virtio_net_flush_tx(q);
->      if (ret > 0) {
->          virtio_queue_set_notification(q->tx_vq, 0);
-> +        n->tx_pkt_cnt -=3D ret;
->          q->tx_waiting =3D 1;
->          timer_mod(q->tx_timer,
->                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout)=
-;
-> @@ -2974,6 +3045,32 @@ static void virtio_net_tx_bh(void *opaque)
->      }
->  }
->
-> +static void virtio_net_handle_tx_dispatch(VirtIODevice *vdev, VirtQueue =
-*vq)
-> +{
-> +    VirtIONet *n =3D VIRTIO_NET(vdev);
-> +    VirtIONetQueue *q =3D &n->vqs[vq2q(virtio_get_queue_index(vq))];
-> +    bool use_timer =3D n->tx_timer_activate || n->tx_coal_usecs > 0 ||
-> +                     n->tx_coal_packets > 0;
-> +    bool pkt_limit =3D (n->tx_coal_packets > 0);
-> +
-> +    if (use_timer) {
-> +        n->tx_pkt_cnt++;
-> +        if (!pkt_limit || n->tx_pkt_cnt < n->tx_coal_packets) {
-> +            if (q->tx_timer) {
-> +                virtio_net_handle_tx_timer(vdev, vq);
-> +                return;
-> +            }
-> +        }
-> +        n->tx_pkt_cnt =3D 0;
-> +        if (q->tx_timer) {
-> +            timer_del(q->tx_timer);
-> +        }
-> +        virtio_net_handle_tx_bh(vdev, vq);
-> +    } else {
-> +        virtio_net_handle_tx_bh(vdev, vq);
-> +    }
-> +}
-> +
->  static void virtio_net_add_queue(VirtIONet *n, int index)
->  {
->      VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> @@ -2981,20 +3078,15 @@ static void virtio_net_add_queue(VirtIONet *n, in=
-t index)
->      n->vqs[index].rx_vq =3D virtio_add_queue(vdev, n->net_conf.rx_queue_=
-size,
->                                             virtio_net_handle_rx);
->
-> -    if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
-> -        n->vqs[index].tx_vq =3D
-> -            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-> -                             virtio_net_handle_tx_timer);
-> -        n->vqs[index].tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> -                                              virtio_net_tx_timer,
-> -                                              &n->vqs[index]);
-> -    } else {
-> -        n->vqs[index].tx_vq =3D
-> -            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-> -                             virtio_net_handle_tx_bh);
-> -        n->vqs[index].tx_bh =3D qemu_bh_new_guarded(virtio_net_tx_bh, &n=
-->vqs[index],
-> -                                                  &DEVICE(vdev)->mem_ree=
-ntrancy_guard);
-> -    }
-> +    n->vqs[index].tx_vq =3D
-> +        virtio_add_queue(vdev,
-> +                         n->net_conf.tx_queue_size,
-> +                         virtio_net_handle_tx_dispatch);
-> +
-> +    n->vqs[index].tx_bh =3D
-> +        qemu_bh_new_guarded(virtio_net_tx_bh,
-> +                            &n->vqs[index],
-> +                            &DEVICE(vdev)->mem_reentrancy_guard);
->
->      n->vqs[index].tx_waiting =3D 0;
->      n->vqs[index].n =3D n;
-> @@ -3972,6 +4064,10 @@ static void virtio_net_device_realize(DeviceState =
-*dev, Error **errp)
->          error_printf("Defaulting to \"bh\"");
->      }
->
-> +    if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer")) {
-> +        n->tx_timer_activate =3D true;
-> +    }
-> +
-
-I keep thinking it would be easier if we accepted either the timer
-cmdline or vq_notif_coal, but never both simultaneously. This way we
-can reuse the exact same logic for both of them.
-
->      n->net_conf.tx_queue_size =3D MIN(virtio_net_max_tx_queue_size(n),
->                                      n->net_conf.tx_queue_size);
->
-> @@ -4048,6 +4144,13 @@ static void virtio_net_device_realize(DeviceState =
-*dev, Error **errp)
->              n->rss_data.specified_hash_types.on_bits |
->              n->rss_data.specified_hash_types.auto_bits;
->      }
-> +    n->rx_pkt_cnt =3D 0;
-> +    n->tx_pkt_cnt =3D 0;
-> +    n->rx_coal_usecs =3D 0;
-> +    n->tx_coal_usecs =3D 0;
-> +    n->rx_coal_packets =3D 0;
-> +    n->tx_coal_packets =3D 0;
-> +    n->rx_index_timer =3D NULL;
->  }
->
->  static void virtio_net_device_unrealize(DeviceState *dev)
-> @@ -4262,6 +4365,8 @@ static const Property virtio_net_properties[] =3D {
->                        VIRTIO_NET_F_GUEST_USO6, true),
->      DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
->                        VIRTIO_NET_F_HOST_USO, true),
-> +    DEFINE_PROP_BIT64("vq_notf_coal", VirtIONet, host_features,
-> +                      VIRTIO_NET_F_NOTF_COAL, true),
->      DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv4", VirtIONet,
->                                    rss_data.specified_hash_types,
->                                    VIRTIO_NET_HASH_REPORT_IPv4 - 1,
-> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-ne=
-t.h
-> index 5b8ab7bda7..024501ed37 100644
-> --- a/include/hw/virtio/virtio-net.h
-> +++ b/include/hw/virtio/virtio-net.h
-> @@ -231,6 +231,14 @@ struct VirtIONet {
->      struct EBPFRSSContext ebpf_rss;
->      uint32_t nr_ebpf_rss_fds;
->      char **ebpf_rss_fds;
-> +    QEMUTimer *rx_index_timer;
-> +    uint32_t rx_coal_usecs;
-> +    uint32_t rx_coal_packets;
-> +    uint32_t rx_pkt_cnt;
-> +    uint32_t tx_coal_usecs;
-> +    uint32_t tx_coal_packets;
-> +    uint32_t tx_pkt_cnt;
-> +    bool tx_timer_activate;
->  };
->
->  size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> index 3df6091274..a20db78b81 100644
-> --- a/net/vhost-vdpa.c
-> +++ b/net/vhost-vdpa.c
-> @@ -70,6 +70,7 @@ static const int vdpa_feature_bits[] =3D {
->      VIRTIO_NET_F_CTRL_RX,
->      VIRTIO_NET_F_CTRL_RX_EXTRA,
->      VIRTIO_NET_F_CTRL_VLAN,
-> +    VIRTIO_NET_F_NOTF_COAL,
->      VIRTIO_NET_F_CTRL_VQ,
->      VIRTIO_NET_F_GSO,
->      VIRTIO_NET_F_GUEST_CSUM,
-> @@ -115,6 +116,7 @@ static const uint64_t vdpa_svq_device_features =3D
->      BIT_ULL(VIRTIO_NET_F_HOST_UFO) |
->      BIT_ULL(VIRTIO_NET_F_MRG_RXBUF) |
->      BIT_ULL(VIRTIO_NET_F_STATUS) |
-> +    BIT_ULL(VIRTIO_NET_F_NOTF_COAL) |
-
-This needs to be deleted, SVQ still does not support VIRTIO_NET_F_NOTF_COAL=
-.
-
->      BIT_ULL(VIRTIO_NET_F_CTRL_VQ) |
->      BIT_ULL(VIRTIO_NET_F_GSO) |
->      BIT_ULL(VIRTIO_NET_F_CTRL_RX) |
-> --
-> 2.53.0
->
-
-Also, VMSTATE_ must be added to vmstate_virtio_net_device to migrate
-these fields. This can be tested by migrating a device with an
-emulated device with no vdpa too.
-
-The process of migration is described here but feel free to ping me
-for help: https://www.linux-kvm.org/page/Migration .
-
+DQoNCk9uIDMxLzAzLzIwMjYgMTg6MzMsIFpoYW5nLCBHdW9RaW5nIChTYW0pIHdyb3RlOg0KPj4N
+Cj4+Pj4gU2lnbmVkLW9mZi1ieTrCoFNhbXVlbMKgWmhhbmcgPGd1b3FpbmcuemhhbmdAYW1kLmNv
+bT4NCj4+PiBPbmXCoHRoaW5nwqB0b8KgbWVudGlvbsKgaXPCoFJETUHCoG1pZ3JhdGlvbsKgaXPC
+oGluwqBvZGQtZml4ZXPCoHN0YWdlLMKgYWN0dWFsbHnCoGl0DQo+Pj4gZG9lc24ndMKgaGF2ZcKg
+YcKgcmVhbMKgbWFpbnRhaW5lcsKgc2/CoGl0wqBpc8Kga2luZMKgb2bCoCJvcnBoYW5lZCIuwqDC
+oEluwqB0aGlzwqBjYXNlLA0KPj4+IEnCoGFjdHVhbGx5wqB3b24ndMKgc3VnZ2VzdMKgd2XCoGFk
+ZMKgYW55wqBuZXfCoGtub2JzwqBmb3LCoHBlcmZvcm1hbmNlwqByZWFzb25zLg0KPj4+DQo+Pj4g
+RG/CoHlvdcKgaGF2ZcKgYcKgc3Ryb25nwqByZWFzb27CoHRvwqBwcm9wb3NlwqB0aGlzwqBwYXRj
+aMKgdG/CoGxhbmTCoHVwc3RyZWFtP8KgwqBJc8KgaXQNCj4+PiB1c2VkwqBpbsKgcHJvZHVjdGlv
+bsKgc3lzdGVtc8KgYW5kwqBpdMKgc29sdmVzwqBzb21lwqByZWFswqBwcm9ibGVtc8KgZm9ywqB5
+b3U/DQo+IA0KPiANCj4gV2XCoGhhdmXCoFZNc8Kgd2l0aMKgbGFyZ2XCoFJBTcKgYW5kwqBmaW5k
+wqBUQ1DCoGxpdmUtbWlncmF0aW9uwqBpc8Kgbm90wqBmYXN0DQo+IGVub3VnaMKgYW5kwqBleHBl
+Y3TCoFJETUHCoG1pZ3JhdGlvbsKgY2FuwqBiZcKgZmFzdGVyLg0KPiANCj4gQnV0wqB3ZcKgZm91
+bmTCoHRoZcKgcmRtYcKgbW9kZcKgbWlncmF0aW9uwqBzcGVlZMKgaXPCoHNsb3dlcsKgdGhhbsKg
+dGNwwqBtb2RlLsKgU2VlDQo+IGZvbGxvd2luZ8KgZGF0YS4NCj4gDQo+IA0KPiA4R0LCoFJBTcKg
+aWRsZcKgVk3CoGxpdmUtbWlncmF0aW9uwqBwZXJmb3JtYW5jZToNCj4gfMKgdHJhbnNwb3J0wqBt
+b2RlwqDCoMKgwqDCoMKgwqB8wqB0aW1lwqAocynCoHzCoHRocm91Z2hwdXTCoChNQi9zKcKgfA0K
+PiB8LS0tLS0tLS0tLS0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tfC0tLS0tLS0tLS0tLS0tLS0tLS18
+DQo+IHzCoFRDUMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHzCoDM2Ljg5wqDC
+oMKgwqB8wqDCoDEsMDgxwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgfA0KPiB8wqBSRE1BLMKgMU1C
+wqBjaHVua8Kgc2l6ZcKgfMKgMzcuOTE1wqDCoMKgfMKgwqAxLDAwN8KgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoHwNCj4gfMKgUkRNQSzCoDFHQsKgY2h1bmvCoHNpemXCoHzCoMKgNC4zNjjCoMKgwqB8
+wqAxNyw1MjnCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB8DQo+IA0KPiBUaGlzwqBwYXRjaMKgYWxs
+b3dzwqB1c8KgdG/CoHVzZcKgbGFyZ2VywqBjaHVua8Kgc2l6ZcKgZm9ywqBmYXN0ZXLCoFJETUHC
+oG1pZ3JhdGlvbi4NCg0KDQpIaSBTYW11ZWwsDQoNClRoYW5rcyBmb3Igc2hhcmluZyB0aGlzIGNv
+bXBhcmlzb24gZGF0YS4NCg0KIEZyb20gdGhlIGZhc3QgY29tcGxldGlvbiB0aW1lIGluIHlvdXIg
+dGVzdCAoNC4zcyBmb3IgOEdCKSwgaXQgbG9va3MgbGlrZSB0aGUgVk0gd2FzDQptb3N0bHkgaWRs
+ZS4gVGhpcyBtZWFucyBhZnRlciB0aGUgZmlyc3QgZnVsbCBtZW1vcnkgcGFzcywgdmVyeSBmZXcg
+bmV3IGRpcnR5IHBhZ2VzIHdlcmUNCmdlbmVyYXRlZCwgYWxsb3dpbmcgdGhlIG1pZ3JhdGlvbiB0
+byBjb21wbGV0ZSBxdWlja2x5LiBUaGlzIHNjZW5hcmlvIGlzIHBlcmZlY3QgZm9yIGhpZ2hsaWdo
+dGluZw0KdGhlIGJlbmVmaXQgb2YgbGFyZ2UgY2h1bmtzIHdoZW4gbWVtb3J5IGlzIGRpcnRpZWQg
+aW4gbGFyZ2UsIGNvbnRpZ3VvdXMgYmxvY2tzIChhcyBpdCBpcw0KZHVyaW5nIHRoZSBpbml0aWFs
+IGZ1bGwgc2NhbikuDQoNClRvIG1ha2UgdGhlIGNhc2UgZm9yIHRoaXMgbmV3IGtub2IgZXZlbiBz
+dHJvbmdlciwgaXQgd291bGQgYmUgdmVyeSBoZWxwZnVsIHRvIGFsc28gc2VlIGRhdGENCmZyb20g
+YSBtb3JlIHJlYWxpc3RpYyB3b3JrbG9hZCBzY2VuYXJpbywgZXNwZWNpYWxseSBvbmUgdGhhdCBn
+ZW5lcmF0ZXMgcmFuZG9tbHkgZGlydHkgcGFnZXMuDQoNCkluIHN1Y2ggYSBjYXNlLCBldmVuIHdp
+dGggYSBsYXJnZSBjaHVuayBzaXplLCBgcWVtdV9yZG1hX3dyaXRlKClgIHdvdWxkIG9ubHkgYmUg
+YWJsZSB0byBzZW5kDQpzbWFsbCwgZGlzY29udGlndW91cyBibG9ja3Mgb2YgZGlydHkgcGFnZXMg
+aW4gZWFjaCBpdGVyYXRpb24uDQoNCkkgc3VzcGVjdCB0aGUgdGhyb3VnaHB1dCBnYWluIHdpbGwg
+c3RpbGwgYmUgc2lnbmlmaWNhbnQsIGJ1dCBsaWtlbHkgZGlmZmVyZW50IGZyb20gdGhlIGlkbGUg
+Y2FzZS4NCkhhdmluZyBkYXRhIGZyb20gYSB3b3JrbG9hZCB0aGF0IHNpbXVsYXRlcyByYW5kb20g
+d3JpdGVzIChlLmcuLCB1c2luZyBgc3RyZXNzLW5nYCwgbWVtaG9nIGV0Yykgd291bGQNCnByb3Zp
+ZGUgYSBtb3JlIGNvbXBsZXRlIHBpY3R1cmUgYW5kIGhlbHAgdXMgdW5kZXJzdGFuZCB0aGUgYmVu
+ZWZpdHMgaW4gYSB3b3JzdC1jYXNlIHNjZW5hcmlvLg0KDQoNClRoYW5rcywNClpoaWppYW4NCg0K
+DQoNCg==
 
