@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14BF10F92E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 16:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8500310F92E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 16:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7cNn-0001lj-35; Tue, 31 Mar 2026 12:56:03 -0400
+	id 1w7cOT-00025Q-Nt; Tue, 31 Mar 2026 12:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cNl-0001lM-Cg
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:01 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ id 1w7cOR-00024i-Re
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:43 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cNj-0001oJ-Mo
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:01 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-64eaf8aa893so8099823d50.3
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:55:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774976158; cv=none;
+ id 1w7cOQ-0001zZ-79
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:43 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ef161129bso7441041d50.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:56:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774976201; cv=none;
  d=google.com; s=arc-20240605;
- b=J6UTGLgDH1mmBuYvIfEYGVqvL46o/UAeOIg7IgK0nZuaW+nr9z8Tqcqeydva99g2V5
- eCkzCvxRvktlSCEYrp/Af3CZbCoQHEef3BRJx7jHfr0WPqzPJ6EpmnHZk5V8GMsy36FD
- gK9ZDB76OF3FrqnuMLzB05VHkBslE6CdGMNRWo8AhGRmAI1OwROSLnx39zXbD682aWgl
- n4kw8gfCDdRxGnB4r4SJUmZ2RqeVYe9UZ79V/dxt8a5SCcY8PxjfvFKTjuARApWoiJRz
- 5VMJRS9oCoL5dTSmDfuxg2HQeOAfBJ3tGP+vssEstm0X+Qbak/9iHXMcbXhdCXTf5aib
- lrxQ==
+ b=Y3wLd/cFLtJ9RqrrCdm29w6l07ksDkj7W0h6QwzxtE0iK63L7jtV9w+fAyrRtwpdIV
+ ayRi2YcY2KPVVcD2NhCjXio02RjyU0ewXIBdXpqpTBdfRFDzLSAIYNI65oS4RsJrz7dt
+ RIjCc5BKZY+/JWv/38G0Myff9x4Ogn241aTeorHNinr/AuENpKJ/6QwFPBUqav/qX8K0
+ WHnRY3GN+O/efZg3pk/EbVtJeXALXgewnqm67+yWjzCbMWTWLD9ZDZDdAV5sBtfROVak
+ XLXRv+38jUmbdxF91MHipzTxt7xdORdk7DEp6tWc2QY9ZzCc8tP6o1PliozpCHiVn7tK
+ uVeg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=r30PW/vpTEB5JhBFy+HoE0iTIU2BVdLxLZWWG0cRwho=;
- fh=evrtiTOpvKWHw+YOJsogrRLGrJRLilGjxlOe6ADeHns=;
- b=ZpNO2i+7qHH0HKcpEFACBH5piRMoOg91eya3lVI7W2+YauIsS9gT1EcgI1/+5YuUu/
- 6n7TTxjgFqLc0CQ/nvC1lJ9MYT4PhxtHC2NqdJOuJcFWYFiIobXGZvuvoJfIAneNBa0O
- BPZSAaT3r727p870J3NrSHKHioh4f8nKoe072aEQ7VF6aA7989mLFXxSNdGjUkRgFKmC
- 25KprCygVNWNCI1HptNRCDX6d31MI+rQC9g1Y+HiaWlpXhBnPHDbjG+7av5dZWkfXm3k
- hSzxdE9gcT8uOhmsHx/Ez/VQiXwLPs0jKLLn4rKfP+EP7Vs9cxWTo847I//fzyuc+5Db
- ZmBg==; darn=nongnu.org
+ bh=oITUMmQDFbOJMQwRzSxeqvH8qPQc1MNb7UJZnNsLbO8=;
+ fh=iBfsoTySO2eRjNWfaA1crknDKmTExEhtnVkpakrX9Bo=;
+ b=WhgmMrTk/0I8Bt1LYKL0bbtRmC4ztUtSomDzxj8xS3tNSICPVJlaLMON8gnPrzFTSa
+ zkyk7GiZUYcd37PHViR0nHV+3I8yfAWT73g/6tDbsIxN2smpcKfzxYIYDNa84FhiRG+Q
+ ZFIK6xekslbcWKEQ+IYS8S9/+kele2zqPjmTJ/Hidre2yvEnW/M9Eue3NDfbv29YcP3R
+ L6fTUChJWuuDELyabluPLQ0lFWeUlTUxTGXxGv7Y3GZk/op6ZtJuHE1lPzh7ZD4tptkm
+ INPHHG1WEpKqCQ+jfBtZq855PUanbXUoaIdBAWtl+q8YiNKG8muwzdwajtg2xllBDyh+
+ M0WQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774976158; x=1775580958; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774976201; x=1775581001; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=r30PW/vpTEB5JhBFy+HoE0iTIU2BVdLxLZWWG0cRwho=;
- b=US2+euA8pRxy6Rwqz0zB4RnKCIK9DkuBCWyKBVTmlWU1xeotQFUpvJQxhanpRfY6KW
- 1e4PSfs/mUbs/U4glWAD20w+1nJ5guVjlDPLcR7/jMFaYb8lGw/TyXd+z1ZFTKjkplvT
- oHuZL7Fn4wH8e870+tBS7CGgjx1FjvIzipI850kcw8QAB70sMUqs4cpxWXKxPVeF70WE
- uvBOQB26/6VPaGFenSLCBgrROYya60uvof/jtb5Ex2hzFFH3QD169vUzoC7zA/ruQg0e
- VEtuyb/hBzkHWKWGjp2z7KeLdc0VTHg91mh6zYOF4HUl7R/RmwXgBjlIuSKG3CWX854j
- fRSQ==
+ bh=oITUMmQDFbOJMQwRzSxeqvH8qPQc1MNb7UJZnNsLbO8=;
+ b=pyhjPnrFD4QMqosQw7IU9fnPksulhLkbLOwLHsltRDliR4Y88sDHjU5ZVdq3cM03HC
+ 9liauCZ9nC6PDe4KBNIOfmc2xXUAC53OcSeBh6YZwawn4qHHpZl07wFnrXtCv5icmWL5
+ U9EUNnOvMlpr0Cui8hNp6/AeaKnkfuWXL9A2WpTbRcw5wS2AJAGHwEv4hWiElZbX+sG/
+ nJmmjL8I9Wy9qaicoPvga9YGegbfgvn5rlmpjkDcoVJSnqvtcuAnugvHTEWVjiDMSNOB
+ Uc37ZWnVxz48qfNERh9gO+ej3hd1ZsPnFy29nFoYoIQiEK4jdVJJ8BOAFeoVkUvNZb9y
+ klRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774976158; x=1775580958;
+ d=1e100.net; s=20251104; t=1774976201; x=1775581001;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r30PW/vpTEB5JhBFy+HoE0iTIU2BVdLxLZWWG0cRwho=;
- b=TaDpAFvJYa7c7sNP9KDFMkNyuQKWmALZXVR1v7OFjpP3v8SFzJGO7cZw/pMlyiq8ME
- 8fkvxM21DYIc1QM20chyQmA8wA9Na+B4lVlyipwKmsQNq7EtwlMpsXt16CPdEKcbByj6
- F8Xr25mfIiARdkvztd7WxjpXKUWgryeOuiPt2yQeg6sVn68azzSOBTDYM2rsMvFeDZzc
- gskm/waI1tAQbGYAWcY9WaOgzLWaeghiABVs7gQ2biRktNgez/NPPGm6aZlFIqF4ew7q
- a0cASd3g5ahfMgWnRnpeDMOpInwYGRC/6UiDma096UxdtbGd70Tys7NA663mZd9jDChD
- TSow==
-X-Gm-Message-State: AOJu0YyFcT0BcVFMjhHdO3v/AaG9X4UKYFCrCb1n28Y8bUt1brLUZTtH
- 89ynQIUlTPPn3jEcGL67WICINa/w6I8LYpPxZpNAbbb0DpQmZBmdp8aIkzk3o33YkFAHz4O4/dJ
- YiVkK8g/gaaFGjZAfQk3agtc8jtc1f7cv3vNWqe4Xln/B4VrqHrpIS5w=
-X-Gm-Gg: ATEYQzwI0Udy3tVVnMB88JVtvNT0uXwHS3f0kmGU1SpYCkpa6Ygc3nYyKx4qLblX8RQ
- gh6hprppbjFxSCvzRdsgWH3JmzP5QhpnqD4LxxHoMBMzJvQiTVnyLpTxZqSZbQ0E92YY1LJSzD2
- yKRy1mJuVx5Ab716lw28gjjeeNnAwTEkCHvRJFn+to/VchLgrTXxgNhdrFUIhqY9JewhF0n1fE8
- VWKuOhI7EZ8DmyifCT5+9o5bDGB6PlW5oS3UBYgMStdxn+NadRfddJegX2xEzE7q5SapRtlOoRF
- aJu8ma5tjMUr0HuLN5X5BmDikgXxFniVxBA6aUz1gEAPlCoE/LyBHrmbfp/YRoj4zdccyXl92eh
- JxQ==
-X-Received: by 2002:a53:e8c9:0:b0:64c:9f31:e33 with SMTP id
- 956f58d0204a3-64ff7414876mr12474719d50.65.1774976158321; Tue, 31 Mar 2026
- 09:55:58 -0700 (PDT)
+ bh=oITUMmQDFbOJMQwRzSxeqvH8qPQc1MNb7UJZnNsLbO8=;
+ b=eJEpW91E/3MXLyyttjM3Ir6WCPs0VdOBaaqpt+KSC5Z0aXUoZClS2D7PaYtKRMw/CX
+ Vyht6NXdXYLRRYmR/s9+jtUgp1/tgGGsPtM2Hdv1St6lQ+AkWad6hNL9A7qOZt1mi+YT
+ Jv3LMwHLiRtpF814CY8SHf7gcNRhW4O9xqiMW2Y7h+DQwTBCeCsCpOcwQrVaf8xZGHVe
+ R0DKaVMUcb7D7xoiW/M7jX7Yj9unuuY+sUwcFs7yRPvBeXtXZB+efhFe5EL5tJrzOTrt
+ YfRSXS/5e4y4idNzThmeKlBayr017JsDX8Hk4hJyoFcM1bxaocv2kbPCbL6nEdpj8K+9
+ jkNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPl29yRThdRgMzhVsGxw9EUPGaoAinyd6mZ4vwG+vPGfIWARIz02DZz6Aooksem2lRXufRWb6BtXEy@nongnu.org
+X-Gm-Message-State: AOJu0YzuatuKmMqzlUx+7fEZk04M3ZtoABsPXvpQiwUSCWa6PDWZOWka
+ KZSXm0Zqtf6xV6SFOHt4qpQtrIJoTlV95FJjwmI7Yb8b0RFLx+XZGE/ZC7hqqzaEavH3kyXcdVz
+ lKKN5bsO/vV3TyKXQu1qb09+LSFdzHgDnaCzM4dU0lg==
+X-Gm-Gg: ATEYQzytheLs7AOIa6IkarNgP2JnE2JGl88MaIFnyqLHmJr3ZEBqVmd/3lFhKTI3xMh
+ O4Na0f+6GMS+OBa8h/Oam911s3AbkH6SLFELe/+BAnSw2l1dDu2kqVvgv7PLybvxr8jwEpKU5Ux
+ Yv6pNNQAw3LULu9+8iHFCNK8LEYac8xuZ2MH5TVh45XEvOMlOH20CJdmvbu5ANLHaIhj8On5N2S
+ 5UliTuWdoA/AAJX+mBPYtq1/Dz7LG/FIYXj15vuEeygssE3sfBj2aUMOksNGyP9uScTVi6N3VXe
+ slTjJcv+kUtkioZ4l7/Uk/DkIa1XnGqysNhKRThpUbgdV4odfL96OoLI5wS4m/TJwAM=
+X-Received: by 2002:a05:690e:25cb:b0:64e:e47b:2476 with SMTP id
+ 956f58d0204a3-64ff73b6529mr13225847d50.43.1774976201003; Tue, 31 Mar 2026
+ 09:56:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260330143123.1685142-1-peter.maydell@linaro.org>
-In-Reply-To: <20260330143123.1685142-1-peter.maydell@linaro.org>
+References: <20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net>
+ <046420c8-63e4-4113-b33e-7b8c070af5da@gmx.de>
+In-Reply-To: <046420c8-63e4-4113-b33e-7b8c070af5da@gmx.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 17:55:44 +0100
-X-Gm-Features: AQROBzDZk6nYvl4bGsmXlGMU3Un8cLKFydxeVEiqtY_nCzLIFXZeuW6f8NWfRHs
-Message-ID: <CAFEAcA-mF1E6k8S+3wokNu+0FeHuvNw948M38od8VmaT9nXuQA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] linux-user: Fix incorrect sign-extension of guest
- addresses
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Laurent Vivier <laurent@vivier.eu>, 
+Date: Tue, 31 Mar 2026 17:56:29 +0100
+X-Gm-Features: AQROBzDiFJ292RWgKB8BFLVndq6QrZrcjJK021uDMgTlsA4aFz1Slz6pPeRbBRI
+Message-ID: <CAFEAcA_FfuS2gMKj-6W2Cv8PV9gt7MJ0AFyFoG9mm6q1i_FVVg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: fix name_to_handle_at when
+ AT_HANDLE_MNT_ID_UNIQUE flag is set
+To: Helge Deller <deller@gmx.de>
+Cc: Clayton Craft <craftyguy@postmarketos.org>, qemu-devel@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,27 +119,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Mar 2026 at 15:31, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Thu, 26 Mar 2026 at 14:49, Helge Deller <deller@gmx.de> wrote:
 >
-> In commit 7804c84a ("include/user: Use vaddr in guest-host.h") we
-> changed all the functions in guest-host.h that took or returned their
-> guest address argument in type abi_ptr to instead use vaddr.
+> On 3/26/26 06:59, Clayton Craft wrote:
+> > Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
+> > is 64-bits. If name_to_handle_at is called with this flag set then qemu
+> > passes a 4 byte int to the kernel, which then tries to store 8 bytes in
+> > a 4 byte variable, causing a SIGSEGV[1][2].
+> >
+> > This stores mount_id in a 64-bit var if the flag is set.
+> >
+> > 1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
+> > 2. https://github.com/systemd/systemd/issues/41279
+> >
+> > Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
 >
-> This introduced regressions for the case of a 32-bit guest and an
-> address above 2GB for the common situation where the address is a
-> syscall argument stored in a variable of type 'abi_long'.  With
-> abi_ptr (which will be an unsigned 32-bit type for 32-bit guests),
-> the address is cast to unsigned 32-bit, and then zero-extended to
-> 64-bits in g2h_untagged_vaddr().  With the switch to vaddr (which is
-> always a 64-bit unsigned type), the guest address will instead be
-> sign-extended to 64 bits, which gives the wrong answer.
+> Reviewed-by: Helge Deller <deller@gmx.de>
 
-I'm going to pick these up for a pullreq I'm putting together
-for this and some other recent linux-user bug fixes, because
-I think it's better to have the fix in rc2 than delayed into rc3.
-I know this has only been on the list a day or so, but I think
-tweaking it in rc3 if needed is better than definitely slipping it
-into rc3.
+I'm putting together a pullreq with a few recent linux-user patches so
+we can get them fixed in rc2; I've included this one.
 
 thanks
 -- PMM
