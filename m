@@ -4,150 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037DE1061B2B
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 11:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EF61061B34
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 11:34:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7XI6-00074y-8I; Tue, 31 Mar 2026 07:29:50 -0400
+	id 1w7XMR-0001wc-GR; Tue, 31 Mar 2026 07:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1w7XHk-0006vy-Tb
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:29:29 -0400
-Received: from mail-japanwestazlp170110001.outbound.protection.outlook.com
- ([2a01:111:f403:c407::1] helo=OS0P286CU010.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1w7XMO-0001vR-V7
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:34:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1w7XHi-0004v8-U0
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:29:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qK2RmRMNZZGm6PUTAMeXVSKGxb4vzS7a1V8df5vAHxLd2xEADCiCmuQwluTgdNfFpOpOAsQIYL+porArUbSpOzEwDZIxPcwR24ws9ohmKOxbcL7Fyy+KfHrpTn0uquyiqSb+tRRsEyYauo/rowDbjETiimwbhVpTKPc2Ikpz1RZ4GUmPt+yadzx9hCcLRIlcUQjG9CXvOR1Ttj/atSGvaq5uRuKL+Kr5C1iXUEvKFYft/FJSckKs9ngwYw1N31+A9/z3+T3xhWPP6tQETeSBp6U45oRrjM39UyOFRCOU3cHNG0w5Q12moasyMpR32tTA+uB6RKGiwkOd0PjD965Xkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NFfNmOR+B3EHAkfxOKt/eRvKVRjQhX4BT8E/FgBaXIE=;
- b=d/b/LJvNmON8KKVaOQAHsB7tSl6+fTlbH+xizKWpyk7DxcKjAp9xLOGnkxera/0hQVD+Icdct8fMff62df6BIt7rjVxs7diz9KRcNCHc6u3TW2jOqD/xKjDCUMvkuIm1Nz0xU+5g/BdFrl45rfN9kHojsPOY6uzJG0Hsr5osnQBQ+17RaTZDYF4MrJeK5z9wNmCQbilvmJMssSk6PLollZF1RwQmHiYWoVgyOFuUvGNtWcM/nNFjeWZMLBmFbaVQisvNkVQWREjZLL/XvMIIt7ZCfdhGVnkJycrJj6bc33xgMkCRikVm4+IhNYuPamchz/pHtBd5KbK00W0x9k6PJA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
- dkim=pass header.d=fujitsu.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fujitsu.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NFfNmOR+B3EHAkfxOKt/eRvKVRjQhX4BT8E/FgBaXIE=;
- b=iwKeQ8fRubUeSpUDXqPlEdmhkyLdcSOYR+75hEZ5E8AKYGdwcyCKwYqiJmiImCtYQzXVAZTqm2jPaGbzthLoLS8Ao3N/uiazmT54Z7L/yqyYCf/dGed8jONIPwm7lVPK452OTSiI7CKE3Wo1uEgj38LV07LjRvQLILU77R1Ux6YJO/umrRB7q2gIqBQ/q9yuJvow3CRvpGFWM1LLsZIocGbarkcG1p7/2Hz+5K2FO2M7INTOLClGM1y3UBiyK05Nialkpndjre78yEh6y7hGrdIif1ye9Jbhf5Mv6tL4GazdgWl4kGlpY2hrZi0oG72wMPwnCMr0+ChAXFvo3z4c7Q==
-Received: from TY7PR01MB16837.jpnprd01.prod.outlook.com
- (2603:1096:405:32e::20) by TY4PR01MB17260.jpnprd01.prod.outlook.com
- (2603:1096:405:339::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.28; Tue, 31 Mar
- 2026 11:29:22 +0000
-Received: from TY7PR01MB16837.jpnprd01.prod.outlook.com
- ([fe80::5812:babf:b430:670f]) by TY7PR01MB16837.jpnprd01.prod.outlook.com
- ([fe80::5812:babf:b430:670f%4]) with mapi id 15.20.9745.027; Tue, 31 Mar 2026
- 11:29:22 +0000
-From: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-To: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>, Peter Xu <peterx@redhat.com>,
- Samuel Zhang <guoqing.zhang@amd.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "farosas@suse.de"
- <farosas@suse.de>, "eblake@redhat.com" <eblake@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "Emily.Deng@amd.com"
- <Emily.Deng@amd.com>, "Victor.Zhao@amd.com" <Victor.Zhao@amd.com>,
- "PengJu.Zhou@amd.com" <PengJu.Zhou@amd.com>, "Qing.Ma@amd.com"
- <Qing.Ma@amd.com>
-Subject: Re: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
-Thread-Topic: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
-Thread-Index: AQHcvbYDFS/bHmyF/0mRIclEy2/9xLXHQ/SAgAC98QCAAHZIgIAAD6OA
-Date: Tue, 31 Mar 2026 11:29:22 +0000
-Message-ID: <a016361c-01ca-4617-b3ac-4cdf6bbdd2ac@fujitsu.com>
-References: <20260327065006.2567463-1-guoqing.zhang@amd.com>
- <acqgZShXRkqzBU1C@x1.local>
- <e3b261a3-25fa-42f9-a926-306e5a19cf75@fujitsu.com>
- <02a44178-eebc-4fef-a8fb-802dac76c11f@amd.com>
-In-Reply-To: <02a44178-eebc-4fef-a8fb-802dac76c11f@amd.com>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=fujitsu.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY7PR01MB16837:EE_|TY4PR01MB17260:EE_
-x-ms-office365-filtering-correlation-id: 58d1e97d-b069-473a-4ffe-08de8f18c187
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|38070700021|18002099003|22082099003|56012099003|1580799027;
-x-microsoft-antispam-message-info: e1l807AsmFW5S1xRbxj59Z1cOYbylew35P+JSKX24LNNn6RtzrhECHO+EOAqcJ5CAZppoe0qo82X/o5FDsX+ct90qUgNOVnJBJxDEdCww1ykLUWCoFAG2I1VVaOYimOzvxsdFs4IS1VfQImqoXLP9RUSO4IeSiaOaA/SsoAVmPKEYf5T9qPL5adEykDc2P7zVwJw8xObm5qdpczl9RjZn72paZ+p6QxWttpkYqefYuZz4Hi7K6z4LwuO+uli6ePRbQ4tiJIJzihqbJb3bQx/wKjGjmKWSBLqg7IA5201W7QDFiBA98PprwbRLagxbnCwF9PTUbLtgcqum6qnPBQCGLvmikbfXKDM7NbfRayMv9UpxT/wJ2JZko4Sff15Xxi2sP4B9pFM8LUkWy0GjbcqN0tgRQhjeYmW3NIc8n7ipEYPZTGG9cUeKzCORZoZeDtKNQOsJcpxFmjjXJOWp7JsUeHLTDuWeA1GXb6Yt0GQihWSvDwo0rVXhd5NvYkn/9ercJA731yNYLOxe9uPWaWxPJuLnWWZjymfql8WxqmyCsKNUw55o/KkuE9Smx2Le1d5F3ckKHXQVWEn/sIKSszrkfg+F/MYyvQITbDv7RR5yXW0RIPFZFk0X6B0lNFk56PvvtO+5SIPHMy+wr5Yf0V01BCt+HZuvRLCih1nffXE0xeWOtut40W6VZojnqVCZhuBEFz/wfrgh1mEL3itpUsjWF+0wb8HaCPnh1OI43KnvLc8lt8QnvTcYS2VnPzIY6QuUOKjqIlezd1LfUAQGOU5l2yU6v3qr/lzsAABjP5zcNSYn4vFji4l0zegNtwZ6470
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TY7PR01MB16837.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700021)(18002099003)(22082099003)(56012099003)(1580799027);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L0JZdVIxZGdnaXJ4Y1l0dW9BVUxHbzkwQmxVUjNGWWw2d1VQTC9HdnUyVTIz?=
- =?utf-8?B?VGwrbkJtZjFudHlJOUhDYWRLSGh2MWtxWEswZXZoekI1aFJmdzFqSlNiR092?=
- =?utf-8?B?aWcvd3BqRkV6R0w1cCsvK21aV1NuT3pSTG1idkdaOTE3T0FkZkVWUUxEOE43?=
- =?utf-8?B?TUw5b2J4ZWEveTdFYnE3UmhWRzdmcE9XRzNhc1ZXR1Q1TmJac21LTFFhNWRL?=
- =?utf-8?B?WHFmS1c0Y3E5cnBOSy8zK3VQU2hZamorVUlZZHRJSVBUakQ0dXZPazlvUDJn?=
- =?utf-8?B?RFQ3ZmYxY2M3RU02dGVjREJlVE1ML2pDdWpDQjIwNWkwZ2p1M0VqSC9XZjRH?=
- =?utf-8?B?WUhIdXNDYk10SE93RldaLzFOa0Rlc1ZtUm9qbzdtMmRmMjdjU3FjaEtNQWww?=
- =?utf-8?B?ckp1S3ppYllHT2pvWTREdWlnNXNPVG1PVGU5R3ZTNEZpUTJXVzQzUktZWjQy?=
- =?utf-8?B?MVkxbk5US2s5OE9qS0Y1Z2VHaVFlZktDbU1rQ0djNmtSK0MvNU8zRDZiL1JC?=
- =?utf-8?B?VHdiT3BsWDVMUXlGK29aL0Z6NHdEclo2WUppREpGTVdHTEZWVE4zMTh4NkJX?=
- =?utf-8?B?WXFmR3Z2NEFoY3AxUVhvNUR6elpVVHdEWjEyNHA1ekJZenF2Q0ZocHVuc0ho?=
- =?utf-8?B?WmRuUGx6SVloL2ZoUSs1ZzNCWHpBekM5UWlhbml2SmNmVGlmb1pqR2Z1UmJU?=
- =?utf-8?B?VVNvRytwZjhhRitRZEE5d3B3SzIvelloaHAyU1FWemJGV1NkczFsbWpZS0xM?=
- =?utf-8?B?RVZjZmt4Rng0eHdBYjhtTDJhb3NCREg2SjR6dm5Jc0NlVWZoUFI1aXhKajgv?=
- =?utf-8?B?NXlaZ1ZzSUxIUzVtZGVZc3R6TFhhV3FCL3U4aitqOFpQOC9mdXNLQ2kvWHlP?=
- =?utf-8?B?RXNCV20yY3lzcUhNdzFmUUJFK1UxMUg2M08vSU0wK3B6dGZjL3ZEWWltaFRv?=
- =?utf-8?B?bk8wa0ZqbGdnUkQxUUEzQUcvaFo4QndMOUd2azQraGZBbDJmK2VhTUExa2xU?=
- =?utf-8?B?L2FwU3cvczhDUWNSa1VvQzRBZVF0Y3ZjOE5Md3V5UXcvYjRRbGVnaGdFWlkz?=
- =?utf-8?B?SUluSjFjZ1pIU2txMFhTNzZGZmFDQmZJSVNOTXlBTmVDQkIwb1UrdWpDMEQx?=
- =?utf-8?B?cDJSWWcrN3hkQ0pWa2pMYzM1SXZmTUhzd3BhNjUrOXRCdDRZTmlXTTJ5ZnA3?=
- =?utf-8?B?eWlFU3BLNVh3Q0RqTThJY1g0M0tMb2JSS0RsZEU0U0p0Z2xLMEN0S01jZTFQ?=
- =?utf-8?B?a0hZQ3UrYVlXY2xjVmpadGpEQm05TTB2VHB4U0R6Z3V4M3ludExWNmx0NTdV?=
- =?utf-8?B?RnAzYURSdmYram5TNGsralpDbUJGNmtMZVlIS0lxWUxrMTBIQmFURDlWb0pm?=
- =?utf-8?B?WDJlSkt1aU9jVzdOd3FramtKaGFWWU1kL1UrMEM0Yzk1eVVRS2tjbGdldDQ2?=
- =?utf-8?B?Wk5TcnZmSzA4UWMzOTFOdUFPM1FZSTRiTmpsM2RaTEpFcTRNOGRZSnJSVG4y?=
- =?utf-8?B?eWN1WXAzNmw1UHNNY09VeFVLUGo2TVNYZXloTklDT0c4RlMwVmhNUnFwUnNq?=
- =?utf-8?B?SzJBS1lVVW5jVkR4R2haN2hxSTJKZDl3c1p1OG5BNXlVMWZzSjY3SWlycEMw?=
- =?utf-8?B?aVVzY3lLWGw1bnB3WkMyTjhGR1ZDYjRCeHJCU2xXVEVjY0NDUXhHbnczc1BE?=
- =?utf-8?B?UW9ienBiM0tadit4T29MK0xCQTVmTitrT1N5UlRybUcycTJ6NisraEhSTnlo?=
- =?utf-8?B?Nmx0b2dwOFo2aU8wY0tGN21RYURxa2NXbFNtbHNzOGErVGZJS3pnNHlIOVow?=
- =?utf-8?B?NUswNkVHa0VVeXhISGhQU1llaTR3REVvQjdIMVJndm1ZOG45T2FnMmRrQ1Z3?=
- =?utf-8?B?R3pjNnM1eWNwYU03aHlLOEF5SXNBVlRoZXVGRExtaEltNy85UUFEUzRUVGhm?=
- =?utf-8?B?NUVsWTFmVFpqQVJDRGV0Q28rYXRvajU0RG9xbmo2TTl6NmNsaE9qV0UwRE90?=
- =?utf-8?B?ekQ2WTRHSFlKbGdUd3kray9VS2Z4SGxkNmQxZ2JDZFNLUXI0WWF2WVNMRjdD?=
- =?utf-8?B?YVpzd1NteXJLZjR1cnVqM3dYM3lLTFg1cS9CUHdPSzg2WEpHa1pxVEVPQWpy?=
- =?utf-8?B?R0kvTGo0ZWtKTHViUDkwK0c0V3VHa0xQbndFK2JYY21pKzVsZng1NEtEblJU?=
- =?utf-8?B?MUZMeTA3VTZQZWZtV3NEWFE0YkJ1d3Z6ZEo0M0pXcGJkdGJlR0ZiMzlCc09M?=
- =?utf-8?B?cTE5b3BBYVA0WmV2MFk2SEhtVUo3bmtCZHp5eFZ1a1Z1c3grN1BJc0RJcEFh?=
- =?utf-8?B?OEFoalNCd0laZE9lUlVPZ2V6UWpqMXdhcUc1VEd3RzNiMnR2OVR1RjIyU0Q1?=
- =?utf-8?Q?rZsudtVO6Rri2/Ik=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5EC5B079B444B5419FF6D2A8BC151E09@jpnprd01.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1w7XML-0005cq-8y
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:34:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774956851;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
+ b=Gm7OIxEtYbjAQeQjLQB6wMS9Ngu9pokRs3qdMOJ3s9Dv+jPteP+kFFTf7wXhvU1o2hitI2
+ VTek6PeV/m+n89I9r885sX6iimTqJDHkSifw5Te6C5TQiQNvdXo2pl4DkFb6kqeoG44gaa
+ GbxKqyC+/+Ll5UjvpfIQLU4avjoTkmM=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-164-exw3SzQCNH-fnraJfy2PMQ-1; Tue, 31 Mar 2026 07:34:10 -0400
+X-MC-Unique: exw3SzQCNH-fnraJfy2PMQ-1
+X-Mimecast-MFC-AGG-ID: exw3SzQCNH-fnraJfy2PMQ_1774956850
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-65019a4b560so3088736d50.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 04:34:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774956850; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WmUXXOugrh23amUL+mGzYvgMDujL+/LSGXzYfRSSls05Hdpj8rfJ0oLC+EPsFGRvEH
+ n88psO4Nwcg96IiGJYsvke9s/l4RZeaZJ/oaUWDbsHcqv9QV1O5bZ6/IDlgQhZeuuu61
+ 8ksDUjRXLwJFRCT4zJ0MW8OE18zpEaio5OwryVh2MA62uzppmKYHu4V08Qij/gWDvgl+
+ Ec3ww1wxA3xKaxV/6tR9afj+7TwzJMV2PZKXBNgipzwg6P2xy5GNYypWhj8bF+t9apv+
+ hxW7nqUD7/w8u5Lx3DmdPK8VOfbo8OVZQRiNreXbXnvRrNkOXxANZF0jy1smordpw57j
+ +xwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
+ fh=pXm4kqJhz0sclCsk7unKqGwgbqBi3wrCcjfkkZ1CYHI=;
+ b=a9mWTN9VdaVw6lDw1mItfkIeKlmoLziLLB2rw90XTSXfKvxt+RPNSqXRzoce8in7kd
+ 9anGHWAJS0dC6IPJ4J9rh+sM8oHSAAd422CkIexPEL7hlvRgYk+VulAf/lrJEzZffP9H
+ sOOUAkATdjI+sM62CKpC1flhXAmEuT/RVsrM3G5ARxQhI1d4XQ/nT8eC5Unep8rui1jO
+ 1NPRavPeTnXwpC76FBsv9VkLm+dsrpvGox9+8fme3bB5Egn27B8LpPzjLJETRg+YFpen
+ 9ka9wCqJvVKqJGII6fvCJ9yVU85/W9umn5rfPZIiOTYw8KJc+qEX/3VU2z8bJMY9NlR6
+ C0EQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1774956850; x=1775561650; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
+ b=CW9eJNRdK9iJt9WwF3ycdzaIdp19emtAs/xIoW8kvNJLk+0tEfibjURAq/EOM8td5Z
+ mV/E/HQ3CCCjJawXxBen1qaHs6xubyKu5KjE77+I5LlU4wFA7S+ma2KVqRc8PQltwXPq
+ 6I0BmBnnUNAKlDzGTWDz9sR2+vgioanIIVYN1So+ENmJwhsrxLRmgmJDLtWmgmVCYXAf
+ buJdpIjKvDHTtH2+mu/7oG1JFOYSzf6RmicyW0LaLpJgmoZHM/mDq7dNmtkoAmuxy3kT
+ frcDDRSkw3xc3eS5EAJ9Keb3VV0SSLZjiphVmqddu2IXuvgWM6vn8Qt/xEWUF8G7Rfqv
+ O7EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774956850; x=1775561650;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
+ b=jl8xDi2Bi/tvy7ADmHk/rFxuaC5Iq60xk3lijH9fA/h00MkZxcEqti7eEYz50055b0
+ ofW2s20G3XgF5IIuZO+gwRRVqljH625saUbWroBrywsBYzDBKI+JeQUvoFAdQjaRWlMy
+ aXMqrjIbLTCV1MBegZU6DMh2kj7CkJParsG9w+Puatfmhv3N6/nYF6lXEMB8bUDNm8KK
+ KX0T5Yw55xxVbqWqH7CIf6zM6joKrPgvFivDPLg0PERfANtzta25Jfp/XDOOZzwep5Eg
+ hCmub2SXiq0+V+yJKSq2imsxo0Fw5TQuRGHwsB5ebgwgiaPpHX3ovVwbQyPQD5Kexni9
+ R4yA==
+X-Gm-Message-State: AOJu0YwMTCqa+XlVTix3B9LtLu49aL8EZpqEgOPFEYTnrPzdnPv7jdWe
+ CUjTzTPVWF8PzGSPOpvGXRIok4VUyRNZ/to2/5CsBIJbVYIkdbhLDdmhnb9+wD5PvALBnHUgaLA
+ E/jNnMGtKIj2L6o/eDXMhKqt1wUAI6v7PmUXtrH/paxKeu78EWr68s3sTToreuv8Rr1p+rwVhRM
+ ubdX9ddeg37WGCbgDZTYHAgfTm/NrC3/o=
+X-Gm-Gg: ATEYQzwZnBi0eaAE8jETIqlDrrw/uGxkfIegJJDjdaDLNapeSya143Dux2hXwNEZJ9d
+ +OiuY3iEiZc65s/5Fw29dMp+43FEcQ4zZACl1HNjZlGoJ3GJRLXyAfb0MPDuIExC6uAPWHFc5HU
+ VENDgPtuVmsFN7E6XiZ8AGQpySLdsSDWmAUc1A+4GN29E070NYnebHLM7aHy1X8MFODwCdLnCkf
+ Wn0fl7gCtCMcHdJ1TlC/CZwBOhmvC2VNsBVKb7D
+X-Received: by 2002:a05:690e:120f:b0:64d:626a:f4fd with SMTP id
+ 956f58d0204a3-64ff743d5b3mr14352061d50.71.1774956849681; 
+ Tue, 31 Mar 2026 04:34:09 -0700 (PDT)
+X-Received: by 2002:a05:690e:120f:b0:64d:626a:f4fd with SMTP id
+ 956f58d0204a3-64ff743d5b3mr14352041d50.71.1774956849210; Tue, 31 Mar 2026
+ 04:34:09 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: brv8UUCmjAEaj9l+JOvUG2sfjkcD4lnHQbAvBjtkt0HvZOwj3yjSpGukHz+xre+js31c0SsBF2PPYYNuDXKVj60fw9Cc7J3NGwJhy/m1QlayffNIgo7KfZbjhd4aoNkXN+zVHYPonT0x0ru7bYpaQCRmwaP8SRpJV53ixdpbzWEz7TNn/7pSkBXfA7ORuxD72rxpZNvRTXe5pKgIS56J/0VO2uVZO/U0SSz/MhOrGddNNbXUgOBpQVzgCFvDyWj+0X+7hPPMiBhTqnUmQ4J3Vk/jdwAOfpkcC0gLhvROnUN3I/y6AWQebSjp/FVZjn4vTOSeKLTMqtDEyhOKz2qctw==
-X-OriginatorOrg: fujitsu.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY7PR01MB16837.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 58d1e97d-b069-473a-4ffe-08de8f18c187
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2026 11:29:22.1466 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ubrRWgWVMkyMWkhkIeWnTGpIjVeJyVqjltawzd37OhkTGn3ff3dA1ayCupuxRDAqYErPqqeL599mgrVlAXncGQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4PR01MB17260
-Received-SPF: pass client-ip=2a01:111:f403:c407::1;
- envelope-from=lizhijian@fujitsu.com;
- helo=OS0P286CU010.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260320163844.754762-1-lvivier@redhat.com>
+In-Reply-To: <20260320163844.754762-1-lvivier@redhat.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 31 Mar 2026 13:33:32 +0200
+X-Gm-Features: AQROBzB5fGSau2jTpMHGgSFoAvh_Nfn_A0Ehne1FShRSeaXkm-WB7hR9H8Q3F5w
+Message-ID: <CAJaqyWeqgO9fR+Xi5rtBw0VL=gaMBFa9N7wV20bYhEgq3SbMMw@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: allow vhost-user backends to provide config
+ space
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,49 +138,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCk9uIDMxLzAzLzIwMjYgMTg6MzMsIFpoYW5nLCBHdW9RaW5nIChTYW0pIHdyb3RlOg0KPj4N
-Cj4+Pj4gU2lnbmVkLW9mZi1ieTrCoFNhbXVlbMKgWmhhbmcgPGd1b3FpbmcuemhhbmdAYW1kLmNv
-bT4NCj4+PiBPbmXCoHRoaW5nwqB0b8KgbWVudGlvbsKgaXPCoFJETUHCoG1pZ3JhdGlvbsKgaXPC
-oGluwqBvZGQtZml4ZXPCoHN0YWdlLMKgYWN0dWFsbHnCoGl0DQo+Pj4gZG9lc24ndMKgaGF2ZcKg
-YcKgcmVhbMKgbWFpbnRhaW5lcsKgc2/CoGl0wqBpc8Kga2luZMKgb2bCoCJvcnBoYW5lZCIuwqDC
-oEluwqB0aGlzwqBjYXNlLA0KPj4+IEnCoGFjdHVhbGx5wqB3b24ndMKgc3VnZ2VzdMKgd2XCoGFk
-ZMKgYW55wqBuZXfCoGtub2JzwqBmb3LCoHBlcmZvcm1hbmNlwqByZWFzb25zLg0KPj4+DQo+Pj4g
-RG/CoHlvdcKgaGF2ZcKgYcKgc3Ryb25nwqByZWFzb27CoHRvwqBwcm9wb3NlwqB0aGlzwqBwYXRj
-aMKgdG/CoGxhbmTCoHVwc3RyZWFtP8KgwqBJc8KgaXQNCj4+PiB1c2VkwqBpbsKgcHJvZHVjdGlv
-bsKgc3lzdGVtc8KgYW5kwqBpdMKgc29sdmVzwqBzb21lwqByZWFswqBwcm9ibGVtc8KgZm9ywqB5
-b3U/DQo+IA0KPiANCj4gV2XCoGhhdmXCoFZNc8Kgd2l0aMKgbGFyZ2XCoFJBTcKgYW5kwqBmaW5k
-wqBUQ1DCoGxpdmUtbWlncmF0aW9uwqBpc8Kgbm90wqBmYXN0DQo+IGVub3VnaMKgYW5kwqBleHBl
-Y3TCoFJETUHCoG1pZ3JhdGlvbsKgY2FuwqBiZcKgZmFzdGVyLg0KPiANCj4gQnV0wqB3ZcKgZm91
-bmTCoHRoZcKgcmRtYcKgbW9kZcKgbWlncmF0aW9uwqBzcGVlZMKgaXPCoHNsb3dlcsKgdGhhbsKg
-dGNwwqBtb2RlLsKgU2VlDQo+IGZvbGxvd2luZ8KgZGF0YS4NCj4gDQo+IA0KPiA4R0LCoFJBTcKg
-aWRsZcKgVk3CoGxpdmUtbWlncmF0aW9uwqBwZXJmb3JtYW5jZToNCj4gfMKgdHJhbnNwb3J0wqBt
-b2RlwqDCoMKgwqDCoMKgwqB8wqB0aW1lwqAocynCoHzCoHRocm91Z2hwdXTCoChNQi9zKcKgfA0K
-PiB8LS0tLS0tLS0tLS0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tfC0tLS0tLS0tLS0tLS0tLS0tLS18
-DQo+IHzCoFRDUMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHzCoDM2Ljg5wqDC
-oMKgwqB8wqDCoDEsMDgxwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgfA0KPiB8wqBSRE1BLMKgMU1C
-wqBjaHVua8Kgc2l6ZcKgfMKgMzcuOTE1wqDCoMKgfMKgwqAxLDAwN8KgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoHwNCj4gfMKgUkRNQSzCoDFHQsKgY2h1bmvCoHNpemXCoHzCoMKgNC4zNjjCoMKgwqB8
-wqAxNyw1MjnCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB8DQo+IA0KPiBUaGlzwqBwYXRjaMKgYWxs
-b3dzwqB1c8KgdG/CoHVzZcKgbGFyZ2VywqBjaHVua8Kgc2l6ZcKgZm9ywqBmYXN0ZXLCoFJETUHC
-oG1pZ3JhdGlvbi4NCg0KDQpIaSBTYW11ZWwsDQoNClRoYW5rcyBmb3Igc2hhcmluZyB0aGlzIGNv
-bXBhcmlzb24gZGF0YS4NCg0KIEZyb20gdGhlIGZhc3QgY29tcGxldGlvbiB0aW1lIGluIHlvdXIg
-dGVzdCAoNC4zcyBmb3IgOEdCKSwgaXQgbG9va3MgbGlrZSB0aGUgVk0gd2FzDQptb3N0bHkgaWRs
-ZS4gVGhpcyBtZWFucyBhZnRlciB0aGUgZmlyc3QgZnVsbCBtZW1vcnkgcGFzcywgdmVyeSBmZXcg
-bmV3IGRpcnR5IHBhZ2VzIHdlcmUNCmdlbmVyYXRlZCwgYWxsb3dpbmcgdGhlIG1pZ3JhdGlvbiB0
-byBjb21wbGV0ZSBxdWlja2x5LiBUaGlzIHNjZW5hcmlvIGlzIHBlcmZlY3QgZm9yIGhpZ2hsaWdo
-dGluZw0KdGhlIGJlbmVmaXQgb2YgbGFyZ2UgY2h1bmtzIHdoZW4gbWVtb3J5IGlzIGRpcnRpZWQg
-aW4gbGFyZ2UsIGNvbnRpZ3VvdXMgYmxvY2tzIChhcyBpdCBpcw0KZHVyaW5nIHRoZSBpbml0aWFs
-IGZ1bGwgc2NhbikuDQoNClRvIG1ha2UgdGhlIGNhc2UgZm9yIHRoaXMgbmV3IGtub2IgZXZlbiBz
-dHJvbmdlciwgaXQgd291bGQgYmUgdmVyeSBoZWxwZnVsIHRvIGFsc28gc2VlIGRhdGENCmZyb20g
-YSBtb3JlIHJlYWxpc3RpYyB3b3JrbG9hZCBzY2VuYXJpbywgZXNwZWNpYWxseSBvbmUgdGhhdCBn
-ZW5lcmF0ZXMgcmFuZG9tbHkgZGlydHkgcGFnZXMuDQoNCkluIHN1Y2ggYSBjYXNlLCBldmVuIHdp
-dGggYSBsYXJnZSBjaHVuayBzaXplLCBgcWVtdV9yZG1hX3dyaXRlKClgIHdvdWxkIG9ubHkgYmUg
-YWJsZSB0byBzZW5kDQpzbWFsbCwgZGlzY29udGlndW91cyBibG9ja3Mgb2YgZGlydHkgcGFnZXMg
-aW4gZWFjaCBpdGVyYXRpb24uDQoNCkkgc3VzcGVjdCB0aGUgdGhyb3VnaHB1dCBnYWluIHdpbGwg
-c3RpbGwgYmUgc2lnbmlmaWNhbnQsIGJ1dCBsaWtlbHkgZGlmZmVyZW50IGZyb20gdGhlIGlkbGUg
-Y2FzZS4NCkhhdmluZyBkYXRhIGZyb20gYSB3b3JrbG9hZCB0aGF0IHNpbXVsYXRlcyByYW5kb20g
-d3JpdGVzIChlLmcuLCB1c2luZyBgc3RyZXNzLW5nYCwgbWVtaG9nIGV0Yykgd291bGQNCnByb3Zp
-ZGUgYSBtb3JlIGNvbXBsZXRlIHBpY3R1cmUgYW5kIGhlbHAgdXMgdW5kZXJzdGFuZCB0aGUgYmVu
-ZWZpdHMgaW4gYSB3b3JzdC1jYXNlIHNjZW5hcmlvLg0KDQoNClRoYW5rcywNClpoaWppYW4NCg0K
-DQoNCg==
+On Fri, Mar 20, 2026 at 5:40=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
+ wrote:
+>
+> Remove the vDPA-only guard on vhost_net_get_config/set_config calls so
+> any vhost backend that negotiates VHOST_USER_PROTOCOL_F_CONFIG can
+> provide device configuration.
+>
+> To manage backends that don't support vhost_net_get_config/set_config,
+> modify the stubs and vhost_net_get_config/vhost_net_set_config
+> with NULL vhost_net parameter to return -ENOSYS.
+>
+> Until now VHOST_USER_PROTOCOL_F_CONFIG was requisited with the
+> supports_config flag in VhostUserState or ignored, but now stop
+> stripping VHOST_USER_PROTOCOL_F_CONFIG when the device code doesn't
+> explicitly require it, so vhost-user backends that advertise F_CONFIG
+> can negotiate it.
+>
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> ---
+>  hw/net/vhost_net-stub.c |  4 ++--
+>  hw/net/vhost_net.c      |  8 ++++++++
+>  hw/net/virtio-net.c     | 36 ++++++++++--------------------------
+>  hw/virtio/vhost-user.c  | 31 +++++++++++--------------------
+>  4 files changed, 31 insertions(+), 48 deletions(-)
+>
+> diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
+> index 0740d5a2ebe6..6edc0a222f3b 100644
+> --- a/hw/net/vhost_net-stub.c
+> +++ b/hw/net/vhost_net-stub.c
+> @@ -53,12 +53,12 @@ void vhost_net_get_features_ex(struct vhost_net *net,=
+ uint64_t *features)
+>  int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
+>                           uint32_t config_len)
+>  {
+> -    return 0;
+> +    return -ENOSYS;
+>  }
+>  int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
+>                           uint32_t offset, uint32_t size, uint32_t flags)
+>  {
+> -    return 0;
+> +    return -ENOSYS;
+>  }
+>
+>  void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *fe=
+atures)
+> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+> index a8ee18a91266..13f926b5cfb6 100644
+> --- a/hw/net/vhost_net.c
+> +++ b/hw/net/vhost_net.c
+> @@ -42,11 +42,19 @@ void vhost_net_get_features_ex(struct vhost_net *net,=
+ uint64_t *features)
+>  int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
+>                           uint32_t config_len)
+>  {
+> +    if (net =3D=3D NULL) {
+> +        return -EINVAL;
+> +    }
+> +
+>      return vhost_dev_get_config(&net->dev, config, config_len, NULL);
+>  }
+>  int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
+>                           uint32_t offset, uint32_t size, uint32_t flags)
+>  {
+> +    if (net =3D=3D NULL) {
+> +        return -EINVAL;
+> +    }
+> +
+>      return vhost_dev_set_config(&net->dev, data, offset, size, flags);
+>  }
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 2a5d642a6476..7ad2dac450d9 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -180,17 +180,9 @@ static void virtio_net_get_config(VirtIODevice *vdev=
+, uint8_t *config)
+>                   n->rss_data.supported_hash_types);
+>      memcpy(config, &netcfg, n->config_size);
+>
+> -    /*
+> -     * Is this VDPA? No peer means not VDPA: there's no way to
+> -     * disconnect/reconnect a VDPA peer.
+> -     */
+> -    if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_=
+VDPA) {
+> -        ret =3D vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *=
+)&netcfg,
+> -                                   n->config_size);
+> -        if (ret =3D=3D -1) {
+> -            return;
+> -        }
+> -
+> +    ret =3D vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&ne=
+tcfg,
+> +                               n->config_size);
+> +    if (ret >=3D 0) {
+>          /*
+>           * Some NIC/kernel combinations present 0 as the mac address.  A=
+s that
+>           * is not a legal address, try to proceed with the address from =
+the
+> @@ -223,15 +215,9 @@ static void virtio_net_set_config(VirtIODevice *vdev=
+, const uint8_t *config)
+>          qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
+>      }
+>
+> -    /*
+> -     * Is this VDPA? No peer means not VDPA: there's no way to
+> -     * disconnect/reconnect a VDPA peer.
+> -     */
+> -    if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_=
+VDPA) {
+> -        vhost_net_set_config(get_vhost_net(nc->peer),
+> -                             (uint8_t *)&netcfg, 0, n->config_size,
+> -                             VHOST_SET_CONFIG_TYPE_FRONTEND);
+> -      }
+> +    vhost_net_set_config(get_vhost_net(nc->peer),
+> +                         (uint8_t *)&netcfg, 0, n->config_size,
+> +                         VHOST_SET_CONFIG_TYPE_FRONTEND);
+>  }
+>
+>  static bool virtio_net_started(VirtIONet *n, uint8_t status)
+> @@ -3868,6 +3854,7 @@ static void virtio_net_device_realize(DeviceState *=
+dev, Error **errp)
+>  {
+>      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+>      VirtIONet *n =3D VIRTIO_NET(dev);
+> +    struct virtio_net_config netcfg =3D {};
+>      NetClientState *nc;
+>      int i;
+>
+> @@ -4023,12 +4010,9 @@ static void virtio_net_device_realize(DeviceState =
+*dev, Error **errp)
+>      nc =3D qemu_get_queue(n->nic);
+>      nc->rxfilter_notify_enabled =3D 1;
+>
+> -   if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_V=
+DPA) {
+> -        struct virtio_net_config netcfg =3D {};
+> -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+> -        vhost_net_set_config(get_vhost_net(nc->peer),
+> -            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONT=
+END);
+> -    }
+> +    memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+> +    vhost_net_set_config(get_vhost_net(nc->peer), (uint8_t *)&netcfg, 0,
+> +                         ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
+
+Hi!
+
+This is a vdpa specific workaround, kind of. As an open question,
+perhaps omitting this `set_config` is better so vhost-user has
+consistent parameters? On one hand I think it's weird to honor only
+the MAC address from the command line and ignore all other parameters
+like mq=3D or vlan=3D. From the other point of view, making vhost-vdpa and
+vhost-user consistent offers benefits.
+
+Or maybe to set the mac address is the motivation for this?
+
+>      QTAILQ_INIT(&n->rsc_chains);
+>      n->qdev =3D dev;
+>
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index a8907cca74ec..2c310403851f 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -2196,28 +2196,19 @@ static int vhost_user_backend_init(struct vhost_d=
+ev *dev, void *opaque,
+>              return -EPROTO;
+>          }
+>
+> -        /*
+> -         * We will use all the protocol features we support - although
+> -         * we suppress F_CONFIG if we know QEMUs internal code can not s=
+upport
+> -         * it.
+> -         */
+>          protocol_features &=3D VHOST_USER_PROTOCOL_FEATURE_MASK;
+>
+> -        if (supports_f_config) {
+> -            if (!virtio_has_feature(protocol_features,
+> -                                    VHOST_USER_PROTOCOL_F_CONFIG)) {
+> -                error_setg(errp, "vhost-user device expecting "
+> -                           "VHOST_USER_PROTOCOL_F_CONFIG but the vhost-u=
+ser backend does "
+> -                           "not support it.");
+> -                return -EPROTO;
+> -            }
+> -        } else {
+> -            if (virtio_has_feature(protocol_features,
+> -                                   VHOST_USER_PROTOCOL_F_CONFIG)) {
+> -                warn_report("vhost-user backend supports "
+> -                            "VHOST_USER_PROTOCOL_F_CONFIG but QEMU does =
+not.");
+> -                protocol_features &=3D ~(1ULL << VHOST_USER_PROTOCOL_F_C=
+ONFIG);
+> -            }
+> +        /*
+> +         * Fail if vhost-user device expects F_CONFIG but backend doesn'=
+t
+> +         * provide it. Otherwise negotiate as usual.
+> +         */
+> +        if (supports_f_config &&
+> +            !virtio_has_feature(protocol_features,
+> +                                VHOST_USER_PROTOCOL_F_CONFIG)) {
+> +            error_setg(errp, "vhost-user device expecting "
+> +                       "VHOST_USER_PROTOCOL_F_CONFIG but the vhost-user =
+backend does "
+> +                       "not support it.");
+> +            return -EPROTO;
+>          }
+>
+>          if (!u->user->supports_inflight_migration ||
+> --
+> 2.53.0
+>
+>
+
 
