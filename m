@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C22FF60EE
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A1DFF60F1
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Uyr-0006J0-25; Tue, 31 Mar 2026 05:01:49 -0400
+	id 1w7VBM-0001gQ-1Q; Tue, 31 Mar 2026 05:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w7Uyp-0006IR-DY
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:01:47 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VBK-0001g3-QJ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:14:42 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w7Uyn-0000nJ-TD
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:01:47 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-35da2d35eccso1471340a91.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 02:01:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VBJ-0002o2-6z
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:14:42 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-486ff3a0fc1so49110835e9.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 02:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774947704; x=1775552504; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dl9nKcFYK8oPU2RgRQMSgPVtpl8RimSaYEpjWJuj/as=;
- b=X6gt7tTOO2su9ZwZ+4fhpF/lyiIaLyu94CmwWdToCd4vlbeclkooEOpmBLJBqJdqSy
- R2f27O2E3WQq67x1jnSBhVyxnaqU0ZYiia6XPaiqt51JiHnm3j9lR6/bPr3+mTTZVdqq
- W2N5K75uWBFyKiM3/c3nIwj4jkowKoILFo8ywonUObj+lhVutd/ab+T02LugNEGvXMPk
- zmAUIkEtLZPK7S5V7rgkQsXAtALNgAtv0Mjpk5SxnV2ghj/3LpmPPJFDj/FtDor7ECyN
- CO1lAYrFrFZLkckYvOWMYprkQBoo8VbGd/jHjoqak5QTdGeFzuApD2aIBYesthNxCRc1
- roGg==
+ d=linaro.org; s=google; t=1774948479; x=1775553279; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PTI1lNAHwXLvHOavXN6hxUHvOTTzBYQseQWDlBBJNaM=;
+ b=JHeKL2BiIz3UeGz16P5MTGox/s75y3vbA9ZD2relky7oRo3x+SXwEx40p4lvSXJvir
+ +aA6DfwEFihZJzIWxWcnUQFMJTGqCkdRA+mK6xnX1PKJL7/vTbjPvjLXl5sd/OIeEPyU
+ bmQxzb3fgWg90y0N7n8ctAfyz7nSOIvq8ExZHVWtiLN2dMkcvW4OD/h8dqdBBGufTKXX
+ 1gMFD86LvDGYnfkPykJ99vq2LxX7FxZDHxjjW2JXQKI1YKIrsX10FOKXMmn6WkMoRVBa
+ uu8m5RHKKTNpoWQY6xM/V0hx18YM5Piqw8IP8RLCMSAm7pJNO8xnYQfq61vZRByLMXVv
+ +P1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774947704; x=1775552504;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1774948479; x=1775553279;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dl9nKcFYK8oPU2RgRQMSgPVtpl8RimSaYEpjWJuj/as=;
- b=a86Bu7tLrLyUyDAzNMzKlrqsX8b2qFpOoa7v5jxoDm0zF4Ec89WzG5LNcpZAry0Blc
- PcoRdDguu+W7xOt74x18Q+k/ddlZq8fHFSzvqujwf9mz4+66S4gQK/KmsCoRAXSZoFbV
- ps0T9H2E8hiXqSKFQ5nnKKMN3f0ICq9JMOyE9xcjvsaOZmxtoge0vwPn5FUS5/jXu49v
- VMQzAG6XVfMa9/TTEzZEVlAmfUV5n4Z2IAUyGWUZyJWuhC3GPTtYE4rIr1cJDsAcVdDD
- t0AjTgF891woxkvozRAdqrEPLuAMAJO9XURyEB5+o5dJDaJhjNPvZH9QFPaSG9vOFFRM
- pqHQ==
-X-Gm-Message-State: AOJu0YyxjjIoGeCcF9pm+Q7DODHUbU0EVCHgLRyshFgXGAJJiH167JKN
- 5fjXUxf0+RdL5RufWGnazUoqHen4eI+saIsxz+QF8tszHCRVT9MTrXk4csSMCotO8PUQAftJDLR
- bOKF8Ywc=
-X-Gm-Gg: ATEYQzw5VnT+O7FDpIzKg5WR7wWi8FEWIMoyRcGoTguOjdsw7Zgg3pSShJxykgK/tH3
- XnKkhPjU7vBV1BVcZzykN4Jn1odumKnJLNxUbyxW1Gm1Glu9K+oDdwReuqEcoxB6K0XiZ+HjRdM
- TVrDVAnOepDk7VXUIPnhw01cGHPFVZbEihgOyzF2jQIeeMFs5CrIVcx9nkTQQFMV8LScjTxO7cs
- hx7rynpcmg9/X7oZfbLXSerc9n/HZLbaBRQLLm0w4DRoPbH0guBWpiV6bahIWNL2JxL7SfXaKZw
- i+zVJuKQnn0/Bby13La7fxCXcGeiW6qq5kN5r/lMqr/tsi0TMqMD7+kYKF3nyBQkHMBcV1QthP+
- 3s+D/ubRtNTblSDOB4wZCH3clY5/E8ZGfkuJsSmXFkcvzt/TL3xMHyd2UyAgOW6TAKwjUtELDMU
- 1UutX7PuuhE1mDL6BYkGavDbyBvwA+XvLcAtsDEds=
-X-Received: by 2002:a17:90b:1dc2:b0:35b:e51a:ec77 with SMTP id
- 98e67ed59e1d1-35c3005729amr14495285a91.16.1774947704030; 
- Tue, 31 Mar 2026 02:01:44 -0700 (PDT)
-Received: from [192.168.4.112] ([103.73.85.112])
+ bh=PTI1lNAHwXLvHOavXN6hxUHvOTTzBYQseQWDlBBJNaM=;
+ b=smh7uI09WRMXjXgMdjaAtERhgNqnNsQZN+9KTMSglHpYs5Mc+CwWnPSiok8e8kt7Oq
+ RODs2m2ISk8yIOehHb10QbVKqZk3XBgrRLUt9FwyKrd0KeWpz4lkq0XtLG5p+0zwsZ7S
+ 8cRtxP1aXeac9LItBGCRobfIUbKVF945zSghlF2r7KYEAdZhHy7aKvSCeSoJf3ZQKXgc
+ q+W9CqxM3JO7frNzrHtHQzczY1wd2w7yMXRxHDx8gVQGzYWD/5YYDx3LXgo3eJQU78mA
+ VaGjhi30I9ajR40ra6lQ9KQZkK/D/hlvC6DYE0lW3Z3TPpUBuFOV/5xJNpTdQ6Dwz9Nw
+ 34Ow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFBFhfCYdSthOdkhqEO6qvpfv0MCKuV2mFSnqcj6drcrwUXFKxheLrj9wEXScD0Wpr8LwvOdLuLIG0@nongnu.org
+X-Gm-Message-State: AOJu0YyzmQt7+jnwG8r2qFrAcCFmDNdII8dcejd3qL5izWStw4nHjMQe
+ MUlc3CBuGl12qDQgwfG2jh3tOu2n/3jt+QukFt7kmnYwXdq5br/cUtAeg/GuTi8hxnY=
+X-Gm-Gg: ATEYQzzsNLZGJ5sJXglEaJ/sSsNSLJQVdLC23ZxpqkkkE2vxywXe+mntSbwQbsmpKCa
+ eHYokgp9x5Jz7tOU7npNvNPV30/8jP/KQVZHrnQ0cJZgWVGWP6d7reCDIuUDvKHzY1Ri4Hm/zIq
+ PKtT/Mn/exoHIvBsqCL/PRt7paphzeB46dNl4luYBCuXISi+JQhBoEd9mN6XTSQSFpVH8yCDc/Y
+ 07oNptF7ZKLvWOvsaA5UZGPqjeLmcmStgqawXS5j2GhTruRIZ3eLHAwRXwn1fEQlj1ul4Uywo9y
+ lrMW95z5/Mxk7SN9x0GA3+fEszPBcXvCyZps3WYgndRs1zLF+9eZXlrnS1I/r7BD2JLFT2VYd8w
+ 0u39ThyS2pUpYrQKfZ9IRp5mDuBf9XjHBqqZhZIWCtvS7LghPTi6uk3zif8nwwQNCk2ssBiBSUQ
+ CEIrCL9sYOTPy8ZfvuGPeXZlsX1e003Ft1ca/NOBGFPD0mo9BxSD8SKE87AQ==
+X-Received: by 2002:a05:600c:c87:b0:486:fe83:8621 with SMTP id
+ 5b1f17b1804b1-48727ede17amr267811305e9.23.1774948478670; 
+ Tue, 31 Mar 2026 02:14:38 -0700 (PDT)
+Received: from [10.193.39.66] (43.149.216.82.rev.sfr.net. [82.216.149.43])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35dba33bfb9sm886738a91.0.2026.03.31.02.01.42
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-4887e81a2cesm24950835e9.8.2026.03.31.02.14.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 02:01:43 -0700 (PDT)
-Message-ID: <7380580c-cb21-4944-8d92-2562a541dbd3@linaro.org>
-Date: Tue, 31 Mar 2026 19:01:37 +1000
+ Tue, 31 Mar 2026 02:14:38 -0700 (PDT)
+Message-ID: <e3ec8476-27f3-4c92-a48e-2665425e0580@linaro.org>
+Date: Tue, 31 Mar 2026 11:14:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/tcg: fix decoding of MOVBE and CRC32 in
- 16-bit mode
-To: qemu-devel@nongnu.org
-References: <20260331065831.423094-1-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 07/11] hw/pci-host/astro: Add GMMIO mapping
 Content-Language: en-US
-In-Reply-To: <20260331065831.423094-1-pbonzini@redhat.com>
+To: Helge Deller <deller@gmx.de>, Helge Deller <deller@kernel.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20260330211859.19317-1-deller@kernel.org>
+ <20260330211859.19317-8-deller@kernel.org>
+ <9aaf1736-c355-4ba6-b6cb-6bdd03930eb2@linaro.org>
+ <5b6b67e4-6a2c-454c-b30a-0692496b640c@gmx.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5b6b67e4-6a2c-454c-b30a-0692496b640c@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,49 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/31/26 16:58, Paolo Bonzini wrote:
-> Table A-4 of the SDM shows
+On 31/3/26 00:29, Helge Deller wrote:
+> On 3/30/26 23:56, Philippe Mathieu-Daudé wrote:
+>> On 30/3/26 23:18, Helge Deller wrote:
+>>> From: Helge Deller <deller@gmx.de>
+>>>
+>>> Implement the GMMIO mapping.
+>>
+>> As this point in the release process, this is a bit out of scope IMHO.
 > 
->                      F0                     F1
-> --------------------------------------------------------
->       NP           MOVBE Gy,My           MOVBE My,Gy
->       66           MOVBE Gw,Mw           MOVBW Mw,Gw
->       F2           CRC32 Gd,Eb           CRC32 Gd,Ey
->    66+F2           CRC32 Gd,Eb           CRC32 Gd,Ew
-> 
-> However, this is incorrect.  Both MOVBE and (for 0xF1) CRC32
-> take Gv, Ev or Mv operands.  In 16-bit mode therefore the
-> operand is of 16-bit size without prefix and 32-bit mode
-> with 0x66 (the data size override).
-> 
-> For example, with NASM you get:
-> 
->                                   bits 16
->     67 0F 38 F0 02                movbe ax, [edx]
->     66 67 0F 38 F0 02             movbe eax, [edx]
-> 
->     67 F2 0F 38 F0 02             crc32 ax, word [edx]
->     66 67 F2 0F 38 F0 02          crc32 eax, dword [edx]
-> 
-> versus
-> 
->                                   bits 32
->     66 0F 38 F0 02                movbe ax, [edx]
->     0F 38 F0 02                   movbe eax, [edx]
-> 
->     66 F2 0F 38 F1 02             crc32 eax, word [edx]
->     F2 0F 38 F1 02                crc32 eax, dword [edx]
-> 
-> The instruction is listed correctly in the APX documentation
-> as "SCALABLE" (which means it has v-size operands).
-> 
-> Cc:qemu-stable@nongnu.org
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/decode-new.c.inc | 16 ++++++++++------
->   1 file changed, 10 insertions(+), 6 deletions(-)
+> Well, no...
+> SeaBIOS has to initialize GMMIO at the same time and report
+> it along with LMMIO and IOS to the operating system.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Then it is an incomplete/broken feature, not something buggy
+that can be fixed in time. Anyway, not my judgement call, so
+feel free to ignore me, just I don't feel confidement enough
+to review and test that implementation for the release.
 
-r~
+> 
+> Helge
+> 
+>>
+>>> Signed-off-by: Helge Deller <deller@gmx.de>
+>>> ---
+>>>   hw/pci-host/astro.c | 71 ++++++++++++++++++++++++++++++++++++++++++++-
+>>>   1 file changed, 70 insertions(+), 1 deletion(-)
+>>
+> 
+
 
