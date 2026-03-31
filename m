@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7944210F92F0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B6F10F92EE
 	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:53:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7eCS-0000BC-Q0; Tue, 31 Mar 2026 14:52:28 -0400
+	id 1w7eCZ-0000E1-U5; Tue, 31 Mar 2026 14:52:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCR-0000Am-G3
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:27 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCY-0000Da-QA
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:34 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCP-0001Wt-R8
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:27 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCX-0001Y8-54
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:34 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 5590F6012B;
- Tue, 31 Mar 2026 18:52:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251B5C2BCB3;
- Tue, 31 Mar 2026 18:52:22 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 45A424359E;
+ Tue, 31 Mar 2026 18:52:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4BFC19423;
+ Tue, 31 Mar 2026 18:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1774983144;
- bh=Ec6DQD/OQuHtghpvnNFaaEE9BbZX6HqByqSmYLEdqeA=;
+ s=k20201202; t=1774983152;
+ bh=gO1P5J3CHs5yjk6CA0dIlb4QEqGW5QSlz1afpeN9G+A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=DrehgWKwUx7J+TVoevWeajSefsLbsHa9Q3o5LIyEZmcLXk9hmjDgaqidl13AiLQrQ
- nr3cDnrZ0xUc1+GXGZAUZPeJnzAUVF8EUvIpaMA24WMK6be10wbLtaNUbX6Ng7k+H2
- NBInUhpCSpDjzFrMfi+IzpWXDjs2UlsoqvDk6VAm6lwJNrNy7N4OoR8DgXrzX8Gp0o
- x7dScK5hkw27Vx/82+LhT1piLWEWTWMPisK1WIiE4Lcn7VswZy4RlP4j0vulTOJA1J
- OAKtHK40C0QBetDLGlYMq0bfFX68wxMJrV5GXB8tirw8jOxJYFhMETqM9ORdeEB0ON
- SsESmjGfbpVvg==
+ b=D1uIrPiHgu8q8SzMo57hAmCMvswwPJn8TvuA3pVrvx/cWuCGGsUch6gPUmIYgmkbI
+ Jzd1+cTPOerJVSOgcMYDp4OfBe2XYcdOgo3GK1G83aYp07EMWbpM6SJjLh/1Iw5IZI
+ 1G6sWMbJCM0mOCP7p+scx4NyPgB+B0CBkz07UtqIx3mC24nQcfyeSttcqzxmPXr3ya
+ 2AP4XlOxqQxirkOfammoyju9icS+KphcFRHG/8zoWaIbroWlMpdoCfU47I+DohwhiR
+ 6e2jZvAR4xQ8sFb0PzoWipKk7mdqYOeKV/ZnpBAkd4G0KRLIEsqcIf9bj/Iwlw6IRE
+ guK0Tz9RNztqQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 1/8] hw/pci-host/astro: Make astro address arrays accessible
- for other users
-Date: Tue, 31 Mar 2026 20:52:12 +0200
-Message-ID: <20260331185219.12187-2-deller@kernel.org>
+Subject: [PULL 7/8] hw/hppa: Implement memory ranges
+Date: Tue, 31 Mar 2026 20:52:18 +0200
+Message-ID: <20260331185219.12187-8-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331185219.12187-1-deller@kernel.org>
 References: <20260331185219.12187-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,41 +71,148 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Move the tables out of astro_realize(). This is needed because follow-up
-patches will need those tables.
+All 64-bit PA-RISC machines split the memory into (up to 3) different
+memory ranges, which are mapped at specific addresses.  This patch
+mimics the mapping as it's done on physical machines, which includes the
+3.75 GB split for C3700, and 1 GB split for newer 64-bit PAT machines
+like the A400.
+
+SeaBIOS-hppa needs to know how the memory split is done, so add a new
+memsplit_addr variable which stores the specific split address and hand
+this over to SeaBIOS-hppa via fwcfg.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/pci-host/astro.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ hw/hppa/hppa_hardware.h |  3 ++-
+ hw/hppa/machine.c       | 58 ++++++++++++++++++++++++++++++-----------
+ 2 files changed, 45 insertions(+), 16 deletions(-)
 
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 6cc0b35070..46d8530538 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -37,6 +37,11 @@
- #include "qom/object.h"
- #include "exec/target_page.h"
+diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
+index 006aae63b9..e2b2faa4a3 100644
+--- a/hw/hppa/hppa_hardware.h
++++ b/hw/hppa/hppa_hardware.h
+@@ -8,7 +8,8 @@
+ #define FIRMWARE_END    0xf0100000
+ #define FIRMWARE_HIGH   0xfffffff0  /* upper 32-bits of 64-bit firmware address */
  
-+static const int elroy_hpa_offsets[ELROY_NUM] = {
-+            0x30000, 0x32000, 0x38000, 0x3c000 };
-+static const char elroy_rope_nr[ELROY_NUM] = {
-+            0, 1, 4, 6 }; /* busnum path, e.g. [10:6] */
+-#define RAM_MAP_HIGH  0x0100000000  /* memory above 3.75 GB is mapped here */
++#define RAM_MAP_HIGH1 0x0100000000  /* memory above 4 GB */
++#define RAM_MAP_HIGH2 0x4040000000  /* memory between 1 G and 3.75 GB */
+ 
+ #define MEM_PDC_ENTRY       0x4800  /* PDC entry address */
+ 
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 3663bac53b..abd75dfe7d 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -43,6 +43,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(HppaMachineState, HPPA_COMMON_MACHINE)
+ 
+ struct HppaMachineState {
+     MachineState parent_obj;
 +
- /*
-  * Helper functions
-  */
-@@ -843,10 +848,6 @@ static void astro_realize(DeviceState *obj, Error **errp)
++    uint64_t memsplit_addr;
+ };
  
-     /* Create Elroys (PCI host bus chips).  */
-     for (i = 0; i < ELROY_NUM; i++) {
--        static const int elroy_hpa_offsets[ELROY_NUM] = {
--                    0x30000, 0x32000, 0x38000, 0x3c000 };
--        static const char elroy_rope_nr[ELROY_NUM] = {
--                    0, 1, 4, 6 }; /* busnum path, e.g. [10:6] */
-         int addr_offset;
-         ElroyState *elroy;
-         hwaddr map_addr;
+ #define MIN_SEABIOS_HPPA_VERSION 22 /* require at least this fw version */
+@@ -208,6 +210,7 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
+     const char qemu_version[] = QEMU_VERSION;
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+     int btlb_entries = HPPA_BTLB_ENTRIES(&cpu[0]->env);
++    struct HppaMachineState *hpm = HPPA_COMMON_MACHINE(ms);
+     int len;
+ 
+     fw_cfg = fw_cfg_init_mem_nodma(addr, addr + 4, 1);
+@@ -231,6 +234,10 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/machine",
+                     g_memdup2(mc->name, len), len);
+ 
++    val = cpu_to_le64(hpm->memsplit_addr);
++    fw_cfg_add_file(fw_cfg, "/etc/hppa/memsplit-addr",
++                    g_memdup2(&val, sizeof(val)), sizeof(val));
++
+     val = cpu_to_le64(soft_power_reg);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/power-button-addr",
+                     g_memdup2(&val, sizeof(val)), sizeof(val));
+@@ -287,6 +294,8 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+     TranslateFn *translate;
+     MemoryRegion *cpu_region;
+     uint64_t ram_max;
++    struct HppaMachineState *hpm;
++    hwaddr splitaddr;
+ 
+     /* Create CPUs.  */
+     for (unsigned int i = 0; i < smp_cpus; i++) {
+@@ -347,21 +356,36 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+         info_report("Max RAM size limited to %" PRIu64 " MB", ram_max / MiB);
+         machine->ram_size = ram_max;
+     }
+-    if (machine->ram_size <= FIRMWARE_START) {
+-        /* contiguous memory up to 3.75 GB RAM */
+-        memory_region_add_subregion_overlap(addr_space, 0, machine->ram, -1);
+-    } else {
++
++    hpm = HPPA_COMMON_MACHINE(machine);
++    if (!hpm->memsplit_addr) {
+         /* non-contiguous: Memory above 3.75 GB is mapped at RAM_MAP_HIGH */
+-        MemoryRegion *mem_region;
+-        mem_region = g_new(MemoryRegion, 2);
+-        memory_region_init_alias(&mem_region[0], &addr_space->parent_obj,
+-                              "LowMem", machine->ram, 0, FIRMWARE_START);
+-        memory_region_init_alias(&mem_region[1], &addr_space->parent_obj,
+-                              "HighMem", machine->ram, FIRMWARE_START,
+-                              machine->ram_size - FIRMWARE_START);
+-        memory_region_add_subregion_overlap(addr_space, 0, &mem_region[0], -1);
+-        memory_region_add_subregion_overlap(addr_space, RAM_MAP_HIGH,
+-                                            &mem_region[1], -1);
++        hpm->memsplit_addr = FIRMWARE_START;
++    }
++    splitaddr = hpm->memsplit_addr;
++
++    MemoryRegion *mem_region;
++    mem_region = g_new(MemoryRegion, 1);
++    memory_region_init_alias(&mem_region[0], &addr_space->parent_obj,
++                          "memory0", machine->ram, 0, splitaddr);
++    memory_region_add_subregion_overlap(addr_space, 0, &mem_region[0], -1);
++    if (hppa_is_pa20(&cpu[0]->env)) {
++        if (machine->ram_size > 4 * GiB) {
++            mem_region = g_new(MemoryRegion, 1);
++            memory_region_init_alias(&mem_region[0], &addr_space->parent_obj,
++                          "memory1", machine->ram, 4 * GiB,
++                          machine->ram_size - 4 * GiB);
++            memory_region_add_subregion_overlap(addr_space, RAM_MAP_HIGH1,
++                                        &mem_region[0], -1);
++        }
++        if (machine->ram_size > splitaddr) {
++            mem_region = g_new(MemoryRegion, 1);
++            memory_region_init_alias(&mem_region[0], &addr_space->parent_obj,
++                          "memory2", machine->ram, splitaddr,
++                          4 * GiB - splitaddr);
++            memory_region_add_subregion_overlap(addr_space, RAM_MAP_HIGH2,
++                                        &mem_region[0], -1);
++        }
+     }
+ 
+     return translate;
+@@ -756,6 +780,10 @@ static void machine_HP_C3700_init(MachineState *machine)
+  */
+ static void machine_HP_A400_init(MachineState *machine)
+ {
++    struct HppaMachineState *hpm;
++
++    hpm = HPPA_COMMON_MACHINE(machine);
++    hpm->memsplit_addr = 1 * GiB;
+     machine_HP_C3700_init(machine);
+ }
+ 
+@@ -814,7 +842,7 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+     mc->default_cpus = 1;
+     mc->max_cpus = HPPA_MAX_CPUS;
+     mc->default_boot_order = "cd";
+-    mc->default_ram_id = "ram";
++    mc->default_ram_id = "hppa.ram";
+     mc->default_nic = "tulip";
+ 
+     nc->nmi_monitor_handler = hppa_nmi;
 -- 
 2.53.0
 
