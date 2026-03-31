@@ -4,87 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982BAFF60F4
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E63410F92E9
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:05:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7dSm-0001UP-EN; Tue, 31 Mar 2026 14:05:16 -0400
+	id 1w7dSi-0001L0-8O; Tue, 31 Mar 2026 14:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dSj-0001Qk-Lc
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:05:13 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7dSg-0001D2-BQ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:05:10 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dSc-0002yl-47
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:05:13 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-486fd27754bso58852885e9.3
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 11:05:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7dSc-0002yW-4P
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:05:08 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-66ba9dfe83bso4496962a12.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 11:05:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774980301; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LlMap4CQS/uypClhP1+c2quKks71Fj/C2oFOyl7i9lkAR1C+YP9FlRUyhP4kOyDMh4
+ zcH63C+3/Ko65ixtUgB/Z4216yYb6RGiCLu3kdeQh/Z6Kt3u6gPWI8u5kEO4Ua2UGUc5
+ nrqBM+3enH8hcZCzqbLoLBbkcjnAGYFSKpA09adQlOPaVsR7BjBTRqMb7qiA02GhP7Zf
+ ixQ9VkJkt2qnDk02TnQtaV4sJmmka/34fKvX83ee+zQn1ntXUpby5tGw6s3+8731ruXU
+ iCyMTAmlrNW0g9VqzmwMp9XEFcG1I/XZx1qjdlBfYsM58uML8qD8IlXHYKCXwDuQ+FZf
+ Lg+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=V8plN5LZT0s/nEZoBnXrJg+KBlMml1yvJx8S9l40jhs=;
+ fh=Ex4Y9D13TzP9Un/NlXA3fHszubsOTjRrzsGdwZWGnvQ=;
+ b=WxJaLMT0gxPD8hmPfFMl1GSNXfbaxkXkN30x09z0ESe/JbmvWjdIyA51fJBlcyyJlO
+ BcMSX/MTCEyrQkBiy2Hd/ZoG76If1kiwnqX4KiB0EZdgBiNGMpUTjb1gQ/CUpAVQ7lP2
+ QLHSiBK2JooPjlWF9V4SmS121beUDx0+xqEB2KC9bvptAYSMphJoWq2xYIVDOW4c9Eak
+ DM5IwsRA3wydBnefbCelsPeD+fd2Q5JIKGkZ1Syd2k8eDLemHznb/MQJUozVJWYuL9zt
+ eEInYdB7SUJWTJAKswdyuldJR57YYr9YNKqvAsnRl1wC+CnwcyYos4gWnQNusKbome+N
+ NhgQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774980302; x=1775585102; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=foSv8Vqtqx4VyVwFuN20VB+Oj1GsrSNAOdP75TJQPrg=;
- b=stMQCRRddpq4XhBaY5wsV+zt6ZjXJz7pU5UepS6ZluMXnD/Iva+e6/vmufhnoReJMb
- 2fo0goVtVwKrh60DcwE1hRYMtRfIAJbKICWwR8Q8P1c+GCiwCjtYlXtmQVbp2ZWm9uoQ
- kdfuMqDUmEip78qtkb8JxKGjouePQPFwDA4WeS8m7KEqyHV5DNEMBb3yUydn5AIo7kWk
- n9ounTW6La9gWsc7Jj6QXe3pEeAb0FiwuRoj/XaHBSYE7sU8pZnHH2GlyrT6UttbhuTH
- w7u7qgdh6veViKJNzdTC+CBnpgWrhY9LxUP+p3AgAJn77fQgavnd92uFkBJXGwm/LSyp
- Ef0g==
+ d=linaro.org; s=google; t=1774980301; x=1775585101; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=V8plN5LZT0s/nEZoBnXrJg+KBlMml1yvJx8S9l40jhs=;
+ b=L6ncPXnkcL2kk1lKFWC8v5LoiDITOslVAP9pmQfU3wpBzwmpvYRwKQX0l+ph1Udq5x
+ p1axDyocTgwLPO9CXzeZ7HxL6JFzxl+IUVE21P3418JDYev4wSRdgda4kyrUJhO6m2Jl
+ WGN78SuAgkoxnnGcRmtqNokxOvc7+9YgYh5AszFthJKvfI9WQsWxSSc8D6Osg/zpqb5S
+ p7W+GFca0edXW0LmOgKC9oQCEm5HKEbSYa1RVJgOK+hRaWO1zYGGoBMRB7yvsBfiFyrx
+ hDbGt4pCuFc1xWAvgy/gGNBPorMufJ9C2HCo82F7a/j2tckNe0UtxJbMvSXQQY8Lg1l3
+ PEPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774980302; x=1775585102;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=foSv8Vqtqx4VyVwFuN20VB+Oj1GsrSNAOdP75TJQPrg=;
- b=iSzwwwsaNqwSwnPdn1sWFvo8maWYu+FHCXcIU1nVa0JzYzXa0n0AKIGcMh1YUOyeEk
- RwJs+2poGAwBq0O0m4NxmFqmCu7/ph8YLxzWRHOnMvttGAe0mE9A+4XQfT5BQgn2Kd59
- hDVGzaOqaCpwmYky2TdxYlVbu4XtJPDqGUad2x8RZXpvf3UWp3n5V0tRKmhV0oOUIm/B
- +2ToQXIzS7AsQ1sqwz5+rITwl6Jo3McW3MOarnLeBN4xjq0NdR1p2m+8Y7K/sGzKhCcC
- EjzaozpuqvJ5ePfiVk/U9u5wxcm0jrs6gBrPuBnLYDWQQNpHtkoceJTr2eQtiWj+9sXd
- jKsg==
+ d=1e100.net; s=20251104; t=1774980301; x=1775585101;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V8plN5LZT0s/nEZoBnXrJg+KBlMml1yvJx8S9l40jhs=;
+ b=l80tptYQ6fv8/iPKIGq2UnFPoKJeUNrVTPRQFDAVueZBwNzDnv9e9OSp5Zdq4ZYK7D
+ no+XG3Q0KgG2hO7sYR0PJgGIiOZ9pEwbAQZ7bdVCgy1lVl6Pnh3rZVv5vqCjaJwbEGJP
+ YHPcZ+IzxfqIuyOuJryfovSE6C+i77BIUIT2q9SilxSS6+NfGnmwzGP1PO5FP6Vj1GV6
+ BX48tndjHJnHsdfZGdUBkJdTLeCP2k+Q8/FMoTCfT4BNrErvKir5QXFge+na975nuoeD
+ mXS+C6/o1QZ8UkVh0qzj+AFMSc/hkN4Jjj4+KdOFPxkSTqLVCRVAEObvXSp2bUzFieG8
+ MnQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnuBGQaspDrbRMYIcCmhNZQA4R+4zzSQ3RD4pP65snRLmKnLOnD83+n1hNrqbZuyFTw4RMnhUjHg1k@nongnu.org
-X-Gm-Message-State: AOJu0YzE1VRaAh9cIpHxkARulYajvNtwF14gekgIE/NWtFLaL3RxIEMo
- ulmymqe8vR9r2BaTCZ72OHbDisymQCkQ4FgUYtC8wSbf22Jfjz3/QIVEq/VUQKHDeJA=
-X-Gm-Gg: ATEYQzwd4cyjXg0kLuWYIK/mKGU5/h7cvhf6c+WyxroZy1U/lQpAUdkVXuk4txN9ffx
- R5GhNe8b6mzzQa0pgAoh2On2biLSPB9++R6jdfIkS4MgQbI1haaILIcSR6+rOpuAdtfhKylEI0p
- HSci76d51ptXdz67C4IzREjOxQXgubvCk4H61szY+L/vggkyg+RVHrupNDP/9tljWRHy017WIkZ
- KfLShbfLmjGQtbCKjiREKz0Ovg0QozM1iesxsSXCpEFydF/NmeogJj1TzRcNYvk2/re6naSYUkF
- SmXO+COzS1tNT16X+WBzAPrn8p7iMOc2y4IVe0ObVaebBjh0j9DoUD1g2tD8VMVNS78hrLlF7dC
- QqdIkHblzDfTP/gLAM/Dm54j+agm/RTKcPL5z+bS9gZjU+6qRA4JjTaDhP8+Sh9tfokZx+NhT1t
- OuYRNyr1zlxOnikjjAkuRn7RX1IOZiHQHb7U7ibS2uXzlDDHHAC94T/YKhSpBYmnXUvQ==
-X-Received: by 2002:a05:600c:3b1f:b0:488:7c98:e9df with SMTP id
- 5b1f17b1804b1-48883306d7emr7209615e9.0.1774980301778; 
- Tue, 31 Mar 2026 11:05:01 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887c8bcaf8sm20499005e9.27.2026.03.31.11.05.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 11:05:01 -0700 (PDT)
-Message-ID: <b3c7f43b-37e8-47b3-a516-23254f73bbc1@linaro.org>
-Date: Tue, 31 Mar 2026 20:05:00 +0200
+ AJvYcCWolzDA3PDlpG8u8RvTRJhmoixTDn8tj8Urf0uSsyeObRL7j+qN4i3VNKyLmisoMya4jhQ0P64FwAnD@nongnu.org
+X-Gm-Message-State: AOJu0YwJLhr/bxOEi/ewDDbFCd8eZxxFabB5nSg1KmD/kMRMxANRCUcD
+ bp5ztbajulinTxnph6ICG3wcgMEH8MubmLFvzMNLMagivvFFHNMMuui7zyf0lZcuzJFBc9hTOk+
+ Ab0HOH7PRcEv091hwdnEE9IPCwQkIGmTlCMO99h2ttg==
+X-Gm-Gg: ATEYQzye31I/WTdd/LuFoVB/Tw/UqrJSOgZV18/brlR6sVbsZxvEyL6GYtN6gBqINLm
+ Jw2cCriShHx5SE+SG+egt2k9Ema8CX0k88yo+Z/e+utVOuBG2UQC/WcPn1o24IdUUfadGB1GH0/
+ Qm4CV/wolBuJsmliNeU7FqqACGWOojjI1HYwpdLO5/tNTr7MQ3OKcXJyRqwrJ8SKcO4emViigKs
+ HLLV3nhnnJaYEnwionTOWlv33BMfbAFnZOv72tqo3+1iM2T9fUt+8cUis9ln5K/wn6bFuEUG1tX
+ 66UTDPmxITeW96j0esp/k2oLlFXcolOPPpkmtgxmH3fcH/x5IvL2JgmO40SJzV0qDUs=
+X-Received: by 2002:a05:6402:350f:b0:66c:359b:646d with SMTP id
+ 4fb4d7f45d1cf-66dafeb8342mr339979a12.6.1774980301065; Tue, 31 Mar 2026
+ 11:05:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] include/user/guest-host.h: Provide g2h etc for both
- abi_ptr and vaddr
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260330143123.1685142-1-peter.maydell@linaro.org>
- <20260330143123.1685142-3-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260330143123.1685142-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+References: <20260331150352.256332-1-kwolf@redhat.com>
+In-Reply-To: <20260331150352.256332-1-kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 31 Mar 2026 19:04:46 +0100
+X-Gm-Features: AQROBzBfgpXKopcR6wHP-oFJoU3G-AIudZAzfo4qdkj-23N0zYDSZtA9piugyH0
+Message-ID: <CAFEAcA96LU2GW3MVmqbuONiwwGiho5D6Cx9OtPvtRANPwjfwQQ@mail.gmail.com>
+Subject: Re: [PULL 0/6] Block layer patches
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,91 +115,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/3/26 16:31, Peter Maydell wrote:
-> In commit 7804c84a ("include/user: Use vaddr in guest-host.h") we
-> changed all the functions in guest-host.h that took or returned their
-> guest address argument in type abi_ptr to instead use vaddr.
-> 
-> This introduced regressions for the case of a 32-bit guest and an
-> address above 2GB for the common situation where the address is a
-> syscall argument stored in a variable of type 'abi_long'.  With
-> abi_ptr (which will be an unsigned 32-bit type for 32-bit guests),
-> the address is cast to unsigned 32-bit, and then zero-extended to
-> 64-bits in g2h_untagged_vaddr().  With the switch to vaddr (which is
-> always a 64-bit unsigned type), the guest address will instead be
-> sign-extended to 64 bits, which gives the wrong answer.
-> 
-> Fix this by providing two versions of the affected functions: the
-> standard names (g2h(), g2h_untagged(), guest_addr_valid_untagged(),
-> guest_range_valid_untagged(), cpu_untagged_addr()) return to using
-> the logically-correct abi_ptr type; new versions with a _vaddr()
-> prefix use the vaddr type.
-> 
-> accel/tcg/user-exec.c must change to use the _vaddr() versions; this
-> is the only file that uses guest-host.h that we want to compile once.
-> All the other uses are in linux-user and bsd-user code that
-> inherently has to know the sizes of target-ABI types.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 7804c84a ("include/user: Use vaddr in guest-host.h")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3333
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   accel/tcg/user-exec.c     | 26 ++++++++--------
->   include/user/guest-host.h | 62 +++++++++++++++++++++++++++++++++++----
->   2 files changed, 69 insertions(+), 19 deletions(-)
+On Tue, 31 Mar 2026 at 16:04, Kevin Wolf <kwolf@redhat.com> wrote:
+>
+> The following changes since commit 49ea0100202fe448be1d0f3ea5384cd51b5e6a58:
+>
+>   Merge tag 'migration-20260330-pull-request' of https://gitlab.com/farosas/qemu into staging (2026-03-31 09:39:52 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/kmwolf/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to a55402d5c3a8c63c801de86896f86c9abeda0ca8:
+>
+>   block: Fix crash after setting latency historygram with single bin (2026-03-31 15:47:52 +0200)
+>
+> ----------------------------------------------------------------
+> Block layer patches
+>
+> - ide: Fix potential assertion failure on VM stop for PIO read error
+> - scsi: Don't consider LOGICAL UNIT NOT SUPPORTED guest recoverable
+> - vhost-user-blk-server: fix opt_io_size=1 causing severe Windows I/O degradation
+> - monitor: Fix deadlock in monitor_cleanup
+> - Fix filename references in comments
+>
+> ----------------------------------------------------------------
 
 
-> +#ifdef COMPILING_PER_TARGET
-> +
-> +/*
-> + * These functions take the guest virtual address as an abi_ptr.  This
-> + * is an important difference from a vaddr for the common case where
-> + * the address is a syscall argument in a variable of type abi_long,
-> + * which may be smaller than the vaddr type. If you pass an address in
-> + * an abi_long to these functions then the value will be converted to
-> + * an unsigned type and then zero extended to give the vaddr. If you
-> + * use the g2h_vaddr() and similar functions which take an argument of
-> + * type vaddr, then the value will be sign-extended, giving the wrong
-> + * answer for addresses above the 2GB mark on 32-bit guests.
-> + *
-> + * Providing these functions with their traditional QEMU semantics is
-> + * less bug-prone than requiring many callsites to remember to cast
-> + * their abi_long variable to an abi_ptr before calling.
 
-Nice fix.
+Applied, thanks.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
-> + */
-> +
-> +static inline void *g2h(CPUState *cs, abi_ptr x)
-> +{
-> +    return g2h_vaddr(cs, x);
-> +}
-> +
-> +static inline void *g2h_untagged(abi_ptr x)
-> +{
-> +    return g2h_untagged_vaddr(x);
-> +}
-> +
-> +static inline bool guest_addr_valid_untagged(abi_ptr x)
-> +{
-> +    return guest_addr_valid_untagged_vaddr(x);
-> +}
-> +
-> +static inline bool guest_range_valid_untagged(abi_ptr start, abi_ptr len)
-> +{
-> +    return guest_range_valid_untagged_vaddr(start, len);
-> +}
-> +
-> +static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
-> +{
-> +    return cpu_untagged_addr_vaddr(cs, x);
-> +}
-> +
-> +#endif
-> +
->   #endif
-
+-- PMM
 
