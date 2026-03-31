@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D7210F92EB
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 011DA10F92EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7eCY-0000DG-I6; Tue, 31 Mar 2026 14:52:34 -0400
+	id 1w7eCR-0000At-Pn; Tue, 31 Mar 2026 14:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCX-0000D5-3E
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:33 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCQ-0000AT-6k
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:26 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCV-0001Xt-Q2
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:32 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCO-0001Wp-IE
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:25 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id E496F41529;
- Tue, 31 Mar 2026 18:52:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD51DC19423;
- Tue, 31 Mar 2026 18:52:29 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CB2B4441E1;
+ Tue, 31 Mar 2026 18:52:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1680C2BCB3;
+ Tue, 31 Mar 2026 18:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1774983150;
- bh=iI1d5bFylepSOxI2yENVX+NCRKlOf8n+vgOxjT9JKDI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ItZebtgIdgDxFKHRwHsgek1DvBvp1y0Ad2PVpgFGA1dHurMMWh2pN1a6rvAszq9jY
- SEH5/+JB+ERV7yd2h8LojwXuFpIyGdy6DKtxbLdqgyq7FTAtDTzBm33qWQgssTa7mJ
- KGooUHe5JugStdZm1vQwVUngEaWIavzs7k0zUzp2NlOthCLDJJveOIsucWBfhTpVAO
- Gp/o9K+uH+1UHbBpGCIWqbuo+IcqsuiBp1x1+F0IAjynVEzyhm2uBLwak9XLCLubOv
- IxNaEBZ672aBQMsbvVaDJvtLQkbWruKpiJe5KV7lqUwevkvVx8n+JbzhCOs1l00+mT
- nzNR3etVGhusQ==
+ s=k20201202; t=1774983142;
+ bh=7SlH6C3OwgyA3Yes0hnZPE80m/4oX0nbkdJFmwhyzXI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=h/jQh9O6gFKHWZb8UXUrsxjwiFHFYxQ4LKw4ralxQYoHcfMjJbI8xnLAPr4oEer6Z
+ oRIPxMQAfBgAKYev+9ajoli+BYFaeB+yuex1m1Y/hQdwwbCZsDV8m/fZQUsnG3mQp8
+ bg2535NxoLxv2EKyZpQcgpDb9L4o+wdUiJC4k5QPgyO7Hbl6a1s190v+Rarhn/W6MU
+ zoTBhY0ptdfxWL9OyYbsQFP/Ac0lT1CVYvGfD4o/RUCldnhgvCplye2d6C2+7nGSBl
+ l6Kt0GXjQI0BVRVO7Gld/PkXgoGRZIihMubJnY0ayLhEzLecr1IX59/2bEcjXCJZx8
+ tp0OfXlH2LypA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 6/8] target/hppa: Fix TOC handler for 64-bit CPUs
-Date: Tue, 31 Mar 2026 20:52:17 +0200
-Message-ID: <20260331185219.12187-7-deller@kernel.org>
+Subject: [PULL 0/8] Hppa more v11 fixes patches
+Date: Tue, 31 Mar 2026 20:52:11 +0200
+Message-ID: <20260331185219.12187-1-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260331185219.12187-1-deller@kernel.org>
-References: <20260331185219.12187-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
@@ -71,34 +70,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-When the TOC handler is triggered, e.g. by using the "NMI" command
-in the QEMU monitor, make sure to call the full 64-bit TOC handler
-address in SeaBIOS-hppa firmware.
-This fixes the TOC handler on 64-bit CPUs (and 64-bit SeaBIOS).
+The following changes since commit 770f50c14f098717fd40ae6e826a495681152447:
 
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- target/hppa/int_helper.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+  Merge tag 'pull-nvme-20260326' of https://gitlab.com/birkelund/qemu into staging (2026-03-26 10:26:39 +0000)
 
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index d5a20cd549..3e87b9a001 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -203,7 +203,12 @@ void hppa_cpu_do_interrupt(CPUState *cs)
- 
-     /* step 7 */
-     if (i == EXCP_TOC) {
--        env->iaoq_f = hppa_form_gva(env, 0, FIRMWARE_START);
-+        hwaddr pdc_toc_addr = FIRMWARE_START;
-+
-+        /* for 64-bit include the high bits of PDC */
-+        pdc_toc_addr |= ((uint64_t) FIRMWARE_HIGH) << 32;
-+        env->iaoq_f = hppa_form_gva(env, 0, pdc_toc_addr);
-+
-         /* help SeaBIOS and provide iaoq_b and iasq_back in shadow regs */
-         env->gr[24] = env->cr_back[0];
-         env->gr[25] = env->cr_back[1];
+are available in the Git repository at:
+
+  https://github.com/hdeller/qemu-hppa.git tags/hppa-more-v11-fixes-pull-request
+
+for you to fetch changes up to bf758751aa4d088f8d7bead7d335d028bcbb89d6:
+
+  target/hppa: Update SeaBIOS-hppa to version 24 (2026-03-31 20:24:24 +0200)
+
+----------------------------------------------------------------
+HPPA patches for qemu-v11
+
+A few late fixes for the HPPA architecture for QEMU v11:
+- graphics support was broken for 64-bit machines. This series adds
+  support for VGA graphics for Linux guests
+- the various memory ranges were not correctly implemented
+- TOC/NMI was not working on 64-bit machines
+- minor 64-bit HP-UX boot fixes (but HP-UX 64-bit still crashes)
+
+----------------------------------------------------------------
+
+Helge Deller (8):
+  hw/pci-host/astro: Make astro address arrays accessible for other
+    users
+  hw/pci-host/astro: Fix initial addresses in IOC
+  hw/pci-host/astro: Implement LMMIO registers
+  hw/pci-host/astro: Fix LMMIO DIRECT mappings
+  hw/pci-host/astro: Add GMMIO mapping
+  target/hppa: Fix TOC handler for 64-bit CPUs
+  hw/hppa: Implement memory ranges
+  target/hppa: Update SeaBIOS-hppa to version 24
+
+ hw/hppa/hppa_hardware.h     |   3 +-
+ hw/hppa/machine.c           |  58 +++++++---
+ hw/pci-host/astro.c         | 209 ++++++++++++++++++++++++++++++------
+ include/hw/pci-host/astro.h |  12 ++-
+ pc-bios/hppa-firmware.img   | Bin 631968 -> 632780 bytes
+ pc-bios/hppa-firmware64.img | Bin 714440 -> 665208 bytes
+ roms/seabios-hppa           |   2 +-
+ target/hppa/int_helper.c    |   7 +-
+ 8 files changed, 238 insertions(+), 53 deletions(-)
+
 -- 
 2.53.0
 
