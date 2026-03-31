@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E327AFF60F7
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFEBEFF60F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Vmk-0000Uk-JK; Tue, 31 Mar 2026 05:53:22 -0400
+	id 1w7Vn2-0000Zr-VI; Tue, 31 Mar 2026 05:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w7Vmi-0000UV-SA
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:53:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w7Vn0-0000Xs-QM
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:53:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w7Vmh-00084R-ET
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:53:20 -0400
+ id 1w7Vmz-00089S-Et
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:53:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774950798;
+ s=mimecast20190719; t=1774950816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jvHT6BwsoBPWDujNFtkt+Bu13w+qxfZDiiZxPnQYDZM=;
- b=DIj7xP7LP3gmpatHObS4gi3o/EMETUgV45dVfHxt9B/9D1SiAQFQPZKfdU3yxNNcjBMmMd
- eMlUe+aQGVFZ2W+GpgHYbBTxoIeKWN2/Hvq7TOg9oy2fl42M3zFgBIHWWME71+H+6cWe7b
- 62cdb7AudN90w2vG+np+tEtw/ggtDkw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=f2zQVVCmyQ0LGrf0EklnYlbhl3AtvR1KwwHBqe0PJ9I=;
+ b=ZdWrMZ5LwZWcM8aZZ48wpvq1P1j84Om94KesaBaCicGSAwWFaCIGl77Yi6G8w70UiiI+Z7
+ 0S97EP/MskEp4d3SVG22AXvEfxU+oySopXpnXWB4Jv6w85JhDOGB3mK6mDxjlqp2ZynGtQ
+ C3EOBH6vHMNvS7dXmIlFQedtDkPZ7T0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-ZOGNzu5sOvyywyQXzHwr-A-1; Tue,
- 31 Mar 2026 05:53:14 -0400
-X-MC-Unique: ZOGNzu5sOvyywyQXzHwr-A-1
-X-Mimecast-MFC-AGG-ID: ZOGNzu5sOvyywyQXzHwr-A_1774950794
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-LWtE86NEOrW71MRV9zAneA-1; Tue,
+ 31 Mar 2026 05:53:33 -0400
+X-MC-Unique: LWtE86NEOrW71MRV9zAneA-1
+X-Mimecast-MFC-AGG-ID: LWtE86NEOrW71MRV9zAneA_1774950812
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D058119560B4; Tue, 31 Mar 2026 09:53:13 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CB18180034E; Tue, 31 Mar 2026 09:53:32 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.22])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 866EA180075B; Tue, 31 Mar 2026 09:53:11 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 61DE418002A6; Tue, 31 Mar 2026 09:53:29 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 1/6] audio/mixeng: fix sw/hw mixup in audio_pcm_sw_init_
-Date: Tue, 31 Mar 2026 13:52:57 +0400
-Message-ID: <20260331095302.644608-2-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 4/6] ui/vnc-jobs: fix VncRectEntry leak on job cleanup
+Date: Tue, 31 Mar 2026 13:53:00 +0400
+Message-ID: <20260331095302.644608-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20260331095302.644608-1-marcandre.lureau@redhat.com>
 References: <20260331095302.644608-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,48 +88,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Commit 42061a14358 ("audio/mixeng: replace redundant pcm_info fields
-with AudioFormat") accidentally changed the conv/clip function selection
-in audio_pcm_sw_init_ to use hw->info.af (the hardware voice format)
-instead of sw->info.af (the software voice format). This causes audio
-distortion when the software and hardware voices use different formats,
-as the wrong conversion functions are applied to the audio data.
+When a VncJob is freed, its associated VncRectEntry list must also be
+freed. Previously, vnc_job_push() and the disconnected path in
+vnc_worker_thread_loop() called g_free(job) directly, leaking all
+VncRectEntry allocations.
 
-Fix by using sw->info.af, restoring the original behavior.
+Introduce vnc_job_free() which iterates and frees the rectangle entries
+before freeing the job itself, and use it in both paths.
 
-Fixes: 42061a14358c ("audio/mixeng: replace redundant pcm_info fields with AudioFormat")
-Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Also add QLIST_REMOVE() in the worker loop before g_free(entry), so
+that entries processed during normal operation are properly unlinked.
+Without this, vnc_job_free() would iterate dangling pointers to
+already-freed entries, causing use-after-free.
+
+Fixes: bd023f953e5e ("vnc: threaded VNC server")
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_template.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ ui/vnc-jobs.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index fe769cde667..398a7273739 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -172,7 +172,7 @@ static int glue (audio_pcm_sw_init_, TYPE) (
-     sw->empty = true;
- #endif
+diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
+index b296d19e089..ca625da6d05 100644
+--- a/ui/vnc-jobs.c
++++ b/ui/vnc-jobs.c
+@@ -107,11 +107,25 @@ int vnc_job_add_rect(VncJob *job, int x, int y, int w, int h)
+     return 1;
+ }
  
--    if (audio_format_is_float(hw->info.af)) {
-+    if (audio_format_is_float(sw->info.af)) {
- #ifdef DAC
-         sw->conv = mixeng_conv_float[sw->info.nchannels == 2]
-             [sw->info.swap_endianness];
-@@ -187,9 +187,9 @@ static int glue (audio_pcm_sw_init_, TYPE) (
-         sw->clip = mixeng_clip
- #endif
-             [sw->info.nchannels == 2]
--            [audio_format_is_signed(hw->info.af)]
-+            [audio_format_is_signed(sw->info.af)]
-             [sw->info.swap_endianness]
--            [audio_format_to_index(hw->info.af)];
-+            [audio_format_to_index(sw->info.af)];
++static void vnc_job_free(VncJob *job)
++{
++    VncRectEntry *entry, *tmp;
++
++    if (!job) {
++        return;
++    }
++    QLIST_FOREACH_SAFE(entry, &job->rectangles, next, tmp) {
++        /* no need for QLIST_REMOVE(entry, next) */
++        g_free(entry);
++    }
++    g_free(job);
++}
++
+ void vnc_job_push(VncJob *job)
+ {
+     vnc_lock_queue(queue);
+     if (queue->exit || QLIST_EMPTY(&job->rectangles)) {
+-        g_free(job);
++        vnc_job_free(job);
+     } else {
+         QTAILQ_INSERT_TAIL(&queue->jobs, job, next);
+         qemu_cond_broadcast(&queue->cond);
+@@ -296,6 +310,7 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
+                 n_rectangles += n;
+             }
+         }
++        QLIST_REMOVE(entry, next);
+         g_free(entry);
      }
- 
-     sw->name = g_strdup (name);
+     trace_vnc_job_nrects(&vs, job, n_rectangles);
+@@ -324,7 +339,7 @@ disconnected:
+     QTAILQ_REMOVE(&queue->jobs, job, next);
+     vnc_unlock_queue(queue);
+     qemu_cond_broadcast(&queue->cond);
+-    g_free(job);
++    vnc_job_free(job);
+     vs.magic = 0;
+     return 0;
+ }
 -- 
 2.53.0
 
