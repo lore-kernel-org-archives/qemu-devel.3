@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8733710F92EB
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C81810F92EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7eCU-0000Bm-5C; Tue, 31 Mar 2026 14:52:30 -0400
+	id 1w7eCW-0000Cf-Hg; Tue, 31 Mar 2026 14:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCS-0000BA-KF
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:28 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCU-0000Bz-Hp
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:30 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCR-0001Wy-0a
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:28 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w7eCT-0001XX-1j
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:52:30 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id AB2F360130;
- Tue, 31 Mar 2026 18:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A338C2BCB0;
- Tue, 31 Mar 2026 18:52:24 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 61234600AD;
+ Tue, 31 Mar 2026 18:52:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F5CC19423;
+ Tue, 31 Mar 2026 18:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1774983145;
- bh=WXwwiiQA5g98onWOG+Xi7+ximkdweZ5ocFkvgOuFOeg=;
+ s=k20201202; t=1774983148;
+ bh=MSh2k1y7oTk1fTpRYev8xiXj57dzEDFrCo0wWi7Vuyk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=p6JfauP5n5q3iKSGQfCBj6v3myf6v+J5hnFzZzWYKwLZOT5xm4gT8Z6rPwRQ5mELj
- 9QFvHZN0OOuSXGVKDEjYbYKjgtdgqpSDrZtuX4yYXR05ygjjXJQVmqhMSr0ddMAvcE
- PC5KT6oZwswFJTaz1LZjBWjlF6WQKA+fKJoQ+qTzHq+3tcbEuqz4nP2gQU1tcNam2o
- ATHTXyXmDTU3EKFH2DSFKnlxwThrMpdO+UsD8JmKuGSFADxl1h98IgxACONulT2NmB
- GBu82EW/7S1cA7Y/NotL4cYXR0D29ZIEXEfG/KpNwyUR+5BRCCIUKYxo5z+DizkA/t
- 1WpjP6pgHV8Uw==
+ b=K8BEqOo/CAGiAWR26yId4trlB5gN2rZQ/FsxTcwAsdMTBs0U254lGowEDGxQ9IZ6l
+ UW5w/I/q9LXQ3f0i+RfAOwXjGuVK0OYwqdu9ibfq8im8pbD52Wb8lQsK0jDN8Syx/B
+ MevaiWjJWqZiS+dnOa1fFJs8df5eGM/S8RiNy/DZAOjvGBu6VjlrgiDgmxVBHqEddM
+ H/eXJkAoLZHet6shGppHLrR6A8VMI8mD1k97UADr/ich2THmiQunSJ1xmmi6qpbM35
+ rjoRUtkoGEhaKSvT1e5bPbwLHQSTvudfxF52ZgPR3uL3+Qq+VjWFiZisyPfPnG6iGQ
+ tGgE+GEQgjDlQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 2/8] hw/pci-host/astro: Fix initial addresses in IOC
-Date: Tue, 31 Mar 2026 20:52:13 +0200
-Message-ID: <20260331185219.12187-3-deller@kernel.org>
+Subject: [PULL 4/8] hw/pci-host/astro: Fix LMMIO DIRECT mappings
+Date: Tue, 31 Mar 2026 20:52:15 +0200
+Message-ID: <20260331185219.12187-5-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331185219.12187-1-deller@kernel.org>
 References: <20260331185219.12187-1-deller@kernel.org>
@@ -71,51 +71,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-F-Extend the LMMIO and IOS distributed addresses.
-Use the 44-bit address for the IOS distributed address.
+Fix the existing code which has the mask wrong.
+Implement the direct mapping via overlapping subregion with priority 3
+to make sure the direct mapping gets precedence over the LMMIO region.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/pci-host/astro.c         | 6 +++---
- include/hw/pci-host/astro.h | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ hw/pci-host/astro.c | 39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
 diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 46d8530538..b3eec4a291 100644
+index a0afa09198..b7760c4b32 100644
 --- a/hw/pci-host/astro.c
 +++ b/hw/pci-host/astro.c
-@@ -804,13 +804,13 @@ static void astro_reset(DeviceState *dev)
-      * The LBA BASE/MASK registers control IO -> System routing (in Elroy)
-      */
-     memset(&s->ioc_ranges, 0, sizeof(s->ioc_ranges));
--    s->ioc_ranges[(0x360 - 0x300) / 8] = LMMIO_DIST_BASE_ADDR | 0x01; /* LMMIO_DIST_BASE (SBA) */
-+    s->ioc_ranges[(0x360 - 0x300) / 8] = F_EXTEND(LMMIO_DIST_BASE_ADDR) | 0x01;
-     s->ioc_ranges[(0x368 - 0x300) / 8] = 0xfc000000;          /* LMMIO_DIST_MASK */
-     s->ioc_ranges[(0x370 - 0x300) / 8] = 0;                   /* LMMIO_DIST_ROUTE */
--    s->ioc_ranges[(0x390 - 0x300) / 8] = IOS_DIST_BASE_ADDR | 0x01; /* IOS_DIST_BASE */
-+    s->ioc_ranges[(0x390 - 0x300) / 8] = F_EXTEND(IOS_DIST_BASE_ADDR) | 0x01;
-     s->ioc_ranges[(0x398 - 0x300) / 8] = 0xffffff0000;        /* IOS_DIST_MASK    */
-     s->ioc_ranges[(0x3a0 - 0x300) / 8] = 0x3400000000000000ULL; /* IOS_DIST_ROUTE */
--    s->ioc_ranges[(0x3c0 - 0x300) / 8] = 0xfffee00000;        /* IOS_DIRECT_BASE  */
-+    s->ioc_ranges[(0x3c0 - 0x300) / 8] = IOS_DIST_BASE_ADDR;  /* IOS_DIRECT_BASE  */
-     s->ioc_ranges[(0x3c8 - 0x300) / 8] = 0xffffff0000;        /* IOS_DIRECT_MASK  */
-     s->ioc_ranges[(0x3d0 - 0x300) / 8] = 0x0;                 /* IOS_DIRECT_ROUTE */
+@@ -607,9 +607,13 @@ static void adjust_LMMIO_DIRECT_mapping(AstroState *s, unsigned int reg_index)
+     MemoryRegion *lmmio_alias;
+     unsigned int lmmio_index, map_route;
+     hwaddr map_addr;
+-    uint32_t map_size;
++    uint32_t map_size, map_enabled;
+     struct ElroyState *elroy;
  
-diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
-index fce052c9f8..5eb1fa57c1 100644
---- a/include/hw/pci-host/astro.h
-+++ b/include/hw/pci-host/astro.h
-@@ -26,8 +26,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ElroyState, ELROY_PCI_HOST_BRIDGE)
++    /* each LMMIO may access from 1 MB up to 64 MB */
++    const unsigned int lmmio_mask = ~(1 * MiB - 1);
++    const unsigned int lmmio_max_size = 64 * MiB;
++
+     /* pointer to LMMIO_DIRECT entry */
+     lmmio_index = reg_index / 3;
+     lmmio_alias = &s->lmmio_direct[lmmio_index];
+@@ -622,31 +626,38 @@ static void adjust_LMMIO_DIRECT_mapping(AstroState *s, unsigned int reg_index)
+     map_route &= (ELROY_NUM - 1);
+     elroy = s->elroy[map_route];
  
- #define LMMIO_DIRECT_RANGES     4
++    /* make sure the lmmio region is initially turned off */
+     if (lmmio_alias->enabled) {
+         memory_region_set_enabled(lmmio_alias, false);
+     }
  
--#define IOS_DIST_BASE_ADDR      0xfffee00000ULL
--#define IOS_DIST_BASE_SIZE           0x10000ULL
-+#define IOS_DIST_BASE_ADDR      0xffffee00000ULL
-+#define IOS_DIST_BASE_SIZE            0x10000ULL
++    /* do sanity checks and calculate mmio size */
++    map_enabled = map_addr & 1;
++    map_addr &= lmmio_mask;
++    map_size &= lmmio_mask;
++    map_size = MIN(map_size, lmmio_max_size);
+     map_addr = F_EXTEND(map_addr);
+-    map_addr &= TARGET_PAGE_MASK;
+-    map_size = (~map_size) + 1;
+-    map_size &= TARGET_PAGE_MASK;
  
- #define HF_ENABLE       0x40    /* enable HF mode (default is -1 mode) */
+-    /* exit if disabled or zero map size */
+-    if (!(map_addr & 1) || !map_size) {
++    /* exit if disabled or has zero size. */
++    if (!map_enabled || !map_size) {
+         return;
+     }
  
+-    if (!memory_region_size(lmmio_alias)) {
++    if (!lmmio_alias->name) {
++        char lmmio_name[32];
++        snprintf(lmmio_name, sizeof(lmmio_name),
++                 "LMMIO-DIRECT-%u", lmmio_index);
+         memory_region_init_alias(lmmio_alias, OBJECT(elroy),
+-                        "pci-lmmmio-alias", &elroy->pci_mmio,
++                        lmmio_name, &elroy->pci_mmio,
+                         (uint32_t) map_addr, map_size);
+-        memory_region_add_subregion(get_system_memory(), map_addr,
+-                                 lmmio_alias);
+-    } else {
+-        memory_region_set_alias_offset(lmmio_alias, map_addr);
+-        memory_region_set_size(lmmio_alias, map_size);
+-        memory_region_set_enabled(lmmio_alias, true);
++        memory_region_add_subregion_overlap(get_system_memory(),
++                        map_addr, lmmio_alias, 3);
+     }
++
++    memory_region_set_address(lmmio_alias, map_addr);
++    memory_region_set_alias_offset(lmmio_alias, (uint32_t) map_addr);
++    memory_region_set_size(lmmio_alias, map_size);
++    memory_region_set_enabled(lmmio_alias, true);
+ }
+ 
+ static MemTxResult astro_chip_read_with_attrs(void *opaque, hwaddr addr,
 -- 
 2.53.0
 
