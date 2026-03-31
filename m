@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F037109B468
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB91E109B469
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Z2w-00041D-Ht; Tue, 31 Mar 2026 09:22:18 -0400
+	id 1w7Z51-0005Q2-J9; Tue, 31 Mar 2026 09:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w7Z2u-0003z2-SR
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:22:16 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w7Z50-0005PU-6G
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:24:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w7Z2s-000582-IU
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:22:16 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w7Z4y-0005V2-FJ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:24:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774963332;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1774963463;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nt8j4iyH58d07zpTysGpv5CGwonr20qNERs9/4v61Ms=;
- b=WDEAjPpJKD1Ctu7ni3e5EHiXGcHmyAyHvbHCkZIIHgXl3wj2jkznCEg2Fn+l9I5zJc2OFB
- XkLtn+tL5cbsH4lhB1zO4vkfnciPwnvjS1/2R+OsspCz+tluCpu2LOtOjOvthfXnQQyju/
- CLMDLpFrxRDAM9pN+zdzCM56bbccD1Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7MEtMnISvWBLfWW9UDfuN4obvQ4JSRJg0CWibd49zPY=;
+ b=CpSfheUgM6wX9ckHNthLiHTGAS2z8ttxUGetd6sAuwQs88if6jZZIF0NMYPhKw1DYfOZAp
+ D8sVKQAv1pPyeDNem7EqpAZuiQ+9Pn8gW3+E6ACDDMatMI0jNoubTep3kKQv5GvT6+7+PD
+ PJExB237msPyoOzv3AomDaIVM3lJwuA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-LebkDRATNWy8eN-8QpcP3A-1; Tue,
- 31 Mar 2026 09:22:11 -0400
-X-MC-Unique: LebkDRATNWy8eN-8QpcP3A-1
-X-Mimecast-MFC-AGG-ID: LebkDRATNWy8eN-8QpcP3A_1774963330
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-NiynDcslPzq8Z6E7R6rbIA-1; Tue,
+ 31 Mar 2026 09:24:19 -0400
+X-MC-Unique: NiynDcslPzq8Z6E7R6rbIA-1
+X-Mimecast-MFC-AGG-ID: NiynDcslPzq8Z6E7R6rbIA_1774963458
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E1AC1955EA1; Tue, 31 Mar 2026 13:22:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.79])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 54C4D30001A2; Tue, 31 Mar 2026 13:22:08 +0000 (UTC)
-Date: Tue, 31 Mar 2026 14:22:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Tejus GK <tejus.gk@nutanix.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v3 1/1] io: invert the return semantics of
- qio_channel_flush
-Message-ID: <acvKfOK5tq99FwHI@redhat.com>
-References: <20260320083950.262119-1-tejus.gk@nutanix.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C7D81944F05; Tue, 31 Mar 2026 13:24:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1A0719560AB; Tue, 31 Mar 2026 13:24:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8C40921E6A28; Tue, 31 Mar 2026 15:24:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "hongmianquan" <hongmianquan@bytedance.com>
+Cc: <qemu-devel@nongnu.org>,  <kwolf@redhat.com>,  <armbru@redhat.com>,
+ <michael.roth@amd.com>,  <wubo.bob@bytedance.com>
+Subject: Re: [PATCH v2] monitor: Fix deadlock in monitor_cleanup
+In-Reply-To: <20260327131024.51947-1-hongmianquan@bytedance.com>
+ (hongmianquan@bytedance.com's message of "Fri, 27 Mar 2026 21:10:24
+ +0800")
+References: <20260327131024.51947-1-hongmianquan@bytedance.com>
+Date: Tue, 31 Mar 2026 15:24:15 +0200
+Message-ID: <875x6ci134.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260320083950.262119-1-tejus.gk@nutanix.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 27
 X-Spam_score: 2.7
@@ -85,43 +83,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 08:39:41AM +0000, Tejus GK wrote:
-> With the kernel's zerocopy notification mechanism, the caller can
-> determine whether
->  * All syscalls successfully used zero copy
->  * At least one syscall failed to use zero copy
-> 
-> But, as of now QEMU's IO channel flush function semantics are like
->  * 1 => all syscalls failed to use zero copy
->  * 0 => at least one syscall successfully used zero copy
-> 
-> This is not aligned with what the kernel reports, and ends up reporting
-> false negatives for cases like when there's just a single successful
-> zerocopy amongst a collection of deferred zero-copies during a flush.
-> 
-> Fix this by inverting the return semantics of the IO flush function.
-> 
-> Suggested-by: Peter Xu <peterx@redhat.com>
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Tejus GK <tejus.gk@nutanix.com>
-> ---
->  include/io/channel-socket.h |  6 +-----
->  include/io/channel.h        |  4 ++--
->  io/channel-socket.c         | 16 ++++++++--------
->  3 files changed, 11 insertions(+), 15 deletions(-)
+"hongmianquan" <hongmianquan@bytedance.com> writes:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
+> received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
+>
+> The root cause is a race condition between the main thread's shutdown sequence and the coroutine's dispatching mechanism. When handling a non-coroutine QMP command, qmp_dispatcher_co schedules the actual command execution as a bottom half in iohandler_ctx and then yields. At this suspended point, qmp_dispatcher_co_busy remains true.
+> Subsequently, the main thread in monitor_cleanup(), sets qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx, false), which attempts to wake up the coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx. The main thread then blocks indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches termination, resulting in a deadlock.
+>
+> The execution sequence is illustrated below:
+>
+>  IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
+>     |                                 |                                        |
+>     |-- query-commands                |                                        |
+>     |-- qmp_dispatcher_co_wake()      |                                        |
+>     |    (sets busy = true)           |                                        |
+>     |                                 |   <-- Wakes up in iohandler_ctx -->    |
+>     |                                 |                                        |-- qmp_dispatch()
+>     |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
+>     |                                 |                                        |-- qemu_coroutine_yield()
+>     |                                 |                                            [State: Suspended, busy=true]
+>     |   [ quit triggered ]            |
+>     |                                 |-- monitor_cleanup()
+>     |                                 |-- qmp_dispatcher_co_shutdown = true
+>     |                                 |-- qmp_dispatcher_co_wake()
+>     |                                 |    -> Checks busy flag. It's TRUE!
+>     |                                 |    -> Skips aio_co_wake().
+>     |                                 |
+>     |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
+>     |                                 |   |-- aio_poll(iohandler_ctx, false)
+>     |                                 |   |    -> Executes do_qmp_dispatch_bh
+>     |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
+>     |                                 |   |
+>     |                                 |   |-- aio_poll(qemu_aio_context, true)
+>     |                                 |   |    -> Blocks indefinitely! (Deadlock)
+>     |                                 |
+>     |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
+>
+> To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh() to break the main loop out of its blocking poll, allowing it to evaluate the loop condition and poll iohandler_ctx.
+>
+> Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+> Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
 
+Please line-wrap your paragraphs at 70 columns or so.  The maintainer
+accepting the patch may do that for you, to save you a respin.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
