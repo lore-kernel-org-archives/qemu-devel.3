@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B491610F9303
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 21:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B6D10F9303
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 21:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7ghh-0005BP-HW; Tue, 31 Mar 2026 17:32:53 -0400
+	id 1w7gnP-0006xf-T1; Tue, 31 Mar 2026 17:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w7ghf-0005Aq-La; Tue, 31 Mar 2026 17:32:51 -0400
+ id 1w7gnN-0006xL-QX; Tue, 31 Mar 2026 17:38:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w7ghd-0006tL-O3; Tue, 31 Mar 2026 17:32:51 -0400
+ id 1w7gnM-0007UI-9r; Tue, 31 Mar 2026 17:38:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774992734; bh=aY24go3PJSSbiIkD2YO2ACcOmjUCqUwyFL0SkDuQsdU=;
+ t=1774993089; bh=eqKSPA/zK+eRnDaE3eWsBcbwyYsO/8V59RbBErHmi2g=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=UksbP4Pt3pqRIg6+FBro3Q0XAKgJpWKWn+yU8QWBGDFersVmuWZ0vOy0dKX+rpPiz
- zo/JRq3kkZI47oTDmXF3UINfivjbQJ3Puw8XFfCOcLaPpMJN8y6XKDxec+sSkaEd1i
- RQG4JrGf5pk8HOXrOfctByLVvmvPGSojrkL9KW/4paBt6dxvNkFh+hCpVyPDb4s0W7
- DgTx3n85DusP0qpoHp6V4XO8lXHLSRDdD3ZR2SN3H+VeRgyBWKgjb7S1Gf98juLsq9
- 0D+ZLYy2KnWltKhKTYyen3016kPSq9Sz4OFAvQN0bDUUolNN/eQJuh9OP/NI5tWpGF
- X0fzEYkIGuUvA==
+ b=tAFmR48A14eY6952haeTDDNs4JS9d+vL7Dh7ENyLvzK0fr4FVi5yI4KXFejUQGcG/
+ LEgLMLJbCMGjrhbsqJ6srXZYYEkbKUYcvJYAXL6EI7NuTItlMbMnXwhggce9n6WqkU
+ uxSKRArXiUnLeY790NyeaxTSGa7bSH3W26YLnh0bblk56lLUzODNHCerC+mppLqHBX
+ dllCq5QrIpI+bkLbP0HGTAyxUXahejldVBdG7GPmabRb0Gdn4iq+sCWcDl2/Jcdx4V
+ 0r+rI/k3yyIGWHE8zkctDx7I3FlIidnFwFJQnBkKMWz3PrBPnTNHdsJwktm1BAre0Y
+ 49yB9o0xkFhlw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id C878D199560;
- Wed, 01 Apr 2026 00:32:14 +0300 (MSK)
-Message-ID: <fcdc1fec-072b-4f41-b338-2577af6dab74@tls.msk.ru>
-Date: Wed, 1 Apr 2026 00:32:47 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id B3C04199565;
+ Wed, 01 Apr 2026 00:38:09 +0300 (MSK)
+Message-ID: <78e18aaf-2231-42c8-9307-829fd4dd44a3@tls.msk.ru>
+Date: Wed, 1 Apr 2026 00:38:42 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0] scsi: Don't consider LOGICAL UNIT NOT SUPPORTED
- guest recoverable
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: pbonzini@redhat.com, stefanha@redhat.com, gveitmic@redhat.com,
- bmarzins@redhat.com, fam@euphon.net, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260330121635.49205-1-kwolf@redhat.com>
+Subject: Re: [PATCH v2] monitor: Fix deadlock in monitor_cleanup
+To: hongmianquan <hongmianquan@bytedance.com>, qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, armbru@redhat.com, michael.roth@amd.com,
+ wubo.bob@bytedance.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20260327131024.51947-1-hongmianquan@bytedance.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,7 +84,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260330121635.49205-1-kwolf@redhat.com>
+In-Reply-To: <20260327131024.51947-1-hongmianquan@bytedance.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -113,35 +111,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.03.2026 15:16, Kevin Wolf wrote:
-> When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
-> it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
-> sense codes. It doesn't really explain how the codes to be in the list
-> were selected.
+On 27.03.2026 16:10, hongmianquan wrote:
+> During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
+> received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
 > 
-> As the LUN doesn't come from the guest, but from the block backend
-> (usually the SCSI device on the host that was opened with host_device,
-> but it could also be the iscsi block driver), there is really no way the
-> guest could influence this.
+> The root cause is a race condition between the main thread's shutdown sequence and the coroutine's dispatching mechanism. When handling a non-coroutine QMP command, qmp_dispatcher_co schedules the actual command execution as a bottom half in iohandler_ctx and then yields. At this suspended point, qmp_dispatcher_co_busy remains true.
+> Subsequently, the main thread in monitor_cleanup(), sets qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx, false), which attempts to wake up the coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx. The main thread then blocks indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches termination, resulting in a deadlock.
 > 
-> It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
-> happen during failover operations. When combined with multipath, the
-> request should be retried on another path instead of being reported to
-> the guest, which would offline the filesystem in response.
+> The execution sequence is illustrated below:
 > 
-> Simply returning false in scsi_sense_buf_is_guest_recoverable() will
-> enable the retry logic in file-posix, and will also make sure that if
-> the error persists, the configured error policy is respected so that the
-> VM can be stopped.
+>   IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
+>      |                                 |                                        |
+>      |-- query-commands                |                                        |
+>      |-- qmp_dispatcher_co_wake()      |                                        |
+>      |    (sets busy = true)           |                                        |
+>      |                                 |   <-- Wakes up in iohandler_ctx -->    |
+>      |                                 |                                        |-- qmp_dispatch()
+>      |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
+>      |                                 |                                        |-- qemu_coroutine_yield()
+>      |                                 |                                            [State: Suspended, busy=true]
+>      |   [ quit triggered ]            |
+>      |                                 |-- monitor_cleanup()
+>      |                                 |-- qmp_dispatcher_co_shutdown = true
+>      |                                 |-- qmp_dispatcher_co_wake()
+>      |                                 |    -> Checks busy flag. It's TRUE!
+>      |                                 |    -> Skips aio_co_wake().
+>      |                                 |
+>      |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
+>      |                                 |   |-- aio_poll(iohandler_ctx, false)
+>      |                                 |   |    -> Executes do_qmp_dispatch_bh
+>      |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
+>      |                                 |   |
+>      |                                 |   |-- aio_poll(qemu_aio_context, true)
+>      |                                 |   |    -> Blocks indefinitely! (Deadlock)
+>      |                                 |
+>      |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
 > 
-> Buglink: https://redhat.atlassian.net/browse/RHEL-158212
-> Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh() to break the main loop out of its blocking poll, allowing it to evaluate the loop condition and poll iohandler_ctx.
 
-Ditto for this one, - while not a big deal really, but I'm picking it up
-for the current stable series.  Please let me know if I shouldn't.
+Shouldn't this one too be picked up for the stable series?
+Sounds like a good candidate to me.
 
 Thanks,
 
 /mjt
+
 
