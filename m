@@ -4,70 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5469109B47B
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 15:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA2E109B47B
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 15:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7adZ-0003JT-UR; Tue, 31 Mar 2026 11:04:13 -0400
+	id 1w7afh-0007IS-2x; Tue, 31 Mar 2026 11:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7adY-0003Gy-1B
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:04:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w7afe-0007Ho-Ok
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:06:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7adW-0002ZF-Im
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:04:11 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w7afd-0003B9-3j
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:06:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774969450;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1774969579;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4/EQKTbtcH/MX2YkSmC6DrV9C1Uks/s3kAn+UlSgZnk=;
- b=J5PcoOpfEqzTpVBBcpCgGNPy+EBNdBXxldSYQNks2VuZsDjE0r2IkpWQjpgqBKtJ8mv5pk
- kHWb66ybGHTaFm/6bWhpiccfMSfAAJKifNbXhB6WErecAocbU1TlxWUhR/I55wu2Tz5O5n
- 0zAPjqFTau/jp3Q+kvHYv0m748VpA5s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-GN0xrhozMYCzet6TcjxOEw-1; Tue,
- 31 Mar 2026 11:04:06 -0400
-X-MC-Unique: GN0xrhozMYCzet6TcjxOEw-1
-X-Mimecast-MFC-AGG-ID: GN0xrhozMYCzet6TcjxOEw_1774969445
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42032195609E; Tue, 31 Mar 2026 15:04:05 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.50.38])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DACDE1954102; Tue, 31 Mar 2026 15:04:03 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Subject: [PULL 4/6] monitor: Fix deadlock in monitor_cleanup
-Date: Tue, 31 Mar 2026 17:03:50 +0200
-Message-ID: <20260331150352.256332-5-kwolf@redhat.com>
-In-Reply-To: <20260331150352.256332-1-kwolf@redhat.com>
-References: <20260331150352.256332-1-kwolf@redhat.com>
+ bh=2gryvpOsyuTGg3mo1MKJLcyqv19wF5b49hWrsT2skrY=;
+ b=LyNJcaB7ckvwkuxDhWERz+aZ2EggbiFhf0y9spWPzBjuOtqsAiHvdUi6Z8dM1G4vIyyqHT
+ lCWQb8SHgvHo6hLWjjaqxMv/LY9pp4l+PsVEtx6Qw3Joqt+kHMk4dXoc3pGQR6yvEGz2wB
+ DSgZXbj/Amqu2xkJrLdFHnSZdeIWf1A=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-365-0fPPMFwuPh68ej1mYA0KZQ-1; Tue, 31 Mar 2026 11:06:18 -0400
+X-MC-Unique: 0fPPMFwuPh68ej1mYA0KZQ-1
+X-Mimecast-MFC-AGG-ID: 0fPPMFwuPh68ej1mYA0KZQ_1774969576
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4888230f434so1036825e9.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 08:06:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774969576; x=1775574376;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2gryvpOsyuTGg3mo1MKJLcyqv19wF5b49hWrsT2skrY=;
+ b=RqqZarsxlsMN4far9KcsT3cyotXw21usymbv9RhSve3gLBZYGkkJNXe/2Jl5bEUukG
+ 46UOqz9qv5FHs/69+6JwhgZnr5l/7APcGXo8V+oD7ZoiuH4LwdnKagAr3pwWWDxt2VV7
+ gtJlU4y1A6tpG00Jo+fov/8GoshkpgYEPDKcBSuTtTzPOia3iFFsaDwKZ/LNUPvtYnBD
+ tuwXGmcDnBXkEiRQIE1wAtagINizSyFk/MrS4iaLgXztcNECWF/fAwv4usfpQ/w/wVl8
+ 65XoVgTIf3Y0GrtWwJXRPB+7jPOJwoq1XFQXETx8khBMDNS1INUFwsJMqITxPQAzlfGR
+ Wr/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBiSFelITtIuLkw6M0QM95LfjA+TWeW7rG1Oy7AxaSpRqyj1wsTEC9zoyBINDNfeKaj95V2CusqsD6@nongnu.org
+X-Gm-Message-State: AOJu0YzlzRk+y68brNViqnWmVEYJAnZC7VoHVlu8e2vuENpIkgFc4bPn
+ 1eYQrjYPww7vuswWUiFIjq9j73pn0GeS5RLXOYQxnUmZWfqgxJ1i6m3KRdxh8bKk9f4V1twyTCE
+ ekBIcd33g0bY1vn+I9yMdvJ9ffQhL36/KcCtywLLqHtTJ34MYgW0J9jwP
+X-Gm-Gg: ATEYQzwJfoKGCiVmNnOyo6zWGO+aZm3tzoDaDQsO8RYgAF/Vnodycaybn2qR2cCvUZo
+ UAY/quKODAo1GHrCeAqKR5j4bHC6vaNqPlnCkI1nL3H8i70QaqDv5NHkPYllhknkqCDx6fiXX18
+ a8kK+OMbSA02FHtX58bb3wOUbWE17mO69UQZTyB/QidCgn8F2xWrS9nBQ8Typt8eNm15tTzqSAn
+ dh/nEW+wiTu9hRvDZcTY6HeaKSAzb20+QO6+YD8rZyyzF5UC2XNjH1x7GzbchJK7KMORPiE3XLp
+ Yi0IjkGVSudW3THP/rXgAC/fBoG5YlCYW5rDgRWewVWsuAT6yxk4l/SFL6qy6S9Q/vIVY9QlwMk
+ 1nqS10FX1YA1zMCL7RZS1Ru03wO94iaqAIYixlQ15sP1Uc04UKCSe1olD9nTChN8oAogFOg==
+X-Received: by 2002:a05:600c:6c8:b0:488:7ff5:2c67 with SMTP id
+ 5b1f17b1804b1-4887ff52e31mr18568765e9.12.1774969576024; 
+ Tue, 31 Mar 2026 08:06:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:6c8:b0:488:7ff5:2c67 with SMTP id
+ 5b1f17b1804b1-4887ff52e31mr18568255e9.12.1774969575443; 
+ Tue, 31 Mar 2026 08:06:15 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4887e7e9786sm40892595e9.3.2026.03.31.08.06.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 31 Mar 2026 08:06:14 -0700 (PDT)
+Message-ID: <5ccbdd38-e63f-4a4a-8d28-9621bf8883fe@redhat.com>
+Date: Tue, 31 Mar 2026 17:06:13 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/pci/pci: Enforce pci_setup_iommu_per_bus() is called
+ only once per bus
+Content-Language: en-US
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, mst@redhat.com, skolothumtho@nvidia.com,
+ nathanc@nvidia.com
+References: <20260323183024.4069032-1-eric.auger@redhat.com>
+ <aco9ECUbZ1+QvbOR@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <aco9ECUbZ1+QvbOR@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,98 +115,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: hongmianquan <hongmianquan@bytedance.com>
 
-During qemu_cleanup, if a non-coroutine QMP command (e.g.,
-query-commands) is concurrently received and processed by the
-mon_iothread, it can lead to a deadlock in monitor_cleanup.
 
-The root cause is a race condition between the main thread's shutdown
-sequence and the coroutine's dispatching mechanism. When handling a
-non-coroutine QMP command, qmp_dispatcher_co schedules the actual
-command execution as a bottom half in iohandler_ctx and then yields. At
-this suspended point, qmp_dispatcher_co_busy remains true.
+On 3/30/26 11:06 AM, Nicolin Chen wrote:
+> On Mon, Mar 23, 2026 at 07:30:20PM +0100, Eric Auger wrote:
+>> @@ -3307,11 +3307,16 @@ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+>>   * IOMMU ops are returned, avoiding the use of the parent’s IOMMU when
+>>   * it's not appropriate.
+>>   */
+>> -void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops,
+>> -                             void *opaque)
+>> +bool pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops,
+>> +                             void *opaque, Error **errp)
+>>  {
+>> +    if (bus->iommu_per_bus) {
+>> +        error_setg(errp, "An iommu is already attached to this bus");
+>> +        return false;
+>> +    }
+>>      pci_setup_iommu(bus, ops, opaque);
+>>      bus->iommu_per_bus = true;
+>> +    return true;
+> Do we need the same check in pci_setup_iommu()?
 
-Subsequently, the main thread in monitor_cleanup(), sets
-qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since
-qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The
-main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes
-the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx,
-false), which attempts to wake up the coroutine, aio_co_wake schedules a
-new wake-up BH in iohandler_ctx. The main thread then blocks
-indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's
-wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches
-termination, resulting in a deadlock.
+For machine wide IOMMU the check is handled in machine code (at least in
+arm virt).
 
-The execution sequence is illustrated below:
+Nevertheless a more generic solution could be to check in
+pci_setup_iommu() that bus->iommu_ops is not already set. If set, return
+an error, cascaded up through pci_setup_iommu() and
+pci_setup_iommu_per_bus().
+However the change is much more invasive and impacts several archs. What
+do you think?
 
- IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
-    |                                 |                                        |
-    |-- query-commands                |                                        |
-    |-- qmp_dispatcher_co_wake()      |                                        |
-    |    (sets busy = true)           |                                        |
-    |                                 |   <-- Wakes up in iohandler_ctx -->    |
-    |                                 |                                        |-- qmp_dispatch()
-    |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
-    |                                 |                                        |-- qemu_coroutine_yield()
-    |                                 |                                            [State: Suspended, busy=true]
-    |   [ quit triggered ]            |
-    |                                 |-- monitor_cleanup()
-    |                                 |-- qmp_dispatcher_co_shutdown = true
-    |                                 |-- qmp_dispatcher_co_wake()
-    |                                 |    -> Checks busy flag. It's TRUE!
-    |                                 |    -> Skips aio_co_wake().
-    |                                 |
-    |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
-    |                                 |   |-- aio_poll(iohandler_ctx, false)
-    |                                 |   |    -> Executes do_qmp_dispatch_bh
-    |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
-    |                                 |   |
-    |                                 |   |-- aio_poll(qemu_aio_context, true)
-    |                                 |   |    -> Blocks indefinitely! (Deadlock)
-    |                                 |
-    |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
+I don't think this can be a valid use case to call pci_setup_iommu()
+several times on the same bus?
+>
+> Apart from this question,
+>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
-To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh()
-to break the main loop out of its blocking poll, allowing it to evaluate
-the loop condition and poll iohandler_ctx.
+Thanks
 
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
-Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
-Message-ID: <20260327131024.51947-1-hongmianquan@bytedance.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- qapi/qmp-dispatch.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
-index 9bb1e6a9f4a..e3897d51977 100644
---- a/qapi/qmp-dispatch.c
-+++ b/qapi/qmp-dispatch.c
-@@ -128,6 +128,16 @@ static void do_qmp_dispatch_bh(void *opaque)
-     data->cmd->fn(data->args, data->ret, data->errp);
-     monitor_set_cur(qemu_coroutine_self(), NULL);
-     aio_co_wake(data->co);
-+
-+    /*
-+     * If the QMP dispatcher coroutine is waiting to be scheduled
-+     * in iohandler_ctx, we must kick the main loop. This ensures
-+     * that AIO_WAIT_WHILE_UNLOCKED() in monitor_cleanup() doesn't
-+     * block indefinitely waiting for an event in qemu_aio_context,
-+     * but actually gets the chance to poll iohandler_ctx and resume
-+     * the coroutine.
-+     */
-+    aio_wait_kick();
- }
- 
- /*
--- 
-2.53.0
+Eric
+>
 
 
