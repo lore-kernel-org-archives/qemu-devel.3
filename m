@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12D1109B468
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED969109B469
 	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Ywc-0005ex-RN; Tue, 31 Mar 2026 09:15:46 -0400
+	id 1w7YwV-0005dN-22; Tue, 31 Mar 2026 09:15:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YwX-0005dl-5F
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:42 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YwN-0005aQ-1J
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:31 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YwV-00046v-1c
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:40 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4887eca00c4so3877125e9.2
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:15:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YwL-00046V-5F
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:30 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43d03db7f87so1073704f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774962936; x=1775567736; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774962927; x=1775567727; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZMEvZqXM1s5ZrHLjKPMsTqMknGdEXuNvVui5H2JTOzk=;
- b=U0I57L00DrPMLU55LIYLs3HbsHPNC7jBdjRcgLRw+O+H7zrBb4KianOvpSKnp3DixC
- MLHDjY4YTNn9DPjJuL4jBoouYKL4irYloBJK7mR4WgJKEdAviMr0golOVx7jup34AhV2
- PYQ4t3sB7caqHwmQ9JXzDfzempjdhHPXqbzlj2QlktJhNoR1GIxPrZtu5ahCEqBTrtd1
- E3MCix9ECiaCwAVs7trtoSgrFdK5FQkgm87T+BreiPw2kuT1JlORbPa6oER1XNQ74+P2
- WrwdDO8AyQKAsYkerW2itKgstZVCWwEJfpwnYeeCCm7ArRA61yIvp5S10LvFaKN4noxV
- bc2A==
+ :reply-to; bh=Bw5zi+GqCLVgCNxjiWNzvFBMTLyZs23V3pNqG3hK1yo=;
+ b=U8yAYFmmZWszi7FZHk8qdW6lgKnmjMC5voQ64W+I8M71co0UjdnA3aTo936xZPNG/Q
+ dCvJ+UGVYX5nOghu2y51K/dr3qd6QmzSgWsmnA1V1S2BJS8+FBMGb6CExFPjVVYCbkG8
+ ImuOKSGG4TXwrX44+mdOQqIoWFdVh7cGaGV3RxnaTTatoloRJi3d9LCQrYfljkWd0ory
+ 8clEXHdPulzZ89/BXS5ME4yG9lJU6bMRJ4X4eJ4JZwfGbGobIM9HbvHf7LEqzB1JGklj
+ VqZG69mY7rUO5Q/BFxQKXqwVO/Rj3AXSj08Fs2U1kc+yhssF7orCNdn3s0TMdz5+v6vS
+ Jfnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774962936; x=1775567736;
+ d=1e100.net; s=20251104; t=1774962927; x=1775567727;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ZMEvZqXM1s5ZrHLjKPMsTqMknGdEXuNvVui5H2JTOzk=;
- b=q6l5b5YGGToB+scXIwinc4CCZ6IHvh91O214koQ6jdkdY1a0rTulLMGl+cX8STou5L
- yq2QWdAzLoLBJXGUpBfbceWqk/8tKg2klfPLYcJZf8dCiR9dIvDF0xiJzt/gX/cumiBn
- AtZDs6vx7WOjDjAHg5Wk7/m5NrTBa8ZsXDZTPLsmyi2IQJ9ZmBS93T+3ZiQAlqLILVxN
- jM54kk73iH3q6arZ8epwkXOEUQHooLZKiG+qxGCs0rDQSu6RwDMGpI3c6CCGXm9VpFb7
- yOzY04aAFzaK9W+5xwgCs5otBOwPcsZWi5QcqcVqPsZGOegrNQaNAvdROX6y4Mq67OA6
- F21A==
-X-Gm-Message-State: AOJu0Yyf6R65bvT7xyeZ5rPrawj5hlwvUiFfw1wG6n4DhnQ9f4HU5WLM
- Awabu10A36IKi0rAoEhlKmyEMeKFO7VF5sfBVkbw0XKpo5tH+59CNLk10BiuNo7ZypXT506FxaX
- XaUBS5UQ=
-X-Gm-Gg: ATEYQzwDmXfFzGoK0104y/pwEdCQeWgps9ri7X0rG/T3pILdqbrIX8H6IXy+ZzlHa+E
- 0ufpreaPRkQXHQfOGMi6XLt4l8vX0ojLZv0oeNPXrygli4Dp2YrXPwEFQ20wP8MnPL/4eMHFBhn
- F8NLPepju/OE0/B31jLwLDh11RzZk88CF9XyZwFu9E2x7UTVpgq1Tt+4fNgw0dcvJYo9whw9TQe
- syKFdgKyZhz/HryPk3n1etHkOTJ3lz052DW/JKfj0hmwAWTxHsRz28pQASD4ESr7pe38qwnvyAb
- EeHUYKe7v5PrRHe8tvHZQ1P2Cm2sUe0vaC650TeAPPlHaoYcDv4k6MVkJYk8yEaohlUc4EZlzTO
- Y2R3cZvI3wWKWDS3sX1XPtqXlJEAtcmWcYjGSVijzpULakH06it8h+rJrDf/7SwGzNaDjS1k7EW
- GyV95vqX6LyrhGj31rRngECt+O9b/PvazhksLYhjrdjWSktU9FTtOFaTTGm4xlAETUeRM=
-X-Received: by 2002:a05:600c:6309:b0:487:1fbf:e0c5 with SMTP id
- 5b1f17b1804b1-48727ef678bmr321369345e9.19.1774962935816; 
- Tue, 31 Mar 2026 06:15:35 -0700 (PDT)
+ bh=Bw5zi+GqCLVgCNxjiWNzvFBMTLyZs23V3pNqG3hK1yo=;
+ b=ihVRO9spboOyTW4mA972anoJCnQAUQkV8eZm8CeaEO+LkIgaLuZPyscLsa6FEB8YIY
+ 4Qlyajsl9SwPAiFHBz4UnSFT5ZUyCFVNd7Mg2YBE1NPoz4hIbiokbqyFmt1a59m9S7YS
+ gCE7EvyTsfKFvkqIEaB4DmEZGiNthbP6HuGMYnDNLjuWaIP83LnrAXwr9Ymxm7Gn1ksc
+ VpwE6qcSJYU47MUa28FGnbZUfbzPUkUF97FTZtTL09buGmdpoWwNiNpf+BiRgj377cy6
+ jOefdJ6WulDa9KtK+HghUMmAvT5FFhunF++aO1juB/EdRt7QQ5jjSCJDvWBAcyUBMqNJ
+ qIFw==
+X-Gm-Message-State: AOJu0YyzAd2sxrSH1xoBhcOzCUJICn7gbdkKOGOZDYesLhUmWK+4z1hW
+ cQoikS+6fQG8P28jigiescxUPExDRtrDuk5rSUG1zgUdTPW60XlAB8gkyc8usWlbTTe3hOtq7AB
+ 4ixoVFDE=
+X-Gm-Gg: ATEYQzyrPbY9tcUeM/kZA2Mrqi2gUKizL+PGVZfcgpIy7A5TUofXRdXWXEO2IKK8h5u
+ PY3amU4sR2pMiTSOruCG16lkxjsUoXCjQldB+24ofGbxfhTZ46JXEwR8V0N5QB98LAhWksw/pEe
+ LTFGSzsd7EeyWj0qELU5Xy7u7I9dZK9Q5Vd7JyKh1SWX6JPJKljlBNvX58ByArK072x+DekfCqd
+ ZeLRCsVciMNL6AFXJxtz2gNFWDHaDbZ62ApZ67YZuZOPucY+//Sxrh+29144bJNv5eRLLikuq1A
+ Mrk2cTVRnkkCt+o7hKiXy6JgqyyoZUerOiyodyBhnZqmoJWNX+w29Kx+dB8EG6gKrvsEoF+Is6n
+ beZEuUqBg2V9bOUSiPMzpvHXO3jbob8t3X5yw2ptExg7H3xjAQTLSNn6sgX8M/8yZqkRtsuin0F
+ a8W1MtY86jhDI85o8ocE4MZ+EKTFxhLZRBSf7CO+KxasMhllZqEQJv1FMvFQVj/67J8PQ=
+X-Received: by 2002:a05:6000:178a:b0:43c:f49f:9b7d with SMTP id
+ ffacd0b85a97d-43cf49f9cdemr20519067f8f.17.1774962926486; 
+ Tue, 31 Mar 2026 06:15:26 -0700 (PDT)
 Received: from localhost.localdomain (43.149.216.82.rev.sfr.net.
  [82.216.149.43]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48880d864b7sm6316385e9.3.2026.03.31.06.15.33
+ ffacd0b85a97d-43cf21eb95fsm28884567f8f.12.2026.03.31.06.15.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Mar 2026 06:15:35 -0700 (PDT)
+ Tue, 31 Mar 2026 06:15:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/11] MAINTAINERS: Separate QDev section from QOM one
-Date: Tue, 31 Mar 2026 15:15:04 +0200
-Message-ID: <20260331131514.21152-3-philmd@linaro.org>
+Subject: [PULL 01/11] ppc/pnv: generate dtb after machine initialization is
+ complete
+Date: Tue, 31 Mar 2026 15:15:03 +0200
+Message-ID: <20260331131514.21152-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331131514.21152-1-philmd@linaro.org>
 References: <20260331131514.21152-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,58 +99,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QDev is about QEMU devices model API, while
-QOM is about QEMU object model in plain C.
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
+Currently, the machine dtb is generated in pnv_init(), before all devices
+are fully initialized. This can result in an incomplete dtb for the system,
+as seen in bug [1].
+
+Fix this by deferring dtb generation until machine initialization is complete,
+using the machine_init_done_notifier hook.
+
+[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
+
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-stable@nongnu.org
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260327124136.983955-1-shivangu@linux.ibm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-Id: <20260325151728.45378-2-philmd@linaro.org>
 ---
- MAINTAINERS | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ include/hw/ppc/pnv.h |  2 ++
+ hw/ppc/pnv.c         | 58 +++++++++++++++++++++++++-------------------
+ 2 files changed, 35 insertions(+), 25 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 81f49b232b5..de8819b7aaa 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3546,24 +3546,29 @@ M: Paolo Bonzini <pbonzini@redhat.com>
- R: Daniel P. Berrange <berrange@redhat.com>
- S: Supported
- F: docs/devel/qom.rst
-+F: include/qom/
-+F: qapi/qom.json
-+F: scripts/coccinelle/qom-parent-type.cocci
-+F: scripts/qom-cast-macro-clean-cocci-gen.py
-+F: qom/
-+F: tests/unit/check-qom-interface.c
-+F: tests/unit/check-qom-proplist.c
-+F: tests/qtest/qom-test.c
-+
-+QDev
-+M: Paolo Bonzini <pbonzini@redhat.com>
-+R: Daniel P. Berrange <berrange@redhat.com>
-+S: Supported
- F: docs/qdev-device-use.txt
- F: hw/core/qdev*
- F: hw/core/bus.c
- F: hw/core/sysbus.c
- F: include/hw/qdev*
- F: include/monitor/qdev.h
--F: include/qom/
--F: qapi/qom.json
- F: qapi/qdev.json
--F: scripts/coccinelle/qom-parent-type.cocci
--F: scripts/qom-cast-macro-clean-cocci-gen.py
- F: system/qdev-monitor.c
- F: stubs/qdev.c
--F: qom/
--F: tests/unit/check-qom-interface.c
--F: tests/unit/check-qom-proplist.c
- F: tests/unit/test-qdev-global-props.c
--F: tests/qtest/qom-test.c
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index 24f8843a409..90028f974da 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -111,6 +111,8 @@ struct PnvMachineState {
  
- QOM boilerplate conversion script
- S: Orphan
+     bool         big_core;
+     bool         lpar_per_core;
++
++    Notifier     machine_init_done;
+ };
+ 
+ PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 7e54b6bc604..524563dcfc2 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -748,31 +748,10 @@ static void pnv_powerdown_notify(Notifier *n, void *opaque)
+ 
+ static void pnv_reset(MachineState *machine, ResetType type)
+ {
+-    PnvMachineState *pnv = PNV_MACHINE(machine);
+-    IPMIBmc *bmc;
+     void *fdt;
+ 
+     qemu_devices_reset(type);
+ 
+-    /*
+-     * The machine should provide by default an internal BMC simulator.
+-     * If not, try to use the BMC device that was provided on the command
+-     * line.
+-     */
+-    bmc = pnv_bmc_find(&error_fatal);
+-    if (!pnv->bmc) {
+-        if (!bmc) {
+-            if (!qtest_enabled()) {
+-                warn_report("machine has no BMC device. Use '-device "
+-                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
+-                            "to define one");
+-            }
+-        } else {
+-            pnv_bmc_set_pnor(bmc, pnv->pnor);
+-            pnv->bmc = bmc;
+-        }
+-    }
+-
+     fdt = machine->fdt;
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+ }
+@@ -984,6 +963,37 @@ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
+     return chip_id == 0 ? 1 * GiB : QEMU_ALIGN_DOWN(ram_per_chip, 1 * MiB);
+ }
+ 
++static void pnv_machine_init_done(Notifier *notifier, void *data)
++{
++    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
++    MachineState *machine = MACHINE(pnv);
++    IPMIBmc *bmc;
++
++    /*
++     * The machine should provide by default an internal BMC simulator.
++     * If not, try to use the BMC device that was provided on the command
++     * line.
++     */
++    bmc = pnv_bmc_find(&error_fatal);
++    if (!pnv->bmc) {
++        if (!bmc) {
++            if (!qtest_enabled()) {
++                warn_report("machine has no BMC device. Use '-device "
++                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
++                            "to define one");
++            }
++        } else {
++            pnv_bmc_set_pnor(bmc, pnv->pnor);
++            pnv->bmc = bmc;
++        }
++    }
++
++    if (!machine->fdt) {
++        machine->fdt = pnv_dt_create(machine);
++        _FDT((fdt_pack(machine->fdt)));
++    }
++}
++
+ static void pnv_init(MachineState *machine)
+ {
+     const char *bios_name = machine->firmware ?: FW_FILE_NAME;
+@@ -1244,10 +1254,8 @@ static void pnv_init(MachineState *machine)
+         pmc->i2c_init(pnv);
+     }
+ 
+-    if (!machine->fdt) {
+-        machine->fdt = pnv_dt_create(machine);
+-        _FDT((fdt_pack(machine->fdt)));
+-    }
++    pnv->machine_init_done.notify = pnv_machine_init_done;
++    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
+ }
+ 
+ /*
 -- 
 2.53.0
 
