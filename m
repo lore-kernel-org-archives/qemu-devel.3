@@ -4,57 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE6E109B467
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9416B109B46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7ZOd-0003DL-GU; Tue, 31 Mar 2026 09:44:43 -0400
+	id 1w7ZXx-0001Cv-GU; Tue, 31 Mar 2026 09:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w7ZOK-0002tN-HJ
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:44:25 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w7ZOH-0000Yo-IH
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:44:24 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 62546596A1D;
- Tue, 31 Mar 2026 15:44:18 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id oW-cbBo8E-7U; Tue, 31 Mar 2026 15:44:16 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 5BFE25969F2; Tue, 31 Mar 2026 15:44:16 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5A2355969EC;
- Tue, 31 Mar 2026 15:44:16 +0200 (CEST)
-Date: Tue, 31 Mar 2026 15:44:16 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>, 
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 1/2] ati-vga: Silence warning about operator precedence
-In-Reply-To: <29055103-a354-4079-88fa-ee239a3aa2ef@linaro.org>
-Message-ID: <d7da2429-ebbd-c14c-15e4-f6fc70f6bebd@eik.bme.hu>
-References: <cover.1774904832.git.balaton@eik.bme.hu>
- <24161ec41f118ad097387f8a84897dee7b4747b8.1774904832.git.balaton@eik.bme.hu>
- <29055103-a354-4079-88fa-ee239a3aa2ef@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7ZXt-0001Bx-Rl
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:54:19 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7ZXs-0001th-75
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:54:17 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6501d242e2fso3906016d50.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:54:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774965254; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WJ0Wqk8HCaDonVuaSSAKaQzU/lse852eVWtefsOJnpSWvYTKuqzkjVMH4HbweP7zyj
+ C2kx4jS17sJ8xlrJsAwhlyNNHqRfkFJ5ArSJv4EPO957PGsEfs5KVzFZKa0E6dxpz1QU
+ qlIoldZq/vfi2yPGYfaSpfMSFWuzeN+8eHaONThmifSzRdSZoJWQi3sIvG68aEGK7YCN
+ nR22O9plA85OBPvH423H6BJQKDcRkaS+JU/xPJOErVNPs4JkEIZt3FZZQ+99qrBSLqHR
+ TbHVECfbArLZOaIZwK4pqHLi4J0oRMP9z2aStd7HdlCzRw5fq0Wd4NUCA/jdLj3SbPW5
+ 4O7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=OzoGAuqd+JIW6Qj2wHgdA0P0GfC5Dsn9nRZnPBlQl7o=;
+ fh=5gSe9iae03psNksqgjd7tPo7vDgbnkSeGJyGDPz/YDo=;
+ b=im3Kr1EWngldG1OKJqS2d5idyZKFmjg7icF9LlO+GV5U66/K9d9Vhcl0YmU89K8LCy
+ gk3cpPgM9+XWWsdmHHtJSCE+tmX4fI/5hL+KN/B5uAXNbd6dDWH9Wpei2U8SrC1uVYjg
+ LYH8D6c7eGtTtHqRyvMFwkQVqU0DOjqEBZ+strlf1Jk04uK0Wd78fTjPixc8AoxVMeYs
+ IB1N0vlTI8aVRU1UJ59yjK/SjKnKTkLy2Mp331U0JWOhpwPQivYbCAe7hD+hgi6KJMc8
+ qDj8fa3P0haI/CX5bNlZsCt7AGGym1gKwKcckss3u9qlAApiNnIzq3IEGigFDLj54l7k
+ Aywg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1774965254; x=1775570054; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OzoGAuqd+JIW6Qj2wHgdA0P0GfC5Dsn9nRZnPBlQl7o=;
+ b=yTuSSXrSMqLK/lQhxnLKL1fgGI4fofK4MIvBVYszbcKM3lBiSOBIeynr3WqV9WKn4x
+ y/QU0lt/6PPjoPCF//+cRD0H6mettc3NzplY7L+8X5bz+xfLtDEAPsphRhNhyfYwSC1A
+ nptjwtOvjXH+U2ySszyMvT3Q35CYAti+eGSj4LXw872XsI3l4Kbqam/nyxCjz6KwpcMp
+ VuAnjU3mqVXZtfFactgZMaxJZsXcs874nTiEx9pvq2po0G5/dbCFVsP0NWEj4waWnOkd
+ P5eE/zudiponHiID+UMMuJsRlbAUrplBk6aMZh4t7PqqcXf7TnbOTbCq5ne281kAHbPA
+ 83CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774965254; x=1775570054;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OzoGAuqd+JIW6Qj2wHgdA0P0GfC5Dsn9nRZnPBlQl7o=;
+ b=GmYwH0ySkaz15TOl8LPcmKZFwnp+jWJe+Wkt6/6TwN/YLFbX5H+GwzDyN0FB24ArzT
+ 3o3XdbDIOPkq/uB5aLsEQyBNWxPsBb0waN0slPSNoEl1VN2yvk7/b+2VF6y+lEzgVshs
+ +wNGyF5zB5uYzso4c8jMOwrMle/h4FY9wh0gl5+Yy/rp5/kdFneFj6xB2eC0I59jvcOS
+ fQRIZHfmB5BHC4SUd/54bJoIWuoaBw4Vo2bE6aZpA70JkzZ61lSsJ69tuvSvHLmnCrMi
+ AD+snU3cavlHMUxdnaJTj08s9YXmjiktKe6+x9jGbbFyoX6500qBBmqPoUu49KpOVc5l
+ qnyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUw3U41VgfE+1ZRZJbDaNkgnAkrtfCLVzi7G/fwoetAiHkMutY+47Sg6vyAfnelKpw2rQR3fFpevPti@nongnu.org
+X-Gm-Message-State: AOJu0Yw/CqNk34HOazPNG9/X90FaRi8jHnXhHgVXIG7y+au5lBU0NDEr
+ zbA5g8DJS58J+avuvwjNSRVPL6o1suwKeDbmJI9VCg8pnWhbz7DL9XnuJ81gGY0StF0wBNy3s0l
+ xYQa0jtT36yS68tH0jy+rDEzAmKgSaku6cnwmphvu7g==
+X-Gm-Gg: ATEYQzywLYTieLJi5vXVuvXvSRbMFWKqsbkK0pxaz8fQmimWkGeTtq0/Gy5QhgKfPwq
+ iKwQ1w/QjGWNOqYEf9sNYCzJ3UHhk9/yhZdNwB2GcOqbaVw+m+1wZCoGxD8Es4Ap98NCiCeJPyW
+ SmQ3qmSkF3eog+GFv52iZcQYNGimnXhPFzqAOByko0m6HXHuX3EnDlrXJs+rEYWwTkhUpTGn6O/
+ PXn+jRKczbs/DW5XTyaomdoQrvcjnA6mVuuszg2O5F3GaMr2zwZdTQaZIPUMFCZK+v4RyhJHbtt
+ SHkN/Wo46GQPLmb55bUbkhyYc1h73KtyhP0z2rqs+I8e0xuYERN0cOyA/C19q3t5xUU=
+X-Received: by 2002:a05:690e:dc6:b0:650:18fc:f557 with SMTP id
+ 956f58d0204a3-65018fcff27mr9201375d50.56.1774965253988; Tue, 31 Mar 2026
+ 06:54:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1636160200-1774964656=:7804"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
+ <20260223134731.2377432-73-marcandre.lureau@redhat.com>
+ <9a0eda08-0474-4283-8060-e8b31193ed59@collabora.com>
+ <CAMxuvazuUAzB7gU1RzAgf12WEQHTiF86Z1R8+dZ8CE7noEvRgQ@mail.gmail.com>
+In-Reply-To: <CAMxuvazuUAzB7gU1RzAgf12WEQHTiF86Z1R8+dZ8CE7noEvRgQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 31 Mar 2026 14:54:02 +0100
+X-Gm-Features: AQROBzCoQ17WmFe8octDW5PwUdvpQX_lH2QuvWsw73vfdx1lbtsP26mdrKxMLDg
+Message-ID: <CAFEAcA-AV2T1wdKueMAWGL8Q8co-kCBxi=fPWDeiNs3WD28y5Q@mail.gmail.com>
+Subject: Re: [PULL v3 72/85] audio/mixeng: replace redundant pcm_info fields
+ with AudioFormat
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-devel@nongnu.org, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,50 +125,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1636160200-1774964656=:7804
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Tue, 31 Mar 2026, Philippe Mathieu-Daudé wrote:
-> On 30/3/26 23:09, BALATON Zoltan wrote:
->> Coverity in CID 1645969 warns about possible operator precendence
->> issue which is a false positive in this case but simplify the
->> expression to silence the warning.
->> 
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/display/ati_2d.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
->> index 23527b2c50..9baf6ff37b 100644
->> --- a/hw/display/ati_2d.c
->> +++ b/hw/display/ati_2d.c
->> @@ -91,7 +91,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, 
->> ATI2DCtx *ctx)
->>       ctx->host_data_active = s->host_data.active;
->>       ctx->left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
->>       ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
->> -    ctx->need_swap = HOST_BIG_ENDIAN != s->vga.big_endian_fb ? true : 
->> false;
->> +    ctx->need_swap = (HOST_BIG_ENDIAN != s->vga.big_endian_fb);
+On Tue, 17 Mar 2026 at 14:02, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
 >
-> Do we really need the parenthesis?
-
-Should not be needed but it may be more readable and Coverity warned about 
-the original that did not need parenthesis either so it seems the safest 
-to write it this way.
-
-Regards,
-BALATON Zoltan
-
->>       ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
->>       ctx->palette = s->vga.palette;
->>       ctx->dst_offset = s->regs.dst_offset;
+> Hi Dmitry
 >
+> On Thu, Mar 5, 2026 at 7:55=E2=80=AFAM Dmitry Osipenko
+> <dmitry.osipenko@collabora.com> wrote:
+> > Audio (driver=3Dpipewire,model=3Dvirtio) is broken/distorted on staging=
+ tree
+> > and I bisected it to this patch. Can't see anything obviously wrong in
+> > the code, any ideas where the problem could be?
 >
---3866299591-1636160200-1774964656=:7804--
+> I can reproduce this. I'll look into it for rc1 and let you know.
+> Thanks for the report.
+
+Hi -- did you figure out the cause of this? As a regression in
+this release it would be good to fix this.
+
+This has been reported also as
+https://gitlab.com/qemu-project/qemu/-/work_items/3368
+
+thanks
+-- PMM
 
