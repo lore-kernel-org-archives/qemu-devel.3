@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB84FF60DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 08:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C63AFF60DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 08:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7U6C-0003Oc-N3; Tue, 31 Mar 2026 04:05:20 -0400
+	id 1w7U8V-0004p9-Nv; Tue, 31 Mar 2026 04:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7U6A-0003Ml-4E
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:05:18 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1w7U8S-0004nE-9Z
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:07:40 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7U67-000231-F2
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:05:17 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6501e465a8eso4777315d50.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 01:05:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774944314; cv=none;
+ id 1w7U8Q-0002Ae-RT
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:07:40 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6500040ef85so6166648d50.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 01:07:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774944457; cv=none;
  d=google.com; s=arc-20240605;
- b=AmukLlMLeuSK/0mvwCSdPIF/G/xLWgiw/zRw4BSfzT9OStIxEitwf+NnchVCz0t2DV
- 1GlANC7XK5azenNQ6JN/5d9h6GUsS1lg5jgClhcQeYF7vKN8LvxHyPHL14/rYMYAcde+
- OoNdgBAujLJ9WXcZt1pO1ke+JC3ijC1S4xYSC0ER/XQ2t6w3OFbkkfJc7DRGoKZbqbUf
- cLv5voSWG7UD/347eekSHI1Gg/LzB6Fx9XgJinjsxS1m9IZhSWnH54DNSSQ79Oy1l0DD
- WbcLnnjxlMThEFrkX7/TqzlANQJdI/kVBFaGKDj/+rx04xEziu9IrE5TZnmfwzQZVtFA
- C5bQ==
+ b=BZXDZv4GDNcuFM21jO4C6Hixg6V9IqkAMWyDA1Vttwc9tWHP1w1UJtIcdNn1XwR+BF
+ 1mq4DytobFihVt3LJWS/GyIA3Bo/GHGyD8z6zGVIcB8QTOrNC386htWDA5H2jBLeOYxg
+ scaPno69fQ3Q9QP52IaGc05Pv3D3j/F8FsLTOTuVdHnOBJ11OWTTr/r9PputQz6jMJi3
+ eoxUgBJI5v39G1vVP8VGmypxg4wtEM+nAc8sWeenUbgWsGSxJq2XWmd+fFWqKnpP0GkX
+ vjof0m+JlkuEcUm++M5F31NFex98Nz6dYpIvgW3qqEDtQr+hH+viH7yu4xhLQ6YmxP8H
+ RkQg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2SCSCG4h5fG8qPnYLPEt8MAeV8OXZKg8XY4JHE2gDfI=;
- fh=lSj/1hQsilLqqrIQB6s4Q1wh6081l/JyVKvt7e1AODI=;
- b=YxP7GespqBTuVIjLl+MYFa4adMRQHtEp7C2YFXUVuyAwpoM4kmYR8ueRGBZKv1HsQX
- iWI7+e5FaOOM0VYfbQtwUNm87WGi993Re/fw0wakLb7EG08qLqq3/2YlktFEIn4qZPSR
- zNCQb6qIF4R2W9uwNJquoeEKWwszK4sfO3ie7mCabxxOFCNum8lCGYJ1Qeq5E8SJ9hxh
- u6BVev0yiyqHDh64gBBQBLsxvaEnA4UnEKhDse3IdlF586yIZOSTR+v115A/TDbvoZ63
- LTj2I+FXIufJYWSfIXOZoN7BbKle/tL4bmKOTjxcLCkZZ/D0mNk5O5OrQ6+EDZrqqu0z
- cOLA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=/ehRP7EKw8h7MDm4UCqW+xjOw9C8D8FKNBarGP8i1/E=;
+ fh=axbB2bjiSokmisYx3H7DI5yUO3Z+Sykod4F4JR7lPwk=;
+ b=WhOhvqEXzQihS3eIgeoPcflZHkzkfsT/nmKFHR4nBgyStR3aROdzbh4lvZcQuzMOLd
+ v2zkvP8kigDWR0MhnjFusPBZliIxO9M0Y5Y/Iq/LCZIq7/9MRYG9+iCC+Ysd4V/DWKMl
+ UbsDWqVqfnIq4Rmf9zC2snn0YlcfJfEMultVXKd1kFU3MFtSrCsOlnKTU0/ktMaASacX
+ jbnxJp9rjT2DQB1iv89J0zZL6OqBMYUgxpi9dXp26LB+2tBCVtk6dnGpuTYwHx44rG8R
+ PHzD0koSowp4Q+CIvhARxcISnsqIiVHKizX8ngkOH+DFwh2k/gapfa2EjV/M7jhROrze
+ xIDQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774944314; x=1775549114; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2SCSCG4h5fG8qPnYLPEt8MAeV8OXZKg8XY4JHE2gDfI=;
- b=hM6mvRPagpBvtpNIWAK5tJwu9Mu4dx7p0GsnRqe18PRbGY7Cg1jAe5UZI5LwwAwd7Q
- hCVPKEN4M4aOQCLPyd0S9nzG9d2NuhKIQdA3SN7vWGgjIl6RCOJa1uRbVPCKMelYT8ES
- ljS2pLbB/lM77Nj0mGV7ncVH3zEIBc44PUG4N+H3VTMDPF8u6egVfCegAekKXBiZg8kF
- BZwxgdR9FAJ2qbX+3w1ggoGXfpCkE3L6kqejF594HT38tweSX82VnaEOAgSDJNyd3/ix
- QZSrVruEKtxwBvrWwyguifPfCwoiM3Q1w9HGAi6KfUaOGsXpTcnrbKjHbz5zDseUMJzS
- X22w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774944314; x=1775549114;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1774944457; x=1775549257; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2SCSCG4h5fG8qPnYLPEt8MAeV8OXZKg8XY4JHE2gDfI=;
- b=R/REctVex3L2dT+yIN2D6ilWOjRIjVIdTkP7tJ1oG/nEcyPsrId2nNIyh4DObvcp2y
- qrS8NFV1293Rbf8ZVR9Gk8Olth7dVzAwl2R7v1d8ve3F2f2naDCfgXwX+gp6Nexyae3l
- UtQEF+XHlXDpiYYy5Td7nrpHxsKQznH1fiA00dh7NyvtE9YqKjeMGF09Gw3er7y7zhNX
- RdElVdPDDln9o+wFt8gZJctshHNq3hneUhvSB5iZphQIei4zbJsdh2ctUEehhCOBXyjF
- wBiD6Vs2a7xLFYF0lNfVTA+F+pkmg1ZqFMUkUW8czeIOzzi1GprSBfntx2SAFhgzQD3q
- 6QUw==
-X-Gm-Message-State: AOJu0YxVzusOZSksXg1T8ZTCzSb79D1B8M7U5ZcsUjU+nSfB44kx63X8
- 8v20sixn60Jg9Q4bqXF/0JKWhhlUrcd6tDG7uFNXOgtqyPeWHCXLNNSBE+nxUgtavrrDPrcWLU2
- OX8Y0+yrxcCcU1qgGnR9vdSDcvsIF29ul3iMNvjYdcLDOKuNkrI1pLTM=
-X-Gm-Gg: ATEYQzyVq1N+2+gHV+ft27UL53hDqns8WtehEtkI2vJ09yTkMCu5P+CuLMVsgUiBCkt
- 05i8uGLWovohgPznqNoup7OZRHgYD9PEo/WFp3x+B5O2qXZephwRrCUh5nhGHKk7bidBN3NRfxz
- GCnDIN/hdoFnw2CvI51Rv2pp2xeTqH3+2H5REBPL/EEBZyUderSbbal89EKfdRMFgwP4wE8seke
- v7J2BThixDuSXb9mki+CPvOXoImhj2LbMnmFLTls/i6wAUuWXbMmadzNyJ1u+koqsWd9qtLjY5y
- DyetdDvESZv7WOi5e+3rmAKBBp6P+DRRRmdbN9nRoOQVcsJCo7DeYbBtpI0cmbJdJhM=
-X-Received: by 2002:a53:dd4e:0:b0:650:1cbb:50a8 with SMTP id
- 956f58d0204a3-650267864e4mr1687622d50.26.1774944314347; Tue, 31 Mar 2026
- 01:05:14 -0700 (PDT)
+ bh=/ehRP7EKw8h7MDm4UCqW+xjOw9C8D8FKNBarGP8i1/E=;
+ b=GJ3AfpQpsvYdM/U+X4UPvTwt1d01NW4OtuWVHmvRaW2SEkUrQsYT/oJRNu9ryBNbuP
+ Etb0RGVxW2apNRyMrsPqS94GLzJovTOPocTsAFZotHYNZATNrQ/+t3m1IK60Pu5C3KIJ
+ q5rAftyx90ifkie87/QJ4MzAO1EIbcPT6WE1DY37XLlG+uHVDZZkjkxza/b0hhwfsy6N
+ WcDmjnhrOlyGxib3OV9sVDFyNsz7rvehpJ91Q9GW+HvmWwreDxEnR/6237Uq1Cv4QoE0
+ g+XYxjQZIGE+5GlpEYWxO7haOOrN9ucTkvCMBbo/xH5+OUnFBq48wfZuvfSCYw2LJ4zD
+ kolw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774944457; x=1775549257;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/ehRP7EKw8h7MDm4UCqW+xjOw9C8D8FKNBarGP8i1/E=;
+ b=B7im/0ff9qV35N5xQgswDG0b2znmvvxDSG1SUIqc6OPZBhuziUUH3sU641JPr4+zzc
+ iuqa4Yn/qU9T3cJIYvF5Gy3Fviw9lm388Gmxz94R6Yv7Cd05thBAXLc8BdOXu3mCv3uc
+ G+gVcE0CJixHUsY/Dzl+hEWJr/ozXRhhu6+UpA7b0fpwPepvN8Z0bOUZxzfEeXM64RdP
+ y32AJB6+3ni7U8TYIRvWfiCfB4iQkS7kDVI6LsUIU2dZK00br+nMWkTEIIvWlDd5hIpX
+ bJ30/kci8551GBN3CQmmljHIMshE7niIfglRKiGf/QNI0CwVv7m8u2wN53eLWnR3+ivr
+ elIA==
+X-Gm-Message-State: AOJu0Yz8jEXWcoLpxGFMj+l4YfEBYRwUT/IYPthCYR1pYU+kchrw/p1l
+ bUaCM/RWYIZ015637P97VzK3XxEEw+hNJ/4/fpgUjd/oXBuUYh2wpglsBslgaTe5LT/yrvkEkDj
+ nXg3oDhF2CbKdKRI2jtUXDUQHcx1Vt2UI0lpqicjC8w==
+X-Gm-Gg: ATEYQzxgGyzHkgzFH5ojJk1R1tEn4KgSa5ASsET3Qtn33iCrD/YOVpfPUf1nYF11u9/
+ c2Q6WSAlQ9CgMqhS9BLmLMwJspPmU7RT9nRcNXfydyRfAyo/VFuhWlL+fLbbMxhLScivB0coQXj
+ 6zD+YvsCxVAeWV44iEMFBuBvjCt5eZTeUoxEW5Ev/T9MSLgR9cJHITHLwA86cGvAZMdGKk5LA8O
+ fQbse09O2CFBMjvq65w+E1VGnIFVO9R/i8qlaiV5nsVVBnhfxmvddrNjgMIR1Rr2N7K74NLC3Hr
+ JUKingSw1cmm2hYguSxgaQQoCGCq0LJbZw8wp1+TPKceQ74mmHK/JZ1/zqNdnD9/48c=
+X-Received: by 2002:a53:b10a:0:b0:649:ef87:5bc8 with SMTP id
+ 956f58d0204a3-64ff7198bddmr13943091d50.7.1774944457371; Tue, 31 Mar 2026
+ 01:07:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1774904832.git.balaton@eik.bme.hu>
- <541ffffdaa4c67b9dcbca6c2498e69b137bce95d.1774904832.git.balaton@eik.bme.hu>
-In-Reply-To: <541ffffdaa4c67b9dcbca6c2498e69b137bce95d.1774904832.git.balaton@eik.bme.hu>
+References: <20260331070401.1125840-1-alex.bennee@linaro.org>
+In-Reply-To: <20260331070401.1125840-1-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 09:05:02 +0100
-X-Gm-Features: AQROBzB-7QEHI4Hs9uDLhKJxkdSn4L7YVM9Ym2-aMucv54PlmXW69dh06Gf2oJA
-Message-ID: <CAFEAcA8y1AD1v3J1A4ZFtm-8nzr75uiQtBwP93LibCznPQhK8g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ati-vga: Add upper limit to x-linear-aper-size
- property
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Tue, 31 Mar 2026 09:07:25 +0100
+X-Gm-Features: AQROBzC5PU0-qCSPfY8C-0lI78nNcS1FvIPd2Pk82QRUncu_4FCrG9Q-MTcboi4
+Message-ID: <CAFEAcA_jwG09k0nT62dyiXP6bqeQJbiF5hqzGkM7ASK50aW7Ng@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: fix OSUOSL typo
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,36 +115,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Mar 2026 at 22:09, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+On Tue, 31 Mar 2026 at 08:04, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> Coverity warns in CID 1645968 about possible integer overflow. This
-> should never happen but to ensure that, add an upper limit on the
-> x-linear-aper-size. This may not silence the warning but makes sure
-> users cannot cause an overflow.
+> It stands for Oregon State University Open Source Lab.
 >
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > ---
->  hw/display/ati.c | 4 ++++
->  1 file changed, 4 insertions(+)
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index fc19737d1f..97d871b1e2 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -1130,6 +1130,10 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
->              s->linear_aper_sz = ATI_R100_LINEAR_APER_SIZE;
->          }
->      }
-> +    if (s->linear_aper_sz > 256 * MiB) {
-> +        error_setg(errp, "x-linear-aper-size is too large (maximum 256 MiB)");
-> +        return;
-> +    }
->      if (s->linear_aper_sz < 16 * MiB) {
->          error_setg(errp, "x-linear-aper-size is too small (minimum 16 MiB)");
->          return;
-> --
-> 2.41.3
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index cd8ba144506..84ea3f2469f 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4526,7 +4526,7 @@ R: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>  S: Maintained
+>  F: tests/tcg/Makefile.target
 >
+> -GitLab custom runners (HW sponsored by Linaro, OSOUL and IBM)
+> +GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
+>  M: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>  M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>  S: Maintained
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
