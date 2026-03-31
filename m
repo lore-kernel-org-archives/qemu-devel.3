@@ -4,125 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EF61061B34
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 11:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A511061B39
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 12:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7XMR-0001wc-GR; Tue, 31 Mar 2026 07:34:19 -0400
+	id 1w7Xtg-0003NU-Kn; Tue, 31 Mar 2026 08:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w7XMO-0001vR-V7
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:34:17 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w7Xtf-0003NK-23
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 08:08:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1w7XML-0005cq-8y
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 07:34:16 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w7Xtb-0001qg-ES
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 08:08:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774956851;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
- b=Gm7OIxEtYbjAQeQjLQB6wMS9Ngu9pokRs3qdMOJ3s9Dv+jPteP+kFFTf7wXhvU1o2hitI2
- VTek6PeV/m+n89I9r885sX6iimTqJDHkSifw5Te6C5TQiQNvdXo2pl4DkFb6kqeoG44gaa
- GbxKqyC+/+Ll5UjvpfIQLU4avjoTkmM=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-164-exw3SzQCNH-fnraJfy2PMQ-1; Tue, 31 Mar 2026 07:34:10 -0400
-X-MC-Unique: exw3SzQCNH-fnraJfy2PMQ-1
-X-Mimecast-MFC-AGG-ID: exw3SzQCNH-fnraJfy2PMQ_1774956850
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-65019a4b560so3088736d50.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 04:34:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774956850; cv=none;
- d=google.com; s=arc-20240605;
- b=WmUXXOugrh23amUL+mGzYvgMDujL+/LSGXzYfRSSls05Hdpj8rfJ0oLC+EPsFGRvEH
- n88psO4Nwcg96IiGJYsvke9s/l4RZeaZJ/oaUWDbsHcqv9QV1O5bZ6/IDlgQhZeuuu61
- 8ksDUjRXLwJFRCT4zJ0MW8OE18zpEaio5OwryVh2MA62uzppmKYHu4V08Qij/gWDvgl+
- Ec3ww1wxA3xKaxV/6tR9afj+7TwzJMV2PZKXBNgipzwg6P2xy5GNYypWhj8bF+t9apv+
- hxW7nqUD7/w8u5Lx3DmdPK8VOfbo8OVZQRiNreXbXnvRrNkOXxANZF0jy1smordpw57j
- +xwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
- fh=pXm4kqJhz0sclCsk7unKqGwgbqBi3wrCcjfkkZ1CYHI=;
- b=a9mWTN9VdaVw6lDw1mItfkIeKlmoLziLLB2rw90XTSXfKvxt+RPNSqXRzoce8in7kd
- 9anGHWAJS0dC6IPJ4J9rh+sM8oHSAAd422CkIexPEL7hlvRgYk+VulAf/lrJEzZffP9H
- sOOUAkATdjI+sM62CKpC1flhXAmEuT/RVsrM3G5ARxQhI1d4XQ/nT8eC5Unep8rui1jO
- 1NPRavPeTnXwpC76FBsv9VkLm+dsrpvGox9+8fme3bB5Egn27B8LpPzjLJETRg+YFpen
- 9ka9wCqJvVKqJGII6fvCJ9yVU85/W9umn5rfPZIiOTYw8KJc+qEX/3VU2z8bJMY9NlR6
- C0EQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774956850; x=1775561650; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
- b=CW9eJNRdK9iJt9WwF3ycdzaIdp19emtAs/xIoW8kvNJLk+0tEfibjURAq/EOM8td5Z
- mV/E/HQ3CCCjJawXxBen1qaHs6xubyKu5KjE77+I5LlU4wFA7S+ma2KVqRc8PQltwXPq
- 6I0BmBnnUNAKlDzGTWDz9sR2+vgioanIIVYN1So+ENmJwhsrxLRmgmJDLtWmgmVCYXAf
- buJdpIjKvDHTtH2+mu/7oG1JFOYSzf6RmicyW0LaLpJgmoZHM/mDq7dNmtkoAmuxy3kT
- frcDDRSkw3xc3eS5EAJ9Keb3VV0SSLZjiphVmqddu2IXuvgWM6vn8Qt/xEWUF8G7Rfqv
- O7EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774956850; x=1775561650;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rue0E2b6IDP6rIiZ1mkb+/vZyxSBkjesYP+fx3E528Y=;
- b=jl8xDi2Bi/tvy7ADmHk/rFxuaC5Iq60xk3lijH9fA/h00MkZxcEqti7eEYz50055b0
- ofW2s20G3XgF5IIuZO+gwRRVqljH625saUbWroBrywsBYzDBKI+JeQUvoFAdQjaRWlMy
- aXMqrjIbLTCV1MBegZU6DMh2kj7CkJParsG9w+Puatfmhv3N6/nYF6lXEMB8bUDNm8KK
- KX0T5Yw55xxVbqWqH7CIf6zM6joKrPgvFivDPLg0PERfANtzta25Jfp/XDOOZzwep5Eg
- hCmub2SXiq0+V+yJKSq2imsxo0Fw5TQuRGHwsB5ebgwgiaPpHX3ovVwbQyPQD5Kexni9
- R4yA==
-X-Gm-Message-State: AOJu0YwMTCqa+XlVTix3B9LtLu49aL8EZpqEgOPFEYTnrPzdnPv7jdWe
- CUjTzTPVWF8PzGSPOpvGXRIok4VUyRNZ/to2/5CsBIJbVYIkdbhLDdmhnb9+wD5PvALBnHUgaLA
- E/jNnMGtKIj2L6o/eDXMhKqt1wUAI6v7PmUXtrH/paxKeu78EWr68s3sTToreuv8Rr1p+rwVhRM
- ubdX9ddeg37WGCbgDZTYHAgfTm/NrC3/o=
-X-Gm-Gg: ATEYQzwZnBi0eaAE8jETIqlDrrw/uGxkfIegJJDjdaDLNapeSya143Dux2hXwNEZJ9d
- +OiuY3iEiZc65s/5Fw29dMp+43FEcQ4zZACl1HNjZlGoJ3GJRLXyAfb0MPDuIExC6uAPWHFc5HU
- VENDgPtuVmsFN7E6XiZ8AGQpySLdsSDWmAUc1A+4GN29E070NYnebHLM7aHy1X8MFODwCdLnCkf
- Wn0fl7gCtCMcHdJ1TlC/CZwBOhmvC2VNsBVKb7D
-X-Received: by 2002:a05:690e:120f:b0:64d:626a:f4fd with SMTP id
- 956f58d0204a3-64ff743d5b3mr14352061d50.71.1774956849681; 
- Tue, 31 Mar 2026 04:34:09 -0700 (PDT)
-X-Received: by 2002:a05:690e:120f:b0:64d:626a:f4fd with SMTP id
- 956f58d0204a3-64ff743d5b3mr14352041d50.71.1774956849210; Tue, 31 Mar 2026
- 04:34:09 -0700 (PDT)
+ s=mimecast20190719; t=1774958913;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=86u4SnaralWiFYvcau7oY+sulsa68QxIFc5P6dciLoE=;
+ b=iDcuRUV6NEPIe10BANIjBHUp5a47VtR4zjEQbh1kTObH0wlxk7+bt0rGLUQ7utVY9oASm+
+ aLcSJiQCC5CIPOTaL4DO35paTRjHlUo7WuEoTzcN8s9EW4o1HThWeYTXx+nRp3GC8RmSwU
+ PpLHjTLbaiBuEymZKap3loWn1m2YHyA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-O-dYkiM3Mrqh7KI1p3tjtg-1; Tue,
+ 31 Mar 2026 08:08:31 -0400
+X-MC-Unique: O-dYkiM3Mrqh7KI1p3tjtg-1
+X-Mimecast-MFC-AGG-ID: O-dYkiM3Mrqh7KI1p3tjtg_1774958910
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9A9919560B8
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 12:08:30 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.79])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0C671800351; Tue, 31 Mar 2026 12:08:28 +0000 (UTC)
+Date: Tue, 31 Mar 2026 13:08:25 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Elizabeth Ashurov <eashurov@redhat.com>
+Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, yvugenfi@redhat.com
+Subject: Re: [PATCH v2] qga: add security info to guest-get-osinfo
+Message-ID: <acu5ORMkk3q0Zt4b@redhat.com>
+References: <20260330151941.2207789-1-eashurov@redhat.com>
 MIME-Version: 1.0
-References: <20260320163844.754762-1-lvivier@redhat.com>
-In-Reply-To: <20260320163844.754762-1-lvivier@redhat.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 31 Mar 2026 13:33:32 +0200
-X-Gm-Features: AQROBzB5fGSau2jTpMHGgSFoAvh_Nfn_A0Ehne1FShRSeaXkm-WB7hR9H8Q3F5w
-Message-ID: <CAJaqyWeqgO9fR+Xi5rtBw0VL=gaMBFa9N7wV20bYhEgq3SbMMw@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: allow vhost-user backends to provide config
- space
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260330151941.2207789-1-eashurov@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,226 +82,320 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 5:40=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
- wrote:
->
-> Remove the vDPA-only guard on vhost_net_get_config/set_config calls so
-> any vhost backend that negotiates VHOST_USER_PROTOCOL_F_CONFIG can
-> provide device configuration.
->
-> To manage backends that don't support vhost_net_get_config/set_config,
-> modify the stubs and vhost_net_get_config/vhost_net_set_config
-> with NULL vhost_net parameter to return -ENOSYS.
->
-> Until now VHOST_USER_PROTOCOL_F_CONFIG was requisited with the
-> supports_config flag in VhostUserState or ignored, but now stop
-> stripping VHOST_USER_PROTOCOL_F_CONFIG when the device code doesn't
-> explicitly require it, so vhost-user backends that advertise F_CONFIG
-> can negotiate it.
->
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+On Mon, Mar 30, 2026 at 06:19:41PM +0300, Elizabeth Ashurov wrote:
+> Extend guest-get-osinfo to include security features status
+> (VBS, Secure Boot, TPM) in a nested 'security' field.
+> OS-specific data (e.g. Windows DeviceGuard) is separated
+> using a union to allow future per-OS extensions.
+> 
+> The implementation queries Win32_DeviceGuard and Win32_Tpm via
+> WMI, and reads the SecureBoot UEFI variable through
+> GetFirmwareEnvironmentVariable().
+> 
+> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
 > ---
->  hw/net/vhost_net-stub.c |  4 ++--
->  hw/net/vhost_net.c      |  8 ++++++++
->  hw/net/virtio-net.c     | 36 ++++++++++--------------------------
->  hw/virtio/vhost-user.c  | 31 +++++++++++--------------------
->  4 files changed, 31 insertions(+), 48 deletions(-)
->
-> diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
-> index 0740d5a2ebe6..6edc0a222f3b 100644
-> --- a/hw/net/vhost_net-stub.c
-> +++ b/hw/net/vhost_net-stub.c
-> @@ -53,12 +53,12 @@ void vhost_net_get_features_ex(struct vhost_net *net,=
- uint64_t *features)
->  int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
->                           uint32_t config_len)
->  {
-> -    return 0;
-> +    return -ENOSYS;
->  }
->  int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
->                           uint32_t offset, uint32_t size, uint32_t flags)
->  {
-> -    return 0;
-> +    return -ENOSYS;
->  }
->
->  void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *fe=
-atures)
-> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> index a8ee18a91266..13f926b5cfb6 100644
-> --- a/hw/net/vhost_net.c
-> +++ b/hw/net/vhost_net.c
-> @@ -42,11 +42,19 @@ void vhost_net_get_features_ex(struct vhost_net *net,=
- uint64_t *features)
->  int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
->                           uint32_t config_len)
->  {
-> +    if (net =3D=3D NULL) {
-> +        return -EINVAL;
+>  qga/commands-win32.c | 421 +++++++++++++++++++++++++++++++++++++++++++
+
+This should also provide a Linux impl for the TPM and secureboot info as
+that is platform portable and easily available.
+
+>  qga/qapi-schema.json |  91 +++++++++-
+>  2 files changed, 511 insertions(+), 1 deletion(-)
+
+> +
+> +/*
+> + * Read the SecureBoot UEFI variable.  On legacy BIOS systems the field
+> + * is omitted (not applicable).
+> + */
+> +static void get_secure_boot_status(GuestSecurityInfo *info,
+> +                                   Error **errp)
+> +{
+> +    Error *local_err = NULL;
+> +    BYTE value = 0;
+> +    DWORD ret;
+> +
+> +    acquire_privilege(SE_SYSTEM_ENVIRONMENT_NAME, &local_err);
+> +    if (local_err) {
+> +        error_propagate(errp, local_err);
+> +        return;
 > +    }
 > +
->      return vhost_dev_get_config(&net->dev, config, config_len, NULL);
->  }
->  int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
->                           uint32_t offset, uint32_t size, uint32_t flags)
->  {
-> +    if (net =3D=3D NULL) {
-> +        return -EINVAL;
+> +    ret = GetFirmwareEnvironmentVariableA("SecureBoot",
+> +        "{8be4df61-93ca-11d2-aa0d-00e098032b8c}", &value, sizeof(value));
+> +
+> +    if (ret == 0) {
+> +        DWORD err = GetLastError();
+> +        if (err == ERROR_INVALID_FUNCTION) {
+> +            return;
+> +        }
+> +        if (err == ERROR_ENVVAR_NOT_FOUND) {
+> +            info->has_secure_boot = true;
+> +            info->secure_boot = false;
+> +            return;
+> +        }
+> +        error_setg_win32(errp, err,
+> +                         "failed to read SecureBoot UEFI variable");
+> +        return;
 > +    }
 > +
->      return vhost_dev_set_config(&net->dev, data, offset, size, flags);
+> +    info->has_secure_boot = true;
+> +    info->secure_boot = (value == 1);
+
+Is that comparison of 'value == 1' definitely correct ?  My
+understanding was that secure boot state is indicated by the 5th byte
+in that EFI variable.
+
+
+
+> +}
+> +
+> +/*
+> + * Query Win32_Tpm WMI class for TPM presence and version.
+> + */
+> +static void get_tpm_info(GuestSecurityInfo *info, Error **errp)
+> +{
+> +    Error *local_err = NULL;
+> +    IWbemServices *services = NULL;
+> +    IEnumWbemClassObject *enumerator = NULL;
+> +    IWbemClassObject *obj = NULL;
+> +    ULONG count = 0;
+> +    HRESULT hr;
+> +    VARIANT var;
+> +
+> +    services = wmi_connect_to_namespace(
+> +        L"ROOT\\CIMV2\\Security\\MicrosoftTpm", &local_err);
+> +    if (!services) {
+> +        /* TPM namespace may not exist -- field omitted (unknown) */
+> +        error_free(local_err);
+> +        return;
+> +    }
+> +
+> +    enumerator = wmi_exec_query(services,
+> +        L"SELECT * FROM Win32_Tpm", &local_err);
+> +    if (!enumerator) {
+> +        error_free(local_err);
+> +        goto out;
+> +    }
+> +
+> +    hr = enumerator->lpVtbl->Next(enumerator, WBEM_INFINITE, 1,
+> +                                   &obj, &count);
+> +    if (FAILED(hr) || count == 0) {
+> +        info->has_tpm_present = true;
+> +        info->tpm_present = false;
+> +        goto out;
+> +    }
+> +
+> +    info->has_tpm_present = true;
+> +    info->tpm_present = true;
+> +
+> +    VariantInit(&var);
+> +    if (SUCCEEDED(wmi_get_property(obj, L"SpecVersion", &var)) &&
+> +        V_VT(&var) == VT_BSTR && V_BSTR(&var)) {
+> +        info->tpm_version = g_utf16_to_utf8(
+> +            (const gunichar2 *)V_BSTR(&var), -1, NULL, NULL, NULL);
+> +        if (info->tpm_version) {
+> +            /* keep only the part before the first comma */
+> +            char *comma = strchr(info->tpm_version, ',');
+
+It would be helpful if the comment included a full example string
+from "SpecVersion", so we can see what we're parsing here.
+
+> +            if (comma) {
+> +                *comma = '\0';
+> +            }
+> +        }
+> +    }
+> +    VariantClear(&var);
+
+
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index c57bc9a02f..2247f77cff 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -1490,6 +1490,8 @@
+>  #     * POSIX: as defined by os-release(5)
+>  #     * Windows: contains string "server" or "client"
+>  #
+> +# @security: Security features status (since 10.3)
+> +#
+>  # .. note:: On POSIX systems the fields @id, @name, @pretty-name,
+>  #    @version, @version-id, @variant and @variant-id follow the
+>  #    definition specified in os-release(5).  Refer to the manual page
+> @@ -1508,7 +1510,8 @@
+>        '*kernel-release': 'str', '*kernel-version': 'str',
+>        '*machine': 'str', '*id': 'str', '*name': 'str',
+>        '*pretty-name': 'str', '*version': 'str', '*version-id': 'str',
+> -      '*variant': 'str', '*variant-id': 'str' } }
+> +      '*variant': 'str', '*variant-id': 'str',
+> +      '*security': 'GuestSecurityInfo' } }
+>  
+>  ##
+>  # @guest-get-osinfo:
+> @@ -1952,3 +1955,89 @@
+>    'returns': ['GuestNetworkRoute'],
+>    'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
 >  }
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 2a5d642a6476..7ad2dac450d9 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -180,17 +180,9 @@ static void virtio_net_get_config(VirtIODevice *vdev=
-, uint8_t *config)
->                   n->rss_data.supported_hash_types);
->      memcpy(config, &netcfg, n->config_size);
->
-> -    /*
-> -     * Is this VDPA? No peer means not VDPA: there's no way to
-> -     * disconnect/reconnect a VDPA peer.
-> -     */
-> -    if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_=
-VDPA) {
-> -        ret =3D vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *=
-)&netcfg,
-> -                                   n->config_size);
-> -        if (ret =3D=3D -1) {
-> -            return;
-> -        }
-> -
-> +    ret =3D vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&ne=
-tcfg,
-> +                               n->config_size);
-> +    if (ret >=3D 0) {
->          /*
->           * Some NIC/kernel combinations present 0 as the mac address.  A=
-s that
->           * is not a legal address, try to proceed with the address from =
-the
-> @@ -223,15 +215,9 @@ static void virtio_net_set_config(VirtIODevice *vdev=
-, const uint8_t *config)
->          qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
->      }
->
-> -    /*
-> -     * Is this VDPA? No peer means not VDPA: there's no way to
-> -     * disconnect/reconnect a VDPA peer.
-> -     */
-> -    if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_=
-VDPA) {
-> -        vhost_net_set_config(get_vhost_net(nc->peer),
-> -                             (uint8_t *)&netcfg, 0, n->config_size,
-> -                             VHOST_SET_CONFIG_TYPE_FRONTEND);
-> -      }
-> +    vhost_net_set_config(get_vhost_net(nc->peer),
-> +                         (uint8_t *)&netcfg, 0, n->config_size,
-> +                         VHOST_SET_CONFIG_TYPE_FRONTEND);
->  }
->
->  static bool virtio_net_started(VirtIONet *n, uint8_t status)
-> @@ -3868,6 +3854,7 @@ static void virtio_net_device_realize(DeviceState *=
-dev, Error **errp)
->  {
->      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
->      VirtIONet *n =3D VIRTIO_NET(dev);
-> +    struct virtio_net_config netcfg =3D {};
->      NetClientState *nc;
->      int i;
->
-> @@ -4023,12 +4010,9 @@ static void virtio_net_device_realize(DeviceState =
-*dev, Error **errp)
->      nc =3D qemu_get_queue(n->nic);
->      nc->rxfilter_notify_enabled =3D 1;
->
-> -   if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_V=
-DPA) {
-> -        struct virtio_net_config netcfg =3D {};
-> -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
-> -        vhost_net_set_config(get_vhost_net(nc->peer),
-> -            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONT=
-END);
-> -    }
-> +    memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
-> +    vhost_net_set_config(get_vhost_net(nc->peer), (uint8_t *)&netcfg, 0,
-> +                         ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
+> +
+> +##
+> +# @GuestSecurityInfoWindows:
+> +#
+> +# Windows-specific security features from Win32_DeviceGuard.
+> +#
+> +# @vbs-status: VirtualizationBasedSecurityStatus
+> +#
+> +# @available-security-properties:
+> +#     AvailableSecurityProperties
+> +#
+> +# @code-integrity-policy-enforcement-status:
+> +#     CodeIntegrityPolicyEnforcementStatus
+> +#
+> +# @required-security-properties: RequiredSecurityProperties
+> +#
+> +# @security-services-configured:
+> +#     SecurityServicesConfigured
+> +#
+> +# @security-services-running: SecurityServicesRunning
+> +#
+> +# @usr-cfg-code-integrity-policy-enforcement-status:
+> +#     UsermodeCodeIntegrityPolicyEnforcementStatus
 
-Hi!
+None of these docs are actually useful. Can you explain in plain
+language what they each mean.
 
-This is a vdpa specific workaround, kind of. As an open question,
-perhaps omitting this `set_config` is better so vhost-user has
-consistent parameters? On one hand I think it's weird to honor only
-the MAC address from the command line and ignore all other parameters
-like mq=3D or vlan=3D. From the other point of view, making vhost-vdpa and
-vhost-user consistent offers benefits.
+> +#
+> +# Since: 10.3
+> +##
+> +{ 'struct': 'GuestSecurityInfoWindows',
+> +  'data': {
+> +      '*vbs-status': 'int',
+> +      '*available-security-properties': ['int'],
+> +      '*code-integrity-policy-enforcement-status': 'int',
+> +      '*required-security-properties': ['int'],
+> +      '*security-services-configured': ['int'],
+> +      '*security-services-running': ['int'],
+> +      '*usr-cfg-code-integrity-policy-enforcement-status':
+> +          'int' } }
 
-Or maybe to set the mac address is the motivation for this?
+I'm guessing there that the are all largely reflecting enumerated
+values from the Windows API. I'm wondering how they will be
+consumed by whatever calls this command. Would they be better off
+as enums, instead of plain ints, or arrays of ints ?
 
->      QTAILQ_INIT(&n->rsc_chains);
->      n->qdev =3D dev;
->
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index a8907cca74ec..2c310403851f 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -2196,28 +2196,19 @@ static int vhost_user_backend_init(struct vhost_d=
-ev *dev, void *opaque,
->              return -EPROTO;
->          }
->
-> -        /*
-> -         * We will use all the protocol features we support - although
-> -         * we suppress F_CONFIG if we know QEMUs internal code can not s=
-upport
-> -         * it.
-> -         */
->          protocol_features &=3D VHOST_USER_PROTOCOL_FEATURE_MASK;
->
-> -        if (supports_f_config) {
-> -            if (!virtio_has_feature(protocol_features,
-> -                                    VHOST_USER_PROTOCOL_F_CONFIG)) {
-> -                error_setg(errp, "vhost-user device expecting "
-> -                           "VHOST_USER_PROTOCOL_F_CONFIG but the vhost-u=
-ser backend does "
-> -                           "not support it.");
-> -                return -EPROTO;
-> -            }
-> -        } else {
-> -            if (virtio_has_feature(protocol_features,
-> -                                   VHOST_USER_PROTOCOL_F_CONFIG)) {
-> -                warn_report("vhost-user backend supports "
-> -                            "VHOST_USER_PROTOCOL_F_CONFIG but QEMU does =
-not.");
-> -                protocol_features &=3D ~(1ULL << VHOST_USER_PROTOCOL_F_C=
-ONFIG);
-> -            }
-> +        /*
-> +         * Fail if vhost-user device expects F_CONFIG but backend doesn'=
-t
-> +         * provide it. Otherwise negotiate as usual.
-> +         */
-> +        if (supports_f_config &&
-> +            !virtio_has_feature(protocol_features,
-> +                                VHOST_USER_PROTOCOL_F_CONFIG)) {
-> +            error_setg(errp, "vhost-user device expecting "
-> +                       "VHOST_USER_PROTOCOL_F_CONFIG but the vhost-user =
-backend does "
-> +                       "not support it.");
-> +            return -EPROTO;
->          }
->
->          if (!u->user->supports_inflight_migration ||
-> --
-> 2.53.0
->
->
+> +
+> +##
+> +# @GuestSecurityInfoType:
+> +#
+> +# Guest operating system type for security info.
+> +#
+> +# @windows: Microsoft Windows
+> +#
+> +# Since: 10.3
+> +##
+> +{ 'enum': 'GuestSecurityInfoType',
+> +  'data': ['windows'] }
+> +
+> +##
+> +# @GuestSecurityInfoOs:
+> +#
+> +# OS-specific security information.
+> +#
+> +# @type: guest operating system type
+> +#
+> +# Since: 10.3
+> +##
+> +{ 'union': 'GuestSecurityInfoOs',
+> +  'base': { 'type': 'GuestSecurityInfoType' },
+> +  'discriminator': 'type',
+> +  'data': {
+> +      'windows': 'GuestSecurityInfoWindows' } }
+> +
+> +##
+> +# @GuestSecurityInfo:
+> +#
+> +# Guest security features status.  Fields are optional; a missing
+> +# field means the information is not available on this platform.
+> +#
+> +# @tpm-present: Whether a TPM device is present
+> +#
+> +# @tpm-version: TPM specification version (e.g. "2.0")
+> +#
+> +# @secure-boot: Whether UEFI Secure Boot is enabled
+> +#
+> +# @os: OS-specific security information
+> +#
+> +# Since: 10.3
+> +##
+> +{ 'struct': 'GuestSecurityInfo',
+> +  'data': {
+> +      '*tpm-present': 'bool',
+> +      '*tpm-version': 'str',
+
+Should we have a GuestSecurityTPMInfo struct ?
+
+    '*tpm': 'GuestSecurityTPMInfo'
+
+We would not need a "present" value, as the mere existence of the struct
+data would indicate presence. Meanwhile this struct would contain a
+mandatory version field:
+
+   { 'struct': 'GuestSecurityTPMInfo',
+     'data': {
+         'major-version': 'int'
+     }
+   }
+
+I suggest only reporting major version, as an int, not an arbitrary
+string as that's ambiguous IMHO.  We could later add other TPM info
+to this struct if needed.
+
+For Linux you can provide this TPM info by checking whether
+/sys/class/tpm/tpm0 exists, and reading /sys/class/tpm/tpm0/tpm_version_major
+
+> +      '*secure-boot': 'bool',
+
+For Linux you can provide this secureboot info by reading
+/sys/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c
+
+This bool only tells us whether secureboot is enabled or not. I wonder
+if we should allow for other info here too. Systemd's bootctl reads
+various other secureboot fields "AuditMode", "DeployedMode", 'SetupMode'
+and 'MokSBStateRT'.
+
+https://github.com/systemd/systemd/blob/main/src/basic/efivars.c#L381
+
+We could represent each as bools within a struct, eg
+
+  '*secure-boot': 'GuestSecuritySecureBootInfo'
+
+which would have several mandatory fields
+
+   { 'struct': 'GuestSecuritySecureBootInfo',
+     'data': {
+         'enabled': 'bool',
+	 'audit-mode': 'bool',
+	 'deployed-mode': 'bool',
+	 'setup-mode': 'bool',
+	 'mok-sb-state': 'bool',
+     }
+   }
+
+These are again all available from EFI variables in sysfs, or the
+equivalent API you have already used on Windows.
+
+Any missing variable can be assumed "false", or we would make all
+the variables except 'enabled' be optional.
+
+> +      '*os': 'GuestSecurityInfoOs' } }
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
