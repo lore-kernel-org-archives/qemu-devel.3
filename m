@@ -4,107 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B192CFF60E7
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 08:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C440AFF60E7
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 08:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7UKC-0001St-Ok; Tue, 31 Mar 2026 04:19:50 -0400
+	id 1w7UKb-0001d5-Ai; Tue, 31 Mar 2026 04:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7UK4-0001SP-SO
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:19:43 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7UK2-0003TU-RH
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:19:40 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-6500eae6d2fso5086813d50.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 01:19:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774945176; cv=none;
- d=google.com; s=arc-20240605;
- b=Zm3fJDXvgtX3VgqJ2Tuw0IHeQFLPMlIMVLus8nL07br3SdBZNKD0eNhORTHIsvH4Zo
- kr72MoL1irTTiOIH5J/cJBve1il+BA7fQo9bbHLK1VPHEh/+mMid/NdGdPF/UnjZDvYY
- /1rwpsQCz9WFESkyRosTw6AqKw5nzesy8NmMcgQuzopb5TPmFOZKtFGT0DL2Hmm8G2QT
- 42fkl4xrFJQ7fnEf76rTPTG5llkx7FV03p3XZecyvzjkbaa8TiKOPbwa3nlJ7zdoyyNH
- 6KBHvDcrFmzFiZgFd4GVmX/ARXk1Zr+koNG6tnwGFCAMxqh9hyaPbgN23T8hmjS+pOEo
- dbrw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ZJLhuz8Mi4qYBbJljsmWW7v/SyDPWBk4EE+2g9THPAE=;
- fh=3mGmKpkESGHX1P/4WX0w7j3pc1fd4twTohnp7LmW8Uk=;
- b=frjZPIJkbv5ncNe8VQO/9QwtbePB4hR6khOgJ9r/o4zW5q0wLs25mRv/YyI1pyKzmO
- r68fzYQ+aquCfEdMRi+fZ6ryJJnxQc39Zb0HgKJhve9F4D9/8BzhgeB6ss4bEIwGtDPD
- cgwNqYRphM52ZTf1li/sqErJzWuxuwFQDff1/pZ1uUuM+SdgnKDYYVTKuCJgE9aQ3/AF
- HTmj2X8dpT1L10Q3yli15x6occhaw0C/psZiNQ1O5Wuv023jGD8l1oP2XSG9Pv+4xZe6
- yCRb/MBrE4aprmmGCeZEWAHA02LmSjaprzs+sNG87+52AuRj/5lNb1XxIsogQgOwBdMy
- noZw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774945176; x=1775549976; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZJLhuz8Mi4qYBbJljsmWW7v/SyDPWBk4EE+2g9THPAE=;
- b=MLtCs7X+XspjjQzZqg8YI5FovH4wijxKWemKjvqoLtybQJycSvlZWO2dUXk7OLKjjN
- hpyPirDcj1RuwkhTD2w0MBeX4xe7PAtezKnIDynU3N6qeQnypru2ZzqRvCckdahqiGyj
- lOqI7TvPOmvvJEJecESvaT/zxzl9ON6QDP1HAzKsf8LNiidWyJlSwKUTV4MseoK9YLE1
- DXyBYR0ZWZ0AC6nCxPrDKmy/bO0+VXvqYB3QMqBdWDyL5J294J+K+HYW7TI7e8x2aFfd
- JSSQWhJ3aSoO1OmJgosWoD4aP24ffn9IwoTcXPoAVJCn57SzRBLlihkwCFERwZWknXY+
- MnWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774945176; x=1775549976;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZJLhuz8Mi4qYBbJljsmWW7v/SyDPWBk4EE+2g9THPAE=;
- b=Yt8PyLto/t1AMSFRV+Vrc9PbH6lIpoOv1F9zPA+wNerfpLy7KX+0tJCQHfjYNGTJUk
- DbREyHN3WvogPa0ABdzMh5Na2Jp4LS7ARZsgfwJzGFxfI6r3ntmon2jPs0gsKh4Bjc5y
- ewnW96VxMAT7+dtzx4gsB8lnNLYOhCYQ7BL1Nap4j7LViAEBR/NNEAaMDLdBsHIYKGhK
- NnJEDX9BV1ZzK1UFZty02cvScDkunQNF+vEd8BSu71NSlUiOZxtD6uOqjS6YaUtmqnHX
- n7/YdeS0na/o3IQtnAOiLcZ27WTlWwa49sPTecwkf9pq4Rs13GzRVlyc7FLAMtlsM2VP
- w65w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXz2S+3WbBb8MrZKeqwCl+LoK4PgLIxI/Su5h2urSS+X9oMZH1ybCiP4Rl3SRUFT99/18EWuwPl5FCN@nongnu.org
-X-Gm-Message-State: AOJu0YxQClJQ0e2pu6ayLc56jviBVZBxrxth7f144aMHD4iye4yusZdP
- lCw94Qo71+jkb3ksFHf9BntI2u7rp9E/EWuD7L6MFrdgeVSzYj89qasLgNuBWpTnaT5VscoJmhc
- zlJ+mSqNOjUSkl5FTDI0g+GohazRrJVDD4cq2QLaSYg==
-X-Gm-Gg: ATEYQzx+doAUV5ZztbpykCcdI/t9SqEEFPfkGRSV45mqNsCv+pl5K/Kxa8wdC0h1DxN
- ysLfw6iVqNWxyd3ufdYjY9vb7Ibw7CAwIp8y5orC1Ycro61u6M9fy0Sls6CAbIu8nusR5CaxlG6
- 8Zc9U6CiPt6NFU1k+V3ycIg8msAr4/dvDrdbUrcZWZBJ9kZFToaj1aZF5KIvcL19z/d5SxEhuxU
- D2FzxRlMUllm5K3YUnJFY5X29hzm50cI61Xm2zfg98I2smXL9k2mxG3vvrg2iHhDsH1xhs2Zb/7
- 0P+9gIl6BXs65Is1mIG7e9jxjMMP2V7kgrpAzsxFk8dB7RWrOxOKU2tTwlGvfuc02HM=
-X-Received: by 2002:a05:690e:d55:b0:64f:ff90:4d56 with SMTP id
- 956f58d0204a3-64fff904dffmr13391095d50.61.1774945175877; Tue, 31 Mar 2026
- 01:19:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1w7UKV-0001ac-Fn
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:20:07 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1w7UKL-0003aM-Te
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 04:20:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1774945198; x=1806481198;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=gJWdUwK586GJa5VW9QzsnFo5SqAsT+/I4KOMATeviiU=;
+ b=Yz3JvBRlKHh5DRIfaLN66Eo2Z7wDkuqfjlyUn/bgJFwLGauNV69m8N2J
+ 3sXKE6U3bkgK/AKanKvOgOxcp5vOY5SSnBVEG1t530m9PfSKzzrUtpOR7
+ P2eRKRdfK/oWQpE4aUxpGIS0xhcObe65rNL3UDC2HUbN0sFQqa78GR1yL
+ ForSAZ0JQSS9hc1HHsycMNLzykInvvIAZ0M2lmMXucf7Qh3vmx1qoTPJz
+ vdwLyU66CqNZWLTavjO/zkQrRhKFhkXJmj54Q334kxn2KLzUuDf2S4K5l
+ t0BNo3/s767VEhUWs7afHsZq4I+S6cmGN801jKIOvxMbIvq/3KMll8Fd2 w==;
+X-CSE-ConnectionGUID: iaZImlXIScWdycW80+kj3g==
+X-CSE-MsgGUID: 8P0NS2lCSiCfa1bE1eyUhQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11744"; a="87342467"
+X-IronPort-AV: E=Sophos;i="6.23,151,1770624000"; d="scan'208";a="87342467"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Mar 2026 01:19:55 -0700
+X-CSE-ConnectionGUID: jecDXw03TyW5D+uveOUWRQ==
+X-CSE-MsgGUID: aVx8ZMafQG6N/YIspLgExA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,151,1770624000"; d="scan'208";a="222999326"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 31 Mar 2026 01:19:54 -0700
+Date: Tue, 31 Mar 2026 16:46:13 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] target/i386: Treat qtest like TCG for supported-features
+Message-ID: <acuJ1c5J3sTVzvy0@intel.com>
+References: <20260330151437.1787008-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20260331040659.401397-1-tangtao1634@phytium.com.cn>
- <20260331040659.401397-2-tangtao1634@phytium.com.cn>
-In-Reply-To: <20260331040659.401397-2-tangtao1634@phytium.com.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 09:19:23 +0100
-X-Gm-Features: AQROBzCpdSc0PNi8CPN_7ZA8RISCWlS__jTbV8_4vCM12Mgnryb4Ykq9xFUFYJ0
-Message-ID: <CAFEAcA-mePyVgVMUy6LDC3E=3HqCyFZVWP78=gY=h_x+_nocVg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] tests/qtest: Add attrs support to qtest server memory
- commands
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260330151437.1787008-1-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,67 +83,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 31 Mar 2026 at 05:07, Tao Tang <tangtao1634@phytium.com.cn> wrote:
->
-> Extend qtest memory access commands to accept an optional attrs argument.
->
-> Supported attrs:
-> - secure (x86/Arm)
-> - space=non-secure|secure|root|realm (Arm-only)
->
-> For memory commands, parse attrs, select the corresponding AddressSpace
-> with cpu_asidx_from_attrs(), and issue accesses with the matching
-> MemTxAttrs.
->
-> Cover scalar and bulk memory commands, including:
-> - read{b,w,l,q} / write{b,w,l,q}
-> - read / write
-> - b64read / b64write
-> - memset
->
-> Also reject invalid attrs and excessive arguments, and document the new
-> command forms in qtest.c, and use qtest_send_memtx_error() to return
-> ERR for memory access failures.
->
-> Preserve legacy no-attrs semantics for compatibility: those commands
-> continue to ignore MemTxResult and return OK.
->
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+On Mon, Mar 30, 2026 at 04:14:37PM +0100, Peter Maydell wrote:
+> Date: Mon, 30 Mar 2026 16:14:37 +0100
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: [PATCH] target/i386: Treat qtest like TCG for supported-features
+> X-Mailer: git-send-email 2.43.0
+> 
+> In x86_cpu_get_supported_feature_word() we figure out the supported
+> features differently for each accelerator. The default case is
+> "set all feature bits"; however this triggers a warning because
+> it enables two features which conflict with each other:
+> 
+> $ ./build/x86/qemu-system-x86_64   -cpu max -accel qtest -S
+> qemu-system-x86_64: warning: this feature conflicts with APX: CPUID[eax=07h,ecx=00h].EBX.mpx [bit 14]
+> qemu-system-x86_64: warning: this feature conflicts with MPX: CPUID[eax=07h,ecx=01h].EDX.apxf [bit 21]
+> 
+> Treat qtest like TCG here, to avoid the complaint.
 
-> @@ -510,33 +684,38 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->                 strcmp(words[0], "writeq") == 0) {
->          uint64_t addr;
->          uint64_t value;
-> +        bool has_attrs;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->
->          g_assert(words[1] && words[2]);
-> +        if (words[3] && words[4]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
->          ret = qemu_strtou64(words[2], NULL, 0, &value);
->          g_assert(ret == 0);
-> +        has_attrs = words[3] != NULL;
-> +        if (!has_attrs) {
-> +            qtest_write_sized(first_cpu->as, addr,
-> +                              MEMTXATTRS_UNSPECIFIED,
-> +                              value, words[0][5]);
-> +            qtest_send(chr, "OK\n");
-> +            return;
-> +        }
+I see, this is a proper way to resolve this for max cpu with qtest,
 
-You don't need has_attrs and this if() statement at all:
-you've written qtest_parse_mem_attrs() to correctly return
-MEMTXATTRS_UNSPECIFIED for the "attrs argument is a NULL pointer"
-case, so the codepath below will handle that correctly. Similarly
-for all the other similar places below.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
--- PMM
+so,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+> ---
+> This suggests to me that the default case is not something
+> we ever want to be in, and we should instead be exhaustively
+> enumerating the accelerators and asserting if we don't know
+> how to handle this for the accelerator in use. But there are
+> several accelerators that we don't have code for here...
+
+yes, when I have some time, I¡¯d see if I can sort this out, to clarify
+what accelerator needs to be covered here.
+
+Regards,
+Zhao
+
 
