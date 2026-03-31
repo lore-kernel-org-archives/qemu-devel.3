@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C971F109B468
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C996109B462
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Yxg-0007dZ-Tw; Tue, 31 Mar 2026 09:16:54 -0400
+	id 1w7Yxq-00081d-JJ; Tue, 31 Mar 2026 09:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YxY-0007S6-Kx
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:45 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Yxh-0007oZ-7c
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:54 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YxX-0004DK-34
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:44 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4853e1ce427so70367525e9.3
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:16:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Yxe-0004ED-6u
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:52 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43cf5d14d6eso2308209f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774963000; x=1775567800; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774963008; x=1775567808; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XEAdYxhF17PZaz6P4rOJG8Kywf0twpqyRyAFFni9Rmc=;
- b=RzHd0iOgpBWmyHH/HzRnXhoRrSulFLveHLcIJEjJL3+M58/B73eWKYBBxf591Sa80c
- s11RPiLmkilEvGzKg9nlJtEr3myTblLDH6F1LvWFcbgdWYJDTTU+a2TpTk/ugVPezBAY
- CfHKBE7BmN4zto5+KxwsbXQHTmASo56Mpfj588p23T/426ScKlq344cNp+xO8SweLULX
- oho/ai8GHCRmXoq+ZCN1wD1s4i65yCtli73zJLXrROrGB/WIrvYGLCwlz0zv2O1+aWOe
- SvULh+e/moUmn385/9mTzk9tn2dEwj3zqKjRYwUQgh6PpU6h6Uhsdmdy7VINvy0zGwZC
- NiIA==
+ :reply-to; bh=EfBNunGxsX5Za9qOZ3QZ/1tl+TL5Gxf184cmua7DLVc=;
+ b=QdbKccuWwgHIrCaKBWgER2A1JDPb0ATeQpeO/7naZTaLPgTQ9j3Uzc4PN7+BQLkVii
+ +JeMOB6Ek7h7celaepgG0sype4LvON+iyUWkWR5Cjb5+r/FBRqZTgX3qatcRvs3l/qxL
+ Dd4rL+GhDa8DZ6yQmFN++qY8mincGzzYRC/1eDQZ4g6VKgpTUq+bdJ3/u4jt1yrYiVRw
+ uQ4Y9sWUSzXwu2iWmk5TG8KlWrU+0tSKpC316ij1vvTDWXhAkmyQm8Bl/gdH7JqmAB8i
+ RBkxZ4p1Ls90Q4N278JxhFfgQkVD3uM1mgGVwgPdCLldyIfByhIVduAPcCx5n5pgXnPg
+ pTZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774963000; x=1775567800;
+ d=1e100.net; s=20251104; t=1774963008; x=1775567808;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XEAdYxhF17PZaz6P4rOJG8Kywf0twpqyRyAFFni9Rmc=;
- b=SwDhsUDwfBEZFL5P6rJlkVn0r9+AAGoFKEKxAguVZPJnPH9xTTNX0lwaMLywsxaszi
- 8bCMLOd8YxqouS20RWlh3IKBqm60x9KZfTU7ck80Kv48rcDHsrwinRXzhTpB79pte2D8
- Yv7wxd23j+BgUDX8Lq9StWzryGJMKUyLV4eGIEaqTt0sX7ucgt0OuwrJygJAJMm9sqMz
- wnbNxcu/M8iuBwy8x00dhQat3YSuO4YG2wu5RPxiFtIvhAGu+AJ71+kOt2sQqgQ1R/C+
- 5PLQpwT/ya2d0fIXVXgtqJyDRY917EQl+OHwRhV16u35Bknxfd2KXtOHYGmvFP4cMMw6
- 1q2Q==
-X-Gm-Message-State: AOJu0YxLGWZZ0reooTAsPeFL2jG2jYrjc1Bnuy/A0Rb7bua1LguGKYAZ
- clR0y14LbYBMsWdKji/40IcRuwf2cq0YkI7chw5UidrnVZlm50rGZOHMZWwPTUh6W2F/HhyR6QS
- Gd5GlMlM=
-X-Gm-Gg: ATEYQzwcLHSdBcDMgWdGJ0WBZmWHAs7A87CqVdQhEj+fCzGzrqBbFBkSm2SdBDd9XAU
- 9Y4v71v8rACdOfhuFK7DdF4UtHDi6BPL0uqWFHhQWue+fdw+YNhKwZLGTffhYgpjLZFPgAA+Jrp
- sR7sjlFgAQ/XS6MLjP+ZQVrRu3F4ZO8jGiYKacsTdWMKW8fzwnX7Gv192gIpu+D3EZK7gDnnJWM
- hbiwkkuWX5KABVlv7EEC60BUVQTmb802KUPeUK2EVyAvdky/gei0QvwvLZmgkvjtW38Jh3t4kUy
- X9p4hn7OiwI5Qhp2R8DVkXVAFS7qna96LWQD01ryLUiMj2jIXuh92cl9KlCd+oTnvgfFUZZh6IL
- yRbkcR+JVbOyIu058pAh1/Q/NFcEkgcWMWi0Mxt6xr0jeKp/SsZbyds/3KRRWO8GL2LpzHC0e13
- G7hbxYmpWDo4F244EOnqujuISz/tGaJq016GVHMMu7RPXle9cX2b83UeqE1t6VkP3QtGI=
-X-Received: by 2002:a05:600c:1e2a:b0:485:1878:7b8c with SMTP id
- 5b1f17b1804b1-48727ee9f5bmr310093705e9.18.1774963000471; 
- Tue, 31 Mar 2026 06:16:40 -0700 (PDT)
+ bh=EfBNunGxsX5Za9qOZ3QZ/1tl+TL5Gxf184cmua7DLVc=;
+ b=s7DUXx/hXXOoPtBnZzHabAEyaov3CQQBOru3tb9HL7nfUW1tvQV3BNlW9WZYgMCBlI
+ ynRlYMJ5f1m6tHtmXdLLa03jzvcHuJUmvT7kzvaBJkAVW/Ms6fndUWiLKuhCZcXDRp6q
+ ot2M4OZg6HuZs7THQAw9Z6BuuBos5bXDyKqbV2WBzAWxStIc4kkKXDfNRcapkthlgWm5
+ vrkaukl5KsTt2Xzak7QgX6IbT/PvO/2fkHHPy/9XI+qLZITlE7ZF7xGbpkskJ8wfl0vd
+ +lDUl4wGLBxMxpobkDXh46NmPEGMFKTEs13ahyyxBl0Bl9uxqZwOyC7pazclPAGsvUPD
+ Q1VA==
+X-Gm-Message-State: AOJu0Yx7EDzXtVGCrrai6mN8g3Gj8endugCVtLM0joYnEGb6QGgr7znk
+ Ye0iAFHC8Hx4Q7l+u+yDDKl3izNrahZvXr7oL5yOcpGWB59vN6iRm+AtLCe2Yae1Q3VR7pehaSF
+ EjVIaFsY=
+X-Gm-Gg: ATEYQzwz9VGIr4r242w3+NfSNqgU/uf79P64dyazYNpCgURWj14W2uhmzYOatsr/5eP
+ c9ppIr9sn2a/Arezc7A0fSMsotgClExKHtaxvnkHr+qflZlUH6WUX8Nbq/y9+Y4DDg2CUI93NA+
+ kMz0W5UiMFCxu1o2WpJiT7k2cFVGrZ9/GUad4NhDbF859ParIFnt3mkAc3R4cvtgZK7rRX1PwGR
+ /FQT3HyZ0yenwUnGbLESTiovK2IDn0VyUTUmMX9Z7BvNGVNVF8UvW9l0esk8YzCv0OnuFFeXH8x
+ ki568FNp6rPoWdZMvkj0uqCBJbBR4WEBF/YPKb9xPgvDAVsahj3oqDIUunoWSjoIHgxSaEWSLnV
+ 2RJgfhFbd+Juvob6f6iYrt7ZuX6vJwm9QmjhIekJVJHjr2bBJ4geIGVs5hAhoZ5nEl6Dl6SNzpE
+ FrkM1vMKxq8kWDIMpHcca2qyEuZBtidX+veI1/uiFkwMtTDKNXLPEpBmTcASU0BZi8R98=
+X-Received: by 2002:a05:6000:4027:b0:43a:580:f60d with SMTP id
+ ffacd0b85a97d-43b9ea4a5b4mr28407686f8f.35.1774963008160; 
+ Tue, 31 Mar 2026 06:16:48 -0700 (PDT)
 Received: from localhost.localdomain (43.149.216.82.rev.sfr.net.
  [82.216.149.43]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e7e9728sm38926525e9.1.2026.03.31.06.16.39
+ ffacd0b85a97d-43cf21ebef9sm28605465f8f.13.2026.03.31.06.16.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Mar 2026 06:16:39 -0700 (PDT)
+ Tue, 31 Mar 2026 06:16:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/11] hw/hppa: Disable Artist graphics card on 64-bit machines
-Date: Tue, 31 Mar 2026 15:15:12 +0200
-Message-ID: <20260331131514.21152-11-philmd@linaro.org>
+Subject: [PULL 11/11] MAINTAINERS: fix OSUOSL typo
+Date: Tue, 31 Mar 2026 15:15:13 +0200
+Message-ID: <20260331131514.21152-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331131514.21152-1-philmd@linaro.org>
 References: <20260331131514.21152-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,47 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-The original Artist graphics used the GSC bus, was often installed in old
-32-bit machines (e.g. 715) and can not be used on 64-bit machines.
-This is why this patch makes the artist driver dependend on the Lasi chip,
-which was never used in a 64-bit machine.
+It stands for Oregon State University Open Source Lab.
 
-Note that there exists a variant of Artist for the PCI-bus (Visualize-EG PCI).
-It has quite some differences in the registers, and would require that we write
-a PCI ROM for it, so that Linux and HP-UX would be able to use it.
-
-Instead, for now, users can simply use a standard VGA or ATI PCI graphics card
-on Linux.  This can be enabled on the command line with "-device ati-vga" or
-"-device VGA".  If the "-nographic" option is omitted, a PCI OCHI controller
-with USB keyboard and USB mouse will be added automatically.
-
-This fixes graphics support on 64-bit hppa machines and allows us to boot up a
-64-bit Linux installation with VGA graphics.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260330211859.19317-3-deller@kernel.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260331070401.1125840-1-alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/hppa/machine.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 3663bac53bd..58e76bee2e4 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -384,7 +384,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-     SysBusDevice *s;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index de8819b7aaa..ad215eced84 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4530,7 +4530,7 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: tests/tcg/Makefile.target
  
-     /* Graphics setup. */
--    if (machine->enable_graphics && vga_interface_type != VGA_NONE) {
-+    if (lasi_dev && machine->enable_graphics &&
-+        vga_interface_type != VGA_NONE) {
-         dev = qdev_new("artist");
-         s = SYS_BUS_DEVICE(dev);
-         bool disabled = object_property_get_bool(OBJECT(dev), "disable", NULL);
+-GitLab custom runners (HW sponsored by Linaro, OSOUL and IBM)
++GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
+ M: Alex Bennée <alex.bennee@linaro.org>
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
 -- 
 2.53.0
 
