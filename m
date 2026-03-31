@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D534F10F92E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 16:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6054210F92E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7cPO-00037F-9H; Tue, 31 Mar 2026 12:57:42 -0400
+	id 1w7cRc-0005Ux-SI; Tue, 31 Mar 2026 13:00:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cPL-00035W-KC
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:57:40 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1w7cRb-0005UX-3L
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:59:59 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cPI-00023o-D5
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:57:39 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64d5a7926cfso8946805d50.2
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:57:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774976255; cv=none;
+ id 1w7cRZ-0002CA-Mw
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:59:58 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64d5a7926cfso8951991d50.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:59:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774976396; cv=none;
  d=google.com; s=arc-20240605;
- b=JP1OAv6UzunUPe53/+ehh5hWKyTi9zaHnzP6jstOV3uEUvIkXJPtG1DZQLMhQjna73
- 0qHuCYx8jDjX/Nm+NIqhSiDAH/W7f5ZErAd1iZ01ScAdcrWeGkQYb1ai9MboLzKw++ZI
- fsTYiUJp6orxCtOq4ppHmHV6oM8E+yVQgrCgMh3vrvGJyqu0H1KpwuImbQ7/TkqJhu4H
- ZFYnMJijGU/aoteqPyovQsul428wxCyQNAn7cjqIEOgxEhBKSGLahYPqfaSM2yFb0oms
- J346IRnKY20Tuq0y2aAIMMEronon0c8TdxKeY06hSZFgvtnQmmMsAXqaMHso4XkUDc9t
- +vew==
+ b=WshoT2JarUtIYTdINsy0htbEO4QsubmGNEW1nPvWlLSuqrWp6m2120QA909n2/guLe
+ 52DwUZwIuvvPPCioeoHNyn6nYhmlICMbPyx8PwqwZ4zIVaB8YXvEOKQe24ZiwuH1zFhH
+ VUR6bSn1uuXa6qryVhtjMPZXHNPmoiqInEm9SWVBFfa7pz26ZUJp4RXUeNCTqvl81wBT
+ oIj5u0tVUMyXfqK/RwejCnlXdr/2dNnVy6TnG6hcTAXTHPyrgOWZdl2zkAEt1PdCQYjA
+ xEjA/8rWNh40CIy8LkRgAGpIdw8xz6HhbZ+t+j78OeldQ6WYdU+Z8Xo90v2rXEiSJ45B
+ 8isA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=NNVS0U9cghrUwlphwuETo+cau/aLoHDBM41hKbEqqFY=;
- fh=C6nSCE5LKC5RuqcGtrq9dsN9XQcZIV+WhX4ZNDyo0OM=;
- b=NehB1C52u9sknLKk9a11zn2opmYtMaTdJsEUWi47FbMvjiBET/9dkjHPySL3YdpLRR
- nGwpnJ0u0BiaNZXW6Bac9vxw6AOj6z/QUVpSnptlpP6G6wIcdf9QO5nxYzq8AN2hFlY6
- iB0N82HiOWLZ9vdaVMmmmNvkBoAQCewSkzxo7bsH293Vlm0uuRZEV1X+eiA/iLiILvgU
- 3yl6OiU3JTWtR7yUe3jbtOCNOYE4VV6s+RZ7e5sXOt8ruUTXICLU7pabeWHf4hEqM2if
- R0Jx/6G3cr/Rkdm2xjqn6WIlx4dOjdpg6IKURaSQh+qcnGLfa0QxBFXDw0+oDV7xmFlP
- uc2w==; darn=nongnu.org
+ bh=iMDREFWEMPXLywfoQ5kD3fONGP27XaMe1I3ynxwtKt8=;
+ fh=j0m/KHqzOQ6CKKktQSBLLiVo/M7SZnjHIyl4bugXt+Y=;
+ b=guJ595Wxw0p/cMKUL7sv+gwOOEDoldFU6Nt0+aqOJ7zJRUpi/1Pdhv+GkHmpLCM7GM
+ UOVcBLMr9Ob9oN2Ah99nhvFEpD2+9zuTiddpXIDeapayRvdwlMO0fIwtku0aa7/yo+uq
+ 2D+mIbWAnHjllg1S05VsyQethJ+U07zUNFexbj4QnXZ5YtaRWDXX+1s5VgoY3ElEMGF1
+ t7DC2pFIi/pwjHWcIQNM8VPZxGB8Zd1hd6/YB/ebffTZj/xFxYUJjguwYCtxv1WZu6gV
+ f/YZ+xcrWZCUEFk8BVEPWrVjHXF+HCtCfq0O+h3HQEFKQwAben7/ZhzgGbBNp2EY2mCg
+ ZUPQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774976255; x=1775581055; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774976396; x=1775581196; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NNVS0U9cghrUwlphwuETo+cau/aLoHDBM41hKbEqqFY=;
- b=N0Ffbh5tU9ERHlQVTrp4PUGyezJYEOZgZhmKwnXe0lXY37S2qOHlZejk32G4gJ4oTl
- 0I/PE0qA4UbFaSNstTmM55bA2PZCI/A9pcGrW1RjHeRU0Dl2wkYBsoqeG5xHbHUyCcKu
- TTxHyNdzaA5kAJg5P1lmkuX5/VOON3kmpcV+Lk2bCE4pLta1o2ivO/3qNE7oAybGzBte
- c92menyvE+sDsv8hfeZDiCzVaKJHKvMmR5w+f6bJxPt4J6AFRh3OPkQrQ6v/8aP56GLl
- iSjU/CyHfhMXvpp/kxym3UX9QkotH8xbb4fyZxZ+F4vT+JPQ7fIQbAkJvr2odfnL64oF
- WWzQ==
+ bh=iMDREFWEMPXLywfoQ5kD3fONGP27XaMe1I3ynxwtKt8=;
+ b=gfDfuvFbn0mt4Qip/Nn8UVBIbTzh/cIPKxkBpPx07ICWLTDeNiQnwkewHfRz5aYm4E
+ LET8d3SbHorRxhOK34N9afmw7db49QycBhwn3wQRF/rmxOoNJE4m2WHhxmdNI3x4ZD70
+ 2yOtK3tRxJ79e6bwGqrWDBN7nqwCvHlradLLTTuMTKaRIjJS9s/CDEGLH6MfZQYjyRxy
+ No75MK8M2sQkFi9ZrBNYacI06v2bzYqdApQMEC+P0p2FeQxeCZHfIZM4Lija5oRDuFrj
+ tsm6pXFjpsCistVhQ8mdK5Ca3t14mOLxN1mNiPTH56/fEDxWZwPYChhZa9+Eth+G+X5o
+ 0HeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774976255; x=1775581055;
+ d=1e100.net; s=20251104; t=1774976396; x=1775581196;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NNVS0U9cghrUwlphwuETo+cau/aLoHDBM41hKbEqqFY=;
- b=l9IHoqNvFTmScPjrRDzEtJj8qYO8QdEsNUwCsaGxV20KTrA/AskBv0V0TyW2x9Qgl4
- Rd6yd9UHB7L9xQCUQp3p0GfoSQCz2yUo/9EcXP9bvKOMiIoU346yrhqs6hYDQFfgoaPU
- HYonjDh1g1tC8P9MhruXQ25N8Woc3AKvKILkCSjMnBBtm194d+9AVcx5GRpXYNfJRkjY
- 11G7bs7BklhpHIaRCZFBvJ1VXjE9w4oUViyZ+DjCFHmy9lUq2Zhzq2mr5VzWNvmCPhtk
- NHvgpjagL73czrCGsdM+0v+qPnMK3rwEllRUMbxAyhtLbsMNIKQYQ6NB1qKilIQqWm5l
- COHg==
-X-Gm-Message-State: AOJu0YxTTQokehhN6P3vl4PDT3V0PKPI0MlExoQURYU0YHilGCSZBmZC
- c6wAsLS+E8K0ekJooWuhv1k2PBsuegxy1e3jFXVaE90S8QNhtGsYW1KVim7Ao/TiyrDsVVujv8k
- 9TuwEWd1Ov5Aah+34RLi5lQWO9M4R/XTGr32J2TzhWgQjjIQPPzM9nbw=
-X-Gm-Gg: ATEYQzz6XS13HI0ov9SuyJKHXMZ7EShWa7ZtLmM5B48xl2lzWLsY7uUxny8jlrCdcWj
- w2cRVBI6DrGj+IRSRgvMmNVocsOret1dH9lLU9FPzE58iHtzxFvs5V1YFZb1dguzwXtaspP563e
- rJGpRPjF90wv0EceLDjwmMWIRFxq3kg/BYVfGufb+3nHvNGDWETMiDzi6aDodrJwcnjEweYsVWa
- 8x7jw95GOr3ElNwaUAxDATU1El7Hm+sYIvCLxaUkxfBuiHo2NS+xloQKnUQZXIgMrGA6W5Ku5yX
- KIy5ab45P3uQ6yWJ65HbkQKvYcComKj67gSZzD6nVrZT4bf8ZQ1jssDT9+fFn9d/gTwFvkNnpZr
- Ctg==
-X-Received: by 2002:a05:690e:43cd:b0:64e:e380:c841 with SMTP id
- 956f58d0204a3-64ff73cafcbmr11659106d50.50.1774976254996; Tue, 31 Mar 2026
- 09:57:34 -0700 (PDT)
+ bh=iMDREFWEMPXLywfoQ5kD3fONGP27XaMe1I3ynxwtKt8=;
+ b=MLtvowba611uD4bvfplc5/jrq4ye21CxUY7Ro3JMiZreVHdCTEkviuYeLv+qfVB+c3
+ eJ+tIQgQTFcGqXSMiGFrZrkT0U8Anlb9kzbLcbpezYfjeHmuUcM0kWPqApJfCo+Dp1/i
+ GE0mFjOu3wSX7TToPdXkCLCpfkgphgqT577Gh1nSiiJkwRgJJJ6bcjuqiIAhHmFVpeR7
+ dTsU9GoPuJrbCG8xQga561IQgKbxaapgD2c0Ux+YmpAYga38qeO5VwrHONFYyVpN/n5t
+ 70pO+BWO3lVsDNDGauGlnwAlO6rhI0IbZHQ0oXuAcshMHBUBeJt27qbzxDvsGbG4RfVr
+ HZFw==
+X-Gm-Message-State: AOJu0Yx42NvEXdbliD6nkEvtX8xyqeb4NhiNfeNapBlbekTisSEKsowf
+ +diOk4BOTRKgQR6v5zInKUFF/ycVKCfhyE7KZcjVrWrlY6h5UuOzwFqusAGbHEqnxkpR6hRbd0P
+ saSOr4Fb0Wl6gBzT5onosq55af8pPcadMBoBaE/5MIg==
+X-Gm-Gg: ATEYQzw/AHNoqLBRS1CaHz8TEcd0KSfO/FS8Ruj+PnReNgNgZ/4hR535GfIzvUl6EcA
+ k7G50/wT8kZOcT1wM8le7dFNjLB/7sKLS4NZdnwi7FTebUhLKuPwOQb/uTjZ7QLhmo/Vb5DRsnU
+ PobeZ2k2t0p9yP0YiYrdIUtN9cDb/0E6HAwk/lgbXWLJmh4PgW3xC7AbTztdbVOw6LGpCzcvQIJ
+ AN7pyUp6KB6kZnhA4hF4lwPFbOlpx3AjAxmA6EZC+QA3LsP/VIKVGf8BCzlJMHjzkEd1MqN6jQy
+ zMV4eafAkl1W3zLZSXtcnIVZ8EeV7NVCj/o0dRf+DYowxl3Zy5UPDZtlIym5JvZ8e/BO3F1k+7I
+ f9g==
+X-Received: by 2002:a05:690e:428f:20b0:64e:e380:c83f with SMTP id
+ 956f58d0204a3-64ff73cbbe3mr14146920d50.46.1774976396057; Tue, 31 Mar 2026
+ 09:59:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260317053827.25051-1-shyliuli@aosc.io>
- <CAFEAcA8OHsqAfbU-C90VdtVineOHhKKZYg+7H1dTcqNeyKcGOQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA8OHsqAfbU-C90VdtVineOHhKKZYg+7H1dTcqNeyKcGOQ@mail.gmail.com>
+References: <20260321135624.581398-1-npiggin@gmail.com>
+In-Reply-To: <20260321135624.581398-1-npiggin@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 17:57:22 +0100
-X-Gm-Features: AQROBzBA_sdR_3fqd6dpT4HzAsDDhfUXNZqnX1-WOcx8KOlVdPQozxSUxiXaWG0
-Message-ID: <CAFEAcA_W_n0UEJpBP_E5a8PFD6eUCG0NyRR3npbdpbS-OZLVEQ@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Make openat2() use -L for absolute paths
-To: Sun Haoyu <shyliuli@aosc.io>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date: Tue, 31 Mar 2026 17:59:44 +0100
+X-Gm-Features: AQROBzBniHr2TcrbiuKPFeKJRtYKWPxMmXX6KW53z9Nh14Ok5NwaBowLuVeaOD0
+Message-ID: <CAFEAcA_iwWDmZf1hojzZ8+N5RTRC4WXDSSK7SugNNRd6kdk8Gw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] user: recursive signal delivery fix and test
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,32 +117,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Mar 2026 at 10:13, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Sat, 21 Mar 2026 at 13:56, Nicholas Piggin <npiggin@gmail.com> wrote:
 >
-> On Tue, 17 Mar 2026 at 05:38, Sun Haoyu <shyliuli@aosc.io> wrote:
-> >
-> > openat2() ignored the -L prefix and opened host files directly.
-> > For example, openat2("/tmp/file") opened /tmp/file on the host, not
-> > QEMU_LD_PREFIX/tmp/file like openat() does.
-> >
-> > Fix this by using path() to rewrite absolute paths. Skip this
-> > when RESOLVE_BENEATH or RESOLVE_IN_ROOT is set:
-> > - RESOLVE_BENEATH rejects absolute paths anyway
-> > - RESOLVE_IN_ROOT resolves relative to dirfd
-> >
-> > Now openat() and openat2() work in the same way.
-> >
-> > Link: https://gitlab.com/qemu-project/qemu/-/work_items/3341
-> >
-> > Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
-> > ---
-> >  linux-user/syscall.c      | 11 ++++++++++-
-> >  linux-user/syscall_defs.h |  7 ++++++-
-> >  2 files changed, 16 insertions(+), 2 deletions(-)
+> I found this recursive delivery problem when testing new riscv vector
+> state support patches (plus a minor lock user balance bug).
 >
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> This or similar type of issue was fixed with 8bd3773cce1 but I couldn't
+> see exactly what scenario that was addressing. Is there any other way a
+> signal can be generated during handle_pending_signal()? The SIGTTIN
+> case, perhaps?
+>
+> Thanks,
+> Nick
+>
+> Nicholas Piggin (3):
+>   linux-user: sigaltstack lock_user_struct missing unlock
+>   bsd-user, linux-user: signal: recursive signal delivery fix
+>   tests/tcg: add recursive signal delivery tests
 
-I'll collect up this patch for a pullreq for rc2.
+I'm going to take patches 2 and 3 into a pullreq I'm doing for
+linux-user fixes for rc2, so we can get the fix into 11.0.
+(I've made a s/__chk_error/do_chk_error/ adjustment to patch 3.)
+
+Patch 1 I had a review comment on and in any case it is only
+a problem if you build with CONFIG_DEBUG_REMAP, so if that
+drifts out to 11.1 that's fine.
 
 thanks
 -- PMM
