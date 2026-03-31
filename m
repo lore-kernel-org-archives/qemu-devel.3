@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1140710F9303
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 21:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B491610F9303
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 21:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7ge0-00048N-Pt; Tue, 31 Mar 2026 17:29:04 -0400
+	id 1w7ghh-0005BP-HW; Tue, 31 Mar 2026 17:32:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w7gdx-000478-Ui; Tue, 31 Mar 2026 17:29:01 -0400
+ id 1w7ghf-0005Aq-La; Tue, 31 Mar 2026 17:32:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w7gdv-0006H1-0Y; Tue, 31 Mar 2026 17:29:01 -0400
+ id 1w7ghd-0006tL-O3; Tue, 31 Mar 2026 17:32:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1774992502; bh=5rWoNUDJZ6zUG6GJHVlookizr1ZjMAuyNlI7oxehj+k=;
+ t=1774992734; bh=aY24go3PJSSbiIkD2YO2ACcOmjUCqUwyFL0SkDuQsdU=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=c5AM6ZTyk3K7NmmMzGX+UAdvxwr9HboKl8QKvThpqSb9shILDDvypQ4l568LFpWpf
- XEg0NgfNzbsCvhC/O6+lPUvE7TVFYAzy6igFEB3QxoWbXp8JIFhABzLGoey7s9Pfoz
- zMpQUPTy5cAyCwf+qh8tK0hZz9R8C7tTxe0dXzUfAyIj3Pv9sz17S2pHuO9tOcHd9a
- DXI1/jv8v9c8KKLhuDzCcQ6XBm5exktjOgsRckGck5j3s1Yvs9OrieDPCHM8s4gb8A
- ElSQ57nQtaFOPsSNd3TdaCdc++cylNMLmowJTJFli/YvUCXg8FWgm1Rc2Gr1QA1yWf
- hxGQzsDFDN6fg==
+ b=UksbP4Pt3pqRIg6+FBro3Q0XAKgJpWKWn+yU8QWBGDFersVmuWZ0vOy0dKX+rpPiz
+ zo/JRq3kkZI47oTDmXF3UINfivjbQJ3Puw8XFfCOcLaPpMJN8y6XKDxec+sSkaEd1i
+ RQG4JrGf5pk8HOXrOfctByLVvmvPGSojrkL9KW/4paBt6dxvNkFh+hCpVyPDb4s0W7
+ DgTx3n85DusP0qpoHp6V4XO8lXHLSRDdD3ZR2SN3H+VeRgyBWKgjb7S1Gf98juLsq9
+ 0D+ZLYy2KnWltKhKTYyen3016kPSq9Sz4OFAvQN0bDUUolNN/eQJuh9OP/NI5tWpGF
+ X0fzEYkIGuUvA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id CD45A19955C;
- Wed, 01 Apr 2026 00:28:22 +0300 (MSK)
-Message-ID: <77826f4f-e9a1-4893-ae73-0e37f16bf7b7@tls.msk.ru>
-Date: Wed, 1 Apr 2026 00:28:55 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id C878D199560;
+ Wed, 01 Apr 2026 00:32:14 +0300 (MSK)
+Message-ID: <fcdc1fec-072b-4f41-b338-2577af6dab74@tls.msk.ru>
+Date: Wed, 1 Apr 2026 00:32:47 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ide: Fix potential assertion failure on VM stop for PIO
- read error
+Subject: Re: [PATCH for-11.0] scsi: Don't consider LOGICAL UNIT NOT SUPPORTED
+ guest recoverable
 To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: timao@redhat.com, hreitz@redhat.com, jsnow@redhat.com,
- qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20260326165124.138593-1-kwolf@redhat.com>
+Cc: pbonzini@redhat.com, stefanha@redhat.com, gveitmic@redhat.com,
+ bmarzins@redhat.com, fam@euphon.net, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260330121635.49205-1-kwolf@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -85,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260326165124.138593-1-kwolf@redhat.com>
+In-Reply-To: <20260330121635.49205-1-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -112,34 +113,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.03.2026 19:51, Kevin Wolf wrote:
-> ide_sector_read() as well as its callers neglect to call ide_set_retry()
-> before starting I/O. If the I/O fails, this means that the retry
-> information is stale. In particular, ide_handle_rw_error() has an
-> assertion that s->bus->retry_unit == s->unit, which can fail if either
-> there was no previous request or it came from another device on the bus.
-> If the assertion weren't there, a wrong request would be retried after
-> resuming the VM.
+On 30.03.2026 15:16, Kevin Wolf wrote:
+> When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
+> it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
+> sense codes. It doesn't really explain how the codes to be in the list
+> were selected.
 > 
-> Fix this by adding a ide_set_retry() call to ide_sector_read().
+> As the LUN doesn't come from the guest, but from the block backend
+> (usually the SCSI device on the host that was opened with host_device,
+> but it could also be the iscsi block driver), there is really no way the
+> guest could influence this.
 > 
-> This affects only reads because ide_transfer_start() does call
-> ide_set_retry(). For writes, the data transfer comes first and the I/O
-> is only started when the data has been read into s->io_buffer, so by
-> that time, ide_set_retry() has been called. For reads, however, the I/O
-> comes first and only then the data is transferred to the guest, so the
-> call in ide_transfer_start() is too late.
+> It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
+> happen during failover operations. When combined with multipath, the
+> request should be retried on another path instead of being reported to
+> the guest, which would offline the filesystem in response.
 > 
-> Buglink: https://redhat.atlassian.net/browse/RHEL-153537
-> Reported-by: Tingting Mao <timao@redhat.com>
+> Simply returning false in scsi_sense_buf_is_guest_recoverable() will
+> enable the retry logic in file-posix, and will also make sure that if
+> the error persists, the configured error policy is respected so that the
+> VM can be stopped.
+> 
+> Buglink: https://redhat.atlassian.net/browse/RHEL-158212
+> Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
 > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   hw/ide/core.c | 1 +
->   1 file changed, 1 insertion(+)
 
-Shouldn't this one be picked up for stable series too?
-
-I'm picking it, please let me know if I should not.
+Ditto for this one, - while not a big deal really, but I'm picking it up
+for the current stable series.  Please let me know if I shouldn't.
 
 Thanks,
 
