@@ -4,70 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294F8109B467
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2145A109B46C
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:47:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7ZHV-0000Vd-W0; Tue, 31 Mar 2026 09:37:23 -0400
+	id 1w7ZQJ-0004dt-A4; Tue, 31 Mar 2026 09:46:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7ZHI-0000Sc-C2
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:37:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w7ZPg-0004St-S5
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:45:51 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7ZHG-0007XV-HV
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:37:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774964225;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GMU65thP7kcrbLo3Em1qf9+VZ/qLdQA9wghG8vWqgzg=;
- b=gzWfdT/inVBbOv3YBojfPQ+z9UQKDDfXIsdJSK0FwK37s3S6pfydiHJxkkPvY0lGtCuM5U
- kiqtbZaXqgUxnBBhfRAKJ/DP9QnY2VXNdPQYi6o2bs+lwQ08IvUnYwnZgKZ0Fu8MGhqosm
- Wnh98F0V+TTuza88ZM3FB+vlTcV25Qs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-ZNowbwZyMVOvLztxVRLMVA-1; Tue,
- 31 Mar 2026 09:37:01 -0400
-X-MC-Unique: ZNowbwZyMVOvLztxVRLMVA-1
-X-Mimecast-MFC-AGG-ID: ZNowbwZyMVOvLztxVRLMVA_1774964220
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C78B195607B; Tue, 31 Mar 2026 13:37:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.38])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7829B1954102; Tue, 31 Mar 2026 13:36:58 +0000 (UTC)
-Date: Tue, 31 Mar 2026 15:36:56 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: hongmianquan <hongmianquan@bytedance.com>, qemu-devel@nongnu.org,
- michael.roth@amd.com, wubo.bob@bytedance.com
-Subject: Re: [PATCH v2] monitor: Fix deadlock in monitor_cleanup
-Message-ID: <acvN-HKqqAN5IWqF@redhat.com>
-References: <20260327131024.51947-1-hongmianquan@bytedance.com>
- <875x6ci134.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w7ZPf-00016J-DY
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:45:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0665D596A1D;
+ Tue, 31 Mar 2026 15:45:44 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id wD6I0G7Uwpkr; Tue, 31 Mar 2026 15:45:42 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 07E58596A24; Tue, 31 Mar 2026 15:45:42 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0690B596A23;
+ Tue, 31 Mar 2026 15:45:42 +0200 (CEST)
+Date: Tue, 31 Mar 2026 15:45:41 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 0/2] ati-vga Coverity fixes
+In-Reply-To: <1122d60a-c7f9-466d-ab2b-c7bac6c66245@linaro.org>
+Message-ID: <58689216-a72e-de88-de61-cca626e1bde9@eik.bme.hu>
+References: <cover.1774904832.git.balaton@eik.bme.hu>
+ <1122d60a-c7f9-466d-ab2b-c7bac6c66245@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <875x6ci134.fsf@pond.sub.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/mixed; boundary="3866299591-942512843-1774964742=:7804"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,57 +67,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 31.03.2026 um 15:24 hat Markus Armbruster geschrieben:
-> "hongmianquan" <hongmianquan@bytedance.com> writes:
-> 
-> > During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
-> > received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
-> >
-> > The root cause is a race condition between the main thread's shutdown sequence and the coroutine's dispatching mechanism. When handling a non-coroutine QMP command, qmp_dispatcher_co schedules the actual command execution as a bottom half in iohandler_ctx and then yields. At this suspended point, qmp_dispatcher_co_busy remains true.
-> > Subsequently, the main thread in monitor_cleanup(), sets qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx, false), which attempts to wake up the coroutine, aio_co_wake schedules a new wake-up BH in iohandler_ctx. The main thread then blocks indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches termination, resulting in a deadlock.
-> >
-> > The execution sequence is illustrated below:
-> >
-> >  IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
-> >     |                                 |                                        |
-> >     |-- query-commands                |                                        |
-> >     |-- qmp_dispatcher_co_wake()      |                                        |
-> >     |    (sets busy = true)           |                                        |
-> >     |                                 |   <-- Wakes up in iohandler_ctx -->    |
-> >     |                                 |                                        |-- qmp_dispatch()
-> >     |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
-> >     |                                 |                                        |-- qemu_coroutine_yield()
-> >     |                                 |                                            [State: Suspended, busy=true]
-> >     |   [ quit triggered ]            |
-> >     |                                 |-- monitor_cleanup()
-> >     |                                 |-- qmp_dispatcher_co_shutdown = true
-> >     |                                 |-- qmp_dispatcher_co_wake()
-> >     |                                 |    -> Checks busy flag. It's TRUE!
-> >     |                                 |    -> Skips aio_co_wake().
-> >     |                                 |
-> >     |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
-> >     |                                 |   |-- aio_poll(iohandler_ctx, false)
-> >     |                                 |   |    -> Executes do_qmp_dispatch_bh
-> >     |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
-> >     |                                 |   |
-> >     |                                 |   |-- aio_poll(qemu_aio_context, true)
-> >     |                                 |   |    -> Blocks indefinitely! (Deadlock)
-> >     |                                 |
-> >     |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
-> >
-> > To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh() to break the main loop out of its blocking poll, allowing it to evaluate the loop condition and poll iohandler_ctx.
-> >
-> > Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
-> > Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
-> 
-> Please line-wrap your paragraphs at 70 columns or so.  The maintainer
-> accepting the patch may do that for you, to save you a respin.
-> 
-> Suggested-by: Kevin Wolf <kwolf@redhat.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks, applied to the block branch.
+--3866299591-942512843-1774964742=:7804
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Kevin
+On Tue, 31 Mar 2026, Philippe Mathieu-Daudé wrote:
+> On 30/3/26 23:09, BALATON Zoltan wrote:
+>> Small patches to address Coverity warnings.
+>> 
+>> BALATON Zoltan (2):
+>>    ati-vga: Silence warning about operator precedence
+>>    ati-vga: Add upper limit to x-linear-aper-size property
+>
+> Queued via hw-misc tree, thanks.
 
+Thanks. Could somebody review the cirrus-vga patch too so it could be 
+picked up?
+
+Regards,
+BALATON Zoltan
+--3866299591-942512843-1774964742=:7804--
 
