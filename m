@@ -4,116 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3996E10F9300
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 20:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3DCE10F9302
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 21:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7fvZ-0001K6-On; Tue, 31 Mar 2026 16:43:09 -0400
+	id 1w7gTL-0008Rl-0V; Tue, 31 Mar 2026 17:18:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1w7fvX-0001Hc-MU; Tue, 31 Mar 2026 16:43:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <xukl2019@sjtu.edu.cn>)
+ id 1w7dDn-0007Hl-Be
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:49:47 -0400
+Received: from smtp232.sjtu.edu.cn ([202.120.2.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1w7fvV-0008Ln-2q; Tue, 31 Mar 2026 16:43:07 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62VJ5Fei395498; Tue, 31 Mar 2026 20:43:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/IX/WI
- NQD65PsfxXN1Wp1Ui/GZYladhk2PPaJWoO+QA=; b=EwmNoc71aT4ncGI4Inb5wb
- v08aC8XwB9L0RMratfzNM2Iaqd499/I2BamT5LQbsDDSSWdg44Z6Yd5xjwJJ4OnX
- FBf570r2I0ORR/mjr8gj3l7j/i1uzn9LmZSE/vOE0iDDhSVJN62J35LV8djBO57w
- Xbv7Fj/y9IiJt8FCHYKKWA1o2UGi4jLM4GDDYPmcDX++cAo746uv1KOiEma1pXm/
- 9DOkbPHseSkzy4djH0e6uy7AI9HSeoIgMTYJGrL75Gm8ZT8C1sPH3H8YsbUjCi5f
- SPk2ZolAPJnEe/04NYU9/x6/AxSGTEJGYLN27udbWQa6jq+9gd+Tl6dIbcDiOMdQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66g1wbpg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 31 Mar 2026 20:42:59 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62VJoJA8022165;
- Tue, 31 Mar 2026 20:42:58 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6tan2u9e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 31 Mar 2026 20:42:58 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62VKgumE23462440
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 31 Mar 2026 20:42:57 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C27155805D;
- Tue, 31 Mar 2026 20:42:56 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 148DB5805C;
- Tue, 31 Mar 2026 20:42:56 +0000 (GMT)
-Received: from [9.61.243.2] (unknown [9.61.243.2])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 31 Mar 2026 20:42:55 +0000 (GMT)
-Message-ID: <4bc27bb7-57cd-48e0-b779-631b9843532f@linux.ibm.com>
-Date: Tue, 31 Mar 2026 15:42:54 -0500
+ (Exim 4.90_1) (envelope-from <xukl2019@sjtu.edu.cn>)
+ id 1w7dDh-0000Ki-9D
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:49:45 -0400
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp232.sjtu.edu.cn (Postfix) with ESMTPS id 1ABD21009F96B;
+ Wed,  1 Apr 2026 01:38:12 +0800 (CST)
+Received: from xuklXiaoxin (unknown [202.120.32.222])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id C9BE237C8CA;
+ Wed,  1 Apr 2026 01:38:11 +0800 (CST)
+From: XU Kailiang <xukl2019@sjtu.edu.cn>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Ziyang Zhang <functioner@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Zhengwei Qi <qizhwei@sjtu.edu.cn>,
+ XU Kailiang <xukl2019@sjtu.edu.cn>
+Subject: [PATCH v1 3/3] contrib/plugins: handle more loader open syscalls in
+ the syscall filter demos
+Date: Wed,  1 Apr 2026 01:36:26 +0800
+Message-ID: <20260331173656.35305-4-xukl2019@sjtu.edu.cn>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260331173656.35305-1-xukl2019@sjtu.edu.cn>
+References: <20260331173656.35305-1-xukl2019@sjtu.edu.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 2/3] aio-poll: refine iothread polling using
- weighted handler intervals
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pbonzini@redhat.com, fam@euphon.net,
- armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
- eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-References: <20260323135451.579655-1-jhkim@linux.ibm.com>
- <20260323135451.579655-3-jhkim@linux.ibm.com>
- <20260325203716.GD701300@fedora>
- <ef9756a6-2017-4c4b-89d6-f9afc38b6c62@linux.ibm.com>
- <20260330191744.GD179613@fedora>
-Content-Language: en-US
-From: JAEHOON KIM <jhkim@linux.ibm.com>
-In-Reply-To: <20260330191744.GD179613@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Fdo6BZ+6 c=1 sm=1 tr=0 ts=69cc31d3 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=a0cfZKsoLB7YhxYPsN4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: IoD4bEq69F_W74RjsHQnE-jdNwY1ykQ2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMxMDE5NiBTYWx0ZWRfX/iUD0U7BHlRO
- FlMScB9c+BiC+OpccMQC6QyNEbC55nHQ4k19A/FZRx5ZrvYMhCOei0UcjbxWaqbG7SKbVB57WlF
- wCqyMzGg3DkqBddm4VYC0LCzbI1TjQ8Dsi/t1I7qzqrNM1JbNQINTVXyJv9xQBlXLK2cx251Lwu
- 8t3uQ1zeujuCI+KJrjsiT9vZZ05Ax3l2WaioVdia3UlBL1Is2bSBvrNZ8+mArd7ethDFgQwpQII
- WUJmDaJmPTLgsaprK44GeYuw4xFWJrDlFd1dU6roqZjVqFQejnSNhH/FpigkbLf43QkhNS3t7Cr
- 2zXjpC18Tqr+HgmWvrORaVCL7nwQ2Ir75VR5iKHt4uLfCni18I41iQKSmkg6sN7JdyYPBUHPbXH
- beRvYxDW+2I9OTl6Em1a/mRdnxaqf1ipMepYeJT7vUq8QILRmDWVXA+33mjbHRcteWUqnwGBufN
- gZn4wdnpbm3kLT8ddDA==
-X-Proofpoint-GUID: IoD4bEq69F_W74RjsHQnE-jdNwY1ykQ2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-31_04,2026-03-31_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501
- adultscore=0 malwarescore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603310196
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
+Received-SPF: pass client-ip=202.120.2.232; envelope-from=xukl2019@sjtu.edu.cn;
+ helo=smtp232.sjtu.edu.cn
+X-Spam_score_int: 1
+X-Spam_score: 0.1
 X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 31 Mar 2026 17:18:00 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -128,430 +68,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/30/2026 2:17 PM, Stefan Hajnoczi wrote:
-> On Fri, Mar 27, 2026 at 12:02:21AM -0500, JAEHOON KIM wrote:
->> On 3/25/2026 3:37 PM, Stefan Hajnoczi wrote:
->>> On Mon, Mar 23, 2026 at 08:54:50AM -0500, Jaehoon Kim wrote:
->>>> Refine adaptive polling in aio_poll by updating iothread polling
->>>> duration based on weighted AioHandler event intervals.
->>>>
->>>> Each AioHandler's poll.ns is updated using a weighted factor when an
->>>> event occurs. Idle handlers accumulate block_ns until poll_max_ns and
->>>> then reset to 0, preventing sporadically active handlers from
->>>> unnecessarily prolonging iothread polling.
->>>>
->>>> The iothread polling duration is set based on the largest poll.ns among
->>>> active handlers. The shrink divider defaults to 2, matching the grow
->>>> rate, to reduce frequent poll_ns resets for slow devices.
->>>>
->>>> The default weight factor (POLL_WEIGHT_SHIFT=3, meaning the current
->>>> interval contributes 12.5% to the weighted average) was selected based
->>>> on extensive testing comparing QEMU 10.0.0 baseline vs poll-weight=2
->>>> and poll-weight=3 across various workloads.
->>>>
->>>> The table below shows a comparison between:
->>>> -Host: RHEL 10.1 GA + qemu-10.0.0-14.el10_1, Guest: RHEL 9.6GA vs.
->>>> -Host: RHEL 10.1 GA + qemu-10.0.0-14.el10_1 (w=2/w=3), Guest: RHEL 9.6GA
->>>> for FIO FCP and FICON with 1 iothread and 8 iothreads.
->>>> The values shown are the averages for numjobs 1, 4, and 8.
->>>>
->>>> Summary of results (% change vs baseline):
->>>>
->>>>                       | poll-weight=2      | poll-weight=3
->>>> --------------------|--------------------|-----------------
->>>> Throughput avg      | -2.4% (all tests)  | -2.2% (all tests)
->>>> CPU consumption avg | -10.9% (all tests) | -9.4% (all tests)
->>>>
->>>> Both weight=2 and weight=3 show significant CPU consumption reduction
->>>> (~10%) compared to baseline, which addresses the CPU utilization
->>>> regression observed in QEMU 10.0.0. The throughput impact is minimal
->>>> for both (~2%).
->>>>
->>>> Weight=3 is selected as the default because it provides slightly better
->>>> throughput (-2.2% vs -2.4%) while still achieving substantial CPU
->>>> savings (-9.4%). The difference between weight=2 and weight=3 is small,
->>>> but weight=3 offers a better balance for general-purpose workloads.
->>>>
->>>> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
->>>> ---
->>>>    include/qemu/aio.h |   4 +-
->>>>    util/aio-posix.c   | 135 +++++++++++++++++++++++++++++++--------------
->>>>    util/async.c       |   1 +
->>>>    3 files changed, 99 insertions(+), 41 deletions(-)
->>>>
->>>> diff --git a/include/qemu/aio.h b/include/qemu/aio.h
->>>> index 8cca2360d1..6c77a190e9 100644
->>>> --- a/include/qemu/aio.h
->>>> +++ b/include/qemu/aio.h
->>>> @@ -195,7 +195,8 @@ struct BHListSlice {
->>>>    typedef QSLIST_HEAD(, AioHandler) AioHandlerSList;
->>>>    typedef struct AioPolledEvent {
->>>> -    int64_t ns;        /* current polling time in nanoseconds */
->>>> +    bool has_event; /* Flag to indicate if an event has occurred */
->>>> +    int64_t ns;     /* estimated block time in nanoseconds */
->>>>    } AioPolledEvent;
->>>>    struct AioContext {
->>>> @@ -306,6 +307,7 @@ struct AioContext {
->>>>        int poll_disable_cnt;
->>>>        /* Polling mode parameters */
->>>> +    int64_t poll_ns;        /* current polling time in nanoseconds */
->>>>        int64_t poll_max_ns;    /* maximum polling time in nanoseconds */
->>>>        int64_t poll_grow;      /* polling time growth factor */
->>>>        int64_t poll_shrink;    /* polling time shrink factor */
->>>> diff --git a/util/aio-posix.c b/util/aio-posix.c
->>>> index b02beb0505..2b3522f2f9 100644
->>>> --- a/util/aio-posix.c
->>>> +++ b/util/aio-posix.c
->>>> @@ -29,9 +29,11 @@
->>>>    /* Stop userspace polling on a handler if it isn't active for some time */
->>>>    #define POLL_IDLE_INTERVAL_NS (7 * NANOSECONDS_PER_SECOND)
->>>> +#define POLL_WEIGHT_SHIFT   (3)
->>>> -static void adjust_polling_time(AioContext *ctx, AioPolledEvent *poll,
->>>> -                                int64_t block_ns);
->>>> +static void adjust_block_ns(AioContext *ctx, int64_t block_ns);
->>>> +static void grow_polling_time(AioContext *ctx, int64_t block_ns);
->>>> +static void shrink_polling_time(AioContext *ctx, int64_t block_ns);
->>>>    bool aio_poll_disabled(AioContext *ctx)
->>>>    {
->>>> @@ -373,7 +375,7 @@ static bool aio_dispatch_ready_handlers(AioContext *ctx,
->>>>             * add the handler to ctx->poll_aio_handlers.
->>> This comment refers to adjusting the polling time. The code no longer
->>> does this and the comment should be updated.
->> The comment about adjusting polling time is no longer accurate.
->> I will update it in the next version.
->>>>             */
->>>>            if (ctx->poll_max_ns && QLIST_IS_INSERTED(node, node_poll)) {
->>>> -            adjust_polling_time(ctx, &node->poll, block_ns);
->>> aio_dispatch_ready_handlers() no longer uses the block_ns argument. It
->>> can be removed.
->> I will remove the block_ns argument in the next version.
->>>> +            node->poll.has_event = true;
->>>>            }
->>>>        }
->>>> @@ -560,18 +562,13 @@ static bool run_poll_handlers(AioContext *ctx, AioHandlerList *ready_list,
->>>>    static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_list,
->>>>                              int64_t *timeout)
->>>>    {
->>>> -    AioHandler *node;
->>>>        int64_t max_ns;
->>>>        if (QLIST_EMPTY_RCU(&ctx->poll_aio_handlers)) {
->>>>            return false;
->>>>        }
->>>> -    max_ns = 0;
->>>> -    QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
->>>> -        max_ns = MAX(max_ns, node->poll.ns);
->>>> -    }
->>>> -    max_ns = qemu_soonest_timeout(*timeout, max_ns);
->>>> +    max_ns = qemu_soonest_timeout(*timeout, ctx->poll_ns);
->>>>        if (max_ns && !ctx->fdmon_ops->need_wait(ctx)) {
->>>>            /*
->>>> @@ -587,46 +584,98 @@ static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_list,
->>>>        return false;
->>>>    }
->>>> -static void adjust_polling_time(AioContext *ctx, AioPolledEvent *poll,
->>>> -                                int64_t block_ns)
->>>> +static void shrink_polling_time(AioContext *ctx, int64_t block_ns)
->>>>    {
->>>> -    if (block_ns <= poll->ns) {
->>>> -        /* This is the sweet spot, no adjustment needed */
->>>> -    } else if (block_ns > ctx->poll_max_ns) {
->>>> -        /* We'd have to poll for too long, poll less */
->>>> -        int64_t old = poll->ns;
->>>> -
->>>> -        if (ctx->poll_shrink) {
->>>> -            poll->ns /= ctx->poll_shrink;
->>>> -        } else {
->>>> -            poll->ns = 0;
->>>> -        }
->>>> +    /*
->>>> +     * Reduce polling time if the block_ns is zero or
->>>> +     * less than the current poll_ns.
->>>> +     */
->>>> +    int64_t old = ctx->poll_ns;
->>>> +    int64_t shrink = ctx->poll_shrink;
->>>> -        trace_poll_shrink(ctx, old, poll->ns);
->>>> -    } else if (poll->ns < ctx->poll_max_ns &&
->>>> -               block_ns < ctx->poll_max_ns) {
->>>> -        /* There is room to grow, poll longer */
->>>> -        int64_t old = poll->ns;
->>>> -        int64_t grow = ctx->poll_grow;
->>>> +    if (shrink == 0) {
->>>> +        shrink = 2;
->>>> +    }
->>>> -        if (grow == 0) {
->>>> -            grow = 2;
->>>> -        }
->>>> +    if (block_ns < (ctx->poll_ns / shrink)) {
->>>> +        ctx->poll_ns /= shrink;
->>>> +    }
->>>> -        if (poll->ns) {
->>>> -            poll->ns *= grow;
->>>> -        } else {
->>>> -            poll->ns = 4000; /* start polling at 4 microseconds */
->>>> -        }
->>>> +    trace_poll_shrink(ctx, old, ctx->poll_ns);
->>> This trace event should be inside if (block_ns < (ctx->poll_ns /
->>> shrink)) like it was before this patch.
->>>
->>>> +}
->>>> -        if (poll->ns > ctx->poll_max_ns) {
->>>> -            poll->ns = ctx->poll_max_ns;
->>>> -        }
->>>> +static void grow_polling_time(AioContext *ctx, int64_t block_ns)
->>>> +{
->>>> +    /* There is room to grow, poll longer */
->>>> +    int64_t old = ctx->poll_ns;
->>>> +    int64_t grow = ctx->poll_grow;
->>>> -        trace_poll_grow(ctx, old, poll->ns);
->>>> +    if (grow == 0) {
->>>> +        grow = 2;
->>>>        }
->>>> +
->>>> +    if (block_ns > ctx->poll_ns * grow) {
->>>> +        ctx->poll_ns = block_ns;
->>>> +    } else {
->>>> +        ctx->poll_ns *= grow;
->>>> +    }
->>>> +
->>>> +    if (ctx->poll_ns > ctx->poll_max_ns) {
->>>> +        ctx->poll_ns = ctx->poll_max_ns;
->>>> +    }
->>>> +
->>>> +    trace_poll_grow(ctx, old, ctx->poll_ns);
->>> Same here.
->> I will move the trace_poll_xxx functions inside if condition in the
->> next version.
->>>>    }
->>>> +static void adjust_block_ns(AioContext *ctx, int64_t block_ns)
->>>> +{
->>>> +    AioHandler *node;
->>>> +    int64_t adj_block_ns = -1;
->>>> +
->>>> +    QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
->>>> +        if (node->poll.has_event) {
->>> Did you consider unifying node->poll.has_event with
->>> node->poll_idle_timeout, which is assigned now + POLL_IDLE_INTERVAL_NS
->>> every time ->io_poll() detects an event?
->>>
->>> For instance, rename node->poll_idle_timeout to
->>> node->last_event_timestamp and assign now without adding
->>> POLL_IDLE_INTERVAL_NS. Then use the field for both idle node removal and
->>> adjust_block_ns() (pass in now).
->> Thank you for the suggestion, I think this is a good idea.
->> After testing, it seems that node->poll_idle_timeout can be reused as you
->> suggested,
->> although a few adjustment are needed.
->>
->> currently, an event is detected and the AioHandler is added to the
->> ready_list in
->> three cases: run_poll_handler_once(), ctx->fdmon_ops-wait(), and
->> poll_set_started().
->>
->> To accurately track the last event timestamp of an AioHandler, it seems
->> necessary to
->> update the timestamp in the following two functions:
->>
->> @@ -45,6 +45,7 @@ void aio_add_ready_handler(AioHandlerList *ready_list,
->>   {
->>       QLIST_SAFE_REMOVE(node, node_ready); /* remove from nested parent's
->> list */
->>       node->pfd.revents = revents;
->> +    node->poll_idle_timeout = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
->>       QLIST_INSERT_HEAD(ready_list, node, node_ready);
->>   }
->>
->> @@ -53,6 +54,7 @@ static void aio_add_poll_ready_handler(AioHandlerList
->> *ready_list,
->>   {
->>       QLIST_SAFE_REMOVE(node, node_ready); /* remove from nested parent's
->> list */
->>       node->poll_ready = true;
->> +    node->poll_idle_timeout = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
->>       QLIST_INSERT_HEAD(ready_list, node, node_ready);
->>   }
->>
->> In addition, remove_idle_poll_handler() would need some adjustments as well.
->> If this approach aligns with you had in mind, I believe it can be
->> incorporated in
->> the next version without any issues.
-> That works but I worry a bit about calling qemu_clock_get_ns() for every
-> event. The timestamp does not need to be precise down to the nano-,
-> micro-, or event milli-second. I think you could instead pass 'now' into
-> aio_dispatch_ready_handlers() and assign the new
-> node->last_dispatch_timestamp field there.
-Thanks for the suggestion, that makes sense.
-You're right that calling qemu_clock_get_ns() on every event could introduce
-unnecessary overhead, especially since we don't require high precision here.
-I'll update the code accordingly.
->
->>>> +            /*
->>>> +             * Update poll.ns for the node with an event.
->>>> +             * Uses a weighted average of the current block_ns and the previous
->>>> +             * poll.ns to smooth out polling time adjustments.
->>>> +             */
->>>> +            node->poll.ns = node->poll.ns
->>>> +                ? (node->poll.ns - (node->poll.ns >> POLL_WEIGHT_SHIFT))
->>>> +                + (block_ns >> POLL_WEIGHT_SHIFT) : block_ns;
->>>> +
->>>> +            if (node->poll.ns > ctx->poll_max_ns) {
->>>> +                node->poll.ns = 0;
->>>> +            }
->>> Previously:
->>> -        if (poll->ns > ctx->poll_max_ns) {
->>> -            poll->ns = ctx->poll_max_ns;
->>> -        }
->>>
->>> Was this causing excessive CPU consumption in your benchmarks?
->>>
->>> Can you explain the rationale for zeroing the poll time? Aside from
->>> reducing CPU consumption, it also reduces the chance that polling will
->>> succeed and could therefore impact performance.
->>>
->>> I'm asking about this because this patch makes several changes at once
->>> and I'm not sure how the CPU usage and performance changes are
->>> attributed to these multiple changes. I want to make sure the changes
->>> merged are minimal and the best set - sometimes when multiple things are
->>> changes at the same time, not all of them are beneficial.
->> This snippet you quoted under "Previously" is also reflected in the logic
->> within grow_polling_time() where a same approach is used.
->>
->> The difference is that previously. all AioHandler in the reay_list would
->> update their own poll.ns using block_ns. As in the snippet below,
->> if block_ns exceeded poll_max_ns, it would effectively be reset to 0 anyway.
->>
->> -    } else if (block_ns > ctx->poll_max_ns) {
->> -        /* We'd have to poll for too long, poll less */
->> -        int64_t old = poll->ns;
->> -
->> -        if (ctx->poll_shrink) {
->> -            poll->ns /= ctx->poll_shrink;
->> -        } else {
->> -            poll->ns = 0;
->> -        }
->>
->> I think I did not explain this part clearly enough in the commit message.
->> Here’s a more detailed explanation of the current polling logic problem and
->> approach:
->>
->> Problem:
->> Starting from QEMU 10.0, poll.ns was introduced per event handler to
->> mitigate excessive
->> fluctuations in IOThread polling times observed in earlier versions (QEMU
->> 9.x).
->>
->> However, in the current design, poll.ns is updated only when an event
->> occurs, making it
->> difficult to treat block_ns as a reliable event interval. Also, The
->> IOThread’s next
->> polling time is determined by the maximum poll.ns among all AioHandlers,
->> which means
->> idle AioHandlers with high poll.ns can have an outsized impact on the
->> polling duration.
->>
->> For io_uring, idle AioHandlers are cleared after POLL_IDLE_INTERVAL_NS (7s),
->> but
->> ppoll/epoll, there is no such mechanism, so CPU consumption due to idle
->> nodes can
->> increase even more.
->>
->> Approach:
->> To address this, we treat block_ns as an event interval and update each
->> AioHandler’s
->> poll.ns using a weighted factor. This smooths out polling time adjustments,
->> preventing
->> excessive fluctuations and ensuring that recent event intervals are properly
->> reflected,
->> which helps maintain performance while lowering CPU utilization.
->>
->> To use block_ns as an event interval, we update polling times for both event
->> and non-event AioHandlers in each loop iteration. Non-event AioHandler do
->> not require
->> a weighted factor; this allows for rapid isolation of idle nodes, while
->> ensuring that
->> poll.ns can increase more responsively when an event occurs within a few
->> subsequent loops.
-> Thanks for this information. Please include it in the commit description.
-Thanks, I'll include this in the commit description in the next version.
->
->>>> +            /*
->>>> +             * To avoid excessive polling time increase, update adj_block_ns
->>>> +             * for nodes with the event flag set to true
->>>> +             */
->>>> +            adj_block_ns = MAX(adj_block_ns, node->poll.ns);
->>> adj_block_ns is not the blocking time, it's the maximum current poll
->>> time across all nodes. It would be clearer to change the variable name.
->> You're right. I will rename it to max_poll_ns to better reflect its purpose.
->>>> +            node->poll.has_event = false;
->>>> +         } else {
->>> 4-space indentation should be used.
->> I will also fix the indentation.
->>>> +            /*
->>>> +             * No event now, but was active before.
->>>> +             * If it waits longer than poll_max_ns, poll.ns will stay 0
->>>> +             * until the next event arrives.
->>>> +             */
->>>> +            if (node->poll.ns != 0) {
->>>> +                node->poll.ns += block_ns;
->>> Why is block_ns being added to an recently inactive node's polling time?
->>> Here node->poll.ns no longer measures the weighted time until the
->>> handler had an event.
->>>
->>> If the goal is to get rid of inactive nodes, then maybe the idle handler
->>> removal mechanism should be made more aggresive instead?
->>>
->>>> +                if (node->poll.ns > ctx->poll_max_ns) {
->>>> +                    node->poll.ns = 0;
->>>> +                }
->>>> +            }
->>>> +        }
->>>> +    }
->>>> +
->>>> +    if (adj_block_ns >= 0) {
->>>> +        if (adj_block_ns > ctx->poll_ns) {
->>>> +            grow_polling_time(ctx, adj_block_ns);
->>>> +        } else {
->>>> +            shrink_polling_time(ctx, adj_block_ns);
->>>> +         }
->>>> +     }
->>>> + }
->>>> +
->>>>    bool aio_poll(AioContext *ctx, bool blocking)
->>>>    {
->>>>        AioHandlerList ready_list = QLIST_HEAD_INITIALIZER(ready_list);
->>>> @@ -723,6 +772,10 @@ bool aio_poll(AioContext *ctx, bool blocking)
->>>>        aio_free_deleted_handlers(ctx);
->>>> +    if (ctx->poll_max_ns) {
->>>> +        adjust_block_ns(ctx, block_ns);
->>>> +    }
->>>> +
->>>>        qemu_lockcnt_dec(&ctx->list_lock);
->>>>        progress |= timerlistgroup_run_timers(&ctx->tlg);
->>>> @@ -784,6 +837,7 @@ void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
->>>>        qemu_lockcnt_inc(&ctx->list_lock);
->>>>        QLIST_FOREACH(node, &ctx->aio_handlers, node) {
->>>> +        node->poll.has_event = false;
->>>>            node->poll.ns = 0;
->>>>        }
->>>>        qemu_lockcnt_dec(&ctx->list_lock);
->>>> @@ -794,6 +848,7 @@ void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
->>>>        ctx->poll_max_ns = max_ns;
->>>>        ctx->poll_grow = grow;
->>>>        ctx->poll_shrink = shrink;
->>>> +    ctx->poll_ns = 0;
->>>>        aio_notify(ctx);
->>>>    }
->>>> diff --git a/util/async.c b/util/async.c
->>>> index 80d6b01a8a..9d3627566f 100644
->>>> --- a/util/async.c
->>>> +++ b/util/async.c
->>>> @@ -606,6 +606,7 @@ AioContext *aio_context_new(Error **errp)
->>>>        timerlistgroup_init(&ctx->tlg, aio_timerlist_notify, ctx);
->>>>        ctx->poll_max_ns = 0;
->>>> +    ctx->poll_ns = 0;
->>>>        ctx->poll_grow = 0;
->>>>        ctx->poll_shrink = 0;
->>>> -- 
->>>> 2.50.1
->>>>
+Extend both syscall-filter demo plugins so the library redirection logic
+handles open() and openat2() in addition to openat().
+
+For openat2(), keep the fast path for unrelated library loads by reading
+the guest pathname first and only decoding struct open_how after the
+pathname matches the demo library name. Update the example README files
+and overview text so the reproduced commands and behavior describe all
+supported loader entry points.
+
+Signed-off-by: XU Kailiang <xukl2019@sjtu.edu.cn>
+Co-authored-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+---
+ .../README.rst                                |  5 +-
+ .../plugins/syscall_filter_callback_qsort.c   | 61 +++++++++++++++--
+ .../syscall_filter_zlib-example/README.rst    |  5 +-
+ contrib/plugins/syscall_filter_zlib.c         | 65 +++++++++++++++++--
+ docs/about/emulation.rst                      |  6 +-
+ 5 files changed, 124 insertions(+), 18 deletions(-)
+
+diff --git a/contrib/plugins/syscall_filter_callback_qsort-example/README.rst b/contrib/plugins/syscall_filter_callback_qsort-example/README.rst
+index e2bba7e2b6..ab758e358b 100644
+--- a/contrib/plugins/syscall_filter_callback_qsort-example/README.rst
++++ b/contrib/plugins/syscall_filter_callback_qsort-example/README.rst
+@@ -8,8 +8,9 @@ interception on ``qemu-x86_64``.
+ 
+ * ``callback-demo.c`` is linked against ``libdemo-callback-qsort.so`` and calls
+   ``callback_qsort()`` directly.
+-* The plugin intercepts the loader's ``openat()`` and returns a file
+-  descriptor for ``./libdemo-callback-qsort-thunk.so`` instead.
++* The plugin intercepts the loader's ``open()``, ``openat()``, or
++  ``openat2()`` and returns a file descriptor for
++  ``./libdemo-callback-qsort-thunk.so`` instead.
+ * ``callback-thunk.S`` issues a ``START`` magic syscall for ``qsort()`` and a
+   ``RESUME`` magic syscall from a guest return trampoline.
+ * ``contrib/plugins/syscall_filter_callback_qsort.c`` runs host ``qsort()``
+diff --git a/contrib/plugins/syscall_filter_callback_qsort.c b/contrib/plugins/syscall_filter_callback_qsort.c
+index 45a83cb5b1..8c6c0ddb91 100644
+--- a/contrib/plugins/syscall_filter_callback_qsort.c
++++ b/contrib/plugins/syscall_filter_callback_qsort.c
+@@ -4,7 +4,7 @@
+  * x86_64-only prototype that demonstrates a callback-capable syscall filter
+  * plugin by redirecting a qsort() thunk library and bridging comparator calls
+  * back into guest translated code with ucontext. The loader redirection
+- * handles openat().
++ * handles open(), openat(), and openat2().
+  *
+  * This demo intentionally assumes a linux-user run with guest_base == 0 on a
+  * little-endian 64-bit host, so guest virtual addresses are directly usable
+@@ -36,7 +36,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+ #define GUEST_STRING_LIMIT (1 << 20)
+ #define CALLBACK_QSORT_MAX_ELEMS (1 << 20)
+ #define CALLBACK_QSORT_STACK_SIZE (1 << 20)
++#define X86_64_OPEN_NR 2
+ #define X86_64_OPENAT_NR 257
++#define X86_64_OPENAT2_NR 437
++
++typedef struct GuestOpenHow {
++    uint64_t flags;
++    uint64_t mode;
++} GuestOpenHow;
+ 
+ typedef enum CallbackQsortPhase {
+     CALLBACK_QSORT_PHASE_IDLE,
+@@ -128,6 +135,19 @@ static void write_reg64(VcpuState *vcpu, struct qemu_plugin_register *reg,
+     g_assert(success);
+ }
+ 
++static void read_guest_buffer(uint64_t addr, void *dst, size_t len)
++{
++    g_autoptr(GByteArray) data = g_byte_array_sized_new(len);
++
++    if (len == 0) {
++        return;
++    }
++
++    g_byte_array_set_size(data, len);
++    g_assert(qemu_plugin_read_memory_vaddr(addr, data, len));
++    memcpy(dst, data->data, len);
++}
++
+ static bool write_guest_u64(uint64_t addr, uint64_t value)
+ {
+     GByteArray data = {
+@@ -138,6 +158,13 @@ static bool write_guest_u64(uint64_t addr, uint64_t value)
+     return qemu_plugin_write_memory_vaddr(addr, &data);
+ }
+ 
++static void read_guest_open_how(uint64_t addr, uint64_t guest_size,
++                                GuestOpenHow *how)
++{
++    g_assert(guest_size >= sizeof(*how));
++    read_guest_buffer(addr, how, sizeof(*how));
++}
++
+ static char *read_guest_cstring(uint64_t addr)
+ {
+     g_autoptr(GByteArray) data = g_byte_array_sized_new(GUEST_STRING_CHUNK);
+@@ -273,23 +300,49 @@ static bool handle_library_open(int64_t num, uint64_t a1, uint64_t a2,
+     g_autofree char *path = NULL;
+     g_autofree char *thunk_path = NULL;
+     g_autofree char *out = NULL;
++    GuestOpenHow how = { 0 };
++    uint64_t path_addr;
++    int dirfd;
++    int flags;
++    mode_t mode;
+     int fd;
+ 
+-    if (num != X86_64_OPENAT_NR) {
++    if (num == X86_64_OPEN_NR) {
++        dirfd = AT_FDCWD;
++        path_addr = a1;
++        flags = (int)a2;
++        mode = (mode_t)a3;
++    } else if (num == X86_64_OPENAT_NR) {
++        dirfd = (int)a1;
++        path_addr = a2;
++        flags = (int)a3;
++        mode = (mode_t)a4;
++    } else if (num == X86_64_OPENAT2_NR) {
++        dirfd = (int)a1;
++        path_addr = a2;
++        flags = 0;
++        mode = 0;
++    } else {
+         return false;
+     }
+ 
+-    path = read_guest_cstring(a2);
++    path = read_guest_cstring(path_addr);
+     if (path == NULL || !guest_path_matches_bridge(path)) {
+         return false;
+     }
+ 
++    if (num == X86_64_OPENAT2_NR) {
++        read_guest_open_how(a3, a4, &how);
++        flags = (int)how.flags;
++        mode = (mode_t)how.mode;
++    }
++
+     thunk_path = build_thunk_path(path);
+     if (access(thunk_path, F_OK) != 0) {
+         return false;
+     }
+ 
+-    fd = openat((int)a1, thunk_path, (int)a3, (mode_t)a4);
++    fd = openat(dirfd, thunk_path, flags, mode);
+     g_assert(fd >= 0);
+ 
+     *sysret = fd;
+diff --git a/contrib/plugins/syscall_filter_zlib-example/README.rst b/contrib/plugins/syscall_filter_zlib-example/README.rst
+index 4920187a2b..0a1cd555ca 100644
+--- a/contrib/plugins/syscall_filter_zlib-example/README.rst
++++ b/contrib/plugins/syscall_filter_zlib-example/README.rst
+@@ -8,8 +8,9 @@ This directory contains the guest-side pieces used by
+ 
+ * ``zcompress-demo.c`` is linked against ``libdemo-zlib.so`` and calls the
+   compression helpers directly.
+-* The plugin intercepts the loader's ``openat()`` call and returns a file
+-  descriptor for ``./libdemo-zlib-thunk.so`` instead.
++* The plugin intercepts the loader's ``open()``, ``openat()``, or
++  ``openat2()`` call and returns a file descriptor for
++  ``./libdemo-zlib-thunk.so`` instead.
+ * ``zcompress-thunk.c`` exposes a tiny compression API as thin wrappers around
+   magic syscalls.
+ * The plugin filters those magic syscalls and executes the host zlib
+diff --git a/contrib/plugins/syscall_filter_zlib.c b/contrib/plugins/syscall_filter_zlib.c
+index e8f430cbaf..59e3750c90 100644
+--- a/contrib/plugins/syscall_filter_zlib.c
++++ b/contrib/plugins/syscall_filter_zlib.c
+@@ -5,10 +5,10 @@
+  * local library interception with a host zlib compression example.
+  *
+  * When the guest dynamic loader attempts to open "./libdemo-zlib.so", this
+- * plugin intercepts openat() and instead returns a file descriptor for
+- * "libdemo-zlib-thunk.so" in the same directory. The thunk library then
+- * forwards compression requests through magic syscalls, which are handled by
+- * this plugin and executed by the host's zlib implementation.
++ * plugin intercepts open(), openat(), or openat2() and instead returns a file
++ * descriptor for "libdemo-zlib-thunk.so" in the same directory. The thunk
++ * library then forwards compression requests through magic syscalls, which are
++ * handled by this plugin and executed by the host's zlib implementation.
+  *
+  * This demo intentionally assumes a linux-user run with guest_base == 0 on a
+  * little-endian 64-bit host, so guest virtual addresses are directly usable
+@@ -40,7 +40,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+ #define ZLIB_COMPRESS_MAX_BUFFER (128 * 1024 * 1024)
+ #define GUEST_STRING_CHUNK 64
+ #define GUEST_STRING_LIMIT (1 << 20)
++#define X86_64_OPEN_NR 2
+ #define X86_64_OPENAT_NR 257
++#define X86_64_OPENAT2_NR 437
++
++typedef struct GuestOpenHow {
++    uint64_t flags;
++    uint64_t mode;
++} GuestOpenHow;
+ 
+ static char *read_guest_cstring(uint64_t addr)
+ {
+@@ -68,6 +75,25 @@ static char *read_guest_cstring(uint64_t addr)
+     return NULL;
+ }
+ 
++static void read_guest_buffer(uint64_t addr, void *dst, size_t len)
++{
++    g_autoptr(GByteArray) data = g_byte_array_sized_new(len);
++
++    if (len == 0) {
++        return;
++    }
++
++    g_byte_array_set_size(data, len);
++    g_assert(qemu_plugin_read_memory_vaddr(addr, data, len));
++    memcpy(dst, data->data, len);
++}
++
++static void read_guest_open_how(uint64_t addr, uint64_t guest_size,
++                                GuestOpenHow *how)
++{
++    g_assert(guest_size >= sizeof(*how));
++    read_guest_buffer(addr, how, sizeof(*how));
++}
+ static bool guest_path_matches_zlib_compress(const char *path)
+ {
+     g_autofree char *basename = g_path_get_basename(path);
+@@ -92,22 +118,47 @@ static bool handle_library_open(int64_t num, uint64_t a1, uint64_t a2,
+     g_autofree char *path = NULL;
+     g_autofree char *thunk_path = NULL;
+     g_autofree char *out = NULL;
++    GuestOpenHow how = { 0 };
++    uint64_t path_addr;
++    int dirfd;
++    int flags;
++    mode_t mode;
+     int fd;
+ 
+-    if (num != X86_64_OPENAT_NR) {
++    if (num == X86_64_OPEN_NR) {
++        dirfd = AT_FDCWD;
++        path_addr = a1;
++        flags = (int)a2;
++        mode = (mode_t)a3;
++    } else if (num == X86_64_OPENAT_NR) {
++        dirfd = (int)a1;
++        path_addr = a2;
++        flags = (int)a3;
++        mode = (mode_t)a4;
++    } else if (num == X86_64_OPENAT2_NR) {
++        dirfd = (int)a1;
++        path_addr = a2;
++        flags = 0;
++        mode = 0;
++    } else {
+         return false;
+     }
+ 
+-    path = read_guest_cstring(a2);
++    path = read_guest_cstring(path_addr);
+     if (path == NULL || !guest_path_matches_zlib_compress(path)) {
+         return false;
+     }
++    if (num == X86_64_OPENAT2_NR) {
++        read_guest_open_how(a3, a4, &how);
++        flags = (int)how.flags;
++        mode = (mode_t)how.mode;
++    }
+     thunk_path = build_thunk_path(path);
+     if (access(thunk_path, F_OK) != 0) {
+         return false;
+     }
+ 
+-    fd = openat((int)a1, thunk_path, (int)a3, (mode_t)a4);
++    fd = openat(dirfd, thunk_path, flags, mode);
+     g_assert(fd >= 0);
+ 
+     *sysret = fd;
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 4afec85ff6..8630300b37 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -246,9 +246,9 @@ side example lives in ``contrib/plugins/syscall_filter_zlib-example``.
+ 
+ The plugin does two things:
+ 
+-* It filters the guest ``openat()`` that the dynamic loader issues for
+-  ``./libdemo-zlib.so`` and instead returns a file descriptor for
+-  ``libdemo-zlib-thunk.so``.
++* It filters the guest ``open()``, ``openat()``, or ``openat2()`` that the
++  dynamic loader issues for ``./libdemo-zlib.so`` and instead returns a file
++  descriptor for ``libdemo-zlib-thunk.so``.
+ * It filters magic syscalls from the thunk library and runs the host's zlib
+   ``compressBound()``, ``compress2()``, and ``uncompress()`` implementations
+   directly on guest buffers.
+-- 
+2.53.0
 
 
