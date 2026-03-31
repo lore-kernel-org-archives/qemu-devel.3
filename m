@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A65EFF60F4
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4684910F92E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 17:29:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7caK-0003wa-So; Tue, 31 Mar 2026 13:09:01 -0400
+	id 1w7ct5-0005SQ-0E; Tue, 31 Mar 2026 13:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1w7caG-0003pT-Lj
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:08:56 -0400
-Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7ct3-0005SF-HD
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:28:21 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1w7caF-0003Cd-6u
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:08:56 -0400
-Received: by mail-pf1-x442.google.com with SMTP id
- d2e1a72fcca58-829a9d08644so3156308b3a.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:08:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7ct1-0005nf-SJ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:28:21 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-6501d242e3fso4932296d50.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:28:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774978098; cv=none;
+ d=google.com; s=arc-20240605;
+ b=IRaSypLzT/yL0rM/AXddgC5fLsMpm83IKWHijhHofdIlGemfT1F/kYNAf0x4lCengA
+ c/9ZViUtNzpJp8EZv1ecD99s4kIm7HObfodKPA00buvFnpPeSIrDd5M+YI42hAVXLZbQ
+ ihJ61ixf+u0Pkh9QS1cHo/WGW/D3x0ITPzF0HENZX6bXdyypVGXHrzSjQlQpmROOlb3w
+ 2iEXALO4F+50n83/1Txuh1CT9DA/N9h6zBXOEYVXhSSG+cwqxPu9OlLmmN8CRTVlSmOO
+ PXCMR4flEEWTf68tOlLn0Ai8WPYX0HBFGAeDUcfj9gJEFUE3lBCm9py9neMjxfStg67D
+ OjcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=IbUtHg43PNy2wWJuPoxX6sqPAXsoLXmFQxiPxYnZUIw=;
+ fh=j0m/KHqzOQ6CKKktQSBLLiVo/M7SZnjHIyl4bugXt+Y=;
+ b=dh53NXiWVkS0MnN/yy25qumm/k0/TNFe29VIrlcLvTzVzaVVOA23JVlJWDTpcaZIh/
+ 3Czih2aliuKYUf4L5YQgONZzIrb5yCqxsbk+I4KtfJYL4y40bsQcFObPFi2IM0lCWMoj
+ qVnsKgWyCN2Uxu53IFiSlfwVUVzWrkgRyQPbgpqfz6IR4MooErxyta3bO514RwAkVcOX
+ eft4f8OBALaql69Udz4rzxwLfd02X2MOW1Ed/j6E5mX7NEKhy9I7pzoY4pLFCJoKvRmM
+ 6A+V/LW3PPMnZX7sBdCXOVyM1C6LwGWSE8MUH/u5AEJcSi39ezGNU39pMuvUdj/qMjjV
+ wnYQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774976932; x=1775581732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W/Vp9csjxDdP8UCdEEf84+/qxz8piPF+LrR8kcVgFz0=;
- b=tBHGtJrAfydRqCBxljz5f9awSV+vffYEO8epUIv3pQSWh4tlvqPD8BG2CJ9vBYOihv
- Sp9fxnfh4BH76Jfto9CIOyRDZjq3O2F63UUA1wtU/4aMNUOp9zxECYv78Uvbg/1Wq7jO
- 6l8dplOSgnyuUcYvthFW3mjgWGATISK7VnT5qfwB68fdd/Yb4fK4iWe0wEko3IM3aQGN
- Nowcb4/dnm89ToqGlgMHCpGl1nRedsacw7cpvsNqkmUv0MZhaPkpQry46m0/S+p7Y6Jk
- W1NWrzWvJWEcVvA2nCn9SikpJIdNlFRDLZv8+DQhqoehKRBi7wOb52dg8K2dwzMTKgs4
- Yi3Q==
+ d=linaro.org; s=google; t=1774978098; x=1775582898; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IbUtHg43PNy2wWJuPoxX6sqPAXsoLXmFQxiPxYnZUIw=;
+ b=vcvShGi0JMmIkRGymFCN3B3ZDcjuVUg2GFc56uOYqxNuUwmTrz98/59Vy57IwSOFRa
+ VgY2WmD1iVZJmtXeFt/6hSs2iSnKIUXx5k+Vb5v30n2NMz06YOVjAAgwQLFs+pICKuZU
+ WMmvDYIrYariXj+1Q93L9hv4e5Bsk5jUfiG59Kckg5x5sYOSf1h2l+P7ONRm0qHcm+Ll
+ itmxomyHL8xJcRpTravz/+AVA2JeqVoD6VsZo0CzB9cnCxq7FFGrTQcVMLJ0CsGo32tR
+ mGj1EWjYhpweqan6xIMDVJKjiyudduPgvYrfRIqKSQI/dOh0XUqnYlSZ8zMGIKwRFn1N
+ vXag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774976932; x=1775581732;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W/Vp9csjxDdP8UCdEEf84+/qxz8piPF+LrR8kcVgFz0=;
- b=ZLNr5uqxuVWWuOibMClP0uGtCvCJT12X5IAOwqFLY6jstphPQ1+Uu4PIAR5FNMhJmQ
- iOOLml+ElWgkys93pMMipTAusNkYLV4+6w915AEcLaO0zuhS48mevuDBUkp+5O/Ti7Rb
- RVQijk8i1s2eBQnfnUI8EkFMH4nnvcBFzsmIu/KyTAGwLFfO7A7Npm4PW9LhaK+BKFh5
- SOYFxGZbjLZ920gj4O8t6WQK5gMKdN/l0kLwMUV459XUPBZVZw3kwH8snB8mO1/KQPrf
- UfiCn+6z2Rmy/BNDZCKwiQdVeTQ9pZkKublkpobxwtCgC3gEsloP4nsHuL+S3wu5Eoom
- 49fQ==
-X-Gm-Message-State: AOJu0YxvwJKI2qrzrpcGqoeiaaXKfqUqPaiGQqN/ieaobtkDHRd5MPqR
- /CxubIsEQueAdOTurL+USoTrzbxzCBOio3Vm90oQ9WFkFrZpF3D2jIbVBFBG38OF
-X-Gm-Gg: ATEYQzx50VTOS8ULWpg/Gd191FCD0LsEuXl40yPrmc95DCxnNnxsE5lLsub6nCL5sQL
- 19uqe2dBVVW0gZzhnMGp0zrbjUOPtfbFUqS3mzDct4CJBr5yWu+6PRjt3H8XaPuw8vBAxGBxRNz
- 2aXVnLedFgQ7jiUCLBgEePA6F/D0ts2Wv4r6IXQ2Pnhq3tm7edtMNnzX2en0d8inrPta3GktS10
- oPoqne7slySWb8tfWvoILaHjePwev7uJ6Tx+kChBeXdxgeH+xylMvF6WRhUNlC81/pM2e20QrX3
- xr45vFjjrGKZyWmdLUrzLZcjgNU08h5vP9xfW3WoZIvPZor03QzvxKXYVAbBqueLTg7qpf44de5
- WFKW6o2t22nLgmZEffCDlqsWV3IVFPSysOmZHpYOI3KIqTYqXCn1lNUDhKX5iLEFqlVJHxRc0qG
- VpZxXI0TD8OKIcMYnWZwkfs0RvMDd3F3drS10SOG4R5QzE3PiuPe/q2fs4p8b1nxjFZ+sQv091N
- 8lC7Ie9iA9QMHepClfAfa+nNwjWqmt0B8s0HwLvRF1QU2PEs4vSdaoEFEA2TOdXdiHUrXurdg==
-X-Received: by 2002:a05:6a00:a1b:b0:7aa:a2a8:9808 with SMTP id
- d2e1a72fcca58-82ce893ed22mr420788b3a.20.1774976932503; 
- Tue, 31 Mar 2026 10:08:52 -0700 (PDT)
-Received: from fedora ([103.2.232.250]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82ca843b818sm13647889b3a.6.2026.03.31.10.08.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 31 Mar 2026 10:08:51 -0700 (PDT)
-From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Soumyajyotii Ssarkar <sarkarsoumyajyoti23@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Thomas Lambertz <patch@thomaslambertz.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex Golovko <alex@browserling.com>, ShengYi Hung <aokblast@FreeBSD.org>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [RFC PATCH 4/5] usb/hid: handle mouse feature report for wheel/pan
- multipliers
-Date: Tue, 31 Mar 2026 22:38:22 +0530
-Message-ID: <20260331170823.72511-5-soumyajyotisarkar23@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
-References: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
+ d=1e100.net; s=20251104; t=1774978098; x=1775582898;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IbUtHg43PNy2wWJuPoxX6sqPAXsoLXmFQxiPxYnZUIw=;
+ b=kAjh6Y5RI+2GQEI0OTG0TlEUa0f5i415v+5uw9UwR4eQoKzUk2mOWqSuoR1NTwerq2
+ Syg5iKceCOa1k9pIipEFw9qHFB7TyVqEZl1tWdpYPgaURBeqWa2Uv3JwBR5WB+FhEqxm
+ l8ioFZI7y28WFP51ghpJt6Bq/Z6Hdgaa8HjRP9NQxB/VoyTyyQMpf517XdV+z/LNLnwo
+ WJ9suokdf9jmHXfYJlxXJJW127qrwshzrvE1xZA3ZNQHHwgNE+64chLF4NPv4j55MgY3
+ 1uBdIB9sN4ZUyE7G+5wF5yS2HnwPBWTEhx8w/HJtuRzdJ+f8fkqI1feEeD9pMwcTdpNl
+ naXg==
+X-Gm-Message-State: AOJu0Yw/XfP41WNxmsktPbNRuf/oYYuwyojQYPWVypGMQb6G3mfrzz1t
+ 4Kj5rn/pqZsklevvGyvOyGtwYOeQ8uSl0MDJtU/0ntZZDLrNo8TxqVXeq7K9pxsD1/NNZp/vuBC
+ ADEAsItxA1qkDeKYBzwSsGSem64AuacvpSAQnYJAgMQ==
+X-Gm-Gg: ATEYQzxy6dk1nXWAWhiQiVAduJunq7JLdCIqWeHXypfvVDjjTtgUQdy50gtK10p3Bxc
+ 5GUJ6F83TMWGxQN1RnoavB+3+i8FsC/Z1K1WhECnXfjaGJLJ434QxQz1fy0HX9YVz5NQ4goqKKp
+ wVL8gQXThMvBZncVuE9v0oD8JXwlAUCfrli1wqSUArsMpzaiTWcMaAaz5yc8pabQPU3ZMrqENaA
+ QQhtdXHdG9IyQXuSO/mRD5wcmK7R4dc5TysriIrXL2RuDSv3V5WhjLLC+9+5n7ZlHgDzVeu+KiR
+ 7N1/uqX+M0k2mvtbzoGeuFD/rYwIcmx0gw3CL9nI+in3dJ/AK2dO7IP3LiyniBfUpKo=
+X-Received: by 2002:a53:b2e3:0:b0:64c:f90c:740b with SMTP id
+ 956f58d0204a3-6502fdc1782mr95921d50.18.1774978098218; Tue, 31 Mar 2026
+ 10:28:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x442.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260321135624.581398-1-npiggin@gmail.com>
+ <CAFEAcA_iwWDmZf1hojzZ8+N5RTRC4WXDSSK7SugNNRd6kdk8Gw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_iwWDmZf1hojzZ8+N5RTRC4WXDSSK7SugNNRd6kdk8Gw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 31 Mar 2026 18:28:06 +0100
+X-Gm-Features: AQROBzBc3BBDwdy8ofqVDw9j4p3rS1jiFKMJ801zB9SQQqiQbwYq2y4ASn2qLn0
+Message-ID: <CAFEAcA_+_tDJstKjQVENprAa-37tX6Ta9Ay7i-nK3Hp8v7BGyQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] user: recursive signal delivery fix and test
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,117 +117,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement HID feature report handlers (GET_REPORT/SET_REPORT) for
-report ID 0x02 to allow guests to configure wheel/pan resolution
-multipliers.
+On Tue, 31 Mar 2026 at 17:59, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Sat, 21 Mar 2026 at 13:56, Nicholas Piggin <npiggin@gmail.com> wrote:
+> >
+> > I found this recursive delivery problem when testing new riscv vector
+> > state support patches (plus a minor lock user balance bug).
+> >
+> > This or similar type of issue was fixed with 8bd3773cce1 but I couldn't
+> > see exactly what scenario that was addressing. Is there any other way a
+> > signal can be generated during handle_pending_signal()? The SIGTTIN
+> > case, perhaps?
+> >
+> > Thanks,
+> > Nick
+> >
+> > Nicholas Piggin (3):
+> >   linux-user: sigaltstack lock_user_struct missing unlock
+> >   bsd-user, linux-user: signal: recursive signal delivery fix
+> >   tests/tcg: add recursive signal delivery tests
+>
+> I'm going to take patches 2 and 3 into a pullreq I'm doing for
+> linux-user fixes for rc2, so we can get the fix into 11.0.
+> (I've made a s/__chk_error/do_chk_error/ adjustment to patch 3.)
 
-Multiplier encoding:
-- Bits [1:0]: wheel_multiplier (0=+-1, 1=+-4, 2=+-8, 3=+-16)
-- Bits [3:2]: pan_multiplier (0=+-1, 1=+-4, 2=+-8, 3=+-16)
+Patch 3 also has a missing "#include <stdbool.h>" in the test
+program; otherwise it fails to compile in 'make check-tcg'.
 
-Supports flexible payload formats (with/without report ID byte).
-Allows Windows guests to dynamically adjust scroll sensitivity without
-driver installation.
-
-Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
----
- hw/usb/dev-hid.c       | 65 ++++++++++++++++++++++++++++++++++++------
- include/hw/input/hid.h |  2 ++
- 2 files changed, 59 insertions(+), 8 deletions(-)
-
-diff --git a/hw/usb/dev-hid.c b/hw/usb/dev-hid.c
-index 49e23c2319..cdcf2a4a0e 100644
---- a/hw/usb/dev-hid.c
-+++ b/hw/usb/dev-hid.c
-@@ -672,17 +672,66 @@ static void usb_hid_handle_control(USBDevice *dev, USBPacket *p,
-         }
-         break;
-     case HID_GET_REPORT:
--        if (hs->kind == HID_MOUSE || hs->kind == HID_TABLET) {
--            p->actual_length = hid_pointer_poll(hs, data, length);
--        } else if (hs->kind == HID_KEYBOARD) {
--            p->actual_length = hid_keyboard_poll(hs, data, length);
-+        {
-+            uint8_t mult;
-+            uint8_t report_type = (value >> 8) & 0xFF;
-+            uint8_t report_id = value & 0xFF;
-+
-+            if (report_type == 0x03 && report_id == 0x02 &&
-+                hs->kind == HID_MOUSE) {
-+
-+                if (length < 1) {
-+                    goto fail;
-+                }
-+
-+                mult = ((hs->ptr.pan_multiplier & 0x03) << 2) |
-+                       (hs->ptr.wheel_multiplier & 0x03);
-+                if (length >= 2) {
-+                    data[0] = 0x02;
-+                    data[1] = mult;
-+                    p->actual_length = 2;
-+                } else {
-+                    data[0] = mult;
-+                    p->actual_length = 1;
-+                }
-+
-+            } else if (hs->kind == HID_MOUSE || hs->kind == HID_TABLET) {
-+                p->actual_length = hid_pointer_poll(hs, data, length);
-+            } else if (hs->kind == HID_KEYBOARD) {
-+                p->actual_length = hid_keyboard_poll(hs, data, length);
-+            } else {
-+                goto fail;
-+            }
-         }
-         break;
-     case HID_SET_REPORT:
--        if (hs->kind == HID_KEYBOARD) {
--            p->actual_length = hid_keyboard_write(hs, data, length);
--        } else {
--            goto fail;
-+        {
-+            uint8_t mult;
-+            uint8_t report_type = (value >> 8) & 0xFF;
-+            uint8_t report_id = value & 0xFF;
-+
-+            if (report_type == 0x03 && report_id == 0x02 &&
-+                hs->kind == HID_MOUSE) {
-+
-+                if (length < 1) {
-+                    goto fail;
-+                }
-+
-+                if (length >= 2 && data[0] == 0x02) {
-+                    mult = data[1];
-+                } else {
-+                    mult = data[0];
-+                }
-+
-+                hs->ptr.wheel_multiplier = mult & 0x03;
-+                hs->ptr.pan_multiplier = (mult >> 2) & 0x03;
-+                p->actual_length = length;
-+
-+            } else if (hs->kind == HID_KEYBOARD) {
-+                p->actual_length = hid_keyboard_write(hs, data, length);
-+            } else {
-+                goto fail;
-+            }
-         }
-         break;
-     case HID_GET_PROTOCOL:
-diff --git a/include/hw/input/hid.h b/include/hw/input/hid.h
-index 1bb1778ee7..1a1941d371 100644
---- a/include/hw/input/hid.h
-+++ b/include/hw/input/hid.h
-@@ -23,6 +23,8 @@ typedef void (*HIDEventFunc)(HIDState *s);
- typedef struct HIDMouseState {
-     HIDPointerEvent queue[QUEUE_LENGTH];
-     int mouse_grabbed;
-+    uint8_t wheel_multiplier;
-+    uint8_t pan_multiplier;
- } HIDMouseState;
-
- typedef struct HIDKeyboardState {
---
-2.53.0
-
+-- PMM
 
