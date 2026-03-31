@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAA0C109B462
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50218109B468
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7Ywn-0005yH-LO; Tue, 31 Mar 2026 09:15:57 -0400
+	id 1w7YxJ-0006a1-Pu; Tue, 31 Mar 2026 09:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Ywl-0005pf-J3
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:55 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YxI-0006Ya-0E
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:28 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Ywj-000492-Sf
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:55 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-487012ce896so35233955e9.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:15:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YxG-0004CO-D5
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:27 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4852a9c6309so48074245e9.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774962952; x=1775567752; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774962984; x=1775567784; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0hZfLbUOtDPdrcYCCS73D5HPlF10V9o2G7my6Fk8kI4=;
- b=cxPN9ZzjjfZDsDreJLxXUl4kCsd+rUFM1GC12+n5zm06M26Wlx8dUdwwzzQBCRu0nv
- nIkA2uiGoLJkUV8qwu38/qn8W8Q0M7R0C4iI/nk5wJakTHAs4XjiF2+3gJhJWfIPD8yt
- ZO1bTKTbweaI6Sg0b4k/eXscUzI2QLefVYXTyfr+/R63Y2CBgiH/tem189/Knjtxfcs6
- HcA0k199EJMO0ts7QUIcbt5N4OREWDyw18wIJJm1rsgXWhTsYkhvETTiq40P2FcFlB9w
- 0sedcvMSrtzCzpgWQpr9I12R1DumbZathWdRKlw8doyXZa/gn08uOLXhvsD4tsfDOkAx
- mZTw==
+ :reply-to; bh=iBOEKdnNX+UB0CEMFgda2sLylOVtVPePP1bIf9KL7R8=;
+ b=vmuKhUA2UnDShT3tCb0+kgsb5uFMnA8jCoaeNF+Lnh3nOsSUxeBWftcdpVyTC0i9jT
+ PBDNDB7l+fFXKL3VG+sR16lBPGnHRjXc6/Rs2ylbgYgBwPi8TMY12uqGW3jkrgZzxnD7
+ yFTXAffmVHDN9ewtDYs2qJ+2f0tl5sfDXSdCx/9b4WVsFVagU7X2ZKomTnKQkZS9AVR2
+ zAt7GlvtwhtCMJdI5tU389kGpnttT4FBV3ZtKMoNXVGI1G9qXh3TNCPrByLnNhjWBJm+
+ twngo4gJrKo5Efgy68UAVexwlqWk7p3+esLaG1gz2z7pFxTVX9uYqmLtV4Ex1hHe2Evx
+ EH0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774962952; x=1775567752;
+ d=1e100.net; s=20251104; t=1774962984; x=1775567784;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=0hZfLbUOtDPdrcYCCS73D5HPlF10V9o2G7my6Fk8kI4=;
- b=i9i0c8c13QxI9xJCG/C6kxd3Ls6OlubZmVnLrX5mb9n0VjAWbrrbZJDfiGrcjkPwW8
- Jycam5zjR301J7D8N6+5N8Mz+X7R9CG/53n+jprIbTJMhQR7ZTFTgl9Dd7jaod8BsKOf
- KWjuhFlCl1R+skO+gRrhrPi0nAoYNGRTvyJj7GUvrbcc0KsIaWeBatOUXP4ZMvU3xuTA
- 5Im2kAOPeRXWUMZOjL2VDzeEpvG9tvaTPk7IyE/ogetPDciSNGXRevjQzKMjLPu4gmf2
- n8tUz313PWZ1/z+Tgg9lFmvZ9qOmwYxHLOEozoAIc6LnM8tkFh3aLTwZ4VxUgUaVUHNW
- 0jLw==
-X-Gm-Message-State: AOJu0Yy4A+I5RlTMUb9xntODD60o+J4y07QcKb40o27gnXGJgqG5mM+9
- 7NoQt74sgT8ee3xyY6ypSRTuWvsAlRXep/DMa6w90uLvp9Vqjn4KnuqebHy9aWJNcMgli8Eapsc
- tFTGigzM=
-X-Gm-Gg: ATEYQzzCc/uKhiMuDd/LRNYTVegW1q9ZJOsVPoq1pPRPHwWGpIhtszLI5IL5FZHKSeA
- Qee70KcGaQt4QGFjq60ziL3xSjXg24Vst/4k93gxsPnHSR6SlinoHCvI0xQB7/c/8VVhmo2QTmc
- jrBJkAwtXUgISAzKiV85FiYFkhVJWZWRWlwjxq79DrhM1n1yoXvlRPdvqTSJu7Gmfz2t93HIncF
- 4CaPGrygDgwbJNbL0rU2Xu1Ugs5CtGwCrFg6FmaHc1IILD5RKVu9oeCrGMpzyXWH1WXM+04u11T
- 5AXehohOsUJ/JfM9ohF428ESNN9QzqHh4UqPIDKcWXJrdnP3S7w7yrJl3L6I+BvBLYWprrtKFnU
- ZUQRysVA0NNOOy+FstnNIihEnKvQCWLck6yU+EiYf5+2gs3bMbVYFeowkn7nvUPNzsCq7h4PesR
- sC+G9f4PzJYKtzvnHA5CPU/vGMfxGK5u7eqDhAXBw7lKKV1HdgsxJeb/s+2sX4hxw8KOk=
-X-Received: by 2002:a05:600c:1393:b0:487:288:1199 with SMTP id
- 5b1f17b1804b1-48727ef16c5mr290963745e9.28.1774962951574; 
- Tue, 31 Mar 2026 06:15:51 -0700 (PDT)
+ bh=iBOEKdnNX+UB0CEMFgda2sLylOVtVPePP1bIf9KL7R8=;
+ b=qqP5ht08d583sZ5GKWJbtzi83xy7qWCNwml41052vCWsYXYlodktMHTYf115kRugzx
+ s256ShJnBhOZ6PBTVVUpyFd8V6DIseIolsr7ktkqScb14WCfhEdAz1yRCBwqvkYUEfBl
+ Wsn0mJ58tYhnOdI/lCF1nkeJ7goHctC9rZ9EtxzyiY66iRpwzYAYldOOGfsiT8LY0XxT
+ 3auJQ4eBoMOTMKQ1+3cqAu5MmHRBhWxj4vmsniczstD19k7vszSxOtvrj/2e1lnb99oT
+ AvSb+mhAlNbpvpDLe6UPgbofP+bmj8s8i9EINi/5VrqxPODb8fwKLJ3kDezGTnNtyp2R
+ h1dA==
+X-Gm-Message-State: AOJu0YxlU0c3NFBUKVfH7MQ7E1PJirx8DGrsf1y4K7ONg3Mk0BgyLtl2
+ f0mMlFF1p/trGmUoV3T1O0AFzJZ+dTtSDzBF3vvy42NQ2M2XYNjg0s9KBCSD8lwP+rOnhuIwX/F
+ +8RLpcDw=
+X-Gm-Gg: ATEYQzyuvNsR7ciM+z8Sbj42UX5DwW79oEH9CWcn+lXnrKiLkAoQC43mrfCO9holvb5
+ OyfLDP6duENIF5ebFMyVi0RKZrERdu9xC81Wnza9sqdDFl7dRqpg3Q4k5wn0BhAaojYbyM9cMTP
+ Ray37PCX1kmqTDt3WHuMeHOv8b3xvAVALLKGIpXDb//F0QVyzy0JXvmGZPlHBlPZXbozeIKyBZr
+ J4ItqE9bveETLmy871RtmUtGFGPggj0rb8eF2RRESEWkpzKjDNxa48mVKYILLrbrHTrUD9wC5MA
+ FF0EAMRd8RTR5VGA2IpiLqLWTpkwE2DPGJUWMrVnvE9B0/hOq4qPHw1INK73mfeWJHpdcSdiwwX
+ XvAquVYl3wBniLLF9ILwODa46CHBL1G96oewEszEF+MgbwDLO8iyRUe9y0Hskp/9fEiLE9t7m+J
+ usQLh6NA2tgR7c1Gbp5UGCmcLKowoHeJC86HoJOM9ZNwlaPjTFpnzRU3FxwnmmxTjc4zc=
+X-Received: by 2002:a05:600c:c493:b0:487:55c:e0c1 with SMTP id
+ 5b1f17b1804b1-48727efca4emr269419895e9.14.1774962983937; 
+ Tue, 31 Mar 2026 06:16:23 -0700 (PDT)
 Received: from localhost.localdomain (43.149.216.82.rev.sfr.net.
  [82.216.149.43]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887eb5aff3sm47341205e9.15.2026.03.31.06.15.50
+ 5b1f17b1804b1-48880946cc5sm16401325e9.13.2026.03.31.06.16.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Mar 2026 06:15:51 -0700 (PDT)
+ Tue, 31 Mar 2026 06:16:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/11] backends/igvm: switch to PRIx64
-Date: Tue, 31 Mar 2026 15:15:06 +0200
-Message-ID: <20260331131514.21152-5-philmd@linaro.org>
+Subject: [PULL 08/11] ati-vga: Add upper limit to x-linear-aper-size property
+Date: Tue, 31 Mar 2026 15:15:10 +0200
+Message-ID: <20260331131514.21152-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331131514.21152-1-philmd@linaro.org>
 References: <20260331131514.21152-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,42 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luigi Leonardi <leonardi@redhat.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Use the PRIx64 format macro instead of %lX for uint64_t values.
+Coverity warns in CID 1645968 about possible integer overflow. This
+should never happen but to ensure that, add an upper limit on the
+x-linear-aper-size. This may not silence the warning but makes sure
+users cannot cause an overflow.
 
-This is to improve portability as %lX is not necessarily 64 bit long.
-
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Message-ID: <20260330-igvm_fixes-v1-1-03587a5a808b@redhat.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <541ffffdaa4c67b9dcbca6c2498e69b137bce95d.1774904832.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- backends/igvm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/display/ati.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 3b5edf15213..50f0d6fb9a7 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -187,7 +187,7 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-             error_setg(
-                 errp,
-                 "Processing of IGVM file failed: Could not prepare memory "
--                "at address 0x%lX due to existing non-RAM region",
-+                "at address 0x%" PRIx64 " due to existing non-RAM region",
-                 addr);
-             return NULL;
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index fc19737d1f0..97d871b1e22 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -1130,6 +1130,10 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+             s->linear_aper_sz = ATI_R100_LINEAR_APER_SIZE;
          }
-@@ -198,7 +198,7 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-             error_setg(
-                 errp,
-                 "Processing of IGVM file failed: Could not prepare memory "
--                "at address 0x%lX: region size exceeded",
-+                "at address 0x%" PRIx64 ": region size exceeded",
-                 addr);
-             return NULL;
-         }
+     }
++    if (s->linear_aper_sz > 256 * MiB) {
++        error_setg(errp, "x-linear-aper-size is too large (maximum 256 MiB)");
++        return;
++    }
+     if (s->linear_aper_sz < 16 * MiB) {
+         error_setg(errp, "x-linear-aper-size is too small (minimum 16 MiB)");
+         return;
 -- 
 2.53.0
 
