@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B9F109B464
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A024109B464
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7YqH-00031X-55; Tue, 31 Mar 2026 09:09:13 -0400
+	id 1w7Yqo-0003m3-2s; Tue, 31 Mar 2026 09:09:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YqG-000315-2l
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:09:12 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Yqm-0003le-Do
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:09:44 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YqE-0002yV-MQ
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:09:11 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48702d51cd0so67705515e9.2
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:09:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Yql-00030P-26
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:09:44 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4852c9b4158so45504965e9.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774962549; x=1775567349; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774962581; x=1775567381; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r3RlM+rF08wt8XxG2ghB/PfaAJTiOR551k3R5vp7FNY=;
- b=xW5KJf5QNXUnd5aHVk4/eREvSTTo2qO0G6RSNcQlRN1agUduvbxs0XO/liNnMta6TH
- hf/Jy0suAwTR99WTw80yBbagRDL+Nxe+kW6IAJvSpPhSJDIBfP86M/r1n+eUmaC4/uOc
- MN7dvQWRufjNSlnxxX8ngYi//ehijJ7Z8bQcTMFc3Ptfj3qGJrzeDKvrYJqVOOLGbN5v
- nPkivAG2J1n8JKdU0UcoUV6Fq2HmYGW7+H7NIBBJvaNzJHW2LraHYX+TRgdgx2F+ofTI
- WxaK/Gh9awVM6Tru9z0iWO+JDf43rzGH3aRpobUz15YDQKMR46NzIgf+NWeRxClKAb8E
- lSLQ==
+ bh=bt9YZbllBzCG189/lYq4U9OzwVYRBUfKyFyj52TKwNk=;
+ b=X0ldAlobyr6thO5YEsFHkRZZ33puYAtiwLepHA9nW0423yNt1MNPGVqsjbPSnuIpfT
+ mFToz3vRlZGUgkM1kazCJa6ssWluQPDond3cIKQVoNmy0FVYM3v4o5Rz3SD4GWSMupG2
+ KsjXVpSe4j7dClk4oASm7VlBOnIDA3sYArMK6bSS+Cw1c0ycOxsCRJPut1ANv3fZAwkf
+ nx/3Gmm2AKwj/HwlOU3hShmS0RFI1GNkKjSWRunk4xSS3bKhfXaA3tE6KvbBZv9254K/
+ KZkBNV/exUctNB9neAWDyBPI+dtWh8v4mhnwvkPHVFyBctKKS4Sa4LCUDR6DYEgOvhzL
+ Eorg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774962549; x=1775567349;
+ d=1e100.net; s=20251104; t=1774962581; x=1775567381;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=r3RlM+rF08wt8XxG2ghB/PfaAJTiOR551k3R5vp7FNY=;
- b=R59QpGxjh+MHe16oKOWyGoFBAwMBr9/XgbnxZUXVk1OwfyT1HEMiHl1CZn68gxG8Rr
- UXxGmDwzhSDPMjL7Yxo1Ye3lZHZfaStAkvuOxEt6JNTwlbYhSViUAQQoRnqMhzQSF3Cp
- seOmg9XbhSLPS5tP/qvw9BO6HRl9XLJuFGntXlisZPNmdZkHkEJu4/xbp901PuMNKQyp
- yIyy/VbGTPhqVyLYP1aehQnBGJfvitT4I/yDbKCOPSvbCL990ySwOIaKcEYuHqc4oLNM
- eu68NSLr48dU0KwK2aPVNGLKfRPkQNh2zGebES94zJtvKjn844azouChzXHgBlFYu+mR
- nyPQ==
+ bh=bt9YZbllBzCG189/lYq4U9OzwVYRBUfKyFyj52TKwNk=;
+ b=jY8wrsEgR7fkrLDjJQAFVm31zIGOgyZB3SJVv0KRd6Pv3FUATY1qZoAiJqpNwxEHXh
+ yVBD740fPXhh4rTBm/gP4hQqA5g30b4O1nVh7HEFIIY23NeEfqggE0Knm8atlSAgtwgn
+ wYkZGFE28cleKyeSToQ9bzZxNoCQu8dD9zALiTgPs0DpmdxPt2OzhFyPjAwGtAOkiQQg
+ zgXiXc5BIhLFbcVHkSWMNZPnUna138rpgZt6xs3WwB4cgqOk365j+pvEOrjQStkMPrHo
+ Tb/+R5/PmQzoRaDv90VDLu0j/oOlq34/CPj96Y1GroQ8lN+JxvmtiDLnFemCZA3kXK1I
+ 17ng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/AY6R3qZTEKITLfucfJP930z+D5A1Kj+XzGVyqMq3zJ87zmaKu8Ae4C0EOXJq/0vRVId45lYZqEyR@nongnu.org
-X-Gm-Message-State: AOJu0YypYHguNgo7MZqw1VGRWgq33tgEiQieQahLqO9TAX2fhn6V7p0d
- gAxtPNSlcBBuso3exNGVPrn+dMepVw4wQ8n2WTHdQGkjVLhfpZ8mEu0mm9fAmvFMQjs=
-X-Gm-Gg: ATEYQzwArZulOVmrvMrH+wYLkPlZZ1n/aO8bGdG83Nl6kRsu5G6GWOoBEzcqyKPzi8L
- li7jKqOyv02W/gB6hvjwmWxXGuMlrPKKlBuwFW7t+KlR5bycNMA8QaW/mccj6dObin4xthPVq/P
- ZUpawXiJYFeKXi5WlLKZPWDVM0fpLLK9kOO5gplZY9z1aGR9me5WnBWMMazp7/CoG9NRqwE7zCh
- JAmsPudnt4oDDKw6x74EovIejndgcyYsmbBPNhrwcUUGBzV1wB1mWDtMKxnKAhlTnCEQZ4HaH5r
- jwm5ZaCGB79K1AHDSYJ8dWJkYj9EAbpFa0zJ74fD3gr7ajGBTzKKf5MCFbgrflbQfhIfPCT0/iv
- Rh0LhAJiV4FHkOT4OPYMC/pNVa/huAv8oep674uXqPtL8cevI3aYo6D0nnxNiRlHHkEVTUOybad
- kGkh7IvLXR2iJ4v55+ZzodpOIPIxbXX68/lwPluvtZgQBO/9hMd/E17ADdMq83PRy2Std3
-X-Received: by 2002:a05:600c:8b51:b0:485:40c6:f507 with SMTP id
- 5b1f17b1804b1-48727f1f47cmr336366035e9.30.1774962549094; 
- Tue, 31 Mar 2026 06:09:09 -0700 (PDT)
+ AJvYcCU5RFYA7dBeWOdgjSnCECbq7/5d35h/a4EEpayOBesymZmNa+f4JFs6mnQio2jfk+9moEgbmsfR2uuM@nongnu.org
+X-Gm-Message-State: AOJu0Yyz6F0ev0tuFrMpEY9ynKuLukJZCtJ/5+m2wcn0/1vXO+PCgU/L
+ SVfmd+XUgQNJChkUoF7e83+e06zxA2k6qnpnBw514ZmAFdSDeHJszhOBwbvnwMOSEpY=
+X-Gm-Gg: ATEYQzwurh4y8u18RO1sOa/d1ORRIk07cthPRyRfs9fVvQiLaYyb+BbuPB5gj4PLbiX
+ JUDAohRo2oy4BiyXe33tsXrrM4phNO5eh9KZxhQ3zi89+KqnXCgZ5QcsL1NhI8FaX4lnMlG+t2l
+ OKg3wDtVDlZOa1+u+GY99EOv9sfr/cIzYYqdm+Jc0mQhhnRd1vOIwzbxCHhV8eMqL+q7Zb/wbbM
+ Z8aavtQnlciXChjBa38nkSOrxxfXTEZ/pE2zkNguz0wu1jRo0wyUyzZrT7gDg2qKglJT9mucwNj
+ aYwfR0tgsdG8t1fR/H2cfmo09Sqj26DFxi8ppWxFEmIT9rzHU/aZ6wgaCxzWMXZ6DRJigpYdoN/
+ pOVCfqWzztpWtrgIaaCMhVXrth2kn44FMHOLCIikCXv+XoIDBCSO6TuIeGAvdq5wPAMtpqcJyAk
+ QotWXsQMKtK0n1uUMoTb+t/0rzIy7UiMZM7Hm9ppRbe+DW8ovpadvgbdbYSQ==
+X-Received: by 2002:a05:600c:8485:b0:487:1fc:14f9 with SMTP id
+ 5b1f17b1804b1-48727d77c8fmr307831995e9.15.1774962580865; 
+ Tue, 31 Mar 2026 06:09:40 -0700 (PDT)
 Received: from [10.193.39.66] (43.149.216.82.rev.sfr.net. [82.216.149.43])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887aacb8d0sm17782045e9.3.2026.03.31.06.09.06
+ 5b1f17b1804b1-4887e832585sm74871805e9.6.2026.03.31.06.09.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 06:09:08 -0700 (PDT)
-Message-ID: <1122d60a-c7f9-466d-ab2b-c7bac6c66245@linaro.org>
-Date: Tue, 31 Mar 2026 15:09:04 +0200
+ Tue, 31 Mar 2026 06:09:40 -0700 (PDT)
+Message-ID: <fc135416-51e3-4539-83b9-340b8d111720@linaro.org>
+Date: Tue, 31 Mar 2026 15:09:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] ati-vga Coverity fixes
+Subject: Re: [PATCH 00/11] HPPA Patches for qemu-v11
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>, Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1774904832.git.balaton@eik.bme.hu>
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>
+References: <20260330211859.19317-1-deller@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cover.1774904832.git.balaton@eik.bme.hu>
+In-Reply-To: <20260330211859.19317-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,12 +102,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/3/26 23:09, BALATON Zoltan wrote:
-> Small patches to address Coverity warnings.
-> 
-> BALATON Zoltan (2):
->    ati-vga: Silence warning about operator precedence
->    ati-vga: Add upper limit to x-linear-aper-size property
+On 30/3/26 23:18, Helge Deller wrote:
 
-Queued via hw-misc tree, thanks.
+> Helge Deller (11):
+>    hw/pci-host/astro: Update copyright and documentation link
+>    hw/hppa: Disable Artist graphics card on 64-bit machines
+
+Queuing the first 2 patches via hw-misc tree, thanks.
 
