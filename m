@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257EA10F92E9
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8103FF60F4
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 18:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7dNh-00052F-Ac; Tue, 31 Mar 2026 14:00:02 -0400
+	id 1w7dOa-0005p1-Up; Tue, 31 Mar 2026 14:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dNM-000502-G3
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:59:42 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dOZ-0005mV-Az
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:00:55 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dNK-0002D5-Hy
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 13:59:40 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b95e5b3afso3509896f8f.3
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 10:59:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7dOW-0002Wx-FZ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 14:00:55 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4852c9b4158so48420645e9.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 11:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774979976; x=1775584776; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1774980050; x=1775584850; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/qS+cREq1W+RKiBSVyZFuDdd6d5V1toNRsD4H7dDYCw=;
- b=IigPJroyVtZf6XBgDUUZ0/eey5FNzGmHcd+vPHxKFDTix+upKisy6v++RhQLwvMwnY
- ugK09Os2ArgJFT2kfcGH+3MYi/z74vEHcXWoSmyErn3UVhZOIvR5lEtMHMbDwwg9VaqK
- SHR5963eN5ymdFNJfurgd/5ueYElr2Xl7vDXBdn1i3g+yEoY4yi2r8nDXYZGjWuvI7Su
- 0kj5BZ1nCV4a7ONpPMcoxY026WOJfkVZPlFSMoHF/g8CE3j8ur/UnqHG9chGMYyWSZz7
- d7QKlA5onsoBrqujCm0Mn0UrVukwfzzPl07X/SZSV9/XbpjPTJmJRQlaPHXt2s2XVnPJ
- dMSA==
+ bh=SBOdQWR0X95ktdsG/ES3ZG+QZR6q8wrARFffa5ux6Bs=;
+ b=QcUvd/Kvag+aUq0rJssy20+EJYlDUre+5d/9V7zhCitgdzIx/nAqUKn4sY8DDHWjNY
+ WNTwx4JLCRwxt+HKaacyu3U1gYMRVCmVCH1Ks6KsnOU96Z97gdxH4QU67t+uxZFUF0KB
+ xifhcM/qzp63JC1n/NWq9Qx/I7NZmCV9JqbocyFVwlbkhD8xkKsi50TId7MX6sTHOA8f
+ o4BT3nfyAVZ93/FRJCysmJJt8YDnyPy1fRFCewaP+5yMNtFGAqMoCbn+BKQIePzmcV1M
+ Rm91zFZsAJTsithjFcD147+g6VKFpSmS8k6+KZa+wLUZcoYRSDroevSSyY+F3B/4GNca
+ AFbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774979976; x=1775584776;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20251104; t=1774980050; x=1775584850;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/qS+cREq1W+RKiBSVyZFuDdd6d5V1toNRsD4H7dDYCw=;
- b=cNhSjC3RnWh9v4726E6qDAgbbLZgJijONV/G9bFuXNLVVtvyBIRjwHgrwy2TI/eox4
- puegBzlhvQCjwed2U7SYbxQB7uKveAqiVf+r/O5U1h6sjVIF03c/XdrAcGjAlvAmquVb
- yWmSb1J9HmHg1P2pRpITCVNZHavuBRgoJFSUSKy/3kF0Wmk4B46CU0jOt0L4GuT1lFo2
- KUHBw9sCgWL25Wi5fxqRAgRaPzueKsz2Fmmp+ZF85KJU8zZVs1EehqxFfkjurhnU1veX
- MRRLdzn8tpxPLKbVIVUf48rBrDBx/es1yzE3BzcS7GqFBzJ8agNe/5Xi0dSPHLCm0Zdm
- dnKg==
+ bh=SBOdQWR0X95ktdsG/ES3ZG+QZR6q8wrARFffa5ux6Bs=;
+ b=bmgBMiyQ76TZ8KKU9mR/mEmxH6/4yfwbURKo7lz5TcUiLE022sslx+0PRsgC2dfb5z
+ i4F7EFEqjwLVWHI4iWtX6IOalHCAu2bdulj2QPC/UwMRnDp10kdXmCgPsPDhVJAseRmg
+ 5QBVDUev2qaX/oUoJQp4+RDsKsDzR7yP5oNmFGfWcLydCKekebCyHYvaZy4da9g8UX+F
+ N0fmzplH+4Wa+wRxfc9ayMnK+ooJpuoK7pUgcyBIwGBK5Gpxd2JeY6Sw6TyOLgRh++mz
+ /W2pJpD86iYO4GmxS1d/2qPCUZY693MhvmRaFaTdhVqMVp8VVKRjf0P2GlclljFAIRHd
+ vaYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVok+VJ6nnHC1ejUZs03UE5mY5VtMzQsW1m+xASPYmVEZbObj926L2c14Z5e6ZsjIAuu6RGR4AGMctI@nongnu.org
-X-Gm-Message-State: AOJu0Yw+XnxV7JDL3uDQaKQeISw5w97SkbJZolh32Xg38qz6uyStuMbe
- P28qahkp0Fs5t1GES6W8kUGKWilbWpLgr3X1WLqmQZmFU41M8GhpphtKL4MrJ2EYxvE=
-X-Gm-Gg: ATEYQzyKuztR8rYu+llqpeWsHzoyIVU9qu7B6AM85k2SnnN6cTQyASqq6u7+FUwgGEG
- hRIUd7H8a0XqwZxna6oSS75qDAhfCVpGHYv9QjH89SeOzc29nklFe7JQnq5bLsHi8N/XK6y7Lbu
- hIzlTWIsIoxs2k8Bfo1MYvAt3DKUWMhC3NB/Sveuch+nV344WVQ4NZLCrNjJ5VaTvOoqncChy9W
- VlAPqRbMh+BdfCTitKgJV3a0wTHJG4O6BD9lrOpVIanM27jXyZJcYaH3O9bSLn1dyGKwKz4NNoW
- vEsESPkO9f5enDaaOMS3IwPbJq8+niPr3FuK8SwiuihgxmjCnr4068zPci6NH/eXngaEKnLk1Eg
- ADwFh/FB+s32yB4SbXJF7A6EGZrxxQA3uEeG9knkz2yAEFCS4bCHrO6KMewzY6qiV5M26EZLDHH
- nVjV0lATCQuXF91lV4h3rVc/dOOK46TGjpbK9YIE1c24r5sHBnTrbHJB6s783YVhqsOg==
-X-Received: by 2002:a05:6000:4008:b0:43d:714:34de with SMTP id
- ffacd0b85a97d-43d150f1b6fmr926070f8f.45.1774979975869; 
- Tue, 31 Mar 2026 10:59:35 -0700 (PDT)
+ AJvYcCWJ8ccNwNIc4IHYyUlh4oJ824l4P4fcNiYzzAl5jfm1VlZDYSLF0OwDu8jmDgobuMXdX+K8WhRvVmq+@nongnu.org
+X-Gm-Message-State: AOJu0YzRAV7fxPbPFX6Y4W0hlL8zCI4x2Sx1x7r6KkmkADpn2Nn2kojc
+ 2OMJqBsSMSKrkhss3f4yKcgJMad8uep7u4e0FQA7XqSBzAAeDLrUxQHjnVCBgR9QlOxe4A+Kznp
+ zmtJlSVg=
+X-Gm-Gg: ATEYQzyFQJec8WW8XIAX9g04lEWYGGK3h3nrdpYmr0SgyNmLpTaYCAa4uvHbwN1SPiI
+ /33dwg5FbPcnOWNzU0FBBnx0cdAMJOua1JWJfJcR/cnLYfvn9U3NTdqy+BcT285NpQHfbl0N8Uy
+ P7a1+R13mcVNQ+4SeHdd6lJ+nKK8E8OYCwITN4RSkElP8EUhy0r6rPVoPxgbTBidOWKUsgZ0UIt
+ EqSndWK2IVRVVpcCVzu+/m5vn0i2p2/ZSNNmndroVrqyPQZqN4Nh9f3hlhqJ4bQUmmr/iCvayHN
+ 5qlqpo/mpswjP2mCwoLPrDbgbYW/kvL7s19MuojsobKZR6/+rcSDyT2gpZDhd74AIhaN0syeWue
+ 2VWpIF57TY4IN+rt7Guk/6jQ95JP6Q9XgxTsuIjAxOA5PfMtlSV/MrEX3rN3Dk1fzICrmF9D8C/
+ PiJBeuD8rYOBUiuclUgSgsV93n/bd2aVsDV1I+ElTbx22/UqlMLeqNGO0lUIEh7L4kkw==
+X-Received: by 2002:a05:600c:4f95:b0:487:2439:6266 with SMTP id
+ 5b1f17b1804b1-4888359cfadmr5452255e9.30.1774980050272; 
+ Tue, 31 Mar 2026 11:00:50 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf245e2f6sm29929612f8f.18.2026.03.31.10.59.34
+ 5b1f17b1804b1-4887e822078sm61982165e9.9.2026.03.31.11.00.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 10:59:35 -0700 (PDT)
-Message-ID: <de8a5eb2-b7e0-48c2-a83e-2d1d4f1e94fb@linaro.org>
-Date: Tue, 31 Mar 2026 19:59:33 +0200
+ Tue, 31 Mar 2026 11:00:49 -0700 (PDT)
+Message-ID: <dde36325-c9d0-4ed4-a1dc-18124b97693a@linaro.org>
+Date: Tue, 31 Mar 2026 20:00:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci/pci: Enforce pci_setup_iommu_per_bus() is called
- only once per bus
+Subject: Re: [PATCH] block: Fix crash after setting latency historygram with
+ single bin
 Content-Language: en-US
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- mst@redhat.com, skolothumtho@nvidia.com, nicolinc@nvidia.com,
- nathanc@nvidia.com
-References: <20260323183024.4069032-1-eric.auger@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: hreitz@redhat.com, qemu-devel@nongnu.org
+References: <20260331102608.60882-1-kwolf@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260323183024.4069032-1-eric.auger@redhat.com>
+In-Reply-To: <20260331102608.60882-1-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,41 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/3/26 19:30, Eric Auger wrote:
-> Currently it is possible to attach several arm-smmuv3 devices to the
-> same bus although it is a wrong setup.
+On 31/3/26 12:26, Kevin Wolf wrote:
+> Passing an empty list of boundaries to block-latency-histogram-set sets
+> up a state that leads to a NULL pointer dereference when the next
+> request should be accounted for. This is not a useful configuration, so
+> just error out if the user tries to set it.
 > 
-> Change the prototype of pci_setup_iommu_per_bus to pass an error
-> handle. This latter is set when iommu_per_bus is already set and
-> used by the single caller (smmu_base_realize) to report a useful
-> error to the end-user.
+> The crash can easily be reproduced with the following script:
 > 
-> While at it document pci_setup_iommu_per_bus callback in the header.
+>      qmp() {
+>      cat <<EOF
+>      {'execute':'qmp_capabilities'}
+>      {'execute':'block-latency-histogram-set',
+>       'arguments': {'id':'ide0','boundaries':[]}}
+>      {'execute':'cont'}
+>      EOF
+>      }
 > 
-> Fixes: 66d2f665e163 ("hw/arm/virt: Allow user-creatable SMMUv3 dev instantiation")
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>      qmp | ./qemu-system-x86_64 -S -qmp stdio \
+>          -drive if=none,format=raw,file=null-co:// \
+>          -device ide-hd,drive=none0,id=ide0
+> 
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->   include/hw/pci/pci.h | 16 +++++++++++++++-
->   hw/arm/smmu-common.c |  2 +-
->   hw/pci/pci.c         |  9 +++++++--
->   3 files changed, 23 insertions(+), 4 deletions(-)
+>   block/accounting.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 
-
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 58c4452b1f5..a3aeb5a8796 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -981,7 +981,7 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
->           }
->   
->           if (s->smmu_per_bus) {
-> -            pci_setup_iommu_per_bus(pci_bus, s->iommu_ops, s);
-> +            pci_setup_iommu_per_bus(pci_bus, s->iommu_ops, s, errp);
-
-Should we return if the caller returned false? More code could be added
-at the end of this function.
-
->           } else {
->               pci_setup_iommu(pci_bus, s->iommu_ops, s);
->           }
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
