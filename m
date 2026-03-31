@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A1DFF60F1
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 906F6FF60F1
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7VBM-0001gQ-1Q; Tue, 31 Mar 2026 05:14:44 -0400
+	id 1w7VJY-0004fh-BB; Tue, 31 Mar 2026 05:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VBK-0001g3-QJ
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:14:42 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7VJW-0004er-Hc
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:23:10 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VBJ-0002o2-6z
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:14:42 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-486ff3a0fc1so49110835e9.2
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 02:14:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7VJV-0003vO-2Y
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:23:10 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-43d0deb7ad5so252734f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 02:23:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774948479; x=1775553279; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PTI1lNAHwXLvHOavXN6hxUHvOTTzBYQseQWDlBBJNaM=;
- b=JHeKL2BiIz3UeGz16P5MTGox/s75y3vbA9ZD2relky7oRo3x+SXwEx40p4lvSXJvir
- +aA6DfwEFihZJzIWxWcnUQFMJTGqCkdRA+mK6xnX1PKJL7/vTbjPvjLXl5sd/OIeEPyU
- bmQxzb3fgWg90y0N7n8ctAfyz7nSOIvq8ExZHVWtiLN2dMkcvW4OD/h8dqdBBGufTKXX
- 1gMFD86LvDGYnfkPykJ99vq2LxX7FxZDHxjjW2JXQKI1YKIrsX10FOKXMmn6WkMoRVBa
- uu8m5RHKKTNpoWQY6xM/V0hx18YM5Piqw8IP8RLCMSAm7pJNO8xnYQfq61vZRByLMXVv
- +P1g==
+ d=linaro.org; s=google; t=1774948986; x=1775553786; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wP+GI1GA2esVBEcdv2LEdQJ+EKOQrpQMHXtB4e3u7TU=;
+ b=uuF5tiyJtl6NyKA3FiAhGWMXajshZ9x7EGb1BlnYVoG9/8cJFemM6HC/xdSi7JFmPV
+ PAECsZ8rndEoIjT7El1mVj2+Qwy5p7Nmvq+/O9e0wkH0zCDePxzukmY2fJwEs0prTJ+K
+ GfHy8sGHw8UOLQhpu0CpsXSC1BWbG0HretAQqxjVdgyuEjmths/sogPTwTFxb1io2cC7
+ ThfTgoV/PHT4FWlgd8oXJlsyopOARyJt65orkwKFNCAzeXpuAll3sZVJcK7caeIqEMaV
+ hNwbAQGIEfjiaybWRpEO16vujjzZrVVIHbXU5wSSW0ElQBBqncY1hp8aZjNRPslg+qt4
+ Rosw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774948479; x=1775553279;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PTI1lNAHwXLvHOavXN6hxUHvOTTzBYQseQWDlBBJNaM=;
- b=smh7uI09WRMXjXgMdjaAtERhgNqnNsQZN+9KTMSglHpYs5Mc+CwWnPSiok8e8kt7Oq
- RODs2m2ISk8yIOehHb10QbVKqZk3XBgrRLUt9FwyKrd0KeWpz4lkq0XtLG5p+0zwsZ7S
- 8cRtxP1aXeac9LItBGCRobfIUbKVF945zSghlF2r7KYEAdZhHy7aKvSCeSoJf3ZQKXgc
- q+W9CqxM3JO7frNzrHtHQzczY1wd2w7yMXRxHDx8gVQGzYWD/5YYDx3LXgo3eJQU78mA
- VaGjhi30I9ajR40ra6lQ9KQZkK/D/hlvC6DYE0lW3Z3TPpUBuFOV/5xJNpTdQ6Dwz9Nw
- 34Ow==
+ d=1e100.net; s=20251104; t=1774948986; x=1775553786;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wP+GI1GA2esVBEcdv2LEdQJ+EKOQrpQMHXtB4e3u7TU=;
+ b=Tgaa/uQ4twKeX0k5eLKsqwnPm7DNvrUPOXq/P2KIgH+MG/rtv9KjfsY/pO68bjC8gD
+ BnUPN4daY5z+CCzegChjN1Uk40mOLJJudT6TYnejuVCNNDR0A+Glsc4HSfifICDC45Mb
+ LpBOg58fvF88cJWPOMMKPqjrkwAVCQvgcIHptkRkSgHATTxftfJT/N/MoXKSC3ztVRIf
+ ZSqt6HwND7nF4pSHo/pWtH6wivsW9juBy72GrzK5+4GzUYoXhksj0hkIu8BMf0iNXbA+
+ QJkVJpKotz1bYxfGvm+7j4RHlmebb7XSiHrYdHu6VIdlYAHZIvghUHGz69BzGxaPO1oq
+ vmuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFBFhfCYdSthOdkhqEO6qvpfv0MCKuV2mFSnqcj6drcrwUXFKxheLrj9wEXScD0Wpr8LwvOdLuLIG0@nongnu.org
-X-Gm-Message-State: AOJu0YyzmQt7+jnwG8r2qFrAcCFmDNdII8dcejd3qL5izWStw4nHjMQe
- MUlc3CBuGl12qDQgwfG2jh3tOu2n/3jt+QukFt7kmnYwXdq5br/cUtAeg/GuTi8hxnY=
-X-Gm-Gg: ATEYQzzsNLZGJ5sJXglEaJ/sSsNSLJQVdLC23ZxpqkkkE2vxywXe+mntSbwQbsmpKCa
- eHYokgp9x5Jz7tOU7npNvNPV30/8jP/KQVZHrnQ0cJZgWVGWP6d7reCDIuUDvKHzY1Ri4Hm/zIq
- PKtT/Mn/exoHIvBsqCL/PRt7paphzeB46dNl4luYBCuXISi+JQhBoEd9mN6XTSQSFpVH8yCDc/Y
- 07oNptF7ZKLvWOvsaA5UZGPqjeLmcmStgqawXS5j2GhTruRIZ3eLHAwRXwn1fEQlj1ul4Uywo9y
- lrMW95z5/Mxk7SN9x0GA3+fEszPBcXvCyZps3WYgndRs1zLF+9eZXlrnS1I/r7BD2JLFT2VYd8w
- 0u39ThyS2pUpYrQKfZ9IRp5mDuBf9XjHBqqZhZIWCtvS7LghPTi6uk3zif8nwwQNCk2ssBiBSUQ
- CEIrCL9sYOTPy8ZfvuGPeXZlsX1e003Ft1ca/NOBGFPD0mo9BxSD8SKE87AQ==
-X-Received: by 2002:a05:600c:c87:b0:486:fe83:8621 with SMTP id
- 5b1f17b1804b1-48727ede17amr267811305e9.23.1774948478670; 
- Tue, 31 Mar 2026 02:14:38 -0700 (PDT)
-Received: from [10.193.39.66] (43.149.216.82.rev.sfr.net. [82.216.149.43])
+ AJvYcCW985D4iCfVThOxDCGypjZhi8EAq4WICLseov3eO+OmJUIB33Zdhq4OiUKhAMUkwLfU2OxkseoRCSxy@nongnu.org
+X-Gm-Message-State: AOJu0YwHPCF4oVLJJb4rMhcuYS/JxYTYeJIwL8Wip9gnfLPt4p788EbY
+ Q8e6UL4jThgfyfTqxVFSmhQwdUFgWoTObjf0xzXFdxlhbJERbAJQf5YwB2qxhOhTVW0=
+X-Gm-Gg: ATEYQzxR/g6wh58SOuTxbUnwdORRzeIYuWiR+bnaCnczAvntRN4eiO6hobpGgQZrVrL
+ H9DsK2CvSVvQPoEjpIXc8peJiWI81t2eUYczYBT6t/MC27lWtViLcwdIY+V8AwV202EnjVjJyWE
+ VugMo/wz8CYURZbqIETKooUiXOwvD0sGreaVTeiXi4C6vK2n0zVhbcBOWNenIuiK99sV9oe8fMa
+ fb3t7JbnSI5pIoAz+KgXfcLKfYOdx9Eog6zeg+es3ybD3sJtcjnq1ZocFEWLoKQ4xuRKV7GpduW
+ nNTRGoOx9MogcVISlz3OAR+m4JIirZdoBeYU6MG3lCdwApWPgpYNY1OWxOWR/WNcPH34zX89bCa
+ t3fprAJiBFliCIDSGRYVC2fvLlcHIxCt3ww5EBYuvIq1Qk7qweEj/IW3ubPb7PdPDcOIKtEhj3p
+ PtXAaTb7blNqyO5VKjbQAWyq6bMuHGcy80eHdzjvtxLb6yozzbu6vbWUG7dhcJVzIQDTyI9fIwu
+ aioqOe12WjUrhV4DWBaEQvdsoT6xOA=
+X-Received: by 2002:a5d:64e6:0:b0:439:b858:1d28 with SMTP id
+ ffacd0b85a97d-43b9ea9aef9mr25655034f8f.26.1774948986461; 
+ Tue, 31 Mar 2026 02:23:06 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e81a2cesm24950835e9.8.2026.03.31.02.14.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 02:14:38 -0700 (PDT)
-Message-ID: <e3ec8476-27f3-4c92-a48e-2665425e0580@linaro.org>
-Date: Tue, 31 Mar 2026 11:14:36 +0200
+ ffacd0b85a97d-43cf257b72dsm25928298f8f.34.2026.03.31.02.23.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 31 Mar 2026 02:23:05 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH] target/arm: do_ats_write(): avoid assertion when ptw failed
+Date: Tue, 31 Mar 2026 10:23:05 +0100
+Message-ID: <20260331092305.2062580-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/11] hw/pci-host/astro: Add GMMIO mapping
-Content-Language: en-US
-To: Helge Deller <deller@gmx.de>, Helge Deller <deller@kernel.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20260330211859.19317-1-deller@kernel.org>
- <20260330211859.19317-8-deller@kernel.org>
- <9aaf1736-c355-4ba6-b6cb-6bdd03930eb2@linaro.org>
- <5b6b67e4-6a2c-454c-b30a-0692496b640c@gmx.de>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5b6b67e4-6a2c-454c-b30a-0692496b640c@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,33 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/3/26 00:29, Helge Deller wrote:
-> On 3/30/26 23:56, Philippe Mathieu-Daudé wrote:
->> On 30/3/26 23:18, Helge Deller wrote:
->>> From: Helge Deller <deller@gmx.de>
->>>
->>> Implement the GMMIO mapping.
->>
->> As this point in the release process, this is a bit out of scope IMHO.
-> 
-> Well, no...
-> SeaBIOS has to initialize GMMIO at the same time and report
-> it along with LMMIO and IOS to the operating system.
+In do_ats_write() we try to assert that the cacheattrs from
+get_phys_addr_for_at() are in the form we expect:
 
-Then it is an incomplete/broken feature, not something buggy
-that can be fixed in time. Anyway, not my judgement call, so
-feel free to ignore me, just I don't feel confidement enough
-to review and test that implementation for the release.
+    /*
+     * ATS operations only do S1 or S1+S2 translations, so we never
+     * have to deal with the ARMCacheAttrs format for S2 only.
+     */
+    assert(!res.cacheattrs.is_s2_format);
 
-> 
-> Helge
-> 
->>
->>> Signed-off-by: Helge Deller <deller@gmx.de>
->>> ---
->>>   hw/pci-host/astro.c | 71 ++++++++++++++++++++++++++++++++++++++++++++-
->>>   1 file changed, 70 insertions(+), 1 deletion(-)
->>
-> 
+However, the GetPhysAddrResult struct documents that its fields are
+only valid when the page table walk succeeded.  For a two stage page
+table walk which fails during stage two, we will return early from
+get_phys_addr_twostage() and depending on the fault type the
+res.cacheattrs may have been initialized with the stage 2 cache attr
+information in stage 2 format.  In this case we will incorrectly
+assert here.
+
+Fix the assertion to not look at the res fields if the lookup failed.
+
+Note for stable backports: the do_ats_write() function is in
+target/arm/helper.c in older QEMU versions, but the change to the
+assert line is the same.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3328
+Fixes: 9f225e607f21 ("target/arm: Postpone interpretation of stage 2 descriptor attribute bits")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Not a regression, but it's a very safe fix, so this will probably
+get into 11.0.
+
+ target/arm/tcg/cpregs-at.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
+index 0e8f229aa7..53dd67375d 100644
+--- a/target/arm/tcg/cpregs-at.c
++++ b/target/arm/tcg/cpregs-at.c
+@@ -37,8 +37,9 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
+     /*
+      * ATS operations only do S1 or S1+S2 translations, so we never
+      * have to deal with the ARMCacheAttrs format for S2 only.
++     * (Note that res fields are only valid on ptw success.)
+      */
+-    assert(!res.cacheattrs.is_s2_format);
++    assert(ret || !res.cacheattrs.is_s2_format);
+ 
+     if (ret) {
+         /*
+-- 
+2.43.0
 
 
