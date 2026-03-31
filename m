@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED969109B469
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A111109B468
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 13:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7YwV-0005dN-22; Tue, 31 Mar 2026 09:15:40 -0400
+	id 1w7Yww-00067J-08; Tue, 31 Mar 2026 09:16:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YwN-0005aQ-1J
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:31 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Ywu-00064O-Fb
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:04 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7YwL-00046V-5F
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:15:30 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43d03db7f87so1073704f8f.3
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:15:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7Yws-00049S-Us
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 09:16:04 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48702d51cd0so67786745e9.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 06:16:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774962927; x=1775567727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774962961; x=1775567761; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Bw5zi+GqCLVgCNxjiWNzvFBMTLyZs23V3pNqG3hK1yo=;
- b=U8yAYFmmZWszi7FZHk8qdW6lgKnmjMC5voQ64W+I8M71co0UjdnA3aTo936xZPNG/Q
- dCvJ+UGVYX5nOghu2y51K/dr3qd6QmzSgWsmnA1V1S2BJS8+FBMGb6CExFPjVVYCbkG8
- ImuOKSGG4TXwrX44+mdOQqIoWFdVh7cGaGV3RxnaTTatoloRJi3d9LCQrYfljkWd0ory
- 8clEXHdPulzZ89/BXS5ME4yG9lJU6bMRJ4X4eJ4JZwfGbGobIM9HbvHf7LEqzB1JGklj
- VqZG69mY7rUO5Q/BFxQKXqwVO/Rj3AXSj08Fs2U1kc+yhssF7orCNdn3s0TMdz5+v6vS
- Jfnw==
+ :reply-to; bh=23Lhs8kn7vYaYRccWIrPbcTZSCxSueDDCmQnurTSwZI=;
+ b=JJixJ78cANrFcgTBxJafTNdirkWyashx3EJ6Tgm6e0J69K5nFn37JJbYOoTfBLJYLf
+ KfeekSS7JbTcNtFHUTPp8aAcURkkcdkBclFO4bPJKfAFaaimwyXqCjw9uHD1Hjw5mVUv
+ BBhqqSNUWeSsJkMheVYwyhJdIkldEMq6M9XGNkaEahDpUn2lKy7lO4JPNUJcW+UNVOBp
+ Ct8P71lRnkokAXpZoG/+47ZzE8zfOB+/9ynqqTkztuPBgsFYskpXCWCzPI2BCpUMH2xn
+ sylmRxF2ZeRe0BR2qcSGpkFQoZ88Use6648nKmR+4+WdLzypwdE1IPWOL3MFv+0qBBpL
+ jLow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774962927; x=1775567727;
+ d=1e100.net; s=20251104; t=1774962961; x=1775567761;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Bw5zi+GqCLVgCNxjiWNzvFBMTLyZs23V3pNqG3hK1yo=;
- b=ihVRO9spboOyTW4mA972anoJCnQAUQkV8eZm8CeaEO+LkIgaLuZPyscLsa6FEB8YIY
- 4Qlyajsl9SwPAiFHBz4UnSFT5ZUyCFVNd7Mg2YBE1NPoz4hIbiokbqyFmt1a59m9S7YS
- gCE7EvyTsfKFvkqIEaB4DmEZGiNthbP6HuGMYnDNLjuWaIP83LnrAXwr9Ymxm7Gn1ksc
- VpwE6qcSJYU47MUa28FGnbZUfbzPUkUF97FTZtTL09buGmdpoWwNiNpf+BiRgj377cy6
- jOefdJ6WulDa9KtK+HghUMmAvT5FFhunF++aO1juB/EdRt7QQ5jjSCJDvWBAcyUBMqNJ
- qIFw==
-X-Gm-Message-State: AOJu0YyzAd2sxrSH1xoBhcOzCUJICn7gbdkKOGOZDYesLhUmWK+4z1hW
- cQoikS+6fQG8P28jigiescxUPExDRtrDuk5rSUG1zgUdTPW60XlAB8gkyc8usWlbTTe3hOtq7AB
- 4ixoVFDE=
-X-Gm-Gg: ATEYQzyrPbY9tcUeM/kZA2Mrqi2gUKizL+PGVZfcgpIy7A5TUofXRdXWXEO2IKK8h5u
- PY3amU4sR2pMiTSOruCG16lkxjsUoXCjQldB+24ofGbxfhTZ46JXEwR8V0N5QB98LAhWksw/pEe
- LTFGSzsd7EeyWj0qELU5Xy7u7I9dZK9Q5Vd7JyKh1SWX6JPJKljlBNvX58ByArK072x+DekfCqd
- ZeLRCsVciMNL6AFXJxtz2gNFWDHaDbZ62ApZ67YZuZOPucY+//Sxrh+29144bJNv5eRLLikuq1A
- Mrk2cTVRnkkCt+o7hKiXy6JgqyyoZUerOiyodyBhnZqmoJWNX+w29Kx+dB8EG6gKrvsEoF+Is6n
- beZEuUqBg2V9bOUSiPMzpvHXO3jbob8t3X5yw2ptExg7H3xjAQTLSNn6sgX8M/8yZqkRtsuin0F
- a8W1MtY86jhDI85o8ocE4MZ+EKTFxhLZRBSf7CO+KxasMhllZqEQJv1FMvFQVj/67J8PQ=
-X-Received: by 2002:a05:6000:178a:b0:43c:f49f:9b7d with SMTP id
- ffacd0b85a97d-43cf49f9cdemr20519067f8f.17.1774962926486; 
- Tue, 31 Mar 2026 06:15:26 -0700 (PDT)
+ bh=23Lhs8kn7vYaYRccWIrPbcTZSCxSueDDCmQnurTSwZI=;
+ b=Tg+6viuGGY0s3Ke/8ugltqIUBJZHqmOzBgmjxYUmEfq1JxTLPYotI1SRVEzuz+Y7li
+ zT22YRU5IbS+GW9hGEIYmfTzCGUd1FYfxE0vifo8nWWedHT0D5Qb3R2SjZcHQARePuBX
+ DxvOlsySZRC/UP/h11+sikVCuZGxt/0nVYyW+nIp3Qm+3c1GFbOt78Q8amlHNqrDhVcg
+ EnI4vESRvb0f1X6xPMks8pN/vwjPrA12mx3ql6qjUx0CjuPUVSoV8I7aG5XsVLjNOBt6
+ dV8lvDTWXCGRN57nQRSBSoRklM2up/KLad97N56evAaApixKbT7Cfa4PqPwVnozb74IH
+ jVBw==
+X-Gm-Message-State: AOJu0YwGYPxdjk/0Z1tWzJy+WOW8hLeahyTpEikPQPqV4OZ1YWDZd2rz
+ v8vc+bX/nuJODKpcaLeAvqwAt63wKKu6zfSC9WECb2ry+fB/7XUGfcwkKQd4knZxca7JjglTXsi
+ UJvA1VDY=
+X-Gm-Gg: ATEYQzxQv3Qudfn/qGQ2vD09DHsSGQbRZ4LsQFPcHnEqPavBpEZQFjbrtVj4IMnpr9t
+ VKl9Wjwm3/xmIWk6kWMvFQ8FifQBq4u/U2rP7cq+7YFc9SRU1pJaUQgUPn9CxWX01xVvw1NdpSY
+ MUOlq1JL+l3gzVCH/n3UH77i+d3wig0D1l3T4+2aohHIl/e4vOENLAHB2wI2PI3MUWJha3fHMvj
+ uwS+W8P0MPPIq6Pqz6T6WQ8utNnuftE4Nqe4/tAqS/8Ee+XIDZF9h2ezgsvOIdrOkWHmEMPG8pt
+ o6rEV5qxJkKpv4kFRT/NcVqlxJTW34kr2zicZgV2Av1bvsIpDeawLIgyHd+L2dMyyh8kRaC87x4
+ IfxQtp1BhXSCzUqDOe7hQBhNsjccsqlBWvtrIGw8RD8pblKr2/JnxT7QJ8vbyHkQmP4UeyWnSSb
+ a1YWyW4plm3DhPExXcEiFa2ZMGiJoFDCVkR+CBIeIbzFIN5KyXHWK3Dz+KOAZo3008z2k=
+X-Received: by 2002:a05:600c:a10a:b0:485:3f72:324d with SMTP id
+ 5b1f17b1804b1-48727e9ea73mr249520355e9.14.1774962960869; 
+ Tue, 31 Mar 2026 06:16:00 -0700 (PDT)
 Received: from localhost.localdomain (43.149.216.82.rev.sfr.net.
  [82.216.149.43]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21eb95fsm28884567f8f.12.2026.03.31.06.15.25
+ 5b1f17b1804b1-4887e80140esm34573235e9.4.2026.03.31.06.15.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Mar 2026 06:15:25 -0700 (PDT)
+ Tue, 31 Mar 2026 06:16:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/11] ppc/pnv: generate dtb after machine initialization is
- complete
-Date: Tue, 31 Mar 2026 15:15:03 +0200
-Message-ID: <20260331131514.21152-2-philmd@linaro.org>
+Subject: [PULL 05/11] target/i386/cpu.c: Correct minor grammar error in warning
+Date: Tue, 31 Mar 2026 15:15:07 +0200
+Message-ID: <20260331131514.21152-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331131514.21152-1-philmd@linaro.org>
 References: <20260331131514.21152-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,135 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Currently, the machine dtb is generated in pnv_init(), before all devices
-are fully initialized. This can result in an incomplete dtb for the system,
-as seen in bug [1].
+Fix a minor error in the grammar of the warning messages
+produced if both MPX and APX are enabled:
 
-Fix this by deferring dtb generation until machine initialization is complete,
-using the machine_init_done_notifier hook.
+$ ./build/x86/qemu-system-x86_64   -cpu max -accel qtest -S
+qemu-system-x86_64: warning: this feature conflicts with APX: CPUID[eax=07h,ecx=00h].EBX.mpx [bit 14]
+qemu-system-x86_64: warning: this feature conflicts with MPX: CPUID[eax=07h,ecx=01h].EDX.apxf [bit 21]
 
-[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
-
-Cc: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-stable@nongnu.org
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260327124136.983955-1-shivangu@linux.ibm.com>
+Fixes: 91bc4d81078a ("i386/cpu: Add APX EGPRs into xsave area")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260330151309.1786787-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/ppc/pnv.h |  2 ++
- hw/ppc/pnv.c         | 58 +++++++++++++++++++++++++-------------------
- 2 files changed, 35 insertions(+), 25 deletions(-)
+ target/i386/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 24f8843a409..90028f974da 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -111,6 +111,8 @@ struct PnvMachineState {
- 
-     bool         big_core;
-     bool         lpar_per_core;
-+
-+    Notifier     machine_init_done;
- };
- 
- PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 7e54b6bc604..524563dcfc2 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -748,31 +748,10 @@ static void pnv_powerdown_notify(Notifier *n, void *opaque)
- 
- static void pnv_reset(MachineState *machine, ResetType type)
- {
--    PnvMachineState *pnv = PNV_MACHINE(machine);
--    IPMIBmc *bmc;
-     void *fdt;
- 
-     qemu_devices_reset(type);
- 
--    /*
--     * The machine should provide by default an internal BMC simulator.
--     * If not, try to use the BMC device that was provided on the command
--     * line.
--     */
--    bmc = pnv_bmc_find(&error_fatal);
--    if (!pnv->bmc) {
--        if (!bmc) {
--            if (!qtest_enabled()) {
--                warn_report("machine has no BMC device. Use '-device "
--                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
--                            "to define one");
--            }
--        } else {
--            pnv_bmc_set_pnor(bmc, pnv->pnor);
--            pnv->bmc = bmc;
--        }
--    }
--
-     fdt = machine->fdt;
-     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
- }
-@@ -984,6 +963,37 @@ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
-     return chip_id == 0 ? 1 * GiB : QEMU_ALIGN_DOWN(ram_per_chip, 1 * MiB);
- }
- 
-+static void pnv_machine_init_done(Notifier *notifier, void *data)
-+{
-+    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
-+    MachineState *machine = MACHINE(pnv);
-+    IPMIBmc *bmc;
-+
-+    /*
-+     * The machine should provide by default an internal BMC simulator.
-+     * If not, try to use the BMC device that was provided on the command
-+     * line.
-+     */
-+    bmc = pnv_bmc_find(&error_fatal);
-+    if (!pnv->bmc) {
-+        if (!bmc) {
-+            if (!qtest_enabled()) {
-+                warn_report("machine has no BMC device. Use '-device "
-+                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
-+                            "to define one");
-+            }
-+        } else {
-+            pnv_bmc_set_pnor(bmc, pnv->pnor);
-+            pnv->bmc = bmc;
-+        }
-+    }
-+
-+    if (!machine->fdt) {
-+        machine->fdt = pnv_dt_create(machine);
-+        _FDT((fdt_pack(machine->fdt)));
-+    }
-+}
-+
- static void pnv_init(MachineState *machine)
- {
-     const char *bios_name = machine->firmware ?: FW_FILE_NAME;
-@@ -1244,10 +1254,8 @@ static void pnv_init(MachineState *machine)
-         pmc->i2c_init(pnv);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index d02f6f0653e..3b0a7c73632 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9628,9 +9628,9 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+     if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX) &&
+         (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF)) {
+         mark_unavailable_features(cpu, FEAT_7_0_EBX, CPUID_7_0_EBX_MPX,
+-            "this feature is conflict with APX");
++            "this feature conflicts with APX");
+         mark_unavailable_features(cpu, FEAT_7_1_EDX, CPUID_7_1_EDX_APXF,
+-            "this feature is conflict with MPX");
++            "this feature conflicts with MPX");
      }
  
--    if (!machine->fdt) {
--        machine->fdt = pnv_dt_create(machine);
--        _FDT((fdt_pack(machine->fdt)));
--    }
-+    pnv->machine_init_done.notify = pnv_machine_init_done;
-+    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
- }
- 
- /*
+     x86_cpu_enable_xsave_components(cpu);
 -- 
 2.53.0
 
