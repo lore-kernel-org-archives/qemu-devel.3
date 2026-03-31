@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E60109B47B
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 15:04:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4626E109B47B
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 15:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7adU-0003BC-Er; Tue, 31 Mar 2026 11:04:08 -0400
+	id 1w7adX-0003G6-RF; Tue, 31 Mar 2026 11:04:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7adT-0003AS-K0
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:04:07 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7adV-0003Bu-D7
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:04:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7adR-0002XK-Cr
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:04:07 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7adT-0002Xt-Jl
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 11:04:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774969443;
+ s=mimecast20190719; t=1774969446;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0w+FkwPEOE9/aTogVmMcduV786B/IV6iPoHRVRGznug=;
- b=PQ/QzSowe/+OL/+g7fdcPID2zz1fGxlpGqPBaGmdTgSIKirZrL2hSVScPK8wAsV3n7rh3V
- Xs4cdR0Fj5sPNVBuV3cOfP7gPtOpo1AlK2MvWIkDSbPg6BMiXjqlAGsE5Tg+4FJCksOmos
- nSgjSRGtKAU9pjJ9PPsA1EUYc0QnA84=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=vJPIebSvHta1IUQzeqCUFPwZpsWjYN1JQlABtV3dR5o=;
+ b=KjHFuoRdlavu8Jb4BiwLtkcfCED/E7PN5DOpiKkFsXkwjrZddHVKmcmrmMsdrESTUlIhXb
+ J0uJSpmMWiTFQ0msjnEO3hQMD/YwMDtMk+XTYU68In8KOZVkhvIyrgT1nWMDA3Liml7Idn
+ C0w7vNRmLtrZZHs5Bv9UtrLZG2GoMiQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-380-WqoFMJCsMyG0fIcaYS17fw-1; Tue,
- 31 Mar 2026 11:04:00 -0400
-X-MC-Unique: WqoFMJCsMyG0fIcaYS17fw-1
-X-Mimecast-MFC-AGG-ID: WqoFMJCsMyG0fIcaYS17fw_1774969439
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-sTovVP-JP0WenJ1z7xIUlA-1; Tue,
+ 31 Mar 2026 11:04:02 -0400
+X-MC-Unique: sTovVP-JP0WenJ1z7xIUlA-1
+X-Mimecast-MFC-AGG-ID: sTovVP-JP0WenJ1z7xIUlA_1774969441
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C3FC18005AF; Tue, 31 Mar 2026 15:03:59 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 890D3195607D; Tue, 31 Mar 2026 15:04:01 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.50.38])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 192D71954102; Tue, 31 Mar 2026 15:03:57 +0000 (UTC)
+ id 28EBA1954102; Tue, 31 Mar 2026 15:03:59 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PULL 1/6] ide: Fix potential assertion failure on VM stop for PIO
- read error
-Date: Tue, 31 Mar 2026 17:03:47 +0200
-Message-ID: <20260331150352.256332-2-kwolf@redhat.com>
+Subject: [PULL 2/6] scsi: Don't consider LOGICAL UNIT NOT SUPPORTED guest
+ recoverable
+Date: Tue, 31 Mar 2026 17:03:48 +0200
+Message-ID: <20260331150352.256332-3-kwolf@redhat.com>
 In-Reply-To: <20260331150352.256332-1-kwolf@redhat.com>
 References: <20260331150352.256332-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -61,12 +61,12 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -84,44 +84,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ide_sector_read() as well as its callers neglect to call ide_set_retry()
-before starting I/O. If the I/O fails, this means that the retry
-information is stale. In particular, ide_handle_rw_error() has an
-assertion that s->bus->retry_unit == s->unit, which can fail if either
-there was no previous request or it came from another device on the bus.
-If the assertion weren't there, a wrong request would be retried after
-resuming the VM.
+When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
+it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
+sense codes. It doesn't really explain how the codes to be in the list
+were selected.
 
-Fix this by adding a ide_set_retry() call to ide_sector_read().
+As the LUN doesn't come from the guest, but from the block backend
+(usually the SCSI device on the host that was opened with host_device,
+but it could also be the iscsi block driver), there is really no way the
+guest could influence this.
 
-This affects only reads because ide_transfer_start() does call
-ide_set_retry(). For writes, the data transfer comes first and the I/O
-is only started when the data has been read into s->io_buffer, so by
-that time, ide_set_retry() has been called. For reads, however, the I/O
-comes first and only then the data is transferred to the guest, so the
-call in ide_transfer_start() is too late.
+It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
+happen during failover operations. When combined with multipath, the
+request should be retried on another path instead of being reported to
+the guest, which would offline the filesystem in response.
 
-Buglink: https://redhat.atlassian.net/browse/RHEL-153537
-Reported-by: Tingting Mao <timao@redhat.com>
+Simply returning false in scsi_sense_buf_is_guest_recoverable() will
+enable the retry logic in file-posix, and will also make sure that if
+the error persists, the configured error policy is respected so that the
+VM can be stopped.
+
+Buglink: https://redhat.atlassian.net/browse/RHEL-158212
+Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260326165124.138593-1-kwolf@redhat.com>
+Message-ID: <20260330121635.49205-1-kwolf@redhat.com>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- hw/ide/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ scsi/utils.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index d6719dbf31d..7a15d6cac9b 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -799,6 +799,7 @@ static void ide_sector_read(IDEState *s)
-     s->error = 0; /* not needed by IDE spec, but needed by Windows */
-     sector_num = ide_get_sector(s);
-     n = s->nsector;
-+    ide_set_retry(s);
+diff --git a/scsi/utils.c b/scsi/utils.c
+index 545956f4f95..daee90ecf0e 100644
+--- a/scsi/utils.c
++++ b/scsi/utils.c
+@@ -373,7 +373,6 @@ static bool scsi_sense_is_guest_recoverable(int key, int asc, int ascq)
+     case 0x1a00: /* PARAMETER LIST LENGTH ERROR */
+     case 0x2000: /* INVALID OPERATION CODE */
+     case 0x2400: /* INVALID FIELD IN CDB */
+-    case 0x2500: /* LOGICAL UNIT NOT SUPPORTED */
+     case 0x2600: /* INVALID FIELD IN PARAMETER LIST */
  
-     if (n == 0) {
-         ide_transfer_stop(s);
+     case 0x2104: /* UNALIGNED WRITE COMMAND */
 -- 
 2.53.0
 
