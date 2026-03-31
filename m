@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5107FFF60FB
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 10:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30661FF60FF
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 10:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7WIu-0006Tn-5E; Tue, 31 Mar 2026 06:26:36 -0400
+	id 1w7WSz-0002zz-BA; Tue, 31 Mar 2026 06:37:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7WIf-0006M8-Jv
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 06:26:24 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ id 1w7WSw-0002zC-PJ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 06:36:59 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7WId-0003xe-LA
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 06:26:20 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-650152687c8so4931622d50.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 03:26:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774952778; cv=none;
+ id 1w7WSt-0005wt-UK
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 06:36:58 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-650221149e2so3091578d50.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 03:36:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774953414; cv=none;
  d=google.com; s=arc-20240605;
- b=ADYkJsR3n1969RrNJaVPqImNmuwT6ilWMOZG4N3SgKadHHTWkRhM33HzQhwc/PiXN9
- W5UaSD3/qqSE1IAOdwUm9PiRaNWIPqKtc5gROU3YI5y4SOTZlPzYJH8xP/ehuc1c8NhO
- xQHLpD4V04Tu4/rhFXfn5kbjJ/8FtXskFfUH/wKmjYJ+CoNwSoQ6AHoqJEMPwZTltJav
- gGAqCW7J+I5O2N5YJxPQIpRy1+HXglzMb3+RwHdyXageil6CyXtvDoaiu7NKyhxUHTS+
- 4ZcNjqW6GrDI8FIfer75X2HtpfxhOEcZErKLMuUXQbvpo0TITQIL7xV/yI3afL3CXKOH
- qgPQ==
+ b=cAcXIeWQkKElg+YoshAXeXXVL4qKoi5DwULG9+hNzpwf5WDEaev4Ss07btIQ+UBkZ9
+ eVvCifD+fXx54iu9AtaumA4iSqlclMiPMytFMqhtKszQNhyqjxMv4lLy9CCeX0uC/jeY
+ OoxZGVcHQwGvUKn2EZ2jZhhWitizYsu8jeu/Wq0lC+jEaq3Ke+Wo1IGo3wu+nbyo82PL
+ /lNsB/TIiiJsCeNtUHRmKCy1pxc4wmCtJNkQahjpMXZGSjI4bkR2tbqi+LEnWtZpHCcP
+ XU/ZdgGn8TPAQm6BQg0VZiP16BA6HPmHr7EPjc6vC0Ikmu1mMO/PuG2CnAMSO+rSgWht
+ BgNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=OGJakI5/s4cFR4SR+pv32nqtOZb2B8bhCrtZ7SmTN6s=;
- fh=ZXBY2hz9BZFcpidjQnPvf6P9lMbU38E2sjgurQl2KSw=;
- b=COhX0Nq5zh8YNQCoP84whbhclKCAH2BqBGoCa9oeoBSbWMTGx0+tJbHSsOYNYOpYph
- Ddk+ayh92OY8H+dvBzUejolu9pMJkucfSvpdJPE0fn92EJBI45q/ixeTQt59m3LxTm+E
- yAYQc6wuIr+xlq7UzFrOlebZbFnDZKKncv3AwOn2DHzSPh7dLDwUJVWdpZyDXULbjaE7
- 15G/sAuewQjgQ5dZ9Ja4/NaoksEFzyNVnUsZCqnGfMjI2lhP9IMHbtc3l7R+93Yh/tkO
- 9/fhK3KS+z/nLeMBrj+cE/SnogGUA/b4rysQOGDXCiDcd9TsoQ5gR4VVvc8OGIZj6RqB
- 1jvw==; darn=nongnu.org
+ bh=yru7KmdrOQ13HJ3Y5DYNlYlKEYc79tfskCkI1743rwg=;
+ fh=vuagoQAEf32ezVAIxmfYZt5TUgrieby/HKjOkkFWnkQ=;
+ b=RQry+c4KH8CBPYUAe2XMdlhruabAA9cdSbmIogW/HlWZ/ewb08cclntmTkADopylS2
+ uDdeqrRahtcVkDm1KCVXXauuPR4T3vE/8oPsoNu3e0Adun9/X3cPtgSezrY5T7Iri/PI
+ pmp4/6KDVsapO1189V0zyxWNnDNc0wYLgXnbR9FIT5BwXb1Z9J3ulCHO58w08MrkHFGJ
+ 9ZWsNO+t4y5hCFbV3S84RS6Adf/y+z7vuPBAXKYtE1XKdlb2YS/1mRpfjdsvWsUuZKj2
+ xEDsUIex1F70EWEvc5UIs7zZQaIIkNUINa4z96tsHd/Aa6CI2U0KuKQaRzjz2+rEUCBF
+ mZeA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774952778; x=1775557578; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774953414; x=1775558214; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OGJakI5/s4cFR4SR+pv32nqtOZb2B8bhCrtZ7SmTN6s=;
- b=HzXQrk+KgscWNPHhVwt/PlO6CFzXBCpC9VxMwrNrMEPXtgjBNjAHQ/Tc/v1Iqb0VxO
- LaW+Sm3VI/vJkkWhzhrdcMe7XPWilqH0s2dnMwLYymzs9UrAc349+iA+o3Jlupem0OmY
- hqaLcn3W62vx0ED/k1uWCLlOdDJYxTk451hkhfeGNQKyZdvE8ijbsv6BlEuP2zQrHZT8
- GfFBd8No6tOy9SEB+WSZByZFTpmH5mK4TMDvSJBCL2peivvP2EBasoGgMPtwzbaWDESi
- 2BPkehW52cM4iS0eDoyCFMd7cxre1Ll9E4yq35nCzdc6DekJ3p2JsYXQ5UZZ3Z+VFWrG
- 2H1Q==
+ bh=yru7KmdrOQ13HJ3Y5DYNlYlKEYc79tfskCkI1743rwg=;
+ b=F0YMZrbxSfnP+JkxsgtWLRK4s7OqXE7c1PK9zaH9yXksMJd7MbiWBzF1HH/Sm9SjKr
+ m3B0pgmE36az3SxanrJTu34fsxjFUTLAV7a1I5WTD5nAIOMhl5Q/i1m67FGSzo++t/Gl
+ dIK8b9V362A1jOqxJUuTJDe6K3ZWTt3fRhG8wJUPQ5ZItt7nximNfL7Z1aui89+qzj0N
+ b601Yi5W6xtOwpVb408xzVGyH2xl8YIHuUo2EuD+HR11IVbzWx2Mhm6UtRLbAT/Lewea
+ 7qJfqyK/esBv3LQVU7SooiN+1d6e3+GuD23pvU8oZ3EHDNMpSecsjxL3ghh687n0nnkW
+ mpJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774952778; x=1775557578;
+ d=1e100.net; s=20251104; t=1774953414; x=1775558214;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OGJakI5/s4cFR4SR+pv32nqtOZb2B8bhCrtZ7SmTN6s=;
- b=rIJc/i2xS+sqCQANiUXpvlZZMH1AZnh/CQHgay4GAjA/Z9pEjM3ePVcAA4nhsH4nCw
- REKVntlyMwcTVDJ87sthhJ1eI5zPfe3JbpZ/WWLDCznoL1Iz13g98KIsGu0SxgT0GOG/
- uRVV/lKy/eUjK83tnql6eLxygBaEHaK03bH3GEhgcUyfmYmIspVFjtMDbrce3sZoWQs/
- ZuwhEpst0zj/jIhDq7wCaZ9honYGVATcDmUEN2D/zZn3qpRKyI9ig7Uv/HgTm6Gzj/Ue
- PB+xNiEgaNkKQP4wQTh+zUE24CimYC69gtnMeN1JdYHMwX9R3I5Z0IcvvuZ8QHcJ4Ws6
- tv6g==
+ bh=yru7KmdrOQ13HJ3Y5DYNlYlKEYc79tfskCkI1743rwg=;
+ b=AYkjwn4PzOXeuSOYeTNRMCCwsKLIYyHthjHnXEPdtWPutbRMTufd1wkaAzZ1Mm3R4c
+ KkYNmwPPfJ/oKnCJZ5JysAyZeEkwZQs4igIEKWrCw/tL8XoCvvsX8Dfzfqs+LRFLFJG5
+ eVlkDm2dTfyPfXt9l0uKniBmtzY75aurUTxzyWjXuYLxKQg6MmvhxSLPVKXxMP4eC5ck
+ aiu//AVw8HprLcBabs3NUVh5wVL93bYqkmlf/a5Bt56ul4dVrFkPgdJduy96BLAeYXvq
+ Zqdku7OMCbGnT69l6rpNzzhuU+dQHSib0Ejo99vW0U6Rm8DD3g9IjN1slf9bP+bh12kP
+ 0EOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/GvPd5qZa4msfjrilxK5gRC5ompyxLmg32WPGO6fC/9IjMnQeG8IdUhjms1XT/ZUKPpXLk0547YLN@nongnu.org
-X-Gm-Message-State: AOJu0YwNJHLEViaxrZ/ly7j+eOejzTNPPvHED0KQx99cZ5U9ncPrHqms
- XqBahbrfRefutPcERnS43DgVqy3j/a/2QbFdwAJ5xH0jkEUQgxhGyJYgB7LGLdpWBWL4cWYzWiI
- z1TM9LE4KdwuT1SxfVQ4i2mwdGDmPcQdN287bFSMC2Q==
-X-Gm-Gg: ATEYQzx+WB82/2itasvo2BFe4+4dn/wdR5n8y6Y8UHnej0J6rGzHh0v7peVbmmO1s05
- UGHnhAMvLMfS9RLhkhkQyt6I+pRdtqIG7tJ+yeuSqwtfileug8Ez9DVmRhyPKGiNcov/fxZw2VG
- 6Kkr6ZB++L/3KntcM/YEEroIe7eKnYZwJAMFb5/8WRG11hb+Eq53t/fwg2zVLTeghrVhe45n0eJ
- RU1FIxF0ETw/tr4rcLZvoVhbrRAAeFIfMDqHK0wDOGqMFcEAF126o1SYxxyue5qs5ps3sF77jh7
- supS/u4zeHI3inuE3xunenMnuq/7ByymClydQZ+fX4frFGizY8c7JV/D41cYXbmB11E=
-X-Received: by 2002:a53:c1cb:0:b0:64e:a1d0:1140 with SMTP id
- 956f58d0204a3-64ff7417a45mr12048245d50.61.1774952778436; Tue, 31 Mar 2026
- 03:26:18 -0700 (PDT)
+ AJvYcCW+F1JSRmiKk+zylVPH/DwgTFn4DI31BXMHyaDiibsfWy3zPftnfQdWYO6vqrxWr1iKj0ipA3mnHIIJ@nongnu.org
+X-Gm-Message-State: AOJu0YwwzlaUZmFccujw2bB30eaNjdl499/fsj3Bk9caed6hbAVw2Y/L
+ jIijfbD2X+Uup1g/DzSSbGWtJxHIXhtG3uiLO/ezxGK1Tzw9WoJnrGlYYrslCpLasCR8mNbmfhM
+ EPGXSkvbzaRJpSd9hpJnVm/O7hySGTvBj+1UoS8Ci0Q==
+X-Gm-Gg: ATEYQzzMMImfXD+HM+mSYuMFSnbiYuy/jf4u5sFTUUK4iW4yC4AJMuc0rcbtBfMc6d1
+ zA9atqN/JbLUfQQba188Xzp7fk0h7l1gFuvzquWbe5AEOXADgi6HxleM2EtQ8S0EuroPtbTAx+9
+ x5mRnYjAiTaCsv1T10LdmtDUX/rhh82s0PEgETjcssAWfvFjjQuvNp2hvnqGnlC2ck/nHhGdG3Y
+ c09nMjGy07vkWW1t/+Wx5plAgaK2OMzAHGSTUIx1Ji2cOPWoBnIJssbiABb5m/0Kz8kSQ7ptBUe
+ FKXKJCgdVUKT2gCndKtiQ0IE9/5iNMa2ccXCpUfX7CSP3zyDKxbkOTcv9DheNVFGSXE=
+X-Received: by 2002:a05:690e:169e:b0:64e:e896:a86 with SMTP id
+ 956f58d0204a3-64ff723edbfmr15161764d50.36.1774953414493; Tue, 31 Mar 2026
+ 03:36:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260331040659.401397-1-tangtao1634@phytium.com.cn>
- <20260331040659.401397-3-tangtao1634@phytium.com.cn>
-In-Reply-To: <20260331040659.401397-3-tangtao1634@phytium.com.cn>
+ <20260331040659.401397-4-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260331040659.401397-4-tangtao1634@phytium.com.cn>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 11:26:05 +0100
-X-Gm-Features: AQROBzB6Gq1PMrYoBpiPk_DUeRVKsPx7U8027JPTsJNNntCxqNxqNp_-3j_RT4o
-Message-ID: <CAFEAcA9-=VKiGYMxYMTPhnKovWxYyEcTGp3+Yw3Cy0H1pDTv=g@mail.gmail.com>
-Subject: Re: [PATCH 2/4] tests/qtest: Add libqtest attrs helpers for memory
- accesses
+Date: Tue, 31 Mar 2026 11:36:41 +0100
+X-Gm-Features: AQROBzCzeP_9qd9pSjRuHsYGlRcY9oF-urqiLkE3HJVJjcFgugZNpJse8bfUBMg
+Message-ID: <CAFEAcA_h+eK3TZSipQCKEFEEqZA1dFPFxYT-V2MK5h57wPDQwA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] tests/qtest: Add qtest-attrs-test for memory access
+ attrs
 To: Tao Tang <tangtao1634@phytium.com.cn>
 Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
@@ -97,15 +97,15 @@ Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,27 +123,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 31 Mar 2026 at 05:07, Tao Tang <tangtao1634@phytium.com.cn> wrote:
 >
-> Expose libqtest APIs for qtest memory commands with optional attrs:
-> - qtest_{read,write}{b,w,l,q}_attrs()
-> - qtest_mem{read,write,set}_attrs()
-> - qtest_buf{read,write}_attrs()
+> Add qtest-attrs-test to exercise qtest memory access commands with attrs
+> on both aarch64 and x86.
 >
-> Keep the existing libqtest memory access helpers as wrappers passing
-> NULL attrs, so current users remain unchanged.
+> The test covers:
+> - Arm virt,secure=on: scalar and bulk accesses across non-secure,
+>   secure, and root spaces, plus negative coverage for realm and for
+>   non-secure accesses into secure-only RAM
+> - x86 q35: normal accesses
+> - libqtest-single *_attrs shortcut wrappers
 >
-> Also add matching libqtest-single shortcut wrappers for the *_attrs
-> helpers.
+> For negative cases, use qtest_raw_cmd() to check that accesses which
+> miss the intended AddressSpace fail with ERR responses emitted via
+> qtest_send_memtx_error().
+>
+> On Arm, the test targets the virt machine's secure-only RAM window so
+> that the requested attrs must select the correct address space.
+>
+> Also wire qtest-attrs-test into the aarch64 and i386/x86_64 qtest
+> builds.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 
-This part is fine.
 
-> Refactor libqtest response parsing by splitting qtest_rsp_args() into a
-> raw tokenizing helper, qtest_rsp_words(), and the existing OK-checking
-> wrapper. Add qtest_raw_cmd() on top of qtest_rsp_words() so tests can
-> send raw qtest protocol commands and inspect non-OK responses such as
-> ERR and FAIL.
+> +static void G_GNUC_PRINTF(3, 4) assert_qtest_response(QTestState *qts,
+> +                                                      const char *expected,
+> +                                                      const char *fmt, ...)
+> +{
+> +    va_list ap;
+> +    g_autofree gchar *cmd = NULL;
+> +    g_autofree gchar *line = NULL;
+> +    g_auto(GStrv) response = NULL;
+> +
+> +    va_start(ap, fmt);
+> +    cmd = g_strdup_vprintf(fmt, ap);
+> +    va_end(ap);
+> +
+> +    response = qtest_raw_cmd(qts, "%s", cmd);
+> +    line = g_strjoinv(" ", response);
+> +    g_assert_cmpstr(line, ==, expected);
+> +}
+> +
+> +static void G_GNUC_PRINTF(2, 3) assert_qtest_error_prefix(QTestState *qts,
+> +                                                          const char *fmt, ...)
+> +{
+> +    va_list ap;
+> +    g_autofree gchar *cmd = NULL;
+> +    g_auto(GStrv) response = NULL;
+> +
+> +    va_start(ap, fmt);
+> +    cmd = g_strdup_vprintf(fmt, ap);
+> +    va_end(ap);
+> +
+> +    response = qtest_raw_cmd(qts, "%s", cmd);
+> +    g_assert_cmpstr(response[0], ==, "ERR");
+> +}
 
-This is a separate thing and shouldn't be in the same patch.
+These seem more generally useful and not specific to this test.
+If this is the API we want for "send a qtest command we expect
+might fail and check what it told us the error was", then we
+should define these in libqtest.
 
-thanks
+More generally, if a test case is having to use qtest_raw_cmd()
+to directly send a qtest command and parse the response for
+something, that suggests that we don't have the API for
+the "non-raw" qtest functions right.
+
 -- PMM
 
