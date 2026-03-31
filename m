@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F163CFF60F7
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A8EFF60F7
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 09:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7VUc-0000x6-SJ; Tue, 31 Mar 2026 05:34:38 -0400
+	id 1w7VVD-0001A2-7A; Tue, 31 Mar 2026 05:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VUa-0000vM-8d
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:34:36 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VVA-00018K-VY
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:35:12 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VUY-0005XW-Ht
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:34:35 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso61651595e9.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 02:34:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7VV9-0005eF-Gp
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 05:35:12 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43cff5dafc3so1585816f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 02:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774949672; x=1775554472; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774949710; x=1775554510; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wZMI9Wyu6cOsuHCG+sxcoMGLYV1u1z5fnlpXU6jhoOM=;
- b=jag29zwOe2jcB9CCjOpVdtYCvBt+ZnaRyjEHRuyTxPej+lsVFmp1PcqSNVWdqHcyoh
- 0tqWFKwNwHDntppABgLy4sAIBn9BrwK6QsjtGeeuDFTLdgj5m90BldqUzitprDCY50Fk
- eERh2fq8plVIMb/gj2Y04CNaOEOTB6Jl6NMHxGMmsW/QR+i+feXx5S/xCYSJnaklTJjh
- YXDdnInJb2/N9aD9h2fvD4eka6gcqpFp3ronh7cO9ocoAc5T/HR5V51WJdca758ef16a
- mVsCl/KZV6qgcwM0huPiPi+RNWxDQJmKO/yCfCY9mCe6UFFWqKAq3RedtSJM5w8GBn6L
- epLQ==
+ bh=zZH9zxK23L1V71U/YBeaOMcuHE4W6JFpn5NY+B6XO2g=;
+ b=DrmJskpA7b+fiUY28paeJeLTLewelHQ2pYWxPu3Sa212y/lxqP9XANhlaakiQlhTPk
+ CZA9rftIMwfoCvXHQYwbCWkrUS70tksa8zR3f2OVCYzXhHY9AdCwDaDpGCdttdmJuv/o
+ Oif900Xd5wHGmh1Fuq38bByOWYJF8QFX7ro7cFOuZKzzBCF6JXcZtFiILdq0ohLXvzUw
+ Vn4CIUpoZIKHmlrjx3L3KY8PIN/V7grFSTEs1sWTmCLJHx2okvjczCjzMJZZrwEJIozc
+ SyxRnIISzfpjqEO7OEUS9hXp4u6ivLkx+FQbo8OOUthQ1x7meF/c/JjQf9C5z/eQ9Z98
+ VwBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774949672; x=1775554472;
+ d=1e100.net; s=20251104; t=1774949710; x=1775554510;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wZMI9Wyu6cOsuHCG+sxcoMGLYV1u1z5fnlpXU6jhoOM=;
- b=Kf8L0MaHgc40tKkMjc4w4lwxVeJ/PWisJ2L4dRZKuiCxOyj8iYuaRqUaiyl/z0YPL5
- ATciNH1HACMaBo+m71g4KpsgLR1i9g++2ERCEYJ1ygtubOVb9Kfn8MPBterFMFbWuJEF
- 0BImROCua2wKi9XQPCIfw/6TgQLREdfdLkXKc9myu9aFwyF5eeUGafuOzCBw6VRLt/a1
- FR6IQfo/+qjhBIUkPGC/PLv/3Yolpldo+2/lUQPypwCrGJo40PdP/4UR0iz2HgKoeukE
- 5gQqahNsWzdDOB3atsvUfc0A+5hPePXW6zHGuKEw9dwbhUpHxBxUeoHnxyQER6nahiR+
- PLEw==
+ bh=zZH9zxK23L1V71U/YBeaOMcuHE4W6JFpn5NY+B6XO2g=;
+ b=PHznlLrLyCuNRpYGSzEDX+QhjYeUGbXNFTmNCQ6NAzwANMsqiRE3+5A8vP3GSOqlhU
+ Ltgcz/JE7+ft9lIPQDbWV7XJbidRNUpUKMv8oaLjQNQVjpBxvTe32EknOJAX9fGQa4F0
+ BR8Ta3XarvDo5FVmX3M7jvL7zypbmasHR4WqzgammA1ydrIC0h5jtDhOzJauuY8zfQbF
+ /sQPwVUrLiS6vI4vKRS6vIBqJ0tsg6Uj7SANtdVrkB6ULPho/ngt6MJuIjV+6ZVwOwxZ
+ H5AH09LhIM1hT2I/p3tevhbqzuR7+x/1H20dJcwfJcCxoqPL68X5xqJAbJrprJ+yxHKu
+ IKHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUapRlZevqB9xaBA15MiYlyQ+FC0dCznGDBTWKgEZ9y8D0Bpi1yZwoYvbwt/xodE+jxEvJImVfGzHmh@nongnu.org
-X-Gm-Message-State: AOJu0Yz+4p6IWQmXoMY32jGbM3xOiSPp481dFmvZwf23PeZOuxKCSxan
- NIrkiiOe/ybfE00RBKaaL+JPg1/W8JNPFVL1STdekSh/52smh88e9RcDtC7SNs9KpAs=
-X-Gm-Gg: ATEYQzyJdfF7HBRA1CAo9BMTUY8lxZjBATs328tqwxh/I1n7/cbOCdL7ZB7emz/YOTi
- OKYVB5UzZqoA3dIzo4WmY4+ndQTjgqg+MCGnrl+a2NzJUJGju58F4SaHvZmYlmSBc5QMGunlX2A
- MDzX7+HDIsQJO7nnrXR1NuKt3HuyQmbQ0U/HHnImAW6vjOn6l+TjA8ECDNk8W5WHWeOLztekMWO
- 0amV3c4c/3Gq5tEJAHbxh5n1Wt0ykYiGmTjCGvjraHtCoQ4SL1y7Z/fHAU+N8OYKQ2HFRNhQRLB
- ecH9PjACawFmIuvMRt5kyG11R4+K6Tyqvi2qG/8L5whKWvNmV6zWkM6jnkaVP0MIAL6bHvyxDWF
- EDQd5/5RiG4Bki8zlD03zDecV6cNJ4XL5hrPfPk3CxlLq8XuVQrfFC9v5b0nxuLKUW44bL9unvK
- sgSzN4J6pABPzru9dxp5R62lDQqVy1RqZJ8dZEFlWBHAxCwIJOA1Ggcu6kHA==
-X-Received: by 2002:a05:600c:47cf:b0:487:1ed:6bf4 with SMTP id
- 5b1f17b1804b1-488781840f3mr33661915e9.3.1774949672506; 
- Tue, 31 Mar 2026 02:34:32 -0700 (PDT)
+ AJvYcCUo8kHCuuZP5tQ47IjbWZwSnKz1uZYi8cl36H6qw8lsOJG/iEQP8sS37AM/0jn8f3afqMliM0aPWsjB@nongnu.org
+X-Gm-Message-State: AOJu0YxSxgeMtx4DUDltr1v5VuJa9aZxkG+8w5Z4pgOXOobN0a7A3SyN
+ 0c2hafr6lpWSv3sw5puqzxZ8Y440bIdwxuwBv+qwvjmg/DmtTP7ixmdloWO0+gIFs078sxdEQAI
+ YX85vFlE=
+X-Gm-Gg: ATEYQzwkfwmXVdCONZN6FeobAhv3NTh6x/BeQ80Jq8ZhNqNm7k8IYa6Gf7/289phMyB
+ ma1fvTdiQDlmIc7XfnLWiAmdfgKcrk9AfTAi/UIMaPCqkIfEOp3F10C0eVyRqMP8ejKEITxUBza
+ NiFGwVZOC0WFRlzb7sljfoVasi9r5br3m/SsGaD6R6F9wpNJgd14ljaXtdtCF9H/xUoBwCO/7tz
+ lATGZwqsSgxxtRm+YXxuXmCY9UusUVRMEJRbBc922qLRvSQBKssKahRw/YRdGc+rEokNvSUt1+9
+ lW4qKWpi2Z77UWE+GLDPLYsbg+goQ+aX8YL6LoItDLoOcb5S9cSGgmQ9UMzZmiz0zrFcGJu2UZN
+ tsfgdQyoo7m4U/s9Pf+hLJ1Vj2IH8/LfsTfm3bElKnqzSF4TNdyXpWHFymqZsNdlyL5EjHHwJpf
+ VuA262g5bccqaGVXOKoU7DZ8iYIJ8ad2TkJLaCjL4W0QT1XQ1/Dg0djtKjWg==
+X-Received: by 2002:a05:6000:2583:b0:43d:b0f:eb44 with SMTP id
+ ffacd0b85a97d-43d0b0fef70mr3450287f8f.15.1774949709915; 
+ Tue, 31 Mar 2026 02:35:09 -0700 (PDT)
 Received: from [10.193.39.66] (43.149.216.82.rev.sfr.net. [82.216.149.43])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21eba4dsm27849754f8f.11.2026.03.31.02.34.31
+ ffacd0b85a97d-43cf24707f2sm27103968f8f.26.2026.03.31.02.35.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 02:34:31 -0700 (PDT)
-Message-ID: <081d94dc-60e7-490d-84ef-d60857be3410@linaro.org>
-Date: Tue, 31 Mar 2026 11:34:30 +0200
+ Tue, 31 Mar 2026 02:35:09 -0700 (PDT)
+Message-ID: <60cb50d1-aa42-431e-b3e4-76a2cf4f437a@linaro.org>
+Date: Tue, 31 Mar 2026 11:35:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] hw/hppa: Disable Artist graphics card on 64-bit
- machines
+Subject: Re: [PATCH 01/11] hw/pci-host/astro: Update copyright and
+ documentation link
 Content-Language: en-US
-To: Helge Deller <deller@gmx.de>, Helge Deller <deller@kernel.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>
 References: <20260330211859.19317-1-deller@kernel.org>
- <20260330211859.19317-3-deller@kernel.org>
- <04942b9e-ed2f-4553-b4c7-73d5499f342a@linaro.org>
- <0634a5f1-7f98-4905-b5a4-394d5cfec3a3@gmx.de>
+ <20260330211859.19317-2-deller@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0634a5f1-7f98-4905-b5a4-394d5cfec3a3@gmx.de>
+In-Reply-To: <20260330211859.19317-2-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,70 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/3/26 10:58, Helge Deller wrote:
-> On 3/30/26 23:42, Philippe Mathieu-Daudé wrote:
->> On 30/3/26 23:18, Helge Deller wrote:
->>> From: Helge Deller <deller@gmx.de>
->>>
->>> The original Artist graphics used the GSC bus, was often installed in 
->>> old
->>> 32-bit machines (e.g. 715) and can not be used on 64-bit machines.
->>> This is why this patch makes the artist driver dependend on the Lasi 
->>> chip,
->>> which was never used in a 64-bit machine.
->>>
->>> Note that there exists a variant of Artist for the PCI-bus 
->>> (Visualize-EG PCI).
->>> It has quite some differences in the registers, and would require 
->>> that we write
->>> a PCI ROM for it, so that Linux and HP-UX would be able to use it.
->>>
->>> Instead, for now, users can simply use a standard VGA or ATI PCI 
->>> graphics card
->>> on Linux.  This can be enabled on the command line with "-device ati- 
->>> vga" or
->>> "-device VGA".  If the "-nographic" option is omitted, a PCI OCHI 
->>> controller
->>> with USB keyboard and USB mouse will be added automatically.
->>>
->>> This fixes graphics support on 64-bit hppa machines and allows us to 
->>> boot up a
->>> 64-bit Linux installation with VGA graphics.
->>>
->>> Signed-off-by: Helge Deller <deller@gmx.de>
->>> ---
->>>   hw/hppa/machine.c | 3 ++-
->>>   1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
->>> index 3663bac53b..58e76bee2e 100644
->>> --- a/hw/hppa/machine.c
->>> +++ b/hw/hppa/machine.c
->>> @@ -384,7 +384,8 @@ static void 
->>> machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
->>>       SysBusDevice *s;
->>>       /* Graphics setup. */
->>> -    if (machine->enable_graphics && vga_interface_type != VGA_NONE) {
->>> +    if (lasi_dev && machine->enable_graphics &&
->>> +        vga_interface_type != VGA_NONE) {
->>
->> Pre-existing, 'lasi_dev' being a static variable isn't really helpful.
+On 30/3/26 23:18, Helge Deller wrote:
+> From: Helge Deller <deller@gmx.de>
 > 
-> Yes, can be done post-v11.
-> Where would it belong? Into MachineState?
+> Update the link to the documentation, which was still pointing to the
+> Wiki page. In the meantime the PA-RISC wiki was converted to a
+> read-the-docs website.
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   hw/pci-host/astro.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-HppaMachineState that would encapsulate MachineState.
-(hint: git grep ' MachineState parent_obj')
-
-> 
->> Back to this patch:
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Thanks!
-> 
->> Although a distinct descriptive boolean variable could be used
->> instead for clarity, rather than testing LASI presence.
-> 
-> Helge
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
