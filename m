@@ -4,99 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8500310F92E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 16:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A19A10F92E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Mar 2026 16:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7cOT-00025Q-Nt; Tue, 31 Mar 2026 12:56:45 -0400
+	id 1w7cP2-0002qz-0o; Tue, 31 Mar 2026 12:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cOR-00024i-Re
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:43 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1w7cOy-0002p1-IZ
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:57:16 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7cOQ-0001zZ-79
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:56:43 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64ef161129bso7441041d50.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:56:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774976201; cv=none;
+ id 1w7cOw-000229-1c
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 12:57:15 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-6501e465a8eso223698d50.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 09:57:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774976232; cv=none;
  d=google.com; s=arc-20240605;
- b=Y3wLd/cFLtJ9RqrrCdm29w6l07ksDkj7W0h6QwzxtE0iK63L7jtV9w+fAyrRtwpdIV
- ayRi2YcY2KPVVcD2NhCjXio02RjyU0ewXIBdXpqpTBdfRFDzLSAIYNI65oS4RsJrz7dt
- RIjCc5BKZY+/JWv/38G0Myff9x4Ogn241aTeorHNinr/AuENpKJ/6QwFPBUqav/qX8K0
- WHnRY3GN+O/efZg3pk/EbVtJeXALXgewnqm67+yWjzCbMWTWLD9ZDZDdAV5sBtfROVak
- XLXRv+38jUmbdxF91MHipzTxt7xdORdk7DEp6tWc2QY9ZzCc8tP6o1PliozpCHiVn7tK
- uVeg==
+ b=GoVOP5ngfSd2OJPj+MAvEAwVRAmCSPymEKkfcZZI8uHBoUl+38TRuJzwlbMcC4TH3l
+ mQSdf1a4Q88KEohI/iN8QpGiubZG24g+Z40+OZuEwxCWGuv36haz+USX42WYciVdsNBL
+ snqLcmfn6i9eX+lWxY9v9rd9uaf3bxurEpyLhWewCNZQP4SWfV9qXWZ/d0TfxVC1tgYv
+ ZWULlKMuDGRRqJ1PsklY0vd1aSYe5nQfWuerhfFnOk+8gQamqkJX00ydrLvKCEvS/+Tw
+ 8cfZx5hLKZ+HY1rImDb5Fcjce27FZMyq1+Mq2HGzTGXbLfJKCkfXTm5Y4k3dkNBym4qb
+ Dsjg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=oITUMmQDFbOJMQwRzSxeqvH8qPQc1MNb7UJZnNsLbO8=;
- fh=iBfsoTySO2eRjNWfaA1crknDKmTExEhtnVkpakrX9Bo=;
- b=WhgmMrTk/0I8Bt1LYKL0bbtRmC4ztUtSomDzxj8xS3tNSICPVJlaLMON8gnPrzFTSa
- zkyk7GiZUYcd37PHViR0nHV+3I8yfAWT73g/6tDbsIxN2smpcKfzxYIYDNa84FhiRG+Q
- ZFIK6xekslbcWKEQ+IYS8S9/+kele2zqPjmTJ/Hidre2yvEnW/M9Eue3NDfbv29YcP3R
- L6fTUChJWuuDELyabluPLQ0lFWeUlTUxTGXxGv7Y3GZk/op6ZtJuHE1lPzh7ZD4tptkm
- INPHHG1WEpKqCQ+jfBtZq855PUanbXUoaIdBAWtl+q8YiNKG8muwzdwajtg2xllBDyh+
- M0WQ==; darn=nongnu.org
+ bh=hbzlaHUP+n9IJbngkTY3e6s19eYTVKdHkQlbfdmho+0=;
+ fh=BNPn5plGW4iapFgomzvvXDa0mZylAFxlcZuJupMSfiQ=;
+ b=GAN/PXU+drxTat5sgU0k+CN2RJycrrbCATCGjIrzxaEwwv681rV0DO48MkJ94Zep0u
+ 1CTpwCiERpmVnTxZObQE3hlyw5Zs9uPaQGZG7YtPCdrmN5VIy7hKPQXZDJfZhCpl7ph3
+ 0d15TompGz4G4TdtQpyY2NbYSo1m5dayRTPTmiEf07uyZa5r3PWX2+zl1QX2tTkMLJm1
+ YI3f6FUoUzoJJNkAWcZRVpzAwLWZp1fRyeYzH8raNWrXp1aTys4sn6PilpM8VWJftm+K
+ n7GH13N6YlT0F1J7kJ6LxQVNUk7TSDEDIx3qykiHrZteHg8nZehROb9LOPxvhDThfWOZ
+ B3+Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774976201; x=1775581001; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774976232; x=1775581032; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=oITUMmQDFbOJMQwRzSxeqvH8qPQc1MNb7UJZnNsLbO8=;
- b=pyhjPnrFD4QMqosQw7IU9fnPksulhLkbLOwLHsltRDliR4Y88sDHjU5ZVdq3cM03HC
- 9liauCZ9nC6PDe4KBNIOfmc2xXUAC53OcSeBh6YZwawn4qHHpZl07wFnrXtCv5icmWL5
- U9EUNnOvMlpr0Cui8hNp6/AeaKnkfuWXL9A2WpTbRcw5wS2AJAGHwEv4hWiElZbX+sG/
- nJmmjL8I9Wy9qaicoPvga9YGegbfgvn5rlmpjkDcoVJSnqvtcuAnugvHTEWVjiDMSNOB
- Uc37ZWnVxz48qfNERh9gO+ej3hd1ZsPnFy29nFoYoIQiEK4jdVJJ8BOAFeoVkUvNZb9y
- klRA==
+ bh=hbzlaHUP+n9IJbngkTY3e6s19eYTVKdHkQlbfdmho+0=;
+ b=j3Qmvznda1xECWzcOTaaZX2f2AMI+GjMUUvZyD1YcFOTkiP1Zz1uP+u3pdwtncMph7
+ urRdCLIoMcNA+1DvYWaUiH3iq2rebIWRrPQJbur6bcZoNDQ2vH8fbuqDjp0hH1MId29/
+ +OV0yH+8KMgT1y0NjbhfNe3bc1k7/g/QifFxacBkUj6/30QCwYS2DiXGis9kOiEkgPIX
+ v1sr6EIgjQpwuTi+UU6oWMISgll7X+Q8+ZYPtokJxVyb4gluIPCwDgN55wDYc3sMileI
+ xwNqF8NKIX3e+9Ol8MGYgGLHi/qgFB+byBWWnygreI5zcnwoAbJGsJ5iGCoEZQH+NSWg
+ +Juw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774976201; x=1775581001;
+ d=1e100.net; s=20251104; t=1774976232; x=1775581032;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oITUMmQDFbOJMQwRzSxeqvH8qPQc1MNb7UJZnNsLbO8=;
- b=eJEpW91E/3MXLyyttjM3Ir6WCPs0VdOBaaqpt+KSC5Z0aXUoZClS2D7PaYtKRMw/CX
- Vyht6NXdXYLRRYmR/s9+jtUgp1/tgGGsPtM2Hdv1St6lQ+AkWad6hNL9A7qOZt1mi+YT
- Jv3LMwHLiRtpF814CY8SHf7gcNRhW4O9xqiMW2Y7h+DQwTBCeCsCpOcwQrVaf8xZGHVe
- R0DKaVMUcb7D7xoiW/M7jX7Yj9unuuY+sUwcFs7yRPvBeXtXZB+efhFe5EL5tJrzOTrt
- YfRSXS/5e4y4idNzThmeKlBayr017JsDX8Hk4hJyoFcM1bxaocv2kbPCbL6nEdpj8K+9
- jkNQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPl29yRThdRgMzhVsGxw9EUPGaoAinyd6mZ4vwG+vPGfIWARIz02DZz6Aooksem2lRXufRWb6BtXEy@nongnu.org
-X-Gm-Message-State: AOJu0YzuatuKmMqzlUx+7fEZk04M3ZtoABsPXvpQiwUSCWa6PDWZOWka
- KZSXm0Zqtf6xV6SFOHt4qpQtrIJoTlV95FJjwmI7Yb8b0RFLx+XZGE/ZC7hqqzaEavH3kyXcdVz
- lKKN5bsO/vV3TyKXQu1qb09+LSFdzHgDnaCzM4dU0lg==
-X-Gm-Gg: ATEYQzytheLs7AOIa6IkarNgP2JnE2JGl88MaIFnyqLHmJr3ZEBqVmd/3lFhKTI3xMh
- O4Na0f+6GMS+OBa8h/Oam911s3AbkH6SLFELe/+BAnSw2l1dDu2kqVvgv7PLybvxr8jwEpKU5Ux
- Yv6pNNQAw3LULu9+8iHFCNK8LEYac8xuZ2MH5TVh45XEvOMlOH20CJdmvbu5ANLHaIhj8On5N2S
- 5UliTuWdoA/AAJX+mBPYtq1/Dz7LG/FIYXj15vuEeygssE3sfBj2aUMOksNGyP9uScTVi6N3VXe
- slTjJcv+kUtkioZ4l7/Uk/DkIa1XnGqysNhKRThpUbgdV4odfL96OoLI5wS4m/TJwAM=
-X-Received: by 2002:a05:690e:25cb:b0:64e:e47b:2476 with SMTP id
- 956f58d0204a3-64ff73b6529mr13225847d50.43.1774976201003; Tue, 31 Mar 2026
- 09:56:41 -0700 (PDT)
+ bh=hbzlaHUP+n9IJbngkTY3e6s19eYTVKdHkQlbfdmho+0=;
+ b=h2vE5csp6NoEgPol4ZE74C8rrgyn9cR6b9Wy7D0I44sMOaPoz2D2748jURycEa2R7V
+ Me7cd1puf5wiY+TQvIHSnn5xqRU89RXe7Oes0rrJT+k0CLm90uUkV+26kzEktEcXsj9V
+ 07wWlzBNW4HM8tuX4O8m7mHMSZGDDYGMZY/Uglma3dwlhWxN63IYbT1b1tiqeez9Dc9J
+ mWJsJzMmLBszmC2/29xI1cz+G1hqKX9tfW93GWpcsgwfyTdV8q/vwF8GlBfwHGkuTLw+
+ Z2hBqKB5IBZ7bMZU5AUGblaoRSjzpQnbc/7TWrjBetTdwkyekK7vSBSLwWYlDesP6hk3
+ PYhQ==
+X-Gm-Message-State: AOJu0YxOznM5d7S2FNaJYKZc4ybxRb/EaCA7LwsLwgSG9JnybCGX1KFc
+ p24sFnr5/5F5rc5UReRRStHDKeahsdOP3UeWn+FdE60zv+gCTsIf4abbRCpe8mDn+3UFJRvwuIp
+ fLBPGLlbHxcknJp67o8MbWj3Io1pOOjovKkvTqLkdnw==
+X-Gm-Gg: ATEYQzyl0LQtNvP04RcyWndFbtF0o93m7IcAjwie1lb7+pIODuKVunvUkshYCY7p/al
+ bDnyRVet3NQEhKxykjbjkmamec5RQIlaW04ZjVr94JVk3GocYRQEkvsImaX2uN0kYgfGGt21E2a
+ 4J9OxRRdm6qAY3fZKvdssZUIE0Tj6HL2XN7HkLEncjuZS81mob6aWnDXHKLsmq/yEzZks8SG8U4
+ NqfP3vvxYNBhzAnjrcHAZOkNzM2DbLhTqpbOJy1NSHe7joYqwfPQShMtH0M42lDuE5R5MIncJ4q
+ J9ZnP48CFYbYU9mkxqilAAYuK4oUjzqgOI4hcVS2axOrWKBHk0E9HtL6m3tFy7NtrLs=
+X-Received: by 2002:a05:690e:1591:10b0:650:20cb:cfc8 with SMTP id
+ 956f58d0204a3-650265fda60mr3231209d50.16.1774976231597; Tue, 31 Mar 2026
+ 09:57:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net>
- <046420c8-63e4-4113-b33e-7b8c070af5da@gmx.de>
-In-Reply-To: <046420c8-63e4-4113-b33e-7b8c070af5da@gmx.de>
+References: <20260320111647.138984-1-shyliuli@aosc.io>
+ <CAFEAcA8EgLD48QASJCvLUGjmHDdVSFX8=cdiyHpuxaqmWCnNig@mail.gmail.com>
+In-Reply-To: <CAFEAcA8EgLD48QASJCvLUGjmHDdVSFX8=cdiyHpuxaqmWCnNig@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 31 Mar 2026 17:56:29 +0100
-X-Gm-Features: AQROBzDiFJ292RWgKB8BFLVndq6QrZrcjJK021uDMgTlsA4aFz1Slz6pPeRbBRI
-Message-ID: <CAFEAcA_FfuS2gMKj-6W2Cv8PV9gt7MJ0AFyFoG9mm6q1i_FVVg@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: fix name_to_handle_at when
- AT_HANDLE_MNT_ID_UNIQUE flag is set
-To: Helge Deller <deller@gmx.de>
-Cc: Clayton Craft <craftyguy@postmarketos.org>, qemu-devel@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date: Tue, 31 Mar 2026 17:56:58 +0100
+X-Gm-Features: AQROBzCUnuaByB_9rZxWR1C-gYWMYGmPQdyxEuvD-G9GwsVe1RgkO6dDDy8TmPM
+Message-ID: <CAFEAcA81fkSSoEiXKFAtdBi9v1CoxoAHoLt2oE3Nmb7QuUkKkQ@mail.gmail.com>
+Subject: Re: [PATCH v3] linux-user: update select timeout writeback
+To: Sun Haoyu <shyliuli@aosc.io>
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu, pierrick.bouvier@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,25 +114,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Mar 2026 at 14:49, Helge Deller <deller@gmx.de> wrote:
+On Fri, 20 Mar 2026 at 11:31, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> On 3/26/26 06:59, Clayton Craft wrote:
-> > Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
-> > is 64-bits. If name_to_handle_at is called with this flag set then qemu
-> > passes a 4 byte int to the kernel, which then tries to store 8 bytes in
-> > a 4 byte variable, causing a SIGSEGV[1][2].
+> On Fri, 20 Mar 2026 at 11:17, Sun Haoyu <shyliuli@aosc.io> wrote:
 > >
-> > This stores mount_id in a 64-bit var if the flag is set.
+> > The Linux kernel writes back the remaining timeout for select-family
+> > syscalls in poll_select_finish(). If that writeback fails, it keeps
+> > the original return value.
 > >
-> > 1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
-> > 2. https://github.com/systemd/systemd/issues/41279
+> > However, QEMU only writes back the timeout on success. If the writeback
+> > fails, QEMU returns -TARGET_EFAULT. This can lose the remaining
+> > timeout and change the return value.
 > >
-> > Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
+> > Update do_select(), do_pselect6(), and do_ppoll() to always write back
+> > the timeout to match the Linux kernel's behavior. If the timeout
+> > writeback fails, keep the original return value.
+> >
+> > Tested with the issue reproducer.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3343
+> >
+> > Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
+> > ---
 >
-> Reviewed-by: Helge Deller <deller@gmx.de>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-I'm putting together a pullreq with a few recent linux-user patches so
-we can get them fixed in rc2; I've included this one.
+I'll put this into a pullreq I'm doing for linux-user patches for rc2.
 
 thanks
 -- PMM
