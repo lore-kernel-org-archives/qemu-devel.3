@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1E51076386
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C173510F6FDC
 	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 17:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7zEK-0003Oq-PE; Wed, 01 Apr 2026 13:19:48 -0400
+	id 1w7zEe-000423-0T; Wed, 01 Apr 2026 13:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w7zEJ-0003NQ-GJ
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:47 -0400
+ id 1w7zEA-0003Et-8e
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w7zEI-0001MU-6R
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:47 -0400
+ id 1w7zE8-0001IM-SJ
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775063985;
+ s=mimecast20190719; t=1775063975;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5883psE6nyExrf3yguXNZZAHUfPO/1/LQet/5J0xfFc=;
- b=NtIpBSyuEqa0RTimrPn+n2WHp0emjrqHfGXDR2IzziQhUST9H6teQ1T1uc3DOCQV5Ktfp3
- YXqvxIWUrNblbonCi9izuE70kMiTSX/AT1YqTtHMehEHEjeMVrgtZhzQtswDgM6AlzeG6Q
- r4FLri+cWp4ltcY/6OVC7I1L5xuA/b0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wa3tgXDwjHGBlgvCWZRQZZMqIWeIdAuwu3ajIUqnh6w=;
+ b=cyWw8OhHHlQacYeyZm9qoEBrbS1FKc7AhBpc2+HDiHNwSKmf4oWhWkV3JNHiDGtrMJpnYs
+ WW4QTu0Q/IFlJnEaVPxJ2Jh68r2/gHQpaI4vGW2hjtbXqbDDBaXpYMQTAVt3BDnpX77iia
+ RNjV9HK6AUfgPluTgpBo7UpBraHQRD4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-b1B6vwiQO5m3alZc1kQQTg-1; Wed,
- 01 Apr 2026 13:19:44 -0400
-X-MC-Unique: b1B6vwiQO5m3alZc1kQQTg-1
-X-Mimecast-MFC-AGG-ID: b1B6vwiQO5m3alZc1kQQTg_1775063983
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-FnQHFicmO6SezMUKGnFG6g-1; Wed,
+ 01 Apr 2026 13:19:33 -0400
+X-MC-Unique: FnQHFicmO6SezMUKGnFG6g-1
+X-Mimecast-MFC-AGG-ID: FnQHFicmO6SezMUKGnFG6g_1775063972
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35936180034E; Wed,  1 Apr 2026 17:19:43 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E9E22195608C; Wed,  1 Apr 2026 17:19:31 +0000 (UTC)
 Received: from localhost (unknown [10.44.32.12])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 283F41800671; Wed,  1 Apr 2026 17:19:41 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6543C180058B; Wed,  1 Apr 2026 17:19:29 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, <qemu-stable@nongnu.org>,
  qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 3/3] scsi: register again after PREEMPT without reservation
-Date: Wed,  1 Apr 2026 13:19:27 -0400
-Message-ID: <20260401171927.396672-4-stefanha@redhat.com>
-In-Reply-To: <20260401171927.396672-1-stefanha@redhat.com>
-References: <20260401171927.396672-1-stefanha@redhat.com>
+Subject: [PATCH 0/3] scsi: PR live migration PREEMPT fixes
+Date: Wed,  1 Apr 2026 13:19:24 -0400
+Message-ID: <20260401171927.396672-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,40 +84,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SCSI specification says PREEMPT without a reservation removes all
-registrations with the given key. Try to register again after PREEMPT
-since our key will have been removed.
+These patches are for QEMU 11.1 and 11.0-stable because they are not release
+blockers.
 
-In practice some SCSI targets keep the calling I_T nexus' registration
-instead of removing it. Therefore we need to handle both the
-spec-compliant and the non-compliant behavior.
+Testing SCSI Persistent Reservation live migration with the Linux LIO iSCSI
+target exposed two issues:
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/scsi/scsi-generic.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+1. The LIO target interprets the request's TYPE field even though the spec says
+   it should be ignored. This led to PREEMPT commands failing on the LIO
+   target. Work around this by sending a "valid" TYPE field value. I have also
+   contacted the LIO maintainers about improving spec-compliance but QEMU needs
+   to work with existing targets.
 
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 349dea6bdd..5182f9236d 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -513,6 +513,16 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
-         if (!scsi_generic_pr_preempt(s, key, resv_type, errp)) {
-             return false;
-         }
-+
-+        /*
-+         * Some SCSI targets, like the Linux LIO target, remove our
-+         * registration when preempting without a reservation (resv_type is 0).
-+         * Try to register again but ignore the error since a RESERVATION
-+         * CONFLICT is expected if our registration remained in place.
-+         */
-+        if (resv_type == 0) {
-+            scsi_generic_pr_register(s, key, NULL);
-+        }
-     }
-     return true;
- }
+2. The LIO target removes all matching registrations, including the I_T nexus
+   that is sending the PREEMPT command, when PREEMPT is used to remove
+   registrations rather than preempt a reservation. This actually appears to
+   comply with the spec, but the hardware target I previously tested against
+   would not remove the calling I_T nexus' registration and therefore QEMU's
+   behavior was wrong. Implement a fix that works regardless of the target.
+
+Stefan Hajnoczi (3):
+  scsi: adjust error_prepend() formatting
+  scsi: always send valid PREEMPT TYPE field
+  scsi: register again after PREEMPT without reservation
+
+ include/scsi/constants.h | 10 ++++++++++
+ hw/scsi/scsi-generic.c   | 24 ++++++++++++++++++++++--
+ 2 files changed, 32 insertions(+), 2 deletions(-)
+
 -- 
 2.53.0
 
