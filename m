@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51CF5D2ED08
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A65FC107637D
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7vwj-0004DG-9Q; Wed, 01 Apr 2026 09:49:25 -0400
+	id 1w7w3d-00032p-4X; Wed, 01 Apr 2026 09:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vwg-0004Ag-3t
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:49:22 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
+ id 1w7oJj-0001PD-Jg
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:40:39 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vwe-00013y-NX
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:49:21 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43cf8fe9c2aso2068529f8f.2
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:49:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
+ id 1w7oJh-0003rr-PG
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:40:39 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-56b7043c97eso2549643e0c.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775051359; x=1775656159; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=heggDzAGN+LCYoNVrVVFKX61MluniPs8j/9lG8gE19E=;
- b=PX/uCPGsPkBDeBMBCeVDbW5n7Ho8jVukKCzypMZyUvbqW49eEpi1oo27b1f7RDQ3Es
- gp9X5yus1bzhxDqJSMt9JNOm/4r0LlekbNFO52L8CPDSs4sn/4YkQAWAmgb3PgUnroD1
- lvyP2iRrYymAwevl2luLOBjj8iglaQB0yLm1lirdhWsTb7t1w+P5XhVUlwKTgi7zZcfQ
- MJciM3yDYzCh51vc1OVXKTP33rCVqt8u/1WfxmfrUQlWaGcjbXxME0sp7kUZEM8a58Yv
- j9jlwCXDJJmaSe+WeqY0v48G9mjwBmqt/H6wbVEyIxpBEBxZ/mnofFQRprCA9F+pUSyJ
- PcQQ==
+ d=gmail.com; s=20251104; t=1775022036; x=1775626836; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yrZz+fw3nJqPlQASaoEkdwkEzy9mvjXJzLjZF79lJHk=;
+ b=SYW2nuKqBl18GsScJBJbKbuuSEN5WlATvwRPmChJ8MACXySQNFbQbJOZwA/ck6IxgN
+ 4pOLN8nY11JoogWImjzwIWlZjGujMDTOqXIs0/Nf0dhvrX30PDE92a6M6BofCvyJ5Fps
+ E8zIS+LI3+Y/BDdozlKKuliGxFGHAvwaCYM4Axd7pb/dv6BRFFr7DFsCc+ceiUTlf+lN
+ X9SeQ8RGJ6IiLiAaiJ3QiFBCUdnwxSL0TgqifHttYumbJ3qIGTlavJy3YkVOEMWUqGKL
+ hJ3EMu/GjXRPE+ZzzSc/wwNjGlE7FLGP6UL8QyiR95hF5NnIUIVL/1MywkD0wSN3mAcn
+ TSTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775051359; x=1775656159;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=heggDzAGN+LCYoNVrVVFKX61MluniPs8j/9lG8gE19E=;
- b=nYe1eGmxmgIAB+UGidS8XmJdT/DZUjZYFaxaAhYEMZTMYWQt/JqqCcTh7s7FFFlR5q
- dOA6unfTkwS+8z1zSvpNd6hKcFzSnna1CTairhCmMTyCsGfD4TcM4eXRo0xHMJ1JYz3B
- jU5EzJ5ugMvBoScLrbXVgROnjfe71e0pfltYFU0bmbev1t1jZSGamI/pFPUsHeX8M70l
- 28d9Nqh2nJlT7RuzDLarm8+btykxptvD09Hpmrh2O6OwQSUjJThXmEiqX3f+9h0EMoxb
- eJ3hhUaGCC4fSXw9+pgBNwl5zo38gEOA223TsLsDorfguMlZkVCSjWgZupLmyPBreJzg
- FSpw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlOIBq7fumlE/yR8aEtMKjXFVpMVDmGbYmfRiIT3yMNvnp4XIV3r5/uC2+qRJscVMsr0z2fcqDI9Bi@nongnu.org
-X-Gm-Message-State: AOJu0YyTTIzANpKuRiHC5HmEwjvnB7wO0MZ9UDgHa2ahpD62LWdpQNYa
- W0sw0n8Gc6VHJWYKwnON/ZdcN0ka1KCtCFLqff9mFO/JBklbS3fDtQegi5NXLs/mAu8=
-X-Gm-Gg: ATEYQzwC6FlofXMJQlSDHQc4YAKgyhlyZEP05c53wFfn5TSGVATM7oIXhbIBueneaG6
- ShGL6qyAXYlOIRd3mopuOvCA8Ba/cYtnImzNhDjhsphWjyIFxDdkhaXudULQHVcEOsEQVkFN+Ji
- YP1aVTfnlOoVwUBmIBE/M3+VKehJQc6H6Qxzb1WIxMglstJbfBWOafcwqDK5j4mxKj8Iw1gtVgz
- BRSztQjVQLhwvo3nHv0HIzLk7h+7p5+y8WLUIi13Ii6OA1yi5C98jD4eIZdBGLq3wlWAfaETCTP
- ZxJOWBCuFnnto8tTHgwXtl12Bsvlo4Hmz5VSQCLTyQQ2wPNi9OabFhPE35FrFVB1v0Q7alsiyq8
- BWUeKbLXJS1NCcNiUrOo1BoPBOksQyRnAkxoPmeM1FWXV1juXhjJWvKyxK1Adb5pXAR+nrK/jFl
- iDiiclxBh/iocwdOgfVsGkApJ40M7QcR3ROQMUmd6f9/uDvdDEvqkAkp1TBIt7kueiQw==
-X-Received: by 2002:a5d:64e7:0:b0:43c:f90b:5669 with SMTP id
- ffacd0b85a97d-43d150d5a8amr6979882f8f.41.1775051358945; 
- Wed, 01 Apr 2026 06:49:18 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf257b72dsm36598535f8f.34.2026.04.01.06.49.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 06:49:18 -0700 (PDT)
-Message-ID: <7e042233-1d2d-4812-b381-9c5121a43ec5@linaro.org>
-Date: Wed, 1 Apr 2026 15:49:17 +0200
+ d=1e100.net; s=20251104; t=1775022036; x=1775626836;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yrZz+fw3nJqPlQASaoEkdwkEzy9mvjXJzLjZF79lJHk=;
+ b=MHP1I49opaWsu7MvW+I6ey7GkA9z3uNTM91ewPKR7v3j3M2klcdMiBtXwVTQVAegnG
+ psfabmCXTJcpoAaWyq+jvU9z+a6B8Gd0io9A1wdE8pzPMbpssbsidQIjR8bd8vYYOJpf
+ wd2E4PivCghO6GLBiuCvGDLSUm67VuAobcAzipzrIp38PPxyYZRlFrgu4Bd0TlCWExVs
+ laaGHO+tDkfjbD5eRGVRBnPmDzGQe6NwpuWWlcfCzNjMrllvNVsSPoApUDtHygwLBvWX
+ gThuFYDeDz4RVgeV3lPwCHY1B3bUNrr80WcYUUqjK6pla+VoNskwrUqqXAAjDKT2kH+E
+ avNw==
+X-Gm-Message-State: AOJu0YxoExFzs/fJ28I9YJjhMWXQNI7ZQ7AQwyofc1fgKI89E8VKTmCD
+ F8WCfYI9Js36dQ0NKpiVFlE6udPztrkLbg+fE0ePE9mfcYxVIL92S10zrmRu4HFOfUs90Q==
+X-Gm-Gg: ATEYQzwgdXShSzanwciFiiSSxfAegdXcXxZcLUvKmAh/XYYrEoAfSUXC57PnIsst8eO
+ TU+Ccx149SP3Gjme5SAwzHjI649bpI83L/z1VmFBa7JMP1bxz6+WPlGS/Ju5+7xCVkcbB4PQktG
+ XdZxPelQsrQa1pwrNzjL4jCVN7yPZQxZajqw29qYks70W8jtmFKj3vHmOOlbvVlDSV9dViua9Px
+ EMujMFMOpSNZKGfZ2dy63MMmxk73NSlxm1LouR/9DP39wKFLROikDATNaP3//c1OBY3ZsGRzS2T
+ KV3zmZryCW0PZlRM0q9KyVxrRBZ6Yqvw5RCexydfTzc5Hob/h0Lf97uhlBPXtWFGnPvYc/okEiV
+ Ssi2DGrkcB+UrJrrUp8XmApYo0Dejl0NGdBgdwHU5UEhWH7d0oXEklCDCD79fxrEmcQJuboY1vu
+ ucjRfARNexk4zOLSUj4T9fvVlzmwfw717/Sw==
+X-Received: by 2002:a05:6122:221d:b0:56c:d77c:ff83 with SMTP id
+ 71dfb90a1353d-56d8a86e495mr976084e0c.5.1775022035769; 
+ Tue, 31 Mar 2026 22:40:35 -0700 (PDT)
+Received: from localhost.localdomain ([2a09:bac6:d6d9:aa::11:1a6])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-56d58a7ba96sm14817891e0c.17.2026.03.31.22.40.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 31 Mar 2026 22:40:35 -0700 (PDT)
+From: =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
+ berrange@redhat.com,
+ =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>
+Subject: [PATCH 1/2] target/riscv: fix stale ptshift and base on page walk
+ restart
+Date: Tue, 31 Mar 2026 23:38:52 -0600
+Message-ID: <20260401053853.10473-1-sebasjosue84@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 43/60] ui/vnc: simplify vnc_init_func error handling
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-43-48eb1dcf7b76@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-43-48eb1dcf7b76@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=sebasjosue84@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 01 Apr 2026 09:56:18 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,11 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 09:50, Marc-André Lureau wrote:
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   ui/vnc.c | 12 +++++-------
->   1 file changed, 5 insertions(+), 7 deletions(-)
+When the atomic compare-and-swap for updating A/D bits in the page
+table entry fails due to a concurrent PTE modification by another
+vCPU, get_physical_address() jumps to the 'restart' label to re-walk
+the page table from the root.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+However, neither 'ptshift' nor 'base' are re-initialized before the
+restart. After the walk completes, ptshift has been decremented to
+its final value and base has been overwritten with an inner PTE PPN.
+On goto restart, the for loop resets i=0 but ptshift and base remain
+stale, causing the restarted walk to compute incorrect PTE addresses.
+
+In an SMP guest with MTTCG and Svadu active, this can result in
+incorrect physical address mappings or guest crashes.
+
+Fix by saving the root base address and re-initializing both ptshift
+and base on each restart.
+
+Fixes: 0c3e702aca ("RISC-V CPU Helpers")
+Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+---
+ target/riscv/cpu_helper.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index dd6c861..22bab45 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1316,12 +1316,15 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         adue = adue && (env->henvcfg & HENVCFG_ADUE);
+     }
+ 
+-    int ptshift = (levels - 1) * ptidxbits;
++    int ptshift;
+     target_ulong pte;
+     hwaddr pte_addr;
++    const hwaddr base_root = base;
+     int i;
+ 
+  restart:
++    ptshift = (levels - 1) * ptidxbits;
++    base = base_root;
+     for (i = 0; i < levels; i++, ptshift -= ptidxbits) {
+         target_ulong idx;
+         if (i == 0) {
+-- 
+2.43.0
+
 
