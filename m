@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FAF3D2ED08
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CB7D2ED0A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7vmX-00027F-Lu; Wed, 01 Apr 2026 09:38:53 -0400
+	id 1w7vpE-0004XT-Ke; Wed, 01 Apr 2026 09:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vmW-00022e-Dc
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:38:52 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vpC-0004Wc-FY
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:41:38 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vmU-0007yv-C5
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:38:51 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4887f49ec5aso25277875e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:38:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vpA-0008N7-U1
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:41:38 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4887fd35e60so11029005e9.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:41:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775050729; x=1775655529; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775050895; x=1775655695; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FP6uLrWzjgYl1svCdxNI/KAmzzhVQS3rx3BtEwpgB2w=;
- b=aPutFpgczL50oxNzPftHGs0BemLci7WGMUynVy26oz+RSRIbpdRAWUN/oSxlhpPqsZ
- UEjxuxflZ47eQ1SuvopWBOEkThJkJT0CLhmTnJmEOl02qr8jhI1U46H2B/o7gZhQTB/D
- LMnXnClivtps7WqntMizj61oc8+xGTYj04wZe78NL5tWQmqWWZnNdPXx0pr0/pVTO5ld
- hSjC2HbKUWBBhnXNeUWRxy9LjLCUpnze8J7Tmwzoj0D2wX6DvuUBfuCcZifo32gq2itJ
- /IzG7y1M/idBVQUR+cVgKV1YQ0030dl8uxooAmL2xsnpIXwCd0hTDtws1MAXcTDpRXFu
- pSEg==
+ bh=sWPi3XkjO+zSgmU+XnKA33L7OlSFTfxWhzYnTUl8PBw=;
+ b=ZLcF1mMFpuMFnRvbBQi9yHsc4baejqahNVqXoZ05KX7mI0QbS6bakfn3y7Uj6vePqd
+ 90LYpAxKb45JYJcfByFnvq2NO5Gy/e0R5Rc16tlkCqXt2bqhVEq4gNtp7ODY+xyZgVLr
+ 7XeQfiHcAkmz4WwjBNu/ce//iai8OJgOxyIiDb8ZnRKr+nRr0YdwOwnF72WwVSbrvgT/
+ Xjz1lOROUbigvtCvIQh5LcVeXr0WhEEV/C4Vx5iyngGWP+b8qXe1sEKmgfX6/KaRNPv5
+ T5hXj8joQbGdBYtGbviKJ4s37ZCsYBQ66CsF3AqcsRMH5Rdf11DweMrDKiOUwWwWRq2M
+ QXLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775050729; x=1775655529;
+ d=1e100.net; s=20251104; t=1775050895; x=1775655695;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FP6uLrWzjgYl1svCdxNI/KAmzzhVQS3rx3BtEwpgB2w=;
- b=dnfWb0bM6UjygSxJ44AgwnCNHohU5ke6uMKq8AqUV+zcZKP/vjONOGZoab1B4fpEMc
- DHHIKLyrs317m+lUhmT6xw3llMP6WnmV0HtI2EJa9eEXUO747SzZUD94FE0v3X4/o0kh
- 1I+ofX/ns0j8MNXnYNfx/CaP/ayf0tqVJnGA7WQznirpl0VtbEfrFrTxG7XRjrTyvsKg
- zX7KOp49+we+C1YzXOZHmsSnMNhsZPrFg0u4LtaTLNrEGpRhFONPk3JfNaxc1oMuC7ZU
- Wdtyn4UwJsikMfoGKACwF/QZ0v9GHcCzvii4vNcW2oGJio1HkKNu+k+HHztoXkVHkJ47
- UjuA==
+ bh=sWPi3XkjO+zSgmU+XnKA33L7OlSFTfxWhzYnTUl8PBw=;
+ b=qkLiBkuTDcCOESz8e7UZQ5+dP/+Jb51h14+B++az0c++EVUTiXykQGi7tj5XVRCT/e
+ FWam9Fp0218XCNjFZPo/uUOCL/Way+902nNSxWUwJiRBr+ryY4E6gcHDdGOfJPzBKB0v
+ BGS8zl1TY0eayN3+CeTd30WUPl+3PHYgy17pTKXxcSOdGcRdFDZTNWMCR+yPvnusB164
+ Ahj2DpWPylyV7h7qBMwxUsRBwJUhtpFsqQkkVX+Xp9WI9rosnHKIQ/Z3obeaqrP21VwU
+ Bs3MdkWHMm41RBOr1vTAOYSv8RN22jsVX65sMd/Nb1E0oORRiOmMZmaa7o3+86zmfPR2
+ l+vQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGK6aLpbbrzZ+KtVZW3zO0IkA+tm+4+5+I/wFa5MxvP1VbGjPV9NMAm7PsYrIDtTYACXGXkHN1FSfd@nongnu.org
-X-Gm-Message-State: AOJu0YzrXuhI0LNGa6gZK+tma9R9lfBk3FI8eIkVmWJxGhdD3/zjEB1Y
- j2r43yOAakUE3mpYZT5OCu7rj9lTMIsLJish7sEPUl9YsCc1pS3cBkGCLdozIFuwWm6AWGArMHk
- xhPAbpMA=
-X-Gm-Gg: ATEYQzzrssaoPWqaNokKZhgmwnHR6uL/ujbXlGTOx7MHc9v9lZl1a0va2fS3qq6aWOh
- ed9qsAxvyhPzeY25xKUtO57VrysPdjVz8PmADKyLZ4lv+RHaqAM0iPn7ZIBNDQVXRvzdtE/PiH3
- TbG5HT6VK6Qj+4UIiMESrQBgsBgEDr2DFhH7XBy1Abu7L0heBfmwOYWsgXk3n+ueySGRJlPrStr
- T9/TlsW82OErjqN0ERboZ4OP+Ub+sDxcC3ImcqBBvAKsI/oJSyQJ4rj4pga/MOFRSvni0+3upgZ
- DK8FXONUgAlKC6w66W7Sm8ksuKrbGEqw0SVIvQ2UhF2KI/qQui6QtdhDonSWXiohJ9ZRlJ+l7Gj
- qN7hcSRdEwaOEq4rcROBh2AFXHEPWgeMFFUX3hpiFFvwav4xo+5N3bcJZjcvdCKUa3y9p7YMBYC
- 9ccLCO1+Kpg5SUDBZRX3FcAMAtVPtpJvOevU4Wd/93+yV61/DLenx/bDHXlnQ80y4kYg==
-X-Received: by 2002:a05:600c:1e8c:b0:485:46fd:7887 with SMTP id
- 5b1f17b1804b1-4888356734dmr64136485e9.13.1775050728577; 
- Wed, 01 Apr 2026 06:38:48 -0700 (PDT)
+ AJvYcCVQgOjzzSNrIqhqTFr63kMObC80XzbAIqU1iOBPzLwVUJqifb3pMg78DqCT7H7QPSEBmV8kgE/1WoJG@nongnu.org
+X-Gm-Message-State: AOJu0YyVYGond1cns5UHgG6nkeUsho1rjJWFTpNyDoMgdxLHL4y/vCkT
+ JLSJiDIbjGmiE0102rzbT9NZ40k8vfbE9H76R9Dozo00V2/8+wU6o2UJ5iWWSNkjvCK48Cng8ui
+ jATwv+aw=
+X-Gm-Gg: ATEYQzwYEKs4evp6wVayjhjRt7Dpxs9CnitOBp7tfDEgJ8SNX+8yuUaEtamxyG2D8qI
+ 0YEakoyWk5y4JeUEj8GqhdiWYk5tYbuA0EU0uMp1ESVpzu8UlmKpD7Dr5lnSZ3Qy3x7ETWn7bJe
+ 7Spu88uqa1k/YMXaY79KDKjSyZQnZB61esHYKti8swUUcPUomzjz/xLM7wbKg0qzyoFVTcWm9lm
+ LQpQHK4YGRq1jRgju/jKBexowfr/jHg/COaUt8hon88/TpXYuQPvKZmntoytPZRs7sE4l5b6wUZ
+ zNy4bOwBWVHZF3AtahYYVXQ7gLxcVfr9p1NsB40HvP6yck35QjGylQ/dmrBflsuIhKLeXusW1sA
+ c6YgfVUQeyf7t6BHH5xMdqxphKOyD2sEv72q0wSoqyzlFyiZ/0Rtjta4LvXgQALrCJiMOpgpsL5
+ duyJTXNOJ5Bi8282FLJ9QDXVnAsRoFTYf+pGe0i7bGVzDNwAxp1GouFqWmWRq3ltR5SX9RZxCCD
+ zpV
+X-Received: by 2002:a05:600c:818f:b0:486:fbc8:8dfd with SMTP id
+ 5b1f17b1804b1-48883595fd2mr58516775e9.23.1775050895168; 
+ Wed, 01 Apr 2026 06:41:35 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887a630922sm162326935e9.0.2026.04.01.06.38.47
+ 5b1f17b1804b1-4887c884b8asm40512115e9.15.2026.04.01.06.41.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 06:38:48 -0700 (PDT)
-Message-ID: <36ddb335-5844-4149-b757-4cd68d37d45e@linaro.org>
-Date: Wed, 1 Apr 2026 15:38:47 +0200
+ Wed, 01 Apr 2026 06:41:34 -0700 (PDT)
+Message-ID: <9422301b-1f5d-4d60-bb33-8bace0bee1ae@linaro.org>
+Date: Wed, 1 Apr 2026 15:41:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 27/60] ui/console-vc: move VT100 state machine and output
- FIFO into QemuVT100
+Subject: Re: [PATCH 26/60] ui/console-vc: unify the write path
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-27-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-26-48eb1dcf7b76@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-27-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-26-48eb1dcf7b76@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,24 +106,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/3/26 09:50, Marc-André Lureau wrote:
-> Move the terminal escape sequence parser state (TTYState, esc_params,
-> text attributes, saved cursor position) and the output FIFO from
-> VCChardev/QemuTextConsole into QemuVT100. Rename the corresponding
-> functions from vc_* to vt100_* to reflect they now operate on the VT100
-> layer directly, removing the indirection through vc->console->vt.
+> VT100 escape responses (DSR) used qemu_chr_be_write() to write directly
+> to the chardev backend, bypassing the output FIFO, while keyboard input
+> went through the FIFO and flush path. This inconsistency could lead to
+> out-of-order delivery when both paths are active.
 > 
-> Add an out_flush callback to QemuVT100 so vt100_write() can flush
-> output without knowing about QemuTextConsole, and move FIFO/VT100
-> initialization from qemu_text_console_init() to vc_chr_open() where
-> the callback can be wired up.
-> 
-> This continues the decoupling of VT100 terminal emulation from the
-> chardev layer, making QemuVT100 a self-contained terminal emulator.
+> Introduce qemu_text_console_write() that pushes data into the output
+> FIFO and flushes it, and use it for both keyboard input and VT100
+> responses. Remove the now-unnecessary vc_respond_str() helper. Rename
+> kbd_send_chars() to qemu_text_console_flush() to better reflect its
+> purpose.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   ui/console-vc.c | 433 ++++++++++++++++++++++++++++----------------------------
->   1 file changed, 215 insertions(+), 218 deletions(-)
+>   ui/console-vc.c | 29 ++++++++++++++---------------
+>   1 file changed, 14 insertions(+), 15 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +static void qemu_text_console_write(QemuTextConsole *s, const void *buf, size_t len)
+
+Nitpicking, maybe take 'uint8_t *buf' (or char *?) argument for this
+console method, letting the FIFO8 API deals with void *?
+
+> +{
+> +    uint32_t num_free;
+> +
+> +    num_free = fifo8_num_free(&s->out_fifo);
+> +    fifo8_push_all(&s->out_fifo, buf, MIN(num_free, len));
+> +    qemu_text_console_flush(s);
+> +}
+
 
