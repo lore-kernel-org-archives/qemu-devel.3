@@ -4,93 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B171D3515C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3EC7D35166
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 10:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7sG8-0004HW-Bt; Wed, 01 Apr 2026 05:53:12 -0400
+	id 1w7sNN-0005Wg-V5; Wed, 01 Apr 2026 06:00:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sG6-0004Gx-BT
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:53:10 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sG4-0000pu-Pk
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:53:10 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43d0deb7ad5so1374679f8f.2
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:53:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1w7sNJ-0005UQ-Nh
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:00:38 -0400
+Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1w7sNC-0001vh-Ux
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:00:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775037187; x=1775641987; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=teKZBEftrAzjFZ430okLdJuqStKsAdQLuOYWShmOBjA=;
- b=o1tdoka7gwORK4ZPZ5MXeZFqHJ8yBhcjwWmJP0HTGW5gticYfm8N0KTFZKL81JHjF1
- IP8V7pVo+DxMsluk7j+8hLmLsJvCTqam12f8lTk0D7HO6xgZ4t2hMwXC4ynDNgot8Z/i
- JWFwvS/MVR+w9SoaLnEKjoZeaetME4f7YUV+RXgbjALhbygViSEkvmNz3fFwYTFlggCH
- I07HEnZE8162JnEBICCUwXn21qp88jG/1kR6ezZ0I+pYDfRrZ+L4vZi3Yp5cuDhyJ4Qj
- RuID4y4CBtNCObh6QD7dsJJ9NJip4Qi9l7LkvWkyGhBAx3wpxYKrkX3+4dkuca1ecVuf
- Epuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775037187; x=1775641987;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=teKZBEftrAzjFZ430okLdJuqStKsAdQLuOYWShmOBjA=;
- b=Qb3nISBbx9Q//ET5ygYLwKwiX1jvzBXuT6Lo5NUu6XpiA/jPOFMLjLVwyga/aZXoIH
- Ev/u9dCOxK9Il8rDGQHwsJWfzmQtTUGaXJZ6LtJTF8qdeT9RF2mz+U/mUkVWH8rKrXYE
- TPAtzrfiIVmKt4X2aTPVp1WVkVzU5ncf2DSBqWXXci6rPXu/OpVm0lGTbw5L8BjiNsqg
- WaV4p7uFKiVFsqXNaQSFt9/YcNRwTLI72AphFXpRRquy8bDGPm3apPbKzGEawlFVz8An
- fA9hgjJP4IO4fdvXSB72HoXvsSYjuEQGMsPwqjYjFBvMGyQiR+hYMQSd8hDD7pbDnMMK
- refA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbAgsSfEyBNpE4WmmAAlr/bcdWT10krsZ5jKv4fbGtXWKdXBLHsfdDqaUJP3EH+aZwFS4c5M4A+BgW@nongnu.org
-X-Gm-Message-State: AOJu0YwXHPn1sPT4ysnLcS35A4JIY9sncFp4N21NElr//oCIfLHEz3Ri
- GElgSLoSE+SAMALG4rc+xwiyhlRIxxABCx2KwWyV1KKLh1ghDD/D/z3wVJdU4DNe5TE=
-X-Gm-Gg: ATEYQzxXBiHg0YVF6gf9/R2DVywuJ9nOMlpeGY1LNtmxIAVnyM/0OdxFGiX28cAKDAS
- LASJJ1tIDJUp0CtFV120qKPNHQE0grvCnrUUlCp+p5ZMASfn+/EtWutIO/4o4gc/QYz+/1/XqFP
- yXWyeZEiVbDg4uCL0YLZFg47b18fm9Vlsfxo7JVTpVcbFM3VUxcHxA123P5e1tk2OYXVnqx5u5t
- mTgeEXh2/PzD9dr01WsYrGElwBesII+8MxdtjPFkip4dRlHBctpDlo7Zj99uweYGRgZYajuiw4g
- 67ABXH09G39DuLhXDLnjVR/dxSzGcgzx5G0E+Aeoqx7GchDtSbKupQGSPT0En3S/jv7xOoKnY5a
- Dv05JrV0v4E5hX5lgfBNYgFQhiGOTOQ1VVJ3abaLdmFkwTa3b9kATetHqHie8nJ2Nc3HDo2HtUl
- 0LZgASjN52rLawGQTX2Hx9F+i3HVbGc7+WbvquOp0xo7ztUlsqy+57Py/ad1ZlwRnZqw==
-X-Received: by 2002:a5d:64e7:0:b0:43c:fed2:bb72 with SMTP id
- ffacd0b85a97d-43d15094320mr5466871f8f.19.1775037187285; 
- Wed, 01 Apr 2026 02:53:07 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf245e2f6sm35755062f8f.18.2026.04.01.02.53.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 02:53:06 -0700 (PDT)
-Message-ID: <e24d03ba-d6cb-4b2d-bc50-643a584a674c@linaro.org>
-Date: Wed, 1 Apr 2026 11:53:05 +0200
+ d=linux.alibaba.com; s=default;
+ t=1775037613; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=9bFZlLNwTFbooIfTwwN58QYLgiJuJrKDiz3NLMytJF0=;
+ b=VgRbRPxO7D//UFgY8pl1nRm3K2Lb1mT5PJM7CLsEDufQUJqKORXqGQIJJRhEerk3hOryKproITlAI6jlH9JuluI0ubh2En81WtMpHjcIZhaS/UeAS5EvNiEO7euhHzJeqMrj51OPUW0BuEh1rkpib8R9ejDAj17eFj33LPaWzU0=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R351e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=5; SR=0;
+ TI=SMTPD_---0X0AcEy1_1775037605; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X0AcEy1_1775037605 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 01 Apr 2026 18:00:12 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, richard.henderson@linaro.org, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: [PATCH] physmem: Simplify dirty memory type checks with loop
+Date: Wed,  1 Apr 2026 18:00:05 +0800
+Message-ID: <20260401100005.20651-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iommufd: Rename all the idev and idevc variables to hiod
- and hiodc
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@bull.com, yi.l.liu@intel.com, qemu-arm@nongnu.org
-References: <20260401080354.1347212-1-zhenzhong.duan@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260401080354.1347212-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
+X-Spam_score_int: -154
+X-Spam_score: -15.5
+X-Spam_bar: ---------------
+X-Spam_report: (-15.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,26 +69,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/26 10:03, Zhenzhong Duan wrote:
-> We used idev and idevc naming for HostIOMMUDeviceIOMMUFD and corresponding
-> class variables which followed the iommufd_device naming in linux kernel.
-> 
-> This is mixed with the hiod naming for base type HostIOMMUDevice. Rename
-> HostIOMMUDeviceIOMMUFD* to hiodi* for consistency in QEMU.
-> 
-> No functional change intended.
-> 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/arm/smmuv3-accel.h       |  2 +-
->   include/system/iommufd.h    | 12 ++---
->   backends/iommufd.c          | 26 +++++------
->   hw/arm/smmuv3-accel.c       | 93 +++++++++++++++++++------------------
->   hw/i386/intel_iommu_accel.c | 44 +++++++++---------
->   hw/vfio/container-legacy.c  | 10 ++--
->   hw/vfio/iommufd.c           | 24 +++++-----
->   7 files changed, 107 insertions(+), 104 deletions(-)
+In physical_memory_range_includes_clean(), we have three nearly identical
+if-statements checking different DIRTY_MEMORY types (VGA, CODE, MIGRATION).
+This code duplication makes maintenance harder and increases the risk of
+inconsistencies when adding new dirty memory types.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Replace the repetitive checks with a simple loop that iterates through
+all DIRTY_MEMORY_NUM types, checking only those specified in the mask.
+This reduces code size and makes it easier to add new dirty memory types
+in the future.
+
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+---
+ system/physmem.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 4e26f1a1d4..c58d940e80 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -981,17 +981,11 @@ uint8_t physical_memory_range_includes_clean(ram_addr_t start,
+ {
+     uint8_t ret = 0;
+ 
+-    if (mask & (1 << DIRTY_MEMORY_VGA) &&
+-        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_VGA)) {
+-        ret |= (1 << DIRTY_MEMORY_VGA);
+-    }
+-    if (mask & (1 << DIRTY_MEMORY_CODE) &&
+-        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_CODE)) {
+-        ret |= (1 << DIRTY_MEMORY_CODE);
+-    }
+-    if (mask & (1 << DIRTY_MEMORY_MIGRATION) &&
+-        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_MIGRATION)) {
+-        ret |= (1 << DIRTY_MEMORY_MIGRATION);
++    for (int i = 0; i < DIRTY_MEMORY_NUM; i++) {
++        if ((mask & (1 << i)) &&
++            !physical_memory_all_dirty(start, length, i)) {
++            ret |= (1 << i);
++        }
+     }
+     return ret;
+ }
+-- 
+2.50.1 (Apple Git-155)
+
 
