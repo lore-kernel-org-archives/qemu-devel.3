@@ -4,52 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F0210FCACC
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 19:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A31BD3517F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 20:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w81iD-0000EM-2X; Wed, 01 Apr 2026 15:58:49 -0400
+	id 1w81jp-000186-BL; Wed, 01 Apr 2026 16:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w81iA-0000CL-HH
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:58:46 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w81i8-0007hx-47
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:58:45 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D240A596A1D;
- Wed, 01 Apr 2026 21:58:38 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id OItP4PhxMYzN; Wed,  1 Apr 2026 21:58:36 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id CB24C596A23; Wed, 01 Apr 2026 21:58:36 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C96B2596A22;
- Wed, 01 Apr 2026 21:58:36 +0200 (CEST)
-Date: Wed, 1 Apr 2026 21:58:36 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [RFC PATCH] hw/display: modernise the vga debug code (!!GenAI!!)
-In-Reply-To: <20260330222900.982404-1-alex.bennee@linaro.org>
-Message-ID: <6256588b-7b98-f908-160f-2f0f884999b1@eik.bme.hu>
-References: <6c3214ac-1679-d9db-2fed-c934fde8ddf2@eik.bme.hu>
- <20260330222900.982404-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w81je-000174-GX
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 16:00:18 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w81jc-0007yQ-Ow
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 16:00:18 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-35d9f68d011so55943a91.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 13:00:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775073615; x=1775678415; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=GyTHQFti4ePurXzdbSKxukkbDfIx3wTcIViU8SobReE=;
+ b=BvGiA1+kAwAp4cVY9ZVfQAMulIliGgHm5tleXH7Hq0eqslxn0Gi3BfvlNayc70xY18
+ WBLM3Mxh1wZmkO5O+7KHO2QbNmltZuteBwOHoPrDVUItlHPVl8APmMDi57n+tnYg/B/e
+ 6/aPhkaPnwWEZIuPlH6w1C8EV2/6By7Y//xvlioLpgPEyW3U6fdIpVJBbbWx+ofvlj6/
+ 4Jnrn7IqoELVRFGVWvUrI6TAyncQBfFgbhggT502pWLQAP1yW/uNnAhkfF+1fyGaYzt3
+ tXT+OyLRjOYMxk+zjIDkP+bxFKFHpcCu+YKFDy9sF48+CeYnbXKuZE0UFJU2jfDA6EPy
+ l3CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775073615; x=1775678415;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GyTHQFti4ePurXzdbSKxukkbDfIx3wTcIViU8SobReE=;
+ b=cDe7upMwNl1Ukb9V7FW342EkASUc6NURxs5UW+PvuVJZmoV2rJzZB+6M7Cmy0/e7y6
+ Ofu5anI0rzKf7x8m0BE6LrcLWhTHYThYbnAPZTL1n37zOYU/+7Qy94z/56cADpICs7Rd
+ 4r/Q43kPRByYQmw0M9fjc9wpIido75esEMblg62t2YhYlcnTnR0BhF97lwhK7GC40N72
+ KmkgEvyKwfHm3c7o9dQsTCs5SESkcpBN7IdoFRWMgt4Gdn8W/jHhXGmFlfa2p4jrq7RI
+ jLQn5X2r+tXVdRJYP0GEHlRxRufpq0UbLDpq1qvcWMFEPhInFAiwkJIT3AZdpkP+T7hJ
+ tIiQ==
+X-Gm-Message-State: AOJu0Yz+8NnDyGe8i+vFNZZqhKAkhETV4w3tbCSflMk6AtnNf16BjyCC
+ Q3cWW0xfvqu+2nJ8byRnIv8sF2WtUYB5W79RjCIjtIqdCI+ukM4EOra+
+X-Gm-Gg: ATEYQzyYIiS8VcAj9LEd60+uZoBGnASG7iup9mOH+0uim/X7lc3Ym6zVbEl/oOu/UtW
+ YFdvcLTgsXe5gBA/XM2+GnrBkAxn7eEs2Nw6XBaap6pZWCSTbLfFgXO/gUr1ce15GgVQyt6SJHb
+ mLX/KmBhW3kCEVSizuDJoXvkByhVPW2nzZp3WgpeYGQ3qdEGy4mw8NMu6HbWC0fA/gv8BhLrZxJ
+ o+hERvn4jzo7QMPzgqiloZnt0szd6HR6iGMpVjW7gVg9hUgHlPTL23rDZXUJaeS0urOqeOAdw6u
+ 3FYZuY9m/uFnIDqgFqBNQQ+3G8qv1tswaRzLvCaWRMOSQhUQzzirIL+ZHXJ+DeZMrQ+tILrbC6j
+ sC1wBtyyAlcuLBy87mDHSp4VGyV0vlx54OflxZJN/1F164qVvSGdHMZ97py0gRrqmxptye0xOet
+ vuuJwWk+DMbSN+MqlwN5Z71SH6MdJ5m34=
+X-Received: by 2002:a05:6a20:3c8e:b0:398:7866:e8e8 with SMTP id
+ adf61e73a8af0-39ef76b414fmr5104227637.31.1775073614432; 
+ Wed, 01 Apr 2026 13:00:14 -0700 (PDT)
+Received: from localhost ([42.118.191.4]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c76c647792bsm728105a12.6.2026.04.01.13.00.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 01 Apr 2026 13:00:14 -0700 (PDT)
+Date: Thu, 2 Apr 2026 03:00:10 +0700
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: validate page_size in mapped-ram header
+ before use
+Message-ID: <dptqcdl44iimicz77wt4mhnlgrr2duzz6ipuwanij5xiaugxeq@ipzhxzz6kr3e>
+References: <20260328072424.10611-1-vikingtc4@gmail.com>
+ <acqzOqkSC3oXSznV@x1.local>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-170091141-1775073516=:57447"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <acqzOqkSC3oXSznV@x1.local>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,39 +100,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-170091141-1775073516=:57447
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Mon, 30 Mar 2026, Alex Bennée wrote:
-> @@ -1660,11 +1604,10 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
->         s->cursor_invalidate(s);
->     }
->
-> -#if 0
-> -    printf("w=%d h=%d v=%d line_offset=%d cr[0x09]=0x%02x cr[0x17]=0x%02x linecmp=%d sr[0x01]=0x%02x\n",
-> -           width, height, v, line_offset, s->cr[9], s->cr[VGA_CRTC_MODE],
-> -           s->params.line_compare, sr(s, VGA_SEQ_CLOCK_MODE));
-> -#endif
-> +    trace_vga_draw_graphic(width, height, v, s->params.line_offset,
-> +                           s->cr[9], s->cr[VGA_CRTC_MODE],
-> +                           s->params.line_compare, sr(s, VGA_SEQ_CLOCK_MODE));
-> +
->     addr1 = (s->params.start_addr * 4);
->     y_start = -1;
->     d = surface_data(surface);
-
-I've found moving this to line 1678 into an else branch of if 
-(!full_update) so it's only logged once when parameters change would 
-probably be better. I haven't looked at the other logs as I only needed 
-this one at this time. The point is that it probably needs more thought 
-than automatic conversion so unless somebody wants to do that it's easier 
-to leave it as it is or convert them one by one.
-
-Regards,
-BALATON Zoltan
---3866299591-170091141-1775073516=:57447--
+On Mon, Mar 30, 2026 at 01:30:34PM -0400, Peter Xu wrote:
+> On Sat, Mar 28, 2026 at 04:24:24PM +0900, Trieu Huynh wrote:
+> > mapped_ram_read_header() reads page_size from the migration stream and
+> > stores it in MappedRamHeader, but does not validate that the value is
+> > non-zero before it is later used in parse_ramblock_mapped_ram():
+> > 
+> > num_pages = length / header.page_size;
+> > 
+> > If a corrupted or malformed migration stream provides page_size = 0,
+> > QEMU unexpectedly crashes.
+> > 
+> > Add validation in mapped_ram_read_header() to reject zero page_size
+> > values early and return an error instead of continuing with an invalid
+> > header.
+> > 
+> > Steps to reproduce:
+> > 
+> > Create a migration snapshot with mapped-ram enabled:
+> > (qemu) migrate_set_capability mapped-ram on
+> > (qemu) migrate file:/tmp/qemu-snapshots/snapshot.bin
+> > Modify the snapshot so that MappedRamHeader.page_size becomes 0.
+> > Restore the snapshot:
+> > (qemu) migrate_set_capability mapped-ram on
+> > (qemu) migrate_incoming file:/tmp/qemu-bug-test/snapshot.bin
+> > 
+> > As-is: qemu crashes immediately
+> > (qemu) Floating point exception (core dumped)
+> > To-be: qemu continue running
+> > (qemu) qemu-system-x86_64: Migration mapped-ram header has invalid
+> > page_size of 0
+> > 
+> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> > ---
+> >  migration/ram.c | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 979751f61b..2a7e958e87 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -3088,6 +3088,11 @@ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
+> >      }
+> >  
+> >      header->page_size = be64_to_cpu(header->page_size);
+> > +    if (header->page_size == 0) {
+> > +        error_setg(errp, "Migration mapped-ram header has invalid "
+> > +                   "page_size of 0");
+> > +        return false;
+> > +    }
+> 
+> Thanks for the patch.
+> 
+> When at this, one more thing we could do is verify the value is exactly
+> target psize; afaict that's the assumption across the whole mapped-ram
+> feature.
+> 
+ack, will add it in v2. Thank you.
+> >      header->bitmap_offset = be64_to_cpu(header->bitmap_offset);
+> >      header->pages_offset = be64_to_cpu(header->pages_offset);
+> >  
+> > -- 
+> > 2.43.0
+> > 
+> 
+> -- 
+> Peter Xu
+> 
 
