@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E675D2ED08
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D10107637D
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7vtx-00010z-1g; Wed, 01 Apr 2026 09:46:34 -0400
+	id 1w7vwM-0003op-Ff; Wed, 01 Apr 2026 09:49:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vtn-0000o7-Ed
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:46:24 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vwL-0003oc-0y
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:49:01 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vtl-0000qf-7D
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:46:23 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso59441395e9.3
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:46:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vwI-00012k-V8
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:49:00 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-486fc4725f0so12634465e9.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:48:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775051179; x=1775655979; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775051337; x=1775656137; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fxY7IpCefyW7whP+pVdfaDfUz34fB4PyDsKtotqTMZM=;
- b=yBxaw3mP2sscPbg6o1lgrxrh2b6p5v6qUEzRblA0gTr3yqytPNWXp0Zt71O+16xL2p
- hT1E9KKhL2QtI0LYdCicwFK9fVYXjSg8CilOeGqQnsa0VfFUulXXvTwfjq1zNyyVg47x
- OaLDOvG6YPPEEDl6/fM48xbUtZGPccvNiqfpNLQ+tFN4n8Cz9thuq42xR0FKpQ2fXHEb
- qQOPPT56juhaFYvfFBlDussjJCTBjn6jf4z6f9Sn+eeap4vZJEeGatbrv1wirPwb/GwB
- U2gJIMzZpgaULl9OQUTsW3a7tz49x8xsbbu+A+fXbuc0nSxkAMY0pl3wxWlrgU9u7FN6
- 5VIw==
+ bh=ZO2vBNoQcQIsYMgsYyjrotopfk+3tQnuPhVTrobSpYU=;
+ b=bDumao4SkA9rGEp6e5US9VnGxV2zk+vGoUFW9/fDtkZztcyXq94TcIucp6ZJm76RTG
+ mD1rAgTiC6yuHjp+L2QKtw3/2lvfK9iFD9HIlXEGFUD/kpxf67Cz/Akxiy8DtIzsdcox
+ JiTU+H95L8N0bb+yvSfe0fEEL97QYwOHzHogRw/LSh7tAuzYev08MNM0saMi1J+YSH7l
+ jgxiQ7LQlTfwIzc8aMCs10u8xaXU8DchUFqZwNE4OI5qa6orwHjtn7MtI7dYBVRUC4su
+ ZRDHlmPi1ou5ahtwGnwfPs0mFAAloN2UCdY8m9drmFhPNQzJpW7EtcR4TmZSxEUz9eHl
+ dR3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775051179; x=1775655979;
+ d=1e100.net; s=20251104; t=1775051337; x=1775656137;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fxY7IpCefyW7whP+pVdfaDfUz34fB4PyDsKtotqTMZM=;
- b=RZDG+PhoK6MajdV/OREQXmq/yzj6MIj3c8J5w2LyccNeeIH7I9TVLXpFNao0fx4HSs
- U2vrSJSOdbcR05gFqj6dLcAGUdU3M3tLypKtSb6usQa7sLlDL6JnwivnifsSmyohBECG
- MRlRY3ZRV1lqTdjtyNrbQZDEo3REKalDpKBzfzTfRNaWAdcgE4XQTX+a1G5KWS0mVEHN
- Vwadj+R7+ALHsfAOZFxpV7ZVx9KgWHxVw8pVX5R9RwNiGUJqQT+WI40ZQZqSq6CKjVnG
- lkVvKYvKef0g2NZ9eFvtNIGn2FqIHdCROV6cELWIBzpwwdVZDCFttqW3OXIuTNYu3xX7
- KkSA==
+ bh=ZO2vBNoQcQIsYMgsYyjrotopfk+3tQnuPhVTrobSpYU=;
+ b=MPfA7ktehtu9wP9tPXGkTntmE07IQRoS35NDAR0ZuhnpQU43M/UNSCcYfoWWVEa4hy
+ H5qsm1aYsaEmIAgDpfu7NKWm9hh3PhE45/WWcudYSvFgtgbdRDG5w8FYdYTpiL0a6cvm
+ LODXvHWMxn8t2LsuWj9diwSACp8SaPSBWEaUOpQS/SUo5BI8AgV51GSJ6YDBOjhYngdN
+ M2BWV/XpGmFt4eqWC/7zrnwhO4ROv85NmeuAhOwGQ7UrpZn5DVyMKVBcp0Wdg6ULPmqu
+ 8F56N0nONOOWWhvAvhI6QJxZu13G/NGRKgh2rYFfr64u+4L1ZcQtChCQckINrQJ3/4mp
+ mPuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXB7I1qwoPgpgDMNmG4PuCU525yOzV3fx1GG6kZkfHWqWBKPVK3RRNpNNJkUZqPXcUTcomc9iXWRin5@nongnu.org
-X-Gm-Message-State: AOJu0YymuU7TqwxkeVdPNVru5Yh8qf6x42PwvdW/l6ignGh6TTQm9Ybx
- Ie5txdFYxmUm4RsPc6k9169kuqF0h3SfcMZrJddxH44/lpiaQGPeKZ500POBrt7o/Nmq6I0qip5
- V7bRLVwQ=
-X-Gm-Gg: ATEYQzzSsPSLnM+P+1srKBLmcPpAB8osY4WPTtppB4o4J28OmXw9aspHr5uOxg66cXY
- L34lBqrKqycICiA6eGe3ncqJHvITYWZCSE6d0UxVW/uNyrSRy5HXIZ2mpPx9gKF4rG4i9O22vgu
- pHBx+hXos+D2imZXJQz2C7SUUayRk6J+PSa9Jf/wElwl/QxCJRVyW65tqXKufnYVtJFYaOpI02o
- GbgJ6wGamjcouDs3NphjQOCUjLnTyHuShUoNaW2lbQipbnmq3wQVtuhpcN5QOzxvSbiu0oCpOX0
- 5bvTAlMtvlt4WmSDXK8cVlB4wmazoq6p8J1g3hYkcov/M5JN9UobWpvoNLaxqFQyBhf/5GXQ0mx
- a00zJOMn439CSFgjvb1Iqe1eAH2UcvzBMzeEDg9QCOT6+D79Mq2qnNh1jAnolOO/+MJmtflnWm3
- JusDDwY7G/fR27dbXbQkt00VjotujeXwXC7GGXGab6Yvs++uyCyAp/HayVmpAVNvYTTw==
-X-Received: by 2002:a05:600d:11:b0:485:3ff1:d5ed with SMTP id
- 5b1f17b1804b1-4888355df72mr62639515e9.1.1775051178765; 
- Wed, 01 Apr 2026 06:46:18 -0700 (PDT)
+ AJvYcCUD35t2jHcIXK98Rh5SZXLM2S13DSmDRSKd00w0nxNWwiOPYKwTKQTeQRhH0pTEWtwgkCZJvMdoL6JL@nongnu.org
+X-Gm-Message-State: AOJu0Ywf7snIGoYkkBojE+/plILSZBUhqJ+X5ic2JVpulrybvdH+z0kD
+ HH0IqMYwGicSI/mS7xIVGBbHDyiH6Nl+xWLu1xhcbKUoGZBSDFtFoxDq1WpL2T4+Tfg8zDR2O22
+ PdpNGfB0=
+X-Gm-Gg: ATEYQzwfVshAcFqdZe7EKk/auzT9VoiEzT+/fVV8QQ1TQNiVgLxXJu9JkE4oVpjpd92
+ RDU7DSP6sCPuJRhH+a9pAr8zsvQLUl2GLQZZ4nK22ppnpUx1QOWwgLnD2YWpYmr//WSGliE8OAk
+ 8JSAZ0t0WdKVVRUULePZH/JOw3QEwH9L0wt0opSgtHGDRCs7huNfIOVYsCu1GdMURPWzVYFMPZ1
+ V4c1wJBOylVgKWCHuXaG/0ayPHFsOihx0eDt+lx1+hHihjcLskCKzC4/f9uCiksDKAAQKOd+aPR
+ lmyzq6Ee70wfyH1l/vLquyQt3U8K9vCmDS+ANBtlyWcAMVY5Htr8xrROvf1t0ZLl9aR+a1aW0aZ
+ eIyMfU4LsKGQCT9j9RX46lVs4QWUI0BRjvU7tjagaaMSKzeT9QbJfRLi9pMxQHNe07A7qev7h4k
+ 7f2aO//jv9zBqtwbMkAkshQSWIxVoFl9cNSKum3a2tPsiwmKyDoN+fHYVXSSrVThAq2w==
+X-Received: by 2002:a05:600c:5252:b0:485:3989:b3e4 with SMTP id
+ 5b1f17b1804b1-4888358a459mr59499745e9.6.1775051337313; 
+ Wed, 01 Apr 2026 06:48:57 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d1e2a71f7sm35215f8f.1.2026.04.01.06.46.17
+ 5b1f17b1804b1-4887e832585sm229489195e9.6.2026.04.01.06.48.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 06:46:18 -0700 (PDT)
-Message-ID: <c821c6fe-9d05-40a3-9a41-9c56666762c9@linaro.org>
-Date: Wed, 1 Apr 2026 15:46:17 +0200
+ Wed, 01 Apr 2026 06:48:56 -0700 (PDT)
+Message-ID: <a30b8c59-995b-4761-b4ea-d55ae2b63b48@linaro.org>
+Date: Wed, 1 Apr 2026 15:48:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 30/60] ui/console-vc: extract vt100_init() and vt100_fini()
+Subject: Re: [PATCH 31/60] ui/console: remove console_ch_t typedef and
+ console_write_ch()
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-30-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-31-48eb1dcf7b76@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-30-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-31-48eb1dcf7b76@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +106,67 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/3/26 09:50, Marc-André Lureau wrote:
-> Consolidate VT100 initialization and finalization into dedicated
-> functions, continuing the extraction of the VT100 layer from the
-> console/chardev code.
+> Since commit e2f82e924d05 ("console: purge curses bits from
+> console.h"), console_ch_t is a plain uint32_t typedef and
+> console_write_ch() is a trivial assignment (*dest = ch). These
+> abstractions were originally needed because console_ch_t was the
+> curses chtype when CONFIG_CURSES was enabled, and console_write_ch()
+> handled VGA-to-curses character translation. That commit moved the
+> curses logic into curses_update(), making the typedef and helper
+> dead abstractions.
 > 
-> vt100_init() gathers the scattered setup (cursor timer, list insertion,
-> FIFO creation, default attributes, and image) that was previously spread
-> across vc_chr_open() and qemu_text_console_class_init().
-> 
-> vt100_fini() pairs with it by handling list removal, FIFO destruction,
-> and cells cleanup, replacing the open-coded QTAILQ_REMOVE in
-> qemu_text_console_finalize().
+> Replace console_ch_t with uint32_t and console_write_ch() calls
+> with direct assignments.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   ui/console-vc.c | 44 ++++++++++++++++++++++++++++++--------------
->   1 file changed, 30 insertions(+), 14 deletions(-)
+>   include/ui/console.h         | 11 ++---------
+>   hw/display/jazz_led.c        | 10 +++++-----
+>   hw/display/vga.c             | 16 ++++++++--------
+>   hw/display/virtio-gpu-base.c |  2 +-
+>   hw/display/virtio-vga.c      |  2 +-
+>   hw/display/vmware_vga.c      |  2 +-
+>   ui/console-vc.c              | 11 +++++------
+>   ui/console.c                 |  2 +-
+>   ui/curses.c                  |  6 +++---
+>   9 files changed, 27 insertions(+), 35 deletions(-)
+> 
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index 401e5a010fd..152333d60fc 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -350,13 +350,6 @@ int dpy_gl_ctx_make_current(QemuConsole *con, QEMUGLContext ctx);
+>   
+>   bool console_has_gl(QemuConsole *con);
+>   
+> -typedef uint32_t console_ch_t;
+> -
+> -static inline void console_write_ch(console_ch_t *dest, uint32_t ch)
+> -{
+> -    *dest = ch;
+> -}
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Why not just remove console_write_ch() but keep the typedef which is
+simpler to relate than 'uint32_t *'?
+
+>   enum {
+>       GRAPHIC_FLAGS_NONE     = 0,
+>       /* require a console/display with GL callbacks */
+> @@ -370,7 +363,7 @@ typedef struct GraphicHwOps {
+>       void (*invalidate)(void *opaque);
+>       void (*gfx_update)(void *opaque);
+>       bool gfx_update_async; /* if true, calls graphic_hw_update_done() */
+> -    void (*text_update)(void *opaque, console_ch_t *text);
+> +    void (*text_update)(void *opaque, uint32_t *text);
+>       void (*ui_info)(void *opaque, uint32_t head, QemuUIInfo *info);
+>       void (*gl_block)(void *opaque, bool block);
+>   } GraphicHwOps;
+> @@ -386,7 +379,7 @@ void graphic_console_close(QemuConsole *con);
+>   void graphic_hw_update(QemuConsole *con);
+>   void graphic_hw_update_done(QemuConsole *con);
+>   void graphic_hw_invalidate(QemuConsole *con);
+> -void graphic_hw_text_update(QemuConsole *con, console_ch_t *chardata);
+> +void graphic_hw_text_update(QemuConsole *con, uint32_t *chardata);
+>   void graphic_hw_gl_block(QemuConsole *con, bool block);
+
 
