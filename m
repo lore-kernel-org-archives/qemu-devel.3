@@ -4,93 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C71A9107637E
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EA5D2ED0A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 14:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7w3c-00031q-8V; Wed, 01 Apr 2026 09:56:32 -0400
+	id 1w7wDS-00042s-La; Wed, 01 Apr 2026 10:06:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
- id 1w7oJn-0001Ul-14
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:40:43 -0400
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
- id 1w7oJk-0003sG-9P
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:40:42 -0400
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-56a86f0a23bso5357106e0c.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:40:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775022039; x=1775626839; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RSThUlx67lF4UcpDajQRGXGdp+BA8NL3r+o77yX/0xY=;
- b=S3osCslLs4XkCfBnZFPcsNujDbmUZdHVpnniOpb+TV9MLhshBR+UipT6uI4mz4f6yg
- yC8WpXfntEegJRRQiMtKuuDxdGBExrOb2kzGuRfWMr2tz6YfJ297pohJ52RX6Un1bq2W
- RKf23Zmr463Ci3qXG9/Ap10MDtTajFMliMx/5+qliovFUzPJbHRm6i/1NVriAOWlDroC
- EbvYBG1csPq8LUwsAg841d2UVeK7BFrGKE13E6nKFYevSVzXG5Ei0zwyubrE/rmAWYzw
- 6zKc0iIPsWLIIdCc69D3kYS4eaTcYBc8czVRKM/6rgNKkSYXxAn8PbDTmO/cqQ82I2Q0
- sJpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775022039; x=1775626839;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RSThUlx67lF4UcpDajQRGXGdp+BA8NL3r+o77yX/0xY=;
- b=S3e1sTE/UQaspC2etPLtsG1YK1AmGfhqx73PhbF7QTuMTpUfAIgZe1z0bCtykISaDu
- azBCnJb11+CfT8R8czrrqCphxDgON/6vZsJKzxQyatwvgyFM2abyC3k8jKrc7+Sa2z/p
- dQqQ/i+7lF6jznV15/9P3bbUP5/AotBER1McDJ0z3UlvfPdVxFeEJyh1K1q08YZ1CN/N
- lEUazcoGkxLt9sJsbzc010JWRjBYNB+s9Ea6kW0M2XMuM7Cy5bmzA6la6m/UngQxv1Sf
- L64vlylFksc6X9s7BTJ6hQIR3QSh4XPlrz8KYVY+OVywTwD5Dw/H+njyrClYORe2RInI
- jUZg==
-X-Gm-Message-State: AOJu0Yxv4gKITLOaKB97+qGfricwsPxokQBPq7XfxG4GrCGW/x+Eapxr
- dZipz14d/GffCEmzXMTzQABuC1nNsi908yuD3qd8f6Jw8jYwZC3LqpVUlaWw1G1SAXZPwA==
-X-Gm-Gg: ATEYQzzvn1cZ1ihFC37OiDPrLbG6ZEB3V6nhRQS+xc9px1SKZt+koajTZrxFjx9MMv+
- suqBlzWPEbm2zSZmKO2QnTVJNGySKqY7EOl3fZkeRExLoOlvXo/EabtVTC/yHth07C/16drwoBk
- esMaUy/C2zEZBrFrVtGbL+hUin6NTA5Pch6mrwb/KoN5HzfOe1et+XTRxcjGXFgCVJJ8oXdRH0D
- kfAEZ08xNbzRR8TkWVOEr3BhICrdhPfkwavXn0CkcvzIyY4BdI67qmeRiVoFRG+prWzPwSjLF2d
- hXgIeGLVqZN4mD6LyM6jQcECpHy8N4h1BR7nFq72y7FRLh8Ra7CI1cIHmxLQ0n3furB5ATVPiOZ
- 2zRFMRwcx9454Wm5g2NTNW2vSAjPT3AS0SQmOvIHn8NN9PNOeigG6tttCE+e1Wzh3STc1smL6DB
- FNJ/nRDTtrvWY9xGb7XvQqU5g=
-X-Received: by 2002:a05:6122:82a5:b0:56b:9aea:41e3 with SMTP id
- 71dfb90a1353d-56d8aaa8323mr1100052e0c.16.1775022038960; 
- Tue, 31 Mar 2026 22:40:38 -0700 (PDT)
-Received: from localhost.localdomain ([2a09:bac6:d6d9:aa::11:1a6])
- by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-56d58a7ba96sm14817891e0c.17.2026.03.31.22.40.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 31 Mar 2026 22:40:38 -0700 (PDT)
-From: =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
- berrange@redhat.com,
- =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
- qemu-security@nongnu.org
-Subject: [PATCH 2/2] hw/intc: fix heap OOB in ACLINT MTIMER multi-socket
-Date: Tue, 31 Mar 2026 23:38:53 -0600
-Message-ID: <20260401053853.10473-2-sebasjosue84@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260401053853.10473-1-sebasjosue84@gmail.com>
-References: <20260401053853.10473-1-sebasjosue84@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w7wDO-00041i-GG
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 10:06:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w7wDJ-0003ZW-Kv
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 10:06:38 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6316RGQn3329573; Wed, 1 Apr 2026 14:05:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=EPv9sm
+ PA3K+e9gqYAH88z0TZADK75w/Yzm1iwY2TcoM=; b=gLy0MHZ7FyZsGHPSw2R74c
+ V1bk3qn7psS5FVD3J2795VUvmGwvaHoVJGSWUUrFS37DzaslNaE71QlDaQ8KXP99
+ eTTNA86rOvvjMCJUCpmFqG7tG8r9jZn3fRm2JbcN9+qz38WfPWAQd+T+Wcla4R7B
+ /iJD9XBlvlAowFR/UEbOaUdGgZ0M4A7fFQQz5qDEvGLEab+G3yZJTyZ8O/jThJxI
+ ShJ2u2qbFDzIa985hRrkyO2//eoHXOFm703QEUARDEnzIARy8AdfPOo9Y7HgL20L
+ 5+8AToVWeMAu2t8+0DN5EaSCOCS3Po9JlFCu3sJLaVW5JAJa73TR/HjJiIF9zeSA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d65dcft9w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Apr 2026 14:05:23 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 631BK4Cu005757;
+ Wed, 1 Apr 2026 14:05:22 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6spy606a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Apr 2026 14:05:22 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 631E5Lkb11600386
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 1 Apr 2026 14:05:21 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6C92058065;
+ Wed,  1 Apr 2026 14:05:21 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B3AB55804B;
+ Wed,  1 Apr 2026 14:05:19 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  1 Apr 2026 14:05:19 +0000 (GMT)
+Message-ID: <2a137ad7-1033-446c-895d-0f91b3acba23@linux.ibm.com>
+Date: Wed, 1 Apr 2026 10:05:19 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 7/7] hw/tpm: Increase TPM TIS max buffer size to 8192
+From: Stefan Berger <stefanb@linux.ibm.com>
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <20260319135316.37412-1-armenon@redhat.com>
+ <20260319135316.37412-8-armenon@redhat.com>
+ <1334de4e-710c-4daf-aefd-3eee855aa35b@linux.ibm.com>
+ <b6aed41c-c5fe-415f-8523-fb1b34ff77ec@linux.ibm.com>
+ <acywxssfdmBqCIM3@fedora>
+ <90bb955a-c951-4bf0-a77f-084096f12423@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <90bb955a-c951-4bf0-a77f-084096f12423@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=sebasjosue84@gmail.com; helo=mail-vk1-xa32.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=RsjI7SmK c=1 sm=1 tr=0 ts=69cd2623 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=xt6ew7UTAAAA:8
+ a=NEAV23lmAAAA:8 a=20KFwNOVAAAA:8 a=1y_Mo7BOKx3cEM7mvqcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=tn93DeGZTgJ6DdWMtdD4:22
+X-Proofpoint-GUID: jukGuAC96LlPlrdhETzISw_wU5KbXyQX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAxMDEyOCBTYWx0ZWRfX0iKO28xtMctT
+ dSy/j+PDZ8TGJhDib0v6bN3h8pL7qbQY2tcEBjOD9s3KiWA9gRsw2jsGbs63hNkZmowEWHxLB7N
+ wvRHdNOKWCUTpuKSD6mSXm2Ku720fQeCBIzHrZXP1Y4u5eUAn33o3fIDTUoSVge3pA56J6ksQgq
+ itQEOPcB9+eX/30+oMtaDvN9jEefwCQVcYpUyyy0ih3f0bIb0q64zeNM564/JBYjpZ2dZUKUotE
+ vR3bAM73sW8zwvdQ85YEWlQcfuDKs4GNTIeJjF8+/DvzgxZeljvARWWGuAkdt1SHbLAW57W/xzp
+ I02l2w+d5LCvVnBXveqc0+My3VImyQUekTCBm/XZw+prN6NvqaVi2QFNwt81DbpEZEE3UzUnvbZ
+ EOldFfsZr+0EuFNbAAcYp4beeHi+sO+JskCqcLQKMwRv1IYFz9/v1FmgqJ0kEEd0NQVNfo13iZm
+ Xk/TTjqxw0PORtJrNwg==
+X-Proofpoint-ORIG-GUID: o0Xw8y8z8EdeRBj2EFglgONsOr1yq5Do
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-01_04,2026-04-01_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015 phishscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2604010128
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 01 Apr 2026 09:56:21 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,72 +137,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MMIO read/write handlers index timecmp[] with the absolute hartid
-(hartid_base + offset) but the array is allocated with num_harts
-elements. In multi-socket configurations with hartid_base > 0 this
-causes heap OOB access in the QEMU process.
 
-Fix by using the relative offset for array indexing.
 
-Cc: qemu-security@nongnu.org
-Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
----
- hw/intc/riscv_aclint.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+On 4/1/26 9:43 AM, Stefan Berger wrote:
+> 
+> 
+> On 4/1/26 1:44 AM, Arun Menon wrote:
+>> Hi Stefan,
+>>
+>> Thank you for looking into this and providing with the additional
+>> patches to handle TIS interface.
+>>
+>> On Tue, Mar 31, 2026 at 03:31:43PM -0400, Stefan Berger wrote:
+>>>
+>>>
+>>> On 3/20/26 2:57 PM, Stefan Berger wrote:
+>>>>
+>>>>
+>>>> On 3/19/26 9:53 AM, Arun Menon wrote:
+>>>>> - Double the size from 4096 to 8192 so that we can have bigger buffer
+>>>>>     enabling support for PQC algorithms in the TPM TIS interface.
+>>>>> - v185 of TCG TPM rolls out PQC algorithm support. [1]
+>>>>>
+>>>>> [1] section 46 https://members.trustedcomputinggroup.org/wg/TCG/
+>>>>> document/previewpdf/45151
+>>>>>
+>>>>> Signed-off-by: Arun Menon <armenon@redhat.com>
+>>>>> ---
+>>>>>    hw/tpm/tpm_tis.h | 2 +-
+>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
+>>>>> index 184632ff66..0df35d5a54 100644
+>>>>> --- a/hw/tpm/tpm_tis.h
+>>>>> +++ b/hw/tpm/tpm_tis.h
+>>>>> @@ -33,7 +33,7 @@
+>>>>>    #define TPM_TIS_IS_VALID_LOCTY(x)   ((x) < TPM_TIS_NUM_LOCALITIES)
+>>>>> -#define TPM_TIS_BUFFER_MAX          4096
+>>>>> +#define TPM_TIS_BUFFER_MAX          8192
+>>>>
+>>>> Unfortunately TIS uses a fixed-size buffer that would now become 
+>>>> bigger:
+>>>>
+>>>> typedef struct TPMState {
+>>>>       MemoryRegion mmio;
+>>>>
+>>>>       unsigned char buffer[TPM_TIS_BUFFER_MAX];  <-- now 8192; 
+>>>> before 4096
+>>>>
+>>>>
+>>>> static const VMStateDescription vmstate_tpm_tis_isa = {
+>>>>       .name = "tpm-tis",
+>>>>       .version_id = 0,
+>>>>       .pre_save  = tpm_tis_pre_save_isa,
+>>>>       .fields = (const VMStateField[]) {
+>>>>           VMSTATE_BUFFER(state.buffer, TPMStateISA),    <-- now 8192;
+>>>> before 4096
+>>>
+>>> This will have to become VMSTATE_PARTIAL_BUFFER and the rest is saved 
+>>> with
+>>> VMSTATE_BUFFER_START_MIDDLE if necessary.
+>>>
+>>>>           VMSTATE_UINT16(state.rw_offset, TPMStateISA),
+>>>>
+>>>> Problem would be if an older version of the TIS (with size 4096) then
+>>>> receives this 8192 buffer, we would (probably) get a buffer overflow.
+>>>
+>>> I created 2 more patches for the TIS. It's now also in my branch here:
+>>>
+>>> https://github.com/stefanberger/qemu-tpm/commits/crb-chunking/
+>>
+>> Looks good to me.
+>>
+>>>
+>>> Both TIS and CRB can now transfer >4096 bytes packets.
+>>>
+>>>>
+>>>>
+>>>>
+>>>>>    typedef enum {
+>>>>>        TPM_TIS_STATE_IDLE = 0,
+>>>>
+>>>>
+>>>
+>>
+>> Is it okay if I incorporate your commits, including the tests and
+>> profile enabling support into my next revision of this series?
+> 
+> Yes, that's okay. Unfortunately the test will not work for most people 
+> right now. The default-v2 profile is available via swtpm in git master 
+> but it doesn't support ML-DSA since libtpms code with PQC is not public, 
+> yet...
 
-diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-index 9c1491b..e27e5fb 100644
---- a/hw/intc/riscv_aclint.c
-+++ b/hw/intc/riscv_aclint.c
-@@ -131,6 +131,7 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
-         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
-         size_t hartid = mtimer->hartid_base +
-                         ((addr - mtimer->timecmp_base) >> 3);
-+        size_t hartid_offset = hartid - mtimer->hartid_base;
-         CPUState *cpu = cpu_by_arch_id(hartid);
-         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
-         if (!env) {
-@@ -138,11 +139,11 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
-                           "aclint-mtimer: invalid hartid: %zu", hartid);
-         } else if ((addr & 0x7) == 0) {
-             /* timecmp_lo for RV32/RV64 or timecmp for RV64 */
--            uint64_t timecmp = mtimer->timecmp[hartid];
-+            uint64_t timecmp = mtimer->timecmp[hartid_offset];
-             return (size == 4) ? (timecmp & 0xFFFFFFFF) : timecmp;
-         } else if ((addr & 0x7) == 4) {
-             /* timecmp_hi */
--            uint64_t timecmp = mtimer->timecmp[hartid];
-+            uint64_t timecmp = mtimer->timecmp[hartid_offset];
-             return (timecmp >> 32) & 0xFFFFFFFF;
-         } else {
-             qemu_log_mask(LOG_UNIMP,
-@@ -174,6 +175,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
-         size_t hartid = mtimer->hartid_base +
-                         ((addr - mtimer->timecmp_base) >> 3);
-+        size_t hartid_offset = hartid - mtimer->hartid_base;
-         CPUState *cpu = cpu_by_arch_id(hartid);
-         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
-         if (!env) {
-@@ -182,7 +184,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         } else if ((addr & 0x7) == 0) {
-             if (size == 4) {
-                 /* timecmp_lo for RV32/RV64 */
--                uint64_t timecmp_hi = mtimer->timecmp[hartid] >> 32;
-+                uint64_t timecmp_hi = mtimer->timecmp[hartid_offset] >> 32;
-                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
-                     timecmp_hi << 32 | (value & 0xFFFFFFFF));
-             } else {
-@@ -193,7 +195,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         } else if ((addr & 0x7) == 4) {
-             if (size == 4) {
-                 /* timecmp_hi for RV32/RV64 */
--                uint64_t timecmp_lo = mtimer->timecmp[hartid];
-+                uint64_t timecmp_lo = mtimer->timecmp[hartid_offset];
-                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
-                     value << 32 | (timecmp_lo & 0xFFFFFFFF));
-             } else {
--- 
-2.43.0
+I added a 2nd search criterion for the profile content to check whether 
+'ml-dsa' is supported. Fixed the style mistakes. Pushed. You can take 
+them from there now.
+
+
+> 
+>>
+>>
+>>
+>> Regards,
+>> Arun Menon
+>>
+> 
+> 
 
 
