@@ -4,113 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE2A107639C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 19:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99F3D107639C
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 19:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w81XE-0003bA-Hm; Wed, 01 Apr 2026 15:47:28 -0400
+	id 1w81Xx-0003wG-RH; Wed, 01 Apr 2026 15:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w81X5-0003XH-Vp
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:47:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w81X4-0006QH-41
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:47:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775072835;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+EACVHxm4XFoMukfu9NE733xrQI5QIC1pLcAZUZ/XbY=;
- b=g+ED3BsVZhelCyOzOYneKCPWEC/ZTXU1VNmz/n/i43pD4bBAvJw72xZRtvJGacxVwsa8Me
- dN28WW+VZmXORJxR0FpwIAzwU5bIDHfFeP8/GbxuRa/AY54PNpDg1dL3sPY6EL4WJ/k66I
- TeH1ssnoRvYd2N/Ri0RTze1fa3sfMuM=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-347-fMugf3DsO1Czry3KS6R7qw-1; Wed, 01 Apr 2026 15:47:14 -0400
-X-MC-Unique: fMugf3DsO1Czry3KS6R7qw-1
-X-Mimecast-MFC-AGG-ID: fMugf3DsO1Czry3KS6R7qw_1775072834
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-50b4661881eso1334311cf.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 12:47:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w81Xu-0003pH-Me
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:48:11 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w81Xt-0006SQ-7e
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:48:10 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-6500eae6d2fso177172d50.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 12:48:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775072888; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BXJrqFNAqTbl+bHt3iLMVg/E9FdVo6UZ0DnT4DBw4GLUP3CMjrKBP13mwTHzmsaSjl
+ Cg+HzJ0jzQSFVX511F/gOoOSyQZMbO6IajIv7Rs5MQlyYY8iqN1lyFbuZitvvYXx3OQA
+ L0gALS3VnSwgHCPdCEzq5evsedA4Gzuy6MPy5yu9ZQPv797K85QlaIRlpiob6KQJtdZp
+ qw3P9+6Z/Wahv+IVNHJVRVPZ4xChZgwMXwsOnNt5fu8NSs1oThCfmVJ5l8mL1MRrabLO
+ kaJmbHRSUWFMlKSTryUIMz8KtskKtnOy2jeP2x/tp9zqRXcGc6JHSrGgaFHAt9vEiwLQ
+ MVsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=uDP+z2xWv4sHyRMlwYY1B8MnRW0Wnoh0PH+tPHWNZWo=;
+ fh=rvgLzTEGSQBPHYqEQQgFJrKgDd9vDNByUmE8aN20vBo=;
+ b=BxXmYNFxMiE+YdQVNu8NW1n8NuLstT5mp/ZKM0Kimjv7hsv9JfLa2qnM/z8Lo8nlbL
+ s0KTJSIhZ9hzSn1XM/6iGjDdzJYb1L/0aVkIgCMvTsLFRX1wtYy2apWHfdxSvEjZLv/E
+ afanT2ykljdRjJmPgx8xEIVyvHIKw6F5fTaAiyrmsNMZ5YOorzlEQuC8+fgkTo1sID0C
+ ouwGIJN9UuMp4h8PYayAYZrITh0zv7Bc71cGNVaYXgzJ9hcnOlK+YE7C5yV9UjsZctld
+ QwCmDbKBl0GQORpBWW5qtxqSEfU47AQJ5ExNDEEvr1Gowl/rCSiyT2kJU1Qd9e9qigId
+ jMeQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775072834; x=1775677634; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+EACVHxm4XFoMukfu9NE733xrQI5QIC1pLcAZUZ/XbY=;
- b=AmJLxlhNtOz4mRLjDM28+H2I/1ceqRNGnV2eAQvBVlzkhBxVDMt73ssRgxmlURB/7q
- DfVCS+5/wcLjggaj3ld3g7g67WE9vSmYx9bCV7UxZiV2VVRTW9IpqZnQQxJDbYFQVAdp
- 46OZCE5STvWlRh0XcjnT2PevSHL0aOcXQ6Vgceu1FihI4pfH54iK4w9BVq8lncPV8nqs
- Jr3RDcKUB/cbJR+edEEZ+3SlnBBa7lyGg8bnuYa8xC3nns6b+LXGkIsh56AeR3r+6uz+
- qyuGSMd6NQOcEhZMTLzoseulVhrWjjCBn4MAn469ioPUB2FLvzO/sLq15EPOqNnlXdN/
- /t8Q==
+ d=linaro.org; s=google; t=1775072888; x=1775677688; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uDP+z2xWv4sHyRMlwYY1B8MnRW0Wnoh0PH+tPHWNZWo=;
+ b=Lbi7iCpHmTyAthv4jS2vh3dXWr+lO5z9sR/NTH3kDO6NI7z4jQA9OR87QoCtYSRlxn
+ cyfuoc3hrT8qPQnpJTbOgqjUPvr1kDn0NihYASmG15B8kroAH2KYixAm2/U1kM8fy/EZ
+ PozDpReZFPElA2hbA8Xk6U14CtyudF446BffrRmW9PiWm9PxZpbekyga8lyUa7ut/59r
+ 14+8EF4u6GO5/AatGJxeeiUV90STyMWpsJO/Dx39aaB4CIngjWJB6MzBXsqGLm1diMMW
+ J6Vk+RQF+Bb4wxnZXJSCRYKVCDcHB6k5WyY+pM45vd1Y2PF9JFqLDo75Y7KMCUo6gQs4
+ gCKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775072834; x=1775677634;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+EACVHxm4XFoMukfu9NE733xrQI5QIC1pLcAZUZ/XbY=;
- b=YIlx2oAJHr/nUMcBjibu/ots5dTgFu4LC4pLqM94l7fNmx2pJfQXW8fOtinhFLbesh
- JVj1Qs1xddYiIh7TBWn1PQMP93szhbjg3oyB0Wp4wYAB/jOYSDgLUVmVlduACd5Td1td
- V+gHj92EU6AZ9YCj4knlNbugv1+KTW7YejD+W+0ZY19grGdVVdA6xAS5lTzy7OgC9wU+
- WfihKFAIVHqTHc5jBLgisAMTnc9+KzHRuJk4pAYobwOvoGtZd+cjjIr5T14vMtrFIlTW
- 3iwwB7KMVjdPiK/SLv05wyp4fUXdu2E7r9DF9sqB9Toh8Lo5l9f2SHFqSqKfVBDDsxrl
- +/Hg==
-X-Gm-Message-State: AOJu0Yzz8D7hyXjSTbTAHKGmwCpVxrBeKapkML1mJkFmc6GDr+RRAQu1
- n93VcYqvHMKrKF2fEPHgVpn7x8bWIUJXK9B2XuH0qD5PZl0yJyKtUYOmv14TRgUGHLA0VwjeuUe
- uua9bO9ZAa1xRT6zt0aMpCzGwtvC1FayORN0xfYLfDcTSWi+BNhk2cyba
-X-Gm-Gg: ATEYQzye0TiU7IQh0TbUCU7oHeyVryhLYRpzlG1BT4zeugVuhGgtxuxLDviTN7gITVO
- zzVY2ey8DPBS/8vmTR2cTh4L9LbigFAguod6vFOsWnmomWccBkT2iX3aacpus0Qy4I4vZQH4JIQ
- 1SMAzRKFTCcyThrAtcgcpMHgRewXBesTa5giGmRkmKamc3E97yZKfgqXgesLpu2oANcD1L7UK3Y
- LunsnfKrpI+8pAPuZQ38co/qJBr61k51TrOEGfKkqe8XPmn+gT/UrSFJwLpQs1HegpWmDvmWLgF
- gqPTRI7nPql3JceHeSUBRNMpiZUmuGQIcvy0OLHgPFn6PoGY0VJ7giMDMpv9DNIasBGBwYNEP6J
- fIqsy76w1U0key7Vf9yHrdhDhpnbJCJrNPzg4mbmAqi8dCw==
-X-Received: by 2002:a05:622a:428d:b0:506:217e:b0e5 with SMTP id
- d75a77b69052e-50d3ba37cdbmr72729801cf.0.1775072833946; 
- Wed, 01 Apr 2026 12:47:13 -0700 (PDT)
-X-Received: by 2002:a05:622a:428d:b0:506:217e:b0e5 with SMTP id
- d75a77b69052e-50d3ba37cdbmr72726201cf.0.1775072828628; 
- Wed, 01 Apr 2026 12:47:08 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d4b73e7e5sm5028611cf.17.2026.04.01.12.47.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Apr 2026 12:47:08 -0700 (PDT)
-Date: Wed, 1 Apr 2026 15:47:06 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Alex Williamson <alex@shazbot.org>,
- Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, devel@lists.libvirt.org
-Subject: Re: [PATCH RFC 02/12] migration/qapi: Rename MigrationStats to
- MigrationRAMStats
-Message-ID: <ac12OtXu9Uk375Yy@x1.local>
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-3-peterx@redhat.com>
- <877br7kn2p.fsf@pond.sub.org>
+ d=1e100.net; s=20251104; t=1775072888; x=1775677688;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uDP+z2xWv4sHyRMlwYY1B8MnRW0Wnoh0PH+tPHWNZWo=;
+ b=oz1WqmzHhx4+WVE3qXCoPu8/fX15hTMCs4dZFu7cnJ08jiYQJnGlt/modmJofZt8Px
+ mSyWc0iRsOmEWF2LxBKucYzYhbkoRK6iJO/u1MSe6bL8VojKyAPkxYDGbEegP6VliNHr
+ +u5f8olvj1VKsrxKoh0CObL+8wnXDcw7UL2MFeahMQNkPQTy2XOMyGVQW7DNqBpyOKKN
+ mU6RDIZXTYK+0ItmaBt00hi6WCvlAPh+nC2qdOoXqkB2Gpnm486Mftndc7uV8m9grpzp
+ 6tEJyD4giFpe3WYss3UkT96qW4rGpqmBlbRz4KhAtjL9HT5HHeyR1RYqYwHPxnKeY8Hm
+ gsdg==
+X-Gm-Message-State: AOJu0Yw2Mo7DuVvqcItR/xinCOukuI3RJs1u8iivMfcqtiy53XD482pj
+ iRJh5kaKhgD/yNgNG/bqjWm3inx0++ySKacQjzGQncgqcSl777pTdx7Vc0UNt06+RUMfV9i6+DP
+ Kcl9f0nzxx3flkJiISttQou0e7ctLLah8eeWtzZRxSA==
+X-Gm-Gg: ATEYQzwj6RqjtSl0ZIREdVZzO/Y5PWVoZAsE5itMexhCBX5LMcNp4ivcxcNZHmBhP98
+ es91x3NFJpWE1E95JP7VIiDDmKrWa7j/h2cGlrVVNSyZf8boGAmB9QFkXUwRCQy6/Ac5wNJlGDh
+ Z3z0pXGs5o6oVLCzgmroXq1YjPRZyRDUod0dIfa3Wm81hM4mJA3pqPVsP2SDlKenaUCMK5XP5Pr
+ 9/JLq+iVm2ZMykOitaHb8At6QTIcJuGOyKQ47lHMOGeYHaYCNDHFnOaFSbjSrfyrcFbZwZb7mgx
+ EtFF/QWPUJ1iKDZubDkTU2/OVgCXtYtTI4lzjFEI7O44GEFyhsJU8z/GEfY5sMxsLDs=
+X-Received: by 2002:a53:8349:0:b0:64e:e90c:567f with SMTP id
+ 956f58d0204a3-6502fe846e2mr3525435d50.65.1775072887808; Wed, 01 Apr 2026
+ 12:48:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <877br7kn2p.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260401095024.1562621-1-kraxel@redhat.com>
+In-Reply-To: <20260401095024.1562621-1-kraxel@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 1 Apr 2026 20:47:55 +0100
+X-Gm-Features: AQROBzC_JkfoIrkWgWi22pHAbEmuq9iE3Ae9DYOVkj28o_ldKhyoJag0iVLC-o4
+Message-ID: <CAFEAcA-oAeria=10qvywjsXum4AsKxG1OjbA8gat0HVCVW7QkQ@mail.gmail.com>
+Subject: Re: [PULL 0/3] Firmware 20260401 for 11.0 patches
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,20 +114,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 07:54:38AM +0100, Markus Armbruster wrote:
-> Recommend to rephrase to avoid the repetition.  Maybe
-> 
->    # @ram: Detailed migration RAM status, only returned if status is
->    #     'active' or 'completed' (since 1.2)
+On Wed, 1 Apr 2026 at 10:50, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>
+> The following changes since commit dd3ee9c63d96b223c8d41bf5d65392eb898be626:
+>
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-30 13:54:56 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/kraxel/qemu.git tags/firmware-20260401-for-11.0-pull-request
+>
+> for you to fetch changes up to 9b4edc3ecacf2f6ef3f2e7e3d423dfe9e67a781a:
+>
+>   igvm: fix parent object type in IgvmCfg struct (2026-03-31 08:53:47 +0200)
+>
+> ----------------------------------------------------------------
+> igvm bugfixes
+>
 
-I just noticed the previous document was also wrong.. it was too ancient
-since 1.2, and we introduced too many new status that also reports RAM
-statistics..  I changed it to below:
 
-# @ram: Detailed migration RAM statistics, only returned if migration
-#     is in progress or completed (since 1.2)
 
--- 
-Peter Xu
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
