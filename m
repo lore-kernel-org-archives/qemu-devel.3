@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6843D35163
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B86D35163
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7rxg-0003Gm-35; Wed, 01 Apr 2026 05:34:08 -0400
+	id 1w7ryq-0003hX-An; Wed, 01 Apr 2026 05:35:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rxc-0003EB-6C
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:34:05 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7ryo-0003h5-6X
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:35:18 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rxa-0006gV-O6
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:34:03 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48541edecf9so79890825e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:34:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7ryl-0006zo-Jy
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:35:17 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43cf8fe9c2aso1906468f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:35:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775036041; x=1775640841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775036112; x=1775640912; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=L2omJN5FKxWYO5yZ3qFqVysY+L3oBX58CZZ1zCqmtk0=;
- b=eBHNF2kyKg+RvV2soUJ5o/j1Qi0AOvxRr2ndb+/FqD6diTvYzDQMUqwKB93MdFVRL7
- RsIk9gN8Sj3PuWd+ts/tlvMseogiGuSAnpToayKdsRpl2HJIGARBzM3u2tJwClfpkLM5
- bAhtDgVNFUon4eH28yRQdta21BWrXWV1HDfkgqWiYIukfulMgoeV9rQD0lnshgoKCo6m
- kko7PfM6/KrfNmgKRKPzLBMf8aO/LA/P3oaSshez2tD5JgbnSBIPmV6pxK0wP0fyvf4Z
- 3DzwkLC3KhlhkV40JIsh4jEHfELdqzDwLRmH/7U7+pi37Y6LDXw0fkE1ldZ6KX4IRlYM
- LKHw==
+ bh=ZyyKHMKgNHrh6480le+LswMVxRzoaQcD5ikJX5DMnjY=;
+ b=r9mqMUc8NUf7aZWLEY7uPMI0MJxiHas84C21VowISIej00kdDOyCa+BrihBeo63+Ep
+ NGoK8rPYhhIO8Pbouy7qoPAQqkhrqXO/UKWy4h0ImI1wFq8ZgszMejH7v+5UVsMPksyx
+ l7EI8bhsISSEs1NtMWBFWSXqPd7OZmpU0askKBU1aCshQoLmrgq1AdYScH/ijg/x7Twk
+ jJ/p5fEq1LKFUchjw156Y6/9E98CZ/AadMgbqQw8tKIrLq76Aj6HQATGp/MuC+nuowLW
+ +Zw40SVcFu+G+3JK6WlDjeugGm3JItHp6x15WjMbtT0EIPAIJFtRrCxUV5PooCyrdn7T
+ fWmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775036041; x=1775640841;
+ d=1e100.net; s=20251104; t=1775036112; x=1775640912;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=L2omJN5FKxWYO5yZ3qFqVysY+L3oBX58CZZ1zCqmtk0=;
- b=BCwaHFghwJb1B2p82pmHN7w/LQ7ewPKlq93zZgiKEq4iZpnVdUdHtIPovQMPMxL1vv
- esWBkmacz9GbtkDlocaLlLP8oNjdia1FMOLtXEMyD0k0Y5/DGmC7laA9yjnwjZyozDj3
- gz8FEXJvyv+TM6LhK8zeW3avjHAvYaTh3T+AFgXDR9Dd+qQC9TdWbrd9b75K9PUHYxLs
- kzTAVvPiPeZq5De2wKqEm8v6ui1pRsKWXpaIuV2ZC7VoTg1qZnrponoUaCbI76OjuO2t
- pXQrCjphnanDSzRc8GNWzEl8l0kx3wUp7y9DKHJ7qSAvMVY0ztJuM+984SHrY9NFE5/o
- pWGg==
+ bh=ZyyKHMKgNHrh6480le+LswMVxRzoaQcD5ikJX5DMnjY=;
+ b=tKiso5JC6eELTFOPwwwRcxcQvSOKsUw4oJeWCdSe+P8J5w9f+YmcGquNe+MHwi+YoJ
+ 1p5g1shdqh33iNt9k/1qQIHXtzfT7R0WOlwNsI9GvUVvO7BaCjCqCcyAYRYXJFSNu0g6
+ Mbrqe/nhir7WCE0dIqz4hgDq1EEAMyiLYWhCmBAaHHmzh2zfNMYIfWJW3Eyrj/B+JH86
+ R88BvSyu2irra4rRBpEZceJFSVfQbjytebAG1sTHLYEu31A5Qw7Ln/qDB9tn+n4+jnV1
+ 9A9MRb1Y8f/fCXON7KLOv7NO3RKNoc7aql5MKESlUaj2j+MZdpy4WWm8iOc4xLiW8LTu
+ 9FOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2ZEdGMjdp996CDZyK/yToXR5qQAqsV3jLTGzNkGZC9/KK77AcL2iDuUTjcv7KemkfIVanx3zt9xqc@nongnu.org
-X-Gm-Message-State: AOJu0YyGDKOpqeINvWNm65Gp1EP4G8zn48gdUg0EiKk71KLpoNpvo1Px
- 0Ks98GPrFjje6K8z0P1X0VXRPHZ6gky0uLZ6GARgHXOtN5/Xq8vj+tTcRzb6EMJPrng=
-X-Gm-Gg: ATEYQzwbqKhlYXFX0Zm9uw4kej+DEYo0n4P/uv0/6df7a6DVcGWuJklaw381OpftO1H
- w6F0DxiD8HgIq2gPqCwV0fNQfh8cmgyW+hJ7V8MwkazA52s+EV3ng1aD64Q7ziCfEFlB8ndXIfE
- EbHrVSXj1ZZLzAabZW19MOJyPbqKBYyO47nQXtO4Ec/8M3ZfP/7ALnM/KwBP0FOBTG9LuRNTgiL
- FmU9lEYQUbV759lje57P6pYew+jcreGyxblqX+VYfy44LQPril2R1tAnM9dVph4Fklo6qHBQYxG
- 6l8ZuP5HB2m8+v9MqjsyF5Wfabp3RNjHbmq1tWUI1YxNuJ0kIJ5YS/skFbX+1jfgxVZ7CemzAad
- l/KD/GkemzCXpFU/Yem978stkt3fRfElVLiyTcbh98nIPQRrud9MAZqr23UfDE5fxfMWPVPGqe+
- tuQq8goGRIu0JCG96xuaNHXV9ZEBVqFN5bVuio+knNgAvzj/iNVnAzHVjPVA1gqe0lIQ==
-X-Received: by 2002:a05:600c:3e14:b0:486:fe45:483 with SMTP id
- 5b1f17b1804b1-488835b30b3mr46317755e9.22.1775036040926; 
- Wed, 01 Apr 2026 02:34:00 -0700 (PDT)
+ AJvYcCXPc9JixZ9cm6uXVYfoDa9eamKEtTWybAVihw3TLd270MBNNJ4MAqG+eH/zLAXDyVKbehENz4EcmIcl@nongnu.org
+X-Gm-Message-State: AOJu0YwXWnwG6omTq4VdUU67X4EkVEeWGQVeBOYLkEhWhZVJNYQ9Foo7
+ Db2YE5BJKI1cVLvoEutjolaQNrYp4D4ZyQsMWviXREAhQ08x7QhNleAKgC8tETvMcUg=
+X-Gm-Gg: ATEYQzze3G/fm91JtY3PCfLbHaxf8cYKUReTVOW8aHHRM6eWe4aoTSRQPwRZ1bWj0+y
+ jFYu1YalJ/jA0NKdNSMtpzNmt52vQJFe84vGmILjlV2anzQfA+pJcQML4/DuDzr1vgCfqZ3aAxe
+ 0rpsAbi/fdZWMrdiSRV50V0ymzoyPUgLpANh3Dfn8wvLe6uvvZOjXNU1LD1brWMZF4QifwVrP4b
+ eHRG3B+ScwSuer5yhzyOdm3svW3JiZq25QB17HQ0cZaC5P0X5AVtWs4t4vV8yNNi7zZ7CmT7aCz
+ N+vok71+Fm1T3dwVwAeIZcwxZ/EHVcxn6IG6m5/wQejRCrVw7N574ZEn+vbevIKLK7fyGfa2g1f
+ +NAVUkQDMg30VnhFH262TQSsot3Q6ME0VAqcyCDe8laZ5tWw9Po4Q30ezbT1jejBribp/iBQ68c
+ wTcTTUvnzQgZef/ZW10bJXTMXM12wReWtTbFvh1zogBuBzxfo77+5u/lcA39VZQbcrJA==
+X-Received: by 2002:a5d:5f53:0:b0:43b:3d54:3154 with SMTP id
+ ffacd0b85a97d-43d150452a1mr5284761f8f.7.1775036111863; 
+ Wed, 01 Apr 2026 02:35:11 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e93cf2dsm94967915e9.11.2026.04.01.02.34.00
+ ffacd0b85a97d-43cf247102dsm39853990f8f.27.2026.04.01.02.35.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 02:34:00 -0700 (PDT)
-Message-ID: <06330740-78d7-4277-8533-6955523fd066@linaro.org>
-Date: Wed, 1 Apr 2026 11:33:59 +0200
+ Wed, 01 Apr 2026 02:35:11 -0700 (PDT)
+Message-ID: <8a9bc774-a3a3-442a-9faf-02ec000e242b@linaro.org>
+Date: Wed, 1 Apr 2026 11:35:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 42/60] ui/vnc: assert preconditions instead of silently
- returning
+Subject: Re: [PATCH 49/60] ui/vnc: explicitly link with png
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-42-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-49-48eb1dcf7b76@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-42-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-49-48eb1dcf7b76@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,16 +103,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 09:50, Marc-André Lureau wrote:
-> Replace defensive NULL guards with assert() in vnc_display_close()
-> and vnc_display_open(). These are internal functions whose callers
-> guarantee non-NULL arguments, so a NULL value would indicate a
-> programming error rather than a runtime condition.
+On 17/3/26 09:51, Marc-André Lureau wrote:
+> The VNC code uses PNG directly.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   ui/vnc.c | 15 ++++-----------
->   1 file changed, 4 insertions(+), 11 deletions(-)
+>   ui/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
