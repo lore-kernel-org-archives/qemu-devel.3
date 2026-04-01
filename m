@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DECAD3517B
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 12:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 856A7D3517D
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7v2C-0003iG-9R; Wed, 01 Apr 2026 08:51:00 -0400
+	id 1w7vSd-0002PR-HY; Wed, 01 Apr 2026 09:18:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w7v2B-0003hz-DP
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 08:50:59 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w7vSS-0002Kg-DT
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:18:08 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w7v29-000112-Ue
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 08:50:59 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b9358dd7f79so220956366b.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 05:50:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w7vSQ-0004WN-M9
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:18:08 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-59de8155501so7203603e87.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:18:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775049483; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NHIfWDwA9ZolyXlEez8m07V8jKi7U3RlIBGgE6dh/zDSwXRlZ1Zzyv2sgyRDuf3sYj
+ KHuh27RtaFtEquI+a1PZJoKH42zwziOBn/7ilye4NWmH9pIb1hveLRm5YArmHzhKUh54
+ Wc+LN9MUZ5bajbd0/24+gsV8GOUG0tS9dUoLtLYwtrjG5UwtFFFXMK6SR9e3erAlx7UF
+ pQLX4kbOMn0c9YmT8VbUM+rhHQ5Cq7Mz8O53yTux6etVEF6HI+LFB+klsUYv1PFPv5aO
+ LZkKfQECCAlYJLHBG20L7crca5igQjBeR3QPvKpvuESTZZXmLbzI3e0D1mwF/ZXaJUE1
+ 0chA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=z2yLwqmcsbihhj0bVk6yxoD0p2no7pvDOY5On0dRTmY=;
+ fh=8jLQ9BF8TzoH/ErGnlkH4vSIZ9SpUVgmQkqZ4x0ADis=;
+ b=Aq0/cgQvvuByBEgr5rLePgbLuWH44wR97TenUvwaUzwK/iR8pVLpKAv9XJ/ACaxl8K
+ +N3wxj8PlmxXVmg/F/sq//1JO+p612X6YXe4zwzqWbEwb0RxklpxVlYn6T8jkHYUz9ee
+ YAVPk3hjIhbK06JD2Olh8QD8fIo7daDz2TkjD7I3PfM+PVaY7xDuYO9n+3z86s6PDPyV
+ fTRuOL2spErKqyCRZLJWPL1xYBkDjVKQj7qfbs40SprnqCWD0vC4elbswcpQ979KLG07
+ dlqNmfJxY26C5n/UcIxiiCcDDeVKIs7UVKUnYFf3gL/XW0Msp+DVrZMyxJKSl9QXy/3n
+ 8R/w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775047856; x=1775652656; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=mihalicyn.com; s=mihalicyn; t=1775049483; x=1775654283; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZcRmbsIvaveKpw/GQzZjT9a7MrE5y2O2yz/kvFV7ELY=;
- b=D0rsylmKS5Wk2oE95dI2okUzjbLcJ/9iqnIKVxfKUsgoYPOCBENDNWhkQh3gbBB+N3
- 5HJxOaXmP9kKf7nJ+/4EFxtX2Kvy3RAtWkksP4JlpaNDTjnfK2yCAU7zArKf94DLScUW
- 3cQdwJ6y8/zCZfEtd8yc3m8JL95ZlmW1bwKOg5jlpq6zYjoq/dBA5uCLZivU8a43f6Nd
- iDmyzlHzxrgjWgbjTMhebOrqMLCWcSG+ZfT/gsR+7VAHdJBYxFu59MkIdBr1hLrmDXKL
- lWNJFTR58qGAyfS57Dn7lF4++MCENbTFeNPEZRdpVrnAyMHh9BeSUeBAd4dOoCaFB/M+
- buSQ==
+ bh=z2yLwqmcsbihhj0bVk6yxoD0p2no7pvDOY5On0dRTmY=;
+ b=iGcsnmqBXwOCbWV/ZSargaNBfKBBq2JiyBZ53//e8LL+HkyajpezG2AVMri9Z5pQeW
+ zKi6QlgC6JoKOht61yzvid/dlB1+yHQx6WGyXOSnpoiecOk+9oxqv7/kkTuNWlfYc9zx
+ kIILDxPGiHJdYS0+ibbRPA11yA5vDxiOPIhis=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775047856; x=1775652656;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZcRmbsIvaveKpw/GQzZjT9a7MrE5y2O2yz/kvFV7ELY=;
- b=WTMK7eW2dvJxbz1vqIko3YiHCs3vwITeBE8tmOJ38DsiA1eHHjBJ7ye6ZvXdSNDzUR
- yBwKGAA5Ol+LFn9fhb2Z1e7y4TfLW4YTZwcSHX5azK03Slr0dTDkpi26X/DaVYHF2cWd
- 1Qrny6PubuAJU/LkbxCkL+uu3hqIUkwdUWj9yQ/IqmL+7yw8wySSRBnhgStD0zvxp3cX
- yXlZDvszO1kHwvZ26VjnN+qrW6F5pGBmSQcx/uVzm7vWiItFF0NlZnzbs4CcUq7Kf3H+
- WYK8Dp81eadevOQjtQVmHTfXCaZ4XhhmfuMlV7/W2yrNxCXg24ndy9Y2XBWpnY0l3OUs
- AHmQ==
-X-Gm-Message-State: AOJu0YzCiiwdHn/knQbehJfjGrANYLmwClWBYw+4Q4s/ec6QeflHCdG3
- 6KwdMce3/1eR8v9masnxPiPojdZhzO1Wv4RZHFpGGdUYlt694QTgZmiv0ZmD2Jv+3c0=
-X-Gm-Gg: ATEYQzxNSiOzXxgckSPJ66Ex4OsCNh4osFmup4ELjHq9OKgo+PHUuZNxrX/M75KVyx0
- 0OdTgkZvdUKp34pjKo4QCetsevtKJPXoPDg4tXyL5dvCB4k9stspx0v/hBwW7eO7TnLnBBPaMGq
- i3yMUQ9nQUqSM47Kv4FUpHA/tuIJoPKaEtTBfpw1wc9mzZFbl8bk9npY5hfGzP7Bfvu+mfZM5jH
- DeoQwQZu7nVxpA7zrPw+3onl1JOXNmvI3JqG3EcCyJNzMM+FMLEXED+9tt7cUHr8iylXkz3pjZo
- USvGTAC+ifjfq4u1ZmFfFZEUrQQVrDhcZu7uAQU3biqH5UclFm/2U0NJH4CM9uYHcp3999GMC+A
- 65/PnHwY4h5QC37LmhsxV/LVt1i6BOTjO4P5axcI7IDhQtuyYjCJ4U5kk6ACM0laN24+sFXM2dy
- tGHA4A6poqxaAvGPV/uXHrrRmSGzKhIaeBVA==
-X-Received: by 2002:a17:906:b313:b0:b9b:3a1b:e2ec with SMTP id
- a640c23a62f3a-b9c138beafemr192553566b.14.1775047856099; 
- Wed, 01 Apr 2026 05:50:56 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9b7b1a5924sm520159466b.32.2026.04.01.05.50.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Apr 2026 05:50:55 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C5CCE5F8D9;
- Wed, 01 Apr 2026 13:50:54 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 03/35] target/arm: migrate FP/SIMD trap syndromes to
- registerfields
-In-Reply-To: <595c4e17-c6c8-4281-bee2-8ed50d27d582@linaro.org> (Richard
- Henderson's message of "Wed, 1 Apr 2026 15:43:37 +1000")
-References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-4-alex.bennee@linaro.org>
- <595c4e17-c6c8-4281-bee2-8ed50d27d582@linaro.org>
-User-Agent: mu4e 1.14.0; emacs 30.1
-Date: Wed, 01 Apr 2026 13:50:54 +0100
-Message-ID: <87a4vmq1xt.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1775049483; x=1775654283;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=z2yLwqmcsbihhj0bVk6yxoD0p2no7pvDOY5On0dRTmY=;
+ b=DP1Z9NDgJOI0+JmM5Op/zFeir7tQlegV175sFjpHqJqe7o7XKiaseG4Myd2eSjRFOy
+ 8PmR/+7L7O2GeK6vAwwxIXWEa16x89UgKRGXXY0V7RTqnCk+RR1wsSkPt+GmsoNDpkk0
+ pZQjgyuxZwpoeF0ej1yX9nRxUGgFh9pI6Hpk+2flzO6XI5vWJ4YltX9qb53ni6ODM/Aw
+ NsVh3gdQesB9p/HAH/CFjxz5tzokfO2Nai0MQ2DOw6+sx0G6hbh9r2EbFRlwPOKRDO9I
+ vDuTsgSWIPQR+pfHAFUKsqnJHGyU6Q5zLQpD5oLAHzNTO9pJ5x300HSyp9T75yuUlN22
+ 8Syw==
+X-Gm-Message-State: AOJu0Yx0zn1r/+EY7nGfcrpSDsp4WdEMdhhO1DEk+3LhBlfQvxMYvJzS
+ LH8Oz/8LApbzVp9BR7lYYrsKBer8O7PiqgUFoHZwTE5FTWipcR4005Qz3NyuVx4e3ftxR/4M2Gu
+ iZFYoTa7YWR3Qj5hkNWey1mrU/OaZLMeays95wDfa4A==
+X-Gm-Gg: ATEYQzyGONSJUw3Zfor2vbUY0+0Q4zybuVsnqG6Md9TeGlSB8vt3M4bU7mQco1/CDN5
+ qrL98HdSsDwdnvY/+TeN02uJ5iSEIZ6EcNivbvbGe+UvC7ON37+N3gpvwH4br9hQ0ed1tFHeViL
+ D7ItY7wLpUUaltbJ5im3XL+BAnRNrbyCdVnWtweQRB5isMJNIQFS82DHAVdk8hbB+OdwQbQzMJV
+ +055qp9e2Rze0nXuc/JKk/1gmDgop+uHI4hcOnuU4m4SwqDsWWtGnGRFSgtbRfM062PJuy+ALo+
+ G7cAxujkq+LRb6dyV2kE0NcjtcqPjsa5W90wDw==
+X-Received: by 2002:a05:6512:2209:b0:5a2:864a:bebb with SMTP id
+ 2adb3069b0e04-5a2c1f215ebmr1231983e87.20.1775049482409; Wed, 01 Apr 2026
+ 06:18:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260326210532.379027-1-peterx@redhat.com>
+ <20260326210532.379027-5-peterx@redhat.com>
+In-Reply-To: <20260326210532.379027-5-peterx@redhat.com>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Wed, 1 Apr 2026 15:17:50 +0200
+X-Gm-Features: AQROBzAdTTiPESqiZiaBtDc5hDGyP1qXQYhkaYmo2U7RNnOyCQG2D_s6ApK3Lmc
+Message-ID: <CAJqdLroWFeb93MDj7T9YuYSidsJrjSp8YCNeJEs1J=Ox_SW42A@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 04/11] vmstate: Update max_elems early and check
+ field compressable once
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Juraj Marcin <jmarcin@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,33 +115,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
-
-> On 3/20/26 23:05, Alex Benn=C3=A9e wrote:
->>   static inline uint32_t syn_fp_access_trap(int cv, int cond, bool is_16=
-bit,
->>                                             int coproc)
->>   {
->>       /* AArch32 FP trap or any AArch64 FP/SIMD trap: TA =3D=3D 0 */
->> -    return (EC_ADVSIMDFPACCESSTRAP << ARM_EL_EC_SHIFT)
->> -        | (is_16bit ? 0 : ARM_EL_IL)
->> -        | (cv << 24) | (cond << 20) | coproc;
->> -}
->> +    uint32_t res =3D syn_set_ec(0, EC_ADVSIMDFPACCESSTRAP);
->> +    res =3D FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
+Am Do., 26. M=C3=A4rz 2026 um 22:05 Uhr schrieb Peter Xu <peterx@redhat.com=
+>:
 >
-> !is_16bit.  I'll not mention it again in the series, but take as
-> given.
-
-Impressive that I managed to run all our tests and nothing tripped up on
-this!
-
+> QEMU has a trick in vmstate_save_vmsd_v(), where it will try to compress
+> multiple JSON entries into one with a count to avoid duplicated entries.
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> That only applies to the cases where vmsd_can_compress() should return
+> true.  For example, vmsd_desc_field_start() later (who will take the
+> updated max_elems as the last parameter) will ignore the value passed in
+> when vmsd_can_compress() returns false.
 >
-> r~
+> Do that check once at the start of loop, and use it to update max_elems, =
+so
+> that max_elems keeps 1 for uncompressable VMSD fields, which is more
+> straightforward.
+>
+> This also paves way to make this counter work for ptr marker VMSD fields
+> too.
+>
+> No functional change intended in this patch alone.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+
+> ---
+>  migration/vmstate.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index e29a8c3f49..05badef42f 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -556,7 +556,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VM=
+StateDescription *vmsd,
+>                  void *curr_elem =3D first_elem + size * i;
+>                  const VMStateField *inner_field;
+>                  bool is_null;
+> -                int max_elems =3D n_elems - i;
+> +                /* maximum number of elements to compress in the JSON bl=
+ob */
+> +                int max_elems =3D vmsd_can_compress(field) ? (n_elems - =
+i) : 1;
+>
+>                  old_offset =3D qemu_file_transferred(f);
+>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+> @@ -587,7 +588,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VM=
+StateDescription *vmsd,
+>                   * vs. nullptr). Search ahead for the next null/non-null=
+ element
+>                   * and start a new compressed array if found.
+>                   */
+> -                if (vmdesc && (field->flags & VMS_ARRAY_OF_POINTER) &&
+> +                if (vmdesc && max_elems > 1 &&
+> +                    (field->flags & VMS_ARRAY_OF_POINTER) &&
+>                      is_null !=3D is_prev_null) {
+>
+>                      is_prev_null =3D is_null;
+> @@ -626,7 +628,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VM=
+StateDescription *vmsd,
+>                  }
+>
+>                  /* Compressed arrays only care about the first element *=
+/
+> -                if (vmdesc_loop && vmsd_can_compress(field)) {
+> +                if (vmdesc_loop && max_elems > 1) {
+>                      vmdesc_loop =3D NULL;
+>                  }
+>              }
+> --
+> 2.50.1
+>
 
