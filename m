@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A31BD3517F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 20:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E01B10FCAC9
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 20:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w81jp-000186-BL; Wed, 01 Apr 2026 16:00:29 -0400
+	id 1w820o-0001Xo-6E; Wed, 01 Apr 2026 16:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w81je-000174-GX
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 16:00:18 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w820m-0001R7-SJ
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 16:18:00 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w81jc-0007yQ-Ow
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 16:00:18 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-35d9f68d011so55943a91.2
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 13:00:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w820k-0001Y4-EU
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 16:18:00 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-486ff201041so1078515e9.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 13:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775073615; x=1775678415; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=GyTHQFti4ePurXzdbSKxukkbDfIx3wTcIViU8SobReE=;
- b=BvGiA1+kAwAp4cVY9ZVfQAMulIliGgHm5tleXH7Hq0eqslxn0Gi3BfvlNayc70xY18
- WBLM3Mxh1wZmkO5O+7KHO2QbNmltZuteBwOHoPrDVUItlHPVl8APmMDi57n+tnYg/B/e
- 6/aPhkaPnwWEZIuPlH6w1C8EV2/6By7Y//xvlioLpgPEyW3U6fdIpVJBbbWx+ofvlj6/
- 4Jnrn7IqoELVRFGVWvUrI6TAyncQBfFgbhggT502pWLQAP1yW/uNnAhkfF+1fyGaYzt3
- tXT+OyLRjOYMxk+zjIDkP+bxFKFHpcCu+YKFDy9sF48+CeYnbXKuZE0UFJU2jfDA6EPy
- l3CA==
+ d=linaro.org; s=google; t=1775074676; x=1775679476; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D9EJVmPQy6eeZJJyEDHNsSijB+T9mGxWe0hCWzvTRWs=;
+ b=iMZGf/e1NpFK/KtUUzMgJQ4nUKsZSw5gppQg5C7biMM9Cn30UzbVW8ntI7BCRuCfFp
+ nSGhTBio6ZmeCPVsa0TEEgk6veIDvGo/guCVjf4zFa5+WDljE+H4W6mMZRUOnD4tI49H
+ aHkRxGCKiQ4oybE5Wesy3SfLYk5klU6vHTGpJe8ewqv2yX8wzituLaeMUPRyQjxkWCFx
+ glYM35bLhlCC22TfIg8EmUUtYaBkrN9zwkRNciS9pwnXSMt+/6Z5hyAiu+yb6glMNY7T
+ 1vH8uUd6ykIx7d1UrRtxAsYgkdMdLS4g8GoZY+a7V3L7NdnGk0nCAiiIgdvrtCicWqUH
+ PdTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775073615; x=1775678415;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GyTHQFti4ePurXzdbSKxukkbDfIx3wTcIViU8SobReE=;
- b=cDe7upMwNl1Ukb9V7FW342EkASUc6NURxs5UW+PvuVJZmoV2rJzZB+6M7Cmy0/e7y6
- Ofu5anI0rzKf7x8m0BE6LrcLWhTHYThYbnAPZTL1n37zOYU/+7Qy94z/56cADpICs7Rd
- 4r/Q43kPRByYQmw0M9fjc9wpIido75esEMblg62t2YhYlcnTnR0BhF97lwhK7GC40N72
- KmkgEvyKwfHm3c7o9dQsTCs5SESkcpBN7IdoFRWMgt4Gdn8W/jHhXGmFlfa2p4jrq7RI
- jLQn5X2r+tXVdRJYP0GEHlRxRufpq0UbLDpq1qvcWMFEPhInFAiwkJIT3AZdpkP+T7hJ
- tIiQ==
-X-Gm-Message-State: AOJu0Yz+8NnDyGe8i+vFNZZqhKAkhETV4w3tbCSflMk6AtnNf16BjyCC
- Q3cWW0xfvqu+2nJ8byRnIv8sF2WtUYB5W79RjCIjtIqdCI+ukM4EOra+
-X-Gm-Gg: ATEYQzyYIiS8VcAj9LEd60+uZoBGnASG7iup9mOH+0uim/X7lc3Ym6zVbEl/oOu/UtW
- YFdvcLTgsXe5gBA/XM2+GnrBkAxn7eEs2Nw6XBaap6pZWCSTbLfFgXO/gUr1ce15GgVQyt6SJHb
- mLX/KmBhW3kCEVSizuDJoXvkByhVPW2nzZp3WgpeYGQ3qdEGy4mw8NMu6HbWC0fA/gv8BhLrZxJ
- o+hERvn4jzo7QMPzgqiloZnt0szd6HR6iGMpVjW7gVg9hUgHlPTL23rDZXUJaeS0urOqeOAdw6u
- 3FYZuY9m/uFnIDqgFqBNQQ+3G8qv1tswaRzLvCaWRMOSQhUQzzirIL+ZHXJ+DeZMrQ+tILrbC6j
- sC1wBtyyAlcuLBy87mDHSp4VGyV0vlx54OflxZJN/1F164qVvSGdHMZ97py0gRrqmxptye0xOet
- vuuJwWk+DMbSN+MqlwN5Z71SH6MdJ5m34=
-X-Received: by 2002:a05:6a20:3c8e:b0:398:7866:e8e8 with SMTP id
- adf61e73a8af0-39ef76b414fmr5104227637.31.1775073614432; 
- Wed, 01 Apr 2026 13:00:14 -0700 (PDT)
-Received: from localhost ([42.118.191.4]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c647792bsm728105a12.6.2026.04.01.13.00.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Apr 2026 13:00:14 -0700 (PDT)
-Date: Thu, 2 Apr 2026 03:00:10 +0700
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: validate page_size in mapped-ram header
- before use
-Message-ID: <dptqcdl44iimicz77wt4mhnlgrr2duzz6ipuwanij5xiaugxeq@ipzhxzz6kr3e>
-References: <20260328072424.10611-1-vikingtc4@gmail.com>
- <acqzOqkSC3oXSznV@x1.local>
+ d=1e100.net; s=20251104; t=1775074676; x=1775679476;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=D9EJVmPQy6eeZJJyEDHNsSijB+T9mGxWe0hCWzvTRWs=;
+ b=ksSJaEEEPQYr1NyDVQ+hESceT0fOd5bS1LGQoFw6d4n4j+YSzQg5bFhcCMk9IWeb3d
+ uiyI7pZQDsf3H2sK+KjC3HxuJ6r5e15jSBcxT5B/4pmbUGhn9N9BgvpuMd2uE5BU6O0o
+ RfV8T7zdvBNZMvP7ald7jp8sGeqognAopQ00OcZkXspAZqHxwMM/YAa1CH1AoxlGybo4
+ XciM5IXUnFwkrCqyvHfMswQtEqaCzl9ps7STs/SjNqArRZG7sfghu3hVznnNORQYsDM6
+ U2EBaI1Lp7fGUVmyuvgnaC1J3RQ8QM+qi9lwhIzSzQYPuIQ20POYUMKsFd48Tpp0l9S/
+ O8vg==
+X-Gm-Message-State: AOJu0Yx4OPv7xyGMGgXy3lrBgsU1oxaDglrdVIdHvz/WpiCbLS38kFVJ
+ u3qIJjqr1vN5ImssRSN7wr4hqbNm7zAN+y1DnYF+5Cr1/Quvr1Q3xVvpDRmbLNwAaRypvo4Ffcv
+ 8ZauOveI=
+X-Gm-Gg: ATEYQzzeKF/yr414K+6fquX+N5fCv1uMWja4P1kDMvAz1WSG2qUkVBunT73Y/Zh6QIM
+ Cx+rKdCSZd7rTiaqMmjd1n+zNYjQq0XPJeZph0p8cD8ZHW8gXXxXbLqVJqRl7UKb2fjqMWQty6p
+ YArt1aeXp+zcPPPpx6CHArzXzdM03Z5PELy27VOzHBIBlOgpHuak3oj4WsP5PzuDRDPY+7f2Ph6
+ yGmFrKDHH0TWp/LFgbUdAqvxCcRK24QB7QsSzG6s6OTSx1znQClW2mt8etCU6o49JYFAKeYSaCn
+ O448Id0DA/WJMtf3V6yF/HtQ0Q1gVJnGMVHuD5LUFgyBbe/T8z+5KY9iQnnXUYd3s3pLE0T39Z1
+ NM5t9fY0OevflubgdnxRynrJLF2RU44Rb1SN2426QmGF9BvtKSAG7C7oh1XWIyXMQDljTd+qW/D
+ 7rzcqpXwkjje2PJlAv9wScpKzkxkfJuWITa6hK+8WTWSiJwODcEY9OENSGqNUhSOBzHu/ZT4VT
+X-Received: by 2002:a05:600c:310a:b0:485:3d3e:167b with SMTP id
+ 5b1f17b1804b1-4888b6d4a4fmr11059385e9.5.1775074676186; 
+ Wed, 01 Apr 2026 13:17:56 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4888a7165aasm24239995e9.14.2026.04.01.13.17.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 01 Apr 2026 13:17:55 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Eric Farman <farman@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Huacai Chen <chenhuacai@kernel.org>, qemu-riscv@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Anton Johansson <anjo@rev.ng>, Song Gao <gaosong@loongson.cn>,
+ Weiwei Li <liwei1518@gmail.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Bibo Mao <maobibo@loongson.cn>,
+ qemu-arm@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-11.1 0/8] target/arm: Compile accelerator-related objects
+ as common code
+Date: Wed,  1 Apr 2026 22:17:44 +0200
+Message-ID: <20260401201753.92290-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <acqzOqkSC3oXSznV@x1.local>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=vikingtc4@gmail.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,71 +114,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 30, 2026 at 01:30:34PM -0400, Peter Xu wrote:
-> On Sat, Mar 28, 2026 at 04:24:24PM +0900, Trieu Huynh wrote:
-> > mapped_ram_read_header() reads page_size from the migration stream and
-> > stores it in MappedRamHeader, but does not validate that the value is
-> > non-zero before it is later used in parse_ramblock_mapped_ram():
-> > 
-> > num_pages = length / header.page_size;
-> > 
-> > If a corrupted or malformed migration stream provides page_size = 0,
-> > QEMU unexpectedly crashes.
-> > 
-> > Add validation in mapped_ram_read_header() to reject zero page_size
-> > values early and return an error instead of continuing with an invalid
-> > header.
-> > 
-> > Steps to reproduce:
-> > 
-> > Create a migration snapshot with mapped-ram enabled:
-> > (qemu) migrate_set_capability mapped-ram on
-> > (qemu) migrate file:/tmp/qemu-snapshots/snapshot.bin
-> > Modify the snapshot so that MappedRamHeader.page_size becomes 0.
-> > Restore the snapshot:
-> > (qemu) migrate_set_capability mapped-ram on
-> > (qemu) migrate_incoming file:/tmp/qemu-bug-test/snapshot.bin
-> > 
-> > As-is: qemu crashes immediately
-> > (qemu) Floating point exception (core dumped)
-> > To-be: qemu continue running
-> > (qemu) qemu-system-x86_64: Migration mapped-ram header has invalid
-> > page_size of 0
-> > 
-> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> > ---
-> >  migration/ram.c | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> > 
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index 979751f61b..2a7e958e87 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -3088,6 +3088,11 @@ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
-> >      }
-> >  
-> >      header->page_size = be64_to_cpu(header->page_size);
-> > +    if (header->page_size == 0) {
-> > +        error_setg(errp, "Migration mapped-ram header has invalid "
-> > +                   "page_size of 0");
-> > +        return false;
-> > +    }
-> 
-> Thanks for the patch.
-> 
-> When at this, one more thing we could do is verify the value is exactly
-> target psize; afaict that's the assumption across the whole mapped-ram
-> feature.
-> 
-ack, will add it in v2. Thank you.
-> >      header->bitmap_offset = be64_to_cpu(header->bitmap_offset);
-> >      header->pages_offset = be64_to_cpu(header->pages_offset);
-> >  
-> > -- 
-> > 2.43.0
-> > 
-> 
-> -- 
-> Peter Xu
-> 
+First drop TARGET_KVM_HAVE_GUEST_DEBUG (all targets but MIPS
+support it), then -- after minor changes -- move the ARM
+specific accelerator units to target_common_system_arch[]
+source set, allowing to remove arm_system_ss[] for good.
+
+Philippe Mathieu-Daudé (8):
+  accel/kvm: Include missing 'exec/vaddr.h' header
+  accel/kvm: Remove TARGET_KVM_HAVE_GUEST_DEBUG
+  accel/kvm: Expose all non-target specific declarations
+  target/arm: Compile WHPX as common object
+  target/arm: Remove target_ulong use in hvf_handle_psci_call()
+  target/arm: Compile HVF as common object
+  target/arm: Remove target_ulong cast in kvm_arm_handle_dabt_nisv()
+  target/arm: Compile KVM as common object
+
+ configs/targets/aarch64-softmmu.mak     |  1 -
+ configs/targets/i386-softmmu.mak        |  1 -
+ configs/targets/loongarch64-softmmu.mak |  1 -
+ configs/targets/ppc-softmmu.mak         |  1 -
+ configs/targets/ppc64-softmmu.mak       |  1 -
+ configs/targets/riscv64-softmmu.mak     |  1 -
+ configs/targets/s390x-softmmu.mak       |  1 -
+ configs/targets/x86_64-softmmu.mak      |  1 -
+ include/system/kvm.h                    | 13 +------------
+ include/system/kvm_int.h                |  2 --
+ accel/kvm/kvm-accel-ops.c               |  4 ----
+ accel/kvm/kvm-all.c                     | 13 ++-----------
+ target/arm/hvf/hvf.c                    |  2 +-
+ target/arm/kvm.c                        |  3 +--
+ target/mips/kvm.c                       |  5 +++++
+ target/arm/hvf/meson.build              |  2 +-
+ target/arm/meson.build                  | 12 +++++++-----
+ target/arm/whpx/meson.build             |  6 +++---
+ 18 files changed, 21 insertions(+), 49 deletions(-)
+
+-- 
+2.53.0
+
 
