@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6216107637B
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E675D2ED08
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7vtM-0000Tx-4x; Wed, 01 Apr 2026 09:45:58 -0400
+	id 1w7vtx-00010z-1g; Wed, 01 Apr 2026 09:46:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vtH-0000TA-IX
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:45:51 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vtn-0000o7-Ed
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:46:24 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vtG-0000oW-18
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:45:51 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-486fe36cfabso6175935e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:45:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vtl-0000qf-7D
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:46:23 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4852b81c73aso59441395e9.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775051148; x=1775655948; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:to:from
+ d=linaro.org; s=google; t=1775051179; x=1775655979; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xTY1i8KyjqkYPU57LBCdszpxncZOEORaGdc2rA7xtm0=;
- b=EM1BWAzpKj+MRJ20+jNlrEKZziD3E+L6bryZQBUfp1FUhOJn8n6JX3/7k20V7uwaXz
- xdIk5uMzKDtb++vK5PjIi4kopihk/7U9Fa8DDckGg4RYaUlFxY8eSrGmk03rZSv+mCmA
- GAmn3klD761dmxmv2PR5H8/qkmNdy0u1Zx/haMctSQG5TJTEhqC5eZ+6k6pFJ54WTH4q
- IxO0H49nuSN7i0n4VIQV0ZyX/+sIqsH5cE0j6Uke6XxGCkKcSlQMXMGKh7ltUsjb6GaU
- ORidNaWpz+v0AtXGqMth/Qoz4YBwi8aukeQi32ytXVMygAnXqd1NH9IC0mmF+rUj5r3h
- hRPA==
+ bh=fxY7IpCefyW7whP+pVdfaDfUz34fB4PyDsKtotqTMZM=;
+ b=yBxaw3mP2sscPbg6o1lgrxrh2b6p5v6qUEzRblA0gTr3yqytPNWXp0Zt71O+16xL2p
+ hT1E9KKhL2QtI0LYdCicwFK9fVYXjSg8CilOeGqQnsa0VfFUulXXvTwfjq1zNyyVg47x
+ OaLDOvG6YPPEEDl6/fM48xbUtZGPccvNiqfpNLQ+tFN4n8Cz9thuq42xR0FKpQ2fXHEb
+ qQOPPT56juhaFYvfFBlDussjJCTBjn6jf4z6f9Sn+eeap4vZJEeGatbrv1wirPwb/GwB
+ U2gJIMzZpgaULl9OQUTsW3a7tz49x8xsbbu+A+fXbuc0nSxkAMY0pl3wxWlrgU9u7FN6
+ 5VIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775051148; x=1775655948;
- h=content-transfer-encoding:in-reply-to:references:to:from
+ d=1e100.net; s=20251104; t=1775051179; x=1775655979;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xTY1i8KyjqkYPU57LBCdszpxncZOEORaGdc2rA7xtm0=;
- b=q080FaMyFtrVvCE7A4iVoW3lje30lCLmDKZxnVhHmSJ4BQ7gzcqIscqUI7A3wsgU80
- VR3uTXw/6F0PNnv8K/nwcVCSVyZD6AiYtIMhZT+oL5uGPUqEUxZf6BHuLZJ4+wo/8jNE
- ufnDbN2jkoMM9zf2DmKaIR8WJlg95iR4fMY/1L7NXFsb/HvQLNRXNkNsw3fONUa+8XjQ
- DK1w1Vctjfu6EwplVxlHI+XLEEOPqVV7nR0Ag8KyH/hauVoyiXrfx+3jdkhEx5gsj3Hl
- lDyvYIucbLqPVWOv8lvU+WTDHuYjsAKNvKeqLpSsLFPe3X8uGzMerI4mVXtzcicqdy8u
- zEmA==
+ bh=fxY7IpCefyW7whP+pVdfaDfUz34fB4PyDsKtotqTMZM=;
+ b=RZDG+PhoK6MajdV/OREQXmq/yzj6MIj3c8J5w2LyccNeeIH7I9TVLXpFNao0fx4HSs
+ U2vrSJSOdbcR05gFqj6dLcAGUdU3M3tLypKtSb6usQa7sLlDL6JnwivnifsSmyohBECG
+ MRlRY3ZRV1lqTdjtyNrbQZDEo3REKalDpKBzfzTfRNaWAdcgE4XQTX+a1G5KWS0mVEHN
+ Vwadj+R7+ALHsfAOZFxpV7ZVx9KgWHxVw8pVX5R9RwNiGUJqQT+WI40ZQZqSq6CKjVnG
+ lkVvKYvKef0g2NZ9eFvtNIGn2FqIHdCROV6cELWIBzpwwdVZDCFttqW3OXIuTNYu3xX7
+ KkSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUY1iOmgQ2guEddSJOJR0/CVs1CAPAfJc1lbHON+wDfgNAHi3MdRTDpQ6DmIGr9BzW86dgXTyK+bF0W@nongnu.org
-X-Gm-Message-State: AOJu0Ywo75ckHF80Lb6bA+ABVScAhRqNQR35F+8QLniYvllYJXB4qvcC
- 0mW9cf15nUnNsI0VdVrU/wdvJ9P3JicR/lb2AArUYhRslVZbN/FMOOniyG4764X6SzB3QvY6wPo
- S5dRlcgY=
-X-Gm-Gg: ATEYQzw2KVsL2RiaicmQx7KT7zHpAagCOCgyyeMdZ4aa2PsYM74JHK5Lrho05o5X1oA
- QTUrznUreepivuzJh1E7Ier/b/E+n6iK34Bg2Pc11Jl8QitIILjgk1SKY1yD+fmz6MR+r3o5Fd3
- rTGua7eQuXN7sl8RSGBS4tQP+W3iAEpOfQnSkIggBvWnW8fYH0yf5E5tLQfdAhzKFWXF7/rySyq
- WnK17b5gfTDTj/JCYzEghYuLqpY318V8C384c9nmTgA03FrXvCJa3dxU9mVBMOSuoriSkPbqiI2
- 33NEppelSKjwsy+DXdFKGJKu9mIgcu2xeLyVzAk6t2jAS3AlU7IDDw8sDaTDYB6kNTma8TkXmnK
- dsccleFyucgzv5seSwY7xKNIxziVN4QsvicdIueobKuGBRTUeR4MWxHlFhn60vslnBjp2G4zehf
- qXl2ztvlbMebxSYaMjghLeVRpak5Gchbv1KgK4XGJkG06iAA1Qu6sHiv97f1D5aGxW5FYKLE4jq
- qMC
-X-Received: by 2002:a05:600c:1e85:b0:487:12c:e7ea with SMTP id
- 5b1f17b1804b1-4888358935amr53913545e9.5.1775051148356; 
- Wed, 01 Apr 2026 06:45:48 -0700 (PDT)
+ AJvYcCXB7I1qwoPgpgDMNmG4PuCU525yOzV3fx1GG6kZkfHWqWBKPVK3RRNpNNJkUZqPXcUTcomc9iXWRin5@nongnu.org
+X-Gm-Message-State: AOJu0YymuU7TqwxkeVdPNVru5Yh8qf6x42PwvdW/l6ignGh6TTQm9Ybx
+ Ie5txdFYxmUm4RsPc6k9169kuqF0h3SfcMZrJddxH44/lpiaQGPeKZ500POBrt7o/Nmq6I0qip5
+ V7bRLVwQ=
+X-Gm-Gg: ATEYQzzSsPSLnM+P+1srKBLmcPpAB8osY4WPTtppB4o4J28OmXw9aspHr5uOxg66cXY
+ L34lBqrKqycICiA6eGe3ncqJHvITYWZCSE6d0UxVW/uNyrSRy5HXIZ2mpPx9gKF4rG4i9O22vgu
+ pHBx+hXos+D2imZXJQz2C7SUUayRk6J+PSa9Jf/wElwl/QxCJRVyW65tqXKufnYVtJFYaOpI02o
+ GbgJ6wGamjcouDs3NphjQOCUjLnTyHuShUoNaW2lbQipbnmq3wQVtuhpcN5QOzxvSbiu0oCpOX0
+ 5bvTAlMtvlt4WmSDXK8cVlB4wmazoq6p8J1g3hYkcov/M5JN9UobWpvoNLaxqFQyBhf/5GXQ0mx
+ a00zJOMn439CSFgjvb1Iqe1eAH2UcvzBMzeEDg9QCOT6+D79Mq2qnNh1jAnolOO/+MJmtflnWm3
+ JusDDwY7G/fR27dbXbQkt00VjotujeXwXC7GGXGab6Yvs++uyCyAp/HayVmpAVNvYTTw==
+X-Received: by 2002:a05:600d:11:b0:485:3ff1:d5ed with SMTP id
+ 5b1f17b1804b1-4888355df72mr62639515e9.1.1775051178765; 
+ Wed, 01 Apr 2026 06:46:18 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887ad1cd86sm44517815e9.5.2026.04.01.06.45.46
+ ffacd0b85a97d-43d1e2a71f7sm35215f8f.1.2026.04.01.06.46.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 06:45:47 -0700 (PDT)
-Message-ID: <cb44bbc5-9b71-42c8-a831-6b4495dc5f52@linaro.org>
-Date: Wed, 1 Apr 2026 15:45:46 +0200
+ Wed, 01 Apr 2026 06:46:18 -0700 (PDT)
+Message-ID: <c821c6fe-9d05-40a3-9a41-9c56666762c9@linaro.org>
+Date: Wed, 1 Apr 2026 15:46:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 20/60] ui/console-vc: decouple VT100 display updates via
- function pointer
+Subject: Re: [PATCH 30/60] ui/console-vc: extract vt100_init() and vt100_fini()
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-20-48eb1dcf7b76@redhat.com>
- <90642606-419d-4217-8e8b-b6063d660a05@linaro.org>
-In-Reply-To: <90642606-419d-4217-8e8b-b6063d660a05@linaro.org>
+ <20260317-qemu-vnc-v1-30-48eb1dcf7b76@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260317-qemu-vnc-v1-30-48eb1dcf7b76@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,36 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/26 11:17, Philippe Mathieu-Daudé wrote:
-> On 17/3/26 09:50, Marc-André Lureau wrote:
->> Replace direct dpy_gfx_update() calls from the VT100 emulation code
->> with an indirect call through a new image_update function pointer in
->> QemuVT100. This decouples the VT100 terminal emulation from the
->> QEMU display layer, allowing different backends to provide their own
->> image update implementation.
->>
->> The QemuVT100 typedef is changed to a forward-declared struct so the
->> function pointer signature can reference QemuVT100 itself.
->>
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> ---
->>   ui/console-vc.c | 28 ++++++++++++++++++++++------
->>   1 file changed, 22 insertions(+), 6 deletions(-)
+On 17/3/26 09:50, Marc-André Lureau wrote:
+> Consolidate VT100 initialization and finalization into dedicated
+> functions, continuing the extraction of the VT100 layer from the
+> console/chardev code.
 > 
+> vt100_init() gathers the scattered setup (cursor timer, list insertion,
+> FIFO creation, default attributes, and image) that was previously spread
+> across vc_chr_open() and qemu_text_console_class_init().
 > 
->>   static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error 
->> **errp)
->>   {
->>       ChardevVC *vc = backend->u.vc.data;
->> @@ -1205,6 +1220,7 @@ static bool vc_chr_open(Chardev *chr, 
->> ChardevBackend *backend, Error **errp)
->>       }
->>       dpy_gfx_replace_surface(QEMU_CONSOLE(s), 
->> qemu_create_displaysurface(width, height));
->> +    s->vt.image_update = text_console_image_update;
+> vt100_fini() pairs with it by handling list removal, FIFO destruction,
+> and cells cleanup, replacing the open-coded QTAILQ_REMOVE in
+> qemu_text_console_finalize().
 > 
-> Isn't it better in qemu_text_console_init()?
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   ui/console-vc.c | 44 ++++++++++++++++++++++++++++++--------------
+>   1 file changed, 30 insertions(+), 14 deletions(-)
 
-Nevermind, I now see this ends in vt100_init() in patch #30.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
