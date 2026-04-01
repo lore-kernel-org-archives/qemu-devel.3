@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E01D35172
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 10:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6319AD35175
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 10:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7shB-0001sD-GE; Wed, 01 Apr 2026 06:21:09 -0400
+	id 1w7t3R-00061O-Mh; Wed, 01 Apr 2026 06:44:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sh9-0001rn-Ur
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:21:07 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sh7-0004KK-Pm
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:21:07 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48700b1ba53so61675045e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 03:21:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775038864; x=1775643664; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JD+KRbH51Y6l0xt0ZxrANuqzkw/1ZWXtY2NTuI2rzWA=;
- b=DfNr8ZsHmCeH73LFN992pp/q08o+NiVVXM3uiOkqrLTIQ2Kansapafv83QhXsyBixU
- mYdvzTP21Yg5RaJ1u7jiC6JFq9hAI4cb3y0FIZOj/tFgCXivpWQn6bZzEB+vM9dun6Pg
- qO70W3VcNickEG56YAK2YK+tt5TQ26nSre6DRg3cGzzGOnv7EMfW1FL1pkL77wgqhiaO
- Z9Q7f60jHIElvStbRx4IZQCayAO7vgKKHBBgsvzRriVzN5N/LbW2cHRxp51zLgeBbqBu
- J00ptkWqOeIjsX3sQwFj8jsvI/lF7l3hu2wqvPIyRGOy3GDpHRy5dsSHEG5Q+0KCvdZu
- P1qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775038864; x=1775643664;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JD+KRbH51Y6l0xt0ZxrANuqzkw/1ZWXtY2NTuI2rzWA=;
- b=GCn9hl2XHOm9XXpCHWbLxAPjX/IHXa3RT8g4rg28wXCpI9TM1NKojte5oMNtxCgXvx
- 3QgGFpvFCc7BXsotiB6v3drHCZMD+cGtk2xvCjc3lLBee0EHmMomiR0kFCaMg4wqcwKA
- yaba6EVKHY2O6MviBWC4p+Ksm8Agc/cGnDukiDjVeZNkhB3NnGr8szgqYCKlAm8oy7Ge
- uMhVvKfCoVBn8nkI/pJRetEY45DaZJMiqQFqWG/iElNk+DlUjPsYwjs41oBFMnjZTSUl
- LXVSR9xhW0/D5h+Fqia6oAxUl68gBzqM1nGtE/W999x5W9Z3SQiJp8R/+aOS6i0Cf8NE
- VDzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV1t5TPWZL69LK7QkfGyQQy+fCSO5kjblrQ+DqJxNFYtXkucOdaDPQ7X+gbpLzNhQVNGB5/X57C73EG@nongnu.org
-X-Gm-Message-State: AOJu0Yw6YCjS5m7WzhWdKiL+O/mVAJeYAM5EQQAK3OKCCDKp55kUdWgQ
- hGd5JZRGG4Oyn6eKbLR0tr9nfENlUrDyHBc0BywfhMJdFN4/cSZvlCIPmgZqG/KhzgY=
-X-Gm-Gg: ATEYQzznc8HklfGaj7MxPpyWJhZS+pVposGO1h4OPELpqpKBWuGpjf6G2LfqXrS53+W
- ZFlSL+KCsKr8+bUE21Vd+E/B8qvI5iOYBCjxoaClkjA89te3edO8RNPw7w8rX6XL/YwDD9/kXTJ
- 1gxCk6ZcAa/+ANlGUD+uNyHsWkVlorhQCdqy+5a8FeZhQerojt9x67ek+LpyCuJ9qNZh3lxJ0+e
- VFmn40XWDzxRVr9Em0BVoa6BoToV7FeNY4+AHFMyZEcZ6K/49Khnc+t4uVUHr2NGuXKUYH3JH/r
- nfNrUNge+nOe2mvXzUahs8T9CSNl/6jZuZTVy1Moyewjiwn/XftEDlrQtd6vHjySfWUARFe8fxR
- fTTmDYiQAWoyzmfiwi8QczBs2LJrYKKVX6cDM61P4/vrHPokxeDYif9s7QEny0w6G2K1pCYtGlO
- 6UnORqZPrxgC5Dh30T6I7qmQ4G5k563BBkbyzVojxxnrZbYtaPpjXXpuuSiKxBqJw/ABajZou5K
- Kl2
-X-Received: by 2002:a05:600c:1f11:b0:486:fd3a:fd22 with SMTP id
- 5b1f17b1804b1-48883568b21mr42751215e9.4.1775038863930; 
- Wed, 01 Apr 2026 03:21:03 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887aab1de3sm60237855e9.1.2026.04.01.03.21.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 03:21:03 -0700 (PDT)
-Message-ID: <a7b05743-c7f4-4626-b11c-ec8200913c33@linaro.org>
-Date: Wed, 1 Apr 2026 12:21:02 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w7t3M-00060x-Iv
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:44:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w7t3J-0007jc-E9
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:44:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775040240;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aLNFaB231eFX2G1G66v7tit4+h7UWxtF7oHO8IMge+k=;
+ b=Ys+6HzlJUK4rzgQVcsmcZirtko247kjJYKmPVBrernWktbr+r/P/8+Olc/mjHgy1Atp2B4
+ riLkuUDJOez6IKkkcFoc9CwNrxMQ3mm29BLfiT5IK6n2h2bD9ZKPhtGV8uMVBQSG3DiZ0g
+ OZjqJgM0/k09EkeiCx2F/PQStXjGXtY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-eZQj25foMc6ZMWvId_yBlg-1; Wed,
+ 01 Apr 2026 06:43:56 -0400
+X-MC-Unique: eZQj25foMc6ZMWvId_yBlg-1
+X-Mimecast-MFC-AGG-ID: eZQj25foMc6ZMWvId_yBlg_1775040235
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 540AF1956089; Wed,  1 Apr 2026 10:43:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.6])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F239218001FE; Wed,  1 Apr 2026 10:43:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8A97521E6A28; Wed, 01 Apr 2026 12:43:50 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Sergei Heifetz" <heifetz@yandex-team.com>
+Cc: <qemu-devel@nongnu.org>,  "Eric Blake" <eblake@redhat.com>,  "Michael S.
+ Tsirkin" <mst@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Marcel
+ Apfelbaum"
+ <marcel.apfelbaum@gmail.com>,  "Paolo Bonzini" <pbonzini@redhat.com>,
+ "Fabiano Rosas" <farosas@suse.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  "Eduardo Habkost" <eduardo@habkost.net>,
+ "Yanan Wang" <wangyanan55@huawei.com>,  "Zhao Liu" <zhao1.liu@intel.com>,
+ "Richard Henderson" <richard.henderson@linaro.org>,  "Dr. David Alan
+ Gilbert" <dave@treblig.org>,  "Thomas Huth" <thuth@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  "Laurent Vivier"
+ <lvivier@redhat.com>,
+ "Gerd Hoffmann" <kraxel@redhat.com>,  <devel@lists.libvirt.org>
+Subject: Re: [PATCH v3 07/11] ui/dbus: run without Audio interface when
+ audio is disabled
+In-Reply-To: <DHHIZYXA11Y7.2Z6AXFKNESH3W@yandex-team.com> (Sergei Heifetz's
+ message of "Wed, 01 Apr 2026 09:16:01 +0500")
+References: <20260315201646.96862-1-heifetz@yandex-team.com>
+ <20260315201646.96862-8-heifetz@yandex-team.com>
+ <87ms04cksj.fsf@pond.sub.org>
+ <DHHIZYXA11Y7.2Z6AXFKNESH3W@yandex-team.com>
+Date: Wed, 01 Apr 2026 12:43:50 +0200
+Message-ID: <87cy0j2c61.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/display: modernise the vga debug code (!!GenAI!!)
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-References: <6c3214ac-1679-d9db-2fed-c934fde8ddf2@eik.bme.hu>
- <20260330222900.982404-1-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260330222900.982404-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,50 +103,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/3/26 00:28, Alex Bennée wrote:
-> Remove dead code, replace debug prints with trace points.
-> 
-> Link: https://patchew.org/QEMU/20260330140656.46FE55969F2@zero.eik.bme.hu/
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
-> As an experiment I prompted Gemini with the thread contents and asked
-> it to make the changes. It cost about 9p in inference and I would
-> argue this barely counts as copyrightable as it is a simple
-> transformation of existing patterns.
-> ---
->   hw/display/vga.c        | 89 ++++++++---------------------------------
->   hw/display/trace-events | 11 +++++
->   2 files changed, 27 insertions(+), 73 deletions(-)
+"Sergei Heifetz" <heifetz@yandex-team.com> writes:
 
+> On Thu Mar 19, 2026 at 12:58 PM +05, Markus Armbruster wrote:
+>> Sergei Heifetz <heifetz@yandex-team.com> writes:
+>>
+>>> D-Bus display can be used even when QEMU is configured with
+>>> `--disable-audio`. In that case, audio interface will not be available
+>>> on `/org/qemu/Display1/Audio`.
+>>>
+>>> (The current handling of the situation when audio is enabled but
+>>> no D-Bus-compatible audio backend is available is different and
+>>> hasn=E2=80=99t been changed.)
+>>>
+>>> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+>>> ---
+>>>  qapi/ui.json    | 2 +-
+>>>  qemu-options.hx | 4 ++++
+>>>  ui/dbus.c       | 8 ++++++++
+>>>  3 files changed, 13 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/qapi/ui.json b/qapi/ui.json
+>>> index e3da77632a8..62eb05c6091 100644
+>>> --- a/qapi/ui.json
+>>> +++ b/qapi/ui.json
+>>> @@ -1385,7 +1385,7 @@
+>>>    'data'    : { '*rendernode' : 'str',
+>>>                  '*addr': 'str',
+>>>                  '*p2p': 'bool',
+>>> -                '*audiodev': 'str' } }
+>>> +                '*audiodev': { 'type': 'str', 'if': 'CONFIG_AUDIO' } }=
+ }
+>>
+>> Is this a compatibility break?
+>>
+>> DisplayDBus is only used in DisplayOptions, which is only used as return
+>> type of query-display-options in the QAPI schema.  However, vl.c also
+>> uses it to parse -display.
+>>
+>> Removing parameter @audiodev from -display is technically a
+>> compatibility break.  However, we're removing an optional paramater that
+>> would always be rejected when present: it has no valid value, because
+>> there are no audiodevs.
+>>
+>> Removal from query-display-options is similar: it could not be present.
+>>
+>> Removal affects introspection, which could conceivably confuse client.
+>> I don't expect such trouble here, because @audiodev always existed, i.e.
+>> there's no real reason to look for it in introspection.
+>>
+>> I think we're okay.  I'm cc'ing the libvirt list just in case.
+>
+> These are questions I would like to know the answers to as well. From my
+> perspective, disabling compilation of the audio subsystem is worth it,
+> but you should expect to potentially tweak a few audio-related things to
+> make it work. I agree that technically makes it a compatibility break.
+> But preserving meaningless parameters (like audiodev in the total
+> absence of audio) certainly makes less sense to me.=20
+>
+>> Do we need a release note?
+>>
+>> Do we need an entry in docs/about/removed-features.rst?  Feels a bit
+>> odd; we're not removing a feature, we're adding one, namely "can compile
+>> out audio".
+>>
+>
+> Maybe we should add something like, "If you compile out audio, be
+> careful with these things: [list of changes]".=20
+>
+> But honestly, I don't know. I'd be happy to add whatever is needed.
 
-> @@ -873,9 +824,7 @@ void vga_mem_writeb(VGACommonState *s, hwaddr addr, uint32_t val)
->       uint32_t write_mask, bit_mask, set_mask;
->       int plane = 0;
->   
-> -#ifdef DEBUG_VGA_MEM
-> -    printf("vga: [0x" HWADDR_FMT_plx "] = 0x%02x\n", addr, val);
-> -#endif
-> +    trace_vga_vram_write(addr, val);
+I guess a brief release note should suffice.  As long as the affected
+interfaces are obviously audio-related, enumerating them seems
+unnecessary.
 
-OK, ...
+>>> +        (If audio is disabled at compile time via the ``--disable-audi=
+o`` option,
+>>> +        no audio backend is used, and none of the audio-related D-Bus =
+interfaces
+>>> +        are exported.)
+>>> [...]
+>>
+>> Well, audio is either compiled in or it isn't.
+>>
+>> If it's compiled in, then why tell the user how things behave when it's
+>> not?
+>>
+>> If it's not compiled in, then why document stuff that doesn't work?  How
+>> much of -audiodev still works then?  -audiodev none?  Anything else?
+>
+> I agree it's weird, but I don't see a clear way around it. Simple
+> ifdef'ing isn't possible in a reStructuredText section (at least I
+> couldn't get it to work).
 
->       /* convert to VGA memory offset */
->       memory_map_mode = (s->gr[VGA_GFX_MISC] >> 2) & 3;
->       addr &= 0x1ffff;
-> @@ -945,9 +894,7 @@ void vga_mem_writeb(VGACommonState *s, hwaddr addr, uint32_t val)
->       if (sr(s, VGA_SEQ_MEMORY_MODE) & VGA_SR04_CHN_4M) {
->           if (mask) {
->               s->vram_ptr[(addr << 2) | plane] = val;
-> -#ifdef DEBUG_VGA_MEM
-> -            printf("vga: chain4: [0x" HWADDR_FMT_plx "]\n", addr);
-> -#endif
-> +            trace_vga_vram_write((addr << 2) | plane, val);
+Context: this is in an SRST...ERST section of qemu-options.hx.
 
-... but why print the index instead of the address here?
+As far as I can tell, we simply ignore the possibility of the thing
+being compiled out when we document a thing there.
 
->               s->plane_updated |= mask; /* only used to detect font change */
->               memory_region_set_dirty(&s->vram, addr, 1);
->           }
+Drop the patch hunk?
+
+>> [...]
 
 
