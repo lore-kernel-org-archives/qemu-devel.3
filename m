@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC476D3517C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C49D3517E
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 13:30:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7ve1-0002N2-Br; Wed, 01 Apr 2026 09:30:05 -0400
+	id 1w7veL-0003OE-6U; Wed, 01 Apr 2026 09:30:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vdu-0002B4-7x
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:30:00 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w7veI-0003MB-38
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:30:22 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7vds-0006AA-Ev
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:29:58 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-486fb14227cso91479515e9.3
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:29:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w7veG-0006Op-GD
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 09:30:21 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-5a159c1e65aso6446707e87.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 06:30:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775050218; cv=none;
+ d=google.com; s=arc-20240605;
+ b=UrpT3qhsZu1JKN0252hulSM3fF899PtpFgJjot4/0hKR+lV2vhejKiJWmegjqLcdI9
+ 7Fluk9x1ErIHn5Tvx3gxHZZf3/eMkMHX2930cRwyoa3Xs6O0pId0U/tqCCOKthGgYEa7
+ 8awvhU5Fo9wZ4v9PwEF1dGnb9V2dlf7UwTEIuGfD8nnVZnrq6w3/ugVfxo5So33P3SsA
+ E6IpEvWzCzr5PDTBWegdlk6SdbrHpoixT/KvVl1BQ1azSKUWWRzjmump+1kDk9GZ5MIq
+ qyGbxdG5ojZ2OefesOA6zxBbGd9aFYvAH+h30/yhw6iUZ/8zb0ScJuAdO2gTO44z3xg1
+ IhIw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=6yvsH32Jpv+V5g++5c/HZKx21J66tjsfQWFwlt+vrtE=;
+ fh=8jLQ9BF8TzoH/ErGnlkH4vSIZ9SpUVgmQkqZ4x0ADis=;
+ b=XwQTrMUSpn/zjy3DCFk2UYr7cD1vo8+tApA3fzx1b2ha3Hwo95BWqlOhYNPr52VAHg
+ MU21Gd5zeqBN+xr39mhdyjSEmcpWo3beF+J0f4q4YN28IgdOEkWYpUc8Yk2C5Kugx8TE
+ 3GkNP7vZWLkVsfYo7sJ4qP6eTXdZyj55xshVNXgjUTDjpIElEih/sDvpucQ1ThzVLn5/
+ qL95PJ9Puss+KJLyobyIVqDm0YJmEXPf6mxzzlabFxcN3renav+sB+8MxhFRpduXOAQZ
+ l7lOp6YH0fbNNDUJ/+Tcskh89CulkowP9M/RNQhZM5nQK2MWEBnkSqkoAxNq2LwhsgYU
+ M+gg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775050195; x=1775654995; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xHAVsCsC8Pt2G9bwpio7qpW5H3otap3+Q97quMFDQOU=;
- b=uYUhmlYkaYzRerobb9+v9Q8HPWW3JAaYEtAvpXSxxR0+Cq7MR/1JyCT/uiv3K7oVEB
- 2N0k7m8m8XWUeSpAHpkhKnB7vVcUiVpWCZksS8h5H5upTHGxvLRY3uOmq0Com44xyfeY
- WE1NaHDASncvYv9Kj4uRY/+wfasDgPNHH5ygPgbY1bh1mYTofrLhbNpO3kYF6Mm4a862
- /v/CG4MoJShUVA/sgB8A3efLoVEz9y/tSMAXxg06TFU6UmeIMJMR5N24BjM6dY3kbzM6
- cBQv2PrRnimyWbraH7sn2mPjumRAKDmucKbHmCHB/fjnpcIOFO9Dgv/+njXE7WHAVWlE
- J2zw==
+ d=mihalicyn.com; s=mihalicyn; t=1775050218; x=1775655018; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6yvsH32Jpv+V5g++5c/HZKx21J66tjsfQWFwlt+vrtE=;
+ b=JUBAWL5jydeKjyXCJJElg1VclCeZ51YDUcySOZEzaWOczD0WC245cgYhTvuL9jcC+6
+ B+iWg2F2F3OjxvwPiq8WIpivhdevM1I7tclj0WPwEexnAGcJhcYiWbbSSb2ZHShHj/y+
+ 9mqV5fjFv4pW+xkOrOr/CmMbw0ybLZDyl03Ts=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775050195; x=1775654995;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xHAVsCsC8Pt2G9bwpio7qpW5H3otap3+Q97quMFDQOU=;
- b=MKKLZisNR4/Tc9ll0E5E5IcIdiWGwrZ8JEkybjJjBxyVziC1micz2wSFOJGJgj/jxR
- n8jKX3e1XYwQ4G8N6TXRtocf7lrWkyZeWAV46+56tuFt7Zs55NnsSHxCCMF1dUbypmR3
- p4HAVNgLOMi4nJSF4/su2NqOJcpm3X6qPNjZxHcEvuh5aY9aL8GIHLiqX+QHJMvIhhuo
- qvu17PvcfzZeygVleZjhJ/peb0YxUcDBj1ghkOogdd5Qcuia7jbeANTTbP9B8FQKc89p
- ott/QlJ79p6h3n2Oe7qkM4TtNbPgdp4kVzVHizRWVf0gMZ9fGntNw+YN82WlKT/M6uFt
- 4GoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZ7q2ykXnYUUaUZw+GjRBUulSXJCqs4s2KId1eqRNGf2wV/0vlM5BvfFRnxExBZ9ytTdON5pSepf8C@nongnu.org
-X-Gm-Message-State: AOJu0YzLAQ/IREH9BU6r/FX70Hn/pucSIpQoexdH3tKM80KfrbZp54oI
- sv3xOZf2OlSJIBsr2ir8Uuhk9iOSX93uFWP56i/K8rmIIzCvUL4phcNfXnRc93V1uUc=
-X-Gm-Gg: ATEYQzwST9J6AC47jqaEd6m/rKibRONScX/3Nd0wylL002rTurfe2mWXnq8VYMljdwN
- M7ACTdhgMP3u63tpD2m7Vq0CmO44UFcHQHKYIaEPb2Oxpl58eyJfBE5mDiNdzhMKmVoP1BAU7Bw
- 1xhyZ5JnezYjrVxLTY6g/qA6lHtOiHzY3Km6WXj+WL5D6WILuuSgg2hnkrBq/xW7Ri1EgCotkNj
- Ow9ueEmq4kj2wmMnwawJ2yrAaY7xi6T6K3Ztw5lRjJQgVGJ3FUAyPgCrO9OJaGyxy7sld5Pn2O0
- Raz2pGEcB1NvfD+L6NA8IAB9LSvZCOjMUUp7HPNl0BJ5Z3zN2OMJo/ShjcPqFpTGTq1jH+t02T5
- NEh+F99OpssyBnVsp//bmtD1c9zavBI1yTkCqq7DGzripfjhnSrvcva6lGQAXLFPPEatS76O8ah
- K9taHlVO2Jeom3H1jUftKPXPDiYBvflbtZ6sSZxrEJKUeXkpczpOLxK3vlscsQXv8xOA==
-X-Received: by 2002:a05:600c:a406:b0:485:40fd:8390 with SMTP id
- 5b1f17b1804b1-488835ccc61mr47899645e9.26.1775050194554; 
- Wed, 01 Apr 2026 06:29:54 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887c883b96sm41477375e9.17.2026.04.01.06.29.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 06:29:54 -0700 (PDT)
-Message-ID: <975c0259-cb5d-4930-a8ab-3da0bb6fc308@linaro.org>
-Date: Wed, 1 Apr 2026 15:29:52 +0200
+ d=1e100.net; s=20251104; t=1775050218; x=1775655018;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6yvsH32Jpv+V5g++5c/HZKx21J66tjsfQWFwlt+vrtE=;
+ b=pmf6ilGkc8RGhRiQ2FKIwMiyMQplKcKB/M5Rtr1ZzVP4doI7vqbgBq5vPNZvNuGCzp
+ kicu2YiDi3Uw5VRKZCGodwZESYmEoePLx3Bm2ZopuROQTHT7s4xEh3gk/GZMpjF1Ie+T
+ Z9v805kwnmZKpzeE5ZN+GEGmgMOlsHVF2xGI/DngXGx7nW9UMyAO4mgk4s6z3yZd1Nja
+ zXSfMX6vwp74DtjDMPwzAgRxmTpqvoZFYytnfuAMSMYl0fpPP/ATncOOBgrsiY/paYjd
+ UJnSfri+s7melmqj1Q2/gr2XA/7uaN1WAUFfCANKW3xrqdHAjXwTz+REWlkKxxciq6Ba
+ 7wLw==
+X-Gm-Message-State: AOJu0Yz/Qk7Dnm8XupDIZ+OGEPPgesc35y34meeF2kCHLIBBrjL8Edvt
+ xwrtBydHejqEI9lBzCv/1ib6L1onjhMVA5g7CefIRkeXULSJArwtXc+8W8MyKPUMvdJ5P7pZnHY
+ jwqPmdnjM1b5zk03Pe6Xssk4jK6DwMN5M3gI/k1dUdd9pbdBgr6mf1g4=
+X-Gm-Gg: ATEYQzy1HPjRdJ55wWTEsX7nCe5nHOwFtmZz/J7yeNXlkMdAdL95li1X3ItZ0hxzbVA
+ he+qNtqd6eZSpQjj+Y3dSdq+2Rg7A1phEgyZ/w8GANZ+/3TTS4ks/4Vq8uWxafXh8IbxdtQJ6MD
+ TCqH5TCAfgNBZbSKJFEpfHRa2BvR2BEnL9su1AhZT2caQt3W2eBoeUl8MRk7OJzmQKn0VGrDsIh
+ 8eGlquSHtFIWB/7p253lhajWVyr6Y1PEfzJCiPiM1qy8W+kEeUdOpMotLh2ZstFX4nJWPYBFPzt
+ 3XHe1772B+4Xv94LmTiZ8xMOGv5uVOKUOhig/A==
+X-Received: by 2002:a05:6512:1091:b0:5a0:ee11:8d94 with SMTP id
+ 2adb3069b0e04-5a2c1ee245amr1515411e87.1.1775050218229; Wed, 01 Apr 2026
+ 06:30:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 01/11] vmstate: Pass in struct itself for
- VMSTATE_ARRAY_OF_POINTER
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 References: <20260326210532.379027-1-peterx@redhat.com>
- <20260326210532.379027-2-peterx@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260326210532.379027-2-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+ <20260326210532.379027-11-peterx@redhat.com>
+In-Reply-To: <20260326210532.379027-11-peterx@redhat.com>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Wed, 1 Apr 2026 15:30:06 +0200
+X-Gm-Features: AQROBzA-aDsa_on9MPufAJXvHPVNnydmEM1KzJPoJKO44tfQDQC1DS2uv-fFkNg
+Message-ID: <CAJqdLrqqMz_fkc6VnKD=wToqpUoZfWr2rVc_mcQL261NieEtQg@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 10/11] vmstate: Stop checking size for nullptr
+ compression
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Juraj Marcin <jmarcin@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,34 +115,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/3/26 22:05, Peter Xu wrote:
-> Passing in a pointer almost never helps.  Convert it to pass in struct for
-> further refactoring on VMS_ARRAY_OF_POINTER.
-> 
+Am Do., 26. M=C3=A4rz 2026 um 22:05 Uhr schrieb Peter Xu <peterx@redhat.com=
+>:
+>
+> From: Fabiano Rosas <farosas@suse.de>
+>
+> The NULL pointer marker code applies only to VMS_ARRAY_OF_POINTER,
+> where the size is never NULL. Move the setting of is_null under
+> VMS_ARRAY_OF_POINTER, so we can stop checking the size.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+
 > ---
->   include/migration/vmstate.h | 6 +++---
->   tests/unit/test-vmstate.c   | 2 +-
->   2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index d4a39aa794..8992fba57d 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -547,9 +547,9 @@ extern const VMStateInfo vmstate_info_qlist;
->       .version_id = (_version),                                        \
->       .num        = (_num),                                            \
->       .info       = &(_info),                                          \
-> -    .size       = sizeof(_type),                                     \
-> +    .size       = sizeof(_type *),                                   \
->       .flags      = VMS_ARRAY|VMS_ARRAY_OF_POINTER,                    \
-> -    .offset     = vmstate_offset_array(_state, _field, _type, _num), \
-> +    .offset     = vmstate_offset_array(_state, _field, _type*, _num), \
-
-For consistency, "_type *" with a space separator (like in following 
-patch), otherwise:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+>  migration/vmstate.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 9cd0a88ce9..1923602f3b 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -673,14 +673,14 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const =
+VMStateDescription *vmsd,
+>                  const VMStateField *inner_field;
+>                  /* maximum number of elements to compress in the JSON bl=
+ob */
+>                  int max_elems =3D vmsd_can_compress(field) ? (n_elems - =
+i) : 1;
+> -                bool use_marker_field, is_null;
+> +                bool use_marker_field, is_null =3D false;
+>
+>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+>                      assert(curr_elem);
+>                      curr_elem =3D *(void **)curr_elem;
+> +                    is_null =3D !curr_elem;
+>                  }
+>
+> -                is_null =3D !curr_elem && size;
+>                  use_marker_field =3D use_dynamic_array || is_null;
+>
+>                  if (use_marker_field) {
+> @@ -708,7 +708,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VM=
+StateDescription *vmsd,
+>
+>                      for (int j =3D i + 1; j < n_elems; j++) {
+>                          void *elem =3D *(void **)(first_elem + size * j)=
+;
+> -                        bool elem_is_null =3D !elem && size;
+> +                        bool elem_is_null =3D !elem;
+>
+>                          if (is_null !=3D elem_is_null) {
+>                              max_elems =3D j - i;
+> --
+> 2.50.1
+>
 
