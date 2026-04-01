@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98A1D35162
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 11:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9B5D35162
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 11:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7tvV-0004lE-Q2; Wed, 01 Apr 2026 07:40:01 -0400
+	id 1w7u0a-0007ld-HH; Wed, 01 Apr 2026 07:45:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w7tvS-0004ku-7z
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 07:39:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1w7u0X-0007lS-Ra
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 07:45:14 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w7tvO-0007Ff-Uj
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 07:39:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775043593;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mqezalPl4i3JBcgLVBe3bFLBNdF5OgFM/6xHTa3bquo=;
- b=RWAhoLKZGbhzsSnZKAULu2ihCHm1wy9eKnhWQVbv8dMpYTnHQ55I70D2Tny/xa8Ud1iScC
- 2vOWJLztKQzsuEywZQXLa9MtDbRbAgeZ9f2A/OToYZ3ald4GfE0kFTWc1AVubpw9WnJXtT
- H9zbJgr/ung9Y9cS/5nBhN0KD6kNvS0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-202-qe4Ff5YzMWiw4qyQPLAQqg-1; Wed,
- 01 Apr 2026 07:39:47 -0400
-X-MC-Unique: qe4Ff5YzMWiw4qyQPLAQqg-1
-X-Mimecast-MFC-AGG-ID: qe4Ff5YzMWiw4qyQPLAQqg_1775043586
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0B930195607D; Wed,  1 Apr 2026 11:39:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17205180058B; Wed,  1 Apr 2026 11:39:45 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BAB5321E6A28; Wed, 01 Apr 2026 13:39:42 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: <qemu-devel@nongnu.org>,  <anisa.su@samsung.com>,
- <berrange@redhat.com>,  <eblake@redhat.com>,
- <jonathan.cameron@huawei.com>,  <linux-cxl@vger.kernel.org>,
- <linuxarm@huawei.com>,  <lizhijian@fujitsu.com>,  <mst@redhat.com>,
- <pbonzini@redhat.com>,  <gourry@gourry.net>,  <nifan.cxl@gmail.com>,
- <me@linux.beauty>,  <ira.weiny@intel.com>
-Subject: Re: [PATCH 9/9] hw/cxl: Add QMP status query for dynamic-capacity
- extent release
-In-Reply-To: <20260331155044.0000603d.alireza.sanaee@huawei.com> (Alireza
- Sanaee's message of "Tue, 31 Mar 2026 15:50:44 +0100")
-References: <20260325184259.366-1-alireza.sanaee@huawei.com>
- <20260325184259.366-10-alireza.sanaee@huawei.com>
- <87mrzuei5f.fsf@pond.sub.org>
- <20260327151811.00005564.alireza.sanaee@huawei.com>
- <87zf3s1ohc.fsf@pond.sub.org>
- <20260331155044.0000603d.alireza.sanaee@huawei.com>
-Date: Wed, 01 Apr 2026 13:39:42 +0200
-Message-ID: <87tstu29kx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1w7u0V-00086l-MO
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 07:45:13 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1w7u0H-0000000GhuU-149d; Wed, 01 Apr 2026 13:44:57 +0200
+Message-ID: <42c3ebe7-a4e9-4af8-b549-7df93083d759@maciej.szmigiero.name>
+Date: Wed, 1 Apr 2026 13:44:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/hyperv: Replace legacy ld_phys() -> address_space_ld()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>, Jon Doron <arilou@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Roman Kagan <rvkagan@yandex-team.ru>
+References: <20260319082954.65069-1-philmd@linaro.org>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20260319082954.65069-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: 3
+X-Spam_score: 0.3
+X-Spam_bar: /
+X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,73 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alireza Sanaee <alireza.sanaee@huawei.com> writes:
+On 19.03.2026 09:29, Philippe Mathieu-Daudé wrote:
+> Prefer the address_space_ld/st API over the legacy ld/st_phys()
+> because it allow checking for bus access fault, which shouldn't
+> happen here.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/hyperv/hyperv.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+> index 27e323a8196..5a0e00892d8 100644
+> --- a/hw/hyperv/hyperv.c
+> +++ b/hw/hyperv/hyperv.c
+> @@ -704,13 +704,16 @@ uint16_t hyperv_hcall_signal_event(uint64_t param, bool fast)
+>       EventFlagHandler *handler;
+>   
+>       if (unlikely(!fast)) {
+> +        MemTxResult result;
+>           hwaddr addr = param;
+>   
+>           if (addr & (__alignof__(addr) - 1)) {
+>               return HV_STATUS_INVALID_ALIGNMENT;
+>           }
+>   
+> -        param = ldq_phys(&address_space_memory, addr);
+> +        param = address_space_ldq_le(&address_space_memory, addr,
+> +                                     MEMTXATTRS_UNSPECIFIED, &result);
+> +        assert(result == MEMTX_OK);
+>       }
+>   
+>       /*
 
-> On Sat, 28 Mar 2026 07:01:51 +0100
-> Markus Armbruster <armbru@redhat.com> wrote:
->
-> +CC Ira
->
-> Hi Markus,
->
-> Please look inline. I believe Ira might be able to help and we can see what he thinks.
->
->> Alireza Sanaee <alireza.sanaee@huawei.com> writes:
->> 
->> > On Thu, 26 Mar 2026 16:15:40 +0100
->> > Markus Armbruster <armbru@redhat.com> wrote:
->> >
->> > Hi Markus,
->> >
->> > This commit adds a test command to check whether an extent (a piece of memory region) has been released or not by the guest.
->> > The process of removal is highly asynchronous, that's why I needed to add a new command to check it.
->> >
->> > I would be happy to drop this patch, as this is extra.  
->> 
->> So your motivation for adding the command is "just" testing.  Correct?
->
-> I wrote tests to make sure extents were released, and I used this QMP command to check.
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-As long as this is the only known use case, we want
-
-    # @unstable: This command is meant for debugging.
-
-in the QAPI schema.
-
-> Now there is background about extents where DCD was developed in Linux by @Ira, CCed [1].
->
-> In the DCD extent tracking section of the CXL spec, I see some commands 
-> related to getting the extent list, maybe Ira can comment here. To be fair, knowing if an extent
-> was released or not is a useful information in general from orchestrator perspective.
->
-> [1] https://patchew.org/linux/20250413-dcd-type2-upstream-v9-0-1d4911a0b365@intel.com/
-
-If we believe there are other uses, but we're unsure the command
-actually serves them:
-
-    # @unstable: This command is experimental.
-
->> Can you think of other uses?
->> 
->> In particular, would a management application need this query to monitor
->> removal?
->
-> I think management will get a signal on the removal given the schema in Ira's Linux kernel 
-> patchset. I do not think this is implemented in QEMU at least (I might be missing something).
-
-I'm getting a feeling of "this is underbaked" :)  But that's for the CXL
-maintainers to judge.
-
->> The description of feature @unstable may need to be adjusted for the
->> answers we work out here.
->
-> Absolutely.
->
->> 
->> >
->> > Thanks,
->> > Ali  
->> 
->> 
+Thanks,
+Maciej
 
 
