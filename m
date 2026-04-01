@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041EF107638D
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 17:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA58710F6FDC
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 17:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7zha-0004lm-Rz; Wed, 01 Apr 2026 13:50:02 -0400
+	id 1w7zm3-0007AW-QC; Wed, 01 Apr 2026 13:54:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w7zhZ-0004lR-BM
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:50:01 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1w7zlf-00078C-VD
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:54:17 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w7zhX-0005sb-Gw
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:50:01 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-82ce09b61beso20722b3a.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 10:49:58 -0700 (PDT)
+ id 1w7zle-0006k5-En
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:54:15 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-82cebbdbdccso716129b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 10:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775065797; x=1775670597; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775066052; x=1775670852; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=idaNdcBJWyF+6rkPZEh9BOULGO0s+hjNQm1sxEStP3Y=;
- b=cNVKZe9suoJ16YCAVNam7GvCQq3vcTWYWf1ysBOmyNi1WwiS+Z0w5mWDSv4TdQ5Nra
- fSLa9aZ+UJqfy5cQTZTT9Fz7CosSTB8aD7A2JVh+joAAOO69Bld08JrETa0C4f2hs39v
- HAJ5sksbk67vFjMvMG6J7RAgBD8Kl1GkEkLAtgwm21SfiJNUI6d04sLBlkiKE3p+Wf3l
- 2xb5fRp/QldPJMWlK1EQ8gPdEN1y5ZzFf6WlLtb4rSmScED2I9WqCRcqvZKshE7z2Wme
- VioRvAa9Yx8LjjRfwDY3jDJSbk4Wn6COKqrqTUj9FThq6T0IY42cs0/bSw+h5eXgYFJ5
- OQ/Q==
+ bh=GNjJ9yneLnMo/A0qgXzBPyfFlVgpiVY0CGjAZST6jP0=;
+ b=bVF7XG7xrTcn/0dOmQ9365bTTg9uUcQfs71Ch3kBLSe0cos1R7JhdReqeH0MwvKgio
+ ahqQY6lc08ZkTcLrcIYBV5bgx/r0CwziM/MbiTLXv3IhafCOMBLvhAto4en3yWzenaua
+ pmRT+q0WA2aGPN3UUzHOBRV1spcPWVedQQN2p+u15mrIGx8lMUiVLHpIwP9r4XEo6vQH
+ PEQejJsYCpiBKz73bcidBshcyQpYO2mGy9je7m7XgK+2jdtrcSVMY3FifjQbba4FLFUl
+ yp50ySKz/eaHKrQzRyidNls/C5AoVpWvHO/peK6RthROijj3UDEM++3IEw99S3SfEE+f
+ +hMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775065797; x=1775670597;
+ d=1e100.net; s=20251104; t=1775066052; x=1775670852;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=idaNdcBJWyF+6rkPZEh9BOULGO0s+hjNQm1sxEStP3Y=;
- b=pE2cHX76qdtc/dixWCbox6rf4gEwLEkXJELD1SkO1A+urhAJWlaRdDi4nFv4EIoztn
- i15sYI4O+pLz88TC3FyD0TwhMMewXociC6bnohOoK+brbWutasvA6omFKVOKH/SDI19S
- jHq4GkQiE9TlML0AKmuI/137MOoJEt0jS33Gnww/y0UiG0CL7zSjq016ZKwoxDjBrkbX
- jzAswPUpGUBKu4dBfigXwO5uY+0TQeDIfpHgwl8tfubGF9T8FBxGrTAA3q3I3qEkXCzu
- hRRPt9qenDAVvT6ul39o5tejnJJUyi6dPKgF1Ex5Mf6zUaC0L2nMRpoOTTXdAN5TnEUu
- 8D1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVriQXvhuRCYJcpux4pvIQFkac4j+rqJow8HW2sdamkY3SBFcsaG+3yBVGcxcQGAGX5maIkd8RXnAJQ@nongnu.org
-X-Gm-Message-State: AOJu0YwjO7M1GgCjlKZ6cc0RL8yOEWfZI9xHcuNi0lQ4ZLvNCASAu6gN
- 7afFwfzU4aEyBynK7+e7F5KJiAaL3tL5IB4/mHCzyc8q0nduGpjGWV4Aq5g3JFLPvL0=
-X-Gm-Gg: ATEYQzwjSk+RhtDf61YBGHmjaEXQPWvMQwV4GFClPGUaRF/Slvd1Ra8GhUs5rIX53+j
- 5AQ924YH/gfAaECoHO8fgmO+A1gdWZR7aeDd4KrT2xKZWuTCFFhuh3EObqzG0zLoiWaYIYtNUan
- IHL8sYbZbAeGqLvH5i2gD/LN3FNeXPflBlmFU4ASeZzI4B6xjBO38hCJQTtsbSJH4dL8k01N1Jo
- v3r5udRi5/YPdpoL2Sef5hRvObwEx9iF3Yp8AvodAflinA9m6lDEEwkH63G03/PYI9tbNYU3r8O
- MuSHW9TOZehPzl3LxyLwXFNfDjNNLhJmL9WRYQUa5x29X3ZIWTwGbR9qnZjxjwHMM8NmQiZAoO5
- vzzhR5xHgp4Lj6b1qjZ7OJOOjts/cRsok9MucKgWqfqYJtJT9D3dZL58HZwDfvg3tpaEFGcZZik
- jE8W/VsdHOgRnBlwlLXumIck15ub35a6/6IartfuEMTqfBLbTnHh0uty7vsAmK451NExh3
-X-Received: by 2002:a05:6a00:ad87:b0:82a:ea3:c16f with SMTP id
- d2e1a72fcca58-82ce8b1b545mr4900513b3a.53.1775065797373; 
- Wed, 01 Apr 2026 10:49:57 -0700 (PDT)
+ bh=GNjJ9yneLnMo/A0qgXzBPyfFlVgpiVY0CGjAZST6jP0=;
+ b=J23gbVVfSxSIHTHVKJitUz00/ADZul106OrJ22wpiImdw27JBoZW/NEvduCb8ULO90
+ GF1t3FN4Rs976ltxyYXlsuMXSeIWoZPYwc20dFd9qp3mbXNxYIEF3jBDyhUfqnxE5nVa
+ QL9BkAA9xAMvgSFqhSVGUrxBCucQ8FbulvzXclbL6jY8zkayyx91czOmK4tnu4BfNBAL
+ jKDpiJ5utry5WQtNqp06LOCTJBMjdpYANBJzuOI6D+MOzA2SxxPRHAPbXZuRs7M8NHw4
+ 3Jpp2v+oXkK1obwinnXdNrEU73HtoZ/ba9GA3dLGV28PUDvE0t3dQBWV9CUqMWF+HAje
+ cLdQ==
+X-Gm-Message-State: AOJu0YwrpJrOA/FvjXVWgWVtC2EcjW+UC+G3T7vLYcDKa68Y9RiLJO5Y
+ T36t6brtcxBR6XqO7PiKjhrxYGY5JvEMzkJ7A3JSg9QX2dBWVYOsBKdknms6Ag0kqf0xzUYzRBj
+ jkuqanabH/w==
+X-Gm-Gg: ATEYQzyO/kVc8LjBPP1Qfug/rPPvwvHi5jGrtUDXo6mmhklHi65EUbWsy/Zel65i8IN
+ q40dyKjOFegHoNj9bchYfV9iYFZSFK4B9+HT9uwPQhurLR7CGdRQ5Af+PBCHTRa0UoV7NmsCvTZ
+ g7KrzhW0KFkpKKKG7XfIYk49qGhzyrRQS3X0E27P634W/tBhu1vy7882YQNTPVkP34hzS4l1B+L
+ cPwrev9hJEPol0GmHH/3BwwY3D8pUa9UT1aHbUdPQKBv+woLL5nZhpa160NW34NLTkBynDn4LE0
+ JX42KV0/ZNY0zoX1SbIy+SCm8iz3FVx/rh5vk8Jjjc7IOOfY0PgC3tcf6i4le+HIKOHnOfPrFqT
+ 0rXtR0uecyrR0062mExjRZdWkTl4LfYzE0R/QfvKRJnwNquQZDcS0W0TS7pZiSn3K6TxZahhovj
+ dO3urygG/BNhbJ7p5WiZF+atFaCMYB0GHzE0MFlQXKq475XFhnOXSKorF+jese04ozw7aO
+X-Received: by 2002:a05:6a00:4211:b0:81c:5bca:8104 with SMTP id
+ d2e1a72fcca58-82ceaae5df1mr3564273b3a.24.1775066052319; 
+ Wed, 01 Apr 2026 10:54:12 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9b3ccc8sm738645b3a.19.2026.04.01.10.49.56
+ d2e1a72fcca58-82cf9c3ce13sm544918b3a.38.2026.04.01.10.54.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 10:49:56 -0700 (PDT)
-Message-ID: <a806e8d5-facb-4831-9d6a-0518af41ea50@linaro.org>
-Date: Wed, 1 Apr 2026 10:49:56 -0700
+ Wed, 01 Apr 2026 10:54:11 -0700 (PDT)
+Message-ID: <e249a5c1-5f5d-469b-9912-3b7ef3b4f400@linaro.org>
+Date: Wed, 1 Apr 2026 10:54:11 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/3] contrib/plugins: add syscall-filter local-library
- demos
+Subject: Re: [RFC PATCH 03/35] target/arm: migrate FP/SIMD trap syndromes to
+ registerfields
 Content-Language: en-US
-To: XU Kailiang <xukl2019@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Ziyang Zhang <functioner@sjtu.edu.cn>,
- Yun Wang <yunwang94@sjtu.edu.cn>, Mingyuan Xia <xiamy@ultrarisc.com>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>
-References: <20260331173656.35305-1-xukl2019@sjtu.edu.cn>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260320130607.2071996-1-alex.bennee@linaro.org>
+ <20260320130607.2071996-4-alex.bennee@linaro.org>
+ <595c4e17-c6c8-4281-bee2-8ed50d27d582@linaro.org>
+ <87a4vmq1xt.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,11 +115,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260331173656.35305-1-xukl2019@sjtu.edu.cn>
+In-Reply-To: <87a4vmq1xt.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,104 +142,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kailiang,
+On 4/1/26 5:50 AM, Alex Bennée wrote:
+> Richard Henderson <richard.henderson@linaro.org> writes:
+> 
+>> On 3/20/26 23:05, Alex Bennée wrote:
+>>>    static inline uint32_t syn_fp_access_trap(int cv, int cond, bool is_16bit,
+>>>                                              int coproc)
+>>>    {
+>>>        /* AArch32 FP trap or any AArch64 FP/SIMD trap: TA == 0 */
+>>> -    return (EC_ADVSIMDFPACCESSTRAP << ARM_EL_EC_SHIFT)
+>>> -        | (is_16bit ? 0 : ARM_EL_IL)
+>>> -        | (cv << 24) | (cond << 20) | coproc;
+>>> -}
+>>> +    uint32_t res = syn_set_ec(0, EC_ADVSIMDFPACCESSTRAP);
+>>> +    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
+>>
+>> !is_16bit.  I'll not mention it again in the series, but take as
+>> given.
+> 
+> Impressive that I managed to run all our tests and nothing tripped up on
+> this!
+>
 
-On 3/31/26 10:36 AM, XU Kailiang wrote:
-> Hi,
-> 
-> This series adds two contrib/plugins examples for the linux-user syscall
-> filter API.
-> 
-> The first patch adds a minimal zlib-based demo. It redirects the guest
-> loader's library open to a local thunk library and handles the thunk's
-> magic syscalls by calling the host zlib implementation directly.
-> 
-> The second patch adds a callback-capable qsort prototype. It shows that
-> the same interface can also bridge callback-style library calls back
-> into guest translated code, using a small thunk library plus a
-> ucontext-based host-side bridge.
-> 
-> The final patch extends both demos from the openat()-based loader path
-> to open() and openat2().
-> 
-> To keep the examples small, both demos currently target x86_64
-> linux-user and assume guest_base == 0 on a little-endian 64-bit host,
-> so guest virtual addresses are directly usable as host pointers. The
-> qsort prototype is built only on hosts with working ucontext support.
-> 
-> Once the demo library path matches, both demos intentionally assert that
-> opening the thunk library succeeds. These examples are meant to show the
-> local-library hand-off path once a known thunk library is in place, not
-> fallback behavior when that local library is missing or unusable.
-> 
-> One limitation is worth calling out explicitly: straightforward local
-> library hand-off is only part of the problem. Once execution needs to
-> leave the guest, run host code, and then re-enter guest translated code
-> again, for example through a host-side function pointer callback,
-> additional target- and ABI-specific handling is needed. The qsort
-> prototype shows one such bridge for x86_64 guest callbacks, but this
-> series does not attempt to provide a general solution for that broader
-> case.
-> 
-> Patch 1 adds the zlib compression demo.
-> Patch 2 adds the callback-capable qsort prototype.
-> Patch 3 extends both demos to open() and openat2().
-> 
-> Reproduction instructions are included in docs/about/emulation.rst and
-> in each example directory.
-> 
-> Thanks,
-> XU Kailiang
-> 
-> XU Kailiang (3):
->    contrib/plugins: add a zlib compression filter example
->    contrib/plugins: add a callback-capable qsort prototype
->    contrib/plugins: handle more loader open syscalls in the syscall
->      filter demos
-> 
->   contrib/plugins/meson.build                   |  16 +-
->   .../Makefile                                  |  19 +
->   .../README.rst                                |  47 ++
->   .../callback-demo.c                           |  75 +++
->   .../callback-qsort.h                          |  14 +
->   .../callback-thunk.S                          |  38 ++
->   .../plugins/syscall_filter_callback_qsort.c   | 484 ++++++++++++++++++
->   .../syscall_filter_zlib-example/Makefile      |  19 +
->   .../syscall_filter_zlib-example/README.rst    |  44 ++
->   .../zcompress-demo.c                          |  94 ++++
->   .../zcompress-thunk.c                         |  35 ++
->   .../zcompress-thunk.h                         |  16 +
->   contrib/plugins/syscall_filter_zlib.c         | 319 ++++++++++++
->   docs/about/emulation.rst                      |  41 ++
->   14 files changed, 1260 insertions(+), 1 deletion(-)
->   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/Makefile
->   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/README.rst
->   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/callback-demo.c
->   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/callback-qsort.h
->   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/callback-thunk.S
->   create mode 100644 contrib/plugins/syscall_filter_callback_qsort.c
->   create mode 100644 contrib/plugins/syscall_filter_zlib-example/Makefile
->   create mode 100644 contrib/plugins/syscall_filter_zlib-example/README.rst
->   create mode 100644 contrib/plugins/syscall_filter_zlib-example/zcompress-demo.c
->   create mode 100644 contrib/plugins/syscall_filter_zlib-example/zcompress-thunk.c
->   create mode 100644 contrib/plugins/syscall_filter_zlib-example/zcompress-thunk.h
->   create mode 100644 contrib/plugins/syscall_filter_zlib.c
-> 
-> 
-> base-commit: 512b794b1091bc4810d28e8ef28addf6344c3889
+Try running all tests (check-tcg + check thorough) on instrumented gprof 
+qemu-system-ar* binaries, you'll be surprised to see what is actually 
+covered by our full test suite.
 
-that's a good demonstration of the thunk approach you have been working 
-on. However, I'm not sure of the value to add those manually crafted 
-examples upstream for now. All they test is the syscall filter, but we 
-already have tests for it.
+Note: It's probably less than what you expect.
 
-In case we want to have something more useful upstream, it would be nice 
-to provide a plugin than can automatically execute a program linked with 
-any of those thunk libraries (ideally hosted somewhere, so we don't have 
-to compile this).
-
-What do you think about this? Are you missing specific bits to make it work?
-
-Regards,
-Pierrick
+>>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>> r~
+> 
 
