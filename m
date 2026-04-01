@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DC9F10F92EC
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 01:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA3910F9314
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 01:04:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7jzF-0007yI-5C; Tue, 31 Mar 2026 21:03:13 -0400
+	id 1w7jzF-0007zA-K2; Tue, 31 Mar 2026 21:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w7jyz-0007kf-L7; Tue, 31 Mar 2026 21:02:58 -0400
+ id 1w7jz7-0007oA-Tv; Tue, 31 Mar 2026 21:03:07 -0400
 Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
  ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w7jyx-0007bB-Pb; Tue, 31 Mar 2026 21:02:57 -0400
+ id 1w7jz6-0007bB-8k; Tue, 31 Mar 2026 21:03:05 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NaxJ5H8eDxWeFvid8+UKhbgpnnCmMOUERDLcxX/7H5dveghzB8qFhy4DAkzbEaIXAKnRaT7iEE29sdK7w6S0cdklyKRfOqIaYNBMnJJDJUsBbsahcRrRz5aJLYMpYOcK6Z/m2hFeridGH074bDPaJWmpTqK0KsYEeoeQg+t+cJ4iSp4crfCftDXES27fsUtxTqCQjuOum0VQ+5YIIntn5DwCH8E9mhdGsQbGXHUOib7MqiFDnIxqefQ53O1Gf4k9B/O+URpsa3s5ejaz7jbBM7h4TQ1RmWlCIdUw3EhkDjZr+HpRiMe253SH3G0T5sqVZXNPxo/tirbvXyr7I41slg==
+ b=NjygCQ+VcgMIDB4nJio6Lxuouxp3tY2yLRCJFqT47JsGELjSq8g8Me9nC4nI49aiLQBB75AvAE8P8tIZAWAKhe4KW5lRDyrPETRwBJ2T0UnkDZUFzaJEJ3RCvTfORmHadZx+BJerPzK47Gtyedt/kFqNIWZNJXUSYSWPRLo8ZLXHYAZ1sHr9iLDXb8fYDMvyDvK3oAmTVLMFz0IONpHEPu6QvUGkeiFSmB2blKFo2501erq0/6Kl5KG8qO/zzqsNfGcwEUt+WsF3+p99RYpkS0IFVQVgICcJMOP7hOYcZuzdtggzLlYZbshplo3ySEQlGB4MeKgfaOGTGPe14Q7iQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PuQI7z3NsOxpkKRptWijvCAUccDmjyqmCCM/xxp03qw=;
- b=vr+UY+Dqe69k4iWsnH6Jji4zJ7ywQG2N4HlrJIN9f0GjdXkA05+iyYv9aFyWLENsicDiJ3VxydoN3vJebDb+VYdyMPs7e3M9EAuyQnL9G07evI8kMwEtO4RapCwZH1T5H9LGPKH64Y2xt3p2f2ypfxcOtM8JVm8kYZI0azradgSXYQh6OIl0PTSzrF20dhjcCMYGMDmDqhEH+Jeu1rGudfX9xKUzlIl2xyd79y57124C0AJNJ4aW/tJORkc6kx1tYXMVjUTj3ifAMNKqpU6kBGBgPJb+IgJWUCELYkk0Igt+qr91cNQmKuUKKRFHxyVPAODLicG5GRhKgFV/fqB4cg==
+ bh=XmzZRhFROEQ4zoXADgAMHQAqsgcRm9XkKp12Mb8wF18=;
+ b=JVYv7+L5DCgNzpWJTGSezazZljrBN3Y8L2ClCiUUU4xHiRIQtv8fxa5LyKV2Sj1FmK8w6rscSIAM/4jUS9p4txJ0VBiWgpTrCxM5RyPDfasUIdoBKMs21KY3KT7wnnd+QyFvrjnpBG84CCJjAg6vlw2Qys1aKPHn4Xv0BuV+Q9VOEgwDZ75cy02GybnrdY6WLAUJKOzRjijcNz5DGPoRk4kB2sGmt/tBQo1Qa/BFuuIj+FmdBcVDMWZq/Axv4DI9wFdI5F0ToeZ1tQGvyoiaKPdQXD1WQwCXG8E3ji666kDlAQg1Oi5lr4ljLpoBqBc9TRI4o/NvBtapqnFVtKjw/w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PuQI7z3NsOxpkKRptWijvCAUccDmjyqmCCM/xxp03qw=;
- b=gLSJE1i5YkP9jspoHXG37WYZUHLW38UPqijMU+ochKPdWilMATwpnrwDxd0tvGx+gwFdk5WmCWlwEvxAJ650/fWvePHedYhhyp0mqL2Zo06XlImxLdljqwIfogZ1kqBdGdmH4nvSIzietD30XuC1k2hq7DE6gl6IpdAr51iFRHn5rSCYxvFRGpmWELG76wb/6oom9T52AlFsHAwJrIrEVLD7ImQPmKSNx0qbgqZNK6b6R6hROJz5/tWtzeQJoZWVDMh34vJjYxuWA2nA7NcY/LMXTsRRkN6nX/ztW4sfZ/8siO/Bvsz7CNPDIdeLhso5D10yxBS0JuccORu72rJC/A==
+ bh=XmzZRhFROEQ4zoXADgAMHQAqsgcRm9XkKp12Mb8wF18=;
+ b=PGz84OCPj4/jDUl8Q6fSumnb0iutf6HR1Ye2V4XhkU6rKw9ObqOpr2TWNVuVpJJXEKTU7XP2McuhoIEDYgeuXZRJD94WBXm7x4wm1/U/OfS0w5vK8w5KaFw/Ri23AHlYoHAHEig7nMPF5OXHp/2DWCWBiCh1pIdbmjQsFXW6ax7Hx1DwHE2BojntWzsvswBAK+An2BVG4D+rEbc42hx0JsskzYBjqSSy17FRGcG0pn0muNepY2WgP2gRlYboikfawfVR96DxVUZg5H2iYYhMUD76rQk3xFOq9AsXHZaEHlKOljzf8ZoCZwyNzSOTkXsVVw63jTkTf6nfdR7Y1bavuw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DS2PR12MB9567.namprd12.prod.outlook.com (2603:10b6:8:27c::8) by
  CH1PR12MB9647.namprd12.prod.outlook.com (2603:10b6:610:2b0::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Wed, 1 Apr
- 2026 01:02:42 +0000
+ 2026 01:02:49 +0000
 Received: from DS2PR12MB9567.namprd12.prod.outlook.com
  ([fe80::636:1b52:24ca:d7e5]) by DS2PR12MB9567.namprd12.prod.outlook.com
  ([fe80::636:1b52:24ca:d7e5%3]) with mapi id 15.20.9769.015; Wed, 1 Apr 2026
- 01:02:42 +0000
+ 01:02:49 +0000
 From: Nathan Chen <nathanc@nvidia.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
@@ -58,71 +58,71 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Shameer Kolothum <skolothumtho@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
  Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>
-Subject: [PATCH 04/11] vfio/pci: Add ats property and mask ATS cap when not
- exposed
-Date: Tue, 31 Mar 2026 18:02:24 -0700
-Message-ID: <20260401010231.4166776-5-nathanc@nvidia.com>
+Subject: [PATCH 08/11] hw/arm/smmuv3: Change the default ssidsize to match the
+ host
+Date: Tue, 31 Mar 2026 18:02:28 -0700
+Message-ID: <20260401010231.4166776-9-nathanc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260401010231.4166776-1-nathanc@nvidia.com>
 References: <20260401010231.4166776-1-nathanc@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SJ2PR07CA0007.namprd07.prod.outlook.com
- (2603:10b6:a03:505::12) To DS2PR12MB9567.namprd12.prod.outlook.com
+X-ClientProxiedBy: BY5PR13CA0023.namprd13.prod.outlook.com
+ (2603:10b6:a03:180::36) To DS2PR12MB9567.namprd12.prod.outlook.com
  (2603:10b6:8:27c::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DS2PR12MB9567:EE_|CH1PR12MB9647:EE_
-X-MS-Office365-Filtering-Correlation-Id: 33273364-cc49-4ab6-dbb1-08de8f8a6088
+X-MS-Office365-Filtering-Correlation-Id: 6e4c35fa-4746-42eb-d760-08de8f8a64c7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|1800799024|366016|376014|7416014|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info: qJrCcfEh1/m4d9FJjzZ9RkzYH9e85IWOKwL8DyQ/ZJX2lHAtMl+8Q7p7dr6pTpvhLqJfYeRhWNoL/xnVoFhndNj1UeBzFSmBuLluRGsbkjnEsMkHFdNc1ydAY00l4Lzq3jC54O3J1gmiPq3gFad685jAe40K2FO/5O6coKBKK1hPejl33SHkPsDqwn6BE8WiBVzaUgxyhrGsI1wHjCSKG6EALbDfcm1CuH3JpNCgQtr4IQvdNB4dRTCbIutz7BeYe4N6nk04qJvlmxRQ/5U6j7wJ7ToS96kG4EEhV3yrYXjeZP7WqNcx/6k/HRg4h8ngMbYWi9WFRNUuH/xf0cjNOmUCQFWh6g80Hk4Ef5jcEwtUPBTnSdnGL/hr3y97bAZBimM93HxmqHqqQypMA1w27r03dUSbw3Yt4WXHXcejPOJyWITUAk1FgU+vdPSsjtEzpghPANTVIGhBrNm9OqB90P5hYdE71sPA8Hk7y1EMvOwyS2uPO8viSi8H7GqEAreDk9dsgBSAP0M2BKRG3sn2RwKmj+gA6vuGuJ7yq/qFfKV3DAAAEgRejac174Z45Zq0Bdky4uGlvt1YHVUvk4z1skmaoYlzt2ztzt5nBqctvNTD9bk0hNgLvPJhixS42s1svTmJzZ9lXTbdOgrbMrHIhvwla0dYLxcefCQtL+qlTya43RU+JOhhs75ZsKaTN2o6GpTkbIR396HPoTrhr5i0iYhK3X1zfx92BpxvtcuLcSQ=
+X-Microsoft-Antispam-Message-Info: BaERQyVmD8va+oAZZvllPdthBppY4Gv5TKb2XrGkHiiflxqUNhPsKml9pnX/02nq0Ps7qr16INSAdvt5y0KAnCNorB6EgqliohGxhCCOk45kKqHSNyQSGhS344oiBzOh0F+W5OTH4C6aSy4naJoWKJ+k0UcLxsx68CChrQT/WGIAbrGphJ+VByVt3xoYquk6jCg0yShELypBp2zoV979jvvQZQG4ZW6CLYxvDKWNBhTBUg/3zqlMGhyYTPi6CuANDWpyu2oVVI+vg9/LbD1g4Wy+2l1qAXNnlrMRjiGvejMEym74SFGxA9D3mKv4aFn+Zi2tygDOkotKNFczOH+vwM2DAt5T6qVWiq90ThTgl1hNWeM+Q70z3R5ufPu26ICgNrRT79CJ1hAl8voJlYuu7LTTxn63ul8T1nDU1JLfnH2uROqYYuZkbw4gA9ldxnH6Zb8LxLiiE3oYDKuyOWtl9OtmowBTOFxQqkjWkNm87+Rd2WBEx1jG37mDyNrwuMGrRIMD4j3/BwUuTIFnETh/2uxsI8ywF7i3EYyeoHp3xPSPrrfsp4O4vt3/qf8Jc6r8XLMANqr3DyW4Mj6TlVKTz94U4HvBROSJSv9XJAD5hqSqKtXWjc7EM2IpP+T1QqQIReWeTJaHbgEMTsQYIEmuMowNdfJe6Zdk6fVcHc1HdaPcjvYYsWWWj/O1HbvKq+8/q2jVNI4Tt4i+M93iR3KS1g2NG89qUNjPnf2eJmpo3PE=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DS2PR12MB9567.namprd12.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(7416014)(18002099003)(56012099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZgtpDxzfX7KojBxTfKsXVi10gqR9CElXCb73dq/nLSJ7Pe1oYEdZppCYXDGX?=
- =?us-ascii?Q?VDSYAMq5mHFGsTCxKzdKizFN/Dm5qSGNb7G8lSZemlUNzYdRpvCxsQttWeLt?=
- =?us-ascii?Q?T3qrH6XBkfkYB+5qP6WB0jGMB5rQaZw40HxIRe/ZuAHRSho1w8arUgl6ga1K?=
- =?us-ascii?Q?l1PLthZBCiBS+l8E0sKAyVZCNrTywUSky1mEnyxx7UvNfdO9MRGL7vRKRtr4?=
- =?us-ascii?Q?MgMU1pSghd592FTMgSRlHY5M11Vm68R0tfRef1iK6ZwWGtWrW7qNCXWEqRbh?=
- =?us-ascii?Q?RXBePpzofGhAS7Mge9RY0EXjIif5yiurFg9sxMMorGF57U/MN0N4krQ14Dp4?=
- =?us-ascii?Q?RE3a9FdGmahi/aLM1iFq/sA2bGjitYa1R6UGtfNW1CHsuwu9PEvfeR90dqIa?=
- =?us-ascii?Q?pjbsj/x/zDa4FCKHDx8vxpQt79tdyxzn1Dyl/GYjxmV1CFBsFXYl2rmEG9Wq?=
- =?us-ascii?Q?f08aqVjLQjGioa6OccGESTBVGB1rYdpVLn2pMy+EG/cc+fGfY2UlSppIMaeL?=
- =?us-ascii?Q?E79wjUjQPDleq6jZy5hEsy20IINYX4TS+xl8lYhUYsiV7UQOhOrSm7GAXDHD?=
- =?us-ascii?Q?5GYOLeMtcuMrntafJBLMCaNQKoAmT0jlT4DwmoBPZgC0pPa6UgqgutbdPelD?=
- =?us-ascii?Q?g163dh4WtLNHISCy9mbSPEZkGEpm1yYq3f5RybSpbJ2Ci9kUduFO169NbZox?=
- =?us-ascii?Q?FrtyP6Vv7Lc4tIF7r9B8PVHxRdkAgo9PLsrbjIelScnAr3plXrV1ejLekK22?=
- =?us-ascii?Q?f0K00xd/YeIn4b1xA4icHHwEtNL7kUCPehR8WIYLUk8WNEHwy/gHcAY+SqtF?=
- =?us-ascii?Q?BVeZcUrPNqAxU758xItYmWrlPlXN0bknzrjgLJ2ufq4ABF2p01p0xuH9evd7?=
- =?us-ascii?Q?3I4p99rk22jpS9c531jRfhKALFaA2Bdy80Wz1uRDHL3JfV+UFl5LKIVfatab?=
- =?us-ascii?Q?DnKK3RoUjvYXcPx+OKXHXjBuaf2I0RTMXdatYsYTKlztlhVfd6uZBeuKGEoQ?=
- =?us-ascii?Q?HZYFgyLs7VCx+19M4lisP9U8tBvOsq+dCDNBsYzIBdfEDcjfsoh06+7XW0XV?=
- =?us-ascii?Q?faW29vxEUlYe00kmt141kqIuJwpdnxhTgOXTJhvIUiIbmxX5P0WpyephSw0a?=
- =?us-ascii?Q?dCYwR+bP9eJWmwOg53E6c2L2JuXqXcP2lIbpsaZkOjllLlty9rPUpEqpAD5B?=
- =?us-ascii?Q?nR2hEHPJWvfTx7EkNfHXtAn99P6lOibnBxa/pYzhFHJMC4acdlhfT2zmaSej?=
- =?us-ascii?Q?v7oipxySobtmYJJ0k0LdHIAmOogTOCqnTNJBDuxH4SK2MAyIlzQ9Q67cfpOG?=
- =?us-ascii?Q?fRn51TiBBrB4f77mC7LUTV//G3WX9aB05Wd7jo+RIg9BP2p0kjPOM9CBipWf?=
- =?us-ascii?Q?oHlypVSp6KCBH34ZJsq1fEOphqD3bSsvcgtxislHpfRjc1LUBZn3h76cCdRS?=
- =?us-ascii?Q?xaFEUmut7e4R82tV38151jmHO7QJnIQ9z4h1ienGu55FT3p3gb2HKEQbrx5n?=
- =?us-ascii?Q?BRma+DoSUod+np5k9/cX+JrmT6+GxCwnz0ddC7NW7x1SEY5tGCgVNyg46+fT?=
- =?us-ascii?Q?qsmz57p5O1GpIiOWIrwfApt0DxjOvTXxwqPGnKRou7+sjr3t9Z9zXSaOUFnL?=
- =?us-ascii?Q?Zt8UFThFuMcXWRi110je1kM8BzSZmya1XL6cBirkIVR4vm/p4WCJhklGOJdM?=
- =?us-ascii?Q?1VrHwbuOZ3zw2wVwPO2DS/h5a7sfHyEERWcPfiYvOHZDpyGu+e1ARzPD7Rea?=
- =?us-ascii?Q?eMBMwcVjrg=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?D8pFUSkbQu6dTWZxfrVVlYFT9QYsQKgID817jpVo4wu2r/AQ3STQCgy8WrVw?=
+ =?us-ascii?Q?a5mb8bJNx8lIi9/T/xopa1/9Wjk3PGba+/+XKM0faWcdMxGZq0y6wdY6+nxR?=
+ =?us-ascii?Q?TRzvAFXr+W6Chwb4sPLvAAo0LkBkFUEYqsY79XsoW7eo6Rr+YD66ciMUacFE?=
+ =?us-ascii?Q?h0A2yqwJPHdK9nzUN7yqbzw1ZQfDlzmMfl6vGU2pGmbnREm0kLbIpd1upxVl?=
+ =?us-ascii?Q?J7Fx+ZjSaTn4dZy1jdd97ioZ3Rsb0J/uHMcrUL99mO0gKPhpcOti4HfoECFC?=
+ =?us-ascii?Q?ixyZxZ/ZUKaMbxsQ4VlnVIdsJPhnk72jSYYNk2hF72AEb40CEMknLtXD5Rmt?=
+ =?us-ascii?Q?aQQwN9Vha55EPDsAMbb47F1EhppqAwSekXpwAfV1ftx/oILbjfEcNj+Pwg0h?=
+ =?us-ascii?Q?XoSbau9JM2g0l+RWYnZ1CsYbSTwZeaSZ37L+0q7U0UeA37okHZlmZJoiyfll?=
+ =?us-ascii?Q?MxC9uHlxl+dG3MTet/EGEcXzPuuEc5aCHGGs8H/WYOJyOhw2f0v5RhF+oKDO?=
+ =?us-ascii?Q?w1wIv4Zuke5FXkOJmkCXvW3m7I71hRxrtl06nKPS6MX6bMYAX/05AUdIB3ur?=
+ =?us-ascii?Q?npqBNrWkRHM8vjhkJQo+DIa45aLy2zE+RJgT6oX+5M+NDnB2nysDnJkFUoEO?=
+ =?us-ascii?Q?VA99Cl7X2Xeva6XlNna2Fwogrx/aXtRKIaC7WTB3qefLVzpZpq8vORrdpRai?=
+ =?us-ascii?Q?M5z211EnI6OYdSpjIeY/oOWkIdCA5Ruym+XQ+4z8X25XZbKEuUeM8D7JxWd4?=
+ =?us-ascii?Q?h48jevfPd4O14dAaERO58zT4cS6QyRIQnlskUKuhWucSz/tUQdGcwKZtImT4?=
+ =?us-ascii?Q?8V0Bm9SQt+R6WNgprFLbPlQGnxrELLJ9v1Ke26PYXKlR43FzRqxThWnCC7HD?=
+ =?us-ascii?Q?R+uG2/2P7In3x9HVLT6QVwRfxWEz1h10Bd3nXasvsLOFs3POxeC/1VNyaP1u?=
+ =?us-ascii?Q?e54NhnUgKmsTewUTHJW2BnTlE1A7IZ5CT91ZWUDre85N+QvJ96SNbKGWFb9z?=
+ =?us-ascii?Q?QRc92CvLOaw5ulUwkJWdnmGx2z9h+iaRJRK3+p35qvUe7zWVfDRDUOnmyV0w?=
+ =?us-ascii?Q?kKj+lTVeZ6j0nlVW2fp1vS43i9qXpbHsjegBJpX0LQy2binNeBTC1U08jW2g?=
+ =?us-ascii?Q?NK+m//5XPASAHOpv/efy+UX1Oc+DZLNqhnHq1IFHKCqnC25nqQL7xRqbrkYs?=
+ =?us-ascii?Q?Xsl0molZBM2+sZNNJYEJGhSv8vwZF4dH5fowbVrhvl/H+KwvsrqoCxo97zTk?=
+ =?us-ascii?Q?EhLT3BvaAE82WYZ6rz1AKoXKKT7vJt+yfQZ38PrCgkZUNxeYWx1pzCqb/pno?=
+ =?us-ascii?Q?7tArbul7F33DY0Wt+gZqzNWOg6NSuc77LhklE3Ra0hUdz16cHHaJcn8+TA5T?=
+ =?us-ascii?Q?Y1jdIq5C29mgAtGh4kQsPKDNJXjGSjTmIAIZWFsxXo0GjnxcvlLfYMHUxs/U?=
+ =?us-ascii?Q?ovhlCb+gehx+rM7M51QWRShfiOm+9xbYmaKBE4GfASn0Xk9LWcpw9lmaElT2?=
+ =?us-ascii?Q?BtOlUTnraVlZXkk7NpRlPfs2jghkbAKhYCLdnNiyY7Fa0ZkuiL19LLZoLNLk?=
+ =?us-ascii?Q?riGq521CdlMJreTFl8HcMmIug0USyrsBlnni+/NE8mT7Wt8/POzO/wfu9gLm?=
+ =?us-ascii?Q?pKDKz+ITA3gUbqUxkBfIFmWrhCb0VpGolpvGzZwC9ZUD/ZEt9gzEjOqtJcYp?=
+ =?us-ascii?Q?irh+5Enz6CTGyiSdavj5AqvFvVFGy8eFxCC8s2cKPzMBydVpepCwJ9+WvJeM?=
+ =?us-ascii?Q?mXqMaq0+RA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 33273364-cc49-4ab6-dbb1-08de8f8a6088
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6e4c35fa-4746-42eb-d760-08de8f8a64c7
 X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9567.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Apr 2026 01:02:42.2729 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Apr 2026 01:02:49.3385 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jLVNXhZTidk37onXVSNT04w55DZQZFsKll8bsAcn4f5nGk3BWjgueTtuNr0+xEIkNLf+u5KZAOlx6PVpLTtvFQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: nX4rnXWScWZJ82bIoCMo1uMXDkwRLDFqHBWbKlXzoij7EvirB+kfaWiYlNV5OF5i+lUBV/TLEfK6pRm9BC2s7g==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PR12MB9647
 Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
  envelope-from=nathanc@nvidia.com;
@@ -151,202 +151,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nathan Chen <nathanc@nvidia.com>
 
-Add an "ats" OnOffAuto property to vfio-pci. When the device has an ATS
-extended capability in config space but we should not expose it (ats=off,
-or ats=auto and kernel reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED), mask
-the capability so the guest does not see it.
+Set the default ssidsize value to auto. The default SSID size used
+to be 0, but we change it to match what the host IOMMU properties
+report so that users do not have to introspect host IDR1 for the
+Substream ID support.
 
-This aligns with the kernel's per-device effective ATS reporting and
-allows omitting ATS capability when the vIOMMU has ats=off.
-
-Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 ---
- backends/iommufd.c                 | 15 +++++++
- hw/vfio/pci.c                      | 63 ++++++++++++++++++++++++++++++
- hw/vfio/pci.h                      |  1 +
- include/system/host_iommu_device.h | 10 +++++
- 4 files changed, 89 insertions(+)
+ hw/arm/smmuv3.c   | 4 ++--
+ hw/core/machine.c | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index e1fee16acf..52cb060454 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -22,6 +22,13 @@
- #include "hw/vfio/vfio-device.h"
- #include <sys/ioctl.h>
- #include <linux/iommufd.h>
-+/*
-+ * Until kernel UAPI is synced via scripts;
-+ * matches include/uapi/linux/iommufd.h
-+ */
-+#ifndef IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED
-+#define IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED (1 << 3)
-+#endif
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 67c499d22b..cb14a08a66 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -2156,7 +2156,7 @@ static const Property smmuv3_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
+     DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
+-                              SSID_SIZE_MODE_0),
++                              SSID_SIZE_MODE_AUTO),
+ };
  
- static const char *iommufd_fd_name(IOMMUFDBackend *be)
- {
-@@ -573,6 +580,13 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
-     }
+ static void smmuv3_instance_init(Object *obj)
+@@ -2195,7 +2195,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+         "Number of bits used to represent SubstreamIDs (SSIDs). "
+         "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
+         "Valid range is 0-20, where 0 disables SubstreamID support. "
+-        "Defaults to 0. A value greater than 0 is required to enable "
++        "Defaults to auto. A value greater than 0 is required to enable "
+         "PASID support.");
  }
  
-+static bool hiod_iommufd_support_ats(HostIOMMUDevice *hiod)
-+{
-+    HostIOMMUDeviceCaps *caps = &hiod->caps;
-+
-+    return !(caps->hw_caps & IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED);
-+}
-+
- static bool hiod_iommufd_get_pasid_info(HostIOMMUDevice *hiod,
-                                         PasidInfo *pasid_info)
- {
-@@ -595,6 +609,7 @@ static void hiod_iommufd_class_init(ObjectClass *oc, const void *data)
- 
-     hioc->get_cap = hiod_iommufd_get_cap;
-     hioc->get_pasid_info = hiod_iommufd_get_pasid_info;
-+    hioc->support_ats = hiod_iommufd_support_ats;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 8f8c26bbe8..aa208a2d9a 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -42,6 +42,7 @@
+ GlobalProperty hw_compat_11_0[] = {
+     { TYPE_ARM_SMMUV3, "ats", "off" },
+     { TYPE_ARM_SMMUV3, "ril", "on" },
++    { TYPE_ARM_SMMUV3, "ssidsize", "0" },
  };
  
- static const TypeInfo types[] = {
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 1945751ffd..2d408e1d9a 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -49,6 +49,10 @@
- #include "system/iommufd.h"
- #include "vfio-migration-internal.h"
- #include "vfio-helpers.h"
-+#ifdef CONFIG_IOMMUFD
-+#include "system/host_iommu_device.h"
-+#include "linux/iommufd.h"
-+#endif
- 
- /* Protected by BQL */
- static KVMRouteChange vfio_route_change;
-@@ -2550,10 +2554,53 @@ static bool vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev, Error **errp)
-     return true;
- }
- 
-+/*
-+ * Determine whether ATS capability should be advertised for @vdev, based on
-+ * whether it was enabled on the command line and whether it is supported
-+ * according to the kernel's IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED bit.
-+ *
-+ * Store whether ATS capability should be advertised in @ats_need.
-+ *
-+ * Return false if kernel enables IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED
-+ * and ATS is effectively unsupported.
-+ */
-+static bool vfio_pci_ats_requested_and_supported(VFIOPCIDevice *vdev,
-+                                                 bool *ats_need, Error **errp)
-+{
-+    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
-+    HostIOMMUDeviceClass *hiodc;
-+    bool ats_supported;
-+
-+    if (vdev->ats == ON_OFF_AUTO_OFF) {
-+        *ats_need = false;
-+        return true;
-+    }
-+
-+    *ats_need = true;
-+    if (!hiod) {
-+        return true;
-+    }
-+    hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
-+    if (!hiodc || !hiodc->support_ats) {
-+        return true;
-+    }
-+
-+    ats_supported = hiodc->support_ats(hiod);
-+    if (vdev->ats == ON_OFF_AUTO_ON && !ats_supported) {
-+        error_setg(errp, "vfio: ATS requested but not supported by kernel");
-+        *ats_need = false;
-+        return false;
-+    }
-+
-+    *ats_need = ats_supported;
-+    return true;
-+}
-+
- static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
- {
-     PCIDevice *pdev = PCI_DEVICE(vdev);
-     bool pasid_cap_added = false;
-+    bool ats_needed = false;
-     Error *err = NULL;
-     uint32_t header;
-     uint16_t cap_id, next, size;
-@@ -2603,6 +2650,11 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
-     pci_set_long(pdev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
-     pci_set_long(vdev->emulated_config_bits + PCI_CONFIG_SPACE_SIZE, ~0);
- 
-+    if (!vfio_pci_ats_requested_and_supported(vdev, &ats_needed, &err)) {
-+        error_report_err(err);
-+       err = NULL;
-+    }
-+
-     for (next = PCI_CONFIG_SPACE_SIZE; next;
-          next = PCI_EXT_CAP_NEXT(pci_get_long(config + next))) {
-         header = pci_get_long(config + next);
-@@ -2640,6 +2692,16 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
-         case PCI_EXT_CAP_ID_PASID:
-             pasid_cap_added = true;
-             /* fallthrough */
-+        case PCI_EXT_CAP_ID_ATS:
-+            /*
-+             * If ATS is requested and supported according to the kernel, add
-+             * the ATS capability. If not supported according to the kernel or
-+             * disabled on the qemu command line, omit the ATS cap.
-+             */
-+            if (ats_needed) {
-+                pcie_add_capability(pdev, cap_id, cap_ver, next, size);
-+            }
-+            break;
-         default:
-             pcie_add_capability(pdev, cap_id, cap_ver, next, size);
-         }
-@@ -3819,6 +3881,7 @@ static const Property vfio_pci_properties[] = {
- #ifdef CONFIG_IOMMUFD
-     DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
-                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
-+    DEFINE_PROP_ON_OFF_AUTO("ats", VFIOPCIDevice, ats, ON_OFF_AUTO_AUTO),
- #endif
-     DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check, true),
-     DEFINE_PROP_UINT16("x-vpasid-cap-offset", VFIOPCIDevice,
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index d6495d7f29..514a9197ce 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -191,6 +191,7 @@ struct VFIOPCIDevice {
-     VFIODisplay *dpy;
-     Notifier irqchip_change_notifier;
-     VFIOPCICPR cpr;
-+    OnOffAuto ats;
- };
- 
- /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot match hw */
-diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-index f000301583..44c56e87bb 100644
---- a/include/system/host_iommu_device.h
-+++ b/include/system/host_iommu_device.h
-@@ -133,6 +133,16 @@ struct HostIOMMUDeviceClass {
-      * Returns: true on success, false on failure.
-      */
-     bool (*get_pasid_info)(HostIOMMUDevice *hiod, PasidInfo *pasid_info);
-+    /**
-+     *  @support_ats: Return whether ATS is supported for the device
-+     *  associated with @hiod host IOMMU device, checking if the
-+     *  IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED capability bit is set.
-+     *
-+     *  @hiod: handle to the host IOMMU device
-+     *
-+     *  Returns: true on success, false on failure
-+     */
-+    bool (*support_ats)(HostIOMMUDevice *hiod);
- };
- 
- /*
+ GlobalProperty hw_compat_10_2[] = {
 -- 
 2.43.0
 
