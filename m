@@ -4,102 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E395E10F6FD9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAFB410F6FBF
 	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 15:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7xo7-0006uL-Qj; Wed, 01 Apr 2026 11:48:39 -0400
+	id 1w7xno-0006gR-Re; Wed, 01 Apr 2026 11:48:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w7xo4-0006s8-Qu
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:48:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w7xo2-0004On-Q4
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:48:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775058513;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+sRgn2+j+uaaLVeSL/GdSpvYYsrj5wTaDzPNRh56gCY=;
- b=eTTj/lvx6NG92LfscJmKrqQvJxxIVz1RJa0rMa5l7uLlVFqbA4uKGAd+m4qORHwBHBZuzo
- jNAU26yfC09XKtHsgE+cbspXtTFV0vvJBoYHg45OJloFp3iXTx1vdWyRwcqFQWPb0GLZm5
- qgG9OJt3TrU45jiTOCijvDi7r+ZGP1E=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-399-J2B377HGPkSYzaDPXLv9pQ-1; Wed, 01 Apr 2026 11:48:32 -0400
-X-MC-Unique: J2B377HGPkSYzaDPXLv9pQ-1
-X-Mimecast-MFC-AGG-ID: J2B377HGPkSYzaDPXLv9pQ_1775058511
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8cfd8067379so1773774085a.3
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 08:48:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7xnT-0006Ue-9K
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:48:08 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w7xnN-0004Jz-4D
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:47:57 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-64edf260b49so2133881d50.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 08:47:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775058466; cv=none;
+ d=google.com; s=arc-20240605;
+ b=F0sjHIWptZ3ZB6JuMQhZx3jENhkdmFbFEfTjID0+ZbgXdwt0Ghns1TYfqJLtg0NXDu
+ 7QW8XwpAhKq7pis/I6vQQ49cPeVSii74HmQv927UyEpRAtKce2YK2BdfM/XEK7vzwpdG
+ rGO2HiHEBVrh2UZ/bzOVnNV7iMeN7PeQ570Vus67yUTbqzr5bkhAylQrRr04WUO2MrKX
+ voxRZQK6bxFh7ttiaLsg13nivHLyK/DJswsDn6gYnEV07MDy8U32YnYiRxoagRFUqRnF
+ k1in0DmGdvj5gvuaV1S7UF4gxk8vlCyfupHLm7QSt6xt+5HIXKr8CjiBvhC9EpohKhPb
+ +xjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=kmB9aIaU6FDnNTOkQ+8o75AxF7qUsTKMyzO9o82yd2w=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=I03gy0r2bVN+NPKUHkeoHDk2LXbiOUiyQjBuUsvUDtHBqLm5RH6kMFp93ngEODqxOO
+ fy4e/pnelmTnhELxjBdnEggPibJfy0T8dI4zd1SYxzs0uLzGgco7GOurqkFwMceX5TIB
+ K8xwq0y4FHnJyaxuHOQBP3ZYm0/0Mgkxz55a4H5YdvpfwmJzdgPpuEvKxteq8qISQXSx
+ FZ9DnXoYCm2ODdA2X4xXLiW31TTUtJ5EWo8XJVChRseTTOjTmAjhUjCZRUwq+wsLN1FC
+ JNQ/uHGUZnnEL1tUKNq+aRyJdnHG9LDwVvmZO7jqzTKdaPV6q9090SO0aiOoC9zX6d3Q
+ iBEQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775058511; x=1775663311; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+sRgn2+j+uaaLVeSL/GdSpvYYsrj5wTaDzPNRh56gCY=;
- b=iUuZ1SCag3sBc6f1gn/L4kZlVJp3nXwX8V3DvBqgshSqoWM6tu5sDTxFdibH3VaXOK
- nVrJs1car2JyDxD7CSW4RFPPhwCVEGYZkHrGBQPDxOabrsFgvNCeKD3ceBp00kwExjjp
- JFV1aoU+pfwepfYJXgAchyoqU1Xw6TZztFrpuWljKi3Y/Tti3pJ+sDxwUROcHrccaSHs
- fzdEKGxwH1gkfgFc6KJE1sGA1jaEc98TJ12wduxyg0L5QJMTkrw4MaC/1xdjV/yxKMio
- 2hzx60i8+4e5zZmBr6GMDgDoMGcl1x9RKtnhFcyxy0HjmGHwuQDRtCwKF/yJC/5Je3vt
- Nutg==
+ d=linaro.org; s=google; t=1775058466; x=1775663266; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kmB9aIaU6FDnNTOkQ+8o75AxF7qUsTKMyzO9o82yd2w=;
+ b=LyHRCMjhbmTUNR1hft5CIyCwyCVd4aQmqTaVJFHgidt1Z9yoS2MvgUO9E8kovhoZC9
+ 4W+oo9nPJq1cF60VJp7YeRrj5qjedsRWM7HjE2o+9vDA/NohnjRAps8K/sAGC5PuZxe5
+ TO0nx6UXI4zk8+2F/b5ur4z/An29FX5n8rvcvNn+nbWcH+Og7IqF5gUH6ah/yAjW7/oF
+ 7JNutcv0aPpZ9IZ1Fg4sTKi+ZRDK8S+MNJ6Ak3Qp06y31yAZyyLvLctxMUt8FkkoJBBN
+ CkGXqRDaVplQd3et17+b11eyZpI2ZbeShsDmfACseGun9PVaIGyzvGTOw0KJfAUglCzm
+ nbyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775058511; x=1775663311;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+sRgn2+j+uaaLVeSL/GdSpvYYsrj5wTaDzPNRh56gCY=;
- b=kfMpPaM0ZDPNlJLdSY7jL5rxvKST/jEe8n9Gt6YeT4u9ks8HgvMBOmggJKZ1UJDFCT
- UGddQe0LeySvbdxhvxFXrcPLqTalm6xeoKZ35/gmEeccieWlsePIx1+VRZxTTlgIzVXX
- C+wHf6+gFWuwmhca4+Qa4IA2pJQTd7dxPO9Z3rMP7B9XMa7AExnEtP6ek8glmT9XVqEQ
- NE3JYAa9/8j1p6RIICTDQ59x74K49mmAG6YQrHDy2umDPXjhVeA+zva1fbYyo+ncTwKM
- iRtBD262rDD7E0t98VtlsjqUtb/Swroh6VpQa9z9t+ZXvQNhMqGtxsfITra+1WARQ+fn
- YgBw==
-X-Gm-Message-State: AOJu0Yx8jq8KlRvNl7sOxMAmiDjlSCaiilnIXniA9oYks7ARem8ffkM7
- kucRJKjNBSp18GyU+XnRBK9zyTcLjMIUqqqZFWIGrurfrZPVbjtkQUZcaaWAdg99pcillxTH9OK
- CdWr8W3QN1L2BhLJHiZPlRcglZpdlch3beWbJB4UZzcKT4ZK07LccEMqW
-X-Gm-Gg: ATEYQzxTQRGvtxjShkjd6tOdb+0iNKlDFVYPPl5YnH01R7OL5fzB+yw0rA2PVnGNj1k
- 7fnCsklbfYUd+lkDkUCgDR4em75/d1O+ng0mo7UnAa6u1lgwVz3oWXwQ1ZjEbtBVES8Zx6yP1uc
- 6FTrewQug56j9rJsPcpt4K0vNr4zsvlaKnoPG445Xukhj9R5T/yx0x+2+RC8Fxdbg7XnqGcK+pQ
- puSk6baC79esxMR+ttbOAThk4xOQq6UwaeRs4FSaHv4u4uK4xOK35dMatyPT9V13QS7S5aQ/d8a
- r3r1QhZKdab8HEggpwi++sFArqacBgI8eUA24prLbQueeoRwncC7Yb0l/S8Ye0C1ABYbhiaroQy
- wa6jwK6KAcbihzdJARV8SQKLK7t2HpZ8i8kQe6VutgBffnQ==
-X-Received: by 2002:a05:620a:1a1b:b0:8c6:ca70:68ac with SMTP id
- af79cd13be357-8d1b5bfa953mr625038285a.46.1775058511384; 
- Wed, 01 Apr 2026 08:48:31 -0700 (PDT)
-X-Received: by 2002:a05:620a:1a1b:b0:8c6:ca70:68ac with SMTP id
- af79cd13be357-8d1b5bfa953mr624981585a.46.1775058506088; 
- Wed, 01 Apr 2026 08:48:26 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8d2a5392ce8sm8756285a.7.2026.04.01.08.48.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Apr 2026 08:48:25 -0700 (PDT)
-Date: Wed, 1 Apr 2026 11:48:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [PATCH] physmem: Simplify dirty memory type checks with loop
-Message-ID: <ac0-SLb8uWJP2VHn@x1.local>
-References: <20260401100005.20651-1-guobin@linux.alibaba.com>
+ d=1e100.net; s=20251104; t=1775058466; x=1775663266;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kmB9aIaU6FDnNTOkQ+8o75AxF7qUsTKMyzO9o82yd2w=;
+ b=ZmqrefmpkjluF7xFwk1A1Ryt3YEiGO27Bkxhu11IoOeZ0PwS28vpemcwpygQTx3MIv
+ Y7Nea7072I2hs5oYJLzFcmSio8pnUQrCUBjvlVLLUdRCaBSuMrcR0NHr/b53dlaePlb8
+ ulQdWstwlOVBdZLqCOGLbr9AC++wH1hjDpIYYSuueMqff18ZhC+dq15cm93KIjOSS2Gl
+ N88jZHyDo5u4xKgJfEheqn3f9Q1bSlxS3uTCL4epUWJxW7kZ3LRRS7BUnzkD4uXSJJWn
+ e1ILAVZHSdRDZ5Xxouth12KlYSau4cd6jIDFEPEbKtDEvI7/BK48AQVeg5M1dgqw5zPF
+ l9mA==
+X-Gm-Message-State: AOJu0YyMconKjLcRX4dEZhA6H579LdMxevpCZbXDLklCPS/Ef3u7EsY2
+ ZQ9YERLxE7p8hIIuuY/c9Qi0Z3TfB43Xa3dJeuuLUVSOgWMnG7BCsKqWwLiRMRgPE+rbmutHzJV
+ QC3R4W2Lh7i4aifK0WxT4oS53DusR3V+zQ+m4eL1Fvrn2PwIg3M5Nwfo=
+X-Gm-Gg: ATEYQzzvzHm9brc0bcnDI8CPQSW+LmC3ltbg7/wRySUKc9K4gSW3hxKBeKCmEzzUNNx
+ oAl5CSs3JVWCPZKMRlWjSNNCjPtHbZbxQvqMYa8P99dm940313s7rl+riMcPPwDqAJkTgP6gPiu
+ 33kcyPHoBoaRuzcN0wXweTrG0KtDlpivWUS6b5NsxHaur2ikBHEOVb9hgtmHhvLScCwMOXq3G2w
+ +3H/3zpE/Chx2Vn/1Y1Bu4fLk0p60am3vqksRTOFgkv9JpG6Ry2izDDHF88+VV9C4Lmia3QtA62
+ ViquqZx7LaX+kx5OP8Py+mdeG0vsz1HUnO4NAsUudQ/9iN5swVVzRzoAEvVAIK3WiJI=
+X-Received: by 2002:a05:690e:1205:b0:64e:65a5:a1cd with SMTP id
+ 956f58d0204a3-650268b3a4fmr7348447d50.35.1775058460777; Wed, 01 Apr 2026
+ 08:47:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260401100005.20651-1-guobin@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260401094848.2661985-1-peter.maydell@linaro.org>
+In-Reply-To: <20260401094848.2661985-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 1 Apr 2026 16:47:29 +0100
+X-Gm-Features: AQROBzAlIQ0CKQe5s9K4oOg6VzK_Mf1B0lp2vm5DoigccxhH9PPSo-ODB8mdEjQ
+Message-ID: <CAFEAcA9wD6rxUceNHAZmQ-a-730LjvkQiEtfevYugVKC4eDQJA@mail.gmail.com>
+Subject: Re: [PULL 0/6] linux-user queue
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,22 +112,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 01, 2026 at 06:00:05PM +0800, Bin Guo wrote:
-> In physical_memory_range_includes_clean(), we have three nearly identical
-> if-statements checking different DIRTY_MEMORY types (VGA, CODE, MIGRATION).
-> This code duplication makes maintenance harder and increases the risk of
-> inconsistencies when adding new dirty memory types.
-> 
-> Replace the repetitive checks with a simple loop that iterates through
-> all DIRTY_MEMORY_NUM types, checking only those specified in the mask.
-> This reduces code size and makes it easier to add new dirty memory types
-> in the future.
-> 
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+On Wed, 1 Apr 2026 at 10:48, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This is a set of linux-user bugfixes that I pulled together
+> that seemed to me worth getting into rc2. This doesn't
+> represent any desire on my part to be a maintainer for
+> linux-user :-)
+>
+> -- PMM
+>
+> The following changes since commit 6aeb397debb1c253901bbade8816656c29b63003:
+>
+>   Merge tag 'for-11.0-rc-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-03-31 13:41:29 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/pm215/qemu.git tags/pull-linux-user-20260401
+>
+> for you to fetch changes up to 7e966ef38f58f91e05a46fdfda4ba63a9a1567d6:
+>
+>   bsd-user, linux-user: signal: recursive signal delivery fix (2026-03-31 19:13:20 +0100)
+>
+> ----------------------------------------------------------------
+> linux-user:
+>  * don't incorrectly sign extend guest addresses from mlock etc
+>  * fix name_to_handle_at when AT_HANDLE_MNT_ID_UNIQUE flag is set
+>  * update select timeout writeback
+>  * make openat2() use -L for absolute paths
+>  * correctly handle SIGSEGV generated when trying to deliver
+>    a synchronous signal
+>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
 
--- 
-Peter Xu
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
