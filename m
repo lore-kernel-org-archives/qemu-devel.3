@@ -4,87 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B37A8107639C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 19:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F0210FCACC
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 19:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w81gc-0007t3-O9; Wed, 01 Apr 2026 15:57:10 -0400
+	id 1w81iD-0000EM-2X; Wed, 01 Apr 2026 15:58:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w81gZ-0007qO-G5
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:57:07 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w81gX-0007ej-Us
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:57:07 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2aaed195901so450765ad.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 12:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775073423; x=1775678223; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=nsPAwPvlxYEGgMuILp86KWxfvXBJ8UtdIwq4FTF0TeA=;
- b=YMTd9Xq1Or1QAN9ICRf6tJMo52nIkf0Q0LTMCAAnGgy1CJ71HRhMubF6bj4h0oyinG
- 3mY7S+SWHtrsrp8dmCL1KZYXstKBNksRl4w1NL5kPp8mhaJncuuf1zsMsmjJ5fXk0J6q
- blOAsTu/gOEhIlE5/o9zjwBYhrHhJv37mlPfJ+DpZaH5LkHVKvjW2wtSEAU9W5iluIMh
- DJko3b65WJ6YSZO1wdueNYLmKEDIvDyEiGeXdJ9r+CYn/NWcAxTIaDnYnTXe20nWZxpn
- Dzhi36lbtV/F9YwIuExwsCJzcxz/yVazTH44ATMEDkKJQpJNAJbvxM+LTP1u0a3xO9v+
- cA8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775073423; x=1775678223;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nsPAwPvlxYEGgMuILp86KWxfvXBJ8UtdIwq4FTF0TeA=;
- b=mjnmcvYOOu34VTjcR+wckJGDjeEeX2KFGRGD8AxgjmBrsRIzMHUl0FN2LbEwls9F1S
- VqY/aWJND/jM9rg9uoWUkpenThnNikhZAYlGCQenmkCfGroz4R6xEVMaq8Al7Z7sSaWP
- 2sSxhkngv4GAVqCEmXQc/Dq5fegEsxj2hSA7NKYkSV6Gp7GqsZRFBcKRaIKmTvxU8lu7
- F3dW8sRUDc7l5j2iMmBaR+jdXycYNLxF47JoRh7rXYIVzrYER6BKz7/iYqnk3bCRO1/+
- K0BldPYp+P2fgCBySqwBb8Csh07HjJv6qbJDYGul1tXT2H1mZG5KkB1DqLu6L3whE83m
- xevg==
-X-Gm-Message-State: AOJu0YxdAgS8l6vYzrmu22Ftgm8i7Ade+5Y97QemqiDuUmqYTWdbkajS
- 6aDattDuIcb+djpIp6nDVuuEX60j5ZtXvmDjvsUWWsA6nmsTbRxbPsVj
-X-Gm-Gg: ATEYQzyHVx3+76u01536ho0mlkgXm7NooYHHNB9hl5mvsZfkOLaHfFajBB+4KpanN69
- DmRLt9rHS+KKSPqfPq69eBNKnU0j3/u/lFiUMfEDyqXWhOcH0u8B7FLICEYW6Gbx5MD3/qeylLL
- FsyBg27ULIxs2kTZ61DcAhfMYpwEjyxuJTxlrGV0vI6Bdmf5UXPIFJYR+TywQxJEJ2SI7UuluFo
- WEZGnJR1lqeVv0Z0HGFUGOttL5/91hGEs5nXePbK6lVUU6GwRLX2UE7WmPv73ivcWsTVIHtyUsO
- xQF3dGLV6krvSYxJxbVvMJrp6WTfWq4ij7s6GRH2/X3kpbsWGEdOi8zWjXa1cJY3Kx5RNpbRw4Z
- esZexEYl8Kt+G+WFyAvNh7MzErJqZNS71nFKf3ig7VFH315NR3vFabynmtzZ+vvyyR06bxekKGA
- ROqKXvPiuGKYQOP34Sg+cZAHdTvSiyke0hC3RNUa2QHw==
-X-Received: by 2002:a17:903:1a2f:b0:2b2:420a:b48a with SMTP id
- d9443c01a7336-2b275b6d39amr4951895ad.32.1775073423441; 
- Wed, 01 Apr 2026 12:57:03 -0700 (PDT)
-Received: from localhost ([42.118.191.4]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2749cbc58sm5463855ad.78.2026.04.01.12.57.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Apr 2026 12:57:02 -0700 (PDT)
-Date: Thu, 2 Apr 2026 02:56:57 +0700
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] migration: fix QIOChannelFile leak on error in
- file_connect_outgoing
-Message-ID: <z7dm2dku7soyuadyudp2uhe7ekssnugowwl6pzyp33o42b5m6g@5t7gb4z35fj6>
-References: <20260328121215.159532-1-vikingtc4@gmail.com>
- <acrimq2TDEs6KHuE@x1.local>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w81iA-0000CL-HH
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:58:46 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w81i8-0007hx-47
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 15:58:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D240A596A1D;
+ Wed, 01 Apr 2026 21:58:38 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id OItP4PhxMYzN; Wed,  1 Apr 2026 21:58:36 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id CB24C596A23; Wed, 01 Apr 2026 21:58:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C96B2596A22;
+ Wed, 01 Apr 2026 21:58:36 +0200 (CEST)
+Date: Wed, 1 Apr 2026 21:58:36 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [RFC PATCH] hw/display: modernise the vga debug code (!!GenAI!!)
+In-Reply-To: <20260330222900.982404-1-alex.bennee@linaro.org>
+Message-ID: <6256588b-7b98-f908-160f-2f0f884999b1@eik.bme.hu>
+References: <6c3214ac-1679-d9db-2fed-c934fde8ddf2@eik.bme.hu>
+ <20260330222900.982404-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <acrimq2TDEs6KHuE@x1.local>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: multipart/mixed;
+ boundary="3866299591-170091141-1775073516=:57447"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,37 +66,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 30, 2026 at 04:52:42PM -0400, Peter Xu wrote:
-> On Sat, Mar 28, 2026 at 09:12:14PM +0900, Trieu Huynh wrote:
-> > Commit 03a680c978 changed g_autoptr(QIOChannelFile) to a plain pointer
-> > but failed to restore the necessary object_unref() calls on error paths.
-> > Previously, these were handled implicitly by the g_autoptr cleanup
-> > mechanism.
-> > 
-> > Two error paths currently leak the QIOChannelFile object and its
-> > underlying file descriptor:
-> > 
-> >   1. When ftruncate() fails (e.g., on character or block devices).
-> >   2. When qio_channel_io_seek() fails after the channel is created.
-> > 
-> > In environments that retry migration automatically (e.g., libvirt),
-> > these FDs accumulate until QEMU hits RLIMIT_NOFILE and fails with
-> > EMFILE (Too many open files).
-> > 
-> > Add the missing object_unref() calls to both error paths to ensure
-> > resources are properly released.
-> > 
-> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> 
-> Good catch.
-> 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> 
-> I'm just curious, how did you find it?
-> 
-Thanks, just by change, while researching the codebase and blame
-some locs :)
-> -- 
-> Peter Xu
-> 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-170091141-1775073516=:57447
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Mon, 30 Mar 2026, Alex Bennée wrote:
+> @@ -1660,11 +1604,10 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
+>         s->cursor_invalidate(s);
+>     }
+>
+> -#if 0
+> -    printf("w=%d h=%d v=%d line_offset=%d cr[0x09]=0x%02x cr[0x17]=0x%02x linecmp=%d sr[0x01]=0x%02x\n",
+> -           width, height, v, line_offset, s->cr[9], s->cr[VGA_CRTC_MODE],
+> -           s->params.line_compare, sr(s, VGA_SEQ_CLOCK_MODE));
+> -#endif
+> +    trace_vga_draw_graphic(width, height, v, s->params.line_offset,
+> +                           s->cr[9], s->cr[VGA_CRTC_MODE],
+> +                           s->params.line_compare, sr(s, VGA_SEQ_CLOCK_MODE));
+> +
+>     addr1 = (s->params.start_addr * 4);
+>     y_start = -1;
+>     d = surface_data(surface);
+
+I've found moving this to line 1678 into an else branch of if 
+(!full_update) so it's only logged once when parameters change would 
+probably be better. I haven't looked at the other logs as I only needed 
+this one at this time. The point is that it probably needs more thought 
+than automatic conversion so unless somebody wants to do that it's easier 
+to leave it as it is or convert them one by one.
+
+Regards,
+BALATON Zoltan
+--3866299591-170091141-1775073516=:57447--
 
