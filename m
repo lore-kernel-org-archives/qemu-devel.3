@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3926A1076381
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 17:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5601A1076381
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 17:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7zEJ-0003Mb-4I; Wed, 01 Apr 2026 13:19:47 -0400
+	id 1w7zEI-0003LV-6Z; Wed, 01 Apr 2026 13:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w7zEF-0003Ix-2t
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:43 -0400
+ id 1w7zEG-0003Jv-BE
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1w7zEC-0001In-VI
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:42 -0400
+ id 1w7zEE-0001Iy-PI
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:19:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775063980;
+ s=mimecast20190719; t=1775063981;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=56IhqZsu/XJJ3I4EtYsq1VusSGeD9z30b3U0IZEUjbM=;
- b=QXGj4tLqKr9IrFciSBIT5BKzu4xIqo+S7EAz6R+O0zQm9ND4194k0IVFcj7MELGWkhsVCY
- 2uI/KyCFRYtvd6TAE7nDGyPsQu1MJ7Sse6g9FOhkwhte8jUKSjvFIOQSBJozA677xfrc2V
- R9cba+ryY1gzOgcyBiNSgHl1qy4jfuo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MZVJJmwTxXh+7sbJhmm6vZsogwXgbvdK40MsXN3n/Gg=;
+ b=Ws+2UQQYg5CaJo4hivfHJQZv9TIPPnZiEQkuo2Ih1NOO5qaPnPIZADPACkQPYgypdbzxm0
+ ZxdAZ1ZSow5hon/kSsGiY1Gl44ONDiKmBOavGxvAlmV+yhushW1xkH+Fpr4IJsnNuP/blj
+ hjl1NTUyNRocrxea+DCijZtSIw4FWAY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-jEBZpI1AOlOrabhYHjk-5w-1; Wed,
- 01 Apr 2026 13:19:37 -0400
-X-MC-Unique: jEBZpI1AOlOrabhYHjk-5w-1
-X-Mimecast-MFC-AGG-ID: jEBZpI1AOlOrabhYHjk-5w_1775063975
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-507-swJLtvw8MFiAabTc7jErBA-1; Wed,
+ 01 Apr 2026 13:19:40 -0400
+X-MC-Unique: swJLtvw8MFiAabTc7jErBA-1
+X-Mimecast-MFC-AGG-ID: swJLtvw8MFiAabTc7jErBA_1775063979
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6421195608C; Wed,  1 Apr 2026 17:19:35 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8080F1955DDB; Wed,  1 Apr 2026 17:19:39 +0000 (UTC)
 Received: from localhost (unknown [10.44.32.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7688730001A2; Wed,  1 Apr 2026 17:19:34 +0000 (UTC)
+ id 6592730002DA; Wed,  1 Apr 2026 17:19:38 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, <qemu-stable@nongnu.org>,
  qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 1/3] scsi: adjust error_prepend() formatting
-Date: Wed,  1 Apr 2026 13:19:25 -0400
-Message-ID: <20260401171927.396672-2-stefanha@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>, Qing Wang <qinwang@redhat.com>
+Subject: [PATCH 2/3] scsi: always send valid PREEMPT TYPE field
+Date: Wed,  1 Apr 2026 13:19:26 -0400
+Message-ID: <20260401171927.396672-3-stefanha@redhat.com>
 In-Reply-To: <20260401171927.396672-1-stefanha@redhat.com>
 References: <20260401171927.396672-1-stefanha@redhat.com>
 MIME-Version: 1.0
@@ -86,36 +86,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error strings will be concatenated so add a separator to make the
-combined error message easy to read.
+The SPC-6 specification says that the PREEMPT service action ignores the
+TYPE field when there is no reservation. However, the LIO Linux iSCSI
+target rejects commands with a zero TYPE field. The field never ends up
+being used in this case, so replace it with a "valid" value to work
+around the issue.
 
+Reported-by: Qing Wang <qinwang@redhat.com>
+Buglink: https://redhat.atlassian.net/browse/RHEL-155807
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/scsi/scsi-generic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/scsi/constants.h | 10 ++++++++++
+ hw/scsi/scsi-generic.c   | 10 ++++++++++
+ 2 files changed, 20 insertions(+)
 
+diff --git a/include/scsi/constants.h b/include/scsi/constants.h
+index cb97bdb636..717e470a5d 100644
+--- a/include/scsi/constants.h
++++ b/include/scsi/constants.h
+@@ -340,4 +340,14 @@
+ #define PRO_REGISTER_AND_MOVE                   0x07
+ #define PRO_REPLACE_LOST_RESERVATION            0x08
+ 
++/*
++ * Persistent reservation types
++ */
++#define PR_TYPE_WRITE_EXCLUSIVE             0x1
++#define PR_TYPE_EXCLUSIVE_ACCESS            0x3
++#define PR_TYPE_WRITE_EXCLUSIVE_REG_ONLY    0x5
++#define PR_TYPE_EXCLUSIVE_ACCESS_REG_ONLY   0x6
++#define PR_TYPE_WRITE_EXCLUSIVE_ALL_REGS    0x7
++#define PR_TYPE_EXCLUSIVE_ACCESS_ALL_REGS   0x8
++
+ #endif
 diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index a2316a5266..b55d068323 100644
+index b55d068323..349dea6bdd 100644
 --- a/hw/scsi/scsi-generic.c
 +++ b/hw/scsi/scsi-generic.c
-@@ -439,7 +439,7 @@ static bool scsi_generic_pr_register(SCSIDevice *s, uint64_t key, Error **errp)
-     ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd),
-                      buf, sizeof(buf), s->io_timeout, errp);
-     if (ret < 0) {
--        error_prepend(errp, "PERSISTENT RESERVE OUT with REGISTER");
-+        error_prepend(errp, "PERSISTENT RESERVE OUT with REGISTER: ");
-         return false;
-     }
-     return true;
-@@ -463,7 +463,7 @@ static bool scsi_generic_pr_preempt(SCSIDevice *s, uint64_t key,
-     ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd),
-                      buf, sizeof(buf), s->io_timeout, errp);
-     if (ret < 0) {
--        error_prepend(errp, "PERSISTENT RESERVE OUT with PREEMPT");
-+        error_prepend(errp, "PERSISTENT RESERVE OUT with PREEMPT: ");
-         return false;
-     }
-     return true;
+@@ -453,6 +453,16 @@ static bool scsi_generic_pr_preempt(SCSIDevice *s, uint64_t key,
+     uint64_t key_be = cpu_to_be64(key);
+     int ret;
+ 
++    /*
++     * The LIO iSCSI target in Linux up to at least version 7.0 rejects PREEMPT
++     * commands with a zero TYPE field although the SPC-6 specification says
++     * the field should be ignored when there is no persistent reservation.
++     * Work around this by choosing an arbitrary valid PR type value.
++     */
++    if (resv_type == 0) {
++        resv_type = PR_TYPE_WRITE_EXCLUSIVE;
++    }
++
+     cmd[0] = PERSISTENT_RESERVE_OUT;
+     cmd[1] = PRO_PREEMPT;
+     cmd[2] = resv_type & 0xf;
 -- 
 2.53.0
 
