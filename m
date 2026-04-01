@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4801AD35164
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7563D35163
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7s3u-0005Fd-AL; Wed, 01 Apr 2026 05:40:34 -0400
+	id 1w7s6c-00062M-Pu; Wed, 01 Apr 2026 05:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7s3r-0005FC-Ft
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:40:31 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7s6b-00061p-4s
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:43:21 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7s3p-0007cJ-Rp
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:40:31 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48557c8ad47so52412075e9.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:40:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7s6Z-0008Ac-G0
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:43:20 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-486fd27754bso65477625e9.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775036428; x=1775641228; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775036598; x=1775641398; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kX4aBh3ZNutmzCXEGUcvM0doLUpfEGBDP4upOWLMzoo=;
- b=FiX+CQAEihONhF6Idl9GMNgeBLvwit7oNP1AU728zt0xHEzn6jkzRPEQHkLE6fmb8e
- 01kqsBL5WEXETYSoV8+0mkhLAqoUxXVELy7GeIU7QsoAwNp1dwqOdNFLj9mseYivAFbQ
- aiLOsGKt+itiU61qh7KbIcJG3ruByL3Adh5qtt9zzccHFz9ktWUu0kjQtfCycia+B2G3
- 5A2tC1jfFe9n1ng6ryOCYhOjxXUjvuvZrODaekAyZJLt9K0chTRGQFkPU4BdHPgptEdi
- dvlyuQ6+Qz5XY1Sqs/4ia5NI/hR8eQhvu9XFvlsvcEYp8748CMjjZslbEmlXvM+ZljMn
- 2lsg==
+ bh=cuBwiUM39oOFyPXW9QKUmrD94Xs1RkDolFcLPjWhI24=;
+ b=swrox1vQamE6ePXsqGbvLWF5jEE5oVjK3HEAvEGgF5So0NvtUV3xSAb98FgftHik1a
+ vx5NIcf3z5iGjnGHKqj4i8YXBsiWSgunVvTjoU+8G4TEyCVC67gk8/hErY7cCvejJk1W
+ WFHLFyFVlZZ37SpcmWBTTMQx5jh9NqMDp5zLvh/ijtE3Ug3naF8jiswNlAtsT4Pmwhku
+ o+CbE/3frQLd23Qqgjes0aq5yV5rCFmby6PLcSb4Kob9KZtgDHUDYln017CVMth4n3J2
+ ifJYZXZlK6tjNYLF+v2nP8ttJWt56nif8/eNjRJF1DhsoAsO1gpo8ZNbxx2hKDj30Tin
+ TIcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775036428; x=1775641228;
+ d=1e100.net; s=20251104; t=1775036598; x=1775641398;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kX4aBh3ZNutmzCXEGUcvM0doLUpfEGBDP4upOWLMzoo=;
- b=pSKKYunkv9VwFQ1OLQD7JB7YAHynKIo98iw9zjw0h1sihGw0Sf2kvw4zKE/fLh4Zjp
- n859qMgeacEtvBqYIe3gDB6hSh5WejFp7vqRXf197O8PbqD/4bewtQgHio6icESyDopi
- KV4OAMnuNduba2WW3vKLHNuvu5TJQMrWwbLA5wIb12bT8guJi4QVDOJ7PqDW0bQM4jeq
- G1F8GjmaIOwRZcyF2Jo8btq/eCVhJ0sO5HhJJtIOS83TgIbkDg6Hr02SJTAShavPwLlb
- ZkFytxSq+VBMF8BttgR8OCxbahMiFy/gE/GykNutLSqDlcBN8KOGg/jLZFDkD7jNqFnT
- XyeA==
+ bh=cuBwiUM39oOFyPXW9QKUmrD94Xs1RkDolFcLPjWhI24=;
+ b=VR4/OdX3W4iw1w4Hwx2+l2BCyJ/bO7ApHr3QeUczZzSUMiW4l8YDM1U1zuz61gssv1
+ EVpIIiAYCUYzyCzZmWlt67KV/P+/Hxp1anyozhwMYK1duj0XEH+bHrnuMoBtcHGbP2dr
+ QhNdPhvOPz5f7A0lHmirS5ucczc9Iq5X0i7hbuP2Ve2yKEu253beofpCnAZ+GZLu8qfi
+ mxGPpRnArI+KmuArDwOdc/XjapckU2dxlk7Xm052yQTetk1jBMsjvuHEihlVqZvLt1e1
+ DSLLXHR7G0k1LCzvKLCFWc7K4S21cBqQvtWfCNujPp1QoM0gJzvf1ES3IbM1pw3M5Onw
+ xkrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqLGAGiMO6be2i6VH1X2YyQU6FQXEG8VntQYplZfa818mm4sXbdNTrLCcqT4yfVaYAKET80CnMy3q9@nongnu.org
-X-Gm-Message-State: AOJu0Ywsd++viksJf0c2MT2cb0RsixGALZi5GcINgYOFYf0V3pphP/BH
- B81v9htR1BZw3AmwVDFUhVbv4QOUtwPPhOUBSpG/Mlv0vLuN6/qwclZR8VHEgGHp2l95qKzkEvw
- zOTO64UQ=
-X-Gm-Gg: ATEYQzxfezg2dlWiSXeFcTWtP6Gw0Dg724ycGi+0iM102ntfN1QSCxjff8fY+7P+PX6
- q6Ut5TEDZ/hmrfeydhuesM1EjUungndba2V4ER1jKiNKT2tiUSnSNlgk4WwK2hk6utsxWDrz9qQ
- 6gHZ8l/G4MARDZJauStNlUo/Jv1sREZJRi41KJRS1gTZkkXQ3M8n8XIJQp9BMYHuB209lXiYH8F
- mRrosZqzVpQfChW21cvE+gDqkBpup0AzBkkQS41WQCDRZIv2uHPjp9MjeZW2k7TVrleHr60O+Y2
- rtNXNli4rRqKyBkFNDpB5ES7mqREkDYh2hZPjA5FgrxdEkWJPCMOPd5AE3XKGNKj6AJt7T/fUUn
- opia+q5V/B50NzM69P3MLx1zyAwlgmt5DOWgLiLkm5tpuaqolfJ237E8BWXcH8FhWDtABS97pVG
- dT/r+ofYagY4ReX5Q9oqbyB3SQti5LmZA5W5DX5mTYHdk1494DbrQyuJh1pCGY+CecAQ==
-X-Received: by 2002:a05:600c:a16:b0:485:a4de:f4f9 with SMTP id
- 5b1f17b1804b1-48883599b21mr47987095e9.27.1775036428247; 
- Wed, 01 Apr 2026 02:40:28 -0700 (PDT)
+ AJvYcCVvItmhbSjDL2vll4XdSMzGrKJ9UtuRCmJ5utTF7yip946vKqRT6r0L4IWIKXFC8nY4sRy0/zfnOsRF@nongnu.org
+X-Gm-Message-State: AOJu0YwkJ85/Le768D5MIMV8HoTk2UgQio0GeCXR1Av4Fp+zW/c2CB2f
+ wDYIaByWDyC6vsMWXJ3Un+er/k8RIg5yfpOnS1xKVOUmPbKFxqsyq4qJOFAPFMvJ5XIluWCuaG0
+ Y0Q+xLb4=
+X-Gm-Gg: ATEYQzwOfgC5I7zx2F2f34R1mSM+u3uuP6hANQ1ggXcdDNx9zQSt15db1CrBN720YqH
+ N2CDk3Xy6DjTZ02Hppgbc+9ccxO0zj/IN2/4nXLUPPVRBwdYfEYKTWKmvKn4rJ3K+hZJw/ETt5X
+ 9Lt4bxJdPKx9R/K8qlrYBA7wuxqhGbFR6j/TiMa+BA14lx2+XtuJ+2eVMM0g0a82h/AewvA+Rl+
+ mJp9YUiMpiNmXp++Fd53CyHwM/L6QHQHhaRIymPMTFT+zDFlrvX9QpjFy6El/V1Z3AHkMclRL6x
+ ZwSMGCGX921BspzJLDVs7Rz7Eza5WuJDiD575hjFpUwtHevMyzKc6JRpTXsYD2ar4GDN0h+9GOg
+ 2BnO7U1ZHV37GsoW3StQpnHDwDTlm6UDqCT69MBduuvl/sJDjaugCaRcj7YrUAp5BZvTcMvJtZV
+ jwXkYshQO2wJgfmDdzHhCwtJFKupAr7aDIrjiErkPo0lMDpssEUKYde1VO3mithVRBmg==
+X-Received: by 2002:a05:600c:c107:b0:488:80b6:873a with SMTP id
+ 5b1f17b1804b1-4888359526cmr32196115e9.21.1775036597777; 
+ Wed, 01 Apr 2026 02:43:17 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48880946cc5sm86141895e9.13.2026.04.01.02.40.27
+ 5b1f17b1804b1-4887c536a7fsm90697795e9.1.2026.04.01.02.43.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 02:40:27 -0700 (PDT)
-Message-ID: <e5f69050-1431-427b-ac79-7b26f6130dcc@linaro.org>
-Date: Wed, 1 Apr 2026 11:40:26 +0200
+ Wed, 01 Apr 2026 02:43:16 -0700 (PDT)
+Message-ID: <60bb7524-a0c9-44bd-baa4-a443885b92f9@linaro.org>
+Date: Wed, 1 Apr 2026 11:43:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 57/60] tests: rename the dbus-daemon helper script
+Subject: Re: [PATCH 60/60] contrib/qemu-vnc: add standalone VNC server over
+ D-Bus
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-57-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-60-48eb1dcf7b76@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-57-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-60-48eb1dcf7b76@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,13 +106,55 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/3/26 09:51, Marc-André Lureau wrote:
-> The following patches are going to use it for qemu-vnc.
+> Add a standalone VNC server binary that connects to a running QEMU
+> instance via the D-Bus display interface (org.qemu.Display1, via the bus
+> or directly p2p). This allows serving a VNC display without compiling
+> VNC support directly into the QEMU system emulator, and enables running
+> the VNC server as a separate process with independent lifecycle and
+> privilege domain.
+> 
+> Built only when both VNC and D-Bus display support are enabled.
+> If we wanted to have qemu -vnc disabled, and qemu-vnc built, we would
+> need to split CONFIG_VNC. This is left as a future exercise.
+> 
+> I left out for now:
+>   - sasl & tls authz
+>   - some runtime functionalities (better done by restarting)
+>   - a few legacy options
+>   - Windows support
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   tests/{dbus-vmstate-daemon.sh => dbus-daemon.sh} | 0
->   tests/qtest/meson.build                          | 2 +-
->   2 files changed, 1 insertion(+), 1 deletion(-)
+>   MAINTAINERS                    |   5 +
+>   docs/conf.py                   |   3 +
+>   docs/interop/dbus-display.rst  |   2 +
+>   docs/interop/dbus-vnc.rst      |  26 ++
+>   docs/interop/index.rst         |   1 +
+>   docs/meson.build               |   1 +
+>   docs/tools/index.rst           |   1 +
+>   docs/tools/qemu-vnc.rst        | 199 +++++++++++
+>   meson.build                    |  17 +
+>   contrib/qemu-vnc/qemu-vnc.h    |  46 +++
+>   contrib/qemu-vnc/trace.h       |   4 +
+>   contrib/qemu-vnc/audio.c       | 307 +++++++++++++++++
+>   contrib/qemu-vnc/chardev.c     | 127 +++++++
+>   contrib/qemu-vnc/clipboard.c   | 378 +++++++++++++++++++++
+>   contrib/qemu-vnc/console.c     | 168 ++++++++++
+>   contrib/qemu-vnc/dbus.c        | 439 ++++++++++++++++++++++++
+>   contrib/qemu-vnc/display.c     | 456 +++++++++++++++++++++++++
+>   contrib/qemu-vnc/input.c       | 239 ++++++++++++++
+>   contrib/qemu-vnc/qemu-vnc.c    | 450 +++++++++++++++++++++++++
+>   contrib/qemu-vnc/stubs.c       |  66 ++++
+>   contrib/qemu-vnc/utils.c       |  59 ++++
+>   tests/qtest/dbus-vnc-test.c    | 733 +++++++++++++++++++++++++++++++++++++++++
+>   contrib/qemu-vnc/meson.build   |  26 ++
+>   contrib/qemu-vnc/qemu-vnc1.xml | 174 ++++++++++
+>   contrib/qemu-vnc/trace-events  |  20 ++
+>   meson_options.txt              |   2 +
+>   scripts/meson-buildoptions.sh  |   3 +
+>   tests/dbus-daemon.sh           |  14 +-
+>   tests/qtest/meson.build        |   8 +
+>   29 files changed, 3971 insertions(+), 3 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This patch deserves its own series, isn't it?
 
