@@ -4,108 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C1B91076365
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 05:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7DC107636F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 05:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7nhn-0001Lv-3U; Wed, 01 Apr 2026 01:01:27 -0400
+	id 1w7oFw-0000Me-BF; Wed, 01 Apr 2026 01:36:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w7nhl-0001Lh-Ia
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:01:25 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w7oFv-0000ME-76
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:36:43 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w7nhj-0007cU-FW
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:01:25 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-66bb66db39dso5347555a12.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:01:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775019682; cv=none;
- d=google.com; s=arc-20240605;
- b=H73umMFkSVOB69/0g88OCPHH7ZtIAG/iAUykGUZsYCA0wV1xJ+5WYLET/Le3A70uQP
- PGnw4pZ2Rl3bTw90+Y0XSNv7ZkzMJIGnhrIeWMdeZR6gaCeV1MpYy2nExNohCSICKutt
- FkaIDgaUrV7sVMvPGdFVmYrLWUulRvks5weGN1u8xRjodWIwsEektoZla9BkjALb3M6s
- Qe1jXa9aGFD+ezYA1Pk3DHm5C0dyqNp8FT3OIsR1vifayOBdGyP3qnxzM8+cQ5ZQ+rOF
- jw54/hGjWEPml+RzoOhVGRQR5+/JWMQpk6gi8wvvev6O3pQPKUuzmhMCP7rwZAfGSb3B
- 5aWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Mjh6hL9ZSmG8fcdCcO13TLHJQ/uCk2d3Oe8Nwf6EPeU=;
- fh=An2jDPbQYanyCSduLqTxkmOqdmKdsobic3bc+xkZAds=;
- b=Jym+mZQ/Nqb34sDP/CIFKLQEj9XT3UJNLSRgdeO9mwuOeScFMaiKwmz/pBETHn+GMi
- 4LDIZh/jGynErHXKjPVzIXixZ3lidtkuQqNx558VexqbtC6Qi/lHtlt+jgDT4hug7zr5
- Zmy3N/Y4Z+3K/oZU7LhhGeZgU8Ve3j2w3pe94u3kVq/TsyS/HWfWjEtz4WSIzpY72vUZ
- jU0n5ZlE6pq2Ox0I3w75pNhu51wsW5rR5PZgcRLfef1WVSlJbFdInoD3IC2Cz9QL5w4F
- R53uCt1VWVXoozxkJIdY0Zb0XHbW5GMAUos0HlXHlUIbG3byPsR4bhiKPViVLHDuX8v6
- xOOg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w7oFt-0003Z7-OK
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:36:42 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-82a7ebc729dso2752147b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775019682; x=1775624482; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Mjh6hL9ZSmG8fcdCcO13TLHJQ/uCk2d3Oe8Nwf6EPeU=;
- b=dBldVqZb4HdG3k8jLVxHZ3QXkLoCB/PJzRYHCWpF5t1xVzibYKdvgMAuElufxL7/AB
- /jMf9DKmyVNkJcaXuwe6im5AvSlzEI71QDUelgpEUR7ahJ0LG7T8KU4ADxmI9sFpP7tH
- /XSSbExBU+8WPfhDUK4mqMQoEHvsqVA2hSnjAdBgMHqAW0loD4ebncxVRETNkVrjkXuG
- arQLarYOK30FxnI1EFPJ3ai6UZAxFgUrVwUU0JHx8lWxp4BrbClrG+DDADsS8hf45Tbm
- f03LLbN6cscAkY9d46NmzV+fBtnO2KZbdD76MVavChh+mnMlxgFWEuq+8OHlsRgMc4Uq
- w5AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775019682; x=1775624482;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1775021799; x=1775626599; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Mjh6hL9ZSmG8fcdCcO13TLHJQ/uCk2d3Oe8Nwf6EPeU=;
- b=bc5CNVRWnnY3qBxBqqLL4gmhMj+hwPl2UZFYYvuqhyYyJ8RBhPS17B5nWs+kYcMzW1
- APRs7IA+yudMrka1L/PP1YaD11pxrMSqN22krqXn73HRq31445Byqow4yIiLb8kw5Nvb
- JBFn1SkpdG2GaPtNcfIam82JTj5FC9hIRfQfCP6H16OMegntMGk3DiV+SY9HivBslNMN
- bd0UEOky7CpagUFcnJF/1etXlZa5UKUT0vLSS5bcUe+N/fzGtxN+ttvwMY88QPxlLBgC
- 7oLVBlELeZoN1c2g6ewzIuOWNm4CoFcbFXsIIxatmUSGGl2fe42Q7DIKBEx87miHbrt6
- ggEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9uEX6SgNS8SlXCgBQQMM5bzV2cipoh2BKcZQ/uRAaUxNXsuyoQMltjfH+Yk/me91w5/xE+P+NVaUz@nongnu.org
-X-Gm-Message-State: AOJu0Yx34W7+1ULizzkKMy7E16nzQ0bqL/xGFTxQNfR3WW2rIxoDHTnG
- QFFj22WjhLgvz8N7MJk+CGNKweXQNZZ80q9+MD40wo1zRTZitISlJfstngiNY/ocxe99jX5ooz9
- OIQ3eVEWD1B17Uqz27JGifNkDHwGEYv6Bp3A4
-X-Gm-Gg: ATEYQzxbk8J63/r7RvJ/+QOjgyD3WTUHVSD7Ce3aWU/xiUyDa4RksJBBqVCt//f4WvU
- wcIriw9EDqgnCqfc4dyDAlVWyEkMggjImgD+pmn3mvFY3Ve21k29AiVaO656v3Wt2YnTr3IjGiN
- 37oiSmSStZ5YTMGvb+ooXJwBn+434XxpUBjSOcOI8Xm7+WcsjBmMeiABJdFnAj02gr6izu08/rA
- jsUKyGHAQ2A9wKoT2spOafFmDzSGH4NHTEF+GcEML0V7bf4QM/lctjdwkBYlK38KGWWTufsHsac
- 4JuWnKNyHCltvOMykzrrNHyywgk/gaq9/kpbrA==
-X-Received: by 2002:a17:906:208f:b0:b98:8692:bc3e with SMTP id
- a640c23a62f3a-b9c1379e34fmr101975166b.9.1775019681501; Tue, 31 Mar 2026
- 22:01:21 -0700 (PDT)
+ bh=M1M6Up2+Ug61oKW/s9KrBHYzfAQr/Gp5A2pMaUqfVV8=;
+ b=EFjKFxMGg2VzmGOjIW1c1yz8CFh8/IwS3KjijYF0ENYpG8HdludfLjOgH1O57WqPus
+ 6hQMLtrP3dPbpoXq43r38Sk2VwifrAa79vX7CsJmSG/WG74cF7FZLchVNKOdpBlescIU
+ R8WN+OqQDk+aBKzGBRdFF3amwGXBDNj+Uuy/5sj7WVzhVegJ4L9QHgvqy2DRjQO7VeU6
+ wTLx0lxm4yOamvzIyCf1D9n0KuUGZqz8FxT5Okbg11yN8BUxC73IkRSit22LhsWQneMC
+ qNjmCPMJRrSe5A8dklbD6WgzlZF2lkpD2j8OYCcZ2yfsVCXaokuoTK4v55OWQoKrC8Km
+ Hfdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775021799; x=1775626599;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M1M6Up2+Ug61oKW/s9KrBHYzfAQr/Gp5A2pMaUqfVV8=;
+ b=kSCcnjlxb7IJ5A4836u1YInI2agfMDBLNVaAxxyDAJPkmehx4vCW/WTDnmN5EG8UB+
+ y1OX9a6vOXz4s9l+lJsOsXAZutHyFExl5IoPeTyH/uxgqD3N47wUk/phAGNoKyF1ZiIU
+ fr7bSbh7dqFC0RQMzN5rgzyk77aTKHbdrhUSsAGN8w7idtXPM0jB05TdmxhqgFAZDr9h
+ J5YIi8drV0571QzCP87YUxfssVrt+ICE6Ljf4oaO+8WwUofmdBvfJH/bRnQHAvAvJW1x
+ WlfCKcmdBOyhuXFoKTASJo9GtGvm/71VJQ27wWJVwCq1EOOBBBgPxuNOqs7f6TYUHcfz
+ 5ypg==
+X-Gm-Message-State: AOJu0YwbeR/tA51VZs4JYt0w0MKotiwOq06CKkF5UERcHS24A2eYlewe
+ GEeiHD+6LaPj+kr+vWC6sxauXqbvegE5+Uiy1BOPi+ICWJDQV7+UJAIyvoLWwhnF1QpG1tvjnxl
+ gMF7K6eQ=
+X-Gm-Gg: ATEYQzxy7i+FZI3GLknmuDnAOCldrFhKm0Q/ThT9Gp5N0jkDIvLxf0Lpug4kacU2HWL
+ 9oF2EElEyglo7onO5QttwiTesD0BLl3LFmMJ6QDHFfmdTrg/vze2dFJUJ1n9Onzue8lspRXvXyM
+ AH0a9+qy57eMeUt/borLkyaec4XMJWp84VF8NwRzIMlHIERG0Tya+hdVRTB84ULfIQ6Ivy+2jck
+ /LrPDH/40w3UpLCIVx+jDF3PVXfnqQUve/cmoXa4/ww8CqKZuT1MEPJP+uhR/ImT3qL4Qn1cle9
+ b5fQuil5464GkwyuUa9zvOjVERJB9pkYT4Rc8zOO1m/XAK3yCldEFCnGXotU3Yu4+7Ri/vjPSUD
+ xd7xMn9nusA0jUrZ7NnSAPlN2Q/bQL2qPdbRllOu5+kgVcQefGpyFsJpqpLceaCSjkuMBSfYUJV
+ qZEKmXgE7h7dOM86VtGCClhiF4uY8syOUgw6C22/L20XD/JNXVKT/GMF7mF5QBimD8BHxUxiIRA
+ qw=
+X-Received: by 2002:a05:6a00:301a:b0:82c:ac4d:742b with SMTP id
+ d2e1a72fcca58-82ce88eac01mr2609035b3a.12.1775021798996; 
+ Tue, 31 Mar 2026 22:36:38 -0700 (PDT)
+Received: from [192.168.68.76] (122-150-206-150.dyn.ip.vocus.au.
+ [122.150.206.150]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82ca846d8a9sm12907536b3a.19.2026.03.31.22.36.37
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 31 Mar 2026 22:36:38 -0700 (PDT)
+Message-ID: <cea62347-1b83-46e6-b887-6ebb1592f4e6@linaro.org>
+Date: Wed, 1 Apr 2026 15:36:32 +1000
 MIME-Version: 1.0
-References: <20260325081314.57089-1-yang.yicong@picoheart.com>
-In-Reply-To: <20260325081314.57089-1-yang.yicong@picoheart.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 1 Apr 2026 15:00:54 +1000
-X-Gm-Features: AQROBzDTttQJr9yIPzsc0iqyY3lTFq93hnQ8pbeNh7veDI_lWt145tJYuXpQdGk
-Message-ID: <CAKmqyKPOwZoRkOxGtfatvyv4c9MEpUq8bCmGRanOgep0LZcK6w@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/virt-acpi-build.c: Use kvm timer frequency when
- kvm enabled
-To: Yicong Yang <yang.yicong@picoheart.com>
-Cc: sunilvl@ventanamicro.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, geshijian@picoheart.com, 
- wangziang.ok@picoheart.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 01/35] target/arm: migrate basic syndrome helpers to
+ registerfields
+To: qemu-devel@nongnu.org
+References: <20260320130607.2071996-1-alex.bennee@linaro.org>
+ <20260320130607.2071996-2-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260320130607.2071996-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,57 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 10:34=E2=80=AFPM Yicong Yang <yang.yicong@picoheart=
-.com> wrote:
->
-> The timer frequency is decided by the host(kvm) rather than a fixed
-> RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
-> RCHT with KVM provided timer frequency if KVM is enabled, just like
-> how we build the timer node on DT based VM.
->
-> Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
-> Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
-
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
+On 3/20/26 23:05, Alex Bennée wrote:
+> We have a registerfields interface which we can use for defining
+> fields alongside helpers to access them. Define the basic syndrome
+> layout and convert the helpers that take the imm16 data directly.
+> 
+> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
 > ---
->  hw/riscv/virt-acpi-build.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index f1406cb68339..fd6ca5dbc4ff 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -35,9 +35,11 @@
->  #include "hw/riscv/virt.h"
->  #include "hw/riscv/numa.h"
->  #include "hw/virtio/virtio-acpi.h"
-> +#include "kvm/kvm_riscv.h"
->  #include "migration/vmstate.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
-> +#include "system/kvm.h"
->  #include "system/reset.h"
->
->  #define ACPI_BUILD_TABLE_SIZE             0x20000
-> @@ -296,7 +298,10 @@ static void build_rhct(GArray *table_data,
->
->      /* Time Base Frequency */
->      build_append_int_noprefix(table_data,
-> -                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
-> +                              kvm_enabled() ?
-> +                              kvm_riscv_get_timebase_frequency(&s->soc->=
-harts[0]) :
-> +                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
-> +                              8);
->
->      /* ISA + N hart info */
->      num_rhct_nodes =3D 1 + ms->smp.cpus;
-> --
-> 2.34.1
->
+>   target/arm/syndrome.h | 75 ++++++++++++++++++++++++++++++++-----------
+>   1 file changed, 57 insertions(+), 18 deletions(-)
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
