@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12111D3516F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 10:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C82D3516C
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 10:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7sZR-0008HK-EJ; Wed, 01 Apr 2026 06:13:09 -0400
+	id 1w7saR-0000BY-SZ; Wed, 01 Apr 2026 06:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sZP-0008Gx-DE
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:13:07 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7saQ-0000BI-8e
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:14:10 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sZN-0003MJ-B9
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:13:07 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43b983bb07eso3531977f8f.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 03:13:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7saO-0003Oz-LY
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:14:10 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43b95e5b3afso3918525f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 03:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775038383; x=1775643183; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1775038447; x=1775643247; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dZey9uLNyS9ZOXKrxot6gGUouwPzAHYCqOqIIrCN8wY=;
- b=e5mROWWMpZPIAkppDkymvtEEorzNr96n37RUxfZ+XoxVlbteph7KWHUXXbPje8S55H
- UeoZDP2uZvetQdiBbsC3Z+5p6jMOSXAoXFts4kJ5Zy2KOuDSDld4Hqm13fGx/4C1QMHH
- uDZ2XFIk+KIW82Lw3YMNTr0otwA77eIRSbXSNRWnBvmIe4XW9igu+KiYpWRNmrmGTtA6
- LG7JGninUsLfs4gHOdHnMycB70SuWYEP9BPk5rOYQ/RfFXTTW927aom8rLGqSkT59pHq
- MzF8Dx6cmDf3x/FIe4Ks5KuZRWfriRZRZFglzC+JXaX1bL26+dJ9BB5v+YM9Y5jCWJy+
- Ce4Q==
+ bh=PUzZ309io7zd9/oYiYDhr2fctRgOa4WHpXvd7DTB8+w=;
+ b=A2+9sL1xqN1NiiGsCKtpB3ZrSf7xCRRlIb8COyEDgjGSeVcZTIfUl8sqB9cN5R/Elu
+ HZ9R5dz7eJdiv0x8tiLV5X0kzfSaM1ZpKsdI1YcvmICn1+AVK/VzlnQ6lNM+kHEO7+pV
+ mBd07LVGprRfDJbYJBAw+sB8j5cRZJ7KQh8g1U51dFCnZejQxdQIzhmVHjPm5UcndKGe
+ k+OMfXgLKAuAN2w4htaWeLyrvLe1G0jjooyQwn8s9gzhRcQ0gpBoA3pnoSqub/o+310E
+ Ki+FGjzJL1KBnUKaQYmsaBGaEOI6wVJFPr1RbI1dMVt3LjE1S3+RqviYqtnOlu/mcSSq
+ NQug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775038383; x=1775643183;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20251104; t=1775038447; x=1775643247;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dZey9uLNyS9ZOXKrxot6gGUouwPzAHYCqOqIIrCN8wY=;
- b=ZGDHiQHptzCcQhS6UfL3RQSTYzxy2vTXniXKYGb1Jh9lEeVXShpZxXkaWERE31c1GV
- i1EQUFtq7HtcYi/p2Hkmq/UKiwA0eSjZY5AR+n3bNenmTrTtaDsH7daN7Oy0gwCYyB0g
- sCKxUe+FpL1u33gUdUDBA0RWtE7a3s1VyCWtbyJDfm2ieoH/7vRPmJQq1udiueUIxgpM
- Bfagg9VqsR+mNOz0rUVLyL6aw5rerRosg7C2X3TvYsVw1ViWPJlTgQ2R+7xggQCwxzZZ
- vcZTemYMfEi2goCROBb6CIPKPndkQxbkRy7j5gmXBG/+oGU/uLZriBUizKwoNyIrXIWL
- SgNw==
+ bh=PUzZ309io7zd9/oYiYDhr2fctRgOa4WHpXvd7DTB8+w=;
+ b=Pk0E+YhX7IS35LbXoINbGP6bm3Os6gi+x5M+PRyxrucBfUhyRq7pxBwc4huhteQehs
+ /lNd4VS6LAwi7YXOjgKnsW7Rwvtb+1s2W12NcnxELicCnYBW5tpLHSoZRfk7U1IQn/Rp
+ jKAFm/oLwydxisgzgT5NqycH9PYCzk+8zyCB0wa1O76XFnkI08j4uuDuj12JmYyeMY4M
+ I53i8XR1kg3CaOkJHw14uI3+jIJrsAVAd4zBEp8XmcnIBzchhMr8SQGt7khLgsCJmDEV
+ 5GNI0Jpy+Ogb5hNskit3xeMfeUGPSXIUVUQ5/BnDw38DvAg3F537cdj9cNxqqZ8Ul6Sg
+ OAIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGAptwdAw6WY64jMgvijed85F8mUqr6qwO+DEkwZysttPjNRG10PaKWM0/tGDzS55/Q/bdASttn99S@nongnu.org
-X-Gm-Message-State: AOJu0Yzr0EUHDYtkqYtP/CV9siyDkiFcf5oVhnzeQVBAv1N9G3TGJ79j
- 3xknqoG+N6r4K2vbsSGNgXV2UVFvFN/50GZaaeNo7HnYU+AJxfiwPN7NnhxvHfEEApU=
-X-Gm-Gg: ATEYQzxD2/QOJyUYpN+Pxb0p/s6AdezfFWwIjjgIAYmubeWDbBGyyp5JwkPTrNHkeZV
- Nchlu9vtIjib/W4nJ/UUCh8JioJe4Xqu8osl6/P6wWr+6aQ1jOMqZBlikOWGo5pGTm9G17DE+oi
- ItHG7DFXyAkzAfuCp+8LVnNqBfzb0ioRiF4hd+wZGTLq6qgY8bYMTl9fsw+rX66ip/6EMc14dXj
- bqhHLm8d7WgO/64Vp4odi9KZRTpOe4EwkAy5pfHP3FqB0dGr53DvMeJ6drBkWL0Z/bodj6W+hTO
- Py3fpwUC65jINf3sIuUbe+Vf3y8JNOi1b3FbLtgT1ex5563+ub1MZLPvfWPRC3QlRWJ73Yy3Ot5
- hn/DksVyL5et4DmJm7wd7IU7duDwY0vI+CE4JAIMBDjcbOw1qmr2qFUvHVf8lf8ZRdQ0UfUvbt3
- NV+NOF6/Wb/gXwKWelwdE/Utyvis1L0mPCc/UOIUgvKXsizI2uY1tUN3U3lRH7+SjMG8wET62gR
- r6J
-X-Received: by 2002:a05:6000:230a:b0:43b:3d83:f04f with SMTP id
- ffacd0b85a97d-43d150452e8mr5314296f8f.9.1775038382847; 
- Wed, 01 Apr 2026 03:13:02 -0700 (PDT)
+ AJvYcCUKnz5US4crfsf4SyYFEggwAnp0BfZ4N1KJCCazobwJCa2t0pSuaSn/ieCz2RUAbVt9DXs1qMGevH+q@nongnu.org
+X-Gm-Message-State: AOJu0Ywkv/DwggBd40ZoziAe3Uu56EeXVQLQYAGMUEiV3+NHyb10OPpT
+ gYuGz6xtyq2BgFHH/u1owutw9+HNOg11OJyRBltrU9KeBwIwmXesNtQImisU/JiqvmU=
+X-Gm-Gg: ATEYQzz/x7Uu7sgfWZtOdwcvPRi29bOCG2F3iLXFpjuEtEvrIzGdGuyG3JgvIcZ3tmk
+ pUhLSug6P2hWxxe0j5Eb63fkYmTmJpiH0v+gFTXZS7W0Nwxg+AsE/SWbadZM48a5hWMoDVDs4xk
+ AfhBn4v4dfw0Ql1mw6nyPMDI86NaJu/VlrVdVX2IxEE/A8btzO2XaAANFgRRRpNhZCl7Lg2ygam
+ ZNpwYGLUE3zg+av7TNAmXyOpzcfo+EUnM9p+0mvjAogbrS4jemg3MrWukCSdvmYEKchXDCbN0PV
+ EWKHYy5SHxNbAh+Q2jqSszOB5nDk597hWVtAHLCg1yYFyjBPpuCoFxYmlGrGrN7XCJZ76t8tjf4
+ HRFxab05/xMJJUb5vnZJ/9nvNvxGjCBP6AL3rswcVN0t2nxcY6zwkXba1490DHFRTtow2B15qKf
+ GAEjQYqWSnIpjLKKOVmS5qfhQv4TsM4DqWaf79e9EMubGUlX62zRBu6ij1m5COtz/fcQ==
+X-Received: by 2002:a05:6000:4008:b0:43b:8858:1146 with SMTP id
+ ffacd0b85a97d-43d150f0ae4mr5506771f8f.41.1775038446907; 
+ Wed, 01 Apr 2026 03:14:06 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf2580194sm32252828f8f.37.2026.04.01.03.13.01
+ ffacd0b85a97d-43cf2580194sm32260253f8f.37.2026.04.01.03.14.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 03:13:02 -0700 (PDT)
-Message-ID: <b9ae80bd-8d37-4fee-8a4e-6001b29089d0@linaro.org>
-Date: Wed, 1 Apr 2026 12:13:01 +0200
+ Wed, 01 Apr 2026 03:14:06 -0700 (PDT)
+Message-ID: <32560216-c9e8-47e6-baa3-14f70c6d2b1c@linaro.org>
+Date: Wed, 1 Apr 2026 12:14:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/11] meson.build: ignore audio drivers when
- configured with --disable-audio
+Subject: Re: [PATCH] physmem: Simplify dirty memory type checks with loop
 Content-Language: en-US
+To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, richard.henderson@linaro.org, pbonzini@redhat.com
+References: <20260401100005.20651-1-guobin@linux.alibaba.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-References: <20260315201646.96862-1-heifetz@yandex-team.com>
- <20260315201646.96862-12-heifetz@yandex-team.com>
- <ee0a3c03-75c7-49af-a3d8-2c715bd1e3e0@linaro.org>
-In-Reply-To: <ee0a3c03-75c7-49af-a3d8-2c715bd1e3e0@linaro.org>
+In-Reply-To: <20260401100005.20651-1-guobin@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,124 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/26 12:10, Philippe Mathieu-Daudé wrote:
-> On 15/3/26 21:16, Sergei Heifetz wrote:
->> When QEMU is configured with `--disable-audio`, we do not need to add the
->> audio drivers list to config_host_data. We also do not need to print this
->> list.
->>
->> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
->> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> ---
->>   meson.build | 80 ++++++++++++++++++++++++++++++-----------------------
->>   1 file changed, 45 insertions(+), 35 deletions(-)
->>
->> diff --git a/meson.build b/meson.build
->> index d05533488f9..7f71dce3ae5 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -2280,46 +2280,55 @@ endif
->>   config_host_data = configuration_data()
->>   config_host_data.set('CONFIG_HAVE_RUST', have_rust)
->> -audio_drivers_selected = []
->> -if have_system
->> -  audio_drivers_available = {
->> -    'alsa': alsa.found(),
->> -    'coreaudio': coreaudio.found(),
->> -    'dsound': dsound.found(),
->> -    'jack': jack.found(),
->> -    'oss': oss.found(),
->> -    'pa': pulse.found(),
->> -    'pipewire': pipewire.found(),
->> -    'sdl': sdl.found(),
->> -    'sndio': sndio.found(),
->> -  }
->> -  foreach k, v: audio_drivers_available
->> -    config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
->> -  endforeach
->> +config_host_data.set('CONFIG_AUDIO', have_audio)
->> +if have_audio
->> +  audio_drivers_selected = []
->> +  if have_system
->> +    audio_drivers_available = {
->> +      'alsa': alsa.found(),
->> +      'coreaudio': coreaudio.found(),
->> +      'dsound': dsound.found(),
->> +      'jack': jack.found(),
->> +      'oss': oss.found(),
->> +      'pa': pulse.found(),
->> +      'pipewire': pipewire.found(),
->> +      'sdl': sdl.found(),
->> +      'sndio': sndio.found(),
->> +    }
->> +    foreach k, v: audio_drivers_available
->> +      config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
->> +    endforeach
->> -  # Default to native drivers first, OSS second, SDL third
->> -  audio_drivers_priority = \
->> -    [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
->> -    (host_os == 'linux' ? [] : [ 'sdl' ])
->> -  audio_drivers_default = []
->> -  foreach k: audio_drivers_priority
->> -    if audio_drivers_available[k]
->> -      audio_drivers_default += k
->> -    endif
->> -  endforeach
->> +    # Default to native drivers first, OSS second, SDL third
->> +    audio_drivers_priority = \
->> +      [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
->> +      (host_os == 'linux' ? [] : [ 'sdl' ])
->> +    audio_drivers_default = []
->> +    foreach k: audio_drivers_priority
->> +      if audio_drivers_available[k]
->> +        audio_drivers_default += k
->> +      endif
->> +    endforeach
->> +    foreach k: get_option('audio_drv_list')
->> +      if k == 'default'
->> +        audio_drivers_selected += audio_drivers_default
->> +      elif not audio_drivers_available[k]
->> +        error('Audio driver "@0@" not available.'.format(k))
->> +      else
->> +        audio_drivers_selected += k
->> +      endif
->> +    endforeach
->> +  endif
->> +  config_host_data.set('CONFIG_AUDIO_DRIVERS',
->> +                      '"' + '", "'.join(audio_drivers_selected) + '", ')
->> +else
->>     foreach k: get_option('audio_drv_list')
->> -    if k == 'default'
->> -      audio_drivers_selected += audio_drivers_default
->> -    elif not audio_drivers_available[k]
->> -      error('Audio driver "@0@" not available.'.format(k))
->> -    else
->> -      audio_drivers_selected += k
->> +    if k != 'default'
->> +      error('Audio drivers are not supported because audio is 
->> disabled.')
->>       endif
->>     endforeach
->>   endif
->> -config_host_data.set('CONFIG_AUDIO_DRIVERS',
->> -                     '"' + '", "'.join(audio_drivers_selected) + '", ')
->>   have_host_block_device = (host_os != 'darwin' or
->>       cc.has_header('IOKit/storage/IOMedia.h'))
->> @@ -4710,7 +4719,8 @@ if enable_modules
->>     summary_info += {'alternative module path': 
->> get_option('module_upgrades')}
->>   endif
->>   summary_info += {'fuzzing support':   get_option('fuzzing')}
->> -if have_system
->> +summary_info += {'Audio support':     have_audio}
->> +if have_audio
->>     summary_info += {'Audio drivers':     ' 
->> '.join(audio_drivers_selected)}
->>   endif
->>   summary_info += {'Trace backends':    
->> ','.join(get_option('trace_backends'))}
+On 1/4/26 12:00, Bin Guo wrote:
+> In physical_memory_range_includes_clean(), we have three nearly identical
+> if-statements checking different DIRTY_MEMORY types (VGA, CODE, MIGRATION).
+> This code duplication makes maintenance harder and increases the risk of
+> inconsistencies when adding new dirty memory types.
 > 
-> Shouldn't this be squashed with patch #1 as a single meson change?
+> Replace the repetitive checks with a simple loop that iterates through
+> all DIRTY_MEMORY_NUM types, checking only those specified in the mask.
+> This reduces code size and makes it easier to add new dirty memory types
+> in the future.
+> 
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> ---
+>   system/physmem.c | 16 +++++-----------
+>   1 file changed, 5 insertions(+), 11 deletions(-)
 
-Ah no otherwise we'd get link failures before the other patches.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
