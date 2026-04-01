@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C82D3516C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 10:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CD3D35167
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 10:15:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7saR-0000BY-SZ; Wed, 01 Apr 2026 06:14:11 -0400
+	id 1w7sba-0000o9-3j; Wed, 01 Apr 2026 06:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7saQ-0000BI-8e
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:14:10 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sbY-0000nw-97
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:15:20 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7saO-0003Oz-LY
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:14:10 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b95e5b3afso3918525f8f.3
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 03:14:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sbW-0003lO-LG
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 06:15:20 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43d0deb7ad5so1397386f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 03:15:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775038447; x=1775643247; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775038517; x=1775643317; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PUzZ309io7zd9/oYiYDhr2fctRgOa4WHpXvd7DTB8+w=;
- b=A2+9sL1xqN1NiiGsCKtpB3ZrSf7xCRRlIb8COyEDgjGSeVcZTIfUl8sqB9cN5R/Elu
- HZ9R5dz7eJdiv0x8tiLV5X0kzfSaM1ZpKsdI1YcvmICn1+AVK/VzlnQ6lNM+kHEO7+pV
- mBd07LVGprRfDJbYJBAw+sB8j5cRZJ7KQh8g1U51dFCnZejQxdQIzhmVHjPm5UcndKGe
- k+OMfXgLKAuAN2w4htaWeLyrvLe1G0jjooyQwn8s9gzhRcQ0gpBoA3pnoSqub/o+310E
- Ki+FGjzJL1KBnUKaQYmsaBGaEOI6wVJFPr1RbI1dMVt3LjE1S3+RqviYqtnOlu/mcSSq
- NQug==
+ bh=OIjj14ehm0lombSWBLMfx2faz4c9Var+PdE2FHuRIuo=;
+ b=SRbit3pGIOXGEFPRsOO42kx1S040RERsH8wkwL1Kp0OjGpi9BaaqL1mkJNLahZmLQk
+ UwrN9CExQnU7dAQbT8HY4b39lolf9NU82MpbEOfFtH4v557HMK6W4iyrhPagA1Xy7dKF
+ oQdw8TOWVula8WfdrW99d9/XbVWFARDOpmeOu3ks0flmnIyLoieHm5aMCyGL+w1MBUuu
+ FnKgUNlBfKfoHtvSayVeQlDW9rVCmFTVrfuPHIfg39XT7dr2uwd2VL+TlMvSqOz9H4Bt
+ IPoKafjn+PJBEBAx/O2GhKHxaQD2Ehs2yZ8iH58+BK9JNQD7E99QVgsOwTUYqXVG5eis
+ DhFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775038447; x=1775643247;
+ d=1e100.net; s=20251104; t=1775038517; x=1775643317;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PUzZ309io7zd9/oYiYDhr2fctRgOa4WHpXvd7DTB8+w=;
- b=Pk0E+YhX7IS35LbXoINbGP6bm3Os6gi+x5M+PRyxrucBfUhyRq7pxBwc4huhteQehs
- /lNd4VS6LAwi7YXOjgKnsW7Rwvtb+1s2W12NcnxELicCnYBW5tpLHSoZRfk7U1IQn/Rp
- jKAFm/oLwydxisgzgT5NqycH9PYCzk+8zyCB0wa1O76XFnkI08j4uuDuj12JmYyeMY4M
- I53i8XR1kg3CaOkJHw14uI3+jIJrsAVAd4zBEp8XmcnIBzchhMr8SQGt7khLgsCJmDEV
- 5GNI0Jpy+Ogb5hNskit3xeMfeUGPSXIUVUQ5/BnDw38DvAg3F537cdj9cNxqqZ8Ul6Sg
- OAIw==
+ bh=OIjj14ehm0lombSWBLMfx2faz4c9Var+PdE2FHuRIuo=;
+ b=jvmHKJeKSkku/IE/vLHeJ04epYGpjEs+IRZ70eALYkUDQ5pCjCyXJopfdt3QH7vmcW
+ JFD0NwemEC7/YLpFlSP/zjmQy+ayUqASYZnCPznDVH+TtWb9NQr+q/wNtuZy55XFLX5W
+ Py0CacteN89SwvtJLqOky5SUG7atyNqAsgbiTyeYT6ROfz7nKMh9tOFmmyNQnWD1tT32
+ 6ZUeqxl/dBwJFFDAs8waiV/qmuK6Xq/zieeRO6yz+VtrE29PH9YyruGF7zIUv6Luz9P0
+ pwnYkpMwAJ84SnL1QLJiNyPfkjogWBX9t7xwmHjM9T55E+G04rbSAnDDxgyKHwmYy4hq
+ uIKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKnz5US4crfsf4SyYFEggwAnp0BfZ4N1KJCCazobwJCa2t0pSuaSn/ieCz2RUAbVt9DXs1qMGevH+q@nongnu.org
-X-Gm-Message-State: AOJu0Ywkv/DwggBd40ZoziAe3Uu56EeXVQLQYAGMUEiV3+NHyb10OPpT
- gYuGz6xtyq2BgFHH/u1owutw9+HNOg11OJyRBltrU9KeBwIwmXesNtQImisU/JiqvmU=
-X-Gm-Gg: ATEYQzz/x7Uu7sgfWZtOdwcvPRi29bOCG2F3iLXFpjuEtEvrIzGdGuyG3JgvIcZ3tmk
- pUhLSug6P2hWxxe0j5Eb63fkYmTmJpiH0v+gFTXZS7W0Nwxg+AsE/SWbadZM48a5hWMoDVDs4xk
- AfhBn4v4dfw0Ql1mw6nyPMDI86NaJu/VlrVdVX2IxEE/A8btzO2XaAANFgRRRpNhZCl7Lg2ygam
- ZNpwYGLUE3zg+av7TNAmXyOpzcfo+EUnM9p+0mvjAogbrS4jemg3MrWukCSdvmYEKchXDCbN0PV
- EWKHYy5SHxNbAh+Q2jqSszOB5nDk597hWVtAHLCg1yYFyjBPpuCoFxYmlGrGrN7XCJZ76t8tjf4
- HRFxab05/xMJJUb5vnZJ/9nvNvxGjCBP6AL3rswcVN0t2nxcY6zwkXba1490DHFRTtow2B15qKf
- GAEjQYqWSnIpjLKKOVmS5qfhQv4TsM4DqWaf79e9EMubGUlX62zRBu6ij1m5COtz/fcQ==
-X-Received: by 2002:a05:6000:4008:b0:43b:8858:1146 with SMTP id
- ffacd0b85a97d-43d150f0ae4mr5506771f8f.41.1775038446907; 
- Wed, 01 Apr 2026 03:14:06 -0700 (PDT)
+ AJvYcCV7fHoRdWLLLuaZO0aOKBoKnJKagyhRsqgsxrvD10aV3i3ZJa5JlR7keMk5CcOuw/ql8YTMHk3uAlhl@nongnu.org
+X-Gm-Message-State: AOJu0YzQqkIRH58h7kbhpEFqaRjSe92cP83Dq73FpfPdRCJUNunv8gml
+ Gyf3eqiA3uHTbLJyZzyeAiDUrBw9vhO6VVxPTYk0MzaCJqmzE5gNALHoA5j1yS1sCHw=
+X-Gm-Gg: ATEYQzyKB4yZzMS0Eq5SoaWTTHQtZh9JDzi5GL7QElrCL/JTbOQvU5xv14WwzQ2MIx/
+ Ul4v3mMV3X6JCi6YMS+uaoLVdZnfN8adstSnW6hds6IGUOw4Talll9c2xTc3q00GlPKrXRhxe+i
+ KnGJF8xAldjyXY6n7+3rFOtzgieas3Xy2G2e8okqepfsmCsc37Ux8gNmyIxnyRygQiLdMWEvyj6
+ 42Ju2nYydqIOOPhVqSIwyCqqLcxWkgB7GSvu2IJdLbyN73cD2sj6RMe6jhQhvvmUiw8knGVVBF8
+ ZAq08l3m1r/XB34Ivjj/683a/1r46oWrjNfnixCCrPsM28OktUBnUHflNSdqlhDXAoHADyuu4fo
+ QS42Xj1ifzP/L/psQv12zF0aboL66ZhaXUiNmYqZXtfUZfTmniA6ukOnXbvYwuBEsOmiReCqWm0
+ pKjRcN4YISsCKFbKcfN/6uTsV+7ZDLjnwZXKca/61DZKTh64zO8WztoYfcbbCdA5Y3K4CLm2jIi
+ hR9
+X-Received: by 2002:a05:600c:3b1f:b0:488:7c98:e9df with SMTP id
+ 5b1f17b1804b1-48883306d7emr49796735e9.0.1775038516997; 
+ Wed, 01 Apr 2026 03:15:16 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf2580194sm32260253f8f.37.2026.04.01.03.14.06
+ 5b1f17b1804b1-4887e93cf2dsm97456315e9.11.2026.04.01.03.15.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 03:14:06 -0700 (PDT)
-Message-ID: <32560216-c9e8-47e6-baa3-14f70c6d2b1c@linaro.org>
-Date: Wed, 1 Apr 2026 12:14:05 +0200
+ Wed, 01 Apr 2026 03:15:16 -0700 (PDT)
+Message-ID: <70042f26-3c17-4311-9ab4-7581c7437261@linaro.org>
+Date: Wed, 1 Apr 2026 12:15:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] physmem: Simplify dirty memory type checks with loop
+Subject: Re: [PATCH 3/3] igvm: fix parent object type in IgvmCfg struct
 Content-Language: en-US
-To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, richard.henderson@linaro.org, pbonzini@redhat.com
-References: <20260401100005.20651-1-guobin@linux.alibaba.com>
+To: Luigi Leonardi <leonardi@redhat.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Oliver Steffen <osteffen@redhat.com>
+References: <20260330-igvm_fixes-v1-0-03587a5a808b@redhat.com>
+ <20260330-igvm_fixes-v1-3-03587a5a808b@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260401100005.20651-1-guobin@linux.alibaba.com>
+In-Reply-To: <20260330-igvm_fixes-v1-3-03587a5a808b@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,21 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/26 12:00, Bin Guo wrote:
-> In physical_memory_range_includes_clean(), we have three nearly identical
-> if-statements checking different DIRTY_MEMORY types (VGA, CODE, MIGRATION).
-> This code duplication makes maintenance harder and increases the risk of
-> inconsistencies when adding new dirty memory types.
+On 30/3/26 14:43, Luigi Leonardi wrote:
+> IgvmCfg is defined as an Object but, currently, its first member is an
+> ObjectClass.
 > 
-> Replace the repetitive checks with a simple loop that iterates through
-> all DIRTY_MEMORY_NUM types, checking only those specified in the mask.
-> This reduces code size and makes it easier to add new dirty memory types
-> in the future.
+> Replace ObjectClass with Object.
 > 
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> Fixes: c1d466d267cf ("backends/igvm: Add IGVM loader and configuration")
+> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 > ---
->   system/physmem.c | 16 +++++-----------
->   1 file changed, 5 insertions(+), 11 deletions(-)
+>   include/system/igvm-internal.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
