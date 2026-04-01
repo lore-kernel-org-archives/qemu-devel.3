@@ -4,60 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E28D35157
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 08:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870BED3515A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 08:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7qwG-0001bW-47; Wed, 01 Apr 2026 04:28:36 -0400
+	id 1w7qzu-0002oP-R9; Wed, 01 Apr 2026 04:32:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xieyi@kylinos.cn>) id 1w7qwD-0001bM-KF
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 04:28:33 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7qzr-0002nd-IE
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 04:32:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xieyi@kylinos.cn>) id 1w7qwA-0006tY-K0
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 04:28:33 -0400
-X-UUID: b9212bb22da411f1aa26b74ffac11d73-20260401
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12, REQID:315622c3-ec4b-45a6-ae1f-c00c20b4c234, IP:0,
- U
- RL:0,TC:0,Content:0,EDM:-20,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
- N:release,TS:-20
-X-CID-META: VersionHash:e7bac3a, CLOUDID:90423360bc212990217ed51692fab68a,
- BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:102|850|898,TC:nil,Content:0|15|50,EDM:1
- ,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV
- :0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: b9212bb22da411f1aa26b74ffac11d73-20260401
-X-User: xieyi@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
- (envelope-from <xieyi@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 819212702; Wed, 01 Apr 2026 16:28:12 +0800
-From: Yi Xie <xieyi@kylinos.cn>
-To: jasowang@redhat.com
-Cc: qemu-devel@nongnu.org,
-	Yi Xie <xieyi@kylinos.cn>
-Subject: [PATCH] net/filter-buffer: use qemu_del_net_queue() in cleanup
-Date: Wed,  1 Apr 2026 16:27:54 +0800
-Message-Id: <20260401082754.96320-1-xieyi@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w7qzo-0007oy-3T
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 04:32:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775032335;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gKcJFipCWIP6qnd0YK7qWtqu4roNo7pi9g4VRUyrrfw=;
+ b=G//9NUK94OK0xkTXiqiXwimYhAhae7PLbE8hG+0hx0NEUqVMm44aW/twPvHl2UEtUGe8e8
+ McjtOhP+G+YOlyh7M3iQBUn6i3V5xR9NRjvPHqQzUFmnSNTDC9i1a4CO8ExyXPHirbSjYn
+ YV9kXkTn43nP5NuBwrSK0LYc3bmPJ8Q=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-vLihRtfhPUebQ16SwRFCCA-1; Wed,
+ 01 Apr 2026 04:32:10 -0400
+X-MC-Unique: vLihRtfhPUebQ16SwRFCCA-1
+X-Mimecast-MFC-AGG-ID: vLihRtfhPUebQ16SwRFCCA_1775032329
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22B331954B17; Wed,  1 Apr 2026 08:32:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.36])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BE551955F42; Wed,  1 Apr 2026 08:32:04 +0000 (UTC)
+Date: Wed, 1 Apr 2026 10:32:02 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: hongmianquan <hongmianquan@bytedance.com>, qemu-devel@nongnu.org,
+ armbru@redhat.com, michael.roth@amd.com, wubo.bob@bytedance.com,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: Re: [PATCH v2] monitor: Fix deadlock in monitor_cleanup
+Message-ID: <aczYAumxAviEYqcR@redhat.com>
+References: <20260327131024.51947-1-hongmianquan@bytedance.com>
+ <78e18aaf-2231-42c8-9307-829fd4dd44a3@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232; envelope-from=xieyi@kylinos.cn;
- helo=mailgw.kylinos.cn
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <78e18aaf-2231-42c8-9307-829fd4dd44a3@tls.msk.ru>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,26 +85,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Yi Xie <xieyi@kylinos.cn>
----
- net/filter-buffer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Am 31.03.2026 um 23:38 hat Michael Tokarev geschrieben:
+> On 27.03.2026 16:10, hongmianquan wrote:
+> > During qemu_cleanup, if a non-coroutine QMP command (e.g., query-commands) is concurrently
+> > received and processed by the mon_iothread, it can lead to a deadlock in monitor_cleanup.
+> 
+> Shouldn't this one too be picked up for the stable series?
+> Sounds like a good candidate to me.
 
-diff --git a/net/filter-buffer.c b/net/filter-buffer.c
-index 427da24097..ce3e9027a0 100644
---- a/net/filter-buffer.c
-+++ b/net/filter-buffer.c
-@@ -95,7 +95,8 @@ static void filter_buffer_cleanup(NetFilterState *nf)
-     /* flush packets */
-     if (s->incoming_queue) {
-         filter_buffer_flush(nf);
--        g_free(s->incoming_queue);
-+        qemu_del_net_queue(s->incoming_queue);
-+        s->incoming_queue = NULL;
-     }
- }
- 
--- 
-2.25.1
+Yes, makes sense, please pick it up. I also agree with the SCSI and IDE
+patch you picked up.
+
+Kevin
 
 
