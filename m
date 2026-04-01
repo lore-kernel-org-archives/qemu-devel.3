@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673F2D35162
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E314D35163
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7raH-0005ai-0u; Wed, 01 Apr 2026 05:09:57 -0400
+	id 1w7rVM-0003D5-2z; Wed, 01 Apr 2026 05:04:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7raC-0005Zq-BE
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:09:53 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rUE-0002Yj-Vx
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:03:43 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7ra9-0003NE-NZ
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:09:52 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-486fd27754bso65114305e9.3
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:09:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rUC-0002fl-QS
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:03:42 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43cfe71e5d3so2785821f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775034588; x=1775639388; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1775034218; x=1775639018; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3evvW8FxjJktOYEhkBoPuvmQDFhoNR9tWIZDpScjZjE=;
- b=h7CYPXxZgR2CcBg3cCk8MqqBxwOmI60Qu6vYjWb9T86t+9DrLYfAWAUQ6sJXucdRQt
- jgDDK0EI5Ut49fkoxLjdrUfVeeUKNFdCGx88YVZbK1AFdR82jeBiQF0wi9RY2i7QCXzp
- B7sAZWiIw2FAZLMNXYe0gT+b/SodIIUL6Lih42NqeeK/XMOQlH26J8u/pXHuhC7iMLlV
- 56hiZiopQVEUSMeln/3jflqv7M1Je9+A6ZXfrvEDW3ez+OlbpdKgLR6ePKBEYU/QDuXw
- ihFpqG08HpncSkoAFu0pEwnQFSCFKHDP7ssMSVZ3+s0d3PX9EBNSh2IOVKfF1PmufPqe
- m3oA==
+ bh=o5L1oGz4KFuGUfFqyRLy8ABv5gE8gKlzOtsCT2Netj4=;
+ b=YTHGeKFIH/ugIbinoyhaD6DHjWhIlkyqGqITA9F+w8dNKVmI3GEDpJT0i6RQYdBAIr
+ Q42kcqSeSqZnU/DSurZoMEpXksRnss+1M1RB2bR1mjE1jim7OPJsTaw+oJR3Fjp45B5A
+ qE0IW4310TsGOiIeDH/rcGhK4TlAEusIx5iw+gik4XGSPNbBrXYv98ZuvMtLPrukrCNh
+ xgZyngy/K3CMqsUGzr9e5jDUBFvN8l1+dmjApxX5JIZ2ssRMDcVv9DrsSvNBulNKN9pq
+ r4XXeWWeKllMsPe/mKmx9FI5U2E9mZhSBweCUxWYLUDGCmlyziTfrYVySGPdFT8uX7m3
+ eiEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775034588; x=1775639388;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1775034218; x=1775639018;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3evvW8FxjJktOYEhkBoPuvmQDFhoNR9tWIZDpScjZjE=;
- b=LNAcYVz26nX0gJ7wkCT3HMf2NaaCF7kHjGCuSi38YVLQyqH3dKkn+4u/nrWSCrETLc
- mIDrz7NExIMnljIEt36TRJ8pqF39xiNM1+WF/VA/P12wuHpnFkuA9voA31DXvc8OJ79i
- lRwcRU7a5mnGybQ+sAq//499Z8KrDp/SHue20FsRi6VIgjOflYdNzgbdG9vMuUmdsqyk
- tGXvAGt0yW4s7mX/VpDuvrlfxCJ0QBQBuPkgfoBv6iXC+uTreEz0ViMUHPWoBrnuzskf
- 7Sed9piFfngb05sUzRq7L7jWEsnXlQowMkU20ZQAzaiswiky2oHol+SIA2FllHAHphMD
- QgGQ==
+ bh=o5L1oGz4KFuGUfFqyRLy8ABv5gE8gKlzOtsCT2Netj4=;
+ b=ZM/rWFv1huHs3oT1xugO9rBUMXQLQxpcFWG+qUAKRwhSNYpNwLfTOCG0kX28i+O5hT
+ vWDWYvgDNtr6kReO/Vw3Khye8iPQ3GD39DnAqY0lq8crFQUZCgmhBPBt4Cvvx0m9NaU1
+ bi7XDwmAhXCB/sLXxRFlxVrj7vtaRodm7XdC6imyuqlC9XlWfJpJawx/sGHtsi/YZj6X
+ 4gi4v5rUClQ7bgNVav6XQqQqlCEDzopiRsg6GCorO1yAIxOHDEAoKrzqNz0W6poiplGp
+ 6EGSWntOHaSXAlYlmIjdvOWfjkH142wwa6TbK/Z+RUQ9wiDzBgoj17NF0qD/tXBibuAs
+ hwLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/eEIHDJuEzy1monPPSe8iMJOl6LHeKBQF53jH1x6uDoItIt//0xRE8jFyyLp+HsjdKfKULYmuDqAx@nongnu.org
-X-Gm-Message-State: AOJu0Yzry+IX/f4URiv4M24wkQcrwSmJy7S+q90Kh7gyUAxQVlnSezK+
- E6n/U88f3akpqO6y6lvm10+uetnCg+j/BI35ooMv4XM6CzEuZLNP168/dRObcWq8mZA=
-X-Gm-Gg: ATEYQzwKVVvrdUoksZ4EyBP8x+gUkL3NY7fjxG97/xaoXGyWys0ReH80NVQHaRaEjT3
- qSQhRNOqfS5QuUVt431jgwTaauMZaZa7EdH5pPUcsjcCaY1JXua5GGSVrv0hCObEPeVjRV1lMHH
- u3n5iud5yUKSlnWnaA8ZliLhm1oIFiZ6AFJwLdfTn3hf7B5JJkcPOV7A2cMV6ySBpxooT51TR9N
- Orw3S4LuLED1wZyvkzvlntTHHdOUe+b6y3NRXKV/hFkr4p9UI06oVPbly/hLThGmofihg63MzdB
- sDyAll69rdg11TriUz0PaxosePbVvXKMYakNxrZelUak/pZwn9kG+Br7ikpKk2vnQhlKifZOCUO
- 6MI6qGmadK0AJTzv4kd9h2JsiK+mYIp/KhQOoIMQ/wXAbFk+0hKlyR4H1o5t5bpgYsFdZDA82ZG
- F5lZ+0V4kgAYaZNtpPu00XsFBq6Fhum4ffZWaLDXSw7j/1I/OBNO7UrCuN9y6+pAJ9Ng==
-X-Received: by 2002:a05:600c:c0c7:b0:487:1108:48af with SMTP id
- 5b1f17b1804b1-4888355e7a7mr32652515e9.4.1775034587851; 
- Wed, 01 Apr 2026 02:09:47 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf21e9e18sm32078659f8f.9.2026.04.01.02.09.46
+ AJvYcCW9kOWU+lBCZhjTczN0Avnbk5DykMNIMPikEdSlEAQ+ymypRwdcXdIjPsbpdFOP3K4iqSmbUjIFh76W@nongnu.org
+X-Gm-Message-State: AOJu0Yy8ZT4LrbP8sbrXxkla0HlHWnmQfsykZ54DBY4/mzQNAk0ufB9r
+ E5N7VvGMn6Owsj1P0UDQPdQkerz4tK8wAxeMFgVEaPvAJhIyqsRgkG35gEjZIvEIwf8=
+X-Gm-Gg: ATEYQzwPuBGwT0YZP1+XZ4VUzS1+i7f/jb+Exx+lwgb6YIi9nTrrbuUyIiIxadfyLPA
+ TOSieb+AZ5JXADe6A1uT60BYz9NOpAjBfbvzLIFmKKLwSoPkWVgzk+aRAvSvdWRhg368x69n26n
+ ORm5Hi8a+31T9PhUBkMCVuMjzDol7CRHVrHqP5YocOulAPO0Umom6qvyq73ygacVQbn00Wwh2Dk
+ hBLxOgzbzpHLYF2luvDWWWh9IpKFCqYoCl5oLkwcCjVouVJvsg0rOdhV9y4HB1ay7RxUC1q6chQ
+ hCCkUkbfWDPcEEOZgaZ4qZSgL6ztwZ+3NwOfWaw8YvfwAXuW1TqHEKl46USLHjhffBbCJcrc+0H
+ jv4MizkCvzN+EMmLlBXyLuFoEQFBRXQ4dLbnz6wDXUIK3moa7r1F4vuR/ecmQQGpV+5pc83Nt2S
+ MQs3m75TTSoAgz4mmVJPuTgUfOjqNLMBFECRUKYibDCUrFhw==
+X-Received: by 2002:a05:6000:18a8:b0:43d:d82:341e with SMTP id
+ ffacd0b85a97d-43d150e8479mr5168715f8f.27.1775034218230; 
+ Wed, 01 Apr 2026 02:03:38 -0700 (PDT)
+Received: from [192.168.69.228] ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43cf247472csm29649636f8f.28.2026.04.01.02.03.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 02:09:47 -0700 (PDT)
-Message-ID: <d8f7baef-09c6-4739-9eed-168bc1a6d15d@linaro.org>
-Date: Wed, 1 Apr 2026 11:09:46 +0200
+ Wed, 01 Apr 2026 02:03:37 -0700 (PDT)
+Message-ID: <988f87d9-8edf-4242-b170-1f9fbc6a10fd@linaro.org>
+Date: Wed, 1 Apr 2026 11:03:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/60] ui/console-vc: set vt100 associated pixman image
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-16-48eb1dcf7b76@redhat.com>
+Subject: Re: [PATCH] memory: Optimize flatview_simplify() to eliminate
+ redundant memmove calls
+To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, richard.henderson@linaro.org
+References: <20260331060731.82641-1-guobin@linux.alibaba.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-16-48eb1dcf7b76@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20260331060731.82641-1-guobin@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,18 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 09:50, Marc-André Lureau wrote:
-> Start removing dependency on DisplaySurface for vt100 handling.
+On 31/3/26 08:07, Bin Guo wrote:
+> The original flatview_simplify() implementation uses memmove() to shift
+> array elements after each merge operation, resulting in O(n²) time
+> complexity in the worst case. This is inefficient for VMs with large
+> memory topologies containing hundreds of MemoryRegions.
 > 
-> Note that before, the rendering is done on the current DisplaySurface.
-> It's not obvious the QemuTextConsole associated surface isn't changed
-> over time, in particular if it was doing resize. But
-> qemu_console_resize() is only implemented for QemuGraphicConsole.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   ui/console-vc.c | 54 +++++++++++++++++++++++++-----------------------------
->   1 file changed, 25 insertions(+), 29 deletions(-)
+> Replace the memmove-based approach with a two-pointer in-place compression
+> algorithm that achieves O(n) time complexity. The new algorithm uses a
+> write pointer i and a read pointer j, where i ≤ j is always maintained.
+> This invariant ensures we never overwrite unprocessed data, making memmove
+> unnecessary.
+
+Super nice!
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> ---
+>   system/memory.c | 27 ++++++++++++++-------------
+>   1 file changed, 14 insertions(+), 13 deletions(-)
+
 
