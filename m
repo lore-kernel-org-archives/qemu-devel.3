@@ -4,106 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A08D3515E
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 08:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132A5D3515E
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 08:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7r8O-00044I-Vv; Wed, 01 Apr 2026 04:41:09 -0400
+	id 1w7rBU-0005h8-Pd; Wed, 01 Apr 2026 04:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w7r8M-00043n-R8
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 04:41:06 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1w7rBP-0005gZ-Ks; Wed, 01 Apr 2026 04:44:15 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w7r8H-0000Aa-Gg
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 04:41:06 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 3F38C4547E
- for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 08:40:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1775032859;
- bh=QoopJrOQkEiODrH4R7Bj336bnOerKKI7845YLYrHoIY=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=PzmbHpKGk7XRKGRsIee7qWDhTtR20JvgAARwk1kT6oPKcV036HFvfwEZ1NaTkba7m
- yQ4mrHjCEVipVjCEpnnw0+dj9pHAsZ+nhNPdsnRU05sIAYJqiH3XdpTjV5GtJyM/tU
- U8pAynHGyguPYZknyu7RosUdb5zTEen7IIjdi6d6F0CfLqTEQ9C+36selw9lcs07uC
- 9dp/FBSqu/S0HRaQK15ZeJmyQUiVP55oUMn2wt2Az3vcJkx4eKVEdjjeJToNlyxnzK
- ooy8U24EKrC/y94wqPlLKMar0c5wqy9YUFlPt5Bljva+IqG3blU+a5pDHu4umg2NF4
- pTmuMqWThPqQA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 2307E7EEB6
- for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 08:40:59 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1w7rBL-0000Q9-Sp; Wed, 01 Apr 2026 04:44:14 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CQ78UKi14UOL5CWDpLsmPkOqbFVBldQLGqQzaLfpYwo+NJC2mTXk4NZnsQkU/Z7+OeAL4JqGezCQeAR3jUnKubYL9DwIlMZPkruDIHuCNFVA1iR88/5VLg0uu5V1Em0rHYvQ/CemzygYjgkDYHAoA4Kd0E0fK1y+HPRis2pmUiF7kxp0HzKA7L9y07Xht9tlLRDu1LG4/GX5D2DXMADqYRRXZ7ZMRnywCNgoX2/WAway6EQQspzriY3aX6nsWwSYDZw9g81eJCRRgFNdzLHee6BmMkYzhTiOZuUJ0EcsL6/uP7AbY3ULFcGQG6LcJ/8qsm7tYXo+U52mJzBaEfRNfg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=flW4oCEo2tGJkCiCyD3gLyYSkze2ET9BfrihRrrUKn0=;
+ b=lUMu0v1jxdPaBG9nV+1L4jFsDkqS3RgC/TvhBv0tl29vS6u/yVi4TcnVilD8eKN1Ccq2xIUihWDNmqg+iDeMmUbSlP0JSloLpYmHpTnSgaNhZFzn1ZzbWHV84JjsnYJX8PXSREKu0Q9Ftb6FLIcvyNwS2CGcSQGC12LKy8lc4KimduVraKiK5QAHyXiqh+4OgQFsrfdFUwbHCANsFPwgrg2c7kEaigYvniGnrUV2hTYTNT6sx7WBFPlbV8IYFeMakStbIa1fS42H72CZ+clgFTDPKzs+DiZ75Di//YbhQNcdKJl6+WBakA462PhkwYFmjOwxxukMvG0cXWBM/loq7g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=flW4oCEo2tGJkCiCyD3gLyYSkze2ET9BfrihRrrUKn0=;
+ b=GNSliASPfZywq7SHck4R5ejqXhurJj69B2OAt4nidktUdsBQAZeEUQOxGY2RSMRfii7MsxKKHaB6ZydlybLsw/mPHOTIw6AtJ/B/GEMWCSfvQtCm6aN7xEV1cknplf/ZtbUnR07583oYkR/5vr8hSqDY9wLAZ6A813pjv9dlF56pJo3PUOWb3stoz2LMCLPaoiWx33u/r+oZmrOhGRFDQZaM7+ky8WVdcdT8xE7++qdklNs2QXpFSaAzyQCjYW+jRCidXxOpFbJh2z/f6RUoJ8ei+Kt1Ait8uu3DMaWhAxzIRf4WMhxsU4PgEic5qTl7iBFZIVTZp67IZntTFmYB4w==
+Received: from CH2PR03CA0015.namprd03.prod.outlook.com (2603:10b6:610:59::25)
+ by LV3PR12MB9260.namprd12.prod.outlook.com (2603:10b6:408:1b4::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Wed, 1 Apr
+ 2026 08:44:03 +0000
+Received: from CH1PEPF0000AD80.namprd04.prod.outlook.com
+ (2603:10b6:610:59:cafe::b5) by CH2PR03CA0015.outlook.office365.com
+ (2603:10b6:610:59::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.29 via Frontend Transport; Wed,
+ 1 Apr 2026 08:44:03 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH1PEPF0000AD80.mail.protection.outlook.com (10.167.244.90) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9769.17 via Frontend Transport; Wed, 1 Apr 2026 08:44:02 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 1 Apr
+ 2026 01:43:49 -0700
+Received: from NV-2Y5XW94.nvidia.com (10.126.230.35) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 1 Apr
+ 2026 01:43:46 -0700
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
+ <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <jan@nvidia.com>, <jgg@nvidia.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <skolothumtho@nvidia.com>
+Subject: [PATCH] hw/vfio/iommufd: Control dirty tracking for nesting parent
+ HWPT
+Date: Wed, 1 Apr 2026 09:41:33 +0100
+Message-ID: <20260401084133.56266-1-skolothumtho@nvidia.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 01 Apr 2026 08:34:37 -0000
-From: Christian Ehrhardt <2133188@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=In Progress; importance=High; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe;
- component=universe; status=In Progress; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=In Progress; importance=High;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
- sourcepackage=qemu-hwe; component=universe; status=In Progress;
- importance=Undecided; assignee=None; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
-X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
-References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <177503247755.1966558.1461006858441406527.malone@juju-98d295-prod-launchpad-7>
-Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
- handler
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="9aaa5bcdb7f1a411456d080b227371e0556b2411";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 2e514dacc6e642b313cea5de1e0a2c34ca7440dd
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.126.230.35]
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD80:EE_|LV3PR12MB9260:EE_
+X-MS-Office365-Filtering-Correlation-Id: a5fd5bbb-e470-4958-81f6-08de8fcad376
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|376014|82310400026|1800799024|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: nvpn0+kSTah/ktHc8eY2U7cRpA/kcsMKQhQ4vYsGqc1C/mv83UYhUowc4imkuTb//o7fiz5kBEBke2465TTkYX8o1LFnnIFTIVDcdj+ix5YJxmBq7vsoSTwfzuqogClGUr/Mm26sgRQ8KZpiuFXTBQCB9uZInBhEhzC4xbPl6WbVWeSs2yU/XGGfRRueBGwePbzZQtzuVSed16ueV2LFj6gcxTRENnWjBfrFY5rcTZb8O6KJhUeC6ifI0tEwK2UcMysZWXJl9FOfQUyYvrLsOKRaokFxstKoK8d14fPYGrufYnztb5beyzMK/C3uIGrhBObIL5XDvJMsVIZwYdOUcq0P0aOHbJ69Qznt4j8UFEMjxXcl8Ol05/VFQ9/zXuOAiXo4ffQNU5D7hP6gqSnHvuXJ1rwIDVwzsSXggaUvsWnwXmxf9AAXFzxkzC3L1VQASvNXusTqnEZQEvYrDR81Z4TOkCFhyJ4jhpIdS+J8FlKdFMRuR4fkRJUIdrBILLtULLOw5jo03hskF+YZuQRuqg4YCnooL0hzj6+4x2751WJF9EqgeyAdCC/h9Q3gdc9Dy22SWTaCpuNT922HqEWszgtCmKjFbBT9oc+oYMlJAxKAvdLu1fWeptJ4Y1vXgKrFecXZ/reYV9Mn+HqF8oBnPqObIERse1pEKzygR7BpTboG6FqBt/99lK5Z3N54qWUyc61O4gW/06l6DhsmW2+dHHtzKpMj9bUJ6IIzf6a5Krq2h/JGsiKdYa2sjY6AzPb9zlzLXJmbIBQG6kdEWxZ8yA==
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700016)(376014)(82310400026)(1800799024)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: ZjbEVr0n9nmx9yjCojIC7spf9gJP1zOOQNjg4bOaMt2HHGqDpyJ4cQB+XCrKJxJgT75UhNUHp1qa3tiPQHyPGMtJp3K97kHzqnXZi1QLhgGILfJO68LHuPBJMBHtLfiuYUoYVcvhk0TIJirKE6i3rlmAWX9vp5KtyHm4mDAVnCEUi2uZQVjdJBK8AQXOTUPXPbybUbus7YFyM8+reZ6Zf7hbR0U54VURIWuyDSjhhUFCDA0t6dNQjd/j6aTvzti855JR7uRRJVQG7ONzRuEcwJpcr6Gi2P8IagVhaaSkPiQkgmCKvQH3NzOXlwhvz+z090Ql8WybNnpZBiejF8EszOG1t6ENbPOi5p8LlYYBRFc9qO4B4+i+2lqg7d76fYO9jjHJ/nATuXFM9MeWfXXGKWMlJeUmPcS894Aj7y2sK27A1rc7ZnmiqWaxifH98KLn
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Apr 2026 08:44:02.5447 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a5fd5bbb-e470-4958-81f6-08de8fcad376
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD80.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9260
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -112,164 +128,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All the MRs are ready - combiningand uploading
+QEMU smmuv3 accel does not support live migration yet, so dirty
+tracking for the nesting parent HWPT is not useful.
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133188
+Also, nested vIOMMU use cases can break on some platforms. For
+example, SMMUv3 with HTTU may advertise dirty tracking capability,
+but the kernel supports it only for stage-1. Requesting dirty
+tracking for a nesting parent HWPT (stage-2) can fail.
 
-Title:
-  [SRU] RISC-V vector state not restored by signal handler
+Add a vIOMMU flag to explicitly request dirty tracking for the
+nesting parent HWPT. For nested cases, dirty tracking is enabled
+only when requested by the vIOMMU.
 
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  In Progress
-Status in qemu-hwe package in Ubuntu:
-  In Progress
-Status in qemu source package in Noble:
-  New
-Status in qemu-hwe source package in Noble:
-  New
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu-hwe source package in Plucky:
-  New
-Status in qemu source package in Questing:
-  New
-Status in qemu-hwe source package in Questing:
-  New
-Status in qemu source package in Resolute:
-  In Progress
-Status in qemu-hwe source package in Resolute:
-  In Progress
+Non-nested cases and Intel vIOMMU keep the existing behavior.
 
-Bug description:
-  # Title
-  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
-et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
+Fixes: fc6dafb98cec ("hw/arm/smmuv3: Implement get_viommu_cap() callback")
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+---
+ include/hw/core/iommu.h       |  2 ++
+ include/hw/vfio/vfio-device.h |  1 +
+ hw/i386/intel_iommu.c         |  7 +++++--
+ hw/vfio/device.c              | 11 +++++++++++
+ hw/vfio/iommufd.c             | 11 +++++++++--
+ 5 files changed, 28 insertions(+), 4 deletions(-)
 
-  ## Summary
-  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
- 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
-gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
- (core dumped)" or "died with signal 4". The illegal instruction is observe=
-d inside glibc's memset implementation at an instruction that uses RISC-V v=
-ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
-e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
-nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
-lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
-code generation / state corruption), not a cmake bug.
-
-  ## Affects
-  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
-untu3)
-  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
-qemu-user static interpreter
-
-  ## Environment / Context
-  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
-  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
-  - Container image: ubuntu:26.04 for riscv64
-  - qemu package used:
-    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
-b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
--user_10.0.6+ds-0+deb13u2).=20
-    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
-ost and registered via /proc/sys/fs/binfmt_misc/register
-  - CMake version used inside container (bootstrap/build may use system-pro=
-vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
-ggers crash)
-  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
-eral consecutive successes or failures)
-  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
-t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
-QEMU_STRACE also makes it much harder to reproduce.
-   =20
-
-  ## Full reproduction steps
-  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
-ry:
-     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
-uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
-     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
--5ubuntu3_amd64
-     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
-in/qemu-riscv64-static
-
-  2. Register qemu-riscv64 with binfmt_misc:
-     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
-     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
-00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
-\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
- >/proc/sys/fs/binfmt_misc/register
-
-  3. Start riscv64 ubuntu container:
-     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
-4 bash
-     docker exec -it ubuntu26 bash -i
-
-  4. Inside container:
-     apt update
-     apt install -y build-essential cmake
-
-  5. Reproducer 1:
-     cmake --system-information
-     -> Often fails with:
-        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
-        Illegal instruction (core dumped)
-
-  6. Reproducer 2 (minimal C project):
-     Create test_cmake/CMakeLists.txt:
-     cmake_minimum_required(VERSION 3.10)
-     project(HelloCMake C)
-     add_executable(hello main.c)
-
-     Create test_cmake/main.c:
-     #include <stdio.h>
-     int main() {
-         printf("Hello, CMake!\n");
-         return 0;
+diff --git a/include/hw/core/iommu.h b/include/hw/core/iommu.h
+index 86af315c15..cd59a367ce 100644
+--- a/include/hw/core/iommu.h
++++ b/include/hw/core/iommu.h
+@@ -21,6 +21,8 @@ enum viommu_flags {
+     /* vIOMMU needs nesting parent HWPT to create nested HWPT */
+     VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
+     VIOMMU_FLAG_PASID_SUPPORTED = BIT_ULL(1),
++    /* vIOMMU needs dirty tracking on the nesting parent HWPT for nested use */
++    VIOMMU_FLAG_WANT_NESTING_DIRTY_TRACKING = BIT_ULL(2),
+ };
+ 
+ /* Host IOMMU quirks. Extracted from host IOMMU capabilities */
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 828a31c006..a95c5bf503 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -268,6 +268,7 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
+ void vfio_device_unprepare(VFIODevice *vbasedev);
+ 
+ bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev);
++bool vfio_device_get_viommu_flags_want_nesting_dirty(VFIODevice *vbasedev);
+ bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
+                                                 uint32_t type, void *caps,
+                                                 uint32_t size);
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 4924aa4375..5ec5ed82d7 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4831,9 +4831,12 @@ static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+ static uint64_t vtd_get_viommu_flags(void *opaque)
+ {
+     IntelIOMMUState *s = opaque;
+-    uint64_t flags;
++    uint64_t flags = 0;
+ 
+-    flags = s->fsts ? VIOMMU_FLAG_WANT_NESTING_PARENT : 0;
++    if (s->fsts) {
++        flags = VIOMMU_FLAG_WANT_NESTING_PARENT |
++                VIOMMU_FLAG_WANT_NESTING_DIRTY_TRACKING;
++    }
+ 
+     return flags;
+ }
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 973fc35b59..8f7ae919a5 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -522,6 +522,17 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
+     vbasedev->bcontainer = NULL;
+ }
+ 
++bool vfio_device_get_viommu_flags_want_nesting_dirty(VFIODevice *vbasedev)
++{
++    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
++
++    if (vdev) {
++        return !!(pci_device_get_viommu_flags(PCI_DEVICE(vdev)) &
++                  VIOMMU_FLAG_WANT_NESTING_DIRTY_TRACKING);
++    }
++    return false;
++}
++
+ bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev)
+ {
+     VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 131612eb83..231635cdc7 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -349,6 +349,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+     ERRP_GUARD();
+     IOMMUFDBackend *iommufd = vbasedev->iommufd;
+     VFIOContainer *bcontainer = VFIO_IOMMU(container);
++    bool viommu_nesting, viommu_nesting_dirty;
+     uint32_t type, flags = 0;
+     uint64_t hw_caps;
+     VendorCaps caps;
+@@ -402,8 +403,14 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+         return false;
      }
-
-     cd test_cmake
-     cmake .
-     -> Crash with:
-        -- Detecting C compiler ABI info
-        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
-
-  7. Reproducer 3 (rebuild cmake from source inside container):
-     apt source cmake
-     cd cmake
-     apt-get build-dep .
-     dpkg-buildpackage -us -uc -b
-     -> Bootstrapping error:
-        Illegal instruction (core dumped)
-        Error when bootstrapping CMake:
-        Problem while running initial CMake
-
-  8. Observed crash location (from gdb/QEMU_STRACE when available):
-     - Illegal instruction is in memset@@GLIBC_2.27+0x52
-     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
-bit elements)
-
-
-  ## Workarounds
-  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
- using vectorized memset.
-  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
-=E2=80=94 both make the failure much less likely.
-
-  Note: The same workload does not reproduce the crash when run under
-  qemu-system (full-system emulation). The issue appears specific to
-  qemu-user
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+ 
++    viommu_nesting = vfio_device_get_viommu_flags_want_nesting(vbasedev);
++    viommu_nesting_dirty =
++        vfio_device_get_viommu_flags_want_nesting_dirty(vbasedev);
++
+     if (hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
+-        flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
++        if (!viommu_nesting || viommu_nesting_dirty) {
++            flags |= IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
++        }
+     }
+ 
+     /*
+@@ -411,7 +418,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+      * force to create it so that it could be reused by vIOMMU to create
+      * nested HWPT.
+      */
+-    if (vfio_device_get_viommu_flags_want_nesting(vbasedev)) {
++    if (viommu_nesting) {
+         flags |= IOMMU_HWPT_ALLOC_NEST_PARENT;
+ 
+         if (vfio_device_get_host_iommu_quirk_bypass_ro(vbasedev, type,
+-- 
+2.43.0
 
 
