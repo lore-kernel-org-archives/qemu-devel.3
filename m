@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7401010F6FCB
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 15:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E91E610F6FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 15:09:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7xBZ-0007Jf-3T; Wed, 01 Apr 2026 11:08:49 -0400
+	id 1w7xC7-0007b9-0K; Wed, 01 Apr 2026 11:09:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w7xB4-0006yV-Fl
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:08:20 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1w7xBs-0007TC-RF
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:09:08 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w7xB2-0004zl-4F
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:08:17 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-c06cb8004e8so2828434a12.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 08:08:14 -0700 (PDT)
+ id 1w7xBr-00054g-3E
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 11:09:08 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2ad21f437eeso7199725ad.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 08:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775056093; x=1775660893; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775056146; x=1775660946; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
  :from:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=2ck0U6aROSJUofviXgnTWrJTFFjrRL0Xg5ByJrn5LgU=;
- b=ZC17I+8Og85y5AcRBk2Q49lIAFbI361x6CSzlqJRn20ZZXSveuW9xiEASo07vZJw8r
- tgiapK7bRV7Fdm47UBsilzffv+V52IfKRbjSRQHu59RcuHKpWhXe7/9W+iqnDWZQxi6D
- N+8L/+nvjzpaj+/Vukmu0bxv3k3l8OOxBStVjfTn2TO+9GSzg+l6xU0U1vS6hmrFN7NI
- 3+qLD0mxZ/qZOhqoZzQznMKksU/YRq4LxNihaeCjKEAI7fEcwWupZRo31er9f/7YLkGf
- RgvkHdj5PJALTNOwfq3j7qg1WEAam7sfmyMmYe5bMZo1vh7azbY5+ACyZW67Jq5BXNcL
- wgVw==
+ bh=YLHWrEuAf8+XC42jAvs9hUEKSSmG++okZ0B24bY5xQw=;
+ b=MEPOnqivI9KcJ3EJE3rGNBKLY684gQvLuypTPUrMmmQ9VsvZODW67J11wRox2Cy8V7
+ WP4nfb38sWzEW2yAGoixG+l+/DMOlitzhOM/LclvuYL3r6/SpX4TPoloXbC8Hkx8Ncq9
+ xGDS4L/hcdDVhNbJo+sWMrXN349SASc5zXAM/OeWqoN2jl/TpjdQMNQxgLnnTA1OjNOU
+ /l7yyY4qX2ggsLFhglhhWxKCkB3Nj8TuV+iL8zdKdLG5SQkvbcKCeCy5FKswDuNcEGJF
+ BuJmnfY7LEa9AJSGJWUTwgD0efep++ySiePPTUK7FHAokzavlLZXQsImRx7NKq+bKDQF
+ RltQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775056093; x=1775660893;
+ d=1e100.net; s=20251104; t=1775056146; x=1775660946;
  h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
  :from:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2ck0U6aROSJUofviXgnTWrJTFFjrRL0Xg5ByJrn5LgU=;
- b=FD4Ct6B+tviGTI64Bl0biIP9Do8Iplp9TY9UcgXqp6Z+EvN8ab4h9Ryce9Hcdm1jqj
- ESZB/aH5la7uJGHp3s+iTNmo63uKsAc7Sz67M9cyyx+FLbdGDKiRrLWZ38xzQkPuOKQj
- 9a3QIUawamm0f6l3u5ByM60kiCovKtvSP+P76UEJUilQaKHYREu7GPKtn+6c5w7fypX4
- raR8p8XbPRQ9qrRiSaIC2/aTiAxaMARmP0BcZKtaGn67KDqT6Ms5nmjlwig3S2bgyzP7
- 0bppoPv6vW9Pz+imNcUnweXCfyUw/7TCV+1dRSsWhjW3xXIH1Vh1XuuMBr9gisaDcH4K
- QqQA==
+ bh=YLHWrEuAf8+XC42jAvs9hUEKSSmG++okZ0B24bY5xQw=;
+ b=DMoEWymDSKwCqo0RoUSpgazkXnI+tY30RmGoU9xWauY2E8Jz3HXWP/3PfYMTW+EdAn
+ 5LlNZO8btFK/lO054mUq+ACX+UQ8B7yjD5z7NM+UoJKdYEmbXtMnkB/NeKqkWMktSwrd
+ /RomqVoA5VCZOzaLfvCfwYfgnwZTnj+4gNe+efe67aka7T2zyI2QPLqpA2r2s69V0X51
+ OajUDhL606Gg+De2VDmP6PKw+nqvNnT52eBcDUDt0b64Gf4FfuCrm3OwgFl/Dntt91V6
+ sgfZ58pfzQSi7PjHBKkNKlb5oWdc1fXNmxmy36FnZ8wr7+KO/ax/EA8oTDq8+GBDfDa6
+ s2Qg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlhtj262dX/tXu4OdpEBOVI5mR/egtWESyKZ/wa7OP5+yw2Kt2nsbg4RRUnw/0wU/YH3vNU6uIpyoS@nongnu.org
-X-Gm-Message-State: AOJu0Yx3GPQeXCETNFnulOedNrO7orsd3IIwt4wDl14FacXwRTRGwz3i
- miYiJv16udGXhZBgmJvAKC5ix/w3wB/n05LXxsYauc7T8fbRR9SNgx+Qz9eaIlwEyvA=
-X-Gm-Gg: ATEYQzzOkm5QYYNsY2LDEpfGXFheYBsk0eKAfPBsYJtQ1ddl6u/WnMxDhLtYy0wexVT
- Aukl4046aLHsog+yEq9FYz3xQr0sOy10ft6CTLCbkMxxG3sGVXImBebDVFg2wUoHeDa4j5RXceH
- jrtRX2p8L7SnLpFW1eu0uPzgTDp/7IfiPtWn7OjED9Cfzm96wDSUUPSf3+OwTU467Fn/9CKpLKV
- XbOsMfxY1IPDg+XPdt5nmXvuqLnb76Ymiy9AYmeKx5zKlRjUUbgcWSBOJdjr4ACdhvmcJSbwylf
- 3IxM19Ro6WsLvnWBhgXAdgGPsFpnDAo6a4a6xRBbnU9YY+BNJMTnhSlziE/Qj2CnOEziTm2YTUd
- LKcxtmYU10TSPpfsTViNGXDHanzrZturT62TiGWy6+Nt35YEnV4WQ0TJgkFGW74HQ0HITgVKqKU
- 2zs6AA7pTHNLY71JeAbGTHZXaZLi2kiA5NDCR5UcKdhxU7OqiQKnDaz0X+30tRwnafUmNv
-X-Received: by 2002:a05:6a20:7fa9:b0:398:b499:44f1 with SMTP id
- adf61e73a8af0-39ef777be6emr4185386637.58.1775056093221; 
- Wed, 01 Apr 2026 08:08:13 -0700 (PDT)
+ AJvYcCXmPpcN+1nRRcZIE9nlxCbCYuuqfM5RsWw++eH4W868dVC16HEGWJ7nz3bmDF94FUFFz2/EtlInOK/T@nongnu.org
+X-Gm-Message-State: AOJu0YyfvomV9pKBTmo+FgwQMXN1LQ+XBAdmsTNpKDZDcqkfbOkWtQE0
+ J/prknk0agQZzKNfBk9sPAaQGhOoQi76Y7odbc+mojR8umSSMUvFeiSHmw4jaFk+vzk=
+X-Gm-Gg: ATEYQzxUNitHNplKY/Tg/1E2hTP/RJcN5QDeYN0VfhZqbEMef9aE2uf6CANDCy4oCrT
+ a6Ge6y62Zs7ABLJ37b342qrYjiVuV+4u9R7lQsJXNO1gP4S8xP6J/zBjMmZlTMF4JFKJAUDeMsd
+ LLD46Pq6Jq8D0CpmO3VxhlcOBfqPDNjfv0COjYTSr+3E0o+pN9/5L5/YocCSf8aYwLr/AHrpw9Y
+ XUg4gEZiIT9uthqE4J3lOOVpiRDtriVzfpmeyt6RSjId/7uRGBjBYMFjY8MBhTSlfyzvCmPl+ik
+ 8rTQPTZb3i9Auul/fOzrZsKcD+5PX2zbqwAuK7F2rEuji9QZPS/0X1m9F4y2tyibgYWdO8qNrNS
+ uviwrPfPYzuF3/OZ51o3FPO7SFPSW41lO6fOVDswBFK96OGqGqUcUj4W7XKa0v/m5lnVCs/oEmz
+ MI22uyDLePzSydJ8cgmVBJLuePhZ9//ayXdUHZGG0IVXPhqCdDheoYTI4QnYZc/QVIMASn
+X-Received: by 2002:a17:903:32c2:b0:2aa:e47d:e3b with SMTP id
+ d9443c01a7336-2b25ed654ecmr81838315ad.0.1775056145643; 
+ Wed, 01 Apr 2026 08:09:05 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c65a3f08sm203065a12.31.2026.04.01.08.08.12
+ d9443c01a7336-2b274979525sm505205ad.45.2026.04.01.08.09.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 08:08:12 -0700 (PDT)
-Message-ID: <a121306e-79c9-464e-9511-1997bc3d00e9@linaro.org>
-Date: Wed, 1 Apr 2026 08:08:12 -0700
+ Wed, 01 Apr 2026 08:09:05 -0700 (PDT)
+Message-ID: <c3a79c21-b021-4936-83cf-c8c17a29e3eb@linaro.org>
+Date: Wed, 1 Apr 2026 08:09:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-11.1 1/2] target/mips: Expand TCGv type as 32-bit for
@@ -84,6 +84,7 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 References: <20260401144503.80510-1-philmd@linaro.org>
  <20260401144503.80510-2-philmd@linaro.org>
  <03df34f1-674a-4e52-bd22-ad77e7884b6b@linaro.org>
+ <a121306e-79c9-464e-9511-1997bc3d00e9@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -118,11 +119,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <03df34f1-674a-4e52-bd22-ad77e7884b6b@linaro.org>
+In-Reply-To: <a121306e-79c9-464e-9511-1997bc3d00e9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,73 +146,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/1/26 8:00 AM, Pierrick Bouvier wrote:
-> On 4/1/26 7:45 AM, Philippe Mathieu-Daudé wrote:
->> The MXU extension is only built as 32-bit, so TCGv expands
->> to TCGv_i32. Use the latter which is more explicit.
+On 4/1/26 8:08 AM, Pierrick Bouvier wrote:
+> On 4/1/26 8:00 AM, Pierrick Bouvier wrote:
+>> On 4/1/26 7:45 AM, Philippe Mathieu-Daudé wrote:
+>>> The MXU extension is only built as 32-bit, so TCGv expands
+>>> to TCGv_i32. Use the latter which is more explicit.
+>>>
+>>> In gen_mxu_s32madd_sub() directly expand:
+>>>
+>>>     - tcg_gen_ext[u]_tl_i64 -> tcg_gen_ext[u]_i32_i64
+>>>     - tcg_gen_concat_tl_i64 -> tcg_gen_concat_i32_i64
+>>>
+>>> the rest being mechanical changes.
+>>>
+>>> Cc: Siarhei Volkau <lis8215@gmail.com>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>     target/mips/tcg/mxu_translate.c | 1954 +++++++++++++++----------------
+>>>     1 file changed, 977 insertions(+), 977 deletions(-)
+>>>
 >>
->> In gen_mxu_s32madd_sub() directly expand:
+>> Yes, it's the kind of changes we should do, but as you see, it's quite
+>> invasive and produce massive patches that can be hard to review.
+>> That's why I'm more in favor to keep TCGv and all tcg_gen.*tl as it is,
+>> and add magic in header to compile it as expected.
 >>
->>    - tcg_gen_ext[u]_tl_i64 -> tcg_gen_ext[u]_i32_i64
->>    - tcg_gen_concat_tl_i64 -> tcg_gen_concat_i32_i64
+>> That said, there is nothing wrong with this patch, I'm just questioning
+>> the approach for all other targets.
 >>
->> the rest being mechanical changes.
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >>
->> Cc: Siarhei Volkau <lis8215@gmail.com>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>    target/mips/tcg/mxu_translate.c | 1954 +++++++++++++++----------------
->>    1 file changed, 977 insertions(+), 977 deletions(-)
->>
+>> Regards,
+>> Pierrick
 > 
-> Yes, it's the kind of changes we should do, but as you see, it's quite
-> invasive and produce massive patches that can be hard to review.
-> That's why I'm more in favor to keep TCGv and all tcg_gen.*tl as it is,
-> and add magic in header to compile it as expected.
+> One solution we could use, is
 > 
-> That said, there is nothing wrong with this patch, I'm just questioning
-> the approach for all other targets.
+> in tcg-op.h:
 > 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> #ifdef COMPILING_PER_TARGET
+> /* we make sure there is no TCG_TL_BITS definition, and define
+>      it as TARGET_LONG_BITS */
+> #ifdef TCG_TL_BITS
+> #error You should not define TCG_TL_BITS for target specific files
+> #endif
+> #define TCG_TL_BITS TARGET_LONG_BITS
+> 
+> #else /* ! COMPILING_PER_TARGET */
+> #ifndef TCG_TL_BITS
+> #error TCG_TL_BITS should be defined for common code
+> #endif
+> #endif
+> 
+> #if TCG_TL_BITS == 32
+> ... /* define TCGv as 32 bit + tcg_gen_ops */
+> #elif TCG_TL_BITS == 64
+> ...
+> #endif
+> 
+> And in a given C file:
+> #define TCG_TL_BITS
+
+#define TCG_TL_BITS 32
+or
+#define TCG_TL_BITS 64
+
+> #include "tcg-op.h"
+> 
+> This makes sure that for common code, we have explicitly chosen a
+> variant for tcg operations. As well, for target specific code, there is
+> no changes needed.
+> 
+> So we get the exact same result and compile time guarantees than your
+> changes, but without any massive patch to change all occurences.
 > 
 > Regards,
 > Pierrick
 
-One solution we could use, is
-
-in tcg-op.h:
-
-#ifdef COMPILING_PER_TARGET
-/* we make sure there is no TCG_TL_BITS definition, and define
-    it as TARGET_LONG_BITS */
-#ifdef TCG_TL_BITS
-#error You should not define TCG_TL_BITS for target specific files
-#endif
-#define TCG_TL_BITS TARGET_LONG_BITS
-
-#else /* ! COMPILING_PER_TARGET */
-#ifndef TCG_TL_BITS
-#error TCG_TL_BITS should be defined for common code
-#endif
-#endif
-
-#if TCG_TL_BITS == 32
-... /* define TCGv as 32 bit + tcg_gen_ops */
-#elif TCG_TL_BITS == 64
-...
-#endif
-
-And in a given C file:
-#define TCG_TL_BITS
-#include "tcg-op.h"
-
-This makes sure that for common code, we have explicitly chosen a 
-variant for tcg operations. As well, for target specific code, there is 
-no changes needed.
-
-So we get the exact same result and compile time guarantees than your 
-changes, but without any massive patch to change all occurences.
-
-Regards,
-Pierrick
 
