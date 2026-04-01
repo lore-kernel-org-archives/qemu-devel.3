@@ -4,112 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94CA610FCAF0
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 22:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B6CD1112242
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 23:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w843C-0007RH-71; Wed, 01 Apr 2026 18:28:38 -0400
+	id 1w84dT-00051q-Hm; Wed, 01 Apr 2026 19:06:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8439-0007Qd-QY
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 18:28:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1w84dK-000507-MC; Wed, 01 Apr 2026 19:05:59 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8435-0006ax-Dc
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 18:28:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775082509;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zlvF8Y0xzE59VKNYaguPYs8VoY8pGc0i4FcyVlG15Wk=;
- b=hNdhP/MU0mlp6OQVSvdVAsZ0D3wP0ICI3gI0kDthNfDPjJ4vn7DImX8cIUvIuqEvy8KsHk
- 1T1/H/S6jhYABt8Rn9mD0AzEvo9E1+fc5VKx+QdrhB6bGJdGh4mVnQjVhzNKNlUSBWZjty
- L34OcNJYjpiQ3I5MTXDTYt3/PHgqryc=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-120-vFPNhyFWNXaIYtwjn4tepw-1; Wed, 01 Apr 2026 18:28:28 -0400
-X-MC-Unique: vFPNhyFWNXaIYtwjn4tepw-1
-X-Mimecast-MFC-AGG-ID: vFPNhyFWNXaIYtwjn4tepw_1775082508
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-50b4076dc16so10964251cf.2
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 15:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775082508; x=1775687308; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=zlvF8Y0xzE59VKNYaguPYs8VoY8pGc0i4FcyVlG15Wk=;
- b=F0Xc0Yc2+4gbRFnlCbsQaphk5x5mnpIAIPLSGC93He4WtfVPN4h08+ZIE3VBuumFie
- vQumxH3apUrCl0KxvVFH07fdrE3/huVKiYpea2xV0fSyRbCJ+smBRTjc7JTMAd1AqspQ
- 9tEViLlem4Qiu1QBFmY1I9eAdFqudYRawBHYYI9riNQ4Sp0WX/2yx5jpiB7DpHbYEeJa
- +RSzbWYjkUuiYIMyXNpcsxccGKUMvMihG5wFHBNvxXLJMqxhWm9A2N5qQFwFfQ2dhPdn
- 1AwVjtdGT/8S6Ghc16uES777ih86KmgpBpopI8DTUsDSdrx+rhgAY2t9JtP71rCuX5tY
- l3og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775082508; x=1775687308;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zlvF8Y0xzE59VKNYaguPYs8VoY8pGc0i4FcyVlG15Wk=;
- b=k072T8Ag9NZ1RcXPZaKn39KsSp29Wl7aQjv1+hKImDSAcIbVcyEsBwLqsTkMaf2ADY
- htTtGc43v0N32dm9D8vL1i9wvCC4qb9IRKc7seD0nG515MPhQgQGb6aCk9XIaXgiuerS
- Hpox3fUr2HUMndE03Tn9ZeIp4r6dmG4KLcV6ejPUS5mvhAy7NaAE6Z/lzlvgbgqFo5sv
- hCltNX63Kr1cS9jN+M+NdwjdjRbLWCYcu2uwIsd9+F0HiKi2lW9VeGQUFJLkmFJmZZyg
- /1VI5XwvziNITBNSypty4DSH/4qbGcNH1rwBW6+wwHiHYngHteOetJY8PM9/PaQK7AG4
- 0JAQ==
-X-Gm-Message-State: AOJu0YwD+lQG/yhJ0VFxKj12st4WN6SKaspWC6RHEKriSAPUuvLX33tx
- OaDju7ea0hb6VkT6Joe5oYmu4GkxAmWp+bcYeOMDNCc/g31u4i5RUHv6QwqLGzEZQJDlvNO2d/c
- nyorDdagr1L1OIlzkKlSYQ8/JqVToXHPVZ0+xfx5mA6P2NjUxvtzCJUPH
-X-Gm-Gg: ATEYQzwiQY5nPWRqdnHUsUGeJZ3VPrBIVNNx94pTkfHN4e3lrMCUqp8/U6nzajhevDL
- tevTwV4i+8yRy9Zc6paFKGyf2c5qCN7Q8S7NE3VrdGUwazQi7E3W7ENVoW5qS1jS3YZJaj5mL1f
- fGPC/vsNBdX6zQQYZ5uhM/aSuKdXEPRg9x9E/IdqZz1kPU7K8nxnJW9HscX+1qIfM8o6zfj7ukS
- hBFqSw88cd8XnUNj10rfcyop8wNxwoO331gXVkmVMmT69+Lb/g98/sQpsR/OjAdw9szuqJ8cIkH
- 8WBAqAxzEfKB0qSAyX6C/i/Q32tzysBAaau+EnmU/svPslV49ciq72HB7loT6W5vTdELFqGV6Ut
- Hcow9qkaa3cZVXy8XmKzXcC0EVRsHnMIUcs30OfLr6cxNjA==
-X-Received: by 2002:a05:622a:53:b0:50b:36cc:3350 with SMTP id
- d75a77b69052e-50d3bdaefdcmr77870031cf.67.1775082507821; 
- Wed, 01 Apr 2026 15:28:27 -0700 (PDT)
-X-Received: by 2002:a05:622a:53:b0:50b:36cc:3350 with SMTP id
- d75a77b69052e-50d3bdaefdcmr77869581cf.67.1775082507305; 
- Wed, 01 Apr 2026 15:28:27 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d4d9ad4b6sm4181411cf.15.2026.04.01.15.28.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Apr 2026 15:28:26 -0700 (PDT)
-Date: Wed, 1 Apr 2026 18:28:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Alex Williamson <alex@shazbot.org>,
- Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH RFC 06/12] migration: Use the new save_query_pending()
- API directly
-Message-ID: <ac2cCLsgG28H-bCM@x1.local>
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-7-peterx@redhat.com>
- <acagIGw8e0RKL2xt@fedora>
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1w84dH-0005sF-MK; Wed, 01 Apr 2026 19:05:58 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 24F65C0244;
+ Thu, 02 Apr 2026 02:05:50 +0300 (MSK)
+Received: from localhost (unknown [2a02:6bf:8080:42a::1:b])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id m5leq60LKeA0-kh0M1gk8; Thu, 02 Apr 2026 02:05:49 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
+ s=default; t=1775084749;
+ bh=EoQSq2o+KRu3QhGbTHj5+iJSlNcBzF4BfhoQLpT5Iic=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=JKYq7OapdLJO3fmXDskzRWFeZETOE9sSofP0kQwuWe46imlZPqxvPFOgCPUsOiyiT
+ 0mSs2+TwT3EEkkJtjP6rjQmhxHu9xPYbnHn44VRFAj6WLd5BOKpWhT8CAujZC45PG/
+ meRasxjMao179d8Htv7RbRIuvULynA7xBDr6wlZo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.com
+From: Sergei Heifetz <heifetz@yandex-team.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Sergei Heifetz <heifetz@yandex-team.com>
+Subject: [PATCH] vhost-user-blk: add seg-max-adjust flag
+Date: Thu,  2 Apr 2026 04:05:48 +0500
+Message-ID: <20260401230548.136541-1-heifetz@yandex-team.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <acagIGw8e0RKL2xt@fedora>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,40 +74,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 27, 2026 at 04:24:09PM +0100, Juraj Marcin wrote:
-> > diff --git a/migration/trace-events b/migration/trace-events
-> > index 60e5087e38..5f836a8652 100644
-> > --- a/migration/trace-events
-> > +++ b/migration/trace-events
-> > @@ -7,6 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
-> >  qemu_loadvm_state_post_main(int ret) "%d"
-> >  qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
-> >  qemu_savevm_send_packaged(void) ""
-> > +qemu_savevm_query_pending(bool fast, uint64_t precopy, uint64_t postcopy) "fast=%d, precopy=%"PRIu64", postcopy=%"PRIu64
-> 
-> Should probably remove these two trace events, or is keeping them
-> intentional?
-> 
->     migrate_pending_exact(uint64_t size, uint64_t pre, uint64_t post) "exact pending size %" PRIu64 " (pre = %" PRIu64 " post=%" PRIu64 ")"
->     migrate_pending_estimate(uint64_t size, uint64_t pre, uint64_t post) "estimate pending size %" PRIu64 " (pre = %" PRIu64 " post=%" PRIu64 ")"
+The virtio specification is not completely clear about seg_max and its
+relationship with queue_size. Some drivers (for example, the modern
+Linux kernel driver) rely on seg_max to set the maximum number of
+segments used in a request. If seg_max is set larger than queue_size,
+such a driver might overwhelm a virtqueue by trying to send more
+segments than it can handle. As a result, it either hangs or faults.
 
-Nah, I forgot about them..  I'll remove them.
+One might argue that it is the vhost-user server's responsibility to set
+a valid seg_max value. However, due to the issue described in the
+previous paragraph, this value should generally depend on queue_size.
+That's why it may be necessary to control it on QEMU's side.
 
-> 
-> >  loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
-> >  loadvm_state_setup(void) ""
-> >  loadvm_state_cleanup(void) ""
-> > -- 
-> > 2.50.1
-> > 
-> 
-> With unused trace events comment resolved,
-> 
-> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+This patch adds the seg-max-adjust flag. A flag with the same name
+already exists for virtio-blk (and it exists to solve the same problem,
+except that here we have a vhost-user server to consult).
 
-Thanks,
+If seg-max-adjust is set, the final seg_max is the minimum of the value
+provided by the vhost-user server and (queue_size - 2). It is not
+enabled by default.
 
+Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+---
+ hw/block/vhost-user-blk.c          | 11 +++++++++++
+ include/hw/virtio/vhost-user-blk.h |  1 +
+ 2 files changed, 12 insertions(+)
+
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index c151e836770..23f910d9fe3 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -65,6 +65,11 @@ static void vhost_user_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+     /* Our num_queues overrides the device backend */
+     virtio_stw_p(vdev, &s->blkcfg.num_queues, s->num_queues);
+ 
++    if (s->seg_max_adjust) {
++        uint32_t seg_max = MIN(s->blkcfg.seg_max, s->queue_size - 2);
++        virtio_stl_p(vdev, &s->blkcfg.seg_max, seg_max);
++    }
++
+     memcpy(config, &s->blkcfg, vdev->config_len);
+ }
+ 
+@@ -474,6 +479,10 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+         error_setg(errp, "queue size must be non-zero");
+         return;
+     }
++    if (s->queue_size < 4 && s->seg_max_adjust) {
++        error_setg(errp, "queue size must be >= 4 when seg-max-adjust is set");
++        return;
++    }
+     if (s->queue_size > VIRTQUEUE_MAX_SIZE) {
+         error_setg(errp, "queue size must not exceed %d",
+                    VIRTQUEUE_MAX_SIZE);
+@@ -608,6 +617,8 @@ static const Property vhost_user_blk_properties[] = {
+     DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+                        VHOST_USER_BLK_AUTO_NUM_QUEUES),
+     DEFINE_PROP_UINT32("queue-size", VHostUserBlk, queue_size, 128),
++    DEFINE_PROP_BOOL("seg-max-adjust", VHostUserBlk, seg_max_adjust,
++                      false),
+     DEFINE_PROP_BIT64("config-wce", VHostUserBlk, parent_obj.host_features,
+                       VIRTIO_BLK_F_CONFIG_WCE, true),
+     DEFINE_PROP_BIT64("discard", VHostUserBlk, parent_obj.host_features,
+diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
+index 1e41a2bcdf6..dee848cfd81 100644
+--- a/include/hw/virtio/vhost-user-blk.h
++++ b/include/hw/virtio/vhost-user-blk.h
+@@ -34,6 +34,7 @@ struct VHostUserBlk {
+     struct virtio_blk_config blkcfg;
+     uint16_t num_queues;
+     uint32_t queue_size;
++    bool seg_max_adjust;
+     struct vhost_dev dev;
+     struct vhost_inflight *inflight;
+     VhostUserState vhost_user;
 -- 
-Peter Xu
+2.53.0
 
 
