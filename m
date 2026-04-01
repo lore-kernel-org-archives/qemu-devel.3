@@ -4,117 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E801076370
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 05:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A13F6D3514F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 08:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7oNq-0002hC-By; Wed, 01 Apr 2026 01:44:54 -0400
+	id 1w7qYl-0000Y5-Mg; Wed, 01 Apr 2026 04:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w7oNo-0002fv-Lp
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:44:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w7qYj-0000XD-2K; Wed, 01 Apr 2026 04:04:17 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w7oNl-000452-T6
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:44:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775022288;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jtcOTWO5JYbCxXpWRDIOvi8qGFO0HQtiNVJUOsKsr/g=;
- b=J2Dd+AVwQFLWfBVw/KK8FshYdCmWdc/39ERnnRIfMfgyU5w8YV7lzn7q00H2aPQ0vT5ddH
- +0rw1NpPXgMstwZHfDrFvIF2QDp9dnJGLsExoWlrPUnfRjLR9DFAkG0XGujHkgnOC5rSwi
- 5Xszsa3S/id+bXv5h7Qwzz5yFY3lSuM=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-F_guTnjqM5SJD7VvHGwM3A-1; Wed, 01 Apr 2026 01:44:47 -0400
-X-MC-Unique: F_guTnjqM5SJD7VvHGwM3A-1
-X-Mimecast-MFC-AGG-ID: F_guTnjqM5SJD7VvHGwM3A_1775022286
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-35c0cbe0f64so18769780a91.0
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:44:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775022286; x=1775627086; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=jtcOTWO5JYbCxXpWRDIOvi8qGFO0HQtiNVJUOsKsr/g=;
- b=RHHrydwSxSLMi6dRcQLuE0ONKAgOdyS4HupAMqRcbEH8nlu7CfXLTfS3QQ8r4WRzhm
- h6gkdnKveFhh55GNFlFRsWQ2Dw/2bpFRDoWuDDGjREV8+JIicQrzaDZzFNkhtSxjkuJq
- AQg8+nnYuvdaNx1sUzZ8uE8PZfA12ufkL4eogURm7EztzaHY7QtYnz/AZG1ef2AewR6L
- J9yT+0q0eY3LHx39SLmO5iDSsIsZCkCo14mev1pJvwYNC1HL1ST9DrUbM7hIaO+aRP1+
- 5NaaQtlV7G2CuHdf50kY3G8S57nZnbB4wGsXtiIi2qfQaLR8dRtnwZbZsmOKeJtRiIfx
- lcWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775022286; x=1775627086;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jtcOTWO5JYbCxXpWRDIOvi8qGFO0HQtiNVJUOsKsr/g=;
- b=CczAvCd6D73DnA2jBxeg9+dCHGXNoS9FtLRPA6m15Ap+4SYFC/noNEOfXHA6Fbhsle
- hDEsHJMKd5GGE1p2Beb6fje3TSbyUtRKcFjm6bFtoZeq911CZ/O/RBYfm6UQONo7p5G6
- iWl5Q8KRdE8LV2EN38p0zOP3zE9NgPmlPAmIhv7bhzvhREeWEauD0FcETQR9wXk4O65n
- nT3dt7HZX7Rh+2dzUq6XpuluKp6pIy6UMAi9a3SI5STlswGyppY6ydhO3+0lWDLvegbQ
- v/FVlOWxklysLOgoyAPY+vxgw8JXAiHExaAmWdvfCDJiSvnjV/SNwMT0G8g/x7lC1vIl
- BAog==
-X-Gm-Message-State: AOJu0YwStvARKcM5yF1ZR5gZ1svM6beBC7lorDlArOx6VCgBD2ERN7+3
- Di+dBxlU8e+YFyO3VlBHlwkLyusZDLme6qVUGiH+4qKKIdQOUnkjROe8iF0fldRUD/V8VAXcNXt
- /lsYx+IIWM2wUPO6sS6fccX2vDELpWkP21ggAAeiJCj48TkMhTjp/Rdv1
-X-Gm-Gg: ATEYQzzl/4o1eLniqt8lItCXe6Q085K7Je9PaxFA0/x2Uw+i2FVYmysEiQyqO8K1/TS
- UBkzFUwQX9GdxamJv0fMGtSJJVF6xOXf8lwsUNVwuCR/jKlOWvkU9TjqOnQd6KqFqO57qyEgzO7
- PnS58gMH4NyN/z32P+oeuQHKHFMKwkfDfsxuhvKFSfEeOBqZBjqST++N2fwO84N3xNxie2pTuqn
- yvNrH5oTzYILEia1mzTS3lH0NwWCxFgsI9bTleMKftZod2PMVUl7Fm6R7vG2BRE1YqfAT3JYspW
- YdxvRL9H6/pPXADMgPWRmNthpkxvfLx/u4lLcFjPdxlSYF4t0QxW7EWChqNgbLY+XnEkQb6kHaq
- /sKu2J3xe+A==
-X-Received: by 2002:a17:90b:288e:b0:35b:9720:98d0 with SMTP id
- 98e67ed59e1d1-35dc6e7ab9emr2343712a91.5.1775022286240; 
- Tue, 31 Mar 2026 22:44:46 -0700 (PDT)
-X-Received: by 2002:a17:90b:288e:b0:35b:9720:98d0 with SMTP id
- 98e67ed59e1d1-35dc6e7ab9emr2343690a91.5.1775022285787; 
- Tue, 31 Mar 2026 22:44:45 -0700 (PDT)
-Received: from fedora ([49.36.108.4]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35dbe5e5127sm4646232a91.1.2026.03.31.22.44.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 31 Mar 2026 22:44:45 -0700 (PDT)
-Date: Wed, 1 Apr 2026 11:14:38 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [RFC v2 7/7] hw/tpm: Increase TPM TIS max buffer size to 8192
-Message-ID: <acywxssfdmBqCIM3@fedora>
-References: <20260319135316.37412-1-armenon@redhat.com>
- <20260319135316.37412-8-armenon@redhat.com>
- <1334de4e-710c-4daf-aefd-3eee855aa35b@linux.ibm.com>
- <b6aed41c-c5fe-415f-8523-fb1b34ff77ec@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w7qYd-000436-AA; Wed, 01 Apr 2026 04:04:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1775030652; x=1806566652;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=4l4y4LlFEhKjXWkq3k86xtA6HKJV+oSTE6YEEsl87FE=;
+ b=MfaQ41UvNSttbk4jSftRIbgnLEgluellGn/Pamn2D0BVPQavGGKkgtPV
+ FeOERBrxYVBnMocZoPqM67y98qbYDogjT4cy3Q6CbxUJsx0HAlfH7mftb
+ ldIKAdZA/Diq1M3gW4Wh6oXcduL4ObNuDh+5THay0U+6RP0Djrc5ErUZR
+ /ta2wVrzM4vP3xoP6kAEzqGwcIV4C6gRd6EAo3Lya14NqeU1SpTAhXNuG
+ zuL4Da14ZovEkdcCTLqiV41qZSkxzP4+0kjnBXM0WJDgGg+dvlsXBgE6a
+ Cg1Lj2jxD1CFg4D9VZgukMiG1Q8t596SNOwctkKXMGMGdXNrz7GIaxPaY w==;
+X-CSE-ConnectionGUID: lrSV2vB/QS2rBrjrCrS3RQ==
+X-CSE-MsgGUID: mAknkGBrTEyF/On9fnxtVQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11745"; a="87136640"
+X-IronPort-AV: E=Sophos;i="6.23,153,1770624000"; d="scan'208";a="87136640"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2026 01:04:05 -0700
+X-CSE-ConnectionGUID: 0rePtZusRd69nY61sHxvWA==
+X-CSE-MsgGUID: JDW1E45pQX+lOsM6Ikw5eQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,153,1770624000"; d="scan'208";a="223727290"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2026 01:04:00 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@bull.com, yi.l.liu@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-arm@nongnu.org
+Subject: [PATCH] iommufd: Rename all the idev and idevc variables to hiod and
+ hiodc
+Date: Wed,  1 Apr 2026 04:03:53 -0400
+Message-ID: <20260401080354.1347212-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b6aed41c-c5fe-415f-8523-fb1b34ff77ec@linux.ibm.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+Received-SPF: pass client-ip=198.175.65.13;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,87 +84,646 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan,
+We used idev and idevc naming for HostIOMMUDeviceIOMMUFD and corresponding
+class variables which followed the iommufd_device naming in linux kernel.
 
-Thank you for looking into this and providing with the additional
-patches to handle TIS interface.
+This is mixed with the hiod naming for base type HostIOMMUDevice. Rename
+HostIOMMUDeviceIOMMUFD* to hiodi* for consistency in QEMU.
 
-On Tue, Mar 31, 2026 at 03:31:43PM -0400, Stefan Berger wrote:
-> 
-> 
-> On 3/20/26 2:57 PM, Stefan Berger wrote:
-> > 
-> > 
-> > On 3/19/26 9:53 AM, Arun Menon wrote:
-> > > - Double the size from 4096 to 8192 so that we can have bigger buffer
-> > >    enabling support for PQC algorithms in the TPM TIS interface.
-> > > - v185 of TCG TPM rolls out PQC algorithm support. [1]
-> > > 
-> > > [1] section 46 https://members.trustedcomputinggroup.org/wg/TCG/
-> > > document/previewpdf/45151
-> > > 
-> > > Signed-off-by: Arun Menon <armenon@redhat.com>
-> > > ---
-> > >   hw/tpm/tpm_tis.h | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
-> > > index 184632ff66..0df35d5a54 100644
-> > > --- a/hw/tpm/tpm_tis.h
-> > > +++ b/hw/tpm/tpm_tis.h
-> > > @@ -33,7 +33,7 @@
-> > >   #define TPM_TIS_IS_VALID_LOCTY(x)   ((x) < TPM_TIS_NUM_LOCALITIES)
-> > > -#define TPM_TIS_BUFFER_MAX          4096
-> > > +#define TPM_TIS_BUFFER_MAX          8192
-> > 
-> > Unfortunately TIS uses a fixed-size buffer that would now become bigger:
-> > 
-> > typedef struct TPMState {
-> >      MemoryRegion mmio;
-> > 
-> >      unsigned char buffer[TPM_TIS_BUFFER_MAX];  <-- now 8192; before 4096
-> > 
-> > 
-> > static const VMStateDescription vmstate_tpm_tis_isa = {
-> >      .name = "tpm-tis",
-> >      .version_id = 0,
-> >      .pre_save  = tpm_tis_pre_save_isa,
-> >      .fields = (const VMStateField[]) {
-> >          VMSTATE_BUFFER(state.buffer, TPMStateISA),    <-- now 8192;
-> > before 4096
-> 
-> This will have to become VMSTATE_PARTIAL_BUFFER and the rest is saved with
-> VMSTATE_BUFFER_START_MIDDLE if necessary.
-> 
-> >          VMSTATE_UINT16(state.rw_offset, TPMStateISA),
-> > 
-> > Problem would be if an older version of the TIS (with size 4096) then
-> > receives this 8192 buffer, we would (probably) get a buffer overflow.
-> 
-> I created 2 more patches for the TIS. It's now also in my branch here:
-> 
-> https://github.com/stefanberger/qemu-tpm/commits/crb-chunking/
+No functional change intended.
 
-Looks good to me.
+Suggested-by: CÃ©dric Le Goater <clg@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/arm/smmuv3-accel.h       |  2 +-
+ include/system/iommufd.h    | 12 ++---
+ backends/iommufd.c          | 26 +++++------
+ hw/arm/smmuv3-accel.c       | 93 +++++++++++++++++++------------------
+ hw/i386/intel_iommu_accel.c | 44 +++++++++---------
+ hw/vfio/container-legacy.c  | 10 ++--
+ hw/vfio/iommufd.c           | 24 +++++-----
+ 7 files changed, 107 insertions(+), 104 deletions(-)
 
-> 
-> Both TIS and CRB can now transfer >4096 bytes packets.
-> 
-> > 
-> > 
-> > 
-> > >   typedef enum {
-> > >       TPM_TIS_STATE_IDLE = 0,
-> > 
-> > 
-> 
-
-Is it okay if I incorporate your commits, including the tests and
-profile enabling support into my next revision of this series?
-
-
-
-Regards,
-Arun Menon
+diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+index dba6c71de5..908a13cbcc 100644
+--- a/hw/arm/smmuv3-accel.h
++++ b/hw/arm/smmuv3-accel.h
+@@ -34,7 +34,7 @@ typedef struct SMMUS1Hwpt {
+ 
+ typedef struct SMMUv3AccelDevice {
+     SMMUDevice sdev;
+-    HostIOMMUDeviceIOMMUFD *idev;
++    HostIOMMUDeviceIOMMUFD *hiodi;
+     SMMUS1Hwpt *s1_hwpt;
+     IOMMUFDVdev *vdev;
+     QLIST_ENTRY(SMMUv3AccelDevice) next;
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 7062944fe6..2925d116ac 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -136,7 +136,7 @@ struct HostIOMMUDeviceIOMMUFDClass {
+      *
+      * Mandatory callback.
+      *
+-     * @idev: host IOMMU device backed by IOMMUFD backend.
++     * @hiodi: host IOMMU device backed by IOMMUFD backend.
+      *
+      * @hwpt_id: ID of IOMMUFD hardware page table.
+      *
+@@ -144,7 +144,7 @@ struct HostIOMMUDeviceIOMMUFDClass {
+      *
+      * Returns: true on success, false on failure.
+      */
+-    bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *idev, uint32_t hwpt_id,
++    bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *hiodi, uint32_t hwpt_id,
+                         Error **errp);
+     /**
+      * @detach_hwpt: detach host IOMMU device from IOMMUFD hardware page table.
+@@ -152,17 +152,17 @@ struct HostIOMMUDeviceIOMMUFDClass {
+      *
+      * Mandatory callback.
+      *
+-     * @idev: host IOMMU device backed by IOMMUFD backend.
++     * @hiodi: host IOMMU device backed by IOMMUFD backend.
+      *
+      * @errp: pass an Error out when attachment fails.
+      *
+      * Returns: true on success, false on failure.
+      */
+-    bool (*detach_hwpt)(HostIOMMUDeviceIOMMUFD *idev, Error **errp);
++    bool (*detach_hwpt)(HostIOMMUDeviceIOMMUFD *hiodi, Error **errp);
+ };
+ 
+-bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            uint32_t hwpt_id, Error **errp);
+-bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            Error **errp);
+ #endif
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index e1fee16acf..410b044370 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -538,24 +538,24 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
+     return true;
+ }
+ 
+-bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            uint32_t hwpt_id, Error **errp)
+ {
+-    HostIOMMUDeviceIOMMUFDClass *idevc =
+-        HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(idev);
++    HostIOMMUDeviceIOMMUFDClass *hiodic =
++        HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(hiodi);
+ 
+-    g_assert(idevc->attach_hwpt);
+-    return idevc->attach_hwpt(idev, hwpt_id, errp);
++    g_assert(hiodic->attach_hwpt);
++    return hiodic->attach_hwpt(hiodi, hwpt_id, errp);
+ }
+ 
+-bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            Error **errp)
+ {
+-    HostIOMMUDeviceIOMMUFDClass *idevc =
+-        HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(idev);
++    HostIOMMUDeviceIOMMUFDClass *hiodic =
++        HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(hiodi);
+ 
+-    g_assert(idevc->detach_hwpt);
+-    return idevc->detach_hwpt(idev, errp);
++    g_assert(hiodic->detach_hwpt);
++    return hiodic->detach_hwpt(hiodi, errp);
+ }
+ 
+ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+@@ -591,10 +591,10 @@ static bool hiod_iommufd_get_pasid_info(HostIOMMUDevice *hiod,
+ 
+ static void hiod_iommufd_class_init(ObjectClass *oc, const void *data)
+ {
+-    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
++    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
+ 
+-    hioc->get_cap = hiod_iommufd_get_cap;
+-    hioc->get_pasid_info = hiod_iommufd_get_pasid_info;
++    hiodc->get_cap = hiod_iommufd_get_cap;
++    hiodc->get_pasid_info = hiod_iommufd_get_pasid_info;
+ };
+ 
+ static const TypeInfo types[] = {
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 65c2f44880..3630078751 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -129,16 +129,16 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+ }
+ 
+ static bool
+-smmuv3_accel_hw_compatible(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
++smmuv3_accel_hw_compatible(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+                            Error **errp)
+ {
+     struct iommu_hw_info_arm_smmuv3 info;
+     uint32_t data_type;
+     uint64_t caps;
+ 
+-    if (!iommufd_backend_get_device_info(idev->iommufd, idev->devid, &data_type,
+-                                         &info, sizeof(info), &caps, NULL,
+-                                         errp)) {
++    if (!iommufd_backend_get_device_info(hiodi->iommufd, hiodi->devid,
++                                         &data_type, &info, sizeof(info), &caps,
++                                         NULL, errp)) {
+         return false;
+     }
+ 
+@@ -182,15 +182,15 @@ static bool
+ smmuv3_accel_alloc_vdev(SMMUv3AccelDevice *accel_dev, int sid, Error **errp)
+ {
+     SMMUv3AccelState *accel = accel_dev->s_accel;
+-    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
++    HostIOMMUDeviceIOMMUFD *hiodi = accel_dev->hiodi;
+     IOMMUFDVdev *vdev = accel_dev->vdev;
+     uint32_t vdevice_id;
+ 
+-    if (!idev || vdev) {
++    if (!hiodi || vdev) {
+         return true;
+     }
+ 
+-    if (!iommufd_backend_alloc_vdev(idev->iommufd, idev->devid,
++    if (!iommufd_backend_alloc_vdev(hiodi->iommufd, hiodi->devid,
+                                     accel->viommu->viommu_id, sid,
+                                     &vdevice_id, errp)) {
+             return false;
+@@ -209,7 +209,7 @@ smmuv3_accel_dev_alloc_translate(SMMUv3AccelDevice *accel_dev, STE *ste,
+ {
+     uint64_t ste_0 = (uint64_t)ste->word[0] | (uint64_t)ste->word[1] << 32;
+     uint64_t ste_1 = (uint64_t)ste->word[2] | (uint64_t)ste->word[3] << 32;
+-    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
++    HostIOMMUDeviceIOMMUFD *hiodi = accel_dev->hiodi;
+     SMMUv3AccelState *accel = accel_dev->s_accel;
+     struct iommu_hwpt_arm_smmuv3 nested_data = {
+         .ste = {
+@@ -220,7 +220,7 @@ smmuv3_accel_dev_alloc_translate(SMMUv3AccelDevice *accel_dev, STE *ste,
+     uint32_t hwpt_id = 0, flags = 0;
+     SMMUS1Hwpt *s1_hwpt;
+ 
+-    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
++    if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
+                                     accel->viommu->viommu_id, flags,
+                                     IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(nested_data), &nested_data,
+@@ -242,7 +242,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+                            .inval_ste_allowed = true};
+     SMMUv3AccelState *accel = s->s_accel;
+     SMMUv3AccelDevice *accel_dev;
+-    HostIOMMUDeviceIOMMUFD *idev;
++    HostIOMMUDeviceIOMMUFD *hiodi;
+     uint32_t config, hwpt_id = 0;
+     SMMUS1Hwpt *s1_hwpt = NULL;
+     const char *type;
+@@ -257,7 +257,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+         return true;
+     }
+ 
+-    idev = accel_dev->idev;
++    hiodi = accel_dev->hiodi;
+     if (!smmuv3_accel_alloc_vdev(accel_dev, sid, errp)) {
+         return false;
+     }
+@@ -300,9 +300,9 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+         return false;
+     }
+ 
+-    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
++    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, hwpt_id, errp)) {
+         if (s1_hwpt) {
+-            iommufd_backend_free_id(idev->iommufd, s1_hwpt->hwpt_id);
++            iommufd_backend_free_id(hiodi->iommufd, s1_hwpt->hwpt_id);
+             g_free(s1_hwpt);
+         }
+         return false;
+@@ -310,7 +310,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+ 
+     /* Free the previous s1_hwpt */
+     if (accel_dev->s1_hwpt) {
+-        iommufd_backend_free_id(idev->iommufd, accel_dev->s1_hwpt->hwpt_id);
++        iommufd_backend_free_id(hiodi->iommufd, accel_dev->s1_hwpt->hwpt_id);
+         g_free(accel_dev->s1_hwpt);
+     }
+ 
+@@ -524,7 +524,7 @@ free_veventq:
+ }
+ 
+ static bool
+-smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
++smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+                           Error **errp)
+ {
+     SMMUv3AccelState *accel = s->s_accel;
+@@ -534,11 +534,11 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+     struct iommu_hwpt_arm_smmuv3 abort_data = {
+         .ste = { SMMU_STE_VALID, 0x0ULL },
+     };
+-    uint32_t s2_hwpt_id = idev->hwpt_id;
++    uint32_t s2_hwpt_id = hiodi->hwpt_id;
+     uint32_t viommu_id, hwpt_id;
+     IOMMUFDViommu *viommu;
+ 
+-    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
++    if (!iommufd_backend_alloc_viommu(hiodi->iommufd, hiodi->devid,
+                                       IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
+                                       s2_hwpt_id, &viommu_id, errp)) {
+         return false;
+@@ -547,21 +547,21 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+     viommu = g_new0(IOMMUFDViommu, 1);
+     viommu->viommu_id = viommu_id;
+     viommu->s2_hwpt_id = s2_hwpt_id;
+-    viommu->iommufd = idev->iommufd;
++    viommu->iommufd = hiodi->iommufd;
+     accel->viommu = viommu;
+ 
+     /*
+      * Pre-allocate HWPTs for S1 bypass and abort cases. These will be attached
+      * later for guest STEs or GBPAs that require bypass or abort configuration.
+      */
+-    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, viommu_id,
++    if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(abort_data), &abort_data,
+                                     &accel->abort_hwpt_id, errp)) {
+         goto free_viommu;
+     }
+ 
+-    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, viommu_id,
++    if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(bypass_data), &bypass_data,
+                                     &accel->bypass_hwpt_id, errp)) {
+@@ -575,7 +575,7 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+ 
+     /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
+     hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
+-    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
++    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, hwpt_id, errp)) {
+         goto free_veventq;
+     }
+     return true;
+@@ -583,11 +583,11 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+ free_veventq:
+     smmuv3_accel_free_veventq(accel);
+ free_bypass_hwpt:
+-    iommufd_backend_free_id(idev->iommufd, accel->bypass_hwpt_id);
++    iommufd_backend_free_id(hiodi->iommufd, accel->bypass_hwpt_id);
+ free_abort_hwpt:
+-    iommufd_backend_free_id(idev->iommufd, accel->abort_hwpt_id);
++    iommufd_backend_free_id(hiodi->iommufd, accel->abort_hwpt_id);
+ free_viommu:
+-    iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
++    iommufd_backend_free_id(hiodi->iommufd, viommu->viommu_id);
+     g_free(viommu);
+     accel->viommu = NULL;
+     return false;
+@@ -596,20 +596,20 @@ free_viommu:
+ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+                                           HostIOMMUDevice *hiod, Error **errp)
+ {
+-    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
+     SMMUState *bs = opaque;
+     SMMUv3State *s = ARM_SMMUV3(bs);
+     SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
+     SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
+ 
+-    if (!idev) {
++    if (!hiodi) {
+         return true;
+     }
+ 
+-    if (accel_dev->idev) {
+-        if (accel_dev->idev != idev) {
+-            error_setg(errp, "Device already has an associated idev 0x%x",
+-                       idev->devid);
++    if (accel_dev->hiodi) {
++        if (accel_dev->hiodi != hiodi) {
++            error_setg(errp, "Device already has an associated hiodi 0x%x",
++                       hiodi->devid);
+             return false;
+         }
+         return true;
+@@ -619,7 +619,7 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+      * Check the host SMMUv3 associated with the dev is compatible with the
+      * QEMU SMMUv3 accel.
+      */
+-    if (!smmuv3_accel_hw_compatible(s, idev, errp)) {
++    if (!smmuv3_accel_hw_compatible(s, hiodi, errp)) {
+         return false;
+     }
+ 
+@@ -627,17 +627,17 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+         goto done;
+     }
+ 
+-    if (!smmuv3_accel_alloc_viommu(s, idev, errp)) {
+-        error_append_hint(errp, "Unable to alloc vIOMMU: idev devid 0x%x: ",
+-                          idev->devid);
++    if (!smmuv3_accel_alloc_viommu(s, hiodi, errp)) {
++        error_append_hint(errp, "Unable to alloc vIOMMU: hiodi devid 0x%x: ",
++                          hiodi->devid);
+         return false;
+     }
+ 
+ done:
+-    accel_dev->idev = idev;
++    accel_dev->hiodi = hiodi;
+     accel_dev->s_accel = s->s_accel;
+     QLIST_INSERT_HEAD(&s->s_accel->device_list, accel_dev, next);
+-    trace_smmuv3_accel_set_iommu_device(devfn, idev->devid);
++    trace_smmuv3_accel_set_iommu_device(devfn, hiodi->devid);
+     return true;
+ }
+ 
+@@ -646,7 +646,7 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+ {
+     SMMUState *bs = opaque;
+     SMMUPciBus *sbus = g_hash_table_lookup(bs->smmu_pcibus_by_busptr, bus);
+-    HostIOMMUDeviceIOMMUFD *idev;
++    HostIOMMUDeviceIOMMUFD *hiodi;
+     SMMUv3AccelDevice *accel_dev;
+     SMMUv3AccelState *accel;
+     IOMMUFDVdev *vdev;
+@@ -662,16 +662,16 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+     }
+ 
+     accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
+-    idev = accel_dev->idev;
++    hiodi = accel_dev->hiodi;
+     accel = accel_dev->s_accel;
+     /* Re-attach the default s2 hwpt id */
+-    if (!host_iommu_device_iommufd_attach_hwpt(idev, idev->hwpt_id, NULL)) {
+-        error_report("Unable to attach the default HW pagetable: idev devid "
+-                     "0x%x", idev->devid);
++    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, hiodi->hwpt_id, NULL)) {
++        error_report("Unable to attach the default HW pagetable: hiodi devid "
++                     "0x%x", hiodi->devid);
+     }
+ 
+     if (accel_dev->s1_hwpt) {
+-        iommufd_backend_free_id(accel_dev->idev->iommufd,
++        iommufd_backend_free_id(accel_dev->hiodi->iommufd,
+                                 accel_dev->s1_hwpt->hwpt_id);
+         g_free(accel_dev->s1_hwpt);
+         accel_dev->s1_hwpt = NULL;
+@@ -684,10 +684,10 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+         accel_dev->vdev = NULL;
+     }
+ 
+-    accel_dev->idev = NULL;
++    accel_dev->hiodi = NULL;
+     accel_dev->s_accel = NULL;
+     QLIST_REMOVE(accel_dev, next);
+-    trace_smmuv3_accel_unset_iommu_device(devfn, idev->devid);
++    trace_smmuv3_accel_unset_iommu_device(devfn, hiodi->devid);
+ 
+     if (QLIST_EMPTY(&accel->device_list)) {
+         smmuv3_accel_free_viommu(accel);
+@@ -879,10 +879,11 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
+ 
+     hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
+     QLIST_FOREACH(accel_dev, &accel->device_list, next) {
+-        if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev, hwpt_id,
++        if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->hiodi, hwpt_id,
+                                                    &local_err)) {
+             error_append_hint(&local_err, "Failed to attach GBPA hwpt %u for "
+-                              "idev devid %u", hwpt_id, accel_dev->idev->devid);
++                              "hiodi devid %u", hwpt_id,
++                               accel_dev->hiodi->devid);
+             error_report_err(local_err);
+             local_err = NULL;
+             all_ok = false;
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 67d54849f2..ed3793602b 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -69,7 +69,7 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+     return NULL;
+ }
+ 
+-static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
+                                Error **errp)
+ {
+@@ -81,27 +81,27 @@ static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+     vtd.addr_width = vtd_pe_get_fs_aw(pe);
+     vtd.pgtbl_addr = (uint64_t)vtd_pe_get_fspt_base(pe);
+ 
+-    return iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, idev->hwpt_id,
+-                                      0, IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd),
+-                                      &vtd, fs_hwpt_id, errp);
++    return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
++                                      hiodi->hwpt_id, 0, IOMMU_HWPT_DATA_VTD_S1,
++                                      sizeof(vtd), &vtd, fs_hwpt_id, errp);
+ }
+ 
+-static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                     VTDAddressSpace *vtd_as)
+ {
+     if (!vtd_as->fs_hwpt_id) {
+         return;
+     }
+-    iommufd_backend_free_id(idev->iommufd, vtd_as->fs_hwpt_id);
++    iommufd_backend_free_id(hiodi->iommufd, vtd_as->fs_hwpt_id);
+     vtd_as->fs_hwpt_id = 0;
+ }
+ 
+ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+                                       VTDAddressSpace *vtd_as, Error **errp)
+ {
+-    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+     VTDPASIDEntry *pe = &vtd_as->pasid_cache_entry.pasid_entry;
+-    uint32_t hwpt_id = idev->hwpt_id;
++    uint32_t hwpt_id = hiodi->hwpt_id;
+     bool ret;
+ 
+     /*
+@@ -116,21 +116,21 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     }
+ 
+     if (vtd_pe_pgtt_is_fst(pe)) {
+-        if (!vtd_create_fs_hwpt(idev, pe, &hwpt_id, errp)) {
++        if (!vtd_create_fs_hwpt(hiodi, pe, &hwpt_id, errp)) {
+             return false;
+         }
+     }
+ 
+-    ret = host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp);
+-    trace_vtd_device_attach_hwpt(idev->devid, vtd_as->pasid, hwpt_id, ret);
++    ret = host_iommu_device_iommufd_attach_hwpt(hiodi, hwpt_id, errp);
++    trace_vtd_device_attach_hwpt(hiodi->devid, vtd_as->pasid, hwpt_id, ret);
+     if (ret) {
+         /* Destroy old fs_hwpt if it's a replacement */
+-        vtd_destroy_old_fs_hwpt(idev, vtd_as);
++        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
+         if (vtd_pe_pgtt_is_fst(pe)) {
+             vtd_as->fs_hwpt_id = hwpt_id;
+         }
+     } else if (vtd_pe_pgtt_is_fst(pe)) {
+-        iommufd_backend_free_id(idev->iommufd, hwpt_id);
++        iommufd_backend_free_id(hiodi->iommufd, hwpt_id);
+     }
+ 
+     return ret;
+@@ -139,27 +139,28 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+                                       VTDAddressSpace *vtd_as, Error **errp)
+ {
+-    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+     IntelIOMMUState *s = vtd_as->iommu_state;
+     uint32_t pasid = vtd_as->pasid;
+     bool ret;
+ 
+     if (s->dmar_enabled && s->root_scalable) {
+-        ret = host_iommu_device_iommufd_detach_hwpt(idev, errp);
+-        trace_vtd_device_detach_hwpt(idev->devid, pasid, ret);
++        ret = host_iommu_device_iommufd_detach_hwpt(hiodi, errp);
++        trace_vtd_device_detach_hwpt(hiodi->devid, pasid, ret);
+     } else {
+         /*
+          * If DMAR remapping is disabled or guest switches to legacy mode,
+          * we fallback to the default HWPT which contains shadow page table.
+          * So guest DMA could still work.
+          */
+-        ret = host_iommu_device_iommufd_attach_hwpt(idev, idev->hwpt_id, errp);
+-        trace_vtd_device_reattach_def_hwpt(idev->devid, pasid, idev->hwpt_id,
++        ret = host_iommu_device_iommufd_attach_hwpt(hiodi, hiodi->hwpt_id,
++                                                    errp);
++        trace_vtd_device_reattach_def_hwpt(hiodi->devid, pasid, hiodi->hwpt_id,
+                                            ret);
+     }
+ 
+     if (ret) {
+-        vtd_destroy_old_fs_hwpt(idev, vtd_as);
++        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
+     }
+ 
+     return ret;
+@@ -211,13 +212,14 @@ static void vtd_flush_host_piotlb_locked(gpointer key, gpointer value,
+     did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
+ 
+     if (piotlb_info->domain_id == did && piotlb_info->pasid == PASID_0) {
+-        HostIOMMUDeviceIOMMUFD *idev =
++        HostIOMMUDeviceIOMMUFD *hiodi =
+             HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+         uint32_t entry_num = 1; /* Only implement one request for simplicity */
+         Error *local_err = NULL;
+         struct iommu_hwpt_vtd_s1_invalidate *cache = piotlb_info->inv_data;
+ 
+-        if (!iommufd_backend_invalidate_cache(idev->iommufd, vtd_as->fs_hwpt_id,
++        if (!iommufd_backend_invalidate_cache(hiodi->iommufd,
++                                              vtd_as->fs_hwpt_id,
+                                               IOMMU_HWPT_INVALIDATE_DATA_VTD_S1,
+                                               sizeof(*cache), &entry_num, cache,
+                                               &local_err)) {
+diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+index 625f151364..d301b27aa6 100644
+--- a/hw/vfio/container-legacy.c
++++ b/hw/vfio/container-legacy.c
+@@ -1244,12 +1244,12 @@ static void vfio_iommu_legacy_instance_init(Object *obj)
+ 
+ static void hiod_legacy_vfio_class_init(ObjectClass *oc, const void *data)
+ {
+-    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
++    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
+ 
+-    hioc->realize = hiod_legacy_vfio_realize;
+-    hioc->get_cap = hiod_legacy_vfio_get_cap;
+-    hioc->get_iova_ranges = hiod_legacy_vfio_get_iova_ranges;
+-    hioc->get_page_size_mask = hiod_legacy_vfio_get_page_size_mask;
++    hiodc->realize = hiod_legacy_vfio_realize;
++    hiodc->get_cap = hiod_legacy_vfio_get_cap;
++    hiodc->get_iova_ranges = hiod_legacy_vfio_get_iova_ranges;
++    hiodc->get_page_size_mask = hiod_legacy_vfio_get_page_size_mask;
+ };
+ 
+ static const TypeInfo types[] = {
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 3e33dfbb35..399b36aa75 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -917,19 +917,19 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
+ };
+ 
+ static bool
+-host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            uint32_t hwpt_id, Error **errp)
+ {
+-    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
++    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(hiodi)->agent;
+ 
+     return !iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
+ }
+ 
+ static bool
+-host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
++host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            Error **errp)
+ {
+-    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
++    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(hiodi)->agent;
+ 
+     return iommufd_cdev_detach_ioas_hwpt(vbasedev, errp);
+ }
+@@ -938,7 +938,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+                                       Error **errp)
+ {
+     VFIODevice *vdev = opaque;
+-    HostIOMMUDeviceIOMMUFD *idev;
++    HostIOMMUDeviceIOMMUFD *hiodi;
+     HostIOMMUDeviceCaps *caps = &hiod->caps;
+     VendorCaps *vendor_caps = &caps->vendor_caps;
+     enum iommu_hw_info_type type;
+@@ -958,10 +958,10 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     caps->hw_caps = hw_caps;
+     caps->max_pasid_log2 = max_pasid_log2;
+ 
+-    idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
+-    idev->iommufd = vdev->iommufd;
+-    idev->devid = vdev->devid;
+-    idev->hwpt_id = vdev->hwpt->hwpt_id;
++    hiodi = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
++    hiodi->iommufd = vdev->iommufd;
++    hiodi->devid = vdev->devid;
++    hiodi->hwpt_id = vdev->hwpt->hwpt_id;
+ 
+     return true;
+ }
+@@ -988,14 +988,14 @@ hiod_iommufd_vfio_get_page_size_mask(HostIOMMUDevice *hiod)
+ static void hiod_iommufd_vfio_class_init(ObjectClass *oc, const void *data)
+ {
+     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
+-    HostIOMMUDeviceIOMMUFDClass *idevc = HOST_IOMMU_DEVICE_IOMMUFD_CLASS(oc);
++    HostIOMMUDeviceIOMMUFDClass *hiodic = HOST_IOMMU_DEVICE_IOMMUFD_CLASS(oc);
+ 
+     hiodc->realize = hiod_iommufd_vfio_realize;
+     hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
+     hiodc->get_page_size_mask = hiod_iommufd_vfio_get_page_size_mask;
+ 
+-    idevc->attach_hwpt = host_iommu_device_iommufd_vfio_attach_hwpt;
+-    idevc->detach_hwpt = host_iommu_device_iommufd_vfio_detach_hwpt;
++    hiodic->attach_hwpt = host_iommu_device_iommufd_vfio_attach_hwpt;
++    hiodic->detach_hwpt = host_iommu_device_iommufd_vfio_detach_hwpt;
+ };
+ 
+ static const TypeInfo types[] = {
+-- 
+2.47.3
 
 
