@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21C84D3517B
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 12:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A52D3517B
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 12:50:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7ugu-000093-Kn; Wed, 01 Apr 2026 08:29:00 -0400
+	id 1w7v15-0003Dc-Kz; Wed, 01 Apr 2026 08:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7ugq-00008j-Mi
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 08:28:56 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w7v13-0003DF-Fc
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 08:49:49 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7ugp-00060Q-3h
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 08:28:56 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43cf5d14d6eso3162186f8f.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 05:28:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w7v11-0000le-IZ
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 08:49:49 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b9358dd7f79so220727366b.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 05:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775046531; x=1775651331; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=25p+N3z6Daew8/VXd9MlHy/1l48QJ0jzge11Z2Ry/d8=;
- b=M5Bk/GnEQwUh2abEjXhvAeYIcTADNDW04/eNXCAtKXqcDVcHOhTHaKxJzFvNnZ55f0
- cMFnuJ9QzHPsJVyw2Df3tUzXCUaXbh518gBFNyElwDb12m7B6RLhDrOIB/QPSLjABd+C
- Ytpt4BB7KtT3nCfxcQ8tuy8Z/Y6FEBNQpumhPtgeP7AeLOk+AGa6xwb7nCf74cPoIcbY
- XDmMGh6dxNGGBBzhv1Tggf2kzDYiwd/Qz5IQj9viOolXcnqiIq5OZdUe/kw7ROh4dNll
- 8k34KAwQ9JKRa+anyY8xRPYn/xCEDpz3GXcSvsbHDirJ/VsYt3ErdN2fazNciZmYuxvP
- GbfA==
+ d=linaro.org; s=google; t=1775047785; x=1775652585; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6eb1GRfytpe6aIIydgD5vn6V/3kc6oCrBbHpnS9gP0k=;
+ b=O5RkrxHKlgIxvRNI2AJZkh254sc2vvWNfrFv6VzUon1R9skDksZwzrr48aNEu7fkf2
+ VMGihIzi9C6St7RobKptPkkVkPLnR83tBU4lwqiHIkXJ45BEfBEujeEUIM01s02txPSS
+ 3lJ4ns/dHcnq4hOihsvLqrNTJlInkdLzVC5mA8ZeIALzi0KgffCltajUqqYR6Xyj3lgi
+ CliEyKAqqFLR8XDVKFOl83GFJ+aaIEAyVynWZ1skOsFSAt9JEXgiyVRd41ksNstoxUOf
+ R+8/DdJsqPgKHoXKroU/tRLJJjNQ5kwBP2B6YwYfu7kQjZ4xpLTRM7v6FTGIVUsB2MYH
+ KTwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775046531; x=1775651331;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=25p+N3z6Daew8/VXd9MlHy/1l48QJ0jzge11Z2Ry/d8=;
- b=JnbggYbNA4OhT4mHqJBwlJhS7IIvnajr/JVKzpg4lZjyOqgOe7kcXlPsL/Z3PYN6Qe
- Sc2RhWPn1HCohJ5sdUED4aL7r0559HmGLjZ9FIeFku5m5lhMZo+Yt2tKZgAoIHXIE6Q9
- ecAnl4FpvO3DrxA2CFiMcgv6m7Igrb63TKWxZ98MR7LEcoUJnm2gnt95GT13HjIZg0k8
- 2/GHR3d9b3wt8lLk8Z47hSckaP9OXFQVk+PeGbT+LsJwyQn2UFP+ZY2deKADuSxR4RVD
- 1oN1r0uS++vFbC1CsfgQ3rTy9dhflXCsQRcm+oWmznn/4+ZhtYHShnFHldj2ygrPQKqo
- iFOg==
-X-Gm-Message-State: AOJu0YylGi4RzCkMITY736tf2t0e3WA3rFYz5YinyMngInLCQgcrx8hf
- EaGzCwN8UDMOLgt3nfDv0laX+gVUjHwVpX+ONj8rJ82fdghOc6xHffdJ8sHInWf7M2VMUGiamPV
- LtP2YdEo=
-X-Gm-Gg: ATEYQzzXF5Crsc/QHiXauV3qKnO2dlVfpPvoQiOIbqM0xbdvbv5tFgS/t/KSL3BRSQL
- R088uC/O/CsXpeO0Ww0AZNVwN0u9YJqXSZOWOzq5tSOUE03yg2JRIiq+vX+vjTkpLwO8MgU4WXD
- DVi8eYqWXb6MIPzzXdz1VKR7mi9EAnM+oQ9eCEcRSl1UH/wdoF17ZKCrcozX9/jfnaAqvvP6NCG
- glcLeFGZcRLoiVSeERsg3jxuSR9QerSfDwPx+I7LySgFRsz7764Mta+OSXHZp2y1IzgiDlXp+6l
- /EQPirarSA68+Zcsh3lTEofzAT92EI6dEvH/Xz02BzlKf4dqOX32nfSsUayE6/EHZxJ22kLV7Uv
- 1lpii55LDD69asYortWAqqKfZo653Vl/cD/B5dyvSuVlRH018fG0/xmJcYr4oHRcewV9i7b4ARr
- uxZ8VzKBCaZw0UsIj7euNCH7JNVUfGIfeJkkFr+YoogcHvCN8TexqnEiFh1gh0tfy21g==
-X-Received: by 2002:a5d:584a:0:b0:43b:5672:efe with SMTP id
- ffacd0b85a97d-43d150488e1mr6436105f8f.9.1775046530596; 
- Wed, 01 Apr 2026 05:28:50 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43cf90424fcsm31210041f8f.32.2026.04.01.05.28.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 05:28:49 -0700 (PDT)
-Message-ID: <8abb908b-ad05-46f7-99fc-5ce10a07ad76@linaro.org>
-Date: Wed, 1 Apr 2026 14:28:48 +0200
+ d=1e100.net; s=20251104; t=1775047785; x=1775652585;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6eb1GRfytpe6aIIydgD5vn6V/3kc6oCrBbHpnS9gP0k=;
+ b=SEsow1j3Q25bSiqifhSG49h2yCdOHcTJEGlCpAIu9l7vc/7NuoHze6vKGlOlDH3QfN
+ sEUKUGx+g4q4CHsmcFgojfWxzlzfeAI3X/jzt95pygazu9h8HxBw4XVi2WINBvwmcCLm
+ PPlz6hvaZfesleXiMOv14JN3xitf5MWLQCVlhOVl28XUsmRxDvmVT6Qjydd5fW+JN6Ey
+ PmR6R7O0qVZKvgNb+5ITQHjR/tp+oWPsnNb4semlHnmFCgp+MryE5hUHAvRG45eEOsQi
+ Q9MN7UGn+lrLB2s/iVZnFgZXQ7rS8lLgxOe27008mNRzL7+cygdNuV2nlthIwWreLzTy
+ BxlQ==
+X-Gm-Message-State: AOJu0YwinJqZnVMONobal4fImvccFEjcZjcd6OYVRJ4MaX3ieY0UYoIQ
+ 84JC5kbwsTbCKhghCJ0hN5qLIPy5qkFfomF9y3IBRUpbYyt/ugY7T1ktXg3RFw5bLpo=
+X-Gm-Gg: ATEYQzz6ubrWBWZbqzlZtEywwg5ozv4IATMo7Zt1FbIWJM9y15KR6u1zWrEQRilMGUu
+ I0E+mqhr8WgW7KAbxbjjtDkF3qdf7dySqFPBYiSnlJIT2Csa+ma355Uuz9IXomFVNBwr5+3MjMk
+ iyL7TTFSXIPef3Qi96aRiCCbMV/uiPPQcCBJtk+ozDndY9HnMKSFwpx4YHqzsfHcacdHlFro3Td
+ QOVC3y3JzFTKu5VHzhqKvfs+tih5L49ed6Nx6uHdbj4l6GE/rzdSLVU5vSFMMU+hSJDtU8JytvX
+ WLL+jYcrgV4XoZ7LVYousA+a6pEjGPdKEWqNqEcsxzNVJdAwY3Mb5jPZpOgFDOQKpri4sXYCIy0
+ kIfcsLp0rQhFxUYn8XP90ihv5WosUy/JEgbn6pUl1VMjBFooO7T9HJU/wobEfnO65j0CGdBozDr
+ S55M4oEUsUZ60nd6q3C8p7Vpo=
+X-Received: by 2002:a17:907:2683:b0:b9b:63af:d9cf with SMTP id
+ a640c23a62f3a-b9c13cc6cf8mr241405266b.48.1775047784983; 
+ Wed, 01 Apr 2026 05:49:44 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b9b7b225d4bsm504514766b.60.2026.04.01.05.49.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 01 Apr 2026 05:49:44 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 432905F8D9;
+ Wed, 01 Apr 2026 13:49:43 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [RFC PATCH] hw/display: modernise the vga debug code (!!GenAI!!)
+In-Reply-To: <a7b05743-c7f4-4626-b11c-ec8200913c33@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 1 Apr 2026 12:21:02
+ +0200")
+References: <6c3214ac-1679-d9db-2fed-c934fde8ddf2@eik.bme.hu>
+ <20260330222900.982404-1-alex.bennee@linaro.org>
+ <a7b05743-c7f4-4626-b11c-ec8200913c33@linaro.org>
+User-Agent: mu4e 1.14.0; emacs 30.1
+Date: Wed, 01 Apr 2026 13:49:43 +0100
+Message-ID: <87fr5eq1zs.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/hyperv: Replace legacy ld_phys() -> address_space_ld()
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Ani Sinha <anisinha@redhat.com>,
- "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
- Jon Doron <arilou@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Roman Kagan <rvkagan@yandex-team.ru>
-References: <20260319082954.65069-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260319082954.65069-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,15 +106,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/3/26 09:29, Philippe Mathieu-Daudé wrote:
-> Prefer the address_space_ld/st API over the legacy ld/st_phys()
-> because it allow checking for bus access fault, which shouldn't
-> happen here.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/hyperv/hyperv.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Patch queued via hw-misc, thanks!
+> On 31/3/26 00:28, Alex Benn=C3=A9e wrote:
+>> Remove dead code, replace debug prints with trace points.
+>> Link:
+>> https://patchew.org/QEMU/20260330140656.46FE55969F2@zero.eik.bme.hu/
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>> As an experiment I prompted Gemini with the thread contents and asked
+>> it to make the changes. It cost about 9p in inference and I would
+>> argue this barely counts as copyrightable as it is a simple
+>> transformation of existing patterns.
+>> ---
+>>   hw/display/vga.c        | 89 ++++++++---------------------------------
+>>   hw/display/trace-events | 11 +++++
+>>   2 files changed, 27 insertions(+), 73 deletions(-)
+>
+>
+>> @@ -873,9 +824,7 @@ void vga_mem_writeb(VGACommonState *s, hwaddr addr, =
+uint32_t val)
+>>       uint32_t write_mask, bit_mask, set_mask;
+>>       int plane =3D 0;
+>>   -#ifdef DEBUG_VGA_MEM
+>> -    printf("vga: [0x" HWADDR_FMT_plx "] =3D 0x%02x\n", addr, val);
+>> -#endif
+>> +    trace_vga_vram_write(addr, val);
+>
+> OK, ...
+>
+>>       /* convert to VGA memory offset */
+>>       memory_map_mode =3D (s->gr[VGA_GFX_MISC] >> 2) & 3;
+>>       addr &=3D 0x1ffff;
+>> @@ -945,9 +894,7 @@ void vga_mem_writeb(VGACommonState *s, hwaddr addr, =
+uint32_t val)
+>>       if (sr(s, VGA_SEQ_MEMORY_MODE) & VGA_SR04_CHN_4M) {
+>>           if (mask) {
+>>               s->vram_ptr[(addr << 2) | plane] =3D val;
+>> -#ifdef DEBUG_VGA_MEM
+>> -            printf("vga: chain4: [0x" HWADDR_FMT_plx "]\n", addr);
+>> -#endif
+>> +            trace_vga_vram_write((addr << 2) | plane, val);
+>
+> ... but why print the index instead of the address here?
+
+I expect it makes the trace data more closely match the actual access.
+As a human I probably would have written:
+
+   if (mask) {
+       size_t idx =3D (addr << 2) | plane;
+       s->vram_ptr[idx] =3D val;
+       trace_vga_vram_write(idx, val);
+       ...
+   }
+
+to avoid the double calculation (even though I'm sure the compiler would
+have clocked it).
+
+>
+>>               s->plane_updated |=3D mask; /* only used to detect font ch=
+ange */
+>>               memory_region_set_dirty(&s->vram, addr, 1);
+>>           }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
