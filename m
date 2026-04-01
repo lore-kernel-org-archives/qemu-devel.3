@@ -4,94 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C04B41061B31
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 04:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D15910F9305
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 04:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7mvz-0000p4-IP; Wed, 01 Apr 2026 00:12:03 -0400
+	id 1w7n07-0002Hp-2h; Wed, 01 Apr 2026 00:16:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w7mvx-0000oV-LE
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 00:12:01 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w7mvu-0001ki-Dz
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 00:12:01 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-35d8e548a05so4521120a91.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 21:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775016716; x=1775621516; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wTUvG2bQYKBmkEgKHomLI08q5jTinJyVh+PH1aAcKQw=;
- b=LuJHBu7nJv1v9ZjV6FPmQHbh4BfOgxzNudkxXZ4PVOdljmv8qIOWc1jpgeqsOsAno1
- DIkt75HnYTS4T6Ad9CHICUvZ6jQQjN+hYlZJx0rmcvp55uRlcZD3kD/N5H3RnXDCW9ge
- CVdflZlEe/E6HenhUA9fylgJnnnspO2iETq0QymtDTCDCP9rJ/0pz3qcJkYr6hlQFZ6+
- IWbszcNBIl0JaBVevFM5SaYeiKxUzqQ0QzSs6/gSBaRcRvBEZDP8p/XSfLJF3Wnr3Q6I
- JnkOIx8omw4E0nKlNna48LfK4/wtJONGO31qp8e9E4JUB4a24MQT4A/4fQ+xqSee/Ev+
- vVaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775016716; x=1775621516;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wTUvG2bQYKBmkEgKHomLI08q5jTinJyVh+PH1aAcKQw=;
- b=GtOoFpjMYwcOf0u9KYK6NDhevAeBOHbL/0KJZWYEfZ/Mknef/hlIGA5vlXrRyHHlrg
- QmtdG9XWun0ZzYVMCVbDDGoo6Ahp0lGsEWtxR/jIOpNBJ8vKdUNu+nVae6OHQgo0G9t4
- P1Hj9uWTKGIpl1YMNgI/mpbeDb49RwkTKCQA8N7gnrJ3bt3AzTzQV1oDheOfiABmKuzo
- oDbij0TyodfOf+frQXoTIZ7/mDpNjZ6JJYBxuPNdAxBLWpuuMCUgcrhy7+urM0xAtWd4
- MfpHSRMvF5JOcl2txgovC6mzXHoZjDRujqP+34DbCn++W1fyxwR8SW38x35KPxXSdnSH
- rDWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDDUTiMxRXE3fxikWqOfGtKcoCUGwDUL14ZK6ezC2nRoR4I7+HDSWk6KHLHeZjitOEv9Mnf2/k8Qvd@nongnu.org
-X-Gm-Message-State: AOJu0YzDDtSO8Po0SmjJljJPp5GheJfizA7U9DtnlbWY9NS/FQcnNGGn
- QXuZlWlg2dCrRxN5u7jC31nIOrdVDePrCnXjrg3k8HqZQHmpdNZ0cjLUns3mBy6QCUc=
-X-Gm-Gg: ATEYQzzk4MFbADMyHsBcfFZt8g+ROx5vrtXNCPZvJI4C360gQDyBOwc2ETgHLgjGKUM
- sCivvfB0+SFxPvxE9osNpfoDMYHoRPrP9MIFSLjPRGD4k4PVcPN3TD3fqD0NicXvbqovKyiy+MU
- usOBLbDS5YbGNOiOHFMBqDgIch07KZZrLWMXcgL+S83k/2AUux5XMsFPjsLcQK7+BjaVzjSTFgi
- da8vna6C9GR5fS2+uDcQpC9SJpBPxVZshpuAUWTIXFea3NHzd1MXp2OPaOoCn2Eqf/ap94nt40Q
- bjoXt3ZXl6Gl2p2b0xIM/k5P0V+aqEk/MAEW4FoQdmBEyTvr1R2OgPNxG2qiL70wYmSf7DPCVv1
- yK4C5to0g0EVq3hO989wVD6cZlJGId9kQuor/g+6UG16B9oQTgEJrSw4bVQIJbmTla/rEQTJQ1J
- n2RXzcJ2a+DuQ29WUDBG9V9Urya6GnGmkyxB0gBd7vH4g9RXGmBmlW/nJRMrsv9GSj98+f7wa/C
- XGwYrIVpwTr3A==
-X-Received: by 2002:a17:90b:3d92:b0:35d:a557:e44 with SMTP id
- 98e67ed59e1d1-35dc6e7ab5cmr1989326a91.6.1775016716199; 
- Tue, 31 Mar 2026 21:11:56 -0700 (PDT)
-Received: from [192.168.68.76] (122-150-206-170.dyn.ip.vocus.au.
- [122.150.206.170]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35dbb883465sm1621007a91.5.2026.03.31.21.11.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 21:11:55 -0700 (PDT)
-Message-ID: <b29dca1f-dde3-4e70-ae08-750d162e1b7d@linaro.org>
-Date: Wed, 1 Apr 2026 14:11:47 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: do_ats_write(): avoid assertion when ptw
- failed
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20260331092305.2062580-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260331092305.2062580-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1w7n02-0002He-Fb
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 00:16:14 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1w7mzy-00026g-87
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 00:16:13 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id EB25880780;
+ Wed, 01 Apr 2026 07:16:03 +0300 (MSK)
+Received: from localhost (unknown [2a02:6bf:8080:72f::1:2a])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 1GSPSF0AjOs0-KqQt0tvg; Wed, 01 Apr 2026 07:16:03 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
+ s=default; t=1775016963;
+ bh=cSu6JV98OLWkrwVVheR+NvcpdFsLV2ZfyebGW+kmluo=;
+ h=In-Reply-To:Cc:Date:References:To:Subject:Message-Id:From;
+ b=cUOwEaAMHU1qOKyfIDuNnJJGrCh8OXNmmcoDtfoNCvM9LqMC9qYYJXgL9kbe0Trkx
+ HzqYLq6HwrH+At07WB1K9kGax0sMk9w52tqAgnV9n1nAxoCi3RIbTbasA2twkXicTo
+ m91KWzOUEJRU8EQWCnPpB/XJ/52CHYRAX7e/e30Q=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.com
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 01 Apr 2026 09:16:01 +0500
+Message-Id: <DHHIZYXA11Y7.2Z6AXFKNESH3W@yandex-team.com>
+Cc: <qemu-devel@nongnu.org>, "Eric Blake" <eblake@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ "Paolo Bonzini" <pbonzini@redhat.com>, "Fabiano Rosas" <farosas@suse.de>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, "Eduardo
+ Habkost" <eduardo@habkost.net>, "Yanan Wang" <wangyanan55@huawei.com>,
+ "Zhao Liu" <zhao1.liu@intel.com>, "Richard Henderson"
+ <richard.henderson@linaro.org>, "Dr. David Alan Gilbert"
+ <dave@treblig.org>, "Thomas Huth" <thuth@redhat.com>,
+ =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>, "Laurent
+ Vivier" <lvivier@redhat.com>, "Gerd Hoffmann" <kraxel@redhat.com>,
+ <devel@lists.libvirt.org>
+Subject: Re: [PATCH v3 07/11] ui/dbus: run without Audio interface when
+ audio is disabled
+From: "Sergei Heifetz" <heifetz@yandex-team.com>
+To: "Markus Armbruster" <armbru@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+X-Mailer: aerc 0.20.1-262-gc2819a603771-dirty
+References: <20260315201646.96862-1-heifetz@yandex-team.com>
+ <20260315201646.96862-8-heifetz@yandex-team.com>
+ <87ms04cksj.fsf@pond.sub.org>
+In-Reply-To: <87ms04cksj.fsf@pond.sub.org>
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,61 +89,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/31/26 19:23, Peter Maydell wrote:
-> In do_ats_write() we try to assert that the cacheattrs from
-> get_phys_addr_for_at() are in the form we expect:
-> 
->      /*
->       * ATS operations only do S1 or S1+S2 translations, so we never
->       * have to deal with the ARMCacheAttrs format for S2 only.
->       */
->      assert(!res.cacheattrs.is_s2_format);
-> 
-> However, the GetPhysAddrResult struct documents that its fields are
-> only valid when the page table walk succeeded.  For a two stage page
-> table walk which fails during stage two, we will return early from
-> get_phys_addr_twostage() and depending on the fault type the
-> res.cacheattrs may have been initialized with the stage 2 cache attr
-> information in stage 2 format.  In this case we will incorrectly
-> assert here.
-> 
-> Fix the assertion to not look at the res fields if the lookup failed.
-> 
-> Note for stable backports: the do_ats_write() function is in
-> target/arm/helper.c in older QEMU versions, but the change to the
-> assert line is the same.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3328
-> Fixes: 9f225e607f21 ("target/arm: Postpone interpretation of stage 2 descriptor attribute bits")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Not a regression, but it's a very safe fix, so this will probably
-> get into 11.0.
-> 
->   target/arm/tcg/cpregs-at.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
-> index 0e8f229aa7..53dd67375d 100644
-> --- a/target/arm/tcg/cpregs-at.c
-> +++ b/target/arm/tcg/cpregs-at.c
-> @@ -37,8 +37,9 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
->       /*
->        * ATS operations only do S1 or S1+S2 translations, so we never
->        * have to deal with the ARMCacheAttrs format for S2 only.
-> +     * (Note that res fields are only valid on ptw success.)
->        */
-> -    assert(!res.cacheattrs.is_s2_format);
-> +    assert(ret || !res.cacheattrs.is_s2_format);
->   
->       if (ret) {
->           /*
+On Thu Mar 19, 2026 at 12:58 PM +05, Markus Armbruster wrote:
+> Sergei Heifetz <heifetz@yandex-team.com> writes:
+>
+>> D-Bus display can be used even when QEMU is configured with
+>> `--disable-audio`. In that case, audio interface will not be available
+>> on `/org/qemu/Display1/Audio`.
+>>
+>> (The current handling of the situation when audio is enabled but
+>> no D-Bus-compatible audio backend is available is different and
+>> hasn=E2=80=99t been changed.)
+>>
+>> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+>> ---
+>>  qapi/ui.json    | 2 +-
+>>  qemu-options.hx | 4 ++++
+>>  ui/dbus.c       | 8 ++++++++
+>>  3 files changed, 13 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/qapi/ui.json b/qapi/ui.json
+>> index e3da77632a8..62eb05c6091 100644
+>> --- a/qapi/ui.json
+>> +++ b/qapi/ui.json
+>> @@ -1385,7 +1385,7 @@
+>>    'data'    : { '*rendernode' : 'str',
+>>                  '*addr': 'str',
+>>                  '*p2p': 'bool',
+>> -                '*audiodev': 'str' } }
+>> +                '*audiodev': { 'type': 'str', 'if': 'CONFIG_AUDIO' } } =
+}
+>
+> Is this a compatibility break?
+>
+> DisplayDBus is only used in DisplayOptions, which is only used as return
+> type of query-display-options in the QAPI schema.  However, vl.c also
+> uses it to parse -display.
+>
+> Removing parameter @audiodev from -display is technically a
+> compatibility break.  However, we're removing an optional paramater that
+> would always be rejected when present: it has no valid value, because
+> there are no audiodevs.
+>
+> Removal from query-display-options is similar: it could not be present.
+>
+> Removal affects introspection, which could conceivably confuse client.
+> I don't expect such trouble here, because @audiodev always existed, i.e.
+> there's no real reason to look for it in introspection.
+>
+> I think we're okay.  I'm cc'ing the libvirt list just in case.
 
-The assert could plausibly be moved somewhere !ret is already tested.  E.g. just before 
-the only use of cacheattrs.  That said,
+These are questions I would like to know the answers to as well. From my
+perspective, disabling compilation of the audio subsystem is worth it,
+but you should expect to potentially tweak a few audio-related things to
+make it work. I agree that technically makes it a compatibility break.
+But preserving meaningless parameters (like audiodev in the total
+absence of audio) certainly makes less sense to me.=20
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Do we need a release note?
+>
+> Do we need an entry in docs/about/removed-features.rst?  Feels a bit
+> odd; we're not removing a feature, we're adding one, namely "can compile
+> out audio".
+>
 
-r~
+Maybe we should add something like, "If you compile out audio, be
+careful with these things: [list of changes]".=20
+
+But honestly, I don't know. I'd be happy to add whatever is needed.
+
+>> +        (If audio is disabled at compile time via the ``--disable-audio=
+`` option,
+>> +        no audio backend is used, and none of the audio-related D-Bus i=
+nterfaces
+>> +        are exported.)
+>> [...]
+>
+> Well, audio is either compiled in or it isn't.
+>
+> If it's compiled in, then why tell the user how things behave when it's
+> not?
+>
+> If it's not compiled in, then why document stuff that doesn't work?  How
+> much of -audiodev still works then?  -audiodev none?  Anything else?
+
+I agree it's weird, but I don't see a clear way around it. Simple
+ifdef'ing isn't possible in a reStructuredText section (at least I
+couldn't get it to work).
+
+> [...]
 
