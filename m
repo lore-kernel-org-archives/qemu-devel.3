@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4254FD3515C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A87D3515C
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7sBy-0008BV-JV; Wed, 01 Apr 2026 05:48:54 -0400
+	id 1w7sC2-0008DB-5q; Wed, 01 Apr 2026 05:48:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7sBx-0008B0-Cc
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:48:53 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1w7sC1-0008CO-1A
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:48:57 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w7sBv-0000L8-IZ
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:48:53 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488879b2e6aso2577275e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:48:51 -0700 (PDT)
+ id 1w7sBz-0000M0-9s
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:48:56 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so79623365e9.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775036930; x=1775641730; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Yb5zEViOUF1RCMDbVLGKMBiHX35KVVSylxNR2VsRzSc=;
- b=bY8pXIbJ7sYBm5r6IbEC1VKsQ/6aWMXK8UzjPQb0p4gGoC9xSRztys4PbaZ1MuI4Pp
- fbihMoY5pH/QlbNn/JkQpDw60SruYsqT9WOEaefXDnNzpy1uVH49WZfxlwUuRozxyTX3
- O4LhTtAo1UZd6AMFc9vDnbrV8zHkZpLNdnsKS3atlt+SRYIgr94rIaNJfyanNZy+m8wv
- nkgaaGsrPeghltxzdz1mAqoAmH4wF07NnxyQ2mhOJjM/646spqEQkk/r/ylBiXkZAzcZ
- 44q+xGTatTtVnvtVYhrdz4o0rQhnSl/PxvEyV2fHtjZFmNU9NNijMThklqjwXragG7sM
- ljzQ==
+ d=linaro.org; s=google; t=1775036934; x=1775641734; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Vo0Efkf+YcZGXah/Y2zvFCSLiebUyzsrMT4TVvGFS2Q=;
+ b=HWDJiXn6EpNHl1Dwtz2uD7fFySTyVhi/TfZKQFVczbqfcHaeb1ytjO3tZDdXMaDGUp
+ km22LW2QCXvnsKqchUeDT1vufNL0zzITrHlCYfTIZoYbb2l8Xtt3NSlu0tUAskGn0xxc
+ hYhlKj/Yiep2tW0J7PJ/Wiarl3dZ2/SFCUCGan68YufBnvmdbIqRahQuFz3EzsM1iJsO
+ nb/e4wUlk4bPTHlV84Phc6qDmBoTN+n70F6vgR2gGMzxXHcIt15QI8vSD/5brIGn+RXN
+ rJLQw8ugL/9sHwgmW75zSOe6w/I7d6d05im7nLwXwIVWHNGbyBWZN60FfuLXh4CYFlX/
+ X5NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775036930; x=1775641730;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Yb5zEViOUF1RCMDbVLGKMBiHX35KVVSylxNR2VsRzSc=;
- b=CxpgGv8QOTmVtMsJ0cKvocfGt+XO0QfdWoDIg8h2bIohGQlRgLnKw6K01g/eANxjs0
- yMxJn1KkDBWwdmQ+i+j+fT2pRZ1ebAnod7vRdfEYnhkxDq3WQ8mkBW1JaN8f4ZRHQBQ2
- tsAalBhN/NnXEmn1Tuh13U6iE9SdKCMWsFbDeXTVZ947pFnLuEzezXH0S7znEXuZM/MK
- PWG1hrwiqTXqV23zECMB533HizRMcObU5dUesGo2J9xhk12BBgFksrWsAK+PfL2nzymk
- LDdtNqwJzwsUhhou7igxAVKuHCYBY42OK10BG4ds2xGqy77dyfgkVyoEW4mnQogTH54Z
- sFog==
-X-Gm-Message-State: AOJu0Yy4HGuQmgPiyEErPnFODDv9U2ZEoDQ42zYCMrzRuLfIO77Z4vDu
- 4SGkhmCmJ/24BhfWVmlPPs6JfQFMcExQjoY7pd3CvqwsxS7yS7W7Tk4MUhu/7i1Nao6qhMHoceg
- PMRHyGxA=
-X-Gm-Gg: ATEYQzzEeSNdqIUMt5Z/GBTDXX3mpfQi/ix+WnNFrDbqYwn34ZMUxvAnKbY8EhASGdk
- AA/7xXtGqNazsoJG+YYyKYFBPbv28cSQFjATt/qSm/3mhddlHLjZZPhKJR128P/q88J7sjwtRtg
- MSpBydEEN4uqCMRp5wFamvvqaSf2kmq3Bm9VTrisIfQR20cckWSX2dkZS9A3sMEPuylx1u5OuRJ
- lEcLpljzxmH1m85boB6/PqPbvbMmDh/TjpcarzccJ+CQFUFBHtIL9ktJwGVCgSc+Me3pAUzzOAJ
- NDsxzeaP2RgnsuU4CeLb/OW4qbrSyVDdMPPI3pXxjTAfPdYxiGOnt3nXhSe9O8QzSNh+Prrf/9e
- y/3Advn20vepnXSFhhUn9ZZoO8G29wU2FoRSdzEhZ56CZcC80oEc2q6kdTGCrAcPaWOcgPvOASa
- IRX5FPdF4LsrD5tAK0lkJI7CKolcAd6mU2JcvV6oj/zSuibZuSBpbhdepnkv/dkx4xfg10lo2cb
- NuPZdj27/Zhsu1YKAyfJu/6rna0XAU=
-X-Received: by 2002:a05:600c:19d0:b0:485:45fb:3472 with SMTP id
- 5b1f17b1804b1-48883562172mr43873645e9.7.1775036929699; 
- Wed, 01 Apr 2026 02:48:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775036934; x=1775641734;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Vo0Efkf+YcZGXah/Y2zvFCSLiebUyzsrMT4TVvGFS2Q=;
+ b=Tb2Zb+hlE0srNsHxH+xkcDR4+En2rBrvpTDehX2qmbxqemLLe+ZD6J9QmU1J1m/8q6
+ zWvIwzaUqAxCMM4snQAJ3+MOXMLeORu8mmUNN1v3mkNMGIqjrrg0bGm0PaRyE2lz+0PA
+ JVzQAUKt0Muu3I++mZuHsYxeKAIGBx76bhG+shMoVCvNQKve5zB038bx4m+SViZEP6J1
+ R9+pwcKABxc6J0yA5KZ6HCS2YaV+/FJDWmnUpdxH9uBmuKiDvtDinK3GzmTmkrmC1SbA
+ wte2980t6C4uv8RMRO5s25RiW9X4c2tTomhM6hSsBCXSYgjOYgDKQS/m8cro34SenqzR
+ wDMg==
+X-Gm-Message-State: AOJu0YxWADabyzOloRIWkP/8jT2CJbVd7yuXqhHK721VQ04yjlVkctqZ
+ mgUXMZqgYwyN/IBTNOcHYTYPGwPXRSFvrFrs/ky7Gt2aR1yx+7iD94PSlnjXis40AorbikjbHEb
+ m4dHEXcM=
+X-Gm-Gg: ATEYQzyXdXS5GqZV8IuDiMqc11IW40x7vdDSTmGHRt5zxapWuXcUlgnW3q3jOpGOln5
+ oAzzWbYN2S4YDU+qYp/dAFuxx8QozH4qpn+P1XaAP/ByKL0kd2NJk32S4wv7EnjPJG5LA1ZZtpI
+ eDTe5ojCiw1DuueYRH07XIZuSIyeAAkCWfG5ezflVkWcVah0TnjmJ5L4CS25XaPWBCvj7cyNAAp
+ r7tJcNrFjrmyhRCXYwI0QrOuLx/AMm1xRqCL6MPjs8IGssPH1a9ZL4fsMB//VPg+fjS0hZqIR/e
+ nSAUYhuF8L26z8Q2zDfoCC4MiGOznEmOKznaNCgrobkr/3F0XIg2p5uDXm/5nNeGHwwdDnkBxvM
+ cfL+uUnlbuxWhqj2XnmxR6lDS4bDnycPuEKxDlxfq0+bf5Qnc9/I3D3Js5C+qvavAJGIXs89RPw
+ obKATXI+112Luw0U6JHWBwtxCE4Mg/aGUAoA5ET4BG6LhWbkuU1FKVzXxVJGK98dgRKZJZFLbw9
+ P9MF3RcfF4mkZtSV4vVSEO9CljvZuI=
+X-Received: by 2002:a05:600c:3f07:b0:486:ff92:63e5 with SMTP id
+ 5b1f17b1804b1-4888355df4emr50657825e9.6.1775036933753; 
+ Wed, 01 Apr 2026 02:48:53 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887eb5aff3sm146945685e9.15.2026.04.01.02.48.48
+ 5b1f17b1804b1-4887eb5aff3sm146945685e9.15.2026.04.01.02.48.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Apr 2026 02:48:48 -0700 (PDT)
+ Wed, 01 Apr 2026 02:48:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/6] linux-user queue
-Date: Wed,  1 Apr 2026 10:48:42 +0100
-Message-ID: <20260401094848.2661985-1-peter.maydell@linaro.org>
+Subject: [PULL 4/6] linux-user: update select timeout writeback
+Date: Wed,  1 Apr 2026 10:48:46 +0100
+Message-ID: <20260401094848.2661985-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260401094848.2661985-1-peter.maydell@linaro.org>
+References: <20260401094848.2661985-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,57 +100,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a set of linux-user bugfixes that I pulled together
-that seemed to me worth getting into rc2. This doesn't
-represent any desire on my part to be a maintainer for
-linux-user :-)
+From: Sun Haoyu <shyliuli@aosc.io>
 
--- PMM
+The Linux kernel writes back the remaining timeout for select-family
+syscalls in poll_select_finish(). If that writeback fails, it keeps
+the original return value.
 
-The following changes since commit 6aeb397debb1c253901bbade8816656c29b63003:
+However, QEMU only writes back the timeout on success. If the writeback
+fails, QEMU returns -TARGET_EFAULT. This can lose the remaining
+timeout and change the return value.
 
-  Merge tag 'for-11.0-rc-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-03-31 13:41:29 +0100)
+Update do_select(), do_pselect6(), and do_ppoll() to always write back
+the timeout to match the Linux kernel's behavior. If the timeout
+writeback fails, keep the original return value.
 
-are available in the Git repository at:
+Tested with the issue reproducer.
 
-  https://gitlab.com/pm215/qemu.git tags/pull-linux-user-20260401
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3343
+Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260320111647.138984-1-shyliuli@aosc.io
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ linux-user/syscall.c | 45 +++++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
-for you to fetch changes up to 7e966ef38f58f91e05a46fdfda4ba63a9a1567d6:
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3cb00c643e..bb95b96f29 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -1384,14 +1384,15 @@ static abi_long do_select(int n,
+             return -TARGET_EFAULT;
+         if (efd_addr && copy_to_user_fdset(efd_addr, &efds, n))
+             return -TARGET_EFAULT;
+-
+-        if (target_tv_addr) {
+-            tv.tv_sec = ts.tv_sec;
+-            tv.tv_usec = ts.tv_nsec / 1000;
+-            if (copy_to_user_timeval(target_tv_addr, &tv)) {
+-                return -TARGET_EFAULT;
+-            }
+-        }
++    }
++    if (target_tv_addr) {
++        tv.tv_sec = ts.tv_sec;
++        tv.tv_usec = ts.tv_nsec / 1000;
++        /*
++         * Like the kernel, we deliberately ignore possible
++         * failures writing back to the timeout struct.
++         */
++        copy_to_user_timeval(target_tv_addr, &tv);
+     }
+ 
+     return ret;
+@@ -1519,14 +1520,16 @@ static abi_long do_pselect6(abi_long arg1, abi_long arg2, abi_long arg3,
+         if (efd_addr && copy_to_user_fdset(efd_addr, &efds, n)) {
+             return -TARGET_EFAULT;
+         }
++    }
++    if (ts_addr) {
++        /*
++         * Like the kernel, we deliberately ignore possible
++         * failures writing back to the timeout struct.
++         */
+         if (time64) {
+-            if (ts_addr && host_to_target_timespec64(ts_addr, &ts)) {
+-                return -TARGET_EFAULT;
+-            }
++            host_to_target_timespec64(ts_addr, &ts);
+         } else {
+-            if (ts_addr && host_to_target_timespec(ts_addr, &ts)) {
+-                return -TARGET_EFAULT;
+-            }
++            host_to_target_timespec(ts_addr, &ts);
+         }
+     }
+     return ret;
+@@ -1596,15 +1599,15 @@ static abi_long do_ppoll(abi_long arg1, abi_long arg2, abi_long arg3,
+         if (set) {
+             finish_sigsuspend_mask(ret);
+         }
+-        if (!is_error(ret) && arg3) {
++        if (arg3) {
++            /*
++             * Like the kernel, we deliberately ignore possible
++             * failures writing back to the timeout struct.
++             */
+             if (time64) {
+-                if (host_to_target_timespec64(arg3, timeout_ts)) {
+-                    return -TARGET_EFAULT;
+-                }
++                host_to_target_timespec64(arg3, timeout_ts);
+             } else {
+-                if (host_to_target_timespec(arg3, timeout_ts)) {
+-                    return -TARGET_EFAULT;
+-                }
++                host_to_target_timespec(arg3, timeout_ts);
+             }
+         }
+     } else {
+-- 
+2.43.0
 
-  bsd-user, linux-user: signal: recursive signal delivery fix (2026-03-31 19:13:20 +0100)
-
-----------------------------------------------------------------
-linux-user:
- * don't incorrectly sign extend guest addresses from mlock etc
- * fix name_to_handle_at when AT_HANDLE_MNT_ID_UNIQUE flag is set
- * update select timeout writeback
- * make openat2() use -L for absolute paths
- * correctly handle SIGSEGV generated when trying to deliver
-   a synchronous signal
-
-----------------------------------------------------------------
-Clayton Craft (1):
-      linux-user: fix name_to_handle_at when AT_HANDLE_MNT_ID_UNIQUE flag is set
-
-Nicholas Piggin (1):
-      bsd-user, linux-user: signal: recursive signal delivery fix
-
-Peter Maydell (2):
-      include: Don't include guest-host.h in cpu-ldst.h
-      include/user/guest-host.h: Provide g2h etc for both abi_ptr and vaddr
-
-Sun Haoyu (2):
-      linux-user: update select timeout writeback
-      linux-user: Make openat2() use -L for absolute paths
-
- accel/tcg/user-exec.c        | 26 +++++++--------
- bsd-user/qemu.h              |  1 +
- bsd-user/signal.c            | 10 +++---
- include/accel/tcg/cpu-ldst.h |  4 ---
- include/user/guest-host.h    | 62 +++++++++++++++++++++++++++++++----
- linux-user/qemu.h            |  1 +
- linux-user/signal.c          |  9 ++++--
- linux-user/syscall.c         | 77 ++++++++++++++++++++++++++++++--------------
- linux-user/syscall_defs.h    |  7 +++-
- 9 files changed, 141 insertions(+), 56 deletions(-)
 
