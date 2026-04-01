@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FA51076387
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 17:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041EF107638D
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 17:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7zVr-00072X-8c; Wed, 01 Apr 2026 13:37:55 -0400
+	id 1w7zha-0004lm-Rz; Wed, 01 Apr 2026 13:50:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w7zVp-000722-2C
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:37:53 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1w7zhZ-0004lR-BM
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:50:01 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w7zVn-0004JY-9Q
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:37:52 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-35d99bae2ebso3977005a91.3
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 10:37:50 -0700 (PDT)
+ id 1w7zhX-0005sb-Gw
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 13:50:01 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-82ce09b61beso20722b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 10:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775065070; x=1775669870; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775065797; x=1775670597; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/JGemNzKw2+46l6L5/WRcnaXeyFfe6THPM44+90gQ2k=;
- b=gc6847A4imzu6Zfs4qmeMze7b6zZidu9wBqdrvBpcUTtV93Ftpfmf/3jCMsfR4i3cH
- 336xo4EDMsuilOCanE/EhGBRj53i9Q79D+8lVU6BZDiW6GRV158qzZwhqthyTCkz8drr
- 6fysoiaPwrJQPOcVrU+sDeoOgaex68/LcRDet0YRM2SlAgXWpDjUBmKPNl6pT9KIG3b1
- 2M/5NZhbALaB7b50+OFPTWLVkMtRSMSb3uqIsWeJtEv//ZBvmpO1lauYxZhDvqh5eck9
- t1MqWV9Rtm08A3M/gZWc0Z1+zN17PvG7I6QbJaHgU5lfXo8WZ9x6afV4edJXEiwHRi1b
- 23gg==
+ bh=idaNdcBJWyF+6rkPZEh9BOULGO0s+hjNQm1sxEStP3Y=;
+ b=cNVKZe9suoJ16YCAVNam7GvCQq3vcTWYWf1ysBOmyNi1WwiS+Z0w5mWDSv4TdQ5Nra
+ fSLa9aZ+UJqfy5cQTZTT9Fz7CosSTB8aD7A2JVh+joAAOO69Bld08JrETa0C4f2hs39v
+ HAJ5sksbk67vFjMvMG6J7RAgBD8Kl1GkEkLAtgwm21SfiJNUI6d04sLBlkiKE3p+Wf3l
+ 2xb5fRp/QldPJMWlK1EQ8gPdEN1y5ZzFf6WlLtb4rSmScED2I9WqCRcqvZKshE7z2Wme
+ VioRvAa9Yx8LjjRfwDY3jDJSbk4Wn6COKqrqTUj9FThq6T0IY42cs0/bSw+h5eXgYFJ5
+ OQ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775065070; x=1775669870;
+ d=1e100.net; s=20251104; t=1775065797; x=1775670597;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/JGemNzKw2+46l6L5/WRcnaXeyFfe6THPM44+90gQ2k=;
- b=aTKqz+CBesiGO+/DpBMPhhA8F5xYJj6JpYsbUS8dLlSz5Q4CB/b/E1jhQVPY17fQWI
- kk3sA+7sjoE1CO6yeLnsa4MKfzomJruwDEAWdtTtYISnJrKSDxdUiZc60eZR+LWWuzkK
- y0kFQ6DQ9Kp4nwGgYW4Up1Eud7aqQSL74TEZ6VyDhJf/OyL83zThXsh1kTS8qlR3wNgl
- cAns0LDg+piCvZM2B1oYBbts561pyzcFBojOwOrq7GwUs93YTIKhX/MUQmxU5MY6dSLA
- bge9fI/CpV8hjMVzKEOhfLpGPdW3b3ljiZs9vzbNNk1TGOVdKWe9xXIo0G7hez1jeNqV
- 5XzQ==
+ bh=idaNdcBJWyF+6rkPZEh9BOULGO0s+hjNQm1sxEStP3Y=;
+ b=pE2cHX76qdtc/dixWCbox6rf4gEwLEkXJELD1SkO1A+urhAJWlaRdDi4nFv4EIoztn
+ i15sYI4O+pLz88TC3FyD0TwhMMewXociC6bnohOoK+brbWutasvA6omFKVOKH/SDI19S
+ jHq4GkQiE9TlML0AKmuI/137MOoJEt0jS33Gnww/y0UiG0CL7zSjq016ZKwoxDjBrkbX
+ jzAswPUpGUBKu4dBfigXwO5uY+0TQeDIfpHgwl8tfubGF9T8FBxGrTAA3q3I3qEkXCzu
+ hRRPt9qenDAVvT6ul39o5tejnJJUyi6dPKgF1Ex5Mf6zUaC0L2nMRpoOTTXdAN5TnEUu
+ 8D1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXraK1updpqtjjbnivkHNPAcRmx3Fk8VG7k1id/l4HTAs9JQ9dQUTR35PQqlL3a/5+ix/9nnv5fTfvm@nongnu.org
-X-Gm-Message-State: AOJu0YyISTheABF1U0MB0dFoSURts6LwuFji2S1F/lMkpdUyC3Zkk4g2
- YlJHWyfhUYfnNtPM14BIAQAM66JR9rvwYtMobKAoYmVzkI1oF/CzbCfHWy3gy9Hm67M=
-X-Gm-Gg: ATEYQzxPxpE74AFdrApseD7imeZm8JzbYMih1T8JREZXx4Q4rrazCEfcNZWGuDLHEas
- pp+FKEFoVK2pn14TVhDov0Dc0v4WL7aNXV1CdT7jYsVfft/wReYADzjKhhhS5hd3nRCEbAEcCMH
- 06YhXdDt9Y4hrKtdWuGEBuFbq07ej3sVTYTIjSKyPbTACERBLsKZzWE0dXtIB+s0zoOZmThH44Z
- toXxhXclLL2e8aw1/BeKBkHIshU78yeH1TwndO8UEDtpOiGNgCreVhP6MPri56+Tj36Tt1+Y/4i
- r8yOXfUqdyIsYBL5lU/8Yu/I0ZU0SvQbFUrJq7s+1dXNKZvf5RB1vksqhORLnzPMtSGX5eb4CTg
- vdCeyMh9IcHIXv0iU2ARMWzvQAXA623jAFq6ZAyCItwnv5XDB1hsk/J+/p3bs8zmsnH+ET87QVa
- KJdG4wQSWjO91eQ3MlPJfkciQrifwsXyrahCGW7RaLLv++46FeLRIfwlGoilUI+v2gqkNx
-X-Received: by 2002:a17:902:e851:b0:2ae:b9cd:d2ce with SMTP id
- d9443c01a7336-2b275b4a227mr1609565ad.27.1775065069607; 
- Wed, 01 Apr 2026 10:37:49 -0700 (PDT)
+ AJvYcCVriQXvhuRCYJcpux4pvIQFkac4j+rqJow8HW2sdamkY3SBFcsaG+3yBVGcxcQGAGX5maIkd8RXnAJQ@nongnu.org
+X-Gm-Message-State: AOJu0YwjO7M1GgCjlKZ6cc0RL8yOEWfZI9xHcuNi0lQ4ZLvNCASAu6gN
+ 7afFwfzU4aEyBynK7+e7F5KJiAaL3tL5IB4/mHCzyc8q0nduGpjGWV4Aq5g3JFLPvL0=
+X-Gm-Gg: ATEYQzwjSk+RhtDf61YBGHmjaEXQPWvMQwV4GFClPGUaRF/Slvd1Ra8GhUs5rIX53+j
+ 5AQ924YH/gfAaECoHO8fgmO+A1gdWZR7aeDd4KrT2xKZWuTCFFhuh3EObqzG0zLoiWaYIYtNUan
+ IHL8sYbZbAeGqLvH5i2gD/LN3FNeXPflBlmFU4ASeZzI4B6xjBO38hCJQTtsbSJH4dL8k01N1Jo
+ v3r5udRi5/YPdpoL2Sef5hRvObwEx9iF3Yp8AvodAflinA9m6lDEEwkH63G03/PYI9tbNYU3r8O
+ MuSHW9TOZehPzl3LxyLwXFNfDjNNLhJmL9WRYQUa5x29X3ZIWTwGbR9qnZjxjwHMM8NmQiZAoO5
+ vzzhR5xHgp4Lj6b1qjZ7OJOOjts/cRsok9MucKgWqfqYJtJT9D3dZL58HZwDfvg3tpaEFGcZZik
+ jE8W/VsdHOgRnBlwlLXumIck15ub35a6/6IartfuEMTqfBLbTnHh0uty7vsAmK451NExh3
+X-Received: by 2002:a05:6a00:ad87:b0:82a:ea3:c16f with SMTP id
+ d2e1a72fcca58-82ce8b1b545mr4900513b3a.53.1775065797373; 
+ Wed, 01 Apr 2026 10:49:57 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2749ce29esm3496855ad.81.2026.04.01.10.37.48
+ d2e1a72fcca58-82cf9b3ccc8sm738645b3a.19.2026.04.01.10.49.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 10:37:49 -0700 (PDT)
-Message-ID: <66b06ada-ec8a-471a-b270-9e71b2291ea5@linaro.org>
-Date: Wed, 1 Apr 2026 10:37:48 -0700
+ Wed, 01 Apr 2026 10:49:56 -0700 (PDT)
+Message-ID: <a806e8d5-facb-4831-9d6a-0518af41ea50@linaro.org>
+Date: Wed, 1 Apr 2026 10:49:56 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/12] include/tcg/tcg-op: extract memory operations to
- tcg-op-mem.h
+Subject: Re: [PATCH v1 0/3] contrib/plugins: add syscall-filter local-library
+ demos
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org
-References: <20260327165042.604105-1-pierrick.bouvier@linaro.org>
- <20260327165042.604105-2-pierrick.bouvier@linaro.org>
- <75a472a5-3b7e-4fc3-864a-4d726eb0d88f@linaro.org>
+To: XU Kailiang <xukl2019@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Ziyang Zhang <functioner@sjtu.edu.cn>,
+ Yun Wang <yunwang94@sjtu.edu.cn>, Mingyuan Xia <xiamy@ultrarisc.com>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>
+References: <20260331173656.35305-1-xukl2019@sjtu.edu.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <75a472a5-3b7e-4fc3-864a-4d726eb0d88f@linaro.org>
+In-Reply-To: <20260331173656.35305-1-xukl2019@sjtu.edu.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -144,97 +143,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/1/26 5:13 AM, Philippe Mathieu-Daudé wrote:
-> On 27/3/26 17:50, Pierrick Bouvier wrote:
->> This new header defines a new type for target virtual address,
->> independent from TCGv and is parameterized by a new define
->> TCG_ADDRESS_BITS (name was suggested by Paolo instead of
->> TARGET_ADDRESS_BITS).
->>
->> By default, tcg-op.h include set this define to TARGET_LONG_BITS, but
->> it's also possible to include only tcg-op-common.h and tcg-op-mem.h and
->> set TCG_ADDRESS_BITS manually, which is what next commits will do.
->>
->> We preserve existing MIT license when extracting this new header.
->>
->> Implemented from:
->> https://lore.kernel.org/qemu-devel/a68321f0-3d54-4909-864c-9793cda05b2a@linaro.org/
->>
->> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    include/tcg/tcg-op-mem.h | 126 +++++++++++++++++++++++++++++++++++++++
->>    include/tcg/tcg-op.h     | 100 +------------------------------
->>    2 files changed, 129 insertions(+), 97 deletions(-)
->>    create mode 100644 include/tcg/tcg-op-mem.h
->>
->> diff --git a/include/tcg/tcg-op-mem.h b/include/tcg/tcg-op-mem.h
->> new file mode 100644
->> index 00000000000..36931d1dd57
->> --- /dev/null
->> +++ b/include/tcg/tcg-op-mem.h
->> @@ -0,0 +1,126 @@
->> +/* SPDX-License-Identifier: MIT */
->> +/*
->> + * Target dependent memory related functions.
->> + *
->> + * Copyright (c) 2008 Fabrice Bellard
->> + */
->> +
->> +#ifndef TCG_TCG_OP_MEM_H
->> +#define TCG_TCG_OP_MEM_H
->> +
->> +#ifndef TCG_ADDRESS_BITS
->> +#error TCG_ADDRESS_BITS must be defined
-> 
-> Alternatively rename as tcg-op-mem.h.inc and check for TCG_TCG_OP_H,
-> erroring "this header can't be included directly" or "can only be
-> included by "tcg/tcg-op.h"?
->
+Hi Kailiang,
 
-The idea is that it can be either included from "tcg/tcg-op.h" for 
-target specific code, and directly in common code, by manually setting 
-TCG_ADDRESS_BITS accordingly.
+On 3/31/26 10:36 AM, XU Kailiang wrote:
+> Hi,
+> 
+> This series adds two contrib/plugins examples for the linux-user syscall
+> filter API.
+> 
+> The first patch adds a minimal zlib-based demo. It redirects the guest
+> loader's library open to a local thunk library and handles the thunk's
+> magic syscalls by calling the host zlib implementation directly.
+> 
+> The second patch adds a callback-capable qsort prototype. It shows that
+> the same interface can also bridge callback-style library calls back
+> into guest translated code, using a small thunk library plus a
+> ucontext-based host-side bridge.
+> 
+> The final patch extends both demos from the openat()-based loader path
+> to open() and openat2().
+> 
+> To keep the examples small, both demos currently target x86_64
+> linux-user and assume guest_base == 0 on a little-endian 64-bit host,
+> so guest virtual addresses are directly usable as host pointers. The
+> qsort prototype is built only on hosts with working ucontext support.
+> 
+> Once the demo library path matches, both demos intentionally assert that
+> opening the thunk library succeeds. These examples are meant to show the
+> local-library hand-off path once a known thunk library is in place, not
+> fallback behavior when that local library is missing or unusable.
+> 
+> One limitation is worth calling out explicitly: straightforward local
+> library hand-off is only part of the problem. Once execution needs to
+> leave the guest, run host code, and then re-enter guest translated code
+> again, for example through a host-side function pointer callback,
+> additional target- and ABI-specific handling is needed. The qsort
+> prototype shows one such bridge for x86_64 guest callbacks, but this
+> series does not attempt to provide a general solution for that broader
+> case.
+> 
+> Patch 1 adds the zlib compression demo.
+> Patch 2 adds the callback-capable qsort prototype.
+> Patch 3 extends both demos to open() and openat2().
+> 
+> Reproduction instructions are included in docs/about/emulation.rst and
+> in each example directory.
+> 
+> Thanks,
+> XU Kailiang
+> 
+> XU Kailiang (3):
+>    contrib/plugins: add a zlib compression filter example
+>    contrib/plugins: add a callback-capable qsort prototype
+>    contrib/plugins: handle more loader open syscalls in the syscall
+>      filter demos
+> 
+>   contrib/plugins/meson.build                   |  16 +-
+>   .../Makefile                                  |  19 +
+>   .../README.rst                                |  47 ++
+>   .../callback-demo.c                           |  75 +++
+>   .../callback-qsort.h                          |  14 +
+>   .../callback-thunk.S                          |  38 ++
+>   .../plugins/syscall_filter_callback_qsort.c   | 484 ++++++++++++++++++
+>   .../syscall_filter_zlib-example/Makefile      |  19 +
+>   .../syscall_filter_zlib-example/README.rst    |  44 ++
+>   .../zcompress-demo.c                          |  94 ++++
+>   .../zcompress-thunk.c                         |  35 ++
+>   .../zcompress-thunk.h                         |  16 +
+>   contrib/plugins/syscall_filter_zlib.c         | 319 ++++++++++++
+>   docs/about/emulation.rst                      |  41 ++
+>   14 files changed, 1260 insertions(+), 1 deletion(-)
+>   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/Makefile
+>   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/README.rst
+>   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/callback-demo.c
+>   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/callback-qsort.h
+>   create mode 100644 contrib/plugins/syscall_filter_callback_qsort-example/callback-thunk.S
+>   create mode 100644 contrib/plugins/syscall_filter_callback_qsort.c
+>   create mode 100644 contrib/plugins/syscall_filter_zlib-example/Makefile
+>   create mode 100644 contrib/plugins/syscall_filter_zlib-example/README.rst
+>   create mode 100644 contrib/plugins/syscall_filter_zlib-example/zcompress-demo.c
+>   create mode 100644 contrib/plugins/syscall_filter_zlib-example/zcompress-thunk.c
+>   create mode 100644 contrib/plugins/syscall_filter_zlib-example/zcompress-thunk.h
+>   create mode 100644 contrib/plugins/syscall_filter_zlib.c
+> 
+> 
+> base-commit: 512b794b1091bc4810d28e8ef28addf6344c3889
 
->> +#endif
->> +
->> +#if TCG_ADDRESS_BITS == 32
->> +typedef TCGv_i32 TCGv_va;
->> +#define TCG_TYPE_VA TCG_TYPE_I32
->> +#define tcgv_va_temp tcgv_i32_temp
->> +#define tcgv_va_temp_new tcg_temp_new_i32
->> +#elif TCG_ADDRESS_BITS == 64
->> +typedef TCGv_i64 TCGv_va;
->> +#define TCG_TYPE_VA TCG_TYPE_I64
->> +#define tcgv_va_temp tcgv_i64_temp
->> +#define tcgv_va_temp_new tcg_temp_new_i64
->> +#else
->> +#error
->> +#endif
->> +
-> 
-> ...
-> 
->> +
->> +#endif /* TCG_TCG_OP_MEM_H */
->> diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
->> index 7024be938e6..96a5af1a298 100644
->> --- a/include/tcg/tcg-op.h
->> +++ b/include/tcg/tcg-op.h
->> @@ -16,6 +16,9 @@
->>    #error must include QEMU headers
->>    #endif
->>    
->> +#define TCG_ADDRESS_BITS TARGET_LONG_BITS
->> +#include "tcg/tcg-op-mem.h"
->> +
->>    #if TARGET_LONG_BITS == 32
->>    # define TCG_TYPE_TL  TCG_TYPE_I32
->>    #elif TARGET_LONG_BITS == 64
->> @@ -46,103 +49,6 @@ typedef TCGv_i64 TCGv;
->>    #error Unhandled TARGET_LONG_BITS value
->>    #endif
-> 
-> ...
+that's a good demonstration of the thunk approach you have been working 
+on. However, I'm not sure of the value to add those manually crafted 
+examples upstream for now. All they test is the syscall filter, but we 
+already have tests for it.
 
+In case we want to have something more useful upstream, it would be nice 
+to provide a plugin than can automatically execute a program linked with 
+any of those thunk libraries (ideally hosted somewhere, so we don't have 
+to compile this).
+
+What do you think about this? Are you missing specific bits to make it work?
+
+Regards,
+Pierrick
 
