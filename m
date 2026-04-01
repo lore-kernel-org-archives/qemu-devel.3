@@ -4,79 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B62B4D35163
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38DBD35160
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7rWm-0004K0-Rn; Wed, 01 Apr 2026 05:06:20 -0400
+	id 1w7reL-0001FZ-Ig; Wed, 01 Apr 2026 05:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jaemyung.lee@samsung.com>)
- id 1w7rVh-0003Tf-3G
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:05:16 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jaemyung.lee@samsung.com>)
- id 1w7rVc-0002jT-BA
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:05:12 -0400
-Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20260401090458epoutp0193e08b723ba83a65606ff9aaabda2abf~iMEow2ffs0798807988epoutp011
- for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 09:04:58 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20260401090458epoutp0193e08b723ba83a65606ff9aaabda2abf~iMEow2ffs0798807988epoutp011
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1775034298;
- bh=kIz0bFQ8TwpvCyO3hTsN2pEoYJ9o8hX32z22kwgp+zU=;
- h=Subject:Reply-To:From:To:CC:Date:References:From;
- b=MVYjJJyvCPw6mOt78QiLUQgvfs4DNi5Fucgn12d6b8Omv/gJJT0CM9CUcr+ltCqWR
- IP6Az4YI3YfAmOx4QezFEnRTawSWGHm4dxnoiS2GB8DvZ0Gd3j1Xz618+5FJtnl4Z6
- lMeXHmKQiA1Ff97M5JIgcpOrQ15OMVIr3v2d6FdQ=
-Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
- epcas2p3.samsung.com (KnoxPortal) with ESMTPS id
- 20260401090458epcas2p337ec79d40fc32bc73a098c12c191d21d~iMEogw8lr1966619666epcas2p3Q;
- Wed,  1 Apr 2026 09:04:58 +0000 (GMT)
-Received: from epcas2p3.samsung.com (unknown [182.195.38.205]) by
- epsnrtp04.localdomain (Postfix) with ESMTP id 4flzZx5b3Pz6B9mH; Wed,  1 Apr
- 2026 09:04:57 +0000 (GMT)
-Mime-Version: 1.0
-Subject: [PATCH RESEND 0/5] hw/ufs: Add Write Booster Support on UFS
-From: Jaemyung Lee <jaemyung.lee@samsung.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Jeuk Kim <jeuk20.kim@samsung.com>, "kwolf@redhat.com"
- <kwolf@redhat.com>, "hreitz@redhat.com" <hreitz@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "farosas@suse.de"
- <farosas@suse.de>, "lvivier@redhat.com" <lvivier@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-X-CPGS-Detection: blocking_info_exchange
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20260401090457epcms2p2368a82c8b794d8591aa62a421db9e8f7@epcms2p2>
-Date: Wed, 01 Apr 2026 18:04:57 +0900
-X-CMS-MailID: 20260401090457epcms2p2368a82c8b794d8591aa62a421db9e8f7
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-cpgsPolicy: CPGSC10-223,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260330112748epcms2p1717e93009f7fb87a8156ee07a9400502
-References: <CGME20260330112748epcms2p1717e93009f7fb87a8156ee07a9400502@epcms2p2>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=jaemyung.lee@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7reF-0001BW-2O
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:14:03 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7reD-00040o-2e
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:14:02 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43cfd1f9fd1so2120759f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:13:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775034838; x=1775639638; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=H31Beqz54bTM5dTgbmC+SrYQ1LQgWpgJJpXNb1ZTy88=;
+ b=P/JWrmh8Xev0JftBR/5Zw8eNbxMPctN21EbQOrZoXw9x2x0l5uG3zG7RwFYn6g6ytZ
+ ROzDzsnqmQvNek6I5P3F72SZZat7zFGMIK00bXZNVDrTUWWTceH/mNsOyPBTw0BdciPJ
+ +SGWB4tBwok0oobgl51xqMyALKG/Mu8QU/TLgYE93lq+oY1sCn0B4mV8EtTwqE/b13op
+ CyhfWQiDIyR4vWXx1Kc8ftzPxQlp+l+oGON1sDqBFy7QUSYEDMc8mQyvYdQ7gwLh4Eib
+ bg0KME0LTZgXWK4zpErLEulE1BlzxvabnCKFseP5twnpNGmn+4mB12AaBD1R3g6WKDXC
+ WBzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775034838; x=1775639638;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H31Beqz54bTM5dTgbmC+SrYQ1LQgWpgJJpXNb1ZTy88=;
+ b=nzrlg+GTmuw5v2fcOlcUVdblz5ZrDbUmtShG0VeLYKAR4SQgdBSUww1jFAQ7IPt/jU
+ 71b988u+L5prLNo67PVmqSERzicP6Ycc1XRgxyt0fA9UOzE0ArKR1qMQgczTeSl6JQbS
+ N6mU1WIe96PAROKrn5MWQeSrkLRuiY2aYxslkt0NzQmv+1GT5l5DR2fJ7VT1zvntH6Zj
+ V9WdFxRp7o3c9pDnxbMaOe+fUx3kz7jdEsX4MgwtWzSDWSzLbcNALh/bDCl7LLU8SOb4
+ rYe8nQWuy7Y82RrBh9TVQsmEfofeZQFpqpFcHc1KjPfsIdfi6WZwnn8Qkth+KCT9RJgX
+ GYLA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU19P2dNVTwNkh/Omy6Krh7CSB8RCGsww5d0xXiA7C1U4fnZ7Mkx6Lv2I6Hq8FlE+W4seCsmL/pqv/M@nongnu.org
+X-Gm-Message-State: AOJu0YzJHJ2i9XwefXt9smdapmOI2DaWCYlTWmiSNG7J688iCTXfuFoi
+ +d3uQPiXkJJ3StWSyM23iTEG8kqOgjwF88RdrR5nUrd4qOYbcORq3EtNP7B44cJFHUE=
+X-Gm-Gg: ATEYQzwW7GDwOaivj/WlCIYswrXHMqBYjaKilGOCjUS1hn4gbhcmUodAAJuY7GjCs+S
+ lrIIZc85tmvGUZJ2qSaqlHjTl1nb7Dg45k03zoAj6JekB2lQVFbXhiIdPda59aGES/Z2DeksWgP
+ cg5UwpDnsmYdh6QGxR9nYw7y+bWB6IAN0y4beBXyg4LYDlhOKsaslmERyPOncTUaPPWgzqqNf3J
+ GPeHqaTIIldfuEymdlGtvvkPcQdGzNvyIiKijo8lUPMYYDME0fMqfYJD1SqftFEfUdo119e7MRU
+ +XNNUcc90L/eUXp0H8FN1aH9kS/waE407R7wR9wCvp8TnA/v/IFppgfl0UAmVPO6WWifTHNXLtI
+ 6zl7Nu1HSE8SKL56rnXrzy++jUrZ5PE5IxmTk9QTZyA6tsNn1wXYF/m8ux7eYBgYU6wawXuxyY+
+ mcrvUDJ3WnuJPznvy69ltMsRd21Il2ZiF11WqIeDA8Kvv273QVrPD7GxYf6l+sz1hhLO0ozFhqw
+ yE6
+X-Received: by 2002:a05:6000:40ce:b0:43b:3cdc:9429 with SMTP id
+ ffacd0b85a97d-43d15047f05mr5275701f8f.1.1775034838193; 
+ Wed, 01 Apr 2026 02:13:58 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43cf257b72dsm34681635f8f.34.2026.04.01.02.13.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Apr 2026 02:13:57 -0700 (PDT)
+Message-ID: <5a4bc203-2932-4ecd-9d12-c28f3234d1f0@linaro.org>
+Date: Wed, 1 Apr 2026 11:13:56 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 20/60] ui/console-vc: decouple VT100 display updates via
+ function pointer
+Content-Language: en-US
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-20-48eb1dcf7b76@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260317-qemu-vnc-v1-20-48eb1dcf7b76@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,38 +102,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: jaemyung.lee@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the QEMU-UFS emulation is implemented based on the JEDEC UFS
-4.0 Specification and does not support the operation related to UFS Extended
-Features which is defined with latest UFS Specifications.
+On 17/3/26 09:50, Marc-André Lureau wrote:
+> Replace direct dpy_gfx_update() calls from the VT100 emulation code
+> with an indirect call through a new image_update function pointer in
+> QemuVT100. This decouples the VT100 terminal emulation from the
+> QEMU display layer, allowing different backends to provide their own
+> image update implementation.
+> 
+> The QemuVT100 typedef is changed to a forward-declared struct so the
+> function pointer signature can reference QemuVT100 itself.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   ui/console-vc.c | 28 ++++++++++++++++++++++------
+>   1 file changed, 22 insertions(+), 6 deletions(-)
+> 
+> diff --git a/ui/console-vc.c b/ui/console-vc.c
+> index 56e2527c7a2..8a18659036f 100644
+> --- a/ui/console-vc.c
+> +++ b/ui/console-vc.c
+> @@ -48,8 +48,11 @@ enum TTYState {
+>       TTY_STATE_OSC,
+>   };
+>   
+> -typedef struct QemuVT100 {
+> +typedef struct QemuVT100 QemuVT100;
 
-This series modifies the UFS core implementation to align with the JEDEC
-UFS 4.1 Specification[1], and adds a Write Booster UFS Extended Feature
-supportability.
+Squash to patch 15 (Introduce QemuVT100 structure)?
 
-Tested: x86-64 KVM, upstream QEMU with Debian GNU/Linux 10
-Resending: Fix corrupted plain-text
+> +
+> +struct QemuVT100 {
+>       pixman_image_t *image;
+> +    void (*image_update)(QemuVT100 *vt, int x, int y, int width, int height);
+>   
+>       int width;
+>       int height;
+> @@ -66,7 +69,7 @@ typedef struct QemuVT100 {
+>       int update_y0;
+>       int update_x1;
+>       int update_y1;
+> -} QemuVT100;
+> +};
+>   
+>   typedef struct QemuTextConsole {
+>       QemuConsole parent;
+> @@ -224,6 +227,11 @@ static void vt100_show_cursor(QemuVT100 *vt, int show)
+>       }
+>   }
+>   
+> +static void vt100_image_update(QemuVT100 *vt, int x, int y, int width, int height)
+> +{
 
-[1]
-https://jedec.org/standards-documents/focus/flash/universal-flash-storage-ufs
+assert?
 
-Jaemyung Lee (5):
-  hw/ufs: Apply UFS 4.1 Specification
-  hw/ufs: Modify flag handling operation
-  hw/ufs: Add IDLE operation
-  hw/ufs: Add UFS Write Booster Support
-  tests/qtest: Add UFS Write Booster QTest
+> +    vt->image_update(vt, x, y, width, height);
+> +}
 
- hw/ufs/lu.c            |  85 ++++++
- hw/ufs/ufs.c           | 569 ++++++++++++++++++++++++++++++++++++++---
- hw/ufs/ufs.h           |  42 +++
- include/block/ufs.h    | 110 +++++++-
- tests/qtest/ufs-test.c | 176 +++++++++++++
- 5 files changed, 938 insertions(+), 44 deletions(-)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
---
-2.34.1
 
