@@ -4,93 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CF531076370
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 05:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E801076370
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 05:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7oMm-00022w-KM; Wed, 01 Apr 2026 01:43:48 -0400
+	id 1w7oNq-0002hC-By; Wed, 01 Apr 2026 01:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w7oMk-00022P-TW
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:43:46 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w7oMj-00041S-Av
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:43:46 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c742d4df00cso265922a12.1
- for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:43:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1w7oNo-0002fv-Lp
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:44:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1w7oNl-000452-T6
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 01:44:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775022288;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jtcOTWO5JYbCxXpWRDIOvi8qGFO0HQtiNVJUOsKsr/g=;
+ b=J2Dd+AVwQFLWfBVw/KK8FshYdCmWdc/39ERnnRIfMfgyU5w8YV7lzn7q00H2aPQ0vT5ddH
+ +0rw1NpPXgMstwZHfDrFvIF2QDp9dnJGLsExoWlrPUnfRjLR9DFAkG0XGujHkgnOC5rSwi
+ 5Xszsa3S/id+bXv5h7Qwzz5yFY3lSuM=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-F_guTnjqM5SJD7VvHGwM3A-1; Wed, 01 Apr 2026 01:44:47 -0400
+X-MC-Unique: F_guTnjqM5SJD7VvHGwM3A-1
+X-Mimecast-MFC-AGG-ID: F_guTnjqM5SJD7VvHGwM3A_1775022286
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-35c0cbe0f64so18769780a91.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Mar 2026 22:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775022223; x=1775627023; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1dzfpJzU6CmcTkrKo+GaBiwdTe1HzTxbeV4CIuodwys=;
- b=jlTZpnv5iP9TubIr5fW8jEjqu/7gbaI0AT3z4E0HJtzym9kBmNEV/64d9UcxtVbAGH
- IOx08bAvBA/QrcblnMtsfHZm56iCe+yf44XuS0s9yy5urKRsEyVfhZY91l+PRmBLYEsT
- lgYI82cTQ5Of2D2GtsddR8AjzpYHWE0ysLHwku2cT3BvgbAM4tGK1xgsQtv3gNYpNN4Y
- 0PLcvkNz6ZIE1YFRoCx/8ePE8L6I3LzJIAsUsiq0LOJp3sDM0xCH5HknAdeIlc3pundT
- YT3kIG2hKLTUyT4KI702Im08/8k1yzDqi85a4EzB621hQGQ1ji9+DzPgLg0LpiXOxDs5
- jHlQ==
+ d=redhat.com; s=google; t=1775022286; x=1775627086; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=jtcOTWO5JYbCxXpWRDIOvi8qGFO0HQtiNVJUOsKsr/g=;
+ b=RHHrydwSxSLMi6dRcQLuE0ONKAgOdyS4HupAMqRcbEH8nlu7CfXLTfS3QQ8r4WRzhm
+ h6gkdnKveFhh55GNFlFRsWQ2Dw/2bpFRDoWuDDGjREV8+JIicQrzaDZzFNkhtSxjkuJq
+ AQg8+nnYuvdaNx1sUzZ8uE8PZfA12ufkL4eogURm7EztzaHY7QtYnz/AZG1ef2AewR6L
+ J9yT+0q0eY3LHx39SLmO5iDSsIsZCkCo14mev1pJvwYNC1HL1ST9DrUbM7hIaO+aRP1+
+ 5NaaQtlV7G2CuHdf50kY3G8S57nZnbB4wGsXtiIi2qfQaLR8dRtnwZbZsmOKeJtRiIfx
+ lcWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775022223; x=1775627023;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1dzfpJzU6CmcTkrKo+GaBiwdTe1HzTxbeV4CIuodwys=;
- b=aby5+xUNinAP4ik/jp/eB9dNfw3rZ+hm9j9QqMlEwHCbq/2kYEwuJYQsDXhu54KZZn
- YImvlHgb4Dwa6EXo+f5i9vSkJNr+zWD+5YSaQQTnpWLERbv2b47CfjVS2ZjNuvuS8+y2
- qT/3NfBcnFFHGsUDhBZ49Gd/ggl8kgq7qiRy2Q+DNiXLY+d+eXJO/3Fg6O+35GLRA/P6
- obhq285CU/JF87W8jGHSza291jxhKu0xAdpSHhYHZJ1bbvJiXaxv7GFFhdi//vy6SpF2
- dz/2ps32MDtz3LgADduRMk2GNoyL2ZMdYuVe7QOptlBavEKJD8aDDQmdy1zyM47zugtt
- 7xHw==
-X-Gm-Message-State: AOJu0YyQfj5eoton0wJa43THnu1IE39XJPRjk9d8cuC+q9yS2N+KGbOz
- wagUdsb97bb2u4lyvfeTxDfPwJQ4AXmbnGMByDndI5+zzOXvv1cyIhmeRZ6TtsPcgbC2n5A7JE5
- Rv/ZuDk8=
-X-Gm-Gg: ATEYQzwUJ7fj/4BVRqNug9Bj++Tc7SDPXUaWi5WKVCjdkU+GXIW9bgbHw2qmcZp+c7G
- +nJYSO+zEKMhzEgDriUl0j+hI9CjZuMRujM9y782itGKlysJHvcgtinbVnUJnaI3+mVl2Di0gth
- DuG2GkXXsqc645CbcjlDE/vhgMB8QM472o+w40BzxenvWdoW6+U98Foory32iRGLzes0BkqOnNe
- XlkOdAxwR35IP0Lkll+Mhj3GF7qZrHZSveOxOLswm8FBzvZgpL1caknKZHVZfeF4DSd6TL9uDma
- 3fSr4AaR9DvmNf/aqqQsC7HKM7Yn/XLzG7VY2D1qxE+ckTAFf0xO+yt4STi8pBDTjWZUGLAxG1D
- glRmoQpX4RyWKyU1UbpEwymU8OJ5b47pztTeu90h94ityhiLonXUCSAu7C3Pm0rR06Dd/3AvyjV
- 2Mjdb+Q8w52/idQxRcisFqrLVloHv96gwsHzWapnHcWm50tS02W4EMQnL3osp4dMkXy3XZ4SgYU
- M5MX4q0BKXxcg==
-X-Received: by 2002:a17:903:1acd:b0:2b0:badc:c9cf with SMTP id
- d9443c01a7336-2b25eeb97b8mr58623485ad.13.1775022223344; 
- Tue, 31 Mar 2026 22:43:43 -0700 (PDT)
-Received: from [192.168.68.76] (122-150-206-150.dyn.ip.vocus.au.
- [122.150.206.150]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b242765d55sm132505475ad.41.2026.03.31.22.43.41
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2026 22:43:42 -0700 (PDT)
-Message-ID: <595c4e17-c6c8-4281-bee2-8ed50d27d582@linaro.org>
-Date: Wed, 1 Apr 2026 15:43:37 +1000
+ d=1e100.net; s=20251104; t=1775022286; x=1775627086;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jtcOTWO5JYbCxXpWRDIOvi8qGFO0HQtiNVJUOsKsr/g=;
+ b=CczAvCd6D73DnA2jBxeg9+dCHGXNoS9FtLRPA6m15Ap+4SYFC/noNEOfXHA6Fbhsle
+ hDEsHJMKd5GGE1p2Beb6fje3TSbyUtRKcFjm6bFtoZeq911CZ/O/RBYfm6UQONo7p5G6
+ iWl5Q8KRdE8LV2EN38p0zOP3zE9NgPmlPAmIhv7bhzvhREeWEauD0FcETQR9wXk4O65n
+ nT3dt7HZX7Rh+2dzUq6XpuluKp6pIy6UMAi9a3SI5STlswGyppY6ydhO3+0lWDLvegbQ
+ v/FVlOWxklysLOgoyAPY+vxgw8JXAiHExaAmWdvfCDJiSvnjV/SNwMT0G8g/x7lC1vIl
+ BAog==
+X-Gm-Message-State: AOJu0YwStvARKcM5yF1ZR5gZ1svM6beBC7lorDlArOx6VCgBD2ERN7+3
+ Di+dBxlU8e+YFyO3VlBHlwkLyusZDLme6qVUGiH+4qKKIdQOUnkjROe8iF0fldRUD/V8VAXcNXt
+ /lsYx+IIWM2wUPO6sS6fccX2vDELpWkP21ggAAeiJCj48TkMhTjp/Rdv1
+X-Gm-Gg: ATEYQzzl/4o1eLniqt8lItCXe6Q085K7Je9PaxFA0/x2Uw+i2FVYmysEiQyqO8K1/TS
+ UBkzFUwQX9GdxamJv0fMGtSJJVF6xOXf8lwsUNVwuCR/jKlOWvkU9TjqOnQd6KqFqO57qyEgzO7
+ PnS58gMH4NyN/z32P+oeuQHKHFMKwkfDfsxuhvKFSfEeOBqZBjqST++N2fwO84N3xNxie2pTuqn
+ yvNrH5oTzYILEia1mzTS3lH0NwWCxFgsI9bTleMKftZod2PMVUl7Fm6R7vG2BRE1YqfAT3JYspW
+ YdxvRL9H6/pPXADMgPWRmNthpkxvfLx/u4lLcFjPdxlSYF4t0QxW7EWChqNgbLY+XnEkQb6kHaq
+ /sKu2J3xe+A==
+X-Received: by 2002:a17:90b:288e:b0:35b:9720:98d0 with SMTP id
+ 98e67ed59e1d1-35dc6e7ab9emr2343712a91.5.1775022286240; 
+ Tue, 31 Mar 2026 22:44:46 -0700 (PDT)
+X-Received: by 2002:a17:90b:288e:b0:35b:9720:98d0 with SMTP id
+ 98e67ed59e1d1-35dc6e7ab9emr2343690a91.5.1775022285787; 
+ Tue, 31 Mar 2026 22:44:45 -0700 (PDT)
+Received: from fedora ([49.36.108.4]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35dbe5e5127sm4646232a91.1.2026.03.31.22.44.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 31 Mar 2026 22:44:45 -0700 (PDT)
+Date: Wed, 1 Apr 2026 11:14:38 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [RFC v2 7/7] hw/tpm: Increase TPM TIS max buffer size to 8192
+Message-ID: <acywxssfdmBqCIM3@fedora>
+References: <20260319135316.37412-1-armenon@redhat.com>
+ <20260319135316.37412-8-armenon@redhat.com>
+ <1334de4e-710c-4daf-aefd-3eee855aa35b@linux.ibm.com>
+ <b6aed41c-c5fe-415f-8523-fb1b34ff77ec@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/35] target/arm: migrate FP/SIMD trap syndromes to
- registerfields
-To: qemu-devel@nongnu.org
-References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-4-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260320130607.2071996-4-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <b6aed41c-c5fe-415f-8523-fb1b34ff77ec@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,21 +130,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/20/26 23:05, Alex BennÃ©e wrote:
->   static inline uint32_t syn_fp_access_trap(int cv, int cond, bool is_16bit,
->                                             int coproc)
->   {
->       /* AArch32 FP trap or any AArch64 FP/SIMD trap: TA == 0 */
-> -    return (EC_ADVSIMDFPACCESSTRAP << ARM_EL_EC_SHIFT)
-> -        | (is_16bit ? 0 : ARM_EL_IL)
-> -        | (cv << 24) | (cond << 20) | coproc;
-> -}
-> +    uint32_t res = syn_set_ec(0, EC_ADVSIMDFPACCESSTRAP);
-> +    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
+Hi Stefan,
 
-!is_16bit.  I'll not mention it again in the series, but take as given.
+Thank you for looking into this and providing with the additional
+patches to handle TIS interface.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, Mar 31, 2026 at 03:31:43PM -0400, Stefan Berger wrote:
+> 
+> 
+> On 3/20/26 2:57 PM, Stefan Berger wrote:
+> > 
+> > 
+> > On 3/19/26 9:53 AM, Arun Menon wrote:
+> > > - Double the size from 4096 to 8192 so that we can have bigger buffer
+> > >    enabling support for PQC algorithms in the TPM TIS interface.
+> > > - v185 of TCG TPM rolls out PQC algorithm support. [1]
+> > > 
+> > > [1] section 46 https://members.trustedcomputinggroup.org/wg/TCG/
+> > > document/previewpdf/45151
+> > > 
+> > > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > > ---
+> > >   hw/tpm/tpm_tis.h | 2 +-
+> > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
+> > > index 184632ff66..0df35d5a54 100644
+> > > --- a/hw/tpm/tpm_tis.h
+> > > +++ b/hw/tpm/tpm_tis.h
+> > > @@ -33,7 +33,7 @@
+> > >   #define TPM_TIS_IS_VALID_LOCTY(x)   ((x) < TPM_TIS_NUM_LOCALITIES)
+> > > -#define TPM_TIS_BUFFER_MAX          4096
+> > > +#define TPM_TIS_BUFFER_MAX          8192
+> > 
+> > Unfortunately TIS uses a fixed-size buffer that would now become bigger:
+> > 
+> > typedef struct TPMState {
+> >      MemoryRegion mmio;
+> > 
+> >      unsigned char buffer[TPM_TIS_BUFFER_MAX];  <-- now 8192; before 4096
+> > 
+> > 
+> > static const VMStateDescription vmstate_tpm_tis_isa = {
+> >      .name = "tpm-tis",
+> >      .version_id = 0,
+> >      .pre_save  = tpm_tis_pre_save_isa,
+> >      .fields = (const VMStateField[]) {
+> >          VMSTATE_BUFFER(state.buffer, TPMStateISA),    <-- now 8192;
+> > before 4096
+> 
+> This will have to become VMSTATE_PARTIAL_BUFFER and the rest is saved with
+> VMSTATE_BUFFER_START_MIDDLE if necessary.
+> 
+> >          VMSTATE_UINT16(state.rw_offset, TPMStateISA),
+> > 
+> > Problem would be if an older version of the TIS (with size 4096) then
+> > receives this 8192 buffer, we would (probably) get a buffer overflow.
+> 
+> I created 2 more patches for the TIS. It's now also in my branch here:
+> 
+> https://github.com/stefanberger/qemu-tpm/commits/crb-chunking/
 
-r~
+Looks good to me.
+
+> 
+> Both TIS and CRB can now transfer >4096 bytes packets.
+> 
+> > 
+> > 
+> > 
+> > >   typedef enum {
+> > >       TPM_TIS_STATE_IDLE = 0,
+> > 
+> > 
+> 
+
+Is it okay if I incorporate your commits, including the tests and
+profile enabling support into my next revision of this series?
+
+
+
+Regards,
+Arun Menon
+
 
