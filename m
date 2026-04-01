@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AAD10F9312
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 00:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EDA810F9312
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 00:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7jfF-0006po-G9; Tue, 31 Mar 2026 20:42:33 -0400
+	id 1w7jfH-0006pt-AX; Tue, 31 Mar 2026 20:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w7jfB-0006oT-1y
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 20:42:29 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1w7jfD-0006pC-2F
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 20:42:31 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1w7jf6-0005ZO-3R
- for qemu-devel@nongnu.org; Tue, 31 Mar 2026 20:42:27 -0400
+ id 1w7jf8-0005Zd-ES
+ for qemu-devel@nongnu.org; Tue, 31 Mar 2026 20:42:29 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id E966543A1A
- for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 00:42:20 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id EEA4746929
+ for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 00:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1775004140;
- bh=PZI6Xi3EQ0B9UzDSoBs67n8dk+U0BApGwpI49tghcpo=;
+ s=20210803; t=1775004144;
+ bh=j4eU+GaZZQm+qbaMHve6ptwgQ/8Bj1moaNhrsLw7INs=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=uoVwKpiz9edrKrD9nrF4HSQ3HJ2M0/tiUdx1hwJAAokRUgPghzE+jAwTNP5QvZncd
- X6TtXW6BYspzWjyWfarf6wnsAubnp4JnmqCOHeNN2l+5oTqCUpJO/GTww/lXgyGyb/
- cRI0rNw072hSZK4BzDvQ+qZpSs4bcCTwkwRBjPSkK/9gG0JJ7aRrTChPygsN7ANWmf
- RtNOJFlstgcKR/yoJv8l0OtJ93IH1G+dPkKTL10dFojdogcOx9LFZ+599Bo4hfqtej
- GkahA6x3p2mNh/qmA+CbYkP+jgLZAaWef7xjT35veFrosrxSSI27zT6Je9CXUZM041
- ltXGfXycXDNLw==
+ b=dno7JDwF4k7qaMoYYRjSczytk8OFL34WFEKHU3VAVbyUTbrJWponYIRt33lBi42ax
+ KWkQtQ5SWhRM3ads5oStQdKsYQgpNcgHUkTOWeOU3Un3uHhm11+xyQG3t5Xt9WwClQ
+ acEKgG49xSs+1gvt2Ny7bzFUrxlTvKjfOAvwFWRXH1LINswfmLPTgfqRZ5HZV1waoA
+ LAbZSFZQg1cstEnPv/LTCT1aa/+RI8UBGSixP9c4BLFc34jcNDLK678P5C3svUqKEc
+ ijzh2hFWLMYpjyokRusmTWkQFnHfpf5Ahn+aKDF9Hhl7sxx49IICdeqbL8m0EhCRnh
+ ENLyKCtZHkoyA==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id C3D527F442
- for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 00:42:20 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id DF8097EE7B
+ for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 00:42:24 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 01 Apr 2026 00:30:33 -0000
+Date: Wed, 01 Apr 2026 00:30:45 -0000
 From: Launchpad Bug Tracker <2126951@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -75,7 +75,7 @@ X-Launchpad-Bug-Commenters: athos hectorcao janitor mjt+launchpad-tls raof
 X-Launchpad-Bug-Reporter: Wesley Hershberger (whershberger)
 X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
 References: <175977079933.1446079.11908449148472830395.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177500343865.2537557.1954438507681364555.malone@scripts.lp.internal>
+Message-Id: <177500344862.2537557.10153103990661780832.malone@scripts.lp.internal>
 Subject: [Bug 2126951] Re: `block-stream` segfault with concurrent
  `query-named-block-nodes`
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -84,9 +84,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="9aaa5bcdb7f1a411456d080b227371e0556b2411";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: a5b4541628d38e6f510acbdf2ec124cafb612652
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 4342fa3c3de04752ee5ad2b70c46b9daafa606d7
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -109,10 +109,10 @@ Reply-To: Bug 2126951 <2126951@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This bug was fixed in the package qemu - 1:6.2+dfsg-2ubuntu6.29
+This bug was fixed in the package qemu - 1:8.2.2+ds-0ubuntu1.14
 
 ---------------
-qemu (1:6.2+dfsg-2ubuntu6.29) jammy; urgency=3Dmedium
+qemu (1:8.2.2+ds-0ubuntu1.14) noble; urgency=3Dmedium
 
   * Fix crash on concurrent `block-stream` and `query-named-block-nodes`
     (LP: #2126951)
@@ -120,12 +120,9 @@ qemu (1:6.2+dfsg-2ubuntu6.29) jammy; urgency=3Dmedium
 .patch
 
  -- Wesley Hershberger <wesley.hershberger@canonical.com>  Wed, 11 Mar
-2026 09:13:21 -0500
+2026 10:42:17 -0500
 
-** Changed in: qemu (Ubuntu Jammy)
-       Status: Fix Committed =3D> Fix Released
-
-** Changed in: qemu (Ubuntu Noble)
+** Changed in: qemu (Ubuntu Questing)
        Status: Fix Committed =3D> Fix Released
 
 --=20
