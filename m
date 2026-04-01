@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43807D3515E
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7351D35160
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7rhO-00041Y-OZ; Wed, 01 Apr 2026 05:17:18 -0400
+	id 1w7rhk-0004WS-Rn; Wed, 01 Apr 2026 05:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rhN-0003ww-E1
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:17:17 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rhL-0004M7-ID
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:17:17 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4887d4c6234so19213075e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:17:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775035033; x=1775639833; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MB73ZSDnZRB9JY5X17nOeUCVvqmZKtv0Fb5V3WcSBSc=;
- b=bSG/cjqK3nJAPmB8XTAYr14WG18+/w4EVqTqiisCMFUZF1WzTmqa9SWTN677xRkldN
- lg/Rx4tbe4cLJCiGObaFmlM4OE0L+YqkxcEnt0H07XHAkUWr3KYQY8rKUhKeiaPmQ2W6
- Dnifz3+i0qK3WaEBlRPPs2MuvKyAJjp/WqCfhDXZPU8hD0wsGyg3xLXVbDfkJm/X7CZY
- s1+ddxmixnW/in2ONlPb4MdSZZfO1lDwC46xr79Q3qFEa/0UfiEe14ViQyd5+9KMMLJR
- gli9LqKguLjGk45y1+93EGHIV1e6jcFbybmkdVwA0zMxzh0TgScdgWh8Mj4JoGb2MW1g
- GjOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775035033; x=1775639833;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MB73ZSDnZRB9JY5X17nOeUCVvqmZKtv0Fb5V3WcSBSc=;
- b=SDi89R/gH6Q844Y+xDq+v3gJmi38Hx8ZtWznO2417lfUotk82rgSkFbRond4rR54jf
- mZO8WHqXfmM/iE3iW2T+Mb5RVKdmgIJikQPdB8w7HMP7BNb3T8YYmavxRHpNHspNdJSk
- JILKQTEKDktMrfp//EyFckXQZnB7RprHmnj8qeXfx4s8dXNYjm9cI2V5eeLjaUSCc+8r
- dMP+MMjlQBL03GCe/bnfHnzNUmlb6MUvgeutXLWzH4qANwFkQdh5j+FEJBK9IJQyEcV0
- 1ygRqmnBb28FsTREOTefrXmqMGQELR2nikgWxxi/v+PlPQkjE0NgALNSU4jOMDf65DO8
- YrbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVR+iHpYCXaVGlHHMlDvWzu0vndUCqIkrcDZRGsK3FHaN2SkVn07HADo8QDlusCTBLcgRZsfG5uZPOY@nongnu.org
-X-Gm-Message-State: AOJu0Yw9eUVTiiqdLPrhoZV/kOLgifURYMkOFnUHJPywjJ0eZpASi35W
- UQ+JCquoCy7A7as+AOOYeixVfDHLTDVHXJWq2Hnf2/+7C16qAGo2FGKhr3KAAqMEJgA=
-X-Gm-Gg: ATEYQzzKvsc6ldRkYFsTDEUOvXbJytoXgvDRxTmbiqDcn2uYbigvXzn7u8fI/o+kuOR
- 8JA+CcBKUGX4uUVNMDgEPRcFRaAb0lJIfthKzBfZNWPBk9AER8wgV938Tt7Kr33//szza+o0/p/
- RdD2aPbDRm9LIe80OeGJNl0Is9+l09AL5JEtvL4y7b5N8OqSia88JoD9m2NJLi/GCHaBTwMIw9q
- 2hUFBpTSdrymc/HYfghUSHUjQnPTCKWkQgBMBUidkBR9BSPPO1UoyTcMIlPLhYUBRxfvmInQyWs
- K88h6gXtjPFTDCzbwyLXUsbrbNQCwxYHEWxuEXfGNxHvWvY+dvXe5S8L9bG0kRl0ygJS/qbcuZS
- eeB2t6UQly6XmUMF7wnvA4f2X4slEqthU9EkSd0YtoqLnRrzoNKUiIaC1XOTs/n6m4XwL9WawyO
- RJI4yVtoeMO2WWtgQz6v+Dw9lDPb1+lL7ZyhAz1qdo7dXYgDMVi5sLS0+uCAogjx1LNA==
-X-Received: by 2002:a05:600c:5303:b0:485:34b3:8587 with SMTP id
- 5b1f17b1804b1-48883562deamr44395135e9.10.1775035033226; 
- Wed, 01 Apr 2026 02:17:13 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887c884c10sm36897265e9.19.2026.04.01.02.17.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 02:17:12 -0700 (PDT)
-Message-ID: <90642606-419d-4217-8e8b-b6063d660a05@linaro.org>
-Date: Wed, 1 Apr 2026 11:17:11 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 20/60] ui/console-vc: decouple VT100 display updates via
- function pointer
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-20-48eb1dcf7b76@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-20-48eb1dcf7b76@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <jaemyung.lee@samsung.com>)
+ id 1w7rhh-0004VX-O9
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:17:38 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jaemyung.lee@samsung.com>)
+ id 1w7rhf-0004OW-QL
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:17:37 -0400
+Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20260401091733epoutp042f28bddb4fd43e7bcd59020211a5d487~iMPoGvUVb1592915929epoutp04J
+ for <qemu-devel@nongnu.org>; Wed,  1 Apr 2026 09:17:33 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20260401091733epoutp042f28bddb4fd43e7bcd59020211a5d487~iMPoGvUVb1592915929epoutp04J
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1775035053;
+ bh=ATWNpJ89zL6IYEMAVy1iWb//wiNeXnRdE/33UOrU+yM=;
+ h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+ b=kDeFg715I+Iu10Ivv/V6I/zVYMKLoCzAHn+WDzzChVYMFEIHDUo6jqmuqAckRkYu+
+ idT1AEopw7ZsaleznYqN0vG1RHRg0hDYtQ0flfYqjNZaKdKWMO6HwQEO7ELQPiMLIc
+ HKI/Dl8Zpi3H8EF0Vug+huYDOgjjrT7unhNUifDA=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+ epcas2p1.samsung.com (KnoxPortal) with ESMTPS id
+ 20260401091733epcas2p158788ac2ecc6218860e7c882b51247d7~iMPn4uy8n1166211662epcas2p1b;
+ Wed,  1 Apr 2026 09:17:33 +0000 (GMT)
+Received: from epcas2p1.samsung.com (unknown [182.195.38.200]) by
+ epsnrtp02.localdomain (Postfix) with ESMTP id 4flzsT077Jz2SSKZ; Wed,  1 Apr
+ 2026 09:17:33 +0000 (GMT)
+Mime-Version: 1.0
+Subject: [PATCH RESEND 3/5] hw/ufs: Add IDLE operation
+From: Jaemyung Lee <jaemyung.lee@samsung.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Jeuk Kim <jeuk20.kim@samsung.com>, "kwolf@redhat.com"
+ <kwolf@redhat.com>, "hreitz@redhat.com" <hreitz@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "farosas@suse.de"
+ <farosas@suse.de>, "lvivier@redhat.com" <lvivier@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <20260401090457epcms2p2368a82c8b794d8591aa62a421db9e8f7@epcms2p2>
+X-CPGS-Detection: blocking_info_exchange
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20260401091732epcms2p8822df565a95c0fa3098e918697b293b2@epcms2p8>
+Date: Wed, 01 Apr 2026 18:17:32 +0900
+X-CMS-MailID: 20260401091732epcms2p8822df565a95c0fa3098e918697b293b2
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+cpgsPolicy: CPGSC10-223,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20260330112748epcms2p1717e93009f7fb87a8156ee07a9400502
+References: <20260401090457epcms2p2368a82c8b794d8591aa62a421db9e8f7@epcms2p2>
+ <CGME20260330112748epcms2p1717e93009f7fb87a8156ee07a9400502@epcms2p8>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=jaemyung.lee@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +91,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: jaemyung.lee@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 09:50, Marc-André Lureau wrote:
-> Replace direct dpy_gfx_update() calls from the VT100 emulation code
-> with an indirect call through a new image_update function pointer in
-> QemuVT100. This decouples the VT100 terminal emulation from the
-> QEMU display layer, allowing different backends to provide their own
-> image update implementation.
-> 
-> The QemuVT100 typedef is changed to a forward-declared struct so the
-> function pointer signature can reference QemuVT100 itself.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   ui/console-vc.c | 28 ++++++++++++++++++++++------
->   1 file changed, 22 insertions(+), 6 deletions(-)
+Add timer-based idle behaviour to UFS Device.
 
+When no I/O occurs, the UFS Device performs various internal operations.
+To emulate this, adds a timer that periodically checks the current I/O
+status of the device and call the ufs_process_idle() function when idle.
 
->   static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
->   {
->       ChardevVC *vc = backend->u.vc.data;
-> @@ -1205,6 +1220,7 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
->       }
->   
->       dpy_gfx_replace_surface(QEMU_CONSOLE(s), qemu_create_displaysurface(width, height));
-> +    s->vt.image_update = text_console_image_update;
+Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
+---
+ hw/ufs/ufs.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ hw/ufs/ufs.h |  3 +++
+ 2 files changed, 49 insertions(+)
 
-Isn't it better in qemu_text_console_init()?
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 69f82ab462..19438c89e1 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -1801,6 +1801,46 @@ static void ufs_sendback_req(void *opaque)
+     ufs_irq_check(u);
+ }
 
->   
->       s->chr = chr;
->       drv->console = s;
-> 
++/* IDLE */
++static void ufs_process_idle(UfsHc *u)
++{
++    /* Currently do nothing */
++    return;
++}
++
++static inline bool ufs_check_idle(UfsHc *u)
++{
++    return !u->reg.utrldbr;
++}
++
++static inline bool ufs_mcq_check_idle(UfsHc *u)
++{
++    for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
++        if (!ufs_mcq_sq_empty(u, i)) {
++            return false;
++        }
++    }
++
++    for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
++        if (!ufs_mcq_cq_empty(u, i)) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
++#define UFS_IDLE_TIMER_TICK 100 /* 0.1s */
++static void ufs_idle_timer_cb(void *opaque)
++{
++    UfsHc *u = opaque;
++    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
++
++    if (ufs_check_idle(u) && ufs_mcq_check_idle(u)) {
++        ufs_process_idle(u);
++    }
++
++    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
++}
++
+ static bool ufs_check_constraints(UfsHc *u, Error **errp)
+ {
+     if (u->params.nutrs > UFS_MAX_NUTRS) {
+@@ -1863,6 +1903,7 @@ static void ufs_init_hc(UfsHc *u)
+     uint32_t cap = 0;
+     uint32_t mcqconfig = 0;
+     uint32_t mcqcap = 0;
++    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
 
+     u->reg_size = pow2ceil(ufs_reg_size(u));
+
+@@ -1959,6 +2000,9 @@ static void ufs_init_hc(UfsHc *u)
+      * dynamically
+      */
+     u->temperature = UFS_TEMPERATURE;
++
++    timer_init_ms(&u->idle_timer, QEMU_CLOCK_VIRTUAL, ufs_idle_timer_cb, u);
++    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
+ }
+
+ static void ufs_realize(PCIDevice *pci_dev, Error **errp)
+@@ -1986,6 +2030,8 @@ static void ufs_exit(PCIDevice *pci_dev)
+ {
+     UfsHc *u = UFS(pci_dev);
+
++    timer_del(&u->idle_timer);
++
+     qemu_free_irq(u->irq);
+
+     qemu_bh_delete(u->doorbell_bh);
+diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+index 13d964c5ae..f0b1f8b0e0 100644
+--- a/hw/ufs/ufs.h
++++ b/hw/ufs/ufs.h
+@@ -148,6 +148,9 @@ typedef struct UfsHc {
+     UfsCq *cq[UFS_MAX_MCQ_QNUM];
+
+     uint8_t temperature;
++
++    /* IDLE timer */
++    QEMUTimer idle_timer;
+ } UfsHc;
+
+ static inline uint32_t ufs_mcq_sq_tail(UfsHc *u, uint32_t qid)
+--
+2.34.1
 
