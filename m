@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B1CD35162
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC2CD35162
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:25:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7roe-0007vX-0T; Wed, 01 Apr 2026 05:24:48 -0400
+	id 1w7rpA-0000Gr-7H; Wed, 01 Apr 2026 05:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rob-0007nb-Ng
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:24:46 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rp8-0000EC-UJ
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:25:18 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7roX-0005NK-7k
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:24:45 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4887f49ec5aso21627325e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:24:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7rp7-0005eI-Hf
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:25:18 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4887fd35e60so9148905e9.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775035479; x=1775640279; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775035516; x=1775640316; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pfgNLiQ4n5EyW3BsOAiev/5CM+KYpoTZpeQAzpesDIU=;
- b=AQOUjhJNboEbT44ohY6LkP0WhI9pIPG9LAeQC7IXInMGauTZCWKvqGPkisagcc86fY
- hYY1wExGWgpu9evO8DarvJdnLtx1ZaFJTRMcW/4IIRJaUo8lizT5BtX+I7t8itag5oqT
- ZgeKrgljq2FN/PqrFG+bDGzTCRiiuJhnPChXpeBGr8NPYoj1MIugltddyOYhEVvLx691
- 9bi8JwzKE/XGP+nN/s/5t7VLoRlh1u/R6ffalQ6/IC7WsuVXXXjBJc96UYe/XBZY8nTO
- BlhtO7x8TUbXFe+KrvvP2ETF/QAcrZ4OH5TYOr0ynlJuWdxCH9j6E03rLSgDWz65jZ6Z
- LRyA==
+ bh=KmJAGmJZQJXN/dK7EStEa0/BjTklqiJWfHoYtci1C80=;
+ b=pDIEMJyvGHSvul+qoZsvGgb/DYBMOVX1yiuDmXEw05DBAR8SZDPjmN5BZOgPcWItj2
+ t9flohQDj1wegnezV6E5j3HxeyOIDYi4YhpIpL3Tl2nBbc/lWOY1soasgN/C0n5UQu9k
+ k6QOL9TuDkwf+7ocx1CDJo9XKPRnjb5sWEOVtM4+oa0Ne//0QdZdHEHXl4GkxNEH8Rdu
+ i57BMswWgIRVxU+Q8jn6TUxPRJHY+IYlZlJsjdRqxpBljy7ZtdWxcaKj0EcDj79ZmgkT
+ 290iiXmiunVqZwwaxZ9pasfaAlDHiA31hKRdEmGmOqYw9zsSgjGiJjdsgwC03oB+qDlR
+ DRqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775035479; x=1775640279;
+ d=1e100.net; s=20251104; t=1775035516; x=1775640316;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pfgNLiQ4n5EyW3BsOAiev/5CM+KYpoTZpeQAzpesDIU=;
- b=ieoHHPMikGrm1asMbVuNdgm7S28xdlXZFJLrtR2xucq9z6T3JnvBderMNpx71nSt1C
- 3vE6lT2V2QewRQoSjNSwErVmJpw8T889+8PqS9OV+m/pEKfE8qAxbVaFTXPs46W3CyUb
- K4v+dCydOfC1YFnP6jm1rmFMPwnJ0qZWbu1dkgtdhojh29//54Tc375sgZr+ImTnYNLk
- WYmTvJ/cWTdAml5gD64c4QqPUwIIBpLlmrkicAObauPcnFCU43jUWDdpsS8mV2NuU9hX
- ieBWLcC5L1Inc4P0dmLGIFQPUXEyQM5pN0Wx5dJL8IucD58NdGuPZ8fALaBFzyTLHRj+
- l1Ag==
+ bh=KmJAGmJZQJXN/dK7EStEa0/BjTklqiJWfHoYtci1C80=;
+ b=kbm3ejp1FF30q6MHM5+QMz/lKr/pQZkRKRMBfxVPyCfHFe+Xwt9JM+Jn7mZQC5hWBW
+ rcmfPlYQUYT+8tr0iH633/c/YRAism4spWptE7TrHojG81/PpLDCJd5wqpJzeePVwyBY
+ gkp2cEGWbmLdNMz9mXidTObsLTKSum5Fd/jBn1mVjT/Xm4wg0+G2rANcSI2KWSze8CKr
+ 9CDATV/a881322W2/4KXbMKV627I9UHkYJc40sXauAvG4UCn6BsY9+gZ9jh23+XjBadU
+ OayvfCAJPee9wVguDJxTvIDi4aXeNBpWGkGLizszDb6HlLV7uJKLijKJwJJkeTn/3mgi
+ gTTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGPkcHPwytJ/YNTdyh0Ub+r+GtfWMOi18VEKfOBWSaSUAYfsv99nfCipraxNydKbUmkvGglY+1K6Li@nongnu.org
-X-Gm-Message-State: AOJu0Yw46Xda90Ne6UrkaYl2rWpLwo9rA0vrsW4CBl7+G9Vu5x7IhDsi
- 2aGaHSrKqCDlWUh1wN4RrX824JqfAVcyBf9LjW2gU27EJEdCY6tf5yrBPPQ79zQxs4A=
-X-Gm-Gg: ATEYQzzd/gBsP3TADTi1Z/0f88Cdpi0PNogX5v4SLeLfyZ6/9V/XNBoF/gTtVKFUAfh
- JQYZwyiBFGWfi8dtVEzIEYpUkhcxbqXkhFFc62kpOZWX2UpTfZa4yFU0xA8aApDs85nF/ukkCo/
- R8wO5P1hhto9A+jHMFSrjJCF4upLaW4mGrqI43Fhwa6zXTLN7gQLUancddd7tyVjwn2pJAj3bFn
- nspodis0ux4/tWNEqkwzn0FKvVbxGUSu3tqXI9huAuu6I+DdJ96PW4P5moDMWTGZ8oL3twVFHhM
- MIYgtZJtAYvn6PFaEz+Q9VSjTmWxKHaz2etJhCF2UnF011lCbNjdDTzAoaHy3xVtz/3A7zn5OD/
- NCu4G73oEw+4Rle6ROOMzDjbWOWaNaPSQ/gKzXT3nLq3WYFkWxjyPwUjI6krKP/xzSwhzVK3htp
- 7SFn/Hahfh9XP7Li/rmGO7/Pc+MCu0LWh9qpBwdBfeGf7+QQj/Ug1Crg7JDDy5VxQDGw==
-X-Received: by 2002:a05:600c:8184:b0:485:4eaf:eb53 with SMTP id
- 5b1f17b1804b1-48883590481mr44653905e9.19.1775035479041; 
- Wed, 01 Apr 2026 02:24:39 -0700 (PDT)
+ AJvYcCWTowSKsdHNa6blqpx2FWdXwhgmcJ2oN1RszSBX7a9rSpzTY9r1kQvuBcDpLR6xAjfpiMOvz0nmiNhS@nongnu.org
+X-Gm-Message-State: AOJu0YzlOkRZBtJZEKgCodDKlMiuSYYLAQrXHOIiQGg/4APKu2t/4bxJ
+ 2Eih0RQ6FftxcmGUE/qE7CfE+6H5quF27LSbEutAYZhZgtCO5kcE+B8t0NYFEWjYSPT1ENNoVjP
+ 4GYbX6JQ=
+X-Gm-Gg: ATEYQzyGEO3CzgW2RBJfEf4UzRmYaOEizAFafRieOGxRO/UcJUjWO59S/4A8uXdI3if
+ +vWosltcjdB6sqEbQ+AeyxO2fBGUYYvWerFU3D76Fu2raIKWlI+MFlzMfCmm8u6AIjBPPixtiR8
+ qITOBTfGcQjgiTJd3bm82LehjvpQh/tGjYLnnR6MdIv673OeSEsJSHdIx+z0ZqxqLyoT9LI4AEA
+ 8Zuwg8JkbU4VyvgBC7DYpdWeoAot2cLeJjlaL3lnpleEQPJhTA2/kNmfihie6OTzM7bbCWvWPux
+ uzISyz9jKIyVrCOH+Kajp0qsNhBV0GCLGZ7Ex3QgXjlrHLgrObpwJKPqbTTcidwSAmpkaDxDET4
+ 7pfl5WIUDFbZbD1G8vkyhXVgooNv2SGJ7bPX7mRhw6/FEUNhAR4zs5wxL4MZmCO6V68/goXEhPg
+ /2k++kP3GWkZWRmHCVjCG5EcHtpDRQSnbrNY7hCbuFl96R+7TWPO2jhpACUvmk2tbvog==
+X-Received: by 2002:a05:600c:17d8:b0:488:882e:3bcc with SMTP id
+ 5b1f17b1804b1-488882e3ca9mr6525365e9.8.1775035515653; 
+ Wed, 01 Apr 2026 02:25:15 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e829c43sm93864385e9.5.2026.04.01.02.24.37
+ 5b1f17b1804b1-4887e80a616sm170648405e9.2.2026.04.01.02.25.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 02:24:38 -0700 (PDT)
-Message-ID: <3aff4c92-75e0-4203-af04-34c35a35d8c4@linaro.org>
-Date: Wed, 1 Apr 2026 11:24:37 +0200
+ Wed, 01 Apr 2026 02:25:14 -0700 (PDT)
+Message-ID: <7be3cd50-5194-4f3b-9e9a-42e770812ff6@linaro.org>
+Date: Wed, 1 Apr 2026 11:25:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/60] ui/console-vc: introduce QemuVT100
+Subject: Re: [PATCH 25/60] ui/console-vc: move vc_put_lf() to VT100 layer as
+ vt100_put_lf()
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-15-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-25-48eb1dcf7b76@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317-qemu-vnc-v1-15-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-25-48eb1dcf7b76@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +106,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/3/26 09:50, Marc-André Lureau wrote:
-> Start moving VT100 emulation specific code in a different structure.
+> Decouple the line-feed handling from VCChardev by operating on
+> QemuVT100 directly. The function no longer needs the chardev or
+> console pointers — callers pass &s->vt instead. This continues the
+> effort to make the VT100 terminal emulation self-contained.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   ui/console-vc.c | 381 ++++++++++++++++++++++++++++----------------------------
->   1 file changed, 192 insertions(+), 189 deletions(-)
+>   ui/console-vc.c | 65 ++++++++++++++++++++++++++++-----------------------------
+>   1 file changed, 32 insertions(+), 33 deletions(-)
 
-
-> @@ -232,23 +235,23 @@ static void console_refresh(QemuTextConsole *s)
->       int x, y, y1;
-Having looked at the following patches, I'd use this pattern here (in
-various functions of this patch) to minimize the review code churn in
-the following ones when you pass QemuVT100 *vt by argument:
-
-         QemuVT100 *vt = &s->vt;
-
->       assert(surface);
-> -    s->text_x[0] = 0;
-> -    s->text_y[0] = 0;
-> -    s->text_x[1] = s->width - 1;
-> -    s->text_y[1] = s->height - 1;
-> -    s->cursor_invalidate = 1;
-> +    s->vt.text_x[0] = 0;
-> +    s->vt.text_y[0] = 0;
-> +    s->vt.text_x[1] = s->vt.width - 1;
-> +    s->vt.text_y[1] = s->vt.height - 1;
-> +    s->vt.cursor_invalidate = 1;
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
