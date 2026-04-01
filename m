@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 428C0D3515C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B171D3515C
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Apr 2026 09:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w7sEW-0003oT-TV; Wed, 01 Apr 2026 05:51:32 -0400
+	id 1w7sG8-0004HW-Bt; Wed, 01 Apr 2026 05:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sEU-0003o5-BC
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:51:30 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sG6-0004Gx-BT
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:53:10 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sES-0000lz-NG
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:51:30 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso59923675e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:51:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w7sG4-0000pu-Pk
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 05:53:10 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43d0deb7ad5so1374679f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 02:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775037087; x=1775641887; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775037187; x=1775641987; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EN+5kYZfAKjpQLnOvclcuPRS7nQ2Q2ZyKGKhUmOFOR0=;
- b=MH+RWusCsDxbYW3Dwie56Tb1qt9qvC9jlSkxbRQ06Tkh0JIbLItttuLNdUaJNlXjC6
- jWY7n+UrS6UshdZJG/dffDXGT8si0wuu1smMDnKi6K0R12FG4gZZGRazfZmx3epVlDhf
- KkwHg5QgRmQxDnWC1kK3N3C4rBHLLYy60wKnsViZsXckBxQtoNFruj6gbRcuUgPh3knS
- +qV2rtLkKl3s4SLxF0Zx0QQoubp/yTq77ODix7YeuxKYfNk+Y0t9JK8jEagUY+4Uu7dX
- BMzjXUPFYXE69X398F2p8X9OpLVTbSFD5dN5NUCcYPpCqJUxdcjkeOj1h9zeyxrjBH8r
- yWiQ==
+ bh=teKZBEftrAzjFZ430okLdJuqStKsAdQLuOYWShmOBjA=;
+ b=o1tdoka7gwORK4ZPZ5MXeZFqHJ8yBhcjwWmJP0HTGW5gticYfm8N0KTFZKL81JHjF1
+ IP8V7pVo+DxMsluk7j+8hLmLsJvCTqam12f8lTk0D7HO6xgZ4t2hMwXC4ynDNgot8Z/i
+ JWFwvS/MVR+w9SoaLnEKjoZeaetME4f7YUV+RXgbjALhbygViSEkvmNz3fFwYTFlggCH
+ I07HEnZE8162JnEBICCUwXn21qp88jG/1kR6ezZ0I+pYDfRrZ+L4vZi3Yp5cuDhyJ4Qj
+ RuID4y4CBtNCObh6QD7dsJJ9NJip4Qi9l7LkvWkyGhBAx3wpxYKrkX3+4dkuca1ecVuf
+ Epuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775037087; x=1775641887;
+ d=1e100.net; s=20251104; t=1775037187; x=1775641987;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EN+5kYZfAKjpQLnOvclcuPRS7nQ2Q2ZyKGKhUmOFOR0=;
- b=loCEM5ebsftsrlxsqUejNabEMDpEKJvarTfhspGe9UBxAWoVN0c5gKOV2VGwP5I5Tu
- yrsBx1C90j7tICGuPXqyKE/5Eu/rCgDq3OBMpFqkLV+ebssmkmBMKevIuxlJNPnr1LPs
- j5SQa8CfJ3DnJG0+Qb6MhydQsImNjcXosGPOFGIBtJL06kWHu9RTxQKIZBTtJ4bRMwPZ
- TS1l7YnvPhcT0RaPwRoi3niN4hRDFwnozf2LHrCndt+FO6heMiFXVXjGC8H2u613PbVW
- dB+a5bYQjd7wlXtXM7YvTBEQQkwxsClbBkICT4DGPsVro3tXkQK3YLqm4I3BjRqi5SVw
- VhkA==
-X-Gm-Message-State: AOJu0YxaLRc3DyalMnLsa0xHxGE5CtUEM9nG32CxJvyRI4TWGwtQV5fq
- QxBAnNna40laB5zQNosZp222agVy8v56V60QHrxpIn7WgWF1W7m+vzLYzpO1+39RzgI=
-X-Gm-Gg: ATEYQzww7OhnjTMb4zvsfHg3xTjxyfpzy0Wx13DVQL0ZFnpof7lZcMgWhGs4YPiCIjy
- qrq86d2HJkBcqOUR2ZyZ+NH226bx5juQmOiuO4+hAzoPKrXdOmaYu4c4pbUdsE9DhN+shkyp2sl
- GTV5IMwTK2pv+pSubZVRJRQfGgBw8QL7iKOHRXX3PoNBhYw2/HFbdtCPnvln4dNEfs0fXra/mXM
- 9hA3Z6dmsoMlUkpFu5MuTA/aw7XkZx3iE2ZIKXVTuvWaYeWGRaHjWo3k+LaeZZydA3AOHIP6XqR
- PO+pXLa7twLdNUwZhBuAcBtxiJg9vnqKanC8zoAoP6M+y7M0rBYAJPRpP/HM/7bFoP70d8ZyiVw
- VckJCSc7YPIJimUfTrk9Fa9nOxo4XiD8aY9xS/zEnvRi+ySsLAPj90LLAZlMzldaRigac47hby+
- NRAn9ngGN5cSLTXowbVaIu/QG8ovlLij2LhrNZc6b08og8X31HVviibBno1UOeZLFBBRnMKGloL
- NjO
-X-Received: by 2002:a05:600c:450f:b0:485:4453:401d with SMTP id
- 5b1f17b1804b1-4888356843fmr49062315e9.2.1775037087040; 
- Wed, 01 Apr 2026 02:51:27 -0700 (PDT)
+ bh=teKZBEftrAzjFZ430okLdJuqStKsAdQLuOYWShmOBjA=;
+ b=Qb3nISBbx9Q//ET5ygYLwKwiX1jvzBXuT6Lo5NUu6XpiA/jPOFMLjLVwyga/aZXoIH
+ Ev/u9dCOxK9Il8rDGQHwsJWfzmQtTUGaXJZ6LtJTF8qdeT9RF2mz+U/mUkVWH8rKrXYE
+ TPAtzrfiIVmKt4X2aTPVp1WVkVzU5ncf2DSBqWXXci6rPXu/OpVm0lGTbw5L8BjiNsqg
+ WaV4p7uFKiVFsqXNaQSFt9/YcNRwTLI72AphFXpRRquy8bDGPm3apPbKzGEawlFVz8An
+ fA9hgjJP4IO4fdvXSB72HoXvsSYjuEQGMsPwqjYjFBvMGyQiR+hYMQSd8hDD7pbDnMMK
+ refA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbAgsSfEyBNpE4WmmAAlr/bcdWT10krsZ5jKv4fbGtXWKdXBLHsfdDqaUJP3EH+aZwFS4c5M4A+BgW@nongnu.org
+X-Gm-Message-State: AOJu0YwXHPn1sPT4ysnLcS35A4JIY9sncFp4N21NElr//oCIfLHEz3Ri
+ GElgSLoSE+SAMALG4rc+xwiyhlRIxxABCx2KwWyV1KKLh1ghDD/D/z3wVJdU4DNe5TE=
+X-Gm-Gg: ATEYQzxXBiHg0YVF6gf9/R2DVywuJ9nOMlpeGY1LNtmxIAVnyM/0OdxFGiX28cAKDAS
+ LASJJ1tIDJUp0CtFV120qKPNHQE0grvCnrUUlCp+p5ZMASfn+/EtWutIO/4o4gc/QYz+/1/XqFP
+ yXWyeZEiVbDg4uCL0YLZFg47b18fm9Vlsfxo7JVTpVcbFM3VUxcHxA123P5e1tk2OYXVnqx5u5t
+ mTgeEXh2/PzD9dr01WsYrGElwBesII+8MxdtjPFkip4dRlHBctpDlo7Zj99uweYGRgZYajuiw4g
+ 67ABXH09G39DuLhXDLnjVR/dxSzGcgzx5G0E+Aeoqx7GchDtSbKupQGSPT0En3S/jv7xOoKnY5a
+ Dv05JrV0v4E5hX5lgfBNYgFQhiGOTOQ1VVJ3abaLdmFkwTa3b9kATetHqHie8nJ2Nc3HDo2HtUl
+ 0LZgASjN52rLawGQTX2Hx9F+i3HVbGc7+WbvquOp0xo7ztUlsqy+57Py/ad1ZlwRnZqw==
+X-Received: by 2002:a5d:64e7:0:b0:43c:fed2:bb72 with SMTP id
+ ffacd0b85a97d-43d15094320mr5466871f8f.19.1775037187285; 
+ Wed, 01 Apr 2026 02:53:07 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e843a55sm82884325e9.12.2026.04.01.02.51.26
+ ffacd0b85a97d-43cf245e2f6sm35755062f8f.18.2026.04.01.02.53.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Apr 2026 02:51:26 -0700 (PDT)
-Message-ID: <6c998d7d-e185-47d7-8687-556e9efa7983@linaro.org>
-Date: Wed, 1 Apr 2026 11:51:25 +0200
+ Wed, 01 Apr 2026 02:53:06 -0700 (PDT)
+Message-ID: <e24d03ba-d6cb-4b2d-bc50-643a584a674c@linaro.org>
+Date: Wed, 1 Apr 2026 11:53:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target: convert TABS indentation to spaces for consistency
+Subject: Re: [PATCH] iommufd: Rename all the idev and idevc variables to hiod
+ and hiodc
 Content-Language: en-US
-To: Tanya Agarwal <tanyaagarwal25699@gmail.com>,
- richard.henderson@linaro.org, pbonzini@redhat.com, zhao1.liu@intel.com,
- edgar.iglesias@gmail.com, mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, peter.maydell@linaro.org
-References: <20260328170913.3673-1-tanyaagarwal25699@gmail.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@bull.com, yi.l.liu@intel.com, qemu-arm@nongnu.org
+References: <20260401080354.1347212-1-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260328170913.3673-1-tanyaagarwal25699@gmail.com>
+In-Reply-To: <20260401080354.1347212-1-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,22 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/26 18:09, Tanya Agarwal wrote:
-> From: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+On 1/4/26 10:03, Zhenzhong Duan wrote:
+> We used idev and idevc naming for HostIOMMUDeviceIOMMUFD and corresponding
+> class variables which followed the iommufd_device naming in linux kernel.
 > 
-> To follow consistent coding style, convert TABS indentation to spaces
-> for consistency.
+> This is mixed with the hiod naming for base type HostIOMMUDevice. Rename
+> HostIOMMUDeviceIOMMUFD* to hiodi* for consistency in QEMU.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/372
+> No functional change intended.
 > 
-> Signed-off-by: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->   target/alpha/cpu.h      |   6 +-
->   target/i386/cpu.h       |  40 ++---
->   target/i386/svm.h       | 308 ++++++++++++++++++-------------------
->   target/microblaze/cpu.h |  12 +-
->   target/sparc/asi.h      | 328 ++++++++++++++++++++--------------------
->   5 files changed, 347 insertions(+), 347 deletions(-)
+>   hw/arm/smmuv3-accel.h       |  2 +-
+>   include/system/iommufd.h    | 12 ++---
+>   backends/iommufd.c          | 26 +++++------
+>   hw/arm/smmuv3-accel.c       | 93 +++++++++++++++++++------------------
+>   hw/i386/intel_iommu_accel.c | 44 +++++++++---------
+>   hw/vfio/container-legacy.c  | 10 ++--
+>   hw/vfio/iommufd.c           | 24 +++++-----
+>   7 files changed, 107 insertions(+), 104 deletions(-)
 
-Queued via hw-misc tree, thanks!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
