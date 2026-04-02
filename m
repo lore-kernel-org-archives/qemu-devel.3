@@ -4,126 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B3AD3940D
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E03D39410
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8FbT-0005cD-Lp; Thu, 02 Apr 2026 06:48:47 -0400
+	id 1w8FbU-0005fu-Fn; Thu, 02 Apr 2026 06:48:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8Faq-0004lQ-S8
+ id 1w8Fap-0004l3-6s
  for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:48:13 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8Fak-0007q5-7m
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:48:07 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1w8Fak-0007q9-RK
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:48:06 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6326btI41965395
+ 6328RsVY352251
  for <qemu-devel@nongnu.org>; Thu, 2 Apr 2026 10:47:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=gN4yioD5Rgh
- 7UznFLRejmfl/X6fbAyKgQNiOL9X2Qck=; b=aBpt8IhUVKWmfYgH9k0nTkZ49Mb
- p01zSbZG5NjIeoSSFyZchHS1QhBc17g7yhpQcKg/YJKFrGZbQAEVDQhvWeU2AKKp
- u/oLGDTrLnqkIQsStCmc4wTjEZH2WMoECKP6kKs+ogOEr72jEx7T+jiIrZcBsvXG
- MaBbDL3HFjioYPav/pfJtuikbngzh5VOmxx8wjLgDEYxdrV04zxsuYhOx2U1UJOv
- gB7r+nIKsUqgvRx/KJfZ3EqhvXlZuy93bGHwEWbKya3mAPxQPg5WpZEgSkholyWY
- MA36YTqd8+dwSiqJQy9NysTC4MMRJYHPLLFn9KhHSpImzULbEJDcO1g9hPg==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=RfmOA1oJRbM
+ 59T5jNLihWyqgY4oN9Qis1RTJ8xh8eSY=; b=SDPCcNE+wHgTOvJwL0HTmbj6QyC
+ 6gFYb/Sn7UCy3cSl0BdlD0D7Z9FMvy5XERH8b0o9cAZ4S6aX38JcVbG3eN1eUhdL
+ brcnmgUb93SBg9TdXh1IIPNeWa7Oqjf/jLe5fW0WrmDHhTjIkNzZ7Jbzumw/vxdv
+ 4jmPfAwEYdTi+KIpsnglpmcdCVyybiobLUzfgaBz10bm2rvL8B4bfIjRjvqrBvmE
+ 5Tjyh1dHPJCx7tDbNgtZxuSJYNBZfHnfcuiyZxonhUjRapJlwTDdg6ZnyuxKiqZf
+ UFCH3hN8KO187xr6TwbQ+cWkMKYWlEHA5KR9K4pMulYkiTdnzliNFxpel6Q==
 Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
  [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9b9h2pm6-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9myh8h1h-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:50 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:51 +0000 (GMT)
 Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2ba9a744f7dso1115411eec.0
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:50 -0700 (PDT)
+ 5a478bee46e88-2c72849f648so3525638eec.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775126870; x=1775731670; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775126871; x=1775731671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gN4yioD5Rgh7UznFLRejmfl/X6fbAyKgQNiOL9X2Qck=;
- b=OfsbNJcomBD2PqLen1i+x5nU9W9zCL6/1vN1GYY3HzKwDTH8DHCj8LW9vyEYbasRY6
- kf58FwMUPEOSKECFT85iy6J7y1D0JoXbz9EjlNPE8aJZnOUWxJBxFos9hEie9XDcvw2K
- 6iKGc8SNI0u45rXrBzLCFHF9hURWyyOsCZHSGRCCrpgtO/MIqBhrkgd3OKKIef27ZXsZ
- xvBV/a1enXb/+ycvXZkoqTeRUfMOt6JcAApYMF164K+wMFln9Z4xBNTj59U1nWvT5U8X
- ZeWoJXRskvrlzJsu97xckJe89Bwy72hhZ9oQB4TPlErdg6jydHcIsvuK1hb9WZyWQOQ7
- nrpw==
+ bh=RfmOA1oJRbM59T5jNLihWyqgY4oN9Qis1RTJ8xh8eSY=;
+ b=Go+OuH3mW0acjhj/qXWxBiP+yWQ6x20xSqVgxLe69g8L0UxiKRxUNwgtPYqMex6uRD
+ wFinOvCB8BC2hYtydQlVnToQAaT7/6eecYhKXfpGuwMdRw0zMUeTLvylHec/4Lac/L+D
+ iC6W1Zsk41EXb3nVdhUqYB2IXdoKg7Cbj9uS6SHkDM0agp1IY6dCW0qEodfX2yT6TRtr
+ 0s3JNs3NeIawleNcgNZr1ySQDXcfjqSGodYCmeoSHP19E+o5ZheKi9jmY5NywnOoEU/7
+ fX/XHIvooac2QYFwypFPTor5j8sonZt0UXR+AzOyL0BTYnLkp3pUNGWC2tpcgSGIuHYS
+ 5kPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775126870; x=1775731670;
+ d=1e100.net; s=20251104; t=1775126871; x=1775731671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gN4yioD5Rgh7UznFLRejmfl/X6fbAyKgQNiOL9X2Qck=;
- b=H8yewEdslFuCPRTDlCCvBXWznyr40d2MRjXo1Rr50D5pUbU9seSil02is37D9wuRqs
- OVsfPa9bambz0AZqwkmB/R52ct73aAuz+DVYzs7tUGmyCk+LjRE+TPZW+RjyUDP8EGKS
- cbZ2Iln5t4ZQvidgcL4s89VUVQAZet5VS15y4YxFTThuPGQnMb5bHDDkZdxkeuaitJQl
- 320yM4tQx3OjYBx6cMnkAlcCWk7DRzPxF3gIaFiqI1LJr+H+NduDVI7MPJUfWJFqxY32
- ka/2mtOSa9L0sRmQRSKqRbyS2TOYuoQ0KGIBRPpU+PM92WvY9k5XpKiixA8lWCepm/JX
- WExQ==
-X-Gm-Message-State: AOJu0YyH6tHaLSwICPScM1SJ2dLvtxpvF0P9akWid6Zv9NMCM+/DzfHo
- NPKrS6wrR4nDqNJnOL7iP5VD28XIojD/ZZjZSVkbX2+tbLNVqwgqwQj/4w07ajZB0VgIhM9xuCF
- LL5SL64SWKEuTR6PrIUw1Iw2qYZOxj/i9HDZD8M2xU/ELAs7idCFcJlQOTu3zyrxQtgXd
-X-Gm-Gg: AeBDiev14c4Cfby0zXnjSRGivIywU+bWvOe4J9BL4SVJ5I/FAeulnuOq+m4aQ8yx54Z
- UMrctwF2tNhEuykqRJIOftTv2XkREkM+jRWxzvsugPoDRpDIPUyLFSTJvqKV9Wbdp1vB9DX0Z3E
- mCH1gaFbV25XVni3+X8A0eJyFfnMrMzCXBI6xNh55nLRaiIt41Y7pnRafUrELJ7wusA+xnhuUQC
- qNtvQLJZuFv3/tkMSXvHtFE0u594W0fk6/I9c2vDRAm/jb6bZKYB092O0db9Lxj+Wihm6zukp9A
- iqj/Jxg2Ub5Rg3kUipIiGZdAEbSCOUPUGRdV5MKTX1bru98yw0kuANAwhvCFY3x4Pt9IWRLFBDH
- PgsTFn3gNkVAxZL2I69Mf8DBKulIyxSbY2dZI658+ZjxzIYfzaL3FO7hc36Jctw1TZPtrpcXPyh
- JLgtDsGgkH
-X-Received: by 2002:a05:693c:2c06:b0:2c1:161f:ac39 with SMTP id
- 5a478bee46e88-2ca8f74aa15mr1332277eec.26.1775126869774; 
- Thu, 02 Apr 2026 03:47:49 -0700 (PDT)
-X-Received: by 2002:a05:693c:2c06:b0:2c1:161f:ac39 with SMTP id
- 5a478bee46e88-2ca8f74aa15mr1332260eec.26.1775126869147; 
- Thu, 02 Apr 2026 03:47:49 -0700 (PDT)
+ bh=RfmOA1oJRbM59T5jNLihWyqgY4oN9Qis1RTJ8xh8eSY=;
+ b=SnDGFwmhc1CWARBe/UVL3aBqju8kPKvPQl5b3krU5AvqPNutrQKwz2s36cA+9uLLts
+ qu3H51QSnhQTFGsjtVTPdIQXNBBE28rZdFtpzPai8bkPFazstbNlpFxfeOuqiQNJJZ9n
+ fCOYlUka3wSbzxPx1K9TzRv2GpmaXTJVt6qXACDkaGjc2XxRg6rWEgXYmcgUcOv+IMVt
+ 3p9tGpNCYvO6p0hZTl8ROj1ycI5YeE5IzJfjY3tCN34slps9jIBJAGdXjwBYeMaUWxEg
+ JrMv4Lo5lYGYrcbY6wmKUCUw1GRTuV07EbDwjPAe1uxkO2Db7fR+SnYIPi/SlYBeylYP
+ iF8A==
+X-Gm-Message-State: AOJu0Yz9SzR4toZ4pMUjhGyS5PBNzAEdd68SWtXpiRay/tTToikU79cm
+ WOZLhcXpCbnPcQkHI0K8tOuIM5dvZocnStmRrrr5TVQp9GU54oYNAuFP2mqF9Mis4FhNpxeFngi
+ Qsw1A9HMQHiQG8gSrJwuhuLQwBgqS0TumVJT6at7Rm06LevjdVDgzjNlveZsIG9iDdg+D
+X-Gm-Gg: ATEYQzz+UhoQR8s/urzSWPkAxBb480oQwmA7PQwzqFtOspDpgtVNFml3x+holdub6/7
+ sdMFLSmz7SbxTeC0F3J35CZ713P7djdcURHvTmXjk0bRYDnQvY27srQMyAhWJmm4gE1qULrXq5q
+ MQQTxexykOwoS7KP90wiSiGWeyESZybk3czcbb6jVmpvPlW7ZNgbVpp/avztE2z90k4uR5ObIT8
+ KxOE1wW21CYCnic2jfgHNmcAY7gwygpqw2ssQheCaustNjLeXP7agyKcGAgQ3BRC28FkSvTd4ym
+ Oqk59EYCVeX2hscF2Urvlh/cndkhdLn7FI85m38sgBeKQSi2G9TtEoHqHC8Wig+1h7MvEqE6BrT
+ HfHDc7wvsqlz9EZ2uUEKV+QV5rTCQtF1/8InmL9wio+3GilO0Il7Vkf2qTe0LLlt3MKX6bwxrMy
+ DlBNTzpeSZ
+X-Received: by 2002:a05:7300:3708:b0:2c7:ea98:da0 with SMTP id
+ 5a478bee46e88-2c9323b72c2mr4144145eec.19.1775126870630; 
+ Thu, 02 Apr 2026 03:47:50 -0700 (PDT)
+X-Received: by 2002:a05:7300:3708:b0:2c7:ea98:da0 with SMTP id
+ 5a478bee46e88-2c9323b72c2mr4144129eec.19.1775126870016; 
+ Thu, 02 Apr 2026 03:47:50 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.48
+ 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 03:47:48 -0700 (PDT)
+ Thu, 02 Apr 2026 03:47:49 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
  brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  marco.liebel@oss.qualcomm.com, philmd@linaro.org,
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH v2 14/16] tests/hexagon: add tests for v68 HVX IEEE float
- conversions
-Date: Thu,  2 Apr 2026 03:47:31 -0700
-Message-Id: <4bbaed1625dba497aa7838d5417dd0cad4c10e22.1775122853.git.matheus.bernardino@oss.qualcomm.com>
+Subject: [PATCH v2 15/16] tests/hexagon: add tests for v68 HVX IEEE float
+ comparisons
+Date: Thu,  2 Apr 2026 03:47:32 -0700
+Message-Id: <7058091ab3c247cd7c94c6505dec6fc0bd9be196.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=TqLrRTXh c=1 sm=1 tr=0 ts=69ce4956 cx=c_pps
+X-Proofpoint-GUID: -Y4RDZ_6zPNN9RbzA5jSUKK8IMVD9Se_
+X-Proofpoint-ORIG-GUID: -Y4RDZ_6zPNN9RbzA5jSUKK8IMVD9Se_
+X-Authority-Analysis: v=2.4 cv=JII2csKb c=1 sm=1 tr=0 ts=69ce4957 cx=c_pps
  a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
- a=tBVvuLY118niWomA0oIA:9 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-ORIG-GUID: G1AJjcx1uPAjyOjupsLBMEBGCoWEnjHW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfX1WNosviEsbKL
- P1nhRwa0Nj2zwgUVUz72RgGWJbwOFTnusn03QCgh4KjegKE1xegIjy1U2NOy1fi9HW2zIR9pKeR
- ZjkHEVXZ+CBr+PykV0f2E6E06Q3mxita+yp378cPLnT0XdK5/iNQhlleN87J5OUBURaDO1PzvfE
- n4/bkh/2aNHssUuvxLvgp/anVmSNSguNkCVuso/honVm6aijpXFWXOT0LxyNboArFegJzEQXHC9
- mWrqc8hZI4yHhXoNY8BBPUxMx/T3nuDhhh+aqCBCm/mS1q4vEjZBwkPWk6k30GQVV65xcn/TxU+
- 4G6KmecLKXaDnkWNVUvp67wGvV75lbDsN2zsAcKzw9wfmWmshq6Q0UkZVs3MmLcn2WK3V5hoexz
- zWq4CKtx938crzapNFKBed2GB4Mhg0g87ta9D0B414pbyOgFL39iPzR3g8JYoDXK8HE+a5uHF2Y
- HE5C0J53AkOIWbQJvgg==
-X-Proofpoint-GUID: G1AJjcx1uPAjyOjupsLBMEBGCoWEnjHW
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=g6BQdadCeQXt8ut-Y_AA:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfXxaRQXCJfRsUb
+ kSAIjzE2eq8+r1NFwtB+5O3olZyBG2CXa8u1Yg2uTjns1QrwVE2kVSNn+C5U9mMk7ZQ/z5rZmoA
+ 22BRhzwMcGJGpQ1P65oIdtaUr2L5wGCNiS5111pj0Cd5ZKRk2Zw9doIT55LjnrzbgwZpwg4UHpu
+ WvO0TnmRoE9xi+EIKQe1CkED8JdU+NUq9gJOQhWs9BM6Q6WKNBpchcpCc6vvVSMJHJwcOccJGg8
+ A6W/12qmcTiEgpPHJRXN5hZLCuX1txylGJ8QxTU5kzcfbOpvBmcXlZUQjN5Tf9Ry693O/Kg88se
+ lGZtBgX7y4VWkSd8M++MyKgYhe15x7nWk+9cfUaX0kFwThmD3DpKKKeR3sDyd1AQRaP2oU6XcuU
+ 1m5nsnHx3eU7ynZ7dwlHfrDSiI9geXTTo0H/AGcmyxKrEaRWVzJMPesDCQIqj5vleU/o+mD1lBU
+ FIKfdh1janh5Vai401w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-02_01,2026-04-02_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- clxscore=1015 malwarescore=0 spamscore=0 adultscore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ adultscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
  definitions=main-2604020097
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=matheus.bernardino@oss.qualcomm.com;
@@ -153,58 +153,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- tests/tcg/hexagon/hex_test.h      |  14 +++
- tests/tcg/hexagon/hvx_misc.h      |   2 +
- tests/tcg/hexagon/fp_hvx_cvt.c    | 188 ++++++++++++++++++++++++++++++
+ tests/tcg/hexagon/hex_test.h      |   1 +
+ tests/tcg/hexagon/fp_hvx_cmp.c    | 227 ++++++++++++++++++++++++++++++
  tests/tcg/hexagon/Makefile.target |   3 +
- 4 files changed, 207 insertions(+)
- create mode 100644 tests/tcg/hexagon/fp_hvx_cvt.c
+ 3 files changed, 231 insertions(+)
+ create mode 100644 tests/tcg/hexagon/fp_hvx_cmp.c
 
 diff --git a/tests/tcg/hexagon/hex_test.h b/tests/tcg/hexagon/hex_test.h
-index e7a6644d41..d5da8ad240 100644
+index d5da8ad240..79d30ec61c 100644
 --- a/tests/tcg/hexagon/hex_test.h
 +++ b/tests/tcg/hexagon/hex_test.h
-@@ -111,6 +111,20 @@ static inline void __check64_ne(int line, uint64_t val, uint64_t expect)
-     "usr = r2\n\t"
- 
- /* Some useful floating point values */
-+const uint16_t HF_INF = 0x7c00;
-+const uint16_t HF_INF_neg = 0xfc00;
-+const uint16_t HF_QNaN = 0x7e00;
-+const uint16_t HF_SNaN = 0x7d00;
-+const uint16_t HF_QNaN_neg = 0xfe00;
-+const uint16_t HF_zero = 0x0000;
-+const uint16_t HF_zero_neg = 0x8000;
-+const uint16_t HF_one = 0x3c00;
-+const uint16_t HF_one_recip = 0x3bf9;
-+const uint16_t HF_two = 0x4000;
-+const uint16_t HF_small_neg = 0x8010;
-+const uint16_t HF_any = 0x3c00;
-+const uint16_t HF_neg_two = 0xc000;
-+
- const uint32_t SF_INF =              0x7f800000;
- const uint32_t SF_INF_neg =          0xff800000;
- const uint32_t SF_QNaN =             0x7fc00000;
-diff --git a/tests/tcg/hexagon/hvx_misc.h b/tests/tcg/hexagon/hvx_misc.h
-index 0330cb289d..43de20da6a 100644
---- a/tests/tcg/hexagon/hvx_misc.h
-+++ b/tests/tcg/hexagon/hvx_misc.h
-@@ -69,7 +69,9 @@ CHECK_OUTPUT_FUNC(d,  8)
- CHECK_OUTPUT_FUNC(w,  4)
- CHECK_OUTPUT_FUNC(sf, 4)
- CHECK_OUTPUT_FUNC(h,  2)
-+CHECK_OUTPUT_FUNC(uh, 2)
- CHECK_OUTPUT_FUNC(hf, 2)
-+CHECK_OUTPUT_FUNC(ub,  1)
- CHECK_OUTPUT_FUNC(b,  1)
- 
- static inline void init_buffers(void)
-diff --git a/tests/tcg/hexagon/fp_hvx_cvt.c b/tests/tcg/hexagon/fp_hvx_cvt.c
+@@ -115,6 +115,7 @@ const uint16_t HF_INF = 0x7c00;
+ const uint16_t HF_INF_neg = 0xfc00;
+ const uint16_t HF_QNaN = 0x7e00;
+ const uint16_t HF_SNaN = 0x7d00;
++const uint16_t HF_SNaN_neg = 0xfd00;
+ const uint16_t HF_QNaN_neg = 0xfe00;
+ const uint16_t HF_zero = 0x0000;
+ const uint16_t HF_zero_neg = 0x8000;
+diff --git a/tests/tcg/hexagon/fp_hvx_cmp.c b/tests/tcg/hexagon/fp_hvx_cmp.c
 new file mode 100644
-index 0000000000..71c3f0fd4f
+index 0000000000..c4e1c81ce5
 --- /dev/null
-+++ b/tests/tcg/hexagon/fp_hvx_cvt.c
-@@ -0,0 +1,188 @@
++++ b/tests/tcg/hexagon/fp_hvx_cmp.c
+@@ -0,0 +1,227 @@
 +/*
 + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 + *
@@ -215,6 +187,7 @@ index 0000000000..71c3f0fd4f
 +#include <stdint.h>
 +#include <stdbool.h>
 +#include <string.h>
++#include <assert.h>
 +#include <hexagon_types.h>
 +#include <hvx_hexagon_protos.h>
 +
@@ -226,191 +199,229 @@ index 0000000000..71c3f0fd4f
 +#include "hvx_misc.h"
 +#include "hex_test.h"
 +
-+#define TEST_EXP(TO, FROM, VAL, EXP) do { \
-+    ((MMVector *)&buffer)->FROM[index] = VAL; \
-+    expect[0].TO[index] = EXP; \
-+    index++; \
++#define MAX_TESTS_hf (MAX_VEC_SIZE_BYTES / 2)
++#define MAX_TESTS_sf (MAX_VEC_SIZE_BYTES / 4)
++
++#define TRUE_MASK_sf 0xffffffff
++#define TRUE_MASK_hf 0xffff
++
++static const char *comparisons[MAX_TESTS_sf][2];
++static HVX_Vector *hvx_output = (HVX_Vector *)&output[0];
++static HVX_Vector buffers[2], true_vec, false_vec;
++static int exp_index;
++
++#define ADD_TEST_CMP(TYPE, VAL1, VAL2, EXP) do { \
++    ((MMVector *)&buffers[0])->TYPE[exp_index] = VAL1; \
++    ((MMVector *)&buffers[1])->TYPE[exp_index] = VAL2; \
++    expect[0].TYPE[exp_index] = EXP ? TRUE_MASK_##TYPE : 0; \
++    comparisons[exp_index][0] = #VAL1; \
++    comparisons[exp_index][1] = #VAL2; \
++    assert(exp_index < MAX_TESTS_##TYPE); \
++    exp_index++; \
 +} while (0)
 +
-+#define DEF_TEST_CVT(TO, FROM, TESTS) \
-+    static void test_vcvt_##TO##_##FROM(void) \
-+    { \
-+        HVX_Vector *hvx_output = (HVX_Vector *)&output[0]; \
-+        HVX_Vector buffer; \
-+        int index = 0; \
-+        memset(&buffer, 0, sizeof(buffer)); \
-+        memset(expect, 0, sizeof(expect)); \
-+        TESTS \
-+        *hvx_output = Q6_V##TO##_vcvt_V##FROM(buffer); \
-+        check_output_##TO(__LINE__, 1); \
-+    }
-+
-+DEF_TEST_CVT(uh, hf, { \
-+    TEST_EXP(uh, hf, HF_QNaN, UINT16_MAX); \
-+    TEST_EXP(uh, hf, HF_SNaN, UINT16_MAX); \
-+    TEST_EXP(uh, hf, HF_QNaN_neg, UINT16_MAX); \
-+    TEST_EXP(uh, hf, HF_INF, UINT16_MAX); \
-+    TEST_EXP(uh, hf, HF_INF_neg, 0); \
-+    TEST_EXP(uh, hf, HF_neg_two, 0); \
-+    TEST_EXP(uh, hf, HF_zero_neg, 0); \
-+    TEST_EXP(uh, hf, raw_hf((_Float16)2.1), 2); \
-+    TEST_EXP(uh, hf, HF_one_recip, 1); \
-+})
-+
-+DEF_TEST_CVT(h, hf, { \
-+    TEST_EXP(h, hf, HF_QNaN, INT16_MAX); \
-+    TEST_EXP(h, hf, HF_SNaN, INT16_MAX); \
-+    TEST_EXP(h, hf, HF_QNaN_neg, INT16_MAX); \
-+    TEST_EXP(h, hf, HF_INF, INT16_MAX); \
-+    TEST_EXP(h, hf, HF_INF_neg, INT16_MIN); \
-+    TEST_EXP(h, hf, HF_neg_two, -2); \
-+    TEST_EXP(h, hf, HF_zero_neg, 0); \
-+    TEST_EXP(h, hf, raw_hf((_Float16)2.1), 2); \
-+    TEST_EXP(h, hf, HF_one_recip, 1); \
-+})
-+
-+/*
-+ * Some cvt operations take two vectors as input and perform the following:
-+ *    VdV.TO[4*i]   = OP(VuV.FROM[2*i]);
-+ *    VdV.TO[4*i+1] = OP(VuV.FROM[2*i+1]);
-+ *    VdV.TO[4*i+2] = OP(VvV.FROM[2*i]);
-+ *    VdV.TO[4*i+3] = OP(VvV.FROM[2*i+1]))
-+ * We use bf_index and index in a way that the tests are always done either
-+ * using the first or third line of the above snippet.
-+ */
-+#define TEST_EXP_2(TO, FROM, VAL, EXP) do { \
-+    ((MMVector *)&buffers[bf_index])->FROM[2 * index] = VAL; \
-+    expect[0].TO[(4 * index) + (2 * bf_index)] = EXP; \
-+    index++; \
-+    bf_index = (bf_index + 1) % 2; \
++#define TEST_CMP_GT(TYPE, VAL1, VAL2) do { \
++    ADD_TEST_CMP(TYPE, VAL1, VAL2, true); \
++    ADD_TEST_CMP(TYPE, VAL2, VAL1, false); \
 +} while (0)
 +
-+#define DEF_TEST_CVT_2(TO, FROM, TESTS) \
-+    static void test_vcvt_##TO##_##FROM(void) \
-+    { \
-+        HVX_Vector *hvx_output = (HVX_Vector *)&output[0]; \
-+        HVX_Vector buffers[2]; \
-+        int index = 0, bf_index = 0; \
-+        memset(&buffers, 0, sizeof(buffers)); \
-+        memset(expect, 0, sizeof(expect)); \
-+        TESTS \
-+        *hvx_output = Q6_V##TO##_vcvt_V##FROM##V##FROM(buffers[0], buffers[1]); \
-+        check_output_##TO(__LINE__, 1); \
++#define PREP_TEST() do { \
++    memset(&buffers, 0, sizeof(buffers)); \
++    memset(expect, 0, sizeof(expect)); \
++    exp_index = 0; \
++} while (0)
++
++#define CHECK(TYPE, TYPESZ) do { \
++    HVX_VectorPred pred = Q6_Q_vcmp_gt_V##TYPE##V##TYPE(buffers[0], buffers[1]); \
++    *hvx_output = Q6_V_vmux_QVV(pred, true_vec, false_vec); \
++    for (int j = 0; j < MAX_VEC_SIZE_BYTES / TYPESZ; j++) { \
++        if (output[0].TYPE[j] != expect[0].TYPE[j]) { \
++            printf("ERROR: expected %s %s %s\n", comparisons[j][0], \
++                   (expect[0].TYPE[j] != 0 ? ">" : "<="), comparisons[j][1]); \
++            err++; \
++        } \
++    } \
++} while (0)
++
++static void test_cmp_sf(void)
++{
++    /*
++     * General ordering for sf:
++     * QNaN > SNaN > +Inf > numbers > -Inf > SNaN_neg > QNaN_neg
++     */
++
++    /* Test equality */
++    PREP_TEST();
++    ADD_TEST_CMP(sf, raw_sf(2.2),  raw_sf(2.2),  false);
++    ADD_TEST_CMP(sf, SF_SNaN,      SF_SNaN,      false);
++    CHECK(sf, 4);
++
++    /* Common numbers */
++    PREP_TEST();
++    TEST_CMP_GT(sf, raw_sf(2.2),  raw_sf(2.1));
++    TEST_CMP_GT(sf, raw_sf(0),    raw_sf(-2.2));
++    CHECK(sf, 4);
++
++    /* Infinity vs Infinity/NaN */
++    PREP_TEST();
++    TEST_CMP_GT(sf, SF_QNaN,      SF_INF);
++    TEST_CMP_GT(sf, SF_SNaN,      SF_INF);
++    TEST_CMP_GT(sf, SF_INF,       SF_INF_neg);
++    TEST_CMP_GT(sf, SF_INF,       SF_SNaN_neg);
++    TEST_CMP_GT(sf, SF_INF,       SF_QNaN_neg);
++    TEST_CMP_GT(sf, SF_INF_neg,   SF_SNaN_neg);
++    TEST_CMP_GT(sf, SF_INF_neg,   SF_QNaN_neg);
++    TEST_CMP_GT(sf, SF_SNaN,      SF_INF_neg);
++    TEST_CMP_GT(sf, SF_QNaN,      SF_INF_neg);
++    CHECK(sf, 4);
++
++    /* NaN vs NaN */
++    PREP_TEST();
++    TEST_CMP_GT(sf, SF_QNaN,      SF_SNaN);
++    TEST_CMP_GT(sf, SF_SNaN,      SF_SNaN_neg);
++    TEST_CMP_GT(sf, SF_SNaN_neg,  SF_QNaN_neg);
++    CHECK(sf, 4);
++
++    /* NaN vs non-NaN */
++    PREP_TEST();
++    TEST_CMP_GT(sf, SF_QNaN,      SF_one);
++    TEST_CMP_GT(sf, SF_SNaN,      SF_one);
++    TEST_CMP_GT(sf, SF_one,       SF_QNaN_neg);
++    TEST_CMP_GT(sf, SF_one,       SF_SNaN_neg);
++    CHECK(sf, 4);
++}
++
++static void test_cmp_hf(void)
++{
++    /*
++     * General ordering for hf:
++     * QNaN > SNaN > +Inf > numbers > -Inf > QSNaN_neg > QNaN_neg
++     */
++
++    /* Test equality */
++    PREP_TEST();
++    ADD_TEST_CMP(hf, raw_hf((_Float16)2.2),  raw_hf((_Float16)2.2),  false);
++    ADD_TEST_CMP(hf, HF_SNaN,                HF_SNaN,      false);
++    CHECK(hf, 2);
++
++    /* Common numbers */
++    PREP_TEST();
++    TEST_CMP_GT(hf, raw_hf((_Float16)2.2),  raw_hf((_Float16)2.1));
++    TEST_CMP_GT(hf, raw_hf((_Float16)0),    raw_hf((_Float16)-2.2));
++    CHECK(hf, 2);
++
++    /* Infinity vs Infinity/NaN */
++    PREP_TEST();
++    TEST_CMP_GT(hf, HF_QNaN,      HF_INF);
++    TEST_CMP_GT(hf, HF_SNaN,      HF_INF);
++    TEST_CMP_GT(hf, HF_INF,       HF_INF_neg);
++    TEST_CMP_GT(hf, HF_INF,       HF_SNaN_neg);
++    TEST_CMP_GT(hf, HF_INF,       HF_QNaN_neg);
++    TEST_CMP_GT(hf, HF_INF_neg,   HF_SNaN_neg);
++    TEST_CMP_GT(hf, HF_INF_neg,   HF_QNaN_neg);
++    TEST_CMP_GT(hf, HF_SNaN,      HF_INF_neg);
++    TEST_CMP_GT(hf, HF_QNaN,      HF_INF_neg);
++    CHECK(hf, 2);
++
++    /* NaN vs NaN */
++    PREP_TEST();
++    TEST_CMP_GT(hf, HF_QNaN,      HF_SNaN);
++    TEST_CMP_GT(hf, HF_SNaN,      HF_SNaN_neg);
++    TEST_CMP_GT(hf, HF_SNaN_neg,  HF_QNaN_neg);
++    CHECK(hf, 2);
++
++    /* NaN vs non-NaN */
++    PREP_TEST();
++    TEST_CMP_GT(hf, HF_QNaN,      HF_one);
++    TEST_CMP_GT(hf, HF_SNaN,      HF_one);
++    TEST_CMP_GT(hf, HF_one,       HF_QNaN_neg);
++    TEST_CMP_GT(hf, HF_one,       HF_SNaN_neg);
++    CHECK(hf, 2);
++}
++
++static void test_cmp_variants(void)
++{
++    HVX_VectorPred true_pred, false_pred, pred;
++    memset(&true_pred, 0xff, sizeof(true_pred));
++    memset(&false_pred, 0, sizeof(false_pred));
++
++    PREP_TEST();
++    ADD_TEST_CMP(sf, SF_one,  SF_zero, true);
++    ADD_TEST_CMP(sf, SF_zero, SF_one,  false);
++    ADD_TEST_CMP(sf, SF_one,  SF_zero, true);
++    ADD_TEST_CMP(sf, SF_zero, SF_one,  false);
++
++    /* greater and */
++    pred = Q6_Q_vcmp_gtand_QVsfVsf(true_pred, buffers[0], buffers[1]);
++    *hvx_output = Q6_V_vmux_QVV(pred, true_vec, false_vec);
++    for (int j = 0; j < 4; j++) {
++        int exp = j % 2 ? 0 : 0xffffffff;
++        if (output[0].sf[j] != exp) {
++            printf("ERROR line %d: gtand %d: expected 0x%x got 0x%x\n",
++                   __LINE__, j, exp, output[0].sf[j]);
++            err++;
++        }
++    }
++    pred = Q6_Q_vcmp_gtand_QVsfVsf(false_pred, buffers[0], buffers[1]);
++    *hvx_output = Q6_V_vmux_QVV(pred, true_vec, false_vec);
++    for (int j = 0; j < 4; j++) {
++        if (output[0].sf[j]) {
++            printf("ERROR line %d: gtand %d: expected false\n", __LINE__, j);
++            err++;
++        }
 +    }
 +
-+DEF_TEST_CVT_2(ub, hf, { \
-+    TEST_EXP_2(ub, hf, HF_QNaN, UINT8_MAX); \
-+    TEST_EXP_2(ub, hf, HF_SNaN, UINT8_MAX); \
-+    TEST_EXP_2(ub, hf, HF_QNaN_neg, UINT8_MAX); \
-+    TEST_EXP_2(ub, hf, HF_INF, UINT8_MAX); \
-+    TEST_EXP_2(ub, hf, HF_INF_neg, 0); \
-+    TEST_EXP_2(ub, hf, HF_small_neg, 0); \
-+    TEST_EXP_2(ub, hf, HF_neg_two, 0); \
-+    TEST_EXP_2(ub, hf, HF_zero_neg, 0); \
-+    TEST_EXP_2(ub, hf, raw_hf((_Float16)2.1), 2); \
-+    TEST_EXP_2(ub, hf, HF_one_recip, 1); \
-+})
-+
-+DEF_TEST_CVT_2(b, hf, { \
-+    TEST_EXP_2(b, hf, HF_QNaN, INT8_MAX); \
-+    TEST_EXP_2(b, hf, HF_SNaN, INT8_MAX); \
-+    TEST_EXP_2(b, hf, HF_QNaN_neg, INT8_MAX); \
-+    TEST_EXP_2(b, hf, HF_INF, INT8_MAX); \
-+    TEST_EXP_2(b, hf, HF_INF_neg, INT8_MIN); \
-+    TEST_EXP_2(b, hf, HF_small_neg, 0); \
-+    TEST_EXP_2(b, hf, HF_neg_two, -2); \
-+    TEST_EXP_2(b, hf, HF_zero_neg, 0); \
-+    TEST_EXP_2(b, hf, raw_hf((_Float16)2.1), 2); \
-+    TEST_EXP_2(b, hf, HF_one_recip, 1); \
-+})
-+
-+#define DEF_TEST_VCONV(TO, FROM, TESTS) \
-+    static void test_vconv_##TO##_##FROM(void) \
-+    { \
-+        HVX_Vector *hvx_output = (HVX_Vector *)&output[0]; \
-+        HVX_Vector buffer; \
-+        int index = 0; \
-+        memset(&buffer, 0, sizeof(buffer)); \
-+        memset(expect, 0, sizeof(expect)); \
-+        TESTS \
-+        *hvx_output = Q6_V##TO##_equals_V##FROM(buffer); \
-+        check_output_##TO(__LINE__, 1); \
++    /* greater or */
++    pred = Q6_Q_vcmp_gtor_QVsfVsf(false_pred, buffers[0], buffers[1]);
++    *hvx_output = Q6_V_vmux_QVV(pred, true_vec, false_vec);
++    for (int j = 0; j < 4; j++) {
++        int exp = j % 2 ? 0 : 0xffffffff;
++        if (output[0].sf[j] != exp) {
++            printf("ERROR line %d: gtor %d: expected 0x%x got 0x%x\n",
++                   __LINE__, j, exp, output[0].sf[j]);
++            err++;
++        }
 +    }
-+
-+DEF_TEST_VCONV(w, sf, { \
-+    TEST_EXP(w, sf, SF_QNaN, INT32_MAX); \
-+    TEST_EXP(w, sf, SF_SNaN, INT32_MAX); \
-+    TEST_EXP(w, sf, SF_QNaN_neg, INT32_MIN); \
-+    TEST_EXP(w, sf, SF_INF, INT32_MAX); \
-+    TEST_EXP(w, sf, SF_INF_neg, INT32_MIN); \
-+    TEST_EXP(w, sf, SF_small_neg, 0); \
-+    TEST_EXP(w, sf, SF_neg_two, -2); \
-+    TEST_EXP(w, sf, SF_zero_neg, 0); \
-+    TEST_EXP(w, sf, raw_sf(2.1f), 2); \
-+    TEST_EXP(w, sf, raw_sf(2.8f), 2); \
-+})
-+
-+DEF_TEST_VCONV(h, hf, { \
-+    TEST_EXP(h, hf, HF_QNaN, INT16_MAX); \
-+    TEST_EXP(h, hf, HF_SNaN, INT16_MAX); \
-+    TEST_EXP(h, hf, HF_QNaN_neg, INT16_MIN); \
-+    TEST_EXP(h, hf, HF_INF, INT16_MAX); \
-+    TEST_EXP(h, hf, HF_INF_neg, INT16_MIN); \
-+    TEST_EXP(h, hf, HF_small_neg, 0); \
-+    TEST_EXP(h, hf, HF_neg_two, -2); \
-+    TEST_EXP(h, hf, HF_zero_neg, 0); \
-+    TEST_EXP(h, hf, raw_hf((_Float16)2.1), 2); \
-+    TEST_EXP(h, hf, raw_hf((_Float16)2.8), 2); \
-+})
-+
-+DEF_TEST_VCONV(hf, h, { \
-+    TEST_EXP(hf, h, 0, HF_zero); \
-+    TEST_EXP(hf, h, 2, HF_two); \
-+    TEST_EXP(hf, h, -2, HF_neg_two); \
-+    TEST_EXP(hf, h, 2049, raw_hf((_Float16)2048)); /* rounds DOWN */ \
-+    TEST_EXP(hf, h, 2051, raw_hf((_Float16)2052)); /* rounds UP */ \
-+})
-+
-+DEF_TEST_VCONV(sf, w, { \
-+    TEST_EXP(sf, w, 0, SF_zero); \
-+    TEST_EXP(sf, w, 2, SF_two); \
-+    TEST_EXP(sf, w, -2, SF_neg_two); \
-+    TEST_EXP(sf, w, 16777217, raw_sf((float)16777216)); /* rounds DOWN */ \
-+    TEST_EXP(sf, w, 16777219, raw_sf((float)16777220)); /* rounds UP */ \
-+})
++    pred = Q6_Q_vcmp_gtor_QVsfVsf(true_pred, buffers[0], buffers[1]);
++    *hvx_output = Q6_V_vmux_QVV(pred, true_vec, false_vec);
++    for (int j = 0; j < 4; j++) {
++        if (!output[0].sf[j]) {
++            printf("ERROR line %d: gtor %d: expected true\n", __LINE__, j);
++            err++;
++        }
++    }
++}
 +
 +int main(void)
 +{
-+    test_vcvt_uh_hf();
-+    test_vcvt_h_hf();
-+    test_vcvt_ub_hf();
-+    test_vcvt_b_hf();
-+    test_vconv_w_sf();
-+    test_vconv_sf_w();
-+    test_vconv_h_hf();
-+    test_vconv_hf_h();
++    memset(&true_vec, 0xff, sizeof(true_vec));
++    memset(&false_vec, 0, sizeof(false_vec));
++
++    test_cmp_sf();
++    test_cmp_hf();
++    test_cmp_variants();
 +
 +    puts(err ? "FAIL" : "PASS");
 +    return err ? 1 : 0;
 +}
 diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
-index 789721bdac..83969e0e73 100644
+index 83969e0e73..76ba245add 100644
 --- a/tests/tcg/hexagon/Makefile.target
 +++ b/tests/tcg/hexagon/Makefile.target
-@@ -51,6 +51,7 @@ HEX_TESTS += scatter_gather
- HEX_TESTS += hvx_misc
+@@ -52,6 +52,7 @@ HEX_TESTS += hvx_misc
  HEX_TESTS += hvx_histogram
  HEX_TESTS += fp_hvx
-+HEX_TESTS += fp_hvx_cvt
+ HEX_TESTS += fp_hvx_cvt
++HEX_TESTS += fp_hvx_cmp
  HEX_TESTS += fp_hvx_disabled
  HEX_TESTS += invalid-slots
  HEX_TESTS += invalid-encoding
-@@ -132,6 +133,8 @@ fp_hvx: fp_hvx.c hvx_misc.h
- fp_hvx: CFLAGS += -mhvx -mhvx-ieee-fp
- fp_hvx_disabled: fp_hvx_disabled.c hvx_misc.h
+@@ -135,6 +136,8 @@ fp_hvx_disabled: fp_hvx_disabled.c hvx_misc.h
  fp_hvx_disabled: CFLAGS += -mhvx -mhvx-ieee-fp
-+fp_hvx_cvt: fp_hvx_cvt.c hvx_misc.h
-+fp_hvx_cvt: CFLAGS += -mhvx -mhvx-ieee-fp
+ fp_hvx_cvt: fp_hvx_cvt.c hvx_misc.h
+ fp_hvx_cvt: CFLAGS += -mhvx -mhvx-ieee-fp
++fp_hvx_cmp: fp_hvx_cmp.c hvx_misc.h
++fp_hvx_cmp: CFLAGS += -mhvx -mhvx-ieee-fp
  
  run-fp_hvx_disabled: QEMU_OPTS += -cpu v73,ieee-fp=false
  
