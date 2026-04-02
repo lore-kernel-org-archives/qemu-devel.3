@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA01D3943C
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 14:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A0FCC6B3E
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8JSo-0005vp-Cf; Thu, 02 Apr 2026 10:56:06 -0400
+	id 1w8Jbj-0003lV-60; Thu, 02 Apr 2026 11:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1w8JSk-0005v9-3h
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:56:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1w8Jbc-0003jV-AN
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:05:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1w8JSg-0005cW-B3
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:55:59 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1w8JbZ-0006Yk-En
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:05:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775141754;
+ s=mimecast20190719; t=1775142305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3kZLxZzCffeG8n2GjmyKvm99bf53bl4b+fFN8fGqQIQ=;
- b=NHG04tkWB/noEJ84YfgNh7ZuePeJHlom7yLI/X/JFaX9DGQrrBdxomwYWoD9Hj081eu3c5
- kv4ojeBpgngEzclJVBF0NH6O9fB2k91wNg5iY0pPjveoRNOn+tbLpqOm5MASWwmNEBVowN
- KwNA05vOiZiuIgLcClNH4EIT02SeNyg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=/Len+JygoBgd2zttBSDPHhxPuBRC+VOEGpBc5RJaBJ4=;
+ b=Ny0jhMM8wxUI1zdGJu1G4cndUTFUZRUpe0hg/sh0jZgwHHCTAYqR/JiQW5yvIxWrl/kpeW
+ ogMeRqI/PRPaskCa98aixDvUXeokbzbgF071d/kU8KwvcS2Gc2QDi9z1ZbBtCpAZszEqwp
+ Hid5cvO59INi3kINJScGoFbl2viZpFA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-GYSCOSJNM9CcJTeslY2vSg-1; Thu,
- 02 Apr 2026 10:55:51 -0400
-X-MC-Unique: GYSCOSJNM9CcJTeslY2vSg-1
-X-Mimecast-MFC-AGG-ID: GYSCOSJNM9CcJTeslY2vSg_1775141750
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-ylGpo3A3OFe477wyJqUv5Q-1; Thu,
+ 02 Apr 2026 11:05:00 -0400
+X-MC-Unique: ylGpo3A3OFe477wyJqUv5Q-1
+X-Mimecast-MFC-AGG-ID: ylGpo3A3OFe477wyJqUv5Q_1775142298
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28118180049D; Thu,  2 Apr 2026 14:55:50 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92BBC1955F04; Thu,  2 Apr 2026 15:04:57 +0000 (UTC)
 Received: from localhost (unknown [10.44.49.158])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6354B1800361; Thu,  2 Apr 2026 14:55:48 +0000 (UTC)
+ id 565191800361; Thu,  2 Apr 2026 15:04:55 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger@redhat.com, Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 1/3] arm: handle demuxed ID registers
-In-Reply-To: <b5315132-bedb-499a-9cf6-83132e8559a3@redhat.com>
+To: eric.auger@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Sebastian Ott
+ <sebott@redhat.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>
+Subject: Re: [PATCH v2 2/3] arm: handle CCSIDR_EL1 as a demuxed register
+In-Reply-To: <93e01647-de7e-4c8e-adb0-7c0bda3f656e@redhat.com>
 Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
  Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
  153243,
  =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
  Avril Crosse O'Flaherty"
 References: <20260204133229.297061-1-cohuck@redhat.com>
- <20260204133229.297061-2-cohuck@redhat.com>
- <8ecca07b-7ff0-4a46-8de3-6a3f21173a00@linaro.org>
- <87bjg3drhf.fsf@redhat.com>
- <b5315132-bedb-499a-9cf6-83132e8559a3@redhat.com>
+ <20260204133229.297061-3-cohuck@redhat.com>
+ <93e01647-de7e-4c8e-adb0-7c0bda3f656e@redhat.com>
 User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Thu, 02 Apr 2026 16:55:44 +0200
-Message-ID: <875x69e7in.fsf@redhat.com>
+Date: Thu, 02 Apr 2026 17:04:53 +0200
+Message-ID: <87341de73e.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,45 +93,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, Apr 01 2026, Eric Auger <eric.auger@redhat.com> wrote:
 
-> On 4/1/26 10:17 AM, Cornelia Huck wrote:
->> On Thu, Feb 05 2026, Richard Henderson <richard.henderson@linaro.org> wr=
-ote:
->>> I'm not keen on this.  Surely we don't expect all multiplexed ID regist=
-ers to have the=20
->>> same number of sub-registers?  A rectangular matrix isn't a great repre=
-sentation.  Also,=20
->>> you're wasting a hole in idregs[] with CSSIDR_EL1_IDX.
->>>
->>> Why not just have the N sub-registers occupy N entries within the regul=
-ar idregs[]?=20
->>> Something like
->>>
->>> #define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM) \
->>>      NAME##_DEMUX_IDX,                               \
->>>      NAME##_DEMUX_LAST =3D NAME##_DEMUX_IDX + NUM - 1,
->>>
->>> #define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                       =
- \
->>>      ({                                                                =
-  \
->>>          ARMISARegisters *i_ =3D (ISAR);                               =
-    \
->>>          i_->idregs_demux[REG ## _EL1_DEMUX_IDX + INDEX] =3D VALUE;    =
-    \
-> I guess we would use regular i_-> idregs[] here, right?=C2=A0
+> Hi Connie,
+>
+> On 2/4/26 2:32 PM, Cornelia Huck wrote:
+>> Move handling of CCSIDR_EL1 over to the new *_IDREG_DEMUX
+>> infrastructure.
+>>
+>> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+>> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>> ---
+>>  hw/intc/armv7m_nvic.c        |  2 +-
+>>  target/arm/cpu-sysregs.h     |  1 +
+>>  target/arm/cpu-sysregs.h.inc |  1 +
+>>  target/arm/cpu.h             |  6 ----
+>>  target/arm/cpu64.c           | 12 ++++----
+>>  target/arm/helper.c          |  2 +-
+>>  target/arm/tcg/cpu32.c       | 32 +++++++++----------
+>>  target/arm/tcg/cpu64.c       | 60 ++++++++++++++++++------------------
+>>  8 files changed, 56 insertions(+), 60 deletions(-)
+>> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+>> index 3d1ed40f0439..ed466ffb7318 100644
+>> --- a/target/arm/cpu-sysregs.h.inc
+>> +++ b/target/arm/cpu-sysregs.h.inc
+>> @@ -37,6 +37,7 @@ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
+>>  DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+>>  DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+>>  DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+>> +DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
+> Currently, in [PATCH 0/3] Generate target/arm/cpu-sysregs.h.inc from
+> AARCHMRS Registers.json
+> and especially [PATCH 1/3] scripts: introduce
+> scripts/update-aarch64-sysreg-code.py
+> (https://lore.kernel.org/all/20251208163751.611186-4-eric.auger@redhat.com/)
+>
+>
+> CCSIDR_EL1 is not automatically generated. 
+>
+> as target/arm/cpu-sysregs.h.inc should be eventually automatically generated, shouldn't we put this definition somewhere else or do we expect to also automatically generate this demux idreg?
 
-Yes.
+The generation script was explicitly skipping CCSIDR_EL1; when I played
+with that script, I just removed it from the list of skipped registers.
+
+I'm not sure if we have information to automatically generate any
+demuxed registers, let me see if I can find something.
 
 >
-> Thanks
->
-> Eric
->>>      })
->>>
->>> etc.
->> Yeah, I was not overly excited about my solution, either. I'll go and
->> play with this, thanks.
->>
->>
+>>  DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+>>  DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+>>  DEF(CTR_EL0, 3, 3, 0, 0, 1)
+
+(...)
+
+>> @@ -792,11 +792,11 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+>>       * L3: No L3 (this matches the CLIDR_EL1 value).
+>>       */
+>>      /* 64KB L1 dcache */
+>> -    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
+>> +    SET_IDREG_DEMUX(isar, CCSIDR, 0, make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0));
+>>      /* 64KB L1 icache */
+>> -    cpu->ccsidr[1] = cpu->ccsidr[0];
+>> +    COPY_IDREG_DEMUX(isar, CCSIDR, 0, 1);
+> nit: maybe we don't need a COPY but do get + set, if it is just used in
+> this file. Or if we keep copy maybe use the memcpy convention?
+
+Alternatively, we could just set the individual registers to the same
+value instead of copying them. I wanted to keep the change obvious here,
+but we can also defer adding a copy/memcopy macro until we really need
+it.
 
 
