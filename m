@@ -4,54 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E16D3941D
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 13:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F955D3941D
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 13:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8IKm-00060V-Qo; Thu, 02 Apr 2026 09:43:44 -0400
+	id 1w8IL2-00082u-Sr; Thu, 02 Apr 2026 09:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w8IKl-0005fW-Ay
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 09:43:43 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w8I5s-0002RH-AM
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 09:28:21 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 5CFBC60008;
- Thu,  2 Apr 2026 13:28:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB22C116C6;
- Thu,  2 Apr 2026 13:28:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775136491;
- bh=+Q6VYouA7YTugZZPEUHit4u4mCrzCUyb9xTNxtHHngk=;
- h=From:To:Cc:Subject:Date:From;
- b=Y3ZSW0E4qJkZ7e4vsJwy0wNksXKVXI800IIJ+/T5YFBAi7GhnSP83eHkutEf7hefh
- wZUI/WrGPzbf2zSyGjtfOwkrPiZNw3L2T+W4GWL5PA2/GyO4MW/DhkVN4cVnqQv3Dd
- Dow7dDMRp+E8RalaLk6UB96rc3KeikMTfrDDYDBcnrxwIRSWuoCiATduUxKkdyq9OZ
- A08bq36WrImM0rUAWlpUDv9xsSWXPHg3Ubi6J0vZqIiEiQndzUbpiJGa/GE3NJieY2
- 30dPzZBFA2jdhsK6WWLbtn8Bh9xVeFtUMp2FQbyX8lpmb3gyWnAdRmTqXhw826T/aS
- QJos7fSHYID4g==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: deller@gmx.de,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH] RFC: Allow building qemu tools on 32-bit hosts
-Date: Thu,  2 Apr 2026 15:28:01 +0200
-Message-ID: <20260402132801.16053-1-deller@kernel.org>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1w8IKt-0004lE-La; Thu, 02 Apr 2026 09:43:51 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1w8HYD-0008T0-GI; Thu, 02 Apr 2026 08:53:36 -0400
+Received: from localhost (unknown [131.107.147.136])
+ by linux.microsoft.com (Postfix) with ESMTPSA id D146620B6F08;
+ Thu,  2 Apr 2026 05:53:06 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D146620B6F08
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1775134386;
+ bh=6q4UfRU/uNzF6gX/u55VyAfKGDcltvG8skg+piojXoU=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=EbER5pjnPA3lYo+NEwudBLBmWlXPG6KrZsYC09xfVDhHNRyZSaPerOGwDdBkatNUV
+ nRZEVbDte/vcTm28OaNJf3F/8Bhfcb3+ukdkan1n18VwPqSFnC4Eg1nuiUa2jSHKzu
+ Ms5j5lT3Y6haFz+bjcsuRuSQk7uyiSGMgOefRIuA=
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
+Date: Thu, 02 Apr 2026 12:52:39 +0000
+Subject: [PATCH v2 12/14] include/hw/hyperv: adjust hv_interrupt_control
+ structure for arm64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260402-mshv_accel_arm64_supp-v2-12-754895c15e9e@linux.microsoft.com>
+References: <20260402-mshv_accel_arm64_supp-v2-0-754895c15e9e@linux.microsoft.com>
+In-Reply-To: <20260402-mshv_accel_arm64_supp-v2-0-754895c15e9e@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, 
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>, qemu-arm@nongnu.org, 
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,129 +76,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
 
-Qemu's tools like qemu-img are often needed on 32-bit platforms,
-although the actual qemu emulators have been discontinued on 32-bit.
+Add the arm64 specific fields to the hv_interrupt_control struct and
+adjust the existing usage accordingly. mshv_request_interrupt is only
+needed only for x86 so compile it out entirely for arm64.
 
-To allow building the tools on 32-bit this patch implements two small
-changes:
-
-a) The check in meson.build is changed to still error out if the user
-tries to build qemu-system or qemu-user on a 32-bit platform, but allows
-building tools (e.g. by "--enable-tools") alone.
-
-b) Remove the compile time checks in atomic.h because:
-- for the qemu-system and qemu-user emulators this check is redundant
-  since we only allow 64-bit platforms anyway (see a)
-- it breaks those 32-bit platforms, which do provide (slower) 64-bit atomics
-- 32-bit platforms without 64-bit atomics will fail instead with linker errors
-- the runtime speed of the qemu tools aren't actually that important.
-
-I've sucessfully tested building qemu tools on 32-bit hppa.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- include/qemu/atomic.h | 16 ----------------
- meson.build           |  4 ++--
- 2 files changed, 2 insertions(+), 18 deletions(-)
+ accel/mshv/irq.c               |  2 ++
+ include/hw/hyperv/hvgdk_mini.h | 25 +++++++++++++++++++++++++
+ include/system/mshv.h          |  2 ++
+ 3 files changed, 29 insertions(+)
 
-diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-index dc9290084b..f05dce36eb 100644
---- a/include/qemu/atomic.h
-+++ b/include/qemu/atomic.h
-@@ -56,14 +56,6 @@
-  */
- #define signal_barrier()    __atomic_signal_fence(__ATOMIC_SEQ_CST)
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 3c238c33c3..a391d7db86 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -310,6 +310,7 @@ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
+     return 0;
+ }
  
--/*
-- * Sanity check that the size of an atomic operation isn't "overly large".
-- * Despite the fact that e.g. i686 has 64-bit atomic operations, we do not
-- * want to use them because we ought not need them, and this lets us do a
-- * bit of sanity checking that other 32-bit hosts might build.
-- */
--#define ATOMIC_REG_SIZE  sizeof(void *)
--
- /* Weak atomic operations prevent the compiler moving other
-  * loads/stores past the atomic operation load/store. However there is
-  * no explicit memory barrier for the processor.
-@@ -79,7 +71,6 @@
++#if defined(__x86_64__)
+ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
+                            uint32_t vp_index, bool logical_dest_mode,
+                            bool level_triggered)
+@@ -346,6 +347,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+     }
+     return 0;
+ }
++#endif
  
- #define qatomic_read(ptr)                              \
-     ({                                                 \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
-     qatomic_read__nocheck(ptr);                        \
-     })
+ void mshv_irqchip_commit_routes(void)
+ {
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index 84b3c6af5f..eb766734d6 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -506,13 +506,38 @@ typedef struct hv_input_set_vp_registers {
+     struct hv_register_assoc elements[];
+ } hv_input_set_vp_registers;
  
-@@ -87,7 +78,6 @@
-     __atomic_store_n(ptr, i, __ATOMIC_RELAXED)
++enum hv_interrupt_type {
++#if defined(__x86_64__)
++    HV_X64_INTERRUPT_TYPE_FIXED             = 0x0000,
++    HV_X64_INTERRUPT_TYPE_LOWESTPRIORITY    = 0x0001,
++    HV_X64_INTERRUPT_TYPE_SMI               = 0x0002,
++    HV_X64_INTERRUPT_TYPE_REMOTEREAD        = 0x0003,
++    HV_X64_INTERRUPT_TYPE_NMI               = 0x0004,
++    HV_X64_INTERRUPT_TYPE_INIT              = 0x0005,
++    HV_X64_INTERRUPT_TYPE_SIPI              = 0x0006,
++    HV_X64_INTERRUPT_TYPE_EXTINT            = 0x0007,
++    HV_X64_INTERRUPT_TYPE_LOCALINT0         = 0x0008,
++    HV_X64_INTERRUPT_TYPE_LOCALINT1         = 0x0009,
++    HV_X64_INTERRUPT_TYPE_MAXIMUM           = 0x000A,
++#elif defined(__aarch64__)
++    HV_ARM64_INTERRUPT_TYPE_FIXED           = 0x0000,
++    HV_ARM64_INTERRUPT_TYPE_MAXIMUM         = 0x0008,
++#endif
++};
++
+ union hv_interrupt_control {
+     uint64_t as_uint64;
+     struct {
+         uint32_t interrupt_type; /* enum hv_interrupt type */
++#if defined(__x86_64__)
+         uint32_t level_triggered:1;
+         uint32_t logical_dest_mode:1;
+         uint32_t rsvd:30;
++#elif defined(__aarch64__)
++        uint32_t rsvd1:2;
++        uint32_t asserted:1;
++        uint32_t rsvd2:29;
++#endif
+     };
+ };
  
- #define qatomic_set(ptr, i)  do {                      \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
-     qatomic_set__nocheck(ptr, i);                      \
- } while(0)
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 75286baf16..0db18fcee9 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -47,10 +47,12 @@ extern bool mshv_allowed;
+ typedef struct MshvState MshvState;
+ extern MshvState *mshv_state;
  
-@@ -110,7 +100,6 @@
-  */
- #define qatomic_rcu_read_internal(ptr, _val)            \
-     ({                                                  \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
-     typeof_strip_qual(*ptr) _val;                       \
-     qatomic_rcu_read__nocheck(ptr, &_val);              \
-     _val;                                               \
-@@ -119,20 +108,17 @@
-     qatomic_rcu_read_internal((ptr), MAKE_IDENTIFIER(_val))
++#if defined(__x86_64__)
+ /* interrupt */
+ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
+                            uint32_t vp_index, bool logical_destination_mode,
+                            bool level_triggered);
++#endif
  
- #define qatomic_rcu_set(ptr, i) do {                   \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
-     __atomic_store_n(ptr, i, __ATOMIC_RELEASE);        \
- } while(0)
- 
- #define qatomic_load_acquire(ptr)                       \
-     ({                                                  \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
-     typeof_strip_qual(*ptr) _val;                       \
-     __atomic_load(ptr, &_val, __ATOMIC_ACQUIRE);        \
-     _val;                                               \
-     })
- 
- #define qatomic_store_release(ptr, i)  do {             \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
-     __atomic_store_n(ptr, i, __ATOMIC_RELEASE);         \
- } while(0)
- 
-@@ -144,7 +130,6 @@
- })
- 
- #define qatomic_xchg(ptr, i)    ({                          \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE);     \
-     qatomic_xchg__nocheck(ptr, i);                          \
- })
- 
-@@ -157,7 +142,6 @@
- })
- 
- #define qatomic_cmpxchg(ptr, old, new)    ({                            \
--    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE);                 \
-     qatomic_cmpxchg__nocheck(ptr, old, new);                            \
- })
- 
-diff --git a/meson.build b/meson.build
-index daa58e46a3..98a708372b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -323,8 +323,8 @@ endif
- # Compiler flags #
- ##################
- 
--if cc.sizeof('void *') < 8
--  error('QEMU requires a 64-bit CPU host architecture')
-+if (cc.sizeof('void *') < 8) and (have_system or have_user)
-+  error('QEMU emulator requires a 64-bit CPU host architecture. Only tools may be built for 32-bit.')
- endif
- 
- foreach lang : all_languages
+ int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
+
 -- 
-2.53.0
+2.45.4
 
 
