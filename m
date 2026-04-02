@@ -4,112 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BF8D6AAE5
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571B4D6AAE8
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8KBw-0006hx-Gp; Thu, 02 Apr 2026 11:42:44 -0400
+	id 1w8KHd-0001Do-Oc; Thu, 02 Apr 2026 11:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8KBu-0006hZ-AL
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:42:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8KBs-0001R3-NT
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:42:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775144559;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gUuDsFxP5i3qpHzhV4fxu8DyCXzoUzFYDCFlVn0RCbs=;
- b=fc6InaaWJMRQ24Ah6EMksF5vuMdniIO/GRH1oc8AhmgAwwg2muxf38vLDUOCi/6X0NnGTi
- rbHAtEl4yju+ocWgpFNXJw9PcwpIzHBWlo737R5OhFMBj2/UtpldCGYI14bmh6BG+oTMcu
- 0FLWruCE9FVv2dbj/O98cdncUiAna4U=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-e-Nb64itOuqnafaxKvBi9Q-1; Thu, 02 Apr 2026 11:42:36 -0400
-X-MC-Unique: e-Nb64itOuqnafaxKvBi9Q-1
-X-Mimecast-MFC-AGG-ID: e-Nb64itOuqnafaxKvBi9Q_1775144556
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8a5f6110cadso24377356d6.3
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 08:42:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w8KHb-0001Bu-KX
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:48:36 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w8KHW-0002Yn-Mh
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:48:33 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6618bc129acso1392306a12.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 08:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775144556; x=1775749356; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=gUuDsFxP5i3qpHzhV4fxu8DyCXzoUzFYDCFlVn0RCbs=;
- b=XwjjZPIN0WlberTQr78y2ioetZd2Yjri85MgQGahbOZn4MFjVi9jDaoWWL/8c030yb
- MZPxSdmguUltDpE0O6lZsbz4d06t1uiNbAizlOPug8U+BXiUQ19QX9PHkMi0UB1n2Xri
- 7iRHy0epHev6Uqkmo4jhLbjToY7F0DTdFbAL72VZ1R/Rz6C12fE0uHVhJYML5fIQnNhj
- A7UgEJf2Xip86DTsxaFuIJEmwpkUN66QH+rNbqzN0u6YWO9ikXRcB95lO4JjZmssty+u
- kjjs1jmdjU3sgeRiU5IfkL5e9pRdDoN8GBzwomTlPXwpcwnZdW17d/Rur8zSKKp7HVOU
- T/vw==
+ d=linaro.org; s=google; t=1775144908; x=1775749708; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=iDzFEMX8K+NDhqiWj9hSCAAXAnoaBn1FE6fzq/wKPdk=;
+ b=QqPPKBrhxVSKXxzGiVLqRBJV6Xg6PzVBuRXyOkaueR90mUKL0Ye9t0K0fRVm67UUaT
+ uUzQ2+or1w4H118L3P7snPJ4IrhcxLxmSBypIYDxToTlkTKMXCKpj+qWqOMmKjrIjlUc
+ cNeL2LWxHr/nTV5ZG6eIZYEHhASZlawvW7gqfTgnxkbyjFOr9BVMmSWYb462uAngHyxB
+ BHN+5tbtpazej18o9anbcYMraJjaFALjKcHMTL+GgrBhSK5EuGJm9oCFgG4ylMsZorBt
+ rxd//USXKbwvVceoq6vmfglzHQ27bTiI7JOLljjCqZbMyjEdpoK3BK2/S9TasT42gJug
+ ZWCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775144556; x=1775749356;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gUuDsFxP5i3qpHzhV4fxu8DyCXzoUzFYDCFlVn0RCbs=;
- b=Pl/XCzRBilINIPSZVHl7U7t7Ea60mtZMcU+kjZBV+VzW/NeouMVMXQOGrEouYHOU0a
- KLMO9CgIHlDT5rROQDJsyLRDKQA0XFWoQqlaecWffXFCjZ38EEZrI69od+FTYJBAFNom
- guEBtGLk2MgN/jL51FYCmSNHt1wZ8vtPKl5eAJaCZrwxdA6I1r9kW1O0h2Sb2kfssQ8a
- 5NBB/zD8ZSDHYUJoieOBH0z0Yg1uheqlL4hbJ9F+bbkafYvPOZ16NmLDJvMQloLNvGyR
- 7e20A/F6yjY3TuWaBjXP8PeQtvJzV/IJlzhlZILe45yzQqXtzkEugS6raNlX6yEWDgzI
- g00g==
-X-Gm-Message-State: AOJu0Ywmq151BW6O9qbcnSnGSyfQ43Ro/Ecv1RprIy2w/yQ+chiTorgu
- LpqdKr5XZEBRS+zT0KERLHzJVUP1gmHwhMdExc/4yJv6DOKoHUeZUseqDxfh/gYuJ4TpTCAbHU8
- I8cOnLYHcgyvFGpNIzAiHDT0sDKmaZiCtpTCctiggoE2+YiubS93/m+0c
-X-Gm-Gg: AeBDietZfjpedd6USQBpS0jFpwSnpMzDJFSfFeXX7zxQw9cyt0o87Tj1JYa7JI6DCB1
- /3PkbmRiNL1dPkTVydwCmlSsqQDPHGe9cJElYRSja+0XZ1TvD/vBtglXm+j98p6G47AMjE50/sk
- tD8LEM59ugjX6bEvzKlxoFKCPhozRF+asd+K5cFXZM3T3qmT5wsyurVBVcbXZthDtOqWjmk2l+b
- Q2LhO02PPXMJlhq6TiygQn7WRAY8ExhgBZob1VM2FOgg8deCQNqu2zEkChQVg/hTWIEoFJ5dbXy
- lGkUM8/whvJOKK3LX0bGeTop+KoRTjY4E8kGseJqw6z1CRgM5AsIUBVUoDb/4IwuEdKdweqKklQ
- WOM15+NgFUW/4+Xr2E0A8qNg1/k6UvaW4rzBFMXfkojCm8g==
-X-Received: by 2002:a05:6214:20e2:b0:89c:4f67:8d15 with SMTP id
- 6a1803df08f44-8a43ac480cdmr124110526d6.53.1775144555933; 
- Thu, 02 Apr 2026 08:42:35 -0700 (PDT)
-X-Received: by 2002:a05:6214:20e2:b0:89c:4f67:8d15 with SMTP id
- 6a1803df08f44-8a43ac480cdmr124109936d6.53.1775144555423; 
- Thu, 02 Apr 2026 08:42:35 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8a593331651sm25525546d6.10.2026.04.02.08.42.34
+ d=1e100.net; s=20251104; t=1775144908; x=1775749708;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iDzFEMX8K+NDhqiWj9hSCAAXAnoaBn1FE6fzq/wKPdk=;
+ b=cFyWF78is3cBvfut7FOI4VFC/IpdSWaiRSHTuMCYE/XOf/6c1MKkrV029VJNK/aKdQ
+ fKDCvOR+joPwt4WHNzn5NGQ7f5st7juMNDwuTtNNP80E/rS7CVnyAWTD3LsL0cYmIgyE
+ XEvq8SCcBEP2TjN7jNCngh0fjuacgSxLdp2OqMQ/rpeNKay/G1SpDEmHxMRwZbmehNTL
+ hNcYukpAkhXWlwYUbgoOkG5+3w8tlnalanqwz59/YYp+2MIjF7cjyEe7l5BjONuFA0PB
+ IO04F3NMI8p3j3YTyXG/pgRHmga7NDkvMsMFQK/m1tYai1/C/mOqU4sNKXIamOlv74Ow
+ tsVA==
+X-Gm-Message-State: AOJu0YzXmR8nmXcaI8/WvP3hELMuuSUHT4e3H0OrV6MffGnGx9epbtaT
+ yKk7HgIxDrLRoAJiZGH7Na8m5t7tkzWLE60Kik26lAn3Iwsc5vC3WHal6wVzFkOXGTwd1I39MUO
+ WHTRv5n0=
+X-Gm-Gg: ATEYQzyKjFZmkriB7lowgpi95TwfgWtLUE9By4EQ9tdgGYEGzblErFxKRLA/pXLflGf
+ L4Dpeo5T/CgjItmlMrwsZYkF2O5SMx68UG5FduZNsU6ywl2yKGEjeXKvA1LD26Flkm+F6PH+pUZ
+ mWWc2Npl5p/UpiwaI9KUhMDlivK6fvA+jzebwZc00sPiUb+9b+SNbCWMZ6IWfa4Bw1WLV6O0Ww7
+ 3AjyB7JoH1NHjXdjFvFaH2MYrpn1PLra9eX0fFRbfIksunLtnGiLG7i58JLnNrxMSiAjGxQXB18
+ 3VRg2j9yi6CYktkjYx2XcGjtf8r0ho/jwNX891YrPEpzEz5L42cwa3RDiwNaUkMVpFBCnJusIvS
+ rONk2BX2/dwroNZ/evNWUjHD389bBCPcEjsmh800ymOgmiD5Oa7ng7iBv/pLIKUm0mWveS0iHRw
+ ufRqqa11WCPFmkPXbpW2KS3wU=
+X-Received: by 2002:a17:906:f58d:b0:b9c:5cf3:50a6 with SMTP id
+ a640c23a62f3a-b9c5cf3a94fmr54391266b.30.1775144908073; 
+ Thu, 02 Apr 2026 08:48:28 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b9c3c97218esm104055266b.9.2026.04.02.08.48.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 08:42:34 -0700 (PDT)
-Date: Thu, 2 Apr 2026 11:42:33 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Alex Williamson <alex@shazbot.org>,
- Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Yong Huang <yong.huang@smartx.com>
-Subject: Re: [PATCH RFC 09/12] migration: Make iteration counter out of RAM
-Message-ID: <ac6OaY__8Gk61iNf@x1.local>
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-10-peterx@redhat.com>
- <acaz4bJstLXz2Xdt@fedora>
+ Thu, 02 Apr 2026 08:48:27 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4F1C15F8F7;
+ Thu, 02 Apr 2026 16:48:26 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [RFC PATCH] target/arm: always propagate s1ns state on faults
+Date: Thu,  2 Apr 2026 16:48:21 +0100
+Message-ID: <20260402154821.2340594-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <acaz4bJstLXz2Xdt@fedora>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,19 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 27, 2026 at 05:49:46PM +0100, Juraj Marcin wrote:
-> Hi Peter,
-> 
-> Did you maybe mean s/Make/Take/ in the subject?
+According to our mmuidx documentation:
 
-I was trying to use "take", but maybe it isn't accurate.
+  we fold together most secure and non-secure regimes for A-profile,
+  because there are no banked system registers for aarch64
 
-I asked my English teacher (Gemini Pro..) and I was told "move" is the
-best, "take" worst, "make" OK but only in "dev-talks".  I'll use "move".
+So we don't hold quite enough information during the table walk to
+infer we are in secure mode. When we are trying to access a
+none-secure page we get a stage 1 translation like:
 
-Thanks,
+  (rr) p ptw
+  $1 = (S1Translate *) 0x7f07479f93a0
+  (rr) p *ptw
+  $2 = {in_mmu_idx = ARMMMUIdx_Stage2, in_ptw_idx = ARMMMUIdx_Phys_S, in_space = ARMSS_NonSecure, cur_space = ARMSS_NonSecure, in_debug = false, in_at = false,
+    in_s1_is_el0 = false, in_prot_check = 1 '\001', in_nv1 = false, out_rw = true, out_be = false, out_space = ARMSS_Secure, out_virt = 1075929104, out_phys = 1075929104,
+    out_host = 0x7f0750016010}
 
+However as we only write HFPAR_EL2.NS when
+arm_is_secure_below_el3(env) && fi.s1ns we can afford to relax the
+check in fault_s1ns.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2568
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/arm/ptw.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index d5b2ed6c99c..ccdc1ef9916 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -634,9 +634,11 @@ static bool fault_s1ns(ARMSecuritySpace space, ARMMMUIdx s2_mmu_idx)
+      * For stage 2 faults in Secure EL22, S1NS indicates
+      * whether the faulting IPA is in the Secure or NonSecure
+      * IPA space. For all other kinds of fault, it is false.
++     *
++     * At this point we can't actually tell we are in SEL[012] but the
++     * actual setting of HPFAR_EL2.NS is gated by arm_is_secure_below_el3(env).
+      */
+-    return space == ARMSS_Secure && regime_is_stage2(s2_mmu_idx)
+-        && s2_mmu_idx == ARMMMUIdx_Stage2_S;
++    return space == ARMSS_NonSecure && regime_is_stage2(s2_mmu_idx);
+ }
+ 
+ /* Translate a S1 pagetable walk through S2 if needed.  */
 -- 
-Peter Xu
+2.47.3
 
 
