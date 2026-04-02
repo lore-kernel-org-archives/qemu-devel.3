@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E66FCD6AB16
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F599D6AB18
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Q2C-0008KK-Kf; Thu, 02 Apr 2026 17:57:05 -0400
+	id 1w8Q3C-0001Iu-3p; Thu, 02 Apr 2026 17:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q2A-0008JE-Hb
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:02 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1w8Q2d-0000BE-GM
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:32 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q29-00076S-2I
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:02 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b93698bb57aso282214466b.0
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:57:00 -0700 (PDT)
+ id 1w8Q2a-0007Eq-0U
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:30 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b9c1da7ac63so234958366b.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:57:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775167019; x=1775771819; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775167046; x=1775771846; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4XtZvlcq7y9dCibk7QnCziTNJJ4JB6d6R3IFkPvUGo4=;
- b=NuNwwD3a+iWe6LJPdo8wKTlKLC4oFZjDpC0OGtTGcauGiOv8RWDzFR/rmpUy0OeiYl
- cI0896e2x+0YjveNcukYU1EpDy0Cze3tjLJDk5vWSZtoMLt+RrxzupAj/sKA5Mq027SH
- OVwvlJrj7ciKGf3cop8VUZoTzkQX3hymfdtGtyn2XnruvXksYGPbEm1qikBUKsWA17k/
- 0Wy3k2rjwV3e/gl5UfAZnuIrcWmibufre/sQJ2plzbs60ocVEUoysrsSbSYqf/OjO5Y3
- UcxeovJaY9/qV4XamgfI3WTsqG6C1hobiFWs42q5kSBMD2zGryxTZ8HXEX79POwPcXdf
- ynIQ==
+ bh=x8ZREsUktJ+jWPapDw6PB5NQmm74pQN/VTasE9D0cnk=;
+ b=Dc0icwgpvpqvvpW3+72803p5YmOe0ooA2lLuA7tRXQDlx2Kj+wotv5Yw6G5+go54bW
+ xThElLEWvWsDwukoJxmafyeDW3tIqTA1g+KxrlwmSJiIzC0l57XTwZDg8zXncVp5hW6s
+ i1ZRRoCmqyBO3aOXj62hjTnQttftiEKeDIq+90DvjwedHnORBii1+m28P0i3mIJC1MT1
+ 1Qz5h09OkllU/iV1zcC+n3E7IBqyE0lUxThLbdslRR/mS0dO9WS4f/FCGA09eO7KrLBW
+ b3hHITOv+G3eypDn+fskzkv8Qp6N/pAyNSM5aXulfN//1tJf0Eom4sO8MNI3+tnK2Jyn
+ TGRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775167019; x=1775771819;
+ d=1e100.net; s=20251104; t=1775167046; x=1775771846;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4XtZvlcq7y9dCibk7QnCziTNJJ4JB6d6R3IFkPvUGo4=;
- b=FFyx64Q4gqAdmmfay+NH5tnf9kg4GUBr1UGVtPMVasGUhguP1M/Dlow/UKFZN53Agw
- +ZWAgDI0QukvERwSdqLnrPhgOgzHhxfgYGK1omkshsKo0pCs0NlLszVvTqvnr+OIJWS9
- /uv8MewVCY5UBRheJQzaLHXDgMr7q7Z5cEoqCTn2YsHtgYi2sGynul3Ss/LhRlyeLhv4
- 38AsaWziAJ27HcuDnahGaRKyI0hCfSQEZgs72ggRTyrSUJPHFPP2EjbwxYh3T7jFC0xf
- 8Xz5fdOEvEI72TsPiKyIjciaaSP3eA4PZ5XDIIiZaJl0fYiu22Gq4bYGCut9C6Xb55Fa
- 7KzA==
-X-Gm-Message-State: AOJu0YzkjrG2UQ4qO7CksYqwV8h3ew23cOvKGyLlzWaFiVWKzo1Uf74A
- PZlIyqrYVPVw7S6JzR2/HN8TBkPqrlNjlrNJ0MepsrXPtrb//irDBpeRyqIvQmuO
-X-Gm-Gg: ATEYQzyW6Tb8op78uNkQQcUKDHpd1KpEMCYEqsSUGN56J6WLCf9gN19ROF89hTS5Utn
- 5RK24AFNjt/8KB0wj42Qbm1g0r7E6xTOwaolqlioA8OABs+I46dr/TlGVTCjERTLPqX4VG8/X7o
- WL/h3y+epcM2iVEc6fhjZb++tWXfHOiqJjwzE+vlyfztDZ8QOyiduiAMHDYFdX2+P8KYBY1xk2u
- B+G008pGvSBEaMz8tfM5cU2oG6JMiPt5sNgg9+nmVmEOe6MqtE+2djG1/DuY75TMaB6ko2sNKVa
- krnr4XNpoaNybgNdawcVWANNhzH2pIYuWGLKDu88UGDMtqKMxllOc+qPrTx9KY5OSUgE22P/AnS
- FlwP8u9QiJFBOekreiY7SrwH7mJFZ8ajkhn1Y9u1kwWgMPLZmG7Vwzysdq3p/MH9FiI6/6jhi0B
- nf+vgqsjTMYxamk0dndUnuKUSv1x8wngkkym8pLmTomgwdSfsjS7dFx2vYgtC6XeqYtAdwxX7aF
- xkTLRrN
-X-Received: by 2002:a17:906:f5a0:b0:b97:6d1b:4be8 with SMTP id
- a640c23a62f3a-b9c46e2677fmr199715066b.10.1775167019041; 
- Thu, 02 Apr 2026 14:56:59 -0700 (PDT)
+ bh=x8ZREsUktJ+jWPapDw6PB5NQmm74pQN/VTasE9D0cnk=;
+ b=jbmYuMzXeN/FJ5fdK0E0ZZ2DxyI59JaAHVxBpf2De99Aq2AgsHacSbwcIf3bqVF3yR
+ TMh7iUtrnFNiWgFlt9cqKE8HItGa2vXvkj2MTlYienKoYkob1UszfzIKMsFFMI00nl9g
+ dbqFdlXL5WSCeqrCfFa7GBj7ra1caLyzRSKkg6WskzKH9FljJBQ2WWxYXxifbJeIrCZd
+ VlCV1DlaU2oV38MgmApYN6qtImb/5pVC/GXLcDwQoMi8qwGAkCEp88IVsD+Oo9YTOgwl
+ 9vqRC9/ff0UAMazSmkGa48GAaWzeLsDznGUbttK9KNqjq03D700skc/XZpmzS4ZDFVsI
+ 7bPQ==
+X-Gm-Message-State: AOJu0YwTSG/DF73KBclLdWKU06ZtzmuLU+eBw+wli3g102xKRTdYhvud
+ rVbptcw3IIQcLQHW3Iv5118bmJ4cvMMKj1FWR92WYize3LXH/RUn0KhQnP1Fk9BS
+X-Gm-Gg: ATEYQzxSfg8xFZjV0FRmVRIeNCYNsRBetOGfhg9pPrdvc5J0C+UbYJ/5E/pqavDiCN6
+ QWaM9FwA7F9HmuoJ15HUynnyIDkqqtoPweDbbiTZ8Xfl9Hmc7/0mYuMWDEAug3fA4e+71Igyp8i
+ IpFYU5lit2QlInpIruHYNQcVcbrWfkgnonutCEMO1SfB3YtfTfTlI8BEPcW/ENc4L1XRwVwg1OW
+ bTBT2KaYSVopq20BrD4h43OCOc9V5IE5eRpqH+T0LcG5NKntCv/txoWng1OVRpLgxoQROWYWQj2
+ CnDnt8L+BOJGPPkbKB4X/94cmwj55XFUA7KGxJjHBVxFsr8dRAV45oncxScH5dFrifhPe2vYGOj
+ jAd648q4R1qOudZEbLzv+kwSTTf2IY9m5Lrp2Uo8h/EoL3e59uwLCc9/kOwhEshiYUJbtpsCb+G
+ aFGYIZ0S/aKu7UItZd7Pr4GsvFpprxs0/DQjzCQoAGisFg7FnVR8HCV8pE1AcIBKvdUw58QMCeP
+ 83GiPZQ
+X-Received: by 2002:a17:907:6093:b0:b94:858:5807 with SMTP id
+ a640c23a62f3a-b9c679adc2fmr25890166b.25.1775167046059; 
+ Thu, 02 Apr 2026 14:57:26 -0700 (PDT)
 Received: from thinkpad-t470s.. (93-143-182-244.adsl.net.t-com.hr.
  [93.143.182.244]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.56.57
+ a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.57.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 14:56:58 -0700 (PDT)
+ Thu, 02 Apr 2026 14:57:25 -0700 (PDT)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
@@ -72,18 +72,19 @@ Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 10/33] qom/object: export object_resolve_link()
-Date: Thu,  2 Apr 2026 23:55:55 +0200
-Message-ID: <20260402215629.745866-11-ruslichenko.r@gmail.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 25/33] system/memory: add setters for MemoryRegion
+ properties
+Date: Thu,  2 Apr 2026 23:56:10 +0200
+Message-ID: <20260402215629.745866-26-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260402215629.745866-1-ruslichenko.r@gmail.com>
 References: <20260402215629.745866-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,54 +109,303 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Export `object_resovle_link()` for use by other
-subsystems.
+Currently, MemoryRegion properties such as addr, size,
+priority and container are read-only and don't have setters.
 
-This allow callers to resolve object path and verify
-type contrains of a link property.
+This patch implements the missing setters function, so that
+properties can be modified dynamically.
+
+The changes allow MemoryRegions objects to be fully configured
+via properties, which enables them be created from a device
+tree description.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- include/qom/object.h | 12 ++++++++++++
- qom/object.c         |  2 +-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ system/memory.c | 221 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 216 insertions(+), 5 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 26df6137b9..1573d41d4f 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -2034,6 +2034,18 @@ int object_child_foreach_recursive(Object *obj,
-  */
- Object *object_property_add_new_container(Object *obj, const char *name);
+diff --git a/system/memory.c b/system/memory.c
+index 56f3225b21..cd463a3dde 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -55,6 +55,9 @@ static GHashTable *flat_views;
  
-+/*
-+ * object_resolve_link:
-+ *
-+ * Lookup an object and ensure its type matches the link property type.  This
-+ * is similar to object_resolve_path() except type verification against the
-+ * link property is performed.
-+ *
-+ * Returns: The matched object or NULL on path lookup failures.
-+ */
-+Object *object_resolve_link(Object *obj, const char *name,
-+    const char *path, Error **errp);
+ typedef struct AddrRange AddrRange;
+ 
++static void memory_region_update_container_subregions(MemoryRegion *subregion);
++static void memory_region_readd_subregion(MemoryRegion *mr);
 +
- /**
-  * object_property_help:
-  * @name: the name of the property
-diff --git a/qom/object.c b/qom/object.c
-index ff8ede8a32..7e16765cb4 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1904,7 +1904,7 @@ static void object_get_link_property(Object *obj, Visitor *v,
-  *
-  * Returns: The matched object or NULL on path lookup failures.
-  */
--static Object *object_resolve_link(Object *obj, const char *name,
-+Object *object_resolve_link(Object *obj, const char *name,
-                                    const char *path, Error **errp)
+ /*
+  * Note that signed integers are needed for negative offsetting in aliases
+  * (large MemoryRegion::alias_offset).
+@@ -1251,6 +1254,73 @@ void memory_region_init(MemoryRegion *mr,
+     memory_region_do_init(mr, owner, name, size);
+ }
+ 
++static void memory_region_get_addr(Object *obj, Visitor *v, const char *name,
++                                   void *opaque, Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    uint64_t value = mr->addr;
++
++    visit_type_uint64(v, name, &value, errp);
++}
++
++static void memory_region_set_addr(Object *obj, Visitor *v, const char *name,
++                                   void *opaque, Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    uint64_t value;
++
++    visit_type_uint64(v, name, &value, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    memory_region_set_address(mr, value);
++}
++
++static void memory_region_set_container(Object *obj, Visitor *v,
++                                        const char *name, void *opaque,
++                                        Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    MemoryRegion *old_container = mr->container;
++    MemoryRegion *new_container = NULL;
++    char *path = NULL;
++
++    visit_type_str(v, name, &path, &local_err);
++
++    if (!local_err && strcmp(path, "") != 0) {
++        new_container = MEMORY_REGION(object_resolve_link(obj, name, path,
++                                      &local_err));
++        while (new_container->alias) {
++            new_container = new_container->alias;
++        }
++    }
++
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    object_ref(OBJECT(new_container));
++
++    memory_region_transaction_begin();
++    memory_region_ref(mr);
++    if (old_container) {
++        memory_region_del_subregion(old_container, mr);
++    }
++    mr->container = new_container;
++    if (new_container) {
++        memory_region_update_container_subregions(mr);
++    }
++    memory_region_unref(mr);
++    memory_region_transaction_commit();
++
++    object_unref(OBJECT(old_container));
++}
++
+ static void memory_region_get_container(Object *obj, Visitor *v,
+                                         const char *name, void *opaque,
+                                         Error **errp)
+@@ -1275,6 +1345,53 @@ static Object *memory_region_resolve_container(Object *obj, void *opaque,
+     return OBJECT(mr->container);
+ }
+ 
++static void memory_region_set_alias(const Object *obj, const char *name,
++                                    Object *val, Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    MemoryRegion *subregion, *next;
++
++    /*
++     * Be conservative and only allow one shotting for the mo
++     * FIXME: Use a softer error than assert
++     */
++    assert(!mr->alias);
++
++    /*
++     * FIXME: check we don't already have subregions and
++     * anything else that might be mutex with aliasing
++     */
++
++    memory_region_transaction_begin();
++    QTAILQ_FOREACH_SAFE(subregion, &mr->subregions, subregions_link, next) {
++        object_property_set_link(OBJECT(subregion), "container",
++                                 OBJECT(val), errp);
++    }
++    memory_region_ref(mr);
++    mr->alias = MEMORY_REGION(val);
++    mr->alias->mapped_via_alias++;
++    memory_region_unref(mr);
++    memory_region_transaction_commit();
++    /* FIXME: add cleanup destructors etc etc */
++}
++
++static void memory_region_set_alias_offset_prop(Object *obj, Visitor *v,
++                                                const char *name,
++                                                void *opaque, Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    uint64_t value;
++
++    visit_type_uint64(v, name, &value, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    memory_region_set_alias_offset(mr, value);
++}
++
+ static void memory_region_get_priority(Object *obj, Visitor *v,
+                                        const char *name, void *opaque,
+                                        Error **errp)
+@@ -1285,6 +1402,70 @@ static void memory_region_get_priority(Object *obj, Visitor *v,
+     visit_type_int32(v, name, &value, errp);
+ }
+ 
++static void memory_region_set_priority(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    int32_t value;
++
++    visit_type_uint32(v, name, (uint32_t *)&value, &error_abort);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    if (mr->priority != value) {
++        mr->priority = value;
++        memory_region_readd_subregion(mr);
++    }
++}
++
++static void memory_region_do_set_ram(MemoryRegion *mr)
++{
++    if (mr->addr) {
++        qemu_ram_free(mr->ram_block);
++    }
++    if (int128_eq(mr->size, int128_make64(0))) {
++        return;
++    }
++    if (mr->ram) {
++        mr->ram_block = qemu_ram_alloc(int128_get64(mr->size),
++                                       RAM_SHARED, mr, &error_abort);
++    }
++}
++
++static void memory_region_set_ram(Object *obj, Visitor *v, const char *name,
++                                  void *opaque, Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    uint8_t value;
++
++    visit_type_uint8(v, name, &value, &error_abort);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    mr->dirty_log_mask |= tcg_enabled() ? (1 << DIRTY_MEMORY_CODE) : 0;
++    /* FIXME: Sanitize error handling */
++    /* FIXME: Probably need all that transactions stuff */
++    if (mr->ram == value) {
++        return;
++    }
++
++    mr->ram = value;
++    mr->terminates = !!value; /*FIXME: Wrong */
++
++    if (int128_eq(int128_2_64(), mr->size)) {
++        return;
++    }
++
++    memory_region_do_set_ram(mr);
++}
++
+ static void memory_region_get_size(Object *obj, Visitor *v, const char *name,
+                                    void *opaque, Error **errp)
  {
-     const char *type;
+@@ -1294,6 +1475,19 @@ static void memory_region_get_size(Object *obj, Visitor *v, const char *name,
+     visit_type_uint64(v, name, &value, errp);
+ }
+ 
++static void memory_region_set_object_size(Object *obj, Visitor *v,
++                                          const char *name, void *opaque,
++                                          Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    uint64_t size;
++
++    visit_type_uint64(v, name, &size, &local_err);
++
++    memory_region_set_size(mr, size);
++}
++
+ static void memory_region_initfn(Object *obj)
+ {
+     MemoryRegion *mr = MEMORY_REGION(obj);
+@@ -1309,19 +1503,33 @@ static void memory_region_initfn(Object *obj)
+     op = object_property_add(OBJECT(mr), "container",
+                              "link<" TYPE_MEMORY_REGION ">",
+                              memory_region_get_container,
+-                             NULL, /* memory_region_set_container */
++                             memory_region_set_container,
+                              NULL, NULL);
+     op->resolve = memory_region_resolve_container;
+ 
+-    object_property_add_uint64_ptr(OBJECT(mr), "addr",
+-                                   &mr->addr, OBJ_PROP_FLAG_READ);
++    object_property_add_link(OBJECT(mr), "alias", TYPE_MEMORY_REGION,
++                             (Object **)&mr->alias,
++                             memory_region_set_alias,
++                             0);
++    object_property_add(OBJECT(mr), "alias-offset", "uint64",
++                        NULL,  /* FIXME: Add getter */
++                        memory_region_set_alias_offset_prop,
++                        NULL, NULL);
++    object_property_add(OBJECT(mr), "addr", "uint64",
++                        memory_region_get_addr,
++                        memory_region_set_addr,
++                        NULL, NULL);
+     object_property_add(OBJECT(mr), "priority", "uint32",
+                         memory_region_get_priority,
+-                        NULL, /* memory_region_set_priority */
++                        memory_region_set_priority,
++                        NULL, NULL);
++    object_property_add(OBJECT(mr), "ram", "uint8",
++                        NULL, /* FIXME: Add getter */
++                        memory_region_set_ram,
+                         NULL, NULL);
+     object_property_add(OBJECT(mr), "size", "uint64",
+                         memory_region_get_size,
+-                        NULL, /* memory_region_set_size, */
++                        memory_region_set_object_size,
+                         NULL, NULL);
+ }
+ 
+@@ -2666,6 +2874,9 @@ void memory_region_set_size(MemoryRegion *mr, uint64_t size)
+     }
+     memory_region_transaction_begin();
+     mr->size = s;
++    if (mr->ram) {
++        memory_region_do_set_ram(mr);
++    }
+     memory_region_update_pending = true;
+     memory_region_transaction_commit();
+ }
 -- 
 2.43.0
 
