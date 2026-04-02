@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61E32D3943A
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BF8D6AAE5
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8K4n-0005iZ-Rx; Thu, 02 Apr 2026 11:35:21 -0400
+	id 1w8KBw-0006hx-Gp; Thu, 02 Apr 2026 11:42:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8K4l-0005iL-61
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:35:19 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8KBu-0006hZ-AL
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:42:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8K4h-0000QM-8x
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:35:18 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8KBs-0001R3-NT
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:42:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775144109;
+ s=mimecast20190719; t=1775144559;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pZ/If0t1Q4No35SOkkaO/KUUsRqOV3KKCfibOvnk8k0=;
- b=XZjkvMcfaD/vmtjH250gzIIO5orOEtmAqAMXbQojJI1tWe2RvyktmfahWtG3um+mSLpMWI
- lgUgbmGhToN4zW7tdIhZr5oZMfL/zGJ4p4/gl4KIwFy9bqmDme0ZKLHMAVr/+0eE9kWUny
- 5PIjTQSeHNfhVXqLpi1vrVZj4O/yv4s=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gUuDsFxP5i3qpHzhV4fxu8DyCXzoUzFYDCFlVn0RCbs=;
+ b=fc6InaaWJMRQ24Ah6EMksF5vuMdniIO/GRH1oc8AhmgAwwg2muxf38vLDUOCi/6X0NnGTi
+ rbHAtEl4yju+ocWgpFNXJw9PcwpIzHBWlo737R5OhFMBj2/UtpldCGYI14bmh6BG+oTMcu
+ 0FLWruCE9FVv2dbj/O98cdncUiAna4U=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-qwn7yGW5MFGgmIcX-3H0Pw-1; Thu, 02 Apr 2026 11:35:08 -0400
-X-MC-Unique: qwn7yGW5MFGgmIcX-3H0Pw-1
-X-Mimecast-MFC-AGG-ID: qwn7yGW5MFGgmIcX-3H0Pw_1775144108
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50b44f7b7bbso27544741cf.3
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 08:35:08 -0700 (PDT)
+ us-mta-661-e-Nb64itOuqnafaxKvBi9Q-1; Thu, 02 Apr 2026 11:42:36 -0400
+X-MC-Unique: e-Nb64itOuqnafaxKvBi9Q-1
+X-Mimecast-MFC-AGG-ID: e-Nb64itOuqnafaxKvBi9Q_1775144556
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8a5f6110cadso24377356d6.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 08:42:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775144108; x=1775748908; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775144556; x=1775749356; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=pZ/If0t1Q4No35SOkkaO/KUUsRqOV3KKCfibOvnk8k0=;
- b=iJlgwW9/mTWmym2Uf9jbshkjb+uwHMF4KeJjVk54bdnWsQ5JFD2Rx7WxSoDJrEpv8L
- phQ4wktN7a1JkuMxkCEmbL51hWUuxoKLRZkapEKm4heQTSwcmt2AZafpMBdeHyrj4O95
- MoooYx4AoCnL3qy59FvKPBX6DjUDLNEe/efqormiclHi/42hho9+C9gWz6zS+Ty82jgh
- /IgztpfsUccKjbeZgLxiuJrKTBeRSBkCSjRRt+mDOId2silU5hoXOq5CDbZgfcqJdU3E
- k+/bCG+Lr+6GwvARehjmN6Lc8iVyEOfVHtbAzvJZ7QwJGTe3Xe0TosIfrFL7mItvsTa4
- mP+Q==
+ bh=gUuDsFxP5i3qpHzhV4fxu8DyCXzoUzFYDCFlVn0RCbs=;
+ b=XwjjZPIN0WlberTQr78y2ioetZd2Yjri85MgQGahbOZn4MFjVi9jDaoWWL/8c030yb
+ MZPxSdmguUltDpE0O6lZsbz4d06t1uiNbAizlOPug8U+BXiUQ19QX9PHkMi0UB1n2Xri
+ 7iRHy0epHev6Uqkmo4jhLbjToY7F0DTdFbAL72VZ1R/Rz6C12fE0uHVhJYML5fIQnNhj
+ A7UgEJf2Xip86DTsxaFuIJEmwpkUN66QH+rNbqzN0u6YWO9ikXRcB95lO4JjZmssty+u
+ kjjs1jmdjU3sgeRiU5IfkL5e9pRdDoN8GBzwomTlPXwpcwnZdW17d/Rur8zSKKp7HVOU
+ T/vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775144108; x=1775748908;
+ d=1e100.net; s=20251104; t=1775144556; x=1775749356;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pZ/If0t1Q4No35SOkkaO/KUUsRqOV3KKCfibOvnk8k0=;
- b=CyEToy8miFwvb7xq3LMyhydyiWtBqaFAaNfLK/CGluGK5kiY/4AfW17qVc+xlRM3LD
- ggnCa5OrHUXGCe9CVpW5urm+ZjjngsqbxAag2t7r3+LJ/cEolefv3IJUc/Cn3gN301K6
- K+gdozBCJ1+ohc9YHIUNldWc/Aw4jo/BbYhm2DCIkwf4R19Z/jDP9vvG/GXYRB/6CMKt
- al49najgDLKtgXe4SMToRjRJgdmsBg2W7EN7farNk3TW6KvZ7IzZAo403spzMXOWqz2K
- NHjLPchdiyxX7FiMcSAW85jWupjB881EtJsYpc3fEpq/AIlGucmb8Jxbb8xF+hAVLAZs
- A4EA==
-X-Gm-Message-State: AOJu0YwpTsq8nosNQUm4sc7dlmV2u7ojdzT5X+XuPSR6/Bs1yxaWKxS6
- AaXOJYQOdfbODDyuzj9gSehgRNIe7egoxh8r4mdqX6wVvjtgnJ3CawGn696IvW1de8D8PTAQXAE
- qVTTx5WIlgvHSxOuEnUvbLnBTjefQvWxJNKcyvMFvyhByOGzfA43TPWAu
-X-Gm-Gg: ATEYQzxWytwqVAypyqKs2UrBlxJLZY2oFn2et7TSqONG/kdXPd+2KH80NOUBG6w5hu2
- q4rV1+dDEzXpGL7BRtVB9Sl+/OgSW9611MV0Sc0LQZjKqPqu5X0gxkZc5nDafcGWFGvZ4fDr/iV
- OiYqvs059OkAsuyYwenSBBhIzyo8vEiA24fZftPI8AM4MXsxjXWrzeYMZoNqNOgaTz/odyk9ILd
- BeaHk8oXo0bZBbV7GNGcGhf6HumtghjD//ogT3974hAKZ7A2NBzjFYxBIcyTdrPKeCY/2YdX0ky
- wUR7NLhYEJJQQCAvDwOQlXErxsoO24l2/SMn3KF7MvX7zXo0SEU/bH/m+G2MrNIofArm7/TDO/s
- IJibiBXfZVsBZSGJozM5/7/PD8jpmgsK8bycMCHb0TrR0eQ==
-X-Received: by 2002:ac8:5887:0:b0:50b:5286:f768 with SMTP id
- d75a77b69052e-50d3bcec088mr108108841cf.48.1775144107650; 
- Thu, 02 Apr 2026 08:35:07 -0700 (PDT)
-X-Received: by 2002:ac8:5887:0:b0:50b:5286:f768 with SMTP id
- d75a77b69052e-50d3bcec088mr108107981cf.48.1775144106863; 
- Thu, 02 Apr 2026 08:35:06 -0700 (PDT)
+ bh=gUuDsFxP5i3qpHzhV4fxu8DyCXzoUzFYDCFlVn0RCbs=;
+ b=Pl/XCzRBilINIPSZVHl7U7t7Ea60mtZMcU+kjZBV+VzW/NeouMVMXQOGrEouYHOU0a
+ KLMO9CgIHlDT5rROQDJsyLRDKQA0XFWoQqlaecWffXFCjZ38EEZrI69od+FTYJBAFNom
+ guEBtGLk2MgN/jL51FYCmSNHt1wZ8vtPKl5eAJaCZrwxdA6I1r9kW1O0h2Sb2kfssQ8a
+ 5NBB/zD8ZSDHYUJoieOBH0z0Yg1uheqlL4hbJ9F+bbkafYvPOZ16NmLDJvMQloLNvGyR
+ 7e20A/F6yjY3TuWaBjXP8PeQtvJzV/IJlzhlZILe45yzQqXtzkEugS6raNlX6yEWDgzI
+ g00g==
+X-Gm-Message-State: AOJu0Ywmq151BW6O9qbcnSnGSyfQ43Ro/Ecv1RprIy2w/yQ+chiTorgu
+ LpqdKr5XZEBRS+zT0KERLHzJVUP1gmHwhMdExc/4yJv6DOKoHUeZUseqDxfh/gYuJ4TpTCAbHU8
+ I8cOnLYHcgyvFGpNIzAiHDT0sDKmaZiCtpTCctiggoE2+YiubS93/m+0c
+X-Gm-Gg: AeBDietZfjpedd6USQBpS0jFpwSnpMzDJFSfFeXX7zxQw9cyt0o87Tj1JYa7JI6DCB1
+ /3PkbmRiNL1dPkTVydwCmlSsqQDPHGe9cJElYRSja+0XZ1TvD/vBtglXm+j98p6G47AMjE50/sk
+ tD8LEM59ugjX6bEvzKlxoFKCPhozRF+asd+K5cFXZM3T3qmT5wsyurVBVcbXZthDtOqWjmk2l+b
+ Q2LhO02PPXMJlhq6TiygQn7WRAY8ExhgBZob1VM2FOgg8deCQNqu2zEkChQVg/hTWIEoFJ5dbXy
+ lGkUM8/whvJOKK3LX0bGeTop+KoRTjY4E8kGseJqw6z1CRgM5AsIUBVUoDb/4IwuEdKdweqKklQ
+ WOM15+NgFUW/4+Xr2E0A8qNg1/k6UvaW4rzBFMXfkojCm8g==
+X-Received: by 2002:a05:6214:20e2:b0:89c:4f67:8d15 with SMTP id
+ 6a1803df08f44-8a43ac480cdmr124110526d6.53.1775144555933; 
+ Thu, 02 Apr 2026 08:42:35 -0700 (PDT)
+X-Received: by 2002:a05:6214:20e2:b0:89c:4f67:8d15 with SMTP id
+ 6a1803df08f44-8a43ac480cdmr124109936d6.53.1775144555423; 
+ Thu, 02 Apr 2026 08:42:35 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d4b8a8f38sm23900331cf.24.2026.04.02.08.35.05
+ 6a1803df08f44-8a593331651sm25525546d6.10.2026.04.02.08.42.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 08:35:06 -0700 (PDT)
-Date: Thu, 2 Apr 2026 11:35:04 -0400
+ Thu, 02 Apr 2026 08:42:34 -0700 (PDT)
+Date: Thu, 2 Apr 2026 11:42:33 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>,
@@ -93,14 +92,14 @@ Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Yong Huang <yong.huang@smartx.com>
 Subject: Re: [PATCH RFC 09/12] migration: Make iteration counter out of RAM
-Message-ID: <ac6MqMLErjou_3nj@x1.local>
+Message-ID: <ac6OaY__8Gk61iNf@x1.local>
 References: <20260319231302.123135-1-peterx@redhat.com>
  <20260319231302.123135-10-peterx@redhat.com>
- <CAE8KmOzqJzdez1xuXOsPyq2ewrCohg+a0VfgmbkPkzTS6nr9Wg@mail.gmail.com>
+ <acaz4bJstLXz2Xdt@fedora>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAE8KmOzqJzdez1xuXOsPyq2ewrCohg+a0VfgmbkPkzTS6nr9Wg@mail.gmail.com>
+In-Reply-To: <acaz4bJstLXz2Xdt@fedora>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -126,18 +125,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 03:19:17PM +0530, Prasad Pandit wrote:
-> > Said that, we have code (not only QEMU, but likely mgmt too) assuming the
-> > 1st iteration will always shows dirty count to 1.
+On Fri, Mar 27, 2026 at 05:49:46PM +0100, Juraj Marcin wrote:
+> Hi Peter,
 > 
-> * Where do we make this assumption? I mostly see 'dirty_sync_count'
-> read/used as is, only cpu_throttle_dirty_sync_timer_tick() seems to
-> skip one *_bitmap_sync_precopy() call when sync_cnt <= 1. This'd works
-> for zero(0) as well.
+> Did you maybe mean s/Make/Take/ in the subject?
 
-That is one reason, the stronger reason is mgmt like libvirt can also read
-this value from QMP queries, and it can matter on mgmt decisions on
-migration operations. Changing definition of this value is an ABI break.
+I was trying to use "take", but maybe it isn't accurate.
+
+I asked my English teacher (Gemini Pro..) and I was told "move" is the
+best, "take" worst, "make" OK but only in "dev-talks".  I'll use "move".
+
+Thanks,
 
 -- 
 Peter Xu
