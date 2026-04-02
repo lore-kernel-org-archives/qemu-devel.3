@@ -4,91 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84606D6AB10
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2B4D6AAE7
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Q21-0008Ez-LF; Thu, 02 Apr 2026 17:56:53 -0400
+	id 1w8QK8-0000q8-Jz; Thu, 02 Apr 2026 18:15:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q1z-0008DB-K1
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:56:51 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q1x-00073C-Su
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:56:51 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-66c4c7e2bb7so1821927a12.0
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:56:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775167008; x=1775771808; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=COppB07ZdgBSIiLPYIXUKRW1DDBdEAcH3Z/PWDGJeWs=;
- b=XtDluCNb9W+ZBaPdofNm5Z+FphNrnu5bPHBpEorvBXcekKUACZBdVzwkdKdfKpE6sh
- 76na9LzQDrDE/kNkiC3NhkcvN3olYrzfk7DicvwCEc0Z7UCfo2QN6niCLv94t1iFcdal
- s1oGfp6TA+TSRoX82NRYrnJc4qw3f/u985MaWrkXJPbrBPuskwTOCP97XItliGINab2y
- CYYznW3SJ1dLD+5d3fDlXbniFOg0X9sd0Kd8q3CKg1GP08BImpI+CVfBhsheRpz4U5cW
- zcpascM64CRx/avuTej5Bg3lweSnRPZ/KuOxL59GO23wxlxDe8Mqbb3NGCGQcekxd3XA
- h+9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775167008; x=1775771808;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=COppB07ZdgBSIiLPYIXUKRW1DDBdEAcH3Z/PWDGJeWs=;
- b=W7U/Lu72owjpkJFtXwMEAyisrBeyj+yw/suP2qbY259bE3vL68u2DP8501lM8bH1Eh
- NDqB1i7AqexRB+aQK2xBqqtuRL6NXXO+U5YR0z0cd6vzmyNgWVVEi3HT4u2UI+QtyjVd
- d6LfH6Pk2dYQYe8VAaWPqvm9z3C+GriAcWQouyFF+Bp5f2Cy3UhcCSLbYIOAIRVUHn6T
- qQnQoczRxawX2Va/zGaka1LLFV+XeZjsY4jZQlxrnM/aaeYJ4HXr/Zcb6pwauqN/R/r0
- 0kzD17EzERSKP6sIbXvvHnW2Ye+nHz3CFNZwiNKETQuiU5WS8npTKVQj/Y4P0SRM+mbo
- Ksiw==
-X-Gm-Message-State: AOJu0Yz7JjIghenIS28RCOjKSCBfgzqOJpivYU6vIO3IxoF5tnf01b3R
- xGW1nEh6no+oU7UnbutKATil3qOvRKso4uuVp0hGtyjnVw9d6zMqWqNpIA62PQi0
-X-Gm-Gg: AeBDievfOl35QvDVsFajcUnxSKft+4OtEQRSDIWONpa2Uq1CqcrkmAaPcx3upkHHRNY
- 0ziDhR+Fw0inI0xeyTKzfDD67q+cuWk1cADHLWtHGQwv0RUmbUhAtvP/h8ezb85JdL3P1OIAeVB
- gof8NsAZaEw0ansZBS3A9LMqiYFCHifFD/8kG3CP/n0y8tkZ6MIqyai8QlR6nazL5z0Gd1XXS25
- qD0Sken49NWnMM6nbcbKQD9+LUxNm+ECpkS4utCDtY/VOnD0PUwRcllBQnN3Sw2slioWhXA4Z+a
- nZrl5NgXxB0HOC1zryIb61YTWXOoIckuqGwDVu70Oy6y7EEVAzAzELXiYgpYHRuJwRoFJEK81SI
- bheOzDBhQD8Ta0bhR8OMvJoKi7ohzCZxqpA8GovS2q+mjnps5SmCAhOLGWvXTKkTpRAJEDftGwi
- yILm2qpSwYpnBKcBigexG+nsl1yxw13uRu3dQ39dZFYE60jY4MmOo22VxVt+FufvpUtv2wvl2hi
- zVlOTe+
-X-Received: by 2002:a17:907:808:b0:b9c:3ba2:2da8 with SMTP id
- a640c23a62f3a-b9c67b83e0amr24481566b.52.1775167007568; 
- Thu, 02 Apr 2026 14:56:47 -0700 (PDT)
-Received: from thinkpad-t470s.. (93-143-182-244.adsl.net.t-com.hr.
- [93.143.182.244]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.56.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 14:56:47 -0700 (PDT)
-From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
- artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v3 04/33] hw/core: introduce generic FDT device model registry
-Date: Thu,  2 Apr 2026 23:55:49 +0200
-Message-ID: <20260402215629.745866-5-ruslichenko.r@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260402215629.745866-1-ruslichenko.r@gmail.com>
-References: <20260402215629.745866-1-ruslichenko.r@gmail.com>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1w8QK6-0000pX-Gm; Thu, 02 Apr 2026 18:15:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1w8QK4-0004oV-OL; Thu, 02 Apr 2026 18:15:34 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 632EjTuh290829; Thu, 2 Apr 2026 22:15:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=tGJnk2
+ 1zM7+6e1mlclJsRkNicDbXkU5+lfrniVbZ4rk=; b=pKyBbg7btKmjq4GyhdBsjV
+ T590UkXNfG9jsDjgV3UG+LxLiGN5BTpfBuDS3oNFJDB4nSchTagZYKrY3w8DBnQt
+ +248s6hqmfSYt34l9FY+w+9enrdcnBdEiXOS4K+g5tjBXNL7+l60roDmPRFbGZQ1
+ kfTxmEgW9QpLayr233umgXx0qL6csMAlDmrBjmEVsi/+sbIVCjdTSJoJamHhHA2E
+ KeN/I6JMaq+a1asbqNGLsZHxRmmvVI8znd6hF2zf6A+NRuxrdT/fcVmX0Uyfr7/H
+ bo1/efEyZApkMJqPWJUrtCnf46OFizGeRtkJ/7Mg4HUc0w/ThtXtzF/282yrFiSA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66q3es9n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2026 22:15:28 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 632KsFQ8022266;
+ Thu, 2 Apr 2026 22:15:27 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6tanbw7d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2026 22:15:27 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 632MFQAw37683754
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Apr 2026 22:15:26 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 124ED5806B;
+ Thu,  2 Apr 2026 22:15:26 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A4D565805D;
+ Thu,  2 Apr 2026 22:15:24 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.183.185])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Apr 2026 22:15:24 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
+ david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com,
+ brueckner@linux.ibm.com, jdaley@linux.ibm.com
+Subject: [PATCH v10 13/30] s390x/ipl: Introduce IPL Information Report Block
+ (IIRB)
+Date: Thu,  2 Apr 2026 18:14:35 -0400
+Message-ID: <20260402221453.1602899-14-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260402221453.1602899-1-zycai@linux.ibm.com>
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 3zHkXglPsMe4_GuI3J5yQ4RmHGz9SqoG
+X-Authority-Analysis: v=2.4 cv=frzRpV4f c=1 sm=1 tr=0 ts=69ceea80 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=1NTGDykL02WXTEG3Jz0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 3zHkXglPsMe4_GuI3J5yQ4RmHGz9SqoG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDE5NSBTYWx0ZWRfXzHrIWDENPgkw
+ /8Kl7ZKRsHlRIiGh5lUkK8TuGrlSHASgaJAhe0D7Qo2+PIj77Am6Dv9AKdS7zYy7l30j9Mnak2v
+ 4nbpwGugJurvCfcujx1rAiw2U1JxXSbbdA0dkkQjH0tikdjJT8+87ac+9IsWSONC5QK0e4mIbnh
+ 1Wja17p8h8KG1XOulh+qK92qBiMYj1M8RP/rPANoivxKEYAphaFi6Tr+YlLr9/Hwys9sZG2h+NN
+ eISWfwulgQ2HzqhBHMMYL9UtVclcdX9u8CvNuH7lN5c9dz8rrvvCjanLQDK+/v/SEMc61+Ce5DV
+ XFzg9Em+iZC6g5JBQCwd5ptjkCcKRysDwAV6gunix/Z1SBfzE8Qt+XGh1B056QjSgiqYPsvXnPO
+ 4zW4V81SnbdOjjRYW9XddQ9TzQ3cOgT5G53CdGKBTJrPw3JhHdUL2A2Q2oq9Os9Z5CPfnGTGITF
+ DjqsYyDjyBCOKh/C2eQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-02_04,2026-04-02_05,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604020195
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,213 +126,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+The IPL information report block (IIRB) contains information used
+to locate IPL records and to report the results of signature verification
+of one or more secure components of the load device.
 
-Introduce infrastructure to instantiate device models
-directly from the device tree.
+IIRB is stored immediately following the IPL Parameter Block. Results on
+component verification in any case (failure or success) are stored.
 
-This includes the registry of known device models with
-associated init functions and key API methods to
-operate it.
+The IIRB data is reserved and protected by the guest kernel during early
+boot to prevent it from being overwritten before the certificate data is
+permanently saved.
 
-The MIT license of fdt_generic.c preserved as in original
-file from https://github.com/Xilinx/qemu.git repo.
-
-The license for fdt_generic.h derived from matching
-fdt_generic.c file.
-
-Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
 ---
- hw/core/fdt_generic.c         | 110 ++++++++++++++++++++++++++++++++++
- include/hw/core/fdt_generic.h |  61 +++++++++++++++++++
- 2 files changed, 171 insertions(+)
- create mode 100644 hw/core/fdt_generic.c
- create mode 100644 include/hw/core/fdt_generic.h
+ docs/specs/s390x-secure-ipl.rst | 21 ++++++++++++
+ include/hw/s390x/ipl/qipl.h     | 59 +++++++++++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+)
 
-diff --git a/hw/core/fdt_generic.c b/hw/core/fdt_generic.c
-new file mode 100644
-index 0000000000..65e3c1efa3
---- /dev/null
-+++ b/hw/core/fdt_generic.c
-@@ -0,0 +1,110 @@
-+/*
-+ * SPDX-License-Identifier: MIT
-+ *
-+ * Tables of FDT device models and their init functions. Keyed by compatibility
-+ * strings, device instance names.
-+ *
-+ * Copyright (c) 2010 PetaLogix Qld Pty Ltd.
-+ * Copyright (c) 2010 Peter A. G. Crosthwaite <peter.crosthwaite@petalogix.com>.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
+diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+index 0ea4522894..d82fb97d5d 100644
+--- a/docs/specs/s390x-secure-ipl.rst
++++ b/docs/specs/s390x-secure-ipl.rst
+@@ -97,3 +97,24 @@ Subcode 1 - perform signature verification
+     * ``0x0302``: PKCS#7 format signature is invalid
+     * ``0x0402``: signature-verification failed
+     * ``0x0502``: length of Diag508SigVerifBlock is invalid
 +
-+#include "qemu/osdep.h"
-+#include "hw/core/fdt_generic.h"
-+#include "hw/core/qdev-properties.h"
-+#include "qemu/log.h"
++IPL Information Report Block
++----------------------------
 +
++The IPL Parameter Block (IPLPB), utilized for IPL operation, is extended with an
++IPL Information Report Block (IIRB), which contains the results from secure IPL
++operations such as:
 +
-+#define FDT_GENERIC_MAX_PATTERN_LEN 1024
++* component data
++* verification results
++* certificate data
 +
-+typedef struct TableListNode {
-+    struct TableListNode *next;
-+    char key[FDT_GENERIC_MAX_PATTERN_LEN];
-+    FDTInitFn fdt_init;
-+    void *opaque;
-+} TableListNode;
++During early boot, the guest kernel reserves the memory region
++containing the IIRB. This preserves the data while the guest kernel is
++operating and during re-IPL.
 +
-+/* add a node to the table specified by *head_p */
++The guest kernel uses the contents in the IIRB for:
 +
-+static void add_to_table(
-+        FDTInitFn fdt_init,
-+        const char *key,
-+        void *opaque,
-+        TableListNode **head_p)
-+{
-+    TableListNode *nn = malloc(sizeof(*nn));
-+    nn->next = *head_p;
-+    strcpy(nn->key, key);
-+    nn->fdt_init = fdt_init;
-+    nn->opaque = opaque;
-+    *head_p = nn;
-+}
++* Boot logging: reports which components were loaded and verified.
++* kexec operations: builds the next kernel’s IPL report from the existing one.
++* Keying: installs IPL certificates into the platform trusted keyring.
+diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+index ed1a91182a..7f91270255 100644
+--- a/include/hw/s390x/ipl/qipl.h
++++ b/include/hw/s390x/ipl/qipl.h
+@@ -146,4 +146,63 @@ union IplParameterBlock {
+ } QEMU_PACKED;
+ typedef union IplParameterBlock IplParameterBlock;
+ 
++struct IplInfoReportBlockHeader {
++    uint32_t len;
++    uint8_t  flags;
++    uint8_t  reserved1[11];
++};
++typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
 +
-+/* FIXME: add return codes that differentiate between not found and error */
++struct IplInfoBlockHeader {
++    uint32_t len;
++    uint8_t  type;
++    uint8_t  reserved1[11];
++};
++typedef struct IplInfoBlockHeader IplInfoBlockHeader;
 +
-+/*
-+ * search a table for a key string and call the fdt init function if found.
-+ * Returns 0 if a match is found, 1 otherwise
-+ */
++enum IplInfoBlockType {
++    IPL_INFO_BLOCK_TYPE_CERTIFICATES = 1,
++    IPL_INFO_BLOCK_TYPE_COMPONENTS = 2,
++};
 +
-+static int fdt_init_search_table(
-+        char *node_path,
-+        FDTMachineInfo *fdti,
-+        const char *key, /* string to match */
-+        TableListNode **head) /* head of the list to search */
-+{
-+    TableListNode *iter;
++struct IplSignatureCertificateEntry {
++    uint64_t addr;
++    uint64_t len;
++};
++typedef struct IplSignatureCertificateEntry IplSignatureCertificateEntry;
 +
-+    for (iter = *head; iter != NULL; iter = iter->next) {
-+        if (!strcmp(key, iter->key)) {
-+            if (iter->fdt_init) {
-+                return iter->fdt_init(node_path, fdti, iter->opaque);
-+            }
-+            return 0;
-+        }
-+    }
++struct IplSignatureCertificateList {
++    IplInfoBlockHeader            ipl_info_header;
++    IplSignatureCertificateEntry  cert_entries[MAX_CERTIFICATES];
++};
++typedef struct IplSignatureCertificateList IplSignatureCertificateList;
 +
-+    return 1;
-+}
++#define S390_IPL_DEV_COMP_FLAG_SC  0x80
++#define S390_IPL_DEV_COMP_FLAG_CSV 0x40
 +
-+TableListNode *compat_list_head;
++struct IplDeviceComponentEntry {
++    uint64_t addr;
++    uint64_t len;
++    uint8_t  flags;
++    uint8_t  reserved1[5];
++    uint16_t cert_index;
++    uint8_t  reserved2[8];
++};
++typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
 +
-+void add_to_compat_table(FDTInitFn fdt_init, const char *compat, void *opaque)
-+{
-+    add_to_table(fdt_init, compat, opaque, &compat_list_head);
-+}
++struct IplDeviceComponentList {
++    IplInfoBlockHeader       ipl_info_header;
++    IplDeviceComponentEntry  device_entries[MAX_CERTIFICATES];
++};
++typedef struct IplDeviceComponentList IplDeviceComponentList;
 +
-+int fdt_init_compat(char *node_path, FDTMachineInfo *fdti, const char *compat)
-+{
-+    return fdt_init_search_table(node_path, fdti, compat, &compat_list_head);
-+}
++#define COMP_LIST_MAX   sizeof(IplDeviceComponentList)
++#define CERT_LIST_MAX   sizeof(IplSignatureCertificateList)
 +
-+TableListNode *inst_bind_list_head;
++struct IplInfoReportBlock {
++    IplInfoReportBlockHeader     hdr;
++    uint8_t                      info_blks[COMP_LIST_MAX + CERT_LIST_MAX];
++};
++typedef struct IplInfoReportBlock IplInfoReportBlock;
 +
-+void add_to_inst_bind_table(FDTInitFn fdt_init, const char *name, void *opaque)
-+{
-+    add_to_table(fdt_init, name, opaque, &inst_bind_list_head);
-+}
-+
-+int fdt_init_inst_bind(char *node_path, FDTMachineInfo *fdti,
-+        const char *name)
-+{
-+    return fdt_init_search_table(node_path, fdti, name, &inst_bind_list_head);
-+}
-diff --git a/include/hw/core/fdt_generic.h b/include/hw/core/fdt_generic.h
-new file mode 100644
-index 0000000000..3d8ec2f7ff
---- /dev/null
-+++ b/include/hw/core/fdt_generic.h
-@@ -0,0 +1,61 @@
-+/*
-+ * SPDX-License-Identifier: MIT
-+ *
-+ * Tables of FDT device models and their init functions. Keyed by compatibility
-+ * strings, device instance names.
-+ */
-+
-+#ifndef FDT_GENERIC_H
-+#define FDT_GENERIC_H
-+
-+#include "qemu/help-texts.h"
-+#include "system/device_tree.h"
-+
-+typedef struct FDTMachineInfo FDTMachineInfo;
-+
-+typedef int (*FDTInitFn)(char *, FDTMachineInfo *, void *);
-+
-+/* associate a FDTInitFn with a FDT compatibility */
-+
-+void add_to_compat_table(FDTInitFn, const char *, void *);
-+
-+/*
-+ * try and find a device model for a particular compatibility. If found,
-+ * the FDTInitFn associated with the compat will be called and 0 will
-+ * be returned. Returns non-zero on not found or error
-+ */
-+
-+int fdt_init_compat(char *, FDTMachineInfo *, const char *);
-+
-+/* same as above, but associates with a FDT node name (rather than compat) */
-+
-+void add_to_inst_bind_table(FDTInitFn, const char *, void *);
-+int fdt_init_inst_bind(char *, FDTMachineInfo *, const char *);
-+
-+/* statically register a FDTInitFn as being associate with a compatibility */
-+
-+#define fdt_register_compatibility_opaque(function, compat, n, opaque) \
-+static void __attribute__((constructor)) \
-+function ## n ## _register_imp(void) { \
-+    add_to_compat_table(function, compat, opaque); \
-+}
-+
-+#define fdt_register_compatibility_n(function, compat, n) \
-+fdt_register_compatibility_opaque(function, compat, n, NULL)
-+
-+#define fdt_register_compatibility(function, compat) \
-+fdt_register_compatibility_n(function, compat, 0)
-+
-+#define fdt_register_instance_opaque(function, inst, n, opaque) \
-+static void __attribute__((constructor)) \
-+function ## n ## _register_imp(void) { \
-+    add_to_inst_bind_table(function, inst, opaque); \
-+}
-+
-+#define fdt_register_instance_n(function, inst, n) \
-+fdt_register_instance_opaque(function, inst, n, NULL)
-+
-+#define fdt_register_instance(function, inst) \
-+fdt_register_instance_n(function, inst, 0)
-+
-+#endif /* FDT_GENERIC_H */
+ #endif
 -- 
-2.43.0
+2.53.0
 
 
