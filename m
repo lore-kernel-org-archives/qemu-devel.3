@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C262D3943A
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FBDD3943A
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Jsz-00084l-9r; Thu, 02 Apr 2026 11:23:10 -0400
+	id 1w8Jy3-0007ft-7P; Thu, 02 Apr 2026 11:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w8Jsp-00084G-BW
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:23:00 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8Jxz-0007fV-Qq
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:28:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w8Jsn-0004qh-Nt
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:22:59 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8Jxx-0005Ps-Al
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:28:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775143375;
+ s=mimecast20190719; t=1775143695;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wVxhGblpV1TZYDb1qXr/eh8XkzboMwrZ6XwIrmuKazc=;
- b=PH84eYkEKOctldZR7BxOyySA9IJDdJVqlq1DGTmf6HcL6ZmGLyycFE6pqcILQslLuWgoIh
- enK2lBnkwHBgT2vebELneUkI9v0P6X59kJtTpceevVC/hRF6U0ICj3G9iM/262emvDchzO
- Dzz5r3fpiuY1EN8V6KDvhmaJlebGHv0=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EJESAtxqsZMKzcOizUBiIb+xWW9p/W9IBvakz8KuL6E=;
+ b=FLSp5yegv/T/T6AXDTIJYiVjYQ+lUbNx+y83WBLxUhDH1849z1H00gFhl3IHf+4rrqu2Us
+ Fme3Z7Wy7NVr3viT0avPI8ZPVhwOPzmxWWG1732j3uSRUPXti6S7z+0byNW8EtmIJeWBIB
+ H+rV1NCvsdym2l4uxzfwQjmao4Wu5mw=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-Y7BB6A0MMe6ahNPpVCJRdg-1; Thu, 02 Apr 2026 11:22:54 -0400
-X-MC-Unique: Y7BB6A0MMe6ahNPpVCJRdg-1
-X-Mimecast-MFC-AGG-ID: Y7BB6A0MMe6ahNPpVCJRdg_1775143373
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-82c70d1f56eso558369b3a.0
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 08:22:54 -0700 (PDT)
+ us-mta-642-NK1syj7JPOu-LUHVXohy0w-1; Thu, 02 Apr 2026 11:28:13 -0400
+X-MC-Unique: NK1syj7JPOu-LUHVXohy0w-1
+X-Mimecast-MFC-AGG-ID: NK1syj7JPOu-LUHVXohy0w_1775143693
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8d3bb33c8b8so61432085a.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 08:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775143373; x=1775748173; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775143692; x=1775748492; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wVxhGblpV1TZYDb1qXr/eh8XkzboMwrZ6XwIrmuKazc=;
- b=YryqXRqfBGCm9Wj53rmbTFMSSGdc/L9433GIYHKAarR2otcbp3L9g/ooWxEGH6f7c6
- zAwN7rpUy5vdOTdYfRncCFVHCXUiB5hyqyISAmoN1i61vo++po79E2i3KkKfsCMmIhnv
- 5Hu6AuzgKbNL3t2OZ5HPrMbly5rvOX2aD+FLXKa2R6RpNG2b6F/eb392CDOKrs7FI8nt
- 5l7X7p6UsGjpxOPJ5G/l982OOMn6V7vQ9e5mRwurHaO9YogYX6ptGmVn5gbPC0UvxCE4
- TYEdMrpfvX8QiVWFEbNtBqWF1n9nppZMEYwOElv/97BgYLIvlzN1ybi6sOb+fDvlkfhD
- X3+g==
+ bh=EJESAtxqsZMKzcOizUBiIb+xWW9p/W9IBvakz8KuL6E=;
+ b=URipNs7T/pJU+tl/ia1/tCkOJRPV+V9ehut8atWAzCIOK59EjDQ0KipCLI8JessouZ
+ 2gLvc7okZOmxkqllOU/7JUq3Nl2RXovE0GIr1NPdzfDG9psGnmxgAVjn5uNltrSxIffQ
+ 1ru/vlzmqacpXXZYHokkkRbpI/1BWXvd/0/q1xSEpuA+vwkf0ZebzP8j0EoPCDMtjT37
+ bNn890KVcHkJII5BI6rweCq+6bBShdKbCtD8UNbq7tfwpavRWlvbLFniS0DHMER4fN5E
+ cTLbrimBz59bAK8RvyyZcLf0Ha86NzygsnKSI2vofiHfv9eMJ+656Qj6VvtSkN1gVa9t
+ /MUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775143373; x=1775748173;
+ d=1e100.net; s=20251104; t=1775143692; x=1775748492;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wVxhGblpV1TZYDb1qXr/eh8XkzboMwrZ6XwIrmuKazc=;
- b=BA/ppqs42pcFm7OBB970lD3ONuoKWsqlukcIsB8li49NELTaXNgpndEeuixuX9ZdoN
- GoVEktKs1owVM8YuLHatzayIbrrsr2IjMecXzhETKBNBmE63AVh2oDm3IL64NB+nd4Tp
- JVq8J8RGDqGkrhVgE0ALJ3QHVUKGyqg9NeGZ+ItILS/OJnmCksgxzm7tPK2dD1b6VzpE
- xH34J18GlYdtPWXc4oHOvvoiSzZODEpByYPo1fpnWBu25p+7yuzrGDyeIIYCQuAmBaLS
- 1Pbnj/+i+u4BWiiw1j/evBO8oMCCBISDMzZDcYNI0cCijGN869lBFUahonXfdn+bwvUq
- JCyw==
-X-Gm-Message-State: AOJu0Yw82WCcSGryjBDKwkRvfnWSAWpZimFqvUVzVsTG88MIa5v8hT46
- 6Lz1bn25oGTG0kpEplaUDt8KG0v7rIZA3cocx95Labsv4FpJ+bOP41jn/9uS5Zi4ALk6/AMlpjt
- m0Igy1pafoRSbZKw/FZZsavJS93VF/jLKqiy5xtpXphgGU08YozOq1oWn
-X-Gm-Gg: ATEYQzz9xQfD49mxNKnGmAi0Ntrmv37zFRgdscarnkUnuj0ESwtCy8M6To9GBMtHc89
- WMZTBfMOBQDvRASt7ZupoUCCGb+jCC60q1WOpdNP+oOYiNqzjRobzpBGH/olR1X+wJ9g7CG9VUk
- CqIyKG3JDFgKmpEwNcZ6LMq+6o4HmDUMv5DejEX2XrqJRhQmeqmiD0CELubyMtLa3Z3T8V7vsLm
- yqERHAei2JQ2hNpLbRZH+rvm4kXd3wFYI6KJXr82U9K/ImuNPOfanZoaAV7731qq1kMXdw4degT
- QqS/Tf9sfZA+uOovGheVWZyx7JfPsf9KFPpg6fYAPPby8FyUOKJ6WCqqyuVv+b5FaX1LcBrkByR
- HsXseBZcZGsfH
-X-Received: by 2002:a05:6a00:130a:b0:82c:e46d:df45 with SMTP id
- d2e1a72fcca58-82ce8ad12e8mr8244534b3a.53.1775143373245; 
- Thu, 02 Apr 2026 08:22:53 -0700 (PDT)
-X-Received: by 2002:a05:6a00:130a:b0:82c:e46d:df45 with SMTP id
- d2e1a72fcca58-82ce8ad12e8mr8244511b3a.53.1775143372692; 
- Thu, 02 Apr 2026 08:22:52 -0700 (PDT)
-Received: from fedora ([49.36.108.200]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9b3baffsm3459722b3a.14.2026.04.02.08.22.48
+ bh=EJESAtxqsZMKzcOizUBiIb+xWW9p/W9IBvakz8KuL6E=;
+ b=V1iZgZRiKIAVPI3epjQBjldFLJa8vmbWROOtMjW/eYjBD07xRI2bor8LqZdKMF81Sw
+ 5W5jG9GPhn8rWVRr+LDYrVpfF8t5AbpTSs2URxbpzZIp7+v/U2YiWBImKOh57bUSRNj4
+ +kSHVrP8LOfZPmtzVVPZTWJiOH55YrnCsF8/KdeEyn7HDJjdQnOVegiEQmLdxzRbhVXR
+ hZAo6HIS2MUuTOAhRxZb5y5fP/sQeXszxxRPFf6lO7ulK333wC0iFc7qSqoNK7o3gXbN
+ 1ZQMYhimilZN6bXp6O5pYit+e0Nwuz/Oz58S1lk1bAfHMfcBujxTqMZGyai+oltg2Cs2
+ OnUA==
+X-Gm-Message-State: AOJu0YzCzDwWUErwHFpkLkuhJSJWnXM8iAMJf8sePX2stufGXSXVjT4w
+ /GdtV8/P8P2dmDW+N+E6rKPt5cC0eiwn8l6LQp08O/nEhWZZSZRxXd2RwJnqMiUtWhjFXnzofJX
+ 6bLH3uW9zkfmg1kofK8CMvEgKRS19G7aCpNsecOl2OefggTMzmCrizKAS7gqcD6+M
+X-Gm-Gg: ATEYQzwAwD9wZJuB6Rtj2+KQ8obG+n3xvbxFIGGHuHXkpcRW1+xfDuPLShf2Ax32ZF0
+ COQqDLvS4KBj9AZr6LVnr9isyIIf0wG5i1x1VRvXFY00KLdumczR3VFdugf1GEEM+XLBAKiJR4v
+ xetEBYObPVJVe9sNFpAS8sxqk2usP+O86aaLtrkfhUilMt/ehXwsPImlqVo3sNLEamSsBhJCnUY
+ Bu2sux6XknQfqWXH1ySozmh7grmUUKCpfHm4esxphlwohPiPqCuov8sIsETLf1PqwHC05qkf1Xu
+ Rqhr+RE7yL04qgkn1d5gLhicbkEHV8PHHViL/UTHvAqnXpEcOT+SO20d4TH3GD8se69Fbl8k//4
+ iij/F9OeLXf7tHEXriFXZc1nFoxmi/BNEYSDB0+X3yUpUgg==
+X-Received: by 2002:a05:620a:2886:b0:8c7:ad9:d0a2 with SMTP id
+ af79cd13be357-8d1b5af80f0mr1168247285a.22.1775143691617; 
+ Thu, 02 Apr 2026 08:28:11 -0700 (PDT)
+X-Received: by 2002:a05:620a:2886:b0:8c7:ad9:d0a2 with SMTP id
+ af79cd13be357-8d1b5af80f0mr1168238085a.22.1775143690914; 
+ Thu, 02 Apr 2026 08:28:10 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8d2a806e54bsm270069185a.30.2026.04.02.08.28.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 08:22:52 -0700 (PDT)
-Date: Thu, 2 Apr 2026 20:52:45 +0530
-From: Arun Menon <armenon@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [RFC v2 6/7] hw/tpm: Add support for VM migration with TPM CRB
- chunking
-Message-ID: <ac6Jxd2DAonGz1g6@fedora>
-References: <20260319135316.37412-1-armenon@redhat.com>
- <20260319135316.37412-7-armenon@redhat.com>
- <177452442289.34609.7771820064527102277.b4-review@b4>
+ Thu, 02 Apr 2026 08:28:10 -0700 (PDT)
+Date: Thu, 2 Apr 2026 11:28:09 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alex Williamson <alex@shazbot.org>,
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH RFC 08/12] vfio/migration: Fix incorrect reporting for
+ VFIO pending data
+Message-ID: <ac6LCWmVHl8fq81J@x1.local>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-9-peterx@redhat.com>
+ <e6a9aaf2-e2ab-4b25-a01d-b6093922668e@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <177452442289.34609.7771820064527102277.b4-review@b4>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+In-Reply-To: <e6a9aaf2-e2ab-4b25-a01d-b6093922668e@nvidia.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -130,153 +129,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 26, 2026 at 03:27:02PM +0400, marcandre.lureau@redhat.com wrote:
-> On Thu, 19 Mar 2026 19:23:15 +0530, Arun Menon <armenon@redhat.com> wrote:
+On Wed, Mar 25, 2026 at 07:32:12PM +0200, Avihai Horon wrote:
 > 
-> Hi
+> On 3/20/2026 1:12 AM, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > VFIO used to report different things in its fast/slow version of query
+> > pending results.  It was likely because it wants to make sure precopy data
+> > can reach 0 hence trigger sync queries.
 > 
-> >
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > index 6cf0e2f404e..fcd6043c992 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -40,6 +40,7 @@
-> >  
-> >  GlobalProperty hw_compat_10_2[] = {
-> 
-> Let's not forget to update this to 11.0 for 11.1 :)
+> It was to guarantee precopy data can reach 0 and trigger dirty sync queries,
+> since not all VFIO device data may be precopy-able.
 
-Yes I shall base it on top of 20260331140347.653404-1-cohuck@redhat.com
+Thanks for confirming.
 
 > 
-> >
-> > diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-> > index e61c04aee0b..9ce342fe8ac 100644
-> > --- a/hw/tpm/tpm_crb.c
-> > +++ b/hw/tpm/tpm_crb.c
-> > @@ -33,6 +33,17 @@
-> >  #include "trace.h"
-> >  #include "qom/object.h"
-> >  
-> > +/* command and response buffers; part of VM state when migrating */
-> > +typedef struct TPMCRBMigState {
-> > +    uint32_t cmd_size;
-> > +    uint8_t *cmd_tmp;
+> > 
+> > Now with stopcopy size reporting facility it doesn't need this hack
+> > anymore.  Fix this.
 > 
-> Could we name them after the name of the state fields?
-> command_buffer_len && command_buffer_data ?
+> Looks good, now the fast/slow path are consistent, plus we get the benefit
+> that if VFIO device has much stopcopy data, migration will try to reduce
+> RAM/other iterative devices to the minimum continuously instead of jumping
+> from fast to slow path as it currently does.
 
-This will be not needed.
+Yep.
 
 > 
-> > +
-> > +    uint32_t rsp_size;
-> > +    uint8_t *rsp_tmp;
-> 
-> (response_buffer_len ..)
-> 
-> Actually, you should not need an extra MigState at all. Check how
-> GByteArray are handled in in ui/vdagent.c for example. (I have a doubt
-> that it may eventually leak if loading for a running state, where data
-> != NULL though, I would have to check - we may want to use realloc for
-> buffers)
+> I still want to test this later with a few workloads, just to make sure we
+> don't miss anything here.
 
-I am thinking of adding a separate VMStateInfo for GByteArray. The .get
-and .put functions will call actual GLib API to set the size of the
-buffer or create a new one if the existing data == NULL.
-
-const VMStateInfo vmstate_info_g_byte_array = {
-    .name = "GByteArray",
-    .get = get_g_byte_array,  // Creates a new GLib object iff data!=NULL
-    .put = put_g_byte_array,
-}
-
-
-We will not require any pre-save and post load hooks in that case.
-We can also use it in the ui/vdagent.c.
+Thanks a lot.  Let me know if there's any update.
 
 > 
-> > @@ -347,18 +361,118 @@ static int tpm_crb_pre_save(void *opaque)
-> > [ ... skip 30 lines ... ]
+> > 
+> > Copy stable might be too much; just skip it and skip the Fixes.
+> > 
+> > Cc: Avihai Horon <avihaih@nvidia.com>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >   hw/vfio/migration.c | 11 +++++++----
+> >   1 file changed, 7 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> > index c054c749b0..9dbe5ad9e9 100644
+> > --- a/hw/vfio/migration.c
+> > +++ b/hw/vfio/migration.c
+> > @@ -591,6 +591,10 @@ static void vfio_state_pending_sync(VFIODevice *vbasedev)
+> >                             __func__, migration->precopy_init_size,
+> >                             migration->precopy_dirty_size,
+> >                             migration->stopcopy_size);
+> > +        migration->stopcopy_size = 0;
 > > +    } else {
-> > +        s->mig.rsp_tmp = NULL;
-> > +        s->mig.rsp_size = 0;
-> > +    }
-> > +    s->mig.rsp_offset = (uint32_t)s->response_offset;
-> > +    return 0;
+> > +        migration->stopcopy_size -=
+> > +            (migration->precopy_init_size + migration->precopy_dirty_size);
 > 
-> If you get rid of MigState, the original response_offset field will
-> proably have to be uint32_t too.
+> Query of stopcopy and precopy are not atomic, so we better use MIN() here:
 > 
-> > [ ... skip 14 lines ... ]
-> > +        g_free(s->mig.cmd_tmp);
-> > +        s->mig.cmd_tmp = NULL;
-> > +        g_free(s->mig.rsp_tmp);
-> > +        s->mig.rsp_tmp = NULL;
-> > +        return false;
-> > +    }
-> 
-> Suggesting g_clear_pointer(&ptr, g_free)
-> 
-> > +
-> > +    if (s->mig.cmd_tmp) {
-> > +        if (s->command_buffer) {
-> > +            g_byte_array_unref(s->command_buffer);
-> > +        }
-> 
-> Slightly neater:
-> g_clear_pointer(&s->command_buffer, g_byte_array_unref);
-> 
-> > +        s->command_buffer = g_byte_array_new_take(s->mig.cmd_tmp,
-> > +                                                  s->mig.cmd_size);
-> > +        s->mig.cmd_tmp = NULL;
-> > +    } else {
-> > +        if (s->command_buffer) {
-> > +            g_byte_array_set_size(s->command_buffer, 0);
-> > +        }
-> > +    }
-> > +    if (s->mig.rsp_tmp) {
-> > +        if (s->response_buffer) {
-> > +            g_byte_array_unref(s->response_buffer);
-> > +        }
-> 
-> Or you could simply without condition:
-> 
-> g_clear_pointer(&s->command_buffer, g_byte_array_unref);
-> s->command_buffer = g_byte_array_new_take(s->mig.cmd_tmp, s->mig.cmd_size);
-> 
-> This will also reset the size to 0 if cmd_tmp is NULL and cmd_size is 0.
-> 
-> > +        s->response_buffer = g_byte_array_new_take(s->mig.rsp_tmp,
-> > +                                                   s->mig.rsp_size);
-> > +        s->mig.rsp_tmp = NULL;
-> > +    }
-> 
-> Missing
->     s->response_offset = s->mig.rsp_offset;
-> 
-> > +    return true;
-> > +}
-> > +
-> > +static const VMStateDescription vmstate_tpm_crb_chunk = {
-> > +    .name = "tpm-crb/chunk",
-> > +    .version_id = 1,
-> > +    .needed = tpm_crb_chunk_needed,
-> > +    .pre_save = tpm_crb_chunk_pre_save,
-> > +    .post_load_errp = tpm_crb_chunk_post_load,
-> > +    .fields = (const VMStateField[]) {
-> > +        VMSTATE_UINT32(mig.cmd_size, CRBState),
-> 
-> Could be version 0, I think.
+> migration->stopcopy_size -= MIN(migration->stopcopy_size,
+> migration->precopy_init_size + migration->precopy_dirty_size);
 
-Yes, will change it
+Yes.  I'll revisit all these places on atomicity and possible overflow
+issues in this series after I get better understanding on the "data shrink"
+possibilities.
 
 > 
-> -- 
-> Marc-Andr� Lureau <marcandre.lureau@redhat.com>
+> >       }
+> >   }
+> > 
+> > @@ -598,19 +602,18 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending)
+> >   {
+> >       VFIODevice *vbasedev = opaque;
+> >       VFIOMigration *migration = vbasedev->migration;
+> > -    uint64_t remain;
+> > 
+> >       if (pending->fastpath) {
+> >           if (!vfio_device_state_is_precopy(vbasedev)) {
+> >               return;
+> >           }
+> > -        remain = migration->precopy_init_size + migration->precopy_dirty_size;
+> >       } else {
+> >           vfio_state_pending_sync(vbasedev);
+> > -        remain = migration->stopcopy_size;
+> >       }
+> > 
+> > -    pending->precopy_bytes += remain;
+> > +    pending->precopy_bytes +=
+> > +        migration->precopy_init_size + migration->precopy_dirty_size;
+> > +    pending->stopcopy_bytes += migration->stopcopy_size;
+> 
+> Now that migration->stopcopy_size holds only the stopcopy size (and not
+> stopcopy+precopy), we should remove these lines from
+> vfio_update_estimated_pending_data():
+> 
+>     /* The total size remaining requires separate accounting */
+>     migration->stopcopy_size -= data_size;
+
+Good point, I missed this part when changing the definition, I'll fix.
+
+Thanks,
+
+> 
+> Thanks.
+> 
+> > 
+> >       trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
+> >                                migration->precopy_init_size,
+> > --
+> > 2.50.1
+> > 
 > 
 
-Regards,
-Arun Menon
+-- 
+Peter Xu
 
 
