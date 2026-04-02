@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA16AD6AB17
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 21:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB09ED6AB10
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 21:20:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8PSZ-000448-CA; Thu, 02 Apr 2026 17:20:15 -0400
+	id 1w8PS6-0003kI-2m; Thu, 02 Apr 2026 17:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w8PSX-0003yB-Ht
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:20:14 -0400
+ id 1w8PS5-0003k9-6P
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:19:45 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w8PSV-0005g4-Ol
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:20:13 -0400
+ id 1w8PS3-0004au-Jz
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:19:44 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 12AF760125;
- Thu,  2 Apr 2026 21:19:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A36BC116C6;
- Thu,  2 Apr 2026 21:19:38 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id A6ABB60123;
+ Thu,  2 Apr 2026 21:19:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E04DC116C6;
+ Thu,  2 Apr 2026 21:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775164780;
- bh=iW8amckai9wBk7Cc1O5sdHXXZB8WiWGJCBtSEG3XdSc=;
+ s=k20201202; t=1775164775;
+ bh=bSL21DMJvdPmisuJ4sR+uubo6LsKzZepTDyv0CmheLU=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=kQIipvI6q54M6Nlu4GTAMqULqdXDMsArd03joVOfD3mG+R6wQM8WKfFrabTi/wcjT
- oEQOndakkChEae0X3FpW0/q78TRMp9KcBPOH8snRbeTzPbPch0/CU0GQTusQsE8aK/
- zC9I4UCg8aXF0qqduPRJcoKWWEMFXohkqTm7Dg4eijMqEzW4M4rbDSByGB1bdcOgqZ
- ZRg3ZX2I3jTFXEyTbHXglivbe8IMYfHn+0ghY6HCIr3Xuk0d9y2Ht0XKhIq5PkiMBV
- wQzGSqXQbjexmDIRSVcku9rfTQ7NPme98uiWWbVdmJNbYofFSVYNhgFtJlrx8xPYsf
- J88rQ+LikFPig==
+ b=dgAYVc21yM/2Vjc90j9dbQAcYoc1fLCXqQkzFCt296qDhe2Go0aqs8USaGnebPNio
+ ynpNo/A7T9a7UCDM631goZ8SsOzdpIaMKYQX1ErQbSbfG/ExO8qx45NqA2m+gqluwU
+ V/PbZAtnNluv/ZWQGVeO0CBrQkoABToqBhvY1qfgXhiOKpoiwilUcLqJZ/lYAzhVVE
+ D2Ea7z9M+rDtOBrJngc8Vj9N9tsnoZDe2Vx8kRupZzQ8vrqhdvMJQS9AkglcGvYWuh
+ crh7pCL48m58VQB7JXVlRn54cKyWrVaH6BXGYLxKQWNZ89CsAezoQ2d8Cblh5AtwkO
+ guTavDLZHgn9A==
 From: Christian Brauner <brauner@kernel.org>
-Date: Thu, 02 Apr 2026 23:19:19 +0200
-Subject: [PATCH 4/5] tests/qtest: add tests for dynamic monitor add/remove
+Date: Thu, 02 Apr 2026 23:19:17 +0200
+Subject: [PATCH 2/5] monitor/qmp: add infrastructure for safe dynamic
+ monitor removal
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260402-work-qmp-monitor-hotplug-v1-4-6313a5cdd574@kernel.org>
+Message-Id: <20260402-work-qmp-monitor-hotplug-v1-2-6313a5cdd574@kernel.org>
 References: <20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org>
 In-Reply-To: <20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org>
 To: qemu-devel@nongnu.org
@@ -52,12 +53,12 @@ Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Christian Brauner <brauner@kernel.org>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4873; i=brauner@kernel.org;
- h=from:subject:message-id; bh=iW8amckai9wBk7Cc1O5sdHXXZB8WiWGJCBtSEG3XdSc=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSeuxuv0zbF1+2qPHuqwIHN55hO6/E0msQ8tfuXfeGk+
- w9DFRf9jlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIlMaGdkOKFw47v38W3b2t1/
- Hr7sYHnihKBqyMbZH8//cby7yPItgw0jw9Zfk8W29p0ocHXnFInVsmxZPvExa4Kw79PZW5WTqxK
- 9eQE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4106; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=bSL21DMJvdPmisuJ4sR+uubo6LsKzZepTDyv0CmheLU=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSeuxv/foer4afmkxfEPMt39E6PC9TgvHlBZ07SqQKXN
+ a7dR9+ndJSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEyk/hYjw2G3CWZtnW2CX7LM
+ vapdfY1U3x/pD4t3eBmSUHDn67XPtQz/LHwzfi7IfaqYtNZi1Yl3WkKnl0rcP+jTvmj+tmzNNYV
+ ZXAA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
@@ -84,139 +85,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test the monitor-add, monitor-remove, and query-monitors QMP commands:
+Extract monitor_qmp_destroy() from the shutdown-time monitor_cleanup()
+path to allow destroying a single QMP monitor at runtime without
+shutting down the entire dispatcher coroutine.
 
-- Basic lifecycle: chardev-add -> monitor-add -> query-monitors ->
-  monitor-remove -> chardev-remove
-- Error: duplicate monitor id
-- Error: monitor-remove on nonexistent id
-- Error: monitor-add with nonexistent chardev
-- Re-add after remove: same id and chardev reusable after removal
+Export monitor_qmp_cleanup_queue_and_resume() so that monitor-remove
+can drain pending requests before destroying the monitor.
+
+Add qmp_dispatcher_current_mon tracking in the dispatcher coroutine to
+handle the case where a monitor sends monitor-remove targeting itself.
+After dispatching each request, the dispatcher checks the dead flag: if
+set, it calls monitor_qmp_destroy() and clears the tracking pointer.
+
+Both the dispatcher yield points and QMP command handlers run under the
+BQL, so no additional locking is needed for qmp_dispatcher_current_mon.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- tests/qtest/qmp-test.c | 101 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
+ monitor/monitor-internal.h |  3 +++
+ monitor/qmp.c              | 36 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
-index edf0886787..9dbd3a6103 100644
---- a/tests/qtest/qmp-test.c
-+++ b/tests/qtest/qmp-test.c
-@@ -337,6 +337,105 @@ static void test_qmp_missing_any_arg(void)
-     qtest_quit(qts);
- }
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 8f5fe7c111..40f76ef5a0 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -181,10 +181,13 @@ void monitor_fdsets_cleanup(void);
  
-+static void test_qmp_monitor_add_remove(void)
-+{
-+    QTestState *qts;
-+    QDict *resp;
+ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+ void monitor_data_destroy_qmp(MonitorQMP *mon);
++void monitor_qmp_destroy(MonitorQMP *mon);
++void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
+ 
+ Monitor *monitor_find_by_id(const char *id);
++bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon);
+ 
+ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+ void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 5fbc7af074..0d393f3c96 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -71,6 +71,13 @@ typedef struct QMPRequest QMPRequest;
+ 
+ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ 
++/*
++ * The monitor currently being serviced by the dispatcher coroutine.
++ * Both the dispatcher and QMP command handlers (monitor-remove) run
++ * under the BQL, so no additional locking is needed.
++ */
++static MonitorQMP *qmp_dispatcher_current_mon;
 +
-+    qts = qtest_init(common_args);
-+
-+    /* Create a null chardev for the dynamic monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'chardev-add',"
-+                     " 'arguments': {'id': 'monitor-chardev',"
-+                     "               'backend': {'type': 'null',"
-+                     "                           'data': {}}}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+
-+    /* Add a dynamic monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'dyn-mon',"
-+                     "               'chardev': 'monitor-chardev'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+
-+    /* Verify it shows up in query-monitors */
-+    resp = qtest_qmp(qts, "{'execute': 'query-monitors'}");
-+    g_assert(!qdict_haskey(resp, "error"));
-+    qobject_unref(resp);
-+
-+    /* Error: duplicate id */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'dyn-mon',"
-+                     "               'chardev': 'monitor-chardev'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
-+
-+    /* Remove the dynamic monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'dyn-mon'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+
-+    /* Error: remove nonexistent */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'dyn-mon'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
-+
-+    /* Error: remove CLI monitor (the default one) -- find its id first.
-+     * CLI monitors typically have no id, so use a bogus id to test. */
-+
-+    /* Add again after remove -- same id and chardev should work */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'dyn-mon',"
-+                     "               'chardev': 'monitor-chardev'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+
-+    /* Clean up */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'dyn-mon'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'chardev-remove',"
-+                     " 'arguments': {'id': 'monitor-chardev'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_qmp_monitor_error_paths(void)
-+{
-+    QTestState *qts;
-+    QDict *resp;
-+
-+    qts = qtest_init(common_args);
-+
-+    /* Error: chardev does not exist */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'bad-mon',"
-+                     "               'chardev': 'nonexistent'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
-+
-+    /* Error: remove nonexistent monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'bogus'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char *argv[])
+ static bool qmp_oob_enabled(MonitorQMP *mon)
  {
-     g_test_init(&argc, &argv, NULL);
-@@ -348,6 +447,8 @@ int main(int argc, char *argv[])
- #endif
-     qtest_add_func("qmp/preconfig", test_qmp_preconfig);
-     qtest_add_func("qmp/missing-any-arg", test_qmp_missing_any_arg);
-+    qtest_add_func("qmp/monitor-add-remove", test_qmp_monitor_add_remove);
-+    qtest_add_func("qmp/monitor-error-paths", test_qmp_monitor_error_paths);
- 
-     return g_test_run();
+     return mon->capab[QMP_CAPABILITY_OOB];
+@@ -98,7 +105,7 @@ static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon)
+     }
  }
+ 
+-static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
++void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
+ {
+     QEMU_LOCK_GUARD(&mon->qmp_queue_lock);
+ 
+@@ -287,6 +294,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+          */
+ 
+         mon = req_obj->mon;
++        qmp_dispatcher_current_mon = mon;
+ 
+         /*
+          * We need to resume the monitor if handle_qmp_command()
+@@ -347,6 +355,16 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+         }
+ 
+         qmp_request_free(req_obj);
++
++        /*
++         * If monitor-remove was called while we were dispatching a
++         * request on this monitor, the monitor was marked dead and
++         * removed from mon_list but destruction was deferred to us.
++         */
++        if (mon->common.dead) {
++            monitor_qmp_destroy(mon);
++        }
++        qmp_dispatcher_current_mon = NULL;
+     }
+     qatomic_set(&qmp_dispatcher_co, NULL);
+ }
+@@ -499,6 +517,22 @@ void monitor_data_destroy_qmp(MonitorQMP *mon)
+     g_queue_free(mon->qmp_requests);
+ }
+ 
++/*
++ * Destroy a single dynamically-added QMP monitor.
++ * The monitor must already have been removed from mon_list.
++ */
++void monitor_qmp_destroy(MonitorQMP *mon)
++{
++    monitor_flush(&mon->common);
++    monitor_data_destroy(&mon->common);
++    g_free(mon);
++}
++
++bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon)
++{
++    return qmp_dispatcher_current_mon == mon;
++}
++
+ static void monitor_qmp_setup_handlers_bh(void *opaque)
+ {
+     MonitorQMP *mon = opaque;
 
 -- 
 2.47.3
