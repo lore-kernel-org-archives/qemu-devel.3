@@ -4,70 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0095D39417
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 11:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 837D9D39415
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 11:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8G8S-0005RI-5n; Thu, 02 Apr 2026 07:22:52 -0400
+	id 1w8GTo-0001fG-7A; Thu, 02 Apr 2026 07:44:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1w8G8I-0005Oo-Qd
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:22:45 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1w8G8F-0005CS-5T
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:22:42 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxgsByUc5pEi8hAA--.34692S3;
- Thu, 02 Apr 2026 19:22:27 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJDx6+BvUc5pg3JjAA--.59757S3;
- Thu, 02 Apr 2026 19:22:25 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: Add support for dbar hint variants
-To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, jiaxun.yang@flygoat.com, richard.henderson@linaro.org, 
- lixianglai@loongson.cn
-References: <20260327003206.3749780-1-gaosong@loongson.cn>
- <70916e5a-ec69-fb8f-259e-2ef07e97bc5a@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <b3265697-630d-29b0-24ab-24be748d79f5@loongson.cn>
-Date: Thu, 2 Apr 2026 19:23:48 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w8GTl-0001et-De
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:44:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w8GTj-0003XS-KR
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:44:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775130289;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nmypjSOO8NHtiaI3BzWg8w1pL57Rt7rMIDp86Itz9/I=;
+ b=ceMtAtm+vUrJsT0tBUoAfJ/G5+dvU5grYUPzTK88s8Hp5zQbLNlV+NEyuhi6ZEO8SwAnev
+ Ie1QWB4j7+I1Pj25UJVi8No/dTUXA/pI5AvI9UHzFpQ4Ay8Fr49utS7Q2mZUc0fDFBim4R
+ ma51Ghfb9gOy2/FlMLDyXciEgzip7p8=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-tjwVCw0ZNj6-D6y9u04paQ-1; Thu, 02 Apr 2026 07:44:48 -0400
+X-MC-Unique: tjwVCw0ZNj6-D6y9u04paQ-1
+X-Mimecast-MFC-AGG-ID: tjwVCw0ZNj6-D6y9u04paQ_1775130287
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-354490889b6so1108999a91.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 04:44:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775130287; cv=none;
+ d=google.com; s=arc-20240605;
+ b=U/Ozx9nDp91EqtPBakYjPUdN92saC8Da3IiCnUchK9m7eY8yNUpnKF/uORT5GG7L2j
+ WMLuG/7MT3J/uA9GKZ5pQ8onUkb4UMYljqPk2ENgZPq76yiYd9dBUreCUdBQGOTb1m/c
+ U4xXyaHBkE5FAgZ3tbvj0WWL4qaHpuwDKvQSV1Cl9Z8QFBa2lBBTkCIfLFliikobtvOn
+ GMgjPgDGWCmjIcZotQvRt8nleJAnhKibncrP4Ai3tcFjhM0Dhkl5w3wU5i8FrjNcUjBW
+ tnvlW5VvlG1sVmTm5bGsjqu8MtLo+/Vir/HVl4H3JyIRC8+1C0U1gftZlB9agpwY7WaX
+ /aAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nmypjSOO8NHtiaI3BzWg8w1pL57Rt7rMIDp86Itz9/I=;
+ fh=pljgQb51SI5T8fJjT4f89PH4vuf7hUTqYcKOSXi3vR8=;
+ b=lMC39AySx0F83mLRXKSIMvDRgZWCKZkdqc9qwnSw3m0ABtrWecYXOb9oprkgmkeWXa
+ iFh8zotK8zXneaAmnHl4nFqWpoiwdeRnA4/ZUhcA0T3HsowQRQzKpQMRi/gMBRwW/oSQ
+ ldI57UP+1NtLWVFcrYy8/oHevrmrm6L7qg9E7jGR0Ye7jQEVVKZLuO5kfOB3RkC1KyPP
+ Lg24/oeB9qLRdUh/2NEncfYx4PcyM5/EgHsIoIJEcrXWTZ8womDNiCTmWW794su0RSMH
+ F4v+bezvYiYUFlfEoi+DY9RqzZRp/2QHFoeslX5xmyIvXpmmHiKfuc2sLNtCR1lXXMwQ
+ ilPg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775130287; x=1775735087; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nmypjSOO8NHtiaI3BzWg8w1pL57Rt7rMIDp86Itz9/I=;
+ b=GUpFZG+6ExSNBW0dzd/5GSyv9nxiK0Cv6UsAHEj0Ic3eeuIEfi8oyM99wclBe7cGZx
+ Jy7RfffET0TyWcST3i34Ew2nGOfKCAy/QWB+YheXhyW3gsq6/oznRCCkT1u1ptJ1pVZ+
+ sb00Z3jUzF2xUIgDDY8IF8wHwdA1QQkq3uSKgNb/LzEqfteKqAMB1/Bwbp+Lrac0veJ+
+ 3F0QrkIAsGZYg/fJGyYudhpsCncRVXUPbgZYZCBwDT4Ktt9jfubOuhOq78M5ApfMSlFr
+ WQpAB25jE0ORLu6OvWKDMU+TWVR847jKT8790218ZehRTedy4gRkInGyGJqSTrwxMKWv
+ 2zxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775130287; x=1775735087;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nmypjSOO8NHtiaI3BzWg8w1pL57Rt7rMIDp86Itz9/I=;
+ b=GW+bigWhHuQ/mUlCndSXFjcXdARy0nCPHNADzmFCpLF2m1H7Sx2WKIpD8QUlpnVp+V
+ 5b5fwgCGk/A2bqH2J2ysHP4qrB0ZXnXZMVwVzcGpx991ZeEcAhQuz1DlrA4pfsCo7do+
+ 4PuFaThOXfV2RcbKV4YZuDRLlvoVbrSdf9Dc7ACmdptbXfah+V2ni/CkubSftz7S4Gbj
+ QqD7riiMu+eh35rwyhSYMqR3+sFWbCdFyW6aIUsevnMKOvplmXCLdeQVYpdkZI0fnvwC
+ bdDogSpUZpP5Zu/DWwsqGZgJAAGo+VAC+/Y5cAwhVjlgbvXaJyXSItalRw7lGN5XsY3x
+ Mmog==
+X-Gm-Message-State: AOJu0YyRonn15NvazUT9OALb6WAoQROraFOm64zCbt92NxrkWBH7Vt8H
+ ep6HBzRCqsNDgzStlzARd2iM0kGuFSSobgQZ/OGkx4e09l4K0GofAqAfgoad4VN6AlLNJdscjZ4
+ g7XfYnNW60CVhSxPLOqwUubTdDuDKJ1nKlQnGID/xqktmopKMVSvGgSHKYisYMR2tg/vKPz4gvI
+ 5qLnbaRv355hLZANWbbiVPefDoUT6IRvI=
+X-Gm-Gg: ATEYQzzHNbM7Lc0keEo2Aqpy38PO7a3BYYBdvGhmfRsATh+f06Ot8xrYbc9o1NuPRxY
+ 4RtQp5gAlyNtMWr7Ub1YWgYvjfH/gPaMwBIKPqryVS/c4uTJOEC8feVNlwNG96W6XRgM+d4gMzO
+ U1z+MVUWZB4fR5l6OvuN0TJAS2ZCDM/7qq6OFTWj9sBxg/B8Y0a/BB7m9pLJV8cxtkMcaK1Bfmz
+ 4SLVQxnysEM2QiJKE3cySAahYtZga3/bLC6iW7jZcxUS97HraSdHEg6FC1cHR4v5CQ/o9f62gDD
+ 5umKxgT/VRhBZ1YtD2mV8Uw=
+X-Received: by 2002:a05:6a20:918a:b0:398:c4e6:fec1 with SMTP id
+ adf61e73a8af0-39f10a19b55mr3409943637.23.1775130287247; 
+ Thu, 02 Apr 2026 04:44:47 -0700 (PDT)
+X-Received: by 2002:a05:6a20:918a:b0:398:c4e6:fec1 with SMTP id
+ adf61e73a8af0-39f10a19b55mr3409925637.23.1775130286810; Thu, 02 Apr 2026
+ 04:44:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <70916e5a-ec69-fb8f-259e-2ef07e97bc5a@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJDx6+BvUc5pg3JjAA--.59757S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3JryDWFy7ZF15KF1DWr4kuFX_yoWfCF4Dpr
- 1kAFWUKFWUJrn3Zw18J34UZFyUZr4xG3W7Xr10qFy8ur47Gr1jgr10grZ0gF1UGw4kXF18
- AF4UZwnrZF9xXFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9
- N3UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.263,
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-11-48eb1dcf7b76@redhat.com>
+ <878qbgpj31.fsf@pond.sub.org>
+ <CAMxuvayGCvJwyUgrHSGwfLhqAbVC61dEbgbL4Ji_0YQHyv4LJA@mail.gmail.com>
+In-Reply-To: <CAMxuvayGCvJwyUgrHSGwfLhqAbVC61dEbgbL4Ji_0YQHyv4LJA@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 2 Apr 2026 15:44:35 +0400
+X-Gm-Features: AQROBzDdZ66uAV7U5WprtiinBf3mQzx5WMgdxSvvvbS1d7sUXoW2VWrVabZm_Jo
+Message-ID: <CAMxuvazy-_DjAVJN2=ie___VxFMKGyLkEiEP0OBNbipN1nxoSA@mail.gmail.com>
+Subject: Re: [PATCH 11/60] ui/console-vc: add UTF-8 input decoding with CP437
+ rendering
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,221 +141,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2026/4/2 上午10:17, Bibo Mao 写道:
->
->
-> On 2026/3/27 上午8:32, Song Gao wrote:
->> LoongArch architecture (since LA664) introduces fine-grained dbar
->> hints that allow controlling which memory accesses are ordered by
->> the barrier. Previously, all dbar instructions were treated as a
->> full barrier (TCG_MO_ALL | TCG_BAR_SC).
->>
->> This patch adds support for decoding dbar hints and emitting the
->> appropriate TCG memory barrier flags. For CPUs that do not advertise
->> the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
->> fall back to a full barrier, preserving compatibility.
->>
->> The hint encoding follows the LoongArch v1.10 specification:
->> - Bit4: 0 = completion barrier, 1 = ordering barrier
->>          (ignored by TCG as TCG only supports ordering barriers)
->> - Bit3: barrier for previous reads (0 = enforce, 1 = relax)
->> - Bit2: barrier for previous writes (0 = enforce, 1 = relax)
->> - Bit1: barrier for succeeding reads (0 = enforce, 1 = relax)
->> - Bit0: barrier for succeeding writes (0 = enforce, 1 = relax)
->>
->> The mapping to TCG memory order flags is as follows:
->> - TCG_MO_LD_LD is set if both previous and succeeding reads are ordered.
->> - TCG_MO_ST_LD is set if previous write and succeeding read are ordered.
->> - TCG_MO_LD_ST is set if previous read and succeeding write are ordered.
->> - TCG_MO_ST_ST is set if both previous and succeeding writes are 
->> ordered.
->>
->> If the resulting flags describe an acquire or release barrier,
->> TCG_BAR_LDAQ or TCG_BAR_STRL is used accordingly; otherwise a
->> full SC barrier (TCG_BAR_SC) is emitted.
->>
->> Special hint handling:
->> - hint 0x700: LL/SC loop barrier, treated as a full barrier as 
->> recommended.
->> - hint 0xf and 0x1f: reserved/no-op, treated as no operation
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   target/loongarch/cpu.c                        |  4 +
->>   .../tcg/insn_trans/trans_memory.c.inc         | 82 ++++++++++++++++++-
->>   target/loongarch/tcg/translate.c              |  1 +
->>   target/loongarch/translate.h                  |  3 +
->>   4 files changed, 88 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index e22568c84a..d8d106b07e 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
->>           data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
->>           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
->>           cpu->env.cpucfg[2] = data;
->> +
->> +        data = cpu->env.cpucfg[3];
->> +        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
->> +        cpu->env.cpucfg[3] = data;
->>       }
->>   }
->>   diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc 
->> b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
->> index e287d46363..99bc486119 100644
->> --- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
->> +++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
->> @@ -137,11 +137,89 @@ static bool trans_preldx(DisasContext *ctx, 
->> arg_preldx * a)
->>       return true;
->>   }
->>   +/*
->> + * Decode dbar hint and emit appropriate TCG memory barrier.
->> + *
->> + * The hint is a 5-bit field (0-31) encoded in the instruction.
->> + * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
->> + *
->> + * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
->> + */
->>   static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
->>   {
->>       tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
->> -    return true;
->> -}
->> +    int hint = a->imm;
->> +    TCGBar bar_flags = 0;
->> +
->> +    /* Reserved/no-op hints: 0xf and 0x1f */
->> +    if (hint == 0xf || hint == 0x1f) {
->> +        return true;
->> +    }
->> +
->> +    /* If the CPU does not support fine-grained hints,or for the 
->> special LL/SC
->> +     * loop barrier (0x700), emit a full barrier.
->> +     */
->> +    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
->> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
->> +        return true;
->> +    }
->> +
->> +    /*
->> +     * Fine-grained hint decoding:
->> +     * Bits 3-0 control which accesses must be ordered.
->> +     *   bit3: barrier previous reads?   (0 = enforce, 1 = relax)
->> +     *   bit2: barrier previous writes?  (0 = enforce, 1 = relax)
->> +     *   bit1: barrier succeeding reads? (0 = enforce, 1 = relax)
->> +     *   bit0: barrier succeeding writes?(0 = enforce, 1 = relax)
->> +     *
->> +     * For each combination, we set the corresponding TCG_MO_* flag 
->> if both
->> +     * sides of the barrier require ordering.
->> +     */
->> +    bool prev_rd = !(hint & 0x08);   /* need barrier for previous 
->> reads */
->> +    bool prev_wr = !(hint & 0x04);   /* need barrier for previous 
->> writes */
->> +    bool succ_rd = !(hint & 0x02);   /* need barrier for succeeding 
->> reads */
->> +    bool succ_wr = !(hint & 0x01);   /* need barrier for succeeding 
->> writes */
->> +
->> +    if (prev_rd && succ_rd) {
->> +        bar_flags |= TCG_MO_LD_LD;
->> +    }
->> +    if (prev_wr && succ_rd) {
->> +        bar_flags |= TCG_MO_ST_LD;
->> +    }
->> +    if (prev_rd && succ_wr) {
->> +        bar_flags |= TCG_MO_LD_ST;
->> +    }
->> +    if (prev_wr && succ_wr) {
->> +        bar_flags |= TCG_MO_ST_ST;
->> +    }
-> I do not know the memory order, however it seems that it is different 
-> with other architectures with following usage when it is translated to 
-> QEMU TCG code. I do now which is right.
->
-> __smp_rmb() ---> tcg_gen_mb(TCG_BAR_SC | TCG_MO_LD_LD | TCG_MO_LD_ST)
-> __smp_wmb() ---> tcg_gen_mb(TCG_BAR_SC | TCG_MO_ST_ST)
-> __smp_mb()  ---> tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL)
->
-Do you mean that TCG_BAR_SC might be missing here?
+Hi Markus
 
-It is actuallyhandled later: for non acquire/release cases we fall back to
-tcg_gen_mb(bar_flags | TCG_BAR_SC).
+On Wed, Mar 25, 2026 at 10:48=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> HI
+>
+> On Wed, Mar 25, 2026 at 9:35=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+> >
+> > Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+> >
+> > > The text console receives bytes that may be UTF-8 encoded (e.g. from
+> > > a guest running a modern distro), but currently treats each byte as a
+> > > raw character index into the VGA/CP437 font, producing garbled output
+> > > for any multi-byte sequence.
+> > >
+> > > Add a proper UTF-8 decoder using Bjoern Hoehrmann's DFA.
+> > > The DFA inherently rejects overlong encodings, surrogates, and
+> > > codepoints above U+10FFFF.  Completed codepoints are then mapped to
+> > > CP437, unmappable characters are displayed as '?'.
+> > >
+> > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > Have you considered the decoder in util/unicode.c?  Do we need two
+> > decoders, or could we replace one by the other?
+> >
+>
+> Oh! I missed it, I should definitely try to use it.
 
-Thanks.
-Song Gao
+The vt100 receives characters one at a time. The DFA is suited for
+this. mod_utf8_codepoint() works with whole buffers. It's possible to
+write one with the other, but we lose in performance, and we need
+extra quirks. I don't think it's worth it.
 
-> Regards
-> Bibo Mao
->> +
->> +    /* If no flags were set, this is a no-op barrier */
->> +    if (bar_flags == 0) {
->> +        return true;
->> +    }
->> +
->> +    /*
->> +     * Use acquire/release semantics when possible to generate more 
->> efficient
->> +     * code. Otherwise, fall back to a sequential consistency barrier.
->> +     *
->> +     * Acquire: order loads before loads/stores (LD_LD | LD_ST)
->> +     * Release: order stores before stores/loads (ST_ST | ST_LD)
->> +     */
->> +    if ((bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST)) &&
->> +        !(bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD))) {
->> +        /* Only acquire flags present */
->> +        tcg_gen_mb(bar_flags | TCG_BAR_LDAQ);
->> +    } else if ((bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD)) &&
->> +               !(bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST))) {
->> +        /* Only release flags present */
->> +        tcg_gen_mb(bar_flags | TCG_BAR_STRL);
->> +    } else {
->> +        /* Mixed or full barrier */
->> +        tcg_gen_mb(bar_flags | TCG_BAR_SC);
->> +    }
->> +
->> +     return true;
->> + }
->>     static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
->>   {
->> diff --git a/target/loongarch/tcg/translate.c 
->> b/target/loongarch/tcg/translate.c
->> index b9ed13d19c..49280b1dd3 100644
->> --- a/target/loongarch/tcg/translate.c
->> +++ b/target/loongarch/tcg/translate.c
->> @@ -149,6 +149,7 @@ static void 
->> loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->>         ctx->cpucfg1 = env->cpucfg[1];
->>       ctx->cpucfg2 = env->cpucfg[2];
->> +    ctx->cpucfg3 = env->cpucfg[3];
->>   }
->>     static void loongarch_tr_tb_start(DisasContextBase *dcbase, 
->> CPUState *cs)
->> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
->> index ba1c89e57b..8aa8325dc6 100644
->> --- a/target/loongarch/translate.h
->> +++ b/target/loongarch/translate.h
->> @@ -43,6 +43,8 @@
->>   #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, 
->> LLACQ_SCREL))
->>   #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
->>   +#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, 
->> DBAR_HINTS))
->> +
->>   /*
->>    * If an operation is being performed on less than TARGET_LONG_BITS,
->>    * it may require the inputs to be sign- or zero-extended; which will
->> @@ -66,6 +68,7 @@ typedef struct DisasContext {
->>       bool va32; /* 32-bit virtual address */
->>       uint32_t cpucfg1;
->>       uint32_t cpucfg2;
->> +    uint32_t cpucfg3;
->>   } DisasContext;
->>     void generate_exception(DisasContext *ctx, int excp);
->>
+>
+> > There's a mad UTF-8 test suite buried in tests/unit/check-qjson.c
+> > derived from Markus Kuhn's UTF-8 decoder capability and stress test at
+> > <http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt>.  How does
+> > this decoder do on these tests?
+> >
+>
+> According to the author original article, it should pass
+> https://bjoern.hoehrmann.de/utf-8/decoder/dfa/
 
 
