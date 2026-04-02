@@ -4,125 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E384CD39410
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D18AD3940D
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:48:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8FaZ-0004h5-T1; Thu, 02 Apr 2026 06:47:52 -0400
+	id 1w8FaY-0004gF-8U; Thu, 02 Apr 2026 06:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8FaX-0004fs-53
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:49 -0400
+ id 1w8FaU-0004eZ-W6
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:47 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8FaU-0007nx-L2
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:48 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1w8FaS-0007mt-77
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:46 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6328dAhQ1249508
- for <qemu-devel@nongnu.org>; Thu, 2 Apr 2026 10:47:45 GMT
+ 6328Rx6h352408
+ for <qemu-devel@nongnu.org>; Thu, 2 Apr 2026 10:47:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=soNRWiA+58L
- ShvYtPlR5O15pOIyvGIp2qUYXHskXHes=; b=HC0+4T/Ueh8B2x3i1VRjK8pxj4x
- r74u6SOmZYeWqNThA13T1JoOPJmiXfv7X3peFmSVDV8mcDW1I9EH93UxxoG8WQ5W
- hdUoUSrJenbtsnosENg+ycZ4eVaVq5aW0XwQh+UbyB4VuOZg5FlXVfjll7jR/8kF
- mXK6XP4sRaVVk0ZkW/Y+o4i/RutcnkYmiDK3Sl+2AT6x63GLN4ziWElcDPSEHppP
- zxRfMXsjr/Av6GmokbgKX19DvMmCP42pVRVyqKdUPEZTYpbxZRTXBYMCzHGkPlOh
- vYFwM/2mZHPjZF1J6x0oTQAd2sUYyLJ05dYRD2KvVTLqaPTvyEQwyuWREIg==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9n4t0fsn-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=UQmlyxpZaVV
+ P/6TW6V7qRLUtxbYcGCiDyOnIxm58+4w=; b=K8MeTxwcNLE/aJrSey/79pLnwrc
+ qqFo5btqngkq/ujsUTbIO8FHI4kml6jKVwLXH7K3w1NRIc9skRU4MwTsRJKz3sLt
+ nH/tVc+D3A8Mw6nzbcANVWirnd2pD+HBThTivy3lDsBV6FAZRbwbiHFLnaFpC6c1
+ QzepLD23/0CpURrL53B0Jy+jyi/xUModybSELi0HatkSgpLQrSVECeeVRxjnEQQu
+ wAEe2/MQiMmy7rlPJFMETgqFSN7aIfgXnAR933y0UhwwP5clx+2PxgsjBcTRCagj
+ YB8oa7qJVt6T0cHaZKpOc9NqZRw2VVLIT9RCO9wCw7Ihu8IWkQG64M6WHBw==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9myh8h0c-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:44 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-2ba9a744f7dso1115327eec.0
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:37 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2c8ac8e422dso1240015eec.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775126864; x=1775731664; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775126857; x=1775731657; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=soNRWiA+58LShvYtPlR5O15pOIyvGIp2qUYXHskXHes=;
- b=XY1gOkUQV0j6vreqTKA7DHONkdO36yZ2Y68q30E6XnuxfwueV2xpmcYaQIjdz4FfxT
- fZeeNQXm856cXSyKIu/KrDoG/2gXh5jherLqkWnOI5jeXp3ZTUYHyfwonXv4t/IYAAxK
- MoeQpBZgicHF/mlv5HH94rk2CWDMsDkp2DXFSNQZU6cc/SVS/N+coY1HTWCm8S625Dhg
- ebh/zDzC56xhOtJ51hDYpGuaH4d8jeIyqz2hM/ReGjeh2OwSW7qdE1ZAmYYxHE+jFUXO
- C2UsoSYHmeR7OyIlcV5VRZ6lkOByRzfdkntFXEx7gUnqoU1VU7YIUYguvtsW+viWZqx1
- hOiA==
+ bh=UQmlyxpZaVVP/6TW6V7qRLUtxbYcGCiDyOnIxm58+4w=;
+ b=Xu6c0miNb4698SlkyaXZlaoLwyGt6xaRdPLCsoWDN87fsVOcpljnJ/GljPCrZ0k/Gp
+ w6kHpUfIWaNtWw2sVqdrETfaDaCWl46udgTmU8ubbVTP2W+AsoRZ9NpzxeWKfwrDH0t2
+ V6h/RUmIiMFf3HSkAca/EZV/hnm8y8TVuNtGVt4lTgr0fKElOveGPus1ZRZv6nO35xkU
+ mamgoiPt6zXIRcghN9Pcxffks8HUOEOD8/VNJ4uoiTpHS6ELuegY2qAHyQ7iKLoAlKAG
+ u4Dv6AY6LWjEwzE7VC+1sH58kvBS0OuolZnfC+tnGrOcij1ECdeLrNNiZO3WKvZCe3jt
+ N0cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775126864; x=1775731664;
+ d=1e100.net; s=20251104; t=1775126857; x=1775731657;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=soNRWiA+58LShvYtPlR5O15pOIyvGIp2qUYXHskXHes=;
- b=FcGNWHPjuoTVkDS1NXCXXtWU/B89SSDBNTYLw5uEPunLFke59gAfXo1g/yi4ucrqi1
- aHJZL9QMFo+cd2c5A0QPehqasB9bBmllu5PM0BUeRVCd1FdbcvkK4Wsb3Jg5OqZh7x5Z
- xMe4/lZuSxmznL5t/AsV6sT+A2aZ+32xI6Sp/oycLI/JvmpqGsHXIbcUaRAwxe43RAzf
- Tm9wuQBVJRIKXiIlPzyJum3aUP9BWnv9R9B2fsfal9m+Yo00xe7bzUBnuakj1gDkDDBx
- 1es+I41R5UtSHSn7Bz8hN5vVdc0zC48KnmJTUHW6wH2Fx0jbp+3eJRb6Zv6fvZN5Dmja
- 8miQ==
-X-Gm-Message-State: AOJu0Yx8SqqY5rZlf85LgTXI1TDa7m3GxBruHDS3zrv8Ni2sKPdHgVYN
- yjY/1PM9ToM9DgOWBgNS9fB96lVCEgMCgJFT+T99eIsuHRMspGBotkhcsp/kuHqamLyLYGu6Vn+
- JTeZz4Zl08gs2cQItHa165/JmHlMGgCg5PCc8aJpxMRIgY5Hf2dGzfFhTJay3vWmcKbTW
-X-Gm-Gg: AeBDietHa8NGa4/yOgfKvObNMkymrGa3GTbvuAqEAkbHQAd42xc+QJQaQKDVbqY40Ja
- QG+8X5rXGH09+n6b2zi5R9LNeZ3bY/hGhnQwk+rU3smjiRoCyZSnzNmsSaqson9ZZeS/eaUQmuE
- WcQCZ+7EQjTWEn4ACUb77C02Bf9yq7j23/nwLC0+rFxAdIVjCqSbLtS4Qn38VeJKtKYZLrwniL+
- z0pQ+J/BVwhGCkl+i6SmKoXGZhJ7iveEL24MkoUB0roem8TbB/hR3HbUE4crhnEV871klCCrkyk
- rnPls9c/n5Qr6W618cWix4qPGcALS/Z+ZveJ1hhn4R0lbRpR6ItdLNzinpuO4VpdOtt3aV8oyVi
- GCNBu9BF71ixy0w7RL7F1vqXcV69zI4cd2O0T79HBUUzRtEF6To1BoydTaGlZY90NvBwZ0WVGjR
- 1ECllCOMV9
-X-Received: by 2002:a05:7300:d50e:b0:2c1:6cfd:73d4 with SMTP id
- 5a478bee46e88-2ca8f7452f2mr1379155eec.23.1775126864202; 
- Thu, 02 Apr 2026 03:47:44 -0700 (PDT)
-X-Received: by 2002:a05:7300:d50e:b0:2c1:6cfd:73d4 with SMTP id
- 5a478bee46e88-2ca8f7452f2mr1379138eec.23.1775126863692; 
- Thu, 02 Apr 2026 03:47:43 -0700 (PDT)
+ bh=UQmlyxpZaVVP/6TW6V7qRLUtxbYcGCiDyOnIxm58+4w=;
+ b=njpb8Z8VG4Q9ons3sKRq8rb8Qc2a6IBM1XGW+7lxxdiQlgTNgpiBQv6kOQDVZqoRgX
+ ysnMJkZuu9Tk8FmSQKNggRJ/ntVlTG+3aHh44IasnQ3nDGo9o7n0rCQw3LewJSEygbif
+ V9HYHY+afT6LlykcJa8UCWsvWOW43i4UphTW2YqZw2H+O9NN6fCuY+CLEKCUkdou58mh
+ B5SCLsUDmRdIfLDzyzkRZ6uPdujr/+3u2crI/Lb1yvOLD5KY81+HaFsY/sxYreMOzmG6
+ 5QhUgSvMQTx9IorR+V3L0D9qIKShvVEwlou5m9U34YCupZHX8LqaCYtsj0akF6g04lW5
+ lM8g==
+X-Gm-Message-State: AOJu0YyMzgcmT8jBKqsuVDAM9tJrmqA7+x1IFPjPHYkJNYO6BkOs6+P1
+ Vjxyvjf2xNh76dD7tTY4jcd3eeinu/yB6jTIdzOZw9ZHpBF8tr21SQ0hflhAfeOiT3M1bjZw2WS
+ vQ/JYtuIwL5ShU25jo+de1aZKqW3uDaadI4nighXuPhxZm7iP0JoId/+9KB0TukWOGw4N
+X-Gm-Gg: ATEYQzxPCWxm6cpOvwY3OuO17xtMLiIqFUX6gRUxhN3d+FAGzdVmFdjGXY9Ls3qbeMU
+ xx76lWhjZ+M8vuy/IozWJzQdTrbwBpjSSJ0YVNWm2B7Gm5M19XIiKWbDPpSwYLFSWVpyMJKrtRZ
+ A5vv2dKEPXYi/0gk+hZ5Vufd5aioP9LzWEJiMSWt/pmaEdtkuO85EnTTUapzM/yUhpF7UvoWyyR
+ AOj5dwVihQBvVQGu860qTtn9of9fx8xbMNi9RdHkfgr9EBXhQE2I7trlal3WqoSVVomBQmBA3S0
+ RKQMd8DGzKCVIy/w9yfvDNiFbkHIZmnTeD+OQ3pZEV5tvZJFK4FbxYGSF/YbFt+o5Tjm0maOdCl
+ j8nSeAfBle/nn1o0tZXLMSbunpnUwEtaJuK4GqOovrLuJQU+Jg+kHu97qu6wll7+kBy/j1sn0vL
+ ryxkmmrNzY
+X-Received: by 2002:a05:7300:5707:b0:2c6:7f49:a871 with SMTP id
+ 5a478bee46e88-2c9326aa17bmr4127113eec.20.1775126857178; 
+ Thu, 02 Apr 2026 03:47:37 -0700 (PDT)
+X-Received: by 2002:a05:7300:5707:b0:2c6:7f49:a871 with SMTP id
+ 5a478bee46e88-2c9326aa17bmr4127083eec.20.1775126856510; 
+ Thu, 02 Apr 2026 03:47:36 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.42
+ 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 03:47:43 -0700 (PDT)
+ Thu, 02 Apr 2026 03:47:36 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
  brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH v2 08/16] target/hexagon: add v68 HVX IEEE float misc insns
-Date: Thu,  2 Apr 2026 03:47:25 -0700
-Message-Id: <7d1812d87058379ae9b4c2e9adcdf1cdb9eafb26.1775122853.git.matheus.bernardino@oss.qualcomm.com>
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 01/16] tests/docker: Update hexagon cross toolchain to
+ 22.1.0
+Date: Thu,  2 Apr 2026 03:47:18 -0700
+Message-Id: <e17bf5c09e434979a491b27bd2fad23fffd2b9cd.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Vberd3zamJEK9ZT5LmHMaS1etuvD3IKu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfX26wAynXiZDOl
- kHKiaJOQZG99Xzo2Hnsgw/U0NMkuBv8hdCfWF5UDKxlg/MB4ly1oBgWSG0lxws8BaHOwPcNjSpf
- f381PMdYx7BUeMZ+lyGOobesNnQuqXIdxk3Ca0QE/NtpSfDEACYBmOmRMrdsf5ihJ0KsefsGNwk
- yyrf2pz6f7E965z97EGGDFdHw+IWH6ftrGk9wjBmRLpuF6BlAJsemox9Iv3oZsGbhJ3aCLgSUel
- 8DRNsI2dxJy66lrUNlDf38etCUDSg9eVTyZ+vAH1YbVLFwEn2y8qqDaNjwzlNzwZlPAuPjWWMev
- 0zNKCtJlfeI5lfgrl8zTWMHSxspB05RJL6nD4Mo/F1shux6g0tPza1g/xyH1diQ+ttBJDp/V0qa
- 88a1Dbb6f7YjuRGg2UrCHkoRc50ckuAq7rcjYrJRpRDkxyxG2deaFNqa6BSuNUzVILvsdDKeU9Y
- 1QbusdEuWROlO1U3q0w==
-X-Proofpoint-GUID: Vberd3zamJEK9ZT5LmHMaS1etuvD3IKu
-X-Authority-Analysis: v=2.4 cv=Ap/jHe9P c=1 sm=1 tr=0 ts=69ce4950 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: RQS08OrLZ6fGRlyZLV0GxyRYzE1nCI1Q
+X-Proofpoint-ORIG-GUID: RQS08OrLZ6fGRlyZLV0GxyRYzE1nCI1Q
+X-Authority-Analysis: v=2.4 cv=JII2csKb c=1 sm=1 tr=0 ts=69ce4949 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=b_pcDZiHv-GACHTOAAQA:9 a=bBxd6f-gb0O0v-kibOvt:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=ovJmrJClAAAA:8
+ a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=q7X4_axEi9qJq2Gpr8MA:9
+ a=scEy_gLbYbu1JhEsrz4S:22 a=brTEhlvMp4NY0_u118I2:22 a=fsdK_YakeE02zTmptMdW:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfX31p2Ny88mZr4
+ 71+X9aOn4a9G2TPRXNM0EDuZtVZ4vi1EitZod8L7UOEUOuvi9IltmkiYdds7uNUatogwTiW1zfo
+ 36hrggzsTogqhcNj1ajgky6flMd3UL8I/RQm0VvOGGwRMEHUqIJCVpnACgrLCo7NJy7rHpXVmuG
+ jeDyuhuf2SU1SRXloOF5sKnddthqC6ZZUA9lR1A3nOWY7dQ90/b9MMIoB7sPZcl/Y6vXkF7Wv5K
+ 6iCBy+lf9Bi3g8u9r4MiC6SD9uXkiVxxyC9x7rHplBeltn8aF43tcWsDW6wmUCfk+yn/xCR+mRO
+ 0eS4mOFy3oaI9eu7sBFtRhgUUUgrfKIxwZBLxxJpCvVim7BH00QeY8MSey6BOqewON2GDND4KLo
+ KjqXCblFkWtTJkTjTsH2XgBKOxHbY6p2dPZlprF4kKyQN3/FkFjeXMNKNHieJMZ67nzywkZxWxD
+ dc/I11/6KaN9Hda7vBg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-02_01,2026-04-02_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015
- bulkscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604020097
+ adultscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2604020097
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=matheus.bernardino@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -149,56 +155,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add HVX IEEE floating-point miscellaneous instructions:
-- vassign_fp (vfmv): vector move
-- vfneg_hf, vfneg_sf: vector floating-point negate
-- vabs_hf, vabs_sf: vector absolute value
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Update the hexagon cross-compiler Docker container to use toolchain
+version 22.1.0, replacing the previous 12.Dec.2023 release.
+
+Changes to accommodate the new toolchain:
+
+- Add libc++1, libc++abi1, libunwind-19 runtime deps for the new
+  LLVM-based toolchain
+- Add zstd for the new .tar.zst archive format
+- Update artifact URL domain to artifacts.codelinaro.org
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/imported/mmvec/encode_ext.def |  7 +++++++
- target/hexagon/imported/mmvec/ext.idef       | 12 ++++++++++++
- 2 files changed, 19 insertions(+)
+ tests/docker/dockerfiles/debian-hexagon-cross.docker | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
-index d7f50db778..72daf8724c 100644
---- a/target/hexagon/imported/mmvec/encode_ext.def
-+++ b/target/hexagon/imported/mmvec/encode_ext.def
-@@ -833,4 +833,11 @@ DEF_ENC(V6_vmin_sf,"00011111110vvvvvPP1uuuuu010ddddd")
- DEF_ENC(V6_vmax_hf,"00011111110vvvvvPP1uuuuu011ddddd")
- DEF_ENC(V6_vmin_hf,"00011111110vvvvvPP1uuuuu100ddddd")
+diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+index 91d4b71ac9..636d0ca8a0 100644
+--- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
++++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+@@ -19,7 +19,11 @@ RUN apt-get update && \
+         curl \
+         ccache \
+         xz-utils \
++        zstd \
+         ca-certificates \
++        libc++1 \
++        libc++abi1 \
++        libunwind-19 \
+         bison \
+         flex \
+         git \
+@@ -40,12 +44,12 @@ RUN apt-get update && \
+     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
-+/* IEEE FP move, negate, abs instructions */
-+DEF_ENC(V6_vassign_fp,"00011110--0-0110PP1uuuuu001ddddd")
-+DEF_ENC(V6_vfneg_hf,"00011110--0-0110PP1uuuuu010ddddd")
-+DEF_ENC(V6_vfneg_sf,"00011110--0-0110PP1uuuuu011ddddd")
-+DEF_ENC(V6_vabs_hf,"00011110--0-0110PP1uuuuu100ddddd")
-+DEF_ENC(V6_vabs_sf,"00011110--0-0110PP1uuuuu101ddddd")
-+
- #endif /* NO MMVEC */
-diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef
-index 19135853d4..54bed47083 100644
---- a/target/hexagon/imported/mmvec/ext.idef
-+++ b/target/hexagon/imported/mmvec/ext.idef
-@@ -3026,6 +3026,18 @@ ITERATOR_INSN_ANY_SLOT_2SRC(16,vmin_hf,"Vd32.hf=vmin(Vu32.hf,Vv32.hf)", \
-     "Vector min of hf input", VdV.hf[i] = qf_min_hf(VuV.hf[i], VvV.hf[i], \
- 	&env->hvx_fp_status))
+ ENV TOOLCHAIN_INSTALL /opt
+-ENV TOOLCHAIN_RELEASE 12.Dec.2023
++ENV TOOLCHAIN_RELEASE 22.1.0
+ ENV TOOLCHAIN_BASENAME "clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-linux-musl"
+-ENV TOOLCHAIN_URL https://codelinaro.jfrog.io/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}/${TOOLCHAIN_BASENAME}.tar.xz
++ENV TOOLCHAIN_URL https://artifacts.codelinaro.org/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}_/${TOOLCHAIN_BASENAME}.tar.zst
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
  
-+/* IEEE FP move, negate, abs instructions */
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vassign_fp, "Vd32.w=vfmv(Vu32.w)", \
-+    "Vector IEEE move", VdV.w[i]  = VuV.w[i])
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfneg_hf, "Vd32.hf=vfneg(Vu32.hf)", \
-+    "Vector IEEE neg: hf", VdV.hf[i] = float16_chs(VuV.hf[i]))
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfneg_sf, "Vd32.sf=vfneg(Vu32.sf)", \
-+    "Vector IEEE neg: sf", VdV.sf[i] = float32_chs(VuV.sf[i]))
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vabs_hf,  "Vd32.hf=vabs(Vu32.hf)", \
-+    "Vector IEEE abs: hf", VdV.hf[i] = float16_abs(VuV.hf[i]))
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vabs_sf,  "Vd32.sf=vabs(Vu32.sf)", \
-+    "Vector IEEE abs: sf", VdV.hf[i] = float32_abs(VuV.hf[i]))
-+
- /******************************************************************************
-  DEBUG Vector/Register Printing
-  ******************************************************************************/
+-RUN curl -#SL "$TOOLCHAIN_URL" | tar -xJC "$TOOLCHAIN_INSTALL"
++RUN curl -#SL "$TOOLCHAIN_URL" | tar --zstd -xC "$TOOLCHAIN_INSTALL"
+ ENV PATH $PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
+ ENV MAKE /usr/bin/make
+ # As a final step configure the user (if env is defined)
 -- 
 2.37.2
 
