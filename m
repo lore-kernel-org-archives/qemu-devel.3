@@ -4,112 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BF0D39418
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 12:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A95AD39426
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 13:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Gmk-0003Ci-Ab; Thu, 02 Apr 2026 08:04:30 -0400
+	id 1w8IKn-0006A1-US; Thu, 02 Apr 2026 09:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1w8Gmd-0003Bp-6w; Thu, 02 Apr 2026 08:04:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w8IKl-0005fW-VE
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 09:43:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1w8Gma-0000rr-UU; Thu, 02 Apr 2026 08:04:22 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 631KZKS23948870; Thu, 2 Apr 2026 12:04:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=oc/x0d
- p7bcNQzXLGZ4aZmw2lGvTo1JdAPhI/5/gOlss=; b=WplQ7VRgn5xMz7r8mjYXzj
- QNcmlAwqQP34y4BpTobpz+Mva70P5NVY02xwTMpWCcsFa9YafMywRei2K6EGyUzW
- /ksoEjshLhvSjHUuygIuVbMZbB1e+yARBeeuo4/uBXgQI2w8lkgjbAaNcQlrsmWz
- Y4pxffDMn6v94QEhFXrecZt+o3cptYRPZ2GKp0Pva+RG7+8TT5Stl9P9357KA93Z
- DLcfOls5sQjB4XhdCTnEBhV8PXTu5yavAwBM/x72VZEY7SK7kuSjFkxzdbT84s8C
- mei+xbFITy/mam8AElEnTZGVY7VrvfMbSkSvaK+uAj6L/rk++8dli0H1J0qJKnpA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d65dckscj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 12:04:04 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6327f4Od008698;
- Thu, 2 Apr 2026 12:04:03 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d6v11spbf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 12:04:03 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 632C3xlX27460088
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Apr 2026 12:03:59 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D4FA2004B;
- Thu,  2 Apr 2026 12:03:59 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2617220040;
- Thu,  2 Apr 2026 12:03:59 +0000 (GMT)
-Received: from [9.52.200.39] (unknown [9.52.200.39])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Apr 2026 12:03:59 +0000 (GMT)
-Message-ID: <9a376d2d-1456-4283-8504-1a69c74cef62@linux.ibm.com>
-Date: Thu, 2 Apr 2026 14:03:58 +0200
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w8I3l-0001tI-5k
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 09:26:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775136359;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=k++yLDh9zYequfMxBgesJhUG06VbD5owT4tNt8su5wI=;
+ b=arXyWEQSkpXPba1dzCpRLxfN4XfUOArrnaLkAyY5nEWIL8NirpvsZpyt6RiPaDynk7MrZV
+ bUBuRKFESLQDJDCLWZ+3Wf3wdbN5GXAyfzy0a8b3loO5UPwhRxWuJAUPDvHb6QZLAMKKAf
+ Ezo5MG+v8HH4w56/uRs2v24kLKIbUbQ=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-70-jBB9vzn0O2qBerOnt9dY3A-1; Thu, 02 Apr 2026 09:25:58 -0400
+X-MC-Unique: jBB9vzn0O2qBerOnt9dY3A-1
+X-Mimecast-MFC-AGG-ID: jBB9vzn0O2qBerOnt9dY3A_1775136357
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-c76b6ccf298so601972a12.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 06:25:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775136357; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ReloHz+KkaCW7f2oKWwnTncxGR+NCaEiUYwu7Mmn79UQwDMk/vWUP1bkcPM55MIfvt
+ B85AN2G6aua6R4ftnpNjMjxDrb7LrYyUMK3Hz3uIzuirAkahdFX5OxiRNvfjWBmhfXVK
+ PvgUSKoAkYxGLA3wNLkhS3YHA0xuVXeCCn/vJDcy/S5HHgPNwUOEmIWGhCTsRze9XX2y
+ m/g8BGZdQCjLbKtepyUIxcVoLNyDfd0poT06VpEl4aEGF0VBk5xYj6330Rfi4UyvpJe8
+ 3fpDSZ9l6lyC2qfVtqWVHnHRzYPCybXDP6Q4aZ3UDVaWlVjeSaDtZIEg1cbiE3b3ZIpo
+ 52sw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=k++yLDh9zYequfMxBgesJhUG06VbD5owT4tNt8su5wI=;
+ fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
+ b=EDREFpF3WW6K/cIYpIAfBSYRBT72/bBrAZC3S0ZU2CSyo/zEoIrs+IXOyypBYNfd8g
+ Jwn9yXTeQItz/x/T3DAgIRt2/2WydhhGOSBU6fVwPI6sydQCPDW0+GeGsNNsP/JnU/u6
+ ijzDbGUig1Q2TV5MPTdsb3gRWuN7zwi8RblDvLVDIcfinVLH61eIwSxTMWixsClY+VF/
+ 6f5FQ1FEVfwg4evg2Fp1l5+krWbi2ZDHrryzKhSWSJ9o5WMylg+aQbs+KbnekQxRQnfl
+ KodKBEiSKm0CzX3ozZC6nIR60F/u3wvs4UCJnDL2TN2crqwNiDteEXOazJQEl+2Ig9iT
+ IN4Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775136357; x=1775741157; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k++yLDh9zYequfMxBgesJhUG06VbD5owT4tNt8su5wI=;
+ b=fWXm4fZDU+pstCh9lPjO1rmVdapZA25/stQOe0ZvfjcKzj8xPNSkQ4rY6r78JLlijv
+ icIMCmMgzPmejUnRIKZ8nGHQHACxYCxxW7nZF55tR7xtGidLx+ab+1kIXTSz5ce2tscG
+ UyuyYfXBrKNETFbBf1c4blOsnOtayL6UJ/VrmzAEwUOXf0q4HJTtOluALeDnJsspoGMe
+ BAdSbd96WLsEsncW3pRHg+ceuUFihj5X1lRRc4Lvt4q/euwlxAEqNfR77BjyyuqggjYu
+ ex9ruJsDh869XVIiq/9/F8G+ASXg+Xpl4AOUH8Gvo8C9/xgfjg0UOQhPr4DtTrl0mtqX
+ knEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775136357; x=1775741157;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k++yLDh9zYequfMxBgesJhUG06VbD5owT4tNt8su5wI=;
+ b=VGrLVpLbx3pfrN+wsGrl4+snxlNqvY7jiDX8WfikOgLnWgx8paObMkNFyhplUCkCzS
+ qJta+DriFnaeNGiHoFc9NFqfICbEpaPHOiHvzxG2xsn3N6xNdIw9oBLjWIJmX2iOYu0J
+ X2BJ9a97wwhLjBZl0obeY7NOBGlX6KH10sDwCkAyIXxPtYceJRX7ge11TfqOetLcDbVu
+ k4x2umIqiy7KQEPabDxslKeP9O6ZyFnyhN/rkOy3tC68O2HY/bVUYMEmambFPeSJSI0C
+ OH9cToIZND/FHK75d1k9yxzmSqyjxXqgpnKpOwh5b/h33+BeGMi52yMVcL9FnOuDFd5v
+ wbmg==
+X-Gm-Message-State: AOJu0Yywg0taKrcGe/K6E9J3mtfc25Q6cOEh87G0IJbLZeJw3+IhAn5t
+ cWYfrSKYsXmJnxvLfVH5r3S7LNT6ABk2Id+kKFuyTyztHulVc9p/6s5erkh6JT2XqKzCz8/XEHl
+ q7zNaFhjQOuxr9nK9Ahlp0CoQsQPoSET3cCT4pzqDxlf3avvGthHb4DKR6PKYltfygr7YmN3zjF
+ 0oIWWqOIiKUddUBmdphbdUgV8wThyjzLM=
+X-Gm-Gg: ATEYQzxbQYoPOInIEWcj5WrE5E8XdPzPMl5s2/K7Gua4l+pnFQsNaxti6NKoaUJ9diy
+ EmZL/GpCjFiS0mZFTPsqnj0YmFtSLOTgBKXL8noSbUmJ5KIYlkPJ2HsMwHp9BRC7DFjMPolHa9q
+ NG62Rq4ZG1rzEQO03uiFZ6fgwK1+zmBcFgBj1iHgs427RmU7gAvzcHhM/JmlkOCOooYsJPb40xD
+ vXcXQUttWnw/mcgnFtTGRDBrp4jDLEiGzACJrHT5JdJNiyDQN4POSymKXd1puBsaL44xDpb4LLz
+ hAAqrhkyAXa0nJRLLnA87yk=
+X-Received: by 2002:a05:6a20:7346:b0:39b:e0f4:322c with SMTP id
+ adf61e73a8af0-39ef7539f41mr8421299637.27.1775136356886; 
+ Thu, 02 Apr 2026 06:25:56 -0700 (PDT)
+X-Received: by 2002:a05:6a20:7346:b0:39b:e0f4:322c with SMTP id
+ adf61e73a8af0-39ef7539f41mr8421278637.27.1775136356460; Thu, 02 Apr 2026
+ 06:25:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/15] s390x/pci: Create function to contain translation
- status check
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260402022921.298818-1-kshk@linux.ibm.com>
- <20260402022921.298818-3-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20260402022921.298818-3-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RsjI7SmK c=1 sm=1 tr=0 ts=69ce5b34 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=B0G84NvrpuzEfJ7AWGAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: G10C_5yCpVN1PgWYYbxxniWAAogvFHRP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDEwNiBTYWx0ZWRfX9C5o+wKk2PU3
- jr29j7ZmCoUU7Z8bzsP8wd1QiUKGHRC3puQQ8th/nctc4shNFdLc2SC9xqajH3SCfOqAfvSnKRp
- +XsU3slsWIIMdIHsb2pbvaWWJcw1L6gzCqOFlGHRp/4OXZkfMidb+0YIjC4o6F6W80ljX8u0vIW
- nrpI5DQ5/2VojMtip8gfEEW9lezo6IHpoi2oHRsostwRZwG1xz9bhDz6e6Ohfz/3dZR3is41/ox
- OpIrA0fJc8n+IPZHgJXLnP0WYbhV33Mq6rpMgURMBq6c60LOG+hh47hYvhhwP9kAJr4M01k6vr3
- GbHU+Wyf4od9bZdn687/g3jeoS3hsGFAmpLxt06DNeFcWLGpnclJPVLpYGF6K1BrEPzRfqUNtwr
- l641BNjY7Fk6nCjkCl5i9XxiYUA9yNH/9mj7nStc/d4NiGQ916sNBQza5x1QyFYRF8vmNIJl9yZ
- xrak+s2nel8B2JCTo7A==
-X-Proofpoint-ORIG-GUID: G10C_5yCpVN1PgWYYbxxniWAAogvFHRP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-02_01,2026-04-02_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015 phishscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2604020106
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-26-48eb1dcf7b76@redhat.com>
+ <9422301b-1f5d-4d60-bb33-8bace0bee1ae@linaro.org>
+In-Reply-To: <9422301b-1f5d-4d60-bb33-8bace0bee1ae@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 2 Apr 2026 17:25:44 +0400
+X-Gm-Features: AQROBzDGcgD9LML71bbcWwtQ1jPqjyyRZZOtDw7wBOEMQ3qQnKZNZxO4-ZpgrTQ
+Message-ID: <CAMxuvaznsgWXZT4eJiW5nPb3MpXRkb+NVmuqEN_c0mT77nAgLQ@mail.gmail.com>
+Subject: Re: [PATCH 26/60] ui/console-vc: unify the write path
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,63 +138,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
+On Wed, Apr 1, 2026 at 5:42=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+>
+> On 17/3/26 09:50, Marc-Andr=C3=A9 Lureau wrote:
+> > VT100 escape responses (DSR) used qemu_chr_be_write() to write directly
+> > to the chardev backend, bypassing the output FIFO, while keyboard input
+> > went through the FIFO and flush path. This inconsistency could lead to
+> > out-of-order delivery when both paths are active.
+> >
+> > Introduce qemu_text_console_write() that pushes data into the output
+> > FIFO and flushes it, and use it for both keyboard input and VT100
+> > responses. Remove the now-unnecessary vc_respond_str() helper. Rename
+> > kbd_send_chars() to qemu_text_console_flush() to better reflect its
+> > purpose.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   ui/console-vc.c | 29 ++++++++++++++---------------
+> >   1 file changed, 14 insertions(+), 15 deletions(-)
+>
+>
+> > +static void qemu_text_console_write(QemuTextConsole *s, const void *bu=
+f, size_t len)
+>
+> Nitpicking, maybe take 'uint8_t *buf' (or char *?) argument for this
+> console method, letting the FIFO8 API deals with void *?
 
-Am 02.04.26 um 04:29 schrieb Konstantin Shkolnyy:
-> Make it more clear what the bit means, and the new function will be called
-> from yet another place in the future.
-> 
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-inst.c        | 7 ++++++-
->   include/hw/s390x/s390-pci-bus.h | 1 +
->   2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-> index 1834596076..7c784b31f3 100644
-> --- a/hw/s390x/s390-pci-inst.c
-> +++ b/hw/s390x/s390-pci-inst.c
-> @@ -993,6 +993,11 @@ int pci_dereg_irqs(S390PCIBusDevice *pbdev)
->       return 0;
->   }
->   
-> +bool s390_pci_is_translation_enabled(uint64_t g_iota)
-> +{
-> +    return ((g_iota >> 11) & 0x1) != 0; /* "T" bit */
+The function is called with a variety of arguments: char*, const
+char*, uint8_t[16].. So this would add some extra casts, I am not sure
+it's worth it.
 
-I think from C perspective you can get rid of the != 0 part as
-integers casts into bool with false=0 and true otherwise.
-
-Apart from that
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-
-
-
-> +}
-> +
->   static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
->                       uintptr_t ra)
->   {
-> @@ -1001,7 +1006,7 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
->       uint64_t pal = ldq_be_p(&fib.pal);
->       uint64_t g_iota = ldq_be_p(&fib.iota);
->       uint8_t dt = (g_iota >> 2) & 0x7;
-> -    uint8_t t = (g_iota >> 11) & 0x1;
-> +    bool t = s390_pci_is_translation_enabled(g_iota);
->   
->       pba &= ~0xfff;
->       pal |= 0xfff;
-> diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-> index 9228523ce8..eb15cb8b2d 100644
-> --- a/include/hw/s390x/s390-pci-bus.h
-> +++ b/include/hw/s390x/s390-pci-bus.h
-> @@ -390,6 +390,7 @@ int pci_chsc_sei_nt2_get_event(void *res);
->   int pci_chsc_sei_nt2_have_event(void);
->   void s390_pci_sclp_configure(SCCB *sccb);
->   void s390_pci_sclp_deconfigure(SCCB *sccb);
-> +bool s390_pci_is_translation_enabled(uint64_t g_iota);
->   void s390_pci_iommu_enable(S390PCIIOMMU *iommu);
->   void s390_pci_iommu_direct_map_enable(S390PCIIOMMU *iommu);
->   void s390_pci_iommu_disable(S390PCIIOMMU *iommu);
+>
+> > +{
+> > +    uint32_t num_free;
+> > +
+> > +    num_free =3D fifo8_num_free(&s->out_fifo);
+> > +    fifo8_push_all(&s->out_fifo, buf, MIN(num_free, len));
+> > +    qemu_text_console_flush(s);
+> > +}
+>
 
 
