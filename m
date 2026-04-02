@@ -4,126 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB9FD39410
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682FBD39410
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8FaX-0004fx-Bn; Thu, 02 Apr 2026 06:47:49 -0400
+	id 1w8Fad-0004ib-8V; Thu, 02 Apr 2026 06:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8FaV-0004ea-1I
+ id 1w8FaV-0004eb-0q
  for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:47 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8FaS-0007nJ-Kn
+ id 1w8FaS-0007n9-77
  for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:46 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6326p30D4009504
- for <qemu-devel@nongnu.org>; Thu, 2 Apr 2026 10:47:40 GMT
+ 6329ojAi1551329
+ for <qemu-devel@nongnu.org>; Thu, 2 Apr 2026 10:47:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=Xz1CmgTtPGx
- O7CCCYjV3Yce2C/RGGhA/FnEMzJwczJA=; b=OrlP/CFnYSvs87oJ/wfcAwKFXIa
- tWn7L5sjQX4LwP/ojJfuRvcFki4eR1I3pApICPsah/Dm+ltMxJh2Qh7fbdmdurO2
- kJREvZf1dPdphhNNuXM+DA5MI5TnCQFtNbmYr+QcAS2rBf8641G2M/KZVxmqidL2
- 1rNhbvQE+FFWj2T5XjWjgoH9b6EavOQDUJXhEpHUu/hV+pelLNMZc6CMb8eYyd2I
- 3lbBmAfQbedRoy8QDqbE28XFiB3nrLq9W3cOLVuX2gm1kSjTOmyGRNtVD1qOEv+s
- 2BYNy7OM34e4vpEH455eqMr4glXtTQ/nOBrcpd2RRkJdNEflFMQ1s8q9/Pw==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d97e03jxh-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=nOvzeWfo1gz
+ MP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=; b=J9iNizoskDz3T4W7Dj5U4ogegjg
+ PsFeu0csuUjNAj8ItUrY+DTZc6ev/braFFWA690TVuH2w4p0rtcGvCK8YLUKEYek
+ 5aYYYEZoKxFBQMXLOHj27xg6O5sz30MnW1DvvccKwOP7Kr9gAifbu4FxCo3RO+7F
+ DAtegOH/kG2ZwV6EB/OsuEVgjqsNqWdb+kEbhvetw8xuBI8E9zeqrwIEdCmJStVh
+ ixcvuKFUq6S2X1Xq9M4Bd190psFQ70ywvjqWkMo6pXe9RdpyP2gd/znQAP3i7Zv6
+ KeEmbOoktgNvsohLA+UYBm5xWDpd/nhaoRndanWVBZi3bnSviujGjRCXb3w==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9heesgvc-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:40 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-2c16233ee11so1114862eec.1
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:40 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:38 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2c68a134df8so690190eec.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775126860; x=1775731660; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775126858; x=1775731658; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xz1CmgTtPGxO7CCCYjV3Yce2C/RGGhA/FnEMzJwczJA=;
- b=GfmHyBFipgYMLZA+IaNrYx5Ma5Q8oiTKRFXOb/fUHQrl5m5YCxXiWiPPMwnPnDyZL3
- 4U1flTqfriPKbgRrAY0/v+R5SL6h0QN2+ywQvZ4Li6D+GEgmZ05npq9vmOzqnIMVlJEi
- CEsX87fDAQcPwGuYGo3BCvBV7DPE48Y/AOaOR60S4/swMnpljqWnzzxbzp7RigZmqnJo
- MZ1pngwUHFi9MNCtosnLJQE5CC1H47/NX56k721e7ehY4tVWBMmQDSBxdeGdfVUAdMo9
- 3FcJoLkeL4gOYJJ6CteF19e6zhEknHCszkRcmuHbw1yaMG7gko7EUnJ9ESZ0UAdFnoyK
- 10hw==
+ bh=nOvzeWfo1gzMP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=;
+ b=hr9QeBVUnNViA73fyMlhYACHRSTjATiAMGWzk7AsWvv0f256CBrUFSXoC4eihveOa4
+ LIoeOu8SrSwGwtSFeZh2YduXVhuECJCVh35DewPEATt5yeyC6qKEH/E7pDOodj789Tpn
+ We5sLudmjf3eMYchZy5ZXYDmBoj3ZiuFJ5eMsnOxKSCCh4yZIqGXJGold7HftWzl9L04
+ 8hkraudm/1+yTXVC4k4Rs5hbfzlprFHSflQHkKywaDhLDmeG3uw4OfN85xXkS0k/1elK
+ YvEFuhPMKRkkHIz7zeW5a82P+fwaZPsz3IdKySKPaRjdjikEkSA7FCAk4oOmrKilADe+
+ xVrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775126860; x=1775731660;
+ d=1e100.net; s=20251104; t=1775126858; x=1775731658;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Xz1CmgTtPGxO7CCCYjV3Yce2C/RGGhA/FnEMzJwczJA=;
- b=baFJFYaNz4RCKzT0WiA+zCmpUMl6kmD/05qsuUCIjD8A1WmfSJGt2KBoqXQOTBC1tO
- q7U/asg2GfmH3c2RlctyTdzgJc9miPUpXb2L+zf0S5e9wQpCxMLsdkQvAMVvUkxzqKsl
- NcUTKoLHxQQTH6A/aX6m6QKg/hiAFRuqmLiP8OFLizG8572+0lBtj9+m4mox6vVCvOrZ
- lF4IfEPYf17E2jywgR90mcqWRXscyCFnBPhHkUWUrdCLzm+Lb56N92HCRxY2ndE+gzlx
- vRVUX0rvfBbv+L97zM041joHOOXRMAAeh//hH5XhqTi7TmoBZihzMBQXf/7MsPBNK9YH
- NVWQ==
-X-Gm-Message-State: AOJu0YxHkB77GRbwu6D5R8kL9mbbM014lyaB+BlE+bx06DXBpyQJNk2T
- eC2EsBSfUXaj6uPOxm9BvucFv/+8JcVhEM7RxN6/6snW0dPv3ErqHEjB0ohOr+mjU0q7zPAr7CS
- bhjd8ESNj45R5I89ngkzn9/Pz2cbnPA7lPx3eGPPRRPz7UONRRSW4A5jOYrGfuvNAANp2
-X-Gm-Gg: AeBDieuvxIsAagEkDskMNL8VPbi2uu5bi8EccnGCrGQ/YrBnsN1IN8/4cHm6heclLRL
- EkX8pgvZFNIIjnT24fDTWg2Dvj5iWf0LuBP8ev3AcFKAV+kWwVYCpksk5lybaPloaT79vjwIayQ
- at4Wn5uDPUKHDPCjtLhZO4GeCh0Qn/jQ8KLFIepuZHwcU9BK7K5xMYAIr3WMtHQYjKA3mx+793q
- BcokcJJIsYdsToDQ5bVc+5Un1jHKAgJXJpiNt+lnwbsrqx3uZ7O0nDvi5X2oxKAlX7cZ+Kx4CQc
- HZjOJaJRDyFiNBS9o2dPnjr+cHFAqr24wV9jSSo55x3y9QlAD1Ze6jElsZZqghJ3wKDKxMLGljC
- MoqMnaxrBn1Y86isx55eYrmZJsft16rzG939aff6nb8GBAgajALzLCZM+Z11jtfFtHX5zFd54ju
- aNCdl0mLQH
-X-Received: by 2002:a05:7301:fa12:b0:2b7:2664:ae9f with SMTP id
- 5a478bee46e88-2ca8d4889ffmr1569921eec.1.1775126859676; 
- Thu, 02 Apr 2026 03:47:39 -0700 (PDT)
-X-Received: by 2002:a05:7301:fa12:b0:2b7:2664:ae9f with SMTP id
- 5a478bee46e88-2ca8d4889ffmr1569901eec.1.1775126859169; 
- Thu, 02 Apr 2026 03:47:39 -0700 (PDT)
+ bh=nOvzeWfo1gzMP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=;
+ b=g9KBYhemg5wri2aVvUF3x7Sjs4kZu+D+oMyvRnrSFkrOdCWRP33kiQA8Q/J4eL1KFr
+ pxiDJi7MJaCQQZEgdF2J3Wa6o3Pk63QKg0IE7YSN5FW8wKS+q+uuT4dP0j1IJ362BEAR
+ qmrZCK9z8Lo2lFQY638LOUVE/FroRrfbXmOW9nvZpDLJ8FdYHIla1imBNFT6V+7ALrzb
+ mnsRj8gU6qBajTpl0euOZs0rneCskXBVeiopMUkUjLsuSKse2e6IinCqLDg7L5fWD6Pa
+ qOi/H8EjQBqoj123YrXxV5XbS6GgfrccWvbHJ9JAZMUX1576Ci9eq6gAoM5mbF9zEErD
+ b4Qw==
+X-Gm-Message-State: AOJu0YxYPoxU34a1vLtUSvzCBsAPR6OOIMe3ZikhB9XI/+6LD6ealjFf
+ PZ+kR2Y3Dx0CoK95990BKkW07p/gb8De16Ary/PDV0zdWc6/hkrHk6DCYojKb+DjwyjGIu9gIK/
+ IZaJv3nW5HN9pPe1iN0O3f8Ggl9fhsisjwmZn9O6AlyEykTet0URLCb7n9xviKsYp3WIk
+X-Gm-Gg: ATEYQzxO4bsObbdjJ5TOG2rp/wFEcQSrvYxqOx8hqTilIq+cUBH10xAXVCiQgcdevQG
+ I5DVW771DrGZDSVmXzR+xhnP+esRX5UzNSL9SBaAhj9qKvPDyr5BtwCcH6CcgAxwyshOXhihajx
+ tU/AixQiCVj6D0MYNyGP2eCxRXMnWmviE1f4j4oGxSi2f/A3kwodrfGCaJyVgrKVSA9QNUr0Thv
+ PuehwImftxdzpWkUZ1VMnZP3m5paSlLoFHUM4jZ1MVOwNG9YkfYKGRNBe0Ds/EMaaKN9EaXfmSu
+ GlFk/sJkRmEKR1o5RJ5/ylvVaksn1v6mR7WmauWtdLo9sn48MrWmWNyE+MTxHBJQKN2nDC8rM/h
+ Pz5ZK/ARVqUPSiHlzMZIdlyRoR5V9B9SAGhxt3VXZ05Synw7ahffLtz/V36hbeOQd5EPZSJlALO
+ 0VL78Wy70y
+X-Received: by 2002:a05:7300:ed0e:b0:2c0:c5e4:6057 with SMTP id
+ 5a478bee46e88-2c9328ac376mr3866696eec.19.1775126857965; 
+ Thu, 02 Apr 2026 03:47:37 -0700 (PDT)
+X-Received: by 2002:a05:7300:ed0e:b0:2c0:c5e4:6057 with SMTP id
+ 5a478bee46e88-2c9328ac376mr3866681eec.19.1775126857439; 
+ Thu, 02 Apr 2026 03:47:37 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.38
+ 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 03:47:38 -0700 (PDT)
+ Thu, 02 Apr 2026 03:47:37 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
  brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  marco.liebel@oss.qualcomm.com, philmd@linaro.org,
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH v2 04/16] hexagon: group cpu configurations in their own struct
-Date: Thu,  2 Apr 2026 03:47:21 -0700
-Message-Id: <c257371d4d0bdc12ed4c0319ddcbc1b6d8954f80.1775122853.git.matheus.bernardino@oss.qualcomm.com>
+Subject: [PATCH v2 02/16] target/hexagon: fix incorrect/too-permissive HVX
+ encodings
+Date: Thu,  2 Apr 2026 03:47:19 -0700
+Message-Id: <529c8c9063f2f25d215727905d830bb0b19028e7.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=fdGgCkQF c=1 sm=1 tr=0 ts=69ce494c cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: ULqYCN1JL0x5cGWePmQg4coLmD2vX8MS
+X-Authority-Analysis: v=2.4 cv=VY36/Vp9 c=1 sm=1 tr=0 ts=69ce494a cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=AHWWR7nXwgbOQO2z_T8A:9 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-ORIG-GUID: sRQn15xrTJeeXm5wexdmRVSwkj5lCxEy
-X-Proofpoint-GUID: sRQn15xrTJeeXm5wexdmRVSwkj5lCxEy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfX3YBYdf47/CU9
- kmLNSR5Ar8A6BBmUyfWEippTFW47Pwu2vILiwrHwrb0iLk07hiZb31O8Q7ic5EdnoBKnH2QzPfU
- oqnsHXOfwYOHg+PzHwS/Hdwy2jucp0FRlgeD4D2p3oZMptnxzlCCgOCAnW43KcOQBgot9MtzEmj
- aRYL4G3x4M60Z29BbkqnenuXtE2ZRCXa5h2Z+VbGz18qVk9zMpwUPvNh43FV2DXad6+edDZ4u6T
- tyMKSbdfOUnsr422gxwtYaVRmQIO7EwGO2vwWkATa2D9HJnmMKG8KWIHDSTJI5Dd8JsbpGgzKWZ
- g+kOJYB32IRoDhMYMoZ8htfwRluxdN+OqJ8hOXwgIyLCXCdAMCOs2ojj8wbmsdnvBM+VL4PfIwO
- APYP59aiqXlAE+DVhBCfHoTMKOUea3XnqLDOB59Qh+kCX0zHSbMPDcSKTssaGjXSpU/6Brgl6DA
- hj8YlBVaGUYa5qFLu5A==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=pGLkceISAAAA:8
+ a=EUspDBNiAAAA:8 a=LtKSMYrkcOpncNoavBoA:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: ULqYCN1JL0x5cGWePmQg4coLmD2vX8MS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfX/yir0TkesiLb
+ J9A3JglncQZwdswpehP4ZVwsSe/CO3PpoBgChlyMyq1JNtLcILC9ffR2jpG03OFfzBV2WPSbXmR
+ DepoXZ/T8Z7jwEhQ3F4tEWTfdVguVWSYPcSfAagYKIAM3EYGQ6TlxUMn2HPVLrLGosVIwwIfUIh
+ SDDiw40J4mIXyrJ9R6Gnbs8BkyFJDTVp+HgheCWZMcfXjKIhuuPT4VxPVWm5t1CprdWqWyVp48T
+ tRc0k7NOG7yMHG42DrUQP0fwZFJ3ve2KdXfZp8NKAHGqM4H5fYClHbAUUBXlcegWAKUFMrgY2Kb
+ 4uhukwBA5GEbF9ZhnWC9yvI28ABhBE0HiiWdmHhWPW9BtdvMNwcsNNjs6E0UBKt5tYLe7jMxMsH
+ /ARbkCHOjK6W6BuAgih5AHTeS5jbLOJdNGe3fkjaWaxmUrS2Nm/lbecKf1ktlcawYtdHpvfF5mm
+ j272pNfMX/k/6rUl7Qw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-02_01,2026-04-02_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 adultscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2604020097
+ phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
+ malwarescore=0 spamscore=0 adultscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604020097
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=matheus.bernardino@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -150,124 +150,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will be used in a follow up commit.
+The following encodings have become stricter since v68:
 
+    - V6_vunpackob, V6_vunpackoh: ---00 -> --000
+    - V6_vaddbq/hq/wq, V6_vaddbnq/hnq/wnq: ---01 -> --001
+    - V6_vsubbq/hq, V6_vsubwq/bnq/hnq/wnq: ---01/---10 -> --001/--010
+    - V6_vhist, V6_vwhist128/256, V6_vwhist128/256_sat: ---00 -> --000
+    - V6_vhistq, V6_vwhist128/256q, V6_vwhist128/256q_sat: ---10 -> --010
+
+Pre v68 compilers, by default, already use "0" for the non-specified bit
+that changed in v68, so unless someone is manually writing the binary
+encoding, this should not cause any backwards incompatibility with
+pre-v68 binaries.
+
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- target/hexagon/cpu.h       | 10 +++-------
- target/hexagon/cpu_bits.h  |  7 +++++++
- target/hexagon/cpu.c       | 14 +++++++-------
- target/hexagon/translate.c |  6 +++---
- 4 files changed, 20 insertions(+), 17 deletions(-)
+ target/hexagon/imported/mmvec/encode_ext.def | 48 ++++++++++----------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index 77822a48b6..d28beaa92f 100644
---- a/target/hexagon/cpu.h
-+++ b/target/hexagon/cpu.h
-@@ -119,19 +119,15 @@ typedef struct HexagonCPUClass {
-     ResettablePhases parent_phases;
- } HexagonCPUClass;
+diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
+index 402438f566..6d70086b5f 100644
+--- a/target/hexagon/imported/mmvec/encode_ext.def
++++ b/target/hexagon/imported/mmvec/encode_ext.def
+@@ -647,36 +647,36 @@ DEF_ENC(V6_vsubububb_sat,    ICLASS_CJ" 1 110 101 vvvvv PP 0 uuuuu 101 ddddd")
+ DEF_ENC(V6_vmpyewuh_64,        ICLASS_CJ" 1 110 101 vvvvv PP 0 uuuuu 110 ddddd")
  
-+#include "cpu_bits.h"
-+
- struct ArchCPU {
-     CPUState parent_obj;
+ DEF_FIELDROW_DESC32(        ICLASS_CJ" 1 110 --0 ----- PP 1 ----- ----- ---","Vx32=Vu32")
+-DEF_ENC(V6_vunpackob,         ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 000 xxxxx") //
+-DEF_ENC(V6_vunpackoh,         ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 001 xxxxx") //
++DEF_ENC(V6_vunpackob,         ICLASS_CJ" 1 110 --0 --000 PP 1 uuuuu 000 xxxxx") //
++DEF_ENC(V6_vunpackoh,         ICLASS_CJ" 1 110 --0 --000 PP 1 uuuuu 001 xxxxx") //
+ //DEF_ENC(V6_vunpackow,     ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 010 xxxxx") //
  
-     CPUHexagonState env;
--
--    bool lldb_compat;
--    target_ulong lldb_stack_adjust;
--    bool short_circuit;
--    bool ieee_fp_extension;
-+    HexagonCPUConfig cfg;
- };
+-DEF_ENC(V6_vhist,            ICLASS_CJ" 1 110 --0 ---00 PP 1 -000- 100 -----")
+-DEF_ENC(V6_vwhist256,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -0010 100 -----")
+-DEF_ENC(V6_vwhist256_sat,    ICLASS_CJ" 1 110 --0 ---00 PP 1 -0011 100 -----")
+-DEF_ENC(V6_vwhist128,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -010- 100 -----")
+-DEF_ENC(V6_vwhist128m,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -011i 100 -----")
++DEF_ENC(V6_vhist,            ICLASS_CJ" 1 110 --0 --000 PP 1 -000- 100 -----")
++DEF_ENC(V6_vwhist256,        ICLASS_CJ" 1 110 --0 --000 PP 1 -0010 100 -----")
++DEF_ENC(V6_vwhist256_sat,    ICLASS_CJ" 1 110 --0 --000 PP 1 -0011 100 -----")
++DEF_ENC(V6_vwhist128,        ICLASS_CJ" 1 110 --0 --000 PP 1 -010- 100 -----")
++DEF_ENC(V6_vwhist128m,        ICLASS_CJ" 1 110 --0 --000 PP 1 -011i 100 -----")
  
--#include "cpu_bits.h"
--
- FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
+ DEF_FIELDROW_DESC32(        ICLASS_CJ" 1 110 --0 ----- PP 1 ----- ----- ---","if (Qv4) Vx32=Vu32")
+-DEF_ENC(V6_vaddbq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 000 xxxxx") //
+-DEF_ENC(V6_vaddhq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 001 xxxxx") //
+-DEF_ENC(V6_vaddwq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 010 xxxxx") //
+-DEF_ENC(V6_vaddbnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 011 xxxxx") //
+-DEF_ENC(V6_vaddhnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 100 xxxxx") //
+-DEF_ENC(V6_vaddwnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 101 xxxxx") //
+-DEF_ENC(V6_vsubbq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 110 xxxxx") //
+-DEF_ENC(V6_vsubhq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 111 xxxxx") //
++DEF_ENC(V6_vaddbq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 000 xxxxx") //
++DEF_ENC(V6_vaddhq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 001 xxxxx") //
++DEF_ENC(V6_vaddwq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 010 xxxxx") //
++DEF_ENC(V6_vaddbnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 011 xxxxx") //
++DEF_ENC(V6_vaddhnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 100 xxxxx") //
++DEF_ENC(V6_vaddwnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 101 xxxxx") //
++DEF_ENC(V6_vsubbq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 110 xxxxx") //
++DEF_ENC(V6_vsubhq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 111 xxxxx") //
  
- G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
-diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
-index 19beca81c0..83d13de569 100644
---- a/target/hexagon/cpu_bits.h
-+++ b/target/hexagon/cpu_bits.h
-@@ -20,6 +20,13 @@
+-DEF_ENC(V6_vsubwq,             ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 000 xxxxx") //
+-DEF_ENC(V6_vsubbnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 001 xxxxx") //
+-DEF_ENC(V6_vsubhnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 010 xxxxx") //
+-DEF_ENC(V6_vsubwnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 011 xxxxx") //
++DEF_ENC(V6_vsubwq,             ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 000 xxxxx") //
++DEF_ENC(V6_vsubbnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 001 xxxxx") //
++DEF_ENC(V6_vsubhnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 010 xxxxx") //
++DEF_ENC(V6_vsubwnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 011 xxxxx") //
  
- #include "qemu/bitops.h"
+-DEF_ENC(V6_vhistq,            ICLASS_CJ" 1 110 vv0 ---10 PP 1 --00- 100 -----")
+-DEF_ENC(V6_vwhist256q,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --010 100 -----")
+-DEF_ENC(V6_vwhist256q_sat,    ICLASS_CJ" 1 110 vv0 ---10 PP 1 --011 100 -----")
+-DEF_ENC(V6_vwhist128q,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --10- 100 -----")
+-DEF_ENC(V6_vwhist128qm,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --11i 100 -----")
++DEF_ENC(V6_vhistq,            ICLASS_CJ" 1 110 vv0 --010 PP 1 --00- 100 -----")
++DEF_ENC(V6_vwhist256q,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --010 100 -----")
++DEF_ENC(V6_vwhist256q_sat,    ICLASS_CJ" 1 110 vv0 --010 PP 1 --011 100 -----")
++DEF_ENC(V6_vwhist128q,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --10- 100 -----")
++DEF_ENC(V6_vwhist128qm,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --11i 100 -----")
  
-+typedef struct HexagonCPUConfig {
-+    bool lldb_compat;
-+    uint32_t lldb_stack_adjust;
-+    bool short_circuit;
-+    bool ieee_fp_extension;
-+} HexagonCPUConfig;
-+
- #define PCALIGN 4
- #define PCALIGN_MASK (PCALIGN - 1)
  
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 8b72a5d3c8..5470d9c7ce 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -50,11 +50,11 @@ static ObjectClass *hexagon_cpu_class_by_name(const char *cpu_model)
- }
- 
- static const Property hexagon_cpu_properties[] = {
--    DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
--    DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, lldb_stack_adjust, 0,
--                         qdev_prop_uint32, target_ulong),
--    DEFINE_PROP_BOOL("short-circuit", HexagonCPU, short_circuit, true),
--    DEFINE_PROP_BOOL("ieee-fp", HexagonCPU, ieee_fp_extension, true),
-+    DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, cfg.lldb_compat, false),
-+    DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, cfg.lldb_stack_adjust,
-+                         0, qdev_prop_uint32, target_ulong),
-+    DEFINE_PROP_BOOL("short-circuit", HexagonCPU, cfg.short_circuit, true),
-+    DEFINE_PROP_BOOL("ieee-fp", HexagonCPU, cfg.ieee_fp_extension, true),
- };
- 
- const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS] = {
-@@ -77,7 +77,7 @@ const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS] = {
- static target_ulong adjust_stack_ptrs(CPUHexagonState *env, target_ulong addr)
- {
-     HexagonCPU *cpu = env_archcpu(env);
--    target_ulong stack_adjust = cpu->lldb_stack_adjust;
-+    target_ulong stack_adjust = cpu->cfg.lldb_stack_adjust;
-     target_ulong stack_start = env->stack_start;
-     target_ulong stack_size = 0x10000;
- 
-@@ -181,7 +181,7 @@ static void hexagon_dump(CPUHexagonState *env, FILE *f, int flags)
- {
-     HexagonCPU *cpu = env_archcpu(env);
- 
--    if (cpu->lldb_compat) {
-+    if (cpu->cfg.lldb_compat) {
-         /*
-          * When comparing with LLDB, it doesn't step through single-cycle
-          * hardware loops the same way.  So, we just skip them here
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index fa8f615a9e..ce3af96675 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -987,8 +987,8 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
-     ctx->num_hvx_insns = 0;
-     ctx->branch_cond = TCG_COND_NEVER;
-     ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
--    ctx->short_circuit = hex_cpu->short_circuit;
--    ctx->ieee_fp_extension = hex_cpu->ieee_fp_extension;
-+    ctx->short_circuit = hex_cpu->cfg.short_circuit;
-+    ctx->ieee_fp_extension = hex_cpu->cfg.ieee_fp_extension;
- }
- 
- static void hexagon_tr_tb_start(DisasContextBase *db, CPUState *cpu)
-@@ -1041,7 +1041,7 @@ static void hexagon_tr_translate_packet(DisasContextBase *dcbase, CPUState *cpu)
-          * so end the TLB after every packet.
-          */
-         HexagonCPU *hex_cpu = env_archcpu(env);
--        if (hex_cpu->lldb_compat && qemu_loglevel_mask(CPU_LOG_TB_CPU)) {
-+        if (hex_cpu->cfg.lldb_compat && qemu_loglevel_mask(CPU_LOG_TB_CPU)) {
-             ctx->base.is_jmp = DISAS_TOO_MANY;
-         }
-     }
+ DEF_ENC(V6_vandvqv,            ICLASS_CJ" 1 110 vv0 ---11 PP 1 uuuuu 000 ddddd")
 -- 
 2.37.2
 
