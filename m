@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67881D6AAEC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59A6D6AAF6
 	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 17:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8LUr-0001v0-11; Thu, 02 Apr 2026 13:06:21 -0400
+	id 1w8LUr-00024J-Uz; Thu, 02 Apr 2026 13:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LUJ-0000qJ-1D
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:48 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LUD-0000mF-RW
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:44 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LUG-0001HD-RE
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:46 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-486fb14227cso15019185e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:05:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LUB-00016A-Cl
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:41 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-486ff201041so11258645e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775149543; x=1775754343; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775149537; x=1775754337; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qb+zd90ZS/Btq5gwYIJLAyNUgmi4p8lYTj1rYDPe6wE=;
- b=nB6twtv+KT9thGjJkTHgegdIj0wgPd3zMIdAsPgBZNfx4ezkcUOgv5wCo0SRF6EryW
- hnbgcAbx2q6kRnWF5/9i+q1fWO5fhDw7dLGec40wbZDc1VniZNIL+GLK6qMbLDK9T9bS
- aFAvxa0Ua2bvu1G+Vl8ZQ2YJ6FBGWRiWYT0rqaqz+J5MshIvlL3zHsz+kgvZL0lE0s7F
- bw/GTc60AXo9P9DcFoFgkibW8lE5jzTbwuEVj4TdHg9/zCL3oUr4CDU33gyI8YV2D8HN
- hDBnb2P03HA+8LO2PtTc6A5135IyHhuRar81v+yOhWGjgoCfbyYzfsRkk0G3vlsEqUc7
- H27A==
+ bh=BRPUYAczpQfrNB7NESGbjTZhQXyZHZILb2QpR9Q7LQM=;
+ b=mxKkzdpXtizb9ttrALIN4oO3fvnLv7t1mbWuPFbJCYxt4cfzKSenqD1CID7kqHgfVN
+ O4q/VbL/UYk5tq8WYEZEvCV3fJWl07XHcBgpEfR2EIjYYKfVWJEY4eLZjwqf4yvQsNP6
+ macHuqaZW72M30mSkzBRQM+mkS+nUDNyiQKuBpcqYgrhImM7LrFThoY/mILDOx9HpFAP
+ HDRpnrRG+y4sW+Il6+mWI+afAV65xTXlAzUh3KC6urFzuye9+RHHqzho1KzcnNNQd9ip
+ CH+ENUD1hpppIvu2bi6xmI2WdEKEyhNOiGR1CK7VkJ11PV5qSWmU9JDeZgqqDSjCTkx4
+ XTsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775149543; x=1775754343;
+ d=1e100.net; s=20251104; t=1775149537; x=1775754337;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qb+zd90ZS/Btq5gwYIJLAyNUgmi4p8lYTj1rYDPe6wE=;
- b=D8RxsxkINbyNXCZ9F+Gc64aLcC9UXq47N4Ti+yuzTfcIGqZbuMG9Qo09/kFO4YWXaJ
- CTtftgQsQB9CLNLXuFvkQnFtT1ry54uR62WWjVHD7I2ZpoBVYA4X9NjSP++Cb4uCSFUS
- 3W/AO20n9TlXG0KykJmrk/VTzLC1TJUKQd9Eb++X9ey4xsHF5NXGh6c95gAnW+Yxrnca
- PR/KmKW1RnVBw/6LGU5GaX2WpmVF0qxMXghKqg2ry9Cex9+Ek+aVYU8o8jn1CS9xumYn
- YuGW+F9wPZ4CN57aSZ7V/jgR68IeYrhdBrOJA82oHY+xWSYaeFQIdIlYb2YAxFmKD/NY
- QGRw==
-X-Gm-Message-State: AOJu0YzoOiLI+ifNoCFYe44Nn/OCs4csGag9sWbk9w34PyMUbpKtATsv
- 6Dtp+U9amsXZytnRrGK16+gqocbryng8iOw1ZqFelO3+G5ZuXXIJb0q351M++ezdDBuTU94aKEi
- 2oTA5L1c=
-X-Gm-Gg: ATEYQzzDBAT7MC7gLMFC7zin8buEadvl4rbQbSzWitKBQtPl81A+kRSjecVY6PVNjhq
- iomjuAFbVPc5PFUkdsnpO2Pj7mpJ1jJqI6eyD6N8fH7qlXbTDflGMLpxEmb6Uc6EF+kx20FnVYV
- catg+LgOiuzSbzG7M1wcvC/SI2bWeaLwIxJUldHUcgTg6rk+PYVHivFEGI/guGlFUXPoYIJamK/
- Fgk579uq59EGVBDs+7PbyBS8Tyto36TfRduBJagC+RbPyEfMgzI52N27Mcl0iGqYwV6GGSdpX4E
- R6dLgk4eTX8tqvA6mbs59iJT5E+R+TIWcbJHZjEzPPt7Y01nnFxR5TgXCZQ6ZyO+p9OqPCO7OPw
- BzPPTkgVKlCVLF0aviA16gB696YY1xcfR5Nyff7eMjsvz5Nwc/YBxnY8zILhjMEJAYH2KGTPZin
- 8WZw+pgtjDstUvpiXoJrop1FLIVs2qoRt/w86p62rPAzUW7+iVHkjsBl9IxqbYjbjUYYK5r6mK
-X-Received: by 2002:a05:600c:3508:b0:488:95d0:ee46 with SMTP id
- 5b1f17b1804b1-48895d0ef40mr23033475e9.19.1775149543086; 
- Thu, 02 Apr 2026 10:05:43 -0700 (PDT)
+ bh=BRPUYAczpQfrNB7NESGbjTZhQXyZHZILb2QpR9Q7LQM=;
+ b=S/Vv/5uEMOGWf+sZUy4Xk1GrkUv3n6g3vVhrYrAYzYRdq0QIjDOSFDI8udT9lFs7MM
+ 05fBAfW0CWXQrH8L2SNoXv4cUP6sf0qdw16jVQtIm2/dg1wETJ326cyN2wHtgndbd+OT
+ aQkgoWjjzr/hZxBeqdxzJkAPbHl/Mummd0l3XoTi2HoTMsoLCX7YcSD4RBN2UOBd53WQ
+ JdttFp4A7juMdVUAbvtD5t/9PA/YpkvTPCNlvz8aoMp3XpSHw3ezaBV+uqew6SrEpXFH
+ O9gw5roOaKpqGoW6LzNNXndvUuaAJ+wDza0TP1UTo3VA3d6VTO5cETf22s9Ki2wSrusg
+ 7wfw==
+X-Gm-Message-State: AOJu0YwNhx99TVWIfpDhNxkiWMFAHoH3CkeQMIowSvedXf2jZmdbyez6
+ okccu7d4R5yHrzEoOHnKj53XwJzJRuk6XlMYUawm4WBI90QmMRR8Dk4Mzb9f5IOB7e/aigLJ/n2
+ mgcOt/qY=
+X-Gm-Gg: ATEYQzxyn3NS17l0PSsQkPTsFbhZ9vlpQi3Id91BDjVUY5BuvUE9WsAy4d9i6Ws9sHt
+ 8ydRzWlugESCIab9GqdfE/RWjK7ID6TPNKMFUX+yruzOaYRJz+4v5ecNu/yWuoay8WYr59nILS6
+ 3jIwHxmztE2li8wgruuqQ/KulL/tZumTdNO0CET229oCn7S9K/e0Wu0QqonrxNU0ioVJVUm4VQn
+ YJL8js5sTkX1a/L1YZIdxsu8lKUmNrivFQWxoMhsuwdrJSm+ivjd/vQhT7BAjs3B+Kg+eyja1F6
+ OIZeYMDynv8sPVhPPWwncfgvItzZRzq6JNxIM7tsShKz/JqNHvtQ4RQkAI8Fxd3/Pd9vpRDl+rs
+ hJH0AvvgdC2K3CSWm0H7d66yFtNFNz4wvje5zZo0X2BdfPC4OMdsLDktweKnChOEhlndF8u2bcy
+ 1CT1zdxxiwi+s5z1zh8Sr8ULk3/6UroaCd4VMTxa7JbMledludc55WTt9tae6wEJmkVCJc8vx/5
+ NYcFFtuc5s=
+X-Received: by 2002:a05:600c:310a:b0:485:3d3e:167b with SMTP id
+ 5b1f17b1804b1-4888b6d4a4fmr70694155e9.5.1775149535919; 
+ Thu, 02 Apr 2026 10:05:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4888a63c963sm82675175e9.4.2026.04.02.10.05.41
+ 5b1f17b1804b1-4888a705ebdsm94510025e9.10.2026.04.02.10.05.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Apr 2026 10:05:42 -0700 (PDT)
+ Thu, 02 Apr 2026 10:05:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
@@ -70,17 +71,18 @@ Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
  qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 v2 9/9] target/arm: Compile KVM as common object
-Date: Thu,  2 Apr 2026 19:04:34 +0200
-Message-ID: <20260402170434.94783-10-philmd@linaro.org>
+Subject: [PATCH-for-11.1 v2 8/9] target/arm: Remove target_ulong cast in
+ kvm_arm_handle_dabt_nisv()
+Date: Thu,  2 Apr 2026 19:04:33 +0200
+Message-ID: <20260402170434.94783-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260402170434.94783-1-philmd@linaro.org>
 References: <20260402170434.94783-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,58 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Neither of kvm.c nor hyp_gdbstub.c use target-specific code.
-Move them from arm_system_ss[] to arm_common_system_ss[] to
-compile them once. The arm_system_ss[] source set ends up
-unused, remove it.
+kvm_arm_handle_dabt_nisv() uses a uint64_t type for its @fault_ipa
+argument since its introduction in commit 694bcaa81f4 ("target/arm:
+kvm: Handle DABT with no valid ISS"). Use the proper format and
+remove the pointless cast.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/meson.build | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ target/arm/kvm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index f14debc6a2f..1b5d346d474 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -1,7 +1,6 @@
- arm_ss = ss.source_set()
- arm_common_ss = ss.source_set()
- arm_common_system_ss = ss.source_set()
--arm_system_ss = ss.source_set()
- arm_user_ss = ss.source_set()
- 
- arm_common_system_ss.add(files('gdbstub.c'))
-@@ -19,7 +18,6 @@ arm_common_ss.add(files(
- arm_common_system_ss.add(files(
-   'arm-qmp-cmds.c',
- ))
--arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
- 
- arm_user_ss.add(files('cpu.c'))
- arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files(
-@@ -39,7 +37,12 @@ arm_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- arm_common_system_ss.add(files('cpu.c'))
- arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
-   'cpu32-stubs.c'))
--arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
-+arm_common_system_ss.add(when: 'CONFIG_KVM', if_true: files(
-+  'kvm.c',
-+  'hyp_gdbstub.c',
-+), if_false: files(
-+  'kvm-stub.c',
-+))
- arm_common_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
- arm_common_system_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- 		                 if_true: files('common-semi-target.c'))
-@@ -67,7 +70,6 @@ else
- endif
- 
- target_arch += {'arm': arm_ss}
--target_system_arch += {'arm': arm_system_ss}
- target_user_arch += {'arm': arm_user_ss}
- target_common_arch += {'arm': arm_common_ss}
- target_common_system_arch += {'arm': arm_common_system_ss}
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index d4a68874b88..c09dc4cb3dc 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1453,8 +1453,7 @@ static int kvm_arm_handle_dabt_nisv(ARMCPU *cpu, uint64_t esr_iss,
+         }
+     } else {
+         error_report("Data abort exception triggered by guest memory access "
+-                     "at physical address: 0x"  TARGET_FMT_lx,
+-                     (target_ulong)fault_ipa);
++                     "at physical address: 0x%08"  PRIx64, fault_ipa);
+         error_printf("KVM unable to emulate faulting instruction.\n");
+     }
+     return -1;
 -- 
 2.53.0
 
