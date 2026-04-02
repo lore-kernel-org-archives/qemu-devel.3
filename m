@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A99DD6AB17
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 21:20:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621B9D6AB10
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 21:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8PS7-0003kS-EX; Thu, 02 Apr 2026 17:19:47 -0400
+	id 1w8Q1z-0008Cq-ID; Thu, 02 Apr 2026 17:56:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w8PS6-0003kJ-2u
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:19:46 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w8PS4-0004bn-Cj
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:19:45 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id B59D660128;
- Thu,  2 Apr 2026 21:19:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D952C19424;
- Thu,  2 Apr 2026 21:19:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775164783;
- bh=TVRVKzeNnGI5lMhmM0XW/KBaDtbgq3fQ6PSz+PGbl/w=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=VLZ3NjjezyXcCo1WBC9dI1xLPNMJwPm1fX/RFAz9dacZQUPVQIrn0tS8H+o9/Oqz1
- QbFAr2IoEgVIicPT8h4raC1dcxkaLqaoTUQIpa/holD0wocYmdzOhupsuYwb9/qt4C
- s/B7OzTYxIIWmC9MU0W9p4UzZjsZqAyLHl1Y6CBdar3czB/v6HMKt88qkIuAugCwwG
- xbLXooTjQ7tNnV16XjznM0WZ1G+n2E6N1MOBX+gbqiXufw5vwrZNw1azb7uPAKAtno
- G22NLejByBw66u/jeTjZ/leqWsSu38FppKGBOHevDGbjbg8B5ABFgo+LkT9AhNrgnI
- 8ZMctXTpUAknw==
-From: Christian Brauner <brauner@kernel.org>
-Date: Thu, 02 Apr 2026 23:19:20 +0200
-Subject: [PATCH 5/5] tests/functional: add e2e test for dynamic QMP monitor
- hotplug
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260402-work-qmp-monitor-hotplug-v1-5-6313a5cdd574@kernel.org>
-References: <20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org>
-In-Reply-To: <20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org>
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1w8Q1v-0008B4-92
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:56:47 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1w8Q1t-00071P-FC
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:56:47 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b982d56dac4so233976066b.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:56:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775167003; x=1775771803; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6OVtHyJEH609H+Jxo+bwaMnaWIVxFgChTmg6HBwKfPs=;
+ b=JQdd2sq2KDVobuGb44+qUyrnZ8lMucOG8B3KLC6ehb+kYRxI6moG7cLEKH3Zxm+Fy5
+ vdUKM3WxM0mttywtGrO6kTdfIjcwi4QZ8RRPE9pC/0lesK3uVun+ja6wGLiUROQgP9o7
+ /uBvproqiMRzmSd1Fn9VtHI42tWj5/bjUDo2RJgRpVV0846xb2sMSsG4HKIarvYZwwzc
+ 4It4PeYbxJe0XS3wqsDBGpNK0wIeV9KKdUvGRYi1iLhCTWXA/ytnyWgkEfK8sxANfvWQ
+ Oy236NhjV+aczWQnJZKqBARm0ZDKOM8qE+/JeVaROgh1q1N4ALHXdj0MlKesfrdiiHQG
+ 55jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775167003; x=1775771803;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6OVtHyJEH609H+Jxo+bwaMnaWIVxFgChTmg6HBwKfPs=;
+ b=AgnxDPM4vK5NPWjn80nLVCFZXzvV4O7Cp6wPzE5vEA32CcTJXak/nQ5wxyepfx6yGF
+ ltM2PggfvfvkUvB1g8QoeSK+xkYAvio/G6hsk8hI6UJQCxOaxGHVjIy8LBbaqNITC3Cj
+ ccqdUiCktHW/aE/Ii4pwWc+dOsZHh9gF1btfp36wPewXKZNomZaJB/nBG9srRgqxEVdt
+ lWMKDVrVm8DQEeJ9iY2ZrECLVHUp9b9kFA/33KwDYicpbfYcIpNSvTjlGml4AQYzLnW4
+ ZHDyfHNR868PhmlJjKCABECihijIEgll0oHODVEuP3+o/V69rKVq02l/ukMH43R8DCOL
+ 02Xw==
+X-Gm-Message-State: AOJu0YxMUnalUfdBeySZeh5/064Y5ch9oPZV5cJxINc4BJjEncT09oyQ
+ x7DJnm67/1YH72hBOqWbc3Cddbnt/sqgyHqFTZ7bf7B/MESlk/MEDUpUAyqrwt8o
+X-Gm-Gg: ATEYQzyHYNZK/9Y0LBp5AcBWMT9ksq+JEnxCkHllvGlm6/HHs/e+4niOijybhRYlFWZ
+ jd2L/Kdm6wKYwTyfbDSraMpRZyMi1Oao3tb1SSz6stMt9690xvybPYBKLBu1yC1mtIWBnJ1pTwY
+ hKC1MCzebsdSAm6Z6ZFw6lIQ+IM8IE3lwIZznCouYJLhSG+HbShrzTXWdfYoAN2pHwLQuuD5NXC
+ UTvf+LnJs1OYBvARkXAsMixkGXNu/QKNyZrZYa/MzIsFMDo5wGUslIzyo8Hsk8cNIUm64I+bKjV
+ i47LCJE+/1UcAVLa8vTdC8M703jlg+l6zS6wURmiA9lGBYHdgM0Tiphl6TseBQGHJqZQjRaXOFy
+ ZR2t9Zk3mhQ9r3ZhHxrcR3CgZzeKa2m68dOevlJIwQAwEnCcT401LQisltC+Yb+3kHebygXAQDu
+ xyYSd4LR4kwOaxHU5SK+WmgWpaLAqBbEvrneAqElfqHeWr6/UDbR5FEokOg4Yw15gwVggw8w==
+X-Received: by 2002:a17:907:26c1:b0:b9c:55e8:fba1 with SMTP id
+ a640c23a62f3a-b9c679ba5b3mr24713166b.26.1775167003515; 
+ Thu, 02 Apr 2026 14:56:43 -0700 (PDT)
+Received: from thinkpad-t470s.. (93-143-182-244.adsl.net.t-com.hr.
+ [93.143.182.244]) by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.56.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Apr 2026 14:56:43 -0700 (PDT)
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Christian Brauner <brauner@kernel.org>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4767; i=brauner@kernel.org;
- h=from:subject:message-id; bh=TVRVKzeNnGI5lMhmM0XW/KBaDtbgq3fQ6PSz+PGbl/w=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSeuxvfbHhh9x93pmvmRxeIBi9ifPFY+kLx3TnlT4ND+
- Q/6hOvKd5SyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzkkzrD/5pjtzmfPuaUm/u0
- 99iXr43iCZsak9fZJSZOshNTKOyI2MjwP/jF7pqc0r51D/53TBGyeN76OGBtXp+/aNQlTcfbzjt
- v8QAA
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
+ artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
+ takahiro.nakata.wr@renesas.com,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu,
+ Alistair Francis <alistair.francis@wdc.com>,
+ David Gibson <david@gibson.dropbear.id.au>
+Subject: [PATCH v3 02/33] system/device_tree: add few parsing and traversal
+ helpers
+Date: Thu,  2 Apr 2026 23:55:47 +0200
+Message-ID: <20260402215629.745866-3-ruslichenko.r@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260402215629.745866-1-ruslichenko.r@gmail.com>
+References: <20260402215629.745866-1-ruslichenko.r@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,148 +106,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test that exercises the full monitor hotplug lifecycle
-with a real socket connection:
+From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-1. Launch QEMU
-2. chardev-add a unix socket chardev
-3. monitor-add to attach a QMP monitor to it
-4. Connect to the socket, receive the QMP greeting, negotiate
-   capabilities, and send a query-version command
-5. Disconnect, monitor-remove, chardev-remove
-6. Repeat the entire cycle a second time to verify cleanup and reuse
+The patch adds few utility functions for parsing FDT nodes.
+The helpers are required for upcoming Hardware device tree
+feature.
 
-This complements the qtest unit tests by verifying that a real QMP
-client can connect to a dynamically-added monitor and exchange messages.
-
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- tests/functional/generic/meson.build             |   1 +
- tests/functional/generic/test_monitor_hotplug.py | 102 +++++++++++++++++++++++
- 2 files changed, 103 insertions(+)
+ include/system/device_tree.h |  22 ++++
+ system/device_tree.c         | 194 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 216 insertions(+)
 
-diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
-index 09763c5d22..c94105c62e 100644
---- a/tests/functional/generic/meson.build
-+++ b/tests/functional/generic/meson.build
-@@ -4,6 +4,7 @@ tests_generic_system = [
-   'empty_cpu_model',
-   'info_usernet',
-   'linters',
-+  'monitor_hotplug',
-   'version',
-   'vnc',
- ]
-diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
-new file mode 100644
-index 0000000000..f8f24320c6
---- /dev/null
-+++ b/tests/functional/generic/test_monitor_hotplug.py
-@@ -0,0 +1,102 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test for dynamic QMP monitor hotplug
-+#
-+# Copyright (c) 2026 Christian Brauner
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
+diff --git a/include/system/device_tree.h b/include/system/device_tree.h
+index 5667ff9538..bc378d38d0 100644
+--- a/include/system/device_tree.h
++++ b/include/system/device_tree.h
+@@ -116,6 +116,11 @@ const void *qemu_fdt_getprop(void *fdt, const char *node_path,
+ uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
+                                const char *property, int cell_id,
+                                Error **errp);
 +
-+import os
-+import tempfile
++const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_path,
++                             const char *property, int *lenp, Error **errp);
++uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_path,
++                               const char *property, int cell_id, Error **errp);
+ uint32_t qemu_fdt_get_phandle(void *fdt, const char *path);
+ uint32_t qemu_fdt_alloc_phandle(void *fdt);
+ int qemu_fdt_nop_node(void *fdt, const char *node_path);
+@@ -191,6 +196,23 @@ int qemu_fdt_setprop_sized_cells_from_array(void *fdt,
+                                                 qdt_tmp);                 \
+     })
+ 
++/* node queries */
 +
-+from qemu.qmp.legacy import QEMUMonitorProtocol
++int qemu_devtree_get_num_children(void *fdt, const char *node_path);
++int qemu_devtree_get_children(void *fdt, const char *node_path,
++                                     int max_paths, char **returned_paths);
++int qemu_devtree_num_props(void *fdt, const char *node_path);
 +
-+from qemu_test import QemuSystemTest
++/* node getters */
 +
++int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int phandle);
++char *qemu_devtree_getparent(void *fdt, const char *current);
 +
-+class MonitorHotplug(QemuSystemTest):
++/* misc */
 +
-+    def setUp(self):
-+        super().setUp()
-+        # Use /tmp to avoid UNIX socket path length limit (108 bytes).
-+        # The scratch_file() path is too deep for socket names.
-+        fd, self._sock_path = tempfile.mkstemp(
-+            prefix='qemu-mon-', suffix='.sock')
-+        os.close(fd)
-+        os.unlink(self._sock_path)
++int devtree_get_num_nodes(void *fdt);
 +
-+    def tearDown(self):
-+        try:
-+            os.unlink(self._sock_path)
-+        except FileNotFoundError:
-+            pass
-+        super().tearDown()
++#define DT_PATH_LENGTH 1024
+ 
+ /**
+  * qemu_fdt_randomize_seeds:
+diff --git a/system/device_tree.c b/system/device_tree.c
+index d2db7bd355..1a70223712 100644
+--- a/system/device_tree.c
++++ b/system/device_tree.c
+@@ -464,6 +464,96 @@ uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
+     return be32_to_cpu(p[cell_id]);
+ }
+ 
++const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_path,
++                             const char *property, int *lenp, Error **errp)
++{
++    const void *found_val = NULL;
++    int found_len = 0;
++    int curr_offset = 0;
++    int temp_len;
++    char **tokens;
++    char **iter;
 +
-+    def _add_monitor(self):
-+        """Create a chardev + monitor and return the socket path."""
-+        sock = self._sock_path
-+        self.vm.cmd('chardev-add', id='hotplug-chr', backend={
-+            'type': 'socket',
-+            'data': {
-+                'addr': {
-+                    'type': 'unix',
-+                    'data': {'path': sock}
-+                },
-+                'server': True,
-+                'wait': False,
-+            }
-+        })
-+        self.vm.cmd('monitor-add', id='hotplug-mon',
-+                    chardev='hotplug-chr')
-+        return sock
++    found_val = fdt_getprop(fdt, 0, property, &found_len);
 +
-+    def _remove_monitor(self):
-+        """Remove the monitor + chardev."""
-+        self.vm.cmd('monitor-remove', id='hotplug-mon')
-+        self.vm.cmd('chardev-remove', id='hotplug-chr')
++    tokens = g_strsplit(node_path + 1, "/", -1);
 +
-+    def _connect_and_handshake(self, sock_path):
-+        """
-+        Connect to the dynamic monitor socket, perform the QMP
-+        greeting and capability negotiation, send a command, then
-+        disconnect.
-+        """
-+        qmp = QEMUMonitorProtocol(sock_path)
++    for (iter = tokens; *iter != NULL; iter++) {
++        if (**iter == '\0') {
++            continue;
++        }
 +
-+        # connect(negotiate=True) receives the greeting, validates it,
-+        # and sends qmp_capabilities automatically.
-+        greeting = qmp.connect(negotiate=True)
-+        self.assertIn('QMP', greeting)
-+        self.assertIn('version', greeting['QMP'])
-+        self.assertIn('capabilities', greeting['QMP'])
++        curr_offset = fdt_subnode_offset(fdt, curr_offset, *iter);
++        if (curr_offset < 0) {
++            error_setg(errp, "%s: Path '%s' not found",
++                       __func__, *iter);
++            g_strfreev(tokens);
++            return NULL;
++        }
 +
-+        # Send a real command to prove the session is fully functional
-+        resp = qmp.cmd_obj({'execute': 'query-version'})
-+        self.assertIn('return', resp)
-+        self.assertIn('qemu', resp['return'])
++        const void *val = fdt_getprop(fdt, curr_offset, property, &temp_len);
++        if (val) {
++            found_val = val;
++            found_len = temp_len;
++        }
++    }
++    g_strfreev(tokens);
 +
-+        qmp.close()
++    if (!found_val) {
++        error_setg(errp, "%s: Property '%s' not found",
++                   __func__, property);
++        return NULL;
++    }
 +
-+    def test_hotplug_cycle(self):
-+        """
-+        Hotplug a monitor, do the full QMP handshake, unplug it,
-+        then repeat the whole cycle a second time.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
++    if (lenp) {
++        *lenp = found_len;
++    }
 +
-+        # First cycle
-+        sock = self._add_monitor()
-+        self._connect_and_handshake(sock)
-+        self._remove_monitor()
++    return found_val;
++}
 +
-+        # Second cycle -- same ids, same path, must work
-+        sock = self._add_monitor()
-+        self._connect_and_handshake(sock)
-+        self._remove_monitor()
++uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_path,
++                               const char *property, int cell_id, Error **errp)
++{
++    int len;
++    const uint32_t *p;
 +
++    p = qemu_fdt_getprop_inherited(fdt, node_path, property, &len, errp);
++    if (!p) {
++        return 0;
++    }
++    if (len < (cell_id + 1) * 4) {
++        error_setg(errp,
++                   "%s: %s/%s is too short, need %d bytes for cell ind %d",
++                   __func__, node_path, property, (cell_id + 1) * 4, cell_id);
++        return 0;
++    }
++    return be32_to_cpu(p[cell_id]);
++}
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-
++char *qemu_devtree_getparent(void *fdt, const char *current)
++{
++    const char *sep;
++    int len;
++
++    if (!current || !strcmp(current, "/")) {
++        return NULL;
++    }
++
++    sep = strrchr(current, '/');
++    if (!sep) {
++        return NULL;
++    }
++
++    if (sep == current) {
++        len = 1;
++    } else {
++        len = sep - current;
++    }
++
++    return g_strndup(current, len);
++}
++
+ uint32_t qemu_fdt_get_phandle(void *fdt, const char *path)
+ {
+     uint32_t r;
+@@ -631,6 +721,110 @@ out:
+     return ret;
+ }
+ 
++int qemu_devtree_num_props(void *fdt, const char *node_path)
++{
++    int offset = fdt_path_offset(fdt, node_path);
++    int ret = 0;
++
++    for (offset = fdt_first_property_offset(fdt, offset);
++            offset != -FDT_ERR_NOTFOUND;
++            offset = fdt_next_property_offset(fdt, offset)) {
++        ret++;
++    }
++    return ret;
++}
++
++int qemu_devtree_get_children(void *fdt, const char *node_path,
++                                     int max_paths, char **returned_paths)
++{
++    int count = 0;
++    int subnode;
++    const char *name;
++    int offset = fdt_path_offset(fdt, node_path);
++
++    if (offset < 0) {
++        return offset;
++    }
++
++    bool is_root = (strcmp(node_path, "/") == 0);
++
++    fdt_for_each_subnode(subnode, fdt, offset) {
++        if (count >= max_paths) {
++            break;
++        }
++        name = fdt_get_name(fdt, subnode, NULL);
++        if (returned_paths) {
++            returned_paths[count] = g_strdup_printf("%s/%s",
++                                                is_root ? "" : node_path, name);
++        }
++
++        ++count;
++    }
++
++    return count;
++}
++
++int qemu_devtree_get_num_children(void *fdt, const char *node_path)
++{
++    int count = 0;
++    int subnode;
++    int offset = fdt_path_offset(fdt, node_path);
++
++    if (offset < 0) {
++        return offset;
++    }
++
++    fdt_for_each_subnode(subnode, fdt, offset) {
++        ++count;
++    }
++
++    return count;
++}
++
++int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int phandle)
++{
++    int offset = 0, cur_depth = 0;
++    int path_lens[64] = { 0 };
++
++    for (offset = 0; offset >= 0; offset = fdt_next_node(fdt, offset,
++                                                         &cur_depth)) {
++        if (cur_depth >= 64) {
++            break;
++        }
++        const char *name = fdt_get_name(fdt, offset, NULL);
++
++        int parent_len = (cur_depth > 0) ? path_lens[cur_depth - 1] : 0;
++        int len = snprintf(node_path + parent_len,
++                             DT_PATH_LENGTH - parent_len,
++                             "%s%s",
++                             (parent_len > 1) ? "/" : "",
++                             (cur_depth == 0) ? "/" : name);
++
++        path_lens[cur_depth] = parent_len + len;
++
++        if (fdt_get_phandle(fdt, offset) == phandle) {
++            return 0;
++        }
++    }
++
++    return -FDT_ERR_NOTFOUND;
++}
++
++int devtree_get_num_nodes(void *fdt)
++{
++    int num_nodes = 0;
++    int depth = 0, offset = 0;
++
++    for (;;) {
++        offset = fdt_next_node(fdt, offset, &depth);
++        num_nodes++;
++        if (offset <= 0 || depth <= 0) {
++            break;
++        }
++    }
++    return num_nodes;
++}
++
+ void qmp_dumpdtb(const char *filename, Error **errp)
+ {
+     ERRP_GUARD();
 -- 
-2.47.3
+2.43.0
 
 
