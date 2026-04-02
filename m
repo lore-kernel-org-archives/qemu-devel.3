@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4EF5D6AB18
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E66FCD6AB16
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:01:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Q2O-0008Pe-8x; Thu, 02 Apr 2026 17:57:16 -0400
+	id 1w8Q2C-0008KK-Kf; Thu, 02 Apr 2026 17:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q2E-0008Kb-8N
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:06 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1w8Q2A-0008JE-Hb
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:02 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q2C-00077S-N1
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:06 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b8f97c626aaso225585566b.2
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:57:04 -0700 (PDT)
+ id 1w8Q29-00076S-2I
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:02 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b93698bb57aso282214466b.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775167023; x=1775771823; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775167019; x=1775771819; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZnoM34DCC1pHSVw13BegRYuqsTlliloemYTyLqTUADg=;
- b=aJ9AYo0q56BRZYlAr3yYFj54qEsJw02uRipwbPUQI0nB++rXp5niXpuqPZ0qaU/N3R
- R+7SY7n7qCsOU3rbzxle2Y/kXyR+B8jKkix3++ijLbpnh4HGq9LIRtkP2upkPFgKHzdF
- dpFwV7Y4lHVWdDLmnmbhyPUjKxeft6z4n9AUpSavisaFKsmRO35i7BKTrqU+mAO8K1zf
- JdFXI5Qp+PVxaYBnvsFQwfvpNJiAful62lzz+iUiN54dualxeceYPyAXSMpVxQ5JppuQ
- VajOcWUuzal/kIJOAMXkfk3esoFTJt441JcKVOQepAuoBMnQSqJ0LCMAd3l3tRg4hL84
- 2AQA==
+ bh=4XtZvlcq7y9dCibk7QnCziTNJJ4JB6d6R3IFkPvUGo4=;
+ b=NuNwwD3a+iWe6LJPdo8wKTlKLC4oFZjDpC0OGtTGcauGiOv8RWDzFR/rmpUy0OeiYl
+ cI0896e2x+0YjveNcukYU1EpDy0Cze3tjLJDk5vWSZtoMLt+RrxzupAj/sKA5Mq027SH
+ OVwvlJrj7ciKGf3cop8VUZoTzkQX3hymfdtGtyn2XnruvXksYGPbEm1qikBUKsWA17k/
+ 0Wy3k2rjwV3e/gl5UfAZnuIrcWmibufre/sQJ2plzbs60ocVEUoysrsSbSYqf/OjO5Y3
+ UcxeovJaY9/qV4XamgfI3WTsqG6C1hobiFWs42q5kSBMD2zGryxTZ8HXEX79POwPcXdf
+ ynIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775167023; x=1775771823;
+ d=1e100.net; s=20251104; t=1775167019; x=1775771819;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZnoM34DCC1pHSVw13BegRYuqsTlliloemYTyLqTUADg=;
- b=oxsA4w61f2guGqzK35RfgqgKx7c3bk28cbUfCcLAUmx/ffyS7MYYlTiGAuegffRvzl
- f2g8QkkyaDUzHU/ok96LTq2GLImqM4oJ/zT7NazGRShf8p0ME9r+tU9uXl4RFp4rw3RL
- 23xCzMN0jd22FE/GAJEcJqK+Tw6rBjiuohROJOheIESNPwOGdexu7jE5KnPMbd0/XHfd
- QZCXqiWY+LS8wym6SlNmUUEOZft6oxY31MG9ezo7FcHRTPhSExgpNZsVil4+FNaB56kx
- 0MmaYb/crqN7zzs/8CyDElzDA+bXECw/cKYhPAf89myfptQKYm7MzXqNTY4+LUOv4LPp
- 0Kww==
-X-Gm-Message-State: AOJu0Yy18Vbz4W+3pPW4EzOzOT3u9HE2Uh4y0HTO1qrJ9AWdBbKHVX0C
- sCZCqOFJ1kNqGgPa2jT3WIaFGg5eul+kK5Dc4bh6t74JPm8PcU4xC+XfVaLoe9zC
-X-Gm-Gg: ATEYQzzSXzuw5o9A53f00aNlLofkqfSKlhO0rq0oXNNTQUKRxhs7en+kswMW0eYfO/y
- Jlmk3smQTYN1xnFu5bQoNC7vMHHaB5Qepr1CEhNczXVRrPxV0rIDtETOD+SRC778TUhwIUuPs+s
- i7C/YtFOqxzMrXELFM3moungrz09txE3EWQKfHrcuOBKNsHABsHIsQ41lzlqoxHQleBpHrWHVMX
- SCEw44l6uguAgn+CQxnL1Zr0y3qFF45nlv8kwX8oFSNrRbN6awoV3GKGFcNy/1pju38AKzRix/P
- gGqqTUwbwgGOT3Srg9ClEC2eC7Drk4gInN1T0KGXaoZFjXzDnlf+y7/O2LD7tF5uYHdHtjUMghs
- bxf9mpIohNG06UMvgXm9pPw/AJ/pSgt/VZyZE8Fxiu23SKGpwuH9c0cCdnmUsxOnW/9euvXUSOf
- wpEh6Td6T5FvbIYn58iY4r2Vjfjp/YFjDVH2fHAu9i+oe1wIh2OzECzPtHJwFbw8V0kd0USw==
-X-Received: by 2002:a17:907:a4a:b0:b9c:451b:2348 with SMTP id
- a640c23a62f3a-b9c672e4cd2mr22057166b.6.1775167022767; 
- Thu, 02 Apr 2026 14:57:02 -0700 (PDT)
+ bh=4XtZvlcq7y9dCibk7QnCziTNJJ4JB6d6R3IFkPvUGo4=;
+ b=FFyx64Q4gqAdmmfay+NH5tnf9kg4GUBr1UGVtPMVasGUhguP1M/Dlow/UKFZN53Agw
+ +ZWAgDI0QukvERwSdqLnrPhgOgzHhxfgYGK1omkshsKo0pCs0NlLszVvTqvnr+OIJWS9
+ /uv8MewVCY5UBRheJQzaLHXDgMr7q7Z5cEoqCTn2YsHtgYi2sGynul3Ss/LhRlyeLhv4
+ 38AsaWziAJ27HcuDnahGaRKyI0hCfSQEZgs72ggRTyrSUJPHFPP2EjbwxYh3T7jFC0xf
+ 8Xz5fdOEvEI72TsPiKyIjciaaSP3eA4PZ5XDIIiZaJl0fYiu22Gq4bYGCut9C6Xb55Fa
+ 7KzA==
+X-Gm-Message-State: AOJu0YzkjrG2UQ4qO7CksYqwV8h3ew23cOvKGyLlzWaFiVWKzo1Uf74A
+ PZlIyqrYVPVw7S6JzR2/HN8TBkPqrlNjlrNJ0MepsrXPtrb//irDBpeRyqIvQmuO
+X-Gm-Gg: ATEYQzyW6Tb8op78uNkQQcUKDHpd1KpEMCYEqsSUGN56J6WLCf9gN19ROF89hTS5Utn
+ 5RK24AFNjt/8KB0wj42Qbm1g0r7E6xTOwaolqlioA8OABs+I46dr/TlGVTCjERTLPqX4VG8/X7o
+ WL/h3y+epcM2iVEc6fhjZb++tWXfHOiqJjwzE+vlyfztDZ8QOyiduiAMHDYFdX2+P8KYBY1xk2u
+ B+G008pGvSBEaMz8tfM5cU2oG6JMiPt5sNgg9+nmVmEOe6MqtE+2djG1/DuY75TMaB6ko2sNKVa
+ krnr4XNpoaNybgNdawcVWANNhzH2pIYuWGLKDu88UGDMtqKMxllOc+qPrTx9KY5OSUgE22P/AnS
+ FlwP8u9QiJFBOekreiY7SrwH7mJFZ8ajkhn1Y9u1kwWgMPLZmG7Vwzysdq3p/MH9FiI6/6jhi0B
+ nf+vgqsjTMYxamk0dndUnuKUSv1x8wngkkym8pLmTomgwdSfsjS7dFx2vYgtC6XeqYtAdwxX7aF
+ xkTLRrN
+X-Received: by 2002:a17:906:f5a0:b0:b97:6d1b:4be8 with SMTP id
+ a640c23a62f3a-b9c46e2677fmr199715066b.10.1775167019041; 
+ Thu, 02 Apr 2026 14:56:59 -0700 (PDT)
 Received: from thinkpad-t470s.. (93-143-182-244.adsl.net.t-com.hr.
  [93.143.182.244]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.57.01
+ a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.56.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 14:57:02 -0700 (PDT)
+ Thu, 02 Apr 2026 14:56:58 -0700 (PDT)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v3 12/33] hw/core/fdt_generic_util: actually realize device
-Date: Thu,  2 Apr 2026 23:55:57 +0200
-Message-ID: <20260402215629.745866-13-ruslichenko.r@gmail.com>
+ Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 10/33] qom/object: export object_resolve_link()
+Date: Thu,  2 Apr 2026 23:55:55 +0200
+Message-ID: <20260402215629.745866-11-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260402215629.745866-1-ruslichenko.r@gmail.com>
 References: <20260402215629.745866-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,62 +108,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Actually realize objects with TYPE_DEVICE after main
-allocations done and properties set for qdev.
+Export `object_resovle_link()` for use by other
+subsystems.
+
+This allow callers to resolve object path and verify
+type contrains of a link property.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic_util.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ include/qom/object.h | 12 ++++++++++++
+ qom/object.c         |  2 +-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index 6f0a1e1e4b..8ae9e23073 100644
---- a/hw/core/fdt_generic_util.c
-+++ b/hw/core/fdt_generic_util.c
-@@ -540,6 +540,34 @@ static void fdt_init_parent_node(Object *dev, Object *parent, char *node_path)
-     }
- }
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 26df6137b9..1573d41d4f 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -2034,6 +2034,18 @@ int object_child_foreach_recursive(Object *obj,
+  */
+ Object *object_property_add_new_container(Object *obj, const char *name);
  
-+static void fdt_init_device_realize(FDTMachineInfo *fdti,  char *node_path,
-+                                   Object *dev)
-+{
-+    if (object_dynamic_cast(dev, TYPE_DEVICE)) {
-+        DeviceClass *dc = DEVICE_GET_CLASS(dev);
-+        const char *short_name = strrchr(node_path, '/') + 1;
++/*
++ * object_resolve_link:
++ *
++ * Lookup an object and ensure its type matches the link property type.  This
++ * is similar to object_resolve_path() except type verification against the
++ * link property is performed.
++ *
++ * Returns: The matched object or NULL on path lookup failures.
++ */
++Object *object_resolve_link(Object *obj, const char *name,
++    const char *path, Error **errp);
 +
-+        /* Regular TYPE_DEVICE houskeeping */
-+        fdt_debug_np("Short naming node: %s\n", short_name);
-+        (DEVICE(dev))->id = g_strdup(short_name);
-+
-+        if (object_dynamic_cast(dev, TYPE_CPU_CLUSTER)) {
-+            /*
-+             * CPU clusters must be realized at the end to make sure all child
-+             * CPUs are parented.
-+             */
-+            fdt_init_register_user_cpu_cluster(fdti, OBJECT(dev));
-+        } else {
-+            object_property_set_bool(OBJECT(dev), "realized", true,
-+                                     &error_fatal);
-+            if (dc->legacy_reset) {
-+                qemu_register_reset((void (*)(void *))dc->legacy_reset,
-+                                    dev);
-+            }
-+        }
-+    }
-+}
-+
- static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
+ /**
+  * object_property_help:
+  * @name: the name of the property
+diff --git a/qom/object.c b/qom/object.c
+index ff8ede8a32..7e16765cb4 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1904,7 +1904,7 @@ static void object_get_link_property(Object *obj, Visitor *v,
+  *
+  * Returns: The matched object or NULL on path lookup failures.
+  */
+-static Object *object_resolve_link(Object *obj, const char *name,
++Object *object_resolve_link(Object *obj, const char *name,
+                                    const char *path, Error **errp)
  {
-     Object *dev, *parent;
-@@ -582,6 +610,8 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
- 
-     fdt_init_qdev_properties(node_path, fdti, dev);
- 
-+    fdt_init_device_realize(fdti, node_path, dev);
-+
-     g_free(parent_node_path);
- 
-     return 0;
+     const char *type;
 -- 
 2.43.0
 
