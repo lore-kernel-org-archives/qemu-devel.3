@@ -4,97 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A251112246
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 01:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73523111224A
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 01:21:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w86Z8-0006FW-9I; Wed, 01 Apr 2026 21:09:47 -0400
+	id 1w86k9-0003k8-BY; Wed, 01 Apr 2026 21:21:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w86Z5-0006EN-BT
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 21:09:43 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1w86k4-0003hp-CQ
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 21:21:04 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w86Z3-0007hJ-LM
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 21:09:43 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b9382e59c0eso53287566b.0
- for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 18:09:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775092179; cv=none;
+ id 1w86k2-0000sL-JT
+ for qemu-devel@nongnu.org; Wed, 01 Apr 2026 21:21:04 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b980785a0bfso42621166b.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Apr 2026 18:21:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775092861; cv=none;
  d=google.com; s=arc-20240605;
- b=JzWsl7DCei/YU0o34E08UHfIB8HOTnD583B922u7DTCt0W/SYhm2u/DCCLl/ZYjkxA
- EYTtSmJpUfEoE5KmPZjvNyakOk1KOJAe/Kwut1Q9c5d9+eKHFMYpa63XEYYzts1vLdiR
- AmNmOEPTruOVi0AeZ7muCwAjjw5H+aJfSafgsYIASTBHbZ7b7ur5Qz9fDYaU/AR5AuIV
- YX1suEaJtPIiQErADw/C+5tVNaQ4+VpD4vce0bPfdlBap2X15oMbGI5FUjKBUWxLKXPw
- ONY5y5inAH7Cv1ORfaIr24ZEdvW73fBtlyoi2WKzkmTLv2xpVkqNtfZjYr44qc3jE7aP
- Ppew==
+ b=MLJw9og7XhmVWwtT+mEb4H7leSwl4Fpn3LZwPgw9lYz5ayQkGVijzN3FUOtFH2Nnzn
+ GQbZC1DtgX/26q8Wr9uw1OY778GG2QGsdSoXTvRJTPT/bmNtXOq0ILRunwHzRrnsTeTa
+ 2Dv0OYm6CMe9DVKJjK1DVOjvI0PopViWYtpWgvENzKl+kmk2qi7uc+QDTqkBsrM9zuPH
+ +b0zDBudYnlMTD+3muBw4ToJFWREx6/NdJ0EPakLwAO1DJ9EHcQ+YM12WkiT8NXUZTRc
+ lGOHFeD9GBArVvrzQdAH5T1OuYUtG9cfOUKZqIO1MQ06dj0lJZhikCQNUe9VNlvnp2lZ
+ ERKw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=1zZ8YW9O2BGGc90wQ5TJ9eQhbFntPrWX23y7UWXgGCw=;
- fh=cKlZQNqGqu5Ke7cd/xNYXJu0/deycT8i50Y0xttk3OA=;
- b=LtlNJFPBmv/fcA5CA0i1xCgdf3nBT8/VfIcr+SCgGPCD4xoP7ifwYO919LnHzys1cx
- glTkU6qX4vB5LNe+tBl5V2LbnomAyZFVfi5+x4o+0Vf3Y7HQEgLHkUMhd13nly4h+QMg
- kkFbju6Cam+7UWIieOU3Qe88eIScQFaBnAU7VEq6mGIcwb62ZcNtgSbiqP2351TzYzVX
- qWMdxd7cQ++y+koVkraPs8IHkHvJi/ePAlFhcoPDho2WT5wApPvQvC+PrDqHZD9UH9Nh
- bGIxRKNH8aimL5baJmlk8R61ifk+BFHDv4DSDdimMb7GV/2Hrkb07cjMyvqdvNTrh5lo
- +Fcw==; darn=nongnu.org
+ bh=vvZzySnXMQuEekVUrXwBjYEbehrYBwKgFI6x7ta6reE=;
+ fh=pib4z2lKR1zIJgPNvRHjuZ7qVpt3JkKqZS5pIzvygy8=;
+ b=Rwq6A29xZrHTGJOWaPeB0G64LxAU+31db+i5xP6h72VOpbJESQ1CEoKm+BNh8ayqd9
+ 5uMERnv4i1vX0MOPUNX1vd+lBKPII2dinZlQmYdO336Si8PyrRyBERBZHdVfK2LZTul4
+ xzEHPdbg+f2t4iH2iifSny/kfqYJvAj0CwqcwpgNdnz2rA2qDJk2Ca4l3A7dZOiwkKUK
+ c4l0Nv6zS3IxIjqD0IRNYUSYc2KtZtMg++AgQu+cMXGJ5YYX6fi/8lyGqjjuXoTSJnya
+ ak6K8pZVHVPhOEcGg8HytMu2Vw5RSEkLsp8taYAhkJDJxLl7QFS3llZYShKDDq30ZyEq
+ AH1g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775092179; x=1775696979; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775092861; x=1775697661; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1zZ8YW9O2BGGc90wQ5TJ9eQhbFntPrWX23y7UWXgGCw=;
- b=REr/iG8sXRa98bbnPFl8KByhhVLsn+ZDj1PxvTz7n3q/CzawaWV5bjBQqTzKpvUtEM
- jHKEVVSxuAzMs3yPn7Q7SZa+eKF6ZrwJa3qrqEgEkomyL/X1IGcnOd5qXddSJFXTvZCq
- zSmlaUF3IzVDLwwgoUvhup/mHYdQ/6hmoPXBhxOhmoXNSJNZPs3caOS7E8ed1IZI5Ypn
- zDZTWOzEooEI5MVzjzP+c1m4O0xP/MhrOfpW6rObbEWMFu02/EJpY55AWVCMqcosVkdz
- sTmHg/TiQX/+77bq0NIjSXzeBW7ZQtYawLAf67R02QumaRe23RMZVtejdAFaTBUzWnTg
- s0tA==
+ bh=vvZzySnXMQuEekVUrXwBjYEbehrYBwKgFI6x7ta6reE=;
+ b=Vs18xzGkqCr9LI5qPh8DWHd2COumKSYpy3qXhp8ha4fVdBQN7/ML58K9SFm8S4+zu3
+ +zk0nPMoebVtfxmXfEdq1QMvGPQO5XTbxpR4vf8DuLR4xtcQX8ynmYphP7z0fg7VelDe
+ Fo72qHrGGmM/fwxtxIp63Tn5+tKgQwmnNwvzMfmeFu0V6YZrOtU+QtI/Bd9dvMDWeuXp
+ SlS56/zIC4Ec7c+dT6pda1zfwFoJO9WDXaUw+EkPjY9cVg9bBsB53BkgPWxeK9RafHgf
+ 0e2i2Xqf5WZ9B/adjcjPo+FGUQoYaQKLl132aMevjXKY8o1ffHIAk55ccJuTVRdQegLu
+ Td0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775092179; x=1775696979;
+ d=1e100.net; s=20251104; t=1775092861; x=1775697661;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1zZ8YW9O2BGGc90wQ5TJ9eQhbFntPrWX23y7UWXgGCw=;
- b=og9HvvoR0UfG2OU7UT2EJElsAdMsvP8L0/jmW/+DIdXVZmRUnG5fR1axQqPqCSBUnq
- LsTLmcsK8iHeWz35Fcnw4h0/6SvemoALrIFoc3rm9FgbuTTezQUEZ06GtlDr+Vmixc3O
- RlPa3EM1dgcTXlKFdYeXWqd4VZGKeU1+gGcfszozXzAzyVxAfsyq5ge/ukb64U6OBK6x
- gV6HZ5kwRoZk6RU+6sGKYnzJ6kHqoOmeD5CSq6m7SJ19Oqsgtf/GubRZPWCSJ73IrMco
- GYmscmcVSf2SN6N6GnDaek3xAMZBBWKOPvTGBHrDiPYMn/JY4Ox+Pt8i/ar5gPyUDMvl
- KSYA==
-X-Gm-Message-State: AOJu0YweNoxez3QrufXfEp3Rn8TiAnU4lFKNExfr5cKRnyI3MgqkYh/z
- HG0bYuGCOs8OKlc9x5WkFuuIivwTt7aqp4y5M3iIcPPOgF5rnZ1mkdCNgX7QrZOeQqNg0g9B6Wg
- p/qeRWHTeov9tF3kFrnv0KEshtW3Bc75tSVBH
-X-Gm-Gg: ATEYQzza/zcWTOLVdsoObU8aL4bjOgxtF9XEEALU/MTRu+buxadz3MkEdD9V+etweb5
- KiS74ISaw+ZgXOAnXRpDeXUGgzv7nO7FcGJTyjMYZrbD/NiAoY4LwP7w0aWeHo3EieaBfe4opLw
- QgS1m8bpqRrJ5vLP7WCMSyCiyCMV7E8D5vxE6fqqmP3RJNGVXsYhv4eJPfYF9B2ZnK3rwqcvM7D
- fnAsAwbaikKWdbDm7SpD1MOciKl4Btz/7dZt8areF2ED2WCAsMGoVys94KZtmBh2qicInyz8h9t
- hg7/fk9YwqFcfZ37GjjfF+YW4GVvA76eRN5aBg==
-X-Received: by 2002:a17:907:d7ca:b0:b98:3b5d:e148 with SMTP id
- a640c23a62f3a-b9c13786385mr385837466b.11.1775092178716; Wed, 01 Apr 2026
- 18:09:38 -0700 (PDT)
+ bh=vvZzySnXMQuEekVUrXwBjYEbehrYBwKgFI6x7ta6reE=;
+ b=WMWwVHFpZMtes5wNWYnEFol7M2ufJr9dxdz7cLGBZLH+iX9cF9W+WF/dD/4BE+iQp6
+ srdi0GoIIid9NwOb1OmAbXDakANbEkai/my5J3cCz7DQbqYE0Yl12NvYBpVLxa5Nv4F9
+ ovfxK4oM40gaEwGjz32hHwm1eVDtQ7NzDniNkRENRW3WpcQ1pxylPBQ6tP7WZfGh+BI1
+ 7xAzKuUSnOaIwvOl7j0mzTSu9FRrQH0T7siiDUeBiCvpm+rsCyi9UbZrwCJXPxErTiug
+ UzAjqR8Na2zgWN/HkSsvhOoMsjpGAXJzS9fbDWkMRclVDinS0GXE+884fbiDQfLadvAv
+ 6MvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXt6GpxtkgadPMieG4nNmbsFhnXlPEX5VzgGI7rLbKGIfJ2Diq873iZmHnO42iTH1Czdm7WGLTQGbbE@nongnu.org
+X-Gm-Message-State: AOJu0YwJz2azB514SIac9OK736M6UmH7UBiKLRfLTSshMezV4zRzkpsX
+ C00sTOaaCUyakFmTTEuSfT8wa8qDqd/Bo3+9zQeKF4qP+fpz1aJ5EAMMQnE52TXjgvAuXd3fjBa
+ KlFK7D4yf8/swzPnfUXKFNWsCN88lBA4=
+X-Gm-Gg: ATEYQzx7UoqjXZ1ct+8wLc0n7PwDFrcknnKkUG5fdnuyN9PYbAPNTqNIVJSyYV0k8oU
+ +AbcqTrm5bAIZ/BmU1WqZUw5/mak2fNAQr3bQw0UWg2qo7NgN3egZYg2bvcAhdM94QJ4n2K5KZX
+ 3zJ+NTWgCLP6z5C25/703Q6FU+xyONDEFYn9zy6K4QS87ZGVW93g+Adk3a2ZPsjbLD1C5TQ+6pL
+ hg0G3uL9/MuGQ9Tz/6g9G7veuR99+k+HjNDk4+TPNLL/V25T6+8Rv451Nha+qUQ0eEe54tCGh/0
+ wquWawJ8BrciahrNT4Y4wyGFHDXM4tFpm/K/Mg==
+X-Received: by 2002:a17:906:ba84:b0:b97:b720:41a1 with SMTP id
+ a640c23a62f3a-b9c13b7bfa7mr387955766b.38.1775092860868; Wed, 01 Apr 2026
+ 18:21:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260401053853.10473-1-sebasjosue84@gmail.com>
- <20260401053853.10473-2-sebasjosue84@gmail.com>
-In-Reply-To: <20260401053853.10473-2-sebasjosue84@gmail.com>
+References: <20260306071105.3328365-1-max.chou@sifive.com>
+ <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
+ <abKfuTO7zg5d67E8@sifive.com>
+ <CAKmqyKOcCKAb2w2t2qYgOevswst75FjzKfihrYP9+odRAsCQmw@mail.gmail.com>
+ <abe80eiIC4gXUHxk@sifive.com>
+ <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
+ <acSqxQQxnO0HdB8M@sifive.com> <acTIq7M94646OAA_@ZEVORN-PC.localdomain>
+In-Reply-To: <acTIq7M94646OAA_@ZEVORN-PC.localdomain>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 2 Apr 2026 11:09:12 +1000
-X-Gm-Features: AQROBzAMdCWTmIdBs8P4svxlvn8igERPKQOhIafH6GqbEUS39ORfSFD1nnIlcV8
-Message-ID: <CAKmqyKMA1UQ+inZwibaeBdtcofYJ7+JPk8xR3Y+M_+DuLcfTMA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/intc: fix heap OOB in ACLINT MTIMER multi-socket
-To: =?UTF-8?Q?Sebasti=C3=A1n_Alba_Vives?= <sebasjosue84@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- palmer@dabbelt.com, berrange@redhat.com, qemu-security@nongnu.org
+Date: Thu, 2 Apr 2026 11:20:34 +1000
+X-Gm-Features: AQROBzA61o6j9SLXWSOyHvjfl1cSuRG_P_4wxmbjn0zleEDZ1MOrsTBae4waPJc
+Message-ID: <CAKmqyKNPUM8GGsRTTCN8mb-b7BBhn211naFw2kpym=5-OuP4uQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] Add Zvfbfa extension support
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -118,91 +129,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 1, 2026 at 11:57=E2=80=AFPM Sebasti=C3=A1n Alba Vives
-<sebasjosue84@gmail.com> wrote:
+On Thu, Mar 26, 2026 at 4:07=E2=80=AFPM Chao Liu <chao.liu.zevorn@gmail.com=
+> wrote:
 >
-> The MMIO read/write handlers index timecmp[] with the absolute hartid
-> (hartid_base + offset) but the array is allocated with num_harts
-> elements. In multi-socket configurations with hartid_base > 0 this
-> causes heap OOB access in the QEMU process.
->
-> Fix by using the relative offset for array indexing.
->
-> Cc: qemu-security@nongnu.org
-> Signed-off-by: Sebasti=C3=A1n Alba Vives <sebasjosue84@gmail.com>
+> On Thu, Mar 26, 2026 at 11:42:58AM +0800, Max Chou wrote:
+> > On 2026-03-19 13:45, Alistair Francis wrote:
+> > > Yes, that's how things previously worked. Basically I think we just
+> > > need a tag (that won't be changed) in an official RISC-V repo that we
+> > > can point to. That way it's easy to say "this is the exact version we
+> > > used to write the QEMU implementation". Then if there is a version 0.=
+2
+> > > we can easily see what has changed and update to match.
+> > >
+> >
+> > Hi Alistair,
+> >
+> > The official riscv-isa-manual repository has added a new tag for the
+> > frozen Zvfbfa v0.9, as shown below:
+> >
+> > https://github.com/riscv/riscv-isa-manual/releases/tag/zvfbfa-0.9
+> >
+> > The current v5 implementation fully complies with this frozen
+> > specification.
+> >
+> > Since the Zvfbfa is frozen, should I prepare a v6 that removes the =E2=
+=80=9Cx-=E2=80=9C
+> > prefix from the zvfbfa property and updates the specification reference
+> > ?
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Yes please!
 
 Alistair
 
-> ---
->  hw/intc/riscv_aclint.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> I think we need a v6 series, usually it's fine to implementation
+> after spec tag is release.
 >
-> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-> index 9c1491b..e27e5fb 100644
-> --- a/hw/intc/riscv_aclint.c
-> +++ b/hw/intc/riscv_aclint.c
-> @@ -131,6 +131,7 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque=
-, hwaddr addr,
->          addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
->          size_t hartid =3D mtimer->hartid_base +
->                          ((addr - mtimer->timecmp_base) >> 3);
-> +        size_t hartid_offset =3D hartid - mtimer->hartid_base;
->          CPUState *cpu =3D cpu_by_arch_id(hartid);
->          CPURISCVState *env =3D cpu ? cpu_env(cpu) : NULL;
->          if (!env) {
-> @@ -138,11 +139,11 @@ static uint64_t riscv_aclint_mtimer_read(void *opaq=
-ue, hwaddr addr,
->                            "aclint-mtimer: invalid hartid: %zu", hartid);
->          } else if ((addr & 0x7) =3D=3D 0) {
->              /* timecmp_lo for RV32/RV64 or timecmp for RV64 */
-> -            uint64_t timecmp =3D mtimer->timecmp[hartid];
-> +            uint64_t timecmp =3D mtimer->timecmp[hartid_offset];
->              return (size =3D=3D 4) ? (timecmp & 0xFFFFFFFF) : timecmp;
->          } else if ((addr & 0x7) =3D=3D 4) {
->              /* timecmp_hi */
-> -            uint64_t timecmp =3D mtimer->timecmp[hartid];
-> +            uint64_t timecmp =3D mtimer->timecmp[hartid_offset];
->              return (timecmp >> 32) & 0xFFFFFFFF;
->          } else {
->              qemu_log_mask(LOG_UNIMP,
-> @@ -174,6 +175,7 @@ static void riscv_aclint_mtimer_write(void *opaque, h=
-waddr addr,
->          addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
->          size_t hartid =3D mtimer->hartid_base +
->                          ((addr - mtimer->timecmp_base) >> 3);
-> +        size_t hartid_offset =3D hartid - mtimer->hartid_base;
->          CPUState *cpu =3D cpu_by_arch_id(hartid);
->          CPURISCVState *env =3D cpu ? cpu_env(cpu) : NULL;
->          if (!env) {
-> @@ -182,7 +184,7 @@ static void riscv_aclint_mtimer_write(void *opaque, h=
-waddr addr,
->          } else if ((addr & 0x7) =3D=3D 0) {
->              if (size =3D=3D 4) {
->                  /* timecmp_lo for RV32/RV64 */
-> -                uint64_t timecmp_hi =3D mtimer->timecmp[hartid] >> 32;
-> +                uint64_t timecmp_hi =3D mtimer->timecmp[hartid_offset] >=
-> 32;
->                  riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu)=
-, hartid,
->                      timecmp_hi << 32 | (value & 0xFFFFFFFF));
->              } else {
-> @@ -193,7 +195,7 @@ static void riscv_aclint_mtimer_write(void *opaque, h=
-waddr addr,
->          } else if ((addr & 0x7) =3D=3D 4) {
->              if (size =3D=3D 4) {
->                  /* timecmp_hi for RV32/RV64 */
-> -                uint64_t timecmp_lo =3D mtimer->timecmp[hartid];
-> +                uint64_t timecmp_lo =3D mtimer->timecmp[hartid_offset];
->                  riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu)=
-, hartid,
->                      value << 32 | (timecmp_lo & 0xFFFFFFFF));
->              } else {
-> --
-> 2.43.0
+> That said, we should defer to Alistair's thoughts on this.
 >
+> Additionally, my new debug spec series can be sent upstream later
+> (base on the zvfbfa tb ext_flag patch), once zvfbfa ia all ready
+> and pulled.
 >
+> Thanks,
+> Chao
+> >
+> > Thanks,
+> > rnax
+> >
+> > > With the seemingly infinite number of draft extensions we need
+> > > something to manage the version and compatibility, and that seems lik=
+e
+> > > the best bet.
+> > >
+> > > Posting the draft PDF spec somewhere immutable would also work. We
+> > > just need to be able to point to something that won't change and
+> > > represents some sort of "release". So a git commit doesn't seem like
+> > > enough, we need a "release" that everyone can converge on.
+> > >
+> > > Alistair
 
