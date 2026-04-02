@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 924F2D6AAE7
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D4C0D6AB17
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8QJv-0000iz-MM; Thu, 02 Apr 2026 18:15:23 -0400
+	id 1w8QKv-00017V-D2; Thu, 02 Apr 2026 18:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1w8QJu-0000h4-Jj; Thu, 02 Apr 2026 18:15:22 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1w8QKF-0000rF-G3; Thu, 02 Apr 2026 18:15:55 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1w8QJt-0004mD-2W; Thu, 02 Apr 2026 18:15:22 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1w8QKC-0004pe-Qn; Thu, 02 Apr 2026 18:15:43 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 632EOvlv119453; Thu, 2 Apr 2026 22:15:18 GMT
+ 632Eig1A064853; Thu, 2 Apr 2026 22:15:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=7jCarr+WGbmHu+2Yi
- 3YrMYGZaXdJCHOLAvclBahg01U=; b=jgw096SCW6gZ7hPkZhZoLVK6QVJn9yP/v
- oqVBHmXyk8Dp9mj7QjFMcJeLqvoZP8d5wdecnus6rhn/X94NWfwu0Izc01TI6qUE
- gtnnuObXq6RKwsKzD3dBWhkEQj+jLiPo3p3EfFiYkxA+7BTc/ByHycjR1jYP4mZB
- IV7N4s+kiX6ImRes+1/zoW2wDCm4iAHDbR2/RLMC2nrCJpQBQKP3I1U/Rixp3QAV
- 1mLpq/yFvqLtG6FidzxYeu6dgLBlegHBGOJH/WyevUxfJjCAyK20AP4FCY/P1nwz
- 24eUHX3OpwNTqzwPvYrCU2iPBFRSbRO7fcZcDQHuGN39mz8C5ZJ5w==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66msdtfj-1
+ :mime-version:references:subject:to; s=pp1; bh=T4Hwil79IzLV+vm7C
+ /ZGGZAXlEgi1EAAjGckzYxphIE=; b=ecvixRa8hEMBJNTzzCUmbNvf85CNp1paA
+ zoiB6zasKSC5AronMP9XCWGU57YJKtDdhmuuQp3ctcVUEQj8krSGjVii5p8cQKp1
+ x6RBESjeNXZAW60Zyn5lcPuknSHFkZyGK0FScoRz0lbjKEIkuh2cw+TlZWgMQMtz
+ 9TBwWpbPOOmbI+0c4rNQRNxSKOGaA25gKYeK710Y9bLxrHLOYxWIrbWCSo4hmEKc
+ Ww2NOkZeYNhPG2+0+VuoGD6gBgO7CuXPCa5GlR7sg6IPK51NhucZN1mfApOUYW4Z
+ qXs+g2nJ3q8XycSMgmiz5gXdkA/RmK+3nQLU8f8eSHZDhcmqcTPhw==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66q3esa5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 22:15:17 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 632JWV7Z005910;
- Thu, 2 Apr 2026 22:15:17 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6spyc0vc-1
+ Thu, 02 Apr 2026 22:15:37 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 632LBqcB013897;
+ Thu, 2 Apr 2026 22:15:36 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6ttkuuth-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 22:15:17 +0000
+ Thu, 02 Apr 2026 22:15:36 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 632MFFtj27918992
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 632MFYY21901068
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Apr 2026 22:15:15 GMT
+ Thu, 2 Apr 2026 22:15:34 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 66DDF58056;
- Thu,  2 Apr 2026 22:15:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 357E35806E;
+ Thu,  2 Apr 2026 22:15:34 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0897D58052;
- Thu,  2 Apr 2026 22:15:14 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C9B1958065;
+ Thu,  2 Apr 2026 22:15:32 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.183.185])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Apr 2026 22:15:13 +0000 (GMT)
+ Thu,  2 Apr 2026 22:15:32 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -66,41 +66,40 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com,
  brueckner@linux.ibm.com, jdaley@linux.ibm.com
-Subject: [PATCH v10 06/30] s390x/diag: Refactor address validation check from
- diag308_parm_check
-Date: Thu,  2 Apr 2026 18:14:28 -0400
-Message-ID: <20260402221453.1602899-7-zycai@linux.ibm.com>
+Subject: [PATCH v10 18/30] pc-bios/s390-ccw: Rework zipl_load_segment function
+Date: Thu,  2 Apr 2026 18:14:40 -0400
+Message-ID: <20260402221453.1602899-19-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260402221453.1602899-1-zycai@linux.ibm.com>
 References: <20260402221453.1602899-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=J6enLQnS c=1 sm=1 tr=0 ts=69ceea75 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-GUID: MykF-lLGoTeFDItFdg0R5wBWSc_07971
+X-Authority-Analysis: v=2.4 cv=frzRpV4f c=1 sm=1 tr=0 ts=69ceea89 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=130TwiEZxdn8fhqcL5YA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDE5NSBTYWx0ZWRfX/8EznLBrjF8b
- dJu7LL0QeSXM8osnHnVsSUKiwdBqoDoO10lG8+5b1X8lxIRNymeZ8p6/2MPU5w2kL4rFre5S/I0
- c+JTtKM0mjaSJwNsWKrD8hiZ41S/idBSUEMvh3qgkVUyYoPTcCW5VRvhTXNTFrkiYLkAHp1YGDm
- xgdUwLXWfYiJvH82qzSCDNjvvd9Cw9pfQYdp1bwdLym/T0frRys/EI9EbMpUuVfPI90Jydh71eK
- UoFPcXk6x7ALMYKjhsbZm7RIx/CHu6w92ZSZsA8Kgo1Cs55ukg1ZYXouwcBSdymAeeWnvdEj4DV
- zjxV07gLVUnVV8kGFvE9/Tz+JTOQlJVOatLd8dPP/sTHkpRXQQbQ9rkg/4IJOcK6XjeqUnm+eIP
- QhlHui0nHoUy+yRZLpRFQBBWHMC/K5eiYsfEqPs8/Zx/208/HXVID0FGwbEqfi/PyaRf7H6sv5B
- fmZZ5Bn7LzmvA0fwFtw==
-X-Proofpoint-GUID: emhI1b7og59J_X8_3h95tBtWG5mu5RqK
-X-Proofpoint-ORIG-GUID: emhI1b7og59J_X8_3h95tBtWG5mu5RqK
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=wVZWP19Ib8Popp5rDVAA:9
+X-Proofpoint-ORIG-GUID: MykF-lLGoTeFDItFdg0R5wBWSc_07971
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDE5NSBTYWx0ZWRfX6FRPtfh9i4zk
+ PR33C9DDgCDhOYk5gSi2iCrLFgh90oeahr4/wmL5CHQJhjFVtKWQD8seOv4dHe5L/w/xxlnGI4V
+ uBBCoyQ39F3PDt25yhHyiFkGnyiLc0/6R4xfMsZOjTO0t8oZN1Qs7GLwUpZgY9IPMGrFXWvgy8Z
+ sV10vMpauH6X64e9vM0EPOfbbGd2seJTLapUbzI5YZsSYtLLkqkZO4WAbkhZVM2gxGtryTjFirk
+ FeL7t0aEOVe0doJPGSLSBaWLDoD4ypY9TdiyPM6d73HrE9l3zhuBtnsfOxdSWhxTWfpMNEmNS7s
+ HrbWdz1AkR2y3ipAWD94FlNouSyBk+fMKIEVh1TWFEYfBfBT5fn4IwbrKAe61SgGkI6qW6MVaTj
+ QKFoB8z03C7r92e4ofLBJMZeySsxy+HBcclTOF6/JPslFh5YHvrwptECi68iCmU6pntnaMjA8tF
+ Tl1eIrjNPL76eWDH74w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-02_04,2026-04-02_05,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501 bulkscore=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604020195
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -124,48 +123,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a function to validate the address parameter of DIAGNOSE.
+Make the address variable a parameter of zipl_load_segment and return
+segment length.
 
-Refactor the function for reuse in the next patch, which allows address
-validation in read or write operation of DIAGNOSE.
+Modify this function to allow the caller to specify a memory address
+where segment data should be loaded into.
+
+seg_len variable is necessary to store the calculated segment length and
+is used during signature verification. Return the length on success, or
+a negative return code on failure.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/diag.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ pc-bios/s390-ccw/bootmap.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-index 6373544bb2..8ab40437a2 100644
---- a/target/s390x/diag.c
-+++ b/target/s390x/diag.c
-@@ -26,6 +26,12 @@
- #include "qemu/error-report.h"
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index b9ba004cfc..d17a6576ff 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -613,19 +613,22 @@ static int ipl_eckd(void)
+  * IPL a SCSI disk
+  */
  
- 
-+static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
-+{
-+    return address_space_access_valid(&address_space_memory, addr,
-+                                      size, write, MEMTXATTRS_UNSPECIFIED);
-+}
-+
- int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3)
+-static int zipl_load_segment(ComponentEntry *entry)
++/*
++ * Returns: length of the segment on success,
++ *          negative value on error.
++ */
++static int zipl_load_segment(ComponentEntry *entry, uint64_t address)
  {
-     uint64_t func = env->regs[r1];
-@@ -65,9 +71,7 @@ static int diag308_parm_check(CPUS390XState *env, uint64_t r1, uint64_t addr,
-         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-         return -1;
-     }
--    if (!address_space_access_valid(&address_space_memory, addr,
--                                    sizeof(IplParameterBlock), write,
--                                    MEMTXATTRS_UNSPECIFIED)) {
-+    if (!diag_parm_addr_valid(addr, sizeof(IplParameterBlock), write)) {
-         s390_program_interrupt(env, PGM_ADDRESSING, ra);
-         return -1;
-     }
+     const int max_entries = (MAX_SECTOR_SIZE / sizeof(ScsiBlockPtr));
+     ScsiBlockPtr *bprs = (void *)sec;
+     const int bprs_size = sizeof(sec);
+     block_number_t blockno;
+-    uint64_t address;
+     int i;
+     char err_msg[] = "zIPL failed to read BPRS at 0xZZZZZZZZZZZZZZZZ";
+     char *blk_no = &err_msg[30]; /* where to print blockno in (those ZZs) */
++    int seg_len = 0;
+ 
+     blockno = entry->data.blockno;
+-    address = entry->compdat.load_addr;
+ 
+     debug_print_int("loading segment at block", blockno);
+     debug_print_int("addr", address);
+@@ -668,10 +671,12 @@ static int zipl_load_segment(ComponentEntry *entry)
+                 puts("zIPL load segment failed");
+                 return -EIO;
+             }
++
++            seg_len += bprs->size * (bprs[i].blockct + 1);
+         }
+     } while (blockno);
+ 
+-    return 0;
++    return seg_len;
+ }
+ 
+ static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+@@ -687,7 +692,7 @@ static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+             continue;
+         }
+ 
+-        if (zipl_load_segment(entry)) {
++        if (zipl_load_segment(entry, entry->compdat.load_addr) < 0) {
+             return -1;
+         }
+ 
 -- 
 2.53.0
 
