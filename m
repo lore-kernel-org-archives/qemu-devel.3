@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B233D6AAF5
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 17:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC4C9D6AAF5
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 17:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8LUj-0001Rw-AZ; Thu, 02 Apr 2026 13:06:13 -0400
+	id 1w8LUX-00012y-NM; Thu, 02 Apr 2026 13:06:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LU1-0000dH-6L
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:37 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LTx-0000Xu-M9
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:34 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LTx-0000wb-J1
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:28 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-486fb14227cso15015145e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:05:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8LTq-0000vg-RT
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 13:05:22 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso10899095e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775149522; x=1775754322; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775149514; x=1775754314; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G5um0Hkp4gUlr+ZAZ+thc8PXoevdikb9WS1n3IueTF8=;
- b=G9TeWzQA1BbVbPctZ+4nyUt+ffMBiVUsvJRVaAooOOqrN5ySehVYvN9+dPcgGUIPXQ
- uGgOh+r48cbV1lTkYyCm3fmTprHmUhiK5YATvsRNikE8dm/EHhHOzXHwzKZpymZSYdLQ
- uGwgUD66EsGgFQqdNOiCZbilNnuLwBDrGXiB8d8nRVyKkaj0SacGBYZQH7jzbyKX8Osd
- QCfPEJtPZ9Xntyra7wWo4cJhX3EHedMoFApHqjU0hSHeiUQOf587A2f5Z1YYr9b62fx6
- 9X7VV8JEvbvU+dXy81/K7lPKsMdlr3J1hQjdz9WEOxzsXSN7jqSyLYV/2BBw64vHeEQe
- u+lA==
+ bh=5zFCy2/f6gXgpLVosgl6P0mdggO0d7nONWw8yr+5Eo4=;
+ b=zrbY38HJ4ifyD7ILAMD92ecXLoIL1lkZqoxV5kf5pDBT36zKjIlTZMCaB/38MHFTpx
+ f5UrLt0wykIrQwTnE301owDX1Xz6QLkxQm4779qq+xaOsegpLkr2Wls68iujXoWbcMnp
+ gg5BxW5OcLhAPdjza4HqQikc4DIoyR0C7P6yHj3s8qhdMrS1IPYtOlgXIK5GlyZ0Dzmm
+ zLQxX7vdBTAsYjwpZ8MzRJH0SrdqCBR/Ovw8DVPRP/I2u6pXVJKsqWzz49Ug0wNvQoGB
+ D0PdnUWHjPL9Kq+25jVh7tA4jarh4YbZrNrvQvnhD7Cm3r9in1/yndiQRE62zKnJsUpr
+ 1fdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775149522; x=1775754322;
+ d=1e100.net; s=20251104; t=1775149514; x=1775754314;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=G5um0Hkp4gUlr+ZAZ+thc8PXoevdikb9WS1n3IueTF8=;
- b=plDaEG/PKLDJMyQXS3ubsU8X8G+lUkeEQUk2zScuWdwg9JiZHJ3fdUZt6qNokXbpug
- 2Sr8fnzA9sUrrZTJlc+uLHKGluGmxjRd/PFYbiRgnxaI0vuxB0v6C8a7h/C5VvV0dtC6
- 16xv4Wjbk7R+FMlTO0/hpcLz/8p3nvKHJ18wOtf3EfFTPBvqz6r0dd1ks5iY8+i6qpzi
- YYdrhLWTCXSbTkxbtppd647IvBpMeD6rvZ/+A/4e8plyY98qyM5HFUt3Tp9G+BzVbhiL
- yCwCnSViDo4Be345BgbTNj3bqy+YZ0HCmvr7uUDhG2TRxOXUIAHmXByaepbeiWvlXCWl
- u7Zw==
-X-Gm-Message-State: AOJu0YwAx47bZDM4vatAK6S1g/OAT0rI80d9xYLz+GlXowzB+/jyzE3N
- S7Tr0vAcsPPxjTO6HI5lIdE2mjTKlXlZa348CykrxSWU055MbW5DI7ye20ynbwPVlmiGBxqzm9H
- Ai7lNirY=
-X-Gm-Gg: ATEYQzwVl5enxC2XJ0JHLs0Eyx38JrrN3OqNhQvbee3iLS2awOP0hX8GmnbPgEDg+UR
- 5+TbWW75T3+wUPM5DcskDNjmrtEBf8zArTAkBCeEvErCY8dPpPoAdnKdopfddCG0JWobk3gWBxC
- 3I+sLHSbl4mLUooHh5GqegXdTYGXbGp0L7a8FZcZnd+VVkGBQpFWpTw5SgGETYj77MgWfMtIRJf
- 77K7q9iUbcCfynwVloRt0RI86MAbxm6BJ432QGrzH26vLYAdBNlwVnRwm3wBWOdBIflKjiapYfV
- LkQR0oEUnMdc4f6HwMxtcCzurh3tmjB7wH7w+Pph6klNJ1SX2YPJLt4YceO58OuZOcxlFuWtpM+
- WatFCoPvvYg8z+qI/UcCUKMe4bOhg6hL1i21yRzSuxq5lj2h6+WL6lBuJR+zGjMA/ZQCGkvbkVb
- 7IOrso68gJY+tyDhCSnAaqoMmnFkm7J7bX6expKKx7MMLdDDI6MZ/rm0PRA0RZorEbzG6JVcC2
-X-Received: by 2002:a05:600c:3515:b0:477:76bf:e1fb with SMTP id
- 5b1f17b1804b1-4888359cee3mr152160325e9.16.1775149521759; 
- Thu, 02 Apr 2026 10:05:21 -0700 (PDT)
+ bh=5zFCy2/f6gXgpLVosgl6P0mdggO0d7nONWw8yr+5Eo4=;
+ b=mp777KFfqcZdSvPLIEAKsBbYmBmH+eHhIa/yJ3NkDoVRSDVD/x6Xt6RL0xc+ellBmm
+ /6tkPpaNEV7317qmeMAlGeaNkKUyrfwzkGRIm/kzgIrC1cPiHK5L2+gFAe8fHKR+nVF2
+ IQVH1Q06NH1OvV8l54tiL26HzzTUUngtQlxcv+DlPVHxgNveb7jBlwrZ5HVs+V/KtFrx
+ 6+o0f3r7J/9nKJhEcKd2P1tDiaVQ/wtmpdwYLu46vWob6BE929i8hYQ/BmyAUd59kYXU
+ ysl588uqNTvvTuwz7mZx8O1f2nScJ4aV8N8lxAT8qmzXxjOKc4Cd/M4QoTy2jeJnHQV4
+ 7kww==
+X-Gm-Message-State: AOJu0YwNKf7THrvcbRVS19RC/JKvv75JXB04zKYBtujgnMQrHJJYE25f
+ 4pRXPzSJwDJlWqF0SC13uwpTU9c9q5pv/MSo9HFsS+rGqjV4NPbYP2gHall52cUVY2zl900B22w
+ nV6TrLYo=
+X-Gm-Gg: ATEYQzzTKCtboXrd4Koh9HLO/DSMddtqUEf5MZePa6jKLmRGVugrnQI/72zbZQjcMOh
+ Po6Ks9xu/oKrsnJ8L3uKgkaAkW2nkAEY99GqivpdcNlm6RYlTrWoPZzKBPeF/nSAn3xoKjkz7ya
+ EVYbybawbcNT0IQmh77P8+y6wcAnalcgb5kcXRoqh67yLn5c7injx3UcCjtVETLcIu9BFAVX+R8
+ b0BWh0iiXlIO2THyJeLa8BvXYUqKI80mIJNHW00g1bMxWgqCU0Ceud57AMiTHYj6eAyQSf8fOc4
+ Wkugyr1HR5dugWQUfvX4deBCWcSEW0iKxbJj2MY39Ji86jnONPZdaoq49+dDNCQwzVJY1r/AfNJ
+ tc0pwRbmVdj7L5cYvRJZETcTaykYvsTo6x/WKvpVvdKHaLcXlwfx+tQM/TRxcfHau8IgyzcNhVB
+ et3oLpcMq8vT7N+9wcfz5naKeZBUxc3jzPzseQCI3lvSfFi7fFtTELhMX0P0X4NqPKVmcjodxQ
+X-Received: by 2002:a05:600c:a4c:b0:487:1c2:6a56 with SMTP id
+ 5b1f17b1804b1-4888356844bmr156661445e9.3.1775149514437; 
+ Thu, 02 Apr 2026 10:05:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e832585sm385581555e9.6.2026.04.02.10.05.20
+ 5b1f17b1804b1-48897fd5680sm666205e9.1.2026.04.02.10.05.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Apr 2026 10:05:20 -0700 (PDT)
+ Thu, 02 Apr 2026 10:05:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
@@ -70,19 +70,19 @@ Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
  qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Graf <agraf@csgraf.de>
-Subject: [PATCH-for-11.1 v2 6/9] target/arm: Remove target_ulong use in
- hvf_handle_psci_call()
-Date: Thu,  2 Apr 2026 19:04:31 +0200
-Message-ID: <20260402170434.94783-7-philmd@linaro.org>
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH-for-11.1 v2 5/9] target/arm: Compile WHPX as common object
+Date: Thu,  2 Apr 2026 19:04:30 +0200
+Message-ID: <20260402170434.94783-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260402170434.94783-1-philmd@linaro.org>
 References: <20260402170434.94783-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,29 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similarly to commit 3580aa03547 ("target/arm/tcg/psci.c: make
-compilation unit common") which replaced the target_ulong use in
-arm_handle_psci_call(), replace the one in hvf_handle_psci_call.
+whpx-all.c doesn't use target-specific code, move it from
+arm_system_ss[] to arm_common_system_ss[] to compile it once.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/hvf/hvf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/whpx/meson.build | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 5fc8f6bbbd9..678afe5c8e1 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1418,7 +1418,7 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
-     bool target_aarch64 = true;
-     CPUState *target_cpu_state;
-     ARMCPU *target_cpu;
--    target_ulong entry;
-+    uint64_t entry;
-     int target_el = 1;
-     int32_t ret = 0;
- 
+diff --git a/target/arm/whpx/meson.build b/target/arm/whpx/meson.build
+index 3df632c9d30..db31e928012 100644
+--- a/target/arm/whpx/meson.build
++++ b/target/arm/whpx/meson.build
+@@ -1,5 +1,5 @@
+-arm_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
++arm_common_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
+   'whpx-all.c',
++), if_false: files(
++  'whpx-stub.c'
+ ))
+-
+-arm_common_system_ss.add(when: 'CONFIG_WHPX', if_false: files('whpx-stub.c'))
 -- 
 2.53.0
 
