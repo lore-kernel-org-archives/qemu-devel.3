@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23233D39406
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 09:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A606D39406
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 09:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Ej1-0007GD-5I; Thu, 02 Apr 2026 05:52:31 -0400
+	id 1w8EiP-0006u8-IW; Thu, 02 Apr 2026 05:51:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8Eiy-0007Dc-Ca
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8EiO-0006sm-9o
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:51:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8Eiw-0008Tg-Oq
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8EiM-0008QG-9X
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:51:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775123544;
+ s=mimecast20190719; t=1775123509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1XTWrPgq4sCwgSTOwpsTMMw/F62QUQmlEI3gOkYR/ZE=;
- b=cNtWkpbMxk3K45QhDHhC1ZtlohCsWYgVceKD8J2agfYqBvQtNPZGq+hK8sNn0/cw8Dg08U
- 09L8iTUHIeW7gautHFlctppnflRDvm7+XWyqWL4pILEyYHTEbTqPPBKyVgal0iCNjinTL7
- /yzaBCdPvvPulhtk0Tt/LhpSZ6miVt0=
+ bh=U2SkktuFniNpBHFMckJQz4idYM3YsD8QVsvB/+MsLBM=;
+ b=BiPIvhiTDAyy8+l5Nh4w6ZsvXcKJivX9voraPVvdAyL6B5hBeceh4P1KZCC5wAd9H6UGpx
+ nzXAJ30qGskh9+mQS5nyRjtMs3275BNXk/3ep9Ia/7Uc81vATirBkKZiBiTlh4XMhivlR2
+ 6ONdnIXcFOcX1i/9ZEz+dHASwFAa+W4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-t3LmcyEeNnWluNdasNIvrQ-1; Thu,
- 02 Apr 2026 05:52:21 -0400
-X-MC-Unique: t3LmcyEeNnWluNdasNIvrQ-1
-X-Mimecast-MFC-AGG-ID: t3LmcyEeNnWluNdasNIvrQ_1775123540
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-NVRJ0cGjMjqJTSZzuaJv-Q-1; Thu,
+ 02 Apr 2026 05:51:46 -0400
+X-MC-Unique: NVRJ0cGjMjqJTSZzuaJv-Q-1
+X-Mimecast-MFC-AGG-ID: NVRJ0cGjMjqJTSZzuaJv-Q_1775123505
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5B85180044D; Thu,  2 Apr 2026 09:52:20 +0000 (UTC)
+ id BE15A180044D; Thu,  2 Apr 2026 09:51:44 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.44])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7C2F1196B088; Thu,  2 Apr 2026 09:52:16 +0000 (UTC)
+ id 63C391978D41; Thu,  2 Apr 2026 09:51:40 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	qemu-devel@nongnu.org
@@ -53,14 +53,13 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 10/10] docs/about/deprecated: Deprecate the qemu-system-i386
- binary
-Date: Thu,  2 Apr 2026 11:51:32 +0200
-Message-ID: <20260402095132.29245-11-thuth@redhat.com>
+Subject: [PATCH 01/10] target/i386/tcg/sysemu: Move target specific SMM code
+ to separate functions
+Date: Thu,  2 Apr 2026 11:51:23 +0200
+Message-ID: <20260402095132.29245-2-thuth@redhat.com>
 In-Reply-To: <20260402095132.29245-1-thuth@redhat.com>
 References: <20260402095132.29245-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -90,53 +89,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Aside from not supporting KVM on 32-bit hosts, the qemu-system-x86_64
-binary is a proper superset of the qemu-system-i386 binary. And with
-the 32-bit x86 host support being removed now, it is possible to
-deprecate the qemu-system-i386 binary now, too.
+This code movement will make the next patch easier to read.
 
-With regards to 32-bit KVM support in the x86 Linux kernel,
-the developers confirmed that they do not need a recent
-qemu-system-i386 binary here:
-
- https://lore.kernel.org/kvm/Y%2ffkTs5ajFy0hP1U@google.com/
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/about/deprecated.rst | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ target/i386/tcg/system/smm_helper.c | 47 ++++++++++++++++++-----------
+ 1 file changed, 30 insertions(+), 17 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index a6d6a713265..2de51337d75 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -301,6 +301,25 @@ machine must ensure that they're setting the ``spike`` machine in the
- command line (``-M spike``).
+diff --git a/target/i386/tcg/system/smm_helper.c b/target/i386/tcg/system/smm_helper.c
+index fb028a8272f..3be78cd53d3 100644
+--- a/target/i386/tcg/system/smm_helper.c
++++ b/target/i386/tcg/system/smm_helper.c
+@@ -32,26 +32,13 @@
+ #define SMM_REVISION_ID 0x00020000
+ #endif
  
+-void do_smm_enter(X86CPU *cpu)
++static void sm_state_init(X86CPU *cpu)
+ {
+     CPUX86State *env = &cpu->env;
+     CPUState *cs = CPU(cpu);
+-    target_ulong sm_state;
+     SegmentCache *dt;
+     int i, offset;
+-
+-    qemu_log_mask(CPU_LOG_INT, "SMM: enter\n");
+-    log_cpu_state_mask(CPU_LOG_INT, CPU(cpu), CPU_DUMP_CCOP);
+-
+-    env->msr_smi_count++;
+-    env->hflags |= HF_SMM_MASK;
+-    if (env->hflags2 & HF2_NMI_MASK) {
+-        env->hflags2 |= HF2_SMM_INSIDE_NMI_MASK;
+-    } else {
+-        env->hflags2 |= HF2_NMI_MASK;
+-    }
+-
+-    sm_state = env->smbase + 0x8000;
++    target_ulong sm_state = env->smbase + 0x8000;
  
-+System emulator binaries
-+------------------------
+ #ifdef TARGET_X86_64
+     for (i = 0; i < 6; i++) {
+@@ -156,6 +143,25 @@ void do_smm_enter(X86CPU *cpu)
+     x86_stl_phys(cs, sm_state + 0x7efc, SMM_REVISION_ID);
+     x86_stl_phys(cs, sm_state + 0x7ef8, env->smbase);
+ #endif
++}
 +
-+``qemu-system-i386`` binary (since 11.1)
-+''''''''''''''''''''''''''''''''''''''''
++void do_smm_enter(X86CPU *cpu)
++{
++    CPUX86State *env = &cpu->env;
 +
-+The ``qemu-system-i386`` binary was mainly useful for running with KVM
-+on 32-bit x86 hosts, but most Linux distributions already removed their
-+support for 32-bit x86 kernels, so hardly anybody still needs this. The
-+``qemu-system-x86_64`` binary is a proper superset and can be used to
-+run 32-bit guests by selecting a 32-bit CPU model, including KVM support
-+on x86_64 hosts. Thus users are recommended to reconfigure their systems
-+to use the ``qemu-system-x86_64`` binary instead. If a 32-bit CPU guest
-+environment should be enforced, you can switch off the "long mode" CPU
-+flag with ``-cpu max,lm=off``, or rename/symlink ``qemu-system-x86_64``
-+to ``qemu-system-i386`` -- QEMU will then run with the 64-bit extensions
-+disabled.
++    qemu_log_mask(CPU_LOG_INT, "SMM: enter\n");
++    log_cpu_state_mask(CPU_LOG_INT, CPU(cpu), CPU_DUMP_CCOP);
 +
++    env->msr_smi_count++;
++    env->hflags |= HF_SMM_MASK;
++    if (env->hflags2 & HF2_NMI_MASK) {
++        env->hflags2 |= HF2_SMM_INSIDE_NMI_MASK;
++    } else {
++        env->hflags2 |= HF2_NMI_MASK;
++    }
 +
- Backend options
- ---------------
++    sm_state_init(cpu);
++
+     /* init SMM cpu state */
  
+ #ifdef TARGET_X86_64
+@@ -191,9 +197,8 @@ void do_smm_enter(X86CPU *cpu)
+                            DESC_G_MASK | DESC_A_MASK);
+ }
+ 
+-void helper_rsm(CPUX86State *env)
++static void rsm_load_regs(CPUX86State *env)
+ {
+-    X86CPU *cpu = env_archcpu(env);
+     CPUState *cs = env_cpu(env);
+     target_ulong sm_state;
+     int i, offset;
+@@ -308,6 +313,14 @@ void helper_rsm(CPUX86State *env)
+         env->smbase = x86_ldl_phys(cs, sm_state + 0x7ef8);
+     }
+ #endif
++}
++
++void helper_rsm(CPUX86State *env)
++{
++    X86CPU *cpu = env_archcpu(env);
++
++    rsm_load_regs(env);
++
+     if ((env->hflags2 & HF2_SMM_INSIDE_NMI_MASK) == 0) {
+         env->hflags2 &= ~HF2_NMI_MASK;
+     }
 -- 
 2.53.0
 
