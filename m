@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05030D6AAE7
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BC4D6AAE7
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 22:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8QL0-0002Fn-Jh; Thu, 02 Apr 2026 18:16:30 -0400
+	id 1w8QJv-0000iR-5f; Thu, 02 Apr 2026 18:15:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1w8QKf-000115-G6; Thu, 02 Apr 2026 18:16:09 -0400
+ id 1w8QJt-0000ft-5g; Thu, 02 Apr 2026 18:15:21 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1w8QKc-0004qk-PK; Thu, 02 Apr 2026 18:16:09 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1w8QJp-0004lG-21; Thu, 02 Apr 2026 18:15:20 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 632BiTeo4172385; Thu, 2 Apr 2026 22:15:43 GMT
+ 632HJ1BM458927; Thu, 2 Apr 2026 22:15:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=/h3e2EEmgdBV+1Ms3
- 70RkH5JlFVr4wpF6ShRXqrv5LI=; b=FsZ5JBGOCOW6UEf7rhibP/1c6Uz/12msX
- vto2B8RvTmm74kRMZSWbq1mJC0g2zPJXIlOUJTZ5NUskrFychbRnCli13+QntJcd
- w1Q6K0glHlhefLOLWII117EV9MOc6YoGdPccnQKDvB6so+tHs/1ESuomSwN9LHqm
- KNLQSAgIlYeFxczEyv+77LSiTeLpqb3VYWk3TCgdMvHKWNfqme4anMIlyMMsFvbo
- N5Rm/UZtVboD9LZgj8yXz0zVXLt0um91lw0+dx6Q5Cgodi7QnFGp0HZeEnjIiMK9
- G3NTUMPvU9YCTCm0Rd+VxylatZyFRfYUvn6XYpJ6yrWg3wEgcPvtw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d65dcnvfw-1
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=iNZ4fOoVZPwAQ3wWiTtHvUtSGzm/
+ 9ffYYuoQETWmop4=; b=DARwVGa0SW8m2AHmJBB7K8DCgGsjVNFg7DByNBuOk7KD
+ lJKgpZS3XZ7N0gg4J9ALpWHsLXnjT2JS2yc3BtzNfDQw6FH59as5mQX3cbI6TQDK
+ c7H+ykmYaMcr5cumUlCCbt7VQmdg5OJjuv8tkHvU0cDdBv3LGQPZ3yrai/BViMfJ
+ 7WSQIKVjNtQIcac/ZyhCXXMDE2GZpee7wwRDlbzF8Lwy2dtNAtXyVSwLYNsweKbf
+ v6SJ0VXs8Ii9Pa3qhMSEjoiWvK6tKVgq8lAHb271ne7HGnhTsnYjKLMZ/9BuxfMv
+ k72OcIHuoixtBCHE0H0SrjsbRTogvW/4r1bHbPaVog==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66msdtes-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 22:15:42 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 632KHlZI013936;
- Thu, 2 Apr 2026 22:15:42 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6ttkuuu7-1
+ Thu, 02 Apr 2026 22:15:08 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 632LJ9pX030952;
+ Thu, 2 Apr 2026 22:15:07 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d6uhk3rj4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 22:15:42 +0000
+ Thu, 02 Apr 2026 22:15:07 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 632MFedT27001392
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 632MF6nQ1049090
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Apr 2026 22:15:41 GMT
+ Thu, 2 Apr 2026 22:15:06 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 99B5C5805D;
- Thu,  2 Apr 2026 22:15:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 56CA758052;
+ Thu,  2 Apr 2026 22:15:06 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 232F358068;
- Thu,  2 Apr 2026 22:15:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D12EA58056;
+ Thu,  2 Apr 2026 22:15:04 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.183.185])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Apr 2026 22:15:39 +0000 (GMT)
+ Thu,  2 Apr 2026 22:15:04 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -66,39 +66,40 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com,
  brueckner@linux.ibm.com, jdaley@linux.ibm.com
-Subject: [PATCH v10 22/30] pc-bios/s390-ccw: Add additional security checks
- for secure boot
-Date: Thu,  2 Apr 2026 18:14:44 -0400
-Message-ID: <20260402221453.1602899-23-zycai@linux.ibm.com>
+Subject: [PATCH v10 00/30] Secure IPL Support for SCSI Scheme of
+ virtio-blk/virtio-scsi Devices
+Date: Thu,  2 Apr 2026 18:14:22 -0400
+Message-ID: <20260402221453.1602899-1-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260402221453.1602899-1-zycai@linux.ibm.com>
-References: <20260402221453.1602899-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RsjI7SmK c=1 sm=1 tr=0 ts=69ceea8e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=v9_7xbZuii4DBXc9P7YA:9
-X-Proofpoint-GUID: 0-YAqcpDkWoCa5ArTNxyHoYJFiMyOhle
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDE5NSBTYWx0ZWRfX+p7JWJcXTECN
- ns+8ljjrMz+HIDVY32i6lp+5rwBlJu6oFQhhyrwt33ic6elUPfXyXZ8H2IlbCNdODgQZ0+2W2wU
- 8AsuLdtxn5uxwjxWfUaIMMDF2U+AH6v+nXOGuU+jVNi+1z5lc5/yIOPlT3YibKph0AxRHXGCBPa
- G7KDcR+8zx54wROvP/XwqpJsso/IrLYWt7QxSiyHsmgg/tsZOWTc+Aj8VFE766WatueibnCK4NV
- VfCdy9ZkdH1leEKT60m2VLRFPXASbgbdJMqPqsDXOcGaFUSUWhKGAgoJ6cCWsvJguFB4zzCUHwL
- xzK4Uq9KlOBaED0G8ZyZVHw5Rzw+VpnLgzp9VY+uQ6MKkHKWo6nhWxCJOApNWHKPVu4hkQyqK1y
- yYdFkNFfVcr6m7gL1lmrM/Q1D/nXsO9jaSJmDhTJkh5f4G+v6NXNFbxJLDwL1fxDTbREw0UFpN6
- EewGM6aXiv9MPhNoApQ==
-X-Proofpoint-ORIG-GUID: 0-YAqcpDkWoCa5ArTNxyHoYJFiMyOhle
+X-Authority-Analysis: v=2.4 cv=J6enLQnS c=1 sm=1 tr=0 ts=69ceea6c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=q5T4S90kAAAA:8 a=20KFwNOVAAAA:8 a=mVQ3UQ6C7W2DyCvHlhgA:9
+ a=ULUCSAz6Z2DhXlGq:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=LnBBZQxPVJ0Z7KJyRdxh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDE5NSBTYWx0ZWRfXwwjsvpuvtdve
+ 6RGmq8tPJKAJZIpaDMiHmLuNeZsBpXXxOsjYBU7e8djOFpZpZiX6fRi0w1EwpKt6T7q32DYMZja
+ VMuhE4gZMkvpPrzNTNWpEKwZOj9lSc0IBbRfoEoJdMLRlTR8kVZmdIX26IzYePY1WI42mpYiAb7
+ +Ylor79TDl0FVfVcguqw8H34ux2TEpNZLVdRn6Bp1Eks0I23OWvNIWxIOlDt6C8j7x2EfVOvjLo
+ jRiCwX6uTzfJ6JVxgQ/qmsu6VVoyt188A+kNtA79iJ2yjBC9+3FKjW+KgRtztKeHw/wTbWkjPeX
+ TPFTccicT7Mmm6+2p+iGgLYe+0GNKvkgrSEeY9+05ZsPK4wxdtx1fNc+BkwefOWE40l6uVT3sm/
+ o/ZvX9dUuQH0C0HXP1aMJQNOh1KElr2tig0v7eIoh//TenXSWhGxQPzbYSJZGr9uHjYUWGbk82j
+ z+yLLM4FRS7tv5GpGQQ==
+X-Proofpoint-GUID: e3b57Kd6fuLuU-FGGh_kj96BYk0QUwjC
+X-Proofpoint-ORIG-GUID: e3b57Kd6fuLuU-FGGh_kj96BYk0QUwjC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-02_04,2026-04-02_05,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015 phishscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2604020195
+ suspectscore=0 clxscore=1011 adultscore=0 priorityscore=1501 bulkscore=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604020195
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -124,551 +125,972 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add additional checks to ensure that components do not overlap with
-signed components when loaded into memory.
+Changelog v9->v10
 
-Add additional checks to ensure the load addresses of unsigned components
-are greater than or equal to 0x2000.
+[PATCH v9 09/30] s390x/diag: Implemented DIAG 320 subcode 2
+- Reworded documentation.
+- Used vce->len directly from handle_diag320_store_vc().
+- Dropped entry_offset; used vcb->out_len from
+  handle_diag320_store_vc().
 
-When the secure IPL code loading attributes facility (SCLAF) is installed,
-all signed components must contain a secure code loading attributes block
-(SCLAB).
+[PATCH v9 13/30] s390x/ipl: Introduced IPL Information Report Block (IIRB)
+- Clarified IIRB in documentation and commit message.
+- Reviewed-by: Collin Walling <walling@linux.ibm.com>
 
-The SCLAB provides further validation of information on where to load the
-signed binary code from the load device, and where to start the execution
-of the loaded OS code.
+[PATCH v9 19/30] pc-bios/s390-ccw: Added signature verification for
+secure IPL in audit mode
+- Removed trailing newline from sclp_get_fac_ipl().
+- Zeroed VCB on error path in request_certificate() using memset().
+- Introduced component-entry tracking struct to reduce parameter passing.
+- Fixed signed/unsigned error-code mismatches in zipl_run_secure().
+    - Fixed sig_len/comp_len type mismatch causing negative error
+      misinterpretation.
+- Dropped unnecessary initialization of cert_len and cert_table_idx
+  in zipl_run_secure().
 
-When SCLAF is installed, its content must be evaluated during secure IPL.
-However, a missing SCLAB will not be reported in audit mode. The SCALB
-checking will be skipped in this case.
+[PATCH v9 20/30] pc-bios/s390-ccw: Added signed component address
+overlap checks
+- Updated is_comp_overlap() comment.
+- Tracked component ranges using SecureIplCompAddrRangeList.
 
-Add IPL Information Error Indicators (IIEI) and Component Error
-Indicators (CEI) for IPL Information Report Block (IIRB).
+[PATCH v9 22/30] pc-bios/s390-ccw: Added additional security checks for
+secure boot
+- Refactored functions to reduce parameters.
+- Renamed set_comp_cei_with_log() to validate_comp_condition() and
+  returned a status flag.
+- Renamed security-check helpers for clarity.
+    - check_nuc → check_no_unsigned_comp
+    - check_sc → check_single_comp
+    - check_signed_comp → check_has_signed_comp
+- Added signed and unsigned counters to SecureIplSclabInfo.
+- Added comment for SCLAB helper struct.
 
-When SCLAF is installed, additional secure boot checks are performed
-during zipl and store results of verification into IIRB.
+[PATCH v9 25/30] pc-bios/s390-ccw: Handled true secure IPL mode
+- Removed ZIPL_BOOT_MODE_INVALID; failed immediately on invalid boot mode.
+- Reviewed-by: Collin Walling <walling@linux.ibm.com>
 
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
----
- include/hw/s390x/ipl/qipl.h   |  29 +++-
- pc-bios/s390-ccw/s390-ccw.h   |   1 +
- pc-bios/s390-ccw/sclp.c       |   8 +
- pc-bios/s390-ccw/sclp.h       |   1 +
- pc-bios/s390-ccw/secure-ipl.c | 283 +++++++++++++++++++++++++++++++++-
- pc-bios/s390-ccw/secure-ipl.h |  49 ++++++
- 6 files changed, 365 insertions(+), 6 deletions(-)
+------------------------------------------------------------------------
 
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index dcb84f729a..ea9bd8bf8b 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -156,10 +156,20 @@ struct IplInfoReportBlockHeader {
- };
- typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
- 
-+/* IPL Info Error Indicators */
-+#define S390_IIEI_NO_SIGNED_COMP      0x8000 /* bit 0 */
-+#define S390_IIEI_NO_SCLAB            0x4000 /* bit 1 */
-+#define S390_IIEI_NO_GLOBAL_SCLAB     0x2000 /* bit 2 */
-+#define S390_IIEI_MORE_GLOBAL_SCLAB   0x1000 /* bit 3 */
-+#define S390_IIEI_FOUND_UNSIGNED_COMP 0x800 /* bit 4 */
-+#define S390_IIEI_MORE_SIGNED_COMP    0x400 /* bit 5 */
-+
- struct IplInfoBlockHeader {
-     uint32_t len;
-     uint8_t  type;
--    uint8_t  reserved1[11];
-+    uint8_t  reserved1[3];
-+    uint16_t iiei;
-+    uint8_t  reserved2[6];
- };
- typedef struct IplInfoBlockHeader IplInfoBlockHeader;
- 
-@@ -183,13 +193,28 @@ typedef struct IplSignatureCertificateList IplSignatureCertificateList;
- #define S390_IPL_DEV_COMP_FLAG_SC  0x80
- #define S390_IPL_DEV_COMP_FLAG_CSV 0x40
- 
-+/* IPL Device Component Error Indicators */
-+#define S390_CEI_INVALID_SCLAB             0x80000000 /* bit 0 */
-+#define S390_CEI_INVALID_SCLAB_LEN         0x40000000 /* bit 1 */
-+#define S390_CEI_INVALID_SCLAB_FORMAT      0x20000000 /* bit 2 */
-+#define S390_CEI_UNMATCHED_SCLAB_LOAD_ADDR 0x10000000 /* bit 3 */
-+#define S390_CEI_UNMATCHED_SCLAB_LOAD_PSW  0x8000000  /* bit 4 */
-+#define S390_CEI_INVALID_LOAD_PSW          0x4000000  /* bit 5 */
-+#define S390_CEI_NUC_NOT_IN_GLOBAL_SCLA    0x2000000  /* bit 6 */
-+#define S390_CEI_SCLAB_OLA_NOT_ONE         0x1000000  /* bit 7 */
-+#define S390_CEI_SC_NOT_IN_GLOBAL_SCLAB    0x800000   /* bit 8 */
-+#define S390_CEI_SCLAB_LOAD_ADDR_NOT_ZERO  0x400000   /* bit 9 */
-+#define S390_CEI_SCLAB_LOAD_PSW_NOT_ZERO   0x200000   /* bit 10 */
-+#define S390_CEI_INVALID_UNSIGNED_ADDR     0x100000   /* bit 11 */
-+
- struct IplDeviceComponentEntry {
-     uint64_t addr;
-     uint64_t len;
-     uint8_t  flags;
-     uint8_t  reserved1[5];
-     uint16_t cert_index;
--    uint8_t  reserved2[8];
-+    uint32_t cei;
-+    uint8_t  reserved2[4];
- };
- typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
- 
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 1b09aed8b1..e1a8097c95 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -82,6 +82,7 @@ void sclp_setup(void);
- void sclp_get_loadparm_ascii(char *loadparm);
- bool sclp_is_diag320_on(void);
- bool sclp_is_sipl_on(void);
-+bool sclp_is_sclaf_on(void);
- int sclp_read(char *str, size_t count);
- 
- /* bootmap.c */
-diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
-index 6283ae71bc..be6055bb40 100644
---- a/pc-bios/s390-ccw/sclp.c
-+++ b/pc-bios/s390-ccw/sclp.c
-@@ -150,6 +150,14 @@ bool sclp_is_sipl_on(void)
-     return fac_ipl & SCCB_FAC_IPL_SIPL_BIT;
- }
- 
-+bool sclp_is_sclaf_on(void)
-+{
-+    uint16_t fac_ipl = 0;
-+
-+    sclp_get_fac_ipl(&fac_ipl);
-+    return fac_ipl & SCCB_FAC_IPL_SCLAF_BIT;
-+}
-+
- int sclp_read(char *str, size_t count)
- {
-     ReadEventData *sccb = (void *)_sccb;
-diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
-index cf147f4634..3441020d6b 100644
---- a/pc-bios/s390-ccw/sclp.h
-+++ b/pc-bios/s390-ccw/sclp.h
-@@ -52,6 +52,7 @@ typedef struct SCCBHeader {
- #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
- #define SCCB_FAC134_DIAG320_BIT 0x4
- #define SCCB_FAC_IPL_SIPL_BIT 0x4000
-+#define SCCB_FAC_IPL_SCLAF_BIT 0x1000
- 
- typedef struct ReadInfo {
-     SCCBHeader h;
-diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-index d2079e19bc..d4e455ed0c 100644
---- a/pc-bios/s390-ccw/secure-ipl.c
-+++ b/pc-bios/s390-ccw/secure-ipl.c
-@@ -134,6 +134,7 @@ static void comp_list_add(IplDeviceComponentList *comp_list, int comp_entry_idx,
- 
-     comp_list->device_entries[comp_entry_idx].addr = comp_entry_info.addr;
-     comp_list->device_entries[comp_entry_idx].len = comp_entry_info.len;
-+    comp_list->device_entries[comp_entry_idx].cei = comp_entry_info.cei;
-     comp_list->device_entries[comp_entry_idx].flags = comp_entry_info.flags;
-     /* cert index field is meaningful only when S390_IPL_DEV_COMP_FLAG_SC is set */
-     comp_list->device_entries[comp_entry_idx].cert_index = comp_entry_info.cert_index;
-@@ -198,6 +199,12 @@ static bool secure_ipl_supported(void)
-         return false;
-     }
- 
-+    if (!sclp_is_sclaf_on()) {
-+        puts("Secure IPL Code Loading Attributes Facility is not supported by"
-+             " the hypervisor!");
-+        return false;
-+    }
-+
-     return true;
- }
- 
-@@ -254,6 +261,259 @@ static void comp_addr_range_add(SecureIplCompAddrRangeList *range_list,
-     range_list->comp_addr_range[range_list->index].end_addr = end_addr;
- }
- 
-+static void check_unsigned_addr(SecureIplCompEntryInfo *comp_entry_info)
-+{
-+    /* unsigned load address must be greater than or equal to 0x2000 */
-+    comp_entry_info->cei |= validate_comp_condition(
-+                    comp_entry_info->addr >= S390_SECURE_IPL_UNSIGNED_MIN_ADDR,
-+                    S390_CEI_INVALID_UNSIGNED_ADDR,
-+                    "Load address is less than 0x2000");
-+}
-+
-+static bool check_sclab_presence(uint8_t *sclab_magic, uint32_t *cei_flags)
-+{
-+    /* identifies the presence of SCLAB */
-+    if (magic_match(sclab_magic, ZIPL_MAGIC)) {
-+        return true;
-+    }
-+
-+    *cei_flags |= S390_CEI_INVALID_SCLAB;
-+
-+    /* a missing SCLAB will not be reported in audit mode */
-+    return false;
-+}
-+
-+static void check_sclab_length(uint16_t sclab_len, uint32_t *cei_flags)
-+{
-+    *cei_flags |= validate_comp_condition(sclab_len >= S390_SECURE_IPL_SCLAB_MIN_LEN,
-+                                          S390_CEI_INVALID_SCLAB_LEN |
-+                                          S390_CEI_INVALID_SCLAB,
-+                                          "Invalid SCLAB length");
-+}
-+
-+static void check_sclab_format(uint8_t sclab_format, uint32_t *cei_flags)
-+{
-+    /* SCLAB format must set to zero, indicating a format-0 SCLAB being used */
-+    *cei_flags |= validate_comp_condition(sclab_format == 0,
-+                                          S390_CEI_INVALID_SCLAB_FORMAT,
-+                                          "Format-0 SCLAB is not being used");
-+}
-+
-+static void check_sclab_opsw(SecureCodeLoadingAttributesBlock *sclab,
-+                             SecureIplSclabInfo *sclab_info, uint32_t *cei_flags)
-+{
-+    const char *msg;
-+
-+    if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OPSW)) {
-+        /* OPSW = 0 - Load PSW field in SCLAB must contain zeros */
-+        msg = "Load PSW is not zero when Override PSW bit is zero";
-+        *cei_flags |= validate_comp_condition(sclab->load_psw == 0,
-+                                              S390_CEI_SCLAB_LOAD_PSW_NOT_ZERO,
-+                                              msg);
-+
-+    } else {
-+        /* OPSW = 1 indicating global SCLAB */
-+        sclab_info->global_count += 1;
-+        if (sclab_info->global_count == 1) {
-+            sclab_info->global_load_psw = sclab->load_psw;
-+            sclab_info->global_flags = sclab->flags;
-+        }
-+
-+        /* OLA must set to one */
-+        msg = "Override Load Address bit is not set to one in the global SCLAB";
-+        *cei_flags |= validate_comp_condition(
-+                            sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OLA,
-+                            S390_CEI_SCLAB_OLA_NOT_ONE, msg);
-+    }
-+}
-+
-+static void check_sclab_ola(SecureCodeLoadingAttributesBlock *sclab,
-+                            uint64_t load_addr, uint32_t *cei_flags)
-+{
-+    const char *msg;
-+
-+    if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OLA)) {
-+        /* OLA = 0 - Load address field in SCLAB must contain zeros */
-+        msg = "Load Address is not zero when Override Load Address bit is zero";
-+        *cei_flags |= validate_comp_condition(sclab->load_addr == 0,
-+                                              S390_CEI_SCLAB_LOAD_ADDR_NOT_ZERO,
-+                                              msg);
-+    } else {
-+        /* OLA = 1 - Load address field must match storage address of the component */
-+        msg = "Load Address does not match with component load address";
-+        *cei_flags |= validate_comp_condition(sclab->load_addr == load_addr,
-+                                              S390_CEI_UNMATCHED_SCLAB_LOAD_ADDR,
-+                                              msg);
-+    }
-+}
-+
-+static void check_sclab_nuc(uint16_t sclab_flags, uint32_t *cei_flags)
-+{
-+    const char *msg;
-+    bool is_nuc_set;
-+    bool is_global_sclab;
-+
-+    is_nuc_set = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_NUC;
-+    is_global_sclab = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_OPSW;
-+    msg = "No Unsigned Components bit is set, but not in the global SCLAB";
-+    *cei_flags |= validate_comp_condition(!is_nuc_set || is_global_sclab,
-+                                          S390_CEI_NUC_NOT_IN_GLOBAL_SCLA, msg);
-+}
-+
-+static void check_sclab_sc(uint16_t sclab_flags, uint32_t *cei_flags)
-+{
-+    const char *msg;
-+    bool is_sc_set;
-+    bool is_global_sclab;
-+
-+    is_sc_set = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_SC;
-+    is_global_sclab = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_OPSW;
-+    msg = "Single Component bit is set, but not in the global SCLAB";
-+    *cei_flags |= validate_comp_condition(!is_sc_set || is_global_sclab,
-+                                          S390_CEI_SC_NOT_IN_GLOBAL_SCLAB, msg);
-+}
-+
-+static bool is_psw_valid(uint64_t psw, SecureIplCompAddrRangeList *range_list)
-+{
-+    uint32_t addr = psw & 0x7fffffff;
-+
-+    /* PSW points within a signed binary code component */
-+    for (int i = 0; i < range_list->index; i++) {
-+        if (range_list->comp_addr_range[i].is_signed &&
-+            addr >= range_list->comp_addr_range[i].start_addr &&
-+            addr <= range_list->comp_addr_range[i].end_addr - 2) {
-+            return true;
-+       }
-+    }
-+    return false;
-+}
-+
-+static void check_load_psw(SecureIplCompAddrRangeList *range_list,
-+                           uint64_t sclab_load_psw,
-+                           SecureIplCompEntryInfo *comp_entry_info)
-+{
-+    bool valid;
-+    uint64_t load_psw;
-+
-+    load_psw = comp_entry_info->addr;
-+    valid = is_psw_valid(sclab_load_psw, range_list) &&
-+            is_psw_valid(load_psw, range_list);
-+    comp_entry_info->cei |= validate_comp_condition(valid,
-+                                                    S390_CEI_INVALID_LOAD_PSW,
-+                                                    "Invalid PSW");
-+
-+    /* compare load PSW with the PSW specified in component */
-+    comp_entry_info->cei |= validate_comp_condition(sclab_load_psw == load_psw,
-+                                          S390_CEI_UNMATCHED_SCLAB_LOAD_PSW,
-+                                         "Load PSW does not match with PSW in component");
-+}
-+
-+static void check_no_unsigned_comp(SecureIplSclabInfo sclab_info,
-+                                   IplDeviceComponentList *comp_list)
-+{
-+    bool is_nuc_set;
-+
-+    is_nuc_set = sclab_info.global_flags & S390_SECURE_IPL_SCLAB_FLAG_NUC;
-+    if (is_nuc_set && sclab_info.unsigned_count > 0) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_FOUND_UNSIGNED_COMP;
-+        zipl_secure_handle("Unsigned components are not allowed");
-+    }
-+}
-+
-+static void check_single_comp(SecureIplSclabInfo sclab_info,
-+                              IplDeviceComponentList *comp_list)
-+{
-+    bool is_sc_set;
-+
-+    is_sc_set = sclab_info.global_flags & S390_SECURE_IPL_SCLAB_FLAG_SC;
-+    if (is_sc_set &&
-+        sclab_info.signed_count != 1 &&
-+        sclab_info.unsigned_count >= 0) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_MORE_SIGNED_COMP;
-+        zipl_secure_handle("Only one signed component is allowed");
-+    }
-+}
-+
-+void check_global_sclab(SecureIplSclabInfo sclab_info,
-+                        IplDeviceComponentList *comp_list)
-+{
-+    if (sclab_info.count == 0) {
-+        return;
-+    }
-+
-+    if (sclab_info.global_count == 0) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_NO_GLOBAL_SCLAB;
-+        zipl_secure_handle("Global SCLAB does not exists");
-+        return;
-+    }
-+
-+    if (sclab_info.global_count > 1) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_MORE_GLOBAL_SCLAB;
-+        zipl_secure_handle("More than one global SCLAB");
-+        return;
-+    }
-+
-+    if (sclab_info.global_flags) {
-+        /* Unsigned components are not allowed if NUC flag is set in the global SCLAB */
-+        check_no_unsigned_comp(sclab_info, comp_list);
-+
-+        /* Only one signed component is allowed is SC flag is set in the global SCLAB */
-+        check_single_comp(sclab_info, comp_list);
-+    }
-+}
-+
-+static void check_has_signed_comp(int signed_count, IplDeviceComponentList *comp_list)
-+{
-+    const char *msg;
-+
-+    msg = "Secure boot is on, but components are not signed";
-+    comp_list->ipl_info_header.iiei |=
-+                validate_comp_condition(signed_count > 0,
-+                                        S390_IIEI_NO_SIGNED_COMP, msg);
-+
-+}
-+
-+static void check_sclab_count(int count, IplDeviceComponentList *comp_list)
-+{
-+    comp_list->ipl_info_header.iiei |=
-+                validate_comp_condition(count > 0, S390_IIEI_NO_SCLAB,
-+                                        "No recognizable SCLAB");
-+}
-+
-+static void check_sclab(SecureIplCompEntryInfo *comp_entry_info,
-+                        SecureIplSclabInfo *sclab_info)
-+{
-+    SclabOriginLocator *sclab_locator;
-+    SecureCodeLoadingAttributesBlock *sclab;
-+
-+    /* sclab locator is located at the last 8 bytes of the signed comp */
-+    sclab_locator = (SclabOriginLocator *)(comp_entry_info->addr +
-+                                           comp_entry_info->len - 8);
-+
-+    /* return early if sclab does not exist */
-+    if (!check_sclab_presence(sclab_locator->magic, &comp_entry_info->cei)) {
-+        return;
-+    }
-+
-+    check_sclab_length(sclab_locator->len, &comp_entry_info->cei);
-+
-+    /* return early if sclab is invalid */
-+    if (comp_entry_info->cei & S390_CEI_INVALID_SCLAB) {
-+        return;
-+    }
-+
-+    sclab_info->count += 1;
-+    sclab = (SecureCodeLoadingAttributesBlock *)(comp_entry_info->addr +
-+                                                 comp_entry_info->len -
-+                                                 sclab_locator->len);
-+
-+    check_sclab_format(sclab->format, &comp_entry_info->cei);
-+    check_sclab_opsw(sclab, sclab_info, &comp_entry_info->cei);
-+    check_sclab_ola(sclab, comp_entry_info->addr, &comp_entry_info->cei);
-+    check_sclab_nuc(sclab->flags, &comp_entry_info->cei);
-+    check_sclab_sc(sclab->flags, &comp_entry_info->cei);
-+}
-+
- static int zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
- {
-     if (zipl_load_segment(entry, sig_sec) < 0) {
-@@ -297,7 +557,7 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-      */
-     int cert_list_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1 };
-     SecureIplCompAddrRangeList range_list = { 0 };
--    int signed_count = 0;
-+    SecureIplSclabInfo sclab_info = { 0 };
- 
-     if (!secure_ipl_supported()) {
-         panic("Unable to boot in secure/audit mode");
-@@ -337,9 +597,15 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-             range_list.index += 1;
- 
-             if (!sig_len) {
-+                check_unsigned_addr(&comp_entry_info);
-+                comp_list_add(&comp_list, comp_entry_idx, comp_entry_info);
-+
-+                sclab_info.unsigned_count += 1;
-+                comp_entry_idx++;
-                 break;
-             }
- 
-+            check_sclab(&comp_entry_info, &sclab_info);
-             verified = verify_signature(comp_entry_info,
-                                         sig_len, (uint64_t)sig,
-                                         &cert_len, &cert_table_idx);
-@@ -374,7 +640,7 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-             }
- 
-             comp_entry_idx++;
--            signed_count += 1;
-+            sclab_info.signed_count += 1;
-             /* After a signature is used another new one can be accepted */
-             sig_len = 0;
-             break;
-@@ -391,10 +657,19 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-         }
-     }
- 
--    if (signed_count == 0) {
--        zipl_secure_handle("Secure boot is on, but components are not signed");
-+    /* validate load PSW with PSW specified in the final entry */
-+    if (sclab_info.global_load_psw) {
-+        comp_entry_info = (SecureIplCompEntryInfo){ 0 };
-+        comp_entry_info.addr = entry->compdat.load_psw;
-+
-+        check_load_psw(&range_list, sclab_info.global_load_psw, &comp_entry_info);
-+        comp_list_add(&comp_list, comp_entry_idx, comp_entry_info);
-     }
- 
-+    check_has_signed_comp(sclab_info.signed_count, &comp_list);
-+    check_sclab_count(sclab_info.count, &comp_list);
-+    check_global_sclab(sclab_info, &comp_list);
-+
-     update_iirb(&comp_list, &cert_list);
- 
-     *entry_ptr = entry;
-diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
-index c625ac2e3a..75d1c8e046 100644
---- a/pc-bios/s390-ccw/secure-ipl.h
-+++ b/pc-bios/s390-ccw/secure-ipl.h
-@@ -16,10 +16,47 @@
- VCStorageSizeBlock *zipl_secure_get_vcssb(void);
- int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec);
- 
-+#define S390_SECURE_IPL_SCLAB_FLAG_OPSW    0x8000
-+#define S390_SECURE_IPL_SCLAB_FLAG_OLA     0x4000
-+#define S390_SECURE_IPL_SCLAB_FLAG_NUC     0x2000
-+#define S390_SECURE_IPL_SCLAB_FLAG_SC      0x1000
-+
-+#define S390_SECURE_IPL_SCLAB_MIN_LEN      32
-+#define S390_SECURE_IPL_UNSIGNED_MIN_ADDR  0x2000
-+
-+struct SecureCodeLoadingAttributesBlock {
-+    uint8_t  format;
-+    uint8_t  reserved1;
-+    uint16_t flags;
-+    uint8_t  reserved2[4];
-+    uint64_t load_psw;
-+    uint64_t load_addr;
-+    uint64_t reserved3[];
-+} __attribute__ ((packed));
-+typedef struct SecureCodeLoadingAttributesBlock SecureCodeLoadingAttributesBlock;
-+
-+struct SclabOriginLocator {
-+    uint8_t reserved[2];
-+    uint16_t len;
-+    uint8_t magic[4];
-+} __attribute__ ((packed));
-+typedef struct SclabOriginLocator SclabOriginLocator;
-+
-+/* Custom struct used to consolidate SCLAB overhead */
-+typedef struct SecureIplSclabInfo {
-+    int count;
-+    int global_count;
-+    int signed_count;
-+    int unsigned_count;
-+    uint64_t global_load_psw;
-+    uint16_t global_flags;
-+} SecureIplSclabInfo;
-+
- /* Custom struct for secure IPL component entry information */
- typedef struct SecureIplCompEntryInfo {
-     uint64_t addr;
-     uint64_t len;
-+    uint32_t cei;
-     uint16_t cert_index;
-     uint8_t  flags;
- } SecureIplCompEntryInfo;
-@@ -50,6 +87,18 @@ static inline void zipl_secure_handle(const char *message)
-     }
- }
- 
-+static inline uint32_t validate_comp_condition(bool condition, uint32_t flag,
-+                                               const char *message)
-+
-+{
-+    if (condition) {
-+        return 0;
-+    }
-+
-+    zipl_secure_handle(message);
-+    return flag;
-+}
-+
- static inline uint64_t diag320(void *data, unsigned long subcode)
- {
-     register unsigned long addr asm("0") = (unsigned long)data;
+# Description
+
+This patch series is an external requirement by Linux distribution
+partners to verify secure IPL process. Additional secure IPL checks are
+also included in this series to address security holes in the original
+secure IPL design to prevent malicious actors to boot modified or
+unsigned code despite secure IPL being enforced.
+
+Secure IPL is enabled when the QEMU options for secure IPL are specified
+in the command line.
+
+During this process, additional security checks are performed to ensure
+system integrity.
+
+As components are loaded from disk, DIAG 508 subcode 2 performs
+signature verification if a signature entry is identified. Upon
+successful verification, DIAG 320 subcode 2 will request the
+corresponding certificate from QEMU key store to the BIOS.
+
+Secure IPL will continue until all the components are loaded if no error
+occurs during True secure IPL mode or in Audit mode (see explanation below).
+
+After that, an IPL Information report block (IIRB) is initialized
+immediately following an IPL Parameter Information Block. The IIRB is
+populated with information about the components, verification results
+and certificate data.
+
+Finally, the guest system proceeds to boot.
+
+Only List-Directed-IPL contains the relevant zIPL data structures to
+perform secure IPL. This patch series only adds support for the SCSI
+scheme of virtio-blk/virtio-scsi devices. Secure IPL for other device
+types will be considered as follow-up work at a later date.
+
+** Note: "secure IPL" and "secure boot" are used interchangeably
+throughout the design. **
+
+# True Secure IPL Mode and Audit Mode
+
+## True Secure IPL Mode
+
+When secure IPL is enabled and certificates are provided, all the secure
+IPL checks will performed. The boot process will abort if any error
+occurs during the secure IPL checks.
+
+## Audit Mode
+
+When the secure IPL option is not selected and certificates are
+provided, all the secure IPL checks will still be performed. However,
+the boot process will continue if any errors occur, with messages logged
+to the console during the secure IPL checks.
+
+The audit mode is also considered as simulated secure IPL because it is
+less pervasive, and allows the guest to boot regardless of the secure
+checking results.
+
+# How to Enable Secure IPL
+
+## QEMU Build Notes
+
+When building QEMU, enable the cryptographic libraries.
+
+Run configure script in QEMU repository with either parameter:
+
+	./configure … --enable-gnutls
+
+## Create Certificates via certtool
+
+Generate and use an RSA private key for signing.
+
+	certtool --generate-privkey > key.pem
+
+A self-signed certificate requires the organization name. Use the cert.info
+template to pre-fill values and avoid interactive prompts from certtool.
+
+	cat > cert.info <<EOF
+	cn = "My Name"
+	expiration_days = 36500
+	cert_signing_key
+	EOF
+
+	certtool --generate-self-signed \
+		 --load-privkey key.pem \
+		 --template cert.info \
+		 --hash=SHA256 \
+		 --outfile cert.pem
+
+It is recommended to store the certificate(s) in the /…/qemu/certs
+directory for easy identification.
+
+## Sign Kernel and Prepare zipl
+
+All actions must be performed on a guest.
+
+Copy the sign-file script (located in Linux source repository),
+generated private key(s), and certificate(s) to guest's file system.
+
+Sign guest image(s) and stage3 binary:
+
+	./sign-file sha256 key.pem cert.pem /boot/vmlinuz-…
+
+	./sign-file sha256 key.pem cert.pem /usr/lib/s390-tools/stage3.bin
+
+Run zipl with secure boot enabled.
+
+	zipl --secure 1 -V
+
+Guest image(s) are now signed, stored on disk, and can be verified.
+
+## New QEMU Command Options for Secure IPL
+
+New parameters have been added to the s390-ccw-virtio machine type to
+enable Secure IPL and provide certificates for signature verification.
+
+This parameter enables or disables Secure IPL/boot. If not specified, it
+defaults to off.
+
+	qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on|off
+
+This parameter specifies one or more paths to boot certificates, used
+for signature verification. You can provide a single certificate file or
+a directory.
+
+	qemu-system-s390x -machine s390-ccw-virtio, \
+                                   boot-certs.0.path=/.../qemu/certs, \
+                                   boot-certs.1.path=/another/path/cert.pem
+
+Example:
+	qemu-system-s390x -machine s390-ccw-virtio,
+	                           secure-boot=on, \
+	                           boot-certs.0.path=/.../qemu/certs, \
+                                   boot-certs.1.path=/another/path/cert.pem
+
+Secure IPL command options overview:
+
+If neither the -secure-boot nor the -boot-certs options are
+specified, the guest will boot in normal mode, and no security checks
+will be conducted.
+
+If the -secure-boot option is not specified or is set to off, and the
+-boot-certs option is provided, the guest will boot in audit mode.
+In this mode, all security checks are performed; however, any
+errors encountered will not interrupt the boot process.
+
+If the -secure-boot option is set to on and the -boot-certs option is
+provided, the guest will boot in true secure IPL mode. In this mode,
+all security checks are performed, and any errors encountered will
+terminate the boot process.
+  - If the -boot-certs option is not provided in true secure IPL
+    mode, the boot process will fail for the corresponding device.
+
+## Constraints
+
+- z16 or "qemu" CPU model
+
+- certificates must be in X.509 PEM format
+
+- only support for SCSI scheme of virtio-blk/virtio-scsi devices
+    - The boot process will terminate if secure boot is enabled without
+specifying a boot device.
+    - If enabling secure boot with multiple boot devices, any
+unsupported devices or non-eligible devices will cause the entire boot
+process terminating early with an error logged to the console.
+
+- attempting to perform secure IPL outside of these constraints will
+result in a failure.
+
+# DIAGNOSE 508 - IPL Extensions
+
+Signature verification is performed during IPL via DIAG 508. Component
+address, component length, signature address and signature length are
+obtained in the BIOS and pass to DIAG 508 subcode 2 to perform signature
+verification in QEMU. If verification succeeds, DIAG 508 subcode 2
+(signature verification) will return the length and index of the
+certificate in the QemuCertificateStore that was used for verification.
+
+## Data Structures
+
+Diag508SignatureVerificationBlock (SVB) — stores addresses and
+lengths of the component and signature to be used for signature
+verification. Upon verification, an index and the length of the
+certificate used is stored.
+
+------------------------------------------------------------------------
+
+Changelog v8->v9
+
+Documentation
+- Replaced "userspace" with "guest code".
+
+[PATCH v8 01/30] Add boot-certs to s390-ccw-virtio machine type
+option
+- Fixed typo and formatting issues in documentation.
+
+[PATCH v8 04/30] hw/s390x/ipl: Create certificate store
+- Fixed coding-style issues.
+- Corrected the maximum certificate count check.
+- Removed QEMU_BUILD_BUG_MSG from cert-store.h.
+- Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v8 05/30] s390x/diag: Introduce DIAG 320 for Certificate
+Store Facility
+- Updated documentation.
+- Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v8 06/30] s390x/diag: Refactor address validation check from
+diag308_parm_check
+- Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v8 07/30] s390x/diag: Implement DIAG 320 subcode 1
+- Adjusted return code in handle_diag320_query_vcsi().
+- Changed double-word boundary handling to use a specification
+  interrupt rather than an address interrupt.
+
+[PATCH v8 09/30] s390x/diag: Implement DIAG 320 subcode 2
+- Fixed a build error caused by a missing include.
+- Added a comment documenting VCE_INVALID_LEN usage.
+- Enforced 4 KB alignment for the subcode 2 address.
+
+[PATCH v8 12/30] s390x/diag: Implement DIAG 508 subcode 1 for
+signature verification
+- Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v8 13/30] s390x/ipl: Introduce IPL Information Report Block
+(IIRB)
+- Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v8 14/30] pc-bios/s390-ccw: Define memory for IPLB and convert
+IPLB to pointers
+- Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v8 16/30] s390x: Guest support for Secure-IPL Facility
+- Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v8 19/30] pc-bios/s390-ccw: Add signature verification for
+secure IPL in audit mode
+- Corrected ROUND_UP usage and added a remark similar to the one in
+  osdep.h.
+- Merged sclp_is_diag320_on() and sclp_get_fac134().
+- Declared vcssb_data as static.
+- Ensured vcssb_data is double-word aligned as required by DIAG 320
+  subcode 1.
+- Reset vcssb->length on errors (e.g., set to 0).
+- Defined vcb_data as a static array with 4 KB alignment, as required
+  by DIAG 320 subcode 2.
+- Ensured the boot process exits when required facilities are missing
+  in secure/audit mode.
+
+[PATCH v8 20/30] pc-bios/s390-ccw: Add signed component address
+overlap checks
+- Handled out-of-range component address range indices according to
+  the active boot mode.
+
+[PATCH v8 21/30] s390x: Guest support for Secure-IPL Code Loading
+Attributes Facility (SCLAF)
+- Fixed a documentation build issue.
+
+[PATCH v8 22/30] pc-bios/s390-ccw: Add additional security checks for
+secure boot
+- Fixed coding-style issues.
+
+[PATCH v8 24/30] hw/s390x/ipl: Set IPIB flags for secure IPL
+- Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v8 25/30] pc-bios/s390-ccw: Handle true secure IPL mode
+- Removed ZIPL_BOOT_MODE_INVALID case from zipl_run() and allowed the
+  default case to handle it.
+
+[PATCH v8 26/30] hw/s390x/ipl: Handle secure boot with multiple boot
+devices
+- Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v8 28/30] tests/functional/s390x: Add secure IPL functional
+test
+- Made the test executable (chmod a+x) to allow direct execution
+  outside the Meson harness.
+- Updated the test to operate on a copied asset using qemu-img -b.
+
+Changelog v7->v8
+
+- Edited documentation
+
+[PATCH v7 01/29] Add boot-certs to s390-ccw-virtio machine type
+option
+- Updated version number from 10.2 to 11.0
+
+[PATCH v7 02/29] crypto/x509-utils: Refactor with GNUTLS fallback
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 03/29] crypto/x509-utils: Add helper functions for
+certificate store
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 04/29] hw/s390x/ipl: Create certificate store
+- Merged init_cert_x509() with init_cert()
+- Simplified certificate path handling; removed redundant NULL
+  checks in get_cert_paths()
+- Added warnings for empty certificate directories and non-.pem
+  files
+- Renamed variables: VC_* → CERT_* and max_cert_size →
+  largest_cert_size
+- Made certificate store initialization independent of kernel/IPLB
+  state
+- Fixed memory leak
+- Added comments explaining why DER data is not stored in
+  S390IPLCertificate
+
+[PATCH v7 05/29] s390x/diag: Introduce DIAG 320 for Certificate Store
+Facility
+- Simplified control flow in handle_diag_320()
+- Removed the word "Provide" from description text
+
+[PATCH v7 06/29] s390x/diag: Refactor address validation check from
+diag308_parm_check()
+- Added Reviewed-by: Collin Walling <walling@linux.ibm.com>
+- Added Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+
+[PATCH v7 07/29] s390x/diag: Implement DIAG 320 subcode 1
+- Added upper-bound validation for vcssb->length
+- Added Reviewed-by: Collin Walling <walling@linux.ibm.com>
+
+[PATCH v7 08/29] crypto/x509-utils: Add helper functions for DIAG 320
+subcode 2
+- Simplified ECC curve validation logic
+- Moved public-key algorithm detection to internal helpers
+- Removed unused QCRYPTO_PK_ALGO enum
+- Fixed commit message
+
+[PATCH v7 09/29] s390x/diag: Implement DIAG 320 subcode 2
+- Added sanity checks for key ID retrieval; mark certificates
+  invalid if extraction fails
+- Reworked VCE construction logic
+- Pass S390IPLCertificate as const pointers instead of copying
+  structs
+
+[PATCH v7 10/29] s390x/diag: Introduce DIAG 508 for secure IPL
+operations
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 11/29] crypto/x509-utils: Add helper functions for DIAG 508
+subcode 1
+- Fixed typos
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+- Added Reviewed-by: Farhan Ali <alialifm@linux.ibm.com>
+
+[PATCH v7 12/29] s390x/diag: Implement DIAG 508 subcode 1 for signature
+verification
+- Added comments on maximum component and signature lengths
+- Added warning indicating failures due to oversize signature or
+  component
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 13/29] pc-bios/s390-ccw: Introduce IPL Information Report
+Block (IIRB)
+- Updated documentation describing guest kernel usage of certificate
+  data in the IIRB
+- Simplified and renamed flags and type definitions
+- Merged unused and reserved fields
+- Moved IIRB definitions from pc-bios/s390-ccw/iplb.h to
+  include/hw/s390x/ipl/qipl.h
+
+[PATCH v7 14/29] pc-bios/s390-ccw: Define memory for IPLB and convert
+IPLB to pointers
+- Moved IplBlocks struct from pc-bios/s390-ccw/iplb.h to
+  include/hw/s390x/ipl/qipl.h
+- Moved attribute annotations to the ipl_data declaration in main.c
+
+  * Note: checkpatch.pl flags the following:
+          ERROR: externs should be avoided in .c files
+          #88: FILE: pc-bios/s390-ccw/main.c:26:
+          +IplBlocks ipl_data __attribute__((__aligned__(PAGE_SIZE)));
+
+This appears to be a false positive, as IplBlocks is not declared as an
+extern in a .c file, and checkpatch.pl reports the same warning for the
+existing IplParameterBlock declaration in main.c even before this patch.
+
+[PATCH v7 15/29] hw/s390x/ipl: Add IPIB flags to IPL Parameter Block
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 16/29] s390x: Guest support for Secure-IPL Facility
+- Fixed reserved-field off-by-one error
+
+[PATCH v7 17/29] pc-bios/s390-ccw: Refactor zipl_run()
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 19/29] pc-bios/s390-ccw: Add signature verification for
+secure IPL in audit mode
+- Updated warning message
+- Simplified control flow and error handling in zipl_run()
+- Removed UNSPECIFIED boot mode and defaulted to NORMAL
+- Refactored zipl_run_secure()
+  - Renamed variables and functions
+- Adjusted index handling in verify_signature(), accounting for
+  DIAG 320 when retrieving certificates
+
+[PATCH v7 21/29] pc-bios/s390-ccw: Add additional security checks for
+secure boot
+- Renamed constants:
+    S390_IPL_INFO_IIEI_* → S390_IIEI_*
+    S390_IPL_COMPONENT_CEI_* → S390_CEI_*
+- Improved readability by reducing function parameter counts
+- Fixed check_sc() to allow only a single signed binary component
+- Moved address-range/overlap checks to a separate patch
+
+[PATCH v7 22/29] Add secure-boot to s390-ccw-virtio machine type option
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 23/29] hw/s390x/ipl: Set IPIB flags for secure IPL
+- Fixed commit message
+
+[PATCH v7 24/29] pc-bios/s390-ccw: Handle true secure IPL mode
+- Updated documentation
+- Fixed typo
+
+[PATCH v7 25/29] pc-bios/s390-ccw: Handle secure boot with multiple
+boot devices
+- Handled support for multiple secure boot devices on the QEMU side
+
+[PATCH v7 26/29] hw/s390x/ipl: Handle secure boot without a specified
+boot device
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v7 27/29] tests/functional/s390x: Add secure IPL
+- Cleaned up test code
+- Switched from time.sleep() to wait_for_console_pattern()
+
+Changelog v6->v7
+
+Add functional test for secure IPL
+
+Secure IPL documentation
+- Merged command line into one line
+- Limited line length to 80 columns
+
+[PATCH v6 01/28] Add boot-certs to s390-ccw-virtio machine type option
+- Renamed BootCertificate to BootCertificates
+- Added Acked-by: Markus Armbruster <armbru@redhat.com>
+
+[PATCH v6 02/28] crypto/x509-utils: Refactor with GNUTLS fallback
+- Edited commit message
+- Added Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+        Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+        Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v6 03/28] crypto/x509-utils: Add helper functions for certificate
+store
+- Added Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+        Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+        Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v6 04/28] hw/s390x/ipl: Create certificate store
+- Removed QEMU_PAKCED
+- Inlined cert2buf wrapper function to reduce lines of code
+- Reported error and handled exit in s390_ipl_create_cert_store()
+
+[PATCH v6 05/28] s390x/diag: Introduce DIAG 320 for Certificate Store
+Facility
+- Fixed typos
+- Added Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v6 06/28] s390x/diag: Refactor address validation check from
+diag308_parm_check
+- Moved diag_parm_addr_valid() to target/s390x/diag.c
+- Added Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v6 07/28] s390x/diag: Implement DIAG 320 subcode 1
+- Added Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v6 08/28] crypto/x509-utils: Add helper functions for DIAG 320
+subcode 2
+- Edited commit message
+- Handled negative return value from gnutls_x509_crt_get_pk_algorithm()
+in qcrypto_x509_get_pk_algorithm
+- Checked boundary before using hash_alg in qcrypto_x509_get_cert_key_id()
+- Rename qcrypto_x509_is_ecc_curve_p521() to
+qcrypto_x509_check_ecc_curve_p521()
+
+[PATCH v6 09/28] s390x/diag: Implement DIAG 320 subcode 2
+- Removed redundant set vce->len
+- Added check to make sure data doesn't exceed buffer bounds
+
+[PATCH v6 10/28] s390x/diag: Introduce DIAG 508 for secure IPL operations
+- Reworded document to avoid the term “KVM”
+- Added Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+
+[PATCH v6 11/28] crypto/x509-utils: Add helper functions for DIAG 508
+subcode 1
+- Fixed indentation
+- Replaced g_new0() and memcpy() with g_memdup2()
+
+[PATCH v6 12/28] s390x/diag: Implement DIAG 508 subcode 1 for signature
+verification
+- Edit commit message and documentation in handle_diag508_sig_verif()
+- Changed diag_508_verify_sig function return type from int to bool
+- Set upper limit for comp_len and sig_len to avoid malicious memory
+allocation
+- Fixed coding style - eliminate unnecessary variables
+
+[PATCH v6 13/28] pc-bios/s390-ccw: Introduce IPL Information Report
+Block (IIRB)
+- Removed bios structs packing
+
+[PATCH v6 14/28] pc-bios/s390-ccw: Define memory for IPLB and convert
+IPLB to pointers
+- specify ipl_data attribute in the pc-bios/s390-ccw/main.c
+
+[PATCH v6 15/28] hw/s390x/ipl: Add IPIB flags to IPL Parameter Block
+- Moved the setting of iplb->len to when the DIAG308_IPIB_FLAGS_IPLIR is set
+
+[PATCH v6 17/28] pc-bios/s390-ccw: Refactor zipl_run()
+- Preserved return error value from zipl_run_normal()
+
+[PATCH v6 18/28] pc-bios/s390-ccw: Rework zipl_load_segment function
+- Fixed typoes
+- Added Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+[PATCH v6 19/28] pc-bios/s390-ccw: Add signature verification for secure
+IPL in audit mode
+- Edited documentation
+- Removed bios structs packing
+- Be more specific in the error message and mention Passthrough (vfio)
+CCW device does not support secure boot
+- Allocated memory for vcb using max_single_vcb_len instead of
+MAX_SECTOR_SIZE in request_certificate()
+- Rename variables in zipl_run_secure()
+cert_index → cert_entry_idx
+comp_index → comp_entry_idx
+cert_idx → cert_table_idx
+- Refactored handle_certificate(): only handles certificate related
+operations and moved the increment of cert_entry_idx and cert to
+zipl_run_secure()
+
+[PATCH v6 21/28] pc-bios/s390-ccw: Add additional security checks for
+secure boot
+- Fixed coding style
+- Added out of range warning in comp_addr_range_add()
+- Fixed end address issue in is_psw_valid() and is_comp_overlap()
+- Inlined comparison functions
+
+[PATCH v6 22/28] Add secure-boot to s390-ccw-virtio machine type option
+- Moved bool secure_boot next to other bool variables to avoid
+additional padding
+
+[PATCH v6 24/28] pc-bios/s390-ccw: Handle true secure IPL mode
+- Edited documentation
+- Used panic instead of IPL_assert() in zipl_secure_handle()
+
+[PATCH v6 25/28] pc-bios/s390-ccw: Handle secure boot with multiple boot
+devices
+- Used a stack variable for QemuIplParameters instead of a malloc in
+check_secure_boot_support()
+
+Changelog v5->v6
+
+Add boot-certs to s390-ccw-virtio machine type option
+- Renamed struct BootCertPath to BootCertificate
+- Defined DummyBootCertificates struct for QMP to use
+BootCertificateList internally
+
+crypto/x509-utils
+- Used gnutls_x509_crt_export2() in qcrypto_x509_convert_cert_der()
+- Allocated buffers with g_new for results in
+qcrypto_x509_convert_cert_der() and qcrypto_pkcs7_convert_sig_pem()
+- Added check for qcrypto_to_gnutls_hash_alg_map bounds in
+qcrypto_x509_get_cert_key_id()
+- Added qcrypto_x509_is_ecc_curve_p521() function to determine if an ECC
+public key algorithm uses P521 curve
+- Fixed typo
+
+hw/s390x/ipl: Create certificate store
+- Made any configuration errors fatal when loading certificates into the
+cert store
+- Removed key_id_size and hash_size from S390IPLCertificate and defined
+them as constants
+- Do not reinitialize the cert store if it already exists
+- Handled memory cleanup
+
+s390x/diag: Implement DIAG 320 subcode 1
+- Added QEMU_BUILD_BUG_MSG
+
+s390x/diag: Implement DIAG 320 subcode 2
+- Refactored build_vce_header() and created a new function for getting
+key type
+- Added QEMU_BUILD_BUG_MSG
+
+s390x/diag: Implement DIAG 508 subcode 1 for signature verification
+- Updated Diag508SigVerifBlock
+
+hw/s390x/ipl: Add IPIB flags to IPL Parameter Block
+- Override IPLB length only when DIAG308_IPIB_FLAGS_IPLIR flag is set
+- Dropped hw/s390x/ipl: Set iplb->len to maximum length of IPL Parameter
+Block patch
+
+pc-bios/s390-ccw: Add signature verification for secure IPL in audit mode
+- Added validation for VCB and VCE before retrieving information in
+request_certificate()
+- Replaced uint64_t *cert with uint8_t *cert in zipl_run_secure()
+
+Changelog v4->v5
+
+- Segmented documentation by introducing them alongside the patches that
+add the relevant functionality
+- Removed hash-type restriction from S390IPLCertificateStore
+
+Add boot-certs to s390-ccw-virtio machine type option
+- Added boot-certs property to the s390-ccw-virtio machine type
+    - Changed to use an array property for passing certificate instead
+      of colo-delimited strings.
+    e.g. boot-certs.0.path=/path/to/dir,
+         boot-certs.1.path=/to/other/dir,
+         boot-certs.2.path=/some/...
+
+crypto/x509-utils
+- Refactored fallback handling into a separated commit
+- Removed QCryptoKeyidFlags and qcrypto_x509_get_keyid_len() function
+- Removed qcrypto_x509_get_cert_version() and
+qcrypto_x509_get_signature_algorithm()
+- Passed QCryptoHashAlgo to qcrypto_x509_get_cert_key_id() instead of
+QCryptoKeyidFlags
+- Improved memory cleanup
+
+hw/s390x/ipl: Create certificate store
+- Fixed error handling and memory management
+- Added condition to only accept files with ".pem" extension
+
+s390x: Guest support for Certificate Store Facility (CS)
+- Renamed "S390_FEAT_DIAG_320" to "S390_FEAT_CERT_STORE"
+- Merged this patch with s390x/diag: Introduce DIAG 320 for certificate
+store facility patch
+
+s390x/diag: Introduce DIAG 320 for certificate store facility
+- Added bit zero to indicate subcode 0 is supported
+- Set response code to 0x0102 when the subcode is not supported
+- Added check to ensure subcode fits within one byte
+
+s390x/diag: Implement DIAG 320 subcode 1
+- Refactored and moved implementation to a helper function
+- Added check to ensure VCSSB length is set to a minimum of 128 bytes
+from the userspace
+- Removed max_vce_len field from the VCSSB data structure
+
+s390x/diag: Implement DIAG 320 subcode 2
+- Refactored and split functions for extracting certificate information
+- Set VCE length to 72 if certificate is invalid
+- Returned VCE even if the certificate is invalid
+
+pc-bios/s390-ccw: Refactor zipl_run()
+- Refactor zipl_run_normal() to reduce duplicate code
+
+pc-bios/s390-ccw: Add signature verification for secure IPL in audit mode
+- Moved secure-boot related functions into secure-ipl.c/h files
+- Rename zipl_handle_sig_entry() to zipl_load_signature()
+- Refactored zipl_run_secure() to use switch cases for different entry
+types instead of a while loop
+- Renamed ZiplBootMode enumerations with "ZIPL_BOOT_MODE" prefix
+- Added meaningful file header to secure-ipl.c
+- Renamed zipl_secure_print() to zipl_secure_handle()
+
+Changelog v3->v4:
+
+cyrpto/x590-utils
+- Updated patch descriptions to summarize what each patch introduces.
+- Restricted accepted certificate format on the QEMU command line to PEM
+only.
+    - Added internal conversion routines to handle PEM-to-DER and
+DER-to-PEM as needed.
+- Renamed crypto functions using the qcrypto_x509_ prefix.
+- Replaced QAPI enums with plain C enums.
+- Improved GNUTLS error propagation throughout the crypto API.
+- Standardized error returns to -1 (instead of using errno values) for
+consistency.
+- Removed unused helpers: qcrypto_check_x509_cert_fmt() and
+qcrypto_get_x509_hash_len().
+- Added bounds checking before converting GNUTLS enums to internal
+crypto enums.
+- Modified qcrypto_get_x509_cert_key_id() to dynamically allocate the
+result.
+- Fixed a typo in the crypto API documentation.
+
+hw/s390x/ipl: Create certificate store
+- Removed max_size check when loading certificate.
+- Removed check_path_type() and use the stat() & S_ISXXX checks inline
+where needed.
+- Initialized all g_autofree variables.
+- Refactored get_cert_paths()
+    - Used g_auto(GStrv) and g_autoptr(GPtrArray) for automatic cleanup.
+    - Renamed misleading variables and dropped unnecessary intermediates.
+    - Replaced check_path_type() with stat(), and treated failures as fatal.
+    - Treated empty path components as fatal configuration errors.
+    - Used GError with g_dir_open() and handled errors properly.
+    - Removed redundant casts and manual cleanup.
+- Treated providing 65 or more certificates as a fatal error.
+- Modified S390IPLCertificate
+    - Changed raw from char * to uint8_t * for API consistency.
+    - Added cert_der field to calculate certificate data buffer size for
+DIAG 320 and format conversion.
+
+s390x/diag
+- Handled error propagation from crypto API correctly.
+- Added g_autofree to variables to ensure proper memory cleanup.
+- Initialized all g_autofree variables.
+
+pc-bios/s390-ccw: Add signature verification for secure IPL in audit mode
+- Allocated certificate buffer based on calculated size instead of
+static MAX_CERT_SIZE.
+
+pc-bios/s390-ccw: Add additional security checks for secure boot
+- Refactored to improve readability.
+- Handled SCLAB Single Component/No Unsigned Component flags.
+
+docs: Add secure IPL documentation
+- Updated documentation.
+- Illustrated with gnutls ‘certtool’ instead of ‘openssl’ for
+consistency with other certificate creation docs.
+
+- Updated cover letter with corresponding changes.
+
+Changelog v2->v3:
+
+- Fixed typos in patches
+- Edited and corrected patch description
+- Enabled secure IPL feature in TCG
+- Split crypto subsystem changes from s390x subsystem changes
+    - Added API documentation for each helper function
+    - Removed qcrypto_get_x509_cert_fmt()
+    - Reworked qcrypto_check_x509_cert_fmt() to return 0 on success and
+negative error code on errors
+    - Rephrased error messages when GNUTLS is not enabled
+    - Changed dev cycle reference from 9.2 to 10.1
+
+hw/s390x/ipl: Create certificate store
+- Passed *cert_buf to g_file_get_contents() directly in cert2buf()
+- Returned NULL for early returns
+- Added check to only allow maximum of 64 certificates in the certificate
+store
+
+s390x: Guest support for Certificate Store Facility (CS)
+- Renamed “diag320” to “cstore”
+
+s390x/diag: Implement DIAG 320 subcode 1
+- Removed QEMU_PACKED from VCStorageSizeBlock
+- Removed unnecessary error check from subcode 1 implementation
+
+s390x/diag: Implement DIAG 320 subcode 2
+- Removed QEMU_PACKED from VCBlock and VCEngtry
+- Reworked diag_320_is_cert_valid() to return 0 on success and negative
+error code on errors
+- Set *key_id_data and *hash_data to NULL after g_free()
+- Moved DIAG_320_SUBC_STORE_VC case block implementation to a separate
+function
+
+s390x/diag: Implement DIAG 508 subcode 1 for signature verification
+- Added a reserved field to Diag508CertificateStoreInfo
+- Removed QEMU_PACKED from Diag508CertificateStoreInfo and
+Diag508SignatureVerificationBlock
+- Applied g_autofree to svb, svb_comp and svb_sig varaibles
+- Moved DIAG_508_SUBC_SIG_VERIF case block implementation to a separate
+function
+
+pc-bios/s390-ccw: Refactor zipl_load_segment function
+- Removed casting when calculating comp_len
+
+pc-bios/s390-ccw: Add signature verification for secure IPL in audit mode
+- Used malloc() to allocate certificate buffer instead of statically
+allocating
+- Reworked zipl_secure_print()
+
+s390x: Guest support for Secure-IPL Code Loading Attributes Facility (SCLAF)
+- Added check to make sure SIPL is enabled when SCLAF is enabled
+
+docs: Add secure IPL documentation
+- Split document into two parts:
+    - docs/specs/s390x-secure-ipl.rst (developer reference)
+    - docs/system/s390x/secure-ipl.rst (user guide)
+
+Changelog v1->v2:
+
+- Fixed typos in patches
+- Edited cover letter
+- Added secure IPL documentation
+
+QEMU Command-Line Interface:
+- Moved boot-certificates under the machine-type option for s390x-virtio-ccw
+- Moved secure-boot under the machine-type option for s390x-virtio-ccw
+
+hw/s390x/ipl: Create Certificate Store
+- Defined internal GNUTLS-related APIs
+- Added check to only accept certificates using SHA-256 hashing
+- Recalculated data_buf_size to ensure word alignment
+- Cleaned up memory allocation
+- Refactored functions for clarity
+
+s390x: Guest Support for Certificate Store Facility (CS)
+- Updated patch description to clarify:
+    - Why Secure IPL is not available with Secure Execution
+    - Why this feature requires S390_FEAT_EXTENDED_LENGTH_SCCB
+-Restricted features to z16 due to additional layers requiring z16
+
+s390x/diag: Implement DIAG 320 Subcode 1
+- Renamed VerificationCertificate prefix to VC
+- Byte-swap written values for endianness correctness
+
+s390x/diag: Implement DIAG 320 Subcode 2
+- Edited commit message for clarity
+- Defined internal GNUTLS-related APIs
+- Renamed data structure variables
+- Ensured length fields in VCE are word-aligned
+- Handled the VC index 0 case
+- General refactoring
+
+s390x/diag: Implement DIAG 508 Subcode 2 for Signature Verification
+- Defined subcode from 2 to 1
+- Removed unused error codes
+- Defined internal GNUTLS-related APIs
+- Byte-swap read values
+
+hw/s390x/ipl: Add IPIB Flags to IPL Parameter Block
+- Moved DIAG308 flags to a new header file
+
+s390x: Guest Support for Secure-IPL Facility
+- Renamed SCLP variable from cbl to fac_ipl
+
+pc-bios/s390-ccw: Add Signature Verification for Secure Boot (Audit Mode)
+- Moved Secure IPL-related functions to pc-bios/s390-ccw/secure-ip.c|h
+- Refactored code for clarity
+
+Collin L. Walling (2):
+  s390x/diag: Introduce DIAG 508 for secure IPL operations
+  s390x/diag: Implement DIAG 508 subcode 1 for signature verification
+
+Zhuoying Cai (28):
+  Add boot-certs to s390-ccw-virtio machine type option
+  crypto/x509-utils: Refactor with GNUTLS fallback
+  crypto/x509-utils: Add helper functions for certificate store
+  hw/s390x/ipl: Create certificate store
+  s390x/diag: Introduce DIAG 320 for Certificate Store Facility
+  s390x/diag: Refactor address validation check from diag308_parm_check
+  s390x/diag: Implement DIAG 320 subcode 1
+  crypto/x509-utils: Add helper functions for DIAG 320 subcode 2
+  s390x/diag: Implement DIAG 320 subcode 2
+  crypto/x509-utils: Add helper functions for DIAG 508 subcode 1
+  s390x/ipl: Introduce IPL Information Report Block (IIRB)
+  pc-bios/s390-ccw: Define memory for IPLB and convert IPLB to pointers
+  hw/s390x/ipl: Add IPIB flags to IPL Parameter Block
+  s390x: Guest support for Secure-IPL Facility
+  pc-bios/s390-ccw: Refactor zipl_run()
+  pc-bios/s390-ccw: Rework zipl_load_segment function
+  pc-bios/s390-ccw: Add signature verification for secure IPL in audit
+    mode
+  pc-bios/s390-ccw: Add signed component address overlap checks
+  s390x: Guest support for Secure-IPL Code Loading Attributes Facility
+    (SCLAF)
+  pc-bios/s390-ccw: Add additional security checks for secure boot
+  Add secure-boot to s390-ccw-virtio machine type option
+  hw/s390x/ipl: Set IPIB flags for secure IPL
+  pc-bios/s390-ccw: Handle true secure IPL mode
+  hw/s390x/ipl: Handle secure boot with multiple boot devices
+  hw/s390x/ipl: Handle secure boot without specifying a boot device
+  tests/functional/s390x: Add secure IPL functional test
+  docs/specs: Add secure IPL documentation
+  docs/system/s390x: Add secure IPL documentation
+
+ crypto/meson.build                        |   2 +-
+ crypto/x509-utils.c                       | 409 +++++++++++++
+ docs/specs/index.rst                      |   1 +
+ docs/specs/s390x-secure-ipl.rst           | 193 ++++++
+ docs/system/s390x/secure-ipl.rst          | 177 ++++++
+ docs/system/target-s390x.rst              |   1 +
+ hw/s390x/cert-store.c                     | 221 +++++++
+ hw/s390x/cert-store.h                     |  38 ++
+ hw/s390x/ipl.c                            |  87 +++
+ hw/s390x/ipl.h                            |  24 +-
+ hw/s390x/meson.build                      |   1 +
+ hw/s390x/s390-virtio-ccw.c                |  52 ++
+ hw/s390x/sclp.c                           |   2 +
+ include/crypto/x509-utils.h               | 113 ++++
+ include/hw/s390x/ipl/diag308.h            |  34 ++
+ include/hw/s390x/ipl/diag320.h            |  97 +++
+ include/hw/s390x/ipl/diag508.h            |  45 ++
+ include/hw/s390x/ipl/qipl.h               |  97 ++-
+ include/hw/s390x/s390-virtio-ccw.h        |   3 +
+ include/hw/s390x/sclp.h                   |   4 +-
+ pc-bios/s390-ccw/Makefile                 |   2 +-
+ pc-bios/s390-ccw/bootmap.c                | 100 +++-
+ pc-bios/s390-ccw/bootmap.h                |  11 +
+ pc-bios/s390-ccw/iplb.h                   |   5 +-
+ pc-bios/s390-ccw/jump2ipl.c               |   6 +-
+ pc-bios/s390-ccw/main.c                   |  37 +-
+ pc-bios/s390-ccw/netmain.c                |   8 +-
+ pc-bios/s390-ccw/s390-ccw.h               |  29 +
+ pc-bios/s390-ccw/sclp.c                   |  45 ++
+ pc-bios/s390-ccw/sclp.h                   |   7 +
+ pc-bios/s390-ccw/secure-ipl.c             | 688 ++++++++++++++++++++++
+ pc-bios/s390-ccw/secure-ipl.h             | 177 ++++++
+ qapi/machine-s390x.json                   |  23 +
+ qapi/pragma.json                          |   1 +
+ qemu-options.hx                           |  10 +-
+ target/s390x/cpu_features.c               |   7 +
+ target/s390x/cpu_features.h               |   1 +
+ target/s390x/cpu_features_def.h.inc       |   5 +
+ target/s390x/cpu_models.c                 |   7 +
+ target/s390x/diag.c                       | 585 +++++++++++++++++-
+ target/s390x/gen-features.c               |   7 +
+ target/s390x/kvm/kvm.c                    |  34 ++
+ target/s390x/s390x-internal.h             |   4 +
+ target/s390x/tcg/misc_helper.c            |  14 +
+ tests/functional/s390x/meson.build        |   2 +
+ tests/functional/s390x/test_secure_ipl.py | 148 +++++
+ 46 files changed, 3496 insertions(+), 68 deletions(-)
+ create mode 100644 docs/specs/s390x-secure-ipl.rst
+ create mode 100644 docs/system/s390x/secure-ipl.rst
+ create mode 100644 hw/s390x/cert-store.c
+ create mode 100644 hw/s390x/cert-store.h
+ create mode 100644 include/hw/s390x/ipl/diag308.h
+ create mode 100644 include/hw/s390x/ipl/diag320.h
+ create mode 100644 include/hw/s390x/ipl/diag508.h
+ create mode 100644 pc-bios/s390-ccw/secure-ipl.c
+ create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+ create mode 100755 tests/functional/s390x/test_secure_ipl.py
+
 -- 
 2.53.0
 
