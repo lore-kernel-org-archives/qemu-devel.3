@@ -4,116 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 745CBD3942C
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 14:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A411ED3942C
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 14:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Ig1-00055p-G7; Thu, 02 Apr 2026 10:05:41 -0400
+	id 1w8IkL-0006BJ-RG; Thu, 02 Apr 2026 10:10:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w8Ify-00055N-I0
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:05:38 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8IkK-000682-0v
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:10:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w8Ifv-0005p2-DI
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:05:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8IkI-0006lM-4r
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:10:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775138734;
+ s=mimecast20190719; t=1775139004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
- b=Hxx2/Sbzk6K/9g1WTGA/mAPdvXq1mQledQCGARv3MUIKVsWkPW7hgQqDUQ740grgktLQGa
- 3dXZTG1t2DmTF5z5vHVaRAOzwXtqJG7SRitNu6A0ePELHRTXA9sY1yPzxuqrDVMcUgLcYp
- CW5dme8/Ci+lZTerbdg9Q+dxMxwHHA8=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2vBrRe5aRe6cex++EO//d2YeXQEmpoUBS3WyOxwxXFU=;
+ b=BvRjcZ6glLEXRmuJlONmA70cHI2DD0EWOKPz5c/yYYmu7k4zt/4mvItJ/NDoZvKcxVsi/M
+ HRUxOsQW3ZoKJnZEvdM1WsGMrzFuPdWGmnyQeoduFHGY/VqgIQHiuYMwksUgIXSJ0m62+Z
+ UDxx+M4Q6DLjWIgyYjn2EOZC3KKAEDw=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-336-xFaoL4fuNyyrnZe8yaw42g-1; Thu, 02 Apr 2026 10:05:33 -0400
-X-MC-Unique: xFaoL4fuNyyrnZe8yaw42g-1
-X-Mimecast-MFC-AGG-ID: xFaoL4fuNyyrnZe8yaw42g_1775138732
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-953b0e67a8bso197792241.2
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 07:05:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775138732; cv=none;
- d=google.com; s=arc-20240605;
- b=WnuW9ssuDy6TzE87rZwFDsOeYqRY3iENFNX6AHmsCtbnQu4mwwAe3nS/lG6RWANOXK
- wPOgCs2wZIMrTQ92P3KBCoDPHpCP5VIEFU7OevVnSDYoD816Kj4MGmz2GHw7kWGmeaDq
- RXVtICyusqYB3tyJP5Ra9TdnfW/dCl0+dj25EzgWr8exMY4u3eqQgCBSbO7YlNjzn4wP
- PWH+hYKQW4xCC7zwUcvb7I+WCp3l25K2CbO4saAHg9iuTCr4tIDQnVETNeacv+Rb2nIm
- Wr68cat/yE4WCRjPAgjY6fc18Qx8Ye/fR1zkZk9FzTvZneDWy9VmzUHOOvaTSpb9A9AB
- APhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
- fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
- b=IQqsJp0NrKoFSqhwEC5g/AEsHd7OkstV3x0krcs6vDWZOUpvdUxAj7+4Mdnu8uaBjj
- 3QkUb1I3JX2hHgdZ90v2ORdHYfMoZRQVcSAYtxVp+oTPMN8GSupGVC8qspFezVTIR06o
- VxXJswxp48pqcGaOKXWXJwZJay14PeGWQN7qnsd7KSEf+BC6hWLwlnqfCNQRZI6xbCxo
- z6SustD7QKz45giAaIm03GX0Y6e6IjtViekQ1iVBmg+EHrSdjycLR5HFlPCRPECbjK3N
- tHp4MQdXkmShQ3Wbfo5fGeyxZWKB+ZhKKBsmterdlHDTZBX6fE1Jzn2dLfvy3aSvVuuh
- UaZw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-14--fVdJIpeNjGMLC4JzdN4eA-1; Thu, 02 Apr 2026 10:10:01 -0400
+X-MC-Unique: -fVdJIpeNjGMLC4JzdN4eA-1
+X-Mimecast-MFC-AGG-ID: -fVdJIpeNjGMLC4JzdN4eA_1775139001
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8a5f6110cadso21841656d6.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 07:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775138732; x=1775743532; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
- b=L7rv644xy775nG32/D8/AiwMuM1g6RbrixRKL/SXt/mHbbKEZajEzMrSxvBweBXzMq
- e78io4/HVYPOmTjU7KwReYWRIjRREukm8i8KzVN7YbJh+LHR6HPcLxCQipHNnmY23gtM
- ImdHDipOGqULiU8NsbIYDxkO5yzZQ6vD3N3X4p8I9VmzHgqoLLUGltAAqV4PniZSTF93
- miocsoXRBhzGHEIMkH6XKmAkWtMT86/DV3oP+3hPCD11vpqJAIkT8tFXxSlcR4pMmAtp
- OlDqrzMWdeKERJndirzsN1xz8Ueil8fWQQaahulVRLo2+cV/ALDKZm2eCGmRN5iUcSEP
- 6xpQ==
+ d=redhat.com; s=google; t=1775139001; x=1775743801; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=2vBrRe5aRe6cex++EO//d2YeXQEmpoUBS3WyOxwxXFU=;
+ b=sKh4Vdxet0WHfEzfZtKfKu39yjz938tsAZrYazcndLLK77m51jaht/yMRFA/7r8o60
+ W0aMpHhujkTCHkZrXMggEglipbeZAae7gtyNp0KriwtqAelotlHXvww0oV9wBGc4O+fK
+ 3vaDM/iqRdCFCHw0ngcFqK1q0lUbAlNLhtKB8OjOnyqv4ZW/G0/UqectcJF4kjSyQ4Za
+ 60Q7PTzqhjYuzn4xIEF4PUcFvpdsG/Y4gQHWZQ5AzZ0VBUknJzukhGThMkKvCf7BTIfL
+ 1yLuCut7axHs9S9y8YwogWroJFiD4UxHu9O3rM+GuJqvSog7AL60pq6Lq9SeSCp7F4hn
+ Xzqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775138732; x=1775743532;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
- b=XhyoZrWgIyttir0SHmSD7MieSRRDbsYOt0cwHbWZvBMm4JALdtvgPAC9LUio9CyDoE
- 0YWy/RZARqBhiywJzqpZQ2P/9XTW0ntxRrbZhYxJsQEsDfThw4eWdU9h06uYErW0dlmo
- j+5mo7WI++L0oaK0ENGMSw/Cxh5f/0oPrPBpafVXqEMDFgum2McMklglJ7tOqT07kUMV
- yphbHXaV6h9wnoIUlE+TXvBZwmJuPPuE68nhv7QWNnUkbn7mey5szd+iw7lbhxJyZt0p
- g4xzDjMfW5v97jfiRLVK60k5n5E63t21kOQlmREBFbFhmsO2uIz29qmLimF6x/u9dpEM
- A2Ig==
-X-Gm-Message-State: AOJu0Yws5ZzKRHdPkS1rUJ4uiOl6HUzTn4uC2JfvCJpA59dsdN8NHoAm
- UALWk35VEd999RmZhtAJZrEA1hWSKWqUb7adJP4fU6e2Qlgbqwcn6b42Y74j5fl71PGpTf3QXmf
- 4UpJXHH2nfSuEfLUtu2UGxvO1bTXjoCAeX4t1A3RzySnED9Ly5QYFWCc2LbUkNZx/Yjjs5YAxvM
- P6pdYKCAt4MlOR79NW5QBDrH0bVB7KnhMWn5JMoww=
-X-Gm-Gg: ATEYQzwUNcoJFSaGtsCbTjprAP46XBFjeSuzWh2o26g9mFnMA7jK9JVMVtIgsDKPjiy
- JqEayDiocPBqyZ5QEddVemOjUiL+cOCw/oHI/6NaBgW8wqF3yQJRGlP1CWJYGH3WUCfDM2fpLdH
- AzYk43Vo15hdz5005o0sd29GkiwtZHYsMdQmDHNZYOUWN5+hjo2u9mrlfsQMousVzUzSPvFSyd8
- 5oThvuIzQZlG5AMmuW1k1UMsXTgZkTJ40fWHyeYlgV+oYVddpZXdC3hFKEhyTOgIcFDMe7JdqYE
- PVMXzgcDZQndOdS+GqD7eZw=
-X-Received: by 2002:a05:6122:322c:b0:56b:f8e:6b2f with SMTP id
- 71dfb90a1353d-56d8aae4ff0mr3470083e0c.16.1775138732049; 
- Thu, 02 Apr 2026 07:05:32 -0700 (PDT)
-X-Received: by 2002:a05:6122:322c:b0:56b:f8e:6b2f with SMTP id
- 71dfb90a1353d-56d8aae4ff0mr3470026e0c.16.1775138731475; Thu, 02 Apr 2026
- 07:05:31 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775139001; x=1775743801;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2vBrRe5aRe6cex++EO//d2YeXQEmpoUBS3WyOxwxXFU=;
+ b=BdCMXx+viX6W/BkYYNqY4jDQ/VHXb2X5QRBDTyh22NCzs0Y50H8LByf9mToKIzRbN6
+ KDMmeaz4xnJBoa1nec71DicnSEfTA6sKlJSMoHhyraDiWM23rgHRecZK4ErGYBDTNTE6
+ v32DDo6knI9rGx642Tsw6EJyyFTlnSOlCK9IXuZHhy4ltcBYHFlDrOVRKyOmgjewOqh6
+ ZUfMneOnos4PAgHtTZyHqO+DNxrtx6AxnM178oytWf9KpA5VclF4cdJfA3zBP1bjTTaY
+ lcoGz0qZU0jOKK8YgFEF2L5wQdJ7EaeEBB6dLcN8bMAxgoBKdjCIBUe6RGpv14/clyVY
+ V7nA==
+X-Gm-Message-State: AOJu0YxbfqymX2ToYpfM0AIHlmYmXrq1aogUDA2Ism1NRzGW1dndWD1r
+ uimq+A1EpgafoTCWeSwM+JBE66IiqxbDDHlWILxQsz30p9mEDec3tW5RU6U+80vSgiuan+yB2zO
+ xfeY+U2YldcvhCYwJVSpE01j7nQngwdoiOdzvuYbclyegudXmU+og4GX4
+X-Gm-Gg: AeBDieueunMFPx/UzECOIEDX64Dk/VzUjyYRQtn3xy36Ug9VQQvRNxRw2SPf8Y/9WG5
+ 7bLPD12AhzGRTnkuTp9wv1gnY6YAeYSDz8EX8dWJ9uscmGk0TFOfh9YqOny3B5aUddgy49kF/kQ
+ qtdWyv4eszepT+KtZ+2QSmKB4B4VNTFvnS585YIY8b8Cs+AuMzMqs4RKtaM5vHNeds3FNXIuu7h
+ t0B5tH/qy6+1tB9MYEBXxCDqTZ1VVp/D9IkYe+jSKjpy8mXVMlM8ngz8buRYwM79GQWvA2YSN9u
+ hIDZAU2XkYJ7xppjZQMm1ri8KGcVY9+67kYPw7luaHsi7awG548dZX44TjU+Fle3ClMfHoennGK
+ BADe/Q7mz6AO69eBnD84+80HGEdqAkSqYdhcG3ywFZb7xMw==
+X-Received: by 2002:a05:6214:212b:b0:89c:ed49:496f with SMTP id
+ 6a1803df08f44-8a43810b774mr112737236d6.23.1775139000379; 
+ Thu, 02 Apr 2026 07:10:00 -0700 (PDT)
+X-Received: by 2002:a05:6214:212b:b0:89c:ed49:496f with SMTP id
+ 6a1803df08f44-8a43810b774mr112736456d6.23.1775138999706; 
+ Thu, 02 Apr 2026 07:09:59 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8a597acf5dbsm23310286d6.49.2026.04.02.07.09.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Apr 2026 07:09:58 -0700 (PDT)
+Date: Thu, 2 Apr 2026 10:09:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alex Williamson <alex@shazbot.org>,
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH RFC 07/12] migration: Introduce stopcopy_bytes in
+ save_query_pending()
+Message-ID: <ac54tN39eq0Rv6T4@x1.local>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-8-peterx@redhat.com>
+ <82b40877-482e-4dbe-add1-6e0cc4292ae7@nvidia.com>
 MIME-Version: 1.0
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-36-48eb1dcf7b76@redhat.com>
- <13bfd7c0-d80c-4082-a6a6-085d463b40d9@linaro.org>
-In-Reply-To: <13bfd7c0-d80c-4082-a6a6-085d463b40d9@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 2 Apr 2026 18:05:18 +0400
-X-Gm-Features: AQROBzAHIX7nBLJuYn7r2VT3AQf8ud-4iz8voGCRSPGYV-9whxFg4OdQDqeBurQ
-Message-ID: <CAMxuvaxHkrvW74hKgz6yu29K3kJOf-vgdNRPUSC_ogpg3T34zQ@mail.gmail.com>
-Subject: Re: [PATCH 36/60] util: move datadir.c from system/
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <82b40877-482e-4dbe-add1-6e0cc4292ae7@nvidia.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -138,49 +126,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Wed, Apr 1, 2026 at 1:30=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> On 17/3/26 09:50, Marc-Andr=C3=A9 Lureau wrote:
-> > The datadir module provides general-purpose data file lookup
-> > utilities that are not specific to system emulation. Move it
-> > to util/ so it can be reused more broadly.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On Wed, Mar 25, 2026 at 06:54:58PM +0200, Avihai Horon wrote:
+> 
+> On 3/20/2026 1:12 AM, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > Allow modules to report data that can only be migrated after VM is stopped.
+> > 
+> > When this concept is introduced, we will need to account stopcopy size to
+> > be part of pending_size as before.
+> > 
+> > One thing to mention is, when there can be stopcopy size, it means the old
+> > "pending_size" may not always be able to reach low enough to kickoff an
+> > slow version of query sync.  While it used to be almost guaranteed to
+> > happen because if we keep iterating, normally pending_size can go to zero
+> > for precopy-only because we assume everything reported can be migrated in
+> > precopy phase.
+> > 
+> > So we need to make sure QEMU will kickoff a synchronized version of query
+> > pending when all precopy data is migrated too.  This might be important to
+> > VFIO to keep making progress even if the downtime cannot yet be satisfied.
+> > 
+> > So far, this patch should introduce no functional change, as no module yet
+> > report stopcopy size.
+> > 
+> > This will pave way for VFIO to properly report its pending data sizes,
+> > which was actually buggy today.  Will be done in follow up patches.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
 > > ---
-> >   {system =3D> util}/datadir.c | 0
-> >   system/meson.build         | 1 -
-> >   system/trace-events        | 1 -
-> >   util/meson.build           | 1 +
-> >   util/trace-events          | 3 +++
-> >   5 files changed, 4 insertions(+), 2 deletions(-)
->
->
-> > diff --git a/util/meson.build b/util/meson.build
-> > index 33132c04ad6..cd56fe2ffe4 100644
-> > --- a/util/meson.build
-> > +++ b/util/meson.build
-> > @@ -30,6 +30,7 @@ util_ss.add(when: linux_io_uring, if_true: files('fdm=
-on-io_uring.c'))
-> >   if glib_has_gslice
-> >     util_ss.add(files('qtree.c'))
-> >   endif
-> > +util_ss.add(files('datadir.c'))
->
-> Should we add under 'if have_system' or 'if not have_user'?
+> >   include/migration/register.h | 12 +++++++++
+> >   migration/migration.c        | 52 ++++++++++++++++++++++++++++++------
+> >   migration/savevm.c           |  7 +++--
+> >   migration/trace-events       |  2 +-
+> >   4 files changed, 62 insertions(+), 11 deletions(-)
+> > 
+> > diff --git a/include/migration/register.h b/include/migration/register.h
+> > index 2320c3a981..3824958ba5 100644
+> > --- a/include/migration/register.h
+> > +++ b/include/migration/register.h
+> > @@ -17,12 +17,24 @@
+> >   #include "hw/core/vmstate-if.h"
+> > 
+> >   typedef struct MigPendingData {
+> > +    /*
+> > +     * Modules can only update these fields in a query request via its
+> > +     * save_query_pending() API.
+> > +     */
+> 
+> Move comment to patch #5?
+> 
+> >       /* How many bytes are pending for precopy / stopcopy? */
+> >       uint64_t precopy_bytes;
+> >       /* How many bytes are pending that can be transferred in postcopy? */
+> >       uint64_t postcopy_bytes;
+> > +    /* How many bytes that can only be transferred when VM stopped? */
+> > +    uint64_t stopcopy_bytes;
+> 
+> Keep consistent phrasing?
+> 
+> /* Amount of pending bytes that can be transferred either in precopy or
+> stopcopy */
+> uint64_t precopy_bytes;
+> /* Amount of pending bytes that can be transferred in postcopy */
+> uint64_t postcopy_bytes;
+> /* Amount of pending bytes that can be transferred only in stopcopy */
+> uint64_t stopcopy_bytes;
+> 
+> > +
+> > +    /*
+> > +     * Modules should never update these fields.
+> > +     */
+> 
+> Move comment to patch #5?
 
-We could, it would need an extra condition for qemu-vnc.. but that
-doesn't save us much.
+Sure, I'll address all above.
 
-There is probably room for improvement in util/ if we wanted to always
-build strictly the minimum. But since those are small, generally
-useful helpers, the linker will drop the unneeded parts..
+> 
+> >       /* Is this a fastpath query (which can be inaccurate)? */
+> >       bool fastpath;
+> > +    /* Total pending data */
+> > +    uint64_t total_bytes;
+> >   } MigPendingData ;
+> > 
+> >   /**
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 99c4d09000..42facb16d1 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -3198,6 +3198,44 @@ typedef enum {
+> >       MIG_ITERATE_BREAK,          /* Break the loop */
+> >   } MigIterateState;
+> > 
+> > +/* Are we ready to move to the next iteration phase? */
+> > +static bool migration_iteration_next_ready(MigrationState *s,
+> > +                                           MigPendingData *pending)
+> > +{
+> > +    /*
+> > +     * If the estimated values already suggest us to switchover, mark this
+> > +     * iteration finished, time to do a slow sync.
+> > +     */
+> > +    if (pending->total_bytes <= s->threshold_size) {
+> > +        return true;
+> > +    }
+> > +
+> > +    /*
+> > +     * Since we may have modules reporting stop-only data, we also want to
+> > +     * re-query with slow mode if all precopy data is moved over.  This
+> > +     * will also mark the current iteration done.
+> > +     *
+> > +     * This could happen when e.g. a module (like, VFIO) reports stopcopy
+> > +     * size too large so it will never yet satisfy the downtime with the
+> > +     * current setup (above check).  Here, slow version of re-query helps
+> > +     * because we keep trying the best to move whatever we have.
+> > +     */
+> > +    if (pending->precopy_bytes == 0) {
+> > +        return true;
+> > +    }
+> > +
+> > +    return false;
+> > +}
+> > +
+> > +static void migration_iteration_go_next(MigPendingData *pending)
+> > +{
+> > +    /*
+> > +     * Do a slow sync will achieve this.  TODO: move RAM iteration code
+> > +     * into the core layer.
+> > +     */
+> > +    qemu_savevm_query_pending(pending, false);
+> > +}
+> 
+> I think the iteration terminology here could be confusing, because these two
+> functions are called from migration_iteration_run() and they don't refer to
+> the same iteration concept.
+> How about migration_pass_next_ready/migration_pass_go_next?
+> Or migration_dirty_sync_ready/migration_dirty_sync?
 
-> Otherwise:
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
+I get the confusion, but IIUC the word "iteration" normally was used to
+describe one full walk of system resources, introducing "pass" may causing
+another way of confusion to me.
+
+E.g. see Dan's post in 2016 and since then iteration was defined as so:
+
+https://www.berrange.com/posts/2016/05/12/analysis-of-techniques-for-ensuring-migration-completion-with-kvm/
+
+Here, migration_iteration_run() was named to say "run the current
+iteration", but it doesn't necessarily mean it can only be run once for the
+current iteration.
+
+OTOH, I don't think it makes much sense we define "iteration" (or any new
+term at all) to be one run of migration_iteration_run(): currently, we
+invoke handlers' savevm iterator hook for each migration_iteration_run(),
+but that's pretty random behavior..
+
+For RAM, that's MAX_WAIT.  For VFIO, it's something else...
+
+It was still a "grey area" and no way to define, even if we may want to
+define it at some point to make each iterator to follow some rule.
+
+Comparing to that, iteration to be defined to describe one round of walk
+for all VM resources makes a lot of sense and it's a criticla concept for
+precopy.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
