@@ -4,113 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A411ED3942C
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 14:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD87D39430
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 14:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8IkL-0006BJ-RG; Thu, 02 Apr 2026 10:10:09 -0400
+	id 1w8Iuj-0001uk-9N; Thu, 02 Apr 2026 10:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8IkK-000682-0v
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:10:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8IkI-0006lM-4r
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:10:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775139004;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2vBrRe5aRe6cex++EO//d2YeXQEmpoUBS3WyOxwxXFU=;
- b=BvRjcZ6glLEXRmuJlONmA70cHI2DD0EWOKPz5c/yYYmu7k4zt/4mvItJ/NDoZvKcxVsi/M
- HRUxOsQW3ZoKJnZEvdM1WsGMrzFuPdWGmnyQeoduFHGY/VqgIQHiuYMwksUgIXSJ0m62+Z
- UDxx+M4Q6DLjWIgyYjn2EOZC3KKAEDw=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-14--fVdJIpeNjGMLC4JzdN4eA-1; Thu, 02 Apr 2026 10:10:01 -0400
-X-MC-Unique: -fVdJIpeNjGMLC4JzdN4eA-1
-X-Mimecast-MFC-AGG-ID: -fVdJIpeNjGMLC4JzdN4eA_1775139001
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8a5f6110cadso21841656d6.3
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 07:10:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1w8Iua-0001tW-DG
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:20:44 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1w8IuW-0003RX-8O
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:20:42 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43d029f346eso918738f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 07:20:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775139001; x=1775743801; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=2vBrRe5aRe6cex++EO//d2YeXQEmpoUBS3WyOxwxXFU=;
- b=sKh4Vdxet0WHfEzfZtKfKu39yjz938tsAZrYazcndLLK77m51jaht/yMRFA/7r8o60
- W0aMpHhujkTCHkZrXMggEglipbeZAae7gtyNp0KriwtqAelotlHXvww0oV9wBGc4O+fK
- 3vaDM/iqRdCFCHw0ngcFqK1q0lUbAlNLhtKB8OjOnyqv4ZW/G0/UqectcJF4kjSyQ4Za
- 60Q7PTzqhjYuzn4xIEF4PUcFvpdsG/Y4gQHWZQ5AzZ0VBUknJzukhGThMkKvCf7BTIfL
- 1yLuCut7axHs9S9y8YwogWroJFiD4UxHu9O3rM+GuJqvSog7AL60pq6Lq9SeSCp7F4hn
- Xzqw==
+ d=linaro.org; s=google; t=1775139637; x=1775744437; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=50JkMzrqmzsDndU7M5ZJWnAC/pZeRhcoTK8kZ/S+Lhc=;
+ b=K/6NfQ9z+eZGv1Kdwozzeo0YWYZoz2/Z1hOzzV+RnYhCvxxcGhJtToC3MLJ71KzbhK
+ ThMGBcCOP9bDiVhi0y+dwZPODIoLhYFxiZ7pnU++s/klm9NS4q3dZrhSD0P+FBV37Sh6
+ u0vQHjGYehPzJpWkmaN/lDf3sEg+DKAl0T59HEOR1WAqVcJNEt2JcXA/IX51xkRvyoXy
+ +95aXmUZAnOrsFhN6qokMI5mt42XmSZM8cnmMsj81nshQcCPkbfoDs4LJCD2IxDilc6X
+ kFSVPjGXGG5ZUGaZz02AhyUnKUZkWPXxX/og/DHJaQWtwiw0pCAGPvFKFWC0RisqdEJD
+ 6+gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775139001; x=1775743801;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2vBrRe5aRe6cex++EO//d2YeXQEmpoUBS3WyOxwxXFU=;
- b=BdCMXx+viX6W/BkYYNqY4jDQ/VHXb2X5QRBDTyh22NCzs0Y50H8LByf9mToKIzRbN6
- KDMmeaz4xnJBoa1nec71DicnSEfTA6sKlJSMoHhyraDiWM23rgHRecZK4ErGYBDTNTE6
- v32DDo6knI9rGx642Tsw6EJyyFTlnSOlCK9IXuZHhy4ltcBYHFlDrOVRKyOmgjewOqh6
- ZUfMneOnos4PAgHtTZyHqO+DNxrtx6AxnM178oytWf9KpA5VclF4cdJfA3zBP1bjTTaY
- lcoGz0qZU0jOKK8YgFEF2L5wQdJ7EaeEBB6dLcN8bMAxgoBKdjCIBUe6RGpv14/clyVY
- V7nA==
-X-Gm-Message-State: AOJu0YxbfqymX2ToYpfM0AIHlmYmXrq1aogUDA2Ism1NRzGW1dndWD1r
- uimq+A1EpgafoTCWeSwM+JBE66IiqxbDDHlWILxQsz30p9mEDec3tW5RU6U+80vSgiuan+yB2zO
- xfeY+U2YldcvhCYwJVSpE01j7nQngwdoiOdzvuYbclyegudXmU+og4GX4
-X-Gm-Gg: AeBDieueunMFPx/UzECOIEDX64Dk/VzUjyYRQtn3xy36Ug9VQQvRNxRw2SPf8Y/9WG5
- 7bLPD12AhzGRTnkuTp9wv1gnY6YAeYSDz8EX8dWJ9uscmGk0TFOfh9YqOny3B5aUddgy49kF/kQ
- qtdWyv4eszepT+KtZ+2QSmKB4B4VNTFvnS585YIY8b8Cs+AuMzMqs4RKtaM5vHNeds3FNXIuu7h
- t0B5tH/qy6+1tB9MYEBXxCDqTZ1VVp/D9IkYe+jSKjpy8mXVMlM8ngz8buRYwM79GQWvA2YSN9u
- hIDZAU2XkYJ7xppjZQMm1ri8KGcVY9+67kYPw7luaHsi7awG548dZX44TjU+Fle3ClMfHoennGK
- BADe/Q7mz6AO69eBnD84+80HGEdqAkSqYdhcG3ywFZb7xMw==
-X-Received: by 2002:a05:6214:212b:b0:89c:ed49:496f with SMTP id
- 6a1803df08f44-8a43810b774mr112737236d6.23.1775139000379; 
- Thu, 02 Apr 2026 07:10:00 -0700 (PDT)
-X-Received: by 2002:a05:6214:212b:b0:89c:ed49:496f with SMTP id
- 6a1803df08f44-8a43810b774mr112736456d6.23.1775138999706; 
- Thu, 02 Apr 2026 07:09:59 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8a597acf5dbsm23310286d6.49.2026.04.02.07.09.57
+ d=1e100.net; s=20251104; t=1775139637; x=1775744437;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=50JkMzrqmzsDndU7M5ZJWnAC/pZeRhcoTK8kZ/S+Lhc=;
+ b=WGkuvhzXUpEQiQONjf2ybH8UQWw+gDWXPqXnfqt5FJ3luTPv5EBpUS/8BYQhL86ZSv
+ +4rfsho0bnKWU8jBr6uDRXcN7YMh5PYTeDnDp9ODPhtDUPgBhgIbbolyVnPQhY7A8H2V
+ t9V5mH6sYvCTb8Vl93UU0zdQ2pMCC3h/eKosNfrByx8fJy3fzJYOeN6WLfQSu09a5U3V
+ 0wCRmBN8S00yfMSTFdK8I/jpu7gxIV9REfQoJRZwQWJo02OkF6epDv6IvtRiH0ms5HCg
+ E5LdBVeIg7UDC0pFR15iQF7sPrTWzQAxm+ZAoRnEkBg4ICdCREr9OFfdsA5fAZUwfnwd
+ HK5g==
+X-Gm-Message-State: AOJu0YyPYiXybl9TAmWcahGwOl/XLDjhP+8Rc+G9Z6mEflHhv3IF7AXl
+ RnbPuJ/6afCoWl7wp/w5CiGzmU3YKMRfpCjMG043qyuxSLyg9ppXiv2iNR/hQ2gRc/A=
+X-Gm-Gg: AeBDieswDBdfS6xWfdx+t5pwQsp3GCSEp32LkcWX59MGtUSsNblliDcCNZUjcDJggc9
+ +TxQp8FP3yGH/9m8CuZlcSl9PsUvYDLfgjCMHW3fs/TK7VgzU1nQxpYAw1gQ9HjdVBQETMYbY+d
+ g+WqTGvgmff4p+0dDcIejRLJa8XmHRx97pHh/BrpNEHBVtwkTLNc0Z2KBRqRaHYNXS/NWCrDT05
+ CnSrkYq5KwGOuthtQtmzHquaxvdndULwD2sPBCeJYB8ZljC7gQANG7Dj21sl99QoaRwSDHvCQVt
+ 4HzqoCCwOLRXR3NIRFvMIk7APsnE23XupRf1YyZKyzgSWBQ6o3b88D5x7kQd6AYgaO6dcIo05rB
+ 1qiRY7pyRkqpFjKgERlaoDmCrnLmBYigBzn9LcC+VWJj0u5HPRlG7j1FFLN7jxrN/aiFq+HTGr2
+ RXA1gOzvdPSyeZZ+e8u3mXNRpPhw==
+X-Received: by 2002:a05:6000:2586:b0:43d:1c21:ead5 with SMTP id
+ ffacd0b85a97d-43d1f1f5c3bmr6749403f8f.22.1775139635788; 
+ Thu, 02 Apr 2026 07:20:35 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:6bea:159e:9f17:ebb])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d1e4e5890sm7902384f8f.31.2026.04.02.07.20.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 07:09:58 -0700 (PDT)
-Date: Thu, 2 Apr 2026 10:09:56 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Alex Williamson <alex@shazbot.org>,
- Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH RFC 07/12] migration: Introduce stopcopy_bytes in
- save_query_pending()
-Message-ID: <ac54tN39eq0Rv6T4@x1.local>
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-8-peterx@redhat.com>
- <82b40877-482e-4dbe-add1-6e0cc4292ae7@nvidia.com>
+ Thu, 02 Apr 2026 07:20:35 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Thu, 02 Apr 2026 15:20:29 +0100
+Subject: [PATCH 2/2] tcg/aarch64/tcg-target.c.inc: Manual replace of I3310,
+ I3313
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <82b40877-482e-4dbe-add1-6e0cc4292ae7@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260402-aarch64-tcg-instruction-format-rename2-v1-2-0998a08a515c@linaro.org>
+References: <20260402-aarch64-tcg-instruction-format-rename2-v1-0-0998a08a515c@linaro.org>
+In-Reply-To: <20260402-aarch64-tcg-instruction-format-rename2-v1-0-0998a08a515c@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,172 +101,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 25, 2026 at 06:54:58PM +0200, Avihai Horon wrote:
-> 
-> On 3/20/2026 1:12 AM, Peter Xu wrote:
-> > External email: Use caution opening links or attachments
-> > 
-> > 
-> > Allow modules to report data that can only be migrated after VM is stopped.
-> > 
-> > When this concept is introduced, we will need to account stopcopy size to
-> > be part of pending_size as before.
-> > 
-> > One thing to mention is, when there can be stopcopy size, it means the old
-> > "pending_size" may not always be able to reach low enough to kickoff an
-> > slow version of query sync.  While it used to be almost guaranteed to
-> > happen because if we keep iterating, normally pending_size can go to zero
-> > for precopy-only because we assume everything reported can be migrated in
-> > precopy phase.
-> > 
-> > So we need to make sure QEMU will kickoff a synchronized version of query
-> > pending when all precopy data is migrated too.  This might be important to
-> > VFIO to keep making progress even if the downtime cannot yet be satisfied.
-> > 
-> > So far, this patch should introduce no functional change, as no module yet
-> > report stopcopy size.
-> > 
-> > This will pave way for VFIO to properly report its pending data sizes,
-> > which was actually buggy today.  Will be done in follow up patches.
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >   include/migration/register.h | 12 +++++++++
-> >   migration/migration.c        | 52 ++++++++++++++++++++++++++++++------
-> >   migration/savevm.c           |  7 +++--
-> >   migration/trace-events       |  2 +-
-> >   4 files changed, 62 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/include/migration/register.h b/include/migration/register.h
-> > index 2320c3a981..3824958ba5 100644
-> > --- a/include/migration/register.h
-> > +++ b/include/migration/register.h
-> > @@ -17,12 +17,24 @@
-> >   #include "hw/core/vmstate-if.h"
-> > 
-> >   typedef struct MigPendingData {
-> > +    /*
-> > +     * Modules can only update these fields in a query request via its
-> > +     * save_query_pending() API.
-> > +     */
-> 
-> Move comment to patch #5?
-> 
-> >       /* How many bytes are pending for precopy / stopcopy? */
-> >       uint64_t precopy_bytes;
-> >       /* How many bytes are pending that can be transferred in postcopy? */
-> >       uint64_t postcopy_bytes;
-> > +    /* How many bytes that can only be transferred when VM stopped? */
-> > +    uint64_t stopcopy_bytes;
-> 
-> Keep consistent phrasing?
-> 
-> /* Amount of pending bytes that can be transferred either in precopy or
-> stopcopy */
-> uint64_t precopy_bytes;
-> /* Amount of pending bytes that can be transferred in postcopy */
-> uint64_t postcopy_bytes;
-> /* Amount of pending bytes that can be transferred only in stopcopy */
-> uint64_t stopcopy_bytes;
-> 
-> > +
-> > +    /*
-> > +     * Modules should never update these fields.
-> > +     */
-> 
-> Move comment to patch #5?
+These are not formats in themselves, but extra constants to OR in with
+the existing ldst_imm format.
 
-Sure, I'll address all above.
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ tcg/aarch64/tcg-target.c.inc | 64 ++++++++++++++++++++++++--------------------
+ 1 file changed, 35 insertions(+), 29 deletions(-)
 
-> 
-> >       /* Is this a fastpath query (which can be inaccurate)? */
-> >       bool fastpath;
-> > +    /* Total pending data */
-> > +    uint64_t total_bytes;
-> >   } MigPendingData ;
-> > 
-> >   /**
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 99c4d09000..42facb16d1 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -3198,6 +3198,44 @@ typedef enum {
-> >       MIG_ITERATE_BREAK,          /* Break the loop */
-> >   } MigIterateState;
-> > 
-> > +/* Are we ready to move to the next iteration phase? */
-> > +static bool migration_iteration_next_ready(MigrationState *s,
-> > +                                           MigPendingData *pending)
-> > +{
-> > +    /*
-> > +     * If the estimated values already suggest us to switchover, mark this
-> > +     * iteration finished, time to do a slow sync.
-> > +     */
-> > +    if (pending->total_bytes <= s->threshold_size) {
-> > +        return true;
-> > +    }
-> > +
-> > +    /*
-> > +     * Since we may have modules reporting stop-only data, we also want to
-> > +     * re-query with slow mode if all precopy data is moved over.  This
-> > +     * will also mark the current iteration done.
-> > +     *
-> > +     * This could happen when e.g. a module (like, VFIO) reports stopcopy
-> > +     * size too large so it will never yet satisfy the downtime with the
-> > +     * current setup (above check).  Here, slow version of re-query helps
-> > +     * because we keep trying the best to move whatever we have.
-> > +     */
-> > +    if (pending->precopy_bytes == 0) {
-> > +        return true;
-> > +    }
-> > +
-> > +    return false;
-> > +}
-> > +
-> > +static void migration_iteration_go_next(MigPendingData *pending)
-> > +{
-> > +    /*
-> > +     * Do a slow sync will achieve this.  TODO: move RAM iteration code
-> > +     * into the core layer.
-> > +     */
-> > +    qemu_savevm_query_pending(pending, false);
-> > +}
-> 
-> I think the iteration terminology here could be confusing, because these two
-> functions are called from migration_iteration_run() and they don't refer to
-> the same iteration concept.
-> How about migration_pass_next_ready/migration_pass_go_next?
-> Or migration_dirty_sync_ready/migration_dirty_sync?
-
-I get the confusion, but IIUC the word "iteration" normally was used to
-describe one full walk of system resources, introducing "pass" may causing
-another way of confusion to me.
-
-E.g. see Dan's post in 2016 and since then iteration was defined as so:
-
-https://www.berrange.com/posts/2016/05/12/analysis-of-techniques-for-ensuring-migration-completion-with-kvm/
-
-Here, migration_iteration_run() was named to say "run the current
-iteration", but it doesn't necessarily mean it can only be run once for the
-current iteration.
-
-OTOH, I don't think it makes much sense we define "iteration" (or any new
-term at all) to be one run of migration_iteration_run(): currently, we
-invoke handlers' savevm iterator hook for each migration_iteration_run(),
-but that's pretty random behavior..
-
-For RAM, that's MAX_WAIT.  For VFIO, it's something else...
-
-It was still a "grey area" and no way to define, even if we may want to
-define it at some point to make each iterator to follow some rule.
-
-Comparing to that, iteration to be defined to describe one round of walk
-for all VM resources makes a lot of sense and it's a criticla concept for
-precopy.
-
-Thanks,
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index 23d96a7960..cc9c2a5158 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -458,8 +458,9 @@ typedef enum {
+     Ildst_imm_LDRVQ  = 0x3c000000 | 3 << 22 | 0 << 30,
+     Ildst_imm_STRVQ  = 0x3c000000 | 2 << 22 | 0 << 30,
+ 
+-    Ildst_imm_TO_I3310 = 0x00200800,
+-    Ildst_imm_TO_I3313 = 0x01000000,
++    /* Additions to the ldst_imm format */
++    ldst_imm_to_reg  = 0x00200800,
++    ldst_imm_to_uimm = 0x01000000,
+ 
+     /* Load/store register pair instructions.  */
+     Ildstpair_LDP    = 0x28400000,
+@@ -880,13 +881,13 @@ static void tcg_out_insn_qrr_e(TCGContext *s, AArch64Insn insn, bool q,
+               | (rn & 0x1f) << 5 | (rd & 0x1f));
+ }
+ 
+-static void tcg_out_insn_3310(TCGContext *s, AArch64Insn insn,
+-                              TCGReg rd, TCGReg base, TCGType ext,
+-                              TCGReg regoff)
++static void tcg_out_insn_ldst_reg(TCGContext *s, AArch64Insn insn,
++                                  TCGReg rd, TCGReg base, TCGType ext,
++                                  TCGReg regoff)
+ {
+     /* Note the AArch64Insn constants above are for C3.3.12.  Adjust.  */
+-    tcg_out32(s, insn | Ildst_imm_TO_I3310 | regoff << 16 |
+-              0x4000 | ext << 13 | base << 5 | (rd & 0x1f));
++    tcg_out32(s, insn | ldst_imm_to_reg | regoff << 16 | 0x4000 | ext << 13 |
++              base << 5 | (rd & 0x1f));
+ }
+ 
+ static void tcg_out_insn_ldst_imm(TCGContext *s, AArch64Insn insn,
+@@ -895,11 +896,11 @@ static void tcg_out_insn_ldst_imm(TCGContext *s, AArch64Insn insn,
+     tcg_out32(s, insn | (offset & 0x1ff) << 12 | rn << 5 | (rd & 0x1f));
+ }
+ 
+-static void tcg_out_insn_3313(TCGContext *s, AArch64Insn insn,
+-                              TCGReg rd, TCGReg rn, uintptr_t scaled_uimm)
++static void tcg_out_insn_ldst_uimm(TCGContext *s, AArch64Insn insn,
++                                   TCGReg rd, TCGReg rn, uintptr_t scaled_uimm)
+ {
+     /* Note the AArch64Insn constants above are for C3.3.12.  Adjust.  */
+-    tcg_out32(s, insn | Ildst_imm_TO_I3313 | scaled_uimm << 10
++    tcg_out32(s, insn | ldst_imm_to_uimm | scaled_uimm << 10
+               | rn << 5 | (rd & 0x1f));
+ }
+ 
+@@ -1203,9 +1204,6 @@ static void tcg_out_addi_ptr(TCGContext *s, TCGReg rd, TCGReg rs,
+     g_assert_not_reached();
+ }
+ 
+-/* Define something more legible for general use.  */
+-#define tcg_out_ldst_r  tcg_out_insn_3310
+-
+ static void tcg_out_ldst(TCGContext *s, AArch64Insn insn, TCGReg rd,
+                          TCGReg rn, intptr_t offset, int lgsize)
+ {
+@@ -1214,7 +1212,7 @@ static void tcg_out_ldst(TCGContext *s, AArch64Insn insn, TCGReg rd,
+     if (offset >= 0 && !(offset & ((1 << lgsize) - 1))) {
+         uintptr_t scaled_uimm = offset >> lgsize;
+         if (scaled_uimm <= 0xfff) {
+-            tcg_out_insn_3313(s, insn, rd, rn, scaled_uimm);
++            tcg_out_insn_ldst_uimm(s, insn, rd, rn, scaled_uimm);
+             return;
+         }
+     }
+@@ -1227,7 +1225,7 @@ static void tcg_out_ldst(TCGContext *s, AArch64Insn insn, TCGReg rd,
+ 
+     /* Worst-case scenario, move offset to temp register, use reg offset.  */
+     tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, offset);
+-    tcg_out_ldst_r(s, insn, rd, rn, TCG_TYPE_I64, TCG_REG_TMP0);
++    tcg_out_insn_ldst_reg(s, insn, rd, rn, TCG_TYPE_I64, TCG_REG_TMP0);
+ }
+ 
+ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+@@ -1764,28 +1762,32 @@ static void tcg_out_qemu_ld_direct(TCGContext *s, MemOp memop, TCGType ext,
+ {
+     switch (memop & MO_SSIZE) {
+     case MO_UB:
+-        tcg_out_ldst_r(s, Ildst_imm_LDRB, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_LDRB, data_r, h.base,
++                              h.index_ext, h.index);
+         break;
+     case MO_SB:
+-        tcg_out_ldst_r(s, ext ? Ildst_imm_LDRSBX : Ildst_imm_LDRSBW,
+-                       data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, ext ? Ildst_imm_LDRSBX : Ildst_imm_LDRSBW,
++                              data_r, h.base, h.index_ext, h.index);
+         break;
+     case MO_UW:
+-        tcg_out_ldst_r(s, Ildst_imm_LDRH, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_LDRH, data_r, h.base, h.index_ext,
++                              h.index);
+         break;
+     case MO_SW:
+-        tcg_out_ldst_r(s, (ext ? Ildst_imm_LDRSHX : Ildst_imm_LDRSHW),
+-                       data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, ext ? Ildst_imm_LDRSHX : Ildst_imm_LDRSHW,
++                              data_r, h.base, h.index_ext, h.index);
+         break;
+     case MO_UL:
+-        tcg_out_ldst_r(s, Ildst_imm_LDRW, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_LDRW, data_r, h.base, h.index_ext,
++                              h.index);
+         break;
+     case MO_SL:
+-        tcg_out_ldst_r(s, Ildst_imm_LDRSWX, data_r, h.base, h.index_ext,
+-                       h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_LDRSWX, data_r, h.base, h.index_ext,
++                              h.index);
+         break;
+     case MO_UQ:
+-        tcg_out_ldst_r(s, Ildst_imm_LDRX, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_LDRX, data_r, h.base, h.index_ext,
++                              h.index);
+         break;
+     default:
+         g_assert_not_reached();
+@@ -1797,16 +1799,20 @@ static void tcg_out_qemu_st_direct(TCGContext *s, MemOp memop,
+ {
+     switch (memop & MO_SIZE) {
+     case MO_8:
+-        tcg_out_ldst_r(s, Ildst_imm_STRB, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_STRB, data_r, h.base,
++                              h.index_ext, h.index);
+         break;
+     case MO_16:
+-        tcg_out_ldst_r(s, Ildst_imm_STRH, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_STRH, data_r, h.base,
++                              h.index_ext, h.index);
+         break;
+     case MO_32:
+-        tcg_out_ldst_r(s, Ildst_imm_STRW, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_STRW, data_r, h.base,
++                              h.index_ext, h.index);
+         break;
+     case MO_64:
+-        tcg_out_ldst_r(s, Ildst_imm_STRX, data_r, h.base, h.index_ext, h.index);
++        tcg_out_insn_ldst_reg(s, Ildst_imm_STRX, data_r, h.base,
++                              h.index_ext, h.index);
+         break;
+     default:
+         g_assert_not_reached();
 
 -- 
-Peter Xu
+2.43.0
 
 
