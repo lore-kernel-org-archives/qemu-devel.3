@@ -4,101 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25363D39413
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 11:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3944CD39410
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 11:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8G37-0007ha-Sp; Thu, 02 Apr 2026 07:17:21 -0400
+	id 1w8G6Y-0001MR-UM; Thu, 02 Apr 2026 07:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w8G33-0007gD-20
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:17:18 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1w8G6X-0001Ly-Jz
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:20:53 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w8G30-00028n-Bz
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:17:16 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-6501547d7edso771924d50.0
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 04:17:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775128632; cv=none;
+ id 1w8G6V-00053d-VI
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 07:20:53 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6501547d7edso774877d50.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 04:20:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775128851; cv=none;
  d=google.com; s=arc-20240605;
- b=iwumPR0RPK1PMfBs3aP3ThxTeitx+TeBNg4bsGMcRJcZQ47TTSogPLLICK27LiLTCH
- 0bZVWgOvmxfrHprCIDsDAUUOIpaWQP3dyuiPdi7nkLHNMF53GZlPgSXGR+AJ+ZhC5+k0
- ey90CbH3utP5uvmDczGpaM2yzsloiy9GDm/Bs7qgbt+XPy9NTwloPDz+s1h6/AYzqye1
- JoM/YQe/z/A8misF5iXQj4vzVRFh3JjodmAoAevutEnrWgKLOgO9pESYq8RZ5UOjOvlQ
- lTWmNc1406RgAgwVdPMPkQTksonEpma/cRkHtNBswtzY4gTkYJN9BcIWU87a92O/Y2Ox
- U5MQ==
+ b=W2ZJ+g9AWOf4nUr+10/1g+OAivii7dSwVAtQFxBWPdxOniP8oAf7NcXRJPIFiAp/BH
+ xmjrrGGbYqM6SRjtitHBK9ZksFY7HIV2OKvlQIwz+JSJPMtAyk2eTBevuJZ7EPyfnFIZ
+ RWay7cgWgM+2yt6KLWFF5FpB2rPR/QU3vbFxh5bfd/yMYHakR3Rz8zmdWkqmL2TefOX7
+ DwukPVqUsNx7+i4GSfoShs1itRcCxdOmIMWYF2TxSPaHTutBg+Q5aT9p7G3VxPB2p19n
+ cAo5opxZdY9md5kHkjc4jUKXrWweB6YrBMysX6iUuJIZ+Ito4lUz3PX0iG4nc/ZpHRCA
+ JGoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=IUVtHv9CaQTlE1ApCtPVjBKYyai83t3OO/g8dSSIlsI=;
- fh=qi+Jp7UQIJ0rTubs3BdDDr6Q7dNucOHu6pXalRdk4dE=;
- b=EP3co+ofZZChkgbOhsqTk49IvSoQ8CI8EiwObu6yNxEdo+4oWu0bsFyWBJzLtBc0mI
- 9ybkDtBl4R+CBeRLTZmQEG5gKz6IuikVpaLFkMGnnowa9UPrTKdqVb/VtRemAeKPlNYN
- i0bkxr/o1TYgw9MI3hRrO/CaNYdtxiI5AVcLETbmFEiqc47RZBNzdU8ecVqH0jvCZ8WF
- lnZY6jfUsgn8tp0E17YWf/jk/7zwN7DOQlbootH7ZgNMdv+FP7luotehXpIYQNyXGOIQ
- QNK2fAsfQps8VbQLy5g1mHLe+fV3zeU4TU86BqSqFuXfUZ/1VTkqTIDNDSbT6MaxCzsi
- yong==; darn=nongnu.org
+ bh=3ldJAJvt+MiTmgMyaB+cQ50gnnqqVL7sQvxIT3yfD9c=;
+ fh=6/U+EqlDll2XSWEYWIVaPw/RDQtZDsMtP2t3uCfoIHQ=;
+ b=Rwqt2VTw482l6DrzYWzrDCtzkekaUFCXCVCOschmqCeMRh/DXsKUJ+t5f0uyqHXPz/
+ gbWFOL//gpqd5ZXqe6f7by6TRKrXG5eHjiyZoZHK5oMWAt1VivQ//ijjak63p8nxKF1T
+ zYosREo9TUksA+KYpQTgBwqc8DKRDLSIQrm1ABq1s4rudfOZdTT0meVjlyx3KRScVP8f
+ AZ6eFIQL5qLC9wrQKrPZsnF4lOpZIpm73Nhx/3ih+i8axMkn1XnacJFujmcvktrm6MhP
+ fqHUgTlsyIQlGJNWMqQdKM/Gc9MXOsWGfNRRhsByJEWoSjJbYc1DdPlEvwEucaCIgc17
+ XcVw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775128632; x=1775733432; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775128851; x=1775733651; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IUVtHv9CaQTlE1ApCtPVjBKYyai83t3OO/g8dSSIlsI=;
- b=EW3/t3hJyWmVFe/eoFYGBWFuJcNUZpl8ffJigraJUN6Kxr1wti3NWvaMPxKsBcyf9P
- lMYIO4Ix4Tl4oXov46KIVTABYp5eCnapTLtxuY947262Kk3vmjDSE0/MyOUsdYx7DD5u
- dmDZSOMxZ3S0sFtJ4rLdp8xl+YVIxR/PK7/08BPzkd1Us4AaYy3g7qrzxv2+mZtaZneE
- LP5uaSVAlCJcLge/8plDLWNhDsWKdfFadzOwCk/gv+HPFBO0oRsw4xVHtCYowH92XYUx
- ZlSvforpDjXwursWwC1j/FsLA0ra2zDwjSfeBINPiEXLaxDgzYvYHkF9Yw1DsI6b6SN2
- ZMJw==
+ bh=3ldJAJvt+MiTmgMyaB+cQ50gnnqqVL7sQvxIT3yfD9c=;
+ b=X1WMy5cdQO5Q0XW5XzdNGrX/w6GaBgW7VFqYp0lyd9WejLPitKTH3EE3fBkrBajwmy
+ jBRnEzqWxX8C3zC2s6JbgoPXva0//ngqhPXLScp8iC6qdVmwqF3q/wVBxo88Iogbs/L2
+ u+lDeqpA1VaA42xTunqM43VTiMUZ0xivq1IsN/ScKIK1oacdYJrZ+kcdJiJZj9oXpeDS
+ 0VPIkupy2w64VwHSHn9Q/6eAUNur/ECjcleLrhad5M5plu5Umjw9YMcWqC3e7+jPr1l0
+ gOrjHJWkUtxZoKPXdGfZH16fofSm/SjvBJMH7LIZdegWpnbvfHTMtRWrEvy7eH21rikh
+ rIfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775128632; x=1775733432;
+ d=1e100.net; s=20251104; t=1775128851; x=1775733651;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IUVtHv9CaQTlE1ApCtPVjBKYyai83t3OO/g8dSSIlsI=;
- b=EE8GwtpR6addxSnuHhTopHHKIbe2nFCK3rWyR4DBNHqHyZcnLnWbzR+laziWHkmmBP
- yBoTXI/3nYMli0Oln3GNGixneQYsYpITD9iAlfmIQljfCBqS38XGt5V/IzR//xEa6ubS
- KWzN0g8JOf9G+XDwJzD3jXl5IlYnqcd6fhakw6TcMl4eKmjlGy6MNxbqIfGMnH4rJrWj
- +tjCPbTyj8L0MHjjBl5v3LPnzq/6RkiC8AQnAGWTbkrWUNaM/1FzYIiuebL9AjuqGVSm
- FsmMs4dHHiFGPSLAuwuA6U4TcwetRC2nErygKnu3l4Zc7LMOyu2i+X1hEtyOlVTk5vP7
- 3ouw==
-X-Gm-Message-State: AOJu0YyvY+xvVN1CJnZP+Fm6DGG5Or8tsuYRjTsDkDwiLzJg/GG9Z9qt
- MMw06PZoohSbD/VrgjpssHOZxgvxVG+rWDOj99+RlHjiNpWt2hLf+7INjEEHbim7JhUZ6agE9es
- cWIQErYJWQpZGwcLykH54YmtwIZt1zYQOQcntyKAKN4yKUrmxVuQaiB0=
-X-Gm-Gg: AeBDietLdpR6cbVMYkTIflH2oQviUvCnP9kbcKHlBdBHaqdSuK2Yi+Z5K2N9mmut4RI
- ZE9ehpEq8ysQ4Pk+AMeyP07sgB7uD/yiI+EP1tfoS3G4tBz9BqY6wes1XIR+cv7hWqUKzbDwyFs
- YggsISii5mm9FJJglIgYOTzO0qN4j+TELLOsITPKdNCbq1M0ltcjm/deI1Mr1Eqg9CoDSl+P99T
- McFrjG+WNRHLSHcOmACp1SEQmnzlgsLww4deEs6zfB4TXYNOZrGDRMR2TrIOf4GQHtZQKMkj1D4
- F2BvrwjT8IgvuLNuZQr/sRRHnz69BUy/JGNNoplOMo8A43oIkmcD5m+kfTxAlOfPyqWNo/axhqS
- 1kg==
-X-Received: by 2002:a53:b4d0:0:b0:64e:e0fc:a314 with SMTP id
- 956f58d0204a3-6502fe7bf8amr4557982d50.69.1775128632265; Thu, 02 Apr 2026
- 04:17:12 -0700 (PDT)
+ bh=3ldJAJvt+MiTmgMyaB+cQ50gnnqqVL7sQvxIT3yfD9c=;
+ b=ZQzwxzIr+9/0JW2uqTYVbxqnmzshn/EPEMFlnkiIOMRObMx/J8/GetXmF4uIwH0UFG
+ oVCGjg79D7iJkTAz8ZJBtYIpy6m6+8Iy0qSKf6jiL850mZEv3tOEo8tfx/ljX0VCYJYA
+ d1Rmlf+YXyz7O5lIMYxUqZtBo9REC2WA9kwTgkZuxVJASi4oW/HNhl6NzVAc3N3IrvaC
+ gu7GSpaJTvEnVAAYsPIRPPXe3vskb+VDU7+9lX04YqwuusWDx0eFcZw/WEzbmrBDe3Ay
+ jTE9oSmj4OHIA5Qsfb8jKx2jZVCRv3KPhIjEy/vdfiiFA5DmizuUt6eNXyaczrv02xXO
+ pFqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZmATvxyarffokYywgZwrW4ow44LBuuJWgiOsGWd8J2DluSom5SuekSQAkZtTNDVWfrZ4md/3ctYHZ@nongnu.org
+X-Gm-Message-State: AOJu0Yz2qvKfExBPyOffElvbzaKfPszP93bunj1RpT1Ybs9zVHghfQFs
+ nOtODX1Rsz1MH9+dTViKvRYtdXINZqpXtiO1xmvssiSJvcNB/GxKlfEXHlm/fQyWNCxLLqQqAM9
+ 1EngSRkv/eGqM9ac01lJmgi7THMNtGXKun4VHcfT+6w==
+X-Gm-Gg: AeBDiethRzi3MfKjrukSfzt2FvktyYBTJ0xlUx7b4KBbr2+nL6QD25yCvgRdFUOb+H2
+ bORnHjk9qvgx6zQS55cynZsRLuBZYoDHRAOAlBwM8z3RmVt8iXafASTsocduCtLPHbcgvQmBVaQ
+ 5bmsxHI/Zb9SQJ+C3vi/6xl6wU7CR3nfGDSW0W8aBYYak8bnCIj9OTw5nnxQtSh9B6MQ9duBHGn
+ TlvK6deYmul3xQulVOmj/to1S+/pE3OC+OoaZT/XqxFWr8st2big+BxJkQ8zhLAlpyUX+mr4guv
+ ErLLZi+LVbyGdbzEaozhJBDsnf9vn7AQIYRxFtYdB0qTLxc1fI4Kv6PBo3MCou3HfG8=
+X-Received: by 2002:a05:690e:1517:b0:64c:b242:496e with SMTP id
+ 956f58d0204a3-6502fdc126bmr7680546d50.17.1775128850685; Thu, 02 Apr 2026
+ 04:20:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260401220720.19555-1-mohamed@unpredictable.fr>
-In-Reply-To: <20260401220720.19555-1-mohamed@unpredictable.fr>
+References: <20260402095132.29245-1-thuth@redhat.com>
+In-Reply-To: <20260402095132.29245-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 2 Apr 2026 12:17:00 +0100
-X-Gm-Features: AQROBzAV94odNk4MQPdJgImb3kgtACC_8dUyZasaiwXt9GWJXTptjuwHxnp0q0A
-Message-ID: <CAFEAcA8qchsEganwrejiqoWabUd_BmNfnS0AXzWR+tT61OsjyQ@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: cpu: add HCR_E2H on reset for EL2 + !E2H0
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Date: Thu, 2 Apr 2026 12:20:39 +0100
+X-Gm-Features: AQROBzCmKQG4sbsPnsh75Ye9ngQi1Ij5cu9QFWiOoHjMC14NYgOM62kpoKO9CPs
+Message-ID: <CAFEAcA8EyCn83zEcysm=4Py-BsQKSBV0KcBUMjMm4Df-pF2BoA@mail.gmail.com>
+Subject: Re: [PATCH for-11.1 00/10] Deprecate the qemu-system-i386 binary
+To: Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,35 +120,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 1 Apr 2026 at 23:07, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+On Thu, 2 Apr 2026 at 10:52, Thomas Huth <thuth@redhat.com> wrote:
 >
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-This could use some rationale in the commit message:
-why do we need it, what goes wrong, etc.
-
-> ---
->  target/arm/cpu.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> This is a follow-up to my 3-years old patch series here, now with the
+> universal binary initiative in mind:
 >
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index ccc47c8a9a..5ffb1e3096 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -685,6 +685,10 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
->          }
->      }
+>  https://lists.nongnu.org/archive/html/qemu-devel/2023-04/msg04541.html
 >
-> +    if (have_el2 && !cpu_isar_feature(aa64_e2h0, cpu)) {
-> +        env->cp15.hcr_el2 |= HCR_E2H;
-> +    }
-> +
->      /* Set the CPU to the desired state */
->      if (env->aarch64) {
->          env->pstate = aarch64_pstate_mode(target_el, true);
-> --
-> 2.50.1 (Apple Git-155)
+> This patch series allows to run qemu-system-x86_64 in 32-bit-only mode
+> (by renaming or symlinking the binary to "qemu-system-i386" or something
+> similar with a "-i386" suffix). After doing this, qemu-system-x86_64
+> should be a full superset of qemu-system-i386 (apart from 32-bit KVM
+> support, which however is not required anymore now that we removed support
+> for 32-bit hosts). It is now possible to migrate a guest that has been
+> started with an old "qemu-system-i386" binary to a qemu-system-x86_64
+> binary that has been renamed with a "-i386" suffix.
 
-thanks
+I think my reaction here is similar to what it has been when
+the similar idea has been raised for qemu-system-arm : we should
+have a coordinated plan that is considering all architectures,
+not just dropping a single binary for one architecture where
+it happens to be more straightforward.
+
 -- PMM
 
