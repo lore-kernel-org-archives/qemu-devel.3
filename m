@@ -4,78 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A0FCC6B3E
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F046CD3943A
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 15:17:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Jbj-0003lV-60; Thu, 02 Apr 2026 11:05:19 -0400
+	id 1w8Jme-0003nm-RZ; Thu, 02 Apr 2026 11:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1w8Jbc-0003jV-AN
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:05:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8JmZ-0003nM-UI
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:16:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1w8JbZ-0006Yk-En
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:05:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w8JmX-0000B3-Qc
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 11:16:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775142305;
+ s=mimecast20190719; t=1775142986;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/Len+JygoBgd2zttBSDPHhxPuBRC+VOEGpBc5RJaBJ4=;
- b=Ny0jhMM8wxUI1zdGJu1G4cndUTFUZRUpe0hg/sh0jZgwHHCTAYqR/JiQW5yvIxWrl/kpeW
- ogMeRqI/PRPaskCa98aixDvUXeokbzbgF071d/kU8KwvcS2Gc2QDi9z1ZbBtCpAZszEqwp
- Hid5cvO59INi3kINJScGoFbl2viZpFA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-ylGpo3A3OFe477wyJqUv5Q-1; Thu,
- 02 Apr 2026 11:05:00 -0400
-X-MC-Unique: ylGpo3A3OFe477wyJqUv5Q-1
-X-Mimecast-MFC-AGG-ID: ylGpo3A3OFe477wyJqUv5Q_1775142298
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92BBC1955F04; Thu,  2 Apr 2026 15:04:57 +0000 (UTC)
-Received: from localhost (unknown [10.44.49.158])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 565191800361; Thu,  2 Apr 2026 15:04:55 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Sebastian Ott
- <sebott@redhat.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>
-Subject: Re: [PATCH v2 2/3] arm: handle CCSIDR_EL1 as a demuxed register
-In-Reply-To: <93e01647-de7e-4c8e-adb0-7c0bda3f656e@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20260204133229.297061-1-cohuck@redhat.com>
- <20260204133229.297061-3-cohuck@redhat.com>
- <93e01647-de7e-4c8e-adb0-7c0bda3f656e@redhat.com>
-User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Thu, 02 Apr 2026 17:04:53 +0200
-Message-ID: <87341de73e.fsf@redhat.com>
+ bh=hMBGHKIFiniqSo5nT+tzjaRmdj78Rydu6AOboLD2ORo=;
+ b=IH3xB5ElGlXFQknKd/b6WbOPocJnT2ZrzlsgOJ3Bz1OaDnGIS+0kdTwy891jJeLnTJOjjo
+ 8PJp3+dBOjduhij1zzcL8dm5+EUefk4n1gXDMSYEMnqvEFxmdA/TzB4iSkjYVfPK1OWFj/
+ Ei3KxiptWH04YzsP5YvQnWY1q5Rw7J4=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-138-1bG9PhlpNgOK2oF1Y27WFA-1; Thu, 02 Apr 2026 11:16:25 -0400
+X-MC-Unique: 1bG9PhlpNgOK2oF1Y27WFA-1
+X-Mimecast-MFC-AGG-ID: 1bG9PhlpNgOK2oF1Y27WFA_1775142985
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8cd7ea0bb20so266374785a.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 08:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775142985; x=1775747785; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=hMBGHKIFiniqSo5nT+tzjaRmdj78Rydu6AOboLD2ORo=;
+ b=ixrgbznBPpZyBAd72XvU73CLUpH86R4mrtvTiJEpumnvzKQlvYSan6LhJitUs5h+QB
+ ut5gu4KbG8GKxwX7dadZLEQkUmLDSSfuKSo1Y1urKo/xvKjHwPn7h6dIauuBtLQQ0dW9
+ 6RexRWHZGIGv9NOWr2DJQxHrhqWtUJlINDebhZn9YLPk4Yf59WEU3o5syjT2TsKq7I6d
+ 7q3KlFsZO9b/HVAR8rQM21mQvi0GJHdNoAcUnISQQKEoPDI89TR+43qwYXxLUYmiSGlG
+ 1e6uD1al6ljqzwCLIdsLeRHzhY01jBI29afAIe0jx2j0xAnQgohU9VJWwZY0DeYuMHTr
+ dMow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775142985; x=1775747785;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hMBGHKIFiniqSo5nT+tzjaRmdj78Rydu6AOboLD2ORo=;
+ b=XSltC6AtS9YUGycVONPnqjMkXhRFMqxGQdN1Nl7CR4DHSmW6kWPuHeV+M8xnoUb1j2
+ C7l5B9bery8W/mwRPbEVbhzjslSY904FEocsf+DTQH5TinIstAQ8Bjc++AiHy+fWVqfN
+ +G8YtrqCYF1krKxIiMLOlsZnBnT09W8caoJyfQ+m4HlYzYtwiWZJAKd3OMXBibtwwcD3
+ mdNCyb74X16a+Rcvb80B+rvQh0ST2jMz74AvXBi7rq3LHLWbDJQHI4kfrdQ6RzJnW+JM
+ IZcRa+mAp9YZU1E8yqlSD9cJjmKV/RzcQpNduX3b5u5lqi+74mPdkc5VLt+BpsumRsQj
+ EQ/w==
+X-Gm-Message-State: AOJu0YxDBrYIlGyDKVRk0pG7Jd8sXKTQNTr4ttTUtoZv3uxCopsWx4U+
+ aUIjYTfTrw1LQozIu9rBxiZ0tBdBMNg5CymsD2ukv3FrfMM5hCV2zbXIm9F89O8W0FYfk/easRi
+ L8Xco3pDtEhEk82w9L9MZXiABLLl3Th8ne5dRpUkFZ8KBKRRS7nYO7USw
+X-Gm-Gg: ATEYQzzMUOa/DuVJm18ZOGp8w3K6mlG4NzE+Ihms6Fn7GCXPzH+vjkX2XCgXR4cmqDz
+ leXaPWrPPnad71QCO7hCZwyoaFVr77BU6doBMYYDG8wals7qxVZbKLNnt6yQ+UYhAWNZIA1hjvw
+ 3tYSKXZokbFSuNk6x7AQbcg3VYBvBV1vkH/4RoVrrcyVxMZ/FvjZI/sPrjmi0cQcHUW8kj61nJb
+ F450NZoukCTWzm85fSIXwnjg4ykGvblqXhxnPuzaT1fmfNGiGEd541GbEhmxtq40dlSoL6Bs16W
+ 5xrxYWS8CzfnHs3Aa4BLyA8AOqJso4URJDQRe4slx1/sb1Vqw2GziD+tnQXnioMC4g4Fcrow02P
+ NsMS06qvtCDt1EKxRueN44J8MtzJIdQPatE05YaS/Wx1NYQ==
+X-Received: by 2002:a05:620a:4114:b0:8cd:94da:433f with SMTP id
+ af79cd13be357-8d1b5bb189emr1154049485a.48.1775142984427; 
+ Thu, 02 Apr 2026 08:16:24 -0700 (PDT)
+X-Received: by 2002:a05:620a:4114:b0:8cd:94da:433f with SMTP id
+ af79cd13be357-8d1b5bb189emr1154040185a.48.1775142983534; 
+ Thu, 02 Apr 2026 08:16:23 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8d2a8c22d0esm262802185a.41.2026.04.02.08.16.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Apr 2026 08:16:23 -0700 (PDT)
+Date: Thu, 2 Apr 2026 11:16:21 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alex Williamson <alex@shazbot.org>,
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH RFC 07/12] migration: Introduce stopcopy_bytes in
+ save_query_pending()
+Message-ID: <ac6IRfYH7UCluuIt@x1.local>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-8-peterx@redhat.com>
+ <acavsDOsAz0hmfvi@fedora>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <acavsDOsAz0hmfvi@fedora>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,75 +125,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 01 2026, Eric Auger <eric.auger@redhat.com> wrote:
+On Fri, Mar 27, 2026 at 05:43:24PM +0100, Juraj Marcin wrote:
+> On 2026-03-19 19:12, Peter Xu wrote:
+> > Allow modules to report data that can only be migrated after VM is stopped.
+> > 
+> > When this concept is introduced, we will need to account stopcopy size to
+> > be part of pending_size as before.
+> > 
+> > One thing to mention is, when there can be stopcopy size, it means the old
+> > "pending_size" may not always be able to reach low enough to kickoff an
+> > slow version of query sync.  While it used to be almost guaranteed to
+> > happen because if we keep iterating, normally pending_size can go to zero
+> > for precopy-only because we assume everything reported can be migrated in
+> > precopy phase.
+> > 
+> > So we need to make sure QEMU will kickoff a synchronized version of query
+> > pending when all precopy data is migrated too.  This might be important to
+> > VFIO to keep making progress even if the downtime cannot yet be satisfied.
+> > 
+> > So far, this patch should introduce no functional change, as no module yet
+> > report stopcopy size.
+> > 
+> > This will pave way for VFIO to properly report its pending data sizes,
+> > which was actually buggy today.  Will be done in follow up patches.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  include/migration/register.h | 12 +++++++++
+> >  migration/migration.c        | 52 ++++++++++++++++++++++++++++++------
+> >  migration/savevm.c           |  7 +++--
+> >  migration/trace-events       |  2 +-
+> >  4 files changed, 62 insertions(+), 11 deletions(-)
+> > 
+> > diff --git a/include/migration/register.h b/include/migration/register.h
+> > index 2320c3a981..3824958ba5 100644
+> > --- a/include/migration/register.h
+> > +++ b/include/migration/register.h
+> > @@ -17,12 +17,24 @@
+> >  #include "hw/core/vmstate-if.h"
+> >  
+> >  typedef struct MigPendingData {
+> > +    /*
+> > +     * Modules can only update these fields in a query request via its
+> > +     * save_query_pending() API.
+> > +     */
+> >      /* How many bytes are pending for precopy / stopcopy? */
+> >      uint64_t precopy_bytes;
+> 
+> The comment suggests precopy_bytes should include iterable precopy and
+> also non-iterable precopy (stopcopy) bytes, however, all 3 are then
+> summed up for total_bytes.
 
-> Hi Connie,
->
-> On 2/4/26 2:32 PM, Cornelia Huck wrote:
->> Move handling of CCSIDR_EL1 over to the new *_IDREG_DEMUX
->> infrastructure.
->>
->> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
->> Reviewed-by: Sebastian Ott <sebott@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->>  hw/intc/armv7m_nvic.c        |  2 +-
->>  target/arm/cpu-sysregs.h     |  1 +
->>  target/arm/cpu-sysregs.h.inc |  1 +
->>  target/arm/cpu.h             |  6 ----
->>  target/arm/cpu64.c           | 12 ++++----
->>  target/arm/helper.c          |  2 +-
->>  target/arm/tcg/cpu32.c       | 32 +++++++++----------
->>  target/arm/tcg/cpu64.c       | 60 ++++++++++++++++++------------------
->>  8 files changed, 56 insertions(+), 60 deletions(-)
->> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
->> index 3d1ed40f0439..ed466ffb7318 100644
->> --- a/target/arm/cpu-sysregs.h.inc
->> +++ b/target/arm/cpu-sysregs.h.inc
->> @@ -37,6 +37,7 @@ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
->>  DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
->>  DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
->>  DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
->> +DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
-> Currently, in [PATCH 0/3] Generate target/arm/cpu-sysregs.h.inc from
-> AARCHMRS Registers.json
-> and especially [PATCH 1/3] scripts: introduce
-> scripts/update-aarch64-sysreg-code.py
-> (https://lore.kernel.org/all/20251208163751.611186-4-eric.auger@redhat.com/)
->
->
-> CCSIDR_EL1 is not automatically generated. 
->
-> as target/arm/cpu-sysregs.h.inc should be eventually automatically generated, shouldn't we put this definition somewhere else or do we expect to also automatically generate this demux idreg?
+Yes the current way to categorize dirty info isn't as clear, but it's the
+easiest so far based on the previous definition of must_precopy.  With
+that, it's natural to define must-stopcopy, which is separately accounted
+from "data that can be copied during stop, but also iterable / precopy-able".
 
-The generation script was explicitly skipping CCSIDR_EL1; when I played
-with that script, I just removed it from the list of skipped registers.
+> 
+> >      /* How many bytes are pending that can be transferred in postcopy? */
+> >      uint64_t postcopy_bytes;
+> > +    /* How many bytes that can only be transferred when VM stopped? */
+> > +    uint64_t stopcopy_bytes;
+> 
+> I was also wondering if having precopy_iterable_bytes,
+> precopy_non_iterable_bytes, and postcopy_bytes would be clearer, but
+> given that stopcopy is already a term for this in VFIO it is probably
+> fine.
 
-I'm not sure if we have information to automatically generate any
-demuxed registers, let me see if I can find something.
+Yes, your naming is better in some way.  However it can also be slightly
+confusing on precopy_non_iterable_bytes to represent stopcopy-only bytes.
 
->
->>  DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
->>  DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
->>  DEF(CTR_EL0, 3, 3, 0, 0, 1)
+IMHO we can leave the "hard problems" (naming..) for later as cleanups and
+fix the problem first.
 
-(...)
+> 
+> > +
+> > +    /*
+> > +     * Modules should never update these fields.
+> > +     */
+> 
+> Maybe splitting input and output parameters, or things which modules
+> should touch and output of the overall API into different
+> structures/simple parameters could be better instead of the comment.
 
->> @@ -792,11 +792,11 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
->>       * L3: No L3 (this matches the CLIDR_EL1 value).
->>       */
->>      /* 64KB L1 dcache */
->> -    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0);
->> +    SET_IDREG_DEMUX(isar, CCSIDR, 0, make_ccsidr(CCSIDR_FORMAT_CCIDX, 4, 64, 64 * KiB, 0));
->>      /* 64KB L1 icache */
->> -    cpu->ccsidr[1] = cpu->ccsidr[0];
->> +    COPY_IDREG_DEMUX(isar, CCSIDR, 0, 1);
-> nit: maybe we don't need a COPY but do get + set, if it is just used in
-> this file. Or if we keep copy maybe use the memcpy convention?
+One thing I can immediately do is making both "exact" and "total_bytes" to
+be consts, then force cast them only once when setting it.  Would that be
+slightly better?  Or any suggestions?
 
-Alternatively, we could just set the individual registers to the same
-value instead of copying them. I wanted to keep the change obvious here,
-but we can also defer adding a copy/memcopy macro until we really need
-it.
+It's always an option to fix the problem first then think about how to make
+it prettier, rather than doing it in one shot.
+
+So far, the immediate goal is to allow reporting VFIO remaining data and/or
+expected downtime in query-migrate.
+
+> 
+> >      /* Is this a fastpath query (which can be inaccurate)? */
+> >      bool fastpath;
+> > +    /* Total pending data */
+> > +    uint64_t total_bytes;
+> >  } MigPendingData ;
+> >  
+> >  /**
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 99c4d09000..42facb16d1 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -3198,6 +3198,44 @@ typedef enum {
+> >      MIG_ITERATE_BREAK,          /* Break the loop */
+> >  } MigIterateState;
+> >  
+> > +/* Are we ready to move to the next iteration phase? */
+> > +static bool migration_iteration_next_ready(MigrationState *s,
+> > +                                           MigPendingData *pending)
+> > +{
+> > +    /*
+> > +     * If the estimated values already suggest us to switchover, mark this
+> > +     * iteration finished, time to do a slow sync.
+> > +     */
+> > +    if (pending->total_bytes <= s->threshold_size) {
+> > +        return true;
+> > +    }
+> > +
+> > +    /*
+> > +     * Since we may have modules reporting stop-only data, we also want to
+> > +     * re-query with slow mode if all precopy data is moved over.  This
+> > +     * will also mark the current iteration done.
+> > +     *
+> > +     * This could happen when e.g. a module (like, VFIO) reports stopcopy
+> > +     * size too large so it will never yet satisfy the downtime with the
+> > +     * current setup (above check).  Here, slow version of re-query helps
+> > +     * because we keep trying the best to move whatever we have.
+> > +     */
+> > +    if (pending->precopy_bytes == 0) {
+> > +        return true;
+> > +    }
+> > +
+> > +    return false;
+> > +}
+> > +
+> > +static void migration_iteration_go_next(MigPendingData *pending)
+> > +{
+> > +    /*
+> > +     * Do a slow sync will achieve this.  TODO: move RAM iteration code
+> > +     * into the core layer.
+> > +     */
+> > +    qemu_savevm_query_pending(pending, false);
+> > +}
+> 
+> I agree with Avihai regarding the iteration terminology. I slightly
+> prefer migration_dirty_sync_ready/migration_dirty_sync, but using pass
+> instead of iteration is also fine.
+
+Replied in the other email, let's see if we can reach a consensus.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
