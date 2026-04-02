@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 325CD1112276
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E031112259
 	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 02:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w87pZ-0004o2-2o; Wed, 01 Apr 2026 22:30:49 -0400
+	id 1w87pZ-0004oQ-Mu; Wed, 01 Apr 2026 22:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1w87os-0004E6-O1; Wed, 01 Apr 2026 22:30:07 -0400
+ id 1w87ot-0004EL-O4; Wed, 01 Apr 2026 22:30:08 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1w87or-0001oT-0e; Wed, 01 Apr 2026 22:30:06 -0400
+ id 1w87or-0001wV-PQ; Wed, 01 Apr 2026 22:30:07 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 631Ju8Oo3941833; Thu, 2 Apr 2026 02:30:01 GMT
+ 631LQaer105889; Thu, 2 Apr 2026 02:30:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Ju3TdCo9F+qwi0b5K
- e4joOc8d4Yfdtaokv5jWfReqNc=; b=JXI8eCDy+HXx/CkH/39ivl89rJNXr6RyT
- Z935IZnuh8/ySeNSoxYWfYfU3odxoNTZlsbGHqjhOpwrWUlAPzlVq1ZdiWuxQjyK
- Gb9/UuFg11f3Dn2MUWahsCO9I089SNcPdZaxkxeR3+VCMenGcA84BmXi7/WaUGth
- ud3CarfkdtV4sulbbugbnAdnuzFQx2m9nwllVxAr/TsmiYocTGl3KkEH6tWdvwRh
- PM+znNitVlLAk5faiVaysnbxBA6N/tXERCFVvFhpwWoFP/zETWLoqCj7H76l+b1j
- ycmnAZTASMsCb+wdtWsHIHwM+MbskR7U3E3WdW7oWklzZ2Ff1eTOQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66msa3tn-1
+ :mime-version:references:subject:to; s=pp1; bh=eYbBKH1oO13k9TLel
+ I7GDEIaC9XcIecLzSyl4dhG1eQ=; b=m3J1bxgTqL98VQVOmjvmHpvx8AkWC35sh
+ 9ssdJZZBEOjtvN+EjVkAObFglnUTVQiC1FHZ/3QWpvPQIfoZh9g+e3vt6JfkFeZC
+ LCw/vEswIQTAnprZAcGE56kxX1kjmanA8i/u4t3ZQcLTAFYDz+9uLPuS9remYZFV
+ ur59FLEhLuhbqvvdNqN73RJdeoRQPZt4iBG2RGlbQoFCeXVUShODFxNZvnd3Lz5r
+ BjG19SrhCqXQJejq0z6ioL3gWxUONU8+EkIjh/B6UmjbtNyrRlDCqg2cuFD4lcs6
+ 97BnR9DelFNkMBe6XUz73iJavH/l0NrNNaD0tyzQXQ/EUi+1bbnyg==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66msa3tx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 02:30:00 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63212omo030990;
- Thu, 2 Apr 2026 02:30:00 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4d6uhk05j0-1
+ Thu, 02 Apr 2026 02:30:02 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6320LhWV013936;
+ Thu, 2 Apr 2026 02:30:01 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6ttkr8ee-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Apr 2026 02:29:59 +0000
+ Thu, 02 Apr 2026 02:30:01 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6322TwHX9044658
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6322U0A13408612
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Apr 2026 02:29:58 GMT
+ Thu, 2 Apr 2026 02:30:00 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 313D0580F4;
- Thu,  2 Apr 2026 02:29:58 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 25527580F7;
+ Thu,  2 Apr 2026 02:30:00 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9CE52580F6;
- Thu,  2 Apr 2026 02:29:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 88287580F6;
+ Thu,  2 Apr 2026 02:29:59 +0000 (GMT)
 Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.247.119])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Apr 2026 02:29:57 +0000 (GMT)
+ Thu,  2 Apr 2026 02:29:59 +0000 (GMT)
 From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 To: mjrosato@linux.ibm.com
 Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
  david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Subject: [PATCH 10/15] s390x/pci: Move pba from S390PCIIOMMU to
- S390PCIBusDevice
-Date: Wed,  1 Apr 2026 21:29:16 -0500
-Message-Id: <20260402022921.298818-11-kshk@linux.ibm.com>
+Subject: [PATCH 13/15] s390x/pci: Add a comment explaining S390PCIIOMMU purpose
+Date: Wed,  1 Apr 2026 21:29:19 -0500
+Message-Id: <20260402022921.298818-14-kshk@linux.ibm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260402022921.298818-1-kshk@linux.ibm.com>
 References: <20260402022921.298818-1-kshk@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=J6enLQnS c=1 sm=1 tr=0 ts=69cdd4a8 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=J6enLQnS c=1 sm=1 tr=0 ts=69cdd4aa cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=THYS1zffzJpO_GefUMYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDAxOSBTYWx0ZWRfX0aMI4+kJHcRN
- Qs/BOmYaYW1YBLN+e8uN86VPZaaDBUC7pGC/8EdvgC0UW5OkO+crNOvvb9tXVp2Bsn6JzcBQHt4
- CIlbpUHFfCcsSPs6EgJU7x5H95MoHu6K1J8MN3OKo2VVgl4IC79Z94uGXKRY2zOlpmCLgDiFbtc
- YDpgziGvTRTak0i7EPxY3kawT+lEYFGiqZb7GU0+cyDJdO6Cy09gOACZPL0RKlBEA00QeB4+EO1
- QhMrT4DBVOzRgIpJvR2UOdMIQqxgjGcy3r0GaHVWbIl+ifLqYoQpulCO3LouDTRMv9hbG5/zMxs
- uFbAm8R76ZVDtCJ1EO9aS3nNpq+ug8K0u4mFZOahEzbpMS/Cn7oKmrKNQaGwS9QR1QjVi4+hZjx
- XVzUAHBPlcWHYaloxSZq/57BQ+ecAfGNctdYiD5GqIJUUOPRd3SymFZTfMGqj0f2Ev6xB/m9CVV
- 4LuE0SchNer4hp1ZAcQ==
-X-Proofpoint-GUID: aCmxvNOByQ4d8nyum1RP09cUn3PrBc-e
-X-Proofpoint-ORIG-GUID: aCmxvNOByQ4d8nyum1RP09cUn3PrBc-e
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=YbwZhMhe-Yu4dYefToEA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDAxOSBTYWx0ZWRfX9ZMcq7FOQWjH
+ AXcgSds6BNOTMyGSPx+DXJSkEEEEJy3FsZ3mBSHhYu14ieyIDJvUpTNWFbbBCB4YUFpHrDPzfiZ
+ gAjHTRlXvUnphQrDqTZH5rNhN86HDAajW0WV8G1mu6HfnGux5cJDSdBE9Hng+k8oPDm8+7rntAw
+ Qhamjp/S4BIW79nMJYLaK0k9Mkkj96+CkzZOyxTSrF7efM75ZH9DyHKrlLUQyYwqYkrGD0Lt5O5
+ vGVDoqSLAZFTdtdNsmsfr4hhz7zGUyAokCt2/D2ejfcmPX47UMprM3bGEKHlvhnzWow93rxbFXf
+ TYBVNF0QFQppDyAhJyS+uJ3saQHbh2vEJ6tjRcNlUNhJTnW/7JlM1wL2VfKUd9DiGRSKZXZHFnf
+ ZdZ9/N4sn4PmVg4N02VDy1w71QTYpFlRICiwE83ubWXskL7cN3aIlncK5Pj3qo7Zlf3zQpb3oQb
+ aCqe+B4Gjs+CTca5Ytg==
+X-Proofpoint-GUID: OXu4MXSWDoqWMdGUtq_Mwc5UtaSRD0JR
+X-Proofpoint-ORIG-GUID: OXu4MXSWDoqWMdGUtq_Mwc5UtaSRD0JR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-01_05,2026-04-01_02,2025-10-01_01
@@ -120,101 +119,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This field is only used when S390PCIBusDevice exists, so it can be moved
-there to simplify S390PCIIOMMU which purpose is just to store the "root"
-AddressSpace.
-
-This also allows to save/restore this field during migration.
-
 Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
 ---
- hw/s390x/s390-pci-bus.c         | 4 ++--
- hw/s390x/s390-pci-inst.c        | 8 ++++----
- include/hw/s390x/s390-pci-bus.h | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ include/hw/s390x/s390-pci-bus.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index b784196c9e..734af3a307 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -564,7 +564,7 @@ static IOMMUTLBEntry s390_translate_iommu(IOMMUMemoryRegion *mr, hwaddr addr,
- 
-     trace_s390_pci_iommu_xlate(addr);
- 
--    if (addr < iommu->pba || addr > iommu->pal) {
-+    if (addr < pbdev->pba || addr > iommu->pal) {
-         error = ERR_EVENT_OORANGE;
-         goto err;
-     }
-@@ -601,7 +601,7 @@ static void s390_pci_ioat_replay(S390PCIBusDevice *pbdev)
-     hwaddr curr, end;
-     S390PCIIOMMU *iommu = pbdev->iommu;
- 
--    curr = iommu->pba;
-+    curr = pbdev->pba;
-     end = iommu->pal;
- 
-     if (pbdev->dm_mr) {
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index f4ec299614..7680d87080 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -753,7 +753,7 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
-         goto err;
-     }
- 
--    if (end < iommu->pba || start > iommu->pal) {
-+    if (end < pbdev->pba || start > iommu->pal) {
-         error = ERR_EVENT_OORANGE;
-         goto err;
-     }
-@@ -1026,7 +1026,7 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
-         return -EINVAL;
-     }
- 
--    iommu->pba = pba;
-+    pbdev->pba = pba;
-     iommu->pal = pal;
-     pbdev->g_iota = g_iota;
- 
-@@ -1043,7 +1043,7 @@ void pci_dereg_ioat(S390PCIBusDevice *pbdev)
- {
-     S390PCIIOMMU *iommu = pbdev->iommu;
-     s390_pci_iommu_disable(pbdev);
--    iommu->pba = 0;
-+    pbdev->pba = 0;
-     iommu->pal = 0;
-     pbdev->g_iota = 0;
- }
-@@ -1416,7 +1416,7 @@ int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         return 0;
-     }
- 
--    stq_be_p(&fib.pba, pbdev->iommu->pba);
-+    stq_be_p(&fib.pba, pbdev->pba);
-     stq_be_p(&fib.pal, pbdev->iommu->pal);
-     stq_be_p(&fib.iota, pbdev->g_iota);
-     stq_be_p(&fib.aibv, pbdev->routes.adapter.ind_addr);
 diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index a7d1f1ade2..42f39a5cf0 100644
+index e3cbee2695..2fab28e6e0 100644
 --- a/include/hw/s390x/s390-pci-bus.h
 +++ b/include/hw/s390x/s390-pci-bus.h
-@@ -275,7 +275,6 @@ struct S390PCIIOMMU {
+@@ -271,6 +271,14 @@ typedef struct S390PCIDMACount {
+     QTAILQ_ENTRY(S390PCIDMACount) link;
+ } S390PCIDMACount;
+ 
++/*
++ * This structure holds the PCI device AddressSpace that QEMU needs to link
++ * into its internal structures before the zPCI and PCI devices are fully
++ * initialized. It's a QEMU requirement to provide this "root" AddressSpace
++ * early. The AddressSpace is only actually used for I/O while the PCI
++ * device is plugged in and configured by the guest, at which time it gets
++ * additional memory subregions from zPCI device, that can do real work.
++ */
+ struct S390PCIIOMMU {
      Object parent_obj;
      AddressSpace as;
-     MemoryRegion mr;
--    uint64_t pba;
-     uint64_t pal;
-     uint64_t max_dma_limit;
- };
-@@ -352,6 +351,7 @@ struct S390PCIBusDevice {
-     MemoryRegion *dm_mr;
-     GHashTable *iotlb;
-     uint64_t g_iota;
-+    uint64_t pba;
-     S390PCIDMACount *dma_limit;
-     MemoryRegion msix_notify_mr;
-     IndAddr *summary_ind;
 -- 
 2.34.1
 
