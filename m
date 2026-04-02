@@ -4,122 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D18AD3940D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF3ABD39410
 	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:48:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8FaY-0004gF-8U; Thu, 02 Apr 2026 06:47:50 -0400
+	id 1w8Fb0-0004oa-VE; Thu, 02 Apr 2026 06:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8FaU-0004eZ-W6
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:47 -0400
+ id 1w8Fan-0004kd-ED
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:48:05 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w8FaS-0007mt-77
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:47:46 -0400
+ id 1w8Fag-0007ot-L2
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:48:01 -0400
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6328Rx6h352408
- for <qemu-devel@nongnu.org>; Thu, 2 Apr 2026 10:47:38 GMT
+ 6328Rt8V352289
+ for <qemu-devel@nongnu.org>; Thu, 2 Apr 2026 10:47:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=UQmlyxpZaVV
- P/6TW6V7qRLUtxbYcGCiDyOnIxm58+4w=; b=K8MeTxwcNLE/aJrSey/79pLnwrc
- qqFo5btqngkq/ujsUTbIO8FHI4kml6jKVwLXH7K3w1NRIc9skRU4MwTsRJKz3sLt
- nH/tVc+D3A8Mw6nzbcANVWirnd2pD+HBThTivy3lDsBV6FAZRbwbiHFLnaFpC6c1
- QzepLD23/0CpURrL53B0Jy+jyi/xUModybSELi0HatkSgpLQrSVECeeVRxjnEQQu
- wAEe2/MQiMmy7rlPJFMETgqFSN7aIfgXnAR933y0UhwwP5clx+2PxgsjBcTRCagj
- YB8oa7qJVt6T0cHaZKpOc9NqZRw2VVLIT9RCO9wCw7Ihu8IWkQG64M6WHBw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9myh8h0c-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=qQ0CPCSb3EJ
+ vawUvosj5tPUWguLWpst70une3py6NVA=; b=hFqHR50jxkuaO9/wBXGDwJ3D1cO
+ IcPs1FEAMF2nducc7hqZUBmz/MuHK3ObNgg0ZiMhtZQtI1TUr7iEz9vTUqRlgcOk
+ 5T2UNQI6V8v3R9Rq8cQJ8w4VGqeInHKPUZrBs54KdethXCni4V4r8TIq3Erb2kh9
+ FoACH7bWHPDcbScVewOXpSod4U8sDGJ1GRRvQJyzDIv8E0Z7CLWTZnbZenJUIkp3
+ GlzHPIxUbBcUc+nyJNm1s3VUivMu8P+jGl7IQDW9A/Q1sSyiAHwHUZ7cVtXoi7H/
+ sI+g3QE1AT2SuHfdBiz80FYcGxC/e/WA7qsl6sWppvKSz+4eOEx8ZAzWtXA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9myh8h17-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:37 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-2c8ac8e422dso1240015eec.0
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:37 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 10:47:47 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2c72849f648so3525459eec.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775126857; x=1775731657; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775126866; x=1775731666; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UQmlyxpZaVVP/6TW6V7qRLUtxbYcGCiDyOnIxm58+4w=;
- b=Xu6c0miNb4698SlkyaXZlaoLwyGt6xaRdPLCsoWDN87fsVOcpljnJ/GljPCrZ0k/Gp
- w6kHpUfIWaNtWw2sVqdrETfaDaCWl46udgTmU8ubbVTP2W+AsoRZ9NpzxeWKfwrDH0t2
- V6h/RUmIiMFf3HSkAca/EZV/hnm8y8TVuNtGVt4lTgr0fKElOveGPus1ZRZv6nO35xkU
- mamgoiPt6zXIRcghN9Pcxffks8HUOEOD8/VNJ4uoiTpHS6ELuegY2qAHyQ7iKLoAlKAG
- u4Dv6AY6LWjEwzE7VC+1sH58kvBS0OuolZnfC+tnGrOcij1ECdeLrNNiZO3WKvZCe3jt
- N0cw==
+ bh=qQ0CPCSb3EJvawUvosj5tPUWguLWpst70une3py6NVA=;
+ b=Phk/nYBzRo4GP6d0ecMGRrxWHTAKa5qvlAu3Eb3hAt5f+bgKnUiW0cQ1a+4cEXxqHD
+ IPCmaX6LPNSpx4ngc1Z66EwCiB/BTdQ7ZHAYk04lZD+D7zM8tuIcFCWAIKtwsiNwW9sU
+ 8kejMJJz9XLhqlEaxEQ8C+XoGEawsgwfnZX/twMbPl7/qNpVTYVXqtlxeJeKS9V6PUX0
+ TRpx3VWEjl66De5rQKEo0UdPMcfg4R/rM53hAWWG1Q2GRbvZOnFZ21AJfpQvuC9Jcjjy
+ sh/SyPBnKTHSAEeVCoo6pSwn+4vezJv96SCwGqlSsKfLZbIwVonwfLCwvx+qk2RkJxBg
+ 2bTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775126857; x=1775731657;
+ d=1e100.net; s=20251104; t=1775126866; x=1775731666;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UQmlyxpZaVVP/6TW6V7qRLUtxbYcGCiDyOnIxm58+4w=;
- b=njpb8Z8VG4Q9ons3sKRq8rb8Qc2a6IBM1XGW+7lxxdiQlgTNgpiBQv6kOQDVZqoRgX
- ysnMJkZuu9Tk8FmSQKNggRJ/ntVlTG+3aHh44IasnQ3nDGo9o7n0rCQw3LewJSEygbif
- V9HYHY+afT6LlykcJa8UCWsvWOW43i4UphTW2YqZw2H+O9NN6fCuY+CLEKCUkdou58mh
- B5SCLsUDmRdIfLDzyzkRZ6uPdujr/+3u2crI/Lb1yvOLD5KY81+HaFsY/sxYreMOzmG6
- 5QhUgSvMQTx9IorR+V3L0D9qIKShvVEwlou5m9U34YCupZHX8LqaCYtsj0akF6g04lW5
- lM8g==
-X-Gm-Message-State: AOJu0YyMzgcmT8jBKqsuVDAM9tJrmqA7+x1IFPjPHYkJNYO6BkOs6+P1
- Vjxyvjf2xNh76dD7tTY4jcd3eeinu/yB6jTIdzOZw9ZHpBF8tr21SQ0hflhAfeOiT3M1bjZw2WS
- vQ/JYtuIwL5ShU25jo+de1aZKqW3uDaadI4nighXuPhxZm7iP0JoId/+9KB0TukWOGw4N
-X-Gm-Gg: ATEYQzxPCWxm6cpOvwY3OuO17xtMLiIqFUX6gRUxhN3d+FAGzdVmFdjGXY9Ls3qbeMU
- xx76lWhjZ+M8vuy/IozWJzQdTrbwBpjSSJ0YVNWm2B7Gm5M19XIiKWbDPpSwYLFSWVpyMJKrtRZ
- A5vv2dKEPXYi/0gk+hZ5Vufd5aioP9LzWEJiMSWt/pmaEdtkuO85EnTTUapzM/yUhpF7UvoWyyR
- AOj5dwVihQBvVQGu860qTtn9of9fx8xbMNi9RdHkfgr9EBXhQE2I7trlal3WqoSVVomBQmBA3S0
- RKQMd8DGzKCVIy/w9yfvDNiFbkHIZmnTeD+OQ3pZEV5tvZJFK4FbxYGSF/YbFt+o5Tjm0maOdCl
- j8nSeAfBle/nn1o0tZXLMSbunpnUwEtaJuK4GqOovrLuJQU+Jg+kHu97qu6wll7+kBy/j1sn0vL
- ryxkmmrNzY
-X-Received: by 2002:a05:7300:5707:b0:2c6:7f49:a871 with SMTP id
- 5a478bee46e88-2c9326aa17bmr4127113eec.20.1775126857178; 
- Thu, 02 Apr 2026 03:47:37 -0700 (PDT)
-X-Received: by 2002:a05:7300:5707:b0:2c6:7f49:a871 with SMTP id
- 5a478bee46e88-2c9326aa17bmr4127083eec.20.1775126856510; 
- Thu, 02 Apr 2026 03:47:36 -0700 (PDT)
+ bh=qQ0CPCSb3EJvawUvosj5tPUWguLWpst70une3py6NVA=;
+ b=r18Bo0F2+W+qa0CFNrmNkzUi5FbxjPRQnD4s7y3xgzhFGTj1n9PYHXZhxylZfKvQoY
+ jurIYJfBgnmaqQqDXX2KaioUbKgmFj70bgAvj7g+tf+a3/Rm36BUmVw+kziLgWDWZpzL
+ ND6XxN4LQLWERVkvLOwXteHOfr8YOB25exwXc43LE3ZSydqNPV3UzDuEGQcEj9uGW6FO
+ yCV7pqkbwsPi3IC0qiJCr/VR1rxPsbM5aOpeKH2qHLHqSaDb7ZmK84PQ22cvIx5vuEXl
+ scoBblpIMSbuwXe+8xXcK5FspmPFPBAAQqj7go2CvuiJntrLXaN3X7nemGMSBHG5ouiY
+ 1djw==
+X-Gm-Message-State: AOJu0Yz9VC7ymYZwZOrIpRB1SZmFvRGt23mC4tOOsir3vZB4OyFZOlVp
+ jfIc3jwbmubLfHBVaYckDXcm3c+X9paVQeRx2gW2SOFwPWc4DZBN3BRQwSO14C+98fSkpJPmlwN
+ SQrxvUaX7B6DvZPPlvIGQJHZMP/DB+nEJLx7bsNE5FnAZdJx3teQahjudcJxYx87HGz/a
+X-Gm-Gg: ATEYQzxg3r5VxoG1S+RqGJehC5EnSbGxHuCd5IrKrFqW2oNz7X52IpkZVtYFxiTmcUy
+ RAsUbu7u/MSjf9rVb5QRNYPPh7wGvu5Pdt++xEAFcdWK3ojnox2REAYGJpOZEd/P2nmvNAopMMy
+ U6BHy/3qB7bormalEp3yKnEBzKBN4gz0rxKboT0izHdCc5N3jiFYyxFwd1H5IUT7maN/2mz5Ubi
+ it1yj4gvrd/YQM0VyeqZUDGmIsnQrH+ZjMSpQ3G/plcQ133st/7DuRZG+3skm6VFopRqua+Z1xU
+ swVu9l8sl8xZW0oHYqTEURH5rHsXK/rQUFKGAHM9ew53q5ryVEExmo8Gcd2pi2Q8pG+uTS7VI8L
+ 2Btlkrjrh+eX3I6LWcmXWxiJ02rW3Hk1xuABWMc1s/iBVrL2iBKPxc8eicriS40qNkRWZjrMbHB
+ 2mLgcB+UTe
+X-Received: by 2002:a05:7300:fb8e:b0:2c7:11f2:d072 with SMTP id
+ 5a478bee46e88-2c9323b8c8cmr4502835eec.16.1775126866167; 
+ Thu, 02 Apr 2026 03:47:46 -0700 (PDT)
+X-Received: by 2002:a05:7300:fb8e:b0:2c7:11f2:d072 with SMTP id
+ 5a478bee46e88-2c9323b8c8cmr4502809eec.16.1775126865584; 
+ Thu, 02 Apr 2026 03:47:45 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.35
+ 5a478bee46e88-2ca7d00f5easm2004783eec.29.2026.04.02.03.47.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 03:47:36 -0700 (PDT)
+ Thu, 02 Apr 2026 03:47:45 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
  brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 01/16] tests/docker: Update hexagon cross toolchain to
- 22.1.0
-Date: Thu,  2 Apr 2026 03:47:18 -0700
-Message-Id: <e17bf5c09e434979a491b27bd2fad23fffd2b9cd.1775122853.git.matheus.bernardino@oss.qualcomm.com>
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Subject: [PATCH v2 10/16] target/hexagon: add v68 HVX IEEE float compare insns
+Date: Thu,  2 Apr 2026 03:47:27 -0700
+Message-Id: <02cf6a499f7363330a7e600f75b70ed0c6ebb7ca.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: RQS08OrLZ6fGRlyZLV0GxyRYzE1nCI1Q
-X-Proofpoint-ORIG-GUID: RQS08OrLZ6fGRlyZLV0GxyRYzE1nCI1Q
-X-Authority-Analysis: v=2.4 cv=JII2csKb c=1 sm=1 tr=0 ts=69ce4949 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: hUzUK1J7_uxmL1xTuVAQrFvPhlara4MW
+X-Proofpoint-ORIG-GUID: hUzUK1J7_uxmL1xTuVAQrFvPhlara4MW
+X-Authority-Analysis: v=2.4 cv=JII2csKb c=1 sm=1 tr=0 ts=69ce4953 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=ovJmrJClAAAA:8
- a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=q7X4_axEi9qJq2Gpr8MA:9
- a=scEy_gLbYbu1JhEsrz4S:22 a=brTEhlvMp4NY0_u118I2:22 a=fsdK_YakeE02zTmptMdW:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfX31p2Ny88mZr4
- 71+X9aOn4a9G2TPRXNM0EDuZtVZ4vi1EitZod8L7UOEUOuvi9IltmkiYdds7uNUatogwTiW1zfo
- 36hrggzsTogqhcNj1ajgky6flMd3UL8I/RQm0VvOGGwRMEHUqIJCVpnACgrLCo7NJy7rHpXVmuG
- jeDyuhuf2SU1SRXloOF5sKnddthqC6ZZUA9lR1A3nOWY7dQ90/b9MMIoB7sPZcl/Y6vXkF7Wv5K
- 6iCBy+lf9Bi3g8u9r4MiC6SD9uXkiVxxyC9x7rHplBeltn8aF43tcWsDW6wmUCfk+yn/xCR+mRO
- 0eS4mOFy3oaI9eu7sBFtRhgUUUgrfKIxwZBLxxJpCvVim7BH00QeY8MSey6BOqewON2GDND4KLo
- KjqXCblFkWtTJkTjTsH2XgBKOxHbY6p2dPZlprF4kKyQN3/FkFjeXMNKNHieJMZ67nzywkZxWxD
- dc/I11/6KaN9Hda7vBg==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=9xUHUbetx40kEkOjbCQA:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5NyBTYWx0ZWRfX9s+an11PevIs
+ cWBM0E5LAs74WyRLKF3asoiJodsehyJ1TBytQkAAei6kr5Yu1fxvGDjTrqxGSCraEXonXpmM0xN
+ R3tdiIlfCvDapbNyyPHRLdL1TQn1ZqFNKcQVUiQjCtFCMz9iT5+mdO3WfljNyoMw3DWVpwx+ShY
+ 0LwlTtoVeEWCNIPnt8lXrhk6HtdtBHwLO9/Y5c1PR+BMReF/2Ovkm+IOkpYwh5Fd1905PuY50ql
+ nRAA9mNE1tWSgfSZjwQiwzbRx2mG9Sgfu0PZFvYGjH2vyvaq2MDlJSs4pdQNUmek3wGKNAzWB+1
+ /O+0xBNvHCOOjtj1KvzVsWkj3e1Nwy9w7plmlJJRDfVTr9OJUIv5ThJ8kIhVio/mw3TtOH5oKiD
+ nTqHdLKj3eVQiKYp1hZ/dfofiCQcTaBETyXpfim9KEb8IsO/Gez2GKM2QIcvyJVhONEd7OTBNo5
+ BH99aKIMysF4WSg8Ksw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-02_01,2026-04-02_01,2025-10-01_01
@@ -155,56 +150,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+Add HVX IEEE floating-point compare instructions:
+- V6_vgthf, V6_vgtsf: greater-than compare
+- V6_vgthf_and, V6_vgtsf_and: greater-than with predicate-and
+- V6_vgthf_or, V6_vgtsf_or: greater-than with predicate-or
+- V6_vgthf_xor, V6_vgtsf_xor: greater-than with predicate-xor
 
-Update the hexagon cross-compiler Docker container to use toolchain
-version 22.1.0, replacing the previous 12.Dec.2023 release.
-
-Changes to accommodate the new toolchain:
-
-- Add libc++1, libc++abi1, libunwind-19 runtime deps for the new
-  LLVM-based toolchain
-- Add zstd for the new .tar.zst archive format
-- Update artifact URL domain to artifacts.codelinaro.org
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- tests/docker/dockerfiles/debian-hexagon-cross.docker | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ target/hexagon/mmvec/hvx_ieee_fp.h           |  4 ++
+ target/hexagon/mmvec/macros.h                |  3 +
+ target/hexagon/attribs_def.h.inc             |  2 +
+ target/hexagon/mmvec/hvx_ieee_fp.c           | 52 +++++++++++++++++
+ target/hexagon/hex_common.py                 |  1 +
+ target/hexagon/imported/mmvec/encode_ext.def | 10 ++++
+ target/hexagon/imported/mmvec/ext.idef       | 61 ++++++++++++++++++++
+ 7 files changed, 133 insertions(+)
 
-diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-index 91d4b71ac9..636d0ca8a0 100644
---- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
-+++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-@@ -19,7 +19,11 @@ RUN apt-get update && \
-         curl \
-         ccache \
-         xz-utils \
-+        zstd \
-         ca-certificates \
-+        libc++1 \
-+        libc++abi1 \
-+        libunwind-19 \
-         bison \
-         flex \
-         git \
-@@ -40,12 +44,12 @@ RUN apt-get update && \
-     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+diff --git a/target/hexagon/mmvec/hvx_ieee_fp.h b/target/hexagon/mmvec/hvx_ieee_fp.h
+index e73f8161b1..b68d6db23e 100644
+--- a/target/hexagon/mmvec/hvx_ieee_fp.h
++++ b/target/hexagon/mmvec/hvx_ieee_fp.h
+@@ -56,6 +56,10 @@ uint32_t qf_min_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
+ uint16_t qf_max_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
+ uint16_t qf_min_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
  
- ENV TOOLCHAIN_INSTALL /opt
--ENV TOOLCHAIN_RELEASE 12.Dec.2023
-+ENV TOOLCHAIN_RELEASE 22.1.0
- ENV TOOLCHAIN_BASENAME "clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-linux-musl"
--ENV TOOLCHAIN_URL https://codelinaro.jfrog.io/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}/${TOOLCHAIN_BASENAME}.tar.xz
-+ENV TOOLCHAIN_URL https://artifacts.codelinaro.org/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}_/${TOOLCHAIN_BASENAME}.tar.zst
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
++/* IEEE - FP compare instructions */
++uint32_t cmpgt_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
++uint16_t cmpgt_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
++
+ /*
+  * IEEE - FP Convert instructions
+  */
+diff --git a/target/hexagon/mmvec/macros.h b/target/hexagon/mmvec/macros.h
+index ac709d8993..318d44efb7 100644
+--- a/target/hexagon/mmvec/macros.h
++++ b/target/hexagon/mmvec/macros.h
+@@ -356,4 +356,7 @@
+                extract32(VAL, POS * 8, 8); \
+     } while (0);
  
--RUN curl -#SL "$TOOLCHAIN_URL" | tar -xJC "$TOOLCHAIN_INSTALL"
-+RUN curl -#SL "$TOOLCHAIN_URL" | tar --zstd -xC "$TOOLCHAIN_INSTALL"
- ENV PATH $PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
- ENV MAKE /usr/bin/make
- # As a final step configure the user (if env is defined)
++#define fCMPGT_SF(A, B) cmpgt_sf(A, B, &env->hvx_fp_status)
++#define fCMPGT_HF(A, B) cmpgt_hf(A, B, &env->hvx_fp_status)
++
+ #endif
+diff --git a/target/hexagon/attribs_def.h.inc b/target/hexagon/attribs_def.h.inc
+index d3c4bf6301..2d0fc7e9c0 100644
+--- a/target/hexagon/attribs_def.h.inc
++++ b/target/hexagon/attribs_def.h.inc
+@@ -81,6 +81,7 @@ DEF_ATTRIB(CVI_SCATTER, "CVI Scatter operation", "", "")
+ DEF_ATTRIB(CVI_SCATTER_RELEASE, "CVI Store Release for scatter", "", "")
+ DEF_ATTRIB(CVI_TMP_DST, "CVI instruction that doesn't write a register", "", "")
+ DEF_ATTRIB(CVI_SLOT23, "Can execute in slot 2 or slot 3 (HVX)", "", "")
++DEF_ATTRIB(CVI_VA_2SRC, "Execs on multimedia vector engine; requires two srcs", "", "")
+ 
+ DEF_ATTRIB(VTCM_ALLBANK_ACCESS, "Allocates in all VTCM schedulers.", "", "")
+ 
+@@ -179,6 +180,7 @@ DEF_ATTRIB(HVX_IEEE_FP_ACC, "HVX IEEE FP accumulate instruction", "", "")
+ DEF_ATTRIB(HVX_IEEE_FP_OUT_16, "HVX IEEE FP 16-bit output", "", "")
+ DEF_ATTRIB(HVX_IEEE_FP_OUT_32, "HVX IEEE FP 32-bit output", "", "")
+ DEF_ATTRIB(CVI_VX_NO_TMP_LD, "HVX multiply without tmp load", "", "")
++DEF_ATTRIB(HVX_FLT, "This a floating point HVX instruction.", "", "")
+ 
+ /* Keep this as the last attribute: */
+ DEF_ATTRIB(ZZ_LASTATTRIB, "Last attribute in the file", "", "")
+diff --git a/target/hexagon/mmvec/hvx_ieee_fp.c b/target/hexagon/mmvec/hvx_ieee_fp.c
+index d39a883ab7..131d8e5595 100644
+--- a/target/hexagon/mmvec/hvx_ieee_fp.c
++++ b/target/hexagon/mmvec/hvx_ieee_fp.c
+@@ -217,3 +217,55 @@ int16_t conv_h_hf(uint16_t a, float_status *fp_status)
+     }
+     return float16_to_int16_round_to_zero(f1, fp_status);
+ }
++
++/*
++ * Returns true if f1 > f2, where at least one of the elements is guaranteed
++ * to be NaN.
++ * Up to v73, Hexagon HVX IEEE FP follows this order:
++ * QNaN > SNaN > +Inf > numbers > -Inf > SNaN_neg > QNaN_neg
++ */
++static bool float32_nan_compare(float32 f1, float32 f2, float_status *fp_status)
++{
++    /* opposite signs case */
++    if (float32_is_neg(f1) != float32_is_neg(f2)) {
++        return !float32_is_neg(f1);
++    }
++
++    /* same sign case */
++    bool result = (float32_is_any_nan(f1) && !float32_is_any_nan(f2)) ||
++        (float32_is_quiet_nan(f1, fp_status) && !float32_is_quiet_nan(f2, fp_status));
++    return float32_is_neg(f1) ? !result : result;
++}
++
++static bool float16_nan_compare(float16 f1, float16 f2, float_status *fp_status)
++{
++    /* opposite signs case */
++    if (float16_is_neg(f1) != float16_is_neg(f2)) {
++        return !float16_is_neg(f1);
++    }
++
++    /* same sign case */
++    bool result = (float16_is_any_nan(f1) && !float16_is_any_nan(f2)) ||
++        (float16_is_quiet_nan(f1, fp_status) && !float16_is_quiet_nan(f2, fp_status));
++    return float16_is_neg(f1) ? !result : result;
++}
++
++uint32_t cmpgt_sf(uint32_t a1, uint32_t a2, float_status *fp_status)
++{
++    float32 f1 = make_float32(a1);
++    float32 f2 = make_float32(a2);
++    if (float32_is_any_nan(f1) || float32_is_any_nan(f2)) {
++        return float32_nan_compare(f1, f2, fp_status);
++    }
++    return float32_compare(a1, a2, fp_status) == float_relation_greater;
++}
++
++uint16_t cmpgt_hf(uint16_t a1, uint16_t a2, float_status *fp_status)
++{
++    float16 f1 = make_float16(a1);
++    float16 f2 = make_float16(a2);
++    if (float16_is_any_nan(f1) || float16_is_any_nan(f2)) {
++        return float16_nan_compare(f1, f2, fp_status);
++    }
++    return float16_compare(a1, a2, fp_status) == float_relation_greater;
++}
+diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+index 9e8bcfdcf0..c81dd5b836 100755
+--- a/target/hexagon/hex_common.py
++++ b/target/hexagon/hex_common.py
+@@ -216,6 +216,7 @@ def need_env(tag):
+             "A_CVI_GATHER" in attribdict[tag] or
+             "A_CVI_SCATTER" in attribdict[tag] or
+             "A_HVX_IEEE_FP" in attribdict[tag] or
++            "A_HVX_FLT" in attribdict[tag] or
+             "A_IMPLICIT_WRITES_USR" in attribdict[tag])
+ 
+ 
+diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
+index c1ed1b6c23..3572e4de4c 100644
+--- a/target/hexagon/imported/mmvec/encode_ext.def
++++ b/target/hexagon/imported/mmvec/encode_ext.def
+@@ -858,4 +858,14 @@ DEF_ENC(V6_vconv_w_sf,"00011110--0--101PP1uuuuu001ddddd")
+ DEF_ENC(V6_vconv_hf_h,"00011110--0--101PP1uuuuu100ddddd")
+ DEF_ENC(V6_vconv_h_hf,"00011110--0--101PP1uuuuu010ddddd")
+ 
++/* IEEE FP compare instructions */
++DEF_ENC(V6_vgtsf,"00011100100vvvvvPP1uuuuu011100dd")
++DEF_ENC(V6_vgthf,"00011100100vvvvvPP1uuuuu011101dd")
++DEF_ENC(V6_vgtsf_and,"00011100100vvvvvPP1uuuuu110010xx")
++DEF_ENC(V6_vgthf_and,"00011100100vvvvvPP1uuuuu110011xx")
++DEF_ENC(V6_vgtsf_or,"00011100100vvvvvPP1uuuuu001100xx")
++DEF_ENC(V6_vgthf_or,"00011100100vvvvvPP1uuuuu001101xx")
++DEF_ENC(V6_vgtsf_xor,"00011100100vvvvvPP1uuuuu111010xx")
++DEF_ENC(V6_vgthf_xor,"00011100100vvvvvPP1uuuuu111011xx")
++
+ #endif /* NO MMVEC */
+diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef
+index 6d5bab0894..6f01a9d48f 100644
+--- a/target/hexagon/imported/mmvec/ext.idef
++++ b/target/hexagon/imported/mmvec/ext.idef
+@@ -3135,6 +3135,67 @@ ITERATOR_INSN_SHIFT_SLOT_FLT(16, vconv_hf_h,"Vd32.hf=Vu32.h",
+     "Vector conversion of int hw format to hf16",
+     VdV.hf[i] = conv_hf_h(VuV.h[i], &env->hvx_fp_status))
+ 
++/******************************************************************************
++ * IEEE FP compare instructions
++ ******************************************************************************/
++
++#define VCMPGT_SF(DEST, ASRC, ASRCOP, CMP, N, SRC, MASK, WIDTH) \
++{ \
++    for (fHIDE(int) i = 0; i < fVBYTES(); i += WIDTH) { \
++        fHIDE(int) VAL = fCMPGT_SF(VuV.SRC[i/WIDTH],VvV.SRC[i/WIDTH]) ? MASK : 0; \
++        fSETQBITS(DEST,WIDTH,MASK,i,ASRC ASRCOP VAL); \
++    } \
++}
++
++#define VCMPGT_HF(DEST, ASRC, ASRCOP, CMP, N, SRC, MASK, WIDTH) \
++{ \
++    for (fHIDE(int) i = 0; i < fVBYTES(); i += WIDTH) { \
++        fHIDE(int) VAL = fCMPGT_HF(VuV.SRC[i/WIDTH],VvV.SRC[i/WIDTH]) ? MASK : 0; \
++        fSETQBITS(DEST,WIDTH,MASK,i,ASRC ASRCOP VAL); \
++    } \
++}
++
++/* Vector SF compare */
++#define MMVEC_CMPGT_SF(TYPE,TYPE2,DESCR,N,MASK,WIDTH,SRC) \
++    EXTINSN(V6_vgt##TYPE##_and, "Qx4&=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than with predicate-and", \
++        VCMPGT_SF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), &, ">", N, SRC, MASK, WIDTH)) \
++    EXTINSN(V6_vgt##TYPE##_xor, "Qx4^=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than with predicate-xor", \
++        VCMPGT_SF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), ^, ">", N, SRC, MASK, WIDTH)) \
++    EXTINSN(V6_vgt##TYPE##_or, "Qx4|=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than with predicate-or", \
++        VCMPGT_SF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), |, ">", N, SRC, MASK, WIDTH)) \
++    EXTINSN(V6_vgt##TYPE, "Qd4=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than", \
++        VCMPGT_SF(QdV, , , ">", N, SRC, MASK, WIDTH))
++
++/* Vector HF compare */
++#define MMVEC_CMPGT_HF(TYPE,TYPE2,DESCR,N,MASK,WIDTH,SRC) \
++    EXTINSN(V6_vgt##TYPE##_and, "Qx4&=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than with predicate-and", \
++        VCMPGT_HF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), &, ">", N, SRC, MASK, WIDTH)) \
++    EXTINSN(V6_vgt##TYPE##_xor, "Qx4^=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than with predicate-xor", \
++        VCMPGT_HF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), ^, ">", N, SRC, MASK, WIDTH)) \
++    EXTINSN(V6_vgt##TYPE##_or, "Qx4|=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than with predicate-or", \
++        VCMPGT_HF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), |, ">", N, SRC, MASK, WIDTH)) \
++    EXTINSN(V6_vgt##TYPE, "Qd4=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
++        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
++        DESCR" greater than", \
++        VCMPGT_HF(QdV, , , ">", N, SRC, MASK, WIDTH))
++
++MMVEC_CMPGT_SF(sf,"sf","Vector sf Compare ", fVELEM(32), 0xF, 4, sf)
++MMVEC_CMPGT_HF(hf,"hf","Vector hf Compare ", fVELEM(16), 0x3, 2, hf)
++
+ /******************************************************************************
+  DEBUG Vector/Register Printing
+  ******************************************************************************/
 -- 
 2.37.2
 
