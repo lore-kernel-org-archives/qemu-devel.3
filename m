@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11778D39406
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 09:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23233D39406
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 09:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Eia-0006vf-1F; Thu, 02 Apr 2026 05:52:04 -0400
+	id 1w8Ej1-0007GD-5I; Thu, 02 Apr 2026 05:52:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8EiY-0006vW-Ky
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8Eiy-0007Dc-Ca
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8EiX-0008RS-BA
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8Eiw-0008Tg-Oq
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775123520;
+ s=mimecast20190719; t=1775123544;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qIToqHE3DYdE6OROkXm1aZvJg+93ZnbgMttNmMm5Ihs=;
- b=LwfkUB5zjDgTVaF4ePdBgggVyo8rTYJALKQHLJXzhEngR+oxGUK0M/y0xBnLA1wZIjG3a9
- uPTlQPMZUiEymMGSjqOdV7bvOSl+zfltWr8WWD7mEQ/wDou83U+NeewShCFlMdxUFTRtce
- UbsPjxJX/gk0NO1huhp9s5ha/0DO9ls=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1XTWrPgq4sCwgSTOwpsTMMw/F62QUQmlEI3gOkYR/ZE=;
+ b=cNtWkpbMxk3K45QhDHhC1ZtlohCsWYgVceKD8J2agfYqBvQtNPZGq+hK8sNn0/cw8Dg08U
+ 09L8iTUHIeW7gautHFlctppnflRDvm7+XWyqWL4pILEyYHTEbTqPPBKyVgal0iCNjinTL7
+ /yzaBCdPvvPulhtk0Tt/LhpSZ6miVt0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-BFZieF7GP8-DbkfgPZqHTQ-1; Thu,
- 02 Apr 2026 05:51:56 -0400
-X-MC-Unique: BFZieF7GP8-DbkfgPZqHTQ-1
-X-Mimecast-MFC-AGG-ID: BFZieF7GP8-DbkfgPZqHTQ_1775123515
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-t3LmcyEeNnWluNdasNIvrQ-1; Thu,
+ 02 Apr 2026 05:52:21 -0400
+X-MC-Unique: t3LmcyEeNnWluNdasNIvrQ-1
+X-Mimecast-MFC-AGG-ID: t3LmcyEeNnWluNdasNIvrQ_1775123540
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C3F4618005BD; Thu,  2 Apr 2026 09:51:55 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5B85180044D; Thu,  2 Apr 2026 09:52:20 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.44])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1360C196B088; Thu,  2 Apr 2026 09:51:51 +0000 (UTC)
+ id 7C2F1196B088; Thu,  2 Apr 2026 09:52:16 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	qemu-devel@nongnu.org
@@ -53,12 +53,14 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 04/10] cpu: Add a way to detect 32-bit mode from argv0
-Date: Thu,  2 Apr 2026 11:51:26 +0200
-Message-ID: <20260402095132.29245-5-thuth@redhat.com>
+Subject: [PATCH 10/10] docs/about/deprecated: Deprecate the qemu-system-i386
+ binary
+Date: Thu,  2 Apr 2026 11:51:32 +0200
+Message-ID: <20260402095132.29245-11-thuth@redhat.com>
 In-Reply-To: <20260402095132.29245-1-thuth@redhat.com>
 References: <20260402095132.29245-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -88,90 +90,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-In the future, we might want to avoid compiling certain targets separately
-for 32-bit mode (i.e. -i386, -arm and -ppc) where the 64-bit variant is a
-superset of the 32-bit variant. But it would be good to provide a way to
-mimic the 32-bit behavior via the program name in case the users need this
-compatibility for some scenarios. Thus add a function that checks
-for the old 32-bit program names and sets a flag accordingly.
+Aside from not supporting KVM on 32-bit hosts, the qemu-system-x86_64
+binary is a proper superset of the qemu-system-i386 binary. And with
+the 32-bit x86 host support being removed now, it is possible to
+deprecate the qemu-system-i386 binary now, too.
 
+With regards to 32-bit KVM support in the x86 Linux kernel,
+the developers confirmed that they do not need a recent
+qemu-system-i386 binary here:
+
+ https://lore.kernel.org/kvm/Y%2ffkTs5ajFy0hP1U@google.com/
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/qemu/target-info.h |  7 +++++++
- system/vl.c                |  1 +
- target-info.c              | 20 ++++++++++++++++++--
- 3 files changed, 26 insertions(+), 2 deletions(-)
+ docs/about/deprecated.rst | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 0713ab4bb16..aa9b2e9b0cf 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -9,6 +9,13 @@
- #ifndef QEMU_TARGET_INFO_H
- #define QEMU_TARGET_INFO_H
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index a6d6a713265..2de51337d75 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -301,6 +301,25 @@ machine must ensure that they're setting the ``spike`` machine in the
+ command line (``-M spike``).
  
-+/**
-+ * target_info_adjust:
-+ *
-+ * Returns: Adjust the target according to the binary name of the executable.
-+ */
-+void target_info_adjust(const char *argv0);
+ 
++System emulator binaries
++------------------------
 +
- /**
-  * target_name:
-  *
-diff --git a/system/vl.c b/system/vl.c
-index 246623b3196..45c9f5d5c7a 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2884,6 +2884,7 @@ void qemu_init(int argc, char **argv)
- 
-     error_init(argv[0]);
-     qemu_init_exec_dir(argv[0]);
-+    target_info_adjust(argv[0]);
- 
-     os_setup_limits();
- 
-diff --git a/target-info.c b/target-info.c
-index dea73b5fbca..b18fd4e0060 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -12,6 +12,21 @@
- #include "qemu/target-info-impl.h"
- #include "qapi/error.h"
- 
-+static bool force_32bit;
++``qemu-system-i386`` binary (since 11.1)
++''''''''''''''''''''''''''''''''''''''''
 +
-+void target_info_adjust(const char *argv0)
-+{
-+    switch (target_arch()) {
-+    case SYS_EMU_TARGET_X86_64:
-+        if (g_str_has_suffix(argv0, "-i386")) {
-+            force_32bit = true;
-+        }
-+        break;
-+    default:
-+        break;
-+    }
-+}
++The ``qemu-system-i386`` binary was mainly useful for running with KVM
++on 32-bit x86 hosts, but most Linux distributions already removed their
++support for 32-bit x86 kernels, so hardly anybody still needs this. The
++``qemu-system-x86_64`` binary is a proper superset and can be used to
++run 32-bit guests by selecting a 32-bit CPU model, including KVM support
++on x86_64 hosts. Thus users are recommended to reconfigure their systems
++to use the ``qemu-system-x86_64`` binary instead. If a 32-bit CPU guest
++environment should be enforced, you can switch off the "long mode" CPU
++flag with ``-cpu max,lm=off``, or rename/symlink ``qemu-system-x86_64``
++to ``qemu-system-i386`` -- QEMU will then run with the 64-bit extensions
++disabled.
 +
- const char *target_name(void)
- {
-     return target_info()->target_name;
-@@ -107,10 +122,11 @@ bool target_base_x86(void)
++
+ Backend options
+ ---------------
  
- bool target_i386(void)
- {
--    return target_arch() == SYS_EMU_TARGET_I386;
-+    return target_arch() == SYS_EMU_TARGET_I386 ||
-+           (target_arch() == SYS_EMU_TARGET_X86_64 && force_32bit);
- }
- 
- bool target_x86_64(void)
- {
--    return target_arch() == SYS_EMU_TARGET_X86_64;
-+    return target_arch() == SYS_EMU_TARGET_X86_64 && !force_32bit;
- }
 -- 
 2.53.0
 
