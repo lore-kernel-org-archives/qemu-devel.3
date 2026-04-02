@@ -4,98 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05418D3942C
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 13:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 745CBD3942C
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 14:06:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8ISr-0003I7-KN; Thu, 02 Apr 2026 09:52:06 -0400
+	id 1w8Ig1-00055p-G7; Thu, 02 Apr 2026 10:05:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1w8Eav-0001D9-Ul
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:44:10 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1w8Ear-0005Ng-CL
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:44:09 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-827270d50d4so635116b3a.3
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 02:44:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w8Ify-00055N-I0
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:05:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1w8Ifv-0005p2-DI
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 10:05:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775138734;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
+ b=Hxx2/Sbzk6K/9g1WTGA/mAPdvXq1mQledQCGARv3MUIKVsWkPW7hgQqDUQ740grgktLQGa
+ 3dXZTG1t2DmTF5z5vHVaRAOzwXtqJG7SRitNu6A0ePELHRTXA9sY1yPzxuqrDVMcUgLcYp
+ CW5dme8/Ci+lZTerbdg9Q+dxMxwHHA8=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-336-xFaoL4fuNyyrnZe8yaw42g-1; Thu, 02 Apr 2026 10:05:33 -0400
+X-MC-Unique: xFaoL4fuNyyrnZe8yaw42g-1
+X-Mimecast-MFC-AGG-ID: xFaoL4fuNyyrnZe8yaw42g_1775138732
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-953b0e67a8bso197792241.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 07:05:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775138732; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WnuW9ssuDy6TzE87rZwFDsOeYqRY3iENFNX6AHmsCtbnQu4mwwAe3nS/lG6RWANOXK
+ wPOgCs2wZIMrTQ92P3KBCoDPHpCP5VIEFU7OevVnSDYoD816Kj4MGmz2GHw7kWGmeaDq
+ RXVtICyusqYB3tyJP5Ra9TdnfW/dCl0+dj25EzgWr8exMY4u3eqQgCBSbO7YlNjzn4wP
+ PWH+hYKQW4xCC7zwUcvb7I+WCp3l25K2CbO4saAHg9iuTCr4tIDQnVETNeacv+Rb2nIm
+ Wr68cat/yE4WCRjPAgjY6fc18Qx8Ye/fR1zkZk9FzTvZneDWy9VmzUHOOvaTSpb9A9AB
+ APhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
+ fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
+ b=IQqsJp0NrKoFSqhwEC5g/AEsHd7OkstV3x0krcs6vDWZOUpvdUxAj7+4Mdnu8uaBjj
+ 3QkUb1I3JX2hHgdZ90v2ORdHYfMoZRQVcSAYtxVp+oTPMN8GSupGVC8qspFezVTIR06o
+ VxXJswxp48pqcGaOKXWXJwZJay14PeGWQN7qnsd7KSEf+BC6hWLwlnqfCNQRZI6xbCxo
+ z6SustD7QKz45giAaIm03GX0Y6e6IjtViekQ1iVBmg+EHrSdjycLR5HFlPCRPECbjK3N
+ tHp4MQdXkmShQ3Wbfo5fGeyxZWKB+ZhKKBsmterdlHDTZBX6fE1Jzn2dLfvy3aSvVuuh
+ UaZw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775123044; x=1775727844; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CksdsVsNY6Vvge/pF7DyPU97nKOJ2uT4c+sk2AA7088=;
- b=UURZvFtRPNPUtad4RPbn7E/qNtpGehLzSSuUtRPc2Dd1uP55FnxTFDzh4uszo0y019
- LMKY2wM21GA7f0hYbCV1KqeKJ+zQfn5QjOWsKQVlrC0TAMBN01t1PRckx/zOb2QCbUvg
- IGelurMNCmzjnRT98/FhhI/zlIl1UA9zIj/AmXjsUthoOdvK4W/d8Kez25504d10cByx
- UgSQg/KfVsKXxbFhalvZn8OJEnvOQPr6qit/7KMSJY5DKi27yQOgvHn9echBqujhmzHW
- KVcpC8YiQXe7WRXC9ii1E4zrP+6L0IpyICfAwIc40HmJTxCmySdVa5wf46ZVGZ0VDAFG
- Jghw==
+ d=redhat.com; s=google; t=1775138732; x=1775743532; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
+ b=L7rv644xy775nG32/D8/AiwMuM1g6RbrixRKL/SXt/mHbbKEZajEzMrSxvBweBXzMq
+ e78io4/HVYPOmTjU7KwReYWRIjRREukm8i8KzVN7YbJh+LHR6HPcLxCQipHNnmY23gtM
+ ImdHDipOGqULiU8NsbIYDxkO5yzZQ6vD3N3X4p8I9VmzHgqoLLUGltAAqV4PniZSTF93
+ miocsoXRBhzGHEIMkH6XKmAkWtMT86/DV3oP+3hPCD11vpqJAIkT8tFXxSlcR4pMmAtp
+ OlDqrzMWdeKERJndirzsN1xz8Ueil8fWQQaahulVRLo2+cV/ALDKZm2eCGmRN5iUcSEP
+ 6xpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775123044; x=1775727844;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=CksdsVsNY6Vvge/pF7DyPU97nKOJ2uT4c+sk2AA7088=;
- b=awsWH/IAbg8AtubKU3aUlJIeJh61KNNaHfZ9A/oWAkUaQCB0Z37WvfJTRa8w93RpLU
- vF1uwL1k/GXDrdC6vGPR3T4oYDtZaAAlaU6TeB/qO4IMGd6SFNXhqK6Io2tgBuFDgk6i
- cNdKWo8M0kPI0yAV5vTOB4sngrJ9qSfsIyJlcdB5vj5w1mEM2KP8rJeGBiihcNUiiHTY
- 41IinK1F+Noyksdz0qVcvoecnvBl3Vv6xKdah+XZm5ZKDc/BVWgArh89puqb+KiKZVvl
- uqGDShTClQw/xwr99uKHxQrwAtGeuoxdOTgMQhaGYdBZgatLamFVoyQQLXaAIZ7xDYqh
- s8fA==
-X-Gm-Message-State: AOJu0Yzm8ODos5wwnElzrGrKvLk/LtgmXaGUs0hgJFA28JKZtHTvSaMX
- sP8rim7pCGJqx/7ASAsLOo6fa6YNXoi/Bvc2MdLiD43+GZ5axNRKCCq3
-X-Gm-Gg: ATEYQzy7TDbZt4+qzQr0pMrVq0++GA61PNNV0Rt4izTF56qiqwc1H54aOMj9UXBEnG8
- 78bDZb8GM6XY6xKSOqdDSoN2Aurv3g0yxrdcnK1fyGU0TYplPHekUH+txdl4bxoi9aBk2B0/hBO
- UDziBhiNPmRJzEdPrMfb2recRvlBufp7jlkFnB8ocfYsgJy26W5OjDJcpJMvElexfR/ISOceike
- jVDOgEbTEGBdpGBoKCx0P6Qlv8N8ZIBxf6s3E2nBsDTWpMht069QaLp271N/f8AYBPHZUk03rpN
- A/8J4Xf32ggWFJhSkNTy+Sk72btMwSErcvv3jb5F1mohg78abTCXQrsO1hqclguNlsqSYgVSD4H
- F4Gp9obCGlJGMuFV6sXBdkycy5R4WLh7Kj6tHML2z2ODj+Cmb7zCd7bs73ovBRMz24SDslwxKR2
- frMiR7hlR5AHHUFz8Ebfz5uyxMWuvD5w==
-X-Received: by 2002:a05:6a00:2406:b0:829:7d31:dd9a with SMTP id
- d2e1a72fcca58-82ce8ae3016mr7540021b3a.51.1775123043783; 
- Thu, 02 Apr 2026 02:44:03 -0700 (PDT)
-Received: from [172.17.0.5] ([168.126.243.22])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9c6ad8asm2668477b3a.40.2026.04.02.02.44.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 02:44:03 -0700 (PDT)
-From: Jaemyung Lee <ldc.jml@gmail.com>
-X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
-Date: Thu, 02 Apr 2026 18:43:47 +0900
-Subject: [PATCH 3/5] hw/ufs: Add idle operation
+ d=1e100.net; s=20251104; t=1775138732; x=1775743532;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zZPRe1lzRek9mUSo2QWGZxdZ4+Jl5eG4SyNn32BK/xM=;
+ b=XhyoZrWgIyttir0SHmSD7MieSRRDbsYOt0cwHbWZvBMm4JALdtvgPAC9LUio9CyDoE
+ 0YWy/RZARqBhiywJzqpZQ2P/9XTW0ntxRrbZhYxJsQEsDfThw4eWdU9h06uYErW0dlmo
+ j+5mo7WI++L0oaK0ENGMSw/Cxh5f/0oPrPBpafVXqEMDFgum2McMklglJ7tOqT07kUMV
+ yphbHXaV6h9wnoIUlE+TXvBZwmJuPPuE68nhv7QWNnUkbn7mey5szd+iw7lbhxJyZt0p
+ g4xzDjMfW5v97jfiRLVK60k5n5E63t21kOQlmREBFbFhmsO2uIz29qmLimF6x/u9dpEM
+ A2Ig==
+X-Gm-Message-State: AOJu0Yws5ZzKRHdPkS1rUJ4uiOl6HUzTn4uC2JfvCJpA59dsdN8NHoAm
+ UALWk35VEd999RmZhtAJZrEA1hWSKWqUb7adJP4fU6e2Qlgbqwcn6b42Y74j5fl71PGpTf3QXmf
+ 4UpJXHH2nfSuEfLUtu2UGxvO1bTXjoCAeX4t1A3RzySnED9Ly5QYFWCc2LbUkNZx/Yjjs5YAxvM
+ P6pdYKCAt4MlOR79NW5QBDrH0bVB7KnhMWn5JMoww=
+X-Gm-Gg: ATEYQzwUNcoJFSaGtsCbTjprAP46XBFjeSuzWh2o26g9mFnMA7jK9JVMVtIgsDKPjiy
+ JqEayDiocPBqyZ5QEddVemOjUiL+cOCw/oHI/6NaBgW8wqF3yQJRGlP1CWJYGH3WUCfDM2fpLdH
+ AzYk43Vo15hdz5005o0sd29GkiwtZHYsMdQmDHNZYOUWN5+hjo2u9mrlfsQMousVzUzSPvFSyd8
+ 5oThvuIzQZlG5AMmuW1k1UMsXTgZkTJ40fWHyeYlgV+oYVddpZXdC3hFKEhyTOgIcFDMe7JdqYE
+ PVMXzgcDZQndOdS+GqD7eZw=
+X-Received: by 2002:a05:6122:322c:b0:56b:f8e:6b2f with SMTP id
+ 71dfb90a1353d-56d8aae4ff0mr3470083e0c.16.1775138732049; 
+ Thu, 02 Apr 2026 07:05:32 -0700 (PDT)
+X-Received: by 2002:a05:6122:322c:b0:56b:f8e:6b2f with SMTP id
+ 71dfb90a1353d-56d8aae4ff0mr3470026e0c.16.1775138731475; Thu, 02 Apr 2026
+ 07:05:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260402-write_booster-v1-3-e4fed1df6c7e@samsung.com>
-References: <20260402-write_booster-v1-0-e4fed1df6c7e@samsung.com>
-In-Reply-To: <20260402-write_booster-v1-0-e4fed1df6c7e@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Jaemyung Lee <jaemyung.lee@samsung.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775123032; l=2916;
- i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
- bh=/YX9M0/8utB10RyJw1Al6+6NhTczJLb9C2D6zloxtfQ=;
- b=MaUmkDUTMfV4ai3EE2sxjNQfLI2ZCCsmJroS/6g1hn3HdGK2LwFbFpi/I1WQw2yb0Ls9Hg10i
- Ew5K1qMNhKZDA+DkZtf+Opz1zH/oJUPe2lcKWZuM68U1yA36n5BV+WU
-X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
- pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=ldc.jml@gmail.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-36-48eb1dcf7b76@redhat.com>
+ <13bfd7c0-d80c-4082-a6a6-085d463b40d9@linaro.org>
+In-Reply-To: <13bfd7c0-d80c-4082-a6a6-085d463b40d9@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 2 Apr 2026 18:05:18 +0400
+X-Gm-Features: AQROBzAHIX7nBLJuYn7r2VT3AQf8ud-4iz8voGCRSPGYV-9whxFg4OdQDqeBurQ
+Message-ID: <CAMxuvaxHkrvW74hKgz6yu29K3kJOf-vgdNRPUSC_ogpg3T34zQ@mail.gmail.com>
+Subject: Re: [PATCH 36/60] util: move datadir.c from system/
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 02 Apr 2026 09:51:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,110 +138,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When no I/O occurs, the UFS Device performs various internal operations.
-To emulate this, adds a timer that periodically checks the current I/O
-status of the device and call the ufs_process_idle() function when idle.
+Hi
 
-Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
----
- hw/ufs/ufs.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- hw/ufs/ufs.h |  2 ++
- 2 files changed, 49 insertions(+)
+On Wed, Apr 1, 2026 at 1:30=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+>
+> On 17/3/26 09:50, Marc-Andr=C3=A9 Lureau wrote:
+> > The datadir module provides general-purpose data file lookup
+> > utilities that are not specific to system emulation. Move it
+> > to util/ so it can be reused more broadly.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   {system =3D> util}/datadir.c | 0
+> >   system/meson.build         | 1 -
+> >   system/trace-events        | 1 -
+> >   util/meson.build           | 1 +
+> >   util/trace-events          | 3 +++
+> >   5 files changed, 4 insertions(+), 2 deletions(-)
+>
+>
+> > diff --git a/util/meson.build b/util/meson.build
+> > index 33132c04ad6..cd56fe2ffe4 100644
+> > --- a/util/meson.build
+> > +++ b/util/meson.build
+> > @@ -30,6 +30,7 @@ util_ss.add(when: linux_io_uring, if_true: files('fdm=
+on-io_uring.c'))
+> >   if glib_has_gslice
+> >     util_ss.add(files('qtree.c'))
+> >   endif
+> > +util_ss.add(files('datadir.c'))
+>
+> Should we add under 'if have_system' or 'if not have_user'?
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 69f82ab462d135fe6cda479891f9d8f26d19be9a..111ce3c3a0b03a1ead722f48b799e3ed0c403cce 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -1801,6 +1801,47 @@ static void ufs_sendback_req(void *opaque)
-     ufs_irq_check(u);
- }
- 
-+static void ufs_process_idle(UfsHc *u)
-+{
-+    /* Currently do nothing */
-+    return;
-+}
-+
-+static inline bool ufs_check_idle(UfsHc *u)
-+{
-+    return !u->reg.utrldbr;
-+}
-+
-+static inline bool ufs_mcq_check_idle(UfsHc *u)
-+{
-+    for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
-+        if (!ufs_mcq_sq_empty(u, i)) {
-+            return false;
-+        }
-+    }
-+
-+    for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
-+        if (!ufs_mcq_cq_empty(u, i)) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+#define UFS_IDLE_TIMER_TICK 100 /* 0.1s */
-+static void ufs_idle_timer_cb(void *opaque)
-+{
-+    UfsHc *u = opaque;
-+    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT);
-+
-+    if (ufs_check_idle(u) && ufs_mcq_check_idle(u)) {
-+        ufs_process_idle(u);
-+    }
-+
-+    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
-+}
-+
- static bool ufs_check_constraints(UfsHc *u, Error **errp)
- {
-     if (u->params.nutrs > UFS_MAX_NUTRS) {
-@@ -1863,6 +1904,7 @@ static void ufs_init_hc(UfsHc *u)
-     uint32_t cap = 0;
-     uint32_t mcqconfig = 0;
-     uint32_t mcqcap = 0;
-+    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT);
- 
-     u->reg_size = pow2ceil(ufs_reg_size(u));
- 
-@@ -1959,6 +2001,9 @@ static void ufs_init_hc(UfsHc *u)
-      * dynamically
-      */
-     u->temperature = UFS_TEMPERATURE;
-+
-+    timer_init_ms(&u->idle_timer, QEMU_CLOCK_VIRTUAL_RT, ufs_idle_timer_cb, u);
-+    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
- }
- 
- static void ufs_realize(PCIDevice *pci_dev, Error **errp)
-@@ -1986,6 +2031,8 @@ static void ufs_exit(PCIDevice *pci_dev)
- {
-     UfsHc *u = UFS(pci_dev);
- 
-+    timer_del(&u->idle_timer);
-+
-     qemu_free_irq(u->irq);
- 
-     qemu_bh_delete(u->doorbell_bh);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 13d964c5ae5ec430a98b2ef71987cb9279e9a317..b5f040302129f4d02732ddd20ef82eb33c41922a 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -148,6 +148,8 @@ typedef struct UfsHc {
-     UfsCq *cq[UFS_MAX_MCQ_QNUM];
- 
-     uint8_t temperature;
-+
-+    QEMUTimer idle_timer;
- } UfsHc;
- 
- static inline uint32_t ufs_mcq_sq_tail(UfsHc *u, uint32_t qid)
+We could, it would need an extra condition for qemu-vnc.. but that
+doesn't save us much.
 
--- 
-2.48.1
+There is probably room for improvement in util/ if we wanted to always
+build strictly the minimum. But since those are small, generally
+useful helpers, the linker will drop the unneeded parts..
+
+> Otherwise:
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
 
 
