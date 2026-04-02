@@ -4,69 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E57F71112274
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 02:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D37351112276
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 02:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w87g4-0000oU-Lw; Wed, 01 Apr 2026 22:21:00 -0400
+	id 1w87ot-0004Dp-Dr; Wed, 01 Apr 2026 22:30:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1w87g1-0000lV-22
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 22:20:58 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1w87fx-0007NB-LT
- for qemu-devel@nongnu.org; Wed, 01 Apr 2026 22:20:56 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxNMFx0s1phg4hAA--.46021S3;
- Thu, 02 Apr 2026 10:20:33 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxpsBt0s1ppB9jAA--.23757S3;
- Thu, 02 Apr 2026 10:20:30 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: Add support for dbar hint variants
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, jiaxun.yang@flygoat.com, richard.henderson@linaro.org, 
- lixianglai@loongson.cn
-References: <20260327003206.3749780-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <70916e5a-ec69-fb8f-259e-2ef07e97bc5a@loongson.cn>
-Date: Thu, 2 Apr 2026 10:17:45 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1w87on-0004Co-Or; Wed, 01 Apr 2026 22:30:02 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1w87om-0001kL-3O; Wed, 01 Apr 2026 22:30:01 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 631IVC5K3747399; Thu, 2 Apr 2026 02:29:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=2nAuGIzcGNveeUJaf
+ 4mJJ38OhIA5CorGjubqRHHjhZ8=; b=NLPWrDciDIkl4PsB+Z+mHRHeWYsYZi2Ja
+ WelER1831fPNJZC0xRFQL60d3gfnCZ7Hn9JLlGuhG3odsmp1BCj2TzN9Um+hkyrF
+ JHG9GcBEFnDcAwtacTGEQSW8s4FWGJ2WRec2OyHyf5nk8RLAuojeUKLxtcE8gV7A
+ qnj0CexhwRKTpGav1w+R2tSfqFI+YxvR6iQCTRE9iAlFHPpGVn5ASutT1PqvkGtT
+ En8u/yLmmlG39bN8llsAFe4VnmrgXCrWFwnrwZ8KAVbevr9mee4qCQRz9DPC+FnD
+ Rq2vgrkBAjA/WcJcVMd+tWAh73Qcn8SZhsSQ717nqdiEFFXc7YhsA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4d66msa3th-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2026 02:29:54 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 631NFY8m005910;
+ Thu, 2 Apr 2026 02:29:54 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4d6spy8ecx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2026 02:29:54 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6322TrJ628639948
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Apr 2026 02:29:53 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 12649580F9;
+ Thu,  2 Apr 2026 02:29:53 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7DB03580F7;
+ Thu,  2 Apr 2026 02:29:52 +0000 (GMT)
+Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.247.119])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Apr 2026 02:29:52 +0000 (GMT)
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+To: mjrosato@linux.ibm.com
+Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
+Subject: [PATCH 02/15] s390x/pci: Create function to contain translation
+ status check
+Date: Wed,  1 Apr 2026 21:29:08 -0500
+Message-Id: <20260402022921.298818-3-kshk@linux.ibm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260402022921.298818-1-kshk@linux.ibm.com>
+References: <20260402022921.298818-1-kshk@linux.ibm.com>
 MIME-Version: 1.0
-In-Reply-To: <20260327003206.3749780-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpsBt0s1ppB9jAA--.23757S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuw4rtry3ZF4fKF18Aw1fGrX_yoW3GF1fpF
- 4xCF17KFW7tF9rZan7Xa1j9rn8uF4fKFy2qa47tryfursxGr1kZF1kK3yYgF48Cw4qvF10
- vFs5Aw17WFZIvFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1YL9U
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.988,
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=J6enLQnS c=1 sm=1 tr=0 ts=69cdd4a2 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=aCv-BzsnQx_gTHabB28A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDAxOSBTYWx0ZWRfX5niHhBrBqYXQ
+ IzPtOF7m27HTh4KagUm8I1b7DRfFOqDSf3LBJfJBRVh+2mC+HhniY0iePUYdsT2YGBS+TlG/Yk4
+ OsQgOGzn3a8a2gN9L5DfqDqQtFYszKAhyTrUaU2LKpwMr/wYl98atv0K47ivSYy1tpFm30d4cjk
+ wICK1KVdJ2LFR5Znm8cIlhvoyLRI9/g+qNZUVOJWn01avV/Zt7t1ziLjGoqItQ61jm9f7TsKn8x
+ vm7Z9fv9xczjkv+kERxjNxRkAuGZnp8ZPtY+qlR6Z565QYRPDrhjiiHOI+AhK3B1GYBmnBe7DrF
+ 8yMYvX0htOKQBvkFdc4ajtOyRrl53KELxZJ9kWOEtRN51qipKNQLVaLHBGTtWaZQ2qoFbKc4VKU
+ 4jR7luOM8AwSYUH1DV98O3iC1FxSL1USz6hkzjQsQqB1BLPbyv4qN9gP6e72X0EzNbawF9U4c1Z
+ 4C6a1w65tHfe7mXA/hw==
+X-Proofpoint-GUID: bJt34xR9ATA-_JbR33aWrVNOlWS51Tl8
+X-Proofpoint-ORIG-GUID: bJt34xR9ATA-_JbR33aWrVNOlWS51Tl8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-01_05,2026-04-01_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1011 adultscore=0 priorityscore=1501 bulkscore=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604020019
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,203 +120,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Make it more clear what the bit means, and the new function will be called
+from yet another place in the future.
 
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+---
+ hw/s390x/s390-pci-inst.c        | 7 ++++++-
+ include/hw/s390x/s390-pci-bus.h | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-On 2026/3/27 上午8:32, Song Gao wrote:
-> LoongArch architecture (since LA664) introduces fine-grained dbar
-> hints that allow controlling which memory accesses are ordered by
-> the barrier. Previously, all dbar instructions were treated as a
-> full barrier (TCG_MO_ALL | TCG_BAR_SC).
-> 
-> This patch adds support for decoding dbar hints and emitting the
-> appropriate TCG memory barrier flags. For CPUs that do not advertise
-> the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
-> fall back to a full barrier, preserving compatibility.
-> 
-> The hint encoding follows the LoongArch v1.10 specification:
-> - Bit4: 0 = completion barrier, 1 = ordering barrier
->          (ignored by TCG as TCG only supports ordering barriers)
-> - Bit3: barrier for previous reads (0 = enforce, 1 = relax)
-> - Bit2: barrier for previous writes (0 = enforce, 1 = relax)
-> - Bit1: barrier for succeeding reads (0 = enforce, 1 = relax)
-> - Bit0: barrier for succeeding writes (0 = enforce, 1 = relax)
-> 
-> The mapping to TCG memory order flags is as follows:
-> - TCG_MO_LD_LD is set if both previous and succeeding reads are ordered.
-> - TCG_MO_ST_LD is set if previous write and succeeding read are ordered.
-> - TCG_MO_LD_ST is set if previous read and succeeding write are ordered.
-> - TCG_MO_ST_ST is set if both previous and succeeding writes are ordered.
-> 
-> If the resulting flags describe an acquire or release barrier,
-> TCG_BAR_LDAQ or TCG_BAR_STRL is used accordingly; otherwise a
-> full SC barrier (TCG_BAR_SC) is emitted.
-> 
-> Special hint handling:
-> - hint 0x700: LL/SC loop barrier, treated as a full barrier as recommended.
-> - hint 0xf and 0x1f: reserved/no-op, treated as no operation
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/cpu.c                        |  4 +
->   .../tcg/insn_trans/trans_memory.c.inc         | 82 ++++++++++++++++++-
->   target/loongarch/tcg/translate.c              |  1 +
->   target/loongarch/translate.h                  |  3 +
->   4 files changed, 88 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index e22568c84a..d8d106b07e 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
->           data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
->           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
->           cpu->env.cpucfg[2] = data;
-> +
-> +        data = cpu->env.cpucfg[3];
-> +        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
-> +        cpu->env.cpucfg[3] = data;
->       }
->   }
->   
-> diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> index e287d46363..99bc486119 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> @@ -137,11 +137,89 @@ static bool trans_preldx(DisasContext *ctx, arg_preldx * a)
->       return true;
->   }
->   
-> +/*
-> + * Decode dbar hint and emit appropriate TCG memory barrier.
-> + *
-> + * The hint is a 5-bit field (0-31) encoded in the instruction.
-> + * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
-> + *
-> + * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
-> + */
->   static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
->   {
->       tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
-> -    return true;
-> -}
-> +    int hint = a->imm;
-> +    TCGBar bar_flags = 0;
-> +
-> +    /* Reserved/no-op hints: 0xf and 0x1f */
-> +    if (hint == 0xf || hint == 0x1f) {
-> +        return true;
-> +    }
-> +
-> +    /* If the CPU does not support fine-grained hints,or for the special LL/SC
-> +     * loop barrier (0x700), emit a full barrier.
-> +     */
-> +    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
-> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * Fine-grained hint decoding:
-> +     * Bits 3-0 control which accesses must be ordered.
-> +     *   bit3: barrier previous reads?   (0 = enforce, 1 = relax)
-> +     *   bit2: barrier previous writes?  (0 = enforce, 1 = relax)
-> +     *   bit1: barrier succeeding reads? (0 = enforce, 1 = relax)
-> +     *   bit0: barrier succeeding writes?(0 = enforce, 1 = relax)
-> +     *
-> +     * For each combination, we set the corresponding TCG_MO_* flag if both
-> +     * sides of the barrier require ordering.
-> +     */
-> +    bool prev_rd = !(hint & 0x08);   /* need barrier for previous reads */
-> +    bool prev_wr = !(hint & 0x04);   /* need barrier for previous writes */
-> +    bool succ_rd = !(hint & 0x02);   /* need barrier for succeeding reads */
-> +    bool succ_wr = !(hint & 0x01);   /* need barrier for succeeding writes */
-> +
-> +    if (prev_rd && succ_rd) {
-> +        bar_flags |= TCG_MO_LD_LD;
-> +    }
-> +    if (prev_wr && succ_rd) {
-> +        bar_flags |= TCG_MO_ST_LD;
-> +    }
-> +    if (prev_rd && succ_wr) {
-> +        bar_flags |= TCG_MO_LD_ST;
-> +    }
-> +    if (prev_wr && succ_wr) {
-> +        bar_flags |= TCG_MO_ST_ST;
-> +    }
-I do not know the memory order, however it seems that it is different 
-with other architectures with following usage when it is translated to 
-QEMU TCG code. I do now which is right.
-
-__smp_rmb() ---> tcg_gen_mb(TCG_BAR_SC | TCG_MO_LD_LD | TCG_MO_LD_ST)
-__smp_wmb() ---> tcg_gen_mb(TCG_BAR_SC | TCG_MO_ST_ST)
-__smp_mb()  ---> tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL)
-
-Regards
-Bibo Mao
-> +
-> +    /* If no flags were set, this is a no-op barrier */
-> +    if (bar_flags == 0) {
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * Use acquire/release semantics when possible to generate more efficient
-> +     * code. Otherwise, fall back to a sequential consistency barrier.
-> +     *
-> +     * Acquire: order loads before loads/stores (LD_LD | LD_ST)
-> +     * Release: order stores before stores/loads (ST_ST | ST_LD)
-> +     */
-> +    if ((bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST)) &&
-> +        !(bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD))) {
-> +        /* Only acquire flags present */
-> +        tcg_gen_mb(bar_flags | TCG_BAR_LDAQ);
-> +    } else if ((bar_flags & (TCG_MO_ST_ST | TCG_MO_ST_LD)) &&
-> +               !(bar_flags & (TCG_MO_LD_LD | TCG_MO_LD_ST))) {
-> +        /* Only release flags present */
-> +        tcg_gen_mb(bar_flags | TCG_BAR_STRL);
-> +    } else {
-> +        /* Mixed or full barrier */
-> +        tcg_gen_mb(bar_flags | TCG_BAR_SC);
-> +    }
-> +
-> +     return true;
-> + }
->   
->   static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
->   {
-> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-> index b9ed13d19c..49280b1dd3 100644
-> --- a/target/loongarch/tcg/translate.c
-> +++ b/target/loongarch/tcg/translate.c
-> @@ -149,6 +149,7 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->   
->       ctx->cpucfg1 = env->cpucfg[1];
->       ctx->cpucfg2 = env->cpucfg[2];
-> +    ctx->cpucfg3 = env->cpucfg[3];
->   }
->   
->   static void loongarch_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
-> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-> index ba1c89e57b..8aa8325dc6 100644
-> --- a/target/loongarch/translate.h
-> +++ b/target/loongarch/translate.h
-> @@ -43,6 +43,8 @@
->   #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LLACQ_SCREL))
->   #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
->   
-> +#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, DBAR_HINTS))
-> +
->   /*
->    * If an operation is being performed on less than TARGET_LONG_BITS,
->    * it may require the inputs to be sign- or zero-extended; which will
-> @@ -66,6 +68,7 @@ typedef struct DisasContext {
->       bool va32; /* 32-bit virtual address */
->       uint32_t cpucfg1;
->       uint32_t cpucfg2;
-> +    uint32_t cpucfg3;
->   } DisasContext;
->   
->   void generate_exception(DisasContext *ctx, int excp);
-> 
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index 1834596076..7c784b31f3 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -993,6 +993,11 @@ int pci_dereg_irqs(S390PCIBusDevice *pbdev)
+     return 0;
+ }
+ 
++bool s390_pci_is_translation_enabled(uint64_t g_iota)
++{
++    return ((g_iota >> 11) & 0x1) != 0; /* "T" bit */
++}
++
+ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+                     uintptr_t ra)
+ {
+@@ -1001,7 +1006,7 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+     uint64_t pal = ldq_be_p(&fib.pal);
+     uint64_t g_iota = ldq_be_p(&fib.iota);
+     uint8_t dt = (g_iota >> 2) & 0x7;
+-    uint8_t t = (g_iota >> 11) & 0x1;
++    bool t = s390_pci_is_translation_enabled(g_iota);
+ 
+     pba &= ~0xfff;
+     pal |= 0xfff;
+diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
+index 9228523ce8..eb15cb8b2d 100644
+--- a/include/hw/s390x/s390-pci-bus.h
++++ b/include/hw/s390x/s390-pci-bus.h
+@@ -390,6 +390,7 @@ int pci_chsc_sei_nt2_get_event(void *res);
+ int pci_chsc_sei_nt2_have_event(void);
+ void s390_pci_sclp_configure(SCCB *sccb);
+ void s390_pci_sclp_deconfigure(SCCB *sccb);
++bool s390_pci_is_translation_enabled(uint64_t g_iota);
+ void s390_pci_iommu_enable(S390PCIIOMMU *iommu);
+ void s390_pci_iommu_direct_map_enable(S390PCIIOMMU *iommu);
+ void s390_pci_iommu_disable(S390PCIIOMMU *iommu);
+-- 
+2.34.1
 
 
