@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9AE9D39406
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 09:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DB3D3940B
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Eiy-00079b-6o; Thu, 02 Apr 2026 05:52:28 -0400
+	id 1w8EtO-0005He-1H; Thu, 02 Apr 2026 06:03:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8Eiu-00078v-QK
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w8Eis-0008TM-SP
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 05:52:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775123540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1gBbz0lXmLXZQfWTPJ1x/oz786AusvxHAXLc6WW8Klk=;
- b=cU+j3yFzsVA5KzeyJqg7qlV/Rb9wd8AD6OWhfOd4ZBa4JSQ75sGjCS1+o7gZ8NgltvcA+q
- 1hz7lukx1lXXk343cDPe2+03IU+kBYBZSF1WB5M6xuaBLosPx/Eoi8knwwarafQI/yN5FF
- TABXk1IXX2yBFIUnGtDhRJZa+2nn7sk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-99-4uqSidACPHiJXw1hTNwhTg-1; Thu,
- 02 Apr 2026 05:52:17 -0400
-X-MC-Unique: 4uqSidACPHiJXw1hTNwhTg-1
-X-Mimecast-MFC-AGG-ID: 4uqSidACPHiJXw1hTNwhTg_1775123536
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00733180047F; Thu,  2 Apr 2026 09:52:16 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.34.44])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66333196B088; Thu,  2 Apr 2026 09:52:12 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 09/10] target/i386: Support migrating from i386 to x86_64
- target
-Date: Thu,  2 Apr 2026 11:51:31 +0200
-Message-ID: <20260402095132.29245-10-thuth@redhat.com>
-In-Reply-To: <20260402095132.29245-1-thuth@redhat.com>
-References: <20260402095132.29245-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w8EtM-0005Ba-4L
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:03:12 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1w8EtK-0002cy-4A
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:03:11 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-486fc4725f0so6970085e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 03:03:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775124188; x=1775728988; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DqqnnT4TrkCK/OHAWuLLo26XZUl9LPYdU8nqOdKZmII=;
+ b=eqjpOdCfFxxnqnmo/xI7oGXnYQlTKMTWGo16ia/plR4fpja1ZJObIRMP2tCFweddlK
+ imEyj3Q79E9+cd+CU6cVOiDpyoczG0+brKinbujBePrJRZqjH/Imxto+Pu3NUWghVY5e
+ TxCoO3LQLg2kwaItylTfBcxRMmUpXS6HjVSADRMvCA3ePsjBPFWyowLVW7KBe4Eb5M4e
+ x5W/7nx83hwPjI0197DebhQ77y6tcfCZR6g/r3Qx0rOQ0+/XSIpKeJ7ffJkl0VlLu602
+ h+tHsl/ZiQWhb8fNVr8i78xUZ7H5G0eYn9g44zRPZg4fnlbkihihCjY6H5ZlLu7wuW+w
+ nudg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775124188; x=1775728988;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DqqnnT4TrkCK/OHAWuLLo26XZUl9LPYdU8nqOdKZmII=;
+ b=giPje4aF7lynyVfkG24Ur//IyDNi1zVrip1yC15JEe3LZSNgowEGROdHjAKuHRlddI
+ Vl0Wl4mJZ7mRPmA6JIPZQT4Q0G+K7dNU4FDnt9ha6J2e+N5HXMAMWuNE2sC5tL9Wv86R
+ yeZOaPVdk8pjdpn8t3ZdoazCHCA2/gghnKgORwZe8/EHQz47keWu7rME7XkH9CV6lv1R
+ t/DEutDpfdtAcjEwoGRZTM8b/bQUKhFex3F+rO71uUEeVocfbHOrbQggsGRuyrWrA59P
+ Z/UX3utwjeRq0j6IF+hBfBNKgtIO2QcRUbenToWCxUILQXBdDF9wUKY65jXLbW7Mv52x
+ jRAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSJ9eLnbm5CEsJBnZIDVo9JUXIr+fv36dykVOcbRPf+22OztYxYCim0Epd3h25EK25GS6+L8y4XB+E@nongnu.org
+X-Gm-Message-State: AOJu0YzeYRlMYSO+uRFFMkAI598GohOIZ3+9h2y1rDKEEQNCTk1KEWh1
+ 1yt0xbi955d7rXgXJUSRuyLODPJjY6p95G03SbgvFKTUroc0qYmAIdcjLduuqA==
+X-Gm-Gg: ATEYQzxUr4/3Vkm+oML4SedOec0Gvjxoxmf1GTbmKDpUVwVGrr8YwSlX1Uf/VHcVaAZ
+ 7zxZlr312HE288geH9PBEG12EMF1vDRMS+dMt3XsdIDmV1S57esIiuULvXNiUgnpGD4ouNCn2jB
+ RkyhXrd8Qzr0vVXQ7+cdS6vcIxdk0W4dw90Aojq/p+7MVnu1iygT1vK2ObwUJNvwChNwI1bpmqj
+ WeUOhZtVQHLfYMAe7ilnmzRMG1To+JC0bKotr8E2Q8MaOJ4e5oxQi/Cj5J/mE8qzoZgk1ptj2WH
+ d9k5lMTWROoRWDDRP0ve5qDNwMU7DxYC/5mxdljmJvej8AE8/xZ7DiL8ONPvyay38AEsBuYcH0L
+ hJa5fHoUla5xyokakxyf8Y2XpnSKresM54SG85wVAIAApbiPi09xOi4PMwQxsFJQBI3IXnKswJ2
+ 4zB4kx2bwBfxbxcefvPsMq+eBwBe9AKP3SfJAceVQ=
+X-Received: by 2002:a05:600c:19d0:b0:477:9890:9ab8 with SMTP id
+ 5b1f17b1804b1-4888e01f5c4mr25029835e9.3.1775124187552; 
+ Thu, 02 Apr 2026 03:03:07 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([62.214.191.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4888a72baa8sm57180875e9.15.2026.04.02.03.03.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 Apr 2026 03:03:07 -0700 (PDT)
+Date: Thu, 02 Apr 2026 10:02:56 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
+ qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Pavel Pisa <pisa@fel.cvut.cz>
+CC: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 0/7] hw/arm/sabrelite: Add FlexCAN support
+In-Reply-To: <cover.1773866323.git.matyas.bobek@gmail.com>
+References: <cover.1773866323.git.matyas.bobek@gmail.com>
+Message-ID: <D2D2A915-D9EB-40A9-921C-0DB50D4CA810@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,377 +105,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
 
-For migrating from qemu-system-i386 to qemu-system-x86_64, we have
-to support the CPU vmstate of the 32-bit target.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- target/i386/cpu.h     |  47 +++++++--
- target/i386/cpu.c     |   8 +-
- target/i386/machine.c | 222 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 270 insertions(+), 7 deletions(-)
+Am 19=2E M=C3=A4rz 2026 19:13:07 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <mat=
+yas=2Ebobek@gmail=2Ecom>:
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 78f2dadc2e3..88fcf44fdc0 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1632,6 +1632,13 @@ typedef struct SegmentCache {
-     uint32_t flags;
- } SegmentCache;
- 
-+typedef struct SegmentCache32 {
-+    uint32_t selector;
-+    uint32_t base;
-+    uint32_t limit;
-+    uint32_t flags;
-+} SegmentCache32;
-+
- typedef union MMXReg {
-     uint8_t  _b_MMXReg[64 / 8];
-     uint16_t _w_MMXReg[64 / 16];
-@@ -1974,10 +1981,16 @@ typedef struct CPUCaches {
- typedef struct CPUArchState {
-     /* standard registers */
-     target_ulong regs[CPU_NB_EREGS];
--    target_ulong eip;
--    target_ulong eflags; /* eflags register. During CPU emulation, CC
--                        flags and DF are set to zero because they are
--                        stored elsewhere */
-+    union {
-+        target_ulong eip;
-+        uint32_t eip32;
-+    };
-+    union {
-+        target_ulong eflags; /* eflags register. During CPU emulation, CC
-+                                flags and DF are set to zero because they are
-+                                stored elsewhere */
-+        uint32_t eflags32;
-+    };
- 
-     /* emulator internal eflags handling */
-     target_ulong cc_dst;
-@@ -2042,8 +2055,14 @@ typedef struct CPUArchState {
- 
-     /* sysenter registers */
-     uint32_t sysenter_cs;
--    target_ulong sysenter_esp;
--    target_ulong sysenter_eip;
-+    union {
-+        target_ulong sysenter_esp;
-+        uint32_t sysenter_esp32;
-+    };
-+    union {
-+        target_ulong sysenter_eip;
-+        uint32_t sysenter_eip32;
-+    };
-     uint64_t star;
- 
-     uint64_t vm_hsave;
-@@ -2294,6 +2313,21 @@ typedef struct CPUArchState {
-     uint16_t fptag_vmstate;
-     uint16_t fpregs_format_vmstate;
- 
-+#ifdef TARGET_X86_64
-+    /*
-+     * These fields are only used for migrating from qemu-system-i386
-+     * to qemu-system-x86_64
-+     */
-+    uint32_t regs32[CPU_NB_REGS32];
-+    SegmentCache32 segs32[6]; /* selector values */
-+    SegmentCache32 ldt32;
-+    SegmentCache32 tr32;
-+    SegmentCache32 gdt32; /* only base and limit are used */
-+    SegmentCache32 idt32; /* only base and limit are used */
-+    uint32_t cr32[5];
-+    uint32_t dr32[8];
-+#endif
-+
-     uint64_t xss;
-     uint32_t umwait;
- 
-@@ -2546,6 +2580,7 @@ struct X86CPUClass {
- 
- #ifndef CONFIG_USER_ONLY
- extern const VMStateDescription vmstate_x86_cpu;
-+extern const VMStateDescription vmstate_i386_cpu;
- #endif
- 
- int x86_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cpu,
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index a8ff1b29f33..a087a45dbfe 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10701,7 +10701,7 @@ static const Property x86_cpu_properties[] = {
- #ifndef CONFIG_USER_ONLY
- #include "hw/core/sysemu-cpu-ops.h"
- 
--static const struct SysemuCPUOps i386_sysemu_ops = {
-+static struct SysemuCPUOps i386_sysemu_ops = {
-     .has_work = x86_cpu_has_work,
-     .get_memory_mapping = x86_cpu_get_memory_mapping,
-     .get_paging_enabled = x86_cpu_get_paging_enabled,
-@@ -10746,8 +10746,14 @@ static void x86_cpu_common_class_init(ObjectClass *oc, const void *data)
- 
- #ifndef CONFIG_USER_ONLY
-     cc->max_as = X86ASIdx_MAX;
-+#ifdef TARGET_X86_64
-+    if (target_i386()) {
-+        i386_sysemu_ops.legacy_vmsd = &vmstate_i386_cpu;
-+    }
-+#endif
-     cc->sysemu_ops = &i386_sysemu_ops;
- #endif /* !CONFIG_USER_ONLY */
-+
- #ifdef CONFIG_TCG
-     cc->tcg_ops = &x86_tcg_ops;
- #endif /* CONFIG_TCG */
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 48a2a4b3190..bb6019d3419 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -310,6 +310,44 @@ static int cpu_pre_save(void *opaque)
-     return 0;
- }
- 
-+
-+#ifdef TARGET_X86_64
-+static void copy_segcache(SegmentCache32 *sc32, SegmentCache *sc64)
-+{
-+    sc64->selector = sc32->selector;
-+    sc64->base = sc32->base;
-+    sc64->limit = sc32->limit;
-+    sc64->flags = sc32->flags;
-+}
-+#endif
-+
-+static void cpu_post_load_fixup32(CPUX86State *env)
-+{
-+#ifdef TARGET_X86_64
-+    int i;
-+
-+    for (i = 0; i < CPU_NB_REGS32; i++) {
-+        env->regs[i] = env->regs32[i];
-+    }
-+
-+    for (i = 0; i < ARRAY_SIZE(env->segs); i++) {
-+        copy_segcache(&env->segs32[i], &env->segs[i]);
-+    }
-+
-+    copy_segcache(&env->ldt32, &env->ldt);
-+    copy_segcache(&env->tr32, &env->tr);
-+    copy_segcache(&env->gdt32, &env->gdt);
-+    copy_segcache(&env->idt32, &env->idt);
-+
-+    for (i = 0; i < ARRAY_SIZE(env->cr); i++) {
-+        env->cr[i] = env->cr32[i];
-+    }
-+    for (i = 0; i < ARRAY_SIZE(env->dr); i++) {
-+        env->dr[i] = env->dr32[i];
-+    }
-+#endif
-+}
-+
- static int cpu_post_load(void *opaque, int version_id)
- {
-     X86CPU *cpu = opaque;
-@@ -317,6 +355,10 @@ static int cpu_post_load(void *opaque, int version_id)
-     CPUX86State *env = &cpu->env;
-     int i;
- 
-+    if (target_i386()) {
-+        cpu_post_load_fixup32(env);
-+    }
-+
-     if (env->tsc_khz && env->user_tsc_khz &&
-         env->tsc_khz != env->user_tsc_khz) {
-         error_report("Mismatch between user-specified TSC frequency and "
-@@ -1920,3 +1962,183 @@ const VMStateDescription vmstate_x86_cpu = {
-         NULL
-     }
- };
-+
-+/* ***************** 32-bit target hacks below **************** */
-+
-+#ifdef TARGET_X86_64
-+
-+static const VMStateDescription vmstate_segment32 = {
-+    .name = "segment",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(selector, SegmentCache32),
-+        VMSTATE_UINT32(base, SegmentCache32),
-+        VMSTATE_UINT32(limit, SegmentCache32),
-+        VMSTATE_UINT32(flags, SegmentCache32),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+#define VMSTATE_SEGMENT32(_field, _state) {                          \
-+    .name       = (stringify(_field)),                               \
-+    .size       = sizeof(SegmentCache32),                            \
-+    .vmsd       = &vmstate_segment32,                                \
-+    .flags      = VMS_STRUCT,                                        \
-+    .offset     = offsetof(_state, _field)                           \
-+            + type_check(SegmentCache32, typeof_field(_state, _field)) \
-+}
-+
-+#define VMSTATE_SEGMENT32_ARRAY(_field, _state, _n)                  \
-+    VMSTATE_STRUCT_ARRAY(_field, _state, _n, 0, vmstate_segment32, SegmentCache32)
-+
-+#define VMSTATE_XMM32_REGS(_field, _state, _start)                       \
-+    VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, CPU_NB_REGS32, 0,   \
-+                             vmstate_xmm_reg, ZMMReg)
-+
-+#define VMSTATE_YMMH32_REGS_VARS(_field, _state, _start, _v)             \
-+    VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, CPU_NB_REGS32, _v,  \
-+                             vmstate_ymmh_reg, ZMMReg)
-+
-+const VMStateDescription vmstate_i386_cpu = {
-+    .name = "cpu",
-+    .version_id = 12,
-+    .minimum_version_id = 11,
-+    .pre_save = cpu_pre_save,
-+    .post_load = cpu_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_SUB_ARRAY(env.regs32, X86CPU, 0, CPU_NB_REGS32),
-+        VMSTATE_UINT32(env.eip32, X86CPU),
-+        VMSTATE_UINT32(env.eflags32, X86CPU),
-+        VMSTATE_UINT32(env.hflags, X86CPU),
-+        /* FPU */
-+        VMSTATE_UINT16(env.fpuc, X86CPU),
-+        VMSTATE_UINT16(env.fpus_vmstate, X86CPU),
-+        VMSTATE_UINT16(env.fptag_vmstate, X86CPU),
-+        VMSTATE_UINT16(env.fpregs_format_vmstate, X86CPU),
-+
-+        VMSTATE_STRUCT_ARRAY(env.fpregs, X86CPU, 8, 0, vmstate_fpreg, FPReg),
-+
-+        VMSTATE_SEGMENT32_ARRAY(env.segs32, X86CPU, 6),
-+        VMSTATE_SEGMENT32(env.ldt32, X86CPU),
-+        VMSTATE_SEGMENT32(env.tr32, X86CPU),
-+        VMSTATE_SEGMENT32(env.gdt32, X86CPU),
-+        VMSTATE_SEGMENT32(env.idt32, X86CPU),
-+
-+        VMSTATE_UINT32(env.sysenter_cs, X86CPU),
-+        VMSTATE_UINT32(env.sysenter_esp32, X86CPU),
-+        VMSTATE_UINT32(env.sysenter_eip32, X86CPU),
-+
-+        VMSTATE_UINT32(env.cr32[0], X86CPU),
-+        VMSTATE_UINT32(env.cr32[2], X86CPU),
-+        VMSTATE_UINT32(env.cr32[3], X86CPU),
-+        VMSTATE_UINT32(env.cr32[4], X86CPU),
-+        VMSTATE_UINT32_ARRAY(env.dr32, X86CPU, 8),
-+        /* MMU */
-+        VMSTATE_INT32(env.a20_mask, X86CPU),
-+        /* XMM */
-+        VMSTATE_UINT32(env.mxcsr, X86CPU),
-+        VMSTATE_XMM32_REGS(env.xmm_regs, X86CPU, 0),
-+
-+        VMSTATE_UINT32(env.smbase, X86CPU),
-+
-+        VMSTATE_UINT64(env.pat, X86CPU),
-+        VMSTATE_UINT32(env.hflags2, X86CPU),
-+
-+        VMSTATE_UINT64(env.vm_hsave, X86CPU),
-+        VMSTATE_UINT64(env.vm_vmcb, X86CPU),
-+        VMSTATE_UINT64(env.tsc_offset, X86CPU),
-+        VMSTATE_UINT64(env.intercept, X86CPU),
-+        VMSTATE_UINT16(env.intercept_cr_read, X86CPU),
-+        VMSTATE_UINT16(env.intercept_cr_write, X86CPU),
-+        VMSTATE_UINT16(env.intercept_dr_read, X86CPU),
-+        VMSTATE_UINT16(env.intercept_dr_write, X86CPU),
-+        VMSTATE_UINT32(env.intercept_exceptions, X86CPU),
-+        VMSTATE_UINT8(env.v_tpr, X86CPU),
-+        /* MTRRs */
-+        VMSTATE_UINT64_ARRAY(env.mtrr_fixed, X86CPU, 11),
-+        VMSTATE_UINT64(env.mtrr_deftype, X86CPU),
-+        VMSTATE_MTRR_VARS(env.mtrr_var, X86CPU, MSR_MTRRcap_VCNT, 8),
-+        /* KVM-related states */
-+        VMSTATE_INT32(env.interrupt_injected, X86CPU),
-+        VMSTATE_UINT32(env.mp_state, X86CPU),
-+        VMSTATE_UINT64(env.tsc, X86CPU),
-+        VMSTATE_INT32(env.exception_nr, X86CPU),
-+        VMSTATE_UINT8(env.soft_interrupt, X86CPU),
-+        VMSTATE_UINT8(env.nmi_injected, X86CPU),
-+        VMSTATE_UINT8(env.nmi_pending, X86CPU),
-+        VMSTATE_UINT8(env.has_error_code, X86CPU),
-+        VMSTATE_UINT32(env.sipi_vector, X86CPU),
-+        /* MCE */
-+        VMSTATE_UINT64(env.mcg_cap, X86CPU),
-+        VMSTATE_UINT64(env.mcg_status, X86CPU),
-+        VMSTATE_UINT64(env.mcg_ctl, X86CPU),
-+        VMSTATE_UINT64_ARRAY(env.mce_banks, X86CPU, MCE_BANKS_DEF * 4),
-+        /* rdtscp */
-+        VMSTATE_UINT64(env.tsc_aux, X86CPU),
-+        /* KVM pvclock msr */
-+        VMSTATE_UINT64(env.system_time_msr, X86CPU),
-+        VMSTATE_UINT64(env.wall_clock_msr, X86CPU),
-+        /* XSAVE related fields */
-+        VMSTATE_UINT64_V(env.xcr0, X86CPU, 12),
-+        VMSTATE_UINT64_V(env.xstate_bv, X86CPU, 12),
-+        VMSTATE_YMMH32_REGS_VARS(env.xmm_regs, X86CPU, 0, 12),
-+        VMSTATE_END_OF_LIST()
-+        /* The above list is not sorted /wrt version numbers, watch out! */
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_exception_info,
-+        &vmstate_error_code,
-+        &vmstate_async_pf_msr,
-+        &vmstate_async_pf_int_msr,
-+        &vmstate_pv_eoi_msr,
-+        &vmstate_steal_time_msr,
-+        &vmstate_poll_control_msr,
-+        &vmstate_fpop_ip_dp,
-+        &vmstate_msr_tsc_adjust,
-+        &vmstate_msr_tscdeadline,
-+        &vmstate_msr_ia32_misc_enable,
-+        &vmstate_msr_ia32_feature_control,
-+        &vmstate_msr_architectural_pmu,
-+        &vmstate_mpx,
-+        &vmstate_msr_hyperv_hypercall,
-+        &vmstate_msr_hyperv_vapic,
-+        &vmstate_msr_hyperv_time,
-+        &vmstate_msr_hyperv_crash,
-+        &vmstate_msr_hyperv_runtime,
-+        &vmstate_msr_hyperv_synic,
-+        &vmstate_msr_hyperv_stimer,
-+        &vmstate_msr_hyperv_reenlightenment,
-+        &vmstate_avx512,
-+        &vmstate_xss,
-+        &vmstate_umwait,
-+        &vmstate_tsc_khz,
-+        &vmstate_msr_smi_count,
-+        &vmstate_pkru,
-+        &vmstate_pkrs,
-+        &vmstate_spec_ctrl,
-+        &amd_tsc_scale_msr_ctrl,
-+        &vmstate_mcg_ext_ctl,
-+        &vmstate_msr_intel_pt,
-+        &vmstate_msr_virt_ssbd,
-+        &vmstate_svm_npt,
-+        &vmstate_svm_guest,
-+#ifdef CONFIG_KVM
-+        &vmstate_nested_state,
-+        &vmstate_xen_vcpu,
-+#endif
-+        &vmstate_msr_tsx_ctrl,
-+        &vmstate_msr_intel_sgx,
-+        &vmstate_pdptrs,
-+        &vmstate_msr_xfd,
-+        &vmstate_msr_hwcr,
-+        &vmstate_arch_lbr,
-+        &vmstate_triple_fault,
-+        &vmstate_pl0_ssp,
-+        &vmstate_cet,
-+
-+        NULL
-+    }
-+};
-+
-+#endif /* TARGET_X86_64 */
--- 
-2.53.0
+Hi Maty=C3=A1=C5=A1,
 
+>This series adds emulation of the FlexCAN CAN controller, version 2,
+>found in NXP i=2EMX6 series SoCs=2E The controller is integrated into
+>fsl-imx6 and the Sabrelite ARM board=2E
+>
+>The chip has two FlexCAN controllers, but the Linux Sabrelite
+>device tree enables only one by default=2E Linux kernel with both
+>controllers enabled has been tested to work properly (using a custom
+>device tree)=2E
+>See docs/system/devices/can=2Erst for an example of QEMU command line
+>invocation=2E
+>
+>More information about the implementation can be found in my bachelor
+>thesis [1]=2E
+>
+>The headers (struct FlexcanRegs and flexcan_regs=2Eh macros) were copied
+>from the Linux kernel=2E Marc Kleine-Budde is the copyright holder=2E He
+>has been kindly asked to provide consent, to confirm his approval for
+>the inclusion of said header fragments into QEMU=2E
+>
+>Changes from v1:
+>- removed DPRINTF (turned into traces or guest errors)
+>- removed gotos and unnecessary continues
+>- register memory region shortened to actual length w/o padding
+>- make flexcan_* fns private
+>- used DEVICE(s)->canonical_path instead of allocating new strings
+>- changed DEVICE_NATIVE_ENDIAN to DEVICE_LITTLE_ENDIAN
+>- removed ugly USE macro
+>- used enums instead of define sequences in flexcan=2Ec
+>- fixed FlexCAN KConfig conf (fixes build on non-arm-softmmu)
+>- fixed style and other issues from Bernhard's review
+>- better wording in docs
+>- rebased onto latest master
+>- Link to v1: https://lore=2Ekernel=2Eorg/qemu-devel/cover=2E1765826753=
+=2Egit=2Ematyas=2Ebobek@gmail=2Ecom
+
+Nice!
+
+>
+>Thanks Bernhard Beschow for the review and his patience=2E
+>I borrowed some fixes from his flexcan branch at [2]=2E
+
+You're welcome to do that!
+
+I'm on reviewing v2=2E Since I'm currently rather busy this will take me m=
+ore time=2E And I want to mention that I'm very much looking forward to hav=
+ing CAN support in i=2EMX devices!
+
+Best regards,
+Bernhard
+
+>
+>[1] http://dspace=2Ecvut=2Ecz/bitstream/handle/10467/122654/F3-BP-2025-Bo=
+bek-Matyas-BP_Bobek_FlexCAN_final_4=2Epdf
+>[2] https://github=2Ecom/shentok/qemu/tree/flexcan
+>
+>Maty=C3=A1=C5=A1 Bobek (7):
+>  hw/arm/sabrelite: Open code DEFINE_MACHINE_ARM
+>  hw/arm/sabrelite: Introduce class SabreliteMachineState
+>  hw/misc/imx6_ccm: Add PLL3 and CAN clock
+>  hw/net/can/flexcan: NXP FlexCAN core emulation
+>  hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
+>  tests: Add qtests for FlexCAN
+>  docs/arm/sabrelite: Mention FlexCAN support
+>
+> MAINTAINERS                   |    9 +
+> docs/system/arm/sabrelite=2Erst |    1 +
+> docs/system/devices/can=2Erst   |   24 +
+> hw/arm/Kconfig                |    1 +
+> hw/arm/fsl-imx6=2Ec             |   29 +
+> hw/arm/sabrelite=2Ec            |   68 +-
+> hw/misc/imx6_ccm=2Ec            |   24 +
+> hw/misc/trace-events          |    2 +
+> hw/net/Kconfig                |    5 +
+> hw/net/can/flexcan=2Ec          | 1407 +++++++++++++++++++++++++++++++++
+> hw/net/can/flexcan_regs=2Eh     |  193 +++++
+> hw/net/can/meson=2Ebuild        |    1 +
+> hw/net/can/trace-events       |   18 +
+> include/hw/arm/fsl-imx6=2Eh     |    6 +
+> include/hw/misc/imx6_ccm=2Eh    |    4 +
+> include/hw/misc/imx_ccm=2Eh     |    1 +
+> include/hw/net/flexcan=2Eh      |  142 ++++
+> tests/qtest/flexcan-test=2Ec    |  424 ++++++++++
+> tests/qtest/meson=2Ebuild       |    1 +
+> 19 files changed, 2350 insertions(+), 10 deletions(-)
+> create mode 100644 hw/net/can/flexcan=2Ec
+> create mode 100644 hw/net/can/flexcan_regs=2Eh
+> create mode 100644 include/hw/net/flexcan=2Eh
+> create mode 100644 tests/qtest/flexcan-test=2Ec
+>
 
