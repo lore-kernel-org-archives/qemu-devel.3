@@ -4,63 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07D21D39427
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 13:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A412D3942B
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 13:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8IKx-0007Sr-JC; Thu, 02 Apr 2026 09:43:55 -0400
+	id 1w8ILL-0008TR-0H; Thu, 02 Apr 2026 09:44:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1w8IKt-0005fW-LG; Thu, 02 Apr 2026 09:43:51 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1w8HYD-0008TT-GJ; Thu, 02 Apr 2026 08:53:36 -0400
-Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5E62F20B6F0C;
- Thu,  2 Apr 2026 05:53:07 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5E62F20B6F0C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1775134387;
- bh=Iqbi7u5tYNh4i8ZrZfBBa2K6wUBHH2xKi1VgQMHkTtw=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=Qh9k7nU9Yd6lQb5X9q+RmWPY/V2/GbXxb4ZF+WrPpCZ3Qpm56SQROKfvEAS8tCpl0
- QT5KetLgAid2DCBM/aM3gZGn2YLwyyMQaJknFxs+8JrjoEDa1EnuPPHCEkqjvhwK51
- fv+EukJThsWzrl3+rwvKLTdfjT+6aaXTd32DOAgk=
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 02 Apr 2026 12:52:40 +0000
-Subject: [PATCH v2 13/14] hw/intc,target/arm/mshv: add MSHV vGICv3
- implementation
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1w8IL3-0005fW-1Z
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 09:44:01 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1w8HXc-0008Oi-8I
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 08:52:57 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-35d971fb6f1so704240a91.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 05:52:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1775134373; x=1775739173; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W1RmrZvmgqn2zibYL2Q6/3V19GhkiYpqpBgRyY5xHio=;
+ b=PB5NTTMH0N/aYwIG16sPAEGDfVgjRXcXc4rZH9CIQZExK2TsnQb3LZB+qV4Wn7US8G
+ ccELh8KEoBEmvgQt+PovM/jsdHXA5nY5gqg1HcTMw7/Kssl0SluhE4LC6/vSnUDKYqGs
+ LQFKVffocvrbb26wNNrUv4Xb243Ym+JStGq4gFTjyR5inZT/qL7hxBsMAtJcAxYf76hk
+ zuCzBpq3eVIe9kXIJ+QJafyd6CmwJySL6A3pYMbnrcFA89guh8F0K2CotSVycbRMlzi8
+ pnZK34MzaSdjDSKTOtz7BciY5sKD7RGHR4lR2oH/Dynn6g5WiEReovnNOcUByfChZy8U
+ M9ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775134373; x=1775739173;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=W1RmrZvmgqn2zibYL2Q6/3V19GhkiYpqpBgRyY5xHio=;
+ b=LZpcD9LcmUpmDwlaFKHh4enYxlj3Z3wfKgzsf2Ud9fP0z9B85HyDbhfThFaSz79euw
+ XYr20M6J2l4JZDTWWAftbdWS8lgaY9q/ZyvSlRs5zZAt1uD9leuNp9fyr0bbu3lYQHBM
+ UdrJRuWYTHHB0goY5E8HcHppCTdJ23qyMgJzyLNQbkJ3Crp0vgSfxNOUA3GV5XhITEK3
+ Z0YwB/cfhummn2ZUpLyOskaQJKUFCcEUeMZ8Un9IUN72y9Y6zphclbqpoiFEH4g071f9
+ 8NQsccKRB1Qec4HygOuiJd9yIgCGJcCREZzgFDwr4+Z96hU+xCAWJ8DeM93wnHh8zF47
+ HpqQ==
+X-Gm-Message-State: AOJu0Yzjwkrh4wbaWwL8xW8P68hbZWROmRREK2HhS8jROikHbk43EZLJ
+ /WjBlIEVBYXbFeO62U8F2tu8MJGkfHdAfkwNv2hvvd65b3xFtryvduJetjLdMsTOOL806orDVZb
+ 3temazwiHWoJWPFG3p71nI6uLg8ZvaUDXkhlwuO0TGb5fgNaSfDEcRIgvtbA74dNbpFWLM8nxoT
+ vyzspv6FrF3DaVm+rlF/gAKlIcPOhWylH4gE7Y7+E=
+X-Gm-Gg: AeBDiesV2/H4PRML1PcqJOmxZi3ApBn7W5T5ceKkU+K9CRL3ODytEjM9qGecfKbFFL5
+ l+eX60+p8HhdZxqsURqJSXI45f47R0Mz/sgUIC9/6e5PynBKvkD67pLLDOKPqvXDKNrwEUuaa6e
+ vrzXtPPK6nqb7SZmVUVn6zYbS4pj4HpzZ5Bqfqb1lmYJ/rC/VRjk4EaLnsIkN1CRqbBUwvx1Cks
+ wGGUS0pQdXsfcLH0inrUkdTl0X7vhuV3YW5+Ujn4ipr1K2T2sTNeFnD4ILqGTulu1ihfGCzsUOA
+ 3sglNcIGHAg7s4+mdPYXqysZ8OAvhJovmeu8k/CiOdDuV264t2RU5vWtaUm48S+Zrg559+HP0l3
+ oOhy9UR38Vy4OMpfIol7Nx2bLn1H0HrHOJnKY1JpU/RCynwe1y5mWU2kHHTPcy0nhgCe8PSrgPN
+ dndIhjnBgexqlC/vcXR0xiSbPfT3pFOXVGCBIF1gfUVC56u/Wouz5mAvKXE5HOvw2mushSgMbL4
+ L71iUxOHMWMJyTv99YLuaPHgsE=
+X-Received: by 2002:a17:90b:4c8e:b0:34c:2db6:578f with SMTP id
+ 98e67ed59e1d1-35dc6f6a323mr6888004a91.19.1775134372643; 
+ Thu, 02 Apr 2026 05:52:52 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35dd35364edsm2730032a91.0.2026.04.02.05.52.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Apr 2026 05:52:52 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH v6 5/9] target/riscv: Use the tb->cs_base as the extend tb
+ flags
+Date: Thu,  2 Apr 2026 20:52:30 +0800
+Message-ID: <20260402125234.1371897-6-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260402125234.1371897-1-max.chou@sifive.com>
+References: <20260402125234.1371897-1-max.chou@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260402-mshv_accel_arm64_supp-v2-13-754895c15e9e@linux.microsoft.com>
-References: <20260402-mshv_accel_arm64_supp-v2-0-754895c15e9e@linux.microsoft.com>
-In-Reply-To: <20260402-mshv_accel_arm64_supp-v2-0-754895c15e9e@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>, 
- Magnus Kulke <magnus.kulke@linux.microsoft.com>, qemu-arm@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: b4 0.15.1
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,449 +109,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+We have more than 32-bits worth of state per TB, so use the
+tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
 
-Add in-kernel GICv3 support for the MSHV accelerator, following the
-same approach as the KVM and WHPX vGIC backends. The implementation
-handles IRQ injection via the HVCALL_ASSERT_VIRTUAL_INTERRUPT hypercall.
-
-Introduce mshv_arch_pre_init_vm(), an arch-specific hook called after
-VM creation but before VM initialization, used on arm64 to configure
-GIC partition properties (GICD base, ITS translater base, timer and PMU
-PPI numbers). The x86 side provides a no-op stub.
-
-Update the virt machine to treat MSHV like WHPX for GIC version
-selection (GICv3 only) and MSI controller finalization (no ITS support).
-
-Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- accel/mshv/mshv-all.c              |   5 +
- hw/arm/virt.c                      |   8 +-
- hw/intc/arm_gicv3_common.c         |   3 +
- hw/intc/arm_gicv3_mshv.c           | 181 +++++++++++++++++++++++++++++++++++++
- hw/intc/meson.build                |   1 +
- include/hw/hyperv/hvgdk_mini.h     |   2 +
- include/hw/hyperv/hvhdk_mini.h     |   6 ++
- include/hw/intc/arm_gicv3_common.h |   1 +
- include/system/mshv_int.h          |   1 +
- target/arm/mshv/mshv-all.c         |  62 +++++++++++++
- target/i386/mshv/mshv-all.c        |   5 +
- 11 files changed, 271 insertions(+), 4 deletions(-)
+ include/exec/translation-block.h | 1 +
+ target/riscv/cpu.h               | 3 +++
+ target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 6c0ddbf3ca..628cd0ad17 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -200,6 +200,11 @@ static int create_vm(int mshv_fd, int *vm_fd)
-         return -1;
-     }
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index 4f83d5bec9..40cc699031 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -65,6 +65,7 @@ struct TranslationBlock {
+      * arm: an extension of tb->flags,
+      * s390x: instruction data for EXECUTE,
+      * sparc: the next pc of the instruction queue (for delay slots).
++     * riscv: an extension of tb->flags,
+      */
+     uint64_t cs_base;
  
-+    ret = mshv_arch_pre_init_vm(*vm_fd);
-+    if (ret < 0) {
-+        return -1;
-+    }
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 962cc45073..4c0676ed53 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -703,6 +703,9 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+ FIELD(TB_FLAGS, PM_PMM, 29, 2)
+ FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+ 
++FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
++FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
 +
-     ret = initialize_vm(*vm_fd);
-     if (ret < 0) {
-         return -1;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 34eb5248a9..5f922ece9c 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2117,7 +2117,7 @@ static void finalize_gic_version(VirtMachineState *vms)
-         /* KVM w/o kernel irqchip can only deal with GICv2 */
-         gics_supported |= VIRT_GIC_VERSION_2_MASK;
-         accel_name = "KVM with kernel-irqchip=off";
--    } else if (whpx_enabled()) {
-+    } else if (whpx_enabled() || mshv_enabled()) {
-         gics_supported |= VIRT_GIC_VERSION_3_MASK;
-     } else if (tcg_enabled() || hvf_enabled() || qtest_enabled())  {
-         gics_supported |= VIRT_GIC_VERSION_2_MASK;
-@@ -2159,7 +2159,7 @@ static void finalize_msi_controller(VirtMachineState *vms)
-     if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
-         if (vms->gic_version == VIRT_GIC_VERSION_2) {
-             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
--        } else if (whpx_enabled()) {
-+        } else if (whpx_enabled() || mshv_enabled()) {
-             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-         } else {
-             vms->msi_controller = VIRT_MSI_CTRL_ITS;
-@@ -2176,8 +2176,8 @@ static void finalize_msi_controller(VirtMachineState *vms)
-             error_report("GICv2 + ITS is an invalid configuration.");
-             exit(1);
-         }
--        if (whpx_enabled()) {
--            error_report("ITS not supported on WHPX.");
-+        if (whpx_enabled() || mshv_enabled()) {
-+            error_report("ITS not supported on WHPX and MSHV.");
-             exit(1);
-         }
-     }
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index 9200671c7a..239c645ab9 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -33,6 +33,7 @@
- #include "hw/arm/linux-boot-if.h"
- #include "system/kvm.h"
- #include "system/whpx.h"
-+#include "system/mshv.h"
+ #ifdef TARGET_RISCV32
+ #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+ #else
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index c4f7da7193..f3f7808895 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -104,6 +104,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+     RISCVCPU *cpu = env_archcpu(env);
+     RISCVExtStatus fs, vs;
+     uint32_t flags = 0;
++    uint64_t ext_flags = 0;
+     bool pm_signext = riscv_cpu_virt_mem_enabled(env);
  
+     if (cpu->cfg.ext_zve32x) {
+@@ -118,6 +119,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
  
- static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
-@@ -658,6 +659,8 @@ const char *gicv3_class_name(void)
-         return "kvm-arm-gicv3";
-     } else if (whpx_enabled()) {
-         return TYPE_WHPX_GICV3;
-+    } else if (mshv_enabled()) {
-+        return TYPE_MSHV_GICV3;
+         /* lmul encoded as in DisasContext::lmul */
+         int8_t lmul = sextract32(FIELD_EX64(env->vtype, VTYPE, VLMUL), 0, 3);
++        uint8_t altfmt = FIELD_EX64(env->vtype, VTYPE, ALTFMT);
+         uint32_t vsew = FIELD_EX64(env->vtype, VTYPE, VSEW);
+         uint32_t vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+         uint32_t maxsz = vlmax << vsew;
+@@ -133,6 +135,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+         flags = FIELD_DP32(flags, TB_FLAGS, VMA,
+                            FIELD_EX64(env->vtype, VTYPE, VMA));
+         flags = FIELD_DP32(flags, TB_FLAGS, VSTART_EQ_ZERO, env->vstart == 0);
++        ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, ALTFMT, altfmt);
      } else {
-         if (kvm_enabled()) {
-             error_report("Userspace GICv3 is not supported with KVM");
-diff --git a/hw/intc/arm_gicv3_mshv.c b/hw/intc/arm_gicv3_mshv.c
-new file mode 100644
-index 0000000000..a87819a5ba
---- /dev/null
-+++ b/hw/intc/arm_gicv3_mshv.c
-@@ -0,0 +1,181 @@
-+/*
-+ * ARM Generic Interrupt Controller using MSHV in-kernel support
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ * Based on vGICv3 KVM code by Pavel Fedin
-+ *
-+ * Authors:
-+ *      Aastha Rawat <aastharawat@microsoft.com>
-+ *      Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "migration/blocker.h"
-+#include "target/arm/cpregs.h"
-+#include "hw/hyperv/hvgdk_mini.h"
-+#include "system/mshv.h"
-+#include "system/mshv_int.h"
-+
-+struct MSHVARMGICv3Class {
-+    ARMGICv3CommonClass parent_class;
-+    DeviceRealize parent_realize;
-+    ResettablePhases parent_phases;
-+};
-+
-+OBJECT_DECLARE_TYPE(GICv3State, MSHVARMGICv3Class, MSHV_GICV3)
-+
-+static void mshv_gicv3_get(GICv3State *s)
-+{
-+}
-+
-+static void mshv_gicv3_put(GICv3State *s)
-+{
-+}
-+
-+static void mshv_gicv3_reset_hold(Object *obj, ResetType type)
-+{
-+    GICv3State *s = ARM_GICV3_COMMON(obj);
-+    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
-+
-+    if (mgc->parent_phases.hold) {
-+        mgc->parent_phases.hold(obj, type);
-+    }
-+
-+    mshv_gicv3_put(s);
-+}
-+
-+static void mshv_gicv3_set_irq(void *opaque, int irq, int level)
-+{
-+    int ret;
-+    GICv3State *s = (GICv3State *)opaque;
-+    int vm_fd = mshv_state->vm;
-+    struct hv_input_assert_virtual_interrupt arg = {0};
-+    struct mshv_root_hvcall args = {0};
-+    union hv_interrupt_control control = {
-+        .interrupt_type = HV_ARM64_INTERRUPT_TYPE_FIXED,
-+        .rsvd1 = 0,
-+        .asserted = level,
-+        .rsvd2 = 0
-+    };
-+
-+    if (irq >= s->num_irq) {
-+        return;
-+    }
-+
-+    arg.control = control;
-+    arg.vector = GIC_INTERNAL + irq;
-+
-+    args.code   = HVCALL_ASSERT_VIRTUAL_INTERRUPT;
-+    args.in_sz  = sizeof(arg);
-+    args.in_ptr = (uint64_t)&arg;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set GICv3 IRQ %d to level %d", irq, level);
-+    }
-+}
-+
-+static void mshv_gicv3_realize(DeviceState *dev, Error **errp)
-+{
-+    ERRP_GUARD();
-+    GICv3State *s = MSHV_GICV3(dev);
-+    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
-+    int i, ret;
-+
-+    mgc->parent_realize(dev, errp);
-+    if (*errp) {
-+        return;
-+    }
-+
-+    if (s->revision != 3) {
-+        error_setg(errp, "unsupported GIC revision %d for platform GIC",
-+                   s->revision);
-+        return;
-+    }
-+
-+    if (s->security_extn) {
-+        error_setg(errp, "the platform vGICv3 does not implement the "
-+                   "security extensions");
-+        return;
-+    }
-+
-+    if (s->nmi_support) {
-+        error_setg(errp, "NMI is not supported with the platform GIC");
-+        return;
-+    }
-+
-+    if (s->nb_redist_regions > 1) {
-+        error_setg(errp, "Multiple VGICv3 redistributor regions are not "
-+                   "supported by MSHV");
-+        error_append_hint(errp, "A maximum of %d VCPUs can be used",
-+                          s->redist_region_count[0]);
-+        return;
-+    }
-+
-+    gicv3_init_irqs_and_mmio(s, mshv_gicv3_set_irq, NULL);
-+
-+    for (i = 0; i < s->num_cpu; i++) {
-+        CPUState *cpu_state = qemu_get_cpu(i);
-+
-+        hv_register_assoc gicr_base = {
-+            .name = HV_ARM64_REGISTER_GICR_BASE_GPA,
-+            .value = {
-+                .reg64 = 0x080A0000 + (GICV3_REDIST_SIZE * i)
-+            }
-+        };
-+
-+        ret = mshv_set_generic_regs(cpu_state, &gicr_base, 1);
-+        if (ret < 0) {
-+            error_setg(errp, "Failed to set GICR base for CPU %d", i);
-+            return;
-+        }
-+    }
-+
-+    if (s->maint_irq) {
-+        error_setg(errp,
-+               "Nested virtualisation not currently supported by MSHV");
-+        return;
-+    }
-+
-+    error_setg(&s->migration_blocker,
-+        "Live migration disabled because GIC state save/restore not supported on MSHV");
-+    if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
-+        error_report_err(*errp);
-+    }
-+}
-+
-+static void mshv_gicv3_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
-+    MSHVARMGICv3Class *mgc = MSHV_GICV3_CLASS(klass);
-+
-+    agcc->pre_save = mshv_gicv3_get;
-+    agcc->post_load = mshv_gicv3_put;
-+
-+    device_class_set_parent_realize(dc, mshv_gicv3_realize,
-+                                    &mgc->parent_realize);
-+    resettable_class_set_parent_phases(rc, NULL, mshv_gicv3_reset_hold, NULL,
-+                                       &mgc->parent_phases);
-+}
-+
-+static const TypeInfo mshv_arm_gicv3_info = {
-+    .name = TYPE_MSHV_GICV3,
-+    .parent = TYPE_ARM_GICV3_COMMON,
-+    .instance_size = sizeof(GICv3State),
-+    .class_init = mshv_gicv3_class_init,
-+    .class_size = sizeof(MSHVARMGICv3Class),
-+};
-+
-+static void mshv_gicv3_register_types(void)
-+{
-+    type_register_static(&mshv_arm_gicv3_info);
-+}
-+
-+type_init(mshv_gicv3_register_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 96742df090..9d824db582 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -43,6 +43,7 @@ arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
- specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
- specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: files('arm_gicv3_whpx.c'))
- specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
-+specific_ss.add(when: ['CONFIG_MSHV', 'TARGET_AARCH64'], if_true: files('arm_gicv3_mshv.c'))
- arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
- specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
- specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index eb766734d6..b50a65a0d4 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -66,6 +66,8 @@ typedef enum hv_register_name {
-     HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
-     HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
+         flags = FIELD_DP32(flags, TB_FLAGS, VILL, 1);
+     }
+@@ -189,10 +192,12 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+     flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
+     flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
  
-+    HV_ARM64_REGISTER_GICR_BASE_GPA       = 0x00063000,
++    ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->misa_ext);
 +
- #elif defined(__x86_64__)
-     /* X64 User-Mode Registers */
-     HV_X64_REGISTER_RAX     = 0x00020000,
-diff --git a/include/hw/hyperv/hvhdk_mini.h b/include/hw/hyperv/hvhdk_mini.h
-index 9c2f3cf5ae..4d78fa0677 100644
---- a/include/hw/hyperv/hvhdk_mini.h
-+++ b/include/hw/hyperv/hvhdk_mini.h
-@@ -62,6 +62,12 @@ enum hv_partition_property_code {
-     HV_PARTITION_PROPERTY_ISOLATION_POLICY                       = 0x00050014,
-     HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION               = 0x00050017,
-     HV_PARTITION_PROPERTY_SEV_VMGEXIT_OFFLOADS                   = 0x00050022,
-+    HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS                      = 0x00050028,
-+    HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS           = 0x00050029,
-+    HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS                    = 0x0005002A,
-+    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV   = 0x0005002B,
-+    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTP   = 0x0005002C,
-+    HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT = 0x0005002D,
- 
-     /* Compatibility properties */
-     HV_PARTITION_PROPERTY_PROCESSOR_VENDOR              = 0x00060000,
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index c55cf18120..3baac1a35c 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -315,6 +315,7 @@ DECLARE_OBJ_CHECKERS(GICv3State, ARMGICv3CommonClass,
- 
- /* Types for GICv3 kernel-irqchip */
- #define TYPE_WHPX_GICV3 "whpx-arm-gicv3"
-+#define TYPE_MSHV_GICV3 "mshv-arm-gicv3"
- 
- struct ARMGICv3CommonClass {
-     /*< private >*/
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index c72c91cd23..0ef98abedf 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -97,6 +97,7 @@ void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
- int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
-+int mshv_arch_pre_init_vm(int vm_fd);
- int mshv_arch_post_init_vm(int vm_fd);
- void mshv_setup_hvcall_args(AccelCPUState *state);
- 
-diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-index c1c0291461..5a07d45f33 100644
---- a/target/arm/mshv/mshv-all.c
-+++ b/target/arm/mshv/mshv-all.c
-@@ -290,6 +290,68 @@ void mshv_arch_amend_proc_features(
- 
+     return (TCGTBCPUState){
+         .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
+         .flags = flags,
+-        .cs_base = env->misa_ext,
++        .cs_base = ext_flags,
+     };
  }
  
-+static int set_partition_prop(int vm_fd, uint32_t prop_code,
-+                                uint64_t prop_value)
-+{
-+    int ret;
-+    struct hv_input_set_partition_property in = {0};
-+    in.property_code = prop_code;
-+    in.property_value = prop_value;
-+
-+    struct mshv_root_hvcall args = {0};
-+    args.code = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set partition property code %u", prop_code);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+int mshv_arch_pre_init_vm(int vm_fd)
-+{
-+    int ret;
-+    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
-+
-+    ret = set_partition_prop(vm_fd,
-+                            HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS,
-+                            vms->memmap[VIRT_GIC_DIST].base);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = set_partition_prop(vm_fd,
-+                        HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS,
-+                        vms->memmap[VIRT_GIC_ITS].base);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = set_partition_prop(vm_fd,
-+                        HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS,
-+                        0);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = set_partition_prop(vm_fd,
-+                        HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV,
-+                        ARCH_TIMER_VIRT_IRQ);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = set_partition_prop(vm_fd,
-+                        HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT,
-+                        VIRTUAL_PMU_IRQ);
-+
-+    return ret;
-+}
-+
- int mshv_arch_post_init_vm(int vm_fd)
- {
-     return 0;
-diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
-index f0b43aa86f..ce8b426ea4 100644
---- a/target/i386/mshv/mshv-all.c
-+++ b/target/i386/mshv/mshv-all.c
-@@ -39,6 +39,11 @@ int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
-     return 0;
- }
- 
-+int mshv_arch_pre_init_vm(int vm_fd)
-+{
-+    return 0;
-+}
-+
- /*
-  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-  * fault to the guest if it tries to access it. It is possible to override
-
 -- 
-2.45.4
+2.52.0
 
 
