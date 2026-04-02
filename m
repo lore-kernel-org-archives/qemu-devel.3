@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34544D39406
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39250D3940B
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 10:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Ew0-0006t1-B6; Thu, 02 Apr 2026 06:05:56 -0400
+	id 1w8EwV-0007D4-Pq; Thu, 02 Apr 2026 06:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w8Evs-0006pw-El
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:05:50 -0400
-Received: from qs-2004i-snip4-5.eps.apple.com ([57.103.84.88]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w8EwT-0007CY-OF
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:06:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w8Evp-0003mq-VP
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:05:48 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-10-percent-1 (Postfix) with ESMTPS id
- 6CC80300012C; Thu, 02 Apr 2026 10:05:40 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775124343; x=1777716343;
- bh=/MUkLPgFZBpV3m64Kp5Hg3FT9nhtEW1quSiDaAGCvyk=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=BrIDuYZzTgqIXTAzoIyvqUxC4ZvAbmnVpJGxUTqVz8Zf4c2vF7f82AT4KEzMvPyRcXRradcFmm+I9qlJ21lfrw4QE3YBPYJbX2DJbCVUEprllks6/8jSFrj9lLYywyo96/5aDfUG9TeCc3iJq0j6+s6qnK9LuPFH9MLAmz6R3hpXkLOOsyKUMzlr1PdWIp+SufPovjJ4skvnvz2Qd9A1sDcuJm/FiK77hOXL5ah2aNw5inKb7okmAwOw3noJcM4JIpXAh8WrDM7dKudnHkLuwJAWxd107bfu2ViJuKeMgi+FHNBgv9XQ0m+ieoaHEsQENHrt/87z2r+WUdevDRW30Q==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-10-percent-1 (Postfix) with ESMTPSA id
- D5D0F30000E1; Thu, 02 Apr 2026 10:05:38 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pedro Barbuda <pbarbuda@microsoft.com>
-Subject: [PATCH 1/2] whpx: i386: enable x2apic by default for user-mode LAPIC
-Date: Thu,  2 Apr 2026 12:05:34 +0200
-Message-ID: <20260402100535.42960-2-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260402100535.42960-1-mohamed@unpredictable.fr>
-References: <20260402100535.42960-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w8EwQ-0003wh-60
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 06:06:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775124377;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m339GPAmBCpZ9Y/I+/J0yUq5i0Ilx+S/aJKhegffL0E=;
+ b=FmKNHBT5MEO2qnWitTyr9sFB2ZkfyakbYXeW3lwhr/+W2ijWCnD+MLXxhHRGHGt8FQ94i5
+ puQEK9dZrkrXnrZNkYmpwAmAiHxDJ8tGbSaEsoay4xwQYyR1YpEmsZm16mngQYBPiwkpvA
+ Q8InFgberlQbvIK2MKD0mpgYcNwM4Y4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-ypdIM2dBPJy0ByLqPd9MiQ-1; Thu,
+ 02 Apr 2026 06:06:14 -0400
+X-MC-Unique: ypdIM2dBPJy0ByLqPd9MiQ-1
+X-Mimecast-MFC-AGG-ID: ypdIM2dBPJy0ByLqPd9MiQ_1775124373
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62DA2195609F; Thu,  2 Apr 2026 10:06:13 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28DA7180036E; Thu,  2 Apr 2026 10:06:10 +0000 (UTC)
+Date: Thu, 2 Apr 2026 11:06:08 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 10/10] docs/about/deprecated: Deprecate the
+ qemu-system-i386 binary
+Message-ID: <ac4_kKUYE00oRr9j@redhat.com>
+References: <20260402095132.29245-1-thuth@redhat.com>
+ <20260402095132.29245-11-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA5MCBTYWx0ZWRfX4jD38TIzKCv2
- 38pN0j/jcwG4SOujplmbVgbtnmdKwL3nVf5BWbUnIPMKLhKyEX1FoZqN5oVsJuDif+IFFRkHYE4
- Kj1i9EL/9hUk9jTaL+GWqNob0FXAJubQ+zDk8MxmIb8GhVXdK6kVNKTJJVhsQo5DA20Rw3kQ3x3
- +oqtkb9+FWmjr+fylCehiA86HGBdCAgCeopWY+ToOVZBDnn9YCOKu1BG+Hf4OCmIuwa44/2b1xk
- IXFewRT9ffUETI31/bcnYTsVVYGzGi36/1WvWkl02LasaefAwGt3f1bwQiPBz/IWJy4eYWXa/B5
- UCh9KPRBR9esnh6XrpxVHwJeVWIFhwBIwYguT+H6UV08k2mTDNvfT3jHE5cYQo=
-X-Authority-Info-Out: v=2.4 cv=CrKys34D c=1 sm=1 tr=0 ts=69ce3f74
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=23N40mErLr3Vl_GD1psA:9
-X-Proofpoint-GUID: wyWc4IxrgjXp5kLpQ_aRe9blGJLlSFMa
-X-Proofpoint-ORIG-GUID: wyWc4IxrgjXp5kLpQ_aRe9blGJLlSFMa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-02_01,2026-04-02_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- spamscore=0 adultscore=0 clxscore=1030 malwarescore=0 mlxlogscore=999
- bulkscore=0 suspectscore=0 lowpriorityscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604020090
-Received-SPF: pass client-ip=57.103.84.88;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1, RCVD_IN_VALIDITY_RPBL_BLOCKED=1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20260402095132.29245-11-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,38 +93,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+On Thu, Apr 02, 2026 at 11:51:32AM +0200, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> Aside from not supporting KVM on 32-bit hosts, the qemu-system-x86_64
+> binary is a proper superset of the qemu-system-i386 binary. And with
+> the 32-bit x86 host support being removed now, it is possible to
+> deprecate the qemu-system-i386 binary now, too.
+> 
+> With regards to 32-bit KVM support in the x86 Linux kernel,
+> the developers confirmed that they do not need a recent
+> qemu-system-i386 binary here:
+> 
+>  https://lore.kernel.org/kvm/Y%2ffkTs5ajFy0hP1U@google.com/
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  docs/about/deprecated.rst | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index a6d6a713265..2de51337d75 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -301,6 +301,25 @@ machine must ensure that they're setting the ``spike`` machine in the
+>  command line (``-M spike``).
+>  
+>  
+> +System emulator binaries
+> +------------------------
+> +
+> +``qemu-system-i386`` binary (since 11.1)
+> +''''''''''''''''''''''''''''''''''''''''
+> +
+> +The ``qemu-system-i386`` binary was mainly useful for running with KVM
+> +on 32-bit x86 hosts, but most Linux distributions already removed their
+> +support for 32-bit x86 kernels, so hardly anybody still needs this. The
+> +``qemu-system-x86_64`` binary is a proper superset and can be used to
+> +run 32-bit guests by selecting a 32-bit CPU model, including KVM support
+> +on x86_64 hosts. Thus users are recommended to reconfigure their systems
+> +to use the ``qemu-system-x86_64`` binary instead. If a 32-bit CPU guest
+> +environment should be enforced, you can switch off the "long mode" CPU
+> +flag with ``-cpu max,lm=off``, or rename/symlink ``qemu-system-x86_64``
+> +to ``qemu-system-i386`` -- QEMU will then run with the 64-bit extensions
+> +disabled.
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index b29f8d43c9..5460207bdb 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -2269,11 +2269,18 @@ error:
-     return ret;
- }
- 
-+static PropValue whpx_default_props[] = {
-+    { "x2apic", "on" },
-+    { NULL, NULL },
-+};
-+
-+
- void whpx_cpu_instance_init(CPUState *cs)
- {
-     X86CPU *cpu = X86_CPU(cs);
- 
-     host_cpu_instance_init(cpu);
-+    x86_cpu_apply_props(cpu, whpx_default_props);
- }
- 
- /*
+Why don't we just have our install rules create the symlink from
+qemu-system-x86_64 to qemu-system-i386. That gives us near zero
+ongoing maint cost, without need to deprecate stuff / impact users
+
+
+With regards,
+Daniel
 -- 
-2.50.1 (Apple Git-155)
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
