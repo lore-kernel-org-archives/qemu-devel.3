@@ -4,97 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB4AD6AB01
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 19:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E7BD6AB0A
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 20:25:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8OC4-0007el-Ha; Thu, 02 Apr 2026 15:59:08 -0400
+	id 1w8Oau-00061a-KG; Thu, 02 Apr 2026 16:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8OC2-0007eY-3I
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 15:59:06 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w8Oat-00061C-5M
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 16:24:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8OBz-0006uc-UL
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 15:59:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775159895; bh=CHnUwFwPQ+G/9gw/LntLDhoB9ulC9r6SgEOvm541I0A=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=d+L7ovR7S5zsyoUX3t4A2dZGQ21J0IFCUgO/xQq4TSljfx8QwCFNXfgR+ztunZrcO
- iGuCRmv0lEVbMzsyc1IaERERiSvpt8FqfSYRo9zHgoxfbT5AWewQl3Z25ZpI4PUvMN
- mS5iNUrMNy9Vf99xxpeTmguVwfe0AGXBmwehh2Wxppb1s4jYvKJJlhMeu2ZuHGqNjj
- M+AhARzSm9aPGnGe/4UHyZR4DEMCSRI0F4695bROmpgepljjcQi6bbxgdb7PFTbVJs
- ze82BZKAHQMFVENVR0LmPe78AdAY9kUjM5aGBOwviqREYzIxS2h0udzgzMH8+qsfgz
- 3a9HwAa0GRtbw==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id D76B619A229;
- Thu, 02 Apr 2026 22:58:15 +0300 (MSK)
-Message-ID: <3d35be4d-d0e7-4edc-9e63-972a341e4aaf@tls.msk.ru>
-Date: Thu, 2 Apr 2026 22:58:52 +0300
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w8Oaq-0006Gq-It
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 16:24:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775161480;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qd5y+uBCxzcbc6R51rEA/ohoVT7jTSzteU0x9L+b1Lw=;
+ b=K/PZLg9J6LDiG2dtAA7ke0zpjt6kJADO/LdYbOQLEallKm+gCGAoJ3OUHcz76nfWAbBjif
+ +IYAwXhVgHMQT7j5gjsr28+0W/0P5LJt7crqhnUOv4JomY3opSDlx4L9FY/fDJk6xjBRkk
+ 3rmiu8a3i3RUuK/VvQB1O9ZPMwUR2Kg=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-164-eEH-9zXNN6-ShLzAukP5dA-1; Thu, 02 Apr 2026 16:24:39 -0400
+X-MC-Unique: eEH-9zXNN6-ShLzAukP5dA-1
+X-Mimecast-MFC-AGG-ID: eEH-9zXNN6-ShLzAukP5dA_1775161479
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-79cfec4344cso22495477b3.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 13:24:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775161479; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Z2BZ/A/nPJeu9zGQ8zMOl34Ab30Ufnf8YeSM953Rhf8yOMbgjwy1bbyWogTKkQKdxA
+ Rr8rMfPA5Yjh+Ai6IalzJPuoK1GRYXq/LAHjp1xs5wqfmF8wHf3b4uCyAcTR5xY0wets
+ L3ITcp8GhmlM49YIBf0rAsFaRkyP6aUl4K8wie1dvLZzVU0+e1rb4rOjXrZz9lrJ8S/7
+ wHgAifkR/QzmEs+g57X3Hvo/Xerp6CQ5kaHRTpZ6OkKLtYmhm3eJ7Xl9fRte3/umvQCM
+ l6Yp+leUeXM91WIDGHPxQrbcXbfp2JNxOFWeo0dSl39EVigmouybHKrvnlebj41L0OU2
+ vmQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=qd5y+uBCxzcbc6R51rEA/ohoVT7jTSzteU0x9L+b1Lw=;
+ fh=cSeDTVByYJ+MrTaTKM1c4C0gLzAwPvp3k0r0iETSZvw=;
+ b=lwE+XGkopHEcc4oBlFhbokz+uiHeriBCr+q/ZSwOUQUO7gq6tLgIAy4exA8B5OJ6Zw
+ EWLM/fJ6zd5gJNYvtmu1jpPNOkA7znX81WpSiKcfkWen96j98RsT7f1EyPpkCvSu5HEn
+ icoTkaEGyZFQIe1/ovhd/22wkHorhn7+z29dyKdhH+uDlHV+LVBz7lmyrFxedoUum6/H
+ wcTBuiWwGQ4G13Z6l7sz1OwNMfWX8/D/4SOypmUAqy9l1oEvLClSjAvj5TDAD0Mvn6We
+ G3iQgQct68G4A7h46VPVpu1KUpL8gs9GRKJvrQAupoIdM6y9+lFA8yikbHyiGm/XEAwW
+ qf6w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775161479; x=1775766279; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qd5y+uBCxzcbc6R51rEA/ohoVT7jTSzteU0x9L+b1Lw=;
+ b=AAPaRN10o9XgSqH7xSgmnxeEFUitMAPbeAek48ReJf30vHPDSpAKZtJ8O/S05JSuHU
+ UitDBH5l4RDVU401HjtLL0j3evur6/GWdgwlvXhRBga56MMZkoImH9Z0oD+6mQSw9Il6
+ vxMcAagLlIIkQRzHC1nOkIDY7YepP0y/dDt4R0VAos2+cUW5XBV4ml9zGHTd7npcISFi
+ WeVDBKvOl7XEqN9h1ORbK+kpIejAJfUOFKxwhyBWahHg31asotlhkCXlE2bxI2QkN4tG
+ WSttyrkOTlib/pJeZyA3D4ZRgC43hJ7irqlvTNAGF6+2FKKXZjzcbD8GQtVjsCPCQjZ9
+ vsyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775161479; x=1775766279;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qd5y+uBCxzcbc6R51rEA/ohoVT7jTSzteU0x9L+b1Lw=;
+ b=juZVutbv/ERL3oSynlL/bkAXD0dUYj3BOseqVd7e+R2s9UnWaf5JwfALzEw/aZNpZw
+ K8WV3UQnoVr5bCPm9mYve/WAOieMtXYIlZA1vStjulvfnXs0IoU8mD3icSU39KrZbuvc
+ gWuApV7KqCi8b8kM5650Vr4aveuK/cT9dHSoOtzvuC0tl112kfAgquybs2WhtQPCgBtc
+ k5NEQ8hA0XeB+enH36pCxdh1P/UkZJIuPvyapT8INTuXFD9f5bmSescCrFBxKC7ScZLO
+ qVBsBaLY69/4PHQZri/Ntq0PZfHlXaUNcMN+Ntw8TFTc7zpgLE64rJvC/w4WG9xUnYUz
+ y7yg==
+X-Gm-Message-State: AOJu0YwOoFRQeyr89h74PCkag6G3UB+zeBNcThdJgVpwiepe+RB7u5Gn
+ DYNsl+oXvnMEhrZK/1KABxnnB4JI/tqG8jb3wPCuHVJNYSnWiYrSoThx5y9EjILQf/URir2VLVi
+ ALnlUts0qw5rrnRz5DfFf6BlJfBOlZhPR41O15HnTKEodpprdcnovDd1gEYCeaqAUCPIMpCZ/n9
+ rs6VBjzKmEaD4Tw8Ls6sgHAMMQtaHyUcU=
+X-Gm-Gg: AeBDieu9pWhmbhCS/9i4DwJJKhQN/i5adRVbdkcJChMAADftXc0HF8ndxK5+q1nSBjL
+ VwFqidQHMamfz03kzCbi8BRXYYGQ+zmmjE9oX5h95p0lP5KfnxYwuyqLXUVjKYfyirG3SBMI2Pw
+ 7QsrIXPeiDhmNssaPeWgiaI6fWYjES6EqXmm48gvozidkRHi8RKG+Wb+vXq9oOBgcxRBVj7XQ2c
+ BkDeWLoIocBa6kyuFBvIFla5kQK35ilnANPYw==
+X-Received: by 2002:a05:690c:83:b0:79e:ce16:38b with SMTP id
+ 00721157ae682-7a4d31e75afmr8661447b3.4.1775161478891; 
+ Thu, 02 Apr 2026 13:24:38 -0700 (PDT)
+X-Received: by 2002:a05:690c:83:b0:79e:ce16:38b with SMTP id
+ 00721157ae682-7a4d31e75afmr8661227b3.4.1775161478483; Thu, 02 Apr 2026
+ 13:24:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] RFC: Allow building qemu tools on 32-bit hosts
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: deller@gmx.de
-References: <20260402132801.16053-1-deller@kernel.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260402132801.16053-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260331203337.1376879-1-jsnow@redhat.com>
+ <aczdV5JgwfXLUzCM@redhat.com>
+In-Reply-To: <aczdV5JgwfXLUzCM@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 2 Apr 2026 16:24:27 -0400
+X-Gm-Features: AQROBzCOckU-sImBPQlTBib-CJ-JYQch2haMzBgz_0HJKuzpHR3VJrhBT8mWPA8
+Message-ID: <CAFn=p-a-wM6v4NTJAFya3TgDaLyOiQVpUt3bsUcP+1Cht-uotg@mail.gmail.com>
+Subject: Re: [PATCH] python: bump qemu.qmp to v0.0.6
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,145 +136,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.04.2026 16:28, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
-> 
-> Qemu's tools like qemu-img are often needed on 32-bit platforms,
-> although the actual qemu emulators have been discontinued on 32-bit.
-> 
-> To allow building the tools on 32-bit this patch implements two small
-> changes:
-> 
-> a) The check in meson.build is changed to still error out if the user
-> tries to build qemu-system or qemu-user on a 32-bit platform, but allows
-> building tools (e.g. by "--enable-tools") alone.
-> 
-> b) Remove the compile time checks in atomic.h because:
-> - for the qemu-system and qemu-user emulators this check is redundant
->    since we only allow 64-bit platforms anyway (see a)
-> - it breaks those 32-bit platforms, which do provide (slower) 64-bit atomics
-> - 32-bit platforms without 64-bit atomics will fail instead with linker errors
-> - the runtime speed of the qemu tools aren't actually that important.
-> 
-> I've sucessfully tested building qemu tools on 32-bit hppa.
+On Wed, Apr 1, 2026 at 4:54=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Tue, Mar 31, 2026 at 04:33:37PM -0400, John Snow wrote:
+> > This release removes some deprecated warnings for our use of the old
+> > sendmsg API on older python versions.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  python/scripts/vendor.py                      |   4 ++--
+> >  ...ny.whl =3D> qemu_qmp-0.0.6-py3-none-any.whl} | Bin 72263 -> 72379 b=
+ytes
+> >  pythondeps.toml                               |   2 +-
+> >  3 files changed, 3 insertions(+), 3 deletions(-)
+> >  rename python/wheels/{qemu_qmp-0.0.5-py3-none-any.whl =3D> qemu_qmp-0.=
+0.6-py3-none-any.whl} (64%)
+>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
 
-I think this makes very good sense indeed, and is an excellent idea.
-
-Atomics don't really mean much outside of qemu/tcg proper, all other
-their usages aren't performance critical.
-
-Also, atomics aren't actually used (much) in tools or the guest agent
-(which is another problematic part of qemu), but are linked in indirectly
-because of other interdependencies in source files.
-
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-
-And it looks like this one can go to 11.0 just fine.
-
-Thank you very much!
-
-/mjt
-
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   include/qemu/atomic.h | 16 ----------------
->   meson.build           |  4 ++--
->   2 files changed, 2 insertions(+), 18 deletions(-)
-> 
-> diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-> index dc9290084b..f05dce36eb 100644
-> --- a/include/qemu/atomic.h
-> +++ b/include/qemu/atomic.h
-> @@ -56,14 +56,6 @@
->    */
->   #define signal_barrier()    __atomic_signal_fence(__ATOMIC_SEQ_CST)
->   
-> -/*
-> - * Sanity check that the size of an atomic operation isn't "overly large".
-> - * Despite the fact that e.g. i686 has 64-bit atomic operations, we do not
-> - * want to use them because we ought not need them, and this lets us do a
-> - * bit of sanity checking that other 32-bit hosts might build.
-> - */
-> -#define ATOMIC_REG_SIZE  sizeof(void *)
-> -
->   /* Weak atomic operations prevent the compiler moving other
->    * loads/stores past the atomic operation load/store. However there is
->    * no explicit memory barrier for the processor.
-> @@ -79,7 +71,6 @@
->   
->   #define qatomic_read(ptr)                              \
->       ({                                                 \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
->       qatomic_read__nocheck(ptr);                        \
->       })
->   
-> @@ -87,7 +78,6 @@
->       __atomic_store_n(ptr, i, __ATOMIC_RELAXED)
->   
->   #define qatomic_set(ptr, i)  do {                      \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
->       qatomic_set__nocheck(ptr, i);                      \
->   } while(0)
->   
-> @@ -110,7 +100,6 @@
->    */
->   #define qatomic_rcu_read_internal(ptr, _val)            \
->       ({                                                  \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
->       typeof_strip_qual(*ptr) _val;                       \
->       qatomic_rcu_read__nocheck(ptr, &_val);              \
->       _val;                                               \
-> @@ -119,20 +108,17 @@
->       qatomic_rcu_read_internal((ptr), MAKE_IDENTIFIER(_val))
->   
->   #define qatomic_rcu_set(ptr, i) do {                   \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
->       __atomic_store_n(ptr, i, __ATOMIC_RELEASE);        \
->   } while(0)
->   
->   #define qatomic_load_acquire(ptr)                       \
->       ({                                                  \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
->       typeof_strip_qual(*ptr) _val;                       \
->       __atomic_load(ptr, &_val, __ATOMIC_ACQUIRE);        \
->       _val;                                               \
->       })
->   
->   #define qatomic_store_release(ptr, i)  do {             \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
->       __atomic_store_n(ptr, i, __ATOMIC_RELEASE);         \
->   } while(0)
->   
-> @@ -144,7 +130,6 @@
->   })
->   
->   #define qatomic_xchg(ptr, i)    ({                          \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE);     \
->       qatomic_xchg__nocheck(ptr, i);                          \
->   })
->   
-> @@ -157,7 +142,6 @@
->   })
->   
->   #define qatomic_cmpxchg(ptr, old, new)    ({                            \
-> -    qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE);                 \
->       qatomic_cmpxchg__nocheck(ptr, old, new);                            \
->   })
->   
-> diff --git a/meson.build b/meson.build
-> index daa58e46a3..98a708372b 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -323,8 +323,8 @@ endif
->   # Compiler flags #
->   ##################
->   
-> -if cc.sizeof('void *') < 8
-> -  error('QEMU requires a 64-bit CPU host architecture')
-> +if (cc.sizeof('void *') < 8) and (have_system or have_user)
-> +  error('QEMU emulator requires a 64-bit CPU host architecture. Only tools may be built for 32-bit.')
->   endif
->   
->   foreach lang : all_languages
+I'm assuming the GitLab CI failures I'm seeing in migration tests
+aren't due to this patch ... Something we already know about?
 
 
