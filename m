@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209F7D6AB16
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 21:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC66AD6AB17
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Apr 2026 21:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Q2g-0000BK-5K; Thu, 02 Apr 2026 17:57:34 -0400
+	id 1w8Q2k-0000GD-K0; Thu, 02 Apr 2026 17:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q2V-0008WN-Gf
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:24 -0400
+ id 1w8Q2W-00005L-Pe
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:25 -0400
 Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w8Q2S-0007Bx-L4
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:22 -0400
+ id 1w8Q2T-0007CW-VD
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 17:57:23 -0400
 Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b97e6e48b24so206789366b.2
- for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:57:20 -0700 (PDT)
+ a640c23a62f3a-b7cf4a975d2so176158166b.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Apr 2026 14:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775167038; x=1775771838; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775167040; x=1775771840; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bR48XpEfrTAurqrwxi3w+VRNBBsgCOfbhfQQhlmqcQo=;
- b=qkQMl+rXJ/i5LPkZjJk83bSwIpCUFnB+a3uJA5sN/1PCu+j8D1tKjaHCGp8L44hgvX
- mI7x+dFC2/CEDe39ET401qGsdanAhUJKNObnNH43KSTQSWzy1QSiXCHMA/5Jc1xC2BnJ
- pXO3T+49Fs/P3VhcjnpPrgbvy++YmzQgvmlZEue57nROBuTZsZlwUQ47fom0bN4Uruv4
- qjuO/EevcXpqvZ8KGYyhU7zX2cOIbEq5PRK49/2MWyfFfD0BgG5HE3H4t06WBTnXBiK3
- x2LFbRsabMdXbc1D/ihoX/wbRIzAXNu9bGAkEHYnBVm2qICXWt3w2HS60pJ6A7MkH4Kl
- xKwg==
+ bh=Iq6P3SESs/IOCtPL61KoE1DsZM3683YfrNg3jTL5uxc=;
+ b=N3lcUhX315uXxCps8mesZsW4BlznRcdmf1RaNaShhwHw4NcLcWnZyB8E1nmZTrVpZs
+ 8mEzC3F9hlkz93b/FGEJF1eSOVK/P4AxJb1JPRIuWO6Ig4I2TF8rWpgAXnKSLNWeP2pA
+ xpj2B5BYnBfRAt+8XZkwO9ODjcE6hRW4PnggimQYJmzUvaXHxkToreyQx9n2vBk8d10G
+ CmlmNVFHFGTj0XlwBDE+Y/ZMU5vdxorUiLpvt/vH0UKQ3k6JcAgZt+PIwSpUwFEFkKcY
+ 70i4Q3cGRoJzm5aKi2PryL9FC1+88Fr+PbiOsWRTXQasQdd/bYyIDoft4jWZ5L8KicpI
+ dgbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775167038; x=1775771838;
+ d=1e100.net; s=20251104; t=1775167040; x=1775771840;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bR48XpEfrTAurqrwxi3w+VRNBBsgCOfbhfQQhlmqcQo=;
- b=QcAcsGU/Ryx4e5jpwrMmk0r1YMmoQqM5IcL3Th9h/4M3lp15UvBuO3dfgU8O6CHcWQ
- WKp5sftoC/Ajg9xxsa9ZQDEh94QewP1UnYwHdBZ6tX8nkyOO0AJk6KaoZNjROx1CIiJs
- BBkJ5dbOCoc/W1rd8qz0aE3ufIkoScqc/751evzt+yCrb3cirtnE4AgXGop1AMhf0An2
- HOSLlObL2J92K2BUW3TVNyRl80BvkjClFzgiTS7GbGomoBHzR3F6Hdw5+zXGVc7DeHe7
- ovUzjG821n9nuvPNQaP6vGAWqG5aBEnUsiQXFV19dJpXfaGEJqcWl4XwaZKC5wUQN1Lt
- RnIA==
-X-Gm-Message-State: AOJu0Yy1vENXR1gBkBoFOlLMrSoPQASk+lFFijNIdyQgmNCXFLLMQiAo
- cZCHhRHI6c/9cB1AgyV598mnSR+umRxwg2k0kdSD9bkElzy53ajfIU2tMkA2tbgm
-X-Gm-Gg: AeBDiessStP2ImBNBCHOErEESGjmueY/F4FkQPiKN4My/mkoovUvuwLJNEUUvNLw9J0
- /+sbKsENZFQSGaGTgl7m+mFeVmsGYtKFxaoTIf4HceDNPsUvzZC9ch5d8qiuL6jBcz05lj3xDM0
- +Ab/SC5Mdsueo/Nq3fB1RCXqVyNRr16oEM1kcOz2RhrVRk1XOiJE4YNilmJRyYY6MOXZihLjtIe
- qPp68FQvk+cBuDLFHPYBIV0f4ITiYDcTRTZHtz3kWczbvQmuWf/JMe85FRYERFOI4iVim0bQJl+
- MniRhz/m6YdkBPp6z/vCK2/lTYchi4OPVbqzy1J845rdHg8+zbnxel3gndQAj4MbLmiIBBwpXFT
- jatJaPrYQkims3yad7je39F1adL5gVljpfc4f4k0AvigrPiu78+W2hvoYf5dom4706qgDPWBEsp
- ONTnT5O5A+nELXu0Wl0pQ56zqK06R5yBHWt67i6xaqrKIBKERbhQIohhc4JATAzQC8jGaORg==
-X-Received: by 2002:a17:907:802:b0:b9c:530b:7986 with SMTP id
- a640c23a62f3a-b9c67422988mr24737266b.6.1775167038411; 
- Thu, 02 Apr 2026 14:57:18 -0700 (PDT)
+ bh=Iq6P3SESs/IOCtPL61KoE1DsZM3683YfrNg3jTL5uxc=;
+ b=SKfnODClgUPVUSa5KKXrGbiyI7bJAF32C5rQ3axVF6eZaS7nBQooKVPgAh2O5ZoKPr
+ yJN/nBrfNgMgThy9RgWwCXNrG40HQK85yFep07PRY0IkgN6ySYso8+1M4l5l0FRl9mLv
+ rbt9sK5Y9rrOQY4EhrvWi/WL48JE5/eeWoM7LPKOKT1r8bf1PBzjKdLbnZaIIFnzihul
+ VaGmg4RzrllDgzUEcJUv6fVh5IS9PkCHz9SNGjUzPxr+gQSAesGFLQJtXmHzndvr6usN
+ C4Jvchr2jjYBckLfQwHexauuUs989O4GJgZH/CpejKym8U5CKTMtCxd6E7zfcrETW0gq
+ /9Mw==
+X-Gm-Message-State: AOJu0YxRFHau29qinc+zTjhs/ab8WcLxTVGt/T3tj5UaFe2Xnalq/AVb
+ yQGwh+sXyzO+O6iiOOt5Ys1LXEXg4gguhY/iRd7dgRryR8Sf6jvCkxSBQzUkNEys
+X-Gm-Gg: AeBDieuBDnaFWNwJF/gCK9mecdQ6AN9PeTuNMMUrKqfCV1i7xfAHXTFXEJawegHLm4w
+ mp0V1nI+ZXxmCIiAlLyHGtTM2eMijCj8+CG7dOPDuor6IGqtaKWMP1lRwe5bNgyDmoyt0EobE90
+ /HZ9qs/dQLXPy7KrxPJN9aivHS/kQTiMlPPvisa/sOKx55RMDvBb4MyAYCubZPq9nl5IiTTqOLZ
+ e3GMowFUR5++T5UJy0RWE+78ZW9By5HAZernqDPyvbswy8fmHSkvclwSE8QdNd7wcrFRmEfkAim
+ mXBED2+W5/6ZQpCiyM7IqDnQoEm5lpzpbwrjJlILC3vv5wS/r9bmoeZ3Bn4pmP+AYtG3aeusPQM
+ Se5XpN0fvkZ4eZpwSAa6PJ3qEbax4my+FiUbbf8K1q4YXH/TQYAkL0IQEiLXDXGYXqFrei9gD5H
+ Ib64XakjuyLrFtvoVI2pwbX+evwOv2ZwzXgjYA2WJpzIE393uCrbReo444pBexCj/YioK1lkkDd
+ xVYwPG7
+X-Received: by 2002:a17:907:a44:b0:b9b:207c:f7b7 with SMTP id
+ a640c23a62f3a-b9c6768d2e2mr27200266b.3.1775167039942; 
+ Thu, 02 Apr 2026 14:57:19 -0700 (PDT)
 Received: from thinkpad-t470s.. (93-143-182-244.adsl.net.t-com.hr.
  [93.143.182.244]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.57.17
+ a640c23a62f3a-b9c3cac0e1asm134009166b.27.2026.04.02.14.57.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Apr 2026 14:57:17 -0700 (PDT)
+ Thu, 02 Apr 2026 14:57:19 -0700 (PDT)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
@@ -71,9 +72,10 @@ Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v3 20/33] hw/arm: add generic ARM machine initialized by FDT
-Date: Thu,  2 Apr 2026 23:56:05 +0200
-Message-ID: <20260402215629.745866-21-ruslichenko.r@gmail.com>
+Subject: [PATCH v3 21/33] hw/arm/arm_generic_fdt: Add support for host-backed
+ RAM regions
+Date: Thu,  2 Apr 2026 23:56:06 +0200
+Message-ID: <20260402215629.745866-22-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260402215629.745866-1-ruslichenko.r@gmail.com>
 References: <20260402215629.745866-1-ruslichenko.r@gmail.com>
@@ -105,214 +107,141 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-This patch introduces new ARM machine model, which is
-fully instantiated from a Device Tree description.
+Add the ability to dynamically map QEMU host memory backends to
+guest memory using configuration from the Device Tree.
 
-This model uses fdt_generic framework to dynamically
-construct system topology based on provided DTB, instead
-of standard machines which rely on hardcoded models in
-C files.
+To map a host memory backend, memory region nodes with the
+'qemu-memory-region' compatible string and the 'qemu,ram' property
+must specify a 'qemu,host-id' property containing the memdev name.
 
-This allows to contruct machines with custom memory maps,
-device structures without the need to modify and re-build
-QEMU sources each time.
+The corresponding memory backends can be specified via the command line:
+
+...
+-object memory-backend-file,id=mem0,mem-path=memory.img,size=256M
+...
+
+If no host backend is found, the initialization will fall back to
+standard anonymous memory mapping.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/arm/arm_generic_fdt.c | 172 +++++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build       |   2 +
- 2 files changed, 174 insertions(+)
- create mode 100644 hw/arm/arm_generic_fdt.c
+ hw/arm/arm_generic_fdt.c | 96 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 95 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/arm_generic_fdt.c b/hw/arm/arm_generic_fdt.c
-new file mode 100644
-index 0000000000..7b50957a82
---- /dev/null
+index 7b50957a82..de121820e0 100644
+--- a/hw/arm/arm_generic_fdt.c
 +++ b/hw/arm/arm_generic_fdt.c
-@@ -0,0 +1,172 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Copyright (c) 2012 Xilinx. Inc
-+ * Copyright (c) 2012 Peter A.G. Crosthwaite (peter.crosthwaite@xilinx.com)
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version
-+ * 2 of the License, or (at your option) any later version.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "hw/core/boards.h"
-+#include "hw/core/hw-error.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/option.h"
-+#include "qom/object.h"
-+#include "system/system.h"
-+#include "system/qtest.h"
-+#include "hw/arm/boot.h"
-+#include "hw/arm/machines-qom.h"
-+
-+#include <libfdt.h>
-+#include "hw/core/fdt_generic_util.h"
-+
-+#define QTEST_RUNNING (qtest_enabled() && qtest_driver())
-+
-+struct ARMGenericFDTState {
-+    MachineState parent;
-+
-+    struct arm_boot_info bootinfo;
-+
-+    char *hw_dtb;
-+};
-+
-+#define TYPE_ARM_GENERIC_FDT_MACHINE MACHINE_TYPE_NAME("arm-generic-fdt")
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(ARMGenericFDTState, ARM_GENERIC_FDT_MACHINE)
-+
-+static void init_machine(void *fdt, ARMGenericFDTState *s)
+@@ -43,6 +43,98 @@ struct ARMGenericFDTState {
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(ARMGenericFDTState, ARM_GENERIC_FDT_MACHINE)
+ 
++static void map_host_memdev_node(FDTMachineInfo *fdti, const char *node_path)
 +{
-+    FDTMachineInfo *fdti;
-+    MemoryRegion *mem_area;
-+    Error *errp = NULL;
-+    char **node_path;
++    int len;
++    uint64_t mr_size, backed_size;
++    Object *mem_obj;
++    Object *backend_obj;
++    MemoryRegion *mr;
++    MemoryRegion *backend_mr;
++    MemoryRegion *container;
++    HostMemoryBackend *backend_mem;
 +
-+    node_path = qemu_fdt_node_unit_path(fdt, "memory", &errp);
-+    if (errp) {
-+        error_report_err(errp);
-+        exit(1);
-+    }
-+    if (!node_path || !g_str_has_prefix(node_path[0], "/memory")) {
-+        error_report("Failed to find /memory node");
-+        exit(1);
-+    }
++    const char *compat = qemu_fdt_getprop(fdti->fdt, node_path,
++                                          "compatible", &len, NULL);
++    const char *host_id = qemu_fdt_getprop(fdti->fdt, node_path, "qemu,host-id",
++                                           &len, NULL);
++    bool is_qemu_ram = (qemu_fdt_getprop(fdti->fdt, node_path, "qemu,ram",
++                                         &len, NULL) != NULL);
 +
-+    /* Instantiate peripherals from the FDT.  */
-+    fdti = fdt_generic_create_machine(fdt, NULL);
-+
-+    mem_area = MEMORY_REGION(object_resolve_path(node_path[0], NULL));
-+
-+    s->bootinfo.loader_start = object_property_get_int(OBJECT(mem_area),
-+                                                            "addr", NULL);
-+
-+    s->bootinfo.ram_size = object_property_get_int(OBJECT(mem_area),
-+                                                          "size", NULL);
-+
-+    fdt_init_destroy_fdti(fdti);
-+    g_strfreev(node_path);
-+}
-+
-+static void arm_generic_fdt_init(MachineState *machine)
-+{
-+    int fdt_size;
-+    void *hw_fdt = NULL;
-+    ARMGenericFDTState *s = ARM_GENERIC_FDT_MACHINE(machine);
-+
-+    if (!s->hw_dtb) {
-+        if (!QTEST_RUNNING) {
-+            /*
-+             * Just return without error if running qtest, as we never have a
-+             * device tree
-+             */
-+            hw_error("DTB must be specified for %s machine model\n",
-+                     MACHINE_GET_CLASS(machine)->name);
-+        }
++    if (!compat || strcmp(compat, "qemu-memory-region")) {
 +        return;
 +    }
 +
-+    hw_fdt = load_device_tree(s->hw_dtb, &fdt_size);
-+    if (!hw_fdt) {
-+        error_report("Error: Unable to load Device Tree %s", s->hw_dtb);
++    if (!is_qemu_ram || !host_id) {
++        return;
++    }
++
++    mem_obj = fdt_init_get_opaque(fdti, node_path);
++    if (!mem_obj) {
++        return;
++    }
++
++    backend_obj = object_resolve_path_type(host_id, TYPE_MEMORY_BACKEND,
++                                            NULL);
++    if (!backend_obj) {
++        warn_report("No mem backend found for FDT requested host-id %s",
++                    host_id);
++        return;
++    }
++
++    backend_mem = MEMORY_BACKEND(backend_obj);
++    backend_mr = host_memory_backend_get_memory(backend_mem);
++
++    mr = MEMORY_REGION(mem_obj);
++    container = mr->container;
++    if (!container) {
++        warn_report("No parent found for requested host-id %s",
++                    host_id);
++        return;
++    }
++
++    mr_size = memory_region_size(mr);
++    backed_size = memory_region_size(backend_mr);
++
++    if (backed_size != mr_size) {
++        error_report("Unable to map host backed memory: %s, "
++                        "dts size: 0x%" PRIx64 ", but memdev size: 0x%" PRIx64,
++                        host_id, mr_size, backed_size);
 +        exit(1);
 +    }
 +
-+    init_machine(hw_fdt, s);
++    hwaddr base_addr = mr->addr;
 +
-+    s->bootinfo.kernel_filename = machine->kernel_filename;
-+    s->bootinfo.kernel_cmdline = machine->kernel_cmdline;
-+    s->bootinfo.initrd_filename = machine->initrd_filename;
-+    s->bootinfo.board_id = -1;
-+    s->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_DISABLED;
++    memory_region_del_subregion(container, mr);
++    memory_region_add_subregion(container, base_addr, backend_mr);
 +
-+    /*
-+     * Expect a direct kernel boot if the '-kernel' option is specified.
-+     * In this case, QEMU provides the PSCI implementation.
-+     */
-+    if (machine->kernel_filename) {
-+        s->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
++    fdt_init_set_opaque(fdti, node_path, OBJECT(backend_mr));
++    object_unparent(mem_obj);
++}
++
++/* Parse device-tree starting from 'node' and attach file-backed RAM's */
++static void map_host_memdevs(FDTMachineInfo *fdti, const char *node_path)
++{
++    int i;
++    char **children;
++    int num_children = qemu_devtree_get_num_children(fdti->fdt, node_path);
++
++    if (num_children > 0) {
++        children = g_malloc0(sizeof(*children) * num_children);
++
++        num_children = qemu_devtree_get_children(fdti->fdt, node_path,
++                                      num_children, children);
++        for (i = 0; i < num_children; ++i) {
++            map_host_memdevs(fdti, children[i]);
++            g_free(children[i]);
++        }
++
++        g_free(children);
 +    }
 +
-+    arm_load_kernel(ARM_CPU(first_cpu), machine, &s->bootinfo);
-+
-+    return;
++    map_host_memdev_node(fdti, node_path);
 +}
 +
-+static char *arm_generic_fdt_get_hw_dtb(Object *obj, Error **errp)
-+{
-+    ARMGenericFDTState *s = ARM_GENERIC_FDT_MACHINE(obj);
+ static void init_machine(void *fdt, ARMGenericFDTState *s)
+ {
+     FDTMachineInfo *fdti;
+@@ -63,7 +155,9 @@ static void init_machine(void *fdt, ARMGenericFDTState *s)
+     /* Instantiate peripherals from the FDT.  */
+     fdti = fdt_generic_create_machine(fdt, NULL);
+ 
+-    mem_area = MEMORY_REGION(object_resolve_path(node_path[0], NULL));
++    map_host_memdevs(fdti, "/");
 +
-+    return g_strdup(s->hw_dtb);
-+}
-+
-+static void arm_generic_fdt_set_hw_dtb(Object *obj, const char *value,
-+                                       Error **errp)
-+{
-+    ARMGenericFDTState *s = ARM_GENERIC_FDT_MACHINE(obj);
-+
-+    s->hw_dtb = g_strdup(value);
-+}
-+
-+static void arm_generic_fdt_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "ARM device tree driven machine model";
-+    mc->init = arm_generic_fdt_init;
-+    mc->max_cpus = 64;
-+    mc->default_cpus = 4;
-+
-+    mc->pci_allow_0_address = true;
-+    mc->minimum_page_bits = 12;
-+    mc->smp_props.clusters_supported = true;
-+
-+    object_class_property_add_str(oc, "hw-dtb",
-+                              arm_generic_fdt_get_hw_dtb,
-+                                  arm_generic_fdt_set_hw_dtb);
-+    object_class_property_set_description(oc, "hw-dtb",
-+                    "Hardware device-tree file with description "
-+                                "used to create the emulated machine");
-+}
-+
-+static const TypeInfo arm_generic_fdt_machine_info = {
-+    .name           = TYPE_ARM_GENERIC_FDT_MACHINE,
-+    .parent         = TYPE_MACHINE,
-+    .instance_size  = sizeof(ARMGenericFDTState),
-+    .class_init     = arm_generic_fdt_class_init,
-+    .interfaces     = arm_machine_interfaces,
-+};
-+
-+static void arm_generic_fdt_register_type(void)
-+{
-+    type_register_static(&arm_generic_fdt_machine_info);
-+}
-+
-+type_init(arm_generic_fdt_register_type)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index b187b946f0..e62fabbb6c 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -1,4 +1,6 @@
- arm_ss = ss.source_set()
-+arm_ss.add(files('arm_generic_fdt.c'))
-+
- arm_common_ss = ss.source_set()
- arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
- arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
++    mem_area = MEMORY_REGION(fdt_init_get_opaque(fdti, node_path[0]));
+ 
+     s->bootinfo.loader_start = object_property_get_int(OBJECT(mem_area),
+                                                             "addr", NULL);
 -- 
 2.43.0
 
