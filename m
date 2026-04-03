@@ -4,49 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7324E7E360
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 09:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C841E7E360
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 10:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8b5K-0006Y3-La; Fri, 03 Apr 2026 05:45:02 -0400
+	id 1w8bJT-0001k7-RS; Fri, 03 Apr 2026 05:59:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1w8b5J-0006Xe-9W
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 05:45:01 -0400
-Received: from mail-japaneastazon11010033.outbound.protection.outlook.com
- ([52.101.229.33] helo=TY3P286CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
+ id 1w8bJQ-0001gK-TU
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 05:59:37 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1w8b5G-0003CT-8b
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 05:45:00 -0400
+ (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
+ id 1w8bJN-0005tt-OL
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 05:59:36 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=D1nf3SLEH1X2arKQXVvCwK02aiyO7/0Rh9wufuvY8Qg6cGCJUjEpUC9ZorDLoVl+zh2RIW7Qt2upgw05cMFmdRPov/x+IoySkafWlICiy5E/2YJoY9GFsD/mxy0f0VbAJ9wE9oZrEUighA5RSnew9B13t4nbDjGhRCzv206GM7Cs/3BswEe5ptGj2GqdPIyTQUnOYABmmxAWoiS2+8X7bZxc9MVjaOXTWX3TWRca3v9dTwz5CEEUqgv6ccrCeAHEdn/apNnRetsVjefbbsKgLwEkVM4pp+R6eLoMC++dAPelUoq606eGCaAV0wiAJKi82f4G299NXhc8KIW6H0rijg==
+ b=qDfWs+ctCAJnj1aT/w7bkEvh8D3qD/b68vFsR9p0j5wbc6iCT4m5wGdxYncCZvMwdQ9UUd/3ULXh38i/uAXbi/1qcB7gZR8jBiynS6Hdwa342tb1aewwPA9NtavBBTe9YqX8zxxrcMCUiiPHXnbV1BQbvOYxwFC+Dlo4QuYcnUkcErPyn3jRGyl0k8K9rbIsrcC2q0wNBwLVil+qhXlpAyXinjVAkT5Ho96wHldUNZ+lkDMtO20I8M3nX4yoiToven9JKrrgDSv4ORtBRSIYDL4Z5SkJjSR0BnMPLX/I0AaQqW/MHFjN0rcx+UMnNTk/2At5N1LhhizkcpgWm8ri3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zk8+ZDms3sV0KkEEl57n5THflqUgqaBQVaLDgk8bvLU=;
- b=PPbUHp7sLkNWYQCRUukmNQpZ5tuAbCNmddoTgGUjftEvIS+3zOpTLm5M2BTQpsecTpJzNxA9yljotgNiRrCGTbUYuA2TgScQg74YbYKDQqfrwwYu/04ZWnvmnNygz5AbCHb/zuFr0OeeLPX/wbgENEmQA4lZy7hDBxOUKGlAZ7PiM+9YL0281LXUf6hGyPP6XZ7TxPhi6qnUFPOzVxXYr8bQpvPcMkE6gMo/eEOQ2daUr/hSJSYGwQ1Y5IGAOjHdhsvOBpzheQR61efjLER7n4pkf61E2z+iGXgng5VR/kazSJtPHpQAttEJiUBMmFQsSfqcW8vzCYWGjfxyXqYP6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
- dkim=pass header.d=fujitsu.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fujitsu.com;
- s=selector1;
+ bh=DkAXku5G3nZ7rz9KPOtdn9gFMgfDeJMtRWMHZzQGllw=;
+ b=CFBJ2KRsGTi4UpvTZhbwKJopldMO0KzLCbFwMwOZ+XX+qnHPwtylTFlS3fkvr5+juLhsLlqueoWiuJC1Y6zNqPG7acgNiMSzSHwlb3IWhFQcenblOyzrKyZom0uAxaT8GOIHwAzmsS4MfC/41aKYjAf88/pRuw7ohQLzKDSj/aOp5MGahSgLsmPM+3gWdNAeZK870RNRfjttQsFWK7TSaVomJAI9ae6RweqIr3rXMe4lqYCHMM5Obzz99f5t0Qs8/BXQp2LFcvyave83Bwy6YYhO01yGMBYxf4KRXcN4NpwS/VnGNvuIxHeVHbm1eP+CD5ODVd+4/oTn/JFX66CEJQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=fujitsu.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zk8+ZDms3sV0KkEEl57n5THflqUgqaBQVaLDgk8bvLU=;
- b=RfiMGyuF69fk4JSxWg8m18/MsjcUZZgwKSYjXgGJAsXE+n6Jpp1je0oy6tjq/g+DQybJVf6e/UAXwb9GBjLce415IN0sI9rFZeSkCG5HE7mG6pU2aaAlmO6ulfo0o73h5Vf1lWHViVN5QEAY7Zs+oinlMj2wD3oxDN3qI10Pp1YydqDWorwzMPNqhI25Za1EvO6cwv/UiiT03kDEL7Ir4pPQpsZNuvNfh79JZlMeMA9dJnV1toE6MQvdoYbiyCz4fT+5arKbzD6Vr3Hun8Abw6lEmdqYWLE7Q8i6o9BjWhxBAk7Mg2LuPnVXqGZP0mLF+64RXDl9zfKW0tvuhy9ylw==
-Received: from TYRPR01MB13806.jpnprd01.prod.outlook.com
- (2603:1096:405:218::10) by OSZPR01MB6677.jpnprd01.prod.outlook.com
- (2603:1096:604:fd::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.19; Fri, 3 Apr
- 2026 09:39:50 +0000
-Received: from TYRPR01MB13806.jpnprd01.prod.outlook.com
- ([fe80::ab07:de7b:8259:7c17]) by TYRPR01MB13806.jpnprd01.prod.outlook.com
- ([fe80::ab07:de7b:8259:7c17%4]) with mapi id 15.20.9769.018; Fri, 3 Apr 2026
- 09:39:50 +0000
-From: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-To: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>, Peter Xu <peterx@redhat.com>
+ bh=DkAXku5G3nZ7rz9KPOtdn9gFMgfDeJMtRWMHZzQGllw=;
+ b=jJFvB5GXWlGRkWqiUAyZC9ZEtzeLzO9QTAO7n1kVx+BcHQBBHlJgWAur1FWzI0wWZm44KB9xDCTgdGRumCa3eJAyTZadkUXIaGuNNeZJNAr5YQvr3kLku51aegxL3Z/9rxoShGgvpsQ8FeehbW36e1Si0zhKwJbs00ooByAmHzU=
+Received: from MN2PR12CA0031.namprd12.prod.outlook.com (2603:10b6:208:a8::44)
+ by DM6PR12MB4387.namprd12.prod.outlook.com (2603:10b6:5:2ac::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.7; Fri, 3 Apr
+ 2026 09:59:26 +0000
+Received: from BL6PEPF00020E63.namprd04.prod.outlook.com
+ (2603:10b6:208:a8:cafe::a4) by MN2PR12CA0031.outlook.office365.com
+ (2603:10b6:208:a8::44) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9769.20 via Frontend Transport; Fri,
+ 3 Apr 2026 09:59:26 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BL6PEPF00020E63.mail.protection.outlook.com (10.167.249.24) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9769.17 via Frontend Transport; Fri, 3 Apr 2026 09:59:26 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Fri, 3 Apr
+ 2026 04:59:22 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 3 Apr
+ 2026 04:59:22 -0500
+Received: from [10.67.184.128] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Fri, 3 Apr 2026 04:59:19 -0500
+Message-ID: <1ca00148-1de9-49d0-9e13-6d829ef5323d@amd.com>
+Date: Fri, 3 Apr 2026 17:59:18 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, Peter Xu
+ <peterx@redhat.com>
 CC: Samuel Zhang <guoqing.zhang@amd.com>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>, "farosas@suse.de" <farosas@suse.de>,
  "eblake@redhat.com" <eblake@redhat.com>, "armbru@redhat.com"
@@ -54,101 +81,52 @@ CC: Samuel Zhang <guoqing.zhang@amd.com>, "qemu-devel@nongnu.org"
  "Victor.Zhao@amd.com" <Victor.Zhao@amd.com>, "PengJu.Zhou@amd.com"
  <PengJu.Zhou@amd.com>, "Qing.Ma@amd.com" <Qing.Ma@amd.com>, Guoqing Zhang
  <simpzan@gmail.com>
-Subject: Re: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
-Thread-Topic: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
-Thread-Index: AQHcvbYDFS/bHmyF/0mRIclEy2/9xLXHQ/SAgAC98QCAAHZIgIAB7HyAgAKCbACAADkeAA==
-Date: Fri, 3 Apr 2026 09:39:50 +0000
-Message-ID: <6f1df732-5c2c-4f1b-a59a-aa6af5566505@fujitsu.com>
 References: <20260327065006.2567463-1-guoqing.zhang@amd.com>
  <acqgZShXRkqzBU1C@x1.local>
  <e3b261a3-25fa-42f9-a926-306e5a19cf75@fujitsu.com>
  <02a44178-eebc-4fef-a8fb-802dac76c11f@amd.com> <ac1AE4vrAlKmawlb@x1.local>
  <59f0466e-71e2-4114-ab4d-285a727aa7d8@amd.com>
-In-Reply-To: <59f0466e-71e2-4114-ab4d-285a727aa7d8@amd.com>
-Accept-Language: en-US, zh-CN
+ <6f1df732-5c2c-4f1b-a59a-aa6af5566505@fujitsu.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=fujitsu.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYRPR01MB13806:EE_|OSZPR01MB6677:EE_
-x-ms-office365-filtering-correlation-id: 4d2a760e-8723-483f-11e0-08de9164f3a1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|7416014|1580799027|38070700021|13003099007|22082099003|56012099003|18002099003;
-x-microsoft-antispam-message-info: +zeEC2d8dkOxAajH6i/eO2h+EqWAvlCIJk/Rrz1S2tHfPusOM1WUVgcUjQObriabF2Mo4DWFIsBeTMymW+oQ383n406QrRvqJ/ZUJDbHCZrc3X3Dldtb25qSarmzBw/HGFbrz8K2YMAwM2XSqIwBx3czf7a9W2ILYXZr329PqWDIk8QqBkeD4D+nPy6d0TICll2sxN4ehAEMSGX/dmsVaF1gcbYQZEk34OQlpIOcXDfSLJdHgpVB5kYqnIPmc5l49ZeZGG/YXoz8o/bWf1g/UXjX+O16VskI9UEJzxDZ0tyvvHumZJy9iL3+5vmJrPXke1MGWqifs+E7dVsscpBVZdeU+klAxHIBCucO0Sq5IWNe+keNoIirF9Xi7AwUkmYMEh/HZ2k2ygvqRp7uZw6epGzzpg9dzmRsWDwu6qNCHt8IoJQNm5SMTsBY8qH1GWHYLN2KECdo4l6B+H6RUL3Vh5mhJOZHfQRoO0fOk834IcRqvsaRgzaBf2mlMhcU2kS99BdbvxSLGaFsJeoz5c+O+TSYjn+zNT1dah/b2C6bT6gEQJMSlrObuR6O2k3ACvitLYt8RzRqZ9RlrADKSKxeel8UtPKhbseUKl6DFQtCl4wDnSr1LSV8jUr7KecXumobyzOotVKzER77xPzH6K/6dBn45Nysu7mLLdMpPP25co+m58TyJrMo6teT/k2pjc/UxX2mzfOp4mp9GStfA7zOX3qnBMugUVDVFE7Gq7H27JPLOcA66wBxeTytCiKXpSIU8grmQDLtEiQXoWt7LUWvMShaFzJbSAYci4KAEkUdDZeMPTulYbmzOBCc6AZxscKD
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYRPR01MB13806.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7416014)(1580799027)(38070700021)(13003099007)(22082099003)(56012099003)(18002099003);
+From: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>
+In-Reply-To: <6f1df732-5c2c-4f1b-a59a-aa6af5566505@fujitsu.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: None (SATLEXMB04.amd.com: guoqzhan@amd.com does not designate
+ permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00020E63:EE_|DM6PR12MB4387:EE_
+X-MS-Office365-Filtering-Correlation-Id: 017f12fa-7d42-4fe8-8f95-08de9167b086
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|376014|1800799024|82310400026|22082099003|56012099003|18002099003|13003099007;
+X-Microsoft-Antispam-Message-Info: K0pTHq2XkAshBGzE8yr99+HuiTuyjbcNKxuZbq47DtS3EBLkLMvYiDm0rpaas5QzNRAyMY0ubt35jKe6rLm37TWqIFU/nGI6ULl8x1dsxO93xgO0xQx4HuLhO9dhtCPJ671/ElCreHBmBq/HBJN6tGWRFcHwW5eKGIGZ/iX2oBaQhyjV/nZNy56m0hNOHRI+5NDduGu6CGwn6Ry9KYq451g8nrp+b7snKNFgPV7J2GKWb9sGh/qpoZOrO7OFJnjquy0ps4OL7JxQE08RUb8AF+erqxwkuXCl+5PHHaw+EZf0CKTinYl5FkdHM+Gg/A3l5ibGFgk6oLZzWYmFdKdsHTvcfZqmk0IrXWvT7ZtixSY+QcQi0TIju8rk3pok790beJLWfOSlnmPDkf2y0Dg5jaWCr+fdDZjUrqnoo9OixluRKtpKaOZy0BupTU8OYem7e9yUMOTeqSB/gTQ6CttFlsC3zMQV0Ky1khzvUNrrO0NV58IPmn06p1WjTd3SVc7BSNtwYE04teB9dW7HtitDzGGne8KeujGIM3FWJNejY2H8skckbvtmeGrydNyPsgPKP7tmbPQpIRg3A8BEUqD0TKsJJcHDoLREtX8fFCPsrm4ocjxiqZ1DVe/FLfaGP4EPUPudE8zmIVTJaaTDAGBNLuBlhMPgF24Qm/k3JVHjQTDmbzNqr5UN43neGletzmWQOMBwVSdgwKYD6oEIagLuTR5AyzGvdxrsIZZ+0e3ZbPChrDNeM70v2I/MLi3vy+IADgzw7ZxhjA7/Ztq8Zj2lhQ==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(376014)(1800799024)(82310400026)(22082099003)(56012099003)(18002099003)(13003099007);
  DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?b1lka25tSExoV3RvaVFWT1lNNEpFeFdRZExma0hha29UUllxUFR5dDFkWHVk?=
- =?utf-8?B?blBxa0dSWkorUEVrb3ViVFFrczhwaUhBVXEyTHRNcVYzZDBkeGlEdXFmQmxK?=
- =?utf-8?B?YmJkN2p5YkVEanh6SG5IUjlEQStWeDNudWx0ZlJDa2JreXhJZmN0YzZWbFlI?=
- =?utf-8?B?dk9mcktrMTJsTVJsc3Y1Z29jZWdXVCtxNSs1NGw3ZXhBL1VBK1AzTWc4L3Ja?=
- =?utf-8?B?MFpYcnZQK00xZEhTUXp6djhabzcyMTVpSm1vL0I1aTd6bFUzWFN3ZTZob255?=
- =?utf-8?B?S1EvYWtMeDI2ZHh4SFJnaDJxTlZXTVJVWXZFM0kxWGEraWNGT1JVRU5rd1JC?=
- =?utf-8?B?cmhrdHJwZDhrMVMxZlQ5YWppSDk0WWREbGJWTm9EUm91aDZXQXc4YVkzVW0y?=
- =?utf-8?B?N0pJRXNFaDJuK1Y3YWhQMDR3ZStMQkFmeFhsSzkzU2s5QnR4QjE3RnpvbXU1?=
- =?utf-8?B?SmZMb0JvQVorM25kZ1RRcCt3ckFNOXVUdU01V1BHdDFBTk5lempvcWtoL2dL?=
- =?utf-8?B?akZHWldSOWhhQ3BNdU5ZZFJzdnhSdGprL3hteStmeUsyOENlZG1DSnlEcFlr?=
- =?utf-8?B?WE9BUEZGQytUZExCV3J0VHJiVzhRTVh1clNIRFNrZHJGL1VzWXJ5NXdydldp?=
- =?utf-8?B?RXZzdlZGRkpTOUx2QWhSVzV0RjVWRURGTWNhZktVVlpVZFFBbzRweDIzOC9L?=
- =?utf-8?B?Rmd5RFFNMVhXUDAvelhJZXltaDJqLzFnT25vMXlzRUpSa1lJNWszZHJuZVZF?=
- =?utf-8?B?SEpFVE52QlhLeVB3L3NpZHNxY0k0OU1vZHJaenkvRVFxbmJmL3pMZTFZb3BD?=
- =?utf-8?B?MW5nS1VlazhDM3B4d09lMm11Q2MvQzNGVWxvR0xZMDdYcG1VZ0xuZHBqdWZh?=
- =?utf-8?B?ZklTbE54MFRONXR2b2NZbWJDQjlKS0VQL0dGUW4wSjBaS2s3bFJiei9teTFF?=
- =?utf-8?B?UFVpeXc2QjgvMEc2NCtJM1A4T1Z4WXJZQncwejdnNUg4KytxL3V4VTM2a05s?=
- =?utf-8?B?SktVb1ZaMlBwYy9QNW9BK3hRZDU2TmNnWFpKTFVZMDhuWG1sSnVkdVBxNEZl?=
- =?utf-8?B?dFFNLzY1eFhWRStrZ3hYYWlVNnFKckljODBOZnMraUVLdXdFTW9jbjZZODds?=
- =?utf-8?B?MElhQ1pseFg1ZWptc092ajczUUxGcEJRQ2FWbGorcHZNKzJ4d3hqbFl2N2Z2?=
- =?utf-8?B?dG44Zi9wMHJnRWFMSHdoOWFadFhvek1meWJmeVJ6clIyZGNoMEhNaW91YXBR?=
- =?utf-8?B?ekVKTlhHa3ArVmtGWWhiZk1MdFhZSmxEUC9Jc2lEK29wY0Z4RHZQMThqZ3NV?=
- =?utf-8?B?aGd2eXBXa2hxVW1jQTdaZ082MzR2bENUNllxbVRVTmJhRzFka1dkckR6bnBm?=
- =?utf-8?B?T0x1ZFptRWdLVjJBSjduNHRXN25qemdKWkVpTFhTNHpPbk51Rkk1QWZEMFdk?=
- =?utf-8?B?enErWmhQOTkvQzY4NUZxa2NMZndCQmJYc2lyZC9vNEZpTmlUelVQRi9DSDNo?=
- =?utf-8?B?UHZqSnlPc0k2QU5wSUkvaXNVc2hDOGF3VS9NZWdMOUFGUjE3M1VBcVh5Q0Ix?=
- =?utf-8?B?SDd5K25FaWd3aklqcHF6SkwrWXIvVUNuM291RW1BR2ZpOXlRRW5TbDJwOFMv?=
- =?utf-8?B?anczUWdza0RHTGhvZlhiVDNVdkY5U3A5RjR2VlAvcDdBSTlHbXM1L3RCVWRJ?=
- =?utf-8?B?V0sxc2w4bFRRM2pwbkpDT1hGb1NlMHJKVWJQaURFNGpzVnF6N3cyY0lwZFBr?=
- =?utf-8?B?bmFLc0RldWUxZWxkTTRhTk1xeTBmUGZJQ3FRSGVMbzBQS1VpTE4zS0hiQWtG?=
- =?utf-8?B?SUJNWmhxWjRsYlpMeFIyYjRUY3JaS2tTb0xpZDY0TXZKMDZyUnA5TGRMdXdx?=
- =?utf-8?B?WUZxMHhhbzdMRFJUbEw5Rm1ncEJCTTl3anY1dlpmbE1FZ3BCT20rdFJQbHVZ?=
- =?utf-8?B?a0FnUEJsYVJtSGdwNlBsLzNacjVtM05lUDU5TW1qMnh5WUE4ekJFV2NjbW83?=
- =?utf-8?B?OWZncTNkZ0tQVzFPcXRkQzJjRkhqbHl6YXBLc0Y1aWJ2TCtOOTlwcmkwdWVT?=
- =?utf-8?B?YlIyK2taOExUQm51TUZxaDVFNk11cHJjZklBSGNhWkNmM043MGFHbkd2UWpr?=
- =?utf-8?B?Mlg1N3lHVklhLzI4UVRtcWcrWlpuajF6N21mSnJhTXF5M0g1eGJzYUcxdlRu?=
- =?utf-8?B?dHY4N2RzTTF1bk1CZ095Q1V3RGdKMWhtajBTdit6M2huTzZRa2xOQ2RFVEFK?=
- =?utf-8?B?N2dTOHpjekNZKzNUQkNMbncraDRlc3dqb3dhVVcwT0dKaHhabjdwcTJoMlds?=
- =?utf-8?B?NWxmaytTS2UwWW9JRndCOHNYSWdtRjlQUlN4a2ovQ0JscUhFSy9uQ1E3TEdU?=
- =?utf-8?Q?Hlcv7XdspSYV3YgM=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <8EF766863C5BEF429DE1E24CEC1ACF05@jpnprd01.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: g1zn5zc6DxKv4oWpjzK2rVfog30bDYxLU4eZEPKKuMmKK/x2neneHk3hsI9JJdszfZ7pRec89xrjw6iM99iIJ/PzLmslwGgLhXnN6FkgtpDJgGKyoIqqUIMIZGGFfP5cI89V0hPr91iTpd33VjdTqDK0dId+8XJmCbp1KDrD2KSHI/qxLQlsFBOdEnit751DLG4eZMu3Fe0LmJxg/C8C0k/0GFHgq94RyAH4hosC/DH/xLsQYqR2pqq1WWCcDq5EJudZmLpNUG6DENfaiIjWzxWqGAI3ZEfY38VZ8fq+Pb8wc7P2BeMww/K9iS4xzl+7JUzfzo6E4hFlXFIujVSF5Q==
-X-OriginatorOrg: fujitsu.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYRPR01MB13806.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d2a760e-8723-483f-11e0-08de9164f3a1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Apr 2026 09:39:50.3223 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: RwJKpnxb1T/dHNenobyhOOjMu2gZz8xwjJi6MVDwWso3a8MHQiw4uc1AxuWT1fZB0DGkHtU68o5cVhosDyVOUw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSZPR01MB6677
-Received-SPF: pass client-ip=52.101.229.33; envelope-from=lizhijian@fujitsu.com;
- helo=TY3P286CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: r11ZJD6A4KGEZf2ejEs6DPZCXL3Z7qTc7LRLPdbFUgkLZmuoBSrIPDz5S/Kj0IiNPU9tk3Nl2oPtvmjFi71uUiVtGBhxJ4NmtQJ4YT8Xf/V7JD4kUOOUAJWtmYmScT+MFI1R61SGqSAAGk4Ys6evTCRHjoVOd6YNRO4kCKis4fcZr9mT/FztlHIJgYzPJ/pJMYQHhPQEvPT9AUSDc3tfKJ8Rr9LsDtWvnTQ+pI19nDZKszAhgQjM5xzoaGDuiCkyqYqFESZSUXtgaRRTbiiMYGHdsK6lFXcFz3F3urvgWU3c8QHps3qe5i1jyqyogYdePgwn8CmsaC4DVjZ2D/oEXZ0OcACOdNuKSXC2P4qzkSYBDnIt2CVGHrFBchhvhdep+gcZcZBEstDB6qzgr2QMN1vJ3P3XDj3r7tSq1foHcZyzyoGWurch4Y7OjYWd+k9C
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2026 09:59:26.2029 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 017f12fa-7d42-4fe8-8f95-08de9167b086
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E63.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4387
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=GuoQing.Zhang@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,147 +143,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCk9uIDAzLzA0LzIwMjYgMTQ6MTUsIFpoYW5nLCBHdW9RaW5nIChTYW0pIHdyb3RlOg0KPiBb
-WW91IGRvbid0IG9mdGVuIGdldCBlbWFpbCBmcm9tIGd1b3F6aGFuQGFtZC5jb20uIExlYXJuIHdo
-eSB0aGlzIGlzIGltcG9ydGFudCBhdCBodHRwczovL2FrYS5tcy9MZWFybkFib3V0U2VuZGVySWRl
-bnRpZmljYXRpb24gXQ0KPiANCj4gSGkgUGV0ZXIsDQo+IA0KPiBUaGUgTklDIGlzIGBNZWxsYW5v
-eCBUZWNobm9sb2dpZXMgTVQ0MzI0NCBCbHVlRmllbGQtMyBpbnRlZ3JhdGVkDQo+IENvbm5lY3RY
-LTcgbmV0d29yayBjb250cm9sbGVyYC4gMiBTZXJ2ZXJzIGRpcmVjdGx5IGNvbm5lY3RlZCB3aXRo
-IHRoZQ0KPiBSRE1BIGNhYmxlLg0KPiANCj4gSSB0cmllZCB0byBlbmFibGUgbXVsdGlmZCB3aXRo
-IGZvbGxvd2luZyBtb25pdG9yIGNtZCBvbiBzb3VyY2UgVk0sIGJ1dA0KPiBtaWdyYXRpb24gZmFp
-bGVkIHdpdGggZXJyaXIgYEZhaWxlZCB0byBjb25uZWN0IHRvICcxOTIuMTY4LjEwMC4zOjQ0NDAn
-Og0KPiBDb25uZWN0aW9uIHRpbWVkIG91dGAuIEkgZG9uJ3Qga25vdyB3aHkuDQo+IA0KPiBgYGAN
-Cj4gbWlncmF0ZV9zZXRfY2FwYWJpbGl0eSBtdWx0aWZkIG9uDQo+IG1pZ3JhdGVfc2V0X3BhcmFt
-ZXRlciBtdWx0aWZkLWNoYW5uZWxzIDgNCj4gYGBgDQo+IA0KPiBIaSBaaGlqaWFuLA0KPiANCj4g
-Rm9sbG93IGlzIHRoZSBwZXJmIGRhdGEgeW91IHJlcXVlc3RlZC4NCg0KDQpIZWxsbyBTYW0NCg0K
-SSBhcHBsaWVkIHlvdXIgVjQgcGF0Y2ggb24gdjExLjAuMC1yYzIsLCBidXQgZW5jb3VudGVyZWQg
-Zm9sbG93aW5nIGVycm9yIGR1cmluZyBtaWdyYXRpb24uDQoNCihxZW11KSBtaWdyYXRlX3NldF9w
-YXJhbWV0ZXIgeC1yZG1hLWNodW5rLXNpemUgMm0gIyBvbmx5IDFtIHdvcmtlZA0KKHFlbXUpIG1p
-Z3JhdGUgLWQgcmRtYToxOTIuMTY4LjMzLjE6NjY2Ng0KKHFlbXUpIHFlbXUtc3lzdGVtLXg4Nl82
-NDogcmRtYSBtaWdyYXRpb246IHNlbmQgcG9sbGluZyBjb250cm9sIGVycm9yDQpxZW11LXN5c3Rl
-bS14ODZfNjQ6IFJETUEgaXMgaW4gYW4gZXJyb3Igc3RhdGUgd2FpdGluZyBtaWdyYXRpb24gdG8g
-YWJvcnQhDQpxZW11LXN5c3RlbS14ODZfNjQ6IGZhaWxlZCB0byBzYXZlIFNhdmVTdGF0ZUVudHJ5
-IHdpdGggaWQobmFtZSk6IDEocmFtKTogLTENCnFlbXUtc3lzdGVtLXg4Nl82NDogQ2hhbm5lbCBl
-cnJvcjogT3BlcmF0aW9uIG5vdCBwZXJtaXR0ZWQNCnFlbXUtc3lzdGVtLXg4Nl82NDogd2Fybmlu
-ZzogRWFybHkgZXJyb3IuIFNlbmRpbmcgZXJyb3IuDQpxZW11LXN5c3RlbS14ODZfNjQ6IHdhcm5p
-bmc6IHJkbWEgbWlncmF0aW9uOiBzZW5kIHBvbGxpbmcgY29udHJvbCBlcnJvcg0KDQpBbnkgaWRl
-YSA/DQoNCg0KDQo+IA0KPiBOSUM6IE1lbGxhbm94IFRlY2hub2xvZ2llcyBNVDQzMjQ0IEJsdWVG
-aWVsZC0zIGludGVncmF0ZWQgQ29ubmVjdFgtNw0KPiBuZXR3b3JrIGNvbnRyb2xsZXINCj4gOEdC
-IFJBTSBWTS4NCj4gd29ya2xvYWQgaW4gZ3Vlc3Q6IGBzdHJlc3MtbmcgLS12bSA0IC0tdm0tYnl0
-ZXMge3NpemV9RyAtLXZtLW1ldGhvZA0KPiByYW5kLXNldCAtLXRpbWVvdXQgMGANCj4gDQo+IHwg
-dHJhbnNwb3J0IHwgY2h1bmsgc2l6ZSB8IHN0cmVzcy1uZyBzaXplIChHKSB8IHRpbWUobXMpIHwg
-dGhyb3VnaHB1dCB8DQo+IHwtLS0tLS0tLS0tLXwtLS0tLS0tLS0tLS18LS0tLS0tLS0tLS0tLS0t
-LS0tLS18LS0tLS0tLS0tLXwtLS0tLS0tLS0tLS18DQo+IHwgdGNwwqDCoMKgwqDCoMKgIHwgbi9h
-wqDCoMKgwqDCoMKgwqAgfCAxwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDQ0
-OTU1wqDCoMKgIHwgMTI0NcKgwqDCoMKgwqAgfA0KPiB8IHJkbWHCoMKgwqDCoMKgIHwgMW3CoMKg
-wqDCoMKgwqDCoMKgIHwgMcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCA0Njg5
-M8KgwqDCoCB8IDEyNDDCoMKgwqDCoMKgIHwNCj4gfCByZG1hwqDCoMKgwqDCoCB8IDJtwqDCoMKg
-wqDCoMKgwqDCoCB8IDHCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgNDczNzTC
-oMKgwqAgfCAxMzA4wqDCoMKgwqDCoCB8DQo+IHwgcmRtYcKgwqDCoMKgwqAgfCA4bcKgwqDCoMKg
-wqDCoMKgwqAgfCAxwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDM4MjcxwqDC
-oMKgIHwgMTU0MsKgwqDCoMKgwqAgfA0KPiB8IHJkbWHCoMKgwqDCoMKgIHwgMTZtwqDCoMKgwqDC
-oMKgwqAgfCAxwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDM4OTAxwqDCoMKg
-IHwgMTU1OMKgwqDCoMKgwqAgfA0KPiB8IHJkbWHCoMKgwqDCoMKgIHwgMzJtwqDCoMKgwqDCoMKg
-wqAgfCAxwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDEzODk1wqDCoMKgIHwg
-Mzc2MsKgwqDCoMKgwqAgfA0KPiB8IHJkbWHCoMKgwqDCoMKgIHwgNjRtwqDCoMKgwqDCoMKgwqAg
-fCAxwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDQyODjCoMKgwqDCoCB8IDE0
-MzU3wqDCoMKgwqDCoCB8DQo+IHwgcmRtYcKgwqDCoMKgwqAgfCA2NG3CoMKgwqDCoMKgwqDCoCB8
-IDLCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgNTQwNcKgwqDCoMKgIHwgMTM3
-MTnCoMKgwqDCoMKgIHwNCj4gfCByZG1hwqDCoMKgwqDCoCB8IDY0bcKgwqDCoMKgwqDCoMKgIHwg
-NMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCA5OTc2wqDCoMKgwqAgfCA5NDc1
-wqDCoMKgwqDCoCB8DQo+IHwgcmRtYcKgwqDCoMKgwqAgfCAxMjhtwqDCoMKgwqDCoMKgIHwgNMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCAzMzQ1wqDCoMKgwqAgfCAyNzQyOMKg
-wqDCoMKgwqAgfA0KPiB8IHJkbWHCoMKgwqDCoMKgIHwgMjU2bcKgwqDCoMKgwqDCoCB8IDTCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMzUzN8KgwqDCoMKgIHwgMjYwOTfCoMKg
-wqDCoMKgIHwNCj4gfCByZG1hwqDCoMKgwqDCoCB8IDUxMm3CoMKgwqDCoMKgwqAgfCA0wqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDM0MTfCoMKgwqDCoCB8IDI4NDQwwqDCoMKg
-wqDCoCB8DQo+IHwgcmRtYcKgwqDCoMKgwqAgfCAxMDI0bcKgwqDCoMKgwqAgfCA0wqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDM0MTLCoMKgwqDCoCB8IDI3NjM3wqDCoMKgwqDC
-oCB8DQo+IA0KPiBSZWdhcmRzDQo+IFNhbQ0KPiANCj4gDQo+IE9uIDIwMjYvNC8xIDIzOjU2LCBQ
-ZXRlciBYdSB3cm90ZToNCj4+IFtZb3UgZG9uJ3Qgb2Z0ZW4gZ2V0IGVtYWlsIGZyb20gcGV0ZXJ4
-QHJlZGhhdC5jb20uIExlYXJuIHdoeSB0aGlzIGlzIGltcG9ydGFudCBhdCBodHRwczovL2FrYS5t
-cy9MZWFybkFib3V0U2VuZGVySWRlbnRpZmljYXRpb24gXQ0KPj4NCj4+IE9uIFR1ZSwgTWFyIDMx
-LCAyMDI2IGF0IDA2OjMzOjIzUE0gKzA4MDAsIFpoYW5nLCBHdW9RaW5nIChTYW0pIHdyb3RlOg0K
-Pj4+IE9uIDIwMjYvMy8zMSAxMTozMCwgWmhpamlhbiBMaSAoRnVqaXRzdSkgd3JvdGU6DQo+Pj4+
-IFtTb21lIHBlb3BsZSB3aG8gcmVjZWl2ZWQgdGhpcyBtZXNzYWdlIGRvbid0IG9mdGVuIGdldCBl
-bWFpbCBmcm9tIGxpemhpamlhbkBmdWppdHN1LmNvbS4gTGVhcm4gd2h5IHRoaXMgaXMgaW1wb3J0
-YW50IGF0IGh0dHBzOi8vYWthLm1zL0xlYXJuQWJvdXRTZW5kZXJJZGVudGlmaWNhdGlvbiBdDQo+
-Pj4+DQo+Pj4+IE9uIDMxLzAzLzIwMjYgMDA6MTAsIFBldGVyIFh1IHdyb3RlOg0KPj4+Pj4gSGks
-IFNhbXVlbCwNCj4+Pj4+DQo+Pj4+PiBPbiBGcmksIE1hciAyNywgMjAyNiBhdCAwMjo1MDowNlBN
-ICswODAwLCBTYW11ZWwgWmhhbmcgd3JvdGU6DQo+Pj4+Pj4gVGhlIGRlZmF1bHQgMU1CIFJETUEg
-Y2h1bmsgc2l6ZSBjYXVzZXMgc2xvdyBsaXZlIG1pZ3JhdGlvbiBiZWNhdXNlDQo+Pj4+Pj4gZWFj
-aCBjaHVuayB0cmlnZ2VycyBhIHdyaXRlX2ZsdXNoIChpYnZfcG9zdF9zZW5kKS4gRm9yIDhHQiBS
-QU0sDQo+Pj4+Pj4gMU1CIGNodW5rIHNpemUgcHJvZHVjZXMgfjE1MDAwIGZsdXNoZXMgdnMgfjM3
-MDAgd2l0aCAxMDI0TUIgY2h1bmsgc2l6ZS4NCj4+Pj4+Pg0KPj4+Pj4+IEFkZCB4LXJkbWEtY2h1
-bmstc2l6ZSBwYXJhbWV0ZXIgdG8gY29uZmlndXJlIHRoZSBSRE1BIGNodW5rIHNpemUgZm9yDQo+
-Pj4+Pj4gZmFzdGVyIG1pZ3JhdGlvbi4NCj4+Pj4+PiBVc2FnZTogYG1pZ3JhdGVfc2V0X3BhcmFt
-ZXRlciB4LXJkbWEtY2h1bmstc2l6ZSAxMDI0TWANCj4+Pj4+Pg0KPj4+Pj4+IFBlcmZvcm1hbmNl
-IHdpdGggUkRNQSBsaXZlIG1pZ3JhdGlvbiBvZiA4R0IgUkFNIFZNOg0KPj4+Pj4+DQo+Pj4+Pj4g
-fCB4LXJkbWEtY2h1bmstc2l6ZSAoQikgfCB0aW1lIChzKSB8IHRocm91Z2hwdXQgKE1CL3MpIHwN
-Cj4+Pj4+PiB8LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS18LS0tLS0tLS0tLXwtLS0tLS0tLS0tLS0t
-LS0tLS0tfA0KPj4+Pj4+IHwgMU0gKGRlZmF1bHQpwqDCoMKgwqDCoMKgwqDCoMKgIHwgMzcuOTE1
-wqDCoCB8wqAgMSwwMDfCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwNCj4+Pj4+IFRoaXMgaXMgdGhl
-IGRlZmF1bHQuIEl0IHN1cnByaXNlZCBtZSBhIGJpdCBrbm93aW5nIGl0IGNhbiBvbmx5IHJlYWNo
-IDFHQi9zDQo+Pj4+PiB0aHJvdWdocHV0IHdpdGggdGhlIGN1cnJlbnQgY29kZSBiYXNlLsKgIERv
-IHlvdSBrbm93IHdoeT/CoCBJIHRob3VnaHQgUkRNQQ0KPj4+Pj4gc2hvdWxkIGJlIG11Y2ggZmFz
-dGVyIHRoYW4gdGhpcyBvbiB0aHJvdWdocHV0IHdpdGggd2hhdGV2ZXIgaGFyZHdhcmUgc2V0dXAu
-DQo+Pj4+IFJlZ2FyZGluZyB0aGUgYmFzZWxpbmUgcGVyZm9ybWFuY2UsIFNhbXVlbCdzIG51bWJl
-cnMgbG9vayByZWFzb25hYmxlLiBJIGNoZWNrZWQNCj4+Pj4gc29tZSBvZiBteSBvbGQgdGVzdCBk
-YXRhIG9uIGEgQ29ubmVjdFgtNCBMeCBjYXJkIHllYXJzIGFnbywgYW5kIHRoZSB0aHJvdWdocHV0
-DQo+Pj4+IHdhcyBhcm91bmQgMTAgR2JwcyAofjEuMjUgR0IvcyksIHdoaWNoIGlzIGNvbnNpc3Rl
-bnQgd2l0aCB0aGUgMSBHQi9zIGhlIHJlcG9ydGVkLg0KPj4+Pg0KPj4+Pj4+IHwgMzJNwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMTcuODgwwqDCoCB8wqAgMiwyNjDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIHwNCj4+Pj4+PiB8IDEwMjRNwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgfMKgIDQuMzY4wqDCoCB8IDE3LDUyOcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-fA0KPj4+PiBNeSBndWVzcyBmb3IgdGhlIGRyYW1hdGljIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50
-IGlzIHRoYXQgYSBsYXJnZXIgY2h1bmsgc2l6ZQ0KPj4+PiBhbGxvd3MgcWVtdV9yZG1hX3dyaXRl
-KCkgdG8gYmF0Y2ggbW9yZSAqY29udGlndW91cyBkaXJ0eSBwYWdlcyogaW50byBhIHNpbmdsZSwN
-Cj4+Pj4gbW9yZSBlZmZpY2llbnQgUkRNQSBzZW5kIG9wZXJhdGlvbi4NCj4+PiBUaGUgYHRocm91
-Z2hwdXRgIGRhdGEgaXMgY29sbGVjdGVkIGZyb20gYGluZm8gbWlncmF0ZWAgcWVtdSBtb25pdG9y
-IGNvbW1hbmQNCj4+PiBhZnRlciBsaXZlLW1pZ3JhdGlvbi4NCj4+Pg0KPj4+IFllcywgWmhpamlh
-biBpcyByaWdodC4gQXMgZWFjaCBjaHVuayB0cmlnZ2VycyBhIHdyaXRlX2ZsdXNoIGFuZCBlYWNo
-IGZsdXNoDQo+Pj4gaW52b2x2ZXMgcG9zdGluZyBhbiBSRE1BIFdSSVRFIGFuZCBXQUlUSU5HIGZv
-ciBjb21wbGV0aW9uLCB0aGVyZSdzIHNvZnR3YXJlDQo+Pj4gb3ZlcmhlYWQgaGVyZS4NCj4+Pg0K
-Pj4+IEZvciA4R0IgUkFNIFZNIG1pZ3JhdGlvbiwgMU1CIGNodW5rIHNpemUgcHJvZHVjZXMgfjE1
-MDAwIGZsdXNoZXMuIFRoZQ0KPj4+IHNvZnR3YXJlIG92ZXJoZWFkIGFkZHMgdXAgYW5kIHByZXZl
-bnRzIHRoZSBSRE1BIGhhcmR3YXJlIGZyb20gc3VzdGFpbmluZw0KPj4+IGhpZ2ggdGhyb3VnaHB1
-dC4NCj4+Pg0KPj4+IFdoZW4gY2h1bmsgc2l6ZSBpcyAxR0IsIHRoZXJlIGFyZSB+MzcwMCBmbHVz
-aGVzLiBSZWR1Y2VkIGZsdXNoIGNvdW50IG1lYW5zDQo+Pj4gcmVkdWNlZCBzb2Z0d2FyZSBvdmVy
-aGVhZCBhbmQgaW1wcm92ZWQgb3ZlcmFsbCB0aHJvdWdocHV0Lg0KPj4+DQo+PiBPSywgdGhhbmtz
-IGJvdGguDQo+Pg0KPj4+PiBJcyB0aGVyZSBhbnkgd29ya2xvYWRzIHJ1bm5pbmcgb24gdGhlIGd1
-ZXN0IGR1cmluZyB0aGUgbWlncmF0aW9uLCBvciBqdXN0IGFuIGlkbGUgZ3Vlc3Q/IEBTYW11ZWwN
-Cj4+Pg0KPj4+IFRoZSBndWVzdCBpcyBpZGxlIHdoZW4gSSB0ZXN0IHRoZSBtaWdyYXRpb24gYW5k
-IGNvbGxlY3QgdGhlIGRhdGEuDQo+Pj4NCj4+Pg0KPj4+PiBHaXZlbiB0aGUgc2lnbmlmaWNhbnQg
-YmVuZWZpdCBhbmQgdGhlIGZhY3QgdGhhdCB0aGUgcGF0Y2ggaXRzZWxmIGlzIHN0cmFpZ2h0Zm9y
-d2FyZCwNCj4+Pj4gSSB0aGluayBpdCdzIGEgd29ydGh3aGlsZSBhZGRpdGlvbi4NCj4+Pj4NCj4+
-Pj4gQWNrZWQtYnk6IExpIFpoaWppYW4gPGxpemhpamlhbkBmdWppdHN1LmNvbT4NCj4+Pg0KPj4+
-IFRoYW5rIHlvdSBmb3IgdGhlIGFjaywgWmhpamlhbiENCj4+Pg0KPj4+DQo+Pj4+DQo+Pj4+DQo+
-Pj4+Pj4gU2lnbmVkLW9mZi1ieTogU2FtdWVsIFpoYW5nIDxndW9xaW5nLnpoYW5nQGFtZC5jb20+
-DQo+Pj4+PiBPbmUgdGhpbmcgdG8gbWVudGlvbiBpcyBSRE1BIG1pZ3JhdGlvbiBpcyBpbiBvZGQt
-Zml4ZXMgc3RhZ2UsIGFjdHVhbGx5IGl0DQo+Pj4+PiBkb2Vzbid0IGhhdmUgYSByZWFsIG1haW50
-YWluZXIgc28gaXQgaXMga2luZCBvZiAib3JwaGFuZWQiLsKgIEluIHRoaXMgY2FzZSwNCj4+Pj4+
-IEkgYWN0dWFsbHkgd29uJ3Qgc3VnZ2VzdCB3ZSBhZGQgYW55IG5ldyBrbm9icyBmb3IgcGVyZm9y
-bWFuY2UgcmVhc29ucy4NCj4+Pj4+DQo+Pj4+PiBEbyB5b3UgaGF2ZSBhIHN0cm9uZyByZWFzb24g
-dG8gcHJvcG9zZSB0aGlzIHBhdGNoIHRvIGxhbmQgdXBzdHJlYW0/wqAgSXMgaXQNCj4+Pj4+IHVz
-ZWQgaW4gcHJvZHVjdGlvbiBzeXN0ZW1zIGFuZCBpdCBzb2x2ZXMgc29tZSByZWFsIHByb2JsZW1z
-IGZvciB5b3U/DQo+Pj4NCj4+PiBXZSBoYXZlIFZNcyB3aXRoIGxhcmdlIFJBTSBhbmQgZmluZCBU
-Q1AgbGl2ZS1taWdyYXRpb24gaXMgbm90IGZhc3QgZW5vdWdoDQo+Pj4gYW5kIGV4cGVjdCBSRE1B
-IG1pZ3JhdGlvbiBjYW4gYmUgZmFzdGVyLg0KPj4+DQo+Pj4gQnV0IHdlIGZvdW5kIHRoZSByZG1h
-IG1vZGUgbWlncmF0aW9uIHNwZWVkIGlzIHNsb3dlciB0aGFuIHRjcCBtb2RlLiBTZWUNCj4+PiBm
-b2xsb3dpbmcgZGF0YS4NCj4+Pg0KPj4+DQo+Pj4gOEdCIFJBTSBpZGxlIFZNIGxpdmUtbWlncmF0
-aW9uIHBlcmZvcm1hbmNlOg0KPj4+IHwgdHJhbnNwb3J0IG1vZGXCoMKgwqDCoMKgwqAgfCB0aW1l
-IChzKSB8IHRocm91Z2hwdXQgKE1CL3MpIHwNCj4+PiB8LS0tLS0tLS0tLS0tLS0tLS0tLS0tLXwt
-LS0tLS0tLS0tfC0tLS0tLS0tLS0tLS0tLS0tLS18DQo+Pj4gfCBUQ1DCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIHwgMzYuODnCoMKgwqAgfMKgIDEsMDgxwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCB8DQo+PiBXaGF0IGlzIHRoZSBOSUMgc2V0dXA/wqAgRGlkIHlvdSB0cnkgdG8gZW5h
-YmxlIG11bHRpZmQgdG8gb2ZmbG9hZCB6ZXJvcGFnZQ0KPj4gZGV0ZWN0aW9ucz/CoCBPciBpcyB0
-aGF0IG5vdCBmZWFzaWJsZSBkdWUgdG8gc29tZSByZWFzb24/DQo+Pg0KPj4+IHwgUkRNQSwgMU1C
-IGNodW5rIHNpemUgfCAzNy45MTXCoMKgIHzCoCAxLDAwN8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-fA0KPj4+IHwgUkRNQSwgMUdCIGNodW5rIHNpemUgfMKgIDQuMzY4wqDCoCB8IDE3LDUyOcKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAgfA0KPj4+DQo+Pj4gVGhpcyBwYXRjaCBhbGxvd3MgdXMgdG8gdXNl
-IGxhcmdlciBjaHVuayBzaXplIGZvciBmYXN0ZXIgUkRNQSBtaWdyYXRpb24uDQo+PiBTdXJlLCBa
-aGlqaWFuJ3MgcG9pbnQgaXMgcmVhc29uYWJsZS7CoCBJZiBoZSdzIGZpbmUsIEknbSBPSy4NCj4+
-DQo+PiBUaGFua3MsDQo+Pg0KPj4+DQo+Pj4gUmVnYXJkcw0KPj4+IFNhbQ0KPj4+DQo+Pj4NCj4+
-Pj4+IEkgYWxzbyB3b25kZXIgd2hhdCBaaGlqaWFuIHdvdWxkIHNheSBvbiB0aGlzLg0KPj4+Pj4N
-Cj4+Pj4+IFRoYW5rcywNCj4+Pj4+DQo+PiAtLSANCj4+IFBldGVyIFh1DQo+Pg0K
+
+On 2026/4/3 17:39, Zhijian Li (Fujitsu) wrote:
+> [Some people who received this message don't often get email from lizhijian@fujitsu.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>
+> On 03/04/2026 14:15, Zhang, GuoQing (Sam) wrote:
+>> [You don't often get email from guoqzhan@amd.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>>
+>> Hi Peter,
+>>
+>> The NIC is `Mellanox Technologies MT43244 BlueField-3 integrated
+>> ConnectX-7 network controller`. 2 Servers directly connected with the
+>> RDMA cable.
+>>
+>> I tried to enable multifd with following monitor cmd on source VM, but
+>> migration failed with errir `Failed to connect to '192.168.100.3:4440':
+>> Connection timed out`. I don't know why.
+>>
+>> ```
+>> migrate_set_capability multifd on
+>> migrate_set_parameter multifd-channels 8
+>> ```
+>>
+>> Hi Zhijian,
+>>
+>> Follow is the perf data you requested.
+>
+> Hello Sam
+>
+> I applied your V4 patch on v11.0.0-rc2,, but encountered following error during migration.
+>
+> (qemu) migrate_set_parameter x-rdma-chunk-size 2m # only 1m worked
+> (qemu) migrate -d rdma:192.168.33.1:6666
+> (qemu) qemu-system-x86_64: rdma migration: send polling control error
+> qemu-system-x86_64: RDMA is in an error state waiting migration to abort!
+> qemu-system-x86_64: failed to save SaveStateEntry with id(name): 1(ram): -1
+> qemu-system-x86_64: Channel error: Operation not permitted
+> qemu-system-x86_64: warning: Early error. Sending error.
+> qemu-system-x86_64: warning: rdma migration: send polling control error
+>
+> Any idea ?
+
+
+Hi Zhijian,
+
+the perf data is based on commit 
+fff352b9b6080e580aa1fadd29b4eccf4cb2922a. I just tried v11.0.0-rc2, it's 
+also working on my side.
+
+one thing to notice is that `migrate_set_parameter x-rdma-chunk-size 2m` 
+should be run on both source and dest qemu before migration starts.
+
+Regards
+Sam
+
+
+>
+>
+>
+>> NIC: Mellanox Technologies MT43244 BlueField-3 integrated ConnectX-7
+>> network controller
+>> 8GB RAM VM.
+>> workload in guest: `stress-ng --vm 4 --vm-bytes {size}G --vm-method
+>> rand-set --timeout 0`
+>>
+>> | transport | chunk size | stress-ng size (G) | time(ms) | throughput |
+>> |-----------|------------|--------------------|----------|------------|
+>> | tcp       | n/a        | 1                  | 44955    | 1245      |
+>> | rdma      | 1m         | 1                  | 46893    | 1240      |
+>> | rdma      | 2m         | 1                  | 47374    | 1308      |
+>> | rdma      | 8m         | 1                  | 38271    | 1542      |
+>> | rdma      | 16m        | 1                  | 38901    | 1558      |
+>> | rdma      | 32m        | 1                  | 13895    | 3762      |
+>> | rdma      | 64m        | 1                  | 4288     | 14357      |
+>> | rdma      | 64m        | 2                  | 5405     | 13719      |
+>> | rdma      | 64m        | 4                  | 9976     | 9475      |
+>> | rdma      | 128m       | 4                  | 3345     | 27428      |
+>> | rdma      | 256m       | 4                  | 3537     | 26097      |
+>> | rdma      | 512m       | 4                  | 3417     | 28440      |
+>> | rdma      | 1024m      | 4                  | 3412     | 27637      |
+>>
+>> Regards
+>> Sam
+>>
+>>
+>> On 2026/4/1 23:56, Peter Xu wrote:
+>>> [You don't often get email from peterx@redhat.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>>>
+>>> On Tue, Mar 31, 2026 at 06:33:23PM +0800, Zhang, GuoQing (Sam) wrote:
+>>>> On 2026/3/31 11:30, Zhijian Li (Fujitsu) wrote:
+>>>>> [Some people who received this message don't often get email from lizhijian@fujitsu.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>>>>>
+>>>>> On 31/03/2026 00:10, Peter Xu wrote:
+>>>>>> Hi, Samuel,
+>>>>>>
+>>>>>> On Fri, Mar 27, 2026 at 02:50:06PM +0800, Samuel Zhang wrote:
+>>>>>>> The default 1MB RDMA chunk size causes slow live migration because
+>>>>>>> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
+>>>>>>> 1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
+>>>>>>>
+>>>>>>> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
+>>>>>>> faster migration.
+>>>>>>> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
+>>>>>>>
+>>>>>>> Performance with RDMA live migration of 8GB RAM VM:
+>>>>>>>
+>>>>>>> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
+>>>>>>> |-----------------------|----------|-------------------|
+>>>>>>> | 1M (default)          | 37.915   |  1,007            |
+>>>>>> This is the default. It surprised me a bit knowing it can only reach 1GB/s
+>>>>>> throughput with the current code base.  Do you know why?  I thought RDMA
+>>>>>> should be much faster than this on throughput with whatever hardware setup.
+>>>>> Regarding the baseline performance, Samuel's numbers look reasonable. I checked
+>>>>> some of my old test data on a ConnectX-4 Lx card years ago, and the throughput
+>>>>> was around 10 Gbps (~1.25 GB/s), which is consistent with the 1 GB/s he reported.
+>>>>>
+>>>>>>> | 32M                   | 17.880   |  2,260            |
+>>>>>>> | 1024M                 |  4.368   | 17,529            |
+>>>>> My guess for the dramatic performance improvement is that a larger chunk size
+>>>>> allows qemu_rdma_write() to batch more *contiguous dirty pages* into a single,
+>>>>> more efficient RDMA send operation.
+>>>> The `throughput` data is collected from `info migrate` qemu monitor command
+>>>> after live-migration.
+>>>>
+>>>> Yes, Zhijian is right. As each chunk triggers a write_flush and each flush
+>>>> involves posting an RDMA WRITE and WAITING for completion, there's software
+>>>> overhead here.
+>>>>
+>>>> For 8GB RAM VM migration, 1MB chunk size produces ~15000 flushes. The
+>>>> software overhead adds up and prevents the RDMA hardware from sustaining
+>>>> high throughput.
+>>>>
+>>>> When chunk size is 1GB, there are ~3700 flushes. Reduced flush count means
+>>>> reduced software overhead and improved overall throughput.
+>>>>
+>>> OK, thanks both.
+>>>
+>>>>> Is there any workloads running on the guest during the migration, or just an idle guest? @Samuel
+>>>> The guest is idle when I test the migration and collect the data.
+>>>>
+>>>>
+>>>>> Given the significant benefit and the fact that the patch itself is straightforward,
+>>>>> I think it's a worthwhile addition.
+>>>>>
+>>>>> Acked-by: Li Zhijian <lizhijian@fujitsu.com>
+>>>> Thank you for the ack, Zhijian!
+>>>>
+>>>>
+>>>>>
+>>>>>>> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
+>>>>>> One thing to mention is RDMA migration is in odd-fixes stage, actually it
+>>>>>> doesn't have a real maintainer so it is kind of "orphaned".  In this case,
+>>>>>> I actually won't suggest we add any new knobs for performance reasons.
+>>>>>>
+>>>>>> Do you have a strong reason to propose this patch to land upstream?  Is it
+>>>>>> used in production systems and it solves some real problems for you?
+>>>> We have VMs with large RAM and find TCP live-migration is not fast enough
+>>>> and expect RDMA migration can be faster.
+>>>>
+>>>> But we found the rdma mode migration speed is slower than tcp mode. See
+>>>> following data.
+>>>>
+>>>>
+>>>> 8GB RAM idle VM live-migration performance:
+>>>> | transport mode       | time (s) | throughput (MB/s) |
+>>>> |----------------------|----------|-------------------|
+>>>> | TCP                  | 36.89    |  1,081            |
+>>> What is the NIC setup?  Did you try to enable multifd to offload zeropage
+>>> detections?  Or is that not feasible due to some reason?
+>>>
+>>>> | RDMA, 1MB chunk size | 37.915   |  1,007            |
+>>>> | RDMA, 1GB chunk size |  4.368   | 17,529            |
+>>>>
+>>>> This patch allows us to use larger chunk size for faster RDMA migration.
+>>> Sure, Zhijian's point is reasonable.  If he's fine, I'm OK.
+>>>
+>>> Thanks,
+>>>
+>>>> Regards
+>>>> Sam
+>>>>
+>>>>
+>>>>>> I also wonder what Zhijian would say on this.
+>>>>>>
+>>>>>> Thanks,
+>>>>>>
+>>> --
+>>> Peter Xu
+>>>
 
