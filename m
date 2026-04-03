@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF2DD7308A
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 03:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E4CD73090
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 03:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Vdd-0001Af-Mk; Thu, 02 Apr 2026 23:56:05 -0400
+	id 1w8Vdc-00019w-Rx; Thu, 02 Apr 2026 23:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w8Vdc-00019c-Aq
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:04 -0400
+ id 1w8Vda-00018f-A6; Thu, 02 Apr 2026 23:56:02 -0400
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w8Vda-0004MM-KT
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:04 -0400
+ id 1w8VdY-0004MM-9o; Thu, 02 Apr 2026 23:56:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1775188562; x=1806724562;
+ t=1775188560; x=1806724560;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=IM87H8/Ait4f6rjlrPdAR7O/TnBajxtINCeU247Vyjw=;
- b=G0qJd9iq0H9/nb2K9GdNMqxE5tBGVZ5MwTxDTRBSqw9DxP8BacG6t9Kw
- Hu3/OVesqnW5Ks9qPmFEMmhKhKs20gXqMnjJyBlXsA7Yn+OuRTEpZZmDN
- 7piM7rx/9nECIwwS1XLyaxRZIB4k56/wbFJYr/mL18oecDPSYMP72/+xE
- QeZkeor1u7UwF6E0JJ1/egCthvRsEDAUqJg5fos+6MUrZyCiOIZM5dxib
- SFWMhOCBACDw+1ERUCZdGzyc3ozZYaBgj1yhdmxCYmVg/17SoMBt//AvN
- 5C/eiDZViArByQnXwexr1M+UAYJAxd/taOKEU39YMcwWfWk3GZVjOmADA g==;
-X-CSE-ConnectionGUID: /nAzXRYpQsKAPD0QgHdEjQ==
-X-CSE-MsgGUID: 7yXnGwL+S3e2/uJmsq5x/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11747"; a="76140602"
-X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="76140602"
+ bh=4Rip2MVEYhHbVzh8uOkV8uN4ObmaZHKKkwkEvsDmxxI=;
+ b=F1rst69L0gdFN3v5cUJCHIEpSKDZtFUgrVgiWssRssxbTrt7QUEFpxbo
+ q0seqyNPgc4Ahjs93KYxK45M02N3Ue1bIhrYH6nIPcSxzPaBF9NkjhWLm
+ B6VYjTTf23iGEMafg3nRNC7OdWZtwJ4zKMRVsOlfhIft12QOPyzhTcG2g
+ a151VQkBdtJQCBV2hkeVngJ1h/qxKYWpSEWeiI3vJS51IOdumWo52K1hD
+ UZCxsqBcTgurv1Bnpq3IWZUcwwMQuWqQvRDqkQ7kqIJE9FhxTMYardSbW
+ 3Sg6Tg2yD/Kv95rkaDWRzjysfPdf4zbk9T8SgXB9G/pJL4pjchBIfIqhc g==;
+X-CSE-ConnectionGUID: xcNQRfX/TVy7PP2ktImCZQ==
+X-CSE-MsgGUID: Kz7hnxPGTV+5/Hni8Y16qg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11747"; a="76140594"
+X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="76140594"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2026 20:56:01 -0700
-X-CSE-ConnectionGUID: SsTIyR/UR76nqOxEaKClhg==
-X-CSE-MsgGUID: nMO9Arz+QNi6BU94BvPifw==
+ 02 Apr 2026 20:55:58 -0700
+X-CSE-ConnectionGUID: SvR28aqySa+svbZV035AzA==
+X-CSE-MsgGUID: sWItOVrkSy+a+fcCHV6lZw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="223884852"
+X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="223884849"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2026 20:55:58 -0700
+ 02 Apr 2026 20:55:54 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 03/14] vfio/iommufd: Create nesting parent hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
-Date: Thu,  2 Apr 2026 23:55:27 -0400
-Message-ID: <20260403035541.18355-4-zhenzhong.duan@intel.com>
+ xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ qemu-arm@nongnu.org
+Subject: [PATCH v3 02/14] iommufd: Extend attach/detach_hwpt callbacks to
+ support pasid
+Date: Thu,  2 Apr 2026 23:55:26 -0400
+Message-ID: <20260403035541.18355-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260403035541.18355-1-zhenzhong.duan@intel.com>
 References: <20260403035541.18355-1-zhenzhong.duan@intel.com>
@@ -87,107 +86,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When both device and vIOMMU have PASID enabled, then guest may setup
-pasid attached translation.
+Same for the two wrappers and their call sites.
 
-VFIO needs to be aware of potential pasid usage and should attach the
-non-pasid part of pasid-capable device to hwpt flagged with
-IOMMU_HWPT_ALLOC_PASID.
-
-ARM SMMU doesn't support IOMMU_HWPT_ALLOC_PASID, only VTD need it. So
-we can't check the existing vIOMMU flag VIOMMU_FLAG_PASID_SUPPORTED to
-determine if set flag IOMMU_HWPT_ALLOC_PASID. Instead, introduce a new
-flag VIOMMU_FLAG_WANT_PASID_ATTACH which will only be exposed by VTD.
-
+Suggested-by: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- include/hw/core/iommu.h       |  1 +
- include/hw/vfio/vfio-device.h |  1 +
- hw/vfio/device.c              | 11 +++++++++++
- hw/vfio/iommufd.c             |  8 +++++++-
- 4 files changed, 20 insertions(+), 1 deletion(-)
+ include/system/iommufd.h    | 16 +++++++++++-----
+ backends/iommufd.c          |  9 +++++----
+ hw/arm/smmuv3-accel.c       | 12 ++++++++----
+ hw/i386/intel_iommu_accel.c | 19 ++++++++++---------
+ hw/vfio/iommufd.c           | 10 +++++-----
+ 5 files changed, 39 insertions(+), 27 deletions(-)
 
-diff --git a/include/hw/core/iommu.h b/include/hw/core/iommu.h
-index bfcd511013..67c575b08c 100644
---- a/include/hw/core/iommu.h
-+++ b/include/hw/core/iommu.h
-@@ -21,6 +21,7 @@ enum viommu_flags {
-     /* vIOMMU needs nesting parent HWPT to create nested HWPT */
-     VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
-     VIOMMU_FLAG_PASID_SUPPORTED = BIT_ULL(1),
-+    VIOMMU_FLAG_WANT_PASID_ATTACH = BIT_ULL(2),
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 2925d116ac..da98e79439 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -138,14 +138,16 @@ struct HostIOMMUDeviceIOMMUFDClass {
+      *
+      * @hiodi: host IOMMU device backed by IOMMUFD backend.
+      *
++     * @pasid: target pasid of the device to be attached.
++     *
+      * @hwpt_id: ID of IOMMUFD hardware page table.
+      *
+      * @errp: pass an Error out when attachment fails.
+      *
+      * Returns: true on success, false on failure.
+      */
+-    bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *hiodi, uint32_t hwpt_id,
+-                        Error **errp);
++    bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *hiodi, uint32_t pasid,
++                        uint32_t hwpt_id, Error **errp);
+     /**
+      * @detach_hwpt: detach host IOMMU device from IOMMUFD hardware page table.
+      * VFIO and VDPA device can have different implementation.
+@@ -154,15 +156,19 @@ struct HostIOMMUDeviceIOMMUFDClass {
+      *
+      * @hiodi: host IOMMU device backed by IOMMUFD backend.
+      *
++     * @pasid: target pasid of the device to be detached.
++     *
+      * @errp: pass an Error out when attachment fails.
+      *
+      * Returns: true on success, false on failure.
+      */
+-    bool (*detach_hwpt)(HostIOMMUDeviceIOMMUFD *hiodi, Error **errp);
++    bool (*detach_hwpt)(HostIOMMUDeviceIOMMUFD *hiodi, uint32_t pasid,
++                        Error **errp);
  };
  
- /* Host IOMMU quirks. Extracted from host IOMMU capabilities */
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 828a31c006..d6e522f8b8 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -268,6 +268,7 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
- void vfio_device_unprepare(VFIODevice *vbasedev);
- 
- bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev);
-+bool vfio_device_get_viommu_flags_want_pasid_attach(VFIODevice *vbasedev);
- bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
-                                                 uint32_t type, void *caps,
-                                                 uint32_t size);
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 973fc35b59..bc1d37e776 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -533,6 +533,17 @@ bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev)
-     return false;
+ bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+-                                           uint32_t hwpt_id, Error **errp);
+-bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
++                                           uint32_t pasid, uint32_t hwpt_id,
+                                            Error **errp);
++bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
++                                           uint32_t pasid, Error **errp);
+ #endif
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 410b044370..cfde6f2b2c 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -539,23 +539,24 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
  }
  
-+bool vfio_device_get_viommu_flags_want_pasid_attach(VFIODevice *vbasedev)
-+{
-+    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
-+
-+    if (vdev) {
-+        return !!(pci_device_get_viommu_flags(PCI_DEVICE(vdev)) &
-+                  VIOMMU_FLAG_WANT_PASID_ATTACH);
-+    }
-+    return false;
-+}
-+
- bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
-                                                 uint32_t type, void *caps,
-                                                 uint32_t size)
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index ecabc33064..ead40b6617 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -363,6 +363,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-     VendorCaps caps;
-     VFIOIOASHwpt *hwpt;
-     uint32_t hwpt_id;
-+    uint8_t max_pasid_log2 = 0;
-     int ret;
+ bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+-                                           uint32_t hwpt_id, Error **errp)
++                                           uint32_t pasid, uint32_t hwpt_id,
++                                           Error **errp)
+ {
+     HostIOMMUDeviceIOMMUFDClass *hiodic =
+         HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(hiodi);
  
-     /* Try to find a domain */
-@@ -408,7 +409,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-      */
-     if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
-                                          &type, &caps, sizeof(caps), &hw_caps,
--                                         NULL, errp)) {
-+                                         &max_pasid_log2, errp)) {
+     g_assert(hiodic->attach_hwpt);
+-    return hiodic->attach_hwpt(hiodi, hwpt_id, errp);
++    return hiodic->attach_hwpt(hiodi, pasid, hwpt_id, errp);
+ }
+ 
+ bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+-                                           Error **errp)
++                                           uint32_t pasid, Error **errp)
+ {
+     HostIOMMUDeviceIOMMUFDClass *hiodic =
+         HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(hiodi);
+ 
+     g_assert(hiodic->detach_hwpt);
+-    return hiodic->detach_hwpt(hiodi, errp);
++    return hiodic->detach_hwpt(hiodi, pasid, errp);
+ }
+ 
+ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 3630078751..3201bb25af 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -300,7 +300,8 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
          return false;
      }
  
-@@ -430,6 +431,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+-    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, hwpt_id, errp)) {
++    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, IOMMU_NO_PASID, hwpt_id,
++                                               errp)) {
+         if (s1_hwpt) {
+             iommufd_backend_free_id(hiodi->iommufd, s1_hwpt->hwpt_id);
+             g_free(s1_hwpt);
+@@ -575,7 +576,8 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+ 
+     /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
+     hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
+-    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, hwpt_id, errp)) {
++    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, IOMMU_NO_PASID, hwpt_id,
++                                               errp)) {
+         goto free_veventq;
+     }
+     return true;
+@@ -665,7 +667,8 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+     hiodi = accel_dev->hiodi;
+     accel = accel_dev->s_accel;
+     /* Re-attach the default s2 hwpt id */
+-    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, hiodi->hwpt_id, NULL)) {
++    if (!host_iommu_device_iommufd_attach_hwpt(hiodi, IOMMU_NO_PASID,
++                                               hiodi->hwpt_id, NULL)) {
+         error_report("Unable to attach the default HW pagetable: hiodi devid "
+                      "0x%x", hiodi->devid);
+     }
+@@ -879,7 +882,8 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
+ 
+     hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
+     QLIST_FOREACH(accel_dev, &accel->device_list, next) {
+-        if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->hiodi, hwpt_id,
++        if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->hiodi,
++                                                   IOMMU_NO_PASID, hwpt_id,
+                                                    &local_err)) {
+             error_append_hint(&local_err, "Failed to attach GBPA hwpt %u for "
+                               "hiodi devid %u", hwpt_id,
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index ed3793602b..3217a2afac 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -121,8 +121,9 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
          }
      }
  
-+    if (max_pasid_log2 &&
-+        vfio_device_get_viommu_flags_want_pasid_attach(vbasedev)) {
-+        flags |= IOMMU_HWPT_ALLOC_PASID;
-+    }
-+
-     if (cpr_is_incoming()) {
-         hwpt_id = vbasedev->cpr.hwpt_id;
-         goto skip_alloc;
+-    ret = host_iommu_device_iommufd_attach_hwpt(hiodi, hwpt_id, errp);
+-    trace_vtd_device_attach_hwpt(hiodi->devid, vtd_as->pasid, hwpt_id, ret);
++    ret = host_iommu_device_iommufd_attach_hwpt(hiodi, IOMMU_NO_PASID, hwpt_id,
++                                                errp);
++    trace_vtd_device_attach_hwpt(hiodi->devid, IOMMU_NO_PASID, hwpt_id, ret);
+     if (ret) {
+         /* Destroy old fs_hwpt if it's a replacement */
+         vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
+@@ -141,22 +142,22 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+ {
+     HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+     IntelIOMMUState *s = vtd_as->iommu_state;
+-    uint32_t pasid = vtd_as->pasid;
+     bool ret;
+ 
+     if (s->dmar_enabled && s->root_scalable) {
+-        ret = host_iommu_device_iommufd_detach_hwpt(hiodi, errp);
+-        trace_vtd_device_detach_hwpt(hiodi->devid, pasid, ret);
++        ret = host_iommu_device_iommufd_detach_hwpt(hiodi, IOMMU_NO_PASID,
++                                                    errp);
++        trace_vtd_device_detach_hwpt(hiodi->devid, IOMMU_NO_PASID, ret);
+     } else {
+         /*
+          * If DMAR remapping is disabled or guest switches to legacy mode,
+          * we fallback to the default HWPT which contains shadow page table.
+          * So guest DMA could still work.
+          */
+-        ret = host_iommu_device_iommufd_attach_hwpt(hiodi, hiodi->hwpt_id,
+-                                                    errp);
+-        trace_vtd_device_reattach_def_hwpt(hiodi->devid, pasid, hiodi->hwpt_id,
+-                                           ret);
++        ret = host_iommu_device_iommufd_attach_hwpt(hiodi, IOMMU_NO_PASID,
++                                                    hiodi->hwpt_id, errp);
++        trace_vtd_device_reattach_def_hwpt(hiodi->devid, IOMMU_NO_PASID,
++                                           hiodi->hwpt_id, ret);
+     }
+ 
+     if (ret) {
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index f020b56208..ecabc33064 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -927,21 +927,21 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
+ 
+ static bool
+ host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+-                                           uint32_t hwpt_id, Error **errp)
++                                           uint32_t pasid, uint32_t hwpt_id,
++                                           Error **errp)
+ {
+     VFIODevice *vbasedev = HOST_IOMMU_DEVICE(hiodi)->agent;
+ 
+-    return !iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, IOMMU_NO_PASID,
+-                                                hwpt_id, errp);
++    return !iommufd_cdev_pasid_attach_ioas_hwpt(vbasedev, pasid, hwpt_id, errp);
+ }
+ 
+ static bool
+ host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+-                                           Error **errp)
++                                           uint32_t pasid, Error **errp)
+ {
+     VFIODevice *vbasedev = HOST_IOMMU_DEVICE(hiodi)->agent;
+ 
+-    return iommufd_cdev_pasid_detach_ioas_hwpt(vbasedev, IOMMU_NO_PASID, errp);
++    return iommufd_cdev_pasid_detach_ioas_hwpt(vbasedev, pasid, errp);
+ }
+ 
+ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
 -- 
 2.47.3
 
