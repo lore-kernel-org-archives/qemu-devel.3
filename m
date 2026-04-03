@@ -4,40 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56738E7E365
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 10:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE678E7E36C
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 10:36:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8bcs-0004Cr-Cq; Fri, 03 Apr 2026 06:19:42 -0400
+	id 1w8bsA-0000u7-6v; Fri, 03 Apr 2026 06:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8bcq-0004Bp-8v
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 06:19:40 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w8bs2-0000th-R9; Fri, 03 Apr 2026 06:35:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8bcn-0000YJ-Eu
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 06:19:40 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w8bs0-0004wV-H5; Fri, 03 Apr 2026 06:35:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775211536; bh=sH0XM3XUdjHs3ZsxkeWMPjLg+M5gMA9Hm6vOtI3dkic=;
+ t=1775212477; bh=6wjlZ6uTFCIvkN6+oKIp+TKDCogF4CC6RN+LIIb1bKo=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=LNH1vI7Uv2Do+WhjcEJ60E62PK9BEOJExnDKWCT67ZurtE3Z/IKslSIfsnk6ydHCd
- 9UZnu85CP3XMUxYlZ5ZStQ8L7eR6bPjodzrewWorDjAsW0T9lcNdlfGx7KDJNigodO
- lLAryzKX80eIlOQiMEly8wO4xSGuU2sAqovi/aBwTDM654LA97ipAUTbls/NBj3EZ5
- REqRSWoOzA0jii9NlGkuTJZJRKET+brqxu1ynGDpePu9AxxmNDOXFCkqOaJP+Npr+2
- n+bvgPabt7I3rTZPUDC9rbiT7q+JrOr15Hg23jnEtxVvafwV5uNoLWqgvcflijIQRW
- 9S8sjsyQTbpQA==
+ b=nppuHBulniRPvh1C2jKyvFwxStLAebSiIDbZzYEk7/lY/cnyQG+NDmXEKm/gXDoip
+ mtuKeSuc3MkOyTdQ0/HP6RHEKYiSNCXoPuyTcGqfO4pJg0upwm+x8QuDI/VujUDffe
+ poPpDPJrpce+zeFf4LPR+MlouxGN1QZqtHBA9DS1NtEorsbW5XrzDmourG+Q+2KNOh
+ tT9bHZ0IdZIv0iYy84B557Oc8Eysl2EvfBmiPf6QxBJx8Sh/p77WzP4Ow+hK/m4RIh
+ W4ftU4UnuNwzsY09STHUmyD1O2stZOnl0WY6MYnfxKfwuTuFcV2dLc3TlicO1bLem0
+ 4pfwx50BQvMmw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BD8A19A60E;
- Fri, 03 Apr 2026 13:18:56 +0300 (MSK)
-Message-ID: <4e7e1677-99be-4cdb-845c-b08ae1e9d033@tls.msk.ru>
-Date: Fri, 3 Apr 2026 13:19:33 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id CC9D519A62B;
+ Fri, 03 Apr 2026 13:34:37 +0300 (MSK)
+Message-ID: <bdc97085-ba40-4c32-a491-57112f77a2ad@tls.msk.ru>
+Date: Fri, 3 Apr 2026 13:35:15 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] RFC: Allow building qemu tools on 32-bit hosts
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: deller@gmx.de
-References: <20260402132801.16053-1-deller@kernel.org>
+Subject: Re: [PATCH trivial] util/meson.build: do not add cpuinfo-$arch to
+ util_ss for 32bit CPUs
+To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260325134932.765163-1-mjt@tls.msk.ru>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -83,9 +87,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260402132801.16053-1-deller@kernel.org>
+In-Reply-To: <20260325134932.765163-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -110,52 +114,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.04.2026 16:28, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
+On 25.03.2026 16:49, Michael Tokarev wrote:
+> qemu dropped support for 32bit CPUs recently, so this change is an
+> additional clean-up on top.  But in theory it will allow building
+> qemu-guest-agent on a 32bit system.
 > 
-> Qemu's tools like qemu-img are often needed on 32-bit platforms,
-> although the actual qemu emulators have been discontinued on 32-bit.
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>   util/meson.build | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> To allow building the tools on 32-bit this patch implements two small
-> changes:
-> 
-> a) The check in meson.build is changed to still error out if the user
-> tries to build qemu-system or qemu-user on a 32-bit platform, but allows
-> building tools (e.g. by "--enable-tools") alone.
-> 
-> b) Remove the compile time checks in atomic.h because:
-> - for the qemu-system and qemu-user emulators this check is redundant
->    since we only allow 64-bit platforms anyway (see a)
-> - it breaks those 32-bit platforms, which do provide (slower) 64-bit atomics
-> - 32-bit platforms without 64-bit atomics will fail instead with linker errors
-> - the runtime speed of the qemu tools aren't actually that important.
-> 
-> I've sucessfully tested building qemu tools on 32-bit hppa.
+> diff --git a/util/meson.build b/util/meson.build
+> index 33132c04ad..170e959d9b 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -116,13 +116,13 @@ endif
+>   
+>   if cpu == 'aarch64'
+>     util_ss.add(files('cpuinfo-aarch64.c'))
+> -elif cpu in ['x86', 'x86_64']
+> +elif cpu == 'x86_64'
+>     util_ss.add(files('cpuinfo-i386.c'))
+>   elif cpu == 'loongarch64'
+>     util_ss.add(files('cpuinfo-loongarch.c'))
+> -elif cpu in ['ppc', 'ppc64']
+> +elif cpu == 'ppc64'
+>     util_ss.add(files('cpuinfo-ppc.c'))
+> -elif cpu in ['riscv32', 'riscv64']
+> +elif cpu = 'riscv64'
 
-There's a bit more of this.  When building on i386, I'm getting this:
-
-util/cpuinfo-i386.c:15:39: warning: no previous prototype for 
-‘cpuinfo_init’ [-Wmissing-prototypes]
-    15 | unsigned __attribute__((constructor)) cpuinfo_init(void)
-       |                                       ^~~~~~~~~~~~
-util/cpuinfo-i386.c: In function ‘cpuinfo_init’:
-util/cpuinfo-i386.c:30:33: error: ‘CPUINFO_BMI1’ undeclared (first use 
-in this function)
-    30 |         info |= (b7 & bit_BMI ? CPUINFO_BMI1 : 0);
-       |                                 ^~~~~~~~~~~~
-util/cpuinfo-i386.c:30:33: note: each undeclared identifier is reported 
-only once for each function it appears in
-util/cpuinfo-i386.c:31:34: error: ‘CPUINFO_BMI2’ undeclared (first use 
-in this function)
-    31 |         info |= (b7 & bit_BMI2 ? CPUINFO_BMI2 : 0);
-...
-
-(this is mentioned in my initial email about this issue).
-
-It's fixed by 
-https://lore.kernel.org/qemu-devel/20260325134932.765163-1-mjt@tls.msk.ru/
-
-Thanks,
+This should be ==, not =.
 
 /mjt
+
+>     util_ss.add(files('cpuinfo-riscv.c'))
+>   elif cpu == 's390x'
+>     util_ss.add(files('s390x_pci_mmio.c'))
+
 
