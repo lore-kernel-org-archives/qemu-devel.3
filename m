@@ -4,130 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C841E7E360
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 10:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B5ADE7E364
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 10:17:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8bJT-0001k7-RS; Fri, 03 Apr 2026 05:59:40 -0400
+	id 1w8baJ-0002uS-HY; Fri, 03 Apr 2026 06:17:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1w8bJQ-0001gK-TU
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 05:59:37 -0400
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1w8bJN-0005tt-OL
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 05:59:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qDfWs+ctCAJnj1aT/w7bkEvh8D3qD/b68vFsR9p0j5wbc6iCT4m5wGdxYncCZvMwdQ9UUd/3ULXh38i/uAXbi/1qcB7gZR8jBiynS6Hdwa342tb1aewwPA9NtavBBTe9YqX8zxxrcMCUiiPHXnbV1BQbvOYxwFC+Dlo4QuYcnUkcErPyn3jRGyl0k8K9rbIsrcC2q0wNBwLVil+qhXlpAyXinjVAkT5Ho96wHldUNZ+lkDMtO20I8M3nX4yoiToven9JKrrgDSv4ORtBRSIYDL4Z5SkJjSR0BnMPLX/I0AaQqW/MHFjN0rcx+UMnNTk/2At5N1LhhizkcpgWm8ri3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DkAXku5G3nZ7rz9KPOtdn9gFMgfDeJMtRWMHZzQGllw=;
- b=CFBJ2KRsGTi4UpvTZhbwKJopldMO0KzLCbFwMwOZ+XX+qnHPwtylTFlS3fkvr5+juLhsLlqueoWiuJC1Y6zNqPG7acgNiMSzSHwlb3IWhFQcenblOyzrKyZom0uAxaT8GOIHwAzmsS4MfC/41aKYjAf88/pRuw7ohQLzKDSj/aOp5MGahSgLsmPM+3gWdNAeZK870RNRfjttQsFWK7TSaVomJAI9ae6RweqIr3rXMe4lqYCHMM5Obzz99f5t0Qs8/BXQp2LFcvyave83Bwy6YYhO01yGMBYxf4KRXcN4NpwS/VnGNvuIxHeVHbm1eP+CD5ODVd+4/oTn/JFX66CEJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=fujitsu.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DkAXku5G3nZ7rz9KPOtdn9gFMgfDeJMtRWMHZzQGllw=;
- b=jJFvB5GXWlGRkWqiUAyZC9ZEtzeLzO9QTAO7n1kVx+BcHQBBHlJgWAur1FWzI0wWZm44KB9xDCTgdGRumCa3eJAyTZadkUXIaGuNNeZJNAr5YQvr3kLku51aegxL3Z/9rxoShGgvpsQ8FeehbW36e1Si0zhKwJbs00ooByAmHzU=
-Received: from MN2PR12CA0031.namprd12.prod.outlook.com (2603:10b6:208:a8::44)
- by DM6PR12MB4387.namprd12.prod.outlook.com (2603:10b6:5:2ac::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.7; Fri, 3 Apr
- 2026 09:59:26 +0000
-Received: from BL6PEPF00020E63.namprd04.prod.outlook.com
- (2603:10b6:208:a8:cafe::a4) by MN2PR12CA0031.outlook.office365.com
- (2603:10b6:208:a8::44) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9769.20 via Frontend Transport; Fri,
- 3 Apr 2026 09:59:26 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BL6PEPF00020E63.mail.protection.outlook.com (10.167.249.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9769.17 via Frontend Transport; Fri, 3 Apr 2026 09:59:26 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Fri, 3 Apr
- 2026 04:59:22 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 3 Apr
- 2026 04:59:22 -0500
-Received: from [10.67.184.128] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Fri, 3 Apr 2026 04:59:19 -0500
-Message-ID: <1ca00148-1de9-49d0-9e13-6d829ef5323d@amd.com>
-Date: Fri, 3 Apr 2026 17:59:18 +0800
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1w8baH-0002tY-Nt
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 06:17:01 -0400
+Received: from mail-dy1-x1335.google.com ([2607:f8b0:4864:20::1335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1w8baF-0000Kc-Vx
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 06:17:01 -0400
+Received: by mail-dy1-x1335.google.com with SMTP id
+ 5a478bee46e88-2c4db6bca03so900876eec.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 03:16:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775211418; cv=none;
+ d=google.com; s=arc-20240605;
+ b=juLYeVC6dlH74Sc1HmiWo1+H0wh2f0QrXLwT6o4MIfYkrVYcpG5Oa7XrviT+pc9iep
+ rZ1Tmvb3xbJhdIH08NNtiRCHIrO+XcaosTefIfVKJuyt6Njln9Q40HYO7GgKTTjw5y/E
+ F7wpNJqZ+CusKdt2U7j1euqCnVGLZN6Io9PAi7JkRwcQ9UPPbL6hRBC+VnxurmwD9al4
+ 6fVAmrWRhAdRyK3Ul/6ZdmfOGzDM0ogYLcxzH+a14czQnBLiaortCb9//0fkXEOtveFq
+ aPujXQwU1wrB1huzwOwww5nwCFzMF/5F31AIK8YjFTSTvjUhiR9rhD2rQY5RirGZVjW9
+ 5ZnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=e2KbeJKI8GcLwgfNJdgfMdr2lrfWkvvxka1iFwz35jc=;
+ fh=pljgQb51SI5T8fJjT4f89PH4vuf7hUTqYcKOSXi3vR8=;
+ b=eteOHIbsVpwlesE1VojvgIVamLYfK0wI19BlY00o149loWYPhX44t+XjTv0V4Q7+H/
+ NkfQsG34BLxFlwCF73bGSnhAm9qRz825vDepV7Db+9MNeTnDS4o3fqe35NzzQOpItrG3
+ 2z7lgzdYBrQmSUld3iuZbuh7Si3B5rBHdxoPWkKTfyJgIJdH7v5ffGBJwtwl+hViOJQs
+ EfZHKF5YSsJx7X1nRQRfn5voTyA2KfK+7Ca+F6wVArlcIlRtCC0tuvf9NBK1gbqg7nZ/
+ kSwvZZehnm5oIOqaK11Gr5lDRahbiQekWleuRTwvIdOrM+tKrTGX1l9JFoW5xihhl20V
+ JTZQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775211418; x=1775816218; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e2KbeJKI8GcLwgfNJdgfMdr2lrfWkvvxka1iFwz35jc=;
+ b=bPOVMyPHvhjXXrvOupgnmzZHWv2+EIT6iOohqLwxLbX1EVaPcIAjoGld/5k7BZHBFB
+ MSyq7h0IzEvd/CAjlpyrEiHq7bg7y6Z2LpSb00UcmF2UZ9xfpSbsHvfyK++Urk9Vfs4z
+ bDIakzKJmohEnuogD+QXxjZ1vzbAFPsuPiJbL7yeFoXkcGsRB2a0f9PVuEruBM0IDkeN
+ InxlAOUjLarYyyMxTNesaFhQHP3yP1T6Ffb7MxOkAR9YcMn8XHhplACvfgiu7NfgoeIx
+ ituaKqU2rb5uhtCYwmAMTd/gW6u48Bs90sjbXb3edum7p9mzXneeB9B2fxF+XuZHF2Og
+ nLug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775211418; x=1775816218;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=e2KbeJKI8GcLwgfNJdgfMdr2lrfWkvvxka1iFwz35jc=;
+ b=MvnzEWGi4KRJ/bXo6137fh9746pCuu8mDITPjANP910BDrfDpWGWHEoEXSw1CPs59O
+ +RKLz4kEhdcvSW7fWmgiO6sC7eWB3ndk8f8NSY5v7JJa6GGU35VOc3hY4q4i7Ynzl00k
+ AOocSo0cYSlV8fNJ90HDZhGZGW60/znCF1TpJr1/sPpeDQbtobYJRcK1EnSFrfjQwoY1
+ hjdT5qlqx8T6Z5cCzm2rSzrtpptv/lOXdPIxEAZ5+V9vucYiz7wT3d0P/U2gTxbtLZEs
+ DVIoaHaIzZwMdlBWk6auwOnrZCCSI6kapmubCKfqpduNh+OAP76121L2iUFKA3r3Fujr
+ foGg==
+X-Gm-Message-State: AOJu0YxLTexWOPyk2hdwBdECxxCFjTKuQeRnQIdNz1nMWVbZYAPWIsWT
+ EpgnVNADv4bv6lw74PeW9XkQpJ94DU9TIoERwUCzSW6Yx5Bef5RVrWUrTCjTMF3aa0RCMDppUjQ
+ 72+k7RLJMTE40JJrr/Cb4LQaPtlx/LRE=
+X-Gm-Gg: AeBDietMqbm8bGkN7ZmDw7G0/HP7g6byicgEmyLjGDWVXM4hq1qhVUrSIQy9bTedAam
+ Ed0E+4FwWHRTfvB1cKJ6wi9HPGbs1Yi94EwerqbXwM3DJfZCRR/1L5G5ZTvA7iitdeaXAc1xkgE
+ hyjLmkTjzAmXwqFzTuHzMNosRQOGUDOHMy1NQH/uVlL/ipVFs14qlNVivlDNzkdShuUCt6udYTw
+ AHNIfgACVsd9F+djUXh8u0i9wvA7DcxOoAAqroWLZBHk/XcC1nNUh0l8SR3/T52VapAtO7O03vA
+ Bc5uo2IujbuVOga5GDWEhwDUrZ06VeVN47jWnjk=
+X-Received: by 2002:a05:7301:d17:b0:2c5:c532:1fe1 with SMTP id
+ 5a478bee46e88-2cad60cb61fmr2384701eec.3.1775211417574; Fri, 03 Apr 2026
+ 03:16:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] migration/rdma: add x-rdma-chunk-size parameter
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, Peter Xu
- <peterx@redhat.com>
-CC: Samuel Zhang <guoqing.zhang@amd.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "farosas@suse.de" <farosas@suse.de>,
- "eblake@redhat.com" <eblake@redhat.com>, "armbru@redhat.com"
- <armbru@redhat.com>, "Emily.Deng@amd.com" <Emily.Deng@amd.com>,
- "Victor.Zhao@amd.com" <Victor.Zhao@amd.com>, "PengJu.Zhou@amd.com"
- <PengJu.Zhou@amd.com>, "Qing.Ma@amd.com" <Qing.Ma@amd.com>, Guoqing Zhang
- <simpzan@gmail.com>
-References: <20260327065006.2567463-1-guoqing.zhang@amd.com>
- <acqgZShXRkqzBU1C@x1.local>
- <e3b261a3-25fa-42f9-a926-306e5a19cf75@fujitsu.com>
- <02a44178-eebc-4fef-a8fb-802dac76c11f@amd.com> <ac1AE4vrAlKmawlb@x1.local>
- <59f0466e-71e2-4114-ab4d-285a727aa7d8@amd.com>
- <6f1df732-5c2c-4f1b-a59a-aa6af5566505@fujitsu.com>
-Content-Language: en-US
-From: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>
-In-Reply-To: <6f1df732-5c2c-4f1b-a59a-aa6af5566505@fujitsu.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: None (SATLEXMB04.amd.com: guoqzhan@amd.com does not designate
- permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00020E63:EE_|DM6PR12MB4387:EE_
-X-MS-Office365-Filtering-Correlation-Id: 017f12fa-7d42-4fe8-8f95-08de9167b086
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|376014|1800799024|82310400026|22082099003|56012099003|18002099003|13003099007;
-X-Microsoft-Antispam-Message-Info: K0pTHq2XkAshBGzE8yr99+HuiTuyjbcNKxuZbq47DtS3EBLkLMvYiDm0rpaas5QzNRAyMY0ubt35jKe6rLm37TWqIFU/nGI6ULl8x1dsxO93xgO0xQx4HuLhO9dhtCPJ671/ElCreHBmBq/HBJN6tGWRFcHwW5eKGIGZ/iX2oBaQhyjV/nZNy56m0hNOHRI+5NDduGu6CGwn6Ry9KYq451g8nrp+b7snKNFgPV7J2GKWb9sGh/qpoZOrO7OFJnjquy0ps4OL7JxQE08RUb8AF+erqxwkuXCl+5PHHaw+EZf0CKTinYl5FkdHM+Gg/A3l5ibGFgk6oLZzWYmFdKdsHTvcfZqmk0IrXWvT7ZtixSY+QcQi0TIju8rk3pok790beJLWfOSlnmPDkf2y0Dg5jaWCr+fdDZjUrqnoo9OixluRKtpKaOZy0BupTU8OYem7e9yUMOTeqSB/gTQ6CttFlsC3zMQV0Ky1khzvUNrrO0NV58IPmn06p1WjTd3SVc7BSNtwYE04teB9dW7HtitDzGGne8KeujGIM3FWJNejY2H8skckbvtmeGrydNyPsgPKP7tmbPQpIRg3A8BEUqD0TKsJJcHDoLREtX8fFCPsrm4ocjxiqZ1DVe/FLfaGP4EPUPudE8zmIVTJaaTDAGBNLuBlhMPgF24Qm/k3JVHjQTDmbzNqr5UN43neGletzmWQOMBwVSdgwKYD6oEIagLuTR5AyzGvdxrsIZZ+0e3ZbPChrDNeM70v2I/MLi3vy+IADgzw7ZxhjA7/Ztq8Zj2lhQ==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(376014)(1800799024)(82310400026)(22082099003)(56012099003)(18002099003)(13003099007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: r11ZJD6A4KGEZf2ejEs6DPZCXL3Z7qTc7LRLPdbFUgkLZmuoBSrIPDz5S/Kj0IiNPU9tk3Nl2oPtvmjFi71uUiVtGBhxJ4NmtQJ4YT8Xf/V7JD4kUOOUAJWtmYmScT+MFI1R61SGqSAAGk4Ys6evTCRHjoVOd6YNRO4kCKis4fcZr9mT/FztlHIJgYzPJ/pJMYQHhPQEvPT9AUSDc3tfKJ8Rr9LsDtWvnTQ+pI19nDZKszAhgQjM5xzoaGDuiCkyqYqFESZSUXtgaRRTbiiMYGHdsK6lFXcFz3F3urvgWU3c8QHps3qe5i1jyqyogYdePgwn8CmsaC4DVjZ2D/oEXZ0OcACOdNuKSXC2P4qzkSYBDnIt2CVGHrFBchhvhdep+gcZcZBEstDB6qzgr2QMN1vJ3P3XDj3r7tSq1foHcZyzyoGWurch4Y7OjYWd+k9C
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2026 09:59:26.2029 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 017f12fa-7d42-4fe8-8f95-08de9167b086
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E63.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4387
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
- envelope-from=GuoQing.Zhang@amd.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-11-48eb1dcf7b76@redhat.com>
+ <878qbgpj31.fsf@pond.sub.org>
+ <CAMxuvayGCvJwyUgrHSGwfLhqAbVC61dEbgbL4Ji_0YQHyv4LJA@mail.gmail.com>
+ <CAMxuvazy-_DjAVJN2=ie___VxFMKGyLkEiEP0OBNbipN1nxoSA@mail.gmail.com>
+ <87se9dtoit.fsf@pond.sub.org>
+In-Reply-To: <87se9dtoit.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Fri, 3 Apr 2026 14:16:45 +0400
+X-Gm-Features: AQROBzB29Z8xHczePYGgJKPxTONye8B18uXejFJ0NjVev5ADq3mjMvxmKLxlOkM
+Message-ID: <CAJ+F1CJEbL+pT984L9c3rs0CMtLoMK+uUi8fhvL5cC_M9tdNvA@mail.gmail.com>
+Subject: Re: [PATCH 11/60] ui/console-vc: add UTF-8 input decoding with CP437
+ rendering
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1335;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.542,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,192 +122,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
-On 2026/4/3 17:39, Zhijian Li (Fujitsu) wrote:
-> [Some people who received this message don't often get email from lizhijian@fujitsu.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+On Thu, Apr 2, 2026 at 6:40=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
 >
-> On 03/04/2026 14:15, Zhang, GuoQing (Sam) wrote:
->> [You don't often get email from guoqzhan@amd.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->>
->> Hi Peter,
->>
->> The NIC is `Mellanox Technologies MT43244 BlueField-3 integrated
->> ConnectX-7 network controller`. 2 Servers directly connected with the
->> RDMA cable.
->>
->> I tried to enable multifd with following monitor cmd on source VM, but
->> migration failed with errir `Failed to connect to '192.168.100.3:4440':
->> Connection timed out`. I don't know why.
->>
->> ```
->> migrate_set_capability multifd on
->> migrate_set_parameter multifd-channels 8
->> ```
->>
->> Hi Zhijian,
->>
->> Follow is the perf data you requested.
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 >
-> Hello Sam
+> > Hi Markus
+> >
+> > On Wed, Mar 25, 2026 at 10:48=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+> > <marcandre.lureau@redhat.com> wrote:
+> >>
+> >> HI
+> >>
+> >> On Wed, Mar 25, 2026 at 9:35=E2=80=AFAM Markus Armbruster <armbru@redh=
+at.com> wrote:
+> >> >
+> >> > Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+> >> >
+> >> > > The text console receives bytes that may be UTF-8 encoded (e.g. fr=
+om
+> >> > > a guest running a modern distro), but currently treats each byte a=
+s a
+> >> > > raw character index into the VGA/CP437 font, producing garbled out=
+put
+> >> > > for any multi-byte sequence.
+> >> > >
+> >> > > Add a proper UTF-8 decoder using Bjoern Hoehrmann's DFA.
+> >> > > The DFA inherently rejects overlong encodings, surrogates, and
+> >> > > codepoints above U+10FFFF.  Completed codepoints are then mapped t=
+o
+> >> > > CP437, unmappable characters are displayed as '?'.
+> >> > >
+> >> > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com=
 >
-> I applied your V4 patch on v11.0.0-rc2,, but encountered following error during migration.
+> >> >
+> >> > Have you considered the decoder in util/unicode.c?  Do we need two
+> >> > decoders, or could we replace one by the other?
+> >> >
+> >>
+> >> Oh! I missed it, I should definitely try to use it.
+> >
+> > The vt100 receives characters one at a time. The DFA is suited for
+> > this. mod_utf8_codepoint() works with whole buffers. It's possible to
+> > write one with the other, but we lose in performance, and we need
+> > extra quirks. I don't think it's worth it.
 >
-> (qemu) migrate_set_parameter x-rdma-chunk-size 2m # only 1m worked
-> (qemu) migrate -d rdma:192.168.33.1:6666
-> (qemu) qemu-system-x86_64: rdma migration: send polling control error
-> qemu-system-x86_64: RDMA is in an error state waiting migration to abort!
-> qemu-system-x86_64: failed to save SaveStateEntry with id(name): 1(ram): -1
-> qemu-system-x86_64: Channel error: Operation not permitted
-> qemu-system-x86_64: warning: Early error. Sending error.
-> qemu-system-x86_64: warning: rdma migration: send polling control error
->
-> Any idea ?
+> Implementing a buffer interface on top of a character at a time
+> interface should be easier than the other way round.
 
-
-Hi Zhijian,
-
-the perf data is based on commit 
-fff352b9b6080e580aa1fadd29b4eccf4cb2922a. I just tried v11.0.0-rc2, it's 
-also working on my side.
-
-one thing to notice is that `migrate_set_parameter x-rdma-chunk-size 2m` 
-should be run on both source and dest qemu before migration starts.
-
-Regards
-Sam
-
+I tried that, it's not hard, except we need to handle the case where
+the DFA rejects early but mod_utf8_codepoint() should still consume
+the continuation bytes.
 
 >
+> I doubt rewriting mod_utf8_codepoint() to wrap around the DFA would slow
+> things down materially.
+
+Quick benchmarks showed -50% in performance.
+
+> I'm not demanding you try that!
 >
->
->> NIC: Mellanox Technologies MT43244 BlueField-3 integrated ConnectX-7
->> network controller
->> 8GB RAM VM.
->> workload in guest: `stress-ng --vm 4 --vm-bytes {size}G --vm-method
->> rand-set --timeout 0`
->>
->> | transport | chunk size | stress-ng size (G) | time(ms) | throughput |
->> |-----------|------------|--------------------|----------|------------|
->> | tcp       | n/a        | 1                  | 44955    | 1245      |
->> | rdma      | 1m         | 1                  | 46893    | 1240      |
->> | rdma      | 2m         | 1                  | 47374    | 1308      |
->> | rdma      | 8m         | 1                  | 38271    | 1542      |
->> | rdma      | 16m        | 1                  | 38901    | 1558      |
->> | rdma      | 32m        | 1                  | 13895    | 3762      |
->> | rdma      | 64m        | 1                  | 4288     | 14357      |
->> | rdma      | 64m        | 2                  | 5405     | 13719      |
->> | rdma      | 64m        | 4                  | 9976     | 9475      |
->> | rdma      | 128m       | 4                  | 3345     | 27428      |
->> | rdma      | 256m       | 4                  | 3537     | 26097      |
->> | rdma      | 512m       | 4                  | 3417     | 28440      |
->> | rdma      | 1024m      | 4                  | 3412     | 27637      |
->>
->> Regards
->> Sam
->>
->>
->> On 2026/4/1 23:56, Peter Xu wrote:
->>> [You don't often get email from peterx@redhat.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->>>
->>> On Tue, Mar 31, 2026 at 06:33:23PM +0800, Zhang, GuoQing (Sam) wrote:
->>>> On 2026/3/31 11:30, Zhijian Li (Fujitsu) wrote:
->>>>> [Some people who received this message don't often get email from lizhijian@fujitsu.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->>>>>
->>>>> On 31/03/2026 00:10, Peter Xu wrote:
->>>>>> Hi, Samuel,
->>>>>>
->>>>>> On Fri, Mar 27, 2026 at 02:50:06PM +0800, Samuel Zhang wrote:
->>>>>>> The default 1MB RDMA chunk size causes slow live migration because
->>>>>>> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
->>>>>>> 1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
->>>>>>>
->>>>>>> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
->>>>>>> faster migration.
->>>>>>> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
->>>>>>>
->>>>>>> Performance with RDMA live migration of 8GB RAM VM:
->>>>>>>
->>>>>>> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
->>>>>>> |-----------------------|----------|-------------------|
->>>>>>> | 1M (default)          | 37.915   |  1,007            |
->>>>>> This is the default. It surprised me a bit knowing it can only reach 1GB/s
->>>>>> throughput with the current code base.  Do you know why?  I thought RDMA
->>>>>> should be much faster than this on throughput with whatever hardware setup.
->>>>> Regarding the baseline performance, Samuel's numbers look reasonable. I checked
->>>>> some of my old test data on a ConnectX-4 Lx card years ago, and the throughput
->>>>> was around 10 Gbps (~1.25 GB/s), which is consistent with the 1 GB/s he reported.
->>>>>
->>>>>>> | 32M                   | 17.880   |  2,260            |
->>>>>>> | 1024M                 |  4.368   | 17,529            |
->>>>> My guess for the dramatic performance improvement is that a larger chunk size
->>>>> allows qemu_rdma_write() to batch more *contiguous dirty pages* into a single,
->>>>> more efficient RDMA send operation.
->>>> The `throughput` data is collected from `info migrate` qemu monitor command
->>>> after live-migration.
->>>>
->>>> Yes, Zhijian is right. As each chunk triggers a write_flush and each flush
->>>> involves posting an RDMA WRITE and WAITING for completion, there's software
->>>> overhead here.
->>>>
->>>> For 8GB RAM VM migration, 1MB chunk size produces ~15000 flushes. The
->>>> software overhead adds up and prevents the RDMA hardware from sustaining
->>>> high throughput.
->>>>
->>>> When chunk size is 1GB, there are ~3700 flushes. Reduced flush count means
->>>> reduced software overhead and improved overall throughput.
->>>>
->>> OK, thanks both.
->>>
->>>>> Is there any workloads running on the guest during the migration, or just an idle guest? @Samuel
->>>> The guest is idle when I test the migration and collect the data.
->>>>
->>>>
->>>>> Given the significant benefit and the fact that the patch itself is straightforward,
->>>>> I think it's a worthwhile addition.
->>>>>
->>>>> Acked-by: Li Zhijian <lizhijian@fujitsu.com>
->>>> Thank you for the ack, Zhijian!
->>>>
->>>>
->>>>>
->>>>>>> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
->>>>>> One thing to mention is RDMA migration is in odd-fixes stage, actually it
->>>>>> doesn't have a real maintainer so it is kind of "orphaned".  In this case,
->>>>>> I actually won't suggest we add any new knobs for performance reasons.
->>>>>>
->>>>>> Do you have a strong reason to propose this patch to land upstream?  Is it
->>>>>> used in production systems and it solves some real problems for you?
->>>> We have VMs with large RAM and find TCP live-migration is not fast enough
->>>> and expect RDMA migration can be faster.
->>>>
->>>> But we found the rdma mode migration speed is slower than tcp mode. See
->>>> following data.
->>>>
->>>>
->>>> 8GB RAM idle VM live-migration performance:
->>>> | transport mode       | time (s) | throughput (MB/s) |
->>>> |----------------------|----------|-------------------|
->>>> | TCP                  | 36.89    |  1,081            |
->>> What is the NIC setup?  Did you try to enable multifd to offload zeropage
->>> detections?  Or is that not feasible due to some reason?
->>>
->>>> | RDMA, 1MB chunk size | 37.915   |  1,007            |
->>>> | RDMA, 1GB chunk size |  4.368   | 17,529            |
->>>>
->>>> This patch allows us to use larger chunk size for faster RDMA migration.
->>> Sure, Zhijian's point is reasonable.  If he's fine, I'm OK.
->>>
->>> Thanks,
->>>
->>>> Regards
->>>> Sam
->>>>
->>>>
->>>>>> I also wonder what Zhijian would say on this.
->>>>>>
->>>>>> Thanks,
->>>>>>
->>> --
->>> Peter Xu
->>>
+> If we decide to go with two decoders, do we want a unit test to ensure
+> they behave the same?
+
+They don't behave exactly the same, as explained above, and also the
+U+0000 case (btw, if you could explain what we need it for, it's not
+obvious to me)
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
