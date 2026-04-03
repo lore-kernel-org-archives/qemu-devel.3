@@ -4,53 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA4E9E85374
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 15:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41750E8536F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 15:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8fzy-0003b6-Dj; Fri, 03 Apr 2026 10:59:50 -0400
+	id 1w8gAI-000899-H0; Fri, 03 Apr 2026 11:10:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w8fzk-0003Yq-BA
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 10:59:36 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w8gAF-00086Z-4Z
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 11:10:27 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w8fzi-0006kc-Bt
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 10:59:36 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4F238596A24;
- Fri, 03 Apr 2026 16:59:29 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id c2VB2pSCuHUt; Fri,  3 Apr 2026 16:59:27 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3F955596A2A; Fri, 03 Apr 2026 16:59:27 +0200 (CEST)
-Message-ID: <2b8af6022aba06aa98a249ae67922de29d82d86f.1775228029.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1775228029.git.balaton@eik.bme.hu>
-References: <cover.1775228029.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 1/2] ati-vga: Fix setting CRTC_OFFSET
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w8gAC-0000Yl-N5
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 11:10:26 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:2008:0:640:480d:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4ED0EC01EF;
+ Fri, 03 Apr 2026 18:10:19 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d4c::1:2b] (unknown
+ [2a02:6bf:8080:d4c::1:2b])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id IAfmpX0K5mI0-fozubs6z; Fri, 03 Apr 2026 18:10:18 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1775229018;
+ bh=Dszo96Rqq7VC7o7Rk/jNRIX+o5bL7rFVMwyU17OdRWc=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=z00OG16WV+duzK27Jg5SzGCXbgUBGGfia81MCBSRgUL88UAeKQZJiG50WYwaK1NpH
+ MH5+0LzP3XpoFvih2PA8/wKb4mafVihrvNZlg/+9YH+zerYb5ipYcFXnsjEvFHmxDt
+ ZBUGS4/UCjjkzR0+koqqBZLh1lLOM/KdLbrSe25Q=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <70bdb32a-3a9c-4674-980d-1f94612c62ea@yandex-team.ru>
+Date: Fri, 3 Apr 2026 18:10:18 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 03 Apr 2026 16:59:27 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vhost-user: fix wrong index for postcopy_client_bases
+To: mst@redhat.com
+Cc: sgarzare@redhat.com, raphael.norwitz@nutanix.com,
+ swapnil.ingle@nutanix.com, peter.turschm@nutanix.com, cui@nutanix.com,
+ marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20260403093411.1431802-1-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260403093411.1431802-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,85 +79,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Offset (display start address) should also be updated when changing
-the register value not only on mode change. Fix the register write
-mask to hard code bits 0:2 to 0 as the chip docs say and update the
-start address on register write. This fixes virtual screen panning for
-screens larger than displayed resolution.
+On 03.04.26 12:34, Vladimir Sementsov-Ogievskiy wrote:
+> u->postcopy_client_bases[i] corresponds to dev->mem->regions[i], not
+> to u->shadow_regions[i]. So we should use j-index, following indexation
+> of dev->mem->regions.
+> 
+> Fixes: f1aeb14b0809e313c7424 "Transmit vhost-user memory regions individually"
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+> 
+> Hi all!
+> 
+> Honestly, I don't follow the logic of vhost-user postcopy, but I can't
+> believe, that the same array should be used in different indexing
+> semantics.
+> 
+>   hw/virtio/vhost-user.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index a8907cca74e..91de08a5128 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -602,7 +602,7 @@ static void scrub_shadow_regions(struct vhost_dev *dev,
+>                       if (fd > 0) {
+>                           u->region_rb_offset[j] = offset;
+>                           u->region_rb[j] = mr->ram_block;
+> -                        shadow_pcb[j] = u->postcopy_client_bases[i];
+> +                        shadow_pcb[j] = u->postcopy_client_bases[j];
+>                       } else {
+>                           u->region_rb_offset[j] = 0;
+>                           u->region_rb[j] = NULL;
 
-As this register allows values that cannot be handled by the VBE_DISPI
-X and Y offsets (which is restricted by line length) we add a function
-to set it directly not through the VBE offsets.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/display/ati.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+Hmm, now I think, that postcopy + CONFIGURE_MEM_SLOTS is totally broken
+both in protocol and in the code.
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index eb00382902..3976f5f01c 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -48,6 +48,19 @@ static const struct {
- 
- enum { VGA_MODE, EXT_MODE };
- 
-+static void ati_vga_set_offset(VGACommonState *vga, uint32_t offs)
-+{
-+    int bypp = DIV_ROUND_UP(vga->vbe_regs[VBE_DISPI_INDEX_BPP], BITS_PER_BYTE);
-+
-+    if (!bypp ||
-+        vga->vbe_regs[VBE_DISPI_INDEX_YRES] *
-+        vga->vbe_regs[VBE_DISPI_INDEX_VIRT_WIDTH] * bypp + offs >
-+        vga->vbe_size) {
-+        return;
-+    }
-+    vga->vbe_start_addr = offs / 4;
-+}
-+
- static void ati_vga_switch_mode(ATIVGAState *s)
- {
-     DPRINTF("%d -> %d\n",
-@@ -110,26 +123,12 @@ static void ati_vga_switch_mode(ATIVGAState *s)
-             vbe_ioport_write_data(&s->vga, 0, VBE_DISPI_ENABLED |
-                 VBE_DISPI_LFB_ENABLED | VBE_DISPI_NOCLEARMEM |
-                 (s->regs.dac_cntl & DAC_8BIT_EN ? VBE_DISPI_8BIT_DAC : 0));
--            /* now set offset and stride after enable as that resets these */
-+            /* now set offset and stride because enable resets these */
-             if (stride) {
--                int bypp = DIV_ROUND_UP(bpp, BITS_PER_BYTE);
--
-                 vbe_ioport_write_index(&s->vga, 0, VBE_DISPI_INDEX_VIRT_WIDTH);
-                 vbe_ioport_write_data(&s->vga, 0, stride);
--                stride *= bypp;
--                if (offs % stride) {
--                    DPRINTF("CRTC offset is not multiple of pitch\n");
--                    vbe_ioport_write_index(&s->vga, 0,
--                                           VBE_DISPI_INDEX_X_OFFSET);
--                    vbe_ioport_write_data(&s->vga, 0, offs % stride / bypp);
--                }
--                vbe_ioport_write_index(&s->vga, 0, VBE_DISPI_INDEX_Y_OFFSET);
--                vbe_ioport_write_data(&s->vga, 0, offs / stride);
--                DPRINTF("VBE offset (%d,%d), vbe_start_addr=%x\n",
--                        s->vga.vbe_regs[VBE_DISPI_INDEX_X_OFFSET],
--                        s->vga.vbe_regs[VBE_DISPI_INDEX_Y_OFFSET],
--                        s->vga.vbe_start_addr);
-             }
-+            ati_vga_set_offset(&s->vga, offs);
+Look:
+
+for VHOST_USER_SET_MEM_TABLE we have not in the spec:
+
+.. Note::
+    ``NEED_REPLY_MASK`` is not set in this case.  QEMU will then
+    reply back to the list of mappings with an empty
+    ``VHOST_USER_SET_MEM_TABLE`` as an acknowledgement; only upon
+    reception of this message may the guest start accessing the memory
+    and generating faults.
+
+
+and in code we do in vhost_user_set_mem_table_postcopy():
+
+         msg.hdr.size = sizeof(msg.payload.u64);
+         msg.payload.u64 = 0; /* OK */
+         ret = vhost_user_write(dev, &msg, NULL, 0);
+         if (ret < 0) {
+             return ret;
          }
-     } else {
-         /* VGA mode enabled */
-@@ -752,7 +751,8 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         s->regs.crtc_v_sync_strt_wid = data & 0x9f0fff;
-         break;
-     case CRTC_OFFSET:
--        s->regs.crtc_offset = data & 0xc7ffffff;
-+        s->regs.crtc_offset = data & 0x87fffff8;
-+        ati_vga_set_offset(&s->vga, s->regs.crtc_offset & 0x07ffffff);
-         break;
-     case CRTC_OFFSET_CNTL:
-         s->regs.crtc_offset_cntl = data; /* FIXME */
--- 
-2.41.3
 
+Note, that msg.hdr.request is set to VHOST_USER_SET_MEM_TABLE by
+vhost_user_fill_set_mem_table_msg() call.
+
+
+
+But when CONFIGURE_MEM_SLOTS is negotiated we don't use VHOST_USER_SET_MEM_TABLE
+message, instead we use VHOST_USER_REM_MEM_REG and VHOST_USER_ADD_MEM_REG.
+
+for VHOST_USER_REM_MEM_REG we have nothing about postcopy in documentation,
+and for VHOST_USER_ADD_MEM_REG we have only:
+
+   In postcopy mode (see ``VHOST_USER_POSTCOPY_LISTEN``), the back-end
+   replies with the bases of the memory mapped region to the front-end.
+   For further details on postcopy, see ``VHOST_USER_SET_MEM_TABLE``.
+   They apply to ``VHOST_USER_ADD_MEM_REG`` accordingly.
+
+how should it work about "an acknowledgement"? Should QEMU send
+an empty VHOST_USER_SET_MEM_TABLE ? And when?
+
+
+Let's see what we have in code:
+
+vhost_user_add_remove_regions() {
+
+    if (nr_rem_reg) { send_remove_regions() }
+
+    if (nr_add_reg) { send_add_regions() }
+
+    ... and for postcopy:
+
+    msg->hdr.size = sizeof(msg->payload.u64);
+    msg->payload.u64 = 0; /* OK */
+
+    ret = vhost_user_write(dev, msg, NULL, 0);
+    if (ret < 0) {
+        return ret;
+    }
+
+
+Note that:
+
+1. We send only one acknowledgement, after sending several (or zero)
+    ADD/REM requests.
+
+2. We send an acknowledgement with request set to either VHOST_USER_ADD_MEM_REG,
+    or VHOST_USER_REM_MEM_REG, or zero (if bot nr_rem_reg and nr_add_reg are zero).
+
+
+I think, it far far away from documentation. And it can't be simply "fixed". If we
+need postcopy for CONFIGURE_MEM_SLOTS case, the protocol extension to support it
+should first be invented.
+
+
+I think, it would be correct to abandon using postcopy together with CONFIGURE_MEM_SLOTS
+for now, and document that behavior of server is actually unpredictable if use postcopy
+commands together with CONFIGURE_MEM_SLOTS negotiated.
+
+-- 
+Best regards,
+Vladimir
 
