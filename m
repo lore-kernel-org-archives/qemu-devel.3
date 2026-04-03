@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02429E7E343
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 887E8E7E343
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8a1P-00086V-17; Fri, 03 Apr 2026 04:36:55 -0400
+	id 1w8a2e-0000VJ-7c; Fri, 03 Apr 2026 04:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8a1O-000866-1O; Fri, 03 Apr 2026 04:36:54 -0400
+ id 1w8a2W-0000TU-2V; Fri, 03 Apr 2026 04:38:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8a1M-0005hX-H3; Fri, 03 Apr 2026 04:36:53 -0400
+ id 1w8a2T-0005mt-R0; Fri, 03 Apr 2026 04:38:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775205372; bh=JAg1ZUHVj6JVwMTnXA+FbuvaJPqnyopTKkMUnxzkNms=;
+ t=1775205442; bh=qQLmVplE0IUEwFwqeJmsS1aPWBAit0qFa13UipeafGk=;
  h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=Cd/3doiBwu8Jz/zzRXI4aw7373PbcHVnB7dLXUv+WMe/WJTk/MUefKiGZ9BQplXrO
- dLC35sGuh0Xw2SbbEjpggGiebrOUzAnYqZ6OIYVsGzoIJeOr/Wg800VSjyMlHkD3GM
- 95GevKr59kG6o0THO9vk5fZpcBCA6QZ6JvzKVcUBSStslS/kyTJKevZwokQB6U+EOC
- J5VlKn+VCBSs4zrug3J1TKal/l7iZjQev/4j/P9aVRD6Ab5w4bVeR9mkhIfFK6hu5E
- DAbNS4hDvyWuBxFH+JtGCBLmDs/eVU977gliV92pQ4NiqVjY1F3GA7k4JmyhFm0F6I
- 3T0uLrqAZFI/A==
+ b=k7Ac4n1c8xX7UlpbvCrL2Yk30kU+HWzjQHj+RSDztHmlkvRDcsAiY0naSWDAH3PXj
+ TjrpFXfpAV/gWY8f2bNYj+EhdlZR+r/ure7r0lZSFuTKzdtjdN+8UhWy5D7pV6UESO
+ 0qFr80TmjKl6OIciFr47pG1ua0bosfwBRnW/Tr1hbi/ouM1V/FoKlCIS7RLEue6p7J
+ t6srXqeKcdyCI5FTdBFi3hgAiNEdWYBHB+kJwe9bp5SB/EInvX5nxdlVXvD14zWk2l
+ iW/UhQFhpezzZdBYetqjso60SgMr3y3mY0Sqp3DBltSWcLvqIs2OuM+n7LSUa1JyS6
+ 41lEyrM0xP8OQ==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id BCF6B19A52F;
- Fri, 03 Apr 2026 11:36:12 +0300 (MSK)
-Message-ID: <c5c72b5b-b155-470e-89e5-15f5683e5d6f@tls.msk.ru>
-Date: Fri, 3 Apr 2026 11:36:50 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 8C68819A536;
+ Fri, 03 Apr 2026 11:37:22 +0300 (MSK)
+Message-ID: <82098f88-1a8e-4d91-8965-704612c25c48@tls.msk.ru>
+Date: Fri, 3 Apr 2026 11:38:00 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 3/6] linux-user: fix name_to_handle_at when
- AT_HANDLE_MNT_ID_UNIQUE flag is set
+Subject: Re: [PULL 4/6] linux-user: update select timeout writeback
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20260401094848.2661985-1-peter.maydell@linaro.org>
- <20260401094848.2661985-4-peter.maydell@linaro.org>
+ <20260401094848.2661985-5-peter.maydell@linaro.org>
 Content-Language: en-US, ru-RU
-Cc: qemu-stable <qemu-stable@nongnu.org>,
- Clayton Craft <craftyguy@postmarketos.org>
+Cc: qemu-stable <qemu-stable@nongnu.org>, Sun Haoyu <shyliuli@aosc.io>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -86,7 +84,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260401094848.2661985-4-peter.maydell@linaro.org>
+In-Reply-To: <20260401094848.2661985-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,21 +112,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 01.04.2026 12:48, Peter Maydell wrote:
-> From: Clayton Craft <craftyguy@postmarketos.org>
+> From: Sun Haoyu <shyliuli@aosc.io>
 > 
-> Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
-> is 64-bits. If name_to_handle_at is called with this flag set then qemu
-> passes a 4 byte int to the kernel, which then tries to store 8 bytes in
-> a 4 byte variable, causing a SIGSEGV[1][2].
+> The Linux kernel writes back the remaining timeout for select-family
+> syscalls in poll_select_finish(). If that writeback fails, it keeps
+> the original return value.
 > 
-> This stores mount_id in a 64-bit var if the flag is set.
+> However, QEMU only writes back the timeout on success. If the writeback
+> fails, QEMU returns -TARGET_EFAULT. This can lose the remaining
+> timeout and change the return value.
 > 
-> 1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
-> 2. https://github.com/systemd/systemd/issues/41279
+> Update do_select(), do_pselect6(), and do_ppoll() to always write back
+> the timeout to match the Linux kernel's behavior. If the timeout
+> writeback fails, keep the original return value.
 > 
-> Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
-> Reviewed-by: Helge Deller <deller@gmx.de>
-> Message-id: 20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net
+> Tested with the issue reproducer.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3343
+> Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Message-id: 20260320111647.138984-1-shyliuli@aosc.io
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
 I'm picking this up for qemu-stable (10.0.x & 10.2.x) series.
@@ -137,4 +140,5 @@ Please let me know if I shouldn't.
 Thanks,
 
 /mjt
+
 
