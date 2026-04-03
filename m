@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0435E88D63
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 21:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 231ECE88D66
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 21:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8lww-0006qm-Ot; Fri, 03 Apr 2026 17:21:06 -0400
+	id 1w8m07-0008Ek-Jz; Fri, 03 Apr 2026 17:24:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8lwu-0006j0-Dw
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:21:04 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1w8m06-0008Eb-RZ
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:24:22 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8lws-0003wr-Ty
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:21:04 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2b23fcf90b2so21205125ad.3
- for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 14:21:02 -0700 (PDT)
+ id 1w8m05-00047q-BT
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:24:22 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2b258576d8cso14146765ad.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 14:24:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775251261; x=1775856061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775251459; x=1775856259; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FKQOiu8uzFuxHT2NoyVPUR27Zi5sXrhv/B5Geiv3d5M=;
- b=war1I2ZFEuR7Yz+z7XWHBGko+g+y6dFy2JXTgg0AGakKZGaqC6jjCKuWDJEJy9hj48
- RgUyRtgnnrRyM2DSaVKEplC3s6dU6lpwnQ0DI4O1YPfC8dewYSFVPbiUaPPgLrFd4SIL
- V3fBvII3JiJXgemjzyUdPKejw96QyvtXRg35sPPXJ/DKwbrojaA+Il2R9h0p9qJSqmzg
- SFaV2EEAhOX/01m0UmgEhbm38Rj8OX1m5pekP0YRCSpgMMHEPDbz1Z3nbHp66HFGHSug
- OO139NKWC/Ugc7Ruo54udxxCtUBlKCnNDKPTjJkdH3fH3vKW72cvS2Qiv/DEL7pd3wLW
- SwRg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=P3IlhFJf1V7EyXurfpVi6WHEJ6UYmbEh2rjfNVJMVwU=;
+ b=MywZNCfkwRYp4kXFOUNPw6yZIp7n06U2xNakjXO3vFbkuFPDrO7a1gmVs81gdCe1Gd
+ y0dwP7BwGjpNJSV6N7q+ibh2fcKx/aoNu6ZMmuMeBrInKfeADOQSRH0fM0V0DDqSlXY8
+ jO/KzZjC7oi06CCyzs/p1IuodVA+igLk8pYFA1vSXH9nGPuo84aF/AbiyJ4dlGhqYvTW
+ /S2D2jBpRtmEmmyAOJ5xdVLoIPrqtokjwak7tZrQz8GOdH8zLdW7AT+eVY7Y1nsnki2m
+ GsE2746LQ/qzBPclaQAMMzF0kmduDW9blvw7hI3wgwPN0UT+br+7xgZ/puIpb4D5NRas
+ 9uig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775251261; x=1775856061;
+ d=1e100.net; s=20251104; t=1775251459; x=1775856259;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FKQOiu8uzFuxHT2NoyVPUR27Zi5sXrhv/B5Geiv3d5M=;
- b=aB2qDxQwn2pPzy+tb+nAwqwBb1HBljrC5yrS3lfH0Z8jhMsBJNN4pX9JLwfGQ+edqz
- uiM6Sf1feT323163VxSPE4eO7Yp9M5W2S8bZT3UyN6cq+jBYzgeKXRWuqHga4G+AorY+
- xhw24efrp6rEJRx8XausGcsuSgLKusUJRuoeO6Wa3uRrd4/Y2Y293eBqtgfqs3rcx3Vu
- QMbQvsMztmcJLrh7D5zGw+pRG7tABaDK8TYok591BbiIk5TJDerRpCG7wky/klWuKL7Q
- OIIlToffcYZnm+VBdp55VAsX6MIKJ7Zn0nLWHK8mzXU8owIqCXkpah7wKiiRyMmOHxrL
- UD1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZYVLSyZvWHfobZABbmgVE4VzyTw1O6gtswgRLr+eTm7MYJKAxeoj9oT6QCQNDfBCDgi7JDYQYTy3/@nongnu.org
-X-Gm-Message-State: AOJu0Yy69S2QbSTEoX5YjvZx1ggCxj7O47nsZokZPxZVKfqDevO5wCzL
- RDS3hxerJU0XfxHgryVRQAmLjqdKAzChDclC8roCZThZf/oGTtZna2gCy9+OA5lM1oihYIF8wV5
- VLkxaHtw=
-X-Gm-Gg: AeBDieumQz4Fdg/qQ/v2bQEwncs7uRqvlmWwFh1Rt0VwfSX/LrSUDyrO7+XnD2owouK
- LppznvMEuVhe7iXf/oWDF132+wFPlzalzxxsWTgc5eg8cWSVABF2XXkoJiIvo1UOJqIICMIdbjj
- Gnsujo/sLdEvcuiVolvDp/NegeR4DcnVqiOxwWNXQ07k30msHZxZ4ok4+osVJobQRa+8OcMrkhR
- fmxdInpzLuk86WDmSbv2rwNULNveAcZIYEuAC+yvXr/2vAuOGQGmXDk4aIOzmXt7FlGROJWGWyM
- wdYm1jF1LFVr2mvN81tl9e60r6A6pvnOeY90N2YtHlsWpyyZNohmYxdZspD7gg2R4h4W2wgdTLg
- jWsxRL+vQFtlMaQZGW9uoDmfW+rhWyb7b8QSKhe2uC+K0TX8wjbG+iQAxXskpAbplMcT1iG+l5L
- G24kIK2Xk997Kadvrbuiqt9yU2FXn3JuFHxDGSWqarlGzlIHv/Lw7JojvXPYYWph8KbF0=
-X-Received: by 2002:a17:903:1a28:b0:2b0:c90f:44b2 with SMTP id
- d9443c01a7336-2b28173548amr46198715ad.12.1775251261115; 
- Fri, 03 Apr 2026 14:21:01 -0700 (PDT)
+ bh=P3IlhFJf1V7EyXurfpVi6WHEJ6UYmbEh2rjfNVJMVwU=;
+ b=TNvDC64YOPnbCqFmE4lGZyTTPpIBQlTKJotQ8VYq2KkDb65xD2x8asSALk3i2Cxgzv
+ mGKlwXT+ANeT14+av13nlkYA8JhDISgwOly31YS0+BUj1nfDEoyhOTQ6B8Ed8pc7aUqv
+ b/9KHf11qeOLB4+dyT//1lU2knHJLEdX11TUSdqrgRhmfaxpDwqN3oEnTC1rlfa+nxmK
+ 3pPZAXfyma/7+9VP7pRDiSa2RNNzpvxloL2yk7OLPwciz+pGTfYpngaV25dFdUEejW8D
+ CYhjsiWf2K3YRcC/SfzbinvIZB7RqUzaIT72Uqxn2KlXAvCahRZFXGtE+RhQ/IDSWy16
+ JUqQ==
+X-Gm-Message-State: AOJu0YzlhHGJibZlsos/sVd4gqdq4MZNEOsmcbHYBBU9OeV+zgu0A444
+ YPrYy4TdKHfoVDTYnhdhr8Y2LF06UIjOIrXNiAivjJgxaJZwPXYzCMHOKy4TNMuWll7jEcxQlYt
+ WJ+hq3d8=
+X-Gm-Gg: AeBDiesisED7g40UPTcmnLhwsALTTOZ9xTU6FRpKKLrDy4EYFQx8BgYkpfTOsAGR1y7
+ WsO8mrsMzTBER83V410ofEZE1jNy71Fezo/YKRyAHHYoq0N8/p6y92ep7X2IqnRlsSAxL8cx50j
+ /2/EMwrtx7PMjrLQAWvu7+myP0pTdzHOtTxNLo9reOMcxslOFpHoXg6mFK3NG2hgRJkhOpcOIIo
+ oFHHfj1s6LbzxUrbA1RQWw4Sru1963eSCRxLcPBNpoBOJaJ2pgGzLFcO6Jhyjydl3daII92NZ1q
+ kISzHciMMgQhGZksDtzTu29M7NQ/b73unQHmoX6ExLAIrgUNRWQFRBuZ0Corh5zqsXYg4pmE31u
+ 8UnfP9HCXSdSI4BY4lFtT4NIL2DNwY7BsyplPHZNeXYK56qtPL2dNePXi5Jay9V2gB7u0Ia4//Y
+ NRg6jGuTCHv0h5BKWv8Z2mB8K3JpBRtOzqh20IgYPJ/WKUZ6t5U2N2jokBKD57xReRugE=
+X-Received: by 2002:a17:902:ea0b:b0:2b2:5da8:14be with SMTP id
+ d9443c01a7336-2b28190a213mr40308785ad.41.1775251459331; 
+ Fri, 03 Apr 2026 14:24:19 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2747530e4sm68066785ad.18.2026.04.03.14.20.57
+ d9443c01a7336-2b2749cbd9fsm65008895ad.75.2026.04.03.14.24.17
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Apr 2026 14:21:00 -0700 (PDT)
-Message-ID: <0f441ddb-d2b2-4095-b0ce-c35090133366@linaro.org>
-Date: Sat, 4 Apr 2026 07:20:53 +1000
+ Fri, 03 Apr 2026 14:24:18 -0700 (PDT)
+Message-ID: <88bc6948-6709-4b0f-bf10-150bb07668ee@linaro.org>
+Date: Sat, 4 Apr 2026 07:24:14 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/12] target/arm/tcg/gengvec.c: make compilation unit
- common
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- jim.macarthur@linaro.org, philmd@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260401192057.1182724-1-pierrick.bouvier@linaro.org>
- <20260401192057.1182724-11-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH-for-11.1 1/8] accel/kvm: Include missing 'exec/vaddr.h'
+ header
+To: qemu-devel@nongnu.org
+References: <20260401201753.92290-1-philmd@linaro.org>
+ <20260401201753.92290-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260401192057.1182724-11-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260401201753.92290-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,47 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/26 05:20, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/tcg/meson.build | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+On 4/2/26 06:17, Philippe Mathieu-Daudé wrote:
+> Commit b67be03e3ac ("accel/kvm: Widen pc/saved_insn for
+> kvm_sw_breakpoint") used the vaddr type in the kvm_sw_breakpoint
+> structure but forgot to include the header defining it. Do it
+> now in order to avoid when refactoring unrelated headers:
 > 
-> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-> index 1fa26670587..0740de92c1a 100644
-> --- a/target/arm/tcg/meson.build
-> +++ b/target/arm/tcg/meson.build
-> @@ -33,7 +33,6 @@ arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
->   
->   arm_ss.add(files(
->     'cpu32.c',
-> -  'gengvec.c',
->     'translate.c',
->     'm_helper.c',
->     'mve_helper.c',
-> @@ -72,6 +71,7 @@ arm_common_system_ss.add(
->     'cpregs-at.c',
->     'debug.c',
->     'hflags.c',
-> +  'gengvec.c',
->     'neon_helper.c',
->     'op_helper.c',
->     'psci.c',
-> @@ -91,6 +91,7 @@ arm_user_ss.add(
->     vfp_d,
->     files(
->     'debug.c',
-> +  'gengvec.c',
->     'hflags.c',
->     'neon_helper.c',
->     'op_helper.c',
+>    include/system/kvm.h:404:5: error: unknown type name 'vaddr'
+>      404 |     vaddr pc;
+>          |     ^~~~~
+>    include/system/kvm.h:405:5: error: unknown type name 'vaddr'
+>      405 |     vaddr saved_insn;
+>          |     ^~~~~
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/system/kvm.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-With slightly more work, this one could really be compiled once, via arm_common_ss. We'd 
-need to split out the function declarations from translate.h though, because there are 
-other CONFIG_USER_ONLY uses in there.
-
 
 r~
+
+> diff --git a/include/system/kvm.h b/include/system/kvm.h
+> index 5fa33eddda3..12f7fc8fb58 100644
+> --- a/include/system/kvm.h
+> +++ b/include/system/kvm.h
+> @@ -17,6 +17,7 @@
+>   #define QEMU_KVM_H
+>   
+>   #include "exec/memattrs.h"
+> +#include "exec/vaddr.h"
+>   #include "qemu/accel.h"
+>   #include "qom/object.h"
+>   
+
 
