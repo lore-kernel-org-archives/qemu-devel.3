@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63AA4E88D6A
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 22:01:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4189E88D6D
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 22:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8mZY-0001dZ-Jz; Fri, 03 Apr 2026 18:01:00 -0400
+	id 1w8nQp-0005sV-BX; Fri, 03 Apr 2026 18:56:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8mZH-0001be-Ed
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 18:00:43 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1w8nQn-0005s4-R9
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 18:56:01 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8mZF-0007t4-3G
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 18:00:42 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-358d80f60ccso1449054a91.3
- for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 15:00:40 -0700 (PDT)
+ id 1w8nQm-0006eW-6l
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 18:56:01 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ad4d639db3so10439875ad.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 15:55:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775253639; x=1775858439; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775256958; x=1775861758; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E5Tk5h0DBxV7WnAoGiV9hDcqtMbqZOUY9apv3ctT524=;
- b=HfpED/ckhWHBjHC5qaQuo8/H7+O51CPQFSraXLs6zysi5xNZxTBwpct6oG7q7KZyxk
- lg3sjaG3EPkfb06DRpTC9AA1djpbvTKw0HOAMlvmPzLT5FkDp/NdT83XTEC4ceZD8o9h
- OJhOQnUJHchQ8ZVeD/umVBgsn1CEjQHBcoCk10HpruTgT5HjpsVymtap1JfGLb0AHptl
- 3ojs26AEdJ3E5GWhhQUMp0zIVMzstIFNBi9uF2MJW/DN/CYzy4fF35ouYFxnlsaG6d5A
- 4xSCid4Wc9rr67BheBAPkUHb/QImqz4Mb9YWcli1eSwSYSrky9lMbhrd4TRrG8jbYUGI
- YBIQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=u6rTCVIJEc41lIqTdE7Fkcyn8hFrgM/EBVaTprslLAk=;
+ b=tXGq87tXdcl7X3pnK/kyyGtvyEZ2PdL8AiYXKpG4XjVZOC0rL+TdiqVa+GDshhzCoG
+ hoc0HmfLgvGu0RVEa6jn7fFIzeZbgzPvMgg+UW8N/boInwjcjRW2NHcOIO2noRH5TpY8
+ P944tsdWPn0zP70R0yeKl5zn6JKO7q028c+hPh1V41pihM/UOrd/DdsH7LiyoxqhGFLj
+ d7Gf9t4cvKsxodzeXDUHLncHx+v7/WBjpEBsdB4Wpmv5h0dIiBefIgmbLpymbfdDTiea
+ grBNyoky0+C/B36HMTD/HaS19MlN1k3xgLWMBlkvhKVLgZraRuOotfR+FOWulegZjRoK
+ BtLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775253639; x=1775858439;
+ d=1e100.net; s=20251104; t=1775256958; x=1775861758;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=E5Tk5h0DBxV7WnAoGiV9hDcqtMbqZOUY9apv3ctT524=;
- b=Ove21/J/ijXix+SawSVpYSbLjfYIy3qT/nrr2kFf1p9hByryRI7nWbnm6kUZz5oaqW
- +q057vpUh92QvPPtFLrl2yZvOXpb/8RmCJ0KW01syBTlVD1hRye6O2n7B/M/9TWSPB8S
- UNSsUnFO5iIr5JppV6vVhwinZ0qsynrFcSmQiOYJ43zCfgOAhDWXu5q7s2v6gO+mhmbz
- VuHo9ZrEBXYPr6XlXpHLXmlW/14oZ+HTLwFupRpZR4u3F9nhfiobjiDyLQucdayZPOQA
- rQMn4Osw1omyhB5qOh0MZ+mmsYOw0KhkpUKpoATAGqhTlkoM0VWTobD1BrOkEXUag+SF
- BUdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUsOsX0n0bTa+LxIKO+12bR9gTLwU6U5bAFg6JCoHSEyauvyJN7Pzwp3v6WSIRSgj0mgLQ9OlqhIQ1w@nongnu.org
-X-Gm-Message-State: AOJu0YxpTqgqlKBVCG8FJpT+cRKgjuNvDVLs+rVmBYihbJCRoNhFN8os
- WNKOFSD9LjZiU+zYZtCzGt02OM1ewLDs4jpjvCARkbe12r47SB0KLDGq0zf/KMx9EeDapbnZVfH
- UfWMT33M=
-X-Gm-Gg: ATEYQzzLsernHbcfGRix3KaMKhtyVvPxBCqbv1v09ekgS7M3HWaURmRVhQL1kseUfJd
- Hkh1WU0KAfq/oLKuI0h3ntC9x8Ml0hxlmKexyavWRYJCunJbe58vkw40d5xbjQHjMr4lwzDEmy6
- ImAbLuCLlJSqbjJpIeNs8RDYfbd+V2OEpM+zQiQeNwSlNo/7BI5+8gNrYGs3G/NhnKFcI9vxsIp
- 7oUsRguWU/n4vNHwfSo1ZsnFeK1y+QXiU1XYQxWkL6C8mPtIig1Qs63tJ5pPjdPAIJLlUjAlCLb
- jk1cMIrrQBIxFH/o2VWgXdgJ4IVm5GwYVNmAQZyFM01BNEywejtYnoX7jKnwIWBpDwpisZDmnXY
- jqWOs1d8aLldak2OFpPwdnE502tB6FGEllPdYfTUozxhT7YN8x78UAwblloUQvaNAuEI6B5kDi1
- JnVktYYNkqtwrC5fBfGJmnLn0Exts2kla13g4aOJL54Hi0oOw16MWWRg4Ohj9yshJc9/8=
-X-Received: by 2002:a05:6a21:338e:b0:398:6e6b:da1f with SMTP id
- adf61e73a8af0-39f2ef20a2bmr4206898637.25.1775253639071; 
- Fri, 03 Apr 2026 15:00:39 -0700 (PDT)
+ bh=u6rTCVIJEc41lIqTdE7Fkcyn8hFrgM/EBVaTprslLAk=;
+ b=nxmk0hDihqUnGwd/M7RZ2azbREs0o0rwIDcUywPExngXJoZImu6HjZBnzzCnNt3Kf8
+ 0zLPPVLBlpAVUgsdvyikNQgnNV5dCgmsLbUfwtd+vmIQ/reiImr3uvJtGnCUDoTTvRJD
+ NANPrXkZlJRj/rbMx9jugo9i9+XioeljauxtJphFji8pXPOgL6PbJ9XdwJHAI0ainOAe
+ z7+ayrrDPcwD1BdLRAnoxp3YFpVRgjQvd73Q8VEj95vvFtevBnHyVntQ/Y+jQpPlRRNh
+ c0tQZRCiKcX8xI5MS2EaBvkr9OfMedsjzl7iHi1NadUVlm6f1yKcQ4tKjd/AFdhKBqHi
+ WfUg==
+X-Gm-Message-State: AOJu0Yye2xqwXIrzfKfd/N6WG9k3s4XWxVUdIQlcjvlnw6rCWthgTn8D
+ 07k8DlsQZi/oHwuO5nve9lHBQQuxVO6vPQK1KPIghqZE3N//3ewdldeXEHhjm/bD7axtN1YBzUA
+ uR8MIcAo=
+X-Gm-Gg: AeBDievYPlZHXQxPy5OIfsQdhnE+/YldmSAilHSf7QcpJkrk55mqJQhy6aUX9qPXBnb
+ 3GIZyWu4aHrFysXj4QQ8hTdV/oQPEmmloHu/7IuYNMKy5pEvDtpg9eIK02uVQADTVTpJNwQar+P
+ YMIKzKbk1KrMNnoWuN6wo29WXZ+C8KPVjYYWgwVz2Itk/TTA/29deXl1XEAHUkoY7b2lYJFwfCB
+ 2InXK92GJj4xh4gZq+UybBCIgHJA9bN0ufjMjR4FVm5enR7uzBh+kL9zQL+MyKqBfV63pHBvEyv
+ gVOQlbKodxqUzesVmACdmiuSphuv5EUw4W92WtQPtanUhfK5b1JIo7D4fvsYAHijvEfEqM4vL4B
+ Wu1xPlXJ2SbKt2i0A3k2TbrH/+7xsIOECYS7FA3WzI/tJlPlJhGXAlq4HM9u/5sKpdFva1HeGEI
+ /0D8wZR8o8ghWj0lX2S3+SeqhbyYf71a6neumeYGsImOJUTYKZDgX43E/68yS6+Nvfz4s=
+X-Received: by 2002:a17:903:191:b0:2ae:504c:ae8a with SMTP id
+ d9443c01a7336-2b281818bdemr44088515ad.16.1775256958271; 
+ Fri, 03 Apr 2026 15:55:58 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c6477bbcsm5896428a12.3.2026.04.03.15.00.36
+ d9443c01a7336-2b274779b48sm91984645ad.25.2026.04.03.15.55.56
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Apr 2026 15:00:38 -0700 (PDT)
-Message-ID: <c52cda8d-4f38-4f2f-9b6e-8c8aa319c5bd@linaro.org>
-Date: Sat, 4 Apr 2026 08:00:32 +1000
+ Fri, 03 Apr 2026 15:55:57 -0700 (PDT)
+Message-ID: <ce92d0b4-96b1-4868-b790-7397cf033a34@linaro.org>
+Date: Sat, 4 Apr 2026 08:55:52 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Replace aarch64 TCG instruction formats with more
- meaningful names
-To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20260402-aarch64-tcg-instruction-format-rename2-v1-0-0998a08a515c@linaro.org>
+Subject: Re: [RFC PATCH] target/arm: always propagate s1ns state on faults
+To: qemu-devel@nongnu.org
+References: <20260402154821.2340594-1-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260402-aarch64-tcg-instruction-format-rename2-v1-0-0998a08a515c@linaro.org>
+In-Reply-To: <20260402154821.2340594-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,24 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/3/26 00:20, Jim MacArthur wrote:
-> tcg/aarch64/tcg-target.c.inc contains a lot of numbered instruction formats
-> called "I3XXX" in the enum AArch64Insn, named for the original section in the
-> Arm documentation which described those formats.
+On 4/3/26 01:48, Alex Bennée wrote:
+> According to our mmuidx documentation:
 > 
-> This patch aims to give them more meaningful names, for example, I3314 becomes
-> Ildstpair. Where possible, these names match those used in
-> target/arm/tcg/a64.decode.
+>    we fold together most secure and non-secure regimes for A-profile,
+>    because there are no banked system registers for aarch64
 > 
-> Changes since the RFC version:
-> * bitfield_32, logic_imm_32, movw_32 have had the _32 suffix removed since they
->    also apply to 64 bit versions here.
-> * The I3310 mask is now ldst_imm_to_reg; the previous 'to_sign_extend' name was
->    wrong.
+> So we don't hold quite enough information during the table walk to
+> infer we are in secure mode. When we are trying to access a
+> none-secure page we get a stage 1 translation like:
+> 
+>    (rr) p ptw
+>    $1 = (S1Translate *) 0x7f07479f93a0
+>    (rr) p *ptw
+>    $2 = {in_mmu_idx = ARMMMUIdx_Stage2, in_ptw_idx = ARMMMUIdx_Phys_S, in_space = ARMSS_NonSecure, cur_space = ARMSS_NonSecure, in_debug = false, in_at = false,
+>      in_s1_is_el0 = false, in_prot_check = 1 '\001', in_nv1 = false, out_rw = true, out_be = false, out_space = ARMSS_Secure, out_virt = 1075929104, out_phys = 1075929104,
+>      out_host = 0x7f0750016010}
+> 
+> However as we only write HFPAR_EL2.NS when
+> arm_is_secure_below_el3(env) && fi.s1ns we can afford to relax the
+> check in fault_s1ns.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2568
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   target/arm/ptw.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index d5b2ed6c99c..ccdc1ef9916 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -634,9 +634,11 @@ static bool fault_s1ns(ARMSecuritySpace space, ARMMMUIdx s2_mmu_idx)
+>        * For stage 2 faults in Secure EL22, S1NS indicates
+>        * whether the faulting IPA is in the Secure or NonSecure
+>        * IPA space. For all other kinds of fault, it is false.
+> +     *
+> +     * At this point we can't actually tell we are in SEL[012] but the
+> +     * actual setting of HPFAR_EL2.NS is gated by arm_is_secure_below_el3(env).
+>        */
+> -    return space == ARMSS_Secure && regime_is_stage2(s2_mmu_idx)
+> -        && s2_mmu_idx == ARMMMUIdx_Stage2_S;
+> +    return space == ARMSS_NonSecure && regime_is_stage2(s2_mmu_idx);
 
+The root problem is that the computation is simply wrong.  Nothing to do with the mmuidx 
+documentation, so the patch description can be simplified.
+
+Anyway, for the actual change,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-I'll queue this to tcg-next for 11.1.
 
 r~
 
