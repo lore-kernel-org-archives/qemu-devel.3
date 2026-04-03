@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A842AE7E340
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02429E7E343
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Zx5-0006CT-MF; Fri, 03 Apr 2026 04:32:27 -0400
+	id 1w8a1P-00086V-17; Fri, 03 Apr 2026 04:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8Zx3-0006C2-IP; Fri, 03 Apr 2026 04:32:25 -0400
+ id 1w8a1O-000866-1O; Fri, 03 Apr 2026 04:36:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8Zx1-000581-33; Fri, 03 Apr 2026 04:32:25 -0400
+ id 1w8a1M-0005hX-H3; Fri, 03 Apr 2026 04:36:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775205094; bh=IEVOAFN7rRD06Sc2O9v1NQdBPQEh2f7zgdhMqyUxrkk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=udmiOEjVvn1z6ijaA21NJ28MD7NOrcsjKuQ4XKE06EMmEYGtjl/znH9uhFKnapZ3U
- nado1yA4ztLFOJqDbxDUaSwagxsBbyGRVHRXH4PqiSg2JPhfsNHAsaQxW61zhUjraE
- PXL77KR2vlQi51WrxufAxE0D51k3V739vCwwy1NSNJvKwtrZ8a2kLFVL0qrP/tOZcA
- 0ObN0Y7i+SMQ/pl9yfAiKQRnYni+k0eOGgAUw7EzygBnH2+80CJ8qqETvPzV2srzOc
- x3jGT3YYNb4nnE3R9N7K6x4yILl8dETfIJez5tU1a+JpiyhHSaBOkw+lhGER1yrDvB
- YT8A/n1rgb0eg==
+ t=1775205372; bh=JAg1ZUHVj6JVwMTnXA+FbuvaJPqnyopTKkMUnxzkNms=;
+ h=Date:Subject:To:References:Cc:From:In-Reply-To;
+ b=Cd/3doiBwu8Jz/zzRXI4aw7373PbcHVnB7dLXUv+WMe/WJTk/MUefKiGZ9BQplXrO
+ dLC35sGuh0Xw2SbbEjpggGiebrOUzAnYqZ6OIYVsGzoIJeOr/Wg800VSjyMlHkD3GM
+ 95GevKr59kG6o0THO9vk5fZpcBCA6QZ6JvzKVcUBSStslS/kyTJKevZwokQB6U+EOC
+ J5VlKn+VCBSs4zrug3J1TKal/l7iZjQev/4j/P9aVRD6Ab5w4bVeR9mkhIfFK6hu5E
+ DAbNS4hDvyWuBxFH+JtGCBLmDs/eVU977gliV92pQ4NiqVjY1F3GA7k4JmyhFm0F6I
+ 3T0uLrqAZFI/A==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id D552119A527;
- Fri, 03 Apr 2026 11:31:34 +0300 (MSK)
-Message-ID: <099e8d07-985f-4cac-b0e2-99067e81b26e@tls.msk.ru>
-Date: Fri, 3 Apr 2026 11:32:12 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id BCF6B19A52F;
+ Fri, 03 Apr 2026 11:36:12 +0300 (MSK)
+Message-ID: <c5c72b5b-b155-470e-89e5-15f5683e5d6f@tls.msk.ru>
+Date: Fri, 3 Apr 2026 11:36:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] linux-user: Fix incorrect sign-extension of guest
- addresses
+Subject: Re: [PULL 3/6] linux-user: fix name_to_handle_at when
+ AT_HANDLE_MNT_ID_UNIQUE flag is set
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260330143123.1685142-1-peter.maydell@linaro.org>
+References: <20260401094848.2661985-1-peter.maydell@linaro.org>
+ <20260401094848.2661985-4-peter.maydell@linaro.org>
 Content-Language: en-US, ru-RU
+Cc: qemu-stable <qemu-stable@nongnu.org>,
+ Clayton Craft <craftyguy@postmarketos.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -87,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260330143123.1685142-1-peter.maydell@linaro.org>
+In-Reply-To: <20260401094848.2661985-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,77 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.03.2026 17:31, Peter Maydell wrote:
-> In commit 7804c84a ("include/user: Use vaddr in guest-host.h") we
-> changed all the functions in guest-host.h that took or returned their
-> guest address argument in type abi_ptr to instead use vaddr.
+On 01.04.2026 12:48, Peter Maydell wrote:
+> From: Clayton Craft <craftyguy@postmarketos.org>
 > 
-> This introduced regressions for the case of a 32-bit guest and an
-> address above 2GB for the common situation where the address is a
-> syscall argument stored in a variable of type 'abi_long'.  With
-> abi_ptr (which will be an unsigned 32-bit type for 32-bit guests),
-> the address is cast to unsigned 32-bit, and then zero-extended to
-> 64-bits in g2h_untagged_vaddr().  With the switch to vaddr (which is
-> always a 64-bit unsigned type), the guest address will instead be
-> sign-extended to 64 bits, which gives the wrong answer.
+> Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
+> is 64-bits. If name_to_handle_at is called with this flag set then qemu
+> passes a 4 byte int to the kernel, which then tries to store 8 bytes in
+> a 4 byte variable, causing a SIGSEGV[1][2].
 > 
-> This is https://gitlab.com/qemu-project/qemu/-/work_items/3333
+> This stores mount_id in a 64-bit var if the flag is set.
 > 
-> There are multiple ways we could fix this, and I wasn't really
-> very enthusiastic about any of the ways I thought of:
+> 1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
+> 2. https://github.com/systemd/systemd/issues/41279
 > 
->   * we could require all the code that has guest addresses in
->     abi_long variables to carefully make sure it casts them
->     to abi_ptr before calling any of the relevant functions.
->     That would be making changes to quite a lot of code, and
->     it feels somewhat bug-prone because the "obvious" way to
->     write code (..."g2h(arg1)"...) is the wrong way.
-> 
->   * we could try to abstract away direct calls to these functions
->     (as a comment in the header says, we likely need to do that
->     at some point if we ever want to have usermode softmmu), as
->     we already do somewhat with the lock_user() and unlock_user()
->     primitives. But that would be a huge upheaval not suitable
->     for fixing a regression.
-> 
->   * we could make the "normal" versions of these functions the
->     same as they've traditionally been in QEMU, and provide
->     variants specifically using vaddr for the small amount of
->     code that needs them and is being compiled only once.
->     This is at least minimally invasive and fairly obviously
->     reviewable for correctness, but having two versions of each
->     function is a bit ugly.
-> 
-> In this patchset I've opted for the last of these possibilities.
-> If anybody has a better idea I didn't think of, feel free to
-> suggest it :-)
-> 
-> Patch 1 in this series isn't a requirement for patch 2;
-> but cutting down the number of places where we include the
-> header helped make me more confident that I wasn't missing
-> any uses.
-> 
-> thanks
-> -- PMM
-> 
-> Peter Maydell (2):
->    include: Don't include guest-host.h in cpu-ldst.h
->    include/user/guest-host.h: Provide g2h etc for both abi_ptr and vaddr
+> Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
+> Reviewed-by: Helge Deller <deller@gmx.de>
+> Message-id: 20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-I'm picking this up to 10.2.x stable series (as was intended,
-though only the second patch is actually needed there), TOGETHER WITH
-two other patches by Richard, from this patchset:
-
-https://lore.kernel.org/qemu-devel/20260128010715.347776-1-richard.henderson@linaro.org/
-
-813dbe869f accel/tcg: Don't pass NULL to get_page_addr_code_hostp
-0039e5fd22 accel/tcg: Fix uninitialized hostp in get_page_addr_code_hostp
-
-I could've fixed up the 8330da591e "Provide g2h etc" patch instead, but
-somehow it felt that picking up two previous patches in this are is
-better.  Not that it makes significant difference.
-
-Richard, is that okay with you? :)
+I'm picking this up for qemu-stable (10.0.x & 10.2.x) series.
+Please let me know if I shouldn't.
 
 Thanks,
 
