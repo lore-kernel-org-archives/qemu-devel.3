@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22957E85367
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 15:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20C6E8536F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 15:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8gJn-00059n-Je; Fri, 03 Apr 2026 11:20:19 -0400
+	id 1w8gOH-0000O8-6R; Fri, 03 Apr 2026 11:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8gJm-00059V-8m
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 11:20:18 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8gOF-0000Ny-33
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 11:24:55 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8gJk-0003gL-BJ
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 11:20:17 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso12093285e9.1
- for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 08:20:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w8gOD-0004KP-0N
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 11:24:54 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so20665045e9.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 08:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775229614; x=1775834414; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1775229891; x=1775834691; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MoKl7MAJVVoQBh3jJHjMhxTrlAT1hvj3U0F3jpD+bug=;
- b=FbDwjCDSbjK8fYQqSadtAarp9WNG7gX1RFBvDOT8durwHAfwGPR/aLw+5I3r7Vuezh
- E2rfoNjJZxHK7qL/IJalnuKmCQgdG2B/OcpO9jlf43EYW6lzHcjGbT7m8+YN8KONKkRJ
- CfXBS4EJkmjA05C6j+Yw1wpJV3ZfezMr4llT3AKEcaCC5rrdpGZ75MGiDR4GKT4W/unr
- A2ZMqt65zUazEv/TtQZl8cYFKpUZgsSNKqM3TFJon0Ot3a5mgkivoWNhCsvlW2AZIXtm
- /nlUOCl4PX61Zvw5o8QtfkJxatduqpJ4bZSXO9l1jHb6PVQNSXJv6FkKga26+IZul7Ob
- jLmQ==
+ bh=oPRuMBTp2qSn1gANhoA1+5oBJwwPs87xbXGdROwdpQc=;
+ b=F8jXtmlMk6Brq8SjQ+WKWdGn446iOtu19FWkutCWwT0plYzetwVgU8pG7M9e/drboM
+ nssJYCIkIEsob+dzh3DyBp3ZMopQYHYnZnAgtkc6bR3UgMkelxY2o3OsZakF4lJtsYoc
+ QLvrvXbmtAYbm7JSyMOLHRGlEsKjynevVUVTulgrPehrolbSSFkbrTQxoJeVdn72x1R1
+ DRKosP8rgeHbx9rYzJs+pY2vkeohvJNknczckzEogFx0In2sAsdH6JqLjpmU05ZuQ287
+ KKx+RqkLN89V/nsujjFuTH4pSpncrtS5WahNdN4Ry7WLbzvqYxNI8XOTb2y9urlko+y+
+ OXjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775229614; x=1775834414;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1775229891; x=1775834691;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MoKl7MAJVVoQBh3jJHjMhxTrlAT1hvj3U0F3jpD+bug=;
- b=P1mtbmrrBTs1ikW2A7PyxhYYfoDN5QHiKIXfoTA+OPZ62Otf0Ivl6G3X9BEhxFVKxg
- rg3Upzk18huYefzb7X/+HTOg3Z0iQriCF7y0iyUbZ2LNk5yd6AmkQK6RA2xHgMTFYSnU
- yXvthFIr1SebGI3pccGoS8pBiXsBtB10rLn6FGbLELYyXnXnT8stMtDDaasQVt1FkEZO
- fOeFpMewNfJmQO4b8T0r1mM2T7QLiA8rNttMN5nnNmpojMsa0NmFFnuauMULHQtp8AVX
- ITVeDqFJCzR0VBw/KUpkNm8iXCJIQggTGkCSDg9omhAQUBItRfQYGrjWapS57zyHFXSr
- LQLg==
+ bh=oPRuMBTp2qSn1gANhoA1+5oBJwwPs87xbXGdROwdpQc=;
+ b=pTpcjwjH27jFbXnHQvNvN91z7XG/Gb6UExeYGPc5N38Giuof/yhatRQkY1Np/d/Jyz
+ FllnkwjE5WjGL3mWS2BSukZnoUv+OPmRc7YSXGvDARb6hgdqClo7ZESSu9asLAz172Yz
+ 7Q3+F+2jZ9pCrZtrxQf5ZDfs4mU7xPb7fKUesqnBTBQz8htUYkmV79R3bkuhPEaqBopi
+ cWPYbfUjFhQ0mXFR5wGjGlJ8h8mgaj+BJP2qs78exbhSVIJK2tfDVnZNeLMuFfFXOPFo
+ bw2f6EQnYZRVb4Fv21vbTER/RSKrECNW30S0y0T1mSx6O7K76MiYP1tZKifEIpbHVYLI
+ 2fvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8ffWySdsnNSuJQa8vcPtgENmME/wSfOrJ0PQVTrw1XgolsZFnuBx8KBSMWs6S1LjhbQNVeLhrWhH2@nongnu.org
-X-Gm-Message-State: AOJu0Yy2LQRsUOe1+NvZE9KDtKuhak+GLUstmPEi5J8t+xVtQw3EOFH2
- a3E80R+DQ1QM1lgXEliM3bJWlQT0kuIXGc5myFqwxnwwcEXzg5cRec2C5g0xx3imkZU=
-X-Gm-Gg: ATEYQzz/UX5GYTb2tRHLqr0/zdLm6XANOsbsYUGekA5gaMlWwynUiY9BqLYaJuelW/T
- 7x0gsM9/VRCLeFcqaFnlVtaPBz2GrhGbwJigCj3l7CcXDQyuZbR423rNRJMBGJQcRb4O9GH5kEa
- HRwT/OPv3z2YJYjWxrzY3KQi6vD4OjVQtfVqzmcE4Kf/pbPyJ3MOBNq+3qQcRmIB65nfWhAZH5p
- qmJTckj+XmSHUdAROl13l9zNCAUfxtbTrfvvwKS/4M1+HpuAXDqVm8CmUPj89uGhBOpQ0DFFHtW
- +EwYwYkLKJzG5aAEnzZqSGcrh4OlJLZmaEyQtMK9EQFwRBIiVcLzejc0ac7By3IoosEQYdGrT0F
- 5M8lPP7fHDBAPxo71wjx+zXGGZaaRBtj07qP/FzwG4FCDtzWouabiLrqEh1ubxu3SMYqkQJdZiR
- oF8L3iaND/jll6sjliVk0E3t9QFusal+8L5Kk/bDpXUCa7F8RHbsOw4Mtgv910goxAZA==
-X-Received: by 2002:a05:600c:5292:b0:488:966f:70a7 with SMTP id
- 5b1f17b1804b1-488996b02f2mr59056445e9.2.1775229614020; 
- Fri, 03 Apr 2026 08:20:14 -0700 (PDT)
+ AJvYcCUcxD83VqSXxsMTdwnIPXZzGdcC3vrtR6wt0LBmdsQrjXkdaDhpQE47ArSrySuxxg0wXzO98Csi2BLz@nongnu.org
+X-Gm-Message-State: AOJu0YzAyBPgqGFnUSaqtTe3uLo496GxM+55mEbpwbcMlKKC1TgTbaGX
+ +ae1TJCDe6BlADNVKLPpcsIPjRJirxEIAmHQQjvicp44qpL4XAefJL+Cv7IKGeHlYSU=
+X-Gm-Gg: ATEYQzxeckenNmurgQuNWSlULpa+NvBQ2KZJddvSnIFxvIGGMatCUCVWVxVNkrVD5aV
+ CSeDPSVVoBhFEguiwKHCUEz6UX8Jd96lYHh2R6xdpWcum/HiNTTwhTZw76kyOAOTejsQxA777Mg
+ BLYtVu5F4noJ4F7kGhe+5vCZYS+YHMdeqVwBMSduGsHfDn5Ero2VXlljse+Gn9jsKfi23PE7VVR
+ Va4C4KPWeK6qJ2ZkRyRy/AI/H4FGAY0dexTAnyRUfDYsZMB0B7UjrVKP0/QkfOcBuRwVYberwIz
+ n7Lc/8Z4O7Nu6sLpb/zP8yvTIJBakbStpzNKU1dBiML4XrAPUH/Ir4J9ZJTf8G4ITepHTc2GSJW
+ bU7ajxtyIHFOpQ9hhW48Vq6UFg9vVWhg7DeEfqABkU/fRNFBKCYzwd1x4xYhDPAVMoxqc3j7jp8
+ mPmR4Az136N9Elsre0pKJt+m9Cl0McCzojXLENaeydvYCsMq9Z036bcbLBnNdYY829EQ==
+X-Received: by 2002:a05:600c:83c9:b0:486:fb5c:3b20 with SMTP id
+ 5b1f17b1804b1-48899760093mr54762075e9.13.1775229891261; 
+ Fri, 03 Apr 2026 08:24:51 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e93c014sm284836155e9.10.2026.04.03.08.20.12
+ 5b1f17b1804b1-48899e48c7asm20330515e9.19.2026.04.03.08.24.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Apr 2026 08:20:12 -0700 (PDT)
-Message-ID: <12644bc4-8713-489f-9ed8-1ee71bf26a3c@linaro.org>
-Date: Fri, 3 Apr 2026 17:20:11 +0200
+ Fri, 03 Apr 2026 08:24:50 -0700 (PDT)
+Message-ID: <8f85b5ce-66ea-430f-9c5f-37b0603b9fae@linaro.org>
+Date: Fri, 3 Apr 2026 17:24:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/arm/omap_sx1: map CS3 at the correct base
-To: zhaoguohan@kylinos.cn, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Beno=C3=AEt_Canet?= <benoit.canet@gmail.com>
-References: <20260402071718.130490-1-zhaoguohan@kylinos.cn>
- <20260403014441.38725-1-zhaoguohan@kylinos.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] target/arm: Move OMAP CP15 register definitions to
+ cpregs-omap.c
 Content-Language: en-US
-In-Reply-To: <20260403014441.38725-1-zhaoguohan@kylinos.cn>
+To: Alessandro Ratti <alessandro@0x65c.net>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, pbonzini@redhat.com
+References: <20260403131458.446399-1-alessandro@0x65c.net>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260403131458.446399-1-alessandro@0x65c.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +103,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/26 03:44, zhaoguohan@kylinos.cn wrote:
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
-> 
-> omap_sx1 wires the "sx1.cs3" region to OMAP_CS2_BASE instead of
-> OMAP_CS3_BASE.
-> 
-> That places both CS2 and CS3 at the same address and leaves the real
-> CS3 window unmapped. Point the CS3 region at OMAP_CS3_BASE so the
-> static chip-select layout matches the OMAP address definitions.
-> 
+Hi Alessandro,
 
-Fixes: ba1580299d0 ("omap_sx1: convert to memory API")
+On 3/4/26 15:14, Alessandro Ratti wrote:
+> The OMAP CP15 registers are only relevant to system-mode emulation
+> of OMAP SoCs. Move them out of the monolithic helper.c into a
+> dedicated file, following the pattern of cpregs-pmu.c and
+> cpregs-gcs.c. This reduces the size of helper.c and compiles
+> the OMAP-specific code out of CONFIG_USER_ONLY builds.
+> 
+> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+> ---
+>   target/arm/cpregs-omap-stub.c | 10 ++++
+>   target/arm/cpregs-omap.c      | 88 +++++++++++++++++++++++++++++++++++
+>   target/arm/helper.c           | 79 +------------------------------
+>   target/arm/internals.h        |  2 +
+>   target/arm/meson.build        |  2 +
+>   5 files changed, 103 insertions(+), 78 deletions(-)
+>   create mode 100644 target/arm/cpregs-omap-stub.c
+>   create mode 100644 target/arm/cpregs-omap.c
+> 
+> diff --git a/target/arm/cpregs-omap-stub.c b/target/arm/cpregs-omap-stub.c
+> new file mode 100644
+> index 0000000000..e0fe32632e
+> --- /dev/null
+> +++ b/target/arm/cpregs-omap-stub.c
+> @@ -0,0 +1,10 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#include "qemu/osdep.h"
+> +#include "cpu.h"
+
+Instead:
+
+#include "target/arm/cpu-qom.h"
+
+> +#include "internals.h"
+> +
+> +void define_omap_cp_regs(ARMCPU *cpu)
+> +{
+> +    g_assert_not_reached();
+> +}
+> diff --git a/target/arm/cpregs-omap.c b/target/arm/cpregs-omap.c
+> new file mode 100644
+> index 0000000000..5fa6b70150
+> --- /dev/null
+> +++ b/target/arm/cpregs-omap.c
+> @@ -0,0 +1,88 @@
+> +/*
+> + * QEMU ARM OMAP CP15 register definitions
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "cpu.h"
+
+Please use full target path:
+
+#include "target/arm/cpu.h"
+...
+
+> +#include "cpregs.h"
+> +#include "internals.h"
+
+With the requested changes:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Note, this got unnoticed for 15 years.
-
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-> ---
-> v1 -> v2:
-> - Resend to qemu-devel@nongnu.org
-> - Keep qemu-arm@nongnu.org on Cc as requested by Peter Maydell
-> 
->   hw/arm/omap_sx1.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 
