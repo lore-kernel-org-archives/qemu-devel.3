@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FC47D7308A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6409D73097
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 03:57:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8Vdq-0001FB-VV; Thu, 02 Apr 2026 23:56:19 -0400
+	id 1w8Vdi-0001C7-7U; Thu, 02 Apr 2026 23:56:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w8Vdq-0001Ew-4S
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:18 -0400
+ id 1w8Vdg-0001BP-5P
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:08 -0400
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w8Vdo-0004N9-Es
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:17 -0400
+ id 1w8Vde-0004N9-HK
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1775188576; x=1806724576;
+ t=1775188566; x=1806724566;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=iQaCmLmcKbdNrlzqxau5uvh3eGSoDbU2Iuqgw7ziD1M=;
- b=nBaQUD6UyH4yhBVgrkxnVxSZRUeTIBDSSKMWmdoBSBRRYay28bjodkGw
- 8Y8z+Q+S9f7i0zoESsW8uPTkeGK4sxpN8CXI3NSYRreZg/6G9TViH2Zcp
- bICviZawERHXpu1HYsZNIJbY77G/QKhAEQy2yfhjaADt0GcXyLjIBZh/l
- 3go3PevfCq3UpyhWEsczI634ucHT+ongCWmLya1bdFVjD+JIiKOwrylMD
- 0hInipMTKKdpeOLAUL5uIv8WuOvxOjoBvASqgemVxErU2nI3jtEesXR5+
- ZdjOQGPDPPFrthzDr+T0gj7XMPx/+5SjvFxmrEcH3tnPW8YAdAEa2zRdl w==;
-X-CSE-ConnectionGUID: r/9A47wSTQyqd50gkcmyyg==
-X-CSE-MsgGUID: 32EXtFCgR22Ln9blBmh7WA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11747"; a="76140638"
-X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="76140638"
+ bh=WhVGnhbo+Pqtx83Hy48OkP5Wl8zor8CPU++Q6Tws2aA=;
+ b=JBVuOFBnleSL/KvoANYAU1Ilw6z51DXZE+z5klDdaGBvUujKYAd1DbJ+
+ DzGSJrWIFTZ2yr1uBFMAqKyTvt6Le/6GpgSlVh09nFfqMh+30k6EIrg9a
+ /EVPDn5Z4SL7325aQX6W6D3m0b8aH1ACVX8yJzA5Hi2YK0a7lP67jWfxH
+ KJJ6zkxC34/o/c9lXMdp1rUs9T8kggu82kG8xTW72HKHsdOrvvaAvCEJW
+ ThLy0l/795b3asSTmM7JXKgqo5QmZ6VaUi6xnqVMfCiB3AwzVvqKHVeuw
+ 2cJnbEylNyiG+D6ATQSbgmnlAZdJlgVfVEB1v/Qa1A1qtEIBJ0yZQMIyq g==;
+X-CSE-ConnectionGUID: R2Nqa2C2Rwa2lQXmuUNMNA==
+X-CSE-MsgGUID: PJ8VrpDnSdSLmETvJgX+cA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11747"; a="76140609"
+X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="76140609"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2026 20:56:15 -0700
-X-CSE-ConnectionGUID: 6AriUrPARGeJH4hE35nvww==
-X-CSE-MsgGUID: exCLPoykTNmf0W7GENFdJQ==
+ 02 Apr 2026 20:56:05 -0700
+X-CSE-ConnectionGUID: sjJeVgYlTcC5k+JuG4N1Aw==
+X-CSE-MsgGUID: Gsxqc7fMSpWtsbd7rEXfNw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="223884888"
+X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="223884861"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2026 20:56:12 -0700
+ 02 Apr 2026 20:56:02 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,9 +53,10 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 07/14] intel_iommu: Use IOMMU_NO_PASID and delete PASID_0
-Date: Thu,  2 Apr 2026 23:55:31 -0400
-Message-ID: <20260403035541.18355-8-zhenzhong.duan@intel.com>
+Subject: [PATCH v3 04/14] intel_iommu: Create the nested hwpt with
+ IOMMU_HWPT_ALLOC_PASID flag
+Date: Thu,  2 Apr 2026 23:55:28 -0400
+Message-ID: <20260403035541.18355-5-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260403035541.18355-1-zhenzhong.duan@intel.com>
 References: <20260403035541.18355-1-zhenzhong.duan@intel.com>
@@ -86,118 +87,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In previous patch we introduced a global macro IOMMU_NO_PASID(0) for
-Requests-without-PASID, this makes the local macro PASID_0 redundant.
-Delete it and use IOMMU_NO_PASID instead.
+When pasid is enabled, any hwpt attached to non-PASID or PASID should be
+IOMMU_HWPT_ALLOC_PASID flagged, or else attachment fails.
 
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Change vtd_destroy_old_fs_hwpt() to pass in 'VTDHostIOMMUDevice *' for
+naming consistency.
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  1 -
- hw/i386/intel_iommu.c          | 18 +++++++++---------
- hw/i386/intel_iommu_accel.c    |  2 +-
- 3 files changed, 10 insertions(+), 11 deletions(-)
+ hw/i386/intel_iommu_accel.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index c7e107fe87..0141316f83 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -615,7 +615,6 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_CTX_ENTRY_LEGACY_SIZE     16
- #define VTD_CTX_ENTRY_SCALABLE_SIZE   32
- 
--#define PASID_0                             0
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
- #define VTD_SM_CONTEXT_ENTRY_PRE            0x10ULL
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index aa67c89e73..3b8d3a96d2 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -941,7 +941,7 @@ int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
-     dma_addr_t pasid_dir_base;
- 
-     if (pasid == PCI_NO_PASID) {
--        pasid = PASID_0;
-+        pasid = IOMMU_NO_PASID;
-     }
-     pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
-     return vtd_get_pe_from_pasid_table(s, pasid_dir_base, pasid, pe);
-@@ -958,7 +958,7 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
-     VTDPASIDEntry pe;
- 
-     if (pasid == PCI_NO_PASID) {
--        pasid = PASID_0;
-+        pasid = IOMMU_NO_PASID;
-     }
-     pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
- 
-@@ -1501,9 +1501,9 @@ static int vtd_ce_pasid_0_check(IntelIOMMUState *s, VTDContextEntry *ce)
- 
-     /*
-      * Make sure in Scalable Mode, a present context entry
--     * has valid pasid entry setting at PASID_0.
-+     * has valid pasid entry setting at IOMMU_NO_PASID.
-      */
--    return vtd_ce_get_pasid_entry(s, ce, &pe, PASID_0);
-+    return vtd_ce_get_pasid_entry(s, ce, &pe, IOMMU_NO_PASID);
- }
- 
- /* Map a device to its corresponding domain (context-entry) */
-@@ -1564,7 +1564,7 @@ int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
-         }
-     } else {
-         /*
--         * Check if the programming of pasid setting of PASID_0
-+         * Check if the programming of pasid setting of IOMMU_NO_PASID
-          * is valid, and thus avoids to check pasid entry fetching
-          * result in future helper function calling.
-          */
-@@ -2122,7 +2122,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     vtd_iommu_lock(s);
- 
-     if (pasid == PCI_NO_PASID && s->root_scalable) {
--        pasid = PASID_0;
-+        pasid = IOMMU_NO_PASID;
-     }
- 
-     /* Try to fetch pte from IOTLB */
-@@ -2508,10 +2508,10 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
-              * In legacy mode, vtd_as->pasid == pasid is always true.
-              * In scalable mode, for vtd address space backing a PCI
-              * device without pasid, needs to compare pasid with
--             * PASID_0 of this device.
-+             * IOMMU_NO_PASID of this device.
-              */
-             if (!(vtd_as->pasid == pasid ||
--                  (vtd_as->pasid == PCI_NO_PASID && pasid == PASID_0))) {
-+                  (vtd_as->pasid == PCI_NO_PASID && pasid == IOMMU_NO_PASID))) {
-                 continue;
-             }
- 
-@@ -3022,7 +3022,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-         if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
-                                       vtd_as->devfn, &ce) &&
-             domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
--            if ((vtd_as->pasid != PCI_NO_PASID || pasid != PASID_0) &&
-+            if ((vtd_as->pasid != PCI_NO_PASID || pasid != IOMMU_NO_PASID) &&
-                 vtd_as->pasid != pasid) {
-                 continue;
-             }
 diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index bd1236c070..8940d240a1 100644
+index 3217a2afac..bd1236c070 100644
 --- a/hw/i386/intel_iommu_accel.c
 +++ b/hw/i386/intel_iommu_accel.c
-@@ -217,7 +217,7 @@ static void vtd_flush_host_piotlb_locked(gpointer key, gpointer value,
+@@ -69,11 +69,13 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+     return NULL;
+ }
  
-     did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
+-static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
++static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+                                VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
+                                Error **errp)
+ {
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+     struct iommu_hwpt_vtd_s1 vtd = {};
++    uint32_t flags = vtd_hiod->iommu_state->pasid ? IOMMU_HWPT_ALLOC_PASID : 0;
  
--    if (piotlb_info->domain_id == did && piotlb_info->pasid == PASID_0) {
-+    if (piotlb_info->domain_id == did && piotlb_info->pasid == IOMMU_NO_PASID) {
-         HostIOMMUDeviceIOMMUFD *hiodi =
-             HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-         uint32_t entry_num = 1; /* Only implement one request for simplicity */
+     vtd.flags = (VTD_SM_PASID_ENTRY_SRE(pe) ? IOMMU_VTD_S1_SRE : 0) |
+                 (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE : 0) |
+@@ -82,13 +84,16 @@ static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+     vtd.pgtbl_addr = (uint64_t)vtd_pe_get_fspt_base(pe);
+ 
+     return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
+-                                      hiodi->hwpt_id, 0, IOMMU_HWPT_DATA_VTD_S1,
+-                                      sizeof(vtd), &vtd, fs_hwpt_id, errp);
++                                      hiodi->hwpt_id, flags,
++                                      IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
++                                      fs_hwpt_id, errp);
+ }
+ 
+-static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
++static void vtd_destroy_old_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+                                     VTDAddressSpace *vtd_as)
+ {
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++
+     if (!vtd_as->fs_hwpt_id) {
+         return;
+     }
+@@ -116,7 +121,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     }
+ 
+     if (vtd_pe_pgtt_is_fst(pe)) {
+-        if (!vtd_create_fs_hwpt(hiodi, pe, &hwpt_id, errp)) {
++        if (!vtd_create_fs_hwpt(vtd_hiod, pe, &hwpt_id, errp)) {
+             return false;
+         }
+     }
+@@ -126,7 +131,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     trace_vtd_device_attach_hwpt(hiodi->devid, IOMMU_NO_PASID, hwpt_id, ret);
+     if (ret) {
+         /* Destroy old fs_hwpt if it's a replacement */
+-        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
++        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
+         if (vtd_pe_pgtt_is_fst(pe)) {
+             vtd_as->fs_hwpt_id = hwpt_id;
+         }
+@@ -161,7 +166,7 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     }
+ 
+     if (ret) {
+-        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
++        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
+     }
+ 
+     return ret;
 -- 
 2.47.3
 
