@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0EC0E88D63
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 21:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EBADE88D6A
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 21:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8mMs-0002F2-WF; Fri, 03 Apr 2026 17:47:55 -0400
+	id 1w8mS2-0005Fp-Nc; Fri, 03 Apr 2026 17:53:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8mMr-0002Et-RR
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:47:53 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1w8mS0-00053W-Fg
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:53:12 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8mMq-0006SG-Bn
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:47:53 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-824c9da9928so1366337b3a.3
- for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 14:47:51 -0700 (PDT)
+ id 1w8mRz-0006r6-1w
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 17:53:12 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-35da2d35eccso1434883a91.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 14:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775252871; x=1775857671; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775253189; x=1775857989; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=H9Vukr9g6qfghWwOduq55GE+RO9Rmk0CHMOoN81TceQ=;
- b=xdJbc3kL/oVzN7D1zLFsLe0A7ho1KSd8WXTmxUAF8R8I49uv5w6enHXJp211JVQlxV
- HnM/TJ3UHviEa+YZzRk9qupEqOZjD+XmW8xv7SRCyzuQ4iGOSeg+XCV7k2AJOzNlM5vK
- aHotC7u/fWvflIa3O0xXPIoqomWWiGNWVkEXEnWHd80fcdT3CGcq1T4yQAg8cZR/nn07
- ZgwQ8dWhVBIcSHktfB1QzrOgpdeOLi+X0svdpEHRB6cho6C1OZHGmSeZzRH6I6SBF3KN
- 0abTUkrgRlxaYnjVm4r3ydbY0AYsT3nqm3ksNHKLfDx7ueb7hqussWYCNQbNKvwkp+2n
- ywvQ==
+ bh=oyqNi/Uf+NyuGj4uDxMxhkbq8AG4iX7BGkiZVYrqDTU=;
+ b=gzN0ygfr17toNlMbZ/1dh22nt4ZeyqDBlt3c8qSpp65NYdpIANmO+RarbeRCYXwdCP
+ 3ZQ4t7GWkhLfh8I8YdO9RfHFVd8tvIBlodj0MFqYE4XeUClwx0k2sHMsL+7ibEFS54NU
+ b8cixU8lYVsL/NH+M37YEk13lwK8RB/al+5L7Usz0LSxLLRUUPnSDzoZ9ki8noDoYhhS
+ P6Ch6+JoV/fLRsDT5uLUxgEDWLDaM1yocJzh7yGBoh39ow3C3pqCH4/XGkfVZuHgkGoh
+ CsWo3P7X113Wec15DLRrKbibSr7nQmcCegLP9AMrw9clGeusBng/A9wckil+RcTyzGqn
+ bo/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775252871; x=1775857671;
+ d=1e100.net; s=20251104; t=1775253189; x=1775857989;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=H9Vukr9g6qfghWwOduq55GE+RO9Rmk0CHMOoN81TceQ=;
- b=BMfYAP7jOoGHh5ab6iKixmeBUXO+RjF/JXKCR4O0yuUqCyP4Hdw9R4zN/GYLgyAOch
- m002XResGzMEm36WntdUPFkMa1ia7xIMv7NtLCxukDiAf1XCCJ/sQTeSAqMxuX37ac93
- 4/xc6dG/xHMlrB515mNr6JNzoqfaSGuAMO9W87p4xKXgIKf0NO2qVVcvRKvX5spT4g7c
- 1cjZB9hnrPRQvAc44EAoEh4Xb5QPMrjmVN2XXc6sBIYWFTKbMDcVicnyrVYBoGC6wpxJ
- SwO2Vf+bUzRGIzu1uTjDSTWsYkK8v1I7bD0JrOFqZKMHPbZwlLbZ3jlxlGshnRI5iQeu
- ccBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXnANicA5o1H4XXTAWi8oGV+bPaS/vpw1DcrmqyyXcjis1ZTt1nhmLa7ehQ/WlM+vaXJ7atfeAjN5wc@nongnu.org
-X-Gm-Message-State: AOJu0YyRY46YGHoKWtWDBtp1VJxEGgIwHhQkBiGpbViYilV/1BfPjwv3
- PCklzj5XWfLpgv4b3ylE/Cfi1cKrAx+YoN8z89KrGF1oZGxId7x8p2Afqkraa1bx++0=
-X-Gm-Gg: AeBDiesZSV4fzQYpcw4T2j+dvtuw7C6AwyCTFjkkZbOppOBfppUiFA7xvf/26P0tXrN
- dwfDVRLX5Y0SjpL/cHF9ncbuWjzPQ4AweG5GMf6rNG0jdieulidM+tkVkfum+KZLQYXs3x2Warh
- 5fC72v5leLdX4RVq7lp+eZE1ZMHHTz7jHmZ3QnuEnMEEgAVrFG18YevKyn5HrVysq3KRiD5lJs2
- 0HhTqs5s9DEZy1XkP/7lQyLxEE6PCMBjzYGAkZgydj5oy6fpMtNq3E8XbezqnAMq7h/urmdvBNr
- iZJ8ALGf2ZN0H61WipX1gTzsApqVU5uRmedrq4Kc1XVUENjWcYR1cyoztDt9t1tVWNOfIAx1Q+5
- NJ0R0YreI19bq7OMih/7grp5WIquQGV4VfGAGljh+5P0n5JcC73KyxbSmlfW3u7vj3qsEYliclG
- 3S/xV5VcxmPPSpHbLoO4xYvqYdJ76nnOlPJu2TIhq6tafBYiBBitbyhtweYiy8jaTCk+Q62WuFc
- QVMBA==
-X-Received: by 2002:a05:6a00:4fc6:b0:81e:f1c3:89df with SMTP id
- d2e1a72fcca58-82d0dbc0dbcmr4130433b3a.50.1775252870795; 
- Fri, 03 Apr 2026 14:47:50 -0700 (PDT)
+ bh=oyqNi/Uf+NyuGj4uDxMxhkbq8AG4iX7BGkiZVYrqDTU=;
+ b=BMkNMtdCMSZBm76TfN1WgryAB3ZFKKVuJ4XqZIwe9elb0zz5T0It0eNELSaxKKJioM
+ xAibrhtqmJ+8qjvzcGkN3gmiNK3UYmWnljl/wNtKVaCRfrl/lW2xgsYteNZzdowGUTIs
+ w7TJENX0zhs1v5NU7H/56ARK1IJrfkGVzbJNxZEgZj2R+rB7aowlcFYZX3qp5swgtMc5
+ XUeQUEX2v+6T4A+aZxzRN+hW0GJC3h4s05cKmsm8lfxYsum0IOEsWVuSKOBtVoACC1TX
+ /ekNXxifCYdV7OYyCei1eLBn6UVUn+ygnhHMQci3Z+pMVjL6wEv2k0k3CwQH8Vb3Z2Ye
+ E4Dg==
+X-Gm-Message-State: AOJu0Yy+JYNHZFzGvIEVq0bzfhSbfTU3/NhSOt/hjeLokYtbNMYBLl3/
+ dkJxFL6spW7r8pnr9SaeLfeUnYdU+pyJailFHMe0/9d3XUZkOgUNEFQt10AFX7Swkiw=
+X-Gm-Gg: AeBDievnAmcq8AZBNSckL/WfByEKvR71CQNTkkojdB982OXmsOJ8iPgorJoanrmaGFO
+ D7BY4c10TrhkWfSzuSCpekuSjLvfWmH0tDZVV28JvgsBlMqbR9VRbret84osye1pk6v4U0hW7mM
+ isS9fP62+u0hlORgaxdZfbOeeH99KLuISkfdu4lQ978T6Xde2JXszKIKDaEdB81wTPQhEsRSULy
+ 954RLrllawbNmYqTLqbBydXT3j/gqpJA81dAr8RTkKIAPFzeNtEvkI+GC474H7oKudk+x8ZDXnJ
+ M2k2sJs3VMvtHjHrzVoJCMsFlGp/LZAjC/F0bDxMiuuJ04kc7Jzu4zNrZeo0XIC/iWtevGnOEOG
+ esotn3qDqnEqe/5/PgLECWotPYV++shPrboM540nXmnA63lD8B6IHJGoFbSVGReHdUfU44VfiFE
+ sZCIb8X4axEfm5eI5btEjrV0u/BNgxbiJZM/Duz2UUbM/EzOLBPOou39UD/ADK1cchxOA=
+X-Received: by 2002:a17:90b:4c8b:b0:35d:a2d3:5c44 with SMTP id
+ 98e67ed59e1d1-35de69d5567mr3818669a91.28.1775253189282; 
+ Fri, 03 Apr 2026 14:53:09 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9c3d67dsm7909809b3a.33.2026.04.03.14.47.46
+ 98e67ed59e1d1-35dbe9709b8sm11043320a91.16.2026.04.03.14.53.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Apr 2026 14:47:50 -0700 (PDT)
-Message-ID: <051a28b0-a67e-4da4-a13f-ed88a69bd629@linaro.org>
-Date: Sat, 4 Apr 2026 07:47:43 +1000
+ Fri, 03 Apr 2026 14:53:08 -0700 (PDT)
+Message-ID: <6af2abbe-2626-4401-b446-6a2f603cf1c2@linaro.org>
+Date: Sat, 4 Apr 2026 07:53:03 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/16] target/hexagon: add v68 HVX IEEE float
- arithmetic insns
-To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: ale@rev.ng, anjo@rev.ng, brian.cain@oss.qualcomm.com,
- ltaylorsimpson@gmail.com, marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-References: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
- <453a9e248b8c2af50cf89912121605db07792dd5.1775122853.git.matheus.bernardino@oss.qualcomm.com>
+Subject: Re: [PATCH] target/arm: cpu: add HCR_E2H on reset for EL2 + !E2H0
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260401220720.19555-1-mohamed@unpredictable.fr>
+ <CAFEAcA8qchsEganwrejiqoWabUd_BmNfnS0AXzWR+tT61OsjyQ@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <453a9e248b8c2af50cf89912121605db07792dd5.1775122853.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <CAFEAcA8qchsEganwrejiqoWabUd_BmNfnS0AXzWR+tT61OsjyQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,37 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/26 20:47, Matheus Tavares Bernardino wrote:
-> +++ b/target/hexagon/mmvec/hvx_ieee_fp.c
-> @@ -0,0 +1,69 @@
-> +/*
-> + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + *
-> + *  SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hvx_ieee_fp.h"
-> +
-> +#define DEF_FP_INSN_2(name, rt, a1t, a2t, op) \
-> +    uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \
-> +                           float_status *fp_status) { \
-> +        float##a1t f1 = make_float##a1t(a1); \
-> +        float##a2t f2 = make_float##a2t(a2); \
-> +        return (op); \
-> +    }
-> +
-> +#define DEF_FP_INSN_3(name, rt, a1t, a2t, a3t, op) \
-> +    uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \
-> +                           uint##a3t##_t a3, float_status *fp_status) { \
-> +        float##a1t f1 = make_float##a1t(a1); \
-> +        float##a2t f2 = make_float##a2t(a2); \
-> +        float##a3t f3 = make_float##a3t(a3); \
-> +        return (op); \
-> +    }
+On 4/2/26 21:17, Peter Maydell wrote:
+> On Wed, 1 Apr 2026 at 23:07, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>>
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> 
+> This could use some rationale in the commit message:
+> why do we need it, what goes wrong, etc.
 
-Why are you using uint32_t and make_float instead of declaring with float32 in the first 
-place?
+Indeed.  I would expect this to be handled via hcr_reset and
+a2834b853d9 ("target/arm: implement FEAT_E2H0")
+
+Specifically,
+
++        /* Strictly E2H is RES1 unless FEAT_E2H0 relaxes the requirement */
++        if (!cpu_isar_feature(aa64_e2h0, cpu)) {
++            value |= HCR_E2H;
++        }
+
 
 r~
+
+
+> 
+>> ---
+>>   target/arm/cpu.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index ccc47c8a9a..5ffb1e3096 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -685,6 +685,10 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
+>>           }
+>>       }
+>>
+>> +    if (have_el2 && !cpu_isar_feature(aa64_e2h0, cpu)) {
+>> +        env->cp15.hcr_el2 |= HCR_E2H;
+>> +    }
+>> +
+>>       /* Set the CPU to the desired state */
+>>       if (env->aarch64) {
+>>           env->pstate = aarch64_pstate_mode(target_el, true);
+>> --
+>> 2.50.1 (Apple Git-155)
+> 
+> thanks
+> -- PMM
+> 
+
 
