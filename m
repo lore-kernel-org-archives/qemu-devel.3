@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48138E7E36C
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 10:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46EA0E7E36B
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 10:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8c06-0003zV-7Q; Fri, 03 Apr 2026 06:43:42 -0400
+	id 1w8c06-0003zW-CA; Fri, 03 Apr 2026 06:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8c03-0003yc-EW
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8c03-0003yr-LM
  for qemu-devel@nongnu.org; Fri, 03 Apr 2026 06:43:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8c01-0005YN-SN
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8c01-0005YO-SL
  for qemu-devel@nongnu.org; Fri, 03 Apr 2026 06:43:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775212971; bh=sxYYGzxX13JLYTURZXmXs1BXBksyTpPz/55bI456ahI=;
+ t=1775212971; bh=RrlxCV4E2YhfW6wkGShBvS/UZsM8Fiy1F7kyYksAPqg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=pYkecZT+t+EzK+2uNSv2aGwNevLhB7vxO3KgyjSCjI50c8yNU67LSde9SZ0Akv9+Q
- 1q9fljJVSbkFRt98pP6nL9P7C7C7ZqLIJDq7EAy90bJhyhnJT3GfV3NEBFSNSLB7Hb
- mpTGOnrUbTsqyAWPzEJCUZd6K/3h4HTUIuZQ99VJsq8TgVWfa6fmy0s22dP1qimYNO
- x52pNSLM95dxhgW602f5RiUsA6yggO1AIYwxxNSYdopcG+J/VCHoszHBmZqDHDr82P
- 7d37SMHeflT1gZXRJx3YS9cob9SN0pvQW7npN03z/7L4GTeDQBOR7Pp3qk22sA41ls
- vbiANOzvKKeOQ==
+ b=rl78ktypZxSR3JDdugwp6mXIRAk327+aYk5tHyxCepYQGaH3yGIsmgGmcpF7stZwe
+ ehki3rLw9Dtp7vcDzo3KpI4d5w9V6ZhYcqlgshZuyXiPBFlWrRpJFUQ1CnUtOuiD4H
+ VARGge8yfKRTU2nv/Nnq2+btIaCel290GhjmvWSfRUVO4C7EhezKyZ61MSnHcdXjJb
+ plhwepmIKY3u9fj4dKqH0FKRn34QAUUgMa7MooGtoZt0c8iuaxqhg6ytnhME3Bp4pw
+ T95VJySSK1yLsHfOihjAvnsxck4feI1LMGiRYEoTzB7425C3g1AEC7IBKGx8/Cfo49
+ hF1ojy5RjHQ3A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0CD2119A63C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 19EFA19A63D;
  Fri, 03 Apr 2026 13:42:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BF64B38DB6C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CC8DF38DB6D;
  Fri, 03 Apr 2026 13:43:28 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH for-11.0 2/6] hw/core: Move compat_props_add() to
- 'hw/core/boards.h'
-Date: Fri,  3 Apr 2026 13:43:22 +0300
-Message-ID: <20260403104327.1163942-3-mjt@tls.msk.ru>
+Subject: [PATCH for-11.0 3/6] qom: Declare GlobalProperty structure in
+ 'qom/compat-properties.h'
+Date: Fri,  3 Apr 2026 13:43:23 +0300
+Message-ID: <20260403104327.1163942-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260403104327.1163942-1-mjt@tls.msk.ru>
 References: <20260403104327.1163942-1-mjt@tls.msk.ru>
@@ -73,59 +73,126 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-compat_props_add() is only used by board models, no need
-to expose it to any device model. Restrict by defining it
-only in "hw/core/boards.h".
+While GlobalProperty is expected to only be used by QDev board
+layer, it is used by the lower QOM API, so define it in the
+qom/ namespace. This helps to build binary which use QOM but
+don't need the QDev layer.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- include/hw/core/boards.h | 10 ++++++++++
- include/hw/core/qdev.h   | 10 ----------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ include/hw/core/boards.h          |  1 +
+ include/hw/core/qdev-properties.h |  1 +
+ include/hw/core/qdev.h            | 17 ----------------
+ include/qom/compat-properties.h   | 32 +++++++++++++++++++++++++++++++
+ qom/object.c                      |  2 +-
+ 5 files changed, 35 insertions(+), 18 deletions(-)
+ create mode 100644 include/qom/compat-properties.h
 
 diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index b8dad0a107..0ac7e17ef7 100644
+index 0ac7e17ef7..3f9a7127ad 100644
 --- a/include/hw/core/boards.h
 +++ b/include/hw/core/boards.h
-@@ -798,6 +798,16 @@ struct MachineState {
-         } \
-     } while (0)
+@@ -8,6 +8,7 @@
+ #include "system/blockdev.h"
+ #include "qapi/qapi-types-machine.h"
+ #include "qemu/module.h"
++#include "qom/compat-properties.h"
+ #include "qom/object.h"
+ #include "hw/core/cpu.h"
+ #include "hw/core/resettable.h"
+diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
+index d8745d4c65..17543957a6 100644
+--- a/include/hw/core/qdev-properties.h
++++ b/include/hw/core/qdev-properties.h
+@@ -1,6 +1,7 @@
+ #ifndef QEMU_QDEV_PROPERTIES_H
+ #define QEMU_QDEV_PROPERTIES_H
  
-+static inline void
-+compat_props_add(GPtrArray *arr,
-+                 GlobalProperty props[], size_t nelem)
-+{
-+    int i;
-+    for (i = 0; i < nelem; i++) {
-+        g_ptr_array_add(arr, (void *)&props[i]);
-+    }
-+}
-+
- extern GlobalProperty hw_compat_10_2[];
- extern const size_t hw_compat_10_2_len;
++#include "qom/compat-properties.h"
+ #include "hw/core/qdev.h"
  
+ /**
 diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index f99a8979cc..778617787c 100644
+index 778617787c..337d69ea2c 100644
 --- a/include/hw/core/qdev.h
 +++ b/include/hw/core/qdev.h
-@@ -421,16 +421,6 @@ typedef struct GlobalProperty {
-     bool optional;
- } GlobalProperty;
+@@ -404,23 +404,6 @@ struct BusState {
+     ResettableState reset;
+ };
  
--static inline void
--compat_props_add(GPtrArray *arr,
--                 GlobalProperty props[], size_t nelem)
--{
--    int i;
--    for (i = 0; i < nelem; i++) {
--        g_ptr_array_add(arr, (void *)&props[i]);
--    }
--}
+-/**
+- * typedef GlobalProperty - a global property type
+- *
+- * @used: Set to true if property was used when initializing a device.
+- * @optional: If set to true, GlobalProperty will be skipped without errors
+- *            if the property doesn't exist.
+- *
+- * An error is fatal for non-hotplugged devices, when the global is applied.
+- */
+-typedef struct GlobalProperty {
+-    const char *driver;
+-    const char *property;
+-    const char *value;
+-    bool used;
+-    bool optional;
+-} GlobalProperty;
 -
  /*** Board API.  This should go away once we have a machine config file.  ***/
  
  /**
+diff --git a/include/qom/compat-properties.h b/include/qom/compat-properties.h
+new file mode 100644
+index 0000000000..6e44aabc26
+--- /dev/null
++++ b/include/qom/compat-properties.h
+@@ -0,0 +1,32 @@
++/*
++ * QEMU Object Model
++ *
++ * Copyright IBM, Corp. 2011
++ *
++ * Authors:
++ *  Anthony Liguori   <aliguori@us.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_COMPAT_PROPERTIES_H
++#define QEMU_COMPAT_PROPERTIES_H
++
++/**
++ * typedef GlobalProperty - a global property type
++ *
++ * @used: Set to true if property was used when initializing a device.
++ * @optional: If set to true, GlobalProperty will be skipped without errors
++ *            if the property doesn't exist.
++ *
++ * An error is fatal for non-hotplugged devices, when the global is applied.
++ */
++typedef struct GlobalProperty {
++    const char *driver;
++    const char *property;
++    const char *value;
++    bool used;
++    bool optional;
++} GlobalProperty;
++
++#endif
+diff --git a/qom/object.c b/qom/object.c
+index ff8ede8a32..838b1d2b22 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -11,8 +11,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "hw/core/qdev.h"
+ #include "qapi/error.h"
++#include "qom/compat-properties.h"
+ #include "qom/object.h"
+ #include "qom/object_interfaces.h"
+ #include "qemu/cutils.h"
 -- 
 2.47.3
 
