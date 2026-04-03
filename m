@@ -4,99 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3696EE85379
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 16:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC924E8538B
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 17:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8hVH-00079s-KO; Fri, 03 Apr 2026 12:36:15 -0400
+	id 1w8iHU-0004rV-Kd; Fri, 03 Apr 2026 13:26:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8hVE-000796-0S
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 12:36:13 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8hV9-0002CZ-Jj
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 12:36:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775234124; bh=ZygCmhJ6FGimZGUaRCh/LVeW2TF2mti+4hdr6c6OXvg=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Ufhfyg9ZDTk9Yivc0xT+1Q4Q9/5KvV7iiKpirwH0AaBxW5FWEa1wm2tYIFvGaGZl/
- bHFvj5NGxsJFi8/PhW1387h0XesB53DJWhYtWMls5KyXuYB7kuaA/cEVWhImbW3HXC
- YpcPKaFAAJpLacpsKFpu2RNYS+Ys1tWHkVeLe/zT2Ek+rtIUF56nnBBgTh2+SUEgDX
- sefqC/5KvijR3Ne0gvpYQbATI3QwNpss7iEAusXxYrPxpUXzOK6uHNtBzWmMP6UaGf
- PFE2IoxhrZz9U6AbUN+S0OyGGg4ZMr8+bj/5ZjKtzgW2JsvM1hAJmMigNhGGGYAVPb
- GVqslENbEHyKA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id BCE5D19A8D8;
- Fri, 03 Apr 2026 19:35:24 +0300 (MSK)
-Message-ID: <7d3db657-510d-48af-be69-66b66627aff8@tls.msk.ru>
-Date: Fri, 3 Apr 2026 19:36:02 +0300
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1w8iHQ-0004qA-Nu
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 13:26:01 -0400
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1w8iHO-0003hV-Rw
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 13:26:00 -0400
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-7d4c383f2fcso1825797a34.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 10:25:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775237157; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iTQvDYhpU54AZMUfxoR2XkGhjVDceYcD+W8WMIGfD7oa8UfgWJnAjvwHcwJZ06UjFP
+ co77n8P7TsoO0r4eANcC24zYoU+Fw5PANc/fgoErxwz3uTF9ye3wYVHnHTavHtE0KL4i
+ QOs9GIgdS28NaqMmkF3thXICxLB0BhKuXcs3NOtIlqylU1WmrloSmGHEqom5zYidH6X7
+ aj9zsj5rkF4RVM//lZlzrQ5HWklH0yrSys4ETOwCX6A+u39WHAKZ4bMCVyQVhTRJGStE
+ 7V+mCrIl6kdFktRR8rbFNl521SBSU2M8hXXGK0pSHCnuRP9h9Oyb07tSKLE9/DRZmKml
+ Uqyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=pDmghM8ARRiPsj8Q17aW1dNVR7bL8LTO6qYzIbK58Og=;
+ fh=U39PmFavrHPjECQQd1GB3et4CkI7X+0j50odXDdWbyc=;
+ b=ObDEQA01TyOi40rsDFj/G9G9VZZmLIhQgggCw8GgZyLOfwnsyHe0RiRgHHbrqLEE56
+ yM37npK/+gGY1iM2x1VInjgeRZ2/8NtQN3ECMxd7r+NbivQTVLFFfQqfRD4MEGdNNw/u
+ Qu7K0NYV7AMpjE0rLFYbpo4wYHpffRRIwlWyJVTlzx6kuVYjd2BSRo5u9L0DlyKyG8BN
+ ji+5Mmw7BZf4GxpUwXw0pn8K3qbwdcz0MLRHKXxFhS0kzRHO5fc1jwhwpC3z5NE+Xz6C
+ ZH2okIu5Tlwm9lwR+4I8wtRIyd8JaDYTfOMLDLdeMYdLbyD1+LuJqa3k6gmrNJOFVCgf
+ KETg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775237157; x=1775841957; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pDmghM8ARRiPsj8Q17aW1dNVR7bL8LTO6qYzIbK58Og=;
+ b=V1LJ2eHSCnFhOTjY54D8FwSrf3EJ0ZNiqrWSRmIlwxyX9G93vqkCRI+BbIbTQEgizP
+ U4QlUnQ+soBpxyNxNv+FwyGxyG8soZjLEXgSvDUeBxCT6gEytUahNa5ta+Z6l0tyBVlh
+ hs20P8R2YnKEu+CXLhaI+4u+KWZfE9YHcejgFzldWexCI/hxCOwxn4hWMJIwESNbrBb7
+ DubUVfP9RtGjl9ylgNEOxMcs6LAfgNgkEhtK/Tu1rxBtq+mQf0LhuiPMlVgmCv1vLqIE
+ hMViKV6Xi1cCdfQuYzjBBd9c8nGzl6ejVmTgeO5VFaeCc16UVtFApBYf1w7YZBoQCDkn
+ FDug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775237157; x=1775841957;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pDmghM8ARRiPsj8Q17aW1dNVR7bL8LTO6qYzIbK58Og=;
+ b=LpLhmNNviXSJJjzsQDTLnH4rTs087iTR+eymT0pf9OtxdCGkLWSydDC8dVLbeE3D1m
+ VbIoBD1VwI/5tFffExgfPQtrbGSPq56iMoDlBF0dFmdyyZGTzsnRCovZRTyZ3vojOUQG
+ 7l06KY4UkVr3YjZ/HfQzpPKLgk6ZTbOTkcVqGN3VYYcyHVMFxTbPbfVKX2fiYMOtw8cT
+ /6xsIGJ/YUgyFzm3W8BC14O9bWxVxK8MzT6QfsmkhGY9qqHrcXYnNrgpNSvSm6zy8o0V
+ zEgNQLuW9J+SKE2w9PkQahCczope4SKIsPap0y1aVCX+M3AxOGi/M+dUrsPnKlYJkKwR
+ lueg==
+X-Gm-Message-State: AOJu0YwLwnOc9C/iTL2M6lzB8Fcb5QKp3Iz+v3qiGfeMv/t2rbmrRkg+
+ uvX/2FIObQEbkmnvTk04vWHvcLCj5aqNDQoLa8i04qzw1T3c6Apn0O+SczgD+ZSs2vkaeZs7U9v
+ Rd4Mq8Ttsho+0vjCbPjPTzjk98nfRels=
+X-Gm-Gg: ATEYQzxdzOezXI2QpxqgHX1UU42RhAUGMcSt16lRT7l13qYVzFR5/mYqInnAZJ0QDaN
+ 2dBICRLI1xGbgC/LkV/I9iiAZAHyZUMHDXexlS4YH6bAQH/+HhT8VTfy17L7j+PrYCgFGHBcMbj
+ +Y/mQBbcI9yLBB/cGbeS4VSGTmYy+haP5UfhjqLzgLvxTS0xYQ4Zt4jibSe1lhyK/h5+23QYLOr
+ R78idY9rTm28clWyptQpEaOf437dnVpmuGCNKr1DGAOlsR4VI+1SPQRWP4ME2D2NdYZf28lLaPz
+ Tg8RnNc=
+X-Received: by 2002:a05:6830:6c10:b0:7d7:bf70:af2 with SMTP id
+ 46e09a7af769-7dbb732ffc9mr2221895a34.1.1775237156928; Fri, 03 Apr 2026
+ 10:25:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0 5/6] qom: Restrict compat properties API to
- system emulation
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260403104327.1163942-1-mjt@tls.msk.ru>
- <20260403104327.1163942-6-mjt@tls.msk.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260403104327.1163942-6-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260402215629.745866-1-ruslichenko.r@gmail.com>
+ <20260402215629.745866-3-ruslichenko.r@gmail.com> <ac8PO_EpAiWxczDy@zatzit>
+In-Reply-To: <ac8PO_EpAiWxczDy@zatzit>
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Date: Fri, 3 Apr 2026 19:25:45 +0200
+X-Gm-Features: AQROBzCLkjDP733gcPutaBWRl8O4OViTBh3PcJ-axO0TuztlCvj5kfUZY9WTwoQ
+Message-ID: <CAN-aV1H92A6OS8C12b2rij+kC84=EdxAoxH3ARW+rq9GvRsz_A@mail.gmail.com>
+Subject: Re: [PATCH v3 02/33] system/device_tree: add few parsing and
+ traversal helpers
+To: David Gibson <david@gibson.dropbear.id.au>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org, 
+ peter.maydell@linaro.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com, 
+ takahiro.nakata.wr@renesas.com, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, Ruslan_Ruslichenko@epam.com,
+ balaton@eik.bme.hu, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ot1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,652 +121,323 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.04.2026 13:43, Michael Tokarev wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Move compat properties API definitions to their own file
-> unit, compile it only when system emulation is configured.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+On Fri, Apr 3, 2026 at 2:52=E2=80=AFAM David Gibson <david@gibson.dropbear.=
+id.au> wrote:
+>
+> On Thu, Apr 02, 2026 at 11:55:47PM +0200, Ruslan Ruslichenko wrote:
+> > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> >
+> > The patch adds few utility functions for parsing FDT nodes.
+> > The helpers are required for upcoming Hardware device tree
+> > feature.
+>
+> If you're building an entire fdt based machine type, it really seems
+> like you might want a "live" dt representation - the flattened format
+> is great for communicating between things, but it's not a good data
+> structure if you're actively consulting it.
+>
 
-This one breaks user-only build on a few architectures:
+Hi David,
 
-https://buildd.debian.org/status/fetch.php?pkg=qemu&arch=amd64&ver=1%3A11.0.0%7Erc2%2Bds-1&stamp=1775233181&raw=0
-https://buildd.debian.org/status/fetch.php?pkg=qemu&arch=amd64&ver=1%3A11.0.0%7Erc2%2Bds-1&stamp=1775233181&raw=0
-https://buildd.debian.org/status/fetch.php?pkg=qemu&arch=ppc64el&ver=1%3A11.0.0%7Erc2%2Bds-1&stamp=1775233277&raw=0
+Thank you for the feedback.
+I will look into switching to a live DT representation for the next
+version of the series.
 
-cc -m64  -o qemu-aarch64 libcommon.a.p/accel_accel-common.c.o 
-libcommon.a.p/hw_core_cpu-common.c.o 
-libcommon.a.p/hw_core_machine-smp.c.o libcommon.a.p/cpu-common.c.o 
-libcommon.a.p/page-vary-common.c.o libcommon.a.p/target-info.c.o 
-libcommon.a.p/disas_capstone.c.o libcommon.a.p/disas_disas-host.c.o 
-libcommon.a.p/disas_disas-target.c.o libcommon.a.p/disas_objdump.c.o 
-libcommon.a.p/disas_disas-common.c.o libcommon.a.p/fpu_softfloat.c.o 
-libcommon.a.p/meson-generated_.._gdbstub_gdbstub-xml.c.o 
-libcommon_arm.a.p/target_arm_mmuidx.c.o 
-libcommon_arm.a.p/target_arm_tcg_arith_helper.c.o 
-libcommon_arm.a.p/target_arm_tcg_crypto_helper.c.o 
-libuser.a.p/semihosting_user.c.o libuser.a.p/semihosting_guestfd.c.o 
-libuser.a.p/accel_accel-user.c.o libuser.a.p/accel_tcg_cpu-exec.c.o 
-libuser.a.p/accel_tcg_cpu-exec-common.c.o 
-libuser.a.p/accel_tcg_tcg-runtime.c.o 
-libuser.a.p/accel_tcg_tcg-runtime-gvec.c.o 
-libuser.a.p/accel_tcg_tb-maint.c.o libuser.a.p/accel_tcg_tcg-all.c.o 
-libuser.a.p/accel_tcg_tcg-stats.c.o 
-libuser.a.p/accel_tcg_translate-all.c.o 
-libuser.a.p/accel_tcg_translator.c.o libuser.a.p/accel_tcg_user-exec.c.o 
-libuser.a.p/accel_tcg_user-exec-stub.c.o 
-libuser.a.p/hw_core_cpu-user.c.o libuser.a.p/hw_core_qdev-user.c.o 
-libuser.a.p/gdbstub_gdbstub.c.o libuser.a.p/gdbstub_syscalls.c.o 
-libuser.a.p/gdbstub_user.c.o libuser.a.p/cpu-target.c.o 
-libuser.a.p/tcg_optimize.c.o libuser.a.p/tcg_region.c.o 
-libuser.a.p/tcg_tcg.c.o libuser.a.p/tcg_tcg-common.c.o 
-libuser.a.p/tcg_tcg-op.c.o libuser.a.p/tcg_tcg-op-ldst.c.o 
-libuser.a.p/tcg_tcg-op-gvec.c.o libuser.a.p/tcg_tcg-op-vec.c.o 
-libuser.a.p/tcg_perf.c.o libuser.a.p/common-user_safe-syscall.S.o 
-libuser.a.p/common-user_safe-syscall-error.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_gdbstub.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_cpu.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_cpregs-gcs.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_cpregs-pmu.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_debug_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_vfp_fpscr.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_el2-stubs.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_common-semi-target.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_debug.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_hflags.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_neon_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_tlb_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_vec_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_vfp_helper.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_aarch64_cpu_loop.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_aarch64_elfload.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_aarch64_signal.c.o 
-libqemu-aarch64-linux-user.a.p/target-info-stub.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_cpu64.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_gdbstub64.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_cpu32.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_gengvec.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate-m-nocp.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate-mve.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate-neon.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate-vfp.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_m_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_mve_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_op_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_cpu64.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_gengvec64.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate-a64.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate-sve.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_translate-sme.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_helper-a64.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_mte_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_pauth_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_sme_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_sve_helper.c.o 
-libqemu-aarch64-linux-user.a.p/target_arm_tcg_vec_helper64.c.o 
-libqemu-aarch64-linux-user.a.p/semihosting_syscalls.c.o 
-libqemu-aarch64-linux-user.a.p/semihosting_arm-compat-semi.c.o 
-libqemu-aarch64-linux-user.a.p/accel_accel-target.c.o 
-libqemu-aarch64-linux-user.a.p/gdbstub_user-target.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_elfload.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_exit.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_fd-trans.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_linuxload.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_main.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_mmap.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_signal.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_strace.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_syscall.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_thunk.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_uaccess.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_uname.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_flatload.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_semihost.c.o 
-libqemu-aarch64-linux-user.a.p/linux-user_aarch64_mte_user_helper.c.o 
-libhwcore.a.p/hw_core_bus.c.o libhwcore.a.p/hw_core_gpio.c.o 
-libhwcore.a.p/hw_core_qdev-properties.c.o libhwcore.a.p/hw_core_qdev.c.o 
-libhwcore.a.p/hw_core_resetcontainer.c.o 
-libhwcore.a.p/hw_core_resettable.c.o 
-libhwcore.a.p/hw_core_vmstate-if.c.o libhwcore.a.p/hw_core_irq.c.o 
-libhwcore.a.p/hw_core_clock.c.o libhwcore.a.p/hw_core_qdev-clock.c.o 
-libqom.a.p/qom_container.c.o libqom.a.p/qom_object.c.o 
-libqom.a.p/qom_object_interfaces.c.o libqom.a.p/qom_qom-qobject.c.o 
-libevent-loop-base.a.p/event-loop-base.c.o -Wl,--as-needed 
--Wl,--no-undefined -pie -static-pie -fstack-protector-strong 
--Wl,-z,relro -Wl,-z,now -g -O2 -Werror=implicit-function-declaration 
-'-ffile-prefix-map=/build/reproducible-path/qemu-11.0.0~rc2+ds=.' 
--fstack-protector-strong -fstack-clash-protection -Wformat 
--Werror=format-security -fcf-protection -ffile-prefix-map=../../= 
--Wdate-time -D_FORTIFY_SOURCE=2 -DPROVIDE_STUBS_FOR_STATIC -Wl,-z,relro 
--Wl,--as-needed -Wl,-Map=%.map,--no-print-map-discarded 
--Wl,--start-group libqemuutil.a /usr/lib/x86_64-linux-gnu/libcapstone.a 
-/usr/lib/x86_64-linux-gnu/libz.a -lm -pthread 
-/usr/lib/x86_64-linux-gnu/libglib-2.0.a 
-/usr/lib/gcc/x86_64-linux-gnu/15/libatomic.a 
-/usr/lib/x86_64-linux-gnu/libsysprof-capture-4.a -Wl,-z,nodelete 
-/usr/lib/x86_64-linux-gnu/libpcre2-8.a -Wl,--end-group
-/usr/bin/x86_64-linux-gnu-ld.bfd: 
-libhwcore.a.p/hw_core_qdev-properties.c.o: in function 
-`qdev_prop_set_globals':
-./b/user/hw/core/qdev-properties.c:1021:(.text+0x1913): undefined 
-reference to `object_apply_global_props'
-/usr/bin/x86_64-linux-gnu-ld.bfd: 
-./b/user/hw/core/qdev-properties.c:1021:(.text+0x194a): undefined 
-reference to `object_apply_global_props'
-/usr/bin/x86_64-linux-gnu-ld.bfd: libhwcore.a.p/hw_core_qdev.c.o: in 
-function `device_post_init':
-./b/user/hw/core/qdev.c:689:(.text+0x3ee): undefined reference to 
-`object_apply_compat_props'
-collect2: error: ld returned 1 exit status
-[1743/1778] cc -m64  -o qemu-aarch64_be 
-libcommon.a.p/accel_accel-common.c.o 
-libcommon.a.p/hw_core_cpu-common.c.o 
-libcommon.a.p/hw_core_machine-smp.c.o libcommon.a.p/cpu-common.c.o 
-libcommon.a.p/page-vary-common.c.o libcommon.a.p/target-info.c.o 
-libcommon.a.p/disas_capstone.c.o libcommon.a.p/disas_disas-host.c.o 
-libcommon.a.p/disas_disas-target.c.o libcommon.a.p/disas_objdump.c.o 
-libcommon.a.p/disas_disas-common.c.o libcommon.a.p/fpu_softfloat.c.o 
-libcommon.a.p/meson-generated_.._gdbstub_gdbstub-xml.c.o 
-libcommon_arm.a.p/target_arm_mmuidx.c.o 
-libcommon_arm.a.p/target_arm_tcg_arith_helper.c.o 
-libcommon_arm.a.p/target_arm_tcg_crypto_helper.c.o 
-libuser.a.p/semihosting_user.c.o libuser.a.p/semihosting_guestfd.c.o 
-libuser.a.p/accel_accel-user.c.o libuser.a.p/accel_tcg_cpu-exec.c.o 
-libuser.a.p/accel_tcg_cpu-exec-common.c.o 
-libuser.a.p/accel_tcg_tcg-runtime.c.o 
-libuser.a.p/accel_tcg_tcg-runtime-gvec.c.o 
-libuser.a.p/accel_tcg_tb-maint.c.o libuser.a.p/accel_tcg_tcg-all.c.o 
-libuser.a.p/accel_tcg_tcg-stats.c.o 
-libuser.a.p/accel_tcg_translate-all.c.o 
-libuser.a.p/accel_tcg_translator.c.o libuser.a.p/accel_tcg_user-exec.c.o 
-libuser.a.p/accel_tcg_user-exec-stub.c.o 
-libuser.a.p/hw_core_cpu-user.c.o libuser.a.p/hw_core_qdev-user.c.o 
-libuser.a.p/gdbstub_gdbstub.c.o libuser.a.p/gdbstub_syscalls.c.o 
-libuser.a.p/gdbstub_user.c.o libuser.a.p/cpu-target.c.o 
-libuser.a.p/tcg_optimize.c.o libuser.a.p/tcg_region.c.o 
-libuser.a.p/tcg_tcg.c.o libuser.a.p/tcg_tcg-common.c.o 
-libuser.a.p/tcg_tcg-op.c.o libuser.a.p/tcg_tcg-op-ldst.c.o 
-libuser.a.p/tcg_tcg-op-gvec.c.o libuser.a.p/tcg_tcg-op-vec.c.o 
-libuser.a.p/tcg_perf.c.o libuser.a.p/common-user_safe-syscall.S.o 
-libuser.a.p/common-user_safe-syscall-error.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_gdbstub.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpu.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpregs-gcs.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpregs-pmu.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_debug_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_vfp_fpscr.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_el2-stubs.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_common-semi-target.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_debug.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_hflags.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_neon_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_tlb_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_vec_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_vfp_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_cpu_loop.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_elfload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_signal.c.o 
-libqemu-aarch64_be-linux-user.a.p/target-info-stub.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpu64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_gdbstub64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_cpu32.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_gengvec.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-m-nocp.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-mve.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-neon.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-vfp.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_m_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_mve_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_op_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_cpu64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_gengvec64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-a64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-sve.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-sme.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_helper-a64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_mte_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_pauth_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_sme_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_sve_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_vec_helper64.c.o 
-libqemu-aarch64_be-linux-user.a.p/semihosting_syscalls.c.o 
-libqemu-aarch64_be-linux-user.a.p/semihosting_arm-compat-semi.c.o 
-libqemu-aarch64_be-linux-user.a.p/accel_accel-target.c.o 
-libqemu-aarch64_be-linux-user.a.p/gdbstub_user-target.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_elfload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_exit.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_fd-trans.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_linuxload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_main.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_mmap.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_signal.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_strace.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_syscall.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_thunk.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_uaccess.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_uname.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_flatload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_semihost.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_mte_user_helper.c.o 
-libhwcore.a.p/hw_core_bus.c.o libhwcore.a.p/hw_core_gpio.c.o 
-libhwcore.a.p/hw_core_qdev-properties.c.o libhwcore.a.p/hw_core_qdev.c.o 
-libhwcore.a.p/hw_core_resetcontainer.c.o 
-libhwcore.a.p/hw_core_resettable.c.o 
-libhwcore.a.p/hw_core_vmstate-if.c.o libhwcore.a.p/hw_core_irq.c.o 
-libhwcore.a.p/hw_core_clock.c.o libhwcore.a.p/hw_core_qdev-clock.c.o 
-libqom.a.p/qom_container.c.o libqom.a.p/qom_object.c.o 
-libqom.a.p/qom_object_interfaces.c.o libqom.a.p/qom_qom-qobject.c.o 
-libevent-loop-base.a.p/event-loop-base.c.o -Wl,--as-needed 
--Wl,--no-undefined -pie -static-pie -fstack-protector-strong 
--Wl,-z,relro -Wl,-z,now -g -O2 -Werror=implicit-function-declaration 
-'-ffile-prefix-map=/build/reproducible-path/qemu-11.0.0~rc2+ds=.' 
--fstack-protector-strong -fstack-clash-protection -Wformat 
--Werror=format-security -fcf-protection -ffile-prefix-map=../../= 
--Wdate-time -D_FORTIFY_SOURCE=2 -DPROVIDE_STUBS_FOR_STATIC -Wl,-z,relro 
--Wl,--as-needed -Wl,-Map=%.map,--no-print-map-discarded 
--Wl,--start-group libqemuutil.a /usr/lib/x86_64-linux-gnu/libcapstone.a 
-/usr/lib/x86_64-linux-gnu/libz.a -lm -pthread 
-/usr/lib/x86_64-linux-gnu/libglib-2.0.a 
-/usr/lib/gcc/x86_64-linux-gnu/15/libatomic.a 
-/usr/lib/x86_64-linux-gnu/libsysprof-capture-4.a -Wl,-z,nodelete 
-/usr/lib/x86_64-linux-gnu/libpcre2-8.a -Wl,--end-group
-FAILED: [code=1] qemu-aarch64_be
-cc -m64  -o qemu-aarch64_be libcommon.a.p/accel_accel-common.c.o 
-libcommon.a.p/hw_core_cpu-common.c.o 
-libcommon.a.p/hw_core_machine-smp.c.o libcommon.a.p/cpu-common.c.o 
-libcommon.a.p/page-vary-common.c.o libcommon.a.p/target-info.c.o 
-libcommon.a.p/disas_capstone.c.o libcommon.a.p/disas_disas-host.c.o 
-libcommon.a.p/disas_disas-target.c.o libcommon.a.p/disas_objdump.c.o 
-libcommon.a.p/disas_disas-common.c.o libcommon.a.p/fpu_softfloat.c.o 
-libcommon.a.p/meson-generated_.._gdbstub_gdbstub-xml.c.o 
-libcommon_arm.a.p/target_arm_mmuidx.c.o 
-libcommon_arm.a.p/target_arm_tcg_arith_helper.c.o 
-libcommon_arm.a.p/target_arm_tcg_crypto_helper.c.o 
-libuser.a.p/semihosting_user.c.o libuser.a.p/semihosting_guestfd.c.o 
-libuser.a.p/accel_accel-user.c.o libuser.a.p/accel_tcg_cpu-exec.c.o 
-libuser.a.p/accel_tcg_cpu-exec-common.c.o 
-libuser.a.p/accel_tcg_tcg-runtime.c.o 
-libuser.a.p/accel_tcg_tcg-runtime-gvec.c.o 
-libuser.a.p/accel_tcg_tb-maint.c.o libuser.a.p/accel_tcg_tcg-all.c.o 
-libuser.a.p/accel_tcg_tcg-stats.c.o 
-libuser.a.p/accel_tcg_translate-all.c.o 
-libuser.a.p/accel_tcg_translator.c.o libuser.a.p/accel_tcg_user-exec.c.o 
-libuser.a.p/accel_tcg_user-exec-stub.c.o 
-libuser.a.p/hw_core_cpu-user.c.o libuser.a.p/hw_core_qdev-user.c.o 
-libuser.a.p/gdbstub_gdbstub.c.o libuser.a.p/gdbstub_syscalls.c.o 
-libuser.a.p/gdbstub_user.c.o libuser.a.p/cpu-target.c.o 
-libuser.a.p/tcg_optimize.c.o libuser.a.p/tcg_region.c.o 
-libuser.a.p/tcg_tcg.c.o libuser.a.p/tcg_tcg-common.c.o 
-libuser.a.p/tcg_tcg-op.c.o libuser.a.p/tcg_tcg-op-ldst.c.o 
-libuser.a.p/tcg_tcg-op-gvec.c.o libuser.a.p/tcg_tcg-op-vec.c.o 
-libuser.a.p/tcg_perf.c.o libuser.a.p/common-user_safe-syscall.S.o 
-libuser.a.p/common-user_safe-syscall-error.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_gdbstub.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpu.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpregs-gcs.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpregs-pmu.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_debug_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_vfp_fpscr.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_el2-stubs.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_common-semi-target.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_debug.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_hflags.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_neon_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_tlb_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_vec_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_vfp_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_cpu_loop.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_elfload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_signal.c.o 
-libqemu-aarch64_be-linux-user.a.p/target-info-stub.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_cpu64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_gdbstub64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_cpu32.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_gengvec.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-m-nocp.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-mve.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-neon.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-vfp.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_m_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_mve_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_op_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_cpu64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_gengvec64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-a64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-sve.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_translate-sme.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_helper-a64.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_mte_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_pauth_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_sme_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_sve_helper.c.o 
-libqemu-aarch64_be-linux-user.a.p/target_arm_tcg_vec_helper64.c.o 
-libqemu-aarch64_be-linux-user.a.p/semihosting_syscalls.c.o 
-libqemu-aarch64_be-linux-user.a.p/semihosting_arm-compat-semi.c.o 
-libqemu-aarch64_be-linux-user.a.p/accel_accel-target.c.o 
-libqemu-aarch64_be-linux-user.a.p/gdbstub_user-target.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_elfload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_exit.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_fd-trans.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_linuxload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_main.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_mmap.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_signal.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_strace.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_syscall.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_thunk.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_uaccess.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_uname.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_flatload.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_semihost.c.o 
-libqemu-aarch64_be-linux-user.a.p/linux-user_aarch64_mte_user_helper.c.o 
-libhwcore.a.p/hw_core_bus.c.o libhwcore.a.p/hw_core_gpio.c.o 
-libhwcore.a.p/hw_core_qdev-properties.c.o libhwcore.a.p/hw_core_qdev.c.o 
-libhwcore.a.p/hw_core_resetcontainer.c.o 
-libhwcore.a.p/hw_core_resettable.c.o 
-libhwcore.a.p/hw_core_vmstate-if.c.o libhwcore.a.p/hw_core_irq.c.o 
-libhwcore.a.p/hw_core_clock.c.o libhwcore.a.p/hw_core_qdev-clock.c.o 
-libqom.a.p/qom_container.c.o libqom.a.p/qom_object.c.o 
-libqom.a.p/qom_object_interfaces.c.o libqom.a.p/qom_qom-qobject.c.o 
-libevent-loop-base.a.p/event-loop-base.c.o -Wl,--as-needed 
--Wl,--no-undefined -pie -static-pie -fstack-protector-strong 
--Wl,-z,relro -Wl,-z,now -g -O2 -Werror=implicit-function-declaration 
-'-ffile-prefix-map=/build/reproducible-path/qemu-11.0.0~rc2+ds=.' 
--fstack-protector-strong -fstack-clash-protection -Wformat 
--Werror=format-security -fcf-protection -ffile-prefix-map=../../= 
--Wdate-time -D_FORTIFY_SOURCE=2 -DPROVIDE_STUBS_FOR_STATIC -Wl,-z,relro 
--Wl,--as-needed -Wl,-Map=%.map,--no-print-map-discarded 
--Wl,--start-group libqemuutil.a /usr/lib/x86_64-linux-gnu/libcapstone.a 
-/usr/lib/x86_64-linux-gnu/libz.a -lm -pthread 
-/usr/lib/x86_64-linux-gnu/libglib-2.0.a 
-/usr/lib/gcc/x86_64-linux-gnu/15/libatomic.a 
-/usr/lib/x86_64-linux-gnu/libsysprof-capture-4.a -Wl,-z,nodelete 
-/usr/lib/x86_64-linux-gnu/libpcre2-8.a -Wl,--end-group
-/usr/bin/x86_64-linux-gnu-ld.bfd: 
-libhwcore.a.p/hw_core_qdev-properties.c.o: in function 
-`qdev_prop_set_globals':
-./b/user/hw/core/qdev-properties.c:1021:(.text+0x1913): undefined 
-reference to `object_apply_global_props'
-/usr/bin/x86_64-linux-gnu-ld.bfd: 
-./b/user/hw/core/qdev-properties.c:1021:(.text+0x194a): undefined 
-reference to `object_apply_global_props'
-/usr/bin/x86_64-linux-gnu-ld.bfd: libhwcore.a.p/hw_core_qdev.c.o: in 
-function `device_post_init':
-./b/user/hw/core/qdev.c:689:(.text+0x3ee): undefined reference to 
-`object_apply_compat_props'
-collect2: error: ld returned 1 exit status
+BR,
+Ruslan
 
-So apparently something else is needed here.
-
-It looks like this patchset is a bit more difficult.
-
-I'll dig deeper.
-
-Thnks,
-
-/mjt
-
-> ---
->   qom/compat-properties.c | 116 ++++++++++++++++++++++++++++++++++++++++
->   qom/meson.build         |   3 ++
->   qom/object.c            | 100 ----------------------------------
->   3 files changed, 119 insertions(+), 100 deletions(-)
->   create mode 100644 qom/compat-properties.c
-> 
-> diff --git a/qom/compat-properties.c b/qom/compat-properties.c
-> new file mode 100644
-> index 0000000000..f8d9b0036a
-> --- /dev/null
-> +++ b/qom/compat-properties.c
-> @@ -0,0 +1,116 @@
-> +/*
-> + * QEMU Object Model
-> + *
-> + * Copyright IBM, Corp. 2011
-> + *
-> + * Authors:
-> + *  Anthony Liguori   <aliguori@us.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qom/compat-properties.h"
-> +#include "qom/qom-qobject.h"
-> +#include "hw/core/qdev.h"
-> +
-> +bool object_apply_global_props(Object *obj, const GPtrArray *props,
-> +                               Error **errp)
-> +{
-> +    int i;
-> +
-> +    if (!props) {
-> +        return true;
-> +    }
-> +
-> +    for (i = 0; i < props->len; i++) {
-> +        GlobalProperty *p = g_ptr_array_index(props, i);
-> +        Error *err = NULL;
-> +
-> +        if (object_dynamic_cast(obj, p->driver) == NULL) {
-> +            continue;
-> +        }
-> +        if (p->optional && !object_property_find(obj, p->property)) {
-> +            continue;
-> +        }
-> +        p->used = true;
-> +        if (!object_property_parse(obj, p->property, p->value, &err)) {
-> +            error_prepend(&err, "can't apply global %s.%s=%s: ",
-> +                          p->driver, p->property, p->value);
-> +            /*
-> +             * If errp != NULL, propagate error and return.
-> +             * If errp == NULL, report a warning, but keep going
-> +             * with the remaining globals.
-> +             */
-> +            if (errp) {
-> +                error_propagate(errp, err);
-> +                return false;
-> +            } else {
-> +                warn_report_err(err);
-> +            }
-> +        }
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +/*
-> + * Global property defaults
-> + * Slot 0: accelerator's global property defaults
-> + * Slot 1: machine's global property defaults
-> + * Slot 2: global properties from legacy command line option
-> + * Each is a GPtrArray of GlobalProperty.
-> + * Applied in order, later entries override earlier ones.
-> + */
-> +static GPtrArray *object_compat_props[3];
-> +
-> +/*
-> + * Retrieve @GPtrArray for global property defined with options
-> + * other than "-global".  These are generally used for syntactic
-> + * sugar and legacy command line options.
-> + */
-> +void object_register_sugar_prop(const char *driver, const char *prop,
-> +                                const char *value, bool optional)
-> +{
-> +    GlobalProperty *g;
-> +    if (!object_compat_props[2]) {
-> +        object_compat_props[2] = g_ptr_array_new();
-> +    }
-> +    g = g_new0(GlobalProperty, 1);
-> +    g->driver = g_strdup(driver);
-> +    g->property = g_strdup(prop);
-> +    g->value = g_strdup(value);
-> +    g->optional = optional;
-> +    g_ptr_array_add(object_compat_props[2], g);
-> +}
-> +
-> +/*
-> + * Set machine's global property defaults to @compat_props.
-> + * May be called at most once.
-> + */
-> +void object_set_machine_compat_props(GPtrArray *compat_props)
-> +{
-> +    assert(!object_compat_props[1]);
-> +    object_compat_props[1] = compat_props;
-> +}
-> +
-> +/*
-> + * Set accelerator's global property defaults to @compat_props.
-> + * May be called at most once.
-> + */
-> +void object_set_accelerator_compat_props(GPtrArray *compat_props)
-> +{
-> +    assert(!object_compat_props[0]);
-> +    object_compat_props[0] = compat_props;
-> +}
-> +
-> +void object_apply_compat_props(Object *obj)
-> +{
-> +    int i;
-> +
-> +    for (i = 0; i < ARRAY_SIZE(object_compat_props); i++) {
-> +        object_apply_global_props(obj, object_compat_props[i],
-> +                                  i == 2 ? &error_fatal : &error_abort);
-> +    }
-> +}
-> diff --git a/qom/meson.build b/qom/meson.build
-> index 8192243430..bd6f4aadd7 100644
-> --- a/qom/meson.build
-> +++ b/qom/meson.build
-> @@ -5,6 +5,9 @@ qom_ss.add(files(
->     'object_interfaces.c',
->     'qom-qobject.c',
->   ))
-> +if have_system
-> +  qom_ss.add(files('compat-properties.c'))
-> +endif
->   
->   qmp_ss.add(files('qom-qmp-cmds.c'))
->   system_ss.add(files('qom-hmp-cmds.c'))
-> diff --git a/qom/object.c b/qom/object.c
-> index 838b1d2b22..f00d659ef0 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -440,106 +440,6 @@ static void object_post_init_with_type(Object *obj, TypeImpl *ti)
->       }
->   }
->   
-> -bool object_apply_global_props(Object *obj, const GPtrArray *props,
-> -                               Error **errp)
-> -{
-> -    int i;
-> -
-> -    if (!props) {
-> -        return true;
-> -    }
-> -
-> -    for (i = 0; i < props->len; i++) {
-> -        GlobalProperty *p = g_ptr_array_index(props, i);
-> -        Error *err = NULL;
-> -
-> -        if (object_dynamic_cast(obj, p->driver) == NULL) {
-> -            continue;
-> -        }
-> -        if (p->optional && !object_property_find(obj, p->property)) {
-> -            continue;
-> -        }
-> -        p->used = true;
-> -        if (!object_property_parse(obj, p->property, p->value, &err)) {
-> -            error_prepend(&err, "can't apply global %s.%s=%s: ",
-> -                          p->driver, p->property, p->value);
-> -            /*
-> -             * If errp != NULL, propagate error and return.
-> -             * If errp == NULL, report a warning, but keep going
-> -             * with the remaining globals.
-> -             */
-> -            if (errp) {
-> -                error_propagate(errp, err);
-> -                return false;
-> -            } else {
-> -                warn_report_err(err);
-> -            }
-> -        }
-> -    }
-> -
-> -    return true;
-> -}
-> -
-> -/*
-> - * Global property defaults
-> - * Slot 0: accelerator's global property defaults
-> - * Slot 1: machine's global property defaults
-> - * Slot 2: global properties from legacy command line option
-> - * Each is a GPtrArray of GlobalProperty.
-> - * Applied in order, later entries override earlier ones.
-> - */
-> -static GPtrArray *object_compat_props[3];
-> -
-> -/*
-> - * Retrieve @GPtrArray for global property defined with options
-> - * other than "-global".  These are generally used for syntactic
-> - * sugar and legacy command line options.
-> - */
-> -void object_register_sugar_prop(const char *driver, const char *prop,
-> -                                const char *value, bool optional)
-> -{
-> -    GlobalProperty *g;
-> -    if (!object_compat_props[2]) {
-> -        object_compat_props[2] = g_ptr_array_new();
-> -    }
-> -    g = g_new0(GlobalProperty, 1);
-> -    g->driver = g_strdup(driver);
-> -    g->property = g_strdup(prop);
-> -    g->value = g_strdup(value);
-> -    g->optional = optional;
-> -    g_ptr_array_add(object_compat_props[2], g);
-> -}
-> -
-> -/*
-> - * Set machine's global property defaults to @compat_props.
-> - * May be called at most once.
-> - */
-> -void object_set_machine_compat_props(GPtrArray *compat_props)
-> -{
-> -    assert(!object_compat_props[1]);
-> -    object_compat_props[1] = compat_props;
-> -}
-> -
-> -/*
-> - * Set accelerator's global property defaults to @compat_props.
-> - * May be called at most once.
-> - */
-> -void object_set_accelerator_compat_props(GPtrArray *compat_props)
-> -{
-> -    assert(!object_compat_props[0]);
-> -    object_compat_props[0] = compat_props;
-> -}
-> -
-> -void object_apply_compat_props(Object *obj)
-> -{
-> -    int i;
-> -
-> -    for (i = 0; i < ARRAY_SIZE(object_compat_props); i++) {
-> -        object_apply_global_props(obj, object_compat_props[i],
-> -                                  i == 2 ? &error_fatal : &error_abort);
-> -    }
-> -}
-> -
->   static void object_class_property_init_all(Object *obj)
->   {
->       ObjectPropertyIterator iter;
-
+> >
+> > Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> > ---
+> >  include/system/device_tree.h |  22 ++++
+> >  system/device_tree.c         | 194 +++++++++++++++++++++++++++++++++++
+> >  2 files changed, 216 insertions(+)
+> >
+> > diff --git a/include/system/device_tree.h b/include/system/device_tree.=
+h
+> > index 5667ff9538..bc378d38d0 100644
+> > --- a/include/system/device_tree.h
+> > +++ b/include/system/device_tree.h
+> > @@ -116,6 +116,11 @@ const void *qemu_fdt_getprop(void *fdt, const char=
+ *node_path,
+> >  uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
+> >                                 const char *property, int cell_id,
+> >                                 Error **errp);
+> > +
+> > +const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_pat=
+h,
+> > +                             const char *property, int *lenp, Error **=
+errp);
+> > +uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_p=
+ath,
+> > +                               const char *property, int cell_id, Erro=
+r **errp);
+> >  uint32_t qemu_fdt_get_phandle(void *fdt, const char *path);
+> >  uint32_t qemu_fdt_alloc_phandle(void *fdt);
+> >  int qemu_fdt_nop_node(void *fdt, const char *node_path);
+> > @@ -191,6 +196,23 @@ int qemu_fdt_setprop_sized_cells_from_array(void *=
+fdt,
+> >                                                  qdt_tmp);             =
+    \
+> >      })
+> >
+> > +/* node queries */
+> > +
+> > +int qemu_devtree_get_num_children(void *fdt, const char *node_path);
+> > +int qemu_devtree_get_children(void *fdt, const char *node_path,
+> > +                                     int max_paths, char **returned_pa=
+ths);
+> > +int qemu_devtree_num_props(void *fdt, const char *node_path);
+> > +
+> > +/* node getters */
+> > +
+> > +int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int p=
+handle);
+> > +char *qemu_devtree_getparent(void *fdt, const char *current);
+> > +
+> > +/* misc */
+> > +
+> > +int devtree_get_num_nodes(void *fdt);
+> > +
+> > +#define DT_PATH_LENGTH 1024
+> >
+> >  /**
+> >   * qemu_fdt_randomize_seeds:
+> > diff --git a/system/device_tree.c b/system/device_tree.c
+> > index d2db7bd355..1a70223712 100644
+> > --- a/system/device_tree.c
+> > +++ b/system/device_tree.c
+> > @@ -464,6 +464,96 @@ uint32_t qemu_fdt_getprop_cell(void *fdt, const ch=
+ar *node_path,
+> >      return be32_to_cpu(p[cell_id]);
+> >  }
+> >
+> > +const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_pat=
+h,
+> > +                             const char *property, int *lenp, Error **=
+errp)
+> > +{
+> > +    const void *found_val =3D NULL;
+> > +    int found_len =3D 0;
+> > +    int curr_offset =3D 0;
+> > +    int temp_len;
+> > +    char **tokens;
+> > +    char **iter;
+> > +
+> > +    found_val =3D fdt_getprop(fdt, 0, property, &found_len);
+> > +
+> > +    tokens =3D g_strsplit(node_path + 1, "/", -1);
+> > +
+> > +    for (iter =3D tokens; *iter !=3D NULL; iter++) {
+> > +        if (**iter =3D=3D '\0') {
+> > +            continue;
+> > +        }
+> > +
+> > +        curr_offset =3D fdt_subnode_offset(fdt, curr_offset, *iter);
+> > +        if (curr_offset < 0) {
+> > +            error_setg(errp, "%s: Path '%s' not found",
+> > +                       __func__, *iter);
+> > +            g_strfreev(tokens);
+> > +            return NULL;
+> > +        }
+> > +
+> > +        const void *val =3D fdt_getprop(fdt, curr_offset, property, &t=
+emp_len);
+> > +        if (val) {
+> > +            found_val =3D val;
+> > +            found_len =3D temp_len;
+> > +        }
+> > +    }
+> > +    g_strfreev(tokens);
+> > +
+> > +    if (!found_val) {
+> > +        error_setg(errp, "%s: Property '%s' not found",
+> > +                   __func__, property);
+> > +        return NULL;
+> > +    }
+> > +
+> > +    if (lenp) {
+> > +        *lenp =3D found_len;
+> > +    }
+> > +
+> > +    return found_val;
+> > +}
+> > +
+> > +uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_p=
+ath,
+> > +                               const char *property, int cell_id, Erro=
+r **errp)
+> > +{
+> > +    int len;
+> > +    const uint32_t *p;
+> > +
+> > +    p =3D qemu_fdt_getprop_inherited(fdt, node_path, property, &len, e=
+rrp);
+> > +    if (!p) {
+> > +        return 0;
+> > +    }
+> > +    if (len < (cell_id + 1) * 4) {
+> > +        error_setg(errp,
+> > +                   "%s: %s/%s is too short, need %d bytes for cell ind=
+ %d",
+> > +                   __func__, node_path, property, (cell_id + 1) * 4, c=
+ell_id);
+> > +        return 0;
+> > +    }
+> > +    return be32_to_cpu(p[cell_id]);
+> > +}
+> > +
+> > +char *qemu_devtree_getparent(void *fdt, const char *current)
+> > +{
+> > +    const char *sep;
+> > +    int len;
+> > +
+> > +    if (!current || !strcmp(current, "/")) {
+> > +        return NULL;
+> > +    }
+> > +
+> > +    sep =3D strrchr(current, '/');
+> > +    if (!sep) {
+> > +        return NULL;
+> > +    }
+> > +
+> > +    if (sep =3D=3D current) {
+> > +        len =3D 1;
+> > +    } else {
+> > +        len =3D sep - current;
+> > +    }
+> > +
+> > +    return g_strndup(current, len);
+> > +}
+> > +
+> >  uint32_t qemu_fdt_get_phandle(void *fdt, const char *path)
+> >  {
+> >      uint32_t r;
+> > @@ -631,6 +721,110 @@ out:
+> >      return ret;
+> >  }
+> >
+> > +int qemu_devtree_num_props(void *fdt, const char *node_path)
+> > +{
+> > +    int offset =3D fdt_path_offset(fdt, node_path);
+> > +    int ret =3D 0;
+> > +
+> > +    for (offset =3D fdt_first_property_offset(fdt, offset);
+> > +            offset !=3D -FDT_ERR_NOTFOUND;
+> > +            offset =3D fdt_next_property_offset(fdt, offset)) {
+> > +        ret++;
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> > +int qemu_devtree_get_children(void *fdt, const char *node_path,
+> > +                                     int max_paths, char **returned_pa=
+ths)
+> > +{
+> > +    int count =3D 0;
+> > +    int subnode;
+> > +    const char *name;
+> > +    int offset =3D fdt_path_offset(fdt, node_path);
+> > +
+> > +    if (offset < 0) {
+> > +        return offset;
+> > +    }
+> > +
+> > +    bool is_root =3D (strcmp(node_path, "/") =3D=3D 0);
+> > +
+> > +    fdt_for_each_subnode(subnode, fdt, offset) {
+> > +        if (count >=3D max_paths) {
+> > +            break;
+> > +        }
+> > +        name =3D fdt_get_name(fdt, subnode, NULL);
+> > +        if (returned_paths) {
+> > +            returned_paths[count] =3D g_strdup_printf("%s/%s",
+> > +                                                is_root ? "" : node_pa=
+th, name);
+> > +        }
+> > +
+> > +        ++count;
+> > +    }
+> > +
+> > +    return count;
+> > +}
+> > +
+> > +int qemu_devtree_get_num_children(void *fdt, const char *node_path)
+> > +{
+> > +    int count =3D 0;
+> > +    int subnode;
+> > +    int offset =3D fdt_path_offset(fdt, node_path);
+> > +
+> > +    if (offset < 0) {
+> > +        return offset;
+> > +    }
+> > +
+> > +    fdt_for_each_subnode(subnode, fdt, offset) {
+> > +        ++count;
+> > +    }
+> > +
+> > +    return count;
+> > +}
+> > +
+> > +int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int p=
+handle)
+> > +{
+> > +    int offset =3D 0, cur_depth =3D 0;
+> > +    int path_lens[64] =3D { 0 };
+> > +
+> > +    for (offset =3D 0; offset >=3D 0; offset =3D fdt_next_node(fdt, of=
+fset,
+> > +                                                         &cur_depth)) =
+{
+> > +        if (cur_depth >=3D 64) {
+> > +            break;
+> > +        }
+> > +        const char *name =3D fdt_get_name(fdt, offset, NULL);
+> > +
+> > +        int parent_len =3D (cur_depth > 0) ? path_lens[cur_depth - 1] =
+: 0;
+> > +        int len =3D snprintf(node_path + parent_len,
+> > +                             DT_PATH_LENGTH - parent_len,
+> > +                             "%s%s",
+> > +                             (parent_len > 1) ? "/" : "",
+> > +                             (cur_depth =3D=3D 0) ? "/" : name);
+> > +
+> > +        path_lens[cur_depth] =3D parent_len + len;
+> > +
+> > +        if (fdt_get_phandle(fdt, offset) =3D=3D phandle) {
+> > +            return 0;
+> > +        }
+> > +    }
+> > +
+> > +    return -FDT_ERR_NOTFOUND;
+> > +}
+> > +
+> > +int devtree_get_num_nodes(void *fdt)
+> > +{
+> > +    int num_nodes =3D 0;
+> > +    int depth =3D 0, offset =3D 0;
+> > +
+> > +    for (;;) {
+> > +        offset =3D fdt_next_node(fdt, offset, &depth);
+> > +        num_nodes++;
+> > +        if (offset <=3D 0 || depth <=3D 0) {
+> > +            break;
+> > +        }
+> > +    }
+> > +    return num_nodes;
+> > +}
+> > +
+> >  void qmp_dumpdtb(const char *filename, Error **errp)
+> >  {
+> >      ERRP_GUARD();
+> > --
+> > 2.43.0
+> >
+>
+> --
+> David Gibson (he or they)       | I'll have my music baroque, and my code
+> david AT gibson.dropbear.id.au  | minimalist, thank you, not the other wa=
+y
+>                                 | around.
+> http://www.ozlabs.org/~dgibson
 
