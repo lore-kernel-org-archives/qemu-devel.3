@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00256E7E348
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B16E7E34C
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8a3S-0001BY-UW; Fri, 03 Apr 2026 04:39:03 -0400
+	id 1w8aG8-0004HD-P7; Fri, 03 Apr 2026 04:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8a3R-0001BH-Mq; Fri, 03 Apr 2026 04:39:01 -0400
+ id 1w8aG7-0004Gh-Cu; Fri, 03 Apr 2026 04:52:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8a3Q-0005tH-1A; Fri, 03 Apr 2026 04:39:01 -0400
+ id 1w8aG5-0000ed-Cr; Fri, 03 Apr 2026 04:52:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775205500; bh=psuuQxxSXOo/Nqa2VLo/RCXzmww7S86fq2WDqT3QkX0=;
+ t=1775206284; bh=h1iPZBe35Wnnzyrg+1XHZFjZfgEutlw4fbGnvrm30jY=;
  h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=ieTIZfFBl+TzO5jpye2Q50XxvmmnPY2Vy/MuqLdEahAXwufGDhPjAydXz3Wo4EtE8
- 7uaP2eLFemfDUamSoZAwpPzK0QwNfd4WlPFy1BkaJkYVIPJ9IrRv0xyG6mWk31vbQW
- rr+5CtMlAUKxlBkY1tc24g7ZapViyPIAQP2b45BSdnDzooVFeQhdYCiSzfsqYQTR42
- +Ecab0ZlhMGCS5ZQ3mRYLvQD+uQ1AmOoLnna58nwilq80bi427M+7NJleeXdJ9tgJw
- Yk38qnjo9Q1FGkBF+ffgI7r0KygdePlM/DNS1vRrGy5jdxhg+kTsmSOtdCgzrXH2jx
- zRhgrzLP0yyiw==
+ b=bxJ6zc6D4u2M2DOrur0rppHfX8uM9xZhQvAQokAKx9pNoHV2ynWNcYslmZL41i2zk
+ vcRoIacaQ+qZeiXmyBcegtjYpiP/rLkmtNeIhpno95ax/G2XJ0+SAhXUqpA+Bs5x2N
+ dLOC7Vr3RTukahsCVRM9Is/3t3wE57Nm/3/QeEHUxbw0WoIXhvdlJYRv4XLpxcPIbF
+ Rf3OK5n5NJolVXja3TvsWWfu0PTn8o9RQ/dmnffRk7ti864sOVbUH7WcHSQlfikOo5
+ TZq7e2TZ4doTjo9kriP3+dJ/nC5hFitaxlUWdnzsbPzyWqZ6cJKgRCP2SyfzAmOWCo
+ +1/HPLGLGdWeQ==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id B1A1319A53B;
- Fri, 03 Apr 2026 11:38:20 +0300 (MSK)
-Message-ID: <21611f09-5530-4587-9ad5-da1cdb4a9e7b@tls.msk.ru>
-Date: Fri, 3 Apr 2026 11:38:58 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 0389519A560;
+ Fri, 03 Apr 2026 11:51:24 +0300 (MSK)
+Message-ID: <d2b123a1-7a20-4634-a774-bbd77d3d0e97@tls.msk.ru>
+Date: Fri, 3 Apr 2026 11:52:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 5/6] linux-user: Make openat2() use -L for absolute paths
+Subject: Re: [PULL 6/6] bsd-user, linux-user: signal: recursive signal
+ delivery fix
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20260401094848.2661985-1-peter.maydell@linaro.org>
- <20260401094848.2661985-6-peter.maydell@linaro.org>
+ <20260401094848.2661985-7-peter.maydell@linaro.org>
 Content-Language: en-US, ru-RU
-Cc: qemu-stable <qemu-stable@nongnu.org>, Sun Haoyu <shyliuli@aosc.io>
+Cc: qemu-stable <qemu-stable@nongnu.org>, Nicholas Piggin
+ <npiggin@gmail.com>, Warner Losh <imp@bsdimp.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -84,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260401094848.2661985-6-peter.maydell@linaro.org>
+In-Reply-To: <20260401094848.2661985-7-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -112,25 +114,92 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 01.04.2026 12:48, Peter Maydell wrote:
-> From: Sun Haoyu <shyliuli@aosc.io>
+> From: Nicholas Piggin <npiggin@gmail.com>
 > 
-> openat2() ignored the -L prefix and opened host files directly.
-> For example, openat2("/tmp/file") opened /tmp/file on the host, not
-> QEMU_LD_PREFIX/tmp/file like openat() does.
+> Synchronous signals must accommodate a synchronous signal being
+> raised during delivery, as asynchronous ones do. For example
+> badframe errors during delivery will cause SIGSEGV to be raised.
 > 
-> Fix this by using path() to rewrite absolute paths. Skip this
-> when RESOLVE_BENEATH or RESOLVE_IN_ROOT is set:
-> - RESOLVE_BENEATH rejects absolute paths anyway
-> - RESOLVE_IN_ROOT resolves relative to dirfd
+> Without this fix, cpu_loop() runs process_pending_signals() which
+> delivers the first synchronous signal (e.g., SIGILL) which fails
+> to set the handler and forces SIGSEGV, but that is not picked up.
+> process_pending_signals() returns. Then cpu_loop() runs cpu_exec()
+> again, which attempts to execute the same instruction, another
+> SIGILL.
 > 
-> Now openat() and openat2() work in the same way.
-> 
-> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3341
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Reviewed-by: Warner Losh <imp@bsdimp.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Message-id: 20260321135624.581398-3-npiggin@gmail.com
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   bsd-user/signal.c   | 10 ++++++----
+>   linux-user/signal.c |  9 ++++++---
+>   2 files changed, 12 insertions(+), 7 deletions(-)
 
-I'm picking this up for qemu-stable (10.0.x & 10.2.x) series.
-Please let me know if I shouldn't.
+This too smells like a qemu-stable material (10.0.x & 10.2.x series).
+
+I'm picking it up.  Please let me know if I shouldn't.
 
 Thanks,
 
 /mjt
+
+> diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+> index dadcc037dc..3e5e41e1b1 100644
+> --- a/bsd-user/signal.c
+> +++ b/bsd-user/signal.c
+> @@ -998,7 +998,12 @@ void process_pending_signals(CPUArchState *env)
+>                   sigdelset(&ts->signal_mask, target_to_host_signal(sig));
+>                   sigact_table[sig - 1]._sa_handler = TARGET_SIG_DFL;
+>               }
+> +            /*
+> +             * Restart scan from the beginning, as handle_pending_signal
+> +             * might have resulted in a new synchronous signal (eg SIGSEGV).
+> +             */
+>               handle_pending_signal(env, sig, &ts->sync_signal);
+> +            goto restart_scan;
+>           }
+>   
+>           k = ts->sigtab;
+> @@ -1008,10 +1013,7 @@ void process_pending_signals(CPUArchState *env)
+>               if (k->pending &&
+>                   !sigismember(blocked_set, target_to_host_signal(sig))) {
+>                   handle_pending_signal(env, sig, k);
+> -                /*
+> -                 * Restart scan from the beginning, as handle_pending_signal
+> -                 * might have resulted in a new synchronous signal (eg SIGSEGV).
+> -                 */
+> +                /* Restart scan, explained above. */
+>                   goto restart_scan;
+>               }
+>           }
+> diff --git a/linux-user/signal.c b/linux-user/signal.c
+> index 804096bd44..f0a22577e5 100644
+> --- a/linux-user/signal.c
+> +++ b/linux-user/signal.c
+> @@ -1384,6 +1384,11 @@ void process_pending_signals(CPUArchState *cpu_env)
+>               }
+>   
+>               handle_pending_signal(cpu_env, sig, &ts->sync_signal);
+> +            /*
+> +             * Restart scan from the beginning, as handle_pending_signal
+> +             * might have resulted in a new synchronous signal (eg SIGSEGV).
+> +             */
+> +            goto restart_scan;
+>           }
+>   
+>           for (sig = 1; sig <= TARGET_NSIG; sig++) {
+> @@ -1394,9 +1399,7 @@ void process_pending_signals(CPUArchState *cpu_env)
+>                   (!sigismember(blocked_set,
+>                                 target_to_host_signal_table[sig]))) {
+>                   handle_pending_signal(cpu_env, sig, &ts->sigtab[sig - 1]);
+> -                /* Restart scan from the beginning, as handle_pending_signal
+> -                 * might have resulted in a new synchronous signal (eg SIGSEGV).
+> -                 */
+> +                /* Restart scan, explained above. */
+>                   goto restart_scan;
+>               }
+>           }
+
 
