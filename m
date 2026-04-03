@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC49ED73090
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 03:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EFA5D73093
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 03:57:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8VeH-0001b2-Hl; Thu, 02 Apr 2026 23:56:45 -0400
+	id 1w8VeE-0001Oz-7m; Thu, 02 Apr 2026 23:56:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w8VeF-0001Tv-U4
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:43 -0400
+ id 1w8VeB-0001OH-Ui
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:39 -0400
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w8VeD-0004N9-Sn
- for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:43 -0400
+ id 1w8VeA-0004N9-AT
+ for qemu-devel@nongnu.org; Thu, 02 Apr 2026 23:56:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1775188602; x=1806724602;
+ t=1775188598; x=1806724598;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Gpq4iT48dEoIvQVMl/RDHwVdK3eHCPEFNnahXMO0tqE=;
- b=iMdWPuMM8VjZPFfPVH7f2yIaJWwE6ELZB5ARxO1lIH02nKL0ExXl9FFu
- mtcyimJdO8Q09nrMZiJLRhyBe5ZZTH3XEAnbbdNgEUOva3rhcIEm6wO2y
- PUjK+r+0IZCVpYEvcXdJ2T12IxEps16kyqTp3Tbc/QPyBFid4fy/jqZMg
- Y7FYILi4QrpIHGbVd2RIW5FLcu8wQhPY00UwrWJ0lLFqAYS9VII9mGNRo
- O4Q6S64bNgWK/Zy3f+Gm1jYjCBisyxx7bW+MfLL/23WLQHozxZ8hb0/oS
- FktblX6sIwAgUD2AlPKVbTni2B6wvaSNCOMreD2yYbo6WqmMCdRDNCvro A==;
-X-CSE-ConnectionGUID: hkL0BQKcQlS3APi/4PMpbw==
-X-CSE-MsgGUID: NPTtWIqBSu+Yn4n9pFu4eQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11747"; a="76140700"
-X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="76140700"
+ bh=hIU2vlg7EXU+6k1wCa3nxm6yYsN20b7avvilirDWblw=;
+ b=LdGwZktxbfBn00JVP3m59qPlDVNWd0/P3xdDrcAK+4bAmKb+K3+Bx7LA
+ gPXy3vSVp+fo7NffmX+Zp6Ub4OPmvEM93RbX4d9m9VF6+Z72VEXHLEoPy
+ ohtI76dT+EYjrEqpfAIiD3Nc+uietlRPGdjrKqtueRZUTCby6cjklUjuu
+ 2Kf1kp+gqBiB7xQbONW+4ICnDy/s/VlvZ3TT0/icEligWnLSnuBT6jDkA
+ piE4E7Hjhsnago2y5ql1tKRNnnPhUbHg5wlgUQj2bDwNQCwjOruAbz3fs
+ Au/0C1U8VGcS6hi13MGF+WuzY7LpJAbs1BCJdoV3fMiW8NbR2kHfp9YDb g==;
+X-CSE-ConnectionGUID: ph6NiwdIR42qUxhG3A4gbg==
+X-CSE-MsgGUID: 0JMh05t5TBWDSdZwjfi64Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11747"; a="76140693"
+X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="76140693"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2026 20:56:41 -0700
-X-CSE-ConnectionGUID: RAgMnMFBQhOnMme+l00PZw==
-X-CSE-MsgGUID: sX4x4nkSSK6VrsiAFlnkDA==
+ 02 Apr 2026 20:56:37 -0700
+X-CSE-ConnectionGUID: uvjp4ho6TNKSUu1bvxSIgQ==
+X-CSE-MsgGUID: R5YnfWPvQZ+OEeByqwm1GA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="223884968"
+X-IronPort-AV: E=Sophos;i="6.23,157,1770624000"; d="scan'208";a="223884952"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2026 20:56:38 -0700
+ 02 Apr 2026 20:56:34 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,10 +53,9 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 14/14] intel_iommu: Expose flag VIOMMU_FLAG_PASID_SUPPORTED
- when configured
-Date: Thu,  2 Apr 2026 23:55:38 -0400
-Message-ID: <20260403035541.18355-15-zhenzhong.duan@intel.com>
+Subject: [PATCH v3 13/14] intel_iommu_accel: Add pasid bits size check
+Date: Thu,  2 Apr 2026 23:55:37 -0400
+Message-ID: <20260403035541.18355-14-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260403035541.18355-1-zhenzhong.duan@intel.com>
 References: <20260403035541.18355-1-zhenzhong.duan@intel.com>
@@ -87,30 +86,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIO device will check flag VIOMMU_FLAG_PASID_SUPPORTED and expose PASID
-capability, or else guest could not enable PASID of this device even if
-vIOMMU's pasid is configured.
-
-This is the final knob to enable PASID.
+If pasid bits size is bigger than host side, host could fail to emulate
+all bindings in guest. Add a check to fail device plug early.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- hw/i386/intel_iommu.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/i386/intel_iommu_internal.h | 1 +
+ hw/i386/intel_iommu_accel.c    | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index abcb0df5d9..3cb8a547c7 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4794,6 +4794,7 @@ static uint64_t vtd_get_viommu_flags(void *opaque)
-     uint64_t flags;
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 2c716c5297..519af3fa90 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -196,6 +196,7 @@
+ #define VTD_ECAP_SRS                (1ULL << 31)
+ #define VTD_ECAP_NWFS               (1ULL << 33)
+ #define VTD_ECAP_SET_PSS(x, v)      ((x)->ecap = deposit64((x)->ecap, 35, 5, v))
++#define VTD_ECAP_GET_PSS(ecap)      extract64(ecap, 35, 5)
+ #define VTD_ECAP_PASID              (1ULL << 40)
+ #define VTD_ECAP_PDS                (1ULL << 42)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 6377db1fb9..32e2c4633f 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -44,6 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+     HostIOMMUDevice *hiod = vtd_hiod->hiod;
+     struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+     struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
++    uint8_t hpasid = VTD_ECAP_GET_PSS(vtd->ecap_reg) + 1;
+     PCIBus *bus = vtd_hiod->bus;
+     PCIDevice *pdev = bus->devices[vtd_hiod->devfn];
  
-     flags = s->fsts ? VIOMMU_FLAG_WANT_NESTING_PARENT : 0;
-+    flags |= s->pasid ? VIOMMU_FLAG_PASID_SUPPORTED : 0;
+@@ -64,6 +65,13 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+         return false;
+     }
  
-     return flags;
- }
++    /* Only do the check when host device support PASIDs */
++    if (caps->max_pasid_log2 && s->pasid > hpasid) {
++        error_setg(errp, "PASID bits size %d > host IOMMU PASID bits size %d",
++                   s->pasid, hpasid);
++        return false;
++    }
++
+     if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
+         error_setg(errp, "Host device downstream to a PCI bridge is "
+                    "unsupported when x-flts=on");
 -- 
 2.47.3
 
