@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 342B3E88D72
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 23:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212D6E88D6E
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 23:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8nkh-0007dm-Pf; Fri, 03 Apr 2026 19:16:35 -0400
+	id 1w8nnW-0004Uj-6C; Fri, 03 Apr 2026 19:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8nkg-0007dN-1M
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 19:16:34 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1w8nnR-0004Tc-NH
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 19:19:25 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8nke-0008CB-KF
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 19:16:33 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-82ce09b61beso1054743b3a.0
- for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 16:16:31 -0700 (PDT)
+ id 1w8nnQ-0008Ml-5Y
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 19:19:25 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c757a9251faso722951a12.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 16:19:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775258190; x=1775862990; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775258362; x=1775863162; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=L2mtlTrpYfLhQMIh8FDI4ghcEctL3zHqAP1YPDVDbRI=;
- b=QLtMPr0PYrMttGexrwbSnckqLIxz7LUigh9ng8CJ7s3KOi2fHS6J9I67Vy6ZxkIbWZ
- Da2KC5Vm7z8SNhCSjmLZxQaUPD1ZddLSM5OYF7u00di94GW36OVJLD7o8xsKgWPfpDq+
- 8zKwvG426eLCJqBopyFRj4XZdynNOFq3skFussjfZvzju0TaS6cHjiiZ/iVCp6DGRNRv
- 65jB6a5uJL8E9rCFMGJCDGxA3/P6bhQMQuHvscPtweyf4SqrRiegMR9HH1FF6qK0pTGf
- vvFmZsUH6WZjeKEGenHWvfkPg8pVbgGbnBxNLZSkq+ads56Zv4pHKMp7wRKIbhBuqnZo
- 5OPQ==
+ bh=WQ9BXFCTc0czh8WYTg86lStU7t2ZzcBaS0KkgmnOOsI=;
+ b=zOYlipG/H+qhWv1dcnW8UCuGJFDecNgnDTbHmtBBqnewSw82Cs2nQgxSV4wwIrrafE
+ KCHCiQloMAaPtiv+gMy6TNWMV1bIpRqO57BAGc9OqmIesAFUTiNXwHgmfGMTB8RZxTER
+ /bVjxAzJbmcMgQFSYQta1OuXkEhJA5zQe7zzqFz8w6EgATM+5kTLclgVNdlqFR7eNukt
+ 9u1C15ttq7UlpwRnhVBAoN7Py+ZsBByFIltNq4XQ5Gtc0zagRmdJK9WEQOOaD1j1yoOs
+ zOHmEN2PpUjDRv7NNSB/NwKjN22b890yMleKfQTRztWN2rO/DHH7HoaLLua491VVTSXf
+ wgfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775258190; x=1775862990;
+ d=1e100.net; s=20251104; t=1775258362; x=1775863162;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=L2mtlTrpYfLhQMIh8FDI4ghcEctL3zHqAP1YPDVDbRI=;
- b=bV34BiaZFyIqzmRCdEcBLrzUNnGjo30a91AC4DJ3r5gzq1OcmqP55kjpCSBrY9xxfU
- PIhyqGV3L1VbbnLdknr4yT8Uo0cmaEA8U8Gs3NLRUFydYDMEXpjvBsjXxOAQsvyfZT9i
- BTdkwTp+aff3dgEGC0dldm62bmgXD6RPkc/Sk7brjwgEFlajzfhAz4u3mgVUUZ+eWNAN
- VJMojknRE/Kd/2Vm4SLtf9U/5wE8MJPQ5KIrOCO3FU63ngyWpaTuz8Xm3YoI0Mk5esy/
- 79dOIEBcfHp8CD9gPM7M5ReKrAXOwILMGedzbf0ddQB6PR70TEK427bu+jaaEmsPnMfG
- aDFw==
-X-Gm-Message-State: AOJu0YzcT6MX+co/+2HMiZsQ70skAFaesA+FNNJ0Oexl/2LLlfBziFx9
- sUs3wQsyeQT+TEjM75HsFYk2xVZmBNoqYAH/xfnAlFCPZwXI3RFuF2FuCq3HVBbevcLAibn8GgT
- iTW8lPeQ=
-X-Gm-Gg: AeBDievzceOGUNNUbQXNVJ1kDLLBOmCTxfNQm0hK1aEA4n17An3SY30ryrwpvcC7OuX
- GV6Atn5yvNmhht5VlnwO7t84A7XW2+C7LSsLffElKa7qZhKDTEfHKxx5vIQCFDyfKpHXX9qKOOh
- MDg1b1hCpsKVj5Sr4TBVIlv5RJIMha8eqbkh5yjQzvnOuUG7MtkUMNmjcEJlzbUKSF9qYDMI2Ej
- huDDD/MuEa+OGgHEFIpnZ+IiOUOB1LvnpAQNj5hmeXkSBumFyOvXXe8c97O1AE+qLWcl9s//ivo
- UTQUuBkMMxmm0fwvkKQx+nd70dJkzdxdUkw9e9iy6c2Aj0Xe4Hw4hfeEIK5lsndGMhJLtxbBN93
- STiPHnFQw8rWEzm0RV3NRO/HWcNtRONNrj7yLSVg3mA20yobTxix+61jSoZSHvVXqZ40A7KgTYE
- st6Z1DntkQXFd13DXcI/Jnzpa0+d3woWl2TZodVU6pE3Xp7mqKVI88Qfjd39mXX5Nk3sU=
-X-Received: by 2002:a05:6a00:4189:b0:82c:e775:d42a with SMTP id
- d2e1a72fcca58-82d0dbc089bmr4295164b3a.49.1775258190460; 
- Fri, 03 Apr 2026 16:16:30 -0700 (PDT)
+ bh=WQ9BXFCTc0czh8WYTg86lStU7t2ZzcBaS0KkgmnOOsI=;
+ b=o5czn6eZuoSV+srPvFSOTY87c/IHo5mAnpZXHTTX5EPCwcQ7jKO9DZT74p8GIallMK
+ hYrnlmUPvs4YPutpWTogtRN+iXUQLODRKAOikROULhdj6wBmgNQaX8MJjAKPXfJHh6Z+
+ /eojfqYAxVK1Pn5U6i1Sd/+0s/HLVBZhXUchVPRB17+hXzQwjiF/qHO0b6ZLAWQsBmfC
+ lHIzQoRn/P3+t7Bb0UYpcfFZYaMz/wZGQqNpygcUsHvjPB8prS+xaJn0Nzdzp8v65emg
+ //gTNxzoNpNSkB7jZhO+6tcPcMGrMX6fdlNLsRgjZcL2vZLtGokIcl1b1VZTEt/COK8+
+ 4NHw==
+X-Gm-Message-State: AOJu0YzKzofDvI0ZU+lLnTQAxWv9Sac8436O3Y2DnUwHMEEsJT6jSrON
+ zgNeJ7beAqjcqcKgI+syBzAxhIZg+EE/iHVvfjhaem0Bf+fYk16un9YBWv80MFlZS7TKrLIOl0o
+ Ccd3CbwM=
+X-Gm-Gg: ATEYQzxRgHL3YtDYcz2XPDp+oLNZL8TxW8Jt+ruHVGE2fcyGhuckAG8VUhRjkVXng6k
+ BmA7+lpT4I1ASvIlZsV0MF24xKC8puLPc0WX4weAHXM279d70gFIzc1lC45h7kujYdvf7e1oEuS
+ 2YwxckmEe69El0mA9VV3Kt+NRg+ffJhVK5Fcq+UZ8XkKNC4c1Ri6Db7XQhdqcBytBaD+wX+n05h
+ Pu1OHSpoT2mcMVYGqq5rZtmWmJInfTYGo1fhYJC3hwB493aCItG/NDY7KAEOW7MATBKUCA+rq9Q
+ 0qdzRmCy3D37UPz4h+7ez5A1T8WBYqwjdv1MENptOInXV7mAhDWhXtuYaYeRBFPfyTG8Ib0oqzb
+ Rm85fpIDQXNocyfkgUPF08tbieLA2VdPO7XQtBD5DbxrwWHG8HNb+g/GSrlGZU5V6n1CmFuOucz
+ qKKmD7j2zpdjNrHS4Uiwt6p8H6/b6Jx2mN1o8HUUW9EsUH8pVAOJmvR93uHZhthpadru8=
+X-Received: by 2002:a05:6a21:998e:b0:39b:81bf:15e9 with SMTP id
+ adf61e73a8af0-39f2f3348bemr4342424637.51.1775258361848; 
+ Fri, 03 Apr 2026 16:19:21 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9b3dcbesm6818146b3a.22.2026.04.03.16.16.28
+ 41be03b00d2f7-c76c6491157sm5508156a12.9.2026.04.03.16.19.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Apr 2026 16:16:30 -0700 (PDT)
-Message-ID: <93aff196-b436-4c8c-aa76-3d58785e5c04@linaro.org>
-Date: Sat, 4 Apr 2026 09:16:25 +1000
+ Fri, 03 Apr 2026 16:19:21 -0700 (PDT)
+Message-ID: <6875d1bf-1d49-4f9d-9f66-75d11fddffe0@linaro.org>
+Date: Sat, 4 Apr 2026 09:19:16 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0 2/6] hw/core: Move compat_props_add() to
- 'hw/core/boards.h'
+Subject: Re: [PATCH for-11.0 3/6] qom: Declare GlobalProperty structure in
+ 'qom/compat-properties.h'
 To: qemu-devel@nongnu.org
 References: <20260403104327.1163942-1-mjt@tls.msk.ru>
- <20260403104327.1163942-3-mjt@tls.msk.ru>
+ <20260403104327.1163942-4-mjt@tls.msk.ru>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260403104327.1163942-3-mjt@tls.msk.ru>
+In-Reply-To: <20260403104327.1163942-4-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +106,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/3/26 20:43, Michael Tokarev wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> From: Philippe Mathieu-Daudé<philmd@linaro.org>
 > 
-> compat_props_add() is only used by board models, no need
-> to expose it to any device model. Restrict by defining it
-> only in "hw/core/boards.h".
+> While GlobalProperty is expected to only be used by QDev board
+> layer, it is used by the lower QOM API, so define it in the
+> qom/ namespace. This helps to build binary which use QOM but
+> don't need the QDev layer.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Reviewed-by: Michael Tokarev<mjt@tls.msk.ru>
 > ---
->   include/hw/core/boards.h | 10 ++++++++++
->   include/hw/core/qdev.h   | 10 ----------
->   2 files changed, 10 insertions(+), 10 deletions(-)
+>   include/hw/core/boards.h          |  1 +
+>   include/hw/core/qdev-properties.h |  1 +
+>   include/hw/core/qdev.h            | 17 ----------------
+>   include/qom/compat-properties.h   | 32 +++++++++++++++++++++++++++++++
+>   qom/object.c                      |  2 +-
+>   5 files changed, 35 insertions(+), 18 deletions(-)
+>   create mode 100644 include/qom/compat-properties.h
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
