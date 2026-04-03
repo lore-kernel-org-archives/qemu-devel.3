@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 887E8E7E343
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00256E7E348
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 08:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8a2e-0000VJ-7c; Fri, 03 Apr 2026 04:38:14 -0400
+	id 1w8a3S-0001BY-UW; Fri, 03 Apr 2026 04:39:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8a2W-0000TU-2V; Fri, 03 Apr 2026 04:38:04 -0400
+ id 1w8a3R-0001BH-Mq; Fri, 03 Apr 2026 04:39:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w8a2T-0005mt-R0; Fri, 03 Apr 2026 04:38:03 -0400
+ id 1w8a3Q-0005tH-1A; Fri, 03 Apr 2026 04:39:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775205442; bh=qQLmVplE0IUEwFwqeJmsS1aPWBAit0qFa13UipeafGk=;
+ t=1775205500; bh=psuuQxxSXOo/Nqa2VLo/RCXzmww7S86fq2WDqT3QkX0=;
  h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=k7Ac4n1c8xX7UlpbvCrL2Yk30kU+HWzjQHj+RSDztHmlkvRDcsAiY0naSWDAH3PXj
- TjrpFXfpAV/gWY8f2bNYj+EhdlZR+r/ure7r0lZSFuTKzdtjdN+8UhWy5D7pV6UESO
- 0qFr80TmjKl6OIciFr47pG1ua0bosfwBRnW/Tr1hbi/ouM1V/FoKlCIS7RLEue6p7J
- t6srXqeKcdyCI5FTdBFi3hgAiNEdWYBHB+kJwe9bp5SB/EInvX5nxdlVXvD14zWk2l
- iW/UhQFhpezzZdBYetqjso60SgMr3y3mY0Sqp3DBltSWcLvqIs2OuM+n7LSUa1JyS6
- 41lEyrM0xP8OQ==
+ b=ieTIZfFBl+TzO5jpye2Q50XxvmmnPY2Vy/MuqLdEahAXwufGDhPjAydXz3Wo4EtE8
+ 7uaP2eLFemfDUamSoZAwpPzK0QwNfd4WlPFy1BkaJkYVIPJ9IrRv0xyG6mWk31vbQW
+ rr+5CtMlAUKxlBkY1tc24g7ZapViyPIAQP2b45BSdnDzooVFeQhdYCiSzfsqYQTR42
+ +Ecab0ZlhMGCS5ZQ3mRYLvQD+uQ1AmOoLnna58nwilq80bi427M+7NJleeXdJ9tgJw
+ Yk38qnjo9Q1FGkBF+ffgI7r0KygdePlM/DNS1vRrGy5jdxhg+kTsmSOtdCgzrXH2jx
+ zRhgrzLP0yyiw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 8C68819A536;
- Fri, 03 Apr 2026 11:37:22 +0300 (MSK)
-Message-ID: <82098f88-1a8e-4d91-8965-704612c25c48@tls.msk.ru>
-Date: Fri, 3 Apr 2026 11:38:00 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id B1A1319A53B;
+ Fri, 03 Apr 2026 11:38:20 +0300 (MSK)
+Message-ID: <21611f09-5530-4587-9ad5-da1cdb4a9e7b@tls.msk.ru>
+Date: Fri, 3 Apr 2026 11:38:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 4/6] linux-user: update select timeout writeback
+Subject: Re: [PULL 5/6] linux-user: Make openat2() use -L for absolute paths
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20260401094848.2661985-1-peter.maydell@linaro.org>
- <20260401094848.2661985-5-peter.maydell@linaro.org>
+ <20260401094848.2661985-6-peter.maydell@linaro.org>
 Content-Language: en-US, ru-RU
 Cc: qemu-stable <qemu-stable@nongnu.org>, Sun Haoyu <shyliuli@aosc.io>
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -84,7 +84,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260401094848.2661985-5-peter.maydell@linaro.org>
+In-Reply-To: <20260401094848.2661985-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,25 +114,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 01.04.2026 12:48, Peter Maydell wrote:
 > From: Sun Haoyu <shyliuli@aosc.io>
 > 
-> The Linux kernel writes back the remaining timeout for select-family
-> syscalls in poll_select_finish(). If that writeback fails, it keeps
-> the original return value.
+> openat2() ignored the -L prefix and opened host files directly.
+> For example, openat2("/tmp/file") opened /tmp/file on the host, not
+> QEMU_LD_PREFIX/tmp/file like openat() does.
 > 
-> However, QEMU only writes back the timeout on success. If the writeback
-> fails, QEMU returns -TARGET_EFAULT. This can lose the remaining
-> timeout and change the return value.
+> Fix this by using path() to rewrite absolute paths. Skip this
+> when RESOLVE_BENEATH or RESOLVE_IN_ROOT is set:
+> - RESOLVE_BENEATH rejects absolute paths anyway
+> - RESOLVE_IN_ROOT resolves relative to dirfd
 > 
-> Update do_select(), do_pselect6(), and do_ppoll() to always write back
-> the timeout to match the Linux kernel's behavior. If the timeout
-> writeback fails, keep the original return value.
+> Now openat() and openat2() work in the same way.
 > 
-> Tested with the issue reproducer.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3343
-> Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Message-id: 20260320111647.138984-1-shyliuli@aosc.io
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3341
 
 I'm picking this up for qemu-stable (10.0.x & 10.2.x) series.
 Please let me know if I shouldn't.
@@ -140,5 +133,4 @@ Please let me know if I shouldn't.
 Thanks,
 
 /mjt
-
 
