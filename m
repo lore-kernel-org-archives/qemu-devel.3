@@ -4,112 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E747FD7308D
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 15:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2653D73094
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 15:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w92Tb-00059Y-Bz; Sat, 04 Apr 2026 10:59:55 -0400
+	id 1w92Zs-0008Lc-C3; Sat, 04 Apr 2026 11:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w92TV-00059F-3x
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 10:59:49 -0400
+ id 1w92Zr-0008LE-2C
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 11:06:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w92TS-0007au-NT
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 10:59:48 -0400
+ id 1w92Zo-0000AL-LF
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 11:06:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775314784;
+ s=mimecast20190719; t=1775315179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SMsb6lasisA5suDG0Zsoj00dH9twXxf2ScN0FrfClLI=;
- b=JQV0JvBXMX6oXu0g91SIhIup84cfdNjrLMVdiY53qtv69sKK1tviUXL7MVOCvrq/A057iT
- N0XQcZx5AMZp0ijZeY7Wn0aV+/Wup6rYrcokSjCBtrHIv71McuLlFvBaO7lons2IKBitpD
- WC2wxsUNe6Z3sof5NDBikLeuQM+tzzs=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5LfCJ2OXVz3/DRbZF8aGQaeBQp92M2qw2t5GANaDaGc=;
+ b=FoY+RPhA2lAAH5GaB6r16ec/HZY/7ScPGuZi7poPpcmby+8hhMnGu1DZBMfwvhWy+M26LT
+ fjs7GJgqoIWqlYi4y+M3t7ESkRH8M98Y6YxnKNAbkvRo+INz+QLv/JbUKNqJVoxiIcMp7W
+ fymu1Kf6ETQpZsD695B006cK89A2FIw=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-lYCKFQ4jNrWitYRKiwaXoA-1; Sat, 04 Apr 2026 10:59:43 -0400
-X-MC-Unique: lYCKFQ4jNrWitYRKiwaXoA-1
-X-Mimecast-MFC-AGG-ID: lYCKFQ4jNrWitYRKiwaXoA_1775314782
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-8230d6d54a5so2435553b3a.1
- for <qemu-devel@nongnu.org>; Sat, 04 Apr 2026 07:59:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775314782; cv=none;
+ us-mta-553-x4WgC8hbOB-BElocot93hg-1; Sat, 04 Apr 2026 11:06:17 -0400
+X-MC-Unique: x4WgC8hbOB-BElocot93hg-1
+X-Mimecast-MFC-AGG-ID: x4WgC8hbOB-BElocot93hg_1775315176
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-b62da7602a0so1512993a12.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Apr 2026 08:06:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775315176; cv=none;
  d=google.com; s=arc-20240605;
- b=OjaYxrfNcz/xOvdh2ELFg5nJ0nEYUhN1U6u6do0P3/XqnRmyRW9WZ43kM35wbnZ5ym
- Cp3ohemLEwvP2bB0+FHYVsh+jUo9Bw85U0e5AyTg2Xpk0pKBS9j37EXWk95D/HQ4hnwY
- Bpk1zH+n+9Aar6QGxTpnkkY/IpfkSAIz5zwFKnpSYNZXuw3l//qMexpcnT0C1QZqw9GU
- meFz+OkoJEjiWfhj2+j1egFJnrYb7Cw7/PeXYvstIjp/xdlJJdlxpygYScvtL31STDg+
- buDj/I06Nvxjk8i6/S95D4IQGDx1t2PtxSAf3P14olwQVvjGanOgYR25rEhoJWk8DpC/
- kkJw==
+ b=gDIgkvoMaBnwyZV3g+YknRcg+hssv4RFGbmxzxvyWfV+DDntlN86s69YwvAJM5yz87
+ JQceyHO1soznLQOxsvQDIIPijr1j/dRsO5ypqbN6Sl6AmH1lPyNFaUuEipsjNhbj8rE/
+ Wgn3xnaDGde0T9XtGLo7YTQKOtA9QpVrcKeYR+Lf2bFtfxviw2p4zLYvhen+9ZRauY5z
+ 9+AcecM1pfZNzfDEW5gE0DvmiULrd0O2p8/CfbeZoE5JhC1bOble56DKu+fxF8wSsXuZ
+ J57cNA0hGlupvGy23WbkCFIQT8YQ2SYH+09zHkww+n3iOnZ7srRH9qaTRcYJ/jdQWuBG
+ KShQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=SMsb6lasisA5suDG0Zsoj00dH9twXxf2ScN0FrfClLI=;
+ bh=5LfCJ2OXVz3/DRbZF8aGQaeBQp92M2qw2t5GANaDaGc=;
  fh=1AedghrWfmWpwJgSv40d1VSkXxo09sTYmGNkJXFOGS0=;
- b=cFHiLHdgE8vc4T3rDMt9JPQx7qwl+UkDAPuLa0pla0Buyn7We1V/roiioU3lawXz9K
- UY3br+etPrzenNdx1ekevejTYaaOJyJu6cphHqcpM17Qmu4UrWGR/cN8VhPfpMQ+YAKk
- t77RJPWMYXZ8ZKrMLmpqhsM/e2rteXMbuy234a7nXlN2zXH/yah+OW13OFH5UcrFz6wr
- mSsGW+5GmKvimV4dAcaXSh9FWw9qm3a3CqrDvfBJKj5SOuF48hBD2b0q5b8fnVzAE0Sj
- 93umxCvZP44EGEsDvmZCVSrMnGveExYtc5lqt3qeR1awpOfCPdFiSLrcpcwQu4tkmnHE
- 582Q==; darn=nongnu.org
+ b=hH4RTzfTY21iMl+SWqszrCxkDWXCB6ZQXlSYtZKAKDHEN8dB4EA26r/lWJE202XwK8
+ y234J8WCRZMJAfK3yzcsiuQtFE19laOq7bLYKieYUjzeV+asgtWxEkcumeY3WrOJtxn+
+ fnZiL5X+fjD/zW8teL+20u5WyxV9IbpW5D13tE4bJEH4aIRDSzgrn2sNnuXeQcY8w2/y
+ r8m8SmbgPWGkwJw9SBj/jp6Q5O5gnTEheeJBfXNzxFN4DhcaTu2uctpvr8nL+FdGyDdb
+ dT7fUbgN1QgL2ophSuzo7Y99VLQnsiCGyUIwcSNZvgc+DFNMjzrZqUPBgPXZDtOVahoW
+ 7iig==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775314782; x=1775919582; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775315176; x=1775919976; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SMsb6lasisA5suDG0Zsoj00dH9twXxf2ScN0FrfClLI=;
- b=rB9M033Jq08bhgMm8xl1BH6CmnHDf5+0TK1/IIhqxnmiLanCLbpxRKTG09qW9CCSN3
- 4DPr0b5vs3dRz24KPTZc2M67MHjrrdHEallDQC5p64VQzeXYN6dNHnZKxl1AU5SA//4V
- Ew6jxUuWjanzu+/4WkFe6mPHuwFpWRPUUTOHksW+SVWKsUWViVoRsyqxhY0z/o6e/oA/
- ldiIC4NwQPbYHp6ZVbfKQq1YAxPFuSA+Yjs+kKEks4BBKvTDxSJbaTgKX6XIL+8HSzkR
- jFjqo1tNdx/id8NXcmJaRI+uxa3AVeU4GP/S64rr54KjznqLIz0NasJ1Qw+WtQK3DVGs
- MK2Q==
+ bh=5LfCJ2OXVz3/DRbZF8aGQaeBQp92M2qw2t5GANaDaGc=;
+ b=jXpjDx/2eUXOcr1MdBSYi2gMfBc2vXSOJKq8Ea4KRorjVAEqc7b/7khUwFvKCEnn3j
+ M5+FUcL03bTRrZT+6QnuGSV31hcyUtUWvttCPS4LURrmg1e2GJr3eCTR51pZDQUHhFyA
+ VDMvXX/0eWbJ/sEH2j9sUV6K81LbWpSrkDEABEb9CQ7Spj7+CV7Tw08+WkiTDD8V7ldU
+ h8aB9XE4vdyu7AUdP0YeBMgMXPgIb2iKvAeLNUz7IY5SuJZ6pi99tcSKSbUHMsNOpnDg
+ pCocF3Cgxj86RdDVWTW7MOJ85NkZMvxRIKCMPogUzuIxh3yfa9IMz9I2ibE+cW8tCpU0
+ Wjvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775314782; x=1775919582;
+ d=1e100.net; s=20251104; t=1775315176; x=1775919976;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SMsb6lasisA5suDG0Zsoj00dH9twXxf2ScN0FrfClLI=;
- b=SfH65zw37iq9KQrxnvs/Ktg6VXsC/dvCZzA12/IRxsFrMMegma/X80pf1yC0Qt11a/
- udgbyojYLzafMrshNkJpjtpevl044R7HD1LrM0fJHBWlXKTZGXGY2cH8D53aoYlwZirP
- r7zllkJaXtWO0CR5ESkQgIxFWxSj/UMSXTWEHkrScuNOghzCkSvNogRYhxo8p5W/Bc+i
- oGcZX46RhLHo6Mh4wryI18IXDQI5jRPXC+hNFsPf5kPe6Teoe5TTQbjaCVMTP8bEB70U
- fh95xdmSnbTHiGQquRmXK9HY504FDkp/hXO0gYzO1D9eOaWklLEKokfOwLhOIoiVcIyp
- re3Q==
-X-Gm-Message-State: AOJu0Yw1Albc0lnj8k7RvwVBFBFB9RgiI8VtiM1/aJS/grwLtGlvWXtr
- O7tWSeYMFigITh3uL3avxQLcyzpUgICQ3xHyMYCgWKnAECtcOeP+dbFHMuVefrJyYxCSkG/YcHf
- t/qw5u2ildBNipPliXrzngo3Xb1tFyppBKVWsH0BWcRtDfiETmybrRJ7u3BqozlTIWlMafYkC0L
- hDUIag4TaWrzPlUXNgdLK+CB+/Y2r9R941fN6Bbjk=
-X-Gm-Gg: AeBDieuC6oWo8YaauJb8uQXuRKFV5os1/Dlyy+EcPXhibVJhRFZYI6kVBjn5TtYm0zG
- curwoB6BFqojRYS6PchXocV9hcrDehqbx1iZgIEi7dnkQogHXEgc71R4YWm4xAfwYm7LOnBBFis
- 6Owglsy3ie83KjOQo2Uno5gdoochHre4O4MmslfFrRHoqcxRbyj7kTdn8Yjf3RR6H0UJbMVkXjR
- nxwW9tRn9ITdecosScckOQ4/ZzSeCTVHMex1RYOWOH7XTS0SHQceGmm7wJCon/88MDDIlXB/TzO
- VHhZIPqoN2zhefglElSVrtE=
-X-Received: by 2002:a05:6a00:1ad3:b0:82a:6e4b:5b4d with SMTP id
- d2e1a72fcca58-82d0035bd98mr8126057b3a.23.1775314781718; 
- Sat, 04 Apr 2026 07:59:41 -0700 (PDT)
-X-Received: by 2002:a05:6a00:1ad3:b0:82a:6e4b:5b4d with SMTP id
- d2e1a72fcca58-82d0035bd98mr8126041b3a.23.1775314781122; Sat, 04 Apr 2026
- 07:59:41 -0700 (PDT)
+ bh=5LfCJ2OXVz3/DRbZF8aGQaeBQp92M2qw2t5GANaDaGc=;
+ b=fITqFhu+hkLXBWJxrk8JtRmu7r0Q7XymLQWTxKffM9IWep6mW8MCCdXKZL4wv+S6De
+ IfM0xQ50STfmznP4pThKeuYhbyD9GYxRdZLEnEuS9iPKpU/2x5NZx3d+jzg94w+LIiU4
+ 3laGU2cdzZQnsgsQ2tNuQ4Xctx1ugT2bh1Xyh/MpIuYWQ/lX57+rNi8ZuKiByYjOskCm
+ WrtqILi3io2oJGwtC0HBKRlAiWeU4EOPtUYEdmoIjWmDrMrllyFil1DRKowJSKYLDwj2
+ viempK6mVnmCsSjqmz8GdplxHGNuIh/lUeyixrRIVrI1Q0ptHRC1TekxIphPaxPhbokj
+ eFAg==
+X-Gm-Message-State: AOJu0YxsjSWhj7rORBo4gQQms8BLsQfCo1wah3ftCiXFTDYWYfN0fmWR
+ bN/IaWxLBOBr80kf8/VVEh8MbuFJVT3vflpU5LftB7S/EANh4Z3sjqE/scJ8FZ4P4i+1RLHiQQ9
+ VUbU8CNN6MpovYrSreU3jDYQQZJ9hiVRpEpqcIZvbtGzlUBBxZu9xPLIcO8Ufb0baYn1uf5lBzU
+ dn5mfLkwvw+COr5+Dx8Z/TzDkEwymhtWu4blEGfkE=
+X-Gm-Gg: AeBDieufO9bM8/vVPosGKrgm5CMcVfNLsnFPUUNFD3SVm+sulZ+YthZBeckRg41tgDU
+ U682qy4wH/Gxp55ljvkkr/W4P/UXEW8533ONwzQJXB6ZI664EJhxpWBBnvISQHL3RXSz8leqMVi
+ J2eXA16zkE5m8ER6k5CXBKPLc9YYwlNR5AW4Aizrf3lqfydF4nJgw+F4FVqYirBnL0osr1dlAEL
+ VFltpDgoY4guV3cQSXK2CJ7hVR2fNm7qGhekKLxFHWeL8Tcp9w8bGwsgtkT7insUCLvHRqaD8N2
+ XSKHlHVTULexFHZKdv5cwdQ=
+X-Received: by 2002:a05:6a20:a11a:b0:398:c170:1c7 with SMTP id
+ adf61e73a8af0-39f2f12b4f9mr6716910637.26.1775315176183; 
+ Sat, 04 Apr 2026 08:06:16 -0700 (PDT)
+X-Received: by 2002:a05:6a20:a11a:b0:398:c170:1c7 with SMTP id
+ adf61e73a8af0-39f2f12b4f9mr6716883637.26.1775315175690; Sat, 04 Apr 2026
+ 08:06:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-53-48eb1dcf7b76@redhat.com>
- <e18e7a83-0c7c-5d83-a000-146c23d6c350@eik.bme.hu>
-In-Reply-To: <e18e7a83-0c7c-5d83-a000-146c23d6c350@eik.bme.hu>
+ <20260317-qemu-vnc-v1-54-48eb1dcf7b76@redhat.com>
+ <58fd247c-d4e7-cc42-de42-bd4333574439@eik.bme.hu>
+In-Reply-To: <58fd247c-d4e7-cc42-de42-bd4333574439@eik.bme.hu>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sat, 4 Apr 2026 18:59:29 +0400
-X-Gm-Features: AQROBzA1u0y3KsY1wahzmxgIyTWGhxZelz8JVhA5QFmkAXAWY_M1xSjLXy_6cao
-Message-ID: <CAMxuvax8LBcRwrJhThYZaHW=N=8fQTcDcobXpU4obFPMssHoYA@mail.gmail.com>
-Subject: Re: [PATCH 53/60] ui/console: return completion status from
- gfx_update callback
+Date: Sat, 4 Apr 2026 19:06:04 +0400
+X-Gm-Features: AQROBzB8vTFEcfGDnF7e7sZGM7wrvWSLIjhFrCykoUR5SvRmFiAm3eztm3xwASA
+Message-ID: <CAMxuvaxgrv0=4r+5Ark6A8qDJiYhL7NMR+HLebiFJWCiBT-z+g@mail.gmail.com>
+Subject: Re: [PATCH 54/60] ui/console: rename public API to use consistent
+ qemu_console_ prefix
 To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
@@ -141,95 +141,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi
 
-On Tue, Mar 17, 2026 at 3:43=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
+On Tue, Mar 17, 2026 at 3:46=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
  wrote:
 >
 > On Tue, 17 Mar 2026, Marc-Andr=C3=A9 Lureau wrote:
-> > Replace the two-field design (gfx_update void callback + gfx_update_asy=
-nc
-> > flag) with a single bool return value from gfx_update. Returning true
-> > means the update completed synchronously and graphic_hw_update_done()
-> > should be called by the console layer. Returning false means the update
-> > is deferred and the device will call graphic_hw_update_done() itself
-> > later (as done by QXL/SPICE and Apple GFX).
+> > Rename the display and graphic console public functions to follow a
+> > consistent qemu_console_ (or qemu_graphic_console_) naming convention.
 > >
-> > This simplifies the interface and makes the async contract explicit at
-> > each call site rather than relying on a separate struct field.
+> > The previous API used a mix of prefixes: dpy_, graphic_hw_,
+> > graphic_console_, console_has_, and update_displaychangelistener().
+> > Unify them under a common qemu_console_ namespace for better
+> > discoverability and consistency.
 > >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> > hw/display/qxl.h              |  2 +-
-> > include/ui/console.h          |  3 +--
-> > hw/arm/musicpal.c             |  3 ++-
-> > hw/display/artist.c           |  4 +++-
-> > hw/display/bcm2835_fb.c       |  7 ++++---
-> > hw/display/bochs-display.c    |  6 ++++--
-> > hw/display/cg3.c              |  5 +++--
-> > hw/display/dm163.c            |  4 +++-
-> > hw/display/exynos4210_fimd.c  |  6 ++++--
-> > hw/display/g364fb.c           |  9 ++++++---
-> > hw/display/jazz_led.c         |  6 ++++--
-> > hw/display/macfb.c            |  6 ++++--
-> > hw/display/next-fb.c          |  4 +++-
-> > hw/display/omap_lcdc.c        | 14 ++++++++------
-> > hw/display/pl110.c            |  5 +++--
-> > hw/display/qxl-render.c       |  6 +++---
-> > hw/display/qxl.c              |  7 +++----
-> > hw/display/ramfb-standalone.c |  4 +++-
-> > hw/display/sm501.c            |  8 +++++---
-> > hw/display/ssd0303.c          | 10 ++++++----
-> > hw/display/ssd0323.c          | 11 ++++++-----
-> > hw/display/tcx.c              |  6 ++++--
-> > hw/display/vga.c              |  4 +++-
-> > hw/display/virtio-gpu-base.c  |  3 ++-
-> > hw/display/virtio-vga.c       |  6 +++---
-> > hw/display/vmware_vga.c       |  7 ++++---
-> > hw/display/xenfb.c            |  6 ++++--
-> > hw/display/xlnx_dp.c          | 10 ++++++----
-> > hw/vfio/display.c             | 17 ++++++++++-------
-> > ui/console.c                  |  7 +------
-> > hw/display/apple-gfx.m        | 10 +++++-----
-> > 31 files changed, 121 insertions(+), 85 deletions(-)
-> >
-> > diff --git a/hw/display/qxl.h b/hw/display/qxl.h
-> > index e0a85a5ca49..ad8a9128785 100644
-> > --- a/hw/display/qxl.h
-> > +++ b/hw/display/qxl.h
-> > @@ -187,7 +187,7 @@ int qxl_log_command(PCIQXLDevice *qxl, const char *=
-ring, QXLCommandExt *ext);
-> >
-> > /* qxl-render.c */
-> > void qxl_render_resize(PCIQXLDevice *qxl);
-> > -void qxl_render_update(PCIQXLDevice *qxl);
-> > +bool qxl_render_update(PCIQXLDevice *qxl);
-> > int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext);
-> > void qxl_render_update_area_done(PCIQXLDevice *qxl, QXLCookie *cookie);
-> > void qxl_render_update_area_bh(void *opaque);
-> > diff --git a/include/ui/console.h b/include/ui/console.h
-> > index c695b433fe3..2ac9c59e151 100644
-> > --- a/include/ui/console.h
-> > +++ b/include/ui/console.h
-> > @@ -363,8 +363,7 @@ enum {
-> > typedef struct GraphicHwOps {
-> >     int (*get_flags)(void *opaque); /* optional, default 0 */
-> >     void (*invalidate)(void *opaque);
-> > -    void (*gfx_update)(void *opaque);
-> > -    bool gfx_update_async; /* if true, calls graphic_hw_update_done() =
-*/
-> > +    bool (*gfx_update)(void *opaque); /* false if deferred update_done=
- */
+> > The main renames are:
+> > - dpy_gfx_*() / dpy_text_*() / dpy_gl_*() =E2=86=92 qemu_console_*()
+> > - dpy_{get,set}_ui_info() =E2=86=92 qemu_console_{get,set}_ui_info()
+> > - graphic_hw_*() =E2=86=92 qemu_console_hw_*()
+> > - graphic_console_*() =E2=86=92 qemu_graphic_console_*()
+> > - console_has_gl() =E2=86=92 qemu_console_has_gl()
+> > - update_displaychangelistener() =E2=86=92 qemu_console_listener_set_re=
+fresh()
 >
-> This short comment (and the commit message) seems to be the only
-> documentation. Is it worth documenting better somewhere or at least make
-> the comment more descriptive such as "true: graphic_hw_update_done() is
-> needed, false: deferred update_done" or something more easily understood
-> by somebody not familiar with console internal working.
+> Is the qemu_ prefix really needed here or if so would something shorter
+> like qcon_ do instead of qemu_console_? With short line limits long names
+> cause a lot of line wraps. I think just console_ as already used by some
+> of these already would do and be less churn but no strong opinion on any
+> of these.
 
-Adding a more descriptive comment above.
+It helps if the structure and its associated functions share the same prefi=
+x.
 
-> Also when returning from update functions from an error at the beginning
-> without any update is graphic_hw_update_done needed when nothing changed?
+Iow, QemuConsole with qemu_console_foo() associated functions.
 
-Yes, a QMP screendump coroutine might be waiting to be resumed.
+If we renamed QemuConsole to QCon, we would lose readability.
+
+So yeah, longer lines, but an IDE can fill it for you and reflow the code.
 
 
