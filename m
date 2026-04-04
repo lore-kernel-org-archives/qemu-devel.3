@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4BAE88D70
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 05:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5147E88D86
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 06:04:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8tr7-0005pv-BU; Sat, 04 Apr 2026 01:47:37 -0400
+	id 1w8u6K-0005rd-OR; Sat, 04 Apr 2026 02:03:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8tqs-0005Qx-QJ
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 01:47:26 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w8u5G-0004ge-AP; Sat, 04 Apr 2026 02:02:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w8tqm-0002Hx-IU
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 01:47:20 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w8u5D-0000Of-EH; Sat, 04 Apr 2026 02:02:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775281563; bh=F1V4/iJSpwGlf0H8+T4e4CC/QZCmky6H/U9RkczA6Lo=;
- h=Date:Subject:To:References:From:In-Reply-To;
- b=RN491ctAicEN+LoE0AhLZRIWB1tDJyLc3JiOabgl3jhsscTzMF+MeuJsuWRbo8psD
- 1LAD2LeaxWMytnfnpN2Da3WiXB5Ei8siSJx3NurmBDzwOH5NMDhIl2SNs3kT2CoeJf
- 8DYEF+wEu80pJ7FaAmcYWw1ilEauplOg3WCBNHZEZDFlLzUZKIwfW3TtMgXyjnHyK1
- S7vBjzt6+tv4O6DvMAnAkwECNOO/Vcp3d+pc9VLDrHjoCj3XEJg5xuQ7cRvcAQAnE0
- iahjtKTV1ngC8+N0O6mp/cy2cIbL+C6m5J64gv/c5dKBpHtEEn6UF3++bFMAzS3oij
- HSrdOTJQyd4xw==
+ t=1775282487; bh=n3Af2doF/FId9IE4TUb8JoZZypvtXyOUyj2U/MgFszI=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=vaCVdjZqs/guwiol8FFu3JrfsAGci3a4vyyR4tcaAg/+b2NbFH4rYBg0p1KlkIf4/
+ kUm/d/RSptGukEZNgBupuTGkejbLEtkZJkRVuCVNYFd5gnC5kelO5Nc07ufsyfrbt/
+ qqIF7G6vg0udcytMPEyNGddFEmSJ0ncXZYpvhmo6s6MTmXRFhQTm4QT95qv4kma+p8
+ MPZsLtdWqDTbgW1uWmL7fdEiVqf/HV9ikSA+Io7b55bOd5HCeoqGcHrjJu+2bacaI0
+ N5a2J7kG1aVfLwOVmoNQ+MFGZQd3sQY+rYBxohllCjg50NudFKyPObtQoVXWNCM76I
+ eTVzTTa/Edr1w==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 4F3BB19AB4B;
- Sat, 04 Apr 2026 08:46:03 +0300 (MSK)
-Message-ID: <3cd32e06-b0e9-44b0-9828-dd9fa39b31c3@tls.msk.ru>
-Date: Sat, 4 Apr 2026 08:46:40 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 494FD19AB4F;
+ Sat, 04 Apr 2026 09:01:27 +0300 (MSK)
+Message-ID: <d0187495-f196-43a3-b77c-463a098b5f60@tls.msk.ru>
+Date: Sat, 4 Apr 2026 09:02:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] RFC: Allow building qemu tools on 32-bit hosts
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260402132801.16053-1-deller@kernel.org>
- <027b8930-0e78-4501-b412-37128d299d01@linaro.org>
+Subject: Re: [PULL 4/6] monitor: Fix deadlock in monitor_cleanup
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
+References: <20260331150352.256332-1-kwolf@redhat.com>
+ <20260331150352.256332-5-kwolf@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -83,9 +84,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <027b8930-0e78-4501-b412-37128d299d01@linaro.org>
+In-Reply-To: <20260331150352.256332-5-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -110,74 +111,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.04.2026 02:10, Richard Henderson wrote:
-> On 4/2/26 23:28, Helge Deller wrote:
->> From: Helge Deller <deller@gmx.de>
->>
->> Qemu's tools like qemu-img are often needed on 32-bit platforms,
->> although the actual qemu emulators have been discontinued on 32-bit.
->>
->> To allow building the tools on 32-bit this patch implements two small
->> changes:
->>
->> a) The check in meson.build is changed to still error out if the user
->> tries to build qemu-system or qemu-user on a 32-bit platform, but allows
->> building tools (e.g. by "--enable-tools") alone.
->>
->> b) Remove the compile time checks in atomic.h because:
->> - for the qemu-system and qemu-user emulators this check is redundant
->>    since we only allow 64-bit platforms anyway (see a)
+On 31.03.2026 18:03, Kevin Wolf wrote:
+> From: hongmianquan <hongmianquan@bytedance.com>
 > 
-> No it isn't.  It double-checks that we don't pass e.g. Int128.
-
-Well.  In current qemu 11.0-tobe, this compile test passes already, so
-there's no code *currently* which pass an Int128 to atomic_read.  This
-concern can be adjusted at the start of 11.1 development cycle, - with
-a check which has been thought about.  Right now we're too close to the
-release, so more invasive changes is not a good idea.
-
-With the current check in place, it's completely impossible to build
-even the qga on 32bit platform, which is quite a drastic change.
-
->> - it breaks those 32-bit platforms, which do provide (slower) 64-bit 
->> atomics
->> - 32-bit platforms without 64-bit atomics will fail instead with 
->> linker errors
->> - the runtime speed of the qemu tools aren't actually that important.
+> During qemu_cleanup, if a non-coroutine QMP command (e.g.,
+> query-commands) is concurrently received and processed by the
+> mon_iothread, it can lead to a deadlock in monitor_cleanup.
 > 
-> Only i686 and armv7 have these.
-
-I've built it on most 32bit platforms on debian, including tests.
-It failed in the end on m68k, powerpc and sh4 becausse I forgot to pass
--latomic there.
-
-> I agree that other 32-bit hosts could fall back to libatomic, but we'd 
-> need to actually use it.
-
-It can be added in --extra-ldflags at the very least, - there's no need
-to rush for that this late in the release cycle.
-
->> I've sucessfully tested building qemu tools on 32-bit hppa.
+> The root cause is a race condition between the main thread's shutdown
+> sequence and the coroutine's dispatching mechanism. When handling a
+> non-coroutine QMP command, qmp_dispatcher_co schedules the actual
+> command execution as a bottom half in iohandler_ctx and then yields. At
+> this suspended point, qmp_dispatcher_co_busy remains true.
 > 
-> Really?  So where does the 64-bit atomic come into it?
-> Was it in code that was compiled but not actually linked?
+> Subsequently, the main thread in monitor_cleanup(), sets
+> qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since
+> qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The
+> main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes
+> the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx,
+> false), which attempts to wake up the coroutine, aio_co_wake schedules a
+> new wake-up BH in iohandler_ctx. The main thread then blocks
+> indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's
+> wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches
+> termination, resulting in a deadlock.
+...
 
-In my case, it builds qemu-img and qemu-nbd fine, - so there, yes, that
-code isn't used.
 
-But it fails to link qga:
+> To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh()
+> to break the main loop out of its blocking poll, allowing it to evaluate
+> the loop condition and poll iohandler_ctx.
 
-ld: libqemuutil.a.p/util_qsp.c.o: undefined reference to symbol 
-'__atomic_load_8@@LIBATOMIC_1.0'
-ld: /usr/lib/m68k-linux-gnu/libatomic.so.1: error adding symbols: DSO 
-missing from command line
+This broke qemu guest agent build.
 
-maybe that one also isn't needed for qga link, - I saw these results
-just now, will take a closer look later today.
+[18/51] Linking target qga/qemu-ga
+FAILED: qga/qemu-ga
+ld: libqemuutil.a.p/qapi_qmp-dispatch.c.o: in function `do_qmp_dispatch_bh':
+qapi/qmp-dispatch.c:140:(.text+0x5c): undefined reference to `aio_wait_kick'
+collect2: error: ld returned 1 exit status
 
-Overall, I think this change (plus my adjustment in util/meson.build) is
-enough to get going for 11.0, with possible further changes after the
-reelase.
+This is an interesting situation.
+I think we've API boundary separation violation here.
+
+This change assumes qmp is only used by qemu-system binary, but
+apparently it isn't.
 
 Thanks,
 
