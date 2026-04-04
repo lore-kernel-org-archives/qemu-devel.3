@@ -4,91 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A307FE63FFD
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 22:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DD0E63FF9
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 22:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w99Wm-0001e6-Bw; Sat, 04 Apr 2026 18:31:41 -0400
+	id 1w99fL-0004XX-NS; Sat, 04 Apr 2026 18:40:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w99Wg-0001dn-FW
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 18:31:34 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w99We-000607-G6
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 18:31:34 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ad9a9be502so18927495ad.0
- for <qemu-devel@nongnu.org>; Sat, 04 Apr 2026 15:31:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775341886; x=1775946686; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=50H8KlSjOPbpsPSVOBB8KOpM4xXhtXmjg3XOCNkYTV0=;
- b=D5MQpWUu1w8liPDGJy0Ti9fuyh1Kx3A0OsuYg3Cyp8fNybbM7WGfgC2je8ToPPLRGK
- IhQ12YSsted8lT8B80CCOslqjHniIkfNpVEy1I17uQmhSEUNPzvgKacx/BogrsQP3onn
- noSueTZnI6XE2NuzHqbkAzsLWK2Z4KqtPE1O692HCrxtJ/pTvvM5E/sNrycw8X9Lq5Ub
- VdoT1uF6mBRF7TrDtmXUZGlkZLEzQq40AA5a+RmdkcZH8r7oMtahjFAVBMBY360s9Rgb
- yRMnZsrN+4T7Vgj1RI2IhE8zAkBo3tVdq6pbUCEkUjt1NCoTSuVujwNqSWPf3332J+cQ
- YQgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775341886; x=1775946686;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=50H8KlSjOPbpsPSVOBB8KOpM4xXhtXmjg3XOCNkYTV0=;
- b=MRiV5ORfiFMZa25wRJJ+R5ptjS9csXHSJwdJcuOuHxBIIAiyg+uZpSZ8Sg+iYjSH56
- P8XGa3JIxFBk/9slY28KtZHdd7bymEWxHT9CUlhbKtyGJffokwWrCf0tzJwNJP1qybJD
- GlZaV4T9qd4dzBKM0iowpUMV2ZncFzgHKwjnu2I5GZ7TRzwPJH8LzEQkmqJh0aKiOEI1
- L6n7svmUyC+tn21zYJGkGiX3eoBp6pHec4Gmkpz+XENJ/eNUtgt82LIjrzVtbWYiy6FD
- 9FvB6B5EAyb3w7btyCye+O2CN0kYBY2bl34oW7q0ozEVqUYPJtIlLAEkNHjEHYqxjjK+
- 8a7Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGZthV2yUbC+MWJvXQBac5n0t43FjZmkgDseHQcamIh6zybB+I5Suvsp4AUMwj8GT8WV3xSkEsIKK9@nongnu.org
-X-Gm-Message-State: AOJu0Yykpx4dIphWWvAiJlSS9+nyHzjbOOnoUiPS6NlSjdPY/srekAPg
- 7oP7EtyQ6Lh4roEhATOoTc3wUMbQfazlpf1b4wBWyeChf8k1AmEP6AzlWjMSN3Z1V7M=
-X-Gm-Gg: AeBDietYJE37Pp0HWIYTSX9+NTDbA8rz88GcOz7TENaI8zoTRFdrTm6c4hwU89rYhST
- fHB/mkRdeO8gfyih+MsjQDNb2atpBOiZkxUhP0bnC+5Y4Svx4F8cHjEwKYrhF2STONyYk3z1aR+
- qT0pMfZfmiePtrd9bjVc0IVulTpcENWivyQjrLXgJ+OIpf25lnsOLqGEHON3YZd/bBhftZJQm8l
- l4N1JLpoAw5CvXKvxxE3iqxDwd1Axzzj4Vc7SVqyEZoZvM6U6gBZtTDi395KM4QIualA7/Jq4i/
- WYOYcXkeVptCM8zyc7O9dpaPGqSj8NrXzxMueoJTVJTXWvhBYzGCnOuNLjgdVMgV8xhoJOM/1CD
- QxqclxcWAwBYAgTeZxnQmT/uhIAzbnaXlYDma6HiC4RE1u2uLv4tKQH4sgIpfIP7FKd4IB7rr7s
- zNkqWHTUV9o1JkJ2r/BFJyV4B5HNBHcqqaz6mEBAFGTXTY/5wXvCzCa5sy0d/zXUvMAgg=
-X-Received: by 2002:a17:903:4b28:b0:2b0:6829:9414 with SMTP id
- d9443c01a7336-2b2817070dbmr74160815ad.8.1775341886008; 
- Sat, 04 Apr 2026 15:31:26 -0700 (PDT)
-Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b27472d1a2sm101636225ad.7.2026.04.04.15.31.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Apr 2026 15:31:25 -0700 (PDT)
-Message-ID: <209a6f85-7136-4599-b4eb-0d5a03e1eb0c@linaro.org>
-Date: Sun, 5 Apr 2026 08:31:19 +1000
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w99fJ-0004X2-AO
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 18:40:29 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w99fF-0006wF-Jr
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 18:40:29 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id B0A1C4054B;
+ Sat,  4 Apr 2026 22:40:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC1AC19421;
+ Sat,  4 Apr 2026 22:40:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775342419;
+ bh=QQH19VbRhYXYPUyEUH1EWv9i9L2lje3mJnL+gL0s4+s=;
+ h=Date:From:To:Subject:From;
+ b=QepZcu1tMVc06bDf2+mMoDmGYnhiBFwNaUhsfNx7XQlC9GKrY9XF4ek3+pNYoXMaO
+ XpXIHXfi9n7pQn6FECR6alUZeEwlajQGAKRmoLDSjRmX++tVHAv5Jth9YZcJ42r3vJ
+ AHoGxcUBtRRgoLjJ/+nHBdGEAkA1PFzxlBEni0ILCzYW0zQKKOkqzFEE0RP/q3tH4v
+ BlhizKF0Utqbbc31EFa27WH3YJb/vkT2i6/wMyJYCs6zT1pnZeLSRSHZDVS82TJ/0n
+ rrtY/7m1hlg6ZmYsQD1FilEDCozYiy8RcpFOH78rKn6IwSGewOOQYzfq0imcrvegHP
+ ZIYdIXmJubw3w==
+Date: Sun, 5 Apr 2026 00:40:16 +0200
+From: Helge Deller <deller@kernel.org>
+To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH v3] Allow building qemu tools on 32-bit hosts
+Message-ID: <adGTUNUSckx1KrAk@p100>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] [PATCH v2] Allow building qemu tools on 32-bit hosts
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: deller@gmx.de, Michael Tokarev <mjt@tls.msk.ru>
-References: <20260404061215.505913-1-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260404061215.505913-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,14 +65,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/26 17:12, Helge Deller wrote:
-> +  qemu_ldflags += cc.get_supported_link_arguments('-Wl,-latomic')
+Qemu's tools like qemu-img are often needed on 32-bit platforms,
+although the actual qemu emulators have been discontinued on 32-bit.
 
-You don't need "-Wl".
+To allow building the tools on 32-bit this patch implements three small
+changes:
 
-Otherwise,
+a) The check in meson.build is changed to still error out if the user
+tries to build qemu-system or qemu-user on a 32-bit platform, but allows
+building tools (e.g. by "--enable-tools") alone.
+
+b) The compile time check in atomic.h now checks against
+sizeof(uint64_t) so that 32-bit environments can still build
+successfully, while 128-bit atomic operations are prevented to sneak in.
+
+c) Allow linking against libatomic as long as we don't build the
+qemu-system and qemu-user binaries.
+
+Sucessfully tested on the 32-bit big-endian powerpc architecture.
+
+v2:
+- keep comple time checks in atomic.h
+- allow linking against libatomic when building tools
+
+v3:
+- Drop "-Wl,"
+- added S-o-b
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-
-r~
+diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
+index dc9290084b..e4dd948863 100644
+--- a/include/qemu/atomic.h
++++ b/include/qemu/atomic.h
+@@ -58,11 +58,11 @@
+ 
+ /*
+  * Sanity check that the size of an atomic operation isn't "overly large".
+- * Despite the fact that e.g. i686 has 64-bit atomic operations, we do not
++ * Despite the fact that e.g. x86-64 has 128-bit atomic operations, we do not
+  * want to use them because we ought not need them, and this lets us do a
+- * bit of sanity checking that other 32-bit hosts might build.
++ * bit of sanity checking that other 32- and 64-bit hosts might build.
+  */
+-#define ATOMIC_REG_SIZE  sizeof(void *)
++#define ATOMIC_REG_SIZE  sizeof(uint64_t)
+ 
+ /* Weak atomic operations prevent the compiler moving other
+  * loads/stores past the atomic operation load/store. However there is
+diff --git a/meson.build b/meson.build
+index daa58e46a3..ab3e97eb9f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -323,8 +323,8 @@ endif
+ # Compiler flags #
+ ##################
+ 
+-if cc.sizeof('void *') < 8
+-  error('QEMU requires a 64-bit CPU host architecture')
++if (cc.sizeof('void *') < 8) and (have_system or have_user)
++  error('QEMU emulator requires a 64-bit CPU host architecture. Only tools may be built for 32-bit.')
+ endif
+ 
+ foreach lang : all_languages
+@@ -423,8 +423,16 @@ endif
+ #
+ # Later checks assume we won't get atomic ops for int128 without
+ # explicitly asking for -latomic, so we must disable GCC's new
+-# automatic linking with the new -fno-link-libatomic flag
+-qemu_isa_flags += cc.get_supported_arguments('-fno-link-libatomic')
++# automatic linking with the new -fno-link-libatomic flag.
++#
++# When not building the emulators, but qemu helper tools only
++# (e.g. on 32-bit hosts), libatomic is sometimes required and
++# thus acceptable.
++if (have_system or have_user)
++  qemu_isa_flags += cc.get_supported_arguments('-fno-link-libatomic')
++else
++  qemu_ldflags += cc.get_supported_link_arguments('-latomic')
++endif
+ 
+ qemu_common_flags = qemu_isa_flags + qemu_common_flags
+ 
 
