@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5342CE63FFF
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 23:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B47FE63FE6
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 23:38:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9ATw-0005ke-BA; Sat, 04 Apr 2026 19:32:48 -0400
+	id 1w9AZ9-0006mB-8r; Sat, 04 Apr 2026 19:38:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w9ATv-0005kW-0C
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 19:32:47 -0400
+ id 1w9AZ6-0006lB-Ej
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 19:38:08 -0400
 Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w9ATt-0006Es-5M
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 19:32:46 -0400
+ id 1w9AZ4-0006rV-DB
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 19:38:08 -0400
 X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
 Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 3e36628bed354508f55fe2c38d478cff2044cf0a55f8acc5e152bbfd8f8dafea with SMTP id
- 69d19f93f2f7fa4308868d1b; Sat, 04 Apr 2026 23:32:35 GMT
+ ff02f649880f4c1d5d70100ea9aa6e7e10e475320cb5153f37db282a819a7e15 with SMTP id
+ 69d1a0dc37a549e1de8f950b; Sat, 04 Apr 2026 23:38:04 GMT
 X-Mailgun-Sending-Ip: 143.55.232.12
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1775345554;
- bh=Uwg9PvySCOemqSHr19GMagVaGrk0TQyaiUytsw6K7CI=;
+ s=rsa2048; t=1775345884;
+ bh=6KPKFo095iCc5JwnSCsD/tOrumx6Is7ZrBOcz2O6tbg=;
  h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
  X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
  Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
  References;
- b=i1RFT8qdsGceJXZvSCBe+dckM/i8pZm9JOU5MU8wwU6EDDFi7Jcuhofk6OYOm8rWg
- zgvaxR5B6UcRW7xSxt8sylM6B23UoylaX0jtiHPf93suhBlJQFdZqws3UvtM1LQNa8
- TsjZ80Fh5mWMMcXGVRyW0F3CkBk42MO8hLljCE/k+LMmx/WG5DwhNs1exi+8b/03d2
- InJTPz1yiYkuEFF3F230h1tNt2aPxQjwg+I2/ozwAhTpnL1GDSalO73BD/py/TQyOO
- bvmMmbfNzgU6anY8+H5xJZyLD5Evnr8oEpq5UI72GmTL6lqqkF30cu7aQuQhpysgTR
- nk/cvCylDUz8Q==
-Message-ID: <0f822f37-de4a-44d3-81dc-61f9caee0403@yodel.dev>
-Date: Sat, 4 Apr 2026 18:32:34 -0500
+ b=rlEkOk7M6NfeAlOU8uJav4+bZUiJhUE/bM+p4hIbhat8iH6fxTpit/YisOtIRJM2C
+ 2bmojFhZCXbrc7SGkXBdNGttrNcaIwDlAvRSshxSo1UZUjLz4opJIrQK+CyaCLVV2R
+ YllKyx9dpmdAvGUYZp/vQyYFOdYqzy4ipy+ATHTW/3JxNCqef33kGkEQZM42WveWgN
+ 5MRS8vGrYlezp+yq9EupGVaU3nqn4hIa+Ntp71zv2ThFVhwGYyu/eHt6/elUaGNfOB
+ sYsquQ9HJfnjG/8RAEIGuQzI5tBY4KFAcgdah2SUV45FhezPNJh8bXFVDwP/wRBvSA
+ +w82ehLS51VDA==
+Message-ID: <d22fc938-770c-4c2b-9491-3cf6936ad494@yodel.dev>
+Date: Sat, 4 Apr 2026 18:38:03 -0500
 MIME-Version: 1.0
-Subject: Re: [RFC PATCH 3/4] alpha: Replace helper_set_alarm with Typhoon
- Cchip MMIO register
+Subject: Re: [RFC PATCH 2/4] alpha: Propagate CPU index via MemTxAttrs
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20260401170454.32045-1-yodel.eldar@yodel.dev>
- <20260401170454.32045-4-yodel.eldar@yodel.dev>
- <1c6d7e6f-eb16-4820-a4c2-35767c8db919@linaro.org>
+ <20260401170454.32045-3-yodel.eldar@yodel.dev>
+ <47236dc2-cb06-4070-815c-b4f12128b99c@linaro.org>
 Content-Language: en-US
 X-Mailgun-Dkim: no
 X-Mailgun-Dkim: no
@@ -64,7 +63,7 @@ Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
  3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
  imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
  TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <1c6d7e6f-eb16-4820-a4c2-35767c8db919@linaro.org>
+In-Reply-To: <47236dc2-cb06-4070-815c-b4f12128b99c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=143.55.232.12;
@@ -93,91 +92,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/04/2026 20:01, Richard Henderson wrote:
+On 03/04/2026 19:52, Richard Henderson wrote:
 > On 4/2/26 03:04, Yodel Eldar wrote:
 >> From: Yodel Eldar <yodel.eldar@yodel.dev>
 >>
->> This commit creates a QEMU-specific (non-standard) MMIO register
->> in Typhoon's Cchip to replace helper_set_alarm() and to move
->> the QEMUTimer pointer, alarm_timer, out of the Alpha CPU and into
->> the chipset code.
+>> Currently, a read of the Typhoon Cchip's MISC register
+>> dereferences current_cpu for the CPU index. To decouple
+>> Typhoon from the CPU, let's instead pass the CPU index
+>> through the requester_id attribute of the memory transaction.
 >>
->> Currently, PALcode writes to the QEMU-specific, synthetic
->> Processor Register (index 251) and triggers the invocation of
->> helper_set_alarm() as a side effect in QEMU, thereby setting
->> the timer alarm expiration value.
->>
->> This works, because the AlphaCPU contains the QEMUTimer and
->> CPUAlphaState stores the alarm expiration value; however, the timer
->> alarm callback resides in and is specific to the Typhoon chipset,
->> thus the CPU and the chipset are entangled.
->>
->> By designating the currently unused offset (0x7c0) of Cchip as the
->> location of the timer alarm expiration, we can disentangle and
->> better encapsulate both.
->>
->> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 >> ---
->>
->> Notes:
->>      The patch to the palcode-clipper binary that follows this
->>      one is necessary for this patch to work; I've left the
->>      diff to the source in the notes of it for reproduction.
->>      Philippe:
->>      Thanks, again, for the suggestion of decoupling the CPU from
->>      the Typhoon using IRQ lines. In my response, I guessed that
->>      getting the CPU index would be trickier than moving the timer
->>      into TyphoonState; perhaps you'll find it amusing (as I do)
->>      that it appears I had that backwards (due to the PALcode
->>      peculiarity)!
->>      The remaining CPU interrupts will be refactored in v2 of that
->>      series.
+>>   hw/alpha/typhoon.c    |  7 ++++---
+>>   target/alpha/helper.c | 15 ++++++++++++---
+>>   2 files changed, 16 insertions(+), 6 deletions(-)
 > 
-> I'm not keen on this.  I would much rather keep the synthetic processor 
-> register than add a synthetic CChip mmio.
+>> +static inline QEMU_ALWAYS_INLINE
+>> +MemTxAttrs alpha_cpu_get_mem_attrs(const CPUState *cs)
+>> +{
+>> +    return (MemTxAttrs){ .requester_id = cs->cpu_index };
+>> +}
+> 
+> No need for QEMU_ALWAYS_INLINE.
 > 
 
-No problem... Are we okay with exposing a typhoon timer helper
-and TyphoonState to target/alpha/sys_helper.c via the inclusion
-of hw/alpha/alpha_sys.h?
+Consider it gone.
 
-If so, we can add an opaque pointer parameter to helper_set_alarm
-carrying the TyphoonState and invoke the typhoon timer helper;
-e.g.:
-
-/* Inside target/alpha/sys_helper.c */
-#include "hw/alpha/alpha_sys.h"
-
-void helper_set_alarm(CPUAlphaState *env, uint64_t expire, void *opaque)
-{
-     CPUState *cs = env_cpu(env);
-     TyphoonState *s = TYPHOON_PCI_HOST_BRIDGE(opaque);
-     int cpu_index = cs->cpu_index & 3;
-
-     if (expire) {
-         env->alarm_expire = expire;
-         typhoon_timer_mod(s, cpu_index, expire);
-     } else {
-         typhoon_timer_del(s, cpu_index);
-     }
-
-}
-
-We'd have to keep alarm_expire in CPUAlphaState, because
-palcode-clipper would still expect it, but alarm timers would
-be moved into the typhoon as an array indexed by cpu_index.
-
-WDYT?
-
-> In any case, this is also doing more than one thing at a time. For 
-> instance, Connecting the irq on typhoon to the irq on the cpu does not 
-> depend on anything else.
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > 
 
-Thanks for the example; I'll split it next time.
+Thanks for the R-b.
 
-Thanks again,
 Yodel
 
 > 
