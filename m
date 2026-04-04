@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C372E88D6E
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Apr 2026 23:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD56E88D73
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 00:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w8oH3-0005pd-Bp; Fri, 03 Apr 2026 19:50:01 -0400
+	id 1w8pCe-0005It-0b; Fri, 03 Apr 2026 20:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8oH1-0005pU-AQ
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 19:49:59 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1w8pCU-0005Ah-RL
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 20:49:24 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w8oGz-0003kl-It
- for qemu-devel@nongnu.org; Fri, 03 Apr 2026 19:49:59 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c76c067bc51so863754a12.0
- for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 16:49:57 -0700 (PDT)
+ id 1w8pCS-0002NK-Hx
+ for qemu-devel@nongnu.org; Fri, 03 Apr 2026 20:49:21 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2aaf43014d0so16332845ad.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Apr 2026 17:49:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775260196; x=1775864996; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775263759; x=1775868559; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PT+6VtdXWb9kwXc+ggioafkKNFuE6ponkjTO2LDO2DY=;
- b=UJio3gSGZJz0ngTNzejIG06R03j3bUdQNN9ZQ03WLvRuyUCF8kqnOQYNJnlqIwOA9J
- Ws1+CNh1AkxWaZMhpEOoZt7bA3t0mjPzjh/Nqa56djIj0RG7+aArqHMNFOPpgZ24Gfur
- FMJZItcCISeXXjUqWlvwN4gV6ECGLA9e7CY/Jdqz432aJ6HHAC43JRKLBUYxBtLqV1Vf
- byVlhH47K3el1EaiFhGUoWt8cIqgsYeuXf7QyRMWAGBDVqgkHgFYl8Hj4qczsyIxfq8G
- JHWWj8KMULhdL7C9tmjHzqM9OLTvc8Xepxjm+OUa1DphW3KrVwRElbzX134bBu60K5B5
- oyPg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EbJI6zW/sRL1mS2mAsDa4rvCIFEIK142ElrJa537/58=;
+ b=IClaUCcGg17Ng6YLnyvtm04flxflELGcBTkB45VApT5njYvM8Is+T0/f4aTHEHHywA
+ 2ICx19G1OdSfpjcaAz+ijslj7SAYsdRh69C7rnnv6PqYpdq38seLoM/VaCL3zuQI0wGu
+ nO7PVn1ylztrltVSeYg+XQSpTZc7H9myWt8XPY+GTACpyEx1EjmRLlks1u5uRx88eAv5
+ 1NzLLppBaLAUxt8qiW3Qo1dofjSzXKAliad2tOwz0WfAna0Uk5jgPYacxmw5NFm8w2sT
+ BYmIH5H9JMJz06Z1YIr7dxW3iFEKok+Xg/C24LvkQnFEdA0iXIbuY9Kwu9yFelOPkZU5
+ WQ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775260196; x=1775864996;
+ d=1e100.net; s=20251104; t=1775263759; x=1775868559;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PT+6VtdXWb9kwXc+ggioafkKNFuE6ponkjTO2LDO2DY=;
- b=e4gpIYSeMlP2hwoOO+f8cIfK4YAwgb2693i7zduBy5E9iSsENHfBLYgs/ncH/5d/wA
- uVn6U4w5hp2q3193vDIl38wU3quD/VvjU2zPVA5RAh6JXWDhP/pn2NG4Z+qYeQItvdZ5
- QmffGEVNtelFb7lBtAJlvpPeTuPvBUne8gFMQF7iHlXZPlFzDJhYOeSXy62qJT9IMuh2
- HK9I5QnSzqHPXJYnkEW48skTWVsjmorQpFM7cAN9w8LuaiP4v6wBSz3B7fQ3+L1KnNgc
- uygS9age2cXKNANFVxNBnGu5MRzF/Py035NBfgxlPjDuwlUJb/5zMV/xbxmfTI8zGQno
- WcCQ==
-X-Gm-Message-State: AOJu0YxtikJF9+c2MPxW0pT0hJl9BetPC0sgIBOhlzwW8C5GhX0YQ8FE
- 7j8OJjwO9dcju+GoNWSxqoaZwzyySnuQ0b3iShM8rJVbTP2bb7H268GsH3IOun7bUg/Nqx1zSeX
- 8M6oN3oY=
-X-Gm-Gg: AeBDiesrGxwGYoR90wuylaboD97u98Dym0CtJu4iQ2Ij6slxZumEsVrz6zKIlh+yQTO
- B2Wrka0G4CvCMW6PKlP4vocNyBal/0ky/O57aR+Ii2atH7wOhxsUhyGgHnKisbckuYc9kZ4/FbI
- d3r/hXkDH8psktxCoPnwZHmfDahvc+JeLNXsdZo2FVegswsdwfEIcVxudmVIQDeYZUTLErQhuuW
- LEQa+vFUsKYXCODYCEG/S0pP+2Nrao02RQLHEagnmuvYC1RpKE4+h5/oEgkULa7B0FiztiYiYn6
- t/CF8iQvM0F/YZ1H8+3MFyNNJl1eKvGQIxmaiIaaO2cB651zSw1/hgKAMCKyrsxOgoIY1Q3iiPC
- /uQigZQss4ciR8FUdNMjO+2nE2jASWdrtyTlpCzDx6d97UmW6hhn9Ae0jhWUIDIvE6hVWwdt05E
- 6xDHUFBAxi+sAS4ryrSbmrUUTAeUECyEfjv+GTAZ+iviUrQLXn3Nm9mi7JCeRoJb9X4xk=
-X-Received: by 2002:a17:902:c943:b0:2ad:9b86:ddc2 with SMTP id
- d9443c01a7336-2b2816e6c38mr47268905ad.22.1775260195641; 
- Fri, 03 Apr 2026 16:49:55 -0700 (PDT)
+ bh=EbJI6zW/sRL1mS2mAsDa4rvCIFEIK142ElrJa537/58=;
+ b=a5vCI1MLn2Ck7DEu9gUHW14aw96GSY967gjvIwMnJ4zy1WsV7YmYjHOFgudwywv+c5
+ cBhWzne9QZoDIW7ocdxx4zpdb0EyI7M70Il2X65/I5Jr7QNeaLNkTtpZG/ODzdnnANvR
+ kS9ANwWpVsQ2SVvpkyZOJtUBWbb4tbXjLPuhsDP5LNKbRkt8/v3ia3ZEuf/e3AbhnLLv
+ KnqwOvlDjzjZ9TUHCs3ICxUsGVhl08nibAMoQ8IzXvwNkpNab5Z3bwcWrxtjRQsrjs8W
+ PA7Np+UQruPhbkwa6b/kiwlV3meETZR6fH58IPYGLAyaX3s/FhHZazAPgGbHSpDN9kM4
+ 2H/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbw/+HjPkynei60pd5EkvQt6MbDBbzSlwBaTaZSWqGkrCxGzNU98yZJs1S0KoG72fMeXUAybsedHU+@nongnu.org
+X-Gm-Message-State: AOJu0YwEwtDWQlwgE02ZmlrSo71Vuqm4lWW40p96PSHAQY4dnlLglXKP
+ qBp4pIxD7HcTUN4YpDTrqk0vlaGxlrbp0xW0jg47RxWn5BZMU0Jl7N3QQiR8byvcEYSBMn3OU10
+ 6NozxHQA=
+X-Gm-Gg: AeBDietLKzujsbxYHY3BxxKWc0ZWk9gvl9l7xUhFludKtkHnP0bh+nYfvkiUXqnbXnz
+ nGFg9m7l64UvksM5sPPtioijRsThuyXkbMPcEK3rZojdYv93eEvIfA/xdmSkCRBAC5KEZhQzR+e
+ 3Rm/XvZ1st8g/CVzhUhxBu4utA9GNjX4ChRWfouhIAQ/+CBfcKHgEGPeHcFDfhd+XwzOtkA25Kx
+ DMsVWmYR4osQhlItq0VPIRBYiwZCNNf0LLw8p55zYGmTix7bI4FvSgDfeGdNMM7kdPL0ljyiEul
+ pPMC5zetzgb72he2D4Cz9MXPtxcQ4upkAXE4Zn68g/LE3PYSxlBa/b+7eRkCcAJP3Bj3KReNCLO
+ ItlsaJ3X1Uok/OE0aYp4wGykZvUX80/bnggCWJcUAKKyZ8grAWNOEbSfyHEHlRK/A4qVI+pTaE1
+ XceaAsMyEdlVd16TZ8hdU/KHBx9RG8IT5Z4571ywf/Tjfl1GgZQKBXiuHWaF2xEQGPJ20=
+X-Received: by 2002:a17:903:287:b0:2b0:c2d9:270a with SMTP id
+ d9443c01a7336-2b28198d6e9mr44702315ad.42.1775263758846; 
+ Fri, 03 Apr 2026 17:49:18 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2749cbd07sm62099565ad.72.2026.04.03.16.49.54
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2b27478b658sm73420175ad.31.2026.04.03.17.49.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Apr 2026 16:49:55 -0700 (PDT)
-Message-ID: <eb9b80b4-78a9-4a0e-be63-aecfa8b426c5@linaro.org>
-Date: Sat, 4 Apr 2026 09:49:51 +1000
+ Fri, 03 Apr 2026 17:49:18 -0700 (PDT)
+Message-ID: <5a6f0a78-85aa-4d80-9dc2-4a58100bf6ba@linaro.org>
+Date: Sat, 4 Apr 2026 10:49:12 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0 6/6] RFC: Allow building qemu tools on 32-bit
- hosts
-To: qemu-devel@nongnu.org
-References: <20260403104327.1163942-1-mjt@tls.msk.ru>
- <20260403104327.1163942-7-mjt@tls.msk.ru>
+Subject: Re: [RFC PATCH 1/4] alpha: Define Typhoon instance_init
+To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260401170454.32045-1-yodel.eldar@yodel.dev>
+ <20260401170454.32045-2-yodel.eldar@yodel.dev>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260403104327.1163942-7-mjt@tls.msk.ru>
+In-Reply-To: <20260401170454.32045-2-yodel.eldar@yodel.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,57 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/3/26 20:43, Michael Tokarev wrote:
-> From: Helge Deller <deller@gmx.de>
+On 4/2/26 03:04, Yodel Eldar wrote:
+> From: Yodel Eldar <yodel.eldar@yodel.dev>
 > 
-> Qemu's tools like qemu-img are often needed on 32-bit platforms,
-> although the actual qemu emulators have been discontinued on 32-bit.
-> 
-> To allow building the tools on 32-bit this patch implements two small
-> changes:
-> 
-> a) The check in meson.build is changed to still error out if the user
-> tries to build qemu-system or qemu-user on a 32-bit platform, but allows
-> building tools (e.g. by "--enable-tools") alone.
-> 
-> b) Remove the compile time checks in atomic.h because:
-> - for the qemu-system and qemu-user emulators this check is redundant
->    since we only allow 64-bit platforms anyway (see a)
+> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+> ---
+>   hw/alpha/alpha_sys.h |  4 +++-
+>   hw/alpha/dp264.c     |  8 +++++++-
+>   hw/alpha/typhoon.c   | 24 ++++++++++++------------
+>   3 files changed, 22 insertions(+), 14 deletions(-)
 
-Nack.
+This is doing more than one thing.
 
-The assert is still useful on 64-bit hosts, because most but not all of our 64-bit hosts 
-also have 128-bit atomics.  We *shouldn't* be attempting atomics on Int128 (or structures) 
-but you never know what'll slip in.
+The subject says adding typhoon_pcihost_instance_init, but that would just be moving two 
+lines out of typhoon_init.
 
-
-> - it breaks those 32-bit platforms, which do provide (slower) 64-bit atomics
-> - 32-bit platforms without 64-bit atomics will fail instead with linker errors
-> - the runtime speed of the qemu tools aren't actually that important.
-> 
-> I've sucessfully tested building qemu tools on 32-bit hppa.
-
-Well, i686, armv7, and m68k have 64-bit atomics in hardware.
-I see from gcc that hppa-linux has 64-bit atomics via syscall.
-
-I think testing got lucky.  Other hosts, e.g. riscv32, I would expect to fail to link, per 
-the second point above.
-
-Since the goal is tools, which do not have to interact atomically with guest emulation, we 
-can fall back to libatomic.  But that requires that we make the meson.build changes to 
-actually link with libatomic.
-
-
-> -/*
-> - * Sanity check that the size of an atomic operation isn't "overly large".
-> - * Despite the fact that e.g. i686 has 64-bit atomic operations, we do not
-> - * want to use them because we ought not need them, and this lets us do a
-> - * bit of sanity checking that other 32-bit hosts might build.
-> - */
-> -#define ATOMIC_REG_SIZE  sizeof(void *)
-
-I think we should retain ATOMIC_REG_SIZE but use uint64_t not void*, and update the 
-comment, noting atomic128.h as well.
+Creating the typhoon object in clipper_init is a different change, and I don't see how 
+that's even helpful at this stage, since typhoon_obj is not used in clipper_init.
 
 
 r~
