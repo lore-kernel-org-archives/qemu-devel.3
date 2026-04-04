@@ -4,52 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DD0E63FF9
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 22:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29748E63FE6
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Apr 2026 23:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w99fL-0004XX-NS; Sat, 04 Apr 2026 18:40:32 -0400
+	id 1w9AEr-0000bL-3I; Sat, 04 Apr 2026 19:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w99fJ-0004X2-AO
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 18:40:29 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w99fF-0006wF-Jr
- for qemu-devel@nongnu.org; Sat, 04 Apr 2026 18:40:29 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id B0A1C4054B;
- Sat,  4 Apr 2026 22:40:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC1AC19421;
- Sat,  4 Apr 2026 22:40:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775342419;
- bh=QQH19VbRhYXYPUyEUH1EWv9i9L2lje3mJnL+gL0s4+s=;
- h=Date:From:To:Subject:From;
- b=QepZcu1tMVc06bDf2+mMoDmGYnhiBFwNaUhsfNx7XQlC9GKrY9XF4ek3+pNYoXMaO
- XpXIHXfi9n7pQn6FECR6alUZeEwlajQGAKRmoLDSjRmX++tVHAv5Jth9YZcJ42r3vJ
- AHoGxcUBtRRgoLjJ/+nHBdGEAkA1PFzxlBEni0ILCzYW0zQKKOkqzFEE0RP/q3tH4v
- BlhizKF0Utqbbc31EFa27WH3YJb/vkT2i6/wMyJYCs6zT1pnZeLSRSHZDVS82TJ/0n
- rrtY/7m1hlg6ZmYsQD1FilEDCozYiy8RcpFOH78rKn6IwSGewOOQYzfq0imcrvegHP
- ZIYdIXmJubw3w==
-Date: Sun, 5 Apr 2026 00:40:16 +0200
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v3] Allow building qemu tools on 32-bit hosts
-Message-ID: <adGTUNUSckx1KrAk@p100>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w9AEq-0000as-7Q
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 19:17:12 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w9AEo-0004mX-QD
+ for qemu-devel@nongnu.org; Sat, 04 Apr 2026 19:17:11 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2aae4816912so18213705ad.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Apr 2026 16:17:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775344629; x=1775949429; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=M2/bKWFGdJReBNI3uKMwIq4NWSBqtjkvMq2rdgCS2V0=;
+ b=p5tHwUBh677Adr/MTYgMZj8YzkNd02DvxQbhus/LuepSBnDnPHf8dEdNm9WZabIUYF
+ QqWaqfUV6JH4bLRIPsGV7ALbGYSzMKZdwkxdx5b5qzaf5YcL/D1PNsnzjCSeLYvFSfjU
+ f2EUV300b4+FPQKImvmSpe8IU5bk/897zXTVK8+3Wbk20C3G3cMlGOxk6lP4psdHZQNr
+ 49Q8KxuIinFfaJankXBKpb1bkoMBVLtBVUC+j97R59lISTc9JNMVSwgSkS20+JJjYv2B
+ tzH4taNYU/BVgGOT877JcFpD1DzlXOz1GA6QuZaAz2o7zZhWf1U5iVfEQpmmPGzI0GG5
+ kWOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775344629; x=1775949429;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M2/bKWFGdJReBNI3uKMwIq4NWSBqtjkvMq2rdgCS2V0=;
+ b=myxvS0uGULIWKxyJs7dgp+X4C2F+keF4iCbla5p7PYOuJu2hjE8GJkLIRc6QNkvu9B
+ YA46INKRHF8MO5J0EZM3eCd7jO/VPS9CMGyGIAsSVVzwUNIEzfeVZMyDfiBhP7aja0PH
+ WA6b+LqljkQfijip7RiQpwaeE/wSlJkaDUHCB4aqgZ4+IGHLbYWSHqnk6rnylhskHhRS
+ VHGpRWuCJock0JA0n3S+yVOrwYBrDJDY3BE0oOqBsXpyEmO50GAoFZVddSMsTkuCQ8qH
+ x2hxcj6v55tQ46ufGUjmGaMnLdd/ivy3DDedRwWH5Jj9mpDXzAiPFjswQqWG4HVQqbEs
+ Ay9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcAcmcMnps7edRxjolFaMRzYAg8XLOW0+yrcNlsHvmIKdVVDp6hVQi/JjPfSrOTRJjG1+UjnsVvSRq@nongnu.org
+X-Gm-Message-State: AOJu0YzvW8l6kX8E6lK1zKMviywWNFoMAKM83E1xD/mNEo8N0E8No46G
+ oiAjc62uBY6Xq7I69BV9/nolOEqdm3Iofa3WrxkELw3FSrUaL+Wx3B7bTijyBxXKtTc=
+X-Gm-Gg: AeBDietSp1/b8HmnT8V2ZUzECZNJuQ012PHcfx9HxI3CDczKrkcRKYw3+aRDVBi3AwV
+ 3D7Yk5nP1vhP9RnSaT9bBVuTfw61hpPIHv5D7B1iJAUtb5vZyhvVBDNJgf70WLm0oVKnYb/Uaaa
+ nZK54n3iEFKgULXduMD+KXrxqEgotzy8KvuRxQF+LSd6bFwjB1eYp9GycBkBV09cnM0pA5G6hfI
+ zKwNFNQ9BlIAqQWU/NibqWKGrsRRqyNWgNc/hbY0sB1RDqgHiwsGx/PnrtNNXBUsQ1niTFfabrk
+ RBuDRdQLanPNNvEbMBqA5jfn0snEGE437aQd83+sJGDKfmfBQTOdEEu1o3yCSwP8qfjFIGAvr/5
+ 53FOzuw1F7DXyrBgkuoMWUfAYgSQx1ON1szIZTEhC1frbVPF4rmnFFXzlotz7xOCEcphKIa0g1A
+ k8LxTKbym7tzAEZjaEKV9xPk1koDh+X9SZVQjN/IPgmbHhoL0h6LND7JNdx5da3fNdbaU=
+X-Received: by 2002:a17:903:1a68:b0:2b2:56bc:c6a5 with SMTP id
+ d9443c01a7336-2b28188de3amr80970775ad.42.1775344628758; 
+ Sat, 04 Apr 2026 16:17:08 -0700 (PDT)
+Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b2749b66aasm98861745ad.68.2026.04.04.16.17.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 04 Apr 2026 16:17:08 -0700 (PDT)
+Message-ID: <f22d9c56-c0c3-4084-83c0-748c950ad302@linaro.org>
+Date: Sun, 5 Apr 2026 09:17:00 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 01/13] target/arm: implement MTE_PERM
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260309-feat-mte4-v4-0-daaf0375620d@gmail.com>
+ <20260309-feat-mte4-v4-1-daaf0375620d@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260309-feat-mte4-v4-1-daaf0375620d@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,89 +108,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Qemu's tools like qemu-img are often needed on 32-bit platforms,
-although the actual qemu emulators have been discontinued on 32-bit.
+On 3/10/26 08:59, Gabriel Brookman wrote:
+> @@ -117,6 +138,15 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
+>       }
+>       assert(!(flags & TLB_INVALID_MASK));
+>   
+> +    /*
+> +     * If the virtual page MemAttr == Tagged NoTagAccess, throw S2 permission
+> +     * fault (conditional on mteperm being implemented and RA != 0).
+> +     */
+> +    if (ra && cpu_isar_feature(aa64_mteperm, env_archcpu(env))
+> +        && full->extra.arm.pte_attrs == 0xe0) {
+> +        mte_perm_check_fail(env, ptr, ra, tag_access == MMU_DATA_STORE);
+> +    }
+> +
+>       /* If the virtual page MemAttr != Tagged, access unchecked. */
+>       if (full->extra.arm.pte_attrs != 0xf0) {
+>           return NULL;
+> 
 
-To allow building the tools on 32-bit this patch implements three small
-changes:
+This isn't quite right, as you're not checking for probe.
 
-a) The check in meson.build is changed to still error out if the user
-tries to build qemu-system or qemu-user on a 32-bit platform, but allows
-building tools (e.g. by "--enable-tools") alone.
+I suggest
 
-b) The compile time check in atomic.h now checks against
-sizeof(uint64_t) so that 32-bit environments can still build
-successfully, while 128-bit atomic operations are prevented to sneak in.
+     switch (full->extra.arm.pte_attrs) {
+     case 0xf0: /* Tagged */
+         break;
 
-c) Allow linking against libatomic as long as we don't build the
-qemu-system and qemu-user binaries.
+     case 0xe0: /* NoTagAccess */
+         if (cpu_isar_feature(aa64_mteperm, env_archcpu(env)) {
+             if (probe) {
+                 return NULL;
+             }
+             assert(ra);
+             mte_perm_check_fail(env, ptr, ra, tag_access == MMU_DATA_STORE);
+         }
+         /* fall through */
 
-Sucessfully tested on the 32-bit big-endian powerpc architecture.
+     default: /* Not Tagged */
+         return NULL;
+     }
 
-v2:
-- keep comple time checks in atomic.h
-- allow linking against libatomic when building tools
+See the block comment just below the #else that starts the system mode implementation.
 
-v3:
-- Drop "-Wl,"
-- added S-o-b
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-index dc9290084b..e4dd948863 100644
---- a/include/qemu/atomic.h
-+++ b/include/qemu/atomic.h
-@@ -58,11 +58,11 @@
- 
- /*
-  * Sanity check that the size of an atomic operation isn't "overly large".
-- * Despite the fact that e.g. i686 has 64-bit atomic operations, we do not
-+ * Despite the fact that e.g. x86-64 has 128-bit atomic operations, we do not
-  * want to use them because we ought not need them, and this lets us do a
-- * bit of sanity checking that other 32-bit hosts might build.
-+ * bit of sanity checking that other 32- and 64-bit hosts might build.
-  */
--#define ATOMIC_REG_SIZE  sizeof(void *)
-+#define ATOMIC_REG_SIZE  sizeof(uint64_t)
- 
- /* Weak atomic operations prevent the compiler moving other
-  * loads/stores past the atomic operation load/store. However there is
-diff --git a/meson.build b/meson.build
-index daa58e46a3..ab3e97eb9f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -323,8 +323,8 @@ endif
- # Compiler flags #
- ##################
- 
--if cc.sizeof('void *') < 8
--  error('QEMU requires a 64-bit CPU host architecture')
-+if (cc.sizeof('void *') < 8) and (have_system or have_user)
-+  error('QEMU emulator requires a 64-bit CPU host architecture. Only tools may be built for 32-bit.')
- endif
- 
- foreach lang : all_languages
-@@ -423,8 +423,16 @@ endif
- #
- # Later checks assume we won't get atomic ops for int128 without
- # explicitly asking for -latomic, so we must disable GCC's new
--# automatic linking with the new -fno-link-libatomic flag
--qemu_isa_flags += cc.get_supported_arguments('-fno-link-libatomic')
-+# automatic linking with the new -fno-link-libatomic flag.
-+#
-+# When not building the emulators, but qemu helper tools only
-+# (e.g. on 32-bit hosts), libatomic is sometimes required and
-+# thus acceptable.
-+if (have_system or have_user)
-+  qemu_isa_flags += cc.get_supported_arguments('-fno-link-libatomic')
-+else
-+  qemu_ldflags += cc.get_supported_link_arguments('-latomic')
-+endif
- 
- qemu_common_flags = qemu_isa_flags + qemu_common_flags
- 
+r~
 
