@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8453EF3D5E1
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 13:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F1D1E9D80A
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 15:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9NGV-0006Wd-JW; Sun, 05 Apr 2026 09:11:47 -0400
+	id 1w9PMu-0006jf-MM; Sun, 05 Apr 2026 11:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9NGP-0006UN-HA
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:41 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9NGN-0006d4-IC
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:41 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id EED2C43890;
- Sun,  5 Apr 2026 13:11:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF9EC116C6;
- Sun,  5 Apr 2026 13:11:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775394695;
- bh=Iiu1cUQv91hAV1L5+tULf8zTWFqn+vLV9HQtttoGHvU=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=ku0Ams00pFmGdgZVctYWmz9Q/l3vI6XbsiRILxxw+7ElA7OSDpE8vUjwjg0kRsnI5
- FoxQRY0ccxBhy+npGxKh71tZ+zlj147bOandVZT03/uZh+6cBsLp7Yv5nxnOk7W3UK
- Uz6IREIEaBpFMtP7Cm9N9Bju4WD/dIfNiN9iSE5Ms31XjDLYV02TKPGSYQ5+C6aGOQ
- fJaw+MTZRBOvNvCUfn9z1ZFWgaxZQ4RI815NC0ljFLolIwYkG9rEas1rRICZovwYov
- drM1ImFycFiiD3hsP5PTmkOvYsE7pibxuIDPrFzSDUNu8Rzeuaw3TEC5r1GoxnOsNv
- wLsuG4mXOmKTQ==
-From: Christian Brauner <brauner@kernel.org>
-Date: Sun, 05 Apr 2026 15:11:17 +0200
-Subject: [PATCH v2 1/5] monitor: store monitor id and dynamic flag in
- Monitor struct
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260405-work-qmp-monitor-hotplug-v2-1-ad5bedd2917a@kernel.org>
-References: <20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org>
-In-Reply-To: <20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org>
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w9PMs-0006j2-Vf
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 11:26:31 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w9PMr-0008RY-7s
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 11:26:30 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-823c56765fdso1556098b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 08:26:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775402787; x=1776007587; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fEjJ0vYqH3FMuiZ8Ejies3mW8gSGC9QDtmSx0t1VKas=;
+ b=LIDe4ew+kacVV6uWxSrCWQCdOwsWIdf62t0PVeLE/7+jrV6h9T8l6ODLJgOMtYH7aM
+ mrvGdWoGpBkMDU06Yz99QjWBcBqPqpo3yc6k4n0KJWQ83Y+O3CIbCdwIBnzznRV9Rizq
+ jSs8RONmxyoScKlmGNOd71fz+hrBzYDA/mFEE6NMQhixRGK95YzDv+hT7Nn9FOb5WV48
+ VxVzx+55tUfIws0W1OmeRfXBesNhpIYB/brN34gWz6alQbZyDObs3nChJ5bCDRYsD3Nj
+ wytvp8wDxqZ2ZTVGDctSnMg5uNgLkxv2Qe0Rq0ldMan9WJwNJNlhnmimHQB+097zQFos
+ fszg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775402787; x=1776007587;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fEjJ0vYqH3FMuiZ8Ejies3mW8gSGC9QDtmSx0t1VKas=;
+ b=G90SSs6bT5FTTcTLm0wNb++kjGOfIY3hZD05mPBn9KptQq6SJXAhSTCfymyfva0rgX
+ Zhtmt0PQQjbQVy27iSyxnhO42NhwZtq81/fvaFFcJgI/1+7FWzCDZufd8hAsbL16aom/
+ F8X5YyemeVVW6K5kvZ5SY+f2vgX+xpMDaUd8ra13VRTmqn58Z4ozOE+K6MAXJxEZwrGz
+ I+iDs+UPIuN1wVIneaZxuDSGO//ixA0/w2a2eo6TtXEBOKSiTIV/KiNP8dRTtRJPmCmb
+ 2oTPklWF7mx2VS6uMRgZs1OL7ljyH6H4WWSwEwd7iO5FQ6Zs5zk9cjC8UdR9+aDS18rJ
+ /73A==
+X-Gm-Message-State: AOJu0YzQ5iKg2QOYZh1oGZpOelrBXEdQPpqus8vmU+cSbb997Mn3JKVj
+ 2jNN27iRIDipHlZjTdU3FFmp+Pss1JIIB4WPx1z4GtKS6YtBfEvlFZhj49XCS+M9Bnw=
+X-Gm-Gg: AeBDietquNycqf5pLgjv8EmtAu1wdu/UqPAWLqGt1uPLddpj2vOhzcHjSSBhz4m5NVo
+ 292KLaV/mQyUXlsA/plkeVnFCU1d7MMUYvftn7X9096+WmSeASPeXRYOh7JaWaiBaRJ9jPj1lOj
+ P659rqi53TZMZlYvBAceO8vCdMSuJz29GVruU/GbmzqJvviDlKI81B6b0ahWKQEW6eN5JnJ8QSy
+ /c5a+Gwx4SqHPrSgckabvLevve8VuB7BkwIWh03OBgcrpYyYZo3X5Q6krqoQ9eoGY5xDPrwNpvt
+ g+GTmKoM9512mefF5v2SG8afj2tmLyZjOOwoVBQ49M/5axmE+hVuvN05nCGVc9qJvimoHOvNHE+
+ GwUdrtv6OXLn0CmYb4N5N6GKuy+30jtyuFONgMl1f3fMtOfQh9ZS2FT3e9cGdpjk1SvsGEX8Usi
+ EowfdyGZN30DfEpHLHY+foT3TcSfv97qnDIYv9wKs8FLwHKLU=
+X-Received: by 2002:a05:6a00:a0b:b0:829:8942:2c93 with SMTP id
+ d2e1a72fcca58-82d0da45d60mr9016305b3a.9.1775402787245; 
+ Sun, 05 Apr 2026 08:26:27 -0700 (PDT)
+Received: from localhost.localdomain ([123.19.199.205])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82cf9c72967sm11187938b3a.49.2026.04.05.08.26.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 Apr 2026 08:26:26 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Christian Brauner <brauner@kernel.org>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7269; i=brauner@kernel.org;
- h=from:subject:message-id; bh=Iiu1cUQv91hAV1L5+tULf8zTWFqn+vLV9HQtttoGHvU=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReim/8zL3z2R8b9p+Hlr/3+z9N+oTOYjfHvn2/JGYeV
- /km53VzRkcpC4MYF4OsmCKLQ7tJuNxynorNRpkaMHNYmUCGMHBxCsBELicwMiwKFjK/1sn8SqRB
- JHzCnd9M7j+lNATi5hpp+Auo71KomsDwz+K4Q6Hr2rvFG1S/cygpf1r8Yb+32tzM3C/zTm4I2Hl
- biBkA
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=brauner@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Trieu Huynh <vikingtc4@gmail.com>
+Subject: [PATCH 0/2] migration: include timing and RAM stats on destination
+ when query-migrate
+Date: Sun,  5 Apr 2026 22:26:06 +0700
+Message-ID: <20260405152612.93027-1-viking4@gmail.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,179 +100,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add 'id', 'dynamic', and 'dead' fields to struct Monitor. The id field
-stores the monitor identifier from MonitorOptions which was previously
-parsed but discarded. The dynamic flag marks monitors created at runtime
-via the upcoming monitor-add command, and the dead flag will be used for
-deferred destruction during monitor-remove.
+From: Trieu Huynh <vikingtc4@gmail.com>
 
-Extend monitor_init_qmp() to accept id and dynamic parameters so these
-are set before the monitor is added to mon_list.
+When query-migrate is called on the *destination* QEMU after a precopy
+migration completes it returns only {"status": "completed"} — no timing,
+no RAM statistics.  The source correctly returns total-time, downtime,
+setup-time, and full ram stats.
 
-For iothread monitors, move monitor_list_append() from the setup BH to
-the caller so monitor_find_by_id() can detect duplicates immediately.
-Without this, two concurrent monitor-add calls could both pass the
-duplicate check before either BH runs.  This means the monitor is now
-visible in mon_list before its chardev handlers are set up, which was
-not the case before.  This is safe because the request queue is still
-empty (no chardev handlers means no monitor_qmp_read(), so the
-dispatcher finds nothing to dispatch) and event broadcast is handled
-below.
+This series fixes the gap in two commits:
 
-This requires initializing mon->commands = &qmp_cap_negotiation_commands
-before monitor_list_append().  Without it, commands is NULL (from
-g_new0) and monitor_qapi_event_emit() would not skip the monitor during
-event broadcast -- its check is specifically for the
-qmp_cap_negotiation_commands pointer, so a NULL falls through to
-qmp_send_response() on an uninitialized monitor.  CHR_EVENT_OPENED sets
-commands to the same value again later.
+* commit 1: Track start/end timestamps and per-page-type counters in
+  MigrationIncomingState, recorded in the receive path.
 
-Add monitor_find_by_id() to look up monitors by identifier.  The lookup
-takes monitor_lock to serialize with the I/O thread BH that modifies
-mon_list, but releases it before returning.  The caller must hold the
-BQL to ensure the returned pointer remains valid since only BQL holders
-can destroy monitors.
+* commit 2: Make source-only MigrationStats fields optional in the QAPI
+  schema so the destination can populate info->ram with only the fields
+  that are meaningful on the receive side.  Fields computed from tracked
+  counters (transferred, normal, duplicate, mbps, pages-per-second) are
+  shown; source-only fields (dirty-sync-count, precopy-bytes, etc.) are
+  absent.
 
-Free the id string in monitor_data_destroy().
+The QAPI change (commit 2) is ABI-compatible: optional fields that are
+not set are simply absent from the output.  Source-side callers are
+unaffected because populate_ram_info() sets all optional fields via
+has_* setters, so the source output is identical to before.
 
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
----
- include/monitor/monitor.h  |  3 ++-
- monitor/monitor-internal.h |  5 +++++
- monitor/monitor.c          | 21 ++++++++++++++++++++-
- monitor/qmp.c              | 11 ++++++++---
- 4 files changed, 35 insertions(+), 5 deletions(-)
+On dst, {"execute":"query-migrate"}
+* As-is:
+{
+    "return": {
+        "status": "completed"
+}
+* To-be:
+{
+    "return": {
+        "status": "completed",
+        "total-time": 94,
+        "ram": {
+            "total": 554508288,
+            "pages-per-second": 1440234,
+            "page-size": 4096,
+            "remaining": 0,
+            "mbps": 97.955404255319152,
+            "transferred": 1150976,
+            "duplicate": 135101,
+            "normal-bytes": 1150976,
+            "normal": 281
+        }
+    }
+}
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 296690e1f1..7a2bb603e4 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -19,7 +19,8 @@ bool monitor_cur_is_qmp(void);
- 
- void monitor_init_globals(void);
- void monitor_init_globals_core(void);
--void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
-+void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
-+                      bool dynamic, Error **errp);
- void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
- int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
- int monitor_init_opts(QemuOpts *opts, Error **errp);
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index feca111ae3..8f5fe7c111 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -98,7 +98,10 @@ struct Monitor {
-     bool is_qmp;
-     bool skip_flush;
-     bool use_io_thread;
-+    bool dynamic;               /* true if created via monitor-add */
-+    bool dead;                  /* true if monitor-remove called, awaiting drain */
- 
-+    char *id;                   /* Monitor identifier (NULL for unnamed CLI monitors) */
-     char *mon_cpu_path;
-     QTAILQ_ENTRY(Monitor) entry;
- 
-@@ -181,6 +184,8 @@ void monitor_data_destroy_qmp(MonitorQMP *mon);
- void coroutine_fn monitor_qmp_dispatcher_co(void *data);
- void qmp_dispatcher_co_wake(void);
- 
-+Monitor *monitor_find_by_id(const char *id);
-+
- int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
- void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
- int hmp_compare_cmd(const char *name, const char *list);
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 00b93ed612..7144255e12 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -622,6 +622,7 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
- 
- void monitor_data_destroy(Monitor *mon)
- {
-+    g_free(mon->id);
-     g_free(mon->mon_cpu_path);
-     qemu_chr_fe_deinit(&mon->chr, false);
-     if (monitor_is_qmp(mon)) {
-@@ -633,6 +634,24 @@ void monitor_data_destroy(Monitor *mon)
-     qemu_mutex_destroy(&mon->mon_lock);
- }
- 
-+/*
-+ * Look up a monitor by its id.  The monitor_lock is released before
-+ * returning, so the caller must hold the BQL to ensure the returned
-+ * pointer remains valid (only BQL holders can destroy monitors).
-+ */
-+Monitor *monitor_find_by_id(const char *id)
-+{
-+    Monitor *mon;
-+
-+    QEMU_LOCK_GUARD(&monitor_lock);
-+    QTAILQ_FOREACH(mon, &mon_list, entry) {
-+        if (mon->id && strcmp(mon->id, id) == 0) {
-+            return mon;
-+        }
-+    }
-+    return NULL;
-+}
-+
- void monitor_cleanup(void)
- {
-     /*
-@@ -732,7 +751,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
- 
-     switch (opts->mode) {
-     case MONITOR_MODE_CONTROL:
--        monitor_init_qmp(chr, opts->pretty, errp);
-+        monitor_init_qmp(chr, opts->pretty, opts->id, false, errp);
-         break;
-     case MONITOR_MODE_READLINE:
-         if (!allow_hmp) {
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 687019811f..afbe2283d6 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -510,10 +510,10 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
-     qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
-                              monitor_qmp_read, monitor_qmp_event,
-                              NULL, &mon->common, context, true);
--    monitor_list_append(&mon->common);
- }
- 
--void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-+void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
-+                      bool dynamic, Error **errp)
- {
-     MonitorQMP *mon = g_new0(MonitorQMP, 1);
- 
-@@ -527,12 +527,16 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-     monitor_data_init(&mon->common, true, false,
-                       qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
- 
-+    mon->common.id = g_strdup(id);
-+    mon->common.dynamic = dynamic;
-     mon->pretty = pretty;
- 
-     qemu_mutex_init(&mon->qmp_queue_lock);
-     mon->qmp_requests = g_queue_new();
- 
-     json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
-+    /* Prevent event broadcast to an uninitialized monitor. */
-+    mon->commands = &qmp_cap_negotiation_commands;
-     if (mon->common.use_io_thread) {
-         /*
-          * Make sure the old iowatch is gone.  It's possible when
-@@ -551,7 +555,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-          */
-         aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
-                                 monitor_qmp_setup_handlers_bh, mon);
--        /* The bottom half will add @mon to @mon_list */
-+        /* Synchronous insert for immediate duplicate detection. */
-+        monitor_list_append(&mon->common);
-     } else {
-         qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
-                                  monitor_qmp_read, monitor_qmp_event,
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3151
+
+Trieu Huynh (2):
+  migration: track timing and received pages in MigrationIncomingState
+  migration: expose RAM stats and timing on destination via
+    query-migrate
+
+ migration/migration.c | 37 +++++++++++++++++++++++++++++++++++++
+ migration/migration.h | 17 +++++++++++++++++
+ migration/ram.c       |  3 +++
+ qapi/migration.json   | 14 +++++++-------
+ 4 files changed, 64 insertions(+), 7 deletions(-)
 
 -- 
-2.47.3
+2.43.0
 
 
