@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D461E9D809
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 15:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891F9E9D80A
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 15:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9PN1-0006ls-6m; Sun, 05 Apr 2026 11:26:39 -0400
+	id 1w9PN5-0006ni-3K; Sun, 05 Apr 2026 11:26:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w9PMz-0006l7-K1
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 11:26:37 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1w9PN3-0006nP-Ha
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 11:26:41 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w9PMx-0008Rv-Ue
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 11:26:37 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-82cd5c07f93so1425100b3a.1
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 08:26:35 -0700 (PDT)
+ id 1w9PN1-0008S9-OG
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 11:26:41 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-82cf976ecacso1275050b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 08:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775402794; x=1776007594; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775402798; x=1776007598; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vtzvMbJwqmZg1QTzQYdfCcfO+oD+mRx9jQ0oIMWTBPI=;
- b=IHl8HVgdq9JulcAQVkYqXGw5Dedj3klnXfyDvsZe8+iSRgkLxaFh//Dh3n4Qhi0WY7
- x5igdQHwTqz8If8iioFZgkikuyZqxg9efYAtMr6dH2wDZhRid4l7B9BNdxFY59mtJFj0
- uKOdn9kRP2uvisGZk2NQUsX+kgXxADkuWrF6gr0WVB+AtxjEud659ot+4B+ttWHPw+N1
- qLntehftutxxumOlVdGYB5aDcmB7iw2eoTMvDdAkxtkHylRSc4OrZYo6igZ4HuVj/D8f
- cl4sGXZPSuK0OkglbxLfzTkbBByeFi/We7gftZpWlJpWjKna9t8viK9SM0S4K6yMvED0
- AvLw==
+ bh=Y1GcBsKVAD50cVidc+/vzB6+ClCQQmkI2qkFkMTszqY=;
+ b=NbE8dZpsK1vjMNTAz7dfdIm7F/wNBgHcpPgmtddchVKJM5lH5aUOq5JsXr2gkxDbyW
+ rZvE4QLKr6CZqFPcSeCQJwSQHQJmENMtn+mBaQEFKUnYkloR6W+/PI6RzA/t1zdB813D
+ WNuZGyiVELZ/m4phHTGP3GbqqXVv7o10ULA3aQkTqc87lKtPwn+X+uXBjCY5twJ1BqPF
+ EiHU6buvQJPXt1dE4fdq1ffXoG8lt59y/wp9c+kVJD/5WNWyetkdiFYaFGbSV4/JWFe7
+ w7oU8iOOEJfWeNyLE2Ikf4DBMYSzwN1cKPpljtNLmp+ihatSkGnenNM2U6MVVfPnYcVQ
+ dADQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775402794; x=1776007594;
+ d=1e100.net; s=20251104; t=1775402798; x=1776007598;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vtzvMbJwqmZg1QTzQYdfCcfO+oD+mRx9jQ0oIMWTBPI=;
- b=DK1qMoYWsLo6RAVOKYjvGa9PeTeJ79hKg/utHIEBHg5WfrY+nwuHxcKbpMp6F+RchU
- X6aL4vufldjroP+W4r0f9omZSKPVh2hfdQZFagkqgJSocZBgh3OVfoQOW6EKLYlAOH9T
- zSbBwdwF+SPHHY9ocla1vhh/FDVEQVA/8iw4D9JPpAycIWs52ePupBO9FYcW/1kkVR1U
- h9RO9AHPyByDmvc9ONhcqCwMYxM4yFUh1EewKwC12a4+KH2lk0ekzJf1B76yM2K4tRyq
- GKvH2n6DgHBwur8LqQlu+qJ72X+q5/Z/0ml8GlkpyxOGZF4Y+t3fIZLGqT4d31BQFdTE
- hUHQ==
-X-Gm-Message-State: AOJu0YxmVPYGtMbu/U5gxrXTPgDMZhJjSd2/sOBwoNsUI8f4V9yw/dv2
- GDsnrg5RBxbKl+NL6Qljlu90Fu+X/bpjvkJK+tvqrogAOOa5HD1q/MKSmCOQaFeAXD4=
-X-Gm-Gg: AeBDievN0ShYEw4q5jAgVts6aUV/n9+ugtepymMgFSa3uMZW0Xud6oQUMaDHhEJNXNF
- +PnQIotkL4bpt7U2Z8+4m+JnbGVEvgHqlNYELs7HVqNcpm3m/9xUAsAZQGbgZtGQfYnQYlsMPua
- 4oBRPI5e/ai7H56DPH7vhbmSejUvgQz7Wu/ze5lZf4utxv37Gb5xA5JnbVf6dkLBVUaSmApiO0Y
- tNawUpddvIya383mG/9kaDpGmTTKTfpRb9ZOM4N7+HRvsbN0XOupPph0xDJzI7IVLhWzj/7sS+g
- 0HoGIeK6Z/7WAYJI25wZ0yXOZ0nx+MoCdxF1abS6Y4/xCL9wzcdexxnlEmBSEaTXd+UEwEwWtxr
- C84mPzG4qrMlJRFOHWAPPba4N8ZEKZNuKGFiXvKlmeUJhoyU7qR1kkw2PAQOEei1IWiGUjl98rY
- is/VDv4OYDSkgS6cINbpgoxUEQSRhWwIEPlqJTnXsIa2gJ9qY=
-X-Received: by 2002:a05:6a00:1f0e:b0:82c:26a4:df02 with SMTP id
- d2e1a72fcca58-82d0db8b083mr8599271b3a.42.1775402794346; 
- Sun, 05 Apr 2026 08:26:34 -0700 (PDT)
+ bh=Y1GcBsKVAD50cVidc+/vzB6+ClCQQmkI2qkFkMTszqY=;
+ b=alio23m5sZQoTiFzhKtPsT5nCXu7hZyL5WfFa+VzRAmPb/TyNJFg6aueBR188iDJPL
+ vkLE3lffEGg/v+u6cxHyo77kKyjl1A2xmIIQcQO/9y3y5nstK1LpGo7ag1tyOUDVqFsE
+ 7T61PXNvGROAUBMeKfnRPQ7k8qKlzulrsxttSwSccjElVI0uwEYhbf9106nUOnvZhiqg
+ 0cIbN+VnLpSWivI0/S32ShrTt89S0EtX8r8P/U84djTaqepvrn/qAeZ9AsyCf+NZG4v2
+ KvABr/F1Of0ltbZOR51ggIhv8+fM1ax+Ze88ujTxZaa07lCU8ZA/w5qW3EWQyGxdX5VN
+ qQ0g==
+X-Gm-Message-State: AOJu0YyAZIqxxNz/g783Me1U3zMh/fS01Yz7aTdTNFV6PGYusc+cXJ9T
+ kT2Ohes0C2UaJqeD2gFYqSKjCZC7kD4tsfdZM+3XZCOf12cqrTqM7PMkkxu19Z42elg=
+X-Gm-Gg: AeBDiesLAOrIqqRDalj2Gez8mxlQpMQZbQIU0F474Duj6LL3U3iPzdl0+/HlpN0Nkz0
+ YypDGwlPybC585NPgt2y2vUm9vt8DG8rPoXpNfp3C57SAscXRZ93hmBXhPdyIHHrpOipm+qjBdN
+ Q3q4zVo38nmyOqGYi81RwzkBZoNm5pnCYv1aex6p4RdbBUKw1I3Tw2XMBwZG/fmd7g5i5GPezer
+ S8svwTosIh1ljo8gbxJXs+srqBaskbPcSOYCZ78O9o2fFQFADzHk25b54QT7AqcqawflgQn4ZQP
+ JEQbhbOymnyeULO24YZAKvo6lS68FO8hpkjpbgiRJgqvkUBTVKEy3iJxQ1bJHVjXl148bt8RDRL
+ 3L5jer1rInn7xkxzWG6rbGObbIcaxAfpTEywsOPqisWgzw06x7YkfWkkLSMI9v4A+ZYZ8WQDR6u
+ nAowm+Kb9O/XvAJDFkg/1ub1YqKMCmxIaKtkLPrcVWDsUY3zsAtWLK8CWcbQ==
+X-Received: by 2002:a05:6a00:3499:b0:829:8041:83f with SMTP id
+ d2e1a72fcca58-82d0da2e724mr8742921b3a.7.1775402798051; 
+ Sun, 05 Apr 2026 08:26:38 -0700 (PDT)
 Received: from localhost.localdomain ([123.19.199.205])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9c72967sm11187938b3a.49.2026.04.05.08.26.32
+ d2e1a72fcca58-82cf9c72967sm11187938b3a.49.2026.04.05.08.26.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Apr 2026 08:26:33 -0700 (PDT)
+ Sun, 05 Apr 2026 08:26:37 -0700 (PDT)
 From: Trieu Huynh <vikingtc4@gmail.com>
 X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Trieu Huynh <vikingtc4@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 1/2] migration: track timing and received pages in
- MigrationIncomingState
-Date: Sun,  5 Apr 2026 22:26:07 +0700
-Message-ID: <20260405152612.93027-2-viking4@gmail.com>
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH 2/2] migration: expose RAM stats and timing on destination via
+ query-migrate
+Date: Sun,  5 Apr 2026 22:26:08 +0700
+Message-ID: <20260405152612.93027-3-viking4@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260405152612.93027-1-viking4@gmail.com>
 References: <20260405152612.93027-1-viking4@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,98 +106,158 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Trieu Huynh <vikingtc4@gmail.com>
 
-Add start_time, total_time, received_normal_pages,
-received_zero_pages, and received_xbzrle_pages to
-MigrationIncomingState.
+MigrationStats had all-required QAPI fields, so partially populating
+info->ram on the destination would force display of source-only metrics
+(dirty-sync-count, precopy-bytes, etc.) as misleading zeros.
 
-start_time is recorded when the incoming state transitions to ACTIVE;
-total_time is recorded when it transitions to COMPLETED. The page
-counters are incremented in ram_load_precopy() as each page type is
-received from the source.
+Make those source-only fields optional with '*' in the QAPI schema.
+Update populate_ram_info() to set them via has_* setters so source
+output is unchanged.
 
-These fields will be used by a subsequent patch to populate
-fill_destination_migration_info() for the migration COMPLETED case.
+As per schema's changes, fill_destination_migration_info() can now
+populate info->ram for the COMPLETED case with the fields that are
+meaningful on the receive side:
+
+  * total, remaining, page-size         (RAM layout)
+  * transferred, normal, normal-bytes   (bytes/pages received)
+  * duplicate                           (zero pages received)
+  * mbps                                (throughput: transferred*8
+                                         /time_ms/1000)
+  * pages-per-second                    (total pages / duration in
+                                         seconds)
+
+Others optional fields (dirty-sync-count, precopy-bytes,
+downtime-bytes, postcopy-bytes, multifd-bytes, postcopy-requests,
+dirty-sync-missed-zero-copy, dirty-pages-rate) are left unset and
+are absent from the destination output.
+
+On dst, {"execute":"query-migrate"}
+* As-is:
+{
+    "return": {
+        "status": "completed"
+}
+* To-be:
+{
+    "return": {
+        "status": "completed",
+        "total-time": 94,
+        "ram": {
+            "total": 554508288,
+            "pages-per-second": 1440234,
+            "page-size": 4096,
+            "remaining": 0,
+            "mbps": 97.955404255319152,
+            "transferred": 1150976,
+            "duplicate": 135101,
+            "normal-bytes": 1150976,
+            "normal": 281
+        }
+    }
+}
 
 Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 ---
- migration/migration.c |  2 ++
- migration/migration.h | 17 +++++++++++++++++
- migration/ram.c       |  3 +++
- 3 files changed, 22 insertions(+)
+ migration/migration.c | 35 +++++++++++++++++++++++++++++++++++
+ qapi/migration.json   | 14 +++++++-------
+ 2 files changed, 42 insertions(+), 7 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 5c9aaa6e58..17c9a8b344 100644
+index 17c9a8b344..925d29890d 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -726,6 +726,7 @@ static void process_incoming_migration_bh(void *opaque)
-      */
-     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-                       MIGRATION_STATUS_COMPLETED);
-+    mis->total_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - mis->start_time;
-     migration_incoming_state_destroy();
- }
+@@ -1063,17 +1063,24 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
+     info->ram->normal = qatomic_read(&mig_stats.normal_pages);
+     info->ram->normal_bytes = info->ram->normal * page_size;
+     info->ram->mbps = s->mbps;
++    info->ram->has_dirty_sync_count = true;
+     info->ram->dirty_sync_count =
+         qatomic_read(&mig_stats.dirty_sync_count);
++    info->ram->has_dirty_sync_missed_zero_copy = true;
+     info->ram->dirty_sync_missed_zero_copy =
+         qatomic_read(&mig_stats.dirty_sync_missed_zero_copy);
++    info->ram->has_postcopy_requests = true;
+     info->ram->postcopy_requests =
+         qatomic_read(&mig_stats.postcopy_requests);
+     info->ram->page_size = page_size;
++    info->ram->has_multifd_bytes = true;
+     info->ram->multifd_bytes = qatomic_read(&mig_stats.multifd_bytes);
+     info->ram->pages_per_second = s->pages_per_second;
++    info->ram->has_precopy_bytes = true;
+     info->ram->precopy_bytes = qatomic_read(&mig_stats.precopy_bytes);
++    info->ram->has_downtime_bytes = true;
+     info->ram->downtime_bytes = qatomic_read(&mig_stats.downtime_bytes);
++    info->ram->has_postcopy_bytes = true;
+     info->ram->postcopy_bytes = qatomic_read(&mig_stats.postcopy_bytes);
  
-@@ -758,6 +759,7 @@ process_incoming_migration_co(void *opaque)
-     migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
-                       MIGRATION_STATUS_ACTIVE);
+     if (migrate_xbzrle()) {
+@@ -1094,6 +1101,7 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
  
-+    mis->start_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     mis->loadvm_co = qemu_coroutine_self();
-     ret = qemu_loadvm_state(mis->from_src_file, &local_err);
-     mis->loadvm_co = NULL;
-diff --git a/migration/migration.h b/migration/migration.h
-index b6888daced..cd51ae452c 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -176,6 +176,23 @@ struct MigrationIncomingState {
-     /* PostCopyFD's for external userfaultfds & handlers of shared memory */
-     GArray   *postcopy_remote_fds;
- 
-+    /*
-+     * Timestamps for reporting migration duration via query-migrate on the
-+     * destination. start_time is recorded when the state moves to ACTIVE;
-+     * total_time is recorded when it moves to COMPLETED.
-+     */
-+    int64_t start_time;
-+    int64_t total_time;
+     if (s->state != MIGRATION_STATUS_COMPLETED) {
+         info->ram->remaining = ram_bytes_remaining();
++        info->ram->has_dirty_pages_rate = true;
+         info->ram->dirty_pages_rate =
+            qatomic_read(&mig_stats.dirty_pages_rate);
+     }
+@@ -1209,6 +1217,33 @@ static void fill_destination_migration_info(MigrationInfo *info)
+     case MIGRATION_STATUS_COMPLETED:
+         info->has_status = true;
+         fill_destination_postcopy_migration_info(info);
++        if (mis->total_time > 0) {
++            info->has_total_time = true;
++            info->total_time = mis->total_time;
++        }
++        {
++            size_t page_size = qemu_target_page_size();
++            uint64_t normal  = mis->received_normal_pages;
++            uint64_t zero    = mis->received_zero_pages;
++            uint64_t xbzrle  = mis->received_xbzrle_pages;
 +
-+    /*
-+     * Page counters for reporting RAM statistics via query-migrate on the
-+     * destination.  Incremented in ram_load_precopy() as each page type
-+     * is received.
-+     */
-+    uint64_t received_normal_pages;
-+    uint64_t received_zero_pages;
-+    uint64_t received_xbzrle_pages;
++            info->ram = g_malloc0(sizeof(*info->ram));
++            info->ram->total        = ram_bytes_total();
++            info->ram->remaining    = 0;
++            info->ram->normal       = normal + xbzrle;
++            info->ram->normal_bytes = (normal + xbzrle) * page_size;
++            info->ram->duplicate    = zero;
++            info->ram->transferred  = (normal + xbzrle) * page_size;
++            info->ram->page_size    = page_size;
 +
-     MigrationStatus state;
++            if (info->has_total_time) {
++                info->ram->mbps = info->ram->transferred * 8.0
++                                  / info->total_time / 1000.0;
++                info->ram->pages_per_second = (normal + xbzrle + zero)
++                                              * 1000.0 / info->total_time;
++            }
++            /* source-only optional omitted from output */
++        }
+         break;
+     default:
+         return;
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 7134d4ce47..a695d04a22 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -68,13 +68,13 @@
+   'data': {'transferred': 'int', 'remaining': 'int', 'total': 'int' ,
+            'duplicate': 'int',
+            'normal': 'int',
+-           'normal-bytes': 'int', 'dirty-pages-rate': 'int',
+-           'mbps': 'number', 'dirty-sync-count': 'int',
+-           'postcopy-requests': 'int', 'page-size': 'int',
+-           'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
+-           'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
+-           'postcopy-bytes': 'uint64',
+-           'dirty-sync-missed-zero-copy': 'uint64' } }
++           'normal-bytes': 'int', '*dirty-pages-rate': 'int',
++           'mbps': 'number', '*dirty-sync-count': 'int',
++           '*postcopy-requests': 'int', 'page-size': 'int',
++           '*multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
++           '*precopy-bytes': 'uint64', '*downtime-bytes': 'uint64',
++           '*postcopy-bytes': 'uint64',
++           '*dirty-sync-missed-zero-copy': 'uint64' } }
  
-     /*
-diff --git a/migration/ram.c b/migration/ram.c
-index 979751f61b..6646e5daad 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4417,10 +4417,12 @@ static int ram_load_precopy(QEMUFile *f)
-                 break;
-             }
-             ram_handle_zero(host, TARGET_PAGE_SIZE);
-+            mis->received_zero_pages++;
-             break;
- 
-         case RAM_SAVE_FLAG_PAGE:
-             qemu_get_buffer(f, host, TARGET_PAGE_SIZE);
-+            mis->received_normal_pages++;
-             break;
- 
-         case RAM_SAVE_FLAG_XBZRLE:
-@@ -4430,6 +4432,7 @@ static int ram_load_precopy(QEMUFile *f)
-                 ret = -EINVAL;
-                 break;
-             }
-+            mis->received_xbzrle_pages++;
-             break;
-         case RAM_SAVE_FLAG_MULTIFD_FLUSH:
-             multifd_recv_sync_main();
+ ##
+ # @XBZRLECacheStats:
 -- 
 2.43.0
 
