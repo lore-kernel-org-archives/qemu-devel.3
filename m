@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDB28E9D827
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF823E9D826
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9Woc-0003y7-Bv; Sun, 05 Apr 2026 19:23:38 -0400
+	id 1w9Wtb-0007GC-KS; Sun, 05 Apr 2026 19:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9Woa-0003xO-B0
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:23:36 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1w9WtY-0007Ev-Rq
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:28:45 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9WoY-0002yO-CH
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:23:35 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-824c9da9928so2482187b3a.3
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:23:33 -0700 (PDT)
+ id 1w9WtV-0003aM-Ny
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:28:44 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-35d971fbcddso1987292a91.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:28:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775431413; x=1776036213; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775431719; x=1776036519; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ddrBnai6+zqLQ99iRQc5aMZYHErVPD4mUwosAjSpJZg=;
- b=luB4sQaW2k2Th/cKpT3CbPVS5GOPLtIKZoeHMb5P1D2PRQ8QYNJOvtdu1/iYFen2r8
- 42uhBT6wucutUwOiXSmF9dVj414PmvU9aLCNcIMIikQf95tYQalBJP7kDJk5bfGYhfKX
- nTHna8Zy1gK88u0WRf5v5kb1NAq8nvrpalB+cYDDfqHm7zRFcIBMHgnTWugyYU+lkTP+
- WlfTzz8KsaGAEANXQ5yA5S/O4Wt2onAB/TGwUxmNHiKIU7l8Eo+YDAAScfKqk8O1+1F/
- lG1bxfIt5Y9k5DtcJ/ZUeGVaWX9ea2UsAJMGlotGCHynNrt2oMjpPPMYJ/uqq2MCj3CN
- 68KQ==
+ bh=sqJbMnERw4O5quG7FAOz+Iw/qKFIMiFLkqAoe2kSYqg=;
+ b=t2x4Fu+IpHdfLZIFDLJ3YvXpXtcAyFuo816YlR9eCFwo0LPoKKormaiCfk7F255klu
+ ywemPkWP8t2oTFOVMHlH/YQXJluMlaoPHfnGGJoznBpq+SrYfYPFl2o3rp3fG04WUJuz
+ bkexNBlX2bkkfScOTBHGsqiVXSyHFpntU8D5GWTohG+d8z1v1MxMVDAEN1gbDGhP+Yh2
+ 4jMCr8DffhW+fQUFCkpsHuRTKTbW0K2AMYYfC/nlZLNP1FS3gsFRd87kDdRN1FdmdNoU
+ ean4mWr8PQBBuOws4FOEyi4l8rEQSiNktUW/DCNZN1EDlDuzqU/Vgg4CJmXkLJz8NH3o
+ Ph9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775431413; x=1776036213;
+ d=1e100.net; s=20251104; t=1775431719; x=1776036519;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ddrBnai6+zqLQ99iRQc5aMZYHErVPD4mUwosAjSpJZg=;
- b=Xzx/a9+/ReufuzGyWtZvw2+bn6s2FOObZpvIJ2ui2VQBypdXr7dm6VVROlDiEZ1Gt0
- EafLmDON5IX5RI8nyGhCeYSYPBjQD54DlVwYb42fnAonrHTpOPa4vXKg0PMc+E0D7xCm
- B/MKoBNRQm0yMQ3AjyR3+/hja30L9VZ61WI+EPsJmcoHiJrY8wM9HfEG3C8jrqATzzUq
- 5WVkAB2Jswo3zJmwAWdYMBuN0fYEgUhBkDwNImhoZhmtT4Zcf4bDtVlvetb1MoKE7X29
- h5Ga1CFaH4zwyjPaelokBYjv+MdrZAgWt9tSjDhF0PRYs5jKbTjL19WTKLHzlbUyCadK
- XtEw==
-X-Gm-Message-State: AOJu0Yw9iknh8HChoJVO/SDWZjbaIU+zRc9pD5x1Hrx0Z9ki6NcHoOe8
- 3AdMU5ZXvzPss7QyLVqnnIo0tD5NivqdKZMAXH4y4kqCjhvGV/hzzpNd80HzvfU+QcfftJQyAwi
- v12j1
-X-Gm-Gg: AeBDiesg+Wen6poM1+XhVrFxeB+GXIvJH4M56oh6+rrDU4swHT4xKkbs7nE86Eupknf
- YvbNTB2bbUETuR2duTpyGuy670gZHvT9XO5pjGB+AtNGiWK2T5h0tt4LMWG9EGHnn1tJkHfprcf
- 7bJeDMvvaRZyCdCj+Nhv/3DTHSNcdBMIk0yvYbWr5Op4absC/2Mv1CFJojLGEleOdXYx/AvFt/P
- Hny3o5aJoJK++vP7tgcXaAfQpTMZAv/YvmzljXy2IHwGN1uoz988UVwxcPUPHBtCEqjKLlzE1WE
- Zp/uq7iC876wnhtm+Gq7oafq1+FBLt2ze+io3mWcO4W4LUVnE4yGcwrwt0CYPRsZLptAoFa9g7W
- wi3re8+i8DYHzJF+rMjwW5c0quXf/a/Xe0mbv0tZwcJYKGpsk8F4/k2mWAGZ3+SHs3HX/BwizD/
- BUlFQ7Flu5rOeiVpNfraK+oaJm8ZkPksFPGvbm82P8vtvpUZnL8GifzJ1cmfDtm7aeqyE=
-X-Received: by 2002:a05:6a00:3cd5:b0:829:9ea2:3e17 with SMTP id
- d2e1a72fcca58-82d0da33ed3mr10861311b3a.9.1775431412712; 
- Sun, 05 Apr 2026 16:23:32 -0700 (PDT)
+ bh=sqJbMnERw4O5quG7FAOz+Iw/qKFIMiFLkqAoe2kSYqg=;
+ b=B5Oc0Ca1ZB6mPs+8BNSqN0iB4hP8iJs+aJTxGqnEcvuw3xrl92GkAuq5Gu3HjcX1Fb
+ usgM7GEne6ivPhToCf8V94WHlLpU6PG6PSGnIu3R3hkNqxPeTHXaZfwVtq/EaCQNX1Vi
+ eh+6pQZlv12mhkoEDIofgoCl3qa8XD609gdeo87Uz/md6Do3PGDKnAuMiM9rIqyxF3TQ
+ 7LgVW7saWDMcRNTAq+UhPVo8OUaZ1KGIvR28KMng8yOvfpqKAW1QbdTw87B1Mt0xy1W6
+ K7aMdg2KpXuD7wnMMcMG+auMzZj2yvA8xuMrjBlTAHnUXCmtM74Usu12hu2k6OiYLTcQ
+ BGow==
+X-Gm-Message-State: AOJu0YwPaSGa8iBK5d54yJ8KyT3tGVCkMSe8Ycc9CoirhcDGm20IDEYQ
+ iIDZYAYzhBcOViX4TSIBSFVdiFJ5+i+R0TjapKwp3NO4C0wW7DezA2mAyoR1jgNmcIYpczsM+3U
+ qE1eX
+X-Gm-Gg: AeBDieuKTLafgogxeV72WXl+Zm+dRwAcafh73LMuYuBHHs8085QT3QWu1bc4y59hfe5
+ sEYRQobPNs7bd9NudziKEiqf7M5fwz7GEs83cTDRuhuJ9BshIiNwdq2jQe956Un0JCxi/G3QGtS
+ PFX6i60WvOa6oHTQ91hPUKjcRcpkD5bd6x2zTCiUCKz+/nZ1L/fFK3Jl2feqv07zS3+01vy8waX
+ +lzAhpTU8H5NCSok9QwNSkLs5pveH2sXiiCZrmbfYIuxyXEhUtoifK7bpKTk2ud4UqOG5GRIzue
+ UaXqkLOHbHgoWcvMoUj+9IS3PplAn3Eb0xMWdq1GHuHjPKvB6LQ3K7LQXsLYnXmbeMt0Ff1DSKK
+ Yl727iFsQ4yYm/obFNcqZaYm5OMjkk3tralrpEljpCHBn1V5itHQq3eXvElRRS2EVtb0sqwmfQH
+ QKfxjjzQy/7As38AoNRlneaeeWIt2e0MhruQqw1oQghXK3SCemToArlTu15Uf0hOcLxz4=
+X-Received: by 2002:a17:90b:2ec5:b0:35b:9e53:e2df with SMTP id
+ 98e67ed59e1d1-35dd67263f9mr12598199a91.2.1775431719556; 
+ Sun, 05 Apr 2026 16:28:39 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9cf065asm11437164b3a.8.2026.04.05.16.23.30
+ 41be03b00d2f7-c76c657e703sm10517142a12.22.2026.04.05.16.28.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Apr 2026 16:23:31 -0700 (PDT)
-Message-ID: <d44fc02f-b0e7-42b6-8b62-8b153f36f63e@linaro.org>
-Date: Mon, 6 Apr 2026 09:23:27 +1000
+ Sun, 05 Apr 2026 16:28:39 -0700 (PDT)
+Message-ID: <041ddc08-b65a-46ee-8b6e-e1fd0ee5ad95@linaro.org>
+Date: Mon, 6 Apr 2026 09:28:34 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 06/35] target/arm: migrate PAC trap syndromes to
+Subject: Re: [RFC PATCH 07/35] target/arm: migrate BTI trap syndromes to
  registerfields
 To: qemu-devel@nongnu.org
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-7-alex.bennee@linaro.org>
+ <20260320130607.2071996-8-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260320130607.2071996-7-alex.bennee@linaro.org>
+In-Reply-To: <20260320130607.2071996-8-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,15 +106,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/21/26 00:05, Alex Bennée wrote:
-> syn_pactrap is fairly simple as the ISS is all RES0.
-> 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/arm/syndrome.h | 23 ++++++++++++++++++++---
->   1 file changed, 20 insertions(+), 3 deletions(-)
+>   target/arm/syndrome.h | 11 ++++++++++-
+>   1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+> index 19c7659fb4f..0520e51a686 100644
+> --- a/target/arm/syndrome.h
+> +++ b/target/arm/syndrome.h
+> @@ -426,9 +426,18 @@ static inline uint32_t syn_pactrap(void)
+>       return res;
+>   }
+>   
+> +/*
+> + * ISS encoding for an exception from a Branch Target Identification
+> + * instruction.
+> + */
+> +FIELD(BTI_ISS, BTYPE, 0, 2)
+> +
+>   static inline uint32_t syn_btitrap(int btype)
+>   {
+> -    return (EC_BTITRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL | btype;
+> +    uint32_t res = syn_set_ec(0, EC_BTITRAP);
+> +    res = FIELD_DP32(res, SYNDROME, IL, 1);
+> +    res = FIELD_DP32(res, BTI_ISS, BTYPE, btype);
+> +    return res;
+>   }
+>   
+>   static inline uint32_t syn_bxjtrap(int cv, int cond, int rm)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
