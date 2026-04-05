@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4A0E9D826
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 22:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5933E9D813
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:00:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9W6Z-0001Jn-Ao; Sun, 05 Apr 2026 18:38:07 -0400
+	id 1w9WRO-0002Ai-CR; Sun, 05 Apr 2026 18:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9W6X-0001IH-F7
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 18:38:05 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1w9WRM-0002AY-Hc
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 18:59:36 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9W6V-0005VN-LY
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 18:38:05 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-82748257f5fso2518997b3a.1
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 15:38:02 -0700 (PDT)
+ id 1w9WRK-0007zt-Nr
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 18:59:36 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-c76cce85bd9so1098233a12.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 15:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775428681; x=1776033481; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775429971; x=1776034771; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jzAW3EIFp0+QiQxjJE6yjUpF77Z7rvsyjuEYd+NvEF4=;
- b=N7aTG9hq9Qg10zZpSBCLvyzWx7UnyglM265x1k/4bSDJJlNldVXfV81iErSo3d2dsH
- RrToAq085/3jAShfGW5B0rKnZ5iVbIKR/NJ6ONErH4YA2t9mSUcdXhAP77EJn5t2ALPy
- mQKQLaY4B5hs4VUH9AiWzocEbzkJdRP0YgWh05x4cFP/hyMiWJXjefGI+30EHSSdRn1+
- c1m8UphUJaAFZ6r7L8m37e7n/g2X0NtEFEqZhmyuoVK6u+OIKe/Oq9u9Pgymtj+6o/Cp
- AXlQ3gWVNFc9tQHAGfeW2ltYQR/Py9Y9rbo/AHqceAIk061Po04rWK9o1tnd0ZLOk1+j
- Yieg==
+ bh=CEjO6cA0xH1DV8M9V2QCUTnh13QATmp0HWimZlUlaBU=;
+ b=X0PAjsYHBiTlJDgU0APo1kJqTZGJjOoH1nkIItmiuZ4u7OpF/nM/Ibmd13hjk/WSgc
+ ad7ZdxsF+MPxwmePBh3LXwhk8ax5cxL1sGVGtiQFV/OXvhbx92UtOVaSX9xAZjiX55SP
+ DqEsTnjuJ6+aHtsDRr6zlaecitDrrUgoz9YODK4eW815cpjsWtdoW+CmV8gpvAWnNBQm
+ EZsAiSIRiWovxGNOVMqeqnh0zo7M2YmaDBRIFlGgrq3EPd3gICQV4qPyNIMhUkuZjcfP
+ FzqMODtgRH47IgizmON7dg/m7bG3eNeX5wXuvu7ngPsMlccoBxsN46Hwn+ZyWKOXU9zz
+ M2Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775428681; x=1776033481;
+ d=1e100.net; s=20251104; t=1775429971; x=1776034771;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jzAW3EIFp0+QiQxjJE6yjUpF77Z7rvsyjuEYd+NvEF4=;
- b=SZATw4OcWcXn6Mdenur/StJt9JJka4I3XKqSmQ8A4mmbbA5F7pMj8zcX9yGqGjfH+j
- +bYKV3N4drEc2PlIbAv6TPij9N0r/VLBQzTpchK1rINHqt2pjjfI2EOmz7FugtvkVbGb
- mX8fAspXPgiUOSTZbJE+Dqx7wb8i53/s82MK0/eb8oE3vLQpPt9Sm/UdSGKTv6wHJ6Sn
- lhSaXWwX4eXqvQkMabt727deHoZIl5EfNYWqDMADSzixHm+VbbdfdmkelBOk+6Y/R41s
- U0SwPNTVD7YDbjvMq9rEtA8zmB+8CPW08/7oTVEdEKsgZfnzL8pKor4JBpcdGQrfPrso
- ntQg==
+ bh=CEjO6cA0xH1DV8M9V2QCUTnh13QATmp0HWimZlUlaBU=;
+ b=ZYznXfDnD5GNOJJ0+XoE29Hy78vbxSZoILPZF4ZxlMJi0zverTVVd8+GIEe8XcPxFC
+ 1apYd9D2iKAd1ZTtZVCE2JHsZ5W8ZzuKLeD1yXbmGvEixg9IueB//FqXfLhamwLZ5Bqt
+ q7A0ZvpEfY0A65c4zTH+ME7FMjMG9hViU6+yxrDo96JEoFKe/ANgdphne/dWlV9K4s4Z
+ eLFCPydhSwegkKP8pmRiBu0dxsAl+fYZNAXFjpbNBteTpgnJKKlrsIMJ6iROESibWPGw
+ sHLc9oDeGJmrB12X0owpUItlmbOLCIPUt6SUgW2aTZeympb4IbKGb0K3F/2ROeyK1bOE
+ zagg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzvtznm5mqNaQYVAtBEQdTcF8R+voftZaJniJob15vym3+g/4V54/cr/N00iDuQTb1kD3JSRjxKqJJ@nongnu.org
-X-Gm-Message-State: AOJu0YzfO4pMRaT43vvHQdLwgH9rEMBBGlIeB6MBazjqHVPv7Kis9wBb
- rVs4NaiWRj0c8K0HAOO6rcWD3wRmja3lTvXt9bqSD45IbDoPrc7Ie+ZiNm0G1kOYbnc=
-X-Gm-Gg: AeBDietRTIJIscbze2p7UgbhtT57YiP0t3W/nnTlBh/SHmNxW73cENVLQBssbxqX5DZ
- L+wxFQ1re8ekNlwJqCyTJa5RmfejSQDsRcCAlDIiICjLP44l+I+L72jSpMzGzZ1T0cRAeeF+tdI
- TM3HBzdLW03PQGVOFMZMiAB5F3ZRaaolq3R2fCpB4y4KRdQv62faZKMw/sLrUrwcAvV3hn4yfbf
- qa6xUOWcZmfx2UXveysePF/vmmQ4Q7Ucx7yCF08t2uDz1u3n5LRX+It66stB+2YDFYkiFgJchig
- zB+bzwEgiqsIy0gqTrxr28KmkLfvJ4wdMTmDRH86VUYSwGLc0Qh1DZo9x0hafTxavV8spVOC52m
- guF/RuRPxaUEtIi4WtPEVrgpkEdm2MbbrT944lLwOtVIC9GXak0NQZ1SXS/cNMVY2nEqtot5h0L
- UdQ5gxQfCqP/WjZT5LFIAXtI+iZFZ0SKk26AEWcJbI5q6mVGq4TcRJDUBIe/OnNGZAu14=
-X-Received: by 2002:a05:6a00:4649:b0:82a:7b0b:f946 with SMTP id
- d2e1a72fcca58-82d00364e54mr11675382b3a.24.1775428680843; 
- Sun, 05 Apr 2026 15:38:00 -0700 (PDT)
+ AJvYcCWituWCbuDFMZ+eLTeiajavUZ5kDUGjVYFMBsZLjauO/abRk2Vs6se5k1FMKfW51l3ElCZR1G6t+Se2@nongnu.org
+X-Gm-Message-State: AOJu0YyWi8kUafl8IPpKRuYzresdR5+YTINp/0+Icf2WpkiZnoQkptvV
+ xd8JfWZoj/81sgHARLZwNssZqflnk5UfY1ZLunLoC68fpnD4ay10PhorsjfXC5G4SL3fB41LUpr
+ jgUrR
+X-Gm-Gg: AeBDievqx6svdP6tSelJfaNMLA4OCvUZZ/wiUFJHECBBVRMTXWcFaRJ+MZBBGppA6sk
+ SzszryOD4K3lFRXq+hKsA/r9JQ77eLl/Y6wBb+8mNTWkKNjxApIvjlyCfPG88bWt067rqWF5IZw
+ oEs9sVyvwNKLXsgpUoIwyYMAweW2Ah9vpDEXmLukXIK68VFnkFhB1bBvZJcNPRULPuzu5c3mgyH
+ bEORLdw1AxxWe+yWzBVivaX0DBIDOOrgIrhxMgB4Ehx9rROhvBxO1n++V5akGTWqNcLLgjMJ/2A
+ E8cDsNwTjdnlO21TnDtxo36mNVP+6yLUpWOgTs2dALFcZUFpeuZnXDEFGgKqtpe030HQWrV8eZt
+ sjdgIf2MmI8cY+rE7FApKz6EkVESTCl9YFmXqib/dKU7x1qngbO3Vp4nlKLfy16NS2SahX3diO9
+ 1lW+5MAeVcGSBcdJRKY6hl4NaXCvND4FYjRiDZoLhKsXUCTdq3IgigxaSqeUc7sgEX8XilR6XEZ
+ cBKWQ==
+X-Received: by 2002:a05:6a00:414b:b0:82c:d8c3:6983 with SMTP id
+ d2e1a72fcca58-82d0dbcfdd5mr10297216b3a.51.1775429971213; 
+ Sun, 05 Apr 2026 15:59:31 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9c41b8dsm11331593b3a.34.2026.04.05.15.37.56
+ d2e1a72fcca58-82cf9c6ad8asm12345723b3a.40.2026.04.05.15.59.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Apr 2026 15:38:00 -0700 (PDT)
-Message-ID: <d1871c2b-6300-450f-a43a-68a83afced0e@linaro.org>
-Date: Mon, 6 Apr 2026 08:37:52 +1000
+ Sun, 05 Apr 2026 15:59:30 -0700 (PDT)
+Message-ID: <b23cc492-6a78-456c-a97e-b935b9277b34@linaro.org>
+Date: Mon, 6 Apr 2026 08:59:24 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/13] target/arm: storing to canonical tag faults
-To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260309-feat-mte4-v4-0-daaf0375620d@gmail.com>
- <20260309-feat-mte4-v4-8-daaf0375620d@gmail.com>
+Subject: Re: [RFC PATCH 3/4] alpha: Replace helper_set_alarm with Typhoon
+ Cchip MMIO register
+To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260401170454.32045-1-yodel.eldar@yodel.dev>
+ <20260401170454.32045-4-yodel.eldar@yodel.dev>
+ <1c6d7e6f-eb16-4820-a4c2-35767c8db919@linaro.org>
+ <0f822f37-de4a-44d3-81dc-61f9caee0403@yodel.dev>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260309-feat-mte4-v4-8-daaf0375620d@gmail.com>
+In-Reply-To: <0f822f37-de4a-44d3-81dc-61f9caee0403@yodel.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,101 +110,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/26 08:59, Gabriel Brookman wrote:
-> According to ARM ARM, section "Memory region tagging types", tag-store
-> instructions targeting canonically tagged regions cause a stage 1
-> permission fault with MTX enabled.
+On 4/5/26 09:32, Yodel Eldar wrote:
+> On 03/04/2026 20:01, Richard Henderson wrote:
+>> On 4/2/26 03:04, Yodel Eldar wrote:
+>>> From: Yodel Eldar <yodel.eldar@yodel.dev>
+>>>
+>>> This commit creates a QEMU-specific (non-standard) MMIO register
+>>> in Typhoon's Cchip to replace helper_set_alarm() and to move
+>>> the QEMUTimer pointer, alarm_timer, out of the Alpha CPU and into
+>>> the chipset code.
+>>>
+>>> Currently, PALcode writes to the QEMU-specific, synthetic
+>>> Processor Register (index 251) and triggers the invocation of
+>>> helper_set_alarm() as a side effect in QEMU, thereby setting
+>>> the timer alarm expiration value.
+>>>
+>>> This works, because the AlphaCPU contains the QEMUTimer and
+>>> CPUAlphaState stores the alarm expiration value; however, the timer
+>>> alarm callback resides in and is specific to the Typhoon chipset,
+>>> thus the CPU and the chipset are entangled.
+>>>
+>>> By designating the currently unused offset (0x7c0) of Cchip as the
+>>> location of the timer alarm expiration, we can disentangle and
+>>> better encapsulate both.
+>>>
+>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+>>> ---
+>>>
+>>> Notes:
+>>>      The patch to the palcode-clipper binary that follows this
+>>>      one is necessary for this patch to work; I've left the
+>>>      diff to the source in the notes of it for reproduction.
+>>>      Philippe:
+>>>      Thanks, again, for the suggestion of decoupling the CPU from
+>>>      the Typhoon using IRQ lines. In my response, I guessed that
+>>>      getting the CPU index would be trickier than moving the timer
+>>>      into TyphoonState; perhaps you'll find it amusing (as I do)
+>>>      that it appears I had that backwards (due to the PALcode
+>>>      peculiarity)!
+>>>      The remaining CPU interrupts will be refactored in v2 of that
+>>>      series.
+>>
+>> I'm not keen on this.  I would much rather keep the synthetic processor register than 
+>> add a synthetic CChip mmio.
+>>
 > 
-> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-> ---
->   target/arm/tcg/mte_helper.c | 69 +++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 69 insertions(+)
+> No problem... Are we okay with exposing a typhoon timer helper
+> and TyphoonState to target/alpha/sys_helper.c via the inclusion
+> of hw/alpha/alpha_sys.h?
 > 
-> diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-> index 07797aecf9..ddf4ffc51b 100644
-> --- a/target/arm/tcg/mte_helper.c
-> +++ b/target/arm/tcg/mte_helper.c
-> @@ -227,6 +227,20 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
->   #endif
->   }
->   
-> +static void canonical_tag_write_fail(CPUARMState *env,
-> +                                uint64_t dirty_ptr, uintptr_t ra)
-> +{
-> +    uint64_t syn;
-> +
-> +    env->exception.vaddress = dirty_ptr;
-> +
-> +    syn = syn_data_abort_no_iss(arm_current_el(env) != 0, 0, 0, 0, 0, 1, 0);
-> +    syn |= BIT_ULL(42); /* TnD is bit 42 */
-> +
-> +    raise_exception_ra(env, EXCP_DATA_ABORT, syn, exception_target_el(env), ra);
-> +    g_assert_not_reached();
-> +}
-> +
->   static uint8_t *allocation_tag_mem(CPUARMState *env, int ptr_mmu_idx,
->                                      uint64_t ptr, MMUAccessType ptr_access,
->                                      int ptr_size, MMUAccessType tag_access,
-> @@ -372,7 +386,11 @@ static inline void do_stg(CPUARMState *env, uint64_t ptr, uint64_t xt,
->       /* Store if page supports tags. */
->       if (mem) {
->           store1(ptr, mem, allocation_tag_from_addr(xt));
-> +    } else if (canonical_tagging_enabled(env, 1 & (ptr >> 55))) {
+> If so, we can add an opaque pointer parameter to helper_set_alarm
+> carrying the TyphoonState and invoke the typhoon timer helper;
+> e.g.:
+> 
+> /* Inside target/alpha/sys_helper.c */
+> #include "hw/alpha/alpha_sys.h"
+> 
+> void helper_set_alarm(CPUAlphaState *env, uint64_t expire, void *opaque)
+> {
+>      CPUState *cs = env_cpu(env);
+>      TyphoonState *s = TYPHOON_PCI_HOST_BRIDGE(opaque);
+>      int cpu_index = cs->cpu_index & 3;
+> 
+>      if (expire) {
+>          env->alarm_expire = expire;
+>          typhoon_timer_mod(s, cpu_index, expire);
+>      } else {
+>          typhoon_timer_del(s, cpu_index);
+>      }
+> 
+> }
+> 
+> We'd have to keep alarm_expire in CPUAlphaState, because
+> palcode-clipper would still expect it, but alarm timers would
+> be moved into the typhoon as an array indexed by cpu_index.
+> 
+> WDYT?
 
-Pass mtx from translator, all instances.
-
-> @@ -415,6 +443,11 @@ static inline void do_st2g(CPUARMState *env, uint64_t ptr, uint64_t xt,
->                                     MMU_DATA_STORE, TAG_GRANULE,
->                                     MMU_DATA_STORE, ra);
->   
-> +        if (!(mem1 && mem2) && canonical_tagging_enabled(env, 1 & (ptr >> 55))) {
-> +            canonical_tag_write_fail(env, ptr, ra);
-> +            return;
-> +        }
-> +
-
-This isn't correct.  The store to mem1 is independent from mem2 and might succeed; the 
-fault from mem2 must increment the address.
-
-> @@ -448,6 +486,7 @@ void HELPER(st2g_stub)(CPUARMState *env, uint64_t ptr)
->       int mmu_idx = arm_env_mmu_index(env);
->       uintptr_t ra = GETPC();
->       int in_page = -(ptr | TARGET_PAGE_MASK);
-> +    uint8_t *mem1, *mem2;
->   
->       check_tag_aligned(env, ptr, ra);
->   
-> @@ -457,6 +496,29 @@ void HELPER(st2g_stub)(CPUARMState *env, uint64_t ptr)
->           probe_write(env, ptr, TAG_GRANULE, mmu_idx, ra);
->           probe_write(env, ptr + TAG_GRANULE, TAG_GRANULE, mmu_idx, ra);
->       }
-> +
-> +    /* If we are storing to a canonically tagged memory region, fault. */
-> +    if (canonical_tagging_enabled(env, 1 & (ptr >> 55))) {
-> +        if (likely(in_page >= 2 * TAG_GRANULE)) {
-> +            mem1 = allocation_tag_mem_probe(env, mmu_idx, ptr, MMU_DATA_STORE,
-> +                                           2 * TAG_GRANULE, MMU_DATA_STORE,
-> +                                           true, ra);
-> +            if (!mem1) {
-> +                canonical_tag_write_fail(env, ptr, ra);
-> +            }
-> +        } else {
-> +            mem1 = allocation_tag_mem_probe(env, mmu_idx, ptr, MMU_DATA_STORE,
-> +                                           TAG_GRANULE, MMU_DATA_STORE,
-> +                                           true, ra);
-> +            mem2 = allocation_tag_mem_probe(env, mmu_idx,
-> +                                                  ptr + TAG_GRANULE,
-> +                                                  MMU_DATA_STORE, TAG_GRANULE,
-> +                                                  MMU_DATA_STORE, true, ra);
-> +            if (!mem1 || !mem2) {
-> +                canonical_tag_write_fail(env, ptr, ra);
-> +            }
-> +        }
-> +    }
->   }
-
-No changes required for st2g_stub, because that's only used when tagaccess is false.  See 
-AArch64.S1CheckPermissions.
+I don't understand why you want to move the QEMUTimer.  What do we gain by preventing the 
+cpu from accessing the QEMUTimer?
 
 
 r~
