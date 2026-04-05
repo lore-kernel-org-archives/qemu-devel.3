@@ -4,100 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACFB1E9D812
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 17:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E792E9D800
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 18:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9RZ7-0005yd-Lc; Sun, 05 Apr 2026 13:47:25 -0400
+	id 1w9Rs9-0007vV-NX; Sun, 05 Apr 2026 14:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w9RYx-0005xv-BH
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 13:47:07 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
+ id 1w9Rs8-0007vA-7F
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 14:06:56 -0400
+Received: from mout01.posteo.de ([185.67.36.65])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w9RYu-0001Rz-DN
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 13:47:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775411168; bh=/1cQue5+bZW824a/afveGLBPYUGjJ1YGMCVMNAu1jhY=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=iP/BUbFTydA+AYwnof+EVvUO7At0hXimmhSIcOolUfpMJX641n0GI9HzaKejjTzWe
- 36smakH724ls0ScH85+M0RHKmKqnEh1B6FOmQ9NPT609DCeSDrYnDaebqYH5qnDsON
- eQ4xF5pjZin/Us5aGXONlsWN4/gBKYu4z9KDrZVLStaWgf54OIm/+X+wIgSb3d5hOX
- gThi2G/Npg4fdtmIwAgncqFZKEg1EZ3OL6zZjEq9AboFDnzJ9Dl5jce/C6nZ+cYR3y
- eaVtIQcsrkyxb5XPeweu4nJIpTyDPcCUP20ZTDTcAysIGI+6+pQesl3BWOAMw8MBqR
- 1ypVqbmejAmPA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id EC58019AF9E;
- Sun, 05 Apr 2026 20:46:07 +0300 (MSK)
-Message-ID: <518c29ac-0477-4a5b-a724-85f6f81bef7c@tls.msk.ru>
-Date: Sun, 5 Apr 2026 20:46:49 +0300
+ (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
+ id 1w9Rs6-0003dJ-5H
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 14:06:55 -0400
+Received: from submission (posteo.de [185.67.36.169]) 
+ by mout01.posteo.de (Postfix) with ESMTPS id 5FB1F240029
+ for <qemu-devel@nongnu.org>; Sun,  5 Apr 2026 20:06:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu; s=2017;
+ t=1775412411; bh=jmhmse9x3N7NO6eCDFxe+fhPthnWKL1/n/S2Iarfx4Y=;
+ h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:From;
+ b=Yxj2L9e48eZ1JQnrI+uMmmXd/85O1Wp/KvULILq3eEszew3SUsDccZ0HVAR40PY90
+ ab2y6iII2OVO492gRfN6S5owts+df2iBiEbsFzglViuO5eS5+KWTOhpW5+RWrlC6HV
+ JY8itOnMFWU0RkUsPMq8ZOxqtSvn/zeSQNDyBKf7YVGjZ4jMq5D08vtL2foTfDvYUi
+ UM4s6Or8mn0CI8WgHslM7m8aalPcyuEdrGfFmxfYtrY7TDrZpChy15ij3MA3uC3+rB
+ vT9/imZFAbLdQxvzOecnG6l8hPgjBKoia5StzCOyH0sPNJe39J6rf3XJZ1LYRmjatX
+ u/iECSYJpBGKg==
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 4fpgQK4lHvz9rxF;
+ Sun,  5 Apr 2026 20:06:49 +0200 (CEST)
+Date: Sun, 05 Apr 2026 18:06:50 +0000
+From: Thomas Huth <th.huth+qemu@posteo.eu>
+To: Christian Brauner <brauner@kernel.org>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Philippe
+ =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, "Daniel P.
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>
+Subject: Re: [PATCH 5/5] tests/functional: add e2e test for dynamic QMP
+ monitor hotplug
+Message-ID: <20260405200648.1f7c6a3d@tpx1>
+In-Reply-To: <20260402-work-qmp-monitor-hotplug-v1-5-6313a5cdd574@kernel.org>
+References: <20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org>
+ <20260402-work-qmp-monitor-hotplug-v1-5-6313a5cdd574@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0 0/6] allow building tools and qemu-guest-agent on
- 32bit hosts
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260403104327.1163942-1-mjt@tls.msk.ru>
- <878qb27dkm.fsf@draig.linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <878qb27dkm.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth+qemu@posteo.eu;
+ helo=mout01.posteo.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,45 +78,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.04.2026 22:03, Alex Bennée wrote:
-> Michael Tokarev <mjt@tls.msk.ru> writes:
+ Hi Christian!
+
+Am Thu, 02 Apr 2026 23:19:20 +0200
+schrieb Christian Brauner <brauner@kernel.org>:
+
+> Add a functional test that exercises the full monitor hotplug lifecycle
+> with a real socket connection:
 > 
->> This is a patchset which makes qemu-guest-agent, qemu-img & qemu-nbd
->> buildable on 32bit hosts again.  The patches are simple enough to be
->> picked up for 11.0.  The one from Helge is marked as RFC still, but
->> I'd love for it to be accepted the way it is.
->>
->> All patches has been on qemu-devel previously, I just collected them
->> into a single batch.
+> 1. Launch QEMU
+> 2. chardev-add a unix socket chardev
+> 3. monitor-add to attach a QMP monitor to it
+> 4. Connect to the socket, receive the QMP greeting, negotiate
+>    capabilities, and send a query-version command
+> 5. Disconnect, monitor-remove, chardev-remove
+> 6. Repeat the entire cycle a second time to verify cleanup and reuse
 > 
-> How are you configuring the 32bit build. I'm trying:
+> This complements the qtest unit tests by verifying that a real QMP
+> client can connect to a dynamically-added monitor and exchange messages.
 > 
->    '../../configure' '--disable-docs' '--disable-system' '--disable-user' '--cross-prefix=i686-linux-gnu-'
-> 
-> but failing with:
-> 
->    Command line: `i686-linux-gnu-gcc -m64 -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include -I/usr/
+> Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+> ---
+...
+> diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+> new file mode 100644
+> index 0000000000..f8f24320c6
+> --- /dev/null
+> +++ b/tests/functional/generic/test_monitor_hotplug.py
+> @@ -0,0 +1,102 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test for dynamic QMP monitor hotplug
+> +#
+> +# Copyright (c) 2026 Christian Brauner
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
 
+Please add a SPDX license identifier for new files - otherwise
+scripts/checkpatch.pl will complain.
 
->        9 |      QEMU_BUILD_BUG_ON(sizeof(size_t) != GLIB_SIZEOF_SIZE_T);
->          |      ^~~~~~~~~~~~~~~~~
+(and bonus points for fixing all warnings from pylint ;-))
 
-Umm.  This is all mixed up.
+> +import os
+> +import tempfile
+> +
+> +from qemu.qmp.legacy import QEMUMonitorProtocol
+> +
+> +from qemu_test import QemuSystemTest
+> +
+> +
+> +class MonitorHotplug(QemuSystemTest):
+> +
+> +    def setUp(self):
+> +        super().setUp()
+> +        # Use /tmp to avoid UNIX socket path length limit (108 bytes).
+> +        # The scratch_file() path is too deep for socket names.
+> +        fd, self._sock_path = tempfile.mkstemp(
+> +            prefix='qemu-mon-', suffix='.sock')
 
-  -m64?
-  -I/usr/include/glib-2.0 goes before -I/usr/lib/i386...glib/ ?
+We've got a socket_dir() function in the test framework to create socket
+paths ... could you use that one instead?
 
-You should have glib-dev:i386 and pkgconf:i386, I guess.
+Apart from that, patch looks fine to me.
 
-But I never tried to build it on my regular environment.  I only built
-it by sbuild (either --arch=i386 or --host=i386), or on a porterbox.
-Though, I just tried to build for --host=armhf on an amd64 chroot, and
-it worked too.
+ Thomas
 
-This is all about debian.  I don't know how it all works on other
-distributions.
-
-Thanks,
-
-/mjt
 
