@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C52E9D826
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DEAE9D827
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:22:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9WmH-0002BP-Jt; Sun, 05 Apr 2026 19:21:13 -0400
+	id 1w9WnU-0003C4-Ip; Sun, 05 Apr 2026 19:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9WmF-00029W-LB
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:21:11 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1w9WnT-0003Ao-42
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:22:27 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9WmE-0002kv-3X
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:21:11 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-82cef263bedso1517139b3a.0
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:21:09 -0700 (PDT)
+ id 1w9WnR-0002s1-KG
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:22:26 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-35c206f0481so3286323a91.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775431268; x=1776036068; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775431344; x=1776036144; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JfeZM4akJPrmB6dECv4zNkmvHYj+AyV5q6bsVdV63zs=;
- b=RviU5yySJu3PO0ptymzD8FW7v4z2fSjQT63S/kcwWcB26iRE82Hkgn0sblnEAxrNhh
- rdY75Wh30egjsZr68mHTkGkM7zyvVTzSUyTfGXYVWb+7nWZPMCG0mkAFt5IerIzB7boB
- lDtslsh3i802kSyA1Rp6HxH3a3gw3CvVTJ3Ht0dAcG21BMfXlEzVT+WaEO+1haf3BU0O
- ovbfZEEKv0lS7/zIkMVFeH73cVLiZ3En1k+MRgWuLRjQvnp7nJidl1y96LAeY/Y+ocni
- pUU6Gok2z5AfGCK9gd8SpnfOrmJAIjWdueHiYe7B6XltbDDi8vZ7tSWyANUiM+HdDGqT
- dOng==
+ bh=tp3zmo5L29XsyPQdubePyff6DmBK7RGaR/pnwo6K6y4=;
+ b=piXRhdbVZHSQOMITbjCQnSJeoDsUD+hvlTLhzdzaC6jjo25+m5YXlEO3Lrcya6CWIR
+ fUETV6s/nwhDPkLgf8EJ6JDKkF2MsaOYwCBfLdnExzjs6Zb8T3UopGflTY6BNsQ9r8T+
+ EjLTtoljieowvDeeYoZtZXgcBGN7lTd2JfAllTjjDns3mRdyhxr3B6dN5AlYhqNr7Cgx
+ IWUZxSFw2+BbgJXyGfjRuMFBh9CtUwSyyV7+zkdcVTJ0nOGQC4ltxcKe4+SPynbGAwmz
+ 7/+liMF/j6AcM+LSc3AppcRVyVezTfal1DzZcrOvfli2ZZppY35fOioz5Ff+0MVf1eME
+ PsTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775431268; x=1776036068;
+ d=1e100.net; s=20251104; t=1775431344; x=1776036144;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JfeZM4akJPrmB6dECv4zNkmvHYj+AyV5q6bsVdV63zs=;
- b=lrH/rJXZ71hnFVzSuz9nqn406EQHAY7sW2c8DdfDcmczoRpz9JgA24vqfAv9jAoU31
- T9gCEW+Lx4QlO+pPiTccIxt+m8XcOjfbrqf2xfgmGAjCYaY5if5EpGexV6Sj4eNAGHJe
- J4BlmDp9YTcOeTQKvLlVa4+K+y6eSPm448a6tOHkmc6v5zlfXShDtKckwWflkv9KN2eJ
- x78jnQCsyNYQIr7oNzLemJDait7lBCHatS6pBWAQfd9HqQHtFEcr5UjB/pSzymiIyBMn
- qqCDqBsDIOQGBniTAFyw3ByyqzPax8SgY6OKx0Qi3sUbt5TYScmfuRTuO5qb2fs1uO50
- zk7A==
-X-Gm-Message-State: AOJu0YzCqgvLMnMs2SSWy3ZrEWq1SVdfHAouXJ04JTrHmJYvrNdj7zCf
- wsCQ17mb05p7545KtVM/OXI2IOYGoKii3rdYl9l4+Tt341S/qSBkdXHpx+SSPx055b/SHstpXBh
- gytgN
-X-Gm-Gg: AeBDievzg2IWtKnveKg6GDytWazH3NUsUtlsJbf0cfe050e9lQ4s2IXOoENnqutIfwd
- GrhKgdVYs2cFdAI1bTMLkLMqLjH6YH8T+tmsKBZ/PULqQ1Ie2Gejli2R1cLjCevxabOr0gpyWQE
- cn8MioU1tCVdArhO8yxniFVBnTJbfJIESqttDocGkXUbD54RY5KIjD4t5wMHPHKLlsUJQ4Y+klI
- Dd1qycXP72wLzqK0vzGIAZ5O99vFInBOJN9XIv7RIa8kFR2Zlud5o8DOAqYkpsjlJprtM8/xvh8
- VY0L2RqeMZByQK4lb4Q+0P1Nn3Nz3qJ0jCGVyoKZ1x9StGbFSLQcAw4C0CnZGF8ZtaE4NhGWMWp
- WPtfEZUp9SuEyh6ItXZtlElYqcE/+IaB5ExURvrjI0JUkvLWjRn39EecNQMQBm3dTU7bZmODnS0
- VCVcMSrsBKOW8oRy0F5kmmaVqciiPt/+VWZ0+FiBTk6uK2Kasyn/otbYqBZS+oUQvpOKM=
-X-Received: by 2002:a05:6a00:4b53:b0:82c:e1a3:986f with SMTP id
- d2e1a72fcca58-82d0db93629mr9123557b3a.43.1775431268304; 
- Sun, 05 Apr 2026 16:21:08 -0700 (PDT)
+ bh=tp3zmo5L29XsyPQdubePyff6DmBK7RGaR/pnwo6K6y4=;
+ b=Vvg5B4A4eGzzrhMfYqnKQkM3nSTZ0+SwosHMef+USo/9idiZXM98+veyg7qkeRZaCm
+ 4Vvqfc5Wg39Gb51vyBQFl5rIvRqTLQmuUUW5JS7TeyAamUZp+BedBBOVZ0/qXGPgRj6Y
+ sRYyKpY8kWtxcz2daDyISEeg33tIVPXECApH7oO2ubxgPcaGyeAtb+XHuSfUQUnff++T
+ 1wqXIanwQ6zgYnzwmGbCZsX6Rrwsnrc5tbWIFv/ol2ni8WeCYK+CiJ+xpW0GJOo48GBu
+ 6HLww2vBWZKLFTne4WmL3H9xrBKVyb1M9nMKEoZ0HJaGC0+YsrNxkLpKPSmwlRF9jpDz
+ cCKw==
+X-Gm-Message-State: AOJu0YwgX4FcfgOERkRSQxS9Y2ChVHHb+qx5c1VVwteBpiQy60E6GW+n
+ GTUE2JffMvXuze78zmdCrO3Ka4j+YD4c/XUWvrNW/ZnbbKAtJ1eaWUrWBRujuJ/aOp8f2+RuNeU
+ /cfEZ
+X-Gm-Gg: AeBDietyGjt6XhpbgjONoSoxhARPwnC9xYsIow2WnTNUECawgqYpglTnX15GMS3jpDV
+ 7ckf4Pgt62Uac0AgpBEJFEFidMJOhCVlimRh8jcZT5W9bckVW07cGXcLrMy8jXka2c3UJ+vgC6D
+ O74XbcwMs+byQMsrcpTQ31RWK/FvlVxlR4ai7vdrg4Q7iRnttSSqo9i/ixXqlysmzBEN4lTghDS
+ gGDAu5Hsja/WM0jg/zCmpQ4ST4d78JQFObUntkGiaVwHMUhtsEBEa6yO1j9RZi8DJZgXHux6OrW
+ 2/kINJgEHkbXDwekiZtySANIcpKqoHt8mgoolP8U+bOmPIT+ykeDJveDUhI8rt9RMPtP9hB7BwM
+ tqE6ysMWsVVTmfk0bBLvswe6GH6WEo662uBjZIwI8/38xrWqvfCjJYwjnO6Rm7yWYzzSM+lDyum
+ lu8j8A9lN1jjdfX204rcyyOqQ73CrZzNYYgmIcGCWDzxrXKhN1ffkF2zTrocy4SXci0EA=
+X-Received: by 2002:a17:90a:d605:b0:35b:93d8:6aaa with SMTP id
+ 98e67ed59e1d1-35de68ce83emr10014399a91.19.1775431344055; 
+ Sun, 05 Apr 2026 16:22:24 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9b3c930sm12346155b3a.17.2026.04.05.16.21.06
+ 98e67ed59e1d1-35de69fce68sm3352399a91.10.2026.04.05.16.22.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Apr 2026 16:21:07 -0700 (PDT)
-Message-ID: <2c03c01b-1bec-40cf-90e6-d7a8444e7199@linaro.org>
-Date: Mon, 6 Apr 2026 09:21:04 +1000
+ Sun, 05 Apr 2026 16:22:23 -0700 (PDT)
+Message-ID: <1869a77a-5259-463d-a7ef-bc5f0506c735@linaro.org>
+Date: Mon, 6 Apr 2026 09:22:18 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 04/35] target/arm: migrate eret trap syndromes to
+Subject: Re: [RFC PATCH 05/35] target/arm: migrate SME trap syndromes to
  registerfields
 To: qemu-devel@nongnu.org
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-5-alex.bennee@linaro.org>
+ <20260320130607.2071996-6-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260320130607.2071996-5-alex.bennee@linaro.org>
+In-Reply-To: <20260320130607.2071996-6-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,42 +106,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/21/26 00:05, Alex Bennée wrote:
-> For simplicity keep the OP as a two bit field rather than the two
-> interlinked fields in the docs (ERET/ERETA).
-> 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/arm/syndrome.h | 11 ++++++++++-
->   1 file changed, 10 insertions(+), 1 deletion(-)
+>   target/arm/syndrome.h | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
 > 
 > diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-> index 5b5a5cb182e..b145a52769f 100644
+> index b145a52769f..abec0a4908e 100644
 > --- a/target/arm/syndrome.h
 > +++ b/target/arm/syndrome.h
-> @@ -367,12 +367,21 @@ static inline uint32_t syn_sve_access_trap(void)
+> @@ -384,10 +384,18 @@ static inline uint32_t syn_erettrap(int eret_op)
+>       return res;
 >   }
 >   
->   /*
-> + * ISS encoding for an exception from an ERET, ERETAA or ERETAB
-> + * instructions.
-> + *
->    * eret_op is bits [1:0] of the ERET instruction, so:
->    * 0 for ERET, 2 for ERETAA, 3 for ERETAB.
->    */
-> +FIELD(ERET_ISS, OP, 0, 2)
+> +/*
+> + * ISS encoding for an exception due to SME functionality
+> + */
+> +FIELD(SME_ISS, SMTC, 0, 2)
 > +
->   static inline uint32_t syn_erettrap(int eret_op)
+>   static inline uint32_t syn_smetrap(SMEExceptionType etype, bool is_16bit)
 >   {
-> -    return (EC_ERETTRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL | eret_op;
-> +    uint32_t res = syn_set_ec(0, EC_ERETTRAP);
-> +    res = FIELD_DP32(res, SYNDROME, IL, 1);
-> +    res = FIELD_DP32(res, ERET_ISS, OP, eret_op);
+> -    return (EC_SMETRAP << ARM_EL_EC_SHIFT)
+> -        | (is_16bit ? 0 : ARM_EL_IL) | etype;
+> +    uint32_t res = syn_set_ec(0, EC_SMETRAP);
+> +    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
+> +    res = FIELD_DP32(res, SME_ISS, SMTC, etype);
 > +
 > +    return res;
->   }
->   
->   static inline uint32_t syn_smetrap(SMEExceptionType etype, bool is_16bit)
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
