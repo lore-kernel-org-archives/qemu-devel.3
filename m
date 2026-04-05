@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A920F3D5E1
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 13:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0C3F3D5E1
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 13:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9NGr-0006in-W9; Sun, 05 Apr 2026 09:12:10 -0400
+	id 1w9NGu-0006ln-68; Sun, 05 Apr 2026 09:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9NGV-0006WN-1n
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:47 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1w9NGX-0006Z7-Q3
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:50 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9NGT-0006eH-3g
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:46 -0400
+ id 1w9NGV-0006eT-Tx
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:49 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 3FBE94410D;
+ by tor.source.kernel.org (Postfix) with ESMTP id 346656001A;
+ Sun,  5 Apr 2026 13:11:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C50C19425;
  Sun,  5 Apr 2026 13:11:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23E1C116C6;
- Sun,  5 Apr 2026 13:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775394704;
- bh=cP8XbmJh0GXQB9MuBcgRv0ncdejCpajjhdMyKSshUIc=;
+ s=k20201202; t=1775394706;
+ bh=rGuDObTpmf98oV2ZmtxPCkCI9kEJVPL11Kaao5hwhXQ=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=YO/9Aj3DJ1JjNoVW6JEuye2rD+QiJ+tpF6E34Y7RpQmJVNB4Ssq1XVcn0GzRZwuPv
- 9lQn/Y1cygEWdRSTYgGsMmZUN3cuBzhmAMaQJ8HU8KOoepJs3yxP7+7jWCiLMWCLWF
- lr62FIUVkdcxNMIXUwk5VmDlXFKPUemLURYzfwikEfBOrsr7CPSj0m6CVhgP8kuB/3
- DLESmKsU2ZA2H45fGzPiy3oNmJd05J9mLwxiV66fW4cIIVPMw7orgMYVlqG32uLuG6
- Jod4yV5q+cYBpftHH0/miHHxE78KWKjm5klQkurXwUAHa9PChHs0vvZOyHvY6ddwt/
- wzShQYKFrDkHw==
+ b=AagrvpDXOijl9aLYUd8IM+C08U7TRDDDTBTEmDWQ/DyjO90Ub/tQ8j2ZZZSnzxKri
+ HQyojvDvzLznbsOpkR91SjIBWNlCsKHjC529Hssq8dkLa2uX9emQ4BMaRcMRSRW8FC
+ nhC4yOvLg3wNjbZwDhJyxX+m+g9jTjb6hV5el21vlkEbZfK3HPN9tvkNDhcc1RQvVv
+ HRJBsEjRIBHoD0OQsmh7a6Q3o99ZymfvTbzVHeOIatkz1Hug/KkNvPCQcVxwJ4GWpo
+ 5ZlgbQ9LgTkuUQS0OwnPiGACZFroB5a31Ykmlq7QpNHF/pAEzanzQi0rAnEDvcSHLA
+ jSVkg5sqIXqNQ==
 From: Christian Brauner <brauner@kernel.org>
-Date: Sun, 05 Apr 2026 15:11:20 +0200
-Subject: [PATCH v2 4/5] tests/qtest: add tests for dynamic monitor add/remove
+Date: Sun, 05 Apr 2026 15:11:21 +0200
+Subject: [PATCH v2 5/5] tests/functional: add e2e test for dynamic QMP
+ monitor hotplug
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260405-work-qmp-monitor-hotplug-v2-4-ad5bedd2917a@kernel.org>
+Message-Id: <20260405-work-qmp-monitor-hotplug-v2-5-ad5bedd2917a@kernel.org>
 References: <20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org>
 In-Reply-To: <20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org>
 To: qemu-devel@nongnu.org
@@ -52,21 +53,22 @@ Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Christian Brauner <brauner@kernel.org>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7943; i=brauner@kernel.org;
- h=from:subject:message-id; bh=cP8XbmJh0GXQB9MuBcgRv0ncdejCpajjhdMyKSshUIc=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReim9at7b/kZ3QTuV7aSVpAWpnNabFyZ1ek6n7Nj3XM
- 2HenNPlHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABOZ3sPIMLmyZ0+efnRxd1zc
- XL5fNwseLeydJKzM13L11+b2z9KPXzP8D9i566fqnYarOt/sWbY7FCw9cjz2M0dB5YmS/9XpPup
- PeQE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7861; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=rGuDObTpmf98oV2ZmtxPCkCI9kEJVPL11Kaao5hwhXQ=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReim/y2Ht8Iue9GoZo/4N5zNPZmtNv/K3fJPa61Ls48
+ MAeLf5PHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABMxWsrwh2fViwtrzrM+d7s4
+ ofmhzuJZZy22vjDKPfv/9pIwj9+91lMYGVYsjH3XUWUt/it8VlDt42+7WM5otsSenllVXNHR271
+ XjhcA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=brauner@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,226 +85,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test the monitor-add, monitor-remove, and query-monitors QMP commands:
+Add functional tests that exercise dynamic monitor hotplug with real
+socket connections:
 
-- Basic lifecycle: chardev-add -> monitor-add -> query-monitors ->
-  monitor-remove -> chardev-remove
-- Error: duplicate monitor id
-- Error: monitor-remove on nonexistent id
-- Error: monitor-add with nonexistent chardev
-- Error: second monitor on same chardev (chardev already in use)
-- Error: monitor-remove on CLI-created monitor
-- Error: monitor-remove on HMP monitor
-- Re-add after remove: same id and chardev reusable after removal
+- Hotplug cycle: chardev-add a unix socket, monitor-add, connect to the
+  socket, receive the QMP greeting, negotiate capabilities, send
+  query-version, disconnect, remove the monitor and chardev, then repeat
+  the entire cycle a second time to verify cleanup and reuse.
+
+- Self-removal: a dynamically-added monitor sends monitor-remove
+  targeting itself, verifying that the response is delivered before
+  the connection drops and that the monitor is gone afterwards.
+
+- Large response: send query-qmp-schema on a dynamic monitor to
+  exercise the output buffer flush path with a large response payload.
+
+- Events after negotiation: trigger STOP/RESUME events via the main
+  monitor and verify they are delivered on the dynamic monitor.
+
+This complements the qtest unit tests by verifying that a real QMP
+client can connect to a dynamically-added monitor and exchange messages.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- tests/qtest/qmp-test.c | 185 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 185 insertions(+)
+ tests/functional/generic/meson.build             |   1 +
+ tests/functional/generic/test_monitor_hotplug.py | 183 +++++++++++++++++++++++
+ 2 files changed, 184 insertions(+)
 
-diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
-index edf0886787..a493a812a9 100644
---- a/tests/qtest/qmp-test.c
-+++ b/tests/qtest/qmp-test.c
-@@ -337,6 +337,186 @@ static void test_qmp_missing_any_arg(void)
-     qtest_quit(qts);
- }
- 
-+static void test_qmp_monitor_add_remove(void)
-+{
-+    QTestState *qts;
-+    QDict *resp;
+diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
+index 09763c5d22..c94105c62e 100644
+--- a/tests/functional/generic/meson.build
++++ b/tests/functional/generic/meson.build
+@@ -4,6 +4,7 @@ tests_generic_system = [
+   'empty_cpu_model',
+   'info_usernet',
+   'linters',
++  'monitor_hotplug',
+   'version',
+   'vnc',
+ ]
+diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+new file mode 100644
+index 0000000000..d65d33c2f6
+--- /dev/null
++++ b/tests/functional/generic/test_monitor_hotplug.py
+@@ -0,0 +1,183 @@
++#!/usr/bin/env python3
++#
++# Functional test for dynamic QMP monitor hotplug
++#
++# Copyright (c) 2026 Christian Brauner
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
 +
-+    qts = qtest_init(common_args);
++import os
++import tempfile
 +
-+    /* Create a null chardev for the dynamic monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'chardev-add',"
-+                     " 'arguments': {'id': 'monitor-chardev',"
-+                     "               'backend': {'type': 'null',"
-+                     "                           'data': {}}}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++from qemu.qmp.legacy import QEMUMonitorProtocol
 +
-+    /* Add a dynamic monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'dyn-mon',"
-+                     "               'chardev': 'monitor-chardev'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++from qemu_test import QemuSystemTest
 +
-+    /* Verify it shows up in query-monitors */
-+    resp = qtest_qmp(qts, "{'execute': 'query-monitors'}");
-+    g_assert(!qdict_haskey(resp, "error"));
-+    qobject_unref(resp);
 +
-+    /* Error: duplicate id */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'dyn-mon',"
-+                     "               'chardev': 'monitor-chardev'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
++class MonitorHotplug(QemuSystemTest):
 +
-+    /* Remove the dynamic monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'dyn-mon'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++    def setUp(self):
++        super().setUp()
++        # Use /tmp to avoid UNIX socket path length limit (108 bytes).
++        # The scratch_file() path is too deep for socket names.
++        fd, self._sock_path = tempfile.mkstemp(
++            prefix='qemu-mon-', suffix='.sock')
++        os.close(fd)
++        os.unlink(self._sock_path)
 +
-+    /* Error: remove nonexistent */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'dyn-mon'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
++    def tearDown(self):
++        try:
++            os.unlink(self._sock_path)
++        except FileNotFoundError:
++            pass
++        super().tearDown()
 +
-+    /* Add again after remove -- same id and chardev should work */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'dyn-mon',"
-+                     "               'chardev': 'monitor-chardev'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++    def _add_monitor(self):
++        """Create a chardev + monitor and return the socket path."""
++        sock = self._sock_path
++        self.vm.cmd('chardev-add', id='hotplug-chr', backend={
++            'type': 'socket',
++            'data': {
++                'addr': {
++                    'type': 'unix',
++                    'data': {'path': sock}
++                },
++                'server': True,
++                'wait': False,
++            }
++        })
++        self.vm.cmd('monitor-add', id='hotplug-mon',
++                    chardev='hotplug-chr')
++        return sock
 +
-+    /* Clean up */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'dyn-mon'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++    def _remove_monitor(self):
++        """Remove the monitor + chardev."""
++        self.vm.cmd('monitor-remove', id='hotplug-mon')
++        self.vm.cmd('chardev-remove', id='hotplug-chr')
 +
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'chardev-remove',"
-+                     " 'arguments': {'id': 'monitor-chardev'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++    def _connect_and_handshake(self, sock_path):
++        """
++        Connect to the dynamic monitor socket, perform the QMP
++        greeting and capability negotiation, send a command, then
++        disconnect.
++        """
++        qmp = QEMUMonitorProtocol(sock_path)
 +
-+    qtest_quit(qts);
-+}
++        # connect(negotiate=True) receives the greeting, validates it,
++        # and sends qmp_capabilities automatically.
++        greeting = qmp.connect(negotiate=True)
++        self.assertIn('QMP', greeting)
++        self.assertIn('version', greeting['QMP'])
++        self.assertIn('capabilities', greeting['QMP'])
 +
-+static void test_qmp_monitor_error_paths(void)
-+{
-+    QTestState *qts;
-+    QDict *resp;
++        # Send a real command to prove the session is fully functional
++        resp = qmp.cmd_obj({'execute': 'query-version'})
++        self.assertIn('return', resp)
++        self.assertIn('qemu', resp['return'])
 +
-+    qts = qtest_init(common_args);
++        qmp.close()
 +
-+    /* Error: chardev does not exist */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'bad-mon',"
-+                     "               'chardev': 'nonexistent'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
++    def test_hotplug_cycle(self):
++        """
++        Hotplug a monitor, do the full QMP handshake, unplug it,
++        then repeat the whole cycle a second time.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
 +
-+    /* Error: remove nonexistent monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'bogus'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
++        # First cycle
++        sock = self._add_monitor()
++        self._connect_and_handshake(sock)
++        self._remove_monitor()
 +
-+    qtest_quit(qts);
-+}
++        # Second cycle -- same ids, same path, must work
++        sock = self._add_monitor()
++        self._connect_and_handshake(sock)
++        self._remove_monitor()
 +
-+static void test_qmp_monitor_chardev_in_use(void)
-+{
-+    QTestState *qts;
-+    QDict *resp;
++    def test_self_removal(self):
++        """
++        A dynamically-added monitor sends monitor-remove targeting
++        itself.  Verify the response is delivered before the
++        connection drops, and that the monitor is gone afterwards.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
 +
-+    qts = qtest_init(common_args);
++        sock = self._add_monitor()
 +
-+    /* Create a null chardev */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'chardev-add',"
-+                     " 'arguments': {'id': 'shared-chr',"
-+                     "               'backend': {'type': 'null',"
-+                     "                           'data': {}}}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++        qmp = QEMUMonitorProtocol(sock)
++        greeting = qmp.connect(negotiate=True)
++        self.assertIn('QMP', greeting)
 +
-+    /* Attach first monitor */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'mon-1',"
-+                     "               'chardev': 'shared-chr'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++        # Self-removal: the dynamic monitor removes itself
++        resp = qmp.cmd_obj({'execute': 'monitor-remove',
++                            'arguments': {'id': 'hotplug-mon'}})
++        self.assertIn('return', resp)
 +
-+    /* Error: second monitor on the same chardev */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-add',"
-+                     " 'arguments': {'id': 'mon-2',"
-+                     "               'chardev': 'shared-chr'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
++        qmp.close()
 +
-+    /* Clean up */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'mon-1'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++        # The main monitor should no longer list the removed monitor
++        monitors = self.vm.cmd('query-monitors')
++        for m in monitors:
++            self.assertNotEqual(m.get('id'), 'hotplug-mon')
 +
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'chardev-remove',"
-+                     " 'arguments': {'id': 'shared-chr'}}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
++        # Clean up the chardev
++        self.vm.cmd('chardev-remove', id='hotplug-chr')
 +
-+    qtest_quit(qts);
-+}
++    def test_large_response(self):
++        """
++        Send a command with a large response (query-qmp-schema) on a
++        dynamically-added monitor to exercise the output buffer flush
++        path.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
 +
-+static void test_qmp_monitor_remove_cli(void)
-+{
-+    QTestState *qts;
-+    QDict *resp;
++        sock = self._add_monitor()
 +
-+    /* Launch with a named CLI monitor on a null chardev */
-+    qts = qtest_initf("%s -chardev null,id=cli-chr"
-+                      " -mon id=cli-mon,chardev=cli-chr,mode=control",
-+                      common_args);
++        qmp = QEMUMonitorProtocol(sock)
++        qmp.connect(negotiate=True)
 +
-+    /* Error: monitor-remove must reject CLI-created monitors */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'cli-mon'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
++        resp = qmp.cmd_obj({'execute': 'query-qmp-schema'})
++        self.assertIn('return', resp)
++        self.assertIsInstance(resp['return'], list)
++        self.assertGreater(len(resp['return']), 0)
 +
-+    qtest_quit(qts);
-+}
++        qmp.close()
++        self._remove_monitor()
 +
-+static void test_qmp_monitor_remove_hmp(void)
-+{
-+    QTestState *qts;
-+    QDict *resp;
++    def test_events_after_negotiation(self):
++        """
++        Verify that QMP events are delivered on a dynamically-added
++        monitor after capability negotiation completes.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
 +
-+    qts = qtest_initf("%s -chardev null,id=hmp-chr"
-+                      " -mon id=hmp-mon,chardev=hmp-chr,mode=readline",
-+                      common_args);
++        sock = self._add_monitor()
 +
-+    /* Error: monitor-remove must reject HMP monitors */
-+    resp = qtest_qmp(qts,
-+                     "{'execute': 'monitor-remove',"
-+                     " 'arguments': {'id': 'hmp-mon'}}");
-+    qmp_expect_error_and_unref(resp, "GenericError");
++        qmp = QEMUMonitorProtocol(sock)
++        qmp.connect(negotiate=True)
 +
-+    qtest_quit(qts);
-+}
++        # Trigger a STOP event via the main monitor, then read it
++        # from the dynamic monitor.
++        self.vm.cmd('stop')
++        resp = qmp.pull_event(wait=True)
++        self.assertEqual(resp['event'], 'STOP')
 +
- int main(int argc, char *argv[])
- {
-     g_test_init(&argc, &argv, NULL);
-@@ -348,6 +528,11 @@ int main(int argc, char *argv[])
- #endif
-     qtest_add_func("qmp/preconfig", test_qmp_preconfig);
-     qtest_add_func("qmp/missing-any-arg", test_qmp_missing_any_arg);
-+    qtest_add_func("qmp/monitor-add-remove", test_qmp_monitor_add_remove);
-+    qtest_add_func("qmp/monitor-error-paths", test_qmp_monitor_error_paths);
-+    qtest_add_func("qmp/monitor-chardev-in-use", test_qmp_monitor_chardev_in_use);
-+    qtest_add_func("qmp/monitor-remove-cli", test_qmp_monitor_remove_cli);
-+    qtest_add_func("qmp/monitor-remove-hmp", test_qmp_monitor_remove_hmp);
- 
-     return g_test_run();
- }
++        self.vm.cmd('cont')
++        resp = qmp.pull_event(wait=True)
++        self.assertEqual(resp['event'], 'RESUME')
++
++        qmp.close()
++        self._remove_monitor()
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 
 -- 
 2.47.3
