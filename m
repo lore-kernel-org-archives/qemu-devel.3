@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DFBE9D827
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718B4E9D827
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9X1x-0003RW-SV; Sun, 05 Apr 2026 19:37:25 -0400
+	id 1w9X6P-0004cf-S3; Sun, 05 Apr 2026 19:42:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9X1w-0003Q1-RB
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:37:24 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1w9X6M-0004c9-3y
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:41:58 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9X1v-0004ox-Dt
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:37:24 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2b24fdac394so35052475ad.3
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:37:22 -0700 (PDT)
+ id 1w9X6I-0005Bk-H9
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:41:56 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-35d932cc948so1782970a91.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:41:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775432241; x=1776037041; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775432513; x=1776037313; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=clgBh3y0kC9vRzxht/lmZZAh5KQpGrnNySBfHQK97C4=;
- b=nNMHo3nAyEav9FMSKPB+7i4bVG0uthkhS++5dBQuG2zsJBc5RsxpQr3jF/wr7wcu7L
- +4Ni9c6TAdk6SywuziN2yYsxjWs+rfP9D1kVdIgw5yBTmLYYGd7d9jIMNGKAwd28vkvb
- 2sQp5Yy5ilw5fKpt6gEcA+LSTUpg77CgRPwjPURkaQlDy2KRVC2wHqs2sCs9oFrUs2Wz
- KRLVjRgFazxaOBJp5Xpdon86UWa49NEnlPNGlS26QTgSTg7TmAtn+rn9C7ZTr8NTz0G0
- 6xtdt4UswsNsuCM4M4swmsbuRWU1FDgeNhehReIWlDpWrEW10vQLtTXE/EkzmWGhTlUy
- l23g==
+ bh=OZTI7uDYyCa0csCQmCJW6AfoMI0/v79qRdtHrSz5zL0=;
+ b=f7qSL4zz2MSpa5HKoQvnlPrgRoY58zlSdC2QVIPtKOf92eGxCIJsqENQ5vp/OwX9AB
+ sOyCrl/beTlGyPuWooycJjxkO4tYUPb/oyfh1NZBBR2LlxmPNNeF85x1MpaCst04hbvi
+ U+UZYlr1hYIDJ1WKspyKSQrm9oouvaX6IowjBMsKADvXUbcF+6oZEMKUd8p/j/+hglxL
+ S1tEyuafeoXIy8wMdYynIJkxIxqTWQ3tNunwYsWZJRzRs3/lCq4jSGlcuM+BSFkoWTXS
+ jSU+Q7rFELMNcpxwuntMts4ktDJtuVBn25iVA/yxU8OAtlYpuru2SuXUpVqwWHXhcTyj
+ Y0WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775432241; x=1776037041;
+ d=1e100.net; s=20251104; t=1775432513; x=1776037313;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=clgBh3y0kC9vRzxht/lmZZAh5KQpGrnNySBfHQK97C4=;
- b=PXW/NenDWr+A6QQ44hQs9f2MLgeZsbhCHTeCYnOOOA6y0f8G5wU05n5zBwZdMgSr2f
- mySgB31Th8S8526ge+namcTGs1A4SfDw0mzJGxCzBCOr6Q4InExtYdGz+wjUu2O+ixOi
- OB8ExtmnpuDMruzmuQ+0aAoAcrXW+AJaANqStkQoW/BxJ/WTJhGrk4UANpbVpRbMMxXJ
- Pi05QzY7Z2tNw0EIOEXUK+/0E7nPg7wstx2R/NWgnBgXcskODukPl/YyUP0zaMoLbKXr
- ORVxkH5RAQHXL2E1vqcSQ3b8ot23veTrn2mloIb3tWEx8dz/jrAw+d26Pv8OIHYPFgye
- E2tQ==
-X-Gm-Message-State: AOJu0Yx78+0Vvon1gj14cC8OW9w+XKzZiWGNvCqjcy0xs5JsPC2BQ2ux
- Ma6GdjKpDTgup2fHS7Dfp5O0urwAJp7wtNCRNUEnZ+gaqqqMFbgND4sHDIsueabOmSSUwxs20aQ
- zzP1k
-X-Gm-Gg: AeBDiesLVccy8qh0Rc7Yj3clRjBIJB+Bv3/Zl8R8wJ1ifjFHhUWKgL2fxMVBhjrvxI3
- i1ZmAI/txI5DuklTVSdUREbkThPvDcedFUvFyfi5SHaKfZEypz+c+GpzGFDAfYjM4adB5Jmvt0V
- eybW92cLh4Tiah6FPAK2AZW4fiOxfd2PnfE6aq5/5Cph1TKYhg0p2bbYSRY7nfrf3ISOV0BrP9e
- qiqjkXpR6TI4cXVloklE21mMuim+vlbNHk/BOESWsWY8ObYENp6f9TLWzXB1zYs+Fr5Pmq+yri3
- NOu6YQawHAhk0lxlFOws4uMHsjVKjPi+gzJO6wniK21lq82HChx5uSC+NugVFCt2k98XOVr3u94
- aM3Ng/7jkpOkArsEt36Nw5wgLmr/ry1El+rm/fa4NQ/BXQq05R0BYuh/0MunLzdzbUIMplKfzmb
- 2TOyG1MFfBQWmPpUXwM1jB5g0sSDWoxXGY4xpronZUuJj6htUgfN94nhaGAVh0wXyo2Wc=
-X-Received: by 2002:a17:903:1b70:b0:2b0:bebb:1081 with SMTP id
- d9443c01a7336-2b281799025mr119936455ad.28.1775432241363; 
- Sun, 05 Apr 2026 16:37:21 -0700 (PDT)
+ bh=OZTI7uDYyCa0csCQmCJW6AfoMI0/v79qRdtHrSz5zL0=;
+ b=fnQv0slBVZaok6cVwxfFsrCwRQfB1rnhzHUsqnQmJDBRp7kHLH1+ZmxdNmT8N+bpLS
+ sxM5U2XUo482qF3i66QdpnQIqNWEugwhlX/G3HaZTMNm+7txgqeXp8wfV9/UFFDLhJIE
+ xGwZ4uf0X1kqmZMULEIWee0xWfXOx+O5Y87vXeiDzthSZ2m1enZ4mQKK6WWtnTgvJDb5
+ +4enN+eEatSmFcg/KHH+lE45K31U+FTy0/EKRtv22dLRrb/1xbiOIb3ncrhEzND2iJxo
+ iCQtGfMlrnpWgPxbZpVcMroQ3oEOk+9zKD9OiLZEE3vSH/X8HrNKSjykJfuXWX+u34ef
+ HQCg==
+X-Gm-Message-State: AOJu0YykUedtd7QNBjCjPuszMN2zrcdKw+jsrSsuErJ+19Jj4bRqvIj4
+ YxwIrUt8yVW6lAxfpBdM7KpsyRpvH52OWIhhLQhag+ySOjUAEUq5HFMpETop0lVzHBSU6Qy+b2L
+ VeE+U
+X-Gm-Gg: AeBDiesqzQJXCPLOFqTGtQwlqjON/CFx9O+d1mJsXCx3VGFgR94IjHTKEX0WE6G0qIW
+ HNXVguofpcjT53UtKQIz3qsIdMKhpijdV+GswinX+n16Ll9B6YBXUU5V3LUv1SLaGIJZyGhCWrm
+ b5b/ut1h1hUMv1dcQYW6+vZi5760p5EBpvEGYKqQihaHu31xb4FFuirGkTT/SK0kIIx8NRIYcrH
+ VFrxjjwK/7q42x/G2+MdCuiw+xUjs8jmyKlpqVYADFyl1kHthTofCX/bX6ooopSgsa3/0iGgfLc
+ /F/bl9Iyn797843oWoE99+cqiolPI2e+khngvulSHj87ASdJw4zTD50uEx362DDVVDwFYFEAzUm
+ LIZHpoQ18McrquNf//RtKLgUuDbpMcJDxraMfc5enrjWgwAKYSNFnDoq4ihxGRVYXVDA8B/Smm+
+ 8EH1Bzg9SnqHmkURq0V1yMLGtBo+1ZNtmbLHskTx6KQyhzYHgSkcU6CEvsaFIHNBT/124=
+X-Received: by 2002:a17:90a:ec84:b0:35a:cf:64a6 with SMTP id
+ 98e67ed59e1d1-35de6973e69mr10175808a91.23.1775432512894; 
+ Sun, 05 Apr 2026 16:41:52 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b27472d618sm115153755ad.12.2026.04.05.16.37.19
+ 98e67ed59e1d1-35dbe9377b7sm21328049a91.10.2026.04.05.16.41.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Apr 2026 16:37:21 -0700 (PDT)
-Message-ID: <5b6e3a04-b4e9-4581-9750-7f1d7bcfe861@linaro.org>
-Date: Mon, 6 Apr 2026 09:37:15 +1000
+ Sun, 05 Apr 2026 16:41:52 -0700 (PDT)
+Message-ID: <2cb30aae-40af-4784-b38f-c4c7519143b7@linaro.org>
+Date: Mon, 6 Apr 2026 09:41:48 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 11/35] target/arm: migrate debug syndromes to
+Subject: Re: [RFC PATCH 12/35] target/arm: migrate wfx syndromes to
  registerfields
 To: qemu-devel@nongnu.org
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-12-alex.bennee@linaro.org>
+ <20260320130607.2071996-13-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260320130607.2071996-12-alex.bennee@linaro.org>
+In-Reply-To: <20260320130607.2071996-13-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,16 +106,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/21/26 00:05, Alex Bennée wrote:
-> Migrate syn_swstep, syn_watchpoint and syn_breakpoint to the
-> registerfields API.
+> This will help later when we expand the fields we report.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/arm/syndrome.h | 54 ++++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 48 insertions(+), 6 deletions(-)
+>   target/arm/syndrome.h | 20 +++++++++++++++++---
+>   1 file changed, 17 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+> index 3bd98a30367..503b19b5d02 100644
+> --- a/target/arm/syndrome.h
+> +++ b/target/arm/syndrome.h
+> @@ -655,11 +655,25 @@ static inline uint32_t syn_breakpoint(int same_el)
+>       return res;
+>   }
+>   
+> +/*
+> + * ISS encoding for an exception from a WF* instruction
+> + */
+> +FIELD(WFX_ISS, TI, 0, 2)
+> +FIELD(WFX_ISS, RV, 2, 1)
+> +FIELD(WFX_ISS, RN, 5, 5)
+> +FIELD(WFX_ISS, COND, 20, 4)
+> +FIELD(WFX_ISS, CV, 24, 1)
+> +
+>   static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
+>   {
+> -    return (EC_WFX_TRAP << ARM_EL_EC_SHIFT) |
+> -           (is_16bit ? 0 : (1 << ARM_EL_IL_SHIFT)) |
+> -           (cv << 24) | (cond << 20) | ti;
+> +    uint32_t res = syn_set_ec(0, EC_WFX_TRAP);
+> +    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
+> +
+> +    res = FIELD_DP32(res, WFX_ISS, CV, cv);
+> +    res = FIELD_DP32(res, WFX_ISS, COND, cond);
+> +    res = FIELD_DP32(res, WFX_ISS, TI, ti);
+> +
+> +    return res;
+>   }
+>   
+>   static inline uint32_t syn_illegalstate(void)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
