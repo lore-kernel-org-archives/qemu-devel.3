@@ -4,94 +4,189 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E212BE9D80D
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 18:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F46E9D80D
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 18:26:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9S1f-0003vZ-Gz; Sun, 05 Apr 2026 14:16:47 -0400
+	id 1w9SAq-0000N3-50; Sun, 05 Apr 2026 14:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
- id 1w9S1X-0003uF-T3
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 14:16:40 -0400
-Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
- id 1w9S1W-0004TY-2w
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 14:16:39 -0400
-Received: by mail-dy1-x1336.google.com with SMTP id
- 5a478bee46e88-2ce7d6fd2c5so193818eec.0
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 11:16:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775412996; x=1776017796; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3m1Z4UTUM6w2aqa7uxC+K1wnAqGBXUYvLkMEl2uyZKo=;
- b=XLEl8Phs8eevmKPZh+RBc5+7eq8b9N2BFAEI2v6gwPQsk81nT1TfcO5DLcrkQDpYEM
- aRqALBq4azYVfi1G5Ily8scqYNH8KrinsNgaRQYTmX/tCwgPRGkyd2CLNCmBi/6W00qx
- p+/l9DOioV4zAs5LTieT/1EZjq2eIvRpvI3FDoH0yrXjQlXrllTNgJaP1xZSlJAtpYm1
- 9L7mOuvlf7wdmbOB9vy4gsMvC2gqnBr2A6cKEkUDW1rXj6QOC/l8J8nsn+0T/vNXoVw6
- 0+Qdb8V0EHNHhb/awCDkkU6wTZnNxsyA8uHWXIgoxLJBPZg1TZ0GWMefo8UgrBOJA3+c
- fswA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775412996; x=1776017796;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3m1Z4UTUM6w2aqa7uxC+K1wnAqGBXUYvLkMEl2uyZKo=;
- b=SUN+Z76fCq9nUPDP7QLVo8jKhE77IT9SfPk+92zdOo+MrzeP6sWABDMV4ZSv+OHvCD
- GQ0U5/DsHLo4uamqXDPLJwFQnqD6+hMznGELy1PIWdJcKoskIyUKhQkqPaIeWMAOoD8e
- PL3w+8AhzHVghO5x0tT3fdN6V5OR1adss10BjeR1IDKy663RQqGQ+JWrrXNp0yF65JcR
- kd1vx8S0pFvLMAK0UxPHz0E6xBdJuftfyM3ypa/vAAHvHDdBMilrQ/aUcXTQKrohtN4l
- AV4ZEgfskrxZ8DuewccuptgEBKr3DRNBC/V0LWvvePUfZC/t3SYZwVl8XEG10a0gN+Fz
- FTYg==
-X-Gm-Message-State: AOJu0YyKl/01xQCSgLCC555Fr2nIiHiGKeTw8Yuu3apMfutn+qzRBFGB
- XRoviQIyyVy4YRy5JsT3Spvfyc8HZWiy0HVZi7DnQKd2jRbR2pOTFyyP
-X-Gm-Gg: AeBDietJpaMTsm8ARpyEHuvNSAoa7SKeILkRaKY7D7mVI+y5STozeRD+Eqz1BZqn82X
- Zqm9yZVbVas77Io3Wxkn3KFwKDlZ+oVxcJ58z64gX/xOJbTxuYp5YauWQfMuYOl098RyCJB1Za7
- LZJaNPVEAeigi0FVMw4sffcS2Ls6+mQEGJPTe/v2ernyGXaXrxGTKJpZ2Y3taD+fw0ya9Ai3L2I
- QB+H9akIWYTdIpWxDlMm2Lk41igRIcfs/wACrZRzsJkQhb6Uw5yIX16As2VnGjBwdxclZy2ybPU
- xP+PWafp1Jjic9I4qibSq15X+DdGrBc8a8oJ14Fo9LcZfRligrt3B51iFHt//AwqWAARTI0Fhlr
- mXLQmpB5Vq0rXiltqLZ1w+VkQ5rC8+UpM9Fq6p5ykJg89jxftZ02Cwd+0CtIdPlWAe9zCtkYkxh
- v63E1gIg9upSLNrjCcNQ6EytSMszL5nDecwRDKl0ZYmSlMjqpxpb+3knqwub4FNnXpwoogQHtBF
- BbfXGxwdyU=
-X-Received: by 2002:a05:693c:2b14:b0:2a4:701a:b9ba with SMTP id
- 5a478bee46e88-2cbfbe7c7damr3348809eec.14.1775412996343; 
- Sun, 05 Apr 2026 11:16:36 -0700 (PDT)
-Received: from localhost ([2601:645:8200:47:d85c:429c:5cc7:1e52])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ca760b0518sm11397906eec.0.2026.04.05.11.16.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Apr 2026 11:16:35 -0700 (PDT)
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1w9SAo-0000M4-4x
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 14:26:14 -0400
+Received: from mout.gmx.net ([212.227.17.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1w9SAl-0005ml-CF
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 14:26:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1775413561; x=1776018361; i=deller@gmx.de;
+ bh=b4rRSR9f51J/meMDnu01cRtOt/hh8waTSme9d/yTpfg=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=J492zDmyOrxXNmwGPbMFQDe5FxLVbWlLT3CH9MbkbZbXROWZ9l7dr/uK/xLoQUci
+ H9O9SYP25B1hlnRPPmDG41n1P22qOoze861yl7/+4hDnkauyII/LPr8u57nV2PipA
+ +Pim6ztXGRwEPpkEIErjXHRrIeAb1jV26i8O0UMpdc33li/u62PjNN5Sw+AIZQdde
+ 5SFbOxtQ8whCoFQdm3k7mNuKvxM0JrLEAI25P2Lut8caswTtTXupF3FadKWqZ2TpR
+ Whnj3WsmdxOTBptTzSdSeOgN8XZ0SLj2FrRWzvJNvyIxddSs/IVuUBbggKO/X+tGr
+ PBPHRB0nCWTWdTW2aQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtOKc-1vLKvH2vra-00vnuM; Sun, 05
+ Apr 2026 20:26:01 +0200
+Message-ID: <42604ad8-edfc-4013-a49a-92a876591238@gmx.de>
+Date: Sun, 5 Apr 2026 20:57:43 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0 0/6] allow building tools and qemu-guest-agent on
+ 32bit hosts
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260403104327.1163942-1-mjt@tls.msk.ru>
+ <878qb27dkm.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <878qb27dkm.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 05 Apr 2026 11:16:34 -0700
-Message-Id: <DHLFDPXWKQ28.2VAETSR1R1DWE@gmail.com>
-Subject: Re: [RFC PATCH 00/10] vfio: PCI device passthrough on Apple Silicon
- Macs
-From: "Scott J. Goldman" <scottjgo@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Scott J. Goldman"
- <scottjgo@gmail.com>
-Cc: <qemu-devel@nongnu.org>, <alex@shazbot.org>, <clg@redhat.com>,
- <pbonzini@redhat.com>, <rbolshakov@ddn.com>, <phil@philjordan.eu>,
- <mst@redhat.com>, <john.levon@nutanix.com>, <thanos.makatos@nutanix.com>,
- <qemu-s390x@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <20260405072857.66484-1-scottjgo@gmail.com>
- <f0a13985-e737-b06a-773d-cddb90444721@eik.bme.hu>
-In-Reply-To: <f0a13985-e737-b06a-773d-cddb90444721@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
- envelope-from=scottjgo@gmail.com; helo=mail-dy1-x1336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Provags-ID: V03:K1:fOmZs+WX1l1ueXRdH54zJt2Ve/oIgBlA+nGEskJtQfkMdzx1Zcy
+ 6UVMyKyreFxM2+DJQDiSg/F+jPCZaivFxfsb3P8G6MIz3BKkgbHJW5ioia8zQL+POzOtoMB
+ myHQ/iLnbzxZOjdBRnppGRpDSooUOa+oRNnjlYhsUFHOiq3eywaZXwTWsGsRDzHKsBmGGNH
+ 1DUCmHLxSIwe1llDqO8XQ==
+UI-OutboundReport: notjunk:1;M01:P0:SjaYzsJE/jY=;iYK40lPJ5+C0luP5N9XXLE49B8R
+ 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
+ SD
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,97 +202,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun Apr 5, 2026 at 3:36 AM PDT, BALATON Zoltan wrote:
-> On Sun, 5 Apr 2026, Scott J. Goldman wrote:
->> This series adds VFIO PCI device passthrough support for Apple Silicon
->> Macs running macOS, using a DriverKit extension (dext) as the host
->> backend instead of the Linux VFIO kernel driver.
+Hi Alex,
+
+On 4/4/26 21:03, Alex Benn=C3=A9e wrote:
+> Michael Tokarev <mjt@tls.msk.ru> writes:
+>=20
+>> This is a patchset which makes qemu-guest-agent, qemu-img & qemu-nbd
+>> buildable on 32bit hosts again.  The patches are simple enough to be
+>> picked up for 11.0.  The one from Helge is marked as RFC still, but
+>> I'd love for it to be accepted the way it is.
 >>
->> I'm sending this as an RFC because I'd like feedback before investing
->> further in upstreaming.  The code is functional.  I've tested it with
->> an NVIDIA RTX 5090 in a Thunderbolt dock on an M4 MacBook Air.  GPU
->> gaming works but is slow (~30 fps on high settings in Cyberpunk 2077
->> [1]), likely due to the BAR access penalty described below.  AI
->> inference workloads appear less affected.  Ollama with Qwen 3.5
->> generates around 140 tok/sec on the same setup [2].
->>
->> How it works:
->>
->> On Linux, VFIO relies on kernel-managed IOMMU groups and /dev/vfio
->> for device access and DMA mapping.  On macOS, there is no equivalent
->> kernel interface.  Instead, a userspace DriverKit extension
->> (VFIOUserPCIDriver) mediates access to the physical PCI device through
->> IOKit's IOUserClient and PCIDriverKit APIs.
->>
->> The series keeps the existing VFIOPCIDevice model and reuses QEMU's
->> passthrough infrastructure.  A few ioctl callsites are refactored into
->> io_ops callbacks, the build system is extended for Darwin, and the
->> Apple-specific backend plugs in behind those abstractions.
->>
->> The guest sees two PCI devices: the passthrough device itself
->> (vfio-apple-pci, which subclasses VFIOPCIDevice) and a companion
->> DMA mapping device (apple-dma-pci).  On the QEMU side, an
->> AppleVFIOContainer implements the IOMMU backend, and a C client
->> library wraps the IOUserClient calls to the dext for config space,
->> BAR MMIO, interrupts, reset, and DMA.
->>
->> DMA limitations:
->>
->> This is the biggest platform constraint.  Unlike a typical IOMMU
->> mapping operation where the caller specifies the IOVA, the
->> PCIDriverKit API (IODMACommand::PrepareForDMA) returns a
->> system-assigned IOVA.  There is no way to request a specific address.
->> This means the guest's requested DMA addresses cannot be used
->> directly.  The guest kernel module must intercept DMA mapping calls
->> and forward them through the companion device to get the actual
->> hardware IOVA.
->
-> I don't know this so what I say might not make sense but I think there is=
-=20
-> iommu emulation in QEMU so could that be used to do this in QEMU and avoi=
-d=20
-> needing a kernel module for it in the guest?
->
-> Regards,
-> BALATON Zoltan
+>> All patches has been on qemu-devel previously, I just collected them
+>> into a single batch.
+>=20
+> How are you configuring the 32bit build. I'm trying:
+>=20
+>    '../../configure' '--disable-docs' '--disable-system' '--disable-user=
+' '--cross-prefix=3Di686-linux-gnu-'
 
-I think the challenge is that this is a passthrough device doing
-DMA directly on the physical PCIe bus.  The device's DMA
-transactions go through the real hardware IOMMU (DART), not
-through QEMU.
+Basically that's the command line, but I'm in a native chroot/physical
+box, so I didn't need the --cross-prefix option.
 
-If the guest programs the device with IOVA 0x1000 (assigned by
-a virtual IOMMU), the device will issue a DMA read for 0x1000 on
-the physical bus.  But DART only knows about the IOVAs that
-PrepareForDMA assigned, so the transaction would fault.
+> but failing with:
+>=20
+>    Command line: `i686-linux-gnu-gcc -m64 -I/usr/include/glib-2.0 -I/usr=
+/lib/i386-linux-gnu/glib-2.0/include -I/usr/include/sysprof-6 /home/alex/l=
+src/qemu.git/builds/testing/meson-private/tmpp4ra9pn_/testfile.c -o /home/=
+alex/lsrc/qemu.git/builds/testing/meson-private/tmpp4ra9pn_/output.obj -c =
+-pthread -D_FILE_OFFSET_BITS=3D64 -O0 -std=3Dgnu11` -> 1
+>    stderr:
+>    /home/alex/lsrc/qemu.git/builds/testing/meson-private/tmpp4ra9pn_/tes=
+tfile.c: In function 'main':
+>    /home/alex/lsrc/qemu.git/builds/testing/meson-private/tmpp4ra9pn_/tes=
+tfile.c:6:16: error: size of array 'qemu_build_bug_on' is negative
+>        6 |   typedef char qemu_build_bug_on[(x)?-1:1] __attribute__((unu=
+sed));
+>          |                ^~~~~~~~~~~~~~~~~
+>    /home/alex/lsrc/qemu.git/builds/testing/meson-private/tmpp4ra9pn_/tes=
+tfile.c:9:6: note: in expansion of macro 'QEMU_BUILD_BUG_ON'
+>        9 |      QEMU_BUILD_BUG_ON(sizeof(size_t) !=3D GLIB_SIZEOF_SIZE_T=
+);
+>          |      ^~~~~~~~~~~~~~~~~
+>    -----------
+>=20
+>    ../../meson.build:1072:2: ERROR: Problem encountered: sizeof(size_t) =
+doesn't match GLIB_SIZEOF_SIZE_T.
+>            You probably need to set PKG_CONFIG_LIBDIR" to point
+>            to the right pkg-config files for your build target.
+>=20
+> I've pointed PKG_CONFIG_LIBDIR at the right place I think:
+>=20
+>    =E2=9E=9C  echo $PKG_CONFIG_LIBDIR
+>    /usr/lib/i386-linux-gnu/pkgconfig
+>    =F0=9F=95=9920:02:58 alex@draig:qemu.git/builds/testing  on =EE=82=A0=
+ 20260403_mjt_tls_msk_ru [$?]
+>    =E2=9E=9C  pkg-config --path glib-2.0
+>    /usr/lib/i386-linux-gnu/pkgconfig//glib-2.0.pc
+>=20
+> But obviously I must be holding it wrong.
 
-My understanding is that on other platforms, this is handled in
-a simpler way because the host IOMMU can be programmed directly:
+Of course all libraries, including glib, would need to have been built for=
+ 64-bit.
+On Debian esp. i386 has been excluded from the 64-bit time_t transition be=
+cause its primary use case is running legacy 32-bit binaries, and that wou=
+ld no longer be possible following an ABI change. See [1].
+[1] https://wiki.debian.org/ReleaseGoals/64bit-time
+I assume your i386-libs still use 32-bit time_t.
 
-1. Guest boots with 2 GB of RAM.  QEMU maps guest physical
-   address (GPA) 0x10000000-0x90000000 to host physical memory
-   at, say, 0x110000000-0x190000000.
-2. QEMU programs the host IOMMU so the device's view of
-   0x10000000-0x90000000 translates to the real host addresses.
-3. Guest programs the PCI device to DMA to GPA 0x20000000.
-4. The device issues the transaction, the IOMMU translates it
-   to 0x120000000, and it hits the right physical memory.
+As debian developer it's possible to use the debian porterboxes.
+Or, as qemu developer, you could simply set up a debian chroot with
+linux-user for armhf, m68k, hppa, powerpc or sh4, e.g.
 
-On macOS, step 2 is missing.  The DriverKit APIs don't provide
-a way to program arbitrary IOVA-to-HPA translations into DART.
-You can only hand a buffer to PrepareForDMA and get back whatever
-IOVA the system assigns.
+a=3Dpowerpc && debootstrap --arch=3D$a --include=3Dbusybox --keyring=3D/us=
+r/share/keyrings/debian-ports-archive-keyring.gpg sid $a-chroot http://ftp=
+.ports.debian.org/debian-ports/
+cd /etc && cp passwd group shells $a-chroot/etc
+echo $a-chroot > $a-chroot/etc/debian_chroot
 
-On top of that, the platform limits the total amount of DMA-mapped
-memory to roughly 1.5 GB across ~64k mappings, so you can't even
-map all of a 2 GB guest's RAM.  I believe this limit comes from
-the host device tree and isn't modifiable by users, though it
-could potentially be changed by Apple in firmware.
-
-A vIOMMU could reduce the amount of memory that needs to be
-mapped (only what the guest actually uses for DMA, not all of
-guest RAM), but fundamentally you still need something akin to
-step 2 to make the device's physical DMA transactions land at
-the right addresses, and we don't have that on this platform.
-
+Helge
 
