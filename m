@@ -4,96 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75279E9D826
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC0AE9D827
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9WWJ-0004jn-FZ; Sun, 05 Apr 2026 19:04:43 -0400
+	id 1w9Wkr-0001If-FX; Sun, 05 Apr 2026 19:19:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adeoluwaademoye@gmail.com>)
- id 1w9WWH-0004ix-V6
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:04:41 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1w9Wkl-0001H4-Lh
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:19:39 -0400
+Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <adeoluwaademoye@gmail.com>)
- id 1w9WWG-0008RP-Dw
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:04:41 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7dbc4f2ad7bso215416a34.0
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:04:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775430277; cv=none;
- d=google.com; s=arc-20240605;
- b=BLaVKQGRZxpSm/Jt7GkjVkbJbWRJ3z82gjtEKTTY6Wq5PbKzop5w+5MVwfmBylby7g
- 8jOS73pfOINNm9l6/YEAKvuQBhfDUP1Q7+pD0b0C7RYKa05IAI2oS5hDCuxdwiiho4Dy
- ykWixqWQkteLnrdEfoq/sKn0ihuWcMNhoBkEUNkbqm2fh5p0IvbjFY909AS4yxY6IGHL
- iunFYHHN/sYiy9CrChI6LuzxzEQ2XiS9TbXF64fxRgsCjumTfatAyd4NzAkFPxHfMtvi
- eUZxzG6n2I9PP9M+ZKeMotkPXea8p89n/KrI9DY7WLHUPvu8aPy8FsFF7L4IJLuFpKzs
- kwfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=VDnxGvJOyBI2mktZL5tVn6AG/Km8+01t+klSWX4VUpU=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=RU0T7ZW0oK41KyujorxFzW0PrOO4klFKetb0B/uq3dHmLpk/n4p5Mp+n96hKb3JzuK
- u24EBkNOp682sEUUYOlhEJhK+p3K2uZljBz2NL5R7HOx6NJIdqxMKXZ8wWjQYJVPlYKC
- aX4CGESC5GadYjxsB3HcxjSgizH5k3Yfxu4FJ9kUNBxGbjLvyBEk5n4P5nQfSuhGJBIF
- jW+mMQgyebDSBcY89QBpDCIXFqfftU7ZFz0temLsRaMwKGLLLpk40M2FpQbUsHWZPF4N
- Nb7amHeN2+V6YOhzf3R7S9oL9eNJvuE6zBUX18msp7bN/BRURg7Q/geW69oeQCctlA2+
- LVKA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775430277; x=1776035077; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=VDnxGvJOyBI2mktZL5tVn6AG/Km8+01t+klSWX4VUpU=;
- b=mS+rNnVzy/PsRA3n6Vq8+T6ftX87lAfQM+04bShIcIRDZqkpbyEzmxFLXR84Ipf6Fa
- EgrV4H5t3IVR2w2gk3pMWCta3N2HMaVvTwFJFIcQ87YX7Rblb3OzA2g+262+4oh9U60k
- qd6UqmAYjYrw5bDRznuaILImwifc4Gen6BPNoEpwMKOXHio7ybIznGoQkKxtkgSm8gNV
- tEgg7JY27PoooJ6Jg8PuCbAAX6oBF9q4PkU0Cyu809UD2KSNvToFgz0Vwey2j2V0887V
- tX05MpfGF7J9tWw76VHgWoukyTgJNoL/usj5g3mDHGk93gyvSnKbryNEKIX0N3YsZozz
- 8EIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775430277; x=1776035077;
- h=to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VDnxGvJOyBI2mktZL5tVn6AG/Km8+01t+klSWX4VUpU=;
- b=MvCke66b4bncJte9Nw0sYfdYLXWk/kcQ7+3IWrPuk2jmTSNJf7ycuNfkB8Ip6nb0cl
- 8lUiTsKu3xTK+DNK6s3Qh/yDWxT/hIDHIkeuwCKeFEqxPn1hC0HoNgPApzsH18TQN3dt
- QcC5JsTDwBkX7RZCrPMUbd6bkMIuGf0+ruBc644SdmxLfXcKDfZpSTMqEFIKAo5TqYXu
- n1tuSic4CTHG0TVVA450ZDsq0/tYq4XkdqPUh7uR4WW9l1CgskGtz0ltt42909ondyS7
- CIl0t87HdoukwBZP6FQEwrS+trXirCf+1A6U6xgdkk7fy//ghhR/0Nmkhg+PAwbrpOEp
- vIHw==
-X-Gm-Message-State: AOJu0YzyeH8fwrzUxHOAxKzb9cr8HNeegOt97sh2uCYSeltLBn88nKSw
- xMh1ydoJq7S8XCM7qlvQICqKpHYT+eAYsFEIU6YG1xlelU4RAPCnl6TSCnAQF05hA86A69Dh+mj
- Qz/i/VSus8UfAT2ra8GDCr8ER631kHwcbB3+rMibqsVvV
-X-Gm-Gg: AeBDieuNLmAcbcgq6NhGRF7WkaFGAELoGrquQX8zIrzuD0zHYpfGXCdu3foO3UV/HgT
- UnM+2fwg+o4g8iYosZtQc2aEX7XIZZhrrBIPv3kGK4GY3HFI2+/kulrzhw1ZwGcRayWCzGwNpHt
- rkiUlInfWtR7J6luZmXJglRmYQElHjdBSFJMLIHrFzOK8lM0Ctpu0nmSCLTmZcP9mRGgKUJjz/+
- 3mdJQp0ya/26fIMRGacT+BzVxfxwD+0isEMF0we7r/tPrGgV24KpTwqLb9Ev/JvsuRruHVmRqrj
- LSdyzgyi
-X-Received: by 2002:a05:6830:4ac5:b0:7db:e661:bb52 with SMTP id
- 46e09a7af769-7dbe661c648mr578431a34.4.1775430276954; Sun, 05 Apr 2026
- 16:04:36 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1w9Wkj-0002NW-OP
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:19:39 -0400
+X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ 8513f12a2fc15fc111f0faa1e590f55254e6a5dbcdc728bb1c83c627af625053 with SMTP id
+ 69d2ee0518e714e81b8f8382; Sun, 05 Apr 2026 23:19:33 GMT
+X-Mailgun-Sending-Ip: 143.55.232.12
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
+ s=rsa2048; t=1775431172;
+ bh=cUGn+kyME30ZrpKCOLY8TUd5U6ZOP/Ccs+FUUQSZ8+0=;
+ h=Message-ID:Date:MIME-Version:Subject:X-Mailgun-Dkim:From:To:Cc:
+ References:In-Reply-To:Content-Type:Content-Transfer-Encoding:From:
+ Reply-to:Subject:Date:Message-id:To:Cc:Mime-version:Content-type:
+ Content-transfer-encoding:In-reply-to:References;
+ b=skvrIIGl2BjyyGVAcfrvkaY5Jow7CS5BIA/iPmqCJ20iES3+2EJVOTN4nn/kGs7nv
+ DecuZ+p9aJ6Q8vhBrdeZdLMZMf22/ji/D1VjOFWAKxXNiWTXxWu7XCaJciu5F8Qzjo
+ GLAiKh9RPna2vdzuQ+YkWxhu1ol2IyErAuxiuIe4KQVUiif6NyZVLRrQklh4gRH9Ok
+ rrOJfHFhJCEQKNXBHNjMhtxNIShQnDwoT+bjeYpliGSArWj47jgiO3TfWHQXlw87NP
+ UAQCrYcifdLltbgTETyLuUiNu9kcr/f+Rzo/QXQcCjzusO4POZ0A5O/p9Qsp0NU6Dq
+ q/xGdTvZfhmTA==
+Message-ID: <cb70f613-9c41-42e8-9ffb-e57e3db7248f@yodel.dev>
+Date: Sun, 5 Apr 2026 18:19:30 -0500
 MIME-Version: 1.0
-From: Adeoluwa Ademoye <adeoluwaademoye@gmail.com>
-Date: Mon, 6 Apr 2026 00:04:25 +0100
-X-Gm-Features: AQROBzDIfKXJv7c7eORSlrLG8ZGhrqkwOCdxqX7cbHipayXInzaEmImyF4kpDj8
-Message-ID: <CAPxx-NymyR=iJ9CpdccOep=gO=L8gzjuTytXZ2DhGBhXpttSmg@mail.gmail.com>
-Subject: [Newcomer] Introduction and seeking guidance on TCG / memory
- architecture
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000fb3dab064ebe926b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=adeoluwaademoye@gmail.com; helo=mail-ot1-x32b.google.com
+Subject: Re: [RFC PATCH 3/4] alpha: Replace helper_set_alarm with Typhoon
+ Cchip MMIO register
+X-Mailgun-Dkim: no
+X-Mailgun-Dkim: no
+From: Yodel Eldar <yodel.eldar@yodel.dev>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260401170454.32045-1-yodel.eldar@yodel.dev>
+ <20260401170454.32045-4-yodel.eldar@yodel.dev>
+ <1c6d7e6f-eb16-4820-a4c2-35767c8db919@linaro.org>
+ <0f822f37-de4a-44d3-81dc-61f9caee0403@yodel.dev>
+Content-Language: en-US
+Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
+ xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
+ I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
+ CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
+ AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
+ Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
+ 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
+ imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
+ TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
+In-Reply-To: <0f822f37-de4a-44d3-81dc-61f9caee0403@yodel.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=143.55.232.12;
+ envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
+ helo=v512.v5f06b487.use4.send.mailgun.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HELO_STATIC_HOST=-0.001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,46 +93,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fb3dab064ebe926b
-Content-Type: text/plain; charset="UTF-8"
+On 04/04/2026 18:32, Yodel Eldar wrote:
+> On 03/04/2026 20:01, Richard Henderson wrote:
+>> On 4/2/26 03:04, Yodel Eldar wrote:
+>>> From: Yodel Eldar <yodel.eldar@yodel.dev>
+>>>
+>>> This commit creates a QEMU-specific (non-standard) MMIO register
+>>> in Typhoon's Cchip to replace helper_set_alarm() and to move
+>>> the QEMUTimer pointer, alarm_timer, out of the Alpha CPU and into
+>>> the chipset code.
+>>>
+>>> Currently, PALcode writes to the QEMU-specific, synthetic
+>>> Processor Register (index 251) and triggers the invocation of
+>>> helper_set_alarm() as a side effect in QEMU, thereby setting
+>>> the timer alarm expiration value.
+>>>
+>>> This works, because the AlphaCPU contains the QEMUTimer and
+>>> CPUAlphaState stores the alarm expiration value; however, the timer
+>>> alarm callback resides in and is specific to the Typhoon chipset,
+>>> thus the CPU and the chipset are entangled.
+>>>
+>>> By designating the currently unused offset (0x7c0) of Cchip as the
+>>> location of the timer alarm expiration, we can disentangle and
+>>> better encapsulate both.
+>>>
+>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+>>> ---
+>>>
+>>> Notes:
+>>>      The patch to the palcode-clipper binary that follows this
+>>>      one is necessary for this patch to work; I've left the
+>>>      diff to the source in the notes of it for reproduction.
+>>>      Philippe:
+>>>      Thanks, again, for the suggestion of decoupling the CPU from
+>>>      the Typhoon using IRQ lines. In my response, I guessed that
+>>>      getting the CPU index would be trickier than moving the timer
+>>>      into TyphoonState; perhaps you'll find it amusing (as I do)
+>>>      that it appears I had that backwards (due to the PALcode
+>>>      peculiarity)!
+>>>      The remaining CPU interrupts will be refactored in v2 of that
+>>>      series.
+>>
+>> I'm not keen on this.  I would much rather keep the synthetic 
+>> processor register than add a synthetic CChip mmio.
+>>
+> 
+> No problem... Are we okay with exposing a typhoon timer helper
+> and TyphoonState to target/alpha/sys_helper.c via the inclusion
+> of hw/alpha/alpha_sys.h?
+> 
+> If so, we can add an opaque pointer parameter to helper_set_alarm
+> carrying the TyphoonState and invoke the typhoon timer helper;
+> e.g.:
+> 
+> /* Inside target/alpha/sys_helper.c */
+> #include "hw/alpha/alpha_sys.h"
+> 
+> void helper_set_alarm(CPUAlphaState *env, uint64_t expire, void *opaque)
+> {
+>      CPUState *cs = env_cpu(env);
+>      TyphoonState *s = TYPHOON_PCI_HOST_BRIDGE(opaque);
+>      int cpu_index = cs->cpu_index & 3;
+> 
+>      if (expire) {
+>          env->alarm_expire = expire;
+>          typhoon_timer_mod(s, cpu_index, expire);
+>      } else {
+>          typhoon_timer_del(s, cpu_index);
+>      }
+> 
+> }
+> 
 
-Hi everyone,
+Hmm, on second thought, I'm not sure this is doable
+without setting a link property between CPU and
+Typhoon, and if we're relegated to that than
+adding the link property in Typhoon's instance_init
+(as in in Patch 8 of "QOMify Clipper and Typhoon" [1])
+to use them in Typhoon's realize to create the timers
+is preferable over using them in TCG helper/translate.
 
-I am an engineering student with a focus on systems programming and
-low-level execution. To build foundational knowledge, I recently wrote a
-stack-based virtual machine from scratch in C, implementing a dynamic type
-system with runtime type dispatch, raw bytecode execution, and manual
-memory ownership across the entire object graph.
+The MMIO approach may be the only way to achieve
+encapsulation here, but it adds complexity and is
+probably not as performant than using a process
+register, so I understand the pushback against it.
 
-I am now looking to channel that into real open source contribution, and
-QEMU is where I want to start. The TCG subsystem and memory translation
-layer are the areas that interest me most.
+Let's set aside the MMIO patch; I'll integrate the
+MemTxAttrs patch (to eliminate current_cpu from the
+MISC register read) into the larger QOMify series and
+replace all occurrences of cpu_{,reset_}interrupt with
+IRQ lines, but leave the alarm timers in the CPU. Since
+the callback for the timer alarm belongs to Typhoon,
+the Cchip will for the time being continue to have a
+reference to the CPUs (though, I'll continue to think
+about gentler ways of eliminating them).
 
-Before I dive into the codebase, could anyone point me toward the right
-documentation or entry-level issues in the TCG or memory subsystem? I want
-to make sure I am orientating myself correctly from the start.
+Philippe: I hope two out of three nexuses will be
+enough for now?
 
-Thank you for your time.
+Richard: Thanks for taking the time to check this out
+and for the feedback; I'll incorporate it into v2.
 
-Best regards,
-Daniel
+[1] <20260310-qomify-alpha-v1-8-4375b00a85ff@yodel.dev>
 
---000000000000fb3dab064ebe926b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks,
+Yodel
 
-<div dir=3D"ltr"><br>Hi everyone,<br><br>I am an engineering student with a=
- focus on systems programming and low-level execution. To build foundationa=
-l knowledge, I recently wrote a stack-based virtual machine from scratch in=
- C, implementing a dynamic type system with runtime type dispatch, raw byte=
-code execution, and manual memory ownership across the entire object graph.=
-<br><br>I am now looking to channel that into real open source contribution=
-, and QEMU is where I want to start. The TCG subsystem and memory translati=
-on layer are the areas that interest me most.<br><br>Before I dive into the=
- codebase, could anyone point me toward the right documentation or entry-le=
-vel issues in the TCG or memory subsystem? I want to make sure I am orienta=
-ting myself correctly from the start.<br><br>Thank you for your time.<br><b=
-r>Best regards,<br>Daniel</div>
+> We'd have to keep alarm_expire in CPUAlphaState, because
+> palcode-clipper would still expect it, but alarm timers would
+> be moved into the typhoon as an array indexed by cpu_index.
+> 
+> WDYT?
+> 
+>> In any case, this is also doing more than one thing at a time. For 
+>> instance, Connecting the irq on typhoon to the irq on the cpu does not 
+>> depend on anything else.
+>>
+> 
+> Thanks for the example; I'll split it next time.
+> 
+> Thanks again,
+> Yodel
+> 
+>>
+>> r~
+>>
+> 
+> 
 
---000000000000fb3dab064ebe926b--
 
