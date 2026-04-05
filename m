@@ -4,82 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A1CE9D827
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3F2E9D828
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 23:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9WvC-00012H-Ok; Sun, 05 Apr 2026 19:30:26 -0400
+	id 1w9Wxk-0002Dh-Ot; Sun, 05 Apr 2026 19:33:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w9WvB-00011W-Be
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:30:25 -0400
-Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w9Wxi-0002DP-VE
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:33:03 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w9Wv9-0004H4-6f
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:30:25 -0400
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 91436959f6d3dcd0cb484754364cde98aa8bd2a527ac59d3f05a32f48ddbc29f with SMTP id
- 69d2f08d29f95355fc836d2f; Sun, 05 Apr 2026 23:30:21 GMT
-X-Mailgun-Sending-Ip: 143.55.232.12
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1775431820;
- bh=fQu2ruKow94+K7lAvisUebn8Vb7YQhAB+5r/AhrFPEo=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=X3LtXfBt4CUkHx+8kc+XDV/OACaFDNb9gPZed8v19apZatOmWH+MK24VYW/ug5UhD
- WB2XniPSrQ79+XEe0uD39OSMeFld62CmQDcNG1CgO7rF5qOi6KHf3GJ4Lvljy16NbQ
- 7W+mz5e6T2CWHcSSe1az42AccZVIK/2ba6mjURYBLMKL4IAb/AfxGjqJLCdAUx/S8N
- 7mouo7Z4h1mpHceXDcNZdXOmxu92ZmGt0S1xziANIA+bYqBUj8s6gptAoL0Ct+vFaF
- 6+DJaZ3xXwcc26OrkYzXymxvtBLhcyYHAHAs4DIYHWyqmwd9oyEOii+Y/tEGllVHVo
- bw/Yuftkn3x7Q==
-Message-ID: <a6a7039c-c197-4e9b-a2aa-6ae9079c8d0b@yodel.dev>
-Date: Sun, 5 Apr 2026 18:30:20 -0500
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w9Wxh-0004UA-0S
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 19:33:02 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c70f91776fcso1264770a12.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 16:33:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775431979; x=1776036779; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pyQhdJg0SPHm4TEi9biMUzRYaQaogkcfwbskQIUWamQ=;
+ b=WDdvOtuXN2AECfFxrKykfZDS4aealYvn73aDNe8gsEvEl3CPszPngbuaPzO6WXLteP
+ Pdz/fEf2ynkXBmO9tsyF8ffGtPJQEtbC7IqnIG2H3yBRpYUKXubMoKAsNZK0Y+uDNVT7
+ 48uO4w5qvyMuMRdjT/35WgxlRXmg5OEvmmHT9lJZ76TNdZcu74hQHvB1ZqLgeId8TUup
+ dK0fSk5tJ2A9TrigBBn5sMyLiK7ZZuUgwkHZuNNEj7py0g8Szyz+FsTX+p/NLNWVexXJ
+ 1p7cWY/aIEGyYwjdQ12cVO+NpPaO9wm9N6lqENyOAjQnZdc9rlwWQ1IYI+kY/HvPBPuw
+ sY7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775431979; x=1776036779;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pyQhdJg0SPHm4TEi9biMUzRYaQaogkcfwbskQIUWamQ=;
+ b=Mp734gnJmAcRmrrit9TKXr3O2Yj4Mlc0DPitcWEw+yc3TwABjs16udSZHhBQSftazA
+ XBjydzHi6KRTCt1ppgCEwfihRMbIEnVBk4D894DGu2oOA/UXMOShPu/H0WGHnRrr5RUL
+ /KTDZrYAM9U6got15ahe+dhavhgnUZTav34oKqfeZD+ZWDLgqgw4ybQCkFQH5oJCTdUU
+ wE0yJ/Y9h7vfVuZJk7Q798EWDPkGAAVoQ0xT9DQZ/Xgy9qPLHYxDf/rfPA4UpLeU8YUg
+ bWQoDoBhPItLTwvMMjybbrmnLuN2oshbu5wDWf0dZrPthsT8WZ/kDXWyQ0X1Sc7qVl4j
+ IGTg==
+X-Gm-Message-State: AOJu0Yy0EEJcyYk6DmWfwwAToYu1GLxCPWM4MjdExwImRb33hmmISRjm
+ Syl182FR/1AOpF9+Q6ROPSS0jx+W0hvVz+aQd1rQrmhUrHcjBLA3bYS8e6sP88JlOgM73GFNYGx
+ VlJv4
+X-Gm-Gg: AeBDievetF8Bs7xo9CcS7a6Hao41sXxNBEJ1oohoo77kEOjdEf53RX0Aa3vyZ+m9BD4
+ dE8Q1A/P8M4EGFjGGPMHyM//RqOnWRXTcXEvUOm6Nko+VLSOJbWHhpI28wit/HNwsdjVF8/gOma
+ w411h+hpmXHJWFbH8bC1JmiRul9Xo67rOwAVIr46zImFIAkgsVqZLjwF/xeB3SCjebZFSPTvKzh
+ xO/lAx3P0oKfC0TSKvZ0tAN+fafNs5hCL0GuAE4ClUqWvJxRJ8vKwQlhEmuBRjmbQBIHzwK1cc3
+ LWurH5DXQF1Ia8Mo1rkle8Vb1k8RQd24vqOUbVo/sonQnf5uMKOyyAGSvLF25F3VOItAU1Z2cW8
+ sTLjgN0uyuEmL1r3DoEQea0hH+Wdnp4WZ60a+NuCFeGva1d1B27a7xJ7qckF4w6ssOFn/zddNwh
+ 2AzAedrAnQkeeaRPPeo8XxyWlMvfKu1R9hPf5MZHDIkSt3RIMp9JS6CEZe1lyhI2MG5JE=
+X-Received: by 2002:a05:6a00:3902:b0:82c:8c6a:682b with SMTP id
+ d2e1a72fcca58-82d0da6a4efmr9426692b3a.19.1775431979471; 
+ Sun, 05 Apr 2026 16:32:59 -0700 (PDT)
+Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82cf9b589b8sm11991523b3a.24.2026.04.05.16.32.58
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 05 Apr 2026 16:32:59 -0700 (PDT)
+Message-ID: <31234279-3a60-418c-ba37-661ee1a17444@linaro.org>
+Date: Mon, 6 Apr 2026 09:32:54 +1000
 MIME-Version: 1.0
-Subject: Re: [RFC PATCH 3/4] alpha: Replace helper_set_alarm with Typhoon
- Cchip MMIO register
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260401170454.32045-1-yodel.eldar@yodel.dev>
- <20260401170454.32045-4-yodel.eldar@yodel.dev>
- <1c6d7e6f-eb16-4820-a4c2-35767c8db919@linaro.org>
- <0f822f37-de4a-44d3-81dc-61f9caee0403@yodel.dev>
- <b23cc492-6a78-456c-a97e-b935b9277b34@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 10/35] target/arm: migrate fault syndromes to
+ registerfields
+To: qemu-devel@nongnu.org
+References: <20260320130607.2071996-1-alex.bennee@linaro.org>
+ <20260320130607.2071996-11-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <b23cc492-6a78-456c-a97e-b935b9277b34@linaro.org>
+In-Reply-To: <20260320130607.2071996-11-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=143.55.232.12;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=v512.v5f06b487.use4.send.mailgun.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HELO_STATIC_HOST=-0.001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,106 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Richard!
-
-On 05/04/2026 17:59, Richard Henderson wrote:
-> On 4/5/26 09:32, Yodel Eldar wrote:
->> On 03/04/2026 20:01, Richard Henderson wrote:
->>> On 4/2/26 03:04, Yodel Eldar wrote:
->>>> From: Yodel Eldar <yodel.eldar@yodel.dev>
->>>>
->>>> This commit creates a QEMU-specific (non-standard) MMIO register
->>>> in Typhoon's Cchip to replace helper_set_alarm() and to move
->>>> the QEMUTimer pointer, alarm_timer, out of the Alpha CPU and into
->>>> the chipset code.
->>>>
->>>> Currently, PALcode writes to the QEMU-specific, synthetic
->>>> Processor Register (index 251) and triggers the invocation of
->>>> helper_set_alarm() as a side effect in QEMU, thereby setting
->>>> the timer alarm expiration value.
->>>>
->>>> This works, because the AlphaCPU contains the QEMUTimer and
->>>> CPUAlphaState stores the alarm expiration value; however, the timer
->>>> alarm callback resides in and is specific to the Typhoon chipset,
->>>> thus the CPU and the chipset are entangled.
->>>>
->>>> By designating the currently unused offset (0x7c0) of Cchip as the
->>>> location of the timer alarm expiration, we can disentangle and
->>>> better encapsulate both.
->>>>
->>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
->>>> ---
->>>>
->>>> Notes:
->>>>      The patch to the palcode-clipper binary that follows this
->>>>      one is necessary for this patch to work; I've left the
->>>>      diff to the source in the notes of it for reproduction.
->>>>      Philippe:
->>>>      Thanks, again, for the suggestion of decoupling the CPU from
->>>>      the Typhoon using IRQ lines. In my response, I guessed that
->>>>      getting the CPU index would be trickier than moving the timer
->>>>      into TyphoonState; perhaps you'll find it amusing (as I do)
->>>>      that it appears I had that backwards (due to the PALcode
->>>>      peculiarity)!
->>>>      The remaining CPU interrupts will be refactored in v2 of that
->>>>      series.
->>>
->>> I'm not keen on this.  I would much rather keep the synthetic 
->>> processor register than add a synthetic CChip mmio.
->>>
->>
->> No problem... Are we okay with exposing a typhoon timer helper
->> and TyphoonState to target/alpha/sys_helper.c via the inclusion
->> of hw/alpha/alpha_sys.h?
->>
->> If so, we can add an opaque pointer parameter to helper_set_alarm
->> carrying the TyphoonState and invoke the typhoon timer helper;
->> e.g.:
->>
->> /* Inside target/alpha/sys_helper.c */
->> #include "hw/alpha/alpha_sys.h"
->>
->> void helper_set_alarm(CPUAlphaState *env, uint64_t expire, void *opaque)
->> {
->>      CPUState *cs = env_cpu(env);
->>      TyphoonState *s = TYPHOON_PCI_HOST_BRIDGE(opaque);
->>      int cpu_index = cs->cpu_index & 3;
->>
->>      if (expire) {
->>          env->alarm_expire = expire;
->>          typhoon_timer_mod(s, cpu_index, expire);
->>      } else {
->>          typhoon_timer_del(s, cpu_index);
->>      }
->>
->> }
->>
->> We'd have to keep alarm_expire in CPUAlphaState, because
->> palcode-clipper would still expect it, but alarm timers would
->> be moved into the typhoon as an array indexed by cpu_index.
->>
->> WDYT?
+On 3/21/26 00:05, Alex Bennée wrote:
+> Migrate syn_insn_abort and syn_data_abort_* to the registerfields API.
 > 
-> I don't understand why you want to move the QEMUTimer.  What do we gain 
-> by preventing the cpu from accessing the QEMUTimer?
-> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   target/arm/syndrome.h | 87 ++++++++++++++++++++++++++++++++++++-------
+>   1 file changed, 74 insertions(+), 13 deletions(-)
 
-For architectural accuracy and separation of concerns,
-I wanted to eliminate the references to the CPUs in
-Typhoon's Cchip, but as I mentioned in the email I just
-sent before I saw your reply, I understand the MMIO
-approach is probably too heavy-handed.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I'll drop the MMIO patch and am setting aside alternative
-approaches to focus on the rest of the QOMify series.
 
-Thanks a lot for your comments and time.
-
-Yodel
-
-> 
-> r~
-> 
+r~
 
 
