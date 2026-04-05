@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE21F3D5E1
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 13:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 408E6F3D5E1
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Apr 2026 13:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9NGR-0006VQ-Bg; Sun, 05 Apr 2026 09:11:43 -0400
+	id 1w9NGT-0006WA-Dp; Sun, 05 Apr 2026 09:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9NGK-0006Tn-Pd
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:37 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1w9NGP-0006Uj-RY
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:41 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9NGI-0006cW-SZ
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:36 -0400
+ id 1w9NGN-0006dG-Ns
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 09:11:41 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 351256001A;
- Sun,  5 Apr 2026 13:11:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935D9C116C6;
- Sun,  5 Apr 2026 13:11:30 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id CBCF46001A;
+ Sun,  5 Apr 2026 13:11:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52262C116C6;
+ Sun,  5 Apr 2026 13:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775394692;
- bh=Mv1cwnfF+cb83p3K4P7Z7Twk5nRgBI0T46wsJ+2+Z3c=;
- h=From:Subject:Date:To:Cc:From;
- b=Xw/tVr9sZktgI3/Aw6c49UVnA6V9E8NrwSz6ZOgUa9KVO2DR7m/mxIkOB2an8Yn8J
- yQUqpRgGxXBCPFj4euDpcV4GCG3iJpISJmNku0glx9oEtkOAA4QwR357948C9mI3wp
- TkgL5uRZUPSWGXkQBqKorGlLfW4SKrlubRx7IauAoNOoJWHK23RjtdEwhRd9LZ7ECj
- M57N+JaeSPbCCBU9ktUg8HdTb+jwqPgEWl1mADChhYeax4EEbFQpJ31qW9hjz2B6Ao
- KqUM4SllwU09LRWOKGbG9tfZTqZc3GO37M+4hBTIbpwCDGrj2sz/+qIh20dH8DsKhP
- DovYagXcarRRg==
+ s=k20201202; t=1775394698;
+ bh=5eeDKAFYh38vdP8ude4jd3oT3eRJVXRuSCT4UpRbzbE=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=jqs6r/kZ6j3KROo3FMdUXHccfPhtSrtkk8DTbkj9r0AU6+ITnd9API9+Ed8iBLoQ+
+ UCTyOmgyUt3XH3N+MYe4uelYh6TLC0sqxp2lo4MwCAuN8Vky/kPv6udhw3aAXobCDc
+ wr7V6AW4012UyBnw2RXAdL84zGgdPYveDA6X4K0/f2cw6T0oKSRcT72V4mHwd4XwAx
+ LGcv1tyGSHId5D/Gv6CsJAFZ5LZ+2KjYUDz7P9mWn5oQfDha78EPph6iFTPyD4wRj0
+ ppxXR+CQ3R0hGzWbj0weAN8TWHhCxVwBxSyJSYnMTzcnxrze5k0y6i1A10QoB1LBHZ
+ zUZHUc5Vujsuw==
 From: Christian Brauner <brauner@kernel.org>
-Subject: [PATCH v2 0/5] monitor: add dynamic QMP monitor hotplug support
-Date: Sun, 05 Apr 2026 15:11:16 +0200
-Message-Id: <20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org>
+Date: Sun, 05 Apr 2026 15:11:18 +0200
+Subject: [PATCH v2 2/5] monitor/qmp: add infrastructure for safe dynamic
+ monitor removal
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHRf0mkC/42OyxKCMAxFf4Xp2ji8cVz5Hw6LPgJUoMUUUIfh3
- 23xB1yem+TcbMwhaXTsGm2McNVOW+MhPUVMdty0CFp5ZmmclnEep/Cy1MNznGC0Rs+WoLPzNCw
- tNIJXskwumCnB/PlE2Oj3ob7XP3aLeKCcgy9sCO4QBHEjuxCN3M1IYdBp582f46k1CYI/+tcEY
- iizJOOFVKqo8luPZHA4W2pZve/7F2Pj4pDsAAAA
-X-Change-ID: 20260402-work-qmp-monitor-hotplug-fba7c618e3db
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260405-work-qmp-monitor-hotplug-v2-2-ad5bedd2917a@kernel.org>
+References: <20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org>
+In-Reply-To: <20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
@@ -55,21 +53,22 @@ Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Christian Brauner <brauner@kernel.org>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4078; i=brauner@kernel.org;
- h=from:subject:message-id; bh=Mv1cwnfF+cb83p3K4P7Z7Twk5nRgBI0T46wsJ+2+Z3c=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReiq974Bz2KO6ZyOHmN4LGkz4l5qhxXuJhXP753Y64U
- 7/mJTgkd5SyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzk0XmG/44TlX/u9LPI7Lat
- 9G+44vv41HKhl4duycw52L1dKIDHwI7hn4numi9nZltPPSHvkn/4qM3EnG03m5yMRNos2LIcj09
- 5xAcA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13148; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=5eeDKAFYh38vdP8ude4jd3oT3eRJVXRuSCT4UpRbzbE=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReim/qO33r9504dv66eVl7g9QNG7Uu7X4o/DYh6WR03
+ NXNb6ec7ShlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZjIk0kM/1OOpt83t/l5fJvw
+ zjBXu91XbAIjpBzaVyz/9d/W8tfJjU8ZGaY7TFs6u3ONfumZKwu4X9ZzLVKZ5rxxElthS2zqD7e
+ ZrGwA
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=brauner@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,88 +85,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU supports runtime hotplug for chardevs, devices, block backends,
-and netdevs. Monitors are the only major subsystem that lacks this --
-all QMP monitors must be configured at launch via -mon or -qmp CLI
-options.
+Add monitor_qmp_destroy() to allow destroying a single QMP monitor at
+runtime without shutting down the entire dispatcher coroutine.
 
-This series adds monitor-add, monitor-remove, and query-monitors QMP
-commands so that management tools can create independent QMP sessions
-on demand at runtime.
+Convert monitor_accept_input from a oneshot BH (aio_bh_schedule_oneshot)
+to a persistent BH (aio_bh_new + qemu_bh_schedule).  Oneshot BHs cannot
+be cancelled, so monitor_resume() racing with destruction would schedule
+a callback against memory that monitor_qmp_destroy() is about to free.
+A persistent BH can be deleted during destruction, cancelling any
+pending schedule.
 
-I've implemented a QMP-to-Varlink bridge in systemd. This allows
-systemd-vmspawn to control virtual machines and containers through a
-unified Varlink interface. Varlink allows protocol upgrades. For
-example, it is possible to switch from Varlink to say http. I'm
-allowing Varlink clients to upgrade from the Varlink interface to the
-native QMP interface. Such clients get a new monitor assigned that
-allows them to manage the virtual machine directly via QMP. The main
-monitor remains unaffected and tied to the generic Varlink interface. We
-can't pre-allocate monitors as we have no control over how many protocol
-upgrades we actually get but it won't just be one. And having unused
-monitors around really isn't ideal either.
+Move qemu_chr_fe_accept_input() under mon_lock in monitor_accept_input()
+so it cannot race with monitor_qmp_destroy() which deletes the BH under
+the same lock.
 
-Having the ability to hotplug monitors would really be helpful. I'm not
-yet super well-versed in qemu internals so this might be done wrong but
-testing works so far.
+Extract monitor_cancel_out_watch() for cancelling a pending out_watch
+GSource.  g_source_remove() only searches the default GMainContext but
+iothread monitors attach the watch to the iothread context, so
+g_main_context_find_source_by_id() with the correct context followed by
+g_source_destroy() is needed.  When chardev handlers have been
+disconnected via qemu_chr_fe_set_handlers(NULL), s->gcontext is reset to
+NULL by qemu_chr_be_update_read_handlers().  A watch created after the
+reset (e.g. by a self-removal response flush) lands on the default
+GMainContext rather than the iothread context.  Fall back to searching
+the default context when the iothread context search misses.
 
-My systemd patch that triggered this is at
-https://github.com/systemd/systemd/pull/41449.
+The monitor_qmp_destroy() sequence is:
 
-The usage pattern mirrors chardev hotplug:
+  1. Delete accept_input_bh (cancel pending resume).
+  2. Under mon_lock: set skip_flush so no further writes can create
+     new out_watch GSources, then cancel any existing out_watch.
+     skip_flush must be set first because the chardev gcontext has
+     already been reset to NULL by handler disconnect -- a flush at
+     this point would attach the watch to the default GMainContext
+     rather than the iothread context, and
+     monitor_cancel_out_watch() searching the iothread context would
+     miss it, leaking a GSource that fires monitor_unblocked() on
+     freed memory.
+  3. For iothread monitors: synchronize with the iothread via
+     aio_wait_bh_oneshot().  An in-flight monitor_unblocked() GSource
+     callback may be blocked on mon_lock (held in step 2) and will
+     resume after we release it.  Since BHs cannot fire while a
+     GSource callback is dispatching, the no-op BH only runs after
+     monitor_unblocked() has returned, making destruction safe.
+  4. Final drain of the request queue to catch requests enqueued by an
+     in-flight monitor_qmp_read() that raced with the drain in
+     qmp_monitor_remove().
+  5. monitor_data_destroy() + g_free().
 
-  -> chardev-add id=qmp-extra backend=socket,...
-  -> monitor-add id=extra-qmp chardev=qmp-extra
-  [client connects to socket, gets QMP greeting, negotiates, sends commands]
-  -> monitor-remove id=extra-qmp
-  -> chardev-remove id=qmp-extra
+Add qmp_dispatcher_current_mon tracking in the dispatcher coroutine to
+handle self-removal (a monitor sends monitor-remove targeting itself).
+Both the dispatcher yield points and QMP command handlers run under the
+BQL, so no additional locking is needed.  After dispatching each
+request, the dispatcher checks the dead flag: if set, it closes the
+chardev connection, calls monitor_qmp_destroy(), and clears the tracking
+pointer.  monitor_resume() is skipped because the chardev handlers are
+already disconnected, and resume would schedule a BH against a monitor
+about to be freed.
 
-Patches 1-2 add the data model (id/dynamic/dead fields in Monitor) and
-the infrastructure for safe per-monitor destruction without shutting
-down the shared dispatcher coroutine.
+Add a setup_pending flag for iothread monitors so qmp_monitor_remove()
+can reject removal before the setup BH has completed.
 
-Patch 3 adds the QAPI schema and command handlers.
-
-Patches 4-5 add qtest unit tests and a functional e2e test that
-performs a full hotplug -> connect -> handshake -> unplug cycle.
-
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
-Changes in v2:
-- Fix use-after-free in self-removal path: skip monitor_resume() when
-  the monitor is dead to avoid scheduling a BH against a monitor that
-  is about to be freed by monitor_qmp_destroy().
-- Hold monitor_lock in monitor_find_by_id() to prevent races with
-  the I/O thread BH that appends to mon_list.
-- Deduplicate monitor-remove commit message: trim the gcontext/out_watch
-  explanation that repeated the infrastructure commit, reference
-  monitor_cancel_out_watch() instead.
-- Add missing test descriptions to patch 4 (chardev-in-use, CLI monitor
-  rejection, HMP monitor rejection) and patch 5 (self-removal, large
-  response, events).
-- Fix cover letter wording.
-- Link to v1: https://patch.msgid.link/20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org
+ monitor/monitor-internal.h |  6 +++++
+ monitor/monitor.c          | 49 ++++++++++++++++++++++++++--------
+ monitor/qmp.c              | 66 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 110 insertions(+), 11 deletions(-)
 
----
-Christian Brauner (5):
-      monitor: store monitor id and dynamic flag in Monitor struct
-      monitor/qmp: add infrastructure for safe dynamic monitor removal
-      qapi: add monitor-add, monitor-remove, query-monitors commands
-      tests/qtest: add tests for dynamic monitor add/remove
-      tests/functional: add e2e test for dynamic QMP monitor hotplug
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 8f5fe7c111..1d9f740abb 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -100,6 +100,7 @@ struct Monitor {
+     bool use_io_thread;
+     bool dynamic;               /* true if created via monitor-add */
+     bool dead;                  /* true if monitor-remove called, awaiting drain */
++    QEMUBH *accept_input_bh;   /* persistent BH for monitor_accept_input() */
+ 
+     char *id;                   /* Monitor identifier (NULL for unnamed CLI monitors) */
+     char *mon_cpu_path;
+@@ -138,6 +139,7 @@ typedef struct {
+     Monitor common;
+     JSONMessageParser parser;
+     bool pretty;
++    bool setup_pending;  /* iothread BH has not yet set up chardev handlers */
+     /*
+      * When a client connects, we're in capabilities negotiation mode.
+      * @commands is &qmp_cap_negotiation_commands then.  When command
+@@ -176,15 +178,19 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+                        bool use_io_thread);
+ void monitor_data_destroy(Monitor *mon);
+ int monitor_can_read(void *opaque);
++void monitor_cancel_out_watch(Monitor *mon);
+ void monitor_list_append(Monitor *mon);
+ void monitor_fdsets_cleanup(void);
+ 
+ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+ void monitor_data_destroy_qmp(MonitorQMP *mon);
++void monitor_qmp_destroy(MonitorQMP *mon);
++void monitor_qmp_drain_queue(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
+ 
+ Monitor *monitor_find_by_id(const char *id);
++bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon);
+ 
+ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+ void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 7144255e12..0080e8ca0e 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -146,6 +146,28 @@ static gboolean monitor_unblocked(void *do_not_use, GIOCondition cond,
+     return G_SOURCE_REMOVE;
+ }
+ 
++/* Cancel a pending out_watch GSource.  Caller must hold mon_lock. */
++void monitor_cancel_out_watch(Monitor *mon)
++{
++    if (mon->out_watch) {
++        GMainContext *ctx = NULL;
++        GSource *src;
++
++        if (mon->use_io_thread) {
++            ctx = iothread_get_g_main_context(mon_iothread);
++        }
++        src = g_main_context_find_source_by_id(ctx, mon->out_watch);
++        if (!src && ctx) {
++            /* Handler disconnect may have reset gcontext to NULL. */
++            src = g_main_context_find_source_by_id(NULL, mon->out_watch);
++        }
++        if (src) {
++            g_source_destroy(src);
++        }
++        mon->out_watch = 0;
++    }
++}
++
+ /* Caller must hold mon->mon_lock */
+ void monitor_flush_locked(Monitor *mon)
+ {
+@@ -545,13 +567,13 @@ static void monitor_accept_input(void *opaque)
+         MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
+         assert(hmp_mon->rs);
+         readline_restart(hmp_mon->rs);
++        qemu_chr_fe_accept_input(&mon->chr);
+         qemu_mutex_unlock(&mon->mon_lock);
+         readline_show_prompt(hmp_mon->rs);
+     } else {
++        qemu_chr_fe_accept_input(&mon->chr);
+         qemu_mutex_unlock(&mon->mon_lock);
+     }
+-
+-    qemu_chr_fe_accept_input(&mon->chr);
+ }
+ 
+ void monitor_resume(Monitor *mon)
+@@ -561,15 +583,7 @@ void monitor_resume(Monitor *mon)
+     }
+ 
+     if (qatomic_dec_fetch(&mon->suspend_cnt) == 0) {
+-        AioContext *ctx;
+-
+-        if (mon->use_io_thread) {
+-            ctx = iothread_get_aio_context(mon_iothread);
+-        } else {
+-            ctx = qemu_get_aio_context();
+-        }
+-
+-        aio_bh_schedule_oneshot(ctx, monitor_accept_input, mon);
++        qemu_bh_schedule(mon->accept_input_bh);
+     }
+ 
+     trace_monitor_suspend(mon, -1);
+@@ -610,6 +624,8 @@ static void monitor_iothread_init(void)
+ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+                        bool use_io_thread)
+ {
++    AioContext *ctx;
++
+     if (use_io_thread && !mon_iothread) {
+         monitor_iothread_init();
+     }
+@@ -618,6 +634,13 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+     mon->outbuf = g_string_new(NULL);
+     mon->skip_flush = skip_flush;
+     mon->use_io_thread = use_io_thread;
++
++    if (use_io_thread) {
++        ctx = iothread_get_aio_context(mon_iothread);
++    } else {
++        ctx = qemu_get_aio_context();
++    }
++    mon->accept_input_bh = aio_bh_new(ctx, monitor_accept_input, mon);
+ }
+ 
+ void monitor_data_destroy(Monitor *mon)
+@@ -631,6 +654,10 @@ void monitor_data_destroy(Monitor *mon)
+         readline_free(container_of(mon, MonitorHMP, common)->rs);
+     }
+     g_string_free(mon->outbuf, true);
++    if (mon->accept_input_bh) {
++        qemu_bh_delete(mon->accept_input_bh);
++        mon->accept_input_bh = NULL;
++    }
+     qemu_mutex_destroy(&mon->mon_lock);
+ }
+ 
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index afbe2283d6..6645b82d48 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -26,6 +26,7 @@
+ 
+ #include "chardev/char-io.h"
+ #include "monitor-internal.h"
++#include "qemu/aio-wait.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
+ #include "qobject/qdict.h"
+@@ -71,6 +72,9 @@ typedef struct QMPRequest QMPRequest;
+ 
+ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ 
++/* Monitor being serviced by the dispatcher.  Protected by BQL. */
++static MonitorQMP *qmp_dispatcher_current_mon;
++
+ static bool qmp_oob_enabled(MonitorQMP *mon)
+ {
+     return mon->capab[QMP_CAPABILITY_OOB];
+@@ -98,6 +102,12 @@ static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon)
+     }
+ }
+ 
++void monitor_qmp_drain_queue(MonitorQMP *mon)
++{
++    QEMU_LOCK_GUARD(&mon->qmp_queue_lock);
++    monitor_qmp_cleanup_req_queue_locked(mon);
++}
++
+ static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
+ {
+     QEMU_LOCK_GUARD(&mon->qmp_queue_lock);
+@@ -287,6 +297,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+          */
+ 
+         mon = req_obj->mon;
++        qmp_dispatcher_current_mon = mon;
+ 
+         /*
+          * We need to resume the monitor if handle_qmp_command()
+@@ -342,11 +353,26 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+             qobject_unref(rsp);
+         }
+ 
++        /*
++         * Self-removal: monitor-remove marked this monitor dead.
++         * Close chardev, destroy, skip monitor_resume().
++         */
++        if (mon->common.dead) {
++            qemu_chr_fe_set_handlers(&mon->common.chr, NULL, NULL,
++                                     NULL, NULL, NULL, NULL, true);
++            qmp_request_free(req_obj);
++            monitor_qmp_destroy(mon);
++            monitor_fdsets_cleanup();
++            qmp_dispatcher_current_mon = NULL;
++            continue;
++        }
++
+         if (!oob_enabled) {
+             monitor_resume(&mon->common);
+         }
+ 
+         qmp_request_free(req_obj);
++        qmp_dispatcher_current_mon = NULL;
+     }
+     qatomic_set(&qmp_dispatcher_co, NULL);
+ }
+@@ -499,6 +525,44 @@ void monitor_data_destroy_qmp(MonitorQMP *mon)
+     g_queue_free(mon->qmp_requests);
+ }
+ 
++static void monitor_qmp_iothread_quiesce(void *opaque)
++{
++    /* No-op: synchronization point only */
++}
++
++/*
++ * Destroy a single dynamically-added QMP monitor.
++ * The monitor must already have been removed from mon_list.
++ */
++void monitor_qmp_destroy(MonitorQMP *mon)
++{
++    qemu_bh_delete(mon->common.accept_input_bh);
++    mon->common.accept_input_bh = NULL;
++
++    WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
++        /* Disable flushes before cancel — gcontext is already wrong. */
++        mon->common.skip_flush = true;
++        monitor_cancel_out_watch(&mon->common);
++    }
++
++    /* Synchronize with in-flight iothread callbacks. */
++    if (mon->common.use_io_thread) {
++        aio_wait_bh_oneshot(iothread_get_aio_context(mon_iothread),
++                            monitor_qmp_iothread_quiesce, NULL);
++    }
++
++    /* Catch requests from a racing monitor_qmp_read(). */
++    monitor_qmp_drain_queue(mon);
++
++    monitor_data_destroy(&mon->common);
++    g_free(mon);
++}
++
++bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon)
++{
++    return qmp_dispatcher_current_mon == mon;
++}
++
+ static void monitor_qmp_setup_handlers_bh(void *opaque)
+ {
+     MonitorQMP *mon = opaque;
+@@ -510,6 +574,7 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
+     qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
+                              monitor_qmp_read, monitor_qmp_event,
+                              NULL, &mon->common, context, true);
++    qatomic_set(&mon->setup_pending, false);
+ }
+ 
+ void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
+@@ -553,6 +618,7 @@ void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
+          * since chardev might be running in the monitor I/O
+          * thread.  Schedule a bottom half.
+          */
++        mon->setup_pending = true;
+         aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
+                                 monitor_qmp_setup_handlers_bh, mon);
+         /* Synchronous insert for immediate duplicate detection. */
 
- include/monitor/monitor.h                        |   3 +-
- monitor/monitor-internal.h                       |  11 ++
- monitor/monitor.c                                |  70 +++++++--
- monitor/qmp-cmds-control.c                       | 111 ++++++++++++++
- monitor/qmp.c                                    |  77 +++++++++-
- qapi/control.json                                | 104 +++++++++++++
- tests/functional/generic/meson.build             |   1 +
- tests/functional/generic/test_monitor_hotplug.py | 183 ++++++++++++++++++++++
- tests/qtest/qmp-test.c                           | 185 +++++++++++++++++++++++
- 9 files changed, 729 insertions(+), 16 deletions(-)
----
-base-commit: b6a7d06213e5d2f7d124d16418bc289c4a8a4b82
-change-id: 20260402-work-qmp-monitor-hotplug-fba7c618e3db
+-- 
+2.47.3
 
 
