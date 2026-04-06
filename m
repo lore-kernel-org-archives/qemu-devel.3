@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF3B6F46C48
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 14:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03C7F46C47
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 14:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9km3-0003rm-M7; Mon, 06 Apr 2026 10:17:56 -0400
+	id 1w9kn9-000598-68; Mon, 06 Apr 2026 10:19:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w9km1-0003rS-FN
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:17:53 -0400
+ id 1w9kn8-00058W-0F
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:19:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w9klz-0004zF-AN
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:17:53 -0400
+ id 1w9kn6-0005Fn-2x
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:19:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775485069;
+ s=mimecast20190719; t=1775485139;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=mk/AFvqMKYlGd/xuxjIjFPJlbZ31peLNGQtW6CDi0Ak=;
- b=iygO02i3a9xXgK7r2KU2w4yy4Zax/oDX/lv7SsEpVEQwxJVfJXyfbHt73IF7lVr0fPC4t4
- uHIihwTyq24/KLWUWc/1+r59ZQhfeiVKezJbXwexmaro77Jq0k9CVwlVJaXTkmQBPjWYYl
- a2RwnJ5WMUZoirX611PsaeHS7+NLaTU=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=X5BfOb29CchgA3O8cD3d/CWCo4Ox5ZAg0ea68Q66Ig0=;
+ b=Cuc6uc261GsJuUWQabYiZQwRZLmXHUmnUeMaQQ1i3U7Je7R06chzsZKoTpJ0Rl/XVcHT/t
+ BvWS7Eg5pSmeHMAks2P7ve6nC6dQx3JkoNaNr6MWf1LoH6t/g3Shqn0h+IYeY0aSv0ebKC
+ TP93fXSsupwDd0NfLWA/LZva5fIEoKQ=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-bS6KcdpfNl6p7dbYvT6FiA-1; Mon, 06 Apr 2026 10:17:48 -0400
-X-MC-Unique: bS6KcdpfNl6p7dbYvT6FiA-1
-X-Mimecast-MFC-AGG-ID: bS6KcdpfNl6p7dbYvT6FiA_1775485067
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2b2454fc131so71206835ad.3
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 07:17:47 -0700 (PDT)
+ us-mta-591-v5rrIPv4MceRL9aJKZVDuw-1; Mon, 06 Apr 2026 10:18:58 -0400
+X-MC-Unique: v5rrIPv4MceRL9aJKZVDuw-1
+X-Mimecast-MFC-AGG-ID: v5rrIPv4MceRL9aJKZVDuw_1775485137
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2b24e9b4d82so51142445ad.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 07:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775485067; x=1776089867; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mk/AFvqMKYlGd/xuxjIjFPJlbZ31peLNGQtW6CDi0Ak=;
- b=qkYGfhrAugXuhVWpK1wJSRFdqS1cx4fzU4xq037MiucE8xzP3GZ660oAh/F97px4Nh
- vRo9w6f4qcVW6ztV4ZNC4v7uIGWYLwP+ZDCIN1JtFMFWmBrjftZVHIDtvNPF4zArKhky
- u589uD6BOHelttQSbz4RBcC/POkqmKIM2rj8B5txU/IzTzzBxcIUaScFgWzVH7zsvosP
- 56CXR/uwkei+qHYoyyPz72YLF76BKPeuJGCK6YhmtjcT+p6mZ/ugtmYsE93mPjec0NFd
- IswzirKScGsKCZizTHQ18yhBri6+U/FqzgGX5t0ierMdkg8GjqIjgeCnXNlLc+o8cEST
- SGEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775485067; x=1776089867;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1775485137; x=1776089937; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mk/AFvqMKYlGd/xuxjIjFPJlbZ31peLNGQtW6CDi0Ak=;
- b=FxOUhgMa23bkkNm5akEzpM8hygLGYskMuqFSZs8fiHvyWhWGhQMgUdoMu+RCHz8ZlK
- ymDQl9Nku2HUgxVkVaq2zS2gz1p9zTc7/cSrR4L8dsmdOGLpcFK3hk4YP/5BGdpLsDgc
- PqFM7YUbo2Ro6an5VXcepXtHhiCzjk3ESUIkAzb1xmaW1av3WvMIXYhF9miFHdmYpkxp
- 9clgaBhzuhfb3QRnQLwoPSfps42pTpjykHEWjkTeJdoIjjFodRk4sy3oZ0PKcFGfXCMF
- Nb0K5RvZofu72cPCLphya+WWBOjKhlhwkG9ERkR77UpwZWX/Y7JN95uxXNqggNTBHvl1
- epnw==
-X-Gm-Message-State: AOJu0Yz7Mp5I5qRRmmjVHhoSO7/wT/1KegC/Ol8oQZ+A864CSBMSMDFY
- dzWBxxvTPX2NTdtcRxGLAHoduuKHVI+qWBNJJzitLsxRXIFCyJzuoZBKmoYpQewoQ0LcW5Qkbnr
- blTbQFxY87SDS5sivCK8ke2vb2yLIOUeZFDVE7BTGBpBUrceSqXtY6jeD5T+R2Z5qyQzPsk/STY
- 8gu0RA1+JCXTU6y+jcx8czGU2nYNtg+8xNHO89S4Q=
-X-Gm-Gg: AeBDieuBLUhk2mJrJEJUGHQPTE2wUdOSLcBLdfr/kYZ5ZRr5DOa/Al4YbkcZQgCKcME
- aNpTU8y3U02suVrKf3aQ08ugukEevQ8ugqNp90hh9Mrm+W8AB9tkiplg00vQrDCm3levSHYC7DN
- 49Zp64MXKAlIACyrxftrG/IAJ9pdw77aTAsxWB+hz5PCNcoZHbbW++YTYgmDNAWB+Kd4zPpJbk1
- fgHJdNiOBFgKFYrcz8wGZvOAQ4Wxw7vNcNbVa5fBJ627EPZoc72gBASitJR4ffjN+DwLfFcWebp
- M6ILFe9pX0xlB+EFCYkwkbvRoLbzBzUI8b1JM2dU+yhf8IznyIsiqnWxQT3U9LEGsUviEeFXWiB
- VakEEK2AcMR8Pd0BTuyu7jIp78tQLGveFkfRHXixET9vFLUTrZemNETA7B2ZS0UK6vF4=
-X-Received: by 2002:a17:903:8c5:b0:2b2:4d36:7aa with SMTP id
- d9443c01a7336-2b281932d71mr141542835ad.35.1775485066642; 
- Mon, 06 Apr 2026 07:17:46 -0700 (PDT)
-X-Received: by 2002:a17:903:8c5:b0:2b2:4d36:7aa with SMTP id
- d9443c01a7336-2b281932d71mr141542355ad.35.1775485066068; 
- Mon, 06 Apr 2026 07:17:46 -0700 (PDT)
+ bh=X5BfOb29CchgA3O8cD3d/CWCo4Ox5ZAg0ea68Q66Ig0=;
+ b=AY6mdoq6zD71DR9DALychDnXMhF0H5RUmyypL2aJd82CMQmEKJA1J57kSJgGoEcQVF
+ sVv3oWRGgV+YMpkQjssEn6qGwdDtl2LhJNHlGqpYTVHY561be8/zziRkcvXFaXIv5cju
+ XFNP+kPh3C9cSUrixTlnoUDi3KqVEEBMPo258zIZph2MimfXoyjqs5h8m0NCLb+hogvs
+ Bu/e3cB4mUDfooU1ji6yrhaCIhvkbGn6ORtLZMlWvADobsSN/OEyGVbynBZcjxdQAGht
+ WOeHR1nfVaV/geN+0GMnTtu1XktWh99SlKmpzQ378BTVPFKtL5hJ0c5rvh7sS1ZCsyxu
+ +6MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775485137; x=1776089937;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=X5BfOb29CchgA3O8cD3d/CWCo4Ox5ZAg0ea68Q66Ig0=;
+ b=TrWvzaUBdogGhfiwnN6MQox4Fxp4tAQjgQap/vuoqQJXd/g5iiMXE3g+zl1g0l5TA6
+ F2YMW5dk1l61Rypnt4h9WdPPCQnlO9gT8EhSBEhLszv7dFz5dWokX6iyZ7tFHd/6CQEI
+ j5JQQ/soU3Yn9qWJh1RLct1e6fgsBWsNnGAE+IUSm0xdR9XLLcI6qZ7vLZFmA9kj5Rpz
+ MMP+sC9oKYnVkOc2WS3jW6HU2dSMrR3o6birOrjkyVkg54mqjekwab5bU0aCkmK8gwQq
+ dksQLqfLyhySzqMsyPSOpj5W2xQpJLHW9Zki+ZgJOJ1obmCfC4cLW1ESPmLoHpO2nVgQ
+ G/xA==
+X-Gm-Message-State: AOJu0YxBAf9STpcN6Isjo+dD/4lh7fBagRAdtVhwsoNVTunD30OYbead
+ BriigfjBSAkB91rBT+BNcYTdkEp1ezeMwS1SD1JWI8RSD0JKFD17YKAzKpGzK1RFMwyt7Vy4hhf
+ ryW0CENgoDyrNGDPIRO9vdJorDberyAODXcvroZ+3T1aSjnd2Sb0QNnDRiWpMux3iGqGc9klFQy
+ N2+NzssogNFDrygcH2nQyi7ABxCXkTMwOxiYJSVh0=
+X-Gm-Gg: AeBDievLYpfUhXIGOp20PlXWAHJX/Bwhx5QK01V8nmaJ7YP/S6rLXiP136GOwlOd26R
+ jkh5ceyYRwp3eZ1/qe1pJWF20aE3XdHhAC5h8dcQOxzNZVzVfRAfROoatNYWDqqpNJMsFOUXqKF
+ F9TxHt2BTrXheNI5+8COOm+Snhs5c+ILdyeDcPpYbkvQ8n+FIElJ2VkuNLAg/G/8iPsCdddwBj3
+ bPIoqrZleq230YQIqQZu421bd1RyzQS0XspXyKiT3kPHp18p0OpoodZWXk97xV8WOl0uIc4VCGp
+ obujG+Pzut/jqCr9n76WQhooJxTksPXwv+OS7vtGvvKp7smbzXBKONwyNYTijI9PXe0ueG7kWdk
+ RsvUX0kgcoAI5OrK2pzeEzx65cLs6iYkCS/mu3KvgdIU4tWporA7D5Sn4cWQ7JH8kqzg=
+X-Received: by 2002:a17:902:f70c:b0:2b0:4fb3:c771 with SMTP id
+ d9443c01a7336-2b277d6372emr149470805ad.6.1775485136598; 
+ Mon, 06 Apr 2026 07:18:56 -0700 (PDT)
+X-Received: by 2002:a17:902:f70c:b0:2b0:4fb3:c771 with SMTP id
+ d9443c01a7336-2b277d6372emr149470345ad.6.1775485135989; 
+ Mon, 06 Apr 2026 07:18:55 -0700 (PDT)
 Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([152.59.100.84])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b27478cb4fsm156732905ad.29.2026.04.06.07.17.39
+ d9443c01a7336-2b27478cb4fsm156732905ad.29.2026.04.06.07.18.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Apr 2026 07:17:45 -0700 (PDT)
+ Mon, 06 Apr 2026 07:18:55 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -91,12 +93,13 @@ Cc: Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  marcandre.lureau@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>, Igor Mammedov <imammedo@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Arun Menon <armenon@redhat.com>
-Subject: [PATCH v3 00/10] hw/tpm: CRB chunking capability to handle PQC
-Date: Mon,  6 Apr 2026 19:47:25 +0530
-Message-ID: <20260406141735.25844-1-armenon@redhat.com>
+ Arun Menon <armenon@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v3 09/10] tpm: Extend TPM TIS buffer size to 8192 bytes
+Date: Mon,  6 Apr 2026 19:47:34 +0530
+Message-ID: <20260406141735.25844-10-armenon@redhat.com>
 X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260406141735.25844-1-armenon@redhat.com>
+References: <20260406141735.25844-1-armenon@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
@@ -124,103 +127,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The move to Post Quantum Cryptography (PQC) changes how we manage
-memory buffers. Unlike classic crypto algorithms like RSA or ECC which
-used small keys and signatures, PQC algorithms require larger buffers.
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-The new version of TCG TPM v185 (currently under review [1]) supports
-sending data/commands in chunks for the CRB (Command Response Buffer)
-interface. This is in line with the initiative to support PQC algorithms.
+Extend the TIS buffer size to 8192 bytes and store the first 4096 bytes
+using VMSTATE_PARTIAL_BUFFER and the rest using VMSTATE_BUFFER_START_MIDDLE
+when necessary. It is necessary to store the buffer beyond original 4096
+bytes when:
 
-This series implements the logic to send and receive data from the
-linux guest to the TPM backend in chunks, thereby allowing the
-guest to send larger data buffers. We introduce 2 new control registers
-called nextChunk and crbRspRetry that will control the START. We also
-add the CRB Interface Identifier called CapCRBChunk that is set to 1
-indicating that the device supports chunking. The default maximum
-chunk/buffer size is 3968 (4096 - 128) bytes.
+ - the user has written more than 4096 bytes to the buffer
+ - the TPM 2 response is larger than 4096 bytes
 
-During a send operation, the guest driver places data in the CRB buffer
-and signals nextChunk for each segment until the final chunk is reached.
-Upon receiving the START signal, QEMU appends the final chunk to its
-internal buffer and dispatches the complete command to the TPM backend.
+Use the .needed function of the VMStateDescription interface to check
+whether the bytes in the buffer beyond 4096 bytes needed to be saved.
+The .pre_save function is called before the .needed function so that we
+can be sure to have received any response packet from the TPM.
 
-For responses, the backend's output is buffered. The guest consumes the
-first chunk once the START bit is cleared. Subsequent chunks are
-retrieved by the guest toggling the nextChunk bit, which advances the
-internal buffer offset and populates the CRB data window.
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+[ Arun Menon - Removed WIP tag and TODO for submission ]
+Signed-off-by: Arun Menon <armenon@redhat.com>
+---
+ hw/tpm/tpm_tis.h        |  2 ++
+ hw/tpm/tpm_tis_common.c | 23 +++++++++++++++++++++++
+ hw/tpm/tpm_tis_i2c.c    | 24 +++++++++++++++++++++++-
+ hw/tpm/tpm_tis_isa.c    | 24 +++++++++++++++++++++++-
+ hw/tpm/tpm_tis_sysbus.c | 24 +++++++++++++++++++++++-
+ 5 files changed, 94 insertions(+), 3 deletions(-)
 
-For this to work, the linux guest tpm driver will also have to
-a) probe if CRB chunking is supported
-b) send data in chunks if the command length exceeds the chunk size.
-c) receive data in chunks by sending a nextChunk signal and accumulate.
-These patches are posted upstream:
-https://lore.kernel.org/lkml/20260324181244.17741-1-armenon@redhat.com/
-
-Dependencies:
-This series has a hard dependency on the following patches currently on
-the mailing list. They must be applied first for this series to function
-correctly:
-1. [PATCH 1/2] migration/vmstate: Add VMState support for GByteArray
-   Link: https://lore.kernel.org/all/20260406115247.4879-2-armenon@redhat.com/
-2. [PATCH for-11.1] hw: add compat machines for 11.1
-   Link: https://lore.kernel.org/all/20260331140347.653404-1-cohuck@redhat.com/
-
-[1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p07_rc1_121225.pdf
-
-v3
---
-Patches 1-6
-- Fix the issue with subsequent nextChunk signal from the guest while
-  the TPM backend is not done processing the previous request.
-- Add tpm_crb_unrealize() to clear buffers
-- Update hw_compat to 11.1.
-- Use newly introduced GByteArray VMStateInfo for migration.
-Patches 7-10
-- Add Stefan Berger's patches for swtpm profile support, TPM TIS
-  migration support with extended buffer and related tests.
-  NOTE: I have removed the "WIP" prefix and the "TODO" regarding dynamic
-  allocation from Stefan's final patch, as the static 8192-byte limit is
-  sufficient for the current requirements and passes all local testing.
-
-v2
---
-- Add the VM migration support.
-- Increase the TIS TPM interface max buffer size to 8192.
-
-Based-on: <20260331140347.653404-1-cohuck@redhat.com>
-Based-on: <20260406115247.4879-2-armenon@redhat.com>
-
-Arun Menon (6):
-  hw/tpm: Add TPM CRB chunking fields
-  hw/tpm: Refactor CRB_CTRL_START register access
-  hw/tpm: Add internal buffer state for chunking
-  hw/tpm: Implement TPM CRB chunking logic
-  test/qtest: Add test for tpm crb chunking
-  hw/tpm: Add support for VM migration with TPM CRB chunking
-
-Stefan Berger (4):
-  qtests: Enable starting swtpm with a given profile
-  tests: Use ML-DSA-87 operations to caused large TPM transfers with CRB
-  tpm: Extend TPM TIS buffer size to 8192 bytes
-  tests: Use ML-DSA-87 operations to caused large TPM transfers with TIS
-
- hw/core/machine.c                |   4 +-
- hw/tpm/tpm_crb.c                 | 218 +++++++++++++++++++++++++++----
- hw/tpm/tpm_tis.h                 |   2 +
- hw/tpm/tpm_tis_common.c          |  23 ++++
- hw/tpm/tpm_tis_i2c.c             |  24 +++-
- hw/tpm/tpm_tis_isa.c             |  24 +++-
- hw/tpm/tpm_tis_sysbus.c          |  24 +++-
- include/hw/acpi/tpm.h            |   5 +-
- tests/qtest/tpm-crb-swtpm-test.c |  11 ++
- tests/qtest/tpm-tests.c          | 102 ++++++++++++++-
- tests/qtest/tpm-tests.h          |   4 +
- tests/qtest/tpm-tis-swtpm-test.c |  11 ++
- tests/qtest/tpm-util.c           | 154 +++++++++++++++++++---
- tests/qtest/tpm-util.h           |  10 +-
- 14 files changed, 569 insertions(+), 47 deletions(-)
-
+diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
+index 184632ff66..d35c332287 100644
+--- a/hw/tpm/tpm_tis.h
++++ b/hw/tpm/tpm_tis.h
+@@ -90,4 +90,6 @@ uint32_t tpm_tis_read_data(TPMState *s, hwaddr addr, unsigned size);
+ void tpm_tis_write_data(TPMState *s, hwaddr addr, uint64_t val, uint32_t size);
+ uint16_t tpm_tis_get_checksum(TPMState *s);
+ 
++bool tpm_tis_ext_buffer_migration_needed(struct TPMState *s);
++
+ #endif /* TPM_TPM_TIS_H */
+diff --git a/hw/tpm/tpm_tis_common.c b/hw/tpm/tpm_tis_common.c
+index f594b15b8a..dffb0a411e 100644
+--- a/hw/tpm/tpm_tis_common.c
++++ b/hw/tpm/tpm_tis_common.c
+@@ -890,3 +890,26 @@ const VMStateDescription vmstate_locty = {
+     }
+ };
+ 
++bool tpm_tis_ext_buffer_migration_needed(struct TPMState *s)
++{
++    if (!TPM_TIS_IS_VALID_LOCTY(s->active_locty)) {
++        return false;
++    }
++
++    switch (s->loc[s->active_locty].state) {
++    case TPM_TIS_STATE_IDLE:
++    case TPM_TIS_STATE_READY:
++        return false;
++    case TPM_TIS_STATE_RECEPTION:
++        return s->rw_offset >= 4096;
++    case TPM_TIS_STATE_EXECUTION:
++        /*
++         * TPM is executing: we cannot know the size of TPM response.
++         * .pre_save must have been called before (should never get here).
++         */
++        return false;
++    case TPM_TIS_STATE_COMPLETION:
++        return (tpm_cmd_get_size(&s->buffer) >= 4096);
++    }
++    return false;
++}
+diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
+index 9f13e0ec12..a01df7e5a0 100644
+--- a/hw/tpm/tpm_tis_i2c.c
++++ b/hw/tpm/tpm_tis_i2c.c
+@@ -110,13 +110,31 @@ static int tpm_tis_i2c_post_load(void *opaque, int version_id)
+     return 0;
+ }
+ 
++static bool tpm_tis_ext_buffer_migration_needed_i2c(void *opaque)
++{
++    TPMStateI2C *i2cst = opaque;
++
++    return tpm_tis_ext_buffer_migration_needed(&i2cst->state);
++}
++
++static const VMStateDescription vmstate_tpm_tis_ext_buffer_i2c = {
++    .name = "tpm-tis/ext_buffer",
++    .version_id = 0,
++    .needed = tpm_tis_ext_buffer_migration_needed_i2c,
++    .pre_save = tpm_tis_i2c_pre_save,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BUFFER_START_MIDDLE(state.buffer, TPMStateI2C, 4096),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_tpm_tis_i2c = {
+     .name = "tpm-tis-i2c",
+     .version_id = 0,
+     .pre_save  = tpm_tis_i2c_pre_save,
+     .post_load  = tpm_tis_i2c_post_load,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_BUFFER(state.buffer, TPMStateI2C),
++        VMSTATE_PARTIAL_BUFFER(state.buffer, TPMStateI2C, 4096),
+         VMSTATE_UINT16(state.rw_offset, TPMStateI2C),
+         VMSTATE_UINT8(state.active_locty, TPMStateI2C),
+         VMSTATE_UINT8(state.aborting_locty, TPMStateI2C),
+@@ -133,6 +151,10 @@ static const VMStateDescription vmstate_tpm_tis_i2c = {
+         VMSTATE_UINT8(csum_enable, TPMStateI2C),
+ 
+         VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription *const[]) {
++        &vmstate_tpm_tis_ext_buffer_i2c,
++        NULL,
+     }
+ };
+ 
+diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
+index 61e95434f5..73038f1a10 100644
+--- a/hw/tpm/tpm_tis_isa.c
++++ b/hw/tpm/tpm_tis_isa.c
+@@ -49,12 +49,30 @@ static int tpm_tis_pre_save_isa(void *opaque)
+     return tpm_tis_pre_save(&isadev->state);
+ }
+ 
++static bool tpm_tis_ext_buffer_migration_needed_isa(void *opaque)
++{
++    TPMStateISA *isadev = opaque;
++
++    return tpm_tis_ext_buffer_migration_needed(&isadev->state);
++}
++
++static const VMStateDescription vmstate_tpm_tis_ext_buffer_isa = {
++    .name = "tpm-tis/ext_buffer",
++    .version_id = 0,
++    .needed = tpm_tis_ext_buffer_migration_needed_isa,
++    .pre_save = tpm_tis_pre_save_isa,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BUFFER_START_MIDDLE(state.buffer, TPMStateISA, 4096),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_tpm_tis_isa = {
+     .name = "tpm-tis",
+     .version_id = 0,
+     .pre_save  = tpm_tis_pre_save_isa,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_BUFFER(state.buffer, TPMStateISA),
++        VMSTATE_PARTIAL_BUFFER(state.buffer, TPMStateISA, 4096),
+         VMSTATE_UINT16(state.rw_offset, TPMStateISA),
+         VMSTATE_UINT8(state.active_locty, TPMStateISA),
+         VMSTATE_UINT8(state.aborting_locty, TPMStateISA),
+@@ -64,6 +82,10 @@ static const VMStateDescription vmstate_tpm_tis_isa = {
+                              vmstate_locty, TPMLocality),
+ 
+         VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription *const[]) {
++        &vmstate_tpm_tis_ext_buffer_isa,
++        NULL,
+     }
+ };
+ 
+diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
+index e9372e7316..86fc5a592c 100644
+--- a/hw/tpm/tpm_tis_sysbus.c
++++ b/hw/tpm/tpm_tis_sysbus.c
+@@ -48,12 +48,30 @@ static int tpm_tis_pre_save_sysbus(void *opaque)
+     return tpm_tis_pre_save(&sbdev->state);
+ }
+ 
++static bool tpm_tis_ext_buffer_migration_needed_sysbus(void *opaque)
++{
++    TPMStateSysBus *sbdev = opaque;
++
++    return tpm_tis_ext_buffer_migration_needed(&sbdev->state);
++}
++
++static const VMStateDescription vmstate_tpm_tis_ext_buffer_sysbus = {
++    .name = "tpm-tis/ext_buffer",
++    .version_id = 0,
++    .needed = tpm_tis_ext_buffer_migration_needed_sysbus,
++    .pre_save  = tpm_tis_pre_save_sysbus,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BUFFER_START_MIDDLE(state.buffer, TPMStateSysBus, 4096),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_tpm_tis_sysbus = {
+     .name = "tpm-tis",
+     .version_id = 0,
+     .pre_save  = tpm_tis_pre_save_sysbus,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_BUFFER(state.buffer, TPMStateSysBus),
++        VMSTATE_PARTIAL_BUFFER(state.buffer, TPMStateSysBus, 4096),
+         VMSTATE_UINT16(state.rw_offset, TPMStateSysBus),
+         VMSTATE_UINT8(state.active_locty, TPMStateSysBus),
+         VMSTATE_UINT8(state.aborting_locty, TPMStateSysBus),
+@@ -63,6 +81,10 @@ static const VMStateDescription vmstate_tpm_tis_sysbus = {
+                              0, vmstate_locty, TPMLocality),
+ 
+         VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription *const[]) {
++        &vmstate_tpm_tis_ext_buffer_sysbus,
++        NULL,
+     }
+ };
+ 
 -- 
 2.53.0
 
