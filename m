@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B04E7E9D82E
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 02:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633FAE9D82F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 03:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9Zyb-0003Dw-JL; Sun, 05 Apr 2026 22:46:09 -0400
+	id 1w9aCH-0000je-RQ; Sun, 05 Apr 2026 23:00:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1w9ZyZ-0003Cs-E6
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 22:46:07 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w9aCF-0000iS-Qz
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 23:00:15 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1w9ZyX-00036v-Ql
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 22:46:07 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-35c2fe0d90fso1962671a91.1
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 19:46:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w9aCC-0005Jt-Gc
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 23:00:15 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-823c56765fdso1678111b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 20:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775443564; x=1776048364; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Oxxjox1gJ+tGqFRrxpajMy1uEJ4ChHv4Ckz6L2imF0Q=;
- b=GEh4p740d7Uk3fsB9Hgur/qUeX+7BpARA5hPcOsXMs9fBzjXiVDW8p+epbUUMlDCMI
- fo6zc+xRqBA0r01veUd+jXKNhFAHFJM/qJnBhgwJUm+KM9CJygizLhRWq877FYNqGO0y
- ybUI6IRY7+jH0MmRXwX+GB9vw+2KLuQHlopnMjk44u5LH6eipYGIm1WFgQkBU9G9m9E6
- +KXDiIsOUx7XYUgzp+L5vjhUXjMW7CykG/i6+B135XEBgGeAysvkXL6tYSM+xuJL5CKq
- I5FxpcdBb4vq/6VevGLQ3cYBpiE6AQN7g1X9dkVIgxR8+jRt1G4Wx1y8f79bagCnDpU0
- bgIQ==
+ d=linaro.org; s=google; t=1775444410; x=1776049210; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jvg9WPTn9JS4NULEzSmYzeBGSc5qvShIbDaAIH8k2nQ=;
+ b=Yc9ezDsXT4YS66UfjepMCfJ1LTC8NO11tl7jMKyQCaNPXP58cJ+9OeD0yR3QkzWXI2
+ UW3lxnM7sX4ftxKakSpQgbHYnWMA8v1G+s0/Z7OlGgjm6vniufbbCEiS3yi4SBnPA/Dc
+ pEkP5RN4iOcnrK9jS4426UJxSQATlid2MNYaVc0SZf80qp3Dze9z7zHICp+2mOlk3Ssh
+ +MTMuyZgbHVIvvuRpLSwbpkvJ5+AOQD9IKOXb1ax/PQ2ldZz3yiOH/9hq8sn+jSd1FWP
+ Jgks7jUfs3o0tpNsSwpH4fjOf6jsxgJ4IGyeUtFuagIp3L99rzNphq6CoRZ2izsfE3Hz
+ ojwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775443564; x=1776048364;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Oxxjox1gJ+tGqFRrxpajMy1uEJ4ChHv4Ckz6L2imF0Q=;
- b=jBLhSd8LZcnyez3Hqz97YKx0ogdE7bEbpSYBWQEGYZNjsEWHMoc4MWTr3efkF34EfG
- XKZ3vKj5MuPP7b3b3pLqavpxgjz+33UbUZESuaKxI79FMLgyy4Ci/y0dZQxTdWptGa1l
- 91MGw15mfp3gklftIKVnBjESrZjJ9e3YwbkBTqwjMqhHzIT+A9DPQYfgM9BRIqogJ3BK
- k91KU8R7NwilTf0LxSjahi9NCvIN2Zo4UhfagCq4Pp47EaoarZYwf3nq//c38+o+Sb/r
- TPBnC5YdCaiaGdmZBPQoYwHMjIX7goM/qDQ6RXVtIt4XaNxjuAd1qH6MkYck6t46CriQ
- +i4w==
+ d=1e100.net; s=20251104; t=1775444410; x=1776049210;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jvg9WPTn9JS4NULEzSmYzeBGSc5qvShIbDaAIH8k2nQ=;
+ b=HhrFu7EHC5+GvGempRyafj44JsVM8DbQ5j4zrd98wQT6PFGXJ3v4Bg7vCdua46IFM3
+ moISR37DU8vnN+MqNbMAnXq6StbiYALOzpC44tZwt79THnyraAQSzR8LRF2zyu5K20OW
+ wGoxHt2ABqFqxoKMaXiZm8EOidnHI1MinzhIHTYggu0g+CPaOHKXJjKhUGqLkOijHkQM
+ 40voDV9akTawDEbq1LOucbvQ5Qic0mItnN+JIegscoBbdcRZDeyHZc23stbZ82Rdfvnq
+ eRT1n5yfxa62laNbXvP7GV12nERW+eB7+SL9kDLEQg8yZ3fbp8/ylPrl1I9sYtaD6ya3
+ pllA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWReWw94F1gFrO58Q8JD90vAOd1MIg/8rjxtrspcGnbruzX9+wPtzV+WH7sKYf6jgugehscX9jjQrSP@nongnu.org
-X-Gm-Message-State: AOJu0YxIyFjk3d51hltlUNgOKbqO5L5cc706Z2MCz8EeqMpiYkoMEFng
- D7/qR8tQGPFhur4PthH2Wu13kNV4/0blAbr61cc3cniLIPOzrlW+7DZG
-X-Gm-Gg: AeBDietuv/AJ/xEypg4JvzLXHqx3r2dQDSeSlGkatT9nLw1uAGs53qvcIfEX1ko21Aw
- YK/7s9tUBQOqIGmoySR47ZQIwnQYt8a2puTzC9kq80s8eU6PPz2ngmGmyf72vAYfI0IkGy6XXWX
- 8pdTMWgQzPbt25eaJsyrh2YS40wUe8HiU0mwtahrgkbmTzN6DCtEcRFV06s/YHERUEihXO4aTTB
- PwF7KBitTcjEn9NHeUn9GVX0lrJQNSmNM4ewwYg6t5jxcr/HglWhDYqk2OjLbYvjZW9KcJM/rAQ
- rByhsNPXmUFmgn4JXhbEbn+kZu2xNYC6nEoDc1rDow9yPVjD6Y7e3kFUZz3pgghoEpGVvvPob+F
- FN749A9B/mqPYMuXzi600PRb21Dd9W8YepLjWUCT3QFxdWGDMyFvew9ftNPn7tNcIIbtOytj9af
- ysgAb8dASo6Nk1BcEg6yEWLTQnx5sRqVjxyAM=
-X-Received: by 2002:a17:90b:4ecc:b0:35c:30a8:32a with SMTP id
- 98e67ed59e1d1-35de67e8aa9mr10043037a91.9.1775443564223; 
- Sun, 05 Apr 2026 19:46:04 -0700 (PDT)
-Received: from localhost.localdomain ([147.136.157.0])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-35dd369f414sm11639760a91.15.2026.04.05.19.46.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Apr 2026 19:46:03 -0700 (PDT)
-From: phind.uet@gmail.com
-To: marcandre.lureau@gmail.com
-Cc: Nguyen Dinh Phi <phind.uet@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] util/readline: Fix out-of-bounds access in
- readline_insert_char().
-Date: Mon,  6 Apr 2026 10:45:52 +0800
-Message-ID: <20260406024552.204973-1-phind.uet@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ AJvYcCUg3fFjMCNhgt44lAidqPK0XSq+XrJnaf1EEtNDPLOhIG5TI5PUF1KYQofqo/5fOju2xl3fSsLIAyOR@nongnu.org
+X-Gm-Message-State: AOJu0YwobxK3/I7mBOnhsDH75fk7AsUuSIU1s+qx9dCxcV0lqNEoZxjX
+ CMbBkTu9piN1V4YMmcfpjOcRqsq96Rsb+8uZ6FvGNJ6tzP+5WP+G50ABsNv0mpABfAg=
+X-Gm-Gg: AeBDietuPL+j1c/UDbinsbF9ejY9dvbrN/U6tTXl2nP+5+K8xMRlBKwXvrzY9pkdaK/
+ 5PgNLX2fvk02p9ZGBVvhW3NZsibhmejVoZ8DhMcqbppK+a1hphNJY+ReTROOaPK4hQFDYqovDBc
+ Ug52bWcVBRKPz4pl9PMOFA1A0srqZZtSrUw8w3pw831iOIrgKQCTQDS0XmaS7+m4tLqZOtZX41i
+ l2c6dwjHKsZikAxLTxazIufbngEJ8uGDqZOCEuz/6HDzO91ZKpKzkHoi14RNawMLhWmKXkfJ0J1
+ KagKclnLch6loBUiwsZsSVZjGD3kY/ATwPyCMP748NV8kn/d+kp4iwPQC1Pnavu7hfPWSwtvhL8
+ 72aQRUo+y6h0IbBWLx0S6IIsvGoH0EwzOITLgqsi6v9Mfyz+LZyPwLBNwxDKlpXAujFN4QX45W9
+ 3IXp9iHfbLrvCkkme8K4F/Aeweblf5kbsoZH4EtuOC9D6x70jftJnqJ+OUYSgzXZqoocU=
+X-Received: by 2002:a05:6a00:1406:b0:82a:7dfd:9757 with SMTP id
+ d2e1a72fcca58-82d0da44b00mr10089236b3a.4.1775444409878; 
+ Sun, 05 Apr 2026 20:00:09 -0700 (PDT)
+Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82cf9b3dcb3sm12170536b3a.16.2026.04.05.20.00.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 05 Apr 2026 20:00:09 -0700 (PDT)
+Message-ID: <fbe27b77-b369-4218-8354-4b5d0d5db139@linaro.org>
+Date: Mon, 6 Apr 2026 13:00:02 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 28/35] target/arm: ensure aarch64 DISAS_WFE will exit
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, Peter Maydell
+ <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20260320130607.2071996-1-alex.bennee@linaro.org>
+ <20260320130607.2071996-29-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260320130607.2071996-29-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=phind.uet@gmail.com; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,62 +109,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+On 3/21/26 00:05, Alex Bennée wrote:
+> This mirrors the logic for DISAS_WFE in 32 bit world.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   target/arm/tcg/translate-a64.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+> index 073454b9195..d79c8ab431b 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -10917,6 +10917,7 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+>           case DISAS_WFE:
+>               gen_a64_update_pc(dc, 4);
+>               gen_helper_wfe(tcg_env);
+> +            tcg_gen_exit_tb(NULL, 0);
+>               break;
+>           case DISAS_YIELD:
+>               gen_a64_update_pc(dc, 4);
 
-Currently, the readline_insert_char() function is guarded by the cursor
-position (cmd_buf_index) rather than the actual buffer fill level(cmd_buf_size).
-The current check is:
-	if (rs->cmd_buf_index < READLINE_CMD_BUF_SIZE)
+This appears to be wrong since 252ec405768 (2014).
 
-This logic is flawed because if the command buffer is full and a user moves the
-cursor backward (e.g. by sending left arrow key), cmd_buf_index can be
-decreased without descreasing of buffer size.
-This allow subsequent insertions to increase cmd_buf_size past its maximum
-limit of rs->cmd_buf.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Because in the ReadLineState struct, cmd_buf[READLINE_CMD_BUF_SIZE + 1] is
-immediately followed by the cmd_buf_index integer, once the buffer size is
-sufficiently inflated, the memmove() operation inside readline_insert_char()
-can write past the end of cmd_buf[] and overwrites cmd_buf_index itself.
 
-The subsequent line:
-	rs->cmd_buf[rs->cmd_buf_index] = ch;
-
-then writes the input character to an address determined by the now-corrupted
-index.
-
-By providing a specifically crafted input sequence via HMP, this flaw can be
-used to redirect the write operation to overwrite any field within the
-ReadLineState structure, which can lead to unpredictable behavior or
-application crashes.
-
-Fix this by adding the guard to check for buffer fullness.
-
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
----
- util/readline.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
----
-V2:
-  use assert() to check the value of  cmd_buf_index before the
-  insertion.
-
-diff --git a/util/readline.c b/util/readline.c
-index 0f19674f52..e2664e48ca 100644
---- a/util/readline.c
-+++ b/util/readline.c
-@@ -84,7 +84,9 @@ static void readline_update(ReadLineState *rs)
- 
- static void readline_insert_char(ReadLineState *rs, int ch)
- {
--    if (rs->cmd_buf_index < READLINE_CMD_BUF_SIZE) {
-+    assert(rs->cmd_buf_index <= rs->cmd_buf_size);
-+
-+    if (rs->cmd_buf_size < READLINE_CMD_BUF_SIZE) {
-         memmove(rs->cmd_buf + rs->cmd_buf_index + 1,
-                 rs->cmd_buf + rs->cmd_buf_index,
-                 rs->cmd_buf_size - rs->cmd_buf_index);
--- 
-2.43.0
-
+r~
 
