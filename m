@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE50F46C70
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 18:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B143F46C6D
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 18:29:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9oem-0007Ud-Lk; Mon, 06 Apr 2026 14:26:40 -0400
+	id 1w9oep-0007Ys-K6; Mon, 06 Apr 2026 14:26:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w9oek-0007Rb-9O
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:38 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1w9oeo-0007Xq-OX
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:42 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w9oeg-0002Pa-8W
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:37 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c742b9b7727so1039525a12.0
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 11:26:33 -0700 (PDT)
+ id 1w9oek-0002RN-NW
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:42 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c76c60c7502so1553940a12.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 11:26:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775499992; x=1776104792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775499997; x=1776104797; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1L86uxagesTAR2MbXgeWPsQvtTYWrgsau2aa3Y7nNBA=;
- b=DVcrOuxtBq8lIj4p3FJSGwiLYnJEBi+ldf4mwEJg4VAPtSULA/bNYmWeojwN9A0C10
- XnryRDL/mGk76g1BvccMhIJdNwbcQFCloAz8339M6l1quG+HzrwxHGzNpbnIm3ryRj5L
- zeMwLADyu2Yklp4aObmf+EoQuTMucLDmPAGU9AQH6jBk12TeqE57fOuPxjeVKO70lfGI
- qZ+pIE0ajDT5DE0poPpZAmsbGwzgmaKvC+9/kiFnumyK207lEJRbfdjZKwM866s/FpZo
- bLbzxhan2h+GAQjPpRer/lBfZvVcOXCrNnKSoIJ4VkAfGrUudTbr+wWAWTHhSc205PSP
- VTPw==
+ bh=cvWpC/BP3AzO1KG7rPNsIt99iLJ3ccph4lX0NivZpaI=;
+ b=okCwm8bpbDRRUecAllR07QkHFqE8E6i6KXcuWqC7gxQyrCjzoCCAuwU4VsmIU95Lbh
+ cZB7BRBRmlX6s9csn25PTIbYDJXJgk/HQ1uD6c+ERZMuMxsX3pvbuZavJQ50PVJZ1yEy
+ /PTdVdP+1qez70t/UN9xCxbvU1uxuh+OpbqZ0Bng/MOV3xdG6fquzLPCSDFbzCZr87N9
+ fXHT16J8M/RGo8iyTEfJENhm2QCeK5tZgGzO8giglk6pAUZXE7qzeGx6YKwPoDIb6UfN
+ fcLp4qeOK9Hx7P7lYrHm+L59+7pnw42NLSoUeB3iDh0LoKEJP3K3109yCJwWv4MPH6/2
+ zeiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775499992; x=1776104792;
+ d=1e100.net; s=20251104; t=1775499997; x=1776104797;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1L86uxagesTAR2MbXgeWPsQvtTYWrgsau2aa3Y7nNBA=;
- b=iDhGSxVhNwqzdfTpjsfLfpJvbmpZfEtBHfvJ9VaPLE158jSt0/x4abt08QASbaR6K+
- s+ZTvaGZQuafvt10ADR8DEy/3/X3VpElIkCXEX4BMFCxRiU+oHUaGmrL4ibg8A/fkJ+M
- DESYSSbK1aDFMfeDPWJr/2Swf2xHV433zk3lWAxzXUy08JoyeTW0/HttV0rybYgR35PI
- xk5dLx61BmmIHDdUYw/0hg95xD7Qw7VSeFFlsNm5tBXocBYNqUguo64hxW2YkxAZRUiz
- 2UszUSGgtAlo3cfPaxKI6uf/FHV8vVLdOp2Orqc16B3zVV3mcxwGR5mRCfg0CX6D0KJu
- KZFQ==
-X-Gm-Message-State: AOJu0Yye24VYfhUNeSod5piudyaxqDKzzjrSjxzTxbxyusKE6JT+Ljo7
- rzpOcK6KEqvzU7HCcENhSxbFNKXAmnKCbsH2J8IMWbNWZoEgV63xKv6LHaWZqix8HF4onY4Ui4d
- 8ws17/OIeIg==
-X-Gm-Gg: AeBDiet9xsdXkXhbVFQk+ibPAeY3PV5QofL3/wUHCFDSvhF3biHnZVZjzu+lPQRWd0q
- u9+gSlcbzfW4mGNwPpgqzRhu5+XF9O2oGuzkdGM9WvSPDnHIuDHdp54vH8OnYe0vlt5gbEE4Vr2
- n9TjIlWFoOJ/naCvY+N3u72vbodAuqJbQ1Fp2AsEefQLaAZO5b6cPrmCJpSVnVhKLeZd1rALGLr
- AWiJ58iKK9g3KOsffCKACDZcJTmZTrIy7tSqhlXfLca4/cNiKSr9c9uO9Pn9tihW7LFRc1HwadP
- Ox1YS3k8Ab3t9akgnStNzNM6Nk0lYej9+HhX20oxHqFJHvUJV6LIGiUlLiTNwPJ61Xf8FoQxBz2
- 3zClCAzmvSe1GXHXvF0MNph1IjCsWzyjtjFaYIMITJYY0//C6iyQ2sknO+zy5C1jwZZqoF11y6Y
- OGXOO1dj/sCXPX0TNHVJTQCXXT3gAZER1Nk108rZJLwM45H0Gl2cCTOe+bpGyVFOuHdms0pZNYs
- a0k
-X-Received: by 2002:a05:6a20:7346:b0:39f:2af3:e8ee with SMTP id
- adf61e73a8af0-39f2d8b8bb3mr12172307637.13.1775499992074; 
- Mon, 06 Apr 2026 11:26:32 -0700 (PDT)
+ bh=cvWpC/BP3AzO1KG7rPNsIt99iLJ3ccph4lX0NivZpaI=;
+ b=Zibt37rUxMarL28Y7UFiyJx1xvgAMGaRB3SViDa39RE8LondO4GpMuKgMg4Uy9dP9R
+ FnwiuhEu22Y4EdVHiy6Q0EZTSLJadXZD92RZVSYpssz9/AmValj63ZDUpylcezINOHxi
+ xnDeJWKPJVLUDhghv9Gb2eDO51Hfi4abq96lPQII2K2rOxItrQeCDNm5Jey4BUiEYPKB
+ atQ0sl51saYR0hyX+cBwGtCFhoYgZIvsuhRlrjYWPG+iVnDOotkqihXyno/vUoXOyLwj
+ KhFdiRqQeeBhfjBB13us+Q+5fhSVC0PLS4CHo0fa9HXuteG62VyZFn7HNPZkCMzh98GJ
+ Q/vg==
+X-Gm-Message-State: AOJu0Yx5r2ShPGqexnUx40f3GiAOiPI/UXKEV2QcfBRWMsWJBpTM6SKv
+ GysTvdLBu/sAIMCP7Sr7Z92xCbkn0M2ybVl2jF7aOozVjsn1KS2m2oiBtBXh+qpnqlf+4lnpiQv
+ 8mUQLk25lWQ==
+X-Gm-Gg: AeBDieuKgWf0pGTjaiYeKQRjDKdXvCUZTq1h2b5GRGGC0Wwjq3mOlEXEtbFAcC/1PzW
+ JwkUzHUAnyrhvoRW1IU6s4mWLVH3SpqQquKhcF6F8FrcEWZwL08vaWPitNDLD6X7w7vzyBHeOgd
+ PZsOC590GAApk6rio+M6CJAGwIExRH3JqZqRDbf60LbhfUKkSxVzZh98JIxZ6/plEUfmxzhIFY/
+ cSI0WpQT8/4OlGi6QpJ8J719d4xg/WkbIncb7duPPfn2yQUVewXGveNGScgGsKiX4NXg/CQLaI3
+ YhZY504CnNKBhPj+u6X/CRm9y7HGvqn+BIcN1492WPEXfW3mKYyjBU8PnarjpC3d0UZQsMyPqZ5
+ dTaa53f7xe8/NSmFtb8GDei85wq+EmCfj9/feOlsmMX+0kH1sBb3eEbKKmvY9ofm2YUAEzux8ln
+ fd5UnIPBn8e8OGpduk8KdkEOvlnWapg6iDsPkblXLjUM8UrXLAVweYqCuqts+9SLDGRQr3CUzUi
+ CNu
+X-Received: by 2002:a05:6a21:3383:b0:39c:4e62:b856 with SMTP id
+ adf61e73a8af0-39f2d879210mr13080873637.8.1775499997279; 
+ Mon, 06 Apr 2026 11:26:37 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c6561fe9sm12765080a12.15.2026.04.06.11.26.31
+ 41be03b00d2f7-c76c6561fe9sm12765080a12.15.2026.04.06.11.26.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Apr 2026 11:26:31 -0700 (PDT)
+ Mon, 06 Apr 2026 11:26:36 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, jim.macarthur@linaro.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-arm@nongnu.org
-Subject: [PATCH v8 13/20] tcg/translator: add parameter to translator_loop for
- current addr type
-Date: Mon,  6 Apr 2026 11:26:02 -0700
-Message-ID: <20260406182609.193886-14-pierrick.bouvier@linaro.org>
+Subject: [PATCH v8 18/20] target/arm/tcg/translate.c: remove target_ulong
+Date: Mon,  6 Apr 2026 11:26:07 -0700
+Message-ID: <20260406182609.193886-19-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
 References: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,361 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With TCG_ADDRESS_BITS mechanism, it's now possible to specify which
-variant every source file is written for. Compared to before, it means
-that addr_type will now vary per tb translation, where it was constant
-for a given target previously.
-
-Thus, we add a parameter to translator_loop().
-Since all targets for now still use default target addr type, we add a
-simple helper returning this value based on target_long_bits().
-
-This will allow us to convert targets one by one.
+We can replace it with uint32_t, because we know it's limited to 32-bit
+target.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/exec/translator.h        | 4 +++-
- include/tcg/tcg.h                | 5 +++++
- accel/tcg/translator.c           | 4 +++-
- target/alpha/translate.c         | 3 ++-
- target/arm/tcg/translate.c       | 3 ++-
- target/avr/translate.c           | 3 ++-
- target/hexagon/translate.c       | 3 ++-
- target/hppa/translate.c          | 3 ++-
- target/i386/tcg/translate.c      | 3 ++-
- target/loongarch/tcg/translate.c | 3 ++-
- target/m68k/translate.c          | 3 ++-
- target/microblaze/translate.c    | 3 ++-
- target/mips/tcg/translate.c      | 3 ++-
- target/or1k/translate.c          | 3 ++-
- target/ppc/translate.c           | 3 ++-
- target/riscv/translate.c         | 3 ++-
- target/rx/translate.c            | 3 ++-
- target/s390x/tcg/translate.c     | 3 ++-
- target/sh4/translate.c           | 3 ++-
- target/sparc/translate.c         | 3 ++-
- target/tricore/translate.c       | 3 ++-
- target/xtensa/translate.c        | 3 ++-
- 22 files changed, 49 insertions(+), 21 deletions(-)
+ target/arm/tcg/translate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index 8d343627bd9..c1d31e06b53 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -20,6 +20,7 @@
- 
- #include "exec/memop.h"
- #include "exec/vaddr.h"
-+#include "tcg/tcg.h"
- 
- /**
-  * DisasJumpType:
-@@ -132,6 +133,7 @@ typedef struct TranslatorOps {
-  * @host_pc: host physical program counter address
-  * @ops: Target-specific operations.
-  * @db: Disassembly context.
-+ * @addr_type: TCG Type for addresses (TCGv_va).
-  *
-  * Generic translator loop.
-  *
-@@ -147,7 +149,7 @@ typedef struct TranslatorOps {
-  */
- void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-                      vaddr pc, void *host_pc, const TranslatorOps *ops,
--                     DisasContextBase *db);
-+                     DisasContextBase *db, TCGType addr_type);
- 
- /**
-  * translator_use_goto_tb
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 45c7e118c3d..f8301d98623 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -166,6 +166,11 @@ static inline int tcg_type_size(TCGType t)
- 
- typedef tcg_target_ulong TCGArg;
- 
-+static inline TCGType tcg_default_addr_type(void)
-+{
-+    return target_long_bits() == 32 ? TCG_TYPE_I32 : TCG_TYPE_I64;
-+}
-+
- /* Define type and accessor macros for TCG variables.
- 
-    TCG variables are the inputs and outputs of TCG ops, as described
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index f3eddcbb2e8..cd7d079fe05 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -121,13 +121,15 @@ bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
- 
- void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-                      vaddr pc, void *host_pc, const TranslatorOps *ops,
--                     DisasContextBase *db)
-+                     DisasContextBase *db, TCGType addr_type)
- {
-     uint32_t cflags = tb_cflags(tb);
-     TCGOp *icount_start_insn;
-     TCGOp *first_insn_start = NULL;
-     bool plugin_enabled;
- 
-+    tcg_ctx->addr_type = addr_type;
-+
-     /* Initialize DisasContext */
-     db->tb = tb;
-     db->pc_first = pc;
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index 4d22d7d5a45..24c556bffc0 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -2953,5 +2953,6 @@ void alpha_translate_code(CPUState *cpu, TranslationBlock *tb,
-                           int *max_insns, vaddr pc, void *host_pc)
- {
-     DisasContext dc;
--    translator_loop(cpu, tb, max_insns, pc, host_pc, &alpha_tr_ops, &dc.base);
-+    translator_loop(cpu, tb, max_insns, pc, host_pc, &alpha_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
 diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 204f9657993..ebcf68aea97 100644
+index 68f050746d4..aea38507ef4 100644
 --- a/target/arm/tcg/translate.c
 +++ b/target/arm/tcg/translate.c
-@@ -6891,5 +6891,6 @@ void arm_translate_code(CPUState *cpu, TranslationBlock *tb,
-     }
- #endif
+@@ -6288,7 +6288,7 @@ static MemOp arm_memop_endian_swap(bool sctlr_b)
  
--    translator_loop(cpu, tb, max_insns, pc, host_pc, ops, &dc.base);
-+    translator_loop(cpu, tb, max_insns, pc, host_pc, ops, &dc.base,
-+                    tcg_default_addr_type());
- }
-diff --git a/target/avr/translate.c b/target/avr/translate.c
-index 649dd4b0112..e7c894b578f 100644
---- a/target/avr/translate.c
-+++ b/target/avr/translate.c
-@@ -2802,5 +2802,6 @@ void avr_cpu_translate_code(CPUState *cs, TranslationBlock *tb,
-                             int *max_insns, vaddr pc, void *host_pc)
+ /* Ditto, for a halfword (Thumb) instruction */
+ static inline uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
+-                                     target_ulong addr, bool sctlr_b)
++                                     uint32_t addr, bool sctlr_b)
  {
-     DisasContext dc = { };
--    translator_loop(cs, tb, max_insns, pc, host_pc, &avr_tr_ops, &dc.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &avr_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 633401451d8..222e19c707e 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -1077,7 +1077,8 @@ void hexagon_translate_code(CPUState *cs, TranslationBlock *tb,
-     DisasContext ctx;
+ #ifndef CONFIG_USER_ONLY
+     /* In big-endian (BE32) mode, adjacent Thumb instructions have been swapped
+@@ -6536,7 +6536,7 @@ static void arm_post_translate_insn(DisasContext *dc)
  
-     translator_loop(cs, tb, max_insns, pc, host_pc,
--                    &hexagon_tr_ops, &ctx.base);
-+                    &hexagon_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
- 
- #define NAME_LEN               64
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 70c20c00377..7cc260359a4 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -4899,5 +4899,6 @@ void hppa_translate_code(CPUState *cs, TranslationBlock *tb,
-                          int *max_insns, vaddr pc, void *host_pc)
+ /* Load an instruction and return it in the standard little-endian order */
+ static inline uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
+-                                    target_ulong addr, bool sctlr_b)
++                                    uint32_t addr, bool sctlr_b)
  {
-     DisasContext ctx = { };
--    translator_loop(cs, tb, max_insns, pc, host_pc, &hppa_tr_ops, &ctx.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &hppa_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
+     return translator_ldl_end(env, s, addr, arm_memop_endian_swap(sctlr_b));
  }
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 14210d569f7..261f2f928b3 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -3615,5 +3615,6 @@ void x86_translate_code(CPUState *cpu, TranslationBlock *tb,
- {
-     DisasContext dc;
- 
--    translator_loop(cpu, tb, max_insns, pc, host_pc, &i386_tr_ops, &dc.base);
-+    translator_loop(cpu, tb, max_insns, pc, host_pc, &i386_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
-diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-index b9ed13d19c6..d3a03619e27 100644
---- a/target/loongarch/tcg/translate.c
-+++ b/target/loongarch/tcg/translate.c
-@@ -342,7 +342,8 @@ void loongarch_translate_code(CPUState *cs, TranslationBlock *tb,
-     DisasContext ctx;
- 
-     translator_loop(cs, tb, max_insns, pc, host_pc,
--                    &loongarch_tr_ops, &ctx.base);
-+                    &loongarch_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
- 
- void loongarch_translate_init(void)
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index abc1c79f3cd..8e484cf36ea 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -6126,7 +6126,8 @@ void m68k_translate_code(CPUState *cpu, TranslationBlock *tb,
-                          int *max_insns, vaddr pc, void *host_pc)
- {
-     DisasContext dc;
--    translator_loop(cpu, tb, max_insns, pc, host_pc, &m68k_tr_ops, &dc.base);
-+    translator_loop(cpu, tb, max_insns, pc, host_pc, &m68k_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
- 
- static double floatx80_to_double(CPUM68KState *env, uint16_t high, uint64_t low)
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 2af67beecec..fdbf493145d 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -1788,7 +1788,8 @@ void mb_translate_code(CPUState *cpu, TranslationBlock *tb,
-                        int *max_insns, vaddr pc, void *host_pc)
- {
-     DisasContext dc;
--    translator_loop(cpu, tb, max_insns, pc, host_pc, &mb_tr_ops, &dc.base);
-+    translator_loop(cpu, tb, max_insns, pc, host_pc, &mb_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
- 
- void mb_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 54849e9ff1a..08b69716e40 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -15242,7 +15242,8 @@ void mips_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext ctx;
- 
--    translator_loop(cs, tb, max_insns, pc, host_pc, &mips_tr_ops, &ctx.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &mips_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
- 
- void mips_tcg_init(void)
-diff --git a/target/or1k/translate.c b/target/or1k/translate.c
-index de81dc6ef8d..11aaa1084a2 100644
---- a/target/or1k/translate.c
-+++ b/target/or1k/translate.c
-@@ -1647,7 +1647,8 @@ void openrisc_translate_code(CPUState *cs, TranslationBlock *tb,
-     DisasContext ctx;
- 
-     translator_loop(cs, tb, max_insns, pc, host_pc,
--                    &openrisc_tr_ops, &ctx.base);
-+                    &openrisc_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
- 
- void openrisc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index a09a6df93fd..2f8b0061ff5 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -6719,5 +6719,6 @@ void ppc_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext ctx;
- 
--    translator_loop(cs, tb, max_insns, pc, host_pc, &ppc_tr_ops, &ctx.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &ppc_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index cb4f4436018..3706359f516 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1440,7 +1440,8 @@ void riscv_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext ctx;
- 
--    translator_loop(cs, tb, max_insns, pc, host_pc, &riscv_tr_ops, &ctx.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &riscv_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
- 
- void riscv_translate_init(void)
-diff --git a/target/rx/translate.c b/target/rx/translate.c
-index a245b9db8fe..2f3d01d22a8 100644
---- a/target/rx/translate.c
-+++ b/target/rx/translate.c
-@@ -2270,7 +2270,8 @@ void rx_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext dc;
- 
--    translator_loop(cs, tb, max_insns, pc, host_pc, &rx_tr_ops, &dc.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &rx_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
- 
- #define ALLOC_REGISTER(sym, name) \
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 92344441878..f8f134ee99b 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -6509,7 +6509,8 @@ void s390x_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext dc;
- 
--    translator_loop(cs, tb, max_insns, pc, host_pc, &s390x_tr_ops, &dc.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &s390x_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
- 
- void s390x_restore_state_to_opc(CPUState *cs,
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index b1057727c55..ee0848d131b 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -2316,5 +2316,6 @@ void sh4_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext ctx;
- 
--    translator_loop(cs, tb, max_insns, pc, host_pc, &sh4_tr_ops, &ctx.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &sh4_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 7e8558dbbd8..c2c446f1407 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -5853,7 +5853,8 @@ void sparc_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext dc = {};
- 
--    translator_loop(cs, tb, max_insns, pc, host_pc, &sparc_tr_ops, &dc.base);
-+    translator_loop(cs, tb, max_insns, pc, host_pc, &sparc_tr_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
- 
- void sparc_tcg_init(void)
-diff --git a/target/tricore/translate.c b/target/tricore/translate.c
-index 0eaf7a82f87..4f264987853 100644
---- a/target/tricore/translate.c
-+++ b/target/tricore/translate.c
-@@ -8500,7 +8500,8 @@ void tricore_translate_code(CPUState *cs, TranslationBlock *tb,
- {
-     DisasContext ctx;
-     translator_loop(cs, tb, max_insns, pc, host_pc,
--                    &tricore_tr_ops, &ctx.base);
-+                    &tricore_tr_ops, &ctx.base,
-+                    tcg_default_addr_type());
- }
- 
- /*
-diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
-index 5e3707d3fdf..3fe7558bc52 100644
---- a/target/xtensa/translate.c
-+++ b/target/xtensa/translate.c
-@@ -1233,7 +1233,8 @@ void xtensa_translate_code(CPUState *cpu, TranslationBlock *tb,
- {
-     DisasContext dc = {};
-     translator_loop(cpu, tb, max_insns, pc, host_pc,
--                    &xtensa_translator_ops, &dc.base);
-+                    &xtensa_translator_ops, &dc.base,
-+                    tcg_default_addr_type());
- }
- 
- void xtensa_cpu_dump_state(CPUState *cs, FILE *f, int flags)
 -- 
 2.47.3
 
