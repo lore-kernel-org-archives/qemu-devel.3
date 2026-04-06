@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE61BF46C66
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 18:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 173FFF46C6D
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 18:27:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9oet-0007bU-0J; Mon, 06 Apr 2026 14:26:47 -0400
+	id 1w9oeW-0007Jm-SP; Mon, 06 Apr 2026 14:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w9oer-0007ag-QX
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:45 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1w9oeU-0007IF-FE
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:22 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w9oen-0002SX-2A
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:45 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c741692db4cso717213a12.1
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 11:26:40 -0700 (PDT)
+ id 1w9oeS-0002Kh-Rm
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:22 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-35da1af3e10so3797231a91.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 11:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775499999; x=1776104799; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775499979; x=1776104779; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wjwprsq2bUgWU2oNx7oeoEWsXfRXKdt6nUjzLzY0Nco=;
- b=D2oNxEts6MiK+j4DGa3KHgc+ub0+zIzxpjQCpw7ehCUwFQuIL+I5mXK2ZIPmMPXFFM
- BHR0IBHKSCDEKPA8iwnVpPtrYZAu2kOu5zYQJ57rfY825nyGM7JvSPAGbq1r0n005LN7
- NwKIboQ8zZ4BExcqNr9ObrGJdllPwIPySf9ZaSjz4mVOVQRKRlXiPuJ2VsO6aAiPEFeF
- yRNYTqobaeMMDsPG+9RZ9m3JJXZZfowyIxatprGjNKseekEiVhOHU7PbUpvRiOCjsrJ0
- FCBO8akAkzRsQkiC0WwWt7mnhBlWFASUOgRaGN7SPKEn6qwRWfvrVAzqVlJS5Nb9Ezv7
- nd9g==
+ bh=Bt74HgDQm6QWm4ci9bJjS4WKY7nrk6DWez5uAlhy+BI=;
+ b=Yt+TFOndbOhGQ1tNkbotV7j6ix4qCTeKOC3hgWTPpklKQNHC+ennOL14FcLUuBbSmx
+ Dtd6lDkXq0W/jFR22uCMgCuAz2A+8FDK+JJtMn2nEJWtYzK/eb58VvzDZXKhLM9Xfmqi
+ /Mxi93L12FFoOQG8S7CXZmLqnVzWXDAi4EvlbK8EDZH2iBWdeKbqukWMxTyT7XYAgEKD
+ wGRg9OoC+PgJbAMOT5hFJ9aYLk0UW4lbq3+HHiFyTLQ/N7ui2n7GvazrbLf6Xh6S14ib
+ +P9i4U4rfCxHLKUZk0HiXm7NRXmFqJrcXZQvnTTx1NJ+N8s02Nr5Ti2SKf7awZ7kC/Iu
+ kHZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775499999; x=1776104799;
+ d=1e100.net; s=20251104; t=1775499979; x=1776104779;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Wjwprsq2bUgWU2oNx7oeoEWsXfRXKdt6nUjzLzY0Nco=;
- b=AqaVRr/QIWTjrvmknnubz5IISv9Ib/42ppe5NdWZPawd0iFqz34ripkhzHgeB/Gz//
- 9ex0a0D3kVi98k7bGaeRH26KKBIl1lqsWNBi/2n7hRBMuPADlfmdf5hl4+DgmzZF1YQ8
- gn+5FRgeXTwJeh9i3W4rOXFA3nN51v5z5y0pSiYGpUO7kjTDGa1+Kz/g3TqSzDpCBHZb
- NvrfcSfpob/rfciNoGQTCHXwlDjn+kGNKkUkKbs7vyKmsPCDiK5WZsUdEyWIngiCcizm
- IXRCod43/twOBdCIp+pJr8QMLgvF08L1CDsLTAGBm4f7lBRrmsdQDC3jZM71b23oMw4t
- JnLw==
-X-Gm-Message-State: AOJu0YzbEbln5Tw53BFPm3U9qVWmF8hNF++/j+HSQgBKj0Q1gkbQ8Aqa
- WwKOir1RXzbM0SPlbz5a6FPVQEYif1vJdXHV2/TmKyxq20U7GJKhyyFCapAVKbhdmafMuEo98ao
- 2X5QW9ZV8WQ==
-X-Gm-Gg: AeBDievxE+E5OsKTI0zXFQ5xN0Q9JceU1Xan7q0k3rLhiO9FXGFWJ4gLMPoVbTzyliv
- Ozq4vgGKHvBdDcKQkSt1mX91+/FjiEEeK15+r39dEi6mceRZ33wDf/dtOROckcSc9+HlJd4bzYu
- cvTsKVzd1l0RLUTX4eAysGBiyvZ8BjUYnZtcSfFzNfcRMnHFyQu+itptOwCbgMLjPdMmH1ve3WC
- PUegVWD7bjqEdfoBlxKVm0zYHgh0xRDDn9f53Tjefr+p1j9+FFeUjDePC1i8OOotEKUf3EBfxvl
- O/QJPru8vjp0f75h9UFnn5MMhevIcE/TknSmg5n3GlgvQ+v8t7EQz0tBLY82JIvB12sBjyOnknn
- nSlJ3gay/bi/T6RRX/8bVm10Uj8V/m/lb3uYM96b73F96FoOJK2Dkdllhjz4785ItplyOPcLcuN
- 23/Vxlb38frbM/WBVst1ptArNQZqY0AqzQJPlJxIOauP8DMnFV4CSAyawL1+zDIHSvA0mWx/8sQ
- 9XR
-X-Received: by 2002:a05:6a20:918d:b0:39b:ca34:96e3 with SMTP id
- adf61e73a8af0-39f171a3f3emr16331130637.37.1775499999560; 
- Mon, 06 Apr 2026 11:26:39 -0700 (PDT)
+ bh=Bt74HgDQm6QWm4ci9bJjS4WKY7nrk6DWez5uAlhy+BI=;
+ b=O3wMIISYtcZ17SzfKQTi5F3q5U1MMc6xROmJZNsXuldpEYI+lLvu87yDn+T0jjqotf
+ UPxt9xaQCufhaE1q8rQJIm4n71aUphOMnMI6vuQE7f3ssI+MWuvaq1uEuG8ziGmsGkOp
+ 5LuZXT4uDHunnQQyFtV5F/0AU9xeNuMHHuvcH6an6NGgOuy6lmPgoDsugd5nOTZRyRnW
+ wAXCQToLNw28qvHyhaF16e6gMJO6WJOidWt5h4FwFIaNoSqjL5BkoU+9IIKiZf+q+OWc
+ YfF6niiDGKb1cCVg60wwWckljEOa1pHqSaeW7C0ZzGNewd5R5AElpKBq+yfmbXAG5FHF
+ z9qQ==
+X-Gm-Message-State: AOJu0YxYvZB5mg0Ht557daAWRZgEOdUSGbSEkHCmSPVZlhXMretT2qaI
+ /3WDEv6OGlifRaCFLhjb41GnDRWImKYJ36O4l3yuCt4hrb/vKFdwTiELf7Z4JvUR77UXRAelOPJ
+ z5IfnSJ7GtQ==
+X-Gm-Gg: AeBDietyeyNpJVGJx7AKYLzh8ZiLgq1hmAUZRX+DKudE/6/KYxonJZ0/C2yN9/sUPUu
+ EYy4CNDMv9dDS/UXBaRUXdtyvfJDECwjJEHaAUEzUDfMmJJqYUZIfxstpjYSMms+PwPPUdLztgQ
+ LlabaDNxfWEPMmp/7L0iLTBNk78wxD2lQrZMzxm4INIml5SB8zuub7aL+4ltluEv8vpX0X5YJNo
+ 1E/StE2D+9enM9zIbj/GJ9f5f1485EmTs2FAhTHibQSeURuUI5OxobLNN/g/VN35KWcMZgv2VLq
+ tCEUFv64UeI2gITacwMZ9ltfRjUqhPTCjB1kYDn2I0s37IpGqk7JuJoBR/ajeimDaFZhg5EVJor
+ 4wU9mQ47wLfnkjH1U1L5Kuo8QUtH0kYdjJTw8ghdDGuwvvX8L7L5vnudXcCisWGY5D1OSuhwofD
+ 87+N0ClEjR+Zh9DExTTAmusHRW/ABhrFUB6RDPBuqBN99Lz8N6nm9DXbFikTAgmlIf1GUBHDS3W
+ V1R0ZSDFckTY78=
+X-Received: by 2002:a05:6a20:6a08:b0:39f:794f:94d8 with SMTP id
+ adf61e73a8af0-39f794fd24emr4650413637.29.1775499979083; 
+ Mon, 06 Apr 2026 11:26:19 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c6561fe9sm12765080a12.15.2026.04.06.11.26.38
+ 41be03b00d2f7-c76c6561fe9sm12765080a12.15.2026.04.06.11.26.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Apr 2026 11:26:38 -0700 (PDT)
+ Mon, 06 Apr 2026 11:26:18 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, jim.macarthur@linaro.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-arm@nongnu.org
-Subject: [PATCH v8 20/20] target/arm/tcg/translate.c: make compilation unit
- common
-Date: Mon,  6 Apr 2026 11:26:09 -0700
-Message-ID: <20260406182609.193886-21-pierrick.bouvier@linaro.org>
+Subject: [PATCH v8 02/20] target/arm/translate.h: remove tcg-op.h include
+Date: Mon,  6 Apr 2026 11:25:51 -0700
+Message-ID: <20260406182609.193886-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
 References: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,72 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We removed all target specifics, and can finally compile this file only
-once.
+Include tcg-op-common.h instead, and include target specific tcg-op.h in
+files needing it. This intermediate step allows to clean up every file
+(TCGv, tcg_gen.*_tl.*) in separate commits.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/tcg/meson.build | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ target/arm/tcg/translate.h     | 2 +-
+ target/arm/tcg/translate-a64.c | 1 +
+ target/arm/tcg/translate-sme.c | 1 +
+ target/arm/tcg/translate-sve.c | 1 +
+ target/arm/tcg/translate.c     | 1 +
+ 5 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 0740de92c1a..506f031f1aa 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -20,20 +20,18 @@ mve_d = decodetree.process('mve.decode', extra_args: '--decode=disas_mve')
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 3e3094a463e..6d52606f9b7 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -2,7 +2,7 @@
+ #define TARGET_ARM_TRANSLATE_H
  
- m_nocp_d = decodetree.process('m-nocp.decode', extra_args: '--decode=disas_m_nocp')
+ #include "cpu.h"
+-#include "tcg/tcg-op.h"
++#include "tcg/tcg-op-common.h"
+ #include "tcg/tcg-op-gvec.h"
+ #include "exec/translator.h"
+ #include "exec/translation-block.h"
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 5d261a5e32b..35ad7530c4b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -23,6 +23,7 @@
+ #include "helper-sve.h"
+ #include "translate.h"
+ #include "translate-a64.h"
++#include "tcg/tcg-op.h"
+ #include "qemu/log.h"
+ #include "arm_ldst.h"
+ #include "semihosting/semihost.h"
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 7d25ac5a51f..08254b088ed 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -23,6 +23,7 @@
+ #include "helper-sve.h"
+ #include "translate.h"
+ #include "translate-a64.h"
++#include "tcg/tcg-op.h"
  
--gen_a32 = [
-+translate32_d = [
-   decodetree.process('a32.decode', extra_args: '--static-decode=disas_a32'),
-   decodetree.process('a32-uncond.decode', extra_args: '--static-decode=disas_a32_uncond'),
-   decodetree.process('t32.decode', extra_args: '--static-decode=disas_t32'),
-   decodetree.process('t16.decode', extra_args: ['-w', '16', '--static-decode=disas_t16']),
- ]
+ /*
+  * Include the generated decoder.
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 5bace3fda1a..aa7d72a35ef 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -23,6 +23,7 @@
+ #include "helper-sve.h"
+ #include "translate.h"
+ #include "translate-a64.h"
++#include "tcg/tcg-op.h"
+ #include "fpu/softfloat.h"
  
--arm_ss.add(gen_a32)
- arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
- arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
  
- arm_ss.add(files(
-   'cpu32.c',
--  'translate.c',
-   'm_helper.c',
-   'mve_helper.c',
- ))
-@@ -66,6 +64,7 @@ arm_common_system_ss.add(
-   m_nocp_d,
-   mve_d,
-   neon_d,
-+  translate32_d,
-   vfp_d,
-   files(
-   'cpregs-at.c',
-@@ -77,6 +76,7 @@ arm_common_system_ss.add(
-   'psci.c',
-   'tlb_helper.c',
-   'tlb-insns.c',
-+  'translate.c',
-   'translate-m-nocp.c',
-   'translate-mve.c',
-   'translate-neon.c',
-@@ -88,6 +88,7 @@ arm_user_ss.add(
-   m_nocp_d,
-   mve_d,
-   neon_d,
-+  translate32_d,
-   vfp_d,
-   files(
-   'debug.c',
-@@ -96,6 +97,7 @@ arm_user_ss.add(
-   'neon_helper.c',
-   'op_helper.c',
-   'tlb_helper.c',
-+  'translate.c',
-   'translate-m-nocp.c',
-   'translate-mve.c',
-   'translate-neon.c',
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index f9d1b8897d2..56ef1e0eb59 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -22,6 +22,7 @@
+ 
+ #include "translate.h"
+ #include "translate-a32.h"
++#include "tcg/tcg-op.h"
+ #include "qemu/log.h"
+ #include "arm_ldst.h"
+ #include "semihosting/semihost.h"
 -- 
 2.47.3
 
