@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7E4F46C46
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06FAAF46C48
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 14:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9kmF-0003tG-QJ; Mon, 06 Apr 2026 10:18:07 -0400
+	id 1w9kmN-0003tu-Ev; Mon, 06 Apr 2026 10:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w9kmE-0003t1-Fn
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:18:06 -0400
+ id 1w9kmM-0003te-5l
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:18:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w9kmD-0004zl-0q
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:18:06 -0400
+ id 1w9kmK-00053X-L5
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:18:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775485084;
+ s=mimecast20190719; t=1775485092;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9wWSyFDxGNwzId7cZzvHY1e6vgl0Aec6Tzqgrzda1Nw=;
- b=RsaOQX/ab5Pl9aISHO0VYimJx7SNc4KhXdW/snzvj2TKeWmcrxAyIsbPLeYrpWP79S2MXr
- T+ozSpDDo1t3g3/5JeEUUCz8mf102j1YUlLYZY6ItWvQetmcKF18lPaNYurZvGVA98DRqg
- RshvV5Wr+KHVJoUsn0mZNnNHK8NhjXM=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jLLYAnrleD9NK24SJY9DaTHQk/BqQZ5iTJMqFUtwcT0=;
+ b=g3Q1LunXN/P19YzVOWYSUUY2Z4AkyzQ/TaKXNPrwhcIEFMKGkVi2qvh6/xNrghvSjCSd/5
+ dqa0K9SS/c4Kizb2bCpvaiodBFc0YhLpuprXJUBd5qPvu0HtR/KxbsYbsjbb3FIrSvPt4/
+ +sRrmy/izXzuv812L98APvKKgkOnbnI=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-Y66hmqORO8eoDzLycXi9cw-1; Mon, 06 Apr 2026 10:18:03 -0400
-X-MC-Unique: Y66hmqORO8eoDzLycXi9cw-1
-X-Mimecast-MFC-AGG-ID: Y66hmqORO8eoDzLycXi9cw_1775485082
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2b250d3699aso98568845ad.2
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 07:18:02 -0700 (PDT)
+ us-mta-84-B_zLYUWuONyMW_wZAikp8g-1; Mon, 06 Apr 2026 10:18:11 -0400
+X-MC-Unique: B_zLYUWuONyMW_wZAikp8g-1
+X-Mimecast-MFC-AGG-ID: B_zLYUWuONyMW_wZAikp8g_1775485090
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2adef9d486bso62579045ad.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 07:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775485082; x=1776089882; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775485090; x=1776089890; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9wWSyFDxGNwzId7cZzvHY1e6vgl0Aec6Tzqgrzda1Nw=;
- b=Di7eiQl80DYVo4dZyJJDxh5viHCF22IwFXqqr9/MZgWZ9NPki0oikOyHxi2yF0SE0V
- cE2IUdjRSfxFSmqVFFmf9Fc4nyEwqLv5Cdbp9Bo9uqq3mWkoOXj4r2Cb57vrUmvsV8eS
- 8eyrI6Z0lMmhDwTejZtCnxuMZZpOX7vLR3+JvLomz6NbyVPmWAwT4k8nkA/s0gmyJfAi
- WVCZlC4qt8WoD/CRTSlcHwYRNcYOzpWVt1VCWdik0IV34OUFqrRrefNd5m0v5cwj2Y2O
- R3/eOdrKk34Qs77uMg51Rvx8PSZf+eVz8G//rUonKMKfwLb1lwcCEO0RwhwbSYr0weA7
- UX/A==
+ bh=jLLYAnrleD9NK24SJY9DaTHQk/BqQZ5iTJMqFUtwcT0=;
+ b=GnEd6UaeJV2bJWqEFxZtfv/u86u/kkeFE/1+YWj8yjeP72fHTuzpe6XSEHcm1YDNpK
+ xkc7rN3USfHPV2WD25mPPPpu2rGBB4zE88akP7e5/MKFhHlnIvn6WsoV0PNa7baTNuYx
+ a9xj8wnWrVDQazx8sN874Xz8fuDHt+SlW8d47GWRTiHchEktd0NBL5dVYEqzmqtUtg5q
+ tCtvxh5DJsXlsXzjyFOsixpizpIqI6Zv1w6oB79u+54f3iXYJv2x2ZpzTbALTVLRFA4I
+ wDYVeKlPfFPqiJglKeZcikLXXgPmk5uknJUb+LXX1uOTPdYRgPD+CgOnafoquSZigfY7
+ q1Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775485082; x=1776089882;
+ d=1e100.net; s=20251104; t=1775485090; x=1776089890;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9wWSyFDxGNwzId7cZzvHY1e6vgl0Aec6Tzqgrzda1Nw=;
- b=CCmtP6HDmNLvYDfULny6bgQXsypzc+Z2NyIj7ejyX6Ry8asoeBP7XwPambMRIX555l
- UJm34+43Ic4qtwzS2Y4qbxWRx7MHvop3KuvFhx2Z8fN7P8ZXHFnX6opiMmvsSgysnF/9
- RtcSPriQO8x5SP9MXccwk81ip87of8IxGaouPXt/DlRWeMu6Rudt1kBy1WSRd2PNY6f3
- rWa6yxI48ly8jPzmZEWD+LC907bUa2xTVqPdnIpnJ4KWnkx7FH/lm2QLB4po6hSaG5pe
- 3tBD241d7uuNixdov1vreYVuZX0SZSrYwh+g7eeoL+AYJIGewfSE8AMq9dygcob0GoD9
- Fzyw==
-X-Gm-Message-State: AOJu0Yxe4ISL5tzaynsgK8jQ3it4COSYgoEgPVecTksm7Oub9FSPVvC0
- JRk0N+Gy+T+RFcNm0x54Z8xbSoPbIb39eX3BFEc5D+t6mzWjiFXkCqNq65xl0dwKq70srTlzGw/
- IKaqpG+jdA83Y1pCp5l1pwc47O1n26vH2cY9IPlC1bYeRpQ5Qq+VwuyuOLBtDUYqOlyTFHWjaWe
- M6xH1/oHGJ8hwdIxSwRcsZbFFRBc+KgV87AAnd0HQ=
-X-Gm-Gg: AeBDiet67jngJR2oa31oLZ1/HEbTKl8OrxXTUcJ37szgrAfdEVFDlgl1ja//aCjRK7H
- AE8wbqRLNf3/6NSq/RM3s4bLXnHB5AdrCw/1beHyLS/k7Q7hoSnoIKTQgTfkEyA1vGPgcoJXFbp
- uHArBA8akX9+6SlADbZkhPGAaekkv+hMpkATu9CavIe5P1WOgZhCuhFUOSBEv5p2hXGei3oTI3B
- sViQjmErAevRPH6qh+w7P+lw7AOV0PU9oqMH/DZcdVXWzglTi0s2xoD308ewEZmM7MFp1spZwvh
- 8EomHiSFqCN6KhbpOHMA16M2A6MqqMkFw8gXfADTr4Ft++XyU35oUp8wgjOC3WAHW4e1BAQ1FOJ
- NAoiFt61eqY94SkVufIKDfb7cOiq+TXIpOyKqHX1PB3kfdbDmW4HzKyLryBK1yXDFAvk=
-X-Received: by 2002:a17:903:32cd:b0:2b2:51e8:2c20 with SMTP id
- d9443c01a7336-2b281760833mr134315345ad.21.1775485081805; 
- Mon, 06 Apr 2026 07:18:01 -0700 (PDT)
-X-Received: by 2002:a17:903:32cd:b0:2b2:51e8:2c20 with SMTP id
- d9443c01a7336-2b281760833mr134314845ad.21.1775485081217; 
- Mon, 06 Apr 2026 07:18:01 -0700 (PDT)
+ bh=jLLYAnrleD9NK24SJY9DaTHQk/BqQZ5iTJMqFUtwcT0=;
+ b=G63hV0+VW4jjc8ARNKKgrji7r9KJr+aGVln3THlhpHw/vLd25dWzh0hZq2PSqOoPW4
+ AZoiTlmzKxABpYFvgDLakfsHcd955dRWCQkk+EAl+4jf+Uej/un9azn16/uTlAlWD1N1
+ AopvkfYQMbNwd/349nkm9M9+fVyftziAk75M986E2ArVsQJ8JqxogzVypFV4f86lmxKE
+ pjTey03FlsxzI5fkJZF388J8LDpUDn911dodyGCUWz5K3rv/jCKwkUVfDlWeWJFECK7S
+ mLzWg+xyvm/KJiLVk3OiWzxOIQ3ngZs2A5wfdBNWX31BJoAz5Y37wikZO8kOy0kuH3AI
+ Tibg==
+X-Gm-Message-State: AOJu0YxUiY9f9rJJtLsCKZoDmHFJEDy/kucu20toNUtrqDSwiy5QJlcQ
+ /LLH0Nf9t3FkbhyLZi7wrnoFrSo3nHzgI5FyKSl5p480ymRi2fs8M2c0cHgkBMMVW68bR10BHBi
+ tbIMr9tqr6tB6FvGKa+dVRR7aKo5+Bp0Nlqr7gLnpX5i25/8/4yEwUVopbZaEMlTfG2jkswYPfO
+ e5RMI7eMW/9GeE2ScddHpmIpyFBZ7l10siGxS3PaI=
+X-Gm-Gg: AeBDieuRhRUL62/5jzaNOM16Kw8Trf1nEYAQFK5gFq9axaNVNSy46mcxEIoh4lsuTIP
+ ywUWdCO+kgcLMpJxaPlNK4TVectV9f/679EVG/uIRdwjJBIEBLSvK+ws495edjqu2uDEGR5bdWl
+ 9hhiaAQL9K20DCjp3mPD5zpGCRCvnLGuVLIQoBBc3wMB8Ui5m9tp+lv7Te3lZXcqv27dXsCGTlt
+ niuHrXS0bvODTxCHV0pqSzVC9Vx1gGMTP4D0LqS11ZI/Yan3JKf2cDdWw6x0oFvA8KtKFmCyKYj
+ tjfeTEXqK2aqkdcsyoDd0KnF+icR190vGtUAWH40ttjiQp4eet0rH0CNMSHCJWfthWJwQNINPA/
+ ZdCOy0J8yWqTgmxWzwrYDtFqScMDvz09/37IN7NyqygFILzAWTCoJfTEqDIzzQ+1KDvw=
+X-Received: by 2002:a17:902:d50e:b0:2b0:5520:f497 with SMTP id
+ d9443c01a7336-2b28164ceeemr137327305ad.9.1775485089463; 
+ Mon, 06 Apr 2026 07:18:09 -0700 (PDT)
+X-Received: by 2002:a17:902:d50e:b0:2b0:5520:f497 with SMTP id
+ d9443c01a7336-2b28164ceeemr137326875ad.9.1775485088830; 
+ Mon, 06 Apr 2026 07:18:08 -0700 (PDT)
 Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([152.59.100.84])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b27478cb4fsm156732905ad.29.2026.04.06.07.17.54
+ d9443c01a7336-2b27478cb4fsm156732905ad.29.2026.04.06.07.18.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Apr 2026 07:18:00 -0700 (PDT)
+ Mon, 06 Apr 2026 07:18:08 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -93,10 +93,10 @@ Cc: Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  marcandre.lureau@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>, Igor Mammedov <imammedo@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Arun Menon <armenon@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v3 02/10] hw/tpm: Refactor CRB_CTRL_START register access
-Date: Mon,  6 Apr 2026 19:47:27 +0530
-Message-ID: <20260406141735.25844-3-armenon@redhat.com>
+ Arun Menon <armenon@redhat.com>
+Subject: [PATCH v3 03/10] hw/tpm: Add internal buffer state for chunking
+Date: Mon,  6 Apr 2026 19:47:28 +0530
+Message-ID: <20260406141735.25844-4-armenon@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260406141735.25844-1-armenon@redhat.com>
 References: <20260406141735.25844-1-armenon@redhat.com>
@@ -129,37 +129,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Arun Menon <armenon@redhat.com>
 
-Replace manual bitwise operations with ARRAY_FIELD_DP32 macros
-No functional changes.
+- Introduce GByteArray buffers to hold the command request and response
+  data during chunked TPM CRB transactions.
+- Add helper function to clean them.
 
 Signed-off-by: Arun Menon <armenon@redhat.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- hw/tpm/tpm_crb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/tpm/tpm_crb.c | 34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
 diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 0a1c7ecdc6..bc55908786 100644
+index bc55908786..d65b3e2cc1 100644
 --- a/hw/tpm/tpm_crb.c
 +++ b/hw/tpm/tpm_crb.c
-@@ -145,7 +145,7 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
-             tpm_crb_get_active_locty(s) == locty) {
-             void *mem = memory_region_get_ram_ptr(&s->cmdmem);
+@@ -38,10 +38,13 @@ struct CRBState {
+     TPMBackend *tpmbe;
+     TPMBackendCmd cmd;
+     uint32_t regs[TPM_CRB_R_MAX];
++    size_t be_buffer_size;
+     MemoryRegion mmio;
+     MemoryRegion cmdmem;
  
--            s->regs[R_CRB_CTRL_START] |= CRB_START_INVOKE;
-+            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 1);
-             s->cmd = (TPMBackendCmd) {
-                 .in = mem,
-                 .in_len = MIN(tpm_cmd_get_size(mem), s->be_buffer_size),
-@@ -194,7 +194,7 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
+-    size_t be_buffer_size;
++    GByteArray *command_buffer;
++    GByteArray *response_buffer;
++    uint32_t response_offset;
+ 
+     bool ppi_enabled;
+     TPMPPI ppi;
+@@ -85,6 +88,13 @@ enum crb_cancel {
+ 
+ #define TPM_CRB_NO_LOCALITY 0xff
+ 
++static void tpm_crb_clear_internal_buffers(CRBState *s)
++{
++    g_byte_array_set_size(s->response_buffer, 0);
++    g_byte_array_set_size(s->command_buffer, 0);
++    s->response_offset = 0;
++}
++
+ static uint64_t tpm_crb_mmio_read(void *opaque, hwaddr addr,
+                                   unsigned size)
  {
-     CRBState *s = CRB(ti);
+@@ -134,9 +144,11 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+         }
+         break;
+     case A_CRB_CTRL_CANCEL:
+-        if (val == CRB_CANCEL_INVOKE &&
+-            s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
+-            tpm_backend_cancel_cmd(s->tpmbe);
++        if (val == CRB_CANCEL_INVOKE) {
++            if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
++                tpm_backend_cancel_cmd(s->tpmbe);
++            }
++            tpm_crb_clear_internal_buffers(s);
+         }
+         break;
+     case A_CRB_CTRL_START:
+@@ -240,6 +252,7 @@ static void tpm_crb_reset(void *dev)
+         tpm_ppi_reset(&s->ppi);
+     }
+     tpm_backend_reset(s->tpmbe);
++    tpm_crb_clear_internal_buffers(s);
  
--    s->regs[R_CRB_CTRL_START] &= ~CRB_START_INVOKE;
-+    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
-     if (ret != 0) {
-         ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
-                          tpmSts, 1); /* fatal error */
+     memset(s->regs, 0, sizeof(s->regs));
+ 
+@@ -306,6 +319,9 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(get_system_memory(),
+         TPM_CRB_ADDR_BASE + sizeof(s->regs), &s->cmdmem);
+ 
++    s->command_buffer = g_byte_array_new();
++    s->response_buffer = g_byte_array_new();
++
+     if (s->ppi_enabled) {
+         tpm_ppi_init(&s->ppi, get_system_memory(),
+                      TPM_PPI_ADDR_BASE, OBJECT(s));
+@@ -318,12 +334,22 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static void tpm_crb_unrealize(DeviceState *dev)
++{
++    CRBState *s = CRB(dev);
++
++    g_byte_array_unref(s->command_buffer);
++    g_byte_array_unref(s->response_buffer);
++
++}
++
+ static void tpm_crb_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     TPMIfClass *tc = TPM_IF_CLASS(klass);
+ 
+     dc->realize = tpm_crb_realize;
++    dc->unrealize = tpm_crb_unrealize;
+     device_class_set_props(dc, tpm_crb_properties);
+     dc->vmsd  = &vmstate_tpm_crb;
+     dc->user_creatable = true;
 -- 
 2.53.0
 
