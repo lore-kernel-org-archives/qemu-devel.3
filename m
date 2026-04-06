@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA834EF4ECC
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 11:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD46DEF4ECD
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 11:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9i6a-0004fZ-FW; Mon, 06 Apr 2026 07:26:56 -0400
+	id 1w9i8S-0006mw-4N; Mon, 06 Apr 2026 07:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1w9i6Y-0004fG-Nr
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:26:54 -0400
-Received: from mail-westcentralusazon11013025.outbound.protection.outlook.com
- ([40.93.201.25] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ id 1w9i8Q-0006mN-L9
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:28:50 -0400
+Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1w9i6W-0006GZ-Q7
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:26:54 -0400
+ id 1w9i8P-0006fM-2x
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:28:50 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rqMPNCFZ7R5vvJb/WRJQf1lOaPVqgwMNxnV7uzWcduNPNH9kR0Id+WCyIDNtKbv9pOAkw7RpeAlJB25t6ButlCTc/Dbch/WWQFjOZtaL9y/CZd6WdEOnOq8Qwrg+/BDpXzUDGiOX9u8OdlMFOfMZPIe2jAfTzrBdZ9vxvXRVtO48/0bV8U2u299pYQB6px1GyYm4nxnsvwuSsAo0bAQ14c3SL7EhFwN7pmflJQuNrTpt1SH1+YtqkRMdwA9EFtzz5ffQnplrzIJ3DNzESM/82vKb5QOFvNWYD85dLPd/X+BusD9IR/yriec7SThQs54IqMZrfTDF+YivtK3q9KEZPw==
+ b=RdMXn+FCF+69pLMTVTwAiFbk45Cau9DQ9nf9AyUfLFONKYeN0wjH7apRuMW5yYe4xva/ZqmcYdPA+LOEOKjty6VG88l7k4AAsc5SSOG3PLomPYeW0m8rcJRxnZcNWKCUB0NHhDckZphv+DJ3KMiMHDSBeoyHYsZRbuPJTLHaqeSd9aWWMEpT4sj8lKgzb8vd9KXMDfydxqULWJwCAddajzigi98dVffKdS7TXVHed1nRsw3dA5JO0id/JlT4QfhH59n91uKf0UvfSbR2KbeH5vgljHuqUk3aERg5kYQ0aTspwU9dbL4zl5dHCP9jUx1ROfif4KM8qjGrsk2wMdbL1g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VfJo0070RaeYT3v63WeJIJMpzUgRj+WSAdvyEW1LwUA=;
- b=CU1UHTbHovDJTyzJ79rrSXPXetlgtgBQOFNxxNm0rDW37mrXY17AbqEKGVpvmCNOK3WJZGV8F4XKMOeTWvRYxAy+FZexkkebM28VIOQ7IYGOQJln2avrui1EHhydEMeo3MLWLut5ENa5tWuw7OrE1xDzc5W9wZKWMuW9SLMoGSDjGhTtQciD9fW7mIGrOkE33TgGu+6s+DKkFNm9k/jPyS0vhcLeIvX5h/GdimYNEOMZ9oGApQSOgFSDfQ+Rai+RISHKsk4fJpSAOidVHh2L/c3iL+rT9NnPRgINSA06HOaI6OFgi9JzLltesix31qG/c51D0ZF9PBE3cCHSUPAg+g==
+ bh=eWURtWt4Z2pnSqf9XoOvnnsRcLFBLIkW5goxv6/G5r4=;
+ b=hKZcykIyxUNPcad82IjCDpWujZlQl3lMYKy0u1kwPCA36qPD8Cf6SUlI4t8u0m47Ys+DQbiMElyKIypeo12VKrJiqTj25Zn1BHn1DSTQ0cjblbok3YHhk0uNqkmwCF9xN/6Ff2RmbjGHkrk6bo557+hh+jyYG65J+oHRz0aLdE+eELKlqbps3pFH81JrWLQz1imCf1gdQaBYjFXfnEPjW936aT4foMeh/dIidvcKoDWrUR+6J9oxpS9EMsAPoqyQxCX0ov0+z4p10WH2P8E1c3/VtsQJYFLl/LJkCIZAeKsnoxid1JzVFZb0C6O0PqCN3eDgrOpH6A98kuW5/mQxgA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VfJo0070RaeYT3v63WeJIJMpzUgRj+WSAdvyEW1LwUA=;
- b=f0eqUZx3kz2HP5TMhbjtfgpZFM8fAlOLzO+uCfCydkx8xJ+zoYmpUn8JQ+lznnf6j9jmKzIhO621Def5fhvAT0v0lzzedAHq8oCwJm32TLiyYY3uXeJznaiaM9n/oJiWDvrVmoFGNNFp4K1G4tDe9QCP1cv5v8n4QWzuTeDHSZZ9hCthbUr1RFektNqYxN7nb0v1v6RhhO/H/u0XS7V7lEv1IxrvB934rGegKMP60PQqmvV3LnC+lwbsaDcZZtCxXr2Iok8zjGa7EGNvWtWcRYuiWweF4HTlOfDFquYwx8p23D2XSB20ryGXBBNKhxkKcM0SRmGlgMd1KfS37aVmOg==
+ bh=eWURtWt4Z2pnSqf9XoOvnnsRcLFBLIkW5goxv6/G5r4=;
+ b=ZNgQcXKR3li0ixVu2Qc7s5MRd6SYJ75RIApB+qCyZCjBG2s0pnFXHZB50VFqb14RMzPNlfXwGyFMRUICExwgwmlI2wHAX6Rb7nUPd5etl7fi6u9fUDs+tf4QmaCTX0jMf0ZCU6SoiQoNbFlZVXa30QWd1+LV8t8OdjicUlBOhvOL+4mbxLs03p08lT9HI6kzz3Dd394g9UPEt+EIhMC/MlbOwMtAbEIbBlfhydnCHj09aYEUyt47hTJJRlRKy/d4Vfa0HTzoRhVbS5MCwDehSvjvsZcfEOfoo/eIGjki31FzFoVxjFdL/y0Xv+1M/t8zeJUGacGYTMlY3WF3YJbqhQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by CH3PR12MB8401.namprd12.prod.outlook.com (2603:10b6:610:130::14)
+ by SJ0PR12MB5633.namprd12.prod.outlook.com (2603:10b6:a03:428::8)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.20; Mon, 6 Apr
- 2026 11:21:45 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Mon, 6 Apr
+ 2026 11:28:43 +0000
 Received: from BL1PR12MB5063.namprd12.prod.outlook.com
  ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
  ([fe80::a0c2:5681:4aca:90da%5]) with mapi id 15.20.9769.018; Mon, 6 Apr 2026
- 11:21:45 +0000
-Message-ID: <dc9e5884-c532-43e6-813d-e302a3cd970b@nvidia.com>
-Date: Mon, 6 Apr 2026 14:21:40 +0300
+ 11:28:43 +0000
+Message-ID: <9ec06730-5da9-4c5a-b4fc-11df995e68c0@nvidia.com>
+Date: Mon, 6 Apr 2026 14:28:38 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 03/12] vfio/migration: Throttle vfio_save_block() on
- data size to read
+Subject: Re: [PATCH RFC 04/12] vfio/migration: Cache stop size in VFIOMigration
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
  Kirti Wankhede <kwankhede@nvidia.com>,
@@ -63,90 +62,89 @@ Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
  Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-4-peterx@redhat.com>
- <d075580a-ad4f-4047-b012-e5d9e4d6bc80@nvidia.com> <ac2B3VF8CSu3ytEE@x1.local>
+ <20260319231302.123135-5-peterx@redhat.com>
+ <894ad48a-6779-41f7-bf9f-08008c8e4bde@nvidia.com> <ac2C7b21mdR8phDl@x1.local>
 Content-Language: en-US
 From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <ac2B3VF8CSu3ytEE@x1.local>
+In-Reply-To: <ac2C7b21mdR8phDl@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TL0P290CA0009.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:5::6)
- To BL1PR12MB5063.namprd12.prod.outlook.com
+X-ClientProxiedBy: TL0P290CA0012.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:5::12) To BL1PR12MB5063.namprd12.prod.outlook.com
  (2603:10b6:208:31a::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|CH3PR12MB8401:EE_
-X-MS-Office365-Filtering-Correlation-Id: 60d105aa-f5cb-46ca-e344-08de93ceaf98
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|SJ0PR12MB5633:EE_
+X-MS-Office365-Filtering-Correlation-Id: f169263d-e1a0-4159-02a3-08de93cfa8bc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: qKttmPjvBgz+Xi9w3c0qxNsTjW/HZ40/ZUVkWEjydmWQhZq9v0BpJD6vjRxSxIBQaxF9/OcPMdwE623e8I+9J56haGy2XLXs+VOBqPwoP6UoYBs7YnAmTZ63E9ytikmqqj+Tb/juDEGPmwPsB8WzGhKujGXKPheypYLCLizkhiFZprmE6qgAkN7ZyQSsAvLSjz8y06coKERKfeFiybh76x46PK9zXYsxv2jhfTAMam8mjuywS7Y2ePLXWwvmqv+3vlXqbGXIryd/1NL4sF/z8j8nlz8GChurTMCbPUb1lyx+gaJetmCwu3VFadllKmta1zrkWYHZCywBu9x5DPPVnCMwzvnQz8x6JxWYwE/Oy7uXHxgvjqaASHpyz5xKvkYbOq4yNwHLqNt3yc5qvuOwBMSSMdOMGlHqwNQz8UMExcuVMYTuO/lophO0+K/0aYUZiyaPbV0K7dPjlgKApXS5tR589tVPzvRklg2SUbsAkCAKLIARwSbMkQPANNYghbjYvFjGEjcKU5VWnlYd+KY9fOKp/nLR+BXkInSAD/wNnPXr1CJs1NiwnFEa45/YBDVTNI/bT98Noc4pzlbuUz1pYS+EWoYuYfQMexgVj3HSK56vYRMXo7QMSexAlmXgagCajQcCo1pHpUDyJaHJMz2asxh4YNWmklM55mkeheMsDTflV2eoxU+GvhDxnO4GNYGDVFWJJlckyud/71TRZ7Sx3JT80mS7VVRfl+lJ+feYrzM=
+ ARA:13230040|376014|1800799024|366016|7416014|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: Fq8uRi+R1XEawEZth/472uooXLbNH6YjyxCxorHTyo32cuigvzB27hfjbbyvbaFW7ImWASS7t1DYS6fKknJG0CrkiEDke0moJjDdfs2z0os0HYk8zhjrUp+PsmqdyVq9ANS1U6Dy0tZKcPUcfDHknTNWYR7nlKNvYy+3GZCkPGj+YpbMzLyvP00Pp8w877FcIrSsuZfu+bD69WfgTi3kJnCGdcT25dDUv3/B6ellla9LmPv0FXy/zoqT4Wg6dmrO+uov8P/2SJDqrNBCMMt/XxsP1oPt5nNe5a33nKBS8j7SqOSS1jQHEqb22lkfQeSD6p1UqqvEB+1GUsjCM/VYmMgtR3fV8Fknz/utXUm9bp3vJEe7jhfgz91Ku0Tax5OC4czl1JKU7lC17tprIy6LCMxNXcLtCV2FL1OMBWDWx8z9jywSOnoEajfV/SAnhLQn7A8covJfHdw2A/ScbALaUgCa4+2WwZ2OtAktbdvjc+lKFwgEN3BcSot/GAf+jEHS5pA8+QgqxUZoEgyVXFrfSfBZhbkSfUsGADhlcZlT+k1Sz1rb5a25dOBcLDA4Ud4wgXkUOSrOO440FBLXPDSotfIe0yEweS6xov6ZiHRtx1TcXkbliTF7n6ILwRuggDl9FUgWsJjo+MKYthWVLBOlid3atNghQnQX32WWbS7QOQ1UyCskGRcJ8Q9UNwzhRUp5psFaZzbL/VgHgsIjstyqo3fq4QINLMsCaemMaJSPPvY=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016)(56012099003)(18002099003)(22082099003);
+ SFS:(13230040)(376014)(1800799024)(366016)(7416014)(18002099003)(22082099003)(56012099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eW1XbXkxc1hQNSs1Q1FzWFk5eHJWMDFMNG5XbUdxK1BydHpRaHVQeGxWOVZO?=
- =?utf-8?B?eC9TWitOYkVRb0l1RmxKMWd6ZmhDVGZVOTVML0FUOTI1VVg3dDRaWUNURTJX?=
- =?utf-8?B?eXN4OHJsUG5FTWRPOHRGYzNqcGFUSnJwZThnOTBybVlZQnZ4b040NmE1SzRo?=
- =?utf-8?B?MDdGaUYvNmw4aG9NTXROUzZIK3ZlQUdkVFNKV1lYYU9yV0ZROVUzUUdTV0U2?=
- =?utf-8?B?RHdubXRaaUVWV1MybFNTblBHaHBJTHpkelhwbXJFNDNnL3o1R21haHlCcUZU?=
- =?utf-8?B?MDB0bmxlVjdPemVrTnZ1NFBNZlZldVhrVDV0MjlLOVBGODJ2dUxGZzlaRVBu?=
- =?utf-8?B?MHd0blBmYURKUmhEL1JqSVMvcDJMVWtIdEdHeWF3UndmRGE5bFc0bzBsMXRO?=
- =?utf-8?B?bTgrVWVOQ0ZENzVjWFNVQ1Q3YzBsQ0xUY1YrUVNBZjF2bnRYQ1k2ajhDUkRG?=
- =?utf-8?B?cmI0SEZjcnVMQThCWWdoalZ0YW1FWndJdytMMmtGUmVxUEdiTVRadlJZOGlB?=
- =?utf-8?B?RkpnZDFqajh5V29PQStsdHJjeWZKTFJESitLM1J3K0ZvenM0WW94K3ozNHM2?=
- =?utf-8?B?dFpGbTdmeE90U1FJNlJmcVkyUk9PMUtRazBrNFVXcjRMZjhLdnJLVnpPdDRP?=
- =?utf-8?B?ZmNiaGt4TVVTRzcxb3BudFdlblFYSnE4cUc5Wm9ENGRjTFI1aTRCbGxYWm9P?=
- =?utf-8?B?bTNtSDVQRUdUVXBVQy9ob1VRbXMvZFk5K21JK1JndUhUSHkxQlpEODlNcUcx?=
- =?utf-8?B?bzB4LzcvREVKeUlkSjFLcTkydG16R0J2ZVFhSnJNbmVBeUY4YVhocy8vMmlX?=
- =?utf-8?B?SDJWYm5mcVhYZEhkZ1JTSXZNVS91ODRhVmluZlpzOWRSM0ZkQlVFUnhaM2pR?=
- =?utf-8?B?dzRGKzJmVVN5K1Q1RHg3NzZSdXhUL3BTNXUrTUI3L2xBZmJHV3FZZnNYUE51?=
- =?utf-8?B?TVhjSlpiem9VU1hHZFM1WEVDTmJLQVBYcERTY2FabEMzaWtoNHN5a2Q1YkhY?=
- =?utf-8?B?UUdBMlBlN0J4U2tmSHYwLzZvTmVYOXZnbVkzbXZYZGJYRHJrL2poL0p4OUpL?=
- =?utf-8?B?dXRIbExNQ1FqRHRUeUFsOFVhc2M2Yit4ZTUrOGxNbk9ieXZndHYzR1BNS1Bk?=
- =?utf-8?B?K3ZLSDcvQ0lONDBGV1ByYU9INmFsUWx5eTVnek1BUS9TK1VNNVhWSytJaFNC?=
- =?utf-8?B?RHdQeVJsYkUzNHlRb1FYNkMrTm9mWlk5b0Y2bktHTThGM2dsR1M2YTF3akEr?=
- =?utf-8?B?RFpEU3kwNTVwTVM2bzJ1dFQxZlJxMnVNRHZ4TWlyU2FJZFZTWjY4NlFra2Qy?=
- =?utf-8?B?aDZBald3L2FVN1M2Vlh4b09ScFZ0enhja003Zm01enNuREVNLzZxL3Z6ei9Y?=
- =?utf-8?B?bk9GT05RUmlJNDZ3YjZYNk84eGs1a05CcGdtYXR2MXRPN2JSU1JQZmJWeEhH?=
- =?utf-8?B?UTlWR3Y4NUxQNlBCMHlFVUhTK1ZlU1ZqUHhOMWIzMTRncW5ycUVSTmhkTDh3?=
- =?utf-8?B?d09WaTNRYUZRUFFiUC9EY08rM0NGeXFnY090cCtqMmJBMW1WUXBVbS9hVFMv?=
- =?utf-8?B?YUVMUDhMV2FTcXM4bXZuc3RWWkx2NlNKOVEyNWpNdFNuSWdkUjUrL3NWNS91?=
- =?utf-8?B?Syt5cGk1b3RYa0FZUmhHQjdEUFAyUjNSOXhpcmxvTEdnUXFMM2NpZ0ZQdGtu?=
- =?utf-8?B?UURBY0Njc3RLTTRhdlQzMW9LUkhMbEZzV284Z05wbmlWTDI3WWJsaUsrbWhK?=
- =?utf-8?B?ek1pQ2g4dVc4aEFRRmc2ZHZRYnFhR1p2T1RiS1FwcE5zNHVIOFM4M00xNEcz?=
- =?utf-8?B?Rm1iQWs1dHFLRDlMYzhQczVEaVp6RFo4N1hYU2UxYVJJeU9DdnpyRDg0d1dV?=
- =?utf-8?B?R2hUR0kzWDFjQ2ViNGFoNDZnaGhBQm5TWlQwZ3l3WEFzcGNGWnJwR1V5L0E4?=
- =?utf-8?B?aW5pTFRtQ3NHUG5UVU5OMFFsc1VtZXA5aUJpUEcvOUFzZXJBSEpOaUpxRGJs?=
- =?utf-8?B?N1ZhWFRqc0hlWU1iZFJQZ1Bnb0VmM29qVzNBTlFXNUN6YnVnSmV5M1o2YlNN?=
- =?utf-8?B?VTlka0wwTDNqS2NGWDdSeFR2QUdzcUFnK2xUb3BSTHRWMmM3YjJpZU4rL1ZD?=
- =?utf-8?B?SWg2alVvL2tlTTdPNENaSTlJaWJiblFPb2sxa0dNSm9QY1dkaFN2TWkrSWt4?=
- =?utf-8?B?elBYQjY1Ujd3TDhscUNaMFJXRVhYT1pGTTh4bTlUVVdSVGxndHNUSnlKNU5Z?=
- =?utf-8?B?VzJva1dDMlFUSmZsMHFHYVRic1ltT2hmUmJCYlR1V0xHa3o5TmZoREt3VVBU?=
- =?utf-8?B?MU1mYlVPMGRHYTRHUUZwYkZ2V2loanFaV09MUDlGNXo3V2ZsSWQvZz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MGdnaCtoV2pKYUI1eXp6cEt3aXJJMHN2dlRRWXpxTkRrVmVIWHk3MEVzNWhX?=
+ =?utf-8?B?Wktzd3AzYnFkS21jYzlOc0dXckY3R0luV25mWUs3Z01OV3ZlOFQ5ZmNuYzRM?=
+ =?utf-8?B?aU94SVRZVTRhZXNlSG1oSFhsVGU1KyswaWJoaXFGZlhoZ0pya1FWMytzSDhH?=
+ =?utf-8?B?V3NUS2xxRlA4Mk5kM0RDcnBXempmNnJRZE5UaUlmSzU4U2c4QWx4NzBiWFBV?=
+ =?utf-8?B?eU9NdUN4L21oT3FmVkd4TGc5NmNxRnMxeTFxb201ZW1BMWNqc29Fd0E5K3FN?=
+ =?utf-8?B?cU9SSmhBdEk2c2ZGdkcrd2tFUEF0OFJNVmIwVWtVSGdHeTFjUjlTZjhYSkl5?=
+ =?utf-8?B?NU5qNk1TdjFHUGI0Nmg4Zk5TWXRhTFFLRHVGbmdOQjZadmxnY3gxb1VaR0Ny?=
+ =?utf-8?B?enhia1FVSmNDd2gxdko2SS9JaXFiOGFldEtKb1VtcEltZXJXaURWVVlCdlFa?=
+ =?utf-8?B?TWFVNzZGSjFhcVcrVi9lVCtHTkpKMGU4RExQVzlJdGFjdXhicHlPMDljRXBq?=
+ =?utf-8?B?RkV4OVZiaDVxUkhXMjJvbHdUUDZOU3dTSUNqNUo5NXFzMzF6c3FtZjk1aWZo?=
+ =?utf-8?B?MG15QVJGU1RuVTJkY1dzNjlyZUl0d3AyM1I4djZzb25iRS9nemg5OXR3d2Mw?=
+ =?utf-8?B?YkhhZFdTMTF0eWJ3TEpWMk1DWldud2wwd2JSd1lVa3NlYVBFSDAvbUFUTzJL?=
+ =?utf-8?B?OExHcXRXdDBoVTlPWHk3d0wyd29lV00rV0dteXNYRFpCSjZ2WTM5SlZFeWNK?=
+ =?utf-8?B?bEdINHlkUGZGNDdEODVOcGVYdjI0MXkvUm5xNXpPanRUeHh6TjRpWXc4VCtY?=
+ =?utf-8?B?bnlKbUo4Mkl3dS9lSGhtMm8wYms0K1hhRWxhMlVjOTlhL1l0K2dlanBjY1ZQ?=
+ =?utf-8?B?eVVHbU9OclU3K2djUm5RbFg2SkU5QXZGQjc5Qm5jMG5TdFdOUzQweTdiQnhS?=
+ =?utf-8?B?ZnNJU2p4bWhsdHF5eWttbzBiZ0pwNzNLYmx6aUk2RkQ0U1Q0Q0h4RmVYbTU0?=
+ =?utf-8?B?NzFGaTVhaDB1cWxxR3FPWGxrV0Nib3U0am83MHkzMnNVbDYybXcrY3BWbjVX?=
+ =?utf-8?B?Z3ZpY0hsOXZCelVOcC9oSUpKVjUxZkdrcEd4N08wd05XMGNRclk5dDJFWmor?=
+ =?utf-8?B?OUlIOFZwdXJ4emlNa1VZWmV4WlNtZ0cwL01SK2JqaFZWRGwyOXF1aGZDeElX?=
+ =?utf-8?B?b0lMNUdvNFU3TERGT2h2WUg4STYxM0dLUlU1cUJ1NzRnYmEzMGR1cmFxMTUw?=
+ =?utf-8?B?dTZ2Q2wwYnQyOU45UGxwTzVHNXJ5YUcyemtXaTFlSGNQUXptSVZ2ZllKMU91?=
+ =?utf-8?B?aWtKbTRsL3JoOEFwaE51bmpMOTh2clY5ZjZDQjh2T2VzQUhpaHpzM2ZnSDhl?=
+ =?utf-8?B?citRWmttb2g5Z1R3eW9IdlJmYS92WFdrMnhXVzRlWEZ0ZVV1TVducWNaUy9H?=
+ =?utf-8?B?K3JUc3VTdnhyUStFVzRlNWJvTWhVakRnUHEvSXpwdThST21vMFBVdDI2U0NW?=
+ =?utf-8?B?Y2ZnQXpLN01tazBrM2lFOHl4YVlYaGxXQ2daM3Ric0RqK1Q0Q1l2TVZmWFBu?=
+ =?utf-8?B?V0FUOGdyZG5TOGh2MS9oUDJUM1VmcS9JK1FqWmVmNjBFWGRmcnNTdTVIRi9w?=
+ =?utf-8?B?ZHJ0MWJHOW0rcU5rL0RMTkwyTGxwZmI5ZWEzMnZISmhTTXBnMmhkQnR1eGZj?=
+ =?utf-8?B?eE9xVlRDNlQ1Y0k2LzQzM3N0Nk40NUsxR25seUJWMFVuK3UwVEdvNUd3SGpj?=
+ =?utf-8?B?R3FSc1VIcjRiVkZDeThWZXJBT2MyeFVWY01oaVhuVEhPTTc3Z2hoS1kvaElR?=
+ =?utf-8?B?UkF2OEU5NG1oeDJVaVo4WWZzVnJuZGhVVUNDVDhCOEtESnRQQjhQOFBic1hU?=
+ =?utf-8?B?KzJMUTJhN1hZQkxCZUdTM2lzU0ZxZnQrUnJCTEN4ZHM4TlhyTEthQlUybnp5?=
+ =?utf-8?B?RURJcHN3SkY2WWtjWVhUbGdJcW9oOVpENXVnbWZwc2dKRDdoMEVyOW9lYWRL?=
+ =?utf-8?B?UnhhbzdGYnZheXBjL3RZRE9xaHlMclM5bTlscXFPMHUvdVdqL013bGhaRUFz?=
+ =?utf-8?B?eFRWbmtjMFNEUEdpbkFkRFVJQ3NMQmVWN1dVY29sM29Wekd0K3hoUmxLUTQ3?=
+ =?utf-8?B?cDQwUkpOMkpZM1BqRnZZcm5ndm1lbGxUNTdrc0N5enBvSmFUdlVxOElmQVVN?=
+ =?utf-8?B?Z29peFpGU2xXcEVzZmQ2VkpPc2ZhWGVGVWVETk1QK1o5SHA4MTJzWTE3VTFx?=
+ =?utf-8?B?V2V2bjBXcm5ldVJMdWNlWURFRWIyaElJdFpqRlRyYnFCdWxibWZLN1pjeW9u?=
+ =?utf-8?B?c3BDdUpXL1pyZDh2YlpNQW5rRG1sV2Y4QU1MakZNL2pzUVhMSnBudz09?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60d105aa-f5cb-46ca-e344-08de93ceaf98
+X-MS-Exchange-CrossTenant-Network-Message-Id: f169263d-e1a0-4159-02a3-08de93cfa8bc
 X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2026 11:21:45.4969 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2026 11:28:43.3691 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0xkkJMYKJryLthDgDtsjt+565asHPB3EiCfSyTvbXSeW0ojw3VT7IcRueo6HfahRPkhtjeo4bntefvf5sRvN5A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8401
-Received-SPF: permerror client-ip=40.93.201.25;
+X-MS-Exchange-CrossTenant-UserPrincipalName: pufBKn7yrrOq1RZvepUy57G8qiC1YrpcS3Y+PGK50ZgVtqQ33FUsdoGKYdRBZxiMq/Kxd/NfxHf4MVSXGrRNGw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB5633
+Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
  envelope-from=avihaih@nvidia.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
+ helo=DM5PR21CU001.outbound.protection.outlook.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
 X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,97 +161,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 4/1/2026 11:36 PM, Peter Xu wrote:
+On 4/1/2026 11:41 PM, Peter Xu wrote:
 > External email: Use caution opening links or attachments
 >
 >
-> On Wed, Mar 25, 2026 at 04:10:14PM +0200, Avihai Horon wrote:
->> Hi Peter,
-> Avihai,
->
->> Thanks for sending this series.
-> Thanks for taking a look.
->
->> On 3/20/2026 1:12 AM, Peter Xu wrote:
->>> External email: Use caution opening links or attachments
+> On Wed, Mar 25, 2026 at 04:15:45PM +0200, Avihai Horon wrote:
+>>> @@ -415,6 +426,9 @@ static void vfio_update_estimated_pending_data(VFIOMigration *migration,
+>>>            return;
+>>>        }
 >>>
->>>
->>> During precopy phase, VFIO maintains two counters for init/dirty data
->>> tracking for query estimations.
->>>
->>> VFIO fetches data during precopy by reading from the VFIO fd, after
->>> fetching it'll deduct the read size.
->>>
->>> Here since the fd's size can dynamically change, I think it means VFIO may
->>> read more than what it "thought" were there for fetching.
->>>
->>> I highly suspect it's also relevant to a weird case in the function of
->>> vfio_update_estimated_pending_data(), where when VFIO reads 0 from the FD
->>> it will _reset_ the two counters, instead of asserting both of them being
->>> zeros, which looks pretty hackish.
->>>
->>> Just guarantee it from userspace level that VFIO won't read more than what
->>> it expects for now.
->> The VFIO_MIG_GET_PRECOPY_INFO ioctl returns an estimation of the data size
->> currently available for reading. So, even if the ioctl returns X bytes, it
->> may be that there are more than X bytes to read or less than X bytes.
->> The code was written in a flexible way to handle such discrepancies.
+>>> +    /* The total size remaining requires separate accounting */
+>>> +    migration->stopcopy_size -= data_size;
+>> stopcopy_size is also an estimation, so I think it's safer to have:
 >>
->> Because we are dealing with an estimation, I don't think we can assert that
->> the counters are zero, and I don't think reading only up to the cached size
->> gives us any benefit:
->> If the estimation is lower than actual available data, we are just deferring
->> sending of the remaining data to a later stage.
-> Since we'll introduce cached size, having the read() only happen with the
-> size reported still makes sense to me.
+>>    migration->stopcopy_size -= MIN(migration->stopcopy_size, data_size);
+> I believe this is very relevant of the question in the previous patch, on
+> whether reported value can be shrinked.  In this case, it's about
+> VFIO_DEVICE_FEATURE_MIG_DATA_SIZE instead.  We can discuss both ioctls there.
 >
-> We're not deferring to later that much, when dirty data reaches zero, we'll
-> re-sync with everything including VFIO's VFIO_MIG_GET_PRECOPY_INFO.  So
-> it's just splitting one last-phase read() into two smaller read()s.  To me,
-> it sounds still OK if with that we can make sure the counter won't overflow.
+> I hope it's clear to you on what I wanted to do with this series, which is
+> to have counters cached in QEMU so as to align the estimate/exact reports.
+> The counters should (in my hope) be 100% accurate reflecting the current
+> status of VFIO device, not necessarily the latest.
 
-The counter doesn't overflow today as well (thanks to the MIN calculation).
-
->
->> If the estimation is higher than actual available data, we may still read()
->> zero when the cached values are not zero.
->>
->> I think we should keep the code as is.
->>
->> Does that make sense?
-> I can understand what got reported in VFIO_MIG_GET_PRECOPY_INFO may not be
-> the total size of dirty data, but what the userapp can read.  That part is
-> fine.
->
-> Now, do you mean the size reported could shrink as well?
-
-Yes.
-
->    Could you explain
-> why, and when, dirtied data size can shrink?
-
-First of all, the sizes of VFIO_MIG_GET_PRECOPY_INFO are defined as an 
-estimation, so anything can be reported there.
-
-But specifically for mlx5, VFIO_MIG_GET_PRECOPY_INFO includes two steps 
-- query and save: first, the driver queries the device for the 
-*expected* amount of data (that's the returned init/dirty sizes) and 
-then the driver async-ly saves the data.
-The query returns the *expected* amount of data, but the actual data 
-returned in the save may be smaller.
-
-Regarding VFIO_DEVICE_FEATURE_MIG_DATA_SIZE , I don't have a concrete 
-example of data "shrink".
-But I can think of a device that all its data is precopy-able and 
-VFIO_DEVICE_FEATURE_MIG_DATA_SIZE may return X data remaining while 
-actual data is smaller than X, simply because the uAPI defines that it's 
-an estimate.
-
-What I am trying to say is that VFIO_MIG_GET_PRECOPY_INFO and 
-VFIO_DEVICE_FEATURE_MIG_DATA_SIZE sizes are estimates which are good 
-enough for telling QEMU how much data is remaining, but shouldn't be 
-used to make precise calculations on how much to read(). At least I 
-don't see the benefit from it.
+Yes, I understand, but the counters are not 100% accurate (even for the 
+current status) - both as defined by the uAPI and in reality. However, 
+they are still good enough for the estimate/exact reports.
+VFIO devices are a bit different than RAM, where everything is very 
+precise and you can know the exact remaining size and remaining size can 
+only grow.
 
 Thanks.
 
