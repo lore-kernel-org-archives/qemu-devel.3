@@ -4,136 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C415EF4EB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 07:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F02EF4EC8
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 08:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9eHG-0007we-0y; Mon, 06 Apr 2026 03:21:42 -0400
+	id 1w9fjS-0001Zx-52; Mon, 06 Apr 2026 04:54:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w9eHE-0007wD-6H
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 03:21:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1w9fjP-0001Z7-M4; Mon, 06 Apr 2026 04:54:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w9eHB-0001P1-Bv
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 03:21:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775460095;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=A4KNjn9htZaCRIRHLEsn8uan9rrHv8Y1Lgt+7LIHeeo=;
- b=U+qK3UqMA0UUfk6m+nckSAZTRFObFp2iEkJi9Y+EHcMtiHotzOu88FgV5+7J4W+ln6GFOn
- QNNM1EddmflNl48BGpwTHYeK1RyZkdMW/A7clqZt9cFuGE9u4k0AaLgaVWu1QTX+qwpkfe
- 9PQugyaWN8f52yfOUs5ErrKbikReUVg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-533-eYaCdDcfNbijIeN0tJ2XJg-1; Mon, 06 Apr 2026 03:21:33 -0400
-X-MC-Unique: eYaCdDcfNbijIeN0tJ2XJg-1
-X-Mimecast-MFC-AGG-ID: eYaCdDcfNbijIeN0tJ2XJg_1775460093
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4839fc4cef6so46842865e9.0
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 00:21:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775460092; cv=none;
- d=google.com; s=arc-20240605;
- b=F6fTLSFFGGXz4YgSucUNuQ9yUaTPst9PF/+Zpu/ReYGph5lpXg3BZCICLs3+w7TNAO
- TSePSZJh+er5B1QOu5LfG52N+MFU4KW6gL4eB5+ygkayh18eVJjDGQeSpYn7N4FBMfdi
- ncoEmVYvQupoPeJmAKOUlOBhszW6A+4Fu55j4oIZ7Y8QokaiaYQPni86DKw6O7vtcTP4
- d5+RA+tle1JZm2fb8/Nwd7TrxQDBNY+cL9wL+KBXgry4+jwyFgnlmjyHD33cRW+VoBhE
- kSnLDU9YFwVyqbYkLJWjqxjOkK5wAKBz3XGUue+qWiNFQmbHgAtC7EglU+Cyzii7wZ5T
- zlOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=A4KNjn9htZaCRIRHLEsn8uan9rrHv8Y1Lgt+7LIHeeo=;
- fh=IAeY1DPX4SofG+uEdlA7hmgTetvBCVk9jD4c2nIj7F4=;
- b=LehostOkuk2CI2ac/hOw1uxczB5UaOnZK4A7NLl6YFbXP7iigHEwt4cvHRoyiKjHkO
- f7eV1AlhJ5sm1LsYdrIhJo6PU+6X01nJ5IzDq5qHSiO0pZX0xszigbEia0XtshtWUnGq
- pUgc11Lww6QmwwHLqgunpOHpXGEOcFLXvEvnT2PSoBGQqJ6czIkkqIUn77xPC46N4e0f
- b3CIxlpAt4ypTKyMhbmODCAA9WjEJzSpO7Jx03obrYiPD1JgE4dikviVX6ntjIPrfLtm
- UlxypVKRKXGCSxhCePWVm/Zd71mnFQM0uO9FDweSqypn7f4nSDK3BJWy0sGG5yxWiaaL
- GV/g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775460092; x=1776064892; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=A4KNjn9htZaCRIRHLEsn8uan9rrHv8Y1Lgt+7LIHeeo=;
- b=QRpqWAKvs7LcCyWZOQKlPoTqPQxxTTGJp4n13ZO1d9nVZ5IV0S/38YemrZm7oMb9z0
- ge3rLl8ajC6oyIGLoBPsPOER9SrdVuuJ4E0Ip9uvCttN2F3hOyrjImG/ZIqhEI5S3Zbf
- zSTgqEW1TQWsVhPW7m96XEbmvi07Msy9XCL3wgbJLBEAtEogWDnuS1NRpe7iQAKHmChW
- wMgMoGGYsgcVoCcxqAetcO4iiuNPGF5C4vdZCyE9SUFP7MBp0lETB1bLo/ezujAck7vE
- NGCVuqjs9Z+jNgkSzZwhW/v3mfuR1o/nuQHYV5pZ/lLR9Dnfh8tjimV7sa3dVNfrhevT
- 04ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775460092; x=1776064892;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A4KNjn9htZaCRIRHLEsn8uan9rrHv8Y1Lgt+7LIHeeo=;
- b=GCG/KPwXQ8SNG59N/+s9T1/So3l8y91DJBGQnHrKtw5DNty082eGpBc+mwEadwfti4
- ZkgWMBDbgaUVMEPVZHP/4leaWe4aSlVyRhdLg6j1PDDnpRQUiIFlR5fVandeNI1LNhLy
- xd/fE9KKEA4WHOkZobeY6FfHAeTLQb015Fvs5WgIFCEphwMjZHOr+ZA37zMwtkmL80bq
- rbI0vSDBMkCbsZdMe+V43ngNhHplzsBBrFXEXijrXBqm+FiVru0cMSpxgVKEGcg9vJWx
- +PLPmv8Sx2VHkoSJYDmQb4XRuFurxYd/lxXC5b871BjCMgZ6RiQvsZGedc9sQ6zdCzHh
- vmmQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUi2NCCtp3/ClOoLcuYTsTQ+pJRtWpGjCWFxfWd2txfdsRV6U/F7giT5ahhZRBIM+U+WQZe5T+HRlSj@nongnu.org
-X-Gm-Message-State: AOJu0YxJdweJnXPJRgvAwjXH7cSnGHkBQ1aYz63KuKva7pQmH7zh2Xwl
- FjAWf7mG2xXOPSVeXD7CN524Y4n01yU16UDXiiTCkG5QWMdc9AbZDLFwQVG12nCOoS7QYwAZoNP
- CplIDVhQk0LSULDfqHQL63E/u37+17F3urkR035rv2YTFk/5AfuoeNxSGsuXruM2meGi3Y6QJ3B
- ZMtA1hwLYT0zyJ3gngRugCiUjqCJtzytw=
-X-Gm-Gg: AeBDieuM4o9g5UHs74kbAyA+LJjQ26NZoHembfiqKykkZXniAfSMxoxkDmvSO1PqxmW
- NVNnV92gl0bLzX62XCGz7D58yN/afvfJEArNPy3Cd3P9CMqyib5qY9oh+0elov1n+yXv/rsgmSu
- MfF4VQ7GgIpZ4JMeo8aN3IkVRJkaJx2rkghS0NOi/dpnsaPgxnNYvGgxkpGTKHhyoqc14hIiUBX
- QZuERRkMbZL2j0UnRl7V/cB+75YNafOpwYwyYD8PPdTJeMvaUCVXxjuvAK5tcU/HBE=
-X-Received: by 2002:a05:600c:c0cf:b0:485:3c2e:60d5 with SMTP id
- 5b1f17b1804b1-4889945f8e8mr108143525e9.2.1775460092588; 
- Mon, 06 Apr 2026 00:21:32 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0cf:b0:485:3c2e:60d5 with SMTP id
- 5b1f17b1804b1-4889945f8e8mr108143285e9.2.1775460092140; Mon, 06 Apr 2026
- 00:21:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1w9fjN-0004Q7-U0; Mon, 06 Apr 2026 04:54:51 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6362tbbm4143886; Mon, 6 Apr 2026 08:54:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=oDG+1I
+ R8bz/XmayiwvjFBgbm2EqbPnEiNImi03vhj64=; b=bzQjdD4tvawAbUWUDJBDNF
+ wOBZYJkrV/h2WQiK1IAalA7we3fFxPYpa6zl6DmKU/MeuYoIF+KC3edMZ4+DZ3hz
+ aJfPHgUjaQ/cWLMbF2YGUpJKNj4ciRpewEt0+0pnIL4v4/HPqKKf6HUiMfyySXKD
+ I4O2HErn1HVgzxIu25ROK8gUeUmuOnLQwbWjxW5n2N3PCxSEr9x+6yvGtNRiavAj
+ Jt/F4xp6TA+C7ERzeWM338VSjzE/yDLSFWk1edWkXKsCyY0vaH0nUkBSgZUJmLTE
+ ArDuVygH4/O/oApn4GmlQuJfOUDOz0YxjniEEhPDdQz1U+uZQyr83crNeslSvbCA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4das2bwfyg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Apr 2026 08:54:46 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6365aDAG020298;
+ Mon, 6 Apr 2026 08:54:45 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dbdync0s0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Apr 2026 08:54:45 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6368shfC7537190
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Apr 2026 08:54:44 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A8F68580AF;
+ Mon,  6 Apr 2026 08:54:43 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 36650580B0;
+ Mon,  6 Apr 2026 08:54:43 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Apr 2026 08:54:43 +0000 (GMT)
 MIME-Version: 1.0
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-2-peterx@redhat.com>
- <CAE8KmOyTq4wib3niowjXNfqh4TjwhcEDqUt99=mvuLs5vsSx9A@mail.gmail.com>
- <acaNfFWvNAEpFsFD@fedora>
- <CAE8KmOwwFmrNgb8MWO7yprPmtautrbrWzF5FYdJ4ODboQxhwUw@mail.gmail.com>
- <acuQc3dVq5vfh3cl@fedora>
-In-Reply-To: <acuQc3dVq5vfh3cl@fedora>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 6 Apr 2026 12:51:14 +0530
-X-Gm-Features: AQROBzBwMuwaDVLTRLd3N-xRgENmTniD0Mo3lsHYmtrpXjHl7sikIO1iu4qLknU
-Message-ID: <CAE8KmOxtcwoFKNgihWnheY8F__uPbzGC9u_5ve24+5oLbb+_sQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 01/12] migration: Fix low possibility downtime
- violation
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- Kirti Wankhede <kwankhede@nvidia.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Joao Martins <joao.m.martins@oracle.com>, Alex Williamson <alex@shazbot.org>, 
- Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Pranav Tyagi <prtyagi@redhat.com>, 
- Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Date: Mon, 06 Apr 2026 14:24:42 +0530
+From: Misbah Anjum N <misanjum@linux.ibm.com>
+To: Ani Sinha <anisinha@redhat.com>, Pbonzini <pbonzini@redhat.com>, Qemu
+ Devel <qemu-devel@nongnu.org>, Qemu Ppc <qemu-ppc@nongnu.org>
+Cc: npiggin@gmail.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ vaibhav@linux.ibm.com, sbhat@linux.ibm.com
+Subject: Re: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
+ commit 98884e0c
+In-Reply-To: <DCB3A7E9-412C-402D-A4C9-EA558CD1FE29@redhat.com>
+References: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
+ <2cc23a5ce64847dd8a9278c87f58119b@linux.ibm.com>
+ <5bc7997d-329e-47a9-9b4d-750a3104094a@linux.ibm.com>
+ <4797B580-7853-490E-8852-B6312619FE95@redhat.com>
+ <e966c053-2e69-b185-532e-fcb4173b4daf@redhat.com>
+ <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
+ <ED4A083D-2B96-468A-BE77-211E9F3FA88D@redhat.com>
+ <7bbeb3cb105934e95bf1a5356cfc4613@linux.ibm.com>
+ <7ACBCD63-B759-47FD-824F-0327726E47F6@redhat.com>
+ <35f6361f69ef4f09f80bd915f3460a28@linux.ibm.com>
+ <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
+ <526d7172f3933baf913bf4b105a6fa9a@linux.ibm.com>
+ <9794AFF9-DFD9-48D0-B4EA-7745ABDED6F7@redhat.com>
+ <DCB3A7E9-412C-402D-A4C9-EA558CD1FE29@redhat.com>
+Message-ID: <ab72cb8395bcc2b1f489c5611bb7c00d@linux.ibm.com>
+X-Sender: misanjum@linux.ibm.com
+Organization: IBM
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: 7uPK7diby7oWe1YGlHDNfWWgsO9X8u3B
+X-Proofpoint-GUID: CgrWcfld9QKffDhuWAiv6kLjV9iF0BWC
+X-Authority-Analysis: v=2.4 cv=U9qfzOru c=1 sm=1 tr=0 ts=69d374d6 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=zYzd7YLIzAHjMBLa044A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA2MDA4NSBTYWx0ZWRfX1ULnp2n/G+cz
+ 24zlWlSSBV08pJjzWAUvDPOCB2W97yYbnVV8qc1SKxnAKzU2bmH7KsQiWw7F4dpsHPypys7ctL0
+ 1cZIINm45Jqlta+ccH8/4a902UYstEHWpjPW8fkp1xpdbpsqUBkhTUftrPNcNMRs4pEA3qWZxdZ
+ ekf7XMYdxNNtQ+4ZGxVKchMzcWM2qGl/spK5VHZd1KPQoFp3ythDG4U33wyk04NJKHEcFA0gTYI
+ yHV3eoLGu+4VQEe19E0lthvTVH4cmauJWFvfdMsR+x9n+s1B9N2EF6p7SNabZ63SXse70ua8rCi
+ 2Rhc/d4KXPBG8B7Sd5t3XspUweuW8ZF3B0YopR0CMPZztV9PuWGxAL9j7iZ2zxo8hYz3CV1H95o
+ IC7tyuigKNpHiTd7MpQZB9KbvC1WvQFtv8LRkB16WnzE1IYLn/ABwhiFX9xdbdxjuPWDQGS3utK
+ hLcsTODJCa6OYXZk+Ag==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-06_02,2026-04-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 clxscore=1015 adultscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2604060085
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=misanjum@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,69 +139,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Ani,
+I've completed the testing you suggested. Unfortunately, the SMP hang 
+still persists with these changes.
 
-On Tue, 31 Mar 2026 at 18:19, Juraj Marcin <jmarcin@redhat.com> wrote:
-> QAPI schema defines the type of 'avail-switchover-bandwidth' and other
-> '*-bandwidth' properties as size, which allows users to use size suffix,
-> for example '100M'. QAPI parser then parses this value to
-> 100 * 1000 * 1000 bytes.
+Changes made:
+As requested, I reverted everything in stubs/kvm.c and the related 
+changes in stubs/meson.build, include/system/kvm.h, and 
+target/i386/kvm/kvm.c. I also commented out the calls to 
+kvm_arch_supports_vmfd_change() and kvm_arch_on_vmfd_change() in 
+kvm_reset_vmfd().
 
-* That's nice, and common with other tools: dc(1), wget(1), curl(1).
-It still doesn't save user the trouble of converting 100 Mbps ->
-12.5MBps. If we check wget(1) and curl(1), their '--limit-rate' option
-accepts values as Bytes/Sec, but that is usage limit user wants to
-impose, it does not entail bits <-> bytes conversion. If the intended
-use of '--available-switchover-bandwidth' option is analogous to the
-'--limit-rate' option, then naming it --available-*bandwidth is
-confusing OR wrong.
+Test result:
+The issue persists - guests still hang indefinitely during boot when SMP 
+is configured.
 
-* The contention here is the deviation from the norm of specifying
-bandwidth in 'bits-per-second'. To accommodate it we add conversion
-arithmetic and (miss) documentation, etc. Above all it breaks user
-intuition.
+Git diff:
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index cc5c42ce4d..04b9cbe7c9 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2622,11 +2622,12 @@ static int kvm_reset_vmfd(MachineState *ms)
+       * bail if the current architecture does not support VM file
+       * descriptor change.
+       */
+-    if (!kvm_arch_supports_vmfd_change()) {
++    /*if (!kvm_arch_supports_vmfd_change()) {
+          error_report("This target architecture does not support KVM VM 
+"
+                       "file descriptor change.");
+          return -EOPNOTSUPP;
+      }
++    */
 
-> Changing from bytes to bits is API breaking change, I don't think it is justified.
+      s = KVM_STATE(ms->accelerator);
+      kml = &s->memory_listener;
+@@ -2659,10 +2660,10 @@ static int kvm_reset_vmfd(MachineState *ms)
+      }
+      assert(!err);
 
-* The sanctity of APIs is important. But that should not prevent us
-from improving the very APIs.
+-    ret = kvm_arch_on_vmfd_change(ms, s);
++    /*ret = kvm_arch_on_vmfd_change(ms, s);
+      if (ret < 0) {
+          return ret;
+-    }
++    }*/
 
-> Devices report two pending values, 'must_precopy' and 'can_postcopy'.
-> 'must_precopy' is number of bytes that must be migrated in precopy (or
-> switchover) and cannot be postcopied. 'can_postcopy' is number of bytes
-> that can be migrated either in precopy or postcopy, those can be RAM
-> pages (with postcopy-ram enabled) or dirty bitmaps or any device that
-> would support postcopy.
->
-> If switching to postcopy is allowed, we only need to be able to transfer
-> 'must_precopy' bytes in switchover. Rest of the pending data can be
-> migrated in postcopy ('can_postcopy' bytes). Thus, we only compare
-> 'must_precopy' when deciding whether to switch to postcopy.
->
-> However, if postcopy isn't allowed, and we are deciding whether to stop
-> the source machine and complete the migration, we need to migrate
-> everything in switchover, including the data that could be postcopied.
-> Thus, we need to compare 'pending_size = must_precopy + can_postcopy' to
-> decide if we can complete the migration in the specified downtime.
+      if (s->kernel_irqchip_allowed) {
+          do_kvm_irqchip_create(s);
 
-* Right. Is it fair to say:
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 5fc7251fd9..0dad0079ed 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -456,8 +456,6 @@ int kvm_physical_memory_addr_from_host(KVMState *s, 
+void *ram_addr,
 
-        /* Return pending data size to decide if we can pause/stop the source VM
-         * and start the VM on the destination side */
-        uint64_t qemu_savevm_state_pending_estimate/exact( ... )
-        {
-                 uint64_t must_precopy = 0, can_postcopy = 0;
-                 ...
-                 if (migrate_postcopy())
-                     return must_precopy;
+  #endif /* COMPILING_PER_TARGET */
 
-                 return must_precopy + can_postcopy;
-        }
+-bool kvm_arch_supports_vmfd_change(void);
+-int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s);
 
-       pending_size = qemu_savevm_state_pending_estimate/exact( ... );
+  void kvm_cpu_synchronize_state(CPUState *cpu);
 
-Thank you.
----
-  - Prasad
+diff --git a/stubs/kvm.c b/stubs/kvm.c
+deleted file mode 100644
+index 2db61d89a7..0000000000
+--- a/stubs/kvm.c
++++ /dev/null
+@@ -1,22 +0,0 @@
+-/*
+- * kvm target arch specific stubs
+- *
+- * Copyright (c) 2026 Red Hat, Inc.
+- *
+- * Author:
+- *   Ani Sinha <anisinha@redhat.com>
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-#include "qemu/osdep.h"
+-#include "system/kvm.h"
+-
+-int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
+-{
+-    abort();
+-}
+-
+-bool kvm_arch_supports_vmfd_change(void)
+-{
+-    return false;
+-}
 
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 6ae478bacc..8a07059500 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -74,7 +74,6 @@ if have_system
+    if igvm.found()
+      stub_ss.add(files('igvm.c'))
+    endif
+-  stub_ss.add(files('kvm.c'))
+    stub_ss.add(files('target-get-monitor-def.c'))
+    stub_ss.add(files('target-monitor-defs.c'))
+    stub_ss.add(files('win32-kbd-hook.c'))
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 524b5276a6..3dfd9a5974 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3389,15 +3389,6 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
+      return 0;
+  }
+
+-int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
+-{
+-    abort();
+-}
+-
+-bool kvm_arch_supports_vmfd_change(void)
+-{
+-    return false;
+-}
+
+  int kvm_arch_init(MachineState *ms, KVMState *s)
+  {
+
+
+I've also tested with the latest QEMU build from master, and the issue 
+still persists there as well. Could you suggest what additional 
+debugging steps I should take to help identify the root cause?
+
+Thanks,
+Misbah Anjum N <misanjum@linux.ibm.com>
+
+
+On 2026-03-18 15:00, Ani Sinha wrote:
+> One possible thing to try is:
+> 
+> Revert everything in stubs/kvm.c and hence changes in
+> stubs/meson.build, include/system/kvm.h and in target/i386/kvm/kvm.c
+> introduced by 98884e0cc1 .
+> You will have to comment out calls to kvm_arch_supports_vmfd_change()
+> and kvm_arch_on_vmfd_change() in kvm_reset_vmfd(). Since
+> kvm_reset_vmfd() is not called anyway, not should make no difference
+> if those calls are commented out.
+> 
+> Let me know what you get after doing the above.
 
