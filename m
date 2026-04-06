@@ -4,63 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB56F46C44
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 14:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80191F46C47
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 15:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9l4f-00085O-FF; Mon, 06 Apr 2026 10:37:09 -0400
+	id 1w9lVW-0002uw-OM; Mon, 06 Apr 2026 11:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9l4d-0007zL-Pe
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:37:07 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9l4c-0000eI-2h
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:37:07 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 6102E40554;
- Mon,  6 Apr 2026 14:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C0FC4CEF7;
- Mon,  6 Apr 2026 14:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775486224;
- bh=kbw03O6QQnSJeekm6/PTxDxHqjkiPa5PMzYC3V7z32I=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=mXBJFwHlKqvmLLtdGe/PKRe9cmdGMU4UMSy5OXQi8/iamdj6bWaXHpwV5A95VN0fM
- 9RBw2tsmBCI+9sMAdMbsG0EInYDfj3G5uEnmVRpPWL8hqff/N+d6KTPCEes+3aQFQM
- uXHUgiCqtbqeZgsWrCQlIb1KkowN4XEdQPVFb1FX7jb0LGTSF/Dxgj7qT+0OSWoa3e
- brscIv6/oICWAcNgBsXzy9HBnqWcsuxCUM6mPBuuEBcxE8SeyoKaCf9N7b9VbVrJgo
- hdCJsNSwU3PbD68u27rgkPSfr5UxH+VN2XUrfWDnq6NHc+Tz65+1qcO1L10Y3c0c8b
- XplItq1AVUr8w==
-Date: Mon, 6 Apr 2026 16:36:59 +0200
-From: Christian Brauner <brauner@kernel.org>
-To: Thomas Huth <th.huth+qemu@posteo.eu>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH 4/5] tests/qtest: add tests for dynamic monitor add/remove
-Message-ID: <20260406-verteidigen-garage-ef6523079ddc@brauner>
-References: <20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org>
- <20260402-work-qmp-monitor-hotplug-v1-4-6313a5cdd574@kernel.org>
- <20260405201133.6f04b585@tpx1>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w9lVS-0002tY-N2
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 11:04:51 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w9lVQ-0003qk-75
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 11:04:50 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2b2469e5117so20970655ad.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 08:04:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775487887; x=1776092687; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BpjBN/H+zc8vKXTIC1giYotC0A5eWy62SJygmBUlOkI=;
+ b=dI63pOJagXq5djUcRyMXxIbsJ/tDaE2YVI2ZBzp8YlikhSpHZSmt74SmTf9kO6RORR
+ me6PLlIE/WPvM7acdEwJvmmdT0H4GGB9EihCGewsSbjOFviO/0rnnPDHRx4t5e9eYLhF
+ 8pzXKa0ocRW2fKruQYrQPEdc0dSgnaBUyAOjAclqe2Balmn19pBcY+bj21gGlmGc4rh6
+ KfUcI/OqTzf9Dwh1xKohCAea0TcIe6klYs80upXWhY7xM5Ff4qceMNhZVgXs0jFVPH8J
+ 2ZWvlIPxsGmPZzBRaE60Bhzj3HGMBwZM84GaVk6gxB1o42hZ/t5k793VkDQYSp1CngfN
+ bs6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775487887; x=1776092687;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BpjBN/H+zc8vKXTIC1giYotC0A5eWy62SJygmBUlOkI=;
+ b=YjZV2uNEf4aNtnPe+If/Fc1I+apFt3oQiwU8AXrWTyR6Ya6kbQJM7VyW0pwv9tGRVe
+ 7Xipwn5ACtw8pLRHefU4r/Ny3NWMROggfMQJS+SHDe6QG0XS/4kR5efT/6ya+QwMIIOx
+ Z0gin3fZF+r8YrvmJjBY0bex4aZVbanpG5pQVdgm5v05iI4NIXStpBoLiiOLf74kxvC5
+ JmQmvnG/EkXQY1HPzAJ2xBhKizrehEzNjekiQUTkSIr6QhKd2EuK4YtkhhcgsT00CbfF
+ 0rqj+tO3//VeQWsoHIT+rUWYuicveTPyidvk20Uxpb/1hG8RpAnJGTq96jJCa+hAGTPI
+ 2ybA==
+X-Gm-Message-State: AOJu0YxeYW2zUof7jtsX1Wvu03x6nGECtHI2H+ck+ghye90uRu7NCVZn
+ Oy9/bd073yPQRSQlPZd3+95c9o2cBx6CQTyMMKjC/hbc/pMiTA/w1hXwVLXcoSKlM2yG6OrmsSo
+ GIA9jO6/Lmw==
+X-Gm-Gg: AeBDietE6jJafCjKHiGobl09rhKsrWWbSxNfbVdg9UZ+4ZG90+p3oBhX7kcWbsKfW0n
+ NGpg46nCyg2XBzAEt7MmshayISMUvnmqaBdI8eSKryCgGBo1dHugqtxUfsPCfsKXSbwp2+rEMvb
+ Mg6wp7jx94jmIFR+pIEK6RdckoRxAbplsI2wzg1a8H0XpNGAewKPRJ/jq15sIsKcvABw3p9aquL
+ KXA4ZfE3VjsfBoz95aRmGDkai664Ga6VqlZsDn1bXYCfSZX0RAFABDEfoABW/llPTWa5K7/4oTJ
+ L2KE+AK3nfAQjc1maqGKkImbFx1b3V5Ezsph51gfHrGcdDwmIF7DQduiU39OBpnpuIhG6GsQ8sm
+ UTjCPkp+2pKIoDab11gDMl5Tc4ZqmFMxaeITYPH0mN6L5PwYcoTqwUywRDE9Z5rtu9MAwebHj3T
+ Wi8Y8K+p9ctCQRRznegRoJUgCuas0rAV1/6n+PMlpoZIEl1s86NCfSVwaD+pXPl/Cm1bMr8H7cC
+ JPr
+X-Received: by 2002:a17:903:32c3:b0:2ae:5350:3a4e with SMTP id
+ d9443c01a7336-2b2821ca1e7mr111285575ad.21.1775487886612; 
+ Mon, 06 Apr 2026 08:04:46 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b274979d72sm137770075ad.51.2026.04.06.08.04.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Apr 2026 08:04:46 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, philmd@linaro.org,
+ jim.macarthur@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v7 04/14] target/arm/tcg/translate.h: remove TARGET_AARCH64
+Date: Mon,  6 Apr 2026 08:04:24 -0700
+Message-ID: <20260406150434.407201-5-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260406150434.407201-1-pierrick.bouvier@linaro.org>
+References: <20260406150434.407201-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260405201133.6f04b585@tpx1>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=brauner@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,95 +105,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 05, 2026 at 06:11:35PM +0000, Thomas Huth wrote:
-> Am Thu, 02 Apr 2026 23:19:19 +0200
-> schrieb Christian Brauner <brauner@kernel.org>:
-> 
-> > Test the monitor-add, monitor-remove, and query-monitors QMP commands:
-> > 
-> > - Basic lifecycle: chardev-add -> monitor-add -> query-monitors ->
-> >   monitor-remove -> chardev-remove
-> > - Error: duplicate monitor id
-> > - Error: monitor-remove on nonexistent id
-> > - Error: monitor-add with nonexistent chardev
-> > - Re-add after remove: same id and chardev reusable after removal
-> > 
-> > Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-> > ---
-> >  tests/qtest/qmp-test.c | 101 +++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 101 insertions(+)
-> > 
-> > diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
-> > index edf0886787..9dbd3a6103 100644
-> > --- a/tests/qtest/qmp-test.c
-> > +++ b/tests/qtest/qmp-test.c
-> > @@ -337,6 +337,105 @@ static void test_qmp_missing_any_arg(void)
-> >      qtest_quit(qts);
-> >  }
-> >  
-> > +static void test_qmp_monitor_add_remove(void)
-> > +{
-> > +    QTestState *qts;
-> > +    QDict *resp;
-> > +
-> > +    qts = qtest_init(common_args);
-> > +
-> > +    /* Create a null chardev for the dynamic monitor */
-> > +    resp = qtest_qmp(qts,
-> > +                     "{'execute': 'chardev-add',"
-> > +                     " 'arguments': {'id': 'monitor-chardev',"
-> > +                     "               'backend': {'type': 'null',"
-> > +                     "                           'data': {}}}}");
-> > +    g_assert(qdict_haskey(resp, "return"));
-> > +    qobject_unref(resp);
-> > +
-> > +    /* Add a dynamic monitor */
-> > +    resp = qtest_qmp(qts,
-> > +                     "{'execute': 'monitor-add',"
-> > +                     " 'arguments': {'id': 'dyn-mon',"
-> > +                     "               'chardev': 'monitor-chardev'}}");
-> > +    g_assert(qdict_haskey(resp, "return"));
-> > +    qobject_unref(resp);
-> > +
-> > +    /* Verify it shows up in query-monitors */
-> > +    resp = qtest_qmp(qts, "{'execute': 'query-monitors'}");
-> > +    g_assert(!qdict_haskey(resp, "error"));
-> > +    qobject_unref(resp);
-> > +
-> > +    /* Error: duplicate id */
-> > +    resp = qtest_qmp(qts,
-> > +                     "{'execute': 'monitor-add',"
-> > +                     " 'arguments': {'id': 'dyn-mon',"
-> > +                     "               'chardev': 'monitor-chardev'}}");
-> > +    qmp_expect_error_and_unref(resp, "GenericError");
-> > +
-> > +    /* Remove the dynamic monitor */
-> > +    resp = qtest_qmp(qts,
-> > +                     "{'execute': 'monitor-remove',"
-> > +                     " 'arguments': {'id': 'dyn-mon'}}");
-> > +    g_assert(qdict_haskey(resp, "return"));
-> > +    qobject_unref(resp);
-> > +
-> > +    /* Error: remove nonexistent */
-> > +    resp = qtest_qmp(qts,
-> > +                     "{'execute': 'monitor-remove',"
-> > +                     " 'arguments': {'id': 'dyn-mon'}}");
-> > +    qmp_expect_error_and_unref(resp, "GenericError");
-> > +
-> > +    /* Error: remove CLI monitor (the default one) -- find its id first.
-> > +     * CLI monitors typically have no id, so use a bogus id to test. */
-> 
-> Please check coding style with scripts/checkpatch.pl - I guess it will
-> complain about the multiline comment here.
+We need to stub a64_translate_init and gen_a64_update_pc.
+At this point, we don't need to do anything for aarch64_translator_ops
+since it's just an external symbol.
 
-Thanks, whatever checkpatch.pl raised should now be fixed.
+We can now include target/arm/tcg/translate.h from common code, since
+all target specific bits have been removed, or can be specialized with
+specific defines.
 
-> Apart from that, the patch looks fine to me. But I think either a qtest or
-> a functional test should be enough, you don't need both. I'd maybe
-> recommend to just keep the qtest, since these tests are often run more
-> frequently than the functional tests.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/arm/tcg/translate.h | 10 ----------
+ target/arm/tcg/stubs32.c   | 17 +++++++++++++++++
+ target/arm/tcg/meson.build |  1 +
+ 3 files changed, 18 insertions(+), 10 deletions(-)
+ create mode 100644 target/arm/tcg/stubs32.c
 
-Hm, I did keep both for v2 and I think whoever applies the changes (if
-accepted) can just decide which patch to drop so I'm inclined to just
-keep it.
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index e28eac54afb..77fdc5f3a17 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -357,19 +357,9 @@ static inline int curr_insn_len(DisasContext *s)
+ /* CPU state was modified dynamically; no need to exit, but do not chain. */
+ #define DISAS_UPDATE_NOCHAIN  DISAS_TARGET_10
+ 
+-#ifdef TARGET_AARCH64
+ void a64_translate_init(void);
+ void gen_a64_update_pc(DisasContext *s, int64_t diff);
+ extern const TranslatorOps aarch64_translator_ops;
+-#else
+-static inline void a64_translate_init(void)
+-{
+-}
+-
+-static inline void gen_a64_update_pc(DisasContext *s, int64_t diff)
+-{
+-}
+-#endif
+ 
+ void arm_test_cc(DisasCompare *cmp, int cc);
+ void arm_jump_cc(DisasCompare *cmp, TCGLabel *label);
+diff --git a/target/arm/tcg/stubs32.c b/target/arm/tcg/stubs32.c
+new file mode 100644
+index 00000000000..c5a0bc61f47
+--- /dev/null
++++ b/target/arm/tcg/stubs32.c
+@@ -0,0 +1,17 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "target/arm/tcg/translate.h"
++
++
++void gen_a64_update_pc(DisasContext *s, int64_t diff)
++{
++    g_assert_not_reached();
++}
++
++void a64_translate_init(void)
++{
++    /* Don't initialize for 32 bits. Call site will be fixed later. */
++}
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 5f591560551..3e96c77df73 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -21,6 +21,7 @@ gen_a32 = [
+ 
+ arm_ss.add(gen_a32)
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
++arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
+ 
+ arm_ss.add(files(
+   'cpu32.c',
+-- 
+2.47.3
+
 
