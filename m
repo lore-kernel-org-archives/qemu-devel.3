@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8012E9D827
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 00:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25B7AE9D826
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 00:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9XPT-0003gL-Nc; Sun, 05 Apr 2026 20:01:43 -0400
+	id 1w9XTw-00057i-K4; Sun, 05 Apr 2026 20:06:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9XPQ-0003g8-FY
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:01:40 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1w9XTv-00057M-1R
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:06:19 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9XPO-0006wo-Fe
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:01:40 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-82ce0a9b3f7so1413069b3a.0
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 17:01:37 -0700 (PDT)
+ id 1w9XTt-0007tE-CW
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:06:18 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2ab39b111b9so13793155ad.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 17:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775433697; x=1776038497; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775433976; x=1776038776; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XH8MIXV91UwNLYwejCAuimdOLK0orVqOEx/jxCs4thg=;
- b=GiJ3zSvXwUvX6F2cJEkRVuMVVnm0Jxcb/8GYlJmaL6u/hKSQgC+nMSZXEGGuK9p3gy
- XJ5uMCwsBekSHUAQ+OReYR/ZI23TH54il63qtBQbxQVPfLJFzhQLCobeI7ZltsC0kDqf
- +88iEjcIFg4BM/TEBZFgE2ih0hcSRHpkzXuq5QRnXfpATGTrXlplyAuPpzcpdijdijeF
- RpxKiWDfNA8fZ8iyaJ3qAHvnT4efDfknOC5fBtCiXj4PfHtj1Y3KnY9Qrpgnq5Up0Kwu
- bcHSeapy/gs5pNrVDtOAm+MRK6bUaB+EWhmI3AUP3Nja6C2G4kPglsH8zEpUnYPw7JAN
- Q5/w==
+ bh=rg1dy0vao+3A5fRXWEmZe6MQz/O1kdvrZKZKOIdGT4c=;
+ b=xuYPT1LF7t1Ot5zNIhge3F1we+aHgdLhZXsm6Eyxg1skmTelk3LEQdTFRbT6GJng5L
+ zxpG4FopMi+k8RmdLC4xDE8h08c/fth8jvcCdylJJkSYvVDHLOjKpVg1cqh74G96hfQ0
+ j3sINgF23cV6Uyq8wWX1yh/A8iJ+y9Kd396+EkKJhcBr0JFP11S0dSRFfkQqjOlQXGkH
+ Qd76hmYfXDxmYuEDyASMZB3kpaxKoZE+NYuUzvrCD6aGAi5/Tb0vKdqW6I5V2TPkm3Qs
+ GaJQTQea5x8FuFmZtk3CPcocSX2CX11eiR0yo7cW8V/S3XVLFPdHFAfPhZpdEOaunImd
+ 7+0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775433697; x=1776038497;
+ d=1e100.net; s=20251104; t=1775433976; x=1776038776;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XH8MIXV91UwNLYwejCAuimdOLK0orVqOEx/jxCs4thg=;
- b=h8Ld1q5N3cef6C5uHs0EsxXfquLVNUlsWbJ0aTXDPHkmBa0fmKbb13V0TkxRbJlksW
- ML5duDwU8GaPV8kzOgiDdY+HUnZnwDCW4bKDhKgGwhKTkd7BIdZS+kIt+b3JESsLE+2/
- jELQscONtv4KrHdWldj777pgvMgkJOJwtxuH+How379w02POEXcidLXAZtVXqw2iB3Hd
- Qbu+U6e9++9CeKWugk7KaNpZb2OVFCg6cAUK55T5HZHaXS+Bc1cSU+afAlauxoK2MxOn
- s3nxR97ln/i9Vwc3OPnvzrcJohD5pMZkbfYTlChp5yGtB9EMRHwUc21vY/pz+Wp9iG3e
- 6mvQ==
-X-Gm-Message-State: AOJu0Yyvs13rCdb/KwmZqVmsAl8jDt5dZ/Mnl4mpUx1CaHq++kp9/A3d
- pfPinc+rJmx28nXIb68a3VYtElqcF9q3wJfDaKX43XEOKTlBmfZBRpIChIwLZo+5o87QcpChCFk
- qFTzZ
-X-Gm-Gg: AeBDiesiiQelDeSqMdv1YA0YjSQFvWAwbrqQQg/78vuERE/IMug1LZYu1cCVKnKv1x8
- YeqCvrCHHZW/OuV5NgiLMNa9A1W3vydsKZ2TUsOW8nWtHUGOstfzqQZuJK79HJpj+sBVgUxARfm
- zAYn11tg/voTCBbM2rdbuLsKpUl++wuMtv7cpsPk+ok+meZzdHQaXKEGzxSxvqGyggwsVKtHPPX
- aS7e75dBqR0/3hcdwHkZ5r2BRTlUCy+n+kWnD5sH644l4QsHkTu5zCYQkJfOg7VJF7ia0k/QDBy
- PpHiH5PBP5XWofGt5l9IYHMRklE3/T4xFQo8WFL7lbGLaudl4CO72COmpJSb8TcH3uBOFmrT2Bd
- hhGkzkyRshcoqQqEkw0ycj6cXAtBm9xtjR9wr9PKEi2Pu9fqlxW/42CaNBdG1svsVvwg4JD7i1q
- 4cpffw00GxnhiGir702KNSKUyH3aY0Yh47ZRSe/3I8DXFIrOaKs7HvpGKvNAfMGPdLIq4=
-X-Received: by 2002:aa7:88c2:0:b0:82c:2205:507d with SMTP id
- d2e1a72fcca58-82d0db7338fmr11042716b3a.36.1775433696173; 
- Sun, 05 Apr 2026 17:01:36 -0700 (PDT)
+ bh=rg1dy0vao+3A5fRXWEmZe6MQz/O1kdvrZKZKOIdGT4c=;
+ b=nrXL0EVvDsGF39JMBICcYT4fG3X0fTKjCoFKFabuyG3SMzxyIUd0uPIpMrNstSsz1l
+ kAYKNIy/XJVGNvs4VMtalx0bstBANImva0tE1Wo4N/iKeNpKTTeKNFDAprg16LuRlbOb
+ 5gQmncJs+uZ9Jpj9QJ2BUpou7nVsOzR3wyRjQVSpk7/QwOfUKSPuCdVQpkn6hUgMHusr
+ j1u0SOTUhy3VmBqg/3ckmT6iho8zzZ6gSTOgWsUyDOXf7nUTgUpvGlIGzTy8Xg2PNi7y
+ dF3k3UK+l6c3kscKMMZlBMc2+K3Zarb+hUaKIvbtsJ8hLCh/aIZXFWCNlcEAXxEmWwhW
+ YKcw==
+X-Gm-Message-State: AOJu0YyjjejkD47Na3xN4NYuocI55NlYJw/tUgL0Ncx80E9Sl3JLmGBU
+ aHrxIVsekMW+miioMeNVE9h2u3SUyk7r+2GSXkqcgpvoi+mOQMUbTzLXXBsC47Egtvs7AxD3Gdo
+ N5swO
+X-Gm-Gg: AeBDieud2CMZeggZdfZzEkJoz51dBrMfqYzhD2JGysgwhqH5ye0HUlYrUwd6WKtSAQr
+ 1UMEZkHVpGOzEgPxc1PyOZSjU7BWMpmN1ZPmMH3hYTPptCn+O87b769R4a4IqYGq8mpihfuaGCs
+ YYw3AV9QcmpJSk5mpCt9Ndbi5Ghn6BNzRWsBI0xVu5L7Uo3XGBV1bCHuQRFsTqb1yHs25ozjHDA
+ osOq/viDR6wwLydGBQuaZ3jrVegDAbzKaD/ZZbdRc3G3+Wixleo80TP4EA/rd8A4F3DIuH3pIBO
+ 5a30bYrHJldppBBGz4SkR2hG/8UuPi1qXTsk7az61nbkHSB6waFLgQsufnY4DQCe0/LqXHO1AsW
+ mkJTJFNP3zu4mBORYUxgXPi04qhoyeQDF2hVs6RGSXZ7U2TkoPhkPIH8ENFfDJtgJHJwWyFlMi5
+ EZ5feGS+qFROsnXHDSzbmkX45Ow18eIuqOT978I8ELrdu9XZ/wANffwF0C/CnAzSjdpSU=
+X-Received: by 2002:a17:902:e74d:b0:2b0:5e63:fc45 with SMTP id
+ d9443c01a7336-2b28152fc03mr113216665ad.0.1775433975547; 
+ Sun, 05 Apr 2026 17:06:15 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9c9ba21sm16176729b3a.51.2026.04.05.17.01.34
+ d9443c01a7336-2b274779b48sm160400285ad.25.2026.04.05.17.06.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Apr 2026 17:01:35 -0700 (PDT)
-Message-ID: <c1f15949-91dd-4c16-a39b-d46c66c91c91@linaro.org>
-Date: Mon, 6 Apr 2026 10:01:30 +1000
+ Sun, 05 Apr 2026 17:06:14 -0700 (PDT)
+Message-ID: <94d1f4aa-88be-48cf-ac35-a8cae70e889d@linaro.org>
+Date: Mon, 6 Apr 2026 10:06:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 15/35] target/arm: migrate check_hcr_el2_trap to use
- syndrome helper
+Subject: Re: [RFC PATCH 16/35] target/arm: use syndrome helpers in
+ arm_cpu_do_interrupt_aarch32_hyp
 To: qemu-devel@nongnu.org
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-16-alex.bennee@linaro.org>
+ <20260320130607.2071996-17-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260320130607.2071996-16-alex.bennee@linaro.org>
+In-Reply-To: <20260320130607.2071996-17-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,62 +106,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/21/26 00:05, Alex Bennée wrote:
-> It shares the same COPROC_ISS encoding as the other CP traps although
-> not all the fields are used.
+> One more step towards dropping the old #defines.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/arm/syndrome.h       | 16 ++++++++++++++++
->   target/arm/tcg/vfp_helper.c |  5 +----
->   2 files changed, 17 insertions(+), 4 deletions(-)
+>   target/arm/helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 7389f2988c4..5ee79f7564f 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -8898,9 +8898,9 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
+>                */
+>               if (cs->exception_index == EXCP_PREFETCH_ABORT ||
+>                   (cs->exception_index == EXCP_DATA_ABORT &&
+> -                 !(env->exception.syndrome & ARM_EL_ISV)) ||
+> +                 !(FIELD_EX32(env->exception.syndrome, SYNDROME, IL))) ||
 
+Unnecessary () around FIELD_EX32.
+
+Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
 
-> 
-> diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-> index 2e3121aec9c..4fbc35ce7b0 100644
-> --- a/target/arm/syndrome.h
-> +++ b/target/arm/syndrome.h
-> @@ -251,6 +251,22 @@ FIELD(COPROC_ISS, OP2, 17, 3)
->   FIELD(COPROC_ISS, COND, 20, 4)
->   FIELD(COPROC_ISS, CV, 24, 1)
->   
-> +static inline uint32_t syn_cp10_rt_trap(int cv, int cond, int opc1,
-> +                                        int crn, int rt, int isread)
-> +{
-> +    uint32_t res = syn_set_ec(0, EC_FPIDTRAP);
-> +    res = FIELD_DP32(res, SYNDROME, IL, 1);
-> +
-> +    res = FIELD_DP32(res, COPROC_ISS, CV, cv);
-> +    res = FIELD_DP32(res, COPROC_ISS, COND, cond);
-> +    res = FIELD_DP32(res, COPROC_ISS, OP1, opc1);
-> +    res = FIELD_DP32(res, COPROC_ISS, CRN, crn);
-> +    res = FIELD_DP32(res, COPROC_ISS, RT, rt);
-> +    res = FIELD_DP32(res, COPROC_ISS, ISREAD, isread);
-> +
-> +    return res;
-> +}
-> +
->   static inline uint32_t syn_cp14_rt_trap(int cv, int cond, int opc1, int opc2,
->                                           int crn, int crm, int rt, int isread,
->                                           bool is_16bit)
-> diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
-> index 45f2eb0930f..e692bc568bd 100644
-> --- a/target/arm/tcg/vfp_helper.c
-> +++ b/target/arm/tcg/vfp_helper.c
-> @@ -1359,10 +1359,7 @@ void HELPER(check_hcr_el2_trap)(CPUARMState *env, uint32_t rt, uint32_t reg)
->           g_assert_not_reached();
->       }
->   
-> -    syndrome = ((EC_FPIDTRAP << ARM_EL_EC_SHIFT)
-> -                | ARM_EL_IL
-> -                | (1 << 24) | (0xe << 20) | (7 << 14)
-> -                | (reg << 10) | (rt << 5) | 1);
-> +    syndrome = syn_cp10_rt_trap(1, 0xe, 7, reg, rt, 1);
->   
->       raise_exception(env, EXCP_HYP_TRAP, syndrome, 2);
->   }
+>                   syn_get_ec(env->exception.syndrome) == EC_UNCATEGORIZED) {
+> -                env->exception.syndrome &= ~ARM_EL_IL;
+> +                env->exception.syndrome = FIELD_DP32(env->exception.syndrome, SYNDROME, IL, 0);
+>               }
+>           }
+>           env->cp15.esr_el[2] = env->exception.syndrome;
 
 
