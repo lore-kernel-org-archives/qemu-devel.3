@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191DFEF4ECD
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 11:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81153EF4ECA
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 11:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9iVt-0002VH-Qp; Mon, 06 Apr 2026 07:53:05 -0400
+	id 1w9iVw-0002cz-Ly; Mon, 06 Apr 2026 07:53:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w9iVr-0002UL-SH
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:53:03 -0400
+ id 1w9iVv-0002Yp-9D
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:53:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w9iVq-0002M3-Aj
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:53:03 -0400
+ id 1w9iVt-0002MN-Oe
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 07:53:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775476381;
+ s=mimecast20190719; t=1775476385;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=At4efh5zbXMwqFU0+ES27jl76V1LSdL1JadRGtGkEcc=;
- b=Di+VQKxhntbTLylZThkp3lUrETYkf7PZdsQvyR8uyMTnynI3Z84+h0hKeEixqkPEewstwR
- D6//pMHon/Wj0VNV091WwX6mEojrmDFQg2dRKsgpVuiapf45uKBlNqFLbDhDvxHeC4b5/A
- w04x0G6utXchKvJbTtCTQZkmxkEuQQo=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4xZ4atkg7nPuazSS+BRhIaW+e8ja5lz+OBs+fqAB4WM=;
+ b=Ri8x/NGI9Qz5wSWxsoHfZVHm3jXRl1Ffn8NEqoIuGGIhGaGRtRpBfn1tWCKtNqTrpdZpxF
+ HgQw/fETBHzAs3Bo5baiO+r86rVN/AZQg0cbZLnT6+lLbPHdFx4EmOZTe+BwA1AEizR2VE
+ Pn30pCebmpxaiNH7wYuIsFNoY9pRU34=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-146-VEgNwjhJNr-jQ3jJ0-NlTg-1; Mon, 06 Apr 2026 07:53:00 -0400
-X-MC-Unique: VEgNwjhJNr-jQ3jJ0-NlTg-1
-X-Mimecast-MFC-AGG-ID: VEgNwjhJNr-jQ3jJ0-NlTg_1775476380
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c741c4cebf3so2496154a12.2
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 04:53:00 -0700 (PDT)
+ us-mta-308-ey_v-KgxNDKp73JAjLdtfQ-1; Mon, 06 Apr 2026 07:53:04 -0400
+X-MC-Unique: ey_v-KgxNDKp73JAjLdtfQ-1
+X-Mimecast-MFC-AGG-ID: ey_v-KgxNDKp73JAjLdtfQ_1775476383
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-82c613194caso2406020b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 04:53:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775476379; x=1776081179; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775476383; x=1776081183; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=At4efh5zbXMwqFU0+ES27jl76V1LSdL1JadRGtGkEcc=;
- b=RfUfiqm+woIp5IfdqubTRNjBO8vQnDMrBL5yx85/8us1N/YZYKN4yY1qKFep4e1LL1
- O/dmfyjUPCjFaPzY4zoTcJUHwb/qCT6qPmo492kOlnPWuwUFQHJGLAbd3QJy32NUD9Zp
- 5gWHwbYvQ/wVBguFIWgpSJ2IdyM8DVkm0CPx2Ngx8Pu1+U4tdoK+uX0BGqr889sRm2Ix
- vbQ95vLPosFGZkTa3M5TFd28DTUGGHqYA/csKHMDT5ikI7X9v3PR7r3lbNWnsKjv/UfD
- apOinPaHYESJ8S5Xsj5f6jBFJ0e2qVaEt/I5ulsamipg3xI+sG6T5mvP1lmb9rHe/+Qx
- F1DQ==
+ bh=4xZ4atkg7nPuazSS+BRhIaW+e8ja5lz+OBs+fqAB4WM=;
+ b=WMcbI9vO+mJOmpGUrbjg26+v4U38W9FKvb99j4zOkoA+xmBDrD4ruHnCfEYfVw7kL4
+ BixHumWuNzMgeiOxxSend1DNkkIdW/iu0Ep6BjLx+JOSnGknpwzx3HBXFdFuIkfFkbUR
+ N8Hk5JGAU435axoHTbduGiDPWGAu73cqIO6V8wkU2CWDZPcro8VVP0qP7/HHA8JNs784
+ Na96zv/tjp5NgKwoMnY2195Z2oLZPCXyG2iJHejLvpHTWPPVbrjVblLDk6Ku/YCGM6rJ
+ 3AAbkh/ZEshH7RonclUw4k/A6E+6cIq65l4ly4ZLffsns8AMvDwvk9adYyZPx0fbb3mP
+ 85SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775476379; x=1776081179;
+ d=1e100.net; s=20251104; t=1775476383; x=1776081183;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=At4efh5zbXMwqFU0+ES27jl76V1LSdL1JadRGtGkEcc=;
- b=BuNDj+Edh3dO2LGoqz0kK9BgmMxg9HeuGJDzisWI8yUCSYYjRAxXNJlpawA9RRZoJo
- yAycjaOyii97gObLSqi+BFxi1HFmz5sKMJAUXT+7zTHwCtGPa7Ry5rTVMGjqy/Rp0rfi
- GkmFOQAEz3IS9pEcXWZHmfeFU8ICvzznaOTV7Zfc4j+/Jj3VVrUMMTMzlUGc5BxgDHv3
- 1cVqp1KDtmYcKRCOorjhb1GbS9SvLqhFtmf5RGtHzCQuIAx6gwA7vYsklX9bUXWypn61
- aj1Dik7agZzQH1UfjU2wzXRmxFueu70dafiiEKGlZzvrPgfKTNViBdtri+e/EKLNNhde
- 9EyA==
-X-Gm-Message-State: AOJu0YwAKyMT+OybKwib7ieDwyePXRNJyEfQsDOPYG/EdoJR9Pd7fj7V
- BT14Z1FID+Fy0OpVl+cgS20arJZtzaMnKV4gTG7AYd9V0GRr4RbeNTmHOVSARFyn8ieoIPAx5wf
- QVEzN7u4Zi4sI5YTekreaw7CXIc0L2b1MFCp26H1ZABhIiddaBAvLwnFL7LDpFQJJcdM14oYTRw
- L9ds0bczLkmteWLpwvWlBx0arMdTUYxFLwgSFvpls=
-X-Gm-Gg: AeBDieuephmLxW0nvA6hkV/vFJSAYbgzPl7bmWPbrpIDNQVH5orpjw/ZJLbZQjQCuaI
- I/TfKP1MEWr93DCGCzO57nYkThWFHWdO6lJ5MvcglbC3k9lqpoHpy1RWdoIC+wQDlhZ/iff90KK
- nUurJNaUDetr7i8pexgbaTr2qKkiC5+udLayMaD4rQg8/POre1wWMRqIUCfv4DtU1xxjZvUfOR3
- 1H4+NeeUEafDV9cA04uE93zCBM1V3yTvyRHe+v/XrpMZ4fe3OWqQXrdh5sEa3Y4YDgXsLdrAngj
- cc2YrVyltpwitEN15QevU3hO4+Himf59JKEQtRBbo2T/UxYIOBl1OAQAROd9W0flMpeBE520vP0
- HqKJFkBVPbXvE0NMAd2DvTt2ZVMQfhcIJu8PJGEIZuwjSe23BFkXiF6VOK2+Rgh5ZWBEf
-X-Received: by 2002:a05:6a00:6ca8:b0:82a:ea3:c16f with SMTP id
- d2e1a72fcca58-82d0dbe3dabmr12061947b3a.53.1775476379036; 
- Mon, 06 Apr 2026 04:52:59 -0700 (PDT)
-X-Received: by 2002:a05:6a00:6ca8:b0:82a:ea3:c16f with SMTP id
- d2e1a72fcca58-82d0dbe3dabmr12061927b3a.53.1775476378454; 
- Mon, 06 Apr 2026 04:52:58 -0700 (PDT)
+ bh=4xZ4atkg7nPuazSS+BRhIaW+e8ja5lz+OBs+fqAB4WM=;
+ b=UeWHOF7FQl+kaf/KXcZ6jrjGGfxR+kBjmvtgk4wbGIMlHtxZfG+7l+M7OMlvRBA+st
+ q82f4CcalaecQMuYSPCT6/QBpnDLleFh6NYEUE3e+qVCcZ0fGReoUKiFp2xnmkHlEGaW
+ IItJVyJyRUarKvTqJFpmYAEBUPZY+DbsrCMKVDEdih3U/KzdFpt4kcoXdXhX0mhMtOJf
+ AIzjXEhvsZfumnNvbHTiRrFGlEWv8k53CfToji3GYCIVxwBHHikRwogb3aYmSeYDuSi7
+ LsDbBhyEoNj/uhapY6JSUYeF60REb1ITay9BfJaU9gAeEb3oZIof9SFHfghG9ObcQga6
+ ANfQ==
+X-Gm-Message-State: AOJu0YzNACweYkkcLYv8lVEs2+8PbsZSbJM9cG2KMABEaJ2IHl+WSIgh
+ iL7rudNRtsQLvaX0ErnQ3/xv91KdrpRXs2MGjT/GUmmAtc84imvbto2yHoPZhi0srsHdA0yjZZi
+ Hbp3wWmIrhrM06RS2PJKPhz4B33oFsc5lS99d1LZnfUyVFBlbGXddX+y6zYicqzigc4EPPJtbkQ
+ i7aA9MRAUyhSCEGqqlq9dMqsHS6bPNgEXqcN2KB8s=
+X-Gm-Gg: AeBDietJAJCd8zYql3L4WP9kBJyGSk9z2Il07To/Hqu5uvmwQR1SMzxvxk4On5Cf0Zu
+ srcihRVm0Z0b0RvPdU+wQGzOBk0pW7DF8LqRdeKONIrtth61gahlHtI34+mZfHhNApvoUUBZt9q
+ 16Xf/ENuhuSWQDpUTDU7TpFyuwsHJ75xd7TuDcK70jFFB3RDT6BZxSdqdszccXYDLvJFS8Xr5wf
+ RpOyr3B4FCm/J4Wd8mxO0cLcZB3ThcHKd5KFvlRO2DiRFLOe5wmmbcj+a0StjbUhSoxqE0NTI1b
+ 1uEh0ryUBmXfkn6ZJRiP4d1pOsl/ge0mg4fMV1v6pBpyQz++ntB47Z5L7nh3p+0pRQyOBdIxQik
+ G+fuDZgCPlT5UXZrlTRvQpb24Y/GcKoyLBDz3LonZMnMNJatXRrbPhmDFe8TB9PDMnEmS
+X-Received: by 2002:a05:6a00:4fc6:b0:82c:daa4:ce29 with SMTP id
+ d2e1a72fcca58-82d0dbc51d3mr12286171b3a.47.1775476382608; 
+ Mon, 06 Apr 2026 04:53:02 -0700 (PDT)
+X-Received: by 2002:a05:6a00:4fc6:b0:82c:daa4:ce29 with SMTP id
+ d2e1a72fcca58-82d0dbc51d3mr12286135b3a.47.1775476381972; 
+ Mon, 06 Apr 2026 04:53:01 -0700 (PDT)
 Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([152.59.100.215])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82d12218738sm11547849b3a.21.2026.04.06.04.52.55
+ d2e1a72fcca58-82d12218738sm11547849b3a.21.2026.04.06.04.52.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Apr 2026 04:52:58 -0700 (PDT)
+ Mon, 06 Apr 2026 04:53:01 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Arun Menon <armenon@redhat.com>
-Subject: [PATCH 1/2] migration/vmstate: Add VMState support for GByteArray
-Date: Mon,  6 Apr 2026 17:22:46 +0530
-Message-ID: <20260406115247.4879-2-armenon@redhat.com>
+Subject: [PATCH 2/2] ui/vdagent: Use VMSTATE_GBYTEARRAY to safely migrate
+ outbuf
+Date: Mon,  6 Apr 2026 17:22:47 +0530
+Message-ID: <20260406115247.4879-3-armenon@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260406115247.4879-1-armenon@redhat.com>
 References: <20260406115247.4879-1-armenon@redhat.com>
@@ -125,104 +126,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Arun Menon <armenon@redhat.com>
 
-In GLib, GByteArray is an object managed by the library. Currently,
-migrating a GByteArray requires treating it as a raw C struct and using
-VMSTATE_VBUFFER_ALLOC_UINT32. For example, see vmstate_vdba in
-ui/vdagent.c
+Migrating a GLib GByteArray is now possible directly using the newly
+introduced VMSTATE_GBYTEARRAY. It uses the standard GLib API calls to
+create the array, or resize it.
 
-QEMU cannot pretend that GByteArray is a C struct and simply use
-VMS_ALLOC to g_malloc() the buffer. This is because, VMS_ALLOC blindly
-overwrites the data pointer with a newly allocated buffer, thereby
-leaking the previous memory. Besides, GLib tracks the array's capacity
-in a hidden alloc field. Bypassing GLib APIs leave this capacity out of
-sync with the newly allocated buffer, potentially leading to heap buffer
-overflows during subsequent g_byte_array_append() calls.
-
-This commit introduces VMSTATE_GBYTEARRAY which uses specific library
-API calls (g_byte_array_set_size()) to safely resize and populate the
-buffer.
+This is safer than implementing a C struct and manually updating the
+data and len fields. This commit uses the VMSTATE_GBYTEARRAY in vdaagent
+to store the outbuf variable.
 
 Signed-off-by: Arun Menon <armenon@redhat.com>
 Fix-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- include/migration/vmstate.h | 10 ++++++++++
- migration/vmstate-types.c   | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+ ui/vdagent.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 62c2abd0c4..ab20445c4c 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
- extern const VMStateInfo vmstate_info_qtailq;
- extern const VMStateInfo vmstate_info_gtree;
- extern const VMStateInfo vmstate_info_qlist;
-+extern const VMStateInfo vmstate_info_g_byte_array;
- 
- #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
- /*
-@@ -892,6 +893,15 @@ extern const VMStateInfo vmstate_info_qlist;
-     .start        = offsetof(_type, _next),                              \
- }
- 
-+#define VMSTATE_GBYTEARRAY(_field, _state, _version) {                   \
-+    .name         = (stringify(_field)),                                 \
-+    .version_id   = (_version),                                          \
-+    .size         = sizeof(GByteArray),                                  \
-+    .info         = &vmstate_info_g_byte_array,                          \
-+    .flags        = VMS_SINGLE | VMS_POINTER,                            \
-+    .offset       = vmstate_offset_pointer(_state, _field, GByteArray),  \
-+}
-+
- /* _f : field name
-    _f_n : num of elements field_name
-    _n : num of elements
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index 89cb211472..ccac731388 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -942,3 +942,40 @@ const VMStateInfo vmstate_info_qlist = {
-     .get  = get_qlist,
-     .put  = put_qlist,
+diff --git a/ui/vdagent.c b/ui/vdagent.c
+index bb0c4aa14c..9206e47000 100644
+--- a/ui/vdagent.c
++++ b/ui/vdagent.c
+@@ -967,17 +967,6 @@ static const VMStateDescription vmstate_chunk = {
+     }
  };
-+
-+static int get_g_byte_array(QEMUFile *f, void *pv, size_t size,
-+                            const VMStateField *field)
-+{
-+    GByteArray *byte_array = pv;
-+    uint32_t len = qemu_get_be32(f);
-+
-+    if (!byte_array) {
-+        byte_array = g_byte_array_new();
-+    }
-+
-+    g_byte_array_set_size(byte_array, len);
-+    if (len > 0) {
-+        qemu_get_buffer(f, byte_array->data, len);
-+    }
-+    return 0;
-+}
-+
-+static int put_g_byte_array(QEMUFile *f, void *pv, size_t size,
-+                            const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    GByteArray *byte_array = pv;
-+    uint32_t len = byte_array ? byte_array->len : 0;
-+
-+    qemu_put_be32(f, len);
-+    if (len > 0) {
-+        qemu_put_buffer(f, byte_array->data, len);
-+    }
-+
-+    return 0;
-+}
-+
-+const VMStateInfo vmstate_info_g_byte_array = {
-+    .name = "GByteArray",
-+    .get  = get_g_byte_array,
-+    .put  = put_g_byte_array,
-+};
+ 
+-static const VMStateDescription vmstate_vdba = {
+-    .name = "vdagent/bytearray",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(len, GByteArray),
+-        VMSTATE_VBUFFER_ALLOC_UINT32(data, GByteArray, 0, 0, len),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+ struct CBInfoArray {
+     uint32_t n;
+     QemuClipboardInfo cbinfo[QEMU_CLIPBOARD_SELECTION__COUNT];
+@@ -1067,7 +1056,7 @@ static const VMStateDescription vmstate_vdagent = {
+         VMSTATE_UINT32(xsize, VDAgentChardev),
+         VMSTATE_UINT32(xoff, VDAgentChardev),
+         VMSTATE_VBUFFER_ALLOC_UINT32(xbuf, VDAgentChardev, 0, 0, xsize),
+-        VMSTATE_STRUCT_POINTER(outbuf, VDAgentChardev, vmstate_vdba, GByteArray),
++        VMSTATE_GBYTEARRAY(outbuf, VDAgentChardev, 0),
+         VMSTATE_UINT32(mouse_x, VDAgentChardev),
+         VMSTATE_UINT32(mouse_y, VDAgentChardev),
+         VMSTATE_UINT32(mouse_btn, VDAgentChardev),
 -- 
 2.53.0
 
