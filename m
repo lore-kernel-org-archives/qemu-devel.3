@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCA3F46C46
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 14:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB56F46C44
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 14:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9l3c-0007Tg-RB; Mon, 06 Apr 2026 10:36:04 -0400
+	id 1w9l4f-00085O-FF; Mon, 06 Apr 2026 10:37:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9l3b-0007SK-6n
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:36:03 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1w9l4d-0007zL-Pe
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:37:07 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1w9l3Z-0000UU-Mu
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:36:02 -0400
+ id 1w9l4c-0000eI-2h
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 10:37:07 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 6CB8060123;
- Mon,  6 Apr 2026 14:35:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD72C4CEF7;
- Mon,  6 Apr 2026 14:35:49 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 6102E40554;
+ Mon,  6 Apr 2026 14:37:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C0FC4CEF7;
+ Mon,  6 Apr 2026 14:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775486152;
- bh=G7AQA2CTFus8FTsb4VfwjtrKUfLbIWCgd0Rb/6KJDr4=;
+ s=k20201202; t=1775486224;
+ bh=kbw03O6QQnSJeekm6/PTxDxHqjkiPa5PMzYC3V7z32I=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=i+TL/yP/oyUSRj/mofeQjvMsYqIQebQwGoLR1hJYBgOOQh5qhYhpESd3WMFQaPeQB
- a2/Vnj0B+wNYaEhttu/pcmy4590FEiQG9NQiEYJ521vI9191zqeA4BwadTs9d+8ofS
- YxahFO/m6JAvSeU+1q0ELtFbwTnlpt7xp0GpHdgukwxb9mdIlNv3kIzgLhSoty3+iF
- zO9mHQWni/mSVmCv6zew2KgwUMHGPxeHzf1ZZqXuYx1r4P9j59BjZ1Cc4QlcMLkK7y
- 1nFoGxNJZ+21UQCT7NGHAI+08jkgL3Iz4PeG27Z/SZ6dDmHnZJbUB4Ij63sC4EODhS
- Jt/QW8ViLlIPA==
-Date: Mon, 6 Apr 2026 16:35:47 +0200
+ b=mXBJFwHlKqvmLLtdGe/PKRe9cmdGMU4UMSy5OXQi8/iamdj6bWaXHpwV5A95VN0fM
+ 9RBw2tsmBCI+9sMAdMbsG0EInYDfj3G5uEnmVRpPWL8hqff/N+d6KTPCEes+3aQFQM
+ uXHUgiCqtbqeZgsWrCQlIb1KkowN4XEdQPVFb1FX7jb0LGTSF/Dxgj7qT+0OSWoa3e
+ brscIv6/oICWAcNgBsXzy9HBnqWcsuxCUM6mPBuuEBcxE8SeyoKaCf9N7b9VbVrJgo
+ hdCJsNSwU3PbD68u27rgkPSfr5UxH+VN2XUrfWDnq6NHc+Tz65+1qcO1L10Y3c0c8b
+ XplItq1AVUr8w==
+Date: Mon, 6 Apr 2026 16:36:59 +0200
 From: Christian Brauner <brauner@kernel.org>
 To: Thomas Huth <th.huth+qemu@posteo.eu>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
@@ -43,18 +43,17 @@ Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH 5/5] tests/functional: add e2e test for dynamic QMP
- monitor hotplug
-Message-ID: <20260406-vorfinanzieren-ausgibt-546b5d19f466@brauner>
+Subject: Re: [PATCH 4/5] tests/qtest: add tests for dynamic monitor add/remove
+Message-ID: <20260406-verteidigen-garage-ef6523079ddc@brauner>
 References: <20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org>
- <20260402-work-qmp-monitor-hotplug-v1-5-6313a5cdd574@kernel.org>
- <20260405200648.1f7c6a3d@tpx1>
+ <20260402-work-qmp-monitor-hotplug-v1-4-6313a5cdd574@kernel.org>
+ <20260405201133.6f04b585@tpx1>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260405200648.1f7c6a3d@tpx1>
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
- helo=tor.source.kernel.org
+In-Reply-To: <20260405201133.6f04b585@tpx1>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=brauner@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
@@ -77,79 +76,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 05, 2026 at 06:06:50PM +0000, Thomas Huth wrote:
->  Hi Christian!
-> 
-> Am Thu, 02 Apr 2026 23:19:20 +0200
+On Sun, Apr 05, 2026 at 06:11:35PM +0000, Thomas Huth wrote:
+> Am Thu, 02 Apr 2026 23:19:19 +0200
 > schrieb Christian Brauner <brauner@kernel.org>:
 > 
-> > Add a functional test that exercises the full monitor hotplug lifecycle
-> > with a real socket connection:
+> > Test the monitor-add, monitor-remove, and query-monitors QMP commands:
 > > 
-> > 1. Launch QEMU
-> > 2. chardev-add a unix socket chardev
-> > 3. monitor-add to attach a QMP monitor to it
-> > 4. Connect to the socket, receive the QMP greeting, negotiate
-> >    capabilities, and send a query-version command
-> > 5. Disconnect, monitor-remove, chardev-remove
-> > 6. Repeat the entire cycle a second time to verify cleanup and reuse
-> > 
-> > This complements the qtest unit tests by verifying that a real QMP
-> > client can connect to a dynamically-added monitor and exchange messages.
+> > - Basic lifecycle: chardev-add -> monitor-add -> query-monitors ->
+> >   monitor-remove -> chardev-remove
+> > - Error: duplicate monitor id
+> > - Error: monitor-remove on nonexistent id
+> > - Error: monitor-add with nonexistent chardev
+> > - Re-add after remove: same id and chardev reusable after removal
 > > 
 > > Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 > > ---
-> ...
-> > diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
-> > new file mode 100644
-> > index 0000000000..f8f24320c6
-> > --- /dev/null
-> > +++ b/tests/functional/generic/test_monitor_hotplug.py
-> > @@ -0,0 +1,102 @@
-> > +#!/usr/bin/env python3
-> > +#
-> > +# Functional test for dynamic QMP monitor hotplug
-> > +#
-> > +# Copyright (c) 2026 Christian Brauner
-> > +#
-> > +# This work is licensed under the terms of the GNU GPL, version 2 or
-> > +# later.  See the COPYING file in the top-level directory.
-> 
-> Please add a SPDX license identifier for new files - otherwise
-> scripts/checkpatch.pl will complain.
-
-Ok, done that. :)
-
-> 
-> (and bonus points for fixing all warnings from pylint ;-))
-
-Done.
-
-> 
-> > +import os
-> > +import tempfile
+> >  tests/qtest/qmp-test.c | 101 +++++++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 101 insertions(+)
+> > 
+> > diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
+> > index edf0886787..9dbd3a6103 100644
+> > --- a/tests/qtest/qmp-test.c
+> > +++ b/tests/qtest/qmp-test.c
+> > @@ -337,6 +337,105 @@ static void test_qmp_missing_any_arg(void)
+> >      qtest_quit(qts);
+> >  }
+> >  
+> > +static void test_qmp_monitor_add_remove(void)
+> > +{
+> > +    QTestState *qts;
+> > +    QDict *resp;
 > > +
-> > +from qemu.qmp.legacy import QEMUMonitorProtocol
+> > +    qts = qtest_init(common_args);
 > > +
-> > +from qemu_test import QemuSystemTest
+> > +    /* Create a null chardev for the dynamic monitor */
+> > +    resp = qtest_qmp(qts,
+> > +                     "{'execute': 'chardev-add',"
+> > +                     " 'arguments': {'id': 'monitor-chardev',"
+> > +                     "               'backend': {'type': 'null',"
+> > +                     "                           'data': {}}}}");
+> > +    g_assert(qdict_haskey(resp, "return"));
+> > +    qobject_unref(resp);
 > > +
+> > +    /* Add a dynamic monitor */
+> > +    resp = qtest_qmp(qts,
+> > +                     "{'execute': 'monitor-add',"
+> > +                     " 'arguments': {'id': 'dyn-mon',"
+> > +                     "               'chardev': 'monitor-chardev'}}");
+> > +    g_assert(qdict_haskey(resp, "return"));
+> > +    qobject_unref(resp);
 > > +
-> > +class MonitorHotplug(QemuSystemTest):
+> > +    /* Verify it shows up in query-monitors */
+> > +    resp = qtest_qmp(qts, "{'execute': 'query-monitors'}");
+> > +    g_assert(!qdict_haskey(resp, "error"));
+> > +    qobject_unref(resp);
 > > +
-> > +    def setUp(self):
-> > +        super().setUp()
-> > +        # Use /tmp to avoid UNIX socket path length limit (108 bytes).
-> > +        # The scratch_file() path is too deep for socket names.
-> > +        fd, self._sock_path = tempfile.mkstemp(
-> > +            prefix='qemu-mon-', suffix='.sock')
+> > +    /* Error: duplicate id */
+> > +    resp = qtest_qmp(qts,
+> > +                     "{'execute': 'monitor-add',"
+> > +                     " 'arguments': {'id': 'dyn-mon',"
+> > +                     "               'chardev': 'monitor-chardev'}}");
+> > +    qmp_expect_error_and_unref(resp, "GenericError");
+> > +
+> > +    /* Remove the dynamic monitor */
+> > +    resp = qtest_qmp(qts,
+> > +                     "{'execute': 'monitor-remove',"
+> > +                     " 'arguments': {'id': 'dyn-mon'}}");
+> > +    g_assert(qdict_haskey(resp, "return"));
+> > +    qobject_unref(resp);
+> > +
+> > +    /* Error: remove nonexistent */
+> > +    resp = qtest_qmp(qts,
+> > +                     "{'execute': 'monitor-remove',"
+> > +                     " 'arguments': {'id': 'dyn-mon'}}");
+> > +    qmp_expect_error_and_unref(resp, "GenericError");
+> > +
+> > +    /* Error: remove CLI monitor (the default one) -- find its id first.
+> > +     * CLI monitors typically have no id, so use a bogus id to test. */
 > 
-> We've got a socket_dir() function in the test framework to create socket
-> paths ... could you use that one instead?
+> Please check coding style with scripts/checkpatch.pl - I guess it will
+> complain about the multiline comment here.
 
-Done.
+Thanks, whatever checkpatch.pl raised should now be fixed.
 
-> 
-> Apart from that, patch looks fine to me.
+> Apart from that, the patch looks fine to me. But I think either a qtest or
+> a functional test should be enough, you don't need both. I'd maybe
+> recommend to just keep the qtest, since these tests are often run more
+> frequently than the functional tests.
 
-Thanks!
+Hm, I did keep both for v2 and I think whoever applies the changes (if
+accepted) can just decide which patch to drop so I'm inclined to just
+keep it.
 
