@@ -4,155 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDC0F46C66
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 18:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC08F46C70
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 18:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9oHH-0002UR-Pk; Mon, 06 Apr 2026 14:02:23 -0400
+	id 1w9oeb-0007N9-U3; Mon, 06 Apr 2026 14:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w9oHG-0002UG-C4
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:02:22 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1w9oHE-0007YD-TZ
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:02:22 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 636DuXvY2420645
- for <qemu-devel@nongnu.org>; Mon, 6 Apr 2026 18:02:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hgIM9T3uC7Cv9IjOlY0NJn7QAK9yIyx7nFIePjs2i6I=; b=Ch/0Z+KassPqb430
- EDU6zNvtI3HU9tVlO4UtkaD3VdXdTz9FobUR8zDT+xPQrRuerYZGrt7ULgbJ8YC9
- tQW+ql9lEgnF67TZSRIJ9t/2ouD2Oi9B6TLwm00GV2EELhDbnSl9haPjCO0DCsKf
- vGmNIczAIz+plzcSqFFrn4+2JJwzyAR+aIlr0scmybmbaOZKnkbrE9Z9MqSyNVRe
- hln7Qmn8NK4BsooqMSawCnNNltDuZcV7+fMPSTwB+BPR5zv6LrGxsfXnqBjrppu+
- 13Zlh52X1cXjJX134y3N3duXYf4HHEus9VcTDuFl2NbUKeYLZB6lufP1P0Urulz/
- yIB2MA==
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dce5jru1q-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 18:02:18 +0000 (GMT)
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-471618e2082so1051281b6e.1
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 11:02:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775498538; cv=none;
- d=google.com; s=arc-20240605;
- b=c9vjEzKg9MbZek9q8HNH+RYzC12keVXGkWb/HyJ0VqGVMOIKBMljJZGMNSE/mGZGOK
- UUedfMoh0V4yT/u3CzyWhoOUtApmSyfGZ9MYbA1KSfHX5bA4Zx+hH9aI+2NQkoSHFSEm
- rSY6+QBkWLziq2fzPv8RdYHuzcLG+0bsiW4ZWVBJZ2W2Sk6mDlbyGEuijfj036XgxtnM
- 16x6KZG/emr/b18v+E2Rjx4vwd3Nz0SnWkmaE+xlU+zTfQGYYjyVhRbu7UAmQsr9ErTA
- nAXn8Y/99CmWYRBCEMD3ToumjL6nBV9pQRAbfAZmKQhol2ahHcK5IxgkVo/B1vMvaixw
- dHnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=hgIM9T3uC7Cv9IjOlY0NJn7QAK9yIyx7nFIePjs2i6I=;
- fh=o3W5rBryHd5xcK8vQ98UvCxdM431zpyrnojV2RHAKf0=;
- b=eGekaTyL3C5TFav1Zi08qUkfm9EDSxU0rYDO186HQKO4wTfwqZNaJLCegD4QUL7CTd
- pf9whVGAIrQELymX5RN/ylmY3fbtUD+0VehTE8BroZmtSWXciWgP92LmAYnlSi5SaFcU
- v9dFnotAZ1KSguHTqZ0oAgIwzpDqIiCJvG5QeCpF9jyi7RaMlcHOmSfcMoARjAHn9AMM
- serqLhsC2qW3m4ZMFJcru31ItRkY/81lkpc7ZCoCqZv2a3dPiqJvL0G7iGvXBrEU2Rj+
- pDMaDt1hGsKnUtkfd3VO4rQwFHOiePGu9JI+OzbdQzPen2p8+N2U4GlrgkbpSjHIfc+y
- Guiw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w9oeW-0007JZ-CY
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:24 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w9oeU-0002LG-SX
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 14:26:24 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-c757a9251faso1372756a12.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 11:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775498538; x=1776103338; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1775499981; x=1776104781; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hgIM9T3uC7Cv9IjOlY0NJn7QAK9yIyx7nFIePjs2i6I=;
- b=LicplMiEocQ4eG42mb9yUItPenP58tAE+8/4cfF+sgj696Qzuk93Sc5DwhTftuurcM
- guy4saB/5IjfpjqAnCNRw8uMrfrJbnN6874ak7h8OvQopgp1CFxkJuCfNMkm8pJmmzPN
- o92LS7r/ucFlJqsMBn599b574tt7mWOe8A0Lk3VoNO1ZW95VTSujIGuA7n+qGw5Tw7VY
- Y1zFDOJrJq5XGCKVsoADxR5b+hw9LYL4nss3FaLWBlkvHZ+8xH9//V2OP4U0IVW08rdE
- fXJRQ2bxPFC8g+1nMEcJrZJ+VOqXdFp1/yoTv5d0500pUK99YlY6I5HCmxDyq++eHzzA
- NhAg==
+ bh=BpjBN/H+zc8vKXTIC1giYotC0A5eWy62SJygmBUlOkI=;
+ b=GAEt0K0inw/NN0Tz+V5hATXwZqX0AgdqQmw3MMHrctUiBx++Z7sU44xSwBfaVIjMCe
+ muBxmJz2Jy7ABVYzFvVg5m6YeGdXWKqL5v13PrSQbtdZasGABMo1scu8uKi2120zqhwz
+ makjxvPHAx2gBp1K+kRLzU/alsWMx3LnXKCZadTZkb7XZ25PhFrDrzNM7rTXdh0o9pzQ
+ e2bO3f4QfFryxtPvLs7+bus2WrhREGxUMug3A1/STKk3L2nmlM7WMobJX97hxDR/Zi+P
+ UX2nGKyq0WxVQKodgMhhiv6NdwwIkqfLzYdDEWqtW4epTVUd+g7xczHSyZ6JNKNd9BTv
+ 9tgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775498538; x=1776103338;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1775499981; x=1776104781;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hgIM9T3uC7Cv9IjOlY0NJn7QAK9yIyx7nFIePjs2i6I=;
- b=NOXYEJz2dPzMQWOEsH3Tgk+4MeTr5M3xQoDNkB68AhXtkNs4aIHXhoHGtlEwRM8Obi
- SpQpyOkgSoyiNtiegVVriP9nvA3f9LBJ05L1PWhA+SmOPR0tFQeF/hcnOtDF0HoM5np2
- Xe+7RIOB3Pdr2gj7/080P/QXrFoH144MGFjGXTBo7JLfkYRjnw4trwX7Crsz4FYuWINd
- Aa9TUQx8Oier2aP9VhXXlP/ZGKcpwQk7maq0+FnqTzMhNnHEdx6eOOtWGIuZWo2hUcHL
- QsMutK8VXys8XWOqJ0u4DKgKr2PSDtQDn2pYj+4r+TPgC2pL5YwBX4uKL9u36QGrM41U
- 57DQ==
-X-Gm-Message-State: AOJu0Yw8/GwoyN+ugOkg5Y2taXMumXF93OHYFAz9bryMGy2qkBQ4q0Y3
- 2wjscoJrzHm/9alBQ3Fbaw20D6g+rzVYm1SmMaAgCMa4b5RsRU5rNreXJsCaIqQIZGrBa9Hc7Uo
- FQpz5Wp8w7zsl3+4jG7+7yQiVimcB1zfUfsGarlzTcw8adBdEyhC8eGS1jEhkKirY5ttunKftP8
- uHiQsq1nA2qXbR62F22o1GeF295WdX+n1B
-X-Gm-Gg: AeBDieuk6rCMtmwUV7kFnrs36dYTHNPUcYEXC9WQGodyLXrmAfDD39rs36zz/h1vvkU
- yxJlG2aiKZzUWM74MXoHn6oOvnAIUpOXa4P0Oxq1D82RWMbPWNZrmUlWEWl9HneHG1z78E8SEFz
- eYlDdFvp6uVACFGmZpEyMbSsNEctUvZX0jbtXAQ18niWuI0kIBrd6RrGqbGY+ywXoATKYeHziGb
- Wjjx60A
-X-Received: by 2002:a05:6808:c147:b0:467:819:dc61 with SMTP id
- 5614622812f47-46ef5bfc425mr7405713b6e.23.1775498538132; 
- Mon, 06 Apr 2026 11:02:18 -0700 (PDT)
-X-Received: by 2002:a05:6808:c147:b0:467:819:dc61 with SMTP id
- 5614622812f47-46ef5bfc425mr7405655b6e.23.1775498537509; Mon, 06 Apr 2026
- 11:02:17 -0700 (PDT)
+ bh=BpjBN/H+zc8vKXTIC1giYotC0A5eWy62SJygmBUlOkI=;
+ b=eqkeRuNRP7egc3cRAGMnBMr+6bq0h7izlkx6PN762b6N8NcoytLfjYEWkWf3wYljGU
+ XCyXy8+8iX7KCZuVW8nF3KEFE8nGwF/2b8X9wXfF9TWYCNpAf6RtcX9LG3NNx/Nlu1PM
+ q3/H17Ydytm041kvvCyvsqY1H0SlheaoZ9oIOvdMrbtL1DQmgrsb58RiWiA4ihOj5TGV
+ WdBuE7EeqlNaVnZg/v2u1HJ/q6KwvsiTQKwYr4xg9YmoEomj/gGRneyXzpDmTWt5S3Ow
+ jASOMyEQewk3V5MQl2JK5md3cWTl426LewziCVBBpid9dxRSdRWxaszjBkwllj94XfnH
+ BMTA==
+X-Gm-Message-State: AOJu0YxHK2eziZKbXZCYCOHyH1pK49nYWvH2WDsddWX5UM9mtjlLHtun
+ 16nyuwS0YiXGJBIEbhHwlzJJojg50XGLoUmaaWLix5ChnN2P9gQht4nzUmrwBzZ+yAKo5XGwD8u
+ uVZIh+Hj4iQ==
+X-Gm-Gg: AeBDievJS15cdi8CM0m3+dnNzx2iZKcf59mY3isJ/dMxt1+0wq68KmrSw7JjAwqJa+j
+ 2daj6jOzoElUaenBR6zIHSsIx93fqp6rUqXnnl0TFmAdtA1navvr6fE85tJwTlC5yJZo1oMj3zT
+ GJgFtH7YSxC4q1TCU74+pembVO8YRIEjyaOE8VQ9XtNKaUxF1fz5eFZb2mgbAsZCdM8l052GfxC
+ mHqKiH4+UhUZhNGyKc47yovKXAx+hSUntxuPR5LdEQZe5MTj0L+K8QJ21so/UL737KwE9dUWp25
+ sg0h6jt8Jt4NSIRFfP523S//ra9no/8M4MW+UKxif1vyoKS5+DIBs/PcyR4JYqMMWz6FThuzKPy
+ 6c2qsskbLC92z33dawZxENOaf2+lFNeRBSxR0p21tWLITvRu+RznxpAsxWsQ0ROYzBv+XBvtnEU
+ v7kPOSdiHCpMsKkqDahBtSkWL2OJA3T213DEp6r2pSEj42Jz+sZsIsWgVyj8qVFZlyHTyeRawyu
+ 0N5
+X-Received: by 2002:a05:6a20:7346:b0:39f:24ad:ad11 with SMTP id
+ adf61e73a8af0-39f2f046df4mr13667699637.9.1775499981265; 
+ Mon, 06 Apr 2026 11:26:21 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c76c6561fe9sm12765080a12.15.2026.04.06.11.26.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Apr 2026 11:26:20 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, jim.macarthur@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-arm@nongnu.org
+Subject: [PATCH v8 04/20] target/arm/tcg/translate.h: remove TARGET_AARCH64
+Date: Mon,  6 Apr 2026 11:25:53 -0700
+Message-ID: <20260406182609.193886-5-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
+References: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-References: <cover.1775122853.git.matheus.bernardino@oss.qualcomm.com>
- <453a9e248b8c2af50cf89912121605db07792dd5.1775122853.git.matheus.bernardino@oss.qualcomm.com>
- <051a28b0-a67e-4da4-a13f-ed88a69bd629@linaro.org>
-In-Reply-To: <051a28b0-a67e-4da4-a13f-ed88a69bd629@linaro.org>
-From: Matheus Bernardino <matheus.bernardino@oss.qualcomm.com>
-Date: Mon, 6 Apr 2026 15:02:05 -0300
-X-Gm-Features: AQROBzDUkSnRJzNLYj9FTUsD6mxpRMoH6YgJTYPxMOOuQHX5O_4Xh-V6hp_1Nak
-Message-ID: <CABrGZ+EggQ7+m3aDTx_b+wRRcwW5LzWbM=EBrW1q3Q6kOGxDUQ@mail.gmail.com>
-Subject: Re: [PATCH v2 06/16] target/hexagon: add v68 HVX IEEE float
- arithmetic insns
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, ale@rev.ng, anjo@rev.ng,
- brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=R9AO2NRX c=1 sm=1 tr=0 ts=69d3f52a cx=c_pps
- a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=gowsoOTTUOVcmtlkKump:22 a=KKAkSRfTAAAA:8 a=jvqndH0Pf1sxCXTLGR8A:9
- a=QEXdDO2ut3YA:10 a=efpaJB4zofY2dbm2aIRb:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 897Le3Hw3Cs3gIK_35wkN_JpFFtAx6kl
-X-Proofpoint-GUID: 897Le3Hw3Cs3gIK_35wkN_JpFFtAx6kl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA2MDE3NyBTYWx0ZWRfX1xFsbth2a+7V
- IZYJhT8WuFJGLV/DdLuGjXCwal3SNdyIhGF+F8k/UpScOVAblJlVAagu48baG4bBQ6Vq62oHl2K
- a0pJvGuFlw6EwHg0btHNujvFjapifzQF7xPBFN6i+DB/xP4HAGDYiJKc2yBD+/bN04DtnBe0w+4
- t3ERszd2Idsrl4lAB897vXJU4Mi9mIf/MoRThDPw8InL5bUKqR2qHMvjTqCkSronvmXEKqDwGju
- 791woOFkv+l+Yk9AFLjnjBSupbSLXv52nEClyGjvzrNZgT2KJ/r/fhXqkctHvys4+06LzMaFTkT
- 8XNCK69Gnn6RSv/6FcFmmMXV0IMJUWjR0PnbGEyn/BuHvOQ2o322bfnV1EZPAhcZmn0b8beLCJq
- VVHXIykjvTU0uuGFwfdFtmwin7OGoBGow23uIHM6/3vqtRUBGeh2zwFop+7x/d8jt8PwxqhZFay
- XoOgvNzTlrAPgrkdf9Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-06_03,2026-04-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 spamscore=0 adultscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2604060177
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,46 +105,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 3, 2026 at 6:47=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 4/2/26 20:47, Matheus Tavares Bernardino wrote:
-> > +++ b/target/hexagon/mmvec/hvx_ieee_fp.c
-> > @@ -0,0 +1,69 @@
-> > +/*
-> > + *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + *
-> > + *  SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "hvx_ieee_fp.h"
-> > +
-> > +#define DEF_FP_INSN_2(name, rt, a1t, a2t, op) \
-> > +    uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \
-> > +                           float_status *fp_status) { \
-> > +        float##a1t f1 =3D make_float##a1t(a1); \
-> > +        float##a2t f2 =3D make_float##a2t(a2); \
-> > +        return (op); \
-> > +    }
-> > +
-> > +#define DEF_FP_INSN_3(name, rt, a1t, a2t, a3t, op) \
-> > +    uint##rt##_t fp_##name(uint##a1t##_t a1, uint##a2t##_t a2, \
-> > +                           uint##a3t##_t a3, float_status *fp_status) =
-{ \
-> > +        float##a1t f1 =3D make_float##a1t(a1); \
-> > +        float##a2t f2 =3D make_float##a2t(a2); \
-> > +        float##a3t f3 =3D make_float##a3t(a3); \
-> > +        return (op); \
-> > +    }
->
-> Why are you using uint32_t and make_float instead of declaring with float=
-32 in the first
-> place?
+We need to stub a64_translate_init and gen_a64_update_pc.
+At this point, we don't need to do anything for aarch64_translator_ops
+since it's just an external symbol.
 
-The helper functions receive raw bit values from the HVX vector
-registers via the generated TCG code. The idea behind using
-uint32_t/uint16_t in the signatures is to make the raw-bits interface
-explicit, since make_float* is essentially a no-op cast. But I can
-change to float32 if that's preferable.
+We can now include target/arm/tcg/translate.h from common code, since
+all target specific bits have been removed, or can be specialized with
+specific defines.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/arm/tcg/translate.h | 10 ----------
+ target/arm/tcg/stubs32.c   | 17 +++++++++++++++++
+ target/arm/tcg/meson.build |  1 +
+ 3 files changed, 18 insertions(+), 10 deletions(-)
+ create mode 100644 target/arm/tcg/stubs32.c
+
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index e28eac54afb..77fdc5f3a17 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -357,19 +357,9 @@ static inline int curr_insn_len(DisasContext *s)
+ /* CPU state was modified dynamically; no need to exit, but do not chain. */
+ #define DISAS_UPDATE_NOCHAIN  DISAS_TARGET_10
+ 
+-#ifdef TARGET_AARCH64
+ void a64_translate_init(void);
+ void gen_a64_update_pc(DisasContext *s, int64_t diff);
+ extern const TranslatorOps aarch64_translator_ops;
+-#else
+-static inline void a64_translate_init(void)
+-{
+-}
+-
+-static inline void gen_a64_update_pc(DisasContext *s, int64_t diff)
+-{
+-}
+-#endif
+ 
+ void arm_test_cc(DisasCompare *cmp, int cc);
+ void arm_jump_cc(DisasCompare *cmp, TCGLabel *label);
+diff --git a/target/arm/tcg/stubs32.c b/target/arm/tcg/stubs32.c
+new file mode 100644
+index 00000000000..c5a0bc61f47
+--- /dev/null
++++ b/target/arm/tcg/stubs32.c
+@@ -0,0 +1,17 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "target/arm/tcg/translate.h"
++
++
++void gen_a64_update_pc(DisasContext *s, int64_t diff)
++{
++    g_assert_not_reached();
++}
++
++void a64_translate_init(void)
++{
++    /* Don't initialize for 32 bits. Call site will be fixed later. */
++}
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 5f591560551..3e96c77df73 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -21,6 +21,7 @@ gen_a32 = [
+ 
+ arm_ss.add(gen_a32)
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
++arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
+ 
+ arm_ss.add(files(
+   'cpu32.c',
+-- 
+2.47.3
+
 
