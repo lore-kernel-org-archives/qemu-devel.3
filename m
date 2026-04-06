@@ -4,105 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6699DE9D834
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 13:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89782E9D834
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 13:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9kK3-0006RX-EP; Mon, 06 Apr 2026 09:48:59 -0400
+	id 1w9kOV-0008QA-0U; Mon, 06 Apr 2026 09:53:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w9kJy-0006Ov-8s
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 09:48:55 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w9kOT-0008Nc-Pq
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 09:53:33 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w9kJu-0002Tc-T1
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 09:48:53 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w9kOR-0002p7-NM
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 09:53:33 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8DF6B5BD83;
- Mon,  6 Apr 2026 13:48:47 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E9D655BD83;
+ Mon,  6 Apr 2026 13:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1775483327; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1775483610; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MGhV+DM8l4q24/4viM7mYSQZ0nRIQoI6WD5FWdpZ8Wo=;
- b=bBCLDhk0FiyCmftza1EG5GN/zJizSQixOZyrxiZbZh5C5t4HV5C94h43TsceWUz/Va0B/q
- NO5caSF4qI4sjsfGvq4Oo1oHDjWlI1jybyFpwlXODr2MMl5H6QwHXa05Xilwfdcnb4doNg
- Ac7APfn3IWXXDntONYTlXAAuyABWybQ=
+ bh=B/BDIEXwms1MmyfCOP+ti6+glHHoh4TDK5voKwhlUAo=;
+ b=lYdQyTpvCSF3DMVmJqwSkpQFqhvZhWpzDeJ/pmNrThA9nhWW0oML6VgmpuXjZGqHsLYXiF
+ c9rNH54BE+srY9NCaykPjhL369npzFIxPMmb0INkFpAQMc7/5QjzdSb6al4PxWUMudeUWN
+ pfwCy5vbAkHV/Yh9LxDAa13VFqKM/KY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1775483327;
+ s=susede2_ed25519; t=1775483610;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MGhV+DM8l4q24/4viM7mYSQZ0nRIQoI6WD5FWdpZ8Wo=;
- b=LWPlqLZ9QeI5+fetFcossm943po50DDaZQ+8f9hxjoCcQ6CkRcd7Y6JXC4ihPNDMDddkda
- 7rw/YmrXpmzICyDw==
+ bh=B/BDIEXwms1MmyfCOP+ti6+glHHoh4TDK5voKwhlUAo=;
+ b=IURRBPJ8YDyHMN7R6f51B0V2wbIi8fhvhuTpGARV0DKXLxQbtrjIdMS14W7GPCX75B+gg8
+ Yf9dq1ec39yKOmCw==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fRBLfheZ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ZVCaitUn
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1775483327; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1775483609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MGhV+DM8l4q24/4viM7mYSQZ0nRIQoI6WD5FWdpZ8Wo=;
- b=bBCLDhk0FiyCmftza1EG5GN/zJizSQixOZyrxiZbZh5C5t4HV5C94h43TsceWUz/Va0B/q
- NO5caSF4qI4sjsfGvq4Oo1oHDjWlI1jybyFpwlXODr2MMl5H6QwHXa05Xilwfdcnb4doNg
- Ac7APfn3IWXXDntONYTlXAAuyABWybQ=
+ bh=B/BDIEXwms1MmyfCOP+ti6+glHHoh4TDK5voKwhlUAo=;
+ b=fRBLfheZRkD1I5UpJCi8guIObWqXGPSk8k5SJ5Hz0IDIuL3CgaoBadWWT8IfrUtN6SDXBi
+ Cxph/BfF+CE9WmGAgbMFR2p466t+FJRAigobl+DXWSbLRX6g/Ud4REQtYulC/Nomkuqr5l
+ yJoZGgZsLKYlhuZfGa41wCkc5Pbo+/w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1775483327;
+ s=susede2_ed25519; t=1775483609;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MGhV+DM8l4q24/4viM7mYSQZ0nRIQoI6WD5FWdpZ8Wo=;
- b=LWPlqLZ9QeI5+fetFcossm943po50DDaZQ+8f9hxjoCcQ6CkRcd7Y6JXC4ihPNDMDddkda
- 7rw/YmrXpmzICyDw==
+ bh=B/BDIEXwms1MmyfCOP+ti6+glHHoh4TDK5voKwhlUAo=;
+ b=ZVCaitUnLQs8yDTWAanXSR1sY5p8NPaZ08E72ZkVxw58d+mvzqC+WzAdjftPkZ6TCb4bX8
+ M3zeMJXegC0XJ/Dw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0D2BA4A0B0;
- Mon,  6 Apr 2026 13:48:46 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6D76C4A0B0;
+ Mon,  6 Apr 2026 13:53:29 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id OvyfML6502mnTgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 06 Apr 2026 13:48:46 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 15xNDNm602lxUgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 06 Apr 2026 13:53:29 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] runstate: allow inmigrate -> debug transition on
- snapshot restore
-In-Reply-To: <20260402194314.20104-1-viking4@gmail.com>
-References: <20260402194314.20104-1-viking4@gmail.com>
-Date: Mon, 06 Apr 2026 10:48:44 -0300
-Message-ID: <87ecks5hdv.fsf@suse.de>
+Cc: peterx@redhat.com, Trieu Huynh <vikingtc4@gmail.com>
+Subject: Re: [PATCH v2] migration: validate page_size in mapped-ram header
+ before use
+In-Reply-To: <20260405094447.11347-1-viking4@gmail.com>
+References: <20260405094447.11347-1-viking4@gmail.com>
+Date: Mon, 06 Apr 2026 10:53:26 -0300
+Message-ID: <87bjfw5h61.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.96%];
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
  TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_RATELIMITED(0.00)[rspamd.com];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[gmail.com,redhat.com,linaro.org];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email, gitlab.com:url,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_THREE(0.00)[4]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: E9D655BD83
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,55 +134,66 @@ Trieu Huynh <vikingtc4@gmail.com> writes:
 
 > From: Trieu Huynh <vikingtc4@gmail.com>
 >
-> When a VM snapshot is taken while the guest is paused by a gdbstub
-> (RUN_STATE_DEBUG), the saved runstate is 'debug', for instance:
->   (gdb) monitor info status
->   VM status: paused (debug)
+> mapped_ram_read_header() reads page_size from the migration stream and
+> stores it in MappedRamHeader, but does not validate that the value is
+> non-zero before it is later used in parse_ramblock_mapped_ram():
 >
-> On restore, the destination starts in 'inmigrate' and transitions
-> to the saved runstate, but the 'inmigrate -> debug' transition
-> was missing from the table, causing an abort:
+> num_pages = length / header.page_size;
 >
->   $ ./qemu-system-x86_64 -machine pc,accel=kvm:tcg  -m 128M
->   -display none -gdb tcp::1235 -incoming "exec:cat /tmp/snap.img"
->   > /tmp/qemu-restore.log 2>&1
->   Aborted (core dumped)
->   $ cat /tmp/qemu-restore.log
->   qemu-system-x86_64: invalid runstate transition: 'inmigrate'
->   -> 'debug'
+> If a corrupted or malformed migration stream provides invalid, guest
+> resumes either with corrupted memory or crashes unexpectedly (eg.
+> page_size = 0)
 >
-> Fix it by adding the missing one (Point out by the author
-> Dustin Spicuzza)
+> Add validation in mapped_ram_read_header() to reject invalid page_size
+> values early and return an error instead of continuing with an invalid
+> header.
 >
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1231
-
-(note to self: stop giving time estimates)
-
+> Steps to reproduce:
+>
+> Create a migration snapshot with mapped-ram enabled:
+> (qemu) migrate_set_capability mapped-ram on
+> (qemu) migrate file:/tmp/qemu-snapshots/snapshot.bin
+> Modify the snapshot so that MappedRamHeader.page_size becomes diff with
+> target psize. (0/512/8192/1GB).
+> Restore the snapshot:
+> (qemu) migrate_set_capability mapped-ram on
+> (qemu) migrate_incoming file:/tmp/qemu-snapshots/snapshot.bin
+>
+> As-is:
+> * [0]: Floating point exception (core dumped)
+> * [512/8192]: Silent corruption
+> * [1GB]: "post load hook failed for: kvm-tpr-opt" (EPERM)
+> To-be:
+> * All: qemu-system-x86_64: Migration mapped-ram header has invalid
+>   page_size [val] (expected 4096)
 >
 > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-
-I think this is reasonable as a standalone change:
+> ---
+> v2:
+> - Replace == 0 check with != TARGET_PAGE_SIZE, which also catches
+>   non-zero wrong values and matches the actual invariant of the
+>   mapped-ram feature (suggested by Peter Xu)
+> - Include actual and expected values in the error message
+>
+>  migration/ram.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 979751f61b..2046f16caa 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3088,6 +3088,12 @@ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
+>      }
+>  
+>      header->page_size = be64_to_cpu(header->page_size);
+> +    if (header->page_size != TARGET_PAGE_SIZE) {
+> +        error_setg(errp, "Migration mapped-ram header has invalid "
+> +                   "page_size %" PRIu64 " (expected %d)",
+> +                   header->page_size, TARGET_PAGE_SIZE);
+> +        return false;
+> +    }
+>      header->bitmap_offset = be64_to_cpu(header->bitmap_offset);
+>      header->pages_offset = be64_to_cpu(header->pages_offset);
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-
-As I mentioned in the Gitlab issue, it raises the question of whether
-there's more to be done in terms of migrating the gdbstub
-connection. Probably too niche of an use-case?
-
-> ---
->  system/runstate.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/system/runstate.c b/system/runstate.c
-> index 2d4e95a216..97a6a1c736 100644
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -94,6 +94,7 @@ static const RunStateTransition runstate_transitions_def[] = {
->      { RUN_STATE_INMIGRATE, RUN_STATE_PRELAUNCH },
->      { RUN_STATE_INMIGRATE, RUN_STATE_POSTMIGRATE },
->      { RUN_STATE_INMIGRATE, RUN_STATE_COLO },
-> +    { RUN_STATE_INMIGRATE, RUN_STATE_DEBUG },
->  
->      { RUN_STATE_INTERNAL_ERROR, RUN_STATE_PAUSED },
->      { RUN_STATE_INTERNAL_ERROR, RUN_STATE_FINISH_MIGRATE },
 
