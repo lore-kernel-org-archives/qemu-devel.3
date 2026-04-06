@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9F3E9D826
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 00:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C3DE9D827
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 00:08:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9XUt-0005ka-9E; Sun, 05 Apr 2026 20:07:19 -0400
+	id 1w9XVn-0006MI-CC; Sun, 05 Apr 2026 20:08:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9XUo-0005jc-6S
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:07:14 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1w9XVk-0006Iw-Ne
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:08:12 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1w9XUk-0007u1-GR
- for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:07:13 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c76b6abdb73so2447289a12.1
- for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 17:07:07 -0700 (PDT)
+ id 1w9XVi-0008Aj-6r
+ for qemu-devel@nongnu.org; Sun, 05 Apr 2026 20:08:12 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-35da2d35eccso2115168a91.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Apr 2026 17:08:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775434027; x=1776038827; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775434087; x=1776038887; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=slSFtjU1YjQyQth+eFc4WxP0SsRZFlbFNm+apaDVArQ=;
- b=iP6l63p+hYaDQyNULLq1Ems7QAYK8PxpM2dfb1Wz0bMR4dhA9m+b4xOUFOW00GLtE4
- IqT3iHO3t+zyITT/V/DhUDV8qdhbzbPzo4ZG2+mA01vpxXwjYnAPxH1I5UJ1p864bL+t
- Lp68nLwk1Xc15Mn3rG2BPHmU/SnKp33ajtH7ERbwlsdhPyo4ICEBf7gyXaLbgydfSvfs
- UENXz5q+ECZXD9BJVOQeRUXM9D1xIj/Es/RMgWwN3I4X47zA2QuBu98315Lt4xKzErc4
- dZgM4TFUetZnC0bqvmnKyZie6n2nh3LYR/BwMGOvCyYVLszTcOiVrzsbFyvyaKvTlgOx
- a8EQ==
+ bh=EyGle2zkMmGdFGWwyS7Xm5SKqqfH07+bwElrhXDlczM=;
+ b=LvLf+NLLcmzdMmk0fhbuIhX5DDj3TCD4L6t6jzuXIi8tBl0/33bOmHdxXfpFOYtzkp
+ qA3J49qmDOVtoIo4IoAwTwNZOpo5koH+/WzrVMAIk/lc0FCeHEkJQgjhQLgV7wGVwNwm
+ MbcnLlP9+uf6TBTad2NjHEg7XnmOzSqtaW0jROtuShAHtkyj09miS06QaynV6XmE4mlr
+ eIZ+T2uNkk/m6k6Eet2GRTAjJycvwAWrYPEUMqsQnpTVgP+pwlkHuCcl+QBHrsU1UYW1
+ gI+61dTSdZ6WP0/DQP7DaD2N/IFKZ6k3opgrv5d3fR+on4QUNEAsFn7EYNqOOfJiUytC
+ jz7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775434027; x=1776038827;
+ d=1e100.net; s=20251104; t=1775434087; x=1776038887;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=slSFtjU1YjQyQth+eFc4WxP0SsRZFlbFNm+apaDVArQ=;
- b=K3jPzmsXV1gzHubRazXly1qT6/dT+eNazsnfOaV67l2bko+eWqJlxE4V9vMRRp56Sf
- kUX38UxninvrAbGUU32zjy3fTeFhDxg/4GVwQERB1tSAugfVHTY3WEzon1IzjuwIgAL9
- kvjjtgMM0qsz5JZoE2aGmuS2lU2bf9oEU//dh5w46JjeijsbM5721HEHw1GYLA0MlBW+
- khGN2YYTAVZqu5dxHetsFKdixcZXMRvy5n8wiupPt2/1NxGxTheixtCPuZ/Zl1IytK6N
- UAlsv1F6Vut9HhPqr37AfRwNK7B4DzH6t7YkuU5nhSCtuGcEC/tduaXUYprtWGK9v8/v
- PNvA==
-X-Gm-Message-State: AOJu0YxDUmseD65Co/G5fIKhtvLLrOYonnbJlz/zo+dMM8qX7kgvfL2/
- jpPc2vk4eaR1i0NthZ+k7mpmDU6y2ZtCJ3oyCf3kkK9c8wYt8eU32IVx5O0FP8avfhKUq7O3wmG
- uYQRb
-X-Gm-Gg: AeBDieuk27Aq/8+vqc4Hle9xsZxmxfnvRiBL9jB5q1x6Kw6fhvpSAJGB1KCsLR8QH0c
- K5htW+O1L03uqcMSg8gp5/cQo5+XIzk/Ugf8nNR3uw71UHYyJWz2wEgJHIp9KjV7P8VL8kPOpTe
- lNOiAr/RTn4lg7ZF0K0IJWlPmaO0AH5cTCxOVNsUXlbGCsfWEFBitSEHmd87VfKcnLEv28QHNA0
- Qs4HjzV6GiXLoyzPYC/pijfqZUXFmxVO2yyQ3h7GSmsfaRLiZMlzBUNhDM3EWwcEL9uaLt/dL0J
- DbNEumi6spLjKLXY32FCfp+WiXEybGPwDaWAIfs10TgA46XoHTq/4kWRAQNqACPq/7D6tbGBLjL
- vVxRxo8AjaXE0hZDhM+/fQz+Y5H7qgaJZqCR9mz0qxFAeWIvyIFxBKR65hIQ23ntFYf8n75A+XJ
- DQKi8wpawVexz1Cw63ryz387ItRL+I/4Ws4QpUkeHvGRbYqVplGHb/dF43YkG8pQt+jGhX1PFEe
- bkdzw==
-X-Received: by 2002:a05:6a21:99a6:b0:39c:8c0a:d09b with SMTP id
- adf61e73a8af0-39f2f110f1amr10533186637.49.1775434026510; 
- Sun, 05 Apr 2026 17:07:06 -0700 (PDT)
+ bh=EyGle2zkMmGdFGWwyS7Xm5SKqqfH07+bwElrhXDlczM=;
+ b=SdhwJBwxcyGAobk7R02XfyLIhktTt3D3uIwUZVKlQGVRfDKwiKjckAHCZGAHnMq3KR
+ TTOgCR+M7OYSEWjUfAEln6eHNHemtb7HUh8K3QF082IA21cEFCCqUrI8EG0SpLE98ro7
+ LAyN2m6DVfdlwxS9pjTGtk4cxqO7jsH0fzXilvkHJTOSLYC+64+DB8zAr/2PBABXhjRI
+ 7UOhyLePumB6Q2qA7zk2OxInaZjPXMW/dy+KW2zhvCV9ovecr3l4n5OWIcufF6IiDaoP
+ XmtlfWKI6HVFk2O10lReZ15XEOvqHY2eGZDWs4B+dced6qHaidojUy0hd4BmLxUK1J+O
+ Q7qw==
+X-Gm-Message-State: AOJu0YzNYIw/I3mH1DFAIO23ABV6K9/2vmC0ci0q3ec98wHQcc/rfmIp
+ ilBeAXLestAFeMmPGc9GAxa30URZMVRWSms67FymVqelGXgW7tjGydjVnkxqL3mQnvBxS51fLwO
+ JWzUa
+X-Gm-Gg: AeBDievVRl1jQ26bIgpIo3/Ym+b7WUWXCqJn7DpoUtgMh89mBEauOzE4cnrpXoDphC6
+ S89yijmR3/v3qVqHcowHbS7dPk8R6/6RgiJNWPD2zOwxsraqhp1utPBQTkaD0tdGWzXuoI3YfAB
+ FGLYCRtgwCPokoUceGao2XETK81tFih+d/Gnx9WPOQ7ERa9xaESclTRjMS+f7+Ts5JNnZrQu3Bm
+ tZvJ6XJb7ZctqRwd9/C3ysqcYtofHj0PGjeLGqPsjaYvPjVvhjK9np8IIrNzB9G7EvFAm0o3RYA
+ OluosyXGEGubLAt01M3bWejhhQhUjw5mUr6TA4GASi3LV13oJZAiJNtDolwsgSxD8D7B1vE1vzk
+ rpX8k4HDCYFW4O62d8IdpKaC8q7qr2/szW6JWh+mb/WTvVr40ab7ZKT3/E8PWr9XdIxRtTPERYN
+ uSHfiF6do1WIAGzLrK79rQBMGCL1qFFujSLZ8C3eRpYUPusTKqBbjzhrFyvyrlWxkurHU=
+X-Received: by 2002:a17:90b:1fcc:b0:35b:952c:43b9 with SMTP id
+ 98e67ed59e1d1-35de689500dmr10640099a91.10.1775434086993; 
+ Sun, 05 Apr 2026 17:08:06 -0700 (PDT)
 Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c657e5f3sm10009844a12.23.2026.04.05.17.07.04
+ 98e67ed59e1d1-35dd367c142sm11925052a91.11.2026.04.05.17.08.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Apr 2026 17:07:05 -0700 (PDT)
-Message-ID: <2bb98586-c9b0-4b0f-828d-a4d10d40a14e@linaro.org>
-Date: Mon, 6 Apr 2026 10:07:01 +1000
+ Sun, 05 Apr 2026 17:08:06 -0700 (PDT)
+Message-ID: <ae8d0499-f52e-43c7-8f98-aa74fd92e6d3@linaro.org>
+Date: Mon, 6 Apr 2026 10:08:01 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 17/35] target/arm: use syndrome helpers to set SAME_EL
- EC bit
+Subject: Re: [RFC PATCH 18/35] target/arm: make whpx use syndrome helpers for
+ decode
 To: qemu-devel@nongnu.org
 References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-18-alex.bennee@linaro.org>
+ <20260320130607.2071996-19-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260320130607.2071996-18-alex.bennee@linaro.org>
+In-Reply-To: <20260320130607.2071996-19-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,33 +106,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/21/26 00:05, Alex Bennée wrote:
-> This removes the last use of ARM_EL_EC_SHIFT.
-
-Why not remove it here then?
-
-Anyway,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
-
+> Rather than open coding a bunch of shifts and masks we can use the
+> syndrome definitions. While we are at it assert it really is a
+> EC_DATAABORT.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/arm/tcg/debug.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/arm/whpx/whpx-all.c | 13 +++++++------
+>   1 file changed, 7 insertions(+), 6 deletions(-)
 > 
-> diff --git a/target/arm/tcg/debug.c b/target/arm/tcg/debug.c
-> index 5214e3c08a8..07a52643e71 100644
-> --- a/target/arm/tcg/debug.c
-> +++ b/target/arm/tcg/debug.c
-> @@ -56,7 +56,7 @@ raise_exception_debug(CPUARMState *env, uint32_t excp, uint32_t syndrome)
->        * Similarly for watchpoint and breakpoint matches.
->        */
->       assert(debug_el >= cur_el);
-> -    syndrome |= (debug_el == cur_el) << ARM_EL_EC_SHIFT;
-> +    syndrome |= (debug_el == cur_el) << R_SYNDROME_EC_SHIFT;
->       raise_exception(env, excp, syndrome, debug_el);
->   }
+> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+> index 513551bec1b..f5646e7127e 100644
+> --- a/target/arm/whpx/whpx-all.c
+> +++ b/target/arm/whpx/whpx-all.c
+> @@ -356,15 +356,16 @@ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
+>   {
+>       uint64_t syndrome = ctx->Syndrome;
+>   
+> -    bool isv = syndrome & ARM_EL_ISV;
+> -    bool iswrite = (syndrome >> 6) & 1;
+> -    bool sse = (syndrome >> 21) & 1;
+> -    uint32_t sas = (syndrome >> 22) & 3;
+> +    bool isv = FIELD_EX32(syndrome, DABORT_ISS, ISV);
+> +    bool iswrite = FIELD_EX32(syndrome, DABORT_ISS, WNR);
+> +    bool sse = FIELD_EX32(syndrome, DABORT_ISS, SSE);
+> +    uint32_t sas = FIELD_EX32(syndrome, DABORT_ISS, SAS);
+>       uint32_t len = 1 << sas;
+> -    uint32_t srt = (syndrome >> 16) & 0x1f;
+> -    uint32_t cm = (syndrome >> 8) & 0x1;
+> +    uint32_t srt = FIELD_EX32(syndrome, DABORT_ISS, SRT);
+> +    uint32_t cm = FIELD_EX32(syndrome, DABORT_ISS, CM);
+>       uint64_t val = 0;
+>   
+> +    assert(syn_get_ec(syndrome) == EC_DATAABORT);
+>       assert(!cm);
+>       assert(isv);
 >   
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
