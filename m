@@ -4,107 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD46F46C53
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 16:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1896FF46C59
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 16:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9mXF-0003vB-Cs; Mon, 06 Apr 2026 12:10:45 -0400
+	id 1w9n28-0001SA-Ci; Mon, 06 Apr 2026 12:42:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w9mXD-0003sn-E5
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 12:10:43 -0400
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w9mXB-00056F-Ip
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 12:10:43 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.phl.internal (Postfix) with ESMTP id 0F378EC0387;
- Mon,  6 Apr 2026 12:10:40 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Mon, 06 Apr 2026 12:10:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1775491840; x=1775578240; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p
- 0gRn5cEe2Wc=; b=h1U4kv2/3+hgwvDCZsPhvhsa4K4KOUili6qUjBcAWbZGq6Dv
- jBL9o1exeicy0XBKTEjo1BGEq78uDZnjUiMZWMqToc7CaeywO5lTy0I0nzFzat4s
- D9T2055JI1UjMJI0ZoIfLtzeMBXOpAX9Ax5tYpbxzllRAoI2An+BM9ume83Kg7+d
- Th08/BzwxpDTFW16ugcPzsLl632ep/mc05q4iZCfcYJroXSqHcNCG7/hRwFWO6YS
- 1fhyODmbATJg63ayjhopX3UfZaP+5YV/YRt0ykMgp4P2Z+UFY6IbQE5gfPhK/M7h
- 1s8GQOhT2rPcDCkAWYh0zsVvz0s0oF59vleHmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775491840; x=
- 1775578240; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p0gRn5cEe2Wc=; b=g
- 8ht8f+DtzfLftMAUXifvbZhQJp8LKnZRXUy8BmWW35sB+c2jfnmYI8x512WR7BTf
- T/LMhOwRekZm/eljehgsjQUm6iP6y5UCgI2p7wBzfZh62//OMGmLoVXVz9aYkG9R
- NFGz2EF9AN0mOqYEFHew0IpSl2NGIpjd+m6ASNjMtfVfHDoPagTIGhCKADEFTs05
- PBR9oE3usvrybBjR7hk+WIgt1UkE4RbJi+johJzFnPK56Xmw96AvgMUOZ4KBBHNq
- 1ehANMEjklYCzwOokytBzta3VQ6edzcaOh97Zi9zHJD8yFklCbf3CK9kBawyy6G6
- B6yEVuL1IqM8t5ZntK1eA==
-X-ME-Sender: <xms:_9rTaTKVzOhlw9S4WYzzjgoLba2hcn6QgqykotyWCTBFDyBlOLGXvg>
- <xme:_9rTaZZ2DNK29q7_jORd1pIy-Nsv8kYqTFNLpfvA-udRA0tRPMwrC5gtVFdqvMLRE
- S8EeBkapC2DPm-Mam7agtZzPMRTs2waFj2zxKKmoUjUUEZh9Dfwd3M>
-X-ME-Received: <xmr:_9rTad8dZfPFDVjk4KQILDD0kRHz6FEHwV0JedDUC2stZxesqWzMZBYoJZGq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukedujecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
- cuvffnffculdejtddmnecujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdej
- necuhfhrohhmpedfvehhrgguucflrggslhhonhhskhhifdcuoegthhgrugesjhgrsghloh
- hnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhephfefudffkeffheduffetledvkeet
- vdejhedtheektefhhedvgefhheethfffkeegnecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhn
- sggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsrghlrg
- htohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehmrghrtggrnhgurhgvrdhluhhr
- vggruhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrth
- drtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhr
- tghpthhtoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepphhhih
- hlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhl
- sehlihhnrghrohdrohhrgh
-X-ME-Proxy: <xmx:_9rTaSaAJ_XEorOWdrTXH1vn9CTNg9iTSG3ZQ8KJO3EDG5GZWcpoqw>
- <xmx:_9rTaZOIsD1vhS42RwKY_rOkyn5xKzRG2Ngli-L1Pr4BEzu60m5e2w>
- <xmx:_9rTaWCYr5KqD0t2MKwWXS_RMvRYXlVgGtogxHfDyJfyAW-0SWDU0g>
- <xmx:_9rTaYJ8BGQOK1hA6i63g5XunxlxMhvIK_gVVEuJFHxORYTfcc3xOQ>
- <xmx:ANvTaYrWKsORiYfeRDD1dBJhUd4q_UHZY84NRIBqFGziOFcwf5SlHUXt>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 12:10:38 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 96ba9925;
- Mon, 6 Apr 2026 16:10:38 +0000 (UTC)
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w9n26-0001Rn-Hg
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 12:42:38 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w9n24-0002LA-Ta
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 12:42:38 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b9c1da7ac63so709511166b.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 09:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775493754; x=1776098554; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FSp3ZZV6IXyG/rTz6Kl0bnaeCUE0wAQ06A9ZLYInE2g=;
+ b=k+iUiWmeeFhxO1EpX8z0/WA51ju0i/dtMdO8p7HQsP6vXfk8kXRckhj8u15aQa2t7e
+ fcxGPUTb/ci/Xog+O9pqSh9+388BdLicJl4kMBGEEKj6Y7sf5puMZ+Z2c66AYvsDeJAl
+ y/H590n57s+0s2/+XMCo0eXzK3V8VpW3IAA2LurcTkKx1qUroVUqDGtHayGLA7+SSA2L
+ wYfueKyyHANmqcNt9Y/bzw7Fjs6wiST7XNWjP3TXcBuWNbvSZMdRZ/WJTw1McYAS7ttM
+ x5Q/q2e4czH/DyquLTneMMKZ/HIbbx2uYfVHAnC+BX3HoORpPExpouq7TOuImH4yIBzy
+ DWHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775493754; x=1776098554;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FSp3ZZV6IXyG/rTz6Kl0bnaeCUE0wAQ06A9ZLYInE2g=;
+ b=RJQEobQm5dCwk2e1E4u72m4dUM0cG6vSxKpWdY17SgcWQUaUfjDaXj7jSefeseEL2Q
+ T8NQB2oluUsvSzxAqVGGZp4ZliIgApn3VWo+8RUb1MWT0JQNxb02OCtnBZ3/hnTmDs6v
+ lIg0X2Z1eML8rwtLlrp3OnDxWg6AtKLD9ZTb/7J07IAHCkeWwEaekTHCa82c7OR5Cy2s
+ Q+w63dsBum7E4vND8Jh4s3OuETllbcBkhS/C8RWYGMpdP2f0LzU+IILm/H10ak1qDYD3
+ F/ZGx1F7Fv4SHfjMvo/FbWvoUzlJ9iU4SdKhrLlONSbbdgEp5tqxm56rK6moDGxCyY2s
+ 9xFQ==
+X-Gm-Message-State: AOJu0Yx2ewtrl6yym35SoiJ+3eULOFnkUKtsql7ReMuTOCciNbUjFmFh
+ cryax7K7PCV5vwEK8DBlQe7uRD4En2JDRnaYmL0r7W27Q5ceZvoNIq0toa/kq3rtVcs=
+X-Gm-Gg: AeBDiesuKAtc5tKpgKRC7lgbqkh9XIOwlupXKdwF89efbETJ1NO2WCf68xedxljNqXl
+ Fx4+4nkJ5Jbg+j9/HOE4JLoGqHtNckRerWlIfBuYbDjk9MvkD6AOrLHfpcUF0iyyOt75FtYegI6
+ S4aC3IKAaAfTQnvXMALT5hcY21Low4Uxb8ZhpcOOZMTjeC3YLjhGWnF56JjhdTwSBnbBrg2pIJa
+ X9etVd6Ontzzb3yVgceDmJ83ybXvCjxZdH1hmE2k7cSRMklt2ZxVpEFCMqLKJmYZ/4r8aw+wZJ2
+ 96R3s7aIeyQPYz0yvXqnHq97p7gxYrNJcA0F3+912pCB2Aj/kceLhhFX3TBnBmgRewaRYf4xgZ2
+ P07QRxnHEP0tSpwHqtQsUwHVclB5ys11fQ5SwY5K2cz7M5meCE+5VGbcqqSf9wdLn3MHZpxqguz
+ TzNwU9N9ZTPj+15uXSaRO0FZpNaLyDubmZ3g==
+X-Received: by 2002:a17:906:ee83:b0:b8f:ae35:cbdf with SMTP id
+ a640c23a62f3a-b9c67b67376mr730203366b.48.1775493754227; 
+ Mon, 06 Apr 2026 09:42:34 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b9c3c9722a9sm484819566b.3.2026.04.06.09.42.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Apr 2026 09:42:33 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7BF125F920;
+ Mon, 06 Apr 2026 17:42:32 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Adeoluwa Ademoye <adeoluwaademoye@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [Newcomer] Introduction and seeking guidance on TCG / memory
+ architecture
+In-Reply-To: <CAPxx-NymyR=iJ9CpdccOep=gO=L8gzjuTytXZ2DhGBhXpttSmg@mail.gmail.com>
+ (Adeoluwa Ademoye's message of "Mon, 6 Apr 2026 00:04:25 +0100")
+References: <CAPxx-NymyR=iJ9CpdccOep=gO=L8gzjuTytXZ2DhGBhXpttSmg@mail.gmail.com>
+User-Agent: mu4e 1.14.0; emacs 30.1
+Date: Mon, 06 Apr 2026 17:42:32 +0100
+Message-ID: <8734186nwn.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 06 Apr 2026 12:10:38 -0400
-Message-Id: <DHM7BUEDLA6O.2FQIGTBT8650M@jablonski.xyz>
-Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
- "Chad Jablonski" <chad@jablonski.xyz>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Peter
- Maydell" <peter.maydell@linaro.org>
-Subject: Re: [PATCH] ati-vga: Do not crash on 24 bits per pixel
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <20260406012031.335A0596A24@zero.eik.bme.hu>
-In-Reply-To: <20260406012031.335A0596A24@zero.eik.bme.hu>
-Received-SPF: pass client-ip=103.168.172.144; envelope-from=chad@jablonski.xyz;
- helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,5 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Adeoluwa Ademoye <adeoluwaademoye@gmail.com> writes:
+
+> Hi everyone,
+>
+> I am an engineering student with a focus on systems programming and low-l=
+evel execution. To build foundational knowledge, I
+> recently wrote a stack-based virtual machine from scratch in C, implement=
+ing a dynamic type system with runtime type dispatch, raw
+> bytecode execution, and manual memory ownership across the entire object =
+graph.
+>
+> I am now looking to channel that into real open source contribution, and =
+QEMU is where I want to start. The TCG subsystem and
+> memory translation layer are the areas that interest me most.
+>
+> Before I dive into the codebase, could anyone point me toward the right d=
+ocumentation or entry-level issues in the TCG or memory
+> subsystem? I want to make sure I am orientating myself correctly from
+> the start.
+
+What documentation we have is here:
+
+  https://www.qemu.org/docs/master/devel/index-tcg.html
+
+You can also see:
+
+  https://www.qemu.org/docs/master/devel/codebase.html
+
+for a quick tour of the code.
+
+>
+> Thank you for your time.
+>
+> Best regards,
+> Daniel
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
