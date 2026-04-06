@@ -4,149 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E486EF4EDE
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 12:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B68AE64016
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Apr 2026 13:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w9jAB-0000qs-CM; Mon, 06 Apr 2026 08:34:43 -0400
+	id 1w9kF2-0004AK-2p; Mon, 06 Apr 2026 09:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1w9jA3-0000q0-SY
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 08:34:37 -0400
-Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1w9jA0-0008IX-7h
- for qemu-devel@nongnu.org; Mon, 06 Apr 2026 08:34:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UdYj+9YCGNEe6Gsm12USjIKKr7XhJFycta6Z5rSr0YvtJjOn5Uu1rzXd8yVN5RI+XZJrpZ82EDy8SVBe9lq9zBMWPavO7UmBHLK2W/D54WRKKq+WBSjWWTb4pxKsLwWl1LbUhY4wotNK1JgZoffukPN9S8XUzbHa7H/KuqQE8g6OuzhvaYkpiYC1mc7BAoUQXwduiEjmZ1QaBFpukR/N3dIhFW5rBmQQA8H4iML83MpdLMwDl7aDhYLxlWKb6U0kSIEt+P0+ynuJ92NnJeZkkkxIEia1KKEZls0Z5UIgDXrcNtgb3+s/A9XfEKaJEiV6o3gpgc6MisRdqg1WJgWNKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aw9jCWJSL4iETscKI782vpoI4/h1kZnxuqIDj50/IRE=;
- b=RLxsJgpFwStGeFwFzHkzKHrXSKQO5OdYatsw3ZN5yJOduvmDA29DOEJHJNhLRKWWEQYD6N/s6rTNApp3vplfJr0wrLF9fdPF7MBd8LFW++l0LSB/lNRQoLnkgwCOCFth//xbKYdJ4hFavj+PjMBeThIL+gRL8JCtBzP4zgExKPYazjQZrZ6TzA7muaWv1oQBj14UMhFz12qiEF2Kab1AtAHHxgvJf6L8wAuZrekGJ/NGMGbUUBEgjS0xuOfr9R3/rZNnO2sopRw+y3bGFhie6wwLsh2C4wWsBL9qOGmRFht6fabbFoJD6x6A+ZmTYEv5DXQ3vshd33l9T9Ciq5ctXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aw9jCWJSL4iETscKI782vpoI4/h1kZnxuqIDj50/IRE=;
- b=tbCxeZT9ODMiiiAzdJjndfTO74gswi4C5uqcvHFZ0XGCpKj5HmhwuiANOdFwobolq9Fe+imyi/LiV5sBGZyogyZIdyBXCRnEWnjvUfpbbWGnBSR+6w0SItVUL+BF8/xtIcgETqCowLK40UzAYSylaw0Ztp6v42xGGhwmf3Coy8gagIz+tSuw+JxG1edlMcrr89r5nbjaqEkhMFXlc0fIxYNVkTFAzAaf3Kyy9uNiOZQBW0swqqjD7kl0icpMPp74LKxXR+VyX21n4W/qWA6kje8c0yKLMHLJWIexYDlhL60D97pUCpeJoJ8AhxJUPanJYeJ0PExg6BRbMM1eBRdJ8g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by MW6PR12MB8661.namprd12.prod.outlook.com (2603:10b6:303:23f::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Mon, 6 Apr
- 2026 12:34:26 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%5]) with mapi id 15.20.9769.018; Mon, 6 Apr 2026
- 12:34:25 +0000
-Message-ID: <b1a8f7d9-306b-4a13-8916-828e61ed0f41@nvidia.com>
-Date: Mon, 6 Apr 2026 15:34:20 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 08/12] vfio/migration: Fix incorrect reporting for
- VFIO pending data
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, Alex Williamson
- <alex@shazbot.org>, Yishai Hadas <yishaih@nvidia.com>,
- Fabiano Rosas <farosas@suse.de>, Pranav Tyagi <prtyagi@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-9-peterx@redhat.com>
- <e6a9aaf2-e2ab-4b25-a01d-b6093922668e@nvidia.com> <ac6LCWmVHl8fq81J@x1.local>
- <ac6RbaA3V_jpfwJX@x1.local>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <ac6RbaA3V_jpfwJX@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TL2P290CA0010.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:2::8)
- To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w9kF0-0004AC-UU
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 09:43:46 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w9kEy-0001WY-Sy
+ for qemu-devel@nongnu.org; Mon, 06 Apr 2026 09:43:46 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 3CCBA4DF04;
+ Mon,  6 Apr 2026 13:43:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1775483022; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6mdPaYbhYrJntX9/BaxgFMR3MVh2A117zaxrHaA+wzE=;
+ b=uneaRN1SfTLohKasq96jGE+rh5n6iNTFI/qBiIwJFdlCQvlzr1bUshuir+ooJMVbsA4Kpn
+ bdurG6v8xJ6tIjPqnC2Lc8C46oJfLSinfHgbCP1nhJxqts6W8im8P2hHM4ANpLyWSH31Fq
+ VSgbDuQ6HCxa0eaqb/BlDy3ok4nmf+k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1775483022;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6mdPaYbhYrJntX9/BaxgFMR3MVh2A117zaxrHaA+wzE=;
+ b=mYwMy2CaARKOkLBsttpdzozvyrslhKZW207rJYX0kGDhFWpwWH6gsyWrG8O7L815LX51Dl
+ mlbxLn0Heyz6m8AA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=uneaRN1S;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mYwMy2Ca
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1775483022; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6mdPaYbhYrJntX9/BaxgFMR3MVh2A117zaxrHaA+wzE=;
+ b=uneaRN1SfTLohKasq96jGE+rh5n6iNTFI/qBiIwJFdlCQvlzr1bUshuir+ooJMVbsA4Kpn
+ bdurG6v8xJ6tIjPqnC2Lc8C46oJfLSinfHgbCP1nhJxqts6W8im8P2hHM4ANpLyWSH31Fq
+ VSgbDuQ6HCxa0eaqb/BlDy3ok4nmf+k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1775483022;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6mdPaYbhYrJntX9/BaxgFMR3MVh2A117zaxrHaA+wzE=;
+ b=mYwMy2CaARKOkLBsttpdzozvyrslhKZW207rJYX0kGDhFWpwWH6gsyWrG8O7L815LX51Dl
+ mlbxLn0Heyz6m8AA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C02F44A0B0;
+ Mon,  6 Apr 2026 13:43:41 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 97GXIo2402lASQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 06 Apr 2026 13:43:41 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
+Cc: Trieu Huynh <vikingtc4@gmail.com>, Peter Xu <peterx@redhat.com>, Eric
+ Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH] migration: add optional capabilities field to migrate
+ and migrate-incoming
+In-Reply-To: <20260404152736.30190-1-viking4@gmail.com>
+References: <20260404152736.30190-1-viking4@gmail.com>
+Date: Mon, 06 Apr 2026 10:43:39 -0300
+Message-ID: <87h5po5hmc.fsf@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|MW6PR12MB8661:EE_
-X-MS-Office365-Filtering-Correlation-Id: e7d27876-8b1d-4c4d-e252-08de93d8d68d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: IVmDgqIPXqC1NC8q4A4VTHcRh7enRa1ih9c8GfxRVjjtvKfpIIZNt9wLcopJhRfiZ62O/4UIzapUOmgcnnYu4Azj+NPoSHoDCNM/MQOacE1kNDqcn0/GLa0+x47oxdBDMvZZ/zAWRKCIU+rzHaqryHCs9Cdaf/CL+URBqhQI3AMUpELbe9tWrktUnWc2lHJ6mMlnBi4pQvDecERNh15lkk7OY+pNd4uOSd74ywr7nVTrR2F0nYDt4ekRz5xCSJaJo1EmMIVg1UJmUJtLd47da8+PQ0k0jvBJh2k0j551AsTPfSsr0pk9TVOgqwDxXjdOcBrIQ0N3Q+2x7sn57AolH+SRz/rKCBXNU2jH0U62nuVSORNNX4stLhy93I1zizftnnZgPz5SjqCpZsjHlmzZ9DZBoAYwy2GQ0WTE/dRaGF4gpHJUdg45LW78JlajUPx4Vci9+oDMzMWcG3WJFrvl8Nv5a1ooN7g761UZ1ama1KFCWF8JwFqu7ldT7UTWMclrRXQ5HGADF5u5HCe8e31aGB4/43mliCQfC3IijLm5bbU7qqhO9ReqCtlYVQolp1UkyIAqDhvJWJ2ecG+/Pt3tAyEYYBNMdEtLQ0NIFtDxds7dTOc2a0PeymMqYqWHmHZTAEcSdJyJSWF3KDyy3+sV7YZu9z3C4B1yfIGX+IBdi2FeVPw4e4jQt4XMRt/2tPhURkGg5nkpbNKdusLeIe+D9dre61bz63q51J8F7LLEym0=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(22082099003)(56012099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?REJjN0ptTFRaTWw3UzZOd1Q5NGkvcEphQTg2S01IdEFkdjF4UDBKU21QZFNv?=
- =?utf-8?B?YzlJdCtheWFvSG5ONnhZNUtWbWxDTStuRUh4eE9sRkUyWHlETC9wb2wyMVBF?=
- =?utf-8?B?MVZDMklkMk9ZMDB1aXhJMlRKRDc4bm5NWjFSSkoxOVlIOG0ra0lUN2cxTjJv?=
- =?utf-8?B?MndPeWN3cXNIQWpBRzY4b0h3YTFmU00rS0EyL29aaXBURU1nZHZCZVNuTzJY?=
- =?utf-8?B?bFhVcjlaQ2FpY05qY2ZYeEhPbFZHTmR1dXhNVGJMOU1icUpVQmFMcXBRU29J?=
- =?utf-8?B?SXZyVnpJbThsOG13aXhZSGpsaEY5S3Q0L0JpaVR3UnJWNk95aW9rTDFKWU1p?=
- =?utf-8?B?NDhkY2lFRFJYVmlzclNhNW1vMUwwNURmbnhUenFuMnllK00rSllqb2oxelhS?=
- =?utf-8?B?blJOM09tU1ByZVNweUNUdXNMVlgvdjVHQWhtK1FLa1EwaFJub05FU1BBNi9O?=
- =?utf-8?B?M1gwbnNzRHpFOXpRQ2pGVEdUMTF5VjJqL0hNbk50OW9hbFc2NndRb2phazk4?=
- =?utf-8?B?RmhCaC9LOHI0L2U3bUVPYm1UUit6Q2c1U1d5MnNrS0hLRm9uUVhMejBabWZx?=
- =?utf-8?B?TExSbEVNd0tCRUJKNklyZ0dvb0p4SUs0M0JYaTJ1bmZqbGdCZFppSjJNQ1gz?=
- =?utf-8?B?WmpOamxhVjFHa1I4RXpSbkg2V2kySE00bjBuV2Vvb1JjeE50Ukx1VXJtSDlk?=
- =?utf-8?B?L2JRSHBnN0x0UW9kdnc2QlZ2Rk5YQVhLdURmN01SdkdXb2RFbnZodUtMYXds?=
- =?utf-8?B?TVVwbno5THUyNVFqUDRWTUZYYXdJcWtKd0VXRGVDbzZrcndVN3d5MXI0NXpQ?=
- =?utf-8?B?RDJ0a3F1M3FCeWtwL1oyL1k1eHAzNkZrRElDcllRZWM1dXdmRTZaZlJEaFhI?=
- =?utf-8?B?SkxGZ1pHVExWWFdYYzQzVnNBVHVic3hnNlpvS2pJV2hMWGJmOXk3eGxxdHZP?=
- =?utf-8?B?Nm95K1M3TU9ZV01uWkR5WThYVWpnUFNudGd4SXJGRXl1dDRLSnh1WkMrcFhO?=
- =?utf-8?B?aUVGNXZTQzlSUGdwQ1g0a1ZiUlpSVHdEeW51UGhtOGU4VURxa0wwc0dZTXJB?=
- =?utf-8?B?TVFKbnBmN3NOY0plM21CNGtsTGljUE5nWWp1clorRklVZU0zL2VPaHZCc2Jx?=
- =?utf-8?B?MUlhNm44UzFZZGh2UzZocCt1N29RU29zQlR6NHhLY000OWdOd2FDV3VHdmVV?=
- =?utf-8?B?YThtL3pxN3BHQ0RhamQrdnJHdFVDeS9xTUhhYnZGL2ZHci85cldIVCt1eHVL?=
- =?utf-8?B?QS9uU3d0Mm8vcGxHTDk5VlNDR056c1doWTlnLzhYKzFydGtOQmNaN29SeXlj?=
- =?utf-8?B?cXFNVVpYd1J4MTE2K2VEYVNOMENDS3k1VFUxMjE4aWJ4azdQdnRiMm5qeFll?=
- =?utf-8?B?YkhFTG5pc0cwMXpzSnRoRUFwSHppdUYyL0NYdFZ1UHZjUHV3THRhbk1DUmZa?=
- =?utf-8?B?RzJmTm1oVTh3M3NBcW1uTStLNmxhMktXbm1DREtsR0szeWJjdW9CVEVCUWl0?=
- =?utf-8?B?T0djRlF4T2RnQ1FsWFNoenp3cytGbjR4TUNCci94eVlMaG9jZ0hBZVJxczYw?=
- =?utf-8?B?dzhncnJYS0NZTXNWMGdVaTFJMUNkckVqaVJpcmprUS9GcDR1N1BIUzJoci9E?=
- =?utf-8?B?OUFnNmtaU3NvNzQycUp3VDZUQWhKc3lacUhFczJzY0dSSi9WWTZSdGxCdDYx?=
- =?utf-8?B?VFBlaVhWVHhpcU8yZStCN1RCa2paQUlUdUFQbFNoUkJneWwzbEpsVEdFbE1w?=
- =?utf-8?B?ZlFwQVBQVmR0ellBTWJEQmNuZWswWlRDbnMzZlZnVkFYWEh1cmowa2RpOGRr?=
- =?utf-8?B?aXBvWGhrNmg5RklWZHhzemUxaG9IK1Rrb296dHFhQ1lRcm1WWVRaRHdyNXhw?=
- =?utf-8?B?cjh6b0R1WlU0SzQvZHk4ZFNwL2MrSDdOSVRLMDNqVTBBWEtzY1hxUDltaVgw?=
- =?utf-8?B?bVFlYmw1ZDRvK00xNHVLRDNwU2dBS0ZNU21pY0dKc2RkaVB5L1JpeGVUSjE0?=
- =?utf-8?B?U3dPU20wMzlYVU1lS1Y0YkM2OGRPazZMdmticzZHbnR2Z2J5MmVIeXlUS1Z1?=
- =?utf-8?B?VXdTcEFPSkZOU2ZmdmQ2a3UzUGw4TUZDd0dtQ1dTdW1kVEU3ZUVVQitKZllu?=
- =?utf-8?B?cVZrZEVVUjF2d09aVDA0OXlHZlpNcWhINTROM2t3MUlSTXd5YjlRQ0JDOEJK?=
- =?utf-8?B?WFF3ZndvVE5KNlBXZURieVpBOEQwRWJZSnlLYjU4UE1zQThSQTNwN2t4ZDdi?=
- =?utf-8?B?TFdWbHVhMDgxRWJmOFpEdzd4LzJxeS80WVdwK2djbTh3cGI5S1pucDEvM05U?=
- =?utf-8?B?S1ZCZzBoS0VUWXVmL0lyeUlDdDJXVHZWanFldEc5T0NHWTNBMi9hdz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e7d27876-8b1d-4c4d-e252-08de93d8d68d
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2026 12:34:25.8796 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MIriS0UA1XgQPlyA08dMwdr8Lgl2C0/Z8PYf0GH9n6TLc1s5yjN30kYlIZ73A0DYFSHFmhAiBPVd2+0dXeOUtw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8661
-Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
- envelope-from=avihaih@nvidia.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[gmail.com,redhat.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_SEVEN(0.00)[8]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
+X-Rspamd-Queue-Id: 3CCBA4DF04
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,75 +132,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Trieu Huynh <vikingtc4@gmail.com> writes:
 
-On 4/2/2026 6:55 PM, Peter Xu wrote:
-> External email: Use caution opening links or attachments
+> From: Trieu Huynh <vikingtc4@gmail.com>
 >
+> When invoking migration, user must call migrate-set-capabilities as a
+> separate QMP command before calling migrate or migrate-incoming.
 >
-> On Thu, Apr 02, 2026 at 11:28:09AM -0400, Peter Xu wrote:
->>> Now that migration->stopcopy_size holds only the stopcopy size (and not
->>> stopcopy+precopy), we should remove these lines from
->>> vfio_update_estimated_pending_data():
->>>
->>>      /* The total size remaining requires separate accounting */
->>>      migration->stopcopy_size -= data_size;
->> Good point, I missed this part when changing the definition, I'll fix.
-> Instead of changing the definition, I found that it might be cleaner to
-> keep the definition of stopcopy cache variable for VFIO (considering the
-> other invokation during save setup), then just do one more step for math.
+> Add an optional 'capabilities' field to both commands. When provided,
+> the capabilities are applied before the migration starts, in the same
+> order as a migrate-set-capabilities call would apply them. Existing
+> callers that do not pass the field are unaffected.
 >
-> The new version should look like this:
+> This is particularly useful, eg. for snapshot-load workflows where a
+> single migrate-incoming call should express the full migration
+> configuration:
+>
+>   { "execute": "migrate-incoming",
+>     "arguments": {
+>       "uri": "file:/tmp/snapshot",
+>       "capabilities": [{"capability": "mapped-ram", "state": true}]
+>     }}
+>
+> Internal callers (HMP migrate-incoming, vl.c -incoming) pass
+> has_capabilities=false so their behaviour is unchanged.
+>
+> Related-to: https://wiki.qemu.org/ToDo/LiveMigration#Allow_QMP_command_%22migrate[_incoming]%22_to_take_capabilities_and_parameters
+>
 
-Yes, that's better. Just small comment below.
+Hi!
 
->
-> ===8<===
->
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 655ff7712a..5aff8de844 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -585,19 +585,27 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending)
->   {
->       VFIODevice *vbasedev = opaque;
->       VFIOMigration *migration = vbasedev->migration;
-> -    uint64_t remain;
-> +    uint64_t precopy_size, stopcopy_size;
->
->       if (pending->exact) {
->           vfio_state_pending_sync(vbasedev);
-> -        remain = migration->stopcopy_size;
->       } else {
->           if (!vfio_device_state_is_precopy(vbasedev)) {
->               return;
+This is a change that comes with a lot of implications from the
+maintenance perspective. We have an ongoing attempt at moving all
+configurable migration options to be arguments of the two main migration
+commands, but it seems the consensus is diverging a bit, see:
 
-Now in the estimate path we shouldn't bail early if not in precopy 
-state, so estimate/exact reports are consistent also for VFIO devices 
-that don't support precopy.
+https://lore.kernel.org/r/20251215220041.12657-1-farosas@suse.de
+https://lore.kernel.org/r/aURtVveE88n31AN_@x1.local
 
-Thanks.
+The main point is whether this change in design direction is worth the
+maintenance burden. I do think it is, but it's not so simple, we'll have
+practically another set of commands to test and document, ensure there's
+no bad interactions with the old way of setting options, etc. Then,
+there's the entire aspect of deprecating old commands, informing users,
+switching to the new commands, etc.
 
->           }
-> -        remain = migration->precopy_init_size + migration->precopy_dirty_size;
->       }
+Peter also mentions in the thread I linked that we haven't seen a real
+need for this type of feature. There's the general consensus (I think)
+that passing options via the migrate commands is a good design approach,
+but that doesn't mean we currently _need_ to do it, there is nothing
+technically requiring it. In which case the "more stuff to maintain"
+argument becomes stronger.
+
+Your patch makes me realise that we could divide the whole work in
+steps, first add capabilities argument to migrate, then add parameters,
+then deprecate set-capabilities, then deprecate set-parameters. This
+would definitely ease the burden of the change, but we might get stuck
+in the middle of the process and end up with an inconsistent interface.
+
+Let's hear what others think on whether a simplified approach like this
+is better and whether the whole endevour is still desirable.
+
+(from my side, I'm in favor of continuing with the work I started. Time
+investment has been a challenge recently, maybe Trieu could help with
+it. To be clear, I'm definitely not against other approaches, as long as
+we all agree and it gets done.)
+
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> ---
+>  migration/migration-hmp-cmds.c |  4 ++--
+>  migration/migration.c          | 19 +++++++++++++++++++
+>  qapi/migration.json            | 12 ++++++++++++
+>  system/vl.c                    |  3 ++-
+>  4 files changed, 35 insertions(+), 3 deletions(-)
 >
-> -    pending->precopy_bytes += remain;
-> +    precopy_size =
-> +        migration->precopy_init_size + migration->precopy_dirty_size;
-> +
-> +    if (migration->stopcopy_size > precopy_size) {
-> +        stopcopy_size = migration->stopcopy_size - precopy_size;
-> +    } else {
-> +        stopcopy_size = 0;
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 0a193b8f54..32c338103d 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -522,7 +522,7 @@ void hmp_migrate_incoming(Monitor *mon, const QDict *qdict)
+>      }
+>      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+>  
+> -    qmp_migrate_incoming(NULL, true, caps, true, false, &err);
+> +    qmp_migrate_incoming(NULL, true, caps, false, NULL, true, false, &err);
+>      qapi_free_MigrationChannelList(caps);
+>  
+>  end:
+> @@ -829,7 +829,7 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+>      }
+>      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+>  
+> -    qmp_migrate(NULL, true, caps, true, resume, &err);
+> +    qmp_migrate(NULL, true, caps, false, NULL, true, resume, &err);
+>      if (hmp_handle_error(mon, err)) {
+>          return;
+>      }
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 5c9aaa6e58..eb1a734dd9 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1752,6 +1752,8 @@ void migrate_del_blocker(Error **reasonp)
+>  
+>  void qmp_migrate_incoming(const char *uri, bool has_channels,
+>                            MigrationChannelList *channels,
+> +                          bool has_capabilities,
+> +                          MigrationCapabilityStatusList *capabilities,
+>                            bool has_exit_on_error, bool exit_on_error,
+>                            Error **errp)
+>  {
+> @@ -1772,6 +1774,14 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+>          return;
+>      }
+>  
+> +    if (has_capabilities) {
+> +        qmp_migrate_set_capabilities(capabilities, errp);
+> +        if (*errp) {
+> +            yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+> +            return;
+> +        }
 > +    }
 > +
-> +    pending->precopy_bytes += precopy_size;
-> +    pending->stopcopy_bytes += stopcopy_size;
->
->       trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
->                                migration->precopy_init_size,
->
-> --
-> Peter Xu
->
+>      mis->exit_on_error =
+>          has_exit_on_error ? exit_on_error : INMIGRATE_DEFAULT_EXIT_ON_ERROR;
+>  
+> @@ -2020,6 +2030,8 @@ static gboolean migration_connect_outgoing_cb(QIOChannel *channel,
+>  
+>  void qmp_migrate(const char *uri, bool has_channels,
+>                   MigrationChannelList *channels,
+> +                 bool has_capabilities,
+> +                 MigrationCapabilityStatusList *capabilities,
+>                   bool has_resume, bool resume, Error **errp)
+>  {
+>      MigrationState *s = migrate_get_current();
+> @@ -2036,6 +2048,13 @@ void qmp_migrate(const char *uri, bool has_channels,
+>          return;
+>      }
+>  
+> +    if (has_capabilities) {
+> +        qmp_migrate_set_capabilities(capabilities, errp);
+> +        if (*errp) {
+> +            return;
+> +        }
+> +    }
+> +
+>      if (!migrate_prepare(s, has_resume && resume, errp)) {
+>          /* Error detected, put into errp */
+>          return;
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 7134d4ce47..58d934f8fe 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -1388,6 +1388,11 @@
+>  # @channels: list of migration stream channels with each stream in the
+>  #     list connected to a destination interface endpoint.
+>  #
+> +# @capabilities: list of migration capabilities to set before
+> +#     starting the migration.  Equivalent to calling
+> +#     `migrate-set-capabilities` before `migrate`, but more
+> +#     convenient.
+> +#
+>  # @resume: when set, use the new uri/channels specified to resume
+>  #     paused postcopy migration.  This flag should only be used if
+>  #     the previous postcopy migration was interrupted.  The command
+> @@ -1453,6 +1458,7 @@
+>  { 'command': 'migrate',
+>    'data': {'*uri': 'str',
+>             '*channels': [ 'MigrationChannel' ],
+> +           '*capabilities': ['MigrationCapabilityStatus'],
+>             '*resume': 'bool' } }
+>  
+>  ##
+> @@ -1467,6 +1473,11 @@
+>  # @channels: list of migration stream channels with each stream in the
+>  #     list connected to a destination interface endpoint.
+>  #
+> +# @capabilities: list of migration capabilities to set before
+> +#     starting the migration.  Equivalent to calling
+> +#     `migrate-set-capabilities` before `migrate-incoming`, but more
+> +#     convenient.
+> +#
+>  # @exit-on-error: Exit on incoming migration failure.  Default true.
+>  #     When set to false, the failure triggers a
+>  #     :qapi:event:`MIGRATION` event, and error details could be
+> @@ -1525,6 +1536,7 @@
+>  { 'command': 'migrate-incoming',
+>               'data': {'*uri': 'str',
+>                        '*channels': [ 'MigrationChannel' ],
+> +                      '*capabilities': ['MigrationCapabilityStatus'],
+>                        '*exit-on-error': 'bool' } }
+>  
+>  ##
+> diff --git a/system/vl.c b/system/vl.c
+> index 246623b319..ed569d75e7 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -2826,7 +2826,8 @@ void qmp_x_exit_preconfig(Error **errp)
+>                  g_new0(MigrationChannelList, 1);
+>  
+>              channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
+> -            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
+> +            qmp_migrate_incoming(NULL, true, channels, false, NULL, true,
+> +                                 true, &local_err);
+>              if (local_err) {
+>                  error_reportf_err(local_err, "-incoming %s: ", incoming);
+>                  exit(1);
 
