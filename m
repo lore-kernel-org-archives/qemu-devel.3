@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA46CFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38237CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITrS-0007mA-Ir; Thu, 30 Apr 2026 12:03:35 -0400
+	id 1wITs6-0001Ak-E2; Thu, 30 Apr 2026 12:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wITr9-0007U5-GO; Thu, 30 Apr 2026 12:03:24 -0400
+ id 1wITrC-0007UH-6g; Thu, 30 Apr 2026 12:03:24 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wITr6-00077g-Bm; Thu, 30 Apr 2026 12:03:15 -0400
-DKIM-Signature: a=rsa-sha256; bh=FTOONq+xVZSYimkNcwm7tLoBSTwv7vH0/MrNqv4xniw=; 
+ id 1wITr9-00078Z-DY; Thu, 30 Apr 2026 12:03:16 -0400
+DKIM-Signature: a=rsa-sha256; bh=t4iQhUpFRyAgERtmsoOXchPum38b2rhvJCOxHACr+zY=; 
  c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:To:Cc; 
- q=dns/txt; s=20240113; t=1777564988; v=1;
- b=a/0y79VIQt6yNtNObfvnnquIuuCcNXDJonYUWWUNuH7bUsYmglzOqtjmbcGZfIX8GQJzPWko
- /aV25jkO6gqa44NG8dMdwL/kjxXsEllTNInhmZjP6q1yoMKnsm/eTxF53H/1llZMnTE0PuCgxjb
- krRjnu8sF/x+XV+c6Mv4z/gkCibh3rrxd1zleBh3NFsUuz50FtodNP3CkFVv+HIfAn4SOIxvbfM
- qBQypG3VQDeCE8BSFw/Y031TzYRJtTAYu9NXCJbUCE3T6HUM/ZTOEntE0HY0pDv/cXZd9s1RLkT
- ASlPMpiuwpEbzwnD0Cv6irULemCr2ShmJvBjFMD6v+BKQ==
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1777564992; v=1;
+ b=hiGxLjjwYcuxq1HdNKItXQa8Wiq3k5QCvtyVhON95xkRarli+yHTsIESQt+lhMsj8mTXXDW+
+ LCnTzQGdJ5e9A42OGXJOPNwUftHuCl4n2R8jkJy2DNwroeRuvy/5JGvRLfawrORV6671QTJeyf1
+ FXMhmC754kd1B3mBkfgShPXi7JMSNH+lPXAP1ZbIYWj8vwwtF2ZX35S+pPVceX2Iei6eJwcNsU3
+ lg0xtDynnpFNoozENDdJdE7O/PM/tZwRclztzcPGiY1j7R3Atmx3HlR0DZyZSdKeESufgo6BkGP
+ 6gDpBWUdQKHjNdMdiE0EmLfPSrbqvQI33MZEK8cYhM94g==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 3C48420C10;
- Thu, 30 Apr 2026 16:03:08 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 39C1A20C76;
+ Thu, 30 Apr 2026 16:03:12 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Thu, 30 Apr 2026 16:03:07 +0000
-Subject: [PATCH qemu v4 0/9] Update opentitan uart (part of supporting
- opentitan version 1)
-MIME-Version: 1.0
-Message-ID: <177756498815.8917.12449488721849651971-0@git.sr.ht>
+Date: Tue, 07 Apr 2026 14:38:47 +0100
+Subject: [PATCH qemu v4 4/9] ot_uart: replace individual IRQ fields with
+ array, add missing IRQs
+Message-ID: <177756498815.8917.12449488721849651971-4@git.sr.ht>
 X-Mailer: git.sr.ht
+In-Reply-To: <177756498815.8917.12449488721849651971-0@git.sr.ht>
 To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
@@ -47,14 +47,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Amit Kumar-Hermosillo <amitkh@google.com>,
  nabihestefan <nabihestefan@google.com>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
  helo=mail-a.sr.ht
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+X-Spam_score_int: 17
+X-Spam_score: 1.7
+X-Spam_bar: +
+X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,67 +73,137 @@ Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the fourth revision of the patch set that updates the
-OpenTitan uart to align with Earlgrey version 1.0.0.
+From: Lex Bailey <lex.bailey@lowrisc.org>
 
-For a specific git commit from OpenTitan that we are aiming to
-support:
-https://github.com/lowRISC/opentitan/tree/Earlgrey-PROD-M6
-(git tag Earlgrey-PROD-M6, which is commit a78922f)
+There are 9 interrupts in the OpenTitan UART device.
+These are documented here:
+https://opentitan.org/book/hw/ip/uart/doc/theory_of_operation.html#interrupts
 
-Once again, for completeness, the details of the version 1 of the UART
-are found here:
-https://opentitan.org/book/hw/ip/uart/index.html
-(and this URL is still added to the file header in one of these commits,
-as before)
+This commit removes the individually named interrupts (of which there was onl=
+y four)
+and replaces them with an array of 9 interrupts.
 
-Fixes in this revision:
-- removed accidental add/delete of unused #define.
-- added documentation about break condition in commit message
-   and also in a documentation file (is it in a suitable place?)
-   this is copied from the documentation on our (lowRISC's) fork.
-- removed the commit that removes the regular clock pulse to
-   transmit data. Following the discussion, I think it's better to merge
-   this without that change for now, and if we decide we need it in
-   the future we will test it with tock and propose the change again.
-- one review comment I couldn't fix: the one that suggested adding
-   a return statement to avoid an else block. There is logic after the
-   else block that runs in both cases, so I can't remove that.
+Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/char/ot_uart.c         | 44 +++++++++++++--------------------------
+ include/hw/char/ot_uart.h |  5 +----
+ 2 files changed, 15 insertions(+), 34 deletions(-)
 
-Thanks!
-
-Lex.
-
-Lex Bailey (9):
-  Rename ibex_uart to ot_uart
-  ot_uart: move to new reset API
-  ot_uart: update register defs, switch to Fifo8 for tx/rx buffers
-  ot_uart: replace individual IRQ fields with array, add missing IRQs
-  ot_uart: gather similar behaviours togeter in register read and write
-  ot_uart: implement RX fifo and loopback
-  ot_uart: handle break condition
-  ot_uart: update file headers with new authorship and documentation URL
-  ot_uart: add tracing
-
- MAINTAINERS                          |   1 +
- docs/system/riscv/opentitan-uart.rst |  43 ++
- hw/char/Kconfig                      |   3 +
- hw/char/ibex_uart.c                  | 569 --------------------
- hw/char/meson.build                  |   2 +-
- hw/char/ot_uart.c                    | 778 +++++++++++++++++++++++++++
- hw/char/trace-events                 |   8 +
- hw/riscv/Kconfig                     |   1 +
- hw/riscv/opentitan.c                 |   3 +-
- include/hw/char/ibex_uart.h          |  73 ---
- include/hw/char/ot_uart.h            |  70 +++
- include/hw/riscv/opentitan.h         |   4 +-
- 12 files changed, 909 insertions(+), 646 deletions(-)
- create mode 100644 docs/system/riscv/opentitan-uart.rst
- delete mode 100644 hw/char/ibex_uart.c
- create mode 100644 hw/char/ot_uart.c
- delete mode 100644 include/hw/char/ibex_uart.h
- create mode 100644 include/hw/char/ot_uart.h
-
--- 
+diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
+index 3fe7c5efe5..62c182cbed 100644
+--- a/hw/char/ot_uart.c
++++ b/hw/char/ot_uart.c
+@@ -102,6 +102,7 @@ REG32(TIMEOUT_CTRL, 0x30)
+ #define OT_UART_NCO_BITS     16
+ #define OT_UART_TX_FIFO_SIZE 128
+ #define OT_UART_RX_FIFO_SIZE 128
++#define OT_UART_IRQ_NUM      9
+=20
+ #define R32_OFF(_r_) ((_r_) / sizeof(uint32_t))
+=20
+@@ -111,31 +112,11 @@ REG32(TIMEOUT_CTRL, 0x30)
+=20
+ static void ot_uart_update_irqs(OtUARTState *s)
+ {
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+-        & INTR_TX_WATERMARK_MASK) {
+-        qemu_set_irq(s->tx_watermark, 1);
+-    } else {
+-        qemu_set_irq(s->tx_watermark, 0);
+-    }
+-
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+-        & INTR_RX_WATERMARK_MASK) {
+-        qemu_set_irq(s->rx_watermark, 1);
+-    } else {
+-        qemu_set_irq(s->rx_watermark, 0);
+-    }
++    uint32_t state_masked =3D s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE];
+=20
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE] & INTR_TX_EMPTY_MASK)=
+ {
+-        qemu_set_irq(s->tx_empty, 1);
+-    } else {
+-        qemu_set_irq(s->tx_empty, 0);
+-    }
+-
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+-        & INTR_RX_OVERFLOW_MASK) {
+-        qemu_set_irq(s->rx_overflow, 1);
+-    } else {
+-        qemu_set_irq(s->rx_overflow, 0);
++    for (int index =3D 0; index < OT_UART_IRQ_NUM; index++) {
++        bool level =3D (state_masked & (1U << index)) !=3D 0;
++        qemu_set_irq(s->irqs[index], level);
+     }
+ }
+=20
+@@ -290,6 +271,9 @@ static void ot_uart_reset_enter(Object *obj, ResetType ty=
+pe)
+     s->regs[R_STATUS] =3D 0x0000003c;
+=20
+     s->tx_watermark_level =3D 0;
++    for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
++        qemu_set_irq(s->irqs[index], 0);
++    }
+     ot_uart_reset_tx_fifo(s);
+     ot_uart_reset_rx_fifo(s);
+=20
+@@ -566,21 +550,21 @@ static void ot_uart_init(Object *obj)
+                                   ot_uart_clk_update, s, ClockUpdate);
+     clock_set_hz(s->f_clk, OT_UART_CLOCK);
+=20
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_watermark);
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_watermark);
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_empty);
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_overflow);
++    for (unsigned index =3D 0; index < OT_UART_IRQ_NUM; index++) {
++        sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irqs[index]);
++    }
+=20
+     memory_region_init_io(&s->mmio, obj, &ot_uart_ops, s, TYPE_OT_UART,
+                           REGS_SIZE);
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+=20
+     /*
+-     * This array has a fixed size in the header. This assertion is used to
+-     * check that it is consistent with the definition in this file. This is
++     * These arrays have fixed sizes in the header. These assertions are use=
+d to
++     * check that they are consistent with the definitions in this file. Thi=
+s is
+      * ostensibly a runtime check, but may be optimised away by the compiler.
+      */
+     assert(REGS_SIZE =3D=3D sizeof(s->regs));
++    assert(OT_UART_IRQ_NUM * sizeof(qemu_irq) =3D=3D sizeof(s->irqs));
+ }
+=20
+ static void ot_uart_realize(DeviceState *dev, Error **errp)
+diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
+index f489612700..a2c5ff8b33 100644
+--- a/include/hw/char/ot_uart.h
++++ b/include/hw/char/ot_uart.h
+@@ -42,6 +42,7 @@ struct OtUARTState {
+=20
+     /* <public> */
+     MemoryRegion mmio;
++    qemu_irq irqs[9];
+=20
+     uint32_t tx_level;
+=20
+@@ -59,10 +60,6 @@ struct OtUARTState {
+     Clock *f_clk;
+=20
+     CharFrontend chr;
+-    qemu_irq tx_watermark;
+-    qemu_irq rx_watermark;
+-    qemu_irq tx_empty;
+-    qemu_irq rx_overflow;
+ };
+=20
+ struct OtUARTClass {
+--=20
 2.49.1
+
 
