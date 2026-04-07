@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49C510F9975
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E652B10F9975
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYbu-000453-IP; Wed, 08 Apr 2026 15:30:47 -0400
+	id 1wAYPP-0001m5-Ee; Wed, 08 Apr 2026 15:17:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAY9A-0000LF-Mr
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:01:04 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYNq-0007x0-LD
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:16:15 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAS9h-0001Jz-EF
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 08:37:14 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-59e4a04f059so5822599e87.2
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 05:37:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wADjR-0004Pr-3H
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:13:11 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43cf8fe9c2aso3233598f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 14:13:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775651831; x=1776256631; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:references:to:from
+ d=linaro.org; s=google; t=1775596387; x=1776201187; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=x9l7Y+FcS/abnFKTQjLb/clsdwbnnMt1ssrftjB3hL4=;
- b=zEUEkadegSJaI3wuT6h4eEC2X43z386zg31ITC2wTGhI1DFUJ4r0wrM0zJM3HflKvF
- dCodv3H6mgf/vsQiB+M1rG+CEMxSE1cS5lCTkBHlwLafVYMZmVlBRw1MpCtJqegOXmUt
- 6t+jdVNInSAU04pebWWAr2ZgbD0Xown+ZMcHuYoVzcxhjWJHFE73H3duYspZsXJSEQ3W
- 3wr+r9HZqpJx1PdejmiKUWVeK75uJulPGyXvpfAq3YDmH0zwaQXlaSKZWboHmd7ppKG4
- PBZFC+NhkMgyRFOqVt099PnZPAofQfOq8LUA5/bKwp03cuWjdcSrHjIJIlY4HWEddqmh
- D+MQ==
+ bh=Up7WhY+LCYbcKJ0K74j1UEt8KwkQXoAV2z+yJ8hMwbI=;
+ b=KBsFd4IOKGv6EoVhmOMHIB9DAyYbvNZtF0WE9YY6vR3OLHXihFmba1cZHqTHArAwJN
+ jk5eLAMzp7iX32/d4M2nUQvqfbWq0eIomb/4iTfEsCd1C+/3Ywtcf5Bcel5zSMnX5kGo
+ zfFh9k0vsUQskuwAZteMJwnUoMkVHCFgT0WsRoEsXP8zS0O0/RG977tCHvjvL8jECauE
+ uEEje282D4q2a5CbV6NdreuSA55Sa4q34XlDcSXCcUZ/+pB3MewLT9wBMZ7k2T0fckSh
+ ZakSS5dKpD/LYk/6mingGjALBW7aBwkA5LHL8k9JNbx+ocB/Tf4iIH8/rZ3UWtgTQq21
+ vByg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775651831; x=1776256631;
- h=content-transfer-encoding:in-reply-to:cc:references:to:from
+ d=1e100.net; s=20251104; t=1775596387; x=1776201187;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=x9l7Y+FcS/abnFKTQjLb/clsdwbnnMt1ssrftjB3hL4=;
- b=tXBZHKXy7cjWBnWNMOGRG8vm5ZW5wxWOAIvY/iTyjLJMERyGuXwpYEyFt/nsK3neTa
- 7Z1Ga0hdXLAUHDKEvo/XEnLcOah5QYLwFa0SdQpDwBghrq2TYtlEHQukMGSmE9ZjhRwp
- GOo8/pb2LDqgcbQBPbuIVXGBzeAF4i7f05cuPjqaeoA/cQcH5PKqwhys3mHWStybxK7u
- PjsamVB/AyFE7HBns8Lr8b2qL4gzz1Jb9iTXG09Pok9xPLsXr4iI2llvkG869nWigOcv
- B0/CvtWqBJlW6H4o4ROurQ0lDhRybynr47JJzBMoAO5cNFvEbjlfwyDN3gjdloOl3y2J
- hUHA==
-X-Gm-Message-State: AOJu0YwvKvceIoVqYR9cMimU2eArpJ+WQgipeBVQhjepFsWjxWvzApX2
- JmaooUXACrR83lb2dPGauyousI2ea59ZFQ8UALNqtRlD/8yakiT3s0HtZzmHQTBic/h2AoGreDZ
- TDFjjhas=
-X-Gm-Gg: AeBDietIAt3Isth5jr7uAxfD67t0juHj1CKN+MgFwZIzZdsSEx3tCBMZpfvh6+Wc9+k
- s0geG092UKB1nu885gUW/hEf5FhrmSh+IfhOT1HZJWM4ywItlPWXSUwy0C+zNECStNOsTVraxmM
- mWydfoAUSnpDLMGGMt+77rqAPQEhcSIp2/GZd7wThl7J9HZ2N+ZmK3jYg4l7u66cphx34RyuCvq
- i9uQ53DBeVuqanzOEcflkWU6y2sI5QneHN5pVU6tLyFd6h2IL3k7HaMqXoiWKNTR3UL74Wo8hY0
- wU0KyYJ4IEUyMv/t5fTyl/eUbj+CoOUxAC1KnjC+FRyg2wZpj0LjrWLOkFc6XPcgLOMM0ZuZrDy
- qroXLiyZ5wpXr6D0d7Xzo4v9EEL0HH1F6bysekOch7R2aB32ATRWT25cQ34EMD+mnu1RbBIRQAd
- Gm8Cb0sS3SRfPgPU2PoTp1aoDJXYQI0g7UB6bcCX1U9NkiVyqtcE8+vchgcQTzUvMSUA==
-X-Received: by 2002:a05:6512:3191:b0:5a2:c9d0:16ba with SMTP id
- 2adb3069b0e04-5a337560ab2mr5786884e87.16.1775651830814; 
- Wed, 08 Apr 2026 05:37:10 -0700 (PDT)
+ bh=Up7WhY+LCYbcKJ0K74j1UEt8KwkQXoAV2z+yJ8hMwbI=;
+ b=Jyl5IN1c6W4OFvcFrritQbLbJ5Zoy0o2uLfIZNrO6Bx7LaY/vq+TP3ZkZsi5jbOCku
+ oLR9zbQVHkXglxm1LjBJ2sdgd9C7FF6H9pxcrcY1wHpqNvzVnSrcCyzXyjRT0ysi5MWR
+ n65AuuhPTmDREwoUFMSAiXYXur042/jdcmSBgdyQLHI5ALxuI2kV0AcXyEXnpsIwpYY1
+ IohJPYhgDL177Fyhhw4Vbn0fj1GyAEd+TVbm4Yby6UGA2jDy0oFNUaNNdfuZ40VyYZaa
+ 366iOMrjIXBnjKKVp1s6EJ4LHdXDz45T/yOj3Ur9S4dvTw6mIs1ijX2jNWnbJkuv+f3H
+ dHgw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBvR+Ba2rV8/oKBDDscBwJxUO21auMUmpBacKM+ISq6fM/AiuTcMRLI7J10FtrTG5eiYN1mv4Xj6bg@nongnu.org
+X-Gm-Message-State: AOJu0YxRi43QZNiIeGg77xtuuNjaaBb1N2GCJH+Ne2RRkCtzwc6RHFey
+ qEYmFxbLaPKSMBVlVmD+RaTvsZNDaV5cZPtQ2iqj4hdQ6cIXN8t4QklkDY/8vI1KG3c=
+X-Gm-Gg: AeBDievQFtUgDYnV+sSHlziOduyNtxrHUaV52w81XGbUfI5ocnhzQ/lecU7kJt5nMSl
+ nkDsw+9OXL6U/xAZgBIz07FzHfaeOIsXgEEbWqV8WRkK3hS2W8aaNFRedcNpXibdHhlJn6wTDU7
+ mizKi+yBlbzFH3zJA2BR0Gu1nA23NR9kVotJyWy2xXQWGDf8/ICZC7oreM+Hc48fqV1XlA9EDUv
+ sxWodXCDzUvH+A1jgHGYChQ4jx41jzOZvNm1bRj4L3HGt6iGcU+MbhRcEv4ybdrzWHJFkeQwkU0
+ lX+94lfwB/DN5AQo5sUeWj1reaWxkIUSJNnE+Y0pMLVyvrJ8Aac4M0Y7JV336Dbxq6FNZlkbEVd
+ 97uKtZv8njHlU21JWOje67vG9So+TGRR9P43Fn8e/Im6qSF2IrqFxM2hE56gAe8GJO6oBYTa1LR
+ Os0OxlwjvjmG7hTXBs8veqzOa6UC1VjLniz+97qFLSOIiR11AIwwSf9drW+qGHhuhW6A==
+X-Received: by 2002:a05:6000:1447:b0:43c:fd4d:2409 with SMTP id
+ ffacd0b85a97d-43d2930fb8bmr28666913f8f.46.1775596387401; 
+ Tue, 07 Apr 2026 14:13:07 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5a2c6cd37besm4674808e87.79.2026.04.08.05.37.08
+ ffacd0b85a97d-43d1e4f843dsm50916582f8f.37.2026.04.07.14.13.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 05:37:09 -0700 (PDT)
-Message-ID: <14805e95-c831-4eea-ae67-f011cb463cd2@linaro.org>
-Date: Wed, 8 Apr 2026 14:37:07 +0200
+ Tue, 07 Apr 2026 14:13:06 -0700 (PDT)
+Message-ID: <2f06fe63-c594-4d78-9193-22bd780ec7e0@linaro.org>
+Date: Tue, 7 Apr 2026 23:13:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 0/6] Misc patches for 2026-04-07
+Subject: Re: [PATCH v10 19/21] target/arm/cpu.c: simplify endianness handling
+ in arm_disas_set_info
 Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260407195922.196410-1-pierrick.bouvier@linaro.org>
+ <20260407195922.196410-20-pierrick.bouvier@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20260407215900.63390-1-philmd@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-In-Reply-To: <20260407215900.63390-1-philmd@linaro.org>
+In-Reply-To: <20260407195922.196410-20-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,45 +106,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Peter directly due to mailing-list issues.
+On 7/4/26 21:59, Pierrick Bouvier wrote:
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   target/arm/cpu.c | 6 +-----
+>   1 file changed, 1 insertion(+), 5 deletions(-)
 
-On 7/4/26 23:58, Philippe Mathieu-Daudé wrote:
-> The following changes since commit b6a7d06213e5d2f7d124d16418bc289c4a8a4b82:
-> 
->    Update version for v11.0.0-rc2 release (2026-04-01 20:48:02 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/philmd/qemu.git tags/hw-misc-20260407
-> 
-> for you to fetch changes up to 992e01e838733c8063f8a17e92034c5f35e34963:
-> 
->    ati-vga: Do not crash on 24 bits per pixel (2026-04-07 22:40:29 +0200)
-> 
-> ----------------------------------------------------------------
-> Misc HW patches
-> 
-> Few fixes, mostly for VGA display models.
-> ----------------------------------------------------------------
-> 
-> BALATON Zoltan (4):
->    cirrus-vga: Make frame buffer endianness little endian by default
->    ati-vga: Fix setting CRTC_OFFSET
->    ati-vga: Update mode on CRTC_PITCH change
->    ati-vga: Do not crash on 24 bits per pixel
-> 
-> GuoHan Zhao (1):
->    hw/arm/omap_sx1: map CS3 at the correct base
-> 
-> Philippe Mathieu-Daudé (1):
->    docs/about/removed-features: Replace 'since' -> 'removed in'
-> 
->   docs/about/removed-features.rst | 32 +++++++++++++-------------
->   hw/arm/omap_sx1.c               |  2 +-
->   hw/display/ati.c                | 40 ++++++++++++++++++---------------
->   hw/display/ati_2d.c             |  9 ++++++++
->   hw/display/cirrus_vga.c         |  2 ++
->   5 files changed, 50 insertions(+), 35 deletions(-)
-> 
+:~)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
