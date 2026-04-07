@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2543010F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFED10F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYRl-0000g2-If; Wed, 08 Apr 2026 15:20:17 -0400
+	id 1wAYQ5-00049U-7B; Wed, 08 Apr 2026 15:18:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAY2G-0005Yu-Kl
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:53:56 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAXzl-000525-4E
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:51:21 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAESD-0005Uy-FC
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:59:26 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so23813495e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 14:59:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAEob-0000rQ-DG
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:22:35 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c6e2355739dso2438743a12.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775599163; x=1776203963; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775600552; x=1776205352; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3F2Q5EnnzT6rmGzklEM6ziQNPmaPW6cAaunkc3rGNik=;
- b=tAtOZ3WICz1A57zeiqha4Tg+JT2fkNah+wfUelJ16Sp3MeW1ZPOeNX871a+mvDihZG
- 7wwzxwZ2hWuHFHLEUiW9pjPw/ohWoO+iy0nnMdywlYAj2VLDGoJGfOKJ+gzVYMxmnxwm
- 7iC8r8Ta3UOEK3l+KW46eRlqxyNIshmBZxiiC3ydIqLGh4wB5qeaNJiDvfFVKjhCG62I
- uviP76QwrMAAor2yo4BScyxjvAgL4U6q7mi+ugiDOXey24vMAPv5EaYd/apba1joAuSk
- TUC6QdppAXcWPAIHgSgw5RyXTpWzI/I2AQTC8GE9bF0pVrU9zRDuEaWrnfRKVl8zm/2I
- VxgQ==
+ bh=P49JgMXtfvI/QxKp8JO4alWiNFfw7eGmQBelecFaY5M=;
+ b=Qa/eSDJPdxQnBgv5MIJeCA6dZlAC0wMi8uChEDWHZrhM9J89W+Hjwr1t+mtuhxvOvR
+ apqn28uUB5D9z77XeiyMsIQwrGMSiBUWAnQgq8uBPD8aPLlNFRGzcn/oM2aXYJ2jGB7B
+ s8Xi0Sn2a2RM4ZxRCR/N/Dc/L78a7wHAcCcov30mZ+bSfamm2PQkLVunpjHw5i58x2N0
+ eQPrhOXRen1WlhqE3NODCc7R1FfG7KHFhZrGASEjrJUYrrD6EUnDWmbhZ19JBOAdmB7B
+ 2ZWWbGlbLpUHLDpBuWOMlxtskzNIk6iIsKkiGUxmrAKDUHpUWB0VrsBefDU/RB9MJUHz
+ GsPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775599163; x=1776203963;
+ d=1e100.net; s=20251104; t=1775600552; x=1776205352;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3F2Q5EnnzT6rmGzklEM6ziQNPmaPW6cAaunkc3rGNik=;
- b=hSFtCzfwH5/ulbbXJnmQ5ARaGKeQ2plwtDBEfGyil31zjKZmJfCp/gY3ups88PSOec
- OHtYSw7DhBMQqCms5cgFuC8n5nPqFRXnL/9BE3KjyZHRP/psHx1Je4cwf789WIYoDhqi
- TtQFNjtUWLCPZe9Rcz9ALRaxhByuSI56FkMPy3j4BfxMPIJO1VFaB8S/kB516Zd8GcmG
- xhb+ZNw59RX2aWNQOXS1hg+45UW0f0/VOUqfzcbORnvn2HRn9wkrrvZ1lwts5zQhQioR
- H3UAJe3TjKVkwtgClmgn6cp6oT8EikJH/LgVVmlCNAsYbr3wTl0DN48lz86ZhTdaK6rA
- IkNg==
-X-Gm-Message-State: AOJu0YwQOeC93TXYawgdYlR2KwMIfdYEO9PfASe0ciFCWwzvwiRUyAUX
- 9wli6Oj7gnwU17l3j/WGn5c0LlNEJSzhpVJE/xO4GmqvsqYRwHw9odxZMMOWgqJdwF/sIZ3k7q1
- to6Xdz3E=
-X-Gm-Gg: AeBDiesOgXpx1ZH3RQMbmhxOqHJMhIm+TsCGglBzRyREzPBIoxpbtYWP75MJRM/q6au
- N0Quj00atDcawkjmGpgDWfuJB1LucagnV1vHfHMmml3uXr/l8mR/HuhP6zxiyxSR7a6aJA8sB6O
- W8P1kb6fFMl9QBemHQjVW6ebwK2FtWbKd1ouXuXgrFwdTG5dN8rPseNyl4KFKU3GdntqhPxGDQt
- 8eeQgJAOaAJbryq+3SfWiQTwO+tO15AoJxXdDsoMP1xSAmEfm1dgnze/1T2kU921Z84UaE7b3C+
- HfkLnsusSX5u+hMglYZrh9iOgDCCIDt9MV82IFZ9QIBBY4PDyITP+5dZJLinG4ke6M+kgKtCbyS
- jvFKQ+A7riJGEtYG3q6fZzvt+dNEZ1nvAetbumVfxtC62f/o8E61iMSjk/SPWkWHLWMsqV+M58W
- KuOPFLf1Idi9GjjWgY6payBT1huJt3U5NkpUD2gPghVl7+5gzyB5y4qq76B+Qz1+ClMKzNK0KB
-X-Received: by 2002:a05:600c:8b75:b0:486:f634:ef1 with SMTP id
- 5b1f17b1804b1-4889978c516mr275818025e9.17.1775599163067; 
- Tue, 07 Apr 2026 14:59:23 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e822227sm659482215e9.4.2026.04.07.14.59.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Apr 2026 14:59:22 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=P49JgMXtfvI/QxKp8JO4alWiNFfw7eGmQBelecFaY5M=;
+ b=ERWfaZNZmcEtfFy7ic7scpO9aE3JhhiNTB2n98t212/G4EkH91IqjAhQC4YkZ9jNeb
+ s6LQMT+wFHThCzqhTHZ+2fOTq3MJnb3oNm1uajMthwH8yCiqO1eKRk40gUzviW0PqZVT
+ uMKidX5KkKb05y8ZS/KWNSmZTNnjBUOpHtGNYBX4F5CEgW9eSrZTgGBhgIDy4vfN3OJE
+ SouV+IcdhiZSfYQToIA4qZAWczmMTZcm7nmRLYD6tob77nn7c9YIFsT/0/u6k7o5K2uB
+ SL+VL64xhN2PCNaGXhoTjNRCuv9VN+QmnANZarndHswsKqd8j4JZn+KNLCf6WaKO4rzL
+ Q65w==
+X-Gm-Message-State: AOJu0YxIZkVW0fJ+AFABex7hpFX8zroWuXXgY0ivQ7+6TvS/nXaiwa08
+ qdV9O4hCxoE8GVMBMAY0lnnVOOkDvBopYI2v/hiRWyx1Jmir70rGRrNc9QYcEK6MurXbRsag3g8
+ tDKy2dZg=
+X-Gm-Gg: AeBDiesmEcncW9z6sf+udkGLtQsYOHxxgZC/Jq3HXrPdM0InqBnddMVpydheNcduYRQ
+ GfwJMuoorKsCBjPsoiJgf0WFtfxD7AAcv1O8gVajGB4fMxKcxfQ4sNq2GJwXO3q5hvtPkqS1Wdk
+ 8gIlVLemaq4IJYqplCS7seXWBnRgqpq9U5RIi75qkHmpIH7LkrhReNS15mQbigfpjzbBcQdk1Wm
+ 9dLaH2FCklDsDLPkVWMl7jvG5mAA+2uKJstkRj6TvyYilxi3pXYVNWgY1K3r1IxvAmwimWvJPIr
+ obNPo21rBtivgCvMqNM3ZBL74PZAOefxv7NyvbYqc9tecU3zU+yufeg7VP4ET7WdUQN4jNDZjXH
+ iaFSiR6Wb0AeOGngfvcAuVhWsWp/+POcD2G+xufdsDASjAHZOpCqKsIUbV8dlsxuYkTk3PR1B10
+ KBMV3t1wlwKmfBFCIW/hXIfJXJupQiVbk2Y0HoZR21731WTY7d5tl/Hps6a1OlfFzvtpMJCZ0Ow
+ PfIaDt17iWKfQg=
+X-Received: by 2002:a17:903:22d1:b0:2ae:a45b:42f7 with SMTP id
+ d9443c01a7336-2b2817b3e21mr192446695ad.36.1775600551758; 
+ Tue, 07 Apr 2026 15:22:31 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b274979d5csm180412065ad.38.2026.04.07.15.22.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 15:22:30 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+Cc: philmd@linaro.org, jim.macarthur@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH-for-11.0 3/6] hw/arm/omap_sx1: map CS3 at the correct base
-Date: Tue,  7 Apr 2026 23:58:57 +0200
-Message-ID: <20260407215900.63390-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260407215900.63390-1-philmd@linaro.org>
-References: <20260407215900.63390-1-philmd@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v11 15/21] target/arm/tcg/translate.c: replace TCGv with
+ TCGv_va
+Date: Tue,  7 Apr 2026 15:22:02 -0700
+Message-ID: <20260407222208.271838-16-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,38 +106,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+We know this file is for 32-bit runtime target, so we can set
+TCG_ADDRESS_BITS. TCG_TYPE_VA is derived accordingly and is already
+passed to translator_loop.
 
-omap_sx1 wires the "sx1.cs3" region to OMAP_CS2_BASE instead of
-OMAP_CS3_BASE.
-
-That places both CS2 and CS3 at the same address and leaves the real
-CS3 window unmapped. Point the CS3 region at OMAP_CS3_BASE so the
-static chip-select layout matches the OMAP address definitions.
-
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Fixes: ba1580299d0 ("omap_sx1: convert to memory API")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260403014441.38725-1-zhaoguohan@kylinos.cn>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/omap_sx1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/translate.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/hw/arm/omap_sx1.c b/hw/arm/omap_sx1.c
-index d858dab3253..bcb7105323f 100644
---- a/hw/arm/omap_sx1.c
-+++ b/hw/arm/omap_sx1.c
-@@ -146,7 +146,7 @@ static void sx1_init(MachineState *machine, const int version)
-     memory_region_init_io(&cs[3], NULL, &static_ops, &cs3val,
-                           "sx1.cs3", OMAP_CS3_SIZE);
-     memory_region_add_subregion(address_space,
--                                OMAP_CS2_BASE, &cs[3]);
-+                                OMAP_CS3_BASE, &cs[3]);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index fa4c7907dcd..0b3b4ab86be 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -22,7 +22,8 @@
  
-     fl_idx = 0;
-     if ((dinfo = drive_get(IF_PFLASH, 0, fl_idx)) != NULL) {
+ #include "translate.h"
+ #include "translate-a32.h"
+-#include "tcg/tcg-op.h"
++#define TCG_ADDRESS_BITS 32
++#include "tcg/tcg-op-mem.h"
+ #include "qemu/log.h"
+ #include "arm_ldst.h"
+ #include "semihosting/semihost.h"
+@@ -910,14 +911,14 @@ MemOp pow2_align(unsigned i)
+  * that the address argument is TCGv_i32 rather than TCGv.
+  */
+ 
+-static TCGv gen_aa32_addr(DisasContext *s, TCGv_i32 a32, MemOp op)
++static TCGv_va gen_aa32_addr(DisasContext *s, TCGv_i32 a32, MemOp op)
+ {
+-    TCGv addr = tcg_temp_new();
+-    tcg_gen_extu_i32_tl(addr, a32);
++    TCGv_va addr = tcgv_va_temp_new();
++    tcg_gen_mov_i32(addr, a32);
+ 
+     /* Not needed for user-mode BE32, where we use MO_BE instead.  */
+     if (!IS_USER_ONLY && s->sctlr_b && (op & MO_SIZE) < MO_32) {
+-        tcg_gen_xori_tl(addr, addr, 4 - (1 << (op & MO_SIZE)));
++        tcg_gen_xori_i32(addr, addr, 4 - (1 << (op & MO_SIZE)));
+     }
+     return addr;
+ }
+@@ -929,21 +930,21 @@ static TCGv gen_aa32_addr(DisasContext *s, TCGv_i32 a32, MemOp op)
+ void gen_aa32_ld_internal_i32(DisasContext *s, TCGv_i32 val,
+                               TCGv_i32 a32, int index, MemOp opc)
+ {
+-    TCGv addr = gen_aa32_addr(s, a32, opc);
++    TCGv_va addr = gen_aa32_addr(s, a32, opc);
+     tcg_gen_qemu_ld_i32(val, addr, index, opc);
+ }
+ 
+ void gen_aa32_st_internal_i32(DisasContext *s, TCGv_i32 val,
+                               TCGv_i32 a32, int index, MemOp opc)
+ {
+-    TCGv addr = gen_aa32_addr(s, a32, opc);
++    TCGv_va addr = gen_aa32_addr(s, a32, opc);
+     tcg_gen_qemu_st_i32(val, addr, index, opc);
+ }
+ 
+ void gen_aa32_ld_internal_i64(DisasContext *s, TCGv_i64 val,
+                               TCGv_i32 a32, int index, MemOp opc)
+ {
+-    TCGv addr = gen_aa32_addr(s, a32, opc);
++    TCGv_va addr = gen_aa32_addr(s, a32, opc);
+ 
+     tcg_gen_qemu_ld_i64(val, addr, index, opc);
+ 
+@@ -956,7 +957,7 @@ void gen_aa32_ld_internal_i64(DisasContext *s, TCGv_i64 val,
+ void gen_aa32_st_internal_i64(DisasContext *s, TCGv_i64 val,
+                               TCGv_i32 a32, int index, MemOp opc)
+ {
+-    TCGv addr = gen_aa32_addr(s, a32, opc);
++    TCGv_va addr = gen_aa32_addr(s, a32, opc);
+ 
+     /* Not needed for user-mode BE32, where we use MO_BE instead.  */
+     if (!IS_USER_ONLY && s->sctlr_b && (opc & MO_SIZE) == MO_64) {
+@@ -2036,7 +2037,7 @@ static void gen_load_exclusive(DisasContext *s, int rt, int rt2,
+          * architecturally 64-bit access, but instead do a 64-bit access
+          * using MO_BE if appropriate and then split the two halves.
+          */
+-        TCGv taddr = gen_aa32_addr(s, addr, opc);
++        TCGv_va taddr = gen_aa32_addr(s, addr, opc);
+ 
+         tcg_gen_qemu_ld_i64(t64, taddr, get_mem_index(s), opc);
+         tcg_gen_mov_i64(cpu_exclusive_val, t64);
+@@ -2065,7 +2066,7 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
+ {
+     TCGv_i32 t0, t1, t2;
+     TCGv_i64 extaddr;
+-    TCGv taddr;
++    TCGv_va taddr;
+     TCGLabel *done_label;
+     TCGLabel *fail_label;
+     MemOp opc = size | MO_ALIGN | s->be_data;
+@@ -3792,7 +3793,7 @@ static void do_ldrd_load(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
+      */
+     int mem_idx = get_mem_index(s);
+     MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
+-    TCGv taddr = gen_aa32_addr(s, addr, opc);
++    TCGv_va taddr = gen_aa32_addr(s, addr, opc);
+     TCGv_i64 t64 = tcg_temp_new_i64();
+     TCGv_i32 tmp = tcg_temp_new_i32();
+     TCGv_i32 tmp2 = tcg_temp_new_i32();
+@@ -3847,7 +3848,7 @@ static void do_strd_store(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
+      */
+     int mem_idx = get_mem_index(s);
+     MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
+-    TCGv taddr = gen_aa32_addr(s, addr, opc);
++    TCGv_va taddr = gen_aa32_addr(s, addr, opc);
+     TCGv_i32 t1 = load_reg(s, rt);
+     TCGv_i32 t2 = load_reg(s, rt2);
+     TCGv_i64 t64 = tcg_temp_new_i64();
+@@ -4068,7 +4069,7 @@ DO_LDST(STRH, store, MO_UW)
+ static bool op_swp(DisasContext *s, arg_SWP *a, MemOp opc)
+ {
+     TCGv_i32 addr, tmp;
+-    TCGv taddr;
++    TCGv_va taddr;
+ 
+     opc |= s->be_data;
+     addr = load_reg(s, a->rn);
 -- 
-2.53.0
+2.47.3
 
 
