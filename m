@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DC8FF5134
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D16AFF5137
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABWA-0007uB-Fm; Tue, 07 Apr 2026 14:51:18 -0400
+	id 1wABUi-0006ZM-If; Tue, 07 Apr 2026 14:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wABTm-0002eY-7W
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wA3qS-0005AI-5m
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 06:39:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775558382;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Hbs22JhBt6EjZOe3QujDiy+G5sHIl7it0+rcHyQDPOE=;
- b=EAw2Ut+BpRI1pPD1M8+B4ySJN8Iy8UCu3OfIktEGK2XCch2LR/H9ZKvSJqTXcXKBoGBeYA
- GZNkS8oUBTFjR53WAcjEoqvMu1uTDyz6KO22ALQIeJasa7Rc+PmFuZltBRs25LJJ/MbZHt
- tz7icQvyujStQBKU3RHkAGqkGY69pBE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-Y_NaVTD1PRufTALoeK3vbQ-1; Tue,
- 07 Apr 2026 06:39:39 -0400
-X-MC-Unique: Y_NaVTD1PRufTALoeK3vbQ-1
-X-Mimecast-MFC-AGG-ID: Y_NaVTD1PRufTALoeK3vbQ_1775558378
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A24E81956046; Tue,  7 Apr 2026 10:39:37 +0000 (UTC)
-Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.101])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBC0130001BB; Tue,  7 Apr 2026 10:39:34 +0000 (UTC)
-Date: Tue, 7 Apr 2026 11:39:31 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Christian Brauner <brauner@kernel.org>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 1/5] monitor: store monitor id and dynamic flag in
- Monitor struct
-Message-ID: <adTe4_uiYogOULtn@redhat.com>
-References: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
- <20260407-work-qmp-monitor-hotplug-v3-1-cb259800fffb@kernel.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wABTD-0002eY-NP
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:18 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wA7Fc-00053K-S1
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 10:18:00 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43cfbd17589so4031634f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 07:17:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775571475; x=1776176275; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=geqA3MZMh9qbt+Amv7uressH8UsaaFhMy0S1HJDzOUE=;
+ b=o+5cWJtJE9Yvt+iu416e/kkXonKdQAJm+jlxIOkvKMoe9vvk8b7wHCmGLftJEIYA8s
+ xhY1TLDWsAIczjZEWot1cW/mBkglJSgLWPFaHqp7m8H/pPS31Q+k6xy+aUQ/aV7fhpmq
+ Glf8tZMRKLVqhRAbwGDLm/MCPmIDttQzIb2l02DRegDKnQw3PP2IYqgP3DYuKi/DoSA9
+ UDk6FLHKKHAda46CGHw6L++5Tgy2JRFtITxouDyE9Lrq1hc29DzrKQH9g0vlCoUrmwdb
+ /ZCqaBhWJ3VK4l9/9f+JKzovsONfB6mt10gikeXTuAoemBWrvmLZCQab44cooJkKNHKj
+ KzFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775571475; x=1776176275;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=geqA3MZMh9qbt+Amv7uressH8UsaaFhMy0S1HJDzOUE=;
+ b=ix0M2QkbXmy5vAqfSljuTRuj7PVxTMVSm3SqbQ4IBFdarbJRzVgMCeQfU9wI+B4fFd
+ l/JwogoduBJrLHOEVH9KIDCqAKYe9z2UaK2zxAmiR+XGmfKqHg2w15bZMIQ/RZIt0Qgg
+ uurUVUAgzc44B54zpmDrHd6WaDE/Cya23rsnRY40R9mONcTJxRqTp5DjVU09OMt+QxOX
+ P2dTwx0J/3jj1qLmBDjXKCHK/YNSr2Ql746E6k7F9VncuYOiv6xWZRzF97T/Xkav1om6
+ jwXE1ejtBklSs71VhgnkRNdNofXWPDFFViGljevIoVUF5kHB0Tx8YnmmbiyTZxK00nXt
+ MMSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQoDniVxdVm9l+0D8z57LLevkdwP8Q6GKt7UWoVxkRU0+5wzTcN/jKuWNe6krlMrzmx4FZQ0Mytsz6@nongnu.org
+X-Gm-Message-State: AOJu0YwkhxlwgH6CYO3X4KzY5v0tUSpkm5O5Epw968cvNIC0EqsdyMbE
+ E84SI/gyftgchwolEnLThOWm05iAPKEEXo/9onjCBVpnTz1fnukE6GliglIy8MKIV5M=
+X-Gm-Gg: AeBDiesP+GLcdfpJpTBZE3+eyFGj7/+fu6sGwwNiRa9qF0MQUoLLSct065ZPO0r+AmF
+ Yr/GLN09NggNj3NArZ3rbJ01mb4TPBdidlFXXKxrXmVltz6KhpUukUqy73nImTaJa7OZpWp+2Nl
+ HOLHWrAT76m6WhoOYA7y16dcQ2zuZ5H8sszfkVkYn8+iPProIWBg4A3Uf8eLDa+2c253gXtWkNW
+ bgNmvyUG8b0DERLbmblYOqjxjCNcU9LCF5DNhW5s9RwB63eYJu3bok99e4peqbvHZq3ThFcLaTX
+ EJm26QkWirMmoB544h4wCWt+9hP+fVsLmIegzjCccNEl42J8wZy4hkWUXMTZwYpvUwcmewXwLtT
+ sGJ1bowo/JGYopykDgShisJ7CSN/hM0qZSV7eQq5WqLEDf/4njqCnbUTTWkEPIfU3CqvgJ7f9ae
+ WHEUayGW0SwOPO72P6R5C98sHX3mGl715+uxpVX8jwI9h8TcGKAWMxOSM6pEH/YoM6KA==
+X-Received: by 2002:a05:6000:2211:b0:43d:14ae:1340 with SMTP id
+ ffacd0b85a97d-43d292e7e5dmr25495821f8f.23.1775571475048; 
+ Tue, 07 Apr 2026 07:17:55 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d1e4d2738sm51512450f8f.24.2026.04.07.07.17.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Apr 2026 07:17:54 -0700 (PDT)
+Message-ID: <884193da-0078-44f0-804d-e5ccaf5f3398@linaro.org>
+Date: Tue, 7 Apr 2026 16:17:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260407-work-qmp-monitor-hotplug-v3-1-cb259800fffb@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/7] target/riscv: Add big-endian CPU property
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260406154935.144674-1-djordje.todorovic@htecgroup.com>
+ <20260406154935.144674-3-djordje.todorovic@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260406154935.144674-3-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,197 +106,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 07, 2026 at 09:32:45AM +0200, Christian Brauner wrote:
-> Add 'id', 'dynamic', and 'dead' fields to struct Monitor. The id field
-> stores the monitor identifier from MonitorOptions which was previously
-> parsed but discarded. The dynamic flag marks monitors created at runtime
-> via the upcoming monitor-add command, and the dead flag will be used for
-> deferred destruction during monitor-remove.
+On 6/4/26 17:49, Djordje Todorovic wrote:
+> Add a "big-endian" boolean property to the RISC-V CPU configuration,
+> defaulting to false (little-endian). This property allows machine
+> models to configure individual HARTs for big-endian data operation.
 > 
-> Extend monitor_init_qmp() to accept id and dynamic parameters so these
-> are set before the monitor is added to mon_list.
+> The RISC-V ISA supports big-endian data accesses via the mstatus
+> SBE/MBE/UBE bits, while instructions remain always little-endian.
+> This property provides the configuration interface; subsequent
+> patches will connect it to the CPU state and translation logic.
 > 
-> For iothread monitors, move monitor_list_append() from the setup BH to
-> the caller so monitor_find_by_id() can detect duplicates immediately.
-> Without this, two concurrent monitor-add calls could both pass the
-> duplicate check before either BH runs.  This means the monitor is now
-> visible in mon_list before its chardev handlers are set up, which was
-> not the case before.  This is safe because the request queue is still
-> empty (no chardev handlers means no monitor_qmp_read(), so the
-> dispatcher finds nothing to dispatch) and event broadcast is handled
-> below.
-> 
-> This requires initializing mon->commands = &qmp_cap_negotiation_commands
-> before monitor_list_append().  Without it, commands is NULL (from
-> g_new0) and monitor_qapi_event_emit() would not skip the monitor during
-> event broadcast -- its check is specifically for the
-> qmp_cap_negotiation_commands pointer, so a NULL falls through to
-> qmp_send_response() on an uninitialized monitor.  CHR_EVENT_OPENED sets
-> commands to the same value again later.
-> 
-> Add monitor_find_by_id() to look up monitors by identifier.  The lookup
-> takes monitor_lock to serialize with the I/O thread BH that modifies
-> mon_list, but releases it before returning.  The caller must hold the
-> BQL to ensure the returned pointer remains valid since only BQL holders
-> can destroy monitors.
-> 
-> Free the id string in monitor_data_destroy().
-> 
-> Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > ---
->  include/monitor/monitor.h  |  3 ++-
->  monitor/monitor-internal.h |  5 +++++
->  monitor/monitor.c          | 21 ++++++++++++++++++++-
->  monitor/qmp.c              | 11 ++++++++---
->  4 files changed, 35 insertions(+), 5 deletions(-)
-> 
-> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-> index 296690e1f1..7a2bb603e4 100644
-> --- a/include/monitor/monitor.h
-> +++ b/include/monitor/monitor.h
-> @@ -19,7 +19,8 @@ bool monitor_cur_is_qmp(void);
->  
->  void monitor_init_globals(void);
->  void monitor_init_globals_core(void);
-> -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
-> +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
-> +                      bool dynamic, Error **errp);
->  void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
->  int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
->  int monitor_init_opts(QemuOpts *opts, Error **errp);
-> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> index feca111ae3..4896812d4e 100644
-> --- a/monitor/monitor-internal.h
-> +++ b/monitor/monitor-internal.h
-> @@ -98,7 +98,10 @@ struct Monitor {
->      bool is_qmp;
->      bool skip_flush;
->      bool use_io_thread;
-> +    bool dynamic;           /* true if created via monitor-add */
-> +    bool dead;              /* awaiting drain after monitor-remove */
+>   target/riscv/cpu.c                | 1 +
+>   target/riscv/cpu_cfg_fields.h.inc | 1 +
+>   2 files changed, 2 insertions(+)
 
-Neither of these fields appear to be used for anything in this
-patch. If they're used in a later patch, then add them at time
-of use.
 
->  
-> +    char *id;               /* NULL for unnamed CLI monitors */
->      char *mon_cpu_path;
->      QTAILQ_ENTRY(Monitor) entry;
->  
-> @@ -181,6 +184,8 @@ void monitor_data_destroy_qmp(MonitorQMP *mon);
->  void coroutine_fn monitor_qmp_dispatcher_co(void *data);
->  void qmp_dispatcher_co_wake(void);
->  
-> +Monitor *monitor_find_by_id(const char *id);
-> +
->  int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
->  void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
->  int hmp_compare_cmd(const char *name, const char *list);
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 00b93ed612..7144255e12 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -622,6 +622,7 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
->  
->  void monitor_data_destroy(Monitor *mon)
->  {
-> +    g_free(mon->id);
->      g_free(mon->mon_cpu_path);
->      qemu_chr_fe_deinit(&mon->chr, false);
->      if (monitor_is_qmp(mon)) {
-> @@ -633,6 +634,24 @@ void monitor_data_destroy(Monitor *mon)
->      qemu_mutex_destroy(&mon->mon_lock);
->  }
->  
-> +/*
-> + * Look up a monitor by its id.  The monitor_lock is released before
-> + * returning, so the caller must hold the BQL to ensure the returned
-> + * pointer remains valid (only BQL holders can destroy monitors).
-> + */
-> +Monitor *monitor_find_by_id(const char *id)
-> +{
-> +    Monitor *mon;
-> +
-> +    QEMU_LOCK_GUARD(&monitor_lock);
-> +    QTAILQ_FOREACH(mon, &mon_list, entry) {
-> +        if (mon->id && strcmp(mon->id, id) == 0) {
-> +            return mon;
-> +        }
-> +    }
-> +    return NULL;
-> +}
-> +
->  void monitor_cleanup(void)
->  {
->      /*
-> @@ -732,7 +751,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
->  
->      switch (opts->mode) {
->      case MONITOR_MODE_CONTROL:
-> -        monitor_init_qmp(chr, opts->pretty, errp);
-> +        monitor_init_qmp(chr, opts->pretty, opts->id, false, errp);
->          break;
->      case MONITOR_MODE_READLINE:
->          if (!allow_hmp) {
-> diff --git a/monitor/qmp.c b/monitor/qmp.c
-> index 687019811f..afbe2283d6 100644
-> --- a/monitor/qmp.c
-> +++ b/monitor/qmp.c
-> @@ -510,10 +510,10 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
->      qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
->                               monitor_qmp_read, monitor_qmp_event,
->                               NULL, &mon->common, context, true);
-> -    monitor_list_append(&mon->common);
->  }
->  
-> -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-> +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
-> +                      bool dynamic, Error **errp)
->  {
->      MonitorQMP *mon = g_new0(MonitorQMP, 1);
->  
-> @@ -527,12 +527,16 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
->      monitor_data_init(&mon->common, true, false,
->                        qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
->  
-> +    mon->common.id = g_strdup(id);
-> +    mon->common.dynamic = dynamic;
->      mon->pretty = pretty;
->  
->      qemu_mutex_init(&mon->qmp_queue_lock);
->      mon->qmp_requests = g_queue_new();
->  
->      json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
-> +    /* Prevent event broadcast to an uninitialized monitor. */
-> +    mon->commands = &qmp_cap_negotiation_commands;
->      if (mon->common.use_io_thread) {
->          /*
->           * Make sure the old iowatch is gone.  It's possible when
-> @@ -551,7 +555,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
->           */
->          aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
->                                  monitor_qmp_setup_handlers_bh, mon);
-> -        /* The bottom half will add @mon to @mon_list */
-> +        /* Synchronous insert for immediate duplicate detection. */
-> +        monitor_list_append(&mon->common);
->      } else {
->          qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
->                                   monitor_qmp_read, monitor_qmp_event,
-> 
-> -- 
-> 2.47.3
-> 
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index 70ec650abf..51436daabf 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
+>   BOOL_FIELD(ext_xmipscmov)
+>   BOOL_FIELD(ext_xmipslsp)
+>   
+> +BOOL_FIELD(big_endian)
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Since it is runtime it doesn't belong to RISCVCPUConfig.
 
