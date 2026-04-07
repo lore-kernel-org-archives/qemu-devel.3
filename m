@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6BFFF513B
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 21:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC95F46C7F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 21:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wADWc-0004Ms-2u; Tue, 07 Apr 2026 16:59:54 -0400
+	id 1wADYJ-0005Q2-Ta; Tue, 07 Apr 2026 17:01:40 -0400
 Received: from eggs.gnu.org ([209.51.188.92])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wADWa-0004MK-01
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:59:52 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wADYA-0005Op-5g
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:01:32 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wADUR-0000wD-9m
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:57:40 -0400
+ id 1wADVv-0001K1-ER
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:59:12 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id A4C02600AC;
- Tue,  7 Apr 2026 20:57:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3F1C116C6;
- Tue,  7 Apr 2026 20:57:28 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id CBE15600AC;
+ Tue,  7 Apr 2026 20:59:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A646C116C6;
+ Tue,  7 Apr 2026 20:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775595451;
- bh=4+gNC0s2qQJ4oL9xsc/4G09+rjiF+z+Me6wgkXsSwOE=;
+ s=k20201202; t=1775595550;
+ bh=m+tZlWT6PpHFvAYmYtrq5ynvY8VedrOo9lnWAeHIrKI=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=oqQBoGwDYIQpySY8tjqHqNbhjdtvBDo30jMD/NIWJkrlBEX9SAG6bWv8XVfW/mUDK
- ysE0YFCYHeMSY7/2cfG0CN7fLsCl7Um9FCeGKUxQxODSekJs0FQ78HValqdW41D52w
- pgpO4mPjG6SfXNTls9zzTuPw4sFn5NX40sx33ax7J5LVoEQd+WrYc0Tf8jCXRh5zEP
- NdxEVLRIaQW4wT2pYkljImZSBV0a8EHjX98czmeNa0oFrRnB+yn1IxvDco5D52p9me
- +k3V6l/DvJG16ItpYt/FCyIDuQqpNYtBeTEugFolWFlfC43p+NwA9bXAwKJB8SB1G9
- S9+7G8YnrMJdQ==
-Date: Tue, 7 Apr 2026 22:57:26 +0200
+ b=Ig7dF6hcqibZeW771dYZ7twTcwvn4OoFe56i9+h+GNoyuOfp1GFeH1F2uFc5yLL+m
+ FbfmYg86D/oro0Wx1pNVzWaYZSlA1bozpjJYnrEOUUdRCAgAQjqDaGMT7O0U6hc+gX
+ 5Em/pZN0hKxxowxAdlPlpUIG3bfw/xN9L2u/bGeZnHA78O7HZJZQO2mHI5xVDAVEuh
+ 49xiE1X5gE1XtLgJm9f84H4IEwPieI9/SQgPRgAUYBndfVZCIgd97iMzy9tTMl3Z2J
+ MbXLAvM9dxi6+5c1nN+USulMdUFpOkGL8FVPe0ZMmh6WU/6p7Wz+YDsopBf3XsBsP5
+ A1DiAC8vZgIxg==
+Date: Tue, 7 Apr 2026 22:59:05 +0200
 From: Christian Brauner <brauner@kernel.org>
 To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
@@ -43,22 +43,25 @@ Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Thomas Huth <th.huth+qemu@posteo.eu>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 0/5] monitor: add dynamic QMP monitor hotplug support
-Message-ID: <20260407-notprogramm-wohlfahrt-be7393963311@brauner>
+Subject: Re: [PATCH v3 3/5] qapi: add monitor-add, monitor-remove,
+ query-monitors commands
+Message-ID: <20260407-erhitzen-anlaufen-ffbbd453251b@brauner>
 References: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
- <adTj1iWPZYTD0CF1@redhat.com>
+ <20260407-work-qmp-monitor-hotplug-v3-3-cb259800fffb@kernel.org>
+ <adTgYYklczPVA40Q@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <adTj1iWPZYTD0CF1@redhat.com>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=brauner@kernel.org; helo=tor.source.kernel.org
+In-Reply-To: <adTgYYklczPVA40Q@redhat.com>
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,49 +78,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 07, 2026 at 12:00:38PM +0100, Daniel P. Berrangé wrote:
-> On Tue, Apr 07, 2026 at 09:32:44AM +0200, Christian Brauner wrote:
-> > QEMU supports runtime hotplug for chardevs, devices, block backends,
-> > and netdevs. Monitors are the only major subsystem that lacks this --
-> > all QMP monitors must be configured at launch via -mon or -qmp CLI
-> > options.
+On Tue, Apr 07, 2026 at 11:45:53AM +0100, Daniel P. Berrangé wrote:
+> On Tue, Apr 07, 2026 at 09:32:47AM +0200, Christian Brauner wrote:
+> > Add QMP commands for dynamic monitor lifecycle management:
 > > 
-> > This series adds monitor-add, monitor-remove, and query-monitors QMP
-> > commands so that management tools can create independent QMP sessions
-> > on demand at runtime.
+> > - monitor-add: Create a QMP monitor on an existing chardev at runtime.
+> >   The chardev must exist and not already have a frontend attached
+> >   (enforced by qemu_chr_fe_init()).  The new monitor starts in
+> >   capability negotiation mode.
 > > 
-> > I've implemented a QMP-to-Varlink bridge in systemd. This allows
-> > systemd-vmspawn to control virtual machines and containers through a
-> > unified Varlink interface. Varlink allows protocol upgrades. For
-> > example, it is possible to switch from Varlink to say http. I'm
-> > allowing Varlink clients to upgrade from the Varlink interface to the
-> > native QMP interface. Such clients get a new monitor assigned that
-> > allows them to manage the virtual machine directly via QMP. The main
-> > monitor remains unaffected and tied to the generic Varlink interface. We
-> > can't pre-allocate monitors as we have no control over how many protocol
-> > upgrades we actually get but it won't just be one. And having unused
-> > monitors around really isn't ideal either.
-> > 
-> > Having the ability to hotplug monitors would really be helpful. I'm not
-> > yet super well-versed in qemu internals so this might be done wrong but
-> > testing works so far.
+> > - monitor-remove: Remove a dynamically-added monitor.  CLI-created
+> >   monitors cannot be removed.  The removal sequence is:
 > 
-> Can you say if AI agents/LLMs were used in creating these patches ? 
+> Why should we block removal of statically created monitors ? Our
+> normal approach is that the creation of objects via the command
+> line & QMP be indistinguishable.
 
-In exploring the QEMU codebase and how the QMP protocol is used in other
-code-bases. So specifically I used it to research:
+Sounds fine to me.
 
-* Does monitor hotplug already work?
-* Has the idea of monitor hotplug been discussed before?
-* Is there an obvious fundamental reason this cannot work?
-* What does the lifetime of a monitor look like?
-* I used it to review the code I wrote and point out bugs that I then
-  fixed myself.
-* I had various research questions around how io-thread interactions
-  work and common synchronization primitives in the codebase.
+> 
+> 
+> > diff --git a/qapi/control.json b/qapi/control.json
+> > index 9a5302193d..fd58b57c31 100644
+> > --- a/qapi/control.json
+> > +++ b/qapi/control.json
+> > @@ -211,3 +211,107 @@
+> >        '*pretty': 'bool',
+> >        'chardev': 'str'
+> >    } }
+> > +
+> > +##
+> > +# @monitor-add:
+> > +#
+> > +# Add a QMP monitor on an existing character device backend.
+> > +#
+> > +# The chardev must already exist (created via chardev-add or CLI).
+> > +# The monitor begins in capability negotiation mode -- the first
+> > +# client to connect receives the QMP greeting.
+> > +#
+> > +# @id: Monitor identifier, must be unique among monitors
+> > +#
+> > +# @chardev: Name of the character device backend to attach to
+> > +#
+> > +# @pretty: Enable pretty-printing of QMP responses (default: false)
+> > +#
+> > +# Errors:
+> > +#     - GenericError if @id is already in use
+> > +#     - GenericError if @chardev does not exist
+> > +#
+> > +# Since: 11.0
+> 
+> We're just about to release 11.0, so 11.1 is the earliest
+> opportunity to merge anything now.
 
-The code hasn't been written by any coding tool in line with what is
-requested in the contribution guidelines. I used it to speed up my
-understanding of what's going on and to debug things without using the
-output.
+I mostly copy-pasted this together. I honestly had no idea what the
+current release cycle is.
+
+> 
+> > +#
+> > +# .. qmp-example::
+> > +#
+> > +#     -> { "execute": "monitor-add",
+> > +#          "arguments": { "id": "extra-qmp",
+> > +#                         "chardev": "qmp-extra" } }
+> > +#     <- { "return": {} }
+> > +##
+> > +{ 'command': 'monitor-add',
+> > +  'data': { 'id': 'str',
+> > +            'chardev': 'str',
+> > +            '*pretty': 'bool' } }
+> > +
+> > +##
+> > +# @monitor-remove:
+> > +#
+> > +# Remove a dynamically added QMP monitor.
+> > +#
+> > +# The monitor must have been created via monitor-add.  Monitors
+> > +# created via CLI options (-mon, -qmp) cannot be removed.  The
+> > +# underlying chardev is NOT removed -- use chardev-remove separately
+> > +# if desired.
+> > +#
+> > +# If a client is currently connected, the connection is dropped.
+> > +#
+> > +# @id: Monitor identifier as passed to monitor-add
+> > +#
+> > +# Errors:
+> > +#     - GenericError if @id does not exist
+> > +#     - GenericError if the monitor was not dynamically added
+> 
+> I don't think we need to include "GenericError" in the description.
+> We've abandoned the idea of error classes in general, so everything
+> is GenericError  except for a bit of historical cruft.
+
+Ok.
+
+> 
+> > +#
+> > +# Since: 11.0
+> > +#
+> > +# .. qmp-example::
+> > +#
+> > +#     -> { "execute": "monitor-remove",
+> > +#          "arguments": { "id": "extra-qmp" } }
+> > +#     <- { "return": {} }
+> > +##
+> > +{ 'command': 'monitor-remove',
+> > +  'data': { 'id': 'str' } }
+> > +
+> > +##
+> > +# @MonitorInfo:
+> > +#
+> > +# Information about a QMP/HMP monitor.
+> > +#
+> > +# @id: Monitor identifier (absent for CLI-created monitors without
+> > +#     an explicit id)
+> 
+> We can't make 'id' mandatory for the existing arg without breaking
+> compat, but IMHO we should allocate an auto-generated 'id' if the
+> user omits it.
+
+Ok.
 
