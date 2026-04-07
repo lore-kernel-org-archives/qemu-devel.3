@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9495910F9972
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB95C10F9969
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYW1-0005qL-Fl; Wed, 08 Apr 2026 15:24:41 -0400
+	id 1wAYcC-0005Lf-Bz; Wed, 08 Apr 2026 15:31:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAY6p-0007CZ-Rn
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:58:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAKyL-0005YE-Ir
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:57:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775624221;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=12Ibako9l1QCgj1DoburL3oW+TWB9fRmzv8J5Z9tONs=;
- b=R57vrxixTkm1JrPrKfAIo+dwzVhXm7IBSmjNaScOu+5uBLdrinemGhM3JcymGb/l2RWH23
- equJJc1OSJJ2uWP/XXICA/OEp34pqDcIhjKPvauFatYKfFAlePVnOAAhFs2elqZxiPMivr
- 2flf9ARXQmvN1ypWsD/QIZj5maoktVE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-tqP6xa1QO76yhAtKpQnmcg-1; Wed,
- 08 Apr 2026 00:56:59 -0400
-X-MC-Unique: tqP6xa1QO76yhAtKpQnmcg-1
-X-Mimecast-MFC-AGG-ID: tqP6xa1QO76yhAtKpQnmcg_1775624217
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E70A195609D; Wed,  8 Apr 2026 04:56:57 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.7])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 54BCB19560A6; Wed,  8 Apr 2026 04:56:47 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYA6-0000pr-54
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:02:02 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wADtZ-0006cc-KL
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:23:38 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so57012975e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 14:23:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775597016; x=1776201816; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=52fny4xf/umuE1X09OYy8HjDidhbGmt3lpbRc93/+vg=;
+ b=uUZc8UKMLtksu/hFr9hukCsrla4lhQOo024mEAL3j90/ap0xmdFHizQCWRGimymZbb
+ RtMe4UqUr3TlK4K9QhU7S3gt60aJ3w3/gtA5uqJX9eZPUUKt4lOJCnkn2brneCJjqTQk
+ wAdEOKVGzclkaks1QTSEwzG4BENnNZgUBqucOzHFgY+QBv3K3TgZF8nVxAOTSsK/+d92
+ fnUB6MPGlPRFqTIGqqhL/ANxNFmA73XAp8Z7/g2rCudFTclCW1SzlEiCQ8R9o7/u6mmX
+ +giAU1lUgSb8ZVTM8s9JeZSbz/WFtmwe1y/Pk3TzGW2NrR0fd7qd+v6tmGghcwnoxiWG
+ SJjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775597016; x=1776201816;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=52fny4xf/umuE1X09OYy8HjDidhbGmt3lpbRc93/+vg=;
+ b=dEWN8Rnsy3TrIIqmBrs58VZKL/Iz3Y4I58EGrONYJau8Q+XY5gVhBmpybIOQxkE8xv
+ hv7dibHiLdNjGvwSjyS97rrMpDs134bF+aHzOKFAD1e8PzCU1Sm0l1DHBCbT0UDtkhbE
+ KsNGUXPlrJmI1CmZfaarPEtx07w966nTqfKZCNDQIFkirNl4FfwAQwyWmP99SNFwvJXU
+ 6mNb359KWRr70MT334dF4bWopMJBn9WDTNDmXAniSUofuLBn5uQPKZXgJrtMbMHM1Fwd
+ mGFcdS5DwRMzFF7CrTwRTshxOD+NtbLQfLEvu2VMAoHIX9h5n7D8vlynsoovSwgSOV+Y
+ jQtw==
+X-Gm-Message-State: AOJu0YzqMXGvWJJ4QvbVDdhYaUAS5AQEOnfy2pYQsNNfI7m9jzUL+x29
+ Lkk8UMIZ4OBPpoRM8z93AnHXZfqg6f6zPbuFjs67hkIiRkDRcHG/4AWKTt3ohNnXf5vwDk5bmMD
+ 8qHTniyI=
+X-Gm-Gg: AeBDieuwy1eFXpDGy9sFel6kdvrHe3NV3fcPjCsvJTd0EZZnFm/eEjkptCdwaIfd5Go
+ Ym4Zn6obVmjZH0olUlQ69bO4R53PV4iU+ld0zxL5O9eSR1TxcpP5i09DJhIfZHAM8CTTsGUZ3NO
+ qrpoja6fDw6PPsajDctvL/OXZG8fC1hJq7AfDHuggR+ft0v4ef5K+WqALq4loRkHDNhJZ2y2IGM
+ dx+vxbIJrEKqq5v+fv6kLRHdADOzQ5Y8KO8uPi2NY79QtwClIgINvJ0R/D5SEDcLIkQjKHfYL9u
+ woq0ttm1UvfEymf4MaTsiCf4tmTsX3cMVXMDtpCIhID73aS7dR5STFOvvCFe3hmU7OFK4pVsTRT
+ 3ScXumaO77vjlAcF8VFpSbSODiO4TVaBHaBPMuvjr8rjvNw2NlcSaUotvN0twW+hJl64sK5D2y8
+ cc06+ZJ8vFifbM6UKVQVcB9//ovPcjR/ru+L3MxKO2n6mi1FeyFp8zWvjVOGrSuxByoQQ0kngq
+X-Received: by 2002:a05:600c:a413:b0:485:6bcc:87dc with SMTP id
+ 5b1f17b1804b1-488997b3a9amr195457605e9.14.1775597015603; 
+ Tue, 07 Apr 2026 14:23:35 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488a8ddfde7sm460077915e9.5.2026.04.07.14.23.34
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 07 Apr 2026 14:23:34 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Kashyap Chamarthy <kchamart@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>, Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 08/10] qapi: enforce doc block section ordering
-Date: Wed,  8 Apr 2026 00:55:29 -0400
-Message-ID: <20260408045531.3006678-9-jsnow@redhat.com>
-In-Reply-To: <20260408045531.3006678-1-jsnow@redhat.com>
-References: <20260408045531.3006678-1-jsnow@redhat.com>
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v10 19.5/21] linux-user/arm: Inline bswap_code()
+Date: Tue,  7 Apr 2026 23:23:33 +0200
+Message-ID: <20260407212333.59260-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260407195922.196410-1-pierrick.bouvier@linaro.org>
+References: <20260407195922.196410-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,142 +102,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ugly hack, gets the job done. Likely many simplifications can be made as
-a result, but I didn't make any of them. There are some inconsistencies
-with human-readable vs ENUM_NAMES in error messages in this patch, but
-it appears to work anyway.
+bswap_code() is now used once in get_user_code_u32(),
+inline it and simplify removing dead system code.
 
-Consider this patch more of a rough idea and not anything approximating
-the kind of code you'd want to see from an Enterprise Linux Senior
-Software Engineer.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
-
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
+ target/arm/cpu.h          | 16 ----------------
+ linux-user/arm/cpu_loop.c | 10 ++++++++++
+ 2 files changed, 10 insertions(+), 16 deletions(-)
 
-[Review note: No changes to *.ir files. --js]
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- scripts/qapi/parser.py | 55 ++++++++++++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 21 deletions(-)
-
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index ade26d124df..6e91cd19e58 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -547,22 +547,28 @@ def get_doc(self) -> 'QAPIDoc':
-             self.accept(False)
-             line = self.get_doc_line()
-             have_tagged = False
--            no_more_tags = False
-+            last_ordered_section = QAPIDoc.Kind.INTRO
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 657ff4ab20b..917e9919e8c 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2568,22 +2568,6 @@ static inline int sme_vq(CPUARMState *env)
+     return EX_TBFLAG_A64(env->hflags, SVL) + 1;
+ }
  
-             def _tag_check(this: Union['QAPIDoc.Kind', str]) -> None:
-+                nonlocal last_ordered_section
-                 if isinstance(this, str):
-                     this = QAPIDoc.Kind.from_string(this)
-+
-                 if this in (QAPIDoc.Kind.TODO, QAPIDoc.Kind.SINCE):
-                     return
- 
--                if no_more_tags:
-+                if this.value < last_ordered_section.value:
-                     raise QAPIParseError(
-                         self,
--                        f"'{this}' section cannot appear after plain "
--                        "paragraphs that follow other tagged sections\n"
--                        "Move this section up above the plain paragraph(s)."
-+                        f"'{this}' section cannot appear after "
-+                        f"'{last_ordered_section}' section, please re-order "
-+                        "the sections and adjust phrasing as necessary to "
-+                        "ensure consistent documentation flow between the "
-+                        "source code and the rendered HTML manual"
-                     )
- 
-+                last_ordered_section = this
-+
-             while line is not None:
-                 # Blank lines
-                 while line == '':
-@@ -593,7 +599,7 @@ def _tag_check(this: Union['QAPIDoc.Kind', str]) -> None:
-                             self, 'feature descriptions expected')
-                     have_tagged = True
-                 elif line == 'Details:':
--                    _tag_check("Details")
-+                    _tag_check(QAPIDoc.Kind.DETAILS)
-                     self.accept(False)
-                     line = self.get_doc_line()
-                     while line == '':
-@@ -602,6 +608,7 @@ def _tag_check(this: Union['QAPIDoc.Kind', str]) -> None:
-                     have_tagged = True
-                 elif match := self._match_at_name_colon(line):
-                     # description
-+                    _tag_check(QAPIDoc.Kind.MEMBER)
-                     if have_tagged:
-                         raise QAPIParseError(
-                             self,
-@@ -658,14 +665,16 @@ def _tag_check(this: Union['QAPIDoc.Kind', str]) -> None:
-                     line = self.get_doc_indented(doc)
-                     have_tagged = True
-                 else:
--                    # plain paragraph
--                    if have_tagged:
--                        no_more_tags = True
+-static inline bool bswap_code(bool sctlr_b)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    /* BE8 (SCTLR.B = 0, TARGET_BIG_ENDIAN = 1) is mixed endian.
+-     * The invalid combination SCTLR.B=1/CPSR.E=1/TARGET_BIG_ENDIAN=0
+-     * would also end up as a mixed-endian mode with BE code, LE data.
+-     */
+-    return TARGET_BIG_ENDIAN ^ sctlr_b;
+-#else
+-    /* All code access in ARM is little endian, and there are no loaders
+-     * doing swaps that need to be reversed
+-     */
+-    return 0;
+-#endif
+-}
 -
--                    # Paragraphs before tagged sections are "intro" paragraphs.
--                    # Any appearing after are "detail" paragraphs.
--                    intro = not have_tagged
--                    doc.ensure_untagged_section(self.info, intro)
-+                    # Paragraphs appearing before any other sections are
-+                    # "intro" paragraphs. Any appearing after are
-+                    # "details" paragraphs.
-+                    this_section = (
-+                        QAPIDoc.Kind.DETAILS
-+                        if have_tagged
-+                        else QAPIDoc.Kind.INTRO
-+                    )
-+                    _tag_check(this_section)
-+                    doc.ensure_untagged_section(self.info, this_section)
-                     doc.append_line(line)
-                     line = self.get_doc_paragraph(doc)
-         else:
-@@ -707,14 +716,17 @@ class QAPIDoc:
-     """
+ enum {
+     QEMU_PSCI_CONDUIT_DISABLED = 0,
+     QEMU_PSCI_CONDUIT_SMC = 1,
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index 19874f4c727..24a66b52cee 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -29,6 +29,16 @@
+ #include "user/page-protection.h"
+ #include "target/arm/syndrome.h"
  
-     class Kind(enum.Enum):
-+        # The order here is the order in which sections must appear in
-+        # source code; with the exception of 'TODO' which may appear
-+        # anywhere but is treated as a comment.
-         INTRO = 0
-         MEMBER = 1
--        FEATURE = 2
--        RETURNS = 3
--        ERRORS = 4
--        SINCE = 5
-+        RETURNS = 2
-+        ERRORS = 3
-+        FEATURE = 4
-+        DETAILS = 5
-         TODO = 6
--        DETAILS = 7
-+        SINCE = 7
- 
-         @staticmethod
-         def from_string(kind: str) -> 'QAPIDoc.Kind':
-@@ -793,9 +805,10 @@ def end(self) -> None:
-     def ensure_untagged_section(
-         self,
-         info: QAPISourceInfo,
--        intro: bool = True,
-+        kind: Optional['QAPIDoc.Kind'] = None,
-     ) -> None:
--        kind = QAPIDoc.Kind.INTRO if intro else QAPIDoc.Kind.DETAILS
-+        if kind is None:
-+            kind = QAPIDoc.Kind.INTRO
- 
-         if self.all_sections and self.all_sections[-1].kind == kind:
-             # extend current section
++static inline bool bswap_code(bool sctlr_b)
++{
++    /*
++     * BE8 (SCTLR.B = 0, TARGET_BIG_ENDIAN = 1) is mixed endian.
++     * The invalid combination SCTLR.B=1/CPSR.E=1/TARGET_BIG_ENDIAN=0
++     * would also end up as a mixed-endian mode with BE code, LE data.
++     */
++    return TARGET_BIG_ENDIAN ^ sctlr_b;
++}
++
+ #define get_user_code_u32(x, gaddr, env)                \
+     ({ abi_long __r = get_user_u32((x), (gaddr));       \
+         if (!__r && bswap_code(arm_sctlr_b(env))) {     \
 -- 
 2.53.0
 
