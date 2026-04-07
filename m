@@ -4,96 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2767DFF5135
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFD5FF5136
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABXM-0000A8-Kl; Tue, 07 Apr 2026 14:52:32 -0400
+	id 1wABSy-0003vv-2g; Tue, 07 Apr 2026 14:48:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wABUB-0003Pl-HE
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:15 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wA0O7-0002A3-JY
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 02:58:16 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-354a18c48b5so4029544a91.1
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 23:58:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775545094; x=1776149894; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XnWq8SxFln/RH/y/L7cp49ARGEJu5PkiuW3cli+99YM=;
- b=Y5nR8lN7JORiLlPj0jsRzNW+EQtVXgtMMBO0HQ8iJETW+S+HFY8JVCvPH2kpmh/lqE
- 4tKvZtfmWtsexrSScQ+KFl8lUAeB+ssxvK6jqO9aOAumvZzO/O/97QE7wwkC0r+jSzow
- x9nYfbxTW0B/9XijWBTkFDkVBi5GJsFq3863EYtXUfh7Ov2dMODlFipGgpbH+/A6xmc8
- 589P3oRSLl+TtM1QJWs//HiTai2ZezaYKzzwqJfWp4OjQkiP+SOt433Uz2nM8UE1V4z3
- RbDSiVtRrAFXYBKqOFoQn1oT2mwsoWNtblCBsM8E12c/+pbEkMSHT5uP9ZtGMyLyjP0P
- sKpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775545094; x=1776149894;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XnWq8SxFln/RH/y/L7cp49ARGEJu5PkiuW3cli+99YM=;
- b=QkwoZsxvUnFGbXDClxIF3RPoLk8wAC/FUoQWAIJ3DamGfMNd2HtNgPnRgfq5Z8eb1n
- TlNJPDLfsVgkn28qErwAPluEuaKugA5ete8KPaCK5U6ORexf7TDfVBTybfIm5adzct7I
- +X0c2If1wBJLI33cH/Rk+SJ8Zrd+KmhGzZO3dQfi7eE896j+OXukTjxRVdm+LNvMysm6
- GDEAM1c3KPGiL+rGAF87VLI6wbMUHKVw2F0obky+mZPM41/l7l56C9pZxP6iOL4lBoHk
- /onmeZ9dxkE0CdQw7aZ3SipHVXzw4asc/cxVgaM7g69mZNaOBEIbV2eGVfLD1lv/D+AH
- v7qg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPM2vnGxQdn54m7xsfQjIO8VeguNB7mqZ6/izt+Y0wfNdBiYQjlY2ZXafyHKAsenazuDb4y/nlObU6@nongnu.org
-X-Gm-Message-State: AOJu0Yw2up0quaQhcjpR1MGj06B3WTgUZLSZtRImRrAlQ+1lXpM3798R
- FnYGq2ckODeZM+GEkntWZOnFVt/iP243x71CUUIgG3ZH9LaBHWvLM0fGpCtOTQ2/LbqhxPA22sx
- mhTUJ+KQ=
-X-Gm-Gg: AeBDieugbsuNojyVOk2pk9Tn0ywgS/SI+8RGHlDLPr0soyToPv+bJRPnQnp8NCyXXcQ
- mQQLMV+ZK61GmzLw2jMXxI+orZDRMQXkYQrIREAdPdxe0WRXvH2N75cS0KjEiAimDDYAvcxIDA4
- CE54hYWCtoodoAClloqWsD0mX9PAH6L3g+hwE0UH9eyhjo8pVWAk5fhNXYOcyhKIMLtzCfNrgjj
- XL4G7LnNvrwROLInPX0pYhvXrv5jw0BQROH0VCTvYv7c+NDPzqtocDQU45W0i5cNjtqEuhdviOf
- TPBgB5ZDaDB4Shf11qV9S6KgWoOKz5Yq1LEQ1B7QtX5+ht4ec81gcPlGFZHegR84FyiJdRLf2uh
- OopHwl46waj6Ttgypgl9HDw6CTQtgcli4384WGwRnmexIRB06fVzHUp9Lofy1M5syy6AM3hhe+Z
- wgXwhI6ptuE/jEt+c7ZCQzSoJqjbc55aQpYVJoJNsIFvquqYU+WmLDAvcupWlZPUYMd2I=
-X-Received: by 2002:a17:90b:52c3:b0:35d:a861:36de with SMTP id
- 98e67ed59e1d1-35de691b394mr15494501a91.24.1775545094055; 
- Mon, 06 Apr 2026 23:58:14 -0700 (PDT)
-Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35de51fde8esm4541783a91.3.2026.04.06.23.58.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Apr 2026 23:58:13 -0700 (PDT)
-Message-ID: <aa164e63-35cf-4a81-b299-dfa3cc4a5ef3@linaro.org>
-Date: Tue, 7 Apr 2026 16:58:06 +1000
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wABRX-0002LR-K6; Tue, 07 Apr 2026 14:46:31 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wA9kU-0001Wl-L9; Tue, 07 Apr 2026 12:58:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1775581025; bh=jOVldi4cF8Nnz5eHVlF/ZFZcQjOq5os0/E5+ck1EiDw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=vQYb4/dQ3EZyGxI/0CmSBg2puRBKEg4fisiW18fGHy+PwlaIhSAU/TfLu1DE+a8Wd
+ yU8DZxEuDjdZAV4w93/NXd577gLl6h3lfg/1+n94nJ02A4KJqrBzoa/2DGt6/ri9jN
+ 79L4jPQRFs6XZRn4T5jjg7r6ygxJYz55+HAoKCd8soh+UVpTWPjdqrwyRn3bhdmDCp
+ zHfW25gsXEX4LEjmmtc9mjsYKDx/MgS7o4lcVvqIqDX9J6bxOfJyoaTwUN2QDV8aWW
+ j1Wl/xQfJCSHy/wvnw9R1Tdr6QixNVSh9kPfmDDIhNRwe4e+PAMPWYhyxi7GoPCJjw
+ LNCWFws2z8CNQ==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id DC63D19BD3F;
+ Tue, 07 Apr 2026 19:57:05 +0300 (MSK)
+Message-ID: <5cbbf738-c925-4f6f-bb71-7bc50bf625c3@tls.msk.ru>
+Date: Tue, 7 Apr 2026 19:57:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 15/20] target/arm/tcg/translate.c: replace TCGv with
- TCGv_va
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
- qemu-arm@nongnu.org
-References: <20260407022748.57629-1-pierrick.bouvier@linaro.org>
- <20260407022748.57629-16-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260407022748.57629-16-pierrick.bouvier@linaro.org>
+Subject: Re: [PULL 4/6] monitor: Fix deadlock in monitor_cleanup
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ pbonzini@redhat.com
+References: <20260331150352.256332-1-kwolf@redhat.com>
+ <20260331150352.256332-5-kwolf@redhat.com>
+ <d0187495-f196-43a3-b77c-463a098b5f60@tls.msk.ru>
+ <2f8a1144-f002-44ae-b9ff-8cbb4f13742f@tls.msk.ru>
+ <adTy5PTUjTu_Swj8@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <adTy5PTUjTu_Swj8@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,17 +115,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/26 12:27, Pierrick Bouvier wrote:
-> We know this file is for 32-bit runtime target, so we can set
-> TCG_ADDRESS_BITS. TCG_TYPE_VA is derived accordingly and is already
-> passed to translator_loop.
+On 07.04.2026 15:04, Kevin Wolf wrote:
+...
+> But for now, the patch below should fix it.
 > 
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> ---
->   target/arm/tcg/translate.c | 29 +++++++++++++++--------------
->   1 file changed, 15 insertions(+), 14 deletions(-)
+> Kevin
+> 
+> diff --git a/util/meson.build b/util/meson.build
+> index 33132c04ad6..637f0b82dd0 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -78,7 +78,7 @@ if have_system
+>   endif
+> 
+>   if have_block or have_ga
+> -  util_ss.add(files('aiocb.c', 'async.c'))
+> +  util_ss.add(files('aiocb.c', 'aio-wait.c', 'async.c'))
+>     util_ss.add(files('base64.c'))
+>     util_ss.add(files('main-loop.c'))
+>     util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-coroutine-io.c'))
+> @@ -87,7 +87,6 @@ if have_block or have_ga
+>     util_ss.add(files('qemu-sockets.c'))
+>   endif
+>   if have_block
+> -  util_ss.add(files('aio-wait.c'))
+>     util_ss.add(files('buffer.c'))
+>     util_ss.add(files('bufferiszero.c'))
+>     util_ss.add(files('hbitmap.c'))
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+FWIW.
 
-r~
+Thanks,
+
+/mjt
 
