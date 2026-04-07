@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8EEFF5134
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A84FF5136
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABUK-00061m-G7; Tue, 07 Apr 2026 14:49:24 -0400
+	id 1wABXh-0000Lk-MG; Tue, 07 Apr 2026 14:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wABSb-0002am-0X
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:37 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wA86h-0001JJ-Qv
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:12:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775574716; bh=9QCUT/LgQNGCRDje0Xyp+qfAd0VMuZ2O07WBROkchmo=;
- h=Date:Subject:To:References:From:In-Reply-To;
- b=XOJl+ZwqVnhtHs42PkPzkKWLrgOGLWzHjoqE1XnjGNruWUmOFVdBtGaiWW2fzqznr
- jeALb5+PP2Ra/d6sZZSfK/OSG5e2Q9wY4TCXVmT+WVOwa9DMrk9EqAeOAkcGao40Wk
- NGaxMBe7D5Kvh+oNNYE/pJy+KpeDKh18NkgasfZt5kmvwoHNb7IwqDo8LtP9nYiXqb
- CWE72byaUPb7eTSjctWNG/UV8eCneDzkSKXPtTpeMBf/3UyWaEEb/nVNtqJpCltHsO
- O4cuzfcXnRdt5g5uS2LtysKgmK2RLMwCW19mCOS/PkURt9eO9mgNO7tt+m/pA4P/P0
- SrJkNz8OaFsmg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 91E4B19BCF6;
- Tue, 07 Apr 2026 18:11:56 +0300 (MSK)
-Message-ID: <91aa0c79-8c13-4421-9115-d149f31fbb1f@tls.msk.ru>
-Date: Tue, 7 Apr 2026 18:12:42 +0300
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wABUK-00042B-Qv
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:24 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1w9yD9-0007Gl-Uf
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 00:38:49 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c70fb6aa323so1570373a12.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 21:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775536726; x=1776141526; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ND40BPJTg3yKXGUdF2X6Rw0O0iuW1QxrCnuohU7zMPY=;
+ b=C1BAaok4MVbSc9Pa0nzcwYagUlUTfdzSL0Ip5MObwuywbf2EcDu8c4wQvg1qiAN1xh
+ GmlNRv6jOg3eJVCZ5q/hMWWASatwNOCkVvtjjPnCA/EZr/C25LDpqnnhVDaoETqY27CH
+ yO182h6K3bqX5lZUVoOW0J+CLn0m40qoLBArdiOupdZ7IEn2vCNVQiR+knkZdWVu/o3s
+ ycBuEjaf3FtIU5bHsLYlSKTqXnYFABPUe5rUxsAPXfvaD9n0k+2zU3arKORDx81pOdwa
+ A8TlQ/YLW0VPfNWaKNAlYem1sHdHC+XrZq6JKVs6jb3iFexcs9ti3Yw3nmZZElWaDy3l
+ Wbdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775536726; x=1776141526;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ND40BPJTg3yKXGUdF2X6Rw0O0iuW1QxrCnuohU7zMPY=;
+ b=Pm2BaEQfjNS9D35IkqUR6RhaSegHsnvrOEA1nl2QR0dWiYdDEiwhN2CUEPs28CaBo7
+ oh78AUPCYrdr5Cz1gZ2a4uoEHpJCAEeTrWm62KI5gfsg/UPcPo7Y+etkZYRp49hChtIG
+ gnM9vu+S2VXrhxMaFk7TW6FRgvsyqvvOT562QY1Xfzwxqs/Pcs5jt4wOmuSIsFMnmlqp
+ bNf6IgQy7Oeb0zq8LfMhvlR0uQRbSsThreg8Ks353E6cNedtYctQuyOzEI4EEL75pGNM
+ M34V+JOvbSQVe7VDOIFLiwsM7OufpXmeb5qc+hdJqwu0mbBsJxnbuPy/9kQ6Ie5O6XNE
+ 1caA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJAvUWXVxSD3takV/hc+BhvrsfOAlkYklFoh4CWrYH85Ng6dJKbq3cgbIHy4CRFrmjZsRWy3+zJZPc@nongnu.org
+X-Gm-Message-State: AOJu0Yzh/icBjiix64hIPBWdejYZJl+6tPXtVpFQYwT9Up25iafS4oiA
+ N9ImlMiWNF4ELNGILm5nbcWcMwrhNW1ekPvqUdflPypMr3wiuG+ckFOS
+X-Gm-Gg: AeBDiesVK9OLJCIRv7fDyYr8i1PuimANUh25TI420JgOR80v//lJjtGqeE4QQ3bE1A0
+ 3YojPiZ5qOGWQOZFh4VTuebIajtJkn2fyQDhx6a2l2X/5BsxorTSSWJBKB020xrFgX7cEaRy/bz
+ DPD7IBPUZ2AziD4MFThsddwO6I/a/JWW/yliguG2KU08tAWLxTQPluv3WxeKE2Wpd3tvJI0OyKZ
+ HDnc2FUE5tKQ7ZOK/dZ4a/tiO22Wq/PT23WdO2ZiyBwIj0V0AkdPYYD5YkikzomxHnrPtNne3vP
+ LOu7KbXY8WJLe8M7VGpBJKtBr/qDX3/VEMblNqfVdmp4I8NF338WK9IMCJmLjoV+HYYpAebowe/
+ ax/ya0MRoUNisqOuwvnp9jrV1oincObPGNl4grcMIreF/0aY6IqTdhaGVBwNoqKGZ/+WOoZi9k+
+ ybYWaUqXkULD7aDboI73ClvQTDdsaD2RvO/gRbEiG0
+X-Received: by 2002:a05:6a20:3ca7:b0:398:9820:f6cc with SMTP id
+ adf61e73a8af0-39f2f19f722mr16245662637.55.1775536725902; 
+ Mon, 06 Apr 2026 21:38:45 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c76c6491fedsm15809963a12.8.2026.04.06.21.38.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Apr 2026 21:38:43 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: alistair23@gmail.com,
+	Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 0/5] target/riscv: A collection of bug fixes
+Date: Tue,  7 Apr 2026 14:36:09 +1000
+Message-ID: <20260407043614.372871-1-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] Allow building qemu tools on 32-bit hosts
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <adGTUNUSckx1KrAk@p100>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <adGTUNUSckx1KrAk@p100>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,38 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.04.2026 01:40, Helge Deller wrote:
-> Qemu's tools like qemu-img are often needed on 32-bit platforms,
-> although the actual qemu emulators have been discontinued on 32-bit.
-> 
-> To allow building the tools on 32-bit this patch implements three small
-> changes:
-> 
-> a) The check in meson.build is changed to still error out if the user
-> tries to build qemu-system or qemu-user on a 32-bit platform, but allows
-> building tools (e.g. by "--enable-tools") alone.
-> 
-> b) The compile time check in atomic.h now checks against
-> sizeof(uint64_t) so that 32-bit environments can still build
-> successfully, while 128-bit atomic operations are prevented to sneak in.
-> 
-> c) Allow linking against libatomic as long as we don't build the
-> qemu-system and qemu-user binaries.
-> 
-> Sucessfully tested on the 32-bit big-endian powerpc architecture.
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Hi!
+This is a collection of patches to fix a few of the open RISC-V bugs [1].
 
-Have you used just one additional fix for util/meson.build from me, or
-all other changes from Philippe too?
+1: https://gitlab.com/qemu-project/qemu/-/work_items?first_page_size=20&label_name%5B%5D=target%3A%20riscv&sort=created_date&state=opened
 
-I'm trying to verify if I can build qga and tools with just two patches
-on 32bits, or if all of them are needed.
+Alistair Francis (5):
+  target/riscv: Generate access fault if sc comparison fails
+  linux-user/strace: Add a wrapper for read and write
+  target/riscv: Don't OR mip.SEIP when mvien is one
+  hw/timer: ibex_timer: Update IRQs after writing CTRL
+  target/riscv: Use ELEN for Fractional LMUL check
 
-Changes by Philippe are really nice cleanups but I'm not sure they're
-mandatory - when we're at -rc3 time..
+ target/riscv/helper.h                   |  3 +++
+ hw/timer/ibex_timer.c                   |  1 +
+ linux-user/strace.c                     | 14 ++++++++++++++
+ target/riscv/csr.c                      |  8 ++++++++
+ target/riscv/op_helper.c                | 14 ++++++++++++++
+ target/riscv/vector_helper.c            |  9 ++++-----
+ target/riscv/insn_trans/trans_rva.c.inc |  6 ++++++
+ linux-user/strace.list                  |  4 ++--
+ 8 files changed, 52 insertions(+), 7 deletions(-)
 
-Thanks,
+-- 
+2.53.0
 
-/mjt
 
