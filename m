@@ -4,80 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C79DFF5135
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5237CFF5135
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABUF-0005nn-BZ; Tue, 07 Apr 2026 14:49:19 -0400
+	id 1wABUt-0006mB-Pk; Tue, 07 Apr 2026 14:50:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wABSZ-0003JO-Uy
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:36 -0400
-Received: from p-east2-cluster2-host12-snip4-8.eps.apple.com ([57.103.78.101]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wA8Bh-0002Ds-9u
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:17:58 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
- AA5691800E9B; Tue, 07 Apr 2026 15:17:53 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775575076; x=1778167076;
- bh=T/ylQnS/te0fMXN5QyRAvae93avWDOZqU0zT/KgDwLQ=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Gq8CYOUKjzzkU5zaQRhMcQI/VepUq2/h1H7LVmINC0Q36pv+6/C1vX5jbY9Gutb/gr9+FTjIGK/gdEkzaf7h8VdhhygzqtBGUhdcUa/GW7y2qldzzTNeKTwSwx5YoalUYKDFKnwGW1vNVjrOT/8wGPjU5PflqsCnsy2o3mufrvOzgZcaSAjMo3ELlSZlaRDz/wORjHwU3je8ME3cwIuBTYCyQFKcUFMAzcWLI2qwCIAdq5Fm83Wa114MyM4n8fFMjSXtY9NmGery5oCDxQ5NqF8GSCFrFKqjvVSjdQhhvYaS0sZcKQRA8yzsoVeLMYBk9tmZKuZAkipt5FCVclMb5Q==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
- 1C82C180037B; Tue, 07 Apr 2026 15:17:20 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Zhao Liu <zhao1.liu@intel.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v9 08/13] whpx: i386: kernel-irqchip=off fixes
-Date: Tue,  7 Apr 2026 17:17:02 +0200
-Message-ID: <20260407151707.46536-9-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260407151707.46536-1-mohamed@unpredictable.fr>
-References: <20260407151707.46536-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1wABTf-0003uc-5h
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:44 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1wA58g-0004D0-7o
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 08:02:40 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id ECBC94E436;
+ Tue,  7 Apr 2026 12:02:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1775563350; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1NqMuz2A400tAznsQF/Faoy7q3XPRoyNI87TXSiLac=;
+ b=xVoEON3eDM9HIQTmNYbH3VobLo4Yo+Ql9zO7vZ8OZLGP6FefUk59rr85JrcPyyfI2Y8s0+
+ 13VcyKIuPPkiCh/mKoFOrzfyZYjA3gdPmVlGnR57N8VRPUt+Rh/pz0pzUQz4ZBY9DhHSya
+ dJOMOIASqRPqKygZJ3tw9r06cmm7qXU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1775563350;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1NqMuz2A400tAznsQF/Faoy7q3XPRoyNI87TXSiLac=;
+ b=4zYeVi5VgyCd0OVz729CZA/pHJsXqeedE/UiB36MrH41FdTLdh2RdT8pD7/li9Hn3tk35L
+ uhhFZQMGkwrlL9Aw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1775563345; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1NqMuz2A400tAznsQF/Faoy7q3XPRoyNI87TXSiLac=;
+ b=WEHqTy5mTg3LpCR/wxedyZUPTQTASOSKsKQKymY1tfkgxnKgtbGB7mB8PIMQcL+quMd3AE
+ s2MKfS+q3vrAc8JLjdd8YVUOlltqILoIGAtN2ldhKIISSRG5GkpFN7yCO7+IbTfTSl++Gt
+ FsCWtj0Ar4PrGJcBaK1WW6XjPJjs8G0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1775563345;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1NqMuz2A400tAznsQF/Faoy7q3XPRoyNI87TXSiLac=;
+ b=Up5R5X3bou7tLLpef3ci/r8kCbMhv530Shdd6NrBb5ncSvGzCqQ3ZO/5Qh8C6uzYpl9bRD
+ QUQ+sklJzbb99MAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A7F644A0B0;
+ Tue,  7 Apr 2026 12:02:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eRcAJlHy1Gk2eQAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Tue, 07 Apr 2026 12:02:25 +0000
+Message-ID: <043e3410-9a58-4102-86a2-177579b63add@suse.de>
+Date: Tue, 7 Apr 2026 14:02:10 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: _1jPpz0CF8bzba_1oYFN_bBFfZOTnD5o
-X-Proofpoint-ORIG-GUID: _1jPpz0CF8bzba_1oYFN_bBFfZOTnD5o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDE0MCBTYWx0ZWRfX6niW4jibKWMH
- SCX0/LkFpAS3QuXqo2FwROKNCkhm74E/08fm153mY4UHk+taA/BIGWI/VIVJ7303fz9gtNfKngr
- DgI9Qc5kzwL8XZaRu0OlQ2rPBv8BhcJkKDdfO+j1sZYYu2YMYfuTVhAIqZe/WsOgTIDixnbYFeP
- a9GrVIM6b6UIko7wmBzHPZ0qddgUGsF1BfyBGiew+IvAyf+XK/r59ZHf9z5EMLKiqWDVVB1tDnS
- ZYC3al2Bx0ogW+W6nUwggVkbJI7iu9cLMuu2nkWx8TW0pyL4TGhvsel3ODF3oAo3epzWBEG3IwN
- t3ibmax/dBqbdmiSzmfSqdlegdKGaIGqEPuRqM9qbh3BdpY47AF/V7ZKy08Abo=
-X-Authority-Info-Out: v=2.4 cv=OauVzxTY c=1 sm=1 tr=0 ts=69d52022
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=gP1GEkNOX-MqffGxZ4oA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0 mlxscore=0 clxscore=1030
- mlxlogscore=999 bulkscore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604070140
-Received-SPF: pass client-ip=57.103.78.101;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] migration: track timing and received pages in
+ MigrationIncomingState
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+References: <20260405152612.93027-1-viking4@gmail.com>
+ <20260405152612.93027-2-viking4@gmail.com>
+Content-Language: en-US
+From: Claudio Fontana <cfontana@suse.de>
+In-Reply-To: <20260405152612.93027-2-viking4@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ FREEMAIL_TO(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=cfontana@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,124 +122,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This was really... quite broken. After fixing this,
-Windows boots with kernel-irqchip=off.
+Hello,
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- include/system/whpx-common.h |  1 +
- target/i386/whpx/whpx-all.c  | 43 +++++-------------------------------
- 2 files changed, 7 insertions(+), 37 deletions(-)
+On 4/5/26 17:26, Trieu Huynh wrote:
+> From: Trieu Huynh <vikingtc4@gmail.com>
+> 
+> Add start_time, total_time, received_normal_pages,
+> received_zero_pages, and received_xbzrle_pages to
+> MigrationIncomingState.
+> 
+> start_time is recorded when the incoming state transitions to ACTIVE;
+> total_time is recorded when it transitions to COMPLETED. The page
+> counters are incremented in ram_load_precopy() as each page type is
+> received from the source.
+> 
+> These fields will be used by a subsequent patch to populate
+> fill_destination_migration_info() for the migration COMPLETED case.
+> 
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> ---
+>  migration/migration.c |  2 ++
+>  migration/migration.h | 17 +++++++++++++++++
+>  migration/ram.c       |  3 +++
+>  3 files changed, 22 insertions(+)
+> 
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 5c9aaa6e58..17c9a8b344 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -726,6 +726,7 @@ static void process_incoming_migration_bh(void *opaque)
+>       */
+>      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>                        MIGRATION_STATUS_COMPLETED);
+> +    mis->total_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - mis->start_time;
+>      migration_incoming_state_destroy();
+>  }
+>  
+> @@ -758,6 +759,7 @@ process_incoming_migration_co(void *opaque)
+>      migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
+>                        MIGRATION_STATUS_ACTIVE);
+>  
+> +    mis->start_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+>      mis->loadvm_co = qemu_coroutine_self();
+>      ret = qemu_loadvm_state(mis->from_src_file, &local_err);
+>      mis->loadvm_co = NULL;
+> diff --git a/migration/migration.h b/migration/migration.h
+> index b6888daced..cd51ae452c 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -176,6 +176,23 @@ struct MigrationIncomingState {
+>      /* PostCopyFD's for external userfaultfds & handlers of shared memory */
+>      GArray   *postcopy_remote_fds;
+>  
+> +    /*
+> +     * Timestamps for reporting migration duration via query-migrate on the
+> +     * destination. start_time is recorded when the state moves to ACTIVE;
+> +     * total_time is recorded when it moves to COMPLETED.
+> +     */
+> +    int64_t start_time;
+> +    int64_t total_time;
 
-diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
-index 04289afd97..3406c20fec 100644
---- a/include/system/whpx-common.h
-+++ b/include/system/whpx-common.h
-@@ -4,6 +4,7 @@
- 
- struct AccelCPUState {
-     bool window_registered;
-+    int window_priority;
-     bool interruptable;
-     bool ready_for_pic_interrupt;
-     uint64_t tpr;
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 9827c93df1..62542922a4 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -22,6 +22,8 @@
- #include "qemu/main-loop.h"
- #include "hw/core/boards.h"
- #include "hw/intc/ioapic.h"
-+#include "hw/intc/i8259.h"
-+#include "hw/i386/x86.h"
- #include "hw/i386/apic_internal.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-@@ -371,28 +373,6 @@ static int whpx_set_tsc(CPUState *cpu)
-     return 0;
- }
- 
--/*
-- * The CR8 register in the CPU is mapped to the TPR register of the APIC,
-- * however, they use a slightly different encoding. Specifically:
-- *
-- *     APIC.TPR[bits 7:4] = CR8[bits 3:0]
-- *
-- * This mechanism is described in section 10.8.6.1 of Volume 3 of Intel 64
-- * and IA-32 Architectures Software Developer's Manual.
-- *
-- * The functions below translate the value of CR8 to TPR and vice versa.
-- */
--
--static uint64_t whpx_apic_tpr_to_cr8(uint64_t tpr)
--{
--    return tpr >> 4;
--}
--
--static uint64_t whpx_cr8_to_apic_tpr(uint64_t cr8)
--{
--    return cr8 << 4;
--}
--
- void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     struct whpx_state *whpx = &whpx_global;
-@@ -421,7 +401,7 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-     v86 = (env->eflags & VM_MASK);
-     r86 = !(env->cr[0] & CR0_PE_MASK);
- 
--    vcpu->tpr = whpx_apic_tpr_to_cr8(cpu_get_apic_tpr(x86_cpu->apic_state));
-+    vcpu->tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
-     vcpu->apic_base = cpu_get_apic_base(x86_cpu->apic_state);
- 
-     idx = 0;
-@@ -692,17 +672,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-                      hr);
-     }
- 
--    if (whpx_irqchip_in_kernel()) {
--        /*
--         * Fetch the TPR value from the emulated APIC. It may get overwritten
--         * below with the value from CR8 returned by
--         * WHvGetVirtualProcessorRegisters().
--         */
--        whpx_apic_get(x86_cpu->apic_state);
--        vcpu->tpr = whpx_apic_tpr_to_cr8(
--            cpu_get_apic_tpr(x86_cpu->apic_state));
--    }
--
-     idx = 0;
- 
-     /* Indexes for first 16 registers match between HV and QEMU definitions */
-@@ -751,7 +720,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     tpr = vcxt.values[idx++].Reg64;
-     if (tpr != vcpu->tpr) {
-         vcpu->tpr = tpr;
--        cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(tpr));
-+        cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
-     }
- 
-     /* 8 Debug Registers - Skipped */
-@@ -1690,7 +1659,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
-      }
- 
-     /* Sync the TPR to the CR8 if was modified during the intercept */
--    tpr = whpx_apic_tpr_to_cr8(cpu_get_apic_tpr(x86_cpu->apic_state));
-+    tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
-     if (tpr != vcpu->tpr) {
-         vcpu->tpr = tpr;
-         reg_values[reg_count].Reg64 = tpr;
-@@ -1737,7 +1706,7 @@ static void whpx_vcpu_post_run(CPUState *cpu)
-     if (vcpu->tpr != tpr) {
-         vcpu->tpr = tpr;
-         bql_lock();
--        cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(vcpu->tpr));
-+        cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
-         bql_unlock();
-     }
- 
--- 
-2.50.1 (Apple Git-155)
+nit: since this is a timestamp and these are directly linked to state changes,
+why not call these:
+
+int64_t migration_active_ts;
+int64_t migration_completed_ts;
+
+or something similar?
+
+Thank you,
+
+Claudio
+
+> +
+> +    /*
+> +     * Page counters for reporting RAM statistics via query-migrate on the
+> +     * destination.  Incremented in ram_load_precopy() as each page type
+> +     * is received.
+> +     */
+> +    uint64_t received_normal_pages;
+> +    uint64_t received_zero_pages;
+> +    uint64_t received_xbzrle_pages;
+> +
+>      MigrationStatus state;
+>  
+>      /*
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 979751f61b..6646e5daad 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -4417,10 +4417,12 @@ static int ram_load_precopy(QEMUFile *f)
+>                  break;
+>              }
+>              ram_handle_zero(host, TARGET_PAGE_SIZE);
+> +            mis->received_zero_pages++;
+>              break;
+>  
+>          case RAM_SAVE_FLAG_PAGE:
+>              qemu_get_buffer(f, host, TARGET_PAGE_SIZE);
+> +            mis->received_normal_pages++;
+>              break;
+>  
+>          case RAM_SAVE_FLAG_XBZRLE:
+> @@ -4430,6 +4432,7 @@ static int ram_load_precopy(QEMUFile *f)
+>                  ret = -EINVAL;
+>                  break;
+>              }
+> +            mis->received_xbzrle_pages++;
+>              break;
+>          case RAM_SAVE_FLAG_MULTIFD_FLUSH:
+>              multifd_recv_sync_main();
 
 
