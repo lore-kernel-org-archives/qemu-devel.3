@@ -4,123 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F67F10F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BAE810F9976
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYaw-0001CP-3j; Wed, 08 Apr 2026 15:29:46 -0400
+	id 1wAYWx-000125-7V; Wed, 08 Apr 2026 15:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wAY8v-0000Am-72
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:00:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wALed-0000JU-Eb
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 01:40:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775626841;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
- b=gglKICR1Gnp74dto23+6jCq3uFe/MPsqG7qyZnLF7mJSP1DXCn+AVXA2NUyrPFa6pDyd1o
- qqgIVOjYKkeJRBVWKysRQ08uwOBlU1b1wSXEDKV9lR3jAP9MsSWgcqZ/Qe2Hm/YDZqEdXX
- +D8tdioldd2zdhIg3AgkP3hxM2ellPc=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-U26elcI3Ms20ABWY4Gjafg-1; Wed, 08 Apr 2026 01:40:39 -0400
-X-MC-Unique: U26elcI3Ms20ABWY4Gjafg-1
-X-Mimecast-MFC-AGG-ID: U26elcI3Ms20ABWY4Gjafg_1775626839
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-358e95e81aeso13334997a91.0
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 22:40:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775626838; cv=none;
- d=google.com; s=arc-20240605;
- b=fDOHyNTAOeghXFDGJxpWMmn6WeaNjb+A4k/tTTbz20XUU9ZhoT9RLxUtua3pa7qhAF
- NvXu7DQXdJvunRKJxWys3DPr9RBdJsmp5sPBjDLjAA6bFH7eoR7fN6I8YFQB6riQ5mFL
- qCAGiBNnUGJodtJWSANq17gO4CRz/tdEqsKQCQf8lx4taHaq/8FFclN2bs7eU/6USQJG
- VvGfR7e3SEvuCFN9GpiWAMqn89ctxkj48UyytpZv+HhWHSXggimu72VmFMP3Mm1oZL1v
- XowWSES3BE8ePJXZ8p3td76TMI8YGDB26m6rl2nEwJYNhlHrS760HeMYOn7KlUJCJ7vx
- GArA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
- fh=J0lI+6V1e8A1yyN2nd5Guz99SJqLbGXMn75K4Y7Xiz8=;
- b=jCzdS4sZ2pkyxan8O/LgbRAzjiEQYCNjiewQbWmnkPUUqubqnaWLDDHJ7OQeh0FG44
- M4x4ioHAJcm1SAEmM7qLUoixLOTVhKERNn14eMDcVqWQSXlluDttIqBrmjadXBMgveUz
- tg47nGsrCv8PK5WRbaUIpBAJRNtPN4BjeBfMIFw2JGH7EPuRbOnZMvYtYsNL2smDJxSB
- ap+COWitw360ofTl/ohojCCZWsHpR4z9cmGAMwGWxJfcD+x0xxUpvRW/XyXZetlK5FQo
- PT1l+hjFuYWspfdWVXSPQFUCwmO5DKffYO1BsANCZ2npSDW16Bw+AG+5Cbr/OaSuH6sK
- 6lUg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAY7V-0007hZ-81
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:59:21 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAEoS-0000nh-3A
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:22:25 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2b299b3c739so12025125ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775626838; x=1776231638; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1775600542; x=1776205342; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
- b=A7DQUD21dfY8xDWoZsPvxAHAICbnSUPoXgem+QOqqm9aqBJNm0gIgcFLaMzn4/HjOF
- O8/1RU+AQR7vJTL+FOxWTWbLDKMo7LiJaSdhHG2/dpfCUuWEX6UG/hxNrXn1ZiicKY4i
- g5ULZyUtJbsLgiPMEvm1CyzK1ojT2CA9Z3wUULViKeyYSedkXe/NBLhH/POZjp3va6m8
- aO05OBWtRQtNTL49ZAUr0D3EFvB3Ko6pgUYDViRXXchnsLqPZRDPE51HKNC3/PzFa1hb
- d9whp0gRvs0mta5Y+M6dtxLUY9pHGpxkjJB7fcly7swk7BNNx/kRMdJh9/UNgHBchkee
- 5HNw==
+ bh=pt4XMBpnPMV9xBPksdczSsyXltFdkMDiM7rgCsFJ8VA=;
+ b=PHU/8VIWwl5N81rZ+2t79IQElwRHErk47ZbFJaRyjBC3nL7nUBNafDgsdr83sfO8Wy
+ sa8ux+LSN4qK+qGlt5FvSPupu7Hf6G4eWOsKr0fTXgjwQENtCOQGJQD70EFmQF9Rko0/
+ 0so5DHcJJrSZRSk+76EgTTgXucqW0gNm8IUHqUwEGSg3sMhuumb+bhlo/grjl3FytQcr
+ 3HZuiPZ7cU6LL8zNKWiDU//mJV4wA5mlg2Zd/OAnF+qfwa93NIrDr79B/5uezJIgiWXO
+ AZMV/fsZppbznn5so/NT4RXekoM7jbBUsmzE0sj6e1AcNfyGIr/N3LrDQCbK9MXHePY0
+ 1BrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775626838; x=1776231638;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1775600542; x=1776205342;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
- b=GJXbHbJ7jg6ArtHrlbuKHSvxZp8pFbZGV5nSSQ4+QrhxtcEHBTJnBuiHx39vgpchgc
- 5OOI4wZ2pk4+bv4/xNovq9DoMaC7acYrxBzes2Ql7grdcfmmBR+IBIYDEgbR9QrH2HMA
- mdx8IJcg5Tn+uERPqoEi4tVvqb54TcOxnjWkN10s5pkCT3/36GY+IkDG9v4N6PKXLz/2
- XWODJemllUF0TTNlT9QRopBEIrctvmnqLCrl+3J4VBf4ZuqNjlK8URQKsUv9NzpE/H6X
- 4TowHUbmlFXQ9SnAnJlKSRnvqvpGGDk464su0cDDw3ONKc07fOaYXHiBYuflUuxG+Btx
- C6gA==
-X-Gm-Message-State: AOJu0YzyvdtA6VvzkCWQxJvpr57YUYSlEZSG+B5W9237Us1+NEQ2LXg+
- oW5fqcwKvhQPHve0Y+Tq/F62bIi2ze1S8murqEGbDWWd/7ZNc2uIiLniIubuvEDJe3g1DphsR9a
- F+jSQsRUswIzCKm1yxhJXct/rxNtbZCz6Dah55G58Y0LnVzrn7Sfo7lSIRf8DBc9soR/xyNg0z0
- 2o6UN2+vjz3qRzAxNR48SrHXGrYUiiFzxuTLjn+r5ruA==
-X-Gm-Gg: AeBDieuQpzhwtBJLB8+rfhFefkTTW/W9eN1F+lAOReguziQQFAIoqJO4fs9YKbkF5Ct
- pErx9M6M0psw9+B0oLla7ltJ24Lo4ZUMMjIC3jK81e3JSZT3MU3JzC1fGTnYF+s12fb/E6T3Y29
- JA6sdUdS4IauSNtHpKPC6AUgVIjHx1+Jn+XjWM4XUySUOapgPTGPDGGtdcGNMJVyTdu3MjHxtB7
- 0OdKbHJlpSoI+WfBEKkZFWq2sZ8Slrn4jL0Y+G1/hSl6m9EAbww5A33bLAE5AEsBbLbfua3UHIQ
- GFht7tZnbgW4E5bhgpIWWEM=
-X-Received: by 2002:a17:90b:3d8a:b0:35b:e4f8:7b2b with SMTP id
- 98e67ed59e1d1-35de68ebaf3mr21279419a91.18.1775626838275; 
- Tue, 07 Apr 2026 22:40:38 -0700 (PDT)
-X-Received: by 2002:a17:90b:3d8a:b0:35b:e4f8:7b2b with SMTP id
- 98e67ed59e1d1-35de68ebaf3mr21279385a91.18.1775626837732; Tue, 07 Apr 2026
- 22:40:37 -0700 (PDT)
+ bh=pt4XMBpnPMV9xBPksdczSsyXltFdkMDiM7rgCsFJ8VA=;
+ b=HEjhTAhX2fra1NVI0l9DfeRbThHFvxEYHYWfZ54sIDJUP+7nF/9e23MVBC29uaOZg5
+ fx2MuNCQ/aKudAgupgiPsNv2S1Ctt4vlOB9EaCkhWRtdMzP8v5ERUDC1wRaEfi7utCT5
+ PLxnTgXpyBUIa4sokVhKzQv1V6qL5V1P47C+l39vTUgqj/VaAOwpj8a/Oa+jWMkKjnor
+ aYmKAVM4ukkJ/0tsVUrATt8c+F16AUdetqnbb7QHazRiLzjIxgsUp2FivJIwp5+qgjlL
+ kCgWXRLQ7YCwokqPBZP6lCksfymfcDcYWPB1nJ18PqpSnXcDvcxyjR/D5GbpejV9FN2d
+ F+gA==
+X-Gm-Message-State: AOJu0YzM+DfsnmmT3Vx/d8nMoCintPP8AgI24EmogMiz+Sb1srXJWAZd
+ pqV1Goju8ADuGIQViuXYDW4jnWC8Y6HAwHGHYqt/aIkqdIQSO74OwRW8ztUrK9aKzxmIOPRhsXK
+ tZJ9yNdg=
+X-Gm-Gg: AeBDiesCKZJhNrvv0u2ttIh8rFjBW5AwTIq2zFQjvNn0KOvJG6mzxSW2EbzgfFQO6Y2
+ CrvlgMQX9oPXydlB2dzRdyokJYpEmRxN8dvsEDVcTKkQrzKaoqFHKV6DQKOuJl5hOnEWRsBNdnH
+ M1cd08eoN6rHT6TNTOBUe+XBBaFPbsUxh0Ca707Dvzh18JrSXll/QeKBtfDKcGT9jM1N4kMg9xY
+ Exs1o8X2BlcJ1TFVhfEvSBjoUgxi6EdGySshTzkG2Azehhwijl/DMMyITqU4tZ7xVrSjlpW6mj+
+ uze5I09YrH2R1NVsgdBkThc8Ro6JwUDdqIfiUHImzO0W/ybWAHEiGJvb4v+JKGG+28KEItj4/G7
+ MjbJUmCVTffMujcSvWvXvjlirKIbe04Hc0e/T3YxJTomGimTTXNKe9s4X8Q1JlcgzfccW2qTU3h
+ rs3gF92JJouwNH0oI1dNsxXgcdtbvXguwIG+xypUiFs50gNkEjsJyb+RKe1Ch3F8lJIJR3z51lU
+ DfM
+X-Received: by 2002:a17:902:778d:b0:2b0:af2f:b26e with SMTP id
+ d9443c01a7336-2b28176a432mr132424985ad.28.1775600541533; 
+ Tue, 07 Apr 2026 15:22:21 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b274979d5csm180412065ad.38.2026.04.07.15.22.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 15:22:20 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, jim.macarthur@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v11 06/21] target/arm/tcg/translate-neon.c: make compilation
+ unit common
+Date: Tue,  7 Apr 2026 15:21:53 -0700
+Message-ID: <20260407222208.271838-7-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-References: <20260408031725.641417-1-zhaoguohan@kylinos.cn>
-In-Reply-To: <20260408031725.641417-1-zhaoguohan@kylinos.cn>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 8 Apr 2026 09:40:26 +0400
-X-Gm-Features: AQROBzAFhhUboDZvXi8EzRHILwcHfSFw81EIKZwbwelGIdWr7xB8iEikNgPdoSk
-Message-ID: <CAMxuvazU-_Uh2YSs7=7nBsLaRXq8ApuJ7rgBUyvmkRaGoAtX_Q@mail.gmail.com>
-Subject: Re: [PATCH] ui/spice-app: detect runtime directory creation failures
-To: zhaoguohan@kylinos.cn
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,49 +107,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/arm/tcg/meson.build | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-On Wed, Apr 8, 2026 at 7:18=E2=80=AFAM <zhaoguohan@kylinos.cn> wrote:
->
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
->
-> spice_app_display_early_init() creates the per-VM runtime directory
-> with g_mkdir_with_parents() before setting up the Spice socket. The
-> code checks for "< -1", but g_mkdir_with_parents() returns -1 on
-> failure, so the error path is never taken.
->
-> This lets spice-app continue after a directory creation failure and
-> defers the problem to later setup steps.
->
-> Check for "< 0" instead so the failure is reported immediately and
-> spice-app exits before using an invalid runtime directory.
->
-> Fixes: d8aec9d9f129 ("display: add -display spice-app launching a Spice c=
-lient")
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-> ---
->  ui/spice-app.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/ui/spice-app.c b/ui/spice-app.c
-> index 9e55f2737159..0df7325e6792 100644
-> --- a/ui/spice-app.c
-> +++ b/ui/spice-app.c
-> @@ -151,7 +151,7 @@ static void spice_app_display_early_init(DisplayOptio=
-ns *opts)
->      if (qemu_name) {
->          app_dir =3D g_build_filename(g_get_user_runtime_dir(),
->                                     "qemu", qemu_name, NULL);
-> -        if (g_mkdir_with_parents(app_dir, S_IRWXU) < -1) {
-> +        if (g_mkdir_with_parents(app_dir, S_IRWXU) < 0) {
->              error_report("Failed to create directory %s: %s",
->                           app_dir, strerror(errno));
->              exit(1);
-> --
-> 2.43.0
->
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 5f33ecd76e0..8d9112f6da2 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -10,10 +10,13 @@ vfp_d = [
+   decodetree.process('vfp-uncond.decode', extra_args: '--decode=disas_vfp_uncond'),
+ ]
+ 
+-gen_a32 = [
++neon_d = [
+   decodetree.process('neon-shared.decode', extra_args: '--decode=disas_neon_shared'),
+   decodetree.process('neon-dp.decode', extra_args: '--decode=disas_neon_dp'),
+   decodetree.process('neon-ls.decode', extra_args: '--decode=disas_neon_ls'),
++]
++
++gen_a32 = [
+   decodetree.process('m-nocp.decode', extra_args: '--decode=disas_m_nocp'),
+   decodetree.process('mve.decode', extra_args: '--decode=disas_mve'),
+   decodetree.process('a32.decode', extra_args: '--static-decode=disas_a32'),
+@@ -32,7 +35,6 @@ arm_ss.add(files(
+   'translate.c',
+   'translate-m-nocp.c',
+   'translate-mve.c',
+-  'translate-neon.c',
+   'm_helper.c',
+   'mve_helper.c',
+   'op_helper.c',
+@@ -63,6 +65,7 @@ arm_common_ss.add(files(
+ ))
+ 
+ arm_common_system_ss.add(
++  neon_d,
+   vfp_d,
+   files(
+   'cpregs-at.c',
+@@ -72,17 +75,20 @@ arm_common_system_ss.add(
+   'psci.c',
+   'tlb_helper.c',
+   'tlb-insns.c',
++  'translate-neon.c',
+   'translate-vfp.c',
+   'vec_helper.c',
+   'vfp_helper.c',
+ ))
+ arm_user_ss.add(
++  neon_d,
+   vfp_d,
+   files(
+   'debug.c',
+   'hflags.c',
+   'neon_helper.c',
+   'tlb_helper.c',
++  'translate-neon.c',
+   'translate-vfp.c',
+   'vec_helper.c',
+   'vfp_helper.c',
+-- 
+2.47.3
 
 
