@@ -4,73 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0B3FF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91708FF5134
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABUP-0006OP-FS; Tue, 07 Apr 2026 14:49:29 -0400
+	id 1wABUJ-0005zy-6I; Tue, 07 Apr 2026 14:49:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wABSU-0002iK-5c
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wABSY-0002o3-II
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wA8Rq-0006XR-5I
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:34:39 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wA8PW-0005Xl-Es
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:32:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775576076;
+ s=mimecast20190719; t=1775575933;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8XADdrZibf57EGRy1RuBkmFPtyCoeV87C4j3jnniRGU=;
- b=eZywXy7PAkfAc1R4JoS4/3mFq1Yv9b4eeCxyWYobNuevVwIoEOjnWdzVpcRbiYOk9IYtNX
- 2i/PoNOYRzvFgOarWzaYpneoEp+wlMyET4wqYDPifh+NIyy2I3yz5iG2CeAp/ShVDhralE
- zhYqEX8kt9khl2DSUbnqTmv1jVVNtqA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-6hmMVIHnMiibzsOlbTJKiA-1; Tue,
- 07 Apr 2026 11:34:35 -0400
-X-MC-Unique: 6hmMVIHnMiibzsOlbTJKiA-1
-X-Mimecast-MFC-AGG-ID: 6hmMVIHnMiibzsOlbTJKiA_1775576073
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85E73195605B; Tue,  7 Apr 2026 15:34:31 +0000 (UTC)
-Received: from localhost (unknown [10.44.34.43])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1307C1800673; Tue,  7 Apr 2026 15:34:28 +0000 (UTC)
-Date: Tue, 7 Apr 2026 11:34:26 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <its@irrelevant.dk>,
- =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v5 5/8] hw/nvme: add migration blockers for non-supported
- cases
-Message-ID: <20260407153426.GA238768@fedora>
-References: <20260317102708.126725-1-alexander@mihalicyn.com>
- <20260317102708.126725-6-alexander@mihalicyn.com>
+ bh=t7VRl3S2rNTZXwX28LihXaYXdGqCNej5/6BBqjKxC5A=;
+ b=Ua25cuvnVv/P+R2pG292ULOz9P/kCLCnn2X6P/J1LINh/xgKbovsjIE7J7Pj3WPz7alJ3J
+ HBJciZtJEiqHoX4zvllv5F0K3dx0lcvdl7Hot64PvzL7OyIPi6+p6qGtARh2KvX4FQizqU
+ ZEKcwFiYbIlBb03zvRhgAZPDrQ8dzu0=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-113-se-QI7wUNbCGEDwHBZhvuA-1; Tue, 07 Apr 2026 11:32:12 -0400
+X-MC-Unique: se-QI7wUNbCGEDwHBZhvuA-1
+X-Mimecast-MFC-AGG-ID: se-QI7wUNbCGEDwHBZhvuA_1775575931
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-50d890580e1so50878141cf.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 08:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775575931; x=1776180731; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=t7VRl3S2rNTZXwX28LihXaYXdGqCNej5/6BBqjKxC5A=;
+ b=NoOsdfxreUZHzCXNxSJ5j/btNXiaekOY/aCn3dIOp7sUU1PTLrikICnADa4xiKB18x
+ mxrajHordCsVLcS1im8mAnl6+Tz9ZsEZnyTg+gCEKcxhm4z57eKbVju0VrLjmm7QNdST
+ 4VTXqcie4Rq0dwz9LNhyb5GKRRuJ7ml2JCzDe8Jd7iWuqao/VCMFEpLXki++rnPDczLW
+ +CWX8lDzMEHUz7yLWua3r+zeQ7yQpdXdaSIjRMYi3Gr5QC+lo/yc+jgpfBDliA0zR+31
+ t5XiMNRMHF65WHMOZWUjXqIC0vYaZ+jmR9vSUTgCFjewvWWx6NoX5WaLTZcRfxei66gY
+ nnig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775575931; x=1776180731;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t7VRl3S2rNTZXwX28LihXaYXdGqCNej5/6BBqjKxC5A=;
+ b=YrlYQwU8XYNIfCW2y6GVzcZLXNEvKuIseeaPJYseo2Qrb4j/xfnTP2kaLV1dkbxH0P
+ q8DhSciMhZUMSxT0ov1lhNlfVbZ1/xi9zvQWHqEUcwqq/kpoZIyDhnq20GknvkX2zW/X
+ ENI42Hx5SyjKjy9lOG6qkiHAyF87IkvmZK0qv8r8db8DbRBdvXmmiY+GNxRNOmjWxe8f
+ nZRD53VTWkyUtdBmLBO0QnuMEd7Zp2+zQ1eVYxMPPTYqnUyTboJD05eNPvZ3AFfPuylH
+ orbHZA6Jsqo6NCBKcZCCpO69+v7DfpI3HdlZvh9kDysbfKMsA0SCTgZxzQ7k/n9SqvAN
+ zdkw==
+X-Gm-Message-State: AOJu0YweBgDKDwvxc/bw0bjEv6V5SWhLNUTWoP4vKmbw8pyyYOC/cVBL
+ yX55OL+xfQq35pmajjpjPQW6QlWrrlo26/bxZM23EPz3k7a69X2J9z50LF1YbOGpTe3C4lcvcsu
+ 2AuyoinaXzHIo0pFsRtxJgPZwIe47iCEPUVx0brS2MN9ILCvuchRCFzf6
+X-Gm-Gg: AeBDieuEpjdfTge7siGFJ6NMtEyKNHpGx0GjjDZ4dl8tDFuq7o4po0qXw0OE1inAROl
+ 1DkXRVh5ufA2sR93PWtrHrxaarZlscC21d3pHjH86T3nWi1FIcKjr2WA0FWmCU42vH31sep3k9c
+ 3cnBOdt6jGFRjuVcZSB5YfWByog2AjnkSFADDQB/UWqNeIVswUp3R1qsHVkiJyq6lOE9oky3igG
+ Z2IrRDiy1AKG++IdGpKg3UicuGvZ3dXWQ+Vwt8ZJUtfNxFdR+v1uubn9ja4t8hgAkmJIJQUa2Bg
+ JSnhb2xxob+3G3P0C6rJ36w+EkVNHpx0u+hirTStRWCJCR9FkDJ970Dvaltljk8LR47XKas/bHA
+ PPL4D+24GIzwuCrqIVYfZ6AEflq6Xz3gc+1+kWrIDt/DLq00=
+X-Received: by 2002:a05:622a:2518:b0:50d:7f60:6231 with SMTP id
+ d75a77b69052e-50d7f606e8dmr192880211cf.21.1775575931375; 
+ Tue, 07 Apr 2026 08:32:11 -0700 (PDT)
+X-Received: by 2002:a05:622a:2518:b0:50d:7f60:6231 with SMTP id
+ d75a77b69052e-50d7f606e8dmr192879521cf.21.1775575930724; 
+ Tue, 07 Apr 2026 08:32:10 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50d4b73ea66sm168573831cf.14.2026.04.07.08.32.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 08:32:10 -0700 (PDT)
+Date: Tue, 7 Apr 2026 11:32:09 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alex Williamson <alex@shazbot.org>,
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH RFC 07/12] migration: Introduce stopcopy_bytes in
+ save_query_pending()
+Message-ID: <adUjefnry9gBCfUg@x1.local>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-8-peterx@redhat.com>
+ <acavsDOsAz0hmfvi@fedora> <ac6IRfYH7UCluuIt@x1.local>
+ <adUfNiig4RptM2sS@fedora>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="NNGxTyNILpv0+EUA"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260317102708.126725-6-alexander@mihalicyn.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <adUfNiig4RptM2sS@fedora>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -95,50 +126,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Apr 07, 2026 at 05:19:01PM +0200, Juraj Marcin wrote:
+> I think, moving the fastpath boolean out and passing it as a separate
+> parameter would help greatly with the input/output separation. Then, if
+> some modules even validate the condition in the comment, there's no
+> harm, it'll just get overwritten afterward with the correct value.
 
---NNGxTyNILpv0+EUA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Sure, I'll use it.
 
-On Tue, Mar 17, 2026 at 11:27:05AM +0100, Alexander Mikhalitsyn wrote:
-> +static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-> +{
-> +    uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
-> +    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
-> +    bool adm_cmd_security_checked = false;
-> +    bool cmd_io_mgmt_checked = false;
-> +    bool cmd_zone_checked = false;
-> +
-> +    /*
-> +     * Idea of this function is simple, we iterate over all Command Sets and
-> +     * for each supported command we provide a special handling logic to
-> +     * determine if we should block migration or not.
-> +     *
-> +     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is always
-> +     * available to the guest, but if there is only 1 namespace, then it is
-> +     * safe to allow migration, but if there are more, then we need to block
-> +     * migration because we don't handle this in migration code yet.
-
-What would be required to migrate multiple namespaces?
-
-Thanks,
-Stefan
-
---NNGxTyNILpv0+EUA
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnVJAIACgkQnKSrs4Gr
-c8jmawf9GDx5rqa2JBFvEUUWLF7X7uqfhGFAHol9kO0yMq9O8s+jutUU9EIj/uIs
-Vps1X0XuRK/29Dr1f04bv74g/bF+FnnFSpStvRT6ixHek64gcgNpArVrEjDpjSA+
-iGpuld01Ly0Qd73gWWWxb8JNFE0UGBGoJRB/JA4xAqGq5lrbYOedKAeqQoiBHEKD
-sw/MfUyqJU7aXsNvQcmab8MWoNwk+UCCkRGxTJIaLfSVjLqSRKsP/tmUdtN/HlQx
-qGsgsG1up1UKU6zVBftg+A41aQ/cJ7IVta/esRg9stFKD6vf5RiEzTsJBNH2RZ9P
-wxHnpuSeBDMz6kLBWYYG5rJfedSYbw==
-=x+XY
------END PGP SIGNATURE-----
-
---NNGxTyNILpv0+EUA--
+-- 
+Peter Xu
 
 
