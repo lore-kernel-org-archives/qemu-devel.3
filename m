@@ -4,73 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93AE4FF5135
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBAEFF5136
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABXL-00009h-8F; Tue, 07 Apr 2026 14:52:31 -0400
+	id 1wABXc-0000Hb-G4; Tue, 07 Apr 2026 14:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wABTx-0003xC-77
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:01 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wA0vm-0007bX-JL
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 03:33:04 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id C7B39416BE;
- Tue,  7 Apr 2026 07:33:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D697C116C6;
- Tue,  7 Apr 2026 07:32:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775547180;
- bh=McMCEJCD2QmIBezTAHXNBYH5nhWhqi9NahlqALGxo0o=;
- h=From:Subject:Date:To:Cc:From;
- b=UtlZRx+Zp8I1OVbO0Nynk9B4+jWwa5s/oT3XaWDzpWEjh0V/igmZyXwPyfqvsBXPf
- 4On9OUsDKwuLtbE2YYuhwpyt5ZBdUu5qs9UQz+PFdVkmns5lX65c1bWnBppmLTnXZ6
- 36kzs/Qpv/28Kf6CqsTCiJNU6eI65ttIt/hdu1Frf9J570v7NiMXjW8DcyenknVT4U
- i1jFBBvyoSB1bCelOOHkCqQe2cMy9O82yWm6NOEEKun5UVULMzPEOMf8GhuSLr6eHr
- 8IdHIv3HmYgKnqWHGmKhrFzVvA8EJurEXNj1uzFF5kK98T9DKmNW7FwTWxabnESBCe
- 25sdT09xdHwHw==
-From: Christian Brauner <brauner@kernel.org>
-Subject: [PATCH v3 0/5] monitor: add dynamic QMP monitor hotplug support
-Date: Tue, 07 Apr 2026 09:32:44 +0200
-Message-Id: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wABUK-0003wR-MV
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:24 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1w9yDE-0007H5-CE
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 00:38:53 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c742723c863so3008717a12.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 21:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775536731; x=1776141531; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EKKZg8uq7Ld0d9eFV3gGIWh2uTItY5aVTYw1sMKCdpI=;
+ b=NTxBsMjctgVPZ8M3E3uFD16vGm+v+b3dYW2GI77K6Lm+7+wquu3B/JJ/dCYS4WjpGo
+ wl/kNSB0/aF40FNkLgYsXopSd6syQFTR/uVFtp8cEjG4UEAzKZaf6dIbEZ6vMosg+c47
+ NuJ9hsZKXuGRtz6pVgKMSELS+oFvq8Xw3VoSzzyoYB4b9gjC22AcfLq0sQ4neSCXjW0a
+ E/1U89TCBVmIYLydn8wCgwrEuHuxuO/6apVFwetksb4iggFA9vu5h+PUkiluSsaANUZy
+ uxAjzdJc870g2UwNECoBkX21O1VcH6IBmk6v5yqXPVnftncH8NtncsmelP8qZUxDpRCu
+ NT7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775536731; x=1776141531;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EKKZg8uq7Ld0d9eFV3gGIWh2uTItY5aVTYw1sMKCdpI=;
+ b=X1btX+CuodAvvRQvGa1+ZhggFSBZD+dQnMKsMBigKvJwPbDOUWaKdIh1F/SWPFzLPg
+ aKeL5o3CM5H9fIwjH3GVy8wbIwP86WErGdGvAe3DSkBGNcMAxT/k6WbYgKxPRosJo+qL
+ 6MXbhb3oGyyMPRxcdU/TNuE6iHqmOUx8vbUV/NZPTlnn8T3a0nHr8wQOHViC6mqlhbnE
+ Bw4ysgDm9VnOZr+mfSC/dX9PRBB5ZI+iH/y+v8fjB42/84JsktdN3maac63ZNKnwLjl1
+ LGRgrJ5tqJ827hWE+SzfJZ1HJ7q3GlKSac2wlVxuiyVEDd4BFXdrevPgQXEVd8CHYfR5
+ ASDQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqFe6fzTl3g6GDoQdRY9MEHrpN7Tm1Mxgy0oj+czIWbkwPKO6IulSSSpxL8ocIMAUX17f4BBR+SboN@nongnu.org
+X-Gm-Message-State: AOJu0Yzn+seH5eKpOHOQWLj5840qyBkipJWOYQRF6UX2bVnCglVqr/qK
+ EEZ99HO3v2vXdox/Vc6WRKIqa/kL2hj0I4TV2yV1N0H2hJIPuoYJepfk
+X-Gm-Gg: AeBDiet8bECBRRNPoyNvPnPXmcKI4c95xkRcEg2EJ1WXwS0IIjrLZNHch8nT0AvwMDa
+ kte485V6URFO95kdjTtY5RpBTPK2P0Ip6NRPR1yoiCeopPahZmOt6LvKdmeBSWd/5vBPSYoFeV9
+ pJDaIqWRlYwmRHDJdECxKDoF5qofndeIy4RyBkT69oNuBN3Eo/+6dAcdXw9rouAN4/t2T9cnnQc
+ 3gFdQ0YKD4u5qhXTakEA9axdMUPl0XoGqL0JDaSFO0SnYDwa/jkwl4GG60310QqQwcyx5p+qwL8
+ OKzx0wqjpAbjKqIVrdz7X0znN2QsIMpSBXtqvzUYE0aN+s00LlhVZmnmgL50o17ulE+3SB5/xHX
+ siKXAXOHjUYzhfAUtbLgsLpeXAUixw4CF+DQdbJGOPLQbX9+Z9jVroIHlwCvE279Rkw/wNeTQXC
+ 11iUE3wVQPMyMQTrJMu1uoSRDDWDxovNqbJoD6vkWw
+X-Received: by 2002:a05:6a20:3d0d:b0:398:787d:4042 with SMTP id
+ adf61e73a8af0-39f2f11da88mr14820664637.50.1775536730902; 
+ Mon, 06 Apr 2026 21:38:50 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c76c6491fedsm15809963a12.8.2026.04.06.21.38.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Apr 2026 21:38:49 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: alistair23@gmail.com,
+	Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 1/5] target/riscv: Generate access fault if sc comparison fails
+Date: Tue,  7 Apr 2026 14:36:10 +1000
+Message-ID: <20260407043614.372871-2-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260407043614.372871-1-alistair.francis@wdc.com>
+References: <20260407043614.372871-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAByz1GkC/43OOxKCMBAG4Ks4qV2HBAG18h6ORR4rRCXBDaCOw
- 91NtNHGsfz38e0+WECyGNhm9mCEow3Wuxjy+YzpRroawZqYmchEmS0zAVdPJ7i0HbTe2d4TNL7
- vzkMNByUrXfIV5kaxuN4RHuztRe/27xwGdUTdJy9NKBkQFEmnm1RqZeiRUqOxIcr311MjT8Af9
- 0cOGZQ5z2WhjSmq5faE5PC88FSz9MAoPqXihySiJE2h0Bix5pX8kqZpegJLswdRNgEAAA==
-X-Change-ID: 20260402-work-qmp-monitor-hotplug-fba7c618e3db
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Christian Brauner <brauner@kernel.org>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4490; i=brauner@kernel.org;
- h=from:subject:message-id; bh=McMCEJCD2QmIBezTAHXNBYH5nhWhqi9NahlqALGxo0o=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRe2ax0MWDjeT7vEP+XO5Ps4yYpfync/zztvBGDpfivw
- 9dDK27Hd5SyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzkoATDfzfzD+eOK7ot2TBX
- aFrZ/r2fDxvsZXPfkL370u+FegIHOhQYGXrFudUWBB87Vr+I8fO559WKN02m//gU9lxkZ33fpcJ
- yD3YA
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=brauner@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,96 +106,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU supports runtime hotplug for chardevs, devices, block backends,
-and netdevs. Monitors are the only major subsystem that lacks this --
-all QMP monitors must be configured at launch via -mon or -qmp CLI
-options.
+From: Alistair Francis <alistair.francis@wdc.com>
 
-This series adds monitor-add, monitor-remove, and query-monitors QMP
-commands so that management tools can create independent QMP sessions
-on demand at runtime.
+The RISC-V spec states:
 
-I've implemented a QMP-to-Varlink bridge in systemd. This allows
-systemd-vmspawn to control virtual machines and containers through a
-unified Varlink interface. Varlink allows protocol upgrades. For
-example, it is possible to switch from Varlink to say http. I'm
-allowing Varlink clients to upgrade from the Varlink interface to the
-native QMP interface. Such clients get a new monitor assigned that
-allows them to manage the virtual machine directly via QMP. The main
-monitor remains unaffected and tied to the generic Varlink interface. We
-can't pre-allocate monitors as we have no control over how many protocol
-upgrades we actually get but it won't just be one. And having unused
-monitors around really isn't ideal either.
+"For the purposes of memory protection, a failed SC.W may be treated
+like a store."
 
-Having the ability to hotplug monitors would really be helpful. I'm not
-yet super well-versed in qemu internals so this might be done wrong but
-testing works so far.
+So if the comparison in sc.w fails we should still check for alignment
+and do a probe access to check permissions.
 
-My systemd patch that triggered this is at
-https://github.com/systemd/systemd/pull/41449.
-
-The usage pattern mirrors chardev hotplug:
-
-  -> chardev-add id=qmp-extra backend=socket,...
-  -> monitor-add id=extra-qmp chardev=qmp-extra
-  [client connects to socket, gets QMP greeting, negotiates, sends commands]
-  -> monitor-remove id=extra-qmp
-  -> chardev-remove id=qmp-extra
-
-Patches 1-2 add the data model (id/dynamic/dead fields in Monitor) and
-the infrastructure for safe per-monitor destruction without shutting
-down the shared dispatcher coroutine.
-
-Patch 3 adds the QAPI schema and command handlers.
-
-Patches 4-5 add qtest unit tests and a functional e2e test that
-performs a full hotplug -> connect -> handshake -> unplug cycle.
-
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3323
+Resoves: https://gitlab.com/qemu-project/qemu/-/work_items/3136
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
-Changes in v3:
-- Use SPDX license identifier in functional test.
-- Use framework's socket_dir() helper instead of manual tempfile
-  handling for socket paths in the functional test, drop tearDown().
-- Tighten struct field comments in monitor-internal.h.
-- Wrap long qtest_add_func() registration line.
-- Link to v2: https://patch.msgid.link/20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org
+ target/riscv/helper.h                   |  3 +++
+ target/riscv/op_helper.c                | 14 ++++++++++++++
+ target/riscv/insn_trans/trans_rva.c.inc |  6 ++++++
+ 3 files changed, 23 insertions(+)
 
-Changes in v2:
-- Fix use-after-free in self-removal path: skip monitor_resume() when
-  the monitor is dead to avoid scheduling a BH against a monitor that
-  is about to be freed by monitor_qmp_destroy().
-- Hold monitor_lock in monitor_find_by_id() to prevent races with
-  the I/O thread BH that appends to mon_list.
-- Deduplicate monitor-remove commit message: trim the gcontext/out_watch
-  explanation that repeated the infrastructure commit, reference
-  monitor_cancel_out_watch() instead.
-- Add missing test descriptions to patch 4 (chardev-in-use, CLI monitor
-  rejection, HMP monitor rejection) and patch 5 (self-removal, large
-  response, events).
-- Fix cover letter wording.
-- Link to v1: https://patch.msgid.link/20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org
-
----
-Christian Brauner (5):
-      monitor: store monitor id and dynamic flag in Monitor struct
-      monitor/qmp: add infrastructure for safe dynamic monitor removal
-      qapi: add monitor-add, monitor-remove, query-monitors commands
-      tests/qtest: add tests for dynamic monitor add/remove
-      tests/functional: add e2e test for dynamic QMP monitor hotplug
-
- include/monitor/monitor.h                        |   3 +-
- monitor/monitor-internal.h                       |  11 ++
- monitor/monitor.c                                |  70 +++++++--
- monitor/qmp-cmds-control.c                       | 111 ++++++++++++++
- monitor/qmp.c                                    |  77 +++++++++-
- qapi/control.json                                | 104 +++++++++++++
- tests/functional/generic/meson.build             |   1 +
- tests/functional/generic/test_monitor_hotplug.py | 170 +++++++++++++++++++++
- tests/qtest/qmp-test.c                           | 186 +++++++++++++++++++++++
- 9 files changed, 717 insertions(+), 16 deletions(-)
----
-base-commit: b6a7d06213e5d2f7d124d16418bc289c4a8a4b82
-change-id: 20260402-work-qmp-monitor-hotplug-fba7c618e3db
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index b785456ee0..af6cfcfc27 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1289,3 +1289,6 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(ssamoswap_disabled, void, env)
+ #endif
++
++/* Zalrsc" SC write probe */
++DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 6ccc127c30..b569366369 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -281,6 +281,20 @@ void helper_cbo_inval(CPURISCVState *env, target_ulong address)
+     /* We don't emulate the cache-hierarchy, so we're done. */
+ }
+ 
++void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
++                           target_ulong size)
++{
++    uintptr_t ra = GETPC();
++    int mmu_idx = riscv_env_mmu_index(env, false);
++
++    if (addr & (size - 1)) {
++        env->badaddr = addr;
++        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ADDR_MIS, ra);
++    }
++
++    probe_write(env, addr, size, mmu_idx, ra);
++}
++
+ #ifndef CONFIG_USER_ONLY
+ 
+ target_ulong helper_sret(CPURISCVState *env)
+diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
+index a7a3278d24..62c0fe673d 100644
+--- a/target/riscv/insn_trans/trans_rva.c.inc
++++ b/target/riscv/insn_trans/trans_rva.c.inc
+@@ -90,6 +90,12 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+      */
+     TCGBar bar_strl = (ctx->ztso || a->rl) ? TCG_BAR_STRL : 0;
+     tcg_gen_mb(TCG_MO_ALL + a->aq * TCG_BAR_LDAQ + bar_strl);
++    /*
++     * "For the purposes of memory protection, a failed SC.W may be treated
++     * like a store." so let's check the write access permissions
++     */
++    gen_helper_sc_probe_write(tcg_env, src1,
++                              tcg_constant_tl(memop_size(mop)));
+     gen_set_gpr(ctx, a->rd, tcg_constant_tl(1));
+ 
+     gen_set_label(l2);
+-- 
+2.53.0
 
 
