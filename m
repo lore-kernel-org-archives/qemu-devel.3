@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B52EEFF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 502ABFF5134
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABUi-0006ZL-Je; Tue, 07 Apr 2026 14:49:48 -0400
+	id 1wABSH-0003Yq-0S; Tue, 07 Apr 2026 14:47:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wABTD-0002o3-Nb
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:18 -0400
-Received: from qs-2006l-snip4-11.eps.apple.com ([57.103.85.251]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wABRe-0002am-4P
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:46:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wA7Fz-000589-FR
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 10:18:21 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPS id
- D109318000B5; Tue, 07 Apr 2026 14:18:13 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775571496; x=1778163496;
- bh=LSZJf0LROEG3AfIIFp8LQpIRPGfPCyDZZnxhkesYt9c=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=NXHVXHzvcErl53gKu6UprYiFgMeUAo/Z2DVZ2ddsS3Gu4amG7g3IUeVx8Py/s+XOM/4HQpMdlxCUOg8zo4i3Fq9ficn4U4pw/q5zxNIqSNxSYIu5myUa4JX1FCAwBLtYB+hLWgxwwDBBXUctiqY78AHEubHSCDvmHFs3LNQE4UJNLAGnbPyqmwao4xmqN2uFgHu5GeeV2JQpK/nfBrkcuHQQhKT1Pg37K+dBZ3op9Il7HwgbTRaXKyhspvh44YwuZ3G+nGQPmj412Qjhxpr21OufXB5y0lhyxbzDnIvUtYsit4p2KImmfcdR7kX/2zcKSqwcXwZyZSuvdKf8+7pTiw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPSA id
- 02F021800184; Tue, 07 Apr 2026 14:18:11 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>
-Subject: [PATCH v8 00/13] whpx: i386: bug fixes, feature probing and CPUID
-Date: Tue,  7 Apr 2026 16:17:56 +0200
-Message-ID: <20260407141809.16862-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wA9Qv-000479-4c
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 12:37:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775579863;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yflob0hoXvPb/eeHXEt12mlIK+9sdbIHt8xFJjJk0LA=;
+ b=AHbGM0zpRD81eqeQGfk0U8ZbcMDC1PrGyf5Gd1pdw2pNf6NqarQsRT1Itfafbm9qldCv0H
+ 6WjWrsGX2snnlCB1sxBuMEgNrmApCnmMYcIhViDnKs+QTRlWrX5FuOjePGaCKuKCyFTDfy
+ /cQH+pbEfpa5JYVm0ARqh7lQSUzBgyg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-tUbBc6XIMcqubORdkm009A-1; Tue,
+ 07 Apr 2026 12:37:39 -0400
+X-MC-Unique: tUbBc6XIMcqubORdkm009A-1
+X-Mimecast-MFC-AGG-ID: tUbBc6XIMcqubORdkm009A_1775579857
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 054C019560B3; Tue,  7 Apr 2026 16:37:37 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 81003300019F; Tue,  7 Apr 2026 16:37:32 +0000 (UTC)
+Date: Tue, 7 Apr 2026 17:37:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, jrossi@linux.ibm.com,
+ cohuck@redhat.com, richard.henderson@linaro.org,
+ pierrick.bouvier@linaro.org, david@kernel.org,
+ walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ jdaley@linux.ibm.com
+Subject: Re: [PATCH v10 11/30] crypto/x509-utils: Add helper functions for
+ DIAG 508 subcode 1
+Message-ID: <adUyydJBYs8u5j7K@redhat.com>
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
+ <20260402221453.1602899-12-zycai@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=PumergM3 c=1 sm=1 tr=0 ts=69d51226
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=1DGgg3L7_nY_qRTbWDsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: hwuOzAJEndCCIebzz39lYxtIZ-5sxzG-
-X-Proofpoint-ORIG-GUID: hwuOzAJEndCCIebzz39lYxtIZ-5sxzG-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDEzMSBTYWx0ZWRfX07N4xqrm6nNs
- UIhnIzM5PRzuOiZmLe1jL0OS04lBg17vU75BOIdC6BorUNRjPM6buG+wCcceKsnPmWQWRReKRII
- Mvx+UMxyN+bVIgCQfPfAM0idA1oWc+gCPXkQbIjwjMKTnSjZrP3Tm2VRj31VdXXLDGLLU3Uxwcz
- KZuOeSbWtDfYywPvagEiYU/YOwhkZuedKVjwD5Rulxp6H3JYR9zwOV+httgSbNGWod2crJw8lpL
- Be1SRlfCyV/BGphEO4LNToSfWBjj0wExN4OX0a/uEV748Q2whMZY3AZ0YPtFak7dyZUoItv6q0s
- SGlh6tHHTgtvUpRHdwABUhWn+MmeMVl7ImyyQzATJXRAmMTxK8dQfeUOTv+DJ4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- malwarescore=0 clxscore=1030 adultscore=0 mlxlogscore=918 bulkscore=0
- phishscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604070131
-Received-SPF: pass client-ip=57.103.85.251;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20260402221453.1602899-12-zycai@linux.ibm.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,181 +94,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a supplemental update that includes
-"whpx: i386: x2apic emulation for kernel-irqchip=off, feature probing"
-v4 unmodified.
+On Thu, Apr 02, 2026 at 06:14:33PM -0400, Zhuoying Cai wrote:
+> Introduce helper functions to support signature verification required by
+> DIAG 508 subcode 1:
+> 
+> qcrypto_pkcs7_convert_sig_pem() – converts a signature from DER to PEM format
+> qcrypto_x509_verify_sig() – verifies the provided data against the given signature
+> 
+> These functions enable basic signature verification support.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  crypto/x509-utils.c         | 108 ++++++++++++++++++++++++++++++++++++
+>  include/crypto/x509-utils.h |  41 ++++++++++++++
+>  2 files changed, 149 insertions(+)
+> 
+> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+> index 906d5e5e87..2b991ff9ac 100644
+> --- a/crypto/x509-utils.c
+> +++ b/crypto/x509-utils.c
 
-This might be too big for QEMU 11.0 at this point though...
+> +int qcrypto_pkcs7_convert_sig_pem(uint8_t *sig, size_t sig_size,
+> +                                  uint8_t **result, size_t *resultlen,
+> +                                  Error **errp)
+> +{
+> +    int ret = -1;
+> +    int rc;
+> +    gnutls_pkcs7_t signature;
+> +    gnutls_datum_t sig_datum_der = {.data = sig, .size = sig_size};
+> +    gnutls_datum_t sig_datum_pem = {.data = NULL, .size = 0};
+> +
+> +    rc = gnutls_pkcs7_init(&signature);
+> +    if (rc < 0) {
+> +        error_setg(errp, "Failed to initialize pkcs7 data: %s", gnutls_strerror(rc));
+> +        return ret;
+> +    }
+> +
+> +    rc = gnutls_pkcs7_import(signature, &sig_datum_der, GNUTLS_X509_FMT_DER);
+> +    if (rc != 0) {
+> +        error_setg(errp, "Failed to import signature: %s", gnutls_strerror(rc));
+> +        goto cleanup;
+> +    }
+> +
+> +    rc = gnutls_pkcs7_export2(signature, GNUTLS_X509_FMT_PEM, &sig_datum_pem);
+> +    if (rc != 0) {
+> +        error_setg(errp, "Failed to convert signature to PEM format: %s",
+> +                   gnutls_strerror(rc));
+> +        goto cleanup;
+> +    }
+> +
+> +    *resultlen = sig_datum_pem.size;
+> +    *result = g_memdup2(sig_datum_pem.data, sig_datum_pem.size);
+> +
+> +    ret = 0;
+> +
+> +cleanup:
+> +    gnutls_pkcs7_deinit(signature);
+> +    gnutls_free(sig_datum_pem.data);
 
-"whpx: i386: disable TbFlushHypercalls for emulated LAPIC" is a
-bugfix, and "target/i386: emulate: include name of unhandled instruction"
-is a debugging aid.
+Change to g_free plesae
 
-"whpx: i386: x2apic emulation" makes things slightly better for Windows
-10 users. But I strongly recommend *not* relying on it when possible and
-using kernel-irqchip=on instead. On Windows 10 however that's more murky
-because PIC interrupt injection is broken (interrupts don't wake the vCPU
-from HLT) in that case.
+> +    return ret;
+> +}
 
-"whpx: i386: wire up feature probing" is yet another commit adding a code path
-not used on Windows 10. It'll tell the user today which CPU features they set
-are incompatible with the hardware but it does not sync that to the CPUID view
-that the guest has.
+With that fixed
 
-And then another commit to enable x2apic emulation by default even for
-kernel-irqchip=off + re-introducing provided by QEMU enlightenments in a more
-functional form to signal that the x2apic can be used. I'm not aware of the
-actual vmware freq leaf being used though.
+ Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+ Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+ 
 
-"whpx: x2apic emulation for kernel-irqchip=off follow-up" is rolled into this series.
-
-"whpx: i386: reintroduce enlightenments for Windows 10" is a bugfix to make
-x2APIC work as intended on Windows 10 without emulating an IOMMU.
-*And* a massive improvement for Windows 10 hosts in performance for Linux guests
-due to using the right clocksource instead of HPET.
-
-And dependent on this series so included, CPUID intercepts finally...
-However that's only supported starting from Windows 11/Server 2022.
-
-Also ended up switching over Windows 10 to kernel-irqchip=off
-by default due to PIC interrupt injection being broken.
-
-Old performance (or lack thereof...) numbers:
-
-On a Ryzen 7 8700GE with a Windows 10 VM running with KVM in nested virt, with
-kernel-irqchip=off for the virt Alpine Linux x86_64 ISO (3.23.3) with -smp cores=2,
-boot times as reported through dmesg:
-
-- QEMU 10.2: 83 seconds
-- QEMU 10.2 with a single core: 18.1 seconds
-- as of v6 of this series, x2apic forced off: 29 seconds
-- as of v6 this series, out of the box: 18 seconds
-- v6 with kernel-irqchip=on and EDK2: 16.5 seconds
-- v6 with kernel-irqchip=off and EDK2: 9.5 seconds
-- v6, and with 1 core instead of two: 12.6 seconds
-
-In v7, the Windows 10 numbers are pretty much at parity with Windows 11 now.
-
-And with this series on a Windows 11 VM on the same hardware:
-- kernel-irqchip=on: 6.5 seconds
-- kernel-irqchip=on, x2apic forced off: 7.6 seconds
-- kernel-irqchip=off: 8.3 seconds
-- hyperv=off,kernel-irqchip=off: 7.6 seconds... which is faster,
-so the absence of enlightenment support on Windows 10 doesn't explain things...
-
-With kernel-irqchip=on on Windows 10, when booting with SeaBIOS, it gets stuck in
-syslinux due to PIC interrupt injection being broken there. That can be counted
-as an infinite boot time (?).
-
-checkpatch false positives:
-
-ERROR: spaces required around that '*' (ctx:WxV)
-+         UINT32 Ecx, WHV_CPUID_OUTPUT *CpuidOutput))
-
-Not a multiplication but a pointer reference.
-
-ERROR: space prohibited after that '&' (ctx:ExW)
-+                    & CPUID_7_0_EDX_CET_IBT) {
-                     ^
-
-ERROR: space prohibited after that '&' (ctx:ExW)
-+                    & CPUID_7_0_ECX_CET_SHSTK) {
-                     ^
-
-Because it's multiline.
-
-Changes in v8:
-
-- Interrupt priority changes are back.
-- Some CPUID fixes
-- disable enlightenments and LAPIC for isapc
-
-Changes in v7:
-
-- Exposing VMware hypervisor identification when not
-using Hyper-V enlightenments and when the VMware frequency
-CPUID leaf isn't explictly disabled.
-
-- Remove the interrupt priority logic as it has issues with
-PIC interrupts. Can be reintroduced later.
-
-- -cpu max passing through CPUID info from Hyper-V
-- fill xsave info
-
-- OSXSAVE CPUID leaf reporting fix.
-
-Changes in v6:
-
-- kernel-irqchip=off fix: re-registering the interrupt window
-when the existing one has too low of a TPR value.
-
-Folded into "whpx: i386: kernel-irqchip=off fixes".
-
-- I/O port access fast path cleanup commit added at the end
-
-The path relied on a side effect of whpx_get_reg instead of
-something cleaner.
-
-- Use the CR8 register provided by the hypervisor only when
-kernel-irqchip=off. Rely on the APIC state synchronisation
-otherwise.
-
-This fixes some register sync errors that surfaced when setting
-the TPR values properly.
-
-Changes in v5/v1 with rename:
-
-- kernel-irqchip=off fixes, notably making 64-bit Windows bootable
-- switching over Windows 10 to kernel-irqchip=off by default
-
-Changes in v4:
-
-- Ugh for a revision sent quickly, unbreaking the arm64 build...
-- and making checkpatch happier to some extent
-
-Changes in v3:
-
-- Fixing CPUID intercepts so that QEMU CPU models work fine now, instead
-of the partial intercept that was present in QEMU 10.2
-- cleanups
-
-Changes in v2:
-
-- GCC warned when a variable name was re-used within a different (but overlapping)
-scope in the same function. It also warned with a -Werror=maybe-uninitialized for
-the MSR write case. Address those
-- make the in-KVM enlightenments path available on Windows 11 too when -M hyperv=off.
-
-Mohamed Mediouni (13):
-  target/i386: emulate: include name of unhandled instruction
-  whpx: i386: x2apic emulation
-  whpx: i386: wire up feature probing
-  whpx: i386: disable TbFlushHypercalls for emulated LAPIC
-  whpx: i386: enable x2apic by default for user-mode LAPIC
-  whpx: i386: reintroduce enlightenments for Windows 10
-  whpx: i386: introduce proper cpuid support
-  whpx: i386: kernel-irqchip=off fixes
-  whpx: i386: use WHvX64RegisterCr8 only when kernel-irqchip=off
-  whpx: i386: disable kernel-irqchip on Windows 10 when PIC enabled
-  whpx: i386: IO port fast path cleanup
-  whpx: i386: disable enlightenments and LAPIC for isapc
-  whpx: i386: interrupt priority support
-
- accel/whpx/whpx-common.c       |   2 +
- include/system/whpx-common.h   |   1 +
- include/system/whpx-internal.h |  10 +
- target/arm/whpx/whpx-all.c     |   1 +
- target/i386/cpu.c              |  25 ++
- target/i386/emulate/x86_emu.c  |   4 +-
- target/i386/whpx/whpx-all.c    | 580 +++++++++++++++++++++++++++------
- target/i386/whpx/whpx-i386.h   |   4 +
- 8 files changed, 530 insertions(+), 97 deletions(-)
- create mode 100644 target/i386/whpx/whpx-i386.h
-
+With regards,
+Daniel
 -- 
-2.50.1 (Apple Git-155)
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
