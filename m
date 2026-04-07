@@ -4,114 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D00AFFF5134
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808B8FF5134
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABU7-0005U4-Uf; Tue, 07 Apr 2026 14:49:11 -0400
+	id 1wABop-0004tP-IB; Tue, 07 Apr 2026 15:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wABSZ-0002o3-IR
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wA8Cs-0002Ht-Us
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:19:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775575149;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=taXHR2mcmnCYy3631kEFpdnTVlYfPnUg2+nSy9l8xDQ=;
- b=b4oT+rGbC/Dz/ONqcDnZS1+83820r0eRjYu2kYHORDain8dWbb70PG4dDZAmAXLc586LPk
- b/YyYmAmugNkD156D9C85hMFwIXOjabZ6zLPVzXg6oJx3Wh2PnLBJwrhSd+E5wx2oCiPMA
- iXBWKcGDV5N3QOx7AuIAyOnm40GUz94=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-ScQKdE-DOwKq1UpjPhAqFg-1; Tue, 07 Apr 2026 11:19:08 -0400
-X-MC-Unique: ScQKdE-DOwKq1UpjPhAqFg-1
-X-Mimecast-MFC-AGG-ID: ScQKdE-DOwKq1UpjPhAqFg_1775575148
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-7a5f9d43c48so53888627b3.2
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 08:19:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wABof-0004lb-Uc
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 15:10:27 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wABoe-0002nk-GE
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 15:10:25 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488a041eae5so27158475e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 12:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775575148; x=1776179948; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=taXHR2mcmnCYy3631kEFpdnTVlYfPnUg2+nSy9l8xDQ=;
- b=PjigDYwv1o87h2JnOBlg4IABr3pxGEyafl8OrwAOqZPsFCa2FO59DGOZnS4ZQIyYaS
- nATpBo7JDStqrBhz7SMcEPHTWFTF9PV08cr2g7hM3uaLtgujM7BImk42JmBitfaA0XXq
- x4W7Z6Q0Pc1zq5XEB00fDFq9Tv2sTRNF/xQWdK92EgPfMGgrXBVvXqaX7DvE0an9r6hg
- PxjKRYL830jzfglzZVYaMfDJv4U8n5cfEbsiAeRlKum2w2U5PFuaMqyg0S/R3nuv5J+y
- 3w6Cfam/aqRmAz53JSRgph42ak+Kr9aNVzMhqg9RvUCNrOxeFfN4s2dIWM7Dpi02KTqB
- cDDw==
+ d=linaro.org; s=google; t=1775589023; x=1776193823; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QLMPykG6lfcrNa00ISi1soNyoXLxQUOTl5+omE2304A=;
+ b=W7jo7chFTHqDjFQWbJjY/TctKnk5aLFMV5I2VcBMQ1RzFXFgS9k6cOnicxJzmfIK9X
+ 7LnW0QI/RWL0I2aqsQYdXnNbGuzRx7B38eN0gx7NkuxBXY6OqEO6AC2KyVGMrnw5mji9
+ rbs70rKuvG25nUa6Xeg5SJGtp8CMwc2zq2p0E4urmMIr/Fc+PMNxpefRpWi6118rpJ95
+ hmwQvxSflw89b3L2izuosITtpQeq603gWyi2gI/Zv9CYv89ism7hp93vKpdfKrJvqn2H
+ wCdhcIGx94oOvX9E8SLV4azhaaM/pRhiqhBHHts+TLHZDrYXlbGzfOv6i4gtYxHHse5b
+ FdWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775575148; x=1776179948;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=taXHR2mcmnCYy3631kEFpdnTVlYfPnUg2+nSy9l8xDQ=;
- b=hPTp10R+LAGrzUa14B/dc8nZpBhwfCL9OUESB0n9zhSL0Q1il+PR5ApS++vAtrEnss
- I62uZio6tW7jMtcdKetw0EvkJYmqeycq7sN5/EIe1i7NCid5Z8SkdwlalbcxskGyxHxk
- sO6m6GUQCgdZrXXXE+Rhu5rY0ofrdsPREp3Qx+PGgrPunjHKMXJAWrwTrrsLJVQApF/L
- cwnQy+xUoHNyXh3/jbMn5aEENQD1BhIkG0qYUD5loOIeYCUTn219MksCY9NVh1KqAZWE
- pJvBhdAPu3eVWcpctKCdLybtqMcc9mIRAbF9Xk+Lp5FeTIgVIilo81DShxgUCi8iiwEA
- Pw3Q==
-X-Gm-Message-State: AOJu0YxPoEVNzgPZJ7DwJy2qmCbxbfZ+JzyszmjLz3QG+6x3jc4V+K1p
- Tr/UoHWD8YXw3hVd6E/4n036iYHLRG4WOio1DvWfl3AMJPZZse/CRth2Z2XoSB7sUfzESjG5PZs
- Q7xogFjMvUVMa583D1dGbw8QYytMNm7QKAk6c9mx5QKUB6mQyPjTeHgis
-X-Gm-Gg: AeBDieshbEp9a9TnYip8DYM3c2cn7R/Go6YoRb1ITjLOGuQAMz+I0AFFq21bcBYx3xp
- k+sKfaeLhBRHGkCLrZmU7CZ7JipCxPZ1mO1rkKun8U6disZX+6hBgNgb3l5pWxlhAQlrhHTz2hX
- 5FRHPvy27Ks3uN9K5prTcBg+DB+u9J6JPhWjCkU9mjklSxpP7XH19XWFETJ3hFmUKFBirJpgIme
- V0ZAaNTqmVUopTDcgG26mORhQhC92ZgWmauLvwUaFKYQc/3vPKb0bL++lhJjYgDgdBTs7uClFca
- 54o42M6xGgRTINr8vpa1yrghy89IHpRZ7UNwLGM6c/zFP6bwr1W6CRbQQdUwcyikVCpOSpC5Nhb
- sc2/yDdycCZFHvceI3bLd8jjygY0Zw3veLQ4oYPM=
-X-Received: by 2002:a53:dd12:0:b0:64f:fa9a:9016 with SMTP id
- 956f58d0204a3-65048821503mr12737074d50.48.1775575147540; 
- Tue, 07 Apr 2026 08:19:07 -0700 (PDT)
-X-Received: by 2002:a53:dd12:0:b0:64f:fa9a:9016 with SMTP id
- 956f58d0204a3-65048821503mr12737011d50.48.1775575146881; 
- Tue, 07 Apr 2026 08:19:06 -0700 (PDT)
-Received: from fedora (nat-88-212-17-233.antik.sk. [88.212.17.233])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8aa70136e87sm60234876d6.22.2026.04.07.08.19.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 08:19:06 -0700 (PDT)
-Date: Tue, 7 Apr 2026 17:19:01 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>, 
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
- Joao Martins <joao.m.martins@oracle.com>, Alex Williamson <alex@shazbot.org>, 
- Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>, 
- Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>, 
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH RFC 07/12] migration: Introduce stopcopy_bytes in
- save_query_pending()
-Message-ID: <adUfNiig4RptM2sS@fedora>
-References: <20260319231302.123135-1-peterx@redhat.com>
- <20260319231302.123135-8-peterx@redhat.com>
- <acavsDOsAz0hmfvi@fedora> <ac6IRfYH7UCluuIt@x1.local>
+ d=1e100.net; s=20251104; t=1775589023; x=1776193823;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QLMPykG6lfcrNa00ISi1soNyoXLxQUOTl5+omE2304A=;
+ b=eSgqHpWOXLjDPrzOr6Hife46NdfKOzYdBbtwIRxfH7zlodGr4aD4Q5ECSZv04wpKfx
+ UFLTg2mOmdPffpK4IWB8Z/dpiZh1E3O763zPjGKIxu+eFs/UFOf3LhjFk7fc6oLko0E+
+ ayURi8xX0AdLVVf1CNUs5mvfgmN0rhCviwEbbpThGTMnreOq2xAOyR2XeIH8h2j4UnqM
+ 5ZhucciCsXBb2dBAksH2O+CGH/BwBFHT/UUzX6lVLoWRIfB0mESdfot5kqgY+uGcr8VG
+ XkF+K1IhfbEuvN8cFjL4sOrVT0ZB4RxHn+rGQehWZ4CVXeUY4WU0CrGycdEP50yAT1Pv
+ ulvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPoWrXSVUKqebqBKbtkPyd78/s77Xvr6PKlbNtkR3+qbek9UrOYjmOmHZ97b3V1H3FBiaHGHuLsXsG@nongnu.org
+X-Gm-Message-State: AOJu0YxXC9gtfQZAnZBGYp9Bkt43oDO1mZgQO61F69tvNsXWaagblv9G
+ RYT+OALFgBgn1l4s5QxbmUEfTPoyITFc9/7sQKSoEDOu1wdoFtVsROWXrDSPLYfe6f0=
+X-Gm-Gg: AeBDiesy+KuA387x/TgD13ZRJ2A8xDGZEBxy4AABai+QY39cKBRWZQWl1bQoWdwiCr0
+ GNPgVuxf1VhoZPWSJ7gB4BkDJtqL4B65s21DYgUpYTuxKqEH9voMxlg8QQvxGyTfxmRPRcH3b74
+ +SFmjKJUcco43w/nYZpwFKYLgnjcOhhb+5W8zAcd5k7dM+ZmuOMl04jNIQXfj8PdnnU6Qs4v9XD
+ 0rDZkjohSqF5leahwb8/cxPoqv7Vy//FJ4mXCQEOAQea/hc4uCqwjFdZ4ymk0E27bKPHb1pEZqo
+ iGgB9gNVawRYyLzPhItXWedcppkEACsb57/uX9iasqlQakdVUxJmljoPYpTvaiU2CJP5yLJfVqm
+ UyXMruojD4lHUv/Jcycq8ZGr2+nmz8SZwI7Dsn60Rl/xphwsc5UUXZyYDQ1Jub63ZlrMwpqEV21
+ ZuDwsoC66mO0XkHQg3FMtD+pvmkEFsPEOb3k/NS1ME41QIa+K9FEqI5pQQGGGa3uq+pA==
+X-Received: by 2002:a05:600c:1f96:b0:483:8062:b2f with SMTP id
+ 5b1f17b1804b1-488996e142bmr256112735e9.6.1775589022842; 
+ Tue, 07 Apr 2026 12:10:22 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488a4b2e111sm309589695e9.1.2026.04.07.12.10.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Apr 2026 12:10:21 -0700 (PDT)
+Message-ID: <546a4f8a-dae1-4f4a-a77f-6414fffb56ef@linaro.org>
+Date: Tue, 7 Apr 2026 21:10:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ac6IRfYH7UCluuIt@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 07/20] target/arm/tcg/translate-mve.c: make compilation
+ unit common
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, jim.macarthur@linaro.org,
+ qemu-arm@nongnu.org
+References: <20260407022748.57629-1-pierrick.bouvier@linaro.org>
+ <20260407022748.57629-8-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260407022748.57629-8-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,106 +107,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-04-02 11:16, Peter Xu wrote:
-> On Fri, Mar 27, 2026 at 05:43:24PM +0100, Juraj Marcin wrote:
-> > On 2026-03-19 19:12, Peter Xu wrote:
-> > > Allow modules to report data that can only be migrated after VM is stopped.
-> > > 
-> > > When this concept is introduced, we will need to account stopcopy size to
-> > > be part of pending_size as before.
-> > > 
-> > > One thing to mention is, when there can be stopcopy size, it means the old
-> > > "pending_size" may not always be able to reach low enough to kickoff an
-> > > slow version of query sync.  While it used to be almost guaranteed to
-> > > happen because if we keep iterating, normally pending_size can go to zero
-> > > for precopy-only because we assume everything reported can be migrated in
-> > > precopy phase.
-> > > 
-> > > So we need to make sure QEMU will kickoff a synchronized version of query
-> > > pending when all precopy data is migrated too.  This might be important to
-> > > VFIO to keep making progress even if the downtime cannot yet be satisfied.
-> > > 
-> > > So far, this patch should introduce no functional change, as no module yet
-> > > report stopcopy size.
-> > > 
-> > > This will pave way for VFIO to properly report its pending data sizes,
-> > > which was actually buggy today.  Will be done in follow up patches.
-> > > 
-> > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > ---
-> > >  include/migration/register.h | 12 +++++++++
-> > >  migration/migration.c        | 52 ++++++++++++++++++++++++++++++------
-> > >  migration/savevm.c           |  7 +++--
-> > >  migration/trace-events       |  2 +-
-> > >  4 files changed, 62 insertions(+), 11 deletions(-)
-> > > 
-> > > diff --git a/include/migration/register.h b/include/migration/register.h
-> > > index 2320c3a981..3824958ba5 100644
-> > > --- a/include/migration/register.h
-> > > +++ b/include/migration/register.h
-> > > @@ -17,12 +17,24 @@
-> > >  #include "hw/core/vmstate-if.h"
-> > >  
-> > >  typedef struct MigPendingData {
-> > > +    /*
-> > > +     * Modules can only update these fields in a query request via its
-> > > +     * save_query_pending() API.
-> > > +     */
-> > >      /* How many bytes are pending for precopy / stopcopy? */
-> > >      uint64_t precopy_bytes;
-> > 
-> > The comment suggests precopy_bytes should include iterable precopy and
-> > also non-iterable precopy (stopcopy) bytes, however, all 3 are then
-> > summed up for total_bytes.
-> 
-> Yes the current way to categorize dirty info isn't as clear, but it's the
-> easiest so far based on the previous definition of must_precopy.  With
-> that, it's natural to define must-stopcopy, which is separately accounted
-> from "data that can be copied during stop, but also iterable / precopy-able".
-> 
-> > 
-> > >      /* How many bytes are pending that can be transferred in postcopy? */
-> > >      uint64_t postcopy_bytes;
-> > > +    /* How many bytes that can only be transferred when VM stopped? */
-> > > +    uint64_t stopcopy_bytes;
-> > 
-> > I was also wondering if having precopy_iterable_bytes,
-> > precopy_non_iterable_bytes, and postcopy_bytes would be clearer, but
-> > given that stopcopy is already a term for this in VFIO it is probably
-> > fine.
-> 
-> Yes, your naming is better in some way.  However it can also be slightly
-> confusing on precopy_non_iterable_bytes to represent stopcopy-only bytes.
-> 
-> IMHO we can leave the "hard problems" (naming..) for later as cleanups and
-> fix the problem first.
-> 
-> > 
-> > > +
-> > > +    /*
-> > > +     * Modules should never update these fields.
-> > > +     */
-> > 
-> > Maybe splitting input and output parameters, or things which modules
-> > should touch and output of the overall API into different
-> > structures/simple parameters could be better instead of the comment.
-> 
-> One thing I can immediately do is making both "exact" and "total_bytes" to
-> be consts, then force cast them only once when setting it.  Would that be
-> slightly better?  Or any suggestions?
+On 7/4/26 04:27, Pierrick Bouvier wrote:
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   target/arm/tcg/meson.build | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
 
-I think, moving the fastpath boolean out and passing it as a separate
-parameter would help greatly with the input/output separation. Then, if
-some modules even validate the condition in the comment, there's no
-harm, it'll just get overwritten afterward with the correct value.
-
-> 
-> It's always an option to fix the problem first then think about how to make
-> it prettier, rather than doing it in one shot.
-> 
-> So far, the immediate goal is to allow reporting VFIO remaining data and/or
-> expected downtime in query-migrate.
-> 
-...
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
