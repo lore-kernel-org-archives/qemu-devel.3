@@ -4,135 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E41610F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B712510F996A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXwz-0005F1-Tu; Wed, 08 Apr 2026 14:48:29 -0400
+	id 1wAXvl-0002tJ-Il; Wed, 08 Apr 2026 14:47:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAXwx-0002mq-LE
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:48:27 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1wAXvj-0002mq-Pz
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:47:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAKQM-0005hk-M7
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:21:56 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 637KOJkn250047
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:21:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:content-type:date:from
- :message-id:mime-version:subject:to; s=qcppdkim1; bh=Xd518drQH2h
- l+JKvD0F0VpZcGOu1/VNhmtgMbYgg94U=; b=fWUMR5bR5FQmbFeh6u6Myf3C5NH
- Ns1H5R9X4CYo4m0Yj+gykS+wQYOi+NFv4G9sBHiE4JUDOS9+vh3/GuA7AKSin/VO
- YtCL3WrqQy/B8b5L9LvH01O4GbVUGtFi8Z6vcWhsRUBWDi6BIZj/SA4aEsjSax+J
- yf0J7XHe/JwiHkG3Ayq11e001w9BvEaxyAIoEVKnmAxUuEp6XfE+4TPlyniWEbKi
- T7gwA7Y4P4DV1/zcWPHmTfJ/++FjDjMJjlgTby69miNLisdFuuzrhzyaeSN6Mgh9
- hkrvW1C3VJM6l7rDXNd7KMTXTaQSVwDZWvMnHhHYGKhHGZ8vxkDDKTyuohQ==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dd8x9971y-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:21:52 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2cc9118dc2eso17125822eec.0
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:21:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775622112; x=1776226912; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Xd518drQH2hl+JKvD0F0VpZcGOu1/VNhmtgMbYgg94U=;
- b=aTGLmIeV5H8fUH564QK471EIrZO1z8ydpqRpjSknNulEq9laQoKFNLjAstKZWmU2O3
- VoaEXlZkGbYmT/aHQ3v8m2ED6f7ZFx8Hrr0FCQBSgOaB7D1YlWVAWLCNHOClyUmS/Pgr
- 7mldz/DPfOehD4yFZNWUZK2di/SQY6x1AiPv0OBEonYyCCda/i61J3B/hRdubJJ37ujq
- BCvZYxbMPfkk3pNv+EnQVPjewC+miiEjybc0XBqf1owEPpsysUkGd7xRROfGcr74QdB8
- Art78seJu5gFNJKM6ETuncUqu68rdfKH4pUEsg19TZZVSAI7591bOiwlSzwToTfVJxc0
- UpBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775622112; x=1776226912;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Xd518drQH2hl+JKvD0F0VpZcGOu1/VNhmtgMbYgg94U=;
- b=ZAuCkrTKn0ryalbUW3szZwK3oMpXQfLTnehiQoJVc8TxBcFrg8zxQ1I3znyCEe5vqw
- vqvCivDArnEDuuqWDAUWG2S42xK44Dvs7iOBda2oaXQze4j+QhBFUBJmHIdNzvw800uS
- 8JSS9fThWYZn13Gabtv/i5lAW9w1jhFPWKadHgku58GWB/v9JNRAOaLE0wuvyS91W+H+
- CMeTSFVqlyyv92uZwvSsFNGxLMGcGw2SVvLRlHfVK37mkawe+DqFN1jTZFJQ5nlXn1Rf
- kuG8tS88Kzo1eAKtJ1GUYKmPLTHNS6s9L2dbRID1OFr4Fsr9vKwVgx35tPRTBrtva+Y6
- NrGg==
-X-Gm-Message-State: AOJu0Yz6y0Zcba1tPG1oC8IfNwM6+canVQhRCYVrdy1pNqTo9f8kx+/O
- 4b+m1zHhecAjHE9wclvchMsr8MF4BoaHKegWaNSl7J6sdAG9xSP3H876kKCDPBFv8Hi43Q9seq4
- Q/GckA7vkKkV6YwypG0mjwzLCR68qSDqulhXjFxl29Dvr89OhPWsEPjD4wPww4Bc+zA==
-X-Gm-Gg: AeBDieu1sRzntqgy0j4F04tBndKi9mfxEjnbyL5TiWbP9ILHs23BzdWaLMj7d7Jfg+t
- gaHx7QxvkVkMYWHz4DqM/5ThpHH4ayNae5DRD2rVNxh8v0KMp0YOanEC96a3PIlKRsEV7Z78j4S
- 9qu/CplWgPVxWy7tsrd2mzdXpzegCPoOEgVJkRT1fxrwUcgbuiLygWsGoCIwJYvemWCZxlsDNdt
- EzIrwyv6bpuS4F419BehSulGFBQDyG47R8FnpcsvHJC74/U/k4y6pzE7HBhgi56IIG7CpOjGzD0
- ythCJc5CostfgJABKnvMrkaZ4m4WQCMxaCcmiUa7l270WEGD5sjl+fSl7+KWbg5f67uLNorxS5/
- IRTZc5oOd9UrxFNfhSSEkDzPthnOjqaSSh0CTPtbhYSv/NfMNXu2u4xYcKthfaWPwJPU7ww==
-X-Received: by 2002:a05:7022:e02:b0:119:e56b:9581 with SMTP id
- a92af1059eb24-12bfb6eb69emr10298647c88.6.1775622111812; 
- Tue, 07 Apr 2026 21:21:51 -0700 (PDT)
-X-Received: by 2002:a05:7022:e02:b0:119:e56b:9581 with SMTP id
- a92af1059eb24-12bfb6eb69emr10298631c88.6.1775622111109; 
- Tue, 07 Apr 2026 21:21:51 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12bed93f861sm23474816c88.0.2026.04.07.21.21.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 21:21:50 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1wAE6a-0001Hh-Cv
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:37:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775597823;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lLHbJbpbVpCc7ZPDfJzkupfRH4+Vp1i+3Y5xDT7n2Qg=;
+ b=IvPpCY7o2L29JddYotS2sBYW1zLml9YlReuTuURY8b6tKdOFGAGTfB9D/WSTpX6JkUZ/Z6
+ IYdBSbC9Syj54gtUmMaC2p+tIzHM/H6pooetsdtNpRZEC4jTClBsx2id0UlcK1YD1U7biQ
+ rFxiybk8xmj7+4AaqJgpPhADUmrUkKY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-lF6QmrMJM8CPq5-BLHxq3A-1; Tue,
+ 07 Apr 2026 17:37:00 -0400
+X-MC-Unique: lF6QmrMJM8CPq5-BLHxq3A-1
+X-Mimecast-MFC-AGG-ID: lF6QmrMJM8CPq5-BLHxq3A_1775597819
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4569F1956053; Tue,  7 Apr 2026 21:36:58 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.159])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 774A619560A6; Tue,  7 Apr 2026 21:36:56 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng
-Subject: [PATCH v4 0/9] Hexagon system emulation - Part 3/3
-Date: Tue,  7 Apr 2026 21:21:39 -0700
-Message-Id: <20260408042149.1902796-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Network Block Dev...)
+Subject: [PATCH] qemu-nbd: Support -s and -l at the same time
+Date: Tue,  7 Apr 2026 16:36:17 -0500
+Message-ID: <20260407213652.769100-2-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Authority-Analysis: v=2.4 cv=Rr716imK c=1 sm=1 tr=0 ts=69d5d7e0 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=N3XQ6_GsU5t2OgCActgA:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNiBTYWx0ZWRfX78gRzC2AIbvh
- kFkBAAaCvtuhx5Ew0TuZhHdpomcrygIlFPBefqAS7mauUaewXEJgtMIFXoAU6A447FY7Oqq5Fxh
- Ikl7GKVwFxgpaCOjp2kCue5zlbHOfyktRE6bG90J3M2Hu8dEemrQ/HUy1YreBgR2hfQ0speFdmH
- wqt7lqPUsb/lYaMd2BCM17/iKYbzZJu2lp2xJxKgahGKtYfejdNjCHmkDaEXiz+K0iZyhy7oAaK
- fdhTo1RUO+XAT9tw8WRxZvq8VYYcNHdaYtcTZeDTkA7q/aiI8K/nfZTkdszv5kG/gWl/u7fh9M6
- RrlqJwBYQZsUIYxSiBorEKs8jZLj+Gd9vtEFUIdrFUNKr5Nd62FzZYROHlzo0CXV9rLBqtSdpJF
- ECajhDARkxMwC81CRAfNzTSkahaqYLQXgDx/4xMsVjHQ6onDYhjIf0BjNCn6+7rgcsMR0PzS8in
- 7r40gu+2mu/mEeLZyVw==
-X-Proofpoint-ORIG-GUID: 3UcGdWIygsun8aELl2sblvaoRpIXy7at
-X-Proofpoint-GUID: 3UcGdWIygsun8aELl2sblvaoRpIXy7at
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
- clxscore=1015 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604080036
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,78 +82,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGhpcyBpcyBQYXJ0IDMgb2YgdGhlIEhleGFnb24gc3lzdGVtIGVtdWxhdGlvbiBzZXJpZXMuICBJ
-dCBhZGRzIHRoZQpib2FyZC1sZXZlbCBzdXBwb3J0LCBtYWNoaW5lIGRlZmluaXRpb25zLCBhbmQg
-YnVpbGQgaW5mcmFzdHJ1Y3R1cmUKbmVlZGVkIHRvIHJ1biBoZXhhZ29uLXNvZnRtbXUuCgpUaGlz
-IGluY2x1ZGVzOgogLSBHbG9iYWwgcmVnaXN0ZXIgbW9kZWwgKFFPTSBkZXZpY2UgZm9yIHNoYXJl
-ZCBzeXN0ZW0gcmVnaXN0ZXJzKQogLSBHbG9iYWwgcmVnaXN0ZXIgdHJhY2luZwogLSBNYWNoaW5l
-IGNvbmZpZ3VyYXRpb24gZGVmaW5pdGlvbnMgKHY2NmcsIHY2OG4sIHNhODc3NS1jZHNwMCkKIC0g
-Y2ZnYmFzZSBzdXBwb3J0CiAtIEhleGFnb24gInZpcnQiIG1hY2hpbmUgZGVmaW5pdGlvbgogLSBC
-dWlsZCBjb25maWd1cmF0aW9uIGZvciBoZXhhZ29uLXNvZnRtbXUgdGFyZ2V0CiAtIEJvb3Qgc2Vy
-aWFsIHRlc3QgZm9yIGhleGFnb24KCkJhc2VkIG9uIFBhcnQgMSB2NiArIFBhcnQgMiB2NC4KCkNo
-YW5nZXMgc2luY2UgdjM6CiAtIFJlYmFzZWQgb250byBQYXJ0IDEgdjYgLyBQYXJ0IDIgdjQKIC0g
-Q3JlYXRlZCBody9oZXhhZ29uL3RyYWNlLmggd3JhcHBlciAoUGhpbGlwcGUpCiAtIENvbnZlcnRl
-ZCBUQVJHRVRfU1VQUE9SVFNfTVRUQ0c9eSB0bwogICBUQ0dDUFVPcHM6Om10dGNnX3N1cHBvcnRl
-ZCA9IHRydWUgKFBoaWxpcHBlKQogLSBBZGRlZCBUQVJHRVRfTk9UX1VTSU5HX0xFR0FDWV9MRFNU
-X1BIWVNfQVBJPXkgYW5kCiAgIFRBUkdFVF9OT1RfVVNJTkdfTEVHQUNZX05BVElWRV9FTkRJQU5f
-QVBJPXkgdG8KICAgaGV4YWdvbi1zb2Z0bW11Lm1hayAoUGhpbGlwcGUpCiAtIEFkZGVkIGNvbnN0
-IHF1YWxpZmllciB0byBtYWNoaW5lIGNvbmZpZyBzdHJ1Y3RzIChQaGlsaXBwZSkKIC0gRml4ZWQg
-bWlkLWJsb2NrIHZhcmlhYmxlIGRlY2xhcmF0aW9ucyAoQzg5IHN0eWxlKQogLSBNb3ZlZCBERUZJ
-TkVfUFJPUF9MSU5LKCJ0bGIiKSB0byB2aXJ0IG1hY2hpbmUgY29tbWl0CgpQcmV2aW91cyB2ZXJz
-aW9uczoKIC0gdjM6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNjAzMTEw
-NDIwMTkuMTA4NTAzMC0xLWJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbS8KIC0gdjI6IGh0dHBz
-Oi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNTA5MDIwMzQ5NTEuMTk0ODE5NC0xLWJy
-aWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbS8KIC0gdjE6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3Jn
-L3FlbXUtZGV2ZWwvMjAyNTAzMDExNzIwNDUuMTI5NTQxMi0xLWJyaWFuLmNhaW5Ab3NzLnF1YWxj
-b21tLmNvbS8KCkJyaWFuIENhaW4gKDgpOgogIGh3L2hleGFnb246IEFkZCBnbG9iYWxyZWcgbW9k
-ZWwKICBody9oZXhhZ29uOiBBZGQgZ2xvYmFsIHJlZ2lzdGVyIHRyYWNpbmcKICBody9oZXhhZ29u
-OiBBZGQgbWFjaGluZSBjb25maWdzIGZvciBzeXNlbXUKICBody9oZXhhZ29uOiBBZGQgdjY4LCBz
-YTg3NzUtY2RzcDAgZGVmcwogIGh3L2hleGFnb246IE1vZGlmeSAiU3RhbmRhbG9uZSIgc3ltYm9s
-cwogIHRhcmdldC9oZXhhZ29uOiBhZGQgYnVpbGQgY29uZmlnIGZvciBzb2Z0bW11CiAgaHcvaGV4
-YWdvbjogRGVmaW5lIGhleGFnb24gInZpcnQiIG1hY2hpbmUKICB0ZXN0cy9xdGVzdDogQWRkIGhl
-eGFnb24gYm9vdC1zZXJpYWwtdGVzdAoKU2lkIE1hbm5pbmcgKDEpOgogIGh3L2hleGFnb246IEFk
-ZCBzdXBwb3J0IGZvciBjZmdiYXNlCgogTUFJTlRBSU5FUlMgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICB8ICAgMyArCiBjb25maWdzL2RldmljZXMvaGV4YWdvbi1zb2Z0bW11L2RlZmF1
-bHQubWFrIHwgICA4ICsKIGNvbmZpZ3MvdGFyZ2V0cy9oZXhhZ29uLXNvZnRtbXUubWFrICAgICAg
-ICAgfCAgIDggKwogbWVzb24uYnVpbGQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8
-ICAgMSArCiBody9oZXhhZ29uL3RyYWNlLmggICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAy
-ICsKIGluY2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uLmggICAgICAgICAgICAgICAgfCAxNTAgKysr
-KysrKwogaW5jbHVkZS9ody9oZXhhZ29uL2hleGFnb25fZ2xvYmFscmVnLmggICAgICB8ICA1NiAr
-KysKIGluY2x1ZGUvaHcvaGV4YWdvbi92aXJ0LmggICAgICAgICAgICAgICAgICAgfCAgNDMgKysK
-IHRhcmdldC9oZXhhZ29uL2NwdS5oICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDcgKy0KIGh3
-L2hleGFnb24vbWFjaGluZV9jZmdfc2E4Nzc1X2Nkc3AwLmguaW5jICAgfCAgNjQgKysrCiBody9o
-ZXhhZ29uL21hY2hpbmVfY2ZnX3Y2NmdfMTAyNC5oLmluYyAgICAgIHwgIDY0ICsrKwogaHcvaGV4
-YWdvbi9tYWNoaW5lX2NmZ192NjhuXzEwMjQuaC5pbmMgICAgICB8ICA2NSArKysKIGh3L2hleGFn
-b24vaGV4YWdvbl9kc3AuYyAgICAgICAgICAgICAgICAgICAgfCAxODggKysrKysrKysKIGh3L2hl
-eGFnb24vaGV4YWdvbl9nbG9iYWxyZWcuYyAgICAgICAgICAgICAgfCAzMTggKysrKysrKysrKysr
-KysKIGh3L2hleGFnb24vdmlydC5jICAgICAgICAgICAgICAgICAgICAgICAgICAgfCA0NTYgKysr
-KysrKysrKysrKysrKysrKysKIHN5c3RlbS9xZGV2LW1vbml0b3IuYyAgICAgICAgICAgICAgICAg
-ICAgICAgfCAgIDIgKy0KIHRhcmdldC9oZXhhZ29uL2NwdS5jICAgICAgICAgICAgICAgICAgICAg
-ICAgfCAgIDYgKy0KIHRhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5jICAgICAgICAgICAgICAgICAg
-fCAgIDEgKwogdGVzdHMvcXRlc3QvYm9vdC1zZXJpYWwtdGVzdC5jICAgICAgICAgICAgICB8ICAg
-OCArCiBody9LY29uZmlnICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAxICsK
-IGh3L2hleGFnb24vS2NvbmZpZyAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMTUgKwogaHcv
-aGV4YWdvbi9tZXNvbi5idWlsZCAgICAgICAgICAgICAgICAgICAgICB8ICAgOCArCiBody9oZXhh
-Z29uL3RyYWNlLWV2ZW50cyAgICAgICAgICAgICAgICAgICAgIHwgICAzICsKIGh3L21lc29uLmJ1
-aWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDEgKwogdGFyZ2V0L0tjb25maWcg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgMSArCiB0YXJnZXQvaGV4YWdvbi9LY29u
-ZmlnICAgICAgICAgICAgICAgICAgICAgIHwgICAyICsKIHRhcmdldC9oZXhhZ29uL21lc29uLmJ1
-aWxkICAgICAgICAgICAgICAgICAgfCAgMTMgKy0KIHRlc3RzL3FlbXUtaW90ZXN0cy90ZXN0ZW52
-LnB5ICAgICAgICAgICAgICAgfCAgIDEgKwogdGVzdHMvcXRlc3QvbWVzb24uYnVpbGQgICAgICAg
-ICAgICAgICAgICAgICB8ICAgMiArCiAyOSBmaWxlcyBjaGFuZ2VkLCAxNDg2IGluc2VydGlvbnMo
-KyksIDExIGRlbGV0aW9ucygtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IGNvbmZpZ3MvZGV2aWNlcy9o
-ZXhhZ29uLXNvZnRtbXUvZGVmYXVsdC5tYWsKIGNyZWF0ZSBtb2RlIDEwMDY0NCBjb25maWdzL3Rh
-cmdldHMvaGV4YWdvbi1zb2Z0bW11Lm1hawogY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2hleGFnb24v
-dHJhY2UuaAogY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uLmgK
-IGNyZWF0ZSBtb2RlIDEwMDY0NCBpbmNsdWRlL2h3L2hleGFnb24vaGV4YWdvbl9nbG9iYWxyZWcu
-aAogY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1ZGUvaHcvaGV4YWdvbi92aXJ0LmgKIGNyZWF0ZSBt
-b2RlIDEwMDY0NCBody9oZXhhZ29uL21hY2hpbmVfY2ZnX3NhODc3NV9jZHNwMC5oLmluYwogY3Jl
-YXRlIG1vZGUgMTAwNjQ0IGh3L2hleGFnb24vbWFjaGluZV9jZmdfdjY2Z18xMDI0LmguaW5jCiBj
-cmVhdGUgbW9kZSAxMDA2NDQgaHcvaGV4YWdvbi9tYWNoaW5lX2NmZ192NjhuXzEwMjQuaC5pbmMK
-IGNyZWF0ZSBtb2RlIDEwMDY0NCBody9oZXhhZ29uL2hleGFnb25fZHNwLmMKIGNyZWF0ZSBtb2Rl
-IDEwMDY0NCBody9oZXhhZ29uL2hleGFnb25fZ2xvYmFscmVnLmMKIGNyZWF0ZSBtb2RlIDEwMDY0
-NCBody9oZXhhZ29uL3ZpcnQuYwogY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2hleGFnb24vS2NvbmZp
-ZwogY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2hleGFnb24vbWVzb24uYnVpbGQKIGNyZWF0ZSBtb2Rl
-IDEwMDY0NCBody9oZXhhZ29uL3RyYWNlLWV2ZW50cwogY3JlYXRlIG1vZGUgMTAwNjQ0IHRhcmdl
-dC9oZXhhZ29uL0tjb25maWcKCi0tIAoyLjM0LjEKCg==
+qemu-nbd already has the ability to wrap a read-write layer on top of
+the export of a read-only image (-s) and the ability to export an
+internal snapshot rather than the main image in a qcow2 file (-l
+SNAPID).  But it gave a confusing error message when trying to mix the
+two, because the snapshot overlay created first no longer has access
+to the internal snapshots of the image being wrapped.
+
+WIth a bit of finesse, this useful scenario is now supported.
+
+https://gitlab.com/qemu-project/qemu/-/work_items/159
+
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ docs/tools/qemu-nbd.rst                       |  7 +-
+ qemu-nbd.c                                    | 20 ++++-
+ tests/qemu-iotests/tests/qemu-nbd-snapshots   | 79 +++++++++++++++++++
+ .../qemu-iotests/tests/qemu-nbd-snapshots.out | 34 ++++++++
+ 4 files changed, 134 insertions(+), 6 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/qemu-nbd-snapshots
+ create mode 100644 tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+
+diff --git a/docs/tools/qemu-nbd.rst b/docs/tools/qemu-nbd.rst
+index f82ea5fd77b..336b4aa46e7 100644
+--- a/docs/tools/qemu-nbd.rst
++++ b/docs/tools/qemu-nbd.rst
+@@ -95,9 +95,10 @@ driver options if :option:`--image-opts` is specified.
+
+ .. option:: -l, --load-snapshot=SNAPSHOT_PARAM
+
+-  Load an internal snapshot inside *filename* and export it
+-  as an read-only device, SNAPSHOT_PARAM format is
+-  ``snapshot.id=[ID],snapshot.name=[NAME]`` or ``[ID_OR_NAME]``
++  Load an internal snapshot inside *filename* and export it.
++  SNAPSHOT_PARAM format is ``snapshot.id=[ID],snapshot.name=[NAME]``
++  or ``[ID_OR_NAME]``. The export is read-only unless ``-s`` is also
++  in use.
+
+ .. option:: --cache=CACHE
+
+diff --git a/qemu-nbd.c b/qemu-nbd.c
+index ed5895861bb..128486a0ec2 100644
+--- a/qemu-nbd.c
++++ b/qemu-nbd.c
+@@ -534,6 +534,7 @@ int main(int argc, char **argv)
+ {
+     BlockBackend *blk;
+     BlockDriverState *bs;
++    BlockDriverState *orig_bs;
+     uint64_t dev_offset = 0;
+     bool readonly = false;
+     bool disconnect = false;
+@@ -716,7 +717,7 @@ int main(int argc, char **argv)
+             } else {
+                 sn_id_or_name = optarg;
+             }
+-            /* fall through */
++            break;
+         case 'r':
+             readonly = true;
+             flags &= ~BDRV_O_RDWR;
+@@ -1110,6 +1111,15 @@ int main(int argc, char **argv)
+     bdrv_init();
+     atexit(qemu_nbd_shutdown);
+
++    /*
++     * -s and -l can be used together to create read-write wrapper
++     * around an internal snapshot. Otherwise, -l in isolation implies
++     * read-only.
++     */
++    if ((sn_opts || sn_id_or_name) && (flags & BDRV_O_SNAPSHOT) == 0) {
++        readonly = true;
++        flags &= ~BDRV_O_RDWR;
++    }
+     opts.srcpath = argv[optind];
+     if (imageOpts) {
+         QemuOpts *o;
+@@ -1155,13 +1165,17 @@ int main(int argc, char **argv)
+
+     blk_set_enable_write_cache(blk, !writethrough);
+
++    orig_bs = bs;
++    if (flags & BDRV_O_SNAPSHOT) {
++        orig_bs = bs->backing->bs;
++    }
+     if (sn_opts) {
+-        ret = bdrv_snapshot_load_tmp(bs,
++        ret = bdrv_snapshot_load_tmp(orig_bs,
+                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_ID),
+                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_NAME),
+                                      &local_err);
+     } else if (sn_id_or_name) {
+-        ret = bdrv_snapshot_load_tmp_by_id_or_name(bs, sn_id_or_name,
++        ret = bdrv_snapshot_load_tmp_by_id_or_name(orig_bs, sn_id_or_name,
+                                                    &local_err);
+     }
+     if (ret < 0) {
+diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots b/tests/qemu-iotests/tests/qemu-nbd-snapshots
+new file mode 100755
+index 00000000000..de405e43720
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots
+@@ -0,0 +1,79 @@
++#!/usr/bin/env bash
++# group: rw quick
++#
++# Test qemu-nbd snapshot handling
++#
++# Copyright (C) Red Hat, Inc.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++seq="$(basename $0)"
++echo "QA output created by $seq"
++
++status=1 # failure is the default!
++
++_cleanup()
++{
++    _cleanup_test_img
++    nbd_server_stop
++}
++trap "_cleanup; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++cd ..
++. ./common.rc
++. ./common.filter
++. ./common.nbd
++
++_supported_fmt qcow2
++_supported_proto file
++_supported_os Linux
++_require_command QEMU_NBD
++
++echo
++echo "=== Initial image setup ==="
++echo
++
++# Create qcow2 image with one internal snapshot
++_make_test_img 10M
++$QEMU_IO -c 'w -P 1 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++$QEMU_IMG snapshot -c snap -f $IMGFMT "$TEST_IMG" | _filter_qemu_img
++$QEMU_IO -c 'w -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++
++echo
++echo "=== Main image in snapshot mode ==="
++echo
++
++nbd_server_start_unix_socket -s -f qcow2 "$TEST_IMG"
++$QEMU_IO -c 'r -P 2 3M 1M' -c 'w -P 3 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Read-only snapshot access ==="
++echo
++
++nbd_server_start_unix_socket -l snap -f qcow2 "$TEST_IMG"
++$QEMU_IO -r -c 'r -P 1 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Combine -s and -l for read-write internal snapshot access ==="
++echo
++
++nbd_server_start_unix_socket -s -l snap -f qcow2 "$TEST_IMG"
++$QEMU_IO -c 'r -P 1 3M 1M' -c 'w -P 3 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Check that original image is unchanged ==="
++echo
++
++$QEMU_IO -c 'r -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++
++# success, all done
++echo '*** done'
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots.out b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+new file mode 100644
+index 00000000000..6bce9d90253
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+@@ -0,0 +1,34 @@
++QA output created by qemu-nbd-snapshots
++
++=== Initial image setup ===
++
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=10485760
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Main image in snapshot mode ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Read-only snapshot access ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Combine -s and -l for read-write internal snapshot access ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Check that original image is unchanged ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++*** done
+-- 
+2.53.0
+
 
