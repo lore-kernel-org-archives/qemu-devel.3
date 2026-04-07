@@ -4,129 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC420FF5134
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B3BEFF5134
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABXg-0000L0-8q; Tue, 07 Apr 2026 14:52:52 -0400
+	id 1wABRP-0002qI-9e; Tue, 07 Apr 2026 14:46:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wABUM-0004Gt-Rs
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w9xlb-0004Sr-DA
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 00:10:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775535017;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zNyif/tdJApRc5vtWDyZe5DQdJz8xXLQJt4vpi3vnuU=;
- b=DHPuk3x/YoBDLtjy/RqwitFeOoXCcyY5NaZr4oIjig/VMqzLVPPBbmX7Ffctla4hxDovpF
- aiGb71ZVijwQTVk+1b/1d4JnYuXkcSKtRmRGvqw5IrbD9iyHfD9ee1oVsQsNn3d1zK8650
- 8Ru6k8pPZ0yaCqi9oQnzIsMLXKcQNis=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-qUIOHRFHMgmUr5FZsMTR7Q-1; Tue, 07 Apr 2026 00:10:03 -0400
-X-MC-Unique: qUIOHRFHMgmUr5FZsMTR7Q-1
-X-Mimecast-MFC-AGG-ID: qUIOHRFHMgmUr5FZsMTR7Q_1775535002
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-82cf0130d17so2711269b3a.3
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 21:10:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wABQx-0002am-AT
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:45:58 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAAGB-0001Io-Uf
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 13:30:46 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-8296d553142so2708961b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 10:30:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775535002; x=1776139802; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zNyif/tdJApRc5vtWDyZe5DQdJz8xXLQJt4vpi3vnuU=;
- b=Eau5WuRDZRsVxrG0HyhvpomJRiHDmJvnERaBXOJrPxPIE6AiX0FtbBUUqMlvDz5L+K
- mXrCnXoOvBWw1L8suEfeE/4KkT503y+zzhR4est9VUr6oglAbxKgfovvC+A+Xmu+ygik
- l8IyVOZpCyV2mk03tOgbtNLe4Lj7Tbd/afy2TwWwPthGREzPwbQbH9Bfy1jwffnaueZX
- SCYbBsW1ktlCf4KbITht99zl8SdU+cTmicA2HkiQGZjDCY7NRCJb16Xzlp//K3fWFC5f
- dJ+ETGyh+pXCqX8BJ/KmPekDsd5WqFbQMkDolaej2IJDV1R4wrm31eJ7dbEKnvu8jE5q
- 1SPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775535002; x=1776139802;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ d=linaro.org; s=google; t=1775583042; x=1776187842; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zNyif/tdJApRc5vtWDyZe5DQdJz8xXLQJt4vpi3vnuU=;
- b=Y8q6Y05qyJ3sm76GtnWdsJUpehjZEa4aeeVAfkVU3aVZtx9YPXIo07BoLueccH55fG
- UZ6PllA8fF/5+6YbQOPXdqT6+qRkUVEvxftlunq9KV9OlV1SlfHOH3UC1gP68Arrfs0P
- /XhGFaX8UsR6axJ8Y7AzDez0+jRjX9iM+JFSMavzJMKa5VbSoiPL4gJmEoErH/LaHYie
- BIp6+qbUqcmqFLm8SvHnnK85bfhiTS0kbOiGCTAZNj4n7eg8iHE5S3I+1KsZqcz2iNlz
- Ui15eWM5TtdSQbMsdPsPqofML4soAScQphb+9WpzTNctln0UPpWiReMjFecGBYtGGyAh
- p1ww==
+ bh=UDaEVMhyKxFlr4Solen+ATNFmzuejjUtuBWYPm+vwKY=;
+ b=uZqTFeHCzOtkjH+ZP13GkdGp6huY/Ekk6WKETggLx8P1Styl3rmBzUJsyGC5RGFWHM
+ U237njDkgtjyCKXqwjl31rw9yuWjz4sxlKK7jiezOd+36JeWhziOX23xkpxSlxh4k4nm
+ skYy+ATZHCmcleF206tRVbdOrFiMgxMXnpCSaXv9BvMuzNb3SMwzsIH7Ugw25I+8EGMr
+ LII30LWUfqq+1xwFvzOAWT6iB1YMi3ZEB5d5ktPb68Ltw2UF2MNrtH3nBueQvf+3Fm+x
+ XQsORuPIkxRPcws+PXDUc+1kaaroSF+mJHByUqR0JR8uCddvy5rRu17QjT8t78xSFGFu
+ 9J+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775583042; x=1776187842;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UDaEVMhyKxFlr4Solen+ATNFmzuejjUtuBWYPm+vwKY=;
+ b=Jh/c2NYf7zjDTqc9TW3TWLdaKE0wRHKaLu2K9PwultzZPXQOQIcY2pfBfNYkEmwc1U
+ yURBOmH9US8Edn7Mv1wiaL6iXdEsnAHbSU5jtFG6xPw/7E9WFdxJ5XJSE2IzFFcNCImT
+ cm+sOu6ZGc783m74R+I5FqAXSkii7Two5253t9YRWmnZy7MpZdfGwd/dYb+dmXaUzlQU
+ /R7ZuCsdGrXvxheRBmL75SiaiU9/epS/i3SN5eDHzbJDWYqFTGM5nScbM9p4UoSZB848
+ jsGETZ41LSiZ4VKbD//ObZSPVeKmoW89hhn9lA853Dxri/HRKTrTgR2OLu8dtXLKFgxT
+ Reaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX26mGKEKp4DNMa2+y+gu05dVCHVzDM5nIF/ZoZgxvkNNTg3LOHLrloTWgFoDcz54iy2msHsZHWtkzd@nongnu.org
-X-Gm-Message-State: AOJu0YwC5kW5+415o6CKhRUd0RYFyxeqncGa+E04BtrEkIwdFSIzDDea
- zM3gtAb6dbwK3R62nWOofV/zEm1XpPfJ3qjDPIN6bQct3KgGsbCyTRwivTq7Y0iyexb+GXx/mlU
- lUCdgTHWdESTXJnWSSNJUPMtbX3K/o+YDj4gJGBaAV2nL0d1YwxE6bLIo
-X-Gm-Gg: AeBDievSLVp6mc9KeNfDvMEsfB7g+GrGGMoChgWxa9DJNeEkCXSXAxJpTckDyrroRdo
- yxfu27W64eCh9f2XYxtDTTObBs5yI0N3NTCm5Eaj2v7SzfR0k3lS/DvdnWUERK3NErwvUQWlrJ1
- 7QqWU1GQAb3433C7oMr714hyx1wt275yHBzeT1w1Amuke2t4wkM1KS9AdJJKZyo+JzQS2vCn+aj
- IPymT/maKSxJXk18Q8/uzjCFk20zthVXD5RGtviUiwuWAH7DfqKuCUdqkqnGtw1Qeho9Nlm98Uh
- h9tz2mCEga1ETD1zACS4FYR3YB7HBlV1WqAREHUl6cz58CjCRgMCCYCrghdZ4+kdY2XycgZczgf
- c3z3qUOrZ3lASZ1VTjvyVWZrP2qsvCoPfwdOfnPx5MH0qK6D489a98bxDaYOKRrXkMoN7/UpMn7
- c=
-X-Received: by 2002:a05:6a00:198d:b0:827:2eff:a29e with SMTP id
- d2e1a72fcca58-82d0db72b9fmr15749188b3a.34.1775535002022; 
- Mon, 06 Apr 2026 21:10:02 -0700 (PDT)
-X-Received: by 2002:a05:6a00:198d:b0:827:2eff:a29e with SMTP id
- d2e1a72fcca58-82d0db72b9fmr15749127b3a.34.1775535001497; 
- Mon, 06 Apr 2026 21:10:01 -0700 (PDT)
-Received: from smtpclient.apple ([122.163.114.34])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9b60199sm14410460b3a.25.2026.04.06.21.09.58
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 06 Apr 2026 21:10:01 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
- commit 98884e0c
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <ab72cb8395bcc2b1f489c5611bb7c00d@linux.ibm.com>
-Date: Tue, 7 Apr 2026 09:39:46 +0530
-Cc: Pbonzini <pbonzini@redhat.com>, Qemu Devel <qemu-devel@nongnu.org>,
- Qemu Ppc <qemu-ppc@nongnu.org>, npiggin@gmail.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, vaibhav@linux.ibm.com,
- sbhat@linux.ibm.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1014F925-4992-459B-B5B4-E6CCAC7FBC02@redhat.com>
-References: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
- <2cc23a5ce64847dd8a9278c87f58119b@linux.ibm.com>
- <5bc7997d-329e-47a9-9b4d-750a3104094a@linux.ibm.com>
- <4797B580-7853-490E-8852-B6312619FE95@redhat.com>
- <e966c053-2e69-b185-532e-fcb4173b4daf@redhat.com>
- <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
- <ED4A083D-2B96-468A-BE77-211E9F3FA88D@redhat.com>
- <7bbeb3cb105934e95bf1a5356cfc4613@linux.ibm.com>
- <7ACBCD63-B759-47FD-824F-0327726E47F6@redhat.com>
- <35f6361f69ef4f09f80bd915f3460a28@linux.ibm.com>
- <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
- <526d7172f3933baf913bf4b105a6fa9a@linux.ibm.com>
- <9794AFF9-DFD9-48D0-B4EA-7745ABDED6F7@redhat.com>
- <DCB3A7E9-412C-402D-A4C9-EA558CD1FE29@redhat.com>
- <ab72cb8395bcc2b1f489c5611bb7c00d@linux.ibm.com>
-To: Misbah Anjum N <misanjum@linux.ibm.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+ AJvYcCUatYGFKVvX+U6hthnd5Ud+GWmFtt5ZsQCOH7wtrld/ETj/8ATgpNFV3H0pY9yCaAPbnq6WeEcjwqMN@nongnu.org
+X-Gm-Message-State: AOJu0YyfQLKPMxyvYT3SSaIXLakxqQc3HiiunJRF2+Gg+QysqHlRIAfx
+ 0ygr6WSI7tj4rzbz85lawJ27LNcJymBPCMk4dxDjykKoFDrU8HWGV9u6ludjlz65W2U=
+X-Gm-Gg: AeBDietSVxIZOXtjabIs9q6S7CI3tDIE9AJMBXOvX2YtuXTKci7x28QNyod4q99q89R
+ WLc0hKffhw1mNBFqqgOJTMPsP7eTrBdoAjyR6T+D6kkD+bY4QypbS8bVwXu0G5zhqdgkbjvaeoQ
+ vgruEnX9rdsuNweTFx3I59Mppzuvq8k2sbphH+1QipCAMJFjpL65hrETJG/ZQhSVXSIAE7nV8ky
+ 3Ez758NlQxVQK2JRRQoWTWtoAMfFk1fZxH0XqBUxGEF+zBeRzN7T4fgMpfkNJiN3JrpBIqVVu5I
+ G72fgMJZf/VNvhtFo5qK02QVXjJzAnO5pu8k0ggrN3O2LkLi7ob/nUDzei8OCSLh+LX2wjtJBpS
+ th2TrvlR0kOStlJ6yfGylvnptecNXQrBzOAIMzMsH9rTR6+x3zBCtcdj4DFJc3LD1peny1mVXMV
+ fB2glHP/7AS0v9kZ0Q5gN9eszJzkDOVj8sBWkWOohRRfMC5/CWcIJ+MAMHq1FPve/1DiJaoQ==
+X-Received: by 2002:a05:6a00:4286:b0:824:ad1e:3b6e with SMTP id
+ d2e1a72fcca58-82d0dbd91camr17783700b3a.49.1775583041968; 
+ Tue, 07 Apr 2026 10:30:41 -0700 (PDT)
+Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82cfebe5b23sm18340765b3a.59.2026.04.07.10.30.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Apr 2026 10:30:41 -0700 (PDT)
+Message-ID: <ca9775b9-5738-477d-9330-55c80aa3b2e2@linaro.org>
+Date: Tue, 7 Apr 2026 10:30:40 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 17/20] target/arm/tcg/translate.c: replace
+ translator_ldl_swap with translator_ldl_end
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-arm@nongnu.org
+References: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
+ <20260406182609.193886-18-pierrick.bouvier@linaro.org>
+ <c73bee03-82f8-4529-9db1-7857a049f59d@linaro.org>
+ <626fdf02-7114-47ad-997a-a7c64a83f9de@linaro.org>
+ <7b15c854-64f7-4996-a831-d03480a40776@linaro.org>
+ <46f488c8-1eff-40c0-a72e-231c81576812@linaro.org>
+ <ba89301b-de27-436f-9f46-50be2467e13b@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <ba89301b-de27-436f-9f46-50be2467e13b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,203 +146,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/6/26 11:51 PM, Richard Henderson wrote:
+> On 4/7/26 09:00, Pierrick Bouvier wrote:
+>> On 4/6/26 3:44 PM, Richard Henderson wrote:
+>>> Delete bswap_code.
+> ...
+>> There is still one usage for bswap_code in linux-user/arm/cpu_loop.c which I'm not sure
+>> what to do with.
+> 
+> Essentially,
+> 
+>       x = load_little_endian(...);
+>       if (arm_sctlr_b(env)) {
+>          x = bswap32(x);
+>       }
+> 
+> This is slightly more complicated because there's not currently a get_user macro to force
+> an endianness, only __get_user_e.  So it's a question of whether to introduce get_user_e
+> or open-code all of the goop in get_user_code_u32.
+> 
+> Actually, there's currently a FIXME in cpu_loop concerning the failure of get_user, so I'd
+> say most of the get_user goop belongs there.  Then using __get_user_e is trivial.
+> 
+>
 
+That's not clear for me what is expected here, I'll let you send a patch 
+for the kind of changes you want to see.
+I can then integrate it in the series with bswap_code removal.
 
-> On 6 Apr 2026, at 2:24=E2=80=AFPM, Misbah Anjum N =
-<misanjum@linux.ibm.com> wrote:
->=20
-> Hi Ani,
-> I've completed the testing you suggested. Unfortunately, the SMP hang =
-still persists with these changes.
->=20
-> Changes made:
-> As requested, I reverted everything in stubs/kvm.c and the related =
-changes in stubs/meson.build, include/system/kvm.h, and =
-target/i386/kvm/kvm.c. I also commented out the calls to =
-kvm_arch_supports_vmfd_change() and kvm_arch_on_vmfd_change() in =
-kvm_reset_vmfd().
->=20
-> Test result:
-> The issue persists - guests still hang indefinitely during boot when =
-SMP is configured.
->=20
-> Git diff:
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index cc5c42ce4d..04b9cbe7c9 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2622,11 +2622,12 @@ static int kvm_reset_vmfd(MachineState *ms)
->      * bail if the current architecture does not support VM file
->      * descriptor change.
->      */
-> -    if (!kvm_arch_supports_vmfd_change()) {
-> +    /*if (!kvm_arch_supports_vmfd_change()) {
->         error_report("This target architecture does not support KVM VM =
-"
->                      "file descriptor change.");
->         return -EOPNOTSUPP;
->     }
-> +    */
->=20
->     s =3D KVM_STATE(ms->accelerator);
->     kml =3D &s->memory_listener;
-> @@ -2659,10 +2660,10 @@ static int kvm_reset_vmfd(MachineState *ms)
->     }
->     assert(!err);
->=20
-> -    ret =3D kvm_arch_on_vmfd_change(ms, s);
-> +    /*ret =3D kvm_arch_on_vmfd_change(ms, s);
->     if (ret < 0) {
->         return ret;
-> -    }
-> +    }*/
->=20
->     if (s->kernel_irqchip_allowed) {
->         do_kvm_irqchip_create(s);
->=20
-> diff --git a/include/system/kvm.h b/include/system/kvm.h
-> index 5fc7251fd9..0dad0079ed 100644
-> --- a/include/system/kvm.h
-> +++ b/include/system/kvm.h
-> @@ -456,8 +456,6 @@ int kvm_physical_memory_addr_from_host(KVMState =
-*s, void *ram_addr,
->=20
-> #endif /* COMPILING_PER_TARGET */
->=20
-> -bool kvm_arch_supports_vmfd_change(void);
-> -int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s);
->=20
-> void kvm_cpu_synchronize_state(CPUState *cpu);
->=20
-> diff --git a/stubs/kvm.c b/stubs/kvm.c
-> deleted file mode 100644
-> index 2db61d89a7..0000000000
-> --- a/stubs/kvm.c
-> +++ /dev/null
-> @@ -1,22 +0,0 @@
-> -/*
-> - * kvm target arch specific stubs
-> - *
-> - * Copyright (c) 2026 Red Hat, Inc.
-> - *
-> - * Author:
-> - *   Ani Sinha <anisinha@redhat.com>
-> - *
-> - * SPDX-License-Identifier: GPL-2.0-or-later
-> - */
-> -#include "qemu/osdep.h"
-> -#include "system/kvm.h"
-> -
-> -int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
-> -{
-> -    abort();
-> -}
-> -
-> -bool kvm_arch_supports_vmfd_change(void)
-> -{
-> -    return false;
-> -}
->=20
-> diff --git a/stubs/meson.build b/stubs/meson.build
-> index 6ae478bacc..8a07059500 100644
-> --- a/stubs/meson.build
-> +++ b/stubs/meson.build
-> @@ -74,7 +74,6 @@ if have_system
->   if igvm.found()
->     stub_ss.add(files('igvm.c'))
->   endif
-> -  stub_ss.add(files('kvm.c'))
->   stub_ss.add(files('target-get-monitor-def.c'))
->   stub_ss.add(files('target-monitor-defs.c'))
->   stub_ss.add(files('win32-kbd-hook.c'))
->=20
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 524b5276a6..3dfd9a5974 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -3389,15 +3389,6 @@ static int kvm_vm_enable_energy_msrs(KVMState =
-*s)
->     return 0;
-> }
->=20
-> -int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
-> -{
-> -    abort();
-> -}
-> -
-> -bool kvm_arch_supports_vmfd_change(void)
-> -{
-> -    return false;
-> -}
->=20
-> int kvm_arch_init(MachineState *ms, KVMState *s)
-> {
->=20
->=20
-> I've also tested with the latest QEMU build from master, and the issue =
-still persists there as well. Could you suggest what additional =
-debugging steps I should take to help identify the root cause?
+> r~
 
-Since you mentioned that 98884e0cc1 is the root of the problem, the =
-intention is to bisect within this patch and find the problematic hunk. =
-You reported that reverting a major part of this patch did not make a =
-difference. Maybe you can try reverting the following refactoring too =
-(in addition to the reverts above) and see what happens.
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0d8b0c4347..cc5c42ce4d 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2415,11 +2415,9 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, =
-qemu_irq irq, int gsi)
-     g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
- }
-=20
--static void kvm_irqchip_create(KVMState *s)
-+static void do_kvm_irqchip_create(KVMState *s)
- {
-     int ret;
--
--    assert(s->kernel_irqchip_split !=3D ON_OFF_AUTO_AUTO);
-     if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
-         ;
-     } else if (kvm_check_extension(s, KVM_CAP_S390_IRQCHIP)) {
-@@ -2452,7 +2450,13 @@ static void kvm_irqchip_create(KVMState *s)
-         fprintf(stderr, "Create kernel irqchip failed: %s\n", =
-strerror(-ret));
-         exit(1);
-     }
-+}
-+
-+static void kvm_irqchip_create(KVMState *s)
-+{
-+    assert(s->kernel_irqchip_split !=3D ON_OFF_AUTO_AUTO);
-=20
-+    do_kvm_irqchip_create(s);
-     kvm_kernel_irqchip =3D true;
-     /* If we have an in-kernel IRQ chip then we must have asynchronous
-      * interrupt delivery (though the reverse is not necessarily true)
-
-If reverting the above still shows the issue, then I think 98884e0cc1 is =
-not the root cause of the issue. The issue is somewhere else as we have =
-tried reverting almost everything from that patch except implementation =
-of kvm_reset_vmfd() which as you reported isn=E2=80=99t called/executed.
-
->=20
-> Thanks,
-> Misbah Anjum N <misanjum@linux.ibm.com>
->=20
->=20
-> On 2026-03-18 15:00, Ani Sinha wrote:
->> One possible thing to try is:
->> Revert everything in stubs/kvm.c and hence changes in
->> stubs/meson.build, include/system/kvm.h and in target/i386/kvm/kvm.c
->> introduced by 98884e0cc1 .
->> You will have to comment out calls to kvm_arch_supports_vmfd_change()
->> and kvm_arch_on_vmfd_change() in kvm_reset_vmfd(). Since
->> kvm_reset_vmfd() is not called anyway, not should make no difference
->> if those calls are commented out.
->> Let me know what you get after doing the above.
->=20
-
+Regards,
+Pierrick
 
