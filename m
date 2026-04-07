@@ -4,94 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D10FF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3612FFF5135
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAC1N-0000Wf-Gs; Tue, 07 Apr 2026 15:23:33 -0400
+	id 1wABUM-00069W-4q; Tue, 07 Apr 2026 14:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAC1M-0000Sq-E8
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 15:23:32 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAC1J-0004oH-DT
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 15:23:32 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso50728045e9.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 12:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775589808; x=1776194608; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=z8V/dZF/x/MHT0Y8jVahQ0cStfp/lZYqnawVks7OPBE=;
- b=mCF/s2y69Xai7O4Iu+HZYtSNBOfkfg4oIBlEU2tUCP1RF2zGEnZmN4hn6gSMW577Jo
- 6odVO//1NYdCVmzhr6JQ7nzrh+HWvJF3sqnz9q9VTh2jie7mwUQZQ6HbD+A/VepEJsRL
- TBSCG0jVHTkzaQkIRhpr2O/sLznU/TLfOQFHjKCvjFdOI+qgROFiYKEx1COBqxJ0/JP0
- KGG/E1OwHS4vYLmKGigIG33PAqZ0rrwdP2xhaOhRmIyT+mVhFm2Z4eU8nWUlFZ6KXkaC
- 4f1nzb3xNPGB8XTYt4vgeMqyk4nfTiEYKlKDfUWovlQtc2PHdqXbDoj5Ck4coGMrg6cR
- heXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775589808; x=1776194608;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z8V/dZF/x/MHT0Y8jVahQ0cStfp/lZYqnawVks7OPBE=;
- b=N5ybb01VtvDY2ikPtUI19DdTTZyWUJmE3Vbqb6CMXqHEvNjYM3WrT/aeI8hDUpa0Kz
- S4/+EfBJN5EooJtGqyUbW9VkinrG/Fvi5MXNtnKH/wogv7sq0+8sR9Ux4k2BrsGFFhah
- lQyRCkrySTdMSSjQ2TCMMSlAMM/95Fw8K9lacFbmcqbk1PCa6RZV49WmdLo/tvtgYkLY
- vgCXi2fzfnTdzCbCsvxWnpBurbCbueyBmbSRh43PcJXoKLeYubCqLsZ+7O6InlVu75tr
- ocxs6w0g/gFXtN8acnGhaUhZL69et/MKNpRpEa+gorMdbWylVIVqX2VgXruv5rh6mjjQ
- WRNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVp5Lh18oVERH+4HETyYrEEwgDZScsi8KuLbLjUVwtJiAE4uh4GU/VMAI1IBsk0tdMvQjEZzTGljDwV@nongnu.org
-X-Gm-Message-State: AOJu0YzUVUPlibH1oBEJO97Bmt46k5yvJLhT13VV0sCL4S6HO306zEwA
- dV6gn1ybWF3cInFe1oi+yd+x9n3Ha0zAR9xjoYPd2ycfBdJcV4VeiuqE/nPejOoMNYI=
-X-Gm-Gg: AeBDievZf2I+1FI5Fp+V6rW2u2RIACpPc/K1YiEyfM+xTSvb79govdd+LY4WYg5yyAw
- yWiy53jLTbTyBlbYCEeBQW7gQgzLGVoW2rubJMtjPnTAuYq8hKofR0kTs7BzoJIyDtgzQGZwU+y
- U2Q+jVWsHAkchyUykp5toO9KRM37HaTKfuzU56oa4yaFu8/hroIcxxWigkINoFsADb5z4LlsH78
- FRNo7Hmn6L3YYiOnBMPQVh3aZpvr16nWC7N5mW6Q+sYvktF6NQ0FHfujCPEnCbEO6KCqOUvj4HS
- 4kHX81qG2IcQhwz4/vcj9T8m6epmaxOVzkjr548s86JolT1yh5ZSI2cz5XYdioa2JbGXBMLt5KI
- YHn/KGBlxXkTeD08kTQ/brTaIVlFOggGfdbaZ+bvoRTtitMsLrPT9vlLxfSRhRXLoKzleHZ3sMj
- IJqdQjgJO5p7fRmL9YMV0E1wqdWRLf28J72XRq7Zxz2H2q0+ZdcxVJ6XrmFu/MKDcypQ==
-X-Received: by 2002:a05:600c:8b54:b0:480:69b6:dfed with SMTP id
- 5b1f17b1804b1-488997c3a25mr264589625e9.24.1775589807692; 
- Tue, 07 Apr 2026 12:23:27 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4888a706062sm511916985e9.9.2026.04.07.12.23.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Apr 2026 12:23:27 -0700 (PDT)
-Message-ID: <7166f802-fe21-4672-895a-3bb946c41a55@linaro.org>
-Date: Tue, 7 Apr 2026 21:23:25 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wABSG-0003JL-Ls
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wA8f3-0000dV-C9
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:48:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775576896;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/WtDDYCH30MLlkAsE+toTlNmLHxZNuJfcuL63QotBFs=;
+ b=FJWxrL3IF+slN+rQkTZym0YGZOeyImFZczCNLlNeliTSuCNUTtVZjjTZP7FrY6rMgE+anH
+ n/DmDtXgFSjaaHxnpsgQ8mlMQ3Fw1pbSv3kWP+G1MXzMAEXDifUsFI7FeUMT2FHpbqOH82
+ 5VIwjVHEP7ALwGqXPnMKrySldlm7Sek=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-k6sSRjOdO2CrdoSRDJZgLQ-1; Tue,
+ 07 Apr 2026 11:48:12 -0400
+X-MC-Unique: k6sSRjOdO2CrdoSRDJZgLQ-1
+X-Mimecast-MFC-AGG-ID: k6sSRjOdO2CrdoSRDJZgLQ_1775576889
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC33318002E5; Tue,  7 Apr 2026 15:48:08 +0000 (UTC)
+Received: from localhost (unknown [10.44.34.43])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 84AD8180035F; Tue,  7 Apr 2026 15:48:05 +0000 (UTC)
+Date: Tue, 7 Apr 2026 11:48:03 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
+ Klaus Jensen <its@irrelevant.dk>,
+ =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v5 7/8] hw/nvme: add basic live migration support
+Message-ID: <20260407154803.GB238768@fedora>
+References: <20260317102708.126725-1-alexander@mihalicyn.com>
+ <20260317102708.126725-8-alexander@mihalicyn.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 13/20] target/arm/tcg/translate.c: extract
- aarch64_translate_code()
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, jim.macarthur@linaro.org,
- qemu-arm@nongnu.org
-References: <20260407022748.57629-1-pierrick.bouvier@linaro.org>
- <20260407022748.57629-14-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260407022748.57629-14-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="sKp2MTVxKjtu18Kf"
+Content-Disposition: inline
+In-Reply-To: <20260317102708.126725-8-alexander@mihalicyn.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,101 +94,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/26 04:27, Pierrick Bouvier wrote:
-> This allows to get rid of TARGET_AARCH64, and helps with next patch
-> which will define at runtime tcg address type, by adding a second entry
-> point in a different source file.
-> 
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/internals.h         |  2 ++
->   target/arm/tcg/stubs32.c       |  7 +++++++
->   target/arm/tcg/translate-a64.c |  8 ++++++++
->   target/arm/tcg/translate.c     | 18 ++++++++----------
->   4 files changed, 25 insertions(+), 10 deletions(-)
 
+--sKp2MTVxKjtu18Kf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> diff --git a/target/arm/tcg/stubs32.c b/target/arm/tcg/stubs32.c
-> index c5a0bc61f47..3945dc49e5e 100644
-> --- a/target/arm/tcg/stubs32.c
-> +++ b/target/arm/tcg/stubs32.c
-> @@ -3,6 +3,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "target/arm/internals.h"
->   #include "target/arm/tcg/translate.h"
->   
->   
-> @@ -15,3 +16,9 @@ void a64_translate_init(void)
->   {
->       /* Don't initialize for 32 bits. Call site will be fixed later. */
->   }
+On Tue, Mar 17, 2026 at 11:27:07AM +0100, Alexander Mikhalitsyn wrote:
+> +    /* wait when all in-flight IO requests (except NVME_ADM_CMD_ASYNC_EV_REQ) are processed */
+> +    for (i = 0; i < n->num_queues; i++) {
+> +        NvmeRequest *req;
+> +        NvmeSQueue *sq = n->sq[i];
 > +
-> +void aarch64_translate_code(CPUState *cs, TranslationBlock *tb,
-> +                            int *max_insns, vaddr pc, void *host_pc)
-> +{
-> +    g_assert_not_reached();
-> +}
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 35ad7530c4b..c5af26e2b7e 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -10949,3 +10949,11 @@ const TranslatorOps aarch64_translator_ops = {
->       .translate_insn     = aarch64_tr_translate_insn,
->       .tb_stop            = aarch64_tr_tb_stop,
->   };
+> +        if (!sq)
+> +            continue;
 > +
+> +        trace_pci_nvme_pre_save_sq_out_req_drain_wait(n, i, sq->head, sq->tail, sq->size);
+> +
+> +wait_out_reqs:
+> +        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
+> +            if (req->cmd.opcode != NVME_ADM_CMD_ASYNC_EV_REQ) {
+> +                cpu_relax();
+> +                goto wait_out_reqs;
+> +            }
+> +        }
+> +
+> +        trace_pci_nvme_pre_save_sq_out_req_drain_wait_end(n, i, sq->head, sq->tail);
+> +    }
 
-Please get translator_loop() declaration with explicit:
+Emulated storage controllers usually do not drain requests themselves.
+They rely on core migration code (e.g. migration_completion_precopy())
+to stop vCPUs and call bdrv_drain_all_begin/end() to quiesce I/O. Why
+does NVMe busy wait for requests here?
 
-#include "exec/translator.h"
+--sKp2MTVxKjtu18Kf
+Content-Type: application/pgp-signature; name=signature.asc
 
-> +void aarch64_translate_code(CPUState *cpu, TranslationBlock *tb,
-> +                            int *max_insns, vaddr pc, void *host_pc)
-> +{
-> +     DisasContext dc = {};
+-----BEGIN PGP SIGNATURE-----
 
-> +     translator_loop(cpu, tb, max_insns, pc, host_pc,
-> +                     &aarch64_translator_ops, &dc.base);
-> +}
-> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-> index 204f9657993..0597c9d4bed 100644
-> --- a/target/arm/tcg/translate.c
-> +++ b/target/arm/tcg/translate.c
-> @@ -6878,18 +6878,16 @@ static const TranslatorOps thumb_translator_ops = {
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnVJzMACgkQnKSrs4Gr
+c8h/mQf+MW6VlcPNfiPB2YtWOoWy4hJa5e9Dv9K7z57ODtvGFbzzNgPmgypI9bKy
+ALAKZ3DcWfHIrCaCairw5A+8qEWNPDS5uW+I44AcNW3jgxtoKo3+SznL+2IHDLCl
+J8Won+bZsNn/Vio6csVDLNqunfOB2s1rk05o9b8UgeFKx5R8dCjGV33L7QuTPebm
+0+jUChntpmLEt+Ux+NPK46P1x+pgXmvRoJSQgK3D2IgUny9EL+g0UvAF/OfH8W2A
+Vzb5ULYp66XkoJwq9d8V4Oyxiwit4xlfZMlw9KAR41e+pDiSmOnODHg/BrEe9P/b
+qlrNlWgtqYuyJKjRedc8jrMNqMsdgw==
+=eUr+
+-----END PGP SIGNATURE-----
 
-Ditto (pre-existing):
-
-#include "exec/translator.h"
-
->   void arm_translate_code(CPUState *cpu, TranslationBlock *tb,
->                           int *max_insns, vaddr pc, void *host_pc)
->   {
-> -    DisasContext dc = { };
-> -    const TranslatorOps *ops = &arm_translator_ops;
->       CPUARMTBFlags tb_flags = arm_tbflags_from_tb(tb);
->   
-> -    if (EX_TBFLAG_AM32(tb_flags, THUMB)) {
-> -        ops = &thumb_translator_ops;
-> -    }
-> -#ifdef TARGET_AARCH64
->       if (EX_TBFLAG_ANY(tb_flags, AARCH64_STATE)) {
-> -        ops = &aarch64_translator_ops;
-> +        aarch64_translate_code(cpu, tb, max_insns, pc, host_pc);
-> +    } else {
-> +        DisasContext dc = { };
-> +        translator_loop(cpu, tb, max_insns, pc, host_pc,
-> +                        (EX_TBFLAG_AM32(tb_flags, THUMB)
-> +                        ? &thumb_translator_ops
-> +                        : &arm_translator_ops),
-> +                        &dc.base);
->       }
-> -#endif
-> -
-> -    translator_loop(cpu, tb, max_insns, pc, host_pc, ops, &dc.base);
->   }
+--sKp2MTVxKjtu18Kf--
 
 
