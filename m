@@ -4,117 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BB310F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D968210F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:12:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYHD-0005E1-EQ; Wed, 08 Apr 2026 15:09:23 -0400
+	id 1wAYJM-0007x2-DV; Wed, 08 Apr 2026 15:11:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAYFq-0003MB-R4
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:07:59 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYGn-0004S0-AD
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:08:57 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAXX5-0001tX-Tx
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:21:45 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-82d561b3689so27620b3a.0
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 11:21:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAESY-0005Xk-DK
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:59:47 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488c2690057so8708595e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 14:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775672502; x=1776277302; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+wErbE7w6vGiSEfoxDTZh742wVqJw06vN4F1JoRgt8U=;
- b=umKyF5zqNFzzNWunvKfJRsgjGOj5vn9d3G9HTD+muqXlBzr7FmcG82m7ZX679iaSaQ
- 8chzIV7vRQU6TPwnabXb4+fH0mbQCwX5LZLBJu+0AUlG0eOaWoMdnrhTwDpXEHD2Or9Z
- pZlVIl9O96AzmyttVlcUxEy4Bhcak5WZ2XuhhfAdqCb2OuLmjiIiX6PVStna/IRZuchd
- z6r2EI8TDsRuqk6/n9RcAhmTxKlq/Nc2D/1BN+yX2li7400uvUsc2mngkXa1dyrkrUSU
- L8SN7rXt/GWZbhSbwNScsr+LpL86bawIR3yW5EoHYpzjuS9RqqlImQ/wrbEp98FtKbsX
- 8Ldw==
+ d=linaro.org; s=google; t=1775599184; x=1776203984; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=agmdtPgbKNlH9bAAj1AAHRxJL/aBymX0MFrBnGbacuc=;
+ b=NhZ+eN3SWHnww8pIvyqKKOzGUdO1TYrOLkztMddlTxJb87nZJqxhrOZ7T4BezsZRPy
+ kKPXLg5x0U/fk3ClUL9BS15RqyzlEbY3fiSd2FpvV5wrdR/K/0CuUCQLjaWj8kgIGrjo
+ D7zJN3QfK8ylg/mF0yXL47X4gZb4AzvXltoTfs15G/0sCel4y4+ewZSw/m6qMomV/t1P
+ Y5QNecgHT8+3iThfMxTk14sSijkh9me50FgMH0lrYEc6xxA6UY3AaYyMKo24os4ZLZ8+
+ 2ZVL5gkrL/bxFXB/lLSUfPXmgx4EZNpSp3HHa7LHCLn77sh2eXMDD+Y0MHX8NlPOKbip
+ vsVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775672502; x=1776277302;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+wErbE7w6vGiSEfoxDTZh742wVqJw06vN4F1JoRgt8U=;
- b=lnR2IySRPvxUq9JCByGQA9OmhkuOL7YxUY/4c0u80+RRBm8bQ2TuahF5lrCLucA6NB
- bOp5c8p30UpM9eOrpuhKHAab20F2UPVc38ryM73dVX4x/AXD3x/LjZNk82PsmEGlLs3r
- LVw8OS3R6alKC40cBNFdq384JnMYGq+jQxhkt6bKC55EYa1/kuavEFRojKW5UTm3yw8c
- CexVrn1RfrjnzaY4cPA6x6XapHblznpz+Wf5ur0wXfV7BLteNFloQRlhasn5GxTmKcrF
- MKnyv2X/GfB8SyYCeNeDZ2BtHn8/wUrtMBDLwVrMKgG5mdC+Gd57bISAKf392vtfsDqK
- k/Iw==
-X-Gm-Message-State: AOJu0Yxfp/Eu3XQJkMRO1MJDOZdFURHEAeB7SJZ0lKhAov9oy1zKBPp+
- VM+GJG3YnOEI1QN4EUeZ/b7rx3SXgKk9VFcB+3oqDjLvOk//IsIQriiyvw70gUAYtXk=
-X-Gm-Gg: AeBDiev8aOwivHoyXlkDiCijfJgPet7VMeYb7BLWkKg2IgRf8bJmvDr15b7HjhY1CH1
- Z3ZIK3fNv0LiISivVJfoU0tvXivFrloQfAP9qqJ7OOaa/tGNbVczGNaeOCzvLPwfg1+PAwMJkud
- UMaLa0xnKfWj+BuHz5bOVIBxsPFT096KWOp+UVeOO87scX2ORpsKm5nTHkU8hS2clfnomPLlGua
- orynwsCgapDCnJQJvoRt5P+RUM6m03LAjHwK5WzGpbs0Y9kDnJQuaUwVwZLYkzXOuNue1BYbLzU
- /QfVWYOR61pFcXLYm5UFb4TU1VQjxw6Xvg0r3br7TbXv1KUHM9idT8wgLcsKn5qEiSQMTSrtQFD
- jeCw3xEFUqzJMdZI0bHNvIFy6078ZcU/vhDCcVbZ3CBr75ImZEaBVPJJxj0gaIlNOc9M9NpKEHS
- TwnZ9j+6nfQhfKcHFxYnCNBR9GNVNRaakw6JoCELdjfN7+r4RHuFudfGcMA8vODvLCs9+6vQ==
-X-Received: by 2002:a05:6a00:180f:b0:82c:6b23:6d10 with SMTP id
- d2e1a72fcca58-82d0da456f1mr22583297b3a.3.1775672502306; 
- Wed, 08 Apr 2026 11:21:42 -0700 (PDT)
-Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9b3c930sm21980552b3a.17.2026.04.08.11.21.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 11:21:41 -0700 (PDT)
-Message-ID: <df1c484f-bc30-49d5-9928-de6e17dd2816@linaro.org>
-Date: Wed, 8 Apr 2026 11:21:41 -0700
+ d=1e100.net; s=20251104; t=1775599184; x=1776203984;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=agmdtPgbKNlH9bAAj1AAHRxJL/aBymX0MFrBnGbacuc=;
+ b=nWScz/LP31Je89HRGklS/9S+gMZhByQQ73cpnXP9AOc/WTmoqa2f19XG4ueVQ5SesU
+ DwNyKBSsLdVFwH9gkg9zYeuu6/aGY5jODIJnHtd2MOA6fqT9ATQbToUVEU0JFIDWa+0O
+ /SB+Rm9KWXsVpcDiL+B0uSmlLdNcFeAIYyX7OJl+woqnQRPH8+iGVMfRKBJIhgzP7B1D
+ q6BvJQgyi5Yx1g3mpw5jpDprEIL2Y6TwIjIJRAc0F/FVTKqLTmeP4QYVrM8pGqF9CqUU
+ nubpOrS1Li9M9HFikqNlDsdZJ4CHva40Xk5ssAKKUFXga9DWjmDoF0azYUAKxck0TgIy
+ li6g==
+X-Gm-Message-State: AOJu0Ywik995ut2tgWmc+Jj3gSExnRUo/cRexjqlsnlFGSsWMKu8a/rf
+ v9JvecPUq5fTMA8KrA0+D4L7l5QpRWFsTeKZkKxKWtNbdZHI84fWDXC+hjyQwloeu/rwDsRD7HO
+ yc4UdT/0=
+X-Gm-Gg: AeBDiesirp9Zt+YWWslN/nd4OvryRJKB90e/pB3O+0aZYEVPgNG0HuXdo+LDuwFZnH9
+ b2dYda/GUgqPrOvIHs8O1ibJ1jBEvvKTLGJOutFLEYM0IbV5Om1z/2aXA0LQ/byOvzU5EE8+hkP
+ 6VA2uECxbUMPEG/t8E9gFgxCT4tJd42Gb/VaAf8fu2zA8tJjQLF3A6H0vENGG8kCDcpzPQFg5O/
+ XRhzToVnyXxKIYQPQUFcwNtT/0abyse+GFK2bywwzHsNKpaX61z+LTL3hisutH8aEq7s4NKf6L4
+ P+ludPXIWWEckuMOA7KjSHQ9aEyTCIFi6ScmoTT+rOtPwNU6TPkS0X4P5liW4kRNKtUbaFILWwM
+ ou4m9pEZvO1x3K7wj+T+leVl7NxpAmQhJa0Ncmy7hfyl5ayfVK7Ol3w62MiEDNxcySEB3JyJbtL
+ dORPcS+9mBxhE86W5KV+vD20PXohjkovbS4Ix9wt7W40+J7fzc3zJfXxSaSMXTtRR19RoS8ygJ6
+ A69gYjk5cc=
+X-Received: by 2002:a05:600c:6286:b0:486:af22:4a2a with SMTP id
+ 5b1f17b1804b1-488996dfebamr259333495e9.7.1775599184543; 
+ Tue, 07 Apr 2026 14:59:44 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488c1c5291esm91154425e9.15.2026.04.07.14.59.43
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 07 Apr 2026 14:59:43 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH-for-11.0 6/6] ati-vga: Do not crash on 24 bits per pixel
+Date: Tue,  7 Apr 2026 23:59:00 +0200
+Message-ID: <20260407215900.63390-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260407215900.63390-1-philmd@linaro.org>
+References: <20260407215900.63390-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: fix usage of struct target_stat64 for
- TARGET_LOONGARCH64 in syscall_defs.h
-Content-Language: en-US
-To: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>, laurent@vivier.eu
-Cc: qemu-devel@nongnu.org
-References: <CAFsMJvCLRw2Q=4muDNG1Ojj3oL+UgTrVzpYM6VULRvdFxgR=KA@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAFsMJvCLRw2Q=4muDNG1Ojj3oL+UgTrVzpYM6VULRvdFxgR=KA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -137,32 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/26 11:17 AM, Gyorgy Tamasi wrote:
-> In a 64bit LoongArch64 env (both TARGET_LOONGARCH and
-> TARGET_LOONGARCH64 are defined!) we can not use the struct
-> target_stat64 for data-transfer, since this struct target_stat64 is
-> defined for 32bit environments with its int-sized (4byte) st_*time
-> sec/nsec components.
-> The user side compiler headers of the LoongArch64 env uses long-sized
-> (8byte) st_*time sec/nsec components.
-> 
-> (This is similar to the case of 32bit vs. 64bit RISCV: the original
-> code does not use struct target_stat64 in 64bit RISCV env, when both
-> TARGET_RISCV and TARGET_RISCV64 are defined.)
-> 
-> This fix is important for LoongArch64 ABI1.0, where stat() is using an
-> fstatat syscall with this struct target_stat64, if its usage is
-> enabled.
-> (In case of LoongArch64 ABI2.0 stat() uses statx syscall, where this
-> problematic struct target_stat64 is not used, struct statx is correct
-> in the LoongArch64 env.)
-> See also: https://gitlab.com/qemu-project/qemu/-/work_items/3371
-> 
-> Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-> ---
->   linux-user/syscall_defs.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The stn_he_p function only supports power of two sizes so it will
+assert if we call it with size 3 that happens with 24 bits per pixel.
+It's not clear from the documentation if this should be supported or
+not and drivers tested so far don't use it so refuse the parameters
+that would crash QEMU for now.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Message-ID: <20260406012031.335A0596A24@zero.eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/display/ati_2d.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 9baf6ff37b0..f0f77cecc65 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -265,6 +265,10 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+     {
+         uint32_t filler = 0;
+ 
++        if (ctx->bpp == 24) {
++            qemu_log_mask(LOG_UNIMP, "Fill blt unsupported in 24 bits\n");
++            return false;
++        }
+         switch (ctx->rop3) {
+         case ROP3_PATCOPY:
+             filler = make_filler(ctx->bpp, ctx->frgd_clr);
+@@ -362,6 +366,11 @@ bool ati_host_data_flush(ATIVGAState *s)
+ 
+     setup_2d_blt_ctx(s, &ctx);
+ 
++    if (ctx.bpp == 24) {
++        qemu_log_mask(LOG_UNIMP,
++                      "host_data_blt: unsupported in 24 bits mode\n");
++        return false;
++    }
+     if (!ctx.left_to_right || !ctx.top_to_bottom) {
+         qemu_log_mask(LOG_UNIMP,
+                       "host_data_blt: unsupported blit direction %c%c\n",
+-- 
+2.53.0
+
 
