@@ -4,79 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F036EFF5134
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12AABFF5136
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:32:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABUm-0006ct-DF; Tue, 07 Apr 2026 14:49:52 -0400
+	id 1wABXZ-0000Gs-FK; Tue, 07 Apr 2026 14:52:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wABSy-0003wR-Ga
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:02 -0400
-Received: from p-west2-cluster3-host9-snip4-10.eps.apple.com ([57.103.69.73]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1wABUI-0004Gu-FY
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wA7bB-0002aW-0C
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 10:40:16 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-4 (Postfix) with ESMTPS id
- B80101800503; Tue, 07 Apr 2026 14:40:08 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775572809; x=1778164809;
- bh=FzkGImXMGV+k4O/3F04KClwgnpiDeG4+zfVAdz0Upko=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=VYV+xZKh+zW44/kr9WjM93N72/faCK+r96GC4ldgRDy0mdNQDohGzM9z9VAindptyAj6SvCRbrLd5t7IDfdKLwovKW0v3j2ia49oFgMhCC3jIwNxQTtVy3S0CZ87GktANNbAj0ah5QEZUTKVogQFaZDK3bS3lxy8wHsZNw9m567Vws2+VtPf9vAm31DFV18FRLrrE+bxmrMPak1kHUqHxFeXdFSieChVUaF6oRfIY0PdZ8eiD9UKGMP0yOaIqbduC9MkTYBz59k0ZC76EBc0ZdwpVDL3uTrtEKhVW4R4vd3iv0KZZUwPufDzQtozQZkTBtMRBD8Y1P3gpsw7owne5g==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-4 (Postfix) with ESMTPSA id
- CF1F4180053A; Tue, 07 Apr 2026 14:40:06 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v8 00/13] whpx: i386: bug fixes, feature probing and CPUID
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260407141809.16862-1-mohamed@unpredictable.fr>
-Date: Tue, 7 Apr 2026 16:39:54 +0200
-Cc: Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5EA7BEB7-05E2-44CF-B780-3B774712BDC3@unpredictable.fr>
-References: <20260407141809.16862-1-mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDEzNCBTYWx0ZWRfX3HHjnt6C4LYv
- w4wqjFodN5De4nObdD5qnqGIQOAt/SEx8H2EVCmqGHrOCUNgpqL/mLA4yVCvB6lqp+zY2CGp2d7
- G+12XGeF4X1PLZ7lMqW7M/YKSVylRVVOlJhj342+30z4woc6fnEUpvoUXorh76cRd/Iikc09ks6
- HSl1afM3zEN0XTnLtWwaGUULq5syogjxYRYY9hXl4h8b0R60r4pn14UW/G9HHei/s6YAD6JNeQ6
- sO4haHVzeK5RtmIBKesxDl3O3KhaMQElA8ZvL94w0rmj6+PJkhn14QnAkoAuh9rmZaXejGUUJHt
- yoANZXa6OgY/78PwRPX4VmHhx0+LcC2GoD9Sf+QT09EuoXs1RQnXSrxev7L7eI=
-X-Authority-Info-Out: v=2.4 cv=JvD8bc4C c=1 sm=1 tr=0 ts=69d51749
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=YK75Sztqf-otMINejiUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: BRkS7pCuZyEFToDkOgsZlq5o6wdUtYly
-X-Proofpoint-ORIG-GUID: BRkS7pCuZyEFToDkOgsZlq5o6wdUtYly
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- bulkscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=997 clxscore=1030
- malwarescore=0 adultscore=0 mlxscore=0 suspectscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604070134
-Received-SPF: pass client-ip=57.103.69.73;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1w9yfx-0003Gm-D4
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 01:08:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775538510;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=r7MgCxBodV/6hEOvHxo+i0I4wG7WCx8i1dakiz9yVNw=;
+ b=Ajz7vD+hoL33pf/whrxVOT50aVAVTFck3X4UvonQjfw5UADLa6CgxqoP9tgSmpqbGQG4Pb
+ 47JcFRoiTQXoXUPbkVk4DtKL3ZEfES3dVRcP/u8TMewavTdYLdBvOByyqWKxo3Exo3eZ54
+ n51a8fZaMOGhk7NynoJY3+kOaY7I0YE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-fhvUPWEfNa-74KkjgOTvCA-1; Tue,
+ 07 Apr 2026 01:08:27 -0400
+X-MC-Unique: fhvUPWEfNa-74KkjgOTvCA-1
+X-Mimecast-MFC-AGG-ID: fhvUPWEfNa-74KkjgOTvCA_1775538506
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C70FF180047F; Tue,  7 Apr 2026 05:08:25 +0000 (UTC)
+Received: from S2.redhat.com (unknown [10.72.112.55])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5ACEF180058C; Tue,  7 Apr 2026 05:08:22 +0000 (UTC)
+From: Cindy Lu <lulu@redhat.com>
+To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, zhangckid@gmail.com,
+ lizhijian@fujitsu.com, jmarcin@redhat.com, qemu-devel@nongnu.org
+Subject: [RFC v4 0/5] net/filter: Add AF_PACKET support for vhost-net
+Date: Tue,  7 Apr 2026 13:05:47 +0800
+Message-ID: <20260407050818.2249570-1-lulu@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,182 +78,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi, All
+
+This series wires AF_PACKET-backed packet capture and inject support into
+the existing socket chardev backend so filter-redirector can keep using exist
+process
+
+Example Usage
+=============
+  Users are expected to create the AF_PACKET socket in userspace, bind it
+  to the target tap device, and then pass the resulting fd to QEMU via
+  the existing FD_PLACEHOLDER mechanism.
+
+  Creating such a socket requires CAP_NET_RAW (or running as root).  A
+  typical setup looks like:
+
+      sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW,
+                           socket.htons(ETH_P_ALL))
+      sock.bind((ifname, ETH_P_ALL))
+
+  The bound fd can then be passed to QEMU with:
+
+      -chardev socket,...,fd=${FD_PLACEHOLDER},...
+
+Primary VM (mirror incoming packets to secondary via chardev socket):
+
+  -netdev "tap,id=net0,ifname=${TAP}...vhost=on"
+  -device "${VIRTIO_NET_DEVICE}"
+  -chardev "socket,id=chain_out,fd=${FD_PLACEHOLDER},af-packet-mode=capture"
+  -chardev "socket,id=mirror0,host=${MIRROR_HOST},port=${MIRROR_PORT},reconnect-ms=${MIRROR_RECONNECT_MS}"
+  -object "filter-redirector,id=r1,netdev=net0,queue=tx,indev=chain_out,status=on,vnet_hdr_support=off,position=head"
+  -object "filter-redirector,id=r1_mirror,netdev=net0,queue=tx,outdev=mirror0,status=on,vnet_hdr_support=off,insert=behind"
+
+Secondary VM (receive mirrored packets):
+
+  -netdev "tap,id=net0,ifname=${TAP}...vhost=on"
+  -device "${VIRTIO_NET_DEVICE}"
+  -chardev "socket,id=red0,host=${MIRROR_BIND_HOST},port=${MIRROR_PORT},server=on,wait=off"
+  -chardev "socket,id=chain_in,fd=${FD_PLACEHOLDER},af-packet-mode=inject"
+  -object "filter-redirector,id=r1,netdev=net0,queue=tx,indev=red0,status=off,vnet_hdr_support=off,position=head"
+  -object "filter-redirector,id=r1_inject,netdev=net0,queue=tx,outdev=chain_in,status=off,vnet_hdr_support=off,position=id=r1,insert=behind"
 
 
-> On 7. Apr 2026, at 16:17, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
->=20
-> This is a supplemental update that includes
-> "whpx: i386: x2apic emulation for kernel-irqchip=3Doff, feature =
-probing"
-> v4 unmodified.
->=20
-> This might be too big for QEMU 11.0 at this point though=E2=80=A6
->=20
+changset
+===========
+change in v2: 
+1. add support for filter-buffer 
+2. remove the in_netdev and out_netdev for AF_PACKET bind port, now only use netdev 
+when the vhost=on start use AF_PACKET to capture and inject, when use vhost=off will use
+the existing code
+3. add CAP_NET_RAW check
+4. address the comment 
 
-Hi,
+change in v3: 
+1. reuse the exist Capture/inject process 
 
-For those shipping prebuilt QEMU on Windows binaries, you probably
-want to cherry-pick this series especially for Windows 10 users.
+change in v4: 
+1.move the capture/inject to chardev 
+2.move the create/bind socket to user script
 
-This is primarily due to the advertising as VMware enlightenment
-which allows Linux to grab the TSC/APIC timer frequencies duo.
-
-Secondarily is kernel-irqchip=3Doff fixes so that modern Windows
-boots in that configuration and making it have x2APIC support.
-
-And then switching Windows 10 to kernel-irqchip=3Doff except if
-the machine has the PIC disabled as we can=E2=80=99t properly emulate
-it with the Hyper-V APIC.
-
-On Windows 11, the feature addition provided here is -cpu <model>
-working.
+Testing
+=======
+- Tested with vhost=on/off TAP device on x86_64
 
 
-> Old performance (or lack thereof...) numbers:
->=20
-> On a Ryzen 7 8700GE with a Windows 10 VM running with KVM in nested =
-virt, with
-> kernel-irqchip=3Doff for the virt Alpine Linux x86_64 ISO (3.23.3) =
-with -smp cores=3D2,
-> boot times as reported through dmesg:
->=20
-> - QEMU 10.2: 83 seconds
-> - QEMU 10.2 with a single core: 18.1 seconds
-> - as of v6 of this series, x2apic forced off: 29 seconds
-> - as of v6 this series, out of the box: 18 seconds
-> - v6 with kernel-irqchip=3Don and EDK2: 16.5 seconds
-> - v6 with kernel-irqchip=3Doff and EDK2: 9.5 seconds
-> - v6, and with 1 core instead of two: 12.6 seconds
->=20
-> In v7, the Windows 10 numbers are pretty much at parity with Windows =
-11 now.
->=20
-> And with this series on a Windows 11 VM on the same hardware:
-> - kernel-irqchip=3Don: 6.5 seconds
-> - kernel-irqchip=3Don, x2apic forced off: 7.6 seconds
-> - kernel-irqchip=3Doff: 8.3 seconds
-> - hyperv=3Doff,kernel-irqchip=3Doff: 7.6 seconds... which is faster,
-> so the absence of enlightenment support on Windows 10 doesn't explain =
-things...
->=20
-> With kernel-irqchip=3Don on Windows 10, when booting with SeaBIOS, it =
-gets stuck in
-> syslinux due to PIC interrupt injection being broken there. That can =
-be counted
-> as an infinite boot time (?).
->=20
-> checkpatch false positives:
->=20
-> ERROR: spaces required around that '*' (ctx:WxV)
-> +         UINT32 Ecx, WHV_CPUID_OUTPUT *CpuidOutput))
->=20
-> Not a multiplication but a pointer reference.
->=20
-> ERROR: space prohibited after that '&' (ctx:ExW)
-> +                    & CPUID_7_0_EDX_CET_IBT) {
->                     ^
->=20
-> ERROR: space prohibited after that '&' (ctx:ExW)
-> +                    & CPUID_7_0_ECX_CET_SHSTK) {
->                     ^
->=20
-> Because it's multiline.
->=20
-> Changes in v8:
->=20
-> - Interrupt priority changes are back.
-> - Some CPUID fixes
-> - disable enlightenments and LAPIC for isapc
->=20
-> Changes in v7:
->=20
-> - Exposing VMware hypervisor identification when not
-> using Hyper-V enlightenments and when the VMware frequency
-> CPUID leaf isn't explictly disabled.
->=20
-> - Remove the interrupt priority logic as it has issues with
-> PIC interrupts. Can be reintroduced later.
->=20
-> - -cpu max passing through CPUID info from Hyper-V
-> - fill xsave info
->=20
-> - OSXSAVE CPUID leaf reporting fix.
->=20
-> Changes in v6:
->=20
-> - kernel-irqchip=3Doff fix: re-registering the interrupt window
-> when the existing one has too low of a TPR value.
->=20
-> Folded into "whpx: i386: kernel-irqchip=3Doff fixes".
->=20
-> - I/O port access fast path cleanup commit added at the end
->=20
-> The path relied on a side effect of whpx_get_reg instead of
-> something cleaner.
->=20
-> - Use the CR8 register provided by the hypervisor only when
-> kernel-irqchip=3Doff. Rely on the APIC state synchronisation
-> otherwise.
->=20
-> This fixes some register sync errors that surfaced when setting
-> the TPR values properly.
->=20
-> Changes in v5/v1 with rename:
->=20
-> - kernel-irqchip=3Doff fixes, notably making 64-bit Windows bootable
-> - switching over Windows 10 to kernel-irqchip=3Doff by default
->=20
-> Changes in v4:
->=20
-> - Ugh for a revision sent quickly, unbreaking the arm64 build...
-> - and making checkpatch happier to some extent
->=20
-> Changes in v3:
->=20
-> - Fixing CPUID intercepts so that QEMU CPU models work fine now, =
-instead
-> of the partial intercept that was present in QEMU 10.2
-> - cleanups
->=20
-> Changes in v2:
->=20
-> - GCC warned when a variable name was re-used within a different (but =
-overlapping)
-> scope in the same function. It also warned with a =
--Werror=3Dmaybe-uninitialized for
-> the MSR write case. Address those
-> - make the in-KVM enlightenments path available on Windows 11 too when =
--M hyperv=3Doff.
->=20
-> Mohamed Mediouni (13):
->  target/i386: emulate: include name of unhandled instruction
->  whpx: i386: x2apic emulation
->  whpx: i386: wire up feature probing
->  whpx: i386: disable TbFlushHypercalls for emulated LAPIC
->  whpx: i386: enable x2apic by default for user-mode LAPIC
->  whpx: i386: reintroduce enlightenments for Windows 10
->  whpx: i386: introduce proper cpuid support
->  whpx: i386: kernel-irqchip=3Doff fixes
->  whpx: i386: use WHvX64RegisterCr8 only when kernel-irqchip=3Doff
->  whpx: i386: disable kernel-irqchip on Windows 10 when PIC enabled
->  whpx: i386: IO port fast path cleanup
->  whpx: i386: disable enlightenments and LAPIC for isapc
->  whpx: i386: interrupt priority support
->=20
-> accel/whpx/whpx-common.c       |   2 +
-> include/system/whpx-common.h   |   1 +
-> include/system/whpx-internal.h |  10 +
-> target/arm/whpx/whpx-all.c     |   1 +
-> target/i386/cpu.c              |  25 ++
-> target/i386/emulate/x86_emu.c  |   4 +-
-> target/i386/whpx/whpx-all.c    | 580 +++++++++++++++++++++++++++------
-> target/i386/whpx/whpx-i386.h   |   4 +
-> 8 files changed, 530 insertions(+), 97 deletions(-)
-> create mode 100644 target/i386/whpx/whpx-i386.h
->=20
-> --=20
-> 2.50.1 (Apple Git-155)
->=20
+
+Cindy Lu (5):
+  net/filter: allow filters on vhost netdevs
+  chardev/socket: add AF_PACKET initialization
+  io/channel-socket: tolerate AF_PACKET getpeername
+  chardev/socket: add AF_PACKET inject path
+  chardev/socket: add AF_PACKET capture path
+
+ chardev/char-socket.c         | 385 +++++++++++++++++++++++++++++++++-
+ chardev/char.c                |   3 +
+ include/chardev/char-socket.h |  13 ++
+ io/channel-socket.c           |   6 +-
+ net/filter.c                  |   6 -
+ qapi/char.json                |  23 +-
+ qemu-options.hx               |   5 +-
+ 7 files changed, 429 insertions(+), 12 deletions(-)
+
+-- 
+2.52.0
 
 
