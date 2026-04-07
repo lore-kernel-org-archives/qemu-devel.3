@@ -4,50 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4201410F9976
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAED10F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYau-0000q7-Hf; Wed, 08 Apr 2026 15:29:45 -0400
+	id 1wAYWr-0000iF-BF; Wed, 08 Apr 2026 15:25:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wAY8O-0008Ga-UM
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:00:16 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAY7R-0007eq-KB; Wed, 08 Apr 2026 14:59:20 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wAQTd-0003rE-EL
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 06:49:43 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2A31D596A23;
- Wed, 08 Apr 2026 12:49:37 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 1BsFWgsbyCBn; Wed,  8 Apr 2026 12:49:35 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1A55A5969F6; Wed, 08 Apr 2026 12:49:35 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2] ati-vga: Fix check for overflowing vram
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAQmk-00035v-8n; Wed, 08 Apr 2026 07:09:29 -0400
+DKIM-Signature: a=rsa-sha256; bh=I2vJF8Ao5uoGzmkiFFS4anH8vSW24HuJ9ZbFaJQD0us=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1775646440; v=1;
+ b=mjm+bSDIhe9pAR8EbLd96UGMmRKB1LNHJkwh8mDXpvAkBZkwz1LGbuh3mYHHiR2w69T+48fv
+ io05KU1HzZnFbtZ7MlFwraxVBxX1z6/nvqFXkaYJE/iAvTEqFMPx+Jl0Pp2GuQ+DEN9MBROs0Fa
+ 2RBIkhEzl04ZeP2vXUDaUwQ+EOuK9941dPcL09AJs2dqMrrQq4z5J9AwxAU2ic8rmPzoI84A0hm
+ CNp/KHPerSXvMG5tgnmHe5qsPQXLp7OimHcDi+p7cgpSbOCPknO8QSjUuW3baConSQlhM2rlC72
+ aGU2HpXil27ZqX9LTwos/2x/RVIuKY82w1bnzE+zvyxWg==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id BEF10207F8;
+ Wed, 08 Apr 2026 11:07:20 +0000 (UTC)
+From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
+Date: Tue, 07 Apr 2026 14:38:47 +0100
+Subject: [PATCH qemu v2 4/7] ot_uart: replace individual IRQ fields with
+ array, add missing IRQs
+Message-ID: <177564643888.23414.7922925369077631439-4@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <177564643888.23414.7922925369077631439-0@git.sr.ht>
+To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
+ Amit Kumar-Hermosillo <amitkh@google.com>, nabihestefan@google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260408104935.1A55A5969F6@zero.eik.bme.hu>
-Date: Wed, 08 Apr 2026 12:49:35 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,72 +69,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Take into account the bytes per pixels when checking for accessing
-beyond end of vram area.
+From: Lex Bailey <lex.bailey@lowrisc.org>
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+There are 9 interrupts in the OpenTitan UART device.
+These are documented here:
+https://opentitan.org/book/hw/ip/uart/doc/theory_of_operation.html#interrupts
+
+This commit removes the individually named interrupts (of which there was onl=
+y four)
+and replaces them with an array of 9 interrupts.
+
+Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 ---
-v2: Also end of accessed region should take bypp into account
+ hw/char/ot_uart.c         | 44 +++++++++++++--------------------------
+ include/hw/char/ot_uart.h |  5 +----
+ 2 files changed, 15 insertions(+), 34 deletions(-)
 
- hw/display/ati_2d.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index f0f77cecc6..504d1c5708 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -146,6 +146,7 @@ static uint32_t make_filler(int bpp, uint32_t color)
- static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
+index 3bf3295b1b..923aab12af 100644
+--- a/hw/char/ot_uart.c
++++ b/hw/char/ot_uart.c
+@@ -107,6 +107,7 @@ REG32(TIMEOUT_CTRL, 0x30)
+ #define OT_UART_NCO_BITS     16
+ #define OT_UART_TX_FIFO_SIZE 128
+ #define OT_UART_RX_FIFO_SIZE 128
++#define OT_UART_IRQ_NUM      9
+=20
+ #define R32_OFF(_r_) ((_r_) / sizeof(uint32_t))
+=20
+@@ -116,31 +117,11 @@ REG32(TIMEOUT_CTRL, 0x30)
+=20
+ static void ot_uart_update_irqs(OtUARTState *s)
  {
-     QemuRect vis_src, vis_dst;
-+    unsigned int x, y, i, j, bypp = ctx->bpp / 8;
- 
-     if (!ctx->bpp) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-@@ -156,8 +157,9 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-         return false;
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+-        & INTR_TX_WATERMARK_MASK) {
+-        qemu_set_irq(s->tx_watermark, 1);
+-    } else {
+-        qemu_set_irq(s->tx_watermark, 0);
+-    }
+-
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+-        & INTR_RX_WATERMARK_MASK) {
+-        qemu_set_irq(s->rx_watermark, 1);
+-    } else {
+-        qemu_set_irq(s->rx_watermark, 0);
+-    }
++    uint32_t state_masked =3D s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE];
+=20
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE] & INTR_TX_EMPTY_MASK)=
+ {
+-        qemu_set_irq(s->tx_empty, 1);
+-    } else {
+-        qemu_set_irq(s->tx_empty, 0);
+-    }
+-
+-    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
+-        & INTR_RX_OVERFLOW_MASK) {
+-        qemu_set_irq(s->rx_overflow, 1);
+-    } else {
+-        qemu_set_irq(s->rx_overflow, 0);
++    for (int index =3D 0; index < OT_UART_IRQ_NUM; index++) {
++        bool level =3D (state_masked & (1U << index)) !=3D 0;
++        qemu_set_irq(s->irqs[index], level);
      }
-     if (ctx->dst.x > 0x3fff || ctx->dst.y > 0x3fff ||
--        ctx->dst_bits >= ctx->vram_end || ctx->dst_bits + ctx->dst.x +
--        (ctx->dst.y + ctx->dst.height) * ctx->dst_stride >= ctx->vram_end) {
-+        ctx->dst_bits >= ctx->vram_end - bypp ||
-+        ctx->dst_bits + ctx->dst.x * bypp + (ctx->dst.y + ctx->dst.height) *
-+        ctx->dst_stride >= ctx->vram_end - bypp) {
-         qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-         return false;
-     }
-@@ -194,8 +196,9 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-         }
-         if (!ctx->host_data_active &&
-             (vis_src.x > 0x3fff || vis_src.y > 0x3fff ||
--            ctx->src_bits >= ctx->vram_end || ctx->src_bits + vis_src.x +
--            (vis_src.y + vis_dst.height) * ctx->src_stride >= ctx->vram_end)) {
-+            ctx->src_bits >= ctx->vram_end - bypp ||
-+            ctx->src_bits + vis_src.x * bypp + (vis_src.y + vis_dst.height) *
-+            ctx->src_stride >= ctx->vram_end - bypp)) {
-             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-             return false;
-         }
-@@ -240,7 +243,6 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-             fallback = true;
-         }
-         if (fallback) {
--            unsigned int y, i, j, bypp = ctx->bpp / 8;
-             for (y = 0; y < vis_dst.height; y++) {
-                 i = vis_dst.x * bypp;
-                 j = vis_src.x * bypp;
-@@ -299,7 +301,6 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
- #endif
-         {
-             /* fallback when pixman failed or we don't want to call it */
--            unsigned int x, y, i, bypp = ctx->bpp / 8;
-             for (y = 0; y < vis_dst.height; y++) {
-                 i = vis_dst.x * bypp + (vis_dst.y + y) * ctx->dst_stride;
-                 for (x = 0; x < vis_dst.width; x++, i += bypp) {
--- 
-2.41.3
+ }
+=20
+@@ -291,6 +272,9 @@ static void ot_uart_reset_enter(Object *obj, ResetType ty=
+pe)
+     s->regs[R_STATUS] =3D 0x0000003c;
+=20
+     s->tx_watermark_level =3D 0;
++    for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
++        qemu_set_irq(s->irqs[index], 0);
++    }
+     ot_uart_reset_tx_fifo(s);
+     ot_uart_reset_rx_fifo(s);
+=20
+@@ -562,21 +546,21 @@ static void ot_uart_init(Object *obj)
+                                   ot_uart_clk_update, s, ClockUpdate);
+     clock_set_hz(s->f_clk, OT_UART_CLOCK);
+=20
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_watermark);
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_watermark);
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_empty);
+-    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_overflow);
++    for (unsigned index =3D 0; index < OT_UART_IRQ_NUM; index++) {
++        sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irqs[index]);
++    }
+=20
+     memory_region_init_io(&s->mmio, obj, &ot_uart_ops, s,
+                           TYPE_OT_UART, 0x400);
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+=20
+     /*
+-     * This array has a fixed size in the header. This assertion is used to
+-     * check that it is consistent with the definition in this file. This is
++     * These arrays have fixed sizes in the header. These assertions are use=
+d to
++     * check that they are consistent with the definitions in this file. Thi=
+s is
+      * ostensibly a runtime check, but may be optimised away by the compiler.
+      */
+     assert(REGS_SIZE =3D=3D sizeof(s->regs));
++    assert(OT_UART_IRQ_NUM * sizeof(qemu_irq) =3D=3D sizeof(s->irqs));
+ }
+=20
+ static void ot_uart_realize(DeviceState *dev, Error **errp)
+diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
+index f489612700..a2c5ff8b33 100644
+--- a/include/hw/char/ot_uart.h
++++ b/include/hw/char/ot_uart.h
+@@ -42,6 +42,7 @@ struct OtUARTState {
+=20
+     /* <public> */
+     MemoryRegion mmio;
++    qemu_irq irqs[9];
+=20
+     uint32_t tx_level;
+=20
+@@ -59,10 +60,6 @@ struct OtUARTState {
+     Clock *f_clk;
+=20
+     CharFrontend chr;
+-    qemu_irq tx_watermark;
+-    qemu_irq rx_watermark;
+-    qemu_irq tx_empty;
+-    qemu_irq rx_overflow;
+ };
+=20
+ struct OtUARTClass {
+--=20
+2.49.1
 
 
