@@ -4,136 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C4B10F996A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2CB710F996A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXqP-0003lk-RE; Wed, 08 Apr 2026 14:41:41 -0400
+	id 1wAXtE-0002eT-2e; Wed, 08 Apr 2026 14:44:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wAXqM-0003R4-O7
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:41:38 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wAVu4-0006p2-DN
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:37:21 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 638GD8TM674162
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 16:37:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=D8XB9U6uJxW
- K1qSpayLLf8XN+ydkf0YDu+EikZ8lS78=; b=C+IX71Cs4R9IhiO/IcZXmPPq68o
- pe4k1Ql5fwozoenW3dg3AZONideh9V52PfBfcayN1S3WO9/RqV88dkS8/TtGL6QW
- 1pQrZ3oUHzKBELLy5XZZqvBmJAx+BrEbSvVfePsNQOtXvd0CRbbA26I0GAtaAd2R
- HU1ZycbcB1aUNNc5NSzvw9Vxo4RkFsbHMqbhCTLuTiCj5VpJEZamGn+Rt67G3jAt
- e5S+eBmm/fWomIJDlY8iiz2NKy3QqGdxmZTOoakJYdhpdpC955jtQ1JpdO4BIkmI
- okdi6fWlpzDdoStOmQQbrCKi4GbRiGk4Vz4Tf1RsgIkZKe3k3szeFyHt4Ww==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddtbmr2h5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:37:19 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c709551ec08so115515a12.3
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:37:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAXsz-0002U9-6n
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:44:24 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAEkE-0008R4-3s
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:18:03 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-35d971fb6f1so4789005a91.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775666238; x=1776271038; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D8XB9U6uJxWK1qSpayLLf8XN+ydkf0YDu+EikZ8lS78=;
- b=TRDwW3WH4mo5W2SCZoZ/IYjL6qhMRAohBQEwxPIZUdmPGVM337VJ+M3J1Lc0ITmvcZ
- PFOs0z1N7HpDD0ipOenyyQG66tJaQKe/Ipixh3aCfRcb99LzcGjdgWLJwuWkU3Cl5l+H
- qRAJWRTtNB9Oc3oujgdafjdwnlvR8FvGhoDXWG+aSJpKc6QjRWMwTCwN9WIEtoSDaF53
- cCAVIKwadmXZ7ZwYNfbBsdiUCNClcUET3dwwNgsJloxXnOd66LLLYw1gtbT36QiyTBXj
- mvwBFX0XWoWxsCRFFkh1c0iKk+goOEe88YpU9435EwlB6YJtio+S1GV6VsaDqjOJuMP7
- PswQ==
+ d=linaro.org; s=google; t=1775600279; x=1776205079; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/9tFviCthByTM3SmVu/IoOMYPiiEJc8zgoYy8zDUdiU=;
+ b=wFIV5m93u/52xPyQFcpqqBK2v1CEHnUebMQfjQrUtEaD6YgEjs3CBfAPQRStWy1l2K
+ Dsy9B3wgnR2b1e/zaUhCKe9KitupUTSc4AH+8fvWwmVUvVDVPU2gxZfOjaJDvvCf3BjR
+ abPdLRtVh9097xEWc/Z2U8CNg8UAUkXCi6EBYngL5gDbzjM5ZNbEm8EFYK4tIM0IYMuq
+ I27ImTl9zyivNWJnNFh3V3Kx5cizGbKyl0vloE8d4xulQNZDtMJLPlqBhQzzJORT4eBt
+ CR8o5ve20O4Cu+oAJGPS8AokwEMy81rW6qIFUfNJJCq3/ElU+6hTwg2Fx7wWs/rzBSNN
+ McDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775666238; x=1776271038;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=D8XB9U6uJxWK1qSpayLLf8XN+ydkf0YDu+EikZ8lS78=;
- b=RRPP2aM8xtNpXxUElSLbD2sC/ZNO5QlHCDWSahPJdIVklDSuNdd5uGAYXyz1VOvf49
- 8Jv7yR6/UyQEb2PTRrYC3GrbH+CT0l56L9MfOoHgKZ1prQXu8OBu/JRYlZQO/wr+P+/U
- j5OQrr3HmtCpRbQ0jX7mtFW0xG8gjPPSjFD1x/4J46fFXlBLaQnywy88uUJrMK5u2Y44
- caAc94wqIYK4yql+ZVZrLQ2W3n+YinMMBCrL8c9XvUF1tS7QhHkmUk+K/7jiJ0O+AgtC
- WTAzKg1FnB1+ZBO44ZLVyQ66kBiP14+SyRUJSlY2rzH6a+UyXZSeOg+LXvsSo3S+sE5W
- Ruwg==
-X-Gm-Message-State: AOJu0YxaJO0zcGzFsU617dgtdibZocxK7LnC3wrPJ8B2eQOs8xGOclW2
- aZCIiGRXbuhtWAtYlgNDh78BWu+uQGuTcHlfRJpbRS/DlU9BgfHiN1ybu/E9apDF5GVnteiOQc0
- E2SVNLDoudbP//4a/wW2jK9+nhRtO+GVx0o+0CbKG1YXJS3N2WHoBtbDYpt/+c1ElNmOC
-X-Gm-Gg: AeBDietBRtrOIK6obgIjCpH0ZNn1JyuUyoKBs5hEz+z+5Lvc/8/To1OiehoY2Ydhh89
- ZZ9Hw1aP4m3eiTSpTb9P9g0cv0vH3offVC0FiM9O+DuAHZg/Sey6igLfoUPJudfLrKjI0XGPypT
- BsWhZZj0F+7ZJp/siihFFmHUqAQHbC5brhvsclO3G6Z0qTKe98SSsyAL+DjcjPaRsO/ivRDF4wo
- NhwP+ZuWBKtWpioSvBoFkbS37ubU1IUX5yQW/QSiWWRLbFCZwqc8w3fkncyGEWryXg7NGkLRam3
- mVmg7qKUsJEGj7Hv+vTr7N1xZrb9ASaa8eACcFzezu1hu3baiAyGyUiwP/F2tZXs82E9U8JioLx
- cZufNDDyiiOyQ+rGeK158fbJAjWQhdihVrYlDjLaaLj05QiBrx1jggrta4Qu7I39jZA7aKVRbKB
- LnK4d1fiOe
-X-Received: by 2002:a05:7022:6997:b0:128:d362:31e8 with SMTP id
- a92af1059eb24-12bfb74518amr11549439c88.20.1775666237881; 
- Wed, 08 Apr 2026 09:37:17 -0700 (PDT)
-X-Received: by 2002:a05:7022:6997:b0:128:d362:31e8 with SMTP id
- a92af1059eb24-12bfb74518amr11549413c88.20.1775666237325; 
- Wed, 08 Apr 2026 09:37:17 -0700 (PDT)
-Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c1ff43d04sm4082006c88.4.2026.04.08.09.37.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 09:37:16 -0700 (PDT)
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
- brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH v3 08/16] target/hexagon: add v68 HVX IEEE float misc insns
-Date: Wed,  8 Apr 2026 09:36:59 -0700
-Message-Id: <2aa7f105031465bdbd63c22bca6e2b77b92bab5f.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-References: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1775600279; x=1776205079;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/9tFviCthByTM3SmVu/IoOMYPiiEJc8zgoYy8zDUdiU=;
+ b=YX364w4E90fplKfM6B0T5d1EpZDwXM7+G/XoMnygbCpP0D/DA9assSg+e0yaXWfwKB
+ xYmygsW2G/jnM4NCqru8U8jBeiLMPxiXcgHDWL3C8lqsU4spOKIb8f9L4RxNORIJ7m0Q
+ TrmYdWH3EJeirEg8y7FyxSqLrKtEKssk7apE7Fkdla71PmrLu0rdEHiBXD+eKQ72KILY
+ 5JIUhPB9X6sg6GHUm170QmTXCpJJ5SZTQMhp9pXW/nPlwfwnJFwhNco3t2Xplue9KFvX
+ QT6PlxiMU2SWyBLt+twvVAg3hU9nkVGLnK965lqB4ylPMyiSOIlW/igGCBYgQxpxUDWs
+ yN3A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxqiN6mU2N4pG5C4w191tiFNOduHdAyWwwRLaQN/Nbp63qwmyEdPeznbtrruQIx7SMRT6kLYQ0zhyg@nongnu.org
+X-Gm-Message-State: AOJu0Yy1m68Dvd5hOeu7WtNCjVdBFJGMqmAgZ0bVu0mNHxJxwuvsJ7Bz
+ 97ZBukfycnEAr3T6brsWvR91gSZCuTlebJPHVwruf9G+nM2sxP8v3T3zHdy//fV5uQM=
+X-Gm-Gg: AeBDieuasYgPJjQj7+XfV7X7iOQZOw4QCm3nW11gumoGIy+n04NE4AeUf5bCVKPZEPV
+ ZAt4mGIl7ELaEPvMUmlOpKyycsDDDWeTbNpmBBQn8OnbUXA0aqRc5jZKNEplALdggRM/W7ukcrA
+ RXUbZJcMnNn8lr7s50cVz+pYo63rsz9RkROrH1UsHva/Y5BBYRjbdXQrpZON1kFqL/DqVUU9c8y
+ rFDAHRPtW414GgXt9lAStPgv0LVebLTIo58CMzSWdT3bPc7gcRMISyJIUbGfKmK3cn42nKcMHL+
+ 905qHyd5JCjX0XtHvZRYJEg9tskCG6MPCc1xCXetomYw0MWCHf0zOizAu962oCWIBgqJ5/Y5aO7
+ wJul3o81VdA3/ZpSHGY3VthOKRA5EQ2J3YIV7E4fSOm59UB5LzsB8W0x4YfR9qLHFBUS4i+vGgN
+ TUU9ZSw0OEI48deWt7fVvySQSUpVGbmWRMiaDu+m+HaAYVpl8EhiUPu0Vu4RbBSu7xvE1eMA==
+X-Received: by 2002:a17:90b:53cb:b0:359:fd9a:c513 with SMTP id
+ 98e67ed59e1d1-35de697ef49mr17652108a91.24.1775600279523; 
+ Tue, 07 Apr 2026 15:17:59 -0700 (PDT)
+Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35dbe9379f3sm23446568a91.9.2026.04.07.15.17.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Apr 2026 15:17:59 -0700 (PDT)
+Message-ID: <c6287f89-56cf-4f3d-9dcf-de5e9494f36d@linaro.org>
+Date: Tue, 7 Apr 2026 15:17:58 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 14/21] tcg/translator: add parameter to
+ translator_loop for current addr type
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260407195922.196410-1-pierrick.bouvier@linaro.org>
+ <20260407195922.196410-15-pierrick.bouvier@linaro.org>
+ <3718ca35-2035-4e62-847f-71c546ad194a@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <3718ca35-2035-4e62-847f-71c546ad194a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: dae6gfnzzDxSrSrbxgCZiA5OI61ZZ_bm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDE1NCBTYWx0ZWRfX7Mb1IOquiQXN
- 9e23zbIj8MTV1FCmFRkYRQJqqb3lnYtsNjxXokNaWFRJecF2bklSW7Ff3X8g1ruhZW5DqvLJ8ff
- fz+Jv47t2ZNj1o7kfD+Sh7wGlQ/uI/go7NXkp/xIP+To8AMSV0UHchYzhweL6nXU/txgxlIliSB
- hdggSckQrqlJyJTUcJO9aUEIT+XBIDQeoTrT+El1IdzH46s9KJs8sxXWnpExIh/jM8aO8F1OM2D
- NByv4/qf2b9pLEcVTB/wzgGdEb4KGxdvOHd/DX4lknb4VbV2Uu0+ACxne2vC4d5qVObVWHEbuMh
- W7OZJTE1l6WkaG/euqv2drbx/haUXb09zTa+wLwTbCZFhop5wAUSiaNP0LAmq4Wpg3LZXORDcqQ
- UWws1uz5lj8aHqFkVlY6yfUQ/5En+gw0rct5kwvWk6bveOLXkh7DflN7dQXgCtHdLxkyoqjbhd3
- v9zYuS36rHI6OX769Mg==
-X-Authority-Analysis: v=2.4 cv=YM2vDxGx c=1 sm=1 tr=0 ts=69d6843f cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=XuGYLkldsImkkdaR63EA:9 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-ORIG-GUID: dae6gfnzzDxSrSrbxgCZiA5OI61ZZ_bm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_05,2026-04-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080154
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,57 +144,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add HVX IEEE floating-point miscellaneous instructions:
-- vassign_fp (vfmv): vector move
-- vfneg_hf, vfneg_sf: vector floating-point negate
-- vabs_hf, vabs_sf: vector absolute value
+On 4/7/26 2:40 PM, Philippe Mathieu-Daudé wrote:
+> On 7/4/26 21:59, Pierrick Bouvier wrote:
+>> With TCG_ADDRESS_BITS mechanism, it's now possible to specify which
+>> variant every source file is written for. Compared to before, it means
+>> that addr_type will now vary per tb translation, where it was constant
+>> for a given target previously.
+>>
+>> Thus, we add new a parameter to translator_loop().
+>> This will allow us to convert targets one by one.
+>>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    include/exec/translator.h        | 4 +++-
+>>    accel/tcg/translate-all.c        | 1 -
+>>    accel/tcg/translator.c           | 4 +++-
+>>    target/alpha/translate.c         | 3 ++-
+>>    target/arm/tcg/translate-a64.c   | 3 ++-
+>>    target/arm/tcg/translate.c       | 2 +-
+>>    target/avr/translate.c           | 3 ++-
+>>    target/hexagon/translate.c       | 3 ++-
+>>    target/hppa/translate.c          | 3 ++-
+>>    target/i386/tcg/translate.c      | 3 ++-
+>>    target/loongarch/tcg/translate.c | 3 ++-
+>>    target/m68k/translate.c          | 3 ++-
+>>    target/microblaze/translate.c    | 3 ++-
+>>    target/mips/tcg/translate.c      | 3 ++-
+>>    target/or1k/translate.c          | 3 ++-
+>>    target/ppc/translate.c           | 3 ++-
+>>    target/riscv/translate.c         | 3 ++-
+>>    target/rx/translate.c            | 3 ++-
+>>    target/s390x/tcg/translate.c     | 3 ++-
+>>    target/sh4/translate.c           | 3 ++-
+>>    target/sparc/translate.c         | 3 ++-
+>>    target/tricore/translate.c       | 3 ++-
+>>    target/xtensa/translate.c        | 3 ++-
+>>    23 files changed, 45 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/include/exec/translator.h b/include/exec/translator.h
+>> index 8d343627bd9..c1d31e06b53 100644
+>> --- a/include/exec/translator.h
+>> +++ b/include/exec/translator.h
+>> @@ -20,6 +20,7 @@
+>>    
+>>    #include "exec/memop.h"
+>>    #include "exec/vaddr.h"
+>> +#include "tcg/tcg.h"
+>>    
+>>    /**
+>>     * DisasJumpType:
+>> @@ -132,6 +133,7 @@ typedef struct TranslatorOps {
+>>     * @host_pc: host physical program counter address
+>>     * @ops: Target-specific operations.
+>>     * @db: Disassembly context.
+>> + * @addr_type: TCG Type for addresses (TCGv_va).
+> 
+> "TCGv_va" confuses me here, do you mean TCG_TYPE_VA?
+> 
+> What about:
+> 
+>     "@addr_type: #TCG_TYPE_VA for TCGv_va address expansion."
+>
 
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
----
- target/hexagon/imported/mmvec/encode_ext.def |  7 +++++++
- target/hexagon/imported/mmvec/ext.idef       | 12 ++++++++++++
- 2 files changed, 19 insertions(+)
+Right, I'll update comment.
 
-diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
-index d7f50db778..72daf8724c 100644
---- a/target/hexagon/imported/mmvec/encode_ext.def
-+++ b/target/hexagon/imported/mmvec/encode_ext.def
-@@ -833,4 +833,11 @@ DEF_ENC(V6_vmin_sf,"00011111110vvvvvPP1uuuuu010ddddd")
- DEF_ENC(V6_vmax_hf,"00011111110vvvvvPP1uuuuu011ddddd")
- DEF_ENC(V6_vmin_hf,"00011111110vvvvvPP1uuuuu100ddddd")
- 
-+/* IEEE FP move, negate, abs instructions */
-+DEF_ENC(V6_vassign_fp,"00011110--0-0110PP1uuuuu001ddddd")
-+DEF_ENC(V6_vfneg_hf,"00011110--0-0110PP1uuuuu010ddddd")
-+DEF_ENC(V6_vfneg_sf,"00011110--0-0110PP1uuuuu011ddddd")
-+DEF_ENC(V6_vabs_hf,"00011110--0-0110PP1uuuuu100ddddd")
-+DEF_ENC(V6_vabs_sf,"00011110--0-0110PP1uuuuu101ddddd")
-+
- #endif /* NO MMVEC */
-diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef
-index 0e9cace203..5312661684 100644
---- a/target/hexagon/imported/mmvec/ext.idef
-+++ b/target/hexagon/imported/mmvec/ext.idef
-@@ -3034,6 +3034,18 @@ ITERATOR_INSN_ANY_SLOT_2SRC(16,vmin_hf,"Vd32.hf=vmin(Vu32.hf,Vv32.hf)", \
-     "Vector min of hf input", VdV.hf[i] = qf_min_hf(VuV.hf[i], VvV.hf[i], \
- 	&env->hvx_fp_status))
- 
-+/* IEEE FP move, negate, abs instructions */
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vassign_fp, "Vd32.w=vfmv(Vu32.w)", \
-+    "Vector IEEE move", VdV.w[i]  = VuV.w[i])
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfneg_hf, "Vd32.hf=vfneg(Vu32.hf)", \
-+    "Vector IEEE neg: hf", VdV.hf[i] = float16_chs(VuV.hf[i]))
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfneg_sf, "Vd32.sf=vfneg(Vu32.sf)", \
-+    "Vector IEEE neg: sf", VdV.sf[i] = float32_chs(VuV.sf[i]))
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vabs_hf,  "Vd32.hf=vabs(Vu32.hf)", \
-+    "Vector IEEE abs: hf", VdV.hf[i] = float16_abs(VuV.hf[i]))
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vabs_sf,  "Vd32.sf=vabs(Vu32.sf)", \
-+    "Vector IEEE abs: sf", VdV.hf[i] = float32_abs(VuV.hf[i]))
-+
- /******************************************************************************
-  DEBUG Vector/Register Printing
-  ******************************************************************************/
--- 
-2.37.2
+> Otherwise,
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
 
