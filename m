@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC95F46C7F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 21:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F13FF513B
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 21:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wADYJ-0005Q2-Ta; Tue, 07 Apr 2026 17:01:40 -0400
+	id 1wADYZ-0005Ye-TS; Tue, 07 Apr 2026 17:01:55 -0400
 Received: from eggs.gnu.org ([209.51.188.92])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wADYA-0005Op-5g
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:01:32 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1wADYY-0005YK-Mo
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:01:54 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wADVv-0001K1-ER
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:59:12 -0400
+ id 1wADWQ-0001Ph-IU
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:59:43 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id CBE15600AC;
- Tue,  7 Apr 2026 20:59:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A646C116C6;
- Tue,  7 Apr 2026 20:59:08 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 00759600AC;
+ Tue,  7 Apr 2026 20:59:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7332DC116C6;
+ Tue,  7 Apr 2026 20:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775595550;
- bh=m+tZlWT6PpHFvAYmYtrq5ynvY8VedrOo9lnWAeHIrKI=;
+ s=k20201202; t=1775595581;
+ bh=i38PdCOospeuZ97BtU06FHd3FUy6qM5rW3XcNazdeJ8=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Ig7dF6hcqibZeW771dYZ7twTcwvn4OoFe56i9+h+GNoyuOfp1GFeH1F2uFc5yLL+m
- FbfmYg86D/oro0Wx1pNVzWaYZSlA1bozpjJYnrEOUUdRCAgAQjqDaGMT7O0U6hc+gX
- 5Em/pZN0hKxxowxAdlPlpUIG3bfw/xN9L2u/bGeZnHA78O7HZJZQO2mHI5xVDAVEuh
- 49xiE1X5gE1XtLgJm9f84H4IEwPieI9/SQgPRgAUYBndfVZCIgd97iMzy9tTMl3Z2J
- MbXLAvM9dxi6+5c1nN+USulMdUFpOkGL8FVPe0ZMmh6WU/6p7Wz+YDsopBf3XsBsP5
- A1DiAC8vZgIxg==
-Date: Tue, 7 Apr 2026 22:59:05 +0200
+ b=MYYKYD+OBRWFWRpnqS3BCf90+Rud0g27Ap/F1mlIDtu4AD94v8FOklJNl+f5PjkWh
+ 5vHy9Jn/QhyfqWpIGl3ETtLOJTEUYgpCIKzHocMmW3LD3LztTOYYS9mho5PliK/l/u
+ bNN77xD3Uo0R6uKIquhu1+HXG4IN33dv/6kXLoslsMsnyb/6ru5VDr39/v+WITV+ov
+ DrSDxAQ5+b40H+k/bdNdaPVhsA6av0fZS9p0C8HP1OkMxJ1adpLsD5GAkV2VNfSVG/
+ E/4Ur7Kr0HvLVyD9ES28bsD7tJPUJIxBeMZ0AUmh7mm/yuTTuJnEAllLhPh/gnFadR
+ xMALj6RzlBK3A==
+Date: Tue, 7 Apr 2026 22:59:37 +0200
 From: Christian Brauner <brauner@kernel.org>
 To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
@@ -43,25 +43,24 @@ Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Thomas Huth <th.huth+qemu@posteo.eu>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 3/5] qapi: add monitor-add, monitor-remove,
- query-monitors commands
-Message-ID: <20260407-erhitzen-anlaufen-ffbbd453251b@brauner>
+Subject: Re: [PATCH v3 1/5] monitor: store monitor id and dynamic flag in
+ Monitor struct
+Message-ID: <20260407-beackern-bereichern-888fb1925d45@brauner>
 References: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
- <20260407-work-qmp-monitor-hotplug-v3-3-cb259800fffb@kernel.org>
- <adTgYYklczPVA40Q@redhat.com>
+ <20260407-work-qmp-monitor-hotplug-v3-1-cb259800fffb@kernel.org>
+ <adTe4_uiYogOULtn@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <adTgYYklczPVA40Q@redhat.com>
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
- helo=tor.source.kernel.org
+In-Reply-To: <adTe4_uiYogOULtn@redhat.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=brauner@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,124 +77,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 07, 2026 at 11:45:53AM +0100, Daniel P. Berrangé wrote:
-> On Tue, Apr 07, 2026 at 09:32:47AM +0200, Christian Brauner wrote:
-> > Add QMP commands for dynamic monitor lifecycle management:
+On Tue, Apr 07, 2026 at 11:39:31AM +0100, Daniel P. Berrangé wrote:
+> On Tue, Apr 07, 2026 at 09:32:45AM +0200, Christian Brauner wrote:
+> > Add 'id', 'dynamic', and 'dead' fields to struct Monitor. The id field
+> > stores the monitor identifier from MonitorOptions which was previously
+> > parsed but discarded. The dynamic flag marks monitors created at runtime
+> > via the upcoming monitor-add command, and the dead flag will be used for
+> > deferred destruction during monitor-remove.
 > > 
-> > - monitor-add: Create a QMP monitor on an existing chardev at runtime.
-> >   The chardev must exist and not already have a frontend attached
-> >   (enforced by qemu_chr_fe_init()).  The new monitor starts in
-> >   capability negotiation mode.
+> > Extend monitor_init_qmp() to accept id and dynamic parameters so these
+> > are set before the monitor is added to mon_list.
 > > 
-> > - monitor-remove: Remove a dynamically-added monitor.  CLI-created
-> >   monitors cannot be removed.  The removal sequence is:
+> > For iothread monitors, move monitor_list_append() from the setup BH to
+> > the caller so monitor_find_by_id() can detect duplicates immediately.
+> > Without this, two concurrent monitor-add calls could both pass the
+> > duplicate check before either BH runs.  This means the monitor is now
+> > visible in mon_list before its chardev handlers are set up, which was
+> > not the case before.  This is safe because the request queue is still
+> > empty (no chardev handlers means no monitor_qmp_read(), so the
+> > dispatcher finds nothing to dispatch) and event broadcast is handled
+> > below.
+> > 
+> > This requires initializing mon->commands = &qmp_cap_negotiation_commands
+> > before monitor_list_append().  Without it, commands is NULL (from
+> > g_new0) and monitor_qapi_event_emit() would not skip the monitor during
+> > event broadcast -- its check is specifically for the
+> > qmp_cap_negotiation_commands pointer, so a NULL falls through to
+> > qmp_send_response() on an uninitialized monitor.  CHR_EVENT_OPENED sets
+> > commands to the same value again later.
+> > 
+> > Add monitor_find_by_id() to look up monitors by identifier.  The lookup
+> > takes monitor_lock to serialize with the I/O thread BH that modifies
+> > mon_list, but releases it before returning.  The caller must hold the
+> > BQL to ensure the returned pointer remains valid since only BQL holders
+> > can destroy monitors.
+> > 
+> > Free the id string in monitor_data_destroy().
+> > 
+> > Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+> > ---
+> >  include/monitor/monitor.h  |  3 ++-
+> >  monitor/monitor-internal.h |  5 +++++
+> >  monitor/monitor.c          | 21 ++++++++++++++++++++-
+> >  monitor/qmp.c              | 11 ++++++++---
+> >  4 files changed, 35 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> > index 296690e1f1..7a2bb603e4 100644
+> > --- a/include/monitor/monitor.h
+> > +++ b/include/monitor/monitor.h
+> > @@ -19,7 +19,8 @@ bool monitor_cur_is_qmp(void);
+> >  
+> >  void monitor_init_globals(void);
+> >  void monitor_init_globals_core(void);
+> > -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
+> > +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
+> > +                      bool dynamic, Error **errp);
+> >  void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
+> >  int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
+> >  int monitor_init_opts(QemuOpts *opts, Error **errp);
+> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> > index feca111ae3..4896812d4e 100644
+> > --- a/monitor/monitor-internal.h
+> > +++ b/monitor/monitor-internal.h
+> > @@ -98,7 +98,10 @@ struct Monitor {
+> >      bool is_qmp;
+> >      bool skip_flush;
+> >      bool use_io_thread;
+> > +    bool dynamic;           /* true if created via monitor-add */
+> > +    bool dead;              /* awaiting drain after monitor-remove */
 > 
-> Why should we block removal of statically created monitors ? Our
-> normal approach is that the creation of objects via the command
-> line & QMP be indistinguishable.
-
-Sounds fine to me.
-
-> 
-> 
-> > diff --git a/qapi/control.json b/qapi/control.json
-> > index 9a5302193d..fd58b57c31 100644
-> > --- a/qapi/control.json
-> > +++ b/qapi/control.json
-> > @@ -211,3 +211,107 @@
-> >        '*pretty': 'bool',
-> >        'chardev': 'str'
-> >    } }
-> > +
-> > +##
-> > +# @monitor-add:
-> > +#
-> > +# Add a QMP monitor on an existing character device backend.
-> > +#
-> > +# The chardev must already exist (created via chardev-add or CLI).
-> > +# The monitor begins in capability negotiation mode -- the first
-> > +# client to connect receives the QMP greeting.
-> > +#
-> > +# @id: Monitor identifier, must be unique among monitors
-> > +#
-> > +# @chardev: Name of the character device backend to attach to
-> > +#
-> > +# @pretty: Enable pretty-printing of QMP responses (default: false)
-> > +#
-> > +# Errors:
-> > +#     - GenericError if @id is already in use
-> > +#     - GenericError if @chardev does not exist
-> > +#
-> > +# Since: 11.0
-> 
-> We're just about to release 11.0, so 11.1 is the earliest
-> opportunity to merge anything now.
-
-I mostly copy-pasted this together. I honestly had no idea what the
-current release cycle is.
-
-> 
-> > +#
-> > +# .. qmp-example::
-> > +#
-> > +#     -> { "execute": "monitor-add",
-> > +#          "arguments": { "id": "extra-qmp",
-> > +#                         "chardev": "qmp-extra" } }
-> > +#     <- { "return": {} }
-> > +##
-> > +{ 'command': 'monitor-add',
-> > +  'data': { 'id': 'str',
-> > +            'chardev': 'str',
-> > +            '*pretty': 'bool' } }
-> > +
-> > +##
-> > +# @monitor-remove:
-> > +#
-> > +# Remove a dynamically added QMP monitor.
-> > +#
-> > +# The monitor must have been created via monitor-add.  Monitors
-> > +# created via CLI options (-mon, -qmp) cannot be removed.  The
-> > +# underlying chardev is NOT removed -- use chardev-remove separately
-> > +# if desired.
-> > +#
-> > +# If a client is currently connected, the connection is dropped.
-> > +#
-> > +# @id: Monitor identifier as passed to monitor-add
-> > +#
-> > +# Errors:
-> > +#     - GenericError if @id does not exist
-> > +#     - GenericError if the monitor was not dynamically added
-> 
-> I don't think we need to include "GenericError" in the description.
-> We've abandoned the idea of error classes in general, so everything
-> is GenericError  except for a bit of historical cruft.
-
-Ok.
-
-> 
-> > +#
-> > +# Since: 11.0
-> > +#
-> > +# .. qmp-example::
-> > +#
-> > +#     -> { "execute": "monitor-remove",
-> > +#          "arguments": { "id": "extra-qmp" } }
-> > +#     <- { "return": {} }
-> > +##
-> > +{ 'command': 'monitor-remove',
-> > +  'data': { 'id': 'str' } }
-> > +
-> > +##
-> > +# @MonitorInfo:
-> > +#
-> > +# Information about a QMP/HMP monitor.
-> > +#
-> > +# @id: Monitor identifier (absent for CLI-created monitors without
-> > +#     an explicit id)
-> 
-> We can't make 'id' mandatory for the existing arg without breaking
-> compat, but IMHO we should allocate an auto-generated 'id' if the
-> user omits it.
+> Neither of these fields appear to be used for anything in this
+> patch. If they're used in a later patch, then add them at time
+> of use.
 
 Ok.
 
