@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F1E9FF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F57FF5135
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABUU-0006Tt-EB; Tue, 07 Apr 2026 14:49:34 -0400
+	id 1wABUR-0006RV-9u; Tue, 07 Apr 2026 14:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wABSa-0002am-Db
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:36 -0400
-Received: from p-east2-cluster2-host3-snip4-8.eps.apple.com ([57.103.78.111]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wABSY-0002am-Lb
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wA8BS-0002CR-UA
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:17:45 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
- 0E58F1800368; Tue, 07 Apr 2026 15:17:37 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775575060; x=1778167060;
- bh=jSFEY3OW57r5Gmf0SB6G349rIgUNCT10rXc1M/CBSww=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=YDvrqDhJItdYBpnWaRJX8asAUJ1D08uLgOYfCofMe1bcO01rcqSP28jP02ARr/VFqX1tWWnTm/zyBcnXhFlfd/bwD8razDseAst3/LRzZX2DfqJ6qBvKzjT77DcycPaUayjipJdaryA2yh0DhxLCiqsowSc62msgzbbyKKK0qW0+0LvsNSsNhqGHP7Sr6r6yhrDpadQROze60Kjep/qWMuGHbfYGLX0iuQ28Kg1lrTH95Ut6rrIicZmXvPoyCuvk4J22XjYRjup36fM9plYeBMIltQN21WbUbcQtlKD+A+5EwbMivA633g383aU84U25mvwCGycb/MahJxQPMm1e/Q==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
- 69D991803F19; Tue, 07 Apr 2026 15:17:11 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wA8Ft-0002xX-1e
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:22:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775575335;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=FuCCvziVknRRzI45BAmNEUYP6lteZAVCEOMdk+SS5XY=;
+ b=KftR8uWbXsOJSBvZTUXNY3xBHvvcUaToeGp7MI1CYP9elFI63mdoBB8CFTW7IeWp0XEn2Q
+ Sy9Fw0ktMstlaNNxZg+rGwV6Zj7jSWNkjAegRkLZhicfWwGwxR8CnjLthYDWGvo/qYMdBk
+ VbkWjCipMkwurFuJMYXHud9RcIyUMzU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-AZmjSFNDMXGx75SC0LBzDg-1; Tue,
+ 07 Apr 2026 11:22:12 -0400
+X-MC-Unique: AZmjSFNDMXGx75SC0LBzDg-1
+X-Mimecast-MFC-AGG-ID: AZmjSFNDMXGx75SC0LBzDg_1775575331
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 048A2195604F; Tue,  7 Apr 2026 15:22:11 +0000 (UTC)
+Received: from toolbx.redhat.corp (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 26251180035F; Tue,  7 Apr 2026 15:22:08 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Zhao Liu <zhao1.liu@intel.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v9 01/13] target/i386: emulate: include name of unhandled
- instruction
-Date: Tue,  7 Apr 2026 17:16:55 +0200
-Message-ID: <20260407151707.46536-2-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260407151707.46536-1-mohamed@unpredictable.fr>
-References: <20260407151707.46536-1-mohamed@unpredictable.fr>
+Cc: "wubo . bob" <wubo.bob@bytedance.com>, Kevin Wolf <kwolf@redhat.com>,
+ hongmianquan <hongmianquan@bytedance.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH for 11.0] util: fix missing aio_wait_kick sym in qemu guest
+ agent only build
+Date: Tue,  7 Apr 2026 16:22:07 +0100
+Message-ID: <20260407152207.363647-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDE0MCBTYWx0ZWRfX5KXJdYgTtdLR
- 5c8O8tpkas7/oKjyzV+7fltrLmTjqW8yL845kQONMX1JC4XCVtCvjLLa6bkb99Cz4saV3lII1Tb
- sYZNSMwrYwI6H/wfTk7SGPI0LCq3T2sIWd+/qNCeinpDC2C+xSuamTxIhXnNukZA7pcTFKcojUX
- +H1X5hipXOz3tUfqYChPdXesShh34ZLJ5ulKGI300gSAIH6rg3xGbSw49aA3dcHkYXUQUiquzm6
- jsPYCgHshW3PZzU6yYZEvIJyp/cOTInYxAUrpFyjFv8LDTLUK6m/t2WdhJ1aWAP1xnz1jLm2Gva
- YvoKR+HiwGLX83tYrH8u30Ltv41XtKgRwP+b/eQ9NznJ2ympSCAjrmNzVdtF1U=
-X-Proofpoint-ORIG-GUID: BwCkw2EohSv7u3Wz9bLyY8yiP_UYhSGG
-X-Proofpoint-GUID: BwCkw2EohSv7u3Wz9bLyY8yiP_UYhSGG
-X-Authority-Info-Out: v=2.4 cv=Z5nh3XRA c=1 sm=1 tr=0 ts=69d52013
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=x0iqa3ucmZZh0HPruXgA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1030 phishscore=0 mlxlogscore=900
- suspectscore=0 spamscore=0 adultscore=0 bulkscore=0 mlxscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2604070140
-Received-SPF: pass client-ip=57.103.78.111;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,29 +86,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of just the command number, include the instruction name to make debugging easier.
+Configure QEMU with
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+ --disable-system --disable-user --disable-tools --enable-guest-agent
+
+and the build with fail with
+
+  FAILED: [code=1] qga/qemu-ga
+  /usr/bin/ld: libqemuutil.a.p/qapi_qmp-dispatch.c.o: in function `do_qmp_dispatch_bh':
+  /var/home/berrange/src/virt/qemu/build/../qapi/qmp-dispatch.c:140:(.text+0x5c): undefined reference to `aio_wait_kick'
+
+This aio_kick() usage was recently introduced in qmp-dispatch.c
+without updating the build logic.
+
+Fixes commit fc1a2ec7da531223b3473185dc2584f8a7c6c659
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- target/i386/emulate/x86_emu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ util/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
-index 55b1a68eb6..c2da1a133f 100644
---- a/target/i386/emulate/x86_emu.c
-+++ b/target/i386/emulate/x86_emu.c
-@@ -1399,8 +1399,8 @@ static void init_cmd_handler(void)
- bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
- {
-     if (!_cmd_handler[ins->cmd].handler) {
--        printf("Unimplemented handler (" TARGET_FMT_lx ") for %d (%x %x)\n",
--                env->eip,
-+        printf("Unimplemented handler (" TARGET_FMT_lx ") for %s - %d (%x %x)\n",
-+                env->eip, decode_cmd_to_string(ins->cmd),
-                 ins->cmd, ins->opcode[0],
-                 ins->opcode_len > 1 ? ins->opcode[1] : 0);
-         env->eip += ins->len;
+diff --git a/util/meson.build b/util/meson.build
+index 33132c04ad..b2166ac1d5 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -79,6 +79,7 @@ endif
+ 
+ if have_block or have_ga
+   util_ss.add(files('aiocb.c', 'async.c'))
++  util_ss.add(files('aio-wait.c'))
+   util_ss.add(files('base64.c'))
+   util_ss.add(files('main-loop.c'))
+   util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-coroutine-io.c'))
+@@ -87,7 +88,6 @@ if have_block or have_ga
+   util_ss.add(files('qemu-sockets.c'))
+ endif
+ if have_block
+-  util_ss.add(files('aio-wait.c'))
+   util_ss.add(files('buffer.c'))
+   util_ss.add(files('bufferiszero.c'))
+   util_ss.add(files('hbitmap.c'))
 -- 
-2.50.1 (Apple Git-155)
+2.53.0
 
 
