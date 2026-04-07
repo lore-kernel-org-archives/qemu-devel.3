@@ -4,110 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0343FF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD164FF5135
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABVv-0007Wz-Ej; Tue, 07 Apr 2026 14:51:03 -0400
+	id 1wABXF-000070-TX; Tue, 07 Apr 2026 14:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wABTl-0004Gt-8v
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wABTw-0002LR-Jt
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wA3rq-0005Oc-Ij
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 06:41:14 -0400
+ id 1wA1CM-0001J8-D9
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 03:50:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775558466;
+ s=mimecast20190719; t=1775548209;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v+eezsYA2JqlbT8f/6WoNRXz1UDCXKGIYdbPcDx165w=;
- b=HzC6GeNCQftaXBoe39to3Ko7RjQRMYFFEZXSasNKsoSJFTJx94qoBihzwEwWLufX/bP1BD
- 5bcCj8WyE7pscKnBU8NdYkOe0QfevZ8qM7H5yxkSz//JhOQVJdQeB+x/i/FuC2vVgrJ7Lm
- AZ4+gQST+n8qj0xo257SD0SIvlS99Do=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZvobOrqEAkaiqENsEomLroTZGJRyqRO8/LE7QH9QcTM=;
+ b=aKETjzmeUXVFTFoexmG9o88B2/GD5MzFzCsiJfxRGBhVzIrXsjHf3T6Ged0HtFgA4MbKkh
+ +WzC7wL6enTcQ9SAbWpYf3TJw5QvbNgYa16GGbeuCAaKBj9buM5a1m/jei0dlUuw8aOno1
+ xrEqhJFgah5lNOybfdx5rr3MkuqhsjA=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-PaWPqLiaNMmcceij-KAaLA-1; Tue, 07 Apr 2026 06:41:04 -0400
-X-MC-Unique: PaWPqLiaNMmcceij-KAaLA-1
-X-Mimecast-MFC-AGG-ID: PaWPqLiaNMmcceij-KAaLA_1775558463
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-35842aa350fso11416110a91.0
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 03:41:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775558463; cv=none;
+ us-mta-581-6i4XUjr-NCK6TDY4md18Ig-1; Tue, 07 Apr 2026 03:50:07 -0400
+X-MC-Unique: 6i4XUjr-NCK6TDY4md18Ig-1
+X-Mimecast-MFC-AGG-ID: 6i4XUjr-NCK6TDY4md18Ig_1775548207
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c741b950511so2559060a12.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 00:50:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775548206; cv=none;
  d=google.com; s=arc-20240605;
- b=gWCiKrLEjput0SQpB0+EAAnjsftmzVqL4JVcQLVR5Ova8l7FAII/cseQFiqpxsbwZP
- 2ONjhkNWz93niQmHuouA+9r1ho/E0wpOYZeHhaPXTou5fynbCJgpS+XpCTg7hKvm6lYH
- Gi2Va5kzxEw9PQo4Twiy+1utygRuMT0I1h9xNCGdUr2a7TcJI5Ua3lvT6CAriKGE2+tL
- MB3y7+CWkIm+CQAJiUGPG5jX9it8j/ROG+hSCUT/hHcN8mKIJS3YOjw2CpD33IFN7FME
- GYUuUNVssbv4QTP0L/ZBMGo2uDnBBCrGkj4M1Vl5AL4i23W6Brc9tNPcc34yDbL/tr/P
- Vy7Q==
+ b=hqmdTCqztbwdF1CzJjU9uFasJKyaHKYKOXiRunNL3nu4Fyd29PpvPNcnGHx1wYlpI7
+ pGtzd2MNjL0yRLAhZK2MQnBkeiV1fPpXjz8HQJppKEmN7eeQMfnDPq4BVo14HOYn0h8O
+ yWgXxCTxzYHc4R6clHgMaiWCu6YuGCtfoKIRXfTEipTrTNECX3TqZB6tee2F6FTYDXkJ
+ u6a5Un/NnXwnqHUasPlvqxCA2Ga2mkcdFUvm3LgnWnqzUaLqAcSsNvZxgHp9MX6bLH/e
+ L3YlqW1yXQL2GCAXLy2HbZEC4Q2BrGjaCp+UbgiqTkkyqZQf6z5H7Qq/aqL0aP2oxzXL
+ MiYA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=v+eezsYA2JqlbT8f/6WoNRXz1UDCXKGIYdbPcDx165w=;
- fh=DjCsBAlzHiQ7urn9emqwzALbJ1ZadaQmzpiSJrrLJFk=;
- b=F+4sexAovCKpR30lMH/mBBrjKL3GU6faLlDEV4wS5Kkb1oUMAKY1EaRGzKLvPyt39z
- phko5ls76hdLe62CQEYI0Pvr8SGIwKNKQI8H23++UaIB3Lw/bcAjsB/ng/ac8tDZs1+U
- hX2AyjCWNSnS+kdRzq94JMdH7Adktxxrdhiyun23aJXHCVHyT0y57qh2S/7HQ2DDaQu/
- h88YBeE/kAJwE85pivoUYrf22laEHzJIGl0lenhVfPMle9HtSr5g9kbA/MgY13j4bZCt
- XHxIZ64AWa9u4AwUM3uzxbZMKyxFtQ3gxAqtsa9K6/jCByfhuaM9KOeX+CJ6JuDVgWNA
- 2LMA==; darn=nongnu.org
+ bh=ZvobOrqEAkaiqENsEomLroTZGJRyqRO8/LE7QH9QcTM=;
+ fh=I3Rojz7Rj7F7zAuh27Zv7NEdlY6RHgtmEIjZ7Qkr/EI=;
+ b=dG45oXpi5t5kMos/4NbAuxhQS+GejfQFjIY1N1kwvKyH7OxG5w3mKWuj8PMCqx+dVl
+ IlDqFTi9/lx5T7YjfxgcnOgIrTK1IAzb0rUZFdcmkS0YV+uXm6k0GcT95U3v4WlZWuoq
+ cShJbp8fnZV5SLYph1YJpzmFKLYGVmwM/2cLr34P4YsPfgT+pLFWvtvZcNfUjWsEYIcO
+ eq3e2AcigYXTwfF0gQm+o8hTyA0zTIk40LFnGnVHbp7ClPbqiTdkxqqZAkFonAffAc/v
+ x1aZn17hGAUMdjRfSx/1a7r15ppw9DtPkTbMasgOzpFQP7ZT63b/whLbqjrY9Ik99f3x
+ Uz1Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775558463; x=1776163263; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775548206; x=1776153006; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v+eezsYA2JqlbT8f/6WoNRXz1UDCXKGIYdbPcDx165w=;
- b=InFhSyVMP5Pi/LcsEQG6jpjRdCviV7cVCDA6aXb0GxiIAsxCPM34XGboHPQ6w0YJIz
- BU2Rj9ZiTNivl500ZIx2qNXpYlfgXde6o6NoD3ibX0WzX77RP1BxbWBPqhW+kktafuXT
- 2DN7IBNV+wTTbvw+9dryDd4Q/8hP8dp811zEBtiyl9TpMEK6ulHf/AZgxOc4FxP38pHk
- unbam1tJwIi0jwOb4FHYhaUnXok3dYxnC7ivznJi8r9Fs3NlcMouD2ne10dQGtMkZuyd
- KK7kV8yYWoRf1YH/4TPZpAJMABjQ5/Slyn6eAlEcR9iBDrrGkjhmkxowqErFyJXxA7S5
- VEXA==
+ bh=ZvobOrqEAkaiqENsEomLroTZGJRyqRO8/LE7QH9QcTM=;
+ b=WuZExjdtJAjG1sy+p9yH5/b/ZiqP8aUwmA28CfrDeeaNaurQ+YYJvVx8mL8XfLQQWN
+ LyaaorQadv1DeWu64+pMfQW8n5y93JsLHDGhyosubdbk+Olh/5NOV9mxYL7BbZGlgiPi
+ K96BdJd2m1022SL4rwcTb6ys9et7ImzRAO7ohNqnsr1Xt7vcymhqwKWdPInFKDx2ZfEM
+ +mUuQKhpriFpKgL/t7Q3ptO8AJtocLO5l/f8GnfDW/JJTNWExqweXU2dm6ts9OZppiQh
+ rx7jpg0oZ/fkJEpuLCmrO+BW8cXSfEK32tVQPL/UcEGvE+EA/8p75La84jmccrLSlNJy
+ tb5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775558463; x=1776163263;
+ d=1e100.net; s=20251104; t=1775548206; x=1776153006;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=v+eezsYA2JqlbT8f/6WoNRXz1UDCXKGIYdbPcDx165w=;
- b=H7uZA64p24VmJIt9mne8NTflVJGU+L0DwR4Q/tNLedJTzyXU5g6Mib3EPj/s43Ts35
- nMlmGztMmakuHFzjz/S43Ro6tujjuFxa5RMi4XX4foNbApHdkKPH//JIP9idc3NmpKkG
- R/E6+MSSeTYCWIe7TKxBEt1XDKgor3CX81O4u9u1xYmFKX4oL9QXYPMBBeG+Dr6UCJju
- xfcQ/y86O4rRUE1zQrx4OB3wUkAakkI4yyYX+subsM4r50b5t9ClAMYRGPDqi5x8zTWk
- 0uwzXRSHCq32vz9WwwSwHP3gdKy1+iVONWs2VzLx7k2wdEe+JXhwG41EUsq6It/ZdXtk
- iyJQ==
-X-Gm-Message-State: AOJu0YznGklY1EyPpcsqLMvecf6l14AuqcvAE6W6ySHQ9m+3OcFA4PVz
- KUlZ0tcYIm3fXZqW+20muRkuAsZqj+yTNPLLsUNNYtAi8ka8vNvNyOoNbsWmnqDLNbvGrKNZUcT
- KoM6Yttkkg4kH9HAi9ytqOl9un38HfJ5kjfasX0ac+kXXq/oh9SCAob7OCXs+BiaC0ArGgu2up6
- kju0NNUDx2ahmbYHsxabRIEU88yfKWgLk=
-X-Gm-Gg: AeBDieuRPYR19C87VrkDAZUt+SuIXSSd8HXQ3dXGK6xxYGL9kvVqvXtTeTiVksZK5Ed
- 5unPIwK2qgH1tBhtdxNPC6KmBc8r0tfnjQp+qTP9EOlrzCEYs491j4ASiLtEHZV6BaU9dGbAORV
- MKzmsO7Y7FEnGfujOi4B4Lw7zm9t/Zqq9b8AQCfTxHh6ygMLbtXLN+mXC5tT+6MFJXi5/Xpb5pg
- cmVtWYkZGwGMM5axwPLelymGH/0c4/yF5dXL2b+anOzX0vLJ34IxPTz/lDrqeL7vygRMA8io8p9
- QITWoc3ZXvFOA/W0ryy2LvQ=
-X-Received: by 2002:a17:90b:35c8:b0:35b:ea35:c3ce with SMTP id
- 98e67ed59e1d1-35de6952e00mr15916185a91.27.1775558463173; 
- Tue, 07 Apr 2026 03:41:03 -0700 (PDT)
-X-Received: by 2002:a17:90b:35c8:b0:35b:ea35:c3ce with SMTP id
- 98e67ed59e1d1-35de6952e00mr15916144a91.27.1775558462659; Tue, 07 Apr 2026
- 03:41:02 -0700 (PDT)
+ bh=ZvobOrqEAkaiqENsEomLroTZGJRyqRO8/LE7QH9QcTM=;
+ b=BfchatWQaZu5e0ZD63ug7DThcwgZl7KLWEtbcYdkjP6JZ58Jj+RCMCjkPhqSVWwtSG
+ mrLThhI+q4aLPuSlpJ5b6YuEtPSPPhSAVQQjfRotsAKGWUHa9tRksNfWcnKA1wuR5wew
+ hHUEnDo169uoIunX56/b253C+MgkDJ/hwmafo73FDcFlvb0nrsUwlpjw7ejCauZgIJlK
+ K3N5P5GPd2xkrmYOO0DTmmvAChgDd0QxGqoy8IP8ag4PIXSBFQXzkRPTBra+A81YQHl3
+ TjwgSAZsrLQCmlKIWupSpX42H6QIjHsDEwQqCJZjzVl4pMlG2vc2w2R3j+RCDrYGyI+y
+ xSCA==
+X-Gm-Message-State: AOJu0Ywt80VnDzNutnnKAuFFyRNyf2UsS33ZhK1ndniSePaF9laa/v9N
+ sAFLNeOTw6C58Z+rZybB1SbpNjuk5Xt5i+f3EFReJj0hA0jCRWvlDm/7bni8qfczwRNYBiHQkBY
+ xBAxi87dqe8ln/p+H5E0I8aBFwI8zPq+LVQ8UOiacCGg3hmpoOWnDGx7CYrdYSNpTkAHHKVXDuu
+ d+W4bmWOWNy97YQVWkrkzhxTIAJUeOWoc=
+X-Gm-Gg: AeBDies/EiXZe/mN1vU1nIxlxFZM13fj3UOqlWNHYKRVe9yPF4r/gmd6J4XDNMAEVK1
+ 0niZ2i54kSUgVT6shRLkgAR4PNHqKwzpbkO+rRN+FkmRFpUMTO8LgIlkPitNYRQKiwXpHTjITHN
+ OUYCSLPRDMor6YE7oowZKTedNc2YNJ4rJRK8sU9ApGQ2V2mBJBv3E4SLtS1NknLfQcRpiDcdvV2
+ Mvb+lnsW/PNfCCAs0V0JgFr5BKOOFfWIgQzvTu/+aPUO0QuDsooaMkltdpkjzI8xN4u6XXb+vqj
+ akYQKswZ4Pti23+m7c7ihVU=
+X-Received: by 2002:a05:6a20:a11a:b0:398:c170:1c7 with SMTP id
+ adf61e73a8af0-39f2f12b4f9mr16041170637.26.1775548206523; 
+ Tue, 07 Apr 2026 00:50:06 -0700 (PDT)
+X-Received: by 2002:a05:6a20:a11a:b0:398:c170:1c7 with SMTP id
+ adf61e73a8af0-39f2f12b4f9mr16041148637.26.1775548206065; Tue, 07 Apr 2026
+ 00:50:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260406141735.25844-1-armenon@redhat.com>
- <20260406141735.25844-6-armenon@redhat.com>
-In-Reply-To: <20260406141735.25844-6-armenon@redhat.com>
+ <20260406141735.25844-2-armenon@redhat.com>
+In-Reply-To: <20260406141735.25844-2-armenon@redhat.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 7 Apr 2026 14:40:51 +0400
-X-Gm-Features: AQROBzBPX_O0jjmnYFNNMK9DzWdntFwFTuSnY9I8SBpAsB7AKE1ixjLldGLnnqI
-Message-ID: <CAMxuvaxU=1nds7QAysem_j0jSOM8DK-E0Y74xCs3kS35Se_JKQ@mail.gmail.com>
-Subject: Re: [PATCH v3 05/10] test/qtest: Add test for tpm crb chunking
+Date: Tue, 7 Apr 2026 11:49:54 +0400
+X-Gm-Features: AQROBzDtwowtje3Ysgx5ZrasJVXquCi1HvuR-yY3xK0f6JBPSt7--7MiuVf7900
+Message-ID: <CAMxuvazscrXMNc+VV_jpTLY1aRjCKAbmBoZ-LCcsZ-4iazBfvg@mail.gmail.com>
+Subject: Re: [PATCH v3 01/10] hw/tpm: Add TPM CRB chunking fields
 To: Arun Menon <armenon@redhat.com>
 Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
  Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
@@ -116,17 +116,18 @@ Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
  Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Stefan Berger <stefanb@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -151,240 +152,79 @@ e:
 >
 > From: Arun Menon <armenon@redhat.com>
 >
-> - New test case added to the swtpm test. Data is written and read from
->   the buffer in chunks.
-> - The chunk size is dynamically calculated by reading the
->   CRB_CTRL_CMD_SIZE address. This can be changed manually to test.
-> - Add a helper function tpm_wait_till_bit_clear()
+> - Add new fields to the CRB Interface Identifier and the CRB
+>   Control Start registers.
+> - CRB_CTRL_START now has 2 new settings, that can be toggled using the
+>   nextChunk and crbRspRetry bits.
+> - CapCRBChunk bit (10) was Reserved1 previously. The field is reused in
+>   this revision of the specification.
+> - Refer to section 6.4.2.2 of [1]
+>
+> [1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specif=
+ic-Platform-TPM-Profile-for-TPM-2p0-v1p07_rc1_121225.pdf
+
+You may update the link to the released version
+https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Pla=
+tform-TPM-Profile-for-TPM-2p0-v1p07_Pub.pdf
+
 >
 > Signed-off-by: Arun Menon <armenon@redhat.com>
-
-This alone doesn't yet test the chunked write/read, as the transfers
-aren't larger. The following patch "tests: Use ML-DSA-87 operations to
-caused large TPM transfers with CRB" will. It may be worth to say in
-the commit message
-
-with other minor style nitpicks below
+> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 > ---
->  tests/qtest/tpm-crb-swtpm-test.c |  10 +++
->  tests/qtest/tpm-util.c           | 108 ++++++++++++++++++++++++++-----
->  tests/qtest/tpm-util.h           |   5 ++
->  3 files changed, 108 insertions(+), 15 deletions(-)
+>  hw/tpm/tpm_crb.c      | 3 +++
+>  include/hw/acpi/tpm.h | 5 ++++-
+>  2 files changed, 7 insertions(+), 1 deletion(-)
 >
-> diff --git a/tests/qtest/tpm-crb-swtpm-test.c b/tests/qtest/tpm-crb-swtpm=
--test.c
-> index ffeb1c396b..050c7b0c1f 100644
-> --- a/tests/qtest/tpm-crb-swtpm-test.c
-> +++ b/tests/qtest/tpm-crb-swtpm-test.c
-> @@ -33,6 +33,14 @@ static void tpm_crb_swtpm_test(const void *data)
->                          "tpm-crb", NULL);
->  }
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index 8723536f93..0a1c7ecdc6 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -59,6 +59,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
+>  #define CRB_INTF_CAP_FIFO_NOT_SUPPORTED 0b0
+>  #define CRB_INTF_CAP_CRB_SUPPORTED 0b1
+>  #define CRB_INTF_IF_SELECTOR_CRB 0b1
+> +#define CRB_INTF_CAP_CRB_CHUNK 0b1
 >
-> +static void tpm_crb_chunk_swtpm_test(const void *data)
-> +{
-> +    const TestState *ts =3D data;
-> +
-> +    tpm_test_swtpm_test(ts->src_tpm_path, tpm_util_crb_chunk_transfer,
-> +                        "tpm-crb", NULL);
-> +}
-> +
->  static void tpm_crb_swtpm_migration_test(const void *data)
->  {
->      const TestState *ts =3D data;
-> @@ -54,6 +62,8 @@ int main(int argc, char **argv)
->      g_test_init(&argc, &argv, NULL);
+>  #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
 >
->      qtest_add_data_func("/tpm/crb-swtpm/test", &ts, tpm_crb_swtpm_test);
-> +    qtest_add_data_func("/tpm/crb-chunk-swtpm/test", &ts,
-> +                        tpm_crb_chunk_swtpm_test);
->      qtest_add_data_func("/tpm/crb-swtpm-migration/test", &ts,
->                          tpm_crb_swtpm_migration_test);
->      ret =3D g_test_run();
-> diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-> index 2cb2dd4796..603c5a825d 100644
-> --- a/tests/qtest/tpm-util.c
-> +++ b/tests/qtest/tpm-util.c
-> @@ -14,16 +14,44 @@
->
->  #include "qemu/osdep.h"
->  #include <glib/gstdio.h>
-> +#include "qemu/bswap.h"
->
->  #include "hw/acpi/tpm.h"
->  #include "libqtest.h"
->  #include "tpm-util.h"
->  #include "qobject/qdict.h"
->
-> +#define CRB_ADDR_START (TPM_CRB_ADDR_BASE + A_CRB_CTRL_START)
-> +#define CRB_ADDR_CTRL_STS (TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS)
-> +#define CRB_ADDR_CTRL_CMD_SIZE \
-> +    (TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_SIZE)
-> +
-> +#define CRB_START_INVOKE  (1 << 0)
-> +#define CRB_START_RSP_RETRY (1 << 1)
-> +#define CRB_START_NEXT_CHUNK (1 << 2)
-> +
-> +void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask=
-)
-> +{
-> +    uint32_t sts;
-> +    uint64_t end_time =3D g_get_monotonic_time() + 5 * G_TIME_SPAN_SECON=
-D;
-> +
-> +    while (true) {
-> +        sts =3D qtest_readl(s, addr);
-> +        if ((sts & mask) =3D=3D 0) {
-> +            break;
-> +        }
-> +        if (g_get_monotonic_time() >=3D end_time) {
-> +            g_assert_cmphex(sts & mask, =3D=3D, 0);
-> +            break;
-> +        }
-> +    }
-> +}
-> +
->  void tpm_util_crb_transfer(QTestState *s,
->                             const unsigned char *req, size_t req_size,
->                             unsigned char *rsp, size_t rsp_size)
->  {
-> +    uint32_t tpm_sts;
->      uint64_t caddr =3D qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD=
-_LADDR);
->      uint64_t raddr =3D qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP=
-_ADDR);
->
-> @@ -31,24 +59,74 @@ void tpm_util_crb_transfer(QTestState *s,
->
->      qtest_memwrite(s, caddr, req, req_size);
->
-> -    uint32_t sts, start =3D 1;
-> -    uint64_t end_time =3D g_get_monotonic_time() + 5 * G_TIME_SPAN_SECON=
-D;
-> -    qtest_writel(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START, start);
-> -    while (true) {
-> -        start =3D qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
-> -        if ((start & 1) =3D=3D 0) {
-> -            break;
-> +    qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
-> +    tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE);
-> +
-> +    tpm_sts =3D qtest_readl(s, CRB_ADDR_CTRL_STS);
-> +    g_assert_cmpint(tpm_sts & 1, =3D=3D, 0);
-> +
-> +    qtest_memread(s, raddr, rsp, rsp_size);
-> +}
-> +
-> +void tpm_util_crb_chunk_transfer(QTestState *s,
-> +                                 const unsigned char *req, size_t req_si=
-ze,
-> +                                 unsigned char *rsp, size_t rsp_size)
-> +{
-> +    uint32_t tpm_sts;
-> +
-> +    uint64_t caddr =3D qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD=
-_LADDR);
-> +    uint64_t raddr =3D qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP=
-_ADDR);
-> +    uint32_t crb_ctrl_cmd_size =3D qtest_readl(s, CRB_ADDR_CTRL_CMD_SIZE=
-);
-> +
-> +    size_t chunk_size =3D crb_ctrl_cmd_size;
-> +
-> +    qtest_writeb(s, TPM_CRB_ADDR_BASE + A_CRB_LOC_CTRL, 1);
-> +
-> +    for (size_t i =3D 0 ; i < req_size; i +=3D chunk_size) {
+> @@ -262,6 +263,8 @@ static void tpm_crb_reset(void *dev)
+>                       CapCRB, CRB_INTF_CAP_CRB_SUPPORTED);
+>      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+>                       InterfaceSelector, CRB_INTF_IF_SELECTOR_CRB);
+> +    ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+> +                     CapCRBChunk, CRB_INTF_CAP_CRB_CHUNK);
+>      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+>                       RID, 0b0000);
+>      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID2,
+> diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
+> index d2bf6637c5..03d452d2b5 100644
+> --- a/include/hw/acpi/tpm.h
+> +++ b/include/hw/acpi/tpm.h
+> @@ -149,7 +149,7 @@ REG32(CRB_INTF_ID, 0x30)
+>    FIELD(CRB_INTF_ID, InterfaceVersion, 4, 4)
+>    FIELD(CRB_INTF_ID, CapLocality, 8, 1)
+>    FIELD(CRB_INTF_ID, CapCRBIdleBypass, 9, 1)
+> -  FIELD(CRB_INTF_ID, Reserved1, 10, 1)
+> +  FIELD(CRB_INTF_ID, CapCRBChunk, 10, 1)
+>    FIELD(CRB_INTF_ID, CapDataXferSizeSupport, 11, 2)
+>    FIELD(CRB_INTF_ID, CapFIFO, 13, 1)
+>    FIELD(CRB_INTF_ID, CapCRB, 14, 1)
+> @@ -168,6 +168,9 @@ REG32(CRB_CTRL_STS, 0x44)
+>    FIELD(CRB_CTRL_STS, tpmIdle, 1, 1)
+>  REG32(CRB_CTRL_CANCEL, 0x48)
+>  REG32(CRB_CTRL_START, 0x4C)
+> +  FIELD(CRB_CTRL_START, invoke, 0, 1)
 
-extra space before ;
+Any reason to diverge from the spec "Start" naming here?
 
-> +        bool last_chunk =3D false;
-> +        size_t current_chunk_size =3D chunk_size;
-> +
-> +        if (i + chunk_size > req_size) {
-> +            last_chunk =3D true;
-> +            current_chunk_size =3D req_size - i;
->          }
-> -        if (g_get_monotonic_time() >=3D end_time) {
-> -            break;
-> +
-> +        qtest_memwrite(s, caddr, req + i, current_chunk_size);
-> +
-> +        if (last_chunk) {
-> +            qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
-> +            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE)=
-;
-> +        } else {
-> +            qtest_writel(s, CRB_ADDR_START , CRB_START_NEXT_CHUNK);
-
-extra space after START
-
-> +            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CH=
-UNK);
->          }
-> -    };
-> -    start =3D qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
-> -    g_assert_cmpint(start & 1, =3D=3D, 0);
-> -    sts =3D qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS);
-> -    g_assert_cmpint(sts & 1, =3D=3D, 0);
-> +    }
-> +    tpm_sts =3D qtest_readl(s, CRB_ADDR_CTRL_STS);
-> +    g_assert_cmpint(tpm_sts & 1, =3D=3D, 0);
->
-> -    qtest_memread(s, raddr, rsp, rsp_size);
-> +    /*
-> +     * Read response in chunks
-> +     */
-> +
-> +    unsigned char header[10];
-> +    qtest_memread(s, raddr, header, sizeof(header));
-> +
-> +    uint32_t actual_response_size =3D ldl_be_p(&header[2]);
-
-avoid mixing code & declaration per qemu coding style.
-
-> +
-> +    if (actual_response_size > rsp_size) {
-> +        actual_response_size =3D rsp_size;
-> +    }
-> +
-> +    for (size_t i =3D 0; i < actual_response_size; i +=3D chunk_size) {
-> +        size_t to_read =3D i + chunk_size > actual_response_size
-> +                       ? actual_response_size - i
-> +                       : chunk_size;
-> +        if (i > 0) {
-> +            qtest_writel(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-> +            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CH=
-UNK);
-> +        }
-> +        qtest_memread(s, raddr, rsp + i, to_read);
-> +    }
->  }
->
->  void tpm_util_startup(QTestState *s, tx_func *tx)
-> diff --git a/tests/qtest/tpm-util.h b/tests/qtest/tpm-util.h
-> index 0cb28dd6e5..681544e7d8 100644
-> --- a/tests/qtest/tpm-util.h
-> +++ b/tests/qtest/tpm-util.h
-> @@ -24,10 +24,15 @@ typedef void (tx_func)(QTestState *s,
->                         const unsigned char *req, size_t req_size,
->                         unsigned char *rsp, size_t rsp_size);
->
-> +void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask=
-);
->  void tpm_util_crb_transfer(QTestState *s,
->                             const unsigned char *req, size_t req_size,
->                             unsigned char *rsp, size_t rsp_size);
->
-> +void tpm_util_crb_chunk_transfer(QTestState *s,
-> +                                 const unsigned char *req, size_t req_si=
-ze,
-> +                                 unsigned char *rsp, size_t rsp_size);
-> +
->  void tpm_util_startup(QTestState *s, tx_func *tx);
->  void tpm_util_pcrextend(QTestState *s, tx_func *tx);
->  void tpm_util_pcrread(QTestState *s, tx_func *tx,
+> +  FIELD(CRB_CTRL_START, crbRspRetry, 1, 1)
+> +  FIELD(CRB_CTRL_START, nextChunk, 2, 1)
+>  REG32(CRB_INT_ENABLED, 0x50)
+>  REG32(CRB_INT_STS, 0x54)
+>  REG32(CRB_CTRL_CMD_SIZE, 0x58)
 > --
 > 2.53.0
 >
