@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE01FFF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D815FFF5138
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABXf-0000Kb-9P; Tue, 07 Apr 2026 14:52:51 -0400
+	id 1wABWg-0008C5-SV; Tue, 07 Apr 2026 14:51:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wABUK-000521-Eo
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:24 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w9yDJ-0007HW-Al
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 00:38:58 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-82735a41920so1564481b3a.2
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 21:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775536736; x=1776141536; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wsSyzB+nHn6U7XjN+sfZadyH0yW29u1E/XNnjLJPkzk=;
- b=j1r1947wqgKNT2m3e+LEOVpbWU1J7kCAPPQHmTPEMX7pks9AZuZayudot7y0c+GE0j
- W1wohoiq/ahdAZqRCo7TrdfEtb7PLCa6pkxXtmykDoKZCCGJeCLpbtsv5X4rwkt0gd7U
- G1iv4eY+GnJw6u5QpWmUrWEsYfA2sPOCTIol+pGQzW197aZL6CpByM2B5nInd1XomOUl
- xPW/fo4czr3NZ3IAqus58lmlWRecRgwo9/U0BDq3kSbed4maMiN9aOybD6e0cCuvoYZG
- BBsm9xFeNblIBgFqXCxIagmUfPt44ZVEIlCs3Eh690KmxYtFfFhJPvcbKWU0Hy8jlfLj
- ekww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775536736; x=1776141536;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wsSyzB+nHn6U7XjN+sfZadyH0yW29u1E/XNnjLJPkzk=;
- b=eB/YwoC/GYv9kVIcYX2JotyWewJVjrwCVFoAgYL9c1H8iDST8dlKvoxSOiyU0cKui/
- 4gcll9cayQ/mVnk9Sr6mPWAXxxI/1rSO9v58XrahOwpN6bxb50vQt/PDTWlkxbrllEpt
- JEtgNoAGgbFQp25h09/0Lhqi9qI7Kx65mZc5tE/rk7uws96W61ows9knkHMOoN5onnpH
- EitqcGabQctuFdy2vdMgEihV1v6zTPhdJ0Zy8VV6RvK/fADRGQbW0DS6NGHQpTINEfjZ
- LOhJnQ3fKcnzmX2Sj7KGqKQiTlwYavERPoFRT5eoujw4Leou1hKOsnaj7fCy8nWJiNqS
- ay3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpwSzutzGbXPoFkO3cdYSfzB0Ov3dfmWQOSAWdy6Gh4n5avODyV5MEqwmWhWxCdbExnVZBQ9yQ8Vfr@nongnu.org
-X-Gm-Message-State: AOJu0YxK6ujAhrxA32dpTBMsvTEantS+GglAf9m42cD8EWGc14YNrdDJ
- ywq1ftjnUJ0ZygL1gY3wkdGcXrNOO5nVlLN2rg2TlcSg/O9p339QIl9k
-X-Gm-Gg: AeBDievXqgv4ghyM2tvAvkko2LRC0/vNu+HMnQCfjJDm8jFAIucfRTT0LgzkAdan2Rl
- MBcW6CII4UKh81ujqia06H6K5vgIvxKaCTR4dJsllkRRB4yHYCWzSDussH+eAVtoXelTEmS4aXC
- Kc0oMxQ9HTGRUtee0HvsB4Jvy5UH5avhzXAcSWIPkmEuktrNXCw/x2y3M13wm/Dm10pvLsf6gvf
- 4Iaxc1Pl/Bw4+vzv4FIkM1TnnJ3jIOeEq8r3mEDaJ/WZP4HZit/F9tBS4C/0jlehoL2LD+RDSre
- mRzPGkfoHq3AkHd94zt+RrOfZqafU++5eUtDPSHENQJ0reaELVeKlPMG6hbayOFeNTH+MlltF5n
- O0DnIb7+lZ1sZxoHTCJ4YKPoULAuu6MVemDf9LY+ythJpUioNET1PoQ9f0jVOdYgBPciio0UEt/
- 8YDQWckDDDlQ0Z+ry5xkWOfwsGRFpF5SRyTggczVke
-X-Received: by 2002:a05:6a20:3d90:b0:39e:f994:f685 with SMTP id
- adf61e73a8af0-39f2ee00861mr15120747637.6.1775536735852; 
- Mon, 06 Apr 2026 21:38:55 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c6491fedsm15809963a12.8.2026.04.06.21.38.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Apr 2026 21:38:54 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 2/5] linux-user/strace: Add a wrapper for read and write
-Date: Tue,  7 Apr 2026 14:36:11 +1000
-Message-ID: <20260407043614.372871-3-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260407043614.372871-1-alistair.francis@wdc.com>
-References: <20260407043614.372871-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wABT6-0002eY-8o
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:15 -0400
+Received: from qs-2004e-snip4-5.eps.apple.com ([57.103.84.48]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wA7GC-0005Ae-Dd
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 10:18:33 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPS id
+ C2AE41800188; Tue, 07 Apr 2026 14:18:28 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1775571511; x=1778163511;
+ bh=zcmYD8sBYnUVL4imQw8BkyvhG03VGFAjf3wzcMF8rtM=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=CN57hilbY1GJPkzfag4TT6/NuPL27CUhHWsSCAzmD3asj7YndgdZK3/lrCMpxA8iGx5ejO5RQ9SkQKnu6JD7dLCx4UxfVA1goK/4ByQfQ/McFmM8PJ4nyOMtfZG9S+PPXk691dl7AWVO/YTUd0pn+vwsOoRNf/H3RWHpDyJ6ICoEauH1MEMTDlHoeUkIDiaAlJu7Zw7nhNqgi7GoVUAkXmu4o07ifpLmZSTw0HxqF176Ber3qnhvcpO6hGfSRFGLm0KUo8G64TUwwsQO3AtrrL9en1XZnOMK49IXGEQZvib9N8cw3nYF6abgU49gE9ejHlrYg08eWWrJyZBAbJPElg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPSA id
+ BBEA918000A2; Tue, 07 Apr 2026 14:18:26 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>
+Subject: [PATCH v8 12/13] whpx: i386: disable enlightenments and LAPIC for
+ isapc
+Date: Tue,  7 Apr 2026 16:18:08 +0200
+Message-ID: <20260407141809.16862-13-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260407141809.16862-1-mohamed@unpredictable.fr>
+References: <20260407141809.16862-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Authority-Info-Out: v=2.4 cv=F55at6hN c=1 sm=1 tr=0 ts=69d51236
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=kaNVauZA35-AGszze7oA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDEzMSBTYWx0ZWRfX+vyQVNrQ3fPe
+ AnZfqq+5XhHGqhMDX6N2ytkSDo3f0NaM3nJGgeOZjW7Ay6XqFegINgbh9YeJ5zkW6DHWYgwlfNS
+ oyhwAp+HC7RIBR5dd+9QkxVQp5/un/u7Dmeo1t0/ng//xP3jxQruPlJ4Kr8WEm4A6FVmFrmY9f6
+ O0CLoCKa98vrs0XKvjqffbtxmLQQErLJXisASFXyrsZxn7Wbk9gQT8M8u6TKjBnQf20sf02PiON
+ D2vNP58haNFmeSZtEkTJTPUGuouIxd+0CA1liMJeLF9BUPdwjnK1HYHCdhe2FtPOHPPfnpPjDS9
+ vDKpuSq33ziiJ00OELNr6c9Lc4FPTavFYrsw2Qy+nwsY4oy19kPh+C9zuKdYcY=
+X-Proofpoint-GUID: V5fibUAqVqortwuEGVvmGpmf9QU3LAIi
+X-Proofpoint-ORIG-GUID: V5fibUAqVqortwuEGVvmGpmf9QU3LAIi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ mlxlogscore=815 malwarescore=0 bulkscore=0 phishscore=0 adultscore=0
+ spamscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604070131
+Received-SPF: pass client-ip=57.103.84.48;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,67 +94,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+The isapc machine doesn't have an APIC. And Hyper-V enlightenments
+don't sound too useful to have there so disable those.
 
-The stack pointer is being truncated as 32-bits for qemu-riscv64, so
-let's add a print_read_write helper that ensures all of the bits are
-printed.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- linux-user/strace.c    | 14 ++++++++++++++
- linux-user/strace.list |  4 ++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ target/i386/whpx/whpx-all.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 2cbaf94c89..023173857b 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4309,6 +4309,20 @@ print_tgkill(CPUArchState *cpu_env, const struct syscallname *name,
- }
- #endif
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 61aec98e66..7a31dc6427 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2470,6 +2470,14 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
+     }
  
-+#if defined(TARGET_NR_read) || defined(TARGET_NR_write)
-+static void
-+print_read_write(CPUArchState *cpu_env, const struct syscallname *name,
-+        abi_long arg0, abi_long arg1, abi_long arg2,
-+        abi_long arg3, abi_long arg4, abi_long arg5)
-+{
-+    print_syscall_prologue(name);
-+    print_raw_param("%d", arg0, 0);
-+    print_pointer(arg1, 0);
-+    print_raw_param("%d", arg2, 1);
-+    print_syscall_epilogue(name);
-+}
-+#endif
++    /* for isapc, disable Hyper-V enlightenments and LAPIC */
++    if (!strcmp(MACHINE_GET_CLASS(ms)->name, "isapc")) {
++        whpx->kernel_irqchip_allowed = false;
++        whpx->kernel_irqchip_required = false;
++        whpx->hyperv_enlightenments_allowed = false;
++        whpx->hyperv_enlightenments_required = false;
++    }
 +
- #if defined(TARGET_NR_pread64) || defined(TARGET_NR_pwrite64)
- static void
- print_pread64(CPUArchState *cpu_env, const struct syscallname *name,
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index 35f001fecd..239b9e18b4 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1114,7 +1114,7 @@
- { TARGET_NR_quotactl, "quotactl" , NULL, NULL, NULL },
- #endif
- #ifdef TARGET_NR_read
--{ TARGET_NR_read, "read" , "%s(%d,%#x,%d)", NULL, NULL },
-+{ TARGET_NR_read, "read" , NULL, print_read_write, NULL },
- #endif
- #ifdef TARGET_NR_readahead
- { TARGET_NR_readahead, "readahead" , NULL, NULL, NULL },
-@@ -1674,7 +1674,7 @@
-                      print_syscall_ret_waitpid },
- #endif
- #ifdef TARGET_NR_write
--{ TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
-+{ TARGET_NR_write, "write" , NULL, print_read_write, NULL },
- #endif
- #ifdef TARGET_NR_writev
- { TARGET_NR_writev, "writev" , "%s(%d,%p,%#x)", NULL, NULL },
+     whpx->mem_quota = ms->ram_size;
+ 
+     hr = whp_dispatch.WHvGetCapability(
 -- 
-2.53.0
+2.50.1 (Apple Git-155)
 
 
