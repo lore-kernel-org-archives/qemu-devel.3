@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A3F10F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2543010F9974
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYHN-0005my-BC; Wed, 08 Apr 2026 15:09:33 -0400
+	id 1wAYRl-0000g2-If; Wed, 08 Apr 2026 15:20:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYGA-0003n2-FB
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:08:19 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAY2G-0005Yu-Kl
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:53:56 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAOQ5-0001ef-OA
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 04:37:55 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso7357935e9.0
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 01:37:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAESD-0005Uy-FC
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:59:26 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so23813495e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 14:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775637472; x=1776242272; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rYvIoV64UzXrtoITOOTHknJ6ZResgG8x/xuVEBwW9Yw=;
- b=IwVLNYb8oveekigxcPRwBLBRWrpKVRGYwEyUbmaXa7Ohfu2I/d7t8DkDlLq92lVs3B
- EF3eVcc05XaQZB4eXI3KnunIjVmArVk4Js9vLPxzFEput5T5QVdY+IGIO1fO5OjGPi/i
- zELvZh+TLnh/5TTwRF4+au4pe8pK0MKqOuE2EOVWn2odlZfIhEHMzFnhXS1jp2ekiwTX
- xvzHgAqH5bOFHf4Hivwu0LkdvtDUgfGaT9rF0j1Nf4gBEa0XfXzgsIcMSP/R5SkZ1ZP/
- N2sQHJWIc54XzeEj9hacbrbR11DTeMpIIhNK6WZ09e44Ku9xkN0f2kPP+5rBIqDKa87x
- CMhA==
+ d=linaro.org; s=google; t=1775599163; x=1776203963; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3F2Q5EnnzT6rmGzklEM6ziQNPmaPW6cAaunkc3rGNik=;
+ b=tAtOZ3WICz1A57zeiqha4Tg+JT2fkNah+wfUelJ16Sp3MeW1ZPOeNX871a+mvDihZG
+ 7wwzxwZ2hWuHFHLEUiW9pjPw/ohWoO+iy0nnMdywlYAj2VLDGoJGfOKJ+gzVYMxmnxwm
+ 7iC8r8Ta3UOEK3l+KW46eRlqxyNIshmBZxiiC3ydIqLGh4wB5qeaNJiDvfFVKjhCG62I
+ uviP76QwrMAAor2yo4BScyxjvAgL4U6q7mi+ugiDOXey24vMAPv5EaYd/apba1joAuSk
+ TUC6QdppAXcWPAIHgSgw5RyXTpWzI/I2AQTC8GE9bF0pVrU9zRDuEaWrnfRKVl8zm/2I
+ VxgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775637472; x=1776242272;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rYvIoV64UzXrtoITOOTHknJ6ZResgG8x/xuVEBwW9Yw=;
- b=Chzd3SQ0BdT4FIej+05f8UzfXW0yyrNJlhEr0999g4I5M6+BMwfOuzMNoJ5+AI4BZ7
- 8fKiGU3JPidT7MU/nwyNkRDM/aUNQCWAYCvvLAWngR4Ye45QV46uBjWhDpen3umSRakB
- 1xK4JGEIIYUrktlJQFX65iYevl3lfcu7dxleoeaA0oFvSCqEb19dVUqznA/wE69gSXPs
- XRY5wVfVqLl4xrlF8TI5NP6VatMLRCsgkn8kuCYZTNtFJ5QQnNeYIW3RG0FAlc8OH94w
- yI7hBl6q40WNwc47VfRAFNk8NELDvIoNO7OG57KjwjsA5FAVDoP0kn/h0AcwARGahE6j
- SLbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU99eX3e7crxtGRVQc/nPWDEFwbHiHdk59exz4YuTIHiRZC9GHeM3NGjKitnodin7Ox6A/TKEZTtX+m@nongnu.org
-X-Gm-Message-State: AOJu0YziXQeGAJpdWXGbhMtDddJpzu3X6OaLo2ewq3kq+ifvbqNCPVQI
- e84wAoimykZk8nYIi8P6ZsoCB2P35ATtxXHdEF82BteiH27JHvHmQf1If7bRDQhfiqs=
-X-Gm-Gg: AeBDieuzJliLr1BWRdNAeULO0NRUSbE1s1HvkReXRUmVHOi39nKY//3G7lupnKNu/LT
- dV6P8Amnm+Ff9AVsdTh9Ei6Sr1LVSE82kXJdXIw0v9yxOR/VDT07r08Kkz/B17V7Ib14U5Pou7U
- s53GpDRDtI4hfyt+MGhlBIIk6nOJiP2tZh/C98Mpa6C2HjcWeJrOtv84XwV5EswOA7s1IuaNTcE
- rz3NSdLpJfOoU9sVvBZ4Wnb/rgn8s2bBKo0zeFMjbJGrvPgNTnwLVksUCvwCAKVxac33VqSuxhe
- NCOPs2BtjKanjEVnDxyIF33np/6UodW6wCSuU6nz4q4Jp+66EC0OYYtY6HKd6lsARQ54cViX4Ms
- wEGfeEKTm+o+SV9MBUGzKJWwCY+9kz2ha+vjakmn5aY6Jiz+c27z95Zr2QqdrWl1UdUQ3a4cK4A
- 6Gwiv/mLrnEu3P3ShVouxNl5Ka+UuhDKRQv5KgwpQqAvM5fXoxpZPXrg9xDklqTCRa0w==
-X-Received: by 2002:a05:600c:8288:b0:488:b47a:908b with SMTP id
- 5b1f17b1804b1-488b47a92e3mr142534175e9.11.1775637471887; 
- Wed, 08 Apr 2026 01:37:51 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1775599163; x=1776203963;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3F2Q5EnnzT6rmGzklEM6ziQNPmaPW6cAaunkc3rGNik=;
+ b=hSFtCzfwH5/ulbbXJnmQ5ARaGKeQ2plwtDBEfGyil31zjKZmJfCp/gY3ups88PSOec
+ OHtYSw7DhBMQqCms5cgFuC8n5nPqFRXnL/9BE3KjyZHRP/psHx1Je4cwf789WIYoDhqi
+ TtQFNjtUWLCPZe9Rcz9ALRaxhByuSI56FkMPy3j4BfxMPIJO1VFaB8S/kB516Zd8GcmG
+ xhb+ZNw59RX2aWNQOXS1hg+45UW0f0/VOUqfzcbORnvn2HRn9wkrrvZ1lwts5zQhQioR
+ H3UAJe3TjKVkwtgClmgn6cp6oT8EikJH/LgVVmlCNAsYbr3wTl0DN48lz86ZhTdaK6rA
+ IkNg==
+X-Gm-Message-State: AOJu0YwQOeC93TXYawgdYlR2KwMIfdYEO9PfASe0ciFCWwzvwiRUyAUX
+ 9wli6Oj7gnwU17l3j/WGn5c0LlNEJSzhpVJE/xO4GmqvsqYRwHw9odxZMMOWgqJdwF/sIZ3k7q1
+ to6Xdz3E=
+X-Gm-Gg: AeBDiesOgXpx1ZH3RQMbmhxOqHJMhIm+TsCGglBzRyREzPBIoxpbtYWP75MJRM/q6au
+ N0Quj00atDcawkjmGpgDWfuJB1LucagnV1vHfHMmml3uXr/l8mR/HuhP6zxiyxSR7a6aJA8sB6O
+ W8P1kb6fFMl9QBemHQjVW6ebwK2FtWbKd1ouXuXgrFwdTG5dN8rPseNyl4KFKU3GdntqhPxGDQt
+ 8eeQgJAOaAJbryq+3SfWiQTwO+tO15AoJxXdDsoMP1xSAmEfm1dgnze/1T2kU921Z84UaE7b3C+
+ HfkLnsusSX5u+hMglYZrh9iOgDCCIDt9MV82IFZ9QIBBY4PDyITP+5dZJLinG4ke6M+kgKtCbyS
+ jvFKQ+A7riJGEtYG3q6fZzvt+dNEZ1nvAetbumVfxtC62f/o8E61iMSjk/SPWkWHLWMsqV+M58W
+ KuOPFLf1Idi9GjjWgY6payBT1huJt3U5NkpUD2gPghVl7+5gzyB5y4qq76B+Qz1+ClMKzNK0KB
+X-Received: by 2002:a05:600c:8b75:b0:486:f634:ef1 with SMTP id
+ 5b1f17b1804b1-4889978c516mr275818025e9.17.1775599163067; 
+ Tue, 07 Apr 2026 14:59:23 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d1e4e5890sm55800959f8f.31.2026.04.08.01.37.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 01:37:51 -0700 (PDT)
-Message-ID: <9846560e-9074-419d-9d06-9b949f6372ce@linaro.org>
-Date: Wed, 8 Apr 2026 10:37:49 +0200
+ 5b1f17b1804b1-4887e822227sm659482215e9.4.2026.04.07.14.59.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 07 Apr 2026 14:59:22 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH-for-11.0 3/6] hw/arm/omap_sx1: map CS3 at the correct base
+Date: Tue,  7 Apr 2026 23:58:57 +0200
+Message-ID: <20260407215900.63390-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260407215900.63390-1-philmd@linaro.org>
+References: <20260407215900.63390-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] linux-user/strace: Add a wrapper for read and write
-Content-Language: en-US
-To: Chao Liu <chao.liu.zevorn@gmail.com>, alistair23@gmail.com
-Cc: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20260407043614.372871-1-alistair.francis@wdc.com>
- <20260407043614.372871-3-alistair.francis@wdc.com>
- <adUycpyM7bUjmC_7@ZEVORN-PC.localdomain>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <adUycpyM7bUjmC_7@ZEVORN-PC.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,48 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/26 18:55, Chao Liu wrote:
-> On Tue, Apr 07, 2026 at 02:36:11PM +1000, alistair23@gmail.com wrote:
->> From: Alistair Francis <alistair.francis@wdc.com>
->>
->> The stack pointer is being truncated as 32-bits for qemu-riscv64, so
->> let's add a print_read_write helper that ensures all of the bits are
->> printed.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
->> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
->> ---
->>   linux-user/strace.c    | 14 ++++++++++++++
->>   linux-user/strace.list |  4 ++--
->>   2 files changed, 16 insertions(+), 2 deletions(-)
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
+omap_sx1 wires the "sx1.cs3" region to OMAP_CS2_BASE instead of
+OMAP_CS3_BASE.
 
->> +#if defined(TARGET_NR_read) || defined(TARGET_NR_write)
->> +static void
->> +print_read_write(CPUArchState *cpu_env, const struct syscallname *name,
->> +        abi_long arg0, abi_long arg1, abi_long arg2,
->> +        abi_long arg3, abi_long arg4, abi_long arg5)
->> +{
->> +    print_syscall_prologue(name);
->> +    print_raw_param("%d", arg0, 0);
->> +    print_pointer(arg1, 0);
->> +    print_raw_param("%d", arg2, 1);
-> If TARGET_NR_read and TARGET_NR_write support 64-bit targets,
-> abi_long is int64_t, so %d will be truncated. We can use
-> TARGET_ABI_FMT_ld to replace it.
+That places both CS2 and CS3 at the same address and leaves the real
+CS3 window unmapped. Point the CS3 region at OMAP_CS3_BASE so the
+static chip-select layout matches the OMAP address definitions.
 
-With the 2 "%d" replacements to TARGET_ABI_FMT_ld:
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Fixes: ba1580299d0 ("omap_sx1: convert to memory API")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260403014441.38725-1-zhaoguohan@kylinos.cn>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/arm/omap_sx1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> Otherwise LGTM.
-> 
-> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> 
-> Thanks,
-> Chao
->> +    print_syscall_epilogue(name);
->> +}
->> +#endif
+diff --git a/hw/arm/omap_sx1.c b/hw/arm/omap_sx1.c
+index d858dab3253..bcb7105323f 100644
+--- a/hw/arm/omap_sx1.c
++++ b/hw/arm/omap_sx1.c
+@@ -146,7 +146,7 @@ static void sx1_init(MachineState *machine, const int version)
+     memory_region_init_io(&cs[3], NULL, &static_ops, &cs3val,
+                           "sx1.cs3", OMAP_CS3_SIZE);
+     memory_region_add_subregion(address_space,
+-                                OMAP_CS2_BASE, &cs[3]);
++                                OMAP_CS3_BASE, &cs[3]);
+ 
+     fl_idx = 0;
+     if ((dinfo = drive_get(IF_PFLASH, 0, fl_idx)) != NULL) {
+-- 
+2.53.0
 
 
