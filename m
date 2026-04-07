@@ -4,133 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B3BEFF5134
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D89FF5134
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:28:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABRP-0002qI-9e; Tue, 07 Apr 2026 14:46:27 -0400
+	id 1wABUN-0006ER-TA; Tue, 07 Apr 2026 14:49:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wABQx-0002am-AT
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:45:58 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAAGB-0001Io-Uf
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 13:30:46 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-8296d553142so2708961b3a.3
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 10:30:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wABSL-0002am-4q
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wA8c6-0000Ua-QR
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:45:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775576713;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ktoTseyRC8KHuhtiLZiQENiQ8FxtaoP9jLcNA3t+pk8=;
+ b=jHSUtBloly2FbLIo7OkRF/sFOL1KLbLl4hO6W17xA1LXuTGS/YuU4kNnJ6737sJI4QQilz
+ FvDInwzrmFI2hjIQHEQQ21qX9OmYDwZoaFRB6hFTbkn5kFZluO1p2Sxkem9QoPYdbXSdYp
+ QFaZyenWTKoKBx8uiwgWA8xyVfb3Sy4=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-508-VNGoLp6iMc2mWPiyTsv23w-1; Tue, 07 Apr 2026 11:45:10 -0400
+X-MC-Unique: VNGoLp6iMc2mWPiyTsv23w-1
+X-Mimecast-MFC-AGG-ID: VNGoLp6iMc2mWPiyTsv23w_1775576710
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-50d5d1c2289so119383321cf.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 08:45:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775583042; x=1776187842; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UDaEVMhyKxFlr4Solen+ATNFmzuejjUtuBWYPm+vwKY=;
- b=uZqTFeHCzOtkjH+ZP13GkdGp6huY/Ekk6WKETggLx8P1Styl3rmBzUJsyGC5RGFWHM
- U237njDkgtjyCKXqwjl31rw9yuWjz4sxlKK7jiezOd+36JeWhziOX23xkpxSlxh4k4nm
- skYy+ATZHCmcleF206tRVbdOrFiMgxMXnpCSaXv9BvMuzNb3SMwzsIH7Ugw25I+8EGMr
- LII30LWUfqq+1xwFvzOAWT6iB1YMi3ZEB5d5ktPb68Ltw2UF2MNrtH3nBueQvf+3Fm+x
- XQsORuPIkxRPcws+PXDUc+1kaaroSF+mJHByUqR0JR8uCddvy5rRu17QjT8t78xSFGFu
- 9J+w==
+ d=redhat.com; s=google; t=1775576710; x=1776181510; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ktoTseyRC8KHuhtiLZiQENiQ8FxtaoP9jLcNA3t+pk8=;
+ b=tgYIx4MGzS1H+5AS+kkICMwDaRFxb7fCw+HrA4jayMbu2/bkcRyastgBwYvpQF+0MY
+ vAPdXbNMfjl5c3kOz43LjipAdYH3Xi+RHJ+PTbmeIndzo4UUrWz1k9N2O/1ntzwG0InN
+ G7ZpkdNyoN+zxTiqzwRRg8A8+Z/EqHZl6kyYjJdXxgnc9vuv+PDZyV5eBe1fwyJ5KMP3
+ gCz02aM48OhgKzY0xUC7jp5tXBrDs9JMG4AHySk2iwMmEqx+WbAjSPNG6Ryufu227nVx
+ 3Yjxsdewe5X3mYI4hnfLB3NCejSLeEfHhuyNpVDNAw2MvyglWa57EaKJdktIIlDu54Dw
+ ALXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775583042; x=1776187842;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UDaEVMhyKxFlr4Solen+ATNFmzuejjUtuBWYPm+vwKY=;
- b=Jh/c2NYf7zjDTqc9TW3TWLdaKE0wRHKaLu2K9PwultzZPXQOQIcY2pfBfNYkEmwc1U
- yURBOmH9US8Edn7Mv1wiaL6iXdEsnAHbSU5jtFG6xPw/7E9WFdxJ5XJSE2IzFFcNCImT
- cm+sOu6ZGc783m74R+I5FqAXSkii7Two5253t9YRWmnZy7MpZdfGwd/dYb+dmXaUzlQU
- /R7ZuCsdGrXvxheRBmL75SiaiU9/epS/i3SN5eDHzbJDWYqFTGM5nScbM9p4UoSZB848
- jsGETZ41LSiZ4VKbD//ObZSPVeKmoW89hhn9lA853Dxri/HRKTrTgR2OLu8dtXLKFgxT
- Reaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUatYGFKVvX+U6hthnd5Ud+GWmFtt5ZsQCOH7wtrld/ETj/8ATgpNFV3H0pY9yCaAPbnq6WeEcjwqMN@nongnu.org
-X-Gm-Message-State: AOJu0YyfQLKPMxyvYT3SSaIXLakxqQc3HiiunJRF2+Gg+QysqHlRIAfx
- 0ygr6WSI7tj4rzbz85lawJ27LNcJymBPCMk4dxDjykKoFDrU8HWGV9u6ludjlz65W2U=
-X-Gm-Gg: AeBDietSVxIZOXtjabIs9q6S7CI3tDIE9AJMBXOvX2YtuXTKci7x28QNyod4q99q89R
- WLc0hKffhw1mNBFqqgOJTMPsP7eTrBdoAjyR6T+D6kkD+bY4QypbS8bVwXu0G5zhqdgkbjvaeoQ
- vgruEnX9rdsuNweTFx3I59Mppzuvq8k2sbphH+1QipCAMJFjpL65hrETJG/ZQhSVXSIAE7nV8ky
- 3Ez758NlQxVQK2JRRQoWTWtoAMfFk1fZxH0XqBUxGEF+zBeRzN7T4fgMpfkNJiN3JrpBIqVVu5I
- G72fgMJZf/VNvhtFo5qK02QVXjJzAnO5pu8k0ggrN3O2LkLi7ob/nUDzei8OCSLh+LX2wjtJBpS
- th2TrvlR0kOStlJ6yfGylvnptecNXQrBzOAIMzMsH9rTR6+x3zBCtcdj4DFJc3LD1peny1mVXMV
- fB2glHP/7AS0v9kZ0Q5gN9eszJzkDOVj8sBWkWOohRRfMC5/CWcIJ+MAMHq1FPve/1DiJaoQ==
-X-Received: by 2002:a05:6a00:4286:b0:824:ad1e:3b6e with SMTP id
- d2e1a72fcca58-82d0dbd91camr17783700b3a.49.1775583041968; 
- Tue, 07 Apr 2026 10:30:41 -0700 (PDT)
-Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cfebe5b23sm18340765b3a.59.2026.04.07.10.30.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Apr 2026 10:30:41 -0700 (PDT)
-Message-ID: <ca9775b9-5738-477d-9330-55c80aa3b2e2@linaro.org>
-Date: Tue, 7 Apr 2026 10:30:40 -0700
+ d=1e100.net; s=20251104; t=1775576710; x=1776181510;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ktoTseyRC8KHuhtiLZiQENiQ8FxtaoP9jLcNA3t+pk8=;
+ b=c/gtysdq0zVBZOAraDfWfO+Ye9MiUd4cXxXSasx5d2kSdzvyBKV28Mzh3N9YmKrMui
+ 54MUTv5JY+oxF9ya+lQ0tP6qKTZoS1PNjcu7eODhrP6y9nUHehvesO4o4FOFG70kXqBI
+ 4Hvy2DR89E6Y9ZPymE6qnE3u7D7zzdY3rG5Sn6appi/mi+4b5AGqeyPM0aI7E5jlMqHY
+ Bk6+C1lQnCNjwtNQXN7j2Pv/wp5GppQ0nsnvNUq/L542XqO6apZ6Oc4+asm3U/Q3J186
+ WvUKacuY4v7a2mF6QVa+LcBdEyZ8DrMKQ1OF+0qmy2MjPruAkaUuNNDqd1fPUiTS0xo2
+ zgJg==
+X-Gm-Message-State: AOJu0Yyf4papumFPWthwGo2hqYacRM2YvoEejECooMaSPAk1Lkgz5DZJ
+ rvDU5t2R7bLJPwGpxewWkNP4geXBkBhSa1mvv6mjW8QO/dCidblOjhLG/2xl5p8GloXki0Bx7sb
+ YPGgW2sssrQVcFiqKYP+v06JyQWbUrZdU6uOjlsbpW/8qN4iUuubDGyjN
+X-Gm-Gg: AeBDietamJt28TU7YePt0kkQJ4yyzj6m8vd4x3Q3tL48DKoYGB6a6rcmierL4Y2iCac
+ Ve7p5xdwBt1nNdCza7TkInNsL/TeZNqa0YJg0iiE7K+G8qk/tvT37RDkVwg4w6Yu261a9rDBPjH
+ ghe/q+EhAGET0KEgjuh2tvBq83I+/lGUnRs/gCYmFwZx08vehZ+IgRallvvoKZlhiAtTpiljl8L
+ qQJmWBLCn5S4H3boWx8uzCAHfvGLVdXDtxybveukm6nQtzvGMQQFy9qehYzvvr+vcfzxln72T+I
+ Eqpdz7xp4lIq7BLbRL/W7gVLaW+ZFl6f56tXfHcF1wmCHcP0ptvOJvKNO0of+w7pR6YnuF2UI2x
+ UrhAu6f2QHnJ9N8pdIMf8LqQSPs91vpffDNYv9d5eqorAqvU=
+X-Received: by 2002:a05:622a:5988:b0:50d:a898:a14d with SMTP id
+ d75a77b69052e-50da898aa3bmr28778411cf.25.1775576709468; 
+ Tue, 07 Apr 2026 08:45:09 -0700 (PDT)
+X-Received: by 2002:a05:622a:5988:b0:50d:a898:a14d with SMTP id
+ d75a77b69052e-50da898aa3bmr28777491cf.25.1775576708954; 
+ Tue, 07 Apr 2026 08:45:08 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50dacd66633sm6388281cf.12.2026.04.07.08.45.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 08:45:07 -0700 (PDT)
+Date: Tue, 7 Apr 2026 11:45:06 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alex Williamson <alex@shazbot.org>,
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH RFC 08/12] vfio/migration: Fix incorrect reporting for
+ VFIO pending data
+Message-ID: <adUmgqqU39K2WKEF@x1.local>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-9-peterx@redhat.com>
+ <e6a9aaf2-e2ab-4b25-a01d-b6093922668e@nvidia.com>
+ <ac6LCWmVHl8fq81J@x1.local> <ac6RbaA3V_jpfwJX@x1.local>
+ <b1a8f7d9-306b-4a13-8916-828e61ed0f41@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 17/20] target/arm/tcg/translate.c: replace
- translator_ldl_swap with translator_ldl_end
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-arm@nongnu.org
-References: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
- <20260406182609.193886-18-pierrick.bouvier@linaro.org>
- <c73bee03-82f8-4529-9db1-7857a049f59d@linaro.org>
- <626fdf02-7114-47ad-997a-a7c64a83f9de@linaro.org>
- <7b15c854-64f7-4996-a831-d03480a40776@linaro.org>
- <46f488c8-1eff-40c0-a72e-231c81576812@linaro.org>
- <ba89301b-de27-436f-9f46-50be2467e13b@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <ba89301b-de27-436f-9f46-50be2467e13b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b1a8f7d9-306b-4a13-8916-828e61ed0f41@nvidia.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,36 +128,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/6/26 11:51 PM, Richard Henderson wrote:
-> On 4/7/26 09:00, Pierrick Bouvier wrote:
->> On 4/6/26 3:44 PM, Richard Henderson wrote:
->>> Delete bswap_code.
-> ...
->> There is still one usage for bswap_code in linux-user/arm/cpu_loop.c which I'm not sure
->> what to do with.
+On Mon, Apr 06, 2026 at 03:34:20PM +0300, Avihai Horon wrote:
 > 
-> Essentially,
+> On 4/2/2026 6:55 PM, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > On Thu, Apr 02, 2026 at 11:28:09AM -0400, Peter Xu wrote:
+> > > > Now that migration->stopcopy_size holds only the stopcopy size (and not
+> > > > stopcopy+precopy), we should remove these lines from
+> > > > vfio_update_estimated_pending_data():
+> > > > 
+> > > >      /* The total size remaining requires separate accounting */
+> > > >      migration->stopcopy_size -= data_size;
+> > > Good point, I missed this part when changing the definition, I'll fix.
+> > Instead of changing the definition, I found that it might be cleaner to
+> > keep the definition of stopcopy cache variable for VFIO (considering the
+> > other invokation during save setup), then just do one more step for math.
+> > 
+> > The new version should look like this:
 > 
->       x = load_little_endian(...);
->       if (arm_sctlr_b(env)) {
->          x = bswap32(x);
->       }
+> Yes, that's better. Just small comment below.
 > 
-> This is slightly more complicated because there's not currently a get_user macro to force
-> an endianness, only __get_user_e.  So it's a question of whether to introduce get_user_e
-> or open-code all of the goop in get_user_code_u32.
+> > 
+> > ===8<===
+> > 
+> > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> > index 655ff7712a..5aff8de844 100644
+> > --- a/hw/vfio/migration.c
+> > +++ b/hw/vfio/migration.c
+> > @@ -585,19 +585,27 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending)
+> >   {
+> >       VFIODevice *vbasedev = opaque;
+> >       VFIOMigration *migration = vbasedev->migration;
+> > -    uint64_t remain;
+> > +    uint64_t precopy_size, stopcopy_size;
+> > 
+> >       if (pending->exact) {
+> >           vfio_state_pending_sync(vbasedev);
+> > -        remain = migration->stopcopy_size;
+> >       } else {
+> >           if (!vfio_device_state_is_precopy(vbasedev)) {
+> >               return;
 > 
-> Actually, there's currently a FIXME in cpu_loop concerning the failure of get_user, so I'd
-> say most of the get_user goop belongs there.  Then using __get_user_e is trivial.
-> 
->
+> Now in the estimate path we shouldn't bail early if not in precopy state, so
+> estimate/exact reports are consistent also for VFIO devices that don't
+> support precopy.
 
-That's not clear for me what is expected here, I'll let you send a patch 
-for the kind of changes you want to see.
-I can then integrate it in the series with bswap_code removal.
+Will do.
 
-> r~
+-- 
+Peter Xu
 
-Regards,
-Pierrick
 
