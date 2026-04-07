@@ -4,98 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F76FF5136
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB53AFF5137
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABXN-0000AU-3c; Tue, 07 Apr 2026 14:52:33 -0400
+	id 1wABXJ-00009D-F0; Tue, 07 Apr 2026 14:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wABUB-0004Gt-WC
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:16 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wA0Hw-0000Vw-Rm
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 02:51:54 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c74f0c3fc16so1537302a12.2
- for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 23:51:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775544711; x=1776149511; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=v5IKxRMmwb+dPwhRvE/+sjVr5tsWbHFNjl7SdiH7BuI=;
- b=ILFmGlGhwZCSrqy+Yn+DCnI7ZkFx9F8o32pOVD+zzCeVHdTCs7nrQG58G7MMU8TdSn
- fUgkLWincj1XnoJX4ajtkP3sEJ2AK/SlM1GTKcD5Jj0QA744Gsg48av0YxuwCocFpncP
- 5NAAPct15o8tyN8c0YMzGDF5/UUAMTSMPAuQxA9uGDkGNdg6YGv3hqWUx7QUVBHljc3J
- 9IvivGsl0AN+SJndvBk0mQCUIHkPm/dmI6XlR3IC+b1CPkcQe2VOyXp8fvIwhQw5cW8y
- oPz+Eyp8mT5ljNGryFMEmcuIZII5a46AqiX1RY8NsM6dgu/nyWZUNMXUjBTM4Qri01A5
- Zjiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775544711; x=1776149511;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=v5IKxRMmwb+dPwhRvE/+sjVr5tsWbHFNjl7SdiH7BuI=;
- b=O0hiw4VAqUz78OH9kYxMWwNLiE67RWgIFN7BwsKzOkcomZb9AZF6HwVuFrvHdOLRzu
- /w9sY3qnTvZgYr04gsLJwcC+00Qls9j3v0aB4RHJ1vBtXBTwR73ziGGNedceXo9DG21Y
- noCJVE+5ZXEulIn82cht2KtsW0+TgRUriChKz5yA9DMxgB8h7FEatPTWRENpC4w1mtRr
- scTBLSjYfRxmleu8SaIkVbUzst3VjQXErYUJKCvlO8WdATzsGf5KKIlXNBv0YKJZNw/C
- RbVK8EuDxXKSvW7uxmS4xtI+zbTeEA12DzadKHuxEJg9kjmNQzsDL2Es3dQlxmgx61qi
- HdEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVetwbFMcemnFNm3pHSwmZm8K22QFU0MKO2JoMXjdrk91V+TPRWhGanz67ME1CmRFm4F1eCtYBu2ExH@nongnu.org
-X-Gm-Message-State: AOJu0YzTKB1beo7pARlfYDiuN4muT4Gs9qRXZlC8+dBLtJm0yj37FD8+
- I15gxEVawx0b9lsqWTCIjpXfx1DbuiEyef3MikLs05LPjZnL5vq4LsEjVtTAUHvdEUw=
-X-Gm-Gg: AeBDievZRZhXVDPUO6MMSdfSl2PEFxFoDZqrTNSHBlCTm1ZfX0yJnczDQA8016rLNLa
- rHlz6eaN5L7LjROJA3UjHD0EEIP6ScWyX/bOH1/8L3QnwukxgddaS+39Uu7H4B/NoJDitiM56rk
- H+hmTz91MZ3nsD3FnSSNwe23LwOqCZOUM98R7/bHch1ItRD1S96MwNm5PRvgeLAbFqRYMMqtUVs
- Af08Dllb6jPypuAGeE6AgOKe3QAWN54q133m3djVs9EF6HwtbKGRxROezWY/Wr3mWckCvWnQ8lZ
- AvAm4Cyalry318ga+jceMmxmjyzK4UKdXuhVLUPZJmyWt7bePBo+aOce0mf24Uw98UG+3MB0maF
- PrSncu/Fv70pcFfMqAbLJxniWk6X1izLcrxBLpqd5eRsIj1hKNXgGjmuqaYnhFVgmE5h+4I8fbu
- KtG+byHbH8aXNCMIpEx1574p1OIXqAGQVjTu51Rmcoziec2bazJio9YMShjhgkpfbigWw=
-X-Received: by 2002:a05:6a20:7289:b0:39c:cf9:b8e4 with SMTP id
- adf61e73a8af0-39f2f0c9443mr15547594637.42.1775544710851; 
- Mon, 06 Apr 2026 23:51:50 -0700 (PDT)
-Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c76c647792bsm15553215a12.6.2026.04.06.23.51.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Apr 2026 23:51:50 -0700 (PDT)
-Message-ID: <ba89301b-de27-436f-9f46-50be2467e13b@linaro.org>
-Date: Tue, 7 Apr 2026 16:51:43 +1000
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wABTw-0003wR-Ro
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:00 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wA0vx-0007ch-4S
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 03:33:14 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 7B8A5600AC;
+ Tue,  7 Apr 2026 07:33:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE10EC2BC9E;
+ Tue,  7 Apr 2026 07:33:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775547192;
+ bh=UnUNpTfNJFNxER59mlO1GiJ99z8RBPCUc14j+NR6xGw=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=qaTG2D6WVzwt/mWIWVd0DrI+iPIfd+qtXYQgyicK5ohJLuaHDO/Zt6a3Eu+kiOnbB
+ g6aTPMFJjZyvVgDMWlycfN2/taHyRFas+EDjQHt2g3TqByenuxWD2Gdt4pU6v+c6zt
+ sGIZEay3OjtAHf6v7MSgn/CYqcI1+5ITXxOgXBlMTvnakCr0/IxEzKs7pVTLS+9saV
+ FRQnr3JAXe8mtf1vgSbafVjgnkI0KxsC5IUognZc51SC1Zw4+dkb3ZFaSffTLjcQf/
+ hs57Hq/OKCSIUVxi/L7QtaKUkswoR+9E9tJ65TbgbwRqOO7cYEqUYgybtP+RSJl2mE
+ LjIaRjRbhGh6A==
+From: Christian Brauner <brauner@kernel.org>
+Date: Tue, 07 Apr 2026 09:32:48 +0200
+Subject: [PATCH v3 4/5] tests/qtest: add tests for dynamic monitor add/remove
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 17/20] target/arm/tcg/translate.c: replace
- translator_ldl_swap with translator_ldl_end
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-arm@nongnu.org
-References: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
- <20260406182609.193886-18-pierrick.bouvier@linaro.org>
- <c73bee03-82f8-4529-9db1-7857a049f59d@linaro.org>
- <626fdf02-7114-47ad-997a-a7c64a83f9de@linaro.org>
- <7b15c854-64f7-4996-a831-d03480a40776@linaro.org>
- <46f488c8-1eff-40c0-a72e-231c81576812@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <46f488c8-1eff-40c0-a72e-231c81576812@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Message-Id: <20260407-work-qmp-monitor-hotplug-v3-4-cb259800fffb@kernel.org>
+References: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
+In-Reply-To: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Christian Brauner <brauner@kernel.org>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7965; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=UnUNpTfNJFNxER59mlO1GiJ99z8RBPCUc14j+NR6xGw=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRe2axZxphm5HPxweojPxOarmmlaEzMq70bOyNke+CBG
+ ecXOZb6dJSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEzk1jpGhin/5x2bm1R1+MP0
+ DNntzJHv9u5VVj8xq9TqgcV7+blzvkUxMuzKnJE4cV+Km9kvl84a6b3np/7rL15oxdwcMv1w1E+
+ +bkYA
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=brauner@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,27 +83,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/26 09:00, Pierrick Bouvier wrote:
-> On 4/6/26 3:44 PM, Richard Henderson wrote:
->> Delete bswap_code.
-...
-> There is still one usage for bswap_code in linux-user/arm/cpu_loop.c which I'm not sure 
-> what to do with.
+Test the monitor-add, monitor-remove, and query-monitors QMP commands:
 
-Essentially,
+- Basic lifecycle: chardev-add -> monitor-add -> query-monitors ->
+  monitor-remove -> chardev-remove
+- Error: duplicate monitor id
+- Error: monitor-remove on nonexistent id
+- Error: monitor-add with nonexistent chardev
+- Error: second monitor on same chardev (chardev already in use)
+- Error: monitor-remove on CLI-created monitor
+- Error: monitor-remove on HMP monitor
+- Re-add after remove: same id and chardev reusable after removal
 
-     x = load_little_endian(...);
-     if (arm_sctlr_b(env)) {
-        x = bswap32(x);
-     }
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+---
+ tests/qtest/qmp-test.c | 186 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 186 insertions(+)
 
-This is slightly more complicated because there's not currently a get_user macro to force 
-an endianness, only __get_user_e.  So it's a question of whether to introduce get_user_e 
-or open-code all of the goop in get_user_code_u32.
+diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
+index edf0886787..5bd57c37cb 100644
+--- a/tests/qtest/qmp-test.c
++++ b/tests/qtest/qmp-test.c
+@@ -337,6 +337,186 @@ static void test_qmp_missing_any_arg(void)
+     qtest_quit(qts);
+ }
+ 
++static void test_qmp_monitor_add_remove(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    qts = qtest_init(common_args);
++
++    /* Create a null chardev for the dynamic monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-add',"
++                     " 'arguments': {'id': 'monitor-chardev',"
++                     "               'backend': {'type': 'null',"
++                     "                           'data': {}}}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Add a dynamic monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-add',"
++                     " 'arguments': {'id': 'dyn-mon',"
++                     "               'chardev': 'monitor-chardev'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Verify it shows up in query-monitors */
++    resp = qtest_qmp(qts, "{'execute': 'query-monitors'}");
++    g_assert(!qdict_haskey(resp, "error"));
++    qobject_unref(resp);
++
++    /* Error: duplicate id */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-add',"
++                     " 'arguments': {'id': 'dyn-mon',"
++                     "               'chardev': 'monitor-chardev'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    /* Remove the dynamic monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-remove',"
++                     " 'arguments': {'id': 'dyn-mon'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Error: remove nonexistent */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-remove',"
++                     " 'arguments': {'id': 'dyn-mon'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    /* Add again after remove -- same id and chardev should work */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-add',"
++                     " 'arguments': {'id': 'dyn-mon',"
++                     "               'chardev': 'monitor-chardev'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Clean up */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-remove',"
++                     " 'arguments': {'id': 'dyn-mon'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-remove',"
++                     " 'arguments': {'id': 'monitor-chardev'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    qtest_quit(qts);
++}
++
++static void test_qmp_monitor_error_paths(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    qts = qtest_init(common_args);
++
++    /* Error: chardev does not exist */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-add',"
++                     " 'arguments': {'id': 'bad-mon',"
++                     "               'chardev': 'nonexistent'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    /* Error: remove nonexistent monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-remove',"
++                     " 'arguments': {'id': 'bogus'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    qtest_quit(qts);
++}
++
++static void test_qmp_monitor_chardev_in_use(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    qts = qtest_init(common_args);
++
++    /* Create a null chardev */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-add',"
++                     " 'arguments': {'id': 'shared-chr',"
++                     "               'backend': {'type': 'null',"
++                     "                           'data': {}}}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Attach first monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-add',"
++                     " 'arguments': {'id': 'mon-1',"
++                     "               'chardev': 'shared-chr'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Error: second monitor on the same chardev */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-add',"
++                     " 'arguments': {'id': 'mon-2',"
++                     "               'chardev': 'shared-chr'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    /* Clean up */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-remove',"
++                     " 'arguments': {'id': 'mon-1'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-remove',"
++                     " 'arguments': {'id': 'shared-chr'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    qtest_quit(qts);
++}
++
++static void test_qmp_monitor_remove_cli(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    /* Launch with a named CLI monitor on a null chardev */
++    qts = qtest_initf("%s -chardev null,id=cli-chr"
++                      " -mon id=cli-mon,chardev=cli-chr,mode=control",
++                      common_args);
++
++    /* Error: monitor-remove must reject CLI-created monitors */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-remove',"
++                     " 'arguments': {'id': 'cli-mon'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    qtest_quit(qts);
++}
++
++static void test_qmp_monitor_remove_hmp(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    qts = qtest_initf("%s -chardev null,id=hmp-chr"
++                      " -mon id=hmp-mon,chardev=hmp-chr,mode=readline",
++                      common_args);
++
++    /* Error: monitor-remove must reject HMP monitors */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'monitor-remove',"
++                     " 'arguments': {'id': 'hmp-mon'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char *argv[])
+ {
+     g_test_init(&argc, &argv, NULL);
+@@ -348,6 +528,12 @@ int main(int argc, char *argv[])
+ #endif
+     qtest_add_func("qmp/preconfig", test_qmp_preconfig);
+     qtest_add_func("qmp/missing-any-arg", test_qmp_missing_any_arg);
++    qtest_add_func("qmp/monitor-add-remove", test_qmp_monitor_add_remove);
++    qtest_add_func("qmp/monitor-error-paths", test_qmp_monitor_error_paths);
++    qtest_add_func("qmp/monitor-chardev-in-use",
++                    test_qmp_monitor_chardev_in_use);
++    qtest_add_func("qmp/monitor-remove-cli", test_qmp_monitor_remove_cli);
++    qtest_add_func("qmp/monitor-remove-hmp", test_qmp_monitor_remove_hmp);
+ 
+     return g_test_run();
+ }
 
-Actually, there's currently a FIXME in cpu_loop concerning the failure of get_user, so I'd 
-say most of the get_user goop belongs there.  Then using __get_user_e is trivial.
+-- 
+2.47.3
 
-
-r~
 
