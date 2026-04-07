@@ -4,66 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3963FF5135
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:23:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C98FFF5135
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABXa-0000H0-2j; Tue, 07 Apr 2026 14:52:46 -0400
+	id 1wABTo-0004uJ-HN; Tue, 07 Apr 2026 14:48:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1wABUI-0003JL-C3
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wABSa-0003Gt-DI
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:36 -0400
+Received: from p-east2-cluster2-host12-snip4-10.eps.apple.com ([57.103.78.103]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1w9yg6-0003Hr-MB
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 01:08:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775538522;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MqH93DCOuaDxrfFcJBWlQQkrhR6XKCODDJxRQl2Naqw=;
- b=ZWeuc3CM3tIFU4/hfSGgS6aytbiETW/AIMqBidulnhyj+DmkKVCCoKfe4q+ZKgLQnOUtmR
- VjPgU4pp+648B/BO6qbc2JoGN1XHwklABBwF0RbpZpywDljlWvQqL5yToJkgS+xnE4/NnA
- ZK45cZf+xNekH3+1SmscJnM16dNB7zE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-lbPaI0P7OJyJCrRmcsPWGQ-1; Tue,
- 07 Apr 2026 01:08:38 -0400
-X-MC-Unique: lbPaI0P7OJyJCrRmcsPWGQ-1
-X-Mimecast-MFC-AGG-ID: lbPaI0P7OJyJCrRmcsPWGQ_1775538518
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DFF4B1800365; Tue,  7 Apr 2026 05:08:37 +0000 (UTC)
-Received: from S2.redhat.com (unknown [10.72.112.55])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AD8F91800361; Tue,  7 Apr 2026 05:08:34 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, zhangckid@gmail.com,
- lizhijian@fujitsu.com, jmarcin@redhat.com, qemu-devel@nongnu.org
-Subject: [RFC v4 3/5] io/channel-socket: tolerate AF_PACKET getpeername
-Date: Tue,  7 Apr 2026 13:05:50 +0800
-Message-ID: <20260407050818.2249570-4-lulu@redhat.com>
-In-Reply-To: <20260407050818.2249570-1-lulu@redhat.com>
-References: <20260407050818.2249570-1-lulu@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wA8BV-0002Cg-UF
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:17:47 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
+ 9409418013FF; Tue, 07 Apr 2026 15:17:42 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1775575065; x=1778167065;
+ bh=Ash1yi3VlTyxdP0Aar5CNwwUDY+XErFVJjyfbU7EpDA=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=J67adkss91j+qA1yXL5pkFiGPXfxH0ONIgvhrc0yumexUW7t90qV5rctXN1xB14166I7zPS6NMIWyLUN8iCJyc4bpjR3u02EklSr9tLrm0M26KpCtrW5l2gJcDfCotiivWiCNHoygYH4PKc3boNx1DyzP1ItKrk9lsGY4qbl2POewn1F2Ps1IOa3G4Qk44Xu33efbxWF3W2WQaXFo5mSYXtamSJ1S/Ez70UQtfWSaPdraNgvXpho8HHZaEUioRAl+GIUTsIrCNkwcaXjGFCi7H93vx7O0O4Shu1YGQCrkhnbmiPHT9gVQalYpGH5MjTxvnjf0T10jrh5xld/qwjr3Q==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
+ 2C64518000A3; Tue, 07 Apr 2026 15:17:14 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Zhao Liu <zhao1.liu@intel.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH v9 03/13] whpx: i386: wire up feature probing
+Date: Tue,  7 Apr 2026 17:16:57 +0200
+Message-ID: <20260407151707.46536-4-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260407151707.46536-1-mohamed@unpredictable.fr>
+References: <20260407151707.46536-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDE0MCBTYWx0ZWRfX4zoFwp5MbzxR
+ Zm/EmyEJzr692lhoGf+Mu9nttk2fCrnljMU41peoy3dF1jiPL5RZmtyLn8Ea+pNg6gRS40o6OZu
+ b2rgStOCN5BTCyqnlIkedMRT98VbIC6+vu/xkC1+fyvUaLDTH08e8SyDeEUwnrT88JddcB8Pw+L
+ F6bK14LcatHmqDfG78h+jpVtGR4jpcnuRDqlVtIw2qJvOHNpEVb+ntmD278JgiwJQQ3b6eYW0zn
+ uoCgVEbZdlepUwxBuhnUJHNzmEjlLL1UN13EXwbYkjM95bOSt6TlEjfz+pDC8f0KeNUvnLM9i1m
+ iMePxFjyuqHFymwZfgnLuaCUYErsbHHClGIt4eG1lPWXfzGHZzn7R/BvfShu9k=
+X-Proofpoint-ORIG-GUID: QOB9Ux1HZ8FGTfrSyWrNqCxAzB_amvTY
+X-Proofpoint-GUID: QOB9Ux1HZ8FGTfrSyWrNqCxAzB_amvTY
+X-Authority-Info-Out: v=2.4 cv=HYgZjyE8 c=1 sm=1 tr=0 ts=69d52017
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Gr33WSPopR-aU8k7cJUA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0 clxscore=1030 suspectscore=0 mlxlogscore=985
+ lowpriorityscore=0 spamscore=0 phishscore=0 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604070140
+Received-SPF: pass client-ip=57.103.78.103;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,39 +93,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When -chardev socket,fd=... is handed an AF_PACKET socket,
-getpeername() can fail with EOPNOTSUPP instead of ENOTCONN because
-packet sockets are not connection-oriented. qio_channel_socket_set_fd()
-currently treats that as fatal and refuses to wrap the fd, even though
-getsockname() and the local address are still valid.
+Windows 10 doesn't have the API for this, so using this
+only for Windows 11.
 
-Treat EOPNOTSUPP the same way as ENOTCONN and leave remoteAddr empty.
-That keeps existing stream-socket behavior unchanged while allowing
-AF_PACKET fds to be adopted by QIOChannelSocket.
-
-Signed-off-by: Cindy Lu <lulu@redhat.com>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- io/channel-socket.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/system/whpx-internal.h |  9 ++++
+ target/i386/cpu.c              | 25 ++++++++++++
+ target/i386/whpx/whpx-all.c    | 75 ++++++++++++++++++++++++++++++++--
+ target/i386/whpx/whpx-i386.h   |  4 ++
+ 4 files changed, 109 insertions(+), 4 deletions(-)
+ create mode 100644 target/i386/whpx/whpx-i386.h
 
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 3053b35ad8..2ed26aefa3 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -115,7 +115,11 @@ qio_channel_socket_set_fd(QIOChannelSocket *sioc,
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index 8482901f71..5902124b63 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -73,6 +73,14 @@ void whpx_apic_get(APICCommonState *s);
+   X(HRESULT, WHvGetVirtualProcessorRegisters, (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, const WHV_REGISTER_NAME* RegisterNames, UINT32 RegisterCount, WHV_REGISTER_VALUE* RegisterValues)) \
+   X(HRESULT, WHvSetVirtualProcessorRegisters, (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, const WHV_REGISTER_NAME* RegisterNames, UINT32 RegisterCount, const WHV_REGISTER_VALUE* RegisterValues)) \
  
-     if (getpeername(fd, (struct sockaddr *)&sioc->remoteAddr,
-                     &sioc->remoteAddrLen) < 0) {
--        if (errno == ENOTCONN) {
-+        if (errno == ENOTCONN
-+#ifdef EOPNOTSUPP
-+            || errno == EOPNOTSUPP
++#ifdef __x86_64__
++#define LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL_ARCH(X) \
++    X(HRESULT, WHvGetVirtualProcessorCpuidOutput, \
++        (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, UINT32 Eax, \
++         UINT32 Ecx, WHV_CPUID_OUTPUT *CpuidOutput))
++#else
++#define LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL_ARCH(X)
 +#endif
-+            ) {
-             memset(&sioc->remoteAddr, 0, sizeof(sioc->remoteAddr));
-             sioc->remoteAddrLen = sizeof(sioc->remoteAddr);
-         } else {
+ /*
+  * These are supplemental functions that may not be present
+  * on all versions and are not critical for basic functionality.
+@@ -89,6 +97,7 @@ void whpx_apic_get(APICCommonState *s);
+          UINT32 StateSize)) \
+   X(HRESULT, WHvResetPartition, \
+         (WHV_PARTITION_HANDLE Partition)) \
++  LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL_ARCH(X)
+ 
+ #define WHP_DEFINE_TYPE(return_type, function_name, signature) \
+     typedef return_type (WINAPI *function_name ## _t) signature;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c6fd1dc00e..0000093fa3 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -26,6 +26,8 @@
+ #include "tcg/helper-tcg.h"
+ #include "exec/translation-block.h"
+ #include "system/hvf.h"
++#include "system/whpx.h"
++#include "whpx/whpx-i386.h"
+ #include "hvf/hvf-i386.h"
+ #include "kvm/kvm_i386.h"
+ #include "kvm/tdx.h"
+@@ -8087,6 +8089,17 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+         r = hvf_get_supported_cpuid(wi->cpuid.eax,
+                                     wi->cpuid.ecx,
+                                     wi->cpuid.reg);
++    } else if (whpx_enabled()) {
++        if (wi->type != CPUID_FEATURE_WORD) {
++            return 0;
++        }
++        if (whpx_is_legacy_os()) {
++            r = wi->tcg_features;
++        } else {
++            r = whpx_get_supported_cpuid(wi->cpuid.eax,
++                                        wi->cpuid.ecx,
++                                        wi->cpuid.reg);
++        }
+     } else if (tcg_enabled() || qtest_enabled()) {
+         r = wi->tcg_features;
+     } else {
+@@ -8168,6 +8181,18 @@ static void x86_cpu_get_supported_cpuid(uint32_t func, uint32_t index,
+         *ebx = hvf_get_supported_cpuid(func, index, R_EBX);
+         *ecx = hvf_get_supported_cpuid(func, index, R_ECX);
+         *edx = hvf_get_supported_cpuid(func, index, R_EDX);
++    } else if (whpx_enabled()) {
++        if (whpx_is_legacy_os()) {
++            *eax = 0;
++            *ebx = 0;
++            *ecx = 0;
++            *edx = 0;
++        } else {
++            *eax = whpx_get_supported_cpuid(func, index, R_EAX);
++            *ebx = whpx_get_supported_cpuid(func, index, R_EBX);
++            *ecx = whpx_get_supported_cpuid(func, index, R_ECX);
++            *edx = whpx_get_supported_cpuid(func, index, R_EDX);
++        }
+     } else {
+         *eax = 0;
+         *ebx = 0;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 4127440c0c..2d527b90dd 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -36,6 +36,7 @@
+ #include "system/whpx-accel-ops.h"
+ #include "system/whpx-all.h"
+ #include "system/whpx-common.h"
++#include "whpx-i386.h"
+ 
+ #include "emulate/x86_decode.h"
+ #include "emulate/x86_emu.h"
+@@ -49,6 +50,8 @@
+ /* for kernel-irqchip=off */
+ #define HV_X64_MSR_APIC_FREQUENCY       0x40000023
+ 
++static bool is_modern_os = true;
++
+ static const WHV_REGISTER_NAME whpx_register_names[] = {
+ 
+     /* X64 General purpose registers */
+@@ -1062,6 +1065,71 @@ static void whpx_init_emu(void)
+     init_emu(&whpx_x86_emul_ops);
+ }
+ 
++bool whpx_is_legacy_os(void)
++{
++    return !is_modern_os;
++}
++
++uint32_t whpx_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
++{
++    WHV_CPUID_OUTPUT output;
++    uint32_t eax, ebx, ecx, edx;
++    uint32_t cpu_index = 0;
++    bool temp_cpu = true;
++    HRESULT hr;
++
++    hr = whp_dispatch.WHvCreateVirtualProcessor(
++        whpx_global.partition, cpu_index, 0);
++
++    /* This means that the CPU already exists... */
++    if (FAILED(hr)) {
++        temp_cpu = false;
++    }
++
++    hr = whp_dispatch.WHvGetVirtualProcessorCpuidOutput(whpx_global.partition,
++        cpu_index, func, idx, &output);
++
++    if (FAILED(hr)) {
++        abort();
++    }
++
++    if (temp_cpu) {
++        hr = whp_dispatch.WHvDeleteVirtualProcessor(whpx_global.partition, cpu_index);
++        if (FAILED(hr)) {
++            abort();
++        }
++    }
++
++    eax = output.Eax;
++    ebx = output.Ebx;
++    ecx = output.Ecx;
++    edx = output.Edx;
++
++    /*
++     * We can emulate X2APIC even for the kernel-irqchip=off case.
++     * CPUID_EXT_HYPERVISOR and CPUID_HT should be considered present
++     * always, so report them as unconditionally supported here.
++     */
++    if (func == 1) {
++        ecx |= CPUID_EXT_X2APIC;
++        ecx |= CPUID_EXT_HYPERVISOR;
++        edx |= CPUID_HT;
++    }
++
++    switch (reg) {
++    case R_EAX:
++        return eax;
++    case R_EBX:
++        return ebx;
++    case R_ECX:
++        return ecx;
++    case R_EDX:
++        return edx;
++    default:
++        return 0;
++    }
++}
++
+ /*
+  * Controls whether we should intercept various exceptions on the guest,
+  * namely breakpoint/single-step events.
+@@ -2235,7 +2303,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     WHV_CAPABILITY_FEATURES features = {0};
+     WHV_PROCESSOR_FEATURES_BANKS processor_features;
+     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
+-    bool is_legacy_os = false;
+     UINT32 cpuidExitList[] = {1};
+ 
+     whpx = &whpx_global;
+@@ -2395,7 +2462,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     if (FAILED(hr)) {
+         warn_report("WHPX: Failed to get performance "
+                     "monitoring features, hr=%08lx", hr);
+-        is_legacy_os = true;
++        is_modern_os = false;
+     } else {
+         hr = whp_dispatch.WHvSetPartitionProperty(
+                 whpx->partition,
+@@ -2435,7 +2502,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         synthetic_features.Bank0.DirectSyntheticTimers = 1;
+     }
+ 
+-    if (!is_legacy_os && whpx->hyperv_enlightenments_allowed) {
++    if (is_modern_os && whpx->hyperv_enlightenments_allowed) {
+         hr = whp_dispatch.WHvSetPartitionProperty(
+                 whpx->partition,
+                 WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
+@@ -2446,7 +2513,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+             ret = -EINVAL;
+             goto error;
+         }
+-    } else if (is_legacy_os && whpx->hyperv_enlightenments_required) {
++    } else if (!is_modern_os && whpx->hyperv_enlightenments_required) {
+         error_report("Hyper-V enlightenments not available on legacy Windows");
+         ret = -EINVAL;
+         goto error;
+diff --git a/target/i386/whpx/whpx-i386.h b/target/i386/whpx/whpx-i386.h
+new file mode 100644
+index 0000000000..6db9a75d39
+--- /dev/null
++++ b/target/i386/whpx/whpx-i386.h
+@@ -0,0 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++uint32_t whpx_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
++bool whpx_is_legacy_os(void);
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
