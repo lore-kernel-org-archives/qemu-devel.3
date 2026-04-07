@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC67DFF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F76FF5136
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABRy-0003BI-9s; Tue, 07 Apr 2026 14:46:58 -0400
+	id 1wABXN-0000AU-3c; Tue, 07 Apr 2026 14:52:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wABR3-0002em-0w
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:46:04 -0400
-Received: from mail-ej1-x642.google.com ([2a00:1450:4864:20::642])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wABUB-0004Gt-WC
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:16 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wAAAA-0007tk-Vy
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 13:24:32 -0400
-Received: by mail-ej1-x642.google.com with SMTP id
- a640c23a62f3a-b9c3e2cf3c0so855765666b.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 10:24:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wA0Hw-0000Vw-Rm
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 02:51:54 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c74f0c3fc16so1537302a12.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Apr 2026 23:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775582669; x=1776187469; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SNnqyiKu4QqqTcyzSZuetFLzuspnDmf4RqP+xBfCwDM=;
- b=O+x6ddl3/ztqGaenL4F08qjNv94tRTD+cCUzLsx5dZrQHqLXiggxi0zR6XKLCGNEmw
- OKQMpAgxrILzGS7woerTmUBLjZRtLVJHj/2aGuPsSpdePfTJfFK0kpgIXCiw/Jbw8h+W
- M1rvE+EcfOf1+sFVhsJaMHYrLB+o7ZmnFCEgCZpapVguH9mQUl/alpJoTzZzKOFxThbR
- tlObsurRMoaFUAe2CIbO1j+eIcErUjAuRchz/EER8M+hjYu996BdJtwoCRL7k3WOE34l
- +teoOop1HG9PYB12/Xw4nRtTVP3iaLq05mxxCNjTemdiOvKdFD4RDXVXGESOaEZendiU
- 5wgQ==
+ d=linaro.org; s=google; t=1775544711; x=1776149511; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v5IKxRMmwb+dPwhRvE/+sjVr5tsWbHFNjl7SdiH7BuI=;
+ b=ILFmGlGhwZCSrqy+Yn+DCnI7ZkFx9F8o32pOVD+zzCeVHdTCs7nrQG58G7MMU8TdSn
+ fUgkLWincj1XnoJX4ajtkP3sEJ2AK/SlM1GTKcD5Jj0QA744Gsg48av0YxuwCocFpncP
+ 5NAAPct15o8tyN8c0YMzGDF5/UUAMTSMPAuQxA9uGDkGNdg6YGv3hqWUx7QUVBHljc3J
+ 9IvivGsl0AN+SJndvBk0mQCUIHkPm/dmI6XlR3IC+b1CPkcQe2VOyXp8fvIwhQw5cW8y
+ oPz+Eyp8mT5ljNGryFMEmcuIZII5a46AqiX1RY8NsM6dgu/nyWZUNMXUjBTM4Qri01A5
+ Zjiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775582669; x=1776187469;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SNnqyiKu4QqqTcyzSZuetFLzuspnDmf4RqP+xBfCwDM=;
- b=nwyDg8P/4TXWMVLveKzEQxSqJG4n92Yu3Pcp1jBcCv9l6Vpq5wQ7d7oDoqnDQ40PJL
- wCjCqHLPAt2NAljt4LpaOJ8DoRn2MgVM+Qxx9JM/KhRXiQd29R159eKbV06XRQLbclOb
- 14ER7NQsgQz/VLndQmFA6uinGe3bYxzhoFnqmQV7xX1GwPY+fBUSTuxp/jODMSCS5UgV
- Hpm6AsfaojGyp60Igs62zvia64XfAayeU7l6it1XHNjF74QYL3Fk+fMOVFrEOQw4bm/j
- QZ9fmJ2TolTRppL3zOOWnkkJIuEofZ98dHRf77AlQqS/w35kjhCaixlHs+Vfx4dJH2IE
- Eg8Q==
+ d=1e100.net; s=20251104; t=1775544711; x=1776149511;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v5IKxRMmwb+dPwhRvE/+sjVr5tsWbHFNjl7SdiH7BuI=;
+ b=O0hiw4VAqUz78OH9kYxMWwNLiE67RWgIFN7BwsKzOkcomZb9AZF6HwVuFrvHdOLRzu
+ /w9sY3qnTvZgYr04gsLJwcC+00Qls9j3v0aB4RHJ1vBtXBTwR73ziGGNedceXo9DG21Y
+ noCJVE+5ZXEulIn82cht2KtsW0+TgRUriChKz5yA9DMxgB8h7FEatPTWRENpC4w1mtRr
+ scTBLSjYfRxmleu8SaIkVbUzst3VjQXErYUJKCvlO8WdATzsGf5KKIlXNBv0YKJZNw/C
+ RbVK8EuDxXKSvW7uxmS4xtI+zbTeEA12DzadKHuxEJg9kjmNQzsDL2Es3dQlxmgx61qi
+ HdEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWvkiN+qAzPHgMOpCC+eLEQM8N+Q1yVAi1PAMod62PPZN0a5kPVdrCWx16h175sZabmpsUxSkJTJjb@nongnu.org
-X-Gm-Message-State: AOJu0YwwRMsVehhDRUqhfuci40ybO8yRIpJA+bh6gUYEgF++UVh7/7yi
- mmvZEDLhIoRCw32Y0YTBTDoSEwoldkCINyLEfDCpWT2QTPPRpAm+JOt0wEeCB4EKVLc=
-X-Gm-Gg: AeBDies1DshU8AK/7UuRCVbyAgGZlFcu0E3OKqE57YpXSlYpcUom/UAn0vJ3MGPuwHt
- DsUJ7ua1+D0NZXIZ3TMxE69jAULhXxt+UUEpw3/mSdpDOwN4/spPsdgTAhQ/YD+VVBQdG7o9KC6
- HA7P/RODJ2nMQe9++BerVGbcFkbzDTuZSOQvq6g/kf47nesvd2ttDn5DOFHPcHqdUtQ6G7/TfNg
- sdlY01aUFk6VryZCGzZJu4eRTocpj0iODFE9P39AxnKIIvXwNGkxG+w459ZDwa/jhBcVtzlF4AI
- MLYcn5FkFVYkgd7HmPqBRD9kl1bdhv0vsdrNlftOB6uIFjcDgk/PEggTvA2G+R4fCmXQzXWjT/2
- w4sxPwZmR8F4IGpinyjnFvZBukJax2kBpY1trrUUQwtUup+EejcXFJIarx/CtSQFfRncLaiNx08
- cAiWDLkMZDUOOH8uaRpaOI59NGhmf21BAZTQ==
-X-Received: by 2002:a17:907:d40f:b0:b98:2b83:909d with SMTP id
- a640c23a62f3a-b9c679f592dmr947670466b.37.1775582668761; 
- Tue, 07 Apr 2026 10:24:28 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9c3cfeedc2sm572469066b.42.2026.04.07.10.24.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 10:24:27 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C19925F9CD;
- Tue, 07 Apr 2026 18:24:26 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Stefan Weil <sw@weilnetz.de>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,  Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui <ray.huang@amd.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Gerd Hoffmann <kraxel@redhat.com>,  Pierre-Eric
- Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei
- Zhang <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert
- Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
- Singh <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger
- Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
- <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Robert Beckett
- <bob.beckett@collabora.com>, Anthony Roberts <anthony.roberts@linaro.org>
-Subject: Re: [PATCH v22 02/18] ui/sdl2: Don't disable scanout when display
- is refreshed
-In-Reply-To: <c9943b84-e997-4ce8-8449-5c0115ca9250@weilnetz.de> (Stefan Weil's
- message of "Tue, 7 Apr 2026 18:44:43 +0200")
-References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
- <20260303151422.977399-3-dmitry.osipenko@collabora.com>
- <c9943b84-e997-4ce8-8449-5c0115ca9250@weilnetz.de>
-User-Agent: mu4e 1.14.1-pre1; emacs 30.1
-Date: Tue, 07 Apr 2026 18:24:26 +0100
-Message-ID: <87qzoqbs51.fsf@draig.linaro.org>
+ AJvYcCVetwbFMcemnFNm3pHSwmZm8K22QFU0MKO2JoMXjdrk91V+TPRWhGanz67ME1CmRFm4F1eCtYBu2ExH@nongnu.org
+X-Gm-Message-State: AOJu0YzTKB1beo7pARlfYDiuN4muT4Gs9qRXZlC8+dBLtJm0yj37FD8+
+ I15gxEVawx0b9lsqWTCIjpXfx1DbuiEyef3MikLs05LPjZnL5vq4LsEjVtTAUHvdEUw=
+X-Gm-Gg: AeBDievZRZhXVDPUO6MMSdfSl2PEFxFoDZqrTNSHBlCTm1ZfX0yJnczDQA8016rLNLa
+ rHlz6eaN5L7LjROJA3UjHD0EEIP6ScWyX/bOH1/8L3QnwukxgddaS+39Uu7H4B/NoJDitiM56rk
+ H+hmTz91MZ3nsD3FnSSNwe23LwOqCZOUM98R7/bHch1ItRD1S96MwNm5PRvgeLAbFqRYMMqtUVs
+ Af08Dllb6jPypuAGeE6AgOKe3QAWN54q133m3djVs9EF6HwtbKGRxROezWY/Wr3mWckCvWnQ8lZ
+ AvAm4Cyalry318ga+jceMmxmjyzK4UKdXuhVLUPZJmyWt7bePBo+aOce0mf24Uw98UG+3MB0maF
+ PrSncu/Fv70pcFfMqAbLJxniWk6X1izLcrxBLpqd5eRsIj1hKNXgGjmuqaYnhFVgmE5h+4I8fbu
+ KtG+byHbH8aXNCMIpEx1574p1OIXqAGQVjTu51Rmcoziec2bazJio9YMShjhgkpfbigWw=
+X-Received: by 2002:a05:6a20:7289:b0:39c:cf9:b8e4 with SMTP id
+ adf61e73a8af0-39f2f0c9443mr15547594637.42.1775544710851; 
+ Mon, 06 Apr 2026 23:51:50 -0700 (PDT)
+Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c76c647792bsm15553215a12.6.2026.04.06.23.51.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Apr 2026 23:51:50 -0700 (PDT)
+Message-ID: <ba89301b-de27-436f-9f46-50be2467e13b@linaro.org>
+Date: Tue, 7 Apr 2026 16:51:43 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::642;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x642.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 17/20] target/arm/tcg/translate.c: replace
+ translator_ldl_swap with translator_ldl_end
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-arm@nongnu.org
+References: <20260406182609.193886-1-pierrick.bouvier@linaro.org>
+ <20260406182609.193886-18-pierrick.bouvier@linaro.org>
+ <c73bee03-82f8-4529-9db1-7857a049f59d@linaro.org>
+ <626fdf02-7114-47ad-997a-a7c64a83f9de@linaro.org>
+ <7b15c854-64f7-4996-a831-d03480a40776@linaro.org>
+ <46f488c8-1eff-40c0-a72e-231c81576812@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <46f488c8-1eff-40c0-a72e-231c81576812@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,56 +111,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Weil <sw@weilnetz.de> writes:
+On 4/7/26 09:00, Pierrick Bouvier wrote:
+> On 4/6/26 3:44 PM, Richard Henderson wrote:
+>> Delete bswap_code.
+...
+> There is still one usage for bswap_code in linux-user/arm/cpu_loop.c which I'm not sure 
+> what to do with.
 
-> Am 03.03.26 um 16:14 schrieb Dmitry Osipenko:
->> Display refreshment is invoked by a timer and it erroneously disables
->> the active scanout if it happens to be invoked after scanout has been
->> enabled. This offending scanout-disable race condition with a timer
->> can be easily hit when Qemu runs with a disabled vsync by using SDL or
->> GTK displays (with vblank_mode=3D0 for GTK). Refreshment of display's
->> content shouldn't disable the active display. Fix it by keeping the
->> scanout's state unchanged when display is redrawn.
->> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
->> Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> ---
->>   ui/sdl2-gl.c | 1 -
->>   1 file changed, 1 deletion(-)
->> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
->> index 3be17d1079af..5eca0248233e 100644
->> --- a/ui/sdl2-gl.c
->> +++ b/ui/sdl2-gl.c
->> @@ -51,7 +51,6 @@ static void sdl2_gl_render_surface(struct sdl2_console=
- *scon)
->>       int ww, wh;
->>         SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
->> -    sdl2_set_scanout_mode(scon, false);
->>         SDL_GetWindowSize(scon->real_window, &ww, &wh);
->>       surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
->
-> I got a user report that my latest QEMU for Windows no longer supports
-> SDL. According to my own test, SDL still worked with git master
-> (2026-03-07), but was broken with 11.0.0-rc0 (2026-03-18).
+Essentially,
 
-This is:
+     x = load_little_endian(...);
+     if (arm_sctlr_b(env)) {
+        x = bswap32(x);
+     }
 
-  https://gitlab.com/qemu-project/qemu/-/work_items/3347
+This is slightly more complicated because there's not currently a get_user macro to force 
+an endianness, only __get_user_e.  So it's a question of whether to introduce get_user_e 
+or open-code all of the goop in get_user_code_u32.
 
-Anthony should be posting a patch to the list soon.
+Actually, there's currently a FIXME in cpu_loop concerning the failure of get_user, so I'd 
+say most of the get_user goop belongs there.  Then using __get_user_e is trivial.
 
->
-> Therefore this patch series might have caused the regression which
-> still exists in 11.0.0-rc2. All test installers are available here:
-> https://qemu.weilnetz.de/w64/2026/.
->
-> Regards
-> Stefan Weil
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
