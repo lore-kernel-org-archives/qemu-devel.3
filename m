@@ -4,66 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA97BFF5137
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0B3FF5136
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:30:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABXb-0000HR-MP; Tue, 07 Apr 2026 14:52:47 -0400
+	id 1wABUP-0006OP-FS; Tue, 07 Apr 2026 14:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1wABUI-0003uc-DO
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wABSU-0002iK-5c
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1w9yg3-0003HK-8N
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 01:08:41 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wA8Rq-0006XR-5I
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:34:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775538518;
+ s=mimecast20190719; t=1775576076;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=bSYhPjyMUCbINJQbYKmJPxVIaDBsqWDh+L4xXLOW1QQ=;
- b=D2wyNQjM/4xTm+h2D/OYZnLnTP25I6s/9oasKSK0l8OxQgVQrxJAbqm23Sa+KtM0e3757E
- og04+ETToayrMCBaxgENEZmI6Uf97uYuZMCHAHoK15h+i/S2XvVMpFyxlAbMLY0O3m/1K0
- rHYVTpds7q/VcLWwlkM4W/9Q5XyD84Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8XADdrZibf57EGRy1RuBkmFPtyCoeV87C4j3jnniRGU=;
+ b=eZywXy7PAkfAc1R4JoS4/3mFq1Yv9b4eeCxyWYobNuevVwIoEOjnWdzVpcRbiYOk9IYtNX
+ 2i/PoNOYRzvFgOarWzaYpneoEp+wlMyET4wqYDPifh+NIyy2I3yz5iG2CeAp/ShVDhralE
+ zhYqEX8kt9khl2DSUbnqTmv1jVVNtqA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-522-Xke8I1JmOIud50myCEc5-g-1; Tue,
- 07 Apr 2026 01:08:35 -0400
-X-MC-Unique: Xke8I1JmOIud50myCEc5-g-1
-X-Mimecast-MFC-AGG-ID: Xke8I1JmOIud50myCEc5-g_1775538514
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-6hmMVIHnMiibzsOlbTJKiA-1; Tue,
+ 07 Apr 2026 11:34:35 -0400
+X-MC-Unique: 6hmMVIHnMiibzsOlbTJKiA-1
+X-Mimecast-MFC-AGG-ID: 6hmMVIHnMiibzsOlbTJKiA_1775576073
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 04146195609F; Tue,  7 Apr 2026 05:08:34 +0000 (UTC)
-Received: from S2.redhat.com (unknown [10.72.112.55])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 978301800351; Tue,  7 Apr 2026 05:08:30 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, zhangckid@gmail.com,
- lizhijian@fujitsu.com, jmarcin@redhat.com, qemu-devel@nongnu.org
-Subject: [RFC v4 2/5] chardev/socket: add AF_PACKET initialization
-Date: Tue,  7 Apr 2026 13:05:49 +0800
-Message-ID: <20260407050818.2249570-3-lulu@redhat.com>
-In-Reply-To: <20260407050818.2249570-1-lulu@redhat.com>
-References: <20260407050818.2249570-1-lulu@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85E73195605B; Tue,  7 Apr 2026 15:34:31 +0000 (UTC)
+Received: from localhost (unknown [10.44.34.43])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1307C1800673; Tue,  7 Apr 2026 15:34:28 +0000 (UTC)
+Date: Tue, 7 Apr 2026 11:34:26 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
+ Klaus Jensen <its@irrelevant.dk>,
+ =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v5 5/8] hw/nvme: add migration blockers for non-supported
+ cases
+Message-ID: <20260407153426.GA238768@fedora>
+References: <20260317102708.126725-1-alexander@mihalicyn.com>
+ <20260317102708.126725-6-alexander@mihalicyn.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="NNGxTyNILpv0+EUA"
+Content-Disposition: inline
+In-Reply-To: <20260317102708.126725-6-alexander@mihalicyn.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,339 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Teach socket chardevs to recognize AF_PACKET fds and record the state
-needed by later TX/RX support. Add af-packet-mode=capture|inject to
-QAPI and command-line parsing, reject it for non-fd address types, and
-validate after a client fd is attached that the supplied fd really is
-AF_PACKET.
 
-The socket chardev now tracks whether the underlying socket is
-AF_PACKET, owns separate send/receive staging buffers, and resets that
-state on connection teardown and reconnect. The follow-up TX and RX
-commits use this setup to translate between the redirector's existing
-length-prefixed chardev framing and raw L2 packets.
+--NNGxTyNILpv0+EUA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: Cindy Lu <lulu@redhat.com>
----
- chardev/char-socket.c         | 104 +++++++++++++++++++++++++++++++++-
- chardev/char.c                |   3 +
- include/chardev/char-socket.h |  13 +++++
- qapi/char.json                |  23 +++++++-
- qemu-options.hx               |   5 +-
- 5 files changed, 145 insertions(+), 3 deletions(-)
+On Tue, Mar 17, 2026 at 11:27:05AM +0100, Alexander Mikhalitsyn wrote:
+> +static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+> +{
+> +    uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
+> +    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
+> +    bool adm_cmd_security_checked = false;
+> +    bool cmd_io_mgmt_checked = false;
+> +    bool cmd_zone_checked = false;
+> +
+> +    /*
+> +     * Idea of this function is simple, we iterate over all Command Sets and
+> +     * for each supported command we provide a special handling logic to
+> +     * determine if we should block migration or not.
+> +     *
+> +     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is always
+> +     * available to the guest, but if there is only 1 namespace, then it is
+> +     * safe to allow migration, but if there are more, then we need to block
+> +     * migration because we don't handle this in migration code yet.
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 62852e3caf..c710fdb497 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -23,6 +23,9 @@
-  */
- 
- #include "qemu/osdep.h"
-+#ifdef CONFIG_LINUX
-+#include <netpacket/packet.h>
-+#endif
- #include "chardev/char.h"
- #include "io/channel-socket.h"
- #include "io/channel-websock.h"
-@@ -32,6 +35,7 @@
- #include "qapi/error.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/qapi-visit-sockets.h"
-+#include "qapi/util.h"
- #include "qemu/yank.h"
- #include "trace.h"
- 
-@@ -326,6 +330,28 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
-     return ret;
- }
- 
-+static bool tcp_chr_is_af_packet(SocketChardev *s)
-+{
-+#ifdef CONFIG_LINUX
-+    return s->sioc && s->sioc->localAddr.ss_family == AF_PACKET;
-+#else
-+    return false;
-+#endif
-+}
-+
-+static void tcp_chr_reset_af_packet_buf(SocketChardev *s)
-+{
-+    s->af_packet_buf_len = 0;
-+    s->af_packet_buf_offset = 0;
-+}
-+
-+static void tcp_chr_reset_af_packet_send(SocketChardev *s)
-+{
-+    s->af_packet_send_len = 0;
-+    s->af_packet_send_offset = 0;
-+    s->af_packet_send_len_bytes = 0;
-+}
-+
- static GSource *tcp_chr_add_watch(Chardev *chr, GIOCondition cond)
- {
-     SocketChardev *s = SOCKET_CHARDEV(chr);
-@@ -384,6 +410,15 @@ static void tcp_chr_free_connection(Chardev *chr)
-     s->sioc = NULL;
-     object_unref(OBJECT(s->ioc));
-     s->ioc = NULL;
-+    g_free(s->af_packet_buf);
-+    s->af_packet_buf = NULL;
-+    s->af_packet_buf_size = 0;
-+    tcp_chr_reset_af_packet_buf(s);
-+    g_free(s->af_packet_send_buf);
-+    s->af_packet_send_buf = NULL;
-+    s->af_packet_send_buf_size = 0;
-+    tcp_chr_reset_af_packet_send(s);
-+    s->is_af_packet = false;
-     g_free(chr->filename);
-     chr->filename = NULL;
-     tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
-@@ -889,6 +924,26 @@ static void tcp_chr_set_client_ioc_name(Chardev *chr,
- 
- }
- 
-+static bool tcp_chr_validate_af_packet_mode_fd(Chardev *chr,
-+                                               QIOChannelSocket *sioc,
-+                                               Error **errp)
-+{
-+    SocketChardev *s = SOCKET_CHARDEV(chr);
-+
-+    if (!s->af_packet_mode_set) {
-+        return true;
-+    }
-+
-+#ifdef CONFIG_LINUX
-+    if (sioc->localAddr.ss_family == AF_PACKET) {
-+        return true;
-+    }
-+#endif
-+
-+    error_setg(errp, "'af-packet-mode' requires an AF_PACKET fd");
-+    return false;
-+}
-+
- static int tcp_chr_new_client(Chardev *chr, QIOChannelSocket *sioc)
- {
-     SocketChardev *s = SOCKET_CHARDEV(chr);
-@@ -907,6 +962,9 @@ static int tcp_chr_new_client(Chardev *chr, QIOChannelSocket *sioc)
-     object_ref(OBJECT(sioc));
-     s->sioc = sioc;
-     object_ref(OBJECT(sioc));
-+    s->is_af_packet = tcp_chr_is_af_packet(s);
-+    tcp_chr_reset_af_packet_buf(s);
-+    tcp_chr_reset_af_packet_send(s);
- 
-     if (s->do_nodelay) {
-         qio_channel_set_delay(s->ioc, false);
-@@ -951,6 +1009,11 @@ static int tcp_chr_add_client(Chardev *chr, int fd)
-                                char_socket_yank_iochannel,
-                                QIO_CHANNEL(sioc));
-     }
-+    if (!tcp_chr_validate_af_packet_mode_fd(chr, sioc, NULL)) {
-+        tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
-+        object_unref(OBJECT(sioc));
-+        return -1;
-+    }
-     ret = tcp_chr_new_client(chr, sioc);
-     object_unref(OBJECT(sioc));
-     return ret;
-@@ -990,7 +1053,17 @@ static int tcp_chr_connect_client_sync(Chardev *chr, Error **errp)
-                                char_socket_yank_iochannel,
-                                QIO_CHANNEL(sioc));
-     }
--    tcp_chr_new_client(chr, sioc);
-+    if (!tcp_chr_validate_af_packet_mode_fd(chr, sioc, errp)) {
-+        tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
-+        object_unref(OBJECT(sioc));
-+        return -1;
-+    }
-+    if (tcp_chr_new_client(chr, sioc) < 0) {
-+        tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
-+        object_unref(OBJECT(sioc));
-+        error_setg(errp, "failed to initialize socket chardev client");
-+        return -1;
-+    }
-     object_unref(OBJECT(sioc));
-     return 0;
- }
-@@ -1312,6 +1385,11 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
-         break;
- 
-     case SOCKET_ADDRESS_TYPE_UNIX:
-+        if (sock->has_af_packet_mode) {
-+            error_setg(errp,
-+                       "'af-packet-mode' option requires 'fd' address type");
-+            return false;
-+        }
-         if (sock->tls_creds) {
-             error_setg(errp,
-                        "'tls_creds' option is incompatible with "
-@@ -1321,9 +1399,19 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
-         break;
- 
-     case SOCKET_ADDRESS_TYPE_INET:
-+        if (sock->has_af_packet_mode) {
-+            error_setg(errp,
-+                       "'af-packet-mode' option requires 'fd' address type");
-+            return false;
-+        }
-         break;
- 
-     case SOCKET_ADDRESS_TYPE_VSOCK:
-+        if (sock->has_af_packet_mode) {
-+            error_setg(errp,
-+                       "'af-packet-mode' option requires 'fd' address type");
-+            return false;
-+        }
-         if (sock->tls_creds) {
-             error_setg(errp,
-                        "'tls_creds' option is incompatible with "
-@@ -1386,6 +1474,10 @@ static void qmp_chardev_open_socket(Chardev *chr,
-     s->is_tn3270 = is_tn3270;
-     s->is_websock = is_websock;
-     s->do_nodelay = do_nodelay;
-+    s->af_packet_mode_set = sock->has_af_packet_mode;
-+    if (sock->has_af_packet_mode) {
-+        s->af_packet_mode = sock->af_packet_mode;
-+    }
-     if (sock->tls_creds) {
-         Object *creds;
-         creds = object_resolve_path_component(
-@@ -1463,6 +1555,7 @@ static void qemu_chr_parse_socket(QemuOpts *opts, ChardevBackend *backend,
-     const char *host = qemu_opt_get(opts, "host");
-     const char *port = qemu_opt_get(opts, "port");
-     const char *fd = qemu_opt_get(opts, "fd");
-+    const char *af_packet_mode = qemu_opt_get(opts, "af-packet-mode");
- #ifdef CONFIG_LINUX
-     bool tight = qemu_opt_get_bool(opts, "tight", true);
-     bool abstract = qemu_opt_get_bool(opts, "abstract", false);
-@@ -1516,6 +1609,15 @@ static void qemu_chr_parse_socket(QemuOpts *opts, ChardevBackend *backend,
-     sock->wait = qemu_opt_get_bool(opts, "wait", true);
-     sock->has_reconnect_ms = qemu_opt_find(opts, "reconnect-ms");
-     sock->reconnect_ms = qemu_opt_get_number(opts, "reconnect-ms", 0);
-+    if (af_packet_mode) {
-+        sock->af_packet_mode =
-+            qapi_enum_parse(&ChardevSocketAfPacketMode_lookup,
-+                            af_packet_mode, -1, errp);
-+        if (*errp) {
-+            return;
-+        }
-+        sock->has_af_packet_mode = true;
-+    }
- 
-     sock->tls_creds = g_strdup(qemu_opt_get(opts, "tls-creds"));
-     sock->tls_authz = g_strdup(qemu_opt_get(opts, "tls-authz"));
-diff --git a/chardev/char.c b/chardev/char.c
-index 3e432195a5..39bb0d5b68 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -910,6 +910,9 @@ QemuOptsList qemu_chardev_opts = {
-         },{
-             .name = "websocket",
-             .type = QEMU_OPT_BOOL,
-+        },{
-+            .name = "af-packet-mode",
-+            .type = QEMU_OPT_STRING,
-         },{
-             .name = "width",
-             .type = QEMU_OPT_NUMBER,
-diff --git a/include/chardev/char-socket.h b/include/chardev/char-socket.h
-index d6d13ad37f..8af8af6cf8 100644
---- a/include/chardev/char-socket.h
-+++ b/include/chardev/char-socket.h
-@@ -63,6 +63,19 @@ struct SocketChardev {
-     int *write_msgfds;
-     size_t write_msgfds_num;
-     bool registered_yank;
-+    bool is_af_packet;
-+    bool af_packet_mode_set;
-+    ChardevSocketAfPacketMode af_packet_mode;
-+    uint8_t *af_packet_buf;
-+    size_t af_packet_buf_size;
-+    size_t af_packet_buf_len;
-+    size_t af_packet_buf_offset;
-+    uint8_t *af_packet_send_buf;
-+    size_t af_packet_send_buf_size;
-+    size_t af_packet_send_len;
-+    size_t af_packet_send_offset;
-+    uint8_t af_packet_send_len_buf[sizeof(uint32_t)];
-+    size_t af_packet_send_len_bytes;
- 
-     SocketAddress *addr;
-     bool is_listen;
-diff --git a/qapi/char.json b/qapi/char.json
-index 140614f82c..61a785727d 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -237,6 +237,22 @@
-   'data': { 'device': 'str' },
-   'base': 'ChardevCommon' }
- 
-+##
-+# @ChardevSocketAfPacketMode:
-+#
-+# AF_PACKET fd mode for socket chardevs.
-+#
-+# @capture: use recvfrom() to capture raw L2 frames and forward them
-+#     through the existing chardev packet framing
-+#
-+# @inject: use sendmsg() to inject framed chardev packets back as raw
-+#     L2 frames
-+#
-+# Since: 10.1
-+##
-+{ 'enum': 'ChardevSocketAfPacketMode',
-+  'data': [ 'capture', 'inject' ] }
-+
- ##
- # @ChardevSocket:
- #
-@@ -274,6 +290,10 @@
- #     Setting this to zero disables this function.
- #     (default: 0) (Since: 9.2)
- #
-+# @af-packet-mode: when @addr is an fd that refers to an AF_PACKET
-+#     socket, use raw packet capture or inject instead of stream
-+#     socket I/O (Since: 10.1)
-+#
- # Since: 1.4
- ##
- { 'struct': 'ChardevSocket',
-@@ -286,7 +306,8 @@
-             '*telnet': 'bool',
-             '*tn3270': 'bool',
-             '*websocket': 'bool',
--            '*reconnect-ms': 'int' },
-+            '*reconnect-ms': 'int',
-+            '*af-packet-mode': 'ChardevSocketAfPacketMode' },
-   'base': 'ChardevCommon' }
- 
- ##
-diff --git a/qemu-options.hx b/qemu-options.hx
-index fca2b7bc74..0e3ce7f493 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4062,7 +4062,7 @@ The available backends are:
-     A void device. This device will not emit any data, and will drop any
-     data it receives. The null backend does not take any options.
- 
--``-chardev socket,id=id[,TCP options or unix options][,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect-ms=milliseconds][,tls-creds=id][,tls-authz=id]``
-+``-chardev socket,id=id[,TCP options or unix options][,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect-ms=milliseconds][,tls-creds=id][,tls-authz=id][,af-packet-mode=capture|inject]``
-     Create a two-way stream socket, which can be either a TCP or a unix
-     socket. A unix socket will be created if ``path`` is specified.
-     Behaviour is undefined if TCP options are specified for a unix
-@@ -4095,6 +4095,9 @@ The available backends are:
-     deleted and recreated on the fly while the chardev server is active.
-     If missing, it will default to denying access.
- 
-+    ``af-packet-mode=capture|inject`` is only valid with ``fd=...`` when
-+    the provided file descriptor is an AF_PACKET socket.
-+
-     TCP and unix socket options are given below:
- 
-     ``TCP options: port=port[,host=host][,to=to][,ipv4=on|off][,ipv6=on|off][,nodelay=on|off]``
--- 
-2.52.0
+What would be required to migrate multiple namespaces?
+
+Thanks,
+Stefan
+
+--NNGxTyNILpv0+EUA
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnVJAIACgkQnKSrs4Gr
+c8jmawf9GDx5rqa2JBFvEUUWLF7X7uqfhGFAHol9kO0yMq9O8s+jutUU9EIj/uIs
+Vps1X0XuRK/29Dr1f04bv74g/bF+FnnFSpStvRT6ixHek64gcgNpArVrEjDpjSA+
+iGpuld01Ly0Qd73gWWWxb8JNFE0UGBGoJRB/JA4xAqGq5lrbYOedKAeqQoiBHEKD
+sw/MfUyqJU7aXsNvQcmab8MWoNwk+UCCkRGxTJIaLfSVjLqSRKsP/tmUdtN/HlQx
+qGsgsG1up1UKU6zVBftg+A41aQ/cJ7IVta/esRg9stFKD6vf5RiEzTsJBNH2RZ9P
+wxHnpuSeBDMz6kLBWYYG5rJfedSYbw==
+=x+XY
+-----END PGP SIGNATURE-----
+
+--NNGxTyNILpv0+EUA--
 
 
