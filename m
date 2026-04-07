@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29802FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6388CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:04:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITrS-0007qA-TZ; Thu, 30 Apr 2026 12:03:35 -0400
+	id 1wITry-0000k9-RD; Thu, 30 Apr 2026 12:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wITrI-0007Vx-9T; Thu, 30 Apr 2026 12:03:24 -0400
+ id 1wITrM-0007cJ-KR; Thu, 30 Apr 2026 12:03:30 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wITrC-00078x-8S; Thu, 30 Apr 2026 12:03:23 -0400
-DKIM-Signature: a=rsa-sha256; bh=ywww7Nv5Qiuj7CAJWTkw1HmYKvkxUnqP3gKISLYCA3I=; 
+ id 1wITrH-00079h-DN; Thu, 30 Apr 2026 12:03:26 -0400
+DKIM-Signature: a=rsa-sha256; bh=PlhA+f2IZd8IcCVPTtjXpKLc7zQX/PWU3bGKcmfeaoo=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
  t=1777564993; v=1;
- b=p6UWgn57Zlq//5wvy1aNHLraPrvq7c76HFHRyTje2Og8CPbiBDZWczt81riwt23EhWPN5C7S
- 4ELKdoKhWeB0E4EYYtNV6F8iurBT6n8EkpyF5ptKnl68h3CTrhh6yLhQ91iAYamcEAO2Ggfkfsu
- ArSQOXOXUt5K3uLARMHeG9MQrh18pTsQjJuHuR4jKY6OjppOlK77P0ZN1BL7hNbx/uV7DbnCdZD
- pJC1cDIu+JebKjrHngo5yolLnc+TdVJj9PTVlEOAFANVG93/RCIDaDkNBY6zFEJ0fKIlzLBpVL0
- 1xl9hl0jexdzpHT+XFAKval5OVdbSqxo4tLZ+xhT/kM5g==
+ b=pQQdb2k06FYgy9IGqQnCbg7pjLgbVLi9723KZHOIiIpL739wATBMN8yh/oXTwD134baElLu2
+ 3Mj8dpUxnwfz3n2so0fiah333RyYyH7KPynSm8H540kaZKseeG9A4ur80M6IXLiAedy1VpM+bE/
+ ZZ6PxWlALzbQf0kdlTaOBhmLrskbMl7duLEV1zTFss4YG0xoYH+vsRJE8xHOfxBQGNunW0yncuv
+ rs6bsjz57dFNXGQ0jnWHKiedhyM+cvHUDyggdtxBxfuDCkToFf/LI6h8qoWWld99NzsLe5dSYNC
+ bLRFcNj9HV1DVxDaq3XISm7Ziuu/n/jyxJHy+vmvl4BUQ==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 548E920C7B;
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 9916620C84;
  Thu, 30 Apr 2026 16:03:13 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Mon, 13 Apr 2026 17:27:19 +0100
-Subject: [PATCH qemu v4 5/9] ot_uart: gather similar behaviours togeter in
- register read and write
-Message-ID: <177756498815.8917.12449488721849651971-5@git.sr.ht>
+Date: Tue, 07 Apr 2026 15:11:43 +0100
+Subject: [PATCH qemu v4 8/9] ot_uart: update file headers with new authorship
+ and documentation URL
+Message-ID: <177756498815.8917.12449488721849651971-8@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177756498815.8917.12449488721849651971-0@git.sr.ht>
 To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
@@ -75,214 +75,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Lex Bailey <lex.bailey@lowrisc.org>
 
-the register read and write functions are each a large switch statement with
-many similar behaviours in, this is mostly for enabling the use of specific
-register names inside of log messages. this commit adds a lookup table for
-register names and uses that instead, allowing much of the code in the regist=
-er
-read and write functions to be deduplicated.
-
-the write function was also missing a switch case for R_ALERT_TEST, so I added
-that in this commit since it has a very simple implementation for now
+The documentation has moved, URL updated.
+This file is now a combination of code from various people/organisations.
+Took the opportunity while editing this to switch to just using
+the SPDX ID.
 
 Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 ---
- hw/char/ot_uart.c | 103 ++++++++++++++++++++++++----------------------
- 1 file changed, 53 insertions(+), 50 deletions(-)
+ hw/char/ot_uart.c         | 24 ++++++++----------------
+ include/hw/char/ot_uart.h | 25 ++++++++++---------------
+ 2 files changed, 18 insertions(+), 31 deletions(-)
 
 diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-index 62c182cbed..2247db7110 100644
+index cdf02da62b..d00f7bee66 100644
 --- a/hw/char/ot_uart.c
 +++ b/hw/char/ot_uart.c
-@@ -109,6 +109,26 @@ REG32(TIMEOUT_CTRL, 0x30)
- #define R_LAST_REG (R_TIMEOUT_CTRL)
- #define REGS_COUNT (R_LAST_REG + 1u)
- #define REGS_SIZE  (REGS_COUNT * sizeof(uint32_t))
-+#define REG_NAME(_reg_) \
-+    ((((_reg_) < REGS_COUNT) && REG_NAMES[_reg_]) ? REG_NAMES[_reg_] : "?")
-+
-+#define REG_NAME_ENTRY(_reg_) [R_##_reg_] =3D stringify(_reg_)
-+static const char *REG_NAMES[REGS_COUNT] =3D {
-+    REG_NAME_ENTRY(INTR_STATE),
-+    REG_NAME_ENTRY(INTR_ENABLE),
-+    REG_NAME_ENTRY(INTR_TEST),
-+    REG_NAME_ENTRY(ALERT_TEST),
-+    REG_NAME_ENTRY(CTRL),
-+    REG_NAME_ENTRY(STATUS),
-+    REG_NAME_ENTRY(RDATA),
-+    REG_NAME_ENTRY(WDATA),
-+    REG_NAME_ENTRY(FIFO_CTRL),
-+    REG_NAME_ENTRY(FIFO_STATUS),
-+    REG_NAME_ENTRY(OVRD),
-+    REG_NAME_ENTRY(VAL),
-+    REG_NAME_ENTRY(TIMEOUT_CTRL),
-+};
-+#undef REG_NAME_ENTRY
+@@ -2,27 +2,19 @@
+  * QEMU OpenTitan UART device
+  *
+  * Copyright (c) 2020 Western Digital
++ * Copyright (c) 2022-2025 Rivos, Inc.
++ * Copyright (c) 2025-2026 lowRISC contributors.
+  *
+  * For details check the documentation here:
+- *    https://docs.opentitan.org/hw/ip/uart/doc/
++ *    https://opentitan.org/book/hw/ip/uart/doc/
+  *
+- * Permission is hereby granted, free of charge, to any person obtaining a c=
+opy
+- * of this software and associated documentation files (the "Software"), to =
+deal
+- * in the Software without restriction, including without limitation the rig=
+hts
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
++ * Author(s):
++ *  Alistair Francis <alistair.francis@wdc.com>
++ *  Lo=C3=AFc Lefort <loic@rivosinc.com>
++ *  Lex Bailey <lex.bailey@lowrisc.com>
+  *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
++ * SPDX-License-Identifier: MIT
+  *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING F=
+ROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+  */
 =20
- static void ot_uart_update_irqs(OtUARTState *s)
- {
-@@ -301,23 +321,14 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
- unsigned int size)
-     OtUARTState *s =3D opaque;
-     uint64_t retvalue =3D 0;
+ #include "qemu/osdep.h"
+diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
+index 997bf2f367..4dc51142f7 100644
+--- a/include/hw/char/ot_uart.h
++++ b/include/hw/char/ot_uart.h
+@@ -2,24 +2,19 @@
+  * QEMU OpenTitan UART device
+  *
+  * Copyright (c) 2020 Western Digital
++ * Copyright (c) 2022-2025 Rivos, Inc.
++ * Copyright (c) 2025-2026 lowRISC contributors.
+  *
+- * Permission is hereby granted, free of charge, to any person obtaining a c=
+opy
+- * of this software and associated documentation files (the "Software"), to =
+deal
+- * in the Software without restriction, including without limitation the rig=
+hts
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
++ * For details check the documentation here:
++ *    https://opentitan.org/book/hw/ip/uart/doc/
+  *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
++ * Author(s):
++ *  Alistair Francis <alistair.francis@wdc.com>
++ *  Lo=C3=AFc Lefort <loic@rivosinc.com>
++ *  Lex Bailey <lex.bailey@lowrisc.com>
++ *
++ * SPDX-License-Identifier: MIT
+  *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING F=
+ROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+  */
 =20
--    switch (addr >> 2) {
-+    hwaddr reg =3D R32_OFF(addr);
-+    switch (reg) {
-     case R_INTR_STATE:
--        retvalue =3D s->regs[R_INTR_STATE];
--        break;
-     case R_INTR_ENABLE:
--        retvalue =3D s->regs[R_INTR_ENABLE];
--        break;
--    case R_INTR_TEST:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: wdata is write only\n", __func__);
--        break;
--
-     case R_CTRL:
--        retvalue =3D s->regs[R_CTRL];
--        break;
-+    case R_FIFO_CTRL:
-     case R_STATUS:
--        retvalue =3D s->regs[R_STATUS];
-+        retvalue =3D s->regs[reg];
-         break;
-=20
-     case R_RDATA:
-@@ -333,14 +344,7 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr, =
-unsigned int size)
-             }
-         }
-         break;
--    case R_WDATA:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: wdata is write only\n", __func__);
--        break;
-=20
--    case R_FIFO_CTRL:
--        retvalue =3D s->regs[R_FIFO_CTRL];
--        break;
-     case R_FIFO_STATUS:
-         retvalue =3D s->regs[R_FIFO_STATUS];
-=20
-@@ -351,21 +355,21 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
- unsigned int size)
-                       "%s: RX fifos are not supported\n", __func__);
-         break;
-=20
--    case R_OVRD:
--        retvalue =3D s->regs[R_OVRD];
--        qemu_log_mask(LOG_UNIMP,
--                      "%s: ovrd is not supported\n", __func__);
--        break;
-     case R_VAL:
--        retvalue =3D s->regs[R_VAL];
--        qemu_log_mask(LOG_UNIMP,
--                      "%s: val is not supported\n", __func__);
--        break;
-+    case R_OVRD:
-     case R_TIMEOUT_CTRL:
--        retvalue =3D s->regs[R_TIMEOUT_CTRL];
-+        retvalue =3D s->regs[reg];
-         qemu_log_mask(LOG_UNIMP,
--                      "%s: timeout_ctrl is not supported\n", __func__);
-+                      "%s: %s is not supported\n", __func__, REG_NAME(reg));
-+        break;
-+
-+    case R_ALERT_TEST:
-+    case R_INTR_TEST:
-+    case R_WDATA:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: %s is write only\n", __func__, REG_NAME(reg));
-         break;
-+
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
-@@ -381,7 +385,9 @@ static void ot_uart_write(void *opaque, hwaddr addr, uint=
-64_t val64,
-     OtUARTState *s =3D opaque;
-     uint32_t value =3D val64;
-=20
--    switch (addr >> 2) {
-+    hwaddr reg =3D R32_OFF(addr);
-+
-+    switch (reg) {
-     case R_INTR_STATE:
-         /* Write 1 clear */
-         value &=3D INTR_MASK;
-@@ -398,7 +404,11 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
-t64_t val64,
-         s->regs[R_INTR_STATE] |=3D value;
-         ot_uart_update_irqs(s);
-         break;
--
-+    case R_ALERT_TEST:
-+        value &=3D R_ALERT_TEST_FATAL_FAULT_MASK;
-+        s->regs[reg] =3D value;
-+        /* This will also set an IRQ once the alert handler is added */
-+        break;
-     case R_CTRL:
-         s->regs[R_CTRL] =3D value;
-=20
-@@ -434,15 +444,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
-t64_t val64,
-             s->char_tx_time =3D (NANOSECONDS_PER_SECOND / baud) * 10;
-         }
-         break;
--    case R_STATUS:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: status is read only\n", __func__);
--        break;
--
--    case R_RDATA:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: rdata is read only\n", __func__);
--        break;
-     case R_WDATA:
-         uart_write_tx_fifo(s, value);
-         break;
-@@ -459,10 +460,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
-t64_t val64,
-             s->tx_level =3D 0;
-         }
-         break;
--    case R_FIFO_STATUS:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: fifo_status is read only\n", __func__);
--        break;
-     case R_OVRD:
-         if (value & R_OVRD_TXEN_MASK) {
-             qemu_log_mask(LOG_UNIMP, "%s: OVRD.TXEN is not supported\n",
-@@ -470,16 +467,22 @@ static void ot_uart_write(void *opaque, hwaddr addr, ui=
-nt64_t val64,
-         }
-         s->regs[R_OVRD] =3D value & R_OVRD_TXVAL_MASK;
-         break;
--    case R_VAL:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: val is read only\n", __func__);
--        break;
-+
-     case R_TIMEOUT_CTRL:
-         s->regs[R_TIMEOUT_CTRL] =3D
-             value & (R_TIMEOUT_CTRL_EN_MASK | R_TIMEOUT_CTRL_VAL_MASK);
-         qemu_log_mask(LOG_UNIMP,
-                       "%s: timeout_ctrl is not supported\n", __func__);
-         break;
-+
-+    case R_STATUS:
-+    case R_RDATA:
-+    case R_FIFO_STATUS:
-+    case R_VAL:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: %s is read only\n", __func__, REG_NAME(reg));
-+        break;
-+
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
+ #ifndef HW_OT_UART_H
 --=20
 2.49.1
 
