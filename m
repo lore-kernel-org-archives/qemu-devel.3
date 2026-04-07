@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB05FF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8263FF5135
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABQo-0002b7-UE; Tue, 07 Apr 2026 14:45:46 -0400
+	id 1wABTq-0004zB-Dv; Tue, 07 Apr 2026 14:48:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wABQm-0002LR-U1
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:45:45 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAAda-0000eO-Py
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 13:54:55 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-488b3f8fa2bso1709215e9.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 10:54:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775584493; x=1776189293; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=j+V5/wr6hJYCNRYt/6OeCVTMAVFIsehdIhZ+xeB+P7M=;
- b=ai0jpHnNwE1D0Jv9fIHLmaxiG0Z4D2mMETrBhW5ogDThiXlWkOiCL7uoXBKpgWhujy
- 3w+UksqhWf99fqsXl3zJuyfTHhHxzni6CnwFGAabNbll8aDmniPERG9erUHjjwes0BIp
- qguqzxf5N9xXX2zbe9I0viwSAErJUzNsYhhuh+i69XMn48DQjAh5Uin/Xtiynxax7jkx
- XpLY0/tr+wYz0mHruDFKfaY74/9A2ylU6mBceg+2wse8cTxRuirrD+/QNnIl+CmOKJ5I
- W+7yMhUwYgcDFTqFgjeJGfoJxBVdMqDO2VxGfQ1aJ8x9DS3QDKCKvzmxFOUvmIsiuMyg
- q/Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775584493; x=1776189293;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=j+V5/wr6hJYCNRYt/6OeCVTMAVFIsehdIhZ+xeB+P7M=;
- b=Rjhpc+3vbS054k6hDzk87xG0qzFbz3EQ2ANF+Z3R6gjHIemDzMcmz79fWotHxtOjHH
- ellWgVHnFvrV4/XW4q3FKb/zZ9OyjoL0xIgNCumKn8RRHAIEkgoevMzDzcjAvIu2v6E9
- YTJvhPgnZ4AnDDEFghx/e0R7BrjOUDrp1Ny4gajh65G1AgawjM+Z05WPg9n/xnd11Eek
- EGwK+r0EGr3fV2IvGfyCQjrY5hDOtwdP1drO81lunpaf2shjJEcN66F56CPkFmDmGild
- 3z/EA7xFMhXauk2Uq8tPIOBIlsGeq+ncs8CD/SIQRz9yYxDjZTmZCkaQEZukQxOwy1lz
- QCeg==
-X-Gm-Message-State: AOJu0YxRwbJzP5wNOkjywZO3jnr0q/Oq0lnY0ggAUG9wgI1bLliHc7uW
- E2JqoBQXW23TvvcP0mSeXOOTf11rhKcB2AC7DGYNGXN2hWK1ouTBtd8irMu2YbqlI258yjHoFZI
- CcnRxbps=
-X-Gm-Gg: AeBDieuoxF7ykBrKUPRYpabW4QWgYRcer0dJ1ejv+ElAW8ksG7WrtKbZP3v0s3oesvn
- OQ2PRS9yr9kvDC2rKsvMBdHhf/NKcfs3ys9c1w4Zv3FyHCf2XKJzufnpzmvWcCHwdFc7zo1jIMD
- PlPv9Vl2DpRhPErBrlQgRxYzDlPpCxS0q8eIezWAS6L/R7/o2RR/Lk/SkdZhrczEKZ0NZU/TNFT
- WKktw0BEJENjxv2xo/lBso5YjdEwgmzNGZ52nIJKLUoJdCY9QKOGsyOvrVNNdzlveNW/qLWpw9C
- ckRKZDqtYSNim+/AAf6P3E54eBTxM39KOn1fyrC0TafGeqBcmO5Qlcmf66G53H1dqX4K2URbUnC
- qKm+FRmD+83c3IaYeBLGhUWlGSwDTTCavQz2GfQ4+BtyWKTAv0JoLqdbqlIDbfSw0FYaDbOEeMC
- GX1da/+XdEM3cnzdCkhz942ZnOFR7z+HiiVBD5J3kB/En1znspTkU28ei+fbeSGCDRqCGyoABHc
- jnSDSy+SQLxKLXbFIetMD1C/SpMTsw=
-X-Received: by 2002:a05:600c:3404:b0:488:9c3b:ff40 with SMTP id
- 5b1f17b1804b1-4889c3c0127mr118895975e9.15.1775584493149; 
- Tue, 07 Apr 2026 10:54:53 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488c5308b3esm1615525e9.1.2026.04.07.10.54.52
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 10:54:52 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wABSZ-0002em-VB
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:36 -0400
+Received: from p-east2-cluster2-host2-snip4-5.eps.apple.com ([57.103.78.18]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wA8Bj-0002EA-Nc
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:18:02 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
+ 8B34B18013F4; Tue, 07 Apr 2026 15:17:56 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1775575078; x=1778167078;
+ bh=9UzhbHGn3KNjJvwbSrpYXcynAdkRNKmx/7n4duVcxcA=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=dHJJoHjBPCr9MaUZrY/DJuZcRMXhlrQPUpHEto6B9rxFhuV5tLHrS2yCg7LmVJkOWAw6QMdopMZzTjhpM6l+h0234npPPdkuE4LObYLVgvIg+okH5KjijrZ1v9IkMX4iycPFW5PlAKL8SjOx/3lW/8IFGRBHyZMmrRbuAFIvniNKYnbLcPRRSunLOGHKkHfSSI+1cFRnaLcuhxP90UFFEf4WU8PAl9BNL9iZ1+T1XE+1Fq9KzDjQQf2UqkmDb9x+Tx6v3iyR7EzwEGbo5eRw9nDhZ9q/zhFl9C5PSFq7YroEKusKw5u+pgskgFJKgzeQ21+gGxfhkZR2IHjOV8M3LA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
+ 795BC1800CBD; Tue, 07 Apr 2026 15:17:22 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Subject: [PULL 3/3] docs/system: remove extraneous sentence
-Date: Tue,  7 Apr 2026 18:54:48 +0100
-Message-ID: <20260407175448.3329196-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260407175448.3329196-1-peter.maydell@linaro.org>
-References: <20260407175448.3329196-1-peter.maydell@linaro.org>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Zhao Liu <zhao1.liu@intel.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH v9 09/13] whpx: i386: use WHvX64RegisterCr8 only when
+ kernel-irqchip=off
+Date: Tue,  7 Apr 2026 17:17:03 +0200
+Message-ID: <20260407151707.46536-10-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260407151707.46536-1-mohamed@unpredictable.fr>
+References: <20260407151707.46536-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDE0MCBTYWx0ZWRfX4YN7I9aJMhtx
+ FBLxTWULHWQKaBFJgzd40IF21wXFrU1j6QRFdM24/h+xDLA8G5pz7K1oS6Ct875BJE0naw1jWFN
+ owfL+N65X8UiVV5PXP7fN3phdFMwbbCx6Pwy1bohSsjlMzkY2H7YNm2Q73N1M7YLCjc1Y2gUmnm
+ 4xjLm3h03ozQHyxUFd7tkGYk5vlA8TwJzUH5BS8hmL+nBqLsFMY2nWfx8aL0YGffYwtYMBb17Rl
+ 0jF7kA/FUJt58RkhCIW8s2useHFtIen/RPTNSgcY/CWXc4MUNCEQHJEg5n8Ld4b4gvbqsolFLHg
+ qu/yVq8Chlp02oCjWUr8Wf0O2bft2vQqAWV6rHQyGmWmiB2XoMaSUqxJm2tQgs=
+X-Proofpoint-ORIG-GUID: IDoR2bJ87a_SONTBaRa5Fn0MdTTgTkNs
+X-Proofpoint-GUID: IDoR2bJ87a_SONTBaRa5Fn0MdTTgTkNs
+X-Authority-Info-Out: v=2.4 cv=HYgZjyE8 c=1 sm=1 tr=0 ts=69d52025
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=4IdwVP5-j8YZXVcKM5MA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0 clxscore=1030 suspectscore=0 mlxlogscore=866
+ lowpriorityscore=0 spamscore=0 phishscore=0 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604070140
+Received-SPF: pass client-ip=57.103.78.18;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,38 +93,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+When kernel-irqchip=on, manage TPR as part of the APIC state instead entirely.
 
-Lest we confuse the reader about something we are no longer showing in
-the example.
+This fixes some failure to set state errors.
 
-Fixes: 132f8ec799c (target/arm: change default pauth algorithm to impdef)
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20260406165648.997995-1-alex.bennee@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- docs/system/introduction.rst | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ target/i386/whpx/whpx-all.c | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
-index be387a6645..bec7291e47 100644
---- a/docs/system/introduction.rst
-+++ b/docs/system/introduction.rst
-@@ -165,10 +165,8 @@ names so we can override the defaults later.
-     -m 4096 \
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 62542922a4..74b94b799e 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -95,7 +95,6 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
+     WHvX64RegisterCr2,
+     WHvX64RegisterCr3,
+     WHvX64RegisterCr4,
+-    WHvX64RegisterCr8,
  
- We then define the 4 vCPUs using the ``max`` option which gives us all
--the Arm features QEMU is capable of emulating. We enable a more
--emulation friendly implementation of Arm's pointer authentication
--algorithm. We explicitly specify TCG acceleration even though QEMU
--would default to it anyway.
-+the Arm features QEMU is capable of emulating. We explicitly specify
-+TCG acceleration even though QEMU would default to it anyway.
+     /* X64 Debug Registers */
+     /*
+@@ -459,8 +458,11 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+         vcxt.values[idx++].Reg64 = env->cr[3];
+         assert(whpx_register_names[idx] == WHvX64RegisterCr4);
+         vcxt.values[idx++].Reg64 = env->cr[4];
+-        assert(whpx_register_names[idx] == WHvX64RegisterCr8);
+-        vcxt.values[idx++].Reg64 = vcpu->tpr;
++        /* For kernel-irqchip=on, TPR is managed as part of APIC state */
++        if (!whpx_irqchip_in_kernel()) {
++            WHV_REGISTER_VALUE cr8 = {.Reg64 = vcpu->tpr};
++            whpx_set_reg(cpu, WHvX64RegisterCr8, cr8);
++        }
  
- .. code::
+         /* 8 Debug Registers - Skipped */
  
+@@ -716,11 +718,14 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+     env->cr[3] = vcxt.values[idx++].Reg64;
+     assert(whpx_register_names[idx] == WHvX64RegisterCr4);
+     env->cr[4] = vcxt.values[idx++].Reg64;
+-    assert(whpx_register_names[idx] == WHvX64RegisterCr8);
+-    tpr = vcxt.values[idx++].Reg64;
+-    if (tpr != vcpu->tpr) {
+-        vcpu->tpr = tpr;
+-        cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
++
++    /* For kernel-irqchip=on, TPR is managed as part of APIC state */
++    if (!whpx_irqchip_in_kernel()) {
++        tpr = vcpu->exit_ctx.VpContext.Cr8;
++        if (tpr != vcpu->tpr) {
++            vcpu->tpr = tpr;
++            cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
++        }
+     }
+ 
+     /* 8 Debug Registers - Skipped */
+@@ -1660,7 +1665,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+ 
+     /* Sync the TPR to the CR8 if was modified during the intercept */
+     tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
+-    if (tpr != vcpu->tpr) {
++    if (!whpx_irqchip_in_kernel() && tpr != vcpu->tpr) {
+         vcpu->tpr = tpr;
+         reg_values[reg_count].Reg64 = tpr;
+         qatomic_set(&cpu->exit_request, true);
+@@ -1702,12 +1707,14 @@ static void whpx_vcpu_post_run(CPUState *cpu)
+ 
+     env->eflags = vcpu->exit_ctx.VpContext.Rflags;
+ 
+-    uint64_t tpr = vcpu->exit_ctx.VpContext.Cr8;
+-    if (vcpu->tpr != tpr) {
+-        vcpu->tpr = tpr;
+-        bql_lock();
+-        cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
+-        bql_unlock();
++    if (!whpx_irqchip_in_kernel()) {
++        uint64_t tpr = vcpu->exit_ctx.VpContext.Cr8;
++        if (vcpu->tpr != tpr) {
++            vcpu->tpr = tpr;
++            bql_lock();
++            cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
++            bql_unlock();
++        }
+     }
+ 
+     vcpu->interruption_pending =
 -- 
-2.43.0
+2.50.1 (Apple Git-155)
 
 
