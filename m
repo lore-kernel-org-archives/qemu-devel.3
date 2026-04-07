@@ -1,96 +1,65 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
+Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04ADDEDB7D0
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 20:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6BFFF513B
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 21:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wADQW-0000Yr-Ce; Tue, 07 Apr 2026 16:53:38 -0400
-Received: from eggs.gnu.org ([2001:470:142:3::10])
+	id 1wADWc-0004Ms-2u; Tue, 07 Apr 2026 16:59:54 -0400
+Received: from eggs.gnu.org ([209.51.188.92])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wADQS-0000Wy-8B
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:53:32 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wADQQ-0000Ba-7G
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:53:31 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so56787305e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 13:53:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775595208; x=1776200008; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+umKk6wWHPqSsy4J47zW2yNFfVhQ64yHh0oe/yOICg8=;
- b=OLBj5HQyyHkHDZOEIf/hDJhAxvfOHjF1X27yjz4s4XQ4X83ssqJiCzE02srNxCMjhL
- QFYaL9yr/l2EUMTA89DPyOH/gds7UloHIvxEQxAyzH1UKxQlVvJCC0WYZO9wv1DtO0oG
- OD91F338pbW1YnpO7V583Bn6H3mfNFrQhbSQ0hBonWPb6UmevnQ8ZnZ3qrjmk1oY47nH
- OqheEBPSccghPQwn03Nqp3pmQNE4/4HODzIKGb3XJzxic+dA8DN9TYGxJFD/6f0RofLA
- ZBSVkEVt+hWwy0HVKtkBWIMbY+UwUWjV8cIyv0eCVdkRgRTCKVROPu08cJWlRaL7R3wF
- xa3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775595208; x=1776200008;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+umKk6wWHPqSsy4J47zW2yNFfVhQ64yHh0oe/yOICg8=;
- b=hvY9gig6r36dQIfJ3zBmXHtrCNvoI2j0Umbe9BRXVHxAJN99aV0kUfKscWr+IWyvtn
- Bxy86oQNVBDkwO/COwArYMvE1H4HCfKiu9uG64nVYYaA8AqZb6JgHQkThENqYy70VYSk
- QHGSMxMFXP7tReVMqlTXffFAyN0flo0YRx/Z8mFtrdMqSNsXFwiClG68ACQQnIGMm3i7
- mJjmol4nyxM4PkAVwWiiYeMxgyZQOi7uaZnGegfyc24cPCko1rnTQXRkEnrtwpL8sNVt
- BzNCUZdMIQO1+C+6WQrwiKe5ba/RpUw4e1YPpsKpMglT9JOvMFDWN+f7MMmiBjJjh9Nl
- XAVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOgGR8Ka9nqIV/6WdhNe6v/XAMslP8+CwoE26PCnNQPzVfI46s0TLGSUk/s8Lpdn/HW88+XuNwKAFU@nongnu.org
-X-Gm-Message-State: AOJu0YxyT/VVjdfQmERMcKGbq1BE6rcAMOAK4OwiMYpKLq5MKVZE/GjW
- 25/nkXe31AIMWolTNgwK0ZO5qngGk5Xri/mifZ8m71UPD1JJwXJ7KFYJR4rr0p6DNx0=
-X-Gm-Gg: AeBDietT8X9nnqYoenS4cCBZaNmp6BM/k3ko2SO0BN/1sosPh38KRwsLV6XW0xmuxfA
- jT4sWyQQTV91NMujgfhWVUNy5fF0VmS9X0cU15+u9WIbadUeGwNazRdi2ClxzmLMKztamWD8U98
- Lsf8qI9p6wW7oeCgx0K8G+gwlds+Lct1iGHdeGN3Qxi02BsPMK14AB+xH06Dw/5c5Doqr5JV+Ep
- vEZ7HwhOl9w+M2tbo6TFdecmHPrNTA3lLyLLljYv7jivsJzfa7i5HU2gxKpP9XLoA3dOuPQZQeO
- Qzv+gavduTAtZ/V3xmexXVXCIVYtVTPIzfRqMV9E1a574ZLaFjj2x/p8trG907yvkUAnD4T18Qn
- XStmqmB/8N8RgdlwAfV/+kLiv7c23vom7jh/oAxCvjbS/FdHnYHddavhej9M2kp+ts1K22nFxTW
- iktvTxfo0tp9IiowQ/LszG4kE11kYEPqK81B2QTOcvMtRNFi+NhzSAcq75+2h5xJqPYg==
-X-Received: by 2002:a05:600c:8012:b0:485:3f72:323f with SMTP id
- 5b1f17b1804b1-4889974a416mr269254155e9.11.1775595208346; 
- Tue, 07 Apr 2026 13:53:28 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e80a616sm1074897175e9.2.2026.04.07.13.53.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Apr 2026 13:53:27 -0700 (PDT)
-Message-ID: <10bf66bd-56d0-4030-bcc4-d61a3a756548@linaro.org>
-Date: Tue, 7 Apr 2026 22:53:26 +0200
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wADWa-0004MK-01
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:59:52 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wADUR-0000wD-9m
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 16:57:40 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id A4C02600AC;
+ Tue,  7 Apr 2026 20:57:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3F1C116C6;
+ Tue,  7 Apr 2026 20:57:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775595451;
+ bh=4+gNC0s2qQJ4oL9xsc/4G09+rjiF+z+Me6wgkXsSwOE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=oqQBoGwDYIQpySY8tjqHqNbhjdtvBDo30jMD/NIWJkrlBEX9SAG6bWv8XVfW/mUDK
+ ysE0YFCYHeMSY7/2cfG0CN7fLsCl7Um9FCeGKUxQxODSekJs0FQ78HValqdW41D52w
+ pgpO4mPjG6SfXNTls9zzTuPw4sFn5NX40sx33ax7J5LVoEQd+WrYc0Tf8jCXRh5zEP
+ NdxEVLRIaQW4wT2pYkljImZSBV0a8EHjX98czmeNa0oFrRnB+yn1IxvDco5D52p9me
+ +k3V6l/DvJG16ItpYt/FCyIDuQqpNYtBeTEugFolWFlfC43p+NwA9bXAwKJB8SB1G9
+ S9+7G8YnrMJdQ==
+Date: Tue, 7 Apr 2026 22:57:26 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 0/5] monitor: add dynamic QMP monitor hotplug support
+Message-ID: <20260407-notprogramm-wohlfahrt-be7393963311@brauner>
+References: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
+ <adTj1iWPZYTD0CF1@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 13/21] target/arm/tcg/translate.c: extract
- aarch64_translate_code()
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, jim.macarthur@linaro.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260407195922.196410-1-pierrick.bouvier@linaro.org>
- <20260407195922.196410-14-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260407195922.196410-14-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <adTj1iWPZYTD0CF1@redhat.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=brauner@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,20 +75,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/26 21:59, Pierrick Bouvier wrote:
-> This allows to get rid of TARGET_AARCH64, and helps with next patch
-> which will define at runtime tcg address type, by adding a second entry
-> point in a different source file.
+On Tue, Apr 07, 2026 at 12:00:38PM +0100, Daniel P. Berrangé wrote:
+> On Tue, Apr 07, 2026 at 09:32:44AM +0200, Christian Brauner wrote:
+> > QEMU supports runtime hotplug for chardevs, devices, block backends,
+> > and netdevs. Monitors are the only major subsystem that lacks this --
+> > all QMP monitors must be configured at launch via -mon or -qmp CLI
+> > options.
+> > 
+> > This series adds monitor-add, monitor-remove, and query-monitors QMP
+> > commands so that management tools can create independent QMP sessions
+> > on demand at runtime.
+> > 
+> > I've implemented a QMP-to-Varlink bridge in systemd. This allows
+> > systemd-vmspawn to control virtual machines and containers through a
+> > unified Varlink interface. Varlink allows protocol upgrades. For
+> > example, it is possible to switch from Varlink to say http. I'm
+> > allowing Varlink clients to upgrade from the Varlink interface to the
+> > native QMP interface. Such clients get a new monitor assigned that
+> > allows them to manage the virtual machine directly via QMP. The main
+> > monitor remains unaffected and tied to the generic Varlink interface. We
+> > can't pre-allocate monitors as we have no control over how many protocol
+> > upgrades we actually get but it won't just be one. And having unused
+> > monitors around really isn't ideal either.
+> > 
+> > Having the ability to hotplug monitors would really be helpful. I'm not
+> > yet super well-versed in qemu internals so this might be done wrong but
+> > testing works so far.
 > 
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/internals.h         |  2 ++
->   target/arm/tcg/stubs32.c       |  7 +++++++
->   target/arm/tcg/translate-a64.c |  9 +++++++++
->   target/arm/tcg/translate.c     | 19 +++++++++----------
->   4 files changed, 27 insertions(+), 10 deletions(-)
+> Can you say if AI agents/LLMs were used in creating these patches ? 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+In exploring the QEMU codebase and how the QMP protocol is used in other
+code-bases. So specifically I used it to research:
+
+* Does monitor hotplug already work?
+* Has the idea of monitor hotplug been discussed before?
+* Is there an obvious fundamental reason this cannot work?
+* What does the lifetime of a monitor look like?
+* I used it to review the code I wrote and point out bugs that I then
+  fixed myself.
+* I had various research questions around how io-thread interactions
+  work and common synchronization primitives in the codebase.
+
+The code hasn't been written by any coding tool in line with what is
+requested in the contribution guidelines. I used it to speed up my
+understanding of what's going on and to debug things without using the
+output.
 
