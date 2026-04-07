@@ -4,96 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005F0FF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C887BFF5136
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABWi-0008C6-HR; Tue, 07 Apr 2026 14:51:57 -0400
+	id 1wABXH-000089-6I; Tue, 07 Apr 2026 14:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wABTn-0003JO-Bd
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:48:51 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wA3fx-0003LP-Of
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 06:28:57 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c74244dc0b3so2936218a12.2
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 03:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775557732; x=1776162532; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nEvvbdwpOxSnYp5j1qxcKcTTJ9o9BYKzkXwsXDSeBbU=;
- b=FU8hpNJ1XYQyh284aoZKp593x8Rwzte+8U7Fp0A3ZFYYp3FwqQ77bdF9vvnpGlVqf8
- fTui4mq1rCNh3wlnt00+tYDYFD7eOPIO+BQew+aNDzcvx79zOFdAqpo0X+mjD1+e1OSf
- DaAqHr+zkRfLpnueZDk0upF2jwpZcNSKg9Urvl8acP9/TOlyjGvQ+VT8v3KhfdVfbFFv
- Xj04AYONgmec4g6gt3x5dAzBlncuRjFElcpll6M+jUD9/muHZjJKnqRWMUAlxvwVkd2G
- ytxv9mtbkiv6wG17M6FKSjvvM0cVneyvdTDJ26N2nxWcozDjOuSGngfzl/OS9982CH5G
- flDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775557732; x=1776162532;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=nEvvbdwpOxSnYp5j1qxcKcTTJ9o9BYKzkXwsXDSeBbU=;
- b=gAbh/FrvlBOBNRdxLwFIv4DmjGcSgiNi8ll0GpOQtl7T4EmzbsXPSrbOc7ZdC/Hlpu
- +AT7im4cW7BzmvmkSThsT0x37VekqEE/qO6KpgCGBl2iopxSarPub8nNyYbMl/211KD9
- eXj/JEQfvfx0PRo6wLe9rOE6CyUdw2LR44y6XrGSohFdAcNY/9wYz1ByJhZlBnEW0sEi
- YYg65mPLP65g2YIHzjVvSmtZr6yBJfiWicCmG4tKU8xasd3ZsfQcgnC62nHDHjpjymXU
- q8Ms6Q3mrZhsKQutIwOod2oN8HbbEggBTBHtUnbBfoQtWYiHp198wDQUtek09yl/Inue
- nNDw==
-X-Gm-Message-State: AOJu0YzqZzJLzQVzYOHpK7JHm2liq/U91n83m6cwLDgBqkBPd+HrDgfh
- V7QGGgzIy75rQfF9uieI8ncVGe2oRUfJ4DG5E+tHWPtCAHJ4V0iRkia9CSrmucxgpA8Bqw==
-X-Gm-Gg: AeBDieuwb1UK1tdagZBKXsjAroxb2402HVBl19SkvmIaXt1ri4HIpP4YNXdbXwpymYZ
- BJnG3KvVP4kONxc4mMs7Ds1VS2T8yP8fuscbYJp071hk6RaFWGxSnFXgnnoq6OmG0ajl+ps2J9/
- BYexutrG5rPR7/ySblGqQzAvvwMshc8KEGfiVO41/pAtedhEduYINKgZBmG5zm7xLeh4I2vnqi2
- fXPvRyYE5FjQfUTEopO402MlSG+4FXiXwX9H2IbpyjKxpDN7/WZYSZEbHfa/6pfjI0e+XI6YA3a
- myu3dsHzGjHFmtTj7NF7gzD2gjepbKRAaf/xBMNQ9+tIMeS3rrTAYbz47uwD55Y8eS12IPfc9fb
- fi1Mf/tD8N/Y972ANJNtJWcNOT3X74NToVMUjOl4DwwHlOSiC3rVgUK7VhK63BdzQi75x/u78/G
- 8pkkxizyyA8mMWfoP8QDAJCh8GiEImBenCJ3lRrp7D
-X-Received: by 2002:a05:6a20:7fa4:b0:366:2447:6778 with SMTP id
- adf61e73a8af0-39f2f11b01emr18907555637.53.1775557731942; 
- Tue, 07 Apr 2026 03:28:51 -0700 (PDT)
-Received: from [172.17.0.5] ([168.126.243.22])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82cf9b2714dsm21217324b3a.1.2026.04.07.03.28.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 03:28:51 -0700 (PDT)
-From: Jaemyung Lee <ldc.jml@gmail.com>
-X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
-Date: Tue, 07 Apr 2026 19:23:39 +0900
-Subject: [PATCH v2 1/5] hw/ufs: Apply UFS 4.1 Specification
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wABTx-0002LR-4g
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:49:01 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wA0vr-0007bz-Ov
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 03:33:09 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id C4AB8600AC;
+ Tue,  7 Apr 2026 07:33:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D3FC116C6;
+ Tue,  7 Apr 2026 07:33:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775547186;
+ bh=kftrZlQfiwL6iRZ5RpAmm8uIKXWZcXoZKdMQ5NHiX0s=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=BYPd4BtIUqFEzFLP4WYx3DTTApVmT4HTrzd5Fp7uzB0AYBXj/SiAh1nx5fBXBCV1R
+ hzOElCE0ZxPiM2yDq/Tapn8TFNvrhjpzCogqMqQsxTOMVAfUlixKjHj2E+xQWXShLG
+ JsNlTiE2nalmNx3k5s8TZnu9GKVPlph/BlXlWr80NQVbDr4p+ntbl5PuJu6mW6taDX
+ 3PVVMXEm5mnAm3Mhsav1MkcQjGl9pMEfiiFevYVErcy0KhIG27l47wXzue+hQBmzo4
+ vmI9d3+9hok4vAVX+IkLQweaP2Jp0kflq4quEVGye3hjDI1KnLJij/m02Wg6MrNxX3
+ yrsOoU6b5Fe5Q==
+From: Christian Brauner <brauner@kernel.org>
+Date: Tue, 07 Apr 2026 09:32:46 +0200
+Subject: [PATCH v3 2/5] monitor/qmp: add infrastructure for safe dynamic
+ monitor removal
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260407-write_booster-v2-1-dd772bb30194@samsung.com>
-References: <20260407-write_booster-v2-0-dd772bb30194@samsung.com>
-In-Reply-To: <20260407-write_booster-v2-0-dd772bb30194@samsung.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260407-work-qmp-monitor-hotplug-v3-2-cb259800fffb@kernel.org>
+References: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
+In-Reply-To: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
+Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Jaemyung Lee <jaemyung.lee@samsung.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775557727; l=12799;
- i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
- bh=CgN8ljzeml1hAPWOnqVTo/m8W7lnE0WV5YXREroYZ/Q=;
- b=79FF1PXm0qm+4tIDejVeBDQdgfLnCpBBl54N6d0dXWXXLa/Dyw3hsUWqMtqGEYfkBZmVaOHGY
- BHsxfTYhmGnACPu+b+pJrXqekI+oh78NB3c9wH69NfbehUUI2QnyAHr
-X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
- pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=ldc.jml@gmail.com; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Christian Brauner <brauner@kernel.org>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13101; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=kftrZlQfiwL6iRZ5RpAmm8uIKXWZcXoZKdMQ5NHiX0s=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWRe2aypuvX+X7M/ibO/nyjY5L3rb+6yBcktXUycwr/m9
+ 54xmVaQ1FHKwiDGxSArpsji0G4SLrecp2KzUaYGzBxWJpAhDFycAjART0dGhkdzthvNkBDYsuR1
+ wIJEsYO5fVXHlVVnHT65kjGD4YH1xnZGhq7cycqBB57sW+WSyTBRdsZmTyuuH2H5bbEzc09NFlo
+ Vxw4A
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=brauner@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,287 +84,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apply current UFS 4.1 Specification to QEMU-UFS.
+Add monitor_qmp_destroy() to allow destroying a single QMP monitor at
+runtime without shutting down the entire dispatcher coroutine.
 
-QEMU-UFS device emulates operation via UFS 4.0 Specification,
-but current latest Spec. version is UFS 4.1. So extent internal
-DESCRIPTOR/FLAG/ATTRIBUTE declaration to follow UFS 4.1 Spec.
+Convert monitor_accept_input from a oneshot BH (aio_bh_schedule_oneshot)
+to a persistent BH (aio_bh_new + qemu_bh_schedule).  Oneshot BHs cannot
+be cancelled, so monitor_resume() racing with destruction would schedule
+a callback against memory that monitor_qmp_destroy() is about to free.
+A persistent BH can be deleted during destruction, cancelling any
+pending schedule.
 
-It does not implement any actual functionallity, but only adds
-minimum supportability for further implementation.
+Move qemu_chr_fe_accept_input() under mon_lock in monitor_accept_input()
+so it cannot race with monitor_qmp_destroy() which deletes the BH under
+the same lock.
 
-Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
+Extract monitor_cancel_out_watch() for cancelling a pending out_watch
+GSource.  g_source_remove() only searches the default GMainContext but
+iothread monitors attach the watch to the iothread context, so
+g_main_context_find_source_by_id() with the correct context followed by
+g_source_destroy() is needed.  When chardev handlers have been
+disconnected via qemu_chr_fe_set_handlers(NULL), s->gcontext is reset to
+NULL by qemu_chr_be_update_read_handlers().  A watch created after the
+reset (e.g. by a self-removal response flush) lands on the default
+GMainContext rather than the iothread context.  Fall back to searching
+the default context when the iothread context search misses.
+
+The monitor_qmp_destroy() sequence is:
+
+  1. Delete accept_input_bh (cancel pending resume).
+  2. Under mon_lock: set skip_flush so no further writes can create
+     new out_watch GSources, then cancel any existing out_watch.
+     skip_flush must be set first because the chardev gcontext has
+     already been reset to NULL by handler disconnect -- a flush at
+     this point would attach the watch to the default GMainContext
+     rather than the iothread context, and
+     monitor_cancel_out_watch() searching the iothread context would
+     miss it, leaking a GSource that fires monitor_unblocked() on
+     freed memory.
+  3. For iothread monitors: synchronize with the iothread via
+     aio_wait_bh_oneshot().  An in-flight monitor_unblocked() GSource
+     callback may be blocked on mon_lock (held in step 2) and will
+     resume after we release it.  Since BHs cannot fire while a
+     GSource callback is dispatching, the no-op BH only runs after
+     monitor_unblocked() has returned, making destruction safe.
+  4. Final drain of the request queue to catch requests enqueued by an
+     in-flight monitor_qmp_read() that raced with the drain in
+     qmp_monitor_remove().
+  5. monitor_data_destroy() + g_free().
+
+Add qmp_dispatcher_current_mon tracking in the dispatcher coroutine to
+handle self-removal (a monitor sends monitor-remove targeting itself).
+Both the dispatcher yield points and QMP command handlers run under the
+BQL, so no additional locking is needed.  After dispatching each
+request, the dispatcher checks the dead flag: if set, it closes the
+chardev connection, calls monitor_qmp_destroy(), and clears the tracking
+pointer.  monitor_resume() is skipped because the chardev handlers are
+already disconnected, and resume would schedule a BH against a monitor
+about to be freed.
+
+Add a setup_pending flag for iothread monitors so qmp_monitor_remove()
+can reject removal before the setup BH has completed.
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- hw/ufs/ufs.c        | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++---
- include/block/ufs.h | 59 ++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 122 insertions(+), 6 deletions(-)
+ monitor/monitor-internal.h |  6 +++++
+ monitor/monitor.c          | 49 ++++++++++++++++++++++++++--------
+ monitor/qmp.c              | 66 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 110 insertions(+), 11 deletions(-)
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index cb74cb56bc15ec6fb873097ccb1b6e5694639bd9..b2b70c8b38ebecd8d49ecce288614d55efd90f2e 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -9,7 +9,7 @@
-  */
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 4896812d4e..370bd4ad53 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -100,6 +100,7 @@ struct Monitor {
+     bool use_io_thread;
+     bool dynamic;           /* true if created via monitor-add */
+     bool dead;              /* awaiting drain after monitor-remove */
++    QEMUBH *accept_input_bh; /* persistent BH for monitor_accept_input */
  
- /**
-- * Reference Specs: https://www.jedec.org/, 4.0
-+ * Reference Specs: https://www.jedec.org/, 4.1
-  *
-  * Usage
-  * -----
-@@ -29,8 +29,8 @@
- #include "trace.h"
- #include "ufs.h"
+     char *id;               /* NULL for unnamed CLI monitors */
+     char *mon_cpu_path;
+@@ -138,6 +139,7 @@ typedef struct {
+     Monitor common;
+     JSONMessageParser parser;
+     bool pretty;
++    bool setup_pending;  /* iothread BH has not yet set up chardev handlers */
+     /*
+      * When a client connects, we're in capabilities negotiation mode.
+      * @commands is &qmp_cap_negotiation_commands then.  When command
+@@ -176,15 +178,19 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+                        bool use_io_thread);
+ void monitor_data_destroy(Monitor *mon);
+ int monitor_can_read(void *opaque);
++void monitor_cancel_out_watch(Monitor *mon);
+ void monitor_list_append(Monitor *mon);
+ void monitor_fdsets_cleanup(void);
  
--/* The QEMU-UFS device follows spec version 4.0 */
--#define UFS_SPEC_VER 0x0400
-+/* The QEMU-UFS device follows spec version 4.1 */
-+#define UFS_SPEC_VER 0x0410
- #define UFS_MAX_NUTRS 32
- #define UFS_MAX_NUTMRS 8
- #define UFS_MCQ_QCFGPTR 2
-@@ -1000,6 +1000,7 @@ static const int flag_permission[UFS_QUERY_FLAG_IDN_COUNT] = {
-     [UFS_QUERY_FLAG_IDN_WB_EN] = UFS_QUERY_FLAG_READ,
-     [UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN] = UFS_QUERY_FLAG_READ,
-     [UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8] = UFS_QUERY_FLAG_READ,
-+    [UFS_QUERY_FLAG_IDN_UNPIN_EN] = UFS_QUERY_FLAG_READ,
- };
+ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+ void monitor_data_destroy_qmp(MonitorQMP *mon);
++void monitor_qmp_destroy(MonitorQMP *mon);
++void monitor_qmp_drain_queue(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
  
- static inline QueryRespCode ufs_flag_check_idn_valid(uint8_t idn, int op)
-@@ -1057,10 +1058,31 @@ static const int attr_permission[UFS_QUERY_ATTR_IDN_COUNT] = {
-     [UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_WB_BUFF_LIFE_TIME_EST] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_CURR_WB_BUFF_SIZE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_EXT_IID_EN] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_HOST_HINT_CACHE_SIZE] = UFS_QUERY_ATTR_READ,
-     /* refresh operation is not supported */
-     [UFS_QUERY_ATTR_IDN_REFRESH_STATUS] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_REFRESH_FREQ] = UFS_QUERY_ATTR_READ,
-     [UFS_QUERY_ATTR_IDN_REFRESH_UNIT] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_TIMESTAMP] = UFS_QUERY_ATTR_WRITE,
-+    [UFS_QUERY_ATTR_IDN_DEVICE_LEVEL_EXCEPTION_ID] = UFS_QUERY_ATTR_READ,
-+    /* host initiated defragmentation is not supported */
-+    [UFS_QUERY_ATTR_IDN_DEFRAG_OP] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_HID_SIZE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_HID_PROG_RATIO] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_HID_STATE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_HINT] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_EN] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_STATUS] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_WB_BUFF_PARTIAL_FLUSH_MODE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_MAX_FIFO_WB_PARTIAL_FLUSH_MODE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_CURR_FIFO_WB_PARTIAL_FLUSH_MODE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_CURR_ALLOC_UNITS] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_AVAIL_PERCENT] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_PINNED_WB_CUMM_WRITTEN_SIZE] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_PINNED_WB_NUM_ALLOC_UNITS] = UFS_QUERY_ATTR_READ,
-+    [UFS_QUERY_ATTR_IDN_NON_PINNED_WB_MIN_NUM_ALLOC_UNITS] = UFS_QUERY_ATTR_READ,
- };
+ Monitor *monitor_find_by_id(const char *id);
++bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon);
  
- static inline QueryRespCode ufs_attr_check_idn_valid(uint8_t idn, int op)
-@@ -1194,12 +1216,50 @@ static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
-         return u->attributes.wb_buffer_life_time_est;
-     case UFS_QUERY_ATTR_IDN_CURR_WB_BUFF_SIZE:
-         return be32_to_cpu(u->attributes.current_wb_buffer_size);
-+    case UFS_QUERY_ATTR_IDN_EXT_IID_EN:
-+        return u->attributes.ext_iid_en;
-+    case UFS_QUERY_ATTR_IDN_HOST_HINT_CACHE_SIZE:
-+        return be16_to_cpu(u->attributes.host_hint_cache_size);
-     case UFS_QUERY_ATTR_IDN_REFRESH_STATUS:
-         return u->attributes.refresh_status;
-     case UFS_QUERY_ATTR_IDN_REFRESH_FREQ:
-         return u->attributes.refresh_freq;
-     case UFS_QUERY_ATTR_IDN_REFRESH_UNIT:
-         return u->attributes.refresh_unit;
-+    case UFS_QUERY_ATTR_IDN_DEVICE_LEVEL_EXCEPTION_ID:
-+        return be64_to_cpu(u->attributes.device_level_exception_id);
-+    case UFS_QUERY_ATTR_IDN_DEFRAG_OP:
-+        return u->attributes.defrag_op;
-+    case UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE:
-+        return be32_to_cpu(u->attributes.hid_avail_size);
-+    case UFS_QUERY_ATTR_IDN_HID_SIZE:
-+        return be32_to_cpu(u->attributes.hid_size);
-+    case UFS_QUERY_ATTR_IDN_HID_PROG_RATIO:
-+        return u->attributes.hid_prog_ratio;
-+    case UFS_QUERY_ATTR_IDN_HID_STATE:
-+        return u->attributes.hid_state;
-+    case UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_HINT:
-+        return u->attributes.wb_buffer_resize_hint;
-+    case UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_EN:
-+        return u->attributes.wb_buffer_resize_en;
-+    case UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_STATUS:
-+        return u->attributes.wb_buffer_resize_status;
-+    case UFS_QUERY_ATTR_IDN_WB_BUFF_PARTIAL_FLUSH_MODE:
-+        return u->attributes.wb_buffer_partial_flush_mode;
-+    case UFS_QUERY_ATTR_IDN_MAX_FIFO_WB_PARTIAL_FLUSH_MODE:
-+        return be32_to_cpu(u->attributes.max_fifo_wb_partial_flush_mode);
-+    case UFS_QUERY_ATTR_IDN_CURR_FIFO_WB_PARTIAL_FLUSH_MODE:
-+        return be32_to_cpu(u->attributes.curr_fifo_wb_partial_flush_mode);
-+    case UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_CURR_ALLOC_UNITS:
-+        return be32_to_cpu(u->attributes.pinned_wb_buffer_curr_alloc_units);
-+    case UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_AVAIL_PERCENT:
-+        return u->attributes.pinned_wb_buffer_avail_percent;
-+    case UFS_QUERY_ATTR_IDN_PINNED_WB_CUMM_WRITTEN_SIZE:
-+        return be32_to_cpu(u->attributes.pinned_wb_cumm_written_size);
-+    case UFS_QUERY_ATTR_IDN_PINNED_WB_NUM_ALLOC_UNITS:
-+        return be32_to_cpu(u->attributes.pinned_wb_num_alloc_units);
-+    case UFS_QUERY_ATTR_IDN_NON_PINNED_WB_MIN_NUM_ALLOC_UNITS:
-+        return be32_to_cpu(u->attributes.non_pinned_wb_min_num_alloc_units);
-     }
-     return 0;
+ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+ void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 7144255e12..0080e8ca0e 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -146,6 +146,28 @@ static gboolean monitor_unblocked(void *do_not_use, GIOCondition cond,
+     return G_SOURCE_REMOVE;
  }
-@@ -1237,6 +1297,9 @@ static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
-     case UFS_QUERY_ATTR_IDN_PSA_DATA_SIZE:
-         u->attributes.psa_data_size = cpu_to_be32(value);
-         break;
-+    case UFS_QUERY_ATTR_IDN_TIMESTAMP:
-+        u->attributes.timestamp = cpu_to_be64(value);
-+        break;
+ 
++/* Cancel a pending out_watch GSource.  Caller must hold mon_lock. */
++void monitor_cancel_out_watch(Monitor *mon)
++{
++    if (mon->out_watch) {
++        GMainContext *ctx = NULL;
++        GSource *src;
++
++        if (mon->use_io_thread) {
++            ctx = iothread_get_g_main_context(mon_iothread);
++        }
++        src = g_main_context_find_source_by_id(ctx, mon->out_watch);
++        if (!src && ctx) {
++            /* Handler disconnect may have reset gcontext to NULL. */
++            src = g_main_context_find_source_by_id(NULL, mon->out_watch);
++        }
++        if (src) {
++            g_source_destroy(src);
++        }
++        mon->out_watch = 0;
++    }
++}
++
+ /* Caller must hold mon->mon_lock */
+ void monitor_flush_locked(Monitor *mon)
+ {
+@@ -545,13 +567,13 @@ static void monitor_accept_input(void *opaque)
+         MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
+         assert(hmp_mon->rs);
+         readline_restart(hmp_mon->rs);
++        qemu_chr_fe_accept_input(&mon->chr);
+         qemu_mutex_unlock(&mon->mon_lock);
+         readline_show_prompt(hmp_mon->rs);
+     } else {
++        qemu_chr_fe_accept_input(&mon->chr);
+         qemu_mutex_unlock(&mon->mon_lock);
      }
-     return UFS_QUERY_RESULT_SUCCESS;
+-
+-    qemu_chr_fe_accept_input(&mon->chr);
  }
-diff --git a/include/block/ufs.h b/include/block/ufs.h
-index 04cb24324d7c5585be9df596738183e1924403fb..4dacfb776f947a285d86018add82115f148b7dd9 100644
---- a/include/block/ufs.h
-+++ b/include/block/ufs.h
-@@ -294,7 +294,8 @@ typedef struct QEMU_PACKED DeviceDescriptor {
-     uint32_t psa_max_data_size;
-     uint8_t psa_state_timeout;
-     uint8_t product_revision_level;
--    uint8_t reserved[36];
-+    uint8_t reserved[34];
-+    uint16_t extended_wb_support;
-     uint32_t extended_ufs_features_support;
-     uint8_t write_booster_buffer_preserve_user_space_en;
-     uint8_t write_booster_buffer_type;
-@@ -342,6 +343,8 @@ typedef struct QEMU_PACKED GeometryDescriptor {
-     uint8_t write_booster_buffer_cap_adj_fac;
-     uint8_t supported_write_booster_buffer_user_space_reduction_types;
-     uint8_t supported_write_booster_buffer_types;
-+    uint8_t reserved3[17];
-+    uint8_t cap_adj_fac_representation;
- } GeometryDescriptor;
  
- #define UFS_GEOMETRY_CAPACITY_SHIFT 9
-@@ -437,6 +440,8 @@ typedef struct QEMU_PACKED Flags {
-     uint8_t wb_buffer_flush_en;
-     uint8_t wb_buffer_flush_during_hibernate;
-     uint8_t reserved4[2];
-+    uint8_t unpin_en;
-+    uint8_t reserved5[235];
- } Flags;
+ void monitor_resume(Monitor *mon)
+@@ -561,15 +583,7 @@ void monitor_resume(Monitor *mon)
+     }
  
- typedef struct Attributes {
-@@ -457,6 +462,8 @@ typedef struct Attributes {
-     uint16_t exception_event_status;
-     uint32_t seconds_passed;
-     uint16_t context_conf;
-+    uint8_t obsolete;
-+    uint8_t reserved2[2];
-     uint8_t device_ffu_status;
-     uint8_t psa_state;
-     uint32_t psa_data_size;
-@@ -469,10 +476,34 @@ typedef struct Attributes {
-     uint8_t available_wb_buffer_size;
-     uint8_t wb_buffer_life_time_est;
-     uint32_t current_wb_buffer_size;
-+    uint8_t reserved3[10];
-+    uint8_t ext_iid_en;
-+    uint16_t host_hint_cache_size;
-     uint8_t refresh_status;
-     uint8_t refresh_freq;
-     uint8_t refresh_unit;
-     uint8_t refresh_method;
-+    uint64_t timestamp;
-+    uint8_t reserved4[3];
-+    uint64_t device_level_exception_id;
-+    uint8_t defrag_op;
-+    uint32_t hid_avail_size;
-+    uint32_t hid_size;
-+    uint8_t hid_prog_ratio;
-+    uint8_t hid_state;
-+    uint8_t reserved5[2];
-+    uint8_t wb_buffer_resize_hint;
-+    uint8_t wb_buffer_resize_en;
-+    uint8_t wb_buffer_resize_status;
-+    uint8_t wb_buffer_partial_flush_mode;
-+    uint32_t max_fifo_wb_partial_flush_mode;
-+    uint32_t curr_fifo_wb_partial_flush_mode;
-+    uint32_t pinned_wb_buffer_curr_alloc_units;
-+    uint8_t pinned_wb_buffer_avail_percent;
-+    uint32_t pinned_wb_cumm_written_size;
-+    uint32_t pinned_wb_num_alloc_units;
-+    uint32_t non_pinned_wb_min_num_alloc_units;
-+    uint8_t reserved6[184];
- } Attributes;
+     if (qatomic_dec_fetch(&mon->suspend_cnt) == 0) {
+-        AioContext *ctx;
+-
+-        if (mon->use_io_thread) {
+-            ctx = iothread_get_aio_context(mon_iothread);
+-        } else {
+-            ctx = qemu_get_aio_context();
+-        }
+-
+-        aio_bh_schedule_oneshot(ctx, monitor_accept_input, mon);
++        qemu_bh_schedule(mon->accept_input_bh);
+     }
  
- #define UFS_TRANSACTION_SPECIFIC_FIELD_SIZE 20
-@@ -856,6 +887,7 @@ enum flag_idn {
-     UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8 = 0x10,
-     UFS_QUERY_FLAG_IDN_HPB_RESET = 0x11,
-     UFS_QUERY_FLAG_IDN_HPB_EN = 0x12,
-+    UFS_QUERY_FLAG_IDN_UNPIN_EN = 0x13,
-     UFS_QUERY_FLAG_IDN_COUNT,
- };
+     trace_monitor_suspend(mon, -1);
+@@ -610,6 +624,8 @@ static void monitor_iothread_init(void)
+ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+                        bool use_io_thread)
+ {
++    AioContext *ctx;
++
+     if (use_io_thread && !mon_iothread) {
+         monitor_iothread_init();
+     }
+@@ -618,6 +634,13 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+     mon->outbuf = g_string_new(NULL);
+     mon->skip_flush = skip_flush;
+     mon->use_io_thread = use_io_thread;
++
++    if (use_io_thread) {
++        ctx = iothread_get_aio_context(mon_iothread);
++    } else {
++        ctx = qemu_get_aio_context();
++    }
++    mon->accept_input_bh = aio_bh_new(ctx, monitor_accept_input, mon);
+ }
  
-@@ -893,9 +925,29 @@ enum attr_idn {
-     UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE = 0x1D,
-     UFS_QUERY_ATTR_IDN_WB_BUFF_LIFE_TIME_EST = 0x1E,
-     UFS_QUERY_ATTR_IDN_CURR_WB_BUFF_SIZE = 0x1F,
-+    UFS_QUERY_ATTR_IDN_EXT_IID_EN = 0x2A,
-+    UFS_QUERY_ATTR_IDN_HOST_HINT_CACHE_SIZE = 0x2B,
-     UFS_QUERY_ATTR_IDN_REFRESH_STATUS = 0x2C,
-     UFS_QUERY_ATTR_IDN_REFRESH_FREQ = 0x2D,
-     UFS_QUERY_ATTR_IDN_REFRESH_UNIT = 0x2E,
-+    UFS_QUERY_ATTR_IDN_TIMESTAMP = 0x30,
-+    UFS_QUERY_ATTR_IDN_DEVICE_LEVEL_EXCEPTION_ID = 0x34,
-+    UFS_QUERY_ATTR_IDN_DEFRAG_OP = 0x35,
-+    UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE = 0x36,
-+    UFS_QUERY_ATTR_IDN_HID_SIZE = 0x37,
-+    UFS_QUERY_ATTR_IDN_HID_PROG_RATIO = 0x38,
-+    UFS_QUERY_ATTR_IDN_HID_STATE = 0x39,
-+    UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_HINT = 0x3C,
-+    UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_EN = 0x3D,
-+    UFS_QUERY_ATTR_IDN_WB_BUFF_RESIZE_STATUS = 0x3E,
-+    UFS_QUERY_ATTR_IDN_WB_BUFF_PARTIAL_FLUSH_MODE = 0x3F,
-+    UFS_QUERY_ATTR_IDN_MAX_FIFO_WB_PARTIAL_FLUSH_MODE = 0x40,
-+    UFS_QUERY_ATTR_IDN_CURR_FIFO_WB_PARTIAL_FLUSH_MODE = 0x41,
-+    UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_CURR_ALLOC_UNITS = 0x42,
-+    UFS_QUERY_ATTR_IDN_PINNED_WB_BUFF_AVAIL_PERCENT = 0x43,
-+    UFS_QUERY_ATTR_IDN_PINNED_WB_CUMM_WRITTEN_SIZE = 0x44,
-+    UFS_QUERY_ATTR_IDN_PINNED_WB_NUM_ALLOC_UNITS = 0x45,
-+    UFS_QUERY_ATTR_IDN_NON_PINNED_WB_MIN_NUM_ALLOC_UNITS = 0x46,
-     UFS_QUERY_ATTR_IDN_COUNT,
- };
+ void monitor_data_destroy(Monitor *mon)
+@@ -631,6 +654,10 @@ void monitor_data_destroy(Monitor *mon)
+         readline_free(container_of(mon, MonitorHMP, common)->rs);
+     }
+     g_string_free(mon->outbuf, true);
++    if (mon->accept_input_bh) {
++        qemu_bh_delete(mon->accept_input_bh);
++        mon->accept_input_bh = NULL;
++    }
+     qemu_mutex_destroy(&mon->mon_lock);
+ }
  
-@@ -1005,6 +1057,7 @@ enum device_desc_param {
-     UFS_DEVICE_DESC_PARAM_PRDCT_REV = 0x2A,
-     UFS_DEVICE_DESC_PARAM_HPB_VER = 0x40,
-     UFS_DEVICE_DESC_PARAM_HPB_CONTROL = 0x42,
-+    UFS_DEVICE_DESC_PARAM_EXT_WB_SUP = 0x4D,
-     UFS_DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP = 0x4F,
-     UFS_DEVICE_DESC_PARAM_WB_PRESRV_USRSPC_EN = 0x53,
-     UFS_DEVICE_DESC_PARAM_WB_TYPE = 0x54,
-@@ -1208,14 +1261,14 @@ static inline void _ufs_check_size(void)
-     QEMU_BUILD_BUG_ON(sizeof(UfsMcqCqIntReg) != 12);
-     QEMU_BUILD_BUG_ON(sizeof(UfsMcqOpReg) != 48);
-     QEMU_BUILD_BUG_ON(sizeof(DeviceDescriptor) != 89);
--    QEMU_BUILD_BUG_ON(sizeof(GeometryDescriptor) != 87);
-+    QEMU_BUILD_BUG_ON(sizeof(GeometryDescriptor) != 105);
-     QEMU_BUILD_BUG_ON(sizeof(UnitDescriptor) != 45);
-     QEMU_BUILD_BUG_ON(sizeof(RpmbUnitDescriptor) != 35);
-     QEMU_BUILD_BUG_ON(sizeof(PowerParametersDescriptor) != 98);
-     QEMU_BUILD_BUG_ON(sizeof(InterconnectDescriptor) != 6);
-     QEMU_BUILD_BUG_ON(sizeof(StringDescriptor) != 254);
-     QEMU_BUILD_BUG_ON(sizeof(DeviceHealthDescriptor) != 45);
--    QEMU_BUILD_BUG_ON(sizeof(Flags) != 0x13);
-+    QEMU_BUILD_BUG_ON(sizeof(Flags) != 0xFF);
-     QEMU_BUILD_BUG_ON(sizeof(UtpUpiuHeader) != 12);
-     QEMU_BUILD_BUG_ON(sizeof(UtpUpiuQuery) != 276);
-     QEMU_BUILD_BUG_ON(sizeof(UtpUpiuCmd) != 20);
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index afbe2283d6..6645b82d48 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -26,6 +26,7 @@
+ 
+ #include "chardev/char-io.h"
+ #include "monitor-internal.h"
++#include "qemu/aio-wait.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
+ #include "qobject/qdict.h"
+@@ -71,6 +72,9 @@ typedef struct QMPRequest QMPRequest;
+ 
+ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ 
++/* Monitor being serviced by the dispatcher.  Protected by BQL. */
++static MonitorQMP *qmp_dispatcher_current_mon;
++
+ static bool qmp_oob_enabled(MonitorQMP *mon)
+ {
+     return mon->capab[QMP_CAPABILITY_OOB];
+@@ -98,6 +102,12 @@ static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon)
+     }
+ }
+ 
++void monitor_qmp_drain_queue(MonitorQMP *mon)
++{
++    QEMU_LOCK_GUARD(&mon->qmp_queue_lock);
++    monitor_qmp_cleanup_req_queue_locked(mon);
++}
++
+ static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
+ {
+     QEMU_LOCK_GUARD(&mon->qmp_queue_lock);
+@@ -287,6 +297,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+          */
+ 
+         mon = req_obj->mon;
++        qmp_dispatcher_current_mon = mon;
+ 
+         /*
+          * We need to resume the monitor if handle_qmp_command()
+@@ -342,11 +353,26 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+             qobject_unref(rsp);
+         }
+ 
++        /*
++         * Self-removal: monitor-remove marked this monitor dead.
++         * Close chardev, destroy, skip monitor_resume().
++         */
++        if (mon->common.dead) {
++            qemu_chr_fe_set_handlers(&mon->common.chr, NULL, NULL,
++                                     NULL, NULL, NULL, NULL, true);
++            qmp_request_free(req_obj);
++            monitor_qmp_destroy(mon);
++            monitor_fdsets_cleanup();
++            qmp_dispatcher_current_mon = NULL;
++            continue;
++        }
++
+         if (!oob_enabled) {
+             monitor_resume(&mon->common);
+         }
+ 
+         qmp_request_free(req_obj);
++        qmp_dispatcher_current_mon = NULL;
+     }
+     qatomic_set(&qmp_dispatcher_co, NULL);
+ }
+@@ -499,6 +525,44 @@ void monitor_data_destroy_qmp(MonitorQMP *mon)
+     g_queue_free(mon->qmp_requests);
+ }
+ 
++static void monitor_qmp_iothread_quiesce(void *opaque)
++{
++    /* No-op: synchronization point only */
++}
++
++/*
++ * Destroy a single dynamically-added QMP monitor.
++ * The monitor must already have been removed from mon_list.
++ */
++void monitor_qmp_destroy(MonitorQMP *mon)
++{
++    qemu_bh_delete(mon->common.accept_input_bh);
++    mon->common.accept_input_bh = NULL;
++
++    WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
++        /* Disable flushes before cancel — gcontext is already wrong. */
++        mon->common.skip_flush = true;
++        monitor_cancel_out_watch(&mon->common);
++    }
++
++    /* Synchronize with in-flight iothread callbacks. */
++    if (mon->common.use_io_thread) {
++        aio_wait_bh_oneshot(iothread_get_aio_context(mon_iothread),
++                            monitor_qmp_iothread_quiesce, NULL);
++    }
++
++    /* Catch requests from a racing monitor_qmp_read(). */
++    monitor_qmp_drain_queue(mon);
++
++    monitor_data_destroy(&mon->common);
++    g_free(mon);
++}
++
++bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon)
++{
++    return qmp_dispatcher_current_mon == mon;
++}
++
+ static void monitor_qmp_setup_handlers_bh(void *opaque)
+ {
+     MonitorQMP *mon = opaque;
+@@ -510,6 +574,7 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
+     qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
+                              monitor_qmp_read, monitor_qmp_event,
+                              NULL, &mon->common, context, true);
++    qatomic_set(&mon->setup_pending, false);
+ }
+ 
+ void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
+@@ -553,6 +618,7 @@ void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
+          * since chardev might be running in the monitor I/O
+          * thread.  Schedule a bottom half.
+          */
++        mon->setup_pending = true;
+         aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
+                                 monitor_qmp_setup_handlers_bh, mon);
+         /* Synchronous insert for immediate duplicate detection. */
 
 -- 
-2.48.1
+2.47.3
 
 
