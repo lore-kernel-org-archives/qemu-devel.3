@@ -4,109 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E93410F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A5C310F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYT2-0006Uq-Vg; Wed, 08 Apr 2026 15:21:37 -0400
+	id 1wAYc0-0004Qo-DF; Wed, 08 Apr 2026 15:30:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAY48-0006Kz-Hu
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:55:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAWCF-00026l-Ru
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:56:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775667364;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=vPGwVEPm25tSQpDsHhbt2i6JsuPl+TWsf9MJqPYEbeQ=;
- b=d4Kocig//KHjnCTrQ1m8jBPJEbbk+QIKYEnKE2wVmTsPMit8itmQP3KVEjHr91mZ+U3jhz
- ni0XBSw/A8TaB5Me/2qb09iB9dIZhVd7nKFxeCNmQlRqqXOMjbADGMxFQOgtrFH+0RBN4m
- Vs9KWetm50tzrLP3eiM0bwJ9v5K4SrA=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-602-Tsv1w9nHMv69WVGXS_ix7Q-1; Wed, 08 Apr 2026 12:56:03 -0400
-X-MC-Unique: Tsv1w9nHMv69WVGXS_ix7Q-1
-X-Mimecast-MFC-AGG-ID: Tsv1w9nHMv69WVGXS_ix7Q_1775667363
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50b4b81c632so3267431cf.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:56:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAY9w-0000aR-Cr
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:01:52 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAEoh-0000tt-Vy
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:22:41 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-358e3cc5e7eso2725210a91.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775667362; x=1776272162; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vPGwVEPm25tSQpDsHhbt2i6JsuPl+TWsf9MJqPYEbeQ=;
- b=DTWm8ZmyyGgONwr6EOyoJqKWKPAt0hgkgxy/kjToZ4wUnw18T9RELkjVEK79wmC1tK
- qRohfgXmK8Ci3KGQFNFXZ+O6ZUZiEdC/Zto1On9v+3CRare12RsfYxASNd5uukuVaJKX
- 7cPcmc4VIHmrRfMXBzB7BxSfmF6etmZGFinf9U5ekSJa/AckOAYCcdjP9Qgnv3IsVWyo
- FVh7WU4DKelSB0WVaodoc8bJI0WjhqgCUYo5yio9Xr0bXiA9A2BnbM6LHBkYx7PxDZCN
- cpdAOgnpJEG1cW4tCmIEr7cOF0QSqTnTY6FSp65QWXAQSTUQkbSjSWSeQJvUtZhPsII/
- LuYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775667362; x=1776272162;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1775600559; x=1776205359; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vPGwVEPm25tSQpDsHhbt2i6JsuPl+TWsf9MJqPYEbeQ=;
- b=GF3ut/sOsez5uuOtF17HSmzxb2kQkRe/iJCtkTbEA1DoE3ZRbDgSozNxETRictcfto
- IEeiE2K2u9hcrL14K69Zhxm/tEh6ipIE8Oca7Q/LPpxJVyWbJFRbCMSMy160BBV/PtNK
- r766sFVG2vf8lpcsnk5dSWDecBl8dgocl4vEbyQu4rtbJIRFucjF2B3LkN2pw6MXBeIr
- abcgOPNAvPDjslQgWndIFpavPt3RgBmSVXiSG3POlyI/3yDOrl2eUS4OK3zux+WKpSEj
- 08bi1wD0f25g0yf92luHbAWZoP9d6TUK/ERsCMwFRn6vOLJOPXfVcaZzMzIXU3JUyaDS
- vNeA==
-X-Gm-Message-State: AOJu0YzULKI8cmvXUKHh5W1n5QHlZrFFArEHGxTzi3DrEMuMShgHtX1j
- d1mRcUk1dCnOZgVlkkwyRx39ZPQvQvLNdffR+CimOKecVgjy6mUaEZG6TVf+jmX/+G63OADm6lU
- 72BUjC3/KzM+vilGfgSAj1JU3Ftk55lrHB3uAnB/sPODsIpRkPPHfogNr28Qyka7n55xf54qlRD
- U+6LVRgnmGUqI2MK/MwIvxwyFVRqDBvB4FsWxIkA==
-X-Gm-Gg: AeBDietGyIbb2c6uuF+N3KWvB15EmwU7oPZqGwFq1YSTtfGPwiVkkMq0kCAOWFEqsHf
- stFHfG0ZAqqfO53Y4tvplzSC7YY8tzfGqWWw0LZCMpehCUD+lQzCeVX4S4o5riUDVALECZc/GfG
- z4sKjA2w8yDgMAXBAlSsdJIHiQsCGQwgwGW8aEuo0wu6+vemw2fnCNmdZa7UaKO2uPbk7WuLcB3
- TdXAM5IBumkjqxn8Rb9rxelFBaXojsAMVuXUEo08e4OPqywzszcSWYLIU55OSRUImQjHmFStDwQ
- QFWg51GjxbMxzE5HZjBSpMRNrb4qYnqVwF+TXMD7Hwap60nuVE6otx5qXRvFPB6BDzJ3CDj7lxZ
- fKZo3m2UU0RRWU5Lsq57bJRBaTrZ9zNMRBeOhYC9KD6I+
-X-Received: by 2002:a05:622a:145:b0:50d:643b:378f with SMTP id
- d75a77b69052e-50d643b421amr330586841cf.57.1775667362229; 
- Wed, 08 Apr 2026 09:56:02 -0700 (PDT)
-X-Received: by 2002:a05:622a:145:b0:50d:643b:378f with SMTP id
- d75a77b69052e-50d643b421amr330586031cf.57.1775667361445; 
- Wed, 08 Apr 2026 09:56:01 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d712c2617sm130491901cf.31.2026.04.08.09.56.00
+ bh=U5qEYDYbzP6gv3T4kUPVLqSQIA87qzuUGpDgD/WJ/SI=;
+ b=ZFs0XqJX01yLHD7+OvOjiuRunId/5Ri8qMruuLAH9V2VUw8CgBkXImsrWl25TkR5nD
+ r8cY1m+CQdRmFIjKFV2DDP2ea4rkQKierHvo55lYdyspLceSHgOoNHe0gpp+CuGiYIbt
+ PEQ1N2mhfE3keGetcYol6GdqSQWNI3gBUHZrpU07/HaoU3kL3Y3/YK0YAzVHm8G+Dz+x
+ V5Y4E22AhutlmuRuuZMJNRR9UFz1QkFUKnb713d59N2wCDiD07irPVpUO/Pu6pbkTADb
+ lPi+aUiKorVLB5h/gg9BXIUHQAt88+Yla6LZddSjS5Lfjprze/Ltl6LfSjwKtcQNPL8U
+ lrPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775600559; x=1776205359;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=U5qEYDYbzP6gv3T4kUPVLqSQIA87qzuUGpDgD/WJ/SI=;
+ b=hCr0RCOfVDXBgkE4z3Nu2h14OKvwyzrizD6SPz80hn5bm5BW+Kp1qIxR9QuL9B5L71
+ 7Dt9SawnwYWZN4G13hRC8UVtPq9oJt7YvLets/lsqQRJFY1tVOBj8CrrzXLH6TReItkr
+ yLSVC6M1lP2PbMv9ykY6QqTfPcW5o6E9I+rL2Y21vHr2xt5t/dUdPMwaAsLLZ8Ushss9
+ izzndXXp3QUlidSQ/gO9PKALZWPbH2mS5zfOScMzyVn4CTgMLOwLymg4s1084S0lH9q+
+ JZ1KjQTZgWO6JpPNV4TQwjIp6Edg7zS/Jq843difhFGbxazEk4asxnNUKngz2DqYxo1C
+ Dg1A==
+X-Gm-Message-State: AOJu0Yz7sJcFPqfvMaJI6io3rxoRPI2OlyCd8Kd8tgxGiDWtBsOSCkfS
+ EmKuLB1vsm5OCLJ7aRSDwZt5az6fIPy/WESJiz8aoGdlW5pvjlC2UeAE+FElq614VjromG77T0x
+ 1FwBwE00=
+X-Gm-Gg: AeBDievGsMJVSkiPZlcgOCuPEunvKHnEbAf1HkqbgYX/LfwCAHBUMScdd6i5HhYn0Ag
+ q2gUKKD4agkkmP4wx3w5+Wl/jyLp99/azGGzy4kF9+ZGfxRmJUOfY79PoPYUi2E+1n7gDu3pg9g
+ y28MNNjWffsNxYz4d2hwLzRCFsMSHbooqH7R2p9q9ZX4qkGb4HI0iOpr9HcNOGc8CmwvtdEU+Dv
+ 3kIoJmgBwm4ctuQiPP/tok17c8SOfObZRjiPPRkL9CdPzrJULyMR/Gutyxbxzfb3ozaWSvNONTm
+ zOJhx2nb/BEkqks79YmXfDOpD0hIESz3UoGq1sMpuyY3pMiAEYNTEtPCWLvwM0xfa8U8IAfBf9B
+ jeEgbyQHN6d4ZZjFnIshveUxGHLlSOUA2DcDMsFKAeGiixOyXcgCBR2g8AXIfuK9qNiT5I92evf
+ jJJJzflKJ3Wr3sIlmDxV8u0hAstk430YU3YfllsNsLMVzcnBoSV0598+ObWNhJZzrvMzDgGdxAm
+ Os2
+X-Received: by 2002:a17:903:b8d:b0:2ae:fc60:2650 with SMTP id
+ d9443c01a7336-2b2817b24c3mr185697845ad.39.1775600558634; 
+ Tue, 07 Apr 2026 15:22:38 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b274979d5csm180412065ad.38.2026.04.07.15.22.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 09:56:00 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ Tue, 07 Apr 2026 15:22:37 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 00/14] migration/vfio: Fix a few issues on API misuse or
- statistic reports
-Date: Wed,  8 Apr 2026 12:55:44 -0400
-Message-ID: <20260408165559.157108-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
+Cc: philmd@linaro.org, jim.macarthur@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v11 21/21] target/arm/tcg/translate.c: make compilation unit
+ common
+Date: Tue,  7 Apr 2026 15:22:08 -0700
+Message-ID: <20260407222208.271838-22-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,176 +107,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CI: https://gitlab.com/peterx/qemu/-/pipelines/2437886506
-rfc: https://lore.kernel.org/r/20260319231302.123135-1-peterx@redhat.com
+We removed all target specifics, and can finally compile this file only
+once.
 
-This is v1 of this series.  I dropped RFC because I feel like I collected
-enough feedback on previous version on what is uncertain, meanwhile I also
-managed to borrow a system with nVidia RTX6000 2GB vGPU and tested it.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/arm/tcg/meson.build | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-There're too many trivial things changed since RFC->v1 here, let me only
-mention what majorly has changed:
-
-- This version will assume both VFIO ioctls (reporting either precopy or
-  stopcopy size) may report anything (say, garbage), and it shouldn't crash
-  QEMU.  It will affect what got reported with downtime or remaining data,
-  but that's best effort so it's expected.  With that in mind, I dropped
-  patch 3 as Avihai suggested.  IOW, I expect no concern on either overflow
-  / underflow or atomicity on reading these values from the VFIO drivers.
-
-- The cached stopcopy_bytes for VFIO reflects always the total size
-  (includes precopy sizes).
-
-- Introduced one new patch to report "system-wide" remaining data, which
-  will start to include VFIO remaining device data.  We can't squash that
-  directly into "ram" section of query-migrate QMP results, so I introduced
-  a new "remaining" field in query-migrate result for it.
-
-- One more patch "migration: Make qemu_savevm_query_pending() available
-  anytime" trying to fix a very hard to hit race condition I found when
-  testing against virtio-net-failover tests.  I can only hit it if I run
-  tens of concurrent tests, but it will be needed to fix a crash.
-
-Otherwise the major things should be kept almost as-is.  I should also
-addressed all comments I received from rfc version.  Please shoot if I
-missed something.
-
-Overview
-========
-
-VFIO migration was merged quite a while, but we do still see things off
-here and there.  This series tries to address some of them, but only based
-on my limited understandings.
-
-Two major issues I wanted to resolve:
-
-(1) VFIO reports state_pending_{exact|estimate}() differently
-
-It reports stop-only sizes in exact() only (which includes both precopy and
-stopcopy data), while in estimate() it only reports precopy data.  This is
-violating the API.  It was done like it to trigger proper sync on the VFIO
-ioctls only but it was only a workaround.  This series should fix it by
-introducing stopcopy size reporting facility for vmstate handlers.
-
-(2) expected_downtime / remaining doesn't take VFIO devices into account
-
-When query migration, QEMU reports one field called "expected-downtime".
-The document was phrasing this almost from RAM perspective, but ideally it
-should be about an estimated blackout window (in milliseconds) if we
-switchover anytime, based on known information.
-
-This didn't yet took VFIO into account, especially in the case of VFIO
-devices that may contain a large amount of device states (like GPUs).
-
-For problem (2), the use case should be that an mgmt app when migrating a
-VFIO GPU device needs to always adjust downtime for migration to converge,
-because when it's involved normal downtime like 300ms will normally not
-suffice.
-
-Now the issue with that is the mgmt doesn't have a good way to know exactly
-how well the precopy goes with the whole system and the GPU device.
-
-The hope is fixed expected_downtime will provide one way for the mgmt app
-to have a reasonable hint for downtime to setup to converge a migration.
-
-Meanwhile, with a system-wise "remaining" field introduced, mgmt can query
-this results at beginning of each iteration to know if a stall is
-happening, IOW, if it's likely that this migration will not converge at
-all.  When detected, mgmt can start to consider the expected_downtime value
-reported above for converging this migration.  See more on testing below.
-
-Tests
-=====
-
-Tested this series with an assigned VFIO device GRID RTX6000-2B, FB memory
-2GB.
-
-The test covers both correct reporting of system-wise remaining data (which
-used to only cover RAM), and the expected downtime.  I verified that using
-the expected downtime I can converge a VFIO migration immediately according
-to the value reported. Test process as below:
-
-Start the VM and kick off migration until it spins at the end, not
-converging with default 300ms downtime.  It's common for a 2GB vGPU device
-due to both huge stopsize reported and dramally small mbps reported.
-
-As a start, update avail-switchover (I chose 1GB over a real 10Gbps port):
-
-This will stablize bandwidth.
-
-Libvirt's domjobinfo won't be able to see the real remaining data because
-libvirt still doesn't support the new "remaining" field, however we can
-still see expected_downtime will be reported correctly now (instead of
-reporting zero, before this patch applied):
-
-Data remaining:   0.000 B
-Memory remaining: 0.000 B
-Expected downtime: 1910         ms
-
-If we peek through QEMU monitor, we'll see with the change the system-wise
-remaining data to be 1.9GB (even if RAM keeps reporting 0), and expected
-downtime keeps the same as what domjobinfo reports as 1.9 seconds:
-
-Status:                 active
-Time (ms):              total=336919, setup=10, exp_down=1910
-Remaining (bytes):      1.91 GiB
-RAM info:
-  Throughput (Mbps):    460.09
-  Sizes:                pagesize=4 KiB, total=32 GiB
-  Transfers:            transferred=12.7 GiB, remain=0 B
-    Channels:           precopy=12.7 GiB, multifd=0 B, postcopy=0 B, vfio=0 B
-    Page Types:         normal=3306906, zero=7745576
-  Page Rates (pps):     transfer=14010, dirty=8039
-  Others:               dirty_syncs=247045
-
-It means 1.91 seconds are required as lowest downtime per math.
-
-We can try to set something lower than that, migration will not converge:
-
-...
-...
-
-Then if we update downtime_limit to be slightly larger than expected downtime:
-
-Migration will complete almost immediately.
-
-Peter Xu (14):
-  migration: Fix low possibility downtime violation
-  migration/qapi: Rename MigrationStats to MigrationRAMStats
-  vfio/migration: Cache stop size in VFIOMigration
-  migration/treewide: Merge @state_pending_{exact|estimate} APIs
-  migration: Use the new save_query_pending() API directly
-  migration: Introduce stopcopy_bytes in save_query_pending()
-  vfio/migration: Fix incorrect reporting for VFIO pending data
-  migration: Make qemu_savevm_query_pending() available anytime
-  migration: Move iteration counter out of RAM
-  migration: Introduce a helper to return switchover bw estimate
-  migration: Calculate expected downtime on demand
-  migration: Fix calculation of expected_downtime to take VFIO info
-  migration/qapi: Introduce system-wise "remaining" reports
-  migration/qapi: Update unit for avail-switchover-bandwidth
-
- docs/about/removed-features.rst   |   2 +-
- docs/devel/migration/main.rst     |   9 +-
- docs/devel/migration/vfio.rst     |   9 +-
- qapi/migration.json               |  32 +++---
- hw/vfio/vfio-migration-internal.h |   8 ++
- include/migration/register.h      |  59 ++++------
- migration/migration-stats.h       |  13 ++-
- migration/migration.h             |  10 +-
- migration/savevm.h                |   9 +-
- hw/s390x/s390-stattrib.c          |   9 +-
- hw/vfio/migration.c               |  92 +++++++++-------
- migration/block-dirty-bitmap.c    |  10 +-
- migration/migration-hmp-cmds.c    |   5 +
- migration/migration.c             | 172 +++++++++++++++++++++---------
- migration/ram.c                   |  40 ++-----
- migration/savevm.c                |  73 +++++++------
- hw/vfio/trace-events              |   3 +-
- migration/trace-events            |   3 +-
- 18 files changed, 313 insertions(+), 245 deletions(-)
-
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 0740de92c1a..506f031f1aa 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -20,20 +20,18 @@ mve_d = decodetree.process('mve.decode', extra_args: '--decode=disas_mve')
+ 
+ m_nocp_d = decodetree.process('m-nocp.decode', extra_args: '--decode=disas_m_nocp')
+ 
+-gen_a32 = [
++translate32_d = [
+   decodetree.process('a32.decode', extra_args: '--static-decode=disas_a32'),
+   decodetree.process('a32-uncond.decode', extra_args: '--static-decode=disas_a32_uncond'),
+   decodetree.process('t32.decode', extra_args: '--static-decode=disas_t32'),
+   decodetree.process('t16.decode', extra_args: ['-w', '16', '--static-decode=disas_t16']),
+ ]
+ 
+-arm_ss.add(gen_a32)
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
+ arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
+ 
+ arm_ss.add(files(
+   'cpu32.c',
+-  'translate.c',
+   'm_helper.c',
+   'mve_helper.c',
+ ))
+@@ -66,6 +64,7 @@ arm_common_system_ss.add(
+   m_nocp_d,
+   mve_d,
+   neon_d,
++  translate32_d,
+   vfp_d,
+   files(
+   'cpregs-at.c',
+@@ -77,6 +76,7 @@ arm_common_system_ss.add(
+   'psci.c',
+   'tlb_helper.c',
+   'tlb-insns.c',
++  'translate.c',
+   'translate-m-nocp.c',
+   'translate-mve.c',
+   'translate-neon.c',
+@@ -88,6 +88,7 @@ arm_user_ss.add(
+   m_nocp_d,
+   mve_d,
+   neon_d,
++  translate32_d,
+   vfp_d,
+   files(
+   'debug.c',
+@@ -96,6 +97,7 @@ arm_user_ss.add(
+   'neon_helper.c',
+   'op_helper.c',
+   'tlb_helper.c',
++  'translate.c',
+   'translate-m-nocp.c',
+   'translate-mve.c',
+   'translate-neon.c',
 -- 
-2.53.0
+2.47.3
 
 
