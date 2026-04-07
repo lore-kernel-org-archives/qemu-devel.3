@@ -4,101 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8FD10F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F1E10F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYdR-0002z9-Ks; Wed, 08 Apr 2026 15:32:21 -0400
+	id 1wAYas-0000en-HZ; Wed, 08 Apr 2026 15:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gyorgy.tamasi@gmail.com>)
- id 1wAY7k-0007sf-Vz
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:59:37 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAY8N-0008FL-Vg
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:00:16 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gyorgy.tamasi@gmail.com>)
- id 1wAXTf-0001Xt-Fd
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:18:13 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-59e4a04f059so31074e87.2
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 11:18:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775672287; cv=none;
- d=google.com; s=arc-20240605;
- b=TKLcFJDjOYgNilffejBvS3SfzU2vGyKD0Z2m40ZNjjT+Bm+VAgr6lSMnhonAub7XUM
- +u0ceM7GSiFLD3AXndu59fXbpmjtFt547FtnjO6V44eM0g0p5Oy1vNNu71CuFHxIthRP
- Yp1+XoqgafSkIDOrCC6dikJG5Otd80MkSrRloAAnr2P5+cImN8/7Eh+1qK29TvJngw8F
- qs+uX7FqpZGvqWdRTF88FgSLQwAg2zDWZFXBmpXI+Y5A80JKO8GaZuzeb6mOxhn0JdZ0
- MGbPvM5VigyY8eupeKegXjsB3EcG/zPC/wWKuIZFMIs+aeO7q7U5Ioc4TIZwzMFbQ/+O
- wsgQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=DdY65THGCt+j324uTVY1lckFxe0r0DZNbYDq2J6s7b8=;
- fh=QX3eyJ+nqDBgQmzOU8uQalw74caV/wOxgOWcbkaaANo=;
- b=iR1LltfYEVLZsCZ4cEc6Ytfxq5JSWDC85NVH6BtQWDBQUsyQFjNqrn1gLcbiaiNL4l
- jgoTXpm67xfOGKeu9JVjLxnTUw4uN2hPzGYa4dh9gsyq1xjlygE2kjH/5E9kTfGCglms
- nIM4hcNX9TOvZm1TcucoxlHEfJ7r88afRNEvbqY1XO3s/0C0hfpyka5wMgFIbBRai1VC
- fdVbZXLTvIkm1t68o/HNxI1VRAkQMJpInnz+4gx1mFsSXzAK8Xvbg/ngV4YXEB/NhVsN
- QtIX/OJEitmk467BG2LlMq8EiNy/XjDwyXezOHI4NI2QePnmzNEWwI9nt74pYrxrK05a
- vdeg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAEod-0000sR-NI
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:22:37 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2b2469e5117so1805815ad.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775672287; x=1776277087; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=DdY65THGCt+j324uTVY1lckFxe0r0DZNbYDq2J6s7b8=;
- b=BjYMNvFVH0WDJtl64dFHrlQW/PuCBUNVPw5NsVbylYIh2nBNPDhehJ/JHWGXvf6LbI
- /9weKo/5ASJMZDNNlLp6RcrGENtBOUTi/RK0HzSR7kjeMTP80AwY1QMzMIDVhQs39WRq
- 6JHdHCruzdoLXCC15sBoyHQ9Z7IIr9j3nPbzMcTodjLHBQu8729DvnQzIbGv/QZdYDyW
- yDGaPFcN6z4xdn5CWyk2Am9NB4XwaGvZLAsl0XFCI0ChamS0uIeX7AUZJSQLwgVBM1Vp
- U795/m4LdmbiPt6VyXNmwo2NXH1P9rI0RtsW1bnk0WfjmyxfjP4jX9X+CkNLC0iWha97
- MPgg==
+ d=linaro.org; s=google; t=1775600554; x=1776205354; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tPW1cE/fmyONyzC92p2j3tKoeEcHH77fUAfq913uUqk=;
+ b=DyELtp7sG5M1GBRBv0xKKGMBcb/z7zatSjvpoLOVxSsXqb+zYE/69z5YuQXibMAAV3
+ GPqM2xTHBct+PyC+EhnTdVIz/1qKKrvf6kFg1TWKjS3Qjs5lij8yoMfVI0KqmbQDUh5h
+ h0qJIGxgo1vzqLn04SmpYGKcQafMc/YUb3sWNuLrH8b/LTTRYV0sBkrPjIH3B4JQpaSq
+ L7/IrdJ8p8lkhWea8sUqkT5mZhN8QmbOffZRyX+D7Q/Png5xmSAoxTey3NBPcMxGznsp
+ eXILgwWSg1M72HSQsn32lIEBDgn4viUYym3qdxK38cGmRaLUKtCaBB3qA+ZmdPdM1N+J
+ LoXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775672287; x=1776277087;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DdY65THGCt+j324uTVY1lckFxe0r0DZNbYDq2J6s7b8=;
- b=pSor/SdfGKqItO9VeHJ/vYQgt4WHZbmsvzC+5ENJessLPBx/QNAisQsJrEB+mOe9we
- tyVVp/VAhnM8RnRgdEjQhPrwN7xHtNXKKwceM/ocLKAnP+dA2V9PV7+5z5UN/wmfUdR0
- 2MyKUqOWuDB9bn28Dv0lW4Sjj/xkJvKA0QVELN6iK6llhwhNznaHlGU5pbEPhxNHCpTi
- NCu2vtp1pS6rNFsJfBoQIj28AkJKAAJo2VeMxVdvPIHMbFVMSNQMaeYVh0REDKmX+GJV
- 3+A9x8r03UaHliAUpxOrR0rs2BtM8jucohkQXhCdXtWsEdw7CXiyrCet6Rdzb8oL/Ln1
- HvJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtx5L5heQWB6rMzLArpHnkyuFjzGfYHv3dr4/VlrAPzS/0IBQMAnpwTFUq3Ekad5PH7Lzwumf+jZe/@nongnu.org
-X-Gm-Message-State: AOJu0YwD8ijKCELriTlBij+gBoKkpiVZBbXsmjQxJimc+0fwvqG9esqx
- 626NdaH6/EmGOgsJWJ7X3HW+TXlCFv7FKpnTnpXnnG758IJtcwnY1mmWD/79wzl+Tx1zx/e6eKe
- EcsXeK8BXpqqSJA6sBzm/AeVrIQBr7IU=
-X-Gm-Gg: AeBDies0HssuQ1UbRXOy0n26i85VgBybzRrsLBMAOY6C6c8zu1Cm68VWxCR33H6AhGK
- ai5A4m6Bxs/ExaVUqdspgBGHH4NoXCjO3GhCJYfzDnemag6eSF62dXcWuVopr1UVQ+3X2bOkYp1
- yiGDkBnBi2G8kaejOlE0QYEoyxe5wXiUkwXX1V0bN9X7wJk97Dd0I0KBO1Kr6EFy2JQEq/by95s
- YuBbzWl/BzE3tIjyHEqmGLl8hQY8hdYDkqmjb7RGuk0xh/HRtPqsaOzy35ZeGPcGcFoPc8XIBHq
- 8ZfDltkoE9XjgBsl6UXb+OURDNiMB+OpjxHs3AgF
-X-Received: by 2002:a05:6512:b07:b0:5a2:c404:838a with SMTP id
- 2adb3069b0e04-5a3e7c47ec8mr171815e87.36.1775672287095; Wed, 08 Apr 2026
- 11:18:07 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775600554; x=1776205354;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tPW1cE/fmyONyzC92p2j3tKoeEcHH77fUAfq913uUqk=;
+ b=js803fMfedW7Ay3diR4EqBzSIKmDJ/aKCiEMWR8wguxpZW3d5bmM29PT3ryr74ERHU
+ srsgaY7+fFDCnAnyj4rfYZ8SNn5dZ97hqOwSxY6uk+IZpEZFataGK+90RNoVOb74iEp6
+ zX9bgD60zRe1wbeCwtEE8s2rawqv/eocETNPsjQMh8q6wG7xJO3lh6ng3lQpzNpMQaUK
+ +IecIFfZxe57gK6eX/i1QRNAu+7ebGqFsqvcKR0VBunHeE/dJjAal4LoJeLTYWvEWAEz
+ dsdnuPsa9eR0AT2dRdfOXj7hDgW9ecvHr0SCBEvAlKGmFrFF+AHlfjMk12Bphhy3XUg9
+ laTw==
+X-Gm-Message-State: AOJu0Yw5+Bkt2aN8BVsi8+eVbfKnd/HWQ7DyYFtEcWXSmsF1hMifweJd
+ WmjM3vEj2MFLcQEklVCHlJ5rZWasNPJK/vK9fc2vPwGNITEBqe2TTldLlR3RHOzlByGe3gZF2tN
+ 5O+l+3OI=
+X-Gm-Gg: AeBDietGkJbJiDQUessnoX6MDQbQ7uvTNm31rhDX3b6/Q9KLwD+9LMcX7eSjT7Lg5mz
+ XEWKLAIvRJDP8oR9ZcVw97W7LxUZ/fRcFRzKg1ZfI78riFHblux+242DPqaoIVzvvd30aqKDdd0
+ gx2IwqivisnyYgxfU34fhjsAHuZlNQwO2Wh8XkUYfbX9GsssxLhgA7BtCcNyAxRjz36hGW1kuUv
+ hy9BHuo0tbwgktPdTXrpOY0nxDHdAsXOJLVmwyHdiVNDiTRa0jlkFxACLKXr3Eax0V4i0uCV5RV
+ SLt2S2LRuFeGsClLar/Qo1tMZn+njVN56XsNr6y/ExTUh02E/aNzq3QPJ+++OlHB4wHTUUdVidL
+ e7MWrizkwXi2YdrUFMMi9lCW6nF8t/Xst4ox/swN6j6e1OV4UdIigQUpi1BQ4SjIbajuuLKl6yC
+ MajqvkBZp+n8Y+eUnYyJfMyxWOT4v9SmBTj5pQuBadLMnAnuX9HTlcecd7lZ4YY8lKrhCbMXa04
+ sf2
+X-Received: by 2002:a17:902:e94d:b0:2b0:6365:217e with SMTP id
+ d9443c01a7336-2b28206efdfmr170656095ad.15.1775600554253; 
+ Tue, 07 Apr 2026 15:22:34 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b274979d5csm180412065ad.38.2026.04.07.15.22.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 15:22:33 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, jim.macarthur@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v11 17/21] target/arm/tcg/arm_ldst.h: merge in translate.c
+Date: Tue,  7 Apr 2026 15:22:04 -0700
+Message-ID: <20260407222208.271838-18-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-From: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-Date: Wed, 8 Apr 2026 20:17:54 +0200
-X-Gm-Features: AQROBzBaxnNTPuS56QXuNhgxeMjx0PK7BB5AOy52cdRuPj639yQ5Gl65wWBMXsM
-Message-ID: <CAFsMJvCLRw2Q=4muDNG1Ojj3oL+UgTrVzpYM6VULRvdFxgR=KA@mail.gmail.com>
-Subject: [PATCH] linux-user: fix usage of struct target_stat64 for
- TARGET_LOONGARCH64 in syscall_defs.h
-To: laurent@vivier.eu
-Cc: pierrick.bouvier@linaro.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=gyorgy.tamasi@gmail.com; helo=mail-lf1-x12c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 08 Apr 2026 15:32:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,44 +105,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In a 64bit LoongArch64 env (both TARGET_LOONGARCH and
-TARGET_LOONGARCH64 are defined!) we can not use the struct
-target_stat64 for data-transfer, since this struct target_stat64 is
-defined for 32bit environments with its int-sized (4byte) st_*time
-sec/nsec components.
-The user side compiler headers of the LoongArch64 env uses long-sized
-(8byte) st_*time sec/nsec components.
+Only translate.c uses those functions, thus move them back to this file.
 
-(This is similar to the case of 32bit vs. 64bit RISCV: the original
-code does not use struct target_stat64 in 64bit RISCV env, when both
-TARGET_RISCV and TARGET_RISCV64 are defined.)
-
-This fix is important for LoongArch64 ABI1.0, where stat() is using an
-fstatat syscall with this struct target_stat64, if its usage is
-enabled.
-(In case of LoongArch64 ABI2.0 stat() uses statx syscall, where this
-problematic struct target_stat64 is not used, struct statx is correct
-in the LoongArch64 env.)
-See also: https://gitlab.com/qemu-project/qemu/-/work_items/3371
-
-Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- linux-user/syscall_defs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/arm_ldst.h  | 47 --------------------------------------
+ target/arm/tcg/translate.c | 24 ++++++++++++++++++-
+ 2 files changed, 23 insertions(+), 48 deletions(-)
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 679af640c0..6967306be4 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2005,7 +2005,7 @@ struct target_stat {
-     abi_uint __unused5;
- };
+diff --git a/target/arm/tcg/arm_ldst.h b/target/arm/tcg/arm_ldst.h
+index cee0548a1c7..e69de29bb2d 100644
+--- a/target/arm/tcg/arm_ldst.h
++++ b/target/arm/tcg/arm_ldst.h
+@@ -1,47 +0,0 @@
+-/*
+- * ARM load/store instructions for code (armeb-user support)
+- *
+- *  Copyright (c) 2012 CodeSourcery, LLC
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef ARM_LDST_H
+-#define ARM_LDST_H
+-
+-#include "exec/translator.h"
+-#include "qemu/bswap.h"
+-
+-/* Load an instruction and return it in the standard little-endian order */
+-static inline uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
+-                                    target_ulong addr, bool sctlr_b)
+-{
+-    return translator_ldl_swap(env, s, addr, bswap_code(sctlr_b));
+-}
+-
+-/* Ditto, for a halfword (Thumb) instruction */
+-static inline uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
+-                                     target_ulong addr, bool sctlr_b)
+-{
+-#ifndef CONFIG_USER_ONLY
+-    /* In big-endian (BE32) mode, adjacent Thumb instructions have been swapped
+-       within each word.  Undo that now.  */
+-    if (sctlr_b) {
+-        addr ^= 2;
+-    }
+-#endif
+-    return translator_lduw_swap(env, s, addr, bswap_code(sctlr_b));
+-}
+-
+-#endif
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 0b3b4ab86be..b6abaff4903 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -25,7 +25,6 @@
+ #define TCG_ADDRESS_BITS 32
+ #include "tcg/tcg-op-mem.h"
+ #include "qemu/log.h"
+-#include "arm_ldst.h"
+ #include "semihosting/semihost.h"
+ #include "cpregs.h"
+ #include "exec/target_page.h"
+@@ -6281,6 +6280,22 @@ static void disas_thumb_insn(DisasContext *s, uint32_t insn)
+     }
+ }
+ 
++/* Ditto, for a halfword (Thumb) instruction */
++static uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
++                              target_ulong addr, bool sctlr_b)
++{
++#ifndef CONFIG_USER_ONLY
++    /*
++     * In big-endian (BE32) mode, adjacent Thumb instructions have been swapped
++     * within each word. Undo that now.
++     */
++    if (sctlr_b) {
++        addr ^= 2;
++    }
++#endif
++    return translator_lduw_swap(env, s, addr, bswap_code(sctlr_b));
++}
++
+ static bool insn_crosses_page(CPUARMState *env, DisasContext *s)
+ {
+     /* Return true if the insn at dc->base.pc_next might cross a page boundary.
+@@ -6515,6 +6530,13 @@ static void arm_post_translate_insn(DisasContext *dc)
+     }
+ }
+ 
++/* Load an instruction and return it in the standard little-endian order */
++static uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
++                             target_ulong addr, bool sctlr_b)
++{
++    return translator_ldl_swap(env, s, addr, bswap_code(sctlr_b));
++}
++
+ static void arm_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+-- 
+2.47.3
 
--#if !defined(TARGET_RISCV64)
-+#if !defined(TARGET_RISCV64) && !defined(TARGET_LOONGARCH64)
- #define TARGET_HAS_STRUCT_STAT64
- struct target_stat64 {
-     abi_ullong st_dev;
---
-2.43.0
 
