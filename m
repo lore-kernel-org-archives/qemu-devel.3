@@ -4,94 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 914D910F9968
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A6A10F9968
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYcE-0005Zs-8p; Wed, 08 Apr 2026 15:31:06 -0400
+	id 1wAYY8-0002PX-FH; Wed, 08 Apr 2026 15:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYA6-0000q7-FB
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:02:02 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAOMZ-00010b-RK
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 04:34:17 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43b95e5b3afso3315205f8f.3
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 01:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775637254; x=1776242054; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UZhlEHU+bENR8VURxKqyDA9WFdD20Y0dP5ryc9G/KCM=;
- b=aKQBdye9Zx6unLGGxEbiwT1zz2kSoPb6s3CnbMSbQxA9pYq1zIzHaKLoR4RazdWXPC
- nDCYqOvxBP98tU0/oY1O1OGfkKi+9FOI/tbhIqVbMwvD6iaQoXDG9kwPkbXRCt7uUEaZ
- wlLA5ID3/jkeu5iOXaPT3NMXk7Qvut/rfG/ubAcF691foeQB8d0TPU7AM74RVlboVvzK
- 2ClxgixdXm2wbpfelSC+0dyuYEUbQFwz11Tvh4y4ToFPZjbGFuXGVwxDcv6RGYq4FPvc
- /gkBG2j6Ux/X5B3z66Zks4uGSkfg7nw7+1K1+HwwHDBcE+tKCcayCJlkg+d5+mIpTA2B
- himw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775637254; x=1776242054;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UZhlEHU+bENR8VURxKqyDA9WFdD20Y0dP5ryc9G/KCM=;
- b=ZOfIwaqChWvbqe0ZBu6kaicIU2elVEuO0aKMvRi+m0cJpjKP72x/SuKHzIpA6XzQpO
- FwpL/mcALTXiVe/4dvYLucTloJtdY6VrX8wuwzqycXh3ouIqBqZvgHuHZ/3ENNVrAQzg
- TRO1HYoKSu3r0T/aXTBs/pPv8/I1lk/drcJlc76OoMzjrtTOtJ/4uhEd0edO9K/4E0F7
- q6/VArJRHalBjssPhQqb45VyoJsD2vBeDYOCPRy8b+3MCz9qF2ghmE5OlGL0W+D0YrYI
- WbHCWkiXdGACtkW5IB8PjZZvmUmzaaEPUgEgKwplb4DN0CNCRhOCPIO/NDbLlkZbo6MB
- 0yJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFPBd9JZBsUAtF1mMZLMM4jY11tfEAAXjcF/Sfh/XOccOmDqiinIlMM+38XZ6UGjKvlclC7ZpBoKHg@nongnu.org
-X-Gm-Message-State: AOJu0YxBRR/eE+IDv8rn5MdSmY3gLA3L7oLka4JIc5Was+Di2hUj9WUS
- GLVSaEx5ym6h3p+Kvc+b4VXg9LgRZjePgj/BaVSKmcRY35A12eSd9TuciI4IMmX4mFISf58xAPZ
- 1HfE+AZ4=
-X-Gm-Gg: AeBDietE8z1KjKUm1+0RT/ktyJfvlzjB15jN/DSIUk4A7Q4FR//g+Ul6lXpkFcH6pa7
- Z3WjL2FY37ln24PfpFZV0efIct8JdULELgpClrM+88+tnapRI1Oq1p4MYuZhKPGfMyreUSnVRPV
- wxt9VVyHdAH99+QQOhFXlIWWZKOxTJeiYPu5411PTamMDPk/sRVMCF3Mno7U8/a96Osk7axL6B4
- bZrXKvvD89/JsgJN3BlfGIcAx4/RnwFmIG7eqp5FV5BXVwspApnovH10Y2KEO50lcukFK8QdgbE
- /FDep71ReXhqZgy+Cai/zRNliAhpObg2ftPaze4v5lMrx5YK0rWx+Dgi5OO577lYYK7IKC7qvgZ
- QKXF9ayGeK5VTv3G+oJ9diJvfB4r3/BEORFDFwszUtkQ1VMXwKwMSbUSAfYXITNax0pklbZoae1
- ccjsccC5K+ep2zc6xkvSJ+aP5rBm6NK5osdR1+QRCofZtRS1jD+ZAAk7BiOuzlWVPbKw==
-X-Received: by 2002:a05:6000:1869:b0:43d:dd:8cad with SMTP id
- ffacd0b85a97d-43d292cbccdmr28207761f8f.32.1775637253997; 
- Wed, 08 Apr 2026 01:34:13 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d1e4d282esm56142130f8f.18.2026.04.08.01.34.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 01:34:13 -0700 (PDT)
-Message-ID: <63521e31-993d-4838-86cf-a8bf7c4b07e4@linaro.org>
-Date: Wed, 8 Apr 2026 10:34:12 +0200
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAY7Y-0007lw-HZ; Wed, 08 Apr 2026 14:59:25 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAQmk-00035t-8n; Wed, 08 Apr 2026 07:09:29 -0400
+DKIM-Signature: a=rsa-sha256; bh=/Zna+JATdyWeJjMwRk+2e7Vw5Q4F0U1k4BLu0T0n7tA=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1775646440; v=1;
+ b=Po/JfeTkprfyID71oPOEZIf8hPrgZ2/jpBIylYfa4/epPgaNexiLSv5fdLaoi4KyyhTGMoc9
+ Ffel0QsDS7GGBj1WfCq/ZcUl5V8iSaU/afv1uUPw9Nb/VDgIm8A1UYczfFAZwnmIuX7tLG8D5LT
+ 5rRGhr7vrDS+w+PXh7IrYuWbSd5SHUsFSE8ByQp4tHFsQo4YUnKRkCg2X75UxncGqxpMPGGfnUr
+ p2k3K6DuAEyOBGSqDYu9I9HmPPf3W0uKt/esC1WDsDnyJiSH8UTnNLPzNyztczVyghwY+ZvEAAf
+ btxkrC3um3mwbY6S2yqP0EuuwtZE9LOCu/jMw2IiHS4BQ==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 91DE9207F6;
+ Wed, 08 Apr 2026 11:07:20 +0000 (UTC)
+From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
+Date: Tue, 07 Apr 2026 10:43:43 +0100
+Subject: [PATCH qemu v2 2/7] ot_uart: move to new reset API
+Message-ID: <177564643888.23414.7922925369077631439-2@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <177564643888.23414.7922925369077631439-0@git.sr.ht>
+To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
+ Amit Kumar-Hermosillo <amitkh@google.com>, nabihestefan@google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 19/21] target/arm/cpu.c: simplify endianness handling
- in arm_disas_set_info
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: jim.macarthur@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
- <20260407222208.271838-20-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260407222208.271838-20-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,18 +68,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/26 00:22, Pierrick Bouvier wrote:
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/cpu.c | 6 +-----
->   1 file changed, 1 insertion(+), 5 deletions(-)
+From: Lex Bailey <lex.bailey@lowrisc.org>
 
-As per v10:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+switch from legacy_reset to new ResettableClass for OpenTitan UART device
+
+Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
+---
+ hw/char/ot_uart.c         | 16 +++++++++++++---
+ include/hw/char/ot_uart.h |  8 +++++++-
+ 2 files changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
+index b3eb619641..2cf0d73cf5 100644
+--- a/hw/char/ot_uart.c
++++ b/hw/char/ot_uart.c
+@@ -227,9 +227,14 @@ static void uart_write_tx_fifo(OtUARTState *s, const uin=
+t8_t *buf,
+               (s->char_tx_time * 4));
+ }
+=20
+-static void ot_uart_reset(DeviceState *dev)
++static void ot_uart_reset_enter(Object *obj, ResetType type)
+ {
+-    OtUARTState *s =3D OT_UART(dev);
++    OtUARTClass *c =3D OT_UART_GET_CLASS(obj);
++    OtUARTState *s =3D OT_UART(obj);
++
++    if (c->parent_phases.enter) {
++        c->parent_phases.enter(obj, type);
++    }
+=20
+     s->uart_intr_state =3D 0x00000000;
+     s->uart_intr_state =3D 0x00000000;
+@@ -545,11 +550,15 @@ static void ot_uart_class_init(ObjectClass *klass, cons=
+t void *data)
+ {
+     DeviceClass *dc =3D DEVICE_CLASS(klass);
+=20
+-    device_class_set_legacy_reset(dc, ot_uart_reset);
+     dc->realize =3D ot_uart_realize;
+     dc->vmsd =3D &vmstate_ot_uart;
+     device_class_set_props(dc, ot_uart_properties);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
++
++    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
++    OtUARTClass *uc =3D OT_UART_CLASS(klass);
++    resettable_class_set_parent_phases(rc, &ot_uart_reset_enter, NULL, NULL,
++                                       &uc->parent_phases);
+ }
+=20
+ static const TypeInfo ot_uart_info =3D {
+@@ -557,6 +566,7 @@ static const TypeInfo ot_uart_info =3D {
+     .parent        =3D TYPE_SYS_BUS_DEVICE,
+     .instance_size =3D sizeof(OtUARTState),
+     .instance_init =3D ot_uart_init,
++    .class_size    =3D sizeof(OtUARTClass),
+     .class_init    =3D ot_uart_class_init,
+ };
+=20
+diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
+index 517324b65d..fee2128f90 100644
+--- a/include/hw/char/ot_uart.h
++++ b/include/hw/char/ot_uart.h
+@@ -34,7 +34,7 @@
+ #define OT_UART_CLOCK 50000000 /* 50MHz clock */
+=20
+ #define TYPE_OT_UART "ot-uart"
+-OBJECT_DECLARE_SIMPLE_TYPE(OtUARTState, OT_UART)
++OBJECT_DECLARE_TYPE(OtUARTState, OtUARTClass, OT_UART)
+=20
+ struct OtUARTState {
+     /* <private> */
+@@ -70,4 +70,10 @@ struct OtUARTState {
+     qemu_irq tx_empty;
+     qemu_irq rx_overflow;
+ };
++
++struct OtUARTClass {
++    SysBusDeviceClass parent_class;
++    ResettablePhases parent_phases;
++};
++
+ #endif /* HW_OT_UART_H */
+--=20
+2.49.1
 
 
