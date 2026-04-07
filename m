@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C38110F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8F6E10F9975
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYc0-0004RV-Vq; Wed, 08 Apr 2026 15:30:53 -0400
+	id 1wAYbr-0003eO-7Z; Wed, 08 Apr 2026 15:30:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
- id 1wAY9y-0000cP-Ta
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:01:54 -0400
-Received: from mail-dl1-x1233.google.com ([2607:f8b0:4864:20::1233])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAY9F-0000QI-6V
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:01:09 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
- id 1wAMwH-0007bP-5Q
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 03:03:03 -0400
-Received: by mail-dl1-x1233.google.com with SMTP id
- a92af1059eb24-128b9b7e3edso2882258c88.0
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 00:02:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1wAEoh-0000tf-Fl
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:22:41 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2b2589c26e3so49792865ad.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775631778; x=1776236578; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1775600557; x=1776205357; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ruazqCaCoj+XALGHoPdW8tAC9uychZwJljs32C4VAIE=;
- b=nuaZ49OhXKcQyb3yY3N2vThQQ0t5GaTEL6ERTS3Q4EeBK4xSyVN5kfiPUHMFZA466E
- sCJyUPBeAG/aDwJqc2vqH/Jy8UvZNT4Y9c7aS8r6FzhMa4MGtl71hU90DGVAuL8cjNfI
- ZxwA1Hj2rvK9m9Ur0aduld2GMPK/3ZxE6ET664+JDIkfMf6Syn3OR7BlbqeR+KzjLgS7
- aB0MSfgBgAXpwDH8Ji/Qs1qg/gb3DwL3asJ8MS6riQzvQGVIijnDYw+eOU7iO2mBX3qi
- JGG8E0ZO4HTpk26D1BZhPqigTrKZCVi3qD83ntQyxj+cdLY3ZaoqCufnxBmFNbV0h5k2
- Jmvw==
+ bh=HCYVORL8twjNtHEKHl2JRzrVw/Xl9zax7Xk6iBP1jLc=;
+ b=nTymbnewuclRkPmLNxJfszFSW4B8YKdTNrCqxzcWPIu6MAFDivf+W44sucilleZ59s
+ xBiUQTvgem5yWYOlJuhtNtlBo81P/ZobBNQ234RYxDmtuhGjoirx2jF7rPtk5RzDeLxh
+ vDugk2MnbBygPpC+d8KeXjjeQifSkexZYVKGfgRi6a455b16vdyd1/uiEFxCbJES34ow
+ dRdVx4C0EelRGHHesS1/QoYR558DSm0dGdWYHRBtu+6ro8EDtS0P91UI7iOdvuc9c6nR
+ I/KGO4hG6PUB6Q+SLX7wBvX01/Uazw9jL6cdSy+2DwaiPDq1Htk2H9O+77eXEz8/nIUn
+ nWdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775631778; x=1776236578;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ruazqCaCoj+XALGHoPdW8tAC9uychZwJljs32C4VAIE=;
- b=TXRvwFXNsVo+N8OXLQwQd1U1YhABayUbpjVQppOZqQHiBRr6Zou355v6zKP/hlVM63
- kkGMhSjHz91sKuaL9UNhn12oxTxo/b07KPxZtDmuzpyIo3ZC06nN1LOHS8tPb5HUxCTT
- FI41pEQdSglRJHM7KRdClLskJ+RnWzJbRileLX8boAIk7TzPirXIdFaVoZMhR2xkgoov
- ZG/rwYMqYHQr7N51ss8dEsnw1vESYd1RF1q8pyiVeSoEHNpwjhuYnola87M49J8NgF5y
- xQ3nCdiqeg0FjxnvbDi1CNNXJoRqpIYaa6R4tqn6ZcBRGrVHEImfiFj2bg/wQPkJ6wj1
- ANGg==
-X-Gm-Message-State: AOJu0Ywj6VZ07w1+r2FC5XDPuJYM3D1dE3zwQtX4h1/RlIjxF9Nq6RZe
- RajKjnCN8cXXHXexRWGQXFMldXvF3m8zAYK+NTbJTc8x15qZH0ovMOJZ
-X-Gm-Gg: AeBDieuxqlr/Pj0rAJRoHthdLYZwOYKL93oFXB2AfpYByyAfMef+rRJAu6OZe2YvPDF
- ga7xnplJroaVYsISUvDIExtg38mD8+6TxZbcPlxs3CQT7TdnaAksiawi10P+fSpVZXsM08/rZrP
- vrr7/AUGV1GuLm3cM510gLj0P3qtf/zaU0j+RRY3FJLZGuJ70C7O6q2uBDMNIT53MyNdYKun/iE
- /IrQeQEOYM+DV8vMJIld+W5VJsigLJJQK/sXGqroHZU3HhaEqhSllNLH5Fl3lIu63W0fhrLORCq
- Xz/DXbr8tq0FmvlGLnc12J4W8AoIL/zyzDFb+PdJdUsNCzYL3mtYnKpEnw1nqcHIK2bbkVbPQa6
- E3M75mJ4iWybzrck9H77qnjS2RUXRZhUh7ndW/uKewiePSFHGM8QmsYhXH6p74LK0uEwXa4jCt+
- oWUp4IsAQpgt6XP3zXX6wRIFxwGUVuOJxqh5rHcqKA2N3yxCffWvX96nP95vs1LdabLJZ22/PwS
- E0TL3RbJIc=
-X-Received: by 2002:a05:7300:dc8e:b0:2cb:8d2f:e247 with SMTP id
- 5a478bee46e88-2cbfa4c488bmr10817290eec.13.1775631777893; 
- Wed, 08 Apr 2026 00:02:57 -0700 (PDT)
-Received: from localhost ([2601:645:8200:47:a1bd:9754:418f:9b37])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2cc0c6ec215sm17788943eec.4.2026.04.08.00.02.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 00:02:57 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+ d=1e100.net; s=20251104; t=1775600557; x=1776205357;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HCYVORL8twjNtHEKHl2JRzrVw/Xl9zax7Xk6iBP1jLc=;
+ b=iqyg33nJozhZU0MimcbyxXQQe1DabUUmtgq+NtDTpB92b5Ba13tVCN6G8n+iLrkEy3
+ O2lY2h+EdbDI79yEN8xwOGy03Q1ALtI4MmLw2V2NkJGFPXhxaM9gRwseUbhvqQNeXNC8
+ dca4RU8AQLA67d4OMuZ0AqyhT+THypdvczqhJiqfRPP8iV+G45lUooUYxKAOjynuo/5E
+ EYS5HYdu9k47s49xqgj2yF9gVeAK3shEx/JEwN1TqgtnB653LjeXr0KmSZ0+pOpCU6m/
+ sK694hX63OGnm75TLZBuazUYjMF9ptMb0LIsTL9N9mQhSEX5v4NLtqNfRB62YmxB0NMZ
+ h7JA==
+X-Gm-Message-State: AOJu0YyEwYkfccyijPmmFNqid2fYNtMB7HtauCOR+FuzzWVFlsVuR5ty
+ B6c6OorOswys7EiQkW+otMUkS/IB2oluINLRHtvI+Hx9Qipu5gMJRzBHQzrwyej34bjeAEeLm5W
+ HdiSMj2A=
+X-Gm-Gg: AeBDietOr3F5XI2MjR052dQcEDaf+MnZW1lW8P7dB2id1qBGukr4YoBrnylpVmGZjnd
+ e3iZkOOsm5PL5i2HOQ9sIBozcykk83/aTwTy7u7iLsSBpi83bnczvZ3cmXfrdGEDRpXcQbbH1Kh
+ 4n2CvBcdR3xJAKZQyS/VOiOwvxprYYfXjVmhCzg7iir8C5M6f5TvdUyCCCkD+tSbZyrxhEK9hgp
+ ALDFHmmsmhPnOcjA2IsY59NPLzjEH0OEZweOod+omKUI0kXIqMDRedKo+YsUdmZ6Nf5C8+Ldoda
+ 4EhGD3S6c9hgATA3iLvTgvyR6L/swIKqyI3PqNqj2A9/6nAqQ4l9jJXqi8vmDQGb0t/amBu2rKh
+ PERlyOTRmO3i2EzWZwCZt87s1BPWYU6QlM7Z6MbTXjnCUdcSBMWhZiOjeg3ihNCgb5gRvfLnri7
+ CRZrtkhix6FmaR5VNbJ3U8jEUB2CO2wZcLuoZU5eONSjtbI1x/E/Ax7mVGvl3j43odJ0CAzc93z
+ VPk
+X-Received: by 2002:a17:903:906:b0:2b2:4c92:c389 with SMTP id
+ d9443c01a7336-2b2817cd623mr221327575ad.34.1775600557518; 
+ Tue, 07 Apr 2026 15:22:37 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b274979d5csm180412065ad.38.2026.04.07.15.22.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 15:22:37 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, jim.macarthur@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v11 20/21] target/arm/tcg/translate.c: remove target_ulong
+Date: Tue,  7 Apr 2026 15:22:07 -0700
+Message-ID: <20260407222208.271838-21-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 08 Apr 2026 00:02:55 -0700
-Message-Id: <DHNKXKNWFI3S.P78ERGSFU3RQ@gmail.com>
-Cc: <qemu-devel@nongnu.org>, <alex@shazbot.org>, <clg@redhat.com>,
- <pbonzini@redhat.com>, <rbolshakov@ddn.com>, <phil@philjordan.eu>,
- <mst@redhat.com>, <john.levon@nutanix.com>, <thanos.makatos@nutanix.com>,
- <qemu-s390x@nongnu.org>
-Subject: Re: [RFC PATCH 00/10] vfio: PCI device passthrough on Apple Silicon
- Macs
-From: "Scott J. Goldman" <scottjgo@gmail.com>
-To: "Mohamed Mediouni" <mohamed@unpredictable.fr>, "Scott J. Goldman"
- <scottjgo@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260405072857.66484-1-scottjgo@gmail.com>
- <A7F5F3BA-1008-4F21-A103-3079DC511292@unpredictable.fr>
- <EE710653-F4AF-4C1B-A9B0-C9ADE7EB01F1@unpredictable.fr>
- <DHLLUP2OY18O.1HYC4V18K7IH1@gmail.com>
- <67BA415D-4D1A-4F68-9429-284309EE96C0@unpredictable.fr>
-In-Reply-To: <67BA415D-4D1A-4F68-9429-284309EE96C0@unpredictable.fr>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1233;
- envelope-from=scottjgo@gmail.com; helo=mail-dl1-x1233.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,231 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun Apr 5, 2026 at 5:16 PM PDT, Mohamed Mediouni wrote:
->
->
->> On 6. Apr 2026, at 01:20, Scott J. Goldman <scottjgo@gmail.com> wrote:
->>=20
->> On Sun Apr 5, 2026 at 1:14 AM PDT, Mohamed Mediouni wrote:
->>>=20
->>>=20
->>>> On 5. Apr 2026, at 10:01, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
->>>>=20
->>>>>=20
->>>>> On 5. Apr 2026, at 09:28, Scott J. Goldman <scottjgo@gmail.com> wrote=
-:
->>>>>=20
->>>>> This series adds VFIO PCI device passthrough support for Apple Silico=
-n
->>>>> Macs running macOS, using a DriverKit extension (dext) as the host
->>>>> backend instead of the Linux VFIO kernel driver.
->>>>>=20
->>>>> I'm sending this as an RFC because I'd like feedback before investing
->>>>> further in upstreaming.  The code is functional.  I've tested it with
->>>>> an NVIDIA RTX 5090 in a Thunderbolt dock on an M4 MacBook Air.  GPU
->>>>> gaming works but is slow (~30 fps on high settings in Cyberpunk 2077
->>>>> [1]), likely due to the BAR access penalty described below.  AI
->>>>> inference workloads appear less affected.  Ollama with Qwen 3.5
->>>>> generates around 140 tok/sec on the same setup [2].
->>>>>=20
->>>>> How it works:
->>>>>=20
->>>>> On Linux, VFIO relies on kernel-managed IOMMU groups and /dev/vfio
->>>>> for device access and DMA mapping.  On macOS, there is no equivalent
->>>>> kernel interface.  Instead, a userspace DriverKit extension
->>>>> (VFIOUserPCIDriver) mediates access to the physical PCI device throug=
-h
->>>>> IOKit's IOUserClient and PCIDriverKit APIs.
->>>>>=20
->>>>> The series keeps the existing VFIOPCIDevice model and reuses QEMU's
->>>>> passthrough infrastructure.  A few ioctl callsites are refactored int=
-o
->>>>> io_ops callbacks, the build system is extended for Darwin, and the
->>>>> Apple-specific backend plugs in behind those abstractions.
->>>>>=20
->>>>> The guest sees two PCI devices: the passthrough device itself
->>>>> (vfio-apple-pci, which subclasses VFIOPCIDevice) and a companion
->>>>> DMA mapping device (apple-dma-pci).  On the QEMU side, an
->>>>> AppleVFIOContainer implements the IOMMU backend, and a C client
->>>>> library wraps the IOUserClient calls to the dext for config space,
->>>>> BAR MMIO, interrupts, reset, and DMA.
->>>>>=20
->>>>> DMA limitations:
->>>>>=20
->>>>> This is the biggest platform constraint.  Unlike a typical IOMMU
->>>>> mapping operation where the caller specifies the IOVA, the
->>>>> PCIDriverKit API (IODMACommand::PrepareForDMA) returns a
->>>>> system-assigned IOVA.  There is no way to request a specific address.
->>>>> This means the guest's requested DMA addresses cannot be used
->>>>> directly.  The guest kernel module must intercept DMA mapping calls
->>>>> and forward them through the companion device to get the actual
->>>>> hardware IOVA.
->>>>=20
->>>> Hello,
->>>>=20
->>>> Ugh this one is not great. By the way, Apple has a private PCIe passth=
-rough
->>>> API used by Virtualization.framework but that's a different design.
->>=20
->> This is really interesting and I had not heard about this. Are you
->> able to elaborate on this one at all? Maybe this is something where an
->> internal API to manipulate the DART is available inside
->> Virtualization.framework?
->
-> Hello,
->
-> All of it needs using private entitlements currently.
->
-> It's _VZPCIPassthroughDeviceConfiguration, a private class needing com.ap=
-ple.private.virtualization to use.
->
-> The VMM process itself then uses the com.apple.private.PCIPassthrough.acc=
-ess entitlement. I'm not
-> sure whether OS versions even have all the code currently though.
->
+We can replace it with uint32_t, because we know it's limited to 32-bit
+target.
 
-Appreciate the pointers here. It looks like, as you said, the framework
-taps into a bunch of code that isn't shipped to us mere mortals. I can
-see from some of the code in Virtualization.framework the general shape
-of what they're doing, though.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/arm/tcg/translate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-It looks like they implement a virtio-iommu device that ultimately calls
-into the host kernel with some internal APIs to do the DART mappings.=20
-
->>>> Would bounce buffering using something akin the confidential compute p=
-ath and=20
->>>> a pre-defined chunk of host memory accessible from the device, and the=
-n managing
->>>> the guest address map work? (see swiotlb).
->>=20
->> I tested this approach early on, but ran into a couple issues:
->>=20
->> 1. Not only does PrepareForDMA() limit the total size of the pool, but
->>   it also limits the size of individual allocations. IIRC it not very
->>   large at around 16MB.
-> Sigh.
->
->> Thankfully, I found that the allocator seemed
->>   to just keep allocating continguously across multiple allocations, so
->>   maybe that's fine?
-> That's good=E2=80=A6 but it sounds brittle=E2=80=A6
->
->> 2. Linux swiotlb default configuration is too small for GPU drivers. The
->>   max single mapping is 256KB and the total pool size is 64MB. The
->>   overall pool size is configurable but the max single mapping is
->>   derived from IO_TLB_SEGSIZE and IO_TLB_SIZE which are compile-time
->>   constants. During games, I have seen roughly ~900MB of active DMA
->>   mappings and mappings much larger than 256kb.
->
-> Pre-defined mappings with restricted-dma-pool sound like a good idea ther=
-e.
->>=20
->> I abandoned this approach because it seemed like the CPU penalty of
->> bouncing all the DMA buffers would be pretty severe and the swiotlb
->> allocator just didn't seem designed for this much memory pressure. I
->> also was hoping to avoid the requirement of recompiling the entire guest
->> kernel as a prerequisite for guests to use this passthrough feature. On
->> top of that, I wasn't sure if upstream would even be willing to take
->> changes to support this use case, since it's so far outside what the
->> existing swiotlb allocator would normally be doing.
->>=20
->> That said, you were saying that CoCo is fine with this restriction? Do
->> other devices just not have drivers that are doing so much allocation? I
->> didn't actually try changing the constants and recompiling the guest
->> kernel in swiotlb to make the pool big enough for it to really work at
->> all with the nvidia guest driver, I will have to see what happens.
->
-> CoCo with bounce buffering works with NVIDIA GPUs. It had to be done beca=
-use
-> no trusted I/O path (and implementing that is a quagmire).
->
-> A recent Intel post about it claiming production-readiness:
->
-> https://community.intel.com/t5/Blogs/Tech-Innovation/Artificial-Intellige=
-nce-AI/Confidential-AI-with-GPU-Acceleration-Bounce-Buffers-Offer-a/post/17=
-40417
-
-I dug in here and implemented the restricted-dma-pool solution. Still
-needs some cleanups but it's working enough to test. To start with the
-bad news:
-
-1. As I mentioned previously, the mainline kernel has a max 256k limit
-for any single swiotlb mapping. This has been debated a few times on
-LKML, but the consensus has been generally that it should not be changed
-or made configurable. You can see the threads:
-  - https://lkml.org/lkml/2015/3/3/84
-  - https://patchwork.kernel.org/project/linux-mips/patch/20210914151016.31=
-74924-1-Roman_Skakun@epam.com/
-
-2. NVIDIA drivers immediately make a contiguous 528384 byte allocation,
-at least on my hardware (NVIDIA RTX 5090), which is required as part of
-initializing the firmware on the card. This obviously fails immediately.
-It happens on both the NVIDIA-provided "open" drivers[1] and the in-tree
-`nouveau` [2], so it's more a hardware-specific issue than just a driver
-problem. If you hack around that (allocate 3 smaller buffers and hope
-they are contiguous), you'll see that both drivers assume coherent DMA
-memory (moreso in the nvidia driver than nouveau, but it's a problem in
-both). They map DMA buffers and then write data into the buffers
-afterward. So you end up sending empty swiotlb buffers to the card and
-it'll ultimately fail to initialize.
-
-It's possible the press release was referring to using the closed NVIDIA
-drivers, but those are now deprecated and don't support my newer GPU.
-
-But, there is good news:
-
-1. The IOVA range that seems to always come from PCIDriverKit is pretty
-far outside the default qemu mapping from `-machine virt`, so the range
-can be cleanly identity mapped in the VM without overlap. One of the
-restrictions I noted earlier (16MB max contiguous mapping) was actually
-just a bug in my code. A large contiguous mapping seems to work fine,
-though the ~1.5GB limit is still real.
-
-2. restricted-dma-pool DT attribute can be assigned per-device. So it
-doesn't affect other drivers on the system, and potentially that means
-you can have different pools for multiple devices (have not actually
-tried this yet, but seems like it would work).
-
-3. More normal devices can work. I purchased a thunderbolt nvme
-enclosure and it works with the swiotlb bounce buffering with no kernel
-modifications.
-
-4. With a sufficient amount of hacks in the driver, the NVIDIA "open"
-driver can be made to work, albeit with already slow gaming performance
-reduced to about 30% (~10fps) vs paravirt dma mapping (~30fps). I wasn't
-able to get CUDA working, but presumably that just needs more elbow
-grease.
-
-After sleeping on this a bit, I think my proposal would be:
-
-- The `restricted-dma-pool` method can be the default. For most devices
-  this will work seamlessly, though users may have to specify a size for
-  the pool, since the optimal size will vary for each device.
-
-- The apple-dma-pci thing can be downgraded from an actual device to an
-  out-of-tree workaround. I have not yet tested it, but presumably it
-  can use ivshmem or a virtual serial port to communicate the mappings.
-  It's mostly a guest-side hack so it doesn't really need qemu
-  involvement necessarily.=20
-
-- I doubt Apple will actually approve this for distribution, but I can
-  write a kext that uses the kernel API to manipulate the DART directly.
-  I didn't realize this was an option before. This can act as kind of a
-  companion for my dext and as follow-on to this patchset, I can teach
-  the vIOMMU device to use it. Eventually if Apple exposes this as
-  something you can use in a dext, then the functionality can be moved
-  into the dext and all of these concerns become moot. Until then, it
-  can be an optimization if you're willing to run without SIP.
-
-If you think this is OK, I can prepare a new version of the patchset.
-
-Thanks,
--sjg
-
-[1] https://github.com/NVIDIA/open-gpu-kernel-modules/blob/main/src/nvidia/=
-src/kernel/gpu/gsp/kernel_gsp.c#L5404
-[2] https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/nouveau/n=
-vkm/subdev/gsp/rm/r535/gsp.c#L1827
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index c432de2a268..ce427c5a3ca 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -6282,7 +6282,7 @@ static void disas_thumb_insn(DisasContext *s, uint32_t insn)
+ 
+ /* Ditto, for a halfword (Thumb) instruction */
+ static uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
+-                              target_ulong addr, bool sctlr_b)
++                              uint32_t addr, bool sctlr_b)
+ {
+     MemOp end = MO_LE;
+     if (sctlr_b) {
+@@ -6529,7 +6529,7 @@ static void arm_post_translate_insn(DisasContext *dc)
+ 
+ /* Load an instruction and return it in the standard little-endian order */
+ static uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
+-                             target_ulong addr, bool sctlr_b)
++                             uint32_t addr, bool sctlr_b)
+ {
+     return translator_ldl_end(env, s, addr, sctlr_b ? MO_BE : MO_LE);
+ }
+-- 
+2.47.3
 
 
