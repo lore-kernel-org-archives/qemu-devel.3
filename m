@@ -4,102 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9A2FF5135
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC67DFF5136
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABQW-0002P1-1Z; Tue, 07 Apr 2026 14:45:28 -0400
+	id 1wABRy-0003BI-9s; Tue, 07 Apr 2026 14:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wABQU-0002LR-2Y
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:45:26 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wABR3-0002em-0w
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:46:04 -0400
+Received: from mail-ej1-x642.google.com ([2a00:1450:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wABLJ-0004Sb-D7
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:40:07 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-5a2a70bb66aso5169977e87.0
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 11:40:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775587202; cv=none;
- d=google.com; s=arc-20240605;
- b=cGb46psBYSH+EW5G4Wh6LihCc+OwcrDL1yAY8ynVyschU4JZMHk+6Wca639WcWGj8M
- RoKgHtBTtl1USwMdOjLOY/gsWejvX/JDSs6uW0LEVBpoE8pLkIz3HraL90rdMyYLpQFZ
- TN+2QMTHOqpEQiqFKaNR4m8Bj1jL8oKttM4/fpvMPrrjyUTYbDKhSUBXVmsOqyQbMXdu
- Upi6YOTo93fwdaXpk7VdDsrUPKUlOSpbgIluUFDPoC8jc52duVus6L9mlS/sTiQ0ozWK
- UgGGKnfFcVqH9WSpEPjUnV5niske8DDp0rcM/q9eqhM5cJwhc4JE+j1br9Ps0kgoJEm4
- GgbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=blbjAKQGlSrDyH90YVt3oPB63zyz8GaSZA3XvZBZq8s=;
- fh=j8cjR5BSdb9oxrjVMaCJViji+r96qovWS4bV9/nXBtU=;
- b=WyDWUB9JP+faTU7N2pueQO4zfPrr0Z+Pk2JTj1o8voh8VmABGc0IoK+ZHC9hDjiV20
- hKQm3Gl8X0AwswjGiqEyDd1Ijig/oK49km5CqE5k/VAsQq8ihesoa+1AvKyf7WnKOpEz
- gLboapYJM7+T/M5v7eAsV4XCDk8/Z8MtxTVOb6BGvJqYpY1xIWZf6Y5TcHRhp7IebBF9
- ih6mD0XCgW/5KQMycKkmoqYAjZlLw0MJXt8u1BEArHqCo32C2ytY9tI6iQvQ1zkcqB/0
- muGodqP2KX9fky4yMrBlMLRa4QG5jpi9bXfmGps47IVItUwvAvNUKa2PzZY8SXF4/CG8
- k3sQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wAAAA-0007tk-Vy
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 13:24:32 -0400
+Received: by mail-ej1-x642.google.com with SMTP id
+ a640c23a62f3a-b9c3e2cf3c0so855765666b.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 10:24:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1775587202; x=1776192002; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=blbjAKQGlSrDyH90YVt3oPB63zyz8GaSZA3XvZBZq8s=;
- b=fB0x8YY12wJ3jQYhAEbVYLwRR9MtmeRJyUBgVmCOfrLRLztSZagky9kqxG1xzxr+RK
- hTY2GhtgGXZCFcsdHPf3CIDTQX7TmzBs9OSt+M2wMbgVWVS+CMPOG8F+pUJEds3aF5fz
- RWQyD3z5+IF0wp1T9BwqjIv6sBgv1c2NJIj9M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775587202; x=1776192002;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1775582669; x=1776187469; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=blbjAKQGlSrDyH90YVt3oPB63zyz8GaSZA3XvZBZq8s=;
- b=LSkxFiwSteeNys7ra2FUTA7QkEfXDyXLOZMoWgm0iN2Erojfg53KcW7SAI1BkeudNh
- VS/Ji9tjoJX0K2N+7+OvyBYeoY2Tfy+rXxZ5EkSvrHkaGmHfss01/stf681Mdqb7Slgu
- vGuXmEc8zn0xQCLExNz7NeWD7O3mkboMiMsMfGL/8xMXegP2y6Ot8LswfI3CplhJkX0w
- gYLEtUPOw48aOrhNYyPu00s3H31iNnoOtFz9t6GVrF9BPzMRId+X9l8nfbiQaJH6bfmE
- H5D1DY+5fqiloAry3PbfNJMmU//60xvDJagjwgYtKUy4B5+vxsZnhtDkAQQ5JLy9KPl2
- boIQ==
-X-Gm-Message-State: AOJu0YxeqOKyQmg/8cQ0A6+l2Bwd3AvHGaxRMzgOH7IaKCnd5s8KHRaa
- JiBnctXCzv/gvMhANTDVdCxywDbhQeiKG50yV0Hk/bTasr3Jn67x7o0uUG8nksksX0hHs6/Xoa7
- oUMwL1DjPQ+Gy20MDFWv1JDy/gUYdAtF6XaLepu3fxg==
-X-Gm-Gg: AeBDies4xvJXcuUNUBGUL+1rwksTeGHkY5MdihMyhzMsfXeUYy8wkn5LdXkTTXozNa+
- wuvVCFj/xT2kYvBakNiULDFWDjeOPjr5saQ/oK3TbsajWWs9WGoJhUxuQhcEFE3lcoodE0HVEnU
- faQdEaeQc/oCeTLc9lrI/TcWnnqlA7tQHyaiHZblwTknU8opGj0wyq3pJFvAS3ZUwVIGUEoVH6D
- RnujLFka8izj+8bWOMVlwl2fnhVpcfLf5L0pXA42jw2bvphf6CVgEdXktQ+iAJJFHo1r8jkH0Rg
- FmznK0Kgt/nM7eiWhqg=
-X-Received: by 2002:a05:6512:3b9e:b0:5a2:9cb4:9729 with SMTP id
- 2adb3069b0e04-5a33754eedbmr6624956e87.2.1775587201817; Tue, 07 Apr 2026
- 11:40:01 -0700 (PDT)
+ bh=SNnqyiKu4QqqTcyzSZuetFLzuspnDmf4RqP+xBfCwDM=;
+ b=O+x6ddl3/ztqGaenL4F08qjNv94tRTD+cCUzLsx5dZrQHqLXiggxi0zR6XKLCGNEmw
+ OKQMpAgxrILzGS7woerTmUBLjZRtLVJHj/2aGuPsSpdePfTJfFK0kpgIXCiw/Jbw8h+W
+ M1rvE+EcfOf1+sFVhsJaMHYrLB+o7ZmnFCEgCZpapVguH9mQUl/alpJoTzZzKOFxThbR
+ tlObsurRMoaFUAe2CIbO1j+eIcErUjAuRchz/EER8M+hjYu996BdJtwoCRL7k3WOE34l
+ +teoOop1HG9PYB12/Xw4nRtTVP3iaLq05mxxCNjTemdiOvKdFD4RDXVXGESOaEZendiU
+ 5wgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775582669; x=1776187469;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SNnqyiKu4QqqTcyzSZuetFLzuspnDmf4RqP+xBfCwDM=;
+ b=nwyDg8P/4TXWMVLveKzEQxSqJG4n92Yu3Pcp1jBcCv9l6Vpq5wQ7d7oDoqnDQ40PJL
+ wCjCqHLPAt2NAljt4LpaOJ8DoRn2MgVM+Qxx9JM/KhRXiQd29R159eKbV06XRQLbclOb
+ 14ER7NQsgQz/VLndQmFA6uinGe3bYxzhoFnqmQV7xX1GwPY+fBUSTuxp/jODMSCS5UgV
+ Hpm6AsfaojGyp60Igs62zvia64XfAayeU7l6it1XHNjF74QYL3Fk+fMOVFrEOQw4bm/j
+ QZ9fmJ2TolTRppL3zOOWnkkJIuEofZ98dHRf77AlQqS/w35kjhCaixlHs+Vfx4dJH2IE
+ Eg8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWvkiN+qAzPHgMOpCC+eLEQM8N+Q1yVAi1PAMod62PPZN0a5kPVdrCWx16h175sZabmpsUxSkJTJjb@nongnu.org
+X-Gm-Message-State: AOJu0YwwRMsVehhDRUqhfuci40ybO8yRIpJA+bh6gUYEgF++UVh7/7yi
+ mmvZEDLhIoRCw32Y0YTBTDoSEwoldkCINyLEfDCpWT2QTPPRpAm+JOt0wEeCB4EKVLc=
+X-Gm-Gg: AeBDies1DshU8AK/7UuRCVbyAgGZlFcu0E3OKqE57YpXSlYpcUom/UAn0vJ3MGPuwHt
+ DsUJ7ua1+D0NZXIZ3TMxE69jAULhXxt+UUEpw3/mSdpDOwN4/spPsdgTAhQ/YD+VVBQdG7o9KC6
+ HA7P/RODJ2nMQe9++BerVGbcFkbzDTuZSOQvq6g/kf47nesvd2ttDn5DOFHPcHqdUtQ6G7/TfNg
+ sdlY01aUFk6VryZCGzZJu4eRTocpj0iODFE9P39AxnKIIvXwNGkxG+w459ZDwa/jhBcVtzlF4AI
+ MLYcn5FkFVYkgd7HmPqBRD9kl1bdhv0vsdrNlftOB6uIFjcDgk/PEggTvA2G+R4fCmXQzXWjT/2
+ w4sxPwZmR8F4IGpinyjnFvZBukJax2kBpY1trrUUQwtUup+EejcXFJIarx/CtSQFfRncLaiNx08
+ cAiWDLkMZDUOOH8uaRpaOI59NGhmf21BAZTQ==
+X-Received: by 2002:a17:907:d40f:b0:b98:2b83:909d with SMTP id
+ a640c23a62f3a-b9c679f592dmr947670466b.37.1775582668761; 
+ Tue, 07 Apr 2026 10:24:28 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b9c3cfeedc2sm572469066b.42.2026.04.07.10.24.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 10:24:27 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C19925F9CD;
+ Tue, 07 Apr 2026 18:24:26 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Stefan Weil <sw@weilnetz.de>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,  Akihiko Odaki
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui <ray.huang@amd.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Gerd Hoffmann <kraxel@redhat.com>,  Pierre-Eric
+ Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei
+ Zhang <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert
+ Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
+ Singh <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger
+ Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
+ <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Robert Beckett
+ <bob.beckett@collabora.com>, Anthony Roberts <anthony.roberts@linaro.org>
+Subject: Re: [PATCH v22 02/18] ui/sdl2: Don't disable scanout when display
+ is refreshed
+In-Reply-To: <c9943b84-e997-4ce8-8449-5c0115ca9250@weilnetz.de> (Stefan Weil's
+ message of "Tue, 7 Apr 2026 18:44:43 +0200")
+References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
+ <20260303151422.977399-3-dmitry.osipenko@collabora.com>
+ <c9943b84-e997-4ce8-8449-5c0115ca9250@weilnetz.de>
+User-Agent: mu4e 1.14.1-pre1; emacs 30.1
+Date: Tue, 07 Apr 2026 18:24:26 +0100
+Message-ID: <87qzoqbs51.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260317102708.126725-1-alexander@mihalicyn.com>
- <20260317102708.126725-6-alexander@mihalicyn.com>
- <20260407153426.GA238768@fedora>
-In-Reply-To: <20260407153426.GA238768@fedora>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Tue, 7 Apr 2026 20:39:48 +0200
-X-Gm-Features: AQROBzCd7WQmHJ9DySlXO58mldofN7JbB_WmD6KpsLT4DHXImMO450s8xJq_fxk
-Message-ID: <CAJqdLrpzZjs0Zf52sB0R149D6hCVYEDqAW36BYAaPW+uhK=g6A@mail.gmail.com>
-Subject: Re: [PATCH v5 5/8] hw/nvme: add migration blockers for non-supported
- cases
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <its@irrelevant.dk>, 
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Fam Zheng <fam@euphon.net>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x12b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::642;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x642.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,58 +125,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Di., 7. Apr. 2026 um 17:34 Uhr schrieb Stefan Hajnoczi <stefanha@redhat.com>:
+Stefan Weil <sw@weilnetz.de> writes:
+
+> Am 03.03.26 um 16:14 schrieb Dmitry Osipenko:
+>> Display refreshment is invoked by a timer and it erroneously disables
+>> the active scanout if it happens to be invoked after scanout has been
+>> enabled. This offending scanout-disable race condition with a timer
+>> can be easily hit when Qemu runs with a disabled vsync by using SDL or
+>> GTK displays (with vblank_mode=3D0 for GTK). Refreshment of display's
+>> content shouldn't disable the active display. Fix it by keeping the
+>> scanout's state unchanged when display is redrawn.
+>> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+>> Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> ---
+>>   ui/sdl2-gl.c | 1 -
+>>   1 file changed, 1 deletion(-)
+>> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+>> index 3be17d1079af..5eca0248233e 100644
+>> --- a/ui/sdl2-gl.c
+>> +++ b/ui/sdl2-gl.c
+>> @@ -51,7 +51,6 @@ static void sdl2_gl_render_surface(struct sdl2_console=
+ *scon)
+>>       int ww, wh;
+>>         SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+>> -    sdl2_set_scanout_mode(scon, false);
+>>         SDL_GetWindowSize(scon->real_window, &ww, &wh);
+>>       surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
 >
-> On Tue, Mar 17, 2026 at 11:27:05AM +0100, Alexander Mikhalitsyn wrote:
-> > +static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-> > +{
-> > +    uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
-> > +    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
-> > +    bool adm_cmd_security_checked = false;
-> > +    bool cmd_io_mgmt_checked = false;
-> > +    bool cmd_zone_checked = false;
-> > +
-> > +    /*
-> > +     * Idea of this function is simple, we iterate over all Command Sets and
-> > +     * for each supported command we provide a special handling logic to
-> > +     * determine if we should block migration or not.
-> > +     *
-> > +     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is always
-> > +     * available to the guest, but if there is only 1 namespace, then it is
-> > +     * safe to allow migration, but if there are more, then we need to block
-> > +     * migration because we don't handle this in migration code yet.
->
+> I got a user report that my latest QEMU for Windows no longer supports
+> SDL. According to my own test, SDL still worked with git master
+> (2026-03-07), but was broken with 11.0.0-rc0 (2026-03-18).
 
-Hi Stefan,
+This is:
 
-first of all thank you for looking into my patchset.
+  https://gitlab.com/qemu-project/qemu/-/work_items/3347
 
-> What would be required to migrate multiple namespaces?
-
-It should not be very complex, and starting from v4 I've added
-VMStateDescription for nvme_ns, but I'm trying
-to be extremely careful here, and keep patchset as small as possible
-(and easy to review), because I it is my first
-contribution to QEMU and I'm newbie with NVMe protocol. I wanted to
-avoid any non-absolutely-required features
-on the first approach and then add all extras after and on-demand.
-
-My current understanding is that to support multiple namespaces we need:
-- VMStateDescription for nvme_ns [ done ]
-- add logic to handle (NvmeCtrl)->namespaces field and save info about
-attached namespaces
-  to some temporary field (use VMSTATE_WITH_TMP?)
-- on restore we should iterate over namespaces attached and call
-nvme_attach_ns(n, .)
-
-Feels like this is it, but I can miss something. Please, let me know
-if you believe that implementing this is absolutely
-required and I'll look closer and add this in v6.
-
-Kind regards,
-Alex
+Anthony should be posting a patch to the list soon.
 
 >
-> Thanks,
-> Stefan
+> Therefore this patch series might have caused the regression which
+> still exists in 11.0.0-rc2. All test installers are available here:
+> https://qemu.weilnetz.de/w64/2026/.
+>
+> Regards
+> Stefan Weil
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
