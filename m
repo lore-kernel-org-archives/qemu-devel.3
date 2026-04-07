@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D2AF9D0EB
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 943EFF9D0E8
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wChSJ-0005v9-MO; Tue, 14 Apr 2026 13:21:43 -0400
+	id 1wChSJ-0005v8-9v; Tue, 14 Apr 2026 13:21:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wChSE-0005sU-8r; Tue, 14 Apr 2026 13:21:40 -0400
+ id 1wChSB-0005sG-Er; Tue, 14 Apr 2026 13:21:38 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wChSB-0007Km-IP; Tue, 14 Apr 2026 13:21:37 -0400
-DKIM-Signature: a=rsa-sha256; bh=PlhA+f2IZd8IcCVPTtjXpKLc7zQX/PWU3bGKcmfeaoo=; 
+ id 1wChS7-0007IE-RH; Tue, 14 Apr 2026 13:21:34 -0400
+DKIM-Signature: a=rsa-sha256; bh=Eb4E4n4zzzhOAaaGQsl9QPIPVsuIUn1rdNE7TxwA3Ns=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
  t=1776187286; v=1;
- b=bONWszH4bPsmkZVggR2/HXX05iKpe0UN7E0iR4Dq/8dfunv6piZavjwbkYsxRYYLEMDI9W1I
- v35X92xmujPsSghdaOC50PpOiOY6uSCGuZqbAFnW6/d8l629NzzV1ikLcboOv9XExjNUKoK3or3
- dmMnL4kqva+WUgv4iv/f7jriFQW02pBCRmYplne+O3ikgDaMmxtVqaZWpWB/fcIxqguM19LsksD
- c3xwYjoIPL0m/eVK/j4j8H/Ky4GQktf7zDtHDflGiKjvYI0bxuTJ8qspL5m3nu/GaCq01/12B7M
- RZa9kvQMWHG6QXHoH8naavRZaWmWkCNQYJNWAP7bwjMvA==
+ b=WjQoEXMzIxRhob6xDzTR2EhdBMRyfvz43O14h2fYV/Vy16RY1eTicZngdrDwIRv4rBLi6ctY
+ ZREiNkzog98vqSjPUgsL1bTH32DOcQZKak1VE2tQAT07M4U/2s44g52ix7NGfMONbp/o/UOcvd3
+ 1Y89X/dYWGcStjJlQIprYHe2fvD/8zSxZFKsWPqqAYJf5OSa5gCyUCGJBsPPKLXZfJGwPVDkgM1
+ bmySpZ4UiS0xcYPVifGnakIkMsrPwBbOIq6n0aTN9yqxLKbcwF7nYYqVkAdNK0pYrJ4XvrrSp5t
+ J1R95oZg7ZK2RMAu2f+NM16y+jmSIUCQHSGq3HNmVXl6A==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 8565520A3C;
- Tue, 14 Apr 2026 17:21:26 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id EF3CC20A36;
+ Tue, 14 Apr 2026 17:21:25 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Tue, 07 Apr 2026 15:11:43 +0100
-Subject: [PATCH qemu v3 08/10] ot_uart: update file headers with new
- authorship and documentation URL
-Message-ID: <177618728515.4917.14466194789826252277-8@git.sr.ht>
+Date: Tue, 07 Apr 2026 10:43:43 +0100
+Subject: [PATCH qemu v3 02/10] ot_uart: move to new reset API
+Message-ID: <177618728515.4917.14466194789826252277-2@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177618728515.4917.14466194789826252277-0@git.sr.ht>
 To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
@@ -76,104 +75,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Lex Bailey <lex.bailey@lowrisc.org>
 
-The documentation has moved, URL updated.
-This file is now a combination of code from various people/organisations.
-Took the opportunity while editing this to switch to just using
-the SPDX ID.
+switch from legacy_reset to new ResettableClass for OpenTitan UART device
 
 Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 ---
- hw/char/ot_uart.c         | 24 ++++++++----------------
- include/hw/char/ot_uart.h | 25 ++++++++++---------------
- 2 files changed, 18 insertions(+), 31 deletions(-)
+ hw/char/ot_uart.c         | 16 +++++++++++++---
+ include/hw/char/ot_uart.h |  8 +++++++-
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
 diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-index cdf02da62b..d00f7bee66 100644
+index b3eb619641..9478af40f9 100644
 --- a/hw/char/ot_uart.c
 +++ b/hw/char/ot_uart.c
-@@ -2,27 +2,19 @@
-  * QEMU OpenTitan UART device
-  *
-  * Copyright (c) 2020 Western Digital
-+ * Copyright (c) 2022-2025 Rivos, Inc.
-+ * Copyright (c) 2025-2026 lowRISC contributors.
-  *
-  * For details check the documentation here:
-- *    https://docs.opentitan.org/hw/ip/uart/doc/
-+ *    https://opentitan.org/book/hw/ip/uart/doc/
-  *
-- * Permission is hereby granted, free of charge, to any person obtaining a c=
-opy
-- * of this software and associated documentation files (the "Software"), to =
-deal
-- * in the Software without restriction, including without limitation the rig=
-hts
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-+ * Author(s):
-+ *  Alistair Francis <alistair.francis@wdc.com>
-+ *  Lo=C3=AFc Lefort <loic@rivosinc.com>
-+ *  Lex Bailey <lex.bailey@lowrisc.com>
-  *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-+ * SPDX-License-Identifier: MIT
-  *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING F=
-ROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-  */
+@@ -227,9 +227,14 @@ static void uart_write_tx_fifo(OtUARTState *s, const uin=
+t8_t *buf,
+               (s->char_tx_time * 4));
+ }
 =20
- #include "qemu/osdep.h"
+-static void ot_uart_reset(DeviceState *dev)
++static void ot_uart_reset_enter(Object *obj, ResetType type)
+ {
+-    OtUARTState *s =3D OT_UART(dev);
++    OtUARTClass *c =3D OT_UART_GET_CLASS(obj);
++    OtUARTState *s =3D OT_UART(obj);
++
++    if (c->parent_phases.enter) {
++        c->parent_phases.enter(obj, type);
++    }
+=20
+     s->uart_intr_state =3D 0x00000000;
+     s->uart_intr_state =3D 0x00000000;
+@@ -544,12 +549,16 @@ static void ot_uart_realize(DeviceState *dev, Error **e=
+rrp)
+ static void ot_uart_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc =3D DEVICE_CLASS(klass);
++    OtUARTClass *uc =3D OT_UART_CLASS(klass);
++    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+=20
+-    device_class_set_legacy_reset(dc, ot_uart_reset);
+     dc->realize =3D ot_uart_realize;
+     dc->vmsd =3D &vmstate_ot_uart;
+     device_class_set_props(dc, ot_uart_properties);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
++
++    resettable_class_set_parent_phases(rc, &ot_uart_reset_enter, NULL, NULL,
++                                       &uc->parent_phases);
+ }
+=20
+ static const TypeInfo ot_uart_info =3D {
+@@ -557,6 +566,7 @@ static const TypeInfo ot_uart_info =3D {
+     .parent        =3D TYPE_SYS_BUS_DEVICE,
+     .instance_size =3D sizeof(OtUARTState),
+     .instance_init =3D ot_uart_init,
++    .class_size    =3D sizeof(OtUARTClass),
+     .class_init    =3D ot_uart_class_init,
+ };
+=20
 diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
-index 997bf2f367..4dc51142f7 100644
+index 517324b65d..fee2128f90 100644
 --- a/include/hw/char/ot_uart.h
 +++ b/include/hw/char/ot_uart.h
-@@ -2,24 +2,19 @@
-  * QEMU OpenTitan UART device
-  *
-  * Copyright (c) 2020 Western Digital
-+ * Copyright (c) 2022-2025 Rivos, Inc.
-+ * Copyright (c) 2025-2026 lowRISC contributors.
-  *
-- * Permission is hereby granted, free of charge, to any person obtaining a c=
-opy
-- * of this software and associated documentation files (the "Software"), to =
-deal
-- * in the Software without restriction, including without limitation the rig=
-hts
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-+ * For details check the documentation here:
-+ *    https://opentitan.org/book/hw/ip/uart/doc/
-  *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-+ * Author(s):
-+ *  Alistair Francis <alistair.francis@wdc.com>
-+ *  Lo=C3=AFc Lefort <loic@rivosinc.com>
-+ *  Lex Bailey <lex.bailey@lowrisc.com>
-+ *
-+ * SPDX-License-Identifier: MIT
-  *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING F=
-ROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-  */
+@@ -34,7 +34,7 @@
+ #define OT_UART_CLOCK 50000000 /* 50MHz clock */
 =20
- #ifndef HW_OT_UART_H
+ #define TYPE_OT_UART "ot-uart"
+-OBJECT_DECLARE_SIMPLE_TYPE(OtUARTState, OT_UART)
++OBJECT_DECLARE_TYPE(OtUARTState, OtUARTClass, OT_UART)
+=20
+ struct OtUARTState {
+     /* <private> */
+@@ -70,4 +70,10 @@ struct OtUARTState {
+     qemu_irq tx_empty;
+     qemu_irq rx_overflow;
+ };
++
++struct OtUARTClass {
++    SysBusDeviceClass parent_class;
++    ResettablePhases parent_phases;
++};
++
+ #endif /* HW_OT_UART_H */
 --=20
 2.49.1
 
