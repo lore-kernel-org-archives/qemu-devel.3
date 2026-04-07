@@ -4,79 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08361FF5136
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D99D3FF5137
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Apr 2026 19:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wABTm-0004nH-D0; Tue, 07 Apr 2026 14:48:50 -0400
+	id 1wACAY-0005cY-9R; Tue, 07 Apr 2026 15:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wABSZ-0002am-Uk
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 14:47:36 -0400
-Received: from p-east2-cluster2-host12-snip4-5.eps.apple.com ([57.103.78.98]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wA8Bf-0002Dn-EI
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 11:17:56 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
- 9F34F1803F28; Tue, 07 Apr 2026 15:17:51 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775575074; x=1778167074;
- bh=6tmGSEaUrE0Q7MlYX6psbx8TA0g5EcgDAZR7bSJpGEE=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=VuS79A84k2sjKNtiK17Vgn+h4Rlh1+IDe4ndhqtqQdvJTmwhu6c3IQ7Soz1LjZ+BZO734/SBJbqlKqQxd1X0L20sYD2ERZSAg6vL2HdN1dG94piR6zL36f5yDYeX5CX7hzkLFuMQ5/Zuo9TnALOeDJs9CVNzxRJWl8yQq8BtK3Q+j8ul3o69eOnhjLPWaBavHlmVuBOntvrha78lvZxlbiC9y1AZARdLs6diEfYBMSal02ednPOTXRoC2MWtm9wFXLFqlCnl1hoGiDhP+ZwZ5wyryZyZeScWFSYYnUKMjKo3ierRKJF5SdmRQGuN+p+0bJVrT6dVTX6zL7IMULhZog==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
- AE3F118013D3; Tue, 07 Apr 2026 15:17:19 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Zhao Liu <zhao1.liu@intel.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v9 07/13] whpx: i386: introduce proper cpuid support
-Date: Tue,  7 Apr 2026 17:17:01 +0200
-Message-ID: <20260407151707.46536-8-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260407151707.46536-1-mohamed@unpredictable.fr>
-References: <20260407151707.46536-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wACAI-0005R0-Hj
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 15:32:47 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wACAG-000744-Pm
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 15:32:46 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-65009bfdcfdso5791253d50.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 12:32:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775590363; cv=none;
+ d=google.com; s=arc-20240605;
+ b=jW9RI4PeBz73ryB2GQCtRvtTEZScdu1ArovW2fkZLb8Rp/u17QtBWwA5zFqvimThac
+ nCM2k+n+/OK+/zFGr1L2WZ0hodSdQBKFOFiQ0fJlRBt1HiwEiHTrlCDJakMfYdc1Y5a/
+ hu/r2dCVcGII28R0xgVLd7U7bGprCS+T3AOiZNM86mP3LAnxFZXQv7EHcbQEqI3D5QLF
+ d3u8/1f8ysVzFVzXZdmKc/ob7wSVWBWAx1aCCinB2rYb+uJ5y8NGSB/kcm+vXslp3rcX
+ cmwX6oAHi8hdPDgINEUcELroQY6eDaQ4YOSDWR1nvgoxw1aNTfkhPCEGx37to2IUu603
+ BGFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=a2XDJ7HdU+mACopPQGPPQUCo0r6VQfrxW6BsPjNy+ho=;
+ fh=uMp/ZVuA5WVztNinbr4ZRc068dhHe8y3axHVKn5eEIA=;
+ b=K84UHn5d+ghxcBoAzdZ0RwyMOyljkJyEjB8N6DIrJpuW70X9z6B6z1fU6v5i+vDBbO
+ 2Pf+3icbjf6fwNqf8y1sGr+Fk5IQkkHLepEgda4ivOc1cYkpSj2JdGa5z18pVA9/8nla
+ r/vtHHEt4rw8XxMU5C00EwZx7ecUOBfgbXlwv/F7fWiUNAlwx2HEbfnTqDzQDjM7K8J+
+ kqEhGn8tt3UDKEd2bdLUIIxN+UbJPqZcnk06lhYmNchX0ILS2OdOEFVrk3PxSyFhSo3q
+ 97cPJ0nHJyhaKgSan27QPzu4Fkmpeu4YQnVwq5y4YwbBpecbdefoDUayw6vyrBQiKaVD
+ zb5w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775590363; x=1776195163; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a2XDJ7HdU+mACopPQGPPQUCo0r6VQfrxW6BsPjNy+ho=;
+ b=EskNZ1dVxps3bQ8FSa79Dia8UcSd0nl0RXouaoezF/FXUzdOjTjiPNDeEr9Ndd1zBc
+ ey/cci9BnSKowK2rHK4+Uw4nDm9BvJvuItYD/23KprDDpKN0Irzhv8xguGoh60cRZIOi
+ cgWAaVv2w44isPrGgDghZd24Ev4Q0S8Cs3xuQqLzSNXSbCE9N/Hh82cRxSO1/1dyELim
+ hRIqy3WpkGhTRZVqw0eCDL51fqfjrpasIGNd1mx/rwJGK5Fq0BI+Nas/DrO3N0kirizc
+ ZPj+sV8/wEV6si/qSAQ326zNqyvquFEkMTX6VQzcYsPjgvrtEMzrEma5vTgMO0GoJYxA
+ x7yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775590363; x=1776195163;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=a2XDJ7HdU+mACopPQGPPQUCo0r6VQfrxW6BsPjNy+ho=;
+ b=rVRJzsqZGSWfYjwyQlmE2zlAAe//K0IX4C0SdT4SV8wUb3nL5f+RedwlOy0KG4w9b5
+ dEM7OqR8xupURDxTjL+/0NfsI9UVAXmVdTUil8+lDdw7mD3J5rkjCtiOffrTeGCF/2AM
+ p7qX9YIjiNfzfq6U6/DFzVi5EWyl/Qr9ypxUebTCqD4Km2Rcr/HIddTwshZ7sFjcz4UO
+ s5I6Ed2FJNaIzvnFTneLn+EXSxegLP/uGAPqIzIDrvGu8eCzYpt6v+4gjDUySqhBgfFa
+ zC8e6dTlmIu252/y6gs6TWD8r8cRCwhaGrPenFjZzAoXHJcvruUgKfEBqfqDbdg4rXmu
+ tPsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUx9OuAZw9NImiQE0LeDQ+4o38lBTIcCxskCsPwPhT4QxUcojj3dz1L8fP4KMBLyXJzBEWuBGCO0C4+@nongnu.org
+X-Gm-Message-State: AOJu0YwlEw7I+1VZiDOdUlT6EO8Jd+zJWGqj53DVJTNx+LBrJ+tE8Ai7
+ swNjs2wIDaKHL6pXqfNn28RxbU7mmbYYpP5h58uzozwXNZkKeCPXZ8EvJX6AM0MzuubGjzr5kTc
+ Q7vTblwC26R5hODBkg2ckDi8euY3bhi/ZjWr9lCB+0w==
+X-Gm-Gg: AeBDiev3mOJva/A/yxTdKtTCXJE4OauLwtFkh0H/v8dl9Ww6QXeDrlt3IVaWyMcLjlu
+ 4Jp4kc0Bq5umffL9DqlpaVDSCcyEw8m7mxs5e0if0qV9Okgq3HZdmzv34HCLo/nY8R/WCsZ13cy
+ 888BSszVt0Be+twCBNhLDIUnDCLGaQS/5INdzCR0Sg+/oIGDT0JGZ7W3LMZxF2D8qMWaXlwIFyi
+ hhmKWDJI/Ml0MDCp+NMGvcIrZttOnfOGS9CKM4cK3fc8z/ADp/tLUuurHYWaqT4a46S9fw9fD6K
+ DAUk4E6/PbO/bdGQdH3NCsBFaR6gEALKVlSjYxAiJOmsw5dQqWo2yHa9VR5VK8JMMmE=
+X-Received: by 2002:a05:690e:4197:b0:650:38c4:2df5 with SMTP id
+ 956f58d0204a3-6504888d785mr15416462d50.66.1775590363279; Tue, 07 Apr 2026
+ 12:32:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDE0MCBTYWx0ZWRfX2PtpeXvkeZ71
- U/jnA+kokyOAFSzFCnvJO2luIW2LoRyjMLMTnEwznEEOqWe6DNKZkQyC/iMFliI5FOOyFYevmaW
- 1YAd53l07roADSbG5WqNGX6x0205IpCbGCCaDt9ygmIs2XVP5rEmoyTYrjuIRIWPa/ELE5aETA1
- OhN9HCCQRG1A5Wm8Udt6ZI2XwxsQs6hg/ZIIRXLnzJLqpECI/55/RQflze4YaHCJv82gr7oF2W3
- MkI4ue/zfx3FXekbo/MVwa+n0rC8xOLrJ3XGDvnu+cErRIWkYr4THV0pMclg+7LaRFw01yyvdhq
- tdhc3vTkx88lRuc4USfaswU/z1wcFyz3dRU0G8U+uRMsSnGn+LlDp9WQTZFvjg=
-X-Proofpoint-ORIG-GUID: HSFah_456OAH7y7foN6UU7fnfUA6lPP7
-X-Proofpoint-GUID: HSFah_456OAH7y7foN6UU7fnfUA6lPP7
-X-Authority-Info-Out: v=2.4 cv=Z5nh3XRA c=1 sm=1 tr=0 ts=69d52020
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=n8cRCUxqL_yedgTzvKUA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-07_03,2026-04-07_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1030 phishscore=0 mlxlogscore=999
- suspectscore=0 spamscore=0 adultscore=0 bulkscore=0 mlxscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2604070140
-Received-SPF: pass client-ip=57.103.78.98;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+References: <20260403104327.1163942-1-mjt@tls.msk.ru>
+ <878qb27dkm.fsf@draig.linaro.org>
+ <518c29ac-0477-4a5b-a724-85f6f81bef7c@tls.msk.ru>
+ <2c806426-3b9a-4118-8ef2-049422cc174c@tls.msk.ru>
+In-Reply-To: <2c806426-3b9a-4118-8ef2-049422cc174c@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 7 Apr 2026 20:32:31 +0100
+X-Gm-Features: AQROBzCmspuEpEvUskB0clcCTWis10d7ZozcwLstvqW-5x84pMClAwa1Cbvb77E
+Message-ID: <CAFEAcA9RNe8OoZSfg-T8ii65b4Vxz4bjjZDuyMBNxdaVeFJvag@mail.gmail.com>
+Subject: Re: [PATCH for-11.0 0/6] allow building tools and qemu-guest-agent on
+ 32bit hosts
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Helge Deller <deller@kernel.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,195 +123,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike the implementation in QEMU 10.2, this one works.
+On Tue, 7 Apr 2026 at 20:19, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> On 05.04.2026 20:46, Michael Tokarev wrote:
+> > On 04.04.2026 22:03, Alex Benn=C3=A9e wrote:
+> >> Michael Tokarev <mjt@tls.msk.ru> writes:
+> >>
+> >>> This is a patchset which makes qemu-guest-agent, qemu-img & qemu-nbd
+> >>> buildable on 32bit hosts again.  The patches are simple enough to be
+> >>> picked up for 11.0.  The one from Helge is marked as RFC still, but
+> >>> I'd love for it to be accepted the way it is.
+> >>>
+> >>> All patches has been on qemu-devel previously, I just collected them
+> >>> into a single batch.
+> >>
+> >> How are you configuring the 32bit build. I'm trying:
+> >>
+> >>    '../../configure' '--disable-docs' '--disable-system' '--disable-
+> >> user' '--cross-prefix=3Di686-linux-gnu-'
+> >>
+> >> but failing with:
+> >>
+> >>    Command line: `i686-linux-gnu-gcc -m64 -I/usr/include/glib-2.0 -I/
+> >> usr/lib/i386-linux-gnu/glib-2.0/include -I/usr/
+> >
+> >
+> >>        9 |      QEMU_BUILD_BUG_ON(sizeof(size_t) !=3D GLIB_SIZEOF_SIZE=
+_T);
+> >>          |      ^~~~~~~~~~~~~~~~~
+> >
+> > Umm.  This is all mixed up.
+> >
+> >   -m64?
+> >   -I/usr/include/glib-2.0 goes before -I/usr/lib/i386...glib/ ?
+>
+> I see what's going on.
+>
+> ./configure ...
+> ...
+> WARNING: unrecognized host CPU, proceeding with 'uname -m' output 'x86_64=
+'
+>
+> And it use i686-linux-gnu-gcc -m64 due to this.  And everything's
+> screwed up from this point on.
+>
+> I haven't looked at this in more details, but that's the key point.
+> It is qemu's ./configure which does the wrong here.  Or the right,
+> depending on your PoV - for qemu, i386 is an unsupported cpu
+> entirely.
 
-It's not optimal though as it doesn't use the Hyper-V support for this.
+You can override that guess by passing '--cpu=3D<whatever>'.
+Really we ought to remove that "guess based on uname" code path
+entirely and require anybody whose CPU type we don't guess to
+specify the architecture.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 123 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 119 insertions(+), 4 deletions(-)
-
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index c2a78312f8..9827c93df1 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -2071,6 +2071,7 @@ int whpx_vcpu_run(CPUState *cpu)
-             WHV_REGISTER_NAME reg_names[5];
-             UINT32 reg_count = 5;
-             X86CPU *x86_cpu = X86_CPU(cpu);
-+            X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
-             CPUX86State *env = &x86_cpu->env;
- 
-             reg_names[0] = WHvX64RegisterRip;
-@@ -2083,7 +2084,15 @@ int whpx_vcpu_run(CPUState *cpu)
-                 vcpu->exit_ctx.VpContext.Rip +
-                 vcpu->exit_ctx.VpContext.InstructionLength;
- 
--            if (whpx_is_legacy_os()) {
-+            /*
-+             * On Windows 10 we can't query features from
-+             * the Hyper-V interface.
-+             *
-+             * On Windows 11, if using xcc->max_features
-+             * just pass through what the hypervisor
-+             * provides without any QEMU filtering.
-+             */
-+            if (whpx_is_legacy_os() || xcc->max_features) {
-                 reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-                 reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-                 reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-@@ -2135,6 +2144,60 @@ int whpx_vcpu_run(CPUState *cpu)
-                     }
-                     break;
-                 }
-+            } else {
-+                switch (vcpu->exit_ctx.CpuidAccess.Rax) {
-+                case 0x40000000:
-+                case 0x40000001:
-+                case 0x40000010:
-+                    reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-+                    reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-+                    reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-+                    reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-+                    break;
-+                }
-+            }
-+
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 0x1) {
-+                if (cpu_has_x2apic_feature(env)) {
-+                    reg_values[2].Reg64 |= CPUID_EXT_X2APIC;
-+                } else {
-+                    reg_values[2].Reg32 &= CPUID_EXT_X2APIC;
-+                }
-+            }
-+
-+            /* Dynamic depending on XCR0 and XSS, so query DefaultResult */
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 0x07
-+                && vcpu->exit_ctx.CpuidAccess.Rcx == 0) {
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRdx
-+                    & CPUID_7_0_EDX_CET_IBT) {
-+                    reg_values[3].Reg32 |= CPUID_7_0_EDX_CET_IBT;
-+                } else {
-+                    reg_values[3].Reg32 &= ~CPUID_7_0_EDX_CET_IBT;
-+                }
-+
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_7_0_ECX_CET_SHSTK) {
-+                    reg_values[2].Reg32 |= CPUID_7_0_ECX_CET_SHSTK;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_7_0_ECX_CET_SHSTK;
-+                }
-+
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_7_0_ECX_OSPKE) {
-+                    reg_values[2].Reg32 |= CPUID_7_0_ECX_OSPKE;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_7_0_ECX_OSPKE;
-+                }
-+            }
-+
-+            /* OSXSAVE is dynamic. Do this instead of syncing CR4 */
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 1) {
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_EXT_OSXSAVE) {
-+                    reg_values[2].Reg32 |= CPUID_EXT_OSXSAVE;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_EXT_OSXSAVE;
-+                }
-             }
- 
-             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
-@@ -2324,6 +2387,45 @@ error:
-     return ret;
- }
- 
-+static void whpx_cpu_xsave_init(void)
-+{
-+    static bool first = true;
-+    int i;
-+
-+    if (!first) {
-+        return;
-+    }
-+    first = false;
-+
-+    /* x87 and SSE states are in the legacy region of the XSAVE area. */
-+    x86_ext_save_areas[XSTATE_FP_BIT].offset = 0;
-+    x86_ext_save_areas[XSTATE_SSE_BIT].offset = 0;
-+
-+    for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
-+        ExtSaveArea *esa = &x86_ext_save_areas[i];
-+
-+        if (esa->size) {
-+            int sz = whpx_get_supported_cpuid(0xd, i, R_EAX);
-+            if (sz != 0) {
-+                assert(esa->size == sz);
-+                esa->offset = whpx_get_supported_cpuid(0xd, i, R_EBX);
-+            }
-+        }
-+    }
-+}
-+
-+static void whpx_cpu_max_instance_init(X86CPU *cpu)
-+{
-+    CPUX86State *env = &cpu->env;
-+
-+    env->cpuid_min_level =
-+        whpx_get_supported_cpuid(0x0, 0, R_EAX);
-+    env->cpuid_min_xlevel =
-+        whpx_get_supported_cpuid(0x80000000, 0, R_EAX);
-+    env->cpuid_min_xlevel2 =
-+        whpx_get_supported_cpuid(0xC0000000, 0, R_EAX);
-+}
-+
- static PropValue whpx_default_props[] = {
-     { "x2apic", "on" },
-     { NULL, NULL },
-@@ -2333,9 +2435,18 @@ static PropValue whpx_default_props[] = {
- void whpx_cpu_instance_init(CPUState *cs)
- {
-     X86CPU *cpu = X86_CPU(cs);
-+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
- 
-     host_cpu_instance_init(cpu);
-     x86_cpu_apply_props(cpu, whpx_default_props);
-+
-+    if (!whpx_is_legacy_os() && xcc->max_features) {
-+        whpx_cpu_max_instance_init(cpu);
-+    }
-+
-+    if (!whpx_is_legacy_os()) {
-+        whpx_cpu_xsave_init();
-+    }
- }
- 
- /*
-@@ -2353,8 +2464,12 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_CAPABILITY_FEATURES features = {0};
-     WHV_PROCESSOR_FEATURES_BANKS processor_features;
-     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
--    UINT32 cpuidExitList[] = {1};
--    UINT32 cpuidExitList_nohyperv[] = {1, 0x40000000, 0x40000001, 0x40000010};
-+
-+    UINT32 cpuidExitList[] = {0x0, 0x1, 0x6, 0x7, 0x14, 0x24, 0x29, 0x1E,
-+        0x40000000, 0x40000001, 0x40000010, 0x80000000, 0x80000001,
-+        0x80000002, 0x80000003, 0x80000004, 0x80000007, 0x80000008,
-+        0x8000000A, 0x80000021, 0x80000022, 0xC0000000, 0xC0000001};
-+    UINT32 cpuidExitList_legacy_os[] = {1, 0x40000000, 0x40000001, 0x40000010};
- 
-     whpx = &whpx_global;
- 
-@@ -2610,7 +2725,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     hr = whp_dispatch.WHvSetPartitionProperty(
-         whpx->partition,
-         WHvPartitionPropertyCodeCpuidExitList,
--        whpx->hyperv_enlightenments_enabled ? cpuidExitList : cpuidExitList_nohyperv,
-+        !whpx_is_legacy_os() ? cpuidExitList : cpuidExitList_legacy_os,
-         RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
- 
-     if (FAILED(hr)) {
--- 
-2.50.1 (Apple Git-155)
-
+-- PMM
 
