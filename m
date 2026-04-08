@@ -4,136 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93CAE10F996A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FFF10F996B
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXsZ-0000p2-KV; Wed, 08 Apr 2026 14:43:57 -0400
+	id 1wAXsr-0001FC-CV; Wed, 08 Apr 2026 14:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAXsW-0000PE-Jx
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:43:52 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAXsZ-0000os-Dx
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:43:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAKP2-0005bK-Nb
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:35 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 637J76Iq263766
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +uVDGq7dJHTrOrLyDMjlzrACmQcLWLNq2nBzhTxQpEs=; b=K9j3LxiK3f9tJoTt
- uZ8QbdbjPiZoeAzoI40droraUnM/Yt9p7cXucdrgx7Xd9PTyXkRW8YDCY3xOE/PL
- dNu2GLkay/mLXzGETQEg6AZXWcbwhH2s60nw6IqsYa4dG+qI57QCKOfZ59h/CPkz
- 3nM/y33/WQQBkSpIw4NhtRANhsD3lFFCy6Jn8p9S5L7zzq9ypCeNYizNvKRED0xo
- 31Lx4+elzf1FsOXGJjVfOHDCcScLJ/21ih95ij8cjAY4NwmEH+Cptzy0qTbbg8sc
- Ix9NAkQlf9mVvqsVF8ctiWJycXH1eqvB+Ax+ft8+Upz4pS0CBPfbk6IljXKWQOcH
- cu+IYQ==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dd7t21f4n-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:27 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-126e8ee6227so9485940c88.0
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775622027; x=1776226827; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+uVDGq7dJHTrOrLyDMjlzrACmQcLWLNq2nBzhTxQpEs=;
- b=MLeAcNSHHIvqrDcJFHm8UVSqlS+jE53+ffWpbtOPqe2CnKo7N8L3KaMsZEd1EoR6Nr
- HKx2BlJxiGVTOqmLYFX/zCO8U7sZMkcF8RTGvHviEK+ibIhEz83Y+ZNt3VcktuYwrgE9
- 1qOMAf5YRpaiLLmlAUUJphvtofP75WqBAZvuFkI2IyyEUK9a0GD0LqthbeBprTG5vuKr
- 6lvObONFUCSa7DbN2w0bMbf0aZPqMh/Bf4jfV/8cpDb5brYfcSAFzhQuSpzsNwjmXg1P
- gjJJp8AWL33NQARfb5Uf1G976KJl0A6ixfrZ+cJNKTE7G2WkKIjDvMQagtXcTBh4rnbO
- zRqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775622027; x=1776226827;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+uVDGq7dJHTrOrLyDMjlzrACmQcLWLNq2nBzhTxQpEs=;
- b=mAPVhgjW84ifA83vVs+sKzU6HGp3p/XOn/qZsB7+e98bh3SpvOk4yTeX7U6TuYfRcT
- 7BINwLGqLKDlQ9uDjTsuewEc183PK/sJdLBVJteP0c+gCLmrgKKvsftSnpNUz7/63ZkH
- 5agw9R9gbF+DYt60JAIp2i9hrFvsER3Qi+2iafWQk8LAA6oMSLm6cNe3hm3Y6l0O8j5D
- cYEekUr/bm7PcPeZl/JuhXxJKNECWI2Go5uPkk20u+dK6fu5kWp2VaXeG0brN76Zk9Gu
- K3Sfzou1gLh6NhGpRxqxViilHdNqHlcMN8pyrYUCWvTZtaIxVor9W+H+v2WU5FQDQNRE
- H8pA==
-X-Gm-Message-State: AOJu0YyH5REcJSB+QabDsfJ9L3WvcChrdce//cgxVa3BB15O9Dk0rB1G
- Mvau+jvclVfs4ex002bcOejeZp6bymleIbFftFUkzZxKCce+QDw8APb4OZjQzxImNAWBIkqfReD
- jJVEPa/0Z7FKEjR7COb4+NacNNCVmpegFii8H6M94/MutAI3ra74xdvhp0kF0wNbhng==
-X-Gm-Gg: AeBDievB/p1I6tvrK5xGnceoFFWWexf33qLk2QVj2phKsAEWt6BEpHIyCkRuzIKgyM+
- TGN8BH6qEVrZ69zILs6jP5cOf8KIU+RLIWJfrpvBs6pChcibw3EYJ062x/Hn8nRWaj7Pm5qOtdp
- /dvzc8Fdh1VK3V5IEsiYStXxdDfE4t3i0DVGoAUi9e6dLhr5uyLSHmgVpvKFBnrlLD0Y/mDGK07
- sg9HSmQBDkcJDsRbQdzhSr5u4PRElvUtviU3c5NmS9vi0Axmkr45iP2jHCCIce7fZUkTRZxJTDR
- dy4vuuz/U2uY2M9n8SOMVJHdyhRRDcpKKVJUYW3acycfT4bIJVxC5ZZp6C4k1oTzhUo2PUC/sYv
- svvHfArhHZQY5sqq9aqNVNEsQCwNwYHmtnFoUhK36ZvlnhShEE+pthh/ibIfKza0gLaJmHg==
-X-Received: by 2002:a05:7022:52b:b0:11a:fec5:d005 with SMTP id
- a92af1059eb24-12bfb6fb407mr9528524c88.10.1775622026617; 
- Tue, 07 Apr 2026 21:20:26 -0700 (PDT)
-X-Received: by 2002:a05:7022:52b:b0:11a:fec5:d005 with SMTP id
- a92af1059eb24-12bfb6fb407mr9528506c88.10.1775622025946; 
- Tue, 07 Apr 2026 21:20:25 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 21:20:25 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAKxE-0005St-Bw
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:55:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775624150;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9hOLm5XknLXNzYps7PBO5aaJI5d/9nbRVwZIRPRfnUA=;
+ b=dHq06BrknWsPFZeXIF8pxa1aJGK+014UDIqN11AHJqtjTW2MAHtMQrSA9HF9+dwNGRFoM8
+ 6SrQydgB5BVP1lJkVWPQ5w4C+SJpXLZ3nfiFS/3jTUUYWkAGMEZp1NXSmtvXkN9rv5ufng
+ AfqNP7QRWbpVRILoUByJ3NFrPaQ4jn4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-pSc05oKUOCmPtifITVCc2Q-1; Wed,
+ 08 Apr 2026 00:55:46 -0400
+X-MC-Unique: pSc05oKUOCmPtifITVCc2Q-1
+X-Mimecast-MFC-AGG-ID: pSc05oKUOCmPtifITVCc2Q_1775624143
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D296C1800344; Wed,  8 Apr 2026 04:55:42 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.7])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9CE6319560A6; Wed,  8 Apr 2026 04:55:33 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v4 18/28] target/hexagon: Decode trap1, rte as COF
-Date: Tue,  7 Apr 2026 21:19:43 -0700
-Message-Id: <20260408041953.1899532-19-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
-References: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
-MIME-Version: 1.0
+Cc: Kashyap Chamarthy <kchamart@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Lukas Straub <lukasstraub2@web.de>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
+ Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v2 00/10] qapi: enforce section ordering
+Date: Wed,  8 Apr 2026 00:55:21 -0400
+Message-ID: <20260408045531.3006678-1-jsnow@redhat.com>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Authority-Analysis: v=2.4 cv=De0nbPtW c=1 sm=1 tr=0 ts=69d5d78b cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=oDs3gbQtVgqjpHJ5GUgA:9
- a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNiBTYWx0ZWRfX3l35vT6PRG/l
- +8vY1o6iTMLx9ja8txY3exJGb/P0Nnt6OnhJCq4Qnyp+PSaM9KVJAueS9O9YbO5c/f0RsKYv/vj
- TE4jJR2/bH/6/wY33fT1zB+Ju5ePUK2bc6OtjZ2J85LLQwrex3vMRODvTQ7omfWlE8K2SHoXZKb
- ANaJKEGyECQM45k+0DFE8cwhJu4vCiYu6QdHiLC54mGagSKL4kxRHds604pvXIkcK0QKufhBKcs
- E0b6yOR98sJ7WUBrpXEYT8NWfez+fERQJJx+dWb19n33drF8DwO7Ut6b8RAFqeRaur01HcQfRcs
- MftDlBP+qIsKiEaTzfQ1cZD9Ntnho+gLxYE6kfBKvWTmaasaVSkzSibMAT5FYzSNtrOXUwoR2P6
- HAUo/e636nI3JNYMlEBbu5duQfT9N9pAnvqQYSvF4/2gb9rM5JveDykdN4ZoHaIlynw3AGOWEEG
- zV5gWvFFh/v/6LcFuvw==
-X-Proofpoint-ORIG-GUID: q9UjJfaAU7dE1lkFhgYX8xcunRBlQ572
-X-Proofpoint-GUID: q9UjJfaAU7dE1lkFhgYX8xcunRBlQ572
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 bulkscore=0 phishscore=0 priorityscore=1501
- malwarescore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080036
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,27 +102,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpBbHNvOiBoYW5kbGUgcnRlIGlu
-c3RydWN0aW9ucyBhdCB0aGUgZW5kIG9mIHRoZSBwYWNrZXQuCgoKUmV2aWV3ZWQtYnk6IFRheWxv
-ciBTaW1wc29uIDxsdGF5bG9yc2ltcHNvbkBnbWFpbC5jb20+ClNpZ25lZC1vZmYtYnk6IEJyaWFu
-IENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiB0YXJnZXQvaGV4YWdvbi9k
-ZWNvZGUuYyB8IDE0ICsrKysrKysrKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgMTQgaW5zZXJ0aW9u
-cygrKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2RlY29kZS5jIGIvdGFyZ2V0L2hleGFn
-b24vZGVjb2RlLmMKaW5kZXggZGJjOWM2MzBlODIuLmNlOTNlNmJkZDhmIDEwMDY0NAotLS0gYS90
-YXJnZXQvaGV4YWdvbi9kZWNvZGUuYworKysgYi90YXJnZXQvaGV4YWdvbi9kZWNvZGUuYwpAQCAt
-MTg1LDYgKzE4NSw4IEBAIHN0YXRpYyBib29sIGRlY29kZV9vcGNvZGVfY2FuX2p1bXAoaW50IG9w
-Y29kZSkKICAgICBpZiAoKEdFVF9BVFRSSUIob3Bjb2RlLCBBX0pVTVApKSB8fAogICAgICAgICAo
-R0VUX0FUVFJJQihvcGNvZGUsIEFfQ0FMTCkpIHx8CiAgICAgICAgIChvcGNvZGUgPT0gSjJfdHJh
-cDApIHx8CisgICAgICAgIChvcGNvZGUgPT0gSjJfdHJhcDEpIHx8CisgICAgICAgIChvcGNvZGUg
-PT0gSjJfcnRlKSB8fAogICAgICAgICAob3Bjb2RlID09IEoyX3BhdXNlKSkgewogICAgICAgICAv
-KiBFeGNlcHRpb24gdG8gQV9KVU1QIGF0dHJpYnV0ZSAqLwogICAgICAgICBpZiAob3Bjb2RlID09
-IEo0X2hpbnRqdW1wcikgewpAQCAtMzYzLDYgKzM2NSwxOCBAQCBzdGF0aWMgdm9pZCBkZWNvZGVf
-c2h1ZmZsZV9mb3JfZXhlY3V0aW9uKFBhY2tldCAqcGFja2V0KQogICAgICAgICAgICAgYnJlYWs7
-CiAgICAgICAgIH0KICAgICB9CisgICAgLyoKKyAgICAgKiBBbmQgYXQgdGhlIHZlcnkgdmVyeSB2
-ZXJ5IGVuZCwgbW92ZSBhbnkgUlRFJ3MsIHNpbmNlIHRoZXkgdXBkYXRlCisgICAgICogdXNlci9z
-dXBlcnZpc29yIG1vZGUuCisgICAgICovCisjaWYgIWRlZmluZWQoQ09ORklHX1VTRVJfT05MWSkK
-KyAgICBmb3IgKGkgPSAwOyBpIDwgbGFzdF9pbnNuOyBpKyspIHsKKyAgICAgICAgaWYgKHBhY2tl
-dC0+aW5zbltpXS5vcGNvZGUgPT0gSjJfcnRlKSB7CisgICAgICAgICAgICBkZWNvZGVfc2VuZF9p
-bnNuX3RvKHBhY2tldCwgaSwgbGFzdF9pbnNuKTsKKyAgICAgICAgICAgIGJyZWFrOworICAgICAg
-ICB9CisgICAgfQorI2VuZGlmCiB9CiAKIHN0YXRpYyB2b2lkCi0tIAoyLjM0LjEKCg==
+Hiya, this series is meant to accomplish mostly one thing: Enforce a=0D
+stricter ordering of sections in QAPI documentation blocks.=0D
+=0D
+The reason to do this is mostly for the sake of the inliner: if QAPI=0D
+documentation blocks have some known, canonical order, it is easier to=0D
+merge two documentation blocks together for the purposes of showing all=0D
+arguments for commands/etc in a simple, flat list without needing to=0D
+follow hyperlink breadcrumbs.=0D
+=0D
+Another reason to do this is to simplify where we insert autogenerated=0D
+documentation. If the order is enforced, then inserting "Not Documented"=0D
+stubs for members and generated "Returns:" statements can have a much=0D
+simpler algorithm that will always match how manually written=0D
+documentation is presented, in the same order.=0D
+=0D
+This is still pretty RFC quality, the tests have not been implemented=0D
+and the implementation of changes in the parser are still pretty=0D
+fuzzy. The main point of this series at this point in time is to review=0D
+the QAPI source changes and decide if the strategy employed in fixing=0D
+the section ordering is the direction we ultimately want to go in.=0D
+=0D
+V2:=0D
+ - Add quite a few FIXME stubs for tests=0D
+ - Much more carefully delineate QAPI source changes into ones required=0D
+   to prevent visible changes, and ones that explictly create visible=0D
+   changes=0D
+ - Various commit message / comment changes=0D
+ - Fix heuristic for griping about Intro/Details "ambiguity" to also=0D
+   ignore generated "Returns" sections, which was missing before and=0D
+   missed quite a few cases that did impact rendered output=0D
+=0D
+To verify rendering changes (or lack thereof), I used this strategy:=0D
+=0D
+(1) For a reference output before a change, I ran a build:=0D
+    > V=3D1 DEBUG=3D1 make -j13;=0D
+=0D
+(2) Then I created some reference output for the intermediate rST=0D
+    debugging output files (fish syntax):=0D
+    > for i in *.ir; sed -E 's|\.json:[0-9]{4}|.json:nnnn|g' $i > $i.ref; e=
+nd=0D
+=0D
+(3) Then after applying a patch, to check for any differences, I re-ran=0D
+    the build as in (1) and then:=0D
+    > for i in *.ir; sed -E 's|\.json:[0-9]{4}|.json:nnnn|g' $i > $i.new; e=
+nd=0D
+    > for i in *.ir; meld $i.ref $i.new; end=0D
+=0D
+An observation: Most of the time, the Intro section is only one=0D
+paragraph anyway. We might be able to save on some explicit "Details:"=0D
+syntax if we just formalize the idea that the intro can only ever be at=0D
+most one paragraph. I don't know if we want to do that (Do we want to=0D
+keep the ability to run long in the "intro"?) - but it would cut down on=0D
+quite a lot of markup that this series adds.=0D
+=0D
+John Snow (10):=0D
+  qapi: differentiate "intro" and "details" sections=0D
+  qapi: prohibit 'details' sections between tagged sections=0D
+  qapi: add "Details:" disambiguation marker=0D
+  qapi: add "Details:" markers where needed=0D
+  qapi: add "Details:" markers where potentially needed=0D
+  qapi: detect potentially semantically ambiguous intro paragraphs=0D
+  qapi: re-order QAPI doc block sections=0D
+  qapi: enforce doc block section ordering=0D
+  qapi: re-order 'since' sections to always be last=0D
+  qapi: enforce strict positioning for "Since:" section=0D
+=0D
+ docs/devel/qapi-code-gen.rst                 |  33 +++-=0D
+ docs/interop/firmware.json                   |   4 +-=0D
+ docs/interop/vhost-user.json                 |   3 +-=0D
+ docs/sphinx/qapidoc.py                       |   2 +-=0D
+ qapi/accelerator.json                        |  12 +-=0D
+ qapi/acpi.json                               |   8 +-=0D
+ qapi/block-core.json                         | 183 ++++++++++---------=0D
+ qapi/block-export.json                       |  20 +-=0D
+ qapi/block.json                              |  48 ++---=0D
+ qapi/char.json                               |  36 ++--=0D
+ qapi/control.json                            |  14 +-=0D
+ qapi/dump.json                               |  16 +-=0D
+ qapi/machine-s390x.json                      |  16 +-=0D
+ qapi/machine.json                            | 144 ++++++++-------=0D
+ qapi/migration.json                          | 102 ++++++-----=0D
+ qapi/misc-arm.json                           |   6 +-=0D
+ qapi/misc-i386.json                          |  40 ++--=0D
+ qapi/misc.json                               |  68 ++++---=0D
+ qapi/net.json                                |  42 ++---=0D
+ qapi/pci.json                                |   4 +-=0D
+ qapi/qdev.json                               |  12 +-=0D
+ qapi/qom.json                                |  34 ++--=0D
+ qapi/replay.json                             |  16 +-=0D
+ qapi/rocker.json                             |  16 +-=0D
+ qapi/run-state.json                          |  66 ++++---=0D
+ qapi/tpm.json                                |  12 +-=0D
+ qapi/trace.json                              |   8 +-=0D
+ qapi/transaction.json                        |   4 +-=0D
+ qapi/ui.json                                 |  76 ++++----=0D
+ qapi/vfio.json                               |   4 +-=0D
+ qapi/virtio.json                             |  46 ++---=0D
+ qapi/yank.json                               |   2 +-=0D
+ qga/qapi-schema.json                         |   2 +=0D
+ scripts/qapi/parser.py                       | 134 ++++++++++++--=0D
+ tests/qapi-schema/doc-good.json              |  12 +-=0D
+ tests/qapi-schema/doc-good.out               |  10 +-=0D
+ tests/qapi-schema/doc-good.txt               |  18 +-=0D
+ tests/qapi-schema/doc-misplaced-details.err  |   0=0D
+ tests/qapi-schema/doc-misplaced-details.json |   3 +=0D
+ tests/qapi-schema/doc-misplaced-details.out  |  11 ++=0D
+ tests/qapi-schema/doc-missing-details.err    |   0=0D
+ tests/qapi-schema/doc-missing-details.json   |   3 +=0D
+ tests/qapi-schema/doc-missing-details.out    |  11 ++=0D
+ tests/qapi-schema/meson.build                |   2 +=0D
+ 44 files changed, 784 insertions(+), 519 deletions(-)=0D
+ create mode 100644 tests/qapi-schema/doc-misplaced-details.err=0D
+ create mode 100644 tests/qapi-schema/doc-misplaced-details.json=0D
+ create mode 100644 tests/qapi-schema/doc-misplaced-details.out=0D
+ create mode 100644 tests/qapi-schema/doc-missing-details.err=0D
+ create mode 100644 tests/qapi-schema/doc-missing-details.json=0D
+ create mode 100644 tests/qapi-schema/doc-missing-details.out=0D
+=0D
+-- =0D
+2.53.0=0D
+=0D
+
 
