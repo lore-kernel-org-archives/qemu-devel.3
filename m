@@ -4,89 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FFF10F996B
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E6610F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXsr-0001FC-CV; Wed, 08 Apr 2026 14:44:13 -0400
+	id 1wAXsQ-0007tn-6G; Wed, 08 Apr 2026 14:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAXsZ-0000os-Dx
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:43:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAXsP-0007mf-4P
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:43:45 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAKxE-0005St-Bw
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:55:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775624150;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=9hOLm5XknLXNzYps7PBO5aaJI5d/9nbRVwZIRPRfnUA=;
- b=dHq06BrknWsPFZeXIF8pxa1aJGK+014UDIqN11AHJqtjTW2MAHtMQrSA9HF9+dwNGRFoM8
- 6SrQydgB5BVP1lJkVWPQ5w4C+SJpXLZ3nfiFS/3jTUUYWkAGMEZp1NXSmtvXkN9rv5ufng
- AfqNP7QRWbpVRILoUByJ3NFrPaQ4jn4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-pSc05oKUOCmPtifITVCc2Q-1; Wed,
- 08 Apr 2026 00:55:46 -0400
-X-MC-Unique: pSc05oKUOCmPtifITVCc2Q-1
-X-Mimecast-MFC-AGG-ID: pSc05oKUOCmPtifITVCc2Q_1775624143
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D296C1800344; Wed,  8 Apr 2026 04:55:42 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.7])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9CE6319560A6; Wed,  8 Apr 2026 04:55:33 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAKP2-0005ax-S7
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:36 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 637Nfg8P1259479
+ for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ eOj4zoAq1FrIUJpyqyEImJhndv6ygl766X1sAeHwMk8=; b=TZqWonORM12CQ75V
+ IXJJUUTZV1lLy2sUYr0BLI8cCUmPiewHGGNN/Z2evNx/M9R3pMdiZNN1XzsiQjMm
+ ZIZ1jawXMWbRolstxbgjqD8PpMSFKJnIsg5MgeeVG6+Ujks4BVpssAcSckFbM+8I
+ j9hZ+Jrts98DqJRYBJLiAAm1o33+e76FApKlWBV9IPQAYQDrUH6isGgFaJx4IwEr
+ 6ugtI7RVnHMfko3hHWHAEZNVslE/tRvUagkTDFLYBQte0ooUUCAp0y3jcEkMF56p
+ siWLFXo62UX5HHCW27YhKx9LMp2gWZkrXHkGTR4GHnH+oVXtM4U3MmEoNinReC6J
+ PGxowQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddbttrqq1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:23 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2b81ff82e3cso352043eec.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1775622023; x=1776226823; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eOj4zoAq1FrIUJpyqyEImJhndv6ygl766X1sAeHwMk8=;
+ b=kH3yFDLd0mPFAbF/sV/UEZ8Ee7ZAc8nqTsfBbf3lq7NX1B+eq8y7awvWY86u3YdBda
+ HHpO9gqTwX8f37+ZfBjBhyLMMCfK9mfig1ZsqJIG4MTG4f40AROO87pp6dBUvuqoHQ9U
+ dhYa7AHMBx55qpWnXN73vU9bGxkducC3MAf2BocwD6KZ/1ecHrvCk1ZBj6ixqTQ99IuX
+ 8v/rLC6sqASFUU0qSydHNPPU/Wr30VQvSeI0OIUdlZZyLrs9VkrBtOs9cYbCWQGZdawf
+ AXNi2j1FmEekbQ6OIYU0SSgPkO5wX4joOIypyuXQJHDZmelPDqXKKWn2RMmRpDT2RaEc
+ tUQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775622023; x=1776226823;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=eOj4zoAq1FrIUJpyqyEImJhndv6ygl766X1sAeHwMk8=;
+ b=JqN4f8qIpFv9Fl6T15WP422X7j5biqo/qw2CkB2yNZ2pMu/71otpTnzCPGTzERP8QV
+ ZMEXv8UqzLgG4tvnSnBtnUu7X2fyrkTt8tqdMw77xt6soworUs3FT36mkcKe2fqmol9U
+ dEOZUH1FdfSmVYCzd3vIhDkfJIvcFbRT89bl19UuVAckM9wTRgSs/GjGmfBqCswzkMm/
+ Hy2O6gmcd40kZigcak/KoxJJ4cs3rM9m+ttUFARYqMT75/HStkCCMUclrix/B8I/5PtL
+ 46tN8kSF8igT+OE+hyUEZFh6fyYSH1PAUmJqzRgWdJufWiyI1Ham/cjpGBieV77v8oNx
+ gO9A==
+X-Gm-Message-State: AOJu0Yw8ChGJwx2zJMRaL5XuSGRopNlOl4DA5QyQLhw1vQLGtcQpmbnF
+ DOp7nvUjc0zS/BDEEDCXhKUwh/T8+EF/jTlekI3t8xTaflmOz2bFBObjDHKH/QxvzSDGBWJ2CrO
+ foDbme3uss+WRk/7OBEDntVUIXtQWcwdiSFoLcCiVRIfVYXot126ynqJjUBGYg+LJCQ==
+X-Gm-Gg: AeBDiesavwZ9Xg5v/ZjHG9LGkJGn/QfEWex3EGOtffTQdj1RccrWNAzItOKoTjmExgf
+ ke7KH7P9q5+JK3lkjMf6g8JzKlsH2BMxJ33HaEMXm3so9XfGnUH/GL9EPX+Em1nISLytZsJxsKk
+ BCMs/YJjLU7gEnZHGoTlOclAGkXOXSyDakwhtm2hMB5M56liqRNDdeakKTWoCTpD3GEPqIB+5Zi
+ 5SVmT+Y6LNmFpBf7cCHMAfSAg008oGwXsek5wCu3s2evEjbYq/UURi2GQnmkFu4nqfiz5kUb9WV
+ guQve+RnIe/dvx8a1cVmTxnxJfZQciCYTbcDxRod0qpp21gIrpk2JjIZ9LGbSbtAP9xsUXelshS
+ MFrroFvLsQlL/Gfgdk+5OZHr9Waxq/uBI8JcsCK3rleYfzTqujb6JzTNb+8QKcOLS9eiiHA==
+X-Received: by 2002:a05:7022:1a86:b0:12b:ebf6:a3bc with SMTP id
+ a92af1059eb24-12bfac012a0mr8102366c88.3.1775622022722; 
+ Tue, 07 Apr 2026 21:20:22 -0700 (PDT)
+X-Received: by 2002:a05:7022:1a86:b0:12b:ebf6:a3bc with SMTP id
+ a92af1059eb24-12bfac012a0mr8102360c88.3.1775622022213; 
+ Tue, 07 Apr 2026 21:20:22 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 21:20:21 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Kashyap Chamarthy <kchamart@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>, Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 00/10] qapi: enforce section ordering
-Date: Wed,  8 Apr 2026 00:55:21 -0400
-Message-ID: <20260408045531.3006678-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH v4 14/28] target/hexagon: Implement hexagon_resume_threads()
+Date: Tue,  7 Apr 2026 21:19:39 -0700
+Message-Id: <20260408041953.1899532-15-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
+References: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-ORIG-GUID: _87cY6I4Br3KLLJM9rKAsEHj0wwtxZUl
+X-Proofpoint-GUID: _87cY6I4Br3KLLJM9rKAsEHj0wwtxZUl
+X-Authority-Analysis: v=2.4 cv=TOt1jVla c=1 sm=1 tr=0 ts=69d5d788 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=uy5dMy9T3THg1DqjAFIA:9
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNSBTYWx0ZWRfX+xnTz1oB/vBZ
+ rrVHjPdvyr4oRUNB69s8hPKh6srqHI6UveBXAq4CgIuTepD5XJWvspqa77uv8J6fm6eKJqZ1Ups
+ jEidcOGczFv3lD7XCAFq/k47uT69FuShiv9OlJku4jUxAgbgW3k6HrH44wM/oDHAs0J0OfUVGJ5
+ 0+rCNiguFKMH+fy+8xQlMWjvAk5mKlbX3XReNlqfXgO1+gWMMzv2qothz2s8Pd9fsZDhmgAqMMV
+ w9woziZDceOi5jjTgVHj+mX4RtUfx3QGnhtvtwkCEmw540Cyvc/DPFG4RWWVaBknxrYnnXHcWHc
+ 4BHGwSgmbjK04OPnK0fZVh0PIOQoESYxvouufiJfabbllyWtfC5xyJBHKLQirh1fX7uVgRLbgVs
+ Yc2CvDzSgT1BI0/YmFhEtJsWco/1qAXzfzpr07l2NiTEVmCFMQCdlH2T7Ogk5WjydH+b7mJqB8m
+ jdU2FF73WN/Y3dT4y2w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080035
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,126 +150,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hiya, this series is meant to accomplish mostly one thing: Enforce a=0D
-stricter ordering of sections in QAPI documentation blocks.=0D
-=0D
-The reason to do this is mostly for the sake of the inliner: if QAPI=0D
-documentation blocks have some known, canonical order, it is easier to=0D
-merge two documentation blocks together for the purposes of showing all=0D
-arguments for commands/etc in a simple, flat list without needing to=0D
-follow hyperlink breadcrumbs.=0D
-=0D
-Another reason to do this is to simplify where we insert autogenerated=0D
-documentation. If the order is enforced, then inserting "Not Documented"=0D
-stubs for members and generated "Returns:" statements can have a much=0D
-simpler algorithm that will always match how manually written=0D
-documentation is presented, in the same order.=0D
-=0D
-This is still pretty RFC quality, the tests have not been implemented=0D
-and the implementation of changes in the parser are still pretty=0D
-fuzzy. The main point of this series at this point in time is to review=0D
-the QAPI source changes and decide if the strategy employed in fixing=0D
-the section ordering is the direction we ultimately want to go in.=0D
-=0D
-V2:=0D
- - Add quite a few FIXME stubs for tests=0D
- - Much more carefully delineate QAPI source changes into ones required=0D
-   to prevent visible changes, and ones that explictly create visible=0D
-   changes=0D
- - Various commit message / comment changes=0D
- - Fix heuristic for griping about Intro/Details "ambiguity" to also=0D
-   ignore generated "Returns" sections, which was missing before and=0D
-   missed quite a few cases that did impact rendered output=0D
-=0D
-To verify rendering changes (or lack thereof), I used this strategy:=0D
-=0D
-(1) For a reference output before a change, I ran a build:=0D
-    > V=3D1 DEBUG=3D1 make -j13;=0D
-=0D
-(2) Then I created some reference output for the intermediate rST=0D
-    debugging output files (fish syntax):=0D
-    > for i in *.ir; sed -E 's|\.json:[0-9]{4}|.json:nnnn|g' $i > $i.ref; e=
-nd=0D
-=0D
-(3) Then after applying a patch, to check for any differences, I re-ran=0D
-    the build as in (1) and then:=0D
-    > for i in *.ir; sed -E 's|\.json:[0-9]{4}|.json:nnnn|g' $i > $i.new; e=
-nd=0D
-    > for i in *.ir; meld $i.ref $i.new; end=0D
-=0D
-An observation: Most of the time, the Intro section is only one=0D
-paragraph anyway. We might be able to save on some explicit "Details:"=0D
-syntax if we just formalize the idea that the intro can only ever be at=0D
-most one paragraph. I don't know if we want to do that (Do we want to=0D
-keep the ability to run long in the "intro"?) - but it would cut down on=0D
-quite a lot of markup that this series adds.=0D
-=0D
-John Snow (10):=0D
-  qapi: differentiate "intro" and "details" sections=0D
-  qapi: prohibit 'details' sections between tagged sections=0D
-  qapi: add "Details:" disambiguation marker=0D
-  qapi: add "Details:" markers where needed=0D
-  qapi: add "Details:" markers where potentially needed=0D
-  qapi: detect potentially semantically ambiguous intro paragraphs=0D
-  qapi: re-order QAPI doc block sections=0D
-  qapi: enforce doc block section ordering=0D
-  qapi: re-order 'since' sections to always be last=0D
-  qapi: enforce strict positioning for "Since:" section=0D
-=0D
- docs/devel/qapi-code-gen.rst                 |  33 +++-=0D
- docs/interop/firmware.json                   |   4 +-=0D
- docs/interop/vhost-user.json                 |   3 +-=0D
- docs/sphinx/qapidoc.py                       |   2 +-=0D
- qapi/accelerator.json                        |  12 +-=0D
- qapi/acpi.json                               |   8 +-=0D
- qapi/block-core.json                         | 183 ++++++++++---------=0D
- qapi/block-export.json                       |  20 +-=0D
- qapi/block.json                              |  48 ++---=0D
- qapi/char.json                               |  36 ++--=0D
- qapi/control.json                            |  14 +-=0D
- qapi/dump.json                               |  16 +-=0D
- qapi/machine-s390x.json                      |  16 +-=0D
- qapi/machine.json                            | 144 ++++++++-------=0D
- qapi/migration.json                          | 102 ++++++-----=0D
- qapi/misc-arm.json                           |   6 +-=0D
- qapi/misc-i386.json                          |  40 ++--=0D
- qapi/misc.json                               |  68 ++++---=0D
- qapi/net.json                                |  42 ++---=0D
- qapi/pci.json                                |   4 +-=0D
- qapi/qdev.json                               |  12 +-=0D
- qapi/qom.json                                |  34 ++--=0D
- qapi/replay.json                             |  16 +-=0D
- qapi/rocker.json                             |  16 +-=0D
- qapi/run-state.json                          |  66 ++++---=0D
- qapi/tpm.json                                |  12 +-=0D
- qapi/trace.json                              |   8 +-=0D
- qapi/transaction.json                        |   4 +-=0D
- qapi/ui.json                                 |  76 ++++----=0D
- qapi/vfio.json                               |   4 +-=0D
- qapi/virtio.json                             |  46 ++---=0D
- qapi/yank.json                               |   2 +-=0D
- qga/qapi-schema.json                         |   2 +=0D
- scripts/qapi/parser.py                       | 134 ++++++++++++--=0D
- tests/qapi-schema/doc-good.json              |  12 +-=0D
- tests/qapi-schema/doc-good.out               |  10 +-=0D
- tests/qapi-schema/doc-good.txt               |  18 +-=0D
- tests/qapi-schema/doc-misplaced-details.err  |   0=0D
- tests/qapi-schema/doc-misplaced-details.json |   3 +=0D
- tests/qapi-schema/doc-misplaced-details.out  |  11 ++=0D
- tests/qapi-schema/doc-missing-details.err    |   0=0D
- tests/qapi-schema/doc-missing-details.json   |   3 +=0D
- tests/qapi-schema/doc-missing-details.out    |  11 ++=0D
- tests/qapi-schema/meson.build                |   2 +=0D
- 44 files changed, 784 insertions(+), 519 deletions(-)=0D
- create mode 100644 tests/qapi-schema/doc-misplaced-details.err=0D
- create mode 100644 tests/qapi-schema/doc-misplaced-details.json=0D
- create mode 100644 tests/qapi-schema/doc-misplaced-details.out=0D
- create mode 100644 tests/qapi-schema/doc-missing-details.err=0D
- create mode 100644 tests/qapi-schema/doc-missing-details.json=0D
- create mode 100644 tests/qapi-schema/doc-missing-details.out=0D
-=0D
--- =0D
-2.53.0=0D
-=0D
-
+RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpSZXZpZXdlZC1ieTogVGF5bG9y
+IFNpbXBzb24gPGx0YXlsb3JzaW1wc29uQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1ieTogQnJpYW4g
+Q2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIHRhcmdldC9oZXhhZ29uL2Nw
+dS5oICAgICAgIHwgMSArCiB0YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYyB8IDMgKystCiAyIGZp
+bGVzIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBh
+L3RhcmdldC9oZXhhZ29uL2NwdS5oIGIvdGFyZ2V0L2hleGFnb24vY3B1LmgKaW5kZXggMjkzODI5
+MWZmMWQuLjEwNDhlNzY3ZTZkIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9jcHUuaAorKysg
+Yi90YXJnZXQvaGV4YWdvbi9jcHUuaApAQCAtNTMsNiArNTMsNyBAQCB0eXBlZGVmIHN0cnVjdCBI
+ZXhhZ29uR2xvYmFsUmVnU3RhdGUgSGV4YWdvbkdsb2JhbFJlZ1N0YXRlOwogI2RlZmluZSBQUkVE
+X1dSSVRFU19NQVggNSAgICAgICAgICAgICAgICAgICAvKiA0IGluc25zICsgZW5kbG9vcCAqLwog
+I2RlZmluZSBWU1RPUkVTX01BWCAyCiAjZGVmaW5lIE1BWF9UTEJfRU5UUklFUyAxMDI0CisjZGVm
+aW5lIFRIUkVBRFNfTUFYIDgKIAogI2RlZmluZSBDUFVfUkVTT0xWSU5HX1RZUEUgVFlQRV9IRVhB
+R09OX0NQVQogI2lmbmRlZiBDT05GSUdfVVNFUl9PTkxZCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4
+YWdvbi9vcF9oZWxwZXIuYyBiL3RhcmdldC9oZXhhZ29uL29wX2hlbHBlci5jCmluZGV4IGUzNmVi
+MmRmODZkLi42NGYxZmIyMDQzZiAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vb3BfaGVscGVy
+LmMKKysrIGIvdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMKQEAgLTE2MDAsNyArMTYwMCw4IEBA
+IHZvaWQgSEVMUEVSKHdhaXQpKENQVUhleGFnb25TdGF0ZSAqZW52LCB1aW50MzJfdCBQQykKIAog
+dm9pZCBIRUxQRVIocmVzdW1lKShDUFVIZXhhZ29uU3RhdGUgKmVudiwgdWludDMyX3QgbWFzaykK
+IHsKLSAgICBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpOworICAgIEJRTF9MT0NLX0dVQVJEKCk7Cisg
+ICAgaGV4YWdvbl9yZXN1bWVfdGhyZWFkcyhlbnYsIG1hc2spOwogfQogCiB1aW50MzJfdCBIRUxQ
+RVIoZ2V0aW1hc2spKENQVUhleGFnb25TdGF0ZSAqZW52LCB1aW50MzJfdCB0aWQpCi0tIAoyLjM0
+LjEKCg==
 
