@@ -4,100 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C697610F996A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B5D10F996A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXhE-0008BU-H6; Wed, 08 Apr 2026 14:32:13 -0400
+	id 1wAXhi-0001jT-L6; Wed, 08 Apr 2026 14:32:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wAXh7-0007nK-T6
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:32:06 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wANcI-0003AK-Vm
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 03:46:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775634334; bh=wQslJKqGAm/13CobiZEzIripYvuG1KtanPE9bzHjaTw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=RxmMH72ELEgwtGLC9wETRhMcxiKzOUzv1MOOj7THnMnR7vwKvP/zRmnGAIyhTgiDW
- Qfy2Z8xlUGZ1kV28F6uL6q5i38lsrTHVhSEyFW6m65uUZT4Swdhe7NwezGHZvRGOqa
- 6577p/jgwfGQSFpiLce5yqx/hvzYHJdBOvJI+mUwicI5SuluKyVsNw6HyxGHSvzSVU
- eEJLQlLHo47T3hUzQkkFirevSCwcssNZNLA9cc9wpqiQc1wUHz7FlIxUqMkcNfRdM1
- /07X8TzrJ4UWOF+g1LdanDaPU1jjbz9KZ1nziV0rXFe/YB34biGuvtHcE1ENUbubZg
- wy8Z9v0hA17LA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 35B1519C13A;
- Wed, 08 Apr 2026 10:45:34 +0300 (MSK)
-Message-ID: <c4eea01e-76fb-4557-b637-c3666ca6882f@tls.msk.ru>
-Date: Wed, 8 Apr 2026 10:46:21 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wAXhg-0001dm-Vp
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:32:41 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wAPfI-0004bS-2E
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 05:57:41 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-64edf260b49so1325624d50.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 02:57:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775642258; cv=none;
+ d=google.com; s=arc-20240605;
+ b=HgXlFY8ncShcIyTieyzohs7N/bk+5eYg3/2LAwSdpCxyQWLNLgPTCUn72VoC2+qBWA
+ OlJUfW+uD99C9iMEiHKTllpw8EYsWESfG5CCrSL15rqLHkBVuVIslDuA429vPe3YXqpe
+ HFBK/sDPOHZ1UgRiGMBXdgZAEfVC3+tDiciBZOIAvhNEQEqBmCFnFq0xaJOVDqjZr1VR
+ otg3gp0m2B3Er3K0BUIGhhH//xJIVDxD3FHPZV5ng7Ld/xSGvoFHOi/mfxhdLvZY/C20
+ G2D99uh+XWeTeWMlAhQ/utMOz19twKo5L3tVBnE5cimp7mzi8aF9kWzL1sgnwQrxpcLM
+ gs1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=wTD4ToS5hyVfquW3+9Z9ksu2E6XruAKTXd11VgdlD1k=;
+ fh=EAwS+xaAAdFCR/1JaTBHTxHClDI4cGX6QnJt5dVLtTE=;
+ b=jCBNNM+o6y/qF1+iNCgNHlion7jJjsakgS4F77pZk7rt6qN+gF6i66eJ1q0y0QlOBr
+ 9UhOJO19snWyKCoegtXzLHkhGxefJZQccOfLblPLg+3tqTc5hN4SlPvTq7upBHSZFMkA
+ SgJ70UyYhAn+xfnyS4A2sWvk3bawFFDMf1fVArdDBlJwkSI0gTenzT/LNH1Sd28peEEA
+ qR9Z9LQPsskOYoaKQpbdJne85STkLh+B0dseeFlt96dGVnVYK7maVqtMuI4HMINva5/Y
+ fybJP0e3XRMMFZ7To8IjaiTT4p0fmhkzTp45TIwLL1t3ZSowfkdfI5pTHT4OT3jaQ21s
+ iRvw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775642258; x=1776247058; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wTD4ToS5hyVfquW3+9Z9ksu2E6XruAKTXd11VgdlD1k=;
+ b=LkNJcq5vodJAUTh5K9czwAjteu5Bah0t+fuQR+PJcro+H43SdtHr+XFlpF37pI/9LT
+ BDOgVWUc7KRtGvvg+4Pm202mRZkmU108AC1qXHUli6acZeC9c66Iqularbf1i6N2QR/M
+ kE732vaZBeaTO8Elvz+vTQSCK3OU794rrfwF+sb+l7y8iUubWedikD8AyGv9Y3KKzliQ
+ 6FVFjanGnqbbT14OlcLvJrCVgGj/DET1+6alGhp1SOhwtygBqd1GDjSvXA7jQ4IB5qWT
+ Tbl04u0qzMkRdOXfMto++Y1vK7Dpqkq6eo5oydOKVgGNMNhfDT3QFEI9qARLQb5Ng8yS
+ sZXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775642258; x=1776247058;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wTD4ToS5hyVfquW3+9Z9ksu2E6XruAKTXd11VgdlD1k=;
+ b=ftpZIhp7F+1KcQFu2XuIHPjvhOuwW2k1Iop4gzuq79CdOGzWSfbSn5g+iXFdCQ2qGr
+ jifxs8x5zHK1f9v3sTDq0BkaVihIEixpj13IsXtK0HhyhuAejNiZpB0U/rzmABqMJpGX
+ ZtDiILmq1BnYaWv+CM3NrKBi2B+Sx7LodFROhNjtzXuekkoUYpHojOvFAx/3Qil2DoZq
+ qaZJvgmIIoWZg1IPorbXwSq2BDr/onyd74/M8bmaCfaHRTY56gLm923Auyb8kxqml0vd
+ 2mak1+1TAULTOIPyunD5OXnuNY7hc1iDx9SkcbVMjmOI24JMvbPPrg4Hp1CwbZ4SQ1PL
+ l1YQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLgovSMGDWq+oQxAYW1CnwrqDEB3A0bvi/VYmMNl1zfqDlzQVGVuBxvmhdbKZ/q4rFPCNcIaTKwU0g@nongnu.org
+X-Gm-Message-State: AOJu0Ywp0hEY9ERlOHHucHh+3BqqI8X/b7l/SObvXbhXIgkAp7LxtB4u
+ pXytKFOqLulFqcFuz6TTSuxnile75XcS+k8VyduyrQy3DYXHTw0WMD/H704TbnXnjQS8mzRGJdL
+ XP/uCEWxRAxZmDBfiFL1Atoj+9uYWImuW5QHZIo1KIA==
+X-Gm-Gg: AeBDietWEv7RJiIpQPmawiWiMeU9vgtnTMSf7IJhIX6lfgAfPxYUeZT20fWJXENO3+x
+ xvYnUgJgzaREdLA5cOqfvSRNtegTYGhzjHvp9k9lQdsNC/eogGWrKAYYUImM2neAXtTqRjsEiYI
+ GFA0ezufAiTB5AoofxW9nu15trGGOi39LLC0NV0Ar0eE2Gb+Al/ySUPGYI4twp64g9eNkuF6LfI
+ bYzOxfmKQy6pStlq5dICFCJGKe9qY3BMq6sru/Zq6B7HPyvzqCr72j/boaEl4Ya77diBiFp5TvP
+ ItFf/tQSyounFnGqVNfJyHdnD1E+gcFO6Dj+9DZx+9p0doPucX2H/iu1x/YYF/5cZzA=
+X-Received: by 2002:a05:690e:150c:b0:64e:ef3b:3bd8 with SMTP id
+ 956f58d0204a3-6503d84be01mr15898001d50.25.1775642258406; Wed, 08 Apr 2026
+ 02:57:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 11.0] util: fix missing aio_wait_kick sym in qemu
- guest agent only build
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "wubo . bob" <wubo.bob@bytedance.com>, Kevin Wolf <kwolf@redhat.com>,
- hongmianquan <hongmianquan@bytedance.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260407152207.363647-1-berrange@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260407152207.363647-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260320130607.2071996-1-alex.bennee@linaro.org>
+ <20260320130607.2071996-28-alex.bennee@linaro.org>
+ <0877e0da-c083-4293-bba2-5c1d2e2315b7@linaro.org>
+ <87zf3fawif.fsf@draig.linaro.org>
+In-Reply-To: <87zf3fawif.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 8 Apr 2026 10:57:26 +0100
+X-Gm-Features: AQROBzDEAVdEWYY7h1giqhQw3ug2LdaywwR2lLIGF-1lAJdmaHxA_Kvk6X5jBEw
+Message-ID: <CAFEAcA_chK44yu1R6j2gw+Q6S8CbJUnJS6aD-uk7eXeQH-on0A@mail.gmail.com>
+Subject: Re: [RFC PATCH 27/35] target/arm: wrap event_register in a union
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,31 +120,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.04.2026 18:22, Daniel P. Berrangé wrote:
-> Configure QEMU with
-> 
->   --disable-system --disable-user --disable-tools --enable-guest-agent
-> 
-> and the build with fail with
-> 
->    FAILED: [code=1] qga/qemu-ga
->    /usr/bin/ld: libqemuutil.a.p/qapi_qmp-dispatch.c.o: in function `do_qmp_dispatch_bh':
->    /var/home/berrange/src/virt/qemu/build/../qapi/qmp-dispatch.c:140:(.text+0x5c): undefined reference to `aio_wait_kick'
-> 
-> This aio_kick() usage was recently introduced in qmp-dispatch.c
-> without updating the build logic.
-> 
-> Fixes commit fc1a2ec7da531223b3473185dc2584f8a7c6c659
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+On Tue, 7 Apr 2026 at 20:28, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Richard Henderson <richard.henderson@linaro.org> writes:
+>
+> > On 3/21/26 00:05, Alex Benn=C3=A9e wrote:
+> >> While the event register is either set or not due to the
+> >> implementation defined nature of bool types we can't set it directly
+> >> from TCG code. By wrapping in a union we can alias a 32 bit value to
+> >> the bool in a future patch.
+> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> >> ---
+> >>   target/arm/cpu.h           | 9 +++++++--
+> >>   hw/intc/armv7m_nvic.c      | 2 +-
+> >>   target/arm/machine.c       | 4 ++--
+> >>   target/arm/tcg/m_helper.c  | 4 ++--
+> >>   target/arm/tcg/op_helper.c | 6 +++---
+> >>   5 files changed, 15 insertions(+), 10 deletions(-)
+> >> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> >> index bf6cf74c2e1..9c25b60ae83 100644
+> >> --- a/target/arm/cpu.h
+> >> +++ b/target/arm/cpu.h
+> >> @@ -763,9 +763,14 @@ typedef struct CPUArchState {
+> >>       /*
+> >>        * The event register is shared by all ARM profiles (A/R/M),
+> >>        * so it is stored in the top-level CPU state.
+> >> -     * WFE/SEV handling is currently implemented only for M-profile.
+> >> +     *
+> >> +     * It is treated as a boolean but we need the union so we can set
+> >> +     * it from TCG.
+> >>        */
+> >> -    bool event_register;
+> >> +    union {
+> >> +        bool as_bool;
+> >> +        uint32_t as_uint32;
+> >> +    } event_register;
+> >
+> > What are you attempting here?  This smells like a big-endian bug.
+> >
+> > TCG is certainly capable of storing to a bool, via tcg_gen_st8_*.
+>
+> So the problem I had was I don't know what size bool will be as its up
+> to each architecture to define the size. I originally had a compile time
+> assert but that failed. Hence this hack to put something that would
+> plausibly overlap.
 
-It is exactly the same change as suggested by Kevin today,
-and exactly the same
+If we need to write to it from TCG and we can't just write to a bool,
+then we should make this a uint8_t or whatever, rather than messing
+about with unions.
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-
-from me.
-
-Thanks,
-
-/mjt
+-- PMM
 
