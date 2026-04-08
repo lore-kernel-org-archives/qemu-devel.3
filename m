@@ -4,126 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996F410F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB7DB10F9973
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYDG-0001pL-PC; Wed, 08 Apr 2026 15:05:18 -0400
+	id 1wAYDU-0002Jp-L0; Wed, 08 Apr 2026 15:05:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAYCe-0001V5-0O
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:04:41 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAWzZ-0005JJ-FO
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 13:47:06 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2b0c8362d93so3685ad.3
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 10:47:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775670424; x=1776275224; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=S+6tFhx4Tr65tUBXxFW21YPAysSNW5/zvmxvgwcSkro=;
- b=ehSDjt4dBvocs0aZ2TI/H0ELmsBivelYvGB1Ck511x1iHvjtJDOuQDlp5v5pCb7K17
- LnSFVN8kkrfM3kzxZJ/umFyT033a08+4fNego6kienTys5GjBHRRVcJVIMZqdy460p+U
- xgawuQwFBHv0/9n7Q68aQ2X873I6Po2Rtj3AkFRB6kY4OLUrV3xF0yZrVh6aswQM47+f
- geQ84D3gowpv09Fvn+nXZ1RWj26icBpz+AhW5bZ6VqOKT2sDOVXjB7jgWrwOVJ5L0EIk
- lBrCurtvugjroqYw5R2jziIXxn1Sj1SC65Bgq5dk1sVbKWE0FTUGW1S505Wx6UozQwZi
- fYrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775670424; x=1776275224;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=S+6tFhx4Tr65tUBXxFW21YPAysSNW5/zvmxvgwcSkro=;
- b=YNwhoV0rHJacWaIDqIPL7dCOEAfa44/6BihpEH1VOz8Ro/+7CP40eRJnwo+ZAs0iDK
- g5K9kRx1E7f6Bnm7biRmupAKEgm0+ZeVXRGWnoBBwMEmcp7a0JMkPMXQUVN7Zooggvun
- 47P8Imq6lynLuYwl1az2vYue488BfCQKJ7cBNkpa0oc2otPq0L6DzM4mkeWFOw99ZeB+
- OVY7rH6i6SAHHJJuYjlom9pSiYulj+xVBRt6XiAQhsUx9sMl+NzM40dpmx/tPPmtI3ZG
- MWwJBGG1d18MDq57m3y9IxvzSne5NicREuAQayjwCarBot2k/itfcFaIt+cBszi7zqde
- +75w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVSS8/zByccR1iLqtkn1wS6Ia5EP0WfY1Z4hMbpvFKYKY0bA6KBvTX32FVnd258XW2nA9lg1nX7PbG@nongnu.org
-X-Gm-Message-State: AOJu0YwVYFTI/CJnQxNC7VBJv69R6JKvPpiVQX8FN3XPJyXdy6/gvAJZ
- PLWY6NzGtVYOFEbaS7R2RbMPhA99i5qgG/5/+0BinP8za3uMynU2dUtrPx2HnKw75xI=
-X-Gm-Gg: AeBDieu+TuRhDZTTMAuYhO1q/7eoFOfVKnTYBFxvGQzh2bh2ylSC7N5/CXj3R0zfoqN
- JdKqTMcuvFxZkwnOSOCjvTyubBlZlQ3Nlce66ubpfoMfkC3luCd43VtMkHlXFig8jwKyEJOIo8s
- PMfB87bEisJFpL+ul295dBLtCv6zw3scHwWdfb2Q5tH+k62hd24aP+Cy5FhengiBHcWHAMf/aZP
- aivlOhgGX1FSuLBhpu1l9R1/+qCZrGGvQxY5yPzL6I3IlM0oerYK7G3f7G8V4k1Lhx6o/a2T++B
- RcBghClAOauuTppFo8opD/JT0L220sPXrh/+bGFsaVRJ9z3stGhZrcUUbe92TLthhYm4i/pEuyP
- hfsu/ChRvJVA96ASsWi4oP6xGYY5MlOQVFCxIbN07nb95DLDBNPnK8UtqolZyUNBQ9HR/SB9FhP
- bfME2/3vnpF/397hKDwLgKpsz4hjgkqcMBxVxDFbZ3euiinmde3SHRY4cM/onQVxU8JmNWUQ==
-X-Received: by 2002:a17:902:e547:b0:2ae:6092:8d93 with SMTP id
- d9443c01a7336-2b2818329f3mr234433765ad.28.1775670423582; 
- Wed, 08 Apr 2026 10:47:03 -0700 (PDT)
-Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2749794e8sm222775315ad.53.2026.04.08.10.47.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 10:47:03 -0700 (PDT)
-Message-ID: <f8610c5b-77f7-4f35-9a77-43158d680256@linaro.org>
-Date: Wed, 8 Apr 2026 10:47:02 -0700
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wAYCo-0001WI-OM
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:04:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wASE7-0003We-0t
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 08:41:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775652104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oh1lToRqu67BUbbJ1vjDrDDoEqqKRCKZp+BOZVyLi2g=;
+ b=cZv0XJQSKELUQSMWwN+zNaodSH/Ufy9meacbfYjsGXxAF7MdlE7Yr+u08Vu9xoFcPaMKTS
+ YLkOWlxzFSiN2HrUURQwSemeB9E8dLi5riBvpnB1ayjt//W+v1oeyDPqqr8lhfP0xnWb+D
+ W7hJ5GJZxQ8BKdR4o4vLYrzwPYlPOqE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-kVcyDHiWMlSj31Pge4rR3w-1; Wed,
+ 08 Apr 2026 08:41:41 -0400
+X-MC-Unique: kVcyDHiWMlSj31Pge4rR3w-1
+X-Mimecast-MFC-AGG-ID: kVcyDHiWMlSj31Pge4rR3w_1775652099
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 50EF11956057; Wed,  8 Apr 2026 12:41:39 +0000 (UTC)
+Received: from localhost (unknown [10.44.33.128])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 506C718002A6; Wed,  8 Apr 2026 12:41:38 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 14/15] s390x/pci: Implement migration for emulated devices
+In-Reply-To: <e4e1ea36-29c7-47df-86d1-d108106a006a@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260402022921.298818-1-kshk@linux.ibm.com>
+ <20260402022921.298818-15-kshk@linux.ibm.com>
+ <021768ba-9871-421d-8b45-80c5ade6a456@redhat.com>
+ <e4e1ea36-29c7-47df-86d1-d108106a006a@linux.ibm.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Wed, 08 Apr 2026 14:41:35 +0200
+Message-ID: <87eckpd3pc.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] linux-user/arm: Improve get_user_code_u32 and usage
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20260408013309.56122-1-richard.henderson@linaro.org>
- <20260408013309.56122-2-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260408013309.56122-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,143 +94,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/26 6:33 PM, Richard Henderson wrote:
-> Force a little-endian load before applying SCTLR.B.
-> Handle the BE32 swap correctly in thumb mode.  This
-> fixes a bug with its later usage in insn_is_linux_bkpt.
-> 
-> Handle lock_user failure: in one case by simply falling back
-> to the original SIGILL and the other by raising SIGSEGV.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   linux-user/arm/cpu_loop.c | 64 ++++++++++++++++++++++++---------------
->   1 file changed, 40 insertions(+), 24 deletions(-)
-> 
-> diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-> index 19874f4c72..419136fdee 100644
-> --- a/linux-user/arm/cpu_loop.c
-> +++ b/linux-user/arm/cpu_loop.c
-> @@ -29,13 +29,34 @@
->   #include "user/page-protection.h"
->   #include "target/arm/syndrome.h"
->   
-> -#define get_user_code_u32(x, gaddr, env)                \
-> -    ({ abi_long __r = get_user_u32((x), (gaddr));       \
-> -        if (!__r && bswap_code(arm_sctlr_b(env))) {     \
-> -            (x) = bswap32(x);                           \
-> -        }                                               \
-> -        __r;                                            \
-> -    })
-> +static bool get_user_code_u32(uint32_t *ret, uint32_t va, CPUARMState *env)
-> +{
-> +    uint32_t insn, *hptr;
-> +
-> +    hptr = lock_user(VERIFY_READ, va, sizeof(uint32_t), 1);
-> +    if (!hptr) {
-> +        *ret = 0;
-> +        return false;
-> +    }
-> +
-> +    /* Load as little-endian by default. */
-> +    __get_user_e(insn, hptr, le);
-> +    unlock_user(hptr, va, 0);
-> +
-> +    /*
-> +     * Adjust the little-endian load for BE32 as required.
-> +     * In thumb mode, bswap both halfwords by bswap of word then
-> +     * swapping the halfwords again to restore the original order.
-> +     */
-> +    if (arm_sctlr_b(env)) {
-> +        insn = bswap32(insn);
-> +        if (env->thumb) {
-> +            insn = hswap32(insn);
-> +        }
-> +    }
-> +    *ret = insn;
-> +    return true;
-> +}
->   
->   /*
->    * Note that if we need to do data accesses here, they should do a
-> @@ -271,7 +292,8 @@ void cpu_loop(CPUARMState *env)
->   {
->       CPUState *cs = env_cpu(env);
->       int trapnr, si_signo, si_code;
-> -    unsigned int n, insn;
-> +    unsigned int n;
-> +    uint32_t insn;
->       abi_ulong ret;
->   
->       for(;;) {
-> @@ -284,31 +306,23 @@ void cpu_loop(CPUARMState *env)
->           case EXCP_UDEF:
->           case EXCP_NOCP:
->           case EXCP_INVSTATE:
-> -            {
-> -                uint32_t opcode;
-> -
-> -                /* we handle the FPU emulation here, as Linux */
-> -                /* we get the opcode */
-> -                /* FIXME - what to do if get_user() fails? */
-> -                get_user_code_u32(opcode, env->regs[15], env);
-> -
-> +            /* we handle the FPU emulation here, as Linux */
-> +            if (get_user_code_u32(&insn, env->regs[15], env)) {
->                   /*
->                    * The Linux kernel treats some UDF patterns specially
->                    * to use as breakpoints (instead of the architectural
->                    * bkpt insn). These should trigger a SIGTRAP rather
->                    * than SIGILL.
->                    */
-> -                if (insn_is_linux_bkpt(opcode, env->thumb)) {
-> +                if (insn_is_linux_bkpt(insn, env->thumb)) {
->                       goto excp_debug;
->                   }
->   
-> -                if (!env->thumb && emulate_arm_fpa11(env, opcode)) {
-> +                if (!env->thumb && emulate_arm_fpa11(env, insn)) {
->                       break;
->                   }
-> -
-> -                force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN,
-> -                                env->regs[15]);
->               }
-> +            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN, env->regs[15]);
->               break;
->           case EXCP_SWI:
->               {
-> @@ -317,14 +331,12 @@ void cpu_loop(CPUARMState *env)
->                   if (env->thumb) {
->                       /* Thumb is always EABI style with syscall number in r7 */
->                       n = env->regs[7];
-> -                } else {
-> +                } else if (get_user_code_u32(&insn, env->regs[15] - 4, env)) {
->                       /*
->                        * Equivalent of kernel CONFIG_OABI_COMPAT: read the
->                        * Arm SVC insn to extract the immediate, which is the
->                        * syscall number in OABI.
->                        */
-> -                    /* FIXME - what to do if get_user() fails? */
-> -                    get_user_code_u32(insn, env->regs[15] - 4, env);
->                       n = insn & 0xffffff;
->                       if (n == 0) {
->                           /* zero immediate: EABI, syscall number in r7 */
-> @@ -340,6 +352,10 @@ void cpu_loop(CPUARMState *env)
->                           n ^= ARM_SYSCALL_BASE;
->                           env->eabi = false;
->                       }
-> +                } else {
-> +                    /* Failed to re-load instruction. */
-> +                    force_sig_fault(TARGET_SIGSEGV, 0, env->regs[15] - 4);
-> +                    break;
->                   }
->   
->                   if (n > ARM_NR_BASE) {
+On Wed, Apr 08 2026, Matthew Rosato <mjrosato@linux.ibm.com> wrote:
 
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> On 4/8/26 6:01 AM, Thomas Huth wrote:
+>> On 02/04/2026 04.29, Konstantin Shkolnyy wrote:
+>>> Implement zPCI device state migration, consequently enabling migration
+>>> of VMs that have emulated PCI devices, whether virtio or not.
+>>> Migration is allowed for devices whose function handle has the
+>>> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
+>>> state of its zPCI emulator.
+>>>
+>>> Passthrough devices will continue to block migration.
+>>>
+>>> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+>>> ---
+>>> =C2=A0 hw/s390x/s390-pci-bus.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 | 112 ++++++++++++++++++++++++++++++--
+>>> =C2=A0 hw/s390x/s390-pci-inst.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 |=C2=A0=C2=A0 2 +-
+>>> =C2=A0 include/hw/s390x/s390-pci-bus.h |=C2=A0=C2=A0 2 +
+>>> =C2=A0 3 files changed, 110 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+>>> index f339a0fd94..b3037b9a8a 100644
+>>> --- a/hw/s390x/s390-pci-bus.c
+>>> +++ b/hw/s390x/s390-pci-bus.c
+>>> ...
+>>> +static const VMStateDescription s390_pci_device_vmstate =3D {
+>>> +=C2=A0=C2=A0=C2=A0 .name =3D TYPE_S390_PCI_DEVICE,
+>>> +=C2=A0=C2=A0=C2=A0 .version_id =3D 1,
+>>> +=C2=A0=C2=A0=C2=A0 .minimum_version_id =3D 1,
+>>> +=C2=A0=C2=A0=C2=A0 .post_load =3D s390_pci_device_post_load,
+>>> +=C2=A0=C2=A0=C2=A0 .fields =3D (const VMStateField[]) {
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(state, S390P=
+CIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT16(uid, S390PCI=
+BusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(idx, S390PCI=
+BusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(fh, S390PCIB=
+usDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(fid, S390PCI=
+BusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(fid_defined, S=
+390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(fmb_addr, S3=
+90PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(fmb.format, =
+S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(fmb.sample, =
+S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(fmb.last_upd=
+ate, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64_ARRAY(fmb.co=
+unter, S390PCIBusDevice,
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 ARRAY_SIZE(((S390PCIBusDevice *)0)->fmb.counter)),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(fmb.fmt0.dma=
+_rbytes, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(fmb.fmt0.dma=
+_wbytes, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT8(isc, S390PCIB=
+usDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT16(noi, S390PCI=
+BusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT8(sum, S390PCIB=
+usDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT8(pft, S390PCIB=
+usDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(routes.adapt=
+er.ind_addr, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(routes.adapt=
+er.summary_addr, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(routes.adapt=
+er.ind_offset, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(routes.adapt=
+er.summary_offset, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(routes.adapt=
+er.adapter_id, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(iommu_enabled,=
+ S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(g_iota, S390=
+PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(pba, S390PCI=
+BusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(pal, S390PCI=
+BusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT64(max_dma_limi=
+t, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_PTR_TO_IND_ADDR(sum=
+mary_ind, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_PTR_TO_IND_ADDR(ind=
+icator, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(pci_unplug_req=
+uest_processed, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(unplug_request=
+ed, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(interp, S390PC=
+IBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(forwarding_ass=
+ist, S390PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(aif, S390PCIBu=
+sDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_BOOL(rtr_avail, S39=
+0PCIBusDevice),
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_END_OF_LIST()
+>>> +=C2=A0=C2=A0=C2=A0 }
+>>> =C2=A0 };
+>> =C2=A0Hi!
+>>=20
+>> I assume this will likely break backward migration with old machine type=
+s?
+>>=20
+>> Could you please try whether migrating a s390-ccw-virtio-10.2 machine
+>> from an old version of QEMU to a version of QEMU that includes your
+>> patches, and back from the new version to the old version works as
+>> expected?
+>>=20
+>> If not, you might need to add a ".needed =3D ..." line to the
+>> s390_pci_device_vmstate, with a function that checks a variable from the
+>> machine state whether the PCI state is allowed or not. And then enable
+>> that variable only on the newest -11.1 machine type once it is available.
+>
+> +1, I was having the same thought but hadn't gotten around to trying it y=
+et.
+>
+> We do already have a few examples for zPCI where we did this even though
+> migration was not even supported yet to kind of lay the groundwork for
+> backward migration ahead of time.
+>
+> But honestly, looking at just this series in isolation, my concern is
+> things like an older machine type would not have the IOMMU replay
+> functionality added in patch 1.
+>
+> So yes, please test to see what happens but make sure to include IOMMU
+> activity in that testing.
+>
+> Tying this to a machine type is probably the safest bet, and given that
+> virtio-pci is not the default virtio transport on s390x I don't think it
+> would cause much hardship.
+> 11.1 machine isn't available yet but I imagine will be soon after QEMU
+> 11.0 release -- you can use Connie's series as a base:
+> https://lore.kernel.org/qemu-devel/20260331140347.653404-1-cohuck@redhat.=
+com/
 
-Regards,
-Pierrick
+I agree, that needs to be tied to the machine type.
+
+I'll pick up the 11.1 machine types patch as soon as I prepare the first
+s390 pull req for 11.1, so there should be a good base around soon.
+
 
