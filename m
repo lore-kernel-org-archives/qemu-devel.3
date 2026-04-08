@@ -4,91 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2208910F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A7A310F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYWD-0006RB-Ss; Wed, 08 Apr 2026 15:24:54 -0400
+	id 1wAYUV-0001bO-9d; Wed, 08 Apr 2026 15:23:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAY6p-0007Ci-W5
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:58:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wAY4r-0006bA-QH
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:56:37 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wAKxL-0005Tc-Ov
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:56:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775624159;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zQNiTfcBvXKXQ+Z+lV3PoOjT3444LniGV6uuOZJ1Zbs=;
- b=imHieWAQxhh9EbcJ5a+RmoaR8CkxoWRwaO9MKcqhwd+f63BUCZkc2jVcNsEzyVtb/CABRL
- Kf+5ZpDyNQZXksepPrPIzuinnbNFh+4PcAc9cRH1b7UdsPO0uk2ldfTWUsUSBDuNvTwENj
- N5+3+yWTy7pbUvLDOf7PcfxrS7CezQE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-52-UGhLi6MbMiaOvoMH2xKW4w-1; Wed,
- 08 Apr 2026 00:55:55 -0400
-X-MC-Unique: UGhLi6MbMiaOvoMH2xKW4w-1
-X-Mimecast-MFC-AGG-ID: UGhLi6MbMiaOvoMH2xKW4w_1775624153
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABED21956080; Wed,  8 Apr 2026 04:55:52 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.7])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6D3791955F2B; Wed,  8 Apr 2026 04:55:43 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wAVuA-0006qR-SR
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:37:28 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 638FrKDH1923183
+ for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 16:37:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=gN4yioD5Rgh
+ 7UznFLRejmfl/X6fbAyKgQNiOL9X2Qck=; b=IHoMd90ZSR2OOeXwHpz/z0aGhad
+ HAHCXtJTbJXAAC2ydPZDB5xTerz3dIwF+I49g2IHANn15fOOFU9ajBDHFJxjIgVJ
+ vp7r5bvZU9XbDd7tIz6KO36HfX/614NIJnfhOY0r/RGEHHPR1zV+eEa5gqEsQRta
+ PSqSP+WylKFanyyRHgzyW6tPcxRL/GWR8G4PHx5mM63XaGzH+ZAIHiT8tSHoV7Hl
+ EC71aq+ZQ6gHxV+wldeDCJfB7ONIVFhSzc3CGgszPZIfnMnE8dgbFR5tUjfdV8jU
+ Hrxuf5L1XoYPtxHuV4VvgBVmI3Iqf0EGWTb5X8d0ycdEAtXJOmi2ne2L/ig==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddt28r5ar-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:37:25 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c76c2bb3149so17171a12.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:37:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1775666244; x=1776271044; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gN4yioD5Rgh7UznFLRejmfl/X6fbAyKgQNiOL9X2Qck=;
+ b=MySGHUZpoda5sHC0bgsiYHke75iR4h45dQW/BO+aNm+tZ5xdymCGt3pzlxhxbrvvd+
+ w5cav/fVxU3SNrgjDb76qDEWDWKbZnS7eMhdP4+HSR+jlHq+CM/7T5agqSVwaCY2OEk0
+ OYnrpRpqfOXjHeAQHk4DwLk3SRNHqScV4tbCUYNMJIKcb7SF49Gl6bDNT0Fu1Lvneuck
+ PuBeZxsQO8pNletTULnX0Y6acNX9GWda/UOsRpVCoFnBfYEybRC9N8msAVRJO+xJiSv6
+ efWE3zrx5Al7k/WdGB8tollckNfkYFFwYsQFnuhodm0NsmVhJIi/oIpoz+2M5TM4vP8G
+ ZCGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775666244; x=1776271044;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gN4yioD5Rgh7UznFLRejmfl/X6fbAyKgQNiOL9X2Qck=;
+ b=G8V0D4FLv+1x7rPcV2VrA5MAey5V5ixu7opFEf8772VliZcxT1opZpf/N71WxdPxrJ
+ 9RhrDGiP+kpK+3vqsfkY5d3xIMKS6ppnPiRLSijj/9ubrG5EezzDZ3kTCohlZGyQ5Ioz
+ A7nyGNiHIQnalMet4oxL607QGOnC3GExROiuPYASZxmh0NoY3bBhu6Tn0iFEF1Lyxe5C
+ UuAi/Yyo3MZPN6emeTPgTTg/VEVeF6SK+U7XHM/4z/SMx3DbD/nNI6s354RqZFRTsyC0
+ jk+u+ei/L2sq6SDMeBcysdOZuDV5oWbovcYKkrdw2ZqPlwkuiwnhI09qFY4XwOVbchO1
+ 41QQ==
+X-Gm-Message-State: AOJu0Yy1H+K5DZ7jT0Fgl0lBny85SA/Qr8lDMGLHuNilU3/sg0mUXzpn
+ vyYj6yNVI1iF2jM8mhY4pzRD52Wkgx/9MPlxq1XgBPDFiDrJLQ1Xm/Wmikaubq9hrNxMof6oAD9
+ cytCQH45URfEVjkChkewt845nPn7PXvRWqDM3uy2Li4ylMPTcBlbAIoWt5NnZ+XEkUHIi
+X-Gm-Gg: AeBDiesLRc1BKIx2z8iC8PxKjhIHXne1C01abHdjxu+/Vrwm0xIAxONiwObIC+N+A28
+ eSb5Whw7YI1H9xgykOaxlTmL612Hu/y9xSKES3aFbxJw6803WscUv7+uFztwMeuPjTJesOHTH6s
+ Yqo6EhOBAMm/r0UhuXVHrqBWLjiri+1iXCEzDRhkaQVWn3wNi1zf+dZw5kjsJ9HZa9gkajCp7T0
+ pglRTYYwG8sSHRpX0AkMCm0j3thF7vB/OYbjqnZXuWTF+bG/362Bl6CckZdbRfX0dBJVqngxFvr
+ K2xmN8nADhFjzPuiP0ZBcntONUE7vkbN+greY/M5mWh3U8Lj4Bwpe3AQPZZubXiSh7JYttMec0H
+ 7gQOwqoEY+OL3BFH6xcYa3cskMSpjt4lsi71WSeuqRLxRle79u+w1mof9BMceKIvf7oqnf5+Sah
+ qTvgQXH0w/
+X-Received: by 2002:a05:7022:510:b0:12c:aae:7b43 with SMTP id
+ a92af1059eb24-12c28c5e011mr40512c88.24.1775666244365; 
+ Wed, 08 Apr 2026 09:37:24 -0700 (PDT)
+X-Received: by 2002:a05:7022:510:b0:12c:aae:7b43 with SMTP id
+ a92af1059eb24-12c28c5e011mr40476c88.24.1775666243722; 
+ Wed, 08 Apr 2026 09:37:23 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c1ff43d04sm4082006c88.4.2026.04.08.09.37.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Apr 2026 09:37:23 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Kashyap Chamarthy <kchamart@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>, Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 01/10] qapi: differentiate "intro" and "details" sections
-Date: Wed,  8 Apr 2026 00:55:22 -0400
-Message-ID: <20260408045531.3006678-2-jsnow@redhat.com>
-In-Reply-To: <20260408045531.3006678-1-jsnow@redhat.com>
-References: <20260408045531.3006678-1-jsnow@redhat.com>
+Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
+ brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ marco.liebel@oss.qualcomm.com, philmd@linaro.org,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Subject: [PATCH v3 14/16] tests/hexagon: add tests for v68 HVX IEEE float
+ conversions
+Date: Wed,  8 Apr 2026 09:37:05 -0700
+Message-Id: <e0d756ec356a90735679356e6df48ba31b82dfe0.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+References: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Proofpoint-ORIG-GUID: bNY7jAJPMgVPLzNLJuVjfNd46g4iATUN
+X-Authority-Analysis: v=2.4 cv=fIIJG5ae c=1 sm=1 tr=0 ts=69d68445 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
+ a=tBVvuLY118niWomA0oIA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDE1NCBTYWx0ZWRfX2/YwsuvHktxg
+ Mt14GiQ/jAQl3cbkDwi13ThGYDvBOw4izIwdhEEKEf8kpX7khzwDLfjT8ilAkvL/bDbDsVMZH6J
+ CljQ0cVCpVEkFZasmxNR0RcZHh0XSfKpvK+mGa0N2f7m2voiii4l5w7S4ZdNJq94zFtRqJQWeae
+ 8hVudK4dlcIRqN/oglnSYP2foui5z6ZkHNMnuxeHVxxNbnc7VWoU/1v+JR/O81/vIh9wRHxOTAm
+ /St0ThojW7/hBtDpuq4q2eUYtcwwuINuY0NF7XyH397nkSCt7VWY4AvaDUBUUnen6F5uGrifj13
+ RvXZaCerFQZ+feKtoeSSCTglJezXb9fgjJSIwYL4btnFZIPUIL9a3zBXdvu7/KJxmlJZ/VbH3pu
+ nSu32ImbP3sBvtZi2QFjWeAA0WlncqTunoQ1PVh8B9yYRufuZZhnF6rhAaka2MRJ4WgHPZ8JpJ+
+ TC1UfgNaJsAQSpbptKw==
+X-Proofpoint-GUID: bNY7jAJPMgVPLzNLJuVjfNd46g4iATUN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-08_05,2026-04-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ bulkscore=0 malwarescore=0 phishscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080154
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,193 +150,270 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch begins distinguishing "Plain" sections as being either
-"Intro" or "Details" sections for the purpose of, in the forthcoming
-documentation inliner, knowing when/where/how to inline those
-sections. i.e. "Intro" sections will not be inlined, but "Details"
-sections will be. The intent is for "Intro" sections to describe
-(briefly) only the specific entity, but for details sections to describe
-information in greater detail that would be relevant to include in
-inlined documentation.
-
-The Intro section is always the first section of any doc block. It may
-be empty or any number of paragraphs. It is interrupted by any other
-non-plaintext section, i.e.; Members, Features, Errors, Returns, Since,
-and TODO.
-
-The details section, as of this patch, is any plaintext section after
-the initial section. (It cannot appear immediately following the INTRO
-section, because it would then simply be part of that intro section.)
-
-Signed-off-by: John Snow <jsnow@redhat.com>
-
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
+ tests/tcg/hexagon/hex_test.h      |  14 +++
+ tests/tcg/hexagon/hvx_misc.h      |   2 +
+ tests/tcg/hexagon/fp_hvx_cvt.c    | 188 ++++++++++++++++++++++++++++++
+ tests/tcg/hexagon/Makefile.target |   3 +
+ 4 files changed, 207 insertions(+)
+ create mode 100644 tests/tcg/hexagon/fp_hvx_cvt.c
 
-[Review note: .ir files remain unchanged before and after this patch, it
-should be completely inert with regards to the rendered output. --js]
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- docs/sphinx/qapidoc.py         |  2 +-
- scripts/qapi/parser.py         | 35 +++++++++++++++++++++++-----------
- tests/qapi-schema/doc-good.out |  8 ++++----
- 3 files changed, 29 insertions(+), 16 deletions(-)
-
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index c2f09bac16c..e359836f110 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -368,7 +368,7 @@ def visit_sections(self, ent: QAPISchemaDefinition) -> None:
-         for i, section in enumerate(sections):
-             section.text = self.reformat_arobase(section.text)
+diff --git a/tests/tcg/hexagon/hex_test.h b/tests/tcg/hexagon/hex_test.h
+index e7a6644d41..d5da8ad240 100644
+--- a/tests/tcg/hexagon/hex_test.h
++++ b/tests/tcg/hexagon/hex_test.h
+@@ -111,6 +111,20 @@ static inline void __check64_ne(int line, uint64_t val, uint64_t expect)
+     "usr = r2\n\t"
  
--            if section.kind == QAPIDoc.Kind.PLAIN:
-+            if section.kind.name in ("INTRO", "DETAILS"):
-                 self.visit_paragraph(section)
-             elif section.kind == QAPIDoc.Kind.MEMBER:
-                 assert isinstance(section, QAPIDoc.ArgSection)
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index c3cf33904ef..da0ac32ad89 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -544,7 +544,7 @@ def get_doc(self) -> 'QAPIDoc':
-             doc = QAPIDoc(info, symbol)
-             self.accept(False)
-             line = self.get_doc_line()
--            no_more_args = False
-+            have_tagged = False
- 
-             while line is not None:
-                 # Blank lines
-@@ -573,10 +573,10 @@ def get_doc(self) -> 'QAPIDoc':
-                     if not doc.features:
-                         raise QAPIParseError(
-                             self, 'feature descriptions expected')
--                    no_more_args = True
-+                    have_tagged = True
-                 elif match := self._match_at_name_colon(line):
-                     # description
--                    if no_more_args:
-+                    if have_tagged:
-                         raise QAPIParseError(
-                             self,
-                             "description of '@%s:' follows a section"
-@@ -588,7 +588,7 @@ def get_doc(self) -> 'QAPIDoc':
-                         if text:
-                             doc.append_line(text)
-                         line = self.get_doc_indented(doc)
--                    no_more_args = True
-+                    have_tagged = True
-                 elif match := re.match(
-                         r'(Returns|Errors|Since|Notes?|Examples?|TODO)'
-                         r'(?!::): *',
-@@ -629,10 +629,14 @@ def get_doc(self) -> 'QAPIDoc':
-                     if text:
-                         doc.append_line(text)
-                     line = self.get_doc_indented(doc)
--                    no_more_args = True
-+                    have_tagged = True
-                 else:
-                     # plain paragraph
--                    doc.ensure_untagged_section(self.info)
+ /* Some useful floating point values */
++const uint16_t HF_INF = 0x7c00;
++const uint16_t HF_INF_neg = 0xfc00;
++const uint16_t HF_QNaN = 0x7e00;
++const uint16_t HF_SNaN = 0x7d00;
++const uint16_t HF_QNaN_neg = 0xfe00;
++const uint16_t HF_zero = 0x0000;
++const uint16_t HF_zero_neg = 0x8000;
++const uint16_t HF_one = 0x3c00;
++const uint16_t HF_one_recip = 0x3bf9;
++const uint16_t HF_two = 0x4000;
++const uint16_t HF_small_neg = 0x8010;
++const uint16_t HF_any = 0x3c00;
++const uint16_t HF_neg_two = 0xc000;
 +
-+                    # Paragraphs before tagged sections are "intro" paragraphs.
-+                    # Any appearing after are "detail" paragraphs.
-+                    intro = not have_tagged
-+                    doc.ensure_untagged_section(self.info, intro)
-                     doc.append_line(line)
-                     line = self.get_doc_paragraph(doc)
-         else:
-@@ -674,13 +678,14 @@ class QAPIDoc:
-     """
+ const uint32_t SF_INF =              0x7f800000;
+ const uint32_t SF_INF_neg =          0xff800000;
+ const uint32_t SF_QNaN =             0x7fc00000;
+diff --git a/tests/tcg/hexagon/hvx_misc.h b/tests/tcg/hexagon/hvx_misc.h
+index 0330cb289d..43de20da6a 100644
+--- a/tests/tcg/hexagon/hvx_misc.h
++++ b/tests/tcg/hexagon/hvx_misc.h
+@@ -69,7 +69,9 @@ CHECK_OUTPUT_FUNC(d,  8)
+ CHECK_OUTPUT_FUNC(w,  4)
+ CHECK_OUTPUT_FUNC(sf, 4)
+ CHECK_OUTPUT_FUNC(h,  2)
++CHECK_OUTPUT_FUNC(uh, 2)
+ CHECK_OUTPUT_FUNC(hf, 2)
++CHECK_OUTPUT_FUNC(ub,  1)
+ CHECK_OUTPUT_FUNC(b,  1)
  
-     class Kind(enum.Enum):
--        PLAIN = 0
-+        INTRO = 0
-         MEMBER = 1
-         FEATURE = 2
-         RETURNS = 3
-         ERRORS = 4
-         SINCE = 5
-         TODO = 6
-+        DETAILS = 7
+ static inline void init_buffers(void)
+diff --git a/tests/tcg/hexagon/fp_hvx_cvt.c b/tests/tcg/hexagon/fp_hvx_cvt.c
+new file mode 100644
+index 0000000000..71c3f0fd4f
+--- /dev/null
++++ b/tests/tcg/hexagon/fp_hvx_cvt.c
+@@ -0,0 +1,188 @@
++/*
++ *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <stdio.h>
++#include <stdint.h>
++#include <stdbool.h>
++#include <string.h>
++#include <hexagon_types.h>
++#include <hvx_hexagon_protos.h>
++
++#if __HEXAGON_ARCH__ > 75
++#error "After v75, compiler will replace some FP HVX instructions."
++#endif
++
++int err;
++#include "hvx_misc.h"
++#include "hex_test.h"
++
++#define TEST_EXP(TO, FROM, VAL, EXP) do { \
++    ((MMVector *)&buffer)->FROM[index] = VAL; \
++    expect[0].TO[index] = EXP; \
++    index++; \
++} while (0)
++
++#define DEF_TEST_CVT(TO, FROM, TESTS) \
++    static void test_vcvt_##TO##_##FROM(void) \
++    { \
++        HVX_Vector *hvx_output = (HVX_Vector *)&output[0]; \
++        HVX_Vector buffer; \
++        int index = 0; \
++        memset(&buffer, 0, sizeof(buffer)); \
++        memset(expect, 0, sizeof(expect)); \
++        TESTS \
++        *hvx_output = Q6_V##TO##_vcvt_V##FROM(buffer); \
++        check_output_##TO(__LINE__, 1); \
++    }
++
++DEF_TEST_CVT(uh, hf, { \
++    TEST_EXP(uh, hf, HF_QNaN, UINT16_MAX); \
++    TEST_EXP(uh, hf, HF_SNaN, UINT16_MAX); \
++    TEST_EXP(uh, hf, HF_QNaN_neg, UINT16_MAX); \
++    TEST_EXP(uh, hf, HF_INF, UINT16_MAX); \
++    TEST_EXP(uh, hf, HF_INF_neg, 0); \
++    TEST_EXP(uh, hf, HF_neg_two, 0); \
++    TEST_EXP(uh, hf, HF_zero_neg, 0); \
++    TEST_EXP(uh, hf, raw_hf((_Float16)2.1), 2); \
++    TEST_EXP(uh, hf, HF_one_recip, 1); \
++})
++
++DEF_TEST_CVT(h, hf, { \
++    TEST_EXP(h, hf, HF_QNaN, INT16_MAX); \
++    TEST_EXP(h, hf, HF_SNaN, INT16_MAX); \
++    TEST_EXP(h, hf, HF_QNaN_neg, INT16_MAX); \
++    TEST_EXP(h, hf, HF_INF, INT16_MAX); \
++    TEST_EXP(h, hf, HF_INF_neg, INT16_MIN); \
++    TEST_EXP(h, hf, HF_neg_two, -2); \
++    TEST_EXP(h, hf, HF_zero_neg, 0); \
++    TEST_EXP(h, hf, raw_hf((_Float16)2.1), 2); \
++    TEST_EXP(h, hf, HF_one_recip, 1); \
++})
++
++/*
++ * Some cvt operations take two vectors as input and perform the following:
++ *    VdV.TO[4*i]   = OP(VuV.FROM[2*i]);
++ *    VdV.TO[4*i+1] = OP(VuV.FROM[2*i+1]);
++ *    VdV.TO[4*i+2] = OP(VvV.FROM[2*i]);
++ *    VdV.TO[4*i+3] = OP(VvV.FROM[2*i+1]))
++ * We use bf_index and index in a way that the tests are always done either
++ * using the first or third line of the above snippet.
++ */
++#define TEST_EXP_2(TO, FROM, VAL, EXP) do { \
++    ((MMVector *)&buffers[bf_index])->FROM[2 * index] = VAL; \
++    expect[0].TO[(4 * index) + (2 * bf_index)] = EXP; \
++    index++; \
++    bf_index = (bf_index + 1) % 2; \
++} while (0)
++
++#define DEF_TEST_CVT_2(TO, FROM, TESTS) \
++    static void test_vcvt_##TO##_##FROM(void) \
++    { \
++        HVX_Vector *hvx_output = (HVX_Vector *)&output[0]; \
++        HVX_Vector buffers[2]; \
++        int index = 0, bf_index = 0; \
++        memset(&buffers, 0, sizeof(buffers)); \
++        memset(expect, 0, sizeof(expect)); \
++        TESTS \
++        *hvx_output = Q6_V##TO##_vcvt_V##FROM##V##FROM(buffers[0], buffers[1]); \
++        check_output_##TO(__LINE__, 1); \
++    }
++
++DEF_TEST_CVT_2(ub, hf, { \
++    TEST_EXP_2(ub, hf, HF_QNaN, UINT8_MAX); \
++    TEST_EXP_2(ub, hf, HF_SNaN, UINT8_MAX); \
++    TEST_EXP_2(ub, hf, HF_QNaN_neg, UINT8_MAX); \
++    TEST_EXP_2(ub, hf, HF_INF, UINT8_MAX); \
++    TEST_EXP_2(ub, hf, HF_INF_neg, 0); \
++    TEST_EXP_2(ub, hf, HF_small_neg, 0); \
++    TEST_EXP_2(ub, hf, HF_neg_two, 0); \
++    TEST_EXP_2(ub, hf, HF_zero_neg, 0); \
++    TEST_EXP_2(ub, hf, raw_hf((_Float16)2.1), 2); \
++    TEST_EXP_2(ub, hf, HF_one_recip, 1); \
++})
++
++DEF_TEST_CVT_2(b, hf, { \
++    TEST_EXP_2(b, hf, HF_QNaN, INT8_MAX); \
++    TEST_EXP_2(b, hf, HF_SNaN, INT8_MAX); \
++    TEST_EXP_2(b, hf, HF_QNaN_neg, INT8_MAX); \
++    TEST_EXP_2(b, hf, HF_INF, INT8_MAX); \
++    TEST_EXP_2(b, hf, HF_INF_neg, INT8_MIN); \
++    TEST_EXP_2(b, hf, HF_small_neg, 0); \
++    TEST_EXP_2(b, hf, HF_neg_two, -2); \
++    TEST_EXP_2(b, hf, HF_zero_neg, 0); \
++    TEST_EXP_2(b, hf, raw_hf((_Float16)2.1), 2); \
++    TEST_EXP_2(b, hf, HF_one_recip, 1); \
++})
++
++#define DEF_TEST_VCONV(TO, FROM, TESTS) \
++    static void test_vconv_##TO##_##FROM(void) \
++    { \
++        HVX_Vector *hvx_output = (HVX_Vector *)&output[0]; \
++        HVX_Vector buffer; \
++        int index = 0; \
++        memset(&buffer, 0, sizeof(buffer)); \
++        memset(expect, 0, sizeof(expect)); \
++        TESTS \
++        *hvx_output = Q6_V##TO##_equals_V##FROM(buffer); \
++        check_output_##TO(__LINE__, 1); \
++    }
++
++DEF_TEST_VCONV(w, sf, { \
++    TEST_EXP(w, sf, SF_QNaN, INT32_MAX); \
++    TEST_EXP(w, sf, SF_SNaN, INT32_MAX); \
++    TEST_EXP(w, sf, SF_QNaN_neg, INT32_MIN); \
++    TEST_EXP(w, sf, SF_INF, INT32_MAX); \
++    TEST_EXP(w, sf, SF_INF_neg, INT32_MIN); \
++    TEST_EXP(w, sf, SF_small_neg, 0); \
++    TEST_EXP(w, sf, SF_neg_two, -2); \
++    TEST_EXP(w, sf, SF_zero_neg, 0); \
++    TEST_EXP(w, sf, raw_sf(2.1f), 2); \
++    TEST_EXP(w, sf, raw_sf(2.8f), 2); \
++})
++
++DEF_TEST_VCONV(h, hf, { \
++    TEST_EXP(h, hf, HF_QNaN, INT16_MAX); \
++    TEST_EXP(h, hf, HF_SNaN, INT16_MAX); \
++    TEST_EXP(h, hf, HF_QNaN_neg, INT16_MIN); \
++    TEST_EXP(h, hf, HF_INF, INT16_MAX); \
++    TEST_EXP(h, hf, HF_INF_neg, INT16_MIN); \
++    TEST_EXP(h, hf, HF_small_neg, 0); \
++    TEST_EXP(h, hf, HF_neg_two, -2); \
++    TEST_EXP(h, hf, HF_zero_neg, 0); \
++    TEST_EXP(h, hf, raw_hf((_Float16)2.1), 2); \
++    TEST_EXP(h, hf, raw_hf((_Float16)2.8), 2); \
++})
++
++DEF_TEST_VCONV(hf, h, { \
++    TEST_EXP(hf, h, 0, HF_zero); \
++    TEST_EXP(hf, h, 2, HF_two); \
++    TEST_EXP(hf, h, -2, HF_neg_two); \
++    TEST_EXP(hf, h, 2049, raw_hf((_Float16)2048)); /* rounds DOWN */ \
++    TEST_EXP(hf, h, 2051, raw_hf((_Float16)2052)); /* rounds UP */ \
++})
++
++DEF_TEST_VCONV(sf, w, { \
++    TEST_EXP(sf, w, 0, SF_zero); \
++    TEST_EXP(sf, w, 2, SF_two); \
++    TEST_EXP(sf, w, -2, SF_neg_two); \
++    TEST_EXP(sf, w, 16777217, raw_sf((float)16777216)); /* rounds DOWN */ \
++    TEST_EXP(sf, w, 16777219, raw_sf((float)16777220)); /* rounds UP */ \
++})
++
++int main(void)
++{
++    test_vcvt_uh_hf();
++    test_vcvt_h_hf();
++    test_vcvt_ub_hf();
++    test_vcvt_b_hf();
++    test_vconv_w_sf();
++    test_vconv_sf_w();
++    test_vconv_h_hf();
++    test_vconv_hf_h();
++
++    puts(err ? "FAIL" : "PASS");
++    return err ? 1 : 0;
++}
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index 789721bdac..83969e0e73 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -51,6 +51,7 @@ HEX_TESTS += scatter_gather
+ HEX_TESTS += hvx_misc
+ HEX_TESTS += hvx_histogram
+ HEX_TESTS += fp_hvx
++HEX_TESTS += fp_hvx_cvt
+ HEX_TESTS += fp_hvx_disabled
+ HEX_TESTS += invalid-slots
+ HEX_TESTS += invalid-encoding
+@@ -132,6 +133,8 @@ fp_hvx: fp_hvx.c hvx_misc.h
+ fp_hvx: CFLAGS += -mhvx -mhvx-ieee-fp
+ fp_hvx_disabled: fp_hvx_disabled.c hvx_misc.h
+ fp_hvx_disabled: CFLAGS += -mhvx -mhvx-ieee-fp
++fp_hvx_cvt: fp_hvx_cvt.c hvx_misc.h
++fp_hvx_cvt: CFLAGS += -mhvx -mhvx-ieee-fp
  
-         @staticmethod
-         def from_string(kind: str) -> 'QAPIDoc.Kind':
-@@ -730,7 +735,7 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
-         self.symbol: Optional[str] = symbol
-         # the sections in textual order
-         self.all_sections: List[QAPIDoc.Section] = [
--            QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
-+            QAPIDoc.Section(info, QAPIDoc.Kind.INTRO)
-         ]
-         # the body section
-         self.body: Optional[QAPIDoc.Section] = self.all_sections[0]
-@@ -748,12 +753,20 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
-     def end(self) -> None:
-         for section in self.all_sections:
-             section.text = section.text.strip('\n')
--            if section.kind != QAPIDoc.Kind.PLAIN and section.text == '':
-+            if (
-+                    section.kind not in (
-+                        QAPIDoc.Kind.INTRO, QAPIDoc.Kind.DETAILS
-+                    ) and section.text == ''
-+            ):
-                 raise QAPISemError(
-                     section.info, "text required after '%s:'" % section.kind)
+ run-fp_hvx_disabled: QEMU_OPTS += -cpu v73,ieee-fp=false
  
--    def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
--        kind = QAPIDoc.Kind.PLAIN
-+    def ensure_untagged_section(
-+        self,
-+        info: QAPISourceInfo,
-+        intro: bool = True,
-+    ) -> None:
-+        kind = QAPIDoc.Kind.INTRO if intro else QAPIDoc.Kind.DETAILS
- 
-         if self.all_sections and self.all_sections[-1].kind == kind:
-             # extend current section
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index 04a55072646..04e29e8d50f 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -116,7 +116,7 @@ The _one_ {and only}, description on the same line
- Also _one_ {and only}
-     feature=enum-member-feat
- a member feature
--    section=Plain
-+    section=Details
- @two is undocumented
- doc symbol=Base
-     body=
-@@ -175,7 +175,7 @@ description starts on the same line
- a feature
-     feature=cmd-feat2
- another feature
--    section=Plain
-+    section=Details
- .. note:: @arg3 is undocumented
-     section=Returns
- @Object
-@@ -183,7 +183,7 @@ another feature
- some
-     section=Todo
- frobnicate
--    section=Plain
-+    section=Details
- .. admonition:: Notes
- 
-  - Lorem ipsum dolor sit amet
-@@ -216,7 +216,7 @@ If you're bored enough to read this, go see a video of boxed cats
- a feature
-     feature=cmd-feat2
- another feature
--    section=Plain
-+    section=Details
- .. qmp-example::
- 
-    -> "this example"
 -- 
-2.53.0
+2.37.2
 
 
