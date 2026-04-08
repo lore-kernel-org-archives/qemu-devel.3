@@ -4,54 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 049F710F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6584210F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:24:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYQc-0005eV-Mv; Wed, 08 Apr 2026 15:19:06 -0400
+	id 1wAYKE-0002pJ-AA; Wed, 08 Apr 2026 15:12:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
- id 1wAY0D-00052P-CZ
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:51:50 -0400
-Received: from mail-4318.protonmail.ch ([185.70.43.18])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wAYI3-0006bN-9V
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:10:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
- id 1wAHKC-0001QR-BY
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 21:03:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=matthewpenney.net;
- s=protonmail; t=1775610198; x=1775869398;
- bh=J70lQstTQVknvHfsteZTD4+60wiGyrWRUrFeYvP4YI4=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=P8rff3h9TLnKNXgb+i4vcE0NHGJw66dj8YBJTTk4qKDh0rQhHn4d3UudzUU//SqTl
- /ZoFeDWpEV1xAuTSt1e6Pzpy5uVocFmS3REo1KRfN2kd6NuesPVW9zR9xv/WQGLiqT
- Vj72lcscCoI9waT0xZs1zOJVcoMphK/fT95pVJVBxIUMqf2DUKN9VPQkivFHeMe4Ve
- 6TJa92gMdDXpk4Bg4wFZXB46+9Q2/WREgkySfFbRuzx1geWbkFQZdnMNqF8eDna2rN
- NNU0gtU/GPWPmp2niLQSWW8oNfMoJxgbKF86lfE05XmYxOdeQbCygjkMNNt9Y0scZK
- TVbjQSkQO3+cg==
-Date: Wed, 08 Apr 2026 01:03:15 +0000
-To: qemu-devel@nongnu.org
-From: Matthew Penney <matt@matthewpenney.net>
-Cc: Matthew Penney <matt@matthewpenney.net>, marcandre.lureau@redhat.com
-Subject: [PATCH 8/8] ui: use g_clear_handle_id() for GSource cleanup
-Message-ID: <20260408010026.4611-9-matt@matthewpenney.net>
-Feedback-ID: 185185778:user:proton
-X-Pm-Message-ID: 5b7bbd041a4983705a8acf8250fc87a54828c37d
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wAPQ1-0003BD-5p
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 05:41:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775641310;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=N6xDr5YkJHjRTzF0TOd4TGyn/fmTQVl8goMAmI84K4o=;
+ b=N9O5428ibNYBPgAVp1CNWiKa31FXewvjiw7V8vqaFkn1u54zzv9JYdQp+8cizTJMB4OxoD
+ z5Dd9lOUw15TPe0zEgCT1nZ654dz43IjEehdjz/4wZGk57+dXgWLkEJssmlMCwD/O//XOn
+ 28xl16mzX3FvVRTz2hWWtaGQYwOlj8E=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-j-OqGbyMPS-UKLFF7GkSDQ-1; Wed,
+ 08 Apr 2026 05:41:49 -0400
+X-MC-Unique: j-OqGbyMPS-UKLFF7GkSDQ-1
+X-Mimecast-MFC-AGG-ID: j-OqGbyMPS-UKLFF7GkSDQ_1775641308
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71B991956050; Wed,  8 Apr 2026 09:41:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.231])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BA1F1800351; Wed,  8 Apr 2026 09:41:46 +0000 (UTC)
+Date: Wed, 8 Apr 2026 11:41:43 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "wubo . bob" <wubo.bob@bytedance.com>,
+ hongmianquan <hongmianquan@bytedance.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH for 11.0] util: fix missing aio_wait_kick sym in qemu
+ guest agent only build
+Message-ID: <adYi13SGlff_TwOD@redhat.com>
+References: <20260407152207.363647-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.43.18; envelope-from=matt@matthewpenney.net;
- helo=mail-4318.protonmail.ch
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260407152207.363647-1-berrange@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,166 +87,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use g_clear_handle_id() instead of g_source_remove() with manual ID
-checking and zeroing.
+Am 07.04.2026 um 17:22 hat Daniel P. Berrangé geschrieben:
+> Configure QEMU with
+> 
+>  --disable-system --disable-user --disable-tools --enable-guest-agent
+> 
+> and the build with fail with
+> 
+>   FAILED: [code=1] qga/qemu-ga
+>   /usr/bin/ld: libqemuutil.a.p/qapi_qmp-dispatch.c.o: in function `do_qmp_dispatch_bh':
+>   /var/home/berrange/src/virt/qemu/build/../qapi/qmp-dispatch.c:140:(.text+0x5c): undefined reference to `aio_wait_kick'
+> 
+> This aio_kick() usage was recently introduced in qmp-dispatch.c
+> without updating the build logic.
+> 
+> Fixes commit fc1a2ec7da531223b3473185dc2584f8a7c6c659
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-This simplifies the code and ensures consistent handling of GSource IDs,
-since g_clear_handle_id() checks for a non-zero ID before calling the
-cleanup function and zeros it afterwards.
+Pretty much the same as what I suggested in the pull request thread,
+just in a separate line instead of adding it to the previous one and as
+a proper patch. Thanks, saves me the work to write a proper commit
+messsage!
 
-No functional change intended.
-
-Signed-off-by: Matthew Penney <matt@matthewpenney.net>
----
- ui/dbus-clipboard.c    |  6 ++----
- ui/input-barrier.c     |  5 +----
- ui/vnc-auth-sasl.c     |  4 +---
- ui/vnc-auth-vencrypt.c |  9 ++-------
- ui/vnc-ws.c            | 18 ++++--------------
- 5 files changed, 10 insertions(+), 32 deletions(-)
-
-diff --git a/ui/dbus-clipboard.c b/ui/dbus-clipboard.c
-index 935b6b1a2a..90318384ee 100644
---- a/ui/dbus-clipboard.c
-+++ b/ui/dbus-clipboard.c
-@@ -80,8 +80,7 @@ dbus_clipboard_update_info(DBusDisplay *dpy, QemuClipboar=
-dInfo *info)
-     if (req->invocation && info->types[req->type].data) {
-         dbus_clipboard_complete_request(dpy, req->invocation, info, req->t=
-ype);
-         g_clear_object(&req->invocation);
--        g_source_remove(req->timeout_id);
--        req->timeout_id =3D 0;
-+        g_clear_handle_id(&req->timeout_id, g_source_remove);
-         return;
-     }
-=20
-@@ -183,8 +182,7 @@ dbus_clipboard_request_cancelled(DBusClipboardRequest *=
-req)
-         "Cancelled clipboard request");
-=20
-     g_clear_object(&req->invocation);
--    g_source_remove(req->timeout_id);
--    req->timeout_id =3D 0;
-+    g_clear_handle_id(&req->timeout_id, g_source_remove);
- }
-=20
- static void
-diff --git a/ui/input-barrier.c b/ui/input-barrier.c
-index 0a2198ca50..711ad81b34 100644
---- a/ui/input-barrier.c
-+++ b/ui/input-barrier.c
-@@ -519,10 +519,7 @@ static void input_barrier_instance_finalize(Object *ob=
-j)
- {
-     InputBarrier *ib =3D INPUT_BARRIER(obj);
-=20
--    if (ib->ioc_tag) {
--        g_source_remove(ib->ioc_tag);
--        ib->ioc_tag =3D 0;
--    }
-+    g_clear_handle_id(&ib->ioc_tag, g_source_remove);
-=20
-     if (ib->sioc) {
-         qio_channel_close(QIO_CHANNEL(ib->sioc), NULL);
-diff --git a/ui/vnc-auth-sasl.c b/ui/vnc-auth-sasl.c
-index 3f4cfc471d..ac68a507ae 100644
---- a/ui/vnc-auth-sasl.c
-+++ b/ui/vnc-auth-sasl.c
-@@ -127,9 +127,7 @@ size_t vnc_client_write_sasl(VncState *vs)
-      * SASL encoded output
-      */
-     if (vs->output.offset =3D=3D 0) {
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-         vs->ioc_tag =3D qio_channel_add_watch(
-             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR,
-             vnc_client_io, vs, NULL);
-diff --git a/ui/vnc-auth-vencrypt.c b/ui/vnc-auth-vencrypt.c
-index d9c212ff32..0b4be384b9 100644
---- a/ui/vnc-auth-vencrypt.c
-+++ b/ui/vnc-auth-vencrypt.c
-@@ -75,9 +75,7 @@ static void vnc_tls_handshake_done(QIOTask *task,
-         vnc_client_error(vs);
-         error_free(err);
-     } else {
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-         vs->ioc_tag =3D qio_channel_add_watch(
-             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_OUT,
-             vnc_client_io, vs, NULL);
-@@ -102,10 +100,7 @@ static int protocol_client_vencrypt_auth(VncState *vs,=
- uint8_t *data, size_t len
-         vnc_write_u8(vs, 1); /* Accept auth */
-         vnc_flush(vs);
-=20
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--            vs->ioc_tag =3D 0;
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-=20
-         tls =3D qio_channel_tls_new_server(
-             vs->ioc,
-diff --git a/ui/vnc-ws.c b/ui/vnc-ws.c
-index 9e3503d93d..e072c1b3fa 100644
---- a/ui/vnc-ws.c
-+++ b/ui/vnc-ws.c
-@@ -37,9 +37,7 @@ static void vncws_tls_handshake_done(QIOTask *task,
-         error_free(err);
-     } else {
-         VNC_DEBUG("TLS handshake complete, starting websocket handshake\n"=
-);
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-         vs->ioc_tag =3D qio_channel_add_watch(vs->ioc,
-                                             G_IO_IN | G_IO_HUP | G_IO_ERR,
-                                             vncws_handshake_io, vs, NULL);
-@@ -55,10 +53,7 @@ gboolean vncws_tls_handshake_io(QIOChannel *ioc G_GNUC_U=
-NUSED,
-     QIOChannelTLS *tls;
-     Error *err =3D NULL;
-=20
--    if (vs->ioc_tag) {
--        g_source_remove(vs->ioc_tag);
--        vs->ioc_tag =3D 0;
--    }
-+    g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-=20
-     if (condition & (G_IO_HUP | G_IO_ERR)) {
-         vnc_client_error(vs);
-@@ -107,9 +102,7 @@ static void vncws_handshake_done(QIOTask *task,
-     } else {
-         VNC_DEBUG("Websock handshake complete, starting VNC protocol\n");
-         vnc_start_protocol(vs);
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-         vs->ioc_tag =3D qio_channel_add_watch(
-             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR,
-             vnc_client_io, vs, NULL);
-@@ -124,10 +117,7 @@ gboolean vncws_handshake_io(QIOChannel *ioc G_GNUC_UNU=
-SED,
-     VncState *vs =3D opaque;
-     QIOChannelWebsock *wioc;
-=20
--    if (vs->ioc_tag) {
--        g_source_remove(vs->ioc_tag);
--        vs->ioc_tag =3D 0;
--    }
-+    g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-=20
-     if (condition & (G_IO_HUP | G_IO_ERR)) {
-         vnc_client_error(vs);
---=20
-2.53.0
-
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
 
