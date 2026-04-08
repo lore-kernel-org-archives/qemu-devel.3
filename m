@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCB010F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 322A710F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:31:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYW7-00068q-EV; Wed, 08 Apr 2026 15:24:47 -0400
+	id 1wAYTz-0008Ve-Jc; Wed, 08 Apr 2026 15:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wAY6s-0007Gt-VK
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:58:42 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wAY4g-0006Ut-PH
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:56:26 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wAHnG-0006Vh-O6
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 21:33:25 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-3590042fa8eso4034483a91.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 18:33:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wAXRl-00016Q-Qc
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:16:15 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64f48a5c3d8so46237d50.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 11:16:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775672171; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MR3YZhD6PkSLJqyhvgsDdd/YA2AZYH/vkqo4XkIMgh3SisqC1IjkpjRgnrrEp5H3nh
+ ulI0XMtZJIkrJfS9CXx0oOW+RzMJ7oI/8Ym3CD5sjXKO1GaiskFsl4CM3SaedThoD3sQ
+ n2Urm+f8fWu0WTqklw+y7DgmrCBTQYK4Sjy25ZI6qnsHnpa/GxKHVn8f8Eia/GkJaHPZ
+ fHQbKZYG6n6aOsLlRffLusdA3SudfgG83ZbGHse2QzB4E53PwjgFnXeRQwTRKJ7JaRqJ
+ 6mM5eQZa516QhwI99aeQeZW42B8OflHIb3QpiHb2ZKJOdRR9Z+IMPk4AZmqPyUF6HKbf
+ 9iIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=pKLfQ33XiCRiNlynAN/2fOlxoo0Fd+Z9Xj6+c8ipyzw=;
+ fh=o9NNXRRpR1snqmakVgbq3eXDVCQ4hGFs6Xd9sNLXLEI=;
+ b=XG6SYcV0Yt0xWhyjfgt3f05tDj0AQBm4rBceqo9j9y9b6pruJYLqRKHccO3Uattekg
+ X2ZgRK80omnNz8KoBf+4n65VRLSzZ4FeAbSubv8gbqb8B6ZyFMInEcUq3CykoqJr+Zgf
+ hFmhQ4U019V5u7pkobHu+zTeA81+HWI88c8eGE6uTsnpQHLa8mB4VK2yKatOYsvRIxMp
+ eoloxUuiYgtIPA+qwEODi+NoiCfDi4hl0Jw8xMTjrKNrZwYZcobvXY0afhcJ+zsb2q6v
+ FNFlk8+tW7+6TlSweGmauws0Selt1xUw5ZDiEp03Y9mitr4MF1noxBIQsDQIFxpigqrk
+ N1dQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775611999; x=1776216799; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oP/1GRjBSCthp+KAd33rcbtQgDmB+jnc/jSoYFA5Kjg=;
- b=VNx47wmbY0xkin4whYLB/Fs6KNwwAJFnz1IV4/ikKXPctmRRft81Lwt+BNAYzdG9eb
- E7z+yiqMwOPsCNmjVJluCLXIKAX9E2MdM+ocL5uLpJvrM5NEhhIIr5kB15g+Qd9Lbmbu
- trzP4fswoagntO+S6PN4+k7iSpk32oWiLKugR+I3kj99HB2HKCJnfaME4hQNUHeGoGgd
- W+uRFDDQJ4+liqB1csxihkvRMCtUhWrKHvhAdNjNYJNEbPuIvz7ew/iEaRYDclFHSdtc
- ampZJPiO3yucLis0ENKCN75+ygGhAKUQ7BEDzXAxg1s6eJSGq0td3itQTvCUkvGRDn1D
- lqkQ==
+ d=linaro.org; s=google; t=1775672171; x=1776276971; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=pKLfQ33XiCRiNlynAN/2fOlxoo0Fd+Z9Xj6+c8ipyzw=;
+ b=lOAObgOYnn5Kl0d5SV8QAbisy435WfIYWl2eKQLa8p+lng9UF0LEmlHVK38bl3uzII
+ r+OAkQ/XGeYd9JCbUD2I5/AJ9LTK10d6rtBkyi0DzKtbBR9RFbnaYhQPU+R3sp67M5li
+ vWJ7HULjh/UdzjgwY9P1NeFg1J9TMRZnvNN2TKc6Q5DTlIkcUyVFQcXrOCxA+2AbxyFi
+ QfLybK0yiVMTNBYwvKr63KPGBPWRQ0F2CnCDnGYj3bT+DivHpsRfotzKutGDogf25jML
+ J9bhC6oedMwnw3b510ceXTpDlqrUYD4tn5CTOM0WQIWZno27+f7dyj5N+dVg6NuDv4wf
+ mF7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775611999; x=1776216799;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=oP/1GRjBSCthp+KAd33rcbtQgDmB+jnc/jSoYFA5Kjg=;
- b=Q6F8TzxbBDdPpyDHoU0PKLBaSd9g3SAb4L9Tgf3QwZ+oBjSD45MW/WVeNhKLqbgNSY
- g19JmVsLQJA6heicd3FXE7Ye+BN9xPJO9GaFZpSwvOSI7rHZdWtg4w85tB2t7kB6xBD3
- SHDMp1k1lmXAo2+itnk+7npE/zlxPrnB0PoNKB4TReGJdGMsFQIq+xqd5C5a6oruWr10
- cjm3Aw8/hWeTQUPxDZlMOH02CwMums5WTvjBRH6yi4jkTr4o1xwWRm9b21yZLy4T9OMc
- lzJxkh4iXSDeKVWAPLLtRthkmXOqU+EasaaNDFAzU1PC/igCrOFHGWXrvXgro6gi+vlW
- 72fA==
-X-Gm-Message-State: AOJu0YxkY4tPcu/BBwCIRqcpPG00QdwAmfg3y8DsHXDbT1WB1g9IUfOb
- XwIbpodrdyqitnpH2KzHDteA/8NviZvcP+hXIZZCVWTQje+Jw6ktPWUxHLPDOUE9lZUI82jHdq+
- PzX9lMEc=
-X-Gm-Gg: AeBDietN/5zdvdV1wpG4gcHAZ1Cj5gaA6jhySrKqhTdwMc0bwYVJ1UvmrWWxPR3EP/w
- FBzbAe6pZEsL/RziDGeNvQLOipNzbuap2kam+4wRS4VngxMZ6KwK1jBaWuAu1X+c1kxQ5hZPf/Q
- rWoMprJ9EgTBbQ96OBMwLEC1dsOiQZTbGh4yeOtxkKUnCqOlO3CFFl74hVCw0LZtKDWWJId11uR
- izlY3ajPH/bhvVamN2weyPEmEmirhsTekYSYPA1htfNJWZkTQQt/tlbmSJX5I4s9EArdJq5ROn/
- g/hirhyDlPdNLOr5kLpQnfaL2mv6CMQIp69xWew6oXzVvdOodXAqvWpk6hgcTWMvTlE42adWDxY
- +OCWWgYy5trkSHZhJuGRJ1opwrUtKmW+P11u1JlExwzLsELEcYWvxXxd/VkGW1hy5n5EC1IsAP7
- Y6wu/+gBY5KlIpQ+ErSTmZYZPz7+GZbbNp9doKisqQzYDSPF+dnt/fXidW
-X-Received: by 2002:a17:903:37ce:b0:2b2:481b:de5f with SMTP id
- d9443c01a7336-2b28163b27dmr196144595ad.5.1775611999145; 
- Tue, 07 Apr 2026 18:33:19 -0700 (PDT)
-Received: from stoup.. (124-150-69-109.tpgi.com.au. [124.150.69.109])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2745c480dsm238277395ad.0.2026.04.07.18.33.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 18:33:18 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org,
-	qemu-arm@nongnu.org
-Subject: [PATCH 1/2] linux-user/arm: Improve get_user_code_u32 and usage
-Date: Wed,  8 Apr 2026 11:33:08 +1000
-Message-ID: <20260408013309.56122-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260408013309.56122-1-richard.henderson@linaro.org>
-References: <20260408013309.56122-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20251104; t=1775672171; x=1776276971;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pKLfQ33XiCRiNlynAN/2fOlxoo0Fd+Z9Xj6+c8ipyzw=;
+ b=eNz8rWHLBOOApJW2nnxbo3Kbk3+hspQb4UQmDme0MRQxHDlJApsYvMhC40kSQ1q2Wr
+ HHL7evY0+BAmgV2bzi7KZ9sEhavSq1uzlstgKQOgaHBBjDMlgqTBkCHnaLxu3vv+jnyU
+ 4wHyYtSI04zcV4P49MR2zMTzluHnopbgYJK2JSdXk7mOp2b+P/Uqfglfbl+x/fVXBdXs
+ RM/bfN1FHNM9n11O4yCzqyiDeapjOVMTXOfjgeGryQKRMtLZqbHloOrgZ2So15EKTVFV
+ YjVrPLsWqzFsetPEFkgwo0bzGwCTcUW97u/guBm6+b0i69NjBh3hqEVobrYDX6lDsfPK
+ DgRA==
+X-Gm-Message-State: AOJu0YygkvnSE9R2BXqqL4Pjb8Pl9D5oqzuugW1svV9CJ2wWKN+Lhvja
+ mqciB/dqdFHZpP6/ce9FzSkE0aLpogVhZSfACN3XSK+MS5rQfr9uINicRt3nd/Pg0rhbziFdeUe
+ NQ5vkqRYNxkQD0VqX4Mpmy0AHClJvPVZCi2zB9ZxYMdxQsKQr1s3qphY=
+X-Gm-Gg: AeBDieuobNcza+OUXn7GeQwgdwT8fi9jAcS67lwpzJYMN7NkfXBDPpu5Gg028ZX5/Vs
+ W9epi4OIV3UlTjtPKMwPQTcRgZgHWZTiUxPW5x45nyd5kNpZefDQ4WOSvvDR6TqtqmuxUDOKik3
+ cd7tqDev0befZeVyW7ECwxqV9vBdBwz+wL/cyGMkmcu1A5EL5cJzi1LRdNVyWTWPJzFByBJxiY5
+ PBvsPgR0y3wigIFd4CpiDWWuMOyhgnTEUsXFjETvT3chDptdvN1l3l4o2VQbIIQgnPTm6g4+nq4
+ /lS83psiMLsd99R6VjPu+7Z28vu3M37N5XFihztN7zEbfuHaCYDxlTqfR+ylTw2LJ7w=
+X-Received: by 2002:a53:e8cc:0:b0:64e:e553:d788 with SMTP id
+ 956f58d0204a3-6504880fbeamr15709937d50.43.1775672171043; Wed, 08 Apr 2026
+ 11:16:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+References: <20260408105605.172465-1-mjt@tls.msk.ru>
+In-Reply-To: <20260408105605.172465-1-mjt@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 8 Apr 2026 19:15:59 +0100
+X-Gm-Features: AQROBzB3c7wft6KLxafDDsTZSV5Zlw23_RdknzdNROhvWBfy6MKaeN6ucRD7v-M
+Message-ID: <CAFEAcA-JLmahDa329ycaVY_t7LsceLa2X6wDgXZG6Z8mbYH__Q@mail.gmail.com>
+Subject: Re: [PULL 0/3] Trivial build-system patches for 2026-04-08
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,139 +113,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Force a little-endian load before applying SCTLR.B.
-Handle the BE32 swap correctly in thumb mode.  This
-fixes a bug with its later usage in insn_is_linux_bkpt.
+On Wed, 8 Apr 2026 at 11:56, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> The following changes since commit b6a7d06213e5d2f7d124d16418bc289c4a8a4b82:
+>
+>   Update version for v11.0.0-rc2 release (2026-04-01 20:48:02 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+>
+> for you to fetch changes up to 17fbf3e18c3dbc32ec07cfc24853d6654a813e90:
+>
+>   util: fix missing aio_wait sym in qemu guest agent only build (2026-04-08 13:48:50 +0300)
+>
+> ----------------------------------------------------------------
+> trivial build-system patches for 2026-04-08
+>
+> bugfixes, and making possible to build some minimal stuff
+> on 32bit platforms - pending more permanent solution in 11.1.
+>
 
-Handle lock_user failure: in one case by simply falling back
-to the original SIGILL and the other by raising SIGSEGV.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/arm/cpu_loop.c | 64 ++++++++++++++++++++++++---------------
- 1 file changed, 40 insertions(+), 24 deletions(-)
 
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index 19874f4c72..419136fdee 100644
---- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -29,13 +29,34 @@
- #include "user/page-protection.h"
- #include "target/arm/syndrome.h"
- 
--#define get_user_code_u32(x, gaddr, env)                \
--    ({ abi_long __r = get_user_u32((x), (gaddr));       \
--        if (!__r && bswap_code(arm_sctlr_b(env))) {     \
--            (x) = bswap32(x);                           \
--        }                                               \
--        __r;                                            \
--    })
-+static bool get_user_code_u32(uint32_t *ret, uint32_t va, CPUARMState *env)
-+{
-+    uint32_t insn, *hptr;
-+
-+    hptr = lock_user(VERIFY_READ, va, sizeof(uint32_t), 1);
-+    if (!hptr) {
-+        *ret = 0;
-+        return false;
-+    }
-+
-+    /* Load as little-endian by default. */
-+    __get_user_e(insn, hptr, le);
-+    unlock_user(hptr, va, 0);
-+
-+    /*
-+     * Adjust the little-endian load for BE32 as required.
-+     * In thumb mode, bswap both halfwords by bswap of word then
-+     * swapping the halfwords again to restore the original order.
-+     */
-+    if (arm_sctlr_b(env)) {
-+        insn = bswap32(insn);
-+        if (env->thumb) {
-+            insn = hswap32(insn);
-+        }
-+    }
-+    *ret = insn;
-+    return true;
-+}
- 
- /*
-  * Note that if we need to do data accesses here, they should do a
-@@ -271,7 +292,8 @@ void cpu_loop(CPUARMState *env)
- {
-     CPUState *cs = env_cpu(env);
-     int trapnr, si_signo, si_code;
--    unsigned int n, insn;
-+    unsigned int n;
-+    uint32_t insn;
-     abi_ulong ret;
- 
-     for(;;) {
-@@ -284,31 +306,23 @@ void cpu_loop(CPUARMState *env)
-         case EXCP_UDEF:
-         case EXCP_NOCP:
-         case EXCP_INVSTATE:
--            {
--                uint32_t opcode;
--
--                /* we handle the FPU emulation here, as Linux */
--                /* we get the opcode */
--                /* FIXME - what to do if get_user() fails? */
--                get_user_code_u32(opcode, env->regs[15], env);
--
-+            /* we handle the FPU emulation here, as Linux */
-+            if (get_user_code_u32(&insn, env->regs[15], env)) {
-                 /*
-                  * The Linux kernel treats some UDF patterns specially
-                  * to use as breakpoints (instead of the architectural
-                  * bkpt insn). These should trigger a SIGTRAP rather
-                  * than SIGILL.
-                  */
--                if (insn_is_linux_bkpt(opcode, env->thumb)) {
-+                if (insn_is_linux_bkpt(insn, env->thumb)) {
-                     goto excp_debug;
-                 }
- 
--                if (!env->thumb && emulate_arm_fpa11(env, opcode)) {
-+                if (!env->thumb && emulate_arm_fpa11(env, insn)) {
-                     break;
-                 }
--
--                force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN,
--                                env->regs[15]);
-             }
-+            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN, env->regs[15]);
-             break;
-         case EXCP_SWI:
-             {
-@@ -317,14 +331,12 @@ void cpu_loop(CPUARMState *env)
-                 if (env->thumb) {
-                     /* Thumb is always EABI style with syscall number in r7 */
-                     n = env->regs[7];
--                } else {
-+                } else if (get_user_code_u32(&insn, env->regs[15] - 4, env)) {
-                     /*
-                      * Equivalent of kernel CONFIG_OABI_COMPAT: read the
-                      * Arm SVC insn to extract the immediate, which is the
-                      * syscall number in OABI.
-                      */
--                    /* FIXME - what to do if get_user() fails? */
--                    get_user_code_u32(insn, env->regs[15] - 4, env);
-                     n = insn & 0xffffff;
-                     if (n == 0) {
-                         /* zero immediate: EABI, syscall number in r7 */
-@@ -340,6 +352,10 @@ void cpu_loop(CPUARMState *env)
-                         n ^= ARM_SYSCALL_BASE;
-                         env->eabi = false;
-                     }
-+                } else {
-+                    /* Failed to re-load instruction. */
-+                    force_sig_fault(TARGET_SIGSEGV, 0, env->regs[15] - 4);
-+                    break;
-                 }
- 
-                 if (n > ARM_NR_BASE) {
--- 
-2.43.0
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
