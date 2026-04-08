@@ -4,59 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAED10F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F67F10F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYWr-0000iF-BF; Wed, 08 Apr 2026 15:25:33 -0400
+	id 1wAYaw-0001CP-3j; Wed, 08 Apr 2026 15:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wAY7R-0007eq-KB; Wed, 08 Apr 2026 14:59:20 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wAY8v-0000Am-72
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:00:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wAQmk-00035v-8n; Wed, 08 Apr 2026 07:09:29 -0400
-DKIM-Signature: a=rsa-sha256; bh=I2vJF8Ao5uoGzmkiFFS4anH8vSW24HuJ9ZbFaJQD0us=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1775646440; v=1;
- b=mjm+bSDIhe9pAR8EbLd96UGMmRKB1LNHJkwh8mDXpvAkBZkwz1LGbuh3mYHHiR2w69T+48fv
- io05KU1HzZnFbtZ7MlFwraxVBxX1z6/nvqFXkaYJE/iAvTEqFMPx+Jl0Pp2GuQ+DEN9MBROs0Fa
- 2RBIkhEzl04ZeP2vXUDaUwQ+EOuK9941dPcL09AJs2dqMrrQq4z5J9AwxAU2ic8rmPzoI84A0hm
- CNp/KHPerSXvMG5tgnmHe5qsPQXLp7OimHcDi+p7cgpSbOCPknO8QSjUuW3baConSQlhM2rlC72
- aGU2HpXil27ZqX9LTwos/2x/RVIuKY82w1bnzE+zvyxWg==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id BEF10207F8;
- Wed, 08 Apr 2026 11:07:20 +0000 (UTC)
-From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Tue, 07 Apr 2026 14:38:47 +0100
-Subject: [PATCH qemu v2 4/7] ot_uart: replace individual IRQ fields with
- array, add missing IRQs
-Message-ID: <177564643888.23414.7922925369077631439-4@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <177564643888.23414.7922925369077631439-0@git.sr.ht>
-To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
- Amit Kumar-Hermosillo <amitkh@google.com>, nabihestefan@google.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wALed-0000JU-Eb
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 01:40:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775626841;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
+ b=gglKICR1Gnp74dto23+6jCq3uFe/MPsqG7qyZnLF7mJSP1DXCn+AVXA2NUyrPFa6pDyd1o
+ qqgIVOjYKkeJRBVWKysRQ08uwOBlU1b1wSXEDKV9lR3jAP9MsSWgcqZ/Qe2Hm/YDZqEdXX
+ +D8tdioldd2zdhIg3AgkP3hxM2ellPc=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-34-U26elcI3Ms20ABWY4Gjafg-1; Wed, 08 Apr 2026 01:40:39 -0400
+X-MC-Unique: U26elcI3Ms20ABWY4Gjafg-1
+X-Mimecast-MFC-AGG-ID: U26elcI3Ms20ABWY4Gjafg_1775626839
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-358e95e81aeso13334997a91.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 22:40:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775626838; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fDOHyNTAOeghXFDGJxpWMmn6WeaNjb+A4k/tTTbz20XUU9ZhoT9RLxUtua3pa7qhAF
+ NvXu7DQXdJvunRKJxWys3DPr9RBdJsmp5sPBjDLjAA6bFH7eoR7fN6I8YFQB6riQ5mFL
+ qCAGiBNnUGJodtJWSANq17gO4CRz/tdEqsKQCQf8lx4taHaq/8FFclN2bs7eU/6USQJG
+ VvGfR7e3SEvuCFN9GpiWAMqn89ctxkj48UyytpZv+HhWHSXggimu72VmFMP3Mm1oZL1v
+ XowWSES3BE8ePJXZ8p3td76TMI8YGDB26m6rl2nEwJYNhlHrS760HeMYOn7KlUJCJ7vx
+ GArA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
+ fh=J0lI+6V1e8A1yyN2nd5Guz99SJqLbGXMn75K4Y7Xiz8=;
+ b=jCzdS4sZ2pkyxan8O/LgbRAzjiEQYCNjiewQbWmnkPUUqubqnaWLDDHJ7OQeh0FG44
+ M4x4ioHAJcm1SAEmM7qLUoixLOTVhKERNn14eMDcVqWQSXlluDttIqBrmjadXBMgveUz
+ tg47nGsrCv8PK5WRbaUIpBAJRNtPN4BjeBfMIFw2JGH7EPuRbOnZMvYtYsNL2smDJxSB
+ ap+COWitw360ofTl/ohojCCZWsHpR4z9cmGAMwGWxJfcD+x0xxUpvRW/XyXZetlK5FQo
+ PT1l+hjFuYWspfdWVXSPQFUCwmO5DKffYO1BsANCZ2npSDW16Bw+AG+5Cbr/OaSuH6sK
+ 6lUg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775626838; x=1776231638; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
+ b=A7DQUD21dfY8xDWoZsPvxAHAICbnSUPoXgem+QOqqm9aqBJNm0gIgcFLaMzn4/HjOF
+ O8/1RU+AQR7vJTL+FOxWTWbLDKMo7LiJaSdhHG2/dpfCUuWEX6UG/hxNrXn1ZiicKY4i
+ g5ULZyUtJbsLgiPMEvm1CyzK1ojT2CA9Z3wUULViKeyYSedkXe/NBLhH/POZjp3va6m8
+ aO05OBWtRQtNTL49ZAUr0D3EFvB3Ko6pgUYDViRXXchnsLqPZRDPE51HKNC3/PzFa1hb
+ d9whp0gRvs0mta5Y+M6dtxLUY9pHGpxkjJB7fcly7swk7BNNx/kRMdJh9/UNgHBchkee
+ 5HNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775626838; x=1776231638;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1GaYXssJET9HUuN8qmmpMmIRItyV5vk+8O1bNepNsjg=;
+ b=GJXbHbJ7jg6ArtHrlbuKHSvxZp8pFbZGV5nSSQ4+QrhxtcEHBTJnBuiHx39vgpchgc
+ 5OOI4wZ2pk4+bv4/xNovq9DoMaC7acYrxBzes2Ql7grdcfmmBR+IBIYDEgbR9QrH2HMA
+ mdx8IJcg5Tn+uERPqoEi4tVvqb54TcOxnjWkN10s5pkCT3/36GY+IkDG9v4N6PKXLz/2
+ XWODJemllUF0TTNlT9QRopBEIrctvmnqLCrl+3J4VBf4ZuqNjlK8URQKsUv9NzpE/H6X
+ 4TowHUbmlFXQ9SnAnJlKSRnvqvpGGDk464su0cDDw3ONKc07fOaYXHiBYuflUuxG+Btx
+ C6gA==
+X-Gm-Message-State: AOJu0YzyvdtA6VvzkCWQxJvpr57YUYSlEZSG+B5W9237Us1+NEQ2LXg+
+ oW5fqcwKvhQPHve0Y+Tq/F62bIi2ze1S8murqEGbDWWd/7ZNc2uIiLniIubuvEDJe3g1DphsR9a
+ F+jSQsRUswIzCKm1yxhJXct/rxNtbZCz6Dah55G58Y0LnVzrn7Sfo7lSIRf8DBc9soR/xyNg0z0
+ 2o6UN2+vjz3qRzAxNR48SrHXGrYUiiFzxuTLjn+r5ruA==
+X-Gm-Gg: AeBDieuQpzhwtBJLB8+rfhFefkTTW/W9eN1F+lAOReguziQQFAIoqJO4fs9YKbkF5Ct
+ pErx9M6M0psw9+B0oLla7ltJ24Lo4ZUMMjIC3jK81e3JSZT3MU3JzC1fGTnYF+s12fb/E6T3Y29
+ JA6sdUdS4IauSNtHpKPC6AUgVIjHx1+Jn+XjWM4XUySUOapgPTGPDGGtdcGNMJVyTdu3MjHxtB7
+ 0OdKbHJlpSoI+WfBEKkZFWq2sZ8Slrn4jL0Y+G1/hSl6m9EAbww5A33bLAE5AEsBbLbfua3UHIQ
+ GFht7tZnbgW4E5bhgpIWWEM=
+X-Received: by 2002:a17:90b:3d8a:b0:35b:e4f8:7b2b with SMTP id
+ 98e67ed59e1d1-35de68ebaf3mr21279419a91.18.1775626838275; 
+ Tue, 07 Apr 2026 22:40:38 -0700 (PDT)
+X-Received: by 2002:a17:90b:3d8a:b0:35b:e4f8:7b2b with SMTP id
+ 98e67ed59e1d1-35de68ebaf3mr21279385a91.18.1775626837732; Tue, 07 Apr 2026
+ 22:40:37 -0700 (PDT)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260408031725.641417-1-zhaoguohan@kylinos.cn>
+In-Reply-To: <20260408031725.641417-1-zhaoguohan@kylinos.cn>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 8 Apr 2026 09:40:26 +0400
+X-Gm-Features: AQROBzAFhhUboDZvXi8EzRHILwcHfSFw81EIKZwbwelGIdWr7xB8iEikNgPdoSk
+Message-ID: <CAMxuvazU-_Uh2YSs7=7nBsLaRXq8ApuJ7rgBUyvmkRaGoAtX_Q@mail.gmail.com>
+Subject: Re: [PATCH] ui/spice-app: detect runtime directory creation failures
+To: zhaoguohan@kylinos.cn
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,140 +133,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Lex Bailey <lex.bailey@lowrisc.org>
+Hi
 
-There are 9 interrupts in the OpenTitan UART device.
-These are documented here:
-https://opentitan.org/book/hw/ip/uart/doc/theory_of_operation.html#interrupts
+On Wed, Apr 8, 2026 at 7:18=E2=80=AFAM <zhaoguohan@kylinos.cn> wrote:
+>
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+>
+> spice_app_display_early_init() creates the per-VM runtime directory
+> with g_mkdir_with_parents() before setting up the Spice socket. The
+> code checks for "< -1", but g_mkdir_with_parents() returns -1 on
+> failure, so the error path is never taken.
+>
+> This lets spice-app continue after a directory creation failure and
+> defers the problem to later setup steps.
+>
+> Check for "< 0" instead so the failure is reported immediately and
+> spice-app exits before using an invalid runtime directory.
+>
+> Fixes: d8aec9d9f129 ("display: add -display spice-app launching a Spice c=
+lient")
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-This commit removes the individually named interrupts (of which there was onl=
-y four)
-and replaces them with an array of 9 interrupts.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
----
- hw/char/ot_uart.c         | 44 +++++++++++++--------------------------
- include/hw/char/ot_uart.h |  5 +----
- 2 files changed, 15 insertions(+), 34 deletions(-)
-
-diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-index 3bf3295b1b..923aab12af 100644
---- a/hw/char/ot_uart.c
-+++ b/hw/char/ot_uart.c
-@@ -107,6 +107,7 @@ REG32(TIMEOUT_CTRL, 0x30)
- #define OT_UART_NCO_BITS     16
- #define OT_UART_TX_FIFO_SIZE 128
- #define OT_UART_RX_FIFO_SIZE 128
-+#define OT_UART_IRQ_NUM      9
-=20
- #define R32_OFF(_r_) ((_r_) / sizeof(uint32_t))
-=20
-@@ -116,31 +117,11 @@ REG32(TIMEOUT_CTRL, 0x30)
-=20
- static void ot_uart_update_irqs(OtUARTState *s)
- {
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
--        & INTR_TX_WATERMARK_MASK) {
--        qemu_set_irq(s->tx_watermark, 1);
--    } else {
--        qemu_set_irq(s->tx_watermark, 0);
--    }
--
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
--        & INTR_RX_WATERMARK_MASK) {
--        qemu_set_irq(s->rx_watermark, 1);
--    } else {
--        qemu_set_irq(s->rx_watermark, 0);
--    }
-+    uint32_t state_masked =3D s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE];
-=20
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE] & INTR_TX_EMPTY_MASK)=
- {
--        qemu_set_irq(s->tx_empty, 1);
--    } else {
--        qemu_set_irq(s->tx_empty, 0);
--    }
--
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
--        & INTR_RX_OVERFLOW_MASK) {
--        qemu_set_irq(s->rx_overflow, 1);
--    } else {
--        qemu_set_irq(s->rx_overflow, 0);
-+    for (int index =3D 0; index < OT_UART_IRQ_NUM; index++) {
-+        bool level =3D (state_masked & (1U << index)) !=3D 0;
-+        qemu_set_irq(s->irqs[index], level);
-     }
- }
-=20
-@@ -291,6 +272,9 @@ static void ot_uart_reset_enter(Object *obj, ResetType ty=
-pe)
-     s->regs[R_STATUS] =3D 0x0000003c;
-=20
-     s->tx_watermark_level =3D 0;
-+    for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
-+        qemu_set_irq(s->irqs[index], 0);
-+    }
-     ot_uart_reset_tx_fifo(s);
-     ot_uart_reset_rx_fifo(s);
-=20
-@@ -562,21 +546,21 @@ static void ot_uart_init(Object *obj)
-                                   ot_uart_clk_update, s, ClockUpdate);
-     clock_set_hz(s->f_clk, OT_UART_CLOCK);
-=20
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_watermark);
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_watermark);
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_empty);
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_overflow);
-+    for (unsigned index =3D 0; index < OT_UART_IRQ_NUM; index++) {
-+        sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irqs[index]);
-+    }
-=20
-     memory_region_init_io(&s->mmio, obj, &ot_uart_ops, s,
-                           TYPE_OT_UART, 0x400);
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-=20
-     /*
--     * This array has a fixed size in the header. This assertion is used to
--     * check that it is consistent with the definition in this file. This is
-+     * These arrays have fixed sizes in the header. These assertions are use=
-d to
-+     * check that they are consistent with the definitions in this file. Thi=
-s is
-      * ostensibly a runtime check, but may be optimised away by the compiler.
-      */
-     assert(REGS_SIZE =3D=3D sizeof(s->regs));
-+    assert(OT_UART_IRQ_NUM * sizeof(qemu_irq) =3D=3D sizeof(s->irqs));
- }
-=20
- static void ot_uart_realize(DeviceState *dev, Error **errp)
-diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
-index f489612700..a2c5ff8b33 100644
---- a/include/hw/char/ot_uart.h
-+++ b/include/hw/char/ot_uart.h
-@@ -42,6 +42,7 @@ struct OtUARTState {
-=20
-     /* <public> */
-     MemoryRegion mmio;
-+    qemu_irq irqs[9];
-=20
-     uint32_t tx_level;
-=20
-@@ -59,10 +60,6 @@ struct OtUARTState {
-     Clock *f_clk;
-=20
-     CharFrontend chr;
--    qemu_irq tx_watermark;
--    qemu_irq rx_watermark;
--    qemu_irq tx_empty;
--    qemu_irq rx_overflow;
- };
-=20
- struct OtUARTClass {
---=20
-2.49.1
+> ---
+>  ui/spice-app.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/ui/spice-app.c b/ui/spice-app.c
+> index 9e55f2737159..0df7325e6792 100644
+> --- a/ui/spice-app.c
+> +++ b/ui/spice-app.c
+> @@ -151,7 +151,7 @@ static void spice_app_display_early_init(DisplayOptio=
+ns *opts)
+>      if (qemu_name) {
+>          app_dir =3D g_build_filename(g_get_user_runtime_dir(),
+>                                     "qemu", qemu_name, NULL);
+> -        if (g_mkdir_with_parents(app_dir, S_IRWXU) < -1) {
+> +        if (g_mkdir_with_parents(app_dir, S_IRWXU) < 0) {
+>              error_report("Failed to create directory %s: %s",
+>                           app_dir, strerror(errno));
+>              exit(1);
+> --
+> 2.43.0
+>
 
 
