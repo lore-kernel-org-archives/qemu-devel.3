@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87CF10F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A3F10F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYPz-0003Af-MT; Wed, 08 Apr 2026 15:18:27 -0400
+	id 1wAYHN-0005my-BC; Wed, 08 Apr 2026 15:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYNm-0007mL-FR
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:16:12 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYGA-0003n2-FB
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:08:19 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAOLR-0000wA-Ic
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 04:33:06 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso54296665e9.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 01:33:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAOQ5-0001ef-OA
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 04:37:55 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso7357935e9.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 01:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775637184; x=1776241984; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775637472; x=1776242272; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=z4v1Hw4XP17q49TcvxomiCeZR5f5JQYZxdu4nKgx7Jw=;
- b=NOQgs5csZq8yCpamEe7nnCNoGjM7cFW1bD5yWMKdk5PPqLtl1Wz/qLhlNe1U1e5uu8
- CH2+rzKg70q8nMyQKGN9kn1i/m8Gbg8ZVYCLiOC2gVATbA3UyqrvpYB4b0QOAKBmquMd
- bNj5cwL44e46QQuBo9FNm1PWhWqWTiq9BpCt7kGeO03M8BHM74pZmvJzGQ8UbhPn7i4h
- KLjCLTyGkXEJx0bKaVj/zIPNHx+ylN7zqzBzELuJNuoUhQYOhKIdjg8z0tZZkU+Y87w2
- I9sIER3lP1mw87fslvwE/zkQO/vln5+KA4WuHFaYfPIPripKOdDAMIfSWwy6Ho01Cxtr
- nK6A==
+ bh=rYvIoV64UzXrtoITOOTHknJ6ZResgG8x/xuVEBwW9Yw=;
+ b=IwVLNYb8oveekigxcPRwBLBRWrpKVRGYwEyUbmaXa7Ohfu2I/d7t8DkDlLq92lVs3B
+ EF3eVcc05XaQZB4eXI3KnunIjVmArVk4Js9vLPxzFEput5T5QVdY+IGIO1fO5OjGPi/i
+ zELvZh+TLnh/5TTwRF4+au4pe8pK0MKqOuE2EOVWn2odlZfIhEHMzFnhXS1jp2ekiwTX
+ xvzHgAqH5bOFHf4Hivwu0LkdvtDUgfGaT9rF0j1Nf4gBEa0XfXzgsIcMSP/R5SkZ1ZP/
+ N2sQHJWIc54XzeEj9hacbrbR11DTeMpIIhNK6WZ09e44Ku9xkN0f2kPP+5rBIqDKa87x
+ CMhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775637184; x=1776241984;
+ d=1e100.net; s=20251104; t=1775637472; x=1776242272;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=z4v1Hw4XP17q49TcvxomiCeZR5f5JQYZxdu4nKgx7Jw=;
- b=NPiEiveOYZjM6LpoMGVKJmxW7/PAiWZNG2of4LP3K3b+dQugSsuxUzYfISIQQRRA4v
- ZHvRxRAXQ1NLScJaAJKoV8eHLlqw/nYBG05JQ9KcajLIuvnAbKh30SnmBbDHh/w8vges
- w1zMwLlGQpmnzduiuYAlPeIfu2PjLtvL2Rn8BXL8I5lca6kDNNByYse5/MexKEMBEDEK
- FNTgvPS8psbb8dEc5yMUrPKytzqDMpgb1jFCAiJ+ep3rMXab+L2Yi/DnFRN76YrK1TfL
- VFsz4wWjn+rQtnc2f0gvcmHNNNitsID/pUQA0nx+R0ZySdCUMNBeHl0O/GixVqQaCz1k
- uQgw==
+ bh=rYvIoV64UzXrtoITOOTHknJ6ZResgG8x/xuVEBwW9Yw=;
+ b=Chzd3SQ0BdT4FIej+05f8UzfXW0yyrNJlhEr0999g4I5M6+BMwfOuzMNoJ5+AI4BZ7
+ 8fKiGU3JPidT7MU/nwyNkRDM/aUNQCWAYCvvLAWngR4Ye45QV46uBjWhDpen3umSRakB
+ 1xK4JGEIIYUrktlJQFX65iYevl3lfcu7dxleoeaA0oFvSCqEb19dVUqznA/wE69gSXPs
+ XRY5wVfVqLl4xrlF8TI5NP6VatMLRCsgkn8kuCYZTNtFJ5QQnNeYIW3RG0FAlc8OH94w
+ yI7hBl6q40WNwc47VfRAFNk8NELDvIoNO7OG57KjwjsA5FAVDoP0kn/h0AcwARGahE6j
+ SLbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVOZJuTTllSwL66LZ4pcVQiH3jgSzSfEKnXNB1WQ9NYpVXvG9B+7MhnodS0Ny98Ngu8BTfszBE3KZiA@nongnu.org
-X-Gm-Message-State: AOJu0YwDubhf5ck9ulSuPpNc/GkySCJ+3ccJbFUw21yUwQCanyNGZl/P
- 6JlY9PKqsiCBSwT6tdBh/coWCLQDBzSIDW/dn5kKlnvvZHHM6dp9xz+SGX1R4gGt+50=
-X-Gm-Gg: AeBDiet6b5mn0R2+tynC5bKqNOux6Tdc1L6/G1uinz15aLighO7jhsLg00G2TXhmOzJ
- RAu5riwMMeNueYY8H9Ypsay4Mner8N3IMxRyQxp/YYZpRRKZ5YxXlwQwMo5QOi8dTBNTUHwDTf7
- cTui79ewGe2FHLuNfrOzt2xyCx7ByswjN27/uOXWE0YZt+ObgUH8PKZXzYj5I8TiO80k9We+nPC
- JDzoe53YzAcu5oR0Nk+VMIphPkCCRyHuKmzUj+HVyg1/CKYPYK44NlofLo6Msgw467Vr5ebNib/
- cXpH42bePpuiEGDS6VDKHbxW339AihLVde69KTajug7ANX0vd/tZm0DOukPeso6N2A7lWcBTedc
- Jte6FVy2Nk6dGGAI3d9G+8p1WOtkzs21+C947JNJwj2EADxuXgfZKXVQKnZExwGGQfbe7x7NYIp
- Xxgb5M8x2Zc1dmI96/hvGm5o6fubF6Vo99D5dNCHJsbgu899g2kV/af9FEEuvmVoWnyw==
-X-Received: by 2002:a05:600c:6098:b0:488:9fb7:376d with SMTP id
- 5b1f17b1804b1-4889fb73b1amr252250055e9.28.1775637183690; 
- Wed, 08 Apr 2026 01:33:03 -0700 (PDT)
+ AJvYcCU99eX3e7crxtGRVQc/nPWDEFwbHiHdk59exz4YuTIHiRZC9GHeM3NGjKitnodin7Ox6A/TKEZTtX+m@nongnu.org
+X-Gm-Message-State: AOJu0YziXQeGAJpdWXGbhMtDddJpzu3X6OaLo2ewq3kq+ifvbqNCPVQI
+ e84wAoimykZk8nYIi8P6ZsoCB2P35ATtxXHdEF82BteiH27JHvHmQf1If7bRDQhfiqs=
+X-Gm-Gg: AeBDieuzJliLr1BWRdNAeULO0NRUSbE1s1HvkReXRUmVHOi39nKY//3G7lupnKNu/LT
+ dV6P8Amnm+Ff9AVsdTh9Ei6Sr1LVSE82kXJdXIw0v9yxOR/VDT07r08Kkz/B17V7Ib14U5Pou7U
+ s53GpDRDtI4hfyt+MGhlBIIk6nOJiP2tZh/C98Mpa6C2HjcWeJrOtv84XwV5EswOA7s1IuaNTcE
+ rz3NSdLpJfOoU9sVvBZ4Wnb/rgn8s2bBKo0zeFMjbJGrvPgNTnwLVksUCvwCAKVxac33VqSuxhe
+ NCOPs2BtjKanjEVnDxyIF33np/6UodW6wCSuU6nz4q4Jp+66EC0OYYtY6HKd6lsARQ54cViX4Ms
+ wEGfeEKTm+o+SV9MBUGzKJWwCY+9kz2ha+vjakmn5aY6Jiz+c27z95Zr2QqdrWl1UdUQ3a4cK4A
+ 6Gwiv/mLrnEu3P3ShVouxNl5Ka+UuhDKRQv5KgwpQqAvM5fXoxpZPXrg9xDklqTCRa0w==
+X-Received: by 2002:a05:600c:8288:b0:488:b47a:908b with SMTP id
+ 5b1f17b1804b1-488b47a92e3mr142534175e9.11.1775637471887; 
+ Wed, 08 Apr 2026 01:37:51 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4887e80a616sm1150596935e9.2.2026.04.08.01.33.02
+ ffacd0b85a97d-43d1e4e5890sm55800959f8f.31.2026.04.08.01.37.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 01:33:03 -0700 (PDT)
-Message-ID: <41713965-dc77-483d-a026-41bb234b6289@linaro.org>
-Date: Wed, 8 Apr 2026 10:33:02 +0200
+ Wed, 08 Apr 2026 01:37:51 -0700 (PDT)
+Message-ID: <9846560e-9074-419d-9d06-9b949f6372ce@linaro.org>
+Date: Wed, 8 Apr 2026 10:37:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 14/21] tcg/translator: add parameter to
- translator_loop for current addr type
+Subject: Re: [PATCH 2/5] linux-user/strace: Add a wrapper for read and write
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: jim.macarthur@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
- <20260407222208.271838-15-pierrick.bouvier@linaro.org>
+To: Chao Liu <chao.liu.zevorn@gmail.com>, alistair23@gmail.com
+Cc: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20260407043614.372871-1-alistair.francis@wdc.com>
+ <20260407043614.372871-3-alistair.francis@wdc.com>
+ <adUycpyM7bUjmC_7@ZEVORN-PC.localdomain>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260407222208.271838-15-pierrick.bouvier@linaro.org>
+In-Reply-To: <adUycpyM7bUjmC_7@ZEVORN-PC.localdomain>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,43 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/26 00:22, Pierrick Bouvier wrote:
-> With TCG_ADDRESS_BITS mechanism, it's now possible to specify which
-> variant every source file is written for. Compared to before, it means
-> that addr_type will now vary per tb translation, where it was constant
-> for a given target previously.
-> 
-> Thus, we add new a parameter to translator_loop().
-> This will allow us to convert targets one by one.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/exec/translator.h        | 4 +++-
->   accel/tcg/translate-all.c        | 1 -
->   accel/tcg/translator.c           | 4 +++-
->   target/alpha/translate.c         | 3 ++-
->   target/arm/tcg/translate-a64.c   | 3 ++-
->   target/arm/tcg/translate.c       | 2 +-
->   target/avr/translate.c           | 3 ++-
->   target/hexagon/translate.c       | 3 ++-
->   target/hppa/translate.c          | 3 ++-
->   target/i386/tcg/translate.c      | 3 ++-
->   target/loongarch/tcg/translate.c | 3 ++-
->   target/m68k/translate.c          | 3 ++-
->   target/microblaze/translate.c    | 3 ++-
->   target/mips/tcg/translate.c      | 3 ++-
->   target/or1k/translate.c          | 3 ++-
->   target/ppc/translate.c           | 3 ++-
->   target/riscv/translate.c         | 3 ++-
->   target/rx/translate.c            | 3 ++-
->   target/s390x/tcg/translate.c     | 3 ++-
->   target/sh4/translate.c           | 3 ++-
->   target/sparc/translate.c         | 3 ++-
->   target/tricore/translate.c       | 3 ++-
->   target/xtensa/translate.c        | 3 ++-
->   23 files changed, 45 insertions(+), 23 deletions(-)
+On 7/4/26 18:55, Chao Liu wrote:
+> On Tue, Apr 07, 2026 at 02:36:11PM +1000, alistair23@gmail.com wrote:
+>> From: Alistair Francis <alistair.francis@wdc.com>
+>>
+>> The stack pointer is being truncated as 32-bits for qemu-riscv64, so
+>> let's add a print_read_write helper that ensures all of the bits are
+>> printed.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
+>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>> ---
+>>   linux-user/strace.c    | 14 ++++++++++++++
+>>   linux-user/strace.list |  4 ++--
+>>   2 files changed, 16 insertions(+), 2 deletions(-)
 
-As per v10:
+
+>> +#if defined(TARGET_NR_read) || defined(TARGET_NR_write)
+>> +static void
+>> +print_read_write(CPUArchState *cpu_env, const struct syscallname *name,
+>> +        abi_long arg0, abi_long arg1, abi_long arg2,
+>> +        abi_long arg3, abi_long arg4, abi_long arg5)
+>> +{
+>> +    print_syscall_prologue(name);
+>> +    print_raw_param("%d", arg0, 0);
+>> +    print_pointer(arg1, 0);
+>> +    print_raw_param("%d", arg2, 1);
+> If TARGET_NR_read and TARGET_NR_write support 64-bit targets,
+> abi_long is int64_t, so %d will be truncated. We can use
+> TARGET_ABI_FMT_ld to replace it.
+
+With the 2 "%d" replacements to TARGET_ABI_FMT_ld:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> 
+> Otherwise LGTM.
+> 
+> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> 
+> Thanks,
+> Chao
+>> +    print_syscall_epilogue(name);
+>> +}
+>> +#endif
+
 
