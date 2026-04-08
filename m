@@ -4,113 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0769010F996B
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C697610F996A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXh4-0007Jm-F0; Wed, 08 Apr 2026 14:32:02 -0400
+	id 1wAXhE-0008BU-H6; Wed, 08 Apr 2026 14:32:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAXgq-00075k-CE
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:31:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wAXh7-0007nK-T6
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:32:06 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAWCW-00029k-LG
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:56:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775667384;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gbrwSMWX65NN2qFtsFxD677N8GbRpenQYWl5sMfBjrg=;
- b=CZVWN+iKXM0zMljnBtIJpacfAY9v9kMfqe8t3Viww9hrEf8DPbFHz24fTlUIOiifjWEePK
- /85QzvZVe714kcwPcll8232Ok2pMUQndoaiKMiN61ZrxVhBO1d7k5p62of4Y8amrPkQtdA
- TTcBvpR1mkfRPOR0Er8uY+VVLKUSlOU=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-o24luCgIMiCxOCtsOdYteA-1; Wed, 08 Apr 2026 12:56:22 -0400
-X-MC-Unique: o24luCgIMiCxOCtsOdYteA-1
-X-Mimecast-MFC-AGG-ID: o24luCgIMiCxOCtsOdYteA_1775667382
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-50da31af14cso2649191cf.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:56:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775667382; x=1776272182; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gbrwSMWX65NN2qFtsFxD677N8GbRpenQYWl5sMfBjrg=;
- b=tXmLDhgU5LT3gMH0iZPzlpfuteFlDjKEzBHSSlX9z380p7pvZuyoyRlkFoadOXZULl
- B6xxKIFTnWN9T+svvDqUrmc6L7rl/mcHhwaEm4bHT6HBscaYd9x5zyXSWhqJG/duM45S
- If45oDHPHV/jbcsmxRK05xZVituxUXR1al0UwN/Kcs9R1AT/nUcL9G3tgJfc6IFXuJKY
- DgkU6VP3Shenl/IdsnVZvJs4qmhI4LaECWbkfkQSpeVdBikzgMgHVHdBvdxgGBjPCTV2
- MNEHkqq548q9a/afF3bL+p/hz823veBiou39nOAFe4yC6J7MLXnQVGy4Q5WE76bxxny5
- hzgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775667382; x=1776272182;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gbrwSMWX65NN2qFtsFxD677N8GbRpenQYWl5sMfBjrg=;
- b=DUVnBAkL6CLVDURKEjJoU17EzQoh8LXzzaxRNlZYqtJ1yvKxDC0yGfO751cYs7om6N
- q2A/PQKBplAOXuIlViPg2E6GkuxOl8NsHUi8wIVgn3AZbZ+bsjdAsNymQlNPTCU3mvaH
- 9VGzub+tCAdqrFRm3q2jIBShtD04gmx6WPpcFVs8nS+iN3ErETlfI6yrvALaO2uJd0lS
- 4irgked5JaqxyG8bRmqj7J8NjfVeoStHMSKieA7/k3J/NiqI+rjbcWKrU4+EHUh691VG
- NxRGrXnm0JRPDpj3b/4+MSGS6kLhv+edHYDl82NnKfSkfHUY1dBvt1EK8ZI7ac50sRzH
- 80DA==
-X-Gm-Message-State: AOJu0YywdTP4axNgJgrqmC0gsW3n2gvqQXeEyq5dk6LQLHy8ihBVCA1H
- 7MsoQImfKHiPDpNqeU4V1cMBaaxWUCNfF31wwWfigttC0KzRbXQllgjS8xfw6GrGMbX9V1qnc+2
- gnlaVpibZg+hDG93r6NIAI5D9bnrGB9nXTAbe7A/dtKfbmdnFaVtgwqcCmfIeSt0rH0eAzP3JcK
- yh4twNKAAiakXH5CH2RjmQybrYLqkdOXRHkUmRfg==
-X-Gm-Gg: AeBDieuS8PiDxi/ozdD51Sz7tb3XYj6A99OvO4yK7ozm0E/xzHfpEfmimtM389BNyD8
- Vd4jXSlteec1FN1oKKellQifHbwXmI/HbDPbVz26P3lsBEIIkx1I3/F/jOZArbw343m6dw1jUhI
- hzC9THVxVA2e7dxCEQwEFLMiwYzAGydV3qtauEa8kmTKXxSpTYWQsond7odWFMAbrfCTmCgfwVK
- fK6Ntz8QhXYljOV/hTWqzPrGio3x7Nx4dVMp9EwffFmZjTvKMHZ5uGxG4uXqrTxQM+RsBvLjvMu
- 8FPeGS1FWtIIRJvc9km0Pji20OFWYXfYoqv1RHaoSdU2zJRpWIeFLmqgKJWV5lWfKJFYd0ks2sR
- +e2Tzw6W0yWsZ5GX7U5zQ/11U7EzTOR7c0VdS1rc/5Vzm
-X-Received: by 2002:a05:622a:124b:b0:50d:83de:4933 with SMTP id
- d75a77b69052e-50d83de50cfmr229016051cf.20.1775667381673; 
- Wed, 08 Apr 2026 09:56:21 -0700 (PDT)
-X-Received: by 2002:a05:622a:124b:b0:50d:83de:4933 with SMTP id
- d75a77b69052e-50d83de50cfmr229015211cf.20.1775667380973; 
- Wed, 08 Apr 2026 09:56:20 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d712c2617sm130491901cf.31.2026.04.08.09.56.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 09:56:20 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 13/14] migration/qapi: Introduce system-wise "remaining"
- reports
-Date: Wed,  8 Apr 2026 12:55:57 -0400
-Message-ID: <20260408165559.157108-14-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260408165559.157108-1-peterx@redhat.com>
-References: <20260408165559.157108-1-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wANcI-0003AK-Vm
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 03:46:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1775634334; bh=wQslJKqGAm/13CobiZEzIripYvuG1KtanPE9bzHjaTw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=RxmMH72ELEgwtGLC9wETRhMcxiKzOUzv1MOOj7THnMnR7vwKvP/zRmnGAIyhTgiDW
+ Qfy2Z8xlUGZ1kV28F6uL6q5i38lsrTHVhSEyFW6m65uUZT4Swdhe7NwezGHZvRGOqa
+ 6577p/jgwfGQSFpiLce5yqx/hvzYHJdBOvJI+mUwicI5SuluKyVsNw6HyxGHSvzSVU
+ eEJLQlLHo47T3hUzQkkFirevSCwcssNZNLA9cc9wpqiQc1wUHz7FlIxUqMkcNfRdM1
+ /07X8TzrJ4UWOF+g1LdanDaPU1jjbz9KZ1nziV0rXFe/YB34biGuvtHcE1ENUbubZg
+ wy8Z9v0hA17LA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 35B1519C13A;
+ Wed, 08 Apr 2026 10:45:34 +0300 (MSK)
+Message-ID: <c4eea01e-76fb-4557-b637-c3666ca6882f@tls.msk.ru>
+Date: Wed, 8 Apr 2026 10:46:21 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for 11.0] util: fix missing aio_wait_kick sym in qemu
+ guest agent only build
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "wubo . bob" <wubo.bob@bytedance.com>, Kevin Wolf <kwolf@redhat.com>,
+ hongmianquan <hongmianquan@bytedance.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260407152207.363647-1-berrange@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260407152207.363647-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,127 +114,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, mgmt can only query for remaining RAM, not system-wise remaining
-data.  It was not a problem before, because for a very long time RAM was
-the only part that matters.
+On 07.04.2026 18:22, Daniel P. Berrangé wrote:
+> Configure QEMU with
+> 
+>   --disable-system --disable-user --disable-tools --enable-guest-agent
+> 
+> and the build with fail with
+> 
+>    FAILED: [code=1] qga/qemu-ga
+>    /usr/bin/ld: libqemuutil.a.p/qapi_qmp-dispatch.c.o: in function `do_qmp_dispatch_bh':
+>    /var/home/berrange/src/virt/qemu/build/../qapi/qmp-dispatch.c:140:(.text+0x5c): undefined reference to `aio_wait_kick'
+> 
+> This aio_kick() usage was recently introduced in qmp-dispatch.c
+> without updating the build logic.
+> 
+> Fixes commit fc1a2ec7da531223b3473185dc2584f8a7c6c659
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-After VFIO migrations landed upstream, it may not be true anymore
-especially considering that there can be GPU devices that contain GBs of
-device states.
+It is exactly the same change as suggested by Kevin today,
+and exactly the same
 
-Add a new "remaining" field in query-migrate results, reflecting
-system-wise remaining data, which will include everything (e.g. VFIO).
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-This information will be useful for mgmt to implement generic way of stall
-detection that covers all system resources.  Say, when system remaining
-data does not decrease anymore for a relatively long period of time, then
-it may mean that there is a challenge of converging, so mgmt can act based
-on how this value changes over time (especially if sampled after each
-migration iteration).
+from me.
 
-Before this patch, "expected_downtime" almost played this role. For
-example, by monitoring "expected_downtime" at the beginning of each
-iteration can in most cases also reflect the progress of migration
-system-wise.  Said that, "expected_downtime" was always calculated based on
-a bandwidth value that can fluctuate a lot if avail-switchover-bandwidth is
-not used. This new "remaining" field will remove that part of uncertainty
-for mgmt.
+Thanks,
 
-With the new field, HMP "info migrate" now reports this:
-
-(qemu) info migrate
-Status:                 active
-Time (ms):              total=12080, setup=14, exp_down=300
-Remaining (bytes):      1.36 GiB        <------------------- newline
-RAM info:
-  Throughput (Mbps):    840.50
-  Sizes:                pagesize=4 KiB, total=4.02 GiB
-  Transfers:            transferred=1.18 GiB, remain=1.36 GiB
-    Channels:           precopy=1.18 GiB, multifd=0 B, postcopy=0 B
-    Page Types:         normal=307923, zero=388148
-  Page Rates (pps):     transfer=25660
-  Others:               dirty_syncs=1
-
-It should be the same value as RAM's remaining report when VFIO is not
-involved, and it should report more than that when VFIO is involved.
-
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- qapi/migration.json            |  4 ++++
- migration/migration-hmp-cmds.c |  5 +++++
- migration/migration.c          | 11 +++++++++++
- 3 files changed, 20 insertions(+)
-
-diff --git a/qapi/migration.json b/qapi/migration.json
-index e3ad3f0604..a6e24b5685 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -300,6 +300,9 @@
- #     average memory load of the virtual CPU indirectly.  Note that
- #     zero means guest doesn't dirty memory.  (Since 8.1)
- #
-+# @remaining: amount of bytes remaining to be migrated system-wise,
-+#     includes both RAM and all devices (like VFIO).  (Since 11.1)
-+#
- # Features:
- #
- # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
-@@ -310,6 +313,7 @@
- ##
- { 'struct': 'MigrationInfo',
-   'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
-+           '*remaining': 'uint64',
-            '*vfio': 'VfioStats',
-            '*xbzrle-cache': 'XBZRLECacheStats',
-            '*total-time': 'int',
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 0a193b8f54..721c211086 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -178,6 +178,11 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
-         }
-     }
- 
-+    if (info->has_remaining) {
-+        g_autofree char *remaining = size_to_str(info->remaining);
-+        monitor_printf(mon, "Remaining (bytes): \t%s\n", remaining);
-+    }
-+
-     if (info->has_socket_address) {
-         SocketAddressList *addr;
- 
-diff --git a/migration/migration.c b/migration/migration.c
-index 4010e5dcf5..c2aa145106 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1076,6 +1076,16 @@ static void populate_time_info(MigrationInfo *info, MigrationState *s)
-     }
- }
- 
-+static void populate_global_info(MigrationInfo *info, MigrationState *s)
-+{
-+    MigPendingData data = { };
-+
-+    qemu_savevm_query_pending(&data, false);
-+
-+    info->has_remaining = true;
-+    info->remaining = data.total_bytes;
-+}
-+
- static void populate_ram_info(MigrationInfo *info, MigrationState *s)
- {
-     size_t page_size = qemu_target_page_size();
-@@ -1177,6 +1187,7 @@ static void fill_source_migration_info(MigrationInfo *info)
-         /* TODO add some postcopy stats */
-         populate_time_info(info, s);
-         populate_ram_info(info, s);
-+        populate_global_info(info, s);
-         migration_populate_vfio_info(info);
-         break;
-     case MIGRATION_STATUS_COLO:
--- 
-2.53.0
-
+/mjt
 
