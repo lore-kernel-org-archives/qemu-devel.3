@@ -4,87 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 271D310F9968
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F6010F9968
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 20:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAZ2A-0004fQ-7R; Wed, 08 Apr 2026 15:57:54 -0400
+	id 1wAZ4G-0006TD-2V; Wed, 08 Apr 2026 16:00:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wAZ28-0004e3-7C
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:57:52 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wAZ4C-0006RV-9v
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 16:00:00 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wAZ25-00025C-Ss
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:57:51 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-35d971fbcddso135432a91.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 12:57:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wAZ48-0002i6-Ax
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:59:58 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-38e0ef48ac0so1201951fa.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 12:59:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775678394; cv=none;
+ d=google.com; s=arc-20240605;
+ b=V51+P3ggkvsRfXpC2tO5FV4AA3kQUWNMlUOhBhTe52ApNQqoraV7nrpCD7h3xGKGGg
+ jlW4m7Zbw5m5j3SCx5AotmcR+Ncmsukcg/9Mydma67HLeyWvw5z5l/i8WZfnS7R0gwEJ
+ BcScU4mlOKGktlfHK4gOxARZez/aC9pWmr23zP6J4xERLKMK8ikmvuDQVBNoEFrS/vjB
+ wtozAy+hPEm3GU8sTHrRLCJyKvYDoXzwQVWtzH5QFNydZASJtFXIk4Jt0NNhMo+L6SAk
+ /kENTN9vm/EZLgeQjKk60pETh+/+CE0oiJSDLSJb32S/1+t5HEt2nWo2K84/ObsMcUxq
+ pGQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=84cVfq5aTpm3Jzo2OEjXm3a8on3kSRW/F7pn55PUXDw=;
+ fh=/7jWUNeDaJJ0vvRe+hRkGpmxwEV1m3a0wXbVBM2FU6E=;
+ b=ROUeZlADQoWgPdjn3W3cCxq82rKKyg1qSLQZjJ1tcQr0oG8Si82W4lzABXHIDXUVzF
+ iq+wJjBdI1IXeEmA3R8WPMvrmAVwTOTzZnfEN4E1K4huO+7UWkoPtjZ+6toZM9oCJMiv
+ ZIycC6qB43zKwrEAECpwX87lvT3jLSQ/c5KE6Qnlm16ofKEwgTP/sUSniLTh/dK5QPwE
+ 46R0sDMN7B6ip2wkZaxucNHbpcxlr91Wtzo9glwELqgwjI6ojZuq3LTs0vF3mzecaadH
+ ZNvguSWCCCoVwyrmGaDJw6COFfbyAc1FU3gL1cb42mLBQo+zx/fEhrnsbXGm5xHt8vAG
+ agHw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775678268; x=1776283068; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=lmQn+RHurwH+/X5CwqlEKehddxkAH1bL60Pvx3NKG/M=;
- b=A8gGF17lvgY1gdnv2DAu9Pfw57mrtSFhpqG5EqXGJWjLd+wTQfkMGXF7XFgqRkBM0g
- ezRwNkvlF51XWtKQHfVmvjW9WvEVsdKD3Txt6YNuf18ZBK+FGrBHCHRBfJlr901/KLtA
- /O38sZ5JLgl3iIENxajLXQWEADt+QzmxsOYJx3biHHW4sTMaSEJxdjCl9jC5eSGhnPkB
- dIyJB3pm+CPY0BuzXpdA2PFMkbivj2l6y9325dufAS+AZDwrNLFr6rZ8L6CKw42vTlee
- +EVBtcFB6rHJVTaP27uCPOY4mVSGjJVeMXLh3bJJDLdaaAga1kkSLdimHHIy1Ok4bCSq
- JVwg==
+ d=mihalicyn.com; s=mihalicyn; t=1775678394; x=1776283194; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=84cVfq5aTpm3Jzo2OEjXm3a8on3kSRW/F7pn55PUXDw=;
+ b=C7yaqUEQBNaksGdq/Sde5pLOE1xTe2+O7WAhsSvS2GpJMbpqLreYQp0nrpWw9DBlhV
+ Su6buec51YjCgD7p88xI4F9BoLxr9ZrFEfbbGICbxBy/wkmtFc6Pa61hnlDbIOVeH2CS
+ NI32kzSPedfhGJXkveytxcUXxdWiTvhon06vM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775678268; x=1776283068;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lmQn+RHurwH+/X5CwqlEKehddxkAH1bL60Pvx3NKG/M=;
- b=ZvfD4O0vHjjNo7UflnISfrKHT9+gRxm5bg8KNbtJrpqdOuXtFEDhWd7TAdLP83zwly
- zduJU7mE6vRgDIl43wB+Mc/Xo+7qB1650oYKsivMngHmwUl9FrSDFWjUPoCVaUWcaRbE
- Hgi5xdxJoBvy+4+Z9I1KDzCBwtRvgEC9mGSr0k6donT4V14A3PxE86cTr497hqtF5fDk
- u3EDoo4iOQbkL/zvYkrvnuN2euGJq8R3QLVPEzmlE8BnKc6EyQpdeSpSkEeBFh2YO/4g
- HXI1U2AYhWMSX1SBKS8tN17KPtvZ67VR7N2eVZYgicmR71UdwnakCMXcz7qsn3xTB8Kg
- iiOA==
-X-Gm-Message-State: AOJu0YwNF+ihaUrymBzFSXu+HXuiZ3JxD70+bDatpGJwvvdqn8Javw0p
- IOvUaPUAKMZio/nzIfdL2uWzISBzX8AGCF5TEzJAyq1LYJK2OrR/Qy7p
-X-Gm-Gg: AeBDiestL/TbXAGfSMzKSdAmSJOR/yZ5nCdarVh0OhU/7qM6vtF/dVBdHrjNX4TMJDU
- HFX2Cv57zptp0q69Fmgan8DMrO7OaCyojP+nHSQ0Ma7CYQCmukAc4kFvBuEyMyFgw/LXS4kPV9h
- I/Zd/EG7zQZOpFYF+dGRZqDcqcdnLI2c+Kh2eCkIW8+FG5B6QanE/O31ph4ogwXk8CPJGOn6ZHv
- Xqz979V+JgnaZrRSN/kpjdk4hfjzstdpw2gMVQYVq/RYgPWMG6ZO2vklK6ELU+QczOgKSUB8GXu
- KUkWCTClOjowCuaIIF9gDHW5pZXEqtHJ5PCTJNAu9rAW3ftRRrv1KhS7Ze32WNnyj10MiYoJWZb
- zR2Ai9a7snT7fzeNyou3qEnFPAqHTgW0zYR2CfB47gu4oizMb/k3TXGqZbXjrTgLI6C0k3Hmp2L
- LHLfXDqkJQ2cxdynQg9SHzKI3oAZw3wrE=
-X-Received: by 2002:a17:90b:3e81:b0:359:8df1:8553 with SMTP id
- 98e67ed59e1d1-35e3542917bmr620296a91.9.1775678268101; 
- Wed, 08 Apr 2026 12:57:48 -0700 (PDT)
-Received: from localhost ([42.118.191.4]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35e34eb2ad9sm210814a91.3.2026.04.08.12.57.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 12:57:47 -0700 (PDT)
-Date: Thu, 9 Apr 2026 02:57:43 +0700
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH] migration: add optional capabilities field to migrate
- and migrate-incoming
-Message-ID: <qnofe7ildi6yf7i3amdd23fipjafu7x4hgkyphcjg2q7anxrwe@mn4hi5prqgms>
-References: <20260404152736.30190-1-viking4@gmail.com> <87h5po5hmc.fsf@suse.de>
+ d=1e100.net; s=20251104; t=1775678394; x=1776283194;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=84cVfq5aTpm3Jzo2OEjXm3a8on3kSRW/F7pn55PUXDw=;
+ b=n64dk3U1wYGa0K1LAp4Qp3gG0cEYSOAHn3JlGorOPKqYlClM+zibaV7RYt1SW6YBS9
+ io7VL8rn/Lub5W/rQEBK04goLMNiXVQL/Eqv+w6oU0adpUvH0SSMsbErwa3YICM+BFRw
+ YIzFPp5c/hFzcIoEJjqRJk0EK2lHCLf23KaE1HtPqxxa0d5KKfkLml7yrUDeIKF5P01X
+ lLGFhGtj9Pylf/5TGiupcdabkhgEHvTNM9kqPK/vsE1gl7mTUrvV0I4P/8RgeGo42heC
+ wMlcINtjJYWJt6xwiEShtVDWCj8aiAbNfXGeTh8lEAz1frWnhXOuK49EE6hygaNM3I2A
+ hYCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUir0W9l06Ba+Fna+qa4ihELLuT+dkxuezB+ThhV9h73pVnQxtFpU2Sv6d5w8J8ltrqP5Ja7a3zshRl@nongnu.org
+X-Gm-Message-State: AOJu0YzjsLuBz2ilxnS66R9C2NuFwBqcAuFjZvz7v0ovpdkQspaaEhZU
+ KDMP/OhsdqkM7MdVFdBD4Mo9Lm/l+G0yJ8T/lfDMZlkMH23ibipT56dm9xBabI8dzjfugoO3NpB
+ mqavJeAq6jqNbs/zzSOuEuc8oCe6TX5y7mf7mzmWTWQ==
+X-Gm-Gg: AeBDievpoL3Xv+DQwRf6zmQmFes5sirffhbeHeB4gfC5Z+8+cckgCgcSuxdFSwzf5qr
+ US9nuwdFA6S83kiVMcEGrVxbhQKz4TgzdP9R/jbu8aPCfrS4b0Pt/glQ8oBNtCW7kexCnr7TkLQ
+ tB0Qn8j1U/iLIu9mAVeog6wIR9iKbjBKSX+JThNx5s8MjoeeEtNsA2O/syiOdp1ZCJ0QcK0gyvM
+ RnfZcjBNdYvQh1wdChV5OHjVu/2WVH5DdZ2yz4Gc+9Gt9eDXBpQwnPzjiWNrKdUyBjtyWAN7wIc
+ LEYzC/THzVlC40fEI6lYA5zpsnTdY/W1xm1TUq4=
+X-Received: by 2002:a05:6512:1386:b0:5a2:7d1a:4043 with SMTP id
+ 2adb3069b0e04-5a3e7a4fa7bmr257902e87.20.1775678394069; Wed, 08 Apr 2026
+ 12:59:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87h5po5hmc.fsf@suse.de>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=vikingtc4@gmail.com; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260317102708.126725-1-alexander@mihalicyn.com>
+ <20260317102708.126725-8-alexander@mihalicyn.com>
+ <20260407154803.GB238768@fedora>
+ <CAJqdLroJk_EmciJQvYPsywpaOoyFSyNf67DGpOJMGpr+MuhQFg@mail.gmail.com>
+ <adX4oSW5u1k0nLOk@AALNPWKJENSEN.aal.scsc.local>
+ <CAJqdLrrBosYRyh8A75bJv9tvgQx5VWxgZuS_E1G=-28YpaBSyw@mail.gmail.com>
+ <20260408183529.GB319710@fedora>
+In-Reply-To: <20260408183529.GB319710@fedora>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Wed, 8 Apr 2026 21:59:42 +0200
+X-Gm-Features: AQROBzDYt-wAJ8B-FmklZx8UBFLlLloZuNWEunRapcfUgpJSuqU0fW3Qzuo39Jo
+Message-ID: <CAJqdLrosTSv+YUo6BSOZ8pFUtoC7dVY8+uYEBaeEa4fgzhed7Q@mail.gmail.com>
+Subject: Re: [PATCH v5 7/8] hw/nvme: add basic live migration support
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Fam Zheng <fam@euphon.net>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,225 +127,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 06, 2026 at 10:43:39AM -0300, Fabiano Rosas wrote:
-> Trieu Huynh <vikingtc4@gmail.com> writes:
-> 
-> > From: Trieu Huynh <vikingtc4@gmail.com>
+Am Mi., 8. Apr. 2026 um 20:35 Uhr schrieb Stefan Hajnoczi <stefanha@redhat.com>:
+>
+> On Wed, Apr 08, 2026 at 01:31:33PM +0200, Alexander Mikhalitsyn wrote:
+> > Am Mi., 8. Apr. 2026 um 08:41 Uhr schrieb Klaus Jensen <its@irrelevant.dk>:
+> > >
+> > > On Apr  7 21:02, Alexander Mikhalitsyn wrote:
+> > > > Am Di., 7. Apr. 2026 um 17:48 Uhr schrieb Stefan Hajnoczi <stefanha@redhat.com>:
+> > > > >
+> > > > > On Tue, Mar 17, 2026 at 11:27:07AM +0100, Alexander Mikhalitsyn wrote:
+> > > > > > +    /* wait when all in-flight IO requests (except NVME_ADM_CMD_ASYNC_EV_REQ) are processed */
+> > > > > > +    for (i = 0; i < n->num_queues; i++) {
+> > > > > > +        NvmeRequest *req;
+> > > > > > +        NvmeSQueue *sq = n->sq[i];
+> > > > > > +
+> > > > > > +        if (!sq)
+> > > > > > +            continue;
+> > > > > > +
+> > > > > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait(n, i, sq->head, sq->tail, sq->size);
+> > > > > > +
+> > > > > > +wait_out_reqs:
+> > > > > > +        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
+> > > > > > +            if (req->cmd.opcode != NVME_ADM_CMD_ASYNC_EV_REQ) {
+> > > > > > +                cpu_relax();
+> > > > > > +                goto wait_out_reqs;
+> > > > > > +            }
+> > > > > > +        }
+> > > > > > +
+> > > > > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait_end(n, i, sq->head, sq->tail);
+> > > > > > +    }
+> > > > >
+> > > >
+> > > > Hi Stefan,
+> > > >
+> > > > > Emulated storage controllers usually do not drain requests themselves.
+> > > > > They rely on core migration code (e.g. migration_completion_precopy())
+> > > > > to stop vCPUs and call bdrv_drain_all_begin/end() to quiesce I/O. Why
+> > > > > does NVMe busy wait for requests here?
+> > > >
+> > > > I rely on core migration code to stop vCPUs and drain requests, *but*
+> > > > a challenge here is that
+> > > > a concept of "in-flight" request in NVMe is not that simple and we
+> > > > have a few different types of in-flight requests:
+> > > > - request was written in SQ (sq->head != sq->tail) -> this I don't
+> > > > even consider as in-flight, because we just stop SQ processing
+> > > >   and these requests don't require any special handling during migration
+> > > > - request was taken from SQ by nvme_process_sq() and it now lives in
+> > > > sq->out_req_list - this means that
+> > > >   we have also initialized req->aiocb and submitted IO for processing
+> > > > in QEMU block layer. After request is processed, completion callback
+> > > >   will be called (for read/write requests it is
+> > > > nvme_rw_complete_cb()), then nvme_enqueue_req_completion() will be
+> > > > called and remove
+> > > >   NvmeRequest from sq->out_req_list and put it into cq->req_list.
+> > > >   I expect, that by the time when we enter nvme_ctrl_pre_save(),
+> > > > bdrv_drain_all_begin/end() were called and
+> > > >   all AIO is finished and sq->out_req_list is empty (except AERs).
+> > > > *But* to be on a safe side I also added busy loop on
+> > > >   sq->out_req_list.
+> > > >
+> > >
+> > > Correct. When nvme_rw_complete_cb (and friends) returns, we still have
+> > > the completion laying around, not posted on the CQ. That is queued up
+> > > for a BH to handle to coalesce CQE posting.
+> > >
+> > > > So, I tend to agree that this busy wait is probably not required, but
+> > > > I believe that we still need to verify that sq->out_req_list
+> > > > is in fact empty. Because if we messed up, then it's better to crash
+> > > > on assert() than to have silent data corruption.
+> > > >
+> > > > Then after I have a loop cq->req_list, and this time it is absolutely
+> > > > required because we need to write all NvmeRequest
+> > > > results to CQ and free NvmeRequest structure, cause I didn't want to
+> > > > deal with NvmeRequest serialization.
+> > > >
 > >
-> > When invoking migration, user must call migrate-set-capabilities as a
-> > separate QMP command before calling migrate or migrate-incoming.
+> > Hi Klaus,
 > >
-> > Add an optional 'capabilities' field to both commands. When provided,
-> > the capabilities are applied before the migration starts, in the same
-> > order as a migrate-set-capabilities call would apply them. Existing
-> > callers that do not pass the field are unaffected.
+> > >
+> > > There is a subtle catch here. There may not be room in the CQ to post
+> > > all CQEs. For example, in the extreme, the host has allocated a CQ with
+> > > room for 1 entry (size 2) and several deep SQs all associated with the
+> > > same CQ. If the controller has nowhere to post CQEs, then we need to
+> > > either abort migration (and try again) or migrate the CQEs.
 > >
-> > This is particularly useful, eg. for snapshot-load workflows where a
-> > single migrate-incoming call should express the full migration
-> > configuration:
-> >
-> >   { "execute": "migrate-incoming",
-> >     "arguments": {
-> >       "uri": "file:/tmp/snapshot",
-> >       "capabilities": [{"capability": "mapped-ram", "state": true}]
-> >     }}
-> >
-> > Internal callers (HMP migrate-incoming, vl.c -incoming) pass
-> > has_capabilities=false so their behaviour is unchanged.
-> >
-> > Related-to: https://wiki.qemu.org/ToDo/LiveMigration#Allow_QMP_command_%22migrate[_incoming]%22_to_take_capabilities_and_parameters
-> >
-> 
-> Hi!
-> 
-> This is a change that comes with a lot of implications from the
-> maintenance perspective. We have an ongoing attempt at moving all
-> configurable migration options to be arguments of the two main migration
-> commands, but it seems the consensus is diverging a bit, see:
-> 
-> https://lore.kernel.org/r/20251215220041.12657-1-farosas@suse.de
-> https://lore.kernel.org/r/aURtVveE88n31AN_@x1.local
-> 
-Oops, thanks for the context. I've checked the mailing list but might drop
-these.. Glad this patch surfaced the overlap btw.
-> The main point is whether this change in design direction is worth the
-> maintenance burden. I do think it is, but it's not so simple, we'll have
-> practically another set of commands to test and document, ensure there's
-> no bad interactions with the old way of setting options, etc. Then,
-> there's the entire aspect of deprecating old commands, informing users,
-> switching to the new commands, etc.
-> 
-> Peter also mentions in the thread I linked that we haven't seen a real
-> need for this type of feature. There's the general consensus (I think)
-> that passing options via the migrate commands is a good design approach,
-> but that doesn't mean we currently _need_ to do it, there is nothing
-> technically requiring it. In which case the "more stuff to maintain"
-> argument becomes stronger.
-> 
-The snapshot-load use case IMHO is a practical motivator. Requiring users
-to issue "migrate-set-capabilities" as a seperate command before
-"migrate-incoming" is a footgun. Since if they forget, they get silent
-wrong behavior. Having capabilities (for eg) as part of the command, makes
-the intent atomic and easier to use correctly.
-> Your patch makes me realise that we could divide the whole work in
-> steps, first add capabilities argument to migrate, then add parameters,
-> then deprecate set-capabilities, then deprecate set-parameters. This
-> would definitely ease the burden of the change, but we might get stuck
-> in the middle of the process and end up with an inconsistent interface.
-I agree the incremental approach is the safer path. It let us validate
-the design at each step before committing to the next.
-> 
-> Let's hear what others think on whether a simplified approach like this
-> is better and whether the whole endevour is still desirable.
-Agree. Let's waiting.
-> 
-> (from my side, I'm in favor of continuing with the work I started. Time
-> investment has been a challenge recently, maybe Trieu could help with
-> it. To be clear, I'm definitely not against other approaches, as long as
-> we all agree and it gets done.)
-> 
-It's my pleasure. Since I'm newbie here so I just try to learn more from
-you and happy to help carry your series forward.
+> > Exactly. This is why I have a next loop, where I ensure that
+> > cq->req_list is empty
+> > and also check nvme_cq_full(cq) to ensure that all CQEs can be posted.
+>
+> Hi Alexander,
 
-BRs,
-Trieu Huynh
-> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> > ---
-> >  migration/migration-hmp-cmds.c |  4 ++--
-> >  migration/migration.c          | 19 +++++++++++++++++++
-> >  qapi/migration.json            | 12 ++++++++++++
-> >  system/vl.c                    |  3 ++-
-> >  4 files changed, 35 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> > index 0a193b8f54..32c338103d 100644
-> > --- a/migration/migration-hmp-cmds.c
-> > +++ b/migration/migration-hmp-cmds.c
-> > @@ -522,7 +522,7 @@ void hmp_migrate_incoming(Monitor *mon, const QDict *qdict)
-> >      }
-> >      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
-> >  
-> > -    qmp_migrate_incoming(NULL, true, caps, true, false, &err);
-> > +    qmp_migrate_incoming(NULL, true, caps, false, NULL, true, false, &err);
-> >      qapi_free_MigrationChannelList(caps);
-> >  
-> >  end:
-> > @@ -829,7 +829,7 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-> >      }
-> >      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
-> >  
-> > -    qmp_migrate(NULL, true, caps, true, resume, &err);
-> > +    qmp_migrate(NULL, true, caps, false, NULL, true, resume, &err);
-> >      if (hmp_handle_error(mon, err)) {
-> >          return;
-> >      }
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 5c9aaa6e58..eb1a734dd9 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -1752,6 +1752,8 @@ void migrate_del_blocker(Error **reasonp)
-> >  
-> >  void qmp_migrate_incoming(const char *uri, bool has_channels,
-> >                            MigrationChannelList *channels,
-> > +                          bool has_capabilities,
-> > +                          MigrationCapabilityStatusList *capabilities,
-> >                            bool has_exit_on_error, bool exit_on_error,
-> >                            Error **errp)
-> >  {
-> > @@ -1772,6 +1774,14 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
-> >          return;
-> >      }
-> >  
-> > +    if (has_capabilities) {
-> > +        qmp_migrate_set_capabilities(capabilities, errp);
-> > +        if (*errp) {
-> > +            yank_unregister_instance(MIGRATION_YANK_INSTANCE);
-> > +            return;
-> > +        }
-> > +    }
-> > +
-> >      mis->exit_on_error =
-> >          has_exit_on_error ? exit_on_error : INMIGRATE_DEFAULT_EXIT_ON_ERROR;
-> >  
-> > @@ -2020,6 +2030,8 @@ static gboolean migration_connect_outgoing_cb(QIOChannel *channel,
-> >  
-> >  void qmp_migrate(const char *uri, bool has_channels,
-> >                   MigrationChannelList *channels,
-> > +                 bool has_capabilities,
-> > +                 MigrationCapabilityStatusList *capabilities,
-> >                   bool has_resume, bool resume, Error **errp)
-> >  {
-> >      MigrationState *s = migrate_get_current();
-> > @@ -2036,6 +2048,13 @@ void qmp_migrate(const char *uri, bool has_channels,
-> >          return;
-> >      }
-> >  
-> > +    if (has_capabilities) {
-> > +        qmp_migrate_set_capabilities(capabilities, errp);
-> > +        if (*errp) {
-> > +            return;
-> > +        }
-> > +    }
-> > +
-> >      if (!migrate_prepare(s, has_resume && resume, errp)) {
-> >          /* Error detected, put into errp */
-> >          return;
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index 7134d4ce47..58d934f8fe 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -1388,6 +1388,11 @@
-> >  # @channels: list of migration stream channels with each stream in the
-> >  #     list connected to a destination interface endpoint.
-> >  #
-> > +# @capabilities: list of migration capabilities to set before
-> > +#     starting the migration.  Equivalent to calling
-> > +#     `migrate-set-capabilities` before `migrate`, but more
-> > +#     convenient.
-> > +#
-> >  # @resume: when set, use the new uri/channels specified to resume
-> >  #     paused postcopy migration.  This flag should only be used if
-> >  #     the previous postcopy migration was interrupted.  The command
-> > @@ -1453,6 +1458,7 @@
-> >  { 'command': 'migrate',
-> >    'data': {'*uri': 'str',
-> >             '*channels': [ 'MigrationChannel' ],
-> > +           '*capabilities': ['MigrationCapabilityStatus'],
-> >             '*resume': 'bool' } }
-> >  
-> >  ##
-> > @@ -1467,6 +1473,11 @@
-> >  # @channels: list of migration stream channels with each stream in the
-> >  #     list connected to a destination interface endpoint.
-> >  #
-> > +# @capabilities: list of migration capabilities to set before
-> > +#     starting the migration.  Equivalent to calling
-> > +#     `migrate-set-capabilities` before `migrate-incoming`, but more
-> > +#     convenient.
-> > +#
-> >  # @exit-on-error: Exit on incoming migration failure.  Default true.
-> >  #     When set to false, the failure triggers a
-> >  #     :qapi:event:`MIGRATION` event, and error details could be
-> > @@ -1525,6 +1536,7 @@
-> >  { 'command': 'migrate-incoming',
-> >               'data': {'*uri': 'str',
-> >                        '*channels': [ 'MigrationChannel' ],
-> > +                      '*capabilities': ['MigrationCapabilityStatus'],
-> >                        '*exit-on-error': 'bool' } }
-> >  
-> >  ##
-> > diff --git a/system/vl.c b/system/vl.c
-> > index 246623b319..ed569d75e7 100644
-> > --- a/system/vl.c
-> > +++ b/system/vl.c
-> > @@ -2826,7 +2826,8 @@ void qmp_x_exit_preconfig(Error **errp)
-> >                  g_new0(MigrationChannelList, 1);
-> >  
-> >              channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
-> > -            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
-> > +            qmp_migrate_incoming(NULL, true, channels, false, NULL, true,
-> > +                                 true, &local_err);
-> >              if (local_err) {
-> >                  error_reportf_err(local_err, "-incoming %s: ", incoming);
-> >                  exit(1);
+Hi Stefan,
+
+> nvme_cq_full(cq) will never become false because the migration thread
+> holds the Big QEMU Lock while calling .pre_save(). The busy loop will
+> hang forever. See my reply to an earlier email in this thread for
+> details.
+
+Yep. That was really stupid bug. Sorry again.
+
+>
+> A qtest test case would be useful here (see tests/qtest/nvme-test.c) to
+> fill the CQ and live migrate. It might be tricky to deterministically
+> run .pre_save() (via the `migrate` QMP command) before nvme_post_cqes()
+> gets called, but then you'd have a test case that covers the CQ full
+> code path.
+
+Sure, no problem I can add qtest here. Thanks for pointing to the
+particular file as I'm
+just doing my first steps with QEMU development :-)
+
+Kind regards,
+Alex
+
+>
+> Stefan
 
