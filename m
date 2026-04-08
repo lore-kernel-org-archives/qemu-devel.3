@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 322A710F9972
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABE710F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYTz-0008Ve-Jc; Wed, 08 Apr 2026 15:22:35 -0400
+	id 1wAYbt-0003zj-Vc; Wed, 08 Apr 2026 15:30:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAY4g-0006Ut-PH
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:56:26 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAY9N-0000S9-1V
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:01:17 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAXRl-00016Q-Qc
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:16:15 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64f48a5c3d8so46237d50.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 11:16:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775672171; cv=none;
- d=google.com; s=arc-20240605;
- b=MR3YZhD6PkSLJqyhvgsDdd/YA2AZYH/vkqo4XkIMgh3SisqC1IjkpjRgnrrEp5H3nh
- ulI0XMtZJIkrJfS9CXx0oOW+RzMJ7oI/8Ym3CD5sjXKO1GaiskFsl4CM3SaedThoD3sQ
- n2Urm+f8fWu0WTqklw+y7DgmrCBTQYK4Sjy25ZI6qnsHnpa/GxKHVn8f8Eia/GkJaHPZ
- fHQbKZYG6n6aOsLlRffLusdA3SudfgG83ZbGHse2QzB4E53PwjgFnXeRQwTRKJ7JaRqJ
- 6mM5eQZa516QhwI99aeQeZW42B8OflHIb3QpiHb2ZKJOdRR9Z+IMPk4AZmqPyUF6HKbf
- 9iIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=pKLfQ33XiCRiNlynAN/2fOlxoo0Fd+Z9Xj6+c8ipyzw=;
- fh=o9NNXRRpR1snqmakVgbq3eXDVCQ4hGFs6Xd9sNLXLEI=;
- b=XG6SYcV0Yt0xWhyjfgt3f05tDj0AQBm4rBceqo9j9y9b6pruJYLqRKHccO3Uattekg
- X2ZgRK80omnNz8KoBf+4n65VRLSzZ4FeAbSubv8gbqb8B6ZyFMInEcUq3CykoqJr+Zgf
- hFmhQ4U019V5u7pkobHu+zTeA81+HWI88c8eGE6uTsnpQHLa8mB4VK2yKatOYsvRIxMp
- eoloxUuiYgtIPA+qwEODi+NoiCfDi4hl0Jw8xMTjrKNrZwYZcobvXY0afhcJ+zsb2q6v
- FNFlk8+tW7+6TlSweGmauws0Selt1xUw5ZDiEp03Y9mitr4MF1noxBIQsDQIFxpigqrk
- N1dQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAY9L-0004MP-Du
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:01:16 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43b9d3ebed5so41815f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 12:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775672171; x=1776276971; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pKLfQ33XiCRiNlynAN/2fOlxoo0Fd+Z9Xj6+c8ipyzw=;
- b=lOAObgOYnn5Kl0d5SV8QAbisy435WfIYWl2eKQLa8p+lng9UF0LEmlHVK38bl3uzII
- r+OAkQ/XGeYd9JCbUD2I5/AJ9LTK10d6rtBkyi0DzKtbBR9RFbnaYhQPU+R3sp67M5li
- vWJ7HULjh/UdzjgwY9P1NeFg1J9TMRZnvNN2TKc6Q5DTlIkcUyVFQcXrOCxA+2AbxyFi
- QfLybK0yiVMTNBYwvKr63KPGBPWRQ0F2CnCDnGYj3bT+DivHpsRfotzKutGDogf25jML
- J9bhC6oedMwnw3b510ceXTpDlqrUYD4tn5CTOM0WQIWZno27+f7dyj5N+dVg6NuDv4wf
- mF7A==
+ d=linaro.org; s=google; t=1775674873; x=1776279673; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cOVeol76/J0qiEZ1bohMeyS5E9C/WQO5Se6X+02jaGQ=;
+ b=fT0flxkZDqZYj5yd5BTha23BxNajwoteB4k6zoklTVuID6PJT3LPbW5VD7ib/azSet
+ Lbf6BdlAHh/RE/mEDVscETCqeJGYkCUqBoTOlX8ZS3fzU54l0VgEFNVoYj0vofwOdncY
+ qIMPd4C9M0P83e05u0lTpcdnkPaFdBR71t3PWNMKNzCHYCFp/if6T2MsVXni0FJMxc1g
+ N/KP7YdfrVm+TzthX1HC2JrCYI1ITlQk738BvE8RhfCOhB9emK6Xs9mBlXblNFIoJxlw
+ HLEoYLkRJXzN5eWdMdTKYEOl28yR2DC6tH773fxODKX3eGG0Uxrk9qHPQZCeJ/9c1QN8
+ 18CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775672171; x=1776276971;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pKLfQ33XiCRiNlynAN/2fOlxoo0Fd+Z9Xj6+c8ipyzw=;
- b=eNz8rWHLBOOApJW2nnxbo3Kbk3+hspQb4UQmDme0MRQxHDlJApsYvMhC40kSQ1q2Wr
- HHL7evY0+BAmgV2bzi7KZ9sEhavSq1uzlstgKQOgaHBBjDMlgqTBkCHnaLxu3vv+jnyU
- 4wHyYtSI04zcV4P49MR2zMTzluHnopbgYJK2JSdXk7mOp2b+P/Uqfglfbl+x/fVXBdXs
- RM/bfN1FHNM9n11O4yCzqyiDeapjOVMTXOfjgeGryQKRMtLZqbHloOrgZ2So15EKTVFV
- YjVrPLsWqzFsetPEFkgwo0bzGwCTcUW97u/guBm6+b0i69NjBh3hqEVobrYDX6lDsfPK
- DgRA==
-X-Gm-Message-State: AOJu0YygkvnSE9R2BXqqL4Pjb8Pl9D5oqzuugW1svV9CJ2wWKN+Lhvja
- mqciB/dqdFHZpP6/ce9FzSkE0aLpogVhZSfACN3XSK+MS5rQfr9uINicRt3nd/Pg0rhbziFdeUe
- NQ5vkqRYNxkQD0VqX4Mpmy0AHClJvPVZCi2zB9ZxYMdxQsKQr1s3qphY=
-X-Gm-Gg: AeBDieuobNcza+OUXn7GeQwgdwT8fi9jAcS67lwpzJYMN7NkfXBDPpu5Gg028ZX5/Vs
- W9epi4OIV3UlTjtPKMwPQTcRgZgHWZTiUxPW5x45nyd5kNpZefDQ4WOSvvDR6TqtqmuxUDOKik3
- cd7tqDev0befZeVyW7ECwxqV9vBdBwz+wL/cyGMkmcu1A5EL5cJzi1LRdNVyWTWPJzFByBJxiY5
- PBvsPgR0y3wigIFd4CpiDWWuMOyhgnTEUsXFjETvT3chDptdvN1l3l4o2VQbIIQgnPTm6g4+nq4
- /lS83psiMLsd99R6VjPu+7Z28vu3M37N5XFihztN7zEbfuHaCYDxlTqfR+ylTw2LJ7w=
-X-Received: by 2002:a53:e8cc:0:b0:64e:e553:d788 with SMTP id
- 956f58d0204a3-6504880fbeamr15709937d50.43.1775672171043; Wed, 08 Apr 2026
- 11:16:11 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775674873; x=1776279673;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cOVeol76/J0qiEZ1bohMeyS5E9C/WQO5Se6X+02jaGQ=;
+ b=pcgq+NYgY+XiIfsS3hpaVEYUx8joCi6JlFpvzWASbskKw3pb/M9/UnIIoWrmeJ6fGy
+ ZOAGQ9wPcCJbmXjiAfW8fBYXJggSM1euoK1fgJIUzVLit8V0MkxmZoeN9WN/q8TmqAaq
+ PADEBq4Tkjczj0kI3UGGcml+E3MGjP56U0K9NP3QrC+iAc3PrcQjTl0SkA+UdPhTyFlp
+ Fn7NPihtbs9Pw8nAjWhJp6gbeThjQWBNGro+hVRXPdnEDfjUBBuYEhgU7SfY1LVqmc+G
+ b+GPZ/um8er0orw4ex7b2Bcbcoe5vlLYUGS0g6V1RElD0uI9Hg/jkBzIKHQpLMQu4O6r
+ zjPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVS2/nNhLufkiWnnCBi14JlQkq+M1Ckcv34exnCGbEeHQvhxoOZII/rNtCcea4mFj5yoe/RjjP7cZAI@nongnu.org
+X-Gm-Message-State: AOJu0YxLdzSf3NDsy6CzsYwNwZpldNZuXMrvs8fkIWT/DsGRp0OVMqAC
+ XWIy95AHl5RqCkvOQRogcCarscezlMuc2aLUYX24m6l4ro6QApMrYk7jn60Vgihbaac=
+X-Gm-Gg: AeBDiesAnY5ElF+8d41Yn4Cn7L465SMUfYpHG83da9aE92+2qdXM+IgiEg5KjFnZOfF
+ WtIzizVeVWFCkmSTZKRt06HU55aS4nSamPgfPhQ1hSmUPmbljgzIRLnuG4aJMN4CrF5WdSlCMtu
+ vJ4XmcMcrK5MZHlGYbF/dlsQWOUtTrYmLLI4c1VySlk2PniMyNvT0QdqNWEu3plw+bvCcTHFLQE
+ 0RJkH1e4U2EqzuY++yzZCqUBlM3EZVU9++6MT5LAy4gdyqfNk77U7Bi+GakNbpxJGhVlPSP+pvF
+ RcMGaSTINzRWtka/b5W96ps3HXpV5QCLkXoLWQMQ1hXWw48HAPb5iDdaHKRYV6uZ/Oy4xcLhq69
+ oSJdGOgKvt/5+1BMuJNwiZ23+V6tkV3liS9tk93X8pN/7cCF89MpF7mBeeVzu3P7/e2yQLR6F8a
+ PpOgG6V95qx8t4vJ4croooxQL3sOBWufsUO1IMu8NjHWB/6+YKulvezt6arWBoXb3SvQ==
+X-Received: by 2002:a05:6000:18a9:b0:43c:fe0e:5bbd with SMTP id
+ ffacd0b85a97d-43d292eca64mr30774096f8f.45.1775674873439; 
+ Wed, 08 Apr 2026 12:01:13 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d1e2a71f7sm62317867f8f.1.2026.04.08.12.01.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Apr 2026 12:01:12 -0700 (PDT)
+Message-ID: <04dcf4fa-c596-45df-aae9-bd9879b8abc3@linaro.org>
+Date: Wed, 8 Apr 2026 21:01:12 +0200
 MIME-Version: 1.0
-References: <20260408105605.172465-1-mjt@tls.msk.ru>
-In-Reply-To: <20260408105605.172465-1-mjt@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 8 Apr 2026 19:15:59 +0100
-X-Gm-Features: AQROBzB3c7wft6KLxafDDsTZSV5Zlw23_RdknzdNROhvWBfy6MKaeN6ucRD7v-M
-Message-ID: <CAFEAcA-JLmahDa329ycaVY_t7LsceLa2X6wDgXZG6Z8mbYH__Q@mail.gmail.com>
-Subject: Re: [PULL 0/3] Trivial build-system patches for 2026-04-08
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 14/21] tcg/translator: add parameter to
+ translator_loop for current addr type
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: jim.macarthur@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+ <20260407222208.271838-15-pierrick.bouvier@linaro.org>
+ <41713965-dc77-483d-a026-41bb234b6289@linaro.org>
+ <1c026eee-8758-45c9-82df-2563c203dcbf@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1c026eee-8758-45c9-82df-2563c203dcbf@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,33 +108,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 Apr 2026 at 11:56, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> The following changes since commit b6a7d06213e5d2f7d124d16418bc289c4a8a4b82:
->
->   Update version for v11.0.0-rc2 release (2026-04-01 20:48:02 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
->
-> for you to fetch changes up to 17fbf3e18c3dbc32ec07cfc24853d6654a813e90:
->
->   util: fix missing aio_wait sym in qemu guest agent only build (2026-04-08 13:48:50 +0300)
->
-> ----------------------------------------------------------------
-> trivial build-system patches for 2026-04-08
->
-> bugfixes, and making possible to build some minimal stuff
-> on 32bit platforms - pending more permanent solution in 11.1.
->
+On 8/4/26 17:18, Pierrick Bouvier wrote:
+> On 4/8/26 1:33 AM, Philippe Mathieu-Daudé wrote:
+>> On 8/4/26 00:22, Pierrick Bouvier wrote:
+>>> With TCG_ADDRESS_BITS mechanism, it's now possible to specify which
+>>> variant every source file is written for. Compared to before, it means
+>>> that addr_type will now vary per tb translation, where it was constant
+>>> for a given target previously.
+>>>
+>>> Thus, we add new a parameter to translator_loop().
+>>> This will allow us to convert targets one by one.
+>>>
+>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>    include/exec/translator.h        | 4 +++-
+>>>    accel/tcg/translate-all.c        | 1 -
+>>>    accel/tcg/translator.c           | 4 +++-
+>>>    target/alpha/translate.c         | 3 ++-
+>>>    target/arm/tcg/translate-a64.c   | 3 ++-
+>>>    target/arm/tcg/translate.c       | 2 +-
+>>>    target/avr/translate.c           | 3 ++-
+>>>    target/hexagon/translate.c       | 3 ++-
+>>>    target/hppa/translate.c          | 3 ++-
+>>>    target/i386/tcg/translate.c      | 3 ++-
+>>>    target/loongarch/tcg/translate.c | 3 ++-
+>>>    target/m68k/translate.c          | 3 ++-
+>>>    target/microblaze/translate.c    | 3 ++-
+>>>    target/mips/tcg/translate.c      | 3 ++-
+>>>    target/or1k/translate.c          | 3 ++-
+>>>    target/ppc/translate.c           | 3 ++-
+>>>    target/riscv/translate.c         | 3 ++-
+>>>    target/rx/translate.c            | 3 ++-
+>>>    target/s390x/tcg/translate.c     | 3 ++-
+>>>    target/sh4/translate.c           | 3 ++-
+>>>    target/sparc/translate.c         | 3 ++-
+>>>    target/tricore/translate.c       | 3 ++-
+>>>    target/xtensa/translate.c        | 3 ++-
+>>>    23 files changed, 45 insertions(+), 23 deletions(-)
+>>
+>> As per v10:
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> I'm surprised it didn't apply, I ran a b4 trailer before sending v11.
 
+b4 fetches from lore.kernel.org which seems to be having issues.
 
+> 
+> Regards,
+> Pierrick
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
 
