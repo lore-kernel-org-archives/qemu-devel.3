@@ -4,91 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACFFE10F996C
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C078810F996A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXqQ-0003on-6F; Wed, 08 Apr 2026 14:41:42 -0400
+	id 1wAXqC-0002P4-JM; Wed, 08 Apr 2026 14:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAXqM-0003Pr-Gj
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:41:38 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAERz-0005Tx-Ij
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 17:59:13 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso39642235e9.3
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 14:59:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wAXq5-0001xa-3Y
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:41:22 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wAVu4-0006ow-4C
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:37:21 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 638B8clB1314539
+ for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 16:37:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=nkTOqU3p++3
+ FTV67E006ISdH7bkUa1lMdBoloXYrJgo=; b=BibofhdzQ1M6yug20Qg1uEx3C84
+ VridvlkpoNYvXMUDbLL3g08nBfvs3vGZY1zoNTpF3B+7p5WV7eVDAN/QeFahK6vo
+ wzr7rCrIKuBcyZYfI5sajSQlRtGCdp95cB8BT+oap8Aiz/+uiv3EjQF0W/lhh8kV
+ BcTFsKEF1NJnA8BUHgP/WOpbdS9T7kA7n3VIiwtOGo0XVK9/kCAY0FuQivUPXSUn
+ rzD134SPmgCZnj1l15DGVCRfIRtwb03gU4L1ecyZqioetmsUCqaSU5/yxo8rdyl9
+ BZvhUUoxVC+htslS5N9juDT4GEEqBE+O6fK3uh9+P8Osdr9jJR9f3wvC3wQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dd8d6m406-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:37:18 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c7422397574so140250a12.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775599149; x=1776203949; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775666237; x=1776271037; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OoKaBti8hgHSAupQ577cwRGACYeQxonS3gqu7n3qfUM=;
- b=zDUs1UQvFkbX7V9ZTgxwfqGBJecJuRVrgO+4cWt/oHSbTO/Hh4Yn5EGob8aYO82th0
- 9TSFZ5j0IN7DhuN2/riEfEhiRbEF/DFVBaR489Q1K15d3eUOFQ7x6eeOAxfyIHNAUWXu
- Fz6g0/8OH/4BamHJQItwjzM0ww/+cMZpf952SiNTFEb3DN5EfGvCv89PwDMNdFanisvS
- UBwEZP4QRRZBAZ2NIgaKJpiUH+2yP63i+L/uf9NdVAFrlb+REJAE1fLH6dw6G5M9FDUD
- 6qu5CH3qDs7erTlflnN10BE9+USiQtpqjJbsLww1y3O2cIKmUjC3OT7zl1Ql9gFKrm19
- iAjw==
+ bh=nkTOqU3p++3FTV67E006ISdH7bkUa1lMdBoloXYrJgo=;
+ b=T/sS6rciYDFIEaB/Ctx8eoRLUAe95d5qHIbFbVkUyr8EmgpE4jR2erxygjfIvgfZtJ
+ 2KgbA0pYI8fE+NmvtAc1QribvDvEMPM7GDOU3UU5H6qveOHCZJhVZX9uWOvxPNsIRQIn
+ vhIwVAWhV2nHlY+KZ8C3a+DmsDZm06nrGSsk9lV91NB9FPp/JvbuviUZ2bVSDExG8iD7
+ yvBM/HOL80m2uh7zRTgl557roOCqAxOjWMsRhaHCgfiOQQ2E+ldBNLK+HfoQXmM68d2Y
+ ak/g4rWl+15i5SBuFq8YkXDTtS5kKYOVudGQzenoJMQ1M7Mjwr/b4ghBC1Japs1lYXLC
+ 0Rdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775599149; x=1776203949;
+ d=1e100.net; s=20251104; t=1775666237; x=1776271037;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OoKaBti8hgHSAupQ577cwRGACYeQxonS3gqu7n3qfUM=;
- b=P72yYIgMFvcytfSYD/CTJtmT74bXSDq1uFUEHyp+GTS0Yi0Wo0k4Kg+5PVNqe2hSxv
- DRYxA2QnbwGgosOhSuFWYtj0Nc5VpQjLibnfjJ1Kad/pNgcOlP8RSVud63lhEUI7ZpCi
- h6uJjOydAaXRysRdF6s1ibSfygAiy5fQnSiw8k7LwoWK6tQWAF0OUwmF949ASkzJFKoG
- 1YyMzCiOx6OpUIk/2nmGi4xfeXFC9MZp09H4zoLn+X+OAQ5b8DmGH1Tem5AvkgegZ31x
- jR/q3XfWZYzEaMgdIPDHbRqzF6RXr6M9jtRb4nGjQQir7s0Xg5WLZOfMm2aAvwFvyIcP
- ci7w==
-X-Gm-Message-State: AOJu0Yy5L5mRo5krSA4rA7ZfUsOvP/peUnVws1YNzGhWN8pGfAsjvQoe
- 8HL+wjHIrqAHNG5bZ+EsS7Hv5rEuZSbLV2CgFGJxPs1YtALC+qX6cUuxNmzkCFh9nT6wEBrCzcY
- z2j04CdA=
-X-Gm-Gg: AeBDiev7goc8n5APoT/oJOw6irSREFodYinJRzigQ3ta7UO0iRy32htibXzI5LUDRVd
- a/24TkRHoQXL/+S8P/uOwFIcPSrGivUb7sWvUETwCGZ5sJE1pqf6J3rv4LMZVzQmWaBLrApNvmG
- vB/ecpcnNe+7z7ReO6H+HCU8padPmX4cdoFhWMTTk95wPayLEuoKgFhk8ftSFsO7evVtsgOerbu
- Fb7fsL1pfQz1rwjUaY53nQqgTDozKym/afDFXguy27DLlqRwBkHznpMlLz+o8hXTNJ5+ubvtKdv
- pi+beK4b6lJlLoN981yKPOhWt/ymIqAu4XnVjhS48GfQx3UbeR+H3rmXhXmowUATS8kpUunZShk
- TgqNx45/seEfyvBYVRKo69K9jRluvmB4k3buKOAFY/c2eJdCXPVV70kUB163HfTGB6gD1ZtfSeN
- tZxPeqHyA1Q0GGYQ8UR0Yu4mEF/fEn/fKZE3MtyGDEf0b1r7MTkoaywps27qruZHAiHIOCKHHq0
- AZOJV0MtR4=
-X-Received: by 2002:a05:600c:3b18:b0:488:90ac:8f71 with SMTP id
- 5b1f17b1804b1-488997152camr246008255e9.5.1775599149200; 
- Tue, 07 Apr 2026 14:59:09 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4889cb46adcsm353450785e9.4.2026.04.07.14.59.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Apr 2026 14:59:08 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=nkTOqU3p++3FTV67E006ISdH7bkUa1lMdBoloXYrJgo=;
+ b=Hu8VuDPUd+YPMMqIP8+/6lbxfjZF2bnV2Nfna2opEA/X9uzhGRirhloBk3S/Zp1fmX
+ arOrHa3dE3os3PrMf8gzaO8OEXvtM9oByM+jR+DlwOXHaAc8d/ywCdd2ELBJrm45F3l9
+ p9pdr1crp+EaMThnX3tOK7hohNxUAC6bDM1X02oGt7EEo93hgUN6OpFLT9/NXRDWFT+Z
+ ch+VBl7OBPuQaVdHx+ZVBL+/Xjrir+PiF8CwW9lj5S6LNXkryHv3d6pC9mZ7gNDfrVoz
+ 4c22VGaSWAtuhDacBgK6qHESEXgkK5GGewc2ZRyPzPnyATMqVq50TKvIyOSyqeh1xkKn
+ FjWw==
+X-Gm-Message-State: AOJu0YzZT3zX89GynheNd7wFh97YWVqXVocdbjaqCoW5aLcXAVlyqpxP
+ k75nKFnmTb/slUays+lhINFU72uaP0A05eg8JGPo64jiO770ZJ1Y6Cx7CvaD8rwcel4hkJ2zx0U
+ GEU96+4hpdACl6DP6tQ9I5u1Dpjx77e3lKyWoJz3VPlgrOQHRDdYvvb1SkT9/+yA/J2eB
+X-Gm-Gg: AeBDievmET5NEbgJyu+jgEPJlzYpCGBsKinLdiF5OsfKboHG/fEJwRC8h8XHUZhHn1U
+ dT6ATAURnTd/737Tkwj5w8ZMaePXc2pVrHSSAFe7ul7qgQmaCrhhvDg/ZaKiSb0XOIf0aGlu6ze
+ y8lkXmdtCR/LSWdvcDfsDPpVnORKOqdL/+t5Nq51v8FizIEZ5wve2Ap7QIP+d2bKdwUyLRb/3SN
+ 0qPbqNMww8Gg2r1lI6kN/5rNQc/xxwpM2UxvqjKr/+Va9B3PXZBnwY5J6SzSdBco4ebzD0kLqOD
+ 4l/We90qguMKeHUtNYBCUZxWnWVjoObLzLNyI7dSwh9F5/BZyloRr4Dvc84q7zRgPom3W5tn9sJ
+ beyFBnKbizqYchVUSdVxqUQyOtodBhQH7gYJCvDZ+RD7eSP2TbP6jczuVMqnO3Q3/EB498KaX61
+ 6Kp+GfK065
+X-Received: by 2002:a05:7022:f96:b0:119:e569:f609 with SMTP id
+ a92af1059eb24-12c28bd4cfbmr79073c88.2.1775666236627; 
+ Wed, 08 Apr 2026 09:37:16 -0700 (PDT)
+X-Received: by 2002:a05:7022:f96:b0:119:e569:f609 with SMTP id
+ a92af1059eb24-12c28bd4cfbmr79055c88.2.1775666235879; 
+ Wed, 08 Apr 2026 09:37:15 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c1ff43d04sm4082006c88.4.2026.04.08.09.37.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Apr 2026 09:37:15 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH-for-11.0 1/6] docs/about/removed-features: Replace 'since' ->
- 'removed in'
-Date: Tue,  7 Apr 2026 23:58:55 +0200
-Message-ID: <20260407215900.63390-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260407215900.63390-1-philmd@linaro.org>
-References: <20260407215900.63390-1-philmd@linaro.org>
+Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
+ brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ marco.liebel@oss.qualcomm.com, philmd@linaro.org,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Subject: [PATCH v3 07/16] target/hexagon: add v68 HVX IEEE float min/max insns
+Date: Wed,  8 Apr 2026 09:36:58 -0700
+Message-Id: <01040724683b0329a732666a2b839afade5d72e1.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+References: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: P7vjWjcw8JsGLd1sHrniAJNlKVY42HRm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDE1NCBTYWx0ZWRfX5LfbLbO9fHgp
+ asJHGARC3IGBaL9OncCGgbl2bZnaJWmV/5x9pI5TxfRAzrVuS4VBOF3WRLMv15IzNcDCb30d6Wf
+ SWQExDG4DLH2A+gWeWtCwIvLlKbhkoZWxf2RP5ODobPytayrlyxU7/ijrO4DPBtzRX4gXyrtFn8
+ K/DVKBsQaP25PMwT3fj25thG6SUpiKxhC22NM0ncO9G47lbQTwMab0CQsvbg2OAZasW6FatY7rc
+ nI0JYvssPAI5q49O6Y7+rxbH63N8DDQrMw6NCo3MP6Ig4l2Bqiote0Su3q4C8mEw6uD9U95kKDr
+ 1Gf0uSJJeg1amxyQovpewnq62InXmwbXOMelXNw/f5WFl2wKHCrTgojdnd8O7dYccP9W0mItYXL
+ GShS0PBekSqOytd/kbtjjdBzVnQpj57gvRKnOclzw7UlYAwQQKomfChuAoSWxPrt93bm0bSH0Xr
+ Echr0ugs+dWaiXt5Rvg==
+X-Authority-Analysis: v=2.4 cv=GN041ONK c=1 sm=1 tr=0 ts=69d6843e cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=jrXzG3Pa4KLJnUkuMhcA:9 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-GUID: P7vjWjcw8JsGLd1sHrniAJNlKVY42HRm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-08_05,2026-04-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604080154
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,111 +150,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We use "deprecated since ..." and "removed in ...".
-Replace "since" by "removed in" for removed features.
+Add HVX IEEE floating-point min/max instructions:
+- vfmin_hf, vfmin_sf: IEEE floating-point minimum
+- vfmax_hf, vfmax_sf: IEEE floating-point maximum
+- vmax_hf, vmax_sf: qfloat IEEE maximum
+- vmin_hf, vmin_sf: qfloat IEEE minimum
 
-Fixes: 762c8554394 ("vfio: Remove 'vfio-platform'")
-Fixes: aeb1a50d4a7 ("vfio: Remove 'vfio-amd-xgbe' device")
-Fixes: e50a021a451 ("hw/arm: Remove ast2700a0-evb machine")
-Fixes: 4af2433a81b ("docs: Mention 32-bit PPC host as removed")
-Fixes: 8ebc416ac17 ("vfio: Remove 'vfio-calxeda-xgmac' device")
-Fixes: a80151c9da1 ("hw/sd/sdcard: Remove support for spec v1.10")
-Fixes: 269ffaabc84 ("buildsys: Remove support for 32-bit MIPS hosts")
-Fixes: fc37c122fff ("migration: Drop deprecated QMP migrate argument @detach")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260323151934.92880-1-philmd@linaro.org>
+The Hexagon qfloat variants are similar to the IEEE-754 ones, but they
+handle NaN slightly differently. See comment on hvx_ieee_fp.h
+
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- docs/about/removed-features.rst | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ target/hexagon/mmvec/hvx_ieee_fp.h           |  6 +++
+ target/hexagon/attribs_def.h.inc             |  2 +
+ target/hexagon/mmvec/hvx_ieee_fp.c           | 49 ++++++++++++++++++++
+ target/hexagon/hex_common.py                 |  1 +
+ target/hexagon/imported/mmvec/encode_ext.def | 10 ++++
+ target/hexagon/imported/mmvec/ext.idef       | 36 +++++++++++++-
+ 6 files changed, 103 insertions(+), 1 deletion(-)
 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 557a24679a1..e75db084108 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -782,8 +782,8 @@ without reporting any destination threads, or non-multifd source
- threads).  For debugging purpose, please use ``-name
- $VM,debug-threads=on`` instead.
+diff --git a/target/hexagon/mmvec/hvx_ieee_fp.h b/target/hexagon/mmvec/hvx_ieee_fp.h
+index 75008deb3b..ed8e4f2da9 100644
+--- a/target/hexagon/mmvec/hvx_ieee_fp.h
++++ b/target/hexagon/mmvec/hvx_ieee_fp.h
+@@ -15,4 +15,10 @@ float32 fp_mult_sf_hf(float16 a1, float16 a2, float_status *fp_status);
+ float32 fp_vdmpy(float16 a1, float16 a2, float16 a3, float16 a4,
+                  float_status *fp_status);
  
--``migrate`` argument ``detach`` (since 11.0)
--''''''''''''''''''''''''''''''''''''''''''''
-+``migrate`` argument ``detach`` (removed in 11.0)
-+''''''''''''''''''''''''''''''''''''''''''''''''''
++/* Qfloat min/max treat +NaN as greater than +INF and -NaN as smaller than -INF */
++uint32_t qf_max_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
++uint32_t qf_min_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
++uint16_t qf_max_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
++uint16_t qf_min_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
++
+ #endif
+diff --git a/target/hexagon/attribs_def.h.inc b/target/hexagon/attribs_def.h.inc
+index d3c4bf6301..2d0fc7e9c0 100644
+--- a/target/hexagon/attribs_def.h.inc
++++ b/target/hexagon/attribs_def.h.inc
+@@ -81,6 +81,7 @@ DEF_ATTRIB(CVI_SCATTER, "CVI Scatter operation", "", "")
+ DEF_ATTRIB(CVI_SCATTER_RELEASE, "CVI Store Release for scatter", "", "")
+ DEF_ATTRIB(CVI_TMP_DST, "CVI instruction that doesn't write a register", "", "")
+ DEF_ATTRIB(CVI_SLOT23, "Can execute in slot 2 or slot 3 (HVX)", "", "")
++DEF_ATTRIB(CVI_VA_2SRC, "Execs on multimedia vector engine; requires two srcs", "", "")
  
- This argument has always been ignored.
+ DEF_ATTRIB(VTCM_ALLBANK_ACCESS, "Allocates in all VTCM schedulers.", "", "")
  
-@@ -932,14 +932,14 @@ work around the atomicity issues in system mode by running all vCPUs
- in a single thread context; in user mode atomicity was simply broken.
- From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+@@ -179,6 +180,7 @@ DEF_ATTRIB(HVX_IEEE_FP_ACC, "HVX IEEE FP accumulate instruction", "", "")
+ DEF_ATTRIB(HVX_IEEE_FP_OUT_16, "HVX IEEE FP 16-bit output", "", "")
+ DEF_ATTRIB(HVX_IEEE_FP_OUT_32, "HVX IEEE FP 32-bit output", "", "")
+ DEF_ATTRIB(CVI_VX_NO_TMP_LD, "HVX multiply without tmp load", "", "")
++DEF_ATTRIB(HVX_FLT, "This a floating point HVX instruction.", "", "")
  
--32-bit MIPS (since 10.2)
--''''''''''''''''''''''''
-+32-bit MIPS (removed in 10.2)
-+'''''''''''''''''''''''''''''
+ /* Keep this as the last attribute: */
+ DEF_ATTRIB(ZZ_LASTATTRIB, "Last attribute in the file", "", "")
+diff --git a/target/hexagon/mmvec/hvx_ieee_fp.c b/target/hexagon/mmvec/hvx_ieee_fp.c
+index 3367226998..868c0c5b18 100644
+--- a/target/hexagon/mmvec/hvx_ieee_fp.c
++++ b/target/hexagon/mmvec/hvx_ieee_fp.c
+@@ -19,3 +19,52 @@ float32 fp_vdmpy(float16 a1, float16 a2, float16 a3, float16 a4,
+     return float32_add(fp_mult_sf_hf(a1, a3, fp_status),
+                        fp_mult_sf_hf(a2, a4, fp_status), fp_status);
+ }
++
++#define float32_is_pos_nan(X) (float32_is_any_nan(X) && !float32_is_neg(X))
++#define float32_is_neg_nan(X) (float32_is_any_nan(X) && float32_is_neg(X))
++#define float16_is_pos_nan(X) (float16_is_any_nan(X) && !float16_is_neg(X))
++#define float16_is_neg_nan(X) (float16_is_any_nan(X) && float16_is_neg(X))
++
++float32 qf_max_sf(float32 a1, float32 a2, float_status *fp_status)
++{
++    if (float32_is_pos_nan(a1) || float32_is_neg_nan(a2)) {
++        return a1;
++    }
++    if (float32_is_pos_nan(a2) || float32_is_neg_nan(a1)) {
++        return a2;
++    }
++    return float32_max(a1, a2, fp_status);
++}
++
++float32 qf_min_sf(float32 a1, float32 a2, float_status *fp_status)
++{
++    if (float32_is_pos_nan(a1) || float32_is_neg_nan(a2)) {
++        return a2;
++    }
++    if (float32_is_pos_nan(a2) || float32_is_neg_nan(a1)) {
++        return a1;
++    }
++    return float32_min(a1, a2, fp_status);
++}
++
++float16 qf_max_hf(float16 a1, float16 a2, float_status *fp_status)
++{
++    if (float16_is_pos_nan(a1) || float16_is_neg_nan(a2)) {
++        return a1;
++    }
++    if (float16_is_pos_nan(a2) || float16_is_neg_nan(a1)) {
++        return a2;
++    }
++    return float16_max(a1, a2, fp_status);
++}
++
++float16 qf_min_hf(float16 a1, float16 a2, float_status *fp_status)
++{
++    if (float16_is_pos_nan(a1) || float16_is_neg_nan(a2)) {
++        return a2;
++    }
++    if (float16_is_pos_nan(a2) || float16_is_neg_nan(a1)) {
++        return a1;
++    }
++    return float16_min(a1, a2, fp_status);
++}
+diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+index 9e8bcfdcf0..c81dd5b836 100755
+--- a/target/hexagon/hex_common.py
++++ b/target/hexagon/hex_common.py
+@@ -216,6 +216,7 @@ def need_env(tag):
+             "A_CVI_GATHER" in attribdict[tag] or
+             "A_CVI_SCATTER" in attribdict[tag] or
+             "A_HVX_IEEE_FP" in attribdict[tag] or
++            "A_HVX_FLT" in attribdict[tag] or
+             "A_IMPLICIT_WRITES_USR" in attribdict[tag])
  
- Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
- maintain our cross-compilation CI tests of the architecture.
  
--32-bit PPC (since 10.2)
--'''''''''''''''''''''''
-+32-bit PPC (removed in 10.2)
-+''''''''''''''''''''''''''''
+diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
+index 4ce87d09fd..d7f50db778 100644
+--- a/target/hexagon/imported/mmvec/encode_ext.def
++++ b/target/hexagon/imported/mmvec/encode_ext.def
+@@ -823,4 +823,14 @@ DEF_ENC(V6_vsub_sf_hf,"00011111100vvvvvPP1uuuuu101ddddd")
+ DEF_ENC(V6_vadd_hf_hf,"00011111101vvvvvPP1uuuuu111ddddd")
+ DEF_ENC(V6_vsub_hf_hf,"00011111011vvvvvPP1uuuuu000ddddd")
  
- The QEMU project no longer supports 32-bit host builds.
++/* IEEE FP min/max instructions */
++DEF_ENC(V6_vfmin_hf,"00011100011vvvvvPP1uuuuu000ddddd")
++DEF_ENC(V6_vfmin_sf,"00011100011vvvvvPP1uuuuu001ddddd")
++DEF_ENC(V6_vfmax_hf,"00011100011vvvvvPP1uuuuu010ddddd")
++DEF_ENC(V6_vfmax_sf,"00011100011vvvvvPP1uuuuu011ddddd")
++DEF_ENC(V6_vmax_sf,"00011111110vvvvvPP1uuuuu001ddddd")
++DEF_ENC(V6_vmin_sf,"00011111110vvvvvPP1uuuuu010ddddd")
++DEF_ENC(V6_vmax_hf,"00011111110vvvvvPP1uuuuu011ddddd")
++DEF_ENC(V6_vmin_hf,"00011111110vvvvvPP1uuuuu100ddddd")
++
+ #endif /* NO MMVEC */
+diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef
+index 14df8e4790..0e9cace203 100644
+--- a/target/hexagon/imported/mmvec/ext.idef
++++ b/target/hexagon/imported/mmvec/ext.idef
+@@ -43,7 +43,9 @@
+ EXTINSN(V6_##TAG, SYNTAX, ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA),  \
+ DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
  
-@@ -1172,8 +1172,8 @@ Mips ``mipssim`` machine (removed in 10.2)
- Linux dropped support for this virtual machine type in kernel v3.7, and
- there was also no binary available online to use with that board.
+-
++#define ITERATOR_INSN_ANY_SLOT_2SRC(WIDTH,TAG,SYNTAX,DESCR,CODE) \
++EXTINSN(V6_##TAG, SYNTAX, ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT),  \
++DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
  
--Arm ``ast2700a0-evb`` machine (since 11.0)
--''''''''''''''''''''''''''''''''''''''''''
-+Arm ``ast2700a0-evb`` machine (removed in 11.0)
-+'''''''''''''''''''''''''''''''''''''''''''''''
+ #define ITERATOR_INSN2_ANY_SLOT(WIDTH,TAG,SYNTAX,SYNTAX2,DESCR,CODE) \
+ ITERATOR_INSN_ANY_SLOT(WIDTH,TAG,SYNTAX2,DESCR,CODE)
+@@ -3000,6 +3002,38 @@ ITERATOR_INSN_IEEE_FP_DOUBLE_32(32, vsub_sf_hf,
+     VddV.v[1].sf[i] = float32_sub(f16_to_f32(VuV.hf[2*i+1]),
+                                   f16_to_f32(VvV.hf[2*i+1]), &env->hvx_fp_status))
  
- The ``ast2700a0-evb`` machine represents the first revision of the AST2700
- and serves as the initial engineering sample rather than a production version.
-@@ -1290,8 +1290,8 @@ by using ``-machine graphics=off``.
- 
- The 'pvrdma' device and the whole RDMA subsystem have been removed.
- 
--``-device sd-card,spec_version=1`` (since 10.2)
--'''''''''''''''''''''''''''''''''''''''''''''''
-+``-device sd-card,spec_version=1`` (removed in 10.2)
-+''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
- SD physical layer specification v2.00 supersedes the v1.10 one.
- 
-@@ -1396,21 +1396,21 @@ device driver such as RBD.
- VFIO devices
- ------------
- 
--``-device vfio-calxeda-xgmac`` (since 10.2)
--'''''''''''''''''''''''''''''''''''''''''''
-+``-device vfio-calxeda-xgmac`` (removed in 10.2)
-+''''''''''''''''''''''''''''''''''''''''''''''''
- The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
- 10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
- string) to a guest. Calxeda HW has been ewasted now and there is no point
- keeping that device.
- 
--``-device vfio-amd-xgbe`` (since 10.2)
--''''''''''''''''''''''''''''''''''''''
-+``-device vfio-amd-xgbe`` (removed in 10.2)
-+'''''''''''''''''''''''''''''''''''''''''''
- The vfio-amd-xgbe device allows to assign a host AMD 10GbE controller
- to a guest ("amd,xgbe-seattle-v1a" compatibility string). AMD "Seattle"
- is not supported anymore and there is no point keeping that device.
- 
--``-device vfio-platform`` (since 10.2)
--''''''''''''''''''''''''''''''''''''''
-+``-device vfio-platform`` (removed in 10.2)
-+'''''''''''''''''''''''''''''''''''''''''''
- The vfio-platform device allows to assign a host platform device
- to a guest in a generic manner. Integrating a new device into
- the vfio-platform infrastructure requires some adaptation at
++#define ITERATOR_INSN_IEEE_FP_16_32_LATE(WIDTH,TAG,SYNTAX,DESCR,CODE) \
++EXTINSN(V6_##TAG, SYNTAX, \
++        ATTRIBS(A_EXTENSION,A_HVX_IEEE_FP,A_CVI,A_CVI_VX,A_HVX_IEEE_FP_OUT_16,A_HVX_IEEE_FP_OUT_32), \
++        DESCR, DO_FOR_EACH_CODE(WIDTH, CODE))
++
++/* IEEE FP min/max instructions */
++ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfmin_hf, "Vd32.hf=vfmin(Vu32.hf,Vv32.hf)", \
++    "Vector IEEE min: hf",  VdV.hf[i] = float16_min(VuV.hf[i], VvV.hf[i], \
++	&env->hvx_fp_status))
++ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfmin_sf, "Vd32.sf=vfmin(Vu32.sf,Vv32.sf)", \
++    "Vector IEEE min: sf",  VdV.sf[i] = float32_min(VuV.sf[i], VvV.sf[i], \
++	&env->hvx_fp_status))
++ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfmax_hf,  "Vd32.hf=vfmax(Vu32.hf,Vv32.hf)", \
++    "Vector IEEE max: hf", VdV.hf[i] = float16_max(VuV.hf[i], VvV.hf[i], \
++	&env->hvx_fp_status))
++ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfmax_sf,  "Vd32.sf=vfmax(Vu32.sf,Vv32.sf)", \
++    "Vector IEEE max: sf", VdV.sf[i] = float32_max(VuV.sf[i], VvV.sf[i], \
++	&env->hvx_fp_status))
++
++ITERATOR_INSN_ANY_SLOT_2SRC(32,vmax_sf,"Vd32.sf=vmax(Vu32.sf,Vv32.sf)", \
++    "Vector max of sf input", VdV.sf[i] = qf_max_sf(VuV.sf[i], VvV.sf[i], \
++	&env->hvx_fp_status))
++ITERATOR_INSN_ANY_SLOT_2SRC(32,vmin_sf,"Vd32.sf=vmin(Vu32.sf,Vv32.sf)", \
++    "Vector min of sf input", VdV.sf[i] = qf_min_sf(VuV.sf[i], VvV.sf[i], \
++	&env->hvx_fp_status))
++ITERATOR_INSN_ANY_SLOT_2SRC(16,vmax_hf,"Vd32.hf=vmax(Vu32.hf,Vv32.hf)", \
++    "Vector max of hf input", VdV.hf[i] = qf_max_hf(VuV.hf[i], VvV.hf[i], \
++	&env->hvx_fp_status))
++ITERATOR_INSN_ANY_SLOT_2SRC(16,vmin_hf,"Vd32.hf=vmin(Vu32.hf,Vv32.hf)", \
++    "Vector min of hf input", VdV.hf[i] = qf_min_hf(VuV.hf[i], VvV.hf[i], \
++	&env->hvx_fp_status))
++
+ /******************************************************************************
+  DEBUG Vector/Register Printing
+  ******************************************************************************/
 -- 
-2.53.0
+2.37.2
 
 
