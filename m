@@ -4,83 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B85710F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3422C10F996B
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXxK-0006bb-Gp; Wed, 08 Apr 2026 14:48:52 -0400
+	id 1wAXxN-0006qK-LM; Wed, 08 Apr 2026 14:48:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wAXx7-0006Q6-Py
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:48:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wAXcb-0003pC-Qw
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:27:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775672843;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gccVHlOBpy+pQvIgdkZHIOgU/hn+ayZspcjVDxBg0Tc=;
- b=HXOKajyoIDQuYg1VL4HqNmugKoSM83jsKVk9oMbcq5Pedqwl2qWwtBYYEQRwVqzc6uqkmG
- 8+OmLJMa8NOTezR6L/ZIpVrzi2WDho6+D4Wmw1S/o/VpjZa+eYjAJWPLMq62tNoM95U67J
- 3PqyyeMsptowr6/b/XP6ERviQQcSKGg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-CJQ4qRCFMNaW-9Xs1cfNNQ-1; Wed,
- 08 Apr 2026 14:27:17 -0400
-X-MC-Unique: CJQ4qRCFMNaW-9Xs1cfNNQ-1
-X-Mimecast-MFC-AGG-ID: CJQ4qRCFMNaW-9Xs1cfNNQ_1775672835
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 922F618005BA; Wed,  8 Apr 2026 18:27:13 +0000 (UTC)
-Received: from localhost (unknown [10.44.48.42])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA2BB19560A6; Wed,  8 Apr 2026 18:27:10 +0000 (UTC)
-Date: Wed, 8 Apr 2026 14:27:08 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <its@irrelevant.dk>,
- =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v5 7/8] hw/nvme: add basic live migration support
-Message-ID: <20260408182708.GA319710@fedora>
-References: <20260317102708.126725-1-alexander@mihalicyn.com>
- <20260317102708.126725-8-alexander@mihalicyn.com>
- <20260407154803.GB238768@fedora>
- <CAJqdLroJk_EmciJQvYPsywpaOoyFSyNf67DGpOJMGpr+MuhQFg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wAXx6-0006LZ-Tu
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:48:36 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wALfb-0000N0-PW
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 01:41:45 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-358ed696623so2539376a91.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 22:41:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775626902; x=1776231702; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dLgFWQqIzhFZMkNgi9lrc8hfI0DMw6Dcno86XH5Qgqs=;
+ b=DGF6jnJFPhgmXe91PcetzsikK7X8o5fukPZcROSc252djsWTD8oIQOHN/zSZ046k5E
+ +9kuXY3q5fv3owQhLX8BxqjaVFdtGESCbIr37nGNaOkhWyCbf1RYAgUWGTjmv2qpVvjx
+ mzAwFQDG3BTb0PIGgJEPRA3LIAgiAFcj30EqHmFO9qm80+PymOeei7h/Cm9pMqHK9a2s
+ 9wZro3fxDDL65kPTtRnnLPI5dE0V847sp3zmL9DYIjdPVOl8BgldcpZ6ikNdDqP16Ee+
+ 1IBeQY/hC1r+7ZQHiFVIEulN5tI2MkXMUZs1DBegO9jnai5nzhkUk09ctCI35gY4jUNJ
+ w/bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775626902; x=1776231702;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dLgFWQqIzhFZMkNgi9lrc8hfI0DMw6Dcno86XH5Qgqs=;
+ b=W6AbJt4Lk6OwHaNKqBCe9OlGRHQVmdgxurJVCrarq3lHrCHCy5WerFsIKL/Q2EJwnS
+ 0IoNrEGT8E6PeqfDcJThOE423IOY42rck9xWH0Wd24Ei6S1FlerB5SkJBCWGBg1qrpXf
+ EIVP4/RGwQkEMy9NimU3Z3rVmMdiof6ajrdCyRVCIHazpZqZ3vbVuir5Uso/HNYQgNrb
+ ceN2t7mU2++iBp69MdHm04YYw3pJoYcrxe5w2pXKyvyOJiejXDaB8MT5OzDOPKcezRKT
+ hbi6yh+I11ryWJnHzNGjxaxfAFQ3iWA7xbAEHLzplUcH/RoNqJLe+ESWY/BMbARcil7g
+ ldNA==
+X-Gm-Message-State: AOJu0YzUoqs5srH9pJvG9OwOYvDxeuAP/OIiT2qQYKhI5jxF/6TxrYHf
+ 8c1YBpoP00bDIfdaPdF+zG9t9KMZQTASmAOMcoZB2pRl/AXo4Pd19akzlT2ShOsquI9R5heV7tW
+ zacZbK3Q=
+X-Gm-Gg: AeBDievyEEsGZ3jLeVCj5T5Kc7zURBdPcg592P3XMqw2H0ypCbN67SBn+yiDkpjxyix
+ SNmKC7YZ5u97pBMIOif4eArjrUj3BmIwGNuZwtYmtVyPJUOlpHqdsOBI8x8ZWbtilFLM7flCNk0
+ oSGjyZOjPRZlw+QHQ58pnqQ0qm/oDs2h4/rK5RjN+cuRF/m+Ab3Ke5bL1o1afjCkpkmv1c50NuW
+ 88anxAexk5Ri8O4yjRxOsAEn9jWliXQoETMl2He0WyvZk3xGxaULqqaYkXMkdJytb+W8BWVv0bo
+ f5wyPhHV3mID+5qIQApFEKdoz2qP1gIpic8VMweWxOELzLohdUoVK69LxYQAb4TQCRLB9FUch9Z
+ 4ljW+cibVCbzLrGMxa8UkRvg2iGgYWhoxDIWb7bOvMc69A2nGnCkPOmLhe9LK1hO1cge89pXJ9G
+ aTi82XRpE1qvd8nzhEtmD6Xo5LAUveMdmG1NAhQ2KvPkbeYNP/Uaf3JSCVI2XSDBEsuhU=
+X-Received: by 2002:a17:902:ccc4:b0:2b0:61c2:8e83 with SMTP id
+ d9443c01a7336-2b2816dd5fcmr196978585ad.20.1775626901761; 
+ Tue, 07 Apr 2026 22:41:41 -0700 (PDT)
+Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b2749cbd9fsm187447865ad.75.2026.04.07.22.41.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Apr 2026 22:41:41 -0700 (PDT)
+Message-ID: <28e042a8-876a-43af-8154-e48481c20f2f@linaro.org>
+Date: Wed, 8 Apr 2026 15:41:36 +1000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="l5pW4oqIFRUCRvKh"
-Content-Disposition: inline
-In-Reply-To: <CAJqdLroJk_EmciJQvYPsywpaOoyFSyNf67DGpOJMGpr+MuhQFg@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 27/35] target/arm: wrap event_register in a union
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260320130607.2071996-1-alex.bennee@linaro.org>
+ <20260320130607.2071996-28-alex.bennee@linaro.org>
+ <0877e0da-c083-4293-bba2-5c1d2e2315b7@linaro.org>
+ <87zf3fawif.fsf@draig.linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <87zf3fawif.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,116 +106,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/7/26 20:35, Alex Bennée wrote:
+> I wonder if there would be a way to use a Generic so tcg_gen_st8_bool
+> would always map to the right size whichever arch we are on?
 
---l5pW4oqIFRUCRvKh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The only outlier for sizeof(bool) that I know of was an ancient x86 Darwin, which is out 
+of the support window.  I think there's zero point in planning to support that.
 
-On Tue, Apr 07, 2026 at 09:02:26PM +0200, Alexander Mikhalitsyn wrote:
-> Am Di., 7. Apr. 2026 um 17:48 Uhr schrieb Stefan Hajnoczi <stefanha@redha=
-t.com>:
-> >
-> > On Tue, Mar 17, 2026 at 11:27:07AM +0100, Alexander Mikhalitsyn wrote:
-> > > +    /* wait when all in-flight IO requests (except NVME_ADM_CMD_ASYN=
-C_EV_REQ) are processed */
-> > > +    for (i =3D 0; i < n->num_queues; i++) {
-> > > +        NvmeRequest *req;
-> > > +        NvmeSQueue *sq =3D n->sq[i];
-> > > +
-> > > +        if (!sq)
-> > > +            continue;
-> > > +
-> > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait(n, i, sq->head=
-, sq->tail, sq->size);
-> > > +
-> > > +wait_out_reqs:
-> > > +        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
-> > > +            if (req->cmd.opcode !=3D NVME_ADM_CMD_ASYNC_EV_REQ) {
-> > > +                cpu_relax();
-> > > +                goto wait_out_reqs;
-> > > +            }
-> > > +        }
-> > > +
-> > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait_end(n, i, sq->=
-head, sq->tail);
-> > > +    }
-> >
->=20
-> Hi Stefan,
->=20
-> > Emulated storage controllers usually do not drain requests themselves.
-> > They rely on core migration code (e.g. migration_completion_precopy())
-> > to stop vCPUs and call bdrv_drain_all_begin/end() to quiesce I/O. Why
-> > does NVMe busy wait for requests here?
->=20
-> I rely on core migration code to stop vCPUs and drain requests, *but*
-> a challenge here is that
-> a concept of "in-flight" request in NVMe is not that simple and we
-> have a few different types of in-flight requests:
-> - request was written in SQ (sq->head !=3D sq->tail) -> this I don't
-> even consider as in-flight, because we just stop SQ processing
->   and these requests don't require any special handling during migration
-> - request was taken from SQ by nvme_process_sq() and it now lives in
-> sq->out_req_list - this means that
->   we have also initialized req->aiocb and submitted IO for processing
-> in QEMU block layer. After request is processed, completion callback
->   will be called (for read/write requests it is
-> nvme_rw_complete_cb()), then nvme_enqueue_req_completion() will be
-> called and remove
->   NvmeRequest from sq->out_req_list and put it into cq->req_list.
->   I expect, that by the time when we enter nvme_ctrl_pre_save(),
-> bdrv_drain_all_begin/end() were called and
->   all AIO is finished and sq->out_req_list is empty (except AERs).
-> *But* to be on a safe side I also added busy loop on
->   sq->out_req_list.
->=20
-> So, I tend to agree that this busy wait is probably not required, but
-> I believe that we still need to verify that sq->out_req_list
-> is in fact empty. Because if we messed up, then it's better to crash
-> on assert() than to have silent data corruption.
->=20
-> Then after I have a loop cq->req_list, and this time it is absolutely
-> required because we need to write all NvmeRequest
-> results to CQ and free NvmeRequest structure, cause I didn't want to
-> deal with NvmeRequest serialization.
 
-I don't see how the busy wait approach can work since
-migration_completion_precopy() holds the Big QEMU Lock
-(bql_lock()/bql_unlock()) while .pre_save() is called. The main loop
-thread's event loop will not be able to make progress while .pre_save()
-is busy waiting.
-
-Based on what you and Klaus have said, how about:
-1. assert(QTAILQ_EMPTY(&sq->out_req_list))
-2. Call nvme_post_cqes() from .pre_save() to write CQEs back to RAM.
-   Whether or not cq->bh is cancelled too doesn't really matter.
-3. Full CQs need to be handled. It will be necessary to serialize the
-   remainder of cq->req_list them. Failing live migration for this
-   reason is not acceptable from a user perspective.=20
-   (virtio-scsi and virtio-blk have a mechanism for serializing failed
-   I/O requests that need to be restarted after migration. There might
-   be a nicer way to do this with vmstate nowadays, but they are at
-   least two examples of how to serialize a storage controller's
-   internal request state.)
-
-Stefan
-
---l5pW4oqIFRUCRvKh
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnWnfwACgkQnKSrs4Gr
-c8hRNwgAkQi9DxgE5AyVyHy3dWK/t++h27lo0bJgqGcgKwUo84vbcYD0TKHFWMaL
-+8BWIYeOJa3ogEfpVz1EZTTdQcfaweQryRcJcOdRTIQUuGuRwekHx+BCgiLc+Ybv
-dYIYluk0H3frAhXOammnAfqINSLEMQIdWHO1gxEJ1ir2JerPD4hS/RzQMPACaJOs
-QnlMEnIACVmQehzL0Jt/TqzlmrlgG9FQRGyOYMAK6Nbc7bq85pFJYLcAvjTBqLRd
-mN/VacGaKu+VFSsQeugregz8c2C+1Zno1vRqy125Hw1zwVZa/zjtjeaGnww6yoUS
-HTxXQkUjZDZlK9f25dLgsTW8KQXvtw==
-=1QHx
------END PGP SIGNATURE-----
-
---l5pW4oqIFRUCRvKh--
-
+r~
 
