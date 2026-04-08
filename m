@@ -4,137 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60CF510F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6107510F996A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 18:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAXsx-0002AJ-JZ; Wed, 08 Apr 2026 14:44:19 -0400
+	id 1wAXsz-0002Pc-2g; Wed, 08 Apr 2026 14:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAXsu-0001sU-UI
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:44:17 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wAXsw-00022f-1H
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:44:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAKPE-0005bt-Hg
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:52 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 637M5HD72862613
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- F0uONMjef3ECBM5NuvfwWgVpAn5g+wZiTF4jIWcu5S8=; b=Ib3iEJnHbaRfPU7D
- yne44RGStVvr826Gj7lhd/B+/fOVbtQT1QCt1n7iqWHKbaLR1NhyCT55e0JE2mlB
- A2aATpdN1DkALm3GYxKMVzwW6IcSK1yJo72ifW7ihOeEC8I5RQSUurUFJsJz/q+q
- wV00FJcsinrptNAxJdJ1n9RQQjFO9PDQNUKeHzsumrw+JB2f7RfbnEGr8UDPN9o+
- WYvYVprLwVIUY87k6gFdqG4K3CTF3dDuMbzQOxYl3Ke49/0ldqkgZQVg3HXrhZaD
- dr9AVKFEihoe436c1w5zzrmMUbeIPQAID/95jG4ITCBqPqpI+eLYK3uvaJIDbeOY
- slxuDQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddad8rwva-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:33 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-2c16233ee11so8180146eec.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wAWuE-0000Ll-TG
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 13:41:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775670092;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4BP+lMZaOrzehJh50THLk3PJdfBSmqrdJwD4Qv48sOY=;
+ b=OreloGizAaoKYkQnHpTUpQY3WfNT7XP4s+oSvor4wBK2V/2Te3V+1ukBlcHTclaCfPNQvg
+ MBXPmBtyJkn0FETf1egNybB7qs6xzM03OXZSq0FLnZlhpnzos/6szNOCQ21swFflM3CT8W
+ Y8GWz2VJHx8cA4mbmdKny5E91u0P0jE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-317-545u4FXWMnWCn0F_eg3kHA-1; Wed, 08 Apr 2026 13:41:24 -0400
+X-MC-Unique: 545u4FXWMnWCn0F_eg3kHA-1
+X-Mimecast-MFC-AGG-ID: 545u4FXWMnWCn0F_eg3kHA_1775670083
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43b91b5dd24so43641f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 10:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775622032; x=1776226832; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F0uONMjef3ECBM5NuvfwWgVpAn5g+wZiTF4jIWcu5S8=;
- b=SGZjEC7EVgM+9Brv6T6c4bl/poOUKM8P9zjb+kSoS/NSwL1OlKOx7+mXS3FvIDsHQt
- 9K05OVlzrbV9k4ZhWg5rNo11Bqhh9UycXFpsj5Te/ghVpXnmLIqCcHgxDHhivexUb9N1
- MQJahdHnn6SSnq5994prF2GwUbNjnI3wuJmu5aKw80srkg6Bx05kj7B1yOl2E+Tx5DkM
- rMB8Ue+LH96EdSNC9JL8CDlsJfVezBSMNJR0WwvMXKx5GLmfbUev/C5PlN+MSwAR5kSi
- Zy4myipAYbqf7i3LvsOTWVnJCERPNGH04+HCpmloXk/bmaX/sLaO8kzx93KHMmOcIGYd
- qyKg==
+ d=redhat.com; s=google; t=1775670083; x=1776274883; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=4BP+lMZaOrzehJh50THLk3PJdfBSmqrdJwD4Qv48sOY=;
+ b=q2z3LUFkQaR5qMSUd3s/t7Rv9q94kQ7zVdX2mnqxNOXokGWBhsmFCSsO3nkRIgy6jm
+ 8mKkFTmsA5dv7tlaSHvaCpzRQ7AkDUkpmW6D4BEV0kXzPEcMlF6YpfzvnQLaoW2D/YGp
+ pxQOoaMuFh14aV93AnlZj52x568jRS60z2voM+XWvIfenxCSBA6NghXwGji2hJL3RoYA
+ I02W5eSEp+MNCa6uqydh+od/2cro/l38OYEXLPcea1vEekkkvV1z6M0zGoIzzDrwiHUF
+ ZJQ8jN8sJOEQatcdtLdAajMk9LmtCOhT37bPsnnUcu/ol/Gv8jbN7/PhGQG55hP/dHE6
+ 1dsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775622032; x=1776226832;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=F0uONMjef3ECBM5NuvfwWgVpAn5g+wZiTF4jIWcu5S8=;
- b=EV4p0ZONN4G3mA6EbU0bbTGQRujDm4ySFKe4w0HCANjEY1VJneu8gynxlD2Lms8qOu
- dRUKaX1GHNoI7anAR+66o9mEruiGt9A0mClP+xl0chzei0xXdLlaFL3UXSg5l3P1PZP+
- k7nhFbDLcMNxqyN7alpN38cHCECzZKNrQRD7pGYo84w5nwwLwSfD8EdHaSHFrw0vLA+b
- 5l1KhWBSuChVSqsSYs6dELugadjhvCp9K/WWrKIxz90MNaL5nnUJmc1av1d2zjizN8qP
- 755saO5DalTuhldCblVHG9MVOuN+/fpe0lHcCnCfgs/rOIzKheRnMezyaRCcyEYoastz
- JYPA==
-X-Gm-Message-State: AOJu0YwHmnDA9Ycw9RntieGv1O4Q/Ai+nQmE1h+1+g78t+I8WkCh9dUQ
- fx7w9v6BYlXQKeQeQ3+mEZXdbQf/p6355tVGeyQDh2HqwfuPPd+oaBpimogrmzYxNF6JOWmzTEK
- 2wx0YeC3AHyLZaFHMc3TSBrx7xi+lxDelA2uHsgBM6Twky4rspZoYfcKw0xW6zbU4rg==
-X-Gm-Gg: AeBDietUFmbK1UCHkrb0lwoPglUcY7W0yeSNqX97M08hrN5+MHgnG441IAOPNtiqpud
- PxpwcsIfhxNVx8rNY94tKj40G4becosF6n1ZAB+m3dxqEkUQKvnbTqNfQSnSogT3FtEenZuwXfp
- jitjtwCMwBfPKJXofGWqyKn4zjhOaZZPPRzF0pr/W+90SmR4Hsu/HiqPlyfd1+aGVz8BK0ODmQN
- WPtRl2Im/5Xp9jKMAS4jcnwPzarHXZTOpQH58mU60zQvLDdsBjGCVox236lvWLmhd170kCd0bG2
- vaRogDT42oL/L/zSnVhYHQHyDSbb1mbBAu2k+8waOvHd3jKTyWNEPD6IakuJsZ77Ej5mIfnug+r
- Umi0dHoG2Em+rktOzGRkPMUMa4BDDj2F+pgaIUk2RnAAX0y4EdMYnwSdfIZX0wWtz7NkF0g==
-X-Received: by 2002:a05:7022:388a:b0:128:bf8d:44d2 with SMTP id
- a92af1059eb24-12bfb6ec558mr9186486c88.2.1775622031849; 
- Tue, 07 Apr 2026 21:20:31 -0700 (PDT)
-X-Received: by 2002:a05:7022:388a:b0:128:bf8d:44d2 with SMTP id
- a92af1059eb24-12bfb6ec558mr9186480c88.2.1775622031308; 
- Tue, 07 Apr 2026 21:20:31 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.29
+ d=1e100.net; s=20251104; t=1775670083; x=1776274883;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4BP+lMZaOrzehJh50THLk3PJdfBSmqrdJwD4Qv48sOY=;
+ b=ZsrXw3jmHIH3Zk0SAxTd1FE946FbnOQ4MOJUvP1vCm6gGjl06+iHuDT8nwmr7UeaOi
+ YtxwuxnuCf2idOcx5PnDB3L/wrepsUO48gNJs5UvD6x6UPM6fSjhXbNdh9ptDySc1n14
+ mOk/SNWXmSakuiD37nE3WpShQk+eXrNBbxruyk6m6cvycYlHk8555/8TyCMGmoOjcgBN
+ 0Y2zcMLwe3czvl3LkPqmoZ3cS0ui4ksy+mDvwXEjHrOh9nl+em6iJczWDdCvcfJ6e6UH
+ iF2vOhH2/u6iaWKbCnEh8MxS8vJj7EoHXp4g8kZgcq7e25keQX7fOLgdYVOTpvaNprLe
+ evTg==
+X-Gm-Message-State: AOJu0YzsmDPjidGvRiJZg1zULiKOM2HTCrlGLb0eCPplXh/XIAAK/Xk2
+ +A9E5R6j2vMiYK+wi1Vwi/1dt2H+2Ccr6VXRNNHuGLLTNqVPyaluTZiWag7qGh5uy7seqfSD9A7
+ 6pRtkpP/f5JrocdYkFd7X2Of/4q8QbZZisFaaB5tHcWEijzAcRauXFOL4
+X-Gm-Gg: AeBDietImOUA5zKAn9i3pJ0IOPZXXpVOXVBQ2sqcRemh3/8AMySsbFOvykh8vDwrXmE
+ fkrxAls0ZdpGMw4T0bppnGwz4LAbqnyc/AEa/JJ81CbivzPKVOKKnDGMrURNhAZGJm9bmDroRc3
+ NMMM7YbJ8ZAtXgHXbDs7gbiEcUBj2j8wWrbU6azkHAspboJWihXQam3hFGDoCaGLavt7juwmdmK
+ Unpxft5kuaDAF1zMRc4aRSC8ZW88j21FIaaa9vn1Yv1zbfvdUmkG49lZ1c1xFpfOKj+ctZzp/Bb
+ L4uoDmMgdChbIwf5mn7N5Ha4sPTWZo69dvZWmIs59hv3VVdZGGUNlfoWK2Nqy2EO3nYH75Sqd86
+ CTbPS5PerYxtZJcyLBUclmmSLYqGW35yiV+uREgU=
+X-Received: by 2002:a05:6000:2881:b0:43b:9227:bc6e with SMTP id
+ ffacd0b85a97d-43d5a18e99fmr219578f8f.24.1775670082623; 
+ Wed, 08 Apr 2026 10:41:22 -0700 (PDT)
+X-Received: by 2002:a05:6000:2881:b0:43b:9227:bc6e with SMTP id
+ ffacd0b85a97d-43d5a18e99fmr219548f8f.24.1775670082136; 
+ Wed, 08 Apr 2026 10:41:22 -0700 (PDT)
+Received: from fedora (nat-88-212-17-233.antik.sk. [88.212.17.233])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d1e4f5016sm64532489f8f.33.2026.04.08.10.41.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 21:20:29 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v4 22/28] target/hexagon: Add implicit sysreg writes
-Date: Tue,  7 Apr 2026 21:19:47 -0700
-Message-Id: <20260408041953.1899532-23-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
-References: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
+ Wed, 08 Apr 2026 10:41:21 -0700 (PDT)
+Date: Wed, 8 Apr 2026 19:41:18 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 00/11] vmstate: Implement VMS_ARRAY_OF_POINTER_AUTO_ALLOC
+Message-ID: <adaS95U5bgZ_XVZC@fedora>
+References: <20260401202844.673494-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: ztNxnN5XWqJvgjYoY-Xaxe8ywsSe3jsY
-X-Proofpoint-GUID: ztNxnN5XWqJvgjYoY-Xaxe8ywsSe3jsY
-X-Authority-Analysis: v=2.4 cv=EoDiaycA c=1 sm=1 tr=0 ts=69d5d791 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=ySlkKLH3HnL0fBWr2zQA:9
- a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNiBTYWx0ZWRfX8MfEgaSpzKs1
- gOju99h29CZt3g/pki+2Cwnr7LniqtgsvivtfSfJcUF1ZL2paliZoLKr2HYuRR0JDg2I0ijYkBy
- EthqnfUbN0pkhCfcuNgIsFGOzJcS1liGE7153liaTeOfhfrlbk89DqaOzI/l+3GI91HNSLt+pZ7
- YV8wcWLvh5e1gB7eKK+qp5Bk5B0rSlltrSKe7ERKHY9IlD4Jyvv9P7HWshqVP+eO68CsZpOWCR/
- Lwho/y9KEgn4ptdygfrdddCf2xCnOePvaMkgYk0dJ+byamcqbVKJISxGfCXJcJxHxNdw2GPef0b
- CTaMKasDZniqENc8uXyNcwu26ghRh+GUEurRT1D6AztJg6DG7FWYCeWlDW01y1KYsqCbWS+cqd/
- 1bCLC+q9TDfyoavFlkP2Z3PKaGNbuZjBvXY4vYbrJEmQrV/azSarfMNv/8bjEpf+7eOy4JCSszN
- 4oGBSngwzRaq02HSSPQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080036
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260401202844.673494-1-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,29 +118,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpSZXZpZXdlZC1ieTogVGF5bG9y
-IFNpbXBzb24gPGx0YXlsb3JzaW1wc29uQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1ieTogQnJpYW4g
-Q2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIHRhcmdldC9oZXhhZ29uL3Ry
-YW5zbGF0ZS5jIHwgMTYgKysrKysrKysrKysrKysrKwogMSBmaWxlIGNoYW5nZWQsIDE2IGluc2Vy
-dGlvbnMoKykKCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuYyBiL3Rhcmdl
-dC9oZXhhZ29uL3RyYW5zbGF0ZS5jCmluZGV4IGE0MmZkNzcxZjI5Li4zODcyMWQ3NDAwNyAxMDA2
-NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vdHJhbnNsYXRlLmMKKysrIGIvdGFyZ2V0L2hleGFnb24v
-dHJhbnNsYXRlLmMKQEAgLTQyOCw2ICs0MjgsMTYgQEAgc3RhdGljIHZvaWQgbWFya19pbXBsaWNp
-dF91c3Jfd3JpdGUoRGlzYXNDb250ZXh0ICpjdHgsIGludCBhdHRyaWIpCiAgICAgfQogfQogCisj
-aWZuZGVmIENPTkZJR19VU0VSX09OTFkKK3N0YXRpYyB2b2lkIG1hcmtfaW1wbGljaXRfc3JlZ193
-cml0ZShEaXNhc0NvbnRleHQgKmN0eCwgaW50IGF0dHJpYiwgaW50IHNudW0pCit7CisgICAgdWlu
-dDE2X3Qgb3Bjb2RlID0gY3R4LT5pbnNuLT5vcGNvZGU7CisgICAgaWYgKEdFVF9BVFRSSUIob3Bj
-b2RlLCBhdHRyaWIpKSB7CisgICAgICAgIGN0eF9sb2dfc3JlZ193cml0ZShjdHgsIHNudW0pOwor
-ICAgIH0KK30KKyNlbmRpZgorCiBzdGF0aWMgdm9pZCBtYXJrX2ltcGxpY2l0X3JlZ193cml0ZXMo
-RGlzYXNDb250ZXh0ICpjdHgpCiB7CiAgICAgbWFya19pbXBsaWNpdF9yZWdfd3JpdGUoY3R4LCBB
-X0lNUExJQ0lUX1dSSVRFU19GUCwgIEhFWF9SRUdfRlApOwpAQCAtNDQwLDYgKzQ1MCwxMiBAQCBz
-dGF0aWMgdm9pZCBtYXJrX2ltcGxpY2l0X3JlZ193cml0ZXMoRGlzYXNDb250ZXh0ICpjdHgpCiAK
-ICAgICBtYXJrX2ltcGxpY2l0X3Vzcl93cml0ZShjdHgsIEFfSU1QTElDSVRfV1JJVEVTX1VTUik7
-CiAgICAgbWFya19pbXBsaWNpdF91c3Jfd3JpdGUoY3R4LCBBX0ZQT1ApOworCisjaWZuZGVmIENP
-TkZJR19VU0VSX09OTFkKKyAgICBtYXJrX2ltcGxpY2l0X3NyZWdfd3JpdGUoY3R4LCBBX0lNUExJ
-Q0lUX1dSSVRFU19TR1AwLCBIRVhfU1JFR19TR1AwKTsKKyAgICBtYXJrX2ltcGxpY2l0X3NyZWdf
-d3JpdGUoY3R4LCBBX0lNUExJQ0lUX1dSSVRFU19TR1AxLCBIRVhfU1JFR19TR1AxKTsKKyAgICBt
-YXJrX2ltcGxpY2l0X3NyZWdfd3JpdGUoY3R4LCBBX0lNUExJQ0lUX1dSSVRFU19TU1IsIEhFWF9T
-UkVHX1NTUik7CisjZW5kaWYKIH0KIAogc3RhdGljIHZvaWQgbWFya19pbXBsaWNpdF9wcmVkX3dy
-aXRlKERpc2FzQ29udGV4dCAqY3R4LCBpbnQgYXR0cmliLCBpbnQgcG51bSkKLS0gCjIuMzQuMQoK
+Hi Peter,
+
+On 2026-04-01 16:28, Peter Xu wrote:
+> CI: https://gitlab.com/peterx/qemu/-/pipelines/2424266591
+>     (one checkpatch warning, not relevant to this series)
+> 
+> rfcv1: https://lore.kernel.org/r/20260317232332.15209-1-peterx@redhat.com
+> rfcv2: https://lore.kernel.org/r/20260326210532.379027-1-peterx@redhat.com
+> 
+> Changelog rfcv2->v1:
+> 
+> - Rebased to latest fabiano's migration-staging branch (bd698d7730)
+> - Collected new tags
+> - Patch 1
+>   - Add space between "_type*" [Phil]
+> - Patch 9
+>   - Slight refactoring on vmstate_load_next() [Fabiano]
+>   - I collected Alexander's tested-by even if strictly I shouldn't when the
+>     patch changed; if test fails, it's me to blame.
+> 
+> This is v1, I removed RFC as I we should have reached some form of
+> consensus in general.  It is based on Fabiano's migration-staging branch.
+> I've pushed this tree here for easier reference:
+> 
+> https://gitlab.com/peterx/qemu/-/tree/vmstate-array-null
+> 
+> This series implements a new vmstate flag that allows real dynamic array of
+> pointers to be migrated, so that QEMU vmstate core will be able to identify
+> NULL and non-NULL pointers pointing to any kind of VMSD (or base types),
+> then properly allocate memory for them on dest QEMU.
+> 
+> The first planned user of such is Alexander's NVMe migration series here:
+> 
+> https://lore.kernel.org/r/20260317102708.126725-1-alexander@mihalicyn.com
+> 
+> This is another alternative to solve this problem.
+> 
+> I tested analyze-migration.py with this version and it works with an idle
+> dump from the nvme series (after I rebase).
+> 
+> Thanks,
+> 
+> Alexander Mikhalitsyn (1):
+>   tests/unit/test-vmstate: add tests for VMS_ARRAY_OF_POINTER_AUTO_ALLOC
+> 
+> Fabiano Rosas (1):
+>   vmstate: Stop checking size for nullptr compression
+> 
+> Peter Xu (9):
+>   vmstate: Pass in struct itself for VMSTATE_ARRAY_OF_POINTER
+>   vmstate: Pass in struct itself for VMSTATE_VARRAY_OF_POINTER_UINT32
+>   vmstate: Do not set size for VMS_ARRAY_OF_POINTER
+>   vmstate: Update max_elems early and check field compressable once
+>   vmstate: Rename VMS_NULLPTR_MARKER to VMS_MARKER_PTR_NULL
+>   vmstate: Introduce vmstate_save_field_with_vmdesc()
+>   vmstate: Allow vmstate_info_nullptr to emit non-NULL markers
+>   vmstate: Implement load of ptr marker in vmstate core
+>   vmstate: Implement VMS_ARRAY_OF_POINTER_AUTO_ALLOC
+> 
+>  include/hw/intc/riscv_aclint.h |   6 +-
+>  include/migration/vmstate.h    |  88 ++++++++++--
+>  migration/savevm.c             |  28 ++++
+>  migration/vmstate-types.c      |  36 ++---
+>  migration/vmstate.c            | 247 ++++++++++++++++++++++++++-------
+>  tests/unit/test-vmstate.c      |  90 +++++++++++-
+>  roms/seabios-hppa              |   2 +-
+>  scripts/analyze-migration.py   |  22 +--
+>  8 files changed, 418 insertions(+), 101 deletions(-)
+> 
+> -- 
+> 2.50.1
+> 
+
+For the whole series:
+
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+
 
