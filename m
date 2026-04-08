@@ -4,103 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC51310F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3526C10F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYT1-0006Ki-FO; Wed, 08 Apr 2026 15:21:35 -0400
+	id 1wAYQ1-0003VX-EO; Wed, 08 Apr 2026 15:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAY3x-0006DI-1z
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:55:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wAYNo-0007rI-IG
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:16:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAWCO-00028m-10
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:56:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wAPjR-0005Du-95
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 06:01:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775667375;
+ s=mimecast20190719; t=1775642516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JNWsc1Vb2/FFVZ+FiEtlLRVcdly+39Jh6AgLzzLmjt4=;
- b=J1uRNKP2ox37xyMjv2mMxewoFLmpwYSSxI41bNf7OlVMPuN9w1bFutS7KjgyKWYazGrXLs
- h7mk8xC6BNZjeEWv3rlUPHIhIj9Jj50aBPHkazyXLdZ4dRsiu5nzLJCq4yseKn6+jhjdQR
- 5l0qs8SktWpzf2YqaVwf/G0iAnu7tV0=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wl7wxwNvvDkcHef4Te7a8kkFngeE3QU8CtlN2AbUdAc=;
+ b=cK3Bd5G46PTEtPz/bX1E2/JrzCw52IIT2C0VAmsJ4OojYv+zYnmhQHycnWEsxLABTSdlsJ
+ nBN4jSEt8cataxKfsHpSY1QHRLcYKEtjxXAcZ1G8x7jn2YHImqaixzOCrt7EADJEWUIeEn
+ YevdcNMOMlT1S2qIKr9UhNVwzruRjVk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-dXVsTwTdNWKNF-JbTlEzdw-1; Wed, 08 Apr 2026 12:56:14 -0400
-X-MC-Unique: dXVsTwTdNWKNF-JbTlEzdw-1
-X-Mimecast-MFC-AGG-ID: dXVsTwTdNWKNF-JbTlEzdw_1775667373
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-50b31cff27fso996151cf.3
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:56:13 -0700 (PDT)
+ us-mta-182-nC38eEnoMHWuyogoFrL5qw-1; Wed, 08 Apr 2026 06:01:54 -0400
+X-MC-Unique: nC38eEnoMHWuyogoFrL5qw-1
+X-Mimecast-MFC-AGG-ID: nC38eEnoMHWuyogoFrL5qw_1775642513
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4839fc4cef6so7068745e9.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 03:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775667372; x=1776272172; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JNWsc1Vb2/FFVZ+FiEtlLRVcdly+39Jh6AgLzzLmjt4=;
- b=Pa5mFaiEcJUkhajtukqU36QUOsB8NfJKx5t8d2SHOTacWimWC0bRUphCosbP0QfqTA
- tUSWBA3yqbcOnp1FMuUJhalAQ8bLo1XhEHChSkWHqD/iDmBZFcMgNa7HcoVy2Z9EbY5G
- 3HOs6Rl9XLb5ByRfmaWbazDMpvrUClwl8uXlASX3Dmb4zfq4y61+505HUG672OpRmIYG
- kLhgtNwsNFcN/SStNCUoMszciHvqEq7m2tS3otA60b63ledkSTt9vUbywDd+Fx4RExBq
- z26+yqwJGUTqpaTihVvPJHJtJ4PApGPCZdSvHLRwxZ1GMfNXiH8AVDs31b4OSla29uBX
- 6JXQ==
+ d=redhat.com; s=google; t=1775642513; x=1776247313; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=wl7wxwNvvDkcHef4Te7a8kkFngeE3QU8CtlN2AbUdAc=;
+ b=hvgPki2tpU7Ct022vI94A841Wk0xFvT/ueBOmJsdde+VxVPrDf7rcdn5DHM5RDnp5X
+ HoJjxI5uf8wUCebAu/NJXqd1RYWfbGFd4cM/jskjwKBwC/10LHSV3Mux1R98IFPCh1Ok
+ WLbtDxswa0T8VTzYQBlshGd8rx/PjK9vvGBSM4Jrpv/qWyuJjxgc14YW3/BPUxQwngoC
+ SJB5BImi5OXczY2yjfcofV1KKVW9Tjs8OExXcRzI0Wm0Z0fFTGPRLK2ZluHCCMWfa8Oi
+ GubWE1tzwEZtvqht5mlIFZmE+xQe266qKe+DUHWUo1FN7IwMQTHTdgaIPdyBYIisOOih
+ 1D/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775667372; x=1776272172;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JNWsc1Vb2/FFVZ+FiEtlLRVcdly+39Jh6AgLzzLmjt4=;
- b=FO0gvPdcZmN6NqKmcq8cGqHKSpgJPROxYhoesVHdSHlK9lpfKqlgTenAbkmNwGr2cP
- O82IyE4vxBGRb5fGAwsriEqq2KboE0FaZqW+ZkB83WPkWKPhQLU7kWln/ijr0M6LMLaP
- TP/q7XDfDbef8lRgDrwKUv3Ofnxw8xQDo9EEs6UOAAUJc2aj0As8FXV9XnjGqv/ZD1S1
- 5YcfayyLkjlw6KxoE7Ulu7Iag+iIM3YExB86VmdX+zLNZNj+igee1nrBK1kM7vzbDlly
- HSyq4gEv+Vxm+a0N78GjCmv6ZFFmG/sSL15pn7V7RBfELYLztDlhaLbMFClUoGFX944/
- aoPg==
-X-Gm-Message-State: AOJu0YwJtUfjHI++PRHhqqHJRRn+PbXbQBudrNHf4t0X8zxZVb9zUFSM
- f+G8OoyKV/U7th9OPYbtduKoBbmogfFqYIeakjnuqg7R1I2XVWN69QHAeZiLrdXggY4ixPdAFkq
- 7NBZorQPzhtHS89l1xT5SIeuaQyWsxrWJXzvg1eUsbr8mtc91kNDFIGfRLsrqAcrlC20QaLy5JJ
- /PzpRQwZUFDrwLBYGGBOuxfbFqNohq5QuBkfoTqg==
-X-Gm-Gg: AeBDiesL9ThOjRAKZTQPrg0eQmhA6vNL72kSrO76+thJe2HDcrfj4sg/myBakjqZ3r6
- PGY3LY97Tz6ScEKWadrh6ptkICyNM8sSLkRL1dyNDcEGD6Lj8zkU1oItfvmYZ9HrXc1SDX1DM2x
- W+ZKgoGvXuE474Esew+Z1NCspOh/aWKlOZYdx8ZYpL4sbJbcRANIa2S9vO7RrRYeCWNiMkPGoZZ
- O+AYk1J2vUlSUw1Q5+y89/+ddI/DkftSPyWIQz6zr3u9HX6ptuFn5iu9P8V8LrE0MDfpDl66b1F
- YV2F5SyI1udSYpTV5CCxYrf8pRHrHa+UmkxQbt8UNsEThCzt2x6veVkQYQgh6ulug1dTXwDCoKT
- p8UIVEpusJWBgSzOJPCRkeucvEZuv7LFuYcid+a5MSkl0
-X-Received: by 2002:a05:622a:4cc8:b0:50b:37a6:4f0a with SMTP id
- d75a77b69052e-50d62b7b3c3mr324406131cf.57.1775667372452; 
- Wed, 08 Apr 2026 09:56:12 -0700 (PDT)
-X-Received: by 2002:a05:622a:4cc8:b0:50b:37a6:4f0a with SMTP id
- d75a77b69052e-50d62b7b3c3mr324405301cf.57.1775667371693; 
- Wed, 08 Apr 2026 09:56:11 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d712c2617sm130491901cf.31.2026.04.08.09.56.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 09:56:11 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 07/14] vfio/migration: Fix incorrect reporting for VFIO
- pending data
-Date: Wed,  8 Apr 2026 12:55:51 -0400
-Message-ID: <20260408165559.157108-8-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260408165559.157108-1-peterx@redhat.com>
-References: <20260408165559.157108-1-peterx@redhat.com>
+ d=1e100.net; s=20251104; t=1775642513; x=1776247313;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wl7wxwNvvDkcHef4Te7a8kkFngeE3QU8CtlN2AbUdAc=;
+ b=MTiGnUXCloqsrLbm0iQI1xzX1cJFQZ4bQ7v+SffJ/hNgmkQ5FsNGbJn2umo+1xKZYy
+ iy4h1vSbFK3btu76e3SWNzobIC2ziudK9pg8lFpjYvqplhj8FLTKkH1DE6sHBJeQefnO
+ Lip+UHFbnshL61J1CpMSF6OIZFcznXNABgS9ZTv96glAdssq05dgvMFzppfkPOUd7RQ4
+ OR8Z9NO8eUfvk2sgcF1r14mFNz/318naRbBLY/ATSUkq6jd406ZV6bfaFPXyJzJTzTzs
+ t4jdYjQL0r5vu4HS08niP7M/07qCx6XlbzMWO/IyJQ/Td2E0ozyqJrF+7JXc68XRMEcr
+ PWsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVK6haz2Qn4Bdizh2yZmNy8Mkx+/ooZXf1G1i7Yh+GLibKmDz0jD+2g1SPpiDUAHeQa8Ka/Cm2W3Aq0@nongnu.org
+X-Gm-Message-State: AOJu0YzoCg3Mv8Tvcsinl3zkneZEgjqzxwC7nVgLZ/Zp664am3eDCDJt
+ 3BAApyD0wHHTzawB15K6L3EDsTxba58Ram1vW9ED02sltGNGphHLFgDut6Tarw59QMK8WeqSTbU
+ yQUChPJwSnptfOhPDSMF31hT2ONBrvb0RZzfxA0C1VAmDGKLIVGO2FImU
+X-Gm-Gg: AeBDiesLvfanG+h2xa/xEKKiG84DakIfhfvfvXV5m3suG+fFA5QPU1qj06YiZliQhb2
+ cdWvKBYZM6AddEIrh1AtrZfhFBfP3N3dYy1UVkzmI5lmVPE40auBZmCmI/Jsnzc5Zf8R+G6HWj4
+ absv9901ytGa9g1ByiDrXWP+rvNAEqgO7yq8YP/GYqO2Espn3rqVkGDHOPPRNkDvYVbnKxa2qbT
+ 6BTGqdM9HH/BNUJF5PFDGNXK0HaxWPAS3y0AwFqJQbwsxBEj0xpgjzLUaGLQwTciilFBxgSYB+W
+ QFbn0snzqHTA3mcF2p1wu0FVsMyR3Z2x7nfePOE4YqRV9zRTCvzWRUoFqvEROez9fX5qRXL/+hp
+ cveg/6fn1qeRPwFrJXfq4i2NeLN2veN2+SSNl4cLMBSxRrL8=
+X-Received: by 2002:a05:600c:5289:b0:487:22ad:403e with SMTP id
+ 5b1f17b1804b1-488994b34b4mr296660205e9.14.1775642513093; 
+ Wed, 08 Apr 2026 03:01:53 -0700 (PDT)
+X-Received: by 2002:a05:600c:5289:b0:487:22ad:403e with SMTP id
+ 5b1f17b1804b1-488994b34b4mr296659175e9.14.1775642512569; 
+ Wed, 08 Apr 2026 03:01:52 -0700 (PDT)
+Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4888a7165aasm630712975e9.14.2026.04.08.03.01.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Apr 2026 03:01:52 -0700 (PDT)
+Message-ID: <021768ba-9871-421d-8b45-80c5ade6a456@redhat.com>
+Date: Wed, 8 Apr 2026 12:01:51 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/15] s390x/pci: Implement migration for emulated devices
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
+Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260402022921.298818-1-kshk@linux.ibm.com>
+ <20260402022921.298818-15-kshk@linux.ibm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260402022921.298818-15-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -125,64 +167,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIO reports different things in its fast/slow version of query pending
-results.  It was because it wants to make sure precopy data can reach 0,
-which is needed to make sure sync queries will happen periodically over
-time.
+On 02/04/2026 04.29, Konstantin Shkolnyy wrote:
+> Implement zPCI device state migration, consequently enabling migration
+> of VMs that have emulated PCI devices, whether virtio or not.
+> Migration is allowed for devices whose function handle has the
+> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
+> state of its zPCI emulator.
+> 
+> Passthrough devices will continue to block migration.
+> 
+> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> ---
+>   hw/s390x/s390-pci-bus.c         | 112 ++++++++++++++++++++++++++++++--
+>   hw/s390x/s390-pci-inst.c        |   2 +-
+>   include/hw/s390x/s390-pci-bus.h |   2 +
+>   3 files changed, 110 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> index f339a0fd94..b3037b9a8a 100644
+> --- a/hw/s390x/s390-pci-bus.c
+> +++ b/hw/s390x/s390-pci-bus.c
+>...
+> +static const VMStateDescription s390_pci_device_vmstate = {
+> +    .name = TYPE_S390_PCI_DEVICE,
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .post_load = s390_pci_device_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT32(state, S390PCIBusDevice),
+> +        VMSTATE_UINT16(uid, S390PCIBusDevice),
+> +        VMSTATE_UINT32(idx, S390PCIBusDevice),
+> +        VMSTATE_UINT32(fh, S390PCIBusDevice),
+> +        VMSTATE_UINT32(fid, S390PCIBusDevice),
+> +        VMSTATE_BOOL(fid_defined, S390PCIBusDevice),
+> +        VMSTATE_UINT64(fmb_addr, S390PCIBusDevice),
+> +        VMSTATE_UINT32(fmb.format, S390PCIBusDevice),
+> +        VMSTATE_UINT32(fmb.sample, S390PCIBusDevice),
+> +        VMSTATE_UINT64(fmb.last_update, S390PCIBusDevice),
+> +        VMSTATE_UINT64_ARRAY(fmb.counter, S390PCIBusDevice,
+> +                ARRAY_SIZE(((S390PCIBusDevice *)0)->fmb.counter)),
+> +        VMSTATE_UINT64(fmb.fmt0.dma_rbytes, S390PCIBusDevice),
+> +        VMSTATE_UINT64(fmb.fmt0.dma_wbytes, S390PCIBusDevice),
+> +        VMSTATE_UINT8(isc, S390PCIBusDevice),
+> +        VMSTATE_UINT16(noi, S390PCIBusDevice),
+> +        VMSTATE_UINT8(sum, S390PCIBusDevice),
+> +        VMSTATE_UINT8(pft, S390PCIBusDevice),
+> +        VMSTATE_UINT64(routes.adapter.ind_addr, S390PCIBusDevice),
+> +        VMSTATE_UINT64(routes.adapter.summary_addr, S390PCIBusDevice),
+> +        VMSTATE_UINT64(routes.adapter.ind_offset, S390PCIBusDevice),
+> +        VMSTATE_UINT32(routes.adapter.summary_offset, S390PCIBusDevice),
+> +        VMSTATE_UINT32(routes.adapter.adapter_id, S390PCIBusDevice),
+> +        VMSTATE_BOOL(iommu_enabled, S390PCIBusDevice),
+> +        VMSTATE_UINT64(g_iota, S390PCIBusDevice),
+> +        VMSTATE_UINT64(pba, S390PCIBusDevice),
+> +        VMSTATE_UINT64(pal, S390PCIBusDevice),
+> +        VMSTATE_UINT64(max_dma_limit, S390PCIBusDevice),
+> +        VMSTATE_PTR_TO_IND_ADDR(summary_ind, S390PCIBusDevice),
+> +        VMSTATE_PTR_TO_IND_ADDR(indicator, S390PCIBusDevice),
+> +        VMSTATE_BOOL(pci_unplug_request_processed, S390PCIBusDevice),
+> +        VMSTATE_BOOL(unplug_requested, S390PCIBusDevice),
+> +        VMSTATE_BOOL(interp, S390PCIBusDevice),
+> +        VMSTATE_BOOL(forwarding_assist, S390PCIBusDevice),
+> +        VMSTATE_BOOL(aif, S390PCIBusDevice),
+> +        VMSTATE_BOOL(rtr_avail, S390PCIBusDevice),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+>   };
+  Hi!
 
-Now with stopcopy size reporting facility it doesn't need this hack
-anymore.  Fix this by reporting the same values in fast/slow versions of
-query pending request, except that the slow version will do a slow sync
-with the hardwares.
+I assume this will likely break backward migration with old machine types?
 
-When at it, removing the special casing for vfio_device_state_is_precopy()
-which may reporting nothing in a fast query.  Then ther reporting will be
-consistent to VFIO devices that do not support precopy phase.
+Could you please try whether migrating a s390-ccw-virtio-10.2 machine from 
+an old version of QEMU to a version of QEMU that includes your patches, and 
+back from the new version to the old version works as expected?
 
-Copy stable might be too much; just skip it and skip the Fixes.
+If not, you might need to add a ".needed = ..." line to the 
+s390_pci_device_vmstate, with a function that checks a variable from the 
+machine state whether the PCI state is allowed or not. And then enable that 
+variable only on the newest -11.1 machine type once it is available.
 
-Cc: Avihai Horon <avihaih@nvidia.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- hw/vfio/migration.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
-
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 1e999f0040..57e88c9dcf 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -587,19 +587,23 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending,
- {
-     VFIODevice *vbasedev = opaque;
-     VFIOMigration *migration = vbasedev->migration;
--    uint64_t remain;
-+    uint64_t precopy_size, stopcopy_size;
- 
-     if (exact) {
-         vfio_state_pending_sync(vbasedev);
--        remain = migration->stopcopy_size;
-+    }
-+
-+    precopy_size =
-+        migration->precopy_init_size + migration->precopy_dirty_size;
-+
-+    if (migration->stopcopy_size > precopy_size) {
-+        stopcopy_size = migration->stopcopy_size - precopy_size;
-     } else {
--        if (!vfio_device_state_is_precopy(vbasedev)) {
--            return;
--        }
--        remain = migration->precopy_init_size + migration->precopy_dirty_size;
-+        stopcopy_size = 0;
-     }
- 
--    pending->precopy_bytes += remain;
-+    pending->precopy_bytes += precopy_size;
-+    pending->stopcopy_bytes += stopcopy_size;
- 
-     trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
-                              migration->precopy_init_size,
--- 
-2.53.0
+  HTH,
+   Thomas
 
 
