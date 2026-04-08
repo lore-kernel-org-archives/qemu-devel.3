@@ -4,112 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA5310F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BCE410F9975
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYJz-0001L4-SX; Wed, 08 Apr 2026 15:12:16 -0400
+	id 1wAYR0-0006z9-2X; Wed, 08 Apr 2026 15:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAYHL-0005lA-Kq
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:09:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wAY0O-0005Nw-Er; Wed, 08 Apr 2026 14:52:00 -0400
+Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAWCU-00029W-An
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:56:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775667382;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=y3AUfIp5hhwSuzshcuDyBJj3UN6iMbkU2aTwINm6YxQ=;
- b=W8wjzC1tFbNZnUWzEGHWZ2sjc8Zk4RS+os+5pErowD+WSAtH2S8M/2hf8YegUh35wLueM+
- Ih0cFpDN0gkzdAyIZA9ippmYGpGonCYj7fxUZ4oAtDpZ5Z4Ek/4byQixnnn787PMGLnwje
- RTcRBTvcqCj/LWMNraitsu+hoQeypiY=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-522-TrcK_ewpO_mM-uwv1n1J7g-1; Wed, 08 Apr 2026 12:56:20 -0400
-X-MC-Unique: TrcK_ewpO_mM-uwv1n1J7g-1
-X-Mimecast-MFC-AGG-ID: TrcK_ewpO_mM-uwv1n1J7g_1775667380
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-50d812c898cso3469351cf.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:56:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775667380; x=1776272180; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y3AUfIp5hhwSuzshcuDyBJj3UN6iMbkU2aTwINm6YxQ=;
- b=Q3fryF58KvtwuXxYSulS37QYyiJzGUWz92WgEHqe/Wl9gp2MPyWAQ3xf4T6mUjf5ie
- ypXPLgM4ModjThEqy/ygN2y5JvsGEAnwmIjLQimyeDZeDt92UXl6sr423tWD/N7ZGTvu
- 4u2ecPVQ01LzMOBCoMDBush+9rY1Csjk29pQqaQmwnNI0GRnsSyj+I52REz8NsZixWd1
- SIztbqzi3rrxOkQ1SDEbVszJYgQItJYTXvpW3uYB4x5FDBOnvea7UKdxA4z5M4Xnw71h
- 7ThcBECtzWE84c2n4fuCItGvlPOWM1HYeiC2GNnmBkbs24u6bUO3rhBL6wRw9fVmJvJe
- ijUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775667380; x=1776272180;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=y3AUfIp5hhwSuzshcuDyBJj3UN6iMbkU2aTwINm6YxQ=;
- b=f7lOO062fQzE2BTCm2lKxjXkEyXpwPgFKUanvWAy8HqAC4vWD8gVo6Gu61orIQ9EwT
- ziJIVhaVsT945GiSB/6p4jS1NuFkQxgc4ODffXGAE8IYSWhxD/Sbt3NZ8k2O8rEH6NB4
- UHg5zDdZfwKTVom1FPtdLpbGSqbND/ZCgNmayrO2a4VUnmBRBK74doWXawF+JteGI/SS
- /+G2QlRGrZocsTJYJG8KU64qsHSqhQl1cGf0iQcKRDFRvpaSh9jJMdWyNzdebDAU2gcw
- bWoaA9XuEZx+3ix1BYGDoJ4UWi7twjSGgr0jhd3XjnI6zLki1q3fmWo9ipRNTYNYCkw8
- FICA==
-X-Gm-Message-State: AOJu0YyAYBpaUB7Q54ZlMqWc8ngL2sBtBCJm/GW/RLsgvFA0FsyIxNPF
- L0X3LVZSWp35160MyXdJdR9J/VnqJhxeph6YdKHQTwY0VZLLifryP6hsHwGhUakvReiZ2lXDmTu
- mG1MtSHME4zpy+dCuyY+aAPDYhm/UhA1+77ooyHM1dirtYVpDt9FCtMLYtkHDvTIIBuUNoIqAJd
- CBMx9hD5CE3vwnqpzg0iNfQCTQAMRYVm4suu555Q==
-X-Gm-Gg: AeBDieuZThkbOJyLTR3u3Z8pTF4vr/DBnJEzlJTY8lk2b49Wv0pnXO504jzXPq1QWXP
- 5cw/xlfxE0F1cJManaXyYfYuPPh/fa/QLuMPGzo/4oWRuISYfU+8rTio+3+dEeUNFvhDSqzKyTG
- KIx37Cwj7FB8ndijJhxr/mg7QVNg1qvvoA3ye4Dvv0pzM06fU4WF6dWD48J2YP89fkHcAaM7Ldx
- y7LdFL9YRT7sca53q4doHa+Hld+89s1FHlfyuCLrVG+YDjIToD3gMqig6HK5maDgoRH63SxyWEI
- 8S3m3MJjo3NWUPPanjsvzO+4Yvjib+I/RADa3vWgQcFIZcjMZ5r5rafORy9sNmp++TYvmsxZevE
- rvCBilHIihFcYtIBj39mQrl1i+i/5JkHTM78jD70uWVjM
-X-Received: by 2002:a05:622a:229f:b0:50d:7b0c:35e7 with SMTP id
- d75a77b69052e-50d7b0c40a9mr260168291cf.43.1775667379767; 
- Wed, 08 Apr 2026 09:56:19 -0700 (PDT)
-X-Received: by 2002:a05:622a:229f:b0:50d:7b0c:35e7 with SMTP id
- d75a77b69052e-50d7b0c40a9mr260167531cf.43.1775667379154; 
- Wed, 08 Apr 2026 09:56:19 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d712c2617sm130491901cf.31.2026.04.08.09.56.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 09:56:18 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 12/14] migration: Fix calculation of expected_downtime to take
- VFIO info
-Date: Wed,  8 Apr 2026 12:55:56 -0400
-Message-ID: <20260408165559.157108-13-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260408165559.157108-1-peterx@redhat.com>
-References: <20260408165559.157108-1-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wAMT0-0002v4-OD; Wed, 08 Apr 2026 02:32:48 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfout.phl.internal (Postfix) with ESMTP id 3C3ACEC00A7;
+ Wed,  8 Apr 2026 02:32:43 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-03.internal (MEProxy); Wed, 08 Apr 2026 02:32:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1775629963; x=
+ 1775716363; bh=6sgWx8YzUsHjBd1/s/nvSSHgBxfyDiPlpUjgjITEFrY=; b=a
+ DPN4tSl68lERFVB8W0BqJdzJ1/9EpWLu1QDkcsYTskANY9FesbQVYz4jFysxCw+y
+ 02uNfQEmztZgas83iCrjZ2il6b88uqNhr8TwyQ4IAsxAPW5YdgkhdXK873rRzOrU
+ UF3s7e9tlRS36zp7I/c+A9EblEUSwxW4j0UNktJ/1djN+kIfFjQeh/HBJNAs+8Ks
+ COivPIULzwKMotVd3/ndrCJGmrlUjRJrBkutqsbTGl7Z39ccN2bBtBE07y6itjw7
+ Bo8MOpoimvdfth8VLAmXDbOgWFW8HfZ5rA4BNEvbpumHONlbBXPo2jB/s9WDfplu
+ b6QLf2DCEw6YHFroYnW4g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1775629963; x=1775716363; bh=6sgWx8YzUsHjBd1/s/nvSSHgBxfyDiPlpUj
+ gjITEFrY=; b=QOjwt3BqGjuZK8tWuJFe2mQNPECfCaZztaVx9wPG5e+g07r2kHl
+ PlJDwcyVCWSks9OgaAMJwByIuvLUIQbL8BAlLUKML/E13PuIE7KnjQ3iH8P99/Bn
+ Z2w4rtgycDUTTrWRjLz7urpxyzI09prMcHwDkuzdZq9H6WJVbEzhQK/kA03iNaFg
+ Dao9YWDliWTpn9IlvgW+YSGKsQ/guZEfewNE+A4z6AagoXbSssQLv4uADw2O87I3
+ W1imoNmgdn52YTS0taz/ls0qquf0aPA6uZD/tsYKTrMfdPNBhEZ4YfDlFbxrcbd5
+ h3ibnJ1AROLuygiQndyAI+4BqTh55AKqBRA==
+X-ME-Sender: <xms:ifbVabV-ANH4koEJ7bG1z--v1o0u00IQBQyHJrXsYlQyD8lWOw4oew>
+ <xme:ifbVaZLwm-cn_QXxtUZC_ioUhMIOIZLJYpFFoMFOo7qIU2p9fqdcQLrandHW1y9LA
+ wlIka69stU5sZKff_wEJKv87oz9Cfwi635XI5MYz9OEwMdNQLwFosk>
+X-ME-Received: <xmr:ifbVaQ8ici6TcVzCG_NIt58h3-D2Bkf100lZ9Xb2lFDZyDiXDYuHKEC5NXgT_bTOU3N0rdkYK_HyDz_ttH_e2YHdZHrVNrM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvvdekiecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhsucfl
+ vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
+ hnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffejveen
+ ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
+ hirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopedujedpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtoheprghlvgigrghnuggvrhesmhhihhgrlhhitgihnhdrtghomh
+ dprhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthhtohep
+ qhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrgi
+ esrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrrhhoshgrshesshhushgvrdguvgdp
+ rhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehsthhgrh
+ grsggvrhesshhtghhrrggsvghrrdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslhhotghk
+ sehnohhnghhnuhdrohhrghdprhgtphhtthhopehhrhgvihhtiiesrhgvughhrghtrdgtoh
+ hm
+X-ME-Proxy: <xmx:ifbVaXM4jJioA24-QLKV2dTRrqbmw90pZVH1-6aEKdik6PDhqWoQTg>
+ <xmx:ifbVac12aygcrIAaAXSkanT7SyN6C32BvKLgn8feKRGo3PO2guXSzA>
+ <xmx:ifbVaQcP4N5zR3T5itAqF8wkkPUb8rkOwYJlM7vthPCzIbd1fJTBnw>
+ <xmx:ifbVadbtWe92kX9okso_0JJO3Ea6XrBbeGweB9DBz5byAoXnNBOLUw>
+ <xmx:i_bVaR7P4xbRTTwVTcLoj3yv6YL44bzwkBrSRoxMApRMICTD-v3kltWU>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Apr 2026 02:32:40 -0400 (EDT)
+Date: Wed, 8 Apr 2026 08:32:38 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Jesper Devantier <foss@defmacro.it>,
+ =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v5 5/8] hw/nvme: add migration blockers for non-supported
+ cases
+Message-ID: <adX2hv2WOpt9ZFzJ@AALNPWKJENSEN.aal.scsc.local>
+References: <20260317102708.126725-1-alexander@mihalicyn.com>
+ <20260317102708.126725-6-alexander@mihalicyn.com>
+ <20260407153426.GA238768@fedora>
+ <CAJqdLrpzZjs0Zf52sB0R149D6hCVYEDqAW36BYAaPW+uhK=g6A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="3S01q7me0hliNLUy"
+Content-Disposition: inline
+In-Reply-To: <CAJqdLrpzZjs0Zf52sB0R149D6hCVYEDqAW36BYAaPW+uhK=g6A@mail.gmail.com>
+Received-SPF: pass client-ip=103.168.172.151; envelope-from=its@irrelevant.dk;
+ helo=fout-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,94 +124,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU will provide an expected downtime for the whole system during
-migration, by remembering the total dirty RAM that we synced the last time,
-divides the estimated switchover bandwidth.
 
-That was flawed when VFIO is taking into account: consider there is a VFIO
-GPU device that contains GBs of data to migrate during stop phase.  Those
-will not be accounted in this math.
+--3S01q7me0hliNLUy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fix it by updating dirty_bytes_last_sync properly only when we go to the
-next iteration, rather than hide this update in the RAM code.  Meanwhile,
-fetch the total (rather than RAM-only) portion of dirty bytes, so as to
-include GPU device states too.
+On Apr  7 20:39, Alexander Mikhalitsyn wrote:
+> Am Di., 7. Apr. 2026 um 17:34 Uhr schrieb Stefan Hajnoczi <stefanha@redha=
+t.com>:
+> >
+> > On Tue, Mar 17, 2026 at 11:27:05AM +0100, Alexander Mikhalitsyn wrote:
+> > > +static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_=
+dev, Error **errp)
+> > > +{
+> > > +    uint64_t unsupported_cap, cap =3D ldq_le_p(&n->bar.cap);
+> > > +    char blocker_features[BLOCKER_FEATURES_MAX_LEN] =3D "";
+> > > +    bool adm_cmd_security_checked =3D false;
+> > > +    bool cmd_io_mgmt_checked =3D false;
+> > > +    bool cmd_zone_checked =3D false;
+> > > +
+> > > +    /*
+> > > +     * Idea of this function is simple, we iterate over all Command =
+Sets and
+> > > +     * for each supported command we provide a special handling logi=
+c to
+> > > +     * determine if we should block migration or not.
+> > > +     *
+> > > +     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is al=
+ways
+> > > +     * available to the guest, but if there is only 1 namespace, the=
+n it is
+> > > +     * safe to allow migration, but if there are more, then we need =
+to block
+> > > +     * migration because we don't handle this in migration code yet.
+> >
+>=20
+> Hi Stefan,
+>=20
+> first of all thank you for looking into my patchset.
+>=20
+> > What would be required to migrate multiple namespaces?
+>=20
+> It should not be very complex, and starting from v4 I've added
+> VMStateDescription for nvme_ns, but I'm trying
+> to be extremely careful here, and keep patchset as small as possible
+> (and easy to review), because I it is my first
+> contribution to QEMU and I'm newbie with NVMe protocol. I wanted to
+> avoid any non-absolutely-required features
+> on the first approach and then add all extras after and on-demand.
+>=20
+> My current understanding is that to support multiple namespaces we need:
+> - VMStateDescription for nvme_ns [ done ]
+> - add logic to handle (NvmeCtrl)->namespaces field and save info about
+> attached namespaces
+>   to some temporary field (use VMSTATE_WITH_TMP?)
+> - on restore we should iterate over namespaces attached and call
+> nvme_attach_ns(n, .)
+>=20
+> Feels like this is it, but I can miss something. Please, let me know
+> if you believe that implementing this is absolutely
+> required and I'll look closer and add this in v6.
+>=20
 
-Update the comment of the field to reflect its new meaning.
+I do not think multi-ns support is a hard requirement. Multi namespace
+support is among the features that are mainly used for driver/host
+test and verification purposes.
 
-Now after this change, the expected-downtime to be read from query-migrate
-should be very accurate even with VFIO devices involved.
+--3S01q7me0hliNLUy
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration-stats.h |  8 +++-----
- migration/migration.c       | 11 ++++++++---
- migration/ram.c             |  1 -
- 3 files changed, 11 insertions(+), 9 deletions(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-index 326ddb0088..1447316802 100644
---- a/migration/migration-stats.h
-+++ b/migration/migration-stats.h
-@@ -31,11 +31,9 @@
-  */
- typedef struct {
-     /*
--     * Number of bytes that were dirty last time that we synced with
--     * the guest memory.  We use that to calculate the downtime.  As
--     * the remaining dirty amounts to what we know that is still dirty
--     * since last iteration, not counting what the guest has dirtied
--     * since we synchronized bitmaps.
-+     * Number of bytes that were reported dirty after the lastest
-+     * system-wise synchronization on dirty information.  It is used to
-+     * do best-effort estimation on expected downtime.
-      */
-     uint64_t dirty_bytes_last_sync;
-     /*
-diff --git a/migration/migration.c b/migration/migration.c
-index f12cd9efd3..4010e5dcf5 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3240,18 +3240,23 @@ static void migration_iteration_go_next(MigPendingData *pending)
-      */
-     qemu_savevm_query_pending(pending, true);
- 
-+    /*
-+     * Update the dirty information for the whole system for this
-+     * iteration.  This value is used to calculate expected downtime.
-+     */
-+    qatomic_set(&mig_stats.dirty_bytes_last_sync, pending->total_bytes);
-+
-     /*
-      * Boost dirty sync count to reflect we finished one iteration.
-      *
-      * NOTE: we need to make sure when this happens (together with the
-      * event sent below) all modules have slow-synced the pending data
--     * above.  That means a write mem barrier, but qatomic_add() should be
--     * enough.
-+     * above and updated corresponding fields (e.g. dirty_bytes_last_sync).
-      *
-      * It's because a mgmt could wait on the iteration event to query again
-      * on pending data for policy changes (e.g. downtime adjustments).  The
-      * ordering will make sure the query will fetch the latest results from
--     * all the modules.
-+     * all the modules on everything.
-      */
-     qatomic_add(&mig_stats.dirty_sync_count, 1);
- 
-diff --git a/migration/ram.c b/migration/ram.c
-index 686162643d..d927ad7508 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1148,7 +1148,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-             RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-                 ramblock_sync_dirty_bitmap(rs, block);
-             }
--            qatomic_set(&mig_stats.dirty_bytes_last_sync, ram_bytes_remaining());
-         }
-     }
- 
--- 
-2.53.0
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnV9oQACgkQTeGvMW1P
+DekRzwf+PTMf6ZJJuEms+detZgmHBwcev9L5Et6V6xyu9MPFzntE+OB+azdWPQiG
+KoxKi4snan99i+4Mqu3UHgxTVde+TzA4Yx1I/Mr1wxSBaNlSbN2Y9WqCZtSWECao
+dBTrHFt20vmXVmFzKLVipwB2Se+oQWU4D12Hlmz/bVGAIprxQAwYk2S9fATHIgqd
+yV9/WL+lfsl0Mgu9ysMpP6tCDSWE4diAHyB3a8SzHE6aFIYmd+S2o3ZT/dF3bHHK
+WIHmKEH6YPagzKBiaDqlClwUuKJmJndViQ3vzHsiWkrgrxUZikWEDxqCM3/j9Dsq
+UaiKTnL65W44tx4R7im7Um3MWbUGfw==
+=sKm1
+-----END PGP SIGNATURE-----
 
+--3S01q7me0hliNLUy--
 
