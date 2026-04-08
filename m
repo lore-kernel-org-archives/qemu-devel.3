@@ -4,136 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C716010F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28EF410F9974
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYN1-0007Av-IA; Wed, 08 Apr 2026 15:15:23 -0400
+	id 1wAYQB-0005AH-MJ; Wed, 08 Apr 2026 15:18:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAYJz-0001Kx-Mb
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:12:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wAY09-00052P-5g
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:51:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAKPJ-0005ct-6g
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:55 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 637M3Luw1619750
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- eDXxY8veDppPGZYB4pvyhydqmDwea2dSVqYJLsKwO3E=; b=IafqgEBUstDrhJzv
- JMSNGpDkUKq1Ws11RTBe3+WV4aTVwx2twf15D27E1Hw7Chu3FpfS6dmsMSckqbAK
- OoZQAPJCwFUIDp2BYxIDdMwczsfbr0ncRO9h136lGiVuVLW+Ouyfzvf2dXGHdpwG
- dv95Byp09gEqS/u4WLh5SpjyZ1FnK/oE6jzskKoHkkfnwLY0KcjYrTKbllGFE1sN
- z1SGPmzRH2MSTZ5Esj2xxYoXh9aKrkOIbuBVZCELAsK1We8Vioy5SLJrWi+uORoR
- Cnjr4IfVjrHi2CdSlU6X1YMyAJRo6MC1t11qt+GJ82mJWuEFEJh0A84IVvsgW1yX
- oZP7Qw==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddacrgxjr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:36 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-1279caef718so9083044c88.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wATyC-0005Gk-BM
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 10:33:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775658806;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oz9DrFRYE+J78tlCHPETBIdJkEH0BWMEs7SxSitP7n0=;
+ b=ikcQkPdKGpR0hUMa6IdqwrG7d3P/NUhP4L08P00Yr811Mn+a3c+VPDIjPhuvy1bBTTrFn/
+ IVJu72UqYSJ1/MzXDevaTlOdjnIdkjGVXKvZBO4Uj+AgAJa1zPMR2C+uhH6ZBGBIe3Hze/
+ O0f7H7D7ZSMCoxy1qQJUiEmyKTHxp8s=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-uxrfCcLMPa6etNFusWI6vg-1; Wed, 08 Apr 2026 10:33:24 -0400
+X-MC-Unique: uxrfCcLMPa6etNFusWI6vg-1
+X-Mimecast-MFC-AGG-ID: uxrfCcLMPa6etNFusWI6vg_1775658803
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43d103e46c3so4454707f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 07:33:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775622035; x=1776226835; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eDXxY8veDppPGZYB4pvyhydqmDwea2dSVqYJLsKwO3E=;
- b=A8GYssb476l/NZKY/GJmG56UaruBmLkGOTJGxOApTwtRr/Qz5iXn3JHW6x1rvXi+s9
- 5wpv0TJrd9x2nx/hkNcf8B2bA+EZzfNkNLRp7leNIdD5Xj/dpYS++mOFoVRQ0ykQb/H1
- Uc7UuTeUkPK79n+vJagTJTn+3K1cPyNwWoEL9KMHaWtbtgEq46TawD2jangHuzOGsgnv
- 7ousko5FrNjcuIGEjyz/DNPKbN2q0CQOMZCE7HAKh4dpm+qu5JLkcQ0W9Y2j7mOxxkiX
- +PWdru1FL0G+PSqLd8zf/3+dcLU8GJU8yYKkiFi9lwXgIiAUW4zqhSD/8/iJauYx1I2T
- d4PA==
+ d=redhat.com; s=google; t=1775658803; x=1776263603; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=oz9DrFRYE+J78tlCHPETBIdJkEH0BWMEs7SxSitP7n0=;
+ b=s/EGCiZ9Rv7V3UIVKnlINMCiZARyR5O1xrGPClbKVCWaget28UuaS3QTUstbDZ0Nes
+ qqxvzR9lDIHJlTcbvZpDl9AvxlVT4uRZ2Dg0Ezx9MDdfIKWfj2ER/gbG8bhOw7NhbhXY
+ WrvaxyWJyWYCniAB6yam9wqWb3vIK/fCgwGVqcqZRuSeK+/znkkvukT5vtn8VLbNXqHf
+ P87sNFpuYRAM76+/Enu9PUhMJfUH/9bG+icuDCwgsEAdMNeV5ynrJwctWbUaE5YWDYGR
+ Mhx2kaFzJ5DDYZPszosATry/NFUQge6nENwbg1DXOPSUOoC1OzhtCGXR5ZMhQl4YMFon
+ 7i4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775622035; x=1776226835;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=eDXxY8veDppPGZYB4pvyhydqmDwea2dSVqYJLsKwO3E=;
- b=aTTi8UqzLd3v+ezwYQcnmVOj1DWidYwyqOISd+XopQ0aHDQ8D9MHHdytZWSBtESM06
- JP2e0M6eL3FsZM24z98RTrsXUT/B1SUlmYXsxHWiRP2StRCOyAL9dDmQOQ16Hil6h4Oe
- rrTjPlU2qYdN5MDOCr2wmo2tP/CPsZ8xgEyc8dhRzYgfAMp2A+vZh8fJLFwCfnq+KuhP
- aPs7Cn+S+ZISfpAirvC/MGbPBmuaydMV2TwRJrlckMrEtVFq5ysXscWCoJjJKpF2tk41
- dYEXxqMsh7T5qjmEFepHTToEL2FH6P3QObe10fmR3Zho6iaqzCWZAf2UTRlsQV24LEYj
- yEnw==
-X-Gm-Message-State: AOJu0YzGgx0cel2WmzD4UNzacvPwQDlvi6IZG55/BvOVLuoZyZul2xcP
- H4elzuYlMy1yzXhtkr+RSCU+GBVSFW15d/vZcHeLMn/mqJ4kPVTp8R+wIuuvicdMZoGAbhCTLGA
- O0AEQZ0k/sDlSvuzAFJt25tP3VnyQwbyW/VP0KjJQb3jUq+xbnplT+jFoms5lrNav6A==
-X-Gm-Gg: AeBDietCzrvT2Ws7PZ9N+L7zfWl/hTyxYH10i+pQ7abPUgLzjQBZS0TpZVcPT/EH95k
- i5fT8PsX2L3fmcx4DDmvatYeLAAhBosdmsQGlOknvd0gcJiUoPc57XCl1XHjefAlnE673bESqlF
- QDDV/iXEoxYejIvZDMDx7G0jyOIIok0FGOm9EcPRGf9jNzxr0BFvtVOdRV9VwvMmBhUNjhWONQI
- iTMitGnmFWuAdBMqw3zAQwY+33l76uYql72Y0NXV9bu4v+Mm21vEzZBJLss+mSXXwM/YutUZ/Mc
- zA1QfHtb9SKVaSCxt96ViiZkg3MXT8TJ3ZZCKJuybdAk0/Tm+f2ZL5Q8STQg7yB8nww0ERSKbOq
- hf5QxWFGhR/WcA4VRoioNCCEBYEgpumxllOnHPifRQ0PyBwhOFZFZkOnjfiuCG8clPPnblw==
-X-Received: by 2002:a05:7022:e14:b0:127:35af:1446 with SMTP id
- a92af1059eb24-12bfb778c4dmr9876277c88.36.1775622035419; 
- Tue, 07 Apr 2026 21:20:35 -0700 (PDT)
-X-Received: by 2002:a05:7022:e14:b0:127:35af:1446 with SMTP id
- a92af1059eb24-12bfb778c4dmr9876261c88.36.1775622034929; 
- Tue, 07 Apr 2026 21:20:34 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.34
+ d=1e100.net; s=20251104; t=1775658803; x=1776263603;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oz9DrFRYE+J78tlCHPETBIdJkEH0BWMEs7SxSitP7n0=;
+ b=cXPiXQdYqvTF27QjUTGZ2QKtb37jqJ53SD7hQzQ43q1BcYAibfz0gyICIEOE6qSkjR
+ A1/GGBarR2MqaALGNT7uPtQBkODA6nGzbo6fHoSpzJNFIqdN2/CzpkBLjdkgaHsEAJnu
+ 2qLVPV1yW6rC81uq30BJtwlbDi5Pz3ItfG28M1aff8kN6Xtk75S3k+yGG9COp5GFkm5V
+ Fy0D32I/Y/c8/obbDp7D4cjp/Uv/qQ3vDvw53G4VcsFFNiFK29sBQv8E3MPT3z6lr5EH
+ 9Ve0mXCjZAsEOEIJ5wfmanMp4Vqr82kKppZsYrsmrFV6UaMjNuUauCpak7BnXQwiDLWn
+ ChyA==
+X-Gm-Message-State: AOJu0Yx/vZndbr8ZvHR0ruPgJpXpmKxNSyAt4NfdXNzlUA9uTD9hd/w1
+ NocjFOhTG2GdcZZAI9R1yvGMTq1yUzd1YkoUEchpuZCU9n36Za4Ibs9wuKgHg/0420gMGLAHn1I
+ dFnl7c6Ryh/8ICkTqXILvJ7T60y0W2Pz78Z0PXbieO3kJN70QQa/wKbZc
+X-Gm-Gg: AeBDievv++BhdReN0EhuJbXIceh8+w8MaoDeGOlvFeB7M7PRtftNSqDLIhwpUI79YM7
+ 1guJlhnkIjLywq8eFOA4HgqxcgSZ1xykdBTBsKfU++XRS/RV/YGlLulPZiAOcnKCAxVHmF6Mq/y
+ tR/IQmNoPdClkW4cgfxSai03v/Vt3B4BUbkVEYngAFUIVfieo3cWnZVO27OclovriNtTxqT0nn4
+ mCgiJi+KHvcfqNd66kCOGT6Eeu1WzHXzxRn0sD4buSXUf+9FOb4egshIxmNeNvGNLONk5QEkrp7
+ un71xbD3GQ2JP9/uN/23q160aSeEdKBbFQSHCNhBw6YaESBzoiY1+jye+8EKwCfB/EC/aAz5lqD
+ J+2z0JSpNpg4mYkSImYOys/zLeMBnrUlnVxM9DLY=
+X-Received: by 2002:a05:6000:2512:b0:43b:852d:a38e with SMTP id
+ ffacd0b85a97d-43d292ff3cdmr29731851f8f.39.1775658803231; 
+ Wed, 08 Apr 2026 07:33:23 -0700 (PDT)
+X-Received: by 2002:a05:6000:2512:b0:43b:852d:a38e with SMTP id
+ ffacd0b85a97d-43d292ff3cdmr29731803f8f.39.1775658802683; 
+ Wed, 08 Apr 2026 07:33:22 -0700 (PDT)
+Received: from fedora (nat-88-212-17-233.antik.sk. [88.212.17.233])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d1e4d27a8sm59682188f8f.17.2026.04.08.07.33.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 21:20:34 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v4 26/28] target/hexagon: Add TCG overrides for transfer insts
-Date: Tue,  7 Apr 2026 21:19:51 -0700
-Message-Id: <20260408041953.1899532-27-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
-References: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
+ Wed, 08 Apr 2026 07:33:21 -0700 (PDT)
+Date: Wed, 8 Apr 2026 16:33:18 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Kirti Wankhede <kwankhede@nvidia.com>, 
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
+ Joao Martins <joao.m.martins@oracle.com>, Alex Williamson <alex@shazbot.org>, 
+ Yishai Hadas <yishaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>, 
+ Pranav Tyagi <prtyagi@redhat.com>, Zhiyi Guo <zhguo@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>, 
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH RFC 10/12] migration: Introduce a helper to return
+ switchover bw estimate
+Message-ID: <adZmzrYe34UNYZEj@fedora>
+References: <20260319231302.123135-1-peterx@redhat.com>
+ <20260319231302.123135-11-peterx@redhat.com>
+ <aca2rpCPVqb-y2IY@fedora> <adU-f0qD2ejP3BwX@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: -91ds-W0TGBux9kOdCSqf6hroONDq_sR
-X-Proofpoint-GUID: -91ds-W0TGBux9kOdCSqf6hroONDq_sR
-X-Authority-Analysis: v=2.4 cv=WZs8rUhX c=1 sm=1 tr=0 ts=69d5d794 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=LN73x9Sj_Gq4gUX8wwYA:9
- a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNiBTYWx0ZWRfX1DDiIH6ay3pF
- 21gkBKTdQ9dgd1ofkWMroe+oy1b83N32Eti8Y3LilMEaAeeEv7dCDNl+/v6asNOHpSvQ2czv8xf
- GrutgkeArutOOjSQGJRmHwROV16DuIw/cogDYp/oxX8twA43puMrlMXpbOnSOPc/ahitEwId1Hn
- 7ECWRwfGc3soLBaRhhmt1sE9CCZnDJAq2sl+UNULLZPiu1M9cAz6SZSJVP8n5UkMETVFztU0ZG3
- /aLHJWhyB+uy1Dt4GsflVXVAALld1HeQLNH0+/duNvAQqME6i++j/6FC4qTLrp1YD6+VCW6G5mf
- NKIle851lxbaRJvzg67YiijHlapHjn/8sPHJ0ZTLuTYIDvsfWWqJrNstzQfIYyGu7IRQXUw0kyQ
- KCCoQHxZT/ieo8b7LqjtquHpMFGOA1rRhrEPQJRwP1i7FgMdMCx6NZZwGIUprvQZmg4JKrMRfik
- 4O5uPQdAIaNLP7+oPUg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 adultscore=0 phishscore=0 clxscore=1015
- bulkscore=0 lowpriorityscore=0 spamscore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080036
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <adU-f0qD2ejP3BwX@x1.local>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,25 +127,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpSZXZpZXdlZC1ieTogVGF5bG9y
-IFNpbXBzb24gPGx0YXlsb3JzaW1wc29uQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1ieTogQnJpYW4g
-Q2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIHRhcmdldC9oZXhhZ29uL2dl
-bl90Y2dfc3lzLmggfCAyNSArKysrKysrKysrKysrKysrKysrKysrKysrCiAxIGZpbGUgY2hhbmdl
-ZCwgMjUgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2dlbl90Y2df
-c3lzLmggYi90YXJnZXQvaGV4YWdvbi9nZW5fdGNnX3N5cy5oCmluZGV4IDA0NDA2ZGI2YTRiLi5j
-NGQ3YzIxYjg5MCAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vZ2VuX3RjZ19zeXMuaAorKysg
-Yi90YXJnZXQvaGV4YWdvbi9nZW5fdGNnX3N5cy5oCkBAIC04MCw2ICs4MCwzMSBAQAogICAgICAg
-ICBnZW5faGVscGVyX3N0b3AodGNnX2Vudik7IFwKICAgICB9IHdoaWxlICgwKQogCisjZGVmaW5l
-IGZHRU5fVENHX1kyX3RmcnNjcnIoU0hPUlRDT0RFKSBcCisgICAgdGNnX2dlbl9tb3ZfdGwoUmRW
-LCBTc1YpCisKKyNkZWZpbmUgZkdFTl9UQ0dfWTJfdGZyc3JjcihTSE9SVENPREUpIFwKKyAgICB0
-Y2dfZ2VuX21vdl90bChTZFYsIFJzVikKKworI2RlZmluZSBmR0VOX1RDR19ZNF90ZnJzY3BwKFNI
-T1JUQ09ERSkgXAorICAgIHRjZ19nZW5fbW92X2k2NChSZGRWLCBTc3NWKQorCisjZGVmaW5lIGZH
-RU5fVENHX1k0X3RmcnNwY3AoU0hPUlRDT0RFKSBcCisgICAgdGNnX2dlbl9tb3ZfaTY0KFNkZFYs
-IFJzc1YpCisKKyNkZWZpbmUgZkdFTl9UQ0dfRzRfdGZyZ2NycihTSE9SVENPREUpIFwKKyAgICB0
-Y2dfZ2VuX21vdl90bChSZFYsIEdzVikKKworI2RlZmluZSBmR0VOX1RDR19HNF90ZnJncmNyKFNI
-T1JUQ09ERSkgXAorICAgIHRjZ19nZW5fbW92X3RsKEdkViwgUnNWKQorCisjZGVmaW5lIGZHRU5f
-VENHX0c0X3RmcmdjcHAoU0hPUlRDT0RFKSBcCisgICAgdGNnX2dlbl9tb3ZfaTY0KFJkZFYsIEdz
-c1YpCisKKyNkZWZpbmUgZkdFTl9UQ0dfRzRfdGZyZ3BjcChTSE9SVENPREUpIFwKKyAgICB0Y2df
-Z2VuX21vdl9pNjQoR2RkViwgUnNzVikKKworCiAvKgogICogcnRlIChyZXR1cm4gZnJvbSBleGNl
-cHRpb24pCiAgKiAgICAgQ2xlYXIgdGhlIEVYIGJpdCBpbiBTU1IKLS0gCjIuMzQuMQoK
+On 2026-04-07 13:27, Peter Xu wrote:
+> On Fri, Mar 27, 2026 at 06:07:38PM +0100, Juraj Marcin wrote:
+> > On 2026-03-19 19:13, Peter Xu wrote:
+> > > Add a helper to be able to return an estimate of switchover bw, called
+> > > migration_get_switchover_bw(). Use it to sligitly simplify the current
+> > > code.
+> > > 
+> > > This will be used in new codes later to remove expected_downtime.
+> > > 
+> > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > ---
+> > >  migration/migration.h |  1 +
+> > >  migration/migration.c | 43 ++++++++++++++++++++++---------------------
+> > >  2 files changed, 23 insertions(+), 21 deletions(-)
+> > > 
+> > > diff --git a/migration/migration.h b/migration/migration.h
+> > > index b6888daced..bf3ee6cc07 100644
+> > > --- a/migration/migration.h
+> > > +++ b/migration/migration.h
+> > > @@ -586,6 +586,7 @@ void migration_cancel(void);
+> > >  void migration_populate_vfio_info(MigrationInfo *info);
+> > >  void migration_reset_vfio_bytes_transferred(void);
+> > >  void postcopy_temp_page_reset(PostcopyTmpPage *tmp_page);
+> > > +int64_t migration_downtime_calc_expected(MigrationState *s);
+> > 
+> > Couldn't find the definition until I looked at the next patch :)
+> 
+> Good catch.. I'll move it out.
+> 
+...
+> > > +    /* NOTE: only update this after bandwidth (s->mbps) updated */
+> > > +    switchover_bw = migration_get_switchover_bw(s) / 1000;
+> > 
+> > It isn't clear from the name, that switchover_bw is in milliseconds, I
+> > think the _per_ms suffix would solve this.
+> 
+> Sure.
+> 
+> > 
+> > > +    s->threshold_size = switchover_bw * migrate_downtime_limit();
+> > > +
+> > >      transferred_pages = ram_get_total_transferred_pages() -
+> > >                              s->iteration_initial_pages;
+> > >      s->pages_per_second = (double) transferred_pages /
+> > 
+> > There's also expected_bw_per_ms which should be probably replaced by
+> > switchover_bw[_per_ms], otherwise it doesn't compile.
+> 
+> Yep, will fix.  I'll likely drop two qatomic_read()s too alone the way when
+> touching that line because they're not needed.
+> 
+...
+> > 
+> > Except the comments above, the change looks good. With those resolved:
+> > 
+> > Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> 
+> Thanks, attaching the final version here (I also touched up the commit
+> message on some English change request from Prasad):
+> 
+> From 2258026f454621b7a5f04bb7bcb018b29482a695 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Thu, 19 Mar 2026 15:50:30 -0400
+> Subject: [PATCH] migration: Introduce a helper to return switchover bw
+>  estimate
+> 
+> Add a helper migration_get_switchover_bw() to return an estimate of
+> switchover bandwidth.  Use it to simplify the current code.
+> 
+> This will be used in later to remove expected_downtime.
+> 
+> When at it, remove two qatomic_read() to shrink the lines because atomic
+> ops are not needed when it's always the same thread who does the updates.
+> 
+> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/migration.c | 48 +++++++++++++++++++++----------------------
+>  1 file changed, 24 insertions(+), 24 deletions(-)
+> 
+> diff --git a/migration/migration.c b/migration/migration.c
+> index c6cc2f6c09..17003ac7ee 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -984,6 +984,21 @@ void migrate_send_rp_resume_ack(MigrationIncomingState *mis, uint32_t value)
+>      migrate_send_rp_message(mis, MIG_RP_MSG_RESUME_ACK, sizeof(buf), &buf);
+>  }
+>  
+> +/*
+> + * Returns the estimated switchover bandwidth (unit: bytes / seconds)
+> + */
+> +static double migration_get_switchover_bw(MigrationState *s)
+> +{
+> +    uint64_t switchover_bw = migrate_avail_switchover_bandwidth();
+> +
+> +    if (switchover_bw) {
+> +        /* If user specified, prioritize this value and don't estimate */
+> +        return (double)switchover_bw;
+> +    }
+> +
+> +    return s->mbps / 8 * 1000 * 1000;
+> +}
+> +
+>  bool migration_is_running(void)
+>  {
+>      MigrationState *s = current_migration;
+> @@ -3126,37 +3141,22 @@ static void migration_update_counters(MigrationState *s,
+>  {
+>      uint64_t transferred, transferred_pages, time_spent;
+>      uint64_t current_bytes; /* bytes transferred since the beginning */
+> -    uint64_t switchover_bw;
+> -    /* Expected bandwidth when switching over to destination QEMU */
+> -    double expected_bw_per_ms;
+> -    double bandwidth;
+> +    double switchover_bw_per_ms;
+>  
+>      if (current_time < s->iteration_start_time + BUFFER_DELAY) {
+>          return;
+>      }
+>  
+> -    switchover_bw = migrate_avail_switchover_bandwidth();
+>      current_bytes = migration_transferred_bytes();
+>      transferred = current_bytes - s->iteration_initial_bytes;
+>      time_spent = current_time - s->iteration_start_time;
+> -    bandwidth = (double)transferred / time_spent;
+> -
+> -    if (switchover_bw) {
+> -        /*
+> -         * If the user specified a switchover bandwidth, let's trust the
+> -         * user so that can be more accurate than what we estimated.
+> -         */
+> -        expected_bw_per_ms = (double)switchover_bw / 1000;
+> -    } else {
+> -        /* If the user doesn't specify bandwidth, we use the estimated */
+> -        expected_bw_per_ms = bandwidth;
+> -    }
+> -
+> -    s->threshold_size = expected_bw_per_ms * migrate_downtime_limit();
+> -
+>      s->mbps = (((double) transferred * 8.0) /
+>                 ((double) time_spent / 1000.0)) / 1000.0 / 1000.0;
+>  
+> +    /* NOTE: only update this after bandwidth (s->mbps) updated */
+> +    switchover_bw_per_ms = migration_get_switchover_bw(s) / 1000;
+> +    s->threshold_size = switchover_bw_per_ms * migrate_downtime_limit();
+> +
+>      transferred_pages = ram_get_total_transferred_pages() -
+>                              s->iteration_initial_pages;
+>      s->pages_per_second = (double) transferred_pages /
+> @@ -3166,10 +3166,9 @@ static void migration_update_counters(MigrationState *s,
+>       * if we haven't sent anything, we don't want to
+>       * recalculate. 10000 is a small enough number for our purposes
+>       */
+> -    if (qatomic_read(&mig_stats.dirty_pages_rate) &&
+> -        transferred > 10000) {
+> +    if (mig_stats.dirty_pages_rate && transferred > 10000) {
+>          s->expected_downtime =
+> -            qatomic_read(&mig_stats.dirty_bytes_last_sync) / expected_bw_per_ms;
+> +            mig_stats.dirty_bytes_last_sync / switchover_bw_per_ms;
+>      }
+>  
+>      migration_rate_reset();
+> @@ -3178,7 +3177,8 @@ static void migration_update_counters(MigrationState *s,
+>  
+>      trace_migrate_transferred(transferred, time_spent,
+>                                /* Both in unit bytes/ms */
+> -                              bandwidth, switchover_bw / 1000,
+> +                              (uint64_t)s->mbps,
+> +                              (uint64_t)switchover_bw_per_ms,
+>                                s->threshold_size);
+>  }
+>  
+> -- 
+> 2.53.0
+> 
+> 
+> -- 
+> Peter Xu
+> 
+
+LGTM!
+
 
