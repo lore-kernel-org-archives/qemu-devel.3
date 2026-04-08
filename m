@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6F7110FC456
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 23:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D53B10FC45F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 23:33:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAcLq-0004KO-Ov; Wed, 08 Apr 2026 19:30:26 -0400
+	id 1wAcOi-0004vu-7Y; Wed, 08 Apr 2026 19:33:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1wAcLo-0004Gw-Dd
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 19:30:24 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wAcOh-0004vP-7x
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 19:33:23 -0400
+Received: from mail-dl1-x122b.google.com ([2607:f8b0:4864:20::122b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1wAcLm-0000RT-NO
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 19:30:24 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2addb31945aso2129555ad.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:30:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775691021; cv=none;
- d=google.com; s=arc-20240605;
- b=loi3lVSrjvdIcw4CwZU5n1vUIAdM4zhyWBepyHxPdJ/ngzvKw1wpb3cN8vsac4eBo6
- ea4hwlmkWprox53VbexFTWfKIikX1nZYf3fXK/4WM91sgxBKmi9m3q0PyZTiReOXR4Ru
- ctMwaZ9zsBy9iJCJzWc4Cr0RYhVK2hk9IvPLnRHYNKibn4a/9BPWVibDi79TvyPSbo39
- 416ijsF02613K0AxneZNfiRdmKM061iUQRJA/euReGMAC5Bzs0i+7Njd4yzFzul+h5TE
- SOk6F2O0ixE6qtqHDt94qA96JmKFZqrGeUHFbIeZOEZjqNb9gFq6R7l5sPvbXRBXILMG
- jgHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=DTlBoQRl4C/4v0qjBblJOKydeJC045m40dzqZvQmXio=;
- fh=seHpsuERei6GoCJPMtZiXpXOw/2EVnvuQ7nSTREwIqg=;
- b=Wez9DSi1KONVsxUyp6cVoF7wjxXccZTnfB+WV1c2CbszcxgZWVLPW4vUSemM1A0FT/
- pfCcIxLNTVx40Y4xBvNU5coIyWANeYU9aZxXpJEk20qgMfXCwrv0IDMYuZlJJgcDhdf9
- 9DqdQ5wbbsUiAm6PB6wXjAMkP4ajFZZywLQdhPgJxa+RtTXPlZEF5EpjA86Bd8ZkJytG
- 23Eu/k0drVK+VYdZs6w+DQmNK7pnqTdzxTd+dRSeaLUYUZGxcB9iKcRidvqn1QkHCorc
- QGRDCA0a+lJm/yioV7jO5VLTc84IaYeiAJla2IZJHjiVLn9Jm5c6tWIvOUkXHFMbWAUv
- l2wA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wAcOd-0000vQ-N9
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 19:33:21 -0400
+Received: by mail-dl1-x122b.google.com with SMTP id
+ a92af1059eb24-12c15414820so96061c88.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:33:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775691021; x=1776295821; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DTlBoQRl4C/4v0qjBblJOKydeJC045m40dzqZvQmXio=;
- b=hQZf9viKR4kZgzIKwTQLb7ShHyBuulEEMpSuImBedsEC6p37xryxXr0Z0+QzdSfxlN
- VDx3MzhCgC3bWxnPRQe3bCY7fSz5fgLx68pg2nM25y2CAVwo7iY9Ao6l7gwBc0hPc1KX
- l/yN+79oPlWVtF+HFnQ7g2IPZ6CYayFRBocamLkxSpYV4i22s2f6FVXsSUgA1c8gKObZ
- Aj0P1wjbhMLQhcnV2DSgHzVjXXuWNfUBO5nJ79GoizpgiCbIRzIySZKJlbwkWwlORnAS
- bl9V22y/OqjgIDwbA3R1fmV+GWM7BfKfgNXMX1vSCqvlxVT/h2IsOWThxdlz5FV+kYde
- x1xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775691021; x=1776295821;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1775691198; x=1776295998; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DTlBoQRl4C/4v0qjBblJOKydeJC045m40dzqZvQmXio=;
- b=r21Q6dAmzBzfDjP8rE0yvJgizGMa7BQN6OOBFThZg+FN2fOnk4cMhd2ziMMPVWuQna
- qXGxjKREmZGcnevMaH/HJdAECmwcpWtTeGiNoIyQNvebA/1j/cnqaibfZHVCB0PUb93y
- 99g52jkb7vyFvIpeBqwZt8laSwkVe7cW792Qzumq27fV2Y4S6kCjdSwr50cU4kFwPcF5
- 40rVPKsOPmpaUXzHUXcDFwqvjfxZR+E8f18K0WmTrOE0BIKfYBJ6SKNxXUhobCEHtys+
- T91uGHYs/P2p6GnB/1cfHRKuRP9pdNNKP/sbSoN+NUlbNMVuTVUyCxs9Op7hyp0TI5Hq
- +W3w==
-X-Gm-Message-State: AOJu0Yz4x7zb8Jr/eAs7ybEzV7jm5c1QA3MT9ljhNlZpsbenrAYDPPRx
- 3W/Tc0YgI4Ear1ttQtw2YKlm/sprN1UzrChy3hRP+ZWbv8Squ61dX3JPb4Xky3k2voKNqEfGRl3
- NTH2ZLh9YuBUxfkCx9KoXmm/2MUIbmlk=
-X-Gm-Gg: AeBDietBPt4wRKO8wVgea/NipPpJ7gVtbRi89R7KTddf129cLaQria94K9fPpsB41Nx
- ln6uGDDdMfoZeBmI8Z3wwRt9jZYJOF9SuRi3eFlbKgn/kRUeVPrMWDE7huIr3kowrQO9z1ulhhn
- /dNJVbA0uiXXplTOYGG9E/wUDhk8CjyW8M+FkDoVkavbCa96MTLQrFAFkrVsGDVyIceLePkUW1h
- YG72grEZNgSrDdWki1fYrqS/Vl/ijFRxkNESwamgERpzC96gok+TnZasvSV7TsWLtYaCajhBXs9
- GuCn9V8bWXIMIfUP8YYM81Vyoc3aY/utN1e8bAs=
-X-Received: by 2002:a17:902:e546:b0:2b0:5b4e:370c with SMTP id
- d9443c01a7336-2b281931aa5mr233465475ad.32.1775691020914; Wed, 08 Apr 2026
- 16:30:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
- <2aa7f105031465bdbd63c22bca6e2b77b92bab5f.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-In-Reply-To: <2aa7f105031465bdbd63c22bca6e2b77b92bab5f.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Wed, 8 Apr 2026 17:30:09 -0600
-X-Gm-Features: AQROBzCY5_LzmL57OYVS9x2RuiGsuogEGGMAlJ_VNFYOx5vzOBT5nqYtPMIKios
-Message-ID: <CAATN3Npqzo=hoQuKix6=gAf9GVeuqM1=wF9LDFyOFcv1MvC9oA@mail.gmail.com>
-Subject: Re: [PATCH v3 08/16] target/hexagon: add v68 HVX IEEE float misc insns
-To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, ale@rev.ng, 
- anjo@rev.ng, brian.cain@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- philmd@linaro.org, quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Content-Type: multipart/alternative; boundary="0000000000008854f7064efb48b8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x633.google.com
+ bh=Sp1l2TLSy59KuOnmhMceKZg7VGUfjBL3v4kCUvYEWOg=;
+ b=T9dfMCBPMCgxGmDSK0NQLe3hgUpFqbffsXmMtvN3rkSCHp+chhSd05kVp64jKZ7rZf
+ kDg96NfXQ+f9Je47C4NXXb30jvZ0czZZVTvVJCHsa05SZQwZLJOZDET8NXLsJmn2mB2l
+ coMelWqko+tJDC2Tvynbkg+uCTv5NSOLCS6maHANBxwu7VltrxwbNxNK1OcNNdRIM7tk
+ 6n4UgJbNcizdyFdsBHhaHDARMdIH6rk0nc+fFmhUsx4kIJJ9t7bGoV4pyJpNXyYNS92/
+ 6TBSnBVElZzBaRdCTJAM0kS1YFsqHC3cLI1XGCxeC+xLy3wu96kqxgtHv6X1CttYcQJE
+ lj2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775691198; x=1776295998;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Sp1l2TLSy59KuOnmhMceKZg7VGUfjBL3v4kCUvYEWOg=;
+ b=R6hP9eghik8s6XgDgeLBxJ6kwAYSJw4OixRQMVp5FGjpgT7Xd3i3d+ibCvlwNxNMbz
+ 5hkUAVwHMip5klbwzacI8NBjWCyBEGZCYlqrfpmbXzlpKxk8a3/kmE36iDgl8GsAAtsm
+ qR6VeLUjIOIOA0SC3w1Hgy+rV9DLFzpTmyBL7g1NXKLbQicYv+PKNShyL9RylIrDhHWd
+ gg8cUlnFuQ6GOWRuaX2keJEpO0/HGal4TEZ47q+91GwIKkk2NE2KX5RrAV0IW6949a5n
+ /WJY5Me0C91GDOL8+X8m6I+Xf0Q6903BmuX6lzyf7DjLlBlz7O2lw1obUFpm5864bdud
+ 4iDA==
+X-Gm-Message-State: AOJu0YyQ7Rkc+zLXXh8LmtAUwPk0YVEuoo9BEj8HpVUlF7qtuGcedjIQ
+ Vr2KD28XsvRpirNFo+UKk8Ns0yluhRJR/6uFsOoMnPpXOsKtRHPYW/5d
+X-Gm-Gg: AeBDievepCvW5TtYkapFLXoYZXtltnuB3KTvgbDfCH9lbNZIVdWQT7cxHo5aUQgmsM5
+ gjBsak8tcv5hGIffuu09LDIzIPhYbUWLCEGxSbxQUoRiwQ3ZYpJAMbEDuCcMjEJ9SjIbtoXUWFI
+ Zu3qcQ9sveWyqdJTRSCt4XG6ZgQeGpJRfyORVecVgKA/067EDcq3rXpbxHrHQ2QmV20g2060SnA
+ zcxda7UjypQb6GiTTr7LyzbC+8MAt4CptNrlfiCfzj2oFkw440n5NEaLSec6012r4mPRScA3HBa
+ TA9J3fm1VUaTFuu4VbUQPhTzeiMQNDVlcTAKdu6Tz49dydYR4UuL7sFPj6AHssyO7It+KFTQ06N
+ G/zuqzZx/cdQ6TnydMNYZNkLAMbggttLteVy0QLLoXEIo6jaFPLcCZWLXiicBQvkoItIAWu/dub
+ ZVqHQi4GyD4oY4/QccR/85/oQTH3hJW+zUQBBwlg17djW7oS8pmOve03ZWxwP/UItRbc76OXza0
+ s+jGzh9EKk=
+X-Received: by 2002:a05:7022:4182:b0:119:e569:f84d with SMTP id
+ a92af1059eb24-12c28bf351bmr604986c88.4.1775691197782; 
+ Wed, 08 Apr 2026 16:33:17 -0700 (PDT)
+Received: from localhost ([2601:645:8200:47:a1bd:9754:418f:9b37])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c07a8703esm17623995c88.8.2026.04.08.16.33.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Apr 2026 16:33:17 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 08 Apr 2026 16:33:15 -0700
+Message-Id: <DHO5ZTWY64G0.1AIDXSKEL01UU@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <alex@shazbot.org>, <clg@redhat.com>,
+ <pbonzini@redhat.com>, <rbolshakov@ddn.com>, <phil@philjordan.eu>,
+ <mst@redhat.com>, <john.levon@nutanix.com>, <thanos.makatos@nutanix.com>,
+ <qemu-s390x@nongnu.org>
+Subject: Re: [RFC PATCH 00/10] vfio: PCI device passthrough on Apple Silicon
+ Macs
+From: "Scott J. Goldman" <scottjgo@gmail.com>
+To: "Mohamed Mediouni" <mohamed@unpredictable.fr>, "Scott J. Goldman"
+ <scottjgo@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260405072857.66484-1-scottjgo@gmail.com>
+ <A7F5F3BA-1008-4F21-A103-3079DC511292@unpredictable.fr>
+ <EE710653-F4AF-4C1B-A9B0-C9ADE7EB01F1@unpredictable.fr>
+ <DHLLUP2OY18O.1HYC4V18K7IH1@gmail.com>
+ <67BA415D-4D1A-4F68-9429-284309EE96C0@unpredictable.fr>
+ <DHNKXKNWFI3S.P78ERGSFU3RQ@gmail.com>
+ <97D215C3-5794-4250-BA33-F07C6A753477@unpredictable.fr>
+ <DHO2FDRRIEGO.FEORPWSGCJE9@gmail.com>
+ <7929BC15-D10B-4CF7-875C-0A168811CA72@unpredictable.fr>
+In-Reply-To: <7929BC15-D10B-4CF7-875C-0A168811CA72@unpredictable.fr>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122b;
+ envelope-from=scottjgo@gmail.com; helo=mail-dl1-x122b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,121 +114,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008854f7064efb48b8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Apr 8, 2026 at 10:37=E2=80=AFAM Matheus Tavares Bernardino <
-matheus.bernardino@oss.qualcomm.com> wrote:
-
-> Add HVX IEEE floating-point miscellaneous instructions:
-> - vassign_fp (vfmv): vector move
-> - vfneg_hf, vfneg_sf: vector floating-point negate
-> - vabs_hf, vabs_sf: vector absolute value
+On Wed Apr 8, 2026 at 3:12 PM PDT, Mohamed Mediouni wrote:
 >
-> Signed-off-by: Matheus Tavares Bernardino <
-> matheus.bernardino@oss.qualcomm.com>
-> ---
->  target/hexagon/imported/mmvec/encode_ext.def |  7 +++++++
->  target/hexagon/imported/mmvec/ext.idef       | 12 ++++++++++++
->  2 files changed, 19 insertions(+)
 >
-> diff --git a/target/hexagon/imported/mmvec/ext.idef
-> b/target/hexagon/imported/mmvec/ext.idef
-> index 0e9cace203..5312661684 100644
-> --- a/target/hexagon/imported/mmvec/ext.idef
-> +++ b/target/hexagon/imported/mmvec/ext.idef
-> @@ -3034,6 +3034,18 @@
-> ITERATOR_INSN_ANY_SLOT_2SRC(16,vmin_hf,"Vd32.hf=3Dvmin(Vu32.hf,Vv32.hf)",=
- \
->      "Vector min of hf input", VdV.hf[i] =3D qf_min_hf(VuV.hf[i], VvV.hf[=
-i],
-> \
->         &env->hvx_fp_status))
+>> On 8. Apr 2026, at 22:45, Scott J. Goldman <scottjgo@gmail.com> wrote:
+>>=20
+>> On Wed Apr 8, 2026 at 12:09 PM PDT, Mohamed Mediouni wrote:
+>>>=20
+>>>=20
+>>>> On 8. Apr 2026, at 09:02, Scott J. Goldman <scottjgo@gmail.com> wrote:
+>>>>=20
+>>>> On Sun Apr 5, 2026 at 5:16 PM PDT, Mohamed Mediouni wrote:
+>>>>>=20
+>>>>>=20
+>>>>>> On 6. Apr 2026, at 01:20, Scott J. Goldman <scottjgo@gmail.com> wrot=
+e:
+>>>>>>=20
+>>>>>> On Sun Apr 5, 2026 at 1:14 AM PDT, Mohamed Mediouni wrote:
+>>>>>>>=20
+>>>>>>>=20
+>>>>>>>> On 5. Apr 2026, at 10:01, Mohamed Mediouni <mohamed@unpredictable.=
+fr> wrote:
+>>>>>>>>=20
+>>>>>>>>>=20
+>>>>>>>>> On 5. Apr 2026, at 09:28, Scott J. Goldman <scottjgo@gmail.com> w=
+rote:
+>>>>>>>>>=20
+>>>>>>>>> This series adds VFIO PCI device passthrough support for Apple Si=
+licon
+>>>>>>>>> Macs running macOS, using a DriverKit extension (dext) as the hos=
+t
+>>>>>>>>> backend instead of the Linux VFIO kernel driver.
+>>>>>>>>>=20
+>>>>>>>>> I'm sending this as an RFC because I'd like feedback before inves=
+ting
+>>>>>>>>> further in upstreaming.  The code is functional.  I've tested it =
+with
+>>>>>>>>> an NVIDIA RTX 5090 in a Thunderbolt dock on an M4 MacBook Air.  G=
+PU
+>>>>>>>>> gaming works but is slow (~30 fps on high settings in Cyberpunk 2=
+077
+>>>>>>>>> [1]), likely due to the BAR access penalty described below.  AI
+>>>>>>>>> inference workloads appear less affected.  Ollama with Qwen 3.5
+>>>>>>>>> generates around 140 tok/sec on the same setup [2].
+>>>>>>>>>=20
+>>>>>>>>> How it works:
+>>>>>>>>>=20
+>>>>>>>>> On Linux, VFIO relies on kernel-managed IOMMU groups and /dev/vfi=
+o
+>>>>>>>>> for device access and DMA mapping.  On macOS, there is no equival=
+ent
+>>>>>>>>> kernel interface.  Instead, a userspace DriverKit extension
+>>>>>>>>> (VFIOUserPCIDriver) mediates access to the physical PCI device th=
+rough
+>>>>>>>>> IOKit's IOUserClient and PCIDriverKit APIs.
+>>>>>>>>>=20
+>>>>>>>>> The series keeps the existing VFIOPCIDevice model and reuses QEMU=
+'s
+>>>>>>>>> passthrough infrastructure.  A few ioctl callsites are refactored=
+ into
+>>>>>>>>> io_ops callbacks, the build system is extended for Darwin, and th=
+e
+>>>>>>>>> Apple-specific backend plugs in behind those abstractions.
+>>>>>>>>>=20
+>>>>>>>>> The guest sees two PCI devices: the passthrough device itself
+>>>>>>>>> (vfio-apple-pci, which subclasses VFIOPCIDevice) and a companion
+>>>>>>>>> DMA mapping device (apple-dma-pci).  On the QEMU side, an
+>>>>>>>>> AppleVFIOContainer implements the IOMMU backend, and a C client
+>>>>>>>>> library wraps the IOUserClient calls to the dext for config space=
+,
+>>>>>>>>> BAR MMIO, interrupts, reset, and DMA.
+>>>>>>>>>=20
+>>>>>>>>> DMA limitations:
+>>>>>>>>>=20
+>>>>>>>>> This is the biggest platform constraint.  Unlike a typical IOMMU
+>>>>>>>>> mapping operation where the caller specifies the IOVA, the
+>>>>>>>>> PCIDriverKit API (IODMACommand::PrepareForDMA) returns a
+>>>>>>>>> system-assigned IOVA.  There is no way to request a specific addr=
+ess.
+>>>>>>>>> This means the guest's requested DMA addresses cannot be used
+>>>>>>>>> directly.  The guest kernel module must intercept DMA mapping cal=
+ls
+>>>>>>>>> and forward them through the companion device to get the actual
+>>>>>>>>> hardware IOVA.
+>>>>>>>>=20
+>>>>>>>> Hello,
+>>>>>>>>=20
+>>>>>>>> Ugh this one is not great. By the way, Apple has a private PCIe pa=
+ssthrough
+>>>>>>>> API used by Virtualization.framework but that's a different design=
+.
+>>>>>>=20
+>>>>>> This is really interesting and I had not heard about this. Are you
+>>>>>> able to elaborate on this one at all? Maybe this is something where =
+an
+>>>>>> internal API to manipulate the DART is available inside
+>>>>>> Virtualization.framework?
+>>>>>=20
+>>>>> Hello,
+>>>>>=20
+>>>>> All of it needs using private entitlements currently.
+>>>>>=20
+>>>>> It's _VZPCIPassthroughDeviceConfiguration, a private class needing co=
+m.apple.private.virtualization to use.
+>>>>>=20
+>>>>> The VMM process itself then uses the com.apple.private.PCIPassthrough=
+.access entitlement. I'm not
+>>>>> sure whether OS versions even have all the code currently though.
+>>>>>=20
+>>>>=20
+>>>> Appreciate the pointers here. It looks like, as you said, the framewor=
+k
+>>>> taps into a bunch of code that isn't shipped to us mere mortals. I can
+>>>> see from some of the code in Virtualization.framework the general shap=
+e
+>>>> of what they're doing, though.
+>>>>=20
+>>>> It looks like they implement a virtio-iommu device that ultimately cal=
+ls
+>>>> into the host kernel with some internal APIs to do the DART mappings.=
+=20
+>>>>=20
+>>>=20
+>>> Hello,
+>>>=20
+>>> Some more details:
+>>>=20
+>>> The VMM side when using Virtualization.framework is at /System/Library/=
+Frameworks/Virtualization.framework/XPCServices/com.apple.Virtualization.Vi=
+rtualMachine.xpc/Contents/MacOS/com.apple.Virtualization.VirtualMachine
+>>> as Virtualization.framework
+>>>=20
+>>> And that directly communicates with IOPCIDevice...
+>>>=20
+>>> And the source code side of PCIDriverKit is at https://github.com/apple=
+-oss-distributions/IOPCIFamily/tree/main/PCIDriverKit=20
+>>>=20
+>>> And for PrepareForDMA at https://github.com/apple-oss-distributions/xnu=
+/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/iokit/Kernel/IOUserServer.cp=
+p#L1001
+>>>=20
+>>> IOMemoryDescriptor has this option: https://github.com/apple-oss-distri=
+butions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/iokit/DriverKit/I=
+OMemoryDescriptor.iig#L56 - kIOMemoryMapFixedAddress
+>>>=20
+>>> But not sure whether that=E2=80=99s allowed for user-mode drivers
+>>>=20
+>>> Hopefully that helps.
+>>>=20
+>>=20
+>> Appreciate the pointers. It seems like the flag does work on DriverKit
+>> user-level drivers. Unfortunately it controls the virtual address
+>> placement in the process, not the IOVA for DMA. If you follow the path
+>> through:
+>>=20
+> That=E2=80=99s indeed the case=E2=80=A6=20
+>> PrepareForDMA_Impl(options, memDesc, offset, length, ...)
+>> -> IODMACommand::prepare(offset, length)
+>>   -> md->dmaCommandOperation(kIOMDDMAMap, &mapArgs)
+>>     -> IOGeneralMemoryDescriptor::dmaMap(mapper, ..., &mapArgs.fAlloc)
+>>=20
+>> You can see that the code doesn't pass these flags through to the
+>> ultimate call to iovmMapMemory. The base class path is at:
+>>=20
+>> https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d3=
+75211650a4c1ff8ca1ea/iokit/Kernel/IOMemoryDescriptor.cpp#L4581-L4587C54
+>>=20
+>> and the IOGeneralMemoryDescriptor override (which is the path taken for =
+client memory) has the same gap:
+>>=20
+>> https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d3=
+75211650a4c1ff8ca1ea/iokit/Kernel/IOMemoryDescriptor.cpp#L4671-L4742
+>>=20
+>> where the mapOptions are also set in IODMACommand::prepare():
+>>=20
+>> https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d3=
+75211650a4c1ff8ca1ea/iokit/Kernel/IODMACommand.cpp#L985C1-L996C1
+>>=20
+>> I think the flag that would have to be in the path would be
+>> kIODMAMapFixedAddress.
 >
-> +/* IEEE FP move, negate, abs instructions */
-> +ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vassign_fp, "Vd32.w=3Dvfmv(Vu32.w)"=
-, \
-> +    "Vector IEEE move", VdV.w[i]  =3D VuV.w[i])
-> +ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfneg_hf, "Vd32.hf=3Dvfneg(Vu32.hf)=
-", \
-> +    "Vector IEEE neg: hf", VdV.hf[i] =3D float16_chs(VuV.hf[i]))
-> +ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfneg_sf, "Vd32.sf=3Dvfneg(Vu32.sf)=
-", \
-> +    "Vector IEEE neg: sf", VdV.sf[i] =3D float32_chs(VuV.sf[i]))
-> +ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vabs_hf,  "Vd32.hf=3Dvabs(Vu32.hf)"=
-, \
-> +    "Vector IEEE abs: hf", VdV.hf[i] =3D float16_abs(VuV.hf[i]))
-> +ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vabs_sf,  "Vd32.sf=3Dvabs(Vu32.sf)"=
-, \
-> +    "Vector IEEE abs: sf", VdV.hf[i] =3D float32_abs(VuV.hf[i]))
+> Intriguingly, mapOptions is defined at https://github.com/apple-oss-distr=
+ibutions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/iokit/Kernel/IOD=
+MACommand.cpp#L943C39-L943C49 and set there in https://github.com/apple-oss=
+-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/iokit/Kern=
+el/IODMACommand.cpp#L985C1-L996C1 but then not used afterwards=E2=80=A6
+>
+> And the flags passed are:
+> https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d37=
+5211650a4c1ff8ca1ea/iokit/Kernel/IOUserServer.cpp#L979
+> so it=E2=80=99s not in IODMACommandSpecification either.
+>
+> Makes me wonder even more what Apple does for their own VM thing, or mayb=
+e
+> the simplest answer is that they=E2=80=99re not using something public - =
+especially
+> as they=E2=80=99re doing this from user-mode using the IOPCIDevice interf=
+ace=E2=80=A6
+> Or=E2=80=A6 the Apple code in Virtualization.framework is unfinished and =
+I=E2=80=99m just thinking too hard about this
 
-
-Should be VdV.sf[i] =3D float32_abs(vuV.sf[i])
-I'm surprised there isn't a test case that catches this.
-
-Otherwise
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
---0000000000008854f7064efb48b8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Apr 8, =
-2026 at 10:37=E2=80=AFAM Matheus Tavares Bernardino &lt;<a href=3D"mailto:m=
-atheus.bernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>=
-&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Add =
-HVX IEEE floating-point miscellaneous instructions:<br>
-- vassign_fp (vfmv): vector move<br>
-- vfneg_hf, vfneg_sf: vector floating-point negate<br>
-- vabs_hf, vabs_sf: vector absolute value<br>
-<br>
-Signed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheus.ber=
-nardino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm=
-.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/imported/mmvec/encode_ext.def |=C2=A0 7 +++++++<br>
-=C2=A0target/hexagon/imported/mmvec/ext.idef=C2=A0 =C2=A0 =C2=A0 =C2=A0| 12=
- ++++++++++++<br>
-=C2=A02 files changed, 19 insertions(+)<br>
-<br>diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/im=
-ported/mmvec/ext.idef<br>
-index 0e9cace203..5312661684 100644<br>
---- a/target/hexagon/imported/mmvec/ext.idef<br>
-+++ b/target/hexagon/imported/mmvec/ext.idef<br>
-@@ -3034,6 +3034,18 @@ ITERATOR_INSN_ANY_SLOT_2SRC(16,vmin_hf,&quot;Vd32.hf=
-=3Dvmin(Vu32.hf,Vv32.hf)&quot;, \<br>
-=C2=A0 =C2=A0 =C2=A0&quot;Vector min of hf input&quot;, VdV.hf[i] =3D qf_mi=
-n_hf(VuV.hf[i], VvV.hf[i], \<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;env-&gt;hvx_fp_status))<br>
-<br>
-+/* IEEE FP move, negate, abs instructions */<br>
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vassign_fp, &quot;Vd32.w=3Dvfmv(Vu32.=
-w)&quot;, \<br>
-+=C2=A0 =C2=A0 &quot;Vector IEEE move&quot;, VdV.w[i]=C2=A0 =3D VuV.w[i])<b=
-r>
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vfneg_hf, &quot;Vd32.hf=3Dvfneg(Vu32.=
-hf)&quot;, \<br>
-+=C2=A0 =C2=A0 &quot;Vector IEEE neg: hf&quot;, VdV.hf[i] =3D float16_chs(V=
-uV.hf[i]))<br>
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vfneg_sf, &quot;Vd32.sf=3Dvfneg(Vu32.=
-sf)&quot;, \<br>
-+=C2=A0 =C2=A0 &quot;Vector IEEE neg: sf&quot;, VdV.sf[i] =3D float32_chs(V=
-uV.sf[i]))<br>
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vabs_hf,=C2=A0 &quot;Vd32.hf=3Dvabs(V=
-u32.hf)&quot;, \<br>
-+=C2=A0 =C2=A0 &quot;Vector IEEE abs: hf&quot;, VdV.hf[i] =3D float16_abs(V=
-uV.hf[i]))<br>
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(32, vabs_sf,=C2=A0 &quot;Vd32.sf=3Dvabs(V=
-u32.sf)&quot;, \<br>
-+=C2=A0 =C2=A0 &quot;Vector IEEE abs: sf&quot;, VdV.hf[i] =3D float32_abs(V=
-uV.hf[i]))</blockquote><div><br></div><div>Should be VdV.sf[i] =3D float32_=
-abs(vuV.sf[i])=C2=A0</div><div>I&#39;m surprised there isn&#39;t a test cas=
-e that catches this.</div><div><br></div><div>Otherwise</div><div>Reviewed-=
-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com">ltaylors=
-impson@gmail.com</a>&gt;</div></div></div>
-
---0000000000008854f7064efb48b8--
+My possibly incorrect read of the strings and some disassembly of
+Virtulization.framework is that they look for
+IOServiceMatching("PCIPassthrough") which is simply not exported by
+anything I can find on my Mac. For internal builds maybe they ship
+another kext for this?
 
