@@ -4,94 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C540910F9973
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 951A210F9973
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYIt-0006z5-Eh; Wed, 08 Apr 2026 15:11:07 -0400
+	id 1wAYKw-0004s0-R8; Wed, 08 Apr 2026 15:13:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAYGd-00047p-NB
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:08:47 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAEoc-0000rq-Hu
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:22:35 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2addb31945aso39459545ad.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:22:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775600553; x=1776205353; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lxr7S5ejvt661ybvSTot+9Xez0DhgnskIyrzMc+2BIE=;
- b=glAr1zBkzObO1hlm5Qwy2ZJDshZCb/luxIU3J12yDSgkBKHS+9cHdrCws8E7CEKwxF
- DRRSGb6+MTEYhRepOUYJWOisjH6J5tGGnoa+2hjgzGMB3kdKlnM5rNaWC5OOxscCwhfc
- gCuOyS2OtiltTVzDsGbl7QNmnj3tlzje9iaVZi+kW2IeIhJXResHHzkMomAM8XQPUzFK
- a8lkC3B1i8GdyM/B32kMKAG4g042nVTokT624Lx/1Y8yj3w0fBx3C/WGv7m/Hox7J/Co
- vI8s2+k7f1Y3PEjRdwqE03ALKgKhMB7l813ApEgAm7u4jylqiNCus7gbvaKNDBTXJhaB
- uBCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775600553; x=1776205353;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lxr7S5ejvt661ybvSTot+9Xez0DhgnskIyrzMc+2BIE=;
- b=H6/6wwTwlHF5mrS3m+lKlAtZjn2aK4ZUO54xZ/spgWklvrwvP+q1r12d/WIfW+Dxna
- 3bqRJM0jP1kQvkHwI9BuKlRSEx/SoK58Rdm7eukmVRzVgPXVGbuArdeiBRuEM7q2kfTO
- RV5zEfn9+maQUfp9nPZoFnofUSfR0ZM9UYBkwxH42pkcmVyehoTYsYdEXiSuFiMMrsRT
- lG5kLNYX51r2t9AQw85J/y5kxuuuZyriwOWuACPRvC3CRm7lc/es6yPKCYOqZaBYZWZ9
- Gsr+KRwexVlkyW51jEsAOvJ/bWyrmLVAnfbPWwDRoxwNydHBcf8ycLmP6qxunRtn9Mx6
- gRXA==
-X-Gm-Message-State: AOJu0YwWl7nLejNVhowJhNLj5xYZdVBcSRvc7gwWHcWhbAsRys6QCyvF
- oVRcAuedcGxM25RuOk+Yj0Bgj4ewR11VeXSMcW7RS8tllaryx15AYlysRQAq3ADR2j9UGi8toWm
- hYwr0p/4=
-X-Gm-Gg: AeBDieuTDYb+0uOAfjcyDjxeRxOWNtusozMbf/TtXh7Adh5bsoyABRepONN43KfvCHi
- BeJDZWTBHGhKYmxVIXQKuDyO8LFZFqFOeyISYab9yrNqyE/gl18D7+zyuO60D44gp/FLGV0OFpp
- yTxLfmAyoj/6xjX7Mrazx9YMWZRm+Hd9w2hCCYjqWYDk0qmJPOI00YDA87eUpp3rATO1FZ192Gm
- DLdEruwUrw0pI/HK7STv44OmoEW0PKeQFUBOo/buIJQ5CKYKMol8jGN4thMASRPbeEYhXrUtYnB
- Q/TIZ66NuHHhDSTJe6LikjZvQIL5gndS5lRhJwcaLvSJccVopEKC87+LCKkCVtalRqIXIhSpxWW
- Fgc83uA0JyI/h2Et0bf2uwC32V3iQeDbjZLVp4e2HWGYZQDCQ/j5mdar7c/YDoZPODsUS/PplpC
- Fy2KiOFy3zMokzhYgBFBTiFLarayFZuvgpEW0tm9XvJE6fH6A5NANJgw+/U3d1g0bACu3FxYnC4
- Dva
-X-Received: by 2002:a17:902:e845:b0:2b2:6df1:1108 with SMTP id
- d9443c01a7336-2b281867961mr197990875ad.15.1775600552961; 
- Tue, 07 Apr 2026 15:22:32 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b274979d5csm180412065ad.38.2026.04.07.15.22.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 15:22:32 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1wAYJa-0000f1-Nk
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:11:51 -0400
+Received: from mail-08.mail-europe.com ([57.129.93.249])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1wAHJP-0001MP-MA
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 21:02:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=matthewpenney.net;
+ s=protonmail; t=1775610143; x=1775869343;
+ bh=6Ir9wkbsRzDHn4ZCMkPGCiaAbY7a7WO1QuXJPohGOBE=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=faDerZWtCl+lq5qYekMywp3zEClp7Hdyzkv/yNyGYcIjSUR9GgOQwLxRBhtOCaJ+m
+ KcHCde7NeKqn/ZHNL040rMQPeNMt1m1ecExWGYtlzYjhHIesNRXLnNoOG6rZ5pm/0X
+ uZQekYJKw2Xb/hEX/nYn7nhOgjGZandORi2AXuT2lwjvChs9KgKi8KzvDUBiGC8Uz6
+ rClOcNYRxUdJtMMjPUQnktnftvWmTsyB7TmQK1BIXFAYX3AOuGfrZsL8BnHiMEz700
+ Tl1/w6DNApXQPRrwgfK5drSbeabNOf2899nIVeIU1OLiRfLYGTRHDjaeb6Xc8PJ6+V
+ 3S8TT6LMHEbSw==
+Date: Wed, 08 Apr 2026 01:02:20 +0000
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, jim.macarthur@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v11 16/21] target/arm/tcg/translate-a64.c: use
- translator_ldl_end instead of arm_ldl_code
-Date: Tue,  7 Apr 2026 15:22:03 -0700
-Message-ID: <20260407222208.271838-17-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
-References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+From: Matthew Penney <matt@matthewpenney.net>
+Cc: Matthew Penney <matt@matthewpenney.net>,
+ =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 3/8] io: use g_clear_handle_id() for GSource cleanup
+Message-ID: <20260408010026.4611-4-matt@matthewpenney.net>
+Feedback-ID: 185185778:user:proton
+X-Pm-Message-ID: 7b59dc3fac1364fc5b44b65cb830ce258b38207f
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=57.129.93.249;
+ envelope-from=matt@matthewpenney.net; helo=mail-08.mail-europe.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,48 +68,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows to reduce scope of target/arm/tcg/arm_ldst.h to aarch32 only.
+Use g_clear_handle_id() instead of g_source_remove() with manual ID
+checking and zeroing.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This simplifies the code and ensures consistent handling of GSource IDs,
+since g_clear_handle_id() checks for a non-zero ID before calling the
+cleanup function and zeros it afterwards.
+
+No functional change intended.
+
+Signed-off-by: Matthew Penney <matt@matthewpenney.net>
 ---
- target/arm/tcg/translate-a64.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ io/channel-websock.c | 21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index df2cbd66b38..48b5c572555 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -26,7 +26,6 @@
- #include "translate-a64.h"
- #include "tcg/tcg-op.h"
- #include "qemu/log.h"
--#include "arm_ldst.h"
- #include "semihosting/semihost.h"
- #include "cpregs.h"
- 
-@@ -10801,7 +10800,7 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     if (pc & 3) {
-         /*
-          * PC alignment fault.  This has priority over the instruction abort
--         * that we would receive from a translation fault via arm_ldl_code.
-+         * that we would receive from a translation fault via translator_ldl_end.
-          * This should only be possible after an indirect branch, at the
-          * start of the TB.
-          */
-@@ -10813,7 +10812,8 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 9902b014f7..3479a5c32d 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -950,12 +950,8 @@ static void qio_channel_websock_finalize(Object *obj)
+     buffer_free(&ioc->encinput);
+     buffer_free(&ioc->encoutput);
+     buffer_free(&ioc->rawinput);
+-    if (ioc->hs_io_tag) {
+-        g_source_remove(ioc->hs_io_tag);
+-    }
+-    if (ioc->io_tag) {
+-        g_source_remove(ioc->io_tag);
+-    }
++    g_clear_handle_id(&ioc->hs_io_tag, g_source_remove);
++    g_clear_handle_id(&ioc->io_tag, g_source_remove);
+     error_free(ioc->io_err);
+     object_unref(OBJECT(ioc->master));
+ }
+@@ -1070,10 +1066,7 @@ static gboolean qio_channel_websock_flush(QIOChannel=
+ *ioc,
+=20
+ static void qio_channel_websock_unset_watch(QIOChannelWebsock *ioc)
+ {
+-    if (ioc->io_tag) {
+-        g_source_remove(ioc->io_tag);
+-        ioc->io_tag =3D 0;
+-    }
++    g_clear_handle_id(&ioc->io_tag, g_source_remove);
+ }
+=20
+ static void qio_channel_websock_set_watch(QIOChannelWebsock *ioc)
+@@ -1250,12 +1243,8 @@ static int qio_channel_websock_close(QIOChannel *ioc=
+,
+     buffer_free(&wioc->encinput);
+     buffer_free(&wioc->encoutput);
+     buffer_free(&wioc->rawinput);
+-    if (wioc->hs_io_tag) {
+-        g_clear_handle_id(&wioc->hs_io_tag, g_source_remove);
+-    }
+-    if (wioc->io_tag) {
+-        g_clear_handle_id(&wioc->io_tag, g_source_remove);
+-    }
++    g_clear_handle_id(&wioc->hs_io_tag, g_source_remove);
++    g_clear_handle_id(&wioc->io_tag, g_source_remove);
+     if (wioc->io_err) {
+         g_clear_pointer(&wioc->io_err, error_free);
      }
- 
-     s->pc_curr = pc;
--    insn = arm_ldl_code(env, &s->base, pc, s->sctlr_b);
-+    /* Code is always little-endian on Aarch64 */
-+    insn = translator_ldl_end(env, &s->base, pc, MO_LE);
-     s->insn = insn;
-     s->base.pc_next = pc + 4;
- 
--- 
-2.47.3
+--=20
+2.53.0
+
 
 
